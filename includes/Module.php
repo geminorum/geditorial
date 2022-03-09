@@ -76,7 +76,7 @@ class Module extends Base
 	];
 
 	protected $root_key = FALSE; // ROOT CONSTANT
-	protected $p2p      = FALSE; // P2P ENABLED/Connection Type
+	protected $_p2p     = FALSE; // P2P ENABLED/Connection Type
 
 	protected $scripts_printed = FALSE;
 
@@ -2404,6 +2404,13 @@ class Module extends Base
 		);
 	}
 
+	public function settings_section_p2p()
+	{
+		Settings::fieldSection(
+			_x( 'Posts-to-Posts', 'Module: Setting Section Title', 'geditorial' )
+		);
+	}
+
 	public function add_settings_field( $r = [] )
 	{
 		$args = array_merge( [
@@ -4407,12 +4414,12 @@ class Module extends Base
 
 		if ( $args = apply_filters( $hook, $args, $posttypes ) )
 			if ( p2p_register_connection_type( $args ) )
-				$this->p2p = $p2p;
+				$this->_p2p = $p2p;
 	}
 
 	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $args = [] )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return '';
 
 		if ( ! $meta = p2p_get_meta( $p2p_id, $meta_key, TRUE ) )
@@ -4432,7 +4439,7 @@ class Module extends Base
 
 	public function p2p_get_meta_row( $constant, $p2p_id, $before = '', $after = '' )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return '';
 
 		$row = '';
@@ -4447,7 +4454,7 @@ class Module extends Base
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Creating-connections-programmatically
 	public function p2p_connect( $constant, $from, $to, $meta = [] )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return FALSE;
 
 		$type = p2p_type( $this->constant( $constant.'_p2p' ) );
@@ -4465,7 +4472,7 @@ class Module extends Base
 
 	protected function column_row_p2p_to_posttype( $constant, $post )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return;
 
 		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
@@ -4519,7 +4526,7 @@ class Module extends Base
 
 	protected function column_row_p2p_from_posttype( $constant, $post )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return;
 
 		if ( empty( $this->cache_column_icon ) )

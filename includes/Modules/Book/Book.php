@@ -589,14 +589,14 @@ class Book extends gEditorial\Module
 				if ( $this->get_setting( 'admin_rowactions' ) )
 					$this->filter( 'post_row_actions', 2 );
 
-				if ( $this->p2p )
+				if ( $this->_p2p )
 					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 
-		} else if ( $this->p2p && 'edit' == $screen->base
+		} else if ( $this->_p2p && 'edit' == $screen->base
 			&& $this->in_setting( $screen->post_type, 'p2p_posttypes' ) ) {
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
@@ -777,7 +777,7 @@ class Book extends gEditorial\Module
 
 	public function publication_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return $content;
 
 		return ShortCode::listPosts(
@@ -785,7 +785,7 @@ class Book extends gEditorial\Module
 			$this->constant( 'publication_cpt' ),
 			'',
 			array_merge( [
-				'connection'    => $this->p2p,
+				'connection'    => $this->_p2p,
 				'posttypes'     => $this->get_setting( 'p2p_posttypes', [] ),
 				'title_cb'      => [ $this, 'shortcode_title_cb' ],
 				'item_after_cb' => [ $this, 'shortcode_item_after_cb' ],
@@ -817,7 +817,7 @@ class Book extends gEditorial\Module
 
 	public function shortcode_item_after_cb( $post, $args, $item )
 	{
-		return $this->p2p ? $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' ) : '';
+		return $this->_p2p ? $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' ) : '';
 	}
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -848,7 +848,7 @@ class Book extends gEditorial\Module
 
 	public function insert_content_p2p( $content )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return;
 
 		if ( ! $this->is_content_insert( $this->get_setting( 'p2p_posttypes', [] ) ) )
@@ -891,7 +891,7 @@ class Book extends gEditorial\Module
 	// FIXME: DEPRECATED: use `publication_shortcode()`
 	public function list_p2p( $post = NULL, $class = '' )
 	{
-		if ( ! $this->p2p )
+		if ( ! $this->_p2p )
 			return;
 
 		if ( ! $post = Helper::getPost( $post ) )
