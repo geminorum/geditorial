@@ -77,6 +77,7 @@ class Module extends Base
 
 	protected $root_key = FALSE; // ROOT CONSTANT
 	protected $_p2p     = FALSE; // P2P ENABLED/Connection Type
+	protected $_paired  = FALSE; // PAIRED API ENABLED/taxonomy paired
 
 	protected $scripts_printed = FALSE;
 
@@ -2905,24 +2906,31 @@ class Module extends Base
 	}
 
 	// PAIRED API
-	protected function paired_register_objects( $posttype, $txonomy, $subterm = FALSE )
+	protected function paired_register_objects( $posttype, $taxonomy, $subterm = FALSE )
 	{
-		// supported + main cpt
-		$posttypes = $this->posttypes( $posttype );
+		$posttypes = $this->posttypes();
 
-		if ( $subterm && $this->get_setting( 'subterms_support' ) )
-			$this->register_taxonomy( $subterm, [
-				'hierarchical'       => TRUE,
-				'meta_box_cb'        => NULL,
-				'show_admin_column'  => FALSE,
-				'show_in_nav_menus'  => TRUE,
+		if ( count( $posttypes ) ) {
+
+			// adding the main cpt
+			$posttypes[] = $this->constant( $posttypes );
+
+			if ( $subterm && $this->get_setting( 'subterms_support' ) )
+				$this->register_taxonomy( $subterm, [
+					'hierarchical'       => TRUE,
+					'meta_box_cb'        => NULL,
+					'show_admin_column'  => FALSE,
+					'show_in_nav_menus'  => TRUE,
+				], $posttypes );
+
+			$this->register_taxonomy( $taxonomy, [
+				'show_ui'      => FALSE,
+				'show_in_rest' => FALSE,
+				'hierarchical' => TRUE,
 			], $posttypes );
 
-		$this->register_taxonomy( $txonomy, [
-			'show_ui'      => FALSE,
-			'show_in_rest' => FALSE,
-			'hierarchical' => TRUE,
-		], $posttypes );
+			$this->_paired = $this->constant( $taxonomy );
+		}
 
 		$this->register_posttype( $posttype, [
 			'hierarchical'      => TRUE,
@@ -2997,6 +3005,9 @@ class Module extends Base
 	// PAIRED API
 	protected function _hook_paired_thumbnail_fallback( $posttypes = NULL )
 	{
+		if ( ! $this->_paired )
+			return;
+
 		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
 			return;
 
@@ -3674,6 +3685,9 @@ class Module extends Base
 	// PAIRED API
 	protected function _hook_paired_to( $posttype )
 	{
+		if ( ! $this->_paired )
+			return;
+
 		add_action( 'save_post_'.$posttype, [ $this, 'save_post' ], 20, 3 );
 		// $this->action( 'save_post', 3, 20 );
 		$this->action( 'post_updated', 3, 20 );
