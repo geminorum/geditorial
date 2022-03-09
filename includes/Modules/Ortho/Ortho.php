@@ -8,6 +8,7 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
@@ -33,7 +34,7 @@ class Ortho extends gEditorial\Module
 			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', 'geditorial' ),
 			'icon'     => [ 'misc-32', 'pen' ],
 			'frontend' => FALSE,
-			'disabled' => 'fa_IR' == get_locale() ? FALSE : _x( 'Only on Persian Locale', 'Modules: Ortho', 'geditorial' ), // FIXME: move up to helper
+			'disabled' => 'fa_IR' == L10n::locale( TRUE ) ? FALSE : _x( 'Only on Persian Locale', 'Modules: Ortho', 'geditorial' ), // FIXME: move up to helper
 		];
 	}
 

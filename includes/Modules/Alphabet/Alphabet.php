@@ -76,7 +76,7 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_posts( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'            => get_locale(),
+			'locale'            => L10n::locale( TRUE ),
 			'alternative'       => 'en_US', // FALSE to disable
 			'post_type'         => $this->posttypes(),
 			'comments'          => FALSE,
@@ -215,7 +215,7 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_terms( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'         => get_locale(),
+			'locale'         => L10n::locale( TRUE ),
 			'alternative'    => 'en_US', // FALSE to disable
 			'taxonomy'       => $this->taxonomies(),
 			'description'    => FALSE,

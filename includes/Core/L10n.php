@@ -5,6 +5,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class L10n extends Base
 {
 
+	public static function locale( $site = FALSE )
+	{
+		return $site ? get_locale() : determine_locale();
+	}
+
 	// FIXME: UNFINISHED!
 	// numeric formatting information
 	public static function localeconv( $field = FALSE, $fallback = NULL )
@@ -65,7 +70,7 @@ class L10n extends Base
 	public static function getISO639( $locale = NULL )
 	{
 		if ( is_null( $locale ) )
-			$locale = get_locale();
+			$locale = self::locale();
 
 		if ( ! $locale )
 			return 'en';
@@ -193,7 +198,7 @@ class L10n extends Base
 	public static function getAlphabetKeysByNumber( $slice = FALSE, $locale = NULL )
 	{
 		if ( is_null( $locale ) )
-			$locale = get_locale();
+			$locale = self::locale();
 
 		switch ( $locale ) {
 			case 'en': $alphabet = range( 'A', 'Z' ); break;
@@ -206,7 +211,7 @@ class L10n extends Base
 	public static function getAlphabet( $locale = NULL )
 	{
 		if ( is_null( $locale ) )
-			$locale = get_locale();
+			$locale = self::locale();
 
 		switch ( $locale ) {
 

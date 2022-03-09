@@ -110,7 +110,7 @@ class Module extends Base
 			$domain = $this->classs();
 
 		if ( is_null( $locale ) )
-			$locale = apply_filters( 'plugin_locale', determine_locale(), $this->base );
+			$locale = apply_filters( 'plugin_locale', L10n::locale(), $this->base );
 
 		load_textdomain( $domain, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
 	}

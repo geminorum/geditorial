@@ -176,7 +176,7 @@ class Plugin
 
 	private function init_modules()
 	{
-		$locale = apply_filters( 'plugin_locale', determine_locale(), static::BASE );
+		$locale = apply_filters( 'plugin_locale', L10n::locale(), static::BASE );
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
@@ -322,7 +322,7 @@ class Plugin
 		if ( FALSE === $orderby )
 			return (array) $this->_modules;
 
-		if ( in_array( get_locale(), [ 'fa', 'fa_IR', 'fa_AF' ] ) )
+		if ( in_array( L10n::locale(), [ 'fa', 'fa_IR', 'fa_AF' ] ) )
 			return L10n::sortAlphabet( (array) $this->_modules, $orderby );
 
 		return wp_list_sort( (array) $this->_modules, $orderby );
