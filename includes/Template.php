@@ -519,7 +519,7 @@ class Template extends Main
 		if ( ! $post = Helper::getPost( $args['id'] ) )
 			return $args['default'];
 
-		$meta = self::getMetaFieldRaw( $field, $post->ID, 'meta' );
+		$meta = $raw = self::getMetaFieldRaw( $field, $post->ID, 'meta' );
 
 		if ( FALSE === $meta && $args['fallback'] )
 			return self::getMetaField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
@@ -527,8 +527,8 @@ class Template extends Main
 		if ( FALSE === $meta )
 			return $args['default'];
 
-		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args );
-		$meta = apply_filters( static::BASE.'_meta_field_'.$field, $meta, $field, $post, $args );
+		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args, $raw );
+		$meta = apply_filters( static::BASE.'_meta_field_'.$field, $meta, $field, $post, $args, $raw );
 
 		if ( $args['filter'] && is_callable( $args['filter'] ) )
 			$meta = call_user_func( $args['filter'], $meta );

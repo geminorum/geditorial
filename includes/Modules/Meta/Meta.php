@@ -380,7 +380,7 @@ class Meta extends gEditorial\Module
 
 		$this->add_posttype_fields( 'page' );
 
-		$this->filter( 'meta_field', 4, 5, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 5, 5, FALSE, 'geditorial' );
 	}
 
 	protected function register_meta_fields()
@@ -990,11 +990,11 @@ class Meta extends gEditorial\Module
 
 	// TODO: support more!
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args )
+	public function meta_field( $meta, $field, $post, $args, $raw )
 	{
 		switch ( $field ) {
-			case 'published': return Number::localize( Datetime::stringFormat( $meta ) );
-			case 'cover_price': return Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $meta ) ); // TODO: format numbers
+			case 'published': return Number::localize( Datetime::stringFormat( $raw ) );
+			case 'cover_price': return Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) ); // TODO: format numbers
 		}
 
 		return $meta;

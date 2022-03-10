@@ -248,7 +248,7 @@ class Tube extends gEditorial\Module
 		if ( $this->get_setting( 'video_channels' ) )
 			$this->add_posttype_fields( $this->constant( 'channel_cpt' ) );
 
-		$this->filter( 'meta_field', 4, 9, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 5, 9, FALSE, 'geditorial' );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -395,10 +395,10 @@ class Tube extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args )
+	public function meta_field( $meta, $field, $post, $args, $raw )
 	{
 		switch ( $field ) {
-			case 'creation_date': return Number::localize( Datetime::stringFormat( $meta ) );
+			case 'creation_date': return Number::localize( Datetime::stringFormat( $raw ) );
 		}
 
 		return $meta;

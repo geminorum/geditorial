@@ -666,7 +666,7 @@ class Book extends gEditorial\Module
 
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
-		$this->filter( 'meta_field', 4, 9, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 5, 9, FALSE, 'geditorial' );
 
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
@@ -1027,21 +1027,21 @@ class Book extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args )
+	public function meta_field( $meta, $field, $post, $args, $raw )
 	{
 		switch ( $field ) {
-			case 'publication_isbn': return ModuleHelper::ISBN( $meta );
-			case 'publication_date': return Number::localize( Datetime::stringFormat( $meta ) );
-			case 'collection': return HTML::link( $meta, WordPress::getSearchLink( $meta ) );
+			case 'publication_isbn': return ModuleHelper::ISBN( $raw );
+			case 'publication_date': return Number::localize( Datetime::stringFormat( $raw ) );
+			case 'collection': return HTML::link( $raw, WordPress::getSearchLink( $raw ) );
 
 			/* translators: %s: total pages */
-			case 'total_pages': return sprintf( _nx( '%s Page', '%s Pages', $meta, 'Noop', 'geditorial-book' ), Number::format( $meta ) );
+			case 'total_pages': return sprintf( _nx( '%s Page', '%s Pages', $raw, 'Noop', 'geditorial-book' ), Number::format( $raw ) );
 
 			/* translators: %s: total volumes */
-			case 'total_volumes': return sprintf( _nx( '%s Volume', '%s Volumes', $meta, 'Noop', 'geditorial-book' ), Number::format( $meta ) );
+			case 'total_volumes': return sprintf( _nx( '%s Volume', '%s Volumes', $raw, 'Noop', 'geditorial-book' ), Number::format( $raw ) );
 
 			/* translators: %s: total discs */
-			case 'total_discs': return sprintf( _nx( '%s Disc', '%s Discs', $meta, 'Noop', 'geditorial-book' ), Number::format( $meta ) );
+			case 'total_discs': return sprintf( _nx( '%s Disc', '%s Discs', $raw, 'Noop', 'geditorial-book' ), Number::format( $raw ) );
 		}
 
 		return $meta;
