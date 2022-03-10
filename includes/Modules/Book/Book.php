@@ -1032,6 +1032,7 @@ class Book extends gEditorial\Module
 		switch ( $field ) {
 			case 'publication_isbn': return ModuleHelper::ISBN( $raw );
 			case 'publication_date': return Number::localize( Datetime::stringFormat( $raw ) );
+			case 'publication_print': return Number::localize( Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
 			case 'collection': return HTML::link( $raw, WordPress::getSearchLink( $raw ) );
 
 			/* translators: %s: total pages */
