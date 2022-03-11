@@ -25,7 +25,6 @@ class Regional extends gEditorial\Module
 		];
 	}
 
-
 	protected function get_global_constants()
 	{
 		return [

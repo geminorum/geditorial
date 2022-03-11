@@ -857,7 +857,7 @@ class Book extends gEditorial\Module
 		$this->list_p2p( NULL, '-after' );
 	}
 
-	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
+	public function get_linked_to_posts_p2p( $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		if ( ! $post = Helper::getPost( $post ) )
 			return FALSE;

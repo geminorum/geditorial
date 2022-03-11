@@ -2919,7 +2919,7 @@ class Module extends Base
 		if ( count( $posttypes ) ) {
 
 			// adding the main cpt
-			$posttypes[] = $this->constant( $posttypes );
+			$posttypes[] = $this->constant( $posttype );
 
 			if ( $subterm && $this->get_setting( 'subterms_support' ) )
 				$this->register_taxonomy( $subterm, [
@@ -2938,7 +2938,7 @@ class Module extends Base
 			$this->_paired = $this->constant( $taxonomy );
 		}
 
-		$this->register_posttype( $posttype, [
+		return $this->register_posttype( $posttype, [
 			'hierarchical'      => TRUE,
 			'show_in_admin_bar' => FALSE,
 			'rewrite'           => [
@@ -3346,7 +3346,7 @@ class Module extends Base
 
 	// PAIRED API
 	// OLD: `do_store_metabox_assoc()`
-	protected function paired_do_store_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant )
+	protected function paired_do_store_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant = FALSE )
 	{
 		$posttype = $this->constant( $posttype_constant );
 		$paired   = self::req( $this->classs( $posttype ), FALSE );
@@ -3876,10 +3876,10 @@ class Module extends Base
 	protected function paired_do_save_to_post_update( $after, $before, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->is_save_post( $after, $posttype_key ) )
-			return;
+			return FALSE;
 
 		if ( 'trash' == $after->post_status )
-			return;
+			return FALSE;
 
 		if ( empty( $before->post_name ) )
 			$before->post_name = sanitize_title( $before->post_title );
@@ -3907,15 +3907,17 @@ class Module extends Base
 		else
 			$the_term = wp_insert_term( $after->post_title, $taxonomy, $term_args );
 
-		if ( ! is_wp_error( $the_term ) )
-			$this->paired_set_to_term( $after->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		if ( is_wp_error( $the_term ) )
+			return FALSE;
+
+		return $this->paired_set_to_term( $after->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
 	// PAIRED API
 	protected function paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->is_save_post( $post, $posttype_key ) )
-			return;
+			return FALSE;
 
 		if ( empty( $post->post_name ) )
 			$post->post_name = sanitize_title( $post->post_title );
@@ -3935,8 +3937,10 @@ class Module extends Base
 		else
 			$the_term = wp_insert_term( $post->post_title, $taxonomy, $term_args );
 
-		if ( ! is_wp_error( $the_term ) )
-			$this->paired_set_to_term( $post->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		if ( is_wp_error( $the_term ) )
+			return FALSE;
+
+		return $this->paired_set_to_term( $post->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
 	// PAIRED API:

@@ -226,7 +226,7 @@ class Magazine extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_tax( $this->constant( 'issue_tax' ) ) ) {
+		if ( $this->_paired && is_tax( $this->constant( 'issue_tax' ) ) ) {
 
 			$term = get_queried_object();
 
@@ -831,7 +831,7 @@ class Magazine extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::tableList( [
+		return HTML::tableList( [
 			'_cb'     => 'term_id',
 			// 'term_id' => Tablelist::columnTermID(),
 			'name'    => Tablelist::columnTermName(),
