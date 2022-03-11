@@ -526,39 +526,7 @@ class Collect extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
-		$posts = $this->paired_get_from_posts( $post->ID, 'collection_cpt', 'collection_tax' );
-		$count = count( $posts );
-
-		if ( ! $count )
-			return;
-
-		echo '<li class="-row -collect -connected">';
-
-			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'connected', 'collection_cpt' ) );
-
-			$posttypes = array_unique( array_map( function( $r ){
-				return $r->post_type;
-			}, $posts ) );
-
-			$args = [ $this->constant( 'collection_tax' ) => $post->post_name ];
-
-			if ( empty( $this->cache_posttypes ) )
-				$this->cache_posttypes = PostType::get( 2 );
-
-			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
-
-			$list = [];
-
-			foreach ( $posttypes as $posttype )
-				$list[] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Title Attr', 'geditorial-collect' ),
-					'target' => '_blank',
-				], $this->cache_posttypes[$posttype] );
-
-			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
-
-		echo '</li>';
+		$this->paired_tweaks_column_attr( $post, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function display_meta_row( $value, $key = NULL, $field = [] )

@@ -10,7 +10,6 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Venue extends gEditorial\Module
@@ -465,38 +464,6 @@ class Venue extends gEditorial\Module
 
 	public function tweaks_column_attr( $post )
 	{
-		$posts = $this->paired_get_from_posts( $post->ID, 'place_cpt', 'place_tax' );
-		$count = count( $posts );
-
-		if ( ! $count )
-			return;
-
-		echo '<li class="-row -venue -connected">';
-
-			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'connected', 'place_cpt' ) );
-
-			$posttypes = array_unique( array_map( function( $r ){
-				return $r->post_type;
-			}, $posts ) );
-
-			$args = [ $this->constant( 'place_tax' ) => $post->post_name ];
-
-			if ( empty( $this->cache_posttypes ) )
-				$this->cache_posttypes = PostType::get( 2 );
-
-			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
-
-			$list = [];
-
-			foreach ( $posttypes as $posttype )
-				$list[] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Title Attr', 'geditorial-venue' ),
-					'target' => '_blank',
-				], $this->cache_posttypes[$posttype] );
-
-			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
-
-		echo '</li>';
+		$this->paired_tweaks_column_attr( $post, 'place_cpt', 'place_tax' );
 	}
 }

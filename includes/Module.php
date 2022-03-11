@@ -3981,6 +3981,45 @@ class Module extends Base
 	}
 
 	// PAIRED API
+	// TODO: check capability
+	protected function paired_tweaks_column_attr( $post, $posttype_key, $taxonomy_key )
+	{
+		$posts = $this->paired_get_from_posts( $post->ID, $posttype_key, $taxonomy_key );
+		$count = count( $posts );
+
+		if ( ! $count )
+			return;
+
+		echo '<li class="-row -'.$this->key.' -connected">';
+
+			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'connected', $posttype_key ) );
+
+			$posttypes = array_unique( array_map( function( $r ){
+				return $r->post_type;
+			}, $posts ) );
+
+			$args = [ $this->constant( $taxonomy_key ) => $post->post_name ];
+
+			if ( empty( $this->cache_posttypes ) )
+				$this->cache_posttypes = PostType::get( 2 );
+
+			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
+
+			$list = [];
+
+			foreach ( $posttypes as $posttype )
+				$list[] = HTML::tag( 'a', [
+					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
+					'title'  => _x( 'View the connected list', 'Module: Paired: Title Attr', 'geditorial' ),
+					'target' => '_blank',
+				], $this->cache_posttypes[$posttype] );
+
+			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+
+		echo '</li>';
+	}
+
+	// PAIRED API
 	protected function paired_sync_paired_terms( $posttype_key, $taxonomy_key )
 	{
 		$count    = 0;
