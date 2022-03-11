@@ -4929,6 +4929,19 @@ class Module extends Base
 		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $posttype, $after );
 	}
 
+	protected function check_draft_metabox( $box, $post, $message = NULL )
+	{
+		if ( ! in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
+			return FALSE;
+
+		if ( is_null( $message ) )
+			$message = _x( 'You can see the contents once you\'ve saved this post for the first time.', 'Module: Draft Metabox', 'geditorial' );
+
+		HTML::desc( $message, TRUE, 'field-wrap -empty' );
+
+		return TRUE;
+	}
+
 	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )
 	{
 		if ( is_null( $fields ) )
