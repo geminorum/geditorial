@@ -444,15 +444,34 @@ class MetaBox extends Main
 
 	// PAIRED API
 	// OLD: `dropdownAssocPostsRedux()`
-	public static function paired_dropdownToPosts( $posttype, $paired = '0', $prefix = '', $exclude = [], $none = NULL, $display_empty = TRUE )
+	public static function paired_dropdownToPosts( $posttype, $taxonomy = FALSE, $paired = '0', $prefix = '', $exclude = [], $none = NULL, $display_empty = TRUE )
 	{
-		$posts = get_pages( [
-			'post_type'   => $posttype,
-			'exclude'     => $exclude,
-			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
-			'sort_column' => 'menu_order',
-			'sort_order'  => 'desc',
-		] );
+		$args = [
+			'post_type'    => $posttype,
+			'post__not_in' => $exclude,
+			'post_status'  => [ 'publish', 'future', 'draft', 'pending' ],
+			'orderby'      => 'menu_order',
+			'order'        => 'desc',
+
+			'posts_per_page'         => -1,
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		];
+
+		// FIXME: WORKING BUT: creates problem with old setups
+		// that main post is not connected to the paired term.
+		// must add tools page for supported modules with maintenance tasks
+		// if ( $taxonomy )
+		// 	$args['tax_query'] = [ [
+		// 		'taxonomy' => $taxonomy,
+		// 		'operator' => 'EXISTS',
+		// 	] ];
+
+		$query = new \WP_Query;
+		$posts = $query->query( $args );
 
 		if ( empty( $posts ) && ! $display_empty )
 			return '';

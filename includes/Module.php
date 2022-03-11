@@ -3280,14 +3280,16 @@ class Module extends Base
 	// PAIRED API
 	// NOTE: subterms must be hierarchical
 	// OLD: `do_render_metabox_assoc()`
-	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant, $display_empty = FALSE )
+	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant = FALSE, $display_empty = FALSE )
 	{
 		$sub_tax   = FALSE;
 		$dropdowns = $excludes = [];
 		$posttype  = $this->constant( $posttype_constant );
-		$terms     = Taxonomy::getTerms( $this->constant( $tax_constant ), $post->ID, TRUE );
+		$taxonomy  = $this->constant( $tax_constant );
+		$terms     = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
 		$none_def  = Settings::showOptionNone();
 		$none_main = $this->get_string( 'show_option_none', $posttype_constant, 'misc', $none_def );
+		$prefix    = $this->classs();
 
 		if ( $sub_tax_constant && $this->get_setting( 'subterms_support' ) ) {
 
@@ -3301,7 +3303,7 @@ class Module extends Base
 			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant, $tax_constant ) )
 				continue;
 
-			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $to_post_id, $this->classs(), [], $none_main, $display_empty );
+			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, $to_post_id, $prefix, [], $none_main, $display_empty );
 
 			if ( $sub_tax ) {
 
@@ -3323,10 +3325,10 @@ class Module extends Base
 		}
 
 		if ( empty( $dropdowns ) )
-			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, '0', $this->classs(), $excludes, $none_main, $display_empty );
+			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
 
 		else if ( $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[] = MetaBox::paired_dropdownToPosts( $posttype, '0', $this->classs(), $excludes, $none_main, $display_empty );
+			$dropdowns[] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
 
 		foreach ( $dropdowns as $dropdown )
 			if ( $dropdown )
