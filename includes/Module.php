@@ -3981,6 +3981,89 @@ class Module extends Base
 	}
 
 	// PAIRED API
+	protected function paired_sync_paired_terms( $posttype_key, $taxonomy_key )
+	{
+		$count    = 0;
+		$taxonomy = $this->constant( $taxonomy_key );
+		$metakey  = sprintf( '%s_linked', $this->constant( $posttype_key ) );
+
+		$terms = get_terms( [
+			'taxonomy'   => $taxonomy,
+			'hide_empty' => FALSE,
+			'orderby'    => 'none',
+			'fields'     => 'ids',
+		] );
+
+		if ( ! $terms || is_wp_error( $terms ) )
+			return FALSE;
+
+		$this->raise_resources( count( $terms ) );
+
+		foreach ( $terms as $term_id ) {
+
+			if ( ! $post_id = get_term_meta( $term_id, $metakey, TRUE ) )
+				continue;
+
+			$result = wp_set_object_terms( (int) $post_id, $term_id, $taxonomy, FALSE );
+
+			if ( ! is_wp_error( $result ) )
+				$count++;
+		}
+
+		return $count;
+	}
+
+	// PAIRED API
+	protected function paired_create_paired_terms( $posttype_key, $taxonomy_key )
+	{
+		$count = 0;
+		$args  = [
+			'orderby'     => 'none',
+			'post_status' => 'any',
+			'post_type'   => $this->constant( $posttype_key ),
+			'tax_query'   => [ [
+				'taxonomy' => $this->constant( $taxonomy_key ),
+				'operator' => 'NOT EXISTS',
+			] ],
+			'suppress_filters' => TRUE,
+			'posts_per_page'   => -1,
+		];
+
+		$query = new \WP_Query;
+		$posts = $query->query( $args );
+
+		if ( empty( $posts ) )
+			return FALSE;
+
+		$this->raise_resources( count( $posts ) );
+
+		foreach ( $posts as $post )
+			if ( $this->paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key ) )
+				$count++;
+
+		return $count;
+	}
+
+	// PAIRED API
+	protected function paired_render_tools_card( $posttype_key, $taxonomy_key )
+	{
+		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
+		HTML::h2( _x( 'Paired Tools', 'Module: Paired: Card Title', 'geditorial' ), 'title' );
+
+		echo $this->wrap_open( '-wrap-button-row -sync_paired_terms' );
+		Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Module: Paired: Button', 'geditorial' ) );
+		HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Module: Paired: Button Description', 'geditorial' ), FALSE );
+		echo '</div>';
+
+		echo $this->wrap_open( '-wrap-button-row -create_paired_terms' );
+		Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Module: Paired: Button', 'geditorial' ) );
+		HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Module: Paired: Button Description', 'geditorial' ), FALSE );
+		echo '</div>';
+
+		echo '</div>';
+	}
+
+	// PAIRED API
 	protected function paired_get_paired_constants()
 	{
 		return [

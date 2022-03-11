@@ -839,11 +839,37 @@ class Magazine extends gEditorial\Module
 						'message' => 'deleted',
 						'count'   => $count,
 					] );
+
+				} else if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
+
+					if ( FALSE === ( $count = $this->paired_sync_paired_terms( 'issue_cpt', 'issue_tax' ) ) )
+						WordPress::redirectReferer( 'wrong' );
+
+					WordPress::redirectReferer( [
+						'message' => 'synced',
+						'count'   => $count,
+					] );
+
+				} else if ( Tablelist::isAction( 'create_paired_terms' ) ) {
+
+					if ( FALSE === ( $count = $this->paired_create_paired_terms( 'issue_cpt', 'issue_tax' ) ) )
+						WordPress::redirectReferer( 'wrong' );
+
+					WordPress::redirectReferer( [
+						'message' => 'created',
+						'count'   => $count,
+					] );
+
 				}
 			}
 		}
 
 		Scripts::enqueueThickBox();
+	}
+
+	protected function render_tools_html_after( $uri, $sub )
+	{
+		$this->paired_render_tools_card( 'issue_cpt', 'issue_tax' );
 	}
 
 	protected function render_tools_html( $uri, $sub )
