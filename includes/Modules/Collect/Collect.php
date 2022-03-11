@@ -505,18 +505,7 @@ class Collect extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_collection' );
-
-			$term = $this->paired_get_to_term( $post->ID, 'collection_cpt', 'collection_tax' );
-
-			if ( $list = MetaBox::getTermPosts( $this->constant( 'collection_tax' ), $term, $this->posttypes() ) )
-				echo $list;
-
-			else
-				HTML::desc( _x( 'No items connected!', 'Message', 'geditorial-collect' ), FALSE, '-empty' );
-
-		echo '</div>';
+		$this->paired_render_listbox_metabox( $post, $box, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )

@@ -3981,6 +3981,26 @@ class Module extends Base
 	}
 
 	// PAIRED API
+	protected function paired_render_listbox_metabox( $post, $box, $posttype_key, $taxonomy_key )
+	{
+		if ( $this->check_draft_metabox( $box, $post ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			$this->actions( 'render_listbox_metabox', $post, $box, NULL, sprintf( 'listbox_%s', $this->constant( $posttype_key ) ) );
+
+			$term = $this->paired_get_to_term( $post->ID, $posttype_key, $taxonomy_key );
+
+			if ( $list = MetaBox::getTermPosts( $this->constant( $taxonomy_key ), $term, $this->posttypes() ) )
+				echo $list;
+
+			else
+				echo HTML::wrap( _x( 'No items connected!', 'Module: Paired: Message', 'geditorial' ), 'field-wrap -empty' );
+
+		echo '</div>';
+	}
+
+	// PAIRED API
 	// TODO: check capability
 	protected function paired_tweaks_column_attr( $post, $posttype_key, $taxonomy_key )
 	{

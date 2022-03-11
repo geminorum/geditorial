@@ -462,18 +462,7 @@ class Course extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_course' );
-
-			$term = $this->paired_get_to_term( $post->ID, 'course_cpt', 'course_tax' );
-
-			if ( $list = MetaBox::getTermPosts( $this->constant( 'course_tax' ), $term, $this->posttypes() ) )
-				echo $list;
-
-			else
-				HTML::desc( _x( 'No items connected!', 'Message', 'geditorial-course' ), FALSE, '-empty' );
-
-		echo '</div>';
+		$this->paired_render_listbox_metabox( $post, $box, 'course_cpt', 'course_tax' );
 	}
 
 	public function render_pairedbox_metabox( $post, $box )

@@ -537,18 +537,7 @@ class Magazine extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_issue' );
-
-			$term = $this->paired_get_to_term( $post->ID, 'issue_cpt', 'issue_tax' );
-
-			if ( $list = MetaBox::getTermPosts( $this->constant( 'issue_tax' ), $term, $this->posttypes() ) )
-				echo $list;
-
-			else
-				echo HTML::wrap( _x( 'No items connected!', 'Message', 'geditorial-magazine' ), 'field-wrap -empty' );
-
-		echo '</div>';
+		$this->paired_render_listbox_metabox( $post, $box, 'issue_cpt', 'issue_tax' );
 	}
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )

@@ -395,18 +395,7 @@ class Contest extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_listbox_metabox', $post, $box, NULL, 'listbox_contest' );
-
-			$term = $this->paired_get_to_term( $post->ID, 'contest_cpt', 'contest_tax' );
-
-			if ( $list = MetaBox::getTermPosts( $this->constant( 'contest_tax' ), $term, $this->posttypes() ) )
-				echo $list;
-
-			else
-				HTML::desc( _x( 'No items connected!', 'Message', 'geditorial-contest' ), FALSE, '-empty' );
-
-		echo '</div>';
+		$this->paired_render_listbox_metabox( $post, $box, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function render_pairedbox_metabox( $post, $box )
