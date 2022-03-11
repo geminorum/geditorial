@@ -1558,11 +1558,14 @@ class Module extends Base
 			if ( $this->render_tools_html( $uri, $sub ) )
 				$this->render_form_buttons();
 
+			$this->render_tools_html_after( $uri, $sub );
+
 		$this->render_form_end( $uri, $sub );
 	}
 
 	// DEFAULT METHOD: used for tools default sub html
 	protected function render_tools_html( $uri, $sub ) {}
+	protected function render_tools_html_after( $uri, $sub ) {}
 
 	// DEFAULT METHOD: reports sub html
 	public function reports_sub( $uri, $sub )
@@ -1572,11 +1575,14 @@ class Module extends Base
 			if ( $this->render_reports_html( $uri, $sub ) )
 				$this->render_form_buttons();
 
+			$this->render_reports_html_after( $uri, $sub );
+
 		$this->render_form_end( $uri, $sub );
 	}
 
 	// DEFAULT METHOD: used for reports default sub html
 	protected function render_reports_html( $uri, $sub ) {}
+	protected function render_reports_html_after( $uri, $sub ) {}
 
 	protected function get_current_form( $defaults, $context = 'settings' )
 	{
