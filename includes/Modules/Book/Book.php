@@ -948,7 +948,7 @@ class Book extends gEditorial\Module
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687
 	protected function render_tools_html( $uri, $sub )
 	{
-		$list  = $this->list_posttypes();
+		$list  = Arraay::keepByKeys( PostType::get( 0, [ 'show_ui' => TRUE ] ), $this->get_setting( 'p2p_posttypes', [] ) );
 		$query = [
 			'meta_query' => [
 				'relation'         => 'OR',
