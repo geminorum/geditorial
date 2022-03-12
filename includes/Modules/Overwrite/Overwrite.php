@@ -21,7 +21,6 @@ class Overwrite extends gEditorial\Module
 		];
 	}
 
-
 	protected function get_global_settings()
 	{
 		$object = [

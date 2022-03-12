@@ -4319,8 +4319,11 @@ class Module extends Base
 	// PAIRED API
 	protected function paired_tools_render_tablelist( $posttype_key, $taxonomy_key, $actions = NULL, $title = NULL )
 	{
-		if ( ! $this->_paired )
-			return HTML::desc( gEditorial()->na(), TRUE, '-empty' );
+		if ( ! $this->_paired ) {
+			if ( $title ) echo HTML::tag( 'h3', $title );
+			HTML::desc( gEditorial()->na(), TRUE, '-empty' );
+			return FALSE;
+		}
 
 		$columns = [
 			'_cb'  => 'term_id',

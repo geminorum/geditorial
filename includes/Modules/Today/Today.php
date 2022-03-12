@@ -516,6 +516,7 @@ class Today extends gEditorial\Module
 
 	public function edit_form_after_editor( $post )
 	{
+		// TODO: use `check_draft_metabox()`
 		if ( ! self::req( 'post' ) )
 			return HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Message', 'geditorial-today' ) );
 

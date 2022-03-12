@@ -150,7 +150,7 @@ class Tablelist extends Main
 							'class'  => '-link -row-link -row-link-attached',
 							'data'   => [ 'id' => $post_id, 'row' => 'attached' ],
 							'target' => '_blank',
-						], _x( 'Attached', 'Tablelist: Row Action', 'geditorial' ) );
+						], _x( 'Attached', 'Tablelist: Row Action: Post', 'geditorial' ) );
 
 				case 'revisions':
 
@@ -163,7 +163,7 @@ class Tablelist extends Main
 							'class'  => '-link -row-link -row-link-revisions',
 							'data'   => [ 'id' => $post_id, 'row' => 'revisions' ],
 							'target' => '_blank',
-						], _x( 'Revisions', 'Tablelist: Row Action', 'geditorial' ) );
+						], _x( 'Revisions', 'Tablelist: Row Action: Post', 'geditorial' ) );
 
 				break;
 				case 'edit':
@@ -176,7 +176,7 @@ class Tablelist extends Main
 						'class'  => '-link -row-link -row-link-edit',
 						'data'   => [ 'id' => $post_id, 'row' => 'edit' ],
 						'target' => '_blank',
-					], _x( 'Edit', 'Tablelist: Row Action', 'geditorial' ) );
+					], _x( 'Edit', 'Tablelist: Row Action: Post', 'geditorial' ) );
 
 				break;
 				case 'view':
@@ -186,7 +186,7 @@ class Tablelist extends Main
 						'class'  => '-link -row-link -row-link-view',
 						'data'   => [ 'id' => $post_id, 'row' => 'view' ],
 						'target' => '_blank',
-					], _x( 'View', 'Tablelist: Row Action', 'geditorial' ) );
+					], _x( 'View', 'Tablelist: Row Action: Post', 'geditorial' ) );
 			}
 		}
 
