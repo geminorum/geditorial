@@ -407,14 +407,68 @@ class Tablelist extends Main
 		return _x( 'ID', 'Tablelist: Column: Term ID', 'geditorial' );
 	}
 
-	public static function columnTermName()
+	public static function columnTermName( $actions = NULL, $description = FALSE, $custom = [] )
 	{
 		return [
 			'title'    => _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-				return self::getTermTitleRow( $row );
+			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $description ) {
+
+				if ( ! $term = Taxonomy::getTerm( $row ) )
+					return Plugin::na( FALSE );
+
+				$html = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+
+				if ( $description && $term->description )
+					$html.= wpautop( Helper::prepDescription( $term->description, FALSE, FALSE ), FALSE );
+
+				return $html;
+			},
+			'actions' => static function( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
+				return array_merge( self::getTermRowActions( $row, $actions ), $custom );
 			},
 		];
+	}
+
+	// TODO: check if taxonomy has ui
+	// TODO: check if taxonomy is viewable
+	public static function getTermRowActions( $row, $actions = NULL )
+	{
+		if ( ! $term = Taxonomy::getTerm( $row ) )
+			return [];
+
+		if ( is_null( $actions ) )
+			$actions = [ 'edit', 'view' ];
+
+		$list = [];
+		$edit = WordPress::getEditTaxLink( $term->taxonomy, $term->term_id );
+
+		foreach ( $actions as $action ) {
+
+			switch ( $action ) {
+
+				case 'edit':
+
+					if ( $edit ) // already checked for cap
+						$list['edit'] = HTML::tag( 'a', [
+							'href'   => $edit,
+							'title'  => $term->term_id,
+							'class'  => '-link -row-link -row-link-edit',
+							'target' => '_blank',
+						], _x( 'Edit', 'Tablelist: Row Action: Term', 'geditorial' ) );
+					break;
+
+				case 'view':
+					$list['view'] = HTML::tag( 'a', [
+						'href'   => get_term_link( $term->term_id, $term->taxonomy ),
+						'title'  => urldecode( $term->slug ),
+						'class'  => '-link -row-link -row-link-view',
+						'target' => '_blank',
+					], _x( 'View', 'Tablelist: Row Action: Term', 'geditorial' ) );
+					break;
+			}
+		}
+
+		return $list;
 	}
 
 	public static function columnTermSlug()
