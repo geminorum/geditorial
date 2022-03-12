@@ -21,6 +21,39 @@ class Tablelist extends Main
 		return FALSE;
 	}
 
+	// @REF: `Taxonomy::getTerms()`
+	public static function getTerms( $atts = [], $extra = [], $taxonomy = '', $perpage = 25 )
+	{
+		$limit  = self::limit( $perpage );
+		$paged  = self::paged();
+		$offset = ( $paged - 1 ) * $limit;
+
+		$args = array_merge( [
+			'taxonomy' => $taxonomy,
+			'number'   => $limit,
+			'offset'   => $offset,
+			'orderby'  => self::orderby( 'term_id' ),
+			'order'    => self::order( 'DESC' ),
+
+			'hide_empty'       => FALSE,
+			'suppress_filters' => TRUE,
+		], $atts );
+
+		if ( ! empty( $_REQUEST['s'] ) )
+			$args['search'] = $extra['s'] = $_REQUEST['s'];
+
+		$query = new \WP_Term_Query();
+		$terms = $query->query( $args );
+
+		// $pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
+		$pagination = HTML::tablePagination( count( $terms ), FALSE, $limit, $paged, $extra );
+
+		$pagination['orderby'] = $args['orderby'];
+		$pagination['order']   = $args['order'];
+
+		return [ $terms, $pagination ];
+	}
+
 	// TODO: support the parent type
 	public static function getPosts( $atts = [], $extra = [], $posttypes = 'any', $perpage = 25 )
 	{
