@@ -4108,8 +4108,11 @@ class Module extends Base
 	}
 
 	// PAIRED API
-	protected function paired_render_tools_card( $posttype_key, $taxonomy_key )
+	protected function paired_tools_render_card( $posttype_key, $taxonomy_key )
 	{
+		if ( ! $this->_paired )
+			return FALSE;
+
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 		HTML::h2( _x( 'Paired Tools', 'Module: Paired: Card Title', 'geditorial' ), 'title' );
 
@@ -4124,6 +4127,315 @@ class Module extends Base
 		echo '</div>';
 
 		echo '</div>';
+	}
+
+	// PAIRED API
+	protected function paired_tools_handle_tablelist( $posttype_key, $taxonomy_key )
+	{
+		if ( Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
+
+			$terms = Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
+			$posts = [];
+
+			foreach ( $_POST['_cb'] as $term_id ) {
+
+				if ( ! isset( $terms[$term_id] ) )
+					continue;
+
+				$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) );
+
+				if ( FALSE !== $post_id )
+					continue;
+
+				$posts[] = PostType::newPostFromTerm(
+					$terms[$term_id],
+					$this->constant( $taxonomy_key ),
+					$this->constant( $posttype_key ),
+					gEditorial()->user( TRUE )
+				);
+			}
+
+			WordPress::redirectReferer( [
+				'message' => 'created',
+				'count'   => count( $posts ),
+			] );
+
+		} else if ( Tablelist::isAction( 'resync_paired_images', TRUE ) ) {
+
+			$meta_key = $this->constant( 'metakey_term_image', 'image' );
+			$count    = 0;
+
+			foreach ( $_POST['_cb'] as $term_id ) {
+
+				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $posttype_key, $taxonomy_key ) )
+					continue;
+
+				if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
+					update_term_meta( $term_id, $meta_key, $thumbnail );
+
+				else
+					delete_term_meta( $term_id, $meta_key );
+
+				$count++;
+			}
+
+			WordPress::redirectReferer( [
+				'message' => 'synced',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'resync_paired_descs', TRUE ) ) {
+
+			$count = 0;
+
+			foreach ( $_POST['_cb'] as $term_id ) {
+
+				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $posttype_key, $taxonomy_key ) )
+					continue;
+
+				if ( ! $post = Helper::getPost( $post_id ) )
+					continue;
+
+				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), [ 'description' => $post->post_excerpt ] ) )
+					$count++;
+			}
+
+			WordPress::redirectReferer( [
+				'message' => 'synced',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'store_paired_orders', TRUE ) ) {
+
+			if ( ! gEditorial()->enabled( 'meta' ) )
+				WordPress::redirectReferer( 'wrong' );
+
+			$count = 0;
+			$field = $this->constant( 'field_paired_order', sprintf( 'in_%s_order', $this->constant( $posttype_key ) ) );
+
+			foreach ( $_POST['_cb'] as $term_id ) {
+				foreach ( $this->paired_get_from_posts( NULL, $posttype_key, $taxonomy_key, FALSE, $term_id ) as $post ) {
+
+					if ( $post->menu_order )
+						continue;
+
+					if ( $order = gEditorial()->meta->get_postmeta_field( $post->ID, $field ) ) {
+						wp_update_post( [
+							'ID'         => $post->ID,
+							'menu_order' => $order,
+						] );
+						$count++;
+					}
+				}
+			}
+
+			WordPress::redirectReferer( [
+				'message' => 'ordered',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'empty_paired_descs', TRUE ) ) {
+
+			$args  = [ 'description' => '' ];
+			$count = 0;
+
+			foreach ( $_POST['_cb'] as $term_id )
+				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), $args ) )
+					$count++;
+
+			WordPress::redirectReferer( [
+				'message' => 'purged',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'connect_paired_posts', TRUE ) ) {
+
+			$terms = Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
+			$count = 0;
+
+			foreach ( $_POST['_cb'] as $term_id ) {
+
+				if ( ! isset( $terms[$term_id] ) )
+					continue;
+
+				$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) );
+
+				if ( FALSE === $post_id )
+					continue;
+
+				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $posttype_key, $taxonomy_key ) )
+					$count++;
+			}
+
+			WordPress::redirectReferer( [
+				'message' => 'updated',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'delete_paired_terms', TRUE ) ) {
+
+			$count = 0;
+
+			foreach ( $_POST['_cb'] as $term_id ) {
+
+				if ( $this->paired_remove_to_term( NULL, $term_id, $posttype_key, $taxonomy_key ) ) {
+
+					$deleted = wp_delete_term( $term_id, $this->constant( $taxonomy_key ) );
+
+					if ( $deleted && ! is_wp_error( $deleted ) )
+						$count++;
+				}
+			}
+
+			WordPress::redirectReferer( [
+				'message' => 'deleted',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
+
+			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $posttype_key, $taxonomy_key ) ) )
+				WordPress::redirectReferer( 'wrong' );
+
+			WordPress::redirectReferer( [
+				'message' => 'synced',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'create_paired_terms' ) ) {
+
+			if ( FALSE === ( $count = $this->paired_create_paired_terms( $posttype_key, $taxonomy_key ) ) )
+				WordPress::redirectReferer( 'wrong' );
+
+			WordPress::redirectReferer( [
+				'message' => 'created',
+				'count'   => $count,
+			] );
+		}
+
+		return TRUE;
+	}
+
+	// PAIRED API
+	protected function paired_tools_render_tablelist( $posttype_key, $taxonomy_key, $actions = NULL, $title = NULL )
+	{
+		if ( ! $this->_paired )
+			return HTML::desc( gEditorial()->na(), TRUE, '-empty' );
+
+		$columns = [
+			'_cb'  => 'term_id',
+			'name' => Tablelist::columnTermName(),
+
+			'related' => [
+				'title'    => _x( 'Slugged / Paired', 'Module: Paired: Table Column', 'geditorial' ),
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+
+					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
+						$html = Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+					else
+						$html = Helper::htmlEmpty();
+
+					$html.= '<hr />';
+
+					if ( $post_id = $this->paired_get_to_post_id( $row, $posttype_key, $taxonomy_key, FALSE ) )
+						$html.= Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+					else
+						$html.= Helper::htmlEmpty();
+
+					return $html;
+				},
+			],
+
+			'description' => [
+				'title'    => _x( 'Desc. / Exce.', 'Module: Paired: Table Column', 'geditorial' ),
+				'class'    => 'html-column',
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+
+					if ( empty( $row->description ) )
+						$html = Helper::htmlEmpty();
+					else
+						$html = Helper::prepDescription( $row->description );
+
+					if ( $post_id = $this->paired_get_to_post_id( $row, $posttype_key, $taxonomy_key, FALSE ) ) {
+
+						$html.= '<hr />';
+
+						if ( ! $post = Helper::getPost( $post_id ) )
+							return $html.gEditorial()->na();
+
+						if ( empty( $post->post_excerpt ) )
+							$html.= Helper::htmlEmpty();
+						else
+							$html.= Helper::prepDescription( $post->post_excerpt );
+					}
+
+					return $html;
+				},
+			],
+
+			'count' => [
+				'title'    => _x( 'Count', 'Module: Paired: Table Column', 'geditorial' ),
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+
+					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
+						return Number::format( $this->paired_get_from_posts( $post_id, $posttype_key, $taxonomy_key, TRUE ) );
+
+					return Number::format( $row->count );
+				},
+			],
+
+			'thumb_image' => [
+				'title'    => _x( 'Thumbnail', 'Module: Paired: Table Column', 'geditorial' ),
+				'class'    => 'image-column',
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+					$html = '';
+
+					if ( $post_id = $this->paired_get_to_post_id( $row, $posttype_key, $taxonomy_key, FALSE ) )
+						$html = PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
+
+					return $html ?: Helper::htmlEmpty();
+				},
+			],
+
+			'term_image' => [
+				'title'    => _x( 'Image', 'Module: Paired: Table Column', 'geditorial' ),
+				'class'    => 'image-column',
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+					$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
+					return $html ?: Helper::htmlEmpty();
+				},
+			],
+		];
+
+		list( $data, $pagination ) = Tablelist::getTerms( [], [], $this->constant( $taxonomy_key ) );
+
+		if ( FALSE !== $actions ) {
+
+			if ( is_null( $actions ) )
+				$actions = [];
+
+			$pagination['actions'] = array_merge( [
+				'create_paired_posts'  => _x( 'Create Paired Posts', 'Module: Paired: Table Action', 'geditorial' ),
+				'connect_paired_posts' => _x( 'Connect Paired Posts', 'Module: Paired: Table Action', 'geditorial' ),
+				'resync_paired_images' => _x( 'Re-Sync Paired Images', 'Module: Paired: Table Action', 'geditorial' ),
+				'resync_paired_descs'  => _x( 'Re-Sync Paired Descriptions', 'Module: Paired: Table Action', 'geditorial' ),
+				'empty_paired_descs'   => _x( 'Empty Paired Descriptions', 'Module: Paired: Table Action', 'geditorial' ),
+				'store_paired_orders'  => _x( 'Store Paired Orders', 'Module: Paired: Table Action', 'geditorial' ),
+				'delete_paired_terms'  => _x( 'Delete Paired Terms', 'Module: Paired: Table Action', 'geditorial' ),
+			], $actions );
+		}
+
+		$pagination['before'][] = Tablelist::filterSearch();
+
+		$args = [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => HTML::tag( 'h3', $title ?: _x( 'Paired Terms Tools', 'Module: Paired: Header', 'geditorial' ) ),
+			'empty'      => _x( 'No Terms Found!', 'Module: Paired: Message', 'geditorial' ),
+			'pagination' => $pagination,
+		];
+
+		return HTML::tableList( $columns, $data, $args );
 	}
 
 	// PAIRED API

@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
@@ -649,5 +650,29 @@ class Course extends gEditorial\Module
 			$this->constant( 'cover_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+				$this->paired_tools_handle_tablelist( 'course_cpt', 'course_tax' );
+			}
+		}
+
+		Scripts::enqueueThickBox();
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		return $this->paired_tools_render_tablelist( 'course_cpt', 'course_tax', NULL, _x( 'Course Tools', 'Header', 'geditorial-course' ) );
+	}
+
+	protected function render_tools_html_after( $uri, $sub )
+	{
+		$this->paired_tools_render_card( 'course_cpt', 'course_tax' );
 	}
 }

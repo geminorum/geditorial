@@ -3,17 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Contest extends gEditorial\Module
@@ -553,73 +549,6 @@ class Contest extends gEditorial\Module
 		);
 	}
 
-	// FIXME: update from magazine module
-	protected function render_tools_html( $uri, $sub )
-	{
-		HTML::h3( _x( 'Contest Tools', 'Header', 'geditorial-contest' ) );
-
-		echo '<table class="form-table">';
-
-		echo '<tr><th scope="row">'._x( 'From Terms', 'Tools', 'geditorial-contest' ).'</th><td>';
-
-		if ( ! empty( $_POST ) && isset( $_POST['contest_tax_check'] ) ) {
-
-			HTML::tableList( [
-				'_cb'     => 'term_id',
-				'term_id' => Tablelist::columnTermID(),
-				'name'    => Tablelist::columnTermName(),
-				'paired'   => [
-					'title' => _x( 'Paired Contest Post', 'Table Column', 'geditorial-contest' ),
-					'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-						if ( $post_id = $this->paired_get_to_post_id( $row, 'contest_cpt', 'contest_tax', FALSE ) )
-							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-						return Helper::htmlEmpty();
-					},
-				],
-				'slugged'   => [
-					'title' => _x( 'Same Slug Contest Post', 'Table Column', 'geditorial-contest' ),
-					'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-						return Helper::htmlEmpty();
-					},
-				],
-				'count' => [
-					'title'    => _x( 'Count', 'Table Column', 'geditorial-contest' ),
-					'callback' => function( $value, $row, $column, $index, $key, $args ) {
-						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'contest_cpt' ) ) )
-							return Number::format( $this->paired_get_from_posts( $post_id, 'contest_cpt', 'contest_tax', TRUE ) );
-						return Number::format( $row->count );
-					},
-				],
-				'description' => Tablelist::columnTermDesc(),
-			], Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE ) );
-
-			echo '<br />';
-		}
-
-		Settings::submitButton( 'contest_tax_check',
-			_x( 'Check Terms', 'Button', 'geditorial-contest' ), TRUE );
-
-		Settings::submitButton( 'contest_post_create',
-			_x( 'Create Contest Posts', 'Button', 'geditorial-contest' ) );
-
-		Settings::submitButton( 'contest_post_connect',
-			_x( 'Re-Connect Posts', 'Button', 'geditorial-contest' ) );
-
-		Settings::submitButton( 'contest_tax_delete',
-			_x( 'Delete Terms', 'Button', 'geditorial-contest' ), 'danger', TRUE );
-
-		HTML::desc( _x( 'Check for contest terms and create corresponding contest posts.', 'Message', 'geditorial-contest' ) );
-
-		echo '</td></tr>';
-		echo '</table>';
-	}
-
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -627,80 +556,20 @@ class Contest extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );
-
-				if ( Tablelist::isAction( 'contest_post_create', TRUE ) ) {
-
-					$terms = Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE );
-					$posts = [];
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! isset( $terms[$term_id] ) )
-							continue;
-
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) );
-
-						if ( FALSE !== $post_id )
-							continue;
-
-						$posts[] = PostType::newPostFromTerm(
-							$terms[$term_id],
-							$this->constant( 'contest_tax' ),
-							$this->constant( 'contest_cpt' ),
-							gEditorial()->user( TRUE )
-						);
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'created',
-						'count'   => count( $posts ),
-					] );
-
-				} else if ( Tablelist::isAction( 'contest_post_connect', TRUE ) ) {
-
-					$terms = Taxonomy::getTerms( $this->constant( 'contest_tax' ), FALSE, TRUE );
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! isset( $terms[$term_id] ) )
-							continue;
-
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'contest_cpt' ) );
-
-						if ( FALSE === $post_id )
-							continue;
-
-						if ( $this->paired_set_to_term( $post_id, $terms[$term_id], 'contest_cpt', 'contest_tax' ) )
-							$count++;
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'updated',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'contest_tax_delete', TRUE ) ) {
-
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( $this->paired_remove_to_term( NULL, $term_id, 'contest_cpt', 'contest_tax' ) ) {
-
-							$deleted = wp_delete_term( $term_id, $this->constant( 'contest_tax' ) );
-
-							if ( $deleted && ! is_wp_error( $deleted ) )
-								$count++;
-						}
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'deleted',
-						'count'   => $count,
-					] );
-				}
+				$this->paired_tools_handle_tablelist( 'contest_cpt', 'contest_tax' );
 			}
 		}
+
+		Scripts::enqueueThickBox();
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		return $this->paired_tools_render_tablelist( 'contest_cpt', 'contest_tax', NULL, _x( 'Contest Tools', 'Header', 'geditorial-contest' ) );
+	}
+
+	protected function render_tools_html_after( $uri, $sub )
+	{
+		$this->paired_tools_render_card( 'contest_cpt', 'contest_tax' );
 	}
 }

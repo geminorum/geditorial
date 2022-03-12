@@ -3,17 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -79,15 +74,16 @@ class Magazine extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'issue_cpt'         => 'issue',
-			'issue_cpt_archive' => 'issues',
-			'issue_tax'         => 'issues',
-			'issue_tax_slug'    => 'issues',
-			'span_tax'          => 'issue_span',
-			'section_tax'       => 'issue_section',
-			'issue_shortcode'   => 'issue',
-			'span_shortcode'    => 'issue-span',
-			'cover_shortcode'   => 'issue-cover',
+			'issue_cpt'          => 'issue',
+			'issue_cpt_archive'  => 'issues',
+			'issue_tax'          => 'issues',
+			'issue_tax_slug'     => 'issues',
+			'span_tax'           => 'issue_span',
+			'section_tax'        => 'issue_section',
+			'issue_shortcode'    => 'issue',
+			'span_shortcode'     => 'issue-span',
+			'cover_shortcode'    => 'issue-cover',
+			'field_paired_order' => 'in_issue_order',
 		];
 	}
 
@@ -632,318 +628,20 @@ class Magazine extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );
-
-				if ( Tablelist::isAction( 'issue_post_create', TRUE ) ) {
-
-					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
-					$posts = [];
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! isset( $terms[$term_id] ) )
-							continue;
-
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) );
-
-						if ( FALSE !== $post_id )
-							continue;
-
-						$posts[] = PostType::newPostFromTerm(
-							$terms[$term_id],
-							$this->constant( 'issue_tax' ),
-							$this->constant( 'issue_cpt' ),
-							gEditorial()->user( TRUE )
-						);
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'created',
-						'count'   => count( $posts ),
-					] );
-
-				} else if ( Tablelist::isAction( 'issue_resync_images', TRUE ) ) {
-
-					$meta_key = $this->constant( 'metakey_term_image', 'image' );
-					$count    = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! $post_id = $this->paired_get_to_post_id( $term_id, 'issue_cpt', 'issue_tax' ) )
-							continue;
-
-						if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
-							update_term_meta( $term_id, $meta_key, $thumbnail );
-
-						else
-							delete_term_meta( $term_id, $meta_key );
-
-						$count++;
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'synced',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'issue_resync_desc', TRUE ) ) {
-
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! $post_id = $this->paired_get_to_post_id( $term_id, 'issue_cpt', 'issue_tax' ) )
-							continue;
-
-						if ( ! $post = Helper::getPost( $post_id ) )
-							continue;
-
-						if ( wp_update_term( $term_id, $this->constant( 'issue_tax' ), [ 'description' => $post->post_excerpt ] ) )
-							$count++;
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'synced',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'issue_store_order', TRUE )
-					|| Tablelist::isAction( 'issue_store_start', TRUE ) ) {
-
-					if ( ! gEditorial()->enabled( 'meta' ) )
-						WordPress::redirectReferer( 'wrong' );
-
-					$count = 0;
-
-					$field_key = isset( $_POST['issue_store_order'] )
-						? 'in_issue_order'
-						: 'in_issue_page_start';
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-						foreach ( $this->paired_get_from_posts( NULL, 'issue_cpt', 'issue_tax', FALSE, $term_id ) as $post ) {
-
-							if ( $post->menu_order )
-								continue;
-
-							if ( $order = gEditorial()->meta->get_postmeta_field( $post->ID, $field_key ) ) {
-								wp_update_post( [
-									'ID'         => $post->ID,
-									'menu_order' => $order,
-								] );
-								$count++;
-							}
-						}
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'ordered',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'issue_empty_desc', TRUE ) ) {
-
-					$args  = [ 'description' => '' ];
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id )
-						if ( wp_update_term( $term_id, $this->constant( 'issue_tax' ), $args ) )
-							$count++;
-
-					WordPress::redirectReferer( [
-						'message' => 'purged',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'issue_post_connect', TRUE ) ) {
-
-					$terms = Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE );
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! isset( $terms[$term_id] ) )
-							continue;
-
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'issue_cpt' ) );
-
-						if ( FALSE === $post_id )
-							continue;
-
-						if ( $this->paired_set_to_term( $post_id, $terms[$term_id], 'issue_cpt', 'issue_tax' ) )
-							$count++;
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'updated',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'issue_tax_delete', TRUE ) ) {
-
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( $this->paired_remove_to_term( NULL, $term_id, 'issue_cpt', 'issue_tax' ) ) {
-
-							$deleted = wp_delete_term( $term_id, $this->constant( 'issue_tax' ) );
-
-							if ( $deleted && ! is_wp_error( $deleted ) )
-								$count++;
-						}
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'deleted',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
-
-					if ( FALSE === ( $count = $this->paired_sync_paired_terms( 'issue_cpt', 'issue_tax' ) ) )
-						WordPress::redirectReferer( 'wrong' );
-
-					WordPress::redirectReferer( [
-						'message' => 'synced',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'create_paired_terms' ) ) {
-
-					if ( FALSE === ( $count = $this->paired_create_paired_terms( 'issue_cpt', 'issue_tax' ) ) )
-						WordPress::redirectReferer( 'wrong' );
-
-					WordPress::redirectReferer( [
-						'message' => 'created',
-						'count'   => $count,
-					] );
-
-				}
+				$this->paired_tools_handle_tablelist( 'issue_cpt', 'issue_tax' );
 			}
 		}
 
 		Scripts::enqueueThickBox();
 	}
 
-	protected function render_tools_html_after( $uri, $sub )
-	{
-		$this->paired_render_tools_card( 'issue_cpt', 'issue_tax' );
-	}
-
 	protected function render_tools_html( $uri, $sub )
 	{
-		return HTML::tableList( [
-			'_cb'     => 'term_id',
-			// 'term_id' => Tablelist::columnTermID(),
-			'name'    => Tablelist::columnTermName(),
-			'paired'  => [
-				'title'    => _x( 'Paired Issue Post', 'Table Column', 'geditorial-magazine' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-					if ( $post_id = $this->paired_get_to_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-					return Helper::htmlEmpty();
-				},
-			],
-			'slugged' => [
-				'title'    => _x( 'Same Slug Issue Post', 'Table Column', 'geditorial-magazine' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-						return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-					return Helper::htmlEmpty();
-				},
-			],
-			'count' => [
-				'title'    => _x( 'Count', 'Table Column', 'geditorial-magazine' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'issue_cpt' ) ) )
-						return Number::format( $this->paired_get_from_posts( $post_id, 'issue_cpt', 'issue_tax', TRUE ) );
-
-					return Number::format( $row->count );
-				},
-			],
-			'description' => [
-				'title'    => _x( 'Desc. / Exce.', 'Table Column', 'geditorial-magazine' ),
-				'class'    => 'html-column',
-				'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-					if ( empty( $row->description ) )
-						$html = Helper::htmlEmpty();
-					else
-						$html = Helper::prepDescription( $row->description );
-
-					if ( $post_id = $this->paired_get_to_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) ) {
-
-						$html.= '<hr />';
-
-						if ( ! $post = Helper::getPost( $post_id ) )
-							return $html.gEditorial()->na();
-
-						if ( empty( $post->post_excerpt ) )
-							$html.= Helper::htmlEmpty();
-						else
-							$html.= Helper::prepDescription( $post->post_excerpt );
-					}
-
-					return $html;
-				},
-			],
-			'thumb_image' => [
-				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-magazine' ),
-				'class'    => 'image-column',
-				'callback' => function( $value, $row, $column, $index, $key, $args ) {
-					$html = '';
-
-					if ( $post_id = $this->paired_get_to_post_id( $row, 'issue_cpt', 'issue_tax', FALSE ) )
-						$html = PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
-
-					return $html ?: Helper::htmlEmpty();
-				},
-			],
-			'term_image' => [
-				'title'    => _x( 'Image', 'Table Column', 'geditorial-magazine' ),
-				'class'    => 'image-column',
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-					$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
-					return $html ?: Helper::htmlEmpty();
-				},
-			],
-		], Taxonomy::getTerms( $this->constant( 'issue_tax' ), FALSE, TRUE ), [
-			'title' => HTML::tag( 'h3', _x( 'Magazine Tools', 'Header', 'geditorial-magazine' ) ),
-			'empty' => _x( 'No Terms Found!', 'Message', 'geditorial-magazine' ),
-			'after' => [ $this, 'table_list_after' ],
-		] );
+		return $this->paired_tools_render_tablelist( 'issue_cpt', 'issue_tax', NULL, _x( 'Magazine Tools', 'Header', 'geditorial-magazine' ) );
 	}
 
-	public function table_list_after( $columns, $data, $args )
+	protected function render_tools_html_after( $uri, $sub )
 	{
-		HTML::desc( _x( 'Check for issue terms and create corresponding issue posts.', 'Message', 'geditorial-magazine' ) );
-		echo $this->wrap_open_buttons( '-tools' );
-
-		Settings::submitButton( 'issue_post_create',
-			_x( 'Create Issue Posts', 'Button', 'geditorial-magazine' ) );
-
-		Settings::submitButton( 'issue_post_connect',
-			_x( 'Re-Connect Posts', 'Button', 'geditorial-magazine' ) );
-
-		Settings::submitButton( 'issue_resync_images',
-			_x( 'Sync Images', 'Button', 'geditorial-magazine' ) );
-
-		Settings::submitButton( 'issue_resync_desc',
-			_x( 'Sync Descriptions', 'Button', 'geditorial-magazine' ) );
-
-		Settings::submitButton( 'issue_store_order',
-			_x( 'Store Orders', 'Button', 'geditorial-magazine' ) );
-
-		Settings::submitButton( 'issue_empty_desc',
-			_x( 'Empty Term Descriptions', 'Button', 'geditorial-magazine' ), 'danger', TRUE );
-
-		Settings::submitButton( 'issue_tax_delete',
-			_x( 'Delete Terms', 'Button', 'geditorial-magazine' ), 'danger', TRUE );
-
-		echo '</p>';
+		$this->paired_tools_render_card( 'issue_cpt', 'issue_tax' );
 	}
 }
