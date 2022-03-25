@@ -209,8 +209,8 @@ class Venue extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'place_cpt' ) )
-			$this->_hook_paired_to( $_REQUEST['post_type'] );
+		if ( $posttype = $this->is_inline_save_posttype( 'place_cpt' ) )
+			$this->_hook_paired_to( $posttype );
 	}
 
 	public function setup_restapi()

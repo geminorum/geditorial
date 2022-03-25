@@ -3668,26 +3668,33 @@ class Module extends Base
 	}
 
 	// for ajax calls on quick edit
-	public function is_inline_save( $request, $constant = FALSE )
+	// OLD: `is_inline_save()`
+	public function is_inline_save_posttype( $target = FALSE, $request = NULL, $key = 'post_type' )
 	{
+		if ( ! WordPress::isAdminAJAX() )
+			return FALSE;
+
+		if ( is_null( $request ) )
+			$request = $_REQUEST;
+
 		if ( empty( $request['action'] )
 			|| 'inline-save' != $request['action'] )
 				return FALSE;
 
 		if ( empty( $request['screen'] )
-			|| empty( $request['post_type'] ) )
+			|| empty( $request[$key] ) )
 				return FALSE;
 
-		if ( is_array( $constant )
-			&& ! in_array( $request['post_type'], $constant ) )
+		if ( is_array( $target )
+			&& ! in_array( $request[$key], $target, TRUE ) )
 				return FALSE;
 
-		if ( $constant
-			&& ! is_array( $constant )
-			&& $request['post_type'] != $this->constant( $constant ) )
+		if ( $target
+			&& ! is_array( $target )
+			&& $request[$key] != $this->constant( $target ) )
 				return FALSE;
 
-		return TRUE;
+		return $request[$key];
 	}
 
 	// PAIRED API

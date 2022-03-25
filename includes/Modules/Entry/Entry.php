@@ -137,8 +137,8 @@ class Entry extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'entry_cpt' ) )
-			$this->_edit_screen( $_REQUEST['post_type'] );
+		if ( $posttype = $this->is_inline_save_posttype( 'entry_cpt' ) )
+			$this->_edit_screen( $posttype );
 
 		$this->filter_module( 'markdown', 'linking', 8, 8 );
 	}

@@ -271,8 +271,8 @@ class Event extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'event_cpt' ) )
-			$this->_edit_screen( $_REQUEST['post_type'] );
+		if ( $posttype = $this->is_inline_save_posttype( 'event_cpt' ) )
+			$this->_edit_screen( $posttype );
 	}
 
 	public function current_screen( $screen )

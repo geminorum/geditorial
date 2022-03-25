@@ -170,20 +170,18 @@ class Today extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $this->is_inline_save( $_REQUEST, 'day_cpt' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'day_cpt' ) ) {
 
-			$this->_edit_screen_supported( $_REQUEST['post_type'] );
+			$this->_edit_screen_supported( $posttype );
+			$this->_save_meta_supported( $posttype );
 
-			$this->_save_meta_supported( $_REQUEST['post_type'] );
-
-		} else if ( $this->is_inline_save( $_REQUEST, $this->posttypes() ) ) {
+		} else if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) {
 
 			if ( ! $this->get_setting( 'admin_columns' ) )
 				return;
 
-			$this->_edit_screen_supported( $_REQUEST['post_type'] );
-
-			$this->_save_meta_supported( $_REQUEST['post_type'] );
+			$this->_edit_screen_supported( $posttype );
+			$this->_save_meta_supported( $posttype );
 		}
 	}
 
