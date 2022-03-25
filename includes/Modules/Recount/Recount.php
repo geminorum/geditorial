@@ -60,7 +60,7 @@ class Recount extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $taxonomy = self::req( 'taxonomy' ) )
+		if ( $this->taxonomy_supported( $taxonomy = $this->is_inline_save_taxonomy() ) )
 			$this->_edit_tags_screen( $taxonomy );
 	}
 

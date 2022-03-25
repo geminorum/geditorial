@@ -3697,6 +3697,35 @@ class Module extends Base
 		return $request[$key];
 	}
 
+	// for ajax calls on quick edit
+	public function is_inline_save_taxonomy( $target = FALSE, $request = NULL, $key = 'taxonomy' )
+	{
+		if ( ! WordPress::isAdminAJAX() )
+			return FALSE;
+
+		if ( is_null( $request ) )
+			$request = $_REQUEST;
+
+		if ( empty( $request['action'] )
+			|| 'inline-save-tax' != $request['action'] )
+				return FALSE;
+
+		if ( empty( $request['screen'] )
+			|| empty( $request[$key] ) )
+				return FALSE;
+
+		if ( is_array( $target )
+			&& ! in_array( $request[$key], $target, TRUE ) )
+				return FALSE;
+
+		if ( $target
+			&& ! is_array( $target )
+			&& $request[$key] != $this->constant( $target ) )
+				return FALSE;
+
+		return $request[$key];
+	}
+
 	// PAIRED API
 	protected function _hook_paired_to( $posttype )
 	{

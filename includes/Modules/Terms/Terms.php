@@ -203,7 +203,7 @@ class Terms extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $taxonomy = self::req( 'taxonomy' ) )
+		if ( $taxonomy = $this->is_inline_save_taxonomy() )
 			$this->_edit_tags_screen( $taxonomy );
 	}
 
