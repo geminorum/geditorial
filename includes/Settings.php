@@ -952,7 +952,7 @@ class Settings extends Core\Base
 			$extra[] = sprintf( _x( '%s Counted!', 'Settings: Message', 'geditorial' ),
 				Number::format( $_REQUEST['count'] ) );
 
-		return count( $extra ) ? ' ('.implode( ', ', $extra ).')' : '';
+		return count( $extra ) ? ' ('.implode( Strings::separator(), $extra ).')' : '';
 	}
 
 	public static function error( $message, $dismissible = TRUE )

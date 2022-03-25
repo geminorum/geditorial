@@ -7,6 +7,16 @@ use geminorum\gEditorial\Core;
 class Strings extends Core\Base
 {
 
+	// wrapper for `wp_get_list_item_separator()` @since WP 6.0.0
+	public static function separator()
+	{
+		if ( function_exists( 'wp_get_list_item_separator' ) )
+			return wp_get_list_item_separator();
+
+		// return _x( ', ', 'Strings: Item Seperator', 'geditorial' );
+		return __( ', ' );
+	}
+
 	public static function isEmpty( $string, $empties = NULL )
 	{
 		if ( ! is_string( $string ) )
@@ -79,8 +89,7 @@ class Strings extends Core\Base
 	public static function getJoined( $items, $before = '', $after = '', $empty = '', $separator = NULL )
 	{
 		if ( is_null( $separator ) )
-			// $separator = _x( ', ', 'Helper: Item Seperator', 'geditorial' );
-			$separator = __( ', ' );
+			$separator = self::separator();
 
 		if ( $items && count( $items ) )
 			return $before.implode( $separator, $items ).$after;

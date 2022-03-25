@@ -167,7 +167,7 @@ class Datetime extends Main
 
 		if ( is_null( $strings ) )
 			$strings = [
-				'sep' => _x( ', ', 'Datetime: From Seconds: Seperator', 'geditorial' ),
+				'sep' => Strings::separator(),
 
 				/* translators: %s: number of seconds */
 				'noop_seconds' => _nx_noop( '%s second', '%s seconds', 'Datetime: From Seconds: Noop', 'geditorial' ),
