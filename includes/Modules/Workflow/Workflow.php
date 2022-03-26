@@ -124,11 +124,8 @@ class Workflow extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $taxonomy = self::req( 'taxonomy' ) ) {
-
-			if ( $taxonomy == $this->constant( 'status_tax' ) )
-				$this->_edit_tags_screen( $taxonomy );
-		}
+		if ( $taxonomy = $this->is_inline_save_taxonomy( 'status_tax' ) )
+			$this->_edit_tags_screen( $taxonomy );
 	}
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args )

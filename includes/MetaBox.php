@@ -463,7 +463,6 @@ class MetaBox extends Main
 
 		// FIXME: WORKING BUT: creates problem with old setups
 		// that main post is not connected to the paired term.
-		// must add tools page for supported modules with maintenance tasks
 		// if ( $taxonomy )
 		// 	$args['tax_query'] = [ [
 		// 		'taxonomy' => $taxonomy,

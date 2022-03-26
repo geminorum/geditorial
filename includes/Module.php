@@ -3681,9 +3681,8 @@ class Module extends Base
 			|| 'inline-save' != $request['action'] )
 				return FALSE;
 
-		if ( empty( $request['screen'] )
-			|| empty( $request[$key] ) )
-				return FALSE;
+		if ( empty( $request[$key] ) )
+			return FALSE;
 
 		if ( is_array( $target )
 			&& ! in_array( $request[$key], $target, TRUE ) )
@@ -3710,9 +3709,8 @@ class Module extends Base
 			|| 'inline-save-tax' != $request['action'] )
 				return FALSE;
 
-		if ( empty( $request['screen'] )
-			|| empty( $request[$key] ) )
-				return FALSE;
+		if ( empty( $request[$key] ) )
+			return FALSE;
 
 		if ( is_array( $target )
 			&& ! in_array( $request[$key], $target, TRUE ) )
@@ -4806,7 +4804,7 @@ class Module extends Base
 						continue;
 
 					if ( count( $posttypes ) > 1 )
-						$text = sprintf( '<b>%3$s</b> %1$s (%2$s)', Helper::noopedCount( $count, $all[$type] ), Strings::trimChars( $name, 35 ), Number::format( $count ) );
+						$text = sprintf( '<b>%3$s</b> %1$s: <b title="%4$s">%2$s</b>', Helper::noopedCount( $count, $all[$type] ), Strings::trimChars( $name, 35 ), Number::format( $count ), $name );
 					else
 						$text = sprintf( '<b>%2$s</b> %1$s', $name, Number::format( $count ) );
 
