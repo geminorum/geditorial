@@ -722,41 +722,43 @@ class Audit extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		$terms = Taxonomy::getTerms( $this->constant( 'audit_tax' ), FALSE, TRUE, 'slug', [ 'hide_empty' => TRUE ] );
+		HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
 
-		if ( empty( $terms ) )
+		if ( ! Taxonomy::hasTerms( $this->constant( 'audit_tax' ) ) )
 			return HTML::desc( _x( 'No reports available!', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
 
+		$this->_render_reports_by_user_summary();
+	}
+
+	// TODO: export option
+	private function _render_reports_by_user_summary()
+	{
 		$args = $this->get_current_form( [
 			'user_id' => '0',
 		], 'reports' );
 
-		HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
-
-		echo '<table class="form-table">';
-
-		echo '<tr><th scope="row">'._x( 'By User', 'Reports', 'geditorial-audit' ).'</th><td>';
+		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
+		HTML::h4( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ), 'title' );
+		echo $this->wrap_open( '-wrap-button-row -mark_empty_excerpt' );
 
 		$this->do_settings_field( [
 			'type'         => 'user',
 			'field'        => 'user_id',
-			'none_title'   => _x( 'All Users', 'None', 'geditorial-audit' ),
+			'none_title'   => _x( 'All Users', 'Card: None-Title', 'geditorial-audit' ),
 			'none_value'   => '0',
 			'default'      => $args['user_id'],
 			'option_group' => 'reports',
 			'cap'          => TRUE,
 		] );
 
-		echo '&nbsp;';
+		echo '&nbsp;&nbsp;';
+		Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Card: Button', 'geditorial-audit' ) );
+		echo '</div>';
 
-		Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Button', 'geditorial-audit' ) );
+		if ( $summary = $this->get_dashboard_term_summary( 'audit_tax', NULL, NULL, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
+			echo '<div><ul class="-wrap-list-items">'.$summary.'</ul></div>'; // FIXME: style this!
 
-		// FIXME: style this!
-		if ( $summary = $this->get_dashboard_term_summary( 'audit_tax', NULL, $terms, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
-			echo '<div><ul>'.$summary.'</ul></div>';
-
-		echo '</td></tr>';
-		echo '</table>';
+		echo '</div>';
 	}
 
 	// TODO: add setting/filter for this
