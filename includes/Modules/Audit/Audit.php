@@ -7,7 +7,10 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
+use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
@@ -136,16 +139,18 @@ class Audit extends gEditorial\Module
 
 		$strings['terms'] = [
 			'audit_tax' => [
-				'audited'      => _x( 'Audited', 'Default Term', 'geditorial-audit' ),
-				'outdated'     => _x( 'Outdated', 'Default Term', 'geditorial-audit' ),
-				'redundant'    => _x( 'Redundant', 'Default Term', 'geditorial-audit' ),
-				'review-seo'   => _x( 'Review SEO', 'Default Term', 'geditorial-audit' ),
-				'review-style' => _x( 'Review Style', 'Default Term', 'geditorial-audit' ),
-				'trivial'      => _x( 'Trivial', 'Default Term', 'geditorial-audit' ),
-				'initial-copy' => _x( 'Initial Copy', 'Default Term', 'geditorial-audit' ),
-				'unfinished'   => _x( 'Unfinished', 'Default Term', 'geditorial-audit' ),
-				'text-empty'   => _x( 'No Content', 'Default Term', 'geditorial-audit' ),
-				'imported'     => _x( 'Imported', 'Default Term', 'geditorial-audit' ),
+				'audited'       => _x( 'Audited', 'Default Term', 'geditorial-audit' ),
+				'outdated'      => _x( 'Outdated', 'Default Term', 'geditorial-audit' ),
+				'redundant'     => _x( 'Redundant', 'Default Term', 'geditorial-audit' ),
+				'review-seo'    => _x( 'Review SEO', 'Default Term', 'geditorial-audit' ),
+				'review-style'  => _x( 'Review Style', 'Default Term', 'geditorial-audit' ),
+				'trivial'       => _x( 'Trivial', 'Default Term', 'geditorial-audit' ),
+				'initial-copy'  => _x( 'Initial Copy', 'Default Term', 'geditorial-audit' ),
+				'unfinished'    => _x( 'Unfinished', 'Default Term', 'geditorial-audit' ),
+				'title-empty'   => _x( 'No Title', 'Default Term', 'geditorial-audit' ),
+				'text-empty'    => _x( 'No Content', 'Default Term', 'geditorial-audit' ),
+				'excerpt-empty' => _x( 'No Excerpt', 'Default Term', 'geditorial-audit' ),
+				'imported'      => _x( 'Imported', 'Default Term', 'geditorial-audit' ),
 			],
 		];
 
@@ -396,7 +401,15 @@ class Audit extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->posttype_supported( $screen->post_type ) ) {
+		if ( $this->constant( 'audit_tax' ) == $screen->taxonomy ) {
+
+			if ( 'edit-tags' == $screen->base ) {
+
+				$this->action( 'taxonomy_tab_extra_content', 2, 20, FALSE, 'gnetwork' );
+				$this->action( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
+			}
+
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
@@ -451,6 +464,257 @@ class Audit extends gEditorial\Module
 		echo '</div>';
 	}
 
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+
+				if ( $action = self::req( $this->classs( 'empty-fields' ) ) )
+					$this->_handle_action_empty_fields( $action );
+
+				WordPress::redirectReferer( 'huh' );
+			}
+		}
+	}
+
+	public function taxonomy_handle_tab_content_actions( $taxonomy )
+	{
+		if ( ! $action = self::req( $this->classs( 'empty-fields' ) ) )
+			return;
+
+		$this->nonce_check( 'do-empty-fields' );
+		$this->_handle_action_empty_fields( $action );
+	}
+
+	// NOTE: must check nonce before
+	private function _handle_action_empty_fields( $action )
+	{
+		$taxonomy = $this->constant( 'audit_tax' );
+
+		$this->_raise_resources();
+
+		switch ( Arraay::keyFirst( $action ) ) {
+
+			case 'flush_empty_title':
+
+				$attribute = $this->_get_attribute( 'empty_title', 'title-empty' );
+
+				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				$this->_update_term_count( $attribute, $taxonomy );
+
+				WordPress::redirectReferer( [
+					'message' => 'emptied',
+					'count'   => $count,
+				] );
+				break;
+
+			case 'flush_empty_content':
+
+				$attribute = $this->_get_attribute( 'empty_content', 'text-empty' );
+
+				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				$this->_update_term_count( $attribute, $taxonomy );
+
+				WordPress::redirectReferer( [
+					'message' => 'emptied',
+					'count'   => $count,
+				] );
+				break;
+
+			case 'flush_empty_excerpt':
+
+				$attribute = $this->_get_attribute( 'empty_excerpt', 'excerpt-empty' );
+
+				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				$this->_update_term_count( $attribute, $taxonomy );
+
+				WordPress::redirectReferer( [
+					'message' => 'emptied',
+					'count'   => $count,
+				] );
+				break;
+
+			case 'mark_empty_title':
+
+				$posttypes = self::req( 'posttype-empty-title' ) ?: NULL;
+				$attribute = $this->_get_attribute( 'empty_title', 'title-empty' );
+
+				if ( FALSE === ( $posts = $this->_get_posts_empty( 'title', $attribute, $posttypes ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				if ( empty( $posts ) )
+					WordPress::redirectReferer( 'nochange' );
+
+				if ( FALSE === ( $count = Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				$this->_update_term_count( $attribute, $taxonomy );
+
+				WordPress::redirectReferer( [
+					'message' => 'synced',
+					'count'   => $count,
+				] );
+				break;
+
+			case 'mark_empty_content':
+
+				$posttypes = self::req( 'posttype-empty-content' ) ?: NULL;
+				$attribute = $this->_get_attribute( 'empty_content', 'text-empty' );
+
+				if ( FALSE === ( $posts = $this->_get_posts_empty( 'content', $attribute, $posttypes ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				if ( empty( $posts ) )
+					WordPress::redirectReferer( 'nochange' );
+
+				if ( FALSE === ( $count = Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				$this->_update_term_count( $attribute, $taxonomy );
+
+				WordPress::redirectReferer( [
+					'message' => 'synced',
+					'count'   => $count,
+				] );
+				break;
+
+			case 'mark_empty_excerpt':
+
+				$posttypes = self::req( 'posttype-empty-excerpt' ) ?: NULL;
+				$attribute = $this->_get_attribute( 'empty_excerpt', 'excerpt-empty' );
+
+				if ( FALSE === ( $posts = $this->_get_posts_empty( 'excerpt', $attribute, $posttypes ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				if ( empty( $posts ) )
+					WordPress::redirectReferer( 'nochange' );
+
+				if ( FALSE === ( $count = Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
+					WordPress::redirectReferer( 'wrong' );
+
+				$this->_update_term_count( $attribute, $taxonomy );
+
+				WordPress::redirectReferer( [
+					'message' => 'synced',
+					'count'   => $count,
+				] );
+				break;
+		}
+
+		WordPress::redirectReferer( 'huh' );
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		HTML::h3( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
+		$this->_render_tools_empty_fields();
+	}
+
+	public function taxonomy_tab_extra_content( $taxonomy, $object )
+	{
+		$this->render_form_start( NULL, 'import', 'download', 'tabs', FALSE );
+			$this->nonce_field( 'do-empty-fields' );
+			$this->_render_tools_empty_fields( TRUE );
+		$this->render_form_end( NULL, 'import', 'download', 'tabs' );
+	}
+
+	private function _render_tools_empty_fields( $lite = FALSE )
+	{
+		$taxonomy = $this->constant( 'audit_tax' );
+		$action   = $this->classs( 'empty-fields' );
+		$empty    = TRUE;
+
+		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
+
+		if ( term_exists( $this->_get_attribute( 'empty_title', 'title-empty' ), $taxonomy ) ) {
+
+			HTML::h4( _x( 'Posts with Empty Title', 'Card Title', 'geditorial-audit' ), 'title' );
+			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_title' );
+
+			echo $this->wrap_open( '-wrap-button-row -mark_empty_title' );
+			echo HTML::dropdown( $this->list_posttypes(), [
+				'name'       => 'posttype-empty-title',
+				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
+			] );
+			echo '&nbsp;&nbsp;';
+			Settings::submitButton( $action.'[mark_empty_title]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
+			Settings::submitButton( $action.'[flush_empty_title]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
+			HTML::desc( _x( 'Tries to set the attribute on supported posts with no title.', 'Card: Description', 'geditorial-audit' ) );
+
+			echo '</div>';
+			$empty = FALSE;
+		}
+
+		if ( term_exists( $this->_get_attribute( 'empty_content', 'title-empty' ), $taxonomy ) ) {
+
+			HTML::h4( _x( 'Posts with Empty Content', 'Card Title', 'geditorial-audit' ), 'title' );
+			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_content' );
+
+			echo $this->wrap_open( '-wrap-button-row -mark_empty_content' );
+			echo HTML::dropdown( $this->list_posttypes(), [
+				'name'       => 'posttype-empty-content',
+				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
+			] );
+			echo '&nbsp;&nbsp;';
+			Settings::submitButton( $action.'[mark_empty_content]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
+			Settings::submitButton( $action.'[flush_empty_content]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
+			HTML::desc( _x( 'Tries to set the attribute on supported posts with no content.', 'Card: Description', 'geditorial-audit' ) );
+
+			echo '</div>';
+			$empty = FALSE;
+		}
+
+		if ( term_exists( $this->_get_attribute( 'empty_excerpt', 'title-empty' ), $taxonomy ) ) {
+
+			HTML::h4( _x( 'Posts with Empty Excerpt', 'Card Title', 'geditorial-audit' ), 'title' );
+			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_excerpt' );
+
+			echo $this->wrap_open( '-wrap-button-row -mark_empty_excerpt' );
+			echo HTML::dropdown( $this->list_posttypes(), [
+				'name'       => 'posttype-empty-excerpt',
+				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
+			] );
+			echo '&nbsp;&nbsp;';
+			Settings::submitButton( $action.'[mark_empty_excerpt]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
+			Settings::submitButton( $action.'[flush_empty_excerpt]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
+			HTML::desc( _x( 'Tries to set the attribute on supported posts with no excerpt.', 'Card: Description', 'geditorial-audit' ) );
+
+			echo '</div>';
+			$empty = FALSE;
+		}
+
+		if ( $empty ) {
+			HTML::h4( _x( 'Posts with Empty Fields', 'Card Title', 'geditorial-audit' ), 'title' );
+			HTML::desc( _x( 'No empty attribute available. Please install the default attributes.', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
+		}
+
+		echo '</div>';
+	}
+
+	private function _render_tools_empty_fields_summary( $for )
+	{
+		if ( ! $attribute = $this->_get_attribute( $for ) )
+			return;
+
+		$posts = $this->_get_posts_empty( $for, $attribute, NULL, FALSE );
+		$count = Taxonomy::countTermObjects( $attribute, $this->constant( 'audit_tax' ) );
+
+		/* translators: %1$s: empty post count, %2$s: assigned term count */
+		HTML::desc( vsprintf( _x( 'Currently found %1$s empty posts and %2$s assigned to the attribute.', 'Card: Description', 'geditorial-audit' ), [
+			FALSE === $posts ? gEditorial()->na() : Number::format( count( $posts ) ),
+			FALSE === $count ? gEditorial()->na() : Number::format( $count ),
+		] ) );
+	}
+
 	public function reports_settings( $sub )
 	{
 		$this->check_settings( $sub, 'reports' );
@@ -495,6 +759,27 @@ class Audit extends gEditorial\Module
 		echo '</table>';
 	}
 
+	// TODO: add setting/filter for this
+	private function _get_attribute( $for, $default = FALSE )
+	{
+		switch ( $for ) {
+			case 'empty_title': return 'title-empty';
+			case 'empty_content': return 'text-empty';
+			case 'empty_excerpt': return 'excerpt-empty';
+		}
+
+		return $default;
+	}
+
+	private function _update_term_count( $attribute, $taxonomy = NULL )
+	{
+		if ( is_null( $taxonomy ) )
+			$taxonomy = $this->constant( 'audit_tax' );
+
+		$term = get_term_by( 'slug', $attribute, $taxonomy );
+		return wp_update_term_count_now( [ $term->term_id ], $taxonomy );
+	}
+
 	// API METHOD
 	// FIXME: move this up to main module
 	public function set_terms( $post, $terms, $append = TRUE )
@@ -513,5 +798,73 @@ class Audit extends gEditorial\Module
 		clean_object_term_cache( $post->ID, $this->constant( 'audit_tax' ) );
 
 		return TRUE;
+	}
+
+	// @REF: https://wordpress.stackexchange.com/a/251385
+	// @REF: https://stackoverflow.com/a/16395673
+	private function _get_posts_empty( $for, $attribute, $posttypes = NULL, $check_taxonomy = TRUE )
+	{
+		switch ( $for ) {
+			case 'title':   case 'empty_title':   $callback = [ __CLASS__, 'whereEmptyTitle' ];   break;
+			case 'content': case 'empty_content': $callback = [ __CLASS__, 'whereEmptyContent' ]; break;
+			case 'excerpt': case 'empty_excerpt': $callback = [ __CLASS__, 'whereEmptyExcerpt' ]; break;
+			default: return FALSE;
+		}
+
+		$args = [
+			'post_type'   => $posttypes ?: $this->posttypes(),
+			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
+
+			'orderby' => 'none',
+			'fields'  => 'ids',
+
+			'posts_per_page'         => -1, // FIXME
+			'no_found_rows'          => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		];
+
+		if ( $check_taxonomy )
+			$args['tax_query'] = [ [
+				'taxonomy' => $this->constant( 'audit_tax' ),
+				'terms'    => $attribute,
+				'field'    => 'slug',
+				'operator' => 'NOT IN',
+			] ];
+
+		add_filter( 'posts_where', $callback, 9999 );
+		$query = new \WP_Query;
+		$posts = $query->query( $args );
+		remove_filter( 'posts_where', $callback, 9999 );
+
+		return $posts;
+	}
+
+	public static function whereEmptyTitle( $where )
+	{
+		global $wpdb;
+		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_title, '')) = '') ";
+	}
+
+	public static function whereEmptyContent( $where )
+	{
+		global $wpdb;
+		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_content, '')) = '') ";
+	}
+
+	public static function whereEmptyExcerpt( $where )
+	{
+		global $wpdb;
+		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_excerpt, '')) = '') ";
+	}
+
+	private function _raise_resources( $count = 0 )
+	{
+		Taxonomy::disableTermCounting();
+
+		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+
+		$this->raise_resources( $count, 60, 'audit' );
 	}
 }
