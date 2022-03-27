@@ -41,6 +41,13 @@ class Audit extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
+			'_general' => [
+				[
+					'field'       => 'auto_audit_empty',
+					'title'       => _x( 'Auto-Audit for Empties', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Tries to automatically assign empty attributes on supported posts.', 'Setting Description', 'geditorial-audit' ),
+				],
+			],
 			'_roles' => [
 				[
 					'field'       => 'manage_roles',
@@ -185,6 +192,9 @@ class Audit extends gEditorial\Module
 
 		$this->filter( 'map_meta_cap', 4 );
 
+		if ( $this->get_setting( 'auto_audit_empty' ) )
+			$this->action( 'save_post', 3 );
+
 		$this->register_default_terms( 'audit_tax' );
 	}
 
@@ -312,6 +322,54 @@ class Audit extends gEditorial\Module
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
 		return 'reports' == $context ? $this->role_can( 'reports' ) : parent::cuc( $context, $fallback );
+	}
+
+	public function save_post( $post_id, $post, $update )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return;
+
+		if ( ! in_array( $post->post_status, [ 'publish', 'future', 'draft', 'pending' ], TRUE ) )
+			return;
+
+		$taxonomy = $this->constant( 'audit_tax' );
+		$terms    = Taxonomy::getObjectTerms( $taxonomy, $post->ID );
+		$currents = $terms;
+
+		if ( $exists = term_exists( $this->_get_attribute( 'empty_title' ), $taxonomy ) ) {
+
+			if ( empty( $post->post_title ) )
+				$terms[] = $exists['term_id'];
+
+			else
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+		}
+
+		if ( $exists = term_exists( $this->_get_attribute( 'empty_content' ), $taxonomy ) ) {
+
+			if ( empty( $post->post_content ) )
+				$terms[] = $exists['term_id'];
+
+			else
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+		}
+
+		if ( $exists = term_exists( $this->_get_attribute( 'empty_excerpt' ), $taxonomy ) ) {
+
+			if ( empty( $post->post_excerpt ) )
+				$terms[] = $exists['term_id'];
+
+			else
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+		}
+
+		if ( $terms == $currents )
+			return;
+
+		$result = wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $taxonomy );
+
+		if ( ! is_wp_error( $result ) )
+			clean_object_term_cache( $post->ID, $taxonomy );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
