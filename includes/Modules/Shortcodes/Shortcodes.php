@@ -39,6 +39,11 @@ class Shortcodes extends gEditorial\Module
 			],
 			'_frontend' => [
 				'adminbar_summary',
+				[
+					'field'       => 'remove_empty_p_tags',
+					'title'       => _x( 'Remove Empty Paragraphs', 'Setting Title', 'geditorial-shortcodes' ),
+					'description' => _x( 'Strips empty paragraph tags around short-codes from post content.', 'Setting Description', 'geditorial-shortcodes' ),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
@@ -68,6 +73,12 @@ class Shortcodes extends gEditorial\Module
 
 		foreach ( $this->get_setting( 'shortcodes', [] ) as $shortcode )
 			$this->register_shortcode( sprintf( '%s_shortcode', $this->sanitize_hook( $shortcode ) ), NULL, TRUE );
+
+		if ( is_admin() )
+			return;
+
+		if ( $this->get_setting( 'remove_empty_p_tags' ) )
+			$this->filter( 'the_content' );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
@@ -191,6 +202,16 @@ class Shortcodes extends gEditorial\Module
 		return wp_update_post( [
 			'ID'           => $post->ID,
 			'post_content' => preg_replace( $pattern, '', $post->post_content ),
+		] );
+	}
+
+	// @REF: https://gist.github.com/wpscholar/8969bb6e1cedb9be92140cc2efa9febb
+	public function the_content( $content )
+	{
+		return strtr( $content, [
+			'<p>['    => '[',
+			']</p>'   => ']',
+			']<br />' => ']',
 		] );
 	}
 
