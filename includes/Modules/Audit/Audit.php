@@ -463,6 +463,8 @@ class Audit extends gEditorial\Module
 
 			if ( 'edit-tags' == $screen->base ) {
 
+				$this->filter( 'taxonomy_empty_terms', 2, 8, FALSE, 'gnetwork' );
+
 				$this->action( 'taxonomy_tab_extra_content', 2, 20, FALSE, 'gnetwork' );
 				$this->action( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
 			}
@@ -675,6 +677,21 @@ class Audit extends gEditorial\Module
 	{
 		HTML::h3( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 		$this->_render_tools_empty_fields();
+	}
+
+	public function taxonomy_empty_terms( $terms, $taxonomy )
+	{
+		if ( empty( $terms ) || ! $taxonomy )
+			return $terms;
+
+		if ( $taxonomy != $this->constant( 'audit_tax' ) )
+			return $terms;
+
+		foreach ( [ 'empty_title', 'empty_content', 'empty_excerpt' ] as $for )
+			if ( $exists = term_exists( $this->_get_attribute( $for ), $taxonomy ) )
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+
+		return $terms;
 	}
 
 	public function taxonomy_tab_extra_content( $taxonomy, $object )
