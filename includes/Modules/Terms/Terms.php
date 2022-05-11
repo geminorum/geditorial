@@ -268,8 +268,10 @@ class Terms extends gEditorial\Module
 				$this->filter( 'taxonomy_bulk_actions', 2, 14, FALSE, 'gnetwork' );
 				$this->filter( 'taxonomy_bulk_callback', 3, 14, FALSE, 'gnetwork' );
 
-				if ( $this->get_setting( 'prevent_deletion', TRUE ) )
+				if ( $this->get_setting( 'prevent_deletion', TRUE ) ) {
+					$this->filter( 'taxonomy_delete_empty_term', 3, 99, FALSE, 'gnetwork' );
 					$this->filter( 'taxonomy_delete_term', 4, 99, FALSE, 'gnetwork' );
+				}
 			}
 
 		} else if ( 'term' == $screen->base ) {
@@ -1702,13 +1704,25 @@ class Terms extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function taxonomy_delete_term( $delete, $term, $taxonomy, $force )
+	public function taxonomy_delete_empty_term( $delete, $term_id, $taxonomy )
 	{
-		if ( $force || ! $delete )
+		if ( ! $delete || ! $term_id || ! $taxonomy )
 			return $delete;
 
 		foreach ( $this->get_supported( $taxonomy ) as $field )
-			if ( get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $taxonomy ), TRUE ) )
+			if ( FALSE !== get_term_meta( $term_id, $this->get_supported_metakey( $field, $taxonomy ), TRUE ) )
+				return FALSE;
+
+		return $delete;
+	}
+
+	public function taxonomy_delete_term( $delete, $term, $taxonomy, $force )
+	{
+		if ( $force || ! $delete || !$taxonomy || ! $term || is_wp_error( $term ) )
+			return $delete;
+
+		foreach ( $this->get_supported( $taxonomy ) as $field )
+			if ( FALSE !== get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $taxonomy ), TRUE ) )
 				return FALSE;
 
 		return $delete;
