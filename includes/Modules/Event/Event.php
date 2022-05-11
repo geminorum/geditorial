@@ -99,10 +99,11 @@ class Event extends gEditorial\Module
 		return [
 			'event_cpt'         => 'event',
 			'event_cpt_archive' => 'events',
-			'event_tag'         => 'event_tag',
-			'event_cat'         => 'event_cat',
-			'type_tax'          => 'event_type',
-			'cal_tax'           => 'event_calendar',
+
+			'event_cat'  => 'event_cat',
+			'event_type' => 'event_type',
+			'event_cal'  => 'event_calendar',
+			'cal_type'   => 'event_calendar_type',
 
 			'endpoint_ical'        => 'ics',
 			'metakey_event_start'  => '_event_datetime_start',
@@ -117,9 +118,9 @@ class Event extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'event_cat' => 'category',
-				'event_tag' => 'tag',
-				'cal_tax'   => 'calendar',
+				'event_cat'  => 'category',
+				'event_type' => 'tag',
+				'event_cal'  => 'calendar',
 			],
 		];
 	}
@@ -128,13 +129,13 @@ class Event extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'event_cpt' => _n_noop( 'Event', 'Events', 'geditorial-event' ),
-				'event_tag' => _n_noop( 'Event Type', 'Event Types', 'geditorial-event' ),
-				'event_cat' => _n_noop( 'Event Category', 'Event Categories', 'geditorial-event' ),
-				'cal_tax'   => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-event' ),
+				'event_cpt'  => _n_noop( 'Event', 'Events', 'geditorial-event' ),
+				'event_cat'  => _n_noop( 'Event Category', 'Event Categories', 'geditorial-event' ),
+				'event_type' => _n_noop( 'Event Type', 'Event Types', 'geditorial-event' ),
+				'event_cal'  => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-event' ),
 			],
 			'labels' => [
-				'type_tax' => [
+				'cal_type' => [
 					'name' => _x( 'Calendar Types', 'Taxonomy Label', 'geditorial-event' ),
 				],
 			],
@@ -155,12 +156,12 @@ class Event extends gEditorial\Module
 				'meta_box_title'      => _x( 'Event Categories', 'MetaBox Title', 'geditorial-event' ),
 				'tweaks_column_title' => _x( 'Event Categories', 'Column Title', 'geditorial-event' ),
 			],
-			'event_tag' => [
+			'event_type' => [
 				'menu_name'           => _x( 'Types', 'Menu Title', 'geditorial-event' ),
 				'meta_box_title'      => _x( 'Event Types', 'MetaBox Title', 'geditorial-event' ),
 				'tweaks_column_title' => _x( 'Event Types', 'Column Title', 'geditorial-event' ),
 			],
-			'cal_tax' => [
+			'event_cal' => [
 				'menu_name'           => _x( 'Calendars', 'Menu Title', 'geditorial-event' ),
 				'meta_box_title'      => _x( 'Event Calendars', 'MetaBox Title', 'geditorial-event' ),
 				'tweaks_column_title' => _x( 'Event Calendars', 'Column Title', 'geditorial-event' ),
@@ -168,7 +169,7 @@ class Event extends gEditorial\Module
 		];
 
 		$strings['terms'] = [
-			'event_tag' => [
+			'event_type' => [
 				'holiday' => _x( 'Holiday', 'Default Term', 'geditorial-event' ),
 				'birth'   => _x( 'Birth', 'Default Term', 'geditorial-event' ),
 				'death'   => _x( 'Death', 'Default Term', 'geditorial-event' ),
@@ -188,26 +189,26 @@ class Event extends gEditorial\Module
 
 	public function before_settings( $module = FALSE )
 	{
-		if ( isset( $_POST['install_def_event_tag'] ) )
-			$this->insert_default_terms( 'event_tag' );
+		if ( isset( $_POST['install_def_event_type'] ) )
+			$this->insert_default_terms( 'event_type' );
 
-		else if ( isset( $_POST['install_def_type_tax'] ) )
-			$this->insert_default_terms( 'type_tax', array_intersect_key(
+		else if ( isset( $_POST['install_def_cal_type'] ) )
+			$this->insert_default_terms( 'cal_type', array_intersect_key(
 				Datetime::getDefualtCalendars( TRUE ),
 				array_flip( $this->get_setting( 'calendar_list', [] ) )
 			) );
 
-		$this->help_tab_default_terms( 'event_tag' );
+		$this->help_tab_default_terms( 'event_type' );
 	}
 
 	public function default_buttons( $module = FALSE )
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'install_def_event_tag', _x( 'Install Default Event Types', 'Button', 'geditorial-event' ) );
+		$this->register_button( 'install_def_event_type', _x( 'Install Default Event Types', 'Button', 'geditorial-event' ) );
 
 		if ( $this->get_setting( 'extra_metadata' ) )
-			$this->register_button( 'install_def_type_tax', _x( 'Install Default Calendar Types', 'Button', 'geditorial-event' ) );
+			$this->register_button( 'install_def_cal_type', _x( 'Install Default Calendar Types', 'Button', 'geditorial-event' ) );
 	}
 
 	public function after_setup_theme()
@@ -236,18 +237,18 @@ class Event extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'event_cpt' );
 
-		$this->register_taxonomy( 'event_tag', [
+		$this->register_taxonomy( 'event_type', [
 			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'event_cpt' );
 
-		$this->register_taxonomy( 'cal_tax', [
+		$this->register_taxonomy( 'event_cal', [
 			'hierarchical' => TRUE, // required by `MetaBox::checklistTerms()`
 		], 'event_cpt' );
 
 		if ( $metadata )
-			$this->register_taxonomy( 'type_tax', [
+			$this->register_taxonomy( 'cal_type', [
 				'show_ui' => FALSE,
 			], 'event_cpt' );
 
@@ -256,7 +257,7 @@ class Event extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		] );
 
-		$this->register_default_terms( 'event_tag' );
+		$this->register_default_terms( 'event_type' );
 
 		if ( $metadata )
 			$this->add_posttype_fields( $this->constant( 'event_cpt' ), NULL, $this->module->name );
@@ -349,7 +350,7 @@ class Event extends gEditorial\Module
 		return $items;
 	}
 
-	public function meta_box_cb_event_tag( $post, $box )
+	public function meta_box_cb_event_type( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -359,7 +360,7 @@ class Event extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function meta_box_cb_cal_tax( $post, $box )
+	public function meta_box_cb_event_cal( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -534,7 +535,7 @@ class Event extends gEditorial\Module
 		echo HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
 
 		if ( $this->get_setting( 'display_type', TRUE ) )
-			MetaBox::dropdownPostTaxonomy( $this->constant( 'type_tax' ), $post, FALSE, FALSE, '', $args['cal-type'] );
+			MetaBox::dropdownPostTaxonomy( $this->constant( 'cal_type' ), $post, FALSE, FALSE, '', $args['cal-type'] );
 	}
 
 	// https://github.com/devinsays/event-posts/blob/master/event-posts.php
@@ -575,7 +576,7 @@ class Event extends gEditorial\Module
 	public function template_include( $template )
 	{
 		if ( is_tax( $this->constant( 'event_cat' ) )
-			|| is_tax( $this->constant( 'cal_tax' ) ) )
+			|| is_tax( $this->constant( 'event_cal' ) ) )
 				$template = get_query_template( 'archive-'.$this->constant( 'event_cpt' ) );
 
 		return $template;
