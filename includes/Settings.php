@@ -161,7 +161,7 @@ class Settings extends Core\Base
 
 	public static function posttypesExcluded( $extra = [] )
 	{
-		return array_merge( [
+		$list = [
 			'attachment',        // WP Core
 			'wp_theme',          // WP Core
 			'wp_block',          // WP Core
@@ -177,14 +177,24 @@ class Settings extends Core\Base
 			'guest-author',      // Co-Authors Plus
 			'amp_validated_url', // AMP
 			'inbound_message',
-		], (array) $extra );
+		];
+
+		if ( class_exists( 'bbPress' ) )
+			$list = array_merge( $list, [
+				'forum',
+				'topic',
+				'reply',
+			] );
+
+		return array_merge( $list, (array) $extra );
 	}
 
 	public static function taxonomiesExcluded( $extra = [] )
 	{
-		return array_merge( [
+		$list = [
 			'nav_menu',               // WP Core
 			'wp_theme',               // WP Core
+			'link_category',          // WP Core
 			'post_format',            // WP Core
 			'wp_template_part_area',  // WP Core
 			'amp_validation_error',   // AMP
@@ -194,7 +204,14 @@ class Settings extends Core\Base
 			'bp-email-type',          // BuddyPress
 			'bp_member_type',         // BuddyPress
 			'bp_group_type',          // BuddyPress
-		], (array) $extra );
+		];
+
+		if ( class_exists( 'bbPress' ) )
+			$list = array_merge( $list, [
+				'topic-tag',
+			] );
+
+		return array_merge( $list, (array) $extra );
 	}
 
 	public static function rolesExcluded( $extra = [] )
@@ -1022,7 +1039,7 @@ class Settings extends Core\Base
 			echo HTML::tag( 'input', array_merge( $atts, [
 				'type'    => 'submit',
 				'name'    => $name,
-				'id'      => $name,
+				// 'id'      => $name, // FIXME: must sanitize
 				'value'   => $text,
 				'class'   => $classes,
 				'default' => TRUE === $primary,

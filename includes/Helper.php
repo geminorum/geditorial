@@ -74,14 +74,14 @@ class Helper extends Main
 	}
 
 	// override to use plugin version
-	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE, $echo = TRUE )
+	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE, $verbose = TRUE )
 	{
-		return HTML::linkStyleSheet( $url, $version, $media, $echo );
+		return HTML::linkStyleSheet( $url, $version, $media, $verbose );
 	}
 
-	public static function linkStyleSheetAdmin( $page, $echo = TRUE )
+	public static function linkStyleSheetAdmin( $page, $verbose = TRUE )
 	{
-		return HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $echo );
+		return HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
 	}
 
 	public static function kses( $text, $context = 'none', $allowed = NULL )
@@ -930,14 +930,14 @@ class Helper extends Main
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
-	public static function renderMustache( $part, $data = [], $echo = TRUE )
+	public static function renderMustache( $part, $data = [], $verbose = TRUE )
 	{
 		$mustache = self::getMustache();
 		$template = $mustache->loadTemplate( $part );
 
 		$html = $template->render( $data );
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;

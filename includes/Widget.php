@@ -153,7 +153,7 @@ class Widget extends \WP_Widget
 		return FALSE;
 	}
 
-	public function before_widget( $args, $instance, $echo = TRUE, $extra = '' )
+	public function before_widget( $args, $instance, $verbose = TRUE, $extra = '' )
 	{
 		$classes = [];
 
@@ -171,26 +171,26 @@ class Widget extends \WP_Widget
 		if ( ! empty( $instance['open_widget_html'] ) )
 			$html.= trim( $instance['open_widget_html'] );
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;
 	}
 
-	public function after_widget( $args, $instance, $echo = TRUE )
+	public function after_widget( $args, $instance, $verbose = TRUE )
 	{
 		$html = $args['after_widget'];
 
 		if ( ! empty( $instance['close_widget_html'] ) )
 			$html = trim( $instance['close_widget_html'] ).$html;
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;
 	}
 
-	public function widget_title( $args, $instance, $echo = TRUE, $default = '' )
+	public function widget_title( $args, $instance, $verbose = TRUE, $default = '' )
 	{
 		$title = apply_filters( 'widget_title',
 			empty( $instance['title'] ) ? $default : $instance['title'],
@@ -212,7 +212,7 @@ class Widget extends \WP_Widget
 		if ( ! empty( $instance['after_title_html'] ) )
 			$html.= trim( $instance['after_title_html'] );
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;
@@ -325,7 +325,7 @@ class Widget extends \WP_Widget
 		return $images;
 	}
 
-	public function before_form( $instance, $echo = TRUE )
+	public function before_form( $instance, $verbose = TRUE )
 	{
 		$classes = [ static::BASE.'-wrap', '-wrap', '-admin-widgetform' ];
 
@@ -334,17 +334,17 @@ class Widget extends \WP_Widget
 
 		$html = '<div class="'.HTML::prepClass( $classes ).'">';
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;
 	}
 
-	public function after_form( $instance, $echo = TRUE )
+	public function after_form( $instance, $verbose = TRUE )
 	{
 		$html = '</div>';
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;

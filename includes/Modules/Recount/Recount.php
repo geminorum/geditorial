@@ -92,6 +92,7 @@ class Recount extends gEditorial\Module
 			$this->_do_recount_term( $term_id );
 	}
 
+	// FIXME: use `countTermObjects( $term, $taxonomy )`
 	public function _do_recount_term( $term_id )
 	{
 		global $wpdb;

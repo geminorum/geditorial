@@ -560,7 +560,7 @@ class Audit extends gEditorial\Module
 
 			case 'flush_empty_title':
 
-				$attribute = $this->_get_attribute( 'empty_title', 'title-empty' );
+				$attribute = $this->_get_attribute( 'empty_title' );
 
 				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
 					WordPress::redirectReferer( 'wrong' );
@@ -575,7 +575,7 @@ class Audit extends gEditorial\Module
 
 			case 'flush_empty_content':
 
-				$attribute = $this->_get_attribute( 'empty_content', 'text-empty' );
+				$attribute = $this->_get_attribute( 'empty_content' );
 
 				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
 					WordPress::redirectReferer( 'wrong' );
@@ -590,7 +590,7 @@ class Audit extends gEditorial\Module
 
 			case 'flush_empty_excerpt':
 
-				$attribute = $this->_get_attribute( 'empty_excerpt', 'excerpt-empty' );
+				$attribute = $this->_get_attribute( 'empty_excerpt' );
 
 				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
 					WordPress::redirectReferer( 'wrong' );
@@ -606,7 +606,7 @@ class Audit extends gEditorial\Module
 			case 'mark_empty_title':
 
 				$posttypes = self::req( 'posttype-empty-title' ) ?: NULL;
-				$attribute = $this->_get_attribute( 'empty_title', 'title-empty' );
+				$attribute = $this->_get_attribute( 'empty_title' );
 
 				if ( FALSE === ( $posts = $this->_get_posts_empty( 'title', $attribute, $posttypes ) ) )
 					WordPress::redirectReferer( 'wrong' );
@@ -628,7 +628,7 @@ class Audit extends gEditorial\Module
 			case 'mark_empty_content':
 
 				$posttypes = self::req( 'posttype-empty-content' ) ?: NULL;
-				$attribute = $this->_get_attribute( 'empty_content', 'text-empty' );
+				$attribute = $this->_get_attribute( 'empty_content' );
 
 				if ( FALSE === ( $posts = $this->_get_posts_empty( 'content', $attribute, $posttypes ) ) )
 					WordPress::redirectReferer( 'wrong' );
@@ -650,7 +650,7 @@ class Audit extends gEditorial\Module
 			case 'mark_empty_excerpt':
 
 				$posttypes = self::req( 'posttype-empty-excerpt' ) ?: NULL;
-				$attribute = $this->_get_attribute( 'empty_excerpt', 'excerpt-empty' );
+				$attribute = $this->_get_attribute( 'empty_excerpt' );
 
 				if ( FALSE === ( $posts = $this->_get_posts_empty( 'excerpt', $attribute, $posttypes ) ) )
 					WordPress::redirectReferer( 'wrong' );
@@ -710,7 +710,7 @@ class Audit extends gEditorial\Module
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 
-		if ( term_exists( $this->_get_attribute( 'empty_title', 'title-empty' ), $taxonomy ) ) {
+		if ( term_exists( $this->_get_attribute( 'empty_title' ), $taxonomy ) ) {
 
 			HTML::h4( _x( 'Posts with Empty Title', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_title' );
@@ -729,7 +729,7 @@ class Audit extends gEditorial\Module
 			$empty = FALSE;
 		}
 
-		if ( term_exists( $this->_get_attribute( 'empty_content', 'title-empty' ), $taxonomy ) ) {
+		if ( term_exists( $this->_get_attribute( 'empty_content' ), $taxonomy ) ) {
 
 			HTML::h4( _x( 'Posts with Empty Content', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_content' );
@@ -748,7 +748,7 @@ class Audit extends gEditorial\Module
 			$empty = FALSE;
 		}
 
-		if ( term_exists( $this->_get_attribute( 'empty_excerpt', 'title-empty' ), $taxonomy ) ) {
+		if ( term_exists( $this->_get_attribute( 'empty_excerpt' ), $taxonomy ) ) {
 
 			HTML::h4( _x( 'Posts with Empty Excerpt', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_excerpt' );
@@ -831,7 +831,7 @@ class Audit extends gEditorial\Module
 		echo '</div>';
 
 		if ( $summary = $this->get_dashboard_term_summary( 'audit_tax', NULL, NULL, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
-			echo '<div><ul class="-wrap-list-items">'.$summary.'</ul></div>'; // FIXME: style this!
+			echo '<div><ul class="-wrap-list-items">'.$summary.'</ul></div>';
 
 		echo '</div>';
 	}
@@ -895,7 +895,7 @@ class Audit extends gEditorial\Module
 			'orderby' => 'none',
 			'fields'  => 'ids',
 
-			'posts_per_page'         => -1, // FIXME
+			'posts_per_page'         => -1,
 			'no_found_rows'          => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,

@@ -734,20 +734,19 @@ class Module extends Base
 			$printpage = $this->get_printpage_url( [ 'single' => '1' ] );
 
 		// prefix to avoid conflicts
-		$function = $this->hook( 'resizeIframe' );
-
+		$func = $this->hook( 'resizeIframe' );
 		$html = HTML::tag( 'iframe', [
 			'src'    => $printpage,
 			'width'  => '100%',
 			'height' => '0',
 			'border' => '0',
-			'onload' => $function.'(this)',
+			'onload' => $func.'(this)',
 		], _x( 'Print Preview', 'Module', 'geditorial' ) );
 
 		echo HTML::wrap( $html, 'field-wrap -iframe -print-iframe' );
 
 		// @REF: https://stackoverflow.com/a/9976309
-		echo '<script>function '.$function.'(obj){obj.style.height=obj.contentWindow.document.documentElement.scrollHeight+"px";}</script>';
+		echo '<script>function '.$func.'(obj){obj.style.height=obj.contentWindow.document.documentElement.scrollHeight+"px";}</script>';
 	}
 
 	protected function render_print_button( $printpage = NULL, $button_class = '' )
@@ -756,8 +755,8 @@ class Module extends Base
 			$printpage = $this->get_printpage_url( [ 'single' => '1' ] );
 
 		// prefix to avoid conflicts
-		$function = $this->hook( 'printIframe' );
-		$id       = $this->classs( 'printiframe' );
+		$func = $this->hook( 'printIframe' );
+		$id   = $this->classs( 'printiframe' );
 
 		echo HTML::tag( 'iframe', [
 			'id'     => $id,
@@ -771,11 +770,11 @@ class Module extends Base
 		echo HTML::tag( 'a', [
 			'href'    => '#',
 			'class'   => [ 'button', $button_class ], //  button-small',
-			'onclick' => $function.'("'.$id.'")',
+			'onclick' => $func.'("'.$id.'")',
 		], _x( 'Print', 'Module', 'geditorial' ) );
 
 		// @REF: https://hdtuto.com/article/print-iframe-content-using-jquery-example
-		echo '<script>function '.$function.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
+		echo '<script>function '.$func.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
 	}
 
 	// LEGACY: do not use thickbox anymore!
