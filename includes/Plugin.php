@@ -66,6 +66,8 @@ class Plugin
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 
+		add_filter( static::BASE.'_markdown_to_html', [ $this, 'markdown_to_html' ] );
+
 		if ( is_admin() )
 			return;
 
@@ -552,6 +554,11 @@ class Plugin
 			return;
 
 		get_footer( $name );
+	}
+
+	public function markdown_to_html( $raw )
+	{
+		return Helper::mdExtra( $raw );
 	}
 
 	public function enqueue_styles()

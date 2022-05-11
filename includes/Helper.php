@@ -943,6 +943,19 @@ class Helper extends Main
 		echo $html;
 	}
 
+	public static function mdExtra( $markdown )
+	{
+		global $gEditorialMarkdownExtra;
+
+		if ( empty( $markdown ) || ! class_exists( '\Michelf\MarkdownExtra' ) )
+			return $markdown;
+
+		if ( empty( $gEditorialMarkdownExtra ) )
+			$gEditorialMarkdownExtra = new \Michelf\MarkdownExtra;
+
+		return $gEditorialMarkdownExtra->defaultTransform( $markdown );
+	}
+
 	public static function getCacheDIR( $sub, $base = NULL )
 	{
 		if ( ! GEDITORIAL_CACHE_DIR )
