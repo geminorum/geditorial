@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress\User;
 
 class Listtable extends Main
 {
@@ -156,8 +157,12 @@ SQL;
 	}
 
 	// @SEE: https://make.wordpress.org/core/2022/01/05/new-capability-queries-in-wordpress-5-9/
+	// @SEE: https://core.trac.wordpress.org/ticket/19867
 	public static function restrictByAuthor( $selected = 0, $name = 'author', $extra = [] )
 	{
+		if ( User::isLargeCount() )
+			return '';
+
 		return wp_dropdown_users( array_merge( [
 			'name'     => $name,
 			'selected' => $selected,
