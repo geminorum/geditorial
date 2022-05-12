@@ -147,7 +147,7 @@ class Plugin
 			'folder'    => $folder,
 			'class'     => $class ?: Helper::moduleClass( $args['name'], FALSE ),
 			'icon'      => 'screenoptions', // dashicon class / svg icon array
-			'configure' => TRUE,
+			'configure' => TRUE,  // or `settings`, `tools`, `reports`, FALSE TO DISABLE
 			'frontend'  => TRUE,  // whether or not the module should be loaded on the frontend
 			'autoload'  => FALSE, // autoloading a module will remove the ability to enable/disable it
 			'disabled'  => FALSE, // or string explaining why the module is not available

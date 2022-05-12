@@ -1190,9 +1190,36 @@ class Settings extends Core\Base
 		], _x( 'You have to enable Javascript!', 'Settings: Notice', 'geditorial' ) );
 	}
 
+	// FIXME: use `Settings::subURL()`
 	public static function moduleConfigure( $module, $enabled = FALSE )
 	{
-		if ( $module->configure )
+		if ( ! $module->configure )
+			return;
+
+		if ( 'tools' == $module->configure )
+			echo HTML::tag( 'a', [
+				'href'  => add_query_arg( [ 'page' => static::TOOLS, 'sub' => $module->name ], get_admin_url( NULL, 'admin.php' ) ),
+				'style' => $enabled ? FALSE : 'display:none',
+				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
+				'data'  => [
+					'module' => $module->name,
+					'do'     => 'configure',
+				],
+			], _x( 'Tools', 'Settings: Button', 'geditorial' ) );
+
+
+		else if ( 'reports' == $module->configure )
+			echo HTML::tag( 'a', [
+				'href'  => add_query_arg( [ 'page' => static::REPORTS, 'sub' => $module->name ], get_admin_url( NULL, 'index.php' ) ),
+				'style' => $enabled ? FALSE : 'display:none',
+				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
+				'data'  => [
+					'module' => $module->name,
+					'do'     => 'configure',
+				],
+			], _x( 'Reports', 'Settings: Button', 'geditorial' ) );
+
+		else
 			echo HTML::tag( 'a', [
 				'href'  => add_query_arg( [ 'page' => static::SETTINGS, 'module' => $module->name ], get_admin_url( NULL, 'admin.php' ) ),
 				'style' => $enabled ? FALSE : 'display:none',

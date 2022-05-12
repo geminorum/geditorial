@@ -127,7 +127,7 @@ class Module extends Base
 		$ajax  = WordPress::isAJAX();
 		$ui    = WordPress::mustRegisterUI( FALSE );
 
-		if ( $admin && $ui && $this->module->configure )
+		if ( $admin && $ui && ( TRUE === $this->module->configure || 'settings' == $this->module->configure ) )
 			add_action( $this->base.'_settings_load', [ $this, 'register_settings' ] );
 
 		if ( $this->setup_disabled() )

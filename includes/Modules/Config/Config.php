@@ -80,7 +80,7 @@ class Config extends gEditorial\Module
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
-			if ( ! $module->configure )
+			if ( ! $module->configure || in_array( $module->configure, [ 'tools', 'reports' ], TRUE ) )
 				continue;
 
 			if ( $module->name == $this->module->name )
