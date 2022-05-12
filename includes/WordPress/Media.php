@@ -439,6 +439,42 @@ class Media extends Core\Base
 		return 0;
 	}
 
+	public static function getAttachmentImageAlt( $attachment_id, $fallback = '' )
+	{
+		if ( $alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', TRUE ) )
+			return trim( strip_tags( $alt ) );
+
+		return $fallback;
+	}
+
+	public static function htmlAttachmentImage( $attachment_id, $size = 'thumbnail', $link = TRUE, $data = [], $class = '-attachment-image' )
+	{
+		if ( empty( $attachment_id ) )
+			return '';
+
+		if ( ! $attachment_img = wp_get_attachment_image_src( $attachment_id, $size ) )
+			return '';
+
+		if ( empty( $data['attachment'] ) )
+			$data['attachment'] = $attachment_id;
+
+		$image = Core\HTML::tag( 'img', [
+			'src'     => $attachment_img[0],
+			'alt'     => self::getAttachmentImageAlt( $attachment_id ),
+			'data'    => $data,
+			'class'   => $class,
+			'loading' => 'lazy',
+		] );
+
+		return $link ? Core\HTML::tag( 'a', [
+			'href'   => wp_get_attachment_url( $attachment_id ),
+			'title'  => get_the_title( $attachment_id ),
+			'data'    => $data,
+			'class'  => 'thickbox',
+			'target' => '_blank',
+		], $image ) : $image;
+	}
+
 	// @REF: https://wordpress.stackexchange.com/a/315447
 	public static function prepAttachmentData( $attachment_id )
 	{
@@ -448,6 +484,7 @@ class Media extends Core\Base
 		$uploads  = self::upload();
 		$metadata = wp_get_attachment_metadata( $attachment_id );
 		$prepared = [
+			'alt'       => self::getAttachmentImageAlt( $attachment_id ),
 			'caption'   => wp_get_attachment_caption( $attachment_id ),
 			'mime_type' => get_post_mime_type( $attachment_id ),
 			'url'       => $uploads['baseurl'].'/'.$metadata['file'],

@@ -76,6 +76,25 @@ class User extends Core\Base
 			self::cheatin();
 	}
 
+	public static function getObjectbyMeta( $meta, $value, $network = TRUE )
+	{
+		$args = [
+			'meta_key'    => $meta,
+			'meta_value'  => $value,
+			'compare'     => '=',
+			'number'      => 1,
+			'count_total' => FALSE,
+		];
+
+		if ( $network )
+			$args['blog_id'] = 0;
+
+		$query = new \WP_User_Query( $args );
+		$users = $query->get_results();
+
+		return reset( $users );
+	}
+
 	public static function getIDbyMeta( $meta, $value, $single = TRUE )
 	{
 		static $data = [];
@@ -191,5 +210,20 @@ class User extends Core\Base
 				$list[$role_name] = translate_user_role( $role['name'] );
 
 		return $list;
+	}
+
+	// @SEE: https://core.trac.wordpress.org/ticket/38741
+	public static function isLargeCount( $network_id = NULL )
+	{
+		if ( function_exists( 'wp_is_large_user_count' ) )
+			return wp_is_large_user_count( $network_id ); // @since WP 6.0.0
+
+		if ( function_exists( 'wp_is_large_network' ) )
+			return wp_is_large_network( 'users', $network_id );
+
+		if ( defined( 'GNETWORK_LARGE_NETWORK_IS' ) && GNETWORK_LARGE_NETWORK_IS )
+			return get_user_count( $network_id ) > GNETWORK_LARGE_NETWORK_IS;
+
+		return FALSE;
 	}
 }

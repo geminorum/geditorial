@@ -106,18 +106,22 @@ class Taxonomy extends Core\Base
 		return 'default_term_'.$taxonomy;
 	}
 
+	// @REF: `wp_count_terms()`
 	public static function hasTerms( $taxonomy, $empty = TRUE )
 	{
-		$terms = get_terms( array(
-			'taxonomy'               => $taxonomy,
-			'hide_empty'             => ! $empty,
-			'fields'                 => 'ids',
-			'orderby'                => 'none',
+		$args = [
+			'taxonomy'   => $taxonomy,
+			'hide_empty' => ! $empty,
+
+			'fields'  => 'count',
+			'orderby' => 'none',
+
 			'suppress_filter'        => TRUE,
 			'update_term_meta_cache' => FALSE,
-		) );
+		];
 
-		return (bool) count( $terms );
+		$query = new \WP_Term_Query;
+		return $query->query( $args );
 	}
 
 	public static function getTerm( $term_or_id, $taxonomy = '' )
@@ -154,6 +158,24 @@ class Taxonomy extends Core\Base
 			return FALSE;
 
 		return $term;
+	}
+
+	public static function getObjectTerms( $taxonomy, $object_id, $fields = 'ids', $extra = [] )
+	{
+		$args = array_merge( [
+			'taxonomy'   => $taxonomy,
+			'object_ids' => $object_id,
+			'hide_empty' => FALSE,
+
+			'fields'  => $fields,
+			'orderby' => 'none',
+
+			'suppress_filter'        => TRUE,
+			'update_term_meta_cache' => FALSE,
+		], $extra );
+
+		$query = new \WP_Term_Query;
+		return $query->query( $args );
 	}
 
 	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
@@ -685,6 +707,42 @@ class Taxonomy extends Core\Base
 		return $count;
 	}
 
+	// @REF: `_update_post_term_count()`
+	public static function countTermObjects( $term, $taxonomy )
+	{
+		global $wpdb;
+
+		if ( ! $exists = term_exists( $term, $taxonomy ) )
+			return FALSE;
+
+		$query = $wpdb->prepare( "
+			SELECT COUNT(*)
+			FROM {$wpdb->term_relationships}
+			WHERE term_taxonomy_id = %d
+		", $exists['term_taxonomy_id'] );
+
+		return $wpdb->get_var( $query );
+	}
+
+	public static function getEmptyTermIDs( $taxonomy, $check_description = FALSE )
+	{
+		global $wpdb;
+
+		$query = "
+			SELECT t.term_id
+			FROM {$wpdb->terms} AS t
+			INNER JOIN {$wpdb->term_taxonomy} AS tt
+			ON t.term_id = tt.term_id
+			WHERE tt.taxonomy IN ( '".implode( "', '", esc_sql( (array) $taxonomy ) )."' )
+			AND tt.count < 1
+		";
+
+		if ( $check_description )
+			$query.= " AND (TRIM(COALESCE(tt.description, '')) = '') ";
+
+		return $wpdb->get_col( $query );
+	}
+
 	public static function addSupport( $taxonomy, $features )
 	{
 		global $gEditorialTaxonomyFeatures;
@@ -738,36 +796,13 @@ class Taxonomy extends Core\Base
 	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage( $term_id, $size = 'thumbnail', $link = TRUE, $metakey = 'image' )
 	{
-		if ( ! $term_image_id = get_term_meta( $term_id, $metakey, TRUE ) )
-			return '';
-
-		if ( ! $term_thumbnail_img = wp_get_attachment_image_src( $term_image_id, $size ) )
-			return '';
-
-		$image = Core\HTML::tag( 'img', array(
-			'src'     => $term_thumbnail_img[0],
-			'alt'     => '',
-			'class'   => '-featured',
-			'loading' => 'lazy',
-			'data'    => array(
-				'term'       => $term_id,
-				'attachment' => $term_image_id,
-			),
-		) );
-
-		if ( ! $link )
-			return $image;
-
-		return Core\HTML::tag( 'a', array(
-			'href'   => wp_get_attachment_url( $term_image_id ),
-			'title'  => get_the_title( $term_image_id ),
-			'class'  => 'thickbox',
-			'target' => '_blank',
-			'data'   => array(
-				'term'       => $term_id,
-				'attachment' => $term_image_id,
-			),
-		), $image );
+		return Media::htmlAttachmentImage(
+			get_term_meta( $term_id, $metakey, TRUE ),
+			$size,
+			$link,
+			[ 'term' => $term_id ],
+			'-featured'
+		);
 	}
 
 	public static function disableTermCounting()

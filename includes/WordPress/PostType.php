@@ -379,38 +379,16 @@ class PostType extends Core\Base
 
 	// must add `add_thickbox()` for thickbox
 	// @SEE: `Scripts::enqueueThickBox()`
+	// TODO: DROP the filter @since WP 5.9.0
 	public static function htmlFeaturedImage( $post_id, $size = 'thumbnail', $link = TRUE )
 	{
-		if ( ! $post_thumbnail_id = apply_filters( 'geditorial_get_post_thumbnail_id', get_post_thumbnail_id( $post_id ), $post_id ) )
-			return '';
-
-		if ( ! $post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size ) )
-			return '';
-
-		$image = HTML::tag( 'img', array(
-			'src'     => $post_thumbnail_img[0],
-			'alt'     => '',
-			'class'   => '-featured',
-			'loading' => 'lazy',
-			'data'    => array(
-				'post'       => $post_id,
-				'attachment' => $post_thumbnail_id,
-			),
-		) );
-
-		if ( ! $link )
-			return $image;
-
-		return HTML::tag( 'a', array(
-			'href'   => wp_get_attachment_url( $post_thumbnail_id ),
-			'title'  => get_the_title( $post_thumbnail_id ),
-			'class'  => 'thickbox',
-			'target' => '_blank',
-			'data'   => array(
-				'post'       => $post_id,
-				'attachment' => $post_thumbnail_id,
-			),
-		), $image );
+		return Media::htmlAttachmentImage(
+			apply_filters( 'geditorial_get_post_thumbnail_id', get_post_thumbnail_id( $post_id ), $post_id ),
+			$size,
+			$link,
+			[ 'post' => $post_id ],
+			'-featured'
+		);
 	}
 
 	public static function supportBlocksByPost( $post )

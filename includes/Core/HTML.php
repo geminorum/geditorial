@@ -559,7 +559,7 @@ class HTML extends Base
 		echo '</table>';
 	}
 
-	public static function linkStyleSheet( $url, $version = NULL, $media = 'all', $echo = TRUE )
+	public static function linkStyleSheet( $url, $version = NULL, $media = 'all', $verbose = TRUE )
 	{
 		if ( is_array( $version ) )
 			$url = add_query_arg( $version, $url );
@@ -574,7 +574,7 @@ class HTML extends Base
 			'media' => $media,
 		) )."\n";
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;
@@ -944,7 +944,7 @@ class HTML extends Base
 		return TRUE;
 	}
 
-	public static function tableActions( $actions, $echo = TRUE )
+	public static function tableActions( $actions, $verbose = TRUE )
 	{
 		if ( ! $actions || ! is_array( $actions ) )
 			return;
@@ -963,7 +963,7 @@ class HTML extends Base
 
 		$html.= '</div>';
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $html;
 
 		echo $html;
@@ -1015,7 +1015,8 @@ class HTML extends Base
 			}
 
 			foreach ( (array) $args['before'] as $before )
-				echo '<span class="-before">'.$before.'</span>&nbsp;';
+				if ( $before )
+					echo '<span class="-before">'.$before.'</span>&nbsp;';
 
 			echo '<input type="number" class="small-text -paged" name="paged" value="'.$args['paged'].'" />&nbsp;';
 			echo '<input type="number" class="small-text -limit" name="limit" value="'.$args['limit'].'" />&nbsp;';
@@ -1030,7 +1031,8 @@ class HTML extends Base
 			), $icons['order'] );
 
 			foreach ( (array) $args['after'] as $after )
-				echo '&nbsp;<span class="-after">'.$after.'</span>';
+				if ( $after )
+					echo '&nbsp;<span class="-after">'.$after.'</span>';
 
 			echo '<div class="-controls">';
 
@@ -1166,7 +1168,7 @@ class HTML extends Base
 		echo '</'.$list.'>';
 	}
 
-	public static function wrapScript( $code, $echo = TRUE )
+	public static function wrapScript( $code, $verbose = TRUE )
 	{
 		if ( ! $code )
 			return '';
@@ -1175,14 +1177,14 @@ class HTML extends Base
 		$script.= "\n".$code."\n";
 		$script.= '/* ]]> */'."\n".'</script>'."\n";
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $script;
 
 		echo $script;
 	}
 
 	// @REF: https://jquery.com/upgrade-guide/3.0/#deprecated-document-ready-handlers-other-than-jquery-function
-	public static function wrapjQueryReady( $code, $echo = TRUE )
+	public static function wrapjQueryReady( $code, $verbose = TRUE )
 	{
 		if ( ! $code )
 			return '';
@@ -1191,7 +1193,7 @@ class HTML extends Base
 		$script.= 'jQuery(function($){'."\n".$code.'});'."\n";
 		$script.= '/* ]]> */'."\n".'</script>'."\n";
 
-		if ( ! $echo )
+		if ( ! $verbose )
 			return $script;
 
 		echo $script;
