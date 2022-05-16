@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Number;
@@ -21,6 +22,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Book extends gEditorial\Module
 {
+
+	protected $deafults = [ 'multiple_instances' => TRUE ];
 
 	protected $support_meta = FALSE;
 	protected $barcode_type = 'ean13';
@@ -46,6 +49,7 @@ class Book extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$settings = [
+			'posttypes_option' => 'posttypes_option',
 			'_dashboard' => [
 				'dashboard_widgets',
 				'summary_excludes' => [
@@ -61,6 +65,7 @@ class Book extends gEditorial\Module
 				'admin_rowactions',
 			],
 			'_frontend' => [
+				'insert_content',
 				'insert_cover',
 				'insert_priority',
 			],
@@ -111,6 +116,7 @@ class Book extends gEditorial\Module
 			'publication_cpt'         => 'publication',
 			'publication_cpt_archive' => 'publications',
 			'publication_cpt_p2p'     => 'related_publications',
+			'publication_paired'      => 'related_publication',
 			'subject_tax'             => 'publication_subject',
 			'serie_tax'               => 'publication_serie',
 			'serie_tax_slug'          => 'publication-series',
@@ -198,13 +204,23 @@ class Book extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['metabox'] = [
+			'publication_cpt' => [
+				'metabox_title' => _x( 'Publications', 'MetaBox Title', 'geditorial-book' ),
+			],
+			'publication_paired' => [
+				'metabox_title' => _x( 'Connected', 'MetaBox Title', 'geditorial-book' ),
+			],
+		];
+
 		$strings['misc'] = [
 			'publication_cpt' => [
-				'featured'           => _x( 'Cover Image', 'Posttype Featured', 'geditorial-book' ),
-				'meta_box_title'     => _x( 'Metadata', 'MetaBox Title', 'geditorial-book' ),
-				'author_metabox'     => _x( 'Curator', 'MetaBox Title', 'geditorial-book' ),
-				'excerpt_metabox'    => _x( 'Summary', 'MetaBox Title', 'geditorial-book' ),
-				'cover_column_title' => _x( 'Cover', 'Column Title', 'geditorial-book' ),
+				'featured'               => _x( 'Cover Image', 'Posttype Featured', 'geditorial-book' ),
+				'meta_box_title'         => _x( 'Metadata', 'MetaBox Title', 'geditorial-book' ),
+				'author_metabox'         => _x( 'Curator', 'MetaBox Title', 'geditorial-book' ),
+				'excerpt_metabox'        => _x( 'Summary', 'MetaBox Title', 'geditorial-book' ),
+				'cover_column_title'     => _x( 'Cover', 'Column Title', 'geditorial-book' ),
+				'connected_column_title' => _x( 'Connected', 'Column Title', 'geditorial-book' ),
 			],
 			'subject_tax' => [
 				'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-book' ),
@@ -471,6 +487,16 @@ class Book extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		], 'publication_cpt' );
 
+		if ( count( $this->posttypes() ) ) {
+
+			$this->register_taxonomy( 'publication_paired', [
+				'show_ui'      => FALSE,
+				'show_in_rest' => FALSE,
+			] );
+
+			$this->_paired = $this->constant( 'publication_paired' );
+		}
+
 		$this->register_posttype( 'publication_cpt' );
 
 		$this->register_shortcode( 'publication_shortcode' );
@@ -552,6 +578,13 @@ class Book extends gEditorial\Module
 
 			WordPress::redirect( get_page_link( $post->ID ), 302 );
 
+		} else if ( $this->_paired && is_tax( $this->constant( 'publication_paired' ) ) ) {
+
+			$term = get_queried_object();
+
+			if ( $post_id = $this->paired_get_to_post_id( $term, 'publication_cpt', 'publication_paired' ) )
+					WordPress::redirect( get_permalink( $post_id ), 301 );
+
 		} else if ( is_singular( $this->constant( 'publication_cpt' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
@@ -559,7 +592,22 @@ class Book extends gEditorial\Module
 					[ $this, 'insert_cover' ],
 					$this->get_setting( 'insert_priority', -50 )
 				);
+
+		} else if ( $this->_paired && is_singular( $this->posttypes() ) ) {
+
+			$this->hook_insert_content();
 		}
+	}
+
+	public function init_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( 'publication_cpt' ) )
+			$this->_hook_paired_to( $posttype );
+	}
+
+	public function setup_restapi()
+	{
+		$this->_hook_paired_to( $this->constant( 'publication_cpt' ) );
 	}
 
 	public function current_screen( $screen )
@@ -577,6 +625,15 @@ class Book extends gEditorial\Module
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
 					$this->add_meta_box_excerpt( 'publication_cpt' );
 
+				$this->class_metabox( $screen, 'listbox' );
+				add_meta_box( $this->classs( 'listbox' ),
+					$this->get_meta_box_title( 'publication_paired' ),
+					[ $this, 'render_listbox_metabox' ],
+					$screen,
+					'advanced',
+					'low'
+				);
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
@@ -593,8 +650,30 @@ class Book extends gEditorial\Module
 					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
+				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
+
+			$this->_hook_paired_to( $screen->post_type );
+
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+				$this->class_metabox( $screen, 'pairedbox' );
+				add_meta_box( $this->classs( 'pairedbox' ),
+					$this->get_meta_box_title_posttype( 'publication_cpt' ),
+					[ $this, 'render_pairedbox_metabox' ],
+					$screen,
+					'side'
+				);
+
+				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+
+			} else if ( 'edit' == $screen->base ) {
+			}
+
+			$this->_hook_store_metabox( $screen->post_type );
 
 		} else if ( $this->_p2p && 'edit' == $screen->base
 			&& $this->in_setting( $screen->post_type, 'p2p_posttypes' ) ) {
@@ -616,6 +695,11 @@ class Book extends gEditorial\Module
 		];
 	}
 
+	public function tweaks_column_attr( $post )
+	{
+		$this->paired_tweaks_column_attr( $post, 'publication_cpt', 'publication_paired' );
+	}
+
 	protected function dashboard_widgets()
 	{
 		$title = 'current' == $this->get_setting( 'summary_scope', 'all' )
@@ -628,6 +712,50 @@ class Book extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
+	}
+
+	public function render_pairedbox_metabox( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+
+		if ( ! Taxonomy::hasTerms( $this->constant( 'publication_paired' ) ) )
+			MetaBox::fieldEmptyPostType( $this->constant( 'publication_cpt' ) );
+
+		else
+			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_publication' );
+
+		do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_publication' );
+
+		echo '</div>';
+	}
+
+	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
+	{
+		$this->paired_do_render_metabox( $post, 'publication_cpt', 'publication_paired' );
+	}
+
+	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
+
+		$this->paired_do_store_metabox( $post, 'publication_cpt', 'publication_paired' );
+	}
+
+	public function render_listbox_metabox( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		$this->paired_render_listbox_metabox( $post, $box, 'publication_cpt', 'publication_paired' );
+	}
+
+	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		return $this->paired_do_get_to_posts( 'publication_cpt', 'publication_paired', $post, $single, $published );
 	}
 
 	public function tweaks_column_row_p2p_to( $post )
@@ -713,6 +841,33 @@ class Book extends gEditorial\Module
 				'target' => '_blank',
 			], _x( 'ISBN', 'Action', 'geditorial-book' ) ),
 		], 'view', 'after' );
+	}
+
+	public function post_updated( $post_id, $post_after, $post_before )
+	{
+		$this->paired_do_save_to_post_update( $post_after, $post_before, 'publication_cpt', 'publication_paired' );
+	}
+
+	public function save_post( $post_id, $post, $update )
+	{
+		// we handle updates on another action, @SEE: `post_updated()`
+		if ( ! $update )
+			$this->paired_do_save_to_post_new( $post, 'publication_cpt', 'publication_paired' );
+	}
+
+	public function wp_trash_post( $post_id )
+	{
+		$this->paired_do_trash_to_post( $post_id, 'publication_cpt', 'publication_paired' );
+	}
+
+	public function untrash_post( $post_id )
+	{
+		$this->paired_do_untrash_to_post( $post_id, 'publication_cpt', 'publication_paired' );
+	}
+
+	public function before_delete_post( $post_id )
+	{
+		$this->paired_do_before_delete_to_post( $post_id, 'publication_cpt', 'publication_paired' );
 	}
 
 	public function meta_box_cb_status_tax( $post, $box )
@@ -942,11 +1097,31 @@ class Book extends gEditorial\Module
 
 	public function tools_settings( $sub )
 	{
-		$this->check_settings( $sub, 'tools' );
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+				$this->paired_tools_handle_tablelist( 'publication_cpt', 'publication_paired' );
+			}
+		}
+
+		Scripts::enqueueThickBox();
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		return $this->paired_tools_render_tablelist( 'publication_cpt', 'publication_paired', NULL, _x( 'Publication Tools', 'Header', 'geditorial-book' ) );
+	}
+
+	protected function render_tools_html_after( $uri, $sub )
+	{
+		$this->paired_tools_render_card( 'publication_cpt', 'publication_paired' );
 	}
 
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687
-	protected function render_tools_html( $uri, $sub )
+	// NOTE: UNFINISHED: just displayes the imported connected data (not handling)
+	protected function render_tools_html_OLD( $uri, $sub )
 	{
 		$list  = Arraay::keepByKeys( PostType::get( 0, [ 'show_ui' => TRUE ] ), $this->get_setting( 'p2p_posttypes', [] ) );
 		$query = [
