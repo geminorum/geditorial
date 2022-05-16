@@ -1,3 +1,34 @@
+### 3.23.0
+* main/listtable: skip restrict by author for large user count
+* main/module: better checks for inline save posttypes
+* main/module: better checks for inline save taxonomy
+* main/module: check draft metabox
+* main/module: check supported count before paired register
+* main/module: p2p support revised
+* main/module: paired render listbox metabox
+* main/module: paired render tools card
+* main/module: paired tweaks column attr
+* main/module: passing paired tax for metabox dropdown
+* main/module: render tools/reports html after methods
+* main/module: tablelist render/handle for paired
+* main/plugin: general filter for markdown conversion
+* main/settings: support module links as configure button
+* main/tablelist: actions for term name column
+* main/tablelist: helper for get terms
+* main/template: passing raw meta into filter
+* module/audit: :new: empty fields tools
+* module/audit: auto-audit for empties
+* module/audit: protect empty terms from deletion
+* module/audit: reports page revised
+* module/book: initial paired api on publication posttype
+* module/book: p2p support revised
+* module/book: publication print number to ordinal
+* module/event: taxonomies revised
+* module/shortcodes: remove empty p tags
+* module/terms: protect empty terms with meta from deletion
+* module/today: auto-select date inputs
+* module/wc-images: :new: module
+
 ### 3.22.1
 * main/widget: :warning: passing new instance as base
 * main/widget: custom title on the form
