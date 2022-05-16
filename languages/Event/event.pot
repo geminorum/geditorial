@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Event 3.22.1\n"
+"Project-Id-Version: gEditorial Event 3.23.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-05T22:02:30+00:00\n"
+"POT-Creation-Date: 2022-05-16T11:12:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Event\n"
@@ -87,15 +87,9 @@ msgctxt "Fields"
 msgid "Event Expire"
 msgstr ""
 
-#: Event.php:131
+#: Event.php:132
 msgid "Event"
 msgid_plural "Events"
-msgstr[0] ""
-msgstr[1] ""
-
-#: Event.php:132
-msgid "Event Type"
-msgid_plural "Event Types"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -106,152 +100,158 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: Event.php:134
+msgid "Event Type"
+msgid_plural "Event Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Event.php:135
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Event.php:138
+#: Event.php:139
 msgctxt "Taxonomy Label"
 msgid "Calendar Types"
 msgstr ""
 
-#: Event.php:148
+#: Event.php:149
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Event.php:149
+#: Event.php:150
 msgctxt "MetaBox Title"
 msgid "Date & Times"
 msgstr ""
 
-#: Event.php:150
+#: Event.php:151
 msgctxt "Column Title"
 msgid "Starts"
 msgstr ""
 
-#: Event.php:151
+#: Event.php:152
 msgctxt "Column Title"
 msgid "Ends"
 msgstr ""
 
-#: Event.php:154
+#: Event.php:155
 msgctxt "Menu Title"
 msgid "Categories"
 msgstr ""
 
-#: Event.php:155
+#: Event.php:156
 msgctxt "MetaBox Title"
 msgid "Event Categories"
 msgstr ""
 
-#: Event.php:156
+#: Event.php:157
 msgctxt "Column Title"
 msgid "Event Categories"
 msgstr ""
 
-#: Event.php:159
+#: Event.php:160
 msgctxt "Menu Title"
 msgid "Types"
 msgstr ""
 
-#: Event.php:160
+#: Event.php:161
 msgctxt "MetaBox Title"
 msgid "Event Types"
 msgstr ""
 
-#: Event.php:161
+#: Event.php:162
 msgctxt "Column Title"
 msgid "Event Types"
 msgstr ""
 
-#: Event.php:164
+#: Event.php:165
 msgctxt "Menu Title"
 msgid "Calendars"
 msgstr ""
 
-#: Event.php:165
+#: Event.php:166
 msgctxt "MetaBox Title"
 msgid "Event Calendars"
 msgstr ""
 
-#: Event.php:166
+#: Event.php:167
 msgctxt "Column Title"
 msgid "Event Calendars"
 msgstr ""
 
-#: Event.php:172
+#: Event.php:173
 msgctxt "Default Term"
 msgid "Holiday"
 msgstr ""
 
-#: Event.php:173
+#: Event.php:174
 msgctxt "Default Term"
 msgid "Birth"
 msgstr ""
 
-#: Event.php:174
+#: Event.php:175
 msgctxt "Default Term"
 msgid "Death"
 msgstr ""
 
-#: Event.php:175
+#: Event.php:176
 msgctxt "Default Term"
 msgid "Start"
 msgstr ""
 
-#: Event.php:176
+#: Event.php:177
 msgctxt "Default Term"
 msgid "End"
 msgstr ""
 
-#: Event.php:207
+#: Event.php:208
 msgctxt "Button"
 msgid "Install Default Event Types"
 msgstr ""
 
-#: Event.php:210
+#: Event.php:211
 msgctxt "Button"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: Event.php:498
+#: Event.php:499
 msgctxt "Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:499
+#: Event.php:500
 msgctxt "Meta Box Input Placeholder"
 msgid "Date Start"
-msgstr ""
-
-#: Event.php:508
-msgctxt "Meta Box Input"
-msgid "Time Start"
 msgstr ""
 
 #: Event.php:509
+msgctxt "Meta Box Input"
+msgid "Time Start"
+msgstr ""
+
+#: Event.php:510
 msgctxt "Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:520
+#: Event.php:521
 msgctxt "Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:521
+#: Event.php:522
 msgctxt "Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:530
+#: Event.php:531
 msgctxt "Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: Event.php:531
+#: Event.php:532
 msgctxt "Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""

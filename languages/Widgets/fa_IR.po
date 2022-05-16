@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-02-07T02:51:52+03:30\n"
-"PO-Revision-Date: 2022-03-04 05:50+0330\n"
+"POT-Creation-Date: 2022-04-23T10:58:07+00:00\n"
+"PO-Revision-Date: 2022-04-23 15:31+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -116,32 +116,32 @@ msgctxt "Widget Description"
 msgid "Displays arbitrary HTML code with support for shortcodes and embeds."
 msgstr "نمایش کد HTML دلخواه، همراه با پشتیبانی از شورت‌کدها و جاسازها."
 
-#: Widgets/CustomHTML.php:73
+#: Widgets/CustomHTML.php:75
 msgctxt "Widget: Custom HTML"
 msgid "Process Embeds"
 msgstr "پردازش جاسازها"
 
-#: Widgets/CustomHTML.php:74
+#: Widgets/CustomHTML.php:76
 msgctxt "Widget: Custom HTML"
 msgid "Process Shortcodes"
 msgstr "پردازش شورت‌کدها"
 
-#: Widgets/CustomHTML.php:75
+#: Widgets/CustomHTML.php:77
 msgctxt "Widget: Custom HTML"
 msgid "Process Filters"
 msgstr "پردازش فیلترها"
 
-#: Widgets/CustomHTML.php:76
+#: Widgets/CustomHTML.php:78
 msgctxt "Widget: Custom HTML"
 msgid "Process Filters (Legacy)"
 msgstr "پردازش فیلترها (قدیمی)"
 
-#: Widgets/CustomHTML.php:77
+#: Widgets/CustomHTML.php:79
 msgctxt "Widget: Custom HTML"
 msgid "Automatic Paragraphs"
 msgstr "بندهای خودکار"
 
-#: Widgets/CustomHTML.php:78
+#: Widgets/CustomHTML.php:80
 msgctxt "Widget: Custom HTML"
 msgid "Bypass Caching"
 msgstr "نادیده‌گرفتن انباشت"

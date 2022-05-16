@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial WcDashboard\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-02-07T02:51:40+03:30\n"
-"PO-Revision-Date: 2022-02-07 02:52+0330\n"
+"POT-Creation-Date: 2022-04-23T10:57:59+00:00\n"
+"PO-Revision-Date: 2022-04-23 15:35+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -56,7 +56,7 @@ msgid ""
 "Appears as title of the purchased products menu on front-end account page."
 msgstr ""
 
-#: WcDashboard.php:54 WcDashboard.php:120
+#: WcDashboard.php:54 WcDashboard.php:119
 msgctxt "Default"
 msgid "Purchased"
 msgstr "خریدها"
@@ -72,7 +72,7 @@ msgid ""
 "Appears as message for empty purchased products on front-end account page."
 msgstr ""
 
-#: WcDashboard.php:61 WcDashboard.php:192
+#: WcDashboard.php:61 WcDashboard.php:191
 msgctxt "Default"
 msgid "Nothing purchased yet."
 msgstr "هنوز چیزی خریداری نشده است."

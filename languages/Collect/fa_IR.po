@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Collect\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-02-07T02:49:52+03:30\n"
-"PO-Revision-Date: 2022-03-04 05:46+0330\n"
+"POT-Creation-Date: 2022-04-23T10:56:51+00:00\n"
+"PO-Revision-Date: 2022-04-23 20:50+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -182,78 +182,68 @@ msgctxt "Field Description"
 msgid "Post collaborator in the collection"
 msgstr ""
 
-#: Collect.php:517
-msgctxt "Message"
-msgid "No items connected!"
-msgstr "چیزی مرتبط نشده است!"
-
-#: Collect.php:555
-msgctxt "Title Attr"
-msgid "View the connected list"
-msgstr "دیدن فهرست مرتبط‌شده‌ها"
-
 #. translators: %s: count placeholder
-#: Collect.php:568
+#: Collect.php:525
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr "چینش در گردآورده: %s"
 
-#: Collect.php:637
+#: Collect.php:594
 msgctxt "Header"
 msgid "Collect Tools"
 msgstr "ابزارهای گردآوری"
 
-#: Collect.php:640
+#: Collect.php:597
 msgctxt "Tools"
 msgid "From Terms"
 msgstr "از رده‌ها"
 
-#: Collect.php:644
+#: Collect.php:601
 msgctxt "Button"
 msgid "Check Terms"
 msgstr "بررسی رده‌ها"
 
-#: Collect.php:647
+#: Collect.php:604
 msgctxt "Button"
 msgid "Create Collection Posts"
 msgstr "ساختن نوشته‌های گردآورده"
 
-#: Collect.php:650
+#: Collect.php:607
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr "بازپیوست نوشته‌ها"
 
-#: Collect.php:653
+#: Collect.php:610
 msgctxt "Button"
 msgid "Store Orders"
 msgstr "ذخیره چیدمان"
 
-#: Collect.php:656
+#: Collect.php:613
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr "پاک‌کردن رده‌ها"
 
-#: Collect.php:669
+#: Collect.php:626
 msgctxt "Table Column"
 msgid "Paired Collection Post"
 msgstr ""
 
-#: Collect.php:679
+#: Collect.php:636
 msgctxt "Table Column"
 msgid "Same Slug Collection Post"
 msgstr "گردآورده نوشته هم‌نامک"
 
-#: Collect.php:689
+#: Collect.php:646
 msgctxt "Table Column"
 msgid "Count"
 msgstr "شمار"
 
-#: Collect.php:698
+#: Collect.php:655
 msgctxt "Table Empty"
 msgid "No Terms Found!"
 msgstr "رده‌ای پیدا نشد!"
 
-#: Collect.php:702
+#: Collect.php:659
 msgctxt "Message"
 msgid "Check for collection terms and create corresponding collection posts."
 msgstr ""
@@ -287,6 +277,14 @@ msgstr "نمایش اطلاعات شمارهٔ گردآورده"
 msgctxt "Widget: Collection Poster"
 msgid "Link to the collection"
 msgstr "پیوند به گردآورده"
+
+#~ msgctxt "Message"
+#~ msgid "No items connected!"
+#~ msgstr "چیزی مرتبط نشده است!"
+
+#~ msgctxt "Title Attr"
+#~ msgid "View the connected list"
+#~ msgstr "دیدن فهرست مرتبط‌شده‌ها"
 
 #~ msgctxt "Table Column"
 #~ msgid "Linked Collection Post"

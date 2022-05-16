@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Shortcodes\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-02-07T02:51:06+03:30\n"
-"PO-Revision-Date: 2022-03-04 05:52+0330\n"
+"POT-Creation-Date: 2022-04-23T10:57:38+00:00\n"
+"PO-Revision-Date: 2022-04-23 16:08+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -25,32 +25,42 @@ msgctxt "Setting Description"
 msgid "Enables the use of the selected short-codes."
 msgstr ""
 
-#: Shortcodes.php:52
+#: Shortcodes.php:44
+msgctxt "Setting Title"
+msgid "Remove Empty Paragraphs"
+msgstr ""
+
+#: Shortcodes.php:45
+msgctxt "Setting Description"
+msgid "Strips empty paragraph tags around short-codes from post content."
+msgstr ""
+
+#: Shortcodes.php:57
 msgctxt "Shortcode Name"
 msgid "Display Terms"
 msgstr "نمایش رده‌ها"
 
-#: Shortcodes.php:53
+#: Shortcodes.php:58
 msgctxt "Shortcode Name"
 msgid "Term Tiles"
 msgstr "کاشی‌های رده‌ها"
 
-#: Shortcodes.php:91
+#: Shortcodes.php:102
 msgctxt "Title Attr"
 msgid "Shortcodes"
 msgstr "شورت‌کدها"
 
-#: Shortcodes.php:130
+#: Shortcodes.php:141
 msgctxt "None Title"
 msgid "All Shortcodes"
 msgstr "همهٔ شورت‌کدها"
 
-#: Shortcodes.php:144
+#: Shortcodes.php:155
 msgctxt "Table Column"
 msgid "Shortcodes"
 msgstr "شورت‌کدها"
 
-#: Shortcodes.php:162
+#: Shortcodes.php:173
 msgctxt "Header"
 msgid "Overview of Post Shortcodes"
 msgstr "مروری بر شورت‌کدها در نوشته‌ها"

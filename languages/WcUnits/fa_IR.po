@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial WC Units\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-10-07T20:25:52+03:30\n"
-"PO-Revision-Date: 2021-10-07 20:27+0330\n"
+"POT-Creation-Date: 2022-04-23T10:58:05+00:00\n"
+"PO-Revision-Date: 2022-04-23 15:32+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcUnits\n"
 "X-Domain: geditorial-wc-units\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
 #: WcUnits.php:35
 msgctxt "Setting Title"
@@ -88,14 +88,6 @@ msgid ""
 "Used as not available string upon display of weights. Leave empty to disable."
 msgstr ""
 
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
-#. translators: %s: unit name
 #. translators: %s: unit name
 #: WcUnits.php:81 WcUnits.php:91 WcUnits.php:101 WcUnits.php:111
 #: WcUnits.php:154 WcUnits.php:164 WcUnits.php:174 WcUnits.php:184

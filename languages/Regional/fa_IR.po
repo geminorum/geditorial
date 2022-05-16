@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Regional\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-02-07T02:50:55+03:30\n"
-"PO-Revision-Date: 2022-03-04 02:58+0330\n"
+"POT-Creation-Date: 2022-04-23T10:57:31+00:00\n"
+"PO-Revision-Date: 2022-04-23 17:05+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,38 +15,38 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Regional\n"
 "X-Domain: geditorial-regional\n"
 
-#: Regional.php:49
+#: Regional.php:48
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] "زبان‌ها"
 msgstr[1] "زبان"
 
-#: Regional.php:57
+#: Regional.php:56
 msgctxt "Show Option All"
 msgid "Language"
 msgstr "زبان"
 
-#: Regional.php:58
+#: Regional.php:57
 msgctxt "Show Option None"
 msgid "(Uknonwn Language)"
 msgstr "(زبان نامشخص)"
 
-#: Regional.php:64
+#: Regional.php:63
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr "عربی"
 
-#: Regional.php:65
+#: Regional.php:64
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr "فارسی"
 
-#: Regional.php:66
+#: Regional.php:65
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr "انگلیسی"
 
-#: Regional.php:67
+#: Regional.php:66
 msgctxt "Default Term: Language"
 msgid "French"
 msgstr "فرانسه"

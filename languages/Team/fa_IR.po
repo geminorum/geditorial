@@ -2,116 +2,116 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Team\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-28T00:05:28+00:00\n"
-"PO-Revision-Date: 2020-08-28 04:49+0430\n"
+"POT-Creation-Date: 2022-04-23T10:57:46+00:00\n"
+"PO-Revision-Date: 2022-04-23 16:05+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
-"X-Domain: geditorial-team\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Domain: geditorial-team\n"
 "X-Poedit-Basepath: ../../includes/Modules/Team\n"
 
-#: Team.php:59
-msgctxt "Posttype Menu"
-msgid "Team Members"
-msgstr "گروهه"
-
-#: Team.php:61
+#: Team.php:58
 msgctxt "Column Title"
 msgid "Team Member Groups"
 msgstr "گروه‌های افراد"
 
-#: Team.php:64
+#: Team.php:61
 msgid "Team Member"
 msgid_plural "Team Members"
 msgstr[0] "افراد گروه"
 msgstr[1] "فرد گروه"
 
-#: Team.php:65
+#: Team.php:62
 msgid "Team Member Group"
 msgid_plural "Team Member Groups"
 msgstr[0] "گروه‌های افراد"
 msgstr[1] "گروه افراد"
 
-#: Team.php:75
+#: Team.php:66
+msgctxt "Posttype Menu"
+msgid "Team Members"
+msgstr "گروهه"
+
+#: Team.php:77
 msgctxt "Field Title"
 msgid "Role"
 msgstr "نقش"
 
-#: Team.php:76
+#: Team.php:78
 msgctxt "Field Description"
 msgid ""
 "Enter a byline for the team member (for example: \"Director of Production\")."
 msgstr ""
 
-#: Team.php:81
+#: Team.php:83
 msgctxt "Field Title"
 msgid "Gravatar E-mail Address"
 msgstr "نشانی ایمیل گراواتار"
 
-#: Team.php:82
+#: Team.php:84
 msgctxt "Field Description"
 msgid ""
 "Enter an e-mail address, to use a Gravatar, instead of using the \"Featured "
 "Image\"."
 msgstr ""
 
-#: Team.php:87
+#: Team.php:89
 msgctxt "Field Title"
 msgid "Personal Site"
 msgstr "سایت شخصی"
 
-#: Team.php:88
+#: Team.php:90
 msgctxt "Field Description"
 msgid "Enter this team member's URL (for example: https://geminorum.ir/)."
 msgstr ""
 
-#: Team.php:93
+#: Team.php:95
 msgctxt "Field Title"
 msgid "Contact E-mail Address"
 msgstr "نشانی ایمیل تماس"
 
-#: Team.php:94
+#: Team.php:96
 msgctxt "Field Description"
 msgid ""
 "Enter a contact email address for this team member to be displayed as a link "
 "on the frontend."
 msgstr ""
 
-#: Team.php:99
+#: Team.php:101
 msgctxt "Field Title"
 msgid "Telephone Number"
 msgstr "شماره تلفن"
 
-#: Team.php:100
+#: Team.php:102
 msgctxt "Field Description"
 msgid ""
 "Enter a telephone number for this team member to be displayed as a link on "
 "the frontend."
 msgstr ""
 
-#: Team.php:105
+#: Team.php:107
 msgctxt "Field Title"
 msgid "Twitter Username"
 msgstr "شناسه توییتر"
 
-#: Team.php:106
+#: Team.php:108
 msgctxt "Field Description"
 msgid ""
 "Enter this team member's Twitter username without the @ (for example: "
 "geminorumir)."
 msgstr ""
 
-#: Team.php:111
+#: Team.php:113
 msgctxt "Field Title"
 msgid "Network Username"
 msgstr "شناسه شبکه"
 
-#: Team.php:112
+#: Team.php:114
 msgctxt "Field Description"
 msgid "Map this team member to a user on this site."
 msgstr ""

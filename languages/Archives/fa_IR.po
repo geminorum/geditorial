@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Archives\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-01-24T18:04:04+03:30\n"
-"PO-Revision-Date: 2022-01-25 01:33+0330\n"
+"POT-Creation-Date: 2022-04-23T10:56:46+00:00\n"
+"PO-Revision-Date: 2022-04-23 20:39+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -16,60 +16,60 @@ msgstr ""
 "X-Domain: geditorial-archives\n"
 
 #. translators: %s: supported object label
-#: Archives.php:39 Archives.php:62
+#: Archives.php:41 Archives.php:64
 msgctxt "Setting Title"
 msgid "Archives Title for %s"
 msgstr "عنوان بایگانی برای %s"
 
-#: Archives.php:40
+#: Archives.php:42
 msgctxt "Setting Description"
 msgid "Used as title on the posttype archive pages."
 msgstr "برای عنوان در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
 
 #. translators: %s: supported object label
-#: Archives.php:48 Archives.php:71
+#: Archives.php:50 Archives.php:73
 msgctxt "Setting Title"
 msgid "Archives Content for %s"
 msgstr "محتوای بایگانی برای %s"
 
-#: Archives.php:49
+#: Archives.php:51
 msgctxt "Setting Description"
 msgid "Used as content on the posttype archive pages."
 msgstr "برای محتوا در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
 
-#: Archives.php:63
+#: Archives.php:65
 msgctxt "Setting Description"
 msgid "Used as title on the taxonomy archive pages."
 msgstr "برای عنوان در صفحات بایگانی رده‌بندی استفاده خواهد شد."
 
-#: Archives.php:72
+#: Archives.php:74
 msgctxt "Setting Description"
 msgid "Used as content on the taxonomy archive pages."
 msgstr "برای محتوا در صفحات بایگانی رده‌بندی استفاده خواهد شد."
 
 #. translators: %s: supported object label
-#: Archives.php:80
+#: Archives.php:82
 msgctxt "Setting Title"
 msgid "Archives Slug for %s"
 msgstr "نامک بایگانی برای %s"
 
-#: Archives.php:81
+#: Archives.php:83
 msgctxt "Setting Description"
 msgid "Used as slug on the taxonomy archive pages."
 msgstr "برای نامک در صفحات بایگانی رده‌بندی استفاده خواهد شد."
 
-#: Archives.php:82
+#: Archives.php:84
 msgctxt "Setting Icon"
 msgid "View Archives Page"
 msgstr "نمایش صفحه بایگانی"
 
-#: Archives.php:88
+#: Archives.php:90
 msgctxt "Setting Description"
 msgid "Prepends a search form to the posttype archive pages."
 msgstr "پیش از محتوای بایگانی نوع‌نوشته، فرم جست‌جو اضافه می‌کند."
 
 #. translators: %s: supported object label
-#: Archives.php:307 Archives.php:316
+#: Archives.php:309 Archives.php:318
 msgctxt "Navigation Metabox"
 msgid "%s Archives"
 msgstr "بایگانی %s"

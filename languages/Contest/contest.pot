@@ -1,231 +1,176 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Contest 3.22.1\n"
+"Project-Id-Version: gEditorial Contest 3.23.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-03-05T22:02:17+00:00\n"
+"POT-Creation-Date: 2022-05-16T11:11:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 "X-Domain: geditorial-contest\n"
 
-#: Contest.php:40
+#: Contest.php:35
 msgctxt "Settings"
 msgid "Contest Sections"
 msgstr ""
 
-#: Contest.php:41
+#: Contest.php:36
 msgctxt "Settings"
 msgid "Section taxonomy for the contests and supported post-types."
 msgstr ""
 
-#: Contest.php:52
+#: Contest.php:47
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Contest.php:53
+#: Contest.php:48
 msgctxt "Settings"
 msgid "Redirects contest and apply archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Contest.php:108
-#: Contest.php:109
+#: Contest.php:103
+#: Contest.php:104
 msgid "Contest"
 msgid_plural "Contests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:110
+#: Contest.php:105
 msgid "Contest Category"
 msgid_plural "Contest Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:111
+#: Contest.php:106
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:112
+#: Contest.php:107
 msgid "Apply"
 msgid_plural "Applies"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:113
+#: Contest.php:108
 msgid "Apply Category"
 msgid_plural "Apply Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:114
+#: Contest.php:109
 msgid "Apply Status"
 msgid_plural "Apply Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:123
+#: Contest.php:118
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Contest.php:124
+#: Contest.php:119
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr ""
 
-#: Contest.php:125
+#: Contest.php:120
 msgctxt "Column Title"
 msgid "Applies"
 msgstr ""
 
-#: Contest.php:126
+#: Contest.php:121
 msgctxt "Select Option None"
 msgid "&ndash; Select Contest &ndash;"
 msgstr ""
 
-#: Contest.php:129
+#: Contest.php:124
 msgctxt "MetaBox Title"
 msgid "In This Contest"
 msgstr ""
 
-#: Contest.php:132
+#: Contest.php:127
 msgctxt "Column Title"
 msgid "Contest Categories"
 msgstr ""
 
-#: Contest.php:135
+#: Contest.php:130
 msgctxt "MetaBox Title"
 msgid "Sections"
 msgstr ""
 
-#: Contest.php:136
+#: Contest.php:131
 msgctxt "Column Title"
 msgid "Contest Sections"
 msgstr ""
 
-#: Contest.php:137
+#: Contest.php:132
 msgctxt "Select Option None"
 msgid "&ndash; Select Section &ndash;"
 msgstr ""
 
-#: Contest.php:140
+#: Contest.php:135
 msgctxt "MetaBox Title"
 msgid "Contest"
 msgstr ""
 
-#: Contest.php:143
+#: Contest.php:138
 msgctxt "Column Title"
 msgid "Apply Categories"
 msgstr ""
 
-#: Contest.php:146
+#: Contest.php:141
 msgctxt "MetaBox Title"
 msgid "Apply Statuses"
 msgstr ""
 
-#: Contest.php:147
+#: Contest.php:142
 msgctxt "Column Title"
 msgid "Apply Statuses"
 msgstr ""
 
-#: Contest.php:149
+#: Contest.php:144
 msgctxt "MetaBox Title"
+msgid "Contests"
+msgstr ""
+
+#: Contest.php:145
+msgctxt "Column Title"
 msgid "Contests"
 msgstr ""
 
 #: Contest.php:150
-msgctxt "Column Title"
-msgid "Contests"
-msgstr ""
-
-#: Contest.php:155
 msgctxt "Default Term"
 msgid "Approved"
 msgstr ""
 
-#: Contest.php:156
+#: Contest.php:151
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Contest.php:157
+#: Contest.php:152
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr ""
 
-#: Contest.php:158
+#: Contest.php:153
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr ""
 
-#: Contest.php:182
+#: Contest.php:177
 msgctxt "Button"
 msgid "Install Default Apply Statuses"
 msgstr ""
 
-#: Contest.php:408
-msgctxt "Message"
-msgid "No items connected!"
-msgstr ""
-
-#: Contest.php:554
-msgctxt "Title Attr"
-msgid "View the connected list"
-msgstr ""
-
-#: Contest.php:603
+#: Contest.php:568
 msgctxt "Header"
 msgid "Contest Tools"
-msgstr ""
-
-#: Contest.php:607
-msgctxt "Tools"
-msgid "From Terms"
-msgstr ""
-
-#: Contest.php:616
-msgctxt "Table Column"
-msgid "Paired Contest Post"
-msgstr ""
-
-#: Contest.php:626
-msgctxt "Table Column"
-msgid "Same Slug Contest Post"
-msgstr ""
-
-#: Contest.php:636
-msgctxt "Table Column"
-msgid "Count"
-msgstr ""
-
-#: Contest.php:650
-msgctxt "Button"
-msgid "Check Terms"
-msgstr ""
-
-#: Contest.php:653
-msgctxt "Button"
-msgid "Create Contest Posts"
-msgstr ""
-
-#: Contest.php:656
-msgctxt "Button"
-msgid "Re-Connect Posts"
-msgstr ""
-
-#: Contest.php:659
-msgctxt "Button"
-msgid "Delete Terms"
-msgstr ""
-
-#: Contest.php:661
-msgctxt "Message"
-msgid "Check for contest terms and create corresponding contest posts."
 msgstr ""
