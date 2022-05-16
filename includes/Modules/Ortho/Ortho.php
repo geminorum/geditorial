@@ -365,6 +365,8 @@ class Ortho extends gEditorial\Module
 						'count'   => $count,
 					] );
 				}
+
+				WordPress::redirectReferer( 'huh' );
 			}
 
 			$this->add_sub_screen_option( $sub );

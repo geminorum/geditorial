@@ -630,9 +630,9 @@ class Magazine extends gEditorial\Module
 				$this->nonce_check( 'tools', $sub );
 				$this->paired_tools_handle_tablelist( 'issue_cpt', 'issue_tax' );
 			}
-		}
 
-		Scripts::enqueueThickBox();
+			Scripts::enqueueThickBox();
+		}
 	}
 
 	protected function render_tools_html( $uri, $sub )

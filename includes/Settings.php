@@ -1196,7 +1196,7 @@ class Settings extends Core\Base
 		if ( ! $module->configure )
 			return;
 
-		if ( 'tools' == $module->configure )
+		if ( 'tools' === $module->configure )
 			echo HTML::tag( 'a', [
 				'href'  => add_query_arg( [ 'page' => static::TOOLS, 'sub' => $module->name ], get_admin_url( NULL, 'admin.php' ) ),
 				'style' => $enabled ? FALSE : 'display:none',
@@ -1208,7 +1208,7 @@ class Settings extends Core\Base
 			], _x( 'Tools', 'Settings: Button', 'geditorial' ) );
 
 
-		else if ( 'reports' == $module->configure )
+		else if ( 'reports' === $module->configure )
 			echo HTML::tag( 'a', [
 				'href'  => add_query_arg( [ 'page' => static::REPORTS, 'sub' => $module->name ], get_admin_url( NULL, 'index.php' ) ),
 				'style' => $enabled ? FALSE : 'display:none',
