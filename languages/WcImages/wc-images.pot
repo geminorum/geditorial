@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcImages 3.22.1\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-05-16T10:24:07+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcImages\n"
+"X-Domain: geditorial-wc-images\n"
+
+#: WcImages.php:109
+msgctxt "Table Action"
+msgid "Shift Thumbnail from Gallery"
+msgstr ""
+
+#: WcImages.php:120
+msgctxt "Table Column"
+msgid "Thumbnail"
+msgstr ""
+
+#: WcImages.php:130
+msgctxt "Table Column"
+msgid "Gallery"
+msgstr ""
+
+#: WcImages.php:145
+msgctxt "Header"
+msgid "Overview of WooCommerce Products"
+msgstr ""
+
+#: WcImages.php:146
+msgctxt "Message"
+msgid "No product found."
+msgstr ""
