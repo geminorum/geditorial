@@ -376,6 +376,7 @@ class ModuleHelper extends gEditorial\Helper
 			'title'        => _x( 'Day', 'Meta Box Input', 'geditorial-today' ),
 			'placeholder'  => _x( 'Day', 'Meta Box Input Placeholder', 'geditorial-today' ),
 			'data'         => [ 'ortho' => 'number' ],
+			'onclick'      => 'this.focus();this.select()',
 		] );
 
 		$html.= HTML::tag( 'input', [
@@ -390,6 +391,7 @@ class ModuleHelper extends gEditorial\Helper
 			'title'        => _x( 'Month', 'Meta Box Input', 'geditorial-today' ),
 			'placeholder'  => _x( 'Month', 'Meta Box Input Placeholder', 'geditorial-today' ),
 			'data'         => [ 'ortho' => 'number' ],
+			'onclick'      => 'this.focus();this.select()',
 		] );
 
 		if ( $year )
@@ -404,6 +406,7 @@ class ModuleHelper extends gEditorial\Helper
 				'placeholder'  => _x( 'Year', 'Meta Box Input Placeholder', 'geditorial-today' ),
 				'disabled'     => ! $year,
 				'data'         => [ 'ortho' => 'number' ],
+				'onclick'      => 'this.focus();this.select()',
 			] );
 
 		echo HTML::wrap( $html, 'field-wrap '.( $year ? '-inputtext-date' : '-inputtext-half' ) );
