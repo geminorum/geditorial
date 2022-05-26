@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Grouping\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: 2022-05-16T11:12:18+00:00\n"
+"PO-Revision-Date: 2022-05-26 20:04+0430\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Grouping\n"
+"X-Domain: geditorial-grouping\n"
+
+#: Grouping.php:33
+msgctxt "Setting Title"
+msgid "Custom Taxonomies"
+msgstr "رده‌بندی‌های سفارشی"
+
+#: Grouping.php:38
+msgctxt "Setting Title"
+msgid "Taxonomy Name"
+msgstr "نام رده‌بندی"
+
+#: Grouping.php:46
+msgctxt "Setting Title"
+msgid "Taxonomy Slug"
+msgstr "نامک رده‌بندی"
+
+#: Grouping.php:54
+msgctxt "Setting Title"
+msgid "Singular Label"
+msgstr "عنوان مفرد"
+
+#: Grouping.php:60
+msgctxt "Setting Title"
+msgid "Plural Label"
+msgstr "عنوان جمع"
+
+#: Grouping.php:66
+msgctxt "Setting Title"
+msgid "Menu Label"
+msgstr "عنوان منو"
+
+#: Grouping.php:72
+msgctxt "Setting Title"
+msgid "Icon"
+msgstr "آیکون"
+
+#: Grouping.php:161
+msgctxt "Column Title"
+msgid "Users"
+msgstr "کاربران"

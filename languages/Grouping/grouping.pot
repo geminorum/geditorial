@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Grouping 3.23.0\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-05-16T11:12:18+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Grouping\n"
+"X-Domain: geditorial-grouping\n"
+
+#: Grouping.php:33
+msgctxt "Setting Title"
+msgid "Custom Taxonomies"
+msgstr ""
+
+#: Grouping.php:38
+msgctxt "Setting Title"
+msgid "Taxonomy Name"
+msgstr ""
+
+#: Grouping.php:46
+msgctxt "Setting Title"
+msgid "Taxonomy Slug"
+msgstr ""
+
+#: Grouping.php:54
+msgctxt "Setting Title"
+msgid "Singular Label"
+msgstr ""
+
+#: Grouping.php:60
+msgctxt "Setting Title"
+msgid "Plural Label"
+msgstr ""
+
+#: Grouping.php:66
+msgctxt "Setting Title"
+msgid "Menu Label"
+msgstr ""
+
+#: Grouping.php:72
+msgctxt "Setting Title"
+msgid "Icon"
+msgstr ""
+
+#: Grouping.php:161
+msgctxt "Column Title"
+msgid "Users"
+msgstr ""
