@@ -2096,8 +2096,10 @@ class Module extends Base
 			'title' => _x( 'Default Terms', 'Module', 'geditorial' ),
 		];
 
-		if ( ! empty( $this->strings['terms'][$constant] ) )
-			$tab['content'] = HTML::wrap( HTML::tableCode( $this->strings['terms'][$constant], TRUE ), '-info' );
+		$terms = $this->get_default_terms( $constant );
+
+		if ( ! empty( $terms ) )
+			$tab['content'] = HTML::wrap( HTML::tableCode( $terms, TRUE ), '-info' );
 
 		else
 			$tab['content'] = HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' );
@@ -2111,8 +2113,8 @@ class Module extends Base
 		if ( ! $this->nonce_verify( 'settings' ) )
 			return;
 
-		if ( is_null( $terms ) && isset( $this->strings['terms'][$constant] ) )
-			$terms = $this->strings['terms'][$constant];
+		if ( is_null( $terms ) )
+			$terms = $this->get_default_terms( $constant );
 
 		if ( empty( $terms ) )
 			$message = 'noadded';
@@ -2129,6 +2131,17 @@ class Module extends Base
 		WordPress::redirectReferer( $message );
 	}
 
+	// NOTE: hook filter before `init` on `after_setup_theme`
+	protected function get_default_terms( $constant )
+	{
+		if ( ! empty( $this->strings['terms'][$constant] ) )
+			$terms = $this->strings['terms'][$constant];
+		else
+			$terms = [];
+
+		return $this->filters( 'get_default_terms', $terms, $this->constant( $constant ) );
+	}
+
 	protected function register_default_terms( $constant, $terms = NULL )
 	{
 		if ( ! defined( 'GNETWORK_VERSION' ) )
@@ -2137,10 +2150,10 @@ class Module extends Base
 		if ( ! is_admin() )
 			return FALSE;
 
-		if ( is_null( $terms ) && ! empty( $this->strings['terms'][$constant] ) )
-			$terms = $this->strings['terms'][$constant];
+		if ( is_null( $terms ) )
+			$terms = $this->get_default_terms( $constant );
 
-		if ( ! $terms )
+		if ( empty( $terms ) )
 			return FALSE;
 
 		add_filter( 'gnetwork_taxonomy_default_terms_'.$this->constant( $constant ),
