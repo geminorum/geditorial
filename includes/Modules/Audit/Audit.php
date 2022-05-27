@@ -193,7 +193,7 @@ class Audit extends gEditorial\Module
 		$this->filter( 'map_meta_cap', 4 );
 
 		if ( $this->get_setting( 'auto_audit_empty' ) )
-			$this->action( 'save_post', 3 );
+			$this->action( 'save_post', 3, 99 );
 
 		$this->register_default_terms( 'audit_tax' );
 	}
@@ -362,6 +362,8 @@ class Audit extends gEditorial\Module
 			else
 				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
 		}
+
+		$terms = $this->filters( 'auto_audit_save_post', $terms, $post, $taxonomy, $currents );
 
 		if ( $terms == $currents )
 			return;
