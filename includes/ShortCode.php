@@ -58,7 +58,7 @@ class ShortCode extends Main
 		$args = self::atts( [
 			'title'          => NULL, // '<a href="%2$s">%1$s</a>', // FALSE to disable
 			'title_cb'       => FALSE, // callback for title
-			'title_link'     => NULL, // FALSE to disable
+			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
 			'title_title'    => '',
 			'title_title_cb' => FALSE, // callback for title attr
 			'title_tag'      => 'h3',
@@ -96,7 +96,8 @@ class ShortCode extends Main
 				( $attr ?: '' )
 			);
 
-			$args['title_link'] = FALSE;
+			if ( 'anchor' !== $args['title_link'] )
+				$args['title_link'] = FALSE;
 		}
 
 		if ( $args['title'] ) {
@@ -104,6 +105,12 @@ class ShortCode extends Main
 			if ( is_null( $args['title_link'] ) && $term )
 				$args['title'] = HTML::tag( 'a', [
 					'href'  => $link,
+					'title' => $attr,
+				], $args['title'] );
+
+			else if ( 'anchor' === $args['title_link'] && $term )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => '#'.sprintf( $args['title_anchor'], $term->term_id, $term->slug ),
 					'title' => $attr,
 				], $args['title'] );
 
@@ -322,7 +329,7 @@ class ShortCode extends Main
 		$args = self::atts( [
 			'title'          => NULL, // FALSE to disable
 			'title_cb'       => FALSE, // callback for title
-			'title_link'     => NULL, // FALSE to disable
+			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
 			'title_title'    => '',
 			'title_title_cb' => FALSE, // callback for title attr
 			'title_tag'      => 'h3',
@@ -353,9 +360,16 @@ class ShortCode extends Main
 			$attr = FALSE;
 
 		if ( $args['title'] ) {
+
 			if ( is_null( $args['title_link'] ) && $post )
 				$args['title'] = HTML::tag( 'a', [
 					'href'  => $link,
+					'title' => $attr,
+				], $args['title'] );
+
+			else if ( 'anchor' === $args['title_link'] && $post )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => '#'.sprintf( $args['title_anchor'], $post->ID, $post->post_name ),
 					'title' => $attr,
 				], $args['title'] );
 
@@ -521,7 +535,7 @@ class ShortCode extends Main
 			'slug'               => '',
 			'title'              => NULL, // FALSE to disable
 			'title_cb'           => FALSE,
-			'title_link'         => NULL, // FALSE to disable
+			'title_link'         => NULL, // `anchor` for slug anchor, FALSE to disable
 			'title_title'        => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
 			'title_title_cb'     => FALSE, // callback for title attr
 			'title_tag'          => 'h3',
