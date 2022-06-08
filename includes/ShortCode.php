@@ -794,10 +794,10 @@ class ShortCode extends Main
 
 		foreach ( $items as $item ) {
 
-			// caller must setup postdata
-			// REF: https://developer.wordpress.org/?p=2837#comment-874
-			// $GLOBALS['post'] = $item;
-			// setup_postdata( $item );
+			// NOTE: callback must setup postdata
+			// @REF: https://developer.wordpress.org/?p=2837#comment-874
+			// `$GLOBALS['post'] = $item;`
+			// `setup_postdata( $item );`
 
 			if ( $args['item_cb'] )
 				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $ref ] );
@@ -1168,7 +1168,7 @@ class ShortCode extends Main
 		];
 
 		// FIXME: support sort by meta
-		if ( 'order' == $query['orderby'] )
+		if ( 'order' == $args['orderby'] )
 			$query['orderby'] = 'none'; // later sorting
 
 		if ( 'listing' == $list ) {

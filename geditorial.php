@@ -26,7 +26,7 @@ define( 'GEDITORIAL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GEDITORIAL_URL', plugin_dir_url( __FILE__ ) );
 define( 'GEDITORIAL_FILE', basename( GEDITORIAL_DIR ).'/'.basename( __FILE__ ) );
 
-if ( version_compare( GEDITORIAL_MIN_PHP, phpversion(), '>=' ) ) {
+if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 
 	if ( is_admin() ) {
 		echo '<div class="notice notice-warning notice-alt is-dismissible"><p dir="ltr">';

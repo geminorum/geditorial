@@ -2672,7 +2672,7 @@ class Module extends Base
 		$posttype = $this->constant( $constant );
 		$cap_type = $this->get_posttype_cap_type( $constant );
 
-		$args = array_merge( [
+		$args = self::recursiveParseArgs( $atts, [
 			'labels'      => $this->get_posttype_labels( $constant ),
 			'description' => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
 
@@ -2715,7 +2715,7 @@ class Module extends Base
 			// only `%post_id%` and `%postname%`
 			// @SEE: https://github.com/torounit/simple-post-type-permalinks
 			'sptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
-		], $atts );
+		] );
 
 		if ( ! array_key_exists( 'taxonomies', $args ) )
 			$args['taxonomies'] = is_null( $taxonomies ) ? $this->taxonomies() : $taxonomies;

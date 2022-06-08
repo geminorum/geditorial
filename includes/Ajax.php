@@ -81,7 +81,7 @@ class Ajax extends Core\Base
 	{
 		$props = array_merge( $args, [
 			'_base' => static::BASE,
-			'_url'  => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
+			'_url'  => sanitize_url( admin_url( 'admin-ajax.php' ) ),
 
 			// '_restURL'   => rest_url(),
 			// '_restNonce' => wp_create_nonce( 'wp_rest' ),

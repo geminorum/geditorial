@@ -129,7 +129,7 @@ class WcDashboard extends gEditorial\Module
 	public function wc_get_template( $template, $template_name, $args, $template_path, $default_path )
 	{
 		if ( 'myaccount/dashboard.php' == $template_name )
-			return $this->path.'templates/dashboard.php';
+			return $this->path.'Templates/dashboard.php';
 
 		return $template;
 	}

@@ -858,7 +858,7 @@ class Helper extends Main
 	{
 		$content = WP_CONTENT_DIR.'/'.$name.'.php';
 		$plugin  = GEDITORIAL_DIR.'includes/Layouts/'.$name.'.php';
-		$layout  = locate_template( 'editorial-layouts/'.$name );
+		$layout  = locate_template( 'editorial/layouts/'.$name );
 
 		if ( ! $layout && is_readable( $content ) )
 			$layout = $content;

@@ -19,7 +19,7 @@ class WcImages extends gEditorial\Module
 	{
 		return [
 			'name'      => 'wc_images',
-			'title'     => _x( 'WC Images', 'Modules: Wc Images', 'geditorial' ),
+			'title'     => _x( 'WC Images', 'Modules: WC Images', 'geditorial' ),
 			'desc'      => _x( 'Tools for Product Galleries', 'Modules: WC Images', 'geditorial' ),
 			'icon'      => 'images-alt2',
 			'disabled'  => Helper::moduleCheckWooCommerce(),

@@ -438,6 +438,8 @@ class ModuleHelper extends gEditorial\Helper
 
 		$html = '';
 
+		unset( $the_day['year'] );
+
 		foreach ( $posttypes as $posttype ) {
 
 			$object = PostType::object( $posttype );
@@ -461,8 +463,6 @@ class ModuleHelper extends gEditorial\Helper
 		if ( FALSE !== $the_post ) {
 
 			$object = PostType::object( self::constant( 'day_cpt', 'day' ) );
-
-			unset( $the_day['year'] );
 
 			if ( TRUE === $the_post ) {
 

@@ -10,6 +10,8 @@ use geminorum\gEditorial\Core\HTML;
 class WcPostal extends gEditorial\Module
 {
 
+	// metabax for manually adding the tracking code
+
 	public static function module()
 	{
 		return [
