@@ -160,7 +160,7 @@ class Entry extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Entry Sections', 'Adminbar', 'geditorial-entry' ),
 			'parent' => $parent,
-			'href'   => get_post_type_archive_link( $this->constant( 'entry_cpt' ) ),
+			'href'   => PostType::getArchiveLink( $this->constant( 'entry_cpt' ) ),
 		];
 
 		foreach ( $terms as $term )

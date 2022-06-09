@@ -502,7 +502,7 @@ class Plugin
 		if ( ! $custom = get_page_template_slug() )
 			return $template;
 
-		if ( $in_theme = locate_template( 'editorial/'.$custom ) )
+		if ( $in_theme = locate_template( 'editorial/templates/'.$custom ) )
 			return $in_theme;
 
 		if ( file_exists( GEDITORIAL_DIR.'includes/templates/'.$custom ) )

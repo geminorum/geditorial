@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -49,6 +50,7 @@ class ShortCode extends Main
 	// term as title of the list
 	public static function termTitle( $term_or_id, $taxonomy = 'category', $atts = [] )
 	{
+		// FIXME: WTF?!
 		if ( is_array( $term_or_id ) )
 			$term_or_id = $term_or_id[0];
 
@@ -233,9 +235,9 @@ class ShortCode extends Main
 
 		$args = self::atts( [
 			'item_link'          => TRUE,
-			'item_text'          => NULL, // callback or use %s for post title
+			'item_text'          => NULL, // callback or use %s for term title
 			'item_wrap'          => '', // use %s for item title / or html tag
-			'item_title'         => '', // use %s for post title
+			'item_title'         => '', // use %s for term title
 			'item_title_cb'      => FALSE,
 			'item_tag'           => 'li',
 			'item_anchor'        => FALSE, // $term->taxonomy.'-%2$s',
@@ -243,15 +245,17 @@ class ShortCode extends Main
 			'item_dummy'         => '<span class="-dummy"></span>',
 			'item_after'         => '',
 			'item_after_cb'      => FALSE,
+			'item_image_tile'    => NULL,
 			'item_image_metakey' => 'image',
 			'item_image_size'    => 'thumbnail',
 			'item_image_loading' => 'lazy', // FALSE to disable
+			'item_image_empty'   => FALSE,
 		], $atts );
 
-		if ( ! $image_id = get_term_meta( $term->term_id, $args['item_image_metakey'], TRUE ) )
+		if ( ! $image_id = Taxonomy::getThumbnailID( $term->term_id, $args['item_image_metakey'] ) )
 			return $fallback;
 
-		if ( ! $thumbnail_img = wp_get_attachment_image_src( $image_id, $args['item_image_size'] ) )
+		if ( ! $thumbnail_img = Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
 
 		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
@@ -270,11 +274,11 @@ class ShortCode extends Main
 			$title = $args['item_text'];
 
 		else
-			$title = ''; // FIXME: WTF: better to bail here!
+			$title = '';
 
 		$image = HTML::tag( 'img', [
-			'src'     => $thumbnail_img[0],
-			'alt'     => $title,
+			'src'     => $thumbnail_img,
+			'alt'     => Media::getAttachmentImageAlt( $image_id, $title ),
 			'loading' => $args['item_image_loading'],
 		] );
 
@@ -343,7 +347,7 @@ class ShortCode extends Main
 		], $atts );
 
 		$text = $taxonomy->labels->{$args['title_label']};
-		$link = Helper::getTaxonomyArchiveLink( $taxonomy->name );
+		$link = Taxonomy::getArchiveLink( $taxonomy->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $taxonomy, $atts, $text, $link ] );
@@ -732,7 +736,7 @@ class ShortCode extends Main
 			'item_image_metakey' => empty( $posttype ) ? 'image' : '_thumbnail_id',
 			'item_image_size'    => 'thumbnail',
 			'item_image_loading' => 'lazy', // FALSE to disable
-			'item_image_empty'   => FALSE, // FALSE to disable
+			'item_image_empty'   => FALSE,
 			'order_before'       => FALSE,
 			'order_zeroise'      => FALSE,
 			'order_sep'          => ' &ndash; ',
@@ -757,11 +761,11 @@ class ShortCode extends Main
 		];
 	}
 
-	// list: assigned: posts by terms
-	// list: paired: posts by meta (PAIRED API)
-	// list: connected: posts by o2o
-	// list: attached: posts by inheritance
-	// list: alphabetized: posts sorted by alphabet // TODO!
+	// list: `assigned`: posts by terms
+	// list: `paired`: posts by meta (PAIRED API)
+	// list: `connected`: posts by o2o
+	// list: `attached`: posts by inheritance
+	// list: `alphabetized`: posts sorted by alphabet // TODO!
 	// list: `custom`: posts by id list // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
@@ -1378,7 +1382,7 @@ class ShortCode extends Main
 		}
 
 		if ( $args['item_image_tile']
-			&& FALSE === $arg['item_image_empty'] ) {
+			&& FALSE === $args['item_image_empty'] ) {
 
 			$query['meta_query'] = [ [
 				'key'     => $args['item_image_metakey'], // 'image',

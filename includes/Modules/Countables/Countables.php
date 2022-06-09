@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Countables extends gEditorial\Module
@@ -101,7 +102,7 @@ class Countables extends gEditorial\Module
 				'countable' => '-posttype-'.$posttype,
 				'count'     => $count,
 				'formatted' => $args['counter'] ? '' : Number::format( $count ),
-				'link'      => $args['link'] ?: get_post_type_archive_link( $posttype ),
+				'link'      => $args['link'] ?: PostType::getArchiveLink( $posttype ),
 				'title'     => is_null( $args['title'] ) ? $this->get_posttype_label( $posttype, 'name' ) : trim( $args['title'] ),
 				'text'      => $content ? trim( $content ) : $this->get_posttype_label( $posttype, 'description' ),
 			], $posttype, $count, $args );

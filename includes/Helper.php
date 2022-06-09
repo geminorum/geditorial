@@ -258,6 +258,7 @@ class Helper extends Main
 		echo Strings::getJoined( $list, $before, $after );
 	}
 
+	// FIXME: move to WordPress/PostType
 	// simplified `get_post()`
 	public static function getPost( $post = NULL, $output = OBJECT, $filter = 'raw' )
 	{
@@ -271,6 +272,7 @@ class Helper extends Main
 		return get_post( $post, $output, $filter );
 	}
 
+	// FIXME: move to WordPress/PostType
 	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
 	{
 		if ( ! $post = self::getPost( $post ) )
@@ -287,10 +289,12 @@ class Helper extends Main
 		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
 	}
 
+	// FIXME: move to WordPress/PostType
 	public static function getPostTitle( $post, $fallback = NULL, $filter = TRUE )
 	{
 		if ( ! $post = self::getPost( $post ) )
-			return Plugin::na( FALSE );
+			// return Plugin::na( FALSE );
+			return '';
 
 		$title = $filter ? apply_filters( 'the_title', $post->post_title, $post->ID ) : $post->post_title;
 
@@ -301,7 +305,8 @@ class Helper extends Main
 			return '';
 
 		if ( is_null( $fallback ) )
-			return _x( '(untitled)', 'Helper: Post Title', 'geditorial' );
+			// return _x( '(untitled)', 'Helper: Post Title', 'geditorial' );
+			return __( '(Untitled)' );
 
 		return $fallback;
 	}

@@ -318,7 +318,7 @@ class Archives extends gEditorial\Module
 				'name' => sprintf( _x( '%s Archives', 'Navigation Metabox', 'geditorial-archives' ), $posttype_label ),
 				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
 				'slug' => sprintf( 'custom-%s_archives', $posttype_name ),
-				'link' => get_post_type_archive_link( $posttype_name ),
+				'link' => PostType::getArchiveLink( $posttype_name ),
 			];
 
 		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label )
