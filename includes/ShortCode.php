@@ -323,7 +323,76 @@ class ShortCode extends Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
-	// post as title of the list
+	// taxonomy as title of the list
+	public static function taxonomyTitle( $taxonomy = NULL, $atts = [] )
+	{
+		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+			return '';
+
+		$args = self::atts( [
+			'title'          => NULL, // FALSE to disable
+			'title_cb'       => FALSE, // callback for title
+			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
+			'title_title'    => '',
+			'title_title_cb' => FALSE, // callback for title attr
+			'title_tag'      => 'h3',
+			'title_anchor'   => '%2$s',
+			'title_class'    => '-title',
+			'title_dummy'    => '<span class="-dummy"></span>',
+			'title_label'    => 'all_items',
+		], $atts );
+
+		$text = $taxonomy->labels->{$args['title_label']};
+		$link = Helper::getTaxonomyArchiveLink( $taxonomy->name );
+
+		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $taxonomy, $atts, $text, $link ] );
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = $text;
+
+		else if ( $args['title'] && Text::has( $args['title'], '%' ) )
+			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
+
+		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
+			$attr = call_user_func_array( $args['title_title_cb'], [ $taxonomy, $atts, $text ] );
+
+		else if ( $args['title_title'] )
+			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
+
+		else
+			$attr = FALSE;
+
+		if ( $args['title'] ) {
+
+			if ( is_null( $args['title_link'] ) && $link )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => $link,
+					'title' => $attr,
+				], $args['title'] );
+
+			else if ( 'anchor' === $args['title_link'] )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => '#'.sprintf( $args['title_anchor'], $taxonomy->name, $taxonomy->rest_base ),
+					'title' => $attr,
+				], $args['title'] );
+
+			else if ( $args['title_link'] )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => $args['title_link'],
+					'title' => $attr,
+				], $args['title'] );
+		}
+
+		if ( $args['title'] && $args['title_tag'] )
+			$args['title'] = HTML::tag( $args['title_tag'], [
+				'id'    => sprintf( $args['title_anchor'], $taxonomy->name, $taxonomy->rest_base ),
+				'class' => $args['title_class'],
+			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
+
+		return $args['title'];
+	}
+
 	public static function postTitle( $post = NULL, $atts = [] )
 	{
 		$args = self::atts( [
@@ -361,7 +430,8 @@ class ShortCode extends Main
 
 		if ( $args['title'] ) {
 
-			if ( is_null( $args['title_link'] ) && $post )
+			// only if post present, avoid linking to itself
+			if ( is_null( $args['title_link'] ) && $link && $post )
 				$args['title'] = HTML::tag( 'a', [
 					'href'  => $link,
 					'title' => $attr,
@@ -543,6 +613,7 @@ class ShortCode extends Main
 			'title_class'        => '-title',
 			'title_dummy'        => '<span class="-dummy"></span>',
 			'title_after'        => '',
+			'title_label'        => 'all_items', // label key for posttype/taxonomy object
 			'item_cb'            => FALSE,
 			'item_link'          => TRUE,
 			'item_text'          => NULL,  // callback or use %s for post title
@@ -557,9 +628,11 @@ class ShortCode extends Main
 			'item_after_cb'      => FALSE,
 			'item_download'      => TRUE, // only for attachments
 			'item_filesize'      => TRUE, // only for attachments // OLD: `item_size`
+			'item_image_tile'    => NULL,
 			'item_image_metakey' => empty( $posttype ) ? 'image' : '_thumbnail_id',
 			'item_image_size'    => 'thumbnail',
 			'item_image_loading' => 'lazy', // FALSE to disable
+			'item_image_empty'   => FALSE, // FALSE to disable
 			'order_before'       => FALSE,
 			'order_zeroise'      => FALSE,
 			'order_sep'          => ' &ndash; ',
@@ -1138,8 +1211,7 @@ class ShortCode extends Main
 		return $html;
 	}
 
-	// list: `listing`: terms for display
-	// list: `tiles`: term images for display
+	// list: `allitems`: terms for display
 	// list: `thepost`: terms for the post
 	// list: `alphabetized`: terms sorted by alphabet // TODO!
 	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '' )
@@ -1171,35 +1243,36 @@ class ShortCode extends Main
 		if ( 'order' == $args['orderby'] )
 			$query['orderby'] = 'none'; // later sorting
 
-		if ( 'listing' == $list ) {
-
-			if ( empty( $args['taxonomy'] ) )
-				return $content;
+		if ( ! empty( $args['taxonomy'] ) ) {
 
 			$query['taxonomy']   = $args['taxonomy'];
 			$query['hide_empty'] = FALSE;
 
-			$query['update_term_meta_cache'] = FALSE;
+			// $query['update_term_meta_cache'] = FALSE;
 
-		} else if ( 'tiles' == $list ) {
+			$ref = Taxonomy::object( $args['taxonomy'] );
 
-			if ( empty( $args['taxonomy'] ) )
-				return $content;
+		} else if ( 'allitems' === $list ) {
 
-			$query['taxonomy']   = $args['taxonomy'];
-			$query['hide_empty'] = FALSE;
+			return $content;
+		}
 
-			$query['meta_query'] = [ [
-				'key'     => $args['item_image_metakey'], // 'image',
-				'compare' => 'EXISTS'
-			] ];
-
-		} else if ( 'thepost' == $list ) {
+		if ( 'thepost' == $list ) {
 
 			if ( ! $parent = Helper::getPost( $args['id'] ) )
 				return $content;
 
 			$query['object_ids'] = [ $parent->ID ];
+			$ref = $parent;
+		}
+
+		if ( $args['item_image_tile']
+			&& FALSE === $arg['item_image_empty'] ) {
+
+			$query['meta_query'] = [ [
+				'key'     => $args['item_image_metakey'], // 'image',
+				'compare' => 'EXISTS'
+			] ];
 		}
 
 		$class = new \WP_Term_Query( $query );
@@ -1213,14 +1286,14 @@ class ShortCode extends Main
 
 			// do nothing, title is disabled by the args
 
-		} else if ( 'listing' == $list || 'tiles' == $list ) {
+		} else if ( 'taxonomy' === $args['title'] ) {
 
-			// FIXME: get the title from taxonomy object
+			$args['title'] = NULL; // reset
+			$args['title'] = $args['taxonomy'] ? self::taxonomyTitle( $ref, $args ) : FALSE;
 
-		} else if ( 'thepost' == $list ) {
+		} else if ( is_null( $args['title'] ) && 'thepost' === $list ) {
 
 			$args['title'] = self::postTitle( $parent, $args );
-			$ref = $parent;
 		}
 
 		if ( $args['orderby'] == 'order' ) {
@@ -1238,7 +1311,7 @@ class ShortCode extends Main
 			if ( $args['item_cb'] )
 				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $ref ] );
 
-			else if ( 'tiles' == $list )
+			else if ( $args['item_image_tile'] )
 				$html.= self::termImage( $item, $args );
 
 			else

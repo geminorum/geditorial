@@ -218,11 +218,25 @@ class Shortcodes extends gEditorial\Module
 	// @SEE: https://github.com/seothemes/display-terms-shortcode/blob/master/display-terms-shortcode.php
 	public function display_terms_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listTerms( 'listing', '', $atts, $content, $this->constant( 'display_terms_shortcode', $tag ) );
+		return ShortCode::listTerms( 'allitems',
+			'',
+			array_merge( [
+				'title' => FALSE,
+			], (array) $atts ),
+			$content,
+			$this->constant( 'display_terms_shortcode', $tag )
+		);
 	}
 
 	public function term_tiles_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listTerms( 'tiles', '', $atts, $content, $this->constant( 'term_tiles_shortcode', $tag ) );
+		return ShortCode::listTerms( 'allitems',
+			'',
+			array_merge( [
+				'item_image_tile' => TRUE,
+			], (array) $atts ),
+			$content,
+			$this->constant( 'term_tiles_shortcode', $tag )
+		);
 	}
 }
