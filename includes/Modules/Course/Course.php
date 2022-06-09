@@ -58,6 +58,9 @@ class Course extends gEditorial\Module
 					'placeholder' => URL::home( 'archives' ),
 				],
 			],
+			'_content' => [
+				'archive_title',
+			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'shortcode_support',
@@ -440,6 +443,16 @@ class Course extends gEditorial\Module
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
 				WordPress::redirect( $redirect, 301 );
 		}
+	}
+
+	public function template_include( $template )
+	{
+		return $this->do_template_include( $template, 'course_cpt', NULL, FALSE );
+	}
+
+	public function template_get_archive_content()
+	{
+		return ModuleTemplate::spanTiles();
 	}
 
 	public function render_mainbox_metabox( $post, $box )

@@ -970,4 +970,50 @@ class Template extends Main
 			echo $empty;
 		}
 	}
+
+	// @EXAMPLE: https://dastan.ourmag.ir/archives/issues/
+	public static function getSpanTiles( $atts = [], $module = NULL )
+	{
+		$html = '';
+
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
+
+		$args = self::atts( [
+			'taxonomy' => NULL,
+			'posttype' => NULL,
+			'fallback' => '',
+			'before'   => '',
+			'after'    => '',
+			'wrap'     => TRUE,
+		], $atts );
+
+		if ( empty( $args['posttype'] ) || empty( $args['taxonomy'] ) )
+			return $args['fallcack'];
+
+		$terms = Taxonomy::listTerms( $args['taxonomy'], 'ids', [ 'order' => 'DESC' ] );
+
+		foreach ( $terms as $term_id ) {
+
+			$span = ShortCode::listPosts( 'assigned', $args['posttype'], $args['taxonomy'], [
+				'id'              => $term_id,
+				'wrap'            => FALSE,
+				'future'          => 'off',
+				'list_class'      => '-tiles',
+				'title_anchor'    => '%2$s',
+				'title_link'      => 'anchor',
+				'item_image_tile' => TRUE,
+			] );
+
+			if ( ! empty( $span ) )
+				$html.= HTML::wrap( $span, '-tile-row' );
+		}
+
+		if ( empty( $html ) )
+			return $args['fallcack'];
+
+		$html = $args['before'].$html.$arg['after'];
+
+		return $args['wrap'] ? HTML::wrap( $html, static::BASE.'-span-tiles' ) : $html;
+	}
 }

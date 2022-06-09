@@ -61,6 +61,9 @@ class Magazine extends gEditorial\Module
 					'placeholder' => URL::home( 'archives' ),
 				],
 			],
+			'_content' => [
+				'archive_title',
+			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'widget_support',
@@ -247,6 +250,16 @@ class Magazine extends gEditorial\Module
 					$this->get_setting( 'insert_priority', -50 )
 				);
 		}
+	}
+
+	public function template_include( $template )
+	{
+		return $this->do_template_include( $template, 'issue_cpt', NULL, FALSE );
+	}
+
+	public function template_get_archive_content()
+	{
+		return ModuleTemplate::spanTiles();
 	}
 
 	public function init_ajax()

@@ -114,4 +114,15 @@ class ModuleTemplate extends gEditorial\Template
 
 		return [ $field ];
 	}
+
+	public static function spanTiles( $atts = [] )
+	{
+		if ( ! array_key_exists( 'taxonomy', $atts ) )
+			$atts['taxonomy'] = self::constant( 'span_tax', 'issue_span' );
+
+		if ( ! array_key_exists( 'posttype', $atts ) )
+			$atts['posttype'] = self::constant( 'issue_cpt', 'issue' );
+
+		return parent::getSpanTiles( $atts, static::MODULE );
+	}
 }
