@@ -5364,7 +5364,7 @@ class Module extends Base
 		return $query->get_results();
 	}
 
-	protected function do_template_include( $template, $constant )
+	protected function do_template_include( $template, $constant, $archive_callback = NULL, $empty_callback = NULL )
 	{
 		if ( is_embed() || is_search() )
 			return $template;
@@ -5379,9 +5379,16 @@ class Module extends Base
 
 		if ( is_404() ) {
 
+			// if new posttype disabled
+			if ( FALSE === $empty_callback )
+				return $template;
+
 			// helps with 404 redirections
 			if ( ! is_user_logged_in() )
 				return $template;
+
+			if ( is_null( $empty_callback ) )
+				$empty_callback = [ $this, 'template_empty_content' ];
 
 			nocache_headers();
 			// WordPress::doNotCache();
@@ -5392,7 +5399,7 @@ class Module extends Base
 				'post_type'  => $posttype,
 				'is_single'  => TRUE,
 				'is_404'     => TRUE,
-			], [ $this, 'template_empty_content' ] );
+			], $empty_callback );
 
 			$this->filter_append( 'post_class', 'empty-entry' );
 
@@ -5402,13 +5409,16 @@ class Module extends Base
 
 		} else {
 
+			if ( is_null( $archive_callback ) )
+				$archive_callback = [ $this, 'template_archive_content' ];
+
 			Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->template_get_archive_title( $posttype ),
 				'post_type'  => $posttype,
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
-			], [ $this, 'template_archive_content' ] );
+			], $archive_callback );
 
 			$this->filter_append( 'post_class', 'archive-entry' );
 			$this->filter( 'post_type_archive_title', 2 );
