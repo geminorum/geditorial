@@ -135,6 +135,7 @@ class Today extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'day_cpt' );
+		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
 	public function init()
@@ -142,6 +143,8 @@ class Today extends gEditorial\Module
 		parent::init();
 
 		$this->register_posttype( 'day_cpt' );
+
+		$this->filter_module( 'audit', 'auto_audit_save_post', 4 );
 
 		if ( ! is_admin() )
 			return;
@@ -995,6 +998,41 @@ class Today extends gEditorial\Module
 
 		echo '</td></tr>';
 		echo '</table>';
+	}
+
+	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $terms;
+
+		$term = $this->constant( 'empty_the_day', 'the-day-empty' );
+
+		if ( $exists = term_exists( $term, $taxonomy ) ) {
+
+			$the_day = ModuleHelper::getTheDayFromPost(
+				Helper::getPost( $post ),
+				$this->default_calendar(),
+				$this->get_the_day_constants()
+			);
+
+			if ( ! $the_day['day'] && ! $the_day['month'] && ! $the_day['year'] )
+				$terms[] = $exists['term_id'];
+
+			else
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+		}
+
+		return $terms;
+	}
+
+	public function audit_get_default_terms( $terms, $taxonomy )
+	{
+		if ( $taxonomy != $this->constant( 'audit_tax', 'audit_attribute' ) )
+			return $terms;
+
+		return array_merge( $terms, [
+			$this->constant( 'empty_the_day', 'the-day-empty' ) => _x( 'No day', 'Default Term: Audit', 'geditorial-today' ),
+		] );
 	}
 
 	private function get_importer_fields( $posttype = NULL )
