@@ -594,6 +594,106 @@ class ShortCode extends Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
+	// post as an image on the list
+	public static function postImage( $post = NULL, $atts = [], $before = '', $after = '', $fallback = '' )
+	{
+		$args = self::atts( [
+			'item_link'          => TRUE,
+			'item_text'          => NULL, // callback or use %s for post title
+			'item_wrap'          => '', // use %s for item title / or html tag
+			'item_title'         => '', // use %s for post title
+			'item_title_cb'      => FALSE,
+			'item_tag'           => 'li',
+			'item_anchor'        => FALSE, // $post->post_type.'-%2$s',
+			'item_class'         => '-item -tile do-sincethen',
+			'item_dummy'         => '<span class="-dummy"></span>',
+			'item_after'         => '',
+			'item_after_cb'      => FALSE,
+			'item_image_tile'    => NULL,
+			'item_image_metakey' => '_thumbnail_id',
+			'item_image_size'    => 'thumbnail',
+			'item_image_loading' => 'lazy', // FALSE to disable
+			'item_image_empty'   => FALSE,
+		], $atts );
+
+		if ( ! $post = Helper::getPost( $post ) )
+			return $fallback;
+
+		if ( ! $image_id = PostType::getThumbnailID( $post->ID, $args['item_image_metakey'] ) )
+			return $fallback;
+
+		if ( ! $thumbnail_img = Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
+			return $fallback;
+
+		$text = Helper::getPostTitle( $post, FALSE );
+		$link = Helper::getPostLink( $post, '' );
+
+		if ( is_null( $args['item_text'] ) )
+			$title = $text;
+
+		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
+			$title = call_user_func_array( $args['item_text'], [ $post, $args, $text ] );
+
+		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+			$title = sprintf( $args['item_text'], $text );
+
+		else if ( $args['item_text'] )
+			$title = $args['item_text'];
+
+		else
+			$title = '';
+
+		$image = HTML::tag( 'img', [
+			'src'     => $thumbnail_img,
+			'alt'     => Media::getAttachmentImageAlt( $image_id, $title ),
+			'loading' => $args['item_image_loading'],
+		] );
+
+		if ( $link && $args['item_link'] )
+			$item = HTML::tag( 'a', [
+				'href'  => $link,
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
+				'class' => '-link -type-'.$post->post_type,
+			], $image );
+
+		else
+			$item = HTML::tag( 'span', [
+				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
+				'class' => $args['item_link'] ? '-no-link -empty -type-'.$post->post_type : FALSE,
+			], $image );
+
+		if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+			$item = sprintf( $args['item_wrap'], $item );
+
+		else if ( $args['item_wrap'] )
+			$item = HTML::tag( $args['item_wrap'], $item );
+
+		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
+			$item.= call_user_func_array( $args['item_after_cb'], [ $post, $args, $item ] );
+
+		} else if ( $args['item_after'] ) {
+
+			if ( Text::has( $args['item_after'], '%' ) )
+				$args['item_after'] = sprintf( $args['item_after'],
+					$text,
+					HTML::escapeURL( $link ),
+					Helper::prepDescription( $post->post_excerpt ),
+					Text::trimChars( $post->post_excerpt )
+				);
+
+			if ( is_string( $args['item_after'] ) )
+				$item.= $args['item_after'];
+		}
+
+		if ( ! $args['item_tag'] )
+			return $before.$item.$after;
+
+		return HTML::tag( $args['item_tag'], [
+			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $post->ID, $post->post_name ) : FALSE,
+			'class' => $args['item_class'],
+		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
+	}
+
 	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [ 'post' ], $taxonomies = [ 'post_tag' ] )
 	{
 		return [
@@ -663,7 +763,6 @@ class ShortCode extends Main
 	// list: attached: posts by inheritance
 	// list: alphabetized: posts sorted by alphabet // TODO!
 	// list: `custom`: posts by id list // TODO!
-	// list: `tiles`: post images for display // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ] );
@@ -825,6 +924,15 @@ class ShortCode extends Main
 			return $content;
 		}
 
+		if ( $args['item_image_tile']
+			&& FALSE === $args['item_image_empty'] ) {
+
+			$query['meta_query'] = [ [
+				'key'     => $args['item_image_metakey'], // '_thumbnail_id',
+				'compare' => 'EXISTS'
+			] ];
+		}
+
 		$class = new \WP_Query;
 		$items = $class->query( $query );
 		$count = count( $items );
@@ -874,6 +982,9 @@ class ShortCode extends Main
 
 			if ( $args['item_cb'] )
 				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $ref ] );
+
+			else if ( $args['item_image_tile'] )
+				$html.= self::postImage( $item, $args );
 
 			else
 				$html.= self::postItem( $item, $args );
