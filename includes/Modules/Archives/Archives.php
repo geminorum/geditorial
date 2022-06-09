@@ -107,6 +107,7 @@ class Archives extends gEditorial\Module
 
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
 
+		$this->filter( 'taxonomy_archive_link', 2, 10, FALSE, 'geditorial' );
 		$this->filter( 'navigation_taxonomy_archive_link', 2, 9, FALSE, 'gtheme' );
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
 	}
@@ -291,6 +292,14 @@ class Archives extends gEditorial\Module
 			$tokens['link'] = $link;
 
 		return $tokens;
+	}
+
+	public function taxonomy_archive_link( $false, $taxonomy )
+	{
+		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
+			return $link;
+
+		return $false;
 	}
 
 	public function navigation_taxonomy_archive_link( $false, $taxonomy )
