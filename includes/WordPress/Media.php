@@ -441,10 +441,28 @@ class Media extends Core\Base
 
 	public static function getAttachmentImageAlt( $attachment_id, $fallback = '' )
 	{
+		if ( empty( $attachment_id ) )
+			return $fallback;
+
 		if ( $alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', TRUE ) )
 			return trim( strip_tags( $alt ) );
 
 		return $fallback;
+	}
+
+	public static function htmlAttachmentSrc( $attachment_id, $size = NULL, $fallback = '' )
+	{
+		$src = $fallback;
+
+		// FIXME: sanitize `$size`
+
+		if ( ! empty( $attachment_id ) ) {
+
+			if ( $img = wp_get_attachment_image_src( $attachment_id, $size ) )
+				$src = $img[0];
+		}
+
+		return apply_filters( 'geditorial_get_thumbnail_src', $src, $attachment_id, $img, $fallback );
 	}
 
 	public static function htmlAttachmentImage( $attachment_id, $size = 'thumbnail', $link = TRUE, $data = [], $class = '-attachment-image' )
@@ -452,14 +470,14 @@ class Media extends Core\Base
 		if ( empty( $attachment_id ) )
 			return '';
 
-		if ( ! $attachment_img = wp_get_attachment_image_src( $attachment_id, $size ) )
+		if ( ! $src = self::htmlAttachmentSrc( $attachment_id, $size, FALSE ) )
 			return '';
 
 		if ( empty( $data['attachment'] ) )
 			$data['attachment'] = $attachment_id;
 
 		$image = Core\HTML::tag( 'img', [
-			'src'     => $attachment_img[0],
+			'src'     => $src,
 			'alt'     => self::getAttachmentImageAlt( $attachment_id ),
 			'data'    => $data,
 			'class'   => $class,
@@ -476,6 +494,7 @@ class Media extends Core\Base
 	}
 
 	// @REF: https://wordpress.stackexchange.com/a/315447
+	// @SEE: `wp_prepare_attachment_for_js()`
 	public static function prepAttachmentData( $attachment_id )
 	{
 		if ( ! $attachment_id )

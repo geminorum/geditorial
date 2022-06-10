@@ -383,12 +383,23 @@ class PostType extends Core\Base
 	public static function htmlFeaturedImage( $post_id, $size = 'thumbnail', $link = TRUE )
 	{
 		return Media::htmlAttachmentImage(
-			apply_filters( 'geditorial_get_post_thumbnail_id', get_post_thumbnail_id( $post_id ), $post_id ),
+			self::getThumbnailID( $post_id ),
 			$size,
 			$link,
 			[ 'post' => $post_id ],
 			'-featured'
 		);
+	}
+
+	// TODO: check for custom metakey
+	public static function getThumbnailID( $post_id, $metakey = NULL )
+	{
+		return apply_filters( 'geditorial_get_post_thumbnail_id', get_post_thumbnail_id( $post_id ), $post_id );
+	}
+
+	public static function getArchiveLink( $posttype )
+	{
+		return apply_filters( 'geditorial_posttype_archive_link', get_post_type_archive_link( $posttyp ), $posttype );
 	}
 
 	public static function supportBlocksByPost( $post )
@@ -461,5 +472,53 @@ class PostType extends Core\Base
 			$args['post_type'] = $posttype;
 
 		return add_query_arg( $args, ( 'attachment' === $posttype ? 'upload.php' : 'edit.php' ) );
+	}
+
+	// simplified `get_post()`
+	public static function getPost( $post = NULL, $output = OBJECT, $filter = 'raw' )
+	{
+		if ( $post instanceof \WP_Post )
+			return $post;
+
+		// handling dummy posts!
+		if ( '-9999' == $post )
+			$post = NULL;
+
+		return get_post( $post, $output, $filter );
+	}
+
+	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
+	{
+		if ( ! $post = self::getPost( $post ) )
+			return FALSE;
+
+		$status = get_post_status( $post );
+
+		if ( is_null( $statuses ) )
+			$statuses = [ 'publish', 'inherit' ]; // TODO: use `is_post_status_viewable()`
+
+		if ( ! in_array( $status, (array) $statuses, TRUE ) )
+			return $fallback;
+
+		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
+	}
+
+	public static function getPostTitle( $post, $fallback = NULL, $filter = TRUE )
+	{
+		if ( ! $post = self::getPost( $post ) )
+			return '';
+
+		$title = $filter ? apply_filters( 'the_title', $post->post_title, $post->ID ) : $post->post_title;
+
+		if ( ! empty( $title ) )
+			return $title;
+
+		if ( FALSE === $fallback )
+			return '';
+
+		if ( is_null( $fallback ) )
+			return __( '(Untitled)' );
+
+		return $fallback;
 	}
 }

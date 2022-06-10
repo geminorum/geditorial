@@ -13,8 +13,7 @@ class Strings extends Core\Base
 		if ( function_exists( 'wp_get_list_item_separator' ) )
 			return wp_get_list_item_separator();
 
-		// return _x( ', ', 'Strings: Item Seperator', 'geditorial' );
-		return __( ', ' );
+		return __( ', ' ); // _x( ', ', 'Strings: Item Seperator', 'geditorial' );
 	}
 
 	public static function isEmpty( $string, $empties = NULL )
@@ -33,6 +32,10 @@ class Strings extends Core\Base
 				'-', '--', '---',
 				'–', '––', '–––',
 				'—', '——', '———',
+				'<p></p>',
+				'<body><p></p></body>',
+				'<body></body>',
+				'<body> </body>',
 			];
 
 		foreach ( (array) $empties as $empty )

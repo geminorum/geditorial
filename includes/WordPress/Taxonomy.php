@@ -149,10 +149,12 @@ class Taxonomy extends Core\Base
 		}
 
 		if ( is_numeric( $term_or_id ) )
-			$term = get_term_by( 'id', $term_or_id, $taxonomy );
+			// $term = get_term_by( 'id', $term_or_id, $taxonomy );
+			$term = get_term( (int) $term_or_id, $taxonomy ); // allows for empty taxonomy
 
 		else
-			$term = get_term_by( 'slug', $term_or_id, $taxonomy );
+			// $term = get_term_by( 'slug', $term_or_id, $taxonomy );
+			$term = get_term( $term_or_id, $taxonomy ); // allows for empty taxonomy
 
 		if ( ! $term || is_wp_error( $term ) )
 			return FALSE;
@@ -245,7 +247,7 @@ class Taxonomy extends Core\Base
 		$query = new \WP_Term_Query( array_merge( array(
 			'taxonomy'   => (array) $taxonomy,
 			'order'      => 'ASC',
-			'orderby'    => 'meta_value_num', // 'name',
+			'orderby'    => 'meta_value_num,name', // 'name',
 			'meta_query' => [
 				// @REF: https://core.trac.wordpress.org/ticket/34996
 				'relation' => 'OR',
@@ -797,12 +799,22 @@ class Taxonomy extends Core\Base
 	public static function htmlFeaturedImage( $term_id, $size = 'thumbnail', $link = TRUE, $metakey = 'image' )
 	{
 		return Media::htmlAttachmentImage(
-			get_term_meta( $term_id, $metakey, TRUE ),
+			self::getThumbnailID( $term_id, $metakey ),
 			$size,
 			$link,
 			[ 'term' => $term_id ],
 			'-featured'
 		);
+	}
+
+	public static function getThumbnailID( $term_id, $metakey = NULL )
+	{
+		return apply_filters( 'geditorial_get_term_thumbnail_id', get_term_meta( $term_id, $metakey ?: 'image', TRUE ), $term_id );
+	}
+
+	public static function getArchiveLink( $taxonomy )
+	{
+		return apply_filters( 'geditorial_taxonomy_archive_link', FALSE, $taxonomy );
 	}
 
 	public static function disableTermCounting()
