@@ -898,7 +898,7 @@ class Module extends Base
 
 	public function is_posttype( $posttype_key, $post = NULL )
 	{
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
 		return $this->constant( $posttype_key ) == $post->post_type;
@@ -2482,7 +2482,7 @@ class Module extends Base
 
 	public function do_posttype_field( $atts = [], $post = NULL )
 	{
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return;
 
 		$args = array_merge( [
@@ -3197,7 +3197,7 @@ class Module extends Base
 		if ( ! $linked = $this->get_linked_to_posts( $post->ID, TRUE ) )
 			return $title;
 
-		return $title.' – '.Helper::getPostTitle( $linked );
+		return $title.' – '.PostType::getPostTitle( $linked );
 	}
 
 	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
@@ -4245,7 +4245,7 @@ class Module extends Base
 				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $posttype_key, $taxonomy_key ) )
 					continue;
 
-				if ( ! $post = Helper::getPost( $post_id ) )
+				if ( ! $post = PostType::getPost( $post_id ) )
 					continue;
 
 				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), [ 'description' => $post->post_excerpt ] ) )
@@ -4415,7 +4415,7 @@ class Module extends Base
 
 						$html.= '<hr />';
 
-						if ( ! $post = Helper::getPost( $post_id ) )
+						if ( ! $post = PostType::getPost( $post_id ) )
 							return $html.gEditorial()->na();
 
 						if ( empty( $post->post_excerpt ) )
@@ -5519,7 +5519,7 @@ class Module extends Base
 	// DEFAULT FILTER
 	public function template_empty_content( $content )
 	{
-		$post  = Helper::getPost();
+		$post  = PostType::getPost();
 		$title = $this->template_get_empty_title( '' );
 
 		$html = $this->template_get_empty_content();

@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
@@ -227,7 +226,7 @@ class Roles extends gEditorial\Module
 			|| 'delete_'.$singular == $cap
 			|| 'read_'.$singular == $cap ) {
 
-			$post = Helper::getPost( $args[0] );
+			$post = PostType::getPost( $args[0] );
 			$type = PostType::object( $post->post_type );
 			$caps = [];
 

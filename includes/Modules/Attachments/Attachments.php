@@ -146,7 +146,7 @@ class Attachments extends gEditorial\Module
 	// @REF: https://wordpress.stackexchange.com/a/187817
 	public function attachment_link( $link, $attachment_id )
 	{
-		if ( ! $attachment = Helper::getPost( $attachment_id ) )
+		if ( ! $attachment = PostType::getPost( $attachment_id ) )
 			return $link;
 
 		if ( empty( $attachment->post_parent ) )

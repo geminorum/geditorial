@@ -210,8 +210,12 @@ class HTML extends Base
 
 		if ( is_array( $atts ) )
 			$html = self::_tag_open( $tag, $atts, $content );
-		else
+
+		else if ( $atts )
 			return '<'.$tag.'>'.$atts.'</'.$tag.'>'.$sep;
+
+		else
+			return '<'.$tag.'></'.$tag.'>'.$sep;
 
 		if ( FALSE === $content )
 			return $html.$sep;

@@ -258,65 +258,12 @@ class Helper extends Main
 		echo Strings::getJoined( $list, $before, $after );
 	}
 
-	// FIXME: move to WordPress/PostType
-	// simplified `get_post()`
-	public static function getPost( $post = NULL, $output = OBJECT, $filter = 'raw' )
-	{
-		if ( $post instanceof \WP_Post )
-			return $post;
-
-		// handling dummy posts!
-		if ( '-9999' == $post )
-			$post = NULL;
-
-		return get_post( $post, $output, $filter );
-	}
-
-	// FIXME: move to WordPress/PostType
-	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
-	{
-		if ( ! $post = self::getPost( $post ) )
-			return FALSE;
-
-		$status = get_post_status( $post );
-
-		if ( is_null( $statuses ) )
-			$statuses = [ 'publish', 'inherit' ]; // MAYBE: `apply_filters()`
-
-		if ( ! in_array( $status, (array) $statuses, TRUE ) )
-			return $fallback;
-
-		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
-	}
-
-	// FIXME: move to WordPress/PostType
-	public static function getPostTitle( $post, $fallback = NULL, $filter = TRUE )
-	{
-		if ( ! $post = self::getPost( $post ) )
-			// return Plugin::na( FALSE );
-			return '';
-
-		$title = $filter ? apply_filters( 'the_title', $post->post_title, $post->ID ) : $post->post_title;
-
-		if ( ! empty( $title ) )
-			return $title;
-
-		if ( FALSE === $fallback )
-			return '';
-
-		if ( is_null( $fallback ) )
-			// return _x( '(untitled)', 'Helper: Post Title', 'geditorial' );
-			return __( '(Untitled)' );
-
-		return $fallback;
-	}
-
 	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
 	{
-		if ( ! $post = self::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return Plugin::na( FALSE );
 
-		$title = self::getPostTitle( $post );
+		$title = PostType::getPostTitle( $post );
 		$after = '';
 
 		if ( $status ) {

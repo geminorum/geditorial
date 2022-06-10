@@ -293,7 +293,7 @@ class Tablelist extends Main
 			'args'     => [ 'statuses' => PostType::getStatuses() ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
 
-				$title = Helper::getPostTitle( $row );
+				$title = PostType::getPostTitle( $row );
 
 				if ( 'publish' != $row->post_status ) {
 

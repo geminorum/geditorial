@@ -9,6 +9,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Uncategorized extends gEditorial\Module
@@ -111,7 +112,7 @@ class Uncategorized extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
-						if ( ! $post = Helper::getPost( $post_id ) )
+						if ( ! $post = PostType::getPost( $post_id ) )
 							continue;
 
 						$taxonomies = get_object_taxonomies( $post );

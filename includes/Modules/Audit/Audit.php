@@ -11,6 +11,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
@@ -272,7 +273,7 @@ class Audit extends gEditorial\Module
 				if ( empty( $locking ) )
 					return $caps;
 
-				if ( ! $post = Helper::getPost( $args[0] ) )
+				if ( ! $post = PostType::getPost( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )
@@ -863,7 +864,7 @@ class Audit extends gEditorial\Module
 	// FIXME: move this up to main module
 	public function set_terms( $post, $terms, $append = TRUE )
 	{
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
 		if ( ! $this->posttype_supported( $post->post_type ) )

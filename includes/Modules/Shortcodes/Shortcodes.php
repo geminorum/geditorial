@@ -3,12 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Shortcodes extends gEditorial\Module
 {
@@ -191,7 +191,7 @@ class Shortcodes extends gEditorial\Module
 	// FIXME: add table action
 	protected function remove_shortcode( $post_id, $shortcode )
 	{
-		if ( ! $post = Helper::getPost( $post_id ) )
+		if ( ! $post = PostType::getPost( $post_id ) )
 			return FALSE;
 
 		$pattern = '#\['.$shortcode.'[^\]]*\]#i';

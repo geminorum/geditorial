@@ -462,7 +462,7 @@ class Meta extends gEditorial\Module
 	// NO NEED: we use original key, so the core will retrieve the value
 	public function register_prepare_callback( $value, $request, $args )
 	{
-		if ( ! $post = Helper::getPost() )
+		if ( ! $post = PostType::getPost() )
 			return $value;
 
 		$fields = $this->get_posttype_fields( $post->post_type );
@@ -480,7 +480,7 @@ class Meta extends gEditorial\Module
 		$field  = $this->stripprefix( $meta_key );
 
 		return array_key_exists( $field, $fields )
-			? $this->sanitize_posttype_field( $meta_value, $fields[$field], Helper::getPost() )
+			? $this->sanitize_posttype_field( $meta_value, $fields[$field], PostType::getPost() )
 			: $meta_value;
 	}
 
@@ -643,7 +643,7 @@ class Meta extends gEditorial\Module
 		if ( ! count( $fields ) )
 			return $postmeta;
 
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return $postmeta;
 
 		if ( ! $this->nonce_verify( 'mainbox' )
@@ -851,7 +851,7 @@ class Meta extends gEditorial\Module
 		if ( $this->classs() != $column_name )
 			return;
 
-		if ( ! $post = Helper::getPost( $post_id ) )
+		if ( ! $post = PostType::getPost( $post_id ) )
 			return;
 
 		$prefix   = $this->classs().'-';
@@ -1036,7 +1036,7 @@ class Meta extends gEditorial\Module
 
 	public function the_author( $display_name )
 	{
-		if ( ! $post = Helper::getPost() )
+		if ( ! $post = PostType::getPost() )
 			return $display_name;
 
 		// NO NEED
@@ -1120,7 +1120,7 @@ class Meta extends gEditorial\Module
 					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
 					'args'     => [ 'types' => PostType::get( 2 ) ],
 					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-						$post = Helper::getPost( $row->post_id );
+						$post = PostType::getPost( $row->post_id );
 						return isset( $column['args']['types'][$post->post_type] )
 							? $column['args']['types'][$post->post_type]
 							: $post->post_type;
@@ -1129,7 +1129,7 @@ class Meta extends gEditorial\Module
 				'title'   => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
 					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-						return Helper::getPostTitle( $row->post_id );
+						return PostType::getPostTitle( $row->post_id );
 					},
 				],
 				/* translators: %s: title */
@@ -1218,7 +1218,7 @@ class Meta extends gEditorial\Module
 	// OLD: `import_to_meta()`
 	public function import_field_raw( $data, $field, $post )
 	{
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
 		$field = $this->sanitize_postmeta_field( $field )[0];

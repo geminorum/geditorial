@@ -560,7 +560,7 @@ class Importer extends gEditorial\Module
 						if ( is_wp_error( $post_id ) )
 							continue;
 
-						$this->actions( 'saved', Helper::getPost( $post_id ), $data, $raw, $field_map, $attach_id );
+						$this->actions( 'saved', PostType::getPost( $post_id ), $data, $raw, $field_map, $attach_id );
 
 						$count++;
 					}

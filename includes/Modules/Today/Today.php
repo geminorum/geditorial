@@ -14,6 +14,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Theme;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Today extends gEditorial\Module
 {
@@ -231,7 +232,7 @@ class Today extends gEditorial\Module
 					$title = trim( ModuleHelper::titleTheDay( $this->the_day ), '[]' );
 
 					if ( ! empty( $this->the_post[0] ) )
-						$title = Helper::getPostTitle( $this->the_post[0] ).' ['.$title.']';
+						$title = PostType::getPostTitle( $this->the_post[0] ).' ['.$title.']';
 
 					HTML::h3( $title );
 
@@ -447,7 +448,7 @@ class Today extends gEditorial\Module
 		if ( 'theday' == $column_name ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
-				Helper::getPost( $post_id ),
+				PostType::getPost( $post_id ),
 				$this->default_calendar(),
 				$this->get_the_day_constants()
 			);
@@ -625,7 +626,7 @@ class Today extends gEditorial\Module
 		if ( $title )
 			return $title;
 
-		if ( ! $post = Helper::getPost( $post_id ) )
+		if ( ! $post = PostType::getPost( $post_id ) )
 			return $title;
 
 		if ( $this->constant( 'day_cpt' ) == $post->post_type ) {
@@ -648,7 +649,7 @@ class Today extends gEditorial\Module
 			return;
 
 		$the_day = ModuleHelper::getTheDayFromPost(
-			Helper::getPost(),
+			PostType::getPost(),
 			$this->default_calendar(),
 			$this->get_the_day_constants()
 		);
@@ -685,7 +686,7 @@ class Today extends gEditorial\Module
 			$title = trim( ModuleHelper::titleTheDay( $this->the_day, '[]', FALSE ), '[]' );
 
 			if ( ! empty( $this->the_post[0] ) )
-				$title = Helper::getPostTitle( $this->the_post[0] ).' ['.$title.']';
+				$title = PostType::getPostTitle( $this->the_post[0] ).' ['.$title.']';
 
 			Theme::resetQuery( [
 				'ID'          => -9999,
@@ -1010,7 +1011,7 @@ class Today extends gEditorial\Module
 		if ( $exists = term_exists( $term, $taxonomy ) ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
-				Helper::getPost( $post ),
+				PostType::getPost( $post ),
 				$this->default_calendar(),
 				$this->get_the_day_constants()
 			);

@@ -228,7 +228,7 @@ class Template extends Main
 
 	public static function getPostImageSrc( $size = NULL, $post_id = NULL )
 	{
-		if ( ! $post = Helper::getPost( $post_id ) )
+		if ( ! $post = PostType::getPost( $post_id ) )
 			return FALSE;
 
 		if ( ! $thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', TRUE ) )
@@ -335,7 +335,7 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'];
 
-		if ( ! $post = Helper::getPost( $args['id'] ) )
+		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$title     = self::getPostField( $args['title'], $post->ID, FALSE );
@@ -516,7 +516,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Helper::getPost( $args['id'] ) )
+		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$meta = $raw = self::getMetaFieldRaw( $field, $post->ID, 'meta' );
@@ -546,7 +546,7 @@ class Template extends Main
 			if ( ! gEditorial()->enabled( 'meta' ) )
 				return FALSE;
 
-			if ( ! $post = Helper::getPost( $post_id ) )
+			if ( ! $post = PostType::getPost( $post_id ) )
 				return FALSE;
 
 			$post_id = $post->ID;
@@ -587,7 +587,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Helper::getPost( $args['id'] ) )
+		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$context = $args['context'] ?: $args['taxonomy'];
@@ -675,7 +675,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Helper::getPost( $args['id'] ) )
+		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$url = $args['url_field'] ? self::getMetaField( $args['url_field'], [
@@ -764,7 +764,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Helper::getPost( $args['id'] ) )
+		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return $args['default'];
 
 		$rows     = [];
@@ -922,7 +922,7 @@ class Template extends Main
 	// FIXME: move this to Taxonomy
 	public static function getTheTermList( $taxonomy, $post = NULL, $before = '', $after = '' )
 	{
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
 		$terms = get_the_terms( $post, $taxonomy );

@@ -567,7 +567,7 @@ class Book extends gEditorial\Module
 			if ( ! $post_id = PostType::getIDbyMeta( '_meta_publication_isbn', $isbn ) )
 				return;
 
-			if ( ! $post = Helper::getPost( $post_id ) )
+			if ( ! $post = PostType::getPost( $post_id ) )
 				return;
 
 			if ( ! in_array( $post->post_status, [ 'publish' ], TRUE ) )
@@ -1014,7 +1014,7 @@ class Book extends gEditorial\Module
 
 	public function get_linked_to_posts_p2p( $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
 		if ( ! $this->posttype_supported( $post->post_type ) )
@@ -1049,7 +1049,7 @@ class Book extends gEditorial\Module
 		if ( ! $this->_p2p )
 			return;
 
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return;
 
 		$connected = new \WP_Query( [
@@ -1074,7 +1074,7 @@ class Book extends gEditorial\Module
 				$connected->the_post();
 
 				echo ShortCode::postItem( $GLOBALS['post'], [
-					'item_link'  => Helper::getPostLink( NULL, FALSE ),
+					'item_link'  => PostType::getPostLink( NULL, FALSE ),
 					'item_after' => $this->p2p_get_meta_row( 'publication_cpt', $GLOBALS['post']->p2p_id, ' &ndash; ', '' ),
 				] );
 			}

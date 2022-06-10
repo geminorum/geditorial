@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
@@ -13,6 +12,7 @@ use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Modified extends gEditorial\Module
 {
@@ -182,7 +182,7 @@ class Modified extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( ! $post = Helper::getPost( $args['id'] ) )
+		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return NULL;
 
 		$gmt   = strtotime( $post->post_modified_gmt );
@@ -205,7 +205,7 @@ class Modified extends gEditorial\Module
 
 	public function get_post_modified( $format = NULL, $post = NULL )
 	{
-		if ( ! $post = Helper::getPost( $post ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
 		$gmt     = strtotime( $post->post_modified_gmt );

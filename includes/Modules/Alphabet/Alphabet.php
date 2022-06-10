@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress\PostType;
 
 class Alphabet extends gEditorial\Module
 {
@@ -172,7 +173,7 @@ class Alphabet extends gEditorial\Module
 
 				} else {
 
-					$title = Helper::getPostTitle( $post );
+					$title = PostType::getPostTitle( $post );
 					$link  = WordPress::getPostShortLink( $post->ID );
 
 					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';

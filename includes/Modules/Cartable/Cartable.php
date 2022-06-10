@@ -318,7 +318,7 @@ class Cartable extends gEditorial\Module
 				if ( empty( $args[0] ) )
 					return $caps;
 
-				if ( ! $post = Helper::getPost( $args[0] ) )
+				if ( ! $post = PostType::getPost( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )

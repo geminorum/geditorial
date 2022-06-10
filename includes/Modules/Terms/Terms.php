@@ -1458,7 +1458,7 @@ class Terms extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
-						if ( ! $post = Helper::getPost( $post_id ) )
+						if ( ! $post = PostType::getPost( $post_id ) )
 							continue;
 
 						$diff = array_diff_key( $registered, array_flip( get_object_taxonomies( $post ) ) );
