@@ -989,7 +989,7 @@ class Template extends Main
 		], $atts );
 
 		if ( empty( $args['posttype'] ) || empty( $args['taxonomy'] ) )
-			return $args['fallcack'];
+			return $args['fallback'];
 
 		$terms = Taxonomy::listTerms( $args['taxonomy'], 'ids', [ 'order' => 'DESC' ] );
 
@@ -1010,9 +1010,9 @@ class Template extends Main
 		}
 
 		if ( empty( $html ) )
-			return $args['fallcack'];
+			return $args['fallback'];
 
-		$html = $args['before'].$html.$arg['after'];
+		$html = $args['before'].$html.$args['after'];
 
 		return $args['wrap'] ? HTML::wrap( $html, static::BASE.'-span-tiles' ) : $html;
 	}
