@@ -1,77 +1,77 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Specs 3.23.0\n"
+"Project-Id-Version: gEditorial Specs 3.23.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-16T11:13:03+00:00\n"
+"POT-Creation-Date: 2022-06-13T12:36:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
 
-#: Specs.php:52
+#: Specs.php:53
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr ""
 
-#: Specs.php:53
+#: Specs.php:54
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr ""
 
-#: Specs.php:54
+#: Specs.php:55
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr ""
 
-#: Specs.php:57
+#: Specs.php:58
 msgctxt "Strings: Description"
 msgid "In Specifications Title"
 msgstr ""
 
-#: Specs.php:58
+#: Specs.php:59
 msgctxt "Strings: Description"
 msgid "In Specifications Order"
 msgstr ""
 
-#: Specs.php:59
+#: Specs.php:60
 msgctxt "Strings: Description"
 msgid "In Specifications Description"
 msgstr ""
 
-#: Specs.php:62
+#: Specs.php:63
 msgctxt "Column Title"
 msgid "Specifications"
 msgstr ""
 
-#: Specs.php:63
+#: Specs.php:64
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Specification &ndash;"
 msgstr ""
 
-#: Specs.php:66
+#: Specs.php:67
 msgctxt "Noop"
 msgid "Specification"
 msgid_plural "Specifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Specs.php:299
+#: Specs.php:300
 msgctxt "Sortable Handler"
 msgid "Sort me!"
 msgstr ""
 
-#: Specs.php:302
+#: Specs.php:303
 msgctxt "Sortable Trash"
 msgid "Trash me!"
 msgstr ""
 
-#: Specs.php:318
-#: Specs.php:452
+#: Specs.php:319
+#: Specs.php:453
 msgctxt "Modules: Specs"
 msgid "Unknown Field"
 msgstr ""

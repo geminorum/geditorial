@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Magazine 3.23.0\n"
+"Project-Id-Version: gEditorial Magazine 3.23.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-16T11:12:29+00:00\n"
+"POT-Creation-Date: 2022-06-13T12:35:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
@@ -43,145 +43,145 @@ msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Magazine.php:105
-#: Magazine.php:106
+#: Magazine.php:108
+#: Magazine.php:109
 msgid "Issue"
 msgid_plural "Issues"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:107
+#: Magazine.php:110
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:108
+#: Magazine.php:111
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:117
+#: Magazine.php:120
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr ""
 
-#: Magazine.php:118
+#: Magazine.php:121
 msgctxt "Select Option None"
 msgid "&ndash; Select Issue &ndash;"
 msgstr ""
 
-#: Magazine.php:121
+#: Magazine.php:124
 msgctxt "MetaBox Title"
 msgid "In This Issue"
 msgstr ""
 
-#: Magazine.php:124
+#: Magazine.php:127
 msgctxt "MetaBox Title"
 msgid "Spans"
 msgstr ""
 
-#: Magazine.php:125
+#: Magazine.php:128
 msgctxt "Column Title"
 msgid "Issue Spans"
 msgstr ""
 
-#: Magazine.php:128
+#: Magazine.php:131
 msgctxt "MetaBox Title"
 msgid "Sections"
 msgstr ""
 
-#: Magazine.php:129
+#: Magazine.php:132
 msgctxt "Column Title"
 msgid "Issue Sections"
 msgstr ""
 
-#: Magazine.php:130
+#: Magazine.php:133
 msgctxt "Select Option None"
 msgid "&ndash; Select Section &ndash;"
 msgstr ""
 
-#: Magazine.php:132
+#: Magazine.php:135
 msgctxt "MetaBox Title"
 msgid "The Issue"
 msgstr ""
 
-#: Magazine.php:133
+#: Magazine.php:136
 msgctxt "Column Title"
 msgid "Issues"
 msgstr ""
 
-#: Magazine.php:134
+#: Magazine.php:137
 msgctxt "Column Title"
 msgid "Connected Items"
 msgstr ""
 
-#: Magazine.php:148
+#: Magazine.php:151
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Magazine.php:149
+#: Magazine.php:152
 msgctxt "Field Description"
 msgid "The issue number line"
 msgstr ""
 
-#: Magazine.php:153
-#: Magazine.php:182
+#: Magazine.php:156
+#: Magazine.php:185
 msgctxt "Field Title"
 msgid "Total Pages"
 msgstr ""
 
-#: Magazine.php:154
+#: Magazine.php:157
 msgctxt "Field Description"
 msgid "The issue total pages"
 msgstr ""
 
-#: Magazine.php:168
+#: Magazine.php:171
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Magazine.php:169
+#: Magazine.php:172
 msgctxt "Field Description"
 msgid "Post order in issue list"
 msgstr ""
 
-#: Magazine.php:175
+#: Magazine.php:178
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr ""
 
-#: Magazine.php:176
+#: Magazine.php:179
 msgctxt "Field Description"
 msgid "Post start page on issue (printed)"
 msgstr ""
 
-#: Magazine.php:183
+#: Magazine.php:186
 msgctxt "Field Description"
 msgid "Post total pages on issue (printed)"
 msgstr ""
 
 #. translators: %s: order
-#: Magazine.php:553
+#: Magazine.php:566
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr ""
 
 #. translators: %s: page
-#: Magazine.php:555
+#: Magazine.php:568
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr ""
 
 #. translators: %s: total count
-#: Magazine.php:557
+#: Magazine.php:570
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr ""
 
-#: Magazine.php:640
+#: Magazine.php:653
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr ""

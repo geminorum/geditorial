@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WcWidgets 3.23.0\n"
+"Project-Id-Version: gEditorial WcWidgets 3.23.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-16T11:13:41+00:00\n"
+"POT-Creation-Date: 2022-06-13T12:37:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
@@ -30,52 +30,57 @@ msgstr ""
 
 #: WcWidgets.php:79
 msgctxt "Action Hook"
+msgid "Thank-you (Before Order Details)"
+msgstr ""
+
+#: WcWidgets.php:85
+msgctxt "Action Hook"
 msgid "Before Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:84
+#: WcWidgets.php:90
 msgctxt "Action Hook"
 msgid "After Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:89
+#: WcWidgets.php:95
 msgctxt "Action Hook"
 msgid "Before Order Notes"
 msgstr ""
 
-#: WcWidgets.php:94
+#: WcWidgets.php:100
 msgctxt "Action Hook"
 msgid "Review Order: Before Payment"
 msgstr ""
 
-#: WcWidgets.php:99
+#: WcWidgets.php:105
 msgctxt "Action Hook"
 msgid "Before Edit Account Address Form"
 msgstr ""
 
-#: WcWidgets.php:104
+#: WcWidgets.php:110
 msgctxt "Action Hook"
 msgid "Account Dashboard"
 msgstr ""
 
-#: WcWidgets.php:112
+#: WcWidgets.php:118
 msgctxt "Action Hook"
 msgid "Editorial: Dashboard Purchased Empty"
 msgstr ""
 
-#: WcWidgets.php:119
+#: WcWidgets.php:125
 msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr ""
 
 #. translators: %s: widget area name
-#: WcWidgets.php:154
+#: WcWidgets.php:160
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr ""
 
 #. translators: %s: widget action hook
-#: WcWidgets.php:156
+#: WcWidgets.php:162
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
 msgstr ""
