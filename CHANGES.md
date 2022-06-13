@@ -1,3 +1,16 @@
+### 3.23.1
+* main/module: custom content callback on template api
+* main/module: filtering default terms
+* main/module: late set labels on registering posttypes
+* main/shortcode: anchor on title links
+* main/shortcode: list term revised
+* main/shortcode: tiles on list posts
+* main/template: :new: span tiles renderer
+* module/archives: filtering taxonomy archive links on parent plugin
+* module/audit: filtering auto attributes on save post
+* module/grouping: :new: module 
+* module/today: support for auto-audit on empty the-day
+
 ### 3.23.0
 * main/listtable: skip restrict by author for large user count
 * main/module: better checks for inline save posttypes
