@@ -47,6 +47,18 @@
   &.-posttype-quote::before {
     content: "\f122" !important;
   }
+
+  &.-posttype-course::before {
+    content: "\f118" !important;
+  }
+
+  &.-posttype-lesson::before {
+    content: "\f322" !important;
+  }
+
+  &.-posttype-place::before {
+    content: "\f231" !important;
+  }
 }
 
 .gpeople-glance-item {
