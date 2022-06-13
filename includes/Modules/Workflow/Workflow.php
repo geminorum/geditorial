@@ -140,7 +140,7 @@ class Workflow extends gEditorial\Module
 			case 'delete_page':
 			// case 'publish_post':
 
-				if ( ! $post = Helper::getPost( $args[0] ) )
+				if ( ! $post = PostType::getPost( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )
