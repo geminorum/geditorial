@@ -108,7 +108,7 @@ class Module extends Base
 			return FALSE;
 
 		if ( is_null( $domain ) )
-			$domain = $this->classs();
+			$domain = $this->get_textdomain();
 
 		if ( is_null( $locale ) )
 			$locale = apply_filters( 'plugin_locale', L10n::locale(), $this->base );
@@ -264,6 +264,8 @@ class Module extends Base
 			);
 		}
 	}
+
+	protected function get_textdomain() { return $this->classs(); }
 
 	protected function get_global_settings() { return []; }
 	protected function get_global_constants() { return []; }
@@ -1130,7 +1132,11 @@ class Module extends Base
 		else if ( TRUE === $defaults )
 			$defaults = array_keys( $supports );
 
-		$singular = @translate_nooped_plural( $this->strings['noops'][$constant], 1 );
+		// NOTE: filtered noop strings may omit context/domain keys!
+		$singular = @translate_nooped_plural( array_merge( [
+			'context' => NULL,
+			'domain'  => $this->get_textdomain(),
+		], $this->strings['noops'][$constant] ), 1 );
 
 		return [
 			'field'       => $constant.'_supports',
