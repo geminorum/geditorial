@@ -517,9 +517,11 @@ class Helper extends Main
 	 * @REF: `_nx_noop()`
 	 * @REF: `translate_nooped_plural()`
 	 */
-	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = [] )
+	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = [], $posttype = NULL )
 	{
-		$name_templates = [
+		$strings = self::getStringsFromName( $name );
+
+		$name_templates = apply_filters( static::BASE.'_posttype_labels_name_templates', [
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'name'                     => _x( '%1$s', 'Helper: CPT Generator: `name`', 'geditorial' ),
 			// 'menu_name'                => _x( '%1$s', 'Helper: CPT Generator: `menu_name`', 'geditorial' ),
@@ -578,9 +580,9 @@ class Helper extends Main
 			'item_link'                => _x( '%2$s Link', 'Helper: CPT Generator: `item_link`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'item_link_description'    => _x( 'A link to a %4$s.', 'Helper: CPT Generator: `item_link_description`', 'geditorial' ),
-		];
+		], $posttype, $strings, $name );
 
-		$featured_templates = [
+		$featured_templates = apply_filters( static::BASE.'_posttype_labels_featured_templates', [
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
 			'featured_image'        => _x( '%1$s', 'Helper: CPT Generator: `featured_image`', 'geditorial' ),
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
@@ -589,9 +591,7 @@ class Helper extends Main
 			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: `remove_featured_image`', 'geditorial' ),
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
 			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: `use_featured_image`', 'geditorial' ),
-		];
-
-		$strings = self::getStringsFromName( $name );
+		], $posttype, $strings, $name );
 
 		// TODO: add raw name strings on the object
 
@@ -630,9 +630,11 @@ class Helper extends Main
 	 * @REF: `_nx_noop()`
 	 * @REF: `translate_nooped_plural()`
 	 */
-	public static function generateTaxonomyLabels( $name, $pre = [] )
+	public static function generateTaxonomyLabels( $name, $pre = [], $taxonomy = NULL )
 	{
-		$templates = [
+		$strings = self::getStringsFromName( $name );
+
+		$templates = apply_filters( static::BASE.'_taxonomy_labels_templates', [
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			'name'                       => _x( '%1$s', 'Helper: Tax Generator: `name`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
@@ -688,9 +690,7 @@ class Helper extends Main
 			// 'parent_field_description'   => _x( 'Assign a parent term to create a hierarchy. The term Jazz, for example, would be the parent of Bebop and Big Band.', 'Helper: Tax Generator: `parent_field_description`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			// 'desc_field_description'     => _x( 'The description is not prominent by default; however, some themes may show it.', 'Helper: Tax Generator: `desc_field_description`', 'geditorial' ),
-		];
-
-		$strings = self::getStringsFromName( $name );
+		], $taxonomy, $strings, $name );
 
 		foreach ( $templates as $key => $template )
 			if ( $template && ! array_key_exists( $key, $pre ) )

@@ -2620,7 +2620,8 @@ class Module extends Base
 			return Helper::generatePostTypeLabels(
 				$this->strings['noops'][$constant],
 				$this->get_string( 'featured', $constant, 'misc', NULL ),
-				$labels
+				$labels,
+				$this->constant( $constant )
 			);
 
 		return $labels;
@@ -2769,7 +2770,11 @@ class Module extends Base
 			$labels['menu_name'] = $menu_name;
 
 		if ( ! empty( $this->strings['noops'][$constant] ) )
-			return Helper::generateTaxonomyLabels( $this->strings['noops'][$constant], $labels );
+			return Helper::generateTaxonomyLabels(
+				$this->strings['noops'][$constant],
+				$labels,
+				$this->constant( $constant )
+			);
 
 		return $labels;
 	}

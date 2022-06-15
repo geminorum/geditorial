@@ -246,7 +246,9 @@ class Grouping extends gEditorial\Module
 			$labels = Helper::generateTaxonomyLabels( [
 				'singular' => $custom['singular'],
 				'plural'   => $custom['plural'],
-			], [ 'menu_name' => $custom['menu'] ] );
+			], [
+				'menu_name' => $custom['menu'],
+			], $name );
 
 			register_taxonomy( $name, 'user', [
 				'labels'      => $labels,
