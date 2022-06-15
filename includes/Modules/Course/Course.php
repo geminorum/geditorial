@@ -8,6 +8,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
@@ -98,9 +99,12 @@ class Course extends gEditorial\Module
 			'format_tax'         => 'lesson_format',
 			'status_tax'         => 'lesson_status',
 			'status_tax_slug'    => 'lesson-statuses',
-			'course_shortcode'   => 'course',
-			'span_shortcode'     => 'course-span',
-			'cover_shortcode'    => 'course-cover',
+
+			'course_shortcode' => 'course',
+			'span_shortcode'   => 'course-span',
+			'cover_shortcode'  => 'course-cover',
+
+			'term_abandoned_lesson' => 'lesson-abandoned',
 		];
 	}
 
@@ -239,6 +243,8 @@ class Course extends gEditorial\Module
 	{
 		$this->register_posttype_thumbnail( 'course_cpt' );
 		$this->register_posttype_thumbnail( 'lesson_cpt' );
+
+		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
 	public function init()
@@ -280,6 +286,8 @@ class Course extends gEditorial\Module
 
 		$this->register_default_terms( 'status_tax' );
 		$this->_hook_paired_thumbnail_fallback();
+
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
 		if ( is_admin() )
 			return;
@@ -698,5 +706,32 @@ class Course extends gEditorial\Module
 	protected function render_tools_html_after( $uri, $sub )
 	{
 		$this->paired_tools_render_card( 'course_cpt', 'course_tax' );
+	}
+
+	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $terms;
+
+		if ( $exists = term_exists( $this->constant( 'term_abandoned_lesson' ), $taxonomy ) ) {
+
+			if ( Taxonomy::hasTerms( $this->constant( 'course_tax' ), $post->ID ) )
+				$terms[] = $exists['term_id'];
+
+			else
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+		}
+
+		return $terms;
+	}
+
+	public function audit_get_default_terms( $terms, $taxonomy )
+	{
+		if ( $taxonomy === gEditorial()->constant( 'audit', 'audit_tax', 'audit_attribute' ) )
+			$terms = array_merge( $terms, [
+				$this->constant( 'term_abandoned_lesson' ) => _x( 'Lesson Abandoned', 'Default Term: Audit', 'geditorial-course' ),
+			] );
+
+		return $terms;
 	}
 }
