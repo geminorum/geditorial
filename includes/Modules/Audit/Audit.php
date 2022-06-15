@@ -365,11 +365,12 @@ class Audit extends gEditorial\Module
 		}
 
 		$terms = $this->filters( 'auto_audit_save_post', $terms, $post, $taxonomy, $currents, $update );
+		$terms = Arraay::prepNumeral( $terms );
 
-		if ( $terms == $currents )
+		if ( Arraay::equalNoneAssoc( $terms, $currents ) )
 			return;
 
-		$result = wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $taxonomy );
+		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy );
 
 		if ( ! is_wp_error( $result ) )
 			clean_object_term_cache( $post->ID, $taxonomy );
