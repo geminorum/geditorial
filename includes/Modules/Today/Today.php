@@ -145,7 +145,7 @@ class Today extends gEditorial\Module
 
 		$this->register_posttype( 'day_cpt' );
 
-		$this->filter_module( 'audit', 'auto_audit_save_post', 4 );
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
 		if ( ! is_admin() )
 			return;
@@ -1001,7 +1001,7 @@ class Today extends gEditorial\Module
 		echo '</table>';
 	}
 
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents )
+	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $terms;

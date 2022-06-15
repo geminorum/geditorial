@@ -364,7 +364,7 @@ class Audit extends gEditorial\Module
 				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
 		}
 
-		$terms = $this->filters( 'auto_audit_save_post', $terms, $post, $taxonomy, $currents );
+		$terms = $this->filters( 'auto_audit_save_post', $terms, $post, $taxonomy, $currents, $update );
 
 		if ( $terms == $currents )
 			return;
