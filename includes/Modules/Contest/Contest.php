@@ -8,6 +8,7 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -85,8 +86,11 @@ class Contest extends gEditorial\Module
 			'apply_cat_slug'      => 'apply-categories',
 			'status_tax'          => 'apply_status',
 			'status_tax_slug'     => 'apply-statuses',
-			'contest_shortcode'   => 'contest',
-			'cover_shortcode'     => 'contest-cover',
+
+			'contest_shortcode' => 'contest',
+			'cover_shortcode'   => 'contest-cover',
+
+			'term_abandoned_apply' => 'apply-abandoned',
 		];
 	}
 
@@ -191,6 +195,7 @@ class Contest extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'contest_cpt' );
+		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
 	public function init()
@@ -225,6 +230,8 @@ class Contest extends gEditorial\Module
 		$this->register_shortcode( 'cover_shortcode' );
 
 		$this->register_default_terms( 'status_tax' );
+
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
 		if ( is_admin() )
 			return;
@@ -582,5 +589,32 @@ class Contest extends gEditorial\Module
 	protected function render_tools_html_after( $uri, $sub )
 	{
 		$this->paired_tools_render_card( 'contest_cpt', 'contest_tax' );
+	}
+
+	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $terms;
+
+		if ( $exists = term_exists( $this->constant( 'term_abandoned_apply' ), $taxonomy ) ) {
+
+			if ( Taxonomy::hasTerms( $this->constant( 'contest_tax' ), $post->ID ) )
+				$terms[] = $exists['term_id'];
+
+			else
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+		}
+
+		return $terms;
+	}
+
+	public function audit_get_default_terms( $terms, $taxonomy )
+	{
+		if ( $taxonomy === gEditorial()->constant( 'audit', 'audit_tax', 'audit_attribute' ) )
+			$terms = array_merge( $terms, [
+				$this->constant( 'term_abandoned_apply' ) => _x( 'Apply Abandoned', 'Default Term: Audit', 'geditorial-contest' ),
+			] );
+
+		return $terms;
 	}
 }
