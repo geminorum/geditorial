@@ -84,7 +84,7 @@ class Headings extends gEditorial\Module
 
 	public function toc_callback( $match )
 	{
-		$title = trim( $match[3] );
+		$title = trim( strip_tags( $match[3] ) );
 
 		if ( ! $title )
 			return $match[0];
