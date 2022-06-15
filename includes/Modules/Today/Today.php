@@ -84,10 +84,13 @@ class Today extends gEditorial\Module
 		return [
 			'day_cpt'         => 'day',
 			'day_cpt_archive' => 'days',
-			'metakey_cal'     => '_theday_cal',
-			'metakey_day'     => '_theday_day',
-			'metakey_month'   => '_theday_month',
-			'metakey_year'    => '_theday_year',
+
+			'metakey_cal'   => '_theday_cal',
+			'metakey_day'   => '_theday_day',
+			'metakey_month' => '_theday_month',
+			'metakey_year'  => '_theday_year',
+
+			'term_empty_the_day' => 'the-day-empty',
 		];
 	}
 
@@ -1006,9 +1009,7 @@ class Today extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $terms;
 
-		$term = $this->constant( 'empty_the_day', 'the-day-empty' );
-
-		if ( $exists = term_exists( $term, $taxonomy ) ) {
+		if ( $exists = term_exists( $this->constant( 'term_empty_the_day' ), $taxonomy ) ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
 				PostType::getPost( $post ),
@@ -1028,12 +1029,12 @@ class Today extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		if ( $taxonomy != $this->constant( 'audit_tax', 'audit_attribute' ) )
-			return $terms;
+		if ( $taxonomy === gEditorial()->constant( 'audit', 'audit_tax', 'audit_attribute' ) )
+			$terms = array_merge( $terms, [
+				$this->constant( 'term_empty_the_day' ) => _x( 'No day', 'Default Term: Audit', 'geditorial-today' ),
+			] );
 
-		return array_merge( $terms, [
-			$this->constant( 'empty_the_day', 'the-day-empty' ) => _x( 'No day', 'Default Term: Audit', 'geditorial-today' ),
-		] );
+		return $terms;
 	}
 
 	private function get_importer_fields( $posttype = NULL )

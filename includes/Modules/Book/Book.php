@@ -129,15 +129,18 @@ class Book extends gEditorial\Module
 			'status_tax_slug'         => 'publication-statuses',
 			'size_tax'                => 'publication_size',
 			'audience_tax'            => 'publication_audience',
-			'publication_shortcode'   => 'publication',
-			'subject_shortcode'       => 'publication-subject',
-			'serie_shortcode'         => 'publication-serie',
-			'cover_shortcode'         => 'publication-cover',
-			'metakey_import_id'       => 'book_publication_id',
-			'metakey_import_title'    => 'book_publication_title',
-			'metakey_import_ref'      => 'book_publication_ref',
-			'metakey_import_desc'     => 'book_publication_desc',
-			'isbn_query'              => 'isbn',
+
+			'publication_shortcode' => 'publication',
+			'subject_shortcode'     => 'publication-subject',
+			'serie_shortcode'       => 'publication-serie',
+			'cover_shortcode'       => 'publication-cover',
+
+			'metakey_import_id'    => 'book_publication_id',
+			'metakey_import_title' => 'book_publication_title',
+			'metakey_import_ref'   => 'book_publication_ref',
+			'metakey_import_desc'  => 'book_publication_desc',
+
+			'isbn_query' => 'isbn',
 		];
 	}
 

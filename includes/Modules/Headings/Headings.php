@@ -189,7 +189,7 @@ class Headings extends gEditorial\Module
 
 				return rtrim( _wp_link_page( $item['page'] ), '">' )
 					.'#'.$item['slug'].'">'.$item['title'].'</a>';
-			} );
+			}, 'ul', 'children', '-headings-toc' );
 
 		echo '</div>';
 	}

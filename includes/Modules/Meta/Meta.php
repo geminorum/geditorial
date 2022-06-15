@@ -220,6 +220,9 @@ class Meta extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
+		if ( $this->setup_disabled() )
+			return;
+
 		$this->register_button( 'install_def_label_tax', _x( 'Install Default Column Headers', 'Button', 'geditorial-meta' ) );
 	}
 
@@ -1114,6 +1117,7 @@ class Meta extends gEditorial\Module
 			&& $args['custom_field'] ) {
 
 			echo '<br />';
+			// FIXME: use table list helpers
 			HTML::tableList( [
 				'post_id' => Tablelist::columnPostID(),
 				'type'   => [

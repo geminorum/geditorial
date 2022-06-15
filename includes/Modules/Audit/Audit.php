@@ -37,7 +37,7 @@ class Audit extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = Taxonomy::listTerms( $this->constant( 'audit_tax' ) );
-		$empty = $this->get_taxonomy_label( 'audit_tax', 'no_terms', _x( 'There\'s no audit attributes available!', 'Setting', 'geditorial-audit' ) );
+		$empty = $this->get_taxonomy_label( 'audit_tax', 'no_terms', _x( 'There\'s no audit attribute available!', 'Setting', 'geditorial-audit' ) );
 		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		return [
@@ -176,6 +176,9 @@ class Audit extends gEditorial\Module
 	public function default_buttons( $module = FALSE )
 	{
 		parent::default_buttons( $module );
+
+		if ( $this->setup_disabled() )
+			return;
 
 		$this->register_button( 'install_def_audit_tax', _x( 'Install Default Attributes', 'Button', 'geditorial-audit' ) );
 	}

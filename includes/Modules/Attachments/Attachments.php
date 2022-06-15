@@ -385,6 +385,9 @@ class Attachments extends gEditorial\Module
 					return HTML::tableCode( $sizes, TRUE );
 				},
 			],
+
+			// FIXME: also display general meta: width/height/filesize
+
 			'meta' => [
 				'title'    => _x( 'Meta', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-meta -has-table -has-table-ltr',
@@ -403,6 +406,7 @@ class Attachments extends gEditorial\Module
 					return Helper::htmlEmpty();
 				},
 			],
+
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',

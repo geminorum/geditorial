@@ -92,7 +92,8 @@ class MetaBox extends Main
 
 		} else {
 
-			$terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
+			// $terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
+			$terms = Taxonomy::listTerms( $args['taxonomy'], 'all' );
 		}
 
 		if ( ! count( $terms ) )

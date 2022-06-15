@@ -23,7 +23,7 @@ class Overwrite extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$object = [
+		$strings = [
 			[
 				'field'       => 'target',
 				'type'        => 'text',
@@ -68,7 +68,7 @@ class Overwrite extends gEditorial\Module
 					'field'  => 'backend_strings',
 					'type'   => 'object',
 					'title'  => _x( 'Back-end Strings', 'Setting Title', 'geditorial-overwrite' ),
-					'values' => $object,
+					'values' => $strings,
 				],
 			],
 			'_frontend' => [
@@ -76,13 +76,13 @@ class Overwrite extends gEditorial\Module
 					'field'  => 'frontend_strings',
 					'type'   => 'object',
 					'title'  => _x( 'Front-end Strings', 'Setting Title', 'geditorial-overwrite' ),
-					'values' => $object,
+					'values' => $strings,
 				],
 			],
 		];
 	}
 
-	protected function setup_disabled()
+	private function _skip_gettext_hook()
 	{
 		return is_admin()
 			? empty( $this->get_setting( 'backend_strings' ) )
@@ -92,6 +92,9 @@ class Overwrite extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
+
+		if ( $this->_skip_gettext_hook() )
+			return;
 
 		$this->filter( 'gettext', 3, 12, is_admin() ? 'backend' : 'frontend' );
 		$this->filter( 'gettext_with_context', 4, 12, is_admin() ? 'backend' : 'frontend' );
