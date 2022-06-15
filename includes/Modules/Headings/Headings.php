@@ -145,7 +145,9 @@ class Headings extends gEditorial\Module
 
 	public function render_headings( $title = NULL, $class = '' )
 	{
-		if ( count( $this->toc ) < $this->get_setting( 'min_headings', '2' ) )
+		$toc = $this->filters( 'toc', $this->toc );
+
+		if ( count( $toc ) < $this->get_setting( 'min_headings', '2' ) )
 			return;
 
 		if ( is_null( $title ) )
@@ -154,7 +156,7 @@ class Headings extends gEditorial\Module
 		$tree = [];
 		$last = FALSE;
 
-		foreach ( $this->toc as $heading ) {
+		foreach ( $toc as $heading ) {
 
 			if ( $GLOBALS['page'] == $heading['page'] || 1 == $heading['page'] )
 				$heading['page'] = FALSE;
@@ -173,6 +175,8 @@ class Headings extends gEditorial\Module
 				$last = $tree[$key];
 			}
 		}
+
+		$this->toc = []; // reset to avoid double rendering
 
 		echo $this->wrap_open( '-toc-box '.$class );
 
