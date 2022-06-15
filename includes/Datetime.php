@@ -26,7 +26,8 @@ class Datetime extends Main
 	// FIXME: use regex!
 	public static function stringFormat( $string )
 	{
-		$string = str_replace( '/', self::dateSeparator(), $string );
+		// FIXME: WTF: messes with the dates!
+		// $string = str_replace( '/', self::dateSeparator(), $string );
 
 		return trim( $string );
 	}
