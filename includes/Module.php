@@ -3312,13 +3312,51 @@ class Module extends Base
 		}
 	}
 
+	/**
+	 * returns post ids with selected terms from settings
+	 * that will be excluded form dropdown on supported post-types
+	 *
+	 * @api PAIRED API
+	 *
+	 * @return array
+	 */
+	protected function paired_get_dropdown_excludes()
+	{
+		if ( ! $terms = $this->get_setting( 'paired_exclude_terms' ) )
+			return [];
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[3] ) )
+			return [];
+
+		$args = [
+			'post_type' => $this->constant( $constants[0] ),
+			'tax_query' => [ [
+				'taxonomy' => $this->constant( $constants[3] ),
+				'terms'    => $terms,
+			] ],
+			'fields'      => 'ids',
+			'numberposts' => -1,
+
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		];
+
+		$query = new \WP_Query;
+		return $query->query( $args );
+	}
+
 	// PAIRED API
 	// NOTE: subterms must be hierarchical
 	// OLD: `do_render_metabox_assoc()`
 	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant = FALSE, $display_empty = FALSE )
 	{
 		$sub_tax   = FALSE;
-		$dropdowns = $excludes = [];
+		$dropdowns = $displayed = [];
+		$excludes  = $this->paired_get_dropdown_excludes();
 		$posttype  = $this->constant( $posttype_constant );
 		$taxonomy  = $this->constant( $tax_constant );
 		$terms     = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
@@ -3338,7 +3376,10 @@ class Module extends Base
 			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant, $tax_constant ) )
 				continue;
 
-			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, $to_post_id, $prefix, [], $none_main, $display_empty );
+			if ( in_array( $to_post_id, $excludes, TRUE ) )
+				continue;
+
+			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, $to_post_id, $prefix, $excludes, $none_main, $display_empty );
 
 			if ( $sub_tax ) {
 
@@ -3356,8 +3397,10 @@ class Module extends Base
 			}
 
 			$dropdowns[$to_post_id] = $dropdown;
-			$excludes[] = $to_post_id;
+			$displayed[] = $to_post_id;
 		}
+
+		$excludes = Arraay::prepNumeral( $excludes, $displayed );
 
 		if ( empty( $dropdowns ) )
 			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
@@ -4511,6 +4554,7 @@ class Module extends Base
 			FALSE, // posttype
 			FALSE, // taxonomy
 			FALSE, // subterm
+			FALSE, // exclude taxonomy
 		];
 	}
 

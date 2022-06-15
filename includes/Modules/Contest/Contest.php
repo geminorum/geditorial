@@ -27,6 +27,9 @@ class Contest extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$terms = Taxonomy::listTerms( $this->constant( 'contest_cat' ) );
+		$empty = $this->get_taxonomy_label( 'contest_cat', 'no_terms', _x( 'There\'s no contest category available!', 'Setting', 'geditorial-contest' ) );
+
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -36,6 +39,14 @@ class Contest extends gEditorial\Module
 					'description' => _x( 'Section taxonomy for the contests and supported post-types.', 'Settings', 'geditorial-contest' ),
 				],
 				'comment_status',
+				[
+					'field'        => 'paired_exclude_terms',
+					'type'         => 'checkbox-panel',
+					'title'        => _x( 'Exclude Terms', 'Setting Title', 'geditorial-contest' ),
+					'description'  => _x( 'Contests with selected terms will be excluded form dropdown on supported post-types.', 'Setting Description', 'geditorial-contest' ),
+					'string_empty' => $empty,
+					'values'       => $terms,
+				],
 			],
 			'_editlist' => [
 				'admin_ordering',
@@ -328,7 +339,7 @@ class Contest extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'contest_cpt', 'contest_tax', 'section_tax' ];
+		return [ 'contest_cpt', 'contest_tax', 'section_tax', 'contest_cat' ];
 	}
 
 	public function dashboard_glance_items( $items )
