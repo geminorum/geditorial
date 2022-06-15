@@ -445,7 +445,7 @@ class Media extends Core\Base
 			return $fallback;
 
 		if ( $alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', TRUE ) )
-			return raw ? $alt : trim( strip_tags( $alt ) );
+			return $raw ? $alt : trim( strip_tags( $alt ) );
 
 		return $fallback;
 	}

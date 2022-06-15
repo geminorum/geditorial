@@ -107,7 +107,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// @REF: `wp_count_terms()`
-	public static function hasTerms( $taxonomy, $empty = TRUE )
+	public static function hasTerms( $taxonomy, $object_id = FALSE, $empty = TRUE )
 	{
 		$args = [
 			'taxonomy'   => $taxonomy,
@@ -119,6 +119,9 @@ class Taxonomy extends Core\Base
 			'suppress_filter'        => TRUE,
 			'update_term_meta_cache' => FALSE,
 		];
+
+		if ( $object_id )
+			$args['object_ids'] = (array) $object_id;
 
 		$query = new \WP_Term_Query;
 		return $query->query( $args );
@@ -180,6 +183,7 @@ class Taxonomy extends Core\Base
 		return $query->query( $args );
 	}
 
+	// FIXME: rewrite this!
 	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
 	{
 		if ( FALSE === $object_id ) {
@@ -198,6 +202,7 @@ class Taxonomy extends Core\Base
 		if ( $id ) {
 
 			// using cached terms, only for posts, when no extra args provided
+			// @REF: https://developer.wordpress.org/reference/functions/wp_get_object_terms/#comment-1582
 			$terms = $post_object && empty( $extra )
 				? get_the_terms( $id, $taxonomy )
 				: wp_get_object_terms( $id, $taxonomy, $extra );

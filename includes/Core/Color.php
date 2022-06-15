@@ -456,4 +456,141 @@ class Color extends Base
 			'yellowgreen'          => [ 154, 205,  50 ]
 		];
 	}
+
+	/**
+	 * Convert RGB to HEX.
+	 * @source: `wc_rgb_from_hex()`
+	 *
+	 * @param mixed $color Color.
+	 *
+	 * @return array
+	 */
+	public static function rgbFromHex( $color )
+	{
+		// convert shorthand colors to full format, e.g. "FFF" -> "FFFFFF"
+		$color = preg_replace( '~^(.)(.)(.)$~', '$1$1$2$2$3$3', str_replace( '#', '', $color ) );
+
+		return [
+			'R' => hexdec( $color[0].$color[1] ),
+			'G' => hexdec( $color[2].$color[3] ),
+			'B' => hexdec( $color[4].$color[5] ),
+		];
+	}
+
+	/**
+	 * Make HEX color darker.
+	 * @source `wc_hex_darker()`
+	 *
+	 * @param mixed $color  Color.
+	 * @param int   $factor Darker factor.
+	 *                      Defaults to 30.
+	 * @return string
+	 */
+	public static function hexDarker( $color, $factor = 30 )
+	{
+		$base  = self::rgbFromHex( $color );
+		$color = '#';
+
+		foreach ( $base as $k => $v ) {
+
+			$amount      = $v / 100;
+			$amount      = NumberUtil::round( $amount * $factor );
+			$new_decimal = $v - $amount;
+
+			$new_hex_component = dechex( $new_decimal );
+
+			if ( strlen( $new_hex_component ) < 2 )
+				$new_hex_component = '0' . $new_hex_component;
+
+			$color.= $new_hex_component;
+		}
+
+		return $color;
+	}
+
+	/**
+	 * Make HEX color lighter.
+	 * @source `wc_hex_lighter()`
+	 *
+	 * @param mixed $color  Color.
+	 * @param int   $factor Lighter factor.
+	 *                      Defaults to 30.
+	 * @return string
+	 */
+	public static function hexLlighter( $color, $factor = 30 )
+	{
+		$base  = self::rgbFromHex( $color );
+		$color = '#';
+
+		foreach ( $base as $k => $v ) {
+
+			$amount      = 255 - $v;
+			$amount      = $amount / 100;
+			$amount      = Number::round( $amount * $factor );
+			$new_decimal = $v + $amount;
+
+			$new_hex_component = dechex( $new_decimal );
+
+			if ( strlen( $new_hex_component ) < 2 )
+				$new_hex_component = '0' . $new_hex_component;
+
+			$color .= $new_hex_component;
+		}
+
+		return $color;
+	}
+
+	/**
+	 * Determine whether a hex color is light.
+	 * @source `wc_hex_is_light()`
+	 *
+	 * @param mixed $color Color.
+	 * @return bool  True if a light color.
+	 */
+	public static function hexIsLight( $color )
+	{
+		$hex = str_replace( '#', '', $color );
+
+		$c_r = hexdec( substr( $hex, 0, 2 ) );
+		$c_g = hexdec( substr( $hex, 2, 2 ) );
+		$c_b = hexdec( substr( $hex, 4, 2 ) );
+
+		$brightness = ( ( $c_r * 299 ) + ( $c_g * 587 ) + ( $c_b * 114 ) ) / 1000;
+
+		return $brightness > 155;
+	}
+
+	/**
+	 * Detect if we should use a light or dark color on a background color.
+	 * @source `wc_light_or_dark()`
+	 *
+	 * @param mixed  $color Color.
+	 * @param string $dark  Darkest reference.
+	 *                      Defaults to '#000000'.
+	 * @param string $light Lightest reference.
+	 *                      Defaults to '#FFFFFF'.
+	 * @return string
+	 */
+	public static function lightOrDark( $color, $dark = '#000000', $light = '#FFFFFF' )
+	{
+		return self::hexIsLight( $color ) ? $dark : $light;
+	}
+
+	/**
+	 * Format string as hex.
+	 * @source `wc_format_hex()`
+	 *
+	 * @param string $hex HEX color.
+	 * @return string|null
+	 */
+	public static function formatHex( $hex )
+	{
+		$hex = trim( str_replace( '#', '', $hex ) );
+
+		if ( strlen( $hex ) === 3 )
+			$hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
+
+		return $hex ? '#'.$hex : NULL;
+	}
 }
+
