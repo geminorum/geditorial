@@ -271,6 +271,13 @@ class Book extends gEditorial\Module
 				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // paltoyee
 				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // jibi
 			],
+			'status_tax' => [
+				'not-available-in-print' => _x( 'Not Available in Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'soon-to-be-published'   => _x( 'Soon to be Published', 'Publication Status: Default Term', 'geditorial-book' ),
+				'secondary-print'        => _x( 'Secondary Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'repeat-print'           => _x( 'Repeat Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'first-print'            => _x( 'First Print', 'Publication Status: Default Term', 'geditorial-book' ),
+			],
 		];
 
 		$strings['p2p']['publication_cpt']['title'] = [
