@@ -912,6 +912,19 @@ class ShortCode extends Main
 			// exclude paired posttype
 			$query['post_type'] = Arraay::stripByValue( Taxonomy::object( $taxonomy )->object_type, $posttype );
 
+		} else if ( 'paired' === $list && is_singular( $args['posttypes'] ) ) {
+
+			// gets the list of main posts paired to this supported post
+
+			if ( ! $args['module'] )
+				return $content;
+
+			if ( ! $paired_posts = gEditorial()->{$args['module']}->get_linked_to_posts( NULL, FALSE, NULL ) )
+				return $content;
+
+			$query['post_type'] = $posttype; // override with main posttype
+			$query['post__in']  = $paired_posts;
+
 		} else if ( 'paired' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
 
 			if ( ! $post = PostType::getPost() )
