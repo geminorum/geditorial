@@ -3975,10 +3975,14 @@ class Module extends Base
 			if ( $single )
 				return $to_post_id;
 
-			if ( $published && 'publish' != get_post_status( $to_post_id ) )
+			if ( is_null( $published ) )
+				$posts[$term->term_id] = $to_post_id;
+
+			else if ( $published && ! is_post_status_viewable( get_post_status( $to_post_id ) ) )
 				continue;
 
-			$posts[$term->term_id] = $to_post_id;
+			else
+				$posts[$term->term_id] = $to_post_id;
 		}
 
 		return count( $posts ) ? $posts : FALSE;
