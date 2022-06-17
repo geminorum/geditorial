@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\URL;
@@ -56,6 +57,7 @@ class Venue extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'place_cpt', [
 					'title',
@@ -78,6 +80,8 @@ class Venue extends gEditorial\Module
 			'place_cat_slug'    => 'place-categories',
 			'facility_tax'      => 'place_facility',
 			'facility_tax_slug' => 'place-facilities',
+
+			'place_shortcode' => 'place',
 		];
 	}
 
@@ -182,6 +186,8 @@ class Venue extends gEditorial\Module
 		], 'place_cpt' );
 
 		$this->paired_register_objects( 'place_cpt', 'place_tax', 'facility_tax' );
+
+		$this->register_shortcode( 'place_shortcode' );
 
 		if ( is_admin() )
 			return;
@@ -326,6 +332,21 @@ class Venue extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
+	}
+
+	public function place_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'paired',
+			$this->constant( 'place_cpt' ),
+			$this->constant( 'place_tax' ),
+			array_merge( [
+				'posttypes' => $this->posttypes(),
+				'orderby'   => 'menu_order',
+			], (array) $atts ),
+			$content,
+			$this->constant( 'place_shortcode', $tag ),
+			$this->key
+		);
 	}
 
 	public function term_link( $link, $term, $taxonomy )
