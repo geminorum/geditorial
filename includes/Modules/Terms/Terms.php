@@ -21,6 +21,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Terms extends gEditorial\Module
 {
 
+	// TODO: like `tableColumnPostMeta()` for term meta
+
 	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ];
 
 	public static function module()
@@ -878,6 +880,14 @@ class Terms extends gEditorial\Module
 		echo '</td></tr>';
 	}
 
+	/**
+	 * Renders form html mark-up for the given field.
+	 *
+	 * @param string $field
+	 * @param string $taxonomy
+	 * @param mixed $term
+	 * @return void
+	 */
 	private function form_field( $field, $taxonomy, $term = FALSE )
 	{
 		$html     = '';

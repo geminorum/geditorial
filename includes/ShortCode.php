@@ -748,7 +748,7 @@ class ShortCode extends Main
 			'connection'         => '', // only for o2o
 			'orderby'            => '', // empty for default
 			'order'              => 'ASC',
-			'order_cb'           => FALSE, // NULL for default order ( by meta, like mag )
+			'order_cb'           => FALSE, // NULL for default order by paired meta
 			'order_start'        => 'start', // meta field for ordering
 			'order_order'        => 'order', // meta field for ordering
 			'limit'              => -1,
@@ -892,9 +892,12 @@ class ShortCode extends Main
 
 		} else if ( 'paired' == $list && is_singular( $posttype ) ) {
 
+			// gets the list of supported posts paired to this post
+
 			if ( ! $post = PostType::getPost() )
 				return $content;
 
+			// FIXME: use module PAIRED API for the term
 			if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
 				$term = get_term_by( 'id', (int) $term_id, $taxonomy );
 
@@ -926,6 +929,8 @@ class ShortCode extends Main
 			$query['post__in']  = $paired_posts;
 
 		} else if ( 'paired' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
+
+			// gets the list of posts by the taxonomy
 
 			if ( ! $post = PostType::getPost() )
 				return $content;
@@ -992,7 +997,10 @@ class ShortCode extends Main
 				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
 
 			else if ( is_null( $args['order_cb'] ) && $count > 1 )
-				$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );
+				$items = Template::reorderPosts( $items,
+					$args['field_module'],
+					$args['order_start'],
+					$args['order_order'] );
 		}
 
 		foreach ( $items as $item ) {
@@ -1038,7 +1046,7 @@ class ShortCode extends Main
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		$html = $term = $tax_query = $meta_query = '';
+		$html = $term = '';
 
 		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $posttype );

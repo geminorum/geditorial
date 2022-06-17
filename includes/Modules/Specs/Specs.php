@@ -484,7 +484,7 @@ class Specs extends gEditorial\Module
 
 		if ( empty( $args['ids'] ) ) {
 
-			$terms = wp_get_object_terms( (int) $post->ID, $this->constant( 'specs_tax' ), [
+			$terms = wp_get_object_terms( $post->ID, $this->constant( 'specs_tax' ), [
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],
 				'fields'  => 'ids',

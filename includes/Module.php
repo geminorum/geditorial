@@ -6,6 +6,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
+use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\URL;
@@ -1133,7 +1134,7 @@ class Module extends Base
 			$defaults = array_keys( $supports );
 
 		// NOTE: filtered noop strings may omit context/domain keys!
-		$singular = @translate_nooped_plural( array_merge( [
+		$singular = translate_nooped_plural( array_merge( [
 			'context' => NULL,
 			'domain'  => $this->get_textdomain(),
 		], $this->strings['noops'][$constant] ), 1 );
@@ -2937,14 +2938,15 @@ class Module extends Base
 	}
 
 	// PAIRED API
-	protected function paired_register_objects( $posttype, $taxonomy, $subterm = FALSE )
+	protected function paired_register_objects( $posttype, $taxonomy, $subterm = FALSE, $supported = NULL )
 	{
-		$posttypes = $this->posttypes();
+		if ( is_null( $supported ) )
+			$supported = $this->posttypes();
 
-		if ( count( $posttypes ) ) {
+		if ( count( $supported ) ) {
 
 			// adding the main cpt
-			$posttypes[] = $this->constant( $posttype );
+			$supported[] = $this->constant( $posttype );
 
 			if ( $subterm && $this->get_setting( 'subterms_support' ) )
 				$this->register_taxonomy( $subterm, [
@@ -2952,13 +2954,13 @@ class Module extends Base
 					'meta_box_cb'        => NULL,
 					'show_admin_column'  => FALSE,
 					'show_in_nav_menus'  => TRUE,
-				], $posttypes );
+				], $supported );
 
 			$this->register_taxonomy( $taxonomy, [
 				'show_ui'      => FALSE,
 				'show_in_rest' => FALSE,
 				'hierarchical' => TRUE,
-			], $posttypes );
+			], $supported );
 
 			$this->_paired = $this->constant( $taxonomy );
 		}
@@ -3413,6 +3415,8 @@ class Module extends Base
 		foreach ( $dropdowns as $dropdown )
 			if ( $dropdown )
 				echo $dropdown;
+
+		// TODO: support for clear all button via js, like `subterms`
 
 		if ( $sub_tax )
 			$this->enqueue_asset_js( 'subterms', 'module' );

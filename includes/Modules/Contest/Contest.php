@@ -16,6 +16,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Contest extends gEditorial\Module
 {
 
+	// TODO: add span tax
+
 	public static function module()
 	{
 		return [
@@ -537,7 +539,7 @@ class Contest extends gEditorial\Module
 			$this->constant( 'contest_tax' ),
 			array_merge( [
 				'posttypes' => $this->posttypes(),
-				'orderby'   => 'menu_order', // order by meta
+				'orderby'   => 'menu_order',
 			], (array) $atts ),
 			$content,
 			$this->constant( 'contest_shortcode', $tag ),

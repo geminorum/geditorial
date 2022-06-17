@@ -9,6 +9,9 @@ use geminorum\gEditorial\Core\HTML;
 class Overwrite extends gEditorial\Module
 {
 
+	// TODO: use helper generator to overwrite posttype/taxonomy labels
+	// filter: `post_type_labels_{$posttype}`
+
 	protected $textdomain_frontend = FALSE;
 
 	public static function module()

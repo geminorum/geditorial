@@ -646,7 +646,7 @@ class Course extends gEditorial\Module
 			$this->constant( 'course_tax' ),
 			array_merge( [
 				'posttypes' => $this->posttypes(),
-				'orderby'   => 'menu_order', // order by meta
+				'orderby'   => 'menu_order',
 			], (array) $atts ),
 			$content,
 			$this->constant( 'course_shortcode', $tag ),

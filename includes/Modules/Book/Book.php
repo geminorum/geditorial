@@ -23,6 +23,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Book extends gEditorial\Module
 {
 
+	// TODO: add publication category
+
 	protected $deafults = [ 'multiple_instances' => TRUE ];
 
 	protected $support_meta = FALSE;
@@ -947,8 +949,7 @@ class Book extends gEditorial\Module
 		if ( ! $this->_p2p )
 			return $content;
 
-		return ShortCode::listPosts(
-			'connected',
+		return ShortCode::listPosts( 'connected',
 			$this->constant( 'publication_cpt' ),
 			'',
 			array_merge( [

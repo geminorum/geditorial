@@ -274,8 +274,7 @@ class Attachments extends gEditorial\Module
 
 	public function attachments_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts(
-			'attached',
+		return ShortCode::listPosts( 'attached',
 			'attachment',
 			'',
 			array_merge( [

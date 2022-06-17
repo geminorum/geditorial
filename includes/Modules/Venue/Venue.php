@@ -3,13 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Venue extends gEditorial\Module
@@ -25,6 +22,7 @@ class Venue extends gEditorial\Module
 		];
 	}
 
+	// TODO: custom list title for each supported posttypes
 	protected function get_global_settings()
 	{
 		return [
