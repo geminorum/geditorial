@@ -402,6 +402,7 @@ class Template extends Main
 		return self::pairedLink( $atts, $module );
 	}
 
+	// TODO: duplicate to `pairedList()`
 	public static function pairedLink( $atts = [], $module = NULL )
 	{
 		if ( is_null( $module ) && static::MODULE )
@@ -922,12 +923,7 @@ class Template extends Main
 	// FIXME: move this to Taxonomy
 	public static function getTheTermList( $taxonomy, $post = NULL, $before = '', $after = '' )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
-			return FALSE;
-
-		$terms = get_the_terms( $post, $taxonomy );
-
-		if ( empty( $terms ) || is_wp_error( $terms ) )
+		if ( ! $terms = Taxonomy::getPostTerms( $taxonomy, $post ) )
 			return FALSE;
 
 		$list = [];

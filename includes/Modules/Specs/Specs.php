@@ -293,7 +293,7 @@ class Specs extends gEditorial\Module
 		if ( ! Taxonomy::hasTerms( $taxonomy ) )
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
-		$terms = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
+		$terms = Taxonomy::getPostTerms( $taxonomy, $post );
 		$metas = $this->get_postmeta_legacy( $post->ID );
 
 		$handle = sprintf( '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="%s"></span>',
@@ -484,7 +484,6 @@ class Specs extends gEditorial\Module
 
 		if ( empty( $args['ids'] ) ) {
 
-			// FIXME: use: `Taxonomy::getTerms()`
 			$terms = wp_get_object_terms( (int) $post->ID, $this->constant( 'specs_tax' ), [
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],

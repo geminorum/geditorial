@@ -211,7 +211,7 @@ class MetaBox extends Main
 		if ( $args['metabox'] && self::checkHidden( $args['metabox'], $args['posttype'] ) )
 			return FALSE;
 
-		$selected = $post_id ? Taxonomy::getTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];
+		$selected = $post_id ? Taxonomy::getPostTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];
 
 		if ( is_null( $users ) )
 			$users = User::get();
@@ -423,7 +423,7 @@ class MetaBox extends Main
 	{
 		$name = sprintf( '%s[%s]', $prefix, $paired );
 
-		if ( ! $terms = Taxonomy::getTerms( $taxonomy, $paired, TRUE ) )
+		if ( ! $terms = Taxonomy::getPostTerms( $taxonomy, $paired ) )
 			return HTML::tag( 'input', [ 'type' => 'hidden', 'value' => '0', 'name' => $name ] );
 
 		if ( is_null( $none ) )

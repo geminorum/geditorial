@@ -153,7 +153,7 @@ class Entry extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		if ( ! $terms = Taxonomy::getTerms( $this->constant( 'section_tax' ), $post_id, TRUE ) )
+		if ( ! $terms = Taxonomy::getPostTerms( $this->constant( 'section_tax' ), $post_id ) )
 			return;
 
 		$nodes[] = [

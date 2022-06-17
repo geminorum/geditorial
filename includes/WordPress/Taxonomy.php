@@ -183,6 +183,23 @@ class Taxonomy extends Core\Base
 		return $query->query( $args );
 	}
 
+	// NOTE: hits cached terms for the post
+	public static function getPostTerms( $taxonomy, $post = NULL, $object = TRUE, $key = FALSE )
+	{
+		$terms = get_the_terms( $post, $taxonomy );
+
+		if ( empty( $terms ) || is_wp_error( $terms ) )
+			return [];
+
+		if ( ! $object )
+			return wp_list_pluck( $terms, $key ?: 'term_id' );
+
+		if ( $key )
+			return Core\Arraay::reKey( $terms, $key );
+
+		return $terms;
+	}
+
 	// FIXME: rewrite this!
 	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
 	{
@@ -200,6 +217,8 @@ class Taxonomy extends Core\Base
 		}
 
 		if ( $id ) {
+
+			// NOTE: use `Taxonomy::getPostTerms()` instead!
 
 			// using cached terms, only for posts, when no extra args provided
 			// @REF: https://developer.wordpress.org/reference/functions/wp_get_object_terms/#comment-1582

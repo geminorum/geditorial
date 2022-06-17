@@ -168,7 +168,7 @@ class Helper extends Main
 		if ( ! $object = Taxonomy::object( $taxonomy ) )
 			return;
 
-		if ( ! $terms = get_the_terms( $post, $object->name ) )
+		if ( ! $terms = Taxonomy::getPostTerms( $object->name, $post ) )
 			return;
 
 		$list = [];

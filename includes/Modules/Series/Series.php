@@ -240,7 +240,7 @@ class Series extends gEditorial\Module
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
 		$posttypes = $this->posttypes();
-		$terms     = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
+		$terms     = Taxonomy::getPostTerms( $taxonomy, $post );
 		$posts     = $dropdowns = $map = [];
 		$i         = 1;
 

@@ -1335,7 +1335,7 @@ class Terms extends gEditorial\Module
 			if ( ! $object = get_taxonomy( $taxonomy ) )
 				continue;
 
-			$terms = get_the_terms( $post_id, $taxonomy );
+			$terms = Taxonomy::getPostTerms( $taxonomy, $post_id );
 
 			if ( ! $terms || is_wp_error( $terms ) )
 				continue;

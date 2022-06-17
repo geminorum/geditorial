@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
@@ -838,17 +839,17 @@ class Cartable extends gEditorial\Module
 
 	private function get_users( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return Taxonomy::getTerms( $this->constant( 'user_tax' ), $post_id, $object, $key );
+		return Taxonomy::getPostTerms( $this->constant( 'user_tax' ), $post_id, $object, $key );
 	}
 
 	private function get_groups( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return Taxonomy::getTerms( $this->constant( 'group_tax' ), $post_id, $object, $key );
+		return Taxonomy::getPostTerms( $this->constant( 'group_tax' ), $post_id, $object, $key );
 	}
 
 	private function get_types( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return Taxonomy::getTerms( $this->constant( 'type_tax' ), $post_id, $object, $key );
+		return Taxonomy::getPostTerms( $this->constant( 'type_tax' ), $post_id, $object, $key );
 	}
 
 	private function get_user_groups( $user_id = NULL )

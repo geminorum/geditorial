@@ -3361,7 +3361,7 @@ class Module extends Base
 		$excludes  = $this->paired_get_dropdown_excludes();
 		$posttype  = $this->constant( $posttype_constant );
 		$taxonomy  = $this->constant( $tax_constant );
-		$terms     = Taxonomy::getTerms( $taxonomy, $post->ID, TRUE );
+		$terms     = Taxonomy::getPostTerms( $taxonomy, $post );
 		$none_def  = Settings::showOptionNone();
 		$none_main = $this->get_string( 'show_option_none', $posttype_constant, 'misc', $none_def );
 		$prefix    = $this->classs();
@@ -3370,7 +3370,7 @@ class Module extends Base
 
 			$sub_tax  = $this->constant( $sub_tax_constant );
 			$none_sub = $this->get_string( 'show_option_none', $sub_tax_constant, 'misc', $none_def );
-			$subterms = Taxonomy::getTerms( $sub_tax, $post->ID );
+			$subterms = Taxonomy::getPostTerms( $sub_tax, $post );
 		}
 
 		foreach ( $terms as $term ) {
@@ -3961,7 +3961,7 @@ class Module extends Base
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		$posts = [];
-		$terms = Taxonomy::getTerms( $this->constant( $tax_constant_key ), $post, TRUE );
+		$terms = Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
 
 		foreach ( $terms as $term ) {
 

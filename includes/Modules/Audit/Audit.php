@@ -399,7 +399,7 @@ class Audit extends gEditorial\Module
 				'href'   => $this->get_module_url(),
 			];
 
-			if ( $terms = Taxonomy::getTerms( $taxonomy, $post_id, TRUE ) )
+			if ( $terms = Taxonomy::getPostTerms( $taxonomy, $post_id ) )
 				foreach ( $terms as $term )
 					$nodes[] = [
 						'id'     => $this->classs( 'attribute', $term->term_id ),

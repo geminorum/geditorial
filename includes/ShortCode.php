@@ -913,7 +913,8 @@ class ShortCode extends Main
 			if ( ! $post = PostType::getPost() )
 				return $content;
 
-			if ( ! $term = get_the_terms( $post, $taxonomy ) )
+			// NOTE: also used later!
+			if ( ! $term = Taxonomy::getPostTerms( $taxonomy, $post ) )
 				return $content;
 
 			$query['tax_query'] = [ [
@@ -1097,7 +1098,8 @@ class ShortCode extends Main
 
 		} else if ( is_singular( $posttype ) ) {
 
-			if ( ! $term = get_the_terms( NULL, $taxonomy ) )
+			// NOTE: also used late
+			if ( ! $term = Taxonomy::getPostTerms( $taxonomy ) )
 				return $content;
 
 			$query_args['tax_query'] = [ [
@@ -1246,7 +1248,8 @@ class ShortCode extends Main
 
 		} else {
 
-			if ( ! $term = get_the_terms( NULL, $taxonomy ) )
+			// NOTE: also used later
+			if ( ! $term = Taxonomy::getPostTerms( $taxonomy ) )
 				return $content;
 
 			$tax_query = [ [
