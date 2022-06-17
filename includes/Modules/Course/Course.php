@@ -649,7 +649,8 @@ class Course extends gEditorial\Module
 				'orderby'   => 'menu_order', // order by meta
 			], (array) $atts ),
 			$content,
-			$this->constant( 'course_shortcode' )
+			$this->constant( 'course_shortcode', $tag ),
+			$this->key
 		);
 	}
 

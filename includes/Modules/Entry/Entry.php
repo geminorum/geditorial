@@ -342,7 +342,8 @@ class Entry extends gEditorial\Module
 			$this->constant( 'section_tax' ),
 			$atts,
 			$content,
-			$this->constant( 'section_shortcode' )
+			$this->constant( 'section_shortcode', $tag ),
+			$this->key
 		);
 	}
 

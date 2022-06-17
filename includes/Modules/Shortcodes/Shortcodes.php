@@ -224,7 +224,8 @@ class Shortcodes extends gEditorial\Module
 				'title' => FALSE,
 			], (array) $atts ),
 			$content,
-			$this->constant( 'display_terms_shortcode', $tag )
+			$this->constant( 'display_terms_shortcode', $tag ),
+			$this->key
 		);
 	}
 
@@ -236,7 +237,8 @@ class Shortcodes extends gEditorial\Module
 				'item_image_tile' => TRUE,
 			], (array) $atts ),
 			$content,
-			$this->constant( 'term_tiles_shortcode', $tag )
+			$this->constant( 'term_tiles_shortcode', $tag ),
+			$this->key
 		);
 	}
 }

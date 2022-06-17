@@ -288,7 +288,8 @@ class Attachments extends gEditorial\Module
 				'item_after_cb' => [ $this, 'attachments_shortcode_item_after_cb' ],
 			], (array) $atts ),
 			$content,
-			$this->constant( 'attachments_shortcode' )
+			$this->constant( 'attachments_shortcode', $tag ),
+			$this->key
 		);
 	}
 

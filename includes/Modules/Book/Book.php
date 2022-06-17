@@ -925,7 +925,8 @@ class Book extends gEditorial\Module
 			$this->constant( 'subject_tax' ),
 			$atts,
 			$content,
-			$this->constant( 'subject_shortcode' )
+			$this->constant( 'subject_shortcode', $tag ),
+			$this->key
 		);
 	}
 
@@ -936,7 +937,8 @@ class Book extends gEditorial\Module
 			$this->constant( 'serie_tax' ),
 			$atts,
 			$content,
-			$this->constant( 'serie_shortcode' )
+			$this->constant( 'serie_shortcode', $tag ),
+			$this->key
 		);
 	}
 
@@ -958,7 +960,8 @@ class Book extends gEditorial\Module
 				'title_link'    => FALSE,
 			], (array) $atts ),
 			$content,
-			$this->constant( 'publication_shortcode' )
+			$this->constant( 'publication_shortcode', $tag ),
+			$this->key
 		);
 	}
 

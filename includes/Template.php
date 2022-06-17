@@ -991,15 +991,21 @@ class Template extends Main
 
 		foreach ( $terms as $term_id ) {
 
-			$span = ShortCode::listPosts( 'assigned', $args['posttype'], $args['taxonomy'], [
-				'id'              => $term_id,
-				'wrap'            => FALSE,
-				'future'          => 'off',
-				'list_class'      => '-tiles',
-				'title_anchor'    => '%2$s',
-				'title_link'      => 'anchor',
-				'item_image_tile' => TRUE,
-			] );
+			$span = ShortCode::listPosts( 'assigned',
+				$args['posttype'],
+				$args['taxonomy'], [
+					'id'              => $term_id,
+					'wrap'            => FALSE,
+					'future'          => 'off',
+					'list_class'      => '-tiles',
+					'title_anchor'    => '%2$s',
+					'title_link'      => 'anchor',
+					'item_image_tile' => TRUE,
+				],
+				NULL,
+				'',
+				$module
+			);
 
 			if ( ! empty( $span ) )
 				$html.= HTML::wrap( $span, '-tile-row' );

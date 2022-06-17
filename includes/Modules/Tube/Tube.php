@@ -379,7 +379,8 @@ class Tube extends gEditorial\Module
 			$this->constant( 'video_cat' ),
 			$atts,
 			$content,
-			$this->constant( 'video_cat_shortcode' )
+			$this->constant( 'video_cat_shortcode', $tag ),
+			$this->key
 		);
 	}
 
@@ -390,7 +391,8 @@ class Tube extends gEditorial\Module
 			$this->constant( 'channel_cat' ),
 			$atts,
 			$content,
-			$this->constant( 'channel_cat_shortcode' )
+			$this->constant( 'channel_cat_shortcode', $tag ),
+			$this->key
 		);
 	}
 

@@ -698,7 +698,7 @@ class ShortCode extends Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
-	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [ 'post' ], $taxonomies = [ 'post_tag' ] )
+	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [], $taxonomies = [], $module = NULL )
 	{
 		return [
 			'taxonomy'           => $taxonomy,
@@ -752,6 +752,7 @@ class ShortCode extends Main
 			'order_start'        => 'start', // meta field for ordering
 			'order_order'        => 'order', // meta field for ordering
 			'limit'              => -1,
+			'module'             => $module, // main caller module
 			'field_module'       => 'meta', // getting meta field from
 			'context'            => NULL,
 			'wrap'               => TRUE,
@@ -767,9 +768,9 @@ class ShortCode extends Main
 	// list: `attached`: posts by inheritance
 	// list: `alphabetized`: posts sorted by alphabet // TODO!
 	// list: `custom`: posts by id list // TODO!
-	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
+	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
 	{
-		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ] );
+		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ], [], $module );
 		$args = shortcode_atts( $defs, $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -787,6 +788,9 @@ class ShortCode extends Main
 			return $cache;
 
 		$html = $ref = $post = $term = $parent = $skip = '';
+
+		if ( is_null( $args['module'] ) && static::MODULE )
+			$args['module'] = static::MODULE;
 
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;
@@ -1332,9 +1336,9 @@ class ShortCode extends Main
 	// list: `allitems`: terms for display
 	// list: `thepost`: terms for the post
 	// list: `alphabetized`: terms sorted by alphabet // TODO!
-	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '' )
+	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
 	{
-		$defs = self::getDefaults( '', $taxonomy );
+		$defs = self::getDefaults( '', $taxonomy, [], [], $module );
 		$args = shortcode_atts( $defs, $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -1348,6 +1352,9 @@ class ShortCode extends Main
 			return $cache;
 
 		$html = $ref = $parent = '';
+
+		if ( is_null( $args['module'] ) && static::MODULE )
+			$args['module'] = static::MODULE;
 
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;

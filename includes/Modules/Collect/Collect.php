@@ -550,7 +550,8 @@ class Collect extends gEditorial\Module
 				'order_order' => 'in_collection_order', // meta field for ordering
 			], (array) $atts ),
 			$content,
-			$this->constant( 'collection_shortcode' )
+			$this->constant( 'collection_shortcode', $tag ),
+			$this->key
 		);
 	}
 

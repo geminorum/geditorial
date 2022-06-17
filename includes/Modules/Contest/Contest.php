@@ -540,7 +540,8 @@ class Contest extends gEditorial\Module
 				'orderby'   => 'menu_order', // order by meta
 			], (array) $atts ),
 			$content,
-			$this->constant( 'contest_shortcode' )
+			$this->constant( 'contest_shortcode', $tag ),
+			$this->key
 		);
 	}
 

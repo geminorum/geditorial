@@ -599,7 +599,8 @@ class Magazine extends gEditorial\Module
 				'order_order' => 'in_issue_order', // meta field for ordering
 			], (array) $atts ),
 			$content,
-			$this->constant( 'issue_shortcode' )
+			$this->constant( 'issue_shortcode', $tag ),
+			$this->key
 		);
 	}
 
