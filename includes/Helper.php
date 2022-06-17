@@ -712,11 +712,13 @@ class Helper extends Main
 	 * %4$s => Lower Case / Singular
 	 * %5$s => %s
 	 */
-	public static function generatePostTypeMessages( $name )
+	public static function generatePostTypeMessages( $name, $posttype = NULL )
 	{
 		global $post_type_object, $post, $post_ID;
 
-		$templates = [
+		$strings = self::getStringsFromName( $name );
+
+		$templates = apply_filters( static::BASE.'_posttype_message_templates', [
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'view_post'                      => _x( 'View %4$s', 'Helper: PostType Message Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
@@ -739,10 +741,9 @@ class Helper extends Main
 			'post_scheduled_for'             => _x( '%2$s scheduled for: %5$s.', 'Helper: PostType Message Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'post_draft_updated'             => _x( '%2$s draft updated.', 'Helper: PostType Message Generator', 'geditorial' ),
-		];
+		], $posttype, $strings, $name );
 
 		$messages = [];
-		$strings  = self::getStringsFromName( $name );
 
 		foreach ( $templates as $key => $template )
 			$messages[$key] = vsprintf( $template, $strings );
@@ -781,9 +782,11 @@ class Helper extends Main
 	 * %4$s => Lower Case / Singular
 	 * %5$s => %s
 	 */
-	public static function generateBulkPostTypeMessages( $name, $counts )
+	public static function generateBulkPostTypeMessages( $name, $counts, $posttype = NULL )
 	{
-		$templates = [
+		$strings = self::getStringsFromName( $name );
+
+		$templates = apply_filters( static::BASE.'_posttype_bulk_message_templates', [
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
@@ -794,10 +797,9 @@ class Helper extends Main
 			'trashed'   => _nx_noop( '%5$s %4$s moved to the Trash.', '%5$s %3$s moved to the Trash.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'untrashed' => _nx_noop( '%5$s %4$s restored from the Trash.', '%5$s %3$s restored from the Trash.', 'Helper: Bulk PostType Message Generator', 'geditorial' ),
-		];
+		], $posttype, $strings, $name );
 
 		$messages = [];
-		$strings  = self::getStringsFromName( $name );
 
 		foreach ( $templates as $key => $template )
 			// needs to apply the role so we use noopedCount()

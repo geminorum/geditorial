@@ -2976,13 +2976,15 @@ class Module extends Base
 	// TODO: convert to auto hook
 	protected function get_post_updated_messages( $constant )
 	{
-		return [ $this->constant( $constant ) => Helper::generatePostTypeMessages( $this->get_noop( $constant ) ) ];
+		$posttype = $this->constant( $constant );
+		return [ $posttype => Helper::generatePostTypeMessages( $this->get_noop( $constant ), $posttype ) ];
 	}
 
 	// TODO: convert to auto hook
 	protected function get_bulk_post_updated_messages( $constant, $bulk_counts )
 	{
-		return [ $this->constant( $constant ) => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $bulk_counts ) ];
+		$posttype = $this->constant( $constant );
+		return [ $posttype => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $bulk_counts, $posttype ) ];
 	}
 
 	public function get_image_sizes( $posttype )
