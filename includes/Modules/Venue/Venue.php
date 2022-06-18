@@ -35,6 +35,11 @@ class Venue extends gEditorial\Module
 					'description' => _x( 'Facility taxonomy for the places and supported post-types.', 'Settings', 'geditorial-venue' ),
 				],
 				'comment_status',
+				'paired_exclude_terms' => [
+					NULL,
+					$this->constant( 'place_cat' ),
+					$this->get_taxonomy_label( 'place_cat', 'no_terms' ),
+				],
 			],
 			'_editlist' => [
 				'admin_ordering',
@@ -312,7 +317,7 @@ class Venue extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'place_cpt', 'place_tax', 'facility_tax' ];
+		return [ 'place_cpt', 'place_tax', 'facility_tax', 'place_cat' ];
 	}
 
 	protected function get_taxonomies_for_restrict_manage_posts()
