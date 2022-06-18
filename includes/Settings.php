@@ -634,6 +634,18 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_paired_exclude_terms( $description = NULL, $taxonomy = 'post_tag', $empty = NULL )
+	{
+		return [
+			'field'        => 'paired_exclude_terms',
+			'type'         => 'checkbox-panel',
+			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial' ),
+			'description'  => $description ?: _x( 'ّItems with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial' ),
+			'values'       => Taxonomy::listTerms( $taxonomy ),
+		];
+	}
+
 	public static function getSetting_count_not( $description = NULL )
 	{
 		return [

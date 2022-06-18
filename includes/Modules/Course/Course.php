@@ -30,9 +30,6 @@ class Course extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$terms = Taxonomy::listTerms( $this->constant( 'course_cat' ) );
-		$empty = $this->get_taxonomy_label( 'course_cat', 'no_terms', _x( 'There\'s no course category available!', 'Setting', 'geditorial-course' ) );
-
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -42,13 +39,10 @@ class Course extends gEditorial\Module
 					'description' => _x( 'Topic taxonomy for the courses and supported post-types.', 'Settings', 'geditorial-course' ),
 				],
 				'comment_status',
-				[
-					'field'        => 'paired_exclude_terms',
-					'type'         => 'checkbox-panel',
-					'title'        => _x( 'Exclude Terms', 'Setting Title', 'geditorial-course' ),
-					'description'  => _x( 'Courses with selected terms will be excluded form dropdown on supported post-types.', 'Setting Description', 'geditorial-course' ),
-					'string_empty' => $empty,
-					'values'       => $terms,
+				'paired_exclude_terms' => [
+					NULL,
+					$this->constant( 'course_cat' ),
+					$this->get_taxonomy_label( 'course_cat', 'no_terms' ),
 				],
 			],
 			'_editlist' => [
