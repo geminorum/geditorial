@@ -770,7 +770,8 @@ class ShortCode extends Main
 	// list: `custom`: posts by id list // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
 	{
-		$defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ], [], $module );
+		// $defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ], [], $module );
+		$defs = self::getDefaults( $posttype, $taxonomy, [], [], $module );
 		$args = shortcode_atts( $defs, $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -796,13 +797,15 @@ class ShortCode extends Main
 			$args['item_cb'] = FALSE;
 
 		$query = [
-			'post_type'        => $args['posttypes'],
 			'orderby'          => 'date',
 			'order'            => $args['order'],
 			'posts_per_page'   => $args['limit'],
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,
 		];
+
+		if ( ! empty( $args['posttypes'] ) )
+			$query['post_type'] = $args['posttypes'];
 
 		// FIXME: back-compat / DROP THIS
 		if ( 'page' == $args['orderby'] )
@@ -915,8 +918,12 @@ class ShortCode extends Main
 			if ( is_null( $args['title'] ) )
 				$args['title'] = FALSE; // disable on main post singular
 
+			$query['ignore_sticky_posts'] = TRUE;
+			$query['post__not_in'] = [ $post->ID ]; // exclude current
+
 			// exclude paired posttype
-			$query['post_type'] = Arraay::stripByValue( Taxonomy::object( $taxonomy )->object_type, $posttype );
+			if ( empty( $args['posttypes'] ) )
+				$query['post_type'] = Arraay::stripByValue( Taxonomy::object( $taxonomy )->object_type, $posttype );
 
 		} else if ( 'paired' === $list && is_singular( $args['posttypes'] ) ) {
 
@@ -929,7 +936,8 @@ class ShortCode extends Main
 				return $content;
 
 			$query['post_type'] = $posttype; // override with main posttype
-			$query['post__in']  = $paired_posts;
+			$query['post__in'] = $paired_posts;
+			$query['ignore_sticky_posts'] = TRUE;
 
 		} else if ( 'paired' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
 
