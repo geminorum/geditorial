@@ -60,6 +60,11 @@ class Venue extends gEditorial\Module
 					'placeholder' => URL::home( 'campus' ),
 				],
 			],
+			'_content' => [
+				'display_searchform',
+				'empty_content',
+				'archive_title',
+			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'shortcode_support',
@@ -337,6 +342,24 @@ class Venue extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
+	}
+
+	public function template_include( $template )
+	{
+		return $this->do_template_include( $template, 'place_cpt' );
+	}
+
+	public function template_get_archive_content()
+	{
+		$html = $this->get_search_form( 'place_cpt' );
+
+		if ( gEditorial()->enabled( 'alphabet' ) )
+			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'place_cpt' ) ] );
+
+		else
+			$html.= $this->place_shortcode( [ 'wrap' => FALSE, 'title' => FALSE ] );
+
+		return $html;
 	}
 
 	public function place_shortcode( $atts = [], $content = NULL, $tag = '' )
