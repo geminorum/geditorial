@@ -37,7 +37,7 @@ class Audit extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = Taxonomy::listTerms( $this->constant( 'audit_tax' ) );
-		$empty = $this->get_taxonomy_label( 'audit_tax', 'no_terms', _x( 'There\'s no audit attribute available!', 'Setting', 'geditorial-audit' ) );
+		$empty = $this->get_taxonomy_label( 'audit_tax', 'no_terms', _x( 'There are no audit attributes available!', 'Setting', 'geditorial-audit' ) );
 		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		return [
@@ -807,7 +807,7 @@ class Audit extends gEditorial\Module
 		HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
 
 		if ( ! Taxonomy::hasTerms( $this->constant( 'audit_tax' ) ) )
-			return HTML::desc( _x( 'No reports available!', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
+			return HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
 
 		$this->_render_reports_by_user_summary();
 	}

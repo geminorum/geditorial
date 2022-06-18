@@ -4827,7 +4827,7 @@ class Module extends Base
 
 			} else {
 
-				HTML::desc( _x( 'No reports available!', 'Module: Message', 'geditorial' ), FALSE, '-empty' );
+				HTML::desc( _x( 'There are no reports available!', 'Module: Message', 'geditorial' ), FALSE, '-empty' );
 			}
 		}
 

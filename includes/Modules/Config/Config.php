@@ -311,7 +311,7 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-config' ) );
-		HTML::desc( _x( 'No reports available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
+		HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
 	}
 
 	protected function render_tools_html( $uri, $sub )
@@ -425,7 +425,7 @@ class Config extends gEditorial\Module
 
 		} else {
 
-			HTML::desc( _x( 'No Editorial Site User available!', 'Sidebox: Message', 'geditorial-config' ), TRUE, '-empty' );
+			HTML::desc( _x( 'Editorial Site User is not available!', 'Sidebox: Message', 'geditorial-config' ), TRUE, '-empty' );
 		}
 	}
 

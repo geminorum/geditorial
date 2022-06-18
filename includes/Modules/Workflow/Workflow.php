@@ -69,7 +69,7 @@ class Workflow extends gEditorial\Module
 					'type'         => 'checkbox-panel',
 					'title'        => _x( 'Locking Statuses', 'Setting Title', 'geditorial-workflow' ),
 					'description'  => _x( 'Selected statuses will lock editing the post to their assigned roles.', 'Setting Description', 'geditorial-workflow' ),
-					'string_empty' => _x( 'There\'s no status available!', 'Setting', 'geditorial-workflow' ),
+					'string_empty' => _x( 'There are no statuses available!', 'Setting', 'geditorial-workflow' ),
 					'values'       => wp_list_pluck( $this->get_statuses(), 'label', 'name' ),
 				],
 			],

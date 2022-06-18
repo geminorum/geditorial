@@ -629,7 +629,7 @@ class Settings extends Core\Base
 			'type'         => 'checkbox-panel',
 			'title'        => _x( 'Summary Excludes', 'Settings: Setting Title', 'geditorial' ),
 			'description'  => $description ?: _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial' ),
-			'string_empty' => $empty ?: _x( 'There\'s no items available!', 'Settings: Setting Empty String', 'geditorial' ),
+			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial' ),
 			'values'       => $values,
 		];
 	}

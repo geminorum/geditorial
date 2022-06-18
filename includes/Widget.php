@@ -814,7 +814,7 @@ class Widget extends \WP_Widget
 			return HTML::desc( '<br />'._x( 'The taxonomy is not available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
 
 		if ( empty( $terms ) )
-			return HTML::desc( '<br />'._x( 'No terms available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
+			return HTML::desc( '<br />'._x( 'There are no terms available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
 
 		$html = HTML::tag( 'option', [
 			'value'    => '0',

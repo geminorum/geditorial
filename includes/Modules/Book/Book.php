@@ -51,6 +51,7 @@ class Book extends gEditorial\Module
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
+				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'publication_category' ),
@@ -82,7 +83,6 @@ class Book extends gEditorial\Module
 				'archive_title',
 			],
 			'_supports' => [
-				'comment_status',
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
