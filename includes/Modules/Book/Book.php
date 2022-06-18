@@ -23,8 +23,6 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Book extends gEditorial\Module
 {
 
-	// TODO: add publication category
-
 	protected $deafults = [ 'multiple_instances' => TRUE ];
 
 	protected $support_meta = FALSE;
@@ -52,6 +50,13 @@ class Book extends gEditorial\Module
 	{
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
+			'_general' => [
+				'paired_exclude_terms' => [
+					NULL,
+					$this->constant( 'publication_category' ),
+					$this->get_taxonomy_label( 'publication_category', 'no_terms' ),
+				],
+			],
 			'_dashboard' => [
 				'dashboard_widgets',
 				'summary_excludes' => [
@@ -119,6 +124,10 @@ class Book extends gEditorial\Module
 			'publication_cpt_archive' => 'publications',
 			'publication_cpt_p2p'     => 'related_publications',
 			'publication_paired'      => 'related_publication',
+
+			'publication_category'      => 'publication_category',
+			'publication_category_slug' => 'publication-categories',
+
 			'subject_tax'             => 'publication_subject',
 			'serie_tax'               => 'publication_serie',
 			'serie_tax_slug'          => 'publication-series',
@@ -150,14 +159,15 @@ class Book extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'subject_tax'   => 'tag',
-				'serie_tax'     => 'tag',
-				'library_tax'   => 'book-alt',
-				'publisher_tax' => 'book',
-				'type_tax'      => 'admin-media',
-				'status_tax'    => 'post-status',
-				'size_tax'      => 'image-crop',
-				'audience_tax'  => 'groups',
+				'publication_category' => 'category',
+				'subject_tax'          => 'tag',
+				'serie_tax'            => 'tag',
+				'library_tax'          => 'book-alt',
+				'publisher_tax'        => 'book',
+				'type_tax'             => 'admin-media',
+				'status_tax'           => 'post-status',
+				'size_tax'             => 'image-crop',
+				'audience_tax'         => 'groups',
 			],
 		];
 	}
@@ -166,15 +176,16 @@ class Book extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'publication_cpt' => _n_noop( 'Publication', 'Publications', 'geditorial-book' ),
-				'subject_tax'     => _n_noop( 'Subject', 'Subjects', 'geditorial-book' ),
-				'serie_tax'       => _n_noop( 'Serie', 'Series', 'geditorial-book' ),
-				'library_tax'     => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
-				'publisher_tax'   => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
-				'type_tax'        => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
-				'status_tax'      => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
-				'size_tax'        => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
-				'audience_tax'    => _n_noop( 'Publication Audience', 'Publication Audiences', 'geditorial-book' ),
+				'publication_cpt'      => _n_noop( 'Publication', 'Publications', 'geditorial-book' ),
+				'publication_category' => _n_noop( 'Publication Category', 'Publication Categories', 'geditorial-book' ),
+				'subject_tax'          => _n_noop( 'Subject', 'Subjects', 'geditorial-book' ),
+				'serie_tax'            => _n_noop( 'Serie', 'Series', 'geditorial-book' ),
+				'library_tax'          => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
+				'publisher_tax'        => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
+				'type_tax'             => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
+				'status_tax'           => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
+				'size_tax'             => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
+				'audience_tax'         => _n_noop( 'Publication Audience', 'Publication Audiences', 'geditorial-book' ),
 			],
 			'p2p' => [
 				'publication_cpt' => [
@@ -226,6 +237,10 @@ class Book extends gEditorial\Module
 				'excerpt_metabox'        => _x( 'Summary', 'MetaBox Title', 'geditorial-book' ),
 				'cover_column_title'     => _x( 'Cover', 'Column Title', 'geditorial-book' ),
 				'connected_column_title' => _x( 'Connected', 'Column Title', 'geditorial-book' ),
+			],
+			'publication_category' => [
+				'meta_box_title'      => _x( 'Category', 'MetaBox Title', 'geditorial-book' ),
+				'tweaks_column_title' => _x( 'Publication Category', 'Column Title', 'geditorial-book' ),
 			],
 			'subject_tax' => [
 				'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-book' ),
@@ -466,6 +481,12 @@ class Book extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->register_taxonomy( 'publication_category', [
+			'hierarchical'       => TRUE,
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+		], 'publication_cpt' );
+
 		$this->register_taxonomy( 'subject_tax', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
@@ -694,10 +715,16 @@ class Book extends gEditorial\Module
 		}
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [ 'publication_cpt', 'publication_paired', FALSE, 'publication_category' ];
+	}
+
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
 		return [
 			'type_tax',
+			'publication_category',
 			'subject_tax',
 			'serie_tax',
 			'library_tax',
@@ -724,6 +751,16 @@ class Book extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
+	}
+
+	public function meta_box_cb_publication_category( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
+		echo '</div>';
 	}
 
 	public function render_pairedbox_metabox( $post, $box )
