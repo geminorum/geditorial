@@ -912,6 +912,9 @@ class ShortCode extends Main
 				'terms'    => [ $term->term_id ],
 			] ];
 
+			if ( is_null( $args['title'] ) )
+				$args['title'] = FALSE; // disable on main post singular
+
 			// exclude paired posttype
 			$query['post_type'] = Arraay::stripByValue( Taxonomy::object( $taxonomy )->object_type, $posttype );
 
@@ -967,25 +970,24 @@ class ShortCode extends Main
 		if ( ! $count || ( 1 == $count && $skip ) )
 			return $content;
 
-		if ( FALSE === $args['title'] ) {
+		if ( 'assigned' == $list ) {
 
-			// do nothing, title is disabled by the args
-
-		} else if ( 'assigned' == $list ) {
-
-			$args['title'] = self::termTitle( $term, $taxonomy, $args );
+			if ( is_null( $args['title'] ) )
+				$args['title'] = self::termTitle( $term, $taxonomy, $args );
 
 			$ref = $term;
 
 		} else if ( 'paired' == $list || 'connected' == $list ) {
 
-			$args['title'] = self::postTitle( $post, $args );
+			if ( is_null( $args['title'] ) )
+				$args['title'] = self::postTitle( $post, $args );
 
 			$ref = $post;
 
 		} else if ( 'attached' == $list ) {
 
-			$args['title'] = self::postTitle( $parent, $args );
+			if ( is_null( $args['title'] ) )
+				$args['title'] = self::postTitle( $parent, $args );
 
 			$ref = $parent;
 		}
