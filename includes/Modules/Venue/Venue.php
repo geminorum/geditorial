@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
@@ -159,6 +160,21 @@ class Venue extends gEditorial\Module
 					'title'       => _x( 'Street Address', 'Field Title', 'geditorial-venue' ),
 					'description' => _x( 'Full street address, including city, state etc.', 'Field Description', 'geditorial-venue' ),
 					'type'        => 'note',
+				],
+				'phone_number' => [
+					'title'       => _x( 'Phone Number', 'Field Title', 'geditorial-venue' ),
+					'description' => _x( 'Full contact number for the location.', 'Field Description', 'geditorial-venue' ),
+					'type'        => 'phone',
+				],
+				'website_url' => [
+					'title'       => _x( 'Website URL', 'Field Title', 'geditorial-venue' ),
+					'description' => _x( 'Official website URL of the location.', 'Field Description', 'geditorial-venue' ),
+					'type'        => 'link',
+				],
+				'map_embed_url' => [
+					'title'       => _x( 'Map Embed URL', 'Field Title', 'geditorial-venue' ),
+					'description' => _x( 'Embeddable map URL of the location.', 'Field Description', 'geditorial-venue' ),
+					'type'        => 'link',
 				],
 				// FIXME: move to `extra_metadata`
 				'geo_latitude' => [
@@ -334,6 +350,8 @@ class Venue extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'place_cpt' ) );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
+
+		$this->filter( 'meta_field', 4, 9, FALSE, 'geditorial' );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -501,5 +519,17 @@ class Venue extends gEditorial\Module
 	public function tweaks_column_attr( $post )
 	{
 		$this->paired_tweaks_column_attr( $post, 'place_cpt', 'place_tax' );
+	}
+
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args, $raw )
+	{
+		switch ( $field ) {
+
+			case 'map_embed_url':
+				return Template::doEmbedShortCode( trim( $raw ) );
+		}
+
+		return $meta;
 	}
 }
