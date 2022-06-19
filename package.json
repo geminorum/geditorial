@@ -41,7 +41,7 @@
     "@wordpress/stylelint-config": "^20.0.2",
     "autoprefixer": "^10.4.7",
     "browserslist": "^4.20.4",
-    "cssnano": "^5.1.11",
+    "cssnano": "^5.1.12",
     "del": "^6.1.1",
     "fancy-log": "^2.0.0",
     "gulp": "^4.0.2",
@@ -86,6 +86,7 @@
     "list.js": "^2.3.1",
     "normalize.css": "^8.0.1",
     "onscan.js": "^1.5.2",
+    "spin.js": "^4.1.1",
     "virastar": "^0.21.0"
   },
   "babel": {

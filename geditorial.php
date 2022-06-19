@@ -15,8 +15,8 @@ Domain Path: /languages
 RepoGitHub: geminorum/geditorial
 GitHub Plugin URI: https://github.com/geminorum/geditorial
 Release Asset: true
-Requires WP: 5.1.0
-Requires at least: 5.1.0
+Requires WP: 5.7.0
+Requires at least: 5.7.0
 Requires PHP: 7.2
 */
 
