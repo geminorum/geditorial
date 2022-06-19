@@ -81,7 +81,7 @@ class Archives extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Archives Slug for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as slug on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
-				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ), _x( 'View Archives Page', 'Setting Icon', 'geditorial-archives' ), 'external' ),
+				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ), _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
 				'placeholder' => $this->_taxonomy_archive_slug( $taxonomy_name, FALSE ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 			];
@@ -110,6 +110,33 @@ class Archives extends gEditorial\Module
 		$this->filter( 'taxonomy_archive_link', 2, 10, FALSE, 'geditorial' );
 		$this->filter( 'navigation_taxonomy_archive_link', 2, 9, FALSE, 'gtheme' );
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
+	}
+
+	public function current_screen( $screen )
+	{
+		if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
+
+			$screen->set_help_sidebar( Settings::helpSidebar( [ [
+				/* translators: %s: supported object label */
+				'title' => sprintf( _x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
+					Taxonomy::object( $screen->taxonomy )->label ),
+				'url'   => $this->get_taxonomy_archive_link( $screen->taxonomy ),
+			] ] ) );
+
+			if ( 'edit-tags' == $screen->base ) {
+
+				$this->action( 'taxonomy_tab_extra_content', 2, 9, FALSE, 'gnetwork' );
+			}
+
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			$screen->set_help_sidebar( Settings::helpSidebar( [ [
+				/* translators: %s: supported object label */
+				'title' => sprintf( _x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
+					PostType::object( $screen->post_type )->label ),
+				'url'   => PostType::getArchiveLink( $screen->post_type ),
+			] ] ) );
+		}
 	}
 
 	private function _do_add_custom_queries()
@@ -331,5 +358,37 @@ class Archives extends gEditorial\Module
 			];
 
 		return $items;
+	}
+
+	// TODO: check cap and link button for the module settings page
+	public function taxonomy_tab_extra_content( $taxonomy, $object )
+	{
+		$link =  $this->get_taxonomy_archive_link( $taxonomy );
+
+		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
+
+			$icon = $link ? Settings::fieldAfterIcon( $link, _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ) : '';
+
+			/* translators: %s: taxonomy object label */
+			HTML::h4( sprintf( _x( 'Custom Archives Page for &ldquo;%s&rdquo;', 'Card Title', 'geditorial-archives' ), $object->label ).$icon, 'title' );
+
+			if ( $link ) {
+
+				echo HTML::tag( 'input', [
+					'type'     => 'url',
+					'readonly' => TRUE,
+					'class'    => [ 'large-text', 'code-text' ],
+					'onclick'  => 'this.focus();this.select()',
+					'value'    => $link,
+				] );
+
+				HTML::desc( _x( 'Link to the custom archives page generated for terms in this taxonomy.', 'Description', 'geditorial-archives' ) );
+
+			} else {
+
+				HTML::desc( _x( 'There is no custom archives page available!', 'Description', 'geditorial-archives' ), TRUE, '-empty' );
+			}
+
+		echo '</div>';
 	}
 }
