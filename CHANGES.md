@@ -1,3 +1,36 @@
+### 3.23.2
+* main/datetime: disable date separator on formatting
+* main/helper: filtering label templates
+* main/helper: filtering posttype message templates
+* main/module: exclude by term on paired post-types
+* main/module: paired to checks for viewable post statuses
+* main/module: prevent notice on filtered noop strings
+* main/module: reorder posttype fields args
+* main/settings: field helper for paired exclude terms
+* main/shortcode: better handling title on list posts
+* main/shortcode: paired main posts list on supported
+* main/shortcode: passing module into default args
+* main/shortcode: rethinking post-type query arguments
+* main/template: support filtering embed urls
+* module/archives: link info on extra-tab/help-sidebar
+* module/audit: better check for equal terms list
+* module/audit: passing update into auto audit filter
+* module/book: :new: publication category
+* module/book: default terms for publication status
+* module/contest: auto audit for abandoned applies
+* module/course: auto audit for abandoned lessons
+* module/course: reversed sort spans by name on metabox
+* module/headings: filtering the toc items
+* module/headings: strip tag on heading titles
+* module/magazine: reversed sort spans by name on metabox
+* module/meta: more default fields
+* module/tube: more meta fields
+* module/venue: :new: `place` short-code
+* module/venue: dropdown exclude by category
+* module/venue: module template helper
+* module/venue: more meta fields
+* module/venue: support template api
+
 ### 3.23.1
 * main/module: custom content callback on template api
 * main/module: filtering default terms
@@ -8,7 +41,7 @@
 * main/template: :new: span tiles renderer
 * module/archives: filtering taxonomy archive links on parent plugin
 * module/audit: filtering auto attributes on save post
-* module/grouping: :new: module 
+* module/grouping: :new: module
 * module/today: support for auto-audit on empty the-day
 
 ### 3.23.0
