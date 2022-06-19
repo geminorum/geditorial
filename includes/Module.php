@@ -1983,7 +1983,7 @@ class Module extends Base
 	}
 
 	// for fields only in connection to the caller module
-	public function add_posttype_fields_supported( $posttypes = NULL, $fields = NULL, $type = 'meta', $append = TRUE )
+	public function add_posttype_fields_supported( $posttypes = NULL, $fields = NULL, $append = TRUE, $type = 'meta' )
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -1995,10 +1995,10 @@ class Module extends Base
 			return;
 
 		foreach ( $posttypes as $posttype )
-			$this->add_posttype_fields( $posttype, $fields, $type, $append );
+			$this->add_posttype_fields( $posttype, $fields, $append, $type );
 	}
 
-	public function add_posttype_fields( $posttype, $fields = NULL, $type = 'meta', $append = TRUE )
+	public function add_posttype_fields( $posttype, $fields = NULL, $append = TRUE, $type = 'meta' )
 	{
 		if ( is_null( $fields ) )
 			$fields = $this->fields[$posttype];

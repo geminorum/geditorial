@@ -110,7 +110,7 @@ class Series extends gEditorial\Module
 		] );
 
 		foreach ( $this->posttypes() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], 'series' );
+			$this->add_posttype_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], TRUE, 'series' );
 
 		$this->register_shortcode( 'series_shortcode' );
 	}

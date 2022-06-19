@@ -260,7 +260,7 @@ class Event extends gEditorial\Module
 		$this->register_default_terms( 'event_type' );
 
 		if ( $metadata )
-			$this->add_posttype_fields( $this->constant( 'event_cpt' ), NULL, $this->module->name );
+			$this->add_posttype_fields( $this->constant( 'event_cpt' ), NULL, TRUE, $this->module->name );
 
 		add_rewrite_endpoint( $this->constant( 'endpoint_ical' ), EP_PAGES, 'ical' );
 
