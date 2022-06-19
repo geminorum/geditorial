@@ -596,10 +596,10 @@ class Contest extends gEditorial\Module
 		if ( $exists = term_exists( $this->constant( 'term_abandoned_apply' ), $taxonomy ) ) {
 
 			if ( Taxonomy::hasTerms( $this->constant( 'contest_tax' ), $post->ID ) )
-				$terms[] = $exists['term_id'];
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+				$terms[] = $exists['term_id'];
 		}
 
 		return $terms;

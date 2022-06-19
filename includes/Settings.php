@@ -640,7 +640,7 @@ class Settings extends Core\Base
 			'field'        => 'paired_exclude_terms',
 			'type'         => 'checkbox-panel',
 			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial' ),
-			'description'  => $description ?: _x( 'ّItems with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+			'description'  => $description ?: _x( 'Items with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial' ),
 			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial' ),
 			'values'       => Taxonomy::listTerms( $taxonomy ),
 		];
@@ -1261,6 +1261,12 @@ class Settings extends Core\Base
 		echo '<span class="status" data-do="enabled" style="display:none;" aria-hidden="true">'.( $enabled ? 'true' : 'false' ).'</span>';
 	}
 
+	/**
+	 * Returns Documentation URL for the module.
+	 *
+	 * @param boolean|object $module
+	 * @return string $url
+	 */
 	public static function getModuleDocsURL( $module = FALSE )
 	{
 		return FALSE === $module || 'config' == $module->name
@@ -1307,6 +1313,12 @@ class Settings extends Core\Base
 		return $html ? HTML::wrap( '<ul>'.$html.'</ul>', '-help-sidebar' ) : FALSE;
 	}
 
+	/**
+	 * Returns the help content for given module
+	 *
+	 * @param boolean|object $module
+	 * @return array $wiki_info
+	 */
 	public static function helpContent( $module = FALSE )
 	{
 		if ( ! function_exists( 'gnetwork_github' ) )
@@ -1319,7 +1331,7 @@ class Settings extends Core\Base
 			'module'   => $module,
 		];
 
-		if ( FALSE === $module || 'config' == $module->name )
+		if ( FALSE === $module || 'config' === $module->name )
 			return [ $wikihome ];
 
 		$wikimodule = [
@@ -1346,7 +1358,7 @@ class Settings extends Core\Base
 
 		$module = empty( $tab['module'] ) ? FALSE : $tab['module'];
 
-		$page = FALSE === $module || 'config' == $module->name
+		$page = FALSE === $module || 'config' === $module->name
 			? 'Home'
 			: 'Modules-'.Helper::moduleSlug( $module->name );
 

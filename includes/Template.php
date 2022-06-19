@@ -798,11 +798,20 @@ class Template extends Main
 			'sub_title',
 			// 'byline',
 			'highlight',
+			'dashboard',
+			'abstract',
+			'foreword',
 			'source_title',
 			'source_url',
 			'action_title',
 			'action_url',
 			'cover_blurb',
+			'content_embed_url',
+			'audio_source_url',
+			'video_source_url',
+			'map_embed_url',
+			'geo_latitude',
+			'geo_longitude',
 		] : (array) $args['excludes'];
 
 		foreach ( $list as $key => $title ) {

@@ -431,10 +431,14 @@ class Book extends gEditorial\Module
 		if ( isset( $_POST['install_def_type_tax'] ) )
 			$this->insert_default_terms( 'type_tax' );
 
-		if ( isset( $_POST['install_def_size_tax'] ) )
+		else if ( isset( $_POST['install_def_status_tax'] ) )
+			$this->insert_default_terms( 'status_tax' );
+
+		else if ( isset( $_POST['install_def_size_tax'] ) )
 			$this->insert_default_terms( 'size_tax' );
 
 		$this->help_tab_default_terms( 'type_tax' );
+		$this->help_tab_default_terms( 'status_tax' );
 		$this->help_tab_default_terms( 'size_tax' );
 	}
 
@@ -443,6 +447,7 @@ class Book extends gEditorial\Module
 		parent::default_buttons( $module );
 
 		$this->register_button( 'install_def_type_tax', _x( 'Install Default Types', 'Button', 'geditorial-book' ) );
+		$this->register_button( 'install_def_status_tax', _x( 'Install Default Statuses', 'Button', 'geditorial-book' ) );
 
 		if ( $this->support_meta )
 			$this->register_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Button', 'geditorial-book' ) );
@@ -548,6 +553,7 @@ class Book extends gEditorial\Module
 		$this->action_module( 'importer', 'saved', 5 );
 
 		$this->register_default_terms( 'type_tax' );
+		$this->register_default_terms( 'status_tax' );
 	}
 
 	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057

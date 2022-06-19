@@ -152,7 +152,8 @@ class Helper extends Main
 			$prepared = HTML::mailto( $value, $title );
 
 		else if ( URL::isValid( $value ) )
-			$prepared = HTML::link( $title, URL::untrail( $value ) );
+			// $prepared = HTML::link( $title, URL::untrail( $value ) );
+			$prepared = HTML::link( $title, URL::prepTitle( $value ) );
 
 		else if ( is_numeric( str_ireplace( [ '+', '-', '.' ], '', $value ) ) )
 			$prepared = HTML::tel( $value, FALSE, $title );

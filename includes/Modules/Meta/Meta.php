@@ -11,7 +11,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
@@ -413,7 +413,7 @@ class Meta extends gEditorial\Module
 		$label_tax_tax_posttypes = [];
 
 		foreach ( $this->posttypes() as $posttype )
-			if ( in_array( 'label_tax', $this->posttype_fields( $posttype ) ) )
+			if ( in_array( 'label_tax', $this->posttype_fields( $posttype ), TRUE ) )
 				$label_tax_tax_posttypes[] = $posttype;
 
 		if ( count( $label_tax_tax_posttypes ) ) {
@@ -1360,7 +1360,7 @@ class Meta extends gEditorial\Module
 
 			if ( ! $term = get_term_by( 'name', $formatted, $field['tax'] ) ) {
 
-				$term = wp_insert_term( $formatted, $taxonomy );
+				$term = wp_insert_term( $formatted, $field['tax'] );
 
 				if ( ! is_wp_error( $term ) )
 					$terms[] = $term->term_id;

@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\ISBN;
-use geminorum\gEditorial\Helpers\Book as ModuleHelper;
 
 class ModuleTemplate extends gEditorial\Template
 {
@@ -92,7 +91,7 @@ class ModuleTemplate extends gEditorial\Template
 			'meta_key'       => 'publication_date',
 			'orderby'        => 'meta_value title',
 			'order'          => 'ASC',
-			'paged'          => $paged,
+			// 'paged'          => $paged,
 			'posts_per_page' => '10',
 
 			'tax_query' => [ [

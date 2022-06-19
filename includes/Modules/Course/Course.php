@@ -714,10 +714,10 @@ class Course extends gEditorial\Module
 		if ( $exists = term_exists( $this->constant( 'term_abandoned_lesson' ), $taxonomy ) ) {
 
 			if ( Taxonomy::hasTerms( $this->constant( 'course_tax' ), $post->ID ) )
-				$terms[] = $exists['term_id'];
+				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+				$terms[] = $exists['term_id'];
 		}
 
 		return $terms;

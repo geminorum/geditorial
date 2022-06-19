@@ -14,6 +14,8 @@ use geminorum\gEditorial\WordPress\PostType;
 
 use geminorum\gNetwork\Core\Orthography;
 
+// TODO: add support for 'phone' type input
+
 class Ortho extends gEditorial\Module
 {
 
