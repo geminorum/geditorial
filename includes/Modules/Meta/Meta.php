@@ -106,8 +106,21 @@ class Meta extends gEditorial\Module
 				'highlight'    => _x( 'Highlight', 'Titles', 'geditorial-meta' ),
 				'dashboard'    => _x( 'Dashboard', 'Titles', 'geditorial-meta' ),
 				'abstract'     => _x( 'Abstract', 'Titles', 'geditorial-meta' ),
+				'foreword'     => _x( 'Foreword', 'Titles', 'geditorial-meta' ),
 				'cover_blurb'  => _x( 'Cover Blurb', 'Titles', 'geditorial-meta' ),
 				'cover_price'  => _x( 'Cover Price', 'Titles', 'geditorial-meta' ),
+
+				'contact_string' => _x( 'Contact', 'Descriptions', 'geditorial-meta' ),
+				'phone_number'   => _x( 'Phone Number', 'Titles', 'geditorial-meta' ),
+				'mobile_number'  => _x( 'Mobile Number', 'Titles', 'geditorial-meta' ),
+
+				'website_url'    => _x( 'Website URL', 'Titles', 'geditorial-meta' ),
+				'email_address'  => _x( 'Email Address', 'Titles', 'geditorial-meta' ),
+				'postal_address' => _x( 'Postal Address', 'Titles', 'geditorial-meta' ),
+
+				'content_embed_url' => _x( 'Content Embed URL', 'Titles', 'geditorial-meta' ),
+				'audio_source_url'  => _x( 'Audio Source URL', 'Titles', 'geditorial-meta' ),
+				'video_source_url'  => _x( 'Video Source URL', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
@@ -129,8 +142,21 @@ class Meta extends gEditorial\Module
 				'highlight'    => _x( 'Notes highlighted about the content', 'Descriptions', 'geditorial-meta' ),
 				'dashboard'    => _x( 'Custom HTML content on the dashboard', 'Descriptions', 'geditorial-meta' ),
 				'abstract'     => _x( 'Brief summary of the content', 'Descriptions', 'geditorial-meta' ),
+				'foreword'     => _x( 'Introduction to the Content', 'Descriptions', 'geditorial-meta' ),
 				'cover_blurb'  => _x( 'Description included on the inside cover or on the back', 'Descriptions', 'geditorial-meta' ),
 				'cover_price'  => _x( 'Cover Price of the content', 'Descriptions', 'geditorial-meta' ),
+
+				'contact_string' => _x( 'A Way to Contact Someone about the Content', 'Descriptions', 'geditorial-meta' ),
+				'phone_number'   => _x( 'Phone Contact Number about the Content', 'Descriptions', 'geditorial-meta' ),
+				'mobile_number'  => _x( 'Mobile Contact Number about the Content', 'Descriptions', 'geditorial-meta' ),
+
+				'website_url'    => _x( 'Public Website URL of the Content', 'Descriptions', 'geditorial-meta' ),
+				'email_address'  => _x( 'Email Address about the Content', 'Descriptions', 'geditorial-meta' ),
+				'postal_address' => _x( 'Postal Address about the Content', 'Descriptions', 'geditorial-meta' ),
+
+				'content_embed_url' => _x( 'Embeddable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
+				'audio_source_url'  => _x( 'Audio Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
+				'video_source_url'  => _x( 'Video Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -184,12 +210,34 @@ class Meta extends gEditorial\Module
 				'highlight'    => [ 'type' => 'note' ],
 				'dashboard'    => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 				'abstract'     => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
+				'foreword'     => [ 'type' => 'postbox_html' ], // or 'postbox_tiny'
 				'cover_blurb'  => [ 'type' => 'note' ],
 				'cover_price'  => [ 'type' => 'price' ],
+
+				'contact_string' => [ 'type' => 'contact' ], // url/email/phone
+				'phone_number'   => [ 'type' => 'phone' ],
+				'mobile_number'  => [ 'type' => 'phone' ],
+
+				'website_url'    => [ 'type' => 'link' ],
+				'email_address'  => [ 'type' => 'email' ],
+				'postal_address' => [ 'type' => 'note' ],
+
+				'content_embed_url' => [ 'type' => 'link' ],
+				'audio_source_url'  => [ 'type' => 'link' ],
+				'video_source_url'  => [ 'type' => 'link' ],
 			],
 			'page' => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
+
+				'phone_number'   => [ 'type' => 'phone' ],
+				'mobile_number'  => [ 'type' => 'phone' ],
+
+				'website_url'    => [ 'type' => 'link' ],
+				'email_address'  => [ 'type' => 'email' ],
+				'postal_address' => [ 'type' => 'note' ],
+
+				'content_embed_url' => [ 'type' => 'link' ],
 			],
 		];
 	}
@@ -506,6 +554,9 @@ class Meta extends gEditorial\Module
 				break;
 				case 'float':
 				case 'code':
+				case 'contact':
+				case 'phone':
+				case 'email':
 				case 'link':
 
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
@@ -519,6 +570,7 @@ class Meta extends gEditorial\Module
 				break;
 				case 'note':
 				case 'textarea':
+				case 'widget':
 
 					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
@@ -671,6 +723,9 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
 
 				break;
+				case 'contact':
+				case 'phone':
+				case 'email':
 				case 'code':
 
 					ModuleMetaBox::setPostMetaField_Code( $postmeta, $field );
@@ -691,6 +746,7 @@ class Meta extends gEditorial\Module
 				break;
 				case 'note':
 				case 'textarea':
+				case 'widget':
 				case 'postbox_legacy':
 				case 'postbox_html':
 
@@ -996,8 +1052,29 @@ class Meta extends gEditorial\Module
 	public function meta_field( $meta, $field, $post, $args, $raw )
 	{
 		switch ( $field ) {
-			case 'published': return Number::localize( Datetime::stringFormat( $raw ) );
-			case 'cover_price': return Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) ); // TODO: format numbers
+
+			case 'published':
+				return Number:: localize( Datetime::stringFormat( $raw ) );
+
+			case 'cover_price':
+				// TODO: format numbers
+				return Number:: localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) );
+
+			case 'website_url':
+				return HTML::link( URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
+
+			case 'email_address':
+				return do_shortcode( sprintf( '[email]%s[/email]', trim( $raw ) ) );
+
+			case 'contact_string':
+				return Helper::prepContact( trim( $raw ) );
+
+			case 'phone_number':
+			case 'mobile_number':
+				return do_shortcode( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
+
+			case 'content_embed_url':
+				return Template::doEmbedShortCode( trim( $raw ) );
 		}
 
 		return $meta;

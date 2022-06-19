@@ -573,10 +573,10 @@ class Template extends Main
 	{
 		global $wp_embed;
 
-		if ( ! $url = trim( $meta ) )
+		if ( ! URL::isValid( $meta ) )
 			return $meta;
 
-		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', $url, trim( $meta ) ) );
+		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', trim( $meta ), trim( $meta ) ) );
 	}
 
 	// FIXME: DEPRECATED

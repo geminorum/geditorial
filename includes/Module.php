@@ -1953,6 +1953,18 @@ class Module extends Base
 				$sanitized = trim( $data );
 
 			break;
+			case 'email':
+				$sanitized = sanitize_email( trim( $data ) );
+
+			break;
+			case 'contact':
+				$sanitized = Number::intval( trim( $data ), FALSE );
+
+			break;
+			case 'phone':
+				$sanitized = Number::intval( trim( $data ), FALSE );
+
+			break;
 			case 'price':
 			case 'number':
 				$sanitized = Number::intval( trim( $data ) );
@@ -1970,6 +1982,7 @@ class Module extends Base
 			break;
 			case 'note':
 			case 'textarea':
+			case 'widget': // FIXME: maybe general note fields displayed by a meta widget: `primary`/`side notes`
 				$sanitized = trim( Helper::kses( $data, 'text' ) );
 
 			break;
