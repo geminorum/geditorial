@@ -508,7 +508,7 @@ class Template extends Main
 			'id'       => NULL,
 			'fallback' => FALSE,
 			'default'  => FALSE,
-			'filter'   => FALSE,
+			'filter'   => FALSE, // or `__do_embed_shortcode`
 			'trim'     => FALSE, // or number of chars
 			'before'   => '',
 			'after'    => '',
@@ -530,6 +530,9 @@ class Template extends Main
 
 		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args, $raw );
 		$meta = apply_filters( static::BASE.'_meta_field_'.$field, $meta, $field, $post, $args, $raw );
+
+		if ( '__do_embed_shortcode' === $args['filter'] )
+			$args['filter'] = [ __CLASS__, 'doEmbedShortCode' ];
 
 		if ( $args['filter'] && is_callable( $args['filter'] ) )
 			$meta = call_user_func( $args['filter'], $meta );
@@ -556,6 +559,24 @@ class Template extends Main
 		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field );
 
 		return apply_filters( static::BASE.'_get_meta_field', $meta, $field, $post_id, $module );
+	}
+
+	/**
+	 * Applies WordPress embed mechanisem on given url.
+	 *
+	 * @source https://wordpress.stackexchange.com/a/23213/
+	 *
+	 * @param string $meta
+	 * @return string $html
+	 */
+	public static function doEmbedShortCode( $meta )
+	{
+		global $wp_embed;
+
+		if ( ! $url = trim( $meta ) )
+			return $meta;
+
+		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', $url, trim( $meta ) ) );
 	}
 
 	// FIXME: DEPRECATED
