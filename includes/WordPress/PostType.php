@@ -399,7 +399,7 @@ class PostType extends Core\Base
 
 	public static function getArchiveLink( $posttype )
 	{
-		return apply_filters( 'geditorial_posttype_archive_link', get_post_type_archive_link( $posttyp ), $posttype );
+		return apply_filters( 'geditorial_posttype_archive_link', get_post_type_archive_link( $posttype ), $posttype );
 	}
 
 	public static function supportBlocksByPost( $post )
@@ -494,10 +494,10 @@ class PostType extends Core\Base
 
 		$status = get_post_status( $post );
 
-		if ( is_null( $statuses ) )
-			$statuses = [ 'publish', 'inherit' ]; // TODO: use `is_post_status_viewable()`
+		if ( is_null( $statuses ) && ! is_post_status_viewable( $status ) )
+			return $fallback;
 
-		if ( ! in_array( $status, (array) $statuses, TRUE ) )
+		if ( $statuses && ! in_array( $status, (array) $statuses, TRUE ) )
 			return $fallback;
 
 		return apply_filters( 'the_permalink', get_permalink( $post ), $post );

@@ -5,12 +5,17 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class File extends Base
 {
 
-	// normalize a filesystem path
-	// on windows systems, replaces backslashes with forward slashes
-	// and forces upper-case drive letters.
-	// allows for two leading slashes for Windows network shares, but
-	// ensures that all other duplicate slashes are reduced to a single.
-	// @SOURCE: `wp_normalize_path()`
+	/**
+	 * normalize a filesystem path
+	 *
+	 * on windows systems, replaces backslashes with forward slashes and forces upper-case drive letters.
+	 * allows for two leading slashes for Windows network shares, but ensures that all other duplicate slashes are reduced to a single.
+	 *
+	 * @source: `wp_normalize_path()`
+	 *
+	 * @param string $path
+	 * @return string
+	 */
 	public static function normalize( $path )
 	{
 		$path = str_replace( '\\', '/', $path );

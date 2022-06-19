@@ -324,6 +324,21 @@ class Taxonomy extends Core\Base
 
 		foreach ( $terms as $term ) {
 
+			/**
+			 * WP_Term Object
+			 * (
+			 *     [term_id] =>
+			 *     [name] =>
+			 *     [slug] =>
+			 *     [term_group] =>
+			 *     [term_taxonomy_id] =>
+			 *     [taxonomy] =>
+			 *     [description] =>
+			 *     [parent] =>
+			 *     [count] =>
+			 *     [filter] =>
+			 * )
+			 */
 			$new = array(
 				'name'        => $term->name,
 				// 'name'        => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
@@ -432,9 +447,10 @@ class Taxonomy extends Core\Base
 		return $taxonomies;
 	}
 
-	public static function theTerm( $taxonomy, $post_id, $object = FALSE )
+	// NOTE: hits cached terms for the post
+	public static function theTerm( $taxonomy, $post = NULL, $object = FALSE )
 	{
-		$terms = get_the_terms( $post_id, $taxonomy );
+		$terms = get_the_terms( $post, $taxonomy );
 
 		if ( $terms && ! is_wp_error( $terms ) )
 			foreach ( $terms as $term )
