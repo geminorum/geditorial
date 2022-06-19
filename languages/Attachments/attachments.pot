@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Attachments 3.23.1\n"
+"Project-Id-Version: gEditorial Attachments 3.23.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-13T12:35:13+00:00\n"
+"POT-Creation-Date: 2022-06-19T19:48:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
@@ -91,13 +91,13 @@ msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr ""
 
-#: Attachments.php:283
+#: Attachments.php:282
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachment parent title
-#: Attachments.php:285
+#: Attachments.php:284
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr ""

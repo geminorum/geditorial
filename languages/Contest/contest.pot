@@ -1,176 +1,181 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Contest 3.23.1\n"
+"Project-Id-Version: gEditorial Contest 3.23.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-13T12:35:27+00:00\n"
+"POT-Creation-Date: 2022-06-19T19:49:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 "X-Domain: geditorial-contest\n"
 
-#: Contest.php:35
+#: Contest.php:38
 msgctxt "Settings"
 msgid "Contest Sections"
 msgstr ""
 
-#: Contest.php:36
+#: Contest.php:39
 msgctxt "Settings"
 msgid "Section taxonomy for the contests and supported post-types."
 msgstr ""
 
-#: Contest.php:47
+#: Contest.php:55
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Contest.php:48
+#: Contest.php:56
 msgctxt "Settings"
 msgid "Redirects contest and apply archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Contest.php:103
-#: Contest.php:104
+#: Contest.php:114
+#: Contest.php:115
 msgid "Contest"
 msgid_plural "Contests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:105
+#: Contest.php:116
 msgid "Contest Category"
 msgid_plural "Contest Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:106
+#: Contest.php:117
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:107
+#: Contest.php:118
 msgid "Apply"
 msgid_plural "Applies"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:108
+#: Contest.php:119
 msgid "Apply Category"
 msgid_plural "Apply Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:109
+#: Contest.php:120
 msgid "Apply Status"
 msgid_plural "Apply Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:118
+#: Contest.php:129
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Contest.php:119
+#: Contest.php:130
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr ""
 
-#: Contest.php:120
+#: Contest.php:131
 msgctxt "Column Title"
 msgid "Applies"
 msgstr ""
 
-#: Contest.php:121
+#: Contest.php:132
 msgctxt "Select Option None"
 msgid "&ndash; Select Contest &ndash;"
 msgstr ""
 
-#: Contest.php:124
+#: Contest.php:135
 msgctxt "MetaBox Title"
 msgid "In This Contest"
 msgstr ""
 
-#: Contest.php:127
+#: Contest.php:138
 msgctxt "Column Title"
 msgid "Contest Categories"
 msgstr ""
 
-#: Contest.php:130
+#: Contest.php:141
 msgctxt "MetaBox Title"
 msgid "Sections"
 msgstr ""
 
-#: Contest.php:131
+#: Contest.php:142
 msgctxt "Column Title"
 msgid "Contest Sections"
 msgstr ""
 
-#: Contest.php:132
+#: Contest.php:143
 msgctxt "Select Option None"
 msgid "&ndash; Select Section &ndash;"
 msgstr ""
 
-#: Contest.php:135
+#: Contest.php:146
 msgctxt "MetaBox Title"
 msgid "Contest"
 msgstr ""
 
-#: Contest.php:138
+#: Contest.php:149
 msgctxt "Column Title"
 msgid "Apply Categories"
 msgstr ""
 
-#: Contest.php:141
+#: Contest.php:152
 msgctxt "MetaBox Title"
 msgid "Apply Statuses"
 msgstr ""
 
-#: Contest.php:142
+#: Contest.php:153
 msgctxt "Column Title"
 msgid "Apply Statuses"
 msgstr ""
 
-#: Contest.php:144
+#: Contest.php:155
 msgctxt "MetaBox Title"
 msgid "Contests"
 msgstr ""
 
-#: Contest.php:145
+#: Contest.php:156
 msgctxt "Column Title"
 msgid "Contests"
 msgstr ""
 
-#: Contest.php:150
+#: Contest.php:161
 msgctxt "Default Term"
 msgid "Approved"
 msgstr ""
 
-#: Contest.php:151
+#: Contest.php:162
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Contest.php:152
+#: Contest.php:163
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr ""
 
-#: Contest.php:153
+#: Contest.php:164
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr ""
 
-#: Contest.php:177
+#: Contest.php:188
 msgctxt "Button"
 msgid "Install Default Apply Statuses"
 msgstr ""
 
-#: Contest.php:568
+#: Contest.php:583
 msgctxt "Header"
 msgid "Contest Tools"
+msgstr ""
+
+#: Contest.php:612
+msgctxt "Default Term: Audit"
+msgid "Apply Abandoned"
 msgstr ""

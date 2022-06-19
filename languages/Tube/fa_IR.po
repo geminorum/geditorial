@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Tube\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:57:50+00:00\n"
-"PO-Revision-Date: 2022-04-23 15:39+0430\n"
+"POT-Creation-Date: 2022-06-19T19:50:41+00:00\n"
+"PO-Revision-Date: 2022-06-20 00:22+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Domain: geditorial-tube\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tube\n"
 
@@ -95,8 +95,8 @@ msgstr "افراد برجسته"
 
 #: Tube.php:133
 msgctxt "Field Description"
-msgid "Featured People"
-msgstr "افراد برجسته"
+msgid "Featured People in the Video"
+msgstr ""
 
 #: Tube.php:138
 msgctxt "Field Title"
@@ -105,8 +105,8 @@ msgstr "تاریخ ساخت"
 
 #: Tube.php:139
 msgctxt "Field Description"
-msgid "Creation Date"
-msgstr "تاریخ ساخت"
+msgid "Creation Date of the Video"
+msgstr ""
 
 #: Tube.php:144
 msgctxt "Field Title"
@@ -115,60 +115,82 @@ msgstr "مدت‌زمان ویدئو"
 
 #: Tube.php:145
 msgctxt "Field Description"
-msgid "Video Duration"
-msgstr "مدت‌زمان ویدئو"
+msgid "Duration of the Video"
+msgstr ""
 
-#: Tube.php:310
+#: Tube.php:150
+msgctxt "Field Title"
+msgid "Video Embed URL"
+msgstr "نشانی جاساز ویدئو"
+
+#: Tube.php:151
+msgctxt "Field Description"
+msgid "Embeddable URL of the External Video"
+msgstr ""
+
+#: Tube.php:314
 msgctxt "Button"
 msgid "The date of this video"
 msgstr "تاریخ این ویدئو"
 
-#: Tube.php:316
+#: Tube.php:320
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr "مجموع مدت زمان این ویدئو"
 
-#: Tube.php:323
+#: Tube.php:327
 msgctxt "Button"
 msgid "Download this video"
 msgstr "دریافت این ویدئو"
 
-#: Tube.php:324
+#: Tube.php:328
 msgctxt "Button"
 msgid "Download"
 msgstr "دریافت"
 
-#: Tube.php:330
+#: Tube.php:334
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr "نمایش این ویدئو در یوتوب"
 
-#: Tube.php:332
+#: Tube.php:336
 msgctxt "Button"
 msgid "YouTube"
 msgstr "یوتوب"
 
-#: Tube.php:338
+#: Tube.php:342
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr "نمایش این ویدئو در آپارات"
 
-#: Tube.php:340
+#: Tube.php:344
 msgctxt "Button"
 msgid "Aparat"
 msgstr "آپارات"
 
-#: Tube.php:347
+#: Tube.php:351
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr "پیوند کوتاه به این ویدئو"
 
-#: Tube.php:349
+#: Tube.php:353
 msgctxt "Button"
 msgid "Shortlink"
 msgstr "پیوند کوتاه"
 
-#: Tube.php:354 Tube.php:361 Tube.php:368
+#: Tube.php:358 Tube.php:365 Tube.php:372
 msgctxt "Button"
 msgid "Share this video"
 msgstr "همخوان کنید"
+
+#~ msgctxt "Field Description"
+#~ msgid "Featured People"
+#~ msgstr "افراد برجسته"
+
+#~ msgctxt "Field Description"
+#~ msgid "Creation Date"
+#~ msgstr "تاریخ ساخت"
+
+#~ msgctxt "Field Description"
+#~ msgid "Video Duration"
+#~ msgstr "مدت‌زمان ویدئو"

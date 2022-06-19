@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Audit 3.23.1\n"
+"Project-Id-Version: gEditorial Audit 3.23.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-13T12:35:15+00:00\n"
+"POT-Creation-Date: 2022-06-19T19:48:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: Audit.php:40
 msgctxt "Setting"
-msgid "There's no audit attributes available!"
+msgid "There are no audit attributes available!"
 msgstr ""
 
 #: Audit.php:48
@@ -184,129 +184,129 @@ msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 
-#: Audit.php:180
+#: Audit.php:183
 msgctxt "Button"
 msgid "Install Default Attributes"
 msgstr ""
 
-#: Audit.php:393
+#: Audit.php:397
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:440
+#: Audit.php:444
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:458
+#: Audit.php:462
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:501
+#: Audit.php:505
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr ""
 
-#: Audit.php:502
+#: Audit.php:506
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr ""
 
-#: Audit.php:681
+#: Audit.php:685
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr ""
 
-#: Audit.php:718
+#: Audit.php:722
 msgctxt "Card Title"
 msgid "Posts with Empty Title"
-msgstr ""
-
-#: Audit.php:724
-#: Audit.php:743
-#: Audit.php:762
-msgctxt "Card: None-Title"
-msgid "All Supported Post-Types"
-msgstr ""
-
-#: Audit.php:727
-#: Audit.php:746
-#: Audit.php:765
-msgctxt "Card: Button"
-msgid "Mark Posts"
 msgstr ""
 
 #: Audit.php:728
 #: Audit.php:747
 #: Audit.php:766
+msgctxt "Card: None-Title"
+msgid "All Supported Post-Types"
+msgstr ""
+
+#: Audit.php:731
+#: Audit.php:750
+#: Audit.php:769
+msgctxt "Card: Button"
+msgid "Mark Posts"
+msgstr ""
+
+#: Audit.php:732
+#: Audit.php:751
+#: Audit.php:770
 msgctxt "Card: Button"
 msgid "Flush Attribute"
 msgstr ""
 
-#: Audit.php:729
+#: Audit.php:733
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no title."
 msgstr ""
 
-#: Audit.php:737
+#: Audit.php:741
 msgctxt "Card Title"
 msgid "Posts with Empty Content"
 msgstr ""
 
-#: Audit.php:748
+#: Audit.php:752
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no content."
 msgstr ""
 
-#: Audit.php:756
+#: Audit.php:760
 msgctxt "Card Title"
 msgid "Posts with Empty Excerpt"
 msgstr ""
 
-#: Audit.php:767
+#: Audit.php:771
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no excerpt."
 msgstr ""
 
-#: Audit.php:774
+#: Audit.php:778
 msgctxt "Card Title"
 msgid "Posts with Empty Fields"
 msgstr ""
 
-#: Audit.php:775
+#: Audit.php:779
 msgctxt "Message"
 msgid "No empty attribute available. Please install the default attributes."
 msgstr ""
 
 #. translators: %1$s: empty post count, %2$s: assigned term count
-#: Audit.php:790
+#: Audit.php:794
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr ""
 
-#: Audit.php:803
+#: Audit.php:807
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:806
+#: Audit.php:810
 msgctxt "Message"
-msgid "No reports available!"
+msgid "There are no reports available!"
 msgstr ""
 
-#: Audit.php:819
+#: Audit.php:823
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr ""
 
-#: Audit.php:825
+#: Audit.php:829
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:833
+#: Audit.php:837
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr ""

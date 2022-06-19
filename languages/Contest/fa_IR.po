@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Contest\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-03-27T17:58:41+00:00\n"
-"PO-Revision-Date: 2022-03-27 22:37+0430\n"
+"POT-Creation-Date: 2022-06-19T19:49:11+00:00\n"
+"PO-Revision-Date: 2022-06-20 00:25+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,172 +11,177 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Domain: geditorial-contest\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 
-#: Contest.php:35
+#: Contest.php:38
 msgctxt "Settings"
 msgid "Contest Sections"
 msgstr "بخش‌های فراخوان"
 
-#: Contest.php:36
+#: Contest.php:39
 msgctxt "Settings"
 msgid "Section taxonomy for the contests and supported post-types."
 msgstr "رده‌بندی بخش‌ها را برای فراخوان‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Contest.php:47
+#: Contest.php:55
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Contest.php:48
+#: Contest.php:56
 msgctxt "Settings"
 msgid "Redirects contest and apply archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی فراخوان‌ها و درخواست‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی "
 "خالی بگذارید."
 
-#: Contest.php:103 Contest.php:104
+#: Contest.php:114 Contest.php:115
 msgid "Contest"
 msgid_plural "Contests"
 msgstr[0] "فراخوان‌ها"
 msgstr[1] "فراخوان"
 
-#: Contest.php:105
+#: Contest.php:116
 msgid "Contest Category"
 msgid_plural "Contest Categories"
 msgstr[0] "دسته‌های فراخوان"
 msgstr[1] "دسته‌ فراخوان"
 
-#: Contest.php:106
+#: Contest.php:117
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] "بخش‌ها"
 msgstr[1] "بخش"
 
-#: Contest.php:107
+#: Contest.php:118
 msgid "Apply"
 msgid_plural "Applies"
 msgstr[0] "درخواست‌ها"
 msgstr[1] "درخواست"
 
-#: Contest.php:108
+#: Contest.php:119
 msgid "Apply Category"
 msgid_plural "Apply Categories"
 msgstr[0] "دسته‌های درخواست"
 msgstr[1] "دسته درخواست"
 
-#: Contest.php:109
+#: Contest.php:120
 msgid "Apply Status"
 msgid_plural "Apply Statuses"
 msgstr[0] "وضعیت‌های درخواست"
 msgstr[1] "وضعیت درخواست"
 
-#: Contest.php:118
+#: Contest.php:129
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Contest.php:119
+#: Contest.php:130
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr "فراداده"
 
-#: Contest.php:120
+#: Contest.php:131
 msgctxt "Column Title"
 msgid "Applies"
 msgstr "درخواست‌ها"
 
-#: Contest.php:121
+#: Contest.php:132
 msgctxt "Select Option None"
 msgid "&ndash; Select Contest &ndash;"
 msgstr "&ndash; انتخاب فراخوان &ndash;"
 
-#: Contest.php:124
+#: Contest.php:135
 msgctxt "MetaBox Title"
 msgid "In This Contest"
 msgstr "در این فراخوان"
 
-#: Contest.php:127
+#: Contest.php:138
 msgctxt "Column Title"
 msgid "Contest Categories"
 msgstr "دسته‌ فراخوان"
 
-#: Contest.php:130
+#: Contest.php:141
 msgctxt "MetaBox Title"
 msgid "Sections"
 msgstr "بخش‌ها"
 
-#: Contest.php:131
+#: Contest.php:142
 msgctxt "Column Title"
 msgid "Contest Sections"
 msgstr "بخش‌های فراخوان"
 
-#: Contest.php:132
+#: Contest.php:143
 msgctxt "Select Option None"
 msgid "&ndash; Select Section &ndash;"
 msgstr "&ndash; انتخاب بخش &ndash;"
 
-#: Contest.php:135
+#: Contest.php:146
 msgctxt "MetaBox Title"
 msgid "Contest"
 msgstr "فراخوان"
 
-#: Contest.php:138
+#: Contest.php:149
 msgctxt "Column Title"
 msgid "Apply Categories"
 msgstr "دسته‌های درخواست"
 
-#: Contest.php:141
+#: Contest.php:152
 msgctxt "MetaBox Title"
 msgid "Apply Statuses"
 msgstr "وضعیت‌های درخواست"
 
-#: Contest.php:142
+#: Contest.php:153
 msgctxt "Column Title"
 msgid "Apply Statuses"
 msgstr "وضعیت‌های درخواست"
 
-#: Contest.php:144
+#: Contest.php:155
 msgctxt "MetaBox Title"
 msgid "Contests"
 msgstr "فراخوان‌ها"
 
-#: Contest.php:145
+#: Contest.php:156
 msgctxt "Column Title"
 msgid "Contests"
 msgstr "فراخوان‌ها"
 
-#: Contest.php:150
+#: Contest.php:161
 msgctxt "Default Term"
 msgid "Approved"
 msgstr "تأییدشده"
 
-#: Contest.php:151
+#: Contest.php:162
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "برای بازبینی"
 
-#: Contest.php:152
+#: Contest.php:163
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr "شاید در آینده"
 
-#: Contest.php:153
+#: Contest.php:164
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr "پذیرفته نشد"
 
-#: Contest.php:177
+#: Contest.php:188
 msgctxt "Button"
 msgid "Install Default Apply Statuses"
 msgstr "نصب وضعیت‌های درخواست پیش‌فرض"
 
-#: Contest.php:568
+#: Contest.php:583
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr "ابزارهای فراخوان"
+
+#: Contest.php:612
+msgctxt "Default Term: Audit"
+msgid "Apply Abandoned"
+msgstr "درخواست رهاشده"
 
 #~ msgctxt "Tools"
 #~ msgid "From Terms"

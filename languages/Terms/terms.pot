@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Terms 3.23.1\n"
+"Project-Id-Version: gEditorial Terms 3.23.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-13T12:36:43+00:00\n"
+"POT-Creation-Date: 2022-06-19T19:50:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
@@ -285,102 +285,102 @@ msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr ""
 
-#: Terms.php:912
-#: Terms.php:1083
+#: Terms.php:920
+#: Terms.php:1091
 msgctxt "Button"
 msgid "Choose"
 msgstr ""
 
-#: Terms.php:917
-#: Terms.php:1089
+#: Terms.php:925
+#: Terms.php:1097
 msgctxt "Button"
 msgid "Remove"
 msgstr ""
 
-#: Terms.php:1197
+#: Terms.php:1205
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr ""
 
-#: Terms.php:1204
+#: Terms.php:1212
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr ""
 
-#: Terms.php:1215
-#: Terms.php:1234
+#: Terms.php:1223
+#: Terms.php:1242
 msgctxt "Adminbar"
 msgid "Description"
 msgstr ""
 
 #. translators: %s: meta title
-#: Terms.php:1246
+#: Terms.php:1254
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr ""
 
-#: Terms.php:1308
+#: Terms.php:1316
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr ""
 
-#: Terms.php:1330
+#: Terms.php:1338
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr ""
 
-#: Terms.php:1406
+#: Terms.php:1414
 msgctxt "Header"
 msgid "Term Tools"
 msgstr ""
 
-#: Terms.php:1412
+#: Terms.php:1420
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr ""
 
-#: Terms.php:1432
+#: Terms.php:1440
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Terms.php:1434
+#: Terms.php:1442
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr ""
 
-#: Terms.php:1442
+#: Terms.php:1450
 msgctxt "Message"
 msgid "Currently no tool available."
 msgstr ""
 
-#: Terms.php:1495
+#: Terms.php:1503
 msgctxt "Table Action"
 msgid "Purge Unregistered"
 msgstr ""
 
-#: Terms.php:1509
+#: Terms.php:1517
 msgctxt "Table Column"
 msgid "Raw"
 msgstr ""
 
-#: Terms.php:1528
+#: Terms.php:1536
 msgctxt "Header"
 msgid "Overview of Posts with Terms"
 msgstr ""
 
 #. translators: %s: term name
-#: Terms.php:1550
+#: Terms.php:1558
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Terms.php:1614
+#: Terms.php:1622
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr ""
 
-#: Terms.php:1617
+#: Terms.php:1625
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr ""
