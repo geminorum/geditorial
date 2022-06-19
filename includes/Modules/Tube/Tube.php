@@ -7,6 +7,7 @@ use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
@@ -130,23 +131,27 @@ class Tube extends gEditorial\Module
 
 				'featured_people' => [
 					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-tube' ),
-					'description' => _x( 'Featured People', 'Field Description', 'geditorial-tube' ),
+					'description' => _x( 'Featured People in the Video', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 				],
 				'creation_date' => [
 					'title'       => _x( 'Creation Date', 'Field Title', 'geditorial-tube' ),
-					'description' => _x( 'Creation Date', 'Field Description', 'geditorial-tube' ),
+					'description' => _x( 'Creation Date of the Video', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'calendar-alt',
 					'quickedit'   => TRUE,
 				],
 				'video_duration' => [
 					'title'       => _x( 'Video Duration', 'Field Title', 'geditorial-tube' ),
-					'description' => _x( 'Video Duration', 'Field Description', 'geditorial-tube' ),
+					'description' => _x( 'Duration of the Video', 'Field Description', 'geditorial-tube' ),
 					'icon'        => 'backup',
 					'quickedit'   => TRUE,
 				],
-
+				'video_embed_url' => [
+					'title'       => _x( 'Video Embed URL', 'Field Title', 'geditorial-tube' ),
+					'description' => _x( 'Embeddable URL of the External Video', 'Field Description', 'geditorial-tube' ),
+					'type'        => 'link',
+				],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
@@ -400,7 +405,12 @@ class Tube extends gEditorial\Module
 	public function meta_field( $meta, $field, $post, $args, $raw )
 	{
 		switch ( $field ) {
-			case 'creation_date': return Number::localize( Datetime::stringFormat( $raw ) );
+
+			case 'creation_date':
+				return Number::localize( Datetime::stringFormat( $raw ) );
+
+			case 'video_embed_url':
+				return Template::doEmbedShortCode( trim( $raw ) );
 		}
 
 		return $meta;
