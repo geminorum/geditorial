@@ -351,7 +351,7 @@ class Venue extends gEditorial\Module
 		$this->add_posttype_fields( $this->constant( 'place_cpt' ) );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
 
-		$this->filter( 'meta_field', 4, 9, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 5, 9, FALSE, 'geditorial' );
 	}
 
 	public function dashboard_glance_items( $items )

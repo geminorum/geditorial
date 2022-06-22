@@ -807,7 +807,7 @@ class ShortCode extends Main
 		if ( ! empty( $args['posttypes'] ) )
 			$query['post_type'] = $args['posttypes'];
 
-		// FIXME: back-compat / DROP THIS
+		// NOTE: back-compat / DROP THIS
 		if ( 'page' == $args['orderby'] )
 			$args['orderby'] = 'order';
 
@@ -908,6 +908,8 @@ class ShortCode extends Main
 
 			} else {
 
+				self::_dep( 'must pass module into ShortCode::listPosts( \'paired\' )' );
+
 				if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
 					$term = get_term_by( 'id', (int) $term_id, $taxonomy );
 
@@ -937,8 +939,12 @@ class ShortCode extends Main
 
 			// gets the list of main posts paired to this supported post
 
-			if ( ! $args['module'] )
+			if ( ! $args['module'] ) {
+
+				self::_dep( 'must pass module into ShortCode::listPosts( \'paired\' )' );
+
 				return $content;
+			}
 
 			if ( ! $paired_posts = gEditorial()->{$args['module']}->get_linked_to_posts( NULL, FALSE, NULL ) )
 				return $content;
@@ -1057,7 +1063,7 @@ class ShortCode extends Main
 	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'assigned' )`
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
-		self::_dev_dep( 'ShortCode::listPosts()' );
+		self::_dep( 'ShortCode::listPosts()' );
 
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
 
@@ -1216,7 +1222,7 @@ class ShortCode extends Main
 	// OLD: `::getAssocPosts()`
 	public static function getPairedPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
-		self::_dev_dep( 'ShortCode::listPosts( \'paired\' )' );
+		self::_dep( 'ShortCode::listPosts( \'paired\' )' );
 
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
 

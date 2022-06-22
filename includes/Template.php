@@ -810,6 +810,7 @@ class Template extends Main
 			'audio_source_url',
 			'video_source_url',
 			'map_embed_url',
+			'parent_complex',
 			'geo_latitude',
 			'geo_longitude',
 		] : (array) $args['excludes'];
