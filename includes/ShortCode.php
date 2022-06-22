@@ -851,7 +851,8 @@ class ShortCode extends Main
 
 		} else if ( 'all' == $args['id'] ) {
 
-			// do nothing, will collect all posts in posttype
+			if ( empty( $query['post_type'] ) )
+				$query['post_type'] = $posttype;
 
 		} else if ( $args['id'] ) {
 
