@@ -901,15 +901,22 @@ class ShortCode extends Main
 			if ( ! $post = PostType::getPost() )
 				return $content;
 
-			// FIXME: use module PAIRED API for the term
-			if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
-				$term = get_term_by( 'id', (int) $term_id, $taxonomy );
+			if ( $args['module'] ) {
 
-			else
-				$term = get_term_by( 'slug', $post->post_name, $taxonomy );
+				if ( ! $term = gEditorial()->{$args['module']}->paired_get_to_term_direct( $post->ID, $posttype, $taxonomy ) )
+					return $content;
 
-			if ( ! $term )
-				return $content;
+			} else {
+
+				if ( $term_id = get_post_meta( $post->ID, '_'.$posttype.'_term_id', TRUE ) )
+					$term = get_term_by( 'id', (int) $term_id, $taxonomy );
+
+				else
+					$term = get_term_by( 'slug', $post->post_name, $taxonomy );
+
+				if ( ! $term )
+					return $content;
+			}
 
 			$query['tax_query'] = [ [
 				'taxonomy' => $taxonomy,

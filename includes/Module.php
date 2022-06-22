@@ -3834,8 +3834,16 @@ class Module extends Base
 	// OLD: `get_linked_term()`
 	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{
-		$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
-		return get_term_by( 'id', (int) $term_id, $this->constant( $tax_constant_key ) );
+		return $this->paired_get_to_term_direct( $post_id,
+			$this->constant( $posttype_constant_key ),
+			$this->constant( $tax_constant_key )
+		);
+	}
+
+	public function paired_get_to_term_direct( $post_id, $posttype, $taxonomy )
+	{
+		$term_id = get_post_meta( $post_id, sprintf( '_%s_term_id', $posttype ), TRUE );
+		return $term_id ? get_term_by( 'id', (int) $term_id, $taxonomy ) : FALSE;
 	}
 
 	// PAIRED API
