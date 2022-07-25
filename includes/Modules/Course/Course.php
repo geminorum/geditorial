@@ -337,6 +337,8 @@ class Course extends gEditorial\Module
 					'low'
 				);
 
+				$this->_hook_paired_to( $screen->post_type );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter( 'bulk_post_updated_messages', 2 );
@@ -350,9 +352,8 @@ class Course extends gEditorial\Module
 
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
+				$this->_hook_paired_to( $screen->post_type );
 			}
-
-			$this->_hook_paired_to( $screen->post_type );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -376,6 +377,7 @@ class Course extends gEditorial\Module
 				);
 
 				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				$this->_hook_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -386,9 +388,8 @@ class Course extends gEditorial\Module
 				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
+				$this->_hook_store_metabox( $screen->post_type );
 			}
-
-			$this->_hook_store_metabox( $screen->post_type );
 		}
 
 		// only for supported posttypes

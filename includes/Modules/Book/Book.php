@@ -673,6 +673,8 @@ class Book extends gEditorial\Module
 					'low'
 				);
 
+				$this->_hook_paired_to( $screen->post_type );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
@@ -691,9 +693,8 @@ class Book extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
+				$this->_hook_paired_to( $screen->post_type );
 			}
-
-			$this->_hook_paired_to( $screen->post_type );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -708,11 +709,12 @@ class Book extends gEditorial\Module
 				);
 
 				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				$this->_hook_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
-			}
 
-			$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_store_metabox( $screen->post_type );
+			}
 
 		} else if ( $this->_p2p && 'edit' == $screen->base
 			&& $this->in_setting( $screen->post_type, 'p2p_posttypes' ) ) {
