@@ -116,7 +116,7 @@
         "assets/components",
         "assets/js/vendor",
         "assets/packages",
-        "assets/apps",
+        "assets/apps/**/src",
         "assets/dev",
         "assets/blocks/**/src",
         "includes/Modules/**/.temp",

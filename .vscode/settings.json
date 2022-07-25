@@ -15,5 +15,6 @@
     "less",
     "postcss",
     "scss"
-  ]
+  ],
+  "git.ignoreLimitWarning": true
 }

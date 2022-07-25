@@ -40,7 +40,7 @@
     "@wordpress/browserslist-config": "^4.1.2",
     "@wordpress/stylelint-config": "^20.0.2",
     "autoprefixer": "^10.4.7",
-    "browserslist": "^4.20.4",
+    "browserslist": "^4.21.2",
     "cssnano": "^5.1.12",
     "del": "^6.1.1",
     "fancy-log": "^2.0.0",
