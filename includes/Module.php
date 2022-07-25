@@ -2928,7 +2928,8 @@ class Module extends Base
 		if ( ! array_key_exists( 'update_count_callback', $args ) ) {
 
 			if ( $cpt_tax )
-				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+				// $args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+				$args['update_count_callback'] = '_update_post_term_count';
 
 			else if ( 'user' == $posttypes )
 				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateUserTermCountCallback' ];

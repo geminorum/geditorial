@@ -354,7 +354,7 @@ class Cartable extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ($this->support_users && $this->role_can( 'view_user' ) )
+				if ( $this->support_users && $this->role_can( 'view_user' ) )
 					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'users' );
 
 				if ( $this->support_groups && $this->role_can( 'view_group' ) )

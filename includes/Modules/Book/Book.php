@@ -565,8 +565,8 @@ class Book extends gEditorial\Module
 		$this->filter_append( 'query_vars', $query );
 
 		add_rewrite_tag( '%'.$query.'%', '([^&]+)' );
-		add_rewrite_rule( '^'.$query.'/([^/]*)/?', 'index.php?'.$query.'=$matches[1]','top' );
-		add_rewrite_rule( '^'.$posttype.'/'.$query.'/([^/]*)/?', 'index.php?post_type='.$posttype.'&'.$query.'=$matches[1]','top' );
+		add_rewrite_rule( '^'.$query.'/([^/]*)/?', 'index.php?'.$query.'=$matches[1]', 'top' );
+		add_rewrite_rule( '^'.$posttype.'/'.$query.'/([^/]*)/?', 'index.php?post_type='.$posttype.'&'.$query.'=$matches[1]', 'top' );
 	}
 
 	public function get_isbn_link( $isbn, $extra = [] )

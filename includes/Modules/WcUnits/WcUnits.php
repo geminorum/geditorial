@@ -325,13 +325,13 @@ class WcUnits extends gEditorial\Module
 
 			if ( 'woocommerce_weight_unit' === $setting['id'] ) {
 
-				foreach( [ 'kg', 'g', 'lbs', 'oz' ] as $weight_unit )
+				foreach ( [ 'kg', 'g', 'lbs', 'oz' ] as $weight_unit )
 					if ( array_key_exists( $weight_unit, $setting['options'] ) )
 						$setting['options'][$weight_unit] = sprintf( '%s &mdash; (%s)', $setting['options'][$weight_unit], $this->format_weight( NULL, 1, $weight_unit ) );
 
 			} else if ( 'woocommerce_dimension_unit' === $setting['id'] ) {
 
-				foreach( [ 'm', 'cm', 'mm', 'in', 'yd' ] as $dimension_unit )
+				foreach ( [ 'm', 'cm', 'mm', 'in', 'yd' ] as $dimension_unit )
 					if ( array_key_exists( $dimension_unit, $setting['options'] ) )
 						$setting['options'][$dimension_unit] = sprintf( '%s &mdash; (%s)', $setting['options'][$dimension_unit], $this->format_dimensions( NULL, [ 1, 1, 1 ], $dimension_unit ) );
 			}

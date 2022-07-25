@@ -16,6 +16,8 @@ use geminorum\gEditorial\WordPress\User;
 class Workflow extends gEditorial\Module
 {
 
+	// TODO: register custom term meta for: plural/private/icon
+
 	private $statuses = [];
 
 	public static function module()
@@ -308,6 +310,7 @@ class Workflow extends gEditorial\Module
 	}
 
 	// TODO: filter `is_post_status_viewable` @since WP 5.9.0
+	// TODO: filter `update_post_term_count_statuses` @since WP 5.7.0
 	private function register_post_statuses()
 	{
 		$builtins = get_post_stati();

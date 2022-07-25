@@ -15,6 +15,8 @@ class Views extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
+	protected $post_id = FALSE;
+
 	public static function module()
 	{
 		return [

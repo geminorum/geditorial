@@ -79,8 +79,6 @@ class Relation extends Main
 
 	public static function capture( $request, $wp_query )
 	{
-		global $wpdb;
-
 		if ( ! isset( $wp_query->_o2o_capture ) )
 			return $request;
 
