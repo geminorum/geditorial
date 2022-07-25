@@ -234,22 +234,23 @@ class ShortCode extends Main
 			return $fallback;
 
 		$args = self::atts( [
-			'item_link'          => TRUE,
-			'item_text'          => NULL, // callback or use %s for term title
-			'item_wrap'          => '', // use %s for item title / or html tag
-			'item_title'         => '', // use %s for term title
-			'item_title_cb'      => FALSE,
-			'item_tag'           => 'li',
-			'item_anchor'        => FALSE, // $term->taxonomy.'-%2$s',
-			'item_class'         => '-item -tile do-sincethen',
-			'item_dummy'         => '<span class="-dummy"></span>',
-			'item_after'         => '',
-			'item_after_cb'      => FALSE,
-			'item_image_tile'    => NULL,
-			'item_image_metakey' => 'image',
-			'item_image_size'    => 'thumbnail',
-			'item_image_loading' => 'lazy', // FALSE to disable
-			'item_image_empty'   => FALSE,
+			'item_link'           => TRUE,
+			'item_text'           => NULL,                             // callback or use %s for term title
+			'item_wrap'           => '',                               // use %s for item title / or html tag
+			'item_title'          => '',                               // use %s for term title
+			'item_title_cb'       => FALSE,
+			'item_tag'            => 'li',
+			'item_anchor'         => FALSE,                            // $term->taxonomy.'-%2$s',
+			'item_class'          => '-item -tile do-sincethen',
+			'item_dummy'          => '<span class="-dummy"></span>',
+			'item_after'          => '',
+			'item_after_cb'       => FALSE,
+			'item_image_tile'     => NULL,
+			'item_image_metakey'  => 'image',
+			'item_image_size'     => 'thumbnail',
+			'item_image_loading'  => 'lazy',                           // FALSE to disable
+			'item_image_decoding' => 'async',                          // FALSE to disable
+			'item_image_empty'    => FALSE,
 		], $atts );
 
 		if ( ! $image_id = Taxonomy::getThumbnailID( $term->term_id, $args['item_image_metakey'] ) )
@@ -277,9 +278,10 @@ class ShortCode extends Main
 			$title = '';
 
 		$image = HTML::tag( 'img', [
-			'src'     => $thumbnail_img,
-			'alt'     => Media::getAttachmentImageAlt( $image_id, $title ),
-			'loading' => $args['item_image_loading'],
+			'src'      => $thumbnail_img,
+			'alt'      => Media::getAttachmentImageAlt( $image_id, $title ),
+			'loading'  => $args['item_image_loading'],
+			'decoding' => $args['item_image_decoding'],
 		] );
 
 		if ( $term->count && $args['item_link'] )
@@ -602,22 +604,23 @@ class ShortCode extends Main
 	public static function postImage( $post = NULL, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
 		$args = self::atts( [
-			'item_link'          => TRUE,
-			'item_text'          => NULL, // callback or use %s for post title
-			'item_wrap'          => '', // use %s for item title / or html tag
-			'item_title'         => '', // use %s for post title
-			'item_title_cb'      => FALSE,
-			'item_tag'           => 'li',
-			'item_anchor'        => FALSE, // $post->post_type.'-%2$s',
-			'item_class'         => '-item -tile do-sincethen',
-			'item_dummy'         => '<span class="-dummy"></span>',
-			'item_after'         => '',
-			'item_after_cb'      => FALSE,
-			'item_image_tile'    => NULL,
-			'item_image_metakey' => '_thumbnail_id',
-			'item_image_size'    => 'thumbnail',
-			'item_image_loading' => 'lazy', // FALSE to disable
-			'item_image_empty'   => FALSE,
+			'item_link'           => TRUE,
+			'item_text'           => NULL,                             // callback or use %s for post title
+			'item_wrap'           => '',                               // use %s for item title / or html tag
+			'item_title'          => '',                               // use %s for post title
+			'item_title_cb'       => FALSE,
+			'item_tag'            => 'li',
+			'item_anchor'         => FALSE,                            // $post->post_type.'-%2$s',
+			'item_class'          => '-item -tile do-sincethen',
+			'item_dummy'          => '<span class="-dummy"></span>',
+			'item_after'          => '',
+			'item_after_cb'       => FALSE,
+			'item_image_tile'     => NULL,
+			'item_image_metakey'  => '_thumbnail_id',
+			'item_image_size'     => 'thumbnail',
+			'item_image_loading'  => 'lazy',                           // FALSE to disable
+			'item_image_decoding' => 'async',                          // FALSE to disable
+			'item_image_empty'    => FALSE,
 		], $atts );
 
 		if ( ! $post = PostType::getPost( $post ) )
@@ -648,9 +651,10 @@ class ShortCode extends Main
 			$title = '';
 
 		$image = HTML::tag( 'img', [
-			'src'     => $thumbnail_img,
-			'alt'     => Media::getAttachmentImageAlt( $image_id, $title ),
-			'loading' => $args['item_image_loading'],
+			'src'      => $thumbnail_img,
+			'alt'      => Media::getAttachmentImageAlt( $image_id, $title ),
+			'loading'  => $args['item_image_loading'],
+			'decoding' => $args['item_image_decoding'],
 		] );
 
 		if ( $link && $args['item_link'] )
@@ -701,64 +705,65 @@ class ShortCode extends Main
 	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [], $taxonomies = [], $module = NULL )
 	{
 		return [
-			'taxonomy'           => $taxonomy,
-			'taxonomies'         => $taxonomies,
-			'posttype'           => $posttype,
-			'posttypes'          => $posttypes,
-			'id'                 => '',
-			'slug'               => '',
-			'title'              => NULL, // FALSE to disable
-			'title_cb'           => FALSE,
-			'title_link'         => NULL, // `anchor` for slug anchor, FALSE to disable
-			'title_title'        => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
-			'title_title_cb'     => FALSE, // callback for title attr
-			'title_tag'          => 'h3',
-			'title_anchor'       => $taxonomy.'-%2$s',
-			'title_class'        => '-title',
-			'title_dummy'        => '<span class="-dummy"></span>',
-			'title_after'        => '',
-			'title_label'        => 'all_items', // label key for posttype/taxonomy object
-			'item_cb'            => FALSE,
-			'item_link'          => TRUE,
-			'item_text'          => NULL,  // callback or use %s for post title
-			'item_wrap'          => '', // use %s for item title / or html tag
-			'item_title'         => '', // use %s for post title
-			'item_title_cb'      => FALSE,
-			'item_tag'           => 'li',
-			'item_anchor'        => FALSE, // $posttype.'-%2$s',
-			'item_class'         => '-item do-sincethen',
-			'item_dummy'         => '<span class="-dummy"></span>',
-			'item_after'         => '',
-			'item_after_cb'      => FALSE,
-			'item_download'      => TRUE, // only for attachments
-			'item_filesize'      => TRUE, // only for attachments // OLD: `item_size`
-			'item_image_tile'    => NULL,
-			'item_image_metakey' => empty( $posttype ) ? 'image' : '_thumbnail_id',
-			'item_image_size'    => 'thumbnail',
-			'item_image_loading' => 'lazy', // FALSE to disable
-			'item_image_empty'   => FALSE,
-			'order_before'       => FALSE,
-			'order_zeroise'      => FALSE,
-			'order_sep'          => ' &ndash; ',
-			'list_tag'           => 'ul',
-			'list_class'         => '-list',
-			'cover'              => FALSE, // must have thumbnail
-			'future'             => 'on',
-			'mime_type'          => '', // only for attachments / like: `image`
-			'connection'         => '', // only for o2o
-			'orderby'            => '', // empty for default
-			'order'              => 'ASC',
-			'order_cb'           => FALSE, // NULL for default order by paired meta
-			'order_start'        => 'start', // meta field for ordering
-			'order_order'        => 'order', // meta field for ordering
-			'limit'              => -1,
-			'module'             => $module, // main caller module
-			'field_module'       => 'meta', // getting meta field from
-			'context'            => NULL,
-			'wrap'               => TRUE,
-			'before'             => '', // html after wrap
-			'after'              => '', // html before wrap
-			'class'              => '', // wrap css class
+			'taxonomy'            => $taxonomy,
+			'taxonomies'          => $taxonomies,
+			'posttype'            => $posttype,
+			'posttypes'           => $posttypes,
+			'id'                  => '',
+			'slug'                => '',
+			'title'               => NULL,                                                            // FALSE to disable
+			'title_cb'            => FALSE,
+			'title_link'          => NULL,                                                            // `anchor` for slug anchor, FALSE to disable
+			'title_title'         => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
+			'title_title_cb'      => FALSE,                                                           // callback for title attr
+			'title_tag'           => 'h3',
+			'title_anchor'        => $taxonomy.'-%2$s',
+			'title_class'         => '-title',
+			'title_dummy'         => '<span class="-dummy"></span>',
+			'title_after'         => '',
+			'title_label'         => 'all_items',                                                     // label key for posttype/taxonomy object
+			'item_cb'             => FALSE,
+			'item_link'           => TRUE,
+			'item_text'           => NULL,                                                            // callback or use %s for post title
+			'item_wrap'           => '',                                                              // use %s for item title / or html tag
+			'item_title'          => '',                                                              // use %s for post title
+			'item_title_cb'       => FALSE,
+			'item_tag'            => 'li',
+			'item_anchor'         => FALSE,                                                           // $posttype.'-%2$s',
+			'item_class'          => '-item do-sincethen',
+			'item_dummy'          => '<span class="-dummy"></span>',
+			'item_after'          => '',
+			'item_after_cb'       => FALSE,
+			'item_download'       => TRUE,                                                            // only for attachments
+			'item_filesize'       => TRUE,                                                            // only for attachments // OLD: `item_size`
+			'item_image_tile'     => NULL,
+			'item_image_metakey'  => empty( $posttype ) ? 'image' : '_thumbnail_id',
+			'item_image_size'     => 'thumbnail',
+			'item_image_loading'  => 'lazy',                                                          // FALSE to disable
+			'item_image_decoding' => 'async',                                                         // FALSE to disable
+			'item_image_empty'    => FALSE,
+			'order_before'        => FALSE,
+			'order_zeroise'       => FALSE,
+			'order_sep'           => ' &ndash; ',
+			'list_tag'            => 'ul',
+			'list_class'          => '-list',
+			'cover'               => FALSE,                                                           // must have thumbnail
+			'future'              => 'on',
+			'mime_type'           => '',                                                              // only for attachments / like: `image`
+			'connection'          => '',                                                              // only for o2o
+			'orderby'             => '',                                                              // empty for default
+			'order'               => 'ASC',
+			'order_cb'            => FALSE,                                                           // NULL for default order by paired meta
+			'order_start'         => 'start',                                                         // meta field for ordering
+			'order_order'         => 'order',                                                         // meta field for ordering
+			'limit'               => -1,
+			'module'              => $module,                                                         // main caller module
+			'field_module'        => 'meta',                                                          // getting meta field from
+			'context'             => NULL,
+			'wrap'                => TRUE,
+			'before'              => '',                                                              // html after wrap
+			'after'               => '',                                                              // html before wrap
+			'class'               => '',                                                              // wrap css class
 		];
 	}
 

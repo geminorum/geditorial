@@ -901,10 +901,11 @@ class Terms extends gEditorial\Module
 			case 'image':
 
 				$html.= '<div>'.HTML::tag( 'img', [
-					'id'      => $this->classs( $field, 'img' ),
-					'src'     => empty( $meta ) ? '' : wp_get_attachment_image_url( $meta, 'thumbnail' ),
-					'loading' => 'lazy',
-					'style'   => empty( $meta ) ? 'display:none' : FALSE,
+					'id'       => $this->classs( $field, 'img' ),
+					'src'      => empty( $meta ) ? '' : wp_get_attachment_image_url( $meta, 'thumbnail' ),
+					'loading'  => 'lazy',
+					'decoding' => 'async',
+					'style'    => empty( $meta ) ? 'display:none' : FALSE,
 				] ).'</div>';
 
 				$html.= HTML::tag( 'input', [
