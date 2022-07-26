@@ -28,7 +28,7 @@
     "nicmart/string-template": "^0.1.2",
     "michelf/php-markdown": "^1.9",
     "league/html-to-markdown": "^4.9",
-    "hbgl/php-code-128-encoder": "^0.2.4",
+    "hbgl/php-code-128-encoder": "^0.2.5",
     "rct567/dom-query": "^0.8.0"
   },
   "require-dev": {
