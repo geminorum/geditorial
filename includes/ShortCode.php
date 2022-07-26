@@ -491,8 +491,11 @@ class ShortCode extends Main
 			'order_sep'     => ' &ndash; ',
 		], $atts );
 
-		$text = PostType::getPostTitle( $post, FALSE );
+		$text = PostType::getPostTitle( $post );
 		$link = PostType::getPostLink( $post, '' );
+
+		if ( ! $link && current_user_can( 'edit_post', $post->ID ) )
+			$link = get_preview_post_link( $post );
 
 		if ( is_null( $args['item_text'] ) )
 			$item = $text;
