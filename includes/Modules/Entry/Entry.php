@@ -330,7 +330,12 @@ class Entry extends gEditorial\Module
 			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
 
 		else
-			$html.= $this->section_shortcode( [ 'id' => 'all', 'wrap' => FALSE ] );
+			$html.= $this->section_shortcode( [
+				'id'     => 'all',
+				'future' => 'off',
+				'title'  => FALSE,
+				'wrap'   => FALSE,
+			] );
 
 		return $html;
 	}

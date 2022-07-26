@@ -378,7 +378,11 @@ class Venue extends gEditorial\Module
 			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'place_cpt' ) ] );
 
 		else
-			$html.= $this->place_shortcode( [ 'wrap' => FALSE, 'title' => FALSE ] );
+			$html.= $this->place_shortcode( [
+				'future' => 'off',
+				'title'  => FALSE,
+				'wrap'   => FALSE,
+			] );
 
 		return $html;
 	}

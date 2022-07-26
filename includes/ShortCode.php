@@ -329,6 +329,79 @@ class ShortCode extends Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
+	// posttype as title of the list
+	public static function posttypeTitle( $posttype = NULL, $atts = [] )
+	{
+		if ( ! $posttype = PostType::object( $posttype ) )
+			return '';
+
+		$args = self::atts( [
+			'title'          => NULL, // FALSE to disable
+			'title_cb'       => FALSE, // callback for title
+			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
+			'title_title'    => '',
+			'title_title_cb' => FALSE, // callback for title attr
+			'title_tag'      => 'h3',
+			'title_anchor'   => '%2$s',
+			'title_class'    => '-title',
+			'title_dummy'    => '<span class="-dummy"></span>',
+			'title_label'    => 'all_items',
+		], $atts );
+
+		if ( 'posttype' === $args['title'] )
+			$args['title'] = NULL; // reset
+
+		$text = $posttype->labels->{$args['title_label']};
+		$link = PostType::getArchiveLink( $posttype->name );
+
+		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $posttype, $atts, $text, $link ] );
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = $text;
+
+		else if ( $args['title'] && Text::has( $args['title'], '%' ) )
+			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
+
+		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
+			$attr = call_user_func_array( $args['title_title_cb'], [ $posttype, $atts, $text ] );
+
+		else if ( $args['title_title'] )
+			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
+
+		else
+			$attr = FALSE;
+
+		if ( $args['title'] ) {
+
+			if ( is_null( $args['title_link'] ) && $link && ! is_post_type_archive( $posttype->name ) )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => $link,
+					'title' => $attr,
+				], $args['title'] );
+
+			else if ( 'anchor' === $args['title_link'] )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => '#'.sprintf( $args['title_anchor'], $posttype->name, $posttype->rest_base ),
+					'title' => $attr,
+				], $args['title'] );
+
+			else if ( $args['title_link'] )
+				$args['title'] = HTML::tag( 'a', [
+					'href'  => $args['title_link'],
+					'title' => $attr,
+				], $args['title'] );
+		}
+
+		if ( $args['title'] && $args['title_tag'] )
+			$args['title'] = HTML::tag( $args['title_tag'], [
+				'id'    => sprintf( $args['title_anchor'], $posttype->name, $posttype->rest_base ),
+				'class' => $args['title_class'],
+			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
+
+		return $args['title'];
+	}
+
 	// taxonomy as title of the list
 	public static function taxonomyTitle( $taxonomy = NULL, $atts = [] )
 	{
@@ -1003,7 +1076,9 @@ class ShortCode extends Main
 		if ( 'assigned' == $list ) {
 
 			if ( is_null( $args['title'] ) )
-				$args['title'] = self::termTitle( $term, $taxonomy, $args );
+				$args['title'] = 'all' === $args['id']
+					? self::posttypeTitle( $posttype, $args )
+					: self::termTitle( $term, $taxonomy, $args );
 
 			$ref = $term;
 
