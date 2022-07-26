@@ -359,8 +359,15 @@ class Attachments extends gEditorial\Module
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 					$list = [];
 
+					foreach ( Media::isThumbnail( $row->ID ) as $post_id )
+						/* translators: %s: linked post title */
+						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							Helper::getPostTitleRow( $post_id ) );
+
 					foreach ( $this->search_attachment( $row->ID ) as $post_id )
-						$list[] = Helper::getPostTitleRow( $post_id );
+						/* translators: %s: linked post title */
+						$list[] = sprintf( _x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							Helper::getPostTitleRow( $post_id ) );
 
 					return $list ? HTML::renderList( $list ) : Helper::htmlEmpty();
 				},
