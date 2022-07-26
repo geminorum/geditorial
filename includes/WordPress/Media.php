@@ -337,8 +337,33 @@ class Media extends Core\Base
 		) );
 	}
 
+	public static function isThumbnail( $attachment_id )
+	{
+		if ( ! $attachment_id )
+			return FALSE;
+
+		$query = new \WP_Query( [
+			'post_type'   => 'any',
+			'post_status' => 'any',
+			'orderby'     => 'none',
+			'fields'      => 'ids',
+			'meta_query'  => [ [
+				'value'   => $attachment_id,
+				'compare' => 'LIKE',
+				'key'     => '_thumbnail_id',
+			] ],
+			'suppress_filters' => TRUE,
+			'posts_per_page'   => -1,
+		] );
+
+		return $query->have_posts() ? $query->posts : [];
+	}
+
 	public static function isCustom( $attachment_id )
 	{
+		if ( ! $attachment_id )
+			return FALSE;
+
 		if ( get_post_meta( $attachment_id, '_wp_attachment_is_custom_header', TRUE ) )
 			return 'custom_header';
 
@@ -407,7 +432,7 @@ class Media extends Core\Base
 		$upload = self::upload();
 
 		// Is URL in uploads directory?
-		if ( FALSE === strpos( $url, $dir['baseurl'] . '/' ) )
+		if ( FALSE === strpos( $url, $upload['baseurl'] . '/' ) )
 			return 0;
 
 		$file  = Core\File::basename( $url );
@@ -477,11 +502,12 @@ class Media extends Core\Base
 			$data['attachment'] = $attachment_id;
 
 		$image = Core\HTML::tag( 'img', [
-			'src'     => $src,
-			'alt'     => self::getAttachmentImageAlt( $attachment_id ),
-			'data'    => $data,
-			'class'   => $class,
-			'loading' => 'lazy',
+			'src'      => $src,
+			'alt'      => self::getAttachmentImageAlt( $attachment_id ),
+			'data'     => $data,
+			'class'    => $class,
+			'loading'  => 'lazy',
+			'decoding' => 'async',
 		] );
 
 		return $link ? Core\HTML::tag( 'a', [

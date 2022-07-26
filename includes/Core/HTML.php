@@ -47,9 +47,10 @@ class HTML extends Base
 	}
 
 	// @REF: https://web.dev/native-lazy-loading/
+	// @SEE: https://www.smashingmagazine.com/2021/04/humble-img-element-core-web-vitals/
 	public static function img( $src, $class = '', $alt = '' )
 	{
-		return $src ? '<img src="'.$src.'" class="'.self::prepClass( $class ).'" alt="'.self::escape( $alt ).'" loading="lazy" />' : '';
+		return $src ? '<img src="'.$src.'" class="'.self::prepClass( $class ).'" alt="'.self::escape( $alt ).'" decoding="async" loading="lazy" />' : '';
 	}
 
 	public static function h1( $html, $class = FALSE, $link = FALSE )

@@ -12,13 +12,13 @@ class Module extends Core\Base
 	protected $base = NULL;
 	protected $key  = NULL;
 	protected $path = NULL;
-	protected $blog = NULL;
+	protected $site = NULL;
 
-	public static function module() { return array(); }
+	public static function module() { return []; }
 
-	protected function setup( $args = array() ) {}
-	protected function init_options( $args = array() ) {}
-	protected function default_options() { return array(); }
+	protected function setup( $args = [] ) {}
+	protected function init_options( $args = [] ) {}
+	protected function default_options() { return []; }
 
 	public function base() { return $this->base; }
 
@@ -102,32 +102,54 @@ class Module extends Core\Base
 				add_filter( ( $base ? $base.'_'.$hook : $hook ), [ $this, $method ], $priority, $args );
 	}
 
-	// USAGE: $this->action_module( 'importer', 'saved', 5 );
-	protected function action_module( $module, $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	/**
+	 * hooks an action for an internal module
+	 *
+	 * @example `$this->action_module( 'importer', 'saved', 5 );`
+	 *
+	 * @param string $module
+	 * @param string $hook
+	 * @param integer $args
+	 * @param integer $priority
+	 * @param string $suffix
+	 * @return void
+	 */
+	protected function action_module( $module, $hook, $args = 1, $priority = 10, $suffix = '' )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
-			add_action( $this->base.'_'.$module.'_'.$hook, array( $this, $method ), $priority, $args );
+			add_action( $this->base.'_'.$module.'_'.$hook, [ $this, $method ], $priority, $args );
 	}
 
-	// USAGE: $this->filter_module( 'importer', 'prepare', 4 );
-	protected function filter_module( $module, $hook, $args = 1, $priority = 10, $suffix = FALSE )
+	/**
+	 * hooks a filter for an internal module
+	 *
+	 * @example `$this->filter_module( 'importer', 'prepare', 4 );`
+	 *
+	 * @param string $module
+	 * @param string $hook
+	 * @param integer $args
+	 * @param integer $priority
+	 * @param string $suffix
+	 * @return void
+	 */
+	protected function filter_module( $module, $hook, $args = 1, $priority = 10, $suffix = '' )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
-			add_filter( $this->base.'_'.$module.'_'.$hook, array( $this, $method ), $priority, $args );
+			add_filter( $this->base.'_'.$module.'_'.$hook, [ $this, $method ], $priority, $args );
 	}
 
 	// USAGE: $this->action_self( 'saved', 5 );
 	protected function action_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_action( $this->base.'_'.$this->key.'_'.$hook, array( $this, $method ), $priority, $args );
+			add_action( $this->base.'_'.$this->key.'_'.$hook, [ $this, $method ], $priority, $args );
 	}
 
 	// USAGE: $this->filter_self( 'prepare', 4 );
 	protected function filter_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_filter( $this->base.'_'.$this->key.'_'.$hook, array( $this, $method ), $priority, $args );
+			add_filter( $this->base.'_'.$this->key.'_'.$hook, [ $this, $method ], $priority, $args );
 	}
 
 	// @REF: https://gist.github.com/markjaquith/b752e3aa93d2421285757ada2a4869b1

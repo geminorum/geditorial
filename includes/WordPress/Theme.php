@@ -92,7 +92,9 @@ class Theme extends Core\Base
 
 	public static function restPost_thumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr )
 	{
-		$alt = isset( $GLOBALS['post']->_thumbnail->caption ) ? $GLOBALS['post']->_thumbnail->caption : $GLOBALS['post']->post_title;
+		$alt = empty( $GLOBALS['post']->_thumbnail->caption )
+			? $GLOBALS['post']->post_title
+			: $GLOBALS['post']->_thumbnail->caption;
 
 		if ( $size && isset( $GLOBALS['post']->_thumbnail->sizes->{$size} ) )
 			return Core\HTML::link( Core\HTML::img( $GLOBALS['post']->_thumbnail->sizes->{$size}, '-thumbnail', $alt ), $GLOBALS['post']->_permalink );
