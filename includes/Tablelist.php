@@ -299,8 +299,10 @@ class Tablelist extends Main
 
 					if ( 'inherit' == $row->post_status && 'attachment' == $row->post_type )
 						$status = '';
+
 					else if ( isset( $column['args']['statuses'][$row->post_status] ) )
 						$status = $column['args']['statuses'][$row->post_status];
+
 					else
 						$status = $row->post_status;
 
@@ -395,7 +397,7 @@ class Tablelist extends Main
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
 					if ( $object->label ) // only public taxes
-						Helper::renderPostTermsEditRow( $row, $object, '<div>'.$object->label.': ', '</div>' );
+						Helper::renderPostTermsEditRow( $row, $object, sprintf( '<div><span title="%s">%s</span>:', $object->name, $object->label ), '</div>' );
 
 				return '';
 			},

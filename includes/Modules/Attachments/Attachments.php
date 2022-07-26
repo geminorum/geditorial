@@ -346,6 +346,7 @@ class Attachments extends gEditorial\Module
 				'title'    => _x( 'Custom', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-custom',
 				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+
 					if ( $custom = Media::isCustom( $row->ID ) )
 						return strtoupper( str_replace( '_', ' ', $custom ) );
 

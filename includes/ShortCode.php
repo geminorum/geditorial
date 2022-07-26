@@ -421,6 +421,9 @@ class ShortCode extends Main
 			'title_label'    => 'all_items',
 		], $atts );
 
+		if ( 'taxonomy' === $args['title'] )
+			$args['title'] = NULL; // reset
+
 		$text = $taxonomy->labels->{$args['title_label']};
 		$link = Taxonomy::getArchiveLink( $taxonomy->name );
 
@@ -1541,7 +1544,6 @@ class ShortCode extends Main
 
 		} else if ( 'taxonomy' === $args['title'] ) {
 
-			$args['title'] = NULL; // reset
 			$args['title'] = $args['taxonomy'] ? self::taxonomyTitle( $ref, $args ) : FALSE;
 
 		} else if ( is_null( $args['title'] ) && 'thepost' === $list ) {
