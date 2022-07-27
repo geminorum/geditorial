@@ -395,17 +395,17 @@ class Attachments extends gEditorial\Module
 					if ( $row->post_parent )
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Parent]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
-							Helper::getPostTitleRow( $row->post_parent, 'view' ) );
+							Helper::getPostTitleRow( $row->post_parent, 'view', TRUE, 'posttype' ) );
 
 					foreach ( Media::isThumbnail( $row->ID ) as $post_id )
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
-							Helper::getPostTitleRow( $post_id ) );
+							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
 
 					foreach ( $this->search_attachment( $row->ID ) as $post_id )
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
-							Helper::getPostTitleRow( $post_id ) );
+							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
 
 					return $list ? HTML::renderList( $list ) : Helper::htmlEmpty();
 				},
@@ -417,7 +417,6 @@ class Attachments extends gEditorial\Module
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
 						return Helper::htmlEmpty();
-
 					$sizes = [];
 
 					if ( ! empty( $meta['filesize'] ) )
