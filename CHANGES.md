@@ -1,3 +1,16 @@
+### 3.23.3
+* main/module: more accurate hooking
+* main/module: support for async decoding attr on image tags
+* main/shortcode: link to preview on unpublished posts
+* main/shortcode: passing posttype on id all
+* main/shortcode: support for posttype as title of the list
+* main/shortcode: using paired api for the term
+* module/attachments: bulk delete attachments action
+* module/attachments: display attachment filesize
+* module/attachments: display attachment parent
+* module/attachments: posttype label as title attr on searches
+* module/attachments: search for attachments as thumbnails
+
 ### 3.23.2
 * main/datetime: disable date separator on formatting
 * main/helper: filtering label templates
