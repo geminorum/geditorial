@@ -388,6 +388,9 @@ class Attachments extends gEditorial\Module
 
 					$sizes = [];
 
+					if ( ! empty( $meta['filesize'] ) )
+						$sizes['FILESIZE'] = File::formatSize( $meta['filesize'] );
+
 					if ( wp_attachment_is( 'image', $row->ID ) )
 						$sizes['ORIGINAL'] = sprintf( '%s&times;%s', $meta['width'], $meta['height'] );
 
@@ -398,8 +401,6 @@ class Attachments extends gEditorial\Module
 					return HTML::tableCode( $sizes, TRUE );
 				},
 			],
-
-			// FIXME: also display general meta: width/height/filesize
 
 			'meta' => [
 				'title'    => _x( 'Meta', 'Table Column', 'geditorial-attachments' ),
