@@ -360,6 +360,11 @@ class Attachments extends gEditorial\Module
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 					$list = [];
 
+					if ( $row->post_parent )
+						/* translators: %s: linked post title */
+						$list[] = sprintf( _x( '[Parent]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							Helper::getPostTitleRow( $row->post_parent, 'view' ) );
+
 					foreach ( Media::isThumbnail( $row->ID ) as $post_id )
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
