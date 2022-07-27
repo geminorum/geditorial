@@ -311,6 +311,34 @@ class Attachments extends gEditorial\Module
 	public function reports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'reports' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'reports', $sub );
+
+				if ( Tablelist::isAction( 'delete_permanently', TRUE ) ) {
+
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $post_id )
+						if ( wp_delete_attachment( $post_id, TRUE ) )
+							$count++;
+
+					WordPress::redirectReferer( [
+						'message' => 'deleted',
+						'count'   => $count,
+					] );
+
+				} else if ( Tablelist::isAction( 'empty_metadata', TRUE ) ) {
+
+					// FIXME
+
+				} else if ( Tablelist::isAction( 'remove_thumbnails', TRUE ) ) {
+
+					// FIXME
+				}
+			}
+
 			Scripts::enqueueThickBox();
 			$this->add_sub_screen_option( $sub );
 		}
@@ -327,12 +355,16 @@ class Attachments extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 
+		$pagination['actions'] = [
+			'delete_permanently' => _x( 'Delete Permanently', 'Table Action', 'geditorial-attachments' ),
+			// 'empty_metadata'     => _x( 'Empty Meta-data', 'Table Action', 'geditorial-attachments' ),
+			// 'remove_thumbnails'  => _x( 'Remove Thumbnails', 'Table Action', 'geditorial-attachments' ),
+		];
+
 		$actions = [
 			// FIXME: must add ajax
 			// 'override-name' => HTML::link( _x( 'Override Name', 'Table Action', 'geditorial-attachments' ) ),
 
-			// empty meta
-			// remove thumbnails
 			// rename filenames
 			// move filenames
 		];
