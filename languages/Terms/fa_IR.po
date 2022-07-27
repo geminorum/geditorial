@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:57:46+00:00\n"
-"PO-Revision-Date: 2022-04-23 16:05+0430\n"
+"POT-Creation-Date: 2022-07-27T10:44:07+00:00\n"
+"PO-Revision-Date: 2022-07-27 15:16+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Domain: geditorial-terms\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
 
@@ -289,99 +289,99 @@ msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr "%s را در رده‌بندی‌های انتخاب‌شده پشتیبانی می‌کند."
 
-#: Terms.php:912 Terms.php:1083
+#: Terms.php:921 Terms.php:1092
 msgctxt "Button"
 msgid "Choose"
 msgstr "انتخاب کنید"
 
-#: Terms.php:917 Terms.php:1089
+#: Terms.php:926 Terms.php:1098
 msgctxt "Button"
 msgid "Remove"
 msgstr "پاک کنید"
 
-#: Terms.php:1197
+#: Terms.php:1206
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr "گزارش رده"
 
-#: Terms.php:1204
+#: Terms.php:1213
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr "شمار نوشته‌ها"
 
-#: Terms.php:1215 Terms.php:1234
+#: Terms.php:1224 Terms.php:1243
 msgctxt "Adminbar"
 msgid "Description"
 msgstr "توضیحات"
 
 #. translators: %s: meta title
-#: Terms.php:1246
+#: Terms.php:1255
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr "متا: %s"
 
-#: Terms.php:1308
+#: Terms.php:1317
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr "متا: نامشخص"
 
-#: Terms.php:1330
+#: Terms.php:1339
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr "گزارش رده‌ها"
 
-#: Terms.php:1406
+#: Terms.php:1415
 msgctxt "Header"
 msgid "Term Tools"
 msgstr "ابزارهای رده‌ها"
 
-#: Terms.php:1412
+#: Terms.php:1421
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr "رده‌های بدون رده‌بندی"
 
-#: Terms.php:1432
+#: Terms.php:1441
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Terms.php:1434
+#: Terms.php:1443
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr "رده‌های بدون رده‌بندی را، به رده‌بندی‌های فعال تبدیل می‌کند."
 
-#: Terms.php:1442
+#: Terms.php:1451
 msgctxt "Message"
 msgid "Currently no tool available."
 msgstr "هم‌اکنون هیچ ابزاری در دسترس نیست."
 
-#: Terms.php:1495
+#: Terms.php:1504
 msgctxt "Table Action"
 msgid "Purge Unregistered"
 msgstr "پاک‌سازی ثبت‌نشده‌ها"
 
-#: Terms.php:1509
+#: Terms.php:1518
 msgctxt "Table Column"
 msgid "Raw"
 msgstr "خام"
 
-#: Terms.php:1528
+#: Terms.php:1537
 msgctxt "Header"
 msgid "Overview of Posts with Terms"
 msgstr "مروری بر نوشته‌های رده‌بندی‌شده"
 
 #. translators: %s: term name
-#: Terms.php:1550
+#: Terms.php:1559
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr "تصویر رده برای &ldquo;%s&rdquo;"
 
-#: Terms.php:1614
+#: Terms.php:1623
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr "همگام‌سازی عنوان‌های تصویر"
 
-#: Terms.php:1617
+#: Terms.php:1626
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr "انتقال معرفی به توضیحات"

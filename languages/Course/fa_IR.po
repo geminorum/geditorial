@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Course\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-06-19T19:49:13+00:00\n"
-"PO-Revision-Date: 2022-06-20 00:25+0430\n"
+"POT-Creation-Date: 2022-07-27T10:43:09+00:00\n"
+"PO-Revision-Date: 2022-07-27 15:16+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
 "X-Domain: geditorial-course\n"
 
@@ -220,12 +220,12 @@ msgctxt "Button"
 msgid "Install Default Lesson Statuses"
 msgstr "نصب وضعیت‌های درس پیش‌فرض"
 
-#: Course.php:701
+#: Course.php:706
 msgctxt "Header"
 msgid "Course Tools"
 msgstr "ابزارهای دوره"
 
-#: Course.php:730
+#: Course.php:735
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr "درس رهاشده"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Attachments\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:56:47+00:00\n"
-"PO-Revision-Date: 2022-04-23 20:40+0430\n"
+"POT-Creation-Date: 2022-07-27T10:42:57+00:00\n"
+"PO-Revision-Date: 2022-07-27 15:14+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Domain: geditorial-attachments\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 
@@ -38,7 +38,7 @@ msgstr "به پایاپیوند پیوست‌ها، پس از شناسه، اف�
 #: Attachments.php:55
 msgctxt "Setting Title"
 msgid "Fallback Alt to Title"
-msgstr ""
+msgstr "پس‌نشینی Alt به عنوان"
 
 #: Attachments.php:56
 msgctxt "Setting Description"
@@ -95,43 +95,76 @@ msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr "نمایش فهرست پیوست‌ها"
 
-#: Attachments.php:283
+#: Attachments.php:282
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: %s: attachment parent title
-#: Attachments.php:285
+#: Attachments.php:284
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr "پیوست‌ها برای %s"
 
-#: Attachments.php:346
+#: Attachments.php:359
+msgctxt "Table Action"
+msgid "Delete Permanently"
+msgstr "پاک‌کردن برای همیشه"
+
+#: Attachments.php:360
+msgctxt "Table Action"
+msgid "Empty Meta-data"
+msgstr ""
+
+#: Attachments.php:361
+msgctxt "Table Action"
+msgid "Remove Thumbnails"
+msgstr ""
+
+#: Attachments.php:378
 msgctxt "Table Column"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: Attachments.php:357
+#: Attachments.php:390
 msgctxt "Table Column"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: Attachments.php:369
+#. translators: %s: linked post title
+#: Attachments.php:397
+msgctxt "Search Result Prefix"
+msgid "[Parent]: %s"
+msgstr "[والد]: %s"
+
+#. translators: %s: linked post title
+#: Attachments.php:402
+msgctxt "Search Result Prefix"
+msgid "[Thumb]: %s"
+msgstr "[برگزیده]: %s"
+
+#. translators: %s: linked post title
+#: Attachments.php:407
+msgctxt "Search Result Prefix"
+msgid "[Content]: %s"
+msgstr "[محتوا]: %s"
+
+#: Attachments.php:414
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr "اندازه‌ها"
 
-#: Attachments.php:389
+#: Attachments.php:437
 msgctxt "Table Column"
 msgid "Meta"
 msgstr "متا"
 
-#: Attachments.php:409
+#: Attachments.php:458
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr "مروری بر پیوست‌ها"
 
-#: Attachments.php:410
+#: Attachments.php:459
 msgctxt "Message"
 msgid "No attachments found."
 msgstr "پیوستی پیدا نشد."

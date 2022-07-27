@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Collect\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:56:51+00:00\n"
-"PO-Revision-Date: 2022-04-23 20:50+0430\n"
+"POT-Creation-Date: 2022-07-27T10:43:03+00:00\n"
+"PO-Revision-Date: 2022-07-27 19:01+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Domain: geditorial-collect\n"
 "X-Poedit-Basepath: ../../includes/Modules/Collect\n"
 
@@ -183,67 +183,67 @@ msgid "Post collaborator in the collection"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:525
+#: Collect.php:526
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr "چینش در گردآورده: %s"
 
-#: Collect.php:594
+#: Collect.php:596
 msgctxt "Header"
 msgid "Collect Tools"
 msgstr "ابزارهای گردآوری"
 
-#: Collect.php:597
+#: Collect.php:599
 msgctxt "Tools"
 msgid "From Terms"
 msgstr "از رده‌ها"
 
-#: Collect.php:601
+#: Collect.php:603
 msgctxt "Button"
 msgid "Check Terms"
 msgstr "بررسی رده‌ها"
 
-#: Collect.php:604
+#: Collect.php:606
 msgctxt "Button"
 msgid "Create Collection Posts"
 msgstr "ساختن نوشته‌های گردآورده"
 
-#: Collect.php:607
+#: Collect.php:609
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr "بازپیوست نوشته‌ها"
 
-#: Collect.php:610
+#: Collect.php:612
 msgctxt "Button"
 msgid "Store Orders"
 msgstr "ذخیره چیدمان"
 
-#: Collect.php:613
+#: Collect.php:615
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr "پاک‌کردن رده‌ها"
 
-#: Collect.php:626
+#: Collect.php:628
 msgctxt "Table Column"
 msgid "Paired Collection Post"
 msgstr ""
 
-#: Collect.php:636
+#: Collect.php:638
 msgctxt "Table Column"
 msgid "Same Slug Collection Post"
 msgstr "گردآورده نوشته هم‌نامک"
 
-#: Collect.php:646
+#: Collect.php:648
 msgctxt "Table Column"
 msgid "Count"
 msgstr "شمار"
 
-#: Collect.php:655
+#: Collect.php:657
 msgctxt "Table Empty"
 msgid "No Terms Found!"
 msgstr "رده‌ای پیدا نشد!"
 
-#: Collect.php:659
+#: Collect.php:661
 msgctxt "Message"
 msgid "Check for collection terms and create corresponding collection posts."
 msgstr ""

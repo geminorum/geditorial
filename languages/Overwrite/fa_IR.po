@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Overwrite\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-03-27T17:59:12+00:00\n"
-"PO-Revision-Date: 2022-03-27 22:39+0430\n"
+"POT-Creation-Date: 2022-07-25T07:38:43+00:00\n"
+"PO-Revision-Date: 2022-07-25 23:02+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,74 +11,74 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Overwrite\n"
 "X-Domain: geditorial-overwrite\n"
 
-#: Overwrite.php:30
+#: Overwrite.php:33
 msgctxt "Setting Title"
 msgid "Target"
 msgstr "هدف"
 
-#: Overwrite.php:31
+#: Overwrite.php:34
 msgctxt "Setting Description"
 msgid "Replaces with the translation string on the filter. Skips if empty."
 msgstr ""
 
-#: Overwrite.php:36
+#: Overwrite.php:39
 msgctxt "Setting Title"
 msgid "Translation"
 msgstr "ترجمه"
 
-#: Overwrite.php:37
+#: Overwrite.php:40
 msgctxt "Setting Description"
 msgid ""
 "Checks against the translation string on the filter. Leave empty to disable "
 "checks."
 msgstr ""
 
-#: Overwrite.php:42
+#: Overwrite.php:45
 msgctxt "Setting Title"
 msgid "Source"
 msgstr "منبع"
 
-#: Overwrite.php:43
+#: Overwrite.php:46
 msgctxt "Setting Description"
 msgid ""
 "Checks against the original string on the filter. Leave empty to disable "
 "checks"
 msgstr ""
 
-#: Overwrite.php:49
+#: Overwrite.php:52
 msgctxt "Setting Title"
 msgid "Context"
 msgstr "زمینه"
 
-#: Overwrite.php:50
+#: Overwrite.php:53
 msgctxt "Setting Description"
 msgid ""
 "Checks against the context of the string on the filter. Leave empty to "
 "disable checks"
 msgstr ""
 
-#: Overwrite.php:57
+#: Overwrite.php:60
 msgctxt "Setting Title"
 msgid "Domain"
 msgstr "دامنه"
 
-#: Overwrite.php:58
+#: Overwrite.php:61
 msgctxt "Setting Description"
 msgid ""
 "Checks against the domain of the string on the filter. Leave empty to "
 "disable checks"
 msgstr ""
 
-#: Overwrite.php:70
+#: Overwrite.php:73
 msgctxt "Setting Title"
 msgid "Back-end Strings"
 msgstr "رشته‌های پشت سایت"
 
-#: Overwrite.php:78
+#: Overwrite.php:81
 msgctxt "Setting Title"
 msgid "Front-end Strings"
 msgstr "رشته‌های روی سایت"

@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Magazine 3.23.2\n"
+"Project-Id-Version: gEditorial Magazine 3.23.3\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-19T19:49:45+00:00\n"
+"POT-Creation-Date: 2022-07-27T16:35:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
@@ -164,24 +164,24 @@ msgid "Post total pages on issue (printed)"
 msgstr ""
 
 #. translators: %s: order
-#: Magazine.php:569
+#: Magazine.php:573
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr ""
 
 #. translators: %s: page
-#: Magazine.php:571
+#: Magazine.php:575
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr ""
 
 #. translators: %s: total count
-#: Magazine.php:573
+#: Magazine.php:577
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr ""
 
-#: Magazine.php:657
+#: Magazine.php:661
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr ""

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial WC Units\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:58:05+00:00\n"
-"PO-Revision-Date: 2022-04-23 15:32+0430\n"
+"POT-Creation-Date: 2022-07-26T11:14:38+00:00\n"
+"PO-Revision-Date: 2022-07-26 16:32+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcUnits\n"
 "X-Domain: geditorial-wc-units\n"
 
@@ -58,7 +58,7 @@ msgstr ""
 #: WcUnits.php:61
 msgctxt "Setting Title"
 msgid "Weight Empty Fallback"
-msgstr ""
+msgstr "پس‌نشینی برای وزن‌های خالی"
 
 #: WcUnits.php:62
 msgctxt "Setting Description"
@@ -143,7 +143,7 @@ msgstr "%s اونس"
 #: WcUnits.php:122
 msgctxt "Setting Title"
 msgid "Length Empty Fallback"
-msgstr ""
+msgstr "پس‌نشینی برای طول‌های خالی"
 
 #: WcUnits.php:123
 msgctxt "Setting Description"
@@ -155,7 +155,7 @@ msgstr ""
 #: WcUnits.php:128
 msgctxt "Setting Title"
 msgid "Width Empty Fallback"
-msgstr ""
+msgstr "پس‌نشینی برای عرض‌های خالی"
 
 #: WcUnits.php:129
 msgctxt "Setting Description"
@@ -167,7 +167,7 @@ msgstr ""
 #: WcUnits.php:134
 msgctxt "Setting Title"
 msgid "Height Empty Fallback"
-msgstr ""
+msgstr "پس‌نشینی برای ارتفاع‌های خالی"
 
 #: WcUnits.php:135
 msgctxt "Setting Description"

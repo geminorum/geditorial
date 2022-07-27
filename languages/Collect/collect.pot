@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Collect 3.23.2\n"
+"Project-Id-Version: gEditorial Collect 3.23.3\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-19T19:49:05+00:00\n"
+"POT-Creation-Date: 2022-07-27T16:34:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Collect\n"
@@ -178,67 +178,67 @@ msgid "Post collaborator in the collection"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:525
+#: Collect.php:526
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr ""
 
-#: Collect.php:595
+#: Collect.php:596
 msgctxt "Header"
 msgid "Collect Tools"
 msgstr ""
 
-#: Collect.php:598
+#: Collect.php:599
 msgctxt "Tools"
 msgid "From Terms"
 msgstr ""
 
-#: Collect.php:602
+#: Collect.php:603
 msgctxt "Button"
 msgid "Check Terms"
 msgstr ""
 
-#: Collect.php:605
+#: Collect.php:606
 msgctxt "Button"
 msgid "Create Collection Posts"
 msgstr ""
 
-#: Collect.php:608
+#: Collect.php:609
 msgctxt "Button"
 msgid "Re-Connect Posts"
 msgstr ""
 
-#: Collect.php:611
+#: Collect.php:612
 msgctxt "Button"
 msgid "Store Orders"
 msgstr ""
 
-#: Collect.php:614
+#: Collect.php:615
 msgctxt "Button"
 msgid "Delete Terms"
 msgstr ""
 
-#: Collect.php:627
+#: Collect.php:628
 msgctxt "Table Column"
 msgid "Paired Collection Post"
 msgstr ""
 
-#: Collect.php:637
+#: Collect.php:638
 msgctxt "Table Column"
 msgid "Same Slug Collection Post"
 msgstr ""
 
-#: Collect.php:647
+#: Collect.php:648
 msgctxt "Table Column"
 msgid "Count"
 msgstr ""
 
-#: Collect.php:656
+#: Collect.php:657
 msgctxt "Table Empty"
 msgid "No Terms Found!"
 msgstr ""
 
-#: Collect.php:660
+#: Collect.php:661
 msgctxt "Message"
 msgid "Check for collection terms and create corresponding collection posts."
 msgstr ""

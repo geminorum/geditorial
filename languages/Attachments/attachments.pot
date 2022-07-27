@@ -1,13 +1,13 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Attachments 3.23.2\n"
+"Project-Id-Version: gEditorial Attachments 3.23.3\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-19T19:48:57+00:00\n"
+"POT-Creation-Date: 2022-07-27T16:34:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
@@ -102,32 +102,55 @@ msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr ""
 
-#: Attachments.php:346
+#: Attachments.php:359
+msgctxt "Table Action"
+msgid "Delete Permanently"
+msgstr ""
+
+#: Attachments.php:378
 msgctxt "Table Column"
 msgid "Custom"
 msgstr ""
 
-#: Attachments.php:357
+#: Attachments.php:390
 msgctxt "Table Column"
 msgid "Search"
 msgstr ""
 
-#: Attachments.php:369
+#. translators: %s: linked post title
+#: Attachments.php:397
+msgctxt "Search Result Prefix"
+msgid "[Parent]: %s"
+msgstr ""
+
+#. translators: %s: linked post title
+#: Attachments.php:402
+msgctxt "Search Result Prefix"
+msgid "[Thumb]: %s"
+msgstr ""
+
+#. translators: %s: linked post title
+#: Attachments.php:407
+msgctxt "Search Result Prefix"
+msgid "[Content]: %s"
+msgstr ""
+
+#: Attachments.php:414
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr ""
 
-#: Attachments.php:392
+#: Attachments.php:437
 msgctxt "Table Column"
 msgid "Meta"
 msgstr ""
 
-#: Attachments.php:413
+#: Attachments.php:458
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr ""
 
-#: Attachments.php:414
+#: Attachments.php:459
 msgctxt "Message"
 msgid "No attachments found."
 msgstr ""

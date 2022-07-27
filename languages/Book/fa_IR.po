@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Book\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-06-19T19:49:01+00:00\n"
-"PO-Revision-Date: 2022-06-20 00:23+0430\n"
+"POT-Creation-Date: 2022-07-27T10:43:00+00:00\n"
+"PO-Revision-Date: 2022-07-27 15:15+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Domain: geditorial-book\n"
 "X-Poedit-Basepath: ../../includes/Modules/Book\n"
 
@@ -555,88 +555,88 @@ msgctxt "Button"
 msgid "Install Default Sizes"
 msgstr "نصب اندازه‌های پیش‌فرض"
 
-#: Book.php:751
+#: Book.php:753
 msgctxt "Dashboard Widget Title"
 msgid "Your Publications Summary"
 msgstr "گزارش نشریات شما"
 
-#: Book.php:752
+#: Book.php:754
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Publications Summary"
 msgstr "گزارش نشریات تحریریه"
 
 #. translators: %s: isbn placeholder
-#: Book.php:830
+#: Book.php:832
 msgctxt "Display"
 msgid "ISBN: %s"
 msgstr "شابک: %s"
 
 #. translators: %s: edition placeholder
-#: Book.php:832
+#: Book.php:834
 msgctxt "Display"
 msgid "%s Edition"
 msgstr "ویراست %s"
 
 #. translators: %s: print placeholder
-#: Book.php:834
+#: Book.php:836
 msgctxt "Display"
 msgid "%s Print"
 msgstr "چاپ %s"
 
 #. translators: %s: pages count placeholder
-#: Book.php:836
+#: Book.php:838
 msgctxt "Display"
 msgid "%s Pages"
 msgstr "%s صفحه"
 
 #. translators: %s: volumes count placeholder
-#: Book.php:838
+#: Book.php:840
 msgctxt "Display"
 msgid "%s Volumes"
 msgstr "%s جلد"
 
-#: Book.php:894
+#: Book.php:896
 msgctxt "Title Attr"
 msgid "ISBN Link to this publication"
 msgstr "پیوند شابک به این نشر"
 
-#: Book.php:897
+#: Book.php:899
 msgctxt "Action"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Book.php:1171
+#: Book.php:1178
 msgctxt "Header"
 msgid "Publication Tools"
 msgstr "ابزارهای نشر"
 
-#: Book.php:1214
+#: Book.php:1221
 msgctxt "Table Column"
 msgid "Import Meta"
 msgstr "متای درون‌ریزی"
 
-#: Book.php:1227
+#: Book.php:1234
 msgctxt "Table Column"
 msgid "Import Related"
 msgstr "ارتباط درون‌ریزی"
 
-#: Book.php:1234
+#: Book.php:1241
 msgctxt "Tools"
 msgid "By ID"
 msgstr "با شناسه"
 
-#: Book.php:1238
+#: Book.php:1245
 msgctxt "Tools"
 msgid "By Title"
 msgstr "با عنوان"
 
-#: Book.php:1246
+#: Book.php:1253
 msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr "مروری بر اطلاعات فراداده درباره نشرهای مرتبط"
 
 #. translators: %s: total pages
-#: Book.php:1281
+#: Book.php:1288
 msgctxt "Noop"
 msgid "%s Page"
 msgid_plural "%s Pages"
@@ -644,7 +644,7 @@ msgstr[0] "%s صفحه"
 msgstr[1] "%s صفحه"
 
 #. translators: %s: total volumes
-#: Book.php:1284
+#: Book.php:1291
 msgctxt "Noop"
 msgid "%s Volume"
 msgid_plural "%s Volumes"
@@ -652,29 +652,29 @@ msgstr[0] "%s جلد"
 msgstr[1] "%s جلد"
 
 #. translators: %s: total discs
-#: Book.php:1287
+#: Book.php:1294
 msgctxt "Noop"
 msgid "%s Disc"
 msgid_plural "%s Discs"
 msgstr[0] "%s دیسک"
 msgstr[1] "%s دیسک"
 
-#: Book.php:1316
+#: Book.php:1323
 msgctxt "Import Field"
 msgid "Book: Publication ID"
 msgstr "کتاب: شناسه نشر مرتبط"
 
-#: Book.php:1317
+#: Book.php:1324
 msgctxt "Import Field"
 msgid "Book: Publication Title"
 msgstr "کتاب: عنوان نشر مرتبط"
 
-#: Book.php:1318
+#: Book.php:1325
 msgctxt "Import Field"
 msgid "Book: Publication Ref (P2P)"
 msgstr "کتاب: ارجاع نشر مرتبط"
 
-#: Book.php:1319
+#: Book.php:1326
 msgctxt "Import Field"
 msgid "Book: Publication Desc (P2P)"
 msgstr "کتاب: توضیحات نشر مرتبط"
