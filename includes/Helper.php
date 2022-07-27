@@ -288,6 +288,9 @@ class Helper extends Main
 		if ( ! $link )
 			return HTML::escape( $title ).$after;
 
+		if ( 'posttype' === $title_attr )
+			$title_attr = PostType::object( $post->post_type )->label;
+
 		$edit = current_user_can( 'edit_post', $post->ID );
 
 		if ( 'edit' == $link && ! $edit )
