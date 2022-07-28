@@ -429,11 +429,11 @@ class Attachments extends gEditorial\Module
 						$sizes['FILESIZE'] = File::formatSize( $meta['filesize'] );
 
 					if ( wp_attachment_is( 'image', $row->ID ) )
-						$sizes['ORIGINAL'] = sprintf( '%s&times;%s', $meta['width'], $meta['height'] );
+						$sizes['ORIGINAL'] = sprintf( '<span title="%s">%s&times;%s</span>', $meta['file'], $meta['width'], $meta['height'] );
 
 					if ( ! empty( $meta['sizes'] ) )
 						foreach ( $meta['sizes'] as $size_name => $size_args )
-							$sizes[$size_name] = sprintf( '%s&times;%s', $size_args['width'], $size_args['height'] );
+							$sizes[$size_name] = sprintf( '<span title="%s">%s&times;%s</span>', $size_args['file'], $size_args['width'], $size_args['height'] );
 
 					return HTML::tableCode( $sizes, TRUE );
 				},
