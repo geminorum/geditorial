@@ -953,7 +953,7 @@ class Taxonomy extends Core\Base
 
 	public static function getTermTitle( $term, $fallback = NULL, $filter = TRUE )
 	{
-		if ( ! $term = self::getPost( $term ) )
+		if ( ! $term = self::getTerm( $term ) )
 			return '';
 
 		$title = $filter
