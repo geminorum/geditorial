@@ -416,7 +416,7 @@ class Attachments extends gEditorial\Module
 						$list[] = sprintf( _x( '[Parent]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $row->post_parent, 'view', TRUE, 'posttype' ) );
 
-					foreach ( Media::isThumbnail( $row->ID ) as $post_id )
+					foreach ( PostType::isThumbnail( $row->ID ) as $post_id )
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
