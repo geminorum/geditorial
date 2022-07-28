@@ -14,6 +14,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Strings;
 
 class Attachments extends gEditorial\Module
@@ -401,6 +402,11 @@ class Attachments extends gEditorial\Module
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
+
+					foreach ( Taxonomy::isThumbnail( $row->ID ) as $term_id )
+						/* translators: %s: linked term title */
+						$list[] = sprintf( _x( '[Term]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							Helper::getTermTitleRow( $term_id, 'view', TRUE ) );
 
 					foreach ( $this->search_attachment( $row->ID ) as $post_id )
 						/* translators: %s: linked post title */
