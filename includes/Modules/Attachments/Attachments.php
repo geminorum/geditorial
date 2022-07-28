@@ -332,11 +332,29 @@ class Attachments extends gEditorial\Module
 
 				} else if ( Tablelist::isAction( 'empty_metadata', TRUE ) ) {
 
-					// FIXME
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $post_id )
+						if ( Media::emptyAttachmentImageMeta( $post_id ) )
+							$count++;
+
+					WordPress::redirectReferer( [
+						'message' => 'emptied',
+						'count'   => $count,
+					] );
 
 				} else if ( Tablelist::isAction( 'remove_thumbnails', TRUE ) ) {
 
-					// FIXME
+					$count = 0;
+
+					foreach ( $_POST['_cb'] as $post_id )
+						if ( Media::deleteAttachmentThumbnails( $post_id ) )
+							$count++;
+
+					WordPress::redirectReferer( [
+						'message' => 'deleted',
+						'count'   => $count,
+					] );
 				}
 			}
 
@@ -358,8 +376,8 @@ class Attachments extends gEditorial\Module
 
 		$pagination['actions'] = [
 			'delete_permanently' => _x( 'Delete Permanently', 'Table Action', 'geditorial-attachments' ),
-			// 'empty_metadata'     => _x( 'Empty Meta-data', 'Table Action', 'geditorial-attachments' ),
-			// 'remove_thumbnails'  => _x( 'Remove Thumbnails', 'Table Action', 'geditorial-attachments' ),
+			'empty_metadata'     => _x( 'Empty Meta-data', 'Table Action', 'geditorial-attachments' ),
+			'remove_thumbnails'  => _x( 'Remove Thumbnails', 'Table Action', 'geditorial-attachments' ),
 		];
 
 		$actions = [
