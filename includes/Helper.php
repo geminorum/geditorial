@@ -330,6 +330,59 @@ class Helper extends Main
 		], HTML::escape( $title ) ).$after;
 	}
 
+	public static function getTermTitleRow( $term, $link = 'edit', $taxonomy = FALSE, $title_attr = NULL )
+	{
+		if ( ! $term = Taxonomy::getTerm( $term ) )
+			return Plugin::na( FALSE );
+
+		$title = Taxonomy::getTermTitle( $term );
+		$after = '';
+
+		if ( $taxonomy )
+			$after = ' <small class="-taxonomy" title="'.HTML::escape( $term->taxonomy ).'">('.Taxonomy::object( $term->taxonomy )->label.')</small>';
+
+		if ( ! $link )
+			return HTML::escape( $title ).$after;
+
+		$edit = current_user_can( 'edit_term', $term->term_id );
+
+		if ( 'edit' == $link && ! $edit )
+			$link = 'view';
+
+		if ( 'edit' == $link )
+			return HTML::tag( 'a', [
+				'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+				'class'  => '-link -row-link -row-link-edit',
+				'target' => '_blank',
+				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
+			], HTML::escape( $title ) ).$after;
+
+		if ( 'view' == $link && ! $edit && ! is_taxonomy_viewable( $term->taxonomy ) )
+			return HTML::tag( 'span', [
+				'class' => '-row-span',
+				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
+				// 'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
+			], HTML::escape( $title ) ).$after;
+
+		if ( 'view' == $link )
+			return HTML::tag( 'a', [
+				'href'   => WordPress::getTermShortLink( $term->term_id ),
+				'class'  => '-link -row-link -row-link-view',
+				'target' => '_blank',
+				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
+			], HTML::escape( $title ) ).$after;
+
+		return HTML::tag( 'a', [
+			'href'   => $link,
+			'class'  => '-link -row-link -row-link-custom',
+			'target' => '_blank',
+			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
+			'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
+		], HTML::escape( $title ) ).$after;
+	}
+
 	public static function getExtension( $mime_type, $extensions )
 	{
 		if ( FALSE === ( $key = array_search( $mime_type, $extensions ) ) )
