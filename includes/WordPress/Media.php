@@ -337,28 +337,6 @@ class Media extends Core\Base
 		) );
 	}
 
-	public static function isThumbnail( $attachment_id )
-	{
-		if ( ! $attachment_id )
-			return FALSE;
-
-		$query = new \WP_Query( [
-			'post_type'   => 'any',
-			'post_status' => 'any',
-			'orderby'     => 'none',
-			'fields'      => 'ids',
-			'meta_query'  => [ [
-				'value'   => $attachment_id,
-				'compare' => 'LIKE',
-				'key'     => '_thumbnail_id',
-			] ],
-			'suppress_filters' => TRUE,
-			'posts_per_page'   => -1,
-		] );
-
-		return $query->have_posts() ? $query->posts : [];
-	}
-
 	public static function isCustom( $attachment_id )
 	{
 		if ( ! $attachment_id )
@@ -556,6 +534,85 @@ class Media extends Core\Base
 			$mime = 'directory';
 
 		return $mime;
+	}
+
+	// @REF: `wp_delete_attachment_files()
+	public static function deleteAttachmentThumbnails( $attachment_id )
+	{
+		if ( ! $attachment_id )
+			return FALSE;
+
+		$attachment = get_post( $attachment_id );
+
+		if ( 'attachment' !== $attachment->post_type )
+			return FALSE;
+
+		$deleted      = TRUE;
+		$uploads      = self::upload();
+		$metadata     = wp_get_attachment_metadata( $attachment_id );
+		$backup_sizes = get_post_meta( $attachment->ID, '_wp_attachment_backup_sizes', TRUE );
+		$file         = get_attached_file( $attachment_id );
+
+		// removes intermediate and backup images if there are any
+		if ( isset( $metadata['sizes'] ) && is_array( $metadata['sizes'] ) ) {
+
+			$intermediate_dir = path_join( $uploads['basedir'], dirname( $file ) );
+
+			foreach ( $metadata['sizes'] as $size => $sizeinfo ) {
+
+				$intermediate_file = str_replace( wp_basename( $file ), $sizeinfo['file'], $file );
+
+				if ( ! empty( $intermediate_file ) ) {
+
+					$intermediate_file = path_join( $uploads['basedir'], $intermediate_file );
+
+					if ( ! wp_delete_file_from_directory( $intermediate_file, $intermediate_dir ) )
+						$deleted = FALSE;
+				}
+			}
+
+			unset( $metadata['sizes'] );
+			wp_update_attachment_metadata( $attachment_id, $metadata );
+		}
+
+		if ( is_array( $backup_sizes ) ) {
+
+			$del_dir = path_join( $uploads['basedir'], dirname( $metadata['file'] ) );
+
+			foreach ( $backup_sizes as $size ) {
+
+				$del_file = path_join( dirname( $metadata['file'] ), $size['file'] );
+
+				if ( ! empty( $del_file ) ) {
+
+					$del_file = path_join( $uploads['basedir'], $del_file );
+
+					if ( ! wp_delete_file_from_directory( $del_file, $del_dir ) )
+						$deleted = FALSE;
+				}
+			}
+
+			delete_post_meta( $attachment->ID, '_wp_attachment_backup_sizes' );
+		}
+
+		if ( is_multisite() && is_string( $file ) && ! empty( $file ) )
+			clean_dirsize_cache( $file );
+
+		clean_post_cache( $attachment );
+
+		return $deleted;
+	}
+
+	public static function emptyAttachmentImageMeta( $attachment_id )
+	{
+		if ( ! $attachment_id )
+			return FALSE;
+
+		$metadata = wp_get_attachment_metadata( $attachment_id );
+
+		unset( $metadata['image_meta'] );
+
+		return wp_update_attachment_metadata( $attachment_id, $metadata );
 	}
 
 	public static function disableThumbnailGeneration()

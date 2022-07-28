@@ -908,6 +908,26 @@ class Taxonomy extends Core\Base
 		return array_keys( wp_filter_object_list( $gEditorialTaxonomyFeatures, $features, $operator ) );
 	}
 
+	public static function isThumbnail( $attachment_id, $metakey = 'image' )
+	{
+		if ( ! $attachment_id )
+			return FALSE;
+
+		$query = new \WP_Term_Query( [
+			// 'taxonomy'   => (array) $taxonomy,
+			'orderby'     => 'none',
+			'meta_query'  => [ [
+				'value'   => $attachment_id,
+				'key'     => $metakey,
+				'compare' => '=',
+			] ],
+			'fields'     => 'ids',
+			'hide_empty' => FALSE,
+		] );
+
+		return empty( $query->terms ) ? [] : $query->terms;
+	}
+
 	// must add `add_thickbox()` for thickbox
 	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage( $term_id, $size = 'thumbnail', $link = TRUE, $metakey = 'image' )
@@ -929,6 +949,27 @@ class Taxonomy extends Core\Base
 	public static function getArchiveLink( $taxonomy )
 	{
 		return apply_filters( 'geditorial_taxonomy_archive_link', FALSE, $taxonomy );
+	}
+
+	public static function getTermTitle( $term, $fallback = NULL, $filter = TRUE )
+	{
+		if ( ! $term = self::getPost( $term ) )
+			return '';
+
+		$title = $filter
+			? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
+			: $term->name;
+
+		if ( ! empty( $title ) )
+			return $title;
+
+		if ( FALSE === $fallback )
+			return '';
+
+		if ( is_null( $fallback ) )
+			return __( '(Untitled)' );
+
+		return $fallback;
 	}
 
 	public static function disableTermCounting()

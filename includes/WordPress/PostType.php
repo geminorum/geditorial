@@ -377,6 +377,28 @@ class PostType extends Core\Base
 		return array();
 	}
 
+	public static function isThumbnail( $attachment_id, $metakey = '_thumbnail_id' )
+	{
+		if ( ! $attachment_id )
+			return FALSE;
+
+		$query = new \WP_Query( [
+			'post_type'   => 'any',
+			'post_status' => 'any',
+			'orderby'     => 'none',
+			'fields'      => 'ids',
+			'meta_query'  => [ [
+				'value'   => $attachment_id,
+				'key'     => $metakey,
+				'compare' => '=',
+			] ],
+			'suppress_filters' => TRUE,
+			'posts_per_page'   => -1,
+		] );
+
+		return $query->have_posts() ? $query->posts : [];
+	}
+
 	// must add `add_thickbox()` for thickbox
 	// @SEE: `Scripts::enqueueThickBox()`
 	// TODO: DROP the filter @since WP 5.9.0
