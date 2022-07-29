@@ -48,6 +48,11 @@ class WcWidgets extends gEditorial\Module
 	{
 		$list = [
 			[
+				'action'   => 'woocommerce_thankyou',
+				'title'    => _x( 'Thank-you (Before Order Details)', 'Action Hook', 'geditorial-wc-widgets' ),
+				'priority' => 10,
+			],
+			[
 				'action'   => 'woocommerce_before_checkout_form',
 				'title'    => _x( 'Before Checkout Form', 'Action Hook', 'geditorial-wc-widgets' ),
 				'priority' => 8,

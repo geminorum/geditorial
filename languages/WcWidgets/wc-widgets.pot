@@ -85,12 +85,62 @@ msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
 msgstr ""
 
-#: Widgets/WCMessage.php:21
+#: Widgets/WCMessage.php:18
 msgctxt "Widget Title"
 msgid "Editorial: WooCommerce Message"
 msgstr ""
 
-#: Widgets/WCMessage.php:22
+#: Widgets/WCMessage.php:19
 msgctxt "Widget Description"
 msgid "Displays a custom message in WooCommerce mark-up."
+msgstr ""
+
+#: Widgets/WCMessage.php:56
+msgctxt "Widget: WCMessage"
+msgid "Notice"
+msgstr ""
+
+#: Widgets/WCMessage.php:57
+msgctxt "Widget: WCMessage"
+msgid "Success"
+msgstr ""
+
+#: Widgets/WCMessage.php:58
+msgctxt "Widget: WCMessage"
+msgid "Error"
+msgstr ""
+
+#: Widgets/WCMessage.php:71
+msgctxt "Widget: WCMessage"
+msgid "Notice Type:"
+msgstr ""
+
+#: Widgets/WCMessage.php:72
+msgctxt "Widget: WCMessage"
+msgid "With a Dismis Button"
+msgstr ""
+
+#: Widgets/WCMessage.php:73
+msgctxt "Widget: WCMessage"
+msgid "Process Shortcodes"
+msgstr ""
+
+#: Widgets/WCMessage.php:74
+msgctxt "Widget: WCMessage"
+msgid "Process Filters"
+msgstr ""
+
+#: Widgets/WCMessage.php:75
+msgctxt "Widget: WCMessage"
+msgid "Process Filters (Legacy)"
+msgstr ""
+
+#: Widgets/WCMessage.php:76
+msgctxt "Widget: WCMessage"
+msgid "Automatic Paragraphs"
+msgstr ""
+
+#: Widgets/WCMessage.php:77
+msgctxt "Widget: WCMessage"
+msgid "Bypass Caching"
 msgstr ""
