@@ -243,32 +243,32 @@ msgctxt "Message"
 msgid "Check for collection terms and create corresponding collection posts."
 msgstr ""
 
-#: Widgets/CollectionPoster.php:20
+#: Widgets/CollectionPoster.php:17
 msgctxt "Widget Title"
 msgid "Editorial: Collection Poster"
 msgstr ""
 
-#: Widgets/CollectionPoster.php:21
+#: Widgets/CollectionPoster.php:18
 msgctxt "Widget Description"
 msgid "Displays latest, selected, connected or current collection poster."
 msgstr ""
 
-#: Widgets/CollectionPoster.php:98
+#: Widgets/CollectionPoster.php:95
 msgctxt "Widget: Collection Poster"
 msgid "The Collection:"
 msgstr ""
 
-#: Widgets/CollectionPoster.php:101
+#: Widgets/CollectionPoster.php:98
 msgctxt "Widget: Collection Poster"
 msgid "Always the latest collection"
 msgstr ""
 
-#: Widgets/CollectionPoster.php:102
+#: Widgets/CollectionPoster.php:99
 msgctxt "Widget: Collection Poster"
 msgid "Display the Number Line"
 msgstr ""
 
-#: Widgets/CollectionPoster.php:103
+#: Widgets/CollectionPoster.php:100
 msgctxt "Widget: Collection Poster"
 msgid "Link to the collection"
 msgstr ""

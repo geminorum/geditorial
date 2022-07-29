@@ -256,40 +256,40 @@ msgctxt "Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""
 
-#: Widgets/Currents.php:20
+#: Widgets/Currents.php:17
 msgctxt "Widget Title"
 msgid "Editorial: Currents"
 msgstr ""
 
-#: Widgets/Currents.php:21
+#: Widgets/Currents.php:18
 msgctxt "Widget Description"
 msgid "Displays ongoing events."
+msgstr ""
+
+#: Widgets/Currents.php:92
+#: Widgets/Poster.php:92
+msgctxt "Widget: Event Poster"
+msgid "The Event:"
 msgstr ""
 
 #: Widgets/Currents.php:95
 #: Widgets/Poster.php:95
 msgctxt "Widget: Event Poster"
-msgid "The Event:"
-msgstr ""
-
-#: Widgets/Currents.php:98
-#: Widgets/Poster.php:98
-msgctxt "Widget: Event Poster"
 msgid "Always the latest event"
 msgstr ""
 
-#: Widgets/Currents.php:99
-#: Widgets/Poster.php:99
+#: Widgets/Currents.php:96
+#: Widgets/Poster.php:96
 msgctxt "Widget: Event Poster"
 msgid "Link to the event"
 msgstr ""
 
-#: Widgets/Poster.php:20
+#: Widgets/Poster.php:17
 msgctxt "Widget Title"
 msgid "Editorial: Event Poster"
 msgstr ""
 
-#: Widgets/Poster.php:21
+#: Widgets/Poster.php:18
 msgctxt "Widget Description"
 msgid "Displays selected, connected or current event poster."
 msgstr ""

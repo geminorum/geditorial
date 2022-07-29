@@ -72,7 +72,19 @@ class WcWidgets extends gEditorial\Module
 				'title'    => _x( 'Before Edit Account Address Form', 'Action Hook', 'geditorial-wc-widgets' ),
 				'priority' => 8,
 			],
+			[
+				'action'   => 'woocommerce_account_dashboard',
+				'title'    => _x( 'Account Dashboard', 'Action Hook', 'geditorial-wc-widgets' ),
+				'priority' => 10,
+			],
 		];
+
+		if ( gEditorial()->enabled( 'wc_dashboard' ) )
+			$list[] = [
+				'action'   => 'geditorial_wc_dashboard_account_purchased_empty',
+				'title'    => _x( 'Editorial: Dashboard Purchased Empty', 'Action Hook', 'geditorial-wc-widgets' ),
+				'priority' => 10,
+			];
 
 		if ( WooCommerce::isActiveWoodMart() ) {
 			$list[] = [

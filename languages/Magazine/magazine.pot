@@ -186,32 +186,32 @@ msgctxt "Header"
 msgid "Magazine Tools"
 msgstr ""
 
-#: Widgets/IssueCover.php:20
+#: Widgets/IssueCover.php:17
 msgctxt "Widget Title"
 msgid "Editorial: Issue Cover"
 msgstr ""
 
-#: Widgets/IssueCover.php:21
+#: Widgets/IssueCover.php:18
 msgctxt "Widget Description"
 msgid "Displays latest, selected, connected or current issue cover."
 msgstr ""
 
-#: Widgets/IssueCover.php:99
+#: Widgets/IssueCover.php:96
 msgctxt "Widget: Issue Cover"
 msgid "The Issue:"
 msgstr ""
 
-#: Widgets/IssueCover.php:102
+#: Widgets/IssueCover.php:99
 msgctxt "Widget: Issue Cover"
 msgid "Always the latest issue"
 msgstr ""
 
-#: Widgets/IssueCover.php:103
+#: Widgets/IssueCover.php:100
 msgctxt "Widget: Issue Cover"
 msgid "Display the Number Line"
 msgstr ""
 
-#: Widgets/IssueCover.php:104
+#: Widgets/IssueCover.php:101
 msgctxt "Widget: Issue Cover"
 msgid "Link to the issue"
 msgstr ""
