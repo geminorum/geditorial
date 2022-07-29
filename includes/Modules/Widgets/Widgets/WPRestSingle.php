@@ -19,11 +19,8 @@ class WPRestSingle extends gEditorial\Widget
 	public static function setup()
 	{
 		return [
-			'module' => 'widgets',
-			'name'   => 'wprest_single',
-			'class'  => 'wprest-single',
-			'title'  => _x( 'Editorial: WP-REST Single', 'Widget Title', 'geditorial-widgets' ),
-			'desc'   => _x( 'Displays single post from a public WordPress site.', 'Widget Description', 'geditorial-widgets' ),
+			'title' => _x( 'Editorial: WP-REST Single', 'Widget Title', 'geditorial-widgets' ),
+			'desc'  => _x( 'Displays single post from a public WordPress site.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}
 

@@ -14,11 +14,8 @@ class PublicationCover extends gEditorial\Widget
 	public static function setup()
 	{
 		return [
-			'module' => 'book',
-			'name'   => 'book_publication_cover',
-			'class'  => 'book-publication-cover',
-			'title'  => _x( 'Editorial: Publication Cover', 'Widget Title', 'geditorial-book' ),
-			'desc'   => _x( 'Displays selected, connected or current publication cover.', 'Widget Description', 'geditorial-book' ),
+			'title' => _x( 'Editorial: Publication Cover', 'Widget Title', 'geditorial-book' ),
+			'desc'  => _x( 'Displays selected, connected or current publication cover.', 'Widget Description', 'geditorial-book' ),
 		];
 	}
 

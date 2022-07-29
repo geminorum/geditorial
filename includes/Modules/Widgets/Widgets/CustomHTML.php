@@ -13,11 +13,8 @@ class CustomHTML extends gEditorial\Widget
 	public static function setup()
 	{
 		return [
-			'module' => 'widgets',
-			'name'   => 'custom_html',
-			'class'  => 'custom-html',
-			'title'  => _x( 'Editorial: Custom HTML', 'Widget Title', 'geditorial-widgets' ),
-			'desc'   => _x( 'Displays arbitrary HTML code with support for shortcodes and embeds.', 'Widget Description', 'geditorial-widgets' ),
+			'title' => _x( 'Editorial: Custom HTML', 'Widget Title', 'geditorial-widgets' ),
+			'desc'  => _x( 'Displays arbitrary HTML code with support for shortcodes and embeds.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}
 

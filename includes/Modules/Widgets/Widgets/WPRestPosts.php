@@ -19,11 +19,8 @@ class WPRestPosts extends gEditorial\Widget
 	public static function setup()
 	{
 		return [
-			'module' => 'widgets',
-			'name'   => 'wprest_posts',
-			'class'  => 'wprest-posts',
-			'title'  => _x( 'Editorial: WP-REST Posts', 'Widget Title', 'geditorial-widgets' ),
-			'desc'   => _x( 'Displays list of posts from a public WordPress site.', 'Widget Description', 'geditorial-widgets' ),
+			'title' => _x( 'Editorial: WP-REST Posts', 'Widget Title', 'geditorial-widgets' ),
+			'desc'  => _x( 'Displays list of posts from a public WordPress site.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}
 

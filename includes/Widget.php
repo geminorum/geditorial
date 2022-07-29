@@ -33,8 +33,8 @@ class Widget extends \WP_Widget
 	public function __construct()
 	{
 		$args = Template::atts( [
-			'module'  => FALSE,
-			'name'    => FALSE,
+			'module' => static::MODULE,
+			'name'   => static::WIDGET,
 			'class'   => '',
 			'title'   => '',
 			'desc'    => '',
@@ -44,6 +44,9 @@ class Widget extends \WP_Widget
 
 		if ( ! $args['name'] || ! $args['module'] )
 			return FALSE;
+
+		if ( empty( $args['class'] ) )
+			$args['class'] = str_replace( '_', '-', $args['name'] );
 
 		parent::__construct( static::BASE.'_'.$args['name'], $args['title'], [
 			'description' => $args['desc'],

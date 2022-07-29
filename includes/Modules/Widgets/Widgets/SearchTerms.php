@@ -15,11 +15,8 @@ class SearchTerms extends gEditorial\Widget
 	public static function setup()
 	{
 		return [
-			'module' => 'widgets',
-			'name'   => 'search_terms',
-			'class'  => 'search-terms',
-			'title'  => _x( 'Editorial: Search Terms', 'Widget Title', 'geditorial-widgets' ),
-			'desc'   => _x( 'Displays the results of current search criteria on selected taxonomies.', 'Widget Description', 'geditorial-widgets' ),
+			'title' => _x( 'Editorial: Search Terms', 'Widget Title', 'geditorial-widgets' ),
+			'desc'  => _x( 'Displays the results of current search criteria on selected taxonomies.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}
 
