@@ -6,6 +6,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -226,12 +227,15 @@ class Template extends Main
 		return FALSE;
 	}
 
-	public static function getPostImageSrc( $size = NULL, $post_id = NULL )
+	public static function getPostImageSrc( $thumbnail_id = NULL, $size = NULL, $post_id = NULL )
 	{
 		if ( ! $post = PostType::getPost( $post_id ) )
 			return FALSE;
 
-		if ( ! $thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', TRUE ) )
+		if ( is_null( $thumbnail_id ) )
+			$thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', TRUE );
+
+		if ( ! $thumbnail_id )
 			return FALSE;
 
 		if ( is_null( $size ) )
@@ -251,13 +255,21 @@ class Template extends Main
 		$html = FALSE;
 
 		$args = self::atts( [
-			'id'    => NULL,
-			'size'  => NULL,
-			'alt'   => FALSE,
-			'class' => '-post-image',
+			'id'           => NULL,
+			'thumbnail'    => NULL,
+			'size'         => NULL,
+			'alt'          => NULL,
+			'alt_fallback' => 'parent_title',
+			'class'        => '-post-image',
 		], $atts );
 
-		if ( $src = self::getPostImageSrc( $args['size'], $args['id'] ) )
+		if ( is_null( $args['alt'] ) && $args['thumbnail'] )
+			$args['alt'] = Media::getAttachmentImageAlt( $args['thumbnail'], FALSE );
+
+		if ( ! $args['alt'] && 'parent_title' === $args['alt_fallback'] )
+			$args['alt'] = trim( strip_tags( get_the_title( $args['id'] ) ) );
+
+		if ( $src = self::getPostImageSrc( $args['thumbnail'], $args['size'], $args['id'] ) )
 			$html = HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
 		return $html;
@@ -302,8 +314,10 @@ class Template extends Main
 
 		$args = self::atts( [
 			'id'           => NULL,
+			'thumbnail'    => NULL,
 			'size'         => NULL,
-			'alt'          => FALSE,
+			'alt'          => NULL, // `FALSE` to disable
+			'alt_fallback' => 'parent_title', // `FALSE` to disable
 			'class'        => '-post-image',
 			'type'         => 'post',
 			'link'         => 'parent',
@@ -333,14 +347,16 @@ class Template extends Main
 			$args['id'] = gEditorial()->{$module}->get_linked_to_posts( NULL, TRUE );
 
 		if ( FALSE === $args['id'] )
-			return $args['default'];
+			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
 
 		if ( ! $post = PostType::getPost( $args['id'] ) )
-			return $args['default'];
+			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
 
-		$title     = self::getPostField( $args['title'], $post->ID, FALSE );
-		$status    = get_post_status( $post );
-		$thumbnail = get_post_meta( $post->ID, '_thumbnail_id', TRUE );
+		$title  = self::getPostField( $args['title'], $post->ID, FALSE );
+		$status = get_post_status( $post );
+
+		if ( is_null( $args['thumbnail'] ) )
+			$args['thumbnail'] = PostType::getThumbnailID( $post->ID );
 
 		if ( $args['link'] ) {
 
@@ -348,12 +364,13 @@ class Template extends Main
 				$args['link'] = in_array( $status, [ 'publish', 'inherit' ] ) ? apply_filters( 'the_permalink', get_permalink( $post ), $post ) : FALSE;
 
 			else if ( 'attachment' == $args['link'] )
-				$args['link'] = ( $thumbnail && in_array( $status, [ 'publish', 'inherit' ] ) ) ? get_attachment_link( $thumbnail ) : FALSE;
+				$args['link'] = ( $args['thumbnail'] && in_array( $status, [ 'publish', 'inherit' ] ) ) ? get_attachment_link( $args['thumbnail'] ) : FALSE;
 
 			else if ( 'url' == $args['link'] )
-				$args['link'] = ( $thumbnail && in_array( $status, [ 'publish', 'inherit' ] ) ) ? wp_get_attachment_url( $thumbnail ) : FALSE;
+				$args['link'] = ( $args['thumbnail'] && in_array( $status, [ 'publish', 'inherit' ] ) ) ? wp_get_attachment_url( $args['thumbnail'] ) : FALSE;
 		}
 
+		$args  = apply_filters( static::BASE.'_template_post_image_args', $args, $post, $module, $title );
 		$image = self::getPostImageTag( $args );
 
 		if ( $args['callback'] && is_callable( $args['callback'] ) ) {
@@ -363,7 +380,7 @@ class Template extends Main
 		} else if ( $image ) {
 
 			$html = HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
-				'href'  => $args['link'],
+				'href'  => $args['link'] ?: FALSE,
 				'title' => $title,
 				'data'  => $args['link'] ? $args['data'] : FALSE,
 			], $image );
@@ -377,21 +394,16 @@ class Template extends Main
 			], get_the_title( $post ) );
 		}
 
-		if ( $html ) {
+		if ( ! $html )
+			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
 
-			$html = $args['before'].$html.$args['after'];
+		$html = $args['before'].$html.$args['after'];
 
-			if ( ! $args['echo'] )
-				return $html;
+		if ( ! $args['echo'] )
+			return $html;
 
-			echo $html;
-			return TRUE;
-		}
-
-		if ( $args['default'] )
-			return $args['before'].$args['default'].$args['after'];
-
-		return FALSE;
+		echo $html;
+		return TRUE;
 	}
 
 	// FIXME: DEPRECATED
