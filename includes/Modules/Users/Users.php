@@ -456,7 +456,7 @@ class Users extends gEditorial\Module
 			$user_id = get_current_user_id();
 
 		if ( is_null( $blog_id ) )
-			$blog_id = get_current_blog_id();
+			$blog_id = $this->site;
 
 		$key = sprintf( $this->constant( 'metakey_categories' ), $blog_id );
 
@@ -481,7 +481,7 @@ class Users extends gEditorial\Module
 
 		if ( $this->get_setting( 'author_categories' ) && isset( $_POST['categories'] ) ) {
 
-			$key = sprintf( $this->constant( 'metakey_categories' ), get_current_blog_id() );
+			$key = sprintf( $this->constant( 'metakey_categories' ), $this->site );
 			update_user_meta( $user_id, $key, array_filter( $_POST['categories'] ) );
 		}
 	}
@@ -680,9 +680,8 @@ class Users extends gEditorial\Module
 					if ( isset( $file['error'] ) || empty( $file['file'] ) )
 						WordPress::redirectReferer( 'wrong' );
 
-					$count    = 0;
-					$blog_id  = get_current_blog_id();
-					$role     = get_option( 'default_role' );
+					$count = 0;
+					$role  = get_option( 'default_role' );
 
 					$users    = User::get( TRUE, TRUE, [], 'user_email' );
 					$currents = $wpdb->get_results( "SELECT post_author as user, GROUP_CONCAT( ID ) as posts FROM {$wpdb->posts} GROUP BY post_author", ARRAY_A );
@@ -703,8 +702,8 @@ class Users extends gEditorial\Module
 							$query = $wpdb->prepare( "UPDATE {$wpdb->posts} SET post_author = %d WHERE ID IN ( ".trim( $current['posts'], ',' )." )", $user->ID );
 							$count+= $wpdb->query( $query );
 
-							if ( ! is_user_member_of_blog( $user->ID, $blog_id ) )
-								add_user_to_blog( $blog_id, $user->ID, $role );
+							if ( ! is_user_member_of_blog( $user->ID, $this->site ) )
+								add_user_to_blog( $this->site, $user->ID, $role );
 						}
 					}
 

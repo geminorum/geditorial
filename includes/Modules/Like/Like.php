@@ -98,7 +98,7 @@ class Like extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->cookie = $this->classs( get_current_blog_id() );
+		$this->cookie = $this->classs( $this->site );
 	}
 
 	public function init_ajax()

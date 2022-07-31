@@ -87,6 +87,7 @@ class Module extends Base
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
 		$this->path = File::normalize( $root.$module->folder.'/' );
+		$this->site = get_current_blog_id();
 
 		$this->module  = $module;
 		$this->options = $options;
@@ -864,7 +865,7 @@ class Module extends Base
 		if ( ! defined( $this->root_key ) )
 			return FALSE;
 
-		if ( constant( $this->root_key ) == get_current_blog_id() )
+		if ( constant( $this->root_key ) == $this->site )
 			return FALSE;
 
 		return TRUE;
