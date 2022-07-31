@@ -31,6 +31,12 @@ class WcWidgets extends gEditorial\Module
 		return [
 			'_general' => [
 				[
+					'field'  => 'widgets',
+					'title'  => _x( 'Widgets', 'Setting Title', 'geditorial-wc-widgets' ),
+					'type'   => 'checkboxes',
+					'values' => $this->_list_widgets(),
+				],
+				[
 					'field'       => 'custom_areas',
 					'type'        => 'checkboxes-values',
 					'title'       => _x( 'Custom Areas', 'Setting Title', 'geditorial-wc-widgets' ),
@@ -39,6 +45,27 @@ class WcWidgets extends gEditorial\Module
 				],
 			],
 		];
+	}
+
+	private function get_widgets()
+	{
+		return [
+			'WC-Message' => 'WCMessage',
+		];
+	}
+
+	private function _list_widgets()
+	{
+		$list = [];
+
+		foreach ( $this->get_widgets() as $key => $class ) {
+
+			$widget = call_user_func( [ __NAMESPACE__.'\\Widgets\\'.$class, 'setup' ] );
+
+			$list[$key] = $widget['title'].': <em>'.$widget['desc'].'</em>';
+		}
+
+		return $list;
 	}
 
 	// @SEE: https://quadlayers.com/how-to-use-woocommerce-hooks/
@@ -108,6 +135,12 @@ class WcWidgets extends gEditorial\Module
 
 	public function widgets_init()
 	{
+		$widgets = $this->get_setting( 'widgets', [] );
+
+		foreach ( $this->get_widgets() as $key => $class )
+			if ( in_array( $key, $widgets, TRUE ) )
+				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
+
 		$areas = Arraay::reKey( $this->_get_widget_action_hooks(), 'action' );
 
 		foreach ( $this->get_setting( 'custom_areas', [] ) as $index => $hook ) {
