@@ -419,7 +419,12 @@ class Settings extends Core\Base
 			'title'       => _x( 'Post Status', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => 'pending',
-			'values'      => PostType::getStatuses(),
+			'values'      => Arraay::stripByKeys( PostType::getStatuses(), [
+				'future',
+				'auto-draft',
+				'inherit',
+				'trash',
+			] ),
 		];
 	}
 

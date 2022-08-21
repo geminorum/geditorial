@@ -98,7 +98,7 @@ class Importer extends gEditorial\Module
 		HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
 	}
 
-	private function guessed_fields_map( $headers, $key = 'source_map' )
+	private function _guessed_fields_map( $headers, $key = 'source_map' )
 	{
 		if ( ! $stored = get_option( $this->hook( $key ), [] ) )
 			return [];
@@ -112,7 +112,7 @@ class Importer extends gEditorial\Module
 		return [];
 	}
 
-	private function store_fields_map( $file, $headers, $map, $key = 'source_map' )
+	private function _store_fields_map( $file, $headers, $map, $key = 'source_map' )
 	{
 		$option = $this->hook( $key );
 		$stored = get_option( $option, [] );
@@ -124,7 +124,7 @@ class Importer extends gEditorial\Module
 		return update_option( $option, $stored );
 	}
 
-	protected function form_posts_map( $id, $posttype = 'post' )
+	private function _form_posts_map( $id, $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -144,7 +144,7 @@ class Importer extends gEditorial\Module
 		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
 		if ( empty( $map ) )
-			$map = $this->guessed_fields_map( $headers );
+			$map = $this->_guessed_fields_map( $headers );
 
 		echo '<table class="base-table-raw"><tbody>';
 
@@ -179,7 +179,7 @@ class Importer extends gEditorial\Module
 		echo '</tbody></table>';
 	}
 
-	protected function from_posts_attached( $id = 0, $posttype = 'post', $user_id = NULL )
+	private function _form_posts_attached( $id = 0, $posttype = 'post', $user_id = NULL )
 	{
 		echo '<input id="upload_csv_button" class="button" value="'._x( 'Upload', 'Button', 'geditorial-importer' ).'" type="button" />';
 		echo '<input id="upload_attach_id" type="hidden" name="upload_id" value="" />';
@@ -204,7 +204,7 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	protected function form_images_table( $args )
+	private function _form_images_table( $args )
 	{
 		$query = [
 			'posts_per_page' => -1,
@@ -262,7 +262,7 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	protected function form_posts_table( $id, $map = [], $posttype = 'post' )
+	private function _form_posts_table( $id, $map = [], $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -279,12 +279,12 @@ class Importer extends gEditorial\Module
 		unset( $iterator, $parser, $items[0] );
 
 		$this->store_postmeta( $id, $map, $this->constant( 'metakey_source_map' ) );
-		$this->store_fields_map( $file, $headers, $map );
+		$this->_store_fields_map( $file, $headers, $map );
 
-		$this->data_table( $items, $headers, $map, $posttype );
+		$this->_render_data_table( $items, $headers, $map, $posttype );
 	}
 
-	private function data_table( $data, $headers, $map = [], $posttype = 'post' )
+	private function _render_data_table( $data, $headers, $map = [], $posttype = 'post' )
 	{
 		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
@@ -398,7 +398,7 @@ class Importer extends gEditorial\Module
 					|| Tablelist::isAction( 'images_import_as_thumbnail', TRUE ) ) {
 
 					$count = 0;
-					$args  = $this->get_current_form_images();
+					$args  = $this->_get_current_form_images();
 
 					$this->_raise_resources();
 
@@ -600,16 +600,16 @@ class Importer extends gEditorial\Module
 			echo HTML::tag( 'h4',  _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
 
 		if ( $first || $posts )
-			$this->render_tools_for_posts();
+			$this->_render_tools_for_posts();
 
 		if ( $first )
 			echo '<br /><hr />'.HTML::tag( 'h4',  _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
 
 		if ( $first || $images )
-			$this->render_tools_for_images();
+			$this->_render_tools_for_images();
 	}
 
-	private function render_tools_for_posts()
+	private function _render_tools_for_posts()
 	{
 		$selected  = self::req( '_cb', [] );
 		$field_map = self::req( 'field_map', [] );
@@ -635,7 +635,7 @@ class Importer extends gEditorial\Module
 			HTML::inputHidden( 'user_id', $user_id );
 			HTML::inputHidden( 'tools_for', 'posts' );
 
-			$this->form_posts_table( $attach_id, $field_map, $posttype );
+			$this->_form_posts_table( $attach_id, $field_map, $posttype );
 
 			echo $this->wrap_open_buttons();
 			Settings::submitButton( 'posts_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
@@ -656,7 +656,7 @@ class Importer extends gEditorial\Module
 			HTML::inputHidden( 'user_id', $user_id );
 			HTML::inputHidden( 'tools_for', 'posts' );
 
-			$this->form_posts_map( $attach_id, $posttype );
+			$this->_form_posts_map( $attach_id, $posttype );
 
 			echo $this->wrap_open_buttons();
 			Settings::submitButton( 'posts_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
@@ -664,7 +664,7 @@ class Importer extends gEditorial\Module
 
 		} else {
 
-			$this->from_posts_attached( 0, $posttype );
+			$this->_form_posts_attached( 0, $posttype );
 
 			echo $this->wrap_open_buttons();
 			Settings::submitButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
@@ -674,7 +674,7 @@ class Importer extends gEditorial\Module
 		echo '</p>';
 	}
 
-	private function get_current_form_images()
+	private function _get_current_form_images()
 	{
 		return $this->get_current_form( [
 			'user_id'  => gEditorial()->user( TRUE ),
@@ -684,12 +684,12 @@ class Importer extends gEditorial\Module
 		], 'forimages' );
 	}
 
-	private function render_tools_for_images()
+	private function _render_tools_for_images()
 	{
 		if ( ! current_user_can( 'upload_files' ) )
 			return HTML::desc( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ) );
 
-		$args = $this->get_current_form_images();
+		$args = $this->_get_current_form_images();
 
 		if ( isset( $_POST['images_step_two'] )  ) {
 
@@ -702,7 +702,7 @@ class Importer extends gEditorial\Module
 			HTML::inputHidden( 'tools_for', 'images' );
 
 			$this->fields_current_form( $args, 'forimages' );
-			$this->form_images_table( $args );
+			$this->_form_images_table( $args );
 
 			echo $this->wrap_open_buttons();
 			Settings::submitButton( 'images_import_as_thumbnail', _x( 'Import & Set Thumbnail', 'Button', 'geditorial-importer' ), TRUE );
@@ -823,7 +823,8 @@ class Importer extends gEditorial\Module
 		Taxonomy::disableTermCounting();
 		wp_defer_comment_counting( TRUE );
 
-		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+		if ( ! WordPress::isDev() )
+			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
 
 		$this->raise_resources( $count, 60, 'import' );
 	}

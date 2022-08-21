@@ -2940,8 +2940,8 @@ class Module extends Base
 
 			// WTF: if not else ?!
 
-			if ( is_admin() && ( $cpt_tax || 'user' == $posttypes || 'comment' == $posttypes ) )
-				$this->_hook_taxonomies_excluded( $constant, 'recount' );
+			// if ( is_admin() && ( $cpt_tax || 'user' == $posttypes || 'comment' == $posttypes ) )
+			// 	$this->_hook_taxonomies_excluded( $constant, 'recount' );
 		}
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );

@@ -2,10 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -476,7 +475,7 @@ class Helper extends Main
 		if ( empty( $timestamp ) )
 			return self::htmlEmpty();
 
-		if ( ! ctype_digit( $timestamp ) )
+		if ( Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
 		$formats = Datetime::dateFormats( FALSE );
@@ -886,6 +885,7 @@ class Helper extends Main
 			return $layout;
 	}
 
+	// TODO: myabe migrate to: https://github.com/jwage/easy-csv
 	// @REF: https://github.com/kzykhys/PHPCsvParser
 	public static function parseCSV( $file_path, $limit = NULL )
 	{

@@ -6,7 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
