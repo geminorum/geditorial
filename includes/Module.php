@@ -3844,8 +3844,13 @@ class Module extends Base
 
 	public function paired_get_to_term_direct( $post_id, $posttype, $taxonomy )
 	{
-		$term_id = get_post_meta( $post_id, sprintf( '_%s_term_id', $posttype ), TRUE );
-		return $term_id ? get_term_by( 'id', (int) $term_id, $taxonomy ) : FALSE;
+		if ( empty( $post_id ) )
+			return FALSE;
+
+		if ( ! $term_id = get_post_meta( $post_id, sprintf( '_%s_term_id', $posttype ), TRUE ) )
+			return FALSE;
+
+		return get_term_by( 'id', (int) $term_id, $taxonomy );
 	}
 
 	// PAIRED API
@@ -4020,6 +4025,8 @@ class Module extends Base
 		if ( 'trash' == $after->post_status )
 			return FALSE;
 
+		$parent = $this->paired_get_to_term( $after->post_parent, $posttype_key, $taxonomy_key );
+
 		if ( empty( $before->post_name ) )
 			$before->post_name = sanitize_title( $before->post_title );
 
@@ -4030,6 +4037,7 @@ class Module extends Base
 			'name'        => $after->post_title,
 			'slug'        => $after->post_name,
 			'description' => $after->post_excerpt,
+			'parent'      => $parent ? $parent->term_id : 0,
 		];
 
 		$taxonomy = $this->constant( $taxonomy_key );
@@ -4058,19 +4066,23 @@ class Module extends Base
 		if ( ! $this->is_save_post( $post, $posttype_key ) )
 			return FALSE;
 
-		if ( empty( $post->post_name ) )
-			$post->post_name = sanitize_title( $post->post_title );
+		$parent = $this->paired_get_to_term( $post->post_parent, $posttype_key, $taxonomy_key );
+
+		$slug = empty( $post->post_name )
+			? sanitize_title( $post->post_title )
+			: $post->post_name;
 
 		$term_args = [
+			'slug'        => $slug,
+			'parent'      => $parent ? $parent->term_id : 0,
 			'name'        => $post->post_title,
-			'slug'        => $post->post_name,
 			'description' => $post->post_excerpt,
 		];
 
 		$taxonomy = $this->constant( $taxonomy_key );
 
 		// link to existing term
-		if ( $namesake = get_term_by( 'slug', $post->post_name, $taxonomy ) )
+		if ( $namesake = get_term_by( 'slug', $slug, $taxonomy ) )
 			$the_term = wp_update_term( $namesake->term_id, $taxonomy, $term_args );
 
 		else
