@@ -7,14 +7,18 @@ class Arraay extends Base
 
 	public static function prepString()
 	{
-		$args = func_get_args();
+		$args = array_map( function( $value ) {
+			return $value ? (array) $value : [];
+		}, func_get_args() );
 
 		return empty( $args ) ? [] : array_unique( array_filter( array_map( 'trim', array_merge( ...$args ) ) ) );
 	}
 
 	public static function prepNumeral()
 	{
-		$args = func_get_args();
+		$args = array_map( function( $value ) {
+			return $value ? (array) $value : [];
+		}, func_get_args() );
 
 		return empty( $args ) ? [] : array_unique( array_filter( array_map( 'intval', array_merge( ...$args ) ) ) );
 	}
