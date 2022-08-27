@@ -475,7 +475,7 @@ class Helper extends Main
 		if ( empty( $timestamp ) )
 			return self::htmlEmpty();
 
-		if ( Date::isTimestamp( $timestamp ) )
+		if ( ! Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
 		$formats = Datetime::dateFormats( FALSE );

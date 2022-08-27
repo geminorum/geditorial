@@ -611,7 +611,6 @@ class Importer extends gEditorial\Module
 
 	private function _render_tools_for_posts()
 	{
-		$selected  = self::req( '_cb', [] );
 		$field_map = self::req( 'field_map', [] );
 		$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id = self::req( 'upload_id', FALSE );

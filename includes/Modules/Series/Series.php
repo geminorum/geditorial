@@ -9,7 +9,6 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Series extends gEditorial\Module

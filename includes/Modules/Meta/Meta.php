@@ -230,13 +230,6 @@ class Meta extends gEditorial\Module
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 
-				'phone_number'   => [ 'type' => 'phone' ],
-				'mobile_number'  => [ 'type' => 'phone' ],
-
-				'website_url'    => [ 'type' => 'link' ],
-				'email_address'  => [ 'type' => 'email' ],
-				'postal_address' => [ 'type' => 'note' ],
-
 				'content_embed_url' => [ 'type' => 'link' ],
 			],
 		];

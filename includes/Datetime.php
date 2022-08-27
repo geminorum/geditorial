@@ -34,7 +34,7 @@ class Datetime extends Main
 
 	public static function dateFormat( $timestamp, $context = 'default' )
 	{
-		if ( Date::isTimestamp( $timestamp ) )
+		if ( ! Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
 		return date_i18n( self::dateFormats( $context ), $timestamp );
@@ -85,7 +85,7 @@ class Datetime extends Main
 
 	public static function htmlHumanTime( $timestamp, $flip = FALSE )
 	{
-		if ( Date::isTimestamp( $timestamp ) )
+		if ( ! Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
 		$now = current_time( 'timestamp', FALSE );

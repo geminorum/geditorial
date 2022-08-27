@@ -1905,6 +1905,7 @@ class Module extends Base
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 				'sanitize'    => NULL,
+				'pattern'     => NULL, // HTML5 input pattern // TODO: use this!
 				'default'     => '', // currently only on rest
 				'icon'        => 'smiley',
 				'type'        => 'text',
