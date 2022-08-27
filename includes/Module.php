@@ -10,6 +10,7 @@ use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\URL;
+use geminorum\gEditorial\Core\Validation;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Module as Base;
@@ -1964,6 +1965,12 @@ class Module extends Base
 			break;
 			case 'phone':
 				$sanitized = Number::intval( trim( $data ), FALSE );
+
+			case 'mobile':
+			 	$sanitized = Number::intval( trim( $data ), FALSE );
+
+				if ( ! Validation::isMobileNumber( $sanitized ) )
+					$sanitized = '';
 
 			break;
 			case 'price':

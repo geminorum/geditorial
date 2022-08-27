@@ -216,7 +216,7 @@ class Meta extends gEditorial\Module
 
 				'contact_string' => [ 'type' => 'contact' ], // url/email/phone
 				'phone_number'   => [ 'type' => 'phone' ],
-				'mobile_number'  => [ 'type' => 'phone' ],
+				'mobile_number'  => [ 'type' => 'mobile' ],
 
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
