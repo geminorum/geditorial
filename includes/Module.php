@@ -3385,8 +3385,9 @@ class Module extends Base
 	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant = FALSE, $display_empty = FALSE )
 	{
 		$sub_tax   = FALSE;
-		$dropdowns = $displayed = [];
+		$dropdowns = $displayed = $parents = [];
 		$excludes  = $this->paired_get_dropdown_excludes();
+		$forced    = $this->get_setting( 'paired_force_parents', FALSE );
 		$posttype  = $this->constant( $posttype_constant );
 		$taxonomy  = $this->constant( $tax_constant );
 		$terms     = Taxonomy::getPostTerms( $taxonomy, $post );
@@ -3426,9 +3427,13 @@ class Module extends Base
 				$dropdown.= MetaBox::paired_dropdownSubTerms( $sub_tax, $to_post_id, $this->classs( $sub_tax ), $selected, $none_sub );
 			}
 
-			$dropdowns[$to_post_id] = $dropdown;
+			$parents[] = $term->parent;
+			$dropdowns[$term->term_id] = $dropdown;
 			$displayed[] = $to_post_id;
 		}
+
+		if ( $forced )
+			$dropdowns = Arraay::stripByKeys( $dropdowns, Arraay::prepNumeral( $parents ) );
 
 		$excludes = Arraay::prepNumeral( $excludes, $displayed );
 
@@ -3436,7 +3441,7 @@ class Module extends Base
 			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
 
 		else if ( $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
+			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
 
 		foreach ( $dropdowns as $dropdown )
 			if ( $dropdown )
@@ -3453,6 +3458,7 @@ class Module extends Base
 	protected function paired_do_store_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant = FALSE )
 	{
 		$posttype = $this->constant( $posttype_constant );
+		$forced   = $this->get_setting( 'paired_force_parents', FALSE );
 		$paired   = self::req( $this->classs( $posttype ), FALSE );
 
 		if ( FALSE === $paired )
@@ -3460,9 +3466,19 @@ class Module extends Base
 
 		$terms = [];
 
-		foreach ( (array) $paired as $paired_id )
-			if ( $paired_id && ( $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $tax_constant ) ) )
-				$terms[] = $term->term_id;
+		foreach ( (array) $paired as $paired_id ) {
+
+			if ( ! $paired_id )
+				continue;
+
+			if ( ! $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $tax_constant ) )
+				continue;
+
+			$terms[] = $term->term_id;
+
+			if ( $forced )
+				$terms = array_merge( Taxonomy::getTermParents( $term->term_id, $term->taxonomy ), $terms );
+		}
 
 		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $this->constant( $tax_constant ), FALSE );
 

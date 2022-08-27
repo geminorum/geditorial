@@ -651,6 +651,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_paired_force_parents( $description = NULL )
+	{
+		return [
+			'field'        => 'paired_force_parents',
+			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Includes parents on the supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+		];
+	}
+
 	public static function getSetting_count_not( $description = NULL )
 	{
 		return [
