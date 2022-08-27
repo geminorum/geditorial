@@ -192,6 +192,7 @@ class Terms extends gEditorial\Module
 		$this->register_meta_fields();
 
 		$this->action( [ 'edit_term', 'create_term' ], 3 );
+		$this->action( 'delete_attachment', 2, 12 );
 
 		if ( $this->get_setting( 'term_author' ) )
 			$this->filter_self( 'supported_field_edit', 4, 8, 'author' );
@@ -831,6 +832,12 @@ class Terms extends gEditorial\Module
 			// FIXME: experiment: since the action may trigger twice
 			unset( $_REQUEST['term-'.$field] );
 		}
+	}
+
+	// delete all attachment images for any term.
+	public function delete_attachment( $post_id, $post )
+	{
+		delete_metadata( 'term', NULL, $this->get_supported_metakey( 'image' ), $post_id, TRUE );
 	}
 
 	private function quick_form_field( $field, $taxonomy )
