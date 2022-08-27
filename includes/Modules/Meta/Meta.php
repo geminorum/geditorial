@@ -863,7 +863,9 @@ class Meta extends gEditorial\Module
 
 			case 'term':
 
-				return wp_set_object_terms( $post->ID, $this->sanitize_posttype_field( $data, $field, $post ), $field['tax'], FALSE );
+				$terms = $this->sanitize_posttype_field( $data, $field, $post );
+
+				return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['tax'], FALSE );
 
 			break;
 			default:
@@ -1371,7 +1373,9 @@ class Meta extends gEditorial\Module
 			}
 		}
 
-		return wp_set_object_terms( $post->ID, $this->sanitize_posttype_field( $terms, $field, $post ), $field['tax'], FALSE );
+		$terms = $this->sanitize_posttype_field( $terms, $field, $post );
+
+		return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['tax'], FALSE );
 	}
 
 	private function get_importer_fields( $posttype = NULL, $object = FALSE )

@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -182,7 +183,7 @@ class Series extends gEditorial\Module
 			if ( $term_id && '-1' != $term_id )
 				$pre_terms[$offset] = (int) $term_id;
 
-		wp_set_object_terms( $post_id, ( count( $pre_terms ) ? $pre_terms : NULL ), $this->constant( 'series_tax' ), FALSE );
+		wp_set_object_terms( $post_id, Arraay::prepNumeral( $pre_terms ), $this->constant( 'series_tax' ), FALSE );
 
 		foreach ( $pre_terms as $offset => $pre_term ) {
 			foreach ( $fields as $field ) {

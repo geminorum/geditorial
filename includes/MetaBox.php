@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -772,8 +773,7 @@ class MetaBox extends Main
 		if ( ! array_key_exists( $object->name, $data ) )
 			return FALSE;
 
-		$terms  = array_map( 'intval', array_filter( $data[$object->name] ) );
-		$result = wp_set_object_terms( $object_id, $terms ?: NULL, $object->name, FALSE );
+		$result = wp_set_object_terms( $object_id, Arraay::prepNumeral( $data[$object->name] ), $object->name, FALSE );
 
 		clean_object_term_cache( $object_id, $object->name );
 

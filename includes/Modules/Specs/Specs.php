@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
@@ -208,7 +209,7 @@ class Specs extends gEditorial\Module
 			ksort( $meta );
 
 			$this->store_postmeta( $post_id, $meta );
-			wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->constant( 'specs_tax' ), FALSE );
+			wp_set_object_terms( $post_id, Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
 
 			return $post_id;
 		}
@@ -231,7 +232,7 @@ class Specs extends gEditorial\Module
 			if ( $term_id && '-1' != $term_id )
 				$terms[$offset] = (int) $term_id;
 
-		wp_set_object_terms( $post_id, ( count( $terms ) ? $terms : null ), $this->constant( 'specs_tax' ), FALSE );
+		wp_set_object_terms( $post_id, Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
 
 		foreach ( $terms as $offset => $term ) {
 

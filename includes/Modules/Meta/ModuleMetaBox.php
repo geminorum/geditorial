@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -71,10 +72,10 @@ class ModuleMetaBox extends gEditorial\MetaBox
 	public static function setPostMetaField_Term( $post_id, $field, $taxonomy, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
-			wp_set_object_terms( $post_id, (int) $_POST[$prefix.$field], $taxonomy, FALSE );
+			wp_set_object_terms( (int) $post_id, Arraay::prepNumeral( $_POST[$prefix.$field] ), $taxonomy, FALSE );
 
 		else if ( isset( $_POST[$prefix.$field] ) && '0' == $_POST[$prefix.$field] )
-			wp_set_object_terms( $post_id, NULL, $taxonomy, FALSE );
+			wp_set_object_terms( (int) $post_id, [], $taxonomy, FALSE );
 	}
 
 	public static function legacy_fieldString( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'text' )

@@ -1478,7 +1478,7 @@ class Terms extends gEditorial\Module
 							continue;
 
 						foreach ( $diff as $taxonomy => $title )
-							wp_set_object_terms( $post->ID, NULL, $taxonomy );
+							wp_set_object_terms( $post->ID, [], $taxonomy );
 
 						$count++;
 					}

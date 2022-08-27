@@ -3453,7 +3453,7 @@ class Module extends Base
 			if ( $paired_id && ( $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $tax_constant ) ) )
 				$terms[] = $term->term_id;
 
-		wp_set_object_terms( $post->ID, ( count( $terms ) ? $terms : NULL ), $this->constant( $tax_constant ), FALSE );
+		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $this->constant( $tax_constant ), FALSE );
 
 		if ( ! $sub_tax_constant || ! $this->get_setting( 'subterms_support' ) )
 			return;
@@ -3462,7 +3462,7 @@ class Module extends Base
 
 		// no post, no subterm
 		if ( ! count( $terms ) )
-			return wp_set_object_terms( $post->ID, NULL, $sub_tax, FALSE );
+			return wp_set_object_terms( $post->ID, [], $sub_tax, FALSE );
 
 		$subterm = self::req( $this->classs( $sub_tax ), FALSE );
 
@@ -3495,7 +3495,7 @@ class Module extends Base
 				$subterms[] = (int) $sub_paired;
 		}
 
-		wp_set_object_terms( $post->ID, ( count( $subterms ) ? $subterms : NULL ), $sub_tax, FALSE );
+		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $subterms ), $sub_tax, FALSE );
 	}
 
 	protected function _hook_store_metabox( $posttype )
@@ -3889,7 +3889,7 @@ class Module extends Base
 
 		if ( $post_id ) {
 			delete_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id' );
-			wp_set_object_terms( (int) $post_id, NULL, $the_term->taxonomy, FALSE );
+			wp_set_object_terms( (int) $post_id, [], $the_term->taxonomy, FALSE );
 		}
 
 		delete_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked' );

@@ -233,10 +233,9 @@ class Audit extends gEditorial\Module
 
 				parse_str( $post['data'], $data );
 
-				$terms = empty( $data['tax_input'][$taxonomy] ) ? NULL
-					: array_map( 'intval', (array) $data['tax_input'][$taxonomy] );
+				$terms = empty( $data['tax_input'][$taxonomy] ) ? [] : $data['tax_input'][$taxonomy];
 
-				wp_set_object_terms( $post['post_id'], $terms, $taxonomy, FALSE );
+				wp_set_object_terms( $post['post_id'], Arraay::prepNumeral( $terms ), $taxonomy, FALSE );
 				clean_object_term_cache( $post['post_id'], $taxonomy );
 
 				Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
@@ -874,7 +873,7 @@ class Audit extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return FALSE;
 
-		$result = wp_set_object_terms( $post->ID, $terms, $this->constant( 'audit_tax' ), $append );
+		$result = wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $this->constant( 'audit_tax' ), $append );
 
 		if ( is_wp_error( $result ) )
 			return FALSE;

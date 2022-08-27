@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
@@ -126,7 +127,7 @@ class Uncategorized extends gEditorial\Module
 								continue;
 
 							$terms = wp_get_object_terms( $post->ID, $taxonomy, [ 'fields' => 'ids' ] );
-							$diff  = array_diff( $terms, [ $default ] );
+							$diff  = Arraay::prepNumeral( array_diff( $terms, [ $default ] ) );
 
 							// keep default if empty
 							if ( empty( $diff ) )
