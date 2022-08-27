@@ -635,6 +635,9 @@ class Module extends Base
 
 		HTML::label( $html, $field );
 
+		if ( $object->hierarchical )
+			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
+
 		$this->actions( 'newpost_content', $posttype, $post, $target, $linked, $status, $meta );
 
 		HTML::inputHidden( 'type', $posttype );

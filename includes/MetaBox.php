@@ -573,7 +573,7 @@ class MetaBox extends Main
 		echo HTML::wrap( $label.$html, 'field-wrap -select' );
 	}
 
-	public static function fieldPostParent( $post, $check = TRUE, $posttype = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
+	public static function fieldPostParent( $post, $check = TRUE, $name = NULL, $posttype = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
 	{
 		// allows for a parent of diffrent type
 		if ( is_null( $posttype ) )
@@ -585,7 +585,7 @@ class MetaBox extends Main
 		$args = [
 			'post_type'        => $posttype,
 			'selected'         => $post->post_parent,
-			'name'             => 'parent_id',
+			'name'             => is_null( $name ) ? 'parent_id' : $name,
 			'class'            => static::BASE.'-admin-dropbown',
 			'show_option_none' => _x( '&ndash; no parent &ndash;', 'MetaBox: Parent Dropdown: Select Option None', 'geditorial' ),
 			'sort_column'      => 'menu_order, post_title',
