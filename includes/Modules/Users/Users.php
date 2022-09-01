@@ -99,6 +99,11 @@ class Users extends gEditorial\Module
 	protected function get_global_strings()
 	{
 		return [
+			'dashboard' => [
+				'widget_title' => _x( 'Your Profile', 'Dashboard Widget Title', 'geditorial-users' ),
+				'action_attr'  => _x( 'Edit your profile', 'Dashboard Widget Action', 'geditorial-users' ),
+				'action_link'  => _x( 'Edit', 'Dashboard Widget Action', 'geditorial-users' ),
+			],
 			'misc' => [
 				'group_tax' => [
 					'menu_name'          => _x( 'Groups', 'Taxonomy Menu', 'geditorial-users' ),
@@ -256,11 +261,10 @@ class Users extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		$title = _x( 'Your Profile', 'Dashboard Widget Title', 'geditorial-users' );
-		$this->add_dashboard_widget( 'profile-summary', $title, [
+		$this->add_dashboard_widget( 'profile-summary', NULL, [
 			'url'   => admin_url( 'profile.php' ),
-			'title' => _x( 'Edit your profile', 'Dashboard Widget Action', 'geditorial-users' ),
-			'link'  => _x( 'Edit', 'Dashboard Widget Action', 'geditorial-users' ),
+			'title' => $this->get_string( 'action_attr', NULL, 'dashboard', '' ),
+			'link'  => $this->get_string( 'action_link', NULL, 'dashboard', '' ),
 		] );
 	}
 

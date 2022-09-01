@@ -220,6 +220,11 @@ class Book extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['dashboard'] = [
+			'current' => [ 'widget_title' => _x( 'Your Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
+			'all'     => [ 'widget_title' => _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
+		];
+
 		$strings['metabox'] = [
 			'publication_cpt' => [
 				'metabox_title' => _x( 'Publications', 'MetaBox Title', 'geditorial-book' ),
@@ -749,11 +754,7 @@ class Book extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		$title = 'current' == $this->get_setting( 'summary_scope', 'all' )
-			? _x( 'Your Publications Summary', 'Dashboard Widget Title', 'geditorial-book' )
-			: _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' );
-
-		$this->add_dashboard_widget( 'term-summary', $title, 'refresh' );
+		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
 	}
 
 	public function render_widget_term_summary( $object, $box )

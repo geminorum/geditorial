@@ -110,8 +110,7 @@ class Modified extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		$title = _x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' );
-		$this->add_dashboard_widget( 'latest-summary', $title );
+		$this->add_dashboard_widget( 'latest-summary', _x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' ) );
 	}
 
 	public function render_widget_latest_summary( $object, $box )

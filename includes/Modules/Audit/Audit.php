@@ -137,6 +137,11 @@ class Audit extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['dashboard'] = [
+			'current' => [ 'widget_title' => _x( 'Your Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
+			'all'     => [ 'widget_title' => _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
+		];
+
 		$strings['misc'] = [
 			'menu_name'           => _x( 'Audit', 'Taxonomy Menu', 'geditorial-audit' ),
 			'tweaks_column_title' => _x( 'Audit Attributes', 'Column Title', 'geditorial-audit' ),
@@ -499,11 +504,7 @@ class Audit extends gEditorial\Module
 		if ( ! $this->role_can( 'assign' ) )
 			return;
 
-		$title = 'current' == $this->get_setting( 'summary_scope', 'all' )
-			? _x( 'Your Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' )
-			: _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' );
-
-		$this->add_dashboard_widget( 'term-summary', $title, 'refresh' );
+		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
 	}
 
 	public function render_widget_term_summary( $object, $box )

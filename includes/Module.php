@@ -4798,11 +4798,18 @@ class Module extends Base
 	}
 
 	// @REF: `wp_add_dashboard_widget()`
-	protected function add_dashboard_widget( $name, $title, $action = FALSE, $extra = [], $callback = NULL, $context = 'dashboard' )
+	protected function add_dashboard_widget( $name, $title = NULL, $action = FALSE, $extra = [], $callback = NULL, $context = 'dashboard' )
 	{
 		// FIXME: test this
 		// if ( ! $this->cuc( $context ) )
 		// 	return FALSE;
+
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'widget_title',
+				$this->get_setting( 'summary_scope', 'all' ),
+				$context,
+				_x( 'Editorial Content Summary', 'Module: Dashboard Widget Title', 'geditorial' )
+			);
 
 		$screen = get_current_screen();
 		$hook   = self::sanitize_hook( $name );
