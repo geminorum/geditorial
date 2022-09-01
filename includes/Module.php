@@ -2014,7 +2014,7 @@ class Module extends Base
 			$posttypes = $this->posttypes();
 
 		if ( is_null( $fields ) )
-			$fields = $this->fields['_supported'];
+			$fields = array_key_exists( '_supported', $this->fields ) ? $this->fields['_supported'] : [];
 
 		if ( empty( $fields ) )
 			return;
@@ -2026,7 +2026,7 @@ class Module extends Base
 	public function add_posttype_fields( $posttype, $fields = NULL, $append = TRUE, $type = 'meta' )
 	{
 		if ( is_null( $fields ) )
-			$fields = $this->fields[$posttype];
+			$fields = array_key_exists( $posttype, $this->fields ) ? $this->fields[$posttype] : [];
 
 		if ( empty( $fields ) )
 			return;

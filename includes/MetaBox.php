@@ -394,7 +394,7 @@ class MetaBox extends Main
 
 	public static function getTitleAction( $action )
 	{
-		return ' <span class="postbox-title-action"><a href="'.esc_url( $action['url'] ).'" title="'.$action['title'].'">'.$action['link'].'</a></span>';
+		return empty( $action['link'] ) ? '' : ' <span class="postbox-title-action"><a href="'.esc_url( $action['url'] ).'" title="'.$action['title'].'">'.$action['link'].'</a></span>';
 	}
 
 	public static function titleActionRefresh()

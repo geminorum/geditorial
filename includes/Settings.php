@@ -402,7 +402,7 @@ class Settings extends Core\Base
 			'field'       => 'comment_status',
 			'type'        => 'select',
 			'title'       => _x( 'Comment Status', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: '',
+			'description' => $description ?: _x( 'Determines the default status of the new post comments.', 'Settings: Setting Description', 'geditorial' ),
 			'default'     => 'closed',
 			'values'      => [
 				'open'   => _x( 'Open', 'Settings: Setting Option', 'geditorial' ),
