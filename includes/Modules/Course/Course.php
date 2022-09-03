@@ -3,16 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Course extends gEditorial\Module

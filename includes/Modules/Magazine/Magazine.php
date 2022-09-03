@@ -348,7 +348,6 @@ class Magazine extends gEditorial\Module
 				);
 
 				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
-
 				$this->_hook_store_metabox( $screen->post_type );
 
 				if ( $this->get_setting( 'quick_newpost' ) )

@@ -545,6 +545,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
+				case 'date':
 				case 'float':
 				case 'code':
 				case 'contact':
@@ -716,6 +717,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
 
 				break;
+				case 'date':
 				case 'contact':
 				case 'phone':
 				case 'email':

@@ -229,6 +229,8 @@ class Contest extends gEditorial\Module
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
+		$this->register_default_terms( 'status_tax' );
+
 		if ( is_admin() )
 			return;
 
@@ -304,11 +306,11 @@ class Contest extends gEditorial\Module
 				if ( $subterms )
 					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 
-				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
+				if ( $screen->post_type == $this->constant( 'apply_cpt' ) ) {
 					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
-
-				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
-				remove_meta_box( 'pageparentdiv', $screen, 'side' );
+					$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
+					remove_meta_box( 'pageparentdiv', $screen, 'side' );
+				}
 
 				$this->class_metabox( $screen, 'pairedbox' );
 				add_meta_box( $this->classs( 'pairedbox' ),
@@ -393,7 +395,7 @@ class Contest extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, 'mainbox' );
+			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'mainbox' );
 
 			MetaBox::fieldPostMenuOrder( $post );
 			MetaBox::fieldPostParent( $post );
@@ -424,7 +426,7 @@ class Contest extends gEditorial\Module
 
 			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_contest' );
 
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'pairedbox_contest' );
+			do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_contest' );
 		}
 
 		echo '</div>';

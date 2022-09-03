@@ -682,9 +682,7 @@ class Collect extends gEditorial\Module
 						if ( ! isset( $terms[$term_id] ) )
 							continue;
 
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) );
-
-						if ( FALSE !== $post_id )
+						if ( PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) ) )
 							continue;
 
 						$posts[] = PostType::newPostFromTerm(

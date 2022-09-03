@@ -1975,8 +1975,18 @@ class Module extends Base
 
 				if ( ! Validation::isMobileNumber( $sanitized ) )
 					$sanitized = '';
-
 			break;
+
+			case 'date':
+			case 'time':
+			case 'datetime':
+
+				// @SEE: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#dates
+
+				$sanitized = Number::intval( trim( $data ), FALSE );
+
+				break;
+
 			case 'price':
 			case 'number':
 				$sanitized = Number::intval( trim( $data ) );
@@ -4320,9 +4330,7 @@ class Module extends Base
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) );
-
-				if ( FALSE !== $post_id )
+				if ( PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
 					continue;
 
 				$posts[] = PostType::newPostFromTerm(
@@ -4436,9 +4444,7 @@ class Module extends Base
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) );
-
-				if ( FALSE === $post_id )
+				if ( ! $post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
 					continue;
 
 				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $posttype_key, $taxonomy_key ) )

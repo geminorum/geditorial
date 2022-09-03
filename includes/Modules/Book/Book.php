@@ -25,7 +25,6 @@ class Book extends gEditorial\Module
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
 
-	protected $support_meta = FALSE;
 	protected $barcode_type = 'ean13';
 
 	public static function module()
@@ -454,7 +453,7 @@ class Book extends gEditorial\Module
 		$this->register_button( 'install_def_type_tax', _x( 'Install Default Types', 'Button', 'geditorial-book' ) );
 		$this->register_button( 'install_def_status_tax', _x( 'Install Default Statuses', 'Button', 'geditorial-book' ) );
 
-		if ( $this->support_meta )
+		if ( taxonomy_exists( $this->constant( 'size_tax' ) ) )
 			$this->register_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Button', 'geditorial-book' ) );
 	}
 
@@ -858,8 +857,6 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
 
 		$this->register_default_terms( 'size_tax' );
-
-		$this->support_meta = TRUE;
 	}
 
 	public function dashboard_glance_items( $items )
