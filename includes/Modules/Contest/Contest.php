@@ -168,6 +168,40 @@ class Contest extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function get_global_fields()
+	{
+		return [
+			$this->constant( 'contest_cpt' ) => [
+				'over_title' => [ 'type' => 'title_before' ],
+				'sub_title'  => [ 'type' => 'title_after' ],
+
+				'deadline_datetime' => [
+					'title'       => _x( 'Deadline Date', 'Field Title', 'geditorial-contest' ),
+					'description' => _x( 'The last date for submitting the applications.', 'Field Description', 'geditorial-contest' ),
+					'icon'        => 'calendar-alt',
+					'type'        => 'date'
+				],
+
+				'contact_string' => [ 'type' => 'contact' ], // url/email/phone
+				'phone_number'   => [ 'type' => 'phone' ],
+				'mobile_number'  => [ 'type' => 'mobile' ],
+
+				'website_url'    => [ 'type' => 'link' ],
+				'email_address'  => [ 'type' => 'email' ],
+				'postal_address' => [ 'type' => 'note' ],
+			],
+			'_supported' => [
+				'submission_datetime' => [
+					'title'       => _x( 'Submission Date', 'Field Title', 'geditorial-contest' ),
+					'description' => _x( 'Verified date for the submitted application.', 'Field Description', 'geditorial-contest' ),
+					'context'     => 'pairedbox_contest',
+					'icon'        => 'calendar-alt',
+					'type'        => 'date'
+				],
+			],
+		];
+	}
+
 	protected function posttypes_excluded()
 	{
 		return Settings::posttypesExcluded( $this->constant( 'contest_cpt' ) );
@@ -350,6 +384,12 @@ class Contest extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [ 'contest_cpt', 'contest_tax', 'section_tax', 'contest_cat' ];
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields( $this->constant( 'contest_cpt' ) );
+		$this->add_posttype_fields_supported();
 	}
 
 	public function dashboard_glance_items( $items )
