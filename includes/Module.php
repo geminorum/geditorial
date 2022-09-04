@@ -3074,6 +3074,246 @@ class Module extends Base
 	}
 
 	// PAIRED API
+	protected function _hook_paired_taxonomy_bulk_actions( $posttype_orogin, $taxonomy_origin )
+	{
+		if ( ! $this->_paired )
+			return FALSE;
+
+		if ( TRUE !== $posttype_orogin && ! $this->posttype_supported( $posttype_orogin ) )
+			return FALSE;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		$paired_posttype = $this->constant( $constants[0] );
+		// $paired_taxonomy = $this->constant( $constants[1] );
+
+		if ( ! in_array( $taxonomy_origin, get_object_taxonomies( $paired_posttype ), TRUE ) )
+			return FALSE;
+
+		$label = $this->get_posttype_label( $constants[0], 'add_new_item' );
+		$key   = sprintf( 'paired_add_new_%s', $paired_posttype );
+
+		add_filter( 'gnetwork_taxonomy_bulk_actions', static function( $actions, $taxonomy ) use ( $taxonomy_origin, $key, $label ) {
+			return $taxonomy === $taxonomy_origin ? array_merge( $actions, [ $key => $label ] ) : $actions;
+		}, 20, 2 );
+
+		add_filter( 'gnetwork_taxonomy_bulk_input', function( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
+			return ( $taxonomy === $taxonomy_origin && $action === $key ) ? [ $this, 'paired_bulk_input_add_new_item' ] : $callback;
+		}, 20, 3 );
+
+		add_filter( 'gnetwork_taxonomy_bulk_callback', function( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
+			return ( $taxonomy === $taxonomy_origin && $action === $key ) ? [ $this, 'paired_bulk_action_add_new_item' ] : $callback;
+		}, 20, 3 );
+
+		return $key;
+	}
+
+	// PAIRED API
+	public function paired_bulk_input_add_new_item( $taxonomy, $action )
+	{
+		/* translators: %s: clone into input */
+		printf( _x( 'as: %s', 'Module: Taxonomy Bulk Input Label', 'geditorial' ),
+			'<input name="'.$this->classs( 'paired-add-new-item-target' ).'" type="text" placeholder="'
+			._x( 'New Item Title', 'Module: Taxonomy Bulk Input PlaceHolder', 'geditorial' ).'" /> ' );
+
+		echo HTML::dropdown( [
+			'separeted-terms' => _x( 'Separeted Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
+			'cross-terms'     => _x( 'Cross Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
+			'union-terms'     => _x( 'Union Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
+		], [
+			'name'     => $this->classs( 'paired-add-new-item-type' ),
+			'style'    => 'float:none',
+			'selected' => 'separeted-terms',
+		] );
+	}
+
+	// PAIRED API
+	public function paired_bulk_action_add_new_item( $term_ids, $taxonomy, $action )
+	{
+		global $wpdb;
+
+		if ( ! $this->_paired )
+			return FALSE;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		$paired_posttype = $this->constant( $constants[0] );
+		$paired_taxonomy = $this->constant( $constants[1] );
+
+		if ( $action !== sprintf( 'paired_add_new_%s', $paired_posttype ) )
+			return FALSE;
+
+		$target    = self::req( $this->classs( 'paired-add-new-item-target' ) );
+		$supported = $this->posttypes();
+
+		switch ( self::req( $this->classs( 'paired-add-new-item-type' ) ) ) {
+
+			case 'cross-terms':
+
+				// bail if no target given
+				if ( empty( $target ) )
+					return FALSE;
+
+				// bail if post with same slug exists
+				if ( PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
+					return FALSE;
+
+				$object_lists = [];
+
+				foreach ( $term_ids as $term_id ) {
+
+					$term = get_term( $term_id, $taxonomy );
+
+					$object_lists[] = (array) $wpdb->get_col( $wpdb->prepare( "
+						SELECT object_id FROM {$wpdb->term_relationships} t
+						LEFT JOIN {$wpdb->posts} p ON p.ID = t.object_id
+						WHERE t.term_taxonomy_id = %d
+						AND p.post_type IN ( '".implode( "', '", esc_sql( $supported ) )."' )
+					", $term->term_taxonomy_id ) );
+				}
+
+				$object_ids = Arraay::prepNumeral( array_intersect( ...$object_lists ) );
+
+				// bail if cross term results are ampty
+				if ( empty( $object_ids ) )
+					return FALSE;
+
+				$inserted = wp_insert_term( $target, $paired_taxonomy, [
+					'slug' => sanitize_title( $target ),
+				] );
+
+				if ( self::isError( $inserted ) )
+					return FALSE;
+
+				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
+				$post_id = PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+
+				if ( self::isError( $post_id ) )
+					return FALSE;
+
+				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
+					return FALSE;
+
+				Taxonomy::disableTermCounting();
+
+				foreach ( $object_ids as $object_id )
+					wp_set_object_terms( $object_id, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
+
+				break;
+
+			case 'union-terms':
+
+				// bail if no target given
+				if ( empty( $target ) )
+					return FALSE;
+
+				// bail if post with same slug exists
+				if ( PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
+					return FALSE;
+
+				$object_lists = [];
+
+				foreach ( $term_ids as $term_id ) {
+
+					$term = get_term( $term_id, $taxonomy );
+
+					$object_lists[] = (array) $wpdb->get_col( $wpdb->prepare( "
+						SELECT object_id FROM {$wpdb->term_relationships} t
+						LEFT JOIN {$wpdb->posts} p ON p.ID = t.object_id
+						WHERE t.term_taxonomy_id = %d
+						AND p.post_type IN ( '".implode( "', '", esc_sql( $supported ) )."' )
+					", $term->term_taxonomy_id ) );
+				}
+
+				$object_ids = Arraay::prepNumeral( ...$object_lists );
+
+				// bail if cross term results are ampty
+				if ( empty( $object_ids ) )
+					return FALSE;
+
+				$inserted = wp_insert_term( $target, $paired_taxonomy, [
+					'slug' => sanitize_title( $target ),
+				] );
+
+				if ( self::isError( $inserted ) )
+					return FALSE;
+
+				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
+				$post_id = PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+
+				if ( self::isError( $post_id ) )
+					return FALSE;
+
+				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
+					return FALSE;
+
+				Taxonomy::disableTermCounting();
+
+				foreach ( $object_ids as $object_id )
+					wp_set_object_terms( $object_id, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
+
+				break;
+			default:
+			case 'separeted-terms':
+
+				Taxonomy::disableTermCounting();
+
+				foreach ( $term_ids as $term_id ) {
+
+					$term = get_term( $term_id, $taxonomy );
+
+					// bail if post with same slug exists
+					if ( PostType::getIDbySlug( $term->slug, $paired_posttype ) )
+						continue;
+
+					$current_objects = (array) $wpdb->get_col( $wpdb->prepare( "
+						SELECT object_id FROM {$wpdb->term_relationships} t
+						LEFT JOIN {$wpdb->posts} p ON p.ID = t.object_id
+						WHERE t.term_taxonomy_id = %d
+						AND p.post_type IN ( '".implode( "', '", esc_sql( $supported ) )."' )
+					", $term->term_taxonomy_id ) );
+
+					// bail if the term is empty
+					if ( empty( $current_objects ) )
+						continue;
+
+					$name = $target ? sprintf( '%s (%s)', $target, $term->name ): $term->name;
+
+					$inserted = wp_insert_term( $name, $paired_taxonomy, [
+						'slug'        => $term->slug,
+						'description' => $term->description,
+					] );
+
+					if ( self::isError( $inserted ) )
+						continue;
+
+					$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
+					$post_id = PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+
+					if ( self::isError( $post_id ) )
+						continue;
+
+					if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
+						continue;
+
+					foreach ( $current_objects as $current_object )
+						wp_set_object_terms( $current_object, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
+				}
+		}
+
+		// flush the deferred term counts
+		wp_update_term_count( NULL, NULL, TRUE );
+
+		return TRUE;
+	}
+
+	// PAIRED API
 	protected function _hook_paired_thumbnail_fallback( $posttypes = NULL )
 	{
 		if ( ! $this->_paired )

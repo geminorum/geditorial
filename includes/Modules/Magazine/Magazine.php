@@ -334,7 +334,11 @@ class Magazine extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'edit-tags' == $screen->base ) {
+
+				$this->_hook_paired_taxonomy_bulk_actions( $screen->post_type, $screen->taxonomy );
+
+			} else if ( 'post' == $screen->base ) {
 
 				if ( $subterms )
 					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );

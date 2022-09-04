@@ -354,7 +354,11 @@ class Course extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'edit-tags' == $screen->base ) {
+
+				$this->_hook_paired_taxonomy_bulk_actions( $screen->post_type, $screen->taxonomy );
+
+			} else if ( 'post' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
 					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
