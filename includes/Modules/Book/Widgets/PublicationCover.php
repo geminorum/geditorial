@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Modules\Book\ModuleTemplate;
+use geminorum\gEditorial\WordPress\Media;
 
 class PublicationCover extends gEditorial\Widget
 {
@@ -46,7 +47,7 @@ class PublicationCover extends gEditorial\Widget
 
 		$atts = [
 			'type' => $type,
-			'size' => empty( $instance['image_size'] ) ? $type.'-thumbnail' : $instance['image_size'],
+			'size' => empty( $instance['image_size'] ) ? Media::getAttachmentImageDefaultSize( $type ) : $instance['image_size'],
 			'link' => $link,
 			'echo' => FALSE,
 		];
@@ -85,7 +86,7 @@ class PublicationCover extends gEditorial\Widget
 		$this->form_title_image( $instance );
 
 		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $type, _x( 'The Publication:', 'Widget: Publication Cover', 'geditorial-book' ) );
-		$this->form_image_size( $instance, $type.'-thumbnail', 'image_size', $type );
+		$this->form_image_size( $instance, NULL, 'image_size', $type );
 
 		$this->form_checkbox( $instance, TRUE, 'link_publication', _x( 'Link to the publication', 'Widget: Publication Cover', 'geditorial-book' ) );
 		$this->form_custom_link( $instance );

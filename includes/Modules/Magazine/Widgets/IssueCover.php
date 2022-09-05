@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Modules\Magazine\ModuleTemplate;
+use geminorum\gEditorial\WordPress\Media;
 
 class IssueCover extends gEditorial\Widget
 {
@@ -51,7 +52,7 @@ class IssueCover extends gEditorial\Widget
 
 		$atts = [
 			'type'  => $type,
-			'size'  => empty( $instance['image_size'] ) ? $type.'-thumbnail' : $instance['image_size'],
+			'size'  => empty( $instance['image_size'] ) ? Media::getAttachmentImageDefaultSize( $type ) : $instance['image_size'],
 			'title' => empty( $instance['number_line'] ) ? 'title' : 'number',
 			'link'  => $link,
 			'echo'  => FALSE,
@@ -94,7 +95,7 @@ class IssueCover extends gEditorial\Widget
 		$this->form_title_image( $instance );
 
 		$this->form_page_id( $instance, '0', 'page_id', 'posttype', $type, _x( 'The Issue:', 'Widget: Issue Cover', 'geditorial-magazine' ) );
-		$this->form_image_size( $instance, $type.'-thumbnail', 'image_size', $type );
+		$this->form_image_size( $instance, NULL, 'image_size', $type );
 
 		$this->form_checkbox( $instance, FALSE, 'latest_issue', _x( 'Always the latest issue', 'Widget: Issue Cover', 'geditorial-magazine' ) );
 		$this->form_checkbox( $instance, TRUE, 'number_line', _x( 'Display the Number Line', 'Widget: Issue Cover', 'geditorial-magazine' ) );

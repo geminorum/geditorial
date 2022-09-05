@@ -575,11 +575,7 @@ class Tweaks extends gEditorial\Module
 			break;
 			case $this->classs( 'thumb' ):
 
-				$sizes = wp_get_additional_image_sizes();
-				$size  = isset( $sizes[$post->post_type.'-thumbnail'] )
-					? $post->post_type.'-thumbnail'
-					: [ 45, 72 ];
-
+				$size = NULL; // maybe filter fo this module?!
 				echo $this->filters( 'column_thumb', PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
 
 			break;

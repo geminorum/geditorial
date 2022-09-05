@@ -127,6 +127,14 @@ class Taxonomy extends Core\Base
 		return $query->query( $args );
 	}
 
+	public static function getTermTaxonomy( $term_or_id, $fallback = FALSE )
+	{
+		if ( $object = self::getTerm( $term_or_id ) )
+			return $object->taxonomy;
+
+		return $fallback;
+	}
+
 	public static function getTerm( $term_or_id, $taxonomy = '' )
 	{
 		if ( $term_or_id instanceof \WP_Term )
@@ -930,8 +938,11 @@ class Taxonomy extends Core\Base
 
 	// must add `add_thickbox()` for thickbox
 	// @SEE: `Scripts::enqueueThickBox()`
-	public static function htmlFeaturedImage( $term_id, $size = 'thumbnail', $link = TRUE, $metakey = 'image' )
+	public static function htmlFeaturedImage( $term_id, $size = NULL, $link = TRUE, $metakey = NULL )
 	{
+		if ( is_null( $size ) )
+			$size = Media::getAttachmentImageDefaultSize( NULL, self::getTermTaxonomy( $term_id, NULL ) );
+
 		return Media::htmlAttachmentImage(
 			self::getThumbnailID( $term_id, $metakey ),
 			$size,
@@ -943,7 +954,16 @@ class Taxonomy extends Core\Base
 
 	public static function getThumbnailID( $term_id, $metakey = NULL )
 	{
-		return apply_filters( 'geditorial_get_term_thumbnail_id', get_term_meta( $term_id, $metakey ?: 'image', TRUE ), $term_id );
+		if ( is_null( $metakey ) )
+			$thumbnail_id = (int) get_term_meta( $term_id, 'image', TRUE );
+
+		else if ( $metakey )
+			$thumbnail_id = (int) get_term_meta( $term_id, $metakey, TRUE );
+
+		else
+			$thumbnail_id = FALSE;
+
+		return apply_filters( 'geditorial_get_term_thumbnail_id', $thumbnail_id, $term_id, $metakey );
 	}
 
 	public static function getArchiveLink( $taxonomy )

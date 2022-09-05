@@ -401,11 +401,13 @@ class PostType extends Core\Base
 
 	// must add `add_thickbox()` for thickbox
 	// @SEE: `Scripts::enqueueThickBox()`
-	// TODO: DROP the filter @since WP 5.9.0
-	public static function htmlFeaturedImage( $post_id, $size = 'thumbnail', $link = TRUE )
+	public static function htmlFeaturedImage( $post_id, $size = NULL, $link = TRUE, $metakey = NULL )
 	{
+		if ( is_null( $size ) )
+			$size = Media::getAttachmentImageDefaultSize( get_post_type( $post_id ) );
+
 		return Media::htmlAttachmentImage(
-			self::getThumbnailID( $post_id ),
+			self::getThumbnailID( $post_id, $metakey ),
 			$size,
 			$link,
 			[ 'post' => $post_id ],
@@ -413,10 +415,18 @@ class PostType extends Core\Base
 		);
 	}
 
-	// TODO: check for custom metakey
 	public static function getThumbnailID( $post_id, $metakey = NULL )
 	{
-		return apply_filters( 'geditorial_get_post_thumbnail_id', get_post_thumbnail_id( $post_id ), $post_id );
+		if ( is_null( $metakey ) )
+			$thumbnail_id = get_post_thumbnail_id( $post_id ); // has filter @since WP 5.9.0
+
+		else if ( $metakey )
+			$thumbnail_id = (int) get_post_meta( $post_id, $metakey, TRUE );
+
+		else
+			$thumbnail_id = FALSE;
+
+		return apply_filters( 'geditorial_get_post_thumbnail_id', $thumbnail_id, $post_id, $metakey );
 	}
 
 	public static function getArchiveLink( $posttype )

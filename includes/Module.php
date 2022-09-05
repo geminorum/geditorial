@@ -3046,6 +3046,7 @@ class Module extends Base
 		return $this->image_sizes[$posttype];
 	}
 
+	// FIXME: DEPRICATED
 	public function get_image_size_key( $constant, $size = 'thumbnail' )
 	{
 		$posttype = $this->constant( $constant );

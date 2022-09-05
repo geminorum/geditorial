@@ -16,6 +16,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\ISBN;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -1039,9 +1040,10 @@ class Book extends gEditorial\Module
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
+		$type = $this->constant( 'publication_cpt' );
 		$args = [
-			'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
-			'type' => $this->constant( 'publication_cpt' ),
+			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'type' => $type,
 			'echo' => FALSE,
 		];
 
@@ -1152,7 +1154,7 @@ class Book extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => $this->get_image_size_key( 'publication_cpt', 'medium' ),
+			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'publication_cpt' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}

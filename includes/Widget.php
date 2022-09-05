@@ -711,9 +711,12 @@ class Widget extends \WP_Widget
 		HTML::label( _x( 'Avatar Size:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
-	public function form_image_size( $instance, $default = 'thumbnail', $field = 'image_size', $posttype = 'post' )
+	public function form_image_size( $instance, $default = NULL, $field = 'image_size', $posttype = 'post' )
 	{
 		$sizes = $this->get_images_sizes( $posttype );
+
+		if ( is_null( $default ) )
+			$default = Media::getAttachmentImageDefaultSize( $posttype );
 
 		if ( count( $sizes ) ) {
 

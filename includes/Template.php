@@ -25,7 +25,7 @@ class Template extends Main
 			return FALSE;
 
 		if ( is_null( $size ) )
-			$size = 'thumbnail';
+			$size = Media::getAttachmentImageDefaultSize( NULL, self::getTermTaxonomy( $term, NULL ) );
 
 		if ( ! $image = image_downsize( $term_image_id, $size ) )
 			return FALSE;
@@ -233,13 +233,13 @@ class Template extends Main
 			return FALSE;
 
 		if ( is_null( $thumbnail_id ) )
-			$thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', TRUE );
+			$thumbnail_id = PostType::getThumbnailID( $post->ID );
 
 		if ( ! $thumbnail_id )
 			return FALSE;
 
 		if ( is_null( $size ) )
-			$size = $post->post_type.'-thumbnail';
+			$size = Media::getAttachmentImageDefaultSize( $post->post_type );
 
 		if ( ! $image = image_downsize( $thumbnail_id, $size ) )
 			return FALSE;

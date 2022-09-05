@@ -9,6 +9,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -435,7 +436,7 @@ class Magazine extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => $this->get_image_size_key( 'issue_cpt', 'medium' ),
+			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'issue_cpt' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -625,9 +626,10 @@ class Magazine extends gEditorial\Module
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
+		$type = $this->constant( 'issue_cpt' );
 		$args = [
-			'size' => $this->get_image_size_key( 'issue_cpt', 'medium' ),
-			'type' => $this->constant( 'issue_cpt' ),
+			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'type' => $type,
 			'echo' => FALSE,
 		];
 

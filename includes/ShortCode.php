@@ -246,8 +246,8 @@ class ShortCode extends Main
 			'item_after'          => '',
 			'item_after_cb'       => FALSE,
 			'item_image_tile'     => NULL,
-			'item_image_metakey'  => 'image',
-			'item_image_size'     => 'thumbnail',
+			'item_image_metakey'  => NULL,
+			'item_image_size'     => NULL,
 			'item_image_loading'  => 'lazy',                           // FALSE to disable
 			'item_image_decoding' => 'async',                          // FALSE to disable
 			'item_image_empty'    => FALSE,
@@ -255,6 +255,9 @@ class ShortCode extends Main
 
 		if ( ! $image_id = Taxonomy::getThumbnailID( $term->term_id, $args['item_image_metakey'] ) )
 			return $fallback;
+
+		if ( is_null( $args['item_image_size'] ) )
+			$args['item_image_size'] = Media::getAttachmentImageDefaultSize( NULL, $term->taxonomy );
 
 		if ( ! $thumbnail_img = Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
@@ -682,6 +685,9 @@ class ShortCode extends Main
 	// post as an image on the list
 	public static function postImage( $post = NULL, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
+		if ( ! $post = PostType::getPost( $post ) )
+			return $fallback;
+
 		$args = self::atts( [
 			'item_link'           => TRUE,
 			'item_text'           => NULL,                             // callback or use %s for post title
@@ -695,18 +701,18 @@ class ShortCode extends Main
 			'item_after'          => '',
 			'item_after_cb'       => FALSE,
 			'item_image_tile'     => NULL,
-			'item_image_metakey'  => '_thumbnail_id',
-			'item_image_size'     => 'thumbnail',
+			'item_image_metakey'  => NULL,
+			'item_image_size'     => NULL,
 			'item_image_loading'  => 'lazy',                           // FALSE to disable
 			'item_image_decoding' => 'async',                          // FALSE to disable
 			'item_image_empty'    => FALSE,
 		], $atts );
 
-		if ( ! $post = PostType::getPost( $post ) )
-			return $fallback;
-
 		if ( ! $image_id = PostType::getThumbnailID( $post->ID, $args['item_image_metakey'] ) )
 			return $fallback;
+
+		if ( is_null( $args['item_image_size'] ) )
+			$args['item_image_size'] = Media::getAttachmentImageDefaultSize( $post->post_type );
 
 		if ( ! $thumbnail_img = Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
@@ -817,7 +823,7 @@ class ShortCode extends Main
 			'item_filesize'       => TRUE,                                                            // only for attachments // OLD: `item_size`
 			'item_image_tile'     => NULL,
 			'item_image_metakey'  => empty( $posttype ) ? 'image' : '_thumbnail_id',
-			'item_image_size'     => 'thumbnail',
+			'item_image_size'     => NULL,
 			'item_image_loading'  => 'lazy',                                                          // FALSE to disable
 			'item_image_decoding' => 'async',                                                         // FALSE to disable
 			'item_image_empty'    => FALSE,

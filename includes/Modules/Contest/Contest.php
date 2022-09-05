@@ -11,6 +11,7 @@ use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Contest extends gEditorial\Module
@@ -590,9 +591,10 @@ class Contest extends gEditorial\Module
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
+		$type = $this->constant( 'contest_cpt' );
 		$args = [
-			'size' => $this->get_image_size_key( 'contest_cpt', 'medium' ),
-			'type' => $this->constant( 'contest_cpt' ),
+			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'type' => $type,
 			'echo' => FALSE,
 		];
 

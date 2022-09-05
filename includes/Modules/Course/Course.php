@@ -10,6 +10,7 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Course extends gEditorial\Module
@@ -663,9 +664,10 @@ class Course extends gEditorial\Module
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
+		$type = $this->constant( 'course_cpt' );
 		$args = [
-			'size' => $this->get_image_size_key( 'course_cpt', 'medium' ),
-			'type' => $this->constant( 'course_cpt' ),
+			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'type' => $type,
 			'echo' => FALSE,
 		];
 

@@ -453,11 +453,31 @@ class Media extends Core\Base
 		return $fallback;
 	}
 
+	public static function getAttachmentImageDefaultSize( $perent_posttype = NULL, $perent_taxonomy = NULL, $fallback = 'thumbnail' )
+	{
+		$size     = NULL;
+		$sizes    = wp_get_additional_image_sizes();
+		$template = $fallback ? ( '%s-'.$fallback ) : '%s-thumbnail';
+		$posttype = $perent_posttype ? sprintf( $template, $perent_posttype ) : FALSE;
+		$taxonomy = $perent_taxonomy ? sprintf( $template, $perent_taxonomy ) : FALSE;
+
+		if ( $posttype && isset( $sizes[$posttype] ) )
+			$size = $posttype;
+
+		else if ( $taxonomy && isset( $sizes[$taxonomy] ) )
+			$size = $taxonomy;
+
+		$size = apply_filters( 'geditorial_get_thumbnail_default_size', $size, $perent_posttype, $perent_taxonomy, $fallback );
+
+		return $size ?: $fallback;
+	}
+
 	public static function htmlAttachmentSrc( $attachment_id, $size = NULL, $fallback = '' )
 	{
 		$src = $fallback;
 
-		// FIXME: sanitize `$size`
+		if ( is_null( $size ) )
+			$size = self::getAttachmentImageDefaultSize();
 
 		if ( ! empty( $attachment_id ) ) {
 
@@ -468,7 +488,7 @@ class Media extends Core\Base
 		return apply_filters( 'geditorial_get_thumbnail_src', $src, $attachment_id, $img, $fallback );
 	}
 
-	public static function htmlAttachmentImage( $attachment_id, $size = 'thumbnail', $link = TRUE, $data = [], $class = '-attachment-image' )
+	public static function htmlAttachmentImage( $attachment_id, $size = NULL, $link = TRUE, $data = [], $class = '-attachment-image' )
 	{
 		if ( empty( $attachment_id ) )
 			return '';

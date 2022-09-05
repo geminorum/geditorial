@@ -661,10 +661,7 @@ class Terms extends gEditorial\Module
 
 			case 'image':
 
-				// $sizes = Media::getPosttypeImageSizes( $post->post_type );
-				// $size  = isset( $sizes[$post->post_type.'-thumbnail'] ) ? $post->post_type.'-thumbnail' : 'thumbnail';
-				$size = [ 45, 72 ]; // FIXME
-
+				$size = NULL; // maybe filter fo this module?!
 				$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
 
 				break;
