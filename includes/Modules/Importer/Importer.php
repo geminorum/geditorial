@@ -124,6 +124,43 @@ class Importer extends gEditorial\Module
 		return update_option( $option, $stored );
 	}
 
+	private function _render_posttype_taxonomies( $posttype )
+	{
+		$taxonomies = Taxonomy::get( 4, [], $posttype );
+
+		if ( empty( $taxonomies ) )
+			return FALSE;
+
+		echo '<table class="base-table-raw"><tbody>';
+
+		foreach ( $taxonomies as $taxonomy => $object ) {
+
+			$dropdown = wp_dropdown_categories( [
+				'taxonomy'          => $taxonomy,
+				'name'              => 'terms_all['.$taxonomy.']',
+				'hierarchical'      => $object->hierarchical,
+				'show_option_none'  => Settings::showOptionNone(),
+				'option_none_value' => '0',
+				'hide_if_empty'     => TRUE,
+				'hide_empty'        => FALSE,
+				'echo'              => FALSE,
+			] );
+
+			if ( empty( $dropdown ) )
+				continue;
+
+			echo '<tr><td>';
+			echo HTML::escape( $object->labels->menu_name );
+			echo '</td><td><td>';
+				echo $dropdown;
+			echo '</td></tr>';
+		}
+
+		echo '</tbody></table>';
+
+		return TRUE;
+	}
+
 	private function _form_posts_map( $id, $posttype = 'post' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
@@ -262,7 +299,7 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	private function _form_posts_table( $id, $map = [], $posttype = 'post' )
+	private function _form_posts_table( $id, $map = [], $posttype = 'post', $terms_all = [] )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -439,6 +476,7 @@ class Importer extends gEditorial\Module
 
 					$count     = 0;
 					$field_map = self::req( 'field_map', [] );
+					$terms_all = self::req( 'terms_all', [] );
 					$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id = self::req( 'attach_id', FALSE );
 					$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
@@ -560,7 +598,15 @@ class Importer extends gEditorial\Module
 						if ( is_wp_error( $post_id ) )
 							continue;
 
-						$this->actions( 'saved', PostType::getPost( $post_id ), $data, $raw, $field_map, $attach_id );
+						foreach ( $terms_all as $taxonomy => $term_id ) {
+
+							if ( ! $taxonomy || ! $term_id )
+								continue;
+
+							wp_set_object_terms( $post_id, Arraay::prepNumeral( $term_id ), $taxonomy, TRUE );
+						}
+
+						$this->actions( 'saved', PostType::getPost( $post_id ), $data, $raw, $field_map, $attach_id, $terms_all );
 
 						$count++;
 					}
@@ -612,6 +658,7 @@ class Importer extends gEditorial\Module
 	private function _render_tools_for_posts()
 	{
 		$field_map = self::req( 'field_map', [] );
+		$terms_all = self::req( 'terms_all', [] );
 		$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id = self::req( 'upload_id', FALSE );
 		$attach_id = self::req( 'attach_id', FALSE );
@@ -620,7 +667,7 @@ class Importer extends gEditorial\Module
 		if ( $upload_id )
 			$attach_id = $upload_id;
 
-		if ( isset( $_POST['posts_step_three'] ) ) {
+		if ( isset( $_POST['posts_step_four'] ) ) {
 
 			if ( ! $attach_id )
 				return HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
@@ -629,16 +676,40 @@ class Importer extends gEditorial\Module
 				return HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			HTML::inputHiddenArray( $field_map, 'field_map' );
+			HTML::inputHiddenArray( $terms_all, 'terms_all' );
 			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
 			HTML::inputHidden( 'tools_for', 'posts' );
 
-			$this->_form_posts_table( $attach_id, $field_map, $posttype );
+			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all );
 
 			echo $this->wrap_open_buttons();
 			Settings::submitButton( 'posts_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
 			HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+
+		} else if ( isset( $_POST['posts_step_three'] ) ) {
+
+			if ( ! $attach_id )
+				return HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( ! PostType::can( $posttype, 'edit_posts' ) )
+				return HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+
+			HTML::h3( _x( 'Terms to Append All', 'Header', 'geditorial-importer' ) );
+
+			HTML::inputHiddenArray( $field_map, 'field_map' );
+			HTML::inputHidden( 'posttype', $posttype );
+			HTML::inputHidden( 'attach_id', $attach_id );
+			HTML::inputHidden( 'user_id', $user_id );
+			HTML::inputHidden( 'tools_for', 'posts' );
+
+			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
+				HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
+
+			echo $this->wrap_open_buttons();
+			Settings::submitButton( 'posts_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
+			HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( isset( $_POST['posts_step_two'] ) ) {
 
