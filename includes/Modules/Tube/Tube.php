@@ -19,7 +19,7 @@ class Tube extends gEditorial\Module
 		return [
 			'name'  => 'tube',
 			'title' => _x( 'Tube', 'Modules: Tube', 'geditorial' ),
-			'desc'  => _x( 'Video Clip Managment', 'Modules: Tube', 'geditorial' ),
+			'desc'  => _x( 'Video Clip Management', 'Modules: Tube', 'geditorial' ),
 			'icon'  => 'video-alt2',
 		];
 	}

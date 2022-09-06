@@ -522,7 +522,7 @@ class Module extends Base
 		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
-	protected function _hook_submenu_adminpage( $context = 'subpage', $parent_slug = NULL )
+	protected function _hook_submenu_adminpage( $context = 'subpage', $parent_slug = '' )
 	{
 		$slug = $this->get_adminpage_url( FALSE, [], $context );
 		$can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
@@ -3032,12 +3032,15 @@ class Module extends Base
 			$sizes = $this->filters( $posttype.'_image_sizes', [] );
 
 			if ( FALSE === $sizes ) {
+
 				$this->image_sizes[$posttype] = []; // no sizes
 
 			} else if ( count( $sizes ) ) {
+
 				$this->image_sizes[$posttype] = $sizes; // custom sizes
 
 			} else {
+
 				foreach ( Media::defaultImageSizes() as $size => $args )
 					$this->image_sizes[$posttype][$posttype.'-'.$size] = $args;
 			}

@@ -24,7 +24,7 @@ class Roles extends gEditorial\Module
 		return [
 			'name'  => 'roles',
 			'title' => _x( 'Roles', 'Modules: Roles', 'geditorial' ),
-			'desc'  => _x( 'Member & Role Managment', 'Modules: Roles', 'geditorial' ),
+			'desc'  => _x( 'Member & Role Management', 'Modules: Roles', 'geditorial' ),
 			'icon'  => 'businessman',
 		];
 	}
