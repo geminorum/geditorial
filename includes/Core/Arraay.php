@@ -195,7 +195,7 @@ class Arraay extends Base
 	//@RF: https://stackoverflow.com/a/11026840
 	public static function stripByKeys( $array, $keys )
 	{
-		return array_diff_key( $array, array_flip( $keys ) );
+		return empty( $keys ) ? $array : array_diff_key( $array, array_flip( $keys ) );
 	}
 
 	// @REF: https://stackoverflow.com/a/34575007
@@ -509,5 +509,17 @@ class Arraay extends Base
 				$array[$item->{$key}] = $item->{$value};
 
 		return $array;
+	}
+
+	// @SOURCE: https://www.php.net/manual/en/function.array-intersect.php#69762
+	public static function union( $a, $b )
+	{
+                                        //  $a = 1 2 3 4
+		return                          //  $b =   2   4 5 6
+		array_merge(
+			array_intersect($a, $b),    //         2   4
+			array_diff($a, $b),         //       1   3
+			array_diff($b, $a)          //               5 6
+		);                              //  $u = 1 2 3 4 5 6
 	}
 }

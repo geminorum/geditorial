@@ -55,4 +55,27 @@ class WooCommerce extends Core\Base
 			'mail'         => get_option( 'address-public-mail' ),
 		];
 	}
+
+	/**
+	 * Change product type
+	 * If used an invalid type a WC_Product_Simple instance will be returned.
+	 * NOTE: same as `wc_get_product_object()` with save trigger
+	 * @source https://stackoverflow.com/a/62761862
+	 *
+	 * @param int     $product_id - The product id.
+	 * @param string  $type       - The new product type
+	 */
+	public static function changeProductType( $product_id, $type )
+	{
+ 		// Get the correct product classname from the new product type
+		$classname = \WC_Product_Factory::get_product_classname( $product_id, $type );
+
+		// Get the new product object from the correct classname
+		$product = new $classname( $product_id );
+
+		// Save product to database and sync caches
+		$product->save();
+
+		return $product;
+	}
 }
