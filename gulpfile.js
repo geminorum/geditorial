@@ -128,7 +128,8 @@
           ' ./languages/' + folder + '/' + domain + '.pot' +
           ' --domain=' + pkg.name + '-' + domain +
           ' --subtract=./languages/' + pkg.name + '.pot' +
-          ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
+          // ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
+          ' --package-name="' + pkg.productName + ' ' + folder + '" ' + // no version for fewer commits!
           ' --headers=\'' + template(JSON.stringify(config.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder: folder, domain: domain, module: module }) + '\' ' +
           extra;
       }), {

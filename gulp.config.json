@@ -126,6 +126,7 @@
       "headers": {
         "Last-Translator": "NULL",
         "Language-Team": "NULL",
+        "POT-Creation-Date": "YEAR-MO-DA HO:MI+ZONE",
         "Report-Msgid-Bugs-To": "<%= data.bugs %>",
         "X-Poedit-Basepath": ".."
       }
@@ -136,6 +137,7 @@
       "headers": {
         "Last-Translator": "NULL",
         "Language-Team": "NULL",
+        "POT-Creation-Date": "YEAR-MO-DA HO:MI+ZONE",
         "Report-Msgid-Bugs-To": "<%= data.bugs %>",
         "X-Poedit-Basepath": "../../includes/Modules/<%= data.folder %>"
       }
