@@ -18,7 +18,11 @@ body.geditorial-terms-enabled {
     }
 
     .column-geditorial-terms-order {
-      width: 45px;
+      width: 50px;
+
+      span.-column-icon::before {
+        content: "\f156"; // `dashicons-sort`
+      }
     }
 
     th.column-geditorial-terms-code {

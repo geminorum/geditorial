@@ -1,0 +1,51 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Badges: Front-ALL
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+.-wrap.geditorial-badges {
+  @include mainwrap();
+  // @include theme-clearfix;
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  transition: opacity .3s ease;
+
+  z-index: 10;
+  align-items: flex-end;
+  max-width: 30%;
+
+  top: 15px;
+  right: 15px;
+
+  > .-badge {
+    color: #fff;
+    background: rgba(130, 183, 53, 1);
+
+    text-align: center;
+    text-transform: uppercase;
+    word-break: break-word;
+    font-weight: 600;
+    line-height: 1.2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 7px;
+    border-radius: 35px;
+    font-size: 14px;
+
+    min-width: 55px;
+    min-height: 55px;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+.entry-cover {
+  position: relative;
+}
