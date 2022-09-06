@@ -13,35 +13,35 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Uncategorized\n"
 "X-Domain: geditorial-uncategorized\n"
 
-#: Uncategorized.php:41
+#: Uncategorized.php:42
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: Uncategorized.php:42
+#: Uncategorized.php:43
 msgctxt "Setting Description"
 msgid "Roles that can see Uncategorized Reports."
 msgstr ""
 
 #. translators: %s: posts count
-#: Uncategorized.php:89
+#: Uncategorized.php:90
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Uncategorized.php:94
+#: Uncategorized.php:95
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr ""
 
-#: Uncategorized.php:165
+#: Uncategorized.php:166
 msgctxt "Table Action"
 msgid "Clean Uncategorized"
 msgstr ""
 
-#: Uncategorized.php:181
+#: Uncategorized.php:182
 msgctxt "Header"
 msgid "Overview of Posts in Uncategorized Terms"
 msgstr ""

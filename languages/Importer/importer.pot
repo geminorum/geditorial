@@ -69,175 +69,197 @@ msgctxt "Tool Box"
 msgid "Helps with Importing contents from CSV files into any post-type, with meta support."
 msgstr ""
 
-#: Importer.php:184
+#: Importer.php:221
 msgctxt "Button"
 msgid "Upload"
 msgstr ""
 
-#: Importer.php:230
+#: Importer.php:267
 msgctxt "Table Column"
 msgid "Image"
 msgstr ""
 
-#: Importer.php:251
+#: Importer.php:288
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Importer.php:260
-#: Importer.php:345
+#: Importer.php:297
+#: Importer.php:382
 msgctxt "Header"
 msgid "%s Records Found"
 msgstr ""
 
-#: Importer.php:295
+#: Importer.php:332
 msgctxt "Table Column"
 msgid "[Checks]"
 msgstr ""
 
-#: Importer.php:320
+#: Importer.php:357
 msgctxt "Table Column"
 msgid "Similar to Title:"
 msgstr ""
 
 #. translators: %s: custom metakey
-#: Importer.php:337
+#: Importer.php:374
 msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr ""
 
-#: Importer.php:594
+#: Importer.php:640
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr ""
 
-#: Importer.php:597
+#: Importer.php:643
 msgctxt "Message"
 msgid "Imports are not supported for any of the post-types!"
 msgstr ""
 
-#: Importer.php:600
+#: Importer.php:646
 msgctxt "Header"
 msgid "Import Data from CSV into Posts"
 msgstr ""
 
-#: Importer.php:606
+#: Importer.php:652
 msgctxt "Header"
 msgid "Import Remote Files as Attachments"
 msgstr ""
 
-#: Importer.php:627
-#: Importer.php:647
+#: Importer.php:673
+#: Importer.php:694
+#: Importer.php:717
 msgctxt "Message"
 msgid "Import source is not defined!"
 msgstr ""
 
-#: Importer.php:630
-#: Importer.php:650
-#: Importer.php:700
+#: Importer.php:676
+#: Importer.php:697
+#: Importer.php:720
+#: Importer.php:770
 msgctxt "Message"
 msgid "You are not allowed to edit this post-type!"
 msgstr ""
 
-#: Importer.php:641
+#: Importer.php:688
 msgctxt "Button"
 msgid "Import"
 msgstr ""
 
-#: Importer.php:642
-#: Importer.php:710
+#: Importer.php:689
+#: Importer.php:780
 msgctxt "Message"
 msgid "Select records to finally import."
 msgstr ""
 
-#: Importer.php:652
+#: Importer.php:699
+msgctxt "Header"
+msgid "Terms to Append All"
+msgstr ""
+
+#: Importer.php:708
+msgctxt "Message"
+msgid "No taxonomy availabe for this post-type!"
+msgstr ""
+
+#: Importer.php:711
+msgctxt "Button"
+msgid "Step 3: Terms"
+msgstr ""
+
+#: Importer.php:712
+msgctxt "Message"
+msgid "Select a term from each post-type supported taxonomy to append all imported posts."
+msgstr ""
+
+#: Importer.php:722
 msgctxt "Header"
 msgid "Map the Importer"
 msgstr ""
 
-#: Importer.php:662
+#: Importer.php:732
 msgctxt "Button"
 msgid "Step 2: Map"
 msgstr ""
 
-#: Importer.php:663
+#: Importer.php:733
 msgctxt "Message"
 msgid "Map the file fields to the post-type fields."
 msgstr ""
 
-#: Importer.php:670
+#: Importer.php:740
 msgctxt "Button"
 msgid "Step 1: Attachment"
 msgstr ""
 
-#: Importer.php:671
+#: Importer.php:741
 msgctxt "Message"
 msgid "Upload or select a CSV file, post-type and user to map the import."
 msgstr ""
 
-#: Importer.php:690
+#: Importer.php:760
 msgctxt "Message"
 msgid "You are not allowed to upload files!"
 msgstr ""
 
-#: Importer.php:697
+#: Importer.php:767
 msgctxt "Message"
 msgid "Refrence meta-key is not defined!"
 msgstr ""
 
-#: Importer.php:708
+#: Importer.php:778
 msgctxt "Button"
 msgid "Import & Set Thumbnail"
 msgstr ""
 
-#: Importer.php:709
+#: Importer.php:779
 msgctxt "Button"
 msgid "Import Only"
 msgstr ""
 
-#: Importer.php:754
+#: Importer.php:824
 msgctxt "Button"
 msgid "Step 1: Meta-key"
 msgstr ""
 
-#: Importer.php:755
+#: Importer.php:825
 msgctxt "Message"
 msgid "Select a meta-key for refrence on importing the attachments."
 msgstr ""
 
-#: Importer.php:770
+#: Importer.php:840
 msgctxt "Post Field"
 msgid "Extra: Old ID"
 msgstr ""
 
-#: Importer.php:771
+#: Importer.php:841
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr ""
 
-#: Importer.php:772
+#: Importer.php:842
 msgctxt "Post Field"
 msgid "Menu Order"
 msgstr ""
 
-#: Importer.php:773
+#: Importer.php:843
 msgctxt "Post Field"
 msgid "Post Title"
 msgstr ""
 
-#: Importer.php:774
+#: Importer.php:844
 msgctxt "Post Field"
 msgid "Post Content"
 msgstr ""
 
-#: Importer.php:775
+#: Importer.php:845
 msgctxt "Post Field"
 msgid "Post Excerpt"
 msgstr ""
 
 #. translators: %s: taxonomy name placeholder
-#: Importer.php:780
+#: Importer.php:850
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr ""

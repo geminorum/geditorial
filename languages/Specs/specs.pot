@@ -13,65 +13,65 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
 
-#: Specs.php:53
+#: Specs.php:54
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr ""
 
-#: Specs.php:54
+#: Specs.php:55
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr ""
 
-#: Specs.php:55
+#: Specs.php:56
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr ""
 
-#: Specs.php:58
+#: Specs.php:59
 msgctxt "Strings: Description"
 msgid "In Specifications Title"
 msgstr ""
 
-#: Specs.php:59
+#: Specs.php:60
 msgctxt "Strings: Description"
 msgid "In Specifications Order"
 msgstr ""
 
-#: Specs.php:60
+#: Specs.php:61
 msgctxt "Strings: Description"
 msgid "In Specifications Description"
 msgstr ""
 
-#: Specs.php:63
+#: Specs.php:64
 msgctxt "Column Title"
 msgid "Specifications"
 msgstr ""
 
-#: Specs.php:64
+#: Specs.php:65
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Specification &ndash;"
 msgstr ""
 
-#: Specs.php:67
+#: Specs.php:68
 msgctxt "Noop"
 msgid "Specification"
 msgid_plural "Specifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Specs.php:300
+#: Specs.php:301
 msgctxt "Sortable Handler"
 msgid "Sort me!"
 msgstr ""
 
-#: Specs.php:303
+#: Specs.php:304
 msgctxt "Sortable Trash"
 msgid "Trash me!"
 msgstr ""
 
-#: Specs.php:319
-#: Specs.php:453
+#: Specs.php:320
+#: Specs.php:454
 msgctxt "Modules: Specs"
 msgid "Unknown Field"
 msgstr ""

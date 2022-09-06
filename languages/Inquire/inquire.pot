@@ -202,7 +202,17 @@ msgctxt "Button"
 msgid "Install Default Inquiry Priorities"
 msgstr ""
 
+#: Inquire.php:199
+msgctxt "Template Title"
+msgid "Editorial: Inquire: Dashboard"
+msgstr ""
+
 #: Inquire.php:269
 msgctxt "Placeholder"
 msgid "Enter question title here"
+msgstr ""
+
+#: ModuleTemplate.php:28
+msgctxt "Header"
+msgid "Overview of Post Orthography"
 msgstr ""

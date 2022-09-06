@@ -285,102 +285,102 @@ msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr ""
 
-#: Terms.php:921
-#: Terms.php:1092
+#: Terms.php:925
+#: Terms.php:1096
 msgctxt "Button"
 msgid "Choose"
 msgstr ""
 
-#: Terms.php:926
-#: Terms.php:1098
+#: Terms.php:930
+#: Terms.php:1102
 msgctxt "Button"
 msgid "Remove"
 msgstr ""
 
-#: Terms.php:1206
+#: Terms.php:1210
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr ""
 
-#: Terms.php:1213
+#: Terms.php:1217
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr ""
 
-#: Terms.php:1224
-#: Terms.php:1243
+#: Terms.php:1228
+#: Terms.php:1247
 msgctxt "Adminbar"
 msgid "Description"
 msgstr ""
 
 #. translators: %s: meta title
-#: Terms.php:1255
+#: Terms.php:1259
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr ""
 
-#: Terms.php:1317
+#: Terms.php:1321
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr ""
 
-#: Terms.php:1339
+#: Terms.php:1343
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr ""
 
-#: Terms.php:1415
+#: Terms.php:1419
 msgctxt "Header"
 msgid "Term Tools"
 msgstr ""
 
-#: Terms.php:1421
+#: Terms.php:1425
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr ""
 
-#: Terms.php:1441
+#: Terms.php:1445
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Terms.php:1443
+#: Terms.php:1447
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr ""
 
-#: Terms.php:1451
+#: Terms.php:1455
 msgctxt "Message"
 msgid "Currently no tool available."
 msgstr ""
 
-#: Terms.php:1504
+#: Terms.php:1508
 msgctxt "Table Action"
 msgid "Purge Unregistered"
 msgstr ""
 
-#: Terms.php:1518
+#: Terms.php:1522
 msgctxt "Table Column"
 msgid "Raw"
 msgstr ""
 
-#: Terms.php:1537
+#: Terms.php:1541
 msgctxt "Header"
 msgid "Overview of Posts with Terms"
 msgstr ""
 
 #. translators: %s: term name
-#: Terms.php:1559
+#: Terms.php:1563
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Terms.php:1623
+#: Terms.php:1627
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr ""
 
-#: Terms.php:1626
+#: Terms.php:1630
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr ""

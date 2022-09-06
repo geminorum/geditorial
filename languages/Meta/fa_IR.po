@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Meta\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-06-19T19:49:49+00:00\n"
-"PO-Revision-Date: 2022-06-20 00:21+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2022-08-28 17:00+0430\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Meta\n"
 "X-Domain: geditorial-meta\n"
 
@@ -294,47 +294,47 @@ msgstr "قیمت روی جلد محتوا"
 #: Meta.php:149
 msgctxt "Descriptions"
 msgid "A Way to Contact Someone about the Content"
-msgstr ""
+msgstr "راهی برای تماس با کسی درباره محتوا"
 
 #: Meta.php:150
 msgctxt "Descriptions"
 msgid "Phone Contact Number about the Content"
-msgstr ""
+msgstr "شماره تماس تلفن درباره محتوا"
 
 #: Meta.php:151
 msgctxt "Descriptions"
 msgid "Mobile Contact Number about the Content"
-msgstr ""
+msgstr "شماره تماس موبایل درباره محتوا"
 
 #: Meta.php:153
 msgctxt "Descriptions"
 msgid "Public Website URL of the Content"
-msgstr ""
+msgstr "نشانی وبسایت عمومی درباره محتوا"
 
 #: Meta.php:154
 msgctxt "Descriptions"
 msgid "Email Address about the Content"
-msgstr ""
+msgstr "نشانی ایمیل درباره محتوا"
 
 #: Meta.php:155
 msgctxt "Descriptions"
 msgid "Postal Address about the Content"
-msgstr ""
+msgstr "کدپستی درباره محتوا"
 
 #: Meta.php:157
 msgctxt "Descriptions"
 msgid "Embeddable URL of the External Content"
-msgstr ""
+msgstr "نشانی جاساز از محتوای بیرونی"
 
 #: Meta.php:158
 msgctxt "Descriptions"
 msgid "Audio Source URL of the Content"
-msgstr ""
+msgstr "نشانی منبع صوتی از محتوا"
 
 #: Meta.php:159
 msgctxt "Descriptions"
 msgid "Video Source URL of the Content"
-msgstr ""
+msgstr "نشانی منبع ویدئویی از محتوا"
 
 #: Meta.php:161
 msgctxt "Descriptions"
@@ -392,69 +392,69 @@ msgctxt "Default Term"
 msgid "Report"
 msgstr "گزارش"
 
-#: Meta.php:274
+#: Meta.php:267
 msgctxt "Button"
 msgid "Install Default Column Headers"
 msgstr "نصب سرستون‌های پیش‌فرض"
 
-#: Meta.php:601
+#: Meta.php:594
 msgctxt "Message"
 msgid "No Meta Fields"
 msgstr "گزینه‌ای وجود ندارد"
 
-#: Meta.php:1134
+#: Meta.php:1129
 msgctxt "Header"
 msgid "Meta Tools"
 msgstr "ابزارهای متا"
 
-#: Meta.php:1149
+#: Meta.php:1144
 msgctxt "Card Title"
 msgid "Import Custom Fields"
 msgstr "درون‌ریزی از زمینه‌های سفارشی"
 
-#: Meta.php:1189
+#: Meta.php:1184
 msgctxt "Button"
 msgid "Check"
 msgstr "بررسی"
 
-#: Meta.php:1192
+#: Meta.php:1187
 msgctxt "Button"
 msgid "Covert"
 msgstr "تبدیل"
 
-#: Meta.php:1195
+#: Meta.php:1190
 msgctxt "Button"
 msgid "Delete"
 msgstr "حذف"
 
-#: Meta.php:1197
+#: Meta.php:1192
 msgctxt "Message"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr "بررسی زمینه‌های سفارشی و درون‌ریزی به عنوان متا"
 
-#: Meta.php:1207
+#: Meta.php:1202
 msgctxt "Table Column"
 msgid "Type"
 msgstr "نوع"
 
-#: Meta.php:1217
+#: Meta.php:1212
 msgctxt "Table Column"
 msgid "Title"
 msgstr "عنوان"
 
 #. translators: %s: title
-#: Meta.php:1223
+#: Meta.php:1218
 msgctxt "Table Column"
 msgid "Meta: %s"
 msgstr "متا: %s"
 
-#: Meta.php:1228
+#: Meta.php:1223
 msgctxt "Table Empty"
 msgid "No Meta Found!"
 msgstr "متا پیدا نشد!"
 
 #. translators: %s: field title
-#: Meta.php:1387
+#: Meta.php:1384
 msgctxt "Import Field"
 msgid "Meta: %s"
 msgstr "متا: %s"

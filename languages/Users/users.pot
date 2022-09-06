@@ -63,178 +63,178 @@ msgctxt "Setting Description"
 msgid "Limits each author to post just on selected categories."
 msgstr ""
 
+#: Users.php:103
+msgctxt "Dashboard Widget Title"
+msgid "Your Profile"
+msgstr ""
+
 #: Users.php:104
-msgctxt "Taxonomy Menu"
-msgid "Groups"
+msgctxt "Dashboard Widget Action"
+msgid "Edit your profile"
 msgstr ""
 
 #: Users.php:105
-#: Users.php:110
-msgctxt "Column Title"
-msgid "Users"
-msgstr ""
-
-#: Users.php:106
-msgctxt "Show Option All"
-msgid "All user groups"
+msgctxt "Dashboard Widget Action"
+msgid "Edit"
 msgstr ""
 
 #: Users.php:109
 msgctxt "Taxonomy Menu"
-msgid "Types"
+msgid "Groups"
+msgstr ""
+
+#: Users.php:110
+#: Users.php:115
+msgctxt "Column Title"
+msgid "Users"
 msgstr ""
 
 #: Users.php:111
 msgctxt "Show Option All"
+msgid "All user groups"
+msgstr ""
+
+#: Users.php:114
+msgctxt "Taxonomy Menu"
+msgid "Types"
+msgstr ""
+
+#: Users.php:116
+msgctxt "Show Option All"
 msgid "All user types"
 msgstr ""
 
-#: Users.php:113
+#: Users.php:118
 msgctxt "Column Title"
 msgid "Summary"
 msgstr ""
 
-#: Users.php:116
+#: Users.php:121
 msgid "User Group"
 msgid_plural "User Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Users.php:117
+#: Users.php:122
 msgid "User Type"
 msgid_plural "User Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Users.php:121
+#: Users.php:126
 msgctxt "Label: Not Found"
 msgid "There are no groups available."
 msgstr ""
 
-#: Users.php:124
+#: Users.php:129
 msgctxt "Label: Not Found"
 msgid "There are no types available."
 msgstr ""
 
-#: Users.php:259
-msgctxt "Dashboard Widget Title"
-msgid "Your Profile"
-msgstr ""
-
-#: Users.php:262
-msgctxt "Dashboard Widget Action"
-msgid "Edit your profile"
-msgstr ""
-
-#: Users.php:263
-msgctxt "Dashboard Widget Action"
-msgid "Edit"
-msgstr ""
-
-#: Users.php:347
+#: Users.php:351
 msgctxt "Row Icon Title"
 msgid "Group"
 msgstr ""
 
-#: Users.php:361
+#: Users.php:365
 msgctxt "Row Icon Title"
 msgid "Type"
 msgstr ""
 
-#: Users.php:414
+#: Users.php:418
 msgctxt "Header"
 msgid "Site Categories"
 msgstr ""
 
-#: Users.php:415
+#: Users.php:419
 msgctxt "Message"
 msgid "Restrict non editor users to post in selected categories only."
 msgstr ""
 
-#: Users.php:418
+#: Users.php:422
 msgctxt "Header"
 msgid "User Categories"
 msgstr ""
 
-#: Users.php:446
+#: Users.php:450
 msgctxt "Message"
 msgid "There are no categories available."
 msgstr ""
 
-#: Users.php:542
+#: Users.php:546
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr ""
 
-#: Users.php:549
+#: Users.php:553
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr ""
 
-#: Users.php:556
+#: Users.php:560
 msgctxt "Row Icon Title"
 msgid "URL"
 msgstr ""
 
-#: Users.php:574
+#: Users.php:578
 msgctxt "Row Icon Title"
 msgid "Registered"
 msgstr ""
 
 #. translators: %s: date
-#: Users.php:576
+#: Users.php:580
 msgctxt "Row"
 msgid "Registered on %s"
 msgstr ""
 
-#: Users.php:581
+#: Users.php:585
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr ""
 
-#: Users.php:616
+#: Users.php:620
 msgctxt "Header"
 msgid "User Reports"
 msgstr ""
 
-#: Users.php:620
+#: Users.php:624
 msgctxt "Header"
 msgid "By PostType"
 msgstr ""
 
-#: Users.php:635
+#: Users.php:639
 msgctxt "None Title"
 msgid "All Users"
 msgstr ""
 
-#: Users.php:645
+#: Users.php:649
 msgctxt "None Title"
 msgid "All Months"
 msgstr ""
 
-#: Users.php:653
+#: Users.php:657
 msgctxt "Button"
 msgid "Query Stats"
 msgstr ""
 
-#: Users.php:728
+#: Users.php:731
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr ""
 
 #. translators: %s: error
-#: Users.php:735
+#: Users.php:738
 msgctxt "Message"
 msgid "Before you can upload a file, you will need to fix the following error: %s"
 msgstr ""
 
 #. translators: %s: size
-#: Users.php:749
+#: Users.php:752
 msgctxt "Message"
 msgid "Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>"
 msgstr ""
 
-#: Users.php:753
+#: Users.php:756
 msgctxt "Button"
 msgid "Upload and Re-Map"
 msgstr ""

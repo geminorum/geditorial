@@ -390,69 +390,69 @@ msgctxt "Default Term"
 msgid "Report"
 msgstr ""
 
-#: Meta.php:274
+#: Meta.php:267
 msgctxt "Button"
 msgid "Install Default Column Headers"
 msgstr ""
 
-#: Meta.php:601
+#: Meta.php:595
 msgctxt "Message"
 msgid "No Meta Fields"
 msgstr ""
 
-#: Meta.php:1134
+#: Meta.php:1131
 msgctxt "Header"
 msgid "Meta Tools"
 msgstr ""
 
-#: Meta.php:1149
+#: Meta.php:1146
 msgctxt "Card Title"
 msgid "Import Custom Fields"
 msgstr ""
 
-#: Meta.php:1189
+#: Meta.php:1186
 msgctxt "Button"
 msgid "Check"
 msgstr ""
 
-#: Meta.php:1192
+#: Meta.php:1189
 msgctxt "Button"
 msgid "Covert"
 msgstr ""
 
-#: Meta.php:1195
+#: Meta.php:1192
 msgctxt "Button"
 msgid "Delete"
 msgstr ""
 
-#: Meta.php:1197
+#: Meta.php:1194
 msgctxt "Message"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr ""
 
-#: Meta.php:1207
+#: Meta.php:1204
 msgctxt "Table Column"
 msgid "Type"
 msgstr ""
 
-#: Meta.php:1217
+#: Meta.php:1214
 msgctxt "Table Column"
 msgid "Title"
 msgstr ""
 
 #. translators: %s: title
-#: Meta.php:1223
+#: Meta.php:1220
 msgctxt "Table Column"
 msgid "Meta: %s"
 msgstr ""
 
-#: Meta.php:1228
+#: Meta.php:1225
 msgctxt "Table Empty"
 msgid "No Meta Found!"
 msgstr ""
 
 #. translators: %s: field title
-#: Meta.php:1387
+#: Meta.php:1386
 msgctxt "Import Field"
 msgid "Meta: %s"
 msgstr ""
