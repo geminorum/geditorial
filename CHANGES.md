@@ -1,3 +1,26 @@
+### 3.23.4
+* main/helper: term title row
+* main/module: :new: paired taxonomy bulk actions
+* main/module: better handling default image size
+* main/module: field type for mobile phones
+* main/module: force parents option on paired api
+* main/module: parent dropdown on new-post frame
+* main/module: prep term ids before setting on object
+* main/module: store current site id
+* main/module: store parent data on paired api
+* main/module: widget title via internal strings api
+* main/template: post image helper revised
+* main/widget: prop widget name from class
+* module/attachments: check for term thumbnails
+* module/attachments: empty meta/remove thumbnails actions
+* module/attachments: file path as title attr on sizes
+* module/contest: support for custom meta fields
+* module/importer: :new: append to all taxonomies
+* module/terms: clear image meta upon attachment deleted
+* module/wc-widgets: :new: message widget
+* module/wc-widgets: support hook on before order details
+* module/wc-widgets: support hooks on wc dashboard
+
 ### 3.23.3
 * main/module: more accurate hooking
 * main/module: support for async decoding attr on image tags
