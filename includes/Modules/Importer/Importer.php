@@ -195,8 +195,10 @@ class Importer extends gEditorial\Module
 
 			echo '</td><td>'
 				.HTML::dropdown( $fields, [
-					'selected' => array_key_exists( $key, $map ) ? $map[$key] : 'none',
-					'name'     => 'field_map['.$key.']',
+					'selected'   => array_key_exists( $key, $map ) ? $map[$key] : 'none',
+					'name'       => 'field_map['.$key.']',
+					'none_title' => Settings::showOptionNone(),
+					'none_value' => 'none',
 				] )
 			.'</td><td><td class="-sep">';
 
@@ -836,7 +838,6 @@ class Importer extends gEditorial\Module
 	public function get_importer_fields( $posttype = NULL, $taxonomies = [] )
 	{
 		$fields = [
-			'none'                  => Settings::showOptionNone(),
 			'importer_old_id'       => _x( 'Extra: Old ID', 'Post Field', 'geditorial-importer' ),
 			'importer_custom_meta'  => _x( 'Extra: Custom Meta', 'Post Field', 'geditorial-importer' ),
 			'importer_menu_order'   => _x( 'Menu Order', 'Post Field', 'geditorial-importer' ),
