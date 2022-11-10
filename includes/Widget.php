@@ -779,7 +779,7 @@ class Widget extends \WP_Widget
 	public function form_page_id( $instance, $default = '0', $field = 'page_id', $posttype_field = 'posttype', $posttype_default = 'page', $label = NULL )
 	{
 		$posttype = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
-		$page_id   = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$page_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( is_null( $label ) )
 			$label = _x( 'Page:', 'Widget Core', 'geditorial' );

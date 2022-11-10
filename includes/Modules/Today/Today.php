@@ -818,10 +818,10 @@ class Today extends gEditorial\Module
 
 		// reset query variables, because `WP_Query` does nothing with
 		// 'customdate' or 'timespan', so it's better remove them
-		$query->init();
+		$wp_query->init();
 
 		// set date query based on custom vars
-		$query->set( 'date_query', [
+		$wp_query->set( 'date_query', [
 			'relation' => 'AND',
 			[
 				'year'  => date( 'Y', $timestamp ),

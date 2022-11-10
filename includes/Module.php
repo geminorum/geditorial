@@ -3625,8 +3625,8 @@ class Module extends Base
 				'taxonomy' => $this->constant( $constants[3] ),
 				'terms'    => $terms,
 			] ],
-			'fields'      => 'ids',
-			'numberposts' => -1,
+			'fields'         => 'ids',
+			'posts_per_page' => -1,
 
 			'suppress_filters'       => TRUE,
 			'update_post_meta_cache' => FALSE,
@@ -5790,7 +5790,7 @@ class Module extends Base
 				'is_404'     => TRUE,
 			], $empty_callback );
 
-			$this->filter_append( 'post_class', 'empty-entry' );
+			$this->filter_append( 'post_class', [ 'empty-posttype', 'empty-'.$posttype ] );
 
 			// look again for template
 			// $again = get_singular_template();
@@ -5809,7 +5809,7 @@ class Module extends Base
 				'is_archive' => TRUE,
 			], $archive_callback );
 
-			$this->filter_append( 'post_class', 'archive-entry' );
+			$this->filter_append( 'post_class', [ 'archive-posttype', 'archive-'.$posttype ] );
 			$this->filter( 'post_type_archive_title', 2 );
 			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
 			$this->filter_false( 'gtheme_navigation_crumb_archive' );

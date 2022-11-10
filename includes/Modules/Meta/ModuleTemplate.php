@@ -112,7 +112,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( FALSE === $meta )
 			return FALSE;
 
-		$meta = apply_filters( 'gmeta_lead', do_shortcode( $meta, TRUE ) );
+		$meta = apply_filters( 'gmeta_lead', apply_shortcodes( $meta, TRUE ) );
 
 		if ( $filter && is_callable( $filter ) )
 			$meta = call_user_func( $filter, $meta );
@@ -291,7 +291,7 @@ class ModuleTemplate extends gEditorial\Template
 		} else if ( isset( $args['def'] ) ) {
 
 			if ( isset( $args['echo'] ) && ! $args['echo'] )
-				return $html;
+				return $args['def'];
 
 			echo $args['def'];
 			return FALSE;

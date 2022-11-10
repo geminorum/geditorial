@@ -265,7 +265,7 @@ class Archives extends gEditorial\Module
 		$setting = $this->get_setting( 'posttype_'.$this->current.'_content', '[alphabet-posts post_type="%s" /]' );
 
 		$form = $this->get_search_form( [ 'post_type[]' => $this->current ] );
-		$html = do_shortcode( sprintf( $setting, $this->current ) );
+		$html = apply_shortcodes( sprintf( $setting, $this->current ) );
 		$html = $this->filters( 'posttype_archive_content', $html, $this->current );
 
 		return HTML::wrap( $form.$html, '-posttype-archives-content' );
@@ -294,7 +294,7 @@ class Archives extends gEditorial\Module
 	{
 		$setting = $this->get_setting( 'taxonomy_'.$this->current.'_content', '[alphabet-terms taxonomy="%s" /]' );
 
-		$html = do_shortcode( sprintf( $setting, $this->current ) );
+		$html = apply_shortcodes( sprintf( $setting, $this->current ) );
 		$html = $this->filters( 'taxonomy_archive_content', $html, $this->current );
 
 		return HTML::wrap( $html, '-taxonomy-archives-content' );

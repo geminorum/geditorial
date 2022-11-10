@@ -119,7 +119,7 @@ class Entry extends gEditorial\Module
 			add_action( $this->base.'_content_before', function( $content ) use ( $before ) {
 
 				if ( $this->is_content_insert( FALSE ) )
-					echo $this->wrap( do_shortcode( $before ), '-before' );
+					echo $this->wrap( apply_shortcodes( $before ), '-before' );
 
 			}, 100 );
 
@@ -127,7 +127,7 @@ class Entry extends gEditorial\Module
 			add_action( $this->base.'_content_after', function( $content ) use ( $after ) {
 
 				if ( $this->is_content_insert( FALSE ) )
-					echo $this->wrap( do_shortcode( $after ), '-after' );
+					echo $this->wrap( apply_shortcodes( $after ), '-after' );
 
 			}, 1 );
 

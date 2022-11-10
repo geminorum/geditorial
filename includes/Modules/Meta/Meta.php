@@ -1061,14 +1061,14 @@ class Meta extends gEditorial\Module
 				return HTML::link( URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 
 			case 'email_address':
-				return do_shortcode( sprintf( '[email]%s[/email]', trim( $raw ) ) );
+				return apply_shortcodes( sprintf( '[email]%s[/email]', trim( $raw ) ) );
 
 			case 'contact_string':
 				return Helper::prepContact( trim( $raw ) );
 
 			case 'phone_number':
 			case 'mobile_number':
-				return do_shortcode( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
+				return apply_shortcodes( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
 
 			case 'content_embed_url':
 				return Template::doEmbedShortCode( trim( $raw ) );

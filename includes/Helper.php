@@ -137,7 +137,7 @@ class Helper extends Main
 			return '';
 
 		if ( $shortcode )
-			$text = do_shortcode( $text, TRUE );
+			$text = apply_shortcodes( $text, TRUE );
 
 		$text = apply_filters( 'html_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
