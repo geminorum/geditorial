@@ -1193,6 +1193,11 @@ class Module extends Base
 		return $default;
 	}
 
+	public function get_postmeta_key( $field, $prefix = NULL )
+	{
+		return sprintf( '_%s_%s', ( is_null( $prefix ) ? $this->key : $prefix ), $field );
+	}
+
 	public function get_postmeta_field( $post_id, $field, $default = FALSE, $prefix = NULL, $metakey = NULL )
 	{
 		if ( ! $post_id )
@@ -1205,7 +1210,7 @@ class Module extends Base
 
 		foreach ( $this->sanitize_postmeta_field( $field ) as $field_key ) {
 
-			if ( $data = $this->fetch_postmeta( $post_id, $default, sprintf( '_%s_%s', $prefix, $field_key ) ) )
+			if ( $data = $this->fetch_postmeta( $post_id, $default, $this->get_postmeta_key( $field_key, $prefix ) ) )
 				return $data;
 
 			if ( is_array( $legacy ) && array_key_exists( $field_key, $legacy ) )
@@ -1220,13 +1225,13 @@ class Module extends Base
 		if ( is_null( $prefix ) )
 			$prefix = $this->key;
 
-		if ( ! $this->store_postmeta( $post_id, $data, sprintf( '_%s_%s', $prefix, $field ) ) )
+		if ( ! $this->store_postmeta( $post_id, $data, $this->get_postmeta_key( $field, $prefix ) ) )
 			return FALSE;
 
 		// tries to cleanup old field keys, upon changing in the future
 		foreach ( $this->sanitize_postmeta_field( $field ) as $offset => $field_key )
 			if ( $offset ) // skips the current key!
-				delete_post_meta( $post_id, sprintf( '_%s_%s', $prefix, $field_key ) );
+				delete_post_meta( $post_id, $this->get_postmeta_key( $field_key, $prefix ) );
 
 		return TRUE;
 	}
