@@ -311,6 +311,15 @@ class Plugin
 		return isset( $this->{$module} );
 	}
 
+	public function disable_process( $module, $context = 'import' )
+	{
+		// already not enabled!
+		if ( ! $this->enabled( $module ) )
+			return TRUE;
+
+		return $this->{$module}->disable_process( $context );
+	}
+
 	public function count()
 	{
 		return empty( $this->_modules ) ? 0 : count( get_object_vars( $this->_modules ) );
