@@ -1943,7 +1943,7 @@ class Module extends Base
 	{
 		if ( ! empty( $field['sanitize'] ) && is_callable( $field['sanitize'] ) )
 			return $this->filters( 'sanitize_posttype_field',
-				call_user_func_array( $field['sanitize'], $data, $field, $post ),
+				call_user_func_array( $field['sanitize'], [ $data, $field, $post ] ),
 				$field, $post, $data );
 
 		$sanitized = $data;

@@ -949,7 +949,8 @@ class Audit extends gEditorial\Module
 	{
 		Taxonomy::disableTermCounting();
 
-		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+		if ( ! WordPress::isDev() )
+			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
 
 		$this->raise_resources( $count, 60, 'audit' );
 	}

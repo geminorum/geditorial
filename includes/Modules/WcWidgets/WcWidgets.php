@@ -51,6 +51,8 @@ class WcWidgets extends gEditorial\Module
 	{
 		return [
 			'WC-Message' => 'WCMessage',
+			// TODO: 'WC-ProductMeta' => 'WCProductMeta', // https://gist.github.com/bekarice/4022e3051d7684ddee2a
+			// TODO: https://gist.github.com/bekarice/377d10d2efd929be1ab8
 		];
 	}
 
