@@ -163,6 +163,36 @@ class PostType extends Core\Base
 		return $list;
 	}
 
+
+	public static function invalidateIDbyMeta( $meta, $value )
+	{
+		global $gEditorialIDbyMeta;
+
+		if ( empty( $meta ) )
+			return TRUE;
+
+		if ( empty( $gEditorialIDbyMeta ) )
+			return TRUE;
+
+		if ( FALSE === $value ) {
+
+			// clear all meta by key
+			foreach ( (array) $meta as $key ) {
+				unset( $gEditorialIDbyMeta[$key]['all'] );
+				unset( $gEditorialIDbyMeta[$key]['single'] );
+			}
+
+		} else {
+
+			foreach ( (array) $meta as $key ) {
+				unset( $gEditorialIDbyMeta[$key]['all'][$value] );
+				unset( $gEditorialIDbyMeta[$key]['single'][$value] );
+			}
+		}
+
+		return TRUE;
+	}
+
 	// WTF: `WP_Query` does not support `id=>name` as fields
 	public static function getIDs( $posttype = 'post', $extra = [], $fields = NULL )
 	{

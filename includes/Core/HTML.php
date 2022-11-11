@@ -1332,8 +1332,14 @@ class HTML extends Base
 
 		foreach ( $list as $offset => $value ) {
 
-			if ( $args['value'] )
-				$key = is_object( $value ) ? $value->{$args['value']} : $value[$args['value']];
+			if ( ! $args['value'] )
+				$key = $offset;
+
+			else if ( is_object( $value ) )
+				$key = property_exists( $value, $args['value'] ) ? $value->{$args['value']} : $offset;
+
+			else if ( is_array( $value ) )
+				$key = array_key_exists( $value, $args['value'] ) ? $value[$args['value']] : $offset;
 
 			else
 				$key = $offset;
@@ -1341,8 +1347,14 @@ class HTML extends Base
 			if ( in_array( $key, (array) $args['exclude'] ) )
 				continue;
 
-			if ( $args['prop'] )
-				$title = is_object( $value ) ? $value->{$args['prop']} : $value[$args['prop']];
+			if ( ! $args['prop'] )
+				$title = $value;
+
+			else if ( is_object( $value ) )
+				$title = property_exists( $value, $args['prop'] ) ? $value->{$args['prop']} : $value;
+
+			else if ( is_array( $value ) )
+				$title = array_key_exists( $value, $args['prop'] ) ? $value[$args['prop']] : $value;
 
 			else
 				$title = $value;
