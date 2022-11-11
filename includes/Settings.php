@@ -113,6 +113,15 @@ class Settings extends Core\Base
 		return FALSE;
 	}
 
+	public static function getPageExcludes( $context = 'settings' )
+	{
+		return array_filter( apply_filters( static::BASE.'_page_excludes', [
+			get_option( 'page_on_front' ),
+			get_option( 'page_for_posts' ),
+			get_option( 'wp_page_for_privacy_policy' ),
+		], $context ) );
+	}
+
 	public static function priorityOptions( $format = TRUE )
 	{
 		return
