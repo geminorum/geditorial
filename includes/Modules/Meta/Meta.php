@@ -550,6 +550,8 @@ class Meta extends gEditorial\Module
 				case 'code':
 				case 'contact':
 				case 'phone':
+				case 'mobile':
+				case 'identity': // TODO: utlize patter!
 				case 'email':
 				case 'link':
 
@@ -720,6 +722,8 @@ class Meta extends gEditorial\Module
 				case 'date':
 				case 'contact':
 				case 'phone':
+				case 'mobile':
+				case 'identity':
 				case 'email':
 				case 'code':
 

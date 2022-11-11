@@ -1972,17 +1972,19 @@ class Module extends Base
 			break;
 			case 'contact':
 				$sanitized = Number::intval( trim( $data ), FALSE );
+				break;
 
-			break;
+			case 'identity':
+				$sanitized = Validation::sanitizeIdentityNumber( $data );
+				break;
+
 			case 'phone':
-				$sanitized = Number::intval( trim( $data ), FALSE );
+				$sanitized = Validation::sanitizePhoneNumber( $data );
+				break;
 
 			case 'mobile':
-			 	$sanitized = Number::intval( trim( $data ), FALSE );
-
-				if ( ! Validation::isMobileNumber( $sanitized ) )
-					$sanitized = '';
-			break;
+			 	$sanitized = Validation::sanitizeMobileNumber( $data );
+				break;
 
 			case 'date':
 			case 'time':
