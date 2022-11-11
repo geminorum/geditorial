@@ -199,9 +199,10 @@ class Collect extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'group_tax', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'collection_cpt' );
 
 		$this->paired_register_objects( 'collection_cpt', 'collection_tax', 'part_tax' );
@@ -444,16 +445,6 @@ class Collect extends gEditorial\Module
 					$wp_query->set( 'order', 'DESC' );
 			}
 		}
-	}
-
-	public function meta_box_cb_group_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	public function render_pairedbox_metabox( $post, $box )

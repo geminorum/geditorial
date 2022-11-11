@@ -238,13 +238,15 @@ class Event extends gEditorial\Module
 		], 'event_cpt' );
 
 		$this->register_taxonomy( 'event_type', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'event_cpt' );
 
 		$this->register_taxonomy( 'event_cal', [
-			'hierarchical' => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => '__checklist_terms_callback',
 		], 'event_cpt' );
 
 		if ( $metadata )
@@ -348,26 +350,6 @@ class Event extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function meta_box_cb_event_type( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
-	}
-
-	public function meta_box_cb_event_cal( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	// FIXME: merge filters

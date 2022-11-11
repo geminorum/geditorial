@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 
 class Gallery extends gEditorial\Module
@@ -121,6 +120,7 @@ class Gallery extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'album_cpt' );
 
 		$this->register_taxonomy( 'photo_tag', [
@@ -159,16 +159,6 @@ class Gallery extends gEditorial\Module
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
 		return [ 'album_cat' ];
-	}
-
-	public function meta_box_cb_album_cat( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	public function dashboard_glance_items( $items )

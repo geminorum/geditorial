@@ -2916,7 +2916,7 @@ class Module extends Base
 
 		$args = self::recursiveParseArgs( $atts, [
 			'labels'               => $this->get_taxonomy_labels( $constant ),
-			'meta_box_cb'          => method_exists( $this, 'meta_box_cb_'.$constant ) ? [ $this, 'meta_box_cb_'.$constant ] : FALSE,
+			'meta_box_cb'          => FALSE,
 			// @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
 			'meta_box_sanitize_cb' => method_exists( $this, 'meta_box_sanitize_cb_'.$constant ) ? [ $this, 'meta_box_sanitize_cb_'.$constant ] : NULL,
 			'hierarchical'         => FALSE,
@@ -2953,6 +2953,12 @@ class Module extends Base
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 		] );
 
+		if ( ! $args['meta_box_cb'] && method_exists( $this, 'meta_box_cb_'.$constant ) )
+			$args['meta_box_cb'] = [ $this, 'meta_box_cb_'.$constant ];
+
+		else if ( '__checklist_terms_callback' === $args['meta_box_cb'] )
+			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_terms_cb' ];
+
 		if ( is_array( $args['rewrite'] ) && ! array_key_exists( 'hierarchical', $args['rewrite'] ) )
 			$args['rewrite']['hierarchical'] = $args['hierarchical'];
 
@@ -2980,6 +2986,17 @@ class Module extends Base
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
 		return $object;
+	}
+
+	// DEFAULT CALLBACK for `__checklist_terms_callback`
+	public function taxonomy_meta_box_checklist_terms_cb( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
+		echo '</div>';
 	}
 
 	// PAIRED API

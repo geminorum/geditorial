@@ -495,6 +495,7 @@ class Book extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'subject_tax', [
@@ -517,12 +518,14 @@ class Book extends gEditorial\Module
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'type_tax', [
-			'hierarchical' => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => '__checklist_terms_callback',
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'status_tax', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'audience_tax', [
@@ -762,16 +765,6 @@ class Book extends gEditorial\Module
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
 	}
 
-	public function meta_box_cb_publication_category( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
-	}
-
 	public function render_pairedbox_metabox( $post, $box )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -924,26 +917,6 @@ class Book extends gEditorial\Module
 	public function before_delete_post( $post_id )
 	{
 		$this->paired_do_before_delete_to_post( $post_id, 'publication_cpt', 'publication_paired' );
-	}
-
-	public function meta_box_cb_status_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
-	}
-
-	public function meta_box_cb_type_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	public function template_include( $template )

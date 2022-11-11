@@ -257,15 +257,17 @@ class Course extends gEditorial\Module
 		], 'course_cpt' );
 
 		$this->register_taxonomy( 'format_tax', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'lesson_cpt' );
 
 		$this->register_taxonomy( 'status_tax', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'lesson_cpt' );
 
 		$this->paired_register_objects( 'course_cpt', 'course_tax', 'topic_tax' );
@@ -529,26 +531,6 @@ class Course extends gEditorial\Module
 			return;
 
 		$this->paired_do_store_metabox( $post, 'course_cpt', 'course_tax', 'topic_tax' );
-	}
-
-	public function meta_box_cb_lesson_format( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
-	}
-
-	public function meta_box_cb_status_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	public function meta_box_cb_span_tax( $post, $box )

@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\MetaBox;
 
 class Regional extends gEditorial\Module
 {
@@ -78,21 +77,12 @@ class Regional extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		] );
 
 		if ( ! is_admin() )
 			return;
 
 		$this->register_default_terms( 'lang_tax' );
-	}
-
-	public function meta_box_cb_lang_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 }

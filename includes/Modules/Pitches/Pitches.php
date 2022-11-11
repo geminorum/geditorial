@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\MetaBox;
 
 class Pitches extends gEditorial\Module
 {
@@ -95,12 +94,14 @@ class Pitches extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'idea_cpt' );
 
 		$this->register_taxonomy( 'pool_tax', [
 			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'idea_cpt' );
 
 		$this->register_posttype( 'idea_cpt' );
@@ -130,26 +131,6 @@ class Pitches extends gEditorial\Module
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
 		return [ 'idea_cat', 'pool_tax' ];
-	}
-
-	public function meta_box_cb_idea_cat( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
-	}
-
-	public function meta_box_cb_pool_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	public function dashboard_glance_items( $items )

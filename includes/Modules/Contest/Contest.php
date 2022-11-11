@@ -248,9 +248,10 @@ class Contest extends gEditorial\Module
 		], 'apply_cpt' );
 
 		$this->register_taxonomy( 'status_tax', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'apply_cpt' );
 
 		$this->paired_register_objects( 'contest_cpt', 'contest_tax', 'section_tax' );
@@ -490,16 +491,6 @@ class Contest extends gEditorial\Module
 			return;
 
 		$this->paired_do_store_metabox( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
-	}
-
-	public function meta_box_cb_status_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	public function post_updated_messages( $messages )

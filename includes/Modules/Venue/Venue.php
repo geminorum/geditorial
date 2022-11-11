@@ -209,6 +209,7 @@ class Venue extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'place_cpt' );
 
 		$this->paired_register_objects( 'place_cpt', 'place_tax', 'facility_tax' );
@@ -452,16 +453,6 @@ class Venue extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'place_cpt', $counts ) );
-	}
-
-	public function meta_box_cb_place_cat( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
 	}
 
 	public function render_pairedbox_metabox( $post, $box )
