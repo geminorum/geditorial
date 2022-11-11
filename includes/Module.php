@@ -68,6 +68,8 @@ class Module extends Base
 	protected $buttons = [];
 	protected $errors  = [];
 
+	protected $process_disabled = [];
+
 	protected $caps = [
 		'default'   => 'manage_options',
 		'settings'  => 'manage_options',
@@ -6120,5 +6122,15 @@ class Module extends Base
 			$context = $this->base;
 
 		return wp_raise_memory_limit( $context );
+	}
+
+	public function disable_process( $context = 'import' )
+	{
+		return $this->process_disabled[$context] = TRUE;
+	}
+
+	public function enable_process( $context = 'import' )
+	{
+		return $this->process_disabled[$context] = FALSE;
 	}
 }

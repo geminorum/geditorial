@@ -333,6 +333,9 @@ class Audit extends gEditorial\Module
 
 	public function save_post( $post_id, $post, $update )
 	{
+		if ( ! empty( $this->process_disabled['import'] ) )
+			return;
+
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
