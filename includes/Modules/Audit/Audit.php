@@ -486,11 +486,8 @@ class Audit extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->role_can( 'assign' ) ) {
+				if ( $this->role_can( 'assign' ) )
 					$this->_hook_screen_restrict_taxonomies();
-					$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
-					$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
-				}
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}

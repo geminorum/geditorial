@@ -4925,10 +4925,19 @@ class Module extends Base
 
 	protected function _hook_screen_restrict_taxonomies( $priority = 10 )
 	{
-		if ( $constants = $this->get_taxonomies_for_restrict_manage_posts() )
-			add_filter( $this->base.'_screen_restrict_taxonomies', function( $taxonomies, $screen ) use ( $constants ) {
-				return array_merge( $taxonomies, $this->constants( $constants ) );
-			}, $priority, 2 );
+		$constants = $this->get_taxonomies_for_restrict_manage_posts();
+
+		if ( empty( $constants ) )
+			return FALSE;
+
+		add_filter( $this->base.'_screen_restrict_taxonomies', function( $taxonomies, $screen ) use ( $constants ) {
+			return array_merge( $taxonomies, $this->constants( $constants ) );
+		}, $priority, 2 );
+
+		$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
+		$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
+
+		return TRUE;
 	}
 
 	// DEFAULT FILTER

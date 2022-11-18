@@ -173,8 +173,6 @@ class Quotation extends gEditorial\Module
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				$this->_hook_screen_restrict_taxonomies();
-				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
-				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				$this->filter( 'the_title', 2, 9 );
 				$this->action_module( 'meta', 'column_row', 1, -25, 'source' );

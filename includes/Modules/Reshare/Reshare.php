@@ -133,8 +133,6 @@ class Reshare extends gEditorial\Module
 				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				$this->_hook_screen_restrict_taxonomies();
-				$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
-				$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
