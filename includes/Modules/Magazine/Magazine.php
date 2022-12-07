@@ -208,7 +208,8 @@ class Magazine extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'span_tax', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'issue_cpt' );
@@ -479,19 +480,6 @@ class Magazine extends gEditorial\Module
 					$wp_query->set( 'order', 'DESC' );
 			}
 		}
-	}
-
-	public function meta_box_cb_span_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		// NOTE: getting reverse-sorted span terms to pass into checklist
-		$terms = Taxonomy::listTerms( $box['args']['taxonomy'], 'all', [ 'order' => 'DESC' ] );
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ], $terms );
-		echo '</div>';
 	}
 
 	public function render_pairedbox_metabox( $post, $box )

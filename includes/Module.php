@@ -2959,6 +2959,9 @@ class Module extends Base
 		else if ( '__checklist_terms_callback' === $args['meta_box_cb'] )
 			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_terms_cb' ];
 
+		else if ( '__checklist_reverse_terms_callback' === $args['meta_box_cb'] )
+			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_reverse_terms_cb' ];
+
 		if ( is_array( $args['rewrite'] ) && ! array_key_exists( 'hierarchical', $args['rewrite'] ) )
 			$args['rewrite']['hierarchical'] = $args['hierarchical'];
 
@@ -2996,6 +2999,20 @@ class Module extends Base
 
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
+		echo '</div>';
+	}
+
+	// DEFAULT CALLBACK for `__checklist_reverse_terms_callback`
+	public function taxonomy_meta_box_checklist_reverse_terms_cb( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		// NOTE: getting reverse-sorted span terms to pass into checklist
+		$terms = Taxonomy::listTerms( $box['args']['taxonomy'], 'all', [ 'order' => 'DESC' ] );
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ], $terms );
 		echo '</div>';
 	}
 

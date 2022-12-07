@@ -251,9 +251,10 @@ class Course extends gEditorial\Module
 		], 'course_cpt' );
 
 		$this->register_taxonomy( 'span_tax', [
-			'hierarchical'       => TRUE, // required by `MetaBox::checklistTerms()`
+			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 		], 'course_cpt' );
 
 		$this->register_taxonomy( 'format_tax', [
@@ -529,19 +530,6 @@ class Course extends gEditorial\Module
 			return;
 
 		$this->paired_do_store_metabox( $post, 'course_cpt', 'course_tax', 'topic_tax' );
-	}
-
-	public function meta_box_cb_span_tax( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		// NOTE: getting reverse-sorted span terms to pass into checklist
-		$terms = Taxonomy::listTerms( $box['args']['taxonomy'], 'all', [ 'order' => 'DESC' ] );
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ], $terms );
-		echo '</div>';
 	}
 
 	public function post_updated_messages( $messages )
