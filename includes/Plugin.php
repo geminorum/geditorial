@@ -590,6 +590,12 @@ class Plugin
 
 		wp_enqueue_style( static::BASE.'-front', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
 		wp_style_add_data( static::BASE.'-front', 'rtl', 'replace' );
+
+		if ( defined( 'GNETWORK_VERSION' ) )
+			return;
+
+		wp_enqueue_style( 'gnetwork-front', GEDITORIAL_URL.'assets/css/front.gnetwork.css', [], GEDITORIAL_VERSION );
+		wp_style_add_data( 'gnetwork-front', 'rtl', 'replace' );
 	}
 
 	public function enqueue_asset_config( $args = [], $module = NULL )
