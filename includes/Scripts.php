@@ -191,6 +191,15 @@ class Scripts extends Main
 			: self::registerPackage( 'onscanjs', 'onscan.js/onscan', [], $ver );
 	}
 
+	// @REF: https://github.com/fgnass/spin.js
+	// @REF: https://spin.js.org/
+	public static function pkgSpinJS( $enqueue = FALSE, $ver = '4.1.1' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'spinjs', 'spin.js/spin.umd', [], $ver )
+			: self::registerPackage( 'spinjs', 'spin.js/spin.umd', [], $ver );
+	}
+
 	public static function getTinyMceStrings( $locale )
 	{
 		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
