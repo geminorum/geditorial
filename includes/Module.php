@@ -5839,9 +5839,8 @@ class Module extends Base
 
 			$this->filter_append( 'post_class', [ 'empty-posttype', 'empty-'.$posttype ] );
 
-			// look again for template
-			// $again = get_singular_template();
-			$again = get_single_template();
+			// $template = get_singular_template();
+			$template = get_single_template();
 
 		} else {
 
@@ -5861,10 +5860,7 @@ class Module extends Base
 			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
 			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
-			// look again for template
-			// $again = get_singular_template();
-			// $again = get_single_template();
-			$again = get_page_template();
+			$template = Theme::getTemplate( $this->get_setting( 'archive_template', NULL ) );
 		}
 
 		$this->filter_empty_string( 'previous_post_link' );
@@ -5878,7 +5874,7 @@ class Module extends Base
 		defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
 			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 
-		return $again;
+		return $template;
 	}
 
 	// DEFAULT METHOD: title for overrided empty page

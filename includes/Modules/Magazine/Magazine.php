@@ -65,6 +65,7 @@ class Magazine extends gEditorial\Module
 			],
 			'_content' => [
 				'archive_title',
+				'archive_template',
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [

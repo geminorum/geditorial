@@ -30,6 +30,20 @@ class Theme extends Core\Base
 		do_action( "get_template_part_{$slug}_after", $slug, $name, $templates );
 	}
 
+	// @REF: `get_page_template()`
+	// TODO: must given type and posttype/taxonomy
+	public static function getTemplate( $custom = NULL, $hierarchy = 'page' )
+	{
+		$templates = [];
+
+		if ( $custom && 0 === validate_file( $custom ) )
+			$templates[] = $custom;
+
+		$templates[] = sprintf( '%s.php', $hierarchy );
+
+		return get_query_template( $hierarchy, $templates );
+	}
+
 	public static function restPost( $data, $setup = FALSE, $network = FALSE )
 	{
 		$dummy = array(

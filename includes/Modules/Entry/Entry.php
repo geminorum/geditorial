@@ -45,6 +45,7 @@ class Entry extends gEditorial\Module
 				'display_searchform',
 				'empty_content',
 				'archive_title',
+				'archive_template',
 			],
 			'_supports' => [
 				'comment_status',

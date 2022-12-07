@@ -717,6 +717,17 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_archive_template( $description = NULL )
+	{
+		return [
+			'field'       => 'archive_template',
+			'type'        => 'select',
+			'title'       => _x( 'Archive Template', 'Setting: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial' ),
+			'values'      => wp_get_theme()->get_page_templates(),
+		];
+	}
+
 	public static function getSetting_display_searchform( $description = NULL )
 	{
 		return [
