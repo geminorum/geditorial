@@ -28,7 +28,8 @@ class Archives extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$settings = [];
+		$settings  = [];
+		$templates = wp_get_theme()->get_page_templates();
 
 		$settings['posttypes_option'] = 'posttypes_option';
 
@@ -50,6 +51,15 @@ class Archives extends gEditorial\Module
 				'title'       => sprintf( _x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as content on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'default'     => '[alphabet-posts post_type="%s" /]', // FIXME: provide for fallback shortcode
+			];
+
+			$settings['_posttypes'][] = [
+				'field'       => 'posttype_'.$posttype_name.'_template',
+				'type'        => 'select',
+				/* translators: %s: supported object label */
+				'title'       => sprintf( _x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
+				'description' => _x( 'Used as page template on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
+				'values'      => $templates,
 			];
 		}
 
@@ -84,6 +94,15 @@ class Archives extends gEditorial\Module
 				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ), _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
 				'placeholder' => $this->_taxonomy_archive_slug( $taxonomy_name, FALSE ),
 				'field_class' => [ 'regular-text', 'code-text' ],
+			];
+
+			$settings['_taxonomies'][] = [
+				'field'       => 'taxonomy_'.$taxonomy_name.'_template',
+				'type'        => 'select',
+				/* translators: %s: supported object label */
+				'title'       => sprintf( _x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'description' => _x( 'Used as page template on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
+				'values'      => $templates,
 			];
 		}
 
@@ -188,7 +207,7 @@ class Archives extends gEditorial\Module
 			$this->filter( 'document_title_parts', 1, 12, 'taxonomy' );
 			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
-			return get_page_template();
+			return Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
 
 		} else if ( is_embed() || is_search() || ! ( $posttype = $GLOBALS['wp_query']->get( 'post_type' ) ) ) {
 
@@ -213,8 +232,7 @@ class Archives extends gEditorial\Module
 			$this->filter( 'document_title_parts', 1, 12, 'posttype' );
 			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
-			// return get_single_template();
-			return get_page_template();
+			return Theme::getTemplate( $this->get_setting( 'posttype_'.$posttype.'_template' ) );
 		}
 
 		return $template;
