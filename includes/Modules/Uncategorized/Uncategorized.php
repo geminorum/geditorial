@@ -235,7 +235,7 @@ class Uncategorized extends gEditorial\Module
 				'lazy_load_term_meta'    => FALSE,
 			];
 
-			$query = new \WP_Query;
+			$query = new \WP_Query();
 			$count = count( $query->query( $args ) );
 
 			set_transient( $cache_key, $count, 12 * HOUR_IN_SECONDS );

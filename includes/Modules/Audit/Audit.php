@@ -917,8 +917,10 @@ class Audit extends gEditorial\Module
 			] ];
 
 		add_filter( 'posts_where', $callback, 9999 );
-		$query = new \WP_Query;
+
+		$query = new \WP_Query();
 		$posts = $query->query( $args );
+
 		remove_filter( 'posts_where', $callback, 9999 );
 
 		return $posts;

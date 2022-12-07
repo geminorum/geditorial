@@ -89,7 +89,7 @@ class Tablelist extends Main
 		if ( 'attachment' == $args['post_type'] && is_array( $args['post_status'] ) )
 			$args['post_status'][] = 'inherit';
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
 		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );

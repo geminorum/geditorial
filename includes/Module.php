@@ -1924,7 +1924,8 @@ class Module extends Base
 				'values'      => [],
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,
-				'tax'         => FALSE,
+				'taxonomy'    => FALSE,
+				'posttype'    => NULL,
 				'group'       => 'general',
 				'order'       => 10 + $i,
 			], $args );
@@ -2117,10 +2118,10 @@ class Module extends Base
 		if ( isset( $this->constants[$key] ) )
 			return $this->constants[$key];
 
-		if ( 'post_cpt' == $key )
+		if ( 'post_cpt' === $key || 'post_posttype' === $key )
 			return 'post';
 
-		if ( 'page_cpt' == $key )
+		if ( 'page_cpt' === $key || 'page_posttype' === $key )
 			return 'page';
 
 		return $default;
@@ -3672,7 +3673,7 @@ class Module extends Base
 			'lazy_load_term_meta'    => FALSE,
 		];
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		return $query->query( $args );
 	}
 
@@ -3957,6 +3958,7 @@ class Module extends Base
 		} );
 	}
 
+	// TODO: filter the results
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL )
 	{
 		if ( is_null( $title ) )
@@ -4567,7 +4569,7 @@ class Module extends Base
 			'posts_per_page'   => -1,
 		];
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
 		if ( empty( $posts ) )

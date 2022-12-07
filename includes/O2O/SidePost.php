@@ -73,7 +73,7 @@ class SidePost extends Side
 		} catch ( Exception $e ) {
 
 			trigger_error( $e->getMessage(), E_USER_WARNING );
-			$labels = new \stdClass;
+			$labels = new \stdClass();
 		}
 
 		return $labels;
@@ -127,7 +127,7 @@ class SidePost extends Side
 
 	public function capture_query( $args )
 	{
-		$q = new \WP_Query;
+		$q = new \WP_Query();
 		$q->_o2o_capture = TRUE;
 
 		$q->query( $args );

@@ -30,7 +30,7 @@ class Plugin
 		static $instance = NULL;
 
 		if ( NULL === $instance ) {
-			$instance = new Plugin;
+			$instance = new Plugin();
 			$instance->setup();
 		}
 
@@ -170,7 +170,7 @@ class Plugin
 				continue;
 
 			if ( ! isset( $options[$mod_name] ) || FALSE === $options[$mod_name] )
-				$this->_options->{$mod_name} = new \stdClass;
+				$this->_options->{$mod_name} = new \stdClass();
 			else
 				$this->_options->{$mod_name} = $options[$mod_name];
 		}

@@ -146,6 +146,7 @@ class Today extends gEditorial\Module
 	{
 		parent::init();
 
+		// TODO: main posttype must be optional
 		$this->register_posttype( 'day_cpt' );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
@@ -965,7 +966,7 @@ class Today extends gEditorial\Module
 					$args['suppress_filters'] = TRUE;
 
 					$count = 0;
-					$query = new \WP_Query;
+					$query = new \WP_Query();
 
 					foreach ( $query->query( $args ) as $post ) {
 

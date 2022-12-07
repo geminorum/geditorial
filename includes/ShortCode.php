@@ -1075,7 +1075,7 @@ class ShortCode extends Main
 			] ];
 		}
 
-		$class = new \WP_Query;
+		$class = new \WP_Query();
 		$items = $class->query( $query );
 		$count = count( $items );
 
@@ -1259,7 +1259,7 @@ class ShortCode extends Main
 				'compare' => 'EXISTS'
 			] ];
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$items = $query->query( $query_args );
 		$count = count( $items );
 
@@ -1424,7 +1424,7 @@ class ShortCode extends Main
 			'no_found_rows'    => TRUE,
 		];
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$posts = $query->query( $query_args );
 		$count = count( $posts );
 

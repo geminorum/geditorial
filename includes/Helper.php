@@ -962,7 +962,7 @@ class Helper extends Main
 			return $markdown;
 
 		if ( empty( $gEditorialMarkdownExtra ) )
-			$gEditorialMarkdownExtra = new \Michelf\MarkdownExtra;
+			$gEditorialMarkdownExtra = new \Michelf\MarkdownExtra();
 
 		return $gEditorialMarkdownExtra->defaultTransform( $markdown );
 	}

@@ -497,7 +497,7 @@ class Revisions extends gEditorial\Module
 		if ( 'attachment' == $args['post_type'] )
 			$args['post_status'][] = 'inherit';
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
 		$pagination = HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged, $extra );

@@ -98,7 +98,7 @@ class Query extends Core\Base
 		if ( 1 == count( $o2o_types ) )
 			$q = self::finalize_query_vars( $q, $o2o_types[0], $item );
 
-		$o2o_q = new Query;
+		$o2o_q = new Query();
 
 		$o2o_q->ctypes = $o2o_types;
 		$o2o_q->items  = $item;

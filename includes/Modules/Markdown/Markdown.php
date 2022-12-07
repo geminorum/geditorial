@@ -198,7 +198,7 @@ class Markdown extends gEditorial\Module
 		$content = stripslashes( $content );
 
 		if ( ! $this->parser )
-			$this->parser = new \Michelf\MarkdownExtra;
+			$this->parser = new \Michelf\MarkdownExtra();
 
 		$content = $this->parser->defaultTransform( $content );
 
@@ -218,7 +218,7 @@ class Markdown extends gEditorial\Module
 	private function convert_content( $content, $id )
 	{
 		if ( ! $this->convertor )
-			$this->convertor = new \League\HTMLToMarkdown\HtmlConverter;
+			$this->convertor = new \League\HTMLToMarkdown\HtmlConverter();
 
 		return $this->convertor->convert( wpautop( $content ) );
 	}

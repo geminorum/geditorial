@@ -501,7 +501,7 @@ class Like extends gEditorial\Module
 				if ( Tablelist::isAction( 'sync_counts_all' ) ) {
 
 					$count = 0;
-					$query = new \WP_Query;
+					$query = new \WP_Query();
 
 					$posts = $query->query( [
 						'fields'                 => 'ids',

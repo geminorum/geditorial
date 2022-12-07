@@ -200,7 +200,7 @@ class Meta extends gEditorial\Module
 				'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'lead'       => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
 				'label'      => [ 'type' => 'text' ],
-				'label_tax'  => [ 'type' => 'term', 'tax' => $this->constant( 'label_tax' ) ],
+				'label_tax'  => [ 'type' => 'term', 'taxonomy' => $this->constant( 'label_tax' ) ],
 
 				'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'source_title' => [ 'type' => 'text' ],
@@ -467,7 +467,7 @@ class Meta extends gEditorial\Module
 					'show_in_rest'      => TRUE, // TODO: must prepare object scheme on repeatable fields
 				] );
 
-				$meta_key = sprintf( '_%s_%s', $this->key, $field );
+				$meta_key = $this->get_postmeta_key( $field );
 				$filtred  = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );
 
 				if ( FALSE !== $filtred )
@@ -551,7 +551,7 @@ class Meta extends gEditorial\Module
 				case 'contact':
 				case 'phone':
 				case 'mobile':
-				case 'identity': // TODO: utlize patter!
+				case 'identity': // TODO: utilize the pattern!
 				case 'email':
 				case 'link':
 
@@ -573,8 +573,8 @@ class Meta extends gEditorial\Module
 				break;
 				case 'term':
 
-					if ( $args['tax'] )
-						ModuleMetaBox::legacy_fieldTerm( $field, [ $field ], $post, $args['tax'], $args['ltr'], $args['title'] );
+					if ( $args['taxonomy'] )
+						ModuleMetaBox::legacy_fieldTerm( $field, [ $field ], $post, $args['taxonomy'], $args['ltr'], $args['title'] );
 					else
 						ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 			}
@@ -711,7 +711,7 @@ class Meta extends gEditorial\Module
 
 				case 'term':
 
-					ModuleMetaBox::setPostMetaField_Term( $post->ID, $field, $args['tax'] );
+					ModuleMetaBox::setPostMetaField_Term( $post->ID, $field, $args['taxonomy'] );
 
 				break;
 				case 'link':
@@ -864,7 +864,7 @@ class Meta extends gEditorial\Module
 
 				$terms = $this->sanitize_posttype_field( $data, $field, $post );
 
-				return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['tax'], FALSE );
+				return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
 
 			break;
 			default:
@@ -1359,9 +1359,9 @@ class Meta extends gEditorial\Module
 
 			$formatted = apply_filters( 'string_format_i18n', $sanitized );
 
-			if ( ! $term = get_term_by( 'name', $formatted, $field['tax'] ) ) {
+			if ( ! $term = get_term_by( 'name', $formatted, $field['taxonomy'] ) ) {
 
-				$term = wp_insert_term( $formatted, $field['tax'] );
+				$term = wp_insert_term( $formatted, $field['taxonomy'] );
 
 				if ( ! is_wp_error( $term ) )
 					$terms[] = $term->term_id;
@@ -1374,7 +1374,7 @@ class Meta extends gEditorial\Module
 
 		$terms = $this->sanitize_posttype_field( $terms, $field, $post );
 
-		return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['tax'], FALSE );
+		return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
 	}
 
 	private function get_importer_fields( $posttype = NULL, $object = FALSE )

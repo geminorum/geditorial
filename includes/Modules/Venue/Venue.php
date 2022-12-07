@@ -65,6 +65,7 @@ class Venue extends gEditorial\Module
 				'display_searchform',
 				'empty_content',
 				'archive_title',
+				'archive_template',
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [

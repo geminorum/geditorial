@@ -930,7 +930,7 @@ class Cartable extends gEditorial\Module
 			'lazy_load_term_meta'    => FALSE,
 		];
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 
 		$columns = [ 'title' => Tablelist::columnPostTitleSummary() ];
 

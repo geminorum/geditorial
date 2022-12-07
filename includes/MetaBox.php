@@ -106,7 +106,7 @@ class MetaBox extends Main
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
 
-			$walker = new Misc\WalkerCategoryChecklist;
+			$walker = new Misc\WalkerCategoryChecklist();
 
 		} else {
 
@@ -219,7 +219,7 @@ class MetaBox extends Main
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
 
-			$walker = new Misc\WalkerUserChecklist;
+			$walker = new Misc\WalkerUserChecklist();
 
 		} else {
 			$walker = $args['walker'];
@@ -471,7 +471,7 @@ class MetaBox extends Main
 		// 		'operator' => 'EXISTS',
 		// 	] ];
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
 		if ( empty( $posts ) && ! $display_empty )

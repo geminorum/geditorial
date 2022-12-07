@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress\Theme;
 class Archives extends gEditorial\Module
 {
 
+	protected $disable_no_customs  = TRUE;
 	protected $textdomain_frontend = FALSE;
 
 	protected $priority_init = 99; // after all taxonomies registered

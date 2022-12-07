@@ -117,7 +117,7 @@ class Alphabet extends gEditorial\Module
 				'suppress_filters' => TRUE,
 			];
 
-			$query = new \WP_Query;
+			$query = new \WP_Query();
 			$posts = $query->query( $query_args );
 
 			// FIXME: check for empty
