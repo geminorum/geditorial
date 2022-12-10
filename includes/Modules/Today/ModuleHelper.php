@@ -16,6 +16,45 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'today';
 
+	// TODO: check min/max for day/month
+	// TODO: 4 digit year based on `$type`
+	public static function parseTheFullDay( $text, $type = 'gregorian' )
+	{
+		if ( Strings::isEmpty( $text ) )
+			return [];
+
+		$text = Number::intval( trim( $text ), FALSE );
+		$text = trim( str_ireplace( [
+			' ',
+			'.',
+			'-',
+			'\\',
+		], '/', $text ) );
+
+		// FIXME: if 4 or 2 digits then yaer only!
+		if ( 4 === strlen( $text ) )
+			return [
+				'cal'   => $type,
+				'year'  => $text,
+				'month' => '',
+				'day'   => '',
+			];
+
+		$parts = explode( '/', $text );
+
+		if ( 4 === strlen( $parts[2] ) )
+			$parts = array_reverse( $parts );
+
+		$temp = [
+			'cal'   => $type,
+			'year'  => $parts[0],
+			'month' => Number::zeroise( $parts[1], 2 ),
+			'day'   => Number::zeroise( $parts[2], 2 ),
+		];
+
+		return $temp;
+	}
+
 	// returns array of post date in given cal
 	public static function getTheDayFromToday( $today = NULL, $type = 'gregorian' )
 	{

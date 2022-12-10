@@ -1045,6 +1045,7 @@ class Today extends gEditorial\Module
 			'today__year'  => _x( 'Today: Year', 'Import Field', 'geditorial-today' ),
 			'today__month' => _x( 'Today: Month', 'Import Field', 'geditorial-today' ),
 			'today__day'   => _x( 'Today: Day', 'Import Field', 'geditorial-today' ),
+			'today__full'  => _x( 'Today: Full', 'Import Field', 'geditorial-today' ),
 		];
 	}
 
@@ -1070,6 +1071,7 @@ class Today extends gEditorial\Module
 			case 'today__year':
 			case 'today__month':
 			case 'today__day': return Number::intval( trim( $value ), FALSE );
+			case 'today__full': return ModuleHelper::parseTheFullDay( trim( $value ), $this->default_calendar() );
 		}
 
 		return $value;
@@ -1095,8 +1097,13 @@ class Today extends gEditorial\Module
 
 			$key = str_ireplace( 'today__', '', $field );
 
-			if ( 'cal' == $key )
+			// will override all data!
+			if ( 'full' == $key )
+				$postmeta = ModuleHelper::parseTheFullDay( $value, array_key_exists( 'cal', $postmeta ) ? $postmeta['cal'] : $default );
+
+			else if ( 'cal' == $key )
 				$postmeta[$key] = Datetime::sanitizeCalendar( $value, $default );
+
 			else
 				$postmeta[$key] = Number::intval( $value, FALSE );
 		}
