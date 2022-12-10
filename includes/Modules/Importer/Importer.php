@@ -902,6 +902,8 @@ class Importer extends gEditorial\Module
 
 	private function _raise_resources( $count = 0 )
 	{
+		gEditorial()->disable_process( 'audit', 'import' );
+
 		Media::disableThumbnailGeneration();
 		Taxonomy::disableTermCounting();
 		wp_defer_comment_counting( TRUE );
