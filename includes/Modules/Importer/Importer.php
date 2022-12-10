@@ -427,7 +427,7 @@ class Importer extends gEditorial\Module
 			$this->filter( 'import_memory_limit' );
 
 			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 6 );
-			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 5 );
+			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 7 );
 
 			if ( ! empty( $_POST ) ) {
 
@@ -508,20 +508,10 @@ class Importer extends gEditorial\Module
 						$items  = $parser->parse();
 						$raw    = array_pop( $items );
 
+						$data     = [ 'tax_input' => [] ];
+						$prepared = [];
+
 						unset( $parser, $items );
-
-						$data = [
-							// 'post_name'      => '', // The name (slug) for your post
-							// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
-							// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
-							// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
-							// 'tax_input'      => [], //[ [ <taxonomy> => <array | string> ] ] // For custom taxonomies. Default empty.
-
-							'post_type'      => $posttype,
-							'post_status'    => $post_status,
-							'comment_status' => $comment_status,
-							'post_author'    => $user_id,
-						];
 
 						foreach ( $field_map as $key => $field ) {
 
@@ -541,10 +531,10 @@ class Importer extends gEditorial\Module
 							if ( FALSE === $value )
 								continue;
 
-							if ( Strings::isEmpty( $value ) )
+							if ( Strings::isEmpty( $value ) && '' !== trim( $value ) )
 								continue;
 
-							if ( $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
+							if ( $value && $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
 
 								$posts = PostType::getIDsByTitle( $value, [ 'post_type' => $posttype ] );
 
@@ -554,48 +544,70 @@ class Importer extends gEditorial\Module
 
 							switch ( $field ) {
 
-								case 'importer_old_id':
-
-									$data['meta_input'][$this->constant( 'metakey_old_id' )] = $value;
-
-								break;
 								case 'importer_custom_meta':
 
 									if ( $custom_metakey = $this->filters( 'custom_metakey', $headers[$key], $posttype, $field, $raw, $taxonomies ) )
-										$data['meta_input'][$custom_metakey] = $value;
+										$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = $value;
 
-								break;
-								case 'importer_menu_order': $data['menu_order'] = $value; break;
-								case 'importer_post_title': $data['post_title'] = $value; break;
-								case 'importer_post_content': $data['post_content'] = $value; break;
-								case 'importer_post_excerpt': $data['post_excerpt'] = $value; break;
+									continue 2;
+
+								case 'importer_old_id': $data['meta_input'][$this->constant( 'metakey_old_id' )] = $prepared[$field] = $value; continue 2;
+								case 'importer_menu_order': $data['menu_order'] = $prepared[$field] = $value; continue 2;
+								case 'importer_post_title': $data['post_title'] = $prepared[$field] = $value; continue 2;
+								case 'importer_post_content': $data['post_content'] = $prepared[$field] = $value; continue 2;
+								case 'importer_post_excerpt': $data['post_excerpt'] = $prepared[$field] = $value; continue 2;
 							}
 
-							// WTF: already `Strings::isEmpty` applied!
-							// skip empty values on terms
-							if ( ! $value )
-								continue;
-
 							foreach ( $taxonomies as $taxonomy => $taxonomy_object ) {
+
+								// skip empty values on terms
+								if ( ! $value )
+									break;
 
 								if ( $field != 'importer_tax_'.$taxonomy )
 									continue;
 
+								// allows to import multiple columns for one taxonomy
+								$already = array_key_exists( $taxonomy, $data['tax_input'] ) ? $data['tax_input'][$taxonomy] : [];
+
 								if ( $taxonomy_object->hierarchical ) {
 
 									if ( $terms = Taxonomy::insertDefaultTerms( $taxonomy, Arraay::sameKey( $value ), FALSE ) )
-										$data['tax_input'][$taxonomy] = array_map( 'intval', wp_list_pluck( $terms, 'term_taxonomy_id' ) );
+										$data['tax_input'][$taxonomy] = Arraay::prepNumeral( $already, wp_list_pluck( $terms, 'term_taxonomy_id' ) );
 
 								} else {
 
-									$data['tax_input'][$taxonomy] = (array) $value;
+									$data['tax_input'][$taxonomy] = Arraay::prepString( $already, $value );
 								}
 
-								break;
+								$prepared[sprintf( 'taxonomy__%s', $taxonomy )] = $data['tax_input'][$taxonomy];
+
+								continue 2;
 							}
+
+							// otherwise store prepared value
+							$prepared[$field] = $value;
 						}
 
-						$post_id = wp_insert_post( $data, TRUE );
+						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $posttype, $attach_id, $raw ) ) )
+							continue;
+
+						// only if it's new!
+						if ( empty( $insert['ID'] ) )
+							$insert = array_merge( [
+								// 'post_name'      => '', // The name (slug) for your post
+								// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
+								// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
+								// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
+								// 'tax_input'      => [], //[ [ <taxonomy> => <array | string> ] ] // For custom taxonomies. Default empty.
+
+								'post_type'      => $posttype,
+								'post_status'    => $post_status,
+								'comment_status' => $comment_status,
+								'post_author'    => $user_id,
+							], $insert );
+
+						$post_id = wp_insert_post( $insert, TRUE );
 
 						if ( is_wp_error( $post_id ) )
 							continue;
@@ -608,7 +620,7 @@ class Importer extends gEditorial\Module
 							wp_set_object_terms( $post_id, Arraay::prepNumeral( $term_id ), $taxonomy, TRUE );
 						}
 
-						$this->actions( 'saved', PostType::getPost( $post_id ), $data, $raw, $field_map, $attach_id, $terms_all );
+						$this->actions( 'saved', PostType::getPost( $post_id ), $insert, $prepared, $field_map, $attach_id, $terms_all, $raw );
 
 						$count++;
 					}
@@ -873,7 +885,7 @@ class Importer extends gEditorial\Module
 		return $value;
 	}
 
-	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
+	public function importer_saved( $post, $data, $prepared, $field_map, $attach_id, $terms_all, $raw )
 	{
 		if ( $this->get_setting( 'store_source_data' ) ) {
 			update_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );

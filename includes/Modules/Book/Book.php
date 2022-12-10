@@ -559,7 +559,7 @@ class Book extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 4 );
-		$this->action_module( 'importer', 'saved', 5 );
+		$this->action_module( 'importer', 'saved', 7 );
 
 		$this->register_default_terms( 'type_tax' );
 		$this->register_default_terms( 'status_tax' );
@@ -1306,7 +1306,8 @@ class Book extends gEditorial\Module
 		return Helper::kses( $value, 'none' );
 	}
 
-	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
+	// FIXME: use `$prepared[$field]`
+	public function importer_saved( $post, $data, $prepared, $field_map, $attach_id, $terms_all, $raw )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;

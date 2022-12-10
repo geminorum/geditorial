@@ -279,7 +279,7 @@ class Meta extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 4 );
-		$this->action_module( 'importer', 'saved', 5 );
+		$this->action_module( 'importer', 'saved', 7 );
 	}
 
 	public function template_redirect()
@@ -1385,7 +1385,7 @@ class Meta extends gEditorial\Module
 
 		foreach ( $this->get_posttype_fields( $posttype ) as $field => $args )
 			if ( ! in_array( $args['type'], [ 'term' ] ) )
-				$fields['meta_'.$field] = $object ? $args : sprintf( $template, $args['title'] );
+				$fields['meta__'.$field] = $object ? $args : sprintf( $template, $args['title'] );
 
 		return $fields;
 	}
@@ -1411,7 +1411,7 @@ class Meta extends gEditorial\Module
 		return $this->sanitize_posttype_field( $value, $fields[$field] );
 	}
 
-	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
+	public function importer_saved( $post, $data, $prepared, $field_map, $attach_id, $terms_all, $raw )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;

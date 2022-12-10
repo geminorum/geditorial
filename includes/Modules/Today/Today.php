@@ -158,7 +158,7 @@ class Today extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 4 );
-		$this->action_module( 'importer', 'saved', 5 );
+		$this->action_module( 'importer', 'saved', 7 );
 	}
 
 	public function template_redirect()
@@ -1041,10 +1041,10 @@ class Today extends gEditorial\Module
 	private function get_importer_fields( $posttype = NULL )
 	{
 		return [
-			'today_cal'   => _x( 'Today: Calendar', 'Import Field', 'geditorial-today' ),
-			'today_year'  => _x( 'Today: Year', 'Import Field', 'geditorial-today' ),
-			'today_month' => _x( 'Today: Month', 'Import Field', 'geditorial-today' ),
-			'today_day'   => _x( 'Today: Day', 'Import Field', 'geditorial-today' ),
+			'today__cal'   => _x( 'Today: Calendar', 'Import Field', 'geditorial-today' ),
+			'today__year'  => _x( 'Today: Year', 'Import Field', 'geditorial-today' ),
+			'today__month' => _x( 'Today: Month', 'Import Field', 'geditorial-today' ),
+			'today__day'   => _x( 'Today: Day', 'Import Field', 'geditorial-today' ),
 		];
 	}
 
@@ -1066,16 +1066,17 @@ class Today extends gEditorial\Module
 
 		switch ( $field ) {
 
-			case 'today_cal': return Datetime::sanitizeCalendar( trim( $value ), $this->default_calendar() );
-			case 'today_year':
-			case 'today_month':
-			case 'today_day': return Number::intval( trim( $value ), FALSE );
+			case 'today__cal': return Datetime::sanitizeCalendar( trim( $value ), $this->default_calendar() );
+			case 'today__year':
+			case 'today__month':
+			case 'today__day': return Number::intval( trim( $value ), FALSE );
 		}
 
 		return $value;
 	}
 
-	public function importer_saved( $post, $data, $raw, $field_map, $attach_id )
+	// FIXME: use `$prepared[$field]`
+	public function importer_saved( $post, $data, $prepared, $field_map, $attach_id, $terms_all, $raw )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
@@ -1092,7 +1093,7 @@ class Today extends gEditorial\Module
 			if ( ! $value = trim( $raw[$offset] ) )
 				continue;
 
-			$key = str_ireplace( 'today_', '', $field );
+			$key = str_ireplace( 'today__', '', $field );
 
 			if ( 'cal' == $key )
 				$postmeta[$key] = Datetime::sanitizeCalendar( $value, $default );
