@@ -200,7 +200,7 @@ class Ortho extends gEditorial\Module
 			return;
 
 		if ( class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
-			$this->filter_module( 'importer', 'prepare', 4, 8 );
+			$this->filter_module( 'importer', 'prepare', 7, 8 );
 	}
 
 	public function current_screen( $screen )
@@ -265,7 +265,7 @@ class Ortho extends gEditorial\Module
 		return $options;
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;

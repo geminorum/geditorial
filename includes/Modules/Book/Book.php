@@ -558,8 +558,8 @@ class Book extends gEditorial\Module
 			return;
 
 		$this->filter_module( 'importer', 'fields', 2 );
-		$this->filter_module( 'importer', 'prepare', 4 );
-		$this->action_module( 'importer', 'saved', 7 );
+		$this->filter_module( 'importer', 'prepare', 7 );
+		$this->action_module( 'importer', 'saved', 8 );
 
 		$this->register_default_terms( 'type_tax' );
 		$this->register_default_terms( 'status_tax' );
@@ -1296,7 +1296,7 @@ class Book extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
 	{
 		$fields = array_keys( $this->get_importer_fields( $posttype ) );
 
@@ -1307,7 +1307,7 @@ class Book extends gEditorial\Module
 	}
 
 	// FIXME: use `$prepared[$field]`
-	public function importer_saved( $post, $data, $prepared, $field_map, $attach_id, $terms_all, $raw )
+	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;

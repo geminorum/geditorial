@@ -278,8 +278,8 @@ class Meta extends gEditorial\Module
 			return;
 
 		$this->filter_module( 'importer', 'fields', 2 );
-		$this->filter_module( 'importer', 'prepare', 4 );
-		$this->action_module( 'importer', 'saved', 7 );
+		$this->filter_module( 'importer', 'prepare', 7 );
+		$this->action_module( 'importer', 'saved', 8 );
 	}
 
 	public function template_redirect()
@@ -1398,7 +1398,7 @@ class Meta extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw )
+	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;
@@ -1411,7 +1411,7 @@ class Meta extends gEditorial\Module
 		return $this->sanitize_posttype_field( $value, $fields[$field] );
 	}
 
-	public function importer_saved( $post, $data, $prepared, $field_map, $attach_id, $terms_all, $raw )
+	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;

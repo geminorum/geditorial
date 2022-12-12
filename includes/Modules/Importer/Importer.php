@@ -53,6 +53,11 @@ class Importer extends gEditorial\Module
 					'description' => _x( 'Tries to avoid importing attachments for posts with thumbnail images.', 'Setting Description', 'geditorial-importer' ),
 				],
 				[
+					'field'       => 'match_source_id',
+					'title'       => _x( 'Match Source ID', 'Setting Title', 'geditorial-importer' ),
+					'description' => _x( 'Tries to find the previously imported by provided source id.', 'Setting Description', 'geditorial-importer' ),
+				],
+				[
 					'field'       => 'store_source_data',
 					'title'       => _x( 'Store Source Data', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
@@ -79,7 +84,8 @@ class Importer extends gEditorial\Module
 			'metakey_source_map'  => '_importer_source_map',
 			'metakey_source_data' => '_importer_source_data',
 			'metakey_attach_id'   => '_importer_attachment_id',
-			'metakey_old_id'      => 'import_source_id', // '_importer_old_id'
+			'metakey_source_key'  => '_importer_source_id_key',
+			'metakey_source_id'   => 'import_source_id',
 		];
 	}
 
@@ -178,12 +184,34 @@ class Importer extends gEditorial\Module
 
 		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
+		$source_key = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_key' ) );
 		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
 		if ( empty( $map ) )
 			$map = $this->_guessed_fields_map( $headers );
 
 		echo '<table class="base-table-raw"><tbody>';
+
+		echo '<tr><td><strong>'._x( 'Source ID', 'Dropdown Label', 'geditorial-importer' );
+		echo '</strong></td><td class="-sep">';
+
+			Settings::fieldSeparate( 'from' );
+
+		echo '</td><td>';
+
+			echo HTML::dropdown( $headers, [
+				'selected'   => $source_key,
+				'name'       => 'source_key',
+				'class'      => '-dropdown-source-key',
+				'none_title' => Settings::showOptionNone(),
+				'none_value' => 'none', // `0` is offset!
+			] );
+
+		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td>';
+
+			HTML::desc( _x( 'Used as Identifider of each item.', 'Description', 'geditorial-importer' ) );
+
+		echo '</td></tr>';
 
 		foreach ( $headers as $key => $title ) {
 
@@ -301,7 +329,7 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	private function _form_posts_table( $id, $map = [], $posttype = 'post', $terms_all = [] )
+	private function _form_posts_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_key = 'none' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -318,12 +346,13 @@ class Importer extends gEditorial\Module
 		unset( $iterator, $parser, $items[0] );
 
 		$this->store_postmeta( $id, $map, $this->constant( 'metakey_source_map' ) );
-		$this->_store_fields_map( $file, $headers, $map );
+		$this->store_postmeta( $id, ( 'none' === $source_key ? FALSE : $source_key ), $this->constant( 'metakey_source_key' ) );
+		$this->_store_fields_map( $file, $headers, $map, $source_key );
 
-		$this->_render_data_table( $items, $headers, $map, $posttype );
+		$this->_render_data_table( $items, $headers, $map, $posttype, $source_key );
 	}
 
-	private function _render_data_table( $data, $headers, $map = [], $posttype = 'post' )
+	private function _render_data_table( $data, $headers, $map = [], $posttype = 'post', $source_key = 'none' )
 	{
 		$taxonomies = Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
@@ -335,15 +364,27 @@ class Importer extends gEditorial\Module
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 					$title_key = array_search( 'importer_post_title', $args['extra']['map'] );
+					$source_id = NULL;
 
 					if ( FALSE === $title_key )
 						return Helper::htmlEmpty();
+
+					if ( 'none' !== $args['extra']['source_key']
+						&& \array_key_exists( $args['extra']['source_key'], $row ) )
+							$source_id = $row[$args['extra']['source_key']];
 
 					$title = $this->filters( 'prepare',
 						$row[$title_key],
 						$args['extra']['post_type'],
 						'importer_post_title',
 						$row,
+						$this->filters( 'source_id',
+							$source_id,
+							$args['extra']['post_type'],
+							$row,
+							$args['extra']['taxonomies'],
+							$args['extra']['headers']
+						),
 						$args['extra']['taxonomies'],
 						$args['extra']['headers'][$title_key]
 					);
@@ -390,6 +431,7 @@ class Importer extends gEditorial\Module
 				'headers'    => $headers,
 				'post_type'  => $posttype,
 				'taxonomies' => $taxonomies,
+				'source_key' => $source_key,
 			],
 		] );
 	}
@@ -402,11 +444,24 @@ class Importer extends gEditorial\Module
 
 	public function form_posts_table_callback( $value, $row, $column, $index, $key, $args )
 	{
+		$source_id = NULL;
+
+		if ( 'none' !== $args['extra']['source_key']
+			&& \array_key_exists( $args['extra']['source_key'], $row ) )
+				$source_id = $row[$args['extra']['source_key']];
+
 		$filtered = $this->filters( 'prepare',
 			$value,
 			$args['extra']['post_type'],
 			$args['extra']['map'][$key],
 			$row,
+			$this->filters( 'source_id',
+				$source_id,
+				$args['extra']['post_type'],
+				$row,
+				$args['extra']['taxonomies'],
+				$args['extra']['headers']
+			),
 			$args['extra']['taxonomies'],
 			$args['extra']['headers'][$key]
 		);
@@ -426,8 +481,8 @@ class Importer extends gEditorial\Module
 
 			$this->filter( 'import_memory_limit' );
 
-			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 6 );
-			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 7 );
+			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 7 );
+			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 8 );
 
 			if ( ! empty( $_POST ) ) {
 
@@ -476,12 +531,13 @@ class Importer extends gEditorial\Module
 
 				} else if ( Tablelist::isAction( 'posts_import', TRUE ) ) {
 
-					$count     = 0;
-					$field_map = self::req( 'field_map', [] );
-					$terms_all = self::req( 'terms_all', [] );
-					$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
-					$attach_id = self::req( 'attach_id', FALSE );
-					$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
+					$count      = 0;
+					$field_map  = self::req( 'field_map', [] );
+					$terms_all  = self::req( 'terms_all', [] );
+					$posttype   = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+					$attach_id  = self::req( 'attach_id', FALSE );
+					$user_id    = self::req( 'user_id', gEditorial()->user( TRUE ) );
+					$source_key = self::req( 'source_key', 'none' );
 
 					if ( ! $file = get_attached_file( $attach_id ) )
 						WordPress::redirectReferer( 'wrong' );
@@ -508,8 +564,26 @@ class Importer extends gEditorial\Module
 						$items  = $parser->parse();
 						$raw    = array_pop( $items );
 
-						$data     = [ 'tax_input' => [] ];
-						$prepared = [];
+						$data      = [ 'tax_input' => [] ];
+						$prepared  = [];
+						$source_id = $this->filters( 'source_id',
+							( 'none' !== $source_key && \array_key_exists( $source_key, $raw )
+								? $raw[$source_key]
+								: NULL
+							),
+							$posttype,
+							$raw,
+							$taxonomies,
+							$headers
+						);
+
+						if ( $source_id && $this->get_setting( 'match_source_id' ) ) {
+
+							$matched = PostType::getIDbyMeta( $this->constant( 'metakey_source_id' ), $source_id );
+
+							if ( $matched && $posttype === get_post_type( intval( $matched ) ) )
+								$data['ID'] = intval( $matched );
+						}
 
 						unset( $parser, $items );
 
@@ -523,6 +597,7 @@ class Importer extends gEditorial\Module
 								$posttype,
 								$field,
 								$raw,
+								$source_id,
 								$taxonomies,
 								$headers[$key]
 							);
@@ -551,7 +626,6 @@ class Importer extends gEditorial\Module
 
 									continue 2;
 
-								case 'importer_old_id': $data['meta_input'][$this->constant( 'metakey_old_id' )] = $prepared[$field] = $value; continue 2;
 								case 'importer_menu_order': $data['menu_order'] = $prepared[$field] = $value; continue 2;
 								case 'importer_post_title': $data['post_title'] = $prepared[$field] = $value; continue 2;
 								case 'importer_post_content': $data['post_content'] = $prepared[$field] = $value; continue 2;
@@ -589,11 +663,12 @@ class Importer extends gEditorial\Module
 							$prepared[$field] = $value;
 						}
 
-						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $posttype, $attach_id, $raw ) ) )
+						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) )
 							continue;
 
 						// only if it's new!
-						if ( empty( $insert['ID'] ) )
+						if ( empty( $insert['ID'] ) ) {
+
 							$insert = array_merge( [
 								// 'post_name'      => '', // The name (slug) for your post
 								// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
@@ -606,6 +681,10 @@ class Importer extends gEditorial\Module
 								'comment_status' => $comment_status,
 								'post_author'    => $user_id,
 							], $insert );
+
+							if ( $source_id )
+								$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
+						}
 
 						$post_id = wp_insert_post( $insert, TRUE );
 
@@ -620,7 +699,7 @@ class Importer extends gEditorial\Module
 							wp_set_object_terms( $post_id, Arraay::prepNumeral( $term_id ), $taxonomy, TRUE );
 						}
 
-						$this->actions( 'saved', PostType::getPost( $post_id ), $insert, $prepared, $field_map, $attach_id, $terms_all, $raw );
+						$this->actions( 'saved', PostType::getPost( $post_id ), $insert, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw );
 
 						$count++;
 					}
@@ -671,12 +750,13 @@ class Importer extends gEditorial\Module
 
 	private function _render_tools_for_posts()
 	{
-		$field_map = self::req( 'field_map', [] );
-		$terms_all = self::req( 'terms_all', [] );
-		$posttype  = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
-		$upload_id = self::req( 'upload_id', FALSE );
-		$attach_id = self::req( 'attach_id', FALSE );
-		$user_id   = self::req( 'user_id', gEditorial()->user( TRUE ) );
+		$field_map  = self::req( 'field_map', [] );
+		$terms_all  = self::req( 'terms_all', [] );
+		$posttype   = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+		$upload_id  = self::req( 'upload_id', FALSE );
+		$attach_id  = self::req( 'attach_id', FALSE );
+		$user_id    = self::req( 'user_id', gEditorial()->user( TRUE ) );
+		$source_key = self::req( 'source_key', 'none' );
 
 		if ( $upload_id )
 			$attach_id = $upload_id;
@@ -694,9 +774,10 @@ class Importer extends gEditorial\Module
 			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
+			HTML::inputHidden( 'source_key', $source_key );
 			HTML::inputHidden( 'tools_for', 'posts' );
 
-			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all );
+			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_key );
 
 			echo $this->wrap_open_buttons();
 			Settings::submitButton( 'posts_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
@@ -716,6 +797,7 @@ class Importer extends gEditorial\Module
 			HTML::inputHidden( 'posttype', $posttype );
 			HTML::inputHidden( 'attach_id', $attach_id );
 			HTML::inputHidden( 'user_id', $user_id );
+			HTML::inputHidden( 'source_key', $source_key );
 			HTML::inputHidden( 'tools_for', 'posts' );
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
@@ -763,7 +845,7 @@ class Importer extends gEditorial\Module
 		return $this->get_current_form( [
 			'user_id'  => gEditorial()->user( TRUE ),
 			'posttype' => $this->get_setting( 'post_type', 'post' ),
-			'metakey'  => $this->constant( 'metakey_old_id' ),
+			'metakey'  => $this->constant( 'metakey_source_id' ),
 			'template' => $this->filters( 'images_default_template', '' ), // FIXME: get default from settings
 		], 'forimages' );
 	}
@@ -850,7 +932,6 @@ class Importer extends gEditorial\Module
 	public function get_importer_fields( $posttype = NULL, $taxonomies = [] )
 	{
 		$fields = [
-			'importer_old_id'       => _x( 'Extra: Old ID', 'Post Field', 'geditorial-importer' ),
 			'importer_custom_meta'  => _x( 'Extra: Custom Meta', 'Post Field', 'geditorial-importer' ),
 			'importer_menu_order'   => _x( 'Menu Order', 'Post Field', 'geditorial-importer' ),
 			'importer_post_title'   => _x( 'Post Title', 'Post Field', 'geditorial-importer' ),
@@ -865,17 +946,15 @@ class Importer extends gEditorial\Module
 		return $this->filters( 'fields', $fields, $posttype );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw, $taxonomies, $key )
+	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
 	{
 		switch ( $field ) {
 
-			case 'importer_menu_order': return Number::intval( $value );
-			case 'importer_post_title': return Helper::kses( $value, 'none' );
+			case 'importer_menu_order'  : return Number::intval( $value );
+			case 'importer_post_title'  : return Helper::kses( $value, 'none' );
 			case 'importer_post_content': return Helper::kses( $value, 'html' );
 			case 'importer_post_excerpt': return Helper::kses( $value, 'text' );
-
-			case 'importer_old_id': return Number::intval( $value, FALSE );
-			case 'importer_custom_meta': return Helper::kses( $value, 'text' );
+			case 'importer_custom_meta' : return Helper::kses( $value, 'text' );
 		}
 
 		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
@@ -885,7 +964,7 @@ class Importer extends gEditorial\Module
 		return $value;
 	}
 
-	public function importer_saved( $post, $data, $prepared, $field_map, $attach_id, $terms_all, $raw )
+	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
 		if ( $this->get_setting( 'store_source_data' ) ) {
 			update_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );
