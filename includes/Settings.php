@@ -271,6 +271,7 @@ class Settings extends Core\Base
 			case 'to'   : $string = _x( 'to', 'Settings: Field Separate', 'geditorial' );    break;
 			case 'as'   : $string = _x( 'as', 'Settings: Field Separate', 'geditorial' );    break;
 			case 'or'   : $string = _x( 'or', 'Settings: Field Separate', 'geditorial' );    break;
+			case 'on'   : $string = _x( 'on', 'Settings: Field Separate', 'geditorial' );    break;
 		}
 
 		printf( '<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>', $string );
@@ -724,6 +725,7 @@ class Settings extends Core\Base
 			'type'        => 'select',
 			'title'       => _x( 'Archive Template', 'Setting: Setting Title', 'geditorial' ),
 			'description' => $description ?: _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial' ),
+			'none_title'  => self::showOptionNone(),
 			'values'      => wp_get_theme()->get_page_templates(),
 		];
 	}

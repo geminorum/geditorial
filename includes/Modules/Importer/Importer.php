@@ -157,7 +157,7 @@ class Importer extends gEditorial\Module
 
 			echo '<tr><td>';
 			echo HTML::escape( $object->labels->menu_name );
-			echo '</td><td><td>';
+			echo '</td><td>';
 				echo $dropdown;
 			echo '</td></tr>';
 		}
@@ -736,13 +736,13 @@ class Importer extends gEditorial\Module
 			return HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Message', 'geditorial-importer' ) );
 
 		if ( $first )
-			echo HTML::tag( 'h4',  _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
+			echo HTML::tag( 'h4', _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
 
 		if ( $first || $posts )
 			$this->_render_tools_for_posts();
 
 		if ( $first )
-			echo '<br /><hr />'.HTML::tag( 'h4',  _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
+			echo '<br /><hr />'.HTML::tag( 'h4', _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
 
 		if ( $first || $images )
 			$this->_render_tools_for_images();

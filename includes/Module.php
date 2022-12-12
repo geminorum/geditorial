@@ -304,7 +304,7 @@ class Module extends Base
 					'text'    => $this->module->title,
 					'url'     => $list,
 					/* translators: %s: module title */
-					'title'   => sprintf( _x( '%s', 'Module: Extra Link: Listtable', 'geditorial' ), $this->module->title ),
+					'title'   => sprintf( _x( '%s Dashboard', 'Module: Extra Link: Listtable', 'geditorial' ), $this->module->title ),
 				];
 
 		if ( method_exists( $this, 'reports_settings' ) && ! Settings::isReports( $screen ) )
@@ -1952,6 +1952,8 @@ class Module extends Base
 		switch ( $field['type'] ) {
 
 			case 'term':
+
+				// TODO: use `Taxonomy::getTerm( $data, $field['taxonomy'] )`
 				$sanitized = empty( $data ) ? NULL : (int) $data;
 
 			break;
@@ -5324,7 +5326,7 @@ class Module extends Base
 				else
 					$text = HTML::wrap( $text, $classes, FALSE );
 
-				$html.= HTML::tag( $list, [ 'class' => 'warning' ],  $text );
+				$html.= HTML::tag( $list, [ 'class' => 'warning' ], $text );
 			}
 		}
 
@@ -5862,7 +5864,7 @@ class Module extends Base
 			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
 			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
-			$template = Theme::getTemplate( $this->get_setting( 'archive_template', NULL ) );
+			$template = Theme::getTemplate( $this->get_setting( 'archive_template' ) );
 		}
 
 		$this->filter_empty_string( 'previous_post_link' );

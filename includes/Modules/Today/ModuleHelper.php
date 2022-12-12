@@ -327,7 +327,7 @@ class ModuleHelper extends gEditorial\Helper
 			}
 		}
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		return $query->query( $args );
 	}
 
@@ -378,7 +378,7 @@ class ModuleHelper extends gEditorial\Helper
 			}
 		}
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$posts = $query->query( $query_args );
 
 		if ( $args['count'] )

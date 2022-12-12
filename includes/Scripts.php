@@ -111,18 +111,22 @@ class Scripts extends Main
 	// @REF: https://github.com/jackmoore/colorbox
 	public static function registerColorBox( $ver = '1.6.4' )
 	{
-		wp_register_style( 'jquery-colorbox', GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
-		wp_register_script( 'jquery-colorbox', GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
+		$handle = 'jquery-colorbox';
 
-		return 'jquery-colorbox';
+		wp_register_style( $handle, GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
+		wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
+
+		return $handle;
 	}
 
 	public static function enqueueColorBox()
 	{
-		wp_enqueue_style( 'jquery-colorbox' );
-		wp_enqueue_script( 'jquery-colorbox' );
+		$handle = 'jquery-colorbox';
 
-		return 'jquery-colorbox';
+		wp_enqueue_style( $handle );
+		wp_enqueue_script( $handle );
+
+		return $handle;
 	}
 
 	public static function pkgAutosize( $ver = '4.0.2' )
