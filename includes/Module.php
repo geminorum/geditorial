@@ -5167,7 +5167,7 @@ class Module extends Base
 		return TRUE;
 	}
 
-	protected function do_dashboard_term_summary( $constant, $box, $posttypes = NULL )
+	protected function do_dashboard_term_summary( $constant, $box, $posttypes = NULL, $edit = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
@@ -5175,10 +5175,24 @@ class Module extends Base
 		// using core styles
 		echo $this->wrap_open( [ '-admin-widget', '-core-styles' ], TRUE, 'dashboard_right_now' );
 
-		$taxonomy = $this->constant( $constant );
+		$taxonomy = Taxonomy::object( $this->constant( $constant ) );
 
-		if ( ! Taxonomy::hasTerms( $taxonomy ) ) {
-			HTML::desc( get_taxonomy( $taxonomy )->labels->no_terms, FALSE, '-empty' );
+		if ( ! Taxonomy::hasTerms( $taxonomy->name ) ) {
+
+			if ( is_null( $edit ) )
+				$edit = WordPress::getEditTaxLink( $taxonomy->name );
+
+			if ( $edit )
+				$empty = HTML::tag( 'a', [
+					'href'   => $edit,
+					'title'  => $taxonomy->labels->add_new_item,
+					'target' => '_blank',
+				], $taxonomy->labels->no_terms );
+
+			else
+				$empty = gEditorial()->na();
+
+			HTML::desc( $empty, FALSE, '-empty' );
 			echo '</div>';
 			return;
 		}
