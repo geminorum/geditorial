@@ -1037,6 +1037,14 @@ class Book extends gEditorial\Module
 		);
 	}
 
+	public function insert_content( $content )
+	{
+		if ( ! $this->is_content_insert() )
+			return;
+
+		echo $this->wrap( ModuleTemplate::cover( [ 'id' => 'paired' ] ) );
+	}
+
 	public function insert_content_p2p( $content )
 	{
 		if ( ! $this->_p2p )
