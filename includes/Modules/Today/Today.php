@@ -693,7 +693,7 @@ class Today extends gEditorial\Module
 				$title = PostType::getPostTitle( $this->the_post[0] ).' ['.$title.']';
 
 			Theme::resetQuery( [
-				'ID'          => -9999,
+				'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
 				'post_title'  => $title,
 				'post_author' => 0,
 				'post_type'   => $this->constant( 'day_cpt' ),

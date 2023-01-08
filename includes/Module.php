@@ -47,6 +47,7 @@ class Module extends Base
 	protected $positions = []; // menu positions by context/constant
 	protected $deafults  = []; // default settings
 
+	protected $settings  = [];
 	protected $constants = [];
 	protected $strings   = [];
 	protected $supports  = [];
@@ -4497,6 +4498,8 @@ class Module extends Base
 	// TODO: check capability
 	protected function paired_tweaks_column_attr( $post, $posttype_key, $taxonomy_key )
 	{
+		static $types = [];
+
 		$posts = $this->paired_get_from_posts( $post->ID, $posttype_key, $taxonomy_key );
 		$count = count( $posts );
 
@@ -4513,8 +4516,8 @@ class Module extends Base
 
 			$args = [ $this->constant( $taxonomy_key ) => $post->post_name ];
 
-			if ( empty( $this->cache_posttypes ) )
-				$this->cache_posttypes = PostType::get( 2 );
+			if ( empty( $types ) )
+				$types = PostType::get( 2 );
 
 			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
@@ -4525,7 +4528,7 @@ class Module extends Base
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: Paired: Title Attr', 'geditorial' ),
 					'target' => '_blank',
-				], $this->cache_posttypes[$posttype] );
+				], $types[$posttype] );
 
 			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
@@ -5161,13 +5164,14 @@ class Module extends Base
 
 		add_meta_box( $id, $title, $callback, $screen, 'normal', 'default', $args );
 
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function( $classes ) use ( $name ) {
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function( $classes ) use ( $name, $context ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',
 				'-admin-postbox'.'-'.$name,
 				'-'.$this->key,
 				'-'.$this->key.'-'.$name,
+				'-context-'.$context,
 			] );
 		} );
 
@@ -5471,6 +5475,8 @@ class Module extends Base
 
 	protected function column_row_p2p_to_posttype( $constant, $post )
 	{
+		static $icons = [], $types = [];
+
 		if ( ! $this->_p2p )
 			return;
 
@@ -5486,12 +5492,11 @@ class Module extends Base
 		if ( ! $count )
 			return;
 
-		if ( empty( $this->cache_column_icon ) )
-			$this->cache_column_icon = $this->get_column_icon( FALSE,
-				NULL, $this->strings['p2p'][$constant]['title']['to'] );
+		if ( empty( $icons[$constant] ) )
+			$icons[$constant] = $this->get_column_icon( FALSE, NULL, $this->strings['p2p'][$constant]['title']['to'] );
 
-		if ( empty( $this->cache_posttypes ) )
-			$this->cache_posttypes = PostType::get( 2 );
+		if ( empty( $types ) )
+			$types = PostType::get( 2 );
 
 		$posttypes = array_unique( array_map( function( $r ){
 			return $r->post_type;
@@ -5505,7 +5510,7 @@ class Module extends Base
 
 		echo '<li class="-row -p2p -connected">';
 
-			echo $this->cache_column_icon;
+			echo $icons[$constant];
 
 			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
@@ -5516,7 +5521,7 @@ class Module extends Base
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
-				], $this->cache_posttypes[$posttype] );
+				], $types[$posttype] );
 
 			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
@@ -5525,12 +5530,13 @@ class Module extends Base
 
 	protected function column_row_p2p_from_posttype( $constant, $post )
 	{
+		static $icons = [];
+
 		if ( ! $this->_p2p )
 			return;
 
-		if ( empty( $this->cache_column_icon ) )
-			$this->cache_column_icon = $this->get_column_icon( FALSE,
-				NULL, $this->strings['p2p'][$constant]['title']['from'] );
+		if ( empty( $icons[$constant] ) )
+			$icons[$constant] = $this->get_column_icon( FALSE, NULL, $this->strings['p2p'][$constant]['title']['from'] );
 
 		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
 		$type  = $this->constant( $constant.'_p2p' );
@@ -5547,7 +5553,7 @@ class Module extends Base
 					echo $this->get_column_icon( get_edit_post_link( $item->get_id() ),
 						NULL, $this->strings['p2p'][$constant]['title']['from'] );
 				else
-					echo $this->cache_column_icon;
+					echo $icons[$constant];
 
 				$args = [
 					'connected_direction' => 'to',

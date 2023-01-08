@@ -407,7 +407,7 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Size', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Size of the Publication, Mainly Books', 'Field Description', 'geditorial-book' ),
 					'type'        => 'term',
-					'tax'         => $this->constant( 'size_tax' ),
+					'taxonomy'    => $this->constant( 'size_tax' ),
 				],
 				'publication_reference' => [
 					'title'       => _x( 'Reference', 'Field Title', 'geditorial-book' ),
@@ -618,10 +618,10 @@ class Book extends gEditorial\Module
 			if ( ! $post = PostType::getPost( $post_id ) )
 				return;
 
-			if ( ! in_array( $post->post_status, [ 'publish' ], TRUE ) )
+			if ( $post->post_type != $this->constant( 'publication_cpt' ) )
 				return;
 
-			if ( $post->post_type != $this->constant( 'publication_cpt' ) )
+			if ( ! $this->is_post_viewable( $post ) )
 				return;
 
 			WordPress::redirect( get_page_link( $post->ID ), 302 );

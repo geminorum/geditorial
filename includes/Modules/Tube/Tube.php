@@ -14,6 +14,9 @@ use geminorum\gEditorial\Core\WordPress;
 class Tube extends gEditorial\Module
 {
 
+	// TODO: `video_playlist` taxonomy with owner user meta
+	// TODO: `channel_subject` taxonomy
+
 	public static function module()
 	{
 		return [

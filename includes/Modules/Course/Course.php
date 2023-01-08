@@ -249,6 +249,7 @@ class Course extends gEditorial\Module
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'show_in_nav_menus'  => TRUE,
 		], 'course_cpt' );
 
 		$this->register_taxonomy( 'span_tax', [

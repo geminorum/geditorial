@@ -22,8 +22,24 @@ class Terms extends gEditorial\Module
 {
 
 	// TODO: like `tableColumnPostMeta()` for term meta
+	// TODO: `cost`, `price`, `date`, `datetime`, 'datestart`, 'dateend`, 'status`: public/private, `capability`, `plural`, `icon`
 
-	protected $supported = [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ];
+	protected $supported = [
+		'order',
+		'tagline',
+		'contact',
+		'image',
+		'author',
+		'color',
+		'role',
+		'roles',
+		'posttype',
+		'posttypes',
+		'arrow',
+		'label',
+		'code',
+		'barcode',
+	];
 
 	public static function module()
 	{
@@ -770,6 +786,8 @@ class Terms extends gEditorial\Module
 
 					$html = $this->field_empty( $field, '0', $column );
 				}
+
+				break;
 
 			default:
 

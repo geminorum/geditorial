@@ -11,6 +11,8 @@ use geminorum\gEditorial\WordPress\Strings;
 class Views extends gEditorial\Module
 {
 
+	// https://github.com/pronamic/wp-entry-views-updater/blob/develop/entry-views-updater.php
+
 	public $meta_key = '_ge_views';
 
 	protected $disable_no_posttypes = TRUE;

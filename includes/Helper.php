@@ -943,10 +943,8 @@ class Helper extends Main
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
 	public static function renderMustache( $part, $data = [], $verbose = TRUE )
 	{
-		$mustache = self::getMustache();
-		$template = $mustache->loadTemplate( $part );
-
-		$html = $template->render( $data );
+		$engine = self::getMustache();
+		$html   = $engine->loadTemplate( $part )->render( $data );
 
 		if ( ! $verbose )
 			return $html;

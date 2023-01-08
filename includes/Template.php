@@ -866,7 +866,7 @@ class Template extends Main
 					'field'    => FALSE,
 					'link'     => FALSE,
 					'echo'     => FALSE,
-					'taxonomy' => $field['tax'],
+					'taxonomy' => $field['taxonomy'],
 				], 'meta', FALSE );
 
 			else

@@ -17,6 +17,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Cartable extends gEditorial\Module
 {
 
+	// TODO: dynamic cartables based on external taxonomies
+
 	protected $disable_no_posttypes = TRUE;
 	protected $priority_admin_menu  = 90;
 
