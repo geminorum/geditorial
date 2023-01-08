@@ -914,6 +914,16 @@ class Module extends Base
 		return $this->constant( $posttype_key ) == $post->post_type;
 	}
 
+	public function is_post_viewable( $post = NULL )
+	{
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		$status = get_post_status( $post );
+
+		return $this->filters( 'is_post_viewable', is_post_status_viewable( $status ), $post, $status );
+	}
+
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
 	{
 		if ( is_null( $pre ) )
@@ -4334,7 +4344,7 @@ class Module extends Base
 			if ( is_null( $published ) )
 				$posts[$term->term_id] = $to_post_id;
 
-			else if ( $published && ! is_post_status_viewable( get_post_status( $to_post_id ) ) )
+			else if ( $published && ! $this->is_post_viewable( $to_post_id ) )
 				continue;
 
 			else
