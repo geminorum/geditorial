@@ -663,8 +663,15 @@ class Importer extends gEditorial\Module
 							$prepared[$field] = $value;
 						}
 
-						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) )
+						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
+
+							$this->log( 'NOTICE', ( $source_id
+								? sprintf( 'ID: %s :: %s', $source_id, 'SKIPPED BY `insert` FILTER' )
+								: 'SKIPPED BY `insert` FILTER'
+							) );
+
 							continue;
+						}
 
 						// only if it's new!
 						if ( empty( $insert['ID'] ) ) {
@@ -688,8 +695,15 @@ class Importer extends gEditorial\Module
 
 						$post_id = wp_insert_post( $insert, TRUE );
 
-						if ( is_wp_error( $post_id ) )
+						if ( is_wp_error( $post_id ) ) {
+
+							$this->log( 'NOTICE', ( $source_id
+								? sprintf( 'ID: %s :: %s', $source_id, $post_id->get_error_message() )
+								: $post_id->get_error_message()
+							) );
+
 							continue;
+						}
 
 						foreach ( $terms_all as $taxonomy => $term_id ) {
 
