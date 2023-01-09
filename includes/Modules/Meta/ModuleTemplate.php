@@ -61,7 +61,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( is_null( $post_id ) )
 			$post_id = $post->ID;
 
-		$meta = gEditorial()->meta->get_postmeta_field( $post_id, $field );
+		$meta = gEditorial()->module( 'meta' )->get_postmeta_field( $post_id, $field );
 
 		if ( FALSE === $meta )
 			return FALSE;
@@ -96,7 +96,7 @@ class ModuleTemplate extends gEditorial\Template
 			'def' => '',
 		], $atts );
 
-		$meta = gEditorial()->meta->get_postmeta_field( $args['id'], $field );
+		$meta = gEditorial()->module( 'meta' )->get_postmeta_field( $args['id'], $field );
 
 		return FALSE === $meta ? $args['def'] : $meta;
 	}

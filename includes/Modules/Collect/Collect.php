@@ -711,7 +711,7 @@ class Collect extends gEditorial\Module
 							if ( $post->menu_order )
 								continue;
 
-							if ( $order = gEditorial()->meta->get_postmeta_field( $post->ID, $field_key ) ) {
+							if ( $order = gEditorial()->module( 'meta' )->get_postmeta_field( $post->ID, $field_key ) ) {
 								wp_update_post( [
 									'ID'         => $post->ID,
 									'menu_order' => $order,

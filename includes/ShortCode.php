@@ -993,7 +993,7 @@ class ShortCode extends Main
 
 			if ( $args['module'] ) {
 
-				if ( ! $term = gEditorial()->{$args['module']}->paired_get_to_term_direct( $post->ID, $posttype, $taxonomy ) )
+				if ( ! $term = gEditorial()->module( $args['module'] )->paired_get_to_term_direct( $post->ID, $posttype, $taxonomy ) )
 					return $content;
 
 			} else {
@@ -1036,7 +1036,7 @@ class ShortCode extends Main
 				return $content;
 			}
 
-			if ( ! $paired_posts = gEditorial()->{$args['module']}->get_linked_to_posts( NULL, FALSE, NULL ) )
+			if ( ! $paired_posts = gEditorial()->module( $args['module'] )->get_linked_to_posts( NULL, FALSE, NULL ) )
 				return $content;
 
 			$query['post_type'] = $posttype; // override with main posttype

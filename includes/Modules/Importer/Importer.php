@@ -989,7 +989,7 @@ class Importer extends gEditorial\Module
 		if ( $this->get_setting( 'add_audit_attribute' )
 			&& gEditorial()->enabled( 'audit' ) ) {
 
-			gEditorial()->audit->set_terms( $post, $this->default_audit_attribute );
+			gEditorial()->module( 'audit' )->set_terms( $post, $this->default_audit_attribute );
 		}
 	}
 

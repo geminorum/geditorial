@@ -58,10 +58,10 @@ class ModuleTemplate extends gEditorial\Template
 				// 'filter'   => '__do_embed_shortcode', // NO NEED: filtering the raw meta
 			] ) );
 
-		if ( ! gEditorial()->{static::MODULE}->posttype_supported( $post->post_type ) )
+		if ( ! gEditorial()->module( static::MODULE )->posttype_supported( $post->post_type ) )
 			return $atts['default'];
 
-		if ( ! $post_id = gEditorial()->{static::MODULE}->get_linked_to_posts( $post, TRUE ) )
+		if ( ! $post_id = gEditorial()->module( static::MODULE )->get_linked_to_posts( $post, TRUE ) )
 			return $atts['default'];
 
 		return self::metaField( 'map_embed_url', array_merge( $atts, [

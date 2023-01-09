@@ -25,7 +25,7 @@ class WalkerPageDropdown extends \Walker_PageDropdown
 
 		if ( ! empty( $args['title_with_meta'] ) && gEditorial()->enabled( 'meta' ) ) {
 
-			if ( $meta = gEditorial()->meta->get_postmeta_field( $page->ID, $args['title_with_meta'] ) )
+			if ( $meta = gEditorial()->module( 'meta' )->get_postmeta_field( $page->ID, $args['title_with_meta'] ) )
 				$title = $meta;
 		}
 

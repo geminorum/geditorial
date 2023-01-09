@@ -299,7 +299,7 @@ class Widget extends \WP_Widget
 	public function get_images_sizes( $posttype )
 	{
 		$images = [];
-		$sizes  = gEditorial()->{$this->parent_module}->get_image_sizes( $posttype );
+		$sizes  = gEditorial()->module( $this->parent_module )->get_image_sizes( $posttype );
 
 		if ( count( $sizes ) ) {
 

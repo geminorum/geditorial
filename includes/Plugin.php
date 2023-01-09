@@ -339,6 +339,12 @@ class Plugin
 		return wp_list_sort( (array) $this->_modules, $orderby );
 	}
 
+	// NOTE: must check for enabled before this!
+	public function module( $name )
+	{
+		return $this->{$name};
+	}
+
 	public function constant( $module, $key, $default = NULL )
 	{
 		if ( $module && self::enabled( $module ) )

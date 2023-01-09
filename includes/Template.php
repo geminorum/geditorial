@@ -344,7 +344,7 @@ class Template extends Main
 			$args['id'] = PostType::getParentPostID();
 
 		else if ( $module && in_array( $args['id'], [ 'assoc', 'linked', 'paired' ] ) )
-			$args['id'] = gEditorial()->{$module}->get_linked_to_posts( NULL, TRUE );
+			$args['id'] = gEditorial()->module( $module )->get_linked_to_posts( NULL, TRUE );
 
 		if ( FALSE === $args['id'] )
 			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
@@ -436,7 +436,7 @@ class Template extends Main
 			'echo'          => TRUE,
 		], $atts );
 
-		if ( ! $posts = gEditorial()->{$module}->get_linked_to_posts( $args['id'], $args['single'], $args['published'] ) )
+		if ( ! $posts = gEditorial()->module( $module )->get_linked_to_posts( $args['id'], $args['single'], $args['published'] ) )
 			return $args['default'];
 
 		$links = [];
@@ -803,7 +803,7 @@ class Template extends Main
 
 		$rows     = [];
 		$posttype = $args['type'] ?: $post->post_type;
-		$fields   = gEditorial()->meta->get_posttype_fields( $posttype );
+		$fields   = gEditorial()->module( 'meta' )->get_posttype_fields( $posttype );
 		$list     = $args['fields'] ?: wp_list_pluck( $fields, 'title', 'name' );
 		$excludes = is_null( $args['excludes'] ) ? [
 			'over_title',

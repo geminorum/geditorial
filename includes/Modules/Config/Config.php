@@ -263,9 +263,9 @@ class Config extends gEditorial\Module
 
 				} else if ( Tablelist::isAction( 'custom_fields_empty' ) ) {
 
-					if ( $post['empty_module'] && isset( gEditorial()->{$post['empty_module']}->meta_key ) ) {
+					if ( $post['empty_module'] && isset( gEditorial()->module( $post['empty_module'] )->meta_key ) ) {
 
-						$result = Database::deleteEmptyMeta( gEditorial()->{$post['empty_module']}->meta_key );
+						$result = Database::deleteEmptyMeta( gEditorial()->module( $post['empty_module'] )->meta_key );
 
 						if ( $result )
 							WordPress::redirectReferer( [
@@ -594,7 +594,7 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		$posted  = empty( $_POST[$this->base.'_'.$module->name] ) ? [] : $_POST[$this->base.'_'.$module->name];
-		$options = gEditorial()->{$module->name}->settings_validate( $posted );
+		$options = gEditorial()->module( $module->name )->settings_validate( $posted );
 
 		$options['enabled'] = TRUE;
 

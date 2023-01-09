@@ -379,7 +379,7 @@ class Venue extends gEditorial\Module
 		$html = $this->get_search_form( 'place_cpt' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
-			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'place_cpt' ) ] );
+			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [ 'post_type' => $this->constant( 'place_cpt' ) ] );
 
 		else
 			$html.= $this->place_shortcode( [

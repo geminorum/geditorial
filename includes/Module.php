@@ -2727,10 +2727,10 @@ class Module extends Base
 		if ( ! gEditorial()->enabled( 'roles' ) )
 			return $default;
 
-		if ( ! in_array( $this->constant( $constant ), gEditorial()->roles->posttypes() ) )
+		if ( ! in_array( $this->constant( $constant ), gEditorial()->module( 'roles' )->posttypes() ) )
 			return $default;
 
-		return gEditorial()->roles->constant( 'base_type' );
+		return gEditorial()->module( 'roles' )->constant( 'base_type' );
 	}
 
 	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ], $block_editor = FALSE )
@@ -2899,10 +2899,10 @@ class Module extends Base
 		else
 			return $defaults;
 
-		if ( ! in_array( $posttype, gEditorial()->roles->posttypes() ) )
+		if ( ! in_array( $posttype, gEditorial()->module( 'roles' )->posttypes() ) )
 			return $defaults;
 
-		$base = gEditorial()->roles->constant( 'base_type' );
+		$base = gEditorial()->module( 'roles' )->constant( 'base_type' );
 
 		return [
 			'manage_terms' => 'edit_others_'.$base[1],
@@ -4709,7 +4709,7 @@ class Module extends Base
 					if ( $post->menu_order )
 						continue;
 
-					if ( $order = gEditorial()->meta->get_postmeta_field( $post->ID, $field ) ) {
+					if ( $order = gEditorial()->module( 'meta' )->get_postmeta_field( $post->ID, $field ) ) {
 						wp_update_post( [
 							'ID'         => $post->ID,
 							'menu_order' => $order,

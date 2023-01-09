@@ -315,7 +315,7 @@ class Entry extends gEditorial\Module
 		$html = $this->get_search_form( 'entry_cpt' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
-			$html.= gEditorial()->alphabet->shortcode_posts( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
+			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [ 'post_type' => $this->constant( 'entry_cpt' ) ] );
 
 		else
 			$html.= $this->section_shortcode( [
