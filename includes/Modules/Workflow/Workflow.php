@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\Color;
 use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -291,30 +293,54 @@ class Workflow extends gEditorial\Module
 		if ( ! empty( $this->statuses[$user_id] ) )
 			return $this->statuses[$user_id];
 
-		$terms     = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
-		$admin     = User::isSuperAdmin();
-		$posttypes = $this->posttypes();
+		$args = [
+			'taxonomy'   => $this->constant( 'status_tax' ),
+			'hide_empty' => FALSE,
+			'orderby'    => 'none',
+			// NOTE: needs meta cache updated
+		];
 
-		foreach ( $terms as $term ) {
+		$query     = new \WP_Term_Query();
+		$admin     = User::isSuperAdmin();
+		$supported = $this->posttypes();
+		$statuses  = [];
+
+		foreach ( $query->query( $args ) as $term ) {
+
+			$metas = Taxonomy::getTermMeta( $term, [
+				'order'     => '',
+				'color'     => '',
+				'posttype'  => '',
+				'posttypes' => $supported,
+				'roles'     => FALSE,
+			] );
 
 			$status = [
 				'term_id'   => $term->term_id,
 				'name'      => $term->slug,
 				'label'     => $term->name,
-				'post_type' => $posttypes, // FIXME: check for posttype meta
+				'color'     => Color::validHex( $metas['color'] ) ?: '',
+				'order'     => $metas['order'],
+				'post_type' => $metas['posttypes'],
 				'disabled'  => FALSE,
+				'viewable'  => FALSE, // FIXME
+				'plural'    => FALSE, // FIXME
+				'icon'      => FALSE, // FIXME
 			];
 
-			if ( ! $admin && ( $roles = get_term_meta( $term->term_id, 'roles', TRUE ) ) ) {
+			if ( $metas['posttype'] && in_array( $metas['posttype'], $supported, TRUE ) )
+				$status['post_type'] = (array) $metas['posttype'];
 
-				if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
+			if ( ! $admin && $metas['roles'] ) {
+
+				if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $metas['roles'] ), $user_id ) )
 					$status['disabled'] = TRUE;
 			}
 
-			$this->statuses[$user_id][$term->slug] = (object) $status;
+			$statuses[$term->slug] = (object) $status;
 		}
 
-		return $this->statuses[$user_id];
+		return $this->statuses[$user_id] = Arraay::sortObjectByPriority( $statuses, 'order' );
 	}
 
 	// TODO: filter `is_post_status_viewable` @since WP 5.9.0
@@ -497,10 +523,14 @@ class Workflow extends gEditorial\Module
 			if ( $hide && $status->disabled && $current != $status->name )
 				continue;
 
+			if ( ! in_array( $post->post_type, $status->post_type, TRUE ) )
+				continue;
+
 			$html.= HTML::tag( 'option', [
 				'value'    => $status->name,
 				'disabled' => $status->disabled,
 				'selected' => $current == $status->name,
+				'style'    => $status->color ? sprintf( 'color:%s;background-color:%s', $status->color, Color::lightOrDark( $status->color ) ) : FALSE,
 			], HTML::escape( $status->label ) );
 
 			if ( $status->disabled )
@@ -517,6 +547,9 @@ class Workflow extends gEditorial\Module
 			// TODO: changes via js and `status-` class
 			$info.= HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class );
 		}
+
+		if ( empty ( $html ) )
+			return HTML::desc( _x( 'There are no statuses available!', 'Message', 'geditorial-workflow' ), TRUE, 'field-wrap misc-pub-section -empty-status' );
 
 		$html = HTML::tag( 'select', [
 			'id'       => $this->classs( 'post-status' ),
