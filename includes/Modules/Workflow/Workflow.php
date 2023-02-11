@@ -91,6 +91,14 @@ class Workflow extends gEditorial\Module
 	protected function get_global_strings()
 	{
 		return [
+			'noops' => [
+				'status_tax' => _n_noop( 'Custom Status', 'Custom Statuses', 'geditorial-workflow' ),
+			],
+			'labels' => [
+				'status_tax' => [
+					'menu_name' => _x( 'Statuses', 'Label: Menu Name', 'geditorial-workflow' ),
+				],
+			],
 			'metabox' => [
 				'metabox_title' => _x( 'Workflow', 'MetaBox Title', 'geditorial-workflow' ),
 			],
@@ -105,7 +113,7 @@ class Workflow extends gEditorial\Module
 			$this->constant( 'status_tax' ),
 			[],
 			[
-				'label'        => _x( 'Statuses', 'Taxonomy Label', 'geditorial-workflow' ),
+				'labels'       => $this->get_taxonomy_labels( 'status_tax' ),
 				'show_ui'      => $this->cuc( 'settings' ),
 				'public'       => FALSE,
 				'meta_box_cb'  => FALSE,
