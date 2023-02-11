@@ -843,7 +843,7 @@ class Template extends Main
 					if ( ! is_object_in_taxonomy( $posttype, $key ) )
 						continue;
 
-					if ( ! $terms = self::getTheTermList( $key, $post ) )
+					if ( ! $terms = Taxonomy::getTheTermList( $key, $post ) )
 						continue;
 
 					if ( is_null( $title ) )
@@ -960,24 +960,6 @@ class Template extends Main
 		ksort( $o );
 
 		return $o;
-	}
-
-	// @REF: `get_the_term_list()`
-	// FIXME: move this to Taxonomy
-	public static function getTheTermList( $taxonomy, $post = NULL, $before = '', $after = '' )
-	{
-		if ( ! $terms = Taxonomy::getPostTerms( $taxonomy, $post ) )
-			return FALSE;
-
-		$list = [];
-
-		foreach ( $terms as $term )
-			$list[] = HTML::tag( 'a', [
-				'href'  => get_term_link( $term, $taxonomy ),
-				'class' => '-term',
-			], sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) );
-
-		return Strings::getJoined( apply_filters( 'term_links-'.$taxonomy, $list ), $before, $after, FALSE );
 	}
 
 	public static function renderRecentByPosttype( $posttype, $link = 'view', $empty = NULL, $title_attr = NULL, $extra = [] )
