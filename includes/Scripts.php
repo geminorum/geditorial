@@ -23,7 +23,7 @@ class Scripts extends Main
 	public static function inlineScript( $asset, $script, $dep = [ 'jquery' ] )
 	{
 		if ( empty( $script ) )
-			return;
+			return FALSE;
 
 		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
 
@@ -32,6 +32,8 @@ class Scripts extends Main
 		wp_register_script( $handle, '', $dep, '', TRUE );
 		wp_enqueue_script( $handle ); // must register then enqueue
 		wp_add_inline_script( $handle, $script );
+
+		return $handle;
 	}
 
 	public static function enqueue( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )

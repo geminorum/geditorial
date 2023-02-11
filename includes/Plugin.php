@@ -25,6 +25,10 @@ class Plugin
 	private $editor_buttons = [];
 	private $adminbar_nodes = [];
 
+	private $_path;
+	private $_options;
+	private $_modules;
+
 	public static function instance()
 	{
 		static $instance = NULL;

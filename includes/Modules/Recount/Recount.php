@@ -198,14 +198,14 @@ class Recount extends gEditorial\Module
 		echo $this->wrap_open( '-tab-extras card -toolbox-card' );
 			HTML::h4( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), 'title' );
 
-			$this->render_form_start( NULL, 'import', 'download', 'tabs', FALSE );
+			$this->render_form_start( NULL, 'recount-items', 'maintenance', 'tabs', FALSE );
 				$this->nonce_field( 'do-recount-items' );
 
 				echo $this->wrap_open_buttons( '-toolbox-buttons' );
 					Settings::submitButton( $this->classs( 'do-recount-items' ), _x( 'Re-count Items for all Terms', 'Tab Tools', 'geditorial-recount' ), 'small button-primary' );
 				echo '</p>';
 
-			$this->render_form_end( NULL, 'import', 'download', 'tabs' );
+			$this->render_form_end( NULL, 'recount-items', 'maintenance', 'tabs' );
 
 		echo '</div>';
 	}

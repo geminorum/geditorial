@@ -288,7 +288,7 @@ class Config extends gEditorial\Module
 					else
 						WordPress::redirectReferer( [
 							'message' => 'converted',
-							'count'   => $count,
+							'count'   => count( $result ),
 						] );
 
 				} else {
@@ -471,11 +471,9 @@ class Config extends gEditorial\Module
 		if ( ! gEditorial()->enabled( $module->name ) )
 			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Page Notice', 'geditorial-config' ), FALSE ) );
 
-		$plugin = gEditorial();
-
-		$plugin->{$module->name}->settings_header();
-			$plugin->{$module->name}->settings_from();
-		$plugin->{$module->name}->settings_footer();
+		gEditorial()->module( $module->name )->settings_header();
+		gEditorial()->module( $module->name )->settings_from();
+		gEditorial()->module( $module->name )->settings_footer();
 	}
 
 	public function settings_from()

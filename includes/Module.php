@@ -26,6 +26,7 @@ class Module extends Base
 
 	public $module;
 	public $options;
+	public $settings;
 
 	public $enabled  = FALSE;
 	public $meta_key = '_ge';
@@ -47,7 +48,6 @@ class Module extends Base
 	protected $positions = []; // menu positions by context/constant
 	protected $deafults  = []; // default settings
 
-	protected $settings  = [];
 	protected $constants = [];
 	protected $strings   = [];
 	protected $supports  = [];

@@ -18,8 +18,6 @@ use geminorum\gEditorial\WordPress\User;
 class Workflow extends gEditorial\Module
 {
 
-	// TODO: register custom term meta for: plural/private/icon
-
 	private $statuses = [];
 
 	public static function module()
@@ -73,7 +71,7 @@ class Workflow extends gEditorial\Module
 					'type'         => 'checkbox-panel',
 					'title'        => _x( 'Locking Statuses', 'Setting Title', 'geditorial-workflow' ),
 					'description'  => _x( 'Selected statuses will lock editing the post to their assigned roles.', 'Setting Description', 'geditorial-workflow' ),
-					'string_empty' => _x( 'There are no statuses available!', 'Setting', 'geditorial-workflow' ),
+					'string_empty' => _x( 'There are no statuses available!', 'Message', 'geditorial-workflow' ),
 					'values'       => wp_list_pluck( $this->get_statuses(), 'label', 'name' ),
 				],
 			],
@@ -118,6 +116,7 @@ class Workflow extends gEditorial\Module
 				'labels'       => $this->get_taxonomy_labels( 'status_tax' ),
 				'show_ui'      => $this->cuc( 'settings' ),
 				'public'       => FALSE,
+				'rewrite'      => FALSE,
 				'meta_box_cb'  => FALSE,
 				'capabilities' => [
 					'manage_terms' => $this->caps['settings'],

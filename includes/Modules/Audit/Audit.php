@@ -702,10 +702,10 @@ class Audit extends gEditorial\Module
 
 	public function taxonomy_tab_extra_content( $taxonomy, $object )
 	{
-		$this->render_form_start( NULL, 'import', 'download', 'tabs', FALSE );
+		$this->render_form_start( NULL, 'empty-fields', 'extra', 'tabs', FALSE );
 			$this->nonce_field( 'do-empty-fields' );
 			$this->_render_tools_empty_fields( TRUE );
-		$this->render_form_end( NULL, 'import', 'download', 'tabs' );
+		$this->render_form_end( NULL, 'empty-fields', 'extra', 'tabs' );
 	}
 
 	private function _render_tools_empty_fields( $lite = FALSE )
