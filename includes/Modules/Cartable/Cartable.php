@@ -226,7 +226,6 @@ class Cartable extends gEditorial\Module
 			$this->register_taxonomy( 'type_tax', [
 				'hierarchical' => TRUE,
 				'public'       => FALSE,
-				'show_ui'      => TRUE,
 				'show_in_menu' => FALSE,
 			], NULL, [
 				'manage_terms' => $this->caps['settings'],

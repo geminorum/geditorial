@@ -2588,18 +2588,17 @@ class Module extends Base
 		$this->scripts_printed = TRUE;
 	}
 
-	public function get_setting( $field, $default = NULL )
+	public function get_setting( $field, $fallback = NULL )
 	{
-		if ( ! isset( $this->options->settings ) )
-			return $default;
+		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
 
-		if ( array_key_exists( $field, $this->options->settings ) )
-			return $this->options->settings[$field];
+		if ( array_key_exists( $field, $settings ) )
+			return $settings[$field];
 
 		if ( array_key_exists( $field, $this->deafults ) )
 			return $this->deafults[$field];
 
-		return $default;
+		return $fallback;
 	}
 
 	public function get_setting_fallback( $field, $fallback )
@@ -4715,16 +4714,19 @@ class Module extends Base
 			$field = $this->constant( 'field_paired_order', sprintf( 'in_%s_order', $this->constant( $posttype_key ) ) );
 
 			foreach ( $_POST['_cb'] as $term_id ) {
+
 				foreach ( $this->paired_get_from_posts( NULL, $posttype_key, $taxonomy_key, FALSE, $term_id ) as $post ) {
 
 					if ( $post->menu_order )
 						continue;
 
 					if ( $order = gEditorial()->module( 'meta' )->get_postmeta_field( $post->ID, $field ) ) {
+
 						wp_update_post( [
 							'ID'         => $post->ID,
 							'menu_order' => $order,
 						] );
+
 						$count++;
 					}
 				}

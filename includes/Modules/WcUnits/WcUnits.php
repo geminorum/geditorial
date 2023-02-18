@@ -294,7 +294,7 @@ class WcUnits extends gEditorial\Module
 	// Arabic Thousands Separator: https://unicode-table.com/en/066C/
 	public function format_localized_decimal( $value )
 	{
-		return str_replace( '.', $this->get_setting( 'decimal_point', '.' ), strval( $value ) );
+		return str_replace( '.', $this->get_setting( 'decimal_point', '.' ), (string) $value );
 	}
 
 	public function display_product_attributes( $attributes, $product )

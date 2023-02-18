@@ -9,7 +9,6 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
@@ -42,6 +41,9 @@ class Terms extends gEditorial\Module
 		'barcode',
 	];
 
+	private $_roles     = [];
+	private $_posttypes = [];
+
 	public static function module()
 	{
 		return [
@@ -69,6 +71,11 @@ class Terms extends gEditorial\Module
 					'field'       => 'apply_ordering',
 					'title'       => _x( 'Apply Ordering', 'Setting Title', 'geditorial-terms' ),
 					'description' => _x( 'Changes internal Wordpress core defaults to use custom ordering.', 'Setting Description', 'geditorial-terms' ),
+				],
+				[
+					'field'       => 'term_author',
+					'title'       => _x( 'Term Author', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Saves the author on creating the terms.', 'Setting Description', 'geditorial-terms' ),
 				],
 			],
 			'_frontend' => [
@@ -403,7 +410,7 @@ class Terms extends gEditorial\Module
 
 	private function get_supported_taxonomies( $field )
 	{
-		return $this->filters( 'supported_field_taxonomies', $this->get_setting( 'term_'.$field ), $field );
+		return $this->filters( 'supported_field_taxonomies', $this->get_setting( 'term_'.$field, [] ), $field );
 	}
 
 	private function get_supported_field_title( $field, $taxonomy, $term = FALSE )
@@ -727,14 +734,14 @@ class Terms extends gEditorial\Module
 
 			case 'role':
 
-				if ( empty( $this->all_roles ) )
-					$this->all_roles = $this->get_settings_default_roles();
+				if ( empty( $this->_roles ) )
+					$this->_roles = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
-						.( empty( $this->all_roles[$meta] )
+						.( empty( $this->_roles[$meta] )
 							? HTML::escape( $meta )
-							: $this->all_roles[$meta] )
+							: $this->_roles[$meta] )
 						.'</span>';
 
 				else
@@ -744,8 +751,8 @@ class Terms extends gEditorial\Module
 
 			case 'roles':
 
-				if ( empty( $this->all_roles ) )
-					$this->all_roles = $this->get_settings_default_roles();
+				if ( empty( $this->_roles ) )
+					$this->_roles = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -753,9 +760,9 @@ class Terms extends gEditorial\Module
 
 					foreach ( (array) $meta as $role )
 						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $role ).'">'
-							.( empty( $this->all_roles[$role] )
+							.( empty( $this->_roles[$role] )
 								? HTML::escape( $role )
-								: $this->all_roles[$role] )
+								: $this->_roles[$role] )
 							.'</span>';
 
 					$html = Strings::getJoined( $list );
@@ -769,14 +776,14 @@ class Terms extends gEditorial\Module
 
 			case 'posttype':
 
-				if ( empty( $this->all_posttypes ) )
-					$this->all_posttypes = PostType::get( 2 );
+				if ( empty( $this->_posttypes ) )
+					$this->_posttypes = PostType::get( 2 );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
-						.( empty( $this->all_posttypes[$meta] )
+						.( empty( $this->_posttypes[$meta] )
 							? HTML::escape( $meta )
-							: $this->all_posttypes[$meta] )
+							: $this->_posttypes[$meta] )
 						.'</span>';
 
 				else
@@ -786,8 +793,8 @@ class Terms extends gEditorial\Module
 
 			case 'posttypes':
 
-				if ( empty( $this->all_posttypes ) )
-					$this->all_posttypes = PostType::get( 2 );
+				if ( empty( $this->_posttypes ) )
+					$this->_posttypes = PostType::get( 2 );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -795,9 +802,9 @@ class Terms extends gEditorial\Module
 
 					foreach ( (array) $meta as $posttype )
 						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
-							.( empty( $this->all_posttypes[$posttype] )
+							.( empty( $this->_posttypes[$posttype] )
 								? HTML::escape( $posttype )
-								: $this->all_posttypes[$posttype] )
+								: $this->_posttypes[$posttype] )
 							.'</span>';
 
 					$html = Strings::getJoined( $list );
@@ -1724,7 +1731,7 @@ class Terms extends gEditorial\Module
 
 	public function bulk_action_move_tagline_to_desc( $term_ids, $taxonomy, $action )
 	{
-		if ( ! in_array( 'tagline', $this->get_supported( $taxonomy ) ) )
+		if ( ! in_array( 'tagline', $this->get_supported( $taxonomy, TRUE ) ) )
 			return FALSE;
 
 		$count   = 0;
