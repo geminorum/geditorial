@@ -11,6 +11,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
@@ -61,6 +62,13 @@ class Terms extends gEditorial\Module
 					'title'       => _x( 'Prevent Deletion', 'Setting Title', 'geditorial-terms' ),
 					'description' => _x( 'Exempts the terms with meta-data from bulk empty deletions.', 'Setting Description', 'geditorial-terms' ),
 					'default'     => TRUE,
+				],
+			],
+			'general' => [
+				[
+					'field'       => 'apply_ordering',
+					'title'       => _x( 'Apply Ordering', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Changes internal Wordpress core defaults to use custom ordering.', 'Setting Description', 'geditorial-terms' ),
 				],
 			],
 			'_frontend' => [
@@ -209,6 +217,18 @@ class Terms extends gEditorial\Module
 
 		$this->action( [ 'edit_term', 'create_term' ], 3 );
 		$this->action( 'delete_attachment', 2, 12 );
+
+		if ( $this->get_setting( 'apply_ordering' ) ) {
+
+			$this->action( 'pre_get_terms', 1, 10, 'ordering' );
+			$this->filter( 'terms_clauses', 3, 99, 'ordering' );
+			$this->filter( 'get_terms_defaults', 2, 10, 'ordering' );
+
+		} else {
+
+			// fallback using WooCommerce
+			$this->filter( 'woocommerce_sortable_taxonomies' );
+		}
 
 		if ( $this->get_setting( 'term_author' ) )
 			$this->filter_self( 'supported_field_edit', 4, 8, 'author' );
@@ -1759,5 +1779,115 @@ class Terms extends gEditorial\Module
 				return FALSE;
 
 		return $delete;
+	}
+
+	/**
+	 * Change get terms defaults for attributes to order by the sorting
+	 * setting, or default to menu_order for sortable taxonomies.
+	 *
+	 * @source `wc_change_get_terms_defaults()`
+	 *
+	 * @param array $defaults   An array of default get_terms() arguments.
+	 * @param array $taxonomies An array of taxonomies.
+	 * @return array
+	 */
+	public function get_terms_defaults_ordering( $defaults, $taxonomies )
+	{
+		if ( is_array( $taxonomies ) && 1 < count( $taxonomies ) )
+			return $defaults;
+
+		$taxonomy = is_array( $taxonomies ) ? (string) current( $taxonomies ) : $taxonomies;
+		$orderby  = 'name';
+
+		if ( in_array( 'order', $this->get_supported( $taxonomy, TRUE ) ) )
+			$orderby = 'menu_order';
+
+		// Change defaults. Invalid values will be changed later @see `pre_get_terms_ordering()`.
+		// These are in place so we know if a specific order was requested.
+		switch ( $orderby ) {
+			case 'menu_order':
+			case 'name_num':
+			case 'parent':
+				$defaults['orderby'] = $orderby;
+				break;
+		}
+
+		return $defaults;
+	}
+
+	/**
+	 * Adds support to get_terms for menu_order argument.
+	 *
+	 * @source `wc_change_pre_get_terms()`
+	 *
+	 * @param WP_Term_Query $terms_query Instance of WP_Term_Query.
+	 */
+	public function pre_get_terms_ordering( $terms_query )
+	{
+		$args = &$terms_query->query_vars;
+
+		// Put back valid orderby values.
+		if ( 'menu_order' === $args['orderby'] ) {
+			$args['orderby']               = 'name';
+			$args['force_menu_order_sort'] = true;
+		}
+
+		if ( 'name_num' === $args['orderby'] ) {
+			$args['orderby']            = 'name';
+			$args['force_numeric_name'] = true;
+		}
+
+		// When COUNTING, disable custom sorting.
+		if ( 'count' === $args['fields'] )
+			return;
+
+		// Support menu_order arg used in previous versions.
+		if ( ! empty( $args['menu_order'] ) ) {
+			$args['order']                 = 'DESC' === strtoupper( $args['menu_order'] ) ? 'DESC' : 'ASC';
+			$args['force_menu_order_sort'] = true;
+		}
+
+		if ( ! empty( $args['force_menu_order_sort'] ) ) {
+			$args['orderby']  = 'meta_value_num';
+			$args['meta_key'] = 'order'; // phpcs:ignore
+			$terms_query->meta_query->parse_query_vars( $args );
+		}
+	}
+
+	/**
+	 * Adjust term query to handle custom sorting parameters.
+	 *
+	 * @source: `wc_terms_clauses()`
+	 *
+	 * @param array $clauses    Clauses.
+	 * @param array $taxonomies Taxonomies.
+	 * @param array $args       Arguments.
+	 * @return array
+	 */
+	public function terms_clauses_ordering( $clauses, $taxonomies, $args )
+	{
+		global $wpdb;
+
+		// No need to filter when counting.
+		if ( Text::has( $clauses['fields'], 'COUNT(*)' ) )
+			return $clauses;
+
+		// Force numeric sort if using name_num custom sorting param.
+		if ( ! empty( $args['force_numeric_name'] ) )
+			$clauses['orderby'] = str_replace( 'ORDER BY t.name', 'ORDER BY t.name+0', $clauses['orderby'] );
+
+		// For sorting, force left join in case order meta is missing.
+		if ( ! empty( $args['force_menu_order_sort'] ) ) {
+			$clauses['join']    = str_replace( "INNER JOIN {$wpdb->termmeta} ON ( t.term_id = {$wpdb->termmeta}.term_id )", "LEFT JOIN {$wpdb->termmeta} ON ( t.term_id = {$wpdb->termmeta}.term_id AND {$wpdb->termmeta}.meta_key='order')", $clauses['join'] );
+			$clauses['where']   = str_replace( "{$wpdb->termmeta}.meta_key = 'order'", "( {$wpdb->termmeta}.meta_key = 'order' OR {$wpdb->termmeta}.meta_key IS NULL )", $clauses['where'] );
+			$clauses['orderby'] = 'DESC' === $args['order'] ? str_replace( 'meta_value+0', 'meta_value+0 DESC, t.name', $clauses['orderby'] ) : str_replace( 'meta_value+0', 'meta_value+0 ASC, t.name', $clauses['orderby'] );
+		}
+
+		return $clauses;
+	}
+
+	public function woocommerce_sortable_taxonomies( $taxonomies )
+	{
+		return array_merge( $taxonomies, $this->get_supported_taxonomies( 'order' ) );
 	}
 }
