@@ -203,11 +203,6 @@ class Contest extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
-	{
-		return Settings::posttypesExcluded( $this->constant( 'contest_cpt' ) );
-	}
-
 	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_status_tax'] ) )

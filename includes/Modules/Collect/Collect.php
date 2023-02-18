@@ -184,11 +184,6 @@ class Collect extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
-	{
-		return Settings::posttypesExcluded( $this->constant( 'collection_cpt' ) );
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'collection_cpt' );

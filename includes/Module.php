@@ -881,9 +881,16 @@ class Module extends Base
 		return TRUE;
 	}
 
+	// DEFAULT METHOD
 	protected function posttypes_excluded()
 	{
-		return Settings::posttypesExcluded();
+		$extra  = [];
+		$paired = $this->paired_get_paired_constants();
+
+		if ( ! empty( $paired[0] ) )
+			$extra[] = $this->constant( $paired[0] );
+
+		return Settings::posttypesExcluded( $extra );
 	}
 
 	// enabled post types for this module

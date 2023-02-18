@@ -192,11 +192,6 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
-	{
-		return Settings::posttypesExcluded( $this->constant( 'place_cpt' ) );
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'place_cpt' );

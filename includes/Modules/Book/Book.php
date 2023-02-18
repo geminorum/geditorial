@@ -427,11 +427,6 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
-	{
-		return Settings::posttypesExcluded( $this->constant( 'publication_cpt' ) );
-	}
-
 	public function before_settings( $module = FALSE )
 	{
 		if ( isset( $_POST['install_def_type_tax'] ) )

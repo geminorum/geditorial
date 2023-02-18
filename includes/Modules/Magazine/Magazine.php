@@ -194,11 +194,6 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
-	{
-		return Settings::posttypesExcluded( $this->constant( 'issue_cpt' ) );
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'issue_cpt' );
