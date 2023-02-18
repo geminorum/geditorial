@@ -431,13 +431,16 @@ class Module extends Base
 		return $this->filters( $context.'_default_sub', Arraay::keyFirst( $subs ) );
 	}
 
-	protected function _hook_menu_adminpage( $context = 'mainpage' )
+	protected function _hook_menu_adminpage( $context = 'mainpage', $position = NULL )
 	{
 		$slug    = $this->get_adminpage_url( FALSE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
 		$can     = $this->role_can( $context ) ? 'read' : 'do_not_allow';
 		$menu    = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
+
+		if ( is_null( $position ) )
+			$position = empty( $this->positions[$context] ) ? 3 : $this->positions[$context];
 
 		$hook = add_menu_page(
 			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
@@ -446,7 +449,7 @@ class Module extends Base
 			$slug,
 			[ $this, 'render_menu_adminpage' ],
 			$this->get_posttype_icon(),
-			empty( $this->positions[$context] ) ? 3 : $this->positions[$context]
+			$position
 		);
 
 		foreach ( $subs as $sub => $submenu )
