@@ -5109,6 +5109,21 @@ class Module extends Base
 		Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0, 'author', $extra );
 	}
 
+	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
+	protected function _hook_editform_readonly_title()
+	{
+		add_action( 'edit_form_after_title', function( $post ) {
+			$html = PostType::getPostTitle( $post );
+			$info = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated', 'Module: ReadOnly Title Info', 'geditorial' ) );
+			echo $this->wrap(
+				$html.' '.$info,
+				'-readonly-title',
+				TRUE,
+				sprintf( '%s-readonlytitle', $this->base )
+			);
+		}, 1, 1 );
+	}
+
 	protected function dashboard_glance_post( $constant )
 	{
 		return MetaBox::glancePosttype(
