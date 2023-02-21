@@ -17,6 +17,8 @@ class Tube extends gEditorial\Module
 	// TODO: `video_playlist` taxonomy with owner user meta
 	// TODO: `channel_subject` taxonomy
 
+	private $_wp_video_shortcode_attr = '';
+
 	public static function module()
 	{
 		return [
@@ -291,16 +293,16 @@ class Tube extends gEditorial\Module
 
 	public function wp_video_shortcode_override( $override, $attr, $content, $instance )
 	{
-		$this->wp_video_shortcode_attr = $attr;
+		$this->_wp_video_shortcode_attr = $attr;
 		return $override;
 	}
 
 	public function wp_video_shortcode( $output, $atts, $video, $post_id, $library )
 	{
-		if ( ! isset( $this->wp_video_shortcode_attr ) )
+		if ( ! isset( $this->_wp_video_shortcode_attr ) )
 			return $output;
 
-		$attr = $this->wp_video_shortcode_attr;
+		$attr = $this->_wp_video_shortcode_attr;
 
 		if ( isset( $attr['toolbar'] ) && ! $attr['toolbar'] )
 			return $output;

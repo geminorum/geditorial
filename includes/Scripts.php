@@ -131,7 +131,7 @@ class Scripts extends Main
 		return $handle;
 	}
 
-	public static function pkgAutosize( $ver = '4.0.2' )
+	public static function pkgAutosize( $ver = '6.0.1' )
 	{
 		$handle = static::BASE.'-autosize';
 

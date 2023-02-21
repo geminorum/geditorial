@@ -794,7 +794,7 @@ class Module extends Base
 
 	// LEGACY: do not use thickbox anymore!
 	// NOTE: must `add_thickbox()` on load
-	public function do_render_thickbox_mainbutton( $post, $context = 'framepage', $extra = [], $inline = FALSE, $width = '600' )
+	public function do_render_thickbox_mainbutton( $post, $context = 'framepage', $extra = [], $inline = FALSE, $width = '800' )
 	{
 		// for inline only
 		// modal id must be: `{$base}-{$module}-thickbox-{$context}`
@@ -820,7 +820,7 @@ class Module extends Base
 			'href'  => $link,
 			'id'    => $this->classs( 'mainbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-mainbutton', 'thickbox' ],
-			'title' => $title ? sprintf( $title, $name ) : FALSE,
+			'title' => $title ? sprintf( $title, PostType::getPostTitle( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
 
 		echo HTML::wrap( $html, 'field-wrap -buttons' );
@@ -844,6 +844,7 @@ class Module extends Base
 		/* translators: %s: posttype singular name */
 		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %s', 'Module: Button Title', 'geditorial' ) );
 		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', '%1$s '.$object->labels->add_new_item );
+		$name  = $object->labels->singular_name;
 
 		if ( $inline )
 			// WTF: thickbox bug: does not process the arg after `TB_inline`!
@@ -861,8 +862,8 @@ class Module extends Base
 			'href'  => $link,
 			'id'    => $this->classs( 'newpostbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-newpostbutton', 'thickbox' ],
-			'title' => $title ? sprintf( $title, $object->labels->singular_name ) : FALSE,
-		], sprintf( $text, Helper::getIcon( $this->module->icon ), $object->labels->singular_name ) );
+			'title' => $title ? sprintf( $title, PostType::getPostTitle( $post, $name ), $name ) : FALSE,
+		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
 
 		echo HTML::wrap( $html, 'field-wrap -buttons hide-if-no-js' );
 	}
@@ -1735,7 +1736,7 @@ class Module extends Base
 
 				$args = $this->get_settings_field( $setting );
 
-				// disabled select
+				// skip disabled settings
 				if ( array_key_exists( 'values', $args ) && FALSE === $args['values'] )
 					continue;
 
@@ -1949,7 +1950,7 @@ class Module extends Base
 				'taxonomy'    => FALSE,
 				'posttype'    => NULL,
 				'group'       => 'general',
-				'order'       => 10 + $i,
+				'order'       => 1000 + $i,
 			], $args );
 		}
 

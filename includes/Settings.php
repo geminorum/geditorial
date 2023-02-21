@@ -641,7 +641,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'        => 'summary_excludes',
-			'type'         => 'checkbox-panel',
+			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Summary Excludes', 'Settings: Setting Title', 'geditorial' ),
 			'description'  => $description ?: _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial' ),
 			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial' ),
@@ -2401,6 +2401,7 @@ class Settings extends Core\Base
 	}
 
 	// FIXME: support more types!
+	// WTF: not possible to pass fields with arrays (checknoxes/multiple select)
 	private static function fieldType_getObjectForm( $args, $fields, $name_prefix = '', $options = [] )
 	{
 		$group = '';

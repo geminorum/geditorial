@@ -303,8 +303,8 @@ class Datetime extends Main
 			$callback = [ 'gPersianDateDate', 'makeFromInput' ];
 
 		// must be here, we can not pass NULL to gPersianDate
-		if ( is_null( $timezone ) )
-			$timezone = Date::currentTimeZone();
+		// if ( is_null( $timezone ) )
+		// 	$timezone = Date::currentTimeZone();
 
 		return call_user_func_array( $callback, [ $input, $calendar, $timezone, $fallback ] );
 	}
@@ -317,8 +317,8 @@ class Datetime extends Main
 			$callback = [ 'gPersianDateDate', 'makeMySQLFromInput' ];
 
 		// must be here, we can not pass NULL to gPersianDate
-		if ( is_null( $timezone ) )
-			$timezone = Date::currentTimeZone();
+		// if ( is_null( $timezone ) )
+		// 	$timezone = Date::currentTimeZone();
 
 		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone, $fallback ] );
 	}

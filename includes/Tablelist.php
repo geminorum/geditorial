@@ -409,10 +409,10 @@ class Tablelist extends Main
 		return _x( 'ID', 'Tablelist: Column: Term ID', 'geditorial' );
 	}
 
-	public static function columnTermName( $actions = NULL, $description = FALSE, $custom = [] )
+	public static function columnTermName( $actions = NULL, $description = FALSE, $custom = [], $title = NULL )
 	{
 		return [
-			'title'    => _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
+			'title'    => $title ?: _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $description ) {
 
 				if ( ! $term = Taxonomy::getTerm( $row ) )

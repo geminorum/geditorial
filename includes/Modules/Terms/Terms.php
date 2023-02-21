@@ -72,11 +72,6 @@ class Terms extends gEditorial\Module
 					'title'       => _x( 'Apply Ordering', 'Setting Title', 'geditorial-terms' ),
 					'description' => _x( 'Changes internal Wordpress core defaults to use custom ordering.', 'Setting Description', 'geditorial-terms' ),
 				],
-				[
-					'field'       => 'term_author',
-					'title'       => _x( 'Term Author', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Saves the author on creating the terms.', 'Setting Description', 'geditorial-terms' ),
-				],
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -426,11 +421,12 @@ class Terms extends gEditorial\Module
 	private function get_supported_position( $field, $taxonomy = FALSE )
 	{
 		switch ( $field ) {
+
 			case 'order':
 
 				$position = [ 'cb', 'after' ];
+				break;
 
-			break;
 			case 'image':
 			case 'color':
 			case 'role':
@@ -440,11 +436,8 @@ class Terms extends gEditorial\Module
 			case 'arrow':
 
 				$position = [ 'name', 'before' ];
+				break;
 
-			break;
-			case 'label':
-			case 'tagline':
-			case 'contact':
 			default:
 				$position = [ 'name', 'after' ];
 		}
@@ -548,12 +541,28 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
 
+		$icons = [
+			'order',
+			'contact',
+			'image',
+			'author',
+			'color',
+			'role',
+			'roles',
+			'posttype',
+			'posttypes',
+			'arrow',
+			'label',
+			'code',
+			'barcode',
+		];
+
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			if ( FALSE === ( $position = $this->get_supported_position( $field, $taxonomy ) ) )
 				continue;
 
-			$title = in_array( $field, [ 'order', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes', 'arrow', 'label', 'code', 'barcode' ] )
+			$title = in_array( $field, $icons, TRUE )
 				? $this->get_column_title_icon( $field, $taxonomy )
 				: $this->get_column_title( $field, $taxonomy );
 
@@ -574,8 +583,20 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
 
+		$sortables = [
+			'tagline',
+			'contact',
+			'image',
+			'roles',
+			'posttypes',
+			'arrow',
+			'label',
+			'code',
+			'barcode',
+		];
+
 		foreach ( $this->get_supported( $taxonomy ) as $field )
-			if ( ! in_array( $field, [ 'tagline', 'contact', 'image', 'roles', 'posttypes', 'arrow', 'label', 'code', 'barcode' ] ) )
+			if ( ! in_array( $field, $sortables, TRUE ) )
 				$columns[$this->classs( $field )] = 'meta_'.$field;
 
 		return $columns;
@@ -855,6 +876,7 @@ class Terms extends gEditorial\Module
 				$meta = is_array( $meta ) ? array_filter( $meta ) : trim( HTML::escape( $meta ) );
 
 				if ( 'image' == $field ) {
+
 					update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 				}
@@ -864,6 +886,7 @@ class Terms extends gEditorial\Module
 			} else {
 
 				if ( 'image' == $field && $meta = get_term_meta( $term_id, $metakey, TRUE ) ) {
+
 					delete_post_meta( (int) $meta, '_wp_attachment_is_term_image' );
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 				}
@@ -1362,8 +1385,10 @@ class Terms extends gEditorial\Module
 
 					// TODO: add the rest!
 
-					break;
-					default: $node['title'] = _x( 'Meta: Uknonwn', 'Adminbar', 'geditorial-terms' ); break;
+					default:
+
+						$node['title'] = _x( 'Meta: Uknonwn', 'Adminbar', 'geditorial-terms' );
+						break;
 				}
 
 				$nodes[] = $node;
