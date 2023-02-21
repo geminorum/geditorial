@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\Date;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\Main;
 
@@ -321,6 +322,37 @@ class Datetime extends Main
 		// 	$timezone = Date::currentTimeZone();
 
 		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone, $fallback ] );
+	}
+
+	public static function prepForInput( $date, $format = NULL, $calendar_type = NULL, $timezone = NULL )
+	{
+		return apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone, FALSE );
+	}
+
+	public static function prepForDisplay( $date, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	{
+		if ( is_null( $format ) )
+			$format = self::dateFormats( 'default' );
+
+		$timestamp = strtotime( $date );
+		$timeage   = self::humanTimeDiffRound( $timestamp, FALSE );
+
+		return Date::htmlDateTime( $timestamp, NULL, $format, $timeage );
+	}
+
+	// TODO: utilize `htmlDateTime()`
+	public static function prepDateOfBirth( $date, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	{
+		if ( is_null( $format ) )
+			$format = self::dateFormats( 'default' );
+
+		$age  = Date::calculateAge( $date, $calendar_type, $timezone );
+		$html = apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone );
+
+		/* translators: %s: year number */
+		$title = sprintf( _nx( '%s year old', '%s years old', $age['year'], 'Datetime: Age Title Attr', 'geditorial' ), Number::format( $age['year'] ) );
+
+		return sprintf( '<span title="%s" class="%s">%s</span>', $title, 'date-of-birth', $html );
 	}
 
 	// FIXME: find a better way!
