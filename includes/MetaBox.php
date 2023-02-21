@@ -481,7 +481,10 @@ class MetaBox extends Main
 			$none = Settings::showOptionNone();
 
 		$html = $none ? HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
-		$html.= walk_page_dropdown_tree( $posts, 0, [ 'selected' => $paired ] ); // to handle sub-pages
+		$html.= walk_page_dropdown_tree( $posts, 0, [
+			'selected'          => $paired,
+			'title_with_parent' => TRUE,
+		] );
 
 		$html = HTML::tag( 'select', [
 			'name'  => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
@@ -583,16 +586,18 @@ class MetaBox extends Main
 			return;
 
 		$args = [
-			'post_type'        => $posttype,
-			'selected'         => $post->post_parent,
-			'name'             => is_null( $name ) ? 'parent_id' : $name,
-			'class'            => static::BASE.'-admin-dropbown',
-			'show_option_none' => _x( '&ndash; no parent &ndash;', 'MetaBox: Parent Dropdown: Select Option None', 'geditorial' ),
-			'sort_column'      => 'menu_order, post_title',
-			'sort_order'       => 'desc',
-			'post_status'      => $statuses,
-			'exclude_tree'     => $post->ID,
-			'echo'             => 0,
+			'post_type'         => $posttype,
+			'selected'          => $post->post_parent,
+			'name'              => is_null( $name ) ? 'parent_id' : $name,
+			'class'             => static::BASE.'-admin-dropbown',
+			'show_option_none'  => _x( '&ndash; no parent &ndash;', 'MetaBox: Parent Dropdown: Select Option None', 'geditorial' ),
+			'sort_column'       => 'menu_order, post_title',
+			'sort_order'        => 'desc',
+			'post_status'       => $statuses,
+			'exclude_tree'      => $post->ID,
+			'echo'              => 0,
+			'walker'            => new Misc\WalkerPageDropdown(),
+			'title_with_parent' => TRUE,
 		];
 
 		$html = wp_dropdown_pages( apply_filters( 'page_attributes_dropdown_pages_args', $args, $post ) );
