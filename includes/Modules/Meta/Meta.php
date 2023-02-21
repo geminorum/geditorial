@@ -202,7 +202,7 @@ class Meta extends gEditorial\Module
 				'label'      => [ 'type' => 'text' ],
 				'label_tax'  => [ 'type' => 'term', 'taxonomy' => $this->constant( 'label_tax' ) ],
 
-				'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
+				'published'    => [ 'type' => 'datestring', 'quickedit' => TRUE ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'action_title' => [ 'type' => 'text' ],
@@ -222,7 +222,7 @@ class Meta extends gEditorial\Module
 				'email_address'  => [ 'type' => 'email' ],
 				'postal_address' => [ 'type' => 'note' ],
 
-				'content_embed_url' => [ 'type' => 'link' ],
+				'content_embed_url' => [ 'type' => 'embed' ],
 				'audio_source_url'  => [ 'type' => 'link' ],
 				'video_source_url'  => [ 'type' => 'link' ],
 			],
@@ -230,7 +230,7 @@ class Meta extends gEditorial\Module
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 
-				'content_embed_url' => [ 'type' => 'link' ],
+				'content_embed_url' => [ 'type' => 'embed' ],
 			],
 		];
 	}
@@ -424,7 +424,7 @@ class Meta extends gEditorial\Module
 
 		$this->add_posttype_fields( 'page' );
 
-		$this->filter( 'meta_field', 5, 5, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 6, 5, FALSE, 'geditorial' );
 	}
 
 	protected function register_meta_fields()
@@ -541,6 +541,7 @@ class Meta extends gEditorial\Module
 			switch ( $args['type'] ) {
 
 				case 'text':
+				case 'datestring':
 
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
@@ -553,6 +554,7 @@ class Meta extends gEditorial\Module
 				case 'mobile':
 				case 'identity': // TODO: utilize the pattern!
 				case 'email':
+				case 'embed':
 				case 'link':
 
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
@@ -714,6 +716,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::setPostMetaField_Term( $post->ID, $field, $args['taxonomy'] );
 
 				break;
+				case 'embed':
 				case 'link':
 
 					ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
@@ -736,6 +739,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
 
 				break;
+				case 'datestring':
 				case 'text':
 				case 'title_before':
 				case 'title_after':
@@ -1048,14 +1052,10 @@ class Meta extends gEditorial\Module
 		$this->nonce_field( 'nobox' );
 	}
 
-	// TODO: support more!
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw )
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args )
 	{
 		switch ( $field ) {
-
-			case 'published':
-				return Number:: localize( Datetime::stringFormat( $raw ) );
 
 			case 'cover_price':
 				// TODO: format numbers
@@ -1064,17 +1064,24 @@ class Meta extends gEditorial\Module
 			case 'website_url':
 				return HTML::link( URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 
-			case 'email_address':
-				return apply_shortcodes( sprintf( '[email]%s[/email]', trim( $raw ) ) );
+			case 'date_of_birth':
+				return Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
+		}
 
-			case 'contact_string':
+		switch ( $field_args['type'] ) {
+
+			case 'contact':
 				return Helper::prepContact( trim( $raw ) );
 
-			case 'phone_number':
-			case 'mobile_number':
+			case 'email':
+				return apply_shortcodes( sprintf( '[email]%s[/email]', trim( $raw ) ) );
+
+			case 'phone':
+			case 'mobile':
 				return apply_shortcodes( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
 
-			case 'content_embed_url':
+
+			case 'embed':
 				return Template::doEmbedShortCode( trim( $raw ) );
 		}
 

@@ -140,6 +140,7 @@ class Tube extends gEditorial\Module
 				'creation_date' => [
 					'title'       => _x( 'Creation Date', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'Creation Date of the Video', 'Field Description', 'geditorial-tube' ),
+					'type'        => 'datestring',
 					'icon'        => 'calendar-alt',
 					'quickedit'   => TRUE,
 				],
@@ -152,7 +153,7 @@ class Tube extends gEditorial\Module
 				'video_embed_url' => [
 					'title'       => _x( 'Video Embed URL', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'Embeddable URL of the External Video', 'Field Description', 'geditorial-tube' ),
-					'type'        => 'link',
+					'type'        => 'embed',
 				],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
@@ -254,8 +255,6 @@ class Tube extends gEditorial\Module
 
 		if ( $this->get_setting( 'video_channels' ) )
 			$this->add_posttype_fields( $this->constant( 'channel_cpt' ) );
-
-		$this->filter( 'meta_field', 5, 9, FALSE, 'geditorial' );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -401,20 +400,5 @@ class Tube extends gEditorial\Module
 			$this->constant( 'channel_cat_shortcode', $tag ),
 			$this->key
 		);
-	}
-
-	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw )
-	{
-		switch ( $field ) {
-
-			case 'creation_date':
-				return Number::localize( Datetime::stringFormat( $raw ) );
-
-			case 'video_embed_url':
-				return Template::doEmbedShortCode( trim( $raw ) );
-		}
-
-		return $meta;
 	}
 }

@@ -175,7 +175,7 @@ class Venue extends gEditorial\Module
 				'map_embed_url' => [
 					'title'       => _x( 'Map Embed URL', 'Field Title', 'geditorial-venue' ),
 					'description' => _x( 'Embeddable map URL of the location.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'link',
+					'type'        => 'embed',
 				],
 				// FIXME: move to `extra_metadata`
 				'geo_latitude' => [
@@ -352,8 +352,6 @@ class Venue extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'place_cpt' ) );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
-
-		$this->filter( 'meta_field', 5, 9, FALSE, 'geditorial' );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -515,17 +513,5 @@ class Venue extends gEditorial\Module
 	public function tweaks_column_attr( $post )
 	{
 		$this->paired_tweaks_column_attr( $post, 'place_cpt', 'place_tax' );
-	}
-
-	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw )
-	{
-		switch ( $field ) {
-
-			case 'map_embed_url':
-				return Template::doEmbedShortCode( trim( $raw ) );
-		}
-
-		return $meta;
 	}
 }

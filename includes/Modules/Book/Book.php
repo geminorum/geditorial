@@ -376,6 +376,7 @@ class Book extends gEditorial\Module
 				'publication_date' => [
 					'title'       => _x( 'Publication Date', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Date Published', 'Field Description', 'geditorial-book' ),
+					'type'        => 'datestring',
 					'icon'        => 'calendar-alt',
 				],
 				'publication_isbn' => [
@@ -839,7 +840,7 @@ class Book extends gEditorial\Module
 
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
-		$this->filter( 'meta_field', 5, 9, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 6, 9, FALSE, 'geditorial' );
 
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
@@ -1241,11 +1242,11 @@ class Book extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw )
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args )
 	{
 		switch ( $field ) {
 			case 'publication_isbn': return ModuleHelper::ISBN( $raw );
-			case 'publication_date': return Number::localize( Datetime::stringFormat( $raw ) );
+			// case 'publication_date': return Number::localize( Datetime::stringFormat( $raw ) );
 			case 'publication_print': return Number::localize( Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
 			case 'collection': return HTML::link( $raw, WordPress::getSearchLink( $raw ) );
 

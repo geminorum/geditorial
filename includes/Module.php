@@ -1979,6 +1979,8 @@ class Module extends Base
 				$sanitized = empty( $data ) ? NULL : (int) $data;
 
 			break;
+
+			case 'embed':
 			case 'link':
 				$sanitized = trim( $data );
 
@@ -2031,6 +2033,7 @@ class Module extends Base
 
 			break;
 			case 'text':
+			case 'datestring':
 			case 'title_before':
 			case 'title_after':
 				$sanitized = trim( Helper::kses( $data, 'none' ) );

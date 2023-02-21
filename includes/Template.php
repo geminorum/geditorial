@@ -540,8 +540,9 @@ class Template extends Main
 		if ( FALSE === $meta )
 			return $args['default'];
 
-		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args, $raw );
-		$meta = apply_filters( static::BASE.'_meta_field_'.$field, $meta, $field, $post, $args, $raw );
+		$fields = gEditorial()->module( 'meta' )->get_posttype_fields( $post->post_type );
+		$meta   = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args, $raw, $fields[$field] );
+		$meta   = apply_filters( static::BASE.'_meta_field_'.$field, $meta, $field, $post, $args, $raw, $fields[$field] );
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
 			$args['filter'] = [ __CLASS__, 'doEmbedShortCode' ];
