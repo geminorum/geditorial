@@ -123,7 +123,7 @@ class Taxonomy extends Core\Base
 		if ( $object_id )
 			$args['object_ids'] = (array) $object_id;
 
-		$query = new \WP_Term_Query;
+		$query = new \WP_Term_Query();
 		return $query->query( $args );
 	}
 
@@ -163,8 +163,10 @@ class Taxonomy extends Core\Base
 			// $term = get_term_by( 'id', $term_or_id, $taxonomy );
 			$term = get_term( (int) $term_or_id, $taxonomy ); // allows for empty taxonomy
 
+		else if ( $taxonomy )
+			$term = get_term_by( 'slug', $term_or_id, $taxonomy );
+
 		else
-			// $term = get_term_by( 'slug', $term_or_id, $taxonomy );
 			$term = get_term( $term_or_id, $taxonomy ); // allows for empty taxonomy
 
 		if ( ! $term || is_wp_error( $term ) )
@@ -204,7 +206,7 @@ class Taxonomy extends Core\Base
 			'update_term_meta_cache' => FALSE,
 		], $extra );
 
-		$query = new \WP_Term_Query;
+		$query = new \WP_Term_Query();
 		return $query->query( $args );
 	}
 
@@ -223,6 +225,44 @@ class Taxonomy extends Core\Base
 			return Core\Arraay::reKey( $terms, $key );
 
 		return $terms;
+	}
+
+	/**
+	 * retrieves meta-data for a given term.
+	 *
+	 * @param  object|int $term
+	 * @param  bool|array $keys `false` for all meta
+	 * @param  bool $single
+	 * @return array
+	 */
+	public static function getTermMeta( $term, $keys = FALSE, $single = TRUE )
+	{
+		if ( ! $term = self::getTerm( $term ) )
+			return FALSE;
+
+		$list = [];
+
+		if ( FALSE === $keys ) {
+
+			if ( $single ) {
+
+				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
+					$list[$key] = maybe_unserialize( $meta[0] );
+
+			} else {
+
+				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
+					foreach ( $meta as $offset => $value )
+						$list[$key][$offset] = maybe_unserialize( $value );
+			}
+
+		} else {
+
+			foreach ( $keys as $key => $default )
+				$list[$key] = get_term_meta( $term->term_id, $key, $single ) ?: $default;
+		}
+
+		return $list;
 	}
 
 	// FIXME: rewrite this!
@@ -619,9 +659,9 @@ class Taxonomy extends Core\Base
 
 		$current = $term_id;
 		$parents = [];
-		$up      = TRUE;
+		$parent  = TRUE;
 
-		while ( $up ) {
+		while ( $parent ) {
 
 			$term = get_term( (int) $current, $taxonomy );
 
@@ -629,7 +669,7 @@ class Taxonomy extends Core\Base
 				$parents[] = (int) $term->parent;
 
 			else
-				$up = FALSE;
+				$parent = FALSE;
 
 			$current = $term->parent;
 		}

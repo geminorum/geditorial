@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\HTML;
 
 class PostType extends Core\Base
 {
@@ -94,6 +93,7 @@ class PostType extends Core\Base
 		return $statuses;
 	}
 
+	// TODO: support regex on meta-keys
 	// @SEE: https://tommcfarlin.com/get-post-id-by-meta-value/
 	public static function getIDbyMeta( $meta, $value, $single = TRUE )
 	{
@@ -209,7 +209,7 @@ class PostType extends Core\Base
 			'lazy_load_term_meta'    => FALSE,
 		], $extra );
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 
 		return (array) $query->query( $args );
 	}
@@ -230,7 +230,7 @@ class PostType extends Core\Base
 			'lazy_load_term_meta'    => FALSE,
 		], $atts );
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 
 		return (array) $query->query( $args );
 	}
@@ -251,7 +251,7 @@ class PostType extends Core\Base
 			'lazy_load_term_meta'    => FALSE,
 		], $atts );
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 
 		return (array) $query->query( $args );
 	}
@@ -353,7 +353,7 @@ class PostType extends Core\Base
 				'compare' => 'EXISTS'
 			) );
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
 		return empty( $posts ) ? FALSE : $posts[0];
@@ -390,7 +390,7 @@ class PostType extends Core\Base
 			'lazy_load_term_meta'    => FALSE,
 		], $extra );
 
-		$query = new \WP_Query;
+		$query = new \WP_Query();
 
 		return (array) $query->query( $args );
 	}
@@ -549,6 +549,20 @@ class PostType extends Core\Base
 		return get_post( $post, $output, $filter );
 	}
 
+	public static function getRestRoute( $post = NULL )
+	{
+		if ( ! $post = self::getPost( $post ) )
+			return FALSE;
+
+		if ( ! $object = self::object( $post ) )
+			return FALSE;
+
+		if ( ! $object->show_in_rest )
+			return FALSE;
+
+		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $post->ID );
+	}
+
 	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
 	{
 		if ( ! $post = self::getPost( $post ) )
@@ -582,5 +596,37 @@ class PostType extends Core\Base
 			return __( '(Untitled)' );
 
 		return $fallback;
+	}
+
+	public static function getParentTitles( $post, $suffix = '', $separator = NULL )
+	{
+		if ( ! $post = self::getPost( $post ) )
+			return $suffix;
+
+		if ( is_null( $separator ) )
+			$separator = Core\HTML::rtl() ? ' &rsaquo; ' : ' &lsaquo; ';
+
+		$current = $post->ID;
+		$parents = [];
+		$parent  = TRUE;
+
+		while ( $parent ) {
+
+			$object = self::getPost( (int) $current );
+
+			if ( $object && $object->post_parent )
+				$parents[] = self::getPostTitle( $object->post_parent );
+
+			else
+				$parent = FALSE;
+
+			if ( $object )
+				$current = $object->post_parent;
+		}
+
+		if ( empty( $parents ) )
+			return $suffix;
+
+		return Strings::getJoined( array_reverse( $parents ), '', $suffix ? $separator.$suffix : '', '', $separator );
 	}
 }

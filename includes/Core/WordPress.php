@@ -141,6 +141,11 @@ class WordPress extends Base
 		return FALSE !== strstr( get_option( 'home' ), 'https:' );
 	}
 
+	public static function isImporting()
+	{
+		return defined( 'WP_IMPORTING' ) && WP_IMPORTING;
+	}
+
 	public static function isCLI()
 	{
 		return defined( 'WP_CLI' ) && WP_CLI;

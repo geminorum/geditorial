@@ -12,6 +12,8 @@ class Main extends Core\Base
 	const BASE   = '';
 	const MODULE = FALSE;
 
+	public static function setup() {}
+
 	protected static function factory()
 	{
 		return gEditorial();

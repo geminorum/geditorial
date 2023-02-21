@@ -405,7 +405,7 @@ class DBTable extends Core\Base
 		$lower   = sanitize_key( $accents );
 
 		// Replace hyphens with single underscores
-		$under   = str_replace( '-',  '_', $lower );
+		$under   = str_replace( '-', '_', $lower );
 
 		// Single underscores only
 		$single  = str_replace( '__', '_', $under );

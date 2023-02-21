@@ -13,6 +13,7 @@ class Module extends Core\Base
 	protected $key  = NULL;
 	protected $path = NULL;
 	protected $site = NULL;
+	protected $caps = [];
 
 	public static function module() { return []; }
 
@@ -29,7 +30,7 @@ class Module extends Core\Base
 
 	protected static function sanitize_hook( $hook )
 	{
-		return trim( str_ireplace( [ '-', '.', '/' ], '_', $hook ) );
+		return trim( str_ireplace( [ '-', '.', '/', '\\' ], '_', $hook ) );
 	}
 
 	protected static function sanitize_base( $hook )
@@ -105,7 +106,7 @@ class Module extends Core\Base
 	/**
 	 * hooks an action for an internal module
 	 *
-	 * @example `$this->action_module( 'importer', 'saved', 5 );`
+	 * @example `$this->action_module( 'importer', 'saved', 8 );`
 	 *
 	 * @param string $module
 	 * @param string $hook
@@ -123,7 +124,7 @@ class Module extends Core\Base
 	/**
 	 * hooks a filter for an internal module
 	 *
-	 * @example `$this->filter_module( 'importer', 'prepare', 4 );`
+	 * @example `$this->filter_module( 'importer', 'prepare', 7 );`
 	 *
 	 * @param string $module
 	 * @param string $hook
@@ -138,14 +139,14 @@ class Module extends Core\Base
 			add_filter( $this->base.'_'.$module.'_'.$hook, [ $this, $method ], $priority, $args );
 	}
 
-	// USAGE: $this->action_self( 'saved', 5 );
+	// USAGE: $this->action_self( 'saved', 8 );
 	protected function action_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
 			add_action( $this->base.'_'.$this->key.'_'.$hook, [ $this, $method ], $priority, $args );
 	}
 
-	// USAGE: $this->filter_self( 'prepare', 4 );
+	// USAGE: $this->filter_self( 'prepare', 7 );
 	protected function filter_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )

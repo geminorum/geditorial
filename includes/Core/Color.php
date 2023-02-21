@@ -8,6 +8,9 @@ class Color extends Base
 	// @REF: `rest_parse_hex_color()`
 	public static function validHex( $color )
 	{
+		if ( ! $color )
+			return FALSE;
+
 		if ( ! preg_match( '/^#([A-Fa-f0-9]{3}){1,2}$/', $color, $matches ) )
 			return FALSE;
 
@@ -38,11 +41,11 @@ class Color extends Base
 	 * Lightens/darkens a given colour (hex format),
 	 * returning the altered colour in hex format.7
 	 *
-	 * @param str $hex Colour as hexadecimal (with or without hash);
-	 * @percent float $percent Decimal ( 0.2 = lighten by 20%(), -0.4 = darken by 40%() )
-	 * @return str Lightened/Darkend colour as hexadecimal (with hash);
+	 * @source: https://gist.github.com/stephenharris/5532899
 	 *
-	 * @REF: https://gist.github.com/stephenharris/5532899
+	 * @param string $hex Colour as hexadecimal (with or without hash);
+	 * @param float $percent Decimal ( 0.2 = lighten by 20%(), -0.4 = darken by 40%() )
+	 * @return string Lightened/Darkend colour as hexadecimal (with hash);
 	 */
 	public static function luminance( $hex, $percent )
 	{
@@ -157,7 +160,7 @@ class Color extends Base
 	 */
 	public static function blendByOpacity( $foreground, $opacity, $background = NULL )
 	{
-		static $rgb = array();
+		static $rgb = [];
 
 		if ( is_null( $background ) )
 			$background = 'FFFFFF';
@@ -271,6 +274,7 @@ class Color extends Base
 	}
 
 	// @REF: https://github.com/aristath/ariColor
+	// `composer require aristath/ari-color`
 	public static function get( $color = '#ffffff' )
 	{
 		return \ariColor::newColor( $color, 'auto' );
@@ -571,9 +575,9 @@ class Color extends Base
 	 *                      Defaults to '#FFFFFF'.
 	 * @return string
 	 */
-	public static function lightOrDark( $color, $dark = '#000000', $light = '#FFFFFF' )
+	public static function lightOrDark( $hex, $dark = '#000000', $light = '#FFFFFF' )
 	{
-		return self::hexIsLight( $color ) ? $dark : $light;
+		return self::hexIsLight( $hex ) ? $dark : $light;
 	}
 
 	/**
@@ -591,6 +595,180 @@ class Color extends Base
 			$hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
 
 		return $hex ? '#'.$hex : NULL;
+	}
+
+	/**
+	 * Color Difference
+	 *
+	 * This is a very simple algorithm that works by summing up the
+	 * differences between the three color components red, green and
+	 * blue. A value higher than 500 is recommended for good
+	 * readability.
+	 *
+	 * @source https://www.splitbrain.org/blog/2008-09/18-calculating_color_contrast_with_php
+	 *
+	 * @param  int $r1
+	 * @param  int $g1
+	 * @param  int $b1
+	 * @param  int $r2
+	 * @param  int $g2
+	 * @param  int $b2
+	 * @return int $difference
+	 */
+	public static function colorDiff( $r1, $g1, $b1, $r2, $g2, $b2 )
+	{
+		return max( $r1, $r2 ) - min( $r1, $r2 ) +
+			   max( $g1, $g2 ) - min( $g1, $g2 ) +
+			   max( $b1, $b2 ) - min( $b1, $b2 );
+	}
+
+	/**
+	 * Brightness Difference
+	 *
+	 * This function is a bit more advanced as it tries to compare the
+	 * brightness of the colors. A return value of more than 125 is
+	 * recommended. Combining it with the color difference above might
+	 * make sense.
+	 *
+	 * @source https://www.splitbrain.org/blog/2008-09/18-calculating_color_contrast_with_php
+	 *
+	 * @param  int $r1
+	 * @param  int $g1
+	 * @param  int $b1
+	 * @param  int $r2
+	 * @param  int $g2
+	 * @param  int $b2
+	 * @return int $difference
+	 */
+	public static function brightnessDiff( $r1, $g1, $b1, $r2, $g2, $b2 )
+	{
+		return abs( ( ( 299 * $r1 + 587 * $g1 + 114 * $b1 ) / 1000 )
+			- ( ( 299 * $r2 + 587 * $g2 + 114 * $b2 ) / 1000 ) );
+	}
+
+	/**
+	 * Luminosity Contrast
+	 *
+	 * The third function is most complex but seems to work best.
+	 * It uses the luminosity to calculate the difference between
+	 * the given colors. The returned value should be bigger than 5
+	 * for best readability.
+	 *
+	 * @source https://www.splitbrain.org/blog/2008-09/18-calculating_color_contrast_with_php
+	 *
+	 * @param  int $r1
+	 * @param  int $g1
+	 * @param  int $b1
+	 * @param  int $r2
+	 * @param  int $g2
+	 * @param  int $b2
+	 * @return int $difference
+	 */
+	public static function luminosityDiff( $r1, $g1, $b1, $r2, $g2, $b2 )
+	{
+		$l1 = 0.2126 * pow( $r1 / 255, 2.2 ) +
+			  0.7152 * pow( $g1 / 255, 2.2 ) +
+			  0.0722 * pow( $b1 / 255, 2.2 );
+
+		$l2 = 0.2126 * pow( $r2 / 255, 2.2 ) +
+			  0.7152 * pow( $g2 / 255, 2.2 ) +
+			  0.0722 * pow( $b2 / 255, 2.2 );
+
+		return ( $l1 > $l2 )
+			? ( ( $l1 + 0.05 ) / ( $l2 + 0.05 ) )
+			: ( ( $l2 + 0.05 ) / ( $l1 + 0.05 ) );
+	}
+
+	/**
+	 * Pythagorean Distance
+	 *
+	 * Manni suggested to use the Pythagorean Distance in the comments.
+	 * I ported his code to PHP. However I found it hard to find a
+	 * good threshold. Sometimes well contrasting colors return a very
+	 * low value, sometimes their value is very high. I settled for
+	 * a threshold of 250 in my script, but suggest to use the
+	 * luminosity contrast function above instead.
+	 *
+	 * @see https://en.wikipedia.org/wiki/Pythagorean_theorem
+	 * @source https://www.splitbrain.org/blog/2008-09/18-calculating_color_contrast_with_php
+	 *
+	 * @param  int $r1
+	 * @param  int $g1
+	 * @param  int $b1
+	 * @param  int $r2
+	 * @param  int $g2
+	 * @param  int $b2
+	 * @return int $difference
+	 */
+	public static function pythagoreanDiff( $r1, $g1, $b1, $r2, $g2, $b2 )
+	{
+		$rd = $r1 - $r2;
+		$gd = $g1 - $g2;
+		$bd = $b1 - $b2;
+
+		return sqrt( $rd * $rd + $gd * $gd + $bd * $bd ) ;
+	}
+
+	/**
+	 * YIQ algorithm (less precise)
+	 *
+	 * Another simpliest and less precise way called YIQ,
+	 * because it converts the RGB color space into YIQ.
+	 *
+	 * @see	https://en.wikipedia.org/wiki/YIQ
+	 * @source https://stackoverflow.com/a/42921358
+	 *
+	 * @param  string $hexcolor
+	 * @return string
+	 */
+	public static function yiqDiff( $hex, $dark = '#000000', $light = '#FFFFFF' )
+	{
+		$r = hexdec( substr( $hex, 1, 2 ) );
+		$g = hexdec( substr( $hex, 3, 2 ) );
+		$b = hexdec( substr( $hex, 5, 2 ) );
+
+		$yiq = ( ( $r * 299 ) + ( $g * 587 ) + ( $b * 114 ) ) / 1000;
+
+		return ( $yiq >= 128 ) ? $dark : $light;
+	}
+
+	/**
+	 * Luminosity Contrast algorithm
+	 *
+	 * @source https://stackoverflow.com/a/42921358
+	 *
+	 * @param  string $hex
+	 * @return string
+	 */
+	public static function luminosityContrast( $hex, $dark = '#000000', $light = '#FFFFFF' )
+	{
+		// hexColor RGB
+		$R1 = hexdec( substr( $hex, 1, 2 ) );
+		$G1 = hexdec( substr( $hex, 3, 2 ) );
+		$B1 = hexdec( substr( $hex, 5, 2 ) );
+
+		// Black RGB
+		$blackColor   = "#000000";
+		$R2BlackColor = hexdec( substr( $blackColor, 1, 2 ) );
+		$G2BlackColor = hexdec( substr( $blackColor, 3, 2 ) );
+		$B2BlackColor = hexdec( substr( $blackColor, 5, 2 ) );
+
+		// Calc contrast ratio
+		$L1 = 0.2126 * pow( $R1 / 255, 2.2 ) +
+			  0.7152 * pow( $G1 / 255, 2.2 ) +
+			  0.0722 * pow( $B1 / 255, 2.2 );
+
+		$L2 = 0.2126 * pow( $R2BlackColor / 255, 2.2 ) +
+			  0.7152 * pow( $G2BlackColor / 255, 2.2 ) +
+			  0.0722 * pow( $B2BlackColor / 255, 2.2 );
+
+		if ( $L1 > $L2 )
+			$contrastRatio = (int) ( ( $L1 + 0.05 ) / ( $L2 + 0.05 ) );
+
+		else
+			$contrastRatio = (int) ( ( $L2 + 0.05 ) / ( $L1 + 0.05 ) );
+
+		return $contrastRatio > 5 ? $dark : $light;
 	}
 }
 

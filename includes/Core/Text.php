@@ -860,14 +860,14 @@ class Text extends Base
 	}
 
 	// @SOURCE: `bp_core_replace_tokens_in_text()`
-	public static function replaceTokens( $text, $tokens )
+	public static function replaceTokens( $text, $tokens, $callback_args = [] )
 	{
 		$unescaped = $escaped = array();
 
 		foreach ( $tokens as $token => $value ) {
 
 			if ( ! is_string( $value ) && is_callable( $value ) )
-				$value = call_user_func( $value );
+				$value = call_user_func_array( $value, [ $token, $callback_args ] );
 
 			// tokens can not be objects or arrays
 			if ( ! is_scalar( $value ) )
@@ -975,7 +975,7 @@ class Text extends Base
 	{
 		if ( is_string( $one ) ) {
 
-			$two = strval( $two );
+			$two = (string) $two;
 			$one = substr( $one, 0, min( strlen( $one ), strlen( $two ) ) );
 			$two = substr( $two, 0, min( strlen( $one ), strlen( $two ) ) );
 

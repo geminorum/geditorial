@@ -322,7 +322,7 @@ class HTML extends Base
 				$sanitized = TRUE;
 			}
 
-			if ( in_array( $key, array( 'selected', 'checked', 'readonly', 'disabled', 'default', 'required' ) ) )
+			if ( in_array( $key, array( 'selected', 'checked', 'readonly', 'disabled', 'default', 'required', 'multiple' ) ) )
 				$att = $att ? $key : FALSE;
 
 			if ( FALSE === $att )

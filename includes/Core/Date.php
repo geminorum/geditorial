@@ -139,6 +139,23 @@ class Date extends Base
 		return date( $format, self::makeFromInput( $input, $calendar, $timezone ) );
 	}
 
+	public static function calculateAge( $date, $calendar = 'gregorian', $timezone = NULL )
+	{
+		if ( is_null( $timezone ) )
+			$timezone = self::currentTimeZone();
+
+		$tz   = new \DateTimeZone( $timezone );
+		$dob  = new \DateTime( $date, $tz );
+		$now  = new \DateTime( 'now', $tz );
+		$diff = $now->diff( $dob );
+
+		return [
+			'month' => $diff->format( '%m' ),
+			'day'   => $diff->format( '%d' ),
+			'year'  => $diff->format( '%y' ),
+		];
+	}
+
 	public static function make( $hour, $minute, $second, $month, $day, $year, $calendar = 'gregorian', $timezone = NULL )
 	{
 		if ( is_null( $timezone ) )

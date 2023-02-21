@@ -139,21 +139,18 @@ class Database extends Core\Base
 	// public static function getPostsByMultipleTerms( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL ) {}
 
 	// @REF: https://core.trac.wordpress.org/ticket/29181
-	public static function countPostsByNotTaxonomy( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
+	public static function countPostsByNotTaxonomy( $taxonomies, $posttypes = [ 'post' ], $user_id = 0, $exclude_statuses = NULL )
 	{
-		$key = md5( 'not_'.$taxonomy.'_'.serialize( $posttypes ).'_'.$user_id );
-		$counts = wp_cache_get( $key, 'counts' );
-
-		if ( FALSE !== $counts )
-			return $counts;
-
 		global $wpdb;
 
+		$key = md5( 'not_'.serialize( $taxonomies ).'_'.serialize( $posttypes ).'_'.$user_id );
+
+		if ( FALSE !== ( $cached = wp_cache_get( $key, 'counts' ) ) )
+			return $cached;
+
 		$counts = array_fill_keys( $posttypes, 0 );
-
 		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';
-
-		$query = $wpdb->prepare( "
+		$query  = "
 			SELECT posts.post_type, COUNT( * ) AS total
 			FROM {$wpdb->posts} AS posts
 			WHERE posts.post_type IN ( '".implode( "', '", esc_sql( $posttypes ) )."' )
@@ -163,11 +160,11 @@ class Database extends Core\Base
 				FROM {$wpdb->term_relationships}
 				INNER JOIN {$wpdb->term_taxonomy}
 				ON {$wpdb->term_taxonomy}.term_taxonomy_id = {$wpdb->term_relationships}.term_taxonomy_id
-				WHERE {$wpdb->term_taxonomy}.taxonomy = %s
+				WHERE {$wpdb->term_taxonomy}.taxonomy IN ( '".implode( "', '", esc_sql( (array) $taxonomies ) )."' )
 				AND {$wpdb->term_relationships}.object_id = posts.ID
 			)
 			GROUP BY posts.post_type
-		", $taxonomy );
+		";
 
 		foreach ( (array) $wpdb->get_results( $query, ARRAY_A ) as $row )
 			$counts[$row['post_type']] = (int) $row['total'];
