@@ -83,6 +83,7 @@ class Module extends Base
 
 	protected $root_key = FALSE; // ROOT CONSTANT
 	protected $_p2p     = FALSE; // P2P ENABLED/Connection Type
+	protected $_o2o     = FALSE; // O2O ENABLED/Connection Type
 	protected $_paired  = FALSE; // PAIRED API ENABLED/taxonomy paired
 
 	protected $scripts_printed = FALSE;
@@ -142,11 +143,11 @@ class Module extends Base
 
 		$this->require_code( $this->partials );
 
-		if ( method_exists( $this, 'p2p_init' ) )
-			$this->action( 'p2p_init' );
+		if ( method_exists( $this, 'o2o_init' ) )
+			$this->action( 'o2o_init' ); // NOTE: runs on `wp_loaded`
 
-		if ( method_exists( $this, 'wp_loaded' ) )
-			$this->action( 'wp_loaded' );
+		else if ( method_exists( $this, 'p2p_init' ) )
+			$this->action( 'p2p_init' ); // NOTE: runs on `wp_loaded`
 
 		if ( method_exists( $this, 'widgets_init' ) && $this->get_setting( 'widget_support' ) )
 			$this->action( 'widgets_init' );

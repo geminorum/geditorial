@@ -146,22 +146,17 @@ class Team extends gEditorial\Module
 		] );
 	}
 
-	public function wp_loaded()
+	public function o2o_init()
 	{
-		return; // FIXME
+		$this->_o2o = O2O\API::registerConnectionType( [
+			'name' => $this->constant( 'o2o_name' ),
+			'from' => $this->constant( 'member_cpt' ),
+			'to'   => 'user',
 
-		$name = $this->constant( 'o2o_name' );
-		$args = [
-			'name'          => $name,
-			'from'          => $this->constant( 'member_cpt' ),
-			'to'            => 'user',
 			'to_query_vars' => [
 				'role' => 'contributor' // FIXME: get setting fot this
 			],
-		];
-
-		if ( O2O\API::registerConnectionType( $args ) )
-			$this->o2o = $name;
+		] );
 	}
 
 	public function current_screen( $screen )

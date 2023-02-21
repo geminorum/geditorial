@@ -10,6 +10,7 @@ use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\O2O;
 
 class Tube extends gEditorial\Module
 {
@@ -44,6 +45,14 @@ class Tube extends gEditorial\Module
 					'description' => _x( 'Displays customized toolbar after player.', 'Setting Description', 'geditorial-tube' ),
 				],
 			],
+			'_connected' => [
+				[
+					'field'  => 'connected_posttypes',
+					'type'   => 'posttypes',
+					'title'  => _x( 'Connected Post-types', 'Setting Title', 'geditorial-tube' ),
+					'values' => $this->all_posttypes(),
+				],
+			],
 			'_supports' => [
 				'comment_status',
 				'shortcode_support',
@@ -57,17 +66,17 @@ class Tube extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'video_cpt'           => 'video', // clip
-			'video_cpt_archive'   => 'videos',
-			'video_cpt_p2p'       => 'related_videos',
-			'video_cat'           => 'video_category',
-			'video_cat_slug'      => 'video-categories',
-			'subject_tax'         => 'video_subject',
-			'channel_cpt'         => 'channel',
-			'channel_cpt_archive' => 'channels',
-			'channel_cpt_p2p'     => 'related_channels',
-			'channel_cat'         => 'channel_category', // MAYBE rename to `channel_subject`
-			'channel_cat_slug'    => 'channel-categories',
+			'video_cpt'             => 'video', // `clip`
+			'video_cpt_archive'     => 'videos',
+			'video_cpt_connected'   => 'connected_videos',
+			'video_cat'             => 'video_category',
+			'video_cat_slug'        => 'video-categories',
+			'subject_tax'           => 'video_subject',
+			'channel_cpt'           => 'channel',
+			'channel_cpt_archive'   => 'channels',
+			'channel_cpt_connected' => 'connected_channels',
+			'channel_cat'           => 'channel_category',
+			'channel_cat_slug'      => 'channel-categories',
 
 			'video_shortcode'       => 'tube-video',
 			'video_cat_shortcode'   => 'tube-video-category',
@@ -182,6 +191,27 @@ class Tube extends gEditorial\Module
 
 		if ( $this->get_setting( 'video_channels' ) )
 			$this->register_posttype_thumbnail( 'channel_cpt' );
+	}
+
+	public function o2o_init()
+	{
+		$posttypes = $this->get_setting( 'connected_posttypes', [] );
+
+		if ( count( $posttypes ) )
+			$this->_o2o = O2O\API::registerConnectionType( [
+				'name' => $this->constant( 'video_cpt_connected' ),
+				'to'   => $this->constant( 'video_cpt' ),
+				'from' => $posttypes,
+			] );
+
+		if ( $this->get_setting( 'video_channels' ) )
+			O2O\API::registerConnectionType( [
+				'name' => $this->constant( 'channel_cpt_connected' ),
+				'to'   => $this->constant( 'channel_cpt' ),
+				'from' => $this->constant( 'video_cpt' ),
+
+				'reciprocal' => TRUE,
+			] );
 	}
 
 	public function init()

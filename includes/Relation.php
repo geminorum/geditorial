@@ -18,6 +18,8 @@ class Relation extends Main
 		Database::registerTable( 'o2o' );
 		Database::registerTable( 'o2ometa' );
 
+		add_action( 'wp_loaded', [ $class, 'wp_loaded' ] );
+
 		// `P2P_Query_Post::init()`
 		add_action( 'parse_query', [ $class, 'parse_query' ], 20 );
 		add_filter( 'posts_clauses', [ $class, 'posts_clauses' ], 20, 2 );
@@ -46,6 +48,11 @@ class Relation extends Main
 
 		// `P2P_Tools_Page::setup()`
 		add_action( 'admin_notices', [ $class, 'maybeInstall' ] );
+	}
+
+	public static function wp_loaded()
+	{
+		do_action( 'o2o_init' ); // avoid unnecessary registers
 	}
 
 	public static function parse_query( $wp_query )

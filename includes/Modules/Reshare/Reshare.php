@@ -103,20 +103,15 @@ class Reshare extends gEditorial\Module
 		$this->register_posttype( 'reshare_cpt' );
 	}
 
-	public function wp_loaded()
+	public function o2o_init()
 	{
-		return; // FIXME
+		$this->_o2o = O2O\API::registerConnectionType( [
+			'name' => $this->constant( 'o2o_name' ),
+			'from' => $this->constant( 'reshare_cpt' ),
+			'to'   => $this->posttypes( 'reshare_cpt' ),
 
-		$name = $this->constant( 'o2o_name' );
-		$args = [
-			'name'       => $name,
-			'from'       => $this->constant( 'reshare_cpt' ),
-			'to'         => $this->posttypes( 'reshare_cpt' ),
 			'reciprocal' => TRUE,
-		];
-
-		if ( O2O\API::registerConnectionType( $args ) )
-			$this->o2o = $name;
+		] );
 	}
 
 	public function current_screen( $screen )
