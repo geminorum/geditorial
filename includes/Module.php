@@ -5171,6 +5171,18 @@ class Module extends Base
 		}, 1, 1 );
 	}
 
+	protected function _hook_editform_meta_summary( $fields = NULL )
+	{
+		add_action( 'edit_form_after_title', function( $post ) use ( $fields ) {
+			echo $this->wrap( Template::metaSummary( [
+				'echo'   => FALSE,
+				'id'     => $post->ID,
+				'type'   => $post->post_type,
+				'fields' => $fields,
+			] ), '-meta-summary' );
+		}, 1, 9 );
+	}
+
 	protected function dashboard_glance_post( $constant )
 	{
 		return MetaBox::glancePosttype(
