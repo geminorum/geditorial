@@ -1219,6 +1219,17 @@ class Module extends Base
 		return $default;
 	}
 
+	public function get_postid_by_field( $value, $field, $prefix = NULL )
+	{
+		if ( is_null( $prefix ) )
+			$prefix = 'meta'; // the exception!
+
+		if ( $post_id = PostType::getIDbyMeta( $this->get_postmeta_key( $field, $prefix ), $value ) )
+			return intval( $post_id );
+
+		return FALSE;
+	}
+
 	public function get_postmeta_key( $field, $prefix = NULL )
 	{
 		return sprintf( '_%s_%s', ( is_null( $prefix ) ? $this->key : $prefix ), $field );
@@ -2085,6 +2096,11 @@ class Module extends Base
 
 		add_post_type_support( $posttype, [ $type.'_fields' ], $fields );
 		add_post_type_support( $posttype, 'custom-fields' ); // must for rest meta fields
+	}
+
+	public function has_posttype_fields_support( $constant, $type = 'meta' )
+	{
+		return post_type_supports( $this->constant( $constant ), $type.'_fields' );
 	}
 
 	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE )
