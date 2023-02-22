@@ -5133,6 +5133,29 @@ class Module extends Base
 		Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0, 'author', $extra );
 	}
 
+	// NOTE: cannot use 'wp_insert_post_data' filter
+	protected function _hook_autofill_posttitle( $posttype )
+	{
+		add_action( 'save_post_'.$posttype, [ $this, '_save_autofill_posttitle' ], 20, 3 );
+	}
+
+	public function _save_autofill_posttitle( $post_id, $post, $update )
+	{
+		remove_action( 'save_post_'.$post->post_type, [ $this, '_save_autofill_posttitle' ], 20, 3 );
+
+		if ( FALSE === ( $posttitle = $this->_get_autofill_posttitle( $post ) ) )
+			return;
+
+		if ( ! wp_update_post( [ 'ID' => $post->ID, 'post_title' => $posttitle ] ) )
+			$this->log( 'FAILED', sprintf( 'updating title of post #%s', $post->ID ) );
+	}
+
+	// DEFAULT CALLBACK
+	protected function _get_autofill_posttitle( $post )
+	{
+		return FALSE;
+	}
+
 	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 	protected function _hook_editform_readonly_title()
 	{
