@@ -37,6 +37,50 @@ class MetaBox extends Main
 		return TRUE;
 	}
 
+	public static function singleselectTerms( $object_id = 0, $atts = [], $terms = NULL )
+	{
+		$args = self::args( $atts, [
+			'taxonomy' => NULL,
+			'posttype' => FALSE,
+			'echo'     => TRUE,
+			'none'     => Settings::showOptionNone(),
+		] );
+
+		if ( ! $args['taxonomy'] )
+			return FALSE;
+
+		if ( ! is_null( $terms ) ) {
+
+			// FIXME: make sure it's a list of objects
+		} else {
+
+			// $terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
+			$terms = Taxonomy::listTerms( $args['taxonomy'], 'all' );
+		}
+
+		$selected = wp_get_object_terms( $object_id, $args['taxonomy'], [ 'fields' => 'ids' ] );
+
+		$dropdown = [
+			'selected'   => count( $selected ) ? $selected[0] : '0',
+			'prop'       => 'name',
+			'value'      => 'term_id',
+			'name'       => 'tax_input['.$args['taxonomy'].'][]',
+			'none_title' => $args['none'],
+			'none_value' => 0,
+			'class'      => static::BASE.'-admin-dropbown',
+		];
+
+		$html = HTML::dropdown( $terms, $dropdown );
+
+		if ( $html )
+			$html = HTML::wrap( $html, 'field-wrap -select' );
+
+		if ( ! $args['echo'] )
+			return $html;
+
+		echo $html;
+	}
+
 	// TODO: radio list box using custom walker
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs,
