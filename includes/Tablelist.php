@@ -486,4 +486,42 @@ class Tablelist extends Main
 			'class'    => 'description',
 		];
 	}
+
+	public static function columnTermMetaDateStart( $metakey = NULL )
+	{
+		if ( is_null( $metakey ) )
+			$metakey = 'datestart';
+
+		return [
+			'title'    => _x( 'Date-Start', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
+			'class'    => 'datetime',
+			'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $metakey ) {
+				$html = '';
+
+				if ( $meta = get_term_meta( $row->term_id, $metakey, TRUE ) )
+					$html = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
+
+				return $html ?: Helper::htmlEmpty();
+			},
+		];
+	}
+
+	public static function columnTermMetaDateEnd( $metakey = NULL )
+	{
+		if ( is_null( $metakey ) )
+			$metakey = 'dateend';
+
+		return [
+			'title'    => _x( 'Date-End', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
+			'class'    => 'datetime',
+			'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $metakey ) {
+				$html = '';
+
+				if ( $meta = get_term_meta( $row->term_id, $metakey, TRUE ) )
+					$html = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
+
+				return $html ?: Helper::htmlEmpty();
+			},
+		];
+	}
 }
