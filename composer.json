@@ -25,7 +25,6 @@
     "composer/installers": "^1.12",
     "mustache/mustache": "^2.14",
     "kzykhys/php-csv-parser": "^1.4",
-    "nicmart/string-template": "^0.1.2",
     "michelf/php-markdown": "^1.9",
     "league/html-to-markdown": "^4.9",
     "hbgl/php-code-128-encoder": "^0.2.5",
@@ -33,6 +32,7 @@
   },
   "require-dev": {
     "nesbot/carbon": "^1.39",
+    "nicmart/string-template": "^0.1.2",
     "evert/sitemap-php": "^1.2",
     "eluceo/ical": "^0.11.4",
     "johngrogg/ics-parser": "^2.2",
@@ -44,7 +44,8 @@
     "seboettg/citeproc-php": "^2",
     "khanamiryan/qrcode-detector-decoder": "^1.0",
     "tecnickcom/tc-lib-barcode": "^1.17",
-    "mustangostang/spyc": "^0.6.3"
+    "mustangostang/spyc": "^0.6.3",
+    "mpdf/mpdf": "^8.1"
   },
   "config": {
     "vendor-dir": "assets/vendor",
