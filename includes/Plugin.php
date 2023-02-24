@@ -110,6 +110,7 @@ class Plugin
 		$this->init_modules();
 
 		// Relation::setup();
+		Services\SelectSingle::setup();
 	}
 
 	private function define_constants()
