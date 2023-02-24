@@ -1,8 +1,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Schedule: Calendar All ---------------------------------------------
+/// Module: Schedule: Calendar All
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+@use "sass:color";
+
+////////////////////////////////////////////////////////////////////////////////
 $table-border-color: #e5e5e5 !default;
 $table-bg-accent: #f9f9f9 !default;
 $padding-base-vertical: 6px !default;
@@ -10,6 +15,7 @@ $padding-base-horizontal: 12px !default;
 $padding-small-vertical: 4px !default;
 $padding-small-horizontal: 8px !default;
 
+////////////////////////////////////////////////////////////////////////////////
 .geditorial-schedule-calendar {
 
   position: relative;
@@ -344,12 +350,12 @@ $padding-small-horizontal: 8px !default;
       color: $brand-danger;
 
       &:hover {
-        color: darken($brand-danger, 20%);
+        color: color.adjust($brand-danger, $lightness: -20%);
       }
     }
 
     &[data-action="save"] {
-      color: darken($brand-success, 20%);
+      color: color.adjust($brand-success, $lightness: -20%);
 
       &:hover {
         color: $brand-success;

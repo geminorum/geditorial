@@ -75,6 +75,15 @@ body.geditorial-terms-enabled {
       }
     }
 
+    th.column-geditorial-terms-dateend,
+    th.column-geditorial-terms-datestart,
+    th.column-geditorial-terms-datetime,
+    th.column-geditorial-terms-date {
+      span.-column-icon::before {
+        content: "\f508";
+      }
+    }
+
     .column-geditorial-terms-author,
     .column-geditorial-terms-role,
     .column-geditorial-terms-posttype {
@@ -141,6 +150,16 @@ body.geditorial-terms-enabled {
       border: 2px solid #eee;
       border-radius: 100%;
       cursor: help;
+    }
+
+    span.field-dateend,
+    span.field-datestart,
+    span.field-datetime,
+    span.field-date {
+
+      /*rtl:ignore*/
+      direction: ltr;
+      display: inline-block;
     }
   }
 }

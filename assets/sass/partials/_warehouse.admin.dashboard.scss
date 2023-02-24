@@ -3,6 +3,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Warehouse: Admin: Dashboard
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+@use "sass:color";
 
 ////////////////////////////////////////////////////////////////////////////////
 $spacer: 1rem !default;
@@ -146,7 +149,7 @@ $spacer: 1rem !default;
   ul.-input-queue {
     li {
       span.query {
-        color: darken($brand-success, 20);
+        color: color.adjust($brand-success, $lightness: -20%);
       }
 
       a.remove {
@@ -161,7 +164,7 @@ $spacer: 1rem !default;
 
       span.query {
         cursor: help;
-        color: darken($brand-danger, 20);
+        color: color.adjust($brand-danger, $lightness: -20%);
       }
 
       a.resend {

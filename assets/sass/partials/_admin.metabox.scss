@@ -1,9 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// gEditorial Partials: Admin MetaBox -----------------------------------------
+/// gEditorial Partials: Admin MetaBox
 
 ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+@use "sass:color";
+
 ////////////////////////////////////////////////////////////////////////////////
 $spacer: 1rem !default;
 
@@ -142,6 +145,24 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-inputdate {
+      input {
+        width: 100%;
+
+        /*rtl:ignore*/
+        direction: ltr;
+      }
+    }
+
+    &.-inputidentity {
+      input {
+        width: 100%;
+
+        /*rtl:ignore*/
+        direction: ltr;
+      }
+    }
+
     &.-inputtext-half {
       input {
         width: 49%;
@@ -189,7 +210,7 @@ $spacer: 1rem !default;
 
         &:hover,
         .dashicons {
-          color: darken($brand-danger, 20%);
+          color: color.adjust($brand-danger, $lightness: -20%);
         }
       }
 
@@ -531,6 +552,10 @@ $spacer: 1rem !default;
       padding-left: 1px;
       margin-right: -1px;
     }
+  }
+
+  > .-title {
+    margin: -2px 0 5px;
   }
 }
 
