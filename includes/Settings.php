@@ -2102,6 +2102,62 @@ class Settings extends Core\Base
 				}
 
 			break;
+
+			case 'navmenu':
+
+				if ( ! $args['values'] )
+					$args['values'] = wp_list_pluck( wp_get_nav_menus(), 'name', 'term_id' );
+
+				if ( ! empty( $args['values'] ) ) {
+
+					if ( is_null( $args['none_title'] ) )
+						$args['none_title'] = $args['string_select'];
+
+					if ( is_null( $args['none_value'] ) )
+						$args['none_value'] = '0';
+
+					$html.= HTML::tag( 'option', [
+						'value'    => $args['none_value'],
+						'selected' => $value == $args['none_value'],
+						'disabled' => HTML::attrBoolean( $args['disabled'], $args['none_value'] ),
+					], $args['none_title'] );
+
+					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
+						$html.= HTML::tag( 'option', [
+							'value'    => $value_name,
+							'selected' => $value == $value_name,
+							'disabled' => HTML::attrBoolean( $args['disabled'], $value_name ),
+						], $value_title );
+					}
+
+					echo HTML::tag( 'select', [
+						'id'       => $id,
+						'name'     => $name,
+						'class'    => HTML::attrClass( $args['field_class'], '-type-navmenu' ),
+						// `select` doesn't have a `readonly`, keeping `disabled` with hidden input
+						// @REF: https://stackoverflow.com/a/368834
+						// `disabled` previously applied to `option` elements
+						'disabled' => $args['readonly'],
+						'dir'      => $args['dir'],
+						'data'     => $args['data'],
+					], $html );
+
+					if ( $args['readonly'] )
+						HTML::inputHidden( $name, $value );
+
+				} else {
+
+					HTML::desc( $args['string_empty'], TRUE, '-empty' );
+
+					$args['description'] = FALSE;
+				}
+
+				break;
+
 			case 'role':
 
 				if ( ! $args['values'] )
