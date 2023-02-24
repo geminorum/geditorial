@@ -13,7 +13,9 @@
 
   const inputs = {
     number: '[data-' + module + '=\'number\']',
-    alphabet: '[data-' + module + '=\'alphabet\']'
+    alphabet: '[data-' + module + '=\'alphabet\']',
+    identity: '[data-' + module + '=\'identity\']',
+    date: '[data-' + module + '=\'date\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
     // currency: '[data-' + module + '=\'currency\']'
@@ -82,7 +84,7 @@
   }
 
   // function toPersian (n) {
-  //   var p = '۰'.charCodeAt(0);
+  //   const p = '۰'.charCodeAt(0);
   //   return n.toString().replace(/\d+/g, function (m) {
   //     return m.split('').map(function (n) {
   //       return String.fromCharCode(p + parseInt(n));
@@ -109,6 +111,21 @@
     document.body.removeChild(element);
   }
 
+  // @REF: https://gist.github.com/mhf-ir/3b6d67e73f04874eea6baece3e43a5c0
+  function identityNumber (value) {
+    if (typeof value === 'undefined' || !value) {
+      return false;
+    }
+    const check = parseInt(value[9], 10);
+    let sum = 0;
+    for (let i = 0; i < 9; i += 1) {
+      sum += parseInt(value[i], 10) * (10 - i);
+    }
+    sum %= 11;
+    const result = (sum < 2 && check === sum) || (sum >= 2 && check + sum === 11);
+    return result;
+  }
+
   const inputCallbacks = {
 
     number: function () {
@@ -128,6 +145,33 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^a-zA-Z]/gi, '').trim().toUpperCase());
+      });
+    },
+
+    identity: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        const val = toEnglish($el.val()).replace(/[^\d.-]/g, '').trim();
+        $el.val(val);
+        if (identityNumber(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else {
+          $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
+        }
+      });
+    },
+
+    date: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish($el.val()).replace(/[^\d.-//]/g, '').trim());
+        // TODO: check for pattern/validate date in persian
       });
     }
 
