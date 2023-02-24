@@ -206,6 +206,15 @@ class Scripts extends Main
 			: self::registerPackage( 'spinjs', 'spin.js/spin.umd', [], $ver );
 	}
 
+	// @REF: https://github.com/select2/select2/
+	// @REF: https://select2.org/
+	public static function pkgSelect2( $enqueue = FALSE, $ver = '4.1.0-rc.0' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'select2', 'select2/select2', [ 'jquery' ], $ver )
+			: self::registerPackage( 'select2', 'select2/select2', [ 'jquery' ], $ver );
+	}
+
 	public static function getTinyMceStrings( $locale )
 	{
 		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
