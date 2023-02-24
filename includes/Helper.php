@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\URL;
+use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
@@ -161,6 +162,21 @@ class Helper extends Main
 			$prepared = HTML::escape( $value );
 
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
+	}
+
+	public static function prepMetaRow( $value, $key = NULL, $field = [] )
+	{
+		switch ( $key ) {
+			case 'twitter'  : return Third::htmlTwitterIntent( $value, TRUE );
+			case 'facebook' : return HTML::link( URL::prepTitle( $value ), $value );
+			case 'instagram': return Third::htmlHandle( $value, 'https://instagram.com/' );
+			case 'telegram' : return Third::htmlHandle( $value, 'https://t.me/' );
+			case 'phone'    : return HTML::tel( $value );
+			case 'mobile'   : return HTML::tel( $value );
+			case 'username' : return '@'.$value; // FIXME
+		}
+
+		return HTML::escape( $value );
 	}
 
 	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )

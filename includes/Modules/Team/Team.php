@@ -184,18 +184,15 @@ class Team extends gEditorial\Module
 		return [ 'member_group' ];
 	}
 
-	public function display_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
-			case 'email_gravatar' : return HTML::mailto( $value );
-			case 'email_contact'  : return HTML::mailto( $value );
-			case 'personal_site'  : return HTML::link( $value );
-			case 'phone'          : return HTML::tel( $value );
-			case 'twitter'        : return Third::htmlTwitterIntent( $value, is_admin() );
-			case 'username'       : return '@'.$value; // FIXME
+			case 'email_gravatar': return HTML::mailto( $value );
+			case 'email_contact' : return HTML::mailto( $value );
+			case 'personal_site' : return HTML::link( $value );
 		}
 
-		return parent::display_meta_row( $value, $key, $field );
+		return parent::prep_meta_row( $value, $key, $field );
 	}
 
 	public function meta_init()

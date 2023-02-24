@@ -814,7 +814,7 @@ class Book extends gEditorial\Module
 		$this->column_row_p2p_from_posttype( 'publication_cpt', $post );
 	}
 
-	public function display_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
 			/* translators: %s: isbn placeholder */
@@ -829,7 +829,7 @@ class Book extends gEditorial\Module
 			case 'volumes' : return Strings::getCounted( $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
 		}
 
-		return parent::display_meta_row( $value, $key, $field );
+		return parent::prep_meta_row( $value, $key, $field );
 	}
 
 	public function meta_init()

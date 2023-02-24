@@ -890,22 +890,9 @@ class Tweaks extends gEditorial\Module
 
 			echo '<li class="-row tweaks-user-contacts -contact-'.$method.'">';
 				echo $this->get_column_icon( FALSE, Icon::guess( $method, 'email-alt' ), $title );
-				echo $this->display_meta_row( $meta, $method );
+				echo $this->prep_meta_row( $meta, $method );
 			echo '</li>';
 		}
-	}
-
-	public function display_meta_row( $value, $key = NULL, $field = [] )
-	{
-		switch ( $key ) {
-			case 'mobile'    : return HTML::tel( $value );
-			case 'twitter'   : return Third::htmlTwitterIntent( $value, TRUE );
-			case 'facebook'  : return HTML::link( URL::prepTitle( $value ), $value );
-			case 'instagram' : return Third::htmlHandle( $value, 'https://instagram.com/' );
-			case 'telegram'  : return Third::htmlHandle( $value, 'https://t.me/' );
-		}
-
-		return parent::display_meta_row( $value, $key, $field );
 	}
 
 	public function do_metabox_mainbox( $post, $box )

@@ -508,14 +508,14 @@ class Collect extends gEditorial\Module
 		$this->paired_tweaks_column_attr( $post, 'collection_cpt', 'collection_tax' );
 	}
 
-	public function display_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row( $value, $key = NULL, $field = [] )
 	{
 		switch ( $key ) {
 			/* translators: %s: count placeholder */
 			case 'in_collection_order': return Strings::getCounted( $value, _x( 'Order in Collection: %s', 'Display', 'geditorial-collect' ) );
 		}
 
-		return parent::display_meta_row( $value, $key, $field );
+		return parent::prep_meta_row( $value, $key, $field );
 	}
 
 	public function post_updated_messages( $messages )

@@ -14,7 +14,6 @@ use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -569,7 +568,7 @@ class Users extends gEditorial\Module
 
 			echo '<li class="-row -contact -contact-'.$method.'">';
 				echo $this->get_column_icon( FALSE, Icon::guess( $method, 'email-alt' ), $title );
-				echo $this->display_meta_row( $meta, $method );
+				echo $this->prep_meta_row( $meta, $method );
 			echo '</li>';
 		}
 
@@ -588,19 +587,6 @@ class Users extends gEditorial\Module
 		$this->tweaks_column_user( $user );
 
 		echo '</ul><div class="clear"></div></div>';
-	}
-
-	public function display_meta_row( $value, $key = NULL, $field = [] )
-	{
-		switch ( $key ) {
-			case 'mobile'    : return HTML::tel( $value );
-			case 'twitter'   : return Third::htmlTwitterIntent( $value, TRUE );
-			case 'facebook'  : return HTML::link( URL::prepTitle( $value ), $value );
-			case 'instagram' : return Third::htmlHandle( $value, 'https://instagram.com/' );
-			case 'telegram'  : return Third::htmlHandle( $value, 'https://t.me/' );
-		}
-
-		return parent::display_meta_row( $value, $key, $field );
 	}
 
 	public function reports_settings( $sub )
