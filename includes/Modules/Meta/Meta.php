@@ -588,7 +588,14 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
+				case 'post':
+
+					ModuleMetaBox::renderFieldPost( $args, $post );
+
+				break;
 				case 'term':
+
+					// TODO: migrate to: `ModuleMetaBox::renderFieldTerm( $args, $post )`
 
 					if ( $args['taxonomy'] )
 						ModuleMetaBox::legacy_fieldTerm( $field, [ $field ], $post, $args['taxonomy'], $args['ltr'], $args['title'] );

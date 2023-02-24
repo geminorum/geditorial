@@ -1986,6 +1986,16 @@ class Module extends Base
 
 		switch ( $field['type'] ) {
 
+			case 'post':
+
+				if ( ! empty( $data ) && ( $object = get_post( (int) $data ) ) )
+					$sanitized = $object->ID;
+
+				else
+					$sanitized = FALSE;
+
+				break;
+
 			case 'term':
 
 				// TODO: use `Taxonomy::getTerm( $data, $field['taxonomy'] )`
