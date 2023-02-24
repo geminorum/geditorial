@@ -1,0 +1,59 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Dashboard\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Dashboard\n"
+"X-Domain: geditorial-dashboard\n"
+
+#: Dashboard.php:31
+msgctxt "Setting Title"
+msgid "Dashboard Page"
+msgstr ""
+
+#: Dashboard.php:32
+msgctxt "Setting Description"
+msgid "Displays the selected page as dashboard page."
+msgstr ""
+
+#: Dashboard.php:39
+msgctxt "Setting Title"
+msgid "Navigation Menu"
+msgstr ""
+
+#: Dashboard.php:40
+msgctxt "Setting Description"
+msgid "Displays the selected nav-menu as dashboard navigation."
+msgstr ""
+
+#: Dashboard.php:45
+msgctxt "Settings: Setting Description"
+msgid "Adds %s before contents on dashboard homepage."
+msgstr ""
+
+#: Dashboard.php:46
+msgctxt "Settings: Setting Description"
+msgid "Adds %s after contents on dashboard homepage."
+msgstr ""
+
+#: Dashboard.php:84
+msgctxt "Widget Area"
+msgid "Editorial: Dashboard"
+msgstr ""
+
+#: Dashboard.php:85
+msgctxt "Widget Area"
+msgid "Widgets appear on Front-end Dashboard"
+msgstr ""
+
+#: Dashboard.php:128
+msgctxt "Page-State"
+msgid "Dashboard"
+msgstr ""

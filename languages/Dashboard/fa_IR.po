@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Dashboard\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-02-25 01:36+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Dashboard\n"
+"X-Domain: geditorial-dashboard\n"
+
+#: Dashboard.php:31
+msgctxt "Setting Title"
+msgid "Dashboard Page"
+msgstr "برگه پیشخوان"
+
+#: Dashboard.php:32
+msgctxt "Setting Description"
+msgid "Displays the selected page as dashboard page."
+msgstr ""
+
+#: Dashboard.php:39
+msgctxt "Setting Title"
+msgid "Navigation Menu"
+msgstr "فهرست راه‌بری"
+
+#: Dashboard.php:40
+msgctxt "Setting Description"
+msgid "Displays the selected nav-menu as dashboard navigation."
+msgstr ""
+
+#: Dashboard.php:45
+msgctxt "Settings: Setting Description"
+msgid "Adds %s before contents on dashboard homepage."
+msgstr ""
+
+#: Dashboard.php:46
+msgctxt "Settings: Setting Description"
+msgid "Adds %s after contents on dashboard homepage."
+msgstr ""
+
+#: Dashboard.php:84
+msgctxt "Widget Area"
+msgid "Editorial: Dashboard"
+msgstr "تحریریه: پیشخوان"
+
+#: Dashboard.php:85
+msgctxt "Widget Area"
+msgid "Widgets appear on Front-end Dashboard"
+msgstr ""
+
+#: Dashboard.php:128
+msgctxt "Page-State"
+msgid "Dashboard"
+msgstr "پیشخوان"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Profile Support"
+#~ msgstr "پشتیبانی نمایه"
+
+#~ msgctxt "Page Title"
+#~ msgid "Home"
+#~ msgstr "خانه"
+
+#~ msgctxt "Page Title"
+#~ msgid "Profile"
+#~ msgstr "نمایه"
+
+#~ msgctxt "Row Icon Title"
+#~ msgid "Name"
+#~ msgstr "نام"
+
+#~ msgctxt "Row Icon Title"
+#~ msgid "Email"
+#~ msgstr "ایمیل"
+
+#~ msgctxt "Row Icon Title"
+#~ msgid "URL"
+#~ msgstr "نشانی"
+
+#~ msgctxt "Row Icon Title"
+#~ msgid "Registered"
+#~ msgstr "نام‌نویسی"
+
+#~ msgctxt "Row Icon Title"
+#~ msgid "Roles"
+#~ msgstr "نقش‌ها"
