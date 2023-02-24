@@ -110,6 +110,8 @@ class Plugin
 		$this->init_modules();
 
 		// Relation::setup();
+
+		Query::setup();
 		Services\SelectSingle::setup();
 	}
 

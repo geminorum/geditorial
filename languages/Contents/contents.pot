@@ -1,0 +1,24 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Contents\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Contents\n"
+"X-Domain: geditorial-contents\n"
+
+#: Contents.php:29
+msgctxt "Setting Title"
+msgid "Title"
+msgstr ""
+
+#: Contents.php:30
+msgctxt "Setting Description"
+msgid "Description."
+msgstr ""
