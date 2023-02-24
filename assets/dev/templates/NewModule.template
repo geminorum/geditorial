@@ -1,0 +1,40 @@
+<?php namespace <%= namespaceAuthor %>\<%= namespaceBase %>\Modules\<%= moduleCamelCase %>;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use <%= namespaceAuthor %>\<%= namespaceBase %>;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Helper;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Core\HTML;
+
+class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
+{
+
+	public static function module()
+	{
+		return [
+			'name'  => '<%= moduleUnderline %>',
+			'title' => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
+			'desc'  => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
+			'icon'  => '<%= moduleDashicon %>',
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		return [
+			'_general' => [
+				[
+					'field'       => 'field',
+					'type'        => 'text',
+					'title'       => _x( 'Title', 'Setting Title', '<%= moduleTextdomain %>' ),
+					'description' => _x( 'Description.', 'Setting Description', '<%= moduleTextdomain %>' ),
+				],
+			],
+		];
+	}
+
+	public function init()
+	{
+		parent::init();
+	}
+}
