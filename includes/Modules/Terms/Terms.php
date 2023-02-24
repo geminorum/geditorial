@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
@@ -10,6 +11,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
@@ -22,7 +24,7 @@ class Terms extends gEditorial\Module
 {
 
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, `date`, `datetime`, 'datestart`, 'dateend`, 'status`: public/private, `capability`, `plural`, `icon`
+	// TODO: `cost`, `price`, 'status`: public/private, `capability`, `plural`, `icon`
 
 	protected $supported = [
 		'order',
@@ -39,6 +41,10 @@ class Terms extends gEditorial\Module
 		'label',
 		'code',
 		'barcode',
+		'date',
+		'datetime',
+		'datestart',
+		'dateend',
 	];
 
 	private $_roles     = [];
@@ -72,6 +78,8 @@ class Terms extends gEditorial\Module
 					'title'       => _x( 'Apply Ordering', 'Setting Title', 'geditorial-terms' ),
 					'description' => _x( 'Changes internal Wordpress core defaults to use custom ordering.', 'Setting Description', 'geditorial-terms' ),
 				],
+				'calendar_type',
+				// 'calendar_list',
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -98,6 +106,10 @@ class Terms extends gEditorial\Module
 				'label'     => _x( 'Label', 'Titles', 'geditorial-terms' ),
 				'code'      => _x( 'Code', 'Titles', 'geditorial-terms' ),
 				'barcode'   => _x( 'Barcode', 'Titles', 'geditorial-terms' ),
+				'date'      => _x( 'Date', 'Titles', 'geditorial-terms' ),
+				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-terms' ),
+				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-terms' ),
+				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
@@ -114,6 +126,10 @@ class Terms extends gEditorial\Module
 				'label'     => _x( 'Terms can have text label to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'code'      => _x( 'Terms can have text code to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'barcode'   => _x( 'Terms can have barcode to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'date'      => _x( 'Terms can have date to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'datetime'  => _x( 'Terms can have date-time to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'datestart' => _x( 'Terms can have date-start to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'dateend'   => _x( 'Terms can have date-end to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
 				'order_column_title'     => _x( 'Order', 'Column Title: Order', 'geditorial-terms' ),
@@ -131,6 +147,10 @@ class Terms extends gEditorial\Module
 				'code_column_title'      => _x( 'Code', 'Column Title: Label', 'geditorial-terms' ),
 				'barcode_column_title'   => _x( 'Barcode', 'Column Title: Label', 'geditorial-terms' ),
 				'posts_column_title'     => _x( 'Posts', 'Column Title: Posts', 'geditorial-terms' ),
+				'date_column_title'      => _x( 'Date', 'Column Title: Date', 'geditorial-terms' ),
+				'datetime_column_title'  => _x( 'Date-Time', 'Column Title: Date-Time', 'geditorial-terms' ),
+				'datestart_column_title' => _x( 'Date-Start', 'Column Title: Date-Start', 'geditorial-terms' ),
+				'dateend_column_title'   => _x( 'Date-End', 'Column Title: Date-End', 'geditorial-terms' ),
 
 				'arrow_directions' => [
 					'undefined' => _x( 'Undefined', 'Arrow Directions', 'geditorial-terms' ),
@@ -438,6 +458,10 @@ class Terms extends gEditorial\Module
 				$position = [ 'name', 'before' ];
 				break;
 
+			case 'dateend':
+				$position = [ $this->classs( 'datestart' ), 'after' ];
+				break;
+
 			default:
 				$position = [ 'name', 'after' ];
 		}
@@ -463,6 +487,10 @@ class Terms extends gEditorial\Module
 
 			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
 				$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
+
+			// NOTE: WordPress not yet support for `date` type
+			else if ( in_array( $field, [ 'date', 'datetime', 'datestart', 'dateend' ] ) )
+				$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => '' ];
 
 			else
 				$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => '' ];
@@ -555,6 +583,10 @@ class Terms extends gEditorial\Module
 			'label',
 			'code',
 			'barcode',
+			'date',
+			'datetime',
+			'datestart',
+			'dateend',
 		];
 
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
@@ -593,6 +625,10 @@ class Terms extends gEditorial\Module
 			'label',
 			'code',
 			'barcode',
+			'date',
+			'datetime',
+			'datestart',
+			'dateend',
 		];
 
 		foreach ( $this->get_supported( $taxonomy ) as $field )
@@ -837,6 +873,38 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'date':
+
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
+
+					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d' );
+					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d', 'gregorian' );
+					$html  = '<span class="field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
+			case 'datetime':
+			case 'datestart':
+			case 'dateend':
+
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
+
+					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
+					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d H:i', 'gregorian' );
+					$html  = '<span class="field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
 			default:
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
@@ -862,6 +930,8 @@ class Terms extends gEditorial\Module
 
 	public function edit_term( $term_id, $tt_id, $taxonomy )
 	{
+		$calendar = $this->default_calendar();
+
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			if ( ! array_key_exists( 'term-'.$field, $_REQUEST ) )
@@ -879,6 +949,16 @@ class Terms extends gEditorial\Module
 
 					update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
+
+				} else if ( in_array( $field, [ 'date' ] ) ) {
+
+					$meta = Number::intval( trim( $meta ), FALSE );
+					$meta = Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
+
+				} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
+
+					$meta = Number::intval( trim( $meta ), FALSE );
+					$meta = Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
 				}
 
 				update_term_meta( $term_id, $metakey, $meta );
@@ -1134,6 +1214,34 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'date':
+
+				$html.= HTML::tag( 'input', [
+					'id'    => $this->classs( $field, 'id' ),
+					'name'  => 'term-'.$field,
+					'type'  => 'text',
+					'value' => empty( $meta ) ? '' : Datetime::prepForInput( $meta, 'Y/m/d', 'gregorian' ),
+					'class' => [ 'code' ],
+					'data'  => [ 'ortho' => 'date' ],
+				] );
+
+				break;
+
+			case 'datetime':
+			case 'datestart':
+			case 'dateend':
+
+				$html.= HTML::tag( 'input', [
+					'id'    => $this->classs( $field, 'id' ),
+					'name'  => 'term-'.$field,
+					'type'  => 'text',
+					'value' => empty( $meta ) ? '' : Datetime::prepForInput( $meta, 'Y/m/d H:i', 'gregorian' ),
+					'class' => [ 'code' ],
+					'data'  => [ 'ortho' => 'date' ],
+				] );
+
+				break;
+
 			case 'label':
 			default:
 
@@ -1247,6 +1355,21 @@ class Terms extends gEditorial\Module
 				$html.= HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
 					'name'     => 'term-'.$field,
 					'selected' => 'undefined',
+				] );
+
+				break;
+
+			case 'date':
+			case 'datetime':
+			case 'datestart':
+			case 'dateend':
+
+				$html.= HTML::tag( 'input', [
+					'name'  => 'term-'.$field,
+					'type'  => 'text',
+					'value' => '',
+					'class' => [ 'ptitle', 'code' ],
+					'data'  => [ 'ortho' => 'date' ],
 				] );
 
 				break;
@@ -1382,6 +1505,28 @@ class Terms extends gEditorial\Module
 							$node['title'].= ': '.Helper::prepContact( $meta );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
+
+						break;
+
+					case 'date':
+
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d' );
+						else
+							$node['title'].= ': '.gEditorial\Plugin::na();
+
+						break;
+
+					case 'datetime':
+					case 'datestart':
+					case 'dateend':
+
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
+						else
+							$node['title'].= ': '.gEditorial\Plugin::na();
+
+						break;
 
 					// TODO: add the rest!
 
