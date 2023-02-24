@@ -828,4 +828,159 @@ class MetaBox extends Main
 
 		return $result;
 	}
+
+	public static function getFieldDefaults( $field )
+	{
+		return [
+			'name'        => $field,
+			'rest'        => $field, // FALSE to disable
+			'title'       => NULL, // self::getString( $field, $posttype, 'titles', $field ),
+			'description' => NULL, // self::getString( $field, $posttype, 'descriptions' ),
+			'sanitize'    => NULL,
+			'pattern'     => NULL, // HTML5 input pattern
+			'default'     => '', // currently only on rest
+			'icon'        => 'smiley',
+			'type'        => 'text',
+			'context'     => NULL, // default is `mainbox`
+			'quickedit'   => FALSE,
+			'values'      => [],
+			'repeat'      => FALSE,
+			'ltr'         => FALSE,
+			'taxonomy'    => FALSE,
+			'posttype'    => FALSE,
+			'group'       => 'general',
+			'order'       => 1000,
+		];
+	}
+
+	public static function renderFieldSelect( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$html     = '';
+		$args     = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$selected = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		foreach ( $args['values'] as $value => $label )
+			$html.= HTML::tag( 'option', [
+				'selected' => $selected == $value,
+				'value'    => $value,
+			], $label );
+
+		$atts = [
+			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title' => $args['title'],
+			'class' => [
+				sprintf( '%s-select', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field'    => $args['name'],
+				'meta-type'     => $args['type'],
+				'meta-title'    => $args['title'],
+			],
+		];
+
+		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select' );
+	}
+
+	public static function renderFieldDate( $field, $post = NULL, $module = NULL, $calendar = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+
+		$atts = [
+			'type'        => 'text',
+			'value'       => $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' ) : '',
+			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title'       => $args['description'],
+			'placeholder' => $args['title'],
+			'class'       => [
+				sprintf( '%s-inputdate', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'],
+				'ortho'      => 'date',
+			],
+		];
+
+		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputdate' );
+	}
+
+	public static function renderFieldIdentity( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+
+		$atts = [
+			'type'        => 'text',
+			'value'       => $value ?: '',
+			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title'       => $args['description'],
+			'placeholder' => $args['title'],
+			'class'       => [
+				sprintf( '%s-inputidentity', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'],
+				'ortho'      => 'identity',
+			],
+		];
+
+		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputidentity' );
+	}
 }

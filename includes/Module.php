@@ -2027,13 +2027,20 @@ class Module extends Base
 				break;
 
 			case 'date':
+				$sanitized = Number::intval( trim( $data ), FALSE );
+				$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, $sanitized );
+				break;
+
 			case 'time':
+				$sanitized = Number::intval( trim( $data ), FALSE );
+				break;
+
 			case 'datetime':
 
 				// @SEE: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#dates
 
 				$sanitized = Number::intval( trim( $data ), FALSE );
-
+				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
 				break;
 
 			case 'price':

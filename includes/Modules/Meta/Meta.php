@@ -75,6 +75,8 @@ class Meta extends gEditorial\Module
 					/* translators: %s: price number */
 					'default'     => _x( '%s Toman', 'Setting Default', 'geditorial-meta' ),
 				],
+				'calendar_type',
+				// 'calendar_list',
 			],
 		];
 	}
@@ -540,6 +542,11 @@ class Meta extends gEditorial\Module
 
 			switch ( $args['type'] ) {
 
+				case 'select':
+
+					ModuleMetaBox::renderFieldSelect( $args, $post );
+					break;
+
 				case 'text':
 				case 'datestring':
 
@@ -547,12 +554,20 @@ class Meta extends gEditorial\Module
 
 				break;
 				case 'date':
+
+					ModuleMetaBox::renderFieldDate( $args, $post, NULL, $this->default_calendar() );
+					break;
+
+				case 'identity': // TODO: utilize the pattern!
+
+					ModuleMetaBox::renderFieldIdentity( $args, $post, NULL );
+					break;
+
 				case 'float':
 				case 'code':
 				case 'contact':
 				case 'phone':
 				case 'mobile':
-				case 'identity': // TODO: utilize the pattern!
 				case 'email':
 				case 'embed':
 				case 'link':
@@ -739,6 +754,7 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
 
 				break;
+				case 'select':
 				case 'datestring':
 				case 'text':
 				case 'title_before':
@@ -1080,6 +1096,11 @@ class Meta extends gEditorial\Module
 			case 'mobile':
 				return apply_shortcodes( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
 
+			case 'date':
+				return Datetime::prepForDisplay( trim( $raw ), 'Y/m/d' );
+
+			case 'datestring':
+				return Number::localize( Datetime::stringFormat( $raw ) );
 
 			case 'embed':
 				return Template::doEmbedShortCode( trim( $raw ) );
