@@ -199,9 +199,10 @@ class Audit extends gEditorial\Module
 		], NULL, TRUE );
 
 		$this->filter( 'map_meta_cap', 4 );
+		$this->action( 'save_post', 3, 99 );
 
 		if ( $this->get_setting( 'auto_audit_empty' ) )
-			$this->action( 'save_post', 3, 99 );
+			$this->filter_self( 'auto_audit_save_post', 5 );
 
 		$this->register_default_terms( 'audit_tax' );
 	}
@@ -343,9 +344,22 @@ class Audit extends gEditorial\Module
 			return;
 
 		$taxonomy = $this->constant( 'audit_tax' );
-		$terms    = Taxonomy::getObjectTerms( $taxonomy, $post->ID );
-		$currents = $terms;
+		$currents = Taxonomy::getObjectTerms( $taxonomy, $post->ID );
 
+		$terms = $this->filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
+		$terms = Arraay::prepNumeral( $terms );
+
+		if ( Arraay::equalNoneAssoc( $terms, $currents ) )
+			return;
+
+		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy );
+
+		if ( ! is_wp_error( $result ) )
+			clean_object_term_cache( $post->ID, $taxonomy );
+	}
+
+	public function auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	{
 		if ( $exists = term_exists( $this->_get_attribute( 'empty_title' ), $taxonomy ) ) {
 
 			if ( empty( $post->post_title ) )
@@ -373,16 +387,7 @@ class Audit extends gEditorial\Module
 				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
 		}
 
-		$terms = $this->filters( 'auto_audit_save_post', $terms, $post, $taxonomy, $currents, $update );
-		$terms = Arraay::prepNumeral( $terms );
-
-		if ( Arraay::equalNoneAssoc( $terms, $currents ) )
-			return;
-
-		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy );
-
-		if ( ! is_wp_error( $result ) )
-			clean_object_term_cache( $post->ID, $taxonomy );
+		return $terms;
 	}
 
 	public function adminbar_init( &$nodes, $parent )
