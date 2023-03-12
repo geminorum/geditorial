@@ -109,10 +109,9 @@ class Plugin
 		$this->load_options();
 		$this->init_modules();
 
-		// Relation::setup();
-
 		Query::setup();
 		Services\SelectSingle::setup();
+		Services\ObjectToObject::setup();
 	}
 
 	private function define_constants()

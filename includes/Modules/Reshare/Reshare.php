@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\O2O;
+use geminorum\gEditorial\Services\O2O;
 
 class Reshare extends gEditorial\Module
 {

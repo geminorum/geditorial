@@ -13,7 +13,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\User;
-use geminorum\gEditorial\O2O;
+use geminorum\gEditorial\Services\O2O;
 
 class Config extends gEditorial\Module
 {

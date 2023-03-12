@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Third;
-use geminorum\gEditorial\O2O;
+use geminorum\gEditorial\Services\O2O;
 
 class Team extends gEditorial\Module
 {

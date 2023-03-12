@@ -10,7 +10,7 @@ use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\O2O;
+use geminorum\gEditorial\Services\O2O;
 
 class Tube extends gEditorial\Module
 {
