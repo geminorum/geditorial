@@ -1986,6 +1986,7 @@ class Module extends Base
 
 		switch ( $field['type'] ) {
 
+			case 'parent_post':
 			case 'post':
 
 				if ( ! empty( $data ) && ( $object = get_post( (int) $data ) ) )

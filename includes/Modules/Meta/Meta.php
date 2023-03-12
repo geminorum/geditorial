@@ -593,6 +593,11 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 
 				break;
+				case 'parent_post':
+
+					ModuleMetaBox::renderFieldPostParent( $args, $post );
+					break;
+
 				case 'post':
 
 					ModuleMetaBox::renderFieldPost( $args, $post );
@@ -892,6 +897,12 @@ class Meta extends gEditorial\Module
 	public function import_posttype_field( $data, $field, $post )
 	{
 		switch ( $field['type'] ) {
+
+			case 'parent_post':
+
+				// do nothing! the input name works magic
+
+				break;
 
 			case 'term':
 

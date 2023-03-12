@@ -1029,6 +1029,61 @@ class MetaBox extends Main
 		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputiban' );
 	}
 
+	// just like any other meta-field but stores in `$post->post_parent`
+	public static function renderFieldPostParent( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$html = '';
+		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+
+		if ( ! $args['posttype'] )
+			$args['posttype'] = $post->post_type;
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		if ( $post->post_parent && ( $parent = PostType::getPost( $post->post_parent ) ) )
+			$html.= HTML::tag( 'option', [
+				'selected' => TRUE,
+				'value'    => $parent->ID,
+			], PostType::getPostTitle( $parent ) );
+
+		$atts = [
+			'name'  => 'parent_id', // sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title' => $args['title'],
+			'class' => [
+				sprintf( '%s-selectsingle', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'],
+
+				'query-target'   => 'post',
+				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
+				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
+
+				'selectsingle-placeholder' => $args['title'],
+			],
+		];
+
+		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+
+		return Services\SelectSingle::enqueue();
+	}
 
 	public static function renderFieldPost( $field, $post = NULL, $module = NULL )
 	{

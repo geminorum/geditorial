@@ -82,6 +82,12 @@ class Quotation extends gEditorial\Module
 
 		return [
 			$this->constant( 'quote_cpt' ) => [
+				'parent_post_id' => [
+					'title'       => _x( 'Parent', 'Field Title', 'geditorial-quotation' ),
+					'description' => _x( 'Parent post of the Quote', 'Field Description', 'geditorial-quotation' ),
+					'type'        => 'parent_post',
+					'posttype'    => $this->posttypes(),
+				],
 				// FIXME: DEPRECATED
 				'quotation_pages' => [
 					'title'       => _x( 'Pages', 'Field Title', 'geditorial-quotation' ),
@@ -207,18 +213,6 @@ class Quotation extends gEditorial\Module
 	// @REF: `page_attributes_misc_attributes`
 	public function meta_render_metabox( $post, $box, $fields = NULL, $context = 'mainbox' )
 	{
-		$html = HTML::tag( 'input', [
-			'name'        => 'parent_id',
-			'type'        => 'number',
-			'dir'         => 'ltr',
-			'value'       => $post->post_parent ?: '',
-			'placeholder' => _x( 'Parent ID', 'Placeholder', 'geditorial-quotation' ),
-		] );
-
-		$html.= ' <span>'._x( 'Parent ID', 'Placeholder', 'geditorial-quotation' ).'</span>';
-
-		echo HTML::wrap( $html, 'field-wrap -inputnumber' );
-
 		$html = HTML::tag( 'input', [
 			'name'        => 'menu_order',
 			'type'        => 'number',
