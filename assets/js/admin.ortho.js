@@ -116,14 +116,18 @@
     if (typeof value === 'undefined' || !value) {
       return false;
     }
+
+    if (value.length !== 10) {
+      return false;
+    }
+
     const check = parseInt(value[9], 10);
     let sum = 0;
     for (let i = 0; i < 9; i += 1) {
       sum += parseInt(value[i], 10) * (10 - i);
     }
     sum %= 11;
-    const result = (sum < 2 && check === sum) || (sum >= 2 && check + sum === 11);
-    return result;
+    return (sum < 2 && check === sum) || (sum >= 2 && check + sum === 11);
   }
 
   const inputCallbacks = {
