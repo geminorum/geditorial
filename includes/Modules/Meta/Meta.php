@@ -563,6 +563,11 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::renderFieldIdentity( $args, $post, NULL );
 					break;
 
+				case 'iban':
+
+					ModuleMetaBox::renderFieldIBAN( $args, $post, NULL );
+					break;
+
 				case 'float':
 				case 'code':
 				case 'contact':
@@ -749,6 +754,7 @@ class Meta extends gEditorial\Module
 				case 'phone':
 				case 'mobile':
 				case 'identity':
+				case 'iban':
 				case 'email':
 				case 'code':
 
@@ -1076,6 +1082,8 @@ class Meta extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
+	// TODO: for `iban`: display bank as title attr
+	// TODO: for `identity`,`iban`: add class if it's not valid
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args )
 	{
 		switch ( $field ) {

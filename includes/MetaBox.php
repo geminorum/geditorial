@@ -985,6 +985,50 @@ class MetaBox extends Main
 		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputidentity' );
 	}
 
+	// TODO: utilize the pattern!
+	public static function renderFieldIBAN( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+
+		$atts = [
+			'type'        => 'text',
+			'value'       => $value ?: '',
+			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title'       => $args['description'],
+			'placeholder' => $args['title'],
+			'class'       => [
+				sprintf( '%s-inputiban', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'],
+				'ortho'      => 'iban',
+			],
+		];
+
+		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputiban' );
+	}
+
 
 	public static function renderFieldPost( $field, $post = NULL, $module = NULL )
 	{

@@ -2028,6 +2028,10 @@ class Module extends Base
 				$sanitized = Validation::sanitizeIdentityNumber( $data );
 				break;
 
+			case 'iban':
+				$sanitized = Validation::sanitizeIBAN( $data );
+				break;
+
 			case 'phone':
 				$sanitized = Validation::sanitizePhoneNumber( $data );
 				break;
