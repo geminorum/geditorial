@@ -25,7 +25,7 @@ class Query extends Main
     //         'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
     //         'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}',
     //         'key' => '{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
-    //         'value' => array($first_day, $last_day),
+    //         'value' => array( $first_day, $last_day ),
     //         'type' => 'numeric',
     //         'compare' => 'BETWEEN'
     //     ),
@@ -39,6 +39,7 @@ class Query extends Main
 		);
 	}
 
+	// @SEE: https://core.trac.wordpress.org/ticket/43867
 	public static function hookSearchPostTitleOnly( $unhook = FALSE )
 	{
 		if ( $unhook )

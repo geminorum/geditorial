@@ -942,6 +942,7 @@ class MetaBox extends Main
 		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputdate' );
 	}
 
+	// TODO: utilize the pattern!
 	public static function renderFieldIdentity( $field, $post = NULL, $module = NULL )
 	{
 		if ( empty( $field['name'] ) )

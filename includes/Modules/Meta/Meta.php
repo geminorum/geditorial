@@ -910,7 +910,6 @@ class Meta extends gEditorial\Module
 
 				return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
 
-			break;
 			default:
 
 				return $this->set_postmeta_field( $post->ID, $field['name'], $this->sanitize_posttype_field( $data, $field, $post ) );

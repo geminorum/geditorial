@@ -31,6 +31,8 @@ class Users extends gEditorial\Module
 		'reports' => 'edit_others_posts',
 	];
 
+	private $_posttypes = [];
+
 	public static function module()
 	{
 		return [
@@ -314,13 +316,13 @@ class Users extends gEditorial\Module
 		if ( $this->classs( 'counts' ) != $column_name )
 			return $output;
 
-		if ( empty( $this->all_posttypes ) )
-			$this->all_posttypes = PostType::get( 1 );
+		if ( empty( $this->_posttypes ) )
+			$this->_posttypes = PostType::get( 1 );
 
 		$counts = Database::countPostsByUser( $user_id );
 		$list   = [];
 
-		foreach ( $this->all_posttypes as $posttype => $label )
+		foreach ( $this->_posttypes as $posttype => $label )
 			if ( ! empty( $counts[$posttype] ) )
 				$list[$label] = HTML::tag( 'a', [
 					'href'   => WordPress::getPostTypeEditLink( $posttype, $user_id ),

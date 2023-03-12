@@ -16,6 +16,8 @@ use geminorum\gEditorial\WordPress\PostType;
 class Revisions extends gEditorial\Module
 {
 
+	// TODO: keep selected revisions by `wp_save_post_revision_revisions_before_deletion` filter
+
 	protected $disable_no_posttypes = TRUE;
 	protected $textdomain_frontend  = FALSE;
 
@@ -25,6 +27,8 @@ class Revisions extends gEditorial\Module
 		'edit'    => 'edit_others_posts',
 		'reports' => 'edit_others_posts',
 	];
+
+	private $_authors = [];
 
 	public static function module()
 	{
@@ -187,10 +191,10 @@ class Revisions extends gEditorial\Module
 
 	protected function author( $user_id )
 	{
-		if ( isset( $this->authors[$user_id] ) )
-			return $this->authors[$user_id];
+		if ( isset( $this->_authors[$user_id] ) )
+			return $this->_authors[$user_id];
 
-		return $this->authors[$user_id] = [
+		return $this->_authors[$user_id] = [
 			'name'   => get_the_author_meta( 'display_name', $user_id ),
 			'avatar' => get_avatar( $user_id, 24 ),
 			// FIXME: add link to user profile

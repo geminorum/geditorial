@@ -4156,7 +4156,7 @@ class Module extends Base
 	{
 		if ( $constant ) {
 
-			if ( is_array( $constant ) && ! in_array( $post->post_type, $constant ) )
+			if ( is_array( $constant ) && ! in_array( $post->post_type, $constant, TRUE ) )
 				return FALSE;
 
 			if ( ! is_array( $constant ) && $post->post_type != $this->constant( $constant ) )

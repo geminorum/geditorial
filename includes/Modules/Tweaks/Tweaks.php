@@ -23,7 +23,10 @@ class Tweaks extends gEditorial\Module
 {
 
 	protected $priority_init = 14;
-	private $enqueued_post = FALSE;
+
+	private $_page_templates = [];
+	private $_site_user_id   = [];
+	private $_post_statuses  = [];
 
 	public static function module()
 	{
@@ -752,16 +755,16 @@ class Tweaks extends gEditorial\Module
 		if ( ! empty( $post->page_template )
 			&& 'default' != $post->page_template ) {
 
-			if ( ! isset( $this->page_templates[$post->post_type] ) )
-				$this->page_templates[$post->post_type] = wp_get_theme()->get_page_templates( $post, $post->post_type );
+			if ( ! isset( $this->_page_templates[$post->post_type] ) )
+				$this->_page_templates[$post->post_type] = wp_get_theme()->get_page_templates( $post, $post->post_type );
 
 			echo '<li class="-row tweaks-page-template">';
 
 				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Row Icon Title', 'geditorial-tweaks' ) );
 
-				if ( ! empty( $this->page_templates[$post->post_type][$post->page_template] ) )
+				if ( ! empty( $this->_page_templates[$post->post_type][$post->page_template] ) )
 					echo '<span title="'.HTML::escape( $post->page_template ).'">'
-						.HTML::escape( $this->page_templates[$post->post_type][$post->page_template] ).'</span>';
+						.HTML::escape( $this->_page_templates[$post->post_type][$post->page_template] ).'</span>';
 				else
 					echo '<span>'.HTML::escape( $post->page_template ).'</span>';
 
@@ -797,10 +800,10 @@ class Tweaks extends gEditorial\Module
 
 	public function column_attr_author( $post )
 	{
-		if ( ! isset( $this->site_user_id ) )
-			$this->site_user_id = gEditorial()->user();
+		if ( ! isset( $this->_site_user_id ) )
+			$this->_site_user_id = gEditorial()->user();
 
-		if ( $post->post_author == $this->site_user_id )
+		if ( $post->post_author == $this->_site_user_id )
 			return;
 
 		echo '<li class="-row tweaks-default-atts -post-author -post-author-'.$post->post_author.'">';
@@ -822,11 +825,11 @@ class Tweaks extends gEditorial\Module
 
 	public function column_attr_status( $post )
 	{
-		if ( ! isset( $this->post_statuses ) )
-			$this->post_statuses = PostType::getStatuses();
+		if ( ! isset( $this->_post_statuses ) )
+			$this->_post_statuses = PostType::getStatuses();
 
-		if ( isset( $this->post_statuses[$post->post_status] ) )
-			$status = HTML::escape( $this->post_statuses[$post->post_status] );
+		if ( isset( $this->_post_statuses[$post->post_status] ) )
+			$status = HTML::escape( $this->_post_statuses[$post->post_status] );
 		else
 			$status = $post->post_status;
 

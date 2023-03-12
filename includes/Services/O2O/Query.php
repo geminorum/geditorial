@@ -169,14 +169,14 @@ class Query extends Core\Base
 					$search = $this->do_other_query( $directed, 'current' );
 
 					$part.= " AND $main_id_column = {$wpdb->o2o}.$from";
-					$part.= " AND {$wpdb->o2o}.$to IN ($search)";
+					$part.= " AND {$wpdb->o2o}.$to IN ({$search})";
 
 				break;
 				default:
 
 					$part.= sprintf ( " AND (
-						($main_id_column = {$wpdb->o2o}.o2o_to AND {$wpdb->o2o}.o2o_from IN (%s)) OR
-						($main_id_column = {$wpdb->o2o}.o2o_from AND {$wpdb->o2o}.o2o_to IN (%s))
+						({$main_id_column} = {$wpdb->o2o}.o2o_to AND {$wpdb->o2o}.o2o_from IN (%s)) OR
+						({$main_id_column} = {$wpdb->o2o}.o2o_from AND {$wpdb->o2o}.o2o_to IN (%s))
 					)",
 						$this->do_other_query( $directed, 'current' ),
 						$this->do_other_query( $directed, 'opposite' )
