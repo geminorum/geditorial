@@ -1125,8 +1125,8 @@ class MetaBox extends Main
 				'meta-title' => $args['title'],
 
 				'query-target'   => 'post',
-				'query-posttype' => $args['posttype'] ?: FALSE,
-				'query-taxonomy' => $args['taxonomy'] ?: FALSE,
+				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
+				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 
 				'selectsingle-placeholder' => $args['title'],
 			],
@@ -1177,8 +1177,8 @@ class MetaBox extends Main
 				'meta-title' => $args['title'],
 
 				'query-target'   => 'term',
-				'query-posttype' => $args['posttype'] ?: FALSE,
-				'query-taxonomy' => $args['taxonomy'] ?: FALSE,
+				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
+				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 
 				'selectsingle-placeholder' => $args['title'],
 			],

@@ -39,7 +39,7 @@ class SelectSingle extends Main
 	// @REF: https://select2.org/data-sources/formats
 	public static function query_callback( $request )
 	{
-		$query = self::atts( [
+		$queried = self::atts( [
 			'search'   => '',
 			'target'   => '',
 			'posttype' => '',
@@ -48,28 +48,42 @@ class SelectSingle extends Main
 			'per'      => '10',
 		], $request->get_query_params() );
 
-		switch( $query['target'] ) {
+		switch ( $queried['target'] ) {
 
 			case 'post':
 
-				if ( empty( $query['posttype'] ) )
+				if ( empty( $queried['posttype'] ) )
 					return new \WP_Error( 'no_correct_settings', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
 
-				if ( ! PostType::can( $query['posttype'], 'read_post' ) )
+				$queried['posttype'] = explode( ',', $queried['posttype'] );
+
+				foreach ( $queried['posttype'] as $index => $posttype )
+					if ( ! PostType::viewable( $posttype ) )
+						unset( $queried['posttype'][$index] );
+
+				// again check if any left!
+				if ( empty( $queried['posttype'] ) )
 					return new \WP_Error( 'not_authorized', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
 
-				$response = self::_get_select2_posts( $query );
+				$response = self::_get_select2_posts( $queried );
 				break;
 
 			case 'term':
 
-				if ( empty( $query['taxonomy'] ) )
+				if ( empty( $queried['taxonomy'] ) )
 					return new \WP_Error( 'no_correct_settings', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
 
-				if ( ! Taxonomy::can( $query['taxonomy'], 'assign_terms' ) )
+				$queried['taxonomy'] = explode( ',', $queried['taxonomy'] );
+
+				foreach ( $queried['taxonomy'] as $index => $taxonomy )
+					if ( ! Taxonomy::can( $taxonomy, 'assign_terms' ) )
+						unset( $queried['taxonomy'][$index] );
+
+				// again check if any left!
+				if ( empty( $queried['taxonomy'] ) )
 					return new \WP_Error( 'not_authorized', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
 
-				$response = self::_get_select2_terms( $query );
+				$response = self::_get_select2_terms( $queried );
 				break;
 
 			default:
@@ -81,10 +95,10 @@ class SelectSingle extends Main
 	}
 
 	// TODO: include/exclude by taxonomy terms
-	private static function _get_select2_posts( $atts )
+	private static function _get_select2_posts( $queried )
 	{
 		$args  = [
-			'post_type'              => $atts['posttype'],
+			'post_type'              => $queried['posttype'],
 			'posts_per_page'         => 10,
 			// 'no_found_rows'          => TRUE, // needs for pagination
 			'suppress_filters'       => TRUE,
@@ -95,46 +109,45 @@ class SelectSingle extends Main
 			'fields'                 => 'ids',
 		];
 
-		if ( ! empty( $atts['search'] ) )
-			$args['s'] = trim( $atts['search'] );
+		if ( ! empty( $queried['search'] ) )
+			$args['s'] = trim( $queried['search'] );
 
-		if ( ! empty( $atts['per'] ) )
-			$args['posts_per_page'] = trim( $atts['per'] );
+		if ( ! empty( $queried['per'] ) )
+			$args['posts_per_page'] = trim( $queried['per'] );
 
-		if ( ! empty( $atts['status'] ) )
-			$args['post_status'] = trim( $atts['status'] );
+		if ( ! empty( $queried['status'] ) )
+			$args['post_status'] = trim( $queried['status'] );
 		else
 			// use only with persistent cache
 			// $args['post_status'] = Posttype::getAvailableStatuses( $args['post_type'] );
 			$args['post_status'] = [ 'publish', 'future', 'draft' ];
 
-		$results = [];
 
 		Query::hookSearchPostTitleOnly();
 
 		$query = new \WP_Query();
-		$posts = $query->query( $args );
+		$posts = [];
 
-		foreach ( $posts as $post )
-			$results[] = (object) [
+		foreach ( $query->query( $args ) as $post )
+			$posts[] = (object) [
 				'id'   => $post,
 				'text' => PostType::getPostTitle( $post ),
 			];
 
 		return [
-			'results'    => $results,
+			'results'    => $posts,
 			'pagination' => [
 				'more' => ( $query->found_posts - $args['posts_per_page'] ) > 0
 			],
 		];
 	}
 
-	private static function _get_select2_terms( $atts )
+	private static function _get_select2_terms( $queried )
 	{
 		$args = [
-			'taxonomy' => $atts['taxonomy'],
-			'number'   => $atts['per'],
-			'offset'   => ( $atts['page'] - 1 ) * $atts['per'],
+			'taxonomy' => $queried['taxonomy'],
+			'number'   => $queried['per'],
+			'offset'   => ( $queried['page'] - 1 ) * $queried['per'],
 			'orderby'  => 'name',
 			'fields'   => 'id=>name',
 
@@ -143,22 +156,20 @@ class SelectSingle extends Main
 			'suppress_filters'       => TRUE,
 		];
 
-		if ( ! empty( $atts['search'] ) )
-			$args['name__like'] = trim( $atts['search'] );
-
-		$results = [];
+		if ( ! empty( $queried['search'] ) )
+			$args['name__like'] = trim( $queried['search'] );
 
 		$query = new \WP_Term_Query();
-		$terms = $query->query( $args );
+		$terms = [];
 
-		foreach ( $terms as $term_id => $term_name )
-			$results[] = (object) [
+		foreach ( $query->query( $args ) as $term_id => $term_name )
+			$terms[] = (object) [
 				'id'   => $term_id,
 				'text' => $term_name,
 			];
 
 		return [
-			'results'    => $results,
+			'results'    => $terms,
 			'pagination' => [
 				'more' => ( $query->found_posts - $args['number'] ) > 0
 			],
