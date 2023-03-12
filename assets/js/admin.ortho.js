@@ -15,6 +15,7 @@
     number: '[data-' + module + '=\'number\']',
     alphabet: '[data-' + module + '=\'alphabet\']',
     identity: '[data-' + module + '=\'identity\']',
+    iban: '[data-' + module + '=\'iban\']',
     date: '[data-' + module + '=\'date\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
@@ -130,6 +131,40 @@
     return (sum < 2 && check === sum) || (sum >= 2 && check + sum === 11);
   }
 
+  function iso7064Mod9710 (iban) {
+    let remainder = iban;
+    let block;
+
+    while (remainder.length > 2) {
+      block = remainder.slice(0, 9);
+      remainder = parseInt(block, 10) % 97 + remainder.slice(block.length);
+    }
+
+    return parseInt(remainder, 10) % 97;
+  }
+
+  // @REF: https://gist.github.com/mhf-ir/c17374fae395a57c9f8e5fe7a92bbf23
+  function validateIBAN (value) {
+    if (typeof value === 'undefined' || !value) {
+      return false;
+    }
+
+    if (value.length !== 26) {
+      return false;
+    }
+
+    if (!/IR[0-9]{24}/.test(value)) {
+      return false;
+    }
+
+    let check = value.substr(4);
+    const d1 = value.charCodeAt(0) - 65 + 10;
+    const d2 = value.charCodeAt(1) - 65 + 10;
+    check += d1.toString() + d2.toString() + value.substr(2, 2);
+
+    return iso7064Mod9710(check) === 1;
+  }
+
   const inputCallbacks = {
 
     number: function () {
@@ -161,6 +196,22 @@
         const val = toEnglish($el.val()).replace(/[^\d.-]/g, '').trim();
         $el.val(val);
         if (identityNumber(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else {
+          $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
+        }
+      });
+    },
+
+    iban: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        const val = toEnglish($el.val()).replace(/IR[^\d.-]/g, '').trim();
+        $el.val(val);
+        if (validateIBAN(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
         } else {
           $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
