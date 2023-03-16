@@ -48,6 +48,7 @@ class Entry extends gEditorial\Module
 				'archive_template',
 			],
 			'_supports' => [
+				'assign_default_term',
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
@@ -72,6 +73,13 @@ class Entry extends gEditorial\Module
 			'noops' => [
 				'entry_cpt'   => _n_noop( 'Entry', 'Entries', 'geditorial-entry' ),
 				'section_tax' => _n_noop( 'Section', 'Sections', 'geditorial-entry' ),
+			],
+			'defaults' => [
+				'section_tax' => [
+					'name'        => _x( 'Unsectioned', 'Default Term: Name', 'geditorial-entry' ),
+					'description' => _x( 'Unsectioned Entries', 'Default Term: Description', 'geditorial-entry' ),
+					'slug'        => 'unsectioned',
+				],
 			],
 		];
 
@@ -100,6 +108,7 @@ class Entry extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
+			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'entry_cpt' );
 

@@ -403,6 +403,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_assign_default_term( $description = NULL )
+	{
+		return [
+			'field'       => 'assign_default_term',
+			'title'       => _x( 'Assign Default Term', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Applies the fallback default term from primary taxonomy.', 'Settings: Setting Description', 'geditorial' ),
+			'default'     => '0',
+		];
+	}
+
 	public static function getSetting_multiple_instances( $description = NULL )
 	{
 		return [

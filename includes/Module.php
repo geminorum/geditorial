@@ -2966,6 +2966,29 @@ class Module extends Base
 		];
 	}
 
+	protected function _get_taxonomy_default_term( $constant, $passed_arg = NULL )
+	{
+		// disabled by settings
+		if ( is_null( $passed_arg ) && ! $this->get_setting( 'assign_default_term' ) )
+			return FALSE;
+
+		if ( isset( $this->strings['defaults'] )
+			&& array_key_exists( $constant, $this->strings['defaults'] ) )
+				$term = $this->strings['defaults'][$constant];
+		else
+			$term = [];
+
+		if ( empty( $term['name'] ) )
+			$term['name'] = is_string( $passed_arg )
+				? $passed_arg
+				: _x( 'Uncategorized', 'Module: Taxonomy Default Term Name', 'geditorial' );
+
+		if ( empty( $term['slug'] ) )
+			$term['slug'] = is_string( $passed_arg ) ? $passed_arg : 'uncategorized';
+
+		return $term;
+	}
+
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
 	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $caps = NULL )
 	{
@@ -2994,6 +3017,7 @@ class Module extends Base
 			'show_in_quick_edit'   => FALSE,
 			'show_in_nav_menus'    => FALSE,
 			'show_tagcloud'        => FALSE,
+			'default_term'         => FALSE,
 			'capabilities'         => $this->_get_taxonomy_caps( $taxonomy, $caps, $posttypes ),
 			'query_var'            => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'              => [
@@ -3006,12 +3030,6 @@ class Module extends Base
 				// 'hierarchical' => FALSE, // will set by `hierarchical` in args
 				// 'ep_mask'      => EP_NONE,
 			],
-
-			// 'default_term' => [
-			// 	'name'        => '',
-			// 	'slug'        => '',
-			// 	'description' => '',
-			// ],
 
 			// 'sort' => NULL, // Whether terms in this taxonomy should be sorted in the order they are provided to `wp_set_object_terms()`.
 			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
@@ -3053,6 +3071,9 @@ class Module extends Base
 			// if ( is_admin() && ( $cpt_tax || 'user' == $posttypes || 'comment' == $posttypes ) )
 			// 	$this->_hook_taxonomies_excluded( $constant, 'recount' );
 		}
+
+		if ( FALSE !== $args['default_term'] )
+			$args['default_term'] = $this->_get_taxonomy_default_term( $constant, $args['default_term'] );
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );
 
