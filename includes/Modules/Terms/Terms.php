@@ -14,7 +14,6 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
@@ -1585,91 +1584,6 @@ class Terms extends gEditorial\Module
 					'href'   => get_term_link( $term ),
 				];
 		}
-	}
-
-	public function tools_settings( $sub )
-	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
-
-			if ( ! empty( $_POST ) ) {
-
-				$this->nonce_check( 'tools', $sub );
-
-				if ( Tablelist::isAction( 'orphaned_terms' ) ) {
-
-					$post = $this->get_current_form( [
-						'dead_tax' => FALSE,
-						'live_tax' => FALSE,
-					], 'tools' );
-
-					if ( $post['dead_tax'] && $post['live_tax'] ) {
-
-						global $wpdb;
-
-						$result = $wpdb->query( $wpdb->prepare( "
-							UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = %s
-						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
-
-						if ( FALSE !== $result )
-							WordPress::redirectReferer( [
-								'message' => 'changed',
-								'count'   => $result,
-							] );
-					}
-				}
-
-				WordPress::redirectReferer( 'nochange' );
-			}
-		}
-	}
-
-	// TODO: option to delete orphaned terms
-	protected function render_tools_html( $uri, $sub )
-	{
-		$available  = FALSE;
-		$db_taxes   = Database::getTaxonomies( TRUE );
-		$live_taxes = Taxonomy::get( 6 );
-		$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
-
-		HTML::h3( _x( 'Term Tools', 'Header', 'geditorial-terms' ) );
-
-		echo '<table class="form-table">';
-
-		if ( count( $dead_taxes ) ) {
-
-			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Tools', 'geditorial-terms' ).'</th><td>';
-
-				$this->do_settings_field( [
-					'type'         => 'select',
-					'field'        => 'dead_tax',
-					'values'       => $dead_taxes,
-					'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
-					'option_group' => 'tools',
-				] );
-
-				$this->do_settings_field( [
-					'type'         => 'select',
-					'field'        => 'live_tax',
-					'values'       => $live_taxes,
-					'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
-					'option_group' => 'tools',
-				] );
-
-				echo '&nbsp;&nbsp;';
-
-				Settings::submitButton( 'orphaned_terms', _x( 'Convert', 'Button', 'geditorial-terms' ) );
-
-				HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-terms' ) );
-
-			echo '</td></tr>';
-
-			$available = TRUE;
-		}
-
-		if ( ! $available )
-			HTML::desc( _x( 'Currently no tool available.', 'Message', 'geditorial-terms' ) );
-
-		echo '</table>';
 	}
 
 	public function reports_settings( $sub )
