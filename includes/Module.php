@@ -2828,6 +2828,9 @@ class Module extends Base
 			'delete_with_user'    => FALSE,
 			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
 
+			/// gEditorial Props
+			'primary_taxonomy' => NULL, // @SEE: `PostType::getPrimaryTaxonomy()`
+
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
 			'cptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
 

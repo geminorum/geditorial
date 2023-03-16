@@ -117,7 +117,9 @@ class Entry extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'entry_cpt' );
 
-		$this->register_posttype( 'entry_cpt' );
+		$this->register_posttype( 'entry_cpt', [
+			'primary_taxonomy' => $this->constant( 'section_tax' ),
+		] );
 
 		$this->register_shortcode( 'section_shortcode' );
 	}

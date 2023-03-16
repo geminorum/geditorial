@@ -533,7 +533,9 @@ class Book extends gEditorial\Module
 			$this->_paired = $this->constant( 'publication_paired' );
 		}
 
-		$this->register_posttype( 'publication_cpt' );
+		$this->register_posttype( 'publication_cpt', [
+			'primary_taxonomy' => $this->constant( 'publication_category' ),
+		] );
 
 		$this->register_shortcode( 'publication_shortcode' );
 		$this->register_shortcode( 'subject_shortcode' );
