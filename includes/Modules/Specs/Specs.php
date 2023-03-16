@@ -49,7 +49,7 @@ class Specs extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
+		$strings = [
 			'titles' => [
 				'spec_title' => _x( 'Title', 'Strings: Title', 'geditorial-specs' ),
 				'spec_order' => _x( 'Order', 'Strings: Title', 'geditorial-specs' ),
@@ -68,6 +68,20 @@ class Specs extends gEditorial\Module
 				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Noop', 'geditorial-specs' ),
 			],
 		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['terms'] = [
+			'specs_tax' => [
+				'color'  => _x( 'Color', 'Default Term', 'geditorial-specs' ),
+				'width'  => _x( 'Width', 'Default Term', 'geditorial-specs' ),
+				'height' => _x( 'Height', 'Default Term', 'geditorial-specs' ),
+				'weight' => _x( 'Weight', 'Default Term', 'geditorial-specs' ),
+			],
+		];
+
+		return $strings;
 	}
 
 	protected function get_global_fields()
@@ -92,6 +106,8 @@ class Specs extends gEditorial\Module
 
 		// add_shortcode( $this->constant( 'specs_shortcode' ), [ $this, 'shortcode_specs' ] );
 		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );
+
+		$this->register_default_terms( 'specs_tax' );
 	}
 
 	public function current_screen( $screen )
