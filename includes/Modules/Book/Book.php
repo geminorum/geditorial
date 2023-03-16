@@ -121,26 +121,19 @@ class Book extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'publication_cpt'         => 'publication',
-			'publication_cpt_archive' => 'publications',
-			'publication_cpt_p2p'     => 'related_publications',
-			'publication_paired'      => 'related_publication',
-
-			'publication_category'      => 'publication_category',
-			'publication_category_slug' => 'publication-categories',
-
-			'subject_tax'             => 'publication_subject',
-			'serie_tax'               => 'publication_serie',
-			'serie_tax_slug'          => 'publication-series',
-			'library_tax'             => 'publication_library',
-			'library_tax_slug'        => 'publication-libraries',
-			'publisher_tax'           => 'publication_publisher',
-			// 'publisher_tax_slug'      => 'publishers', // FIXME: add settings fot this!
-			'type_tax'                => 'publication_type',
-			'status_tax'              => 'publication_status',
-			'status_tax_slug'         => 'publication-statuses',
-			'size_tax'                => 'publication_size',
-			'audience_tax'            => 'publication_audience',
+			'publication_cpt'      => 'publication',
+			'publication_cpt_p2p'  => 'related_publications',
+			'publication_paired'   => 'related_publication',
+			'publication_category' => 'publication_category',
+			'subject_tax'          => 'publication_subject',
+			'serie_tax'            => 'publication_serie',
+			'library_tax'          => 'publication_library',
+			'publisher_tax'        => 'publication_publisher',
+			// 'publisher_tax_slug'   => 'publishers',              // FIXME: add settings fot this!
+			'type_tax'             => 'publication_type',
+			'status_tax'           => 'publication_status',
+			'size_tax'             => 'publication_size',
+			'audience_tax'         => 'publication_audience',
 
 			'publication_shortcode' => 'publication',
 			'subject_shortcode'     => 'publication-subject',

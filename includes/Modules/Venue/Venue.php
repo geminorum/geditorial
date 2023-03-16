@@ -85,13 +85,10 @@ class Venue extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'place_cpt'         => 'place',
-			'place_cpt_archive' => 'places',
-			'place_tax'         => 'places',
-			'place_cat'         => 'place_category',
-			'place_cat_slug'    => 'place-categories',
-			'facility_tax'      => 'place_facility',
-			'facility_tax_slug' => 'place-facilities',
+			'place_cpt'    => 'place',
+			'place_tax'    => 'places',
+			'place_cat'    => 'place_category',
+			'facility_tax' => 'place_facility',
 
 			'place_shortcode' => 'place',
 		];

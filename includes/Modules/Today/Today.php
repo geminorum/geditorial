@@ -82,8 +82,7 @@ class Today extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'day_cpt'         => 'day',
-			'day_cpt_archive' => 'days',
+			'day_cpt' => 'day',
 
 			'metakey_cal'   => '_theday_cal',
 			'metakey_day'   => '_theday_day',

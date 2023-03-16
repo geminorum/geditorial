@@ -80,18 +80,14 @@ class Course extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'course_cpt'         => 'course',
-			'course_cpt_archive' => 'courses',
-			'course_tax'         => 'courses',
-			'lesson_cpt'         => 'lesson',
-			'lesson_cpt_archive' => 'lessons',
-			'course_cat'         => 'course_category',
-			'course_cat_slug'    => 'course-categories',
-			'span_tax'           => 'course_span',
-			'topic_tax'          => 'course_topic',
-			'format_tax'         => 'lesson_format',
-			'status_tax'         => 'lesson_status',
-			'status_tax_slug'    => 'lesson-statuses',
+			'course_cpt' => 'course',
+			'course_tax' => 'courses',
+			'lesson_cpt' => 'lesson',
+			'course_cat' => 'course_category',
+			'span_tax'   => 'course_span',
+			'topic_tax'  => 'course_topic',
+			'format_tax' => 'lesson_format',
+			'status_tax' => 'lesson_status',
 
 			'course_shortcode' => 'course',
 			'span_shortcode'   => 'course-span',

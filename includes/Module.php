@@ -2790,6 +2790,7 @@ class Module extends Base
 	{
 		$posttype = $this->constant( $constant );
 		$cap_type = $this->get_posttype_cap_type( $constant );
+		$plural   = str_replace( '_', '-', L10n::pluralize( $posttype ) );
 
 		$args = self::recursiveParseArgs( $atts, [
 			'description' => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
@@ -2799,7 +2800,7 @@ class Module extends Base
 			'menu_position' => empty( $this->positions[$constant] ) ? 4 : $this->positions[$constant],
 
 			'query_var'   => $this->constant( $constant.'_query_var', $posttype ),
-			'has_archive' => $this->constant( $constant.'_archive', FALSE ),
+			'has_archive' => $this->constant( $constant.'_archive', $plural ),
 
 			'rewrite' => [
 				'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $posttype ) ),
@@ -2819,7 +2820,7 @@ class Module extends Base
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
 
 			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ), // FIXME: DEPRECATE THIS
-			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $posttype ) ),
+			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $plural ) ),
 
 			// 'rest_namespace ' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
@@ -2968,9 +2969,9 @@ class Module extends Base
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
 	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $caps = NULL )
 	{
-		$cpt_tax   = TRUE;
-		$taxonomy  = $this->constant( $constant );
-		$slug_base = $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy.'s' ) );
+		$cpt_tax  = TRUE;
+		$taxonomy = $this->constant( $constant );
+		$plural   = str_replace( '_', '-', L10n::pluralize( $taxonomy ) );
 
 		if ( is_string( $posttypes ) && in_array( $posttypes, [ 'user', 'comment' ] ) )
 			$cpt_tax = FALSE;
@@ -3000,7 +3001,7 @@ class Module extends Base
 				// NOTE: we can use `example.com/cpt/tax` if cpt registered after the tax
 				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
 
-				'slug'         => $slug_base,
+				'slug'         => $this->constant( $constant.'_slug', $plural ),
 				'with_front'   => FALSE,
 				// 'hierarchical' => FALSE, // will set by `hierarchical` in args
 				// 'ep_mask'      => EP_NONE,
@@ -3016,7 +3017,7 @@ class Module extends Base
 			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
 
 			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ), // FIXME: DEPRECATE THIS
-			'rest_base'    => $this->constant( $constant.'_rest', $slug_base ),
+			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_slug', $plural ) ),
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 		] );
 
@@ -3123,6 +3124,7 @@ class Module extends Base
 				'show_ui'      => FALSE,
 				'show_in_rest' => FALSE,
 				'hierarchical' => TRUE,
+				'rewrite'      => [ 'slug' => str_replace( '_', '-', $this->constant( $taxonomy ) ) ],
 			], $supported );
 
 			$this->_paired = $this->constant( $taxonomy );

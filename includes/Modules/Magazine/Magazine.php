@@ -80,15 +80,15 @@ class Magazine extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'issue_cpt'          => 'issue',
-			'issue_cpt_archive'  => 'issues',
-			'issue_tax'          => 'issues',
-			'issue_tax_slug'     => 'issues',
-			'span_tax'           => 'issue_span',
-			'section_tax'        => 'issue_section',
-			'issue_shortcode'    => 'issue',
-			'span_shortcode'     => 'issue-span',
-			'cover_shortcode'    => 'issue-cover',
+			'issue_cpt'   => 'issue',
+			'issue_tax'   => 'issues',
+			'span_tax'    => 'issue_span',
+			'section_tax' => 'issue_section',
+
+			'issue_shortcode' => 'issue',
+			'span_shortcode'  => 'issue-span',
+			'cover_shortcode' => 'issue-cover',
+
 			'field_paired_order' => 'in_issue_order',
 		];
 	}

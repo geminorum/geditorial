@@ -71,18 +71,13 @@ class Contest extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'contest_cpt'         => 'contest',
-			'contest_cpt_archive' => 'contests',
-			'contest_tax'         => 'contests',
-			'section_tax'         => 'contest_section',
-			'apply_cpt'           => 'apply',
-			'apply_cpt_archive'   => 'applies',
-			'contest_cat'         => 'contest_category',
-			'contest_cat_slug'    => 'contest-categories',
-			'apply_cat'           => 'apply_category',
-			'apply_cat_slug'      => 'apply-categories',
-			'status_tax'          => 'apply_status',
-			'status_tax_slug'     => 'apply-statuses',
+			'contest_cpt' => 'contest',
+			'contest_tax' => 'contests',
+			'section_tax' => 'contest_section',
+			'apply_cpt'   => 'apply',
+			'contest_cat' => 'contest_category',
+			'apply_cat'   => 'apply_category',
+			'status_tax'  => 'apply_status',
 
 			'contest_shortcode' => 'contest',
 			'cover_shortcode'   => 'contest-cover',

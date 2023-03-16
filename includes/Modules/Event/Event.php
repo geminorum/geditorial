@@ -96,10 +96,8 @@ class Event extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'event_cpt'         => 'event',
-			'event_cpt_archive' => 'events',
-
-			'event_cat'  => 'event_cat',
+			'event_cpt'  => 'event',
+			'event_cat'  => 'event_category',
 			'event_type' => 'event_type',
 			'event_cal'  => 'event_calendar',
 			'cal_type'   => 'event_calendar_type',

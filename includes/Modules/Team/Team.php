@@ -33,9 +33,8 @@ class Team extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'member_cpt'         => 'team_member',
-			'member_cpt_archive' => 'team-members',
-			'member_group'       => 'team_member_group',
+			'member_cpt'   => 'team_member',
+			'member_group' => 'team_member_group',
 
 			'o2o_name' => 'team_member_to_user',
 		];

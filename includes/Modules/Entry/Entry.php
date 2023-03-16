@@ -59,9 +59,9 @@ class Entry extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'entry_cpt'         => 'entry',
-			'entry_cpt_archive' => 'entries',
-			'section_tax'       => 'entry_section',
+			'entry_cpt'   => 'entry',
+			'section_tax' => 'entry_section',
+
 			'section_shortcode' => 'entry-section',
 		];
 	}
