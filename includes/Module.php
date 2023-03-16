@@ -3128,6 +3128,7 @@ class Module extends Base
 			], $supported );
 
 			$this->_paired = $this->constant( $taxonomy );
+			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
 		}
 
 		return $this->register_posttype( $posttype, [
