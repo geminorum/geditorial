@@ -74,6 +74,11 @@ class Entry extends gEditorial\Module
 				'entry_cpt'   => _n_noop( 'Entry', 'Entries', 'geditorial-entry' ),
 				'section_tax' => _n_noop( 'Section', 'Sections', 'geditorial-entry' ),
 			],
+			'labels' => [
+				'section_tax' => [
+					'uncategorized' => _x( 'Unsectioned', 'Taxonomy Label', 'geditorial-entry' ),
+				]
+			],
 			'defaults' => [
 				'section_tax' => [
 					'name'        => _x( 'Unsectioned', 'Default Term: Name', 'geditorial-entry' ),

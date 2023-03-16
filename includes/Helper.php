@@ -774,6 +774,10 @@ class Helper extends Main
 		if ( ! array_key_exists( 'most_used', $pre ) )
 			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', 'geditorial' ), $strings );
 
+		if ( ! array_key_exists( 'uncategorized', $pre ) )
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			$pre['uncategorized'] = vsprintf( _x( 'Uncategorized', 'Helper: Tax Generator', 'geditorial' ), $strings );
+
 		return $pre;
 	}
 
