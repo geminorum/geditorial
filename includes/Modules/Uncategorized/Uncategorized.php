@@ -35,6 +35,7 @@ class Uncategorized extends gEditorial\Module
 		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
 
 		return [
+			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
 			'_roles' => [
 				[
@@ -71,8 +72,16 @@ class Uncategorized extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'dashboard' == $screen->base && current_user_can( 'edit_others_posts' ) )
+		if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			add_filter( "views_{$screen->id}", function( $views ) use ( $screen ) {
+				return array_merge( $views, $this->_get_posttype_view( $screen->post_type ) );
+			}, 9 );
+
+		} else if ( 'dashboard' == $screen->base && current_user_can( 'edit_others_posts' ) ) {
+
 			$this->filter( 'dashboard_pointers', 1, 10, FALSE, 'gnetwork' );
+		}
 	}
 
 	// override
@@ -373,5 +382,34 @@ class Uncategorized extends gEditorial\Module
 		}
 
 		return $count;
+	}
+
+	private function _get_posttype_view( $posttype )
+	{
+		if ( ! $taxonomy = PostType::getPrimaryTaxonomy( $posttype ) )
+			return [];
+
+		if ( ! $default = Taxonomy::getDefaultTermID( $taxonomy ) )
+			return [];
+
+		$object = Taxonomy::object( $taxonomy );
+		$term   = Taxonomy::getTerm( $default, $taxonomy );
+
+		return [ $this->key => vsprintf( '<a href="%1$s"%2$s>%3$s <span class="count">(%4$s)</span></a>', [
+
+			WordPress::getPostTypeEditLink( $posttype, 0, [
+				$object->query_var => $term->slug,
+				'post_status'      => 'all',
+			] ),
+
+			$term->slug === self::req( $object->query_var, FALSE )
+				? ' class="current" aria-current="page"' : '',
+
+			empty( $object->labels->uncategorized )
+				? _x( 'Uncategorized', 'Default Label', 'geditorial-uncategorized' )
+				: HTML::escape( $object->labels->uncategorized ),
+
+			Number::format( $term->count ),
+		] ) ];
 	}
 }
