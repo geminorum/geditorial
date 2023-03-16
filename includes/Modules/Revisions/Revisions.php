@@ -103,11 +103,7 @@ class Revisions extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_bulkactions' ) && $this->cuc( 'edit' ) ) {
-					add_filter( 'bulk_actions-'.$screen->id, [ $this, 'bulk_actions' ] );
-					add_filter( 'handle_bulk_actions-'.$screen->id, [ $this, 'handle_bulk_actions' ], 10, 3 );
-					$this->action( 'admin_notices' );
-				}
+				$this->_hook_admin_bulkactions( $screen, (bool) $this->cuc( 'edit' ) );
 
 				if ( $this->get_setting( 'revision_summary', FALSE ) )
 					$this->action_module( 'tweaks', 'column_attr', 1, 100 );
