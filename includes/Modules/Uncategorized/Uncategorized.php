@@ -111,8 +111,6 @@ class Uncategorized extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		global $wpdb;
-
 		if ( $this->check_settings( $sub, 'reports' ) ) {
 
 			if ( ! empty( $_POST ) ) {
@@ -123,33 +121,12 @@ class Uncategorized extends gEditorial\Module
 
 				if ( Tablelist::isAction( 'clean_uncategorized', TRUE ) ) {
 
+					$taxonomies = $this->taxonomies();
+
 					foreach ( $_POST['_cb'] as $post_id ) {
 
-						if ( ! $post = PostType::getPost( $post_id ) )
-							continue;
-
-						$taxonomies = get_object_taxonomies( $post );
-
-						foreach ( $this->taxonomies() as $taxonomy ) {
-
-							if ( ! in_array( $taxonomy, $taxonomies ) )
-								continue;
-
-							if ( ! $default = Taxonomy::getDefaultTermID( $taxonomy ) )
-								continue;
-
-							$terms = wp_get_object_terms( $post->ID, $taxonomy, [ 'fields' => 'ids' ] );
-							$diff  = Arraay::prepNumeral( array_diff( $terms, [ $default ] ) );
-
-							// keep default if empty
-							if ( empty( $diff ) )
-								continue;
-
-							$results = wp_set_object_terms( $post->ID, $diff, $taxonomy );
-
-							if ( ! self::isError( $results ) )
-								$count++;
-						}
+						if ( $results = $this->_do_clean_uncategorized( $post_id, $taxonomies ) )
+							$count+= $results;
 					}
 
 					if ( $count ) {
@@ -167,30 +144,8 @@ class Uncategorized extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
-						if ( ! $post = PostType::getPost( $post_id ) )
-							continue;
-
-						$taxonomies   = get_object_taxonomies( $post );
-						$currents     = wp_get_object_terms( $post->ID, $taxonomies, [ 'fields' => 'ids' ] );
-						$unregistered = get_terms( [ 'object_ids' => $post->ID, 'orderby' => 'none', 'exclude' => $currents ] );
-
-						if ( empty( $unregistered ) )
-							continue;
-
-						$tt_ids   = wp_list_pluck( $unregistered, 'term_taxonomy_id' );
-						$prepared = "'" . implode( "', '", $tt_ids ) . "'";
-						$query    = $wpdb->prepare( "
-							DELETE FROM {$wpdb->term_relationships}
-							WHERE object_id = %d
-							AND term_taxonomy_id IN ({$prepared})
-						", $post->ID );
-
-						if ( ! $wpdb->query( $query ) )
-							continue;
-
-						Taxonomy::updateTermCount( wp_list_pluck( $unregistered, 'term_id' ) );
-
-						$count++;
+						if ( $this->_do_clean_unregistered( $post_id ) )
+							$count++;
 					}
 
 					if ( $count ) {
@@ -323,6 +278,72 @@ class Uncategorized extends gEditorial\Module
 			HTML::desc( _x( 'There are no tools available!', 'Message', 'geditorial-uncategorized' ) );
 
 		echo '</table>';
+	}
+
+	private function _do_clean_unregistered( $post )
+	{
+		global $wpdb;
+
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		$taxonomies   = get_object_taxonomies( $post );
+		$currents     = wp_get_object_terms( $post->ID, $taxonomies, [ 'fields' => 'ids' ] );
+		$unregistered = get_terms( [ 'object_ids' => $post->ID, 'orderby' => 'none', 'exclude' => $currents ] );
+
+		if ( empty( $unregistered ) )
+			return FALSE;
+
+		$tt_ids   = wp_list_pluck( $unregistered, 'term_taxonomy_id' );
+		$prepared = "'" . implode( "', '", $tt_ids ) . "'";
+
+		$query = $wpdb->prepare( "
+			DELETE FROM {$wpdb->term_relationships}
+			WHERE object_id = %d
+			AND term_taxonomy_id IN ({$prepared})
+		", $post->ID );
+
+		if ( ! $wpdb->query( $query ) )
+			return FALSE;
+
+		Taxonomy::updateTermCount( wp_list_pluck( $unregistered, 'term_id' ) );
+
+		return TRUE;
+	}
+
+	private function _do_clean_uncategorized( $post, $taxonomies = NULL )
+	{
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $taxonomies ) )
+			$taxonomies = $this->taxonomies();
+
+		$count    = 0;
+		$currents = get_object_taxonomies( $post );
+
+		foreach ( $taxonomies as $taxonomy ) {
+
+			if ( ! in_array( $taxonomy, $currents ) )
+				continue;
+
+			if ( ! $default = Taxonomy::getDefaultTermID( $taxonomy ) )
+				continue;
+
+			$terms = wp_get_object_terms( $post->ID, $taxonomy, [ 'fields' => 'ids' ] );
+			$diff  = Arraay::prepNumeral( array_diff( $terms, [ $default ] ) );
+
+			// keep default if empty
+			if ( empty( $diff ) )
+				continue;
+
+			$results = wp_set_object_terms( $post->ID, $diff, $taxonomy );
+
+			if ( ! self::isError( $results ) )
+				$count++;
+		}
+
+		return $count;
 	}
 
 	private function _get_uncategorized_tax_query( $taxonomies = NULL )
