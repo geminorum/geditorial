@@ -17,6 +17,8 @@ class Archives extends gEditorial\Module
 
 	protected $priority_init = 99; // after all taxonomies registered
 
+	private $_current = FALSE;
+
 	public static function module()
 	{
 		return [
@@ -192,7 +194,7 @@ class Archives extends gEditorial\Module
 		// no need to check for supported taxonomies, since we using `query_vars` filter
 		if ( $taxonomy = get_query_var( $this->constant( 'taxonomy_query' ) ) ) {
 
-			$this->current = $taxonomy;
+			$this->_current = $taxonomy;
 
 			Theme::resetQuery( [
 				'ID'         => 0,
@@ -217,7 +219,7 @@ class Archives extends gEditorial\Module
 
 		if ( $this->posttype_supported( $posttype ) && is_post_type_archive( $posttype ) ) {
 
-			$this->current = $posttype;
+			$this->_current = $posttype;
 
 			Theme::resetQuery( [
 				'ID'         => 0,
@@ -257,12 +259,12 @@ class Archives extends gEditorial\Module
 
 	public function get_the_archive_title_posttype( $name )
 	{
-		return $this->_get_posttype_archive_title( $this->current );
+		return $this->_get_posttype_archive_title( $this->_current );
 	}
 
 	public function document_title_parts_posttype( $title )
 	{
-		$title['title'] = $this->_get_posttype_archive_title( $this->current );
+		$title['title'] = $this->_get_posttype_archive_title( $this->_current );
 		return $title;
 	}
 
@@ -281,23 +283,23 @@ class Archives extends gEditorial\Module
 
 	public function template_get_archive_content()
 	{
-		$setting = $this->get_setting( 'posttype_'.$this->current.'_content', '[alphabet-posts post_type="%s" /]' );
+		$setting = $this->get_setting( 'posttype_'.$this->_current.'_content', '[alphabet-posts post_type="%s" /]' );
 
-		$form = $this->get_search_form( [ 'post_type[]' => $this->current ] );
-		$html = apply_shortcodes( sprintf( $setting, $this->current ) );
-		$html = $this->filters( 'posttype_archive_content', $html, $this->current );
+		$form = $this->get_search_form( [ 'post_type[]' => $this->_current ] );
+		$html = apply_shortcodes( sprintf( $setting, $this->_current ) );
+		$html = $this->filters( 'posttype_archive_content', $html, $this->_current );
 
 		return HTML::wrap( $form.$html, '-posttype-archives-content' );
 	}
 
 	public function get_the_archive_title_taxonomy( $title )
 	{
-		return $this->_get_taxonomy_archive_title( $this->current );
+		return $this->_get_taxonomy_archive_title( $this->_current );
 	}
 
 	public function document_title_parts_taxonomy( $title )
 	{
-		$title['title'] = $this->_get_taxonomy_archive_title( $this->current );
+		$title['title'] = $this->_get_taxonomy_archive_title( $this->_current );
 		return $title;
 	}
 
@@ -311,10 +313,10 @@ class Archives extends gEditorial\Module
 
 	public function template_taxonomy_archives( $content )
 	{
-		$setting = $this->get_setting( 'taxonomy_'.$this->current.'_content', '[alphabet-terms taxonomy="%s" /]' );
+		$setting = $this->get_setting( 'taxonomy_'.$this->_current.'_content', '[alphabet-terms taxonomy="%s" /]' );
 
-		$html = apply_shortcodes( sprintf( $setting, $this->current ) );
-		$html = $this->filters( 'taxonomy_archive_content', $html, $this->current );
+		$html = apply_shortcodes( sprintf( $setting, $this->_current ) );
+		$html = $this->filters( 'taxonomy_archive_content', $html, $this->_current );
 
 		return HTML::wrap( $html, '-taxonomy-archives-content' );
 	}
@@ -405,7 +407,7 @@ class Archives extends gEditorial\Module
 
 			} else {
 
-				HTML::desc( _x( 'There is no custom archives page available!', 'Description', 'geditorial-archives' ), TRUE, '-empty' );
+				HTML::desc( _x( 'There are no no custom archives pages available!', 'Message', 'geditorial-archives' ), TRUE, '-empty' );
 			}
 
 		echo '</div>';

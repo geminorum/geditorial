@@ -514,6 +514,9 @@ class Template extends Main
 		return TRUE;
 	}
 
+	// TODO: support for other modules
+	// TODO: DEPRECATE
+	// TODO: rename to `getPosttypeField()`
 	public static function getMetaField( $field, $atts = [], $check = TRUE )
 	{
 		$args = self::atts( [

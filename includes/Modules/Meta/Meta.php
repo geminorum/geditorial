@@ -325,7 +325,7 @@ class Meta extends gEditorial\Module
 				$contexts   = Arraay::column( $fields, 'context' );
 				$metabox_id = $this->classs( $screen->post_type );
 
-				$mainbox = $this->filters( 'mainbox_callback', in_array( 'mainbox', $contexts ), $screen->post_type );
+				$mainbox = $this->filters( 'mainbox_callback', in_array( 'mainbox', $contexts, TRUE ), $screen->post_type );
 
 				if ( TRUE === $mainbox )
 					$mainbox = [ $this, 'render_mainbox_metabox' ];
@@ -343,7 +343,7 @@ class Meta extends gEditorial\Module
 						]
 					);
 
-				$nobox = $this->filters( 'nobox_callback', in_array( 'nobox', $contexts ), $screen->post_type );
+				$nobox = $this->filters( 'nobox_callback', in_array( 'nobox', $contexts, TRUE ), $screen->post_type );
 
 				if ( TRUE === $nobox )
 					add_action( 'dbx_post_sidebar', [ $this, 'render_nobox_fields' ], 10, 1 );
@@ -351,7 +351,7 @@ class Meta extends gEditorial\Module
 				else if ( $nobox && is_callable( $nobox ) )
 					add_action( 'dbx_post_sidebar', $nobox, 10, 1 );
 
-				$lonebox = $this->filters( 'lonebox_callback', in_array( 'lonebox', $contexts ), $screen->post_type );
+				$lonebox = $this->filters( 'lonebox_callback', in_array( 'lonebox', $contexts, TRUE ), $screen->post_type );
 
 				if ( TRUE === $lonebox )
 					call_user_func_array( [ $this, 'register_lonebox_fields' ], [ $screen ] );
@@ -375,7 +375,6 @@ class Meta extends gEditorial\Module
 				$this->_hook_default_rows();
 
 				$asset = [
-					// 'fields' => $fields, // not used yet!
 					'fields' => array_filter( Arraay::column( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
 				];
 

@@ -2773,6 +2773,7 @@ class Module extends Base
 		return $icon ?: 'dashicons-'.$default;
 	}
 
+	// NOTE: also accepts: `[ 'story', 'stories' ]`
 	public function get_posttype_cap_type( $constant )
 	{
 		$default = $this->constant( $constant.'_cap_type', 'post' );
@@ -2831,6 +2832,7 @@ class Module extends Base
 			/// gEditorial Props
 			'primary_taxonomy' => NULL, // @SEE: `PostType::getPrimaryTaxonomy()`
 
+			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
 			'cptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
 
@@ -3687,6 +3689,13 @@ class Module extends Base
 		return $form.'</form>';
 	}
 
+	/**
+	 * Gets default roles for use in settings.
+	 *
+	 * @param  array $extra_excludes
+	 * @param  bool  $filtered
+	 * @return array $rols
+	 */
 	protected function get_settings_default_roles( $extra_excludes = [], $filtered = TRUE )
 	{
 		$supported = User::getAllRoleList( $filtered );

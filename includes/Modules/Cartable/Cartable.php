@@ -203,6 +203,7 @@ class Cartable extends gEditorial\Module
 			$this->register_taxonomy( 'user_tax', [
 				'hierarchical' => TRUE,
 				'public'       => FALSE,
+				'rewrite'      => FALSE,
 				'show_ui'      => FALSE,
 				'meta_box_cb'  => FALSE,
 			], NULL, [
@@ -226,6 +227,7 @@ class Cartable extends gEditorial\Module
 			$this->register_taxonomy( 'type_tax', [
 				'hierarchical' => TRUE,
 				'public'       => FALSE,
+				'rewrite'      => FALSE,
 				'show_in_menu' => FALSE,
 			], NULL, [
 				'manage_terms' => $this->caps['settings'],
@@ -248,6 +250,7 @@ class Cartable extends gEditorial\Module
 		$this->register_taxonomy( 'group_tax', [
 			'hierarchical' => TRUE,
 			'public'       => FALSE,
+			'rewrite'      => FALSE,
 			'show_ui'      => FALSE,
 		], NULL, [
 			'manage_terms' => $this->caps['settings'],

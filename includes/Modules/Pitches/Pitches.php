@@ -23,7 +23,7 @@ class Pitches extends gEditorial\Module
 		return [
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'idea_cpt', [
+				$this->settings_supports_option( 'idea_posttype', [
 					'title',
 					'excerpt',
 					'author',
@@ -38,9 +38,9 @@ class Pitches extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'idea_cpt'         => 'idea',
-			'idea_cat'         => 'idea_category',
-			'pool_tax'         => 'idea_pool',
+			'idea_posttype'     => 'idea',
+			'category_taxonomy' => 'idea_category',
+			'pool_taxonomy'     => 'idea_pool',
 		];
 	}
 
@@ -48,8 +48,8 @@ class Pitches extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'idea_cat' => NULL,
-				'pool_tax' => 'clipboard',
+				'category_taxonomy' => NULL,
+				'pool_taxonomy'     => 'clipboard',
 			],
 		];
 	}
@@ -58,9 +58,9 @@ class Pitches extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'idea_cpt' => _nx_noop( 'Idea', 'Ideas', 'Noop', 'geditorial-pitches' ),
-				'idea_cat' => _nx_noop( 'Idea Category', 'Idea Categories', 'Noop', 'geditorial-pitches' ),
-				'pool_tax' => _nx_noop( 'Idea Pool', 'Idea Pools', 'Noop', 'geditorial-pitches' ),
+				'idea_posttype'     => _nx_noop( 'Idea', 'Ideas', 'Noop', 'geditorial-pitches' ),
+				'category_taxonomy' => _nx_noop( 'Idea Category', 'Idea Categories', 'Noop', 'geditorial-pitches' ),
+				'pool_taxonomy'     => _nx_noop( 'Idea Pool', 'Idea Pools', 'Noop', 'geditorial-pitches' ),
 			],
 		];
 
@@ -68,10 +68,10 @@ class Pitches extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'idea_cat' => [
+			'category_taxonomy' => [
 				'tweaks_column_title' => _x( 'Idea Categories', 'Column Title', 'geditorial-pitches' ),
 			],
-			'pool_tax' => [
+			'pool_taxonomy' => [
 				'tweaks_column_title' => _x( 'Idea Pools', 'Column Title', 'geditorial-pitches' ),
 			],
 		];
@@ -81,33 +81,33 @@ class Pitches extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'idea_cpt' );
+		$this->register_posttype_thumbnail( 'idea_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'idea_cat', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'idea_cpt' );
+		], 'idea_posttype' );
 
-		$this->register_taxonomy( 'pool_tax', [
+		$this->register_taxonomy( 'pool_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'idea_cpt' );
+		], 'idea_posttype' );
 
-		$this->register_posttype( 'idea_cpt' );
+		$this->register_posttype( 'idea_posttype' );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'idea_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'idea_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -126,12 +126,12 @@ class Pitches extends gEditorial\Module
 
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
-		return [ 'idea_cat', 'pool_tax' ];
+		return [ 'category_taxonomy', 'pool_taxonomy' ];
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'idea_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'idea_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -139,11 +139,11 @@ class Pitches extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'idea_cpt' ) );
+		return array_merge( $messages, $this->get_post_updated_messages( 'idea_posttype' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'idea_cpt', $counts ) );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'idea_posttype', $counts ) );
 	}
 }

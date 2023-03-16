@@ -332,7 +332,7 @@ class Uncategorized extends gEditorial\Module
 
 		$tax_query = [ 'relation' => 'OR' ];
 
-		foreach ( $taxonomies as $taxonomy )
+		foreach ( (array) $taxonomies as $taxonomy )
 			if ( $default = Taxonomy::getDefaultTermID( $taxonomy ) )
 				$tax_query[] = [
 					'taxonomy' => $taxonomy,
@@ -362,11 +362,12 @@ class Uncategorized extends gEditorial\Module
 		if ( FALSE === ( $count = get_transient( $cache_key ) ) ) {
 
 			$args = [
-				'tax_query'      => $this->_get_uncategorized_tax_query( $taxonomies ),
-				'fields'         => 'ids',
-				'post_type'      => 'any',
-				'posts_per_page' => -1,
-
+				'tax_query'              => $this->_get_uncategorized_tax_query( $taxonomies ),
+				'fields'                 => 'ids',
+				'post_type'              => 'any',
+				'orderby'                => 'none',
+				'posts_per_page'         => -1,
+				'nopaging'               => TRUE,
 				'ignore_sticky_posts'    => TRUE,
 				'suppress_filters'       => TRUE,
 				'no_found_rows'          => TRUE,

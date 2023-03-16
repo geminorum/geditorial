@@ -41,9 +41,9 @@ class Specs extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'specs_tax'                => 'specs',
+			'specs_tax'                => 'spec',
 			'specs_shortcode'          => 'specs',
-			'multiple_specs_shortcode' => 'multiple_specs',
+			'multiple_specs_shortcode' => 'multiple-specs',
 		];
 	}
 

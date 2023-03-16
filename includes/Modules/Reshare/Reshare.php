@@ -28,7 +28,7 @@ class Reshare extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'reshare_cpt', [
+				$this->settings_supports_option( 'reshare_posttype', [
 					'title',
 					'editor',
 					'excerpt',
@@ -47,8 +47,8 @@ class Reshare extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'reshare_cpt'         => 'reshare',
-			'reshare_cat'         => 'reshare_category',
+			'reshare_posttype'  => 'reshare',
+			'category_taxonomy' => 'reshare_category',
 
 			'o2o_name' => 'reshares_to_posts',
 		];
@@ -58,7 +58,7 @@ class Reshare extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'reshare_cat' => NULL,
+				'category_taxonomy' => NULL,
 			],
 		];
 	}
@@ -70,42 +70,42 @@ class Reshare extends gEditorial\Module
 				'tweaks_column_title' => _x( 'Reshare Categories', 'Column Title', 'geditorial-reshare' ),
 			],
 			'noops' => [
-				'reshare_cpt' => _nx_noop( 'Reshare', 'Reshares', 'Noop', 'geditorial-reshare' ),
-				'reshare_cat' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Noop', 'geditorial-reshare' ),
+				'reshare_posttype'  => _nx_noop( 'Reshare', 'Reshares', 'Noop', 'geditorial-reshare' ),
+				'category_taxonomy' => _nx_noop( 'Reshare Category', 'Reshare Categories', 'Noop', 'geditorial-reshare' ),
 			],
 		];
 	}
 
 	protected function posttypes_excluded()
 	{
-		return Settings::posttypesExcluded( $this->constant( 'reshare_cpt' ) );
+		return Settings::posttypesExcluded( $this->constant( 'reshare_posttype' ) );
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'reshare_cpt' );
+		$this->register_posttype_thumbnail( 'reshare_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'reshare_cat', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'reshare_cpt' );
+		], 'reshare_posttype' );
 
-		$this->register_posttype( 'reshare_cpt' );
+		$this->register_posttype( 'reshare_posttype' );
 	}
 
 	public function o2o_init()
 	{
 		$this->_o2o = O2O\API::registerConnectionType( [
 			'name' => $this->constant( 'o2o_name' ),
-			'from' => $this->constant( 'reshare_cpt' ),
-			'to'   => $this->posttypes( 'reshare_cpt' ),
+			'from' => $this->constant( 'reshare_posttype' ),
+			'to'   => $this->posttypes( 'reshare_posttype' ),
 
 			'reciprocal' => TRUE,
 		] );
@@ -113,7 +113,7 @@ class Reshare extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'reshare_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'reshare_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -133,12 +133,12 @@ class Reshare extends gEditorial\Module
 
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
-		return [ 'reshare_cat' ];
+		return [ 'category_taxonomy' ];
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'reshare_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'reshare_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -146,11 +146,11 @@ class Reshare extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'reshare_cpt' ) );
+		return array_merge( $messages, $this->get_post_updated_messages( 'reshare_posttype' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'reshare_cpt', $counts ) );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'reshare_posttype', $counts ) );
 	}
 }

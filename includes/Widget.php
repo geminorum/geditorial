@@ -738,7 +738,8 @@ class Widget extends \WP_Widget
 			HTML::label( _x( 'Image Size:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 
 		} else {
-			HTML::desc( _x( 'No Image Size Available!', 'Widget Core', 'geditorial' ) );
+
+			HTML::desc( _x( 'There are no image sizes available!', 'Widget Core', 'geditorial' ) );
 		}
 	}
 
