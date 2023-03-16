@@ -101,6 +101,8 @@ class Uncategorized extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
+		global $wpdb;
+
 		if ( $this->check_settings( $sub, 'reports' ) ) {
 
 			if ( ! empty( $_POST ) ) {
@@ -150,6 +152,47 @@ class Uncategorized extends gEditorial\Module
 							'count'   => $count,
 						] );
 					}
+
+				} else if ( Tablelist::isAction( 'clean_unregistered', TRUE ) ) {
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						if ( ! $post = PostType::getPost( $post_id ) )
+							continue;
+
+						$taxonomies   = get_object_taxonomies( $post );
+						$currents     = wp_get_object_terms( $post->ID, $taxonomies, [ 'fields' => 'ids' ] );
+						$unregistered = get_terms( [ 'object_ids' => $post->ID, 'orderby' => 'none', 'exclude' => $currents ] );
+
+						if ( empty( $unregistered ) )
+							continue;
+
+						$tt_ids   = wp_list_pluck( $unregistered, 'term_taxonomy_id' );
+						$prepared = "'" . implode( "', '", $tt_ids ) . "'";
+						$query    = $wpdb->prepare( "
+							DELETE FROM {$wpdb->term_relationships}
+							WHERE object_id = %d
+							AND term_taxonomy_id IN ({$prepared})
+						", $post->ID );
+
+						if ( ! $wpdb->query( $query ) )
+							continue;
+
+						Taxonomy::updateTermCount( wp_list_pluck( $unregistered, 'term_id' ) );
+
+						$count++;
+					}
+
+					if ( $count ) {
+
+						// delete pointer's cache
+						delete_transient( $this->_get_count_cache_key() );
+
+						WordPress::redirectReferer( [
+							'message' => 'cleaned',
+							'count'   => $count,
+						] );
+					}
 				}
 
 				WordPress::redirectReferer( 'nochange' );
@@ -164,6 +207,7 @@ class Uncategorized extends gEditorial\Module
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], 'any', $this->get_sub_limit_option( $sub ) );
 
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Table Action', 'geditorial-uncategorized' );
+		$pagination['actions']['clean_unregistered']  = _x( 'Clean Unregistered', 'Table Action', 'geditorial-uncategorized' );
 
 		$pagination['before'][] = Tablelist::filterPostTypes();
 		$pagination['before'][] = Tablelist::filterAuthors();
