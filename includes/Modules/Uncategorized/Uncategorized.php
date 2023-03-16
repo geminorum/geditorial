@@ -37,6 +37,9 @@ class Uncategorized extends gEditorial\Module
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
+			'_general' => [
+				'admin_bulkactions',
+			],
 			'_roles' => [
 				[
 					'field'       => 'reports_roles',
@@ -72,11 +75,13 @@ class Uncategorized extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->posttype_supported( $screen->post_type ) ) {
+		if ( 'edit' == $screen->base && $this->posttype_supported( $screen->post_type ) ) {
 
 			add_filter( "views_{$screen->id}", function( $views ) use ( $screen ) {
 				return array_merge( $views, $this->_get_posttype_view( $screen->post_type ) );
 			}, 9 );
+
+			$this->_hook_admin_bulkactions( $screen );
 
 		} else if ( 'dashboard' == $screen->base && current_user_can( 'edit_others_posts' ) ) {
 
@@ -88,6 +93,49 @@ class Uncategorized extends gEditorial\Module
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
 		return 'reports' == $context ? $this->role_can( 'reports' ) : parent::cuc( $context, $fallback );
+	}
+
+	public function bulk_actions( $actions )
+	{
+		return array_merge( $actions, [
+			'clean_uncategorized' => _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' ),
+			'clean_unregistered'  => _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' ),
+		] );
+	}
+
+	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	{
+		if ( ! in_array( $doaction, [ 'clean_uncategorized', 'clean_unregistered' ], TRUE ) )
+			return $redirect_to;
+
+		$count    = 0;
+		$callback = $doaction == 'clean_uncategorized'
+			? [ $this, '_do_clean_uncategorized' ]
+			: [ $this, '_do_clean_unregistered' ];
+
+		foreach ( $post_ids as $post_id ) {
+
+			if ( ! current_user_can( 'edit_post', $post_id ) )
+				continue;
+
+			if ( call_user_func_array( $callback, [ $post_id ] ) )
+				$count++;
+		}
+
+		return add_query_arg( $this->hook( 'cleaned' ), $count, $redirect_to );
+	}
+
+	public function admin_notices()
+	{
+		$hook = $this->hook( 'cleaned' );
+
+		if ( ! $count = self::req( $hook ) )
+			return;
+
+		$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
+
+		/* translators: %s: count */
+		echo HTML::success( sprintf( _x( '%s items(s) cleaned!', 'Message', 'geditorial-uncategorized' ), Number::format( $count ) ) );
 	}
 
 	// already cap checked!
@@ -171,8 +219,8 @@ class Uncategorized extends gEditorial\Module
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], 'any', $this->get_sub_limit_option( $sub ) );
 
-		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Table Action', 'geditorial-uncategorized' );
-		$pagination['actions']['clean_unregistered']  = _x( 'Clean Unregistered', 'Table Action', 'geditorial-uncategorized' );
+		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' );
+		$pagination['actions']['clean_unregistered']  = _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' );
 
 		$pagination['before'][] = Tablelist::filterPostTypes();
 		$pagination['before'][] = Tablelist::filterAuthors();
