@@ -22,6 +22,11 @@ class Config extends gEditorial\Module
 		'reports'  => 'publish_posts',
 		'settings' => 'manage_options',
 		'tools'    => 'edit_posts',
+		'imports'  => 'import',
+	];
+
+	protected $positions = [
+		'imports' => 1,
 	];
 
 	public static function module()
@@ -74,13 +79,16 @@ class Config extends gEditorial\Module
 			[ $this, 'admin_tools_page' ]
 		);
 
+		$this->_hook_wp_submenu_page( 'imports', 'tools.php',
+			_x( 'Editorial Imports', 'Menu Title', 'geditorial-config' ) );
+
 		add_action( 'load-'.$hook_reports, [ $this, 'admin_reports_load' ] );
 		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
 		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
-			if ( ! $module->configure || in_array( $module->configure, [ 'tools', 'reports' ], TRUE ) )
+			if ( ! $module->configure || in_array( $module->configure, [ 'tools', 'reports', 'imports' ], TRUE ) )
 				continue;
 
 			if ( $module->name == $this->module->name )
@@ -410,6 +418,66 @@ class Config extends gEditorial\Module
 		}
 
 		echo '</td></tr></table>';
+	}
+
+	public function admin_imports_load()
+	{
+		$sub = Settings::sub();
+
+		if ( 'general' == $sub ) {
+
+			add_action( $this->base.'_imports_sub_general', [ $this, 'imports_sub' ], 10, 2 );
+
+			$this->register_help_tabs( NULL, 'imports' );
+		}
+
+		do_action( $this->base.'_imports_settings', $sub );
+	}
+
+	public function admin_imports_page()
+	{
+		$can = $this->cuc( 'imports' );
+		$uri = Settings::importsURL( FALSE );
+		$sub = Settings::sub();
+
+		$subs = [ 'overview' => _x( 'Overview', 'Imports Sub', 'geditorial-config' ) ];
+
+		if ( $can )
+			$subs['general'] = _x( 'General', 'Imports Sub', 'geditorial-config' );
+
+		$subs     = apply_filters( $this->base.'_imports_subs', $subs, 'imports', $can );
+		$messages = apply_filters( $this->base.'_imports_messages', Settings::messages(), $sub, $can );
+
+		Settings::wrapOpen( $sub, 'imports' );
+
+			Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-config' ) );
+			HTML::headerNav( $uri, $sub, $subs );
+			Settings::message( $messages );
+
+			if ( 'overview' == $sub )
+				$this->imports_overview( $uri );
+
+			else if ( 'console' == $sub )
+				gEditorial()->files( 'Layouts/console.imports' );
+
+			else if ( has_action( $this->base.'_imports_sub_'.$sub ) )
+				do_action( $this->base.'_imports_sub_'.$sub, $uri, $sub );
+
+			else
+				Settings::cheatin();
+
+			$this->settings_signature( 'imports' );
+
+		Settings::wrapClose();
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		if ( ! $this->cuc( 'imports' ) )
+			self::cheatin();
+
+		HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-config' ) );
+		HTML::desc( _x( 'There are no importers available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
 	}
 
 	public function settings_sidebox( $sub, $uri )

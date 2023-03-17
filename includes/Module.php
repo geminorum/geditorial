@@ -200,6 +200,9 @@ class Module extends Base
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
 				add_action( $this->base.'_tools_settings', [ $this, 'tools_settings' ] );
 
+			if ( $ui && method_exists( $this, 'imports_settings' ) )
+				add_action( $this->base.'_imports_settings', [ $this, 'imports_settings' ] );
+
 			if ( $ui && method_exists( $this, 'tool_box_content' ) )
 				$this->action( 'tool_box' );
 
@@ -332,6 +335,17 @@ class Module extends Base
 					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial' ), $title ),
 				];
 
+		if ( method_exists( $this, 'imports_settings' ) && ! Settings::isImports( $screen ) )
+			foreach ( $this->append_sub( [], 'imports' ) as $sub => $title )
+				$links[] = [
+					'context' => 'imports',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => $this->get_module_url( 'imports', $sub ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial' ), $title ),
+				];
+
 		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( 'settings' ) )
 			$links[] = [
 				'context' => 'settings',
@@ -373,6 +387,7 @@ class Module extends Base
 			case 'config'    : $url = Settings::settingsURL(); break;
 			case 'reports'   : $url = Settings::reportsURL(); break;
 			case 'tools'     : $url = Settings::toolsURL(); break;
+			case 'imports'   : $url = Settings::importsURL(); break;
 			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
 			case 'settings'  : $url = add_query_arg( 'module', $this->module->name, Settings::settingsURL() ); $sub = FALSE; break;
 			case 'listtable' : $url = $this->get_adminmenu( FALSE ); $sub = FALSE; break;
@@ -1636,6 +1651,23 @@ class Module extends Base
 	// DEFAULT METHOD: used for reports default sub html
 	protected function render_reports_html( $uri, $sub ) {}
 	protected function render_reports_html_after( $uri, $sub ) {}
+
+	// DEFAULT METHOD: imports sub html
+	public function imports_sub( $uri, $sub )
+	{
+		$this->render_form_start( $uri, $sub, 'bulk', 'imports', FALSE );
+
+			if ( $this->render_imports_html( $uri, $sub ) )
+				$this->render_form_buttons();
+
+			$this->render_imports_html_after( $uri, $sub );
+
+		$this->render_form_end( $uri, $sub );
+	}
+
+	// DEFAULT METHOD: used for imports default sub html
+	protected function render_imports_html( $uri, $sub ) {}
+	protected function render_imports_html_after( $uri, $sub ) {}
 
 	protected function get_current_form( $defaults, $context = 'settings' )
 	{
