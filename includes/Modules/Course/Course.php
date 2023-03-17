@@ -68,6 +68,7 @@ class Course extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
 				'thumbnail_fallback',
@@ -241,6 +242,7 @@ class Course extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
+			'default_term'       => NULL,
 		], 'course_cpt' );
 
 		$this->register_taxonomy( 'span_tax', [
@@ -264,7 +266,9 @@ class Course extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'lesson_cpt' );
 
-		$this->paired_register_objects( 'course_cpt', 'course_tax', 'topic_tax' );
+		$this->paired_register_objects( 'course_cpt', 'course_tax', 'topic_tax', [
+			'primary_taxonomy' => $this->constant( 'course_cat' ),
+		] );
 
 		$this->register_posttype( 'lesson_cpt' );
 

@@ -22,6 +22,7 @@ class Pitches extends gEditorial\Module
 	{
 		return [
 			'_supports' => [
+				'assign_default_term',
 				'thumbnail_support',
 				$this->settings_supports_option( 'idea_posttype', [
 					'title',
@@ -92,6 +93,7 @@ class Pitches extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'idea_posttype' );
 
@@ -102,7 +104,9 @@ class Pitches extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'idea_posttype' );
 
-		$this->register_posttype( 'idea_posttype' );
+		$this->register_posttype( 'idea_posttype', [
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
+		] );
 	}
 
 	public function current_screen( $screen )

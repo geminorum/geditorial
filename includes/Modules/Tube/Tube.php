@@ -52,6 +52,7 @@ class Tube extends gEditorial\Module
 				],
 			],
 			'_supports' => [
+				'assign_default_term',
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
@@ -217,9 +218,13 @@ class Tube extends gEditorial\Module
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
 		], 'video_cpt' );
 
-		$this->register_posttype( 'video_cpt' );
+		$this->register_posttype( 'video_cpt', [
+			'primary_taxonomy' => $this->constant( 'video_cat' ),
+		] );
+
 		$this->register_shortcode( 'video_cat_shortcode' );
 
 		if ( $this->get_setting( 'video_channels' ) ) {
@@ -229,10 +234,12 @@ class Tube extends gEditorial\Module
 				'meta_box_cb'        => NULL,
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
+				'default_term'       => NULL,
 			], 'channel_cpt' );
 
 			$this->register_posttype( 'channel_cpt', [
 				'show_in_admin_bar' => FALSE,
+				'primary_taxonomy'  => $this->constant( 'channel_cat' ),
 			] );
 
 			$this->register_shortcode( 'channel_cat_shortcode' );

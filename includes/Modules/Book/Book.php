@@ -84,6 +84,7 @@ class Book extends gEditorial\Module
 				'archive_template',
 			],
 			'_supports' => [
+				'assign_default_term',
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
@@ -485,6 +486,7 @@ class Book extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'publication_cpt' );
 

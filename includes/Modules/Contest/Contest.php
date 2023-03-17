@@ -60,6 +60,7 @@ class Contest extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'contest_cpt', TRUE ),
@@ -228,6 +229,7 @@ class Contest extends gEditorial\Module
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
 		], 'contest_cpt' );
 
 		$this->register_taxonomy( 'apply_cat', [
@@ -244,7 +246,9 @@ class Contest extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'apply_cpt' );
 
-		$this->paired_register_objects( 'contest_cpt', 'contest_tax', 'section_tax' );
+		$this->paired_register_objects( 'contest_cpt', 'contest_tax', 'section_tax', [
+			'primary_taxonomy' => $this->constant( 'contest_cat' ),
+		] );
 
 		$this->register_posttype( 'apply_cpt' );
 

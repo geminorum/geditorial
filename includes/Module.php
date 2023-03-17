@@ -2971,6 +2971,7 @@ class Module extends Base
 		];
 	}
 
+	// @REF: https://core.trac.wordpress.org/ticket/43517
 	protected function _get_taxonomy_default_term( $constant, $passed_arg = NULL )
 	{
 		// disabled by settings
@@ -3128,7 +3129,7 @@ class Module extends Base
 	}
 
 	// PAIRED API
-	protected function paired_register_objects( $posttype, $taxonomy, $subterm = FALSE, $supported = NULL )
+	protected function paired_register_objects( $posttype, $taxonomy, $subterm = FALSE, $extra = [], $supported = NULL )
 	{
 		if ( is_null( $supported ) )
 			$supported = $this->posttypes();
@@ -3157,14 +3158,14 @@ class Module extends Base
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
 		}
 
-		return $this->register_posttype( $posttype, [
+		return $this->register_posttype( $posttype, array_merge( [
 			'hierarchical'      => TRUE,
 			'show_in_admin_bar' => FALSE,
 			'rewrite'           => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
-		] );
+		], $extra ) );
 	}
 
 	// TODO: convert to auto hook

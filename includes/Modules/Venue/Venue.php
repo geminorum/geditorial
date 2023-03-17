@@ -69,6 +69,7 @@ class Venue extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'place_cpt', [
@@ -202,10 +203,13 @@ class Venue extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'place_cpt' );
 
-		$this->paired_register_objects( 'place_cpt', 'place_tax', 'facility_tax' );
+		$this->paired_register_objects( 'place_cpt', 'place_tax', 'facility_tax', [
+			'primary_taxonomy' => $this->constant( 'place_cat' ),
+		] );
 
 		$this->register_shortcode( 'place_shortcode' );
 

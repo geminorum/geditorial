@@ -27,6 +27,7 @@ class Reshare extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'assign_default_term',
 				'thumbnail_support',
 				$this->settings_supports_option( 'reshare_posttype', [
 					'title',
@@ -95,9 +96,12 @@ class Reshare extends gEditorial\Module
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
 		], 'reshare_posttype' );
 
-		$this->register_posttype( 'reshare_posttype' );
+		$this->register_posttype( 'reshare_posttype', [
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
+		] );
 	}
 
 	public function o2o_init()

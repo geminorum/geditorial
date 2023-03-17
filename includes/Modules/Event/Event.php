@@ -42,6 +42,7 @@ class Event extends gEditorial\Module
 				'admin_ordering',
 			],
 			'_supports' => [
+				'assign_default_term',
 				'comment_status',
 				'widget_support',
 				'thumbnail_support',
@@ -232,6 +233,7 @@ class Event extends gEditorial\Module
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
 		], 'event_cpt' );
 
 		$this->register_taxonomy( 'event_type', [
@@ -252,8 +254,8 @@ class Event extends gEditorial\Module
 			], 'event_cpt' );
 
 		$this->register_posttype( 'event_cpt', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL, // default meta box
+			'hierarchical'     => TRUE,
+			'primary_taxonomy' => $this->constant( 'event_cat' ),
 		] );
 
 		$this->register_default_terms( 'event_type' );
