@@ -124,6 +124,12 @@ class Meta extends gEditorial\Module
 				'audio_source_url'  => _x( 'Audio Source URL', 'Titles', 'geditorial-meta' ),
 				'video_source_url'  => _x( 'Video Source URL', 'Titles', 'geditorial-meta' ),
 
+				'date'      => _x( 'Date', 'Titles', 'geditorial-meta' ),
+				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-meta' ),
+				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-meta' ),
+				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-meta' ),
+				'days'      => _x( 'Days', 'Titles', 'geditorial-meta' ),
+
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
 				'action' => _x( 'Action', 'Titles', 'geditorial-meta' ),
@@ -159,6 +165,12 @@ class Meta extends gEditorial\Module
 				'content_embed_url' => _x( 'Embeddable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
 				'audio_source_url'  => _x( 'Audio Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'video_source_url'  => _x( 'Video Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
+
+				'date'      => _x( 'Posts can have date to help orginize them.', 'Descriptions', 'geditorial-meta' ),
+				'datetime'  => _x( 'Posts can have date-time to help orginize them.', 'Descriptions', 'geditorial-meta' ),
+				'datestart' => _x( 'Posts can have date-start to help orginize them.', 'Descriptions', 'geditorial-meta' ),
+				'dateend'   => _x( 'Posts can have date-end to help orginize them.', 'Descriptions', 'geditorial-meta' ),
+				'days'      => _x( 'Posts can have days number to help orginize them.', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -227,6 +239,12 @@ class Meta extends gEditorial\Module
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'audio_source_url'  => [ 'type' => 'link' ],
 				'video_source_url'  => [ 'type' => 'link' ],
+
+				'date'      => [ 'type' => 'date' ],
+				'datetime'  => [ 'type' => 'datetime' ],
+				'datestart' => [ 'type' => 'datetime' ],
+				'dateend'   => [ 'type' => 'datetime' ],
+				'days'      => [ 'type' => 'number' ],
 			],
 			'page' => [
 				'over_title' => [ 'type' => 'title_before' ],
