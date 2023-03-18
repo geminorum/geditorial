@@ -20,6 +20,7 @@ class Settings extends Core\Base
 	const REPORTS  = 'geditorial-reports';
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
+	const IMPORTS  = 'geditorial-imports';
 
 	// better to use `$this->get_module_url()`
 	public static function subURL( $sub = FALSE, $context = 'reports', $extra = [] )
@@ -28,6 +29,7 @@ class Settings extends Core\Base
 			case 'reports' : $url = self::reportsURL();  break;
 			case 'settings': $url = self::settingsURL(); break;
 			case 'tools'   : $url = self::toolsURL();    break;
+			case 'imports' : $url = self::importsURL();  break;
 			default        : $url = URL::current();
 		}
 
@@ -69,6 +71,17 @@ class Settings extends Core\Base
 		return $relative;
 	}
 
+	// FIXME: MUST DEPRICATE
+	public static function importsURL( $full = TRUE )
+	{
+		$relative = 'tools.php?page='.self::IMPORTS;
+
+		if ( $full )
+			return get_admin_url( NULL, $relative );
+
+		return $relative;
+	}
+
 	public static function isReports( $screen = NULL )
 	{
 		if ( is_null( $screen ) )
@@ -97,6 +110,17 @@ class Settings extends Core\Base
 			$screen = get_current_screen();
 
 		if ( ! empty( $screen->base ) && Text::has( $screen->base, self::TOOLS ) )
+			return TRUE;
+
+		return FALSE;
+	}
+
+	public static function isImports( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( ! empty( $screen->base ) && Text::has( $screen->base, self::IMPORTS ) )
 			return TRUE;
 
 		return FALSE;
