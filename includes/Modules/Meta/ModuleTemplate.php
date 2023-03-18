@@ -19,7 +19,13 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function metaLabel( $atts = [] )
 	{
-		return self::metaTermField( $atts, 'meta', FALSE );
+		if ( ! array_key_exists( 'field', $atts ) )
+			$atts['field'] = 'label';
+
+		if ( ! array_key_exists( 'taxonomy', $atts ) )
+			$atts['taxonomy'] = self::constant( 'label_tax', 'label' );
+
+		return self::metaTermField( $atts, static::MODULE, FALSE );
 	}
 
 	public static function metaLead( $atts = [] )

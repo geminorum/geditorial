@@ -614,8 +614,8 @@ class Template extends Main
 			'before'      => '',
 			'after'       => '',
 			'echo'        => TRUE,
-			'field'       => 'label', // FALSE to disable
-			'taxonomy'    => gEditorial()->constant( $module, 'label_tax', 'label' ),
+			'field'       => '',
+			'taxonomy'    => FALSE,
 			'context'     => NULL, // to use `taxonomy`
 			'image'       => FALSE,
 			'link'        => NULL, // FALSE to disable
@@ -628,14 +628,14 @@ class Template extends Main
 		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return $args['default'];
 
-		$context = $args['context'] ?: $args['taxonomy'];
+		$context = $args['context'] ?: ( $args['taxonomy'] ?: 'term' );
 
 		$meta = $args['field'] ? self::getMetaField( $args['field'], [
 			'id'     => $post->ID,
 			'filter' => $args['filter'],
 		], FALSE ) : FALSE;
 
-		if ( $term = Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) {
+		if ( $args['taxonomy'] && ( $term = Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) ) {
 
 			if ( ! $meta )
 				$meta = sanitize_term_field( 'name', $term->name, $term->term_id, $args['taxonomy'], 'display' );
@@ -654,6 +654,9 @@ class Template extends Main
 				/* translators: %s: search query */
 				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ), $meta );
 		}
+
+		if ( ! $meta )
+			return $args['default'];
 
 		$html = $args['image'] ? HTML::img( $args['image'], '-'.$context.'-image', $meta ) : $meta;
 
