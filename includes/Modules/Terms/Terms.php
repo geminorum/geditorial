@@ -44,6 +44,8 @@ class Terms extends gEditorial\Module
 		'datetime',
 		'datestart',
 		'dateend',
+		'days',
+		'unit',
 	];
 
 	private $_roles     = [];
@@ -109,6 +111,8 @@ class Terms extends gEditorial\Module
 				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-terms' ),
 				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-terms' ),
 				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-terms' ),
+				'days'      => _x( 'Days', 'Titles', 'geditorial-terms' ),
+				'unit'      => _x( 'Unit', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
@@ -129,6 +133,8 @@ class Terms extends gEditorial\Module
 				'datetime'  => _x( 'Terms can have date-time to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'datestart' => _x( 'Terms can have date-start to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'dateend'   => _x( 'Terms can have date-end to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'days'      => _x( 'Terms can have days number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'unit'      => _x( 'Terms can have unit number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
 				'order_column_title'     => _x( 'Order', 'Column Title: Order', 'geditorial-terms' ),
@@ -150,6 +156,8 @@ class Terms extends gEditorial\Module
 				'datetime_column_title'  => _x( 'Date-Time', 'Column Title: Date-Time', 'geditorial-terms' ),
 				'datestart_column_title' => _x( 'Date-Start', 'Column Title: Date-Start', 'geditorial-terms' ),
 				'dateend_column_title'   => _x( 'Date-End', 'Column Title: Date-End', 'geditorial-terms' ),
+				'days_column_title'      => _x( 'Days', 'Column Title: Date-End', 'geditorial-terms' ),
+				'unit_column_title'      => _x( 'Unit', 'Column Title: Date-End', 'geditorial-terms' ),
 
 				'arrow_directions' => [
 					'undefined' => _x( 'Undefined', 'Arrow Directions', 'geditorial-terms' ),
@@ -481,7 +489,7 @@ class Terms extends gEditorial\Module
 			$prepare = 'register_prepare_callback_'.$field;
 
 			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
-			if ( in_array( $field, [ 'order', 'author', 'image' ] ) )
+			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'unit' ] ) )
 				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
 
 			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
@@ -586,6 +594,8 @@ class Terms extends gEditorial\Module
 			'datetime',
 			'datestart',
 			'dateend',
+			'days',
+			'unit',
 		];
 
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
@@ -628,6 +638,8 @@ class Terms extends gEditorial\Module
 			'datetime',
 			'datestart',
 			'dateend',
+			'days',
+			'unit',
 		];
 
 		foreach ( $this->get_supported( $taxonomy ) as $field )
@@ -669,6 +681,22 @@ class Terms extends gEditorial\Module
 				if ( $meta || '0' === $meta ) {
 
 					$html = Listtable::columnOrder( $meta );
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
+			case 'days':
+			case 'unit':
+
+				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
+
+				if ( $meta || '0' === $meta ) {
+
+					$html = $meta ? Number::format( $meta ) : Helper::htmlEmpty( '-'.$metakey );
 
 				} else {
 
@@ -949,6 +977,10 @@ class Terms extends gEditorial\Module
 					update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 
+				} else if ( in_array( $field, [ 'days', 'unit' ] ) ) {
+
+					$meta = Number::intval( trim( $meta ), FALSE );
+
 				} else if ( in_array( $field, [ 'date' ] ) ) {
 
 					$meta = Number::intval( trim( $meta ), FALSE );
@@ -1077,6 +1109,9 @@ class Terms extends gEditorial\Module
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) );
 
 			break;
+
+			case 'days':
+			case 'unit':
 			case 'order':
 
 				$html.= HTML::tag( 'input', [
@@ -1283,6 +1318,9 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
+
+			case 'days':
+			case 'unit':
 			case 'order':
 
 				$html.= HTML::tag( 'input', [
@@ -1462,8 +1500,18 @@ class Terms extends gEditorial\Module
 					case 'order':
 
 						$node['title'].= ': '.Helper::htmlOrder( get_term_meta( $term->term_id, $metakey, TRUE ) );
+						break;
 
-					break;
+					case 'days':
+					case 'unit':
+
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+							$node['title'].= ': '.Number::format( $meta );
+						else
+							$node['title'].= ': &mdash;';
+
+						break;
+
 					case 'image':
 
 						$image = Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ], TRUE, $metakey );
