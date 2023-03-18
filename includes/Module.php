@@ -3065,7 +3065,8 @@ class Module extends Base
 				// NOTE: we can use `example.com/cpt/tax` if cpt registered after the tax
 				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
 
-				'slug'         => $this->constant( $constant.'_slug', $plural ),
+				// NOTE: taxonomy prefix slugs are singular: `/category/`, `/tag/`
+				'slug'         => $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy ) ),
 				'with_front'   => FALSE,
 				// 'hierarchical' => FALSE, // will set by `hierarchical` in args
 				// 'ep_mask'      => EP_NONE,
@@ -3185,7 +3186,7 @@ class Module extends Base
 				'show_ui'      => FALSE,
 				'show_in_rest' => FALSE,
 				'hierarchical' => TRUE,
-				'rewrite'      => [ 'slug' => str_replace( '_', '-', $this->constant( $taxonomy ) ) ],
+				// 'rewrite'      => [ 'slug' => str_replace( '_', '-', $this->constant( $taxonomy ) ) ],
 			], $supported );
 
 			$this->_paired = $this->constant( $taxonomy );
