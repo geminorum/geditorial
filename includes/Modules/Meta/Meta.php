@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -237,8 +238,8 @@ class Meta extends gEditorial\Module
 				'postal_address' => [ 'type' => 'note' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
-				'audio_source_url'  => [ 'type' => 'link' ],
-				'video_source_url'  => [ 'type' => 'link' ],
+				'audio_source_url'  => [ 'type' => 'audio_source' ],
+				'video_source_url'  => [ 'type' => 'video_source' ],
 
 				'date'      => [ 'type' => 'date' ],
 				'datetime'  => [ 'type' => 'datetime' ],
@@ -592,6 +593,8 @@ class Meta extends gEditorial\Module
 				case 'mobile':
 				case 'email':
 				case 'embed':
+				case 'audio_source':
+				case 'video_source':
 				case 'link':
 
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
@@ -766,6 +769,8 @@ class Meta extends gEditorial\Module
 
 				break;
 				case 'embed':
+				case 'audio_source':
+				case 'video_source':
 				case 'link':
 
 					ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
@@ -1146,6 +1151,12 @@ class Meta extends gEditorial\Module
 
 			case 'embed':
 				return Template::doEmbedShortCode( trim( $raw ) );
+
+			case 'audio_source':
+				return Template::doMediaShortCode( trim( $raw ), 'audio' );
+
+			case 'video_source':
+				return Template::doMediaShortCode( trim( $raw ), 'video' );
 		}
 
 		return $meta;

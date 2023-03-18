@@ -595,6 +595,18 @@ class Template extends Main
 		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', trim( $meta ), trim( $meta ) ) );
 	}
 
+	public static function doMediaShortCode( $meta, $type = NULL )
+	{
+		switch ( $type ) {
+			// @SEE: https://wordpress.org/documentation/article/audio-shortcode/
+			case 'audio': return apply_shortcodes( sprintf( '[audio src="%s" /]', $meta ) );
+			// @SEE: https://wordpress.org/documentation/article/video-shortcode/
+			case 'video': return apply_shortcodes( sprintf( '[video src="%s" /]', $meta ) );
+		}
+
+		return $meta;
+	}
+
 	// FIXME: DEPRECATED
 	public static function metaLabel( $atts = [] )
 	{
