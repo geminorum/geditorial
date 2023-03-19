@@ -58,7 +58,14 @@ class Dashboard extends gEditorial\Module
 
 	protected function setup_disabled()
 	{
-		return empty( $this->get_setting( 'dashboard_page_id', 0 ) );
+		if ( ! $page = $this->get_setting( 'dashboard_page_id', 0 ) )
+			return TRUE;
+
+		if ( ! $post = PostType::getPost( $page ) )
+			return TRUE;
+
+		// only ASCII slugs!
+		return $post->post_name !== urldecode( $post->post_name );
 	}
 
 	public function init()
