@@ -11,6 +11,8 @@ use geminorum\gEditorial\WordPress\PostType;
 class Dashboard extends gEditorial\Module
 {
 
+	protected $priority_template_redirect = 9; // NOTE: before `redirect_canonical`
+
 	public static function module()
 	{
 		return [
@@ -72,7 +74,7 @@ class Dashboard extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->_register_pages();
+		$this->_init_rewrite_rules();
 
 		if ( is_admin() ) {
 
@@ -81,7 +83,7 @@ class Dashboard extends gEditorial\Module
 		} else {
 
 			$this->action_self( 'dashbard_content', 1, 10, 'callback' );
-			$this->action_self( 'content_page_home', 3 );
+			$this->action_self( 'content_page_home' );
 
 			if ( $this->get_setting( 'dashboard_navmenu' ) )
 				$this->action_self( 'dashbard_before', 1, 1, 'navmenu' );
@@ -110,10 +112,34 @@ class Dashboard extends gEditorial\Module
 		], $name ) );
 	}
 
-	private function _get_page_permalink( $slug = FALSE )
+	private function _init_rewrite_rules()
+	{
+		$key  = $this->classs();
+		$slug = $this->_get_dashboard_slug();
+		$home = $this->_dahboard_is_homepage();
+
+		add_rewrite_tag( "%{$key}%", '([^&]+)' );
+
+		foreach ( $this->_get_pages() as $page => $title )
+			add_rewrite_rule( ( $home ? ( '^'.$page.'/?$' ) : ( '^'.$slug.'/'.$page.'/?$' ) ),
+				sprintf( 'index.php?pagename=%s&%s=%s', $slug, $key, $page ), 'top' );
+	}
+
+	private function _get_dashboard_slug( $page = FALSE )
+	{
+		if ( ! $id = $this->get_setting( 'dashboard_page_id', 0 ) )
+			return FALSE;
+
+		if ( ! $post = PostType::getPost( $id ) )
+			return FALSE;
+
+		return $page ? ( $post->post_name.'/'.$page ) : $post->post_name;
+	}
+
+	private function _get_dashboard_permalink( $page = FALSE )
 	{
 		$dashboard = get_permalink( $this->get_setting( 'dashboard_page_id', 0 ) );
-		return $slug ? URL::trail( $dashboard ).$slug : URL::untrail( $dashboard );
+		return $page ? URL::trail( $dashboard ).$page : URL::untrail( $dashboard );
 	}
 
 	private function _get_pages()
@@ -121,15 +147,7 @@ class Dashboard extends gEditorial\Module
 		return $this->filters( 'pages', [] );
 	}
 
-	private function _register_pages()
-	{
-		$home = $this->dahboard_is_homepage();
-
-		foreach ( $this->_get_pages() as $slug => $title )
-			add_rewrite_endpoint( $slug, $home ? EP_ROOT | EP_PAGES : EP_PAGES, $this->classs( $slug ) );
-	}
-
-	private function dahboard_is_homepage()
+	private function _dahboard_is_homepage()
 	{
 		if ( 'page' === get_option( 'show_on_front' )
 			&& $this->get_setting( 'dashboard_page_id', 0 ) == get_option( 'page_on_front' ) )
@@ -149,29 +167,20 @@ class Dashboard extends gEditorial\Module
 		return $states;
 	}
 
-	// FIXME: problems on home as dashboard
-	public function template_include( $template )
+	private function _init_hooks()
 	{
-		if ( ! is_page( $this->get_setting( 'dashboard_page_id', 0 ) ) )
-			return $template;
-
 		nocache_headers();
 		// WordPress::doNotCache();
 
-		$this->actions( 'include' );
+		$page = get_query_var( $this->classs(), FALSE );
 
-		$queried = FALSE;
+		if ( $page && ( ! in_array( $page, array_keys( $this->_get_pages() ), TRUE ) ) )
+			return FALSE;
 
-		foreach ( $this->_get_pages() as $slug => $title ) {
+		$this->actions( 'include', $page );
+		$this->actions( sprintf( 'include_page_%s', $page ), $page );
 
-			if ( FALSE === ( $queried = get_query_var( $this->classs( $slug ), FALSE ) ) )
-				continue;
-
-			$this->actions( sprintf( 'include_page_%s', $slug ), $queried, $slug, $title );
-			break;
-		}
-
-		if ( FALSE === $queried )
+		if ( FALSE === $page )
 			$this->actions( 'include_page_home', 'home', '', '' );
 
 		$this->filter( 'the_title', 2, 9 );
@@ -179,7 +188,37 @@ class Dashboard extends gEditorial\Module
 		$this->filter( 'the_content', 2, 9 );
 		$this->filter_append( 'post_class', 'editorial-dashboard' );
 
-		return $template;
+		return TRUE;
+	}
+
+	public function template_redirect()
+	{
+		if ( get_query_var( $this->classs(), FALSE ) )
+			remove_action( 'template_redirect', 'redirect_canonical' );
+	}
+
+	public function template_include( $template )
+	{
+		if ( $this->_dahboard_is_homepage() ) {
+
+			if ( ! is_front_page() )
+				return $template;
+
+			if ( ! $this->_init_hooks() )
+				return get_404_template();
+
+			return get_page_template();
+
+		} else {
+
+			if ( ! is_page( $this->get_setting( 'dashboard_page_id', 0 ) ) )
+				return $template;
+
+			if ( ! $this->_init_hooks() )
+				return get_404_template();
+
+			return $template;
+		}
 	}
 
 	// hides dashboard title for active theme
@@ -241,24 +280,16 @@ class Dashboard extends gEditorial\Module
 
 	public function dashbard_content_callback()
 	{
-		$queried = FALSE;
+		if ( $page = get_query_var( $this->classs(), FALSE ) )
+			$this->actions( sprintf( 'content_page_%s', $page ), $page );
 
-		foreach ( $this->_get_pages() as $slug => $title ) {
-
-			if ( FALSE === ( $queried = get_query_var( $this->classs( $slug ), FALSE ) ) )
-				continue;
-
-			$this->actions( sprintf( 'content_page_%s', $slug ), $queried, $slug, $title );
-			break;
-		}
-
-		if ( FALSE === $queried )
-			$this->actions( 'content_page_home', 'home', '', '' );
+		else
+			$this->actions( 'content_page_home', 'home' );
 	}
 
-	public function content_page_home( $queried, $slug, $title )
+	public function content_page_home( $page )
 	{
-		$this->actions( 'content_page_home_before', $queried, $slug, $title );
+		$this->actions( 'content_page_home_before', $page );
 
 		if ( $before = $this->get_setting( 'before_content' ) )
 			echo $this->wrap( apply_shortcodes( $before ), '-before' );
@@ -266,21 +297,21 @@ class Dashboard extends gEditorial\Module
 		if ( $this->get_setting( 'widget_support' ) )
 			dynamic_sidebar( $this->classs() );
 
-		$this->actions( 'content_page_home_main', $queried, $slug, $title );
+		$this->actions( 'content_page_home_main', $page );
 
 		if ( $after = $this->get_setting( 'after_content' ) )
 			echo $this->wrap( apply_shortcodes( $after ), '-after' );
 
-		$this->actions( 'content_page_home_after', $queried, $slug, $title );
+		$this->actions( 'content_page_home_after', $page );
 	}
 
 	public function navigation_general_items( $items )
 	{
-		foreach ( $this->_get_pages() as $slug => $title )
+		foreach ( $this->_get_pages() as $page => $title )
 			$items[] = [
 				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
-				'slug' => sprintf( 'custom-dashboard-%s', $slug ),
-				'link' => $this->_get_page_permalink( $slug ),
+				'slug' => sprintf( 'custom-dashboard-%s', $page ),
+				'link' => $this->_get_dashboard_permalink( $page ),
 				'name' => $title,
 			];
 
