@@ -72,6 +72,9 @@ class Dashboard extends gEditorial\Module
 
 			if ( $this->get_setting( 'dashboard_navmenu' ) )
 				$this->action_self( 'dashbard_before', 1, 1, 'navmenu' );
+
+			$this->filter( 'wp_sitemaps_posts_query_args', 2, 12 );
+			$this->filter( 'wpseo_exclude_from_sitemap_by_post_ids', 1, 12 );
 		}
 
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
@@ -268,5 +271,27 @@ class Dashboard extends gEditorial\Module
 			];
 
 		return $items;
+	}
+
+	// @REF: https://perishablepress.com/customize-wordpress-sitemaps/
+	public function wp_sitemaps_posts_query_args( $args, $post_type )
+	{
+		if ( 'page' !== $post_type )
+			return $args;
+
+		if ( ! array_key_exists( 'post__not_in', $args ) )
+			$args['post__not_in'] = [];
+
+		$args['post__not_in'][] = (int) $this->get_setting( 'dashboard_page_id', 0 );
+
+		return $args;
+	}
+
+	// @REF: https://preventdirectaccess.com/5-ways-remove-pages-from-sitemap/
+	public function wpseo_exclude_from_sitemap_by_post_ids( $excluded_posts_ids )
+	{
+		$excluded_posts_ids[] = (int) $this->get_setting( 'dashboard_page_id', 0 );
+
+		return $excluded_posts_ids;
 	}
 }
