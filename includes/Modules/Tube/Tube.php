@@ -164,10 +164,18 @@ class Tube extends gEditorial\Module
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
+
+				'content_embed_url' => [ 'type' => 'embed' ],
+				'audio_source_url'  => [ 'type' => 'audio_source' ],
+				'video_source_url'  => [ 'type' => 'video_source' ],
 			],
 			$this->constant( 'channel_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
+
+				'content_embed_url' => [ 'type' => 'embed' ],
+				'audio_source_url'  => [ 'type' => 'audio_source' ],
+				'video_source_url'  => [ 'type' => 'video_source' ],
 			],
 		];
 	}

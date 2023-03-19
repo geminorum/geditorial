@@ -127,9 +127,8 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Reports Sub', 'geditorial-config' );
 
-		$subs = apply_filters( $this->base.'_reports_subs', $subs, 'reports' );
-
-		$messages = apply_filters( $this->base.'_reports_messages', Settings::messages(), $sub );
+		$subs     = apply_filters( $this->base.'_reports_subs', $subs, 'reports', $can );
+		$messages = apply_filters( $this->base.'_reports_messages', Settings::messages(), $sub. $can );
 
 		Settings::wrapOpen( $sub, 'reports' );
 
@@ -170,14 +169,14 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Tools Sub', 'geditorial-config' );
 
-		$subs = apply_filters( $this->base.'_tools_subs', $subs, 'tools' );
+		$subs = apply_filters( $this->base.'_tools_subs', $subs, 'tools', $can );
 
 		if ( User::isSuperAdmin() ) {
 			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-config' );
 			$subs['console'] = _x( 'Console', 'Tools Sub', 'geditorial-config' );
 		}
 
-		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub );
+		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub, $can );
 
 		Settings::wrapOpen( $sub, 'tools' );
 
@@ -234,7 +233,7 @@ class Config extends gEditorial\Module
 
 			add_action( $this->base.'_reports_sub_general', [ $this, 'reports_sub' ], 10, 2 );
 
-			$this->register_help_tabs();
+			$this->register_help_tabs( NULL, 'reports' );
 		}
 
 		do_action( $this->base.'_reports_settings', $sub );
@@ -307,7 +306,7 @@ class Config extends gEditorial\Module
 
 			add_action( $this->base.'_tools_sub_'.$sub, [ $this, 'tools_sub' ], 10, 2 );
 
-			$this->register_help_tabs();
+			$this->register_help_tabs( NULL, 'tools' );
 		}
 
 		do_action( $this->base.'_tools_settings', $sub );

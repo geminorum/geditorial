@@ -176,6 +176,7 @@ class Venue extends gEditorial\Module
 					'type'        => 'embed',
 				],
 				// FIXME: move to `extra_metadata`
+				// FIXME: see `Geo` Module
 				'geo_latitude' => [
 					'title'       => _x( 'Latitude', 'Field Title', 'geditorial-venue' ),
 					'description' => _x( 'The latitude (in decimal notation) for this location.', 'Field Description', 'geditorial-venue' ),

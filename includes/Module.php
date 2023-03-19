@@ -20,6 +20,7 @@ use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Theme;
 use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\Services\O2O;
 
 class Module extends Base
 {
@@ -1554,7 +1555,7 @@ class Module extends Base
 		$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', 'geditorial' ), 'danger' );
 
 		foreach ( $this->get_module_links() as $link )
-			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'listtable' ] ) )
+			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'listtable' ] ) )
 				$this->register_button( $link['url'], $link['title'], 'link' );
 	}
 
@@ -2771,7 +2772,7 @@ class Module extends Base
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return Helper::generatePostTypeLabels(
 				$this->strings['noops'][$constant],
-				$this->get_string( 'featured', $constant, 'misc', NULL ),
+				$this->get_string( 'featured', $constant, 'misc', NULL ), //FIXME: move this out of `misc`
 				$labels,
 				$this->constant( $constant )
 			);

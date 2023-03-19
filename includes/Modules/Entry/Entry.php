@@ -312,7 +312,7 @@ class Entry extends gEditorial\Module
 	{
 		$sections = Taxonomy::prepTerms( $this->constant( 'section_tax' ), [], NULL, 'name' );
 
-		return Text::replaceWords( wp_list_pluck( $sections, 'name' ), $content, function( $matched ) use ( $sections ) {
+		return Text::replaceWords( wp_list_pluck( $sections, 'name' ), $content, static function( $matched ) use ( $sections ) {
 			return HTML::tag( 'a', [
 				'href'  => $sections[$matched]->link,
 				'class' => '-entry-section',

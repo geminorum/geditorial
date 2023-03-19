@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;

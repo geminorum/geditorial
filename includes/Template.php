@@ -868,7 +868,7 @@ class Template extends Main
 					if ( is_null( $title ) )
 						$title = Taxonomy::object( $key )->labels->singular_name;
 
-					$rows[$title] = $terms;
+					$rows[$title] = Strings::getJoined( $terms );
 				}
 
 				continue;

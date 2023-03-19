@@ -1122,7 +1122,7 @@ class Meta extends gEditorial\Module
 
 			case 'cover_price':
 				// TODO: format numbers
-				return Number:: localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) );
+				return Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) );
 
 			case 'website_url':
 				return HTML::link( URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );

@@ -522,7 +522,7 @@ class Book extends gEditorial\Module
 
 		$this->register_taxonomy( 'audience_tax', [
 			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL, // default meta box
+			'meta_box_cb'  => '__checklist_terms_callback',
 		], 'publication_cpt' );
 
 		if ( count( $this->posttypes() ) ) {

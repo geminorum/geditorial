@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\User;
 
+#[\AllowDynamicProperties] // TODO: implement the magic methods `__get()` and `__set()`
 class Plugin
 {
 
