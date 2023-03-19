@@ -50,6 +50,12 @@ class Dashboard extends gEditorial\Module
 		];
 	}
 
+	public function default_buttons( $module = FALSE )
+	{
+		parent::default_buttons( $module );
+		$this->register_button( $this->_get_page_permalink(), _x( 'Dashboard Page', 'Setting Button', 'geditorial-dashboard' ), 'link' );
+	}
+
 	protected function setup_disabled()
 	{
 		return empty( $this->get_setting( 'dashboard_page_id', 0 ) );
@@ -97,9 +103,10 @@ class Dashboard extends gEditorial\Module
 		], $name ) );
 	}
 
-	private function _get_page_permalink( $slug )
+	private function _get_page_permalink( $slug = FALSE )
 	{
-		return URL::trail( get_permalink( $this->get_setting( 'dashboard_page_id', 0 ) ) ).$slug;
+		$dashboard = get_permalink( $this->get_setting( 'dashboard_page_id', 0 ) );
+		return $slug ? URL::trail( $dashboard ).$slug : URL::untrail( $dashboard );
 	}
 
 	private function _get_pages()
