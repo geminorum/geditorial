@@ -395,9 +395,10 @@ class Tablelist extends Main
 			'title'    => _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
 			'args'     => [ 'taxonomies' => $taxonomies ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-				foreach ( $column['args']['taxonomies'] as $taxonomy => $object )
-					if ( $object->label ) // only public taxes
-						Helper::renderPostTermsEditRow( $row, $object, sprintf( '<div><span title="%s">%s</span>:', $object->name, $object->label ), '</div>' );
+				foreach ( $column['args']['taxonomies'] as $object )
+					if ( Taxonomy::viewable( $object ) )
+						Helper::renderPostTermsEditRow( $row, $object,
+							sprintf( '<div><span title="%s">%s</span>:&nbsp;', $object->name, $object->label ), '</div>' );
 
 				return '';
 			},

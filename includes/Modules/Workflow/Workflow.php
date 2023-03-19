@@ -482,7 +482,7 @@ class Workflow extends gEditorial\Module
 
 		echo '</div>';
 
-		if ( is_post_type_viewable( $post->post_type ) ) {
+		if ( PostType::viewable( $post->post_type ) ) {
 
 			echo '<div id="preview-action">';
 				echo HTML::tag( 'a', [

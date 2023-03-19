@@ -25,7 +25,7 @@ class Template extends Main
 			return FALSE;
 
 		if ( is_null( $size ) )
-			$size = Media::getAttachmentImageDefaultSize( NULL, self::getTermTaxonomy( $term, NULL ) );
+			$size = Media::getAttachmentImageDefaultSize( NULL, Taxonomy::getTermTaxonomy( $term, NULL ) );
 
 		if ( ! $image = image_downsize( $term_image_id, $size ) )
 			return FALSE;
@@ -121,7 +121,7 @@ class Template extends Main
 		$args['taxonomy'] = $term->taxonomy;
 
 		$title    = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
-		$viewable = Taxonomy::isViewable( $args['taxonomy'] );
+		$viewable = Taxonomy::viewable( $args['taxonomy'] );
 		$meta     = get_term_meta( $args['id'], $args['field'], TRUE );
 
 		if ( $args['link'] ) {
@@ -206,9 +206,8 @@ class Template extends Main
 		$args['id']       = $term->term_id;
 		$args['taxonomy'] = $term->taxonomy;
 
-		$title    = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
-		$viewable = Taxonomy::isViewable( $args['taxonomy'] );
-		$meta     = get_term_meta( $args['id'], $args['field'], TRUE );
+		$title = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
+		$meta  = get_term_meta( $args['id'], $args['field'], TRUE );
 
 		if ( $html = Helper::prepContact( $meta, $title ) ) {
 

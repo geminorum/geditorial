@@ -75,7 +75,7 @@ class Drafts extends gEditorial\Module
 			$posttypes = Arraay::stripByKeys( $posttypes, $excluded );
 
 		foreach ( $posttypes as $posttype => $label )
-			if ( is_post_type_viewable( $posttype ) )
+			if ( PostType::viewable( $posttype ) )
 				$viewables[$posttype] = $label;
 
 		return $viewables;

@@ -831,7 +831,7 @@ class Helper extends Main
 		$preview = $scheduled = $view = '';
 		$scheduled_date = Datetime::dateFormat( $post->post_date, 'datetime' );
 
-		if ( is_post_type_viewable( $post_type_object ) ) {
+		if ( PostType::viewable( $post_type_object ) ) {
 			$view      = ' '.HTML::link( $messages['view_post'], $permalink );
 			$preview   = ' '.HTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
 			$scheduled = ' '.HTML::link( $messages['preview_post'], $permalink, TRUE );

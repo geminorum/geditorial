@@ -55,7 +55,9 @@ class Dashboard extends gEditorial\Module
 	public function default_buttons( $module = FALSE )
 	{
 		parent::default_buttons( $module );
-		$this->register_button( $this->_get_page_permalink(), _x( 'Dashboard Page', 'Setting Button', 'geditorial-dashboard' ), 'link' );
+
+		$this->register_button( $this->_get_dashboard_permalink(),
+			_x( 'Dashboard Page', 'Setting Button', 'geditorial-dashboard' ), 'link' );
 	}
 
 	protected function setup_disabled()

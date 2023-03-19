@@ -10,11 +10,7 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Third;
-use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\User;
@@ -379,7 +375,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->in_setting( $posttype, 'page_template' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 
-		if ( $this->in_setting( $posttype, 'slug_attribute' ) && is_post_type_viewable( $posttype ) )
+		if ( $this->in_setting( $posttype, 'slug_attribute' ) && PostType::viewable( $posttype ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_slug' ], 50 );
 
 		if ( $this->in_setting( $posttype, 'comment_status' ) && post_type_supports( $posttype, 'comments' ) )
