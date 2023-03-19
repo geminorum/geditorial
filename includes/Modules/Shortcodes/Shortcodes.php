@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\PostType;
 
@@ -43,6 +44,11 @@ class Shortcodes extends gEditorial\Module
 					'title'       => _x( 'Remove Empty Paragraphs', 'Setting Title', 'geditorial-shortcodes' ),
 					'description' => _x( 'Strips empty paragraph tags around short-codes from post content.', 'Setting Description', 'geditorial-shortcodes' ),
 				],
+				[
+					'field'       => 'remove_orphaned',
+					'title'       => _x( 'Remove Orphaned', 'Setting Title', 'geditorial-shortcodes' ),
+					'description' => _x( 'Strips unregistered shortcode tags from post content.', 'Setting Description', 'geditorial-shortcodes' ),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 		];
@@ -78,6 +84,9 @@ class Shortcodes extends gEditorial\Module
 
 		if ( $this->get_setting( 'remove_empty_p_tags' ) )
 			$this->filter( 'the_content' );
+
+		if ( $this->get_setting( 'remove_orphaned' ) )
+			$this->filter( 'the_content', 1, 8, 'orphaned' );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
@@ -212,6 +221,49 @@ class Shortcodes extends gEditorial\Module
 			']</p>'   => ']',
 			']<br />' => ']',
 		] );
+	}
+
+	/**
+	 * Strips Orphan Shortcodes
+	 * Author: Meks - v1.2
+	 *
+	 * @source https://wordpress.org/plugins/remove-orphan-shortcodes/
+	 *
+	 * @param  string $content
+	 * @return string $content
+	 */
+	public function the_content_orphaned( $content )
+	{
+		global $shortcode_tags;
+
+		if ( ! Text::has( $content, '[' ) )
+			return $content;
+
+		// Check for active shortcodes
+		$active_shortcodes = ( is_array( $shortcode_tags ) && ! empty( $shortcode_tags ) )
+			? array_keys( $shortcode_tags ) : [];
+
+		// Avoid "/" chars in content breaks preg_replace
+		$hack1   = md5( microtime( TRUE ) );
+		$content = str_replace( '[/', $hack1, $content );
+		$hack2   = md5( microtime( TRUE ) + 1 );
+		$content = str_replace( '/', $hack2, $content );
+		$content = str_replace( $hack1, '[/', $content );
+
+		if ( ! empty( $active_shortcodes ) ) {
+
+			// Be sure to keep active shortcodes
+			$keep_active = implode( '|', $active_shortcodes );
+			$content     = preg_replace( "~(?:\[/?)(?!(?:$keep_active))[^/\]]+/?\]~s", '', $content );
+
+		} else {
+
+			// Strip all shortcodes
+			$content = preg_replace( "~(?:\[/?)[^/\]]+/?\]~s", '', $content );
+		}
+
+		// Set "/" back to its place
+		return str_replace( $hack2, "/", $content );
 	}
 
 	// @SEE: https://github.com/seothemes/display-terms-shortcode/blob/master/display-terms-shortcode.php
