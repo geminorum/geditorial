@@ -3032,7 +3032,7 @@ class Module extends Base
 		$taxonomy = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', L10n::pluralize( $taxonomy ) );
 
-		if ( is_string( $posttypes ) && in_array( $posttypes, [ 'user', 'comment' ] ) )
+		if ( is_string( $posttypes ) && in_array( $posttypes, [ 'user', 'comment', 'taxonomy' ] ) )
 			$cpt_tax = FALSE;
 
 		else if ( is_null( $posttypes ) )
@@ -3074,6 +3074,9 @@ class Module extends Base
 			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ), // FIXME: DEPRECATE THIS
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_slug', $plural ) ),
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
+
+			// gEditorial Props
+			'target_taxonomies' => FALSE, // or array of taxonomies
 		] );
 
 		if ( ! $args['meta_box_cb'] && method_exists( $this, 'meta_box_cb_'.$constant ) )
@@ -3101,6 +3104,9 @@ class Module extends Base
 				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateUserTermCountCallback' ];
 
 			else if ( 'comment' == $posttypes )
+				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+
+			else if ( 'taxonomy' == $posttypes )
 				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
 
 			// WTF: if not else ?!
