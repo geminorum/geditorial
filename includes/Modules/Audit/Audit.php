@@ -196,7 +196,6 @@ class Audit extends gEditorial\Module
 			'rewrite'            => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
-			'show_in_rest'       => $this->role_can( 'assign' ), // QUESTION: what if auth by plugin
 		], NULL, TRUE );
 
 		$this->filter( 'map_meta_cap', 4 );

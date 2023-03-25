@@ -218,13 +218,7 @@ class Statuses extends gEditorial\Module
 			}
 		}
 
-		if ( $tax = get_taxonomy( $this->constant( 'status_tax' ) ) )
-			add_options_page(
-				HTML::escape( $tax->labels->menu_name ),
-				HTML::escape( $tax->labels->menu_name ),
-				$tax->cap->manage_terms,
-				'edit-tags.php?taxonomy='.$tax->name
-			);
+		$this->_hook_menu_taxonomy( 'status_tax', 'options-general.php' );
 	}
 
 	public function get_adminmenu( $page = TRUE, $extra = [] )

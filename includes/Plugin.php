@@ -501,6 +501,9 @@ class Plugin
 		else if ( Settings::isTools( $screen ) )
 			Helper::linkStyleSheetAdmin( 'tools' );
 
+		else if ( Settings::isImports( $screen ) )
+			Helper::linkStyleSheetAdmin( 'imports' );
+
 		else if ( Settings::isSettings( $screen ) )
 			Helper::linkStyleSheetAdmin( 'settings' );
 
@@ -723,13 +726,13 @@ class Plugin
 
 	public static function na( $wrap = 'code' )
 	{
-		$na = __( 'N/A', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'title' => __( 'Not Available', 'geditorial' ) ], $na ) : $na;
+		$message = __( 'N/A', 'geditorial' );
+		return $wrap ? HTML::tag( $wrap, [ 'title' => __( 'Not Available', 'geditorial' ) ], $message ) : $message;
 	}
 
 	public static function denied( $wrap = 'p' )
 	{
-		$message = __( 'You don&#8217;t have permission to do this.' );
+		$message = __( 'You don&#8217;t have permission to do this.', 'geditorial' );
 		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-denied' ] ], $message ) : $message;
 	}
 

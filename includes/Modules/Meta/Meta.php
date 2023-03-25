@@ -1301,7 +1301,7 @@ class Meta extends gEditorial\Module
 				stripslashes( $args['custom_field'] ),
 				stripslashes( $args['custom_field_limit'] )
 			), [
-				'empty' => HTML::warning( _x( 'No Meta Found!', 'Table Empty', 'geditorial-meta' ), FALSE ),
+				'empty' => HTML::warning( _x( 'There are no meta-data available!', 'Table Empty', 'geditorial-meta' ), FALSE ),
 			] );
 		}
 

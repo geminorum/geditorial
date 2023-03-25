@@ -644,7 +644,7 @@ class Collect extends gEditorial\Module
 				],
 				'description' => Tablelist::columnTermDesc(),
 			], Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE ), [
-				'empty' => HTML::warning( _x( 'No Terms Found!', 'Table Empty', 'geditorial-collect' ), FALSE ),
+				'empty' => HTML::warning( _x( 'There are no terms available!', 'Table Empty', 'geditorial-collect' ), FALSE ),
 			] );
 		}
 

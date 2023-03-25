@@ -1020,7 +1020,7 @@ class Settings extends Core\Base
 			'maked'     => self::success( _x( 'File/Folder created.', 'Settings: Message', 'geditorial' ) ),
 			'mailed'    => self::success( _x( 'Mail sent successfully.', 'Settings: Message', 'geditorial' ) ),
 			'error'     => self::error( _x( 'Error occurred!', 'Settings: Message', 'geditorial' ) ),
-			'wrong'     => self::error( _x( 'Something\'s wrong!', 'Settings: Message', 'geditorial' ) ),
+			'wrong'     => self::error( _x( 'Something&#8217;s wrong!', 'Settings: Message', 'geditorial' ) ),
 			'nochange'  => self::error( _x( 'No item changed!', 'Settings: Message', 'geditorial' ) ),
 			'noadded'   => self::error( _x( 'No item added!', 'Settings: Message', 'geditorial' ) ),
 			'noaccess'  => self::error( _x( 'You do not have the access!', 'Settings: Message', 'geditorial' ) ),

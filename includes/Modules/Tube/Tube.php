@@ -13,6 +13,7 @@ use geminorum\gEditorial\Services\O2O;
 class Tube extends gEditorial\Module
 {
 
+	// @SEE: https://github.com/swissspidy/video-post-type
 	// TODO: `video_playlist` taxonomy with owner user meta
 	// TODO: `channel_subject` taxonomy
 

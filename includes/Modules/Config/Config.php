@@ -169,14 +169,13 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Tools Sub', 'geditorial-config' );
 
-		$subs = apply_filters( $this->base.'_tools_subs', $subs, 'tools', $can );
+		$subs     = apply_filters( $this->base.'_tools_subs', $subs, 'tools', $can );
+		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub, $can );
 
 		if ( User::isSuperAdmin() ) {
 			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-config' );
 			$subs['console'] = _x( 'Console', 'Tools Sub', 'geditorial-config' );
 		}
-
-		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub, $can );
 
 		Settings::wrapOpen( $sub, 'tools' );
 

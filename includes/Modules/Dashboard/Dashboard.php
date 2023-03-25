@@ -114,6 +114,7 @@ class Dashboard extends gEditorial\Module
 		], $name ) );
 	}
 
+	// add_rewrite_rule( 'api/items/([0-9]+)/?', 'index.php?api_item_id=$matches[1]', 'top' );
 	private function _init_rewrite_rules()
 	{
 		$key  = $this->classs();
@@ -121,6 +122,7 @@ class Dashboard extends gEditorial\Module
 		$home = $this->_dahboard_is_homepage();
 
 		add_rewrite_tag( "%{$key}%", '([^&]+)' );
+		// add_rewrite_tag( "%{$key}%", '([0-9]+)' );
 
 		foreach ( $this->_get_pages() as $page => $title )
 			add_rewrite_rule( ( $home ? ( '^'.$page.'/?$' ) : ( '^'.$slug.'/'.$page.'/?$' ) ),

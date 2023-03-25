@@ -260,7 +260,7 @@ class ObjectToObject extends Main
 	public static function rest_connect( $request )
 	{
 		if ( ! $type = O2O\API::type( $request['name'] ) )
-			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', 'geditorial' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'no_connection_type', _x( 'There are no connection types available!', 'Relation: REST', 'geditorial' ), [ 'status' => 404 ] );
 
 		// $meta = [ 'date' => current_time( 'mysql' ) ];
 		$o2o = $type->connect( $request['from'], $request['to'] );
@@ -271,7 +271,7 @@ class ObjectToObject extends Main
 	public static function rest_disconnect( $request )
 	{
 		if ( ! $type = O2O\API::type( $request['name'] ) )
-			return new \WP_Error( 'no_connection_type', _x( 'No connection type found!', 'Relation: REST', 'geditorial' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'no_connection_type', _x( 'There are no connection types available!', 'Relation: REST', 'geditorial' ), [ 'status' => 404 ] );
 
 		$o2o = $type->disconnect( $request['from'], $request['to'] );
 

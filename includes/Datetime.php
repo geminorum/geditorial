@@ -86,6 +86,9 @@ class Datetime extends Main
 
 	public static function htmlHumanTime( $timestamp, $flip = FALSE )
 	{
+		if ( ! $timestamp )
+			return $timestamp;
+
 		if ( ! Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 

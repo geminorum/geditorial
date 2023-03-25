@@ -605,7 +605,7 @@ class Module extends Base
 		$post     = get_default_post_to_edit( $posttype );
 
 		if ( ! current_user_can( $object->cap->create_posts ) )
-			return HTML::desc( gEditorial()->denied( FALSE ), TRUE, '-denied' );
+			return HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
 
 		$meta = $this->filters( 'newpost_content_meta', $meta, $posttype, $target, $linked, $status );
 
@@ -5086,7 +5086,7 @@ class Module extends Base
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', $title ?: _x( 'Paired Terms Tools', 'Module: Paired: Header', 'geditorial' ) ),
-			'empty'      => _x( 'No Terms Found!', 'Module: Paired: Message', 'geditorial' ),
+			'empty'      => _x( 'There are no terms available!', 'Module: Paired: Message', 'geditorial' ),
 			'pagination' => $pagination,
 		];
 
@@ -5857,6 +5857,8 @@ class Module extends Base
 		HTML::inputHidden( 'menu_order', PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
 
+	// $parent_slug options: `options-general.php`, `users.php`
+	// also set `$this->filter_string( 'parent_file', $parent_slug );`
 	protected function _hook_menu_taxonomy( $constant, $parent_slug = 'index.php', $context = 'submenu' )
 	{
 		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
@@ -5871,7 +5873,8 @@ class Module extends Base
 		);
 	}
 
-	// FIXME: WTF, maybe just add `'show_in_menu' => FALSE` on taxonomy args!
+	// NOTE: hack to keep the submenu only on primary paired posttype
+	// for hiding the menu just set `show_in_menu` to `FALSE` on taxonomy args
 	protected function remove_taxonomy_submenu( $taxonomies, $posttypes = NULL )
 	{
 		if ( ! $taxonomies )
