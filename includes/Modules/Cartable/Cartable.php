@@ -500,7 +500,7 @@ class Cartable extends gEditorial\Module
 
 			} else {
 
-				HTML::desc( _x( 'Something\'s wrong!', 'Message', 'geditorial-cartable' ), FALSE, '-empty' );
+				echo gEditorial\Plugin::wrong();
 			}
 
 			$this->settings_signature( 'listtable' );
@@ -715,7 +715,7 @@ class Cartable extends gEditorial\Module
 			return;
 
 		if ( ! $term = Taxonomy::getTerm( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
-			return HTML::desc( _x( 'Something\'s wrong!', 'Message', 'geditorial-cartable' ), FALSE, '-empty' );
+			return HTML::desc( gEditorial\Plugin::wrong( FALSE ), FALSE, '-empty' );
 
 		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}

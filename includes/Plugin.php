@@ -732,4 +732,10 @@ class Plugin
 		$message = __( 'You don&#8217;t have permission to do this.' );
 		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-denied' ] ], $message ) : $message;
 	}
+
+	public static function wrong( $wrap = 'p' )
+	{
+		$message = __( 'Something&#8217;s wrong!', 'geditorial' );
+		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-wrong' ] ], $message ) : $message;
+	}
 }

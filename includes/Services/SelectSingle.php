@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Query;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress\Main;
@@ -53,7 +54,7 @@ class SelectSingle extends Main
 			case 'post':
 
 				if ( empty( $queried['posttype'] ) )
-					return new \WP_Error( 'no_correct_settings', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
+					return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
 
 				$queried['posttype'] = explode( ',', $queried['posttype'] );
 
@@ -63,7 +64,7 @@ class SelectSingle extends Main
 
 				// again check if any left!
 				if ( empty( $queried['posttype'] ) )
-					return new \WP_Error( 'not_authorized', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
+					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
 
 				$response = self::_get_select2_posts( $queried );
 				break;
@@ -71,7 +72,7 @@ class SelectSingle extends Main
 			case 'term':
 
 				if ( empty( $queried['taxonomy'] ) )
-					return new \WP_Error( 'no_correct_settings', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
+					return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
 
 				$queried['taxonomy'] = explode( ',', $queried['taxonomy'] );
 
@@ -81,14 +82,14 @@ class SelectSingle extends Main
 
 				// again check if any left!
 				if ( empty( $queried['taxonomy'] ) )
-					return new \WP_Error( 'not_authorized', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
+					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
 
 				$response = self::_get_select2_terms( $queried );
 				break;
 
 			default:
 
-				return new \WP_Error( 'no_correct_settings', esc_html_x( 'Something\'s wrong!', 'Service: SelectSingle: Error', 'geditorial' ) );
+				return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
 		}
 
 		return new \WP_REST_Response( $response, 200 );
