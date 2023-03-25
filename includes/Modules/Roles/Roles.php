@@ -58,6 +58,12 @@ class Roles extends gEditorial\Module
 					'title'       => _x( 'Tags for Authors', 'Setting Title', 'geditorial-roles' ),
 					'description' => _x( 'Allows Authors to manage post tags.', 'Setting Description', 'geditorial-roles' ),
 				],
+				[
+					'field'       => 'disable_builtin_post',
+					'type'        => 'disabled',
+					'title'       => _x( 'Built-in Post & Category', 'Setting Title', 'geditorial-roles' ),
+					'description' => _x( 'Removes access to the builtin post post-type and category taxonomy on the admin.', 'Setting Description', 'geditorial-roles' ),
+				],
 			],
 		];
 
@@ -139,6 +145,14 @@ class Roles extends gEditorial\Module
 		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Button', 'geditorial-roles' ) );
 	}
 
+	public function after_setup_theme()
+	{
+		if ( $this->get_setting( 'disable_builtin_post' ) ) {
+			$this->filter( 'register_post_post_type_args', 2, 12, 'disable' ); // @since WP6.0.0
+			$this->filter( 'register_category_taxonomy_args', 2, 12, 'disable' ); // @since WP6.0.0
+		}
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -174,6 +188,39 @@ class Roles extends gEditorial\Module
 				return TRUE;
 
 		return FALSE;
+	}
+
+	// @REF: https://wordpress.stackexchange.com/a/293207
+	public function register_post_post_type_args_disable( $args, $posttype_name )
+	{
+		$args['capabilities'] = [
+            'create_posts'           => 'do_not_allow',
+            'delete_others_posts'    => 'do_not_allow',
+            'delete_posts'           => 'do_not_allow',
+            'delete_private_posts'   => 'do_not_allow',
+            'delete_published_posts' => 'do_not_allow',
+            'edit_others_posts'      => 'do_not_allow',
+            'edit_posts'             => 'do_not_allow',
+            'edit_private_posts'     => 'do_not_allow',
+            'edit_published_posts'   => 'do_not_allow',
+            'publish_posts'          => 'do_not_allow',
+            'read'                   => 'do_not_allow',
+		];
+
+		return $args;
+	}
+
+	// TODO: maybe `rewrite`/`publicly_queryable` FALSE
+	public function register_category_taxonomy_args_disable( $args, $taxonomy )
+	{
+		$args['capabilities'] = [
+            'manage_terms' => 'do_not_allow',
+            'edit_terms'   => 'do_not_allow',
+            'delete_terms' => 'do_not_allow',
+            'assign_terms' => 'do_not_allow',
+		];
+
+		return $args;
 	}
 
 	// @SEE: https://developer.wordpress.org/?p=1109
