@@ -10,6 +10,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\User;
@@ -457,6 +458,9 @@ class Config extends gEditorial\Module
 		$subs     = apply_filters( $this->base.'_imports_subs', $subs, 'imports', $can );
 		$messages = apply_filters( $this->base.'_imports_messages', Settings::messages(), $sub, $can );
 
+		if ( $can )
+			$subs['data'] = _x( 'Data', 'Imports Sub', 'geditorial-config' );
+
 		Settings::wrapOpen( $sub, 'imports' );
 
 			Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-config' ) );
@@ -465,6 +469,9 @@ class Config extends gEditorial\Module
 
 			if ( 'overview' == $sub )
 				$this->imports_overview( $uri );
+
+			else if ( 'data' == $sub )
+				$this->imports_data( $uri );
 
 			else if ( 'console' == $sub )
 				gEditorial()->files( 'Layouts/console.imports' );
@@ -483,6 +490,31 @@ class Config extends gEditorial\Module
 	protected function imports_overview( $uri )
 	{
 		do_action( $this->base.'_imports_overview', $uri );
+	}
+
+	// TODO: download link
+	protected function imports_data( $uri )
+	{
+		foreach ( apply_filters( $this->base.'_imports_data_summary', [] ) as $row ) {
+
+			$data = self::atts( [
+				'title'       => _x( 'Untitled', 'Imports: Data Summary', 'geditorial-config' ),
+				'description' => '',
+				'path'        => '',
+				'updated'     => '',
+				'sources'     => [],
+			], $row );
+
+			$data['updated']     = Datetime::htmlHumanTime( $data['updated'] );
+			$data['description'] = Helper::prepDescription( $data['description'] );
+			$data['links']       = count( (array) $data['sources'] );
+
+			echo $this->wrap_open( '-view -imports-data-summary' );
+				$this->render_view( 'imports-data-summary', $data );
+			echo '</div>';
+		}
+
+		do_action( $this->base.'_imports_data', $uri );
 	}
 
 	protected function render_imports_html( $uri, $sub )
