@@ -155,7 +155,7 @@ class Config extends gEditorial\Module
 
 	protected function reports_overview( $uri )
 	{
-		// summary of available tools
+		do_action( $this->base.'_reports_overview', $uri );
 	}
 
 	public function admin_tools_page()
@@ -206,9 +206,17 @@ class Config extends gEditorial\Module
 
 	protected function tools_overview( $uri )
 	{
+		do_action( $this->base.'_tools_overview', $uri );
+	}
+
+	public function tools_overview_notice( $uri )
+	{
 		if ( function_exists( 'gnetwork_update_notice' ) )
 			gnetwork_update_notice( GEDITORIAL_FILE );
+	}
 
+	public function tools_overview_readme( $uri )
+	{
 		if ( function_exists( 'gnetwork_github_readme' ) )
 			gnetwork_github_readme( 'geminorum/geditorial' );
 	}
@@ -310,6 +318,9 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->base.'_tools_settings', $sub );
+
+		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
+		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
 	}
 
 	protected function render_reports_html( $uri, $sub )
@@ -468,6 +479,11 @@ class Config extends gEditorial\Module
 			$this->settings_signature( 'imports' );
 
 		Settings::wrapClose();
+	}
+
+	protected function imports_overview( $uri )
+	{
+		do_action( $this->base.'_imports_overview', $uri );
 	}
 
 	protected function render_imports_html( $uri, $sub )
