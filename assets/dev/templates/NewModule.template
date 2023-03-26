@@ -30,11 +30,58 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 					'description' => _x( 'Description.', 'Setting Description', '<%= moduleTextdomain %>' ),
 				],
 			],
+			'_supports' => [
+				'assign_default_term',
+				'comment_status',
+				'shortcode_support',
+				'thumbnail_support',
+				$this->settings_supports_option( 'primary_posttype', TRUE ),
+			],
 		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'primary_posttype' => '',
+			'primary_taxonomy' => '',
+		];
+	}
+
+	protected function get_global_strings()
+	{
+		$strings = [
+			'noops' => [
+				'primary_posttype' => _nx_noop( '', '', 'Noop', '<%= moduleTextdomain %>' ),
+				'primary_taxonomy' => _nx_noop( '', '', 'Noop', '<%= moduleTextdomain %>' ),
+			],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		return $strings;
 	}
 
 	public function init()
 	{
 		parent::init();
+
+		$this->register_taxonomy( 'primary_taxonomy', [
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL,
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
+		], 'primary_posttype' );
+
+		$this->register_posttype( 'primary_posttype', [
+			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
+		] );
+	}
+
+	public function after_setup_theme()
+	{
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 }

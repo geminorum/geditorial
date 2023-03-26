@@ -33,12 +33,14 @@
     "changes": "echo ### > CHANGES.temp && git changelog >> CHANGES.temp && (echo. & echo.) >> CHANGES.temp && type CHANGES.md >> CHANGES.temp && type CHANGES.temp > CHANGES.md && del CHANGES.temp",
     "release": "gulp github:package && start https://github.com/geminorum/geditorial/releases",
     "home": "start https://github.com/geminorum/geditorial/",
-    "issues": "start https://github.com/geminorum/geditorial/issues"
+    "issues": "start https://github.com/geminorum/geditorial/issues",
+    "comp:show": "composer show --tree",
+    "comp:deps": "composer-require-checker check composer.json"
   },
   "devDependencies": {
-    "@wordpress/browserslist-config": "^5.10.0",
-    "@wordpress/stylelint-config": "^21.10.0",
-    "autoprefixer": "^10.4.13",
+    "@wordpress/browserslist-config": "^5.12.0",
+    "@wordpress/stylelint-config": "^21.12.0",
+    "autoprefixer": "^10.4.14",
     "browserslist": "^4.21.5",
     "cssnano": "^5.1.15",
     "del": "^7.0.0",
@@ -65,7 +67,7 @@
     "postcss": "^8.4.21",
     "rtlcss": "^4.0.0",
     "semistandard": "^16.0.1",
-    "stylelint": "^15.2.0",
+    "stylelint": "^15.3.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {
