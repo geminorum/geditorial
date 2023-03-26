@@ -2675,10 +2675,18 @@ class Module extends Base
 		return $fallback;
 	}
 
-	public function get_setting_fallback( $field, $fallback )
+	public function get_setting_fallback( $field, $fallback, $empty = '' )
 	{
-		if ( ! empty( $this->options->settings[$field] ) )
-			return $this->options->settings[$field];
+		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+
+		if ( array_key_exists( $field, $settings ) ) {
+
+			if ( '0' === $settings[$field] )
+				return $empty;
+
+			if ( ! empty( $settings[$field] ) )
+				return $settings[$field];
+		}
 
 		if ( array_key_exists( $field, $this->deafults ) )
 			return $this->deafults[$field];
@@ -6153,27 +6161,19 @@ class Module extends Base
 	// DEFAULT METHOD: title for overrided archive page
 	public function template_get_archive_title( $posttype )
 	{
-		if ( $title = $this->get_setting( 'archive_title', FALSE ) )
-			return $title;
-
-		return PostType::object( $posttype )->labels->all_items;
+		return $this->get_setting_fallback( 'archive_title',
+			PostType::object( $posttype )->labels->all_items );
 	}
 
 	// no need to check for posttype
 	public function post_type_archive_title( $name, $posttype )
 	{
-		if ( $title = $this->get_setting( 'archive_title', FALSE ) )
-			return $title;
-
-		return $name;
+		return $this->get_setting_fallback( 'archive_title', $name );
 	}
 
 	public function gtheme_navigation_crumb_archive( $crumb, $args )
 	{
-		if ( $title = $this->get_setting( 'archive_title', FALSE ) )
-			return $title;
-
-		return $crumb;
+		return $this->get_setting_fallback( 'archive_title', $crumb );
 	}
 
 	// DEFAULT METHOD: content for overrided archive page

@@ -755,7 +755,8 @@ class Settings extends Core\Base
 			'field'       => 'archive_title',
 			'type'        => 'text',
 			'title'       => _x( 'Archive Title', 'Setting: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Displays as archive title. Leave blank for default.', 'Setting: Setting Description', 'geditorial' ),
+			/* translators: %s: zero placeholder */
+			'description' => $description ?: sprintf( _x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial' ), HTML::code( '0' ) ),
 		];
 	}
 
