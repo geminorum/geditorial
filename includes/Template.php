@@ -596,14 +596,33 @@ class Template extends Main
 
 	public static function doMediaShortCode( $meta, $type = NULL )
 	{
+		$html = $meta;
+
 		switch ( $type ) {
-			// @SEE: https://wordpress.org/documentation/article/audio-shortcode/
-			case 'audio': return apply_shortcodes( sprintf( '[audio src="%s" /]', $meta ) );
-			// @SEE: https://wordpress.org/documentation/article/video-shortcode/
-			case 'video': return apply_shortcodes( sprintf( '[video src="%s" /]', $meta ) );
+
+			case 'text':
+
+				$html = HTML::tag( 'a', [
+					'href'   => $meta,
+					'class'  => '-media-text-link',
+					'target' => '_blank',
+				], _x( 'Text', 'Template: Text file label', 'geditorial' ) );
+				break;
+
+			case 'audio':
+
+				// @SEE: https://wordpress.org/documentation/article/audio-shortcode/
+				$html = apply_shortcodes( sprintf( '[audio src="%s" /]', $meta ) );
+				break;
+
+			case 'video':
+
+				// @SEE: https://wordpress.org/documentation/article/video-shortcode/
+				$html = apply_shortcodes( sprintf( '[video src="%s" /]', $meta ) );
+				break;
 		}
 
-		return $meta;
+		return apply_filters( static::BASE.'_media_shortcode', $html, $meta, $type );
 	}
 
 	// FIXME: DEPRECATED
