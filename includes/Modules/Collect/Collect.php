@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
@@ -528,6 +529,31 @@ class Collect extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'collection_cpt', $counts ) );
 	}
 
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+				$this->paired_tools_handle_tablelist( 'collection_cpt', 'collection_tax' );
+			}
+
+			Scripts::enqueueThickBox();
+		}
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		return $this->paired_tools_render_tablelist( 'collection_cpt', 'collection_tax', NULL, _x( 'Collect Tools', 'Header', 'geditorial-collect' ) );
+	}
+
+	protected function render_tools_html_after( $uri, $sub )
+	{
+		$this->paired_tools_render_card( 'collection_cpt', 'collection_tax' );
+	}
+
 	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
@@ -578,194 +604,5 @@ class Collect extends gEditorial\Module
 			$this->constant( 'poster_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);
-	}
-
-	// FIXME: update from magazine module
-	protected function render_tools_html( $uri, $sub )
-	{
-		HTML::h3( _x( 'Collect Tools', 'Header', 'geditorial-collect' ) );
-
-		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'From Terms', 'Tools', 'geditorial-collect' ).'</th><td>';
-		echo $this->wrap_open_buttons( '-tools' );
-
-		Settings::submitButton( 'collection_tax_check',
-			_x( 'Check Terms', 'Button', 'geditorial-collect' ), TRUE );
-
-		Settings::submitButton( 'collection_post_create',
-			_x( 'Create Collection Posts', 'Button', 'geditorial-collect' ) );
-
-		Settings::submitButton( 'collection_post_connect',
-			_x( 'Re-Connect Posts', 'Button', 'geditorial-collect' ) );
-
-		Settings::submitButton( 'collection_store_order',
-			_x( 'Store Orders', 'Button', 'geditorial-collect' ) );
-
-		Settings::submitButton( 'collection_tax_delete',
-			_x( 'Delete Terms', 'Button', 'geditorial-collect' ), 'danger', TRUE );
-
-
-		echo '</p>';
-
-		if ( ! empty( $_POST ) && isset( $_POST['collection_tax_check'] ) ) {
-			echo '<br />';
-
-			HTML::tableList( [
-				'_cb'     => 'term_id',
-				'term_id' => Tablelist::columnTermID(),
-				'name'    => Tablelist::columnTermName(),
-				'paired'   => [
-					'title'    => _x( 'Paired Collection Post', 'Table Column', 'geditorial-collect' ),
-					'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-						if ( $post_id = $this->paired_get_to_post_id( $row, 'collection_cpt', 'collection_tax', FALSE ) )
-							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-						return Helper::htmlEmpty();
-					},
-				],
-				'slugged'   => [
-					'title' => _x( 'Same Slug Collection Post', 'Table Column', 'geditorial-collect' ),
-					'callback' => function( $value, $row, $column, $index, $key, $args ) {
-
-						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
-							return Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
-
-						return Helper::htmlEmpty();
-					},
-				],
-				'count' => [
-					'title'    => _x( 'Count', 'Table Column', 'geditorial-collect' ),
-					'callback' => function( $value, $row, $column, $index, $key, $args ) {
-						if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( 'collection_cpt' ) ) )
-							return Number::format( $this->paired_get_from_posts( $post_id, 'collection_cpt', 'collection_tax', TRUE ) );
-						return Number::format( $row->count );
-					},
-				],
-				'description' => Tablelist::columnTermDesc(),
-			], Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE ), [
-				'empty' => HTML::warning( _x( 'There are no terms available!', 'Table Empty', 'geditorial-collect' ), FALSE ),
-			] );
-		}
-
-		HTML::desc( _x( 'Check for collection terms and create corresponding collection posts.', 'Message', 'geditorial-collect' ) );
-
-		echo '</td></tr>';
-		echo '</table>';
-	}
-
-	public function tools_settings( $sub )
-	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
-
-			if ( ! empty( $_POST ) ) {
-
-				$this->nonce_check( 'tools', $sub );
-
-				if ( Tablelist::isAction( 'collection_post_create', TRUE ) ) {
-
-					$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE );
-					$posts = [];
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! isset( $terms[$term_id] ) )
-							continue;
-
-						if ( PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) ) )
-							continue;
-
-						$posts[] = PostType::newPostFromTerm(
-							$terms[$term_id],
-							$this->constant( 'collection_tax' ),
-							$this->constant( 'collection_cpt' ),
-							gEditorial()->user( TRUE )
-						);
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'created',
-						'count'   => count( $posts ),
-					] );
-
-				} else if ( Tablelist::isAction( 'collection_store_order', TRUE )
-					|| Tablelist::isAction( 'collection_store_start', TRUE ) ) {
-
-					if ( ! gEditorial()->enabled( 'meta' ) )
-						WordPress::redirectReferer( 'wrong' );
-
-					$count = 0;
-
-					$field_key = isset( $_POST['collection_store_order'] )
-						? 'in_collection_order'
-						: 'in_collection_page_start';
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-						foreach ( $this->paired_get_from_posts( NULL, 'collection_cpt', 'collection_tax', FALSE, $term_id ) as $post ) {
-
-							if ( $post->menu_order )
-								continue;
-
-							if ( $order = gEditorial()->module( 'meta' )->get_postmeta_field( $post->ID, $field_key ) ) {
-								wp_update_post( [
-									'ID'         => $post->ID,
-									'menu_order' => $order,
-								] );
-								$count++;
-							}
-						}
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'ordered',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'collection_post_connect', TRUE ) ) {
-
-					$terms = Taxonomy::getTerms( $this->constant( 'collection_tax' ), FALSE, TRUE );
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( ! isset( $terms[$term_id] ) )
-							continue;
-
-						$post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( 'collection_cpt' ) );
-
-						if ( FALSE === $post_id )
-							continue;
-
-						if ( $this->paired_set_to_term( $post_id, $terms[$term_id], 'collection_cpt', 'collection_tax' ) )
-							$count++;
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'updated',
-						'count'   => $count,
-					] );
-
-				} else if ( Tablelist::isAction( 'collection_tax_delete', TRUE ) ) {
-
-					$count = 0;
-
-					foreach ( $_POST['_cb'] as $term_id ) {
-
-						if ( $this->paired_remove_to_term( NULL, $term_id, 'collection_cpt', 'collection_tax' ) ) {
-
-							$deleted = wp_delete_term( $term_id, $this->constant( 'collection_tax' ) );
-
-							if ( $deleted && ! is_wp_error( $deleted ) )
-								$count++;
-						}
-					}
-
-					WordPress::redirectReferer( [
-						'message' => 'deleted',
-						'count'   => $count,
-					] );
-				}
-			}
-		}
 	}
 }
