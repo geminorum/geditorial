@@ -111,6 +111,7 @@ class Plugin
 		$this->init_modules();
 
 		Query::setup();
+		Services\Paired::setup();
 		Services\SelectSingle::setup();
 		Services\ObjectToObject::setup();
 	}

@@ -21,6 +21,7 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Theme;
 use geminorum\gEditorial\WordPress\User;
 use geminorum\gEditorial\Services\O2O;
+use geminorum\gEditorial\Services\Paired;
 
 class Module extends Base
 {
@@ -2870,6 +2871,7 @@ class Module extends Base
 
 			/// gEditorial Props
 			'primary_taxonomy' => NULL, // @SEE: `PostType::getPrimaryTaxonomy()`
+			'paired_taxonomy'  => FALSE, // @SEE: `Paired::isPostType()`
 
 			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
@@ -3205,6 +3207,7 @@ class Module extends Base
 		}
 
 		return $this->register_posttype( $posttype, array_merge( [
+			'paired_taxonomy'   => $this->_paired,
 			'hierarchical'      => TRUE,
 			'show_in_admin_bar' => FALSE,
 			'rewrite'           => [
@@ -4351,15 +4354,11 @@ class Module extends Base
 		);
 	}
 
+	// PAIRED API
+	// NOTE: here so modules can override
 	public function paired_get_to_term_direct( $post_id, $posttype, $taxonomy )
 	{
-		if ( empty( $post_id ) )
-			return FALSE;
-
-		if ( ! $term_id = get_post_meta( $post_id, sprintf( '_%s_term_id', $posttype ), TRUE ) )
-			return FALSE;
-
-		return get_term_by( 'id', (int) $term_id, $taxonomy );
+		return Paired::getToTerm( $post_id, $posttype, $taxonomy );
 	}
 
 	// PAIRED API
