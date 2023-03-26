@@ -7,6 +7,8 @@ use geminorum\gEditorial\Core;
 class PostType extends Core\Base
 {
 
+	const PRIMARY_TAXONOMY_PROP = 'primary_taxonomy';
+
 	public static function object( $posttype_or_post )
 	{
 		if ( ! $posttype_or_post )
@@ -21,6 +23,28 @@ class PostType extends Core\Base
 		return get_post_type_object( $posttype_or_post );
 	}
 
+	// TODO: also passing a post
+	public static function viewable( $posttype )
+	{
+		return is_post_type_viewable( $posttype );
+	}
+
+	// TODO: also passing a post
+	public static function viewableStatus( $status )
+	{
+		return is_post_status_viewable( $status );
+	}
+
+	// @REF: `is_post_publicly_viewable()` @since WP5.7.0
+	public static function viewablePost( $post )
+	{
+		if ( ! $post = self::getPost( $post ) )
+			return FALSE;
+
+		return self::viewable( $post->post_type )
+			&& self::viewableStatus( get_post_status( $post ) );
+	}
+
 	public static function can( $posttype, $capability = 'edit_posts', $user_id = NULL )
 	{
 		if ( is_null( $capability ) )
@@ -33,6 +57,30 @@ class PostType extends Core\Base
 			: user_can( $user_id, $cap );
 	}
 
+	/**
+	 * Retrieves the list of posttypes.
+	 *
+	 * Argument values for `$args` include:
+	 * 	`public` Boolean: If true, only public post types will be returned.
+	 * 	`publicly_queryable` Boolean
+	 * 	`exclude_from_search` Boolean
+	 * 	`show_ui` Boolean
+	 * 	`capability_type`
+	 * 	`hierarchical`
+	 * 	`menu_position`
+	 * 	`menu_icon`
+	 * 	`permalink_epmask`
+	 *  `rewrite`
+	 * 	`query_var`
+	 *  `show_in_rest` Boolean: If true, will return post types whitelisted for the REST API
+	 * 	`_builtin` Boolean: If true, will return WordPress default post types. Use false to return only custom post types.
+	 *
+	 * @param  int    $mod
+	 * @param  array  $args
+	 * @param  null|string $capability
+	 * @param  int $user_id
+	 * @return array $list
+	 */
 	public static function get( $mod = 0, $args = [ 'public' => TRUE ], $capability = NULL, $user_id = NULL )
 	{
 		$list = [];
@@ -91,6 +139,18 @@ class PostType extends Core\Base
 			$statuses[$status->name] = $status->label;
 
 		return $statuses;
+	}
+
+	public static function getAvailableStatuses( $posttype, $excludes = NULL )
+	{
+		if ( is_null( $excludes ) )
+			$excludes = [
+				'trash',
+				'private',
+				'auto-draft',
+			];
+
+		return array_diff_key( get_available_post_statuses( $posttype ), (array) $excludes );
 	}
 
 	// TODO: support regex on meta-keys
@@ -162,7 +222,6 @@ class PostType extends Core\Base
 
 		return $list;
 	}
-
 
 	public static function invalidateIDbyMeta( $meta, $value )
 	{
@@ -536,17 +595,10 @@ class PostType extends Core\Base
 		return add_query_arg( $args, ( 'attachment' === $posttype ? 'upload.php' : 'edit.php' ) );
 	}
 
-	// simplified `get_post()`
+	// DEPRECATED: use `Post::get()`
 	public static function getPost( $post = NULL, $output = OBJECT, $filter = 'raw' )
 	{
-		if ( $post instanceof \WP_Post )
-			return $post;
-
-		// handling dummy posts!
-		if ( '-9999' == $post )
-			$post = NULL;
-
-		return get_post( $post, $output, $filter );
+		return Post::get( $post, $output, $filter );
 	}
 
 	public static function getRestRoute( $post = NULL )
@@ -598,6 +650,7 @@ class PostType extends Core\Base
 		return $fallback;
 	}
 
+	// NOTE: parent post type can be diffrenet
 	public static function getParentTitles( $post, $suffix = '', $separator = NULL )
 	{
 		if ( ! $post = self::getPost( $post ) )
@@ -628,5 +681,28 @@ class PostType extends Core\Base
 			return $suffix;
 
 		return Strings::getJoined( array_reverse( $parents ), '', $suffix ? $separator.$suffix : '', '', $separator );
+	}
+
+	public static function getPrimaryTaxonomy( $posttype, $fallback = FALSE )
+	{
+		$taxonomy = $fallback;
+
+		if ( 'post' === $posttype )
+			$taxonomy = 'category';
+
+		else if ( 'page' === $posttype )
+			$taxonomy = $fallback;
+
+		else if ( $posttype == WooCommerce::getProductPosttype() && WooCommerce::isActive() )
+			$taxonomy = WooCommerce::getProductCategoryTaxonomy();
+
+		if ( ! $taxonomy && ( $object = self::object( $posttype ) ) ) {
+
+			if ( ! empty( $object->{self::PRIMARY_TAXONOMY_PROP} )
+				&& taxonomy_exists( $object->{self::PRIMARY_TAXONOMY_PROP} ) )
+					$taxonomy = $object->{self::PRIMARY_TAXONOMY_PROP};
+		}
+
+		return apply_filters( 'geditorial_posttype_primary_taxonomy', $taxonomy, $posttype, $fallback );
 	}
 }

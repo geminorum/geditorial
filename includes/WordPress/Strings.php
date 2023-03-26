@@ -126,4 +126,46 @@ class Strings extends Core\Base
 
 		return $content;
 	}
+
+	/**
+	 * Strips all HTML tags including script and style.
+	 *
+	 * @source `Yoast\WP\SEO\Helpers\String_Helper::strip_all_tags()`
+	 *
+	 * @param string $text The text to strip the tags from.
+	 * @return string The processed string.
+	 */
+	public static function stripAllTags( $text )
+	{
+		return \wp_strip_all_tags( $text );
+	}
+
+	/**
+	 * Standardize whitespace in a string.
+	 *
+	 * Replace line breaks, carriage returns, tabs with a space, then remove double spaces.
+	 *
+	 * @source `Yoast\WP\SEO\Helpers\String_Helper::standardize_whitespace()`
+	 *
+	 * @param string $text Text input to standardize.
+	 * @return string
+	 */
+	public static function standardizeWhitespace( $text )
+	{
+		return \trim( \str_replace( '  ', ' ', \str_replace( [ "\t", "\n", "\r", "\f" ], ' ', $text ) ) );
+	}
+
+	/**
+	 * First strip out registered and enclosing shortcodes using native WordPress strip_shortcodes function.
+	 * Then strip out the shortcodes with a filthy regex, because people don't properly register their shortcodes.
+	 *
+	 * @source `Yoast\WP\SEO\Helpers\String_Helper::strip_shortcode()`
+	 *
+	 * @param string $text Input string that might contain shortcodes.
+	 * @return string String without shortcodes.
+	 */
+	public static function stripShortCode( $text )
+	{
+		return \preg_replace( '`\[[^\]]+\]`s', '', \strip_shortcodes( $text ) );
+	}
 }

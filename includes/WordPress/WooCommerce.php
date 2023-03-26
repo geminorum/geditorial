@@ -29,6 +29,11 @@ class WooCommerce extends Core\Base
 		return 'product';
 	}
 
+	public static function getProductCategoryTaxonomy()
+	{
+		return 'product_cat';
+	}
+
 	public static function getOrderStatuses()
 	{
 		$statuses = [];

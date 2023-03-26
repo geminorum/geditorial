@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class IBAN extends Base
 {
 
+	// NOTE: `bcmod()` needs `ext-bcmath`
+
 	/**
 	 * @author Esser Jan
 	 * @license MIT
@@ -109,7 +111,7 @@ class IBAN extends Base
 
         // 2. + 3. + 4. + 5. only checking upper case characters cause we strtoupper 'd it in constructor
         // and 0 cause then we can strip it in one go, we cant cast to int here due to 64bit limitation
-        $checkString = preg_replace_callback( ['/[A-Z]/', '/^[0]+/'], function( $matches ) {
+        $checkString = preg_replace_callback( ['/[A-Z]/', '/^[0]+/'], static function( $matches ) {
             if ( substr( $matches[0], 0, 1 ) !== '0' ) // may be multiple leading 0's
                 return base_convert( $matches[0], 36, 10 );
             return '';

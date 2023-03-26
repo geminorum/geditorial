@@ -468,4 +468,13 @@ class Database extends Core\Base
 
 		return implode( ',', $values );
 	}
+
+	public static function listUserMetakeys()
+	{
+		global $wpdb;
+
+		$query = "SELECT distinct {$wpdb->usermeta}.meta_key FROM {$wpdb->usermeta}";
+
+		return array_column( $wpdb->get_results( $query, ARRAY_A ), 'meta_key' );
+	}
 }

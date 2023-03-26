@@ -426,6 +426,32 @@ class Arraay extends Base
 		return is_array( $value ) ? array_map( [ __CLASS__, 'changeCaseLowerCallback' ], $value ) : strtolower( $value );
 	}
 
+	/**
+	 * Replaces keys in an array based on another mapping array.
+	 *
+	 * @source https://stackoverflow.com/a/36435888
+	 *
+	 * @param  array $array
+	 * @param  array $map
+	 * @return array $array
+	 */
+	public static function reKeyByMap_ALT( $array, $map )
+	{
+		if ( empty( $array ) || empty( $map ) || ! self::isAssoc( $array ) )
+			return $array;
+
+		return array_combine( array_map( function( $el ) use ( $map ) {
+			return isset( $map[$el] ) ? $map[$el] : $el;
+		}, array_keys( $array ) ), array_values( $array ) );
+	}
+
+	/**
+	 * Replaces keys in an array based on another mapping array.
+	 *
+	 * @param  array $array
+	 * @param  array $map
+	 * @return array $array
+	 */
 	public static function reKeyByMap( $array, $map )
 	{
 		if ( empty( $array ) || empty( $map ) || ! self::isAssoc( $array ) )
@@ -523,9 +549,9 @@ class Arraay extends Base
                                         //  $a = 1 2 3 4
 		return                          //  $b =   2   4 5 6
 		array_merge(
-			array_intersect($a, $b),    //         2   4
-			array_diff($a, $b),         //       1   3
-			array_diff($b, $a)          //               5 6
+			array_intersect( $a, $b ),  //         2   4
+			array_diff( $a, $b ),       //       1   3
+			array_diff( $b, $a )        //               5 6
 		);                              //  $u = 1 2 3 4 5 6
 	}
 }

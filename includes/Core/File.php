@@ -236,6 +236,9 @@ class File extends Base
 	// WP core `size_format()` function without `number_format_i18n()`
 	public static function formatSize( $bytes, $decimals = 0 )
 	{
+		if ( 0 === $bytes )
+			return number_format( 0, $decimals ).' B';
+
 		$quant = [
 			'YB' => 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
 			'ZB' => 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
@@ -247,9 +250,6 @@ class File extends Base
 			'KB' => 1024,
 			'B'  => 1,
 		];
-
-		if ( 0 === $bytes )
-			return number_format( 0, $decimals ).' B';
 
 		foreach ( $quant as $unit => $mag )
 			if ( (float) $bytes >= $mag )
@@ -364,10 +364,10 @@ class File extends Base
 				// the last line in the file is right after the linebreak
 				$line_end = ftell( $handle ) + $lb + 1;
 
-				self::_log($line_end);
+				self::_log( $line_end );
 			}
 
-			self::_log($string);
+			self::_log( $string );
 
 			// break out of the loop if we are at the beginning of the file
 			if ( 0 == ftell( $handle ) )
@@ -393,5 +393,41 @@ class File extends Base
 			// close the file, nothing else to do.
 			fclose( $handle );
 		}
+	}
+
+	// @REF: https://paulund.co.uk/html5-download-attribute
+	public static function download( $path, $name = NULL, $mime = 'application/octet-stream' )
+	{
+		if ( ! is_readable( $path ) )
+			return FALSE;
+
+		if ( ! is_file( $path ) )
+			return FALSE;
+
+		if ( is_null( $name ) )
+			$name = basename( $path );
+
+		// @ini_set( 'zlib.output_compression', 'Off' );
+		// @ini_set( 'zlib.output_handler', '' );
+		// @ini_set( 'output_buffering', 'Off' );
+		// @ini_set( 'output_handler', '' );
+
+		header( 'Content-Description: File Transfer' );
+		header( 'Pragma: public' ); // required
+		header( 'Expires: 0' ); // no cache
+		header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
+		header( 'Cache-Control: private', FALSE );
+		header( 'Content-Type: '.$mime );
+		header( 'Content-Length: '.self::size( $path ) );
+		header( 'Content-Disposition: attachment; filename="'.$name.'"' );
+		header( 'Content-Transfer-Encoding: binary' );
+		header( 'Connection: close' );
+
+		// @ob_clean();
+		// @flush();
+
+		readfile( $path );
+
+		exit;
 	}
 }

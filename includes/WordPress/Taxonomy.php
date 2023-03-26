@@ -12,6 +12,11 @@ class Taxonomy extends Core\Base
 		return is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
 	}
 
+	public static function viewable( $taxonomy )
+	{
+		return is_taxonomy_viewable( $taxonomy );
+	}
+
 	public static function can( $taxonomy, $capability = 'manage_terms', $user_id = NULL )
 	{
 		if ( is_null( $capability ) )
@@ -77,19 +82,6 @@ class Taxonomy extends Core\Base
 		return $list;
 	}
 
-	// @REF: `is_post_type_viewable()`
-	public static function isViewable( $taxonomy )
-	{
-		if ( is_scalar( $taxonomy ) ) {
-
-			if ( ! $taxonomy = get_taxonomy( $taxonomy ) )
-				return FALSE;
-		}
-
-		return $taxonomy->publicly_queryable
-			|| ( $taxonomy->_builtin && $taxonomy->public );
-	}
-
 	public static function getDefaultTermID( $taxonomy, $fallback = FALSE )
 	{
 		return get_option( self::getDefaultTermOptionKey( $taxonomy ), $fallback );
@@ -100,7 +92,7 @@ class Taxonomy extends Core\Base
 		if ( 'category' == $taxonomy )
 			return 'default_category'; // WordPress
 
-		if ( 'product_cat' == $taxonomy )
+		if ( $taxonomy == WooCommerce::getProductCategoryTaxonomy() && WooCommerce::isActive() )
 			return 'default_product_cat'; // WooCommerce
 
 		return 'default_term_'.$taxonomy;
@@ -135,61 +127,27 @@ class Taxonomy extends Core\Base
 		return $fallback;
 	}
 
+	// DEPRECATED: use `Term::get()`
 	public static function getTerm( $term_or_id, $taxonomy = '' )
 	{
-		if ( $term_or_id instanceof \WP_Term )
-			return $term_or_id;
-
-		if ( ! $term_or_id ) {
-
-			if ( is_admin() )
-				return FALSE;
-
-			if ( 'category' == $taxonomy && ! is_category() )
-				return FALSE;
-
-			if ( 'post_tag' == $taxonomy && ! is_tag() )
-				return FALSE;
-
-			if ( ! in_array( $taxonomy, array( 'category', 'post_tag' ) )
-				&& ! is_tax( $taxonomy ) )
-					return FALSE;
-
-			if ( ! $term_or_id = get_queried_object_id() )
-				return FALSE;
-		}
-
-		if ( is_numeric( $term_or_id ) )
-			// $term = get_term_by( 'id', $term_or_id, $taxonomy );
-			$term = get_term( (int) $term_or_id, $taxonomy ); // allows for empty taxonomy
-
-		else if ( $taxonomy )
-			$term = get_term_by( 'slug', $term_or_id, $taxonomy );
-
-		else
-			$term = get_term( $term_or_id, $taxonomy ); // allows for empty taxonomy
-
-		if ( ! $term || is_wp_error( $term ) )
-			return FALSE;
-
-		return $term;
+		return Term::get( $term_or_id, $taxonomy );
 	}
 
 	// @REF: `get_the_term_list()`
 	public static function getTheTermList( $taxonomy, $post = NULL, $before = '', $after = '' )
 	{
 		if ( ! $terms = self::getPostTerms( $taxonomy, $post ) )
-			return FALSE;
+			return [];
 
 		$list = [];
 
 		foreach ( $terms as $term )
-			$list[] = HTML::tag( 'a', [
+			$list[] = $before.Core\HTML::tag( 'a', [
 				'href'  => get_term_link( $term, $taxonomy ),
 				'class' => '-term',
-			], sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) );
+			], sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) ).$after;
 
-		return Strings::getJoined( apply_filters( 'term_links-'.$taxonomy, $list ), $before, $after, FALSE );
+		return apply_filters( 'term_links-'.$taxonomy, $list );
 	}
 
 	public static function getObjectTerms( $taxonomy, $object_id, $fields = 'ids', $extra = [] )

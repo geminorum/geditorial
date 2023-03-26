@@ -285,4 +285,115 @@ class L10n extends Base
 			];
 		}
 	}
+
+	/**
+	 * Pluralizes a word in English
+	 *
+	 * TODO: support multiple words
+	 *
+	 * @source https://www.grammarly.com/blog/plural-nouns/
+	 *
+	 * @param  string $singular Singular form of word
+	 * @return string $plural Plural form of word
+	 */
+	public static function pluralize( $singular )
+	{
+		if ( ! $word = strtolower( trim( $singular ) ) )
+			return $singular;
+
+		$irregulars = [
+			'addendum' => 'addenda',
+			'analysis' => 'analyses',
+			'locus'    => 'loci',
+			'louse'    => 'lice',
+			'oasis'    => 'oases',
+			'ovum'     => 'ova',
+			'child'    => 'children',
+			'goose'    => 'geese',
+			'man'      => 'men',
+			'woman'    => 'women',
+			'tooth'    => 'teeth',
+			'foot'     => 'feet',
+			'mouse'    => 'mice',
+			'person'   => 'people',
+			'sheep'    => 'sheep',
+			'series'   => 'series',
+			'species'  => 'species',
+			'deer'     => 'deer',
+		];
+
+		if ( array_key_exists( $word, $irregulars ) )
+			return $irregulars[$word];
+
+		// $len = strlen( $word );
+		$one = substr( $word, -1 );
+		$two = substr( $word, -2 );
+
+		switch ( $one ) {
+
+			// @SEE: https://gist.github.com/effone/1e54f364559bf919af3be97b7f9d94af
+
+			case 'y':
+
+				$plural = in_array( $two, [ 'ay', 'ey', 'iy', 'oy', 'uy' ], TRUE )
+					? sprintf( '%ss', $word )
+					: sprintf( '%sies', substr( $word, 0, -1 ) );
+
+				break;
+
+			case 'h':
+
+				$plural = in_array( $two, [ 'sh', 'ch' ], TRUE )
+					? sprintf( '%ses', $word )
+					: sprintf( '%ss', $word );
+
+				break;
+
+			case 'n':
+
+				// WTF: `lessons`
+				// $plural = in_array( $two, [ 'on' ], TRUE )
+				// 	? sprintf( '%sa', substr( $word, 0, -2 ) )
+				// 	: sprintf( '%ss', $word );
+
+				$plural = sprintf( '%ss', $word );
+
+				break;
+
+			case 'o':
+
+				$plural = in_array( $word, [ 'photo', 'piano', 'halo', 'gas' ], TRUE )
+					? sprintf( '%ss', $word )
+					: sprintf( '%ses', $word );
+
+				break;
+
+			case 's':
+
+				// If the singular noun ends in -us, the plural ending is frequently -i.
+				// cactus -> cacti
+				// focus -> foci
+
+				// WTF: `statuses`
+				// $plural = in_array( $two, [ 'us' ], TRUE )
+				// 	? sprintf( '%si', substr( $word, 0, -2 ) )
+				// 	: sprintf( '%ses', $word );
+
+				$plural = sprintf( '%ses', $word );
+
+				break;
+
+			case 'x':
+			case 'z':
+
+				$plural = sprintf( '%ses', $word );
+				break;
+
+			default:
+
+				$plural = sprintf( '%ss', $word );
+		}
+
+		return $plural;
+	}
 }

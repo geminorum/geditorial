@@ -284,6 +284,7 @@ class WordPress extends Base
 		return FALSE;
 	}
 
+	// FIXME: move to `PostType`
 	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = array() )
 	{
 		$query = array( 'post_type' => $posttype );
@@ -294,6 +295,7 @@ class WordPress extends Base
 		return add_query_arg( array_merge( $query, $extra ), admin_url( 'edit.php' ) );
 	}
 
+	// FIXME: move to `PostType`
 	// @SEE: `get_edit_post_link()`
 	public static function getPostEditLink( $post_id, $extra = array() )
 	{
