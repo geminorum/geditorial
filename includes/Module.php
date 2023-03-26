@@ -2033,6 +2033,7 @@ class Module extends Base
 			break;
 
 			case 'embed':
+			case 'text_source':
 			case 'audio_source':
 			case 'video_source':
 			case 'link':

@@ -837,6 +837,7 @@ class Template extends Main
 			'action_url',
 			'cover_blurb',
 			'content_embed_url',
+			'text_source',
 			'audio_source_url',
 			'video_source_url',
 			'map_embed_url',

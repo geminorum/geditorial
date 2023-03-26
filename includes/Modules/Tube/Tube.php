@@ -167,6 +167,7 @@ class Tube extends gEditorial\Module
 				'highlight'    => [ 'type' => 'note' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
+				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
 			],
@@ -175,6 +176,7 @@ class Tube extends gEditorial\Module
 				'sub_title'  => [ 'type' => 'title_after' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
+				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
 			],

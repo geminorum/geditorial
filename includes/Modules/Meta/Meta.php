@@ -122,6 +122,7 @@ class Meta extends gEditorial\Module
 				'postal_address' => _x( 'Postal Address', 'Titles', 'geditorial-meta' ),
 
 				'content_embed_url' => _x( 'Content Embed URL', 'Titles', 'geditorial-meta' ),
+				'text_source_url'   => _x( 'Text Source URL', 'Titles', 'geditorial-meta' ),
 				'audio_source_url'  => _x( 'Audio Source URL', 'Titles', 'geditorial-meta' ),
 				'video_source_url'  => _x( 'Video Source URL', 'Titles', 'geditorial-meta' ),
 
@@ -164,6 +165,7 @@ class Meta extends gEditorial\Module
 				'postal_address' => _x( 'Postal Address about the Content', 'Descriptions', 'geditorial-meta' ),
 
 				'content_embed_url' => _x( 'Embeddable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
+				'text_source_url'   => _x( 'Text Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'audio_source_url'  => _x( 'Audio Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'video_source_url'  => _x( 'Video Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 
@@ -238,6 +240,7 @@ class Meta extends gEditorial\Module
 				'postal_address' => [ 'type' => 'note' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
+				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
 
@@ -593,6 +596,7 @@ class Meta extends gEditorial\Module
 				case 'mobile':
 				case 'email':
 				case 'embed':
+				case 'text_source':
 				case 'audio_source':
 				case 'video_source':
 				case 'link':
@@ -769,6 +773,7 @@ class Meta extends gEditorial\Module
 
 				break;
 				case 'embed':
+				case 'text_source':
 				case 'audio_source':
 				case 'video_source':
 				case 'link':
@@ -1151,6 +1156,9 @@ class Meta extends gEditorial\Module
 
 			case 'embed':
 				return Template::doEmbedShortCode( trim( $raw ) );
+
+			case 'text_source':
+				return Template::doMediaShortCode( trim( $raw ), 'text' );
 
 			case 'audio_source':
 				return Template::doMediaShortCode( trim( $raw ), 'audio' );
