@@ -163,6 +163,15 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-inputiban {
+      input {
+        width: 100%;
+
+        /*rtl:ignore*/
+        direction: ltr;
+      }
+    }
+
     &.-inputtext-half {
       input {
         width: 49%;

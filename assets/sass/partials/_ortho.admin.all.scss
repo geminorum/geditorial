@@ -92,10 +92,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 input.ortho-is-valid {
   border-color: $brand-success !important;
+
+  &:focus {
+    box-shadow: 0 0 0 1px $brand-success !important;
+  }
 }
 
 input.ortho-not-valid {
   border-color: $brand-danger !important;
+
+  &:focus {
+    box-shadow: 0 0 0 1px $brand-danger !important;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
