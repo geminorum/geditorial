@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
@@ -1605,7 +1606,7 @@ class Module extends Base
 
 		echo '<form enctype="multipart/form-data" class="'.HTML::prepClass( $class ).'" method="post" action="">';
 
-			if ( in_array( $context, [ 'settings', 'tools', 'reports' ] ) )
+			if ( in_array( $context, [ 'settings', 'tools', 'reports', 'imports' ] ) )
 				$this->render_form_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {

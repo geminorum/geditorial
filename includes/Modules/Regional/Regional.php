@@ -86,10 +86,10 @@ class Regional extends gEditorial\Module
 		$strings['terms'] = [
 			'lang_tax' => [
 				// @SEE: https://en.wikipedia.org/wiki/ISO_639
-				'ar' => _x( 'Arabic', 'Default Term: Language', 'geditorial-regional' ),
-				'fa' => _x( 'Farsi', 'Default Term: Language', 'geditorial-regional' ),
-				'en' => _x( 'English', 'Default Term: Language', 'geditorial-regional' ),
-				'fr' => _x( 'French', 'Default Term: Language', 'geditorial-regional' ),
+				'arabic'  => _x( 'Arabic', 'Default Term: Language', 'geditorial-regional' ),
+				'persian' => _x( 'Farsi', 'Default Term: Language', 'geditorial-regional' ),
+				'english' => _x( 'English', 'Default Term: Language', 'geditorial-regional' ),
+				'french'  => _x( 'French', 'Default Term: Language', 'geditorial-regional' ),
 			],
 		];
 
