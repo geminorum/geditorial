@@ -6482,6 +6482,38 @@ class Module extends Base
 		return FALSE;
 	}
 
+	// IMPORTS API
+	protected function get_imports_page_url( $sub = NULL )
+	{
+		return $this->get_module_url( 'imports', is_null( $sub ) ? $this->key : $sub );
+	}
+
+	protected function _hook_wp_register_importer()
+	{
+		if ( ! function_exists( 'register_importer' ) )
+			return FALSE;
+
+		return register_importer(
+			$this->classs(),
+			$this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ),
+			$this->get_string( 'description', 'wp_importer', 'misc', '' ),
+			[ $this, '_callback_wp_register_importer' ]
+		);
+	}
+
+	public function _callback_wp_register_importer()
+	{
+		$url = $this->get_imports_page_url();
+
+		echo $this->wrap_open( 'wrap' ); // // NOTE: needs `wrap` class for admin styles
+
+			HTML::h1( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ) );
+			HTML::desc( sprintf( $this->get_string( 'redirect', 'wp_importer', 'misc', gEditorial\Plugin::moment( FALSE ) ), $url ) );
+
+			WordPress::redirectJS( $url, 1000 );
+		echo '</div>';
+	}
+
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
 	protected function render_view( $part, $data = [], $path = NULL, $verbose = TRUE )
 	{
