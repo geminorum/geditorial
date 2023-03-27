@@ -938,6 +938,30 @@ class Helper extends Main
 		return $list;
 	}
 
+	public static function parseJSON( $file_path )
+	{
+		if ( empty( $file_path ) )
+			return FALSE;
+
+		return json_decode( File::getContents( $file_path ), TRUE );
+	}
+
+	public static function parseXML( $file_path )
+	{
+		if ( empty( $file_path ) || ! function_exists( 'xml_parser_create' ) )
+			return FALSE;
+
+		if ( ! $contents = File::getContents( $file_path ) )
+			return $contents;
+
+		$parser = xml_parser_create();
+
+		xml_parse_into_struct( $parser, $contents, $values, $index );
+		xml_parser_free( $parser );
+
+		return [ $values, $index ];
+	}
+
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki
 	public static function getMustache( $base = GEDITORIAL_DIR )
 	{
