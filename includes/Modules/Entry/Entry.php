@@ -28,6 +28,10 @@ class Entry extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
+			'_editpost' => [
+				'assign_default_term',
+				'metabox_advanced',
+			],
 			'_editlist' => [
 				'admin_ordering',
 			],
@@ -48,7 +52,6 @@ class Entry extends gEditorial\Module
 				'archive_template',
 			],
 			'_supports' => [
-				'assign_default_term',
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
@@ -114,7 +117,7 @@ class Entry extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'default_term'       => NULL,
-			'meta_box_cb'        => '__checklist_terms_callback',
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], 'entry_cpt' );
 
 		$this->register_posttype( 'entry_cpt', [
