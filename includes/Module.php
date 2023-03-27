@@ -6489,6 +6489,28 @@ class Module extends Base
 		return $this->get_module_url( 'imports', is_null( $sub ) ? $this->key : $sub );
 	}
 
+	// IMPORTS API
+	protected function render_imports_toolbox_card( $imports_url = NULL )
+	{
+		if ( is_null( $imports_url ) )
+			$imports_url = $this->get_imports_page_url();
+
+		echo $this->wrap_open( 'card -toolbox-card' );
+
+			HTML::h4( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ), 'title' );
+			HTML::desc( $this->get_string( 'description', 'wp_importer', 'misc', '' ) );
+
+			$link = HTML::tag( 'a' , [
+				'href'  => $imports_url,
+				'class' => [ 'button', '-button' ],
+			], $this->get_string( 'button', 'wp_importer', 'misc',
+				_x( 'Go to Imports', 'Module: Importer Button', 'geditorial' ) ) );
+
+			echo HTML::wrap( HTML::renderList( (array) $link ), '-toolbox-links' );
+
+		echo '</div>';
+	}
+
 	protected function _hook_wp_register_importer()
 	{
 		if ( ! function_exists( 'register_importer' ) )
