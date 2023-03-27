@@ -744,4 +744,10 @@ class Plugin
 		$message = __( 'Something&#8217;s wrong!', 'geditorial' );
 		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-wrong' ] ], $message ) : $message;
 	}
+
+	public static function moment( $wrap = 'p' )
+	{
+		$message = __( 'Wait for a moment &hellip;', 'geditorial' );
+		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-wrong' ] ], $message ) : $message;
+	}
 }
