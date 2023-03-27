@@ -73,13 +73,15 @@ class Plugin
 
 		add_filter( static::BASE.'_markdown_to_html', [ $this, 'markdown_to_html' ] );
 
-		if ( is_admin() )
-			return;
+		if ( ! is_admin() ) {
 
-		add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
-		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
-		add_filter( 'template_include', [ $this, 'template_include' ], 98 ); // before gTheme
-		add_filter( 'the_content', [ $this, 'the_content' ], 998 );
+			add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
+			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
+			add_filter( 'template_include', [ $this, 'template_include' ], 98 ); // before gTheme
+			add_filter( 'the_content', [ $this, 'the_content' ], 998 );
+		}
+
+		do_action( sprintf( '%s_loaded', static::BASE ) );
 	}
 
 	public function files( $stack, $check = TRUE, $base = GEDITORIAL_DIR )
