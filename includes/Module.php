@@ -3184,7 +3184,7 @@ class Module extends Base
 
 		if ( count( $supported ) ) {
 
-			// adding the main cpt
+			// adding the main posttype
 			$supported[] = $this->constant( $posttype );
 
 			if ( $subterm && $this->get_setting( 'subterms_support' ) )

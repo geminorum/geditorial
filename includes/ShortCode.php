@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;

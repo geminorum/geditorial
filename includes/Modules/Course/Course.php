@@ -416,7 +416,10 @@ class Course extends gEditorial\Module
 
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
-		return [ 'course_cat', 'span_tax' ];
+		return [
+			'course_cat',
+			'span_tax',
+		];
 	}
 
 	public function meta_init()

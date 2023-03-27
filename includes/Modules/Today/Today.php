@@ -103,7 +103,7 @@ class Today extends gEditorial\Module
 				'theday_column_title' => _x( 'Day', 'Column Title', 'geditorial-today' ),
 			],
 			'noops' => [
-				'day_cpt' => _nx_noop( 'Day', 'Days', 'Noop', 'geditorial-today' ),
+				'day_cpt' => _n_noop( 'Day', 'Days', 'geditorial-today' ),
 			],
 		];
 	}

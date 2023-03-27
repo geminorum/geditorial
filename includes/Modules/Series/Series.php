@@ -84,7 +84,7 @@ class Series extends gEditorial\Module
 				'show_option_none'    => _x( '&ndash; Choose a Series &ndash;', 'Show Option None', 'geditorial-series' ),
 			],
 			'noops' => [
-				'series_tax' => _nx_noop( 'Serie', 'Series', 'Noop', 'geditorial-series' ),
+				'series_tax' => _n_noop( 'Serie', 'Series', 'geditorial-series' ),
 			],
 		];
 	}

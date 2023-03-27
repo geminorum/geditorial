@@ -136,12 +136,10 @@ class Countables extends gEditorial\Module
 
 		foreach ( Strings::getSeparated( $args['taxonomy'] ) as $taxonomy ) {
 
-			if ( ! $taxonomy )
+			if ( ! $taxonomy || ! taxonomy_exists( $taxonomy ) )
 				continue;
 
-			$count = wp_count_terms( $taxonomy );
-
-			if ( self::isError( $count ) )
+			if ( ! $count = Taxonomy::hasTerms( $taxonomy ) )
 				continue;
 
 			$tokens = $this->filters( 'taxonomy_countbox_tokens', [

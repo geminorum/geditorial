@@ -65,7 +65,7 @@ class Specs extends gEditorial\Module
 				'show_option_none' => _x( '&ndash; Choose a Specification &ndash;', 'Show Option None', 'geditorial-specs' ),
 			],
 			'noops' => [
-				'specs_tax' => _nx_noop( 'Specification', 'Specifications', 'Noop', 'geditorial-specs' ),
+				'specs_tax' => _n_noop( 'Specification', 'Specifications', 'geditorial-specs' ),
 			],
 		];
 

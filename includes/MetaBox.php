@@ -765,7 +765,7 @@ class MetaBox extends Main
 
 	public static function glanceTaxonomy( $taxonomy, $noop, $extra_class = '' )
 	{
-		if ( ! $terms = wp_count_terms( $taxonomy ) )
+		if ( ! $terms = Taxonomy::hasTerms( $taxonomy ) )
 			return FALSE;
 
 		$object = get_taxonomy( $taxonomy );

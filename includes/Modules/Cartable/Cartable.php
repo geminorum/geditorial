@@ -174,7 +174,7 @@ class Cartable extends gEditorial\Module
 				'metabox_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),
 			],
 			'noops' => [
-				'type_tax' => _nx_noop( 'Cartable Type', 'Cartable Types', 'Noop', 'geditorial-cartable' ),
+				'type_tax' => _n_noop( 'Cartable Type', 'Cartable Types', 'geditorial-cartable' ),
 			],
 			'settings' => [
 				'sync_terms' => _x( 'Sync Users & Groups', 'Button', 'geditorial-cartable' ),

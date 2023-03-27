@@ -529,7 +529,6 @@ class Collect extends gEditorial\Module
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'collection_cpt', $counts ) );
 	}
 
-
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {

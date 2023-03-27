@@ -99,10 +99,10 @@ class Tube extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'video_cpt'   => _nx_noop( 'Video', 'Videos', 'Noop', 'geditorial-tube' ),
-				'video_cat'   => _nx_noop( 'Video Category', 'Video Categories', 'Noop', 'geditorial-tube' ),
-				'channel_cpt' => _nx_noop( 'Channel', 'Channels', 'Noop', 'geditorial-tube' ),
-				'channel_cat' => _nx_noop( 'Channel Category', 'Channel Categories', 'Noop', 'geditorial-tube' ),
+				'video_cpt'   => _n_noop( 'Video', 'Videos', 'geditorial-tube' ),
+				'video_cat'   => _n_noop( 'Video Category', 'Video Categories', 'geditorial-tube' ),
+				'channel_cpt' => _n_noop( 'Channel', 'Channels', 'geditorial-tube' ),
+				'channel_cat' => _n_noop( 'Channel Category', 'Channel Categories', 'geditorial-tube' ),
 			],
 		];
 

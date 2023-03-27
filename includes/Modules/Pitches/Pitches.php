@@ -59,9 +59,9 @@ class Pitches extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'idea_posttype'     => _nx_noop( 'Idea', 'Ideas', 'Noop', 'geditorial-pitches' ),
-				'category_taxonomy' => _nx_noop( 'Idea Category', 'Idea Categories', 'Noop', 'geditorial-pitches' ),
-				'pool_taxonomy'     => _nx_noop( 'Idea Pool', 'Idea Pools', 'Noop', 'geditorial-pitches' ),
+				'idea_posttype'     => _n_noop( 'Idea', 'Ideas', 'geditorial-pitches' ),
+				'category_taxonomy' => _n_noop( 'Idea Category', 'Idea Categories', 'geditorial-pitches' ),
+				'pool_taxonomy'     => _n_noop( 'Idea Pool', 'Idea Pools', 'geditorial-pitches' ),
 			],
 		];
 

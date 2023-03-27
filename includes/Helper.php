@@ -453,6 +453,7 @@ class Helper extends Main
 		return gEditorial()->user( $fallback );
 	}
 
+	// MOVE TO: `Strings`
 	public static function htmlEmpty( $class = '', $title_attr = NULL )
 	{
 		return is_null( $title_attr )
