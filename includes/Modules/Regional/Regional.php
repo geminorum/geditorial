@@ -50,6 +50,12 @@ class Regional extends gEditorial\Module
 		];
 	}
 
+	protected function tool_box_content()
+	{
+		/* translators: %s: iso code */
+		HTML::desc( sprintf( _x( 'Helps with Importing Regional Languages from %s into WordPress.', 'Tool Box', 'geditorial-regional' ), HTML::code( 'ISO 639-1' ) ) );
+	}
+
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -62,6 +68,14 @@ class Regional extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
+			'wp_importer' => [
+				'title'       => _x( 'Import Languages', 'Importer: Title', 'geditorial-regional' ),
+				/* translators: %s: iso code */
+				'description' => sprintf( _x( 'Regional Languages from %s into WordPress', 'Importer: Description', 'geditorial-regional' ), HTML::code( 'ISO 639-1' ) ),
+				/* translators: %s: redirect url */
+				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-regional' ),
+			],
+
 			'show_option_all'  => _x( 'Language', 'Show Option All', 'geditorial-regional' ),
 			'show_option_none' => _x( '(Uknonwn Language)', 'Show Option None', 'geditorial-regional' ),
 		];
@@ -99,6 +113,8 @@ class Regional extends gEditorial\Module
 
 		$this->register_default_terms( 'lang_tax' );
 		$this->filter( 'imports_data_summary', 1, 10, FALSE, $this->base );
+
+		$this->_hook_wp_register_importer();
 	}
 
 	public function current_screen( $screen )
