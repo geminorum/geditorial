@@ -87,6 +87,7 @@ class Regional extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
+			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		] );
 
@@ -98,6 +99,31 @@ class Regional extends gEditorial\Module
 
 		$this->register_default_terms( 'lang_tax' );
 		$this->filter( 'imports_data_summary', 1, 10, FALSE, $this->base );
+	}
+
+	public function current_screen( $screen )
+	{
+		if ( $this->constant( 'lang_tax' ) == $screen->taxonomy ) {
+
+			$this->filter_string( 'parent_file', 'options-general.php' );
+
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+			} else if ( 'edit' == $screen->base ) {
+			}
+		}
+	}
+
+	public function admin_menu()
+	{
+		$this->_hook_menu_taxonomy( 'lang_tax', 'options-general.php' );
+	}
+
+	public function get_adminmenu( $page = TRUE, $extra = [] )
+	{
+		return FALSE;
 	}
 
 	public function imports_data_summary( $data )
