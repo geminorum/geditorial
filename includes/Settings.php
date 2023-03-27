@@ -199,7 +199,7 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function posttypesExcluded( $extra = [] )
+	public static function posttypesExcluded( $extra = [], $context = 'settings' )
 	{
 		$list = [
 			'attachment',        // WP Core
@@ -226,10 +226,10 @@ class Settings extends Core\Base
 				'reply',
 			] );
 
-		return array_merge( $list, (array) $extra );
+		return apply_filters( static::BASE.'_posttypes_excluded', array_merge( $list, (array) $extra ), $context );
 	}
 
-	public static function taxonomiesExcluded( $extra = [] )
+	public static function taxonomiesExcluded( $extra = [], $context = 'settings' )
 	{
 		$list = [
 			'nav_menu',               // WP Core
@@ -251,7 +251,7 @@ class Settings extends Core\Base
 				'topic-tag',
 			] );
 
-		return array_merge( $list, (array) $extra );
+		return apply_filters( static::BASE.'_taxonomies_excluded', array_merge( $list, (array) $extra ), $context );
 	}
 
 	public static function rolesExcluded( $extra = [] )
