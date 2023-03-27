@@ -59,6 +59,8 @@ class Module extends Base
 	protected $partials_remote = [];
 	protected $view_engines    = [];
 
+	protected $imports_datafile = '';
+
 	protected $disable_no_customs    = FALSE; // not hooking module if has no posttypes/taxonomies
 	protected $disable_no_posttypes  = FALSE; // not hooking module if has no posttypes
 	protected $disable_no_taxonomies = FALSE; // not hooking module if has no taxonomies
@@ -6450,6 +6452,34 @@ class Module extends Base
 			add_action( 'load-'.$hook, [ $this, sprintf( 'admin_%s_load', $context ) ] );
 
 		return $hook;
+	}
+
+	// IMPORTS API
+	protected function get_imports_datafile()
+	{
+		return empty( $this->imports_datafile ) ? FALSE : sprintf( '%sdata/%s', $this->path, $this->imports_datafile );
+	}
+
+	// IMPORTS API
+	// DEFAULT METHOD
+	protected function get_imports_raw_data()
+	{
+		if ( empty( $this->imports_datafile ) )
+			return FALSE;
+
+		$filetype = wp_check_filetype( $this->imports_datafile, [
+			'csv'  => 'text/csv',
+			'json' => 'application/json',
+			'xml'  => 'application/xml',
+		] );
+
+		switch( $filetype['ext'] ) {
+			case 'csv' : return Helper::parseCSV( $this->get_imports_datafile() );
+			case 'json': return Helper::parseJSON( $this->get_imports_datafile() );
+			case 'xml' : return Helper::parseXML( $this->get_imports_datafile() );
+		}
+
+		return FALSE;
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
