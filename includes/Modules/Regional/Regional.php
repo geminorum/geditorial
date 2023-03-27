@@ -31,6 +31,9 @@ class Regional extends gEditorial\Module
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
+			'_editpost' => [
+				'metabox_advanced',
+			],
 		];
 	}
 
@@ -102,7 +105,7 @@ class Regional extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'show_in_menu'       => FALSE,
-			'meta_box_cb'        => '__checklist_terms_callback',
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		] );
 
 		if ( ! is_admin() )
