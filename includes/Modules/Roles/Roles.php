@@ -150,6 +150,9 @@ class Roles extends gEditorial\Module
 		if ( $this->get_setting( 'disable_builtin_post' ) ) {
 			$this->filter( 'register_post_post_type_args', 2, 12, 'disable' ); // @since WP6.0.0
 			$this->filter( 'register_category_taxonomy_args', 2, 12, 'disable' ); // @since WP6.0.0
+
+			$this->filter_append( $this->base.'_posttypes_excluded', 'post' );
+			$this->filter_append( $this->base.'_taxonomies_excluded', 'category' );
 		}
 	}
 
