@@ -1091,6 +1091,22 @@ class Settings extends Core\Base
 		return [ 'onclick' => sprintf( 'return confirm(\'%s\')', HTML::escape( $message ) ) ];
 	}
 
+	public static function submitCheckBox( $name = 'submit', $text = '', $atts = [], $after = '&nbsp;&nbsp;' )
+	{
+		$id = Text::sanitizeBase( $name );
+
+		$input = HTML::tag( 'input', array_merge( [
+			'type'  => 'checkbox',
+			'value' => '1',
+			'name'  => $name,
+			'id'    => $id,
+		], $atts ) );
+
+		HTML::label( $input.$text, $id, 'span' );
+
+		echo $after;
+	}
+
 	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [], $after = '&nbsp;&nbsp;' )
 	{
 		$link    = FALSE;
