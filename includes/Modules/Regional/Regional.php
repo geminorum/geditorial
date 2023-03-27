@@ -166,6 +166,14 @@ class Regional extends gEditorial\Module
 		return FALSE;
 	}
 
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_taxonomy( 'lang_tax' ) )
+			$items[] = $glance;
+
+		return $items;
+	}
+
 	public function imports_data_summary( $data )
 	{
 		$data[] = [
