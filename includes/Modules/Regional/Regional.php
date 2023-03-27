@@ -3,9 +3,19 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Term;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Regional extends gEditorial\Module
 {
+
+	protected $imports_datafile = 'languages-20230325.json';
 
 	public static function module()
 	{
@@ -83,6 +93,157 @@ class Regional extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
+		$this->filter_module( 'terms', 'column_title', 4 );
+		$this->filter_module( 'terms', 'field_tagline_title', 4 );
+
 		$this->register_default_terms( 'lang_tax' );
+		$this->filter( 'imports_data_summary', 1, 10, FALSE, $this->base );
+	}
+
+	public function imports_data_summary( $data )
+	{
+		$data[] = [
+			'title'       => $this->imports_datafile,
+			'updated'     => '2023-03-25',
+			'description' => 'List of languages with ISO 639-1 Alpha-2 codes in JSON.',
+			'path'        => $this->get_imports_datafile(),
+			'sources' => [
+				[
+					'link'  => 'https://gist.github.com/joshuabaker/d2775b5ada7d1601bcd7b31cb4081981',
+					'title' => 'GitHub Gist',
+				],
+			],
+		];
+
+		return $data;
+	}
+
+	public function imports_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'imports' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'imports', $sub );
+
+				if ( Tablelist::isAction( 'language_taxonomy_create', TRUE ) ) {
+
+					if ( ! $data = $this->get_imports_raw_data() )
+						WordPress::redirectReferer( 'wrong' );
+
+					$count  = 0;
+					$terms  = [];
+					$data   = Arraay::reKey( $data, 'code' );
+					$update = self::req( 'language_taxonomy_update', FALSE );
+
+					foreach ( $_POST['_cb'] as $code ) {
+
+						if ( ! array_key_exists( $code, $data ) )
+							continue;
+
+						$term = [
+							'slug' => strtolower( $data[$code]['name'] ),
+							'name' => $data[$code]['name'],
+							'meta' => [
+								'code'    => $data[$code]['code'],
+								'tagline' => $data[$code]['native'],
+							],
+						];
+
+						$terms[] = $term;
+						$count++;
+					}
+
+					if ( ! Taxonomy::insertDefaultTerms( $this->constant( 'lang_tax' ), $terms, ( $update ? 'not_name' : FALSE ) ) )
+						WordPress::redirectReferer( 'noadded' );
+
+					WordPress::redirectReferer( [
+						'message' => 'created',
+						'count'   => $count,
+					] );
+				}
+			}
+		}
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		HTML::h3( _x( 'Import Languages', 'Header', 'geditorial-regional' ) );
+
+		echo '<table class="form-table">';
+		echo '<tr><th scope="row">'.HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-regional' ), 'description' ).'</th><td>';
+
+		if ( $data = $this->get_imports_raw_data() ) {
+
+			HTML::tableList( [
+				'_cb'  => 'code',
+				'code' => [
+					'title' => _x( 'Code', 'Table Column', 'geditorial-regional' ),
+					'class' => '-ltr',
+				],
+				'term' => [
+					'title'    => _x( 'Term', 'Table Column', 'geditorial-regional' ),
+					'class'    => '-ltr',
+					'args'     => [ 'taxonomy' => $this->constant( 'lang_tax' ) ],
+					'callback' => function( $value, $row, $column, $index, $key, $args ) {
+
+						if ( $term = Term::exists( $row['name'], $column['args']['taxonomy'] ) )
+							return Helper::getTermTitleRow( $term );
+
+						return Helper::htmlEmpty();
+					}
+				],
+				'name' => [
+					'title' => _x( 'English Name', 'Table Column', 'geditorial-regional' ),
+					'class' => '-ltr',
+				],
+				'native' => [
+					'title' => _x( 'Native Name', 'Table Column', 'geditorial-regional' ),
+					'class' => '-ltr',
+				],
+
+			], $data, [
+				'empty' => HTML::warning( _x( 'There are no languages available!', 'Message: Table Empty', 'geditorial-regional' ), FALSE ),
+			] );
+
+		} else {
+
+			echo gEditorial\Plugin::wrong();
+		}
+
+		echo '</td></tr>';
+		echo '<tr><th scope="row">&nbsp;</th><td>';
+		echo $this->wrap_open_buttons( '-imports' );
+
+		Settings::submitButton( 'language_taxonomy_create',
+			_x( 'Create Language Terms', 'Button', 'geditorial-regional' ), TRUE );
+
+		Settings::submitCheckBox( 'language_taxonomy_update',
+			_x( 'Update Existing Terms', 'Button', 'geditorial-regional' ) );
+
+		echo '</p>';
+
+		HTML::desc( _x( 'Check for available languages and create corresponding language terms.', 'Message', 'geditorial-regional' ) );
+
+		echo '</td></tr>';
+
+		echo '</table>';
+	}
+
+	public function terms_column_title( $title, $field, $taxonomy, $fallback )
+	{
+		if ( 'tagline' !== $field )
+			return $title;
+
+		return $taxonomy === $this->constant( 'lang_tax' )
+			? _x( 'Native Name', 'Table Column', 'geditorial-regional' )
+			: $title;
+	}
+
+	public function terms_field_tagline_title( $title, $taxonomy, $field, $term )
+	{
+		return $taxonomy === $this->constant( 'lang_tax' )
+			? _x( 'Native Name', 'Table Column', 'geditorial-regional' )
+			: $title;
 	}
 }
