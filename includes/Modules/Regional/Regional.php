@@ -32,6 +32,7 @@ class Regional extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_editpost' => [
+				'assign_default_term',
 				'metabox_advanced',
 			],
 		];
@@ -64,6 +65,18 @@ class Regional extends gEditorial\Module
 		$strings = [
 			'noops' => [
 				'lang_tax' => _n_noop( 'Language', 'Languages', 'geditorial-regional' ),
+			],
+			'labels' => [
+				'lang_tax' => [
+					'uncategorized' => _x( 'Unknown', 'Taxonomy Label', 'geditorial-regional' ),
+				]
+			],
+			'defaults' => [
+				'lang_tax' => [
+					'name'        => _x( '[Unknown]', 'Default Term: Name', 'geditorial-regional' ),
+					'description' => _x( 'Unknown Languages', 'Default Term: Description', 'geditorial-regional' ),
+					'slug'        => 'unknown',
+				],
 			],
 		];
 
@@ -105,6 +118,7 @@ class Regional extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'show_in_menu'       => FALSE,
+			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		] );
 
