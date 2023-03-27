@@ -138,6 +138,13 @@ class Regional extends gEditorial\Module
 	{
 		if ( $this->constant( 'lang_tax' ) == $screen->taxonomy ) {
 
+			if ( 'edit-tags' == $screen->base ) {
+
+				$this->action( 'taxonomy_tab_extra_content', 2, 12, FALSE, 'gnetwork' );
+
+			} else if ( 'term' == $screen->base ) {
+			}
+
 			$this->filter_string( 'parent_file', 'options-general.php' );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -304,5 +311,10 @@ class Regional extends gEditorial\Module
 		return $taxonomy === $this->constant( 'lang_tax' )
 			? _x( 'Native Name', 'Table Column', 'geditorial-regional' )
 			: $title;
+	}
+
+	public function taxonomy_tab_extra_content( $taxonomy, $object )
+	{
+		$this->render_imports_toolbox_card();
 	}
 }
