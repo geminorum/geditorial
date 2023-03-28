@@ -3093,6 +3093,7 @@ class Module extends Base
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			// gEditorial Props
+			'has_archive'       => $this->constant( $constant.'_archive', $plural ),
 			'target_taxonomies' => FALSE, // or array of taxonomies
 		] );
 
@@ -5335,7 +5336,7 @@ class Module extends Base
 		);
 	}
 
-	protected function dashboard_glance_tax( $constant )
+	protected function dashboard_glance_taxonomy( $constant )
 	{
 		return MetaBox::glanceTaxonomy(
 			$this->constant( $constant ),

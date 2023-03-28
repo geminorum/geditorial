@@ -113,6 +113,14 @@ class Regional extends gEditorial\Module
 	{
 		parent::init();
 
+		// TODO: make custom to use with roles api
+		$capabilities = [
+			'manage_terms' => 'manage_options',
+			'edit_terms'   => 'manage_options',
+			'delete_terms' => 'manage_options',
+			'assign_terms' => 'edit_posts',
+		];
+
 		$this->register_taxonomy( 'lang_tax', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
@@ -120,7 +128,7 @@ class Regional extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
-		] );
+		], NULL, $capabilities );
 
 		if ( ! is_admin() )
 			return;

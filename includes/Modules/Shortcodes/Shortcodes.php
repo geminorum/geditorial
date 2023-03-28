@@ -34,7 +34,6 @@ class Shortcodes extends gEditorial\Module
 					'type'           => 'checkboxes-values',
 					'values'         => $this->_list_shortcodes(),
 					'template_value' => '[%s]',
-
 				],
 			],
 			'_frontend' => [

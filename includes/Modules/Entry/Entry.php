@@ -84,7 +84,7 @@ class Entry extends gEditorial\Module
 			],
 			'defaults' => [
 				'section_tax' => [
-					'name'        => _x( 'Unsectioned', 'Default Term: Name', 'geditorial-entry' ),
+					'name'        => _x( '[Unsectioned]', 'Default Term: Name', 'geditorial-entry' ),
 					'description' => _x( 'Unsectioned Entries', 'Default Term: Description', 'geditorial-entry' ),
 					'slug'        => 'unsectioned',
 				],
