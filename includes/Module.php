@@ -117,16 +117,32 @@ class Module extends Base
 
 	protected function setup_textdomain( $locale = NULL, $domain = NULL )
 	{
+		if ( FALSE === $this->module->i18n )
+			return FALSE;
+
+		if ( 'adminonly' === $this->module->i18n && ! is_admin() )
+			return FALSE;
+
+		if ( 'restonly' === $this->module->i18n && ! WordPress::isREST() )
+			return FALSE;
+
+		if ( 'frontonly' === $this->module->i18n && is_admin() )
+			return FALSE;
+
+		// FIXME: `textdomain_frontend` DEPRECATED
 		if ( ! $this->textdomain_frontend && ! is_admin() )
 			return FALSE;
 
 		if ( is_null( $domain ) )
 			$domain = $this->get_textdomain();
 
+		if ( ! $domain )
+			return FALSE;
+
 		if ( is_null( $locale ) )
 			$locale = apply_filters( 'plugin_locale', L10n::locale(), $this->base );
 
-		load_textdomain( $domain, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
+		return load_textdomain( $domain, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
 	}
 
 	protected function setup_remote( $args = [] )
@@ -284,7 +300,18 @@ class Module extends Base
 		}
 	}
 
-	protected function get_textdomain() { return $this->classs(); }
+	protected function get_textdomain()
+	{
+		if ( NULL === $this->module->textdomain )
+			return $this->base;
+
+		if ( FALSE === $this->module->textdomain )
+			return FALSE;
+
+		return empty( $this->module->textdomain )
+			? $this->classs()
+			: $this->module->textdomain;
+	}
 
 	protected function get_global_settings() { return []; }
 	protected function get_global_constants() { return []; }
@@ -1185,7 +1212,7 @@ class Module extends Base
 		// NOTE: filtered noop strings may omit context/domain keys!
 		$singular = translate_nooped_plural( array_merge( [
 			'context' => NULL,
-			'domain'  => $this->get_textdomain(),
+			'domain'  => $this->get_textdomain() ?: 'default',
 		], $this->strings['noops'][$constant] ), 1 );
 
 		return [
