@@ -18,9 +18,6 @@ use geminorum\gEditorial\WordPress\Strings;
 class Uncategorized extends gEditorial\Module
 {
 
-	protected $disable_no_taxonomies = TRUE;
-	protected $textdomain_frontend   = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -28,6 +25,7 @@ class Uncategorized extends gEditorial\Module
 			'title' => _x( 'Uncategorized', 'Modules: Uncategorized', 'geditorial' ),
 			'desc'  => _x( 'Term Leftover Management', 'Modules: Uncategorized', 'geditorial' ),
 			'icon'  => 'hammer',
+			'i18n'  => 'adminonly',
 		];
 	}
 
@@ -76,7 +74,9 @@ class Uncategorized extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base && $this->posttype_supported( $screen->post_type ) ) {
+		if ( 'edit' == $screen->base
+			// TODO: add separate list of posttypes on settings for this
+			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			add_filter( "views_{$screen->id}", function( $views ) use ( $screen ) {
 				return array_merge( $views, $this->_get_posttype_view( $screen->post_type ) );
@@ -84,7 +84,9 @@ class Uncategorized extends gEditorial\Module
 
 			$this->_hook_admin_bulkactions( $screen );
 
-		} else if ( 'dashboard' == $screen->base && current_user_can( 'edit_others_posts' ) ) {
+		} else if ( 'dashboard' == $screen->base
+			// NOTE: only for `post` posttype
+			&& current_user_can( 'edit_others_posts' ) ) {
 
 			$this->filter( 'dashboard_pointers', 1, 10, FALSE, 'gnetwork' );
 		}
@@ -161,7 +163,8 @@ class Uncategorized extends gEditorial\Module
 		echo HTML::success( sprintf( _x( '%s items(s) cleaned!', 'Message', 'geditorial-uncategorized' ), Number::format( $count ) ) );
 	}
 
-	// already cap checked!
+	// NOTE: already cap checked!
+	// TODO: posinter for all supported posttypes
 	public function dashboard_pointers( $items )
 	{
 		if ( ! $count = $this->_get_post_count() )
@@ -260,9 +263,11 @@ class Uncategorized extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		// FIXME: add screen option for this!
-		$query = [ 'tax_query' => $this->_get_uncategorized_tax_query() ];
+		// $query = [ 'tax_query' => $this->_get_uncategorized_tax_query() ];
+		$query = $extra = [];
+		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], 'any', $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
 		// TODO: add screen help tabs explainig the actions
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' );
@@ -511,6 +516,7 @@ class Uncategorized extends gEditorial\Module
 		return $this->hash( 'uncategorizedcount', $taxonomies );
 	}
 
+	// NOTE: only for `post` posttype
 	private function _get_post_count()
 	{
 		$taxonomies = $this->taxonomies();
@@ -524,7 +530,7 @@ class Uncategorized extends gEditorial\Module
 			$args = [
 				'tax_query'              => $this->_get_uncategorized_tax_query( $taxonomies ),
 				'fields'                 => 'ids',
-				'post_type'              => 'any',
+				'post_type'              => 'post', // 'any',
 				'orderby'                => 'none',
 				'posts_per_page'         => -1,
 				'nopaging'               => TRUE,

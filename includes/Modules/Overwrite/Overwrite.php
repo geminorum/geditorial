@@ -10,8 +10,6 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Overwrite extends gEditorial\Module
 {
 
-	protected $textdomain_frontend = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -19,6 +17,7 @@ class Overwrite extends gEditorial\Module
 			'title' => _x( 'Overwrite', 'Modules: Overwrite', 'geditorial' ),
 			'desc'  => _x( 'Customized Translation Strings', 'Modules: Overwrite', 'geditorial' ),
 			'icon'  => 'editor-strikethrough',
+			'i18n'  => 'adminonly',
 		];
 	}
 

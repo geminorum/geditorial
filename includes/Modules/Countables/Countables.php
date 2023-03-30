@@ -17,8 +17,6 @@ class Countables extends gEditorial\Module
 
  	// https://codepen.io/geminorum/pen/NWxqZKO
 
-	protected $textdomain_frontend = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -26,6 +24,7 @@ class Countables extends gEditorial\Module
 			'title' => _x( 'Countables', 'Modules: Countables', 'geditorial' ),
 			'desc'  => _x( 'Editorial Countable Items', 'Modules: Countables', 'geditorial' ),
 			'icon'  => 'performance',
+			'i18n'  => 'adminonly',
 		];
 	}
 

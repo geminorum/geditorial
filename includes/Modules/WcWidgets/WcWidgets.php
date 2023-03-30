@@ -13,8 +13,6 @@ class WcWidgets extends gEditorial\Module
 {
 	protected $deafults = [ 'widget_support' => TRUE ];
 
-	protected $textdomain_frontend = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -22,6 +20,7 @@ class WcWidgets extends gEditorial\Module
 			'title'    => _x( 'WC Widgets', 'Modules: WC Widgets', 'geditorial' ),
 			'desc'     => _x( 'Widget Enhancements for WooCommerce', 'Modules: WC Widgets', 'geditorial' ),
 			'icon'     => 'welcome-widgets-menus',
+			'i18n'     => 'adminonly',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
 	}

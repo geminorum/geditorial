@@ -14,7 +14,6 @@ class Recount extends gEditorial\Module
 {
 
 	protected $disable_no_taxonomies = TRUE;
-	protected $textdomain_frontend   = FALSE;
 
 	public static function module()
 	{
@@ -23,6 +22,7 @@ class Recount extends gEditorial\Module
 			'title' => _x( 'Recount', 'Modules: Recount', 'geditorial' ),
 			'desc'  => _x( 'Custom Counts Interface', 'Modules: Recount', 'geditorial' ),
 			'icon'  => 'database',
+			'i18n'  => 'adminonly',
 		];
 	}
 

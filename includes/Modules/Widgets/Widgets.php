@@ -10,8 +10,6 @@ class Widgets extends gEditorial\Module
 
 	protected $deafults = [ 'widget_support' => TRUE ];
 
-	protected $textdomain_frontend = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -19,6 +17,7 @@ class Widgets extends gEditorial\Module
 			'title' => _x( 'Widgets', 'Modules: Widgets', 'geditorial' ),
 			'desc'  => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial' ),
 			'icon'  => 'welcome-widgets-menus',
+			'i18n'  => 'adminonly',
 		];
 	}
 

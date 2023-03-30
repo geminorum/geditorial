@@ -9,7 +9,6 @@ class Headings extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
-	protected $textdomain_frontend  = FALSE;
 
 	private $anchors  = [];
 	private $toc      = [];
@@ -21,6 +20,7 @@ class Headings extends gEditorial\Module
 			'title' => _x( 'Headings', 'Modules: Headings', 'geditorial' ),
 			'desc'  => _x( 'Table of Contents', 'Modules: Headings', 'geditorial' ),
 			'icon'  => 'tablet',
+			'i18n'  => 'adminonly',
 		];
 	}
 

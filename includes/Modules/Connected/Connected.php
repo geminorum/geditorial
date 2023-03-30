@@ -8,7 +8,6 @@ class Connected extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
-	protected $textdomain_frontend  = FALSE;
 
 	public static function module()
 	{
@@ -17,6 +16,7 @@ class Connected extends gEditorial\Module
 			'title'    => _x( 'Connected', 'Modules: Connected', 'geditorial' ),
 			'desc'     => _x( 'Posts-to-Posts Extended', 'Modules: Connected', 'geditorial' ),
 			'icon'     => 'controls-repeat',
+			'i18n'     => 'adminonly',
 			'disabled' => defined( 'P2P_PLUGIN_VERSION' ) ? FALSE : _x( 'Needs Posts-to-Posts', 'Modules: Connected', 'geditorial' ),
 		];
 	}

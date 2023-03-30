@@ -66,8 +66,6 @@ class Module extends Base
 	protected $disable_no_posttypes  = FALSE; // not hooking module if has no posttypes
 	protected $disable_no_taxonomies = FALSE; // not hooking module if has no taxonomies
 
-	protected $textdomain_frontend = TRUE; // loading textdomain on frontend
-
 	protected $image_sizes  = [];
 	protected $kses_allowed = [];
 
@@ -127,10 +125,6 @@ class Module extends Base
 			return FALSE;
 
 		if ( 'frontonly' === $this->module->i18n && is_admin() )
-			return FALSE;
-
-		// FIXME: `textdomain_frontend` DEPRECATED
-		if ( ! $this->textdomain_frontend && ! is_admin() )
 			return FALSE;
 
 		if ( is_null( $domain ) )
@@ -1009,7 +1003,7 @@ class Module extends Base
 	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
 	{
 		$posttypes = PostType::get( 0, $args );
-		$excluded  = $this->posttypes_excluded();
+		$excluded  = Arraay::prepString( $this->posttypes_excluded() );
 
 		return empty( $excluded ) ? $posttypes : Arraay::stripByKeys( $posttypes, $excluded );
 	}
@@ -2886,6 +2880,9 @@ class Module extends Base
 			'menu_icon'     => $this->get_posttype_icon( $constant ),
 			'menu_position' => empty( $this->positions[$constant] ) ? 4 : $this->positions[$constant],
 
+			// 'show_in_nav_menus' => TRUE,
+			// 'show_in_admin_bar' => TRUE,
+
 			'query_var'   => $this->constant( $constant.'_query_var', $posttype ),
 			'has_archive' => $this->constant( $constant.'_archive', $plural ),
 
@@ -2906,7 +2903,7 @@ class Module extends Base
 
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant ) ? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
 
-			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ), // FIXME: DEPRECATE THIS
+			'show_in_rest' => TRUE,
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $plural ) ),
 
 			// 'rest_namespace ' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
@@ -3128,7 +3125,7 @@ class Module extends Base
 			// 'sort' => NULL, // Whether terms in this taxonomy should be sorted in the order they are provided to `wp_set_object_terms()`.
 			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
 
-			'show_in_rest' => $this->get_setting( 'restapi_support', TRUE ), // FIXME: DEPRECATE THIS
+			'show_in_rest' => TRUE,
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_slug', $plural ) ),
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 

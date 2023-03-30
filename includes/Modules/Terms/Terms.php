@@ -22,7 +22,7 @@ class Terms extends gEditorial\Module
 {
 
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private, `capability`, `plural`, `icon`
+	// TODO: `cost`, `price`, 'status`: public/private, `capability`, `plural`, `icon`, `LatLng`, `url`, `subtitle`
 
 	protected $supported = [
 		'order',

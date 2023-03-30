@@ -13,15 +13,14 @@ use geminorum\gEditorial\Core\WordPress;
 class WcUnits extends gEditorial\Module
 {
 
-	protected $textdomain_frontend = FALSE;
-
 	public static function module()
 	{
 		return [
-			'name'  => 'wc_units',
-			'title' => _x( 'WC Units', 'Modules: WC Units', 'geditorial' ),
-			'desc'  => _x( 'Weight and Dimensions Enhancements for WooCommerce', 'Modules: WC Units', 'geditorial' ),
+			'name'     => 'wc_units',
+			'title'    => _x( 'WC Units', 'Modules: WC Units', 'geditorial' ),
+			'desc'     => _x( 'Weight and Dimensions Enhancements for WooCommerce', 'Modules: WC Units', 'geditorial' ),
 			'icon'     => 'image-crop',
+			'i18n'     => 'adminonly',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
 	}

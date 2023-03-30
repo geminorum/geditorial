@@ -17,7 +17,6 @@ class Roles extends gEditorial\Module
 	];
 
 	protected $priority_admin_menu = 99;
-	protected $textdomain_frontend = FALSE;
 
 	public static function module()
 	{
@@ -26,6 +25,7 @@ class Roles extends gEditorial\Module
 			'title' => _x( 'Roles', 'Modules: Roles', 'geditorial' ),
 			'desc'  => _x( 'Member & Role Management', 'Modules: Roles', 'geditorial' ),
 			'icon'  => 'businessman',
+			'i18n'  => 'adminonly',
 		];
 	}
 

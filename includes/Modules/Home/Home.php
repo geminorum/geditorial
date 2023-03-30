@@ -9,8 +9,6 @@ use geminorum\gEditorial\Core\HTML;
 class Home extends gEditorial\Module
 {
 
-	protected $textdomain_frontend = FALSE;
-
 	private $featured = [];
 
 	public static function module()
@@ -20,6 +18,7 @@ class Home extends gEditorial\Module
 			'title' => _x( 'Home', 'Modules: Home', 'geditorial' ),
 			'desc'  => _x( 'Customized Homepage', 'Modules: Home', 'geditorial' ),
 			'icon'  => 'admin-home',
+			'i18n'  => 'adminonly',
 		];
 	}
 

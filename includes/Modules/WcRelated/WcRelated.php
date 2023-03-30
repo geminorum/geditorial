@@ -14,8 +14,6 @@ use geminorum\gEditorial\WordPress\WooCommerce;
 class WcRelated extends gEditorial\Module
 {
 
-	protected $textdomain_frontend = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -23,6 +21,7 @@ class WcRelated extends gEditorial\Module
 			'title'    => _x( 'WC Related', 'Modules: WC Related', 'geditorial' ),
 			'desc'     => _x( 'Related Product Enhancements for WooCommerce', 'Modules: WC Related', 'geditorial' ),
 			'icon'     => 'tagcloud',
+			'i18n'     => 'adminonly',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
 	}

@@ -17,7 +17,6 @@ class Revisions extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
-	protected $textdomain_frontend  = FALSE;
 
 	protected $caps = [
 		'purge'   => 'delete_post',
@@ -35,6 +34,7 @@ class Revisions extends gEditorial\Module
 			'title'    => _x( 'Revisions', 'Modules: Revisions', 'geditorial' ),
 			'desc'     => _x( 'Revision Management', 'Modules: Revisions', 'geditorial' ),
 			'icon'     => 'backup',
+			'i18n'     => 'adminonly',
 			'frontend' => FALSE,
 			'disabled' => defined( 'WP_POST_REVISIONS' ) && ! WP_POST_REVISIONS
 				? _x( 'Deactivated by Constant', 'Modules: Revisions', 'geditorial' )

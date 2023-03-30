@@ -12,10 +12,8 @@ use geminorum\gEditorial\WordPress\Theme;
 class Archives extends gEditorial\Module
 {
 
-	protected $disable_no_customs  = TRUE;
-	protected $textdomain_frontend = FALSE;
-
-	protected $priority_init = 99; // after all taxonomies registered
+	protected $disable_no_customs = TRUE;
+	protected $priority_init      = 99;    // after all taxonomies registered
 
 	private $_current = FALSE;
 
@@ -26,6 +24,7 @@ class Archives extends gEditorial\Module
 			'title' => _x( 'Archives', 'Modules: Archives', 'geditorial' ),
 			'desc'  => _x( 'Content Archives Pages', 'Modules: Archives', 'geditorial' ),
 			'icon'  => 'editor-ul',
+			'i18n'  => 'adminonly',
 		];
 	}
 
