@@ -13,6 +13,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Strings;
 
 class Uncategorized extends gEditorial\Module
 {
@@ -262,6 +263,7 @@ class Uncategorized extends gEditorial\Module
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], 'any', $this->get_sub_limit_option( $sub ) );
 
+		// TODO: add screen help tabs explainig the actions
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' );
 		$pagination['actions']['clean_unregistered']  = _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' );
 		$pagination['actions']['clean_unattached']    = _x( 'Clean Unattached', 'Action', 'geditorial-uncategorized' );
@@ -277,6 +279,31 @@ class Uncategorized extends gEditorial\Module
 			'type'  => Tablelist::columnPostType(),
 			'title' => Tablelist::columnPostTitle(),
 			'terms' => Tablelist::columnPostTerms(),
+			'raw'   => [
+				'title'    => _x( 'Raw', 'Table Column', 'geditorial-uncategorized' ),
+				'class'    => '-has-list',
+				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+
+					$query = new \WP_Term_Query( [
+						'object_ids' => $row->ID,
+						'get'        => 'all',
+					] );
+
+					if ( empty( $query->terms ) )
+						return Helper::htmlEmpty();
+
+					$list = [];
+
+					foreach ( $query->terms as $term )
+						$list[$term->taxonomy][] = $term->name;
+
+					foreach ( $list as $taxonomy => $terms )
+						$list[$taxonomy] = sprintf( '<code>%s</code>: %s', $taxonomy, Strings::getJoined( $terms ) );
+
+					return HTML::renderList( $list );
+				},
+			],
+
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
