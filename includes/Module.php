@@ -3121,8 +3121,7 @@ class Module extends Base
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_slug', $plural ) ),
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
-			// gEditorial Props
-			'has_archive'       => $this->constant( $constant.'_archive', $plural ),
+			/// gEditorial Props
 			'target_taxonomies' => FALSE, // or array of taxonomies
 		] );
 
@@ -3164,6 +3163,10 @@ class Module extends Base
 
 		if ( FALSE !== $args['default_term'] )
 			$args['default_term'] = $this->_get_taxonomy_default_term( $constant, $args['default_term'] );
+
+		// NOTE: gEditorial Prop
+		if ( ! array_key_exists( 'has_archive', $args ) && $args['public'] && $args['show_ui'] )
+			$args['has_archive'] = $this->constant( $constant.'_archive', $plural );
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );
 

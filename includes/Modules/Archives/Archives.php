@@ -241,6 +241,10 @@ class Archives extends gEditorial\Module
 		if ( ! $object = Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
+		// NOTE: it's gEditorial Prop
+		if ( ! empty( $object->has_archive ) )
+			return $object->has_archive;
+
 		if ( ! empty( $object->rest_base ) )
 			return $object->rest_base;
 
