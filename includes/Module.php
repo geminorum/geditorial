@@ -53,7 +53,7 @@ class Module extends Base
 
 	protected $constants = [];
 	protected $strings   = [];
-	protected $supports  = [];
+	protected $features  = [];
 	protected $fields    = [];
 
 	protected $partials        = [];
@@ -269,7 +269,6 @@ class Module extends Base
 	public function _after_setup_theme()
 	{
 		$this->constants = $this->filters( 'constants', $this->get_global_constants(), $this->module );
-		$this->supports  = $this->filters( 'supports', $this->get_global_supports(), $this->module ); // FIXME: DEPRECATED
 		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
@@ -278,7 +277,8 @@ class Module extends Base
 	{
 		$this->actions( 'init', $this->options, $this->module );
 
-		$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
+		$this->features = $this->filters( 'features', $this->get_global_features(), $this->module );
+		$this->strings  = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 
 		if ( ! is_admin() )
 			return;
@@ -316,7 +316,7 @@ class Module extends Base
 	protected function get_global_settings() { return []; }
 	protected function get_global_constants() { return []; }
 	protected function get_global_strings() { return []; }
-	protected function get_global_supports() { return []; } // FIXME: DEPRECATED
+	protected function get_global_features() { return []; }
 	protected function get_global_fields() { return []; }
 
 	protected function get_module_templates() { return []; }
@@ -1188,7 +1188,7 @@ class Module extends Base
 			HTML::desc( $after );
 	}
 
-	protected function settings_supports_option( $constant, $defaults = NULL, $excludes = NULL )
+	protected function settings_supports_option( $constant, $defaults = TRUE, $excludes = NULL )
 	{
 		$supports = $this->filters( $constant.'_supports', Settings::supportsOptions() );
 
@@ -1203,8 +1203,8 @@ class Module extends Base
 		if ( count( $excludes ) )
 			$supports = array_diff_key( $supports, array_flip( (array) $excludes ) );
 
-		if ( is_null( $defaults ) )
-			$defaults = $this->supports[$constant];
+		if ( FALSE === $defaults )
+			$defaults = [];
 
 		else if ( TRUE === $defaults )
 			$defaults = array_keys( $supports );
@@ -2698,6 +2698,20 @@ class Module extends Base
 		$this->scripts_printed = TRUE;
 	}
 
+	// NOTE: features are `TRUE` by default
+	public function get_feature( $field, $fallback = TRUE )
+	{
+		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+
+		if ( array_key_exists( $field, $settings ) )
+			return $settings[$field];
+
+		if ( array_key_exists( $field, $this->features ) )
+			return $this->features[$field];
+
+		return $fallback;
+	}
+
 	public function get_setting( $field, $fallback = NULL )
 	{
 		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
@@ -2824,9 +2838,6 @@ class Module extends Base
 	{
 		if ( isset( $this->options->settings[$constant.'_supports'] ) )
 			return $this->options->settings[$constant.'_supports'];
-
-		if ( isset( $this->supports[$constant] ) )
-			return $this->supports[$constant];
 
 		return array_keys( Settings::supportsOptions() );
 	}
