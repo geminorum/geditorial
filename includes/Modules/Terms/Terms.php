@@ -595,7 +595,8 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
 
-		$icons = [
+		$supported = $this->get_supported( $taxonomy );
+		$icons     = [
 			'order',
 			'contact',
 			'image',
@@ -617,7 +618,7 @@ class Terms extends gEditorial\Module
 			'unit',
 		];
 
-		foreach ( $this->get_supported( $taxonomy ) as $field ) {
+		foreach ( $supported as $field ) {
 
 			if ( FALSE === ( $position = $this->get_supported_position( $field, $taxonomy ) ) )
 				continue;
@@ -635,7 +636,7 @@ class Terms extends gEditorial\Module
 		if ( array_key_exists( 'posts', $columns ) )
 			$columns['posts'] = $this->get_column_title_icon( 'posts', $taxonomy );
 
-		return $columns;
+		return $this->filters( 'manage_columns', $columns, $taxonomy, $supported );
 	}
 
 	public function sortable_columns( $columns )
@@ -643,6 +644,7 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
 
+		$supported = $this->get_supported( $taxonomy );
 		$sortables = [
 			'overwrite',
 			'tagline',
@@ -662,11 +664,11 @@ class Terms extends gEditorial\Module
 			'unit',
 		];
 
-		foreach ( $this->get_supported( $taxonomy ) as $field )
+		foreach ( $supported as $field )
 			if ( ! in_array( $field, $sortables, TRUE ) )
 				$columns[$this->classs( $field )] = 'meta_'.$field;
 
-		return $columns;
+		return $this->filters( 'sortable_columns', $columns, $taxonomy, $supported );
 	}
 
 	public function custom_column( $string, $column_name, $term_id )
@@ -674,15 +676,19 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $string;
 
-		$term = get_term_by( 'id', $term_id, $taxonomy );
+		$term      = get_term_by( 'id', $term_id, $taxonomy );
+		$supported = $this->get_supported( $taxonomy );
 
-		foreach ( $this->get_supported( $taxonomy ) as $field ) {
+		foreach ( $supported as $field ) {
 
 			if ( $this->classs( $field ) != $column_name )
 				continue;
 
 			$this->display_form_field( $field, $taxonomy, $term, TRUE );
 		}
+
+		// NOTE: here for custom column with multiple fields support
+		$this->actions( 'custom_column', $column_name, $taxonomy, $supported, $term );
 	}
 
 	// TODO: use readonly inputs on non-columns
