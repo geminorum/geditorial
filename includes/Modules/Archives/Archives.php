@@ -53,7 +53,7 @@ class Archives extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as content on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
-				'default'     => '[alphabet-posts post_type="%s" /]', // FIXME: provide for fallback shortcode
+				'default'     => $this->_get_default_posttype_content( $posttype_name ),
 			];
 
 			$settings['_posttypes'][] = [
@@ -85,7 +85,7 @@ class Archives extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as content on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
-				'default'     => '[alphabet-terms taxonomy="%s" /]', // FIXME: provide for fallback shortcode
+				'default'     => $this->_get_default_taxonomy_content( $taxonomy_name ),
 			];
 
 			$settings['_taxonomies'][] = [
@@ -175,6 +175,29 @@ class Archives extends gEditorial\Module
 				'url'   => PostType::getArchiveLink( $screen->post_type ),
 			] ] ) );
 		}
+	}
+
+	private function _get_default_posttype_content( $posttype = NULL )
+	{
+		$default = '';
+
+		if ( shortcode_exists( 'alphabet-posts' ) )
+			$default = '[alphabet-posts post_type="%s" /]';
+
+		return $this->filters( 'default_posttype_content', $default, $posttype );
+	}
+
+	private function _get_default_taxonomy_content( $taxonomy = NULL )
+	{
+		$default = '';
+
+		if ( shortcode_exists( 'alphabet-terms' ) )
+			$default = '[alphabet-terms taxonomy="%s" /]';
+
+		else if ( shortcode_exists( 'display-terms' ) )
+			$default = '[display-terms taxonomy="%s" /]';
+
+		return $this->filters( 'default_taxonomy_content', $default, $taxonomy );
 	}
 
 	private function _do_add_custom_queries()
@@ -299,7 +322,8 @@ class Archives extends gEditorial\Module
 
 	public function template_get_archive_content()
 	{
-		$setting = $this->get_setting( 'posttype_'.$this->_current.'_content', '[alphabet-posts post_type="%s" /]' );
+		$setting = $this->get_setting( 'posttype_'.$this->_current.'_content',
+			$this->_get_default_posttype_content( $this->_current ) );
 
 		$form = $this->get_search_form( [ 'post_type[]' => $this->_current ] );
 		$html = apply_shortcodes( sprintf( $setting, $this->_current ) );
@@ -329,7 +353,8 @@ class Archives extends gEditorial\Module
 
 	public function template_taxonomy_archives( $content )
 	{
-		$setting = $this->get_setting( 'taxonomy_'.$this->_current.'_content', '[alphabet-terms taxonomy="%s" /]' );
+		$setting = $this->get_setting( 'taxonomy_'.$this->_current.'_content',
+			$this->_get_default_taxonomy_content( $this->_current ) );
 
 		$html = apply_shortcodes( sprintf( $setting, $this->_current ) );
 		$html = $this->filters( 'taxonomy_archive_content', $html, $this->_current );
