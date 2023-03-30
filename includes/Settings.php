@@ -1279,6 +1279,11 @@ class Settings extends Core\Base
 
 	public static function moduleButtons( $module, $enabled = FALSE )
 	{
+		if ( $module->autoload ) {
+			echo HTML::wrap( _x( 'Auto-loaded!', 'Settings: Notice', 'geditorial' ), '-autoloaded -warning', FALSE );
+			return;
+		}
+
 		echo HTML::tag( 'input', [
 			'type'  => 'submit',
 			'value' => _x( 'Enable', 'Settings: Button', 'geditorial' ),

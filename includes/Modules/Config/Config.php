@@ -596,7 +596,8 @@ class Config extends gEditorial\Module
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
-			if ( $module->autoload )
+			// skip if `config`
+			if ( $this->module->name === $module->name )
 				continue;
 
 			$enabled = gEditorial()->enabled( $module->name );
