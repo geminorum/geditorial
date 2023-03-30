@@ -27,6 +27,7 @@ class Terms extends gEditorial\Module
 
 	protected $supported = [
 		'order',
+		'overwrite',
 		'tagline',
 		'contact',
 		'image',
@@ -84,6 +85,11 @@ class Terms extends gEditorial\Module
 					'title'       => _x( 'Fill Current Author', 'Setting Title', 'geditorial-terms' ),
 					'description' => _x( 'Automatically fills current user as term author if not set for supported taxonomy.', 'Setting Description', 'geditorial-terms' ),
 				],
+				[
+					'field'       => 'auto_term_overwrite',
+					'title'       => _x( 'Term Overwrite', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Automatically overwrites term name with custom field if set for supported taxonomies.', 'Setting Description', 'geditorial-terms' ),
+				],
 				'calendar_type',
 				// 'calendar_list',
 			],
@@ -99,6 +105,7 @@ class Terms extends gEditorial\Module
 		return [
 			'titles' => [
 				'order'     => _x( 'Order', 'Titles', 'geditorial-terms' ),
+				'overwrite' => _x( 'Overwrite', 'Titles', 'geditorial-terms' ),
 				'tagline'   => _x( 'Tagline', 'Titles', 'geditorial-terms' ),
 				'contact'   => _x( 'Contact', 'Titles', 'geditorial-terms' ),
 				'image'     => _x( 'Image', 'Titles', 'geditorial-terms' ),
@@ -121,6 +128,7 @@ class Terms extends gEditorial\Module
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
+				'overwrite' => _x( 'Replaces the term name on front-page display.', 'Descriptions', 'geditorial-terms' ),
 				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Descriptions', 'geditorial-terms' ),
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
 				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
@@ -143,6 +151,7 @@ class Terms extends gEditorial\Module
 			],
 			'misc' => [
 				'order_column_title'     => _x( 'Order', 'Column Title: Order', 'geditorial-terms' ),
+				'overwrite_column_title' => _x( 'Overwrite', 'Column Title: Overwrite', 'geditorial-terms' ),
 				'tagline_column_title'   => _x( 'Tagline', 'Column Title: Tagline', 'geditorial-terms' ),
 				'contact_column_title'   => _x( 'Contact', 'Column Title: Contact', 'geditorial-terms' ),
 				'image_column_title'     => _x( 'Image', 'Column Title: Image', 'geditorial-terms' ),
@@ -208,6 +217,7 @@ class Terms extends gEditorial\Module
 
 		switch ( $field ) {
 			case 'role': $excluded[] = 'audit_attribute'; break;
+			case 'overwrite': $excluded[] = 'post_tag'; break;
 			case 'tagline': $excluded[] = 'post_tag'; break;
 			case 'arrow': return Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break; // override!
 		}
@@ -271,6 +281,9 @@ class Terms extends gEditorial\Module
 
 		if ( ! is_admin() )
 			return;
+
+		if ( $this->get_setting( 'auto_term_overwrite' ) )
+			$this->_hook_overwrite_titles( $this->get_setting( 'term_overwrite', [] ) );
 
 		$this->filter( 'display_media_states', 2, 12 );
 		$this->filter_module( 'datacodes', 'print_template_data', 4, 8 );
@@ -632,6 +645,7 @@ class Terms extends gEditorial\Module
 			return $columns;
 
 		$sortables = [
+			'overwrite',
 			'tagline',
 			'contact',
 			'image',
@@ -764,6 +778,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'label':
+			case 'overwrite':
 			case 'tagline':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -1218,6 +1233,7 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
+			case 'overwrite':
 			case 'tagline':
 
 				$html.= HTML::tag( 'input', [
@@ -1419,6 +1435,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'label':
+			case 'overwrite':
 			case 'tagline':
 			default:
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
@@ -1545,6 +1562,7 @@ class Terms extends gEditorial\Module
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
 					break;
+					case 'overwrite':
 					case 'tagline':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
@@ -2035,5 +2053,39 @@ class Terms extends gEditorial\Module
 	public function woocommerce_sortable_taxonomies( $taxonomies )
 	{
 		return array_merge( $taxonomies, $this->get_supported_taxonomies( 'order' ) );
+	}
+
+	private function _hook_overwrite_titles( $taxonomies, $field = 'overwrite' )
+	{
+		if ( is_admin() || empty( $taxonomies ))
+			return FALSE;
+
+		add_filter( 'single_term_title', function( $name ) use ( $field, $taxonomies ) {
+
+			if ( ! is_tax( $taxonomies ) )
+				return $name;
+
+			if ( $term = get_queried_object() )
+				return $name;
+
+			$metakey = $this->get_supported_metakey( $field, $term->taxonomy );
+			$meta    = get_term_meta( $term->term_id, $metakey, TRUE );
+
+			return $meta ?: $name; // TODO: pass through filters
+		}, 8 );
+
+		foreach ( $taxonomies as $taxonomy )
+			add_filter( $taxonomy.'_name', function( $value, $term_id, $context ) use ( $field ) {
+
+				if ( 'display' !== $context )
+					return $value;
+
+				$metakey = $this->get_supported_metakey( $field );
+				$meta    = get_term_meta( $term_id, $metakey, TRUE );
+
+				return $meta ?: $value; // TODO: pass through filters
+			}, 8, 3 );
+
+		return count( $taxonomies );
 	}
 }
