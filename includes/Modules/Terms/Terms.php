@@ -279,11 +279,11 @@ class Terms extends gEditorial\Module
 			&& $this->get_setting( 'auto_current_author' ) )
 			$this->filter_self( 'supported_field_edit', 4, 8, 'author' );
 
-		if ( ! is_admin() )
-			return;
-
 		if ( $this->get_setting( 'auto_term_overwrite' ) )
 			$this->_hook_overwrite_titles( $this->get_setting( 'term_overwrite', [] ) );
+
+		if ( ! is_admin() )
+			return;
 
 		$this->filter( 'display_media_states', 2, 12 );
 		$this->filter_module( 'datacodes', 'print_template_data', 4, 8 );
@@ -1825,10 +1825,10 @@ class Terms extends gEditorial\Module
 		$additions = [];
 		$supported = $this->get_supported( $taxonomy );
 
-		if ( in_array( 'image', $supported ) )
+		if ( in_array( 'image', $supported, TRUE ) )
 			$additions['sync_image_titles'] = _x( 'Sync Image Titles', 'Bulk Actions', 'geditorial-terms' );
 
-		if ( in_array( 'tagline', $supported ) )
+		if ( in_array( 'tagline', $supported, TRUE ) )
 			$additions['move_tagline_to_desc'] = _x( 'Move Tagline to Description', 'Bulk Actions', 'geditorial-terms' );
 
 		return array_merge( $actions, $additions );
@@ -2055,37 +2055,51 @@ class Terms extends gEditorial\Module
 		return array_merge( $taxonomies, $this->get_supported_taxonomies( 'order' ) );
 	}
 
-	private function _hook_overwrite_titles( $taxonomies, $field = 'overwrite' )
+	private function _hook_overwrite_titles( $taxonomies )
 	{
 		if ( is_admin() || empty( $taxonomies ))
 			return FALSE;
 
-		add_filter( 'single_term_title', function( $name ) use ( $field, $taxonomies ) {
+		$this->filter_self( 'sanitize_name', 3, 9 );
+
+		add_filter( 'single_term_title', function( $name ) use ( $taxonomies ) {
 
 			if ( ! is_tax( $taxonomies ) )
 				return $name;
 
-			if ( $term = get_queried_object() )
+			if ( ! $term = get_queried_object() )
 				return $name;
 
-			$metakey = $this->get_supported_metakey( $field, $term->taxonomy );
+			$metakey = $this->get_supported_metakey( 'overwrite', $term->taxonomy );
 			$meta    = get_term_meta( $term->term_id, $metakey, TRUE );
 
 			return $meta ?: $name; // TODO: pass through filters
 		}, 8 );
 
 		foreach ( $taxonomies as $taxonomy )
-			add_filter( $taxonomy.'_name', function( $value, $term_id, $context ) use ( $field ) {
+			add_filter( $taxonomy.'_name', function( $value, $term_id, $context ) {
 
 				if ( 'display' !== $context )
 					return $value;
 
-				$metakey = $this->get_supported_metakey( $field );
+				$metakey = $this->get_supported_metakey( 'overwrite' );
 				$meta    = get_term_meta( $term_id, $metakey, TRUE );
 
 				return $meta ?: $value; // TODO: pass through filters
 			}, 8, 3 );
 
 		return count( $taxonomies );
+	}
+
+	// @FILTER: `geditorial_terms_sanitize_name`
+	public function sanitize_name( $name, $term, $action )
+	{
+		if ( ! in_array( 'overwrite', $this->get_supported( $term->taxonomy ), TRUE ) )
+			return $name;
+
+		$metakey = $this->get_supported_metakey( 'overwrite', $term->taxonomy );
+		$meta    = get_term_meta( $term->term_id, $metakey, TRUE );
+
+		return $meta ?: $name; // TODO: pass through filters
 	}
 }
