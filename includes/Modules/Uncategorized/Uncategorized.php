@@ -102,6 +102,7 @@ class Uncategorized extends gEditorial\Module
 		return array_merge( $actions, [
 			$prefix.'_clean_uncategorized' => _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' ),
 			$prefix.'_clean_unregistered'  => _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' ),
+			$prefix.'_clean_unattached'    => _x( 'Clean Unattached', 'Action', 'geditorial-uncategorized' ),
 		] );
 	}
 
@@ -122,6 +123,12 @@ class Uncategorized extends gEditorial\Module
 
 				$taxonomies = NULL;
 				$callback   = [ $this, '_do_clean_unregistered' ];
+				break;
+
+			case $prefix.'_clean_unattached':
+
+				$taxonomies = Taxonomy::get( -1 );
+				$callback   = [ $this, '_do_clean_unattached' ];
 				break;
 
 			default:
@@ -221,6 +228,27 @@ class Uncategorized extends gEditorial\Module
 							'count'   => $count,
 						] );
 					}
+
+				} else if ( Tablelist::isAction( 'clean_unattached', TRUE ) ) {
+
+					$taxonomies = Taxonomy::get( -1 );
+
+					foreach ( $_POST['_cb'] as $post_id ) {
+
+						if ( $this->_do_clean_unattached( $post_id, $taxonomies ) )
+							$count++;
+					}
+
+					if ( $count ) {
+
+						// delete pointer's cache
+						delete_transient( $this->_get_count_cache_key() );
+
+						WordPress::redirectReferer( [
+							'message' => 'cleaned',
+							'count'   => $count,
+						] );
+					}
 				}
 
 				WordPress::redirectReferer( 'nochange' );
@@ -236,6 +264,7 @@ class Uncategorized extends gEditorial\Module
 
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' );
 		$pagination['actions']['clean_unregistered']  = _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' );
+		$pagination['actions']['clean_unattached']    = _x( 'Clean Unattached', 'Action', 'geditorial-uncategorized' );
 
 		$pagination['before'][] = Tablelist::filterPostTypes();
 		$pagination['before'][] = Tablelist::filterAuthors();
@@ -341,6 +370,25 @@ class Uncategorized extends gEditorial\Module
 			HTML::desc( _x( 'There are no tools available!', 'Message', 'geditorial-uncategorized' ) );
 
 		echo '</table>';
+	}
+
+	private function _do_clean_unattached( $post, $taxonomies = NULL )
+	{
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $taxonomies ) )
+			$taxonomies = Taxonomy::get( -1 ); // better to be all!
+
+		$diff = array_diff( $taxonomies, get_object_taxonomies( $post ) );
+
+		if ( empty( $diff ) )
+			return FALSE;
+
+		foreach ( $diff as $taxonomy )
+			wp_set_object_terms( $post->ID, [], $taxonomy );
+
+		return TRUE;
 	}
 
 	private function _do_clean_unregistered( $post )
