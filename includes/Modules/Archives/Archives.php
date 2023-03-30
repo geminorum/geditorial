@@ -121,6 +121,22 @@ class Archives extends gEditorial\Module
 		];
 	}
 
+	protected function posttypes_excluded()
+	{
+		return Settings::posttypesExcluded( get_post_types( [
+			'public'      => FALSE,
+			'has_archive' => FALSE,
+		], 'names', 'or' ) );
+	}
+
+	protected function taxonomies_excluded()
+	{
+		return Settings::taxonomiesExcluded( get_taxonomies( [
+			'public'      => FALSE,
+			'has_archive' => FALSE, // NOTE: gEditorial prop
+		] , 'names', 'or' ) );
+	}
+
 	public function init()
 	{
 		parent::init();
