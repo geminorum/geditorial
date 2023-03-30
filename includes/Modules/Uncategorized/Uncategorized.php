@@ -97,28 +97,43 @@ class Uncategorized extends gEditorial\Module
 
 	public function bulk_actions( $actions )
 	{
+		$prefix = $this->classs();
+
 		return array_merge( $actions, [
-			'clean_uncategorized' => _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' ),
-			'clean_unregistered'  => _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' ),
+			$prefix.'_clean_uncategorized' => _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' ),
+			$prefix.'_clean_unregistered'  => _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' ),
 		] );
 	}
 
 	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
 	{
-		if ( ! in_array( $doaction, [ 'clean_uncategorized', 'clean_unregistered' ], TRUE ) )
-			return $redirect_to;
+		$count  = 0;
+		$prefix = $this->classs();
 
-		$count    = 0;
-		$callback = $doaction == 'clean_uncategorized'
-			? [ $this, '_do_clean_uncategorized' ]
-			: [ $this, '_do_clean_unregistered' ];
+		switch ( $doaction ) {
+
+			case $prefix.'_clean_uncategorized':
+
+				$taxonomies = $this->taxonomies();
+				$callback   = [ $this, '_do_clean_uncategorized' ];
+				break;
+
+			case $prefix.'_clean_unregistered':
+
+				$taxonomies = NULL;
+				$callback   = [ $this, '_do_clean_unregistered' ];
+				break;
+
+			default:
+				return $redirect_to;
+		}
 
 		foreach ( $post_ids as $post_id ) {
 
 			if ( ! current_user_can( 'edit_post', $post_id ) )
 				continue;
 
-			if ( call_user_func_array( $callback, [ $post_id ] ) )
+			if ( call_user_func_array( $callback, [ $post_id, $taxonomies ] ) )
 				$count++;
 		}
 
