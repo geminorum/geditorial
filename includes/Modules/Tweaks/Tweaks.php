@@ -18,6 +18,8 @@ use geminorum\gEditorial\WordPress\User;
 class Tweaks extends gEditorial\Module
 {
 
+	// TODO: metabox on postedit with similar post names using `Post::getIDByTitle()`
+
 	protected $priority_init = 14;
 
 	private $_page_templates = [];

@@ -3243,6 +3243,7 @@ class Module extends Base
 		return $this->register_posttype( $posttype, array_merge( [
 			'paired_taxonomy'   => $this->_paired,
 			'hierarchical'      => TRUE,
+			'show_in_nav_menus' => FALSE,
 			'show_in_admin_bar' => FALSE,
 			'rewrite'           => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
@@ -5139,10 +5140,10 @@ class Module extends Base
 	protected function paired_get_paired_constants()
 	{
 		return [
-			FALSE, // posttype
-			FALSE, // taxonomy
-			FALSE, // subterm
-			FALSE, // exclude taxonomy
+			FALSE, // posttype: `primary_posttype`
+			FALSE, // taxonomy: `primary_paired`
+			FALSE, // subterm: `primary_subterm`
+			FALSE, // exclude: `primary_taxonomy`
 		];
 	}
 

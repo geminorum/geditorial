@@ -81,9 +81,9 @@ class Terms extends gEditorial\Module
 					'description' => _x( 'Changes internal Wordpress core defaults to use custom ordering.', 'Setting Description', 'geditorial-terms' ),
 				],
 				[
-					'field'       => 'fill_current_author',
-					'title'       => _x( 'Fill Current Author', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Automatically fills current user as term author if not set for supported taxonomy.', 'Setting Description', 'geditorial-terms' ),
+					'field'       => 'auto_current_author',
+					'title'       => _x( 'Current Author', 'Setting Title', 'geditorial-terms' ),
+					'description' => _x( 'Automatically fills current user as term author if not set for supported taxonomies.', 'Setting Description', 'geditorial-terms' ),
 				],
 				[
 					'field'       => 'auto_term_overwrite',
@@ -276,7 +276,7 @@ class Terms extends gEditorial\Module
 
 		// fills current user as term author if not set for supported taxonomy
 		if ( ! empty( $this->get_setting( 'term_author', [] ) )
-			&& $this->get_setting( 'fill_current_author' ) )
+			&& $this->get_setting( 'auto_current_author' ) )
 			$this->filter_self( 'supported_field_edit', 4, 8, 'author' );
 
 		if ( ! is_admin() )

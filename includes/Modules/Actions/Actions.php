@@ -12,8 +12,8 @@ class Actions extends gEditorial\Module
 		return [
 			'name'       => 'actions',
 			'title'      => _x( 'Actions', 'Modules: Actions', 'geditorial' ),
+			'desc'       => _x( 'Editorial Content Actions', 'Modules: Actions', 'geditorial' ),
 			'textdomain' => FALSE,
-			'frontend'   => FALSE,
 			'autoload'   => TRUE,
 		];
 	}

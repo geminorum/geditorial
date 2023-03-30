@@ -16,8 +16,6 @@ use geminorum\gEditorial\WordPress\PostType;
 class Revisions extends gEditorial\Module
 {
 
-	// TODO: keep selected revisions by `wp_save_post_revision_revisions_before_deletion` filter
-
 	protected $disable_no_posttypes = TRUE;
 	protected $textdomain_frontend  = FALSE;
 
