@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Switcher\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Switcher\n"
+"X-Domain: geditorial-switcher\n"
+
+#: Switcher.php:35
+msgctxt "Setting Title"
+msgid "Bulk Action Roles"
+msgstr ""
+
+#: Switcher.php:36
+msgctxt "Setting Description"
+msgid "Roles that can use bulk action to switch post-types."
+msgstr ""
+
+#: Switcher.php:42
+msgctxt "Setting Title"
+msgid "Bulk Action From"
+msgstr ""
+
+#: Switcher.php:43
+msgctxt "Setting Description"
+msgid "Select post-types to be avialable for switch."
+msgstr ""
+
+#: Switcher.php:49
+msgctxt "Setting Title"
+msgid "Bulk Action To"
+msgstr ""
+
+#: Switcher.php:50
+msgctxt "Setting Description"
+msgid "Select post-types to be targetted for switch."
+msgstr ""
+
+#. translators: %s: posttype
+#: Switcher.php:76
+msgctxt "Bulk Action"
+msgid "Switch to %s"
+msgstr ""
+
+#. translators: %1$s: count, %2$s: posttype
+#: Switcher.php:128
+msgctxt "Message"
+msgid "%1$s items(s) switched to %2$s!"
+msgstr ""
