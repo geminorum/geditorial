@@ -12,10 +12,13 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress\Post;
+use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\WooCommerce;
+use geminorum\gEditorial\Services\Paired;
 
 class Helper extends Main
 {
@@ -884,6 +887,42 @@ class Helper extends Main
 			$messages[$key] = vsprintf( self::noopedCount( $counts[$key], $template ), $strings );
 
 		return $messages;
+	}
+
+	/**
+	 * Switches posttype with PAIRED API support
+	 *
+	 * @param  int|object $post
+	 * @param  string|object $posttype
+	 * @return int|false $changed
+	 */
+	public static function switchPostType( $post, $posttype )
+	{
+		if ( ! $posttype = PostType::object( $posttype ) )
+			return FALSE;
+
+		if ( ! $post = Post::get( $post ) )
+			return FALSE;
+
+		if ( $posttype->name === $post->post_type )
+			return TRUE;
+
+		$paired_from = Paired::isPostType( $post->post_type );
+		$paired_to   = Paired::isPostType( $posttype->name );
+
+		// neither is paired
+		if ( ! $paired_from && ! $paired_to )
+			return Post::setPostType( $post, $posttype );
+
+		// bail if paired term not defined
+		if ( ! $term = Paired::getToTerm( $post->ID, $post->post_type, $paired_from ) )
+			return Post::setPostType( $post, $posttype );
+
+		// NOTE: the `term_id` remains intact
+		if ( ! Term::setTaxonomy( $term, $paired_to ) )
+			return FALSE;
+
+		return Post::setPostType( $post, $posttype );
 	}
 
 	public static function getLayout( $name, $require = FALSE, $no_cache = FALSE )
