@@ -45,6 +45,8 @@ class Archives extends gEditorial\Module
 				'title'       => sprintf( _x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as title on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'placeholder' => $this->_get_posttype_archive_title( $posttype_name, FALSE ),
+				'after'       => Settings::fieldAfterIcon( $this->get_posttype_archive_link( $posttype_name ),
+					_x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
 			];
 
 			$settings['_posttypes'][] = [
@@ -94,7 +96,8 @@ class Archives extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Archives Slug for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as slug on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
-				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ), _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
+				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ),
+					_x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
 				'placeholder' => $this->_taxonomy_archive_slug( $taxonomy_name, FALSE ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 			];
@@ -146,6 +149,7 @@ class Archives extends gEditorial\Module
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
 
 		$this->filter( 'taxonomy_archive_link', 2, 10, FALSE, 'geditorial' );
+		$this->filter( 'taxonomy_archive_link', 2, 10, FALSE, 'gnetwork' );
 		$this->filter( 'navigation_taxonomy_archive_link', 2, 9, FALSE, 'gtheme' );
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
 	}
@@ -172,7 +176,7 @@ class Archives extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title' => sprintf( _x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
 					PostType::object( $screen->post_type )->label ),
-				'url'   => PostType::getArchiveLink( $screen->post_type ),
+				'url'   => $this->get_posttype_archive_link( $screen->post_type ),
 			] ] ) );
 		}
 	}
@@ -209,6 +213,24 @@ class Archives extends gEditorial\Module
 		foreach ( $this->taxonomies() as $taxonomy )
 			if ( $slug = $this->_taxonomy_archive_slug( $taxonomy ) )
 				add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
+	}
+
+	// not used yet!
+	private function _posttype_archive_slug( $posttype )
+	{
+		if ( ! $object = PostType::object( $posttype ) )
+			return FALSE;
+
+		if ( ! empty( $object->has_archive ) )
+			return $object->has_archive;
+
+		if ( ! empty( $object->rest_base ) )
+			return $object->rest_base;
+
+		if ( ! empty( $object->rewrite['slug'] ) )
+			return $object->rewrite['slug'];
+
+		return $posttype;
 	}
 
 	private function _taxonomy_archive_slug( $taxonomy, $settings = TRUE )
@@ -362,6 +384,17 @@ class Archives extends gEditorial\Module
 		return HTML::wrap( $html, '-taxonomy-archives-content' );
 	}
 
+	public function get_posttype_archive_link( $posttype )
+	{
+		if ( ! in_array( $posttype, $this->posttypes() ) )
+			return FALSE;
+
+		$link = PostType::getArchiveLink( $posttype );
+		$slug = PostType::object( $posttype )->has_archive;
+
+		return $this->filters( 'posttype_archive_link', $link, $posttype, $slug );
+	}
+
 	public function get_taxonomy_archive_link( $taxonomy )
 	{
 		if ( ! in_array( $taxonomy, $this->taxonomies() ) )
@@ -407,7 +440,7 @@ class Archives extends gEditorial\Module
 				'name' => sprintf( _x( '%s Archives', 'Navigation Metabox', 'geditorial-archives' ), $posttype_label ),
 				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
 				'slug' => sprintf( 'custom-%s_archives', $posttype_name ),
-				'link' => PostType::getArchiveLink( $posttype_name ),
+				'link' => $this->get_posttype_archive_link( $posttype_name ),
 			];
 
 		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label )
