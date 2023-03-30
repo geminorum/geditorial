@@ -157,7 +157,7 @@ class Plugin
 			'class'      => $class ?: Helper::moduleClass( $args['name'], FALSE ),
 			'icon'       => 'screenoptions', // dashicon class / svg icon array
 			'textdomain' => sprintf( '%s-%s', static::BASE, Text::sanitizeBase( $args['name'] ) ), // or `NULL` for plugin base
-			'configure'  => TRUE,  // or `settings`, `tools`, `reports`, FALSE TO DISABLE
+			'configure'  => TRUE,  // or `settings`, `tools`, `reports`, `imports`, `FALSE` to disable
 			'i18n'       => TRUE,  // or `FALSE`, `adminonly`, `frontonly`, `restonly`
 			'frontend'   => TRUE,  // whether or not the module should be loaded on the frontend
 			'autoload'   => FALSE, // autoloading a module will remove the ability to enable/disable it

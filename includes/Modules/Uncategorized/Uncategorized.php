@@ -259,6 +259,7 @@ class Uncategorized extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
+		// FIXME: add screen option for this!
 		$query = [ 'tax_query' => $this->_get_uncategorized_tax_query() ];
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], 'any', $this->get_sub_limit_option( $sub ) );

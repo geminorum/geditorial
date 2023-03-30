@@ -8,7 +8,6 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
@@ -1657,93 +1656,6 @@ class Terms extends gEditorial\Module
 					'href'   => get_term_link( $term ),
 				];
 		}
-	}
-
-	public function reports_settings( $sub )
-	{
-		if ( $this->check_settings( $sub, 'reports' ) ) {
-			if ( ! empty( $_POST ) ) {
-
-				$this->nonce_check( 'reports', $sub );
-
-				if ( Tablelist::isAction( 'purge_unregistered', TRUE ) ) {
-
-					// FIXME: only purges no-longer-attached taxes, not orphaned
-
-					$count      = 0;
-					$registered = Taxonomy::get();
-
-					foreach ( $_POST['_cb'] as $post_id ) {
-
-						if ( ! $post = PostType::getPost( $post_id ) )
-							continue;
-
-						$diff = array_diff_key( $registered, array_flip( get_object_taxonomies( $post ) ) );
-
-						if ( empty( $diff ) )
-							continue;
-
-						foreach ( $diff as $taxonomy => $title )
-							wp_set_object_terms( $post->ID, [], $taxonomy );
-
-						$count++;
-					}
-
-					if ( $count )
-						WordPress::redirectReferer( [
-							'message' => 'cleaned',
-							'count'   => $count,
-						] );
-				}
-
-				WordPress::redirectReferer( 'nochange' );
-			}
-
-			$this->add_sub_screen_option( $sub );
-		}
-	}
-
-	protected function render_reports_html( $uri, $sub )
-	{
-		list( $posts, $pagination ) = Tablelist::getPosts( [], [], 'any', $this->get_sub_limit_option( $sub ) );
-
-		$pagination['actions']['purge_unregistered'] = _x( 'Purge Unregistered', 'Table Action', 'geditorial-terms' );
-
-		$pagination['before'][] = Tablelist::filterPostTypes();
-		$pagination['before'][] = Tablelist::filterAuthors();
-		$pagination['before'][] = Tablelist::filterSearch();
-
-		return HTML::tableList( [
-			'_cb'   => 'ID',
-			'ID'    => Tablelist::columnPostID(),
-			'date'  => Tablelist::columnPostDate(),
-			'type'  => Tablelist::columnPostType(),
-			'title' => Tablelist::columnPostTitle(),
-			'terms' => Tablelist::columnPostTerms(),
-			'raw' => [
-				'title'    => _x( 'Raw', 'Table Column', 'geditorial-terms' ),
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-
-					$query = new \WP_Term_Query( [ 'object_ids' => $row->ID, 'get' => 'all' ] );
-
-					if ( empty( $query->terms ) )
-						return Helper::htmlEmpty();
-
-					$list = [];
-
-					foreach ( $query->terms as $term )
-						$list[] = '<span title="'.$term->taxonomy.'">'.$term->name.'</span>';
-
-					return Strings::getJoined( $list );
-				},
-			],
-		], $posts, [
-			'navigation' => 'before',
-			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Posts with Terms', 'Header', 'geditorial-terms' ) ),
-			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
-			'pagination' => $pagination,
-		] );
 	}
 
 	public function supported_field_edit_author( $meta, $field, $taxonomy, $term_id )
