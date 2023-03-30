@@ -30,12 +30,12 @@ class Module extends Core\Base
 
 	protected static function sanitize_hook( $hook )
 	{
-		return trim( str_ireplace( [ '-', '.', '/', '\\' ], '_', $hook ) );
+		return Text::sanitizeHook( $hook );
 	}
 
-	protected static function sanitize_base( $hook )
+	protected static function sanitize_base( $base )
 	{
-		return trim( str_ireplace( [ '_', '.' ], '-', $hook ) );
+		return Text::sanitizeBase( $base );
 	}
 
 	protected function hook()
@@ -157,11 +157,17 @@ class Module extends Core\Base
 	protected function filter_once( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_filter( $hook, function( $first ) use ( $method ) {
+			add_filter( $hook, function() use ( $method ) {
 				static $ran = FALSE;
-				if ( $ran ) return $first;
+
+				$params = func_get_args();
+
+				if ( $ran )
+					return $params[0];
+
 				$ran = TRUE;
-				return call_user_func_array( [ $this, $method ], func_get_args() );
+
+				return call_user_func_array( [ $this, $method ], $params );
 			}, $priority, $args );
 	}
 

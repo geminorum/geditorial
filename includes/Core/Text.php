@@ -5,6 +5,16 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Text extends Base
 {
 
+	public static function sanitizeHook( $hook )
+	{
+		return trim( str_ireplace( [ '-', '.', '/', '\\' ], '_', $hook ) );
+	}
+
+	public static function sanitizeBase( $hook )
+	{
+		return trim( str_ireplace( [ '_', '.' ], '-', $hook ) );
+	}
+
 	public static function nameFamilyFirst( $text, $separator = ', ' )
 	{
 		if ( empty( $text ) )

@@ -7,9 +7,11 @@ use geminorum\gEditorial\Core;
 class WooCommerce extends Core\Base
 {
 
+	const PLUGIN = 'woocommerce/woocommerce.php';
+
 	public static function isActive()
 	{
-		return Core\WordPress::isPluginActive( 'woocommerce/woocommerce.php' );
+		return Core\WordPress::isPluginActive( static::PLUGIN );
 	}
 
 	public static function isActiveWoodMart()

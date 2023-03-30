@@ -90,8 +90,12 @@ class PostType extends Core\Base
 			if ( ! self::can( $posttype_obj, $capability, $user_id ) )
 				continue;
 
+			// just the name!
+			if ( -1 === $mod )
+				$list[] = $posttype_obj->name;
+
 			// label
-			if ( 0 === $mod )
+			else if ( 0 === $mod )
 				$list[$posttype] = $posttype_obj->label ? $posttype_obj->label : $posttype_obj->name;
 
 			// plural
@@ -315,6 +319,7 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
+	// TODO: move to `Post` Class
 	public static function getIDbySlug( $slug, $posttype = 'post', $url = FALSE )
 	{
 		static $cache = [];

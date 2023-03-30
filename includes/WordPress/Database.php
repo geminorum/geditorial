@@ -7,6 +7,8 @@ use geminorum\gEditorial\Core;
 class Database extends Core\Base
 {
 
+	// @SEE: https://make.wordpress.org/core/2022/10/08/escaping-table-and-field-names-with-wpdbprepare-in-wordpress-6-1/
+
 	public static function getResults( $query, $output = OBJECT, $key = 'default', $group = 'geditorial' )
 	{
 		global $wpdb;

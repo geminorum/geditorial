@@ -31,6 +31,37 @@ class Post extends Core\Base
 	}
 
 	/**
+	 * Retrieves a post given its title.
+	 *
+	 * @see `get_page_by_title()`
+	 * @source https://make.wordpress.org/core/2023/03/06/get_page_by_title-deprecated/
+	 *
+	 * @param  string $title
+	 * @param  string $posttype
+	 * @return mixed $posts
+	 */
+	public static function getIDsByTitle( $title, $posttype = 'post', $fields = 'ids' )
+	{
+		$args = [
+			'title'          => $title,
+			'fields'         => $fields,
+			'post_type'      => $posttype,
+			'post_status'    => 'all',
+			'orderby'        => 'post_date ID',
+			'order'          => 'ASC',
+			'posts_per_page' => -1,
+
+			'no_found_rows'          => TRUE,
+			'ignore_sticky_posts'    => TRUE,
+			'update_post_term_cache' => FALSE,
+			'update_post_meta_cache' => FALSE,
+		];
+
+		$query = new \WP_Query();
+		return $query->query( $args );
+	}
+
+	/**
 	 * Updates the posttype for the post.
 	 *
 	 * also accepts post and posttype objects
