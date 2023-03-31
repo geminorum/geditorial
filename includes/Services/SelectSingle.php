@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Query;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
@@ -124,7 +123,7 @@ class SelectSingle extends Main
 			$args['post_status'] = [ 'publish', 'future', 'draft' ];
 
 
-		Query::hookSearchPostTitleOnly();
+		AdvancedQueries::hookSearchPostTitleOnly();
 
 		$query = new \WP_Query();
 		$posts = [];

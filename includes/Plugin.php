@@ -111,10 +111,10 @@ class Plugin
 		$this->load_options();
 		$this->init_modules();
 
-		Query::setup();
 		Services\Paired::setup();
 		Services\SelectSingle::setup();
 		Services\ObjectToObject::setup();
+		Services\AdvancedQueries::setup();
 	}
 
 	private function define_constants()

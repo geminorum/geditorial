@@ -1,12 +1,10 @@
-<?php namespace geminorum\gEditorial;
+<?php namespace geminorum\gEditorial\Services;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\WordPress\Main;
 
-class Query extends Main
+class AdvancedQueries extends Main
 {
 
 	const BASE = 'geditorial';
