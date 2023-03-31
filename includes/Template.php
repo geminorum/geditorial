@@ -590,17 +590,32 @@ class Template extends Main
 	{
 		global $wp_embed;
 
-		if ( ! URL::isValid( $meta ) )
+		$url = trim( $meta );
+
+		if ( ! URL::isValid( $url) )
 			return $meta;
 
-		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', trim( $meta ), trim( $meta ) ) );
+		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', $url, $url ) );
 	}
 
 	public static function doMediaShortCode( $meta, $type = NULL )
 	{
-		$html = $meta;
+		$html = trim( $meta );
+
+		if ( $html && is_null( $type ) ) {
+
+			$file = wp_check_filetype( $html );
+			$type = $file['type'] ?: 'embed'; // fallback if no type by url
+		}
 
 		switch ( $type ) {
+
+			case 'embed':
+
+				$html = self::doEmbedShortCode( $meta );
+				break;
+
+			// case 'application': // TODO
 
 			case 'text':
 
