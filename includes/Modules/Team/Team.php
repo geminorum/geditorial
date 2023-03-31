@@ -117,9 +117,9 @@ class Team extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
+	protected function posttypes_excluded( $extra = [] )
 	{
-		return Settings::posttypesExcluded( $this->constant( 'member_cpt' ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $this->constant( 'member_cpt' ) ) );
 	}
 
 	public function after_setup_theme()

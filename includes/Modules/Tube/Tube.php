@@ -183,12 +183,12 @@ class Tube extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
+	protected function posttypes_excluded( $extra = [] )
 	{
-		return Settings::posttypesExcluded( [
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( [
 			$this->constant( 'video_cpt' ),
 			$this->constant( 'channel_cpt' ),
-		] );
+		] ) );
 	}
 
 	public function after_setup_theme()

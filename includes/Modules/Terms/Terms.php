@@ -187,7 +187,7 @@ class Terms extends gEditorial\Module
 		];
 	}
 
-	protected function taxonomies_excluded()
+	protected function taxonomies_excluded( $extra = [] )
 	{
 		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
 			'system_tags',

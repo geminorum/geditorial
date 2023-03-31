@@ -117,9 +117,9 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
+	protected function posttypes_excluded( $extra = [] )
 	{
-		return Settings::posttypesExcluded( $this->constant( 'day_cpt' ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $this->constant( 'day_cpt' ) ) );
 	}
 
 	public function setup( $args = [] )

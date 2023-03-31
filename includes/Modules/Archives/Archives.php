@@ -123,20 +123,20 @@ class Archives extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded()
+	protected function posttypes_excluded( $extra = [] )
 	{
-		return Settings::posttypesExcluded( get_post_types( [
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( get_post_types( [
 			'public'      => FALSE,
 			'has_archive' => FALSE,
-		], 'names', 'or' ) );
+		], 'names', 'or' ) ) );
 	}
 
-	protected function taxonomies_excluded()
+	protected function taxonomies_excluded( $extra = [] )
 	{
-		return Settings::taxonomiesExcluded( get_taxonomies( [
+		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( get_taxonomies( [
 			'public'      => FALSE,
 			'has_archive' => FALSE, // NOTE: gEditorial prop
-		] , 'names', 'or' ) );
+		] , 'names', 'or' ) ) );
 	}
 
 	public function init()

@@ -929,15 +929,15 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	protected function posttypes_excluded()
+	protected function posttypes_excluded( $extra = [] )
 	{
-		$extra  = [];
+		$extra  = (array) $extra;
 		$paired = $this->paired_get_paired_constants();
 
 		if ( ! empty( $paired[0] ) )
 			$extra[] = $this->constant( $paired[0] );
 
-		return Settings::posttypesExcluded( $extra );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra ) );
 	}
 
 	// enabled post types for this module
@@ -1008,9 +1008,9 @@ class Module extends Base
 		return empty( $excluded ) ? $posttypes : Arraay::stripByKeys( $posttypes, $excluded );
 	}
 
-	protected function taxonomies_excluded()
+	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded() );
+		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( $extra ) );
 	}
 
 	protected function _hook_taxonomies_excluded( $constant, $module = NULL )
