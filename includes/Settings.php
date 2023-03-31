@@ -1672,7 +1672,7 @@ class Settings extends Core\Base
 
 					HTML::desc( $args['string_empty'], TRUE, '-empty' );
 
-				} else if ( count( $args['values'] ) ) {
+				} else if ( $args['values'] && count( $args['values'] ) ) {
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -1831,7 +1831,7 @@ class Settings extends Core\Base
 			case 'checkboxes':
 			case 'checkboxes-values':
 
-				if ( count( $args['values'] ) ) {
+				if ( $args['values'] && count( $args['values'] ) ) {
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
@@ -1886,7 +1886,7 @@ class Settings extends Core\Base
 			break;
 			case 'checkbox-panel':
 
-				if ( count( $args['values'] ) ) {
+				if ( $args['values'] && count( $args['values'] ) ) {
 
 					echo '<div class="wp-tab-panel"><ul>';
 
@@ -1940,7 +1940,7 @@ class Settings extends Core\Base
 			break;
 			case 'radio':
 
-				if ( count( $args['values'] ) ) {
+				if ( $args['values'] && count( $args['values'] ) ) {
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
@@ -2480,6 +2480,7 @@ class Settings extends Core\Base
 
 				} else {
 
+					$args['description'] = FALSE;
 					HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 

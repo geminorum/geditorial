@@ -560,13 +560,13 @@ class Terms extends gEditorial\Module
 			// mainly for display purposes
 			if ( in_array( $field, [ 'image' ] ) )
 				register_rest_field( $taxonomies, $field, [
-					'get_callback' => [ $this, 'register_rest_get_callback' ],
-					// 'auth_callback' // FIXME
+					'get_callback'  => [ $this, 'attribute_get_callback' ],
+					// 'auth_callback' => [ $this, 'attribute_auth_callback' ], // FIXME
 				] );
 		}
 	}
 
-	public function register_rest_get_callback( $term, $attr, $request, $object_type )
+	public function attribute_get_callback( $term, $attr, $request, $object_type )
 	{
 		switch ( $attr ) {
 
@@ -576,6 +576,11 @@ class Terms extends gEditorial\Module
 
 				break;
 		}
+	}
+
+	public function attribute_auth_callback( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )
+	{
+		return $allowed;
 	}
 
 	public function register_auth_callback( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )

@@ -886,9 +886,9 @@ class Module extends Base
 		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
 			$this->action( 'admin_footer', 0, 20, $context );
 
-		/* translators: %s: posttype singular name */
-		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %s', 'Module: Button Title', 'geditorial' ) );
-		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', '%1$s '.$object->labels->add_new_item );
+		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %2$s', 'Module: Button Title', 'geditorial' ) );
+		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', sprintf( '%s %s', '%1$s', $object->labels->add_new_item ) );
 		$name  = $object->labels->singular_name;
 
 		if ( $inline )
@@ -1251,7 +1251,7 @@ class Module extends Base
 		if ( FALSE === $field )
 			return $gEditorialPostMeta[$post_id][$metakey];
 
-		foreach ( $this->sanitize_postmeta_field( $field ) as $field_key )
+		foreach ( $this->sanitize_postmeta_field_key( $field ) as $field_key )
 			if ( isset( $gEditorialPostMeta[$post_id][$metakey][$field_key] ) )
 				return $gEditorialPostMeta[$post_id][$metakey][$field_key];
 
@@ -1284,7 +1284,7 @@ class Module extends Base
 
 		$legacy = $this->get_postmeta_legacy( $post_id, [], $metakey );
 
-		foreach ( $this->sanitize_postmeta_field( $field ) as $field_key ) {
+		foreach ( $this->sanitize_postmeta_field_key( $field ) as $field_key ) {
 
 			if ( $data = $this->fetch_postmeta( $post_id, $default, $this->get_postmeta_key( $field_key, $prefix ) ) )
 				return $data;
@@ -1305,7 +1305,7 @@ class Module extends Base
 			return FALSE;
 
 		// tries to cleanup old field keys, upon changing in the future
-		foreach ( $this->sanitize_postmeta_field( $field ) as $offset => $field_key )
+		foreach ( $this->sanitize_postmeta_field_key( $field ) as $offset => $field_key )
 			if ( $offset ) // skips the current key!
 				delete_post_meta( $post_id, $this->get_postmeta_key( $field_key, $prefix ) );
 
@@ -1338,7 +1338,7 @@ class Module extends Base
 			$legacy = $this->get_postmeta_legacy( $post_id, [], $metakey );
 
 		foreach ( $fields as $field => $args )
-			foreach ( $this->sanitize_postmeta_field( $field ) as $field_key )
+			foreach ( $this->sanitize_postmeta_field_key( $field ) as $field_key )
 				if ( array_key_exists( $field_key, $legacy ) )
 					unset( $legacy[$field_key] );
 
@@ -1347,9 +1347,9 @@ class Module extends Base
 		return $this->store_postmeta( $post_id, array_filter( $legacy ), $metakey );
 	}
 
-	public function sanitize_postmeta_field( $field )
+	public function sanitize_postmeta_field_key( $field_key )
 	{
-		return (array) $field;
+		return (array) $field_key;
 	}
 
 	// FIXME: DEPRECATED
@@ -1498,7 +1498,7 @@ class Module extends Base
 	// helps with renamed fields
 	private function get_settings_fields_option_val( $args )
 	{
-		$fields = array_reverse( $this->sanitize_postmeta_field( $args['field'] ) );
+		$fields = array_reverse( $this->sanitize_postmeta_field_key( $args['field'] ) );
 
 		foreach ( $fields as $field_key )
 			if ( isset( $this->options->fields[$args['post_type']][$field_key] ) )
@@ -1952,9 +1952,9 @@ class Module extends Base
 		if ( isset( $this->options->fields[$posttype] )
 			&& is_array( $this->options->fields[$posttype] ) ) {
 
-			foreach ( $this->options->fields[$posttype] as $field => $enabled ) {
+			foreach ( $this->options->fields[$posttype] as $field_key => $enabled ) {
 
-				$sanitized = $this->sanitize_postmeta_field( $field )[0];
+				$sanitized = $this->sanitize_postmeta_field_key( $field_key )[0];
 
 				if ( $js )
 					$fields[$sanitized] = (bool) $enabled;
@@ -2008,7 +2008,7 @@ class Module extends Base
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 				'sanitize'    => NULL,
-				'pattern'     => NULL, // HTML5 input pattern // TODO: use this!
+				'pattern'     => NULL, // HTML5 input pattern // FIXME: utilize this!
 				'default'     => '', // currently only on rest
 				'icon'        => 'smiley',
 				'type'        => 'text',
@@ -5631,7 +5631,7 @@ class Module extends Base
 		return $html;
 	}
 
-	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post' )
+	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post', $extra = [] )
 	{
 		if ( is_null( $icon ) )
 			$icon = $this->module->icon;
@@ -5642,7 +5642,7 @@ class Module extends Base
 		return HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ?: FALSE,
 			'title'  => $title ?: FALSE,
-			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
+			'class'  => array_merge( [ '-icon', ( $link ? '-link' : '-info' ) ], (array) $extra ),
 			'target' => $link ? '_blank' : FALSE,
 		], Helper::getIcon( $icon ) );
 	}

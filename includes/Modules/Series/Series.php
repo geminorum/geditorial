@@ -14,6 +14,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Series extends gEditorial\Module
 {
 
+	// TODO: use each parent term as a `set`
+
 	public $meta_key = '_ge_series';
 
 	protected $disable_no_posttypes = TRUE;

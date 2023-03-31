@@ -454,14 +454,18 @@ class Meta extends gEditorial\Module
 	{
 		foreach ( $this->posttypes() as $posttype ) {
 
-			// register general field for all meta data
-			// mainly for display purposes
+			/**
+			 * registering general field for all meta data
+			 * mainly for display purposes
+			 */
 			register_rest_field( $posttype, $this->constant( 'restapi_attribute' ), [
-				'get_callback' => [ $this, 'register_get_callback' ],
+				'get_callback' => [ $this, 'attribute_get_callback' ],
 			] );
 
-			// the post type must have `custom-fields` support
-			// otherwise the meta fields will not appear in the REST API
+			/**
+			 * the posttype must have `custom-fields` support
+			 * otherwise the meta fields will not appear in the REST API
+			 */
 			if ( ! post_type_supports( $posttype, 'custom-fields' ) )
 				continue;
 
@@ -473,6 +477,7 @@ class Meta extends gEditorial\Module
 					continue;
 
 				if ( $args['repeat'] )
+					// NOTE: require an item schema when registering array meta
 					$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
 
 				else if ( in_array( $args['type'], [ 'number', 'float', 'price' ] ) )
@@ -499,7 +504,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function register_get_callback( $post, $attr, $request, $object_type )
+	public function attribute_get_callback( $post, $attr, $request, $object_type )
 	{
 		$list   = [];
 		$fields = $this->get_posttype_fields( $post['type'] );
@@ -821,10 +826,10 @@ class Meta extends gEditorial\Module
 		return $postmeta;
 	}
 
-	public function sanitize_postmeta_field( $field )
+	public function sanitize_postmeta_field_key( $field_key )
 	{
-		if ( is_array( $field ) )
-			return $field;
+		if ( is_array( $field_key ) )
+			return $field_key;
 
 		$fields = [
 			// meta currents
@@ -880,10 +885,10 @@ class Meta extends gEditorial\Module
 			'number'     => [ 'number_line', 'issue_number_line', 'number' ],
 		];
 
-		if ( isset( $fields[$field] ) )
-			return $fields[$field];
+		if ( isset( $fields[$field_key] ) )
+			return $fields[$field_key];
 
-		return [ $field ];
+		return [ $field_key ];
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
@@ -1387,12 +1392,12 @@ class Meta extends gEditorial\Module
 	}
 
 	// OLD: `import_to_meta()`
-	public function import_field_raw( $data, $field, $post )
+	public function import_field_raw( $data, $field_key, $post )
 	{
 		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
-		$field = $this->sanitize_postmeta_field( $field )[0];
+		$field = $this->sanitize_postmeta_field_key( $field_key )[0];
 		$data  = $this->filters( 'import_field_raw_pre', $data, $field, $post );
 
 		if ( FALSE === $data )
