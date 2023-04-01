@@ -476,24 +476,53 @@ class Meta extends gEditorial\Module
 				if ( empty( $args['rest'] ) )
 					continue;
 
-				if ( $args['repeat'] )
-					// NOTE: require an item schema when registering array meta
-					$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
+				if ( $args['repeat'] ) {
 
-				else if ( in_array( $args['type'], [ 'number', 'float', 'price' ] ) )
-					$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
+					$defaults = [
+						// NOTE: require an item schema when registering `array` meta
+						'type'    => 'array',
+						'single'  => FALSE,
+						'default' => (array) $args['default'],
+					];
 
-				else
-					$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => $args['default'] ];
+				} else if ( in_array( $args['type'], [ 'integer', 'number', 'float', 'price' ] ) ) {
+
+					$defaults = [
+						'type'    => 'integer',
+						'single'  => TRUE,
+						'default' => $args['default'] ?: 0,
+					];
+
+				} else {
+
+					$defaults = [
+						// NOTE: valid values: `string`, `boolean`, `integer`, `number`, `array`, `object`
+						'type'    => 'string',
+						'single'  => TRUE,
+						'default' => $args['default'] ?: '',
+					];
+				}
 
 				$register_args = array_merge( $defaults, [
-					'object_subtype'    => $posttype,
+
+					/**
+					 * accepts `post`, `comment`, `term`, `user`
+					 * or any other object type with an associated meta table
+					 */
+					'object_subtype' => $posttype,
+
 					'description'       => sprintf( '%s: %s', $args['title'], $args['description'] ),
 					'auth_callback'     => [ $this, 'register_auth_callback' ],
 					'sanitize_callback' => [ $this, 'register_sanitize_callback' ],
+					'show_in_rest'      => TRUE,
+					// TODO: must prepare object scheme on repeatable fields
+					// @SEE: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/#read-and-write-a-post-meta-field-in-post-responses
+					// @SEE: `rest_validate_value_from_schema()`, `wp_register_persisted_preferences_meta()`
 					// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback' ] ],
-					'show_in_rest'      => TRUE, // TODO: must prepare object scheme on repeatable fields
 				] );
+
+				if ( FALSE === $args['access_view'] )
+					$register_args['show_in_rest'] = FALSE; // only for explicitly private fields
 
 				$meta_key = $this->get_postmeta_key( $field );
 				$filtred  = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );
@@ -514,20 +543,33 @@ class Meta extends gEditorial\Module
 			if ( empty( $args['rest'] ) )
 				continue;
 
-			$list[$args['rest']] = ModuleTemplate::getMetaField( $field, [
-				'id'      => $post['id'],
-				'default' => $args['default'],
+			$meta = ModuleTemplate::getMetaField( $field, [
+				'id'       => $post['id'],
+				'default'  => $args['default'],
+				'noaccess' => FALSE,
 			] );
+
+			// if no access or default is FALSE
+			if ( FALSE !== $meta || $meta === $args['default'] )
+				$list[$args['rest']] = $meta;
 		}
 
 		return $list;
 	}
 
-	// TODO: implement disable filter on our regular UI
-	// FIXME: `current_user_can('edit_posts')` and get it from posttype object caps
+	/**
+	 * NOTE: DEPRECATED FILTER: `geditorial_meta_disable_field_edit`
+	 *
+	 * - upon no `auth_callback`, wordpress checks for `is_protected_meta()` aka underline prefix
+	 * - this filter is to call when performing `edit_post_meta`, `add_post_meta`, and `delete_post_meta` capability checks
+	 * - return `true` to have the mapped meta caps from `edit_{$object_type}` apply
+	*/
 	public function register_auth_callback( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )
 	{
-		return ! $this->filters( 'disable_field_edit', FALSE, $this->stripprefix( $meta_key ), get_object_subtype( 'post', $object_id ) );
+		if ( ! $field = $this->get_posttype_field_args( $this->stripprefix( $meta_key ), get_object_subtype( 'post', $object_id ) ) )
+			return $allowed;
+
+		return (bool) $this->access_posttype_field( $field, $object_id, 'edit', $user_id );
 	}
 
 	// WORKING BUT DISABLED
@@ -548,22 +590,23 @@ class Meta extends gEditorial\Module
 
 	public function register_sanitize_callback( $meta_value, $meta_key, $object_type )
 	{
-		$fields = $this->get_posttype_fields( $object_type );
-		$field  = $this->stripprefix( $meta_key );
-
-		return array_key_exists( $field, $fields )
-			? $this->sanitize_posttype_field( $meta_value, $fields[$field], PostType::getPost() )
-			: $meta_value;
+		$field = $this->get_posttype_field_args( $this->stripprefix( $meta_key ), $object_type );
+		return $field ? $this->sanitize_posttype_field( $meta_value, $field, PostType::getPost() ) : $meta_value;
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
 	{
+		$user_id = wp_get_current_user();
+
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
 
 			if ( $context != $args['context'] )
+				continue;
+
+			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
 
 			switch ( $args['type'] ) {
@@ -909,9 +952,13 @@ class Meta extends gEditorial\Module
 		if ( ! count( $fields ) )
 			return;
 
-		$legacy = $this->get_postmeta_legacy( $post->ID );
+		$user_id = wp_get_current_user();
+		$legacy  = $this->get_postmeta_legacy( $post->ID );
 
 		foreach ( $fields as $field => $args ) {
+
+			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
+				continue;
 
 			$request = sprintf( '%s-%s-%s', $this->base, $this->module->name, $field );
 

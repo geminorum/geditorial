@@ -516,18 +516,23 @@ class Template extends Main
 	// TODO: support for other modules
 	// TODO: DEPRECATE
 	// TODO: rename to `getPosttypeField()`
-	// TODO: rename `$field` to `$field_key`
-	public static function getMetaField( $field, $atts = [], $check = TRUE )
+	public static function getMetaField( $field_key, $atts = [], $check = TRUE )
 	{
 		$args = self::atts( [
 			'id'       => NULL,
 			'fallback' => FALSE,
 			'default'  => FALSE,
+			'noaccess' => NULL, // returns upon no access, `NULL` for `default` arg
+			'context'  => 'view', // for access checks
 			'filter'   => FALSE, // or `__do_embed_shortcode`
 			'trim'     => FALSE, // or number of chars
 			'before'   => '',
 			'after'    => '',
 		], $atts );
+
+		// NOTE: may come from posttype field args
+		if ( is_null( $args['default'] ) )
+			$args['default'] = '';
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
@@ -535,7 +540,7 @@ class Template extends Main
 		if ( ! $post = PostType::getPost( $args['id'] ) )
 			return $args['default'];
 
-		$meta = $raw = self::getMetaFieldRaw( $field, $post->ID, 'meta' );
+		$meta = $raw = self::getMetaFieldRaw( $field_key, $post->ID, 'meta' );
 
 		if ( FALSE === $meta && $args['fallback'] )
 			return self::getMetaField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
@@ -543,9 +548,14 @@ class Template extends Main
 		if ( FALSE === $meta )
 			return $args['default'];
 
-		$fields = gEditorial()->module( 'meta' )->get_posttype_fields( $post->post_type );
-		$meta   = apply_filters( static::BASE.'_meta_field', $meta, $field, $post, $args, $raw, $fields[$field] );
-		$meta   = apply_filters( static::BASE.'_meta_field_'.$field, $meta, $field, $post, $args, $raw, $fields[$field] );
+		$field  = gEditorial()->module( 'meta' )->get_posttype_field_args( $field_key, $post->post_type );
+		$access = gEditorial()->module( 'meta' )->access_posttype_field( $field, $post, $args['context'] );
+
+		if ( ! $access )
+			return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
+
+		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field );
+		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field );
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
 			$args['filter'] = [ __CLASS__, 'doEmbedShortCode' ];
@@ -592,7 +602,7 @@ class Template extends Main
 
 		$url = trim( $meta );
 
-		if ( ! URL::isValid( $url) )
+		if ( ! URL::isValid( $url ) )
 			return $meta;
 
 		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', $url, $url ) );

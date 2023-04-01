@@ -1967,10 +1967,24 @@ class Module extends Base
 		return $fields;
 	}
 
+	// HELPER METHOD
+	public function get_posttype_field_args( $field_key, $posttype )
+	{
+		if ( ! $posttype || ! $field_key )
+			return FALSE;
+
+		$fields = $this->get_posttype_fields( $posttype );
+		$field  = array_key_exists( $field_key, $fields )
+			? $fields[$field_key]
+			: FALSE;
+
+		return $this->filters( 'posttype_field_args', $field, $field_key, $posttype, $fields );
+	}
+
 	// this module enabled fields with args for a posttype
 	// static contexts: `nobox`, `lonebox`, `mainbox`
 	// dynamic contexts: `listbox_{$posttype}`, `pairedbox_{$posttype}`, `pairedbox_{$module}`
-	public function get_posttype_fields( $posttype = 'post' )
+	public function get_posttype_fields( $posttype )
 	{
 		global $gEditorialPostTypeFields;
 
@@ -1995,6 +2009,19 @@ class Module extends Base
 					$args['context'] = 'lonebox'; // OLD: 'lone'
 			}
 
+			if ( ! array_key_exists( 'default', $args )
+				&& array_key_exists( 'type', $args ) ) {
+
+				if ( in_array( $args['type'], [ 'array' ] ) || ! empty( $args['repeat'] ) )
+					$args['default'] = [];
+
+				else if ( in_array( $args['type'], [ 'integer', 'number', 'float', 'price' ] ) )
+					$args['default'] = 0;
+
+				else
+					$args['default'] = '';
+			}
+
 			if ( ! array_key_exists( 'quickedit', $args )
 				&& array_key_exists( 'type', $args ) )
 					$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
@@ -2007,9 +2034,11 @@ class Module extends Base
 				'rest'        => $field, // FALSE to disable
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
+				'access_view' => NULL, // @SEE: `$this->access_posttype_field()`
+				'access_edit' => NULL, // @SEE: `$this->access_posttype_field()`
 				'sanitize'    => NULL,
 				'pattern'     => NULL, // HTML5 input pattern // FIXME: utilize this!
-				'default'     => '', // currently only on rest
+				'default'     => NULL, // currently only on rest
 				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'mainbox', // OLD: 'main'
@@ -2030,6 +2059,53 @@ class Module extends Base
 		] );
 
 		return $gEditorialPostTypeFields[$this->key][$posttype];
+	}
+
+	/**
+	 * Checks for accessing a posttype field.
+	 *
+	 * - `TRUE`,`FALSE` for public/private
+	 * - `NULL` for posttype `read`/`edit_post` capability
+	 * - String for capability checks
+	 *
+	 * @param  array $field
+	 * @param  null|int|object $post
+	 * @param  string $context
+	 * @param  null|int $user_id
+	 * @return bool $access
+	 */
+	public function access_posttype_field( $field, $post = NULL, $context = 'view', $user_id = NULL )
+	{
+		$context = in_array( $context, [ 'view', 'edit' ], TRUE ) ? $context : 'view';
+		$access  = array_key_exists( 'access_'.$context, $field )
+			? $field['access_'.$context] : NULL;
+
+		if ( TRUE !== $access && FALSE !== $access ) {
+
+			if ( is_null( $user_id ) )
+				$user_id = wp_get_current_user();
+
+			if ( ! is_null( $access ) ) {
+
+				$access = user_can( $user_id, $access );
+
+			} else if ( $post = Post::get( $post ) ) {
+
+				$posttype   = PostType::object( $post->post_type );
+				$capability = in_array( $context, [ 'view' ], TRUE )
+					? $posttype->cap->read
+					: $posttype->cap->edit_post;
+
+				$access = user_can( $user_id, $capability, $post->ID );
+
+			} else {
+
+				// no post, no access!
+				$access = FALSE;
+			}
+		}
+
+		return $this->filters( 'access_posttype_field', $access, $field, $post, $context, $user_id );
 	}
 
 	// use for all modules
