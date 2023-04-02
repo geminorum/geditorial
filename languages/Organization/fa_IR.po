@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Organization\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-02 15:20+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Organization\n"
+"X-Domain: geditorial-organization\n"
+
+#: Organization.php:32
+msgctxt "Settings"
+msgid "Sub-departments"
+msgstr "زیردپارتمان"
+
+#: Organization.php:33
+msgctxt "Settings"
+msgid "Substitute taxonomy for the departments and supported post-types."
+msgstr ""
+"رده‌بندی زیرمجموعه را برای دپارتمان‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
+
+#: Organization.php:49
+msgctxt "Settings"
+msgid "Redirect Archives"
+msgstr "بازگردانی بایگانی"
+
+#: Organization.php:50
+msgctxt "Settings"
+msgid "Redirects department archives to this URL. Leave empty to disable."
+msgstr ""
+"بایگانی دپارتمان‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
+"بگذارید."
+
+#: Organization.php:96 Organization.php:97
+msgid "Department"
+msgid_plural "Departments"
+msgstr[0] "دپارتمان‌ها"
+msgstr[1] "دپارتمان"
+
+#: Organization.php:98
+msgid "Department Category"
+msgid_plural "Department Categories"
+msgstr[0] "دسته‌های دپارتمان"
+msgstr[1] "دسته دپارتمان"
+
+#: Organization.php:99
+msgid "Sub-department"
+msgid_plural "Sub-departments"
+msgstr[0] "زیردپارتمان‌ها"
+msgstr[1] "زیردپارتمان"
+
+#: Organization.php:100
+msgid "Department Type"
+msgid_plural "Department Types"
+msgstr[0] "انواع دپارتمان"
+msgstr[1] "نوع دپارتمان"
+
+#: Organization.php:101
+msgid "Department Status"
+msgid_plural "Department Statuses"
+msgstr[0] "وضعیت‌های دپارتمان"
+msgstr[1] "وضعیت دپارتمان"
+
+#: Organization.php:105
+msgctxt "Label: Menu Name"
+msgid "Categories"
+msgstr "دسته‌ها"
+
+#: Organization.php:108
+msgctxt "Label: Menu Name"
+msgid "Types"
+msgstr "انواع"
+
+#: Organization.php:111
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr "وضعیت‌ها"
+
+#: Organization.php:121
+msgctxt "Posttype Featured"
+msgid "Department Badge"
+msgstr "نشان دپارتمان"
+
+#: Organization.php:124
+msgctxt "MetaBox Title"
+msgid "Department Types"
+msgstr "نوع دپارتمان"
+
+#: Organization.php:125
+msgctxt "Column Title"
+msgid "Department Types"
+msgstr "انواع دپارتمان"
+
+#: Organization.php:127
+msgctxt "Column Title"
+msgid "Departments"
+msgstr "دپارتمان‌ها"
+
+#: Organization.php:128
+msgctxt "MetaBox Title"
+msgid "Organization"
+msgstr "سازمان"
+
+#: Organization.php:133
+msgctxt "Default Term"
+msgid "Working"
+msgstr "فعال"
+
+#: Organization.php:134
+msgctxt "Default Term"
+msgid "Inactive"
+msgstr "غیرفعال"
+
+#: Organization.php:135
+msgctxt "Default Term"
+msgid "Resolved"
+msgstr "منحل‌شده"
+
+#: Organization.php:136
+msgctxt "Default Term"
+msgid "Planned"
+msgstr "برنامه‌ریزی شده"
+
+#: Organization.php:137
+msgctxt "Default Term"
+msgid "Pending"
+msgstr "برای بازبینی"
+
+#: Organization.php:158
+msgctxt "Field Title"
+msgid "Organization Number"
+msgstr "شماره سازمانی"
+
+#: Organization.php:159
+msgctxt "Field Description"
+msgid "Unique Organization Number"
+msgstr "شماره سازمانی یکتا"
+
+#~ msgctxt "Menu Title"
+#~ msgid "Types"
+#~ msgstr "انواع"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Types"
+#~ msgstr "انواع"
