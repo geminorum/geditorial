@@ -8,6 +8,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\WordPress;
@@ -60,9 +61,18 @@ class Helper extends Main
 		return $enabled;
 	}
 
-	public static function moduleCheckWooCommerce()
+	public static function moduleCheckWooCommerce( $message = NULL )
 	{
-		return WooCommerce::isActive() ? FALSE : _x( 'Needs WooCommerce', 'Helper', 'geditorial' );
+		return WooCommerce::isActive()
+			? FALSE
+			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Helper', 'geditorial' ) : $message );
+	}
+
+	public static function moduleCheckLocale( $locale, $message = NULL )
+	{
+		return $locale === L10n::locale( TRUE )
+			? FALSE
+			: ( is_null( $message ) ? _x( 'Only on Persian Locale', 'Helper', 'geditorial' ) : $message );
 	}
 
 	public static function getIcon( $icon, $fallback = 'admin-post' )
