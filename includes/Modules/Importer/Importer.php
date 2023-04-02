@@ -269,6 +269,8 @@ class Importer extends gEditorial\Module
 			'name'     => 'user_id',
 			'prop'     => 'display_name',
 		] );
+
+		// TODO: checkbox to only import if import_id found, e.g: not creating new posts!
 	}
 
 	private function _form_images_table( $args )
@@ -506,6 +508,8 @@ class Importer extends gEditorial\Module
 
 						$extra = [ 'post_author' => $args['user_id'] ];
 
+						// TODO: make this optional
+						// FIXME: filter the title for here
 						if ( ! empty( $post->post_title ) ) {
 							$extra['post_title'] = $post->post_title;
 							$extra['meta_input']['_wp_attachment_image_alt'] = $post->post_title;
@@ -760,6 +764,13 @@ class Importer extends gEditorial\Module
 
 		if ( $first || $images )
 			$this->_render_tools_for_images();
+
+		// TODO: `_render_tools_for_files()`
+		// --- import data from directory of files into fields: like excerpt
+		// - attach file from directory of files into posts with field data to rename
+
+		// TODO: `_render_tools_for_metas()`
+		// - import data by metakey + support types: string/int/comma seperated
 	}
 
 	private function _render_tools_for_posts()

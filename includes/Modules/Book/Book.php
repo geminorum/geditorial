@@ -839,6 +839,7 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
 		$this->filter( 'meta_field', 6, 9, FALSE, 'geditorial' );
 
+		$this->filter_module( 'national_library', 'default_posttype_isbn_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
 
@@ -1258,6 +1259,14 @@ class Book extends gEditorial\Module
 		}
 
 		return $meta;
+	}
+
+	public function national_library_default_posttype_isbn_metakey( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'publication_cpt' ) )
+			return '_meta_publication_isbn';
+
+		return $default;
 	}
 
 	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )

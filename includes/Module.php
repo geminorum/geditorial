@@ -16,6 +16,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Module as Base;
 use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -3202,7 +3203,7 @@ class Module extends Base
 			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
 
 			'show_in_rest' => TRUE,
-			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_slug', $plural ) ),
+			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $plural ) ),
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			/// gEditorial Props
@@ -3322,7 +3323,9 @@ class Module extends Base
 				'show_ui'      => FALSE,
 				'show_in_rest' => FALSE,
 				'hierarchical' => TRUE,
-				// 'rewrite'      => [ 'slug' => str_replace( '_', '-', $this->constant( $taxonomy ) ) ],
+				// the paired taxonomies are often in plural
+				// FIXME: WTF: will confilict with posttype rest base!
+				// 'rest_base'    => $this->constant( $taxonomy.'_slug', str_replace( '_', '-', $this->constant( $taxonomy ) ) ),
 			], $supported );
 
 			$this->_paired = $this->constant( $taxonomy );

@@ -1271,6 +1271,7 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
+	// TODO: bulk move data to another field with filters for processing
 	protected function render_tools_html( $uri, $sub )
 	{
 		$args = $this->get_current_form( [

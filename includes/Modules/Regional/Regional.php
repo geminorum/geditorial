@@ -182,6 +182,7 @@ class Regional extends gEditorial\Module
 		return $items;
 	}
 
+	// TODO: move to ModuleInfo
 	public function imports_data_summary( $data )
 	{
 		$data[] = [

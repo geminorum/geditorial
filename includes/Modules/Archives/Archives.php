@@ -211,7 +211,8 @@ class Archives extends gEditorial\Module
 
 		foreach ( $this->taxonomies() as $taxonomy )
 			if ( $slug = $this->_taxonomy_archive_slug( $taxonomy ) )
-				add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
+				// add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
+				add_rewrite_rule( '^'.$slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
 	}
 
 	// not used yet!

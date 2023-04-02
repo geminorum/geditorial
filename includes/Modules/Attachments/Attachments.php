@@ -32,6 +32,31 @@ class Attachments extends gEditorial\Module
 		];
 	}
 
+	protected function settings_help_tabs( $context = 'settings' )
+	{
+		$tabs = [
+			[
+				'id'      => $this->classs( 'shortcodes' ),
+				'title'   => _x( 'Shortcodes', 'Help Tab Title', 'geditorial-attachments' ),
+				'content' => self::buffer( [ $this, 'render_help_tab_content_shortcodes' ] ),
+			],
+		];
+
+		return array_merge( $tabs, parent::settings_help_tabs( $context ) );
+	}
+
+	// TODO: add click to select
+	public function render_help_tab_content_shortcodes()
+	{
+		$list = [
+			HTML::code( '[attachments mime_type="application/pdf" title=0 wrap=0 /]' ),
+		];
+
+		echo $this->wrap_open( '-help-tab-content -info' );
+			echo HTML::renderList( $list );
+		echo '</div>';
+	}
+
 	protected function get_global_settings()
 	{
 		return [

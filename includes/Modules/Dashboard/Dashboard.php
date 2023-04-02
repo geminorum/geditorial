@@ -115,6 +115,7 @@ class Dashboard extends gEditorial\Module
 	}
 
 	// add_rewrite_rule( 'api/items/([0-9]+)/?', 'index.php?api_item_id=$matches[1]', 'top' );
+	// add_rewrite_rule( '^dashboard/([^/]*)/?', 'index.php?city=$matches[1]','top' );
 	private function _init_rewrite_rules()
 	{
 		$key  = $this->classs();

@@ -72,7 +72,7 @@ class Helper extends Main
 	{
 		return $locale === L10n::locale( TRUE )
 			? FALSE
-			: ( is_null( $message ) ? _x( 'Only on Persian Locale', 'Helper', 'geditorial' ) : $message );
+			: ( is_null( $message ) ? _x( 'Not Available on Current Locale', 'Helper', 'geditorial' ) : $message );
 	}
 
 	public static function getIcon( $icon, $fallback = 'admin-post' )
