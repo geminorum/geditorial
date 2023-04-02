@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Symposium\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Symposium\n"
+"X-Domain: geditorial-symposium\n"
+
+#: Symposium.php:51
+msgid "Session"
+msgid_plural "Sessions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Symposium.php:52
+msgid "Session Category"
+msgid_plural "Session Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Symposium.php:53
+msgid "Session Type"
+msgid_plural "Session Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Symposium.php:54
+msgid "Session Audience"
+msgid_plural "Session Audiences"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Symposium.php:55
+msgid "Session Subject"
+msgid_plural "Session Subjects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Symposium.php:64
+msgctxt "Session: Featured"
+msgid "Poster Image"
+msgstr ""
+
+#: Symposium.php:70
+msgctxt "Session Type: Default Term"
+msgid "Lecture"
+msgstr ""
+
+#: Symposium.php:71
+msgctxt "Session Type: Default Term"
+msgid "Conference"
+msgstr ""
+
+#: Symposium.php:72
+msgctxt "Session Type: Default Term"
+msgid "Colloquium"
+msgstr ""
+
+#: Symposium.php:73
+msgctxt "Session Type: Default Term"
+msgid "Book Review"
+msgstr ""
+
+#: Symposium.php:88
+msgctxt "Field Title"
+msgid "Featured People"
+msgstr ""
+
+#: Symposium.php:89
+msgctxt "Field Description"
+msgid "Featured People in the Session"
+msgstr ""
