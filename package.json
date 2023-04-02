@@ -34,17 +34,20 @@
     "release": "gulp github:package && start https://github.com/geminorum/geditorial/releases",
     "home": "start https://github.com/geminorum/geditorial/",
     "issues": "start https://github.com/geminorum/geditorial/issues",
+    "phpcs:php": "phpcs -v -p includes/ geditorial.php --standard=PHPCompatibility -d memory_limit=1024M --colors",
+    "phpcs:wp": "phpcs -v -p includes/ geditorial.php --standard=WordPress -d memory_limit=1024M  --colors",
     "comp:show": "composer show --tree",
     "comp:deps": "composer-require-checker check composer.json"
   },
   "devDependencies": {
-    "@wordpress/browserslist-config": "^5.12.0",
-    "@wordpress/stylelint-config": "^21.12.0",
+    "@wordpress/browserslist-config": "^5.13.0",
+    "@wordpress/stylelint-config": "^21.13.0",
     "autoprefixer": "^10.4.14",
     "browserslist": "^4.21.5",
-    "cssnano": "^5.1.15",
+    "cssnano": "^6.0.0",
     "del": "^7.0.0",
     "fancy-log": "^2.0.0",
+    "fs-extra": "^11.1.1",
     "gulp": "^4.0.2",
     "gulp-bump": "^3.2.0",
     "gulp-changed-in-place": "^2.3.0",
@@ -67,7 +70,7 @@
     "postcss": "^8.4.21",
     "rtlcss": "^4.0.0",
     "semistandard": "^16.0.1",
-    "stylelint": "^15.3.0",
+    "stylelint": "^15.4.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {

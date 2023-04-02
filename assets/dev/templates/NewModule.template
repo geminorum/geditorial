@@ -45,6 +45,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return [
 			'primary_posttype' => '',
 			'primary_taxonomy' => '',
+			'primary_paired'   => '',
+			'primary_subterm'  => '',
 		];
 	}
 
@@ -52,8 +54,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype' => _nx_noop( '', '', 'Noop', '<%= moduleTextdomain %>' ),
-				'primary_taxonomy' => _nx_noop( '', '', 'Noop', '<%= moduleTextdomain %>' ),
+				'primary_posttype' => _n_noop( '', '', '<%= moduleTextdomain %>' ),
+				'primary_taxonomy' => _n_noop( '', '', '<%= moduleTextdomain %>' ),
 			],
 		];
 
@@ -61,6 +63,11 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			return $strings;
 
 		return $strings;
+	}
+
+	public function after_setup_theme()
+	{
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function init()
@@ -78,10 +85,5 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		$this->register_posttype( 'primary_posttype', [
 			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
 		] );
-	}
-
-	public function after_setup_theme()
-	{
-		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 }

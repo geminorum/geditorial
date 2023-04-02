@@ -1,4 +1,7 @@
 {
+  "root": {
+    "changelog": "CHANGES.md"
+  },
   "input": {
     "modules": "./includes/Modules/*",
     "php": [
@@ -195,7 +198,7 @@
         "moduleTitle": "New Module",
         "moduleCamelCase": "NewModule",
         "moduleUnderline": "new_module",
-        "moduleTagline": "This is a New Module for Editorial",
+        "moduleTagline": "[CHANGE ME]",
         "moduleDashicon": "smiley"
       }
     }
