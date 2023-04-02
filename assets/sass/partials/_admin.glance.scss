@@ -63,6 +63,10 @@
   &.-posttype-place::before {
     content: "\f231" !important;
   }
+
+  &.-taxonomy-language::before {
+    content: "\f326" !important;
+  }
 }
 
 .gpeople-glance-item {

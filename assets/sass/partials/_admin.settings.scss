@@ -34,6 +34,22 @@
     }
   }
 
+  .-wrap.-warning {
+    color: $brand-warning;
+
+    &:hover {
+      color: color.adjust($brand-warning, $lightness: -20%);
+    }
+  }
+
+  .-wrap.-info {
+    color: $brand-info;
+
+    &:hover {
+      color: color.adjust($brand-info, $lightness: -20%);
+    }
+  }
+
   .-field-sep {
     vertical-align: middle;
   }
