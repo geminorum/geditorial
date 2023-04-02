@@ -9,183 +9,223 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Config\n"
 "X-Domain: geditorial-config\n"
 
-#: Config.php:49
+#: Config.php:55
 msgctxt "Menu Title"
 msgid "Editorial Reports"
 msgstr ""
 
-#: Config.php:50
+#: Config.php:56
 msgctxt "Menu Title"
 msgid "My Reports"
 msgstr ""
 
-#: Config.php:67
-#: Config.php:70
+#: Config.php:73
+#: Config.php:76
 msgctxt "Menu Title"
 msgid "Editorial Tools"
 msgstr ""
 
-#: Config.php:69
+#: Config.php:75
 msgctxt "Menu Title"
 msgid "Tools"
 msgstr ""
 
-#: Config.php:117
+#: Config.php:84
+msgctxt "Menu Title"
+msgid "Editorial Imports"
+msgstr ""
+
+#: Config.php:126
 msgctxt "Reports Sub"
 msgid "Overview"
 msgstr ""
 
-#: Config.php:120
+#: Config.php:129
 msgctxt "Reports Sub"
 msgid "General"
 msgstr ""
 
-#: Config.php:128
+#: Config.php:136
 msgctxt "Page Title"
 msgid "Editorial Reports"
 msgstr ""
 
-#: Config.php:160
+#: Config.php:168
 msgctxt "Tools Sub"
 msgid "Overview"
 msgstr ""
 
-#: Config.php:163
+#: Config.php:171
 msgctxt "Tools Sub"
 msgid "General"
 msgstr ""
 
-#: Config.php:168
+#: Config.php:177
 msgctxt "Tools Sub"
 msgid "Options"
 msgstr ""
 
-#: Config.php:169
+#: Config.php:178
 msgctxt "Tools Sub"
 msgid "Console"
 msgstr ""
 
-#: Config.php:176
+#: Config.php:183
 msgctxt "Page Title"
 msgid "Editorial Tools"
 msgstr ""
 
-#: Config.php:313
+#: Config.php:331
 msgctxt "Header"
 msgid "General Editorial Reports"
 msgstr ""
 
-#: Config.php:314
+#: Config.php:332
 msgctxt "Message"
 msgid "There are no reports available!"
 msgstr ""
 
-#: Config.php:328
+#: Config.php:346
 msgctxt "Tools"
 msgid "Options"
 msgstr ""
 
-#: Config.php:332
+#: Config.php:350
 msgctxt "Button"
 msgid "Upgrade Old Options"
 msgstr ""
 
-#: Config.php:334
+#: Config.php:352
 msgctxt "Tools: Message"
 msgid "Checks for old options and upgrade them. Also deletes the old options."
 msgstr ""
 
-#: Config.php:340
+#: Config.php:358
 msgctxt "Button"
 msgid "Delete All Options"
 msgstr ""
 
-#: Config.php:342
+#: Config.php:360
 msgctxt "Tools: Message"
 msgid "Deletes all editorial options on current site"
 msgstr ""
 
-#: Config.php:348
+#: Config.php:366
 msgctxt "Tools: Header"
 msgid "Maintenance Tasks"
 msgstr ""
 
-#: Config.php:352
+#: Config.php:370
 msgctxt "Tools"
 msgid "Empty Meta Fields"
 msgstr ""
 
-#: Config.php:365
+#: Config.php:383
 msgctxt "Button"
 msgid "Empty"
 msgstr ""
 
-#: Config.php:367
+#: Config.php:385
 msgctxt "Tools: Message"
 msgid "Deletes empty meta values. This solves common problems with imported posts."
 msgstr ""
 
-#: Config.php:371
+#: Config.php:389
 msgctxt "Tools"
 msgid "Orphan Connections"
 msgstr ""
 
-#: Config.php:377
+#: Config.php:395
 msgctxt "Tools: Message"
 msgid "No connection types found."
 msgstr ""
 
-#: Config.php:405
+#: Config.php:423
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Config.php:409
+#: Config.php:427
 msgctxt "Tools: Message"
 msgid "No orphaned connection types found in the database."
 msgstr ""
 
+#: Config.php:453
+msgctxt "Imports Sub"
+msgid "Overview"
+msgstr ""
+
+#: Config.php:456
+msgctxt "Imports Sub"
+msgid "General"
+msgstr ""
+
+#: Config.php:462
+msgctxt "Imports Sub"
+msgid "Data"
+msgstr ""
+
+#: Config.php:466
+msgctxt "Page Title"
+msgid "Editorial Imports"
+msgstr ""
+
+#: Config.php:501
+msgctxt "Imports: Data Summary"
+msgid "Untitled"
+msgstr ""
+
+#: Config.php:525
+msgctxt "Header"
+msgid "General Editorial Imports"
+msgstr ""
+
+#: Config.php:526
+msgctxt "Message"
+msgid "There are no importers available!"
+msgstr ""
+
 #. translators: %s: user link placeholder
-#: Config.php:423
+#: Config.php:537
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User Is %s"
 msgstr ""
 
-#: Config.php:428
+#: Config.php:542
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User is not available!"
 msgstr ""
 
-#: Config.php:447
+#: Config.php:561
 msgctxt "Ajax Notice"
 msgid "No action or name!"
 msgstr ""
 
-#: Config.php:450
+#: Config.php:564
 msgctxt "Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: Config.php:455
+#: Config.php:569
 msgctxt "Ajax Notice"
 msgid "Module state successfully changed."
 msgstr ""
 
-#: Config.php:457
+#: Config.php:571
 msgctxt "Ajax Notice"
 msgid "Cannot change module state!"
 msgstr ""
 
-#: Config.php:469
+#: Config.php:583
 msgctxt "Page Notice"
 msgid "Not a registered Editorial module."
 msgstr ""
 
-#: Config.php:472
+#: Config.php:586
 msgctxt "Page Notice"
 msgid "Module not enabled. Please enable it from the Editorial settings page."
 msgstr ""

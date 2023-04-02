@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Workflow\n"
 "X-Domain: geditorial-workflow\n"
 
@@ -74,16 +74,23 @@ msgid "Selected statuses will lock editing the post to their assigned roles."
 msgstr ""
 
 #: Workflow.php:74
-msgctxt "Setting"
+#: Workflow.php:544
+msgctxt "Message"
 msgid "There are no statuses available!"
 msgstr ""
 
-#: Workflow.php:95
-msgctxt "MetaBox Title"
-msgid "Workflow"
+#: Workflow.php:94
+msgid "Custom Status"
+msgid_plural "Custom Statuses"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Workflow.php:98
+msgctxt "Label: Menu Name"
+msgid "Statuses"
 msgstr ""
 
-#: Workflow.php:108
-msgctxt "Taxonomy Label"
-msgid "Statuses"
+#: Workflow.php:102
+msgctxt "MetaBox Title"
+msgid "Workflow"
 msgstr ""

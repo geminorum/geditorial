@@ -9,53 +9,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Series\n"
 "X-Domain: geditorial-series\n"
 
-#: Series.php:69
+#: Series.php:71
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr ""
 
-#: Series.php:70
+#: Series.php:72
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr ""
 
-#: Series.php:71
+#: Series.php:73
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr ""
 
-#: Series.php:76
+#: Series.php:78
 msgctxt "Strings: Description"
 msgid "In Serie Title"
 msgstr ""
 
-#: Series.php:77
+#: Series.php:79
 msgctxt "Strings: Description"
 msgid "In Serie Order"
 msgstr ""
 
-#: Series.php:78
+#: Series.php:80
 msgctxt "Strings: Description"
 msgid "In Serie Description"
 msgstr ""
 
-#: Series.php:82
-#: Series.php:83
+#: Series.php:84
+#: Series.php:85
 msgctxt "Column Title"
 msgid "Series"
 msgstr ""
 
-#: Series.php:84
+#: Series.php:86
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Series &ndash;"
 msgstr ""
 
-#: Series.php:87
-msgctxt "Noop"
+#: Series.php:89
 msgid "Serie"
 msgid_plural "Series"
 msgstr[0] ""

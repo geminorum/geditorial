@@ -9,37 +9,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Pitches\n"
 "X-Domain: geditorial-pitches\n"
 
-#: Pitches.php:64
-msgctxt "Noop"
+#: Pitches.php:62
 msgid "Idea"
 msgid_plural "Ideas"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Pitches.php:65
-msgctxt "Noop"
+#: Pitches.php:63
 msgid "Idea Category"
 msgid_plural "Idea Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Pitches.php:66
-msgctxt "Noop"
+#: Pitches.php:64
 msgid "Idea Pool"
 msgid_plural "Idea Pools"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Pitches.php:75
+#: Pitches.php:73
 msgctxt "Column Title"
 msgid "Idea Categories"
 msgstr ""
 
-#: Pitches.php:78
+#: Pitches.php:76
 msgctxt "Column Title"
 msgid "Idea Pools"
 msgstr ""

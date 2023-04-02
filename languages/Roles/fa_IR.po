@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Roles\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:57:35+00:00\n"
-"PO-Revision-Date: 2022-04-23 17:04+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-03-30 10:17+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,108 +11,120 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Roles\n"
 "X-Domain: geditorial-roles\n"
 
-#: Roles.php:43
+#: Roles.php:42
 msgctxt "Setting Title"
 msgid "Editorial Posttypes"
 msgstr "نوع‌نوشته‌های تحریریه"
 
-#: Roles.php:44
+#: Roles.php:43
 msgctxt "Setting Description"
 msgid "Posttypes to handle via Editorial roles."
 msgstr "نوع‌نوشته‌هایی که به کمک نقش‌های تحریریه مدیریت شوند."
 
-#: Roles.php:50
+#: Roles.php:49
 msgctxt "Setting Title"
 msgid "Duplicate Roles"
 msgstr "تکرار نقش‌ها"
 
-#: Roles.php:51
+#: Roles.php:50
 msgctxt "Setting Description"
 msgid "Roles to duplicate as Editorial Roles."
 msgstr "نقش‌هایی که از روی آن‌ها نقش‌های تحریریه ساخته شود."
 
-#: Roles.php:59
+#: Roles.php:58
 msgctxt "Setting Title"
 msgid "Tags for Authors"
 msgstr "برچسب‌ها برای نویسنده‌ها"
 
-#: Roles.php:60
+#: Roles.php:59
 msgctxt "Setting Description"
 msgid "Allows Authors to manage post tags."
 msgstr "امکان مدیریت برچسب‌های نوشته به نویسندگان داده شود."
 
+#: Roles.php:64
+msgctxt "Setting Title"
+msgid "Built-in Post & Category"
+msgstr "فرسته و دسته هسته"
+
+#: Roles.php:65
+msgctxt "Setting Description"
+msgid ""
+"Removes access to the builtin post post-type and category taxonomy on the "
+"admin."
+msgstr ""
+
 #. translators: %s: role name
-#: Roles.php:70
+#: Roles.php:75
 msgctxt "Setting Title"
 msgid "Role Name for %s"
 msgstr "عنوان نقش برای %s"
 
-#: Roles.php:71
+#: Roles.php:76
 msgctxt "Setting Description"
 msgid "Custom name for the duplicated role."
 msgstr "عنوان سفارشی برای نقش‌های تحریریه تکرارشده."
 
 #. translators: %s: role name
-#: Roles.php:73 Roles.php:290
+#: Roles.php:78 Roles.php:339
 msgctxt "Setting Default"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
 
-#: Roles.php:136
+#: Roles.php:141
 msgctxt "Button"
 msgid "Duplicate Default Roles"
 msgstr "تکرار نقش‌های پیش‌فرض"
 
-#: Roles.php:137
+#: Roles.php:142
 msgctxt "Button"
 msgid "Remove Duplicated Roles"
 msgstr "حذف نقش‌های تکرارشده"
 
-#: Roles.php:138
+#: Roles.php:143
 msgctxt "Button"
 msgid "Add Default Caps to Editor Role"
 msgstr "افزودن دسترسی‌های پیش‌فرض به نقش ویرایشگر"
 
-#: Roles.php:140
+#: Roles.php:145
 msgctxt "Button"
 msgid "Add Theme Caps to Editor Role"
 msgstr "افزودن دسترسی‌های پوسته به نقش ویرایشگر"
 
-#: Roles.php:393
+#: Roles.php:442
 msgctxt "Header"
 msgid "Editorial Roles"
 msgstr "نقش‌های تحریریه"
 
-#: Roles.php:397
+#: Roles.php:446
 msgctxt "Header"
 msgid "Current Roles"
 msgstr "نقش‌های کنونی"
 
-#: Roles.php:399
+#: Roles.php:448
 msgctxt "Button"
 msgid "Check Roles"
 msgstr "بررسی نقش‌ها"
 
-#: Roles.php:400
+#: Roles.php:449
 msgctxt "Button"
 msgid "Check Capabilities"
 msgstr "بررسی دسترسی‌ها"
 
-#: Roles.php:401
+#: Roles.php:450
 msgctxt "Button"
 msgid "Duplicate Defaults"
 msgstr "تکرار پیش‌فرض‌ها"
 
-#: Roles.php:402
+#: Roles.php:451
 msgctxt "Button"
 msgid "Add Default Caps to Editors"
 msgstr "افزودن دسترسی‌های پیش‌فرض به ویرایشگران"
 
-#: Roles.php:403
+#: Roles.php:452
 msgctxt "Button"
 msgid "Remove Duplicates"
 msgstr "حذف تکرارشده‌ها"

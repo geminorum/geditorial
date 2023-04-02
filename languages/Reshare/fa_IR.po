@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Reshare\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:57:32+00:00\n"
-"PO-Revision-Date: 2022-04-23 17:05+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-03-27 04:27+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,24 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Reshare\n"
 "X-Domain: geditorial-reshare\n"
 
-#: Reshare.php:73
+#: Reshare.php:71
 msgctxt "Column Title"
 msgid "Reshare Categories"
 msgstr "دسته‌های بازنشر"
 
-#: Reshare.php:76
-msgctxt "Noop"
+#: Reshare.php:74
 msgid "Reshare"
 msgid_plural "Reshares"
 msgstr[0] "بازنشرها"
 msgstr[1] "بازنشر"
 
-#: Reshare.php:77
-msgctxt "Noop"
+#: Reshare.php:75
 msgid "Reshare Category"
 msgid_plural "Reshare Categories"
 msgstr[0] "دسته‌های بازنشر"

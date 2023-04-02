@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Dashboard\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-02-25 01:36+0330\n"
+"PO-Revision-Date: 2023-03-20 04:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -35,27 +35,34 @@ msgctxt "Setting Description"
 msgid "Displays the selected nav-menu as dashboard navigation."
 msgstr ""
 
-#: Dashboard.php:45
+#. translators: %s: HTML word
+#: Dashboard.php:46
 msgctxt "Settings: Setting Description"
 msgid "Adds %s before contents on dashboard homepage."
 msgstr ""
 
-#: Dashboard.php:46
+#. translators: %s: HTML word
+#: Dashboard.php:48
 msgctxt "Settings: Setting Description"
 msgid "Adds %s after contents on dashboard homepage."
 msgstr ""
 
-#: Dashboard.php:84
+#: Dashboard.php:56
+msgctxt "Setting Button"
+msgid "Dashboard Page"
+msgstr "برگه پیشخوان"
+
+#: Dashboard.php:108
 msgctxt "Widget Area"
 msgid "Editorial: Dashboard"
 msgstr "تحریریه: پیشخوان"
 
-#: Dashboard.php:85
+#: Dashboard.php:109
 msgctxt "Widget Area"
 msgid "Widgets appear on Front-end Dashboard"
 msgstr ""
 
-#: Dashboard.php:128
+#: Dashboard.php:195
 msgctxt "Page-State"
 msgid "Dashboard"
 msgstr "پیشخوان"

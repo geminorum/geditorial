@@ -9,24 +9,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Reshare\n"
 "X-Domain: geditorial-reshare\n"
 
-#: Reshare.php:73
+#: Reshare.php:71
 msgctxt "Column Title"
 msgid "Reshare Categories"
 msgstr ""
 
-#: Reshare.php:76
-msgctxt "Noop"
+#: Reshare.php:74
 msgid "Reshare"
 msgid_plural "Reshares"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Reshare.php:77
-msgctxt "Noop"
+#: Reshare.php:75
 msgid "Reshare Category"
 msgid_plural "Reshare Categories"
 msgstr[0] ""

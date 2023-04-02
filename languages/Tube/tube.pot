@@ -9,177 +9,178 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tube\n"
 "X-Domain: geditorial-tube\n"
 
-#: Tube.php:33
+#: Tube.php:38
 msgctxt "Setting Title"
 msgid "Channels Support"
 msgstr ""
 
-#: Tube.php:34
+#: Tube.php:39
 msgctxt "Setting Description"
 msgid "Supports channel post-type and related features."
 msgstr ""
 
-#: Tube.php:38
+#: Tube.php:43
 msgctxt "Setting Title"
 msgid "Video Toolbar"
 msgstr ""
 
-#: Tube.php:39
+#: Tube.php:44
 msgctxt "Setting Description"
 msgid "Displays customized toolbar after player."
 msgstr ""
 
-#: Tube.php:92
-msgctxt "Noop"
+#: Tube.php:51
+msgctxt "Setting Title"
+msgid "Connected Post-types"
+msgstr ""
+
+#: Tube.php:102
 msgid "Video"
 msgid_plural "Videos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:93
-msgctxt "Noop"
+#: Tube.php:103
 msgid "Video Category"
 msgid_plural "Video Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:94
-msgctxt "Noop"
+#: Tube.php:104
 msgid "Channel"
 msgid_plural "Channels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:95
-msgctxt "Noop"
+#: Tube.php:105
 msgid "Channel Category"
 msgid_plural "Channel Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Tube.php:102
+#: Tube.php:112
 msgctxt "Column Title"
 msgid "Video Categories"
 msgstr ""
 
-#: Tube.php:103
+#: Tube.php:113
 msgctxt "Column Title"
 msgid "Channel Categories"
 msgstr ""
 
-#: Tube.php:108
-#: Tube.php:115
+#: Tube.php:118
+#: Tube.php:125
 msgctxt "O2O"
 msgid "Connected Videos"
 msgstr ""
 
-#: Tube.php:109
+#: Tube.php:119
 msgctxt "O2O"
 msgid "Connected Posts"
 msgstr ""
 
-#: Tube.php:114
+#: Tube.php:124
 msgctxt "O2O"
 msgid "Connected Channels"
 msgstr ""
 
-#: Tube.php:132
+#: Tube.php:142
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr ""
 
-#: Tube.php:133
+#: Tube.php:143
 msgctxt "Field Description"
 msgid "Featured People in the Video"
 msgstr ""
 
-#: Tube.php:138
+#: Tube.php:148
 msgctxt "Field Title"
 msgid "Creation Date"
 msgstr ""
 
-#: Tube.php:139
+#: Tube.php:149
 msgctxt "Field Description"
 msgid "Creation Date of the Video"
 msgstr ""
 
-#: Tube.php:144
+#: Tube.php:155
 msgctxt "Field Title"
 msgid "Video Duration"
 msgstr ""
 
-#: Tube.php:145
+#: Tube.php:156
 msgctxt "Field Description"
 msgid "Duration of the Video"
 msgstr ""
 
-#: Tube.php:150
+#: Tube.php:161
 msgctxt "Field Title"
 msgid "Video Embed URL"
 msgstr ""
 
-#: Tube.php:151
+#: Tube.php:162
 msgctxt "Field Description"
 msgid "Embeddable URL of the External Video"
 msgstr ""
 
-#: Tube.php:314
+#: Tube.php:393
 msgctxt "Button"
 msgid "The date of this video"
 msgstr ""
 
-#: Tube.php:320
+#: Tube.php:399
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr ""
 
-#: Tube.php:327
+#: Tube.php:406
 msgctxt "Button"
 msgid "Download this video"
 msgstr ""
 
-#: Tube.php:328
+#: Tube.php:407
 msgctxt "Button"
 msgid "Download"
 msgstr ""
 
-#: Tube.php:334
+#: Tube.php:413
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr ""
 
-#: Tube.php:336
+#: Tube.php:415
 msgctxt "Button"
 msgid "YouTube"
 msgstr ""
 
-#: Tube.php:342
+#: Tube.php:421
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr ""
 
-#: Tube.php:344
+#: Tube.php:423
 msgctxt "Button"
 msgid "Aparat"
 msgstr ""
 
-#: Tube.php:351
+#: Tube.php:430
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr ""
 
-#: Tube.php:353
+#: Tube.php:432
 msgctxt "Button"
 msgid "Shortlink"
 msgstr ""
 
-#: Tube.php:358
-#: Tube.php:365
-#: Tube.php:372
+#: Tube.php:437
+#: Tube.php:444
+#: Tube.php:451
 msgctxt "Button"
 msgid "Share this video"
 msgstr ""

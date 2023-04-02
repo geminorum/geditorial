@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
 "X-Domain: geditorial-course\n"
 
@@ -43,186 +43,186 @@ msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Course.php:125
-#: Course.php:126
+#: Course.php:123
+#: Course.php:124
 msgid "Course"
 msgid_plural "Courses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:127
+#: Course.php:125
 msgid "Course Category"
 msgid_plural "Course Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:128
+#: Course.php:126
 msgid "Course Span"
 msgid_plural "Course Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:129
+#: Course.php:127
 msgid "Course Topic"
 msgid_plural "Course Topics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:130
+#: Course.php:128
 msgid "Lesson"
 msgid_plural "Lessons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:131
+#: Course.php:129
 msgid "Lesson Format"
 msgid_plural "Lesson Formats"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:132
+#: Course.php:130
 msgid "Lesson Status"
 msgid_plural "Lesson Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:141
+#: Course.php:139
 msgctxt "Posttype Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Course.php:142
+#: Course.php:140
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr ""
 
-#: Course.php:143
+#: Course.php:141
 msgctxt "Column Title"
 msgid "Lessons"
 msgstr ""
 
-#: Course.php:144
+#: Course.php:142
 msgctxt "Select Option None"
 msgid "&ndash; Select Course &ndash;"
 msgstr ""
 
-#: Course.php:147
+#: Course.php:145
 msgctxt "MetaBox Title"
 msgid "In This Course"
 msgstr ""
 
-#: Course.php:150
+#: Course.php:148
 msgctxt "Column Title"
 msgid "Course Categories"
 msgstr ""
 
-#: Course.php:153
+#: Course.php:151
 msgctxt "MetaBox Title"
 msgid "Spans"
 msgstr ""
 
-#: Course.php:154
+#: Course.php:152
 msgctxt "Column Title"
 msgid "Course Spans"
 msgstr ""
 
-#: Course.php:157
+#: Course.php:155
 msgctxt "MetaBox Title"
 msgid "Topics"
 msgstr ""
 
-#: Course.php:158
+#: Course.php:156
 msgctxt "Column Title"
 msgid "Course Topics"
 msgstr ""
 
-#: Course.php:159
+#: Course.php:157
 msgctxt "Select Option None"
 msgid "&ndash; Select Topic &ndash;"
 msgstr ""
 
-#: Course.php:162
+#: Course.php:160
 msgctxt "MetaBox Title"
 msgid "Course"
 msgstr ""
 
-#: Course.php:165
+#: Course.php:163
 msgctxt "MetaBox Title"
 msgid "Lesson Format"
 msgstr ""
 
-#: Course.php:166
+#: Course.php:164
 msgctxt "Column Title"
 msgid "Lesson Format"
 msgstr ""
 
-#: Course.php:169
+#: Course.php:167
 msgctxt "MetaBox Title"
+msgid "Lesson Statuses"
+msgstr ""
+
+#: Course.php:168
+msgctxt "Column Title"
 msgid "Lesson Statuses"
 msgstr ""
 
 #: Course.php:170
-msgctxt "Column Title"
-msgid "Lesson Statuses"
-msgstr ""
-
-#: Course.php:172
 msgctxt "MetaBox Title"
 msgid "Courses"
 msgstr ""
 
-#: Course.php:173
+#: Course.php:171
 msgctxt "Column Title"
 msgid "Courses"
 msgstr ""
 
-#: Course.php:178
+#: Course.php:176
 msgctxt "Default Term"
 msgid "Ongoing"
 msgstr ""
 
-#: Course.php:179
+#: Course.php:177
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Course.php:180
+#: Course.php:178
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Course.php:181
+#: Course.php:179
 msgctxt "Default Term"
 msgid "Cancelled"
 msgstr ""
 
-#: Course.php:193
-#: Course.php:201
+#: Course.php:191
+#: Course.php:204
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: Course.php:194
+#: Course.php:192
 msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr ""
 
-#: Course.php:202
+#: Course.php:205
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr ""
 
-#: Course.php:231
+#: Course.php:234
 msgctxt "Button"
 msgid "Install Default Lesson Statuses"
 msgstr ""
 
-#: Course.php:705
+#: Course.php:683
 msgctxt "Header"
 msgid "Course Tools"
 msgstr ""
 
-#: Course.php:734
+#: Course.php:712
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr ""

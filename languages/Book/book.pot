@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Book\n"
 "X-Domain: geditorial-book\n"
 
@@ -19,620 +19,620 @@ msgctxt "Settings Intro"
 msgid "Please consider installing <a href=\"%1$s\" target=\"_blank\">Posts to Posts</a> or <a href=\"%2$s\" target=\"_blank\">Objects to Objects</a>."
 msgstr ""
 
-#: Book.php:98
+#: Book.php:100
 msgctxt "Setting Title"
 msgid "Connected Post-types"
 msgstr ""
 
-#: Book.php:103
+#: Book.php:105
 msgctxt "Setting Title"
 msgid "Insert in Content"
 msgstr ""
 
-#: Book.php:108
+#: Book.php:110
 msgctxt "Setting Title"
 msgid "Connected From Title"
 msgstr ""
 
-#: Book.php:113
+#: Book.php:115
 msgctxt "Setting Title"
 msgid "Connected To Title"
 msgstr ""
 
-#: Book.php:179
+#: Book.php:174
 msgid "Publication"
 msgid_plural "Publications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:180
+#: Book.php:175
 msgid "Publication Category"
 msgid_plural "Publication Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:181
+#: Book.php:176
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:182
+#: Book.php:177
 msgid "Serie"
 msgid_plural "Series"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:183
+#: Book.php:178
 msgid "Library"
 msgid_plural "Libraries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:184
+#: Book.php:179
 msgid "Publisher"
 msgid_plural "Publishers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:185
+#: Book.php:180
 msgid "Publication Type"
 msgid_plural "Publication Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:186
+#: Book.php:181
 msgid "Publication Status"
 msgid_plural "Publication Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:187
+#: Book.php:182
 msgid "Publication Size"
 msgid_plural "Publication Sizes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:188
+#: Book.php:183
 msgid "Publication Audience"
 msgid_plural "Publication Audiences"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:194
+#: Book.php:189
 msgctxt "P2P"
 msgid "Pages"
 msgstr ""
 
 #. translators: %s: pages placeholder
-#: Book.php:197
+#: Book.php:192
 msgctxt "P2P"
 msgid "P. %s"
 msgstr ""
 
-#: Book.php:200
+#: Book.php:195
 msgctxt "P2P"
 msgid "Volume"
 msgstr ""
 
 #. translators: %s: volumes placeholder
-#: Book.php:203
+#: Book.php:198
 msgctxt "P2P"
 msgid "Vol. %s"
 msgstr ""
 
-#: Book.php:206
+#: Book.php:201
 msgctxt "P2P"
 msgid "Reference"
 msgstr ""
 
-#: Book.php:211
+#: Book.php:206
 msgctxt "P2P"
 msgid "Description"
 msgstr ""
 
-#: Book.php:224
+#: Book.php:219
 msgctxt "Dashboard Widget Title"
 msgid "Your Publications Summary"
 msgstr ""
 
-#: Book.php:225
+#: Book.php:220
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Publications Summary"
 msgstr ""
 
-#: Book.php:230
+#: Book.php:225
 msgctxt "MetaBox Title"
 msgid "Publications"
 msgstr ""
 
-#: Book.php:233
+#: Book.php:228
 msgctxt "MetaBox Title"
 msgid "Connected"
 msgstr ""
 
-#: Book.php:239
+#: Book.php:234
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr ""
 
-#: Book.php:240
+#: Book.php:235
 msgctxt "MetaBox Title"
 msgid "Metadata"
 msgstr ""
 
-#: Book.php:241
+#: Book.php:236
 msgctxt "MetaBox Title"
 msgid "Curator"
 msgstr ""
 
-#: Book.php:242
+#: Book.php:237
 msgctxt "MetaBox Title"
 msgid "Summary"
 msgstr ""
 
-#: Book.php:243
+#: Book.php:238
 msgctxt "Column Title"
 msgid "Cover"
 msgstr ""
 
-#: Book.php:244
+#: Book.php:239
 msgctxt "Column Title"
 msgid "Connected"
 msgstr ""
 
-#: Book.php:247
+#: Book.php:242
 msgctxt "MetaBox Title"
 msgid "Category"
 msgstr ""
 
-#: Book.php:248
+#: Book.php:243
 msgctxt "Column Title"
 msgid "Publication Category"
 msgstr ""
 
-#: Book.php:251
+#: Book.php:246
 msgctxt "MetaBox Title"
 msgid "Subject"
 msgstr ""
 
-#: Book.php:252
+#: Book.php:247
 msgctxt "Column Title"
 msgid "Publication Subject"
 msgstr ""
 
-#: Book.php:255
+#: Book.php:250
 msgctxt "MetaBox Title"
 msgid "Serie"
 msgstr ""
 
-#: Book.php:256
+#: Book.php:251
 msgctxt "Column Title"
 msgid "Publication Serie"
 msgstr ""
 
-#: Book.php:259
+#: Book.php:254
 msgctxt "MetaBox Title"
 msgid "Library"
 msgstr ""
 
-#: Book.php:260
+#: Book.php:255
 msgctxt "Column Title"
 msgid "Publication Library"
 msgstr ""
 
-#: Book.php:263
+#: Book.php:258
 msgctxt "MetaBox Title"
 msgid "Publisher"
 msgstr ""
 
-#: Book.php:264
+#: Book.php:259
 msgctxt "Column Title"
 msgid "Publication Publisher"
 msgstr ""
 
-#: Book.php:267
+#: Book.php:262
 msgctxt "MetaBox Title"
 msgid "Status"
 msgstr ""
 
-#: Book.php:268
+#: Book.php:263
 msgctxt "Column Title"
 msgid "Publication Status"
 msgstr ""
 
-#: Book.php:271
+#: Book.php:266
 msgctxt "MetaBox Title"
 msgid "Type"
 msgstr ""
 
-#: Book.php:272
+#: Book.php:267
 msgctxt "Column Title"
 msgid "Publication Type"
 msgstr ""
 
-#: Book.php:275
+#: Book.php:270
 msgctxt "MetaBox Title"
 msgid "Size"
 msgstr ""
 
-#: Book.php:276
+#: Book.php:271
 msgctxt "Column Title"
 msgid "Publication Size"
 msgstr ""
 
-#: Book.php:279
+#: Book.php:274
 msgctxt "MetaBox Title"
 msgid "Audience"
 msgstr ""
 
-#: Book.php:280
+#: Book.php:275
 msgctxt "Column Title"
 msgid "Publication Audience"
 msgstr ""
 
-#: Book.php:286
+#: Book.php:281
 msgctxt "Publication Type: Default Term"
 msgid "Paperback"
 msgstr ""
 
-#: Book.php:287
+#: Book.php:282
 msgctxt "Publication Type: Default Term"
 msgid "Hardcover"
 msgstr ""
 
-#: Book.php:288
+#: Book.php:283
 msgctxt "Publication Type: Default Term"
 msgid "E-Book"
 msgstr ""
 
-#: Book.php:289
+#: Book.php:284
 msgctxt "Publication Type: Default Term"
 msgid "Disc"
 msgstr ""
 
-#: Book.php:292
+#: Book.php:287
 msgctxt "Publication Size: Default Term"
 msgid "Octavo"
 msgstr ""
 
-#: Book.php:293
+#: Book.php:288
 msgctxt "Publication Size: Default Term"
 msgid "Folio"
 msgstr ""
 
-#: Book.php:294
+#: Book.php:289
 msgctxt "Publication Size: Default Term"
 msgid "Medium Octavo"
 msgstr ""
 
-#: Book.php:295
+#: Book.php:290
 msgctxt "Publication Size: Default Term"
 msgid "Quatro"
 msgstr ""
 
-#: Book.php:296
+#: Book.php:291
 msgctxt "Publication Size: Default Term"
 msgid "Duodecimo"
 msgstr ""
 
-#: Book.php:297
+#: Book.php:292
 msgctxt "Publication Size: Default Term"
 msgid "Sextodecimo"
 msgstr ""
 
-#: Book.php:300
+#: Book.php:295
 msgctxt "Publication Status: Default Term"
 msgid "Not Available in Print"
 msgstr ""
 
-#: Book.php:301
+#: Book.php:296
 msgctxt "Publication Status: Default Term"
 msgid "Soon to be Published"
 msgstr ""
 
-#: Book.php:302
+#: Book.php:297
 msgctxt "Publication Status: Default Term"
 msgid "Secondary Print"
 msgstr ""
 
-#: Book.php:303
+#: Book.php:298
 msgctxt "Publication Status: Default Term"
 msgid "Repeat Print"
 msgstr ""
 
-#: Book.php:304
+#: Book.php:299
 msgctxt "Publication Status: Default Term"
 msgid "First Print"
 msgstr ""
 
-#: Book.php:309
+#: Book.php:304
 msgctxt "P2P"
 msgid "Connected Publications"
 msgstr ""
 
-#: Book.php:310
+#: Book.php:305
 msgctxt "P2P"
 msgid "Connected Posts"
 msgstr ""
 
-#: Book.php:314
+#: Book.php:309
 msgctxt "P2P"
 msgid "Post"
 msgstr ""
 
-#: Book.php:315
+#: Book.php:310
 msgctxt "P2P"
 msgid "Search Posts"
 msgstr ""
 
-#: Book.php:316
+#: Book.php:311
 msgctxt "P2P"
 msgid "No posts found."
 msgstr ""
 
-#: Book.php:317
+#: Book.php:312
 msgctxt "P2P"
 msgid "Connect to a post"
 msgstr ""
 
-#: Book.php:321
+#: Book.php:316
 msgctxt "P2P"
 msgid "Publications"
 msgstr ""
 
-#: Book.php:322
+#: Book.php:317
 msgctxt "P2P"
 msgid "Search Publications"
 msgstr ""
 
-#: Book.php:323
+#: Book.php:318
 msgctxt "P2P"
 msgid "No publications found."
 msgstr ""
 
-#: Book.php:324
+#: Book.php:319
 msgctxt "P2P"
 msgid "Connect to a publication"
 msgstr ""
 
-#: Book.php:337
+#: Book.php:332
 msgctxt "Field Title"
 msgid "Cover Tagline"
 msgstr ""
 
-#: Book.php:338
+#: Book.php:333
 msgctxt "Field Description"
 msgid "Promotional Text on the Cover of this Publication"
 msgstr ""
 
-#: Book.php:342
+#: Book.php:337
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: Book.php:343
+#: Book.php:338
 msgctxt "Field Description"
 msgid "Subtitle of the Publication"
 msgstr ""
 
-#: Book.php:347
+#: Book.php:342
 msgctxt "Field Title"
 msgid "Alternative Title"
 msgstr ""
 
-#: Book.php:348
+#: Book.php:343
 msgctxt "Field Description"
 msgid "The Original Title or Title in Another Language"
 msgstr ""
 
-#: Book.php:351
+#: Book.php:346
 msgctxt "Field Title"
 msgid "Collection Title"
 msgstr ""
 
-#: Book.php:352
+#: Book.php:347
 msgctxt "Field Description"
 msgid "This Publication Is Part of a Collection"
 msgstr ""
 
-#: Book.php:355
+#: Book.php:350
 msgctxt "Field Title"
 msgid "Publication By-Line"
 msgstr ""
 
-#: Book.php:356
+#: Book.php:351
 msgctxt "Field Description"
 msgid "Text to override the publication author"
 msgstr ""
 
-#: Book.php:362
+#: Book.php:357
 msgctxt "Field Title"
 msgid "Edition"
 msgstr ""
 
-#: Book.php:363
+#: Book.php:358
 msgctxt "Field Description"
 msgid "Edition of the Publication"
 msgstr ""
 
-#: Book.php:366
+#: Book.php:361
 msgctxt "Field Title"
 msgid "Print"
 msgstr ""
 
-#: Book.php:367
+#: Book.php:362
 msgctxt "Field Description"
 msgid "Specefic Print of the Publication"
 msgstr ""
 
-#: Book.php:371
+#: Book.php:366
 msgctxt "Field Title"
 msgid "Publish Location"
 msgstr ""
 
-#: Book.php:372
+#: Book.php:367
 msgctxt "Field Description"
 msgid "Location Published"
 msgstr ""
 
-#: Book.php:376
+#: Book.php:371
 msgctxt "Field Title"
 msgid "Publication Date"
 msgstr ""
 
-#: Book.php:377
+#: Book.php:372
 msgctxt "Field Description"
 msgid "Date Published"
 msgstr ""
 
-#: Book.php:381
+#: Book.php:377
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr ""
 
-#: Book.php:382
+#: Book.php:378
 msgctxt "Field Description"
 msgid "International Standard Book Number"
 msgstr ""
 
-#: Book.php:388
+#: Book.php:384
 msgctxt "Field Title"
 msgid "Pages"
 msgstr ""
 
-#: Book.php:389
+#: Book.php:385
 msgctxt "Field Description"
 msgid "Total Pages of the Publication"
 msgstr ""
 
-#: Book.php:394
+#: Book.php:390
 msgctxt "Field Title"
 msgid "Volumes"
 msgstr ""
 
-#: Book.php:395
+#: Book.php:391
 msgctxt "Field Description"
 msgid "Total Volumes of the Publication"
 msgstr ""
 
-#: Book.php:400
+#: Book.php:396
 msgctxt "Field Title"
 msgid "Discs"
 msgstr ""
 
-#: Book.php:401
+#: Book.php:397
 msgctxt "Field Description"
 msgid "Total Discs of the Publication"
 msgstr ""
 
-#: Book.php:406
+#: Book.php:402
 msgctxt "Field Title"
 msgid "Size"
 msgstr ""
 
-#: Book.php:407
+#: Book.php:403
 msgctxt "Field Description"
 msgid "The Size of the Publication, Mainly Books"
 msgstr ""
 
-#: Book.php:412
+#: Book.php:408
 msgctxt "Field Title"
 msgid "Reference"
 msgstr ""
 
-#: Book.php:413
+#: Book.php:409
 msgctxt "Field Description"
 msgid "Full reference to this publication"
 msgstr ""
 
-#: Book.php:454
+#: Book.php:445
 msgctxt "Button"
 msgid "Install Default Types"
 msgstr ""
 
-#: Book.php:455
+#: Book.php:446
 msgctxt "Button"
 msgid "Install Default Statuses"
 msgstr ""
 
-#: Book.php:458
+#: Book.php:449
 msgctxt "Button"
 msgid "Install Default Sizes"
 msgstr ""
 
 #. translators: %s: isbn placeholder
-#: Book.php:833
+#: Book.php:818
 msgctxt "Display"
 msgid "ISBN: %s"
 msgstr ""
 
 #. translators: %s: edition placeholder
-#: Book.php:835
+#: Book.php:820
 msgctxt "Display"
 msgid "%s Edition"
 msgstr ""
 
 #. translators: %s: print placeholder
-#: Book.php:837
+#: Book.php:822
 msgctxt "Display"
 msgid "%s Print"
 msgstr ""
 
 #. translators: %s: pages count placeholder
-#: Book.php:839
+#: Book.php:824
 msgctxt "Display"
 msgid "%s Pages"
 msgstr ""
 
 #. translators: %s: volumes count placeholder
-#: Book.php:841
+#: Book.php:826
 msgctxt "Display"
 msgid "%s Volumes"
 msgstr ""
 
-#: Book.php:895
+#: Book.php:881
 msgctxt "Title Attr"
 msgid "ISBN Link to this publication"
 msgstr ""
 
-#: Book.php:898
+#: Book.php:884
 msgctxt "Action"
 msgid "ISBN"
 msgstr ""
 
-#: Book.php:1178
+#: Book.php:1152
 msgctxt "Header"
 msgid "Publication Tools"
 msgstr ""
 
-#: Book.php:1221
+#: Book.php:1195
 msgctxt "Table Column"
 msgid "Import Meta"
 msgstr ""
 
-#: Book.php:1234
+#: Book.php:1208
 msgctxt "Table Column"
 msgid "Import Related"
 msgstr ""
 
-#: Book.php:1241
+#: Book.php:1215
 msgctxt "Tools"
 msgid "By ID"
 msgstr ""
 
-#: Book.php:1245
+#: Book.php:1219
 msgctxt "Tools"
 msgid "By Title"
 msgstr ""
 
-#: Book.php:1253
+#: Book.php:1227
 msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr ""
 
 #. translators: %s: total pages
-#: Book.php:1288
+#: Book.php:1252
 msgctxt "Noop"
 msgid "%s Page"
 msgid_plural "%s Pages"
@@ -640,7 +640,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: total volumes
-#: Book.php:1291
+#: Book.php:1255
 msgctxt "Noop"
 msgid "%s Volume"
 msgid_plural "%s Volumes"
@@ -648,29 +648,29 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: total discs
-#: Book.php:1294
+#: Book.php:1258
 msgctxt "Noop"
 msgid "%s Disc"
 msgid_plural "%s Discs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:1323
+#: Book.php:1295
 msgctxt "Import Field"
 msgid "Book: Publication ID"
 msgstr ""
 
-#: Book.php:1324
+#: Book.php:1296
 msgctxt "Import Field"
 msgid "Book: Publication Title"
 msgstr ""
 
-#: Book.php:1325
+#: Book.php:1297
 msgctxt "Import Field"
 msgid "Book: Publication Ref (P2P)"
 msgstr ""
 
-#: Book.php:1326
+#: Book.php:1298
 msgctxt "Import Field"
 msgid "Book: Publication Desc (P2P)"
 msgstr ""

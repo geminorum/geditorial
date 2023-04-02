@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Quotation\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-07-25T07:38:50+00:00\n"
-"PO-Revision-Date: 2022-07-25 23:01+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-02-24 16:23+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Quotation\n"
 "X-Domain: geditorial-quotation\n"
 
@@ -102,23 +102,23 @@ msgctxt "Field Description"
 msgid "Description of the Quote"
 msgstr ""
 
-#: Quotation.php:217 Quotation.php:220
+#: Quotation.php:215 Quotation.php:218
 msgctxt "Placeholder"
 msgid "Parent ID"
 msgstr "شناسه مادر"
 
-#: Quotation.php:229 Quotation.php:232
+#: Quotation.php:227 Quotation.php:230
 msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr "ترتیب فهرست"
 
 #. translators: %1$s: post parent, %2$s: menu order
-#: Quotation.php:249
+#: Quotation.php:247
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
 msgstr "[نقل از «%1$s» — %2$s]"
 
-#: Quotation.php:261
+#: Quotation.php:259
 msgctxt "Row Icon Title"
 msgid "Quotation Source"
 msgstr "منبع گفتاورد"

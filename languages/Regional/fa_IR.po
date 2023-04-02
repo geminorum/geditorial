@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Regional\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:57:31+00:00\n"
-"PO-Revision-Date: 2022-04-23 17:05+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-03-27 15:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,45 +11,149 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Regional\n"
 "X-Domain: geditorial-regional\n"
 
-#: Regional.php:48
+#. translators: %s: iso code
+#: Regional.php:60
+msgctxt "Tool Box"
+msgid "Helps with Importing Regional Languages from %s into WordPress."
+msgstr "به درون‌ریزی زبان‌های بومی از %s به وردپرس کمک می‌کند."
+
+#: Regional.php:67
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] "زبان‌ها"
 msgstr[1] "زبان"
 
-#: Regional.php:56
+#: Regional.php:71
+msgctxt "Taxonomy Label"
+msgid "Unknown"
+msgstr "ناشناخته"
+
+#: Regional.php:76
+msgctxt "Default Term: Name"
+msgid "[Unknown]"
+msgstr "[ناشناخته]"
+
+#: Regional.php:77
+msgctxt "Default Term: Description"
+msgid "Unknown Languages"
+msgstr "زبان‌های ناشناخته"
+
+#: Regional.php:88
+msgctxt "Importer: Title"
+msgid "Import Languages"
+msgstr "درون‌ریزی زبان‌ها"
+
+#. translators: %s: iso code
+#: Regional.php:90
+msgctxt "Importer: Description"
+msgid "Regional Languages from %s into WordPress"
+msgstr "زبان‌های بومی از %s به وردپرس"
+
+#. translators: %s: redirect url
+#: Regional.php:92
+msgctxt "Importer: Redirect"
+msgid ""
+"If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click "
+"here</a>."
+msgstr ""
+"اگر مرورگر شما به صورت خودکار بازگردانی نشد، به <a href=\"%s\">این صفحه</a> "
+"بروید."
+
+#: Regional.php:95
 msgctxt "Show Option All"
 msgid "Language"
 msgstr "زبان"
 
-#: Regional.php:57
+#: Regional.php:96
 msgctxt "Show Option None"
 msgid "(Uknonwn Language)"
 msgstr "(زبان نامشخص)"
 
-#: Regional.php:63
+#: Regional.php:102
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr "عربی"
 
-#: Regional.php:64
+#: Regional.php:103
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr "فارسی"
 
-#: Regional.php:65
+#: Regional.php:104
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr "انگلیسی"
 
-#: Regional.php:66
+#: Regional.php:105
 msgctxt "Default Term: Language"
 msgid "French"
 msgstr "فرانسه"
+
+#: Regional.php:253
+msgctxt "Header"
+msgid "Import Languages"
+msgstr "درون‌ریزی زبان‌ها"
+
+#: Regional.php:256
+msgctxt "Imports"
+msgid "ISO 639-1 Alpha-2"
+msgstr ""
+
+#: Regional.php:263
+msgctxt "Table Column"
+msgid "Code"
+msgstr "کد"
+
+#: Regional.php:267
+msgctxt "Table Column"
+msgid "Term"
+msgstr "رده"
+
+#: Regional.php:279
+msgctxt "Table Column"
+msgid "English Name"
+msgstr "نام انگلیسی"
+
+#: Regional.php:283 Regional.php:321 Regional.php:328
+msgctxt "Table Column"
+msgid "Native Name"
+msgstr "نام بومی"
+
+#: Regional.php:288
+msgctxt "Message: Table Empty"
+msgid "There are no languages available!"
+msgstr "هیچ زبانی در دسترس نیست!"
+
+#: Regional.php:301
+msgctxt "Button"
+msgid "Create Language Terms"
+msgstr "ایجاد رده‌های زبان"
+
+#: Regional.php:304
+msgctxt "Button"
+msgid "Update Existing Terms"
+msgstr "به‌روزرسانی رده‌های موجود"
+
+#: Regional.php:308
+msgctxt "Message"
+msgid "Check for available languages and create corresponding language terms."
+msgstr "زبان‌های موجود را بررسی کنید و رده‌های مربوط به زبان را ایجاد کنید."
+
+#~ msgctxt "Button"
+#~ msgid "Store Extra Fields"
+#~ msgstr "ذخیره زمینه‌های افزوده"
+
+#~ msgctxt "Button"
+#~ msgid "Delete Terms"
+#~ msgstr "پاک‌کردن رده‌ها"
+
+#~ msgctxt "Imports"
+#~ msgid "Available Languages"
+#~ msgstr "زبان‌های در دسترس"
 
 #~ msgctxt "Taxonomy Menu"
 #~ msgid "Regional"

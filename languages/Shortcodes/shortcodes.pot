@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Shortcodes\n"
 "X-Domain: geditorial-shortcodes\n"
 
@@ -23,42 +23,52 @@ msgctxt "Setting Description"
 msgid "Enables the use of the selected short-codes."
 msgstr ""
 
-#: Shortcodes.php:44
+#: Shortcodes.php:43
 msgctxt "Setting Title"
 msgid "Remove Empty Paragraphs"
 msgstr ""
 
-#: Shortcodes.php:45
+#: Shortcodes.php:44
 msgctxt "Setting Description"
 msgid "Strips empty paragraph tags around short-codes from post content."
 msgstr ""
 
-#: Shortcodes.php:57
+#: Shortcodes.php:48
+msgctxt "Setting Title"
+msgid "Remove Orphaned"
+msgstr ""
+
+#: Shortcodes.php:49
+msgctxt "Setting Description"
+msgid "Strips unregistered shortcode tags from post content."
+msgstr ""
+
+#: Shortcodes.php:61
 msgctxt "Shortcode Name"
 msgid "Display Terms"
 msgstr ""
 
-#: Shortcodes.php:58
+#: Shortcodes.php:62
 msgctxt "Shortcode Name"
 msgid "Term Tiles"
 msgstr ""
 
-#: Shortcodes.php:102
+#: Shortcodes.php:109
 msgctxt "Title Attr"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:141
+#: Shortcodes.php:148
 msgctxt "None Title"
 msgid "All Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:155
+#: Shortcodes.php:162
 msgctxt "Table Column"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:173
+#: Shortcodes.php:180
 msgctxt "Header"
 msgid "Overview of Post Shortcodes"
 msgstr ""

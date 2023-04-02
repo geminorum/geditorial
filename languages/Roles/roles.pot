@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Roles\n"
 "X-Domain: geditorial-roles\n"
 
@@ -43,75 +43,85 @@ msgctxt "Setting Description"
 msgid "Allows Authors to manage post tags."
 msgstr ""
 
+#: Roles.php:64
+msgctxt "Setting Title"
+msgid "Built-in Post & Category"
+msgstr ""
+
+#: Roles.php:65
+msgctxt "Setting Description"
+msgid "Removes access to the builtin post post-type and category taxonomy on the admin."
+msgstr ""
+
 #. translators: %s: role name
-#: Roles.php:69
+#: Roles.php:75
 msgctxt "Setting Title"
 msgid "Role Name for %s"
 msgstr ""
 
-#: Roles.php:70
+#: Roles.php:76
 msgctxt "Setting Description"
 msgid "Custom name for the duplicated role."
 msgstr ""
 
 #. translators: %s: role name
-#: Roles.php:72
-#: Roles.php:289
+#: Roles.php:78
+#: Roles.php:339
 msgctxt "Setting Default"
 msgid "Editorial: %s"
 msgstr ""
 
-#: Roles.php:135
+#: Roles.php:141
 msgctxt "Button"
 msgid "Duplicate Default Roles"
 msgstr ""
 
-#: Roles.php:136
+#: Roles.php:142
 msgctxt "Button"
 msgid "Remove Duplicated Roles"
 msgstr ""
 
-#: Roles.php:137
+#: Roles.php:143
 msgctxt "Button"
 msgid "Add Default Caps to Editor Role"
 msgstr ""
 
-#: Roles.php:139
+#: Roles.php:145
 msgctxt "Button"
 msgid "Add Theme Caps to Editor Role"
 msgstr ""
 
-#: Roles.php:392
+#: Roles.php:442
 msgctxt "Header"
 msgid "Editorial Roles"
 msgstr ""
 
-#: Roles.php:396
+#: Roles.php:446
 msgctxt "Header"
 msgid "Current Roles"
 msgstr ""
 
-#: Roles.php:398
+#: Roles.php:448
 msgctxt "Button"
 msgid "Check Roles"
 msgstr ""
 
-#: Roles.php:399
+#: Roles.php:449
 msgctxt "Button"
 msgid "Check Capabilities"
 msgstr ""
 
-#: Roles.php:400
+#: Roles.php:450
 msgctxt "Button"
 msgid "Duplicate Defaults"
 msgstr ""
 
-#: Roles.php:401
+#: Roles.php:451
 msgctxt "Button"
 msgid "Add Default Caps to Editors"
 msgstr ""
 
-#: Roles.php:402
+#: Roles.php:452
 msgctxt "Button"
 msgid "Remove Duplicates"
 msgstr ""

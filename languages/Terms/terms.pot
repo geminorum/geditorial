@@ -9,378 +9,473 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
 "X-Domain: geditorial-terms\n"
 
-#: Terms.php:45
+#: Terms.php:71
 msgctxt "Setting Title"
 msgid "Prevent Deletion"
 msgstr ""
 
-#: Terms.php:46
+#: Terms.php:72
 msgctxt "Setting Description"
 msgid "Exempts the terms with meta-data from bulk empty deletions."
 msgstr ""
 
-#: Terms.php:61
+#: Terms.php:79
+msgctxt "Setting Title"
+msgid "Apply Ordering"
+msgstr ""
+
+#: Terms.php:80
+msgctxt "Setting Description"
+msgid "Changes internal Wordpress core defaults to use custom ordering."
+msgstr ""
+
+#: Terms.php:84
+msgctxt "Setting Title"
+msgid "Current Author"
+msgstr ""
+
+#: Terms.php:85
+msgctxt "Setting Description"
+msgid "Automatically fills current user as term author if not set for supported taxonomies."
+msgstr ""
+
+#: Terms.php:89
+msgctxt "Setting Title"
+msgid "Term Overwrite"
+msgstr ""
+
+#: Terms.php:90
+msgctxt "Setting Description"
+msgid "Automatically overwrites term name with custom field if set for supported taxonomies."
+msgstr ""
+
+#: Terms.php:106
 msgctxt "Titles"
 msgid "Order"
 msgstr ""
 
-#: Terms.php:62
+#: Terms.php:107
+msgctxt "Titles"
+msgid "Overwrite"
+msgstr ""
+
+#: Terms.php:108
 msgctxt "Titles"
 msgid "Tagline"
 msgstr ""
 
-#: Terms.php:63
+#: Terms.php:109
 msgctxt "Titles"
 msgid "Contact"
 msgstr ""
 
-#: Terms.php:64
+#: Terms.php:110
 msgctxt "Titles"
 msgid "Image"
 msgstr ""
 
-#: Terms.php:65
+#: Terms.php:111
 msgctxt "Titles"
 msgid "Author"
 msgstr ""
 
-#: Terms.php:66
+#: Terms.php:112
 msgctxt "Titles"
 msgid "Color"
 msgstr ""
 
-#: Terms.php:67
+#: Terms.php:113
 msgctxt "Titles"
 msgid "Role"
 msgstr ""
 
-#: Terms.php:68
+#: Terms.php:114
 msgctxt "Titles"
 msgid "Posttype"
 msgstr ""
 
-#: Terms.php:69
+#: Terms.php:115
 msgctxt "Titles"
 msgid "Roles"
 msgstr ""
 
-#: Terms.php:70
+#: Terms.php:116
 msgctxt "Titles"
 msgid "Posttypes"
 msgstr ""
 
-#: Terms.php:71
+#: Terms.php:117
 msgctxt "Titles"
 msgid "Arrow"
 msgstr ""
 
-#: Terms.php:72
+#: Terms.php:118
 msgctxt "Titles"
 msgid "Label"
 msgstr ""
 
-#: Terms.php:73
+#: Terms.php:119
 msgctxt "Titles"
 msgid "Code"
 msgstr ""
 
-#: Terms.php:74
+#: Terms.php:120
 msgctxt "Titles"
 msgid "Barcode"
 msgstr ""
 
-#: Terms.php:77
+#: Terms.php:121
+msgctxt "Titles"
+msgid "Date"
+msgstr ""
+
+#: Terms.php:122
+msgctxt "Titles"
+msgid "Date-Time"
+msgstr ""
+
+#: Terms.php:123
+msgctxt "Titles"
+msgid "Date-Start"
+msgstr ""
+
+#: Terms.php:124
+msgctxt "Titles"
+msgid "Date-End"
+msgstr ""
+
+#: Terms.php:125
+msgctxt "Titles"
+msgid "Days"
+msgstr ""
+
+#: Terms.php:126
+msgctxt "Titles"
+msgid "Unit"
+msgstr ""
+
+#: Terms.php:129
 msgctxt "Descriptions"
 msgid "Terms are usually ordered alphabetically, but you can choose your own order by numbers."
 msgstr ""
 
-#: Terms.php:78
+#: Terms.php:130
+msgctxt "Descriptions"
+msgid "Replaces the term name on front-page display."
+msgstr ""
+
+#: Terms.php:131
 msgctxt "Descriptions"
 msgid "Gives more information about the term in a short phrase."
 msgstr ""
 
-#: Terms.php:79
+#: Terms.php:132
 msgctxt "Descriptions"
 msgid "Adds a way to contact someone about the term, by url, email or phone."
 msgstr ""
 
-#: Terms.php:80
+#: Terms.php:133
 msgctxt "Descriptions"
 msgid "Assigns a custom image to visually separate terms from each other."
 msgstr ""
 
-#: Terms.php:81
+#: Terms.php:134
 msgctxt "Descriptions"
 msgid "Sets a user as term author to help identify who created or owns each term."
 msgstr ""
 
-#: Terms.php:82
+#: Terms.php:135
 msgctxt "Descriptions"
 msgid "Assigns a custom color to visually separate terms from each other."
 msgstr ""
 
-#: Terms.php:83
+#: Terms.php:136
 msgctxt "Descriptions"
 msgid "Terms can have unique role visibility to help separate them for user roles."
 msgstr ""
 
-#: Terms.php:84
+#: Terms.php:137
 msgctxt "Descriptions"
 msgid "Terms can have unique roles visibility to help separate them for user roles."
 msgstr ""
 
-#: Terms.php:85
+#: Terms.php:138
 msgctxt "Descriptions"
 msgid "Terms can have unique posttype visibility to help separate them on editing."
 msgstr ""
 
-#: Terms.php:86
+#: Terms.php:139
 msgctxt "Descriptions"
 msgid "Terms can have unique posttypes visibility to help separate them on editing."
 msgstr ""
 
-#: Terms.php:87
+#: Terms.php:140
 msgctxt "Descriptions"
 msgid "Terms can have direction arrow to help orginize them."
 msgstr ""
 
-#: Terms.php:88
+#: Terms.php:141
 msgctxt "Descriptions"
 msgid "Terms can have text label to help orginize them."
 msgstr ""
 
-#: Terms.php:89
+#: Terms.php:142
 msgctxt "Descriptions"
 msgid "Terms can have text code to help orginize them."
 msgstr ""
 
-#: Terms.php:90
+#: Terms.php:143
 msgctxt "Descriptions"
 msgid "Terms can have barcode to help orginize them."
 msgstr ""
 
-#: Terms.php:93
+#: Terms.php:144
+msgctxt "Descriptions"
+msgid "Terms can have date to help orginize them."
+msgstr ""
+
+#: Terms.php:145
+msgctxt "Descriptions"
+msgid "Terms can have date-time to help orginize them."
+msgstr ""
+
+#: Terms.php:146
+msgctxt "Descriptions"
+msgid "Terms can have date-start to help orginize them."
+msgstr ""
+
+#: Terms.php:147
+msgctxt "Descriptions"
+msgid "Terms can have date-end to help orginize them."
+msgstr ""
+
+#: Terms.php:148
+msgctxt "Descriptions"
+msgid "Terms can have days number to help orginize them."
+msgstr ""
+
+#: Terms.php:149
+msgctxt "Descriptions"
+msgid "Terms can have unit number to help orginize them."
+msgstr ""
+
+#: Terms.php:152
 msgctxt "Column Title: Order"
 msgid "Order"
 msgstr ""
 
-#: Terms.php:94
+#: Terms.php:153
+msgctxt "Column Title: Overwrite"
+msgid "Overwrite"
+msgstr ""
+
+#: Terms.php:154
 msgctxt "Column Title: Tagline"
 msgid "Tagline"
 msgstr ""
 
-#: Terms.php:95
+#: Terms.php:155
 msgctxt "Column Title: Contact"
 msgid "Contact"
 msgstr ""
 
-#: Terms.php:96
+#: Terms.php:156
 msgctxt "Column Title: Image"
 msgid "Image"
 msgstr ""
 
-#: Terms.php:97
+#: Terms.php:157
 msgctxt "Column Title: Author"
 msgid "Author"
 msgstr ""
 
-#: Terms.php:98
+#: Terms.php:158
 msgctxt "Column Title: Color"
 msgid "Color"
 msgstr ""
 
-#: Terms.php:99
+#: Terms.php:159
 msgctxt "Column Title: Role"
 msgid "Role"
 msgstr ""
 
-#: Terms.php:100
+#: Terms.php:160
 msgctxt "Column Title: Roles"
 msgid "Roles"
 msgstr ""
 
-#: Terms.php:101
+#: Terms.php:161
 msgctxt "Column Title: Posttype"
 msgid "Posttype"
 msgstr ""
 
-#: Terms.php:102
+#: Terms.php:162
 msgctxt "Column Title: Posttypes"
 msgid "Posttypes"
 msgstr ""
 
-#: Terms.php:103
+#: Terms.php:163
 msgctxt "Column Title: Arrow"
 msgid "Arrow"
 msgstr ""
 
-#: Terms.php:104
+#: Terms.php:164
 msgctxt "Column Title: Label"
 msgid "Label"
 msgstr ""
 
-#: Terms.php:105
+#: Terms.php:165
 msgctxt "Column Title: Label"
 msgid "Code"
 msgstr ""
 
-#: Terms.php:106
+#: Terms.php:166
 msgctxt "Column Title: Label"
 msgid "Barcode"
 msgstr ""
 
-#: Terms.php:107
+#: Terms.php:167
 msgctxt "Column Title: Posts"
 msgid "Posts"
 msgstr ""
 
-#: Terms.php:110
+#: Terms.php:168
+msgctxt "Column Title: Date"
+msgid "Date"
+msgstr ""
+
+#: Terms.php:169
+msgctxt "Column Title: Date-Time"
+msgid "Date-Time"
+msgstr ""
+
+#: Terms.php:170
+msgctxt "Column Title: Date-Start"
+msgid "Date-Start"
+msgstr ""
+
+#: Terms.php:171
+msgctxt "Column Title: Date-End"
+msgid "Date-End"
+msgstr ""
+
+#: Terms.php:172
+msgctxt "Column Title: Date-End"
+msgid "Days"
+msgstr ""
+
+#: Terms.php:173
+msgctxt "Column Title: Date-End"
+msgid "Unit"
+msgstr ""
+
+#: Terms.php:176
 msgctxt "Arrow Directions"
 msgid "Undefined"
 msgstr ""
 
-#: Terms.php:111
+#: Terms.php:177
 msgctxt "Arrow Directions"
 msgid "Up"
 msgstr ""
 
-#: Terms.php:112
+#: Terms.php:178
 msgctxt "Arrow Directions"
 msgid "Right"
 msgstr ""
 
-#: Terms.php:113
+#: Terms.php:179
 msgctxt "Arrow Directions"
 msgid "Down"
 msgstr ""
 
-#: Terms.php:114
+#: Terms.php:180
 msgctxt "Arrow Directions"
 msgid "Left"
 msgstr ""
 
-#: Terms.php:118
+#: Terms.php:184
 msgctxt "Javascript String"
 msgid "Choose an Image"
 msgstr ""
 
-#: Terms.php:119
+#: Terms.php:185
 msgctxt "Javascript String"
 msgid "Set as image"
 msgstr ""
 
 #. translators: %s: field name
-#: Terms.php:173
+#: Terms.php:240
 msgctxt "Setting Title"
 msgid "Term %s"
 msgstr ""
 
 #. translators: %s: field name
-#: Terms.php:180
+#: Terms.php:247
 msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr ""
 
-#: Terms.php:925
-#: Terms.php:1096
+#: Terms.php:1136
+#: Terms.php:1339
 msgctxt "Button"
 msgid "Choose"
 msgstr ""
 
-#: Terms.php:930
-#: Terms.php:1102
+#: Terms.php:1141
+#: Terms.php:1345
 msgctxt "Button"
 msgid "Remove"
 msgstr ""
 
-#: Terms.php:1210
+#: Terms.php:1472
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr ""
 
-#: Terms.php:1217
+#: Terms.php:1479
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr ""
 
-#: Terms.php:1228
-#: Terms.php:1247
+#: Terms.php:1490
+#: Terms.php:1509
 msgctxt "Adminbar"
 msgid "Description"
 msgstr ""
 
 #. translators: %s: meta title
-#: Terms.php:1259
+#: Terms.php:1521
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr ""
 
-#: Terms.php:1321
+#: Terms.php:1617
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr ""
 
-#: Terms.php:1343
+#: Terms.php:1640
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr ""
 
-#: Terms.php:1419
-msgctxt "Header"
-msgid "Term Tools"
-msgstr ""
-
-#: Terms.php:1425
-msgctxt "Tools"
-msgid "Orphaned Terms"
-msgstr ""
-
-#: Terms.php:1445
-msgctxt "Button"
-msgid "Convert"
-msgstr ""
-
-#: Terms.php:1447
-msgctxt "Message"
-msgid "Converts orphaned terms into currently registered taxonomies."
-msgstr ""
-
-#: Terms.php:1455
-msgctxt "Message"
-msgid "Currently no tool available."
-msgstr ""
-
-#: Terms.php:1508
-msgctxt "Table Action"
-msgid "Purge Unregistered"
-msgstr ""
-
-#: Terms.php:1522
-msgctxt "Table Column"
-msgid "Raw"
-msgstr ""
-
-#: Terms.php:1541
-msgctxt "Header"
-msgid "Overview of Posts with Terms"
-msgstr ""
-
 #. translators: %s: term name
-#: Terms.php:1563
+#: Terms.php:1688
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Terms.php:1627
+#: Terms.php:1752
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr ""
 
-#: Terms.php:1630
+#: Terms.php:1755
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr ""

@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
 
@@ -54,24 +54,43 @@ msgid "&ndash; Choose a Specification &ndash;"
 msgstr ""
 
 #: Specs.php:68
-msgctxt "Noop"
 msgid "Specification"
 msgid_plural "Specifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Specs.php:301
+#: Specs.php:77
+msgctxt "Default Term"
+msgid "Color"
+msgstr ""
+
+#: Specs.php:78
+msgctxt "Default Term"
+msgid "Width"
+msgstr ""
+
+#: Specs.php:79
+msgctxt "Default Term"
+msgid "Height"
+msgstr ""
+
+#: Specs.php:80
+msgctxt "Default Term"
+msgid "Weight"
+msgstr ""
+
+#: Specs.php:317
 msgctxt "Sortable Handler"
 msgid "Sort me!"
 msgstr ""
 
-#: Specs.php:304
+#: Specs.php:320
 msgctxt "Sortable Trash"
 msgid "Trash me!"
 msgstr ""
 
-#: Specs.php:320
-#: Specs.php:454
+#: Specs.php:336
+#: Specs.php:470
 msgctxt "Modules: Specs"
 msgid "Unknown Field"
 msgstr ""

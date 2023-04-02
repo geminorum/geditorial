@@ -9,39 +9,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Uncategorized\n"
 "X-Domain: geditorial-uncategorized\n"
 
-#: Uncategorized.php:42
+#: Uncategorized.php:46
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: Uncategorized.php:43
+#: Uncategorized.php:47
 msgctxt "Setting Description"
 msgid "Roles that can see Uncategorized Reports."
 msgstr ""
 
+#: Uncategorized.php:106
+#: Uncategorized.php:273
+msgctxt "Action"
+msgid "Clean Uncategorized"
+msgstr ""
+
+#: Uncategorized.php:107
+#: Uncategorized.php:274
+msgctxt "Action"
+msgid "Clean Unregistered"
+msgstr ""
+
+#: Uncategorized.php:108
+#: Uncategorized.php:275
+msgctxt "Action"
+msgid "Clean Unattached"
+msgstr ""
+
+#. translators: %s: count
+#: Uncategorized.php:163
+msgctxt "Message"
+msgid "%s items(s) cleaned!"
+msgstr ""
+
 #. translators: %s: posts count
-#: Uncategorized.php:90
+#: Uncategorized.php:174
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Uncategorized.php:95
+#: Uncategorized.php:179
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr ""
 
-#: Uncategorized.php:166
-msgctxt "Table Action"
-msgid "Clean Uncategorized"
+#: Uncategorized.php:289
+msgctxt "Table Column"
+msgid "Raw"
 msgstr ""
 
-#: Uncategorized.php:182
+#: Uncategorized.php:316
 msgctxt "Header"
 msgid "Overview of Posts in Uncategorized Terms"
+msgstr ""
+
+#: Uncategorized.php:367
+msgctxt "Header"
+msgid "Uncategorized Tools"
+msgstr ""
+
+#: Uncategorized.php:373
+msgctxt "Tools"
+msgid "Orphaned Terms"
+msgstr ""
+
+#: Uncategorized.php:393
+msgctxt "Button"
+msgid "Convert"
+msgstr ""
+
+#: Uncategorized.php:395
+msgctxt "Message"
+msgid "Converts orphaned terms into currently registered taxonomies."
+msgstr ""
+
+#: Uncategorized.php:403
+msgctxt "Message"
+msgid "There are no tools available!"
+msgstr ""
+
+#: Uncategorized.php:576
+msgctxt "Default Label"
+msgid "Uncategorized"
 msgstr ""

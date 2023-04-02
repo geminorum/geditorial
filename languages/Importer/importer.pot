@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Importer\n"
 "X-Domain: geditorial-importer\n"
 
@@ -35,231 +35,246 @@ msgstr ""
 
 #: Importer.php:57
 msgctxt "Setting Title"
-msgid "Store Source Data"
+msgid "Match Source ID"
 msgstr ""
 
 #: Importer.php:58
 msgctxt "Setting Description"
-msgid "Stores raw source data and attchment reference as meta for each imported item."
+msgid "Tries to find the previously imported by provided source id."
 msgstr ""
 
 #: Importer.php:62
+msgctxt "Setting Title"
+msgid "Store Source Data"
+msgstr ""
+
+#: Importer.php:63
+msgctxt "Setting Description"
+msgid "Stores raw source data and attchment reference as meta for each imported item."
+msgstr ""
+
+#: Importer.php:67
 msgctxt "Setting Title"
 msgid "Add Audit Attribute"
 msgstr ""
 
 #. translators: %s: default term placeholder
-#: Importer.php:64
+#: Importer.php:69
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each imported item."
 msgstr ""
 
-#: Importer.php:90
+#: Importer.php:96
 msgctxt "Javascript String"
 msgid "Choose a Datasheet"
 msgstr ""
 
-#: Importer.php:91
+#: Importer.php:97
 msgctxt "Javascript String"
 msgid "Select as Source"
 msgstr ""
 
-#: Importer.php:98
+#: Importer.php:104
 msgctxt "Tool Box"
 msgid "Helps with Importing contents from CSV files into any post-type, with meta support."
 msgstr ""
 
-#: Importer.php:221
+#: Importer.php:195
+msgctxt "Dropdown Label"
+msgid "Source ID"
+msgstr ""
+
+#: Importer.php:212
+msgctxt "Description"
+msgid "Used as Identifider of each item."
+msgstr ""
+
+#: Importer.php:251
 msgctxt "Button"
 msgid "Upload"
 msgstr ""
 
-#: Importer.php:267
+#: Importer.php:299
 msgctxt "Table Column"
 msgid "Image"
 msgstr ""
 
-#: Importer.php:288
+#: Importer.php:320
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Importer.php:297
-#: Importer.php:382
+#: Importer.php:329
+#: Importer.php:427
 msgctxt "Header"
 msgid "%s Records Found"
 msgstr ""
 
-#: Importer.php:332
+#: Importer.php:365
 msgctxt "Table Column"
 msgid "[Checks]"
 msgstr ""
 
-#: Importer.php:357
+#: Importer.php:402
 msgctxt "Table Column"
 msgid "Similar to Title:"
 msgstr ""
 
 #. translators: %s: custom metakey
-#: Importer.php:374
+#: Importer.php:419
 msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr ""
 
-#: Importer.php:640
+#: Importer.php:751
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr ""
 
-#: Importer.php:643
+#: Importer.php:754
 msgctxt "Message"
 msgid "Imports are not supported for any of the post-types!"
 msgstr ""
 
-#: Importer.php:646
+#: Importer.php:757
 msgctxt "Header"
 msgid "Import Data from CSV into Posts"
 msgstr ""
 
-#: Importer.php:652
+#: Importer.php:763
 msgctxt "Header"
 msgid "Import Remote Files as Attachments"
 msgstr ""
 
-#: Importer.php:673
-#: Importer.php:694
-#: Importer.php:717
+#: Importer.php:792
+#: Importer.php:814
+#: Importer.php:838
 msgctxt "Message"
 msgid "Import source is not defined!"
 msgstr ""
 
-#: Importer.php:676
-#: Importer.php:697
-#: Importer.php:720
-#: Importer.php:770
+#: Importer.php:795
+#: Importer.php:817
+#: Importer.php:841
+#: Importer.php:891
 msgctxt "Message"
 msgid "You are not allowed to edit this post-type!"
 msgstr ""
 
-#: Importer.php:688
+#: Importer.php:808
 msgctxt "Button"
 msgid "Import"
 msgstr ""
 
-#: Importer.php:689
-#: Importer.php:780
+#: Importer.php:809
+#: Importer.php:901
 msgctxt "Message"
 msgid "Select records to finally import."
 msgstr ""
 
-#: Importer.php:699
+#: Importer.php:819
 msgctxt "Header"
 msgid "Terms to Append All"
 msgstr ""
 
-#: Importer.php:708
+#: Importer.php:829
 msgctxt "Message"
 msgid "No taxonomy availabe for this post-type!"
 msgstr ""
 
-#: Importer.php:711
+#: Importer.php:832
 msgctxt "Button"
 msgid "Step 3: Terms"
 msgstr ""
 
-#: Importer.php:712
+#: Importer.php:833
 msgctxt "Message"
 msgid "Select a term from each post-type supported taxonomy to append all imported posts."
 msgstr ""
 
-#: Importer.php:722
+#: Importer.php:843
 msgctxt "Header"
 msgid "Map the Importer"
 msgstr ""
 
-#: Importer.php:732
+#: Importer.php:853
 msgctxt "Button"
 msgid "Step 2: Map"
 msgstr ""
 
-#: Importer.php:733
+#: Importer.php:854
 msgctxt "Message"
 msgid "Map the file fields to the post-type fields."
 msgstr ""
 
-#: Importer.php:740
+#: Importer.php:861
 msgctxt "Button"
 msgid "Step 1: Attachment"
 msgstr ""
 
-#: Importer.php:741
+#: Importer.php:862
 msgctxt "Message"
 msgid "Upload or select a CSV file, post-type and user to map the import."
 msgstr ""
 
-#: Importer.php:760
+#: Importer.php:881
 msgctxt "Message"
 msgid "You are not allowed to upload files!"
 msgstr ""
 
-#: Importer.php:767
+#: Importer.php:888
 msgctxt "Message"
 msgid "Refrence meta-key is not defined!"
 msgstr ""
 
-#: Importer.php:778
+#: Importer.php:899
 msgctxt "Button"
 msgid "Import & Set Thumbnail"
 msgstr ""
 
-#: Importer.php:779
+#: Importer.php:900
 msgctxt "Button"
 msgid "Import Only"
 msgstr ""
 
-#: Importer.php:824
+#: Importer.php:945
 msgctxt "Button"
 msgid "Step 1: Meta-key"
 msgstr ""
 
-#: Importer.php:825
+#: Importer.php:946
 msgctxt "Message"
 msgid "Select a meta-key for refrence on importing the attachments."
 msgstr ""
 
-#: Importer.php:840
-msgctxt "Post Field"
-msgid "Extra: Old ID"
-msgstr ""
-
-#: Importer.php:841
+#: Importer.php:960
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr ""
 
-#: Importer.php:842
+#: Importer.php:961
 msgctxt "Post Field"
 msgid "Menu Order"
 msgstr ""
 
-#: Importer.php:843
+#: Importer.php:962
 msgctxt "Post Field"
 msgid "Post Title"
 msgstr ""
 
-#: Importer.php:844
+#: Importer.php:963
 msgctxt "Post Field"
 msgid "Post Content"
 msgstr ""
 
-#: Importer.php:845
+#: Importer.php:964
 msgctxt "Post Field"
 msgid "Post Excerpt"
 msgstr ""
 
 #. translators: %s: taxonomy name placeholder
-#: Importer.php:850
+#: Importer.php:969
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr ""

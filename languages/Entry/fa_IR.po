@@ -2,25 +2,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Entry\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2021-09-17T23:48:47+04:30\n"
-"PO-Revision-Date: 2021-09-17 23:51+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-03-16 21:31+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Entry\n"
 "X-Domain: geditorial-entry\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Entry.php:40
+#: Entry.php:38
 msgctxt "Settings"
 msgid "Auto-link Sections"
 msgstr "پیوند خود‌کار بخش‌ها"
 
-#: Entry.php:41
+#: Entry.php:39
 msgctxt "Settings"
 msgid "Tries to linkify the section titles in the entry content."
 msgstr "تلاش می‌کند عنوان بخش‌ها در متن ورودیه را پیوند‌دهی کند."
@@ -37,32 +37,47 @@ msgid_plural "Sections"
 msgstr[0] "بخش‌ها"
 msgstr[1] "بخش"
 
-#: Entry.php:83
+#: Entry.php:79
+msgctxt "Taxonomy Label"
+msgid "Unsectioned"
+msgstr "بخش‌بندی‌نشده"
+
+#: Entry.php:84
+msgctxt "Default Term: Name"
+msgid "[Unsectioned]"
+msgstr "بخش‌بندی‌نشده‌ها"
+
+#: Entry.php:85
+msgctxt "Default Term: Description"
+msgid "Unsectioned Entries"
+msgstr "ورودیه‌های بخش‌بندی‌نشده"
+
+#: Entry.php:95
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr "تصویر کاور"
 
-#: Entry.php:84
+#: Entry.php:96
 msgctxt "MetaBox Title"
 msgid "Entry"
 msgstr "ورودیه"
 
-#: Entry.php:85
+#: Entry.php:97
 msgctxt "Column Title"
 msgid "Section"
 msgstr "بخش‌ها"
 
-#: Entry.php:161
+#: Entry.php:177
 msgctxt "Adminbar"
 msgid "Entry Sections"
 msgstr "بخش‌های ورودیه"
 
-#: Entry.php:178
+#: Entry.php:194
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr "بخش ورودیه"
 
-#: Entry.php:182
+#: Entry.php:198
 msgctxt "UI: Label"
 msgid "Section"
 msgstr "بخش"

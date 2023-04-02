@@ -9,58 +9,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Entry\n"
 "X-Domain: geditorial-entry\n"
 
-#: Entry.php:40
+#: Entry.php:42
 msgctxt "Settings"
 msgid "Auto-link Sections"
 msgstr ""
 
-#: Entry.php:41
+#: Entry.php:43
 msgctxt "Settings"
 msgid "Tries to linkify the section titles in the entry content."
 msgstr ""
 
-#: Entry.php:74
+#: Entry.php:77
 msgid "Entry"
 msgid_plural "Entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Entry.php:75
+#: Entry.php:78
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Entry.php:83
+#: Entry.php:82
+msgctxt "Taxonomy Label"
+msgid "Unsectioned"
+msgstr ""
+
+#: Entry.php:87
+msgctxt "Default Term: Name"
+msgid "[Unsectioned]"
+msgstr ""
+
+#: Entry.php:88
+msgctxt "Default Term: Description"
+msgid "Unsectioned Entries"
+msgstr ""
+
+#: Entry.php:98
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr ""
 
-#: Entry.php:84
+#: Entry.php:99
 msgctxt "MetaBox Title"
 msgid "Entry"
 msgstr ""
 
-#: Entry.php:85
+#: Entry.php:100
 msgctxt "Column Title"
 msgid "Section"
 msgstr ""
 
-#: Entry.php:161
+#: Entry.php:180
 msgctxt "Adminbar"
 msgid "Entry Sections"
 msgstr ""
 
-#: Entry.php:178
+#: Entry.php:197
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr ""
 
-#: Entry.php:182
+#: Entry.php:201
 msgctxt "UI: Label"
 msgid "Section"
 msgstr ""

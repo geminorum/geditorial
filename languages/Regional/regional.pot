@@ -9,42 +9,132 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Regional\n"
 "X-Domain: geditorial-regional\n"
 
-#: Regional.php:48
+#. translators: %s: iso code
+#: Regional.php:60
+msgctxt "Tool Box"
+msgid "Helps with Importing Regional Languages from %s into WordPress."
+msgstr ""
+
+#: Regional.php:67
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Regional.php:56
+#: Regional.php:71
+msgctxt "Taxonomy Label"
+msgid "Unknown"
+msgstr ""
+
+#: Regional.php:76
+msgctxt "Default Term: Name"
+msgid "[Unknown]"
+msgstr ""
+
+#: Regional.php:77
+msgctxt "Default Term: Description"
+msgid "Unknown Languages"
+msgstr ""
+
+#: Regional.php:88
+msgctxt "Importer: Title"
+msgid "Import Languages"
+msgstr ""
+
+#. translators: %s: iso code
+#: Regional.php:90
+msgctxt "Importer: Description"
+msgid "Regional Languages from %s into WordPress"
+msgstr ""
+
+#. translators: %s: redirect url
+#: Regional.php:92
+msgctxt "Importer: Redirect"
+msgid "If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click here</a>."
+msgstr ""
+
+#: Regional.php:95
 msgctxt "Show Option All"
 msgid "Language"
 msgstr ""
 
-#: Regional.php:57
+#: Regional.php:96
 msgctxt "Show Option None"
 msgid "(Uknonwn Language)"
 msgstr ""
 
-#: Regional.php:63
+#: Regional.php:102
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr ""
 
-#: Regional.php:64
+#: Regional.php:103
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr ""
 
-#: Regional.php:65
+#: Regional.php:104
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr ""
 
-#: Regional.php:66
+#: Regional.php:105
 msgctxt "Default Term: Language"
 msgid "French"
+msgstr ""
+
+#: Regional.php:254
+msgctxt "Header"
+msgid "Import Languages"
+msgstr ""
+
+#: Regional.php:257
+msgctxt "Imports"
+msgid "ISO 639-1 Alpha-2"
+msgstr ""
+
+#: Regional.php:264
+msgctxt "Table Column"
+msgid "Code"
+msgstr ""
+
+#: Regional.php:268
+msgctxt "Table Column"
+msgid "Term"
+msgstr ""
+
+#: Regional.php:280
+msgctxt "Table Column"
+msgid "English Name"
+msgstr ""
+
+#: Regional.php:284
+#: Regional.php:322
+#: Regional.php:329
+msgctxt "Table Column"
+msgid "Native Name"
+msgstr ""
+
+#: Regional.php:289
+msgctxt "Message: Table Empty"
+msgid "There are no languages available!"
+msgstr ""
+
+#: Regional.php:302
+msgctxt "Button"
+msgid "Create Language Terms"
+msgstr ""
+
+#: Regional.php:305
+msgctxt "Button"
+msgid "Update Existing Terms"
+msgstr ""
+
+#: Regional.php:309
+msgctxt "Message"
+msgid "Check for available languages and create corresponding language terms."
 msgstr ""

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Workflow\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-07-26T11:14:40+00:00\n"
-"PO-Revision-Date: 2022-07-26 17:33+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-02-22 03:09+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Domain: geditorial-workflow\n"
 "X-Poedit-Basepath: ../../includes/Modules/Workflow\n"
 
@@ -75,17 +75,31 @@ msgctxt "Setting Description"
 msgid "Selected statuses will lock editing the post to their assigned roles."
 msgstr ""
 
-#: Workflow.php:74
-msgctxt "Setting"
+#: Workflow.php:74 Workflow.php:551
+msgctxt "Message"
 msgid "There are no statuses available!"
-msgstr ""
+msgstr "وضعیتی در دسترس نیست!"
 
 #: Workflow.php:95
+msgid "Custom Status"
+msgid_plural "Custom Statuses"
+msgstr[0] "وضعیت‌های سفارشی"
+msgstr[1] "وضعیت سفارشی"
+
+#: Workflow.php:99
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr "وضعیت‌ها"
+
+#: Workflow.php:103
 msgctxt "MetaBox Title"
 msgid "Workflow"
 msgstr "گردش کار"
 
-#: Workflow.php:108
-msgctxt "Taxonomy Label"
-msgid "Statuses"
-msgstr "وضعیت‌ها"
+#~ msgctxt "Message"
+#~ msgid "No status available!"
+#~ msgstr "وضعیتی در دسترس نیست!"
+
+#~ msgctxt "Taxonomy Label"
+#~ msgid "Statuses"
+#~ msgstr "وضعیت‌ها"

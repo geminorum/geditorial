@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Today\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-06-13T12:01:46+00:00\n"
-"PO-Revision-Date: 2022-06-13 16:35+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-03-27 04:26+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,62 +11,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Today\n"
 "X-Domain: geditorial-today\n"
 
-#: ModuleHelper.php:376
+#: ModuleHelper.php:415
 msgctxt "Meta Box Input"
 msgid "Day"
 msgstr "روز"
-
-#: ModuleHelper.php:377
-msgctxt "Meta Box Input Placeholder"
-msgid "Day"
-msgstr "روز"
-
-#: ModuleHelper.php:391
-msgctxt "Meta Box Input"
-msgid "Month"
-msgstr "ماه"
-
-#: ModuleHelper.php:392
-msgctxt "Meta Box Input Placeholder"
-msgid "Month"
-msgstr "ماه"
-
-#: ModuleHelper.php:405
-msgctxt "Meta Box Input"
-msgid "Year"
-msgstr "سال"
-
-#: ModuleHelper.php:406
-msgctxt "Meta Box Input Placeholder"
-msgid "Year"
-msgstr "سال"
 
 #: ModuleHelper.php:416
+msgctxt "Meta Box Input Placeholder"
+msgid "Day"
+msgstr "روز"
+
+#: ModuleHelper.php:430
+msgctxt "Meta Box Input"
+msgid "Month"
+msgstr "ماه"
+
+#: ModuleHelper.php:431
+msgctxt "Meta Box Input Placeholder"
+msgid "Month"
+msgstr "ماه"
+
+#: ModuleHelper.php:444
+msgctxt "Meta Box Input"
+msgid "Year"
+msgstr "سال"
+
+#: ModuleHelper.php:445
+msgctxt "Meta Box Input Placeholder"
+msgid "Year"
+msgstr "سال"
+
+#: ModuleHelper.php:455
 msgctxt "Meta Box Input Option None"
 msgid "&ndash; Select Calendar &ndash;"
 msgstr "&ndash; انتخاب کنید &ndash;"
 
-#: ModuleHelper.php:428
+#: ModuleHelper.php:467
 msgctxt "Meta Box Input"
 msgid "Calendar"
 msgstr "تقویم"
 
 #. translators: %s: singular name
-#: ModuleHelper.php:458
+#: ModuleHelper.php:497
 msgctxt "Title Attr"
 msgid "New %s connected to this day"
 msgstr "افزودن %s تازه برای این روز"
 
-#: ModuleHelper.php:478
+#: ModuleHelper.php:517
 msgctxt "Title Attr"
 msgid "New Day!"
 msgstr "روز تازه!"
 
-#: ModuleHelper.php:494
+#: ModuleHelper.php:533
 msgctxt "Title Attr"
 msgid "Edit Day!"
 msgstr "ویرایش روز!"
@@ -106,124 +106,131 @@ msgctxt "Setting Description"
 msgid "Displays today list of connected posts on front-page."
 msgstr ""
 
-#: Today.php:98
+#: Today.php:100
 msgctxt "Posttype Featured"
 msgid "Cover Image"
 msgstr "تصویر کاور"
 
-#: Today.php:99
+#: Today.php:101
 msgctxt "MetaBox Title"
 msgid "Summary"
 msgstr "چکیده"
 
-#: Today.php:100
+#: Today.php:102
 msgctxt "MetaBox Title"
 msgid "The Day"
 msgstr "امروز"
 
-#: Today.php:101
+#: Today.php:103
 msgctxt "Column Title"
 msgid "Day"
 msgstr "روز"
 
-#: Today.php:104
-msgctxt "Noop"
+#: Today.php:106
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] "روزها"
 msgstr[1] "روز"
 
-#: Today.php:113
+#: Today.php:115
 msgctxt "Template Title"
 msgid "Editorial: Today: Front-page"
 msgstr ""
 
-#: Today.php:196 Today.php:227
+#: Today.php:199 Today.php:230
 msgctxt "Page Title"
 msgid "Editorial Today"
 msgstr "امروز تحریریه"
 
-#: Today.php:197
+#: Today.php:200
 msgctxt "Menu Title"
 msgid "My Today"
 msgstr "امروز من"
 
-#: Today.php:373
+#: Today.php:376
 msgctxt "Title Attr"
 msgid "View on Today"
 msgstr "دیدن در امروز"
 
-#: Today.php:376
+#: Today.php:379
 msgctxt "Action"
 msgid "Today"
 msgstr "امروز"
 
-#: Today.php:523
+#: Today.php:526
 msgctxt "Message"
-msgid "You can connect posts to this day once you've saved it for the first time."
-msgstr "وقتی روز را برای اولین بار را ذخیره کردید، می‌توانید فرسته‌ها را به آن متصل کنید."
+msgid ""
+"You can connect posts to this day once you've saved it for the first time."
+msgstr ""
+"وقتی روز را برای اولین بار را ذخیره کردید، می‌توانید فرسته‌ها را به آن متصل "
+"کنید."
 
-#: Today.php:549 Today.php:942
+#: Today.php:552 Today.php:945
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr "نوشته‌ای با اطلاعات روزانه پیدا نشد."
 
-#: Today.php:754
+#: Today.php:757
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr "هیچ اتفاقی نیفتاده است!"
 
-#: Today.php:925
+#: Today.php:928
 msgctxt "Table Column"
 msgid "The Day"
 msgstr "روز"
 
-#: Today.php:941
+#: Today.php:944
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr "مروری بر نوشته‌های همراه با اطلاعات روزانه"
 
-#: Today.php:987
+#: Today.php:990
 msgctxt "Header"
 msgid "Today Tools"
 msgstr "ابزارهای امروز"
 
-#: Today.php:990
+#: Today.php:993
 msgctxt "Header"
 msgid "Re-schedule by Day"
 msgstr "بازتنظیم بر اساس روز"
 
-#: Today.php:996
+#: Today.php:999
 msgctxt "Setting"
 msgid "Schedule"
 msgstr "زمان‌بندی"
 
-#: Today.php:998
+#: Today.php:1001
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1035
+#: Today.php:1034
 msgctxt "Default Term: Audit"
 msgid "No day"
 msgstr "بدون روز"
 
-#: Today.php:1042
+#: Today.php:1043
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr "امروز:‌ تقویم"
 
-#: Today.php:1043
+#: Today.php:1044
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr "امروز:‌ سال"
 
-#: Today.php:1044
+#: Today.php:1045
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr "امروز:‌ ماه"
 
-#: Today.php:1045
+#: Today.php:1046
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr "امروز:‌ روز"
+
+#: Today.php:1047
+msgctxt "Import Field"
+msgid "Today: Full"
+msgstr "امروز: کامل"

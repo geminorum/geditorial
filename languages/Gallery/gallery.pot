@@ -9,49 +9,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Gallery\n"
 "X-Domain: geditorial-gallery\n"
 
-#: Gallery.php:61
+#: Gallery.php:60
 msgid "Photo Album"
 msgid_plural "Photo Albums"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:62
+#: Gallery.php:61
 msgid "Album Gallery"
 msgid_plural "Album Galleries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:63
+#: Gallery.php:62
 msgid "Photo Tag"
 msgid_plural "Photo Tags"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:72
+#: Gallery.php:71
 msgctxt "Posttype Menu"
 msgid "Gallery"
 msgstr ""
 
-#: Gallery.php:73
+#: Gallery.php:72
 msgctxt "Posttype Featured"
 msgid "Featured Photo"
 msgstr ""
 
-#: Gallery.php:76
+#: Gallery.php:75
 msgctxt "Column Title"
 msgid "Album Galleries"
 msgstr ""
 
-#: Gallery.php:79
+#: Gallery.php:78
 msgctxt "Column Title"
 msgid "Photo Tags"
 msgstr ""
 
-#: Gallery.php:107
+#: Gallery.php:106
 msgctxt "Button"
 msgid "Install Default Album Cats"
 msgstr ""

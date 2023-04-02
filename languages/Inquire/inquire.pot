@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Inquire\n"
 "X-Domain: geditorial-inquire\n"
 
@@ -33,183 +33,188 @@ msgctxt "Setting Description"
 msgid "Displays Inquiries on the front-end."
 msgstr ""
 
-#: Inquire.php:77
+#: Inquire.php:74
 msgid "Inquiry"
 msgid_plural "Inquiries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:78
+#: Inquire.php:75
 msgid "Inquiry Subject"
 msgid_plural "Inquiry Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:79
+#: Inquire.php:76
 msgid "Inquiry Status"
 msgid_plural "Inquiry Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:80
+#: Inquire.php:77
 msgid "Inquiry Priority"
 msgid_plural "Inquiry Priorities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:89
+#: Inquire.php:86
 msgctxt "Posttype Menu"
 msgid "Inquiries"
 msgstr ""
 
-#: Inquire.php:90
+#: Inquire.php:87
 msgctxt "MetaBox Title"
 msgid "Question"
 msgstr ""
 
-#: Inquire.php:93
+#: Inquire.php:90
 msgctxt "Menu Title"
 msgid "Subjects"
 msgstr ""
 
-#: Inquire.php:94
+#: Inquire.php:91
 msgctxt "MetaBox Title"
 msgid "Subject"
 msgstr ""
 
-#: Inquire.php:95
+#: Inquire.php:92
 msgctxt "Column Title"
 msgid "Inquiry Subject"
 msgstr ""
 
-#: Inquire.php:98
+#: Inquire.php:95
 msgctxt "Menu Title"
 msgid "Statuses"
 msgstr ""
 
-#: Inquire.php:99
+#: Inquire.php:96
 msgctxt "MetaBox Title"
 msgid "Status"
 msgstr ""
 
-#: Inquire.php:100
+#: Inquire.php:97
 msgctxt "Column Title"
 msgid "Inquiry Status"
 msgstr ""
 
-#: Inquire.php:103
+#: Inquire.php:100
 msgctxt "Menu Title"
 msgid "Priorities"
 msgstr ""
 
-#: Inquire.php:104
+#: Inquire.php:101
 msgctxt "MetaBox Title"
 msgid "Priority"
 msgstr ""
 
-#: Inquire.php:105
+#: Inquire.php:102
 msgctxt "Column Title"
 msgid "Inquiry Priority"
 msgstr ""
 
-#: Inquire.php:111
+#: Inquire.php:108
 msgctxt "Default Term"
 msgid "Drafted"
 msgstr ""
 
-#: Inquire.php:112
+#: Inquire.php:109
 msgctxt "Default Term"
 msgid "Approved"
 msgstr ""
 
-#: Inquire.php:113
+#: Inquire.php:110
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Inquire.php:114
+#: Inquire.php:111
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr ""
 
-#: Inquire.php:115
+#: Inquire.php:112
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr ""
 
-#: Inquire.php:116
+#: Inquire.php:113
 msgctxt "Default Term"
 msgid "Assigned"
 msgstr ""
 
-#: Inquire.php:117
+#: Inquire.php:114
 msgctxt "Default Term"
 msgid "Answering"
 msgstr ""
 
-#: Inquire.php:118
+#: Inquire.php:115
 msgctxt "Default Term"
 msgid "Reviewing"
 msgstr ""
 
-#: Inquire.php:119
+#: Inquire.php:116
 msgctxt "Default Term"
 msgid "Archived"
 msgstr ""
 
-#: Inquire.php:120
+#: Inquire.php:117
 msgctxt "Default Term"
 msgid "Ready"
 msgstr ""
 
-#: Inquire.php:121
+#: Inquire.php:118
 msgctxt "Default Term"
 msgid "Final"
 msgstr ""
 
-#: Inquire.php:124
+#: Inquire.php:121
 msgctxt "Default Term"
 msgid "Immediate"
 msgstr ""
 
-#: Inquire.php:125
+#: Inquire.php:122
 msgctxt "Default Term"
 msgid "High"
 msgstr ""
 
-#: Inquire.php:126
+#: Inquire.php:123
 msgctxt "Default Term"
 msgid "Normal"
 msgstr ""
 
-#: Inquire.php:127
+#: Inquire.php:124
 msgctxt "Default Term"
 msgid "Low"
 msgstr ""
 
-#: Inquire.php:128
+#: Inquire.php:125
 msgctxt "Default Term"
 msgid "Zero"
 msgstr ""
 
-#: Inquire.php:151
+#: Inquire.php:148
 msgctxt "Button"
 msgid "Install Default Inquiry Statuses"
 msgstr ""
 
-#: Inquire.php:152
+#: Inquire.php:149
 msgctxt "Button"
 msgid "Install Default Inquiry Priorities"
 msgstr ""
 
-#: Inquire.php:199
+#: Inquire.php:204
 msgctxt "Template Title"
 msgid "Editorial: Inquire: Dashboard"
 msgstr ""
 
-#: Inquire.php:269
+#: Inquire.php:272
 msgctxt "Placeholder"
 msgid "Enter question title here"
+msgstr ""
+
+#: Inquire.php:304
+msgctxt "Dashboard Title"
+msgid "Inquiries"
 msgstr ""
 
 #: ModuleTemplate.php:28
