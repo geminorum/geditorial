@@ -1,3 +1,135 @@
+### 3.24.0
+* assets/dev: new module template
+* main/datetime: prep date string for input/display
+* main/helper: json/xml parser methods
+* main/helper: module check for locale
+* main/helper: prep meta row
+* main/helper: switch post-type with paired api support
+* main/helper: uncategorized label for taxonomy
+* main/metabox: single select terms dropdown
+* main/metabox: title with parent on dropdowns
+* main/module: auto hook admin bulk actions
+* main/module: auto hook plugin loaded action
+* main/module: auto hook submenu pages
+* main/module: better handling plural keys
+* main/module: custom page template for archives
+* main/module: default checklist reverse terms callback
+* main/module: default checklist terms callback
+* main/module: edit link on dashboard term summary
+* main/module: exclude paired post-type by default
+* main/module: exclude paired taxonomy from sitemap
+* main/module: excluded objects revised
+* main/module: factoring restrict taxonomy hooks
+* main/module: has archives for taxonomies
+* main/module: i18n/textdomain on module args
+* main/module: initial imports api
+* main/module: internal api for auto-fill post-title
+* main/module: internal api for meta summery on edit form
+* main/module: method for post-meta keys
+* main/module: more module helpers
+* main/module: otherwise true settings via features
+* main/module: passing menu position on admin-page registeration
+* main/module: post viewable with filters
+* main/module: primary taxonomy for posttype
+* main/module: process disabled api
+* main/module: read-only title on edit form
+* main/module: register importer on admin tools
+* main/module: render imports toolbox card
+* main/module: rendering view api
+* main/module: sanitize for phone/mobile/identity field types
+* main/module: support `0` on setting fallback
+* main/module: support for default term
+* main/module: support register taxonomy for taxonomies
+* main/module: taxonomy prefix slugs are singular
+* main/plugin: fallback for gnetwork front styles
+* main/plugin: helper for something is wrong message
+* main/plugin: moment string method
+* main/plugin: proper accessing module instance
+* main/plugin: query main moved to services
+* main/relation: dedicated hook for o2o registers
+* main/scripts: select2 package
+* main/scripts: spin.js v4.1.1
+* main/settings: advanced metabox setting
+* main/settings: filter for posttype/taxonomy excludes
+* main/settings: helper for common excluded pages
+* main/settings: list of includes on default page excludes
+* main/settings: new field type for nav-menu
+* main/settings: submit checkbox helper
+* main/tablelist: helper for date-start/date-end term column
+* main/template: check for type and fallback to embed on media shortcode
+* main/template: filter media shortcode html
+* main/template: move up the helper method
+* module/actions: :new: auto-load module
+* module/archives: check and filter for default contents
+* module/archives: custom page template for archives
+* module/archives: exclude non-public/no-archive objects
+* module/archives: module filter for posttype archive links
+* module/audit: always run auto audit filter
+* module/book: missing callback for paired insert content
+* module/collect: upgrade paired tools
+* module/config: :new: imports page
+* module/config: data tab for imports
+* module/config: overview actions
+* module/config: settings card for autoloaded
+* module/dashboard: :new: module
+* module/dashboard: disable if page slug is non-ascii
+* module/dashboard: exclude page from sitemap/wpseo
+* module/dashboard: page as link button
+* module/dashboard: support page as root
+* module/dossier: :new: module
+* module/entry: optional advanced metabox for sections
+* module/importer: avoid using none value on field list
+* module/importer: disable process on audit module
+* module/importer: keeping source id for further imports
+* module/importer: log source id on errors
+* module/importer: passing prepared data through filters
+* module/meta: :new: access check for fields
+* module/meta: :new: date fields
+* module/meta: label field/taxonomy from calling module
+* module/meta: prep values based on field types
+* module/meta: support for iban field type
+* module/meta: support for media fields
+* module/meta: support for parent post field type
+* module/meta: support for post field
+* module/meta: support select/date/identity field types
+* module/meta: text source url field
+* module/organization: :new: module
+* module/ortho: check for identity length
+* module/ortho: support for iban
+* module/overwrite: :new: override post-type/taxonomy labels
+* module/regional: dashboard glance count
+* module/regional: default term support
+* module/regional: import card on taxonomy tab extra
+* module/regional: import from `ISO 639-1 Alpha-2`
+* module/regional: optional advanced metabox
+* module/regional: register importer on admin tools
+* module/regional: show menu under options
+* module/roles: disable built-in post post-type
+* module/shortcodes: remove orphaned
+* module/specs: default terms
+* module/switcher: :new: module
+* module/symposium: :new: module
+* module/terms column hooks for supported
+* module/terms: :new: support for date fields
+* module/terms: :new: support for overwrite
+* module/terms: apply ordering on supported
+* module/terms: fill current author
+* module/terms: new number fields
+* module/today: full day importer field
+* module/uncategorized: clean bulk actions
+* module/uncategorized: clean unregistered action
+* module/uncategorized: edit view for supported post-types
+* module/uncategorized: extract clean logics
+* module/uncategorized: move clean unattached from terms
+* module/uncategorized: moved related tools
+* module/uncategorized: prefix bulk actions
+* module/uncategorized: raw taxonomies column on reports
+* module/workflow: better handling status meta
+* module/workflow: full label set for the custom taxonomy
+* service/o2o: move to services
+* service/paired: :new: initial service
+* service/select-single: :new: service
+
 ### 3.23.4
 * main/helper: term title row
 * main/module: :new: paired taxonomy bulk actions
