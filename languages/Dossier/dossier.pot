@@ -1,0 +1,149 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Dossier\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Dossier\n"
+"X-Domain: geditorial-dossier\n"
+
+#: Dossier.php:37
+msgctxt "Settings"
+msgid "Dossier Sections"
+msgstr ""
+
+#: Dossier.php:38
+msgctxt "Settings"
+msgid "Section taxonomy for the dossiers and supported post-types."
+msgstr ""
+
+#: Dossier.php:54
+msgctxt "Settings"
+msgid "Redirect Archives"
+msgstr ""
+
+#: Dossier.php:55
+msgctxt "Settings"
+msgid "Redirects dossier archives to this URL. Leave empty to disable."
+msgstr ""
+
+#: Dossier.php:61
+msgctxt "Settings"
+msgid "Redirect Spans"
+msgstr ""
+
+#: Dossier.php:62
+msgctxt "Settings"
+msgid "Redirects all span archives to this URL. Leave empty to disable."
+msgstr ""
+
+#: Dossier.php:108
+#: Dossier.php:109
+msgid "Dossier"
+msgid_plural "Dossiers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Dossier.php:110
+msgid "Span"
+msgid_plural "Spans"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Dossier.php:111
+msgid "Section"
+msgid_plural "Sections"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Dossier.php:120
+msgctxt "Posttype Featured"
+msgid "Cover Image"
+msgstr ""
+
+#: Dossier.php:121
+msgctxt "Select Option None"
+msgid "&ndash; Select Dossier &ndash;"
+msgstr ""
+
+#: Dossier.php:124
+msgctxt "MetaBox Title"
+msgid "In This Dossier"
+msgstr ""
+
+#: Dossier.php:127
+msgctxt "MetaBox Title"
+msgid "Spans"
+msgstr ""
+
+#: Dossier.php:128
+msgctxt "Column Title"
+msgid "Dossier Spans"
+msgstr ""
+
+#: Dossier.php:131
+msgctxt "MetaBox Title"
+msgid "Sections"
+msgstr ""
+
+#: Dossier.php:132
+msgctxt "Column Title"
+msgid "Dossier Sections"
+msgstr ""
+
+#: Dossier.php:133
+msgctxt "Select Option None"
+msgid "&ndash; Select Section &ndash;"
+msgstr ""
+
+#: Dossier.php:135
+msgctxt "MetaBox Title"
+msgid "The Dossier"
+msgstr ""
+
+#: Dossier.php:136
+msgctxt "Column Title"
+msgid "Dossiers"
+msgstr ""
+
+#: Dossier.php:137
+msgctxt "Column Title"
+msgid "Connected Items"
+msgstr ""
+
+#: Dossier.php:151
+msgctxt "Field Title"
+msgid "Number Line"
+msgstr ""
+
+#: Dossier.php:152
+msgctxt "Field Description"
+msgid "The dossier number line"
+msgstr ""
+
+#: Dossier.php:164
+msgctxt "Field Title"
+msgid "Order"
+msgstr ""
+
+#: Dossier.php:165
+msgctxt "Field Description"
+msgid "Post order in dossier list"
+msgstr ""
+
+#. translators: %s: order
+#: Dossier.php:533
+msgctxt "Display"
+msgid "Order in Dossier: %s"
+msgstr ""
+
+#: Dossier.php:565
+msgctxt "Header"
+msgid "Dossiers Tools"
+msgstr ""
