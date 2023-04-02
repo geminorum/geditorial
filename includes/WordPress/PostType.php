@@ -45,6 +45,37 @@ class PostType extends Core\Base
 			&& self::viewableStatus( get_post_status( $post ) );
 	}
 
+	/**
+	 * Checks for posttype capability.
+	 *
+	 * If assigned posttype `capability_type` arg:
+	 *
+	 * /// Meta capabilities
+	 * 	[edit_post]   => "edit_{$capability_type}"
+	 * 	[read_post]   => "read_{$capability_type}"
+	 * 	[delete_post] => "delete_{$capability_type}"
+	 *
+	 * /// Primitive capabilities used outside of map_meta_cap():
+	 * 	[edit_posts]             => "edit_{$capability_type}s"
+	 * 	[edit_others_posts]      => "edit_others_{$capability_type}s"
+	 * 	[publish_posts]          => "publish_{$capability_type}s"
+	 * 	[read_private_posts]     => "read_private_{$capability_type}s"
+	 *
+	 * /// Primitive capabilities used within map_meta_cap():
+	 * 	[read]                   => "read",
+	 * 	[delete_posts]           => "delete_{$capability_type}s"
+	 * 	[delete_private_posts]   => "delete_private_{$capability_type}s"
+	 * 	[delete_published_posts] => "delete_published_{$capability_type}s"
+	 * 	[delete_others_posts]    => "delete_others_{$capability_type}s"
+	 * 	[edit_private_posts]     => "edit_private_{$capability_type}s"
+	 * 	[edit_published_posts]   => "edit_published_{$capability_type}s"
+	 * 	[create_posts]           => "edit_{$capability_type}s"
+	 *
+	 * @param  string|object $posttype
+	 * @param  null|string $capability
+	 * @param  null|int|object $user_id
+	 * @return bool $can
+	 */
 	public static function can( $posttype, $capability = 'edit_posts', $user_id = NULL )
 	{
 		if ( is_null( $capability ) )
