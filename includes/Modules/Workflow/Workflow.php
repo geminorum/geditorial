@@ -304,6 +304,7 @@ class Workflow extends gEditorial\Module
 				'color'     => '',
 				'posttype'  => '',
 				'posttypes' => $supported,
+				'viewable'  => NULL, // NOTE: `NULL` for undetermined
 				'roles'     => FALSE,
 			] );
 
@@ -314,8 +315,8 @@ class Workflow extends gEditorial\Module
 				'color'     => Color::validHex( $metas['color'] ) ?: '',
 				'order'     => $metas['order'],
 				'post_type' => $metas['posttypes'],
+				'viewable'  => $metas['viewable'],
 				'disabled'  => FALSE,
-				'viewable'  => FALSE, // FIXME
 				'plural'    => FALSE, // FIXME
 				'icon'      => FALSE, // FIXME
 			];
@@ -335,8 +336,6 @@ class Workflow extends gEditorial\Module
 		return $this->statuses[$user_id] = Arraay::sortObjectByPriority( $statuses, 'order' );
 	}
 
-	// TODO: filter `is_post_status_viewable` @since WP 5.9.0
-	// TODO: filter `update_post_term_count_statuses` @since WP 5.7.0
 	private function register_post_statuses()
 	{
 		$builtins = get_post_stati();
@@ -359,6 +358,29 @@ class Workflow extends gEditorial\Module
 
 			register_post_status( $status->name, $args );
 		}
+
+		$this->filter( 'is_post_status_viewable', 2, 12 );
+		$this->filter( 'update_post_term_count_statuses', 2, 12 );
+	}
+
+	public function is_post_status_viewable( $is_viewable, $post_status )
+	{
+		$statuses = $this->get_statuses();
+
+		if ( ! array_key_exists( $post_status->name, $statuses, TRUE ) )
+			return $is_viewable;
+
+		// NOTE: `NULL` for undetermined
+		if ( is_null( $statuses[$post_status->name]->viewable ) )
+			return $is_viewable;
+
+		return (bool) $statuses[$post_status->name]->viewable;
+	}
+
+	public function update_post_term_count_statuses( $post_statuses, $taxonomy )
+	{
+		return array_merge( $post_statuses, array_keys(	array_filter(
+			wp_list_pluck( $this->get_statuses(), 'viewable', 'name' ) ) ) );
 	}
 
 	public function page_row_actions( $actions, $post )
@@ -602,5 +624,16 @@ class Workflow extends gEditorial\Module
 			submit_button( __( 'Submit' ), 'primary large', 'save', FALSE, [ 'id' => 'publish' ] );
 
 		echo '</div>';
+	}
+
+	public function tools_settings( $sub )
+	{
+		$this->check_settings( $sub, 'tools' );
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		foreach( get_post_stati( [], 'objects' ) as $status )
+			self::dump($status);
 	}
 }
