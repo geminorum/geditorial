@@ -167,6 +167,7 @@ class Dossier extends gEditorial\Module
 					'type'        => 'number',
 					'context'     => 'pairedbox_dossier',
 					'icon'        => 'sort',
+					'order'       => 400,
 				],
 			],
 		];

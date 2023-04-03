@@ -88,7 +88,7 @@ class Gallery extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $this->constant( 'album_cpt' ) ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'album_cpt' ) ] ) );
 	}
 
 	public function before_settings( $module = FALSE )

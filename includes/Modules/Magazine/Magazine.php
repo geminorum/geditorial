@@ -177,6 +177,7 @@ class Magazine extends gEditorial\Module
 					'type'        => 'number',
 					'context'     => 'pairedbox_issue',
 					'icon'        => 'sort',
+					'order'       => 400,
 				],
 				'in_issue_page_start' => [
 					'title'       => _x( 'Page Start', 'Field Title', 'geditorial-magazine' ),
@@ -184,12 +185,14 @@ class Magazine extends gEditorial\Module
 					'type'        => 'number',
 					'context'     => 'pairedbox_issue',
 					'icon'        => 'media-default',
+					'order'       => 410,
 				],
 				'in_issue_pages' => [
 					'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
 					'description' => _x( 'Post total pages on issue (printed)', 'Field Description', 'geditorial-magazine' ),
 					'context'     => 'pairedbox_issue',
 					'icon'        => 'admin-page',
+					'order'       => 420,
 				],
 			],
 		];

@@ -129,16 +129,16 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( get_post_types( [
 			'public'      => FALSE,
 			'has_archive' => FALSE,
-		], 'names', 'or' ) ) );
+		], 'names', 'or' ) + $extra ) );
 	}
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
 		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( get_taxonomies( [
-		] , 'names', 'or' ) ) );
 			'public'                     => FALSE,
 			'has_archive'                => FALSE,   // NOTE: gEditorial prop
 			Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
+			] , 'names', 'or' ) + $extra ) );
 	}
 
 	public function init()

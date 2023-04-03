@@ -1001,12 +1001,9 @@ class Module extends Base
 		return $pre;
 	}
 
-	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
+	public function all_posttypes( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
 	{
-		$posttypes = PostType::get( 0, $args );
-		$excluded  = Arraay::prepString( $this->posttypes_excluded() );
-
-		return empty( $excluded ) ? $posttypes : Arraay::stripByKeys( $posttypes, $excluded );
+		return Arraay::stripByKeys( PostType::get( 0, $args ), Arraay::prepString( $this->posttypes_excluded( $exclude_extra ) ) );
 	}
 
 	protected function taxonomies_excluded( $extra = [] )
@@ -1067,14 +1064,9 @@ class Module extends Base
 		return $pre;
 	}
 
-	public function all_taxonomies( $args = [] )
+	public function all_taxonomies( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
 	{
-		$taxonomies = Taxonomy::get( 0, $args );
-		$excluded   = $this->taxonomies_excluded();
-
-		return empty( $excluded )
-			? $taxonomies
-			: array_diff_key( $taxonomies, array_flip( $excluded ) );
+		return Arraay::stripByKeys( Taxonomy::get( 0, $args ), Arraay::prepString( $this->taxonomies_excluded( $exclude_extra ) ) );
 	}
 
 	// allows for filtering the page title
@@ -2990,8 +2982,8 @@ class Module extends Base
 			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
 
 			/// gEditorial Props
-			'primary_taxonomy' => NULL, // @SEE: `PostType::getPrimaryTaxonomy()`
-			'paired_taxonomy'  => FALSE, // @SEE: `Paired::isPostType()`
+			PostType::PRIMARY_TAXONOMY_PROP => NULL,   // @SEE: `PostType::getPrimaryTaxonomy()`
+			Paired::PAIRED_TAXONOMY_PROP    => FALSE,  // @SEE: `Paired::isPostType()`
 
 			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
@@ -3207,8 +3199,8 @@ class Module extends Base
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			/// gEditorial Props
-			'target_taxonomies' => FALSE,  // or array of taxonomies
-			'paired_posttype'   => FALSE,  // @SEE: `Paired::isTaxonomy()`
+			Taxonomy::TARGET_TAXONOMIES_PROP => FALSE,  // or array of taxonomies
+			Paired::PAIRED_POSTTYPE_PROP     => FALSE,  // @SEE: `Paired::isTaxonomy()`
 		] );
 
 		if ( ! $args['meta_box_cb'] && method_exists( $this, 'meta_box_cb_'.$constant ) )
@@ -3321,10 +3313,10 @@ class Module extends Base
 				], $supported );
 
 			$this->register_taxonomy( $taxonomy, [
-				'paired_posttype' => $this->constant( $posttype ),
-				'show_ui'         => FALSE,
-				'show_in_rest'    => FALSE,
-				'hierarchical'    => TRUE,
+				Paired::PAIRED_POSTTYPE_PROP => $this->constant( $posttype ),
+				'show_ui'                    => FALSE,
+				'show_in_rest'               => FALSE,
+				'hierarchical'               => TRUE,
 				// the paired taxonomies are often in plural
 				// FIXME: WTF: will confilict with posttype rest base!
 				// 'rest_base'    => $this->constant( $taxonomy.'_slug', str_replace( '_', '-', $this->constant( $taxonomy ) ) ),
@@ -3335,11 +3327,11 @@ class Module extends Base
 		}
 
 		return $this->register_posttype( $posttype, array_merge( [
-			'paired_taxonomy'   => $this->_paired,
-			'hierarchical'      => TRUE,
-			'show_in_nav_menus' => FALSE,
-			'show_in_admin_bar' => FALSE,
-			'rewrite'           => [
+			Paired::PAIRED_TAXONOMY_PROP => $this->_paired,
+			'hierarchical'               => TRUE,
+			'show_in_nav_menus'          => FALSE,
+			'show_in_admin_bar'          => FALSE,
+			'rewrite'                    => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],

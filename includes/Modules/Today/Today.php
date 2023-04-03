@@ -119,7 +119,7 @@ class Today extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $this->constant( 'day_cpt' ) ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'day_cpt' ) ] ) );
 	}
 
 	public function setup( $args = [] )

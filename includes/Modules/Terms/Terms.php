@@ -22,7 +22,8 @@ class Terms extends gEditorial\Module
 {
 
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private, `capability`, `plural`, `icon`, `LatLng`, `url`, `subtitle`
+	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `plural`, `icon`, `LatLng`, `url`, `subtitle`
+	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
 		'order',

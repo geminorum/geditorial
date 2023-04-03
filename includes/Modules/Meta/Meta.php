@@ -1271,7 +1271,8 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
-	// TODO: bulk move data to another field with filters for processing
+	// TODO: bulk migrate data to another field with filters for processing
+	// - or just rename metakey directly on database!
 	protected function render_tools_html( $uri, $sub )
 	{
 		$args = $this->get_current_form( [
