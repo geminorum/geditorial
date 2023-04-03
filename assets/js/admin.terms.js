@@ -101,6 +101,7 @@
       $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
     },
 
+    // NOTE: handles `code` tags
     inlineCode: function (field, tag, event) {
       const value = $('td.' + s.classs + '-' + field + ' code.field-' + field, '#' + tag).attr('data-' + field);
       $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
@@ -133,14 +134,14 @@
       app.inlineOrder(tag, event);
       app.inlineText('overwrite', tag, event);
       app.inlineText('tagline', tag, event);
-      app.inlineCode('contact', tag, event);
+      app.inlineText('contact', tag, event);
       app.inlineSelect('author', tag, event);
       app.inlineSelect('role', tag, event);
       app.inlineSelect('posttype', tag, event);
       app.inlineSelect('arrow', tag, event);
       app.inlineText('label', tag, event);
       app.inlineCode('code', tag, event);
-      app.inlineCode('barcode', tag, event);
+      app.inlineText('barcode', tag, event);
       app.inlineDate('date', tag, event);
       app.inlineDate('datetime', tag, event);
       app.inlineDate('datestart', tag, event);
