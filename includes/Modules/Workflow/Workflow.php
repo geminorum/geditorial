@@ -304,7 +304,7 @@ class Workflow extends gEditorial\Module
 				'color'     => '',
 				'posttype'  => '',
 				'posttypes' => $supported,
-				'viewable'  => NULL, // NOTE: `NULL` for undetermined
+				'viewable'  => '0', // NOTE: `0`: Undefined, `1`: Nonviewable, `2`: Viewable
 				'roles'     => FALSE,
 			] );
 
@@ -367,20 +367,19 @@ class Workflow extends gEditorial\Module
 	{
 		$statuses = $this->get_statuses();
 
-		if ( ! array_key_exists( $post_status->name, $statuses, TRUE ) )
+		if ( ! array_key_exists( $post_status->name, $statuses ) )
 			return $is_viewable;
 
-		// NOTE: `NULL` for undetermined
-		if ( is_null( $statuses[$post_status->name]->viewable ) )
+		if ( ! $statuses[$post_status->name]->viewable )
 			return $is_viewable;
 
-		return (bool) $statuses[$post_status->name]->viewable;
+		// NOTE: `0`: Undefined, `1`: Nonviewable, `2`: Viewable
+		return '2' == $statuses[$post_status->name]->viewable;
 	}
 
 	public function update_post_term_count_statuses( $post_statuses, $taxonomy )
 	{
-		return array_merge( $post_statuses, array_keys(	array_filter(
-			wp_list_pluck( $this->get_statuses(), 'viewable', 'name' ) ) ) );
+		return array_merge( $post_statuses, wp_filter_object_list( $this->get_statuses(), [ 'viewable' => '2' ], 'and', 'name' ) );
 	}
 
 	public function page_row_actions( $actions, $post )
