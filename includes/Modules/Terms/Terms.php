@@ -153,29 +153,11 @@ class Terms extends gEditorial\Module
 				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
-				'order_column_title'     => _x( 'Order', 'Column Title: Order', 'geditorial-terms' ),
-				'overwrite_column_title' => _x( 'Overwrite', 'Column Title: Overwrite', 'geditorial-terms' ),
-				'tagline_column_title'   => _x( 'Tagline', 'Column Title: Tagline', 'geditorial-terms' ),
-				'contact_column_title'   => _x( 'Contact', 'Column Title: Contact', 'geditorial-terms' ),
-				'image_column_title'     => _x( 'Image', 'Column Title: Image', 'geditorial-terms' ),
-				'author_column_title'    => _x( 'Author', 'Column Title: Author', 'geditorial-terms' ),
-				'color_column_title'     => _x( 'Color', 'Column Title: Color', 'geditorial-terms' ),
-				'role_column_title'      => _x( 'Role', 'Column Title: Role', 'geditorial-terms' ),
-				'roles_column_title'     => _x( 'Roles', 'Column Title: Roles', 'geditorial-terms' ),
-				'posttype_column_title'  => _x( 'Posttype', 'Column Title: Posttype', 'geditorial-terms' ),
-				'posttypes_column_title' => _x( 'Posttypes', 'Column Title: Posttypes', 'geditorial-terms' ),
-				'arrow_column_title'     => _x( 'Arrow', 'Column Title: Arrow', 'geditorial-terms' ),
-				'label_column_title'     => _x( 'Label', 'Column Title: Label', 'geditorial-terms' ),
-				'code_column_title'      => _x( 'Code', 'Column Title: Label', 'geditorial-terms' ),
-				'barcode_column_title'   => _x( 'Barcode', 'Column Title: Label', 'geditorial-terms' ),
-				'posts_column_title'     => _x( 'Posts', 'Column Title: Posts', 'geditorial-terms' ),
-				'date_column_title'      => _x( 'Date', 'Column Title: Date', 'geditorial-terms' ),
-				'datetime_column_title'  => _x( 'Date-Time', 'Column Title: Date-Time', 'geditorial-terms' ),
-				'datestart_column_title' => _x( 'Date-Start', 'Column Title: Date-Start', 'geditorial-terms' ),
-				'dateend_column_title'   => _x( 'Date-End', 'Column Title: Date-End', 'geditorial-terms' ),
-				'days_column_title'      => _x( 'Days', 'Column Title: Date-End', 'geditorial-terms' ),
-				'unit_column_title'      => _x( 'Unit', 'Column Title: Date-End', 'geditorial-terms' ),
-				'viewable_column_title'  => _x( 'Visibility', 'Column Title: Date-End', 'geditorial-terms' ),
+				// NOTE: Only the diffrents from titles
+				// - filters are abale to customize by `{$field}_column_title` key
+				'order_column_title'    => _x( 'Ordering', 'Column Title: Order', 'geditorial-terms' ),
+				'arrow_column_title'    => _x( 'Arrow Directions', 'Column Title: Arrow', 'geditorial-terms' ),
+				'viewable_column_title' => _x( 'Visibility', 'Column Title: Date-End', 'geditorial-terms' ),
 
 				'visibility' => [
 					'0' => _x( 'Undefined', 'Visibility', 'geditorial-terms' ),
@@ -640,9 +622,10 @@ class Terms extends gEditorial\Module
 			if ( FALSE === ( $position = $this->get_supported_position( $field, $taxonomy ) ) )
 				continue;
 
-			$title = in_array( $field, $icons, TRUE )
-				? $this->get_column_title_icon( $field, $taxonomy )
-				: $this->get_column_title( $field, $taxonomy );
+			$fallback = $this->get_supported_field_title( $field, $taxonomy );
+			$title    = in_array( $field, $icons, TRUE )
+				? $this->get_column_title_icon( $field, $taxonomy, $fallback )
+				: $this->get_column_title( $field, $taxonomy, $fallback );
 
 			$columns = Arraay::insert( $columns, [
 				$this->classs( $field ) => $title,
