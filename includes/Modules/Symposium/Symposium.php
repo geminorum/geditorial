@@ -23,6 +23,11 @@ class Symposium extends gEditorial\Module
 			'_general' => [
 				'comment_status',
 			],
+			'_content' => [
+				'archive_title',
+				'archive_content',
+				'archive_template',
+			],
 			'_supports' => [
 				'assign_default_term',
 				'thumbnail_support',
@@ -177,6 +182,11 @@ class Symposium extends gEditorial\Module
 			'subject_taxonomy',
 			'audience_taxonomy',
 		];
+	}
+
+	public function template_include( $template )
+	{
+		return $this->do_template_include( $template, 'session_posttype', NULL, FALSE );
 	}
 
 	public function dashboard_glance_items( $items )
