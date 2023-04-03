@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Paired extends Main
 {
@@ -12,6 +13,7 @@ class Paired extends Main
 	const BASE = 'geditorial';
 
 	const PAIRED_TAXONOMY_PROP = 'paired_taxonomy';
+	const PAIRED_POSTTYPE_PROP = 'paired_posttype';
 
 	// public static function setup() {}
 
@@ -22,6 +24,15 @@ class Paired extends Main
 			return FALSE;
 
 		return empty( $posttype->{self::PAIRED_TAXONOMY_PROP} ) ? FALSE : $posttype->{self::PAIRED_TAXONOMY_PROP};
+	}
+
+	// returns the paired posttype, otherwise `FALSE`
+	public static function isTaxonomy( $taxonomy )
+	{
+		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+			return FALSE;
+
+		return empty( $taxonomy->{self::PAIRED_POSTTYPE_PROP} ) ? FALSE : $taxonomy->{self::PAIRED_POSTTYPE_PROP};
 	}
 
 	public static function getPostTypes()

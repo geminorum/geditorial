@@ -3207,7 +3207,8 @@ class Module extends Base
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			/// gEditorial Props
-			'target_taxonomies' => FALSE, // or array of taxonomies
+			'target_taxonomies' => FALSE,  // or array of taxonomies
+			'paired_posttype'   => FALSE,  // @SEE: `Paired::isTaxonomy()`
 		] );
 
 		if ( ! $args['meta_box_cb'] && method_exists( $this, 'meta_box_cb_'.$constant ) )
@@ -3320,9 +3321,10 @@ class Module extends Base
 				], $supported );
 
 			$this->register_taxonomy( $taxonomy, [
-				'show_ui'      => FALSE,
-				'show_in_rest' => FALSE,
-				'hierarchical' => TRUE,
+				'paired_posttype' => $this->constant( $posttype ),
+				'show_ui'         => FALSE,
+				'show_in_rest'    => FALSE,
+				'hierarchical'    => TRUE,
 				// the paired taxonomies are often in plural
 				// FIXME: WTF: will confilict with posttype rest base!
 				// 'rest_base'    => $this->constant( $taxonomy.'_slug', str_replace( '_', '-', $this->constant( $taxonomy ) ) ),

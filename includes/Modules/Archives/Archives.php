@@ -8,6 +8,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Theme;
+use geminorum\gEditorial\Services\Paired;
 
 class Archives extends gEditorial\Module
 {
@@ -134,9 +135,10 @@ class Archives extends gEditorial\Module
 	protected function taxonomies_excluded( $extra = [] )
 	{
 		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( get_taxonomies( [
-			'public'      => FALSE,
-			'has_archive' => FALSE, // NOTE: gEditorial prop
 		] , 'names', 'or' ) ) );
+			'public'                     => FALSE,
+			'has_archive'                => FALSE,   // NOTE: gEditorial prop
+			Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
 	}
 
 	public function init()
