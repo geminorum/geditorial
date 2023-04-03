@@ -64,6 +64,7 @@ class Course extends gEditorial\Module
 			],
 			'_content' => [
 				'archive_title',
+				'archive_content',
 				'archive_template',
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -477,7 +478,7 @@ class Course extends gEditorial\Module
 		return $this->do_template_include( $template, 'course_cpt', NULL, FALSE );
 	}
 
-	public function template_get_archive_content()
+	public function template_get_archive_content_default()
 	{
 		return ModuleTemplate::spanTiles();
 	}

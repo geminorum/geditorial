@@ -81,6 +81,7 @@ class Book extends gEditorial\Module
 				'display_searchform',
 				'empty_content',
 				'archive_title',
+				'archive_content',
 				'archive_template',
 			],
 			'_supports' => [
@@ -917,7 +918,7 @@ class Book extends gEditorial\Module
 		return $this->do_template_include( $template, 'publication_cpt' );
 	}
 
-	public function template_get_archive_content()
+	public function template_get_archive_content_default()
 	{
 		$html = $this->get_search_form( 'publication_cpt' );
 

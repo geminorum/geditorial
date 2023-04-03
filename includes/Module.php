@@ -6310,6 +6310,33 @@ class Module extends Base
 	// DEFAULT METHOD: content for overrided archive page
 	public function template_get_archive_content()
 	{
+		$setting = $this->get_setting_fallback( 'archive_content', NULL );
+
+		if ( ! is_null( $setting ) )
+			return $setting; // might be empty string
+
+		// NOTE: here to avoid further process
+		if ( $default = $this->template_get_archive_content_default() )
+			return $default;
+
+		if ( is_post_type_archive() )
+			return ShortCode::listPosts( 'assigned',
+				PostType::current(),
+				'',
+				[
+					'orderby' => 'menu_order', // WTF: must apply to `assigned`
+					'id'      => 'all',
+					'future'  => 'off',
+					'title'   => FALSE,
+					'wrap'    => FALSE,
+				]
+			);
+
+		return '';
+	}
+
+	public function template_get_archive_content_default()
+	{
 		return '';
 	}
 

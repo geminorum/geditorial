@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -54,6 +53,7 @@ class Organization extends gEditorial\Module
 			],
 			'_content' => [
 				'archive_title',
+				'archive_content',
 				'archive_template',
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -378,22 +378,11 @@ class Organization extends gEditorial\Module
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
 	}
 
-	public function template_get_archive_content()
-	{
-		// TODO: template helper for `postTiles` using badges
-		// return ModuleTemplate::spanTiles();
-
-		return ShortCode::listPosts( 'assigned',
-			$this->constant( 'primary_posttype' ),
-			$this->constant( 'primary_taxonomy' ),
-			[
-				'id'     => 'all',
-				'future' => 'off',
-				'title'  => FALSE,
-				'wrap'   => FALSE,
-			]
-		);
-	}
+	// TODO: template helper for `postTiles` using badges
+	// public function template_get_archive_content_default()
+	// {
+	// 	return ModuleTemplate::postTiles();
+	// }
 
 	public function post_updated( $post_id, $post_after, $post_before )
 	{

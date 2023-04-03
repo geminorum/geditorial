@@ -65,6 +65,7 @@ class Dossier extends gEditorial\Module
 			],
 			'_content' => [
 				'archive_title',
+				'archive_content',
 				'archive_template',
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -374,7 +375,7 @@ class Dossier extends gEditorial\Module
 		return $this->do_template_include( $template, 'dossier_posttype', NULL, FALSE );
 	}
 
-	public function template_get_archive_content()
+	public function template_get_archive_content_default()
 	{
 		return ModuleTemplate::spanTiles();
 	}

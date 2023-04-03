@@ -49,6 +49,7 @@ class Entry extends gEditorial\Module
 				'display_searchform',
 				'empty_content',
 				'archive_title',
+				'archive_content',
 				'archive_template',
 			],
 			'_supports' => [
@@ -329,7 +330,7 @@ class Entry extends gEditorial\Module
 		return $this->do_template_include( $template, 'entry_cpt' );
 	}
 
-	public function template_get_archive_content()
+	public function template_get_archive_content_default()
 	{
 		$html = $this->get_search_form( 'entry_cpt' );
 

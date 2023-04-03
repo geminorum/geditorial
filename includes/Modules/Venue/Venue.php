@@ -65,6 +65,7 @@ class Venue extends gEditorial\Module
 				'display_searchform',
 				'empty_content',
 				'archive_title',
+				'archive_content',
 				'archive_template',
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -369,7 +370,7 @@ class Venue extends gEditorial\Module
 		return $this->do_template_include( $template, 'place_cpt' );
 	}
 
-	public function template_get_archive_content()
+	public function template_get_archive_content_default()
 	{
 		$html = $this->get_search_form( 'place_cpt' );
 
