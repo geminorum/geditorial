@@ -47,6 +47,7 @@ class Terms extends gEditorial\Module
 		'dateend',
 		'days',
 		'unit',
+		'viewable',
 	];
 
 	private $_roles     = [];
@@ -125,6 +126,7 @@ class Terms extends gEditorial\Module
 				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-terms' ),
 				'days'      => _x( 'Days', 'Titles', 'geditorial-terms' ),
 				'unit'      => _x( 'Unit', 'Titles', 'geditorial-terms' ),
+				'viewable'  => _x( 'Viewable', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
@@ -148,6 +150,7 @@ class Terms extends gEditorial\Module
 				'dateend'   => _x( 'Terms can have date-end to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'days'      => _x( 'Terms can have days number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'unit'      => _x( 'Terms can have unit number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
 				'order_column_title'     => _x( 'Order', 'Column Title: Order', 'geditorial-terms' ),
@@ -172,7 +175,13 @@ class Terms extends gEditorial\Module
 				'dateend_column_title'   => _x( 'Date-End', 'Column Title: Date-End', 'geditorial-terms' ),
 				'days_column_title'      => _x( 'Days', 'Column Title: Date-End', 'geditorial-terms' ),
 				'unit_column_title'      => _x( 'Unit', 'Column Title: Date-End', 'geditorial-terms' ),
+				'viewable_column_title'  => _x( 'Visibility', 'Column Title: Date-End', 'geditorial-terms' ),
 
+				'visibility' => [
+					'0' => _x( 'Undefined', 'Visibility', 'geditorial-terms' ),
+					'1' => _x( 'Nonviewable', 'Visibility', 'geditorial-terms' ),
+					'2' => _x( 'Viewable', 'Visibility', 'geditorial-terms' ),
+				],
 				'arrow_directions' => [
 					'undefined' => _x( 'Undefined', 'Arrow Directions', 'geditorial-terms' ),
 					'up'        => _x( 'Up', 'Arrow Directions', 'geditorial-terms' ),
@@ -481,6 +490,7 @@ class Terms extends gEditorial\Module
 			case 'code':
 			case 'barcode':
 			case 'arrow':
+			case 'viewable':
 
 				$position = [ 'name', 'before' ];
 				break;
@@ -509,7 +519,7 @@ class Terms extends gEditorial\Module
 			$prepare = 'register_prepare_callback_'.$field;
 
 			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
-			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'unit' ] ) )
+			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'unit', 'viewable' ] ) )
 				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
 
 			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
@@ -622,6 +632,7 @@ class Terms extends gEditorial\Module
 			'dateend',
 			'days',
 			'unit',
+			'viewable',
 		];
 
 		foreach ( $supported as $field ) {
@@ -668,6 +679,7 @@ class Terms extends gEditorial\Module
 			'dateend',
 			'days',
 			'unit',
+			'viewable',
 		];
 
 		foreach ( $supported as $field )
@@ -733,6 +745,28 @@ class Terms extends gEditorial\Module
 				} else {
 
 					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
+			case 'viewable':
+
+				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
+
+				if ( $meta ) {
+
+					$visibility = $this->get_string( 'visibility', FALSE, 'misc', [] );
+
+					if ( '2' == $meta )
+						$icon = HTML::getDashicon( 'visibility', $visibility[$meta], '-icon-danger' );
+					else
+						$icon = HTML::getDashicon( 'hidden', $visibility[$meta], '-icon-warning' );
+
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '0', $column );
 				}
 
 				break;
@@ -1014,6 +1048,10 @@ class Terms extends gEditorial\Module
 
 					$meta = Number::intval( trim( $meta ), FALSE );
 
+				} else if ( in_array( $field, [ 'viewable' ] ) ) {
+
+					$meta = Number::intval( trim( $meta ), FALSE );
+
 				} else if ( in_array( $field, [ 'date' ] ) ) {
 
 					$meta = Number::intval( trim( $meta ), FALSE );
@@ -1272,6 +1310,16 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'viewable':
+
+				$html.= HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
+					'id'       => $this->classs( $field, 'id' ),
+					'name'     => 'term-'.$field,
+					'selected' => empty( $meta ) ? 'undefined' : $meta,
+				] );
+
+				break;
+
 			case 'arrow':
 
 				$html.= HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
@@ -1417,6 +1465,15 @@ class Terms extends gEditorial\Module
 					'value' => '',
 					'class' => [ 'ptitle', 'code' ],
 					'data'  => [ 'ortho' => 'code' ],
+				] );
+
+				break;
+
+			case 'viewable':
+
+				$html.= HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
+					'name'     => 'term-'.$field,
+					'selected' => 'undefined',
 				] );
 
 				break;

@@ -139,6 +139,7 @@
       app.inlineSelect('role', tag, event);
       app.inlineSelect('posttype', tag, event);
       app.inlineSelect('arrow', tag, event);
+      app.inlineSelect('viewable', tag, event);
       app.inlineText('label', tag, event);
       app.inlineCode('code', tag, event);
       app.inlineText('barcode', tag, event);
