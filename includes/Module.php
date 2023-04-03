@@ -4438,7 +4438,7 @@ class Module extends Base
 			$request = $_REQUEST;
 
 		if ( empty( $request['action'] )
-			|| 'inline-save-tax' != $request['action'] )
+			|| ! in_array( $request['action'], [ 'add-tag', 'inline-save-tax' ], TRUE ) )
 				return FALSE;
 
 		if ( empty( $request[$key] ) )
