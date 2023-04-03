@@ -75,6 +75,11 @@ class Helper extends Main
 			: ( is_null( $message ) ? _x( 'Not Available on Current Locale', 'Helper', 'geditorial' ) : $message );
 	}
 
+	public static function isTaxonomyAudit( $taxonomy, $fallback = 'audit_attribute' )
+	{
+		return $taxonomy === gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );
+	}
+
 	public static function getIcon( $icon, $fallback = 'admin-post' )
 	{
 		if ( is_array( $icon ) )

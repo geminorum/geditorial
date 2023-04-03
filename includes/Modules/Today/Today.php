@@ -1029,12 +1029,9 @@ class Today extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		if ( $taxonomy === gEditorial()->constant( 'audit', 'audit_tax', 'audit_attribute' ) )
-			$terms = array_merge( $terms, [
-				$this->constant( 'term_empty_the_day' ) => _x( 'No day', 'Default Term: Audit', 'geditorial-today' ),
-			] );
-
-		return $terms;
+		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+			$this->constant( 'term_empty_the_day' ) => _x( 'No day', 'Default Term: Audit', 'geditorial-today' ),
+		] ) : $terms;
 	}
 
 	private function get_importer_fields( $posttype = NULL )

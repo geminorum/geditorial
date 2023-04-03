@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
@@ -708,11 +709,8 @@ class Course extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		if ( $taxonomy === gEditorial()->constant( 'audit', 'audit_tax', 'audit_attribute' ) )
-			$terms = array_merge( $terms, [
-				$this->constant( 'term_abandoned_lesson' ) => _x( 'Lesson Abandoned', 'Default Term: Audit', 'geditorial-course' ),
-			] );
-
-		return $terms;
+		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+			$this->constant( 'term_abandoned_lesson' ) => _x( 'Lesson Abandoned', 'Default Term: Audit', 'geditorial-course' ),
+		] ) : $terms;
 	}
 }
