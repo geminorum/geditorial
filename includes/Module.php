@@ -4334,6 +4334,9 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
 
+		if ( is_null( $title ) && ! empty( $object->labels->metabox_title ) )
+			$title = $object->labels->metabox_title;
+
 		// DEPRECATED: for back-comp only
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
