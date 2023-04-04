@@ -678,24 +678,11 @@ class MetaBox extends Main
 
 			wp_editor( html_entity_decode( $content ), $id, $args );
 
-			echo self::editorStatusInfo( $id );
+			Helper::renderEditorStatusInfo( $id );
 
 		echo '</div>';
 
-		Scripts::enqueue( 'all.wordcount', [ 'jquery', 'word-count', 'underscore' ] );
-	}
-
-	public static function editorStatusInfo( $target = 'excerpt' )
-	{
-		$html = '<div class="-wordcount hide-if-no-js" data-target="'.$target.'">';
-		/* translators: %s: words count */
-		$html.= sprintf( _x( 'Words: %s', 'MetaBox', 'geditorial' ), '<span class="word-count">'.Number::format( '0' ).'</span>' );
-		$html.= ' | ';
-		/* translators: %s: chars count */
-		$html.= sprintf( _x( 'Chars: %s', 'MetaBox', 'geditorial' ), '<span class="char-count">'.Number::format( '0' ).'</span>' );
-		$html.= '</div>';
-
-		echo HTML::wrap( $html, '-editor-status-info' );
+		Scripts::enqueueWordCount();
 	}
 
 	// FIXME: finalize name/id

@@ -77,6 +77,15 @@ class Scripts extends Main
 		return $handle;
 	}
 
+	public static function enqueueWordCount()
+	{
+		return self::enqueue( 'all.wordcount', [
+			'jquery',
+			'word-count',
+			'underscore',
+		] );
+	}
+
 	public static function enqueueTimeAgo()
 	{
 		$callback = [ 'gPersianDateTimeAgo', 'enqueue' ];

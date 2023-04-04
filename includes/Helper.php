@@ -471,6 +471,25 @@ class Helper extends Main
 		return gEditorial()->user( $fallback );
 	}
 
+	public static function renderEditorStatusInfo( $target )
+	{
+		$html = '<div data-target="'.$target.'" class="-status-count hide-if-no-js">';
+
+		/* translators: %s: words count */
+		$html.= sprintf( _x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
+			'<span class="word-count">'.Number::format( '0' ).'</span>' );
+
+		$html.= ' | ';
+
+		/* translators: %s: chars count */
+		$html.= sprintf( _x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
+			'<span class="char-count">'.Number::format( '0' ).'</span>' );
+
+		$html.= '</div>';
+
+		echo HTML::wrap( $html, '-editor-status-info' );
+	}
+
 	// MOVE TO: `Strings`
 	public static function htmlEmpty( $class = '', $title_attr = NULL )
 	{
