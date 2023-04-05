@@ -729,7 +729,7 @@ class Helper extends Main
 			'remove_featured_image' => _x( 'Remove %2$s', 'Helper: CPT Generator: `remove_featured_image`', 'geditorial' ),
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
 			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: `use_featured_image`', 'geditorial' ),
-		], $posttype, $strings, $name );
+		], $posttype, $featured, $name );
 
 		// TODO: add raw name strings on the object
 
@@ -757,9 +757,13 @@ class Helper extends Main
 		if ( ! array_key_exists( 'excerpt_label', $pre ) )
 			$pre['excerpt_label'] = __( 'Excerpt' );
 
+		if ( ! $featured && array_key_exists( 'featured_image', $pre ) )
+			$featured = $pre['featured_image'];
+
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )
-				$pre[$key] = vsprintf( $template, [ $featured, Text::strToLower( $featured ) ] );
+				if ( ! array_key_exists( $key, $pre ) )
+					$pre[$key] = vsprintf( $template, [ $featured, Text::strToLower( $featured ) ] );
 
 		return $pre;
 	}
