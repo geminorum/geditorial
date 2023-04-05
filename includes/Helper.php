@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
@@ -78,6 +79,29 @@ class Helper extends Main
 	public static function isTaxonomyAudit( $taxonomy, $fallback = 'audit_attribute' )
 	{
 		return $taxonomy === gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );
+	}
+
+	public static function setTaxonomyAudit( $post, $term_ids, $append = TRUE, $fallback = 'audit_attribute' )
+	{
+		if ( ! gEditorial()->enabled( 'audit' ) )
+			return FALSE;
+
+		if ( ! $post = Post::get( $post ) )
+			return FALSE;
+
+		if ( ! gEditorial()->module( 'audit' )->posttype_supported( $post->post_type ) )
+			return FALSE;
+
+		$taxonomy = gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );
+		$terms    = is_null( $term_ids ) ? $term_ids : Arraay::prepNumeral( $term_ids );
+		$result   = wp_set_object_terms( $post->ID, $terms, $taxonomy, $append );
+
+		if ( is_wp_error( $result ) )
+			return FALSE;
+
+		clean_object_term_cache( $post->ID, $taxonomy );
+
+		return $result;
 	}
 
 	public static function getIcon( $icon, $fallback = 'admin-post' )

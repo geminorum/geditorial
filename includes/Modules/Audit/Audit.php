@@ -868,26 +868,6 @@ class Audit extends gEditorial\Module
 		return wp_update_term_count_now( [ $term->term_id ], $taxonomy );
 	}
 
-	// API METHOD
-	// FIXME: move this up to main module
-	public function set_terms( $post, $terms, $append = TRUE )
-	{
-		if ( ! $post = PostType::getPost( $post ) )
-			return FALSE;
-
-		if ( ! $this->posttype_supported( $post->post_type ) )
-			return FALSE;
-
-		$result = wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $this->constant( 'main_taxonomy' ), $append );
-
-		if ( is_wp_error( $result ) )
-			return FALSE;
-
-		clean_object_term_cache( $post->ID, $this->constant( 'main_taxonomy' ) );
-
-		return TRUE;
-	}
-
 	// @REF: https://wordpress.stackexchange.com/a/251385
 	// @REF: https://stackoverflow.com/a/16395673
 	private function _get_posts_empty( $for, $attribute, $posttypes = NULL, $check_taxonomy = TRUE )
