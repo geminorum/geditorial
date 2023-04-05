@@ -19,8 +19,7 @@ class Like extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	protected $cookie  = 'geditorial-like';
-	protected $post_id = FALSE;
+	protected $cookie = 'geditorial-like';
 
 	public static function module()
 	{
@@ -123,21 +122,21 @@ class Like extends gEditorial\Module
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		$this->post_id = get_queried_object_id();
+		$this->current_queried = get_queried_object_id();
 
 		$this->enqueue_asset_js();
 		$this->enqueue_styles();
 	}
 
-	public function get_button( $post_id = NULL )
+	public function get_button( $post = NULL )
 	{
-		if ( is_null( $post_id ) )
-			$post_id = $this->post_id;
+		if ( is_null( $post ) )
+			$post = $this->current_queried;
 
-		if ( ! $post_id )
+		if ( ! $post )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $post_id ) )
+		if ( ! $post = PostType::getPost( $post ) )
 			return FALSE;
 
 		if ( ! in_array( $post->post_type, $this->posttypes() ) )

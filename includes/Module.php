@@ -91,6 +91,7 @@ class Module extends Base
 	protected $_paired  = FALSE; // PAIRED API ENABLED/taxonomy paired
 
 	protected $scripts_printed = FALSE;
+	protected $current_queried = FALSE; // usually contains `get_queried_object_id()`
 
 	public function __construct( &$module, &$options, $root, $locale = NULL )
 	{

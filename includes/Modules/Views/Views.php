@@ -17,8 +17,6 @@ class Views extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	protected $post_id = FALSE;
-
 	public static function module()
 	{
 		return [
@@ -94,7 +92,7 @@ class Views extends gEditorial\Module
 		if ( is_user_logged_in() && $this->role_can( 'excluded' ) )
 			return;
 
-		$this->post_id = get_queried_object_id();
+		$this->current_queried = get_queried_object_id();
 
 		$this->action( 'wp_footer' );
 
@@ -103,7 +101,7 @@ class Views extends gEditorial\Module
 
 	public function wp_footer()
 	{
-		HTML::wrapjQueryReady( '$.post("'.admin_url( 'admin-ajax.php' ).'",{action:"'.$this->hook().'",_ajax_nonce:"'.wp_create_nonce( $this->classs( $this->post_id ) ).'",post_id:'.$this->post_id.',what:"entryview"});' );
+		HTML::wrapjQueryReady( '$.post("'.admin_url( 'admin-ajax.php' ).'",{action:"'.$this->hook().'",_ajax_nonce:"'.wp_create_nonce( $this->classs( $this->current_queried ) ).'",post_id:'.$this->current_queried.',what:"entryview"});' );
 	}
 
 	public function ajax()
