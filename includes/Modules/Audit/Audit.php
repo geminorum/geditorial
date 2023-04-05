@@ -495,7 +495,7 @@ class Audit extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->role_can( 'assign' ) )
+				if ( $this->role_can( 'reports' ) )
 					$this->_hook_screen_restrict_taxonomies();
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
@@ -520,7 +520,7 @@ class Audit extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		if ( ! $this->role_can( 'assign' ) )
+		if ( ! $this->role_can( 'reports' ) )
 			return;
 
 		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
