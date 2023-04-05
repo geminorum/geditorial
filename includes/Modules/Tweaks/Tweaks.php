@@ -420,7 +420,7 @@ class Tweaks extends gEditorial\Module
 			MetaBox::classEditorBox( $screen );
 
 			add_meta_box( 'postexcerpt',
-				empty( $object->labels->excerpt_metabox ) ? __( 'Excerpt' ) : $object->labels->excerpt_metabox,
+				empty( $object->labels->excerpt_label ) ? __( 'Excerpt' ) : $object->labels->excerpt_label,
 				[ $this, 'do_metabox_excerpt' ],
 				$screen,
 				$this->get_setting( 'after_title_excerpt' ) ? 'after_title' : 'normal'

@@ -95,17 +95,26 @@ class Today extends gEditorial\Module
 
 	protected function get_global_strings()
 	{
-		return [
-			'misc' => [
-				'featured'            => _x( 'Cover Image', 'Posttype Featured', 'geditorial-today' ),
-				'excerpt_metabox'     => _x( 'Summary', 'MetaBox Title', 'geditorial-today' ),
-				'meta_box_title'      => _x( 'The Day', 'MetaBox Title', 'geditorial-today' ),
-				'theday_column_title' => _x( 'Day', 'Column Title', 'geditorial-today' ),
-			],
+		$strings = [
 			'noops' => [
 				'day_cpt' => _n_noop( 'Day', 'Days', 'geditorial-today' ),
 			],
+			'labels' => [
+				'day_cpt' => [
+					'metabox_title' => _x( 'The Day', 'Label: MetaBox Label', 'geditorial-today' ),
+					'excerpt_label' => _x( 'Summary', 'MetaBox Title', 'geditorial-today' ),
+				],
+			],
 		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['misc'] = [
+			'featured' => _x( 'Cover Image', 'Posttype Featured', 'geditorial-today' ),
+		];
+
+		return $strings;
 	}
 
 	protected function get_module_templates()
@@ -284,7 +293,7 @@ class Today extends gEditorial\Module
 					MetaBox::classEditorBox( $screen, $this->classs( 'excerpt' ) );
 
 					add_meta_box( $this->classs( 'excerpt' ),
-						$this->get_string( 'excerpt_metabox', 'day_cpt', 'misc' ),
+						$this->get_posttype_label( 'day_cpt', 'excerpt_label' ),
 						[ $this, 'do_metabox_excerpt' ],
 						$screen,
 						'after_title'
@@ -435,7 +444,7 @@ class Today extends gEditorial\Module
 		MetaBox::fieldEditorBox(
 			$post->post_excerpt,
 			'excerpt',
-			$this->get_string( 'excerpt_metabox', 'day_cpt', 'misc' )
+			$this->get_posttype_label( 'day_cpt', 'excerpt_label' )
 		);
 	}
 

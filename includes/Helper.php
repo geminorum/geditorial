@@ -743,12 +743,12 @@ class Helper extends Main
 			$pre['metabox_title'] = $strings[0];
 
 		// EXTRA: must be in the core!
-		if ( ! array_key_exists( 'author_metabox', $pre ) )
-			$pre['author_metabox'] = __( 'Author' );
+		if ( ! array_key_exists( 'author_label', $pre ) )
+			$pre['author_label'] = __( 'Author' );
 
 		// EXTRA: must be in the core!
-		if ( ! array_key_exists( 'excerpt_metabox', $pre ) )
-			$pre['excerpt_metabox'] = __( 'Excerpt' );
+		if ( ! array_key_exists( 'excerpt_label', $pre ) )
+			$pre['excerpt_label'] = __( 'Excerpt' );
 
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )

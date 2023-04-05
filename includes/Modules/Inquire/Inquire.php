@@ -76,6 +76,11 @@ class Inquire extends gEditorial\Module
 				'status_tax'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
 				'priority_tax' => _n_noop( 'Inquiry Priority', 'Inquiry Priorities', 'geditorial-inquire' ),
 			],
+			'labels' => [
+				'inquiry_cpt' => [
+					'excerpt_label' => _x( 'Question', 'Label: Excerpt Label', 'geditorial-inquire' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
@@ -84,7 +89,6 @@ class Inquire extends gEditorial\Module
 		$strings['misc'] = [
 			'inquiry_cpt' => [
 				'menu_name'       => _x( 'Inquiries', 'Posttype Menu', 'geditorial-inquire' ),
-				'excerpt_metabox' => _x( 'Question', 'MetaBox Title', 'geditorial-inquire' ),
 			],
 			'subject_tax' => [
 				'menu_name'           => _x( 'Subjects', 'Menu Title', 'geditorial-inquire' ),
@@ -215,7 +219,7 @@ class Inquire extends gEditorial\Module
 					MetaBox::classEditorBox( $screen, $this->classs( 'question' ) );
 
 					add_meta_box( $this->classs( 'question' ),
-						$this->get_string( 'excerpt_metabox', 'inquiry_cpt', 'misc' ),
+						$this->get_posttype_label( 'inquiry_cpt', 'excerpt_label' ),
 						[ $this, 'do_metabox_excerpt' ],
 						$screen,
 						'after_title'
@@ -285,7 +289,7 @@ class Inquire extends gEditorial\Module
 			MetaBox::fieldEditorBox(
 				$post->post_excerpt,
 				'excerpt',
-				$this->get_string( 'excerpt_metabox', 'inquiry_cpt', 'misc' )
+				$this->get_posttype_label( 'inquiry_cpt', 'excerpt_label' )
 			);
 
 		else

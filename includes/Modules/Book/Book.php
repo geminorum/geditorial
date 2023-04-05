@@ -183,6 +183,12 @@ class Book extends gEditorial\Module
 				'size_tax'             => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
 				'audience_tax'         => _n_noop( 'Publication Audience', 'Publication Audiences', 'geditorial-book' ),
 			],
+			'labels' => [
+				'publication_cpt' => [
+					'author_label'  => _x( 'Curator', 'Label: Author Label', 'geditorial-book' ),
+					'excerpt_label' => _x( 'Summary', 'Label: Excerpt Label', 'geditorial-book' ),
+				],
+			],
 			'p2p' => [
 				'publication_cpt' => [
 					'fields' => [
@@ -234,8 +240,6 @@ class Book extends gEditorial\Module
 			'publication_cpt' => [
 				'featured'               => _x( 'Cover Image', 'Posttype Featured', 'geditorial-book' ),
 				'meta_box_title'         => _x( 'Metadata', 'MetaBox Title', 'geditorial-book' ),
-				'author_metabox'         => _x( 'Curator', 'MetaBox Title', 'geditorial-book' ),
-				'excerpt_metabox'        => _x( 'Summary', 'MetaBox Title', 'geditorial-book' ),
 				'cover_column_title'     => _x( 'Cover', 'Column Title', 'geditorial-book' ),
 				'connected_column_title' => _x( 'Connected', 'Column Title', 'geditorial-book' ),
 			],

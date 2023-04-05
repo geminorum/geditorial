@@ -4229,7 +4229,7 @@ class Module extends Base
 			return;
 
 		add_meta_box( 'authordiv', // same as core to override
-			$this->get_string( 'author_metabox', $constant, 'misc', __( 'Author' ) ),
+			$this->get_posttype_label( $constant, 'author_label', __( 'Author' ) ),
 			$callback,
 			NULL,
 			'normal',
@@ -4248,7 +4248,7 @@ class Module extends Base
 			return;
 
 		add_meta_box( 'postexcerpt', // same as core to override
-			$this->get_string( 'excerpt_metabox', $constant, 'misc', __( 'Excerpt' ) ),
+			$this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) ),
 			$callback,
 			NULL,
 			'normal',
