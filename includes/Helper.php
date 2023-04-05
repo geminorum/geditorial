@@ -497,21 +497,25 @@ class Helper extends Main
 
 	public static function renderEditorStatusInfo( $target )
 	{
-		$html = '<div data-target="'.$target.'" class="-status-count hide-if-no-js">';
+		echo '<div class="-wrap -editor-status-info">';
 
-		/* translators: %s: words count */
-		$html.= sprintf( _x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
-			'<span class="word-count">'.Number::format( '0' ).'</span>' );
+			echo '<div data-target="'.$target.'" class="-status-count hide-if-no-js">';
 
-		$html.= ' | ';
+				/* translators: %s: words count */
+				printf( _x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
+					'<span class="word-count">'.Number::format( '0' ).'</span>' );
 
-		/* translators: %s: chars count */
-		$html.= sprintf( _x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
-			'<span class="char-count">'.Number::format( '0' ).'</span>' );
+				echo '&nbsp;|&nbsp;';
 
-		$html.= '</div>';
+				/* translators: %s: chars count */
+				printf( _x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
+					'<span class="char-count">'.Number::format( '0' ).'</span>' );
 
-		echo HTML::wrap( $html, '-editor-status-info' );
+			echo '</div>';
+
+			do_action( static::BASE.'_editor_status_info', $target );
+
+		echo '</div>';
 	}
 
 	// MOVE TO: `Strings`
