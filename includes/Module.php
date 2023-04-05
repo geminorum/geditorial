@@ -6109,11 +6109,11 @@ class Module extends Base
 		if ( empty( $icons['taxonomies'] ) )
 			return $info;
 
-		foreach ( $icons['taxonomies'] as $tax => $icon )
-			if ( $object->name == $this->constant( $tax ) )
+		foreach ( $icons['taxonomies'] as $constant => $icon )
+			if ( $object->name == $this->constant( $constant ) )
 				return [
 					'icon'  => is_null( $icon ) ? $this->module->icon : $icon,
-					'title' => $this->get_column_title( 'tweaks', $tax ),
+					'title' => $this->get_column_title( 'tweaks', $constant, $object->labels->name ),
 					'edit'  => NULL,
 				];
 
