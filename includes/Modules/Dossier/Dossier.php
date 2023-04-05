@@ -242,7 +242,7 @@ class Dossier extends gEditorial\Module
 
 				$this->class_metabox( $screen, 'listbox' );
 				add_meta_box( $this->classs( 'listbox' ),
-					$this->get_meta_box_title( 'dossier_paired' ),
+					$this->get_meta_box_title_taxonomy( 'dossier_paired', $screen->post_type, FALSE ),
 					[ $this, 'render_listbox_metabox' ],
 					$screen,
 					'advanced',

@@ -306,7 +306,7 @@ class Magazine extends gEditorial\Module
 
 				$this->class_metabox( $screen, 'listbox' );
 				add_meta_box( $this->classs( 'listbox' ),
-					$this->get_meta_box_title( 'issue_tax' ),
+					$this->get_meta_box_title_taxonomy( 'issue_tax', $screen->post_type, FALSE ),
 					[ $this, 'render_listbox_metabox' ],
 					$screen,
 					'advanced',

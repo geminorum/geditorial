@@ -277,7 +277,7 @@ class Venue extends gEditorial\Module
 
 				$this->class_metabox( $screen, 'listbox' );
 				add_meta_box( $this->classs( 'listbox' ),
-					$this->get_meta_box_title( 'place_tax' ),
+					$this->get_meta_box_title_taxonomy( 'place_tax', $screen->post_type, FALSE ),
 					[ $this, 'render_listbox_metabox' ],
 					$screen,
 					'advanced',

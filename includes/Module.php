@@ -4298,9 +4298,9 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial' ) );
 
-		// FIXME: problems with block editor
-		return $title; // <--
+		return $title; // <-- // FIXME: problems with block editor
 
+		// TODO: 'metabox_icon'
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
 
@@ -4322,19 +4322,27 @@ class Module extends Base
 		return $title;
 	}
 
-	public function get_meta_box_title_tax( $constant, $posttype, $url = NULL, $title = NULL )
+	public function get_meta_box_title_taxonomy( $constant, $posttype, $url = NULL, $title = NULL )
 	{
-		if ( is_null( $title ) )
-			$title = $this->get_taxonomy_label( $constant );
+		$object = Taxonomy::object( $this->constant( $constant ) );
 
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
+
+		if ( is_null( $title ) && ! empty( $object->labels->metabox_title ) )
+			$title = $object->labels->metabox_title;
+
+		if ( is_null( $title ) )
+			$title = $object->labels->name;
+
+		return $title; // <-- // FIXME: problems with block editor
+
+		// TODO: 'metabox_icon'
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
 
-		// FIXME: problems with block editor
-		return $title; // <--
-
 		if ( is_null( $url ) )
-			$url = WordPress::getEditTaxLink( $this->constant( $constant ), FALSE, [ 'post_type' => $posttype ] );
+			$url = WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $posttype ] );
 
 		if ( $url ) {
 			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );

@@ -117,7 +117,7 @@ class Specs extends gEditorial\Module
 
 			$this->class_metabox( $screen, 'supportedbox' );
 			add_meta_box( $this->classs( 'supportedbox' ),
-				$this->get_meta_box_title_tax( 'specs_tax', $screen->post_type ),
+				$this->get_meta_box_title_taxonomy( 'specs_tax', $screen->post_type ),
 				[ $this, 'render_supportedbox_metabox' ],
 				$screen,
 				'side',
