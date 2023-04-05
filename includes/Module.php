@@ -3213,6 +3213,9 @@ class Module extends Base
 		else if ( '__checklist_reverse_terms_callback' === $args['meta_box_cb'] )
 			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_reverse_terms_cb' ];
 
+		else if ( '__checklist_restricted_terms_callback' === $args['meta_box_cb'] )
+			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_restricted_terms_cb' ];
+
 		else if ( '__singleselect_terms_callback' === $args['meta_box_cb'] )
 			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_singleselect_terms_cb' ];
 
@@ -3277,6 +3280,25 @@ class Module extends Base
 
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ], $terms );
+		echo '</div>';
+	}
+
+	// DEFAULT CALLBACK for `__checklist_restricted_terms_callback`
+	public function taxonomy_meta_box_checklist_restricted_terms_cb( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		$args = [
+			'taxonomy' => $box['args']['taxonomy'],
+			'posttype' => $post->post_type,
+		];
+
+		if ( $this->role_can( 'restricted', NULL, FALSE, FALSE ) )
+			$args['role'] = $this->get_setting( 'restricted', 'disabled' );
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::checklistTerms( $post->ID, $args );
 		echo '</div>';
 	}
 

@@ -196,6 +196,7 @@ class Audit extends gEditorial\Module
 			'rewrite'            => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'meta_box_cb'        => '__checklist_restricted_terms_callback',
 		], NULL, TRUE );
 
 		$this->filter( 'map_meta_cap', 4 );
@@ -515,24 +516,6 @@ class Audit extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
-	}
-
-	public function meta_box_cb_main_taxonomy( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		$args = [
-			'taxonomy' => $box['args']['taxonomy'],
-			'posttype' => $post->post_type,
-		];
-
-		if ( $this->role_can( 'restricted', NULL, FALSE, FALSE ) )
-			$args['role'] = $this->get_setting( 'restricted', 'disabled' );
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $args );
-		echo '</div>';
 	}
 
 	public function tools_settings( $sub )
