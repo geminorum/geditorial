@@ -847,6 +847,10 @@ class Helper extends Main
 		if ( ! array_key_exists( 'metabox_title', $pre ) )
 			$pre['metabox_title'] = $strings[0];
 
+		if ( ! array_key_exists( 'desc_field_title', $pre ) )
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			$pre['desc_field_title'] = vsprintf( _x( 'Description', 'Helper: Tax Generator', 'geditorial' ), $strings );
+
 		if ( ! array_key_exists( 'uncategorized', $pre ) )
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			$pre['uncategorized'] = vsprintf( _x( 'Uncategorized', 'Helper: Tax Generator', 'geditorial' ), $strings );
