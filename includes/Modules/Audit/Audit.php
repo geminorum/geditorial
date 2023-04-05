@@ -196,6 +196,7 @@ class Audit extends gEditorial\Module
 			'rewrite'            => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
+			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => '__checklist_restricted_terms_callback',
 		], NULL, TRUE );
 
@@ -480,6 +481,8 @@ class Audit extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
+			$this->filter_string( 'parent_file', 'options-general.php' );
+
 			if ( 'edit-tags' == $screen->base ) {
 
 				$this->filter( 'taxonomy_empty_terms', 2, 8, FALSE, 'gnetwork' );
@@ -498,6 +501,16 @@ class Audit extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
+	}
+
+	public function admin_menu()
+	{
+		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
+	}
+
+	public function get_adminmenu( $page = TRUE, $extra = [] )
+	{
+		return FALSE;
 	}
 
 	protected function get_taxonomies_for_restrict_manage_posts()
