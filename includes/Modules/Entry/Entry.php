@@ -80,7 +80,8 @@ class Entry extends gEditorial\Module
 			],
 			'labels' => [
 				'section_tax' => [
-					'uncategorized' => _x( 'Unsectioned', 'Taxonomy Label', 'geditorial-entry' ),
+					'column_title'  => _x( 'Section', 'Label: Column Title', 'geditorial-entry' ),
+					'uncategorized' => _x( 'Unsectioned', 'Label: Uncategorized', 'geditorial-entry' ),
 				]
 			],
 			'defaults' => [
@@ -284,7 +285,7 @@ class Entry extends gEditorial\Module
 	public function manage_posts_columns( $columns )
 	{
 		return Arraay::insert( $columns, [
-			'taxonomy-'.$this->constant( 'section_tax' ) => $this->get_column_title( 'section', 'entry_cpt' ),
+			'taxonomy-'.$this->constant( 'section_tax' ) => $this->get_column_title_taxonomy( 'section_tax', $this->constant( 'entry_cpt' ) ),
 		], 'cb', 'after' );
 	}
 

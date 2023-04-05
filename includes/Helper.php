@@ -743,6 +743,9 @@ class Helper extends Main
 		if ( ! array_key_exists( 'name_admin_bar', $pre ) )
 			$pre['name_admin_bar'] = $strings[1];
 
+		if ( ! array_key_exists( 'column_title', $pre ) )
+			$pre['column_title'] = $strings[0];
+
 		if ( ! array_key_exists( 'metabox_title', $pre ) )
 			$pre['metabox_title'] = $strings[0];
 
@@ -843,6 +846,9 @@ class Helper extends Main
 		if ( ! array_key_exists( 'most_used', $pre ) )
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', 'geditorial' ), $strings );
+
+		if ( ! array_key_exists( 'column_title', $pre ) )
+			$pre['column_title'] = $strings[0];
 
 		if ( ! array_key_exists( 'metabox_title', $pre ) )
 			$pre['metabox_title'] = $strings[0];

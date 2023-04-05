@@ -4390,6 +4390,26 @@ class Module extends Base
 		return $this->filters( 'column_title', $title, $column, $constant, $fallback );
 	}
 
+	public function get_column_title_posttype( $constant, $taxonomy = FALSE, $fallback = NULL )
+	{
+		$object = PostType::object( $this->constant( $constant ) );
+		$title  = empty( $object->labels->column_title )
+			? ( is_null( $fallback ) ? $object->labels->name : $fallback )
+			: $object->labels->column_title;
+
+		return $this->filters( 'column_title', $title, $taxonomy, $constant, $fallback );
+	}
+
+	public function get_column_title_taxonomy( $constant, $posttype = FALSE, $fallback = NULL )
+	{
+		$object = Taxonomy::object( $this->constant( $constant ) );
+		$title  = empty( $object->labels->column_title )
+			? ( is_null( $fallback ) ? $object->labels->name : $fallback )
+			: $object->labels->column_title;
+
+		return $this->filters( 'column_title', $title, $posttype, $constant, $fallback );
+	}
+
 	public function get_column_title_icon( $column, $constant = NULL, $fallback = NULL )
 	{
 		$title = $this->get_column_title( $column, $constant, $fallback );
