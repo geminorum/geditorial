@@ -58,7 +58,7 @@ class SelectSingle extends Main
 				$queried['posttype'] = explode( ',', $queried['posttype'] );
 
 				foreach ( $queried['posttype'] as $index => $posttype )
-					if ( ! PostType::viewable( $posttype ) ) // && ! PostType::can( $posttype, 'read' ) )
+					if ( ! PostType::can( $posttype, 'read' ) )
 						unset( $queried['posttype'][$index] );
 
 				// again check if any left!
