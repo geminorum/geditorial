@@ -199,6 +199,17 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function posttypesParents( $extra = [], $context = 'settings' )
+	{
+		$list = [
+			'human',
+			'team_member',
+			'department',
+		];
+
+		return apply_filters( static::BASE.'_posttypes_parents', array_merge( $list, (array) $extra ), $context );
+	}
+
 	public static function posttypesExcluded( $extra = [], $context = 'settings' )
 	{
 		$list = [
@@ -735,6 +746,18 @@ class Settings extends Core\Base
 			'field'       => 'posttype_pages',
 			'title'       => _x( 'Pages', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: _x( 'Supports pagination on the supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+		];
+	}
+
+	public static function getSetting_posttypes_parents( $description = NULL, $values = [], $empty = NULL )
+	{
+		return [
+			'field'        => 'posttypes_parents',
+			'type'         => 'checkboxes-values',
+			'title'        => _x( 'Parent Post-types', 'Settings: Setting Title', 'geditorial' ),
+			'description'  => $description ?: _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial' ),
+			'string_empty' => $empty ?: _x( 'There are no parents available!', 'Settings: Setting Empty String', 'geditorial' ),
+			'values'       => $values,
 		];
 	}
 

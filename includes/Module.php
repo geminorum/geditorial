@@ -942,6 +942,12 @@ class Module extends Base
 		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra ) );
 	}
 
+	// DEFAULT METHOD
+	protected function posttypes_parents( $extra = [] )
+	{
+		return $this->filters( 'posttypes_parents', Settings::posttypesParents( $extra ) );
+	}
+
 	// enabled post types for this module
 	public function posttypes( $posttypes = NULL )
 	{
@@ -3898,6 +3904,31 @@ class Module extends Base
 			$form.= '<input type="hidden" name="'.HTML::escape( $name ).'" value="'.HTML::escape( $value ).'" />';
 
 		return $form.'</form>';
+	}
+
+	/**
+	 * Gets posttype parents for use in settings.
+	 *
+	 * @param  array $extra_excludes
+	 * @param  bool  $filtered
+	 * @return array $rols
+	 */
+	protected function get_settings_posttypes_parents( $extra = [], $capability = NULL )
+	{
+		$list       = [];
+		$posttypes = PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
+
+		foreach ( $this->posttypes_parents( $extra ) as $posttype ) {
+
+			if ( array_key_exists( $posttype, $posttypes ) )
+				$list[$posttype] = $posttypes[$posttype];
+
+			// only if no checks required
+			else if ( is_null( $capability ) && post_type_exists( $posttype ) )
+				$list[$posttype] = $posttype;
+		}
+
+		return $list;
 	}
 
 	/**
