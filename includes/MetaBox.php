@@ -552,7 +552,7 @@ class MetaBox extends Main
 			'name'             => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
 			'id'               => ( $prefix ? $prefix.'-' : '' ).$posttype.'-'.( $selected ? $selected : '0' ),
 			'class'            => static::BASE.'-admin-dropbown',
-			'show_option_none' => Settings::showOptionNone(),
+			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_select' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
@@ -627,7 +627,9 @@ class MetaBox extends Main
 		if ( is_null( $posttype ) )
 			$posttype = $post->post_type;
 
-		if ( $check && ! PostType::object( $posttype )->hierarchical )
+		$object = PostType::object( $posttype );
+
+		if ( $check && ! $object->hierarchical )
 			return;
 
 		$args = [
@@ -635,7 +637,7 @@ class MetaBox extends Main
 			'selected'          => $post->post_parent,
 			'name'              => is_null( $name ) ? 'parent_id' : $name,
 			'class'             => static::BASE.'-admin-dropbown',
-			'show_option_none'  => _x( '&ndash; no parent &ndash;', 'MetaBox: Parent Dropdown: Select Option None', 'geditorial' ),
+			'show_option_none'  => Helper::getPostTypeLabel( $object, 'show_option_parent' ),
 			'sort_column'       => 'menu_order, post_title',
 			'sort_order'        => 'desc',
 			'post_status'       => $statuses,
@@ -704,7 +706,7 @@ class MetaBox extends Main
 		$terms = wp_dropdown_categories( [
 			'taxonomy'          => $taxonomy,
 			'selected'          => $selected,
-			'show_option_none'  => Settings::showOptionNone( $obj->labels->menu_name ),
+			'show_option_none'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' ),
 			'option_none_value' => '0',
 			'class'             => static::BASE.'-admin-dropbown',
 			'name'              => 'tax_input['.$taxonomy.'][]',

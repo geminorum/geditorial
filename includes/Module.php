@@ -4020,13 +4020,15 @@ class Module extends Base
 		$taxonomy  = $this->constant( $tax_constant );
 		$terms     = Taxonomy::getPostTerms( $taxonomy, $post );
 		$none_def  = Settings::showOptionNone();
-		$none_main = $this->get_string( 'show_option_none', $posttype_constant, 'misc', $none_def );
+		// $none_main = $this->get_string( 'show_option_none', $posttype_constant, 'misc', $none_def ); // FIXME: `show_option_select`
+		$none_main = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
 		$prefix    = $this->classs();
 
 		if ( $sub_tax_constant && $this->get_setting( 'subterms_support' ) ) {
 
 			$sub_tax  = $this->constant( $sub_tax_constant );
-			$none_sub = $this->get_string( 'show_option_none', $sub_tax_constant, 'misc', $none_def );
+			// $none_sub = $this->get_string( 'show_option_none', $sub_tax_constant, 'misc', $none_def ); // FIXME: `show_option_select`
+			$none_sub = Helper::getTaxonomyLabel( $sub_tax, 'show_option_select' );
 			$subterms = Taxonomy::getPostTerms( $sub_tax, $post );
 		}
 
@@ -5339,11 +5341,7 @@ class Module extends Base
 			if ( FALSE !== $selected && ! in_array( $taxonomy, (array) $selected ) )
 				continue;
 
-			Listtable::restrictByTaxonomy(
-				$taxonomy,
-				$this->get_string( 'show_option_all', $constant, 'misc', NULL ),
-				$this->get_string( 'show_option_none', $constant, 'misc', NULL )
-			);
+			Listtable::restrictByTaxonomy( $taxonomy );
 		}
 	}
 
@@ -5385,11 +5383,7 @@ class Module extends Base
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
 			foreach ( (array) $taxes as $constant )
-				Listtable::restrictByTaxonomy(
-					$this->constant( $constant ),
-					$this->get_string( 'show_option_all', $constant, 'misc', NULL ),
-					$this->get_string( 'show_option_none', $constant, 'misc', NULL )
-				);
+				Listtable::restrictByTaxonomy( $this->constant( $constant ) );
 		}
 	}
 
@@ -5718,7 +5712,7 @@ class Module extends Base
 
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
-			$none = $this->get_string( 'show_option_none', $constant, 'misc', sprintf( '(%s)', $object->labels->no_terms ) );
+			$none = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
 			$not  = Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 
 			foreach ( $not as $type => $count ) {

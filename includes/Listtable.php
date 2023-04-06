@@ -102,7 +102,7 @@ SQL;
 	// TODO: our own `wp_dropdown_categories()` using cutom walker
 	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
 	// ALSO: trim term titles
-	public static function restrictByTaxonomy( $taxonomy, $option_all = NULL, $option_none = NULL )
+	public static function restrictByTaxonomy( $taxonomy )
 	{
 		global $wp_query;
 
@@ -122,10 +122,10 @@ SQL;
 		}
 
 		wp_dropdown_categories( [
-			'show_option_all'  => is_null( $option_all ) ? $object->labels->all_items : $option_all,
-			'show_option_none' => is_null( $option_none ) ? '('.$object->labels->no_terms.')' : $option_none,
 			'taxonomy'         => $taxonomy,
 			'name'             => $object->name,
+			'show_option_all'  => Helper::getTaxonomyLabel( $object, 'show_option_all' ),
+			'show_option_none' => Helper::getTaxonomyLabel( $object, 'show_option_no_items' ),
 			'orderby'          => 'name',
 			'value_field'      => 'slug',
 			'selected'         => $selected,
@@ -147,7 +147,7 @@ SQL;
 			'selected'         => isset( $_GET[$taxonomy] ) ? $_GET[$taxonomy] : '',
 			'name'             => $taxonomy,
 			'class'            => static::BASE.'-admin-dropbown',
-			'show_option_none' => is_null( $option_all ) ? $object->labels->all_items : $option_all,
+			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_all' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],

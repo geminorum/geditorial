@@ -425,7 +425,7 @@ class Audit extends gEditorial\Module
 				$nodes[] = [
 					'id'     => $this->classs( 'attribute', 0 ),
 					'parent' => $classs,
-					'title'  => $this->get_string( 'show_option_none', 'main_taxonomy', 'misc' ),
+					'title'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_no_items' ),
 					'href'   => FALSE,
 					'meta'   => [ 'class' => '-danger '.$classs ],
 				];

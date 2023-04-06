@@ -768,6 +768,30 @@ class Helper extends Main
 		return $pre;
 	}
 
+	public static function getPostTypeLabel( $posttype, $label, $fallback_key = 'name' )
+	{
+		if ( ! $object = PostType::object( $posttype ) )
+			return $label;
+
+		if ( isset( $object->labels->{$label} ) )
+			return $object->labels->{$label};
+
+		switch ( $label ) {
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			case 'show_option_no_items': return vsprintf( x_( '(No %3$s)', 'Helper: PostType Label: `show_option_no_items`', 'geditorial' ),
+				self::getStringsFromName( [ 'plural' => $object->labels->name, 'singular' => $object->labels->singular_name ] ) );
+			case 'show_option_all'     : return $object->labels->all_items;
+			case 'show_option_none'    : return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
+			case 'show_option_parent'  : return sprintf( '&ndash; %s &ndash;', trim( $object->labels->parent_item_colon, ':' ) );
+			case 'show_option_select'  : return sprintf( '&ndash; %s &ndash;', $object->labels->name );
+		}
+
+		if ( isset( $object->labels->{$fallback_key} ) )
+			return $object->labels->{$fallback_key};
+
+		return $label;
+	}
+
 	/**
 	 * %1$s => Camel Case / Plural   : Tags
 	 * %2$s => Camel Case / Singular : Tag
@@ -866,6 +890,28 @@ class Helper extends Main
 			$pre['uncategorized'] = vsprintf( _x( 'Uncategorized', 'Helper: Tax Generator', 'geditorial' ), $strings );
 
 		return $pre;
+	}
+
+	public static function getTaxonomyLabel( $taxonomy, $label, $fallback_key = 'name' )
+	{
+		if ( ! $object = Taxonomy::object( $taxonomy ) )
+			return $label;
+
+		if ( isset( $object->labels->{$label} ) )
+			return $object->labels->{$label};
+
+		switch ( $label ) {
+			case 'show_option_no_items': return sprintf( '(%s)', $object->labels->no_terms );
+			case 'show_option_all'     : return $object->labels->all_items;
+			case 'show_option_none'    : return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
+			case 'show_option_parent'  : return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );
+			case 'show_option_select'  : return sprintf( '&ndash; %s &ndash;', $object->labels->name );
+		}
+
+		if ( isset( $object->labels->{$fallback_key} ) )
+			return $object->labels->{$fallback_key};
+
+		return $label;
 	}
 
 	/**
