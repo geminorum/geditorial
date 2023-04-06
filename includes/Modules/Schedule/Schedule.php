@@ -13,6 +13,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Status;
 
 class Schedule extends gEditorial\Module
 {
@@ -50,7 +51,7 @@ class Schedule extends gEditorial\Module
 					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Setting Description', 'geditorial-schedule' ),
 					'default'     => [ 'publish', 'future', 'private' ],
 					'exclude'     => [ 'trash', 'inherit', 'auto-draft' ],
-					'values'      => PostType::getStatuses(),
+					'values'      => Status::get(),
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -303,7 +304,7 @@ class Schedule extends gEditorial\Module
 		}
 
 		if ( is_null( $this->posttype_statuses ) )
-			$this->posttype_statuses = PostType::getStatuses();
+			$this->posttype_statuses = Status::get();
 
 		if ( ! isset( $this->posttype_icons[$post->post_type] ) )
 			$this->posttype_icons[$post->post_type] = Helper::getPostTypeIcon( $post->post_type );

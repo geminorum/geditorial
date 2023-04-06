@@ -624,15 +624,4 @@ class Workflow extends gEditorial\Module
 
 		echo '</div>';
 	}
-
-	public function tools_settings( $sub )
-	{
-		$this->check_settings( $sub, 'tools' );
-	}
-
-	protected function render_tools_html( $uri, $sub )
-	{
-		foreach( get_post_stati( [], 'objects' ) as $status )
-			self::dump($status);
-	}
 }

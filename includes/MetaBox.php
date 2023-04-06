@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Status;
 use geminorum\gEditorial\WordPress\User;
 
 class MetaBox extends Main
@@ -384,7 +385,7 @@ class MetaBox extends Main
 			return FALSE;
 
 		$html     = '';
-		$statuses = PostType::getStatuses();
+		$statuses = Status::get();
 
 		if ( TRUE === $title )
 			$html.= HTML::tag( 'h4', Tablelist::getTermTitleRow( $term ) );
@@ -523,7 +524,7 @@ class MetaBox extends Main
 			return '';
 
 		if ( is_null( $none ) )
-			$none = Settings::showOptionNone();
+			$none = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
 
 		$html = $none ? HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
 		$html.= walk_page_dropdown_tree( $posts, 0, [

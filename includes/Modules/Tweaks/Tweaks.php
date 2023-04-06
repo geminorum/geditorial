@@ -13,6 +13,7 @@ use geminorum\gEditorial\Core\Icon;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress\Status;
 use geminorum\gEditorial\WordPress\User;
 
 class Tweaks extends gEditorial\Module
@@ -798,7 +799,7 @@ class Tweaks extends gEditorial\Module
 
 	public function column_attr_author( $post )
 	{
-		if ( ! isset( $this->_site_user_id ) )
+		if ( empty( $this->_site_user_id ) )
 			$this->_site_user_id = gEditorial()->user();
 
 		if ( $post->post_author == $this->_site_user_id )
@@ -823,8 +824,8 @@ class Tweaks extends gEditorial\Module
 
 	public function column_attr_status( $post )
 	{
-		if ( ! isset( $this->_post_statuses ) )
-			$this->_post_statuses = PostType::getStatuses();
+		if ( empty( $this->_post_statuses ) )
+			$this->_post_statuses = Status::get();
 
 		if ( isset( $this->_post_statuses[$post->post_status] ) )
 			$status = HTML::escape( $this->_post_statuses[$post->post_status] );

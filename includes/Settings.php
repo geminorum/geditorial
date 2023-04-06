@@ -11,6 +11,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Status;
 use geminorum\gEditorial\WordPress\User;
 
 class Settings extends Core\Base
@@ -481,7 +482,7 @@ class Settings extends Core\Base
 			'title'       => _x( 'Post Status', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => 'pending',
-			'values'      => Arraay::stripByKeys( PostType::getStatuses(), [
+			'values'      => Arraay::stripByKeys( Status::get(), [
 				'future',
 				'auto-draft',
 				'inherit',

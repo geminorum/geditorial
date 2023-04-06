@@ -18,6 +18,7 @@ use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress\Status;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\WooCommerce;
 use geminorum\gEditorial\Services\Paired;
@@ -326,7 +327,7 @@ class Helper extends Main
 
 		if ( $status ) {
 
-			$statuses = TRUE === $status ? PostType::getStatuses() : $status;
+			$statuses = TRUE === $status ? Status::get() : $status;
 
 			if ( 'publish' != $post->post_status ) {
 
@@ -495,6 +496,7 @@ class Helper extends Main
 		return gEditorial()->user( $fallback );
 	}
 
+	// TODO: `line-count`
 	public static function renderEditorStatusInfo( $target )
 	{
 		echo '<div class="-wrap -editor-status-info">';

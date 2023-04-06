@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Status;
 
 class Tablelist extends Main
 {
@@ -290,7 +291,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'args'     => [ 'statuses' => PostType::getStatuses() ],
+			'args'     => [ 'statuses' => Status::get() ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
 
 				$title = PostType::getPostTitle( $row );
@@ -355,7 +356,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Status', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'args'     => [ 'statuses' => PostType::getStatuses() ],
+			'args'     => [ 'statuses' => Status::get() ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 				if ( ! $row->post_status )

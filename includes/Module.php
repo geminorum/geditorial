@@ -1028,7 +1028,7 @@ class Module extends Base
 		$this->filter_append( $hook, $this->constant( $constant ) );
 	}
 
-	// enabled post types for this module
+	// enabled taxonomies for this module
 	public function taxonomies( $taxonomies = NULL )
 	{
 		if ( is_null( $taxonomies ) )
@@ -3150,9 +3150,12 @@ class Module extends Base
 		];
 	}
 
+	// WTF: the core default term system is messed-up!
 	// @REF: https://core.trac.wordpress.org/ticket/43517
 	protected function _get_taxonomy_default_term( $constant, $passed_arg = NULL )
 	{
+		return FALSE; // FIXME <------------------------------------------------
+
 		// disabled by settings
 		if ( is_null( $passed_arg ) && ! $this->get_setting( 'assign_default_term' ) )
 			return FALSE;
@@ -4070,14 +4073,12 @@ class Module extends Base
 		$taxonomy  = $this->constant( $tax_constant );
 		$terms     = Taxonomy::getPostTerms( $taxonomy, $post );
 		$none_def  = Settings::showOptionNone();
-		// $none_main = $this->get_string( 'show_option_none', $posttype_constant, 'misc', $none_def ); // FIXME: `show_option_select`
 		$none_main = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
 		$prefix    = $this->classs();
 
 		if ( $sub_tax_constant && $this->get_setting( 'subterms_support' ) ) {
 
 			$sub_tax  = $this->constant( $sub_tax_constant );
-			// $none_sub = $this->get_string( 'show_option_none', $sub_tax_constant, 'misc', $none_def ); // FIXME: `show_option_select`
 			$none_sub = Helper::getTaxonomyLabel( $sub_tax, 'show_option_select' );
 			$subterms = Taxonomy::getPostTerms( $sub_tax, $post );
 		}
