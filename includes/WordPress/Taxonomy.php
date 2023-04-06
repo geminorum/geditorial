@@ -7,14 +7,39 @@ use geminorum\gEditorial\Core;
 class Taxonomy extends Core\Base
 {
 
+	const TARGET_TAXONOMIES_PROP = 'target_taxonomies';
+
 	public static function object( $taxonomy )
 	{
+		if ( ! $taxonomy )
+			return $taxonomy;
+
 		return is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
 	}
 
 	public static function viewable( $taxonomy )
 	{
+		if ( ! $taxonomy )
+			return $taxonomy;
+
 		return is_taxonomy_viewable( $taxonomy );
+	}
+
+	/**
+	 * Determines whether the taxonomy object is hierarchical.
+	 * Also accepts taxonomy object.
+	 *
+	 * @source `is_taxonomy_hierarchical()`
+	 *
+	 * @param  string|object $taxonomy
+	 * @return bool $hierarchical
+	 */
+	public static function hierarchical( $taxonomy )
+	{
+		if ( $object = self::object( $taxonomy ) )
+			return $object->hierarchical;
+
+		return FALSE;
 	}
 
 	public static function can( $taxonomy, $capability = 'manage_terms', $user_id = NULL )
@@ -915,23 +940,86 @@ class Taxonomy extends Core\Base
 		return $wpdb->get_var( $query );
 	}
 
-	public static function getEmptyTermIDs( $taxonomy, $check_description = FALSE )
+	/**
+	 * Retrieves children of taxonomy as term IDs.
+	 * without option save and accepts taxonomy object.
+	 *
+	 * @source `_get_term_hierarchy()`
+	 *
+	 * @param  string|object $taxonomy
+	 * @return array $children
+	 */
+	public static function getHierarchy( $taxonomy )
+	{
+		if ( ! self::hierarchical( $taxonomy ) )
+			return [];
+
+		$children = [];
+		$terms    = get_terms( [
+			'taxonomy'   => self::object( $taxonomy )->name,
+			'get'        => 'all',
+			'orderby'    => 'id',
+			'fields'     => 'id=>parent',
+			'hide_empty' => FALSE, // FIXME: WTF?!
+
+			'update_term_meta_cache' => FALSE,
+		] );
+
+		foreach ( $terms as $term_id => $parent )
+			if ( $parent > 0 )
+				$children[$parent][] = $term_id;
+
+		return $children;
+	}
+
+	public static function getEmptyTermIDs( $taxonomy, $check_description = FALSE, $max = 0, $min = 0 )
 	{
 		global $wpdb;
 
-		$query = "
+		$query = $wpdb->prepare( "
 			SELECT t.term_id
 			FROM {$wpdb->terms} AS t
 			INNER JOIN {$wpdb->term_taxonomy} AS tt
 			ON t.term_id = tt.term_id
 			WHERE tt.taxonomy IN ( '".implode( "', '", esc_sql( (array) $taxonomy ) )."' )
-			AND tt.count < 1
-		";
+			AND tt.count < %d
+			AND tt.count > %d
+		", ( ( (int) $max ) + 1 ), ( ( (int) $min ) - 1 ) );
 
 		if ( $check_description )
 			$query.= " AND (TRIM(COALESCE(tt.description, '')) = '') ";
 
 		return $wpdb->get_col( $query );
+	}
+
+	/**
+	 * Retrieves terms with no children.
+	 *
+	 * @param  string|object $taxonomy
+	 * @param  array $extra
+	 * @return array $list
+	 */
+	public static function listChildLessTerms( $taxonomy, $fields = NULL, $extra = [] )
+	{
+		if ( ! $object = self::object( $taxonomy ) )
+			return FALSE;
+
+		$args = array_merge( [
+			'taxonomy'   => $object->name,
+			'hide_empty' => FALSE,
+
+			'fields'  => is_null( $fields ) ? 'id=>name' : $fields,
+			'orderby' => 'none',
+
+			'suppress_filter'        => TRUE,
+			'update_term_meta_cache' => FALSE,
+		], $extra );
+
+		if ( $hierarchy = self::getHierarchy( $object ) )
+			$args['exclude'] = implode( ', ', array_keys( $hierarchy ) );
+
+		$query = new \WP_Term_Query();
+		return $query->query( $args );
 	}
 
 	public static function addSupport( $taxonomy, $features )
@@ -1057,6 +1145,24 @@ class Taxonomy extends Core\Base
 			return __( '(Untitled)' );
 
 		return $fallback;
+	}
+
+	public static function getTargetTaxonomies( $taxonomy, $fallback = FALSE )
+	{
+		$targets = [];
+
+		if ( $object = self::object( $taxonomy ) ) {
+
+			if ( ! empty( $object->{self::TARGET_TAXONOMIES_PROP} ) ) {
+
+				foreach ( (array) $object->{self::TARGET_TAXONOMIES_PROP} as $target )
+
+					if ( taxonomy_exists( $target ) )
+						$targets[] = $target;
+			}
+		}
+
+		return apply_filters( 'geditorial_taxonomy_target_taxonomies', $targets ?: $fallback, $taxonomy, $fallback );
 	}
 
 	public static function disableTermCounting()

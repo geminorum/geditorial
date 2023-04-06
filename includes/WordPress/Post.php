@@ -31,6 +31,23 @@ class Post extends Core\Base
 	}
 
 	/**
+	 * Determines whether a post is publicly viewable.
+	 *
+	 * @source `is_post_publicly_viewable()` @since WP5.7.0
+	 *
+	 * @param  int|WP_Post|null $post
+	 * @return bool $viewable
+	 */
+	public static function viewable( $post = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		return PostType::viewable( $post->post_type )
+			&& Status::viewable( get_post_status( $post ) );
+	}
+
+	/**
 	 * Retrieves a post given its title.
 	 *
 	 * @see `get_page_by_title()`

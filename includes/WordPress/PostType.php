@@ -23,26 +23,12 @@ class PostType extends Core\Base
 		return get_post_type_object( $posttype_or_post );
 	}
 
-	// TODO: also passing a post
 	public static function viewable( $posttype )
 	{
-		return is_post_type_viewable( $posttype );
-	}
-
-	// TODO: also passing a post
-	public static function viewableStatus( $status )
-	{
-		return is_post_status_viewable( $status );
-	}
-
-	// @REF: `is_post_publicly_viewable()` @since WP5.7.0
-	public static function viewablePost( $post )
-	{
-		if ( ! $post = self::getPost( $post ) )
+		if ( ! $posttype )
 			return FALSE;
 
-		return self::viewable( $post->post_type )
-			&& self::viewableStatus( get_post_status( $post ) );
+		return is_post_type_viewable( $posttype );
 	}
 
 	/**
@@ -81,11 +67,15 @@ class PostType extends Core\Base
 		if ( is_null( $capability ) )
 			return TRUE;
 
-		$cap = self::object( $posttype )->cap->{$capability};
+		if ( ! $object = self::object( $posttype ) )
+			return FALSE;
+
+		if ( ! isset( $object->cap->{$capability} ) )
+			return FALSE;
 
 		return is_null( $user_id )
-			? current_user_can( $cap )
-			: user_can( $user_id, $cap );
+			? current_user_can( $object->cap->{$capability} )
+			: user_can( $user_id, $object->cap->{$capability} );
 	}
 
 	/**
@@ -106,8 +96,8 @@ class PostType extends Core\Base
 	 *  `show_in_rest` Boolean: If true, will return post types whitelisted for the REST API
 	 * 	`_builtin` Boolean: If true, will return WordPress default post types. Use false to return only custom post types.
 	 *
-	 * @param  int    $mod
-	 * @param  array  $args
+	 * @param  int $mod
+	 * @param  array $args
 	 * @param  null|string $capability
 	 * @param  int $user_id
 	 * @return array $list
@@ -164,6 +154,7 @@ class PostType extends Core\Base
 	// * 'private' - not visible to users who are not logged in
 	// * 'inherit' - a revision. see get_children.
 	// * 'trash' - post is in trashbin. added with Version 2.9.
+	// FIXME: DEPRECATED
 	public static function getStatuses()
 	{
 		global $wp_post_statuses;
@@ -658,7 +649,7 @@ class PostType extends Core\Base
 
 		$status = get_post_status( $post );
 
-		if ( is_null( $statuses ) && ! is_post_status_viewable( $status ) )
+		if ( is_null( $statuses ) && ! Status::viewable( $status ) )
 			return $fallback;
 
 		if ( $statuses && ! in_array( $status, (array) $statuses, TRUE ) )
