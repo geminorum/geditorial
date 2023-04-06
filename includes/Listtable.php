@@ -104,12 +104,11 @@ SQL;
 	// ALSO: trim term titles
 	public static function restrictByTaxonomy( $taxonomy )
 	{
-		global $wp_query;
-
 		if ( ! $object = get_taxonomy( $taxonomy ) )
 			return;
 
-		$selected = isset( $wp_query->query[$taxonomy] ) ? $wp_query->query[$taxonomy] : '';
+		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
 
 		// if selected is term_id instead of term slug
 		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
@@ -122,10 +121,10 @@ SQL;
 		}
 
 		wp_dropdown_categories( [
-			'taxonomy'         => $taxonomy,
-			'name'             => $object->name,
 			'show_option_all'  => Helper::getTaxonomyLabel( $object, 'show_option_all' ),
 			'show_option_none' => Helper::getTaxonomyLabel( $object, 'show_option_no_items' ),
+			'taxonomy'         => $object->name,
+			'name'             => $query_var,
 			'orderby'          => 'name',
 			'value_field'      => 'slug',
 			'selected'         => $selected,
@@ -144,10 +143,23 @@ SQL;
 		if ( ! $object = get_taxonomy( $taxonomy ) )
 			return;
 
+		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
+
+		// if selected is term_id instead of term slug
+		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
+
+			if ( $term = get_term_by( 'id', $selected, $taxonomy ) )
+				$selected = $term->slug;
+
+			else
+				$selected = '';
+		}
+
 		wp_dropdown_pages( [
 			'post_type'        => $posttype,
-			'selected'         => isset( $_GET[$taxonomy] ) ? $_GET[$taxonomy] : '',
-			'name'             => $taxonomy,
+			'selected'         => $selected,
+			'name'             => $query_var,
 			'class'            => static::BASE.'-admin-dropbown',
 			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_all' ),
 			'sort_column'      => 'menu_order',
