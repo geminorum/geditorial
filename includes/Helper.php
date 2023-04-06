@@ -776,14 +776,28 @@ class Helper extends Main
 		if ( isset( $object->labels->{$label} ) )
 			return $object->labels->{$label};
 
+		$name = [
+			'plural'   => $object->labels->name,
+			'singular' => $object->labels->singular_name,
+		];
+
 		switch ( $label ) {
-			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
-			case 'show_option_no_items': return vsprintf( x_( '(No %3$s)', 'Helper: PostType Label: `show_option_no_items`', 'geditorial' ),
-				self::getStringsFromName( [ 'plural' => $object->labels->name, 'singular' => $object->labels->singular_name ] ) );
-			case 'show_option_all'     : return $object->labels->all_items;
-			case 'show_option_none'    : return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
-			case 'show_option_parent'  : return sprintf( '&ndash; %s &ndash;', trim( $object->labels->parent_item_colon, ':' ) );
-			case 'show_option_select'  : return sprintf( '&ndash; %s &ndash;', $object->labels->name );
+			case 'show_option_no_items':
+				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+				return vsprintf( _x( '(No %3$s)', 'Helper: PostType Label: `show_option_no_items`', 'geditorial' ), self::getStringsFromName( $name ) );
+
+			case 'show_option_select':
+				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+				return vsprintf( _x( '&ndash; Select %2$s &ndash;', 'Helper: PostType Label: `show_option_select`', 'geditorial' ), self::getStringsFromName( $name ) );
+
+			case 'show_option_all':
+				return $object->labels->all_items;
+
+			case 'show_option_none':
+				return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
+
+			case 'show_option_parent':
+				return sprintf( '&ndash; %s &ndash;', trim( $object->labels->parent_item_colon, ':' ) );
 		}
 
 		if ( isset( $object->labels->{$fallback_key} ) )
@@ -900,12 +914,27 @@ class Helper extends Main
 		if ( isset( $object->labels->{$label} ) )
 			return $object->labels->{$label};
 
+		$name = [
+			'plural'   => $object->labels->name,
+			'singular' => $object->labels->singular_name,
+		];
+
 		switch ( $label ) {
-			case 'show_option_no_items': return sprintf( '(%s)', $object->labels->no_terms );
-			case 'show_option_all'     : return $object->labels->all_items;
-			case 'show_option_none'    : return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
-			case 'show_option_parent'  : return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );
-			case 'show_option_select'  : return sprintf( '&ndash; %s &ndash;', $object->labels->name );
+			case 'show_option_no_items':
+				return sprintf( '(%s)', $object->labels->no_terms );
+
+			case 'show_option_select':
+				/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+				return vsprintf( _x( '&ndash; Select %2$s &ndash;', 'Helper: Taxonomy Label: `show_option_select`', 'geditorial' ), self::getStringsFromName( $name ) );
+
+			case 'show_option_all':
+				return $object->labels->all_items;
+
+			case 'show_option_none':
+				return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
+
+			case 'show_option_parent':
+				return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );
 		}
 
 		if ( isset( $object->labels->{$fallback_key} ) )
