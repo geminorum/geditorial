@@ -838,6 +838,7 @@ class MetaBox extends Main
 			'ltr'         => FALSE,
 			'taxonomy'    => FALSE,
 			'posttype'    => FALSE,
+			'role'        => FALSE,
 			'group'       => 'general',
 			'order'       => 1000,
 		];
@@ -1065,6 +1066,7 @@ class MetaBox extends Main
 				'query-target'   => 'post',
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
+				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
 
 				'selectsingle-placeholder' => $args['title'],
 			],
@@ -1117,6 +1119,7 @@ class MetaBox extends Main
 				'query-target'   => 'post',
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
+				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
 
 				'selectsingle-placeholder' => $args['title'],
 			],
@@ -1169,6 +1172,61 @@ class MetaBox extends Main
 				'query-target'   => 'term',
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
+				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
+
+				'selectsingle-placeholder' => $args['title'],
+			],
+		];
+
+		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+
+		return Services\SelectSingle::enqueue();
+	}
+
+
+	public static function renderFieldUser( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = PostType::getPost( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$html = '';
+		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		if ( $value = self::getPostMeta( $post->ID, $args['name'], '' ) )
+			$html.= HTML::tag( 'option', [
+				'selected' => TRUE,
+				'value'    => $value,
+			], User::getTitleRow( (int) $value, sprintf( _x( 'Uknown User #%s', 'MetaBox: Title Attr', 'geditorial' ), $value ) ) );
+
+		$atts = [
+			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title' => $args['title'],
+			'class' => [
+				sprintf( '%s-selectsingle', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'],
+
+				'query-target'   => 'user',
+				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
+				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
+				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
 
 				'selectsingle-placeholder' => $args['title'],
 			],

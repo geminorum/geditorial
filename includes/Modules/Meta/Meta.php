@@ -670,6 +670,11 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::renderFieldPostParent( $args, $post );
 					break;
 
+				case 'user':
+
+					ModuleMetaBox::renderFieldUser( $args, $post );
+					break;
+
 				case 'post':
 
 					ModuleMetaBox::renderFieldPost( $args, $post );

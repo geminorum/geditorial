@@ -79,6 +79,7 @@
               target: el.data('query-target'),
               posttype: el.data('query-posttype'),
               taxonomy: el.data('query-taxonomy'),
+              role: el.data('query-role'),
               page: params.page || 1
             };
           }

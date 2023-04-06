@@ -2055,6 +2055,7 @@ class Module extends Base
 				'ltr'         => FALSE,
 				'taxonomy'    => FALSE,
 				'posttype'    => NULL,
+				'role'        => FALSE,
 				'group'       => 'general',
 				'order'       => 1000 + $i,
 			], $args );
@@ -2131,6 +2132,16 @@ class Module extends Base
 			case 'post':
 
 				if ( ! empty( $data ) && ( $object = get_post( (int) $data ) ) )
+					$sanitized = $object->ID;
+
+				else
+					$sanitized = FALSE;
+
+				break;
+
+			case 'user':
+
+				if ( ! empty( $data ) && ( $object = get_user_by( 'id', (int) $data ) ) )
 					$sanitized = $object->ID;
 
 				else
