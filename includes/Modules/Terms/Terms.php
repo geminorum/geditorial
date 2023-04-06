@@ -765,7 +765,7 @@ class Terms extends gEditorial\Module
 					if ( array_key_exists( $meta, $dirs ) )
 						$icon = HTML::getDashicon( sprintf( 'arrow-%s-alt', $meta ), $dirs[$meta], 'icon-arrow' );
 					else
-						$icon = HTML::getDashicon( 'warning', $meta, 'icon-warning' );
+						$icon = HTML::getDashicon( 'warning', $meta, '-icon-warning' );
 
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
 
@@ -1298,7 +1298,7 @@ class Terms extends gEditorial\Module
 				$html.= HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
 					'id'       => $this->classs( $field, 'id' ),
 					'name'     => 'term-'.$field,
-					'selected' => empty( $meta ) ? 'undefined' : $meta,
+					'selected' => empty( $meta ) ? '0' : $meta,
 				] );
 
 				break;
@@ -1456,7 +1456,7 @@ class Terms extends gEditorial\Module
 
 				$html.= HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
 					'name'     => 'term-'.$field,
-					'selected' => 'undefined',
+					'selected' => '0',
 				] );
 
 				break;

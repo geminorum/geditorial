@@ -131,7 +131,6 @@ class Book extends gEditorial\Module
 			'serie_tax'            => 'publication_serie',
 			'library_tax'          => 'publication_library',
 			'publisher_tax'        => 'publication_publisher',
-			// 'publisher_tax_slug'   => 'publishers',              // FIXME: add settings fot this!
 			'type_tax'             => 'publication_type',
 			'status_tax'           => 'publication_status',
 			'size_tax'             => 'publication_size',
@@ -185,8 +184,9 @@ class Book extends gEditorial\Module
 			],
 			'labels' => [
 				'publication_cpt' => [
-					'author_label'  => _x( 'Curator', 'Label: Author Label', 'geditorial-book' ),
-					'excerpt_label' => _x( 'Summary', 'Label: Excerpt Label', 'geditorial-book' ),
+					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-book' ),
+					'author_label'   => _x( 'Curator', 'Label: Author Label', 'geditorial-book' ),
+					'excerpt_label'  => _x( 'Summary', 'Label: Excerpt Label', 'geditorial-book' ),
 				],
 			],
 			'p2p' => [
@@ -225,60 +225,6 @@ class Book extends gEditorial\Module
 		$strings['dashboard'] = [
 			'current' => [ 'widget_title' => _x( 'Your Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
 			'all'     => [ 'widget_title' => _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
-		];
-
-		$strings['metabox'] = [
-			'publication_cpt' => [
-				'metabox_title' => _x( 'Publications', 'MetaBox Title', 'geditorial-book' ),
-			],
-			'publication_paired' => [
-				'metabox_title' => _x( 'Connected', 'MetaBox Title', 'geditorial-book' ),
-			],
-		];
-
-		$strings['misc'] = [
-			'publication_cpt' => [
-				'featured'               => _x( 'Cover Image', 'Posttype Featured', 'geditorial-book' ),
-				'meta_box_title'         => _x( 'Metadata', 'MetaBox Title', 'geditorial-book' ),
-				'cover_column_title'     => _x( 'Cover', 'Column Title', 'geditorial-book' ),
-				'connected_column_title' => _x( 'Connected', 'Column Title', 'geditorial-book' ),
-			],
-			'publication_category' => [
-				'meta_box_title'      => _x( 'Category', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Category', 'Column Title', 'geditorial-book' ),
-			],
-			'subject_tax' => [
-				'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Subject', 'Column Title', 'geditorial-book' ),
-			],
-			'serie_tax' => [
-				'meta_box_title'      => _x( 'Serie', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Serie', 'Column Title', 'geditorial-book' ),
-			],
-			'library_tax' => [
-				'meta_box_title'      => _x( 'Library', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Library', 'Column Title', 'geditorial-book' ),
-			],
-			'publisher_tax' => [
-				'meta_box_title'      => _x( 'Publisher', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Publisher', 'Column Title', 'geditorial-book' ),
-			],
-			'status_tax' => [
-				'meta_box_title'      => _x( 'Status', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Status', 'Column Title', 'geditorial-book' ),
-			],
-			'type_tax' => [
-				'meta_box_title'      => _x( 'Type', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Type', 'Column Title', 'geditorial-book' ),
-			],
-			'size_tax' => [
-				'meta_box_title'      => _x( 'Size', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Size', 'Column Title', 'geditorial-book' ),
-			],
-			'audience_tax' => [
-				'meta_box_title'      => _x( 'Audience', 'MetaBox Title', 'geditorial-book' ),
-				'tweaks_column_title' => _x( 'Publication Audience', 'Column Title', 'geditorial-book' ),
-			],
 		];
 
 		$strings['terms'] = [

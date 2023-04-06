@@ -597,7 +597,7 @@ class Like extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Likes', 'Header', 'geditorial-like' ) ),
-			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
+			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

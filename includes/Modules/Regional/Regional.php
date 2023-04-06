@@ -92,8 +92,8 @@ class Regional extends gEditorial\Module
 				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-regional' ),
 			],
 
-			'show_option_all'  => _x( 'Language', 'Show Option All', 'geditorial-regional' ),
-			'show_option_none' => _x( '(Uknonwn Language)', 'Show Option None', 'geditorial-regional' ),
+			// 'show_option_all'  => _x( 'Language', 'Show Option All', 'geditorial-regional' ),
+			// 'show_option_none' => _x( '(Uknonwn Language)', 'Show Option None', 'geditorial-regional' ),
 		];
 
 		$strings['terms'] = [

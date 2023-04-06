@@ -101,8 +101,9 @@ class Today extends gEditorial\Module
 			],
 			'labels' => [
 				'day_cpt' => [
-					'metabox_title' => _x( 'The Day', 'Label: MetaBox Label', 'geditorial-today' ),
-					'excerpt_label' => _x( 'Summary', 'MetaBox Title', 'geditorial-today' ),
+					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-today' ),
+					'metabox_title'  => _x( 'The Day', 'Label: MetaBox Label', 'geditorial-today' ),
+					'excerpt_label'  => _x( 'Summary', 'MetaBox Title', 'geditorial-today' ),
 				],
 			],
 		];
@@ -111,7 +112,7 @@ class Today extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'featured' => _x( 'Cover Image', 'Posttype Featured', 'geditorial-today' ),
+			'theday_column_title' => _x( 'Day', 'Column Title', 'geditorial-today' ),
 		];
 
 		return $strings;

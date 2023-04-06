@@ -102,8 +102,8 @@ class Countables extends gEditorial\Module
 				'count'     => $count,
 				'formatted' => $args['counter'] ? '' : Number::format( $count ),
 				'link'      => $args['link'] ?: PostType::getArchiveLink( $posttype ),
-				'title'     => is_null( $args['title'] ) ? $this->get_posttype_label( $posttype, 'name' ) : trim( $args['title'] ),
-				'text'      => $content ? trim( $content ) : $this->get_posttype_label( $posttype, 'description' ),
+				'title'     => is_null( $args['title'] ) ? Helper::getPostTypeLabel( $posttype, 'name' ) : trim( $args['title'] ),
+				'text'      => $content ? trim( $content ) : Helper::getPostTypeLabel( $posttype, 'description' ),
 			], $posttype, $count, $args );
 
 			$box  = Text::replaceTokens( $args['template'], $tokens );

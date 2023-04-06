@@ -57,9 +57,10 @@ class Module extends Base
 	protected $features  = [];
 	protected $fields    = [];
 
-	protected $partials        = [];
-	protected $partials_remote = [];
-	protected $view_engines    = [];
+	protected $partials         = [];
+	protected $partials_remote  = [];
+	protected $view_engines     = [];
+	protected $process_disabled = [];
 
 	protected $imports_datafile = '';
 
@@ -73,8 +74,6 @@ class Module extends Base
 	protected $scripts = [];
 	protected $buttons = [];
 	protected $errors  = [];
-
-	protected $process_disabled = [];
 
 	protected $caps = [
 		'default'   => 'manage_options',
@@ -729,7 +728,12 @@ class Module extends Base
 				'post_status' => [ 'publish', 'future', 'draft' ],
 			] );
 
-		echo '</div></div></div>';
+		echo '</div>';
+
+			/* translators: %s: posttype name */
+			HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial' ), $object->labels->name ) );
+
+		echo '</div></div>';
 
 		$this->enqueue_asset_js( [
 			'strings' => [
@@ -982,7 +986,7 @@ class Module extends Base
 
 	public function is_post_viewable( $post = NULL )
 	{
-		return $this->filters( 'is_post_viewable', PostType::viewablePost( $post ), PostType::getPost( $post ) );
+		return $this->filters( 'is_post_viewable', Post::viewable( $post ), PostType::getPost( $post ) );
 	}
 
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
@@ -1001,7 +1005,7 @@ class Module extends Base
 				$pre[$posttype] = $all[$posttype];
 
 			// only if no checks required
-			else if ( is_null( $capability ) )
+			else if ( is_null( $capability ) && post_type_exists( $posttype ) )
 				$pre[$posttype] = $posttype;
 		}
 
@@ -2026,6 +2030,9 @@ class Module extends Base
 				&& array_key_exists( 'type', $args ) )
 					$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 
+			// TODO: migrate!
+			// $args = PostTypeFields::getFieldDefaults( $field, $args );
+
 			if ( ! isset( $args['icon'] ) )
 				$args['icon'] = $this->get_posttype_field_icon( $field, $posttype, $args );
 
@@ -2134,7 +2141,7 @@ class Module extends Base
 			case 'term':
 
 				// TODO: use `Taxonomy::getTerm( $data, $field['taxonomy'] )`
-				$sanitized = empty( $data ) ? NULL : (int) $data;
+				$sanitized = empty( $data ) ? FALSE : (int) $data;
 
 			break;
 
@@ -2887,16 +2894,17 @@ class Module extends Base
 
 		// DEPRECATED: back-comp
 		if ( $author_metabox = $this->get_string( 'author_metabox', $constant, 'misc', NULL ) )
-			$labels['author_metabox'] = $author_metabox;
+			$labels['author_label'] = $author_metabox;
 
 		// DEPRECATED: back-comp
 		if ( $excerpt_metabox = $this->get_string( 'excerpt_metabox', $constant, 'misc', NULL ) )
-			$labels['excerpt_metabox'] = $excerpt_metabox;
+			$labels['excerpt_label'] = $excerpt_metabox;
 
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return Helper::generatePostTypeLabels(
 				$this->strings['noops'][$constant],
-				$this->get_string( 'featured', $constant, 'misc', NULL ), //FIXME: move this out of `misc`
+				// DEPRECATED: back-comp: use `labels->featured_image`
+				$this->get_string( 'featured', $constant, 'misc', NULL ),
 				$labels,
 				$this->constant( $constant )
 			);
@@ -4883,9 +4891,11 @@ class Module extends Base
 		if ( ! $count )
 			return;
 
+		$title = $this->get_posttype_label( $posttype_key, 'column_title', $this->constant( $posttype_key ) );
+
 		echo '<li class="-row -'.$this->key.' -connected">';
 
-			echo $this->get_column_icon( FALSE, NULL, $this->get_column_title( 'connected', $posttype_key ) );
+			echo $this->get_column_icon( FALSE, NULL, $title );
 
 			$posttypes = array_unique( array_map( function( $r ){
 				return $r->post_type;
@@ -6180,6 +6190,7 @@ class Module extends Base
 		return $info;
 	}
 
+	// MAYBE: move to `Visual` Main
 	public function get_posttype_field_icon( $field, $posttype = 'post', $args = [] )
 	{
 		switch ( $field ) {
@@ -6495,6 +6506,7 @@ class Module extends Base
 	}
 
 	// TODO: customize column position/sorting
+	// FIXME: WTF?!
 	protected function _hook_terms_meta_field( $constant, $field, $args = [] )
 	{
 		if ( ! gEditorial()->enabled( 'terms' ) )

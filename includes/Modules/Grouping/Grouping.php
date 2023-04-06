@@ -163,7 +163,9 @@ class Grouping extends gEditorial\Module
 	{
 		add_filter( 'manage_edit-'.$taxonomy.'_columns', function( $columns ) use ( $taxonomy ) {
 			unset( $columns['posts'] );
-			return array_merge( $columns, [ 'users' => $this->get_column_title( 'users', $taxonomy, _x( 'Users', 'Column Title', 'geditorial-grouping' ) ) ] );
+			return array_merge( $columns, [
+				'users' => $this->get_column_title( 'users', $taxonomy, _x( 'Users', 'Column Title', 'geditorial-grouping' ) ),
+			] );
 		} );
 
 		add_action( 'manage_'.$taxonomy.'_custom_column', static function( $display, $column, $term_id ) use ( $taxonomy ) {

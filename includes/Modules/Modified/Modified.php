@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
@@ -11,7 +12,6 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\PostType;
 
 class Modified extends gEditorial\Module
@@ -146,7 +146,7 @@ class Modified extends gEditorial\Module
 		$columns['modified'] = Tablelist::columnPostDateModified();
 
 		HTML::tableList( $columns, $query->query( $args ), [
-			'empty' => $this->get_posttype_label( 'post', 'not_found' ),
+			'empty' => Helper::getPostTypeLabel( 'post', 'not_found' ),
 		] );
 	}
 

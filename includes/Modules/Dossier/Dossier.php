@@ -111,32 +111,26 @@ class Dossier extends gEditorial\Module
 				'span_taxonomy'    => _n_noop( 'Span', 'Spans', 'geditorial-dossier' ),
 				'section_taxonomy' => _n_noop( 'Section', 'Sections', 'geditorial-dossier' ),
 			],
+			'labels' => [
+				'dossier_posttype' => [
+					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-dossier' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
+		$strings['metabox'] = [
 			'dossier_posttype' => [
-				'featured'         => _x( 'Cover Image', 'Posttype Featured', 'geditorial-dossier' ),
-				'show_option_none' => _x( '&ndash; Select Dossier &ndash;', 'Select Option None', 'geditorial-dossier' ),
+				'metabox_title' => _x( 'The Dossier', 'MetaBox Title', 'geditorial-dossier' ),
 			],
 			'dossier_paired' => [
-				'meta_box_title' => _x( 'In This Dossier', 'MetaBox Title', 'geditorial-dossier' ),
+				'metabox_title' => _x( 'In This Dossier', 'MetaBox Title', 'geditorial-dossier' ),
 			],
-			'span_taxonomy' => [
-				'meta_box_title'      => _x( 'Spans', 'MetaBox Title', 'geditorial-dossier' ),
-				'tweaks_column_title' => _x( 'Dossier Spans', 'Column Title', 'geditorial-dossier' ),
-			],
-			'section_taxonomy' => [
-				'meta_box_title'      => _x( 'Sections', 'MetaBox Title', 'geditorial-dossier' ),
-				'tweaks_column_title' => _x( 'Dossier Sections', 'Column Title', 'geditorial-dossier' ),
-				'show_option_none'    => _x( '&ndash; Select Section &ndash;', 'Select Option None', 'geditorial-dossier' ),
-			],
-			'meta_box_title'         => _x( 'The Dossier', 'MetaBox Title', 'geditorial-dossier' ),
-			'tweaks_column_title'    => _x( 'Dossiers', 'Column Title', 'geditorial-dossier' ),
-			'connected_column_title' => _x( 'Connected Items', 'Column Title', 'geditorial-dossier' ),
 		];
+
+		// $strings['misc'] = [];
 
 		return $strings;
 	}

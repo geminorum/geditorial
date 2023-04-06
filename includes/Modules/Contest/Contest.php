@@ -117,41 +117,32 @@ class Contest extends gEditorial\Module
 				'apply_cat'   => _n_noop( 'Apply Category', 'Apply Categories', 'geditorial-contest' ),
 				'status_tax'  => _n_noop( 'Apply Status', 'Apply Statuses', 'geditorial-contest' ),
 			],
+			'labels' => [
+				'contest_cpt' => [
+					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-contest' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
+		$strings['metabox'] = [
 			'contest_cpt' => [
-				'featured'              => _x( 'Poster Image', 'Posttype Featured', 'geditorial-contest' ),
-				'meta_box_title'        => _x( 'Metadata', 'MetaBox Title', 'geditorial-contest' ),
-				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
-				'show_option_none'      => _x( '&ndash; Select Contest &ndash;', 'Select Option None', 'geditorial-contest' ),
+				'metabox_title' => _x( 'The Contest', 'MetaBox Title', 'geditorial-contest' ),
 			],
 			'contest_tax' => [
-				'meta_box_title' => _x( 'In This Contest', 'MetaBox Title', 'geditorial-contest' ),
-			],
-			'contest_cat' => [
-				'tweaks_column_title' => _x( 'Contest Categories', 'Column Title', 'geditorial-contest' ),
-			],
-			'section_tax' => [
-				'meta_box_title'      => _x( 'Sections', 'MetaBox Title', 'geditorial-contest' ),
-				'tweaks_column_title' => _x( 'Contest Sections', 'Column Title', 'geditorial-contest' ),
-				'show_option_none'    => _x( '&ndash; Select Section &ndash;', 'Select Option None', 'geditorial-contest' ),
+				'metabox_title' => _x( 'In This Contest', 'MetaBox Title', 'geditorial-contest' ),
 			],
 			'apply_cpt' => [
-				'meta_box_title' => _x( 'Contest', 'MetaBox Title', 'geditorial-contest' ),
+				'metabox_title' => _x( 'Contest', 'MetaBox Title', 'geditorial-contest' ),
 			],
-			'apply_cat' => [
-				'tweaks_column_title' => _x( 'Apply Categories', 'Column Title', 'geditorial-contest' ),
+		];
+
+		$strings['misc'] = [
+			'contest_cpt' => [
+				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
 			],
-			'status_tax' => [
-				'meta_box_title'      => _x( 'Apply Statuses', 'MetaBox Title', 'geditorial-contest' ),
-				'tweaks_column_title' => _x( 'Apply Statuses', 'Column Title', 'geditorial-contest' ),
-			],
-			'meta_box_title'      => _x( 'Contests', 'MetaBox Title', 'geditorial-contest' ),
-			'tweaks_column_title' => _x( 'Contests', 'Column Title', 'geditorial-contest' ),
 		];
 
 		$strings['terms'] = [

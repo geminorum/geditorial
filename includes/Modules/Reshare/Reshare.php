@@ -29,7 +29,7 @@ class Reshare extends gEditorial\Module
 			'_supports' => [
 				'assign_default_term',
 				'thumbnail_support',
-				$this->settings_supports_option( 'reshare_posttype', [
+				$this->settings_supports_option( 'primary_posttype', [
 					'title',
 					'editor',
 					'excerpt',
@@ -48,8 +48,8 @@ class Reshare extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'reshare_posttype'  => 'reshare',
-			'category_taxonomy' => 'reshare_category',
+			'primary_posttype' => 'reshare',
+			'primary_taxonomy' => 'reshare_category',
 
 			'o2o_name' => 'reshares_to_posts',
 		];
@@ -59,7 +59,7 @@ class Reshare extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'category_taxonomy' => NULL,
+				'primary_taxonomy' => NULL,
 			],
 		];
 	}
@@ -67,40 +67,37 @@ class Reshare extends gEditorial\Module
 	protected function get_global_strings()
 	{
 		return [
-			'misc' => [
-				'tweaks_column_title' => _x( 'Reshare Categories', 'Column Title', 'geditorial-reshare' ),
-			],
 			'noops' => [
-				'reshare_posttype'  => _n_noop( 'Reshare', 'Reshares', 'geditorial-reshare' ),
-				'category_taxonomy' => _n_noop( 'Reshare Category', 'Reshare Categories', 'geditorial-reshare' ),
+				'primary_posttype' => _n_noop( 'Reshare', 'Reshares', 'geditorial-reshare' ),
+				'primary_taxonomy' => _n_noop( 'Reshare Category', 'Reshare Categories', 'geditorial-reshare' ),
 			],
 		];
 	}
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'reshare_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'primary_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'reshare_posttype' );
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'category_taxonomy', [
+		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'reshare_posttype' );
+		], 'primary_posttype' );
 
-		$this->register_posttype( 'reshare_posttype', [
-			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
+		$this->register_posttype( 'primary_posttype', [
+			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
 		] );
 	}
 
@@ -108,8 +105,8 @@ class Reshare extends gEditorial\Module
 	{
 		$this->_o2o = O2O\API::registerConnectionType( [
 			'name' => $this->constant( 'o2o_name' ),
-			'from' => $this->constant( 'reshare_posttype' ),
-			'to'   => $this->posttypes( 'reshare_posttype' ),
+			'from' => $this->constant( 'primary_posttype' ),
+			'to'   => $this->posttypes( 'primary_posttype' ),
 
 			'reciprocal' => TRUE,
 		] );
@@ -117,7 +114,7 @@ class Reshare extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'reshare_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -137,12 +134,12 @@ class Reshare extends gEditorial\Module
 
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
-		return [ 'category_taxonomy' ];
+		return [ 'primary_taxonomy' ];
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'reshare_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -150,11 +147,11 @@ class Reshare extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'reshare_posttype' ) );
+		return array_merge( $messages, $this->get_post_updated_messages( 'primary_posttype' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'reshare_posttype', $counts ) );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'primary_posttype', $counts ) );
 	}
 }

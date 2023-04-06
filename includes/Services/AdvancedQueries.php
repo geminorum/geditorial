@@ -7,6 +7,8 @@ use geminorum\gEditorial\WordPress\Main;
 class AdvancedQueries extends Main
 {
 
+	// TODO: support pipe (|) as `or` operator in search criteria in admin/front
+
 	const BASE = 'geditorial';
 
 	public static function setup()

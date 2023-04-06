@@ -58,7 +58,7 @@ class SelectSingle extends Main
 				$queried['posttype'] = explode( ',', $queried['posttype'] );
 
 				foreach ( $queried['posttype'] as $index => $posttype )
-					if ( ! PostType::viewable( $posttype ) )
+					if ( ! PostType::viewable( $posttype ) ) // && ! PostType::can( $posttype, 'read' ) )
 						unset( $queried['posttype'][$index] );
 
 				// again check if any left!
@@ -121,7 +121,6 @@ class SelectSingle extends Main
 			// use only with persistent cache
 			// $args['post_status'] = Posttype::getAvailableStatuses( $args['post_type'] );
 			$args['post_status'] = [ 'publish', 'future', 'draft' ];
-
 
 		AdvancedQueries::hookSearchPostTitleOnly();
 

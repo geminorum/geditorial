@@ -133,6 +133,16 @@ class Event extends gEditorial\Module
 				'event_cal'  => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-event' ),
 			],
 			'labels' => [
+				'event_cat' => [
+					'menu_name'      => _x( 'Categories', 'Menu Title', 'geditorial-event' ),
+					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-event' ),
+				],
+				'event_type' => [
+					'menu_name' => _x( 'Types', 'Menu Title', 'geditorial-event' ),
+				],
+				'event_cal' => [
+					'menu_name' => _x( 'Calendars', 'Menu Title', 'geditorial-event' ),
+				],
 				'cal_type' => [
 					'name' => _x( 'Calendar Types', 'Taxonomy Label', 'geditorial-event' ),
 				],
@@ -142,27 +152,16 @@ class Event extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['metabox'] = [
+			'event_cpt' => [
+				'metabox_title' => _x( 'Date & Times', 'MetaBox Title', 'geditorial-event' ),
+			],
+		];
+
 		$strings['misc'] = [
 			'event_cpt' => [
-				'featured'                  => _x( 'Poster Image', 'Posttype Featured', 'geditorial-event' ),
-				'meta_box_title'            => _x( 'Date & Times', 'MetaBox Title', 'geditorial-event' ),
 				'event_starts_column_title' => _x( 'Starts', 'Column Title', 'geditorial-event' ),
 				'event_ends_column_title'   => _x( 'Ends', 'Column Title', 'geditorial-event' ),
-			],
-			'event_cat' => [
-				'menu_name'           => _x( 'Categories', 'Menu Title', 'geditorial-event' ),
-				'meta_box_title'      => _x( 'Event Categories', 'MetaBox Title', 'geditorial-event' ),
-				'tweaks_column_title' => _x( 'Event Categories', 'Column Title', 'geditorial-event' ),
-			],
-			'event_type' => [
-				'menu_name'           => _x( 'Types', 'Menu Title', 'geditorial-event' ),
-				'meta_box_title'      => _x( 'Event Types', 'MetaBox Title', 'geditorial-event' ),
-				'tweaks_column_title' => _x( 'Event Types', 'Column Title', 'geditorial-event' ),
-			],
-			'event_cal' => [
-				'menu_name'           => _x( 'Calendars', 'Menu Title', 'geditorial-event' ),
-				'meta_box_title'      => _x( 'Event Calendars', 'MetaBox Title', 'geditorial-event' ),
-				'tweaks_column_title' => _x( 'Event Calendars', 'Column Title', 'geditorial-event' ),
 			],
 		];
 

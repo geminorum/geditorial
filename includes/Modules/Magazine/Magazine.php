@@ -114,32 +114,21 @@ class Magazine extends gEditorial\Module
 				'span_tax'    => _n_noop( 'Span', 'Spans', 'geditorial-magazine' ),
 				'section_tax' => _n_noop( 'Section', 'Sections', 'geditorial-magazine' ),
 			],
+			'labels' => [
+				'issue_cpt' => [
+					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-magazine' ),
+					'metabox_title'  => _x( 'The Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
+				],
+				'issue_tax' => [
+					'metabox_title' => _x( 'In This Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
-			'issue_cpt' => [
-				'featured'         => _x( 'Cover Image', 'Posttype Featured', 'geditorial-magazine' ),
-				'show_option_none' => _x( '&ndash; Select Issue &ndash;', 'Select Option None', 'geditorial-magazine' ),
-			],
-			'issue_tax' => [
-				'meta_box_title' => _x( 'In This Issue', 'MetaBox Title', 'geditorial-magazine' ),
-			],
-			'span_tax' => [
-				'meta_box_title'      => _x( 'Spans', 'MetaBox Title', 'geditorial-magazine' ),
-				'tweaks_column_title' => _x( 'Issue Spans', 'Column Title', 'geditorial-magazine' ),
-			],
-			'section_tax' => [
-				'meta_box_title'      => _x( 'Sections', 'MetaBox Title', 'geditorial-magazine' ),
-				'tweaks_column_title' => _x( 'Issue Sections', 'Column Title', 'geditorial-magazine' ),
-				'show_option_none'    => _x( '&ndash; Select Section &ndash;', 'Select Option None', 'geditorial-magazine' ),
-			],
-			'meta_box_title'         => _x( 'The Issue', 'MetaBox Title', 'geditorial-magazine' ),
-			'tweaks_column_title'    => _x( 'Issues', 'Column Title', 'geditorial-magazine' ),
-			'connected_column_title' => _x( 'Connected Items', 'Column Title', 'geditorial-magazine' ),
-		];
+		// $strings['misc'] = [];
 
 		return $strings;
 	}

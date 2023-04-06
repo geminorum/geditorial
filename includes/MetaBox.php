@@ -879,9 +879,9 @@ class MetaBox extends Main
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
 			'data' => [
-				'meta-field'    => $args['name'],
-				'meta-type'     => $args['type'],
-				'meta-title'    => $args['title'],
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'],
 			],
 		];
 

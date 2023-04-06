@@ -86,27 +86,6 @@ class Inquire extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
-			'inquiry_cpt' => [
-				'menu_name'       => _x( 'Inquiries', 'Posttype Menu', 'geditorial-inquire' ),
-			],
-			'subject_tax' => [
-				'menu_name'           => _x( 'Subjects', 'Menu Title', 'geditorial-inquire' ),
-				'meta_box_title'      => _x( 'Subject', 'MetaBox Title', 'geditorial-inquire' ),
-				'tweaks_column_title' => _x( 'Inquiry Subject', 'Column Title', 'geditorial-inquire' ),
-			],
-			'status_tax' => [
-				'menu_name'           => _x( 'Statuses', 'Menu Title', 'geditorial-inquire' ),
-				'meta_box_title'      => _x( 'Status', 'MetaBox Title', 'geditorial-inquire' ),
-				'tweaks_column_title' => _x( 'Inquiry Status', 'Column Title', 'geditorial-inquire' ),
-			],
-			'priority_tax' => [
-				'menu_name'           => _x( 'Priorities', 'Menu Title', 'geditorial-inquire' ),
-				'meta_box_title'      => _x( 'Priority', 'MetaBox Title', 'geditorial-inquire' ),
-				'tweaks_column_title' => _x( 'Inquiry Priority', 'Column Title', 'geditorial-inquire' ),
-			],
-		];
-
 		$strings['terms'] = [
 			'status_tax' => [
 				'status_drafted'     => _x( 'Drafted', 'Default Term', 'geditorial-inquire' ),
@@ -195,14 +174,20 @@ class Inquire extends gEditorial\Module
 		$this->register_default_terms( 'priority_tax' );
 	}
 
-	// protected function get_module_templates()
-	// {
-	// 	return [
-	// 		'page_cpt' => [
-	// 			'main' => _x( 'Editorial: Inquire: Dashboard', 'Template Title', 'geditorial-inquire' ),
-	// 		],
-	// 	];
-	// }
+	public function after_setup_theme()
+	{
+		$this->filter_module( 'dashboard', 'pages' );
+		$this->action_module( 'dashboard', 'content_page_inquire', 1 );
+	}
+
+	protected function get_module_templates()
+	{
+		return [
+			'page_cpt' => [
+				'main' => _x( 'Editorial: Inquire: Dashboard', 'Template Title', 'geditorial-inquire' ),
+			],
+		];
+	}
 
 	public function current_screen( $screen )
 	{
@@ -294,5 +279,17 @@ class Inquire extends gEditorial\Module
 
 		else
 			echo HTML::wrap( Text::autoP( $post->post_excerpt ), '-excerpt -readonly' );
+	}
+
+	public function dashboard_pages( $pages )
+	{
+		return array_merge( $pages, [
+			$this->key => _x( 'Inquiries', 'Dashboard Title', 'geditorial-inquire' ),
+		] );
+	}
+
+	public function dashboard_content_page_inquire( $page )
+	{
+		// ModuleTemplate::templateMain();
 	}
 }

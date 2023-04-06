@@ -61,27 +61,18 @@ class Gallery extends gEditorial\Module
 				'album_cat' => _n_noop( 'Album Gallery', 'Album Galleries', 'geditorial-gallery' ),
 				'photo_tag' => _n_noop( 'Photo Tag', 'Photo Tags', 'geditorial-gallery' ),
 			],
+			'labels' => [
+				'album_cpt' => [
+					'menu_name'      => _x( 'Gallery', 'Label: Menu Name', 'geditorial-gallery' ),
+					'featured_image' => _x( 'Featured Photo', 'Label: Featured Image', 'geditorial-gallery' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
-			'album_cpt' => [
-				'menu_name' => _x( 'Gallery', 'Posttype Menu', 'geditorial-gallery' ),
-				'featured'  => _x( 'Featured Photo', 'Posttype Featured', 'geditorial-gallery' ),
-			],
-			'album_cat' => [
-				'tweaks_column_title' => _x( 'Album Galleries', 'Column Title', 'geditorial-gallery' ),
-			],
-			'photo_tag' => [
-				'tweaks_column_title' => _x( 'Photo Tags', 'Column Title', 'geditorial-gallery' ),
-			],
-		];
-
-		$strings['terms'] = [
-			'album_cat' => [],
-		];
+		// $strings['misc'] = [];
 
 		return $strings;
 	}
@@ -89,21 +80,6 @@ class Gallery extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'album_cpt' ) ] ) );
-	}
-
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['install_def_album_cats'] ) )
-			$this->insert_default_terms( 'album_cat' );
-
-		$this->help_tab_default_terms( 'album_cat' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		$this->register_button( 'install_def_album_cats', _x( 'Install Default Album Cats', 'Button', 'geditorial-gallery' ) );
 	}
 
 	public function after_setup_theme()
@@ -130,8 +106,6 @@ class Gallery extends gEditorial\Module
 		], [ 'attachments' ] );
 
 		$this->register_posttype( 'album_cpt' );
-
-		$this->register_default_terms( 'album_cat' );
 	}
 
 	public function current_screen( $screen )

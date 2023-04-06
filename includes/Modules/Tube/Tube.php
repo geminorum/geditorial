@@ -109,9 +109,6 @@ class Tube extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc']['video_cat']['tweaks_column_title']   = _x( 'Video Categories', 'Column Title', 'geditorial-tube' );
-		$strings['misc']['channel_cat']['tweaks_column_title'] = _x( 'Channel Categories', 'Column Title', 'geditorial-tube' );
-
 		$strings['p2p'] = [
 			'video_cpt' => [
 				'title' => [

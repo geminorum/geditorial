@@ -81,9 +81,8 @@ class Series extends gEditorial\Module
 				],
 			],
 			'misc' => [
-				'column_title'        => _x( 'Series', 'Column Title', 'geditorial-series' ),
-				'tweaks_column_title' => _x( 'Series', 'Column Title', 'geditorial-series' ),
-				'show_option_none'    => _x( '&ndash; Choose a Series &ndash;', 'Show Option None', 'geditorial-series' ),
+				'column_title'     => _x( 'Series', 'Column Title', 'geditorial-series' ),
+				'show_option_none' => _x( '&ndash; Choose a Series &ndash;', 'Show Option None', 'geditorial-series' ),
 			],
 			'noops' => [
 				'series_tax' => _n_noop( 'Serie', 'Series', 'geditorial-series' ),

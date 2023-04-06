@@ -327,7 +327,7 @@ class Importer extends gEditorial\Module
 		], $posts, [
 			/* translators: %s: count placeholder */
 			'title' => HTML::tag( 'h3', Strings::getCounted( count( $posts ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
-			'empty' => $this->get_posttype_label( $args['posttype'], 'not_found' ),
+			'empty' => Helper::getPostTypeLabel( $args['posttype'], 'not_found' ),
 		] );
 	}
 

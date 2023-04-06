@@ -787,7 +787,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'archive_content',
-			'type'        => 'text',
+			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Archive Content', 'Setting: Setting Title', 'geditorial' ),
 			/* translators: %s: zero placeholder */
 			'description' => $description ?: sprintf( _x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial' ), HTML::code( '0' ) ),

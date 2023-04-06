@@ -110,32 +110,21 @@ class Collect extends gEditorial\Module
 				'group_tax'      => _n_noop( 'Group', 'Groups', 'geditorial-collect' ),
 				'part_tax'       => _n_noop( 'Part', 'Parts', 'geditorial-collect' ),
 			],
+			'labels' => [
+				'collection_cpt' => [
+					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-collect' ),
+					'metabox_title'  => _x( 'The Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
+				],
+				'collection_tax' => [
+					'metabox_title' => _x( 'In This Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
-			'collection_cpt' => [
-				'featured'         => _x( 'Poster Image', 'Posttype Featured', 'geditorial-collect' ),
-				'show_option_none' => _x( '&ndash; Select Collection &ndash;', 'Select Option None', 'geditorial-collect' ),
-			],
-			'collection_tax' => [
-				'meta_box_title' => _x( 'In This Collection', 'MetaBox Title', 'geditorial-collect' ),
-			],
-			'group_tax' => [
-				'meta_box_title'      => _x( 'Groups', 'MetaBox Title', 'geditorial-collect' ),
-				'tweaks_column_title' => _x( 'Collection Groups', 'Column Title', 'geditorial-collect' ),
-			],
-			'part_tax' => [
-				'meta_box_title'      => _x( 'Parts', 'MetaBox Title', 'geditorial-collect' ),
-				'tweaks_column_title' => _x( 'Collection Parts', 'Column Title', 'geditorial-collect' ),
-				'show_option_none'    => _x( '&ndash; Select Part &ndash;', 'Select Option None', 'geditorial-collect' ),
-			],
-			'meta_box_title'         => _x( 'The Collection', 'MetaBox Title', 'geditorial-collect' ),
-			'tweaks_column_title'    => _x( 'Collections', 'Column Title', 'geditorial-collect' ),
-			'connected_column_title' => _x( 'Connected Items', 'Column Title', 'geditorial-collect' ),
-		];
+		// $strings['misc'] = [];
 
 		return $strings;
 	}

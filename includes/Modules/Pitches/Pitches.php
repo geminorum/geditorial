@@ -24,7 +24,7 @@ class Pitches extends gEditorial\Module
 			'_supports' => [
 				'assign_default_term',
 				'thumbnail_support',
-				$this->settings_supports_option( 'idea_posttype', [
+				$this->settings_supports_option( 'primary_posttype', [
 					'title',
 					'excerpt',
 					'author',
@@ -39,9 +39,9 @@ class Pitches extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'idea_posttype'     => 'idea',
-			'category_taxonomy' => 'idea_category',
-			'pool_taxonomy'     => 'idea_pool',
+			'primary_posttype' => 'idea',
+			'primary_taxonomy' => 'idea_category',
+			'primary_subterm'  => 'idea_pool',
 		];
 	}
 
@@ -49,8 +49,8 @@ class Pitches extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'category_taxonomy' => NULL,
-				'pool_taxonomy'     => 'clipboard',
+				'primary_taxonomy' => NULL,
+				'primary_subterm'  => 'clipboard',
 			],
 		];
 	}
@@ -59,59 +59,52 @@ class Pitches extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'idea_posttype'     => _n_noop( 'Idea', 'Ideas', 'geditorial-pitches' ),
-				'category_taxonomy' => _n_noop( 'Idea Category', 'Idea Categories', 'geditorial-pitches' ),
-				'pool_taxonomy'     => _n_noop( 'Idea Pool', 'Idea Pools', 'geditorial-pitches' ),
+				'primary_posttype' => _n_noop( 'Idea', 'Ideas', 'geditorial-pitches' ),
+				'primary_taxonomy' => _n_noop( 'Idea Category', 'Idea Categories', 'geditorial-pitches' ),
+				'primary_subterm'  => _n_noop( 'Idea Pool', 'Idea Pools', 'geditorial-pitches' ),
 			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
-			'category_taxonomy' => [
-				'tweaks_column_title' => _x( 'Idea Categories', 'Column Title', 'geditorial-pitches' ),
-			],
-			'pool_taxonomy' => [
-				'tweaks_column_title' => _x( 'Idea Pools', 'Column Title', 'geditorial-pitches' ),
-			],
-		];
+		// $strings['misc'] = [];
 
 		return $strings;
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'idea_posttype' );
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'category_taxonomy', [
+		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'idea_posttype' );
+		], 'primary_posttype' );
 
-		$this->register_taxonomy( 'pool_taxonomy', [
+		$this->register_taxonomy( 'primary_subterm', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'idea_posttype' );
+		], 'primary_posttype' );
 
-		$this->register_posttype( 'idea_posttype', [
-			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
+		$this->register_posttype( 'primary_posttype', [
+			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
 		] );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'idea_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -130,12 +123,12 @@ class Pitches extends gEditorial\Module
 
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
-		return [ 'category_taxonomy', 'pool_taxonomy' ];
+		return [ 'primary_taxonomy', 'primary_subterm' ];
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'idea_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -143,11 +136,11 @@ class Pitches extends gEditorial\Module
 
 	public function post_updated_messages( $messages )
 	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'idea_posttype' ) );
+		return array_merge( $messages, $this->get_post_updated_messages( 'primary_posttype' ) );
 	}
 
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'idea_posttype', $counts ) );
+		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'primary_posttype', $counts ) );
 	}
 }

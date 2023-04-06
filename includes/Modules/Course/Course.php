@@ -131,46 +131,32 @@ class Course extends gEditorial\Module
 				'format_tax' => _n_noop( 'Lesson Format', 'Lesson Formats', 'geditorial-course' ),
 				'status_tax' => _n_noop( 'Lesson Status', 'Lesson Statuses', 'geditorial-course' ),
 			],
+			'labels' => [
+				'course_cpt' => [
+					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-course' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
+		$strings['metabox'] = [
 			'course_cpt' => [
-				'featured'              => _x( 'Poster Image', 'Posttype Featured', 'geditorial-course' ),
-				'meta_box_title'        => _x( 'Metadata', 'MetaBox Title', 'geditorial-course' ),
-				'children_column_title' => _x( 'Lessons', 'Column Title', 'geditorial-course' ),
-				'show_option_none'      => _x( '&ndash; Select Course &ndash;', 'Select Option None', 'geditorial-course' ),
+				'metabox_title' => _x( 'The Course', 'MetaBox Title', 'geditorial-course' ),
 			],
 			'course_tax' => [
-				'meta_box_title' => _x( 'In This Course', 'MetaBox Title', 'geditorial-course' ),
-			],
-			'course_cat' => [
-				'tweaks_column_title' => _x( 'Course Categories', 'Column Title', 'geditorial-course' ),
-			],
-			'span_tax' => [
-				'meta_box_title'      => _x( 'Spans', 'MetaBox Title', 'geditorial-course' ),
-				'tweaks_column_title' => _x( 'Course Spans', 'Column Title', 'geditorial-course' ),
-			],
-			'topic_tax' => [
-				'meta_box_title'      => _x( 'Topics', 'MetaBox Title', 'geditorial-course' ),
-				'tweaks_column_title' => _x( 'Course Topics', 'Column Title', 'geditorial-course' ),
-				'show_option_none'    => _x( '&ndash; Select Topic &ndash;', 'Select Option None', 'geditorial-course' ),
+				'metabox_title' => _x( 'In This Course', 'MetaBox Title', 'geditorial-course' ),
 			],
 			'lesson_cpt' => [
-				'meta_box_title' => _x( 'Course', 'MetaBox Title', 'geditorial-course' ),
+				'metabox_title' => _x( 'Course', 'MetaBox Title', 'geditorial-course' ),
 			],
-			'format_tax' => [
-				'meta_box_title'      => _x( 'Lesson Format', 'MetaBox Title', 'geditorial-course' ),
-				'tweaks_column_title' => _x( 'Lesson Format', 'Column Title', 'geditorial-course' ),
+		];
+
+		$strings['misc'] = [
+			'course_cpt' => [
+				'children_column_title' => _x( 'Lessons', 'Column Title', 'geditorial-course' ),
 			],
-			'status_tax' => [
-				'meta_box_title'      => _x( 'Lesson Statuses', 'MetaBox Title', 'geditorial-course' ),
-				'tweaks_column_title' => _x( 'Lesson Statuses', 'Column Title', 'geditorial-course' ),
-			],
-			'meta_box_title'      => _x( 'Courses', 'MetaBox Title', 'geditorial-course' ),
-			'tweaks_column_title' => _x( 'Courses', 'Column Title', 'geditorial-course' ),
 		];
 
 		$strings['terms'] = [

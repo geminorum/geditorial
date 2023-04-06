@@ -80,8 +80,9 @@ class Entry extends gEditorial\Module
 			],
 			'labels' => [
 				'section_tax' => [
-					'column_title'  => _x( 'Section', 'Label: Column Title', 'geditorial-entry' ),
-					'uncategorized' => _x( 'Unsectioned', 'Label: Uncategorized', 'geditorial-entry' ),
+					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-entry' ),
+					'column_title'   => _x( 'Section', 'Label: Column Title', 'geditorial-entry' ),
+					'uncategorized'  => _x( 'Unsectioned', 'Label: Uncategorized', 'geditorial-entry' ),
 				]
 			],
 			'defaults' => [
@@ -96,11 +97,7 @@ class Entry extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
-			'featured'             => _x( 'Cover Image', 'Posttype Featured', 'geditorial-entry' ),
-			'meta_box_title'       => _x( 'Entry', 'MetaBox Title', 'geditorial-entry' ),
-			'section_column_title' => _x( 'Section', 'Column Title', 'geditorial-entry' ),
-		];
+		// $strings['misc'] = [];
 
 		return $strings;
 	}

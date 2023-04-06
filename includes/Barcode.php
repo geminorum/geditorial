@@ -11,6 +11,45 @@ class Barcode extends Main
 
 	const BASE = 'geditorial';
 
+	// QRCode
+	// php 7.1: https://github.com/Bacon/BaconQrCode
+
+
+	// php 7.3: https://github.com/endroid/qr-code
+	//
+	// create hash of args
+	// store in temp folder in updaloads
+	// serce cached images
+
+	// ---------------------------------------------------------
+	// ---------------------------------------------------------
+	// https://github.com/tecnickcom/tc-lib-barcode
+
+	// // instantiate the barcode class
+	// $barcode = new \Com\Tecnick\Barcode\Barcode();
+	//
+	// // generate a barcode
+	// $bobj = $barcode->getBarcodeObj(
+	//     'QRCODE,H',                     // barcode type and additional comma-separated parameters
+	//     'https://tecnick.com',          // data string to encode
+	//     -4,                             // bar width (use absolute or negative value as multiplication factor)
+	//     -4,                             // bar height (use absolute or negative value as multiplication factor)
+	//     'black',                        // foreground color
+	//     array(-2, -2, -2, -2)           // padding (use absolute or negative values as multiplication factors)
+	//     )->setBackgroundColor('white'); // background color
+	//
+	// // output the barcode as HTML div (see other output formats in the documentation and examples)
+	// $bobj->getHtmlDiv();
+
+	// ---------------------------------------------------------
+
+
+	// QRCODE decode
+	// https://github.com/khanamiryan/php-qrcode-detector-decoder
+	// $qrcode = new \QrReader('path/to_image');
+	// $text = $qrcode->text(); //return decoded text from QR Code
+
+
 	// @REF: https://github.com/hbgl/php-code-128-encoder
 	public static function encode( $data, $type )
 	{

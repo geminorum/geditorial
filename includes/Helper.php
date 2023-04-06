@@ -650,6 +650,8 @@ class Helper extends Main
 	 * %4$s => Lower Case / Singular : post
 	 * %5$s => %s
 	 *
+	 * TODO: add raw name strings on the object
+	 *
 	 * @REF: `get_post_type_labels()`
 	 * @REF: `_get_custom_object_labels()`
 	 * @REF: `_nx_noop()`
@@ -730,8 +732,6 @@ class Helper extends Main
 			/* translators: %1$s: featured camel case, %2$s: featured lower case */
 			'use_featured_image'    => _x( 'Use as %2$s', 'Helper: CPT Generator: `use_featured_image`', 'geditorial' ),
 		], $posttype, $featured, $name );
-
-		// TODO: add raw name strings on the object
 
 		foreach ( $name_templates as $key => $template )
 			if ( ! array_key_exists( $key, $pre ) )

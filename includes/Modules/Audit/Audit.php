@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
@@ -36,8 +36,9 @@ class Audit extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
-		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_terms', _x( 'There are no audit attributes available!', 'Setting', 'geditorial-audit' ) );
 		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
+		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_terms',
+			_x( 'There are no audit attributes available!', 'Setting', 'geditorial-audit' ) );
 
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -80,8 +81,8 @@ class Audit extends gEditorial\Module
 				[
 					'field'       => 'restricted',
 					'type'        => 'select',
-					'title'       => _x( 'Restricted Terms', 'Setting Title', 'geditorial-audit' ),
-					'description' => _x( 'Handles visibility of each term based on meta values.', 'Setting Description', 'geditorial-audit' ),
+					'title'       => _x( 'Restricted Attributes', 'Setting Title', 'geditorial-audit' ),
+					'description' => _x( 'Handles visibility of each attribute based on meta values.', 'Setting Description', 'geditorial-audit' ),
 					'default'     => 'disabled',
 					'values'      => [
 						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-audit' ),
@@ -132,6 +133,13 @@ class Audit extends gEditorial\Module
 			'noops' => [
 				'main_taxonomy' => _n_noop( 'Audit Attribute', 'Audit Attributes', 'geditorial-audit' ),
 			],
+			'labels' => [
+				'main_taxonomy' => [
+					'menu_name'            => _x( 'Content Audit', 'Label: Menu Name', 'geditorial-audit' ),
+					'show_option_all'      => _x( 'Audit', 'Label: Show Option All', 'geditorial-audit' ),
+					'show_option_no_items' => _x( '(Unaudited)', 'Label: Show Option No Terms', 'geditorial-audit' ),
+				],
+			],
 		];
 
 		if ( ! is_admin() )
@@ -140,13 +148,6 @@ class Audit extends gEditorial\Module
 		$strings['dashboard'] = [
 			'current' => [ 'widget_title' => _x( 'Your Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
 			'all'     => [ 'widget_title' => _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
-		];
-
-		$strings['misc'] = [
-			'menu_name'           => _x( 'Audit', 'Taxonomy Menu', 'geditorial-audit' ),
-			'tweaks_column_title' => _x( 'Audit Attributes', 'Column Title', 'geditorial-audit' ),
-			'show_option_all'     => _x( 'Audit', 'Show Option All', 'geditorial-audit' ),
-			'show_option_none'    => _x( '(Not audited)', 'Show Option None', 'geditorial-audit' ),
 		];
 
 		$strings['terms'] = [
@@ -167,24 +168,6 @@ class Audit extends gEditorial\Module
 		];
 
 		return $strings;
-	}
-
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['install_def_main_taxonomy'] ) )
-			$this->insert_default_terms( 'main_taxonomy' );
-
-		$this->help_tab_default_terms( 'main_taxonomy' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		if ( $this->setup_disabled() )
-			return;
-
-		$this->register_button( 'install_def_main_taxonomy', _x( 'Install Default Attributes', 'Button', 'geditorial-audit' ) );
 	}
 
 	public function init()
@@ -291,8 +274,8 @@ class Audit extends gEditorial\Module
 				foreach ( $locking as $term_id )
 					if ( is_object_in_term( $post->ID, $taxonomy, (int) $term_id ) )
 						return $this->role_can( 'manage', $user_id ) ? $caps : [ 'do_not_allow' ];
+				break;
 
-			break;
 			case 'manage_'.$taxonomy:
 			case 'edit_'.$taxonomy:
 			case 'delete_'.$taxonomy:
@@ -301,13 +284,16 @@ class Audit extends gEditorial\Module
 					? [ 'read' ]
 					: [ 'do_not_allow' ];
 
-			break;
+				break;
+
 			case 'assign_'.$taxonomy:
 
 				return $this->role_can( 'assign', $user_id )
 					? [ 'read' ]
 					: [ 'do_not_allow' ];
-			break;
+
+				break;
+
 			case 'assign_term':
 
 				$term = get_term( (int) $args[0] );

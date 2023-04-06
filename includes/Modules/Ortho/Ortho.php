@@ -14,8 +14,6 @@ use geminorum\gEditorial\WordPress\PostType;
 
 use geminorum\gNetwork\Core\Orthography;
 
-// TODO: add support for 'phone' type input
-
 class Ortho extends gEditorial\Module
 {
 
@@ -215,7 +213,7 @@ class Ortho extends gEditorial\Module
 
 		} else if ( 'edit-tags' == $screen->base || 'term' == $screen->base ) {
 
-			if ( in_array( $screen->taxonomy, $this->taxonomies() ) )
+			if ( $this->taxonomy_supported( $screen->taxonomy ) )
 				$this->enqueueVirastar();
 		}
 	}
@@ -416,7 +414,7 @@ class Ortho extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Header', 'geditorial-ortho' ) ),
-			'empty'      => $this->get_posttype_label( 'post', 'not_found' ),
+			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

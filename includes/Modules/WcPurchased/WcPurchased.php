@@ -15,6 +15,8 @@ use geminorum\gEditorial\WordPress\WooCommerce;
 class WcPurchased extends gEditorial\Module
 {
 
+	// TODO: export limit to: time after
+
 	public static function module()
 	{
 		return [
@@ -172,7 +174,7 @@ class WcPurchased extends gEditorial\Module
 			],
 
 		], array_filter( array_map( [ $this, 'prep_product_data' ], $orders ) ), [
-			'empty' => $this->get_posttype_label( 'shop_order', 'not_found' ),
+			'empty' => Helper::getPostTypeLabel( 'shop_order', 'not_found' ),
 		] );
 	}
 

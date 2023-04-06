@@ -111,33 +111,25 @@ class Venue extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'place_tax'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
 				'place_cpt'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'place_tax'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
 				'place_cat'    => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
 				'facility_tax' => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
+			],
+			'labels' => [
+				'place_cpt' => [
+					'metabox_title' => _x( 'Place Details', 'Label: MetaBox Title', 'geditorial-venue' ),
+				],
+				'place_tax' => [
+					'metabox_title' => _x( 'Connected to this Place', 'Label: MetaBox Title', 'geditorial-venue' ),
+				],
 			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['misc'] = [
-			'place_tax' => [
-				'tweaks_column_title' => _x( 'Venue', 'Column Title', 'geditorial-venue' ),
-				'meta_box_title'      => _x( 'Connected to this Place', 'Column Title', 'geditorial-venue' ),
-				'show_option_none'    => _x( '&ndash; Select Place &ndash;', 'Select Option None', 'geditorial-venue' ),
-			],
-			'place_cat' => [
-				'tweaks_column_title' => _x( 'Place Categories', 'Column Title', 'geditorial-venue' ),
-			],
-			'facility_tax' => [
-				'tweaks_column_title' => _x( 'Place Facilities', 'Column Title', 'geditorial-venue' ),
-				'show_option_none'    => _x( '&ndash; Select Facility &ndash;', 'Select Option None', 'geditorial-venue' ),
-			],
-			'meta_box_title'         => _x( 'Place Details', 'MetaBox Title', 'geditorial-venue' ),
-			'tweaks_column_title'    => _x( 'Places', 'Column Title', 'geditorial-venue' ),
-			'connected_column_title' => _x( 'Connected Places', 'Column Title', 'geditorial-venue' ),
-		];
+		// $strings['misc'] = [];
 
 		return $strings;
 	}

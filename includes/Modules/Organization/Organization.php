@@ -102,6 +102,13 @@ class Organization extends gEditorial\Module
 				'status_taxonomy'  => _n_noop( 'Department Status', 'Department Statuses', 'geditorial-organization' ),
 			],
 			'labels' => [
+				'primary_posttype' => [
+					'featured_image' => _x( 'Department Badge', 'Label: Featured Image', 'geditorial-organization' ),
+					'metabox_title'  => _x( 'The Department', 'Label: MetaBox Title', 'geditorial-organization' ),
+				],
+				'primary_paired' => [
+					'metabox_title' => _x( 'In This Department', 'Label: MetaBox Title', 'geditorial-organization' ),
+				],
 				'primary_taxonomy' => [
 					'menu_name' => _x( 'Categories', 'Label: Menu Name', 'geditorial-organization' ),
 				],
@@ -116,18 +123,6 @@ class Organization extends gEditorial\Module
 
 		if ( ! is_admin() )
 			return $strings;
-
-		$strings['misc'] = [
-			'primary_posttype' => [
-				'featured' => _x( 'Department Badge', 'Posttype Featured', 'geditorial-organization' ),
-			],
-			'type_taxonomy' => [
-				'meta_box_title'      => _x( 'Department Types', 'MetaBox Title', 'geditorial-organization' ),
-				'tweaks_column_title' => _x( 'Department Types', 'Column Title', 'geditorial-organization' ),
-			],
-			'tweaks_column_title' => _x( 'Departments', 'Column Title', 'geditorial-organization' ),
-			'meta_box_title'      => _x( 'Organization', 'MetaBox Title', 'geditorial-organization' ),
-		];
 
 		$strings['terms'] = [
 			'status_taxonomy' => [
@@ -376,12 +371,6 @@ class Organization extends gEditorial\Module
 	{
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
 	}
-
-	// TODO: template helper for `postTiles` using badges
-	// public function template_get_archive_content_default()
-	// {
-	// 	return ModuleTemplate::postTiles();
-	// }
 
 	public function post_updated( $post_id, $post_after, $post_before )
 	{
