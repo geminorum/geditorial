@@ -137,6 +137,8 @@ SQL;
 		] );
 	}
 
+	// FIXME: DEPRECATED: use `restrictByTaxonomy()`
+	// WTF: `draft` status posts with no `post_name`
 	public static function restrictByPosttype( $taxonomy, $posttype, $option_all = NULL )
 	{
 		if ( ! $object = get_taxonomy( $taxonomy ) )

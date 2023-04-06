@@ -324,7 +324,6 @@ class Venue extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 				$this->_hook_screen_restrict_paired();
 
 				$this->action_module( 'meta', 'column_row', 3 );

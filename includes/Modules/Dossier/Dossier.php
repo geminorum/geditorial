@@ -297,7 +297,6 @@ class Dossier extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_screen_restrict_paired();
-				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );

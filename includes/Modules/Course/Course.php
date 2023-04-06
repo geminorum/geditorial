@@ -397,7 +397,6 @@ class Course extends gEditorial\Module
 					$this->filter( 'bulk_post_updated_messages', 2, 10, 'supported' );
 
 				$this->_hook_screen_restrict_paired();
-				$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 				$this->_hook_store_metabox( $screen->post_type );
