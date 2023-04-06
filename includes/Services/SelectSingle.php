@@ -7,6 +7,7 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\User;
 
 class SelectSingle extends Main
 {
@@ -44,6 +45,7 @@ class SelectSingle extends Main
 			'target'   => '',
 			'posttype' => '',
 			'taxonomy' => '',
+			'role'     => '',
 			'page'     => '1',
 			'per'      => '10',
 		], $request->get_query_params() );
@@ -84,6 +86,14 @@ class SelectSingle extends Main
 					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
 
 				$response = self::_get_select2_terms( $queried );
+				break;
+
+			case 'user':
+
+				if ( ! User::cuc( 'list_users' ) )
+					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
+
+				$response = self::_get_select2_users( $queried );
 				break;
 
 			default:
@@ -169,6 +179,50 @@ class SelectSingle extends Main
 
 		return [
 			'results'    => $terms,
+			'pagination' => [
+				'more' => ( $query->found_posts - $args['number'] ) > 0
+			],
+		];
+	}
+
+	private static function _get_select2_users( $queried )
+	{
+		$args = [
+			'login__not_in'  => get_super_admins(),
+			'role__not_in '  => [ 'administrator', 'subscriber' ],
+			'search_columns' => [
+				'user_login',
+				'user_email',
+				'user_nicename',
+				'display_name',
+			],
+
+			'number'  => $queried['per'],
+			'offset'  => ( $queried['page'] - 1 ) * $queried['per'],
+			'orderby' => 'name',
+			'fields'  => 'all',
+
+			'update_term_meta_cache' => FALSE,
+			'suppress_filters'       => TRUE,
+		];
+
+		if ( ! empty( $queried['role'] ) && 'all' !== trim( $queried['role'] ) )
+			$args['role__in'] = array_diff( explode( ',', $queried['role'] ), $args['role__not_in'] );
+
+		if ( ! empty( $queried['search'] ) )
+			$args['search'] = trim( $queried['search'] );
+
+		$query = new \WP_User_Query( $args );
+		$users = [];
+
+		foreach ( (array) $query->get_results() as $user )
+			$users[] = (object) [
+				'id'   => $user->ID,
+				'text' => User::getTitleRow( $user ),
+			];
+
+		return [
+			'results'    => $users,
 			'pagination' => [
 				'more' => ( $query->found_posts - $args['number'] ) > 0
 			],
