@@ -28,6 +28,8 @@ class Drafts extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
@@ -45,7 +47,7 @@ class Drafts extends gEditorial\Module
 					'description' => _x( 'Summary for the current item as a node in adminbar', 'Setting Description', 'geditorial-drafts' ),
 				],
 				'summary_scope',
-				'adminbar_roles',
+				'adminbar_roles' => [ NULL, $roles ],
 				[
 					'field'       => 'max_posts',
 					'type'        => 'number',

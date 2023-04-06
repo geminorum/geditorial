@@ -43,7 +43,7 @@ class Schedule extends gEditorial\Module
 				'calendar_type',
 				'calendar_list',
 				'admin_rowactions',
-				'adminmenu_roles',
+				'adminmenu_roles' => [ NULL, $this->get_settings_default_roles() ],
 				[
 					'field'       => 'noschedule_statuses',
 					'type'        => 'checkboxes',

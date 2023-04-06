@@ -40,7 +40,7 @@ class Cartable extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
+		$roles = $this->get_settings_default_roles();
 
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
@@ -78,7 +78,10 @@ class Cartable extends gEditorial\Module
 			];
 
 		if ( $this->support_users )
-			$settings['_roles']['excluded_roles'] = _x( 'Roles that excluded from cartables.', 'Setting Description', 'geditorial-cartable' );
+			$settings['_roles']['excluded_roles'] = [
+				_x( 'Roles that excluded from cartables.', 'Setting Description', 'geditorial-cartable' ),
+				array_merge( $roles, [ 'subscriber' ] ),
+ 			];
 
 		if ( $this->support_users )
 			$settings['_roles'][] = [

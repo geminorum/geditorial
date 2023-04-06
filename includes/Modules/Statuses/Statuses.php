@@ -31,7 +31,7 @@ class Statuses extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$statuses = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
-		$roles    = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
+		$roles    = $this->get_settings_default_roles();
 
 		$settings = [
 			'posttypes_option' => 'posttypes_option',

@@ -266,13 +266,18 @@ class Settings extends Core\Base
 		return apply_filters( static::BASE.'_taxonomies_excluded', array_merge( $list, (array) $extra ), $context );
 	}
 
-	public static function rolesExcluded( $extra = [] )
+	public static function rolesExcluded( $extra = [], $context = 'settings' )
 	{
-		return array_merge( [
+		$list = [
+			'administrator',  // WP Core
+			'subscriber',     // WP Core
+
 			'backwpup_admin',
 			'backwpup_check',
 			'backwpup_helper',
-		], (array) $extra );
+		];
+
+		return apply_filters( static::BASE.'_roles_excluded', array_merge( $list, (array) $extra ), $context );
 	}
 
 	public static function showOptionNone( $string = NULL )
@@ -871,7 +876,7 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function getSetting_supported_roles( $description = NULL )
+	public static function getSetting_supported_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [
 			'field'       => 'supported_roles',
@@ -879,12 +884,12 @@ class Settings extends Core\Base
 			'title'       => _x( 'Supported Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => self::rolesExcluded( [ 'administrator' ] ),
-			'values'      => User::getAllRoleList(),
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? User::getAllRoleList() : $roles,
 		];
 	}
 
-	public static function getSetting_excluded_roles( $description = NULL )
+	public static function getSetting_excluded_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [
 			'field'       => 'excluded_roles',
@@ -892,12 +897,12 @@ class Settings extends Core\Base
 			'title'       => _x( 'Excluded Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => self::rolesExcluded( [ 'administrator' ] ),
-			'values'      => User::getAllRoleList(),
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? User::getAllRoleList() : $roles,
 		];
 	}
 
-	public static function getSetting_adminmenu_roles( $description = NULL )
+	public static function getSetting_adminmenu_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [
 			'field'       => 'adminmenu_roles',
@@ -905,12 +910,12 @@ class Settings extends Core\Base
 			'title'       => _x( 'Admin Menu Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => self::rolesExcluded( [ 'administrator', 'subscriber' ] ),
-			'values'      => User::getAllRoleList(),
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? User::getAllRoleList() : $roles,
 		];
 	}
 
-	public static function getSetting_metabox_roles( $description = NULL )
+	public static function getSetting_metabox_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [
 			'field'       => 'metabox_roles',
@@ -918,12 +923,12 @@ class Settings extends Core\Base
 			'title'       => _x( 'Meta Box Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => self::rolesExcluded( [ 'administrator', 'subscriber' ] ),
-			'values'      => User::getAllRoleList(),
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? User::getAllRoleList() : $roles,
 		];
 	}
 
-	public static function getSetting_adminbar_roles( $description = NULL )
+	public static function getSetting_adminbar_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [
 			'field'       => 'adminbar_roles',
@@ -931,8 +936,8 @@ class Settings extends Core\Base
 			'title'       => _x( 'Adminbar Roles', 'Settings: Setting Title', 'geditorial' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => self::rolesExcluded( [ 'administrator', 'subscriber' ] ),
-			'values'      => User::getAllRoleList(),
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? User::getAllRoleList() : $roles,
 		];
 	}
 

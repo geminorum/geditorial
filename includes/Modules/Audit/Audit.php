@@ -36,7 +36,7 @@ class Audit extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
-		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
+		$roles = $this->get_settings_default_roles();
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_terms',
 			_x( 'There are no audit attributes available!', 'Setting', 'geditorial-audit' ) );
 

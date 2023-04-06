@@ -23,7 +23,7 @@ class Inquire extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
+		$roles = $this->get_settings_default_roles();
 
 		return [
 			'_editpost' => [

@@ -37,7 +37,7 @@ class Views extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
-				'excluded_roles',
+				'excluded_roles' => [ NULL, $this->get_settings_default_roles( [], 'subscriber' ) ],
 				'adminbar_summary',
 			],
 		];

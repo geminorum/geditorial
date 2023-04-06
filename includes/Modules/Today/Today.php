@@ -46,7 +46,7 @@ class Today extends gEditorial\Module
 				],
 			],
 			'_dashboard' => [
-				'adminmenu_roles',
+				'adminmenu_roles' => [ NULL, $this->get_settings_default_roles() ],
 				'admin_rowactions',
 			],
 			'_editlist' => [

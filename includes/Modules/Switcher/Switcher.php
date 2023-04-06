@@ -25,7 +25,7 @@ class Switcher extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$posttypes = $this->all_posttypes();
-		$roles     = $this->get_settings_default_roles( [ 'administrator', 'subscriber' ] );
+		$roles     = $this->get_settings_default_roles();
 
 		return [
 			'_bulkactions' => [
