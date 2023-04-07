@@ -278,6 +278,12 @@ class Module extends Base
 		if ( ! is_admin() )
 			return;
 
+		// auto-hook register default terms
+		// helps if strings filtered
+		if ( ! empty( $this->strings['default_terms'] ) )
+			foreach ( array_keys( $this->strings['default_terms'] ) as $taxonomy_constant )
+				$this->register_default_terms( $taxonomy_constant );
+
 		$prefix   = self::sanitize_base( $this->key );
 		$callback = static function( $key, $value ) use ( $prefix ) {
 			return [ sprintf( '%s-%s.php', $prefix, $key ) => $value ];
@@ -2409,8 +2415,13 @@ class Module extends Base
 	// NOTE: hook filter before `init` on `after_setup_theme`
 	protected function get_default_terms( $constant )
 	{
-		if ( ! empty( $this->strings['terms'][$constant] ) )
+		if ( ! empty( $this->strings['default_terms'][$constant] ) )
+			$terms = $this->strings['default_terms'][$constant];
+
+		// DEPRECATED: use `default_terms` key
+		else if ( ! empty( $this->strings['terms'][$constant] ) )
 			$terms = $this->strings['terms'][$constant];
+
 		else
 			$terms = [];
 
