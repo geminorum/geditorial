@@ -401,7 +401,7 @@ class MetaBox extends Main
 		return HTML::wrap( $html.'</ol>', 'field-wrap -list' );
 	}
 
-	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL, $posttype = FALSE )
+	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL, $posttype = FALSE, $echo = TRUE )
 	{
 		if ( FALSE === $edit )
 			return FALSE;
@@ -422,10 +422,15 @@ class MetaBox extends Main
 		else
 			$html = '<span>'.$taxonomy->labels->not_found.'</span>';
 
-		echo HTML::wrap( $html, 'field-wrap -empty' );
+		$html = HTML::wrap( $html, 'field-wrap -empty' );
+
+		if ( ! $echo )
+			return $html;
+
+		echo $html;
 	}
 
-	public static function fieldEmptyPostType( $posttype )
+	public static function fieldEmptyPostType( $posttype, $echo = TRUE )
 	{
 		$object = PostType::object( $posttype );
 
@@ -435,7 +440,12 @@ class MetaBox extends Main
 			'target' => '_blank',
 		], $object->labels->not_found );
 
-		echo HTML::wrap( $html, 'field-wrap -empty' );
+		$html = HTML::wrap( $html, 'field-wrap -empty' );
+
+		if ( ! $echo )
+			return $html;
+
+		echo $html;
 	}
 
 	public static function getTitleAction( $action )
