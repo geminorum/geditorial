@@ -159,7 +159,7 @@ class Course extends gEditorial\Module
 			],
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'status_tax' => [
 				'ongoing'   => _x( 'Ongoing', 'Default Term', 'geditorial-course' ),
 				'planned'   => _x( 'Planned', 'Default Term', 'geditorial-course' ),
@@ -205,21 +205,6 @@ class Course extends gEditorial\Module
 				'video_source_url'  => [ 'type' => 'video_source' ],
 			],
 		];
-	}
-
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['install_def_status_tax'] ) )
-			$this->insert_default_terms( 'status_tax' );
-
-		$this->help_tab_default_terms( 'status_tax' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		$this->register_button( 'install_def_status_tax', _x( 'Install Default Lesson Statuses', 'Button', 'geditorial-course' ) );
 	}
 
 	public function after_setup_theme()
@@ -274,7 +259,6 @@ class Course extends gEditorial\Module
 		$this->register_shortcode( 'span_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
-		$this->register_default_terms( 'status_tax' );
 		$this->_hook_paired_thumbnail_fallback();
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );

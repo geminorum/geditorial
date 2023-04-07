@@ -27,8 +27,9 @@ class Assigned extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
-		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_terms', _x( 'There are no assignments available!', 'Setting', 'geditorial-assigned' ) );
 		$roles = $this->get_settings_default_roles();
+		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_terms',
+			_x( 'There are no assignments available!', 'Setting', 'geditorial-assigned' ) );
 
 		return [
 			'posttypes_option' => 'posttypes_option',

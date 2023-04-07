@@ -104,7 +104,6 @@ class Educated extends gEditorial\Module
 			],
 			'labels' => [
 				'main_taxonomy' => [
-					'menu_name'            => _x( 'Educations', 'Label: Menu Name', 'geditorial-educated' ),
 					'show_option_all'      => _x( 'Educations', 'Label: Show Option All', 'geditorial-educated' ),
 					'show_option_no_items' => _x( '(Uneducated)', 'Label: Show Option No Terms', 'geditorial-educated' ),
 				],

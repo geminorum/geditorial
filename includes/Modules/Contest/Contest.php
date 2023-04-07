@@ -145,7 +145,7 @@ class Contest extends gEditorial\Module
 			],
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'status_tax' => [
 				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-contest' ),
 				'status_pending'     => _x( 'Pending', 'Default Term', 'geditorial-contest' ),
@@ -191,21 +191,6 @@ class Contest extends gEditorial\Module
 		];
 	}
 
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['install_def_status_tax'] ) )
-			$this->insert_default_terms( 'status_tax' );
-
-		$this->help_tab_default_terms( 'status_tax' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		$this->register_button( 'install_def_status_tax', _x( 'Install Default Apply Statuses', 'Button', 'geditorial-contest' ) );
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'contest_cpt' );
@@ -247,11 +232,7 @@ class Contest extends gEditorial\Module
 		$this->register_shortcode( 'contest_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
-		$this->register_default_terms( 'status_tax' );
-
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
-
-		$this->register_default_terms( 'status_tax' );
 
 		if ( is_admin() )
 			return;

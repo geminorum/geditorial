@@ -124,7 +124,7 @@ class Organization extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'status_taxonomy' => [
 				'working'  => _x( 'Working', 'Default Term', 'geditorial-organization' ),
 				'inactive' => _x( 'Inactive', 'Default Term', 'geditorial-organization' ),
@@ -215,14 +215,10 @@ class Organization extends gEditorial\Module
 			'show_in_nav_menus' => TRUE,
 		] );
 
-		if ( is_admin() ) {
+		if ( is_admin() )
+			return;
 
-			$this->register_default_terms( 'status_taxonomy' );
-
-		} else {
-
-			$this->filter( 'term_link', 3 );
-		}
+		$this->filter( 'term_link', 3 );
 	}
 
 	public function init_ajax()

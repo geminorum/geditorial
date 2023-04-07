@@ -10,6 +10,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core\ISBN;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
@@ -196,7 +197,7 @@ class Meta extends gEditorial\Module
 			'author_column_title' => _x( 'Author', 'Column Title', 'geditorial-meta' ),
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'label_tax' => [
 				'introduction' => _x( 'Introduction', 'Default Term', 'geditorial-meta' ),
 				'interview'    => _x( 'Interview', 'Default Term', 'geditorial-meta' ),
@@ -271,24 +272,6 @@ class Meta extends gEditorial\Module
 		$list = array_diff( array_merge( $posttypes, $supported ), $excludes );
 
 		return $this->filters( 'support_posttypes', $list );
-	}
-
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['install_def_label_tax'] ) )
-			$this->insert_default_terms( 'label_tax' );
-
-		$this->help_tab_default_terms( 'label_tax' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		if ( $this->setup_disabled() )
-			return;
-
-		$this->register_button( 'install_def_label_tax', _x( 'Install Default Column Headers', 'Button', 'geditorial-meta' ) );
 	}
 
 	public function init()
@@ -438,7 +421,7 @@ class Meta extends gEditorial\Module
 				'show_in_rest' => FALSE, // temporarily disable in block editor
 			], $label_tax_tax_posttypes );
 
-			$this->register_default_terms( 'label_tax' );
+			// $this->register_default_terms( 'label_tax' );
 		}
 
 		// default fields for custom posttypes

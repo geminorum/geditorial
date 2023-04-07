@@ -15,6 +15,8 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Regional extends gEditorial\Module
 {
 
+	// TODO: register term meta for `language` to store language `term_id`
+
 	protected $imports_datafile = 'languages-20230325.json';
 
 	public static function module()
@@ -96,7 +98,7 @@ class Regional extends gEditorial\Module
 			// 'show_option_none' => _x( '(Uknonwn Language)', 'Show Option None', 'geditorial-regional' ),
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'lang_tax' => [
 				// @SEE: https://en.wikipedia.org/wiki/ISO_639
 				'arabic'  => _x( 'Arabic', 'Default Term: Language', 'geditorial-regional' ),
@@ -136,7 +138,6 @@ class Regional extends gEditorial\Module
 		$this->filter_module( 'terms', 'column_title', 4 );
 		$this->filter_module( 'terms', 'field_tagline_title', 4 );
 
-		$this->register_default_terms( 'lang_tax' );
 		$this->filter( 'imports_data_summary', 1, 10, FALSE, $this->base );
 
 		$this->_hook_wp_register_importer();

@@ -1083,7 +1083,8 @@ class Template extends Main
 
 			$span = ShortCode::listPosts( 'assigned',
 				$args['posttype'],
-				$args['taxonomy'], [
+				$args['taxonomy'],
+				[
 					'id'              => $term_id,
 					'wrap'            => FALSE,
 					'future'          => 'off',

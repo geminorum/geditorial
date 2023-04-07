@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
@@ -2404,13 +2405,18 @@ class Module extends Base
 		if ( ! $this->nonce_verify( 'settings' ) )
 			return;
 
+		$taxonomy = $this->constant( $constant );
+
+		if ( ! taxonomy_exists( $taxonomy ) )
+			return;
+
 		if ( is_null( $terms ) )
 			$terms = $this->get_default_terms( $constant );
 
 		if ( empty( $terms ) )
 			$message = 'noadded';
 
-		else if ( $added = Taxonomy::insertDefaultTerms( $this->constant( $constant ), $terms ) )
+		else if ( $added = Taxonomy::insertDefaultTerms( $taxonomy, $terms ) )
 			$message = [
 				'message' => 'created',
 				'count'   => count( $added ),

@@ -72,7 +72,7 @@ class Specs extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'specs_tax' => [
 				'color'  => _x( 'Color', 'Default Term', 'geditorial-specs' ),
 				'width'  => _x( 'Width', 'Default Term', 'geditorial-specs' ),
@@ -106,8 +106,6 @@ class Specs extends gEditorial\Module
 
 		// add_shortcode( $this->constant( 'specs_shortcode' ), [ $this, 'shortcode_specs' ] );
 		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );
-
-		$this->register_default_terms( 'specs_tax' );
 	}
 
 	public function current_screen( $screen )

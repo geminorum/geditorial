@@ -57,6 +57,10 @@ class MetaBox extends Main
 			// FIXME: make sure it's a list of objects
 		} else {
 
+			// TODO: if `hierarchical` the title must have parent prefixes
+			// @SEE: `PostType::getParentTitles()`
+			// - e.g. tree list select
+
 			// $terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
 			$terms = Taxonomy::listTerms( $args['taxonomy'], 'all' );
 		}
@@ -902,7 +906,7 @@ class MetaBox extends Main
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title' => $args['title'],
+			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-select', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
@@ -912,6 +916,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 			],
 		];
 
@@ -943,7 +948,7 @@ class MetaBox extends Main
 			'type'        => 'text',
 			'value'       => $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' ) : '',
 			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title'       => $args['description'],
+			'title'       => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'placeholder' => $args['title'],
 			'class'       => [
 				sprintf( '%s-inputdate', static::BASE ),
@@ -954,6 +959,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 				'ortho'      => 'date',
 			],
 		];
@@ -987,7 +993,7 @@ class MetaBox extends Main
 			'type'        => 'text',
 			'value'       => $value ?: '',
 			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title'       => $args['description'],
+			'title'       => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'placeholder' => $args['title'],
 			'class'       => [
 				sprintf( '%s-inputidentity', static::BASE ),
@@ -998,6 +1004,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 				'ortho'      => 'identity',
 			],
 		];
@@ -1076,7 +1083,7 @@ class MetaBox extends Main
 			'type'        => 'text',
 			'value'       => $value ?: '',
 			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title'       => $args['description'],
+			'title'       => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'placeholder' => $args['title'],
 			'class'       => [
 				sprintf( '%s-inputiban', static::BASE ),
@@ -1087,6 +1094,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 				'ortho'      => 'iban',
 			],
 		];
@@ -1126,7 +1134,7 @@ class MetaBox extends Main
 
 		$atts = [
 			'name'  => 'parent_id', // sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title' => $args['title'],
+			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-selectsingle', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
@@ -1136,6 +1144,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'post',
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
@@ -1179,7 +1188,7 @@ class MetaBox extends Main
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title' => $args['title'],
+			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-selectsingle', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
@@ -1189,6 +1198,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'post',
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
@@ -1232,7 +1242,7 @@ class MetaBox extends Main
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title' => $args['title'],
+			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-selectsingle', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
@@ -1242,6 +1252,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'term',
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
@@ -1288,7 +1299,7 @@ class MetaBox extends Main
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title' => $args['title'],
+			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-selectsingle', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
@@ -1298,6 +1309,7 @@ class MetaBox extends Main
 				'meta-field' => $args['name'],
 				'meta-type'  => $args['type'],
 				'meta-title' => $args['title'],
+				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'user',
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,

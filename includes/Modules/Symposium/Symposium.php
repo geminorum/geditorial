@@ -68,7 +68,7 @@ class Symposium extends gEditorial\Module
 			],
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'type_taxonomy' => [
 				'lecture'     => _x( 'Lecture', 'Session Type: Default Term', 'geditorial-symposium' ),
 				'conference'  => _x( 'Conference', 'Session Type: Default Term', 'geditorial-symposium' ),
@@ -148,11 +148,6 @@ class Symposium extends gEditorial\Module
 		$this->register_posttype( 'session_posttype', [
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
-
-		if ( ! is_admin() )
-			return;
-
-		$this->register_default_terms( 'type_taxonomy' );
 	}
 
 	public function current_screen( $screen )

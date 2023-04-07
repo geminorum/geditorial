@@ -165,7 +165,7 @@ class Event extends gEditorial\Module
 			],
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'event_type' => [
 				'holiday' => _x( 'Holiday', 'Default Term', 'geditorial-event' ),
 				'birth'   => _x( 'Birth', 'Default Term', 'geditorial-event' ),
@@ -186,23 +186,17 @@ class Event extends gEditorial\Module
 
 	public function before_settings( $module = FALSE )
 	{
-		if ( isset( $_POST['install_def_event_type'] ) )
-			$this->insert_default_terms( 'event_type' );
-
-		else if ( isset( $_POST['install_def_cal_type'] ) )
+		// TODO: register via gNetwork
+		if ( isset( $_POST['install_def_cal_type'] ) )
 			$this->insert_default_terms( 'cal_type', array_intersect_key(
 				Datetime::getDefualtCalendars( TRUE ),
 				array_flip( $this->get_setting( 'calendar_list', [] ) )
 			) );
-
-		$this->help_tab_default_terms( 'event_type' );
 	}
 
 	public function default_buttons( $module = FALSE )
 	{
 		parent::default_buttons( $module );
-
-		$this->register_button( 'install_def_event_type', _x( 'Install Default Event Types', 'Button', 'geditorial-event' ) );
 
 		if ( $this->get_setting( 'extra_metadata' ) )
 			$this->register_button( 'install_def_cal_type', _x( 'Install Default Calendar Types', 'Button', 'geditorial-event' ) );
@@ -256,8 +250,6 @@ class Event extends gEditorial\Module
 			'hierarchical'     => TRUE,
 			'primary_taxonomy' => $this->constant( 'event_cat' ),
 		] );
-
-		$this->register_default_terms( 'event_type' );
 
 		if ( $metadata )
 			$this->add_posttype_fields( $this->constant( 'event_cpt' ), NULL, TRUE, $this->module->name );

@@ -150,7 +150,7 @@ class Audit extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'main_taxonomy' => [
 				'audited'       => _x( 'Audited', 'Default Term', 'geditorial-audit' ),
 				'outdated'      => _x( 'Outdated', 'Default Term', 'geditorial-audit' ),
@@ -188,8 +188,6 @@ class Audit extends gEditorial\Module
 
 		if ( $this->get_setting( 'auto_audit_empty' ) )
 			$this->filter_self( 'auto_audit_save_post', 5 );
-
-		$this->register_default_terms( 'main_taxonomy' );
 	}
 
 	public function init_ajax()

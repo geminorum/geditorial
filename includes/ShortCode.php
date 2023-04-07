@@ -1137,7 +1137,7 @@ class ShortCode extends Main
 
 		if ( $args['list_tag'] )
 			$html = HTML::tag( $args['list_tag'], [
-				'class' => HTML::attrClass( $args['list_class'], '-posts-list', sprintf( '-type-%s', $posttype ) ),
+				'class' => HTML::attrClass( $args['list_class'], '-posts-list', sprintf( '-type-%s', is_array( $posttype ) ? $posttype[0] : $posttype ) ),
 			], $html );
 
 		if ( $args['title'] )

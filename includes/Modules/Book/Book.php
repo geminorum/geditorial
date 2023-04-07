@@ -235,7 +235,7 @@ class Book extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
 		];
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'type_tax' => [
 				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ), // shomiz
 				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ), // gallingor
@@ -381,33 +381,6 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['install_def_type_tax'] ) )
-			$this->insert_default_terms( 'type_tax' );
-
-		else if ( isset( $_POST['install_def_status_tax'] ) )
-			$this->insert_default_terms( 'status_tax' );
-
-		else if ( isset( $_POST['install_def_size_tax'] ) )
-			$this->insert_default_terms( 'size_tax' );
-
-		$this->help_tab_default_terms( 'type_tax' );
-		$this->help_tab_default_terms( 'status_tax' );
-		$this->help_tab_default_terms( 'size_tax' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		$this->register_button( 'install_def_type_tax', _x( 'Install Default Types', 'Button', 'geditorial-book' ) );
-		$this->register_button( 'install_def_status_tax', _x( 'Install Default Statuses', 'Button', 'geditorial-book' ) );
-
-		if ( taxonomy_exists( $this->constant( 'size_tax' ) ) )
-			$this->register_button( 'install_def_size_tax', _x( 'Install Default Sizes', 'Button', 'geditorial-book' ) );
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'publication_cpt' );
@@ -512,9 +485,6 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 8 );
-
-		$this->register_default_terms( 'type_tax' );
-		$this->register_default_terms( 'status_tax' );
 	}
 
 	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
@@ -797,13 +767,13 @@ class Book extends gEditorial\Module
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
-		$this->filter( 'meta_field', 6, 9, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 6, 9, FALSE, $this->base );
 
 		$this->filter_module( 'national_library', 'default_posttype_isbn_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
 
-		$this->register_default_terms( 'size_tax' );
+		// $this->register_default_terms( 'size_tax' );
 	}
 
 	public function dashboard_glance_items( $items )

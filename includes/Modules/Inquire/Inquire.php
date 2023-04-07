@@ -86,7 +86,7 @@ class Inquire extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['terms'] = [
+		$strings['default_terms'] = [
 			'status_tax' => [
 				'status_drafted'     => _x( 'Drafted', 'Default Term', 'geditorial-inquire' ),
 				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-inquire' ),
@@ -110,26 +110,6 @@ class Inquire extends gEditorial\Module
 		];
 
 		return $strings;
-	}
-
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['install_def_status_tax'] ) )
-			$this->insert_default_terms( 'status_tax' );
-
-		else if ( isset( $_POST['install_def_priority_tax'] ) )
-			$this->insert_default_terms( 'priority_tax' );
-
-		$this->help_tab_default_terms( 'status_tax' );
-		$this->help_tab_default_terms( 'priority_tax' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		$this->register_button( 'install_def_status_tax', _x( 'Install Default Inquiry Statuses', 'Button', 'geditorial-inquire' ) );
-		$this->register_button( 'install_def_priority_tax', _x( 'Install Default Inquiry Priorities', 'Button', 'geditorial-inquire' ) );
 	}
 
 	public function init()
@@ -169,9 +149,6 @@ class Inquire extends gEditorial\Module
 			];
 
 		$this->register_posttype( 'inquiry_cpt', $args );
-
-		$this->register_default_terms( 'status_tax' );
-		$this->register_default_terms( 'priority_tax' );
 	}
 
 	public function after_setup_theme()
