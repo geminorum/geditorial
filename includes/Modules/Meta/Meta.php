@@ -311,7 +311,7 @@ class Meta extends gEditorial\Module
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		if ( $this->get_setting( 'insert_content_enabled' ) ) {
+		if ( $this->get_setting( 'insert_content' ) ) {
 			add_action( $this->base.'_content_before', [ $this, 'content_before' ], 50 );
 			add_action( $this->base.'_content_after', [ $this, 'content_after' ], 50 );
 		}
@@ -447,7 +447,7 @@ class Meta extends gEditorial\Module
 
 		$this->add_posttype_fields( 'page' );
 
-		$this->filter( 'meta_field', 6, 5, FALSE, 'geditorial' );
+		$this->filter( 'meta_field', 6, 5, FALSE, $this->base );
 	}
 
 	protected function register_meta_fields()

@@ -3,11 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Tablelist;
@@ -185,6 +183,18 @@ class Book extends gEditorial\Module
 					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-book' ),
 					'author_label'   => _x( 'Curator', 'Label: Author Label', 'geditorial-book' ),
 					'excerpt_label'  => _x( 'Summary', 'Label: Excerpt Label', 'geditorial-book' ),
+				],
+				'type_tax' => [
+					'show_option_all'      => _x( 'Type', 'Label: Show Option All', 'geditorial-book' ),
+					'show_option_no_items' => _x( '(Untyped)', 'Label: Show Option No Items', 'geditorial-book' ),
+				],
+				'serie_tax' => [
+					'show_option_all'      => _x( 'Serie', 'Label: Show Option All', 'geditorial-book' ),
+					'show_option_no_items' => _x( '(Non-Series)', 'Label: Show Option No Items', 'geditorial-book' ),
+				],
+				'publisher_tax' => [
+					'show_option_all'      => _x( 'Publisher', 'Label: Show Option All', 'geditorial-book' ),
+					'show_option_no_items' => _x( '(Without Publisher)', 'Label: Show Option No Items', 'geditorial-book' ),
 				],
 			],
 			'p2p' => [
@@ -1195,6 +1205,7 @@ class Book extends gEditorial\Module
 		switch ( $field ) {
 			case 'publication_isbn': return ModuleHelper::ISBN( $raw );
 			// case 'publication_date': return Number::localize( Datetime::stringFormat( $raw ) );
+			case 'publication_edition': return Number::localize( Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
 			case 'publication_print': return Number::localize( Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
 			case 'collection': return HTML::link( $raw, WordPress::getSearchLink( $raw ) );
 

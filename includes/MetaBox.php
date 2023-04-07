@@ -1209,7 +1209,9 @@ class MetaBox extends Main
 			$html.= HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
-			], User::getTitleRow( (int) $value, sprintf( _x( 'Uknown User #%s', 'MetaBox: Title Attr', 'geditorial' ), $value ) ) );
+			], User::getTitleRow( (int) $value,
+				/* translators: %s: user id number */
+				sprintf( _x( 'Unknown User #%s', 'MetaBox: Title Attr', 'geditorial' ), $value ) ) );
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),

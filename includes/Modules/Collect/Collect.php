@@ -116,7 +116,8 @@ class Collect extends gEditorial\Module
 					'metabox_title'  => _x( 'The Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
 				],
 				'collection_tax' => [
-					'metabox_title' => _x( 'In This Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
+					'metabox_title'   => _x( 'In This Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
+					'show_option_all' => _x( 'Collection', 'Label: Show Option All', 'geditorial-collect' ),
 				],
 			],
 		];
