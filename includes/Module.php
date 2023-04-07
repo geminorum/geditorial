@@ -3352,6 +3352,9 @@ class Module extends Base
 			MetaBox::singleselectTerms( $post->ID, [
 				'taxonomy' => $box['args']['taxonomy'],
 				'posttype' => $post->post_type,
+				// NOTE: metabox title already displays the taxonomy label
+				'none'     => Settings::showOptionNone(),
+				'empty'    => NULL, // displays empty box with link
 			] );
 		echo '</div>';
 	}

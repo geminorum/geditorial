@@ -45,7 +45,8 @@ class MetaBox extends Main
 			'taxonomy' => NULL,
 			'posttype' => FALSE,
 			'echo'     => TRUE,
-			'none'     => Settings::showOptionNone(),
+			'none'     => NULL,    // `NULL` for label check, `FALSE` for disable
+			'empty'    => FALSE,   // `NULL` for empty box, `FALSE` for disable
 		] );
 
 		if ( ! $args['taxonomy'] )
@@ -59,6 +60,23 @@ class MetaBox extends Main
 			// $terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
 			$terms = Taxonomy::listTerms( $args['taxonomy'], 'all' );
 		}
+
+		if ( empty( $terms ) ) {
+
+			if ( is_null( $args['empty'] ) )
+				return self::fieldEmptyTaxonomy( $args['taxonomy'], NULL, $args['posttype'], $args['echo'] );
+
+			if ( $args['empty'] && ! $args['echo'] )
+				return $args['empty'];
+
+			if ( $args['empty'] )
+				echo $args['empty'];
+
+			return FALSE;
+		}
+
+		if ( is_null( $args['none'] ) )
+			$args['none'] = Helper::getTaxonomyLabel( $args['taxonomy'], 'show_option_select' );
 
 		$selected = wp_get_object_terms( $object_id, $args['taxonomy'], [ 'fields' => 'ids' ] );
 
