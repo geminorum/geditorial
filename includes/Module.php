@@ -2372,20 +2372,26 @@ class Module extends Base
 
 	protected function help_tab_default_terms( $constant )
 	{
-		$tab = [
-			'id'    => $this->classs( 'help-default-terms', $this->constant( $constant ) ),
-			'title' => _x( 'Default Terms', 'Module', 'geditorial' ),
-		];
+		if ( ! $taxonomy = Taxonomy::object( $this->constant( $constant ) ) )
+			return;
 
-		$terms = $this->get_default_terms( $constant );
+		/* translators: %s: taxonomy object label */
+		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial' ), $taxonomy->label );
+		/* translators: %s: taxonomy object label */
+		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial' ), $taxonomy->label );
+		$terms  = $this->get_default_terms( $constant );
+		$link   = WordPress::getEditTaxLink( $taxonomy->name );
+		$before = HTML::tag( 'p', $title );
+		$after  = HTML::tag( 'p', HTML::link( $edit, $link, TRUE ) );
+		$args   = [ 'title' => $taxonomy->label, 'id' => $this->classs( 'help-default-terms', '-'.$taxonomy->name ) ];
 
 		if ( ! empty( $terms ) )
-			$tab['content'] = HTML::wrap( HTML::tableCode( $terms, TRUE ), '-info' );
+			$args['content'] = $before.HTML::wrap( HTML::tableCode( $terms, TRUE ), '-info' ).$after;
 
 		else
-			$tab['content'] = HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' );
+			$args['content'] = $before.HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' ).$after;
 
-		get_current_screen()->add_help_tab( $tab );
+		get_current_screen()->add_help_tab( $args );
 	}
 
 	// DEPRECATED: use `$this->register_default_terms()`
@@ -2560,6 +2566,13 @@ class Module extends Base
 
 		if ( $sidebar = $this->settings_help_sidebar( $context ) )
 			$screen->set_help_sidebar( $sidebar );
+
+		if ( ! in_array( $context, [ 'settings' ], TRUE ) )
+			return;
+
+		if ( ! empty( $this->strings['default_terms'] ) )
+			foreach ( array_keys( $this->strings['default_terms'] ) as $taxonomy_constant )
+				$this->help_tab_default_terms( $taxonomy_constant );
 	}
 
 	public function settings_header()
