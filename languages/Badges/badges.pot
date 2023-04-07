@@ -1,0 +1,116 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Badges\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Badges\n"
+"X-Domain: geditorial-badges\n"
+
+#: Badges.php:30
+#: Badges.php:336
+msgctxt "Setting"
+msgid "There are no badges available!"
+msgstr ""
+
+#: Badges.php:38
+msgctxt "Setting Title"
+msgid "Manage Roles"
+msgstr ""
+
+#: Badges.php:39
+msgctxt "Setting Description"
+msgid "Roles that can Manage, Edit and Delete Badges."
+msgstr ""
+
+#: Badges.php:45
+msgctxt "Setting Title"
+msgid "Assign Roles"
+msgstr ""
+
+#: Badges.php:46
+msgctxt "Setting Description"
+msgid "Roles that can Assign Badges."
+msgstr ""
+
+#: Badges.php:52
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr ""
+
+#: Badges.php:53
+msgctxt "Setting Description"
+msgid "Roles that can see Badges Reports."
+msgstr ""
+
+#: Badges.php:59
+msgctxt "Setting Title"
+msgid "Restricted Roles"
+msgstr ""
+
+#: Badges.php:60
+msgctxt "Setting Description"
+msgid "Roles that check for Badges visibility."
+msgstr ""
+
+#: Badges.php:66
+msgctxt "Setting Title"
+msgid "Restricted Badges"
+msgstr ""
+
+#: Badges.php:67
+msgctxt "Setting Description"
+msgid "Handles visibility of each badge on meta values."
+msgstr ""
+
+#: Badges.php:70
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr ""
+
+#: Badges.php:71
+msgctxt "Setting Option"
+msgid "Hidden"
+msgstr ""
+
+#: Badges.php:109
+msgid "Badge"
+msgid_plural "Badges"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Badges.php:113
+msgctxt "Label: Menu Name"
+msgid "Content Badges"
+msgstr ""
+
+#: Badges.php:114
+msgctxt "Label: Show Option All"
+msgid "Badges"
+msgstr ""
+
+#: Badges.php:115
+msgctxt "Label: Show Option No Terms"
+msgid "(Unbadged)"
+msgstr ""
+
+#: Badges.php:124
+msgctxt "Dashboard Widget Title"
+msgid "Your Content Badges Summary"
+msgstr ""
+
+#: Badges.php:125
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Badges Summary"
+msgstr ""
+
+#: Badges.php:331
+msgctxt "Header"
+msgid "Badge Reports"
+msgstr ""
