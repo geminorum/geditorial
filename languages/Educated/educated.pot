@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Educated\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Educated\n"
+"X-Domain: geditorial-educated\n"
+
+#: Educated.php:28
+msgctxt "Setting"
+msgid "There are no education definitions available!"
+msgstr ""
+
+#: Educated.php:36
+msgctxt "Setting Title"
+msgid "Manage Roles"
+msgstr ""
+
+#: Educated.php:37
+msgctxt "Setting Description"
+msgid "Roles that can Manage, Edit and Delete Education Definitions."
+msgstr ""
+
+#: Educated.php:43
+msgctxt "Setting Title"
+msgid "Assign Roles"
+msgstr ""
+
+#: Educated.php:44
+msgctxt "Setting Description"
+msgid "Roles that can Assign Education Definitions."
+msgstr ""
+
+#: Educated.php:50
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr ""
+
+#: Educated.php:51
+msgctxt "Setting Description"
+msgid "Roles that can see Education Definitions Reports."
+msgstr ""
+
+#: Educated.php:57
+msgctxt "Setting Title"
+msgid "Restricted Roles"
+msgstr ""
+
+#: Educated.php:58
+msgctxt "Setting Description"
+msgid "Roles that check for Education Definitions visibility."
+msgstr ""
+
+#: Educated.php:64
+msgctxt "Setting Title"
+msgid "Restricted Definitions"
+msgstr ""
+
+#: Educated.php:65
+msgctxt "Setting Description"
+msgid "Handles visibility of each definition based on meta values."
+msgstr ""
+
+#: Educated.php:68
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr ""
+
+#: Educated.php:69
+msgctxt "Setting Option"
+msgid "Hidden"
+msgstr ""
+
+#: Educated.php:103
+msgid "Education Definition"
+msgid_plural "Education Definitions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Educated.php:107
+msgctxt "Label: Menu Name"
+msgid "Educations"
+msgstr ""
+
+#: Educated.php:108
+msgctxt "Label: Show Option All"
+msgid "Educations"
+msgstr ""
+
+#: Educated.php:109
+msgctxt "Label: Show Option No Terms"
+msgid "(Uneducated)"
+msgstr ""
+
+#: Educated.php:118
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Education Summary"
+msgstr ""
+
+#: Educated.php:119
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Education Summary"
+msgstr ""
+
+#: Educated.php:124
+msgctxt "Default Term"
+msgid "Illiterate"
+msgstr ""
+
+#: Educated.php:125
+msgctxt "Default Term"
+msgid "Primary"
+msgstr ""
+
+#: Educated.php:126
+msgctxt "Default Term"
+msgid "Secondary"
+msgstr ""
+
+#: Educated.php:127
+msgctxt "Default Term"
+msgid "Bachelor"
+msgstr ""
+
+#: Educated.php:128
+msgctxt "Default Term"
+msgid "Master"
+msgstr ""
+
+#: Educated.php:129
+msgctxt "Default Term"
+msgid "Doctorate"
+msgstr ""

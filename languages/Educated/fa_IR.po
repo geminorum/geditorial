@@ -1,0 +1,171 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Educated\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-07 16:50+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Educated\n"
+"X-Domain: geditorial-educated\n"
+
+#: Educated.php:28
+msgctxt "Setting"
+msgid "There are no education definitions available!"
+msgstr "سطوح تحصیلی در دسترس نیست!"
+
+#: Educated.php:36
+msgctxt "Setting Title"
+msgid "Manage Roles"
+msgstr "نقش‌های مدیریت بررسی"
+
+#: Educated.php:37
+msgctxt "Setting Description"
+msgid "Roles that can Manage, Edit and Delete Education Definitions."
+msgstr "نقش‌هایی که میتوانند تعاریف تحصیلی را مدیریت، ویرایش و یا حذف کنند."
+
+#: Educated.php:43
+msgctxt "Setting Title"
+msgid "Assign Roles"
+msgstr "نقش‌های مأمور بررسی"
+
+#: Educated.php:44
+msgctxt "Setting Description"
+msgid "Roles that can Assign Education Definitions."
+msgstr "نقش‌هایی که میتوانند تعاریف تحصیلی را اختصاص دهند."
+
+#: Educated.php:50
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr "نقش‌های گزارشات"
+
+#: Educated.php:51
+msgctxt "Setting Description"
+msgid "Roles that can see Education Definitions Reports."
+msgstr "نقش‌هایی که می‌توانند گزارش‌های تعاریف تحصیلی را ببینند."
+
+#: Educated.php:57
+msgctxt "Setting Title"
+msgid "Restricted Roles"
+msgstr "نقش‌های محدود‌شده"
+
+#: Educated.php:58
+msgctxt "Setting Description"
+msgid "Roles that check for Education Definitions visibility."
+msgstr "نقش‌هایی که سطح دسترسی هر تعریف تحصیلی برای نمایش به آن‌ها بررسی می‌شود."
+
+#: Educated.php:64
+msgctxt "Setting Title"
+msgid "Restricted Definitions"
+msgstr "سطوح محدودشده"
+
+#: Educated.php:65
+msgctxt "Setting Description"
+msgid "Handles visibility of each definition based on meta values."
+msgstr "بر اساس متای هر تعریف، نمایانی آن را مشخص میکند."
+
+#: Educated.php:68
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr "غیرفعال"
+
+#: Educated.php:69
+msgctxt "Setting Option"
+msgid "Hidden"
+msgstr "پنهانی"
+
+#: Educated.php:103
+msgid "Education Definition"
+msgid_plural "Education Definitions"
+msgstr[0] "سطوح تحصیلی"
+msgstr[1] "سطح تحصیلی"
+
+#: Educated.php:107
+msgctxt "Label: Menu Name"
+msgid "Educations"
+msgstr "تحصیلات"
+
+#: Educated.php:108
+msgctxt "Label: Show Option All"
+msgid "Educations"
+msgstr "تحصیلات"
+
+#: Educated.php:109
+msgctxt "Label: Show Option No Terms"
+msgid "(Uneducated)"
+msgstr "(تحصیلات نامعلوم)"
+
+#: Educated.php:118
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Education Summary"
+msgstr "گزارش تحصیلات گروهه شما"
+
+#: Educated.php:119
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Education Summary"
+msgstr "گزارش تحصیلات تحریریه"
+
+#: Educated.php:124
+msgctxt "Default Term"
+msgid "Illiterate"
+msgstr "بی‌سواد"
+
+#: Educated.php:125
+msgctxt "Default Term"
+msgid "Primary"
+msgstr "ابتدائی"
+
+#: Educated.php:126
+msgctxt "Default Term"
+msgid "Secondary"
+msgstr "متوسطه"
+
+#: Educated.php:127
+msgctxt "Default Term"
+msgid "Bachelor"
+msgstr "کارشناسی"
+
+#: Educated.php:128
+msgctxt "Default Term"
+msgid "Master"
+msgstr "کارشناسی ارشد"
+
+#: Educated.php:129
+msgctxt "Default Term"
+msgid "Doctorate"
+msgstr "دکترا"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Restricted Terms"
+#~ msgstr "رده‌های محدود‌شده"
+
+#~ msgid "Education"
+#~ msgid_plural "Educations"
+#~ msgstr[0] "تحصیلات"
+#~ msgstr[1] "تحصیل"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Manage, Edit and Delete Audit Attributes."
+#~ msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را مدیریت، ویرایش و یا حذف کنند."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Assign Audit Attributes."
+#~ msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را به فرسته‌ها اختصاص دهند."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can see Audit Attributes Reports."
+#~ msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را ببینند."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that check for Audit Attributes visibility."
+#~ msgstr "نقش‌هایی که سطح دسترسی هر برچسب بازبینی برای نمایش به آن‌ها بررسی میشود."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Handles visibility of each term based on meta values."
+#~ msgstr "بر اساس متای هر رده، نمایانی آن را مشخص میکند."
