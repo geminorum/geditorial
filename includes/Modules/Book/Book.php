@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
@@ -40,10 +41,7 @@ class Book extends gEditorial\Module
 
 	public function settings_intro()
 	{
-		if ( ! defined( 'P2P_PLUGIN_VERSION' ) )
-			/* translators: %1$s: plugin url, %2$s: plugin url */
-			HTML::desc( sprintf( _x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Settings Intro', 'geditorial-book' ),
-				'https://github.com/scribu/wp-posts-to-posts/', 'https://github.com/voceconnect/objects-to-objects' ) );
+		Info::renderNoticeP2P();
 	}
 
 	protected function get_global_settings()
