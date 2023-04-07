@@ -2191,6 +2191,10 @@ class Module extends Base
 				$sanitized = Validation::sanitizeIdentityNumber( $data );
 				break;
 
+			case 'isbn':
+				$sanitized = Core\ISBN::sanitize( $data, TRUE );
+				break;
+
 			case 'iban':
 				$sanitized = Validation::sanitizeIBAN( $data );
 				break;

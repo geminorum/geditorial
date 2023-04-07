@@ -632,6 +632,11 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::renderFieldIdentity( $args, $post, NULL );
 					break;
 
+				case 'isbn':
+
+					ModuleMetaBox::renderFieldISBN( $args, $post, NULL );
+					break;
+
 				case 'iban':
 
 					ModuleMetaBox::renderFieldIBAN( $args, $post, NULL );
@@ -839,6 +844,7 @@ class Meta extends gEditorial\Module
 				case 'phone':
 				case 'mobile':
 				case 'identity':
+				case 'isbn':
 				case 'iban':
 				case 'email':
 				case 'code':
@@ -1205,6 +1211,9 @@ class Meta extends gEditorial\Module
 			case 'phone':
 			case 'mobile':
 				return apply_shortcodes( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
+
+			case 'isbn':
+				return HTML::link( ISBN::prep( $raw, TRUE ), Info::lookupISBN( $raw ), TRUE );
 
 			case 'date':
 				return Datetime::prepForDisplay( trim( $raw ), 'Y/m/d' );

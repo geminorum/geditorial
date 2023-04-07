@@ -335,7 +335,7 @@ class Book extends gEditorial\Module
 				'publication_isbn' => [
 					'title'       => _x( 'ISBN', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-book' ),
-					'type'        => 'code',
+					'type'        => 'isbn',
 					'icon'        => 'menu',
 					'quickedit'   => TRUE,
 				],
