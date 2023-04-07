@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Wysiwyg\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-07 18:47+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Wysiwyg\n"
+"X-Domain: geditorial-wysiwyg\n"
+
+#: Wysiwyg.php:41
+msgctxt "Setting Title"
+msgid "Description Roles"
+msgstr "نقش‌های توضیحات"
+
+#: Wysiwyg.php:42
+msgctxt "Setting Description"
+msgid "Editor will be available on descriptions for selected Roles."
+msgstr "ویرایشگر توضیحات، برای این نقش‌ها در دسترس خواهد بود."
+
+#: Wysiwyg.php:112
+msgctxt "Taxonomy Description: Label"
+msgid "Description"
+msgstr "توضیحات"
+
+#: Wysiwyg.php:121
+msgctxt "Taxonomy Description: Description"
+msgid ""
+"The description is not prominent by default; however, some themes may show it."
+msgstr ""
+"توضیحات به صورت پیش فرض مهم نیستند، با این حال برخی از پوسته‌ها ممکن است آنها "
+"را نمایش دهند."
