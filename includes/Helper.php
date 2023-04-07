@@ -208,19 +208,39 @@ class Helper extends Main
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}
 
-	public static function prepMetaRow( $value, $key = NULL, $field = [] )
+	public static function prepMetaRow( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
-		switch ( $key ) {
-			case 'twitter'  : return Third::htmlTwitterIntent( $value, TRUE );
-			case 'facebook' : return HTML::link( URL::prepTitle( $value ), $value );
-			case 'instagram': return Third::htmlHandle( $value, 'https://instagram.com/' );
-			case 'telegram' : return Third::htmlHandle( $value, 'https://t.me/' );
-			case 'phone'    : return HTML::tel( $value );
-			case 'mobile'   : return HTML::tel( $value );
-			case 'username' : return '@'.$value; // FIXME
+		$filtered = apply_filters( static::BASE.'_prep_meta_row', $value, $field_key, $field, $raw );
+
+		if ( $filtered !== $value )
+			return $filtered; // bail if already filtered
+
+		switch ( $field_key ) {
+			case 'twitter'  : return Core\Third::htmlTwitterIntent( $raw ?: $value, TRUE );
+			case 'facebook' : return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
+			case 'instagram': return Core\Third::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
+			case 'telegram' : return Core\Third::htmlHandle( $value, 'https://t.me/' );
+			case 'phone'    : return Core\HTML::tel( $raw ?: $value );
+			case 'mobile'   : return Core\HTML::tel( $raw ?: $value );
+			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
 		}
 
-		return HTML::escape( $value );
+		if ( empty( $field['type'] ) )
+			return Core\HTML::escape( $value );
+
+		switch ( $field['type'] ) {
+
+			case 'isbn':
+				return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ),
+					Info::lookupISBN( $raw ?: $value ), TRUE );
+
+			case 'contact_method':
+				return Core\URL::isValid( $raw ?: $value )
+					? Core\HTML::link( URL::prepTitle( $raw ?: $value ), $raw ?: $value )
+					: sprintf( '<span title="%s">@%s</span>', empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ), $raw ?: $value );
+		}
+
+		return Core\HTML::escape( $value );
 	}
 
 	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )

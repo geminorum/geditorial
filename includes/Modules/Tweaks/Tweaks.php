@@ -887,12 +887,12 @@ class Tweaks extends gEditorial\Module
 
 		foreach ( wp_get_user_contact_methods( $user ) as $method => $title ) {
 
-			if ( ! $meta = get_user_meta( $user->ID, $method, TRUE ) )
+			if ( ! $value = get_user_meta( $user->ID, $method, TRUE ) )
 				continue;
 
 			echo '<li class="-row tweaks-user-contacts -contact-'.$method.'">';
 				echo $this->get_column_icon( FALSE, Icon::guess( $method, 'email-alt' ), $title );
-				echo $this->prep_meta_row( $meta, $method );
+				echo $this->prep_meta_row( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
 			echo '</li>';
 		}
 	}

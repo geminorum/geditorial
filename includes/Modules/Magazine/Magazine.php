@@ -383,6 +383,8 @@ class Magazine extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'issue_cpt' ) );
 		$this->add_posttype_fields_supported();
+
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 	}
 
 	public function admin_menu()
@@ -545,18 +547,18 @@ class Magazine extends gEditorial\Module
 		$this->paired_tweaks_column_attr( $post, 'issue_cpt', 'issue_tax' );
 	}
 
-	public function prep_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
-		switch ( $key ) {
+		switch ( $field_key ) {
 			/* translators: %s: order */
-			case 'in_issue_order'      : return Strings::getCounted( $value, _x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_order'      : return Strings::getCounted( $raw ?: $value, _x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' ) );
 			/* translators: %s: page */
-			case 'in_issue_page_start' : return Strings::getCounted( $value, _x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_page_start' : return Strings::getCounted( $raw ?: $value, _x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) );
 			/* translators: %s: total count */
-			case 'in_issue_pages'      : return Strings::getCounted( $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_pages'      : return Strings::getCounted( $raw ?: $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
 		}
 
-		return parent::prep_meta_row( $value, $key, $field );
+		return $value;
 	}
 
 	public function post_updated_messages( $messages )

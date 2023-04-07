@@ -1066,19 +1066,20 @@ class Meta extends gEditorial\Module
 			echo '<div class="hidden '.$prefix.$field.'-value">'.$this->get_postmeta_field( $post->ID, $field ).'</div>';
 	}
 
+	// NOTE: only renders quick-edits
 	public function column_row_default( $post, $fields, $excludes )
 	{
-		foreach ( $fields as $field => $args ) {
+		foreach ( $fields as $field_key => $field ) {
 
-			if ( ! $args['quickedit'] )
+			if ( ! $field['quickedit'] )
 				continue;
 
-			if ( ! $value = $this->get_postmeta_field( $post->ID, $field ) )
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
 				continue;
 
-			echo '<li class="-row meta-'.$field.'">';
-				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
-				echo HTML::escape( $value );
+			echo '<li class="-row meta-'.$field_key.'">';
+				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
+				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo '</li>';
 		}
 	}

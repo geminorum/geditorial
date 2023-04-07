@@ -2043,7 +2043,8 @@ class Module extends Base
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 				'access_view' => NULL, // @SEE: `$this->access_posttype_field()`
 				'access_edit' => NULL, // @SEE: `$this->access_posttype_field()`
-				'sanitize'    => NULL,
+				'sanitize'    => NULL, // callback
+				'prep'        => NULL, // callback
 				'pattern'     => NULL, // HTML5 input pattern // FIXME: utilize this!
 				'default'     => NULL, // currently only on rest
 				'icon'        => 'smiley',
@@ -6221,25 +6222,36 @@ class Module extends Base
 	// DEFAULT FILTER
 	public function meta_column_row( $post, $fields, $excludes )
 	{
-		foreach ( $fields as $field => $args ) {
+		foreach ( $fields as $field_key => $field ) {
 
-			if ( in_array( $field, $excludes ) )
+			if ( in_array( $field_key, $excludes ) )
 				continue;
 
-			if ( ! $value = $this->get_postmeta_field( $post->ID, $field ) )
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
 				continue;
 
-			echo '<li class="-row -'.$this->module->name.' -field-'.$field.'">';
-				echo $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
-				echo $this->prep_meta_row( $value, $field, $args );
+			echo '<li class="-row -'.$this->module->name.' -field-'.$field_key.'">';
+				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
+				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo '</li>';
 		}
 	}
 
 	// DEFAULT METHOD
-	public function prep_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
-		return Helper::prepMetaRow( $value, $key, $field );
+		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
+			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw ] );
+
+		if ( method_exists( $this, 'prep_meta_row_module' ) ) {
+
+			$prepped = $this->prep_meta_row_module( $value, $field_key, $field, $raw );
+
+			if ( $prepped !== $value )
+				return $prepped; // bail if already prepped
+		}
+
+		return Helper::prepMetaRow( $value, $field_key, $field, $raw );
 	}
 
 	public function icon( $name, $group = NULL )

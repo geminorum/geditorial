@@ -760,22 +760,22 @@ class Book extends gEditorial\Module
 		$this->column_row_p2p_from_posttype( 'publication_cpt', $post );
 	}
 
-	public function prep_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
-		switch ( $key ) {
-			/* translators: %s: isbn placeholder */
-			case 'isbn'    : return sprintf( _x( 'ISBN: %s', 'Display', 'geditorial-book' ), ModuleHelper::ISBN( $value ) );
+		switch ( $field_key ) {
+			// FIXME: MUST BE DEPRECATED: use type: `isbn`
+			case 'publication_isbn'   : return HTML::link( ISBN::prep( $raw ?: $value, TRUE ), Info::lookupISBN( $raw ?: $value ), TRUE );
 			/* translators: %s: edition placeholder */
-			case 'edition' : return sprintf( _x( '%s Edition', 'Display', 'geditorial-book' ), $value );
+			case 'publication_edition': return sprintf( _x( '%s Edition', 'Display', 'geditorial-book' ), Number::localize( Number::toOrdinal( $raw ?: $value ) ) );
 			/* translators: %s: print placeholder */
-			case 'print'   : return sprintf( _x( '%s Print', 'Display', 'geditorial-book' ), $value );
+			case 'publication_print'  : return sprintf( _x( '%s Print', 'Display', 'geditorial-book' ), Number::localize( Number::toOrdinal( $raw ?: $value ) ) );
 			/* translators: %s: pages count placeholder */
-			case 'pages'   : return Strings::getCounted( $value, _x( '%s Pages', 'Display', 'geditorial-book' ) );
+			case 'total_pages'        : return Strings::getCounted( $raw ?: $value, _x( '%s Pages', 'Display', 'geditorial-book' ) );
 			/* translators: %s: volumes count placeholder */
-			case 'volumes' : return Strings::getCounted( $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
+			case 'total_volumes'      : return Strings::getCounted( $raw ?: $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
 		}
 
-		return parent::prep_meta_row( $value, $key, $field );
+		return $value;
 	}
 
 	public function meta_init()
@@ -786,6 +786,7 @@ class Book extends gEditorial\Module
 
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 6, 9, FALSE, 'geditorial' );
 
 		$this->filter_module( 'national_library', 'default_posttype_isbn_metakey', 2 );

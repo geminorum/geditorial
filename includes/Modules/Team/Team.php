@@ -179,20 +179,22 @@ class Team extends gEditorial\Module
 		return [ 'member_group' ];
 	}
 
-	public function prep_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
-		switch ( $key ) {
-			case 'email_gravatar': return HTML::mailto( $value );
-			case 'email_contact' : return HTML::mailto( $value );
-			case 'personal_site' : return HTML::link( $value );
+		switch ( $field_key ) {
+			case 'email_gravatar': return HTML::mailto( $raw ?: $value );
+			case 'email_contact' : return HTML::mailto( $raw ?: $value );
+			case 'personal_site' : return HTML::link( $raw ?: $value );
 		}
 
-		return parent::prep_meta_row( $value, $key, $field );
+		return $value;
 	}
 
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'member_cpt' ) );
+
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 	}
 
 	public function dashboard_glance_items( $items )

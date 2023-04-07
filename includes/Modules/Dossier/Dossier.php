@@ -320,6 +320,8 @@ class Dossier extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'dossier_posttype' ) );
 		$this->add_posttype_fields_supported();
+
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 	}
 
 	public function admin_menu()
@@ -521,14 +523,14 @@ class Dossier extends gEditorial\Module
 		$this->paired_tweaks_column_attr( $post, 'dossier_posttype', 'dossier_paired' );
 	}
 
-	public function prep_meta_row( $value, $key = NULL, $field = [] )
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
-		switch ( $key ) {
+		switch ( $field_key ) {
 			/* translators: %s: order */
-			case 'in_dossier_order' : return Strings::getCounted( $value, _x( 'Order in Dossier: %s', 'Display', 'geditorial-dossier' ) );
+			case 'in_dossier_order' : return Strings::getCounted( $raw ?: $value, _x( 'Order in Dossier: %s', 'Display', 'geditorial-dossier' ) );
 		}
 
-		return parent::prep_meta_row( $value, $key, $field );
+		return $value;
 	}
 
 	public function post_updated_messages( $messages )
