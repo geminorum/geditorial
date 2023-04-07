@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Suited\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Suited\n"
+"X-Domain: geditorial-suited\n"
+
+#: Suited.php:29
+msgctxt "Setting"
+msgid "There are no suitable targets available!"
+msgstr ""
+
+#: Suited.php:37
+msgctxt "Setting Title"
+msgid "Manage Roles"
+msgstr ""
+
+#: Suited.php:38
+msgctxt "Setting Description"
+msgid "Roles that can Manage, Edit and Delete Suitable Targets."
+msgstr ""
+
+#: Suited.php:44
+msgctxt "Setting Title"
+msgid "Assign Roles"
+msgstr ""
+
+#: Suited.php:45
+msgctxt "Setting Description"
+msgid "Roles that can Assign Suitable Targets."
+msgstr ""
+
+#: Suited.php:51
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr ""
+
+#: Suited.php:52
+msgctxt "Setting Description"
+msgid "Roles that can see Suitable Targets Reports."
+msgstr ""
+
+#: Suited.php:58
+msgctxt "Setting Title"
+msgid "Restricted Roles"
+msgstr ""
+
+#: Suited.php:59
+msgctxt "Setting Description"
+msgid "Roles that check for Suitable Targets visibility."
+msgstr ""
+
+#: Suited.php:65
+msgctxt "Setting Title"
+msgid "Restricted Targets"
+msgstr ""
+
+#: Suited.php:66
+msgctxt "Setting Description"
+msgid "Handles visibility of each target based on meta values."
+msgstr ""
+
+#: Suited.php:69
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr ""
+
+#: Suited.php:70
+msgctxt "Setting Option"
+msgid "Hidden"
+msgstr ""
+
+#: Suited.php:108
+msgid "Suitable Target"
+msgid_plural "Suitable Targets"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Suited.php:112
+msgctxt "Label: Show Option All"
+msgid "Suitable"
+msgstr ""
+
+#: Suited.php:113
+msgctxt "Label: Show Option No Terms"
+msgid "(Unsuitable)"
+msgstr ""
