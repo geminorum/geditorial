@@ -1,0 +1,140 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Licensed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Licensed\n"
+"X-Domain: geditorial-licensed\n"
+
+#: Licensed.php:28
+msgctxt "Setting"
+msgid "There are no driving licences available!"
+msgstr ""
+
+#: Licensed.php:36
+msgctxt "Setting Title"
+msgid "Manage Roles"
+msgstr ""
+
+#: Licensed.php:37
+msgctxt "Setting Description"
+msgid "Roles that can Manage, Edit and Delete Driving Licences."
+msgstr ""
+
+#: Licensed.php:43
+msgctxt "Setting Title"
+msgid "Assign Roles"
+msgstr ""
+
+#: Licensed.php:44
+msgctxt "Setting Description"
+msgid "Roles that can Assign Driving Licences."
+msgstr ""
+
+#: Licensed.php:50
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr ""
+
+#: Licensed.php:51
+msgctxt "Setting Description"
+msgid "Roles that can see Driving Licences Reports."
+msgstr ""
+
+#: Licensed.php:57
+msgctxt "Setting Title"
+msgid "Restricted Roles"
+msgstr ""
+
+#: Licensed.php:58
+msgctxt "Setting Description"
+msgid "Roles that check for Driving Licences visibility."
+msgstr ""
+
+#: Licensed.php:64
+msgctxt "Setting Title"
+msgid "Restricted Licences"
+msgstr ""
+
+#: Licensed.php:65
+msgctxt "Setting Description"
+msgid "Handles visibility of each licence based on meta values."
+msgstr ""
+
+#: Licensed.php:68
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr ""
+
+#: Licensed.php:69
+msgctxt "Setting Option"
+msgid "Hidden"
+msgstr ""
+
+#: Licensed.php:103
+msgid "Driving Licence"
+msgid_plural "Driving Licences"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Licensed.php:107
+msgctxt "Label: Show Option All"
+msgid "Licences"
+msgstr ""
+
+#: Licensed.php:108
+msgctxt "Label: Show Option No Terms"
+msgid "(Unlicensed)"
+msgstr ""
+
+#: Licensed.php:117
+msgctxt "Dashboard Widget Title"
+msgid "Your Driving Licence Summary"
+msgstr ""
+
+#: Licensed.php:118
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Driving Licence Summary"
+msgstr ""
+
+#: Licensed.php:123
+msgctxt "Default Term"
+msgid "Motorcycle"
+msgstr ""
+
+#: Licensed.php:124
+msgctxt "Default Term"
+msgid "Category Three"
+msgstr ""
+
+#: Licensed.php:125
+msgctxt "Default Term"
+msgid "Category Two"
+msgstr ""
+
+#: Licensed.php:126
+msgctxt "Default Term"
+msgid "Category One"
+msgstr ""
+
+#: Licensed.php:127
+msgctxt "Default Term"
+msgid "Loader"
+msgstr ""
+
+#: Licensed.php:128
+msgctxt "Default Term"
+msgid "Helicopter"
+msgstr ""
+
+#: Licensed.php:129
+msgctxt "Default Term"
+msgid "Airplane"
+msgstr ""
