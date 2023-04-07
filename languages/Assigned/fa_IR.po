@@ -1,0 +1,178 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Assigned\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-07 17:21+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Assigned\n"
+"X-Domain: geditorial-assigned\n"
+
+#: Assigned.php:30
+msgctxt "Setting"
+msgid "There are no assignments available!"
+msgstr "تکلیفی در دسترس نیست!"
+
+#: Assigned.php:42
+msgctxt "Setting Title"
+msgid "Manage Roles"
+msgstr "نقش‌های مدیریت واگذاری"
+
+#: Assigned.php:43
+msgctxt "Setting Description"
+msgid "Roles that can Manage, Edit and Delete Assignments."
+msgstr "نقش‌هایی که میتوانند تکالیف را مدیریت، ویرایش و یا حذف کنند."
+
+#: Assigned.php:49
+msgctxt "Setting Title"
+msgid "Assign Roles"
+msgstr "نقش‌های مأمور واگذاری"
+
+#: Assigned.php:50
+msgctxt "Setting Description"
+msgid "Roles that can assign Assignments."
+msgstr "نقش‌هایی که میتوانند تکالیف را تخصیص دهند."
+
+#: Assigned.php:56
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr "نقش‌های بررسی گزارشات"
+
+#: Assigned.php:57
+msgctxt "Setting Description"
+msgid "Roles that can see Assignments Reports."
+msgstr "نقش‌هایی که می‌توانند گزارش‌های تکالیف را ببینند."
+
+#: Assigned.php:63
+msgctxt "Setting Title"
+msgid "Restricted Roles"
+msgstr "نقش‌های محدود‌شده"
+
+#: Assigned.php:64
+msgctxt "Setting Description"
+msgid "Roles that check for Assignments visibility."
+msgstr "نقش‌هایی که سطح دسترسی هر تکلیف برای نمایش به آن‌ها بررسی می‌شود."
+
+#: Assigned.php:70
+msgctxt "Setting Title"
+msgid "Restricted Terms"
+msgstr "رده‌های محدود‌شده"
+
+#: Assigned.php:71
+msgctxt "Setting Description"
+msgid "Handles visibility of each term based on meta values."
+msgstr "بر اساس متای هر رده، نمایانی آن را مشخص میکند."
+
+#: Assigned.php:74
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr "غیرفعال"
+
+#: Assigned.php:75
+msgctxt "Setting Option"
+msgid "Hidden"
+msgstr "پنهانی"
+
+#: Assigned.php:81
+msgctxt "Setting Title"
+msgid "Locking Terms"
+msgstr "رده‌های قفل‌کننده"
+
+#: Assigned.php:82
+msgctxt "Setting Description"
+msgid "Selected terms will lock editing the post to assignment managers."
+msgstr "رده‌های انتخاب شده، نوشته را برای مدیران تکالیف قفل میکند."
+
+#: Assigned.php:117
+msgid "Assignment"
+msgid_plural "Assignments"
+msgstr[0] "تکالیف"
+msgstr[1] "تکلیف"
+
+#: Assigned.php:121
+msgctxt "Label: Menu Name"
+msgid "Content Assignments"
+msgstr "تکالیف محتوایی"
+
+#: Assigned.php:122
+msgctxt "Label: Show Option All"
+msgid "Assignment"
+msgstr "تکالیف"
+
+#: Assigned.php:123
+msgctxt "Label: Show Option No Terms"
+msgid "(Unassigned)"
+msgstr "(تکلیف‌نشده)"
+
+#: Assigned.php:132
+msgctxt "Dashboard Widget Title"
+msgid "Your Assignments Summary"
+msgstr "گزارش تکالیف شما"
+
+#: Assigned.php:133
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Assignments Summary"
+msgstr "گزارش تکالیف تحریریه"
+
+#: Assigned.php:138
+msgctxt "Default Term"
+msgid "Research"
+msgstr "تحقیق"
+
+#: Assigned.php:139
+msgctxt "Default Term"
+msgid "Planning"
+msgstr "برنامه‌ریزی"
+
+#: Assigned.php:140
+msgctxt "Default Term"
+msgid "Execution"
+msgstr "اجرا"
+
+#: Assigned.php:141
+msgctxt "Default Term"
+msgid "Reporting"
+msgstr "گزارش‌گیری"
+
+#: Assigned.php:153 Assigned.php:158
+msgctxt "Field Title"
+msgid "Assigned To"
+msgstr "واگذارشده به"
+
+#: Assigned.php:154
+msgctxt "Field Description"
+msgid "Determines the user responsible for this assignment."
+msgstr "کاربر مسؤول این تکلیف را مشخص می‌کند."
+
+#: Assigned.php:159
+msgctxt "Field Description"
+msgid "Determines the individual responsible for this assignment."
+msgstr "فرد مسؤول این تکلیف را مشخص می‌کند."
+
+#: Assigned.php:164
+msgctxt "Field Title"
+msgid "Due Date"
+msgstr "تاریخ نهایی"
+
+#~ msgctxt "Taxonomy Menu"
+#~ msgid "Assignments"
+#~ msgstr "تکالیف"
+
+#~ msgctxt "Column Title"
+#~ msgid "Assignments"
+#~ msgstr "تکالیف"
+
+#~ msgctxt "Show Option All"
+#~ msgid "Assignments"
+#~ msgstr "تکالیف"
+
+#~ msgctxt "Show Option None"
+#~ msgid "(Not assigned)"
+#~ msgstr "(واگذارنشده)"
