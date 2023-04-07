@@ -3,10 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\ISBN;
-use geminorum\gEditorial\Core\Number;
 
 class ModuleHelper extends gEditorial\Helper
 {
@@ -15,15 +14,15 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function ISBN( $string )
 	{
-		return HTML::link( ISBN::prep( $string, TRUE ), Helper::lookupISBN( $string ), TRUE );
+		return HTML::link( ISBN::prep( $string, TRUE ), Info::lookupISBN( $string ), TRUE );
 	}
 
-	// FIXME: DEPRECATED: use `Helper::lookupISBN()`
+	// FIXME: DEPRECATED: use `Info::lookupISBN()`
 	public static function lookupISBN( $isbn )
 	{
-		self::_dep( 'Helper::lookupISBN()' );
+		self::_dep( 'Info::lookupISBN()' );
 
-		return Helper::lookupISBN( $isbn );
+		return Info::lookupISBN( $isbn );
 	}
 
 	public static function barcodeISBN( $isbn )

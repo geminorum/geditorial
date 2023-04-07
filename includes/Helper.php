@@ -482,30 +482,6 @@ class Helper extends Main
 		return HTML::getDashicon( $fallback );
 	}
 
-	// https://books.google.com/books?vid=isbn9789646799950
-	// https://www.google.com/search?tbm=bks&q=9786005334395
-	public static function lookupISBN( $isbn )
-	{
-		// $url = add_query_arg( [
-		// 	// 'q' => 'ISBN:'.urlencode( ISBN::sanitize( $isbn ) ),
-		// 	'q' => urlencode( ISBN::sanitize( $isbn ) ),
-		// ], 'https://www.google.com/search' );
-
-		$url = add_query_arg( [
-			'vid' => urlencode( 'isbn'.Core\ISBN::sanitize( $isbn ) ),
-		], 'https://books.google.com/books' );
-
-		return apply_filters( static::BASE.'_lookup_isbn', $url, $isbn );
-	}
-
-	public static function ipLookup( $ip )
-	{
-		if ( function_exists( 'gnetwork_ip_lookup' ) )
-			return gnetwork_ip_lookup( $ip );
-
-		return $ip;
-	}
-
 	// DEPRECATED
 	public static function getEditorialUserID( $fallback = FALSE )
 	{

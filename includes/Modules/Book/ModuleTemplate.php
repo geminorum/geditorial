@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\ISBN;
 
@@ -69,7 +69,7 @@ class ModuleTemplate extends gEditorial\Template
 		$html = HTML::img( ModuleHelper::barcodeISBN( $isbn ), '-book-barcode-isbn', $isbn );
 
 		if ( is_null( $args['link'] ) )
-			$html = HTML::link( $html, Helper::lookupISBN( $isbn ) );
+			$html = HTML::link( $html, Info::lookupISBN( $isbn ) );
 
 		else if ( $args['link'] )
 			$html = HTML::link( $html, $args['link'] );
