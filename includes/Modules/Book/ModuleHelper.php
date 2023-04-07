@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\ISBN;
 use geminorum\gEditorial\Core\Number;
@@ -14,23 +15,15 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function ISBN( $string )
 	{
-		return HTML::link( ISBN::prep( $string, TRUE ), self::lookupISBN( $string ), TRUE );
+		return HTML::link( ISBN::prep( $string, TRUE ), Helper::lookupISBN( $string ), TRUE );
 	}
 
-	// https://books.google.com/books?vid=isbn9789646799950
-	// https://www.google.com/search?tbm=bks&q=9786005334395
+	// FIXME: DEPRECATED: use `Helper::lookupISBN()`
 	public static function lookupISBN( $isbn )
 	{
-		// $url = add_query_arg( [
-		// 	// 'q' => 'ISBN:'.urlencode( ISBN::sanitize( $isbn ) ),
-		// 	'q' => urlencode( ISBN::sanitize( $isbn ) ),
-		// ], 'https://www.google.com/search' );
+		self::_dep( 'Helper::lookupISBN()' );
 
-		$url = add_query_arg( [
-			'vid' => urlencode( 'isbn'.ISBN::sanitize( $isbn ) ),
-		], 'https://books.google.com/books' );
-
-		return apply_filters( static::BASE.'_'.static::MODULE.'_lookup_isbn', $url, $isbn );
+		return Helper::lookupISBN( $isbn );
 	}
 
 	public static function barcodeISBN( $isbn )
