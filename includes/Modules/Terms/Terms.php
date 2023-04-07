@@ -22,11 +22,12 @@ class Terms extends gEditorial\Module
 {
 
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `plural`, `icon`, `LatLng`, `url`, `subtitle`
+	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `LatLng`, `url`, `subtitle`, `phonetic`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
 		'order',
+		'plural',
 		'overwrite',
 		'tagline',
 		'contact',
@@ -106,6 +107,7 @@ class Terms extends gEditorial\Module
 		return [
 			'titles' => [
 				'order'     => _x( 'Order', 'Titles', 'geditorial-terms' ),
+				'plural'    => _x( 'Plural', 'Titles', 'geditorial-terms' ),
 				'overwrite' => _x( 'Overwrite', 'Titles', 'geditorial-terms' ),
 				'tagline'   => _x( 'Tagline', 'Titles', 'geditorial-terms' ),
 				'contact'   => _x( 'Contact', 'Titles', 'geditorial-terms' ),
@@ -130,6 +132,7 @@ class Terms extends gEditorial\Module
 			],
 			'descriptions' => [
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
+				'plural'    => _x( 'Defines the plural form of the term.', 'Descriptions', 'geditorial-terms' ),
 				'overwrite' => _x( 'Replaces the term name on front-page display.', 'Descriptions', 'geditorial-terms' ),
 				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Descriptions', 'geditorial-terms' ),
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
@@ -208,6 +211,7 @@ class Terms extends gEditorial\Module
 
 		switch ( $field ) {
 			case 'role': $excluded[] = 'audit_attribute'; break;
+			case 'plural': $excluded[] = 'post_tag'; break;
 			case 'overwrite': $excluded[] = 'post_tag'; break;
 			case 'tagline': $excluded[] = 'post_tag'; break;
 			case 'arrow': return Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break; // override!
@@ -646,6 +650,7 @@ class Terms extends gEditorial\Module
 
 		$supported = $this->get_supported( $taxonomy );
 		$sortables = [
+			'plural',
 			'overwrite',
 			'tagline',
 			'contact',
@@ -806,6 +811,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'label':
+			case 'plural':
 			case 'overwrite':
 			case 'tagline':
 
@@ -1265,6 +1271,7 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
+			case 'plural':
 			case 'overwrite':
 			case 'tagline':
 
@@ -1486,6 +1493,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'label':
+			case 'plural':
 			case 'overwrite':
 			case 'tagline':
 			default:
@@ -1613,6 +1621,7 @@ class Terms extends gEditorial\Module
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
 					break;
+					case 'plural':
 					case 'overwrite':
 					case 'tagline':
 
