@@ -81,11 +81,12 @@ class Importer extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'metakey_source_map'  => '_importer_source_map',
-			'metakey_source_data' => '_importer_source_data',
-			'metakey_attach_id'   => '_importer_attachment_id',
-			'metakey_source_key'  => '_importer_source_id_key',
-			'metakey_source_id'   => 'import_source_id',
+			'metakey_source_map'    => '_importer_source_map',
+			'metakey_source_key'    => '_importer_source_id_key',
+			'metakey_source_data'   => '_import_source_data',
+			'metakey_prepared_data' => '_import_prepared_data',
+			'metakey_attach_id'     => '_import_attachment_id',
+			'metakey_source_id'     => 'import_source_id',
 		];
 	}
 
@@ -1006,6 +1007,7 @@ class Importer extends gEditorial\Module
 	{
 		if ( $this->get_setting( 'store_source_data' ) ) {
 			update_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );
+			update_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ), $prepared );
 			update_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ), $attach_id );
 		}
 
