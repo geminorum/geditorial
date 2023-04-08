@@ -86,7 +86,7 @@ class Regional extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'lang_tax' => 'language',
+			'language_taxonomy' => 'language',
 		];
 	}
 
@@ -94,7 +94,7 @@ class Regional extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'lang_tax' => NULL,
+				'language_taxonomy' => NULL,
 			],
 		];
 	}
@@ -109,15 +109,15 @@ class Regional extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'lang_tax' => _n_noop( 'Language', 'Languages', 'geditorial-regional' ),
+				'language_taxonomy' => _n_noop( 'Language', 'Languages', 'geditorial-regional' ),
 			],
 			'labels' => [
-				'lang_tax' => [
+				'language_taxonomy' => [
 					'uncategorized' => _x( 'Unknown', 'Taxonomy Label', 'geditorial-regional' ),
 				]
 			],
 			'defaults' => [
-				'lang_tax' => [
+				'language_taxonomy' => [
 					'name'        => _x( '[Unknown]', 'Default Term: Name', 'geditorial-regional' ),
 					'description' => _x( 'Unknown Languages', 'Default Term: Description', 'geditorial-regional' ),
 					'slug'        => 'unknown',
@@ -142,7 +142,7 @@ class Regional extends gEditorial\Module
 		];
 
 		$strings['default_terms'] = [
-			'lang_tax' => [
+			'language_taxonomy' => [
 				// @SEE: https://en.wikipedia.org/wiki/ISO_639
 				'arabic'  => _x( 'Arabic', 'Default Term: Language', 'geditorial-regional' ),
 				'persian' => _x( 'Farsi', 'Default Term: Language', 'geditorial-regional' ),
@@ -158,7 +158,7 @@ class Regional extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'lang_tax', [
+		$this->register_taxonomy( 'language_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
@@ -180,13 +180,14 @@ class Regional extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'lang_tax' ) == $screen->taxonomy ) {
+		if ( $this->constant( 'language_taxonomy' ) == $screen->taxonomy ) {
 
 			if ( 'edit-tags' == $screen->base ) {
 
 				$this->action( 'taxonomy_tab_extra_content', 2, 12, FALSE, 'gnetwork' );
 
 			} else if ( 'term' == $screen->base ) {
+
 			}
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
@@ -205,12 +206,12 @@ class Regional extends gEditorial\Module
 
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
-		return [ 'lang_tax' ];
+		return [ 'language_taxonomy' ];
 	}
 
 	public function admin_menu()
 	{
-		$this->_hook_menu_taxonomy( 'lang_tax', 'options-general.php' );
+		$this->_hook_menu_taxonomy( 'language_taxonomy', 'options-general.php' );
 	}
 
 	public function get_adminmenu( $page = TRUE, $extra = [] )
@@ -220,7 +221,7 @@ class Regional extends gEditorial\Module
 
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
-		$taxonomy = $this->constant( 'lang_tax' );
+		$taxonomy = $this->constant( 'language_taxonomy' );
 
 		switch ( $cap ) {
 
@@ -264,7 +265,7 @@ class Regional extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_taxonomy( 'lang_tax' ) )
+		if ( $glance = $this->dashboard_glance_taxonomy( 'language_taxonomy' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -325,7 +326,7 @@ class Regional extends gEditorial\Module
 						$count++;
 					}
 
-					if ( ! Taxonomy::insertDefaultTerms( $this->constant( 'lang_tax' ), $terms, ( $update ? 'not_name' : FALSE ) ) )
+					if ( ! Taxonomy::insertDefaultTerms( $this->constant( 'language_taxonomy' ), $terms, ( $update ? 'not_name' : FALSE ) ) )
 						WordPress::redirectReferer( 'noadded' );
 
 					WordPress::redirectReferer( [
@@ -355,7 +356,7 @@ class Regional extends gEditorial\Module
 				'term' => [
 					'title'    => _x( 'Term', 'Table Column', 'geditorial-regional' ),
 					'class'    => '-ltr',
-					'args'     => [ 'taxonomy' => $this->constant( 'lang_tax' ) ],
+					'args'     => [ 'taxonomy' => $this->constant( 'language_taxonomy' ) ],
 					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
 						if ( $term = Term::exists( $row['name'], $column['args']['taxonomy'] ) )
@@ -406,14 +407,14 @@ class Regional extends gEditorial\Module
 		if ( 'tagline' !== $field )
 			return $title;
 
-		return $taxonomy === $this->constant( 'lang_tax' )
+		return $taxonomy === $this->constant( 'language_taxonomy' )
 			? _x( 'Native Name', 'Table Column', 'geditorial-regional' )
 			: $title;
 	}
 
 	public function terms_field_tagline_title( $title, $taxonomy, $field, $term )
 	{
-		return $taxonomy === $this->constant( 'lang_tax' )
+		return $taxonomy === $this->constant( 'language_taxonomy' )
 			? _x( 'Native Name', 'Table Column', 'geditorial-regional' )
 			: $title;
 	}
