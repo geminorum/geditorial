@@ -1006,9 +1006,9 @@ class Importer extends gEditorial\Module
 	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
 		if ( $this->get_setting( 'store_source_data' ) ) {
-			update_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );
-			update_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ), $prepared );
-			update_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ), $attach_id );
+			add_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );
+			add_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ), $prepared );
+			add_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ), $attach_id );
 		}
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
