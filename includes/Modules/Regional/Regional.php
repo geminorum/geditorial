@@ -31,11 +31,54 @@ class Regional extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_editpost' => [
 				'assign_default_term',
 				'metabox_advanced',
+			],
+			'_roles' => [
+				[
+					'field'       => 'manage_roles',
+					'type'        => 'checkboxes',
+					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-regional' ),
+					'description' => _x( 'Roles that can Manage, Edit and Delete Language Defenitions.', 'Setting Description', 'geditorial-regional' ),
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'assign_roles',
+					'type'        => 'checkboxes',
+					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-regional' ),
+					'description' => _x( 'Roles that can Assign Language Defenitions.', 'Setting Description', 'geditorial-regional' ),
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'reports_roles',
+					'type'        => 'checkboxes',
+					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-regional' ),
+					'description' => _x( 'Roles that can see Language Defenitions Reports.', 'Setting Description', 'geditorial-regional' ),
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'restricted_roles',
+					'type'        => 'checkboxes',
+					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-regional' ),
+					'description' => _x( 'Roles that check for Language Defenitions visibility.', 'Setting Description', 'geditorial-regional' ),
+					'values'      => $roles,
+				],
+				[
+					'field'       => 'restricted',
+					'type'        => 'select',
+					'title'       => _x( 'Restricted Defenitions', 'Setting Title', 'geditorial-regional' ),
+					'description' => _x( 'Handles visibility of each defenition based on meta values.', 'Setting Description', 'geditorial-regional' ),
+					'default'     => 'disabled',
+					'values'      => [
+						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-regional' ),
+						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-regional' ),
+					],
+				],
 			],
 		];
 	}
@@ -115,14 +158,6 @@ class Regional extends gEditorial\Module
 	{
 		parent::init();
 
-		// TODO: make custom to use with roles api
-		$capabilities = [
-			'manage_terms' => 'manage_options',
-			'edit_terms'   => 'manage_options',
-			'delete_terms' => 'manage_options',
-			'assign_terms' => 'edit_posts',
-		];
-
 		$this->register_taxonomy( 'lang_tax', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
@@ -130,7 +165,7 @@ class Regional extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
-		], NULL, $capabilities );
+		], NULL, TRUE );
 
 		if ( ! is_admin() )
 			return;
@@ -161,8 +196,16 @@ class Regional extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 			} else if ( 'edit' == $screen->base ) {
+
+				if ( $this->role_can( 'reports' ) )
+					$this->_hook_screen_restrict_taxonomies();
 			}
 		}
+	}
+
+	protected function get_taxonomies_for_restrict_manage_posts()
+	{
+		return [ 'lang_tax' ];
 	}
 
 	public function admin_menu()
@@ -173,6 +216,50 @@ class Regional extends gEditorial\Module
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
 		return FALSE;
+	}
+
+	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	{
+		$taxonomy = $this->constant( 'lang_tax' );
+
+		switch ( $cap ) {
+
+			case 'manage_'.$taxonomy:
+			case 'edit_'.$taxonomy:
+			case 'delete_'.$taxonomy:
+
+				return $this->role_can( 'manage', $user_id )
+					? [ 'read' ]
+					: [ 'do_not_allow' ];
+
+				break;
+
+			case 'assign_'.$taxonomy:
+
+				return $this->role_can( 'assign', $user_id )
+					? [ 'read' ]
+					: [ 'do_not_allow' ];
+
+				break;
+
+			case 'assign_term':
+
+				$term = get_term( (int) $args[0] );
+
+				if ( ! $term || is_wp_error( $term ) )
+					return $caps;
+
+				if ( $taxonomy != $term->taxonomy )
+					return $caps;
+
+				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
+					return $caps;
+
+				if ( ! WordPress\User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
+					return [ 'do_not_allow' ];
+		}
+
+		return $caps;
 	}
 
 	public function dashboard_glance_items( $items )
