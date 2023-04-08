@@ -49,7 +49,7 @@ class MetaBox extends Main
 			'empty'    => FALSE,   // `NULL` for empty box, `FALSE` for disable
 		] );
 
-		if ( ! $args['taxonomy'] )
+		if ( ! $args['taxonomy'] || ( ! $taxonomy = Taxonomy::object( $args['taxonomy'] ) ) )
 			return FALSE;
 
 		if ( ! is_null( $terms ) ) {
@@ -61,14 +61,14 @@ class MetaBox extends Main
 			// @SEE: `PostType::getParentTitles()`
 			// - e.g. tree list select
 
-			// $terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
-			$terms = Taxonomy::listTerms( $args['taxonomy'], 'all' );
+			// $terms = Taxonomy::getTerms( $taxonomy->name, FALSE, TRUE );
+			$terms = Taxonomy::listTerms( $taxonomy->name, 'all' );
 		}
 
 		if ( empty( $terms ) ) {
 
 			if ( is_null( $args['empty'] ) )
-				return self::fieldEmptyTaxonomy( $args['taxonomy'], NULL, $args['posttype'], $args['echo'] );
+				return self::fieldEmptyTaxonomy( $taxonomy->name, NULL, $args['posttype'], $args['echo'] );
 
 			if ( $args['empty'] && ! $args['echo'] )
 				return $args['empty'];
@@ -80,15 +80,15 @@ class MetaBox extends Main
 		}
 
 		if ( is_null( $args['none'] ) )
-			$args['none'] = Helper::getTaxonomyLabel( $args['taxonomy'], 'show_option_select' );
+			$args['none'] = Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' );
 
-		$selected = wp_get_object_terms( $object_id, $args['taxonomy'], [ 'fields' => 'ids' ] );
+		$selected = wp_get_object_terms( $object_id, $taxonomy->name, [ 'fields' => $taxonomy->hierarchical ? 'ids' : 'slugs' ] );
 
 		$dropdown = [
 			'selected'   => count( $selected ) ? $selected[0] : '0',
 			'prop'       => 'name',
-			'value'      => 'term_id',
-			'name'       => 'tax_input['.$args['taxonomy'].'][]',
+			'value'      => $taxonomy->hierarchical ? 'term_id' : 'slug',
+			'name'       => 'tax_input['.$taxonomy->name.'][]',
 			'none_title' => $args['none'],
 			'none_value' => 0,
 			'class'      => static::BASE.'-admin-dropbown',
@@ -1267,7 +1267,6 @@ class MetaBox extends Main
 
 		return Services\SelectSingle::enqueue();
 	}
-
 
 	public static function renderFieldUser( $field, $post = NULL, $module = NULL )
 	{
