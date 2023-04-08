@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
@@ -1539,7 +1540,7 @@ class Meta extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
+	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;

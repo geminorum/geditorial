@@ -69,7 +69,7 @@ class Uncategorized extends gEditorial\Module
 			'rel_post',
 			'affiliation',
 			'specs',
-		] ) );
+		] + $extra ) );
 	}
 
 	public function current_screen( $screen )

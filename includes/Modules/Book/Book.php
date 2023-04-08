@@ -1237,7 +1237,7 @@ class Book extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
+	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
 	{
 		$fields = array_keys( $this->get_importer_fields( $posttype ) );
 

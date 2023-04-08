@@ -187,7 +187,7 @@ class Ortho extends gEditorial\Module
 			'post_status',
 			'rel_people',
 			'rel_post',
-		] ) );
+		] + $extra ) );
 	}
 
 	public function init()
@@ -263,7 +263,7 @@ class Ortho extends gEditorial\Module
 		return $options;
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
+	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;

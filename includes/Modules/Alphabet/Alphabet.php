@@ -24,6 +24,7 @@ class Alphabet extends gEditorial\Module
 			'title' => _x( 'Alphabet', 'Modules: Alphabet', 'geditorial' ),
 			'desc'  => _x( 'A to Z Lists for Post Types, Taxonomies and Users', 'Modules: Alphabet', 'geditorial' ),
 			'icon'  => 'editor-textcolor',
+			'i18n'  => FALSE,
 		];
 	}
 
@@ -61,10 +62,8 @@ class Alphabet extends gEditorial\Module
 			'rel_post',
 			'affiliation',
 			'specs',
-		] ) );
+		] + $extra ) );
 	}
-
-	protected function setup_textdomain( $locale = NULL, $domain = NULL ) {} // OVERRIDE
 
 	public function init()
 	{

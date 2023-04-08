@@ -247,7 +247,7 @@ class Tweaks extends gEditorial\Module
 			'follow_users',
 			'follow_groups',
 			'status',
-		] ) );
+		] + $extra ) );
 	}
 
 	private function _get_posttypes_support_feature( $feature, $extra_excludes = [] )

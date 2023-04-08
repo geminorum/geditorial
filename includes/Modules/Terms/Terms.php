@@ -201,7 +201,7 @@ class Terms extends gEditorial\Module
 			'cartable_group',
 			'follow_users',
 			'follow_groups',
-		] ) );
+		] + $extra ) );
 	}
 
 	protected function get_taxonomies_support( $field )
