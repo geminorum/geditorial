@@ -365,6 +365,7 @@ class Importer extends gEditorial\Module
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
+					$raw       = array_combine( $args['extra']['headers'], $row );
 					$title_key = array_search( 'importer_post_title', $args['extra']['map'] );
 					$source_id = NULL;
 
@@ -372,23 +373,23 @@ class Importer extends gEditorial\Module
 						return Helper::htmlEmpty();
 
 					if ( 'none' !== $args['extra']['source_key']
-						&& \array_key_exists( $args['extra']['source_key'], $row ) )
+						&& array_key_exists( $args['extra']['source_key'], $row ) )
 							$source_id = $row[$args['extra']['source_key']];
+
+					$source_id = $this->filters( 'source_id',
+						$source_id,
+						$args['extra']['post_type'],
+						$raw
+					);
 
 					$title = $this->filters( 'prepare',
 						$row[$title_key],
 						$args['extra']['post_type'],
 						'importer_post_title',
-						$row,
-						$this->filters( 'source_id',
-							$source_id,
-							$args['extra']['post_type'],
-							$row,
-							$args['extra']['taxonomies'],
-							$args['extra']['headers']
-						),
-						$args['extra']['taxonomies'],
-						$args['extra']['headers'][$title_key]
+						$args['extra']['headers'][$title_key],
+						$raw,
+						$source_id,
+						$args['extra']['taxonomies']
 					);
 
 					if ( ! $title = trim( $title ) )
@@ -446,26 +447,27 @@ class Importer extends gEditorial\Module
 
 	public function form_posts_table_callback( $value, $row, $column, $index, $key, $args )
 	{
+		$raw       = array_combine( $args['extra']['headers'], $row );
 		$source_id = NULL;
 
 		if ( 'none' !== $args['extra']['source_key']
 			&& \array_key_exists( $args['extra']['source_key'], $row ) )
 				$source_id = $row[$args['extra']['source_key']];
 
+		$source_id = $this->filters( 'source_id',
+			$source_id,
+			$args['extra']['post_type'],
+			$raw
+		);
+
 		$filtered = $this->filters( 'prepare',
 			$value,
 			$args['extra']['post_type'],
 			$args['extra']['map'][$key],
-			$row,
-			$this->filters( 'source_id',
-				$source_id,
-				$args['extra']['post_type'],
-				$row,
-				$args['extra']['taxonomies'],
-				$args['extra']['headers']
-			),
-			$args['extra']['taxonomies'],
-			$args['extra']['headers'][$key]
+			$args['extra']['headers'][$key],
+			$raw,
+			$source_id,
+			$args['extra']['taxonomies']
 		);
 
 		if ( FALSE === $filtered )
@@ -548,7 +550,7 @@ class Importer extends gEditorial\Module
 
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
-					$taxonomies     = Taxonomy::get( 4, [], $posttype );
+					$all_taxonomies = Taxonomy::get( 4, [], $posttype );
 
 					$this->_raise_resources();
 
@@ -566,19 +568,21 @@ class Importer extends gEditorial\Module
 
 						$parser = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
 						$items  = $parser->parse();
-						$raw    = array_pop( $items );
+						$row    = array_pop( $items );
 
+						$raw       = array_combine( $headers, $row );
 						$data      = [ 'tax_input' => [] ];
 						$prepared  = [];
+
+						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
-							( 'none' !== $source_key && \array_key_exists( $source_key, $raw )
+							( 'none' !== $source_key && array_key_exists( $source_key, $raw )
 								? $raw[$source_key]
 								: NULL
 							),
 							$posttype,
 							$raw,
-							$taxonomies,
-							$headers
+							$all_taxonomies
 						);
 
 						if ( $source_id && $this->get_setting( 'match_source_id' ) ) {
@@ -591,19 +595,19 @@ class Importer extends gEditorial\Module
 
 						unset( $parser, $items );
 
-						foreach ( $field_map as $key => $field ) {
+						foreach ( $field_map as $offsetkey => $field ) {
 
 							if ( 'none' == $field )
 								continue;
 
 							$value = $this->filters( 'prepare',
-								$raw[$key],
+								$raw[$offsetkey],
 								$posttype,
 								$field,
+								$headers[$offsetkey],
 								$raw,
 								$source_id,
-								$taxonomies,
-								$headers[$key]
+								$all_taxonomies
 							);
 
 							// filter bail-out!
@@ -625,7 +629,7 @@ class Importer extends gEditorial\Module
 
 								case 'importer_custom_meta':
 
-									if ( $custom_metakey = $this->filters( 'custom_metakey', $headers[$key], $posttype, $field, $raw, $taxonomies ) )
+									if ( $custom_metakey = $this->filters( 'custom_metakey', $headers[$offsetkey], $posttype, $field, $raw, $all_taxonomies ) )
 										$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = $value;
 
 									continue 2;
@@ -636,7 +640,7 @@ class Importer extends gEditorial\Module
 								case 'importer_post_excerpt': $data['post_excerpt'] = $prepared[$field] = $value; continue 2;
 							}
 
-							foreach ( $taxonomies as $taxonomy => $taxonomy_object ) {
+							foreach ( $all_taxonomies as $taxonomy => $taxonomy_object ) {
 
 								// skip empty values on terms
 								if ( ! $value )
@@ -717,7 +721,16 @@ class Importer extends gEditorial\Module
 							wp_set_object_terms( $post_id, Arraay::prepNumeral( $term_id ), $taxonomy, TRUE );
 						}
 
-						$this->actions( 'saved', PostType::getPost( $post_id ), $insert, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw );
+						$this->actions( 'saved',
+							PostType::getPost( $post_id ),
+							$insert,
+							$prepared,
+							$field_map,
+							$source_id,
+							$attach_id,
+							$terms_all,
+							$raw
+						);
 
 						$count++;
 					}
@@ -971,7 +984,7 @@ class Importer extends gEditorial\Module
 		return $this->filters( 'fields', $fields, $posttype );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $raw, $source_id, $taxonomies, $key )
+	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
 	{
 		switch ( $field ) {
 
@@ -982,7 +995,7 @@ class Importer extends gEditorial\Module
 			case 'importer_custom_meta' : return Helper::kses( $value, 'text' );
 		}
 
-		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
+		foreach ( array_keys( $all_taxonomies ) as $taxonomy )
 			if ( $field == 'importer_tax_'.$taxonomy )
 				return array_filter( Helper::ksesArray( Strings::getSeparated( $value ) ) );
 
