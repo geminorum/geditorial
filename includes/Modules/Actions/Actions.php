@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\WordPress;
 
 class Actions extends gEditorial\Module
 {
@@ -23,10 +24,31 @@ class Actions extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( is_admin() )
+		if ( is_admin() ) {
+
+			$this->action( 'add_meta_boxes', 2, 9 );
+
+		} else {
+
+			$this->filter( 'the_content', 1, 998 );
+		}
+	}
+
+	// @REF: https://wpartisan.me/?p=434
+	// @REF: https://core.trac.wordpress.org/ticket/45283
+	public function add_meta_boxes( $posttype, $post )
+	{
+		if ( WordPress\PostType::supportBlocksByPost( $post ) )
 			return;
 
-		add_filter( 'the_content', [ $this, 'the_content' ], 998 );
+		$this->action( 'edit_form_after_title' );
+	}
+
+	public function edit_form_after_title( $post )
+	{
+		echo '<div id="postbox-container-after-title" class="postbox-container">';
+			do_meta_boxes( get_current_screen(), 'after_title', $post );
+		echo '</div>';
 	}
 
 	public function the_content( $content )
