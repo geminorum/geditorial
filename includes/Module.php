@@ -2107,12 +2107,9 @@ class Module extends Base
 
 			} else if ( $post = Post::get( $post ) ) {
 
-				$posttype   = PostType::object( $post->post_type );
-				$capability = in_array( $context, [ 'view' ], TRUE )
-					? $posttype->cap->read
-					: $posttype->cap->edit_post;
-
-				$access = user_can( $user_id, $capability, $post->ID );
+				$access = in_array( $context, [ 'edit' ], TRUE )
+					? user_can( $user_id, 'edit_post', $post->ID )
+					: Post::viewable( $post );
 
 			} else {
 
