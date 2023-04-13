@@ -2516,6 +2516,8 @@ class Module extends Base
 
 				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
 					$callback = [ $this, 'settings_section'.$section_suffix ];
+				else if ( method_exists( __NAMESPACE__.'\\Settings', 'settings_section'.$section_suffix ) )
+					$callback = [ __NAMESPACE__.'\\Settings', 'settings_section'.$section_suffix ];
 				else
 					$callback = '__return_false';
 

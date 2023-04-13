@@ -14,10 +14,11 @@ class Suited extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'suited',
-			'title' => _x( 'Suited', 'Modules: Suited', 'geditorial' ),
-			'desc'  => _x( 'Suitable Targets for Contents', 'Modules: Suited', 'geditorial' ),
-			'icon'  => 'superhero-alt',
+			'name'   => 'suited',
+			'title'  => _x( 'Suited', 'Modules: Suited', 'geditorial' ),
+			'desc'   => _x( 'Suitable Targets for Contents', 'Modules: Suited', 'geditorial' ),
+			'icon'   => 'superhero-alt',
+			'access' => 'beta',
 		];
 	}
 

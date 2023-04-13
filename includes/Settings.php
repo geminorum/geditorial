@@ -358,12 +358,6 @@ class Settings extends Core\Base
 		return '<span class="-field-after -icon-wrap">'.$html.'</span>';
 	}
 
-	public static function infoP2P()
-	{
-		/* translators: %s: code placeholder */
-		return sprintf( _x( 'Connected via %s', 'Settings: Setting Info', 'geditorial' ), '<code>P2P</code>' );
-	}
-
 	public static function getSetting_editor_button( $description = NULL )
 	{
 		return [
@@ -1399,7 +1393,7 @@ class Settings extends Core\Base
 		], $module->title ).$access, '-title' );
 
 		if ( isset( $module->desc ) )
-			HTML::desc( $module->desc );
+			HTML::desc( Text::wordWrap( $module->desc ) );
 
 		// list.js filters
 		echo '<span class="-module-title" style="display:none;" aria-hidden="true">'.$module->title.'</span>';

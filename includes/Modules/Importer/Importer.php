@@ -15,6 +15,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -33,6 +34,7 @@ class Importer extends gEditorial\Module
 			'title'    => _x( 'Importer', 'Modules: Importer', 'geditorial' ),
 			'desc'     => _x( 'Data Import Tools', 'Modules: Importer', 'geditorial' ),
 			'icon'     => 'upload',
+			'access'   => 'stable',
 			'frontend' => FALSE,
 		];
 	}
@@ -396,7 +398,7 @@ class Importer extends gEditorial\Module
 					if ( ! $title = trim( $title ) )
 						return Helper::htmlEmpty();
 
-					$posts = PostType::getIDsByTitle( $title, [ 'post_type' => $args['extra']['post_type'] ] );
+					$posts = Post::getByTitle( $title, $args['extra']['post_type'] );
 
 					if ( empty( $posts ) )
 						return Helper::htmlEmpty();
@@ -620,7 +622,7 @@ class Importer extends gEditorial\Module
 
 							if ( $value && $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
 
-								$posts = PostType::getIDsByTitle( $value, [ 'post_type' => $posttype ] );
+								$posts = Post::getByTitle( $value, $posttype );
 
 								if ( ! empty( $posts ) )
 									continue 2;

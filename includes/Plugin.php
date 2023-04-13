@@ -205,7 +205,7 @@ class Plugin
 			if ( 'beta' === $module->access && ! GEDITORIAL_BETA_FEATURES )
 				continue;
 
-			if ( 'alpha' === $module->access && 'production' === $env )
+			if ( 'production' === $env && in_array( $module->access, [ 'alpha', 'experimental', 'unknown' ], TRUE ) )
 				continue;
 
 			if ( $module->autoload || Helper::moduleEnabled( $this->_options->{$mod_name} ) ) {

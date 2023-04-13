@@ -36,10 +36,11 @@ class Users extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'users',
-			'title' => _x( 'Users', 'Modules: Users', 'geditorial' ),
-			'desc'  => _x( 'Editorial Users', 'Modules: Users', 'geditorial' ),
-			'icon'  => 'admin-users',
+			'name'   => 'users',
+			'title'  => _x( 'Users', 'Modules: Users', 'geditorial' ),
+			'desc'   => _x( 'Editorial Users', 'Modules: Users', 'geditorial' ),
+			'icon'   => 'admin-users',
+			'access' => 'beta',
 		];
 	}
 

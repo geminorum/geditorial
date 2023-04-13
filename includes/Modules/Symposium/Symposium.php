@@ -10,10 +10,11 @@ class Symposium extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'symposium',
-			'title' => _x( 'Symposium', 'Modules: Symposium', 'geditorial' ),
-			'desc'  => _x( 'Editorial Session Management', 'Modules: Symposium', 'geditorial' ),
-			'icon'  => 'welcome-learn-more',
+			'name'   => 'symposium',
+			'title'  => _x( 'Symposium', 'Modules: Symposium', 'geditorial' ),
+			'desc'   => _x( 'Editorial Session Management', 'Modules: Symposium', 'geditorial' ),
+			'icon'   => 'welcome-learn-more',
+			'access' => 'beta',
 		];
 	}
 

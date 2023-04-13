@@ -16,6 +16,7 @@ use geminorum\gEditorial\Core\ISBN;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -30,10 +31,11 @@ class Book extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'book',
-			'title' => _x( 'Book', 'Modules: Book', 'geditorial' ),
-			'desc'  => _x( 'Online House of Publications', 'Modules: Book', 'geditorial' ),
-			'icon'  => 'book-alt',
+			'name'   => 'book',
+			'title'  => _x( 'Book', 'Modules: Book', 'geditorial' ),
+			'desc'   => _x( 'Online House of Publications', 'Modules: Book', 'geditorial' ),
+			'icon'   => 'book-alt',
+			'access' => 'stable',
 		];
 	}
 
@@ -129,7 +131,7 @@ class Book extends gEditorial\Module
 			'publisher_tax'        => 'publication_publisher',
 			'type_tax'             => 'publication_type',
 			'status_tax'           => 'publication_status',
-			'size_tax'             => 'publication_size',
+			'size_tax'             => 'publication_size', // TODO: move to Measurements Module
 			'audience_tax'         => 'publication_audience',
 
 			'publication_shortcode' => 'publication',
@@ -1145,7 +1147,7 @@ class Book extends gEditorial\Module
 						$html.= '<div><b>'._x( 'By ID', 'Tools', 'geditorial-book' ).'</b>: '.Helper::getPostTitleRow( $id ).'</div>';
 
 					if ( $title = get_post_meta( $row->ID, 'book_publication_title', TRUE ) )
-						foreach ( (array) PostType::getIDsByTitle( $title, [ 'post_type' => $column['args']['type'] ] ) as $post_id )
+						foreach ( (array) Post::getByTitle( $title, $column['args']['type'] ) as $post_id )
 							$html.= '<div><b>'._x( 'By Title', 'Tools', 'geditorial-book' ).'</b>: '.Helper::getPostTitleRow( $post_id ).'</div>';
 
 					return $html ?: Helper::htmlEmpty();

@@ -19,10 +19,11 @@ class Dossier extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'dossier',
-			'title' => _x( 'Dossier', 'Modules: Dossier', 'geditorial' ),
-			'desc'  => _x( 'Collection of Contents', 'Modules: Dossier', 'geditorial' ),
-			'icon'  => 'portfolio',
+			'name'   => 'dossier',
+			'title'  => _x( 'Dossier', 'Modules: Dossier', 'geditorial' ),
+			'desc'   => _x( 'Collection of Contents', 'Modules: Dossier', 'geditorial' ),
+			'icon'   => 'portfolio',
+			'access' => 'beta',
 		];
 	}
 

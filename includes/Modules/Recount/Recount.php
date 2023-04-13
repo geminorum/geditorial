@@ -18,11 +18,12 @@ class Recount extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'recount',
-			'title' => _x( 'Recount', 'Modules: Recount', 'geditorial' ),
-			'desc'  => _x( 'Custom Counts Interface', 'Modules: Recount', 'geditorial' ),
-			'icon'  => 'database',
-			'i18n'  => 'adminonly',
+			'name'   => 'recount',
+			'title'  => _x( 'Recount', 'Modules: Recount', 'geditorial' ),
+			'desc'   => _x( 'Custom Counts Interface', 'Modules: Recount', 'geditorial' ),
+			'icon'   => 'database',
+			'i18n'   => 'adminonly',
+			'access' => 'beta',
 		];
 	}
 

@@ -16,10 +16,11 @@ class Quotation extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'quotation',
-			'title' => _x( 'Quotation', 'Modules: Quotation', 'geditorial' ),
-			'desc'  => _x( 'Snippets from Content', 'Modules: Quotation', 'geditorial' ),
-			'icon'  => 'format-quote',
+			'name'   => 'quotation',
+			'title'  => _x( 'Quotation', 'Modules: Quotation', 'geditorial' ),
+			'desc'   => _x( 'Snippets from Content', 'Modules: Quotation', 'geditorial' ),
+			'icon'   => 'format-quote',
+			'access' => 'beta',
 		];
 	}
 

@@ -20,10 +20,11 @@ class Course extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'course',
-			'title' => _x( 'Course', 'Modules: Course', 'geditorial' ),
-			'desc'  => _x( 'Course and Lesson Management', 'Modules: Course', 'geditorial' ),
-			'icon'  => 'welcome-learn-more',
+			'name'   => 'course',
+			'title'  => _x( 'Course', 'Modules: Course', 'geditorial' ),
+			'desc'   => _x( 'Course and Lesson Management', 'Modules: Course', 'geditorial' ),
+			'icon'   => 'welcome-learn-more',
+			'access' => 'beta',
 		];
 	}
 

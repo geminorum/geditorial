@@ -43,4 +43,11 @@ class Info extends WordPress\Main
 		Core\HTML::desc( sprintf( _x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Info: P2P', 'geditorial' ),
 			'https://github.com/scribu/wp-posts-to-posts/', 'https://github.com/voceconnect/objects-to-objects' ) );
 	}
+
+	// OLD: `infoP2P()`
+	public static function renderConnectedP2P()
+	{
+		/* translators: %s: code placeholder */
+		return sprintf( _x( 'Connected via %s', 'Info: P2P', 'geditorial' ), '<code>P2P</code>' );
+	}
 }

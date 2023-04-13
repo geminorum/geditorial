@@ -18,10 +18,11 @@ class Entry extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'entry',
-			'title' => _x( 'Entry', 'Modules: Entry', 'geditorial' ),
-			'desc'  => _x( 'Wiki-like Posts Entries', 'Modules: Entry', 'geditorial' ),
-			'icon'  => 'media-document',
+			'name'   => 'entry',
+			'title'  => _x( 'Entry', 'Modules: Entry', 'geditorial' ),
+			'desc'   => _x( 'Wiki-like Posts Entries', 'Modules: Entry', 'geditorial' ),
+			'icon'   => 'media-document',
+			'access' => 'stable',
 		];
 	}
 

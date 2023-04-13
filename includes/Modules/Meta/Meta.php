@@ -38,10 +38,11 @@ class Meta extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'meta',
-			'title' => _x( 'Meta', 'Modules: Meta', 'geditorial' ),
-			'desc'  => _x( 'Curated Metadata', 'Modules: Meta', 'geditorial' ),
-			'icon'  => 'tag',
+			'name'   => 'meta',
+			'title'  => _x( 'Meta', 'Modules: Meta', 'geditorial' ),
+			'desc'   => _x( 'Curated Metadata', 'Modules: Meta', 'geditorial' ),
+			'icon'   => 'tag',
+			'access' => 'stable',
 		];
 	}
 

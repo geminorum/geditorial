@@ -12,10 +12,11 @@ class Reshare extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'reshare',
-			'title' => _x( 'Reshare', 'Modules: Reshare', 'geditorial' ),
-			'desc'  => _x( 'Contents from Other Sources', 'Modules: Reshare', 'geditorial' ),
-			'icon'  => 'share-alt',
+			'name'   => 'reshare',
+			'title'  => _x( 'Reshare', 'Modules: Reshare', 'geditorial' ),
+			'desc'   => _x( 'Contents from Other Sources', 'Modules: Reshare', 'geditorial' ),
+			'icon'   => 'share-alt',
+			'access' => 'beta',
 		];
 	}
 

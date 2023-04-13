@@ -21,11 +21,12 @@ class Uncategorized extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'uncategorized',
-			'title' => _x( 'Uncategorized', 'Modules: Uncategorized', 'geditorial' ),
-			'desc'  => _x( 'Term Leftover Management', 'Modules: Uncategorized', 'geditorial' ),
-			'icon'  => 'hammer',
-			'i18n'  => 'adminonly',
+			'name'   => 'uncategorized',
+			'title'  => _x( 'Uncategorized', 'Modules: Uncategorized', 'geditorial' ),
+			'desc'   => _x( 'Term Leftover Management', 'Modules: Uncategorized', 'geditorial' ),
+			'icon'   => 'hammer',
+			'i18n'   => 'adminonly',
+			'access' => 'stable',
 		];
 	}
 

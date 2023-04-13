@@ -20,11 +20,12 @@ class Countables extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'countables',
-			'title' => _x( 'Countables', 'Modules: Countables', 'geditorial' ),
-			'desc'  => _x( 'Editorial Countable Items', 'Modules: Countables', 'geditorial' ),
-			'icon'  => 'performance',
-			'i18n'  => 'adminonly',
+			'name'   => 'countables',
+			'title'  => _x( 'Countables', 'Modules: Countables', 'geditorial' ),
+			'desc'   => _x( 'Editorial Countable Items', 'Modules: Countables', 'geditorial' ),
+			'icon'   => 'performance',
+			'i18n'   => 'adminonly',
+			'access' => 'beta',
 		];
 	}
 

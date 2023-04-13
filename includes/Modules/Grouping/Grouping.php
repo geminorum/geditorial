@@ -16,10 +16,11 @@ class Grouping extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'grouping',
-			'title' => _x( 'Grouping', 'Modules: Grouping', 'geditorial' ),
-			'desc'  => _x( 'Custom Taxonomies for Users', 'Modules: Grouping', 'geditorial' ),
-			'icon'  => 'buddicons-tracking',
+			'name'   => 'grouping',
+			'title'  => _x( 'Grouping', 'Modules: Grouping', 'geditorial' ),
+			'desc'   => _x( 'Custom Taxonomies for Users', 'Modules: Grouping', 'geditorial' ),
+			'icon'   => 'buddicons-tracking',
+			'access' => 'beta',
 		];
 	}
 

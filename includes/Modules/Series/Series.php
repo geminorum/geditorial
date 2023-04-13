@@ -23,10 +23,11 @@ class Series extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'series',
-			'title' => _x( 'Series', 'Modules: Series', 'geditorial' ),
-			'desc'  => _x( 'List Posts in Series', 'Modules: Series', 'geditorial' ),
-			'icon'  => 'editor-ol',
+			'name'   => 'series',
+			'title'  => _x( 'Series', 'Modules: Series', 'geditorial' ),
+			'desc'   => _x( 'List Posts in Series', 'Modules: Series', 'geditorial' ),
+			'icon'   => 'editor-ol',
+			'access' => 'beta',
 		];
 	}
 

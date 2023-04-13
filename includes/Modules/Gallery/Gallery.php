@@ -11,10 +11,11 @@ class Gallery extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'gallery',
-			'title' => _x( 'Gallery', 'Modules: Gallery', 'geditorial' ),
-			'desc'  => _x( 'Photo Directory', 'Modules: Gallery', 'geditorial' ),
-			'icon'  => 'format-gallery',
+			'name'   => 'gallery',
+			'title'  => _x( 'Gallery', 'Modules: Gallery', 'geditorial' ),
+			'desc'   => _x( 'Photo Directory', 'Modules: Gallery', 'geditorial' ),
+			'icon'   => 'format-gallery',
+			'access' => 'beta',
 		];
 	}
 

@@ -19,10 +19,11 @@ class Magazine extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'magazine',
-			'title' => _x( 'Magazine', 'Modules: Magazine', 'geditorial' ),
-			'desc'  => _x( 'Magazine Issue Management', 'Modules: Magazine', 'geditorial' ),
-			'icon'  => 'book',
+			'name'   => 'magazine',
+			'title'  => _x( 'Magazine', 'Modules: Magazine', 'geditorial' ),
+			'desc'   => _x( 'Magazine Issue Management', 'Modules: Magazine', 'geditorial' ),
+			'icon'   => 'book',
+			'access' => 'stable',
 		];
 	}
 

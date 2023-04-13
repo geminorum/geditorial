@@ -33,6 +33,7 @@ class Ortho extends gEditorial\Module
 			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', 'geditorial' ),
 			'icon'     => [ 'misc-32', 'pen' ],
 			'frontend' => FALSE,
+			'access'   => 'stable',
 			'disabled' => Helper::moduleCheckLocale( 'fa_IR' ),
 		];
 	}

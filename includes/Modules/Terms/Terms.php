@@ -57,10 +57,11 @@ class Terms extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'terms',
-			'title' => _x( 'Terms', 'Modules: Terms', 'geditorial' ),
-			'desc'  => _x( 'Taxonomy & Term Tools', 'Modules: Terms', 'geditorial' ),
-			'icon'  => 'image-filter',
+			'name'   => 'terms',
+			'title'  => _x( 'Terms', 'Modules: Terms', 'geditorial' ),
+			'desc'   => _x( 'Taxonomy & Term Tools', 'Modules: Terms', 'geditorial' ),
+			'icon'   => 'image-filter',
+			'access' => 'stable',
 		];
 	}
 
@@ -343,7 +344,7 @@ class Terms extends gEditorial\Module
 				$this->_edit_tags_screen( $screen->taxonomy );
 				add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
-				// FIXME: add empty all term meta card for each field
+				// TODO: add empty all term meta card for each field
 				// $this->action( 'taxonomy_tab_extra_content', 2, 9, FALSE, 'gnetwork' );
 				// $this->action( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
 
@@ -406,7 +407,7 @@ class Terms extends gEditorial\Module
 
 	private function _get_supported_raw( $filtred = TRUE )
 	{
-		return $filtred ? $this->filters( 'supported_raw', $this->supported ) : $this->supported;
+		return $filtred ? $this->filters( 'supported_fields_raw', $this->supported ) : $this->supported;
 	}
 
 	// FALSE for all

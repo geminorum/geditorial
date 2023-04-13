@@ -19,11 +19,12 @@ class Archives extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'archives',
-			'title' => _x( 'Archives', 'Modules: Archives', 'geditorial' ),
-			'desc'  => _x( 'Content Archives Pages', 'Modules: Archives', 'geditorial' ),
-			'icon'  => 'editor-ul',
-			'i18n'  => 'adminonly',
+			'name'   => 'archives',
+			'title'  => _x( 'Archives', 'Modules: Archives', 'geditorial' ),
+			'desc'   => _x( 'Content Archives Pages', 'Modules: Archives', 'geditorial' ),
+			'icon'   => 'editor-ul',
+			'i18n'   => 'adminonly',
+			'access' => 'stable',
 		];
 	}
 

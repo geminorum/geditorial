@@ -14,10 +14,11 @@ class Organization extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'organization',
-			'title' => _x( 'Organization', 'Modules: Organization', 'geditorial' ),
-			'desc'  => _x( 'Departments of Editorial', 'Modules: Organization', 'geditorial' ),
-			'icon'  => 'bank',
+			'name'   => 'organization',
+			'title'  => _x( 'Organization', 'Modules: Organization', 'geditorial' ),
+			'desc'   => _x( 'Departments of Editorial', 'Modules: Organization', 'geditorial' ),
+			'icon'   => 'bank',
+			'access' => 'beta',
 		];
 	}
 
@@ -42,6 +43,9 @@ class Organization extends gEditorial\Module
 			'_editlist' => [
 				'admin_ordering',
 			],
+			'_editpost' => [
+				'assign_default_term',
+			],
 			'_frontend' => [
 				[
 					'field'       => 'redirect_archives',
@@ -58,7 +62,7 @@ class Organization extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
-				'assign_default_term',
+				'comment_status',
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],

@@ -17,6 +17,7 @@ class Connected extends gEditorial\Module
 			'desc'     => _x( 'Posts-to-Posts Extended', 'Modules: Connected', 'geditorial' ),
 			'icon'     => 'controls-repeat',
 			'i18n'     => 'adminonly',
+			'access'   => 'beta',
 			'disabled' => defined( 'P2P_PLUGIN_VERSION' ) ? FALSE : _x( 'Needs Posts-to-Posts', 'Modules: Connected', 'geditorial' ),
 		];
 	}

@@ -24,10 +24,11 @@ class Like extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'like',
-			'title' => _x( 'Like', 'Modules: Like', 'geditorial' ),
-			'desc'  => _x( 'Like Button for Guests and Users', 'Modules: Like', 'geditorial' ),
-			'icon'  => 'heart',
+			'name'   => 'like',
+			'title'  => _x( 'Like', 'Modules: Like', 'geditorial' ),
+			'desc'   => _x( 'Like Button for Guests and Users', 'Modules: Like', 'geditorial' ),
+			'icon'   => 'heart',
+			'access' => 'stable',
 		];
 	}
 

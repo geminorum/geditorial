@@ -17,6 +17,7 @@ class Actions extends gEditorial\Module
 			'textdomain' => FALSE,
 			'configure'  => FALSE,
 			'autoload'   => TRUE,
+			'access'     => 'stable',
 		];
 	}
 

@@ -13,11 +13,12 @@ class Overwrite extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'overwrite',
-			'title' => _x( 'Overwrite', 'Modules: Overwrite', 'geditorial' ),
-			'desc'  => _x( 'Customized Translation Strings', 'Modules: Overwrite', 'geditorial' ),
-			'icon'  => 'editor-strikethrough',
-			'i18n'  => 'adminonly',
+			'name'   => 'overwrite',
+			'title'  => _x( 'Overwrite', 'Modules: Overwrite', 'geditorial' ),
+			'desc'   => _x( 'Customized Translation Strings', 'Modules: Overwrite', 'geditorial' ),
+			'icon'   => 'editor-strikethrough',
+			'i18n'   => 'adminonly',
+			'access' => 'beta',
 		];
 	}
 

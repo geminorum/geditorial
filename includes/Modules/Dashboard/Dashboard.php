@@ -16,10 +16,11 @@ class Dashboard extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'dashboard',
-			'title' => _x( 'Dashboard', 'Modules: Dashboard', 'geditorial' ),
-			'desc'  => _x( 'Front-end Editorial Dashboard', 'Modules: Dashboard', 'geditorial' ),
-			'icon'  => 'dashboard',
+			'name'   => 'dashboard',
+			'title'  => _x( 'Dashboard', 'Modules: Dashboard', 'geditorial' ),
+			'desc'   => _x( 'Front-end Editorial Dashboard', 'Modules: Dashboard', 'geditorial' ),
+			'icon'   => 'dashboard',
+			'access' => 'beta',
 		];
 	}
 

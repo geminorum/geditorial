@@ -15,10 +15,11 @@ class Badges extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'badges',
-			'title' => _x( 'Badges', 'Modules: Badges', 'geditorial' ),
-			'desc'  => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial' ),
-			'icon'  => 'superhero',
+			'name'   => 'badges',
+			'title'  => _x( 'Badges', 'Modules: Badges', 'geditorial' ),
+			'desc'   => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial' ),
+			'icon'   => 'superhero',
+			'access' => 'beta',
 		];
 	}
 

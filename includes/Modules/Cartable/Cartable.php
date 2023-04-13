@@ -34,6 +34,7 @@ class Cartable extends gEditorial\Module
 			'title'    => _x( 'Cartable', 'Modules: Cartable', 'geditorial' ),
 			'desc'     => _x( 'Customized Content Folders', 'Modules: Cartable', 'geditorial' ),
 			'icon'     => 'portfolio',
+			'access'   => 'beta',
 			'frontend' => FALSE,
 		];
 	}

@@ -14,10 +14,11 @@ class Event extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'event',
-			'title' => _x( 'Event', 'Modules: Event', 'geditorial' ),
-			'desc'  => _x( 'Integrated Events', 'Modules: Event', 'geditorial' ),
-			'icon'  => 'calendar-alt',
+			'name'   => 'event',
+			'title'  => _x( 'Event', 'Modules: Event', 'geditorial' ),
+			'desc'   => _x( 'Integrated Events', 'Modules: Event', 'geditorial' ),
+			'icon'   => 'calendar-alt',
+			'access' => 'beta',
 		];
 	}
 

@@ -19,10 +19,11 @@ class Estimated extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'estimated',
-			'title' => _x( 'Estimated', 'Modules: Estimated', 'geditorial' ),
-			'desc'  => _x( 'Average Required Reading Time', 'Modules: Estimated', 'geditorial' ),
-			'icon'  => 'clock',
+			'name'   => 'estimated',
+			'title'  => _x( 'Estimated', 'Modules: Estimated', 'geditorial' ),
+			'desc'   => _x( 'Average Required Reading Time', 'Modules: Estimated', 'geditorial' ),
+			'icon'   => 'clock',
+			'access' => 'beta',
 		];
 	}
 

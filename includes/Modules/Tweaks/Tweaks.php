@@ -35,6 +35,7 @@ class Tweaks extends gEditorial\Module
 			'desc'     => _x( 'Admin UI Enhancement', 'Modules: Tweaks', 'geditorial' ),
 			'icon'     => 'admin-tools',
 			'frontend' => FALSE,
+			'access'   => 'stable',
 		];
 	}
 

@@ -23,10 +23,11 @@ class Contest extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'contest',
-			'title' => _x( 'Contest', 'Modules: Contest', 'geditorial' ),
-			'desc'  => _x( 'Contest Management', 'Modules: Contest', 'geditorial' ),
-			'icon'  => 'megaphone',
+			'name'   => 'contest',
+			'title'  => _x( 'Contest', 'Modules: Contest', 'geditorial' ),
+			'desc'   => _x( 'Contest Management', 'Modules: Contest', 'geditorial' ),
+			'icon'   => 'megaphone',
+			'access' => 'beta',
 		];
 	}
 

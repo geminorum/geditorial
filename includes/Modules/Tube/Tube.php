@@ -22,10 +22,11 @@ class Tube extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'tube',
-			'title' => _x( 'Tube', 'Modules: Tube', 'geditorial' ),
-			'desc'  => _x( 'Video Clip Management', 'Modules: Tube', 'geditorial' ),
-			'icon'  => 'video-alt2',
+			'name'   => 'tube',
+			'title'  => _x( 'Tube', 'Modules: Tube', 'geditorial' ),
+			'desc'   => _x( 'Video Clip Management', 'Modules: Tube', 'geditorial' ),
+			'icon'   => 'video-alt2',
+			'access' => 'beta',
 		];
 	}
 

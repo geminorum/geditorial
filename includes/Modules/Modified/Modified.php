@@ -22,10 +22,11 @@ class Modified extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'modified',
-			'title' => _x( 'Modified', 'Modules: Modified', 'geditorial' ),
-			'desc'  => _x( 'Last Modifications', 'Modules: Modified', 'geditorial' ),
-			'icon'  => 'update',
+			'name'   => 'modified',
+			'title'  => _x( 'Modified', 'Modules: Modified', 'geditorial' ),
+			'desc'   => _x( 'Last Modifications', 'Modules: Modified', 'geditorial' ),
+			'icon'   => 'update',
+			'access' => 'beta',
 		];
 	}
 

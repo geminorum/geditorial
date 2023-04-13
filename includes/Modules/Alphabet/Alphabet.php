@@ -20,11 +20,12 @@ class Alphabet extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'alphabet',
-			'title' => _x( 'Alphabet', 'Modules: Alphabet', 'geditorial' ),
-			'desc'  => _x( 'A to Z Lists for Post Types, Taxonomies and Users', 'Modules: Alphabet', 'geditorial' ),
-			'icon'  => 'editor-textcolor',
-			'i18n'  => FALSE,
+			'name'   => 'alphabet',
+			'title'  => _x( 'Alphabet', 'Modules: Alphabet', 'geditorial' ),
+			'desc'   => _x( 'A to Z Lists for Post Types, Taxonomies and Users', 'Modules: Alphabet', 'geditorial' ),
+			'icon'   => 'editor-textcolor',
+			'i18n'   => FALSE,
+			'access' => 'stable',
 		];
 	}
 

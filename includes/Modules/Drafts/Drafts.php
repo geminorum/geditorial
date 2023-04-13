@@ -19,10 +19,11 @@ class Drafts extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'drafts',
-			'title' => _x( 'Drafts', 'Modules: Drafts', 'geditorial' ),
-			'desc'  => _x( 'Tools to Work With Drafts', 'Modules: Drafts', 'geditorial' ),
-			'icon'  => 'admin-post',
+			'name'   => 'drafts',
+			'title'  => _x( 'Drafts', 'Modules: Drafts', 'geditorial' ),
+			'desc'   => _x( 'Tools to Work With Drafts', 'Modules: Drafts', 'geditorial' ),
+			'icon'   => 'admin-post',
+			'access' => 'stable',
 		];
 	}
 

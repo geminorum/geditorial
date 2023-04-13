@@ -20,10 +20,11 @@ class Views extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'views',
-			'title' => _x( 'Views', 'Modules: Views', 'geditorial' ),
-			'desc'  => _x( 'Customized Page Views', 'Modules: Views', 'geditorial' ),
-			'icon'  => 'admin-views',
+			'name'   => 'views',
+			'title'  => _x( 'Views', 'Modules: Views', 'geditorial' ),
+			'desc'   => _x( 'Customized Page Views', 'Modules: Views', 'geditorial' ),
+			'icon'   => 'admin-views',
+			'access' => 'beta',
 		];
 	}
 

@@ -24,6 +24,7 @@ class Statuses extends gEditorial\Module
 			'title'    => _x( 'Statuses', 'Modules: Statuses', 'geditorial' ),
 			'desc'     => _x( 'WP-Statuses Companion', 'Modules: Statuses', 'geditorial' ),
 			'icon'     => 'post-status',
+			'access'   => 'beta',
 			'disabled' => class_exists( 'WP_Statuses' ) ? FALSE : _x( 'Needs WP Statuses', 'Modules: Statuses', 'geditorial' ),
 		];
 	}

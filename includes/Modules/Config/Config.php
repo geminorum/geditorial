@@ -38,6 +38,7 @@ class Config extends gEditorial\Module
 			'desc'     => _x( 'WordPress in Magazine Style', 'Modules: Config', 'geditorial' ),
 			'frontend' => FALSE,
 			'autoload' => TRUE,
+			'access'   => 'stable',
 		];
 	}
 

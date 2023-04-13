@@ -18,6 +18,7 @@ class Switcher extends gEditorial\Module
 			'title'    => _x( 'Switcher', 'Modules: Switcher', 'geditorial' ),
 			'desc'     => _x( 'Bulk Conversion Utility', 'Modules: Switcher', 'geditorial' ),
 			'icon'     => 'randomize',
+			'access'   => 'beta',
 			'frontend' => FALSE,
 		];
 	}

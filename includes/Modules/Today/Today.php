@@ -25,10 +25,11 @@ class Today extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'today',
-			'title' => _x( 'Today', 'Modules: Today', 'geditorial' ),
-			'desc'  => _x( 'The day in History', 'Modules: Today', 'geditorial' ),
-			'icon'  => 'calendar-alt',
+			'name'   => 'today',
+			'title'  => _x( 'Today', 'Modules: Today', 'geditorial' ),
+			'desc'   => _x( 'The day in History', 'Modules: Today', 'geditorial' ),
+			'icon'   => 'calendar-alt',
+			'access' => 'beta',
 		];
 	}
 

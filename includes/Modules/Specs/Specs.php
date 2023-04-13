@@ -23,10 +23,11 @@ class Specs extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'specs',
-			'title' => _x( 'Specifications', 'Modules: Specs', 'geditorial' ),
-			'desc'  => _x( 'Post Specifications', 'Modules: Specs', 'geditorial' ),
-			'icon'  => 'list-view',
+			'name'   => 'specs',
+			'title'  => _x( 'Specifications', 'Modules: Specs', 'geditorial' ),
+			'desc'   => _x( 'Post Specifications', 'Modules: Specs', 'geditorial' ),
+			'icon'   => 'list-view',
+			'access' => 'deprecated',
 		];
 	}
 

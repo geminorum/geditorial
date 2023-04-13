@@ -13,10 +13,11 @@ class Team extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'team',
-			'title' => _x( 'Team', 'Modules: Team', 'geditorial' ),
-			'desc'  => _x( 'Profiles for Editorial Teams', 'Modules: Team', 'geditorial' ),
-			'icon'  => 'groups',
+			'name'   => 'team',
+			'title'  => _x( 'Team', 'Modules: Team', 'geditorial' ),
+			'desc'   => _x( 'Profiles for Editorial Teams', 'Modules: Team', 'geditorial' ),
+			'icon'   => 'groups',
+			'access' => 'beta',
 		];
 	}
 

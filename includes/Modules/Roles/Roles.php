@@ -21,11 +21,12 @@ class Roles extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'roles',
-			'title' => _x( 'Roles', 'Modules: Roles', 'geditorial' ),
-			'desc'  => _x( 'Member & Role Management', 'Modules: Roles', 'geditorial' ),
-			'icon'  => 'businessman',
-			'i18n'  => 'adminonly',
+			'name'   => 'roles',
+			'title'  => _x( 'Roles', 'Modules: Roles', 'geditorial' ),
+			'desc'   => _x( 'Member & Role Management', 'Modules: Roles', 'geditorial' ),
+			'icon'   => 'businessman',
+			'i18n'   => 'adminonly',
+			'access' => 'beta',
 		];
 	}
 

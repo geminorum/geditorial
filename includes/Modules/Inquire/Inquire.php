@@ -14,10 +14,11 @@ class Inquire extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'inquire',
-			'title' => _x( 'Inquire', 'Modules: Inquire', 'geditorial' ),
-			'desc'  => _x( 'Questions and Answers', 'Modules: Inquire', 'geditorial' ),
-			'icon'  => 'editor-help',
+			'name'   => 'inquire',
+			'title'  => _x( 'Inquire', 'Modules: Inquire', 'geditorial' ),
+			'desc'   => _x( 'Questions and Answers', 'Modules: Inquire', 'geditorial' ),
+			'icon'   => 'editor-help',
+			'access' => 'beta',
 		];
 	}
 

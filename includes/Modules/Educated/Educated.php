@@ -13,10 +13,11 @@ class Educated extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'educated',
-			'title' => _x( 'Educated', 'Modules: Educated', 'geditorial' ),
-			'desc'  => _x( 'Editorial Educations', 'Modules: Educated', 'geditorial' ),
-			'icon'  => 'welcome-learn-more',
+			'name'   => 'educated',
+			'title'  => _x( 'Educated', 'Modules: Educated', 'geditorial' ),
+			'desc'   => _x( 'Editorial Educations', 'Modules: Educated', 'geditorial' ),
+			'icon'   => 'welcome-learn-more',
+			'access' => 'beta',
 		];
 	}
 

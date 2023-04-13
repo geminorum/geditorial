@@ -16,11 +16,12 @@ class Headings extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'headings',
-			'title' => _x( 'Headings', 'Modules: Headings', 'geditorial' ),
-			'desc'  => _x( 'Table of Contents', 'Modules: Headings', 'geditorial' ),
-			'icon'  => 'tablet',
-			'i18n'  => 'adminonly',
+			'name'   => 'headings',
+			'title'  => _x( 'Headings', 'Modules: Headings', 'geditorial' ),
+			'desc'   => _x( 'Table of Contents', 'Modules: Headings', 'geditorial' ),
+			'icon'   => 'tablet',
+			'i18n'   => 'adminonly',
+			'access' => 'stable',
 		];
 	}
 

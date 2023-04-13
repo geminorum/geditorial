@@ -23,10 +23,11 @@ class Markdown extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'markdown',
-			'title' => _x( 'Markdown', 'Modules: Markdown', 'geditorial' ),
-			'desc'  => _x( 'Write Posts in Markdown', 'Modules: Markdown', 'geditorial' ),
-			'icon'  => [ 'misc-32', 'markdown' ],
+			'name'   => 'markdown',
+			'title'  => _x( 'Markdown', 'Modules: Markdown', 'geditorial' ),
+			'desc'   => _x( 'Write Posts in Markdown', 'Modules: Markdown', 'geditorial' ),
+			'icon'   => [ 'misc-32', 'markdown' ],
+			'access' => 'beta',
 		];
 	}
 

@@ -17,10 +17,11 @@ class Venue extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'venue',
-			'title' => _x( 'Venue', 'Modules: Venue', 'geditorial' ),
-			'desc'  => _x( 'Place Listings', 'Modules: Venue', 'geditorial' ),
-			'icon'  => 'location-alt',
+			'name'   => 'venue',
+			'title'  => _x( 'Venue', 'Modules: Venue', 'geditorial' ),
+			'desc'   => _x( 'Place Listings', 'Modules: Venue', 'geditorial' ),
+			'icon'   => 'location-alt',
+			'access' => 'beta',
 		];
 	}
 

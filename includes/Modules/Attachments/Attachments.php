@@ -25,10 +25,11 @@ class Attachments extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'attachments',
-			'title' => _x( 'Attachments', 'Modules: Attachments', 'geditorial' ),
-			'desc'  => _x( 'Attachment Management', 'Modules: Attachments', 'geditorial' ),
-			'icon'  => 'paperclip',
+			'name'   => 'attachments',
+			'title'  => _x( 'Attachments', 'Modules: Attachments', 'geditorial' ),
+			'desc'   => _x( 'Attachment Management', 'Modules: Attachments', 'geditorial' ),
+			'icon'   => 'paperclip',
+			'access' => 'stable',
 		];
 	}
 
