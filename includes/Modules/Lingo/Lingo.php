@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Regional;
+<?php namespace geminorum\gEditorial\Modules\Lingo;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -12,20 +12,20 @@ use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
-class Regional extends gEditorial\Module
+class Lingo extends gEditorial\Module
 {
 
-	// TODO: register term meta for `language` to store language `term_id`
-
-	protected $imports_datafile = 'languages-20230325.json';
+	protected $disable_no_customs = TRUE;
+	protected $imports_datafile   = 'languages-20230325.json';
 
 	public static function module()
 	{
 		return [
-			'name'  => 'regional',
-			'title' => _x( 'Regional', 'Modules: Regional', 'geditorial' ),
-			'desc'  => _x( 'Regional MetaData', 'Modules: Regional', 'geditorial' ),
-			'icon'  => 'translation',
+			'name'   => 'lingo',
+			'title'  => _x( 'Lingo', 'Modules: Lingo', 'geditorial' ),
+			'desc'   => _x( 'Language Identifiers', 'Modules: Lingo', 'geditorial' ),
+			'icon'   => 'translation',
+			'access' => 'beta',
 		];
 	}
 
@@ -43,40 +43,40 @@ class Regional extends gEditorial\Module
 				[
 					'field'       => 'manage_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-regional' ),
-					'description' => _x( 'Roles that can Manage, Edit and Delete Language Defenitions.', 'Setting Description', 'geditorial-regional' ),
+					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-lingo' ),
+					'description' => _x( 'Roles that can Manage, Edit and Delete Language Identifiers.', 'Setting Description', 'geditorial-lingo' ),
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'assign_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-regional' ),
-					'description' => _x( 'Roles that can Assign Language Defenitions.', 'Setting Description', 'geditorial-regional' ),
+					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-lingo' ),
+					'description' => _x( 'Roles that can Assign Language Identifiers.', 'Setting Description', 'geditorial-lingo' ),
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'reports_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-regional' ),
-					'description' => _x( 'Roles that can see Language Defenitions Reports.', 'Setting Description', 'geditorial-regional' ),
+					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-lingo' ),
+					'description' => _x( 'Roles that can see Language Identifiers Reports.', 'Setting Description', 'geditorial-lingo' ),
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'restricted_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-regional' ),
-					'description' => _x( 'Roles that check for Language Defenitions visibility.', 'Setting Description', 'geditorial-regional' ),
+					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-lingo' ),
+					'description' => _x( 'Roles that check for Language Identifiers visibility.', 'Setting Description', 'geditorial-lingo' ),
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'restricted',
 					'type'        => 'select',
-					'title'       => _x( 'Restricted Defenitions', 'Setting Title', 'geditorial-regional' ),
-					'description' => _x( 'Handles visibility of each defenition based on meta values.', 'Setting Description', 'geditorial-regional' ),
+					'title'       => _x( 'Restricted Identifiers', 'Setting Title', 'geditorial-lingo' ),
+					'description' => _x( 'Handles visibility of each identifier based on meta values.', 'Setting Description', 'geditorial-lingo' ),
 					'default'     => 'disabled',
 					'values'      => [
-						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-regional' ),
-						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-regional' ),
+						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-lingo' ),
+						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-lingo' ),
 					],
 				],
 			],
@@ -102,25 +102,27 @@ class Regional extends gEditorial\Module
 	protected function tool_box_content()
 	{
 		/* translators: %s: iso code */
-		HTML::desc( sprintf( _x( 'Helps with Importing Regional Languages from %s into WordPress.', 'Tool Box', 'geditorial-regional' ), HTML::code( 'ISO 639-1' ) ) );
+		HTML::desc( sprintf( _x( 'Helps with Importing Language Identifiers from %s into WordPress.', 'Tool Box', 'geditorial-lingo' ), HTML::code( 'ISO 639-1' ) ) );
 	}
 
 	protected function get_global_strings()
 	{
 		$strings = [
 			'noops' => [
-				'language_taxonomy' => _n_noop( 'Language', 'Languages', 'geditorial-regional' ),
+				'language_taxonomy' => _n_noop( 'Language', 'Languages', 'geditorial-lingo' ),
 			],
 			'labels' => [
 				'language_taxonomy' => [
-					'uncategorized' => _x( 'Unknown', 'Taxonomy Label', 'geditorial-regional' ),
+					'show_option_all'  => _x( 'Languages', 'Label: `show_option_all`', 'geditorial-lingo' ),
+					'show_option_none' => _x( '(Unidentified)', 'Label: `show_option_none`', 'geditorial-lingo' ),
+					'uncategorized'    => _x( 'Unidentified', 'Taxonomy Label', 'geditorial-lingo' ),
 				]
 			],
 			'defaults' => [
 				'language_taxonomy' => [
-					'name'        => _x( '[Unknown]', 'Default Term: Name', 'geditorial-regional' ),
-					'description' => _x( 'Unknown Languages', 'Default Term: Description', 'geditorial-regional' ),
-					'slug'        => 'unknown',
+					'name'        => _x( '[Unidentified]', 'Default Term: Name', 'geditorial-lingo' ),
+					'description' => _x( 'Unidentified Languages', 'Default Term: Description', 'geditorial-lingo' ),
+					'slug'        => 'unidentified',
 				],
 			],
 		];
@@ -130,24 +132,21 @@ class Regional extends gEditorial\Module
 
 		$strings['misc'] = [
 			'wp_importer' => [
-				'title'       => _x( 'Import Languages', 'Importer: Title', 'geditorial-regional' ),
+				'title'       => _x( 'Import Language Identifiers', 'Importer: Title', 'geditorial-lingo' ),
 				/* translators: %s: iso code */
-				'description' => sprintf( _x( 'Regional Languages from %s into WordPress', 'Importer: Description', 'geditorial-regional' ), HTML::code( 'ISO 639-1' ) ),
+				'description' => sprintf( _x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ), HTML::code( 'ISO 639-1' ) ),
 				/* translators: %s: redirect url */
-				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-regional' ),
+				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-lingo' ),
 			],
-
-			// 'show_option_all'  => _x( 'Language', 'Show Option All', 'geditorial-regional' ),
-			// 'show_option_none' => _x( '(Uknonwn Language)', 'Show Option None', 'geditorial-regional' ),
 		];
 
 		$strings['default_terms'] = [
 			'language_taxonomy' => [
 				// @SEE: https://en.wikipedia.org/wiki/ISO_639
-				'arabic'  => _x( 'Arabic', 'Default Term: Language', 'geditorial-regional' ),
-				'persian' => _x( 'Farsi', 'Default Term: Language', 'geditorial-regional' ),
-				'english' => _x( 'English', 'Default Term: Language', 'geditorial-regional' ),
-				'french'  => _x( 'French', 'Default Term: Language', 'geditorial-regional' ),
+				'arabic'  => _x( 'Arabic', 'Default Term: Language', 'geditorial-lingo' ),
+				'persian' => _x( 'Farsi', 'Default Term: Language', 'geditorial-lingo' ),
+				'english' => _x( 'English', 'Default Term: Language', 'geditorial-lingo' ),
+				'french'  => _x( 'French', 'Default Term: Language', 'geditorial-lingo' ),
 			],
 		];
 
@@ -166,6 +165,8 @@ class Regional extends gEditorial\Module
 			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], NULL, TRUE );
+
+		$this->filter( 'map_meta_cap', 4 );
 
 		if ( ! is_admin() )
 			return;
@@ -277,7 +278,7 @@ class Regional extends gEditorial\Module
 		$data[] = [
 			'title'       => $this->imports_datafile,
 			'updated'     => '2023-03-25',
-			'description' => 'List of languages with ISO 639-1 Alpha-2 codes in JSON.',
+			'description' => 'List of language identifiers with ISO 639-1 Alpha-2 codes in JSON.',
 			'path'        => $this->get_imports_datafile(),
 			'sources' => [
 				[
@@ -340,21 +341,21 @@ class Regional extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Import Languages', 'Header', 'geditorial-regional' ) );
+		HTML::h3( _x( 'Import Language Identifiers', 'Header', 'geditorial-lingo' ) );
 
 		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'.HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-regional' ), 'description' ).'</th><td>';
+		echo '<tr><th scope="row">'.HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'description' ).'</th><td>';
 
 		if ( $data = $this->get_imports_raw_data() ) {
 
 			HTML::tableList( [
 				'_cb'  => 'code',
 				'code' => [
-					'title' => _x( 'Code', 'Table Column', 'geditorial-regional' ),
+					'title' => _x( 'Code', 'Table Column', 'geditorial-lingo' ),
 					'class' => '-ltr',
 				],
 				'term' => [
-					'title'    => _x( 'Term', 'Table Column', 'geditorial-regional' ),
+					'title'    => _x( 'Term', 'Table Column', 'geditorial-lingo' ),
 					'class'    => '-ltr',
 					'args'     => [ 'taxonomy' => $this->constant( 'language_taxonomy' ) ],
 					'callback' => function( $value, $row, $column, $index, $key, $args ) {
@@ -366,16 +367,16 @@ class Regional extends gEditorial\Module
 					}
 				],
 				'name' => [
-					'title' => _x( 'English Name', 'Table Column', 'geditorial-regional' ),
+					'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
 					'class' => '-ltr',
 				],
 				'native' => [
-					'title' => _x( 'Native Name', 'Table Column', 'geditorial-regional' ),
+					'title' => _x( 'Native Name', 'Table Column', 'geditorial-lingo' ),
 					'class' => '-ltr',
 				],
 
 			], $data, [
-				'empty' => HTML::warning( _x( 'There are no languages available!', 'Message: Table Empty', 'geditorial-regional' ), FALSE ),
+				'empty' => HTML::warning( _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ), FALSE ),
 			] );
 
 		} else {
@@ -388,14 +389,14 @@ class Regional extends gEditorial\Module
 		echo $this->wrap_open_buttons( '-imports' );
 
 		Settings::submitButton( 'language_taxonomy_create',
-			_x( 'Create Language Terms', 'Button', 'geditorial-regional' ), TRUE );
+			_x( 'Create Language Terms', 'Button', 'geditorial-lingo' ), TRUE );
 
 		Settings::submitCheckBox( 'language_taxonomy_update',
-			_x( 'Update Existing Terms', 'Button', 'geditorial-regional' ) );
+			_x( 'Update Existing Terms', 'Button', 'geditorial-lingo' ) );
 
 		echo '</p>';
 
-		HTML::desc( _x( 'Check for available languages and create corresponding language terms.', 'Message', 'geditorial-regional' ) );
+		HTML::desc( _x( 'Check for available language identifiers and create corresponding terms.', 'Message', 'geditorial-lingo' ) );
 
 		echo '</td></tr>';
 
@@ -408,14 +409,14 @@ class Regional extends gEditorial\Module
 			return $title;
 
 		return $taxonomy === $this->constant( 'language_taxonomy' )
-			? _x( 'Native Name', 'Table Column', 'geditorial-regional' )
+			? _x( 'Native Name', 'Table Column', 'geditorial-lingo' )
 			: $title;
 	}
 
 	public function terms_field_tagline_title( $title, $taxonomy, $field, $term )
 	{
 		return $taxonomy === $this->constant( 'language_taxonomy' )
-			? _x( 'Native Name', 'Table Column', 'geditorial-regional' )
+			? _x( 'Native Name', 'Table Column', 'geditorial-lingo' )
 			: $title;
 	}
 
