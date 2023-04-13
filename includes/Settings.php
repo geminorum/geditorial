@@ -1384,12 +1384,19 @@ class Settings extends Core\Base
 
 	public static function moduleInfo( $module, $enabled = FALSE, $tag = 'h3' )
 	{
+		$access = ( ! empty( $module->access ) && 'stable' !== $module->access )
+			? sprintf( ' <code title="%3$s" class="-acccess -access-%1$s">%2$s</code>',
+				$module->access,
+				strtoupper( $module->access ),
+				_x( 'Access Code', 'Settings: Title Attr', 'geditorial' )
+			) : '';
+
 		HTML::h3( HTML::tag( 'a', [
 			'href'   => self::getModuleDocsURL( $module ),
 			/* translators: %s: module title */
 			'title'  => sprintf( _x( '%s Documentation', 'Settings', 'geditorial' ), $module->title ),
 			'target' => '_blank',
-		], $module->title ), '-title' );
+		], $module->title ).$access, '-title' );
 
 		if ( isset( $module->desc ) )
 			HTML::desc( $module->desc );
@@ -1397,6 +1404,7 @@ class Settings extends Core\Base
 		// list.js filters
 		echo '<span class="-module-title" style="display:none;" aria-hidden="true">'.$module->title.'</span>';
 		echo '<span class="-module-key" style="display:none;" aria-hidden="true">'.$module->name.'</span>';
+		echo '<span class="-module-access" style="display:none;" aria-hidden="true">'.$module->access.'</span>';
 		echo '<span class="status" data-do="enabled" style="display:none;" aria-hidden="true">'.( $enabled ? 'true' : 'false' ).'</span>';
 	}
 

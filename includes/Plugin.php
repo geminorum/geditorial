@@ -118,6 +118,9 @@ class Plugin
 	private function define_constants()
 	{
 		$constants = [
+			'GEDITORIAL_BETA_FEATURES' => TRUE,
+			'GEDITORIAL_LOAD_PRIVATES' => FALSE,
+
 			'GEDITORIAL_CACHE_DIR' => WP_CONTENT_DIR.'/cache', // FALSE to disable
 			'GEDITORIAL_CACHE_URL' => WP_CONTENT_URL.'/cache',
 			'GEDITORIAL_CACHE_TTL' => 60 * 60 * 12, // 12 hours
@@ -160,6 +163,7 @@ class Plugin
 			'frontend'   => TRUE,  // whether or not the module should be loaded on the frontend
 			'autoload'   => FALSE, // autoloading a module will remove the ability to enable/disable it
 			'disabled'   => FALSE, // or string explaining why the module is not available
+			'access'     => 'unknown', // or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
 		];
 
 		$this->_modules->{$args['name']} = (object) array_merge( $defaults, $args );
@@ -188,10 +192,20 @@ class Plugin
 	private function init_modules()
 	{
 		$locale = apply_filters( 'plugin_locale', L10n::locale(), static::BASE );
+		$env    = Helper::const( 'WP_STAGE', 'production' );                       // 'development'
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
 			if ( ! isset( $this->_options->{$mod_name} ) )
+				continue;
+
+			if ( 'private' === $module->access && ! GEDITORIAL_LOAD_PRIVATES )
+				continue;
+
+			if ( 'beta' === $module->access && ! GEDITORIAL_BETA_FEATURES )
+				continue;
+
+			if ( 'alpha' === $module->access && 'production' === $env )
 				continue;
 
 			if ( $module->autoload || Helper::moduleEnabled( $this->_options->{$mod_name} ) ) {
