@@ -2,39 +2,30 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Status;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
-class MetaBox extends Main
+class MetaBox extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
 
 	public static function checkHidden( $metabox_id, $posttype = FALSE, $after = '' )
 	{
-		if ( $posttype && PostType::supportBlocks( $posttype ) )
+		if ( $posttype && WordPress\PostType::supportBlocks( $posttype ) )
 			return FALSE;
 
 		if ( ! in_array( $metabox_id, get_hidden_meta_boxes( get_current_screen() ) ) )
 			return FALSE;
 
-		$html = HTML::tag( 'a', [
+		$html = Core\HTML::tag( 'a', [
 			'href'  => add_query_arg( 'flush', '' ),
 			'class' => [ '-description', '-refresh' ],
 		], _x( 'Please refresh the page to generate the data.', 'MetaBox: Refresh Link', 'geditorial' ) );
 
-		echo HTML::wrap( $html, 'field-wrap -needs-refresh' ).$after;
+		echo Core\HTML::wrap( $html, 'field-wrap -needs-refresh' ).$after;
 
 		return TRUE;
 	}
@@ -49,20 +40,21 @@ class MetaBox extends Main
 			'empty'    => FALSE,   // `NULL` for empty box, `FALSE` for disable
 		] );
 
-		if ( ! $args['taxonomy'] || ( ! $taxonomy = Taxonomy::object( $args['taxonomy'] ) ) )
+		if ( ! $args['taxonomy'] || ( ! $taxonomy = WordPress\Taxonomy::object( $args['taxonomy'] ) ) )
 			return FALSE;
 
 		if ( ! is_null( $terms ) ) {
 
 			// FIXME: make sure it's a list of objects
+
 		} else {
 
 			// TODO: if `hierarchical` the title must have parent prefixes
 			// @SEE: `PostType::getParentTitles()`
 			// - e.g. tree list select
 
-			// $terms = Taxonomy::getTerms( $taxonomy->name, FALSE, TRUE );
-			$terms = Taxonomy::listTerms( $taxonomy->name, 'all' );
+			// $terms = WordPress\Taxonomy::getTerms( $taxonomy->name, FALSE, TRUE );
+			$terms = WordPress\Taxonomy::listTerms( $taxonomy->name, 'all' );
 		}
 
 		if ( empty( $terms ) ) {
@@ -94,10 +86,10 @@ class MetaBox extends Main
 			'class'      => static::BASE.'-admin-dropbown',
 		];
 
-		$html = HTML::dropdown( $terms, $dropdown );
+		$html = Core\HTML::dropdown( $terms, $dropdown );
 
 		if ( $html )
-			$html = HTML::wrap( $html, 'field-wrap -select' );
+			$html = Core\HTML::wrap( $html, 'field-wrap -select' );
 
 		if ( ! $args['echo'] )
 			return $html;
@@ -161,8 +153,8 @@ class MetaBox extends Main
 
 		} else {
 
-			// $terms = Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
-			$terms = Taxonomy::listTerms( $args['taxonomy'], 'all' );
+			// $terms = WordPress\Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
+			$terms = WordPress\Taxonomy::listTerms( $args['taxonomy'], 'all' );
 		}
 
 		if ( ! count( $terms ) )
@@ -249,7 +241,7 @@ class MetaBox extends Main
 			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
 
 		if ( $html )
-			$html = HTML::wrap( '<ul>'.$html.'</ul>', [ 'field-wrap', '-list', $args['field_class'] ] );
+			$html = Core\HTML::wrap( '<ul>'.$html.'</ul>', [ 'field-wrap', '-list', $args['field_class'] ] );
 
 		$html.= $hidden;
 
@@ -280,10 +272,10 @@ class MetaBox extends Main
 		if ( $args['metabox'] && self::checkHidden( $args['metabox'], $args['posttype'] ) )
 			return FALSE;
 
-		$selected = $post_id ? Taxonomy::getPostTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];
+		$selected = $post_id ? WordPress\Taxonomy::getPostTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];
 
 		if ( is_null( $users ) )
-			$users = User::get();
+			$users = WordPress\User::get();
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
 
@@ -304,20 +296,20 @@ class MetaBox extends Main
 
 		if ( ! $atts['list_only'] && count( $users ) > $threshold ) {
 
-			$form.= HTML::tag( 'input', [
+			$form.= Core\HTML::tag( 'input', [
 				'type'        => 'search',
 				'class'       => [ '-search', 'hide-if-no-js' ],
 				'placeholder' => _x( 'Search …', 'MetaBox: Checklist', 'geditorial' ),
 			] );
 
-			$form.= HTML::tag( 'button', [
+			$form.= Core\HTML::tag( 'button', [
 				'type'  => 'button',
 				'class' => [ '-button', 'button', 'button-small', '-sort', 'hide-if-no-js' ],
 				'data'  => [ 'sort' => '-name' ],
 				'title' => _x( 'Sort by name', 'MetaBox: Checklist', 'geditorial' ),
-			], HTML::getDashicon( 'sort' ) );
+			], Core\HTML::getDashicon( 'sort' ) );
 
-			$html.= HTML::wrap( $form, 'field-wrap field-wrap-filter' );
+			$html.= Core\HTML::wrap( $form, 'field-wrap field-wrap-filter' );
 		}
 
 		if ( is_null( $args['selected_preserve'] ) )
@@ -353,7 +345,7 @@ class MetaBox extends Main
 			return FALSE;
 		}
 
-		$html.= HTML::wrap( '<ul>'.$list.'</ul>', 'field-wrap -list' );
+		$html.= Core\HTML::wrap( '<ul>'.$list.'</ul>', 'field-wrap -list' );
 
 		// allows for an empty term set to be sent. 0 is an invalid Term ID
 		// and will be ignored by empty() checks
@@ -384,7 +376,7 @@ class MetaBox extends Main
 		if ( ! $term_or_id || is_wp_error( $term_or_id ) )
 			return '';
 
-		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
+		if ( ! $term = WordPress\Taxonomy::getTerm( $term_or_id, $taxonomy ) )
 			return '';
 
 		$args = [
@@ -407,20 +399,20 @@ class MetaBox extends Main
 			return FALSE;
 
 		$html     = '';
-		$statuses = Status::get();
+		$statuses = WordPress\Status::get();
 
 		if ( TRUE === $title )
-			$html.= HTML::tag( 'h4', Tablelist::getTermTitleRow( $term ) );
+			$html.= Core\HTML::tag( 'h4', Tablelist::getTermTitleRow( $term ) );
 
 		else if ( $title )
-			$html.= HTML::tag( 'h4', $title );
+			$html.= Core\HTML::tag( 'h4', $title );
 
 		$html.= '<ol>';
 
 		foreach ( $posts as $post )
 			$html.= '<li>'.Helper::getPostTitleRow( $post, ( $post->ID == $current ? FALSE : 'edit' ), $statuses ).'</li>';
 
-		return HTML::wrap( $html.'</ol>', 'field-wrap -list' );
+		return Core\HTML::wrap( $html.'</ol>', 'field-wrap -list' );
 	}
 
 	public static function fieldEmptyTaxonomy( $taxonomy, $edit = NULL, $posttype = FALSE, $echo = TRUE )
@@ -428,14 +420,14 @@ class MetaBox extends Main
 		if ( FALSE === $edit )
 			return FALSE;
 
-		$taxonomy = Taxonomy::object( $taxonomy );
+		$taxonomy = WordPress\Taxonomy::object( $taxonomy );
 		$extra    = $posttype ? [ 'post_type' => $posttype ] : [];
 
 		if ( is_null( $edit ) )
-			$edit = WordPress::getEditTaxLink( $taxonomy->name, FALSE, $extra );
+			$edit = Core\WordPress::getEditTaxLink( $taxonomy->name, FALSE, $extra );
 
 		if ( $edit )
-			$html = HTML::tag( 'a', [
+			$html = Core\HTML::tag( 'a', [
 				'href'   => $edit,
 				'title'  => $taxonomy->labels->add_new_item,
 				'target' => '_blank',
@@ -444,7 +436,7 @@ class MetaBox extends Main
 		else
 			$html = '<span>'.$taxonomy->labels->not_found.'</span>';
 
-		$html = HTML::wrap( $html, 'field-wrap -empty' );
+		$html = Core\HTML::wrap( $html, 'field-wrap -empty' );
 
 		if ( ! $echo )
 			return $html;
@@ -454,15 +446,15 @@ class MetaBox extends Main
 
 	public static function fieldEmptyPostType( $posttype, $echo = TRUE )
 	{
-		$object = PostType::object( $posttype );
+		$object = WordPress\PostType::object( $posttype );
 
-		$html = HTML::tag( 'a', [
-			'href'   => WordPress::getPostNewLink( $posttype ),
+		$html = Core\HTML::tag( 'a', [
+			'href'   => Core\WordPress::getPostNewLink( $posttype ),
 			'title'  => $object->labels->add_new_item,
 			'target' => '_blank',
 		], $object->labels->not_found );
 
-		$html = HTML::wrap( $html, 'field-wrap -empty' );
+		$html = Core\HTML::wrap( $html, 'field-wrap -empty' );
 
 		if ( ! $echo )
 			return $html;
@@ -489,9 +481,9 @@ class MetaBox extends Main
 		if ( ! $info )
 			return '';
 
-		$html = ' <span class="postbox-title-action" data-tooltip="'.Text::wordWrap( $info ).'"';
-		$html.= ' data-tooltip-pos="'.( HTML::rtl() ? 'down-left' : 'down-right' ).'"';
-		$html.= ' data-tooltip-length="xlarge">'.HTML::getDashicon( 'info' ).'</span>';
+		$html = ' <span class="postbox-title-action" data-tooltip="'.Core\Text::wordWrap( $info ).'"';
+		$html.= ' data-tooltip-pos="'.( Core\HTML::rtl() ? 'down-left' : 'down-right' ).'"';
+		$html.= ' data-tooltip-length="xlarge">'.Core\HTML::getDashicon( 'info' ).'</span>';
 
 		return $html;
 	}
@@ -502,13 +494,13 @@ class MetaBox extends Main
 	{
 		$name = sprintf( '%s[%s]', $prefix, $paired );
 
-		if ( ! $terms = Taxonomy::getPostTerms( $taxonomy, $paired ) )
-			return HTML::tag( 'input', [ 'type' => 'hidden', 'value' => '0', 'name' => $name ] );
+		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $paired ) )
+			return Core\HTML::tag( 'input', [ 'type' => 'hidden', 'value' => '0', 'name' => $name ] );
 
 		if ( is_null( $none ) )
 			$none = Settings::showOptionNone();
 
-		$html = HTML::dropdown( $terms, [
+		$html = Core\HTML::dropdown( $terms, [
 			'class'      => static::BASE.'-paired-subterms',
 			'name'       => $name,
 			'prop'       => 'name',
@@ -519,7 +511,7 @@ class MetaBox extends Main
 			'data'       => [ 'paired' => $paired ],
 		] );
 
-		return HTML::wrap( $html, 'field-wrap -select' );
+		return Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	// PAIRED API
@@ -558,13 +550,13 @@ class MetaBox extends Main
 		if ( is_null( $none ) )
 			$none = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
 
-		$html = $none ? HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
+		$html = $none ? Core\HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
 		$html.= walk_page_dropdown_tree( $posts, 0, [
 			'selected'          => $paired,
 			'title_with_parent' => TRUE,
 		] );
 
-		$html = HTML::tag( 'select', [
+		$html = Core\HTML::tag( 'select', [
 			'name'  => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
 			'class' => [ static::BASE.'-paired-to-post-dropdown', empty( $posts ) ? 'hidden' : '' ],
 			'data'  => [
@@ -573,7 +565,7 @@ class MetaBox extends Main
 			],
 		], $html );
 
-		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : '';
+		return $html ? Core\HTML::wrap( $html, 'field-wrap -select' ) : '';
 	}
 
 	// FIXME: DEPRECATED
@@ -596,12 +588,12 @@ class MetaBox extends Main
 			'title_with_meta'  => 'number_line', // extra arg for the walker
 		] );
 
-		return $html ? HTML::wrap( $html, 'field-wrap -select' ) : '';
+		return $html ? Core\HTML::wrap( $html, 'field-wrap -select' ) : '';
 	}
 
 	public static function fieldPostMenuOrder( $post )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'        => 'number',
 			'step'        => '1',
 			'size'        => '4',
@@ -614,7 +606,7 @@ class MetaBox extends Main
 			'data'        => [ 'ortho' => 'number' ],
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap -inputnumber' );
+		echo Core\HTML::wrap( $html, 'field-wrap -inputnumber' );
 	}
 
 	// @REF: `post_slug_meta_box()`
@@ -622,7 +614,7 @@ class MetaBox extends Main
 	{
 		$html = '<label class="screen-reader-text" for="post_name">'.__( 'Slug' ).'</label>';
 
-		$html.= HTML::tag( 'input', [
+		$html.= Core\HTML::tag( 'input', [
 			'type'        => 'text',
 			'name'        => 'post_name',
 			'id'          => 'post_name',
@@ -632,7 +624,7 @@ class MetaBox extends Main
 			'class'       => 'code-text',
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap -inputcode' );
+		echo Core\HTML::wrap( $html, 'field-wrap -inputcode' );
 	}
 
 	// @REF: `post_author_meta_box()`
@@ -651,7 +643,7 @@ class MetaBox extends Main
 
 		$label = '<label class="screen-reader-text" for="post_author_override">'.__( 'Author' ).'</label>';
 
-		echo HTML::wrap( $label.$html, 'field-wrap -select' );
+		echo Core\HTML::wrap( $label.$html, 'field-wrap -select' );
 	}
 
 	public static function fieldPostParent( $post, $check = TRUE, $name = NULL, $posttype = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
@@ -660,7 +652,7 @@ class MetaBox extends Main
 		if ( is_null( $posttype ) )
 			$posttype = $post->post_type;
 
-		$object = PostType::object( $posttype );
+		$object = WordPress\PostType::object( $posttype );
 
 		if ( $check && ! $object->hierarchical )
 			return;
@@ -683,7 +675,7 @@ class MetaBox extends Main
 		$html = wp_dropdown_pages( apply_filters( 'page_attributes_dropdown_pages_args', $args, $post ) );
 
 		if ( $html )
-			echo HTML::wrap( $html, 'field-wrap -select' );
+			echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	public static function classEditorBox( $screen, $id = 'postexcerpt' )
@@ -733,7 +725,7 @@ class MetaBox extends Main
 				$default = '0';
 		}
 
-		if ( ! $selected = Taxonomy::theTerm( $taxonomy, $post->ID ) )
+		if ( ! $selected = WordPress\Taxonomy::theTerm( $taxonomy, $post->ID ) )
 			$selected = $default;
 
 		$terms = wp_dropdown_categories( [
@@ -756,7 +748,7 @@ class MetaBox extends Main
 		] );
 
 		if ( $terms )
-			echo HTML::tag( 'div', [
+			echo Core\HTML::tag( 'div', [
 				'class' => '-wrap field-wrap -select',
 				'title' => $obj->labels->menu_name,
 			], $terms );
@@ -766,20 +758,20 @@ class MetaBox extends Main
 
 	public static function glancePosttype( $posttype, $noop, $extra_class = '' )
 	{
-		$posts = Database::countPostsByPosttype( $posttype );
+		$posts = WordPress\Database::countPostsByPosttype( $posttype );
 
 		if ( ! $posts['publish'] )
 			return FALSE;
 
-		$object = PostType::object( $posttype );
+		$object = WordPress\PostType::object( $posttype );
 
-		$class  = HTML::prepClass( 'geditorial-glance-item', '-posttype', '-posttype-'.$posttype, $extra_class );
+		$class  = Core\HTML::prepClass( 'geditorial-glance-item', '-posttype', '-posttype-'.$posttype, $extra_class );
 		$format = current_user_can( $object->cap->edit_posts )
 			? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>'
 			: '<div class="'.$class.'">%1$s %2$s</div>';
 
 		return vsprintf( $format, [
-			Number::format( $posts['publish'] ),
+			Core\Number::format( $posts['publish'] ),
 			Helper::noopedCount( $posts['publish'], $noop ),
 			$posttype,
 		] );
@@ -787,18 +779,18 @@ class MetaBox extends Main
 
 	public static function glanceTaxonomy( $taxonomy, $noop, $extra_class = '' )
 	{
-		if ( ! $terms = Taxonomy::hasTerms( $taxonomy ) )
+		if ( ! $terms = WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return FALSE;
 
 		$object = get_taxonomy( $taxonomy );
 
-		$class  = HTML::prepClass( 'geditorial-glance-item', '-tax', '-taxonomy-'.$taxonomy, $extra_class );
+		$class  = Core\HTML::prepClass( 'geditorial-glance-item', '-tax', '-taxonomy-'.$taxonomy, $extra_class );
 		$format = current_user_can( $object->cap->manage_terms )
 			? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>'
 			: '<div class="'.$class.'">%1$s %2$s</div>';
 
 		return vsprintf( $format, [
-			Number::format( $terms ),
+			Core\Number::format( $terms ),
 			Helper::noopedCount( $terms, $noop ),
 			$taxonomy,
 		] );
@@ -806,13 +798,13 @@ class MetaBox extends Main
 
 	public static function tableRowObjectTaxonomy( $taxonomy, $object_id = 0, $name = NULL, $edit = NULL, $before = '', $after = '' )
 	{
-		if ( ! $object = Taxonomy::object( $taxonomy ) )
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
 		if ( ! current_user_can( $object->cap->assign_terms ) )
 			return FALSE;
 
-		echo $before.'<tr class="form-field"><th scope="row">'.HTML::escape( $object->label ).'</th><td>';
+		echo $before.'<tr class="form-field"><th scope="row">'.Core\HTML::escape( $object->label ).'</th><td>';
 
 		self::checklistTerms( $object_id, [
 			'field_class' => 'wp-tab-panel',
@@ -826,7 +818,7 @@ class MetaBox extends Main
 
 	public static function storeObjectTaxonomy( $taxonomy, $object_id, $data = NULL, $name = NULL, $check = TRUE )
 	{
-		if ( ! $object = Taxonomy::object( $taxonomy ) )
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
 		if ( $check && ! current_user_can( $object->cap->assign_terms ) )
@@ -845,7 +837,7 @@ class MetaBox extends Main
 		if ( ! array_key_exists( $object->name, $data ) )
 			return FALSE;
 
-		$result = wp_set_object_terms( $object_id, Arraay::prepNumeral( $data[$object->name] ), $object->name, FALSE );
+		$result = wp_set_object_terms( $object_id, Core\Arraay::prepNumeral( $data[$object->name] ), $object->name, FALSE );
 
 		clean_object_term_cache( $object_id, $object->name );
 
@@ -877,12 +869,165 @@ class MetaBox extends Main
 		];
 	}
 
+	/**
+	 * renders an general input tag for forms in a metabox
+	 *
+	 * @param  array $field
+	 * @param  null|int|object $post
+	 * @param  string $module
+	 * @return bool $success
+	 */
+	public static function renderFieldInput( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+		$wrap  = [ 'field-wrap', '-inputgeneral' ];
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		$atts = [
+			'type'        => 'text',
+			'value'       => $value ?: '',
+			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'pattern'     => $args['pattern'],
+			'placeholder' => $args['title'],
+			'class'       => [
+				sprintf( '%s-inputgeneral', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'] ?: $args['name'],
+				'meta-desc'  => $args['description'] ?: '',
+			],
+		];
+
+		switch ( $args['type'] ) {
+
+			case 'date':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'date';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputdate';
+
+				if ( $value )
+					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' );
+
+				break;
+
+			case 'contact':
+			case 'code':
+
+				$atts['dir'] = 'ltr';
+
+				$wrap[] = '-inputcode';
+
+				break;
+
+			case 'email':
+
+				$atts['dir'] = 'ltr';
+				$atts['type'] = 'email';
+				$atts['data']['ortho'] = 'email';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputemail';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\Email::getHTMLPattern();
+
+				break;
+
+			case 'mobile':
+			case 'phone':
+
+				$atts['dir'] = 'ltr';
+				$atts['type'] = 'tel';
+				$atts['data']['ortho'] = 'phone';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputphone';
+
+				// FIXME: the pattern is not cover all numbers
+				// if ( is_null( $atts['pattern'] ) )
+				// 	$atts['pattern'] = 'mobile' === $args['type']
+				// 	 	? Core\Mobile::getHTMLPattern()
+				// 		: Core\Phone::getHTMLPattern();
+
+				break;
+
+			case 'isbn':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'isbn';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputisbn';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\ISBN::getHTMLPattern();
+
+				break;
+
+			case 'iban':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'iban';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputiban';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\Validation::getIBANHTMLPattern();
+
+				break;
+
+			case 'identity':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'identity';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputidentity';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\Validation::getIdentityNumberHTMLPattern();
+
+				break;
+		}
+
+		if ( ! $atts['pattern'] )
+			unset( $atts['pattern'] );
+
+		echo Core\HTML::wrap( Core\HTML::tag( 'input', $atts ), $wrap );
+
+		return TRUE;
+	}
+
 	public static function renderFieldSelect( $field, $post = NULL, $module = NULL )
 	{
 		if ( empty( $field['name'] ) )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $module ) )
@@ -899,7 +1044,7 @@ class MetaBox extends Main
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
 
 		foreach ( $args['values'] as $value => $label )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'selected' => $selected == $value,
 				'value'    => $value,
 			], $label );
@@ -920,186 +1065,7 @@ class MetaBox extends Main
 			],
 		];
 
-		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select' );
-	}
-
-	public static function renderFieldDate( $field, $post = NULL, $module = NULL, $calendar = NULL )
-	{
-		if ( empty( $field['name'] ) )
-			return FALSE;
-
-		if ( ! $post = PostType::getPost( $post ) )
-			return FALSE;
-
-		if ( is_null( $module ) )
-			$module = static::MODULE;
-
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
-
-		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
-
-		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
-
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
-
-		$atts = [
-			'type'        => 'text',
-			'value'       => $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' ) : '',
-			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title'       => sprintf( '%s :: %s', $args['title'], $args['description'] ),
-			'placeholder' => $args['title'],
-			'class'       => [
-				sprintf( '%s-inputdate', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
-			],
-			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'],
-				'meta-desc'  => $args['description'],
-				'ortho'      => 'date',
-			],
-		];
-
-		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputdate' );
-	}
-
-	// TODO: utilize the pattern!
-	public static function renderFieldIdentity( $field, $post = NULL, $module = NULL )
-	{
-		if ( empty( $field['name'] ) )
-			return FALSE;
-
-		if ( ! $post = PostType::getPost( $post ) )
-			return FALSE;
-
-		if ( is_null( $module ) )
-			$module = static::MODULE;
-
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
-
-		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
-
-		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
-
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
-
-		$atts = [
-			'type'        => 'text',
-			'value'       => $value ?: '',
-			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title'       => sprintf( '%s :: %s', $args['title'], $args['description'] ),
-			'placeholder' => $args['title'],
-			'class'       => [
-				sprintf( '%s-inputidentity', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
-			],
-			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'],
-				'meta-desc'  => $args['description'],
-				'ortho'      => 'identity',
-			],
-		];
-
-		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputidentity' );
-	}
-
-	// TODO: utilize the pattern!
-	public static function renderFieldISBN( $field, $post = NULL, $module = NULL )
-	{
-		if ( empty( $field['name'] ) )
-			return FALSE;
-
-		if ( ! $post = PostType::getPost( $post ) )
-			return FALSE;
-
-		if ( is_null( $module ) )
-			$module = static::MODULE;
-
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
-
-		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
-
-		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
-
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
-
-		$atts = [
-			'type'        => 'text',
-			'value'       => $value ?: '',
-			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title'       => sprintf( '%s :: %s', $args['title'], $args['description'] ),
-			'placeholder' => $args['title'],
-			'class'       => [
-				sprintf( '%s-inputisbn', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
-			],
-			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'],
-				'meta-desc'  => $args['description'],
-				'ortho'      => 'isbn',
-			],
-		];
-
-		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputisbn' );
-	}
-
-	// TODO: utilize the pattern!
-	public static function renderFieldIBAN( $field, $post = NULL, $module = NULL )
-	{
-		if ( empty( $field['name'] ) )
-			return FALSE;
-
-		if ( ! $post = PostType::getPost( $post ) )
-			return FALSE;
-
-		if ( is_null( $module ) )
-			$module = static::MODULE;
-
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
-
-		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
-
-		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
-
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
-
-		$atts = [
-			'type'        => 'text',
-			'value'       => $value ?: '',
-			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
-			'title'       => sprintf( '%s :: %s', $args['title'], $args['description'] ),
-			'placeholder' => $args['title'],
-			'class'       => [
-				sprintf( '%s-inputiban', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
-			],
-			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'],
-				'meta-desc'  => $args['description'],
-				'ortho'      => 'iban',
-			],
-		];
-
-		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputiban' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select' );
 	}
 
 	// just like any other meta-field but stores in `$post->post_parent`
@@ -1108,7 +1074,7 @@ class MetaBox extends Main
 		if ( empty( $field['name'] ) )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $module ) )
@@ -1126,11 +1092,11 @@ class MetaBox extends Main
 		if ( is_null( $field['description'] ) )
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
 
-		if ( $post->post_parent && ( $parent = PostType::getPost( $post->post_parent ) ) )
-			$html.= HTML::tag( 'option', [
+		if ( $post->post_parent && ( $parent = WordPress\Post::get( $post->post_parent ) ) )
+			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $parent->ID,
-			], PostType::getPostTitle( $parent ) );
+			], WordPress\PostType::getPostTitle( $parent ) );
 
 		$atts = [
 			'name'  => 'parent_id', // sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
@@ -1155,7 +1121,7 @@ class MetaBox extends Main
 			],
 		];
 
-		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}
@@ -1165,7 +1131,7 @@ class MetaBox extends Main
 		if ( empty( $field['name'] ) )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $module ) )
@@ -1181,10 +1147,10 @@ class MetaBox extends Main
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
 
 		if ( $value = self::getPostMeta( $post->ID, $args['name'], '' ) )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
-			], PostType::getPostTitle( $value ) );
+			], WordPress\PostType::getPostTitle( $value ) );
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
@@ -1209,7 +1175,7 @@ class MetaBox extends Main
 			],
 		];
 
-		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}
@@ -1219,7 +1185,7 @@ class MetaBox extends Main
 		if ( empty( $field['name'] ) )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $module ) )
@@ -1235,10 +1201,10 @@ class MetaBox extends Main
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
 
 		if ( $value = self::getPostMeta( $post->ID, $args['name'], '' ) )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
-			], Taxonomy::getTermTitle( $value ) );
+			], WordPress\Taxonomy::getTermTitle( $value ) );
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
@@ -1263,7 +1229,7 @@ class MetaBox extends Main
 			],
 		];
 
-		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}
@@ -1273,7 +1239,7 @@ class MetaBox extends Main
 		if ( empty( $field['name'] ) )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $module ) )
@@ -1289,10 +1255,10 @@ class MetaBox extends Main
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
 
 		if ( $value = self::getPostMeta( $post->ID, $args['name'], '' ) )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
-			], User::getTitleRow( (int) $value,
+			], WordPress\User::getTitleRow( (int) $value,
 				/* translators: %s: user id number */
 				sprintf( _x( 'Unknown User #%s', 'MetaBox: Title Attr', 'geditorial' ), $value ) ) );
 
@@ -1319,7 +1285,7 @@ class MetaBox extends Main
 			],
 		];
 
-		echo HTML::wrap( HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}

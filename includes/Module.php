@@ -2052,7 +2052,7 @@ class Module extends Base
 				'access_edit' => NULL, // @SEE: `$this->access_posttype_field()`
 				'sanitize'    => NULL, // callback
 				'prep'        => NULL, // callback
-				'pattern'     => NULL, // HTML5 input pattern // FIXME: utilize this!
+				'pattern'     => NULL, // HTML5 input pattern
 				'default'     => NULL, // currently only on rest
 				'icon'        => 'smiley',
 				'type'        => 'text',
@@ -2198,11 +2198,11 @@ class Module extends Base
 				break;
 
 			case 'phone':
-				$sanitized = Validation::sanitizePhoneNumber( $data );
+				$sanitized = Core\Phone::sanitize( $data );
 				break;
 
 			case 'mobile':
-			 	$sanitized = Validation::sanitizeMobileNumber( $data );
+			 	$sanitized = Core\Mobile::sanitize( $data );
 				break;
 
 			case 'date':

@@ -605,34 +605,22 @@ class Meta extends gEditorial\Module
 				case 'datestring':
 
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					break;
 
-				break;
 				case 'date':
-
-					ModuleMetaBox::renderFieldDate( $args, $post, NULL, $this->default_calendar() );
-					break;
-
-				case 'identity': // TODO: utilize the pattern!
-
-					ModuleMetaBox::renderFieldIdentity( $args, $post, NULL );
-					break;
-
+				case 'identity':
 				case 'isbn':
-
-					ModuleMetaBox::renderFieldISBN( $args, $post, NULL );
-					break;
-
 				case 'iban':
+				case 'code':
+				case 'contact':
+				case 'mobile':
+				case 'phone':
+				case 'email':
 
-					ModuleMetaBox::renderFieldIBAN( $args, $post, NULL );
+					ModuleMetaBox::renderFieldInput( $args, $post, NULL );
 					break;
 
 				case 'float':
-				case 'code':
-				case 'contact':
-				case 'phone':
-				case 'mobile':
-				case 'email':
 				case 'embed':
 				case 'text_source':
 				case 'audio_source':
