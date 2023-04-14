@@ -12,10 +12,11 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	public static function module()
 	{
 		return [
-			'name'  => '<%= moduleUnderline %>',
-			'title' => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
-			'desc'  => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
-			'icon'  => '<%= moduleDashicon %>',
+			'name'   => '<%= moduleUnderline %>',
+			'title'  => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
+			'desc'   => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
+			'icon'   => '<%= moduleDashicon %>',
+			'access' => 'planned',
 		];
 	}
 
@@ -47,6 +48,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'primary_taxonomy' => '',
 			'primary_paired'   => '',
 			'primary_subterm'  => '',
+			'main_taxonomy'    => '',
+			'main_shortcode'   => '',
 		];
 	}
 
@@ -56,11 +59,18 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'noops' => [
 				'primary_posttype' => _n_noop( '', '', '<%= moduleTextdomain %>' ),
 				'primary_taxonomy' => _n_noop( '', '', '<%= moduleTextdomain %>' ),
+				'main_taxonomy'    => _n_noop( '', '', '<%= moduleTextdomain %>' ),
 			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
+
+		$strings['default_terms'] = [
+			'main_taxonomy' => [
+				'' => _x( '', 'Main Taxonomy: Default Term', '<%= moduleTextdomain %>' ),
+			],
+		];
 
 		return $strings;
 	}
@@ -85,5 +95,17 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		$this->register_posttype( 'primary_posttype', [
 			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
 		] );
+
+		$this->register_taxonomy( 'main_taxonomy', [
+			'hierarchical' => TRUE,
+			'meta_box_cb'  => '__checklist_terms_callback',
+		] );
+
+		$this->register_shortcode( 'main_shortcode' );
+	}
+
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return '';
 	}
 }
