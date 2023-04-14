@@ -13,8 +13,10 @@
 
   const inputs = {
     number: '[data-' + module + '=\'number\']',
-    alphabet: '[data-' + module + '=\'alphabet\']',
+    alphabet: '[data-' + module + '=\'alphabet\']', // example: warehouse partials
     identity: '[data-' + module + '=\'identity\']',
+    phone: '[data-' + module + '=\'phone\']',
+    isbn: '[data-' + module + '=\'isbn\']',
     iban: '[data-' + module + '=\'iban\']',
     date: '[data-' + module + '=\'date\']'
     // code: '[data-' + module + '=\'code\']',
@@ -143,6 +145,76 @@
     return parseInt(remainder, 10) % 97;
   }
 
+  function validatePhone (value) {
+    if (typeof value === 'undefined' || !value) {
+      return false;
+    }
+
+    // @REF: https://www.abstractapi.com/guides/validate-phone-number-javascript
+    // const pattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+    // @REF: https://www.w3resource.com/javascript/form/phone-no-validation.php
+    // const pattern = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+
+    // @REF: https://rgxdb.com/r/4MEBA3DO
+    const pattern = /^[+]?(?=(?:[^\dx]*\d){7})(?:\(\d+(?:\.\d+)?\)|\d+(?:\.\d+)?)(?:[ -]?(?:\(\d+(?:\.\d+)?\)|\d+(?:\.\d+)?))*(?:[ ]?(?:x|ext)\.?[ ]?\d{1,5})?$/;
+
+    return pattern.test(value);
+  }
+
+  // @REF: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
+  function validateISBN (value) {
+    if (typeof value === 'undefined' || !value) {
+      return false;
+    }
+
+    // checks for ISBN-10 or ISBN-13 format
+    const pattern = /^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$/;
+    // const pattern = /^(?:ISBN(?:-13)?:?\ )?(?=[0-9]{13}$|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17}$)97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]$/;
+
+    if (pattern.test(value)) {
+      // remove non ISBN digits, then split into an array
+      const chars = value.replace(/[- ]|^ISBN(?:-1[03])?:?/g, '').split('');
+
+      // remove the final ISBN digit from `chars`, and assign it to `last`
+      const last = chars.pop();
+      let sum = 0;
+      let check, i;
+
+      if (chars.length === 9) {
+        // compute the ISBN-10 check digit
+        chars.reverse();
+
+        for (i = 0; i < chars.length; i++) {
+          sum += (i + 2) * parseInt(chars[i], 10);
+        }
+
+        check = 11 - (sum % 11);
+
+        if (check === 10) {
+          check = 'X';
+        } else if (check === 11) {
+          check = '0';
+        }
+      } else {
+        // compute the ISBN-13 check digit
+        for (i = 0; i < chars.length; i++) {
+          sum += (i % 2 * 2 + 1) * parseInt(chars[i], 10);
+        }
+
+        check = 10 - (sum % 10);
+
+        if (check === 10) {
+          check = '0';
+        }
+      }
+
+      return check === parseInt(last);
+    }
+
+    return false;
+  }
+
   // @REF: https://gist.github.com/mhf-ir/c17374fae395a57c9f8e5fe7a92bbf23
   function validateIBAN (value) {
     if (typeof value === 'undefined' || !value) {
@@ -170,7 +242,7 @@
     number: function () {
       const $el = $(this);
       try {
-        $el.prop('type', 'text');
+        $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-]/g, '').trim());
@@ -203,10 +275,42 @@
       });
     },
 
+    phone: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `tel`
+      } catch (e) {}
+      $el.on('change', function () {
+        const val = toEnglish($el.val()).replace(/[^\d+]/g, '').trim();
+        $el.val(val);
+        if (validatePhone(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else {
+          $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
+        }
+      });
+    },
+
+    isbn: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `number`
+      } catch (e) {}
+      $el.on('change', function () {
+        const val = toEnglish($el.val()).replace(/[^\d.-]/g, '').trim();
+        $el.val(val);
+        if (validateISBN(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else {
+          $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
+        }
+      });
+    },
+
     iban: function () {
       const $el = $(this);
       try {
-        $el.prop('type', 'text');
+        $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
         const val = toEnglish($el.val()).replace(/IR[^\d.-]/g, '').trim();
@@ -222,7 +326,7 @@
     date: function () {
       const $el = $(this);
       try {
-        $el.prop('type', 'text');
+        $el.prop('type', 'text'); // NOTE: possible type: `date`
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-//]/g, '').trim());
