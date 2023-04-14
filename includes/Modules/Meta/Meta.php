@@ -668,6 +668,8 @@ class Meta extends gEditorial\Module
 						ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 			}
 		}
+
+		$this->nonce_field( 'mainbox' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )
@@ -687,8 +689,6 @@ class Meta extends gEditorial\Module
 
 			$this->actions( 'render_metabox_after', $post, $box, $fields, 'mainbox' );
 		echo '</div>';
-
-		$this->nonce_field( 'mainbox' );
 	}
 
 	public function render_nobox_fields( $post )
