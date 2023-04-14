@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -63,6 +64,7 @@ class Organization extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'comment_status',
+				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
@@ -78,6 +80,8 @@ class Organization extends gEditorial\Module
 			'primary_subterm'  => 'subdepartment',
 			'type_taxonomy'    => 'department_type',
 			'status_taxonomy'  => 'department_status',
+
+			'subterm_shortcode' => 'organization-subdepartment',
 		];
 	}
 
@@ -174,6 +178,7 @@ class Organization extends gEditorial\Module
 		return [
 			'primary_subterm',
 			'primary_taxonomy',
+			'primary_subterm',
 			'type_taxonomy',
 			'status_taxonomy',
 		];
@@ -218,6 +223,9 @@ class Organization extends gEditorial\Module
 		$this->paired_register_objects( 'primary_posttype', 'primary_paired', 'primary_subterm', [
 			'show_in_nav_menus' => TRUE,
 		] );
+
+		if ( $this->get_setting( 'subterms_support' ) )
+			$this->register_shortcode( 'subterm_shortcode' );
 
 		if ( is_admin() )
 			return;
@@ -501,5 +509,17 @@ class Organization extends gEditorial\Module
 	public function bulk_post_updated_messages( $messages, $counts )
 	{
 		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'primary_posttype', $counts ) );
+	}
+
+	public function subterm_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'assigned',
+			$this->constant( 'primary_posttype' ),
+			$this->constant( 'primary_subterm' ),
+			$atts,
+			$content,
+			$this->constant( 'subterm_shortcode', $tag ),
+			$this->key
+		);
 	}
 }
