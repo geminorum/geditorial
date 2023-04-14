@@ -8,7 +8,7 @@
 .wp-list-table,
 .base-table-list {
 
-  // TODO: move to `_admin.table.css`
+  // TODO: move to core's `_admin.table.css`
   th span.-column-icon {
     display: block;
     text-indent: -9999px;
@@ -40,6 +40,26 @@
       content: "\f123";
       font-size: $spacer;
     }
+  }
+
+  span.-icon-danger {
+    color: $brand-danger;
+  }
+
+  span.-icon-warning {
+    color: $brand-warning;
+  }
+
+  span.-icon-info {
+    color: $brand-info;
+  }
+
+  span.-icon-success {
+    color: $brand-success;
+  }
+
+  span.-icon-primary {
+    color: $brand-primary;
   }
 }
 

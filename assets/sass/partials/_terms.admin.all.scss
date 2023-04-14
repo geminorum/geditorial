@@ -45,6 +45,14 @@ body.geditorial-terms-enabled {
       }
     }
 
+    th.column-geditorial-terms-viewable {
+      width: 22px;
+
+      span.-column-icon::before {
+        content: "\f177";
+      }
+    }
+
     th.column-geditorial-terms-arrow {
       width: 22px;
 
@@ -84,9 +92,40 @@ body.geditorial-terms-enabled {
       }
     }
 
+    th.column-geditorial-terms-color {
+      span.-column-icon::before {
+        content: "\f131";
+      }
+    }
+
+    th.column-geditorial-terms-author {
+      span.-column-icon::before {
+        content: "\f110";
+      }
+    }
+
+    th.column-geditorial-terms-role,
+    th.column-geditorial-terms-roles {
+      span.-column-icon::before {
+        content: "\f307";
+      }
+    }
+
+    th.column-geditorial-terms-posttype,
+    th.column-geditorial-terms-posttypes {
+      span.-column-icon::before {
+        content: "\f109";
+      }
+    }
+
     .column-geditorial-terms-author,
     .column-geditorial-terms-role,
     .column-geditorial-terms-posttype {
+      width: 80px;
+    }
+
+    .column-geditorial-terms-roles,
+    .column-geditorial-terms-posttypes {
       width: 120px;
     }
 
@@ -94,6 +133,7 @@ body.geditorial-terms-enabled {
       width: 50px;
     }
 
+    td.column-geditorial-terms-viewable,
     td.column-geditorial-terms-arrow,
     td.column-geditorial-terms-barcode,
     td.column-geditorial-terms-contact {

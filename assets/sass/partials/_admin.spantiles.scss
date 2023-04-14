@@ -1,0 +1,52 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Admin SpanTiles
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+$spacer: 1rem !default;
+$theme-color-border: $gray-light !default;
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+.-wrap.geditorial-span-tiles {
+  margin: $spacer 0 ($spacer * .25) 0;
+
+  > .-tile-row {
+    @include theme-clearfix;
+    border-top: 1px dashed $theme-color-border;
+    padding-bottom: ($spacer * .5);
+
+    .-title {
+      float: left;
+      clear: left;
+      width: $spacer * 10;
+      padding: ($spacer * .5) 0 0 ($spacer * .5);
+      margin: 0;
+    }
+
+    ul.-tiles {
+      // @include theme-list-reset;
+
+      @include theme-list-flex() {
+        margin-top: $spacer * .5;
+        margin-right: $spacer * .5;
+
+
+        // + li {
+        //   margin-left: $spacer * .5;
+        // }
+
+        img {
+          max-width: $spacer * 10;
+          border: none;
+        }
+      }
+
+      margin-left: $spacer * 10;
+    }
+
+    // li.-item {}
+  }
+}
