@@ -5,6 +5,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class ISBN extends Base
 {
 
+	public static function getHTMLPattern()
+	{
+		return FALSE; // FIXME!
+	}
+
 	public static function prep( $input, $wrap = FALSE, $link = FALSE )
 	{
 		$string = Number::intval( $input, FALSE );

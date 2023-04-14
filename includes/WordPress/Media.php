@@ -474,6 +474,7 @@ class Media extends Core\Base
 
 	public static function htmlAttachmentSrc( $attachment_id, $size = NULL, $fallback = '' )
 	{
+		$img = NULL;
 		$src = $fallback;
 
 		if ( is_null( $size ) )

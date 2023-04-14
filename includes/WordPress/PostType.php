@@ -320,6 +320,7 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
+	// DEPRECATED: use `Post::getByTitle()`
 	public static function getIDsByTitle( $title, $atts = [] )
 	{
 		$args = array_merge( [

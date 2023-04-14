@@ -27,98 +27,6 @@ class Validation extends Base
 		return (bool) preg_match( '/(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}/', trim( str_ireplace( [ '-', ' ' ], '', Number::intval( $input, FALSE ) ) ) );
 	}
 
-	public static function getMobileHTMLPattern()
-	{
-		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
-			return '[0-9۰-۹+]{11,}';
-
-		return '[0-9+]{11,}';
-	}
-
-	public static function sanitizePhoneNumber( $input )
-	{
-		$sanitized = Number::intval( trim( $input ), FALSE );
-
-		if ( ! self::isPhoneNumber( $sanitized ) )
-			return '';
-
-		$sanitized = trim( str_ireplace( [
-			' ',
-			'.',
-			'-',
-			'#',
-		], '', $sanitized ) );
-
-		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
-
-			if ( preg_match( '/^0\d{10}$/', $sanitized ) )
-				$sanitized = sprintf( '+98%s', ltrim( $sanitized, '0' ) );
-
-			else if ( preg_match( '/^[1-9]{1}\d{7}$/', $sanitized ) )
-				$sanitized = sprintf( '+9821%s', $sanitized ); // WTF: Tehran prefix!
-		}
-
-		return $sanitized;
-	}
-
-	public static function isPhoneNumber( $input )
-	{
-		if ( empty( $input ) )
-			return FALSE;
-
-		// @SOURCE: `WC_Validation::is_phone()`
-		if ( 0 < strlen( trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', $input ) ) ) )
-			return FALSE;
-
-		// all zeros!
-		if ( ! intval( $input ) )
-			return FALSE;
-
-		return TRUE;
-	}
-
-	public static function sanitizeMobileNumber( $input )
-	{
-		$sanitized = Number::intval( trim( $input ), FALSE );
-
-		if ( ! self::isMobileNumber( $sanitized ) )
-			return '';
-
-		$sanitized = trim( str_ireplace( [
-			' ',
-			'.',
-			'-',
-			'#',
-		], '', $sanitized ) );
-
-		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
-
-			if ( preg_match( '/^9\d{9}$/', $sanitized ) )
-				$sanitized = sprintf( '+98%s', $sanitized );
-
-			else if ( preg_match( '/^09\d{9}$/', $sanitized ) )
-				$sanitized = sprintf( '+98%s', ltrim( $sanitized, '0' ) );
-		}
-
-		return $sanitized;
-	}
-
-	public static function isMobileNumber( $input )
-	{
-		if ( empty( $input ) )
-			return FALSE;
-
-		// @SOURCE: `WC_Validation::is_phone()`
-		if ( 0 < strlen( trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', $input ) ) ) )
-			return FALSE;
-
-		// all zeros!
-		if ( ! intval( $input ) )
-			return FALSE;
-
-		return TRUE;
-	}
-
 	public static function getIdentityNumberHTMLPattern()
 	{
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
@@ -176,6 +84,11 @@ class Validation extends Base
 			return TRUE;
 
 		return FALSE;
+	}
+
+	public static function getIBANHTMLPattern()
+	{
+		return FALSE; // FIXME!
 	}
 
 	// @SEE: https://fa.wikipedia.org/wiki/%D8%B4%D8%A8%D8%A7

@@ -54,6 +54,55 @@ class Term extends Core\Base
 	}
 
 	/**
+	 * Retrieves term taxonomy given a term ID or term object.
+	 *
+	 * @param  null|int|string|object $term
+	 * @return string $taxonomy
+	 */
+	public static function taxonomy( $term )
+	{
+		if ( $object = self::get( $term ) )
+			return $object->taxonomy;
+
+		return FALSE;
+	}
+
+	/**
+	 * Generates HTML link for given term
+	 *
+	 * @param  null|int|string|object $term
+	 * @param  null|false|string $title
+	 * @param  bool|string $fallback
+	 * @return string|false $html
+	 */
+	public static function htmlLink( $term, $title = NULL, $fallback = FALSE )
+	{
+		if ( ! $term = self::get( $term ) );
+			return $fallback;
+
+		if ( ! $url = get_term_link( $term ) )
+			return $fallback;
+
+		if ( is_wp_error( $url ) )
+			return $fallback;
+
+		if ( FALSE === $title )
+			return $url;
+
+		if ( is_null( $title ) )
+			$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+
+		return HTML::tag( 'a', [
+			'href'  => $url,
+			'class' => [ '-term', '-term-link' ],
+			'data'  => [
+				'term_id'  => $term->term_id,
+				'taxonomy' => $term->taxonomy,
+			],
+		], $title );
+	}
+
+	/**
 	 * Checks if a term exists and return term id only.
 	 *
 	 * @source `term_exists()`

@@ -178,12 +178,10 @@ class Taxonomy extends Core\Base
 		return $query->query( $args );
 	}
 
+	// DEPRECATED: use `Term::taxonomy()`
 	public static function getTermTaxonomy( $term_or_id, $fallback = FALSE )
 	{
-		if ( $object = self::getTerm( $term_or_id ) )
-			return $object->taxonomy;
-
-		return $fallback;
+		return Term::taxonomy( $term_or_id ) ?: $fallback;
 	}
 
 	// DEPRECATED: use `Term::get()`
@@ -201,10 +199,7 @@ class Taxonomy extends Core\Base
 		$list = [];
 
 		foreach ( $terms as $term )
-			$list[] = $before.Core\HTML::tag( 'a', [
-				'href'  => get_term_link( $term, $taxonomy ),
-				'class' => '-term',
-			], sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) ).$after;
+			$list[] = $before.Term::htmlLink( $term ).$after;
 
 		return apply_filters( 'term_links-'.$taxonomy, $list );
 	}

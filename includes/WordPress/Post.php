@@ -31,6 +31,22 @@ class Post extends Core\Base
 	}
 
 	/**
+	 * Retrieves post type given a post ID or post object.
+	 *
+	 * @source `get_post_type()`
+	 *
+	 * @param  null|int|object $post
+	 * @return string $posttype
+	 */
+	public static function type( $post = NULL )
+	{
+		if ( $post = self::get( $post ) )
+			return $post->post_type;
+
+		return FALSE;
+	}
+
+	/**
 	 * Determines whether a post is publicly viewable.
 	 *
 	 * @source `is_post_publicly_viewable()` @since WP5.7.0
@@ -54,11 +70,14 @@ class Post extends Core\Base
 	 * @source https://make.wordpress.org/core/2023/03/06/get_page_by_title-deprecated/
 	 *
 	 * @param  string $title
-	 * @param  string $posttype
-	 * @return mixed $posts
+	 * @param  string|array $posttype
+	 * @return array $posts
 	 */
-	public static function getIDsByTitle( $title, $posttype = 'post', $fields = 'ids' )
+	public static function getByTitle( $title, $posttype = 'any', $fields = 'ids' )
 	{
+		if ( ! $title = trim( $title ) )
+			return [];
+
 		$args = [
 			'title'          => $title,
 			'fields'         => $fields,
