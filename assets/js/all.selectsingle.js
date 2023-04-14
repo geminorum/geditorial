@@ -71,6 +71,9 @@
           headers: {
             'X-WP-Nonce': plugin._restNonce
           },
+          // beforeSend: function (request) {
+          //   request.setRequestHeader('X-WP-Nonce', plugin._restNonce);
+          // },
           delay: 500,
           cache: true,
           data: function (params) {
@@ -95,21 +98,18 @@
     $(s.select).each(function () {
       app.init($(this));
     });
-	
-	// $( document.body ).on( "focus", ".ptitle,select",
-		// function ( ev ) {
-			// if ( ev.target.nodeName === "SELECT" ) {
-				// // Fire for this element only
-				// $( this ).select2({ width: "element" });
-			// } else {
-				// // Fire again, but only for selects that haven't yet been select2'd
-				// $( "select:visible" ).not( ".select2-offscreen" ).select2({
-					// width: "element"
-				// });
-			// }
-		// }
-	// );
-	
+
+    // $(document.body).on('focus', '.ptitle,select',
+    //   function (event) {
+    //     if (event.target.nodeName === 'SELECT') {
+    //       // fire for this element only
+    //       $(this).select2({ width: 'element' });
+    //     } else {
+    //       // fire again, but only for selects that haven't yet been select2'd
+    //       $('select:visible').not('.select2-offscreen').select2({ width: 'element' });
+    //     }
+    //   }
+    // );
 
     $(document).trigger('gEditorialReady', [module, app]);
   });
