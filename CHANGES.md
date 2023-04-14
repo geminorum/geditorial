@@ -1,3 +1,66 @@
+### 3.25.0
+* main/helper: action hook for editor status info
+* main/helper: description field label for taxonomies
+* main/helper: fallback for featured string for post-type labels
+* main/helper: get posttype/taxonomy labels with fallbacks
+* main/helper: label key for post-type author/excerpt renamed
+* main/helper: lookup isbn moved up
+* main/helper: metabox title on object labels
+* main/helper: method to set audit terms
+* main/helper: wordcount revised
+* main/info: :new: main
+* main/info: moved lookup helpers
+* main/listtable: better checks for query vars
+* main/metabox: better select single terms
+* main/metabox: passing field empty for taxonomy/posttypes
+* main/metabox: render field input general
+* main/metabox: support for non hierarchical single terms
+* main/module: auto-hook help tab default terms
+* main/module: auto-hook register default terms
+* main/module: column title from object labels
+* main/module: correct columns on adding tags via ajax
+* main/module: default callback for meta-box checklist restricted terms
+* main/module: default roles revised
+* main/module: fallback for tweaks column icon title
+* main/module: get meta-box title for taxonomy revised
+* main/module: override archive content via settings
+* main/module: post-types parents internal api
+* main/module: prep meta row revised
+* main/module: proper check for accessing meta fields
+* main/module: restrict by taxonomy on paired
+* main/module: unified prop for current queried
+* main/plugin: module access prop
+* module/action: moved edit form after title hook
+* module/assigned: :new: module
+* module/audit: correct role checks for restrict/widget
+* module/audit: global helper for taxonomy check
+* module/audit: menu moved under options
+* module/badges: :new: module
+* module/educated: :new: module
+* module/importer: avoid replacing raw data on each import
+* module/importer: passing associative array on raw data
+* module/importer: store prepared data for each post
+* module/licensed: :new: module
+* module/lingo: renamed from regional
+* module/meta: :warning: nonce field with correct action
+* module/meta: support for isbn field type
+* module/meta: support for user field type
+* module/organization: support for sub term short-code
+* module/ortho: support for phone/isbn input
+* module/overwrite: support post/bulk messages
+* module/regional: custom capabilities based on roles
+* module/suited: :new: module
+* module/symposium: custom archives support
+* module/terms: :new: support for plural
+* module/terms: :warning: regression on quick edit for contact/barcode
+* module/terms: dropped redundant strings on column titles
+* module/terms: support for viewable field
+* module/workflow: apply viewable meta on filters
+* module/wysiwyg: :new: module
+* service/paired: store paired posttype on taxonomy args
+* service/select-single: support for user queries
+* service/select-single: using rest nonce to auth
+
 ### 3.24.0
 * assets/dev: new module template
 * main/datetime: prep date string for input/display
