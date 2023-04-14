@@ -254,6 +254,43 @@ class Overwrite extends gEditorial\Module
 		return $translation;
 	}
 
+	public function current_screen( $screen )
+	{
+		if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( 'post' === $screen->base ) {
+
+				add_filter( 'post_updated_messages', function( $messages ) use ( $screen ) {
+
+					if ( ! $posttype = PostType::object( $screen->post_type ) )
+						return $messages;
+
+					return array_merge( $messages, [
+						$posttype->name => Helper::generatePostTypeMessages( [
+							'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_plural', $posttype->labels->name ),
+							'singular' => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_singular', $posttype->labels->singular_name ),
+						], $posttype->name ),
+					] );
+				}, 12 );
+
+			} else if ( 'edit' === $screen->base ) {
+
+				add_filter( 'bulk_post_updated_messages', function( $messages, $counts ) use ( $screen ) {
+
+					if ( ! $posttype = PostType::object( $screen->post_type ) )
+						return $messages;
+
+					return array_merge( $messages, [
+						$posttype->name => Helper::generateBulkPostTypeMessages( [
+							'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_plural', $posttype->labels->name ),
+							'singular' => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_singular', $posttype->labels->singular_name ),
+						], $counts, $posttype->name ),
+					] );
+				}, 12, 2 );
+			}
+		}
+	}
+
 	private function _overwrite_posttype_labels()
 	{
 		foreach ( $this->posttypes() as $posttype )
