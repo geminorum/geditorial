@@ -12,7 +12,6 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\Third;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Post;
@@ -192,7 +191,7 @@ class Helper extends Main
 
 	public static function prepContact( $value, $title = NULL )
 	{
-		if ( is_email( $value ) )
+		if ( Core\Email::is( $value ) )
 			$prepared = HTML::mailto( $value, $title );
 
 		else if ( URL::isValid( $value ) )

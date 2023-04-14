@@ -108,8 +108,11 @@ class Datetime extends Main
 
 	public static function humanTimeAgo( $from, $to = '' )
 	{
-		/* translators: %s: time string */
-		return sprintf( _x( '%s ago', 'Datetime: Human Time Ago', 'geditorial' ), human_time_diff( $from, $to ) );
+		return sprintf(
+			/* translators: %s: time string */
+			_x( '%s ago', 'Datetime: Human Time Ago', 'geditorial' ),
+			human_time_diff( $from, $to )
+		);
 	}
 
 	public static function humanTimeDiffRound( $local, $round = NULL, $format = NULL, $now = NULL )

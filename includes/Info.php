@@ -47,7 +47,10 @@ class Info extends WordPress\Main
 	// OLD: `infoP2P()`
 	public static function renderConnectedP2P()
 	{
-		/* translators: %s: code placeholder */
-		return sprintf( _x( 'Connected via %s', 'Info: P2P', 'geditorial' ), '<code>P2P</code>' );
+		return sprintf(
+			/* translators: %s: code placeholder */
+			_x( 'Connected via %s', 'Info: P2P', 'geditorial' ),
+			'<code>P2P</code>'
+		);
 	}
 }

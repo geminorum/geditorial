@@ -6562,7 +6562,11 @@ class Module extends Base
 	// DEFAULT CALLBACK
 	protected function tool_box_title()
 	{
-		HTML::h2( sprintf( _x( 'Editorial: %s', 'Module', 'geditorial' ), $this->module->title ), 'title' );
+		HTML::h2( sprintf(
+			/* translators: %s: module title */
+			_x( 'Editorial: %s', 'Module', 'geditorial' ),
+			$this->module->title
+		), 'title' );
 	}
 
 	// TODO: customize column position/sorting
@@ -6836,7 +6840,7 @@ class Module extends Base
 	{
 		$url = $this->get_imports_page_url();
 
-		echo $this->wrap_open( 'wrap' ); // // NOTE: needs `wrap` class for admin styles
+		echo $this->wrap_open( 'wrap' ); // NOTE: needs `wrap` class for admin styles
 
 			HTML::h1( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ) );
 			HTML::desc( sprintf( $this->get_string( 'redirect', 'wp_importer', 'misc', gEditorial\Plugin::moment( FALSE ) ), $url ) );

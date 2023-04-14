@@ -3,16 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\L10n;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Alphabet extends gEditorial\Module
 {
@@ -77,7 +72,7 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_posts( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'            => L10n::locale( TRUE ),
+			'locale'            => Core\L10n::locale( TRUE ),
 			'alternative'       => 'en_US', // FALSE to disable
 			'post_type'         => $this->posttypes(),
 			'comments'          => FALSE,
@@ -100,7 +95,7 @@ class Alphabet extends gEditorial\Module
 
 		$key = $this->hash( 'posts', $args );
 
-		if ( WordPress::isFlush() )
+		if ( Core\WordPress::isFlush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
@@ -125,11 +120,11 @@ class Alphabet extends gEditorial\Module
 			$current = $html = $list = '';
 			$actives = [];
 
-			$alphabet = L10n::getAlphabet( $args['locale'] );
-			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
+			$alphabet = Core\L10n::getAlphabet( $args['locale'] );
+			$keys     = array_flip( Core\Arraay::column( $alphabet, 'letter', 'key' ) );
 
-			$alt      = $args['alternative'] ? L10n::getAlphabet( $args['alternative'] ) : FALSE;
-			$alt_keys = $alt ? array_flip( Arraay::column( $alt, 'letter', 'key' ) ) : [];
+			$alt      = $args['alternative'] ? Core\L10n::getAlphabet( $args['alternative'] ) : FALSE;
+			$alt_keys = $alt ? array_flip( Core\Arraay::column( $alt, 'letter', 'key' ) ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
 				$args['heading_cb'] = FALSE;
@@ -139,7 +134,7 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $posts as $post ) {
 
-				$letter = L10n::firstLetter( $post->post_title, $alphabet, $alt );
+				$letter = Core\L10n::firstLetter( $post->post_title, $alphabet, $alt );
 
 				if ( $current != $letter ) {
 
@@ -173,13 +168,13 @@ class Alphabet extends gEditorial\Module
 
 				} else {
 
-					$title = PostType::getPostTitle( $post );
-					$link  = WordPress::getPostShortLink( $post->ID );
+					$title = WordPress\PostType::getPostTitle( $post );
+					$link  = Core\WordPress::getPostShortLink( $post->ID );
 
-					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$args['term_tag'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
 
 					if ( $args['comments'] && $post->comment_count )
-						$html.= '<span class="-comments-count">'.Strings::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
+						$html.= '<span class="-comments-count">'.WordPress\Strings::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
 
 					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
 
@@ -205,7 +200,7 @@ class Alphabet extends gEditorial\Module
 				.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
 
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_posts' ), $args );
-			$html = Text::minifyHTML( $html );
+			$html = Core\Text::minifyHTML( $html );
 
 			set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
 		}
@@ -216,7 +211,7 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_terms( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'         => L10n::locale( TRUE ),
+			'locale'         => Core\L10n::locale( TRUE ),
 			'alternative'    => 'en_US', // FALSE to disable
 			'taxonomy'       => $this->taxonomies(),
 			'description'    => FALSE,
@@ -239,7 +234,7 @@ class Alphabet extends gEditorial\Module
 
 		$key = $this->hash( 'terms', $args );
 
-		if ( WordPress::isFlush() )
+		if ( Core\WordPress::isFlush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
@@ -259,11 +254,11 @@ class Alphabet extends gEditorial\Module
 			$current = $html = $list = '';
 			$actives = [];
 
-			$alphabet = L10n::getAlphabet( $args['locale'] );
-			$keys     = array_flip( Arraay::column( $alphabet, 'letter', 'key' ) );
+			$alphabet = Core\L10n::getAlphabet( $args['locale'] );
+			$keys     = array_flip( Core\Arraay::column( $alphabet, 'letter', 'key' ) );
 
-			$alt      = $args['alternative'] ? L10n::getAlphabet( $args['alternative'] ) : FALSE;
-			$alt_keys = $alt ? array_flip( Arraay::column( $alt, 'letter', 'key' ) ) : [];
+			$alt      = $args['alternative'] ? Core\L10n::getAlphabet( $args['alternative'] ) : FALSE;
+			$alt_keys = $alt ? array_flip( Core\Arraay::column( $alt, 'letter', 'key' ) ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
 				$args['heading_cb'] = FALSE;
@@ -273,7 +268,7 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $terms as $term ) {
 
-				$letter = L10n::firstLetter( $term->name, $alphabet, $alt );
+				$letter = Core\L10n::firstLetter( $term->name, $alphabet, $alt );
 
 				if ( $current != $letter ) {
 
@@ -308,13 +303,13 @@ class Alphabet extends gEditorial\Module
 				} else {
 
 					$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-					// $title = Text::nameFamilyLast( $title ); // no need on front
+					// $title = Core\Text::nameFamilyLast( $title ); // no need on front
 					$link  = get_term_link( $term->term_id, $term->taxonomy );
 
-					$html.= '<'.$args['term_tag'].'><span class="-title">'.HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$args['term_tag'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
 
 					if ( $args['count'] && $term->count )
-						$html.= '<span class="-term-count">'.Strings::getCounted( $term->count, $args['count_template'] ).'</span>';
+						$html.= '<span class="-term-count">'.WordPress\Strings::getCounted( $term->count, $args['count_template'] ).'</span>';
 
 					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
 
@@ -340,7 +335,7 @@ class Alphabet extends gEditorial\Module
 				.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
 
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_terms' ), $args );
-			$html = Text::minifyHTML( $html );
+			$html = Core\Text::minifyHTML( $html );
 
 			set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
 		}
@@ -354,15 +349,15 @@ class Alphabet extends gEditorial\Module
 			return '';
 
 		// no actives on this alphabet
-		if ( empty( array_intersect( Arraay::column( $alphabet, 'letter' ), $actives ) ) )
+		if ( empty( array_intersect( Core\Arraay::column( $alphabet, 'letter' ), $actives ) ) )
 			return '';
 
 		$list = [];
 
 		foreach ( $alphabet as $key => $info )
 			$list[] = in_array( $info['letter'], $actives, TRUE )
-				? HTML::scroll( $info['letter'], $info['key'], $info['name'] )
-				: HTML::tag( 'span', $info['letter'] );
+				? Core\HTML::scroll( $info['letter'], $info['key'], $info['name'] )
+				: Core\HTML::tag( 'span', $info['letter'] );
 
 		return '<li>'.implode( '</li><li>', $list ).'</li>';
 	}
