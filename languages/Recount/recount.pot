@@ -13,37 +13,37 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Recount\n"
 "X-Domain: geditorial-recount\n"
 
-#: Recount.php:37
+#: Recount.php:38
 msgctxt "Setting Title"
 msgid "Thrift Mode"
 msgstr ""
 
-#: Recount.php:38
+#: Recount.php:39
 msgctxt "Setting Description"
 msgid "Delays counting till needed!"
 msgstr ""
 
-#: Recount.php:42
+#: Recount.php:43
 msgctxt "Setting Title"
 msgid "Count on Display"
 msgstr ""
 
-#: Recount.php:43
+#: Recount.php:44
 msgctxt "Setting Description"
 msgid "Tries to re-count posts on empty data display."
 msgstr ""
 
-#: Recount.php:163
+#: Recount.php:164
 msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:199
+#: Recount.php:200
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:205
+#: Recount.php:206
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr ""

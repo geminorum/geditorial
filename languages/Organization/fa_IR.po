@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Organization\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-02 15:20+0330\n"
+"PO-Revision-Date: 2023-04-15 00:28+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,133 +15,139 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Organization\n"
 "X-Domain: geditorial-organization\n"
 
-#: Organization.php:32
+#: Organization.php:34
 msgctxt "Settings"
 msgid "Sub-departments"
 msgstr "زیردپارتمان"
 
-#: Organization.php:33
+#: Organization.php:35
 msgctxt "Settings"
 msgid "Substitute taxonomy for the departments and supported post-types."
 msgstr ""
 "رده‌بندی زیرمجموعه را برای دپارتمان‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Organization.php:49
+#: Organization.php:54
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Organization.php:50
+#: Organization.php:55
 msgctxt "Settings"
 msgid "Redirects department archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی دپارتمان‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
 "بگذارید."
 
-#: Organization.php:96 Organization.php:97
+#: Organization.php:105 Organization.php:106
 msgid "Department"
 msgid_plural "Departments"
 msgstr[0] "دپارتمان‌ها"
 msgstr[1] "دپارتمان"
 
-#: Organization.php:98
+#: Organization.php:107
 msgid "Department Category"
 msgid_plural "Department Categories"
 msgstr[0] "دسته‌های دپارتمان"
 msgstr[1] "دسته دپارتمان"
 
-#: Organization.php:99
+#: Organization.php:108
 msgid "Sub-department"
 msgid_plural "Sub-departments"
 msgstr[0] "زیردپارتمان‌ها"
 msgstr[1] "زیردپارتمان"
 
-#: Organization.php:100
+#: Organization.php:109
 msgid "Department Type"
 msgid_plural "Department Types"
 msgstr[0] "انواع دپارتمان"
 msgstr[1] "نوع دپارتمان"
 
-#: Organization.php:101
+#: Organization.php:110
 msgid "Department Status"
 msgid_plural "Department Statuses"
 msgstr[0] "وضعیت‌های دپارتمان"
 msgstr[1] "وضعیت دپارتمان"
 
-#: Organization.php:105
+#: Organization.php:114
+msgctxt "Label: Featured Image"
+msgid "Department Badge"
+msgstr "نشان دپارتمان"
+
+#: Organization.php:115
+msgctxt "Label: MetaBox Title"
+msgid "The Department"
+msgstr "این دپارتمان"
+
+#: Organization.php:118
+msgctxt "Label: MetaBox Title"
+msgid "In This Department"
+msgstr "در این دپارتمان"
+
+#: Organization.php:121
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Organization.php:108
+#: Organization.php:124
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Organization.php:111
+#: Organization.php:127
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: Organization.php:121
-msgctxt "Posttype Featured"
-msgid "Department Badge"
-msgstr "نشان دپارتمان"
-
-#: Organization.php:124
-msgctxt "MetaBox Title"
-msgid "Department Types"
-msgstr "نوع دپارتمان"
-
-#: Organization.php:125
-msgctxt "Column Title"
-msgid "Department Types"
-msgstr "انواع دپارتمان"
-
-#: Organization.php:127
-msgctxt "Column Title"
-msgid "Departments"
-msgstr "دپارتمان‌ها"
-
-#: Organization.php:128
-msgctxt "MetaBox Title"
-msgid "Organization"
-msgstr "سازمان"
-
-#: Organization.php:133
+#: Organization.php:137
 msgctxt "Default Term"
 msgid "Working"
 msgstr "فعال"
 
-#: Organization.php:134
+#: Organization.php:138
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr "غیرفعال"
 
-#: Organization.php:135
+#: Organization.php:139
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr "منحل‌شده"
 
-#: Organization.php:136
+#: Organization.php:140
 msgctxt "Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Organization.php:137
+#: Organization.php:141
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "برای بازبینی"
 
-#: Organization.php:158
+#: Organization.php:162
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr "شماره سازمانی"
 
-#: Organization.php:159
+#: Organization.php:163
 msgctxt "Field Description"
 msgid "Unique Organization Number"
 msgstr "شماره سازمانی یکتا"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Department Types"
+#~ msgstr "نوع دپارتمان"
+
+#~ msgctxt "Column Title"
+#~ msgid "Department Types"
+#~ msgstr "انواع دپارتمان"
+
+#~ msgctxt "Column Title"
+#~ msgid "Departments"
+#~ msgstr "دپارتمان‌ها"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Organization"
+#~ msgstr "سازمان"
 
 #~ msgctxt "Menu Title"
 #~ msgid "Types"

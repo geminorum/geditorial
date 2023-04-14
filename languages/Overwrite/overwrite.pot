@@ -14,123 +14,123 @@ msgstr ""
 "X-Domain: geditorial-overwrite\n"
 
 #. translators: %s: supported object label
-#: Overwrite.php:38
-#: Overwrite.php:81
+#: Overwrite.php:39
+#: Overwrite.php:82
 msgctxt "Setting Title"
 msgid "Plural Name for %s"
 msgstr ""
 
-#: Overwrite.php:39
+#: Overwrite.php:40
 msgctxt "Setting Description"
 msgid "Used as plural name on the posttype labels. Must be in title case."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Overwrite.php:47
-#: Overwrite.php:90
+#: Overwrite.php:48
+#: Overwrite.php:91
 msgctxt "Setting Title"
 msgid "Singular Name for %s"
 msgstr ""
 
-#: Overwrite.php:48
+#: Overwrite.php:49
 msgctxt "Setting Description"
 msgid "Used as singular name on the posttype labels. Must be in title case."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Overwrite.php:56
+#: Overwrite.php:57
 msgctxt "Setting Title"
 msgid "Featured Image Title for %s"
 msgstr ""
 
-#: Overwrite.php:57
+#: Overwrite.php:58
 msgctxt "Setting Description"
 msgid "Used as featured image title on the posttype labels. Must be in title case."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Overwrite.php:65
-#: Overwrite.php:99
+#: Overwrite.php:66
+#: Overwrite.php:100
 msgctxt "Setting Title"
 msgid "Menu Name for %s"
 msgstr ""
 
-#: Overwrite.php:66
+#: Overwrite.php:67
 msgctxt "Setting Description"
 msgid "Used as menu name title on the posttype labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:82
+#: Overwrite.php:83
 msgctxt "Setting Description"
 msgid "Used as plural name on the taxonomy labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:91
+#: Overwrite.php:92
 msgctxt "Setting Description"
 msgid "Used as singular name on the taxonomy labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:100
+#: Overwrite.php:101
 msgctxt "Setting Description"
 msgid "Used as menu name title on the taxonomy labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:109
+#: Overwrite.php:110
 msgctxt "Setting Title"
 msgid "Target"
 msgstr ""
 
-#: Overwrite.php:110
+#: Overwrite.php:111
 msgctxt "Setting Description"
 msgid "Replaces with the translation string on the filter. Skips if empty."
 msgstr ""
 
-#: Overwrite.php:115
+#: Overwrite.php:116
 msgctxt "Setting Title"
 msgid "Translation"
 msgstr ""
 
-#: Overwrite.php:116
+#: Overwrite.php:117
 msgctxt "Setting Description"
 msgid "Checks against the translation string on the filter. Leave empty to disable checks."
 msgstr ""
 
-#: Overwrite.php:121
+#: Overwrite.php:122
 msgctxt "Setting Title"
 msgid "Source"
 msgstr ""
 
-#: Overwrite.php:122
+#: Overwrite.php:123
 msgctxt "Setting Description"
 msgid "Checks against the original string on the filter. Leave empty to disable checks"
 msgstr ""
 
-#: Overwrite.php:128
+#: Overwrite.php:129
 msgctxt "Setting Title"
 msgid "Context"
 msgstr ""
 
-#: Overwrite.php:129
+#: Overwrite.php:130
 msgctxt "Setting Description"
 msgid "Checks against the context of the string on the filter. Leave empty to disable checks"
 msgstr ""
 
-#: Overwrite.php:136
+#: Overwrite.php:137
 msgctxt "Setting Title"
 msgid "Domain"
 msgstr ""
 
-#: Overwrite.php:137
+#: Overwrite.php:138
 msgctxt "Setting Description"
 msgid "Checks against the domain of the string on the filter. Leave empty to disable checks"
 msgstr ""
 
-#: Overwrite.php:148
+#: Overwrite.php:149
 msgctxt "Setting Title"
 msgid "Back-end Strings"
 msgstr ""
 
-#: Overwrite.php:157
+#: Overwrite.php:158
 msgctxt "Setting Title"
 msgid "Front-end Strings"
 msgstr ""

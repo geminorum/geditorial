@@ -13,165 +13,165 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 "X-Domain: geditorial-attachments\n"
 
-#: Attachments.php:46
+#: Attachments.php:41
 msgctxt "Help Tab Title"
 msgid "Shortcodes"
 msgstr ""
 
-#: Attachments.php:73
+#: Attachments.php:68
 msgctxt "Setting Title"
 msgid "Rewrite Permalinks"
 msgstr ""
 
-#: Attachments.php:74
+#: Attachments.php:69
 msgctxt "Setting Description"
 msgid "Changes default permalinks into attachment id."
 msgstr ""
 
-#: Attachments.php:79
+#: Attachments.php:74
 msgctxt "Setting Title"
 msgid "Prefix Permalinks"
 msgstr ""
 
-#: Attachments.php:80
+#: Attachments.php:75
 msgctxt "Setting Description"
 msgid "Adds to the permalink of attachments, before id."
 msgstr ""
 
-#: Attachments.php:87
+#: Attachments.php:82
 msgctxt "Setting Title"
 msgid "Fallback Alt to Title"
 msgstr ""
 
-#: Attachments.php:88
+#: Attachments.php:83
 msgctxt "Setting Description"
 msgid "Tries to fill empty alt attribute with attachment title on images."
 msgstr ""
 
-#: Attachments.php:94
+#: Attachments.php:89
 msgctxt "Setting Title"
 msgid "Attachment Count"
 msgstr ""
 
-#: Attachments.php:95
+#: Attachments.php:90
 msgctxt "Setting Description"
 msgid "Displays attachment summary of the post."
 msgstr ""
 
-#: Attachments.php:97
+#: Attachments.php:92
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
 msgstr ""
 
-#: Attachments.php:100
+#: Attachments.php:95
 msgctxt "Setting Title"
 msgid "Restrict Library"
 msgstr ""
 
-#: Attachments.php:101
+#: Attachments.php:96
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr ""
 
-#: Attachments.php:221
+#: Attachments.php:216
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr ""
 
-#: Attachments.php:271
+#: Attachments.php:266
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachments count
-#: Attachments.php:274
+#: Attachments.php:269
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Attachments.php:279
+#: Attachments.php:274
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr ""
 
-#: Attachments.php:314
+#: Attachments.php:309
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachment parent title
-#: Attachments.php:316
+#: Attachments.php:311
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr ""
 
-#: Attachments.php:409
+#: Attachments.php:404
 msgctxt "Table Action"
 msgid "Delete Permanently"
 msgstr ""
 
-#: Attachments.php:410
+#: Attachments.php:405
 msgctxt "Table Action"
 msgid "Empty Meta-data"
 msgstr ""
 
-#: Attachments.php:411
+#: Attachments.php:406
 msgctxt "Table Action"
 msgid "Remove Thumbnails"
 msgstr ""
 
-#: Attachments.php:428
+#: Attachments.php:423
 msgctxt "Table Column"
 msgid "Custom"
 msgstr ""
 
-#: Attachments.php:440
+#: Attachments.php:435
 msgctxt "Table Column"
 msgid "Search"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:447
+#: Attachments.php:442
 msgctxt "Search Result Prefix"
 msgid "[Parent]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:452
+#: Attachments.php:447
 msgctxt "Search Result Prefix"
 msgid "[Thumb]: %s"
 msgstr ""
 
 #. translators: %s: linked term title
-#: Attachments.php:457
+#: Attachments.php:452
 msgctxt "Search Result Prefix"
 msgid "[Term]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:462
+#: Attachments.php:457
 msgctxt "Search Result Prefix"
 msgid "[Content]: %s"
 msgstr ""
 
-#: Attachments.php:469
+#: Attachments.php:464
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr ""
 
-#: Attachments.php:492
+#: Attachments.php:487
 msgctxt "Table Column"
 msgid "Meta"
 msgstr ""
 
-#: Attachments.php:513
+#: Attachments.php:508
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr ""
 
-#: Attachments.php:514
+#: Attachments.php:509
 msgctxt "Message"
 msgid "No attachments found."
 msgstr ""

@@ -13,149 +13,149 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Assigned\n"
 "X-Domain: geditorial-assigned\n"
 
-#: Assigned.php:30
+#: Assigned.php:33
 msgctxt "Setting"
 msgid "There are no assignments available!"
 msgstr ""
 
-#: Assigned.php:42
+#: Assigned.php:44
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr ""
 
-#: Assigned.php:43
+#: Assigned.php:45
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Assignments."
 msgstr ""
 
-#: Assigned.php:49
+#: Assigned.php:51
 msgctxt "Setting Title"
 msgid "Assign Roles"
 msgstr ""
 
-#: Assigned.php:50
+#: Assigned.php:52
 msgctxt "Setting Description"
 msgid "Roles that can assign Assignments."
 msgstr ""
 
-#: Assigned.php:56
+#: Assigned.php:58
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: Assigned.php:57
+#: Assigned.php:59
 msgctxt "Setting Description"
 msgid "Roles that can see Assignments Reports."
 msgstr ""
 
-#: Assigned.php:63
+#: Assigned.php:65
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr ""
 
-#: Assigned.php:64
+#: Assigned.php:66
 msgctxt "Setting Description"
 msgid "Roles that check for Assignments visibility."
 msgstr ""
 
-#: Assigned.php:70
+#: Assigned.php:72
 msgctxt "Setting Title"
 msgid "Restricted Terms"
 msgstr ""
 
-#: Assigned.php:71
+#: Assigned.php:73
 msgctxt "Setting Description"
 msgid "Handles visibility of each term based on meta values."
 msgstr ""
 
-#: Assigned.php:74
+#: Assigned.php:76
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr ""
 
-#: Assigned.php:75
+#: Assigned.php:77
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr ""
 
-#: Assigned.php:81
+#: Assigned.php:83
 msgctxt "Setting Title"
 msgid "Locking Terms"
 msgstr ""
 
-#: Assigned.php:82
+#: Assigned.php:84
 msgctxt "Setting Description"
 msgid "Selected terms will lock editing the post to assignment managers."
 msgstr ""
 
-#: Assigned.php:117
+#: Assigned.php:119
 msgid "Assignment"
 msgid_plural "Assignments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Assigned.php:121
+#: Assigned.php:123
 msgctxt "Label: Menu Name"
 msgid "Content Assignments"
 msgstr ""
 
-#: Assigned.php:122
+#: Assigned.php:124
 msgctxt "Label: Show Option All"
 msgid "Assignment"
 msgstr ""
 
-#: Assigned.php:123
+#: Assigned.php:125
 msgctxt "Label: Show Option No Terms"
 msgid "(Unassigned)"
 msgstr ""
 
-#: Assigned.php:132
+#: Assigned.php:134
 msgctxt "Dashboard Widget Title"
 msgid "Your Assignments Summary"
 msgstr ""
 
-#: Assigned.php:133
+#: Assigned.php:135
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Assignments Summary"
 msgstr ""
 
-#: Assigned.php:138
+#: Assigned.php:140
 msgctxt "Default Term"
 msgid "Research"
 msgstr ""
 
-#: Assigned.php:139
+#: Assigned.php:141
 msgctxt "Default Term"
 msgid "Planning"
 msgstr ""
 
-#: Assigned.php:140
+#: Assigned.php:142
 msgctxt "Default Term"
 msgid "Execution"
 msgstr ""
 
-#: Assigned.php:141
+#: Assigned.php:143
 msgctxt "Default Term"
 msgid "Reporting"
 msgstr ""
 
-#: Assigned.php:153
-#: Assigned.php:158
+#: Assigned.php:155
+#: Assigned.php:160
 msgctxt "Field Title"
 msgid "Assigned To"
 msgstr ""
 
-#: Assigned.php:154
+#: Assigned.php:156
 msgctxt "Field Description"
 msgid "Determines the user responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:159
+#: Assigned.php:161
 msgctxt "Field Description"
 msgid "Determines the individual responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:164
+#: Assigned.php:166
 msgctxt "Field Title"
 msgid "Due Date"
 msgstr ""

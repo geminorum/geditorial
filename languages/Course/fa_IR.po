@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Course\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-18 19:59+0330\n"
+"PO-Revision-Date: 2023-04-06 13:46+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,220 +15,211 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
 "X-Domain: geditorial-course\n"
 
-#: Course.php:36
+#: Course.php:37
 msgctxt "Settings"
 msgid "Course Topics"
 msgstr "جستارهای دوره"
 
-#: Course.php:37
+#: Course.php:38
 msgctxt "Settings"
 msgid "Topic taxonomy for the courses and supported post-types."
 msgstr "رده‌بندی جستارها را برای دوره‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Course.php:53
+#: Course.php:54
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Course.php:54
+#: Course.php:55
 msgctxt "Settings"
 msgid "Redirects course and lesson archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی دوره‌ها و درس‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
 "بگذارید."
 
-#: Course.php:60
+#: Course.php:61
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr "بازگردانی بازه‌ها"
 
-#: Course.php:61
+#: Course.php:62
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی همه بازه‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌سازی خالی بگذارید."
 
-#: Course.php:123 Course.php:124
+#: Course.php:125 Course.php:126
 msgid "Course"
 msgid_plural "Courses"
 msgstr[0] "دوره‌ها"
 msgstr[1] "دوره"
 
-#: Course.php:125
+#: Course.php:127
 msgid "Course Category"
 msgid_plural "Course Categories"
 msgstr[0] "دسته‌های دوره"
 msgstr[1] "دسته دوره"
 
-#: Course.php:126
+#: Course.php:128
 msgid "Course Span"
 msgid_plural "Course Spans"
 msgstr[0] "بازه‌های دوره"
 msgstr[1] "بازه دوره"
 
-#: Course.php:127
+#: Course.php:129
 msgid "Course Topic"
 msgid_plural "Course Topics"
 msgstr[0] "جستارهای دوره"
 msgstr[1] "جستار دوره"
 
-#: Course.php:128
+#: Course.php:130
 msgid "Lesson"
 msgid_plural "Lessons"
 msgstr[0] "درس‌ها"
 msgstr[1] "درس"
 
-#: Course.php:129
+#: Course.php:131
 msgid "Lesson Format"
 msgid_plural "Lesson Formats"
 msgstr[0] "قالب‌های درس"
 msgstr[1] "قالب درس"
 
-#: Course.php:130
+#: Course.php:132
 msgid "Lesson Status"
 msgid_plural "Lesson Statuses"
 msgstr[0] "وضعیت‌های درس"
 msgstr[1] "وضعیت درس"
 
-#: Course.php:139
-msgctxt "Posttype Featured"
+#: Course.php:136
+msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Course.php:140
+#: Course.php:146
 msgctxt "MetaBox Title"
-msgid "Metadata"
-msgstr "فراداده"
+msgid "The Course"
+msgstr "دوره"
 
-#: Course.php:141
-msgctxt "Column Title"
-msgid "Lessons"
-msgstr "درس‌ها"
-
-#: Course.php:142
-msgctxt "Select Option None"
-msgid "&ndash; Select Course &ndash;"
-msgstr "&ndash; انتخاب دوره &ndash;"
-
-#: Course.php:145
+#: Course.php:149
 msgctxt "MetaBox Title"
 msgid "In This Course"
 msgstr "در این دوره"
 
-#: Course.php:148
-msgctxt "Column Title"
-msgid "Course Categories"
-msgstr "دسته‌های دوره"
-
-#: Course.php:151
-msgctxt "MetaBox Title"
-msgid "Spans"
-msgstr "بازه‌ها"
-
 #: Course.php:152
-msgctxt "Column Title"
-msgid "Course Spans"
-msgstr "بازه‌های دوره"
-
-#: Course.php:155
-msgctxt "MetaBox Title"
-msgid "Topics"
-msgstr "جستارها"
-
-#: Course.php:156
-msgctxt "Column Title"
-msgid "Course Topics"
-msgstr "جستارهای دوره"
-
-#: Course.php:157
-msgctxt "Select Option None"
-msgid "&ndash; Select Topic &ndash;"
-msgstr "&ndash; انتخاب جستار &ndash;"
-
-#: Course.php:160
 msgctxt "MetaBox Title"
 msgid "Course"
 msgstr "دوره"
 
-#: Course.php:163
-msgctxt "MetaBox Title"
-msgid "Lesson Format"
-msgstr "قالب درس"
+#: Course.php:158
+msgctxt "Column Title"
+msgid "Lessons"
+msgstr "درس‌ها"
 
 #: Course.php:164
-msgctxt "Column Title"
-msgid "Lesson Format"
-msgstr "قالب درس"
-
-#: Course.php:167
-msgctxt "MetaBox Title"
-msgid "Lesson Statuses"
-msgstr "وضعیت‌های درس"
-
-#: Course.php:168
-msgctxt "Column Title"
-msgid "Lesson Statuses"
-msgstr "وضعیت درس"
-
-#: Course.php:170
-msgctxt "MetaBox Title"
-msgid "Courses"
-msgstr "دوره‌ها"
-
-#: Course.php:171
-msgctxt "Column Title"
-msgid "Courses"
-msgstr "دوره‌ها"
-
-#: Course.php:176
 msgctxt "Default Term"
 msgid "Ongoing"
 msgstr "در حال اجرا"
 
-#: Course.php:177
+#: Course.php:165
 msgctxt "Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Course.php:178
+#: Course.php:166
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "برای بازبینی"
 
-#: Course.php:179
+#: Course.php:167
 msgctxt "Default Term"
 msgid "Cancelled"
 msgstr "لغو شده"
 
-#: Course.php:191 Course.php:203
+#: Course.php:179 Course.php:192
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr "زیرعنوان"
 
-#: Course.php:192
+#: Course.php:180
 msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr "زیرعنوان دوره"
 
-#: Course.php:204
+#: Course.php:193
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr "زیرعنوان درس"
 
-#: Course.php:232
+#: Course.php:222
 msgctxt "Button"
 msgid "Install Default Lesson Statuses"
 msgstr "نصب وضعیت‌های درس پیش‌فرض"
 
-#: Course.php:678
+#: Course.php:670
 msgctxt "Header"
 msgid "Course Tools"
 msgstr "ابزارهای دوره"
 
-#: Course.php:707
+#: Course.php:698
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr "درس رهاشده"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Metadata"
+#~ msgstr "فراداده"
+
+#~ msgctxt "Select Option None"
+#~ msgid "&ndash; Select Course &ndash;"
+#~ msgstr "&ndash; انتخاب دوره &ndash;"
+
+#~ msgctxt "Column Title"
+#~ msgid "Course Categories"
+#~ msgstr "دسته‌های دوره"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Spans"
+#~ msgstr "بازه‌ها"
+
+#~ msgctxt "Column Title"
+#~ msgid "Course Spans"
+#~ msgstr "بازه‌های دوره"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Topics"
+#~ msgstr "جستارها"
+
+#~ msgctxt "Column Title"
+#~ msgid "Course Topics"
+#~ msgstr "جستارهای دوره"
+
+#~ msgctxt "Select Option None"
+#~ msgid "&ndash; Select Topic &ndash;"
+#~ msgstr "&ndash; انتخاب جستار &ndash;"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Lesson Format"
+#~ msgstr "قالب درس"
+
+#~ msgctxt "Column Title"
+#~ msgid "Lesson Format"
+#~ msgstr "قالب درس"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Lesson Statuses"
+#~ msgstr "وضعیت‌های درس"
+
+#~ msgctxt "Column Title"
+#~ msgid "Lesson Statuses"
+#~ msgstr "وضعیت درس"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Courses"
+#~ msgstr "دوره‌ها"
+
+#~ msgctxt "Column Title"
+#~ msgid "Courses"
+#~ msgstr "دوره‌ها"
 
 #~ msgctxt "Setting"
 #~ msgid "There's no course category available!"

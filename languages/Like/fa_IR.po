@@ -2,102 +2,102 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Like\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-07-17T10:40:35+00:00\n"
-"PO-Revision-Date: 2020-07-17 16:03+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-06 14:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
-"X-Domain: geditorial-like\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Domain: geditorial-like\n"
 
-#: Like.php:43
+#: Like.php:42
 msgctxt "Setting Title"
 msgid "Display Avatars"
 msgstr "نمایش آواتارها"
 
-#: Like.php:44
+#: Like.php:43
 msgctxt "Setting Description"
 msgid "Displays avatars next to the like button."
 msgstr ""
 
-#: Like.php:49
+#: Like.php:48
 msgctxt "Setting Title"
 msgid "Max Avatars"
 msgstr "بیشینه آواتارها"
 
-#: Like.php:50
+#: Like.php:49
 msgctxt "Setting Description"
 msgid "Maximum number of avatars to display."
 msgstr ""
 
-#: Like.php:57
+#: Like.php:56
 msgctxt "Setting Title"
 msgid "Like Count"
 msgstr "شمار پسند"
 
-#: Like.php:58
+#: Like.php:57
 msgctxt "Setting Description"
 msgid "Displays likes summary of the post."
 msgstr ""
 
-#: Like.php:65
+#: Like.php:64
 msgctxt "Setting Title"
 msgid "Loading Title"
 msgstr "عنوان بارگیری"
 
-#: Like.php:66 Like.php:73 Like.php:80
+#: Like.php:65 Like.php:72 Like.php:79
 msgctxt "Setting Description"
 msgid "Title attribute of the like button."
 msgstr ""
 
-#: Like.php:67 Like.php:139
+#: Like.php:66 Like.php:147
 msgctxt "Setting Default"
 msgid "Loading &hellip;"
 msgstr "بارگیری &hellip;"
 
-#: Like.php:72
+#: Like.php:71
 msgctxt "Setting Title"
 msgid "Like Title"
 msgstr "عنوان پسند"
 
-#: Like.php:74 Like.php:278
+#: Like.php:73 Like.php:286
 msgctxt "Setting Default"
 msgid "Like"
 msgstr "پسند"
 
-#: Like.php:79
+#: Like.php:78
 msgctxt "Setting Title"
 msgid "Unlike Title"
 msgstr "عنوان ناپسند"
 
-#: Like.php:81 Like.php:276
+#: Like.php:80 Like.php:284
 msgctxt "Setting Default"
 msgid "Unlike"
 msgstr "ناپسند"
 
 #. translators: %s: count placeholder
-#: Like.php:179
+#: Like.php:187
 msgctxt "Adminbar"
 msgid "Like Summary: Users %s"
 msgstr "پسند‌ها: کاربران %s"
 
 #. translators: %s: count placeholder
-#: Like.php:199
+#: Like.php:207
 msgctxt "Adminbar"
 msgid "Like Summary: Guests %s"
 msgstr "پسند‌ها: مهمان‌ها %s"
 
-#: Like.php:432
+#: Like.php:470
 msgctxt "Row Icon Title"
 msgid "Likes"
 msgstr "پسندها"
 
 #. translators: %s: likes count
-#: Like.php:435
+#: Like.php:473
 msgctxt "Noop"
 msgid "%s Like"
 msgid_plural "%s Likes"
@@ -105,7 +105,7 @@ msgstr[0] "%s پسند"
 msgstr[1] "%s پسند"
 
 #. translators: %s: users count
-#: Like.php:443
+#: Like.php:481
 msgctxt "Noop"
 msgid "%s User"
 msgid_plural "%s Users"
@@ -113,44 +113,44 @@ msgstr[0] "%s کاربر"
 msgstr[1] "%s کاربر"
 
 #. translators: %s: guests count
-#: Like.php:447
+#: Like.php:485
 msgctxt "Noop"
 msgid "%s Guest"
 msgid_plural "%s Guests"
 msgstr[0] "%s مهمان"
 msgstr[1] "%s مهمان"
 
-#: Like.php:520
+#: Like.php:558
 msgctxt "Table Action"
 msgid "Sync Counts"
 msgstr "همگام‌سازی شمارها"
 
-#: Like.php:521
+#: Like.php:559
 msgctxt "Table Action"
 msgid "Sync All Counts"
 msgstr "همگام‌سازی همه شمارها"
 
-#: Like.php:534
+#: Like.php:572
 msgctxt "Table Column"
 msgid "Total"
 msgstr "مجموع"
 
-#: Like.php:540
+#: Like.php:578
 msgctxt "Table Column"
 msgid "Guests"
 msgstr "مهمانان"
 
-#: Like.php:547
+#: Like.php:584
 msgctxt "Table Column"
 msgid "Users"
 msgstr "کاربران"
 
-#: Like.php:554
+#: Like.php:590
 msgctxt "Table Column"
 msgid "Avatars"
 msgstr "آواتارها"
 
-#: Like.php:563
+#: Like.php:599
 msgctxt "Header"
 msgid "Overview of Post Likes"
 msgstr "مروری بر پسند‌ها در نوشته‌ها"

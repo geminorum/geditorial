@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Collect\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-26 04:47+0330\n"
+"PO-Revision-Date: 2023-04-07 12:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -67,128 +67,93 @@ msgid_plural "Parts"
 msgstr[0] "پاره‌ها"
 msgstr[1] "پاره"
 
-#: Collect.php:120
-msgctxt "Posttype Featured"
+#: Collect.php:115
+msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Collect.php:121
-msgctxt "Select Option None"
-msgid "&ndash; Select Collection &ndash;"
-msgstr "&ndash; انتخاب گردآورده &ndash;"
-
-#: Collect.php:124
-msgctxt "MetaBox Title"
-msgid "In This Collection"
-msgstr "در این گردآورده"
-
-#: Collect.php:127
-msgctxt "MetaBox Title"
-msgid "Groups"
-msgstr "گروه‌‌ها"
-
-#: Collect.php:128
-msgctxt "Column Title"
-msgid "Collection Groups"
-msgstr "گروه‌های گردآورده"
-
-#: Collect.php:131
-msgctxt "MetaBox Title"
-msgid "Parts"
-msgstr "پاره‌ها"
-
-#: Collect.php:132
-msgctxt "Column Title"
-msgid "Collection Parts"
-msgstr "پاره‌های گردآورده"
-
-#: Collect.php:133
-msgctxt "Select Option None"
-msgid "&ndash; Select Part &ndash;"
-msgstr "&ndash; انتخاب پاره &ndash;"
-
-#: Collect.php:135
-msgctxt "MetaBox Title"
+#: Collect.php:116
+msgctxt "Label: MetaBox Title"
 msgid "The Collection"
 msgstr "گردآورده"
 
-#: Collect.php:136
-msgctxt "Column Title"
-msgid "Collections"
-msgstr "گردآورده‌ها"
+#: Collect.php:119
+msgctxt "Label: MetaBox Title"
+msgid "In This Collection"
+msgstr "در این گردآورده"
 
-#: Collect.php:137
-msgctxt "Column Title"
-msgid "Connected Items"
-msgstr "نوشته‌های مرتبط"
+#: Collect.php:120
+msgctxt "Label: Show Option All"
+msgid "Collection"
+msgstr "گردآورده"
 
-#: Collect.php:151
+#: Collect.php:141
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr "خط شماره"
 
-#: Collect.php:152
+#: Collect.php:142
 msgctxt "Field Description"
 msgid "The collection number line"
 msgstr ""
 
-#: Collect.php:156
+#: Collect.php:146
 msgctxt "Field Title"
 msgid "Total Items"
 msgstr "مجموع موارد"
 
-#: Collect.php:157
+#: Collect.php:147
 msgctxt "Field Description"
 msgid "The collection total items"
 msgstr ""
 
-#: Collect.php:163
+#: Collect.php:153
 msgctxt "Field Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Collect.php:164
+#: Collect.php:154
 msgctxt "Field Description"
 msgid "Post order in the collection"
 msgstr ""
 
-#: Collect.php:170
+#: Collect.php:160
 msgctxt "Field Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: Collect.php:171
+#: Collect.php:161
 msgctxt "Field Description"
 msgid "Override post title in the collection"
 msgstr ""
 
-#: Collect.php:175
+#: Collect.php:165
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr "زیرتیتر"
 
-#: Collect.php:176
+#: Collect.php:166
 msgctxt "Field Description"
 msgid "Post subtitle in the collection"
 msgstr ""
 
-#: Collect.php:180
+#: Collect.php:170
 msgctxt "Field Title"
 msgid "Collaborator"
 msgstr "همدست"
 
-#: Collect.php:181
+#: Collect.php:171
 msgctxt "Field Description"
 msgid "Post collaborator in the collection"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:516
+#: Collect.php:507
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr "چینش در گردآورده: %s"
 
-#: Collect.php:548
+#: Collect.php:539
 msgctxt "Header"
 msgid "Collect Tools"
 msgstr "ابزارهای گردآوری"
@@ -222,6 +187,46 @@ msgstr "نمایش اطلاعات شمارهٔ گردآورده"
 msgctxt "Widget: Collection Poster"
 msgid "Link to the collection"
 msgstr "پیوند به گردآورده"
+
+#~ msgctxt "Select Option None"
+#~ msgid "&ndash; Select Collection &ndash;"
+#~ msgstr "&ndash; انتخاب گردآورده &ndash;"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "In This Collection"
+#~ msgstr "در این گردآورده"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Groups"
+#~ msgstr "گروه‌‌ها"
+
+#~ msgctxt "Column Title"
+#~ msgid "Collection Groups"
+#~ msgstr "گروه‌های گردآورده"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Parts"
+#~ msgstr "پاره‌ها"
+
+#~ msgctxt "Column Title"
+#~ msgid "Collection Parts"
+#~ msgstr "پاره‌های گردآورده"
+
+#~ msgctxt "Select Option None"
+#~ msgid "&ndash; Select Part &ndash;"
+#~ msgstr "&ndash; انتخاب پاره &ndash;"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "The Collection"
+#~ msgstr "گردآورده"
+
+#~ msgctxt "Column Title"
+#~ msgid "Collections"
+#~ msgstr "گردآورده‌ها"
+
+#~ msgctxt "Column Title"
+#~ msgid "Connected Items"
+#~ msgstr "نوشته‌های مرتبط"
 
 #~ msgctxt "Tools"
 #~ msgid "From Terms"

@@ -13,18 +13,13 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Reshare\n"
 "X-Domain: geditorial-reshare\n"
 
-#: Reshare.php:71
-msgctxt "Column Title"
-msgid "Reshare Categories"
-msgstr ""
-
-#: Reshare.php:74
+#: Reshare.php:72
 msgid "Reshare"
 msgid_plural "Reshares"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Reshare.php:75
+#: Reshare.php:73
 msgid "Reshare Category"
 msgid_plural "Reshare Categories"
 msgstr[0] ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Importer\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-02-22 03:14+0330\n"
+"PO-Revision-Date: 2023-04-06 13:56+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -103,94 +103,94 @@ msgctxt "Button"
 msgid "Upload"
 msgstr "بارگذاری"
 
-#: Importer.php:297
+#: Importer.php:299
 msgctxt "Table Column"
 msgid "Image"
 msgstr "تصویر"
 
-#: Importer.php:318
+#: Importer.php:320
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr "بند‌انگشتی"
 
 #. translators: %s: count placeholder
-#: Importer.php:327 Importer.php:425
+#: Importer.php:329 Importer.php:427
 msgctxt "Header"
 msgid "%s Records Found"
 msgstr "%s مورد پیدا شد"
 
-#: Importer.php:363
+#: Importer.php:365
 msgctxt "Table Column"
 msgid "[Checks]"
 msgstr "[بررسی‌ها]"
 
-#: Importer.php:400
+#: Importer.php:402
 msgctxt "Table Column"
 msgid "Similar to Title:"
 msgstr "عناوین مشابه:"
 
 #. translators: %s: custom metakey
-#: Importer.php:417
+#: Importer.php:419
 msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr "سفارشی: %s"
 
-#: Importer.php:747
+#: Importer.php:751
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr "ابزارهای درون‌ریزی"
 
-#: Importer.php:750
+#: Importer.php:754
 msgctxt "Message"
 msgid "Imports are not supported for any of the post-types!"
 msgstr "درون‌ریزی در هیچ نوع‌نوشته‌ای پشتیبانی نمی‌شود!"
 
-#: Importer.php:753
+#: Importer.php:757
 msgctxt "Header"
 msgid "Import Data from CSV into Posts"
 msgstr "درون‌ریزی داده‌ها از یک CSV به نوشته‌ها"
 
-#: Importer.php:759
+#: Importer.php:763
 msgctxt "Header"
 msgid "Import Remote Files as Attachments"
 msgstr "درون‌ریزی پرونده‌های دوردست به‌عنوان پیوست"
 
-#: Importer.php:781 Importer.php:803 Importer.php:827
+#: Importer.php:792 Importer.php:814 Importer.php:838
 msgctxt "Message"
 msgid "Import source is not defined!"
 msgstr "منبع درون‌ریزی مشخص نشده است!"
 
-#: Importer.php:784 Importer.php:806 Importer.php:830 Importer.php:880
+#: Importer.php:795 Importer.php:817 Importer.php:841 Importer.php:891
 msgctxt "Message"
 msgid "You are not allowed to edit this post-type!"
 msgstr "شما اجازهٔ ویرایش این نوع‌نوشته را ندارید!"
 
-#: Importer.php:797
+#: Importer.php:808
 msgctxt "Button"
 msgid "Import"
 msgstr "درون‌ریزی"
 
-#: Importer.php:798 Importer.php:890
+#: Importer.php:809 Importer.php:901
 msgctxt "Message"
 msgid "Select records to finally import."
 msgstr "موارد نهایی برای درون‌ریزی را انتخاب کنید."
 
-#: Importer.php:808
+#: Importer.php:819
 msgctxt "Header"
 msgid "Terms to Append All"
 msgstr "رده‌هایی برای الحاق به همه"
 
-#: Importer.php:818
+#: Importer.php:829
 msgctxt "Message"
 msgid "No taxonomy availabe for this post-type!"
 msgstr "هیچ رده‌بندی برای این نوع‌نوشته در دسترس نیست!"
 
-#: Importer.php:821
+#: Importer.php:832
 msgctxt "Button"
 msgid "Step 3: Terms"
 msgstr "قدم ۳: رده‌ها"
 
-#: Importer.php:822
+#: Importer.php:833
 msgctxt "Message"
 msgid ""
 "Select a term from each post-type supported taxonomy to append all imported "
@@ -199,90 +199,90 @@ msgstr ""
 "یک رده از هر رده‌بندی پشتیبانی‌شده توسط نوع‌نوشته را برای الحاق به همه نوشته‌های "
 "درون‌ریزی شده انتخاب کنید."
 
-#: Importer.php:832
+#: Importer.php:843
 msgctxt "Header"
 msgid "Map the Importer"
 msgstr "نقشه درون‌ریزی را ترسیم کنید"
 
-#: Importer.php:842
+#: Importer.php:853
 msgctxt "Button"
 msgid "Step 2: Map"
 msgstr "قدم ۲: نقشه"
 
-#: Importer.php:843
+#: Importer.php:854
 msgctxt "Message"
 msgid "Map the file fields to the post-type fields."
 msgstr "نقشه فیلد‌های پرونده به فیلد‌های نوع‌نوشته را ترسیم کنید."
 
-#: Importer.php:850
+#: Importer.php:861
 msgctxt "Button"
 msgid "Step 1: Attachment"
 msgstr "قدم ۱: پیوست"
 
-#: Importer.php:851
+#: Importer.php:862
 msgctxt "Message"
 msgid "Upload or select a CSV file, post-type and user to map the import."
 msgstr ""
 "یک پرونده CSV را بارگیری و یا انتخاب کنید، تا همراه با نوع‌نوشته و کاربر در ترسیم "
 "نقشه درون‌ریزی استفاده شود."
 
-#: Importer.php:870
+#: Importer.php:881
 msgctxt "Message"
 msgid "You are not allowed to upload files!"
 msgstr "شما اجازهٔ بارگذاری پرونده‌ها را ندارید!"
 
-#: Importer.php:877
+#: Importer.php:888
 msgctxt "Message"
 msgid "Refrence meta-key is not defined!"
 msgstr "کلید متای ارجاع مشخص نشده است!"
 
-#: Importer.php:888
+#: Importer.php:899
 msgctxt "Button"
 msgid "Import & Set Thumbnail"
 msgstr "درون‌ریزی و تنظیم بندانگشتی"
 
-#: Importer.php:889
+#: Importer.php:900
 msgctxt "Button"
 msgid "Import Only"
 msgstr "فقط درون‌ریزی"
 
-#: Importer.php:934
+#: Importer.php:945
 msgctxt "Button"
 msgid "Step 1: Meta-key"
 msgstr "قدم ۱: کلید متا"
 
-#: Importer.php:935
+#: Importer.php:946
 msgctxt "Message"
 msgid "Select a meta-key for refrence on importing the attachments."
 msgstr "یکی از کلیدهای متا را به‌عنوان مرجع درون‌ریزی پیوست‌ها انتخاب کنید."
 
-#: Importer.php:949
+#: Importer.php:960
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr "افزوده: متای سفارشی"
 
-#: Importer.php:950
+#: Importer.php:961
 msgctxt "Post Field"
 msgid "Menu Order"
 msgstr "چینش منو"
 
-#: Importer.php:951
+#: Importer.php:962
 msgctxt "Post Field"
 msgid "Post Title"
 msgstr "عنوان نوشته"
 
-#: Importer.php:952
+#: Importer.php:963
 msgctxt "Post Field"
 msgid "Post Content"
 msgstr "متن نوشته"
 
-#: Importer.php:953
+#: Importer.php:964
 msgctxt "Post Field"
 msgid "Post Excerpt"
 msgstr "چکیده نوشته"
 
 #. translators: %s: taxonomy name placeholder
-#: Importer.php:958
+#: Importer.php:969
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr "رده‌بندی: %s"

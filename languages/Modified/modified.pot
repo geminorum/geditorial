@@ -13,52 +13,52 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Modified\n"
 "X-Domain: geditorial-modified\n"
 
-#: Modified.php:45
+#: Modified.php:46
 msgctxt "Setting Title"
 msgid "Last Published"
 msgstr ""
 
-#: Modified.php:46
+#: Modified.php:47
 msgctxt "Setting Description"
 msgid "Displays last published instead of modified date."
 msgstr ""
 
-#: Modified.php:52
+#: Modified.php:53
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr ""
 
-#: Modified.php:53
+#: Modified.php:54
 msgctxt "Setting Description"
 msgid "Custom string before the modified time on the content."
 msgstr ""
 
-#: Modified.php:54
+#: Modified.php:55
 msgctxt "Setting Default"
 msgid "Last modified on"
 msgstr ""
 
-#: Modified.php:59
+#: Modified.php:60
 msgctxt "Setting Title"
 msgid "Insert Format"
 msgstr ""
 
-#: Modified.php:60
+#: Modified.php:61
 msgctxt "Setting Description"
 msgid "Displays the date in this format on the content."
 msgstr ""
 
-#: Modified.php:67
+#: Modified.php:68
 msgctxt "Setting Title"
 msgid "Display After"
 msgstr ""
 
-#: Modified.php:68
+#: Modified.php:69
 msgctxt "Setting Description"
 msgid "Skips displaying modified since the original content published time."
 msgstr ""
 
-#: Modified.php:113
+#: Modified.php:114
 msgctxt "Dashboard Widget Title"
 msgid "Latest Changes"
 msgstr ""

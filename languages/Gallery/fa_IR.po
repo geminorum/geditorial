@@ -2,58 +2,59 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Gallery\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-07-17T14:06:42+00:00\n"
-"PO-Revision-Date: 2020-07-17 18:48+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-06 13:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Domain: geditorial-gallery\n"
 "X-Poedit-Basepath: ../../includes/Modules/Gallery\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Gallery.php:61
+#: Gallery.php:60
 msgid "Photo Album"
 msgid_plural "Photo Albums"
-msgstr[0] "مجموعه تصویری"
-msgstr[1] "مجموعه‌های تصویری"
+msgstr[0] "مجموعه‌های تصویری"
+msgstr[1] "مجموعه تصویری"
 
-#: Gallery.php:62
+#: Gallery.php:61
 msgid "Album Gallery"
 msgid_plural "Album Galleries"
 msgstr[0] "مجموعه‌های گالری"
 msgstr[1] "مجموعه گالری"
 
-#: Gallery.php:63
+#: Gallery.php:62
 msgid "Photo Tag"
 msgid_plural "Photo Tags"
 msgstr[0] "برچسب‌های تصویر"
 msgstr[1] "برچسب تصویر"
 
-#: Gallery.php:72
-msgctxt "Posttype Menu"
+#: Gallery.php:66
+msgctxt "Label: Menu Name"
 msgid "Gallery"
 msgstr "گالری"
 
-#: Gallery.php:73
-msgctxt "Posttype Featured"
+#: Gallery.php:67
+msgctxt "Label: Featured Image"
 msgid "Featured Photo"
 msgstr "تصویر برگزیده"
 
-#: Gallery.php:76
-msgctxt "Column Title"
-msgid "Album Galleries"
-msgstr "مجموعه گالری‌ها"
+#~ msgctxt "Posttype Menu"
+#~ msgid "Gallery"
+#~ msgstr "گالری"
 
-#: Gallery.php:79
-msgctxt "Column Title"
-msgid "Photo Tags"
-msgstr "برچسب‌های تصویر"
+#~ msgctxt "Column Title"
+#~ msgid "Album Galleries"
+#~ msgstr "مجموعه گالری‌ها"
 
-#: Gallery.php:107
-msgctxt "Button"
-msgid "Install Default Album Cats"
-msgstr "نصب دسته‌های مجموعه پیش‌فرض"
+#~ msgctxt "Column Title"
+#~ msgid "Photo Tags"
+#~ msgstr "برچسب‌های تصویر"
+
+#~ msgctxt "Button"
+#~ msgid "Install Default Album Cats"
+#~ msgstr "نصب دسته‌های مجموعه پیش‌فرض"

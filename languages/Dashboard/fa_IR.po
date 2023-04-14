@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Dashboard\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-20 04:34+0330\n"
+"PO-Revision-Date: 2023-04-06 13:46+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,54 +15,54 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Dashboard\n"
 "X-Domain: geditorial-dashboard\n"
 
-#: Dashboard.php:31
+#: Dashboard.php:33
 msgctxt "Setting Title"
 msgid "Dashboard Page"
 msgstr "برگه پیشخوان"
 
-#: Dashboard.php:32
+#: Dashboard.php:34
 msgctxt "Setting Description"
 msgid "Displays the selected page as dashboard page."
 msgstr ""
 
-#: Dashboard.php:39
+#: Dashboard.php:41
 msgctxt "Setting Title"
 msgid "Navigation Menu"
 msgstr "فهرست راه‌بری"
 
-#: Dashboard.php:40
+#: Dashboard.php:42
 msgctxt "Setting Description"
 msgid "Displays the selected nav-menu as dashboard navigation."
 msgstr ""
 
 #. translators: %s: HTML word
-#: Dashboard.php:46
+#: Dashboard.php:48
 msgctxt "Settings: Setting Description"
 msgid "Adds %s before contents on dashboard homepage."
 msgstr ""
 
 #. translators: %s: HTML word
-#: Dashboard.php:48
+#: Dashboard.php:50
 msgctxt "Settings: Setting Description"
 msgid "Adds %s after contents on dashboard homepage."
 msgstr ""
 
-#: Dashboard.php:56
+#: Dashboard.php:60
 msgctxt "Setting Button"
 msgid "Dashboard Page"
 msgstr "برگه پیشخوان"
 
-#: Dashboard.php:108
+#: Dashboard.php:106
 msgctxt "Widget Area"
 msgid "Editorial: Dashboard"
 msgstr "تحریریه: پیشخوان"
 
-#: Dashboard.php:109
+#: Dashboard.php:107
 msgctxt "Widget Area"
 msgid "Widgets appear on Front-end Dashboard"
 msgstr ""
 
-#: Dashboard.php:195
+#: Dashboard.php:170
 msgctxt "Page-State"
 msgid "Dashboard"
 msgstr "پیشخوان"

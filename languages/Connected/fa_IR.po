@@ -1,110 +1,110 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Connected\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues/\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-06 13:45+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
+"Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-14T21:27:06+00:00\n"
-"PO-Revision-Date: 2020-07-15 02:17+0430\n"
-"X-Generator: Poedit 2.3.1\n"
-"X-Domain: geditorial-connected\n"
-"Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"Language: fa_IR\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Domain: geditorial-connected\n"
 
-#: Connected.php:30
+#: Connected.php:31
 msgctxt "Settings"
 msgid "Admin Column"
 msgstr ""
 
-#: Connected.php:31
+#: Connected.php:32
 msgctxt "Settings"
 msgid "Displays connected column on admin list screen."
 msgstr ""
 
-#: Connected.php:35
+#: Connected.php:36
 msgctxt "Setting Title"
 msgid "Admin Box Context"
 msgstr ""
 
-#: Connected.php:36
+#: Connected.php:37
 msgctxt "Settings"
 msgid "Where to display the connected box on admin post edit screen."
 msgstr ""
 
-#: Connected.php:38
+#: Connected.php:39
 msgctxt "Settings"
 msgid "Normal"
 msgstr ""
 
-#: Connected.php:39
+#: Connected.php:40
 msgctxt "Settings"
 msgid "Advanced"
 msgstr ""
 
-#: Connected.php:44
+#: Connected.php:45
 msgctxt "Settings"
 msgid "Duplicate Connections"
 msgstr ""
 
-#: Connected.php:45
+#: Connected.php:46
 msgctxt "Settings"
 msgid "Displays multiple connections between connecties."
 msgstr ""
 
-#: Connected.php:49
+#: Connected.php:50
 msgctxt "Settings"
 msgid "Description Field"
 msgstr ""
 
-#: Connected.php:50
+#: Connected.php:51
 msgctxt "Settings"
 msgid "Displays description field on connected metabox."
 msgstr ""
 
-#: Connected.php:55
+#: Connected.php:56
 msgctxt "Settings"
 msgid "Description Title"
 msgstr ""
 
-#: Connected.php:56
+#: Connected.php:57
 msgctxt "Settings"
 msgid "Appears as description column title on connected metabox."
 msgstr ""
 
-#: Connected.php:57
+#: Connected.php:58
 msgctxt "Settings"
 msgid "Description"
 msgstr ""
 
-#: Connected.php:89
+#: Connected.php:90
 msgctxt "Metabox Title"
 msgid "Connected"
 msgstr "مرتبط"
 
-#: Connected.php:91
+#: Connected.php:92
 msgctxt "Label"
 msgid "Connectie"
 msgstr "مربوط"
 
-#: Connected.php:92
+#: Connected.php:93
 msgctxt "Label"
 msgid "Search Connecties"
 msgstr "جست‌وجوی مرتبط‌ها"
 
-#: Connected.php:93
+#: Connected.php:94
 msgctxt "Label"
 msgid "No Connecties found."
 msgstr "ارتباطی پیدا نشد."
 
-#: Connected.php:94
+#: Connected.php:95
 msgctxt "Label"
 msgid "Connect to a connectie"
 msgstr "مرتبط کنید"
 
-#: Connected.php:100
+#: Connected.php:101
 msgctxt "Field Title"
 msgid "Description"
 msgstr "توضیحات"

@@ -13,12 +13,12 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Contents\n"
 "X-Domain: geditorial-contents\n"
 
-#: Contents.php:29
+#: Contents.php:30
 msgctxt "Setting Title"
 msgid "Title"
 msgstr ""
 
-#: Contents.php:30
+#: Contents.php:31
 msgctxt "Setting Description"
 msgid "Description."
 msgstr ""

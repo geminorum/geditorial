@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Today\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-27 04:26+0330\n"
+"PO-Revision-Date: 2023-04-14 00:38+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -71,93 +71,93 @@ msgctxt "Title Attr"
 msgid "Edit Day!"
 msgstr "ویرایش روز!"
 
-#: Today.php:44
+#: Today.php:45
 msgctxt "Setting Title"
 msgid "Fill The Day"
 msgstr "تکمیل روز"
 
-#: Today.php:45
+#: Today.php:46
 msgctxt "Setting Description"
 msgid "Fills the current day info on newly drafted supported posttypes."
 msgstr ""
 
-#: Today.php:53
+#: Today.php:54
 msgctxt "Settings"
 msgid "Displays today column on edit list for supported posttypes."
 msgstr ""
 
-#: Today.php:58
+#: Today.php:59
 msgctxt "Setting Title"
 msgid "Insert The Day"
 msgstr "جای‌گذاری روز"
 
-#: Today.php:59
+#: Today.php:60
 msgctxt "Setting Description"
 msgid "Displays the day info for supported posttypes."
 msgstr "نمایش اطلاعات روز مرتبط، قبل از متن نوع‌نوشته‌های فعال."
 
-#: Today.php:66
+#: Today.php:67
 msgctxt "Setting Title"
 msgid "Override Front-Page"
 msgstr "بازنویسی صفحه نخست"
 
-#: Today.php:67
+#: Today.php:68
 msgctxt "Setting Description"
 msgid "Displays today list of connected posts on front-page."
 msgstr ""
 
-#: Today.php:100
-msgctxt "Posttype Featured"
-msgid "Cover Image"
-msgstr "تصویر کاور"
-
 #: Today.php:101
-msgctxt "MetaBox Title"
-msgid "Summary"
-msgstr "چکیده"
-
-#: Today.php:102
-msgctxt "MetaBox Title"
-msgid "The Day"
-msgstr "امروز"
-
-#: Today.php:103
-msgctxt "Column Title"
-msgid "Day"
-msgstr "روز"
-
-#: Today.php:106
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] "روزها"
 msgstr[1] "روز"
 
-#: Today.php:115
+#: Today.php:105
+msgctxt "Label: Featured Image"
+msgid "Cover Image"
+msgstr "تصویر کاور"
+
+#: Today.php:106
+msgctxt "Label: MetaBox Label"
+msgid "The Day"
+msgstr "امروز"
+
+#: Today.php:107
+msgctxt "MetaBox Title"
+msgid "Summary"
+msgstr "چکیده"
+
+#: Today.php:116
+msgctxt "Column Title"
+msgid "Day"
+msgstr "روز"
+
+#: Today.php:126
 msgctxt "Template Title"
 msgid "Editorial: Today: Front-page"
-msgstr ""
+msgstr "تحریریه: امروز: صفحه نخست"
 
-#: Today.php:199 Today.php:230
+#: Today.php:210 Today.php:241
 msgctxt "Page Title"
 msgid "Editorial Today"
 msgstr "امروز تحریریه"
 
-#: Today.php:200
+#: Today.php:211
 msgctxt "Menu Title"
 msgid "My Today"
 msgstr "امروز من"
 
-#: Today.php:376
+#: Today.php:387
 msgctxt "Title Attr"
 msgid "View on Today"
 msgstr "دیدن در امروز"
 
-#: Today.php:379
+#: Today.php:390
 msgctxt "Action"
 msgid "Today"
 msgstr "امروز"
 
-#: Today.php:526
+#: Today.php:537
 msgctxt "Message"
 msgid ""
 "You can connect posts to this day once you've saved it for the first time."
@@ -165,72 +165,76 @@ msgstr ""
 "وقتی روز را برای اولین بار را ذخیره کردید، می‌توانید فرسته‌ها را به آن متصل "
 "کنید."
 
-#: Today.php:552 Today.php:945
+#: Today.php:563 Today.php:956
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr "نوشته‌ای با اطلاعات روزانه پیدا نشد."
 
-#: Today.php:757
+#: Today.php:768
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr "هیچ اتفاقی نیفتاده است!"
 
-#: Today.php:928
+#: Today.php:939
 msgctxt "Table Column"
 msgid "The Day"
 msgstr "روز"
 
-#: Today.php:944
+#: Today.php:955
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr "مروری بر نوشته‌های همراه با اطلاعات روزانه"
 
-#: Today.php:990
+#: Today.php:1001
 msgctxt "Header"
 msgid "Today Tools"
 msgstr "ابزارهای امروز"
 
-#: Today.php:993
+#: Today.php:1004
 msgctxt "Header"
 msgid "Re-schedule by Day"
 msgstr "بازتنظیم بر اساس روز"
 
-#: Today.php:999
+#: Today.php:1010
 msgctxt "Setting"
 msgid "Schedule"
 msgstr "زمان‌بندی"
 
-#: Today.php:1001
+#: Today.php:1012
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1034
+#: Today.php:1044
 msgctxt "Default Term: Audit"
 msgid "No day"
 msgstr "بدون روز"
 
-#: Today.php:1043
+#: Today.php:1051
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr "امروز:‌ تقویم"
 
-#: Today.php:1044
+#: Today.php:1052
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr "امروز:‌ سال"
 
-#: Today.php:1045
+#: Today.php:1053
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr "امروز:‌ ماه"
 
-#: Today.php:1046
+#: Today.php:1054
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr "امروز:‌ روز"
 
-#: Today.php:1047
+#: Today.php:1055
 msgctxt "Import Field"
 msgid "Today: Full"
 msgstr "امروز: کامل"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "The Day"
+#~ msgstr "امروز"

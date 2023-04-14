@@ -13,177 +13,142 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Collect\n"
 "X-Domain: geditorial-collect\n"
 
-#: Collect.php:41
+#: Collect.php:42
 msgctxt "Settings"
 msgid "Collection Parts"
 msgstr ""
 
-#: Collect.php:42
+#: Collect.php:43
 msgctxt "Settings"
 msgid "Partition taxonomy for the collections and supported post-types."
 msgstr ""
 
-#: Collect.php:57
+#: Collect.php:58
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Collect.php:58
+#: Collect.php:59
 msgctxt "Settings"
 msgid "Redirects collection archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Collect.php:64
+#: Collect.php:65
 msgctxt "Settings"
 msgid "Redirect Groups"
 msgstr ""
 
-#: Collect.php:65
+#: Collect.php:66
 msgctxt "Settings"
 msgid "Redirects all group archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Collect.php:108
 #: Collect.php:109
+#: Collect.php:110
 msgid "Collection"
 msgid_plural "Collections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Collect.php:110
+#: Collect.php:111
 msgid "Group"
 msgid_plural "Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Collect.php:111
+#: Collect.php:112
 msgid "Part"
 msgid_plural "Parts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Collect.php:120
-msgctxt "Posttype Featured"
+#: Collect.php:116
+msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr ""
 
-#: Collect.php:121
-msgctxt "Select Option None"
-msgid "&ndash; Select Collection &ndash;"
-msgstr ""
-
-#: Collect.php:124
-msgctxt "MetaBox Title"
-msgid "In This Collection"
-msgstr ""
-
-#: Collect.php:127
-msgctxt "MetaBox Title"
-msgid "Groups"
-msgstr ""
-
-#: Collect.php:128
-msgctxt "Column Title"
-msgid "Collection Groups"
-msgstr ""
-
-#: Collect.php:131
-msgctxt "MetaBox Title"
-msgid "Parts"
-msgstr ""
-
-#: Collect.php:132
-msgctxt "Column Title"
-msgid "Collection Parts"
-msgstr ""
-
-#: Collect.php:133
-msgctxt "Select Option None"
-msgid "&ndash; Select Part &ndash;"
-msgstr ""
-
-#: Collect.php:135
-msgctxt "MetaBox Title"
+#: Collect.php:117
+msgctxt "Label: MetaBox Title"
 msgid "The Collection"
 msgstr ""
 
-#: Collect.php:136
-msgctxt "Column Title"
-msgid "Collections"
+#: Collect.php:120
+msgctxt "Label: MetaBox Title"
+msgid "In This Collection"
 msgstr ""
 
-#: Collect.php:137
-msgctxt "Column Title"
-msgid "Connected Items"
+#: Collect.php:121
+msgctxt "Label: Show Option All"
+msgid "Collection"
 msgstr ""
 
-#: Collect.php:151
+#: Collect.php:142
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Collect.php:152
+#: Collect.php:143
 msgctxt "Field Description"
 msgid "The collection number line"
 msgstr ""
 
-#: Collect.php:156
+#: Collect.php:147
 msgctxt "Field Title"
 msgid "Total Items"
 msgstr ""
 
-#: Collect.php:157
+#: Collect.php:148
 msgctxt "Field Description"
 msgid "The collection total items"
 msgstr ""
 
-#: Collect.php:163
+#: Collect.php:154
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Collect.php:164
+#: Collect.php:155
 msgctxt "Field Description"
 msgid "Post order in the collection"
 msgstr ""
 
-#: Collect.php:170
+#: Collect.php:161
 msgctxt "Field Title"
 msgid "Title"
 msgstr ""
 
-#: Collect.php:171
+#: Collect.php:162
 msgctxt "Field Description"
 msgid "Override post title in the collection"
 msgstr ""
 
-#: Collect.php:175
+#: Collect.php:166
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: Collect.php:176
+#: Collect.php:167
 msgctxt "Field Description"
 msgid "Post subtitle in the collection"
 msgstr ""
 
-#: Collect.php:180
+#: Collect.php:171
 msgctxt "Field Title"
 msgid "Collaborator"
 msgstr ""
 
-#: Collect.php:181
+#: Collect.php:172
 msgctxt "Field Description"
 msgid "Post collaborator in the collection"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:516
+#: Collect.php:508
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr ""
 
-#: Collect.php:548
+#: Collect.php:540
 msgctxt "Header"
 msgid "Collect Tools"
 msgstr ""

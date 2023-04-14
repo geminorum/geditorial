@@ -13,104 +13,104 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
-#: Badges.php:30
-#: Badges.php:336
+#: Badges.php:31
+#: Badges.php:337
 msgctxt "Setting"
 msgid "There are no badges available!"
 msgstr ""
 
-#: Badges.php:38
+#: Badges.php:39
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr ""
 
-#: Badges.php:39
+#: Badges.php:40
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Badges."
 msgstr ""
 
-#: Badges.php:45
+#: Badges.php:46
 msgctxt "Setting Title"
 msgid "Assign Roles"
 msgstr ""
 
-#: Badges.php:46
+#: Badges.php:47
 msgctxt "Setting Description"
 msgid "Roles that can Assign Badges."
 msgstr ""
 
-#: Badges.php:52
+#: Badges.php:53
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: Badges.php:53
+#: Badges.php:54
 msgctxt "Setting Description"
 msgid "Roles that can see Badges Reports."
 msgstr ""
 
-#: Badges.php:59
+#: Badges.php:60
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr ""
 
-#: Badges.php:60
+#: Badges.php:61
 msgctxt "Setting Description"
 msgid "Roles that check for Badges visibility."
 msgstr ""
 
-#: Badges.php:66
+#: Badges.php:67
 msgctxt "Setting Title"
 msgid "Restricted Badges"
 msgstr ""
 
-#: Badges.php:67
+#: Badges.php:68
 msgctxt "Setting Description"
 msgid "Handles visibility of each badge on meta values."
 msgstr ""
 
-#: Badges.php:70
+#: Badges.php:71
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr ""
 
-#: Badges.php:71
+#: Badges.php:72
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr ""
 
-#: Badges.php:109
+#: Badges.php:110
 msgid "Badge"
 msgid_plural "Badges"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Badges.php:113
+#: Badges.php:114
 msgctxt "Label: Menu Name"
 msgid "Content Badges"
 msgstr ""
 
-#: Badges.php:114
+#: Badges.php:115
 msgctxt "Label: Show Option All"
 msgid "Badges"
 msgstr ""
 
-#: Badges.php:115
+#: Badges.php:116
 msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr ""
 
-#: Badges.php:124
+#: Badges.php:125
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Badges Summary"
 msgstr ""
 
-#: Badges.php:125
+#: Badges.php:126
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr ""
 
-#: Badges.php:331
+#: Badges.php:332
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr ""

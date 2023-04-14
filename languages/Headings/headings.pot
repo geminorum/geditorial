@@ -13,42 +13,42 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Headings\n"
 "X-Domain: geditorial-headings\n"
 
-#: Headings.php:34
+#: Headings.php:35
 msgctxt "Setting Title"
 msgid "ToC Title"
 msgstr ""
 
-#: Headings.php:35
+#: Headings.php:36
 msgctxt "Setting Description"
 msgid "Default text on the ToC box"
 msgstr ""
 
-#: Headings.php:36
+#: Headings.php:37
 msgctxt "Setting Default"
 msgid "Table of Contents"
 msgstr ""
 
-#: Headings.php:41
+#: Headings.php:42
 msgctxt "Setting Title"
 msgid "Anchor Title"
 msgstr ""
 
-#: Headings.php:42
+#: Headings.php:43
 msgctxt "Setting Description"
 msgid "Default text on the anchor link"
 msgstr ""
 
-#: Headings.php:43
+#: Headings.php:44
 msgctxt "Setting Default"
 msgid "Permalink to this title"
 msgstr ""
 
-#: Headings.php:48
+#: Headings.php:49
 msgctxt "Setting Title"
 msgid "Minimum Headings"
 msgstr ""
 
-#: Headings.php:49
+#: Headings.php:50
 msgctxt "Setting Description"
 msgid "Threshold to Display ToC"
 msgstr ""

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Event\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-05-11T05:50:40+00:00\n"
-"PO-Revision-Date: 2022-05-11 10:20+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-06 13:53+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,26 +11,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Event\n"
 "X-Domain: geditorial-event\n"
 
-#: Event.php:29
+#: Event.php:28
 msgctxt "Setting Description"
 msgid "Specifies events based on the actual date and time."
 msgstr "رویداد‌ها را بر اساس تاریخ و زمان واقعی مشخص می‌کند."
 
-#: Event.php:31
+#: Event.php:30
 msgctxt "Settings"
 msgid "Metadata Fields"
 msgstr "زمینه‌های فراداده"
 
-#: Event.php:35
+#: Event.php:34
 msgctxt "Setting Title"
 msgid "Display Calendar Type"
 msgstr "نمایش نوع تقویم"
 
-#: Event.php:36
+#: Event.php:35
 msgctxt "Setting Description"
 msgid ""
 "For each event you can select the calendar type. Or else select default "
@@ -89,206 +89,200 @@ msgctxt "Fields"
 msgid "Event Expire"
 msgstr "سرآمد رویداد"
 
-#: Event.php:132
+#: Event.php:130
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] "رویدادها"
 msgstr[1] "رویداد"
 
-#: Event.php:133
+#: Event.php:131
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] "دسته‌های رویداد"
 msgstr[1] "دسته رویداد"
 
-#: Event.php:134
+#: Event.php:132
 msgid "Event Type"
 msgid_plural "Event Types"
 msgstr[0] "انواع رویداد"
 msgstr[1] "نوع رویداد"
 
-#: Event.php:135
+#: Event.php:133
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] "تقویم‌های رویداد"
 msgstr[1] "تقویم رویداد"
 
-#: Event.php:139
-msgctxt "Taxonomy Label"
-msgid "Calendar Types"
-msgstr "نوع تقویم"
-
-#: Event.php:149
-msgctxt "Posttype Featured"
-msgid "Poster Image"
-msgstr "تصویر اعلان"
-
-#: Event.php:150
-msgctxt "MetaBox Title"
-msgid "Date & Times"
-msgstr "تاریخ و زمان"
-
-#: Event.php:151
-msgctxt "Column Title"
-msgid "Starts"
-msgstr "شروع"
-
-#: Event.php:152
-msgctxt "Column Title"
-msgid "Ends"
-msgstr "پایان"
-
-#: Event.php:155
+#: Event.php:137
 msgctxt "Menu Title"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Event.php:156
-msgctxt "MetaBox Title"
-msgid "Event Categories"
-msgstr "دسته‌های رویداد"
+#: Event.php:138
+msgctxt "Label: Featured Image"
+msgid "Poster Image"
+msgstr "تصویر اعلان"
 
-#: Event.php:157
-msgctxt "Column Title"
-msgid "Event Categories"
-msgstr "دسته‌های رویداد"
-
-#: Event.php:160
+#: Event.php:141
 msgctxt "Menu Title"
 msgid "Types"
 msgstr "انواع"
 
-#: Event.php:161
-msgctxt "MetaBox Title"
-msgid "Event Types"
-msgstr "انواع رویداد"
-
-#: Event.php:162
-msgctxt "Column Title"
-msgid "Event Types"
-msgstr "انواع رویداد"
-
-#: Event.php:165
+#: Event.php:144
 msgctxt "Menu Title"
 msgid "Calendars"
 msgstr "تقویم‌ها"
 
-#: Event.php:166
+#: Event.php:147
+msgctxt "Taxonomy Label"
+msgid "Calendar Types"
+msgstr "نوع تقویم"
+
+#: Event.php:157
 msgctxt "MetaBox Title"
-msgid "Event Calendars"
-msgstr "تقویم‌های رویداد"
+msgid "Date & Times"
+msgstr "تاریخ و زمان"
 
-#: Event.php:167
+#: Event.php:163
 msgctxt "Column Title"
-msgid "Event Calendars"
-msgstr "تقویم‌های رویداد"
+msgid "Starts"
+msgstr "شروع"
 
-#: Event.php:173
+#: Event.php:164
+msgctxt "Column Title"
+msgid "Ends"
+msgstr "پایان"
+
+#: Event.php:170
 msgctxt "Default Term"
 msgid "Holiday"
 msgstr "تعطیلات"
 
-#: Event.php:174
+#: Event.php:171
 msgctxt "Default Term"
 msgid "Birth"
 msgstr "زادروز"
 
-#: Event.php:175
+#: Event.php:172
 msgctxt "Default Term"
 msgid "Death"
 msgstr "درگذشت"
 
-#: Event.php:176
+#: Event.php:173
 msgctxt "Default Term"
 msgid "Start"
 msgstr "شروع"
 
-#: Event.php:177
+#: Event.php:174
 msgctxt "Default Term"
 msgid "End"
 msgstr "پایان"
 
-#: Event.php:208
+#: Event.php:205
 msgctxt "Button"
 msgid "Install Default Event Types"
 msgstr "نصب انواع پیش‌فرض رویداد"
 
-#: Event.php:211
+#: Event.php:208
 msgctxt "Button"
 msgid "Install Default Calendar Types"
 msgstr "نصب تقویم‌های پیش‌فرض رویداد"
 
-#: Event.php:499
+#: Event.php:477
 msgctxt "Meta Box Input"
 msgid "Date Start"
 msgstr "تاریخ شروع"
+
+#: Event.php:478
+msgctxt "Meta Box Input Placeholder"
+msgid "Date Start"
+msgstr "تاریخ شروع"
+
+#: Event.php:487
+msgctxt "Meta Box Input"
+msgid "Time Start"
+msgstr "زمان شروع"
+
+#: Event.php:488
+msgctxt "Meta Box Input Placeholder"
+msgid "Time Start"
+msgstr "زمان شروع"
+
+#: Event.php:499
+msgctxt "Meta Box Input"
+msgid "Date End"
+msgstr "تاریخ پایان"
 
 #: Event.php:500
 msgctxt "Meta Box Input Placeholder"
-msgid "Date Start"
-msgstr "تاریخ شروع"
+msgid "Date End"
+msgstr "تاریخ پایان"
 
 #: Event.php:509
 msgctxt "Meta Box Input"
-msgid "Time Start"
-msgstr "زمان شروع"
+msgid "Time End"
+msgstr "زمان پایان"
 
 #: Event.php:510
 msgctxt "Meta Box Input Placeholder"
-msgid "Time Start"
-msgstr "زمان شروع"
-
-#: Event.php:521
-msgctxt "Meta Box Input"
-msgid "Date End"
-msgstr "تاریخ پایان"
-
-#: Event.php:522
-msgctxt "Meta Box Input Placeholder"
-msgid "Date End"
-msgstr "تاریخ پایان"
-
-#: Event.php:531
-msgctxt "Meta Box Input"
 msgid "Time End"
 msgstr "زمان پایان"
 
-#: Event.php:532
-msgctxt "Meta Box Input Placeholder"
-msgid "Time End"
-msgstr "زمان پایان"
-
-#: Widgets/Currents.php:20
+#: Widgets/Currents.php:18
 msgctxt "Widget Title"
 msgid "Editorial: Currents"
 msgstr "تحریریه: هم‌اکنون"
 
-#: Widgets/Currents.php:21
+#: Widgets/Currents.php:19
 msgctxt "Widget Description"
 msgid "Displays ongoing events."
 msgstr "رویدادهای جاری را نمایش می‌دهد."
 
-#: Widgets/Currents.php:95 Widgets/Poster.php:95
+#: Widgets/Currents.php:93 Widgets/Poster.php:93
 msgctxt "Widget: Event Poster"
 msgid "The Event:"
 msgstr "رویداد:"
 
-#: Widgets/Currents.php:98 Widgets/Poster.php:98
+#: Widgets/Currents.php:96 Widgets/Poster.php:96
 msgctxt "Widget: Event Poster"
 msgid "Always the latest event"
 msgstr "استفاده از آخرین رویداد"
 
-#: Widgets/Currents.php:99 Widgets/Poster.php:99
+#: Widgets/Currents.php:97 Widgets/Poster.php:97
 msgctxt "Widget: Event Poster"
 msgid "Link to the event"
 msgstr "پیوند به رویداد"
 
-#: Widgets/Poster.php:20
+#: Widgets/Poster.php:18
 msgctxt "Widget Title"
 msgid "Editorial: Event Poster"
 msgstr "تحریریه: اعلان رویداد"
 
-#: Widgets/Poster.php:21
+#: Widgets/Poster.php:19
 msgctxt "Widget Description"
 msgid "Displays selected, connected or current event poster."
 msgstr "اعلان رویداد آخر، منتخب، مرتبط و یا فعلی را نمایش می‌دهد."
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Event Categories"
+#~ msgstr "دسته‌های رویداد"
+
+#~ msgctxt "Column Title"
+#~ msgid "Event Categories"
+#~ msgstr "دسته‌های رویداد"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Event Types"
+#~ msgstr "انواع رویداد"
+
+#~ msgctxt "Column Title"
+#~ msgid "Event Types"
+#~ msgstr "انواع رویداد"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Event Calendars"
+#~ msgstr "تقویم‌های رویداد"
+
+#~ msgctxt "Column Title"
+#~ msgid "Event Calendars"
+#~ msgstr "تقویم‌های رویداد"

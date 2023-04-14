@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Meta\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-02 12:01+0330\n"
+"PO-Revision-Date: 2023-04-06 14:03+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -482,64 +482,64 @@ msgctxt "Button"
 msgid "Install Default Column Headers"
 msgstr "نصب سرستون‌های پیش‌فرض"
 
-#: Meta.php:711
+#: Meta.php:716
 msgctxt "Message"
 msgid "No Meta Fields"
 msgstr "گزینه‌ای وجود ندارد"
 
-#: Meta.php:1292
+#: Meta.php:1298
 msgctxt "Header"
 msgid "Meta Tools"
 msgstr "ابزارهای متا"
 
-#: Meta.php:1296
+#: Meta.php:1302
 msgctxt "Header"
 msgid "Import Custom Fields"
 msgstr "درون‌ریزی از زمینه‌های سفارشی"
 
-#: Meta.php:1334
+#: Meta.php:1340
 msgctxt "Button"
 msgid "Check"
 msgstr "بررسی"
 
-#: Meta.php:1337
+#: Meta.php:1343
 msgctxt "Button"
 msgid "Covert"
 msgstr "تبدیل"
 
-#: Meta.php:1340
+#: Meta.php:1346
 msgctxt "Button"
 msgid "Delete"
 msgstr "حذف"
 
-#: Meta.php:1342
+#: Meta.php:1348
 msgctxt "Message"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr "بررسی زمینه‌های سفارشی و درون‌ریزی به عنوان متا"
 
-#: Meta.php:1352
+#: Meta.php:1358
 msgctxt "Table Column"
 msgid "Type"
 msgstr "نوع"
 
-#: Meta.php:1362
+#: Meta.php:1368
 msgctxt "Table Column"
 msgid "Title"
 msgstr "عنوان"
 
 #. translators: %s: title
-#: Meta.php:1368
+#: Meta.php:1374
 msgctxt "Table Column"
 msgid "Meta: %s"
 msgstr "متا: %s"
 
-#: Meta.php:1373
+#: Meta.php:1379
 msgctxt "Table Empty"
 msgid "There are no meta-data available!"
 msgstr "متا-داده‌ای در دسترس نیست!"
 
 #. translators: %s: field title
-#: Meta.php:1533
+#: Meta.php:1539
 msgctxt "Import Field"
 msgid "Meta: %s"
 msgstr "متا: %s"

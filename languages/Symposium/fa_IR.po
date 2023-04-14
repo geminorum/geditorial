@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Symposium\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-02 14:58+0330\n"
+"PO-Revision-Date: 2023-04-15 00:29+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,67 +15,67 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Symposium\n"
 "X-Domain: geditorial-symposium\n"
 
-#: Symposium.php:51
+#: Symposium.php:55
 msgid "Session"
 msgid_plural "Sessions"
 msgstr[0] "نشست‌ها"
 msgstr[1] "نشست"
 
-#: Symposium.php:52
+#: Symposium.php:56
 msgid "Session Category"
 msgid_plural "Session Categories"
 msgstr[0] "دسته‌های نشست"
 msgstr[1] "دسته نشست"
 
-#: Symposium.php:53
+#: Symposium.php:57
 msgid "Session Type"
 msgid_plural "Session Types"
 msgstr[0] "انواع نشست"
 msgstr[1] "نوع نشست"
 
-#: Symposium.php:54
+#: Symposium.php:58
 msgid "Session Audience"
 msgid_plural "Session Audiences"
 msgstr[0] "مخاطبین نشست"
 msgstr[1] "مخاطب نشست"
 
-#: Symposium.php:55
+#: Symposium.php:59
 msgid "Session Subject"
 msgid_plural "Session Subjects"
 msgstr[0] "موضوعات نشست"
 msgstr[1] "موضوع نشست"
 
-#: Symposium.php:64
+#: Symposium.php:68
 msgctxt "Session: Featured"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Symposium.php:70
+#: Symposium.php:74
 msgctxt "Session Type: Default Term"
 msgid "Lecture"
 msgstr "سخنرانی"
 
-#: Symposium.php:71
+#: Symposium.php:75
 msgctxt "Session Type: Default Term"
 msgid "Conference"
 msgstr "همایش"
 
-#: Symposium.php:72
+#: Symposium.php:76
 msgctxt "Session Type: Default Term"
 msgid "Colloquium"
 msgstr "مکالمه"
 
-#: Symposium.php:73
+#: Symposium.php:77
 msgctxt "Session Type: Default Term"
 msgid "Book Review"
 msgstr "نقد کتاب"
 
-#: Symposium.php:88
+#: Symposium.php:92
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr "افراد برجسته"
 
-#: Symposium.php:89
+#: Symposium.php:93
 msgctxt "Field Description"
 msgid "Featured People in the Session"
 msgstr "افراد برجسته در این نشست"

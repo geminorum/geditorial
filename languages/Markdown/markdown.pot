@@ -13,92 +13,92 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Markdown\n"
 "X-Domain: geditorial-markdown\n"
 
-#: Markdown.php:40
+#: Markdown.php:41
 msgctxt "Setting Title"
 msgid "Wiki Linking"
 msgstr ""
 
-#: Markdown.php:41
+#: Markdown.php:42
 msgctxt "Setting Description"
 msgid "Converts wiki like markup to internal links."
 msgstr ""
 
-#: Markdown.php:96
+#: Markdown.php:97
 msgctxt "Adminbar"
 msgid "Markdown Summary"
 msgstr ""
 
-#: Markdown.php:105
+#: Markdown.php:106
 msgctxt "Adminbar"
 msgid "Markdown Convert"
 msgstr ""
 
-#: Markdown.php:115
+#: Markdown.php:116
 msgctxt "Adminbar"
 msgid "Markdown Process"
 msgstr ""
 
-#: Markdown.php:123
+#: Markdown.php:124
 msgctxt "Adminbar"
 msgid "Markdown Cleanup"
 msgstr ""
 
-#: Markdown.php:131
+#: Markdown.php:132
 msgctxt "Adminbar"
 msgid "Markdown Discard"
 msgstr ""
 
-#: Markdown.php:161
+#: Markdown.php:162
 msgctxt "Message"
 msgid "Unable process Makrdown content into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:169
+#: Markdown.php:170
 msgctxt "Message"
 msgid "Unable convert content into Makrdown. Please try again."
 msgstr ""
 
-#: Markdown.php:178
+#: Markdown.php:179
 msgctxt "Message"
 msgid "Unable cleanup Makrdown content. Please try again."
 msgstr ""
 
-#: Markdown.php:186
+#: Markdown.php:187
 msgctxt "Message"
 msgid "Unable discard Makrdown content back into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:478
+#: Markdown.php:479
 msgctxt "Table Action"
 msgid "Convert into Markdown"
 msgstr ""
 
-#: Markdown.php:479
+#: Markdown.php:480
 msgctxt "Table Action"
 msgid "Re-Process Markdown"
 msgstr ""
 
-#: Markdown.php:480
+#: Markdown.php:481
 msgctxt "Table Action"
 msgid "Cleanup Markdown"
 msgstr ""
 
-#: Markdown.php:481
+#: Markdown.php:482
 msgctxt "Table Action"
 msgid "Discard Markdown"
 msgstr ""
 
-#: Markdown.php:492
+#: Markdown.php:493
 msgctxt "Table Column"
 msgid "Markdown"
 msgstr ""
 
-#: Markdown.php:503
+#: Markdown.php:504
 msgctxt "Header"
 msgid "Overview of Markdown Posts"
 msgstr ""
 
-#: Markdown.php:504
+#: Markdown.php:505
 msgctxt "Message"
 msgid "No markdown posts found."
 msgstr ""

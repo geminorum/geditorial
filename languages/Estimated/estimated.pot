@@ -13,85 +13,85 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Estimated\n"
 "X-Domain: geditorial-estimated\n"
 
-#: Estimated.php:36
+#: Estimated.php:37
 msgctxt "Setting Title"
 msgid "Reading Time"
 msgstr ""
 
-#: Estimated.php:37
+#: Estimated.php:38
 msgctxt "Setting Description"
 msgid "Average words per minute"
 msgstr ""
 
-#: Estimated.php:43
+#: Estimated.php:44
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr ""
 
-#: Estimated.php:44
+#: Estimated.php:45
 msgctxt "Setting Description"
 msgid "Custom string before the estimated time on the content."
 msgstr ""
 
-#: Estimated.php:45
-#: Estimated.php:199
+#: Estimated.php:46
+#: Estimated.php:200
 msgctxt "Setting Default"
 msgid "Estimated read time:"
 msgstr ""
 
-#: Estimated.php:50
+#: Estimated.php:51
 msgctxt "Setting Title"
 msgid "Content Teaser"
 msgstr ""
 
-#: Estimated.php:51
+#: Estimated.php:52
 msgctxt "Setting Description"
 msgid "Calculate teaser text along with rest of the content"
 msgstr ""
 
-#: Estimated.php:54
+#: Estimated.php:55
 msgctxt "Content Teaser Option"
 msgid "Ignore"
 msgstr ""
 
-#: Estimated.php:55
+#: Estimated.php:56
 msgctxt "Content Teaser Option"
 msgid "Include"
 msgstr ""
 
-#: Estimated.php:63
+#: Estimated.php:64
 msgctxt "Setting Title"
 msgid "Minimum Words"
 msgstr ""
 
-#: Estimated.php:64
+#: Estimated.php:65
 msgctxt "Setting Description"
 msgid "And above this number of words will show the notice"
 msgstr ""
 
-#: Estimated.php:103
+#: Estimated.php:104
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr ""
 
-#: Estimated.php:106
+#: Estimated.php:107
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr ""
 
 #. translators: %s: words count
-#: Estimated.php:139
-#: Estimated.php:220
+#: Estimated.php:140
+#: Estimated.php:221
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute"
 msgstr ""
 
-#: Estimated.php:212
+#: Estimated.php:213
 msgid "less than 1 minute"
 msgstr ""
 
 #. translators: %s: number of minutes
-#: Estimated.php:215
+#: Estimated.php:216
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""

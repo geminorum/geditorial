@@ -2,60 +2,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Modified\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2020-08-09T22:11:40+00:00\n"
-"PO-Revision-Date: 2020-08-11 03:36+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-04-06 14:03+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Modified\n"
 "X-Domain: geditorial-modified\n"
-"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: Modified.php:44
+#: Modified.php:45
 msgctxt "Setting Title"
 msgid "Last Published"
 msgstr "آخرین انتشار"
 
-#: Modified.php:45
+#: Modified.php:46
 msgctxt "Setting Description"
 msgid "Displays last published instead of modified date."
 msgstr "آخرین تاریخ انتشار را به جای آخرین تاریخ تغییرات نمایش می‌دهد."
 
-#: Modified.php:51
+#: Modified.php:52
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr "پیشوند محتوا"
 
-#: Modified.php:52
+#: Modified.php:53
 msgctxt "Setting Description"
 msgid "Custom string before the modified time on the content."
 msgstr "رشته سفارشی که قبل از زمان تغییرات نمایش داده خواهد شد."
 
-#: Modified.php:53
+#: Modified.php:54
 msgctxt "Setting Default"
 msgid "Last modified on"
 msgstr "آخرین تغییر در"
 
-#: Modified.php:58
+#: Modified.php:59
 msgctxt "Setting Title"
 msgid "Insert Format"
 msgstr "قالب جای‌گذاری"
 
-#: Modified.php:59
+#: Modified.php:60
 msgctxt "Setting Description"
 msgid "Displays the date in this format on the content."
 msgstr ""
 
-#: Modified.php:66
+#: Modified.php:67
 msgctxt "Setting Title"
 msgid "Display After"
 msgstr "نمایش بعد از"
 
-#: Modified.php:67
+#: Modified.php:68
 msgctxt "Setting Description"
 msgid "Skips displaying modified since the original content published time."
 msgstr ""

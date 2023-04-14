@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Quotation\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-02-24 16:23+0330\n"
+"PO-Revision-Date: 2023-04-06 14:59+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -42,86 +42,95 @@ msgctxt "Column Title"
 msgid "Topic"
 msgstr "جستار"
 
+#: Quotation.php:86
+msgctxt "Field Title"
+msgid "Parent"
+msgstr "مادر"
+
 #: Quotation.php:87
+msgctxt "Field Description"
+msgid "Parent post of the Quote"
+msgstr ""
+
+#: Quotation.php:93
 msgctxt "Field Title"
 msgid "Pages"
 msgstr "صفحات"
 
-#: Quotation.php:88
+#: Quotation.php:94
 msgctxt "Field Description"
 msgid "Source Pages of the Quote"
 msgstr ""
 
-#: Quotation.php:94
+#: Quotation.php:100
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr "صفحه شروع"
 
-#: Quotation.php:95
+#: Quotation.php:101
 msgctxt "Field Description"
 msgid "Source Start Page of the Quote"
 msgstr ""
 
-#: Quotation.php:101
+#: Quotation.php:107
 msgctxt "Field Title"
 msgid "Page End"
 msgstr "صفحه پایان"
 
-#: Quotation.php:102
+#: Quotation.php:108
 msgctxt "Field Description"
 msgid "Source End Page of the Quote"
 msgstr ""
 
-#: Quotation.php:108
+#: Quotation.php:114
 msgctxt "Field Title"
 msgid "Volume"
 msgstr "جلد"
 
-#: Quotation.php:109
+#: Quotation.php:115
 msgctxt "Field Description"
 msgid "Source Volume of the Quote"
 msgstr ""
 
-#: Quotation.php:115
+#: Quotation.php:121
 msgctxt "Field Title"
 msgid "Reference"
 msgstr "ارجاع"
 
-#: Quotation.php:116
+#: Quotation.php:122
 msgctxt "Field Description"
 msgid "Reference to the Quote Source"
 msgstr ""
 
-#: Quotation.php:120
+#: Quotation.php:126
 msgctxt "Field Title"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Quotation.php:121
+#: Quotation.php:127
 msgctxt "Field Description"
 msgid "Description of the Quote"
 msgstr ""
 
-#: Quotation.php:215 Quotation.php:218
-msgctxt "Placeholder"
-msgid "Parent ID"
-msgstr "شناسه مادر"
-
-#: Quotation.php:227 Quotation.php:230
+#: Quotation.php:221 Quotation.php:224
 msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr "ترتیب فهرست"
 
 #. translators: %1$s: post parent, %2$s: menu order
-#: Quotation.php:247
+#: Quotation.php:241
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
 msgstr "[نقل از «%1$s» — %2$s]"
 
-#: Quotation.php:259
+#: Quotation.php:253
 msgctxt "Row Icon Title"
 msgid "Quotation Source"
 msgstr "منبع گفتاورد"
+
+#~ msgctxt "Placeholder"
+#~ msgid "Parent ID"
+#~ msgstr "شناسه مادر"
 
 #~ msgctxt "Title Template"
 #~ msgid "[Quote from “%1$s” (%2$s)]"

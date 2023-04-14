@@ -13,97 +13,97 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Connected\n"
 "X-Domain: geditorial-connected\n"
 
-#: Connected.php:31
+#: Connected.php:32
 msgctxt "Settings"
 msgid "Admin Column"
 msgstr ""
 
-#: Connected.php:32
+#: Connected.php:33
 msgctxt "Settings"
 msgid "Displays connected column on admin list screen."
 msgstr ""
 
-#: Connected.php:36
+#: Connected.php:37
 msgctxt "Setting Title"
 msgid "Admin Box Context"
 msgstr ""
 
-#: Connected.php:37
+#: Connected.php:38
 msgctxt "Settings"
 msgid "Where to display the connected box on admin post edit screen."
 msgstr ""
 
-#: Connected.php:39
+#: Connected.php:40
 msgctxt "Settings"
 msgid "Normal"
 msgstr ""
 
-#: Connected.php:40
+#: Connected.php:41
 msgctxt "Settings"
 msgid "Advanced"
 msgstr ""
 
-#: Connected.php:45
+#: Connected.php:46
 msgctxt "Settings"
 msgid "Duplicate Connections"
 msgstr ""
 
-#: Connected.php:46
+#: Connected.php:47
 msgctxt "Settings"
 msgid "Displays multiple connections between connecties."
 msgstr ""
 
-#: Connected.php:50
+#: Connected.php:51
 msgctxt "Settings"
 msgid "Description Field"
 msgstr ""
 
-#: Connected.php:51
+#: Connected.php:52
 msgctxt "Settings"
 msgid "Displays description field on connected metabox."
 msgstr ""
 
-#: Connected.php:56
+#: Connected.php:57
 msgctxt "Settings"
 msgid "Description Title"
 msgstr ""
 
-#: Connected.php:57
+#: Connected.php:58
 msgctxt "Settings"
 msgid "Appears as description column title on connected metabox."
 msgstr ""
 
-#: Connected.php:58
+#: Connected.php:59
 msgctxt "Settings"
 msgid "Description"
 msgstr ""
 
-#: Connected.php:90
+#: Connected.php:91
 msgctxt "Metabox Title"
 msgid "Connected"
 msgstr ""
 
-#: Connected.php:92
+#: Connected.php:93
 msgctxt "Label"
 msgid "Connectie"
 msgstr ""
 
-#: Connected.php:93
+#: Connected.php:94
 msgctxt "Label"
 msgid "Search Connecties"
 msgstr ""
 
-#: Connected.php:94
+#: Connected.php:95
 msgctxt "Label"
 msgid "No Connecties found."
 msgstr ""
 
-#: Connected.php:95
+#: Connected.php:96
 msgctxt "Label"
 msgid "Connect to a connectie"
 msgstr ""
 
-#: Connected.php:101
+#: Connected.php:102
 msgctxt "Field Title"
 msgid "Description"
 msgstr ""

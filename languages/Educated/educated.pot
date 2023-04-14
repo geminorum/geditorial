@@ -13,81 +13,76 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Educated\n"
 "X-Domain: geditorial-educated\n"
 
-#: Educated.php:28
+#: Educated.php:29
 msgctxt "Setting"
 msgid "There are no education definitions available!"
 msgstr ""
 
-#: Educated.php:36
+#: Educated.php:37
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr ""
 
-#: Educated.php:37
+#: Educated.php:38
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Education Definitions."
 msgstr ""
 
-#: Educated.php:43
+#: Educated.php:44
 msgctxt "Setting Title"
 msgid "Assign Roles"
 msgstr ""
 
-#: Educated.php:44
+#: Educated.php:45
 msgctxt "Setting Description"
 msgid "Roles that can Assign Education Definitions."
 msgstr ""
 
-#: Educated.php:50
+#: Educated.php:51
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: Educated.php:51
+#: Educated.php:52
 msgctxt "Setting Description"
 msgid "Roles that can see Education Definitions Reports."
 msgstr ""
 
-#: Educated.php:57
+#: Educated.php:58
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr ""
 
-#: Educated.php:58
+#: Educated.php:59
 msgctxt "Setting Description"
 msgid "Roles that check for Education Definitions visibility."
 msgstr ""
 
-#: Educated.php:64
+#: Educated.php:65
 msgctxt "Setting Title"
 msgid "Restricted Definitions"
 msgstr ""
 
-#: Educated.php:65
+#: Educated.php:66
 msgctxt "Setting Description"
 msgid "Handles visibility of each definition based on meta values."
 msgstr ""
 
-#: Educated.php:68
+#: Educated.php:69
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr ""
 
-#: Educated.php:69
+#: Educated.php:70
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr ""
 
-#: Educated.php:103
+#: Educated.php:104
 msgid "Education Definition"
 msgid_plural "Education Definitions"
 msgstr[0] ""
 msgstr[1] ""
-
-#: Educated.php:107
-msgctxt "Label: Menu Name"
-msgid "Educations"
-msgstr ""
 
 #: Educated.php:108
 msgctxt "Label: Show Option All"

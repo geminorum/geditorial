@@ -27,7 +27,7 @@ msgstr ""
 
 #: Archives.php:48
 #: Archives.php:99
-#: Archives.php:469
+#: Archives.php:470
 msgctxt "Icon Title"
 msgid "View Archives Page"
 msgstr ""
@@ -88,31 +88,31 @@ msgid "Prepends a search form to the posttype archive pages."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Archives.php:162
-#: Archives.php:176
+#: Archives.php:163
+#: Archives.php:177
 msgctxt "Help Sidebar"
 msgid "%s Archives"
 msgstr ""
 
 #. translators: %s: supported object label
-#: Archives.php:444
-#: Archives.php:453
+#: Archives.php:445
+#: Archives.php:454
 msgctxt "Navigation Metabox"
 msgid "%s Archives"
 msgstr ""
 
 #. translators: %s: taxonomy object label
-#: Archives.php:472
+#: Archives.php:473
 msgctxt "Card Title"
 msgid "Custom Archives Page for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Archives.php:484
+#: Archives.php:485
 msgctxt "Description"
 msgid "Link to the custom archives page generated for terms in this taxonomy."
 msgstr ""
 
-#: Archives.php:488
+#: Archives.php:489
 msgctxt "Message"
 msgid "There are no no custom archives pages available!"
 msgstr ""

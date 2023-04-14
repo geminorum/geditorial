@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Reshare\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-27 04:27+0330\n"
+"PO-Revision-Date: 2023-04-06 15:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -16,18 +16,17 @@ msgstr ""
 "X-Domain: geditorial-reshare\n"
 
 #: Reshare.php:71
-msgctxt "Column Title"
-msgid "Reshare Categories"
-msgstr "دسته‌های بازنشر"
-
-#: Reshare.php:74
 msgid "Reshare"
 msgid_plural "Reshares"
 msgstr[0] "بازنشرها"
 msgstr[1] "بازنشر"
 
-#: Reshare.php:75
+#: Reshare.php:72
 msgid "Reshare Category"
 msgid_plural "Reshare Categories"
 msgstr[0] "دسته‌های بازنشر"
 msgstr[1] "دسته بازنشر"
+
+#~ msgctxt "Column Title"
+#~ msgid "Reshare Categories"
+#~ msgstr "دسته‌های بازنشر"

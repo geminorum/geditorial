@@ -13,54 +13,54 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Dashboard\n"
 "X-Domain: geditorial-dashboard\n"
 
-#: Dashboard.php:33
+#: Dashboard.php:34
 msgctxt "Setting Title"
 msgid "Dashboard Page"
 msgstr ""
 
-#: Dashboard.php:34
+#: Dashboard.php:35
 msgctxt "Setting Description"
 msgid "Displays the selected page as dashboard page."
 msgstr ""
 
-#: Dashboard.php:41
+#: Dashboard.php:42
 msgctxt "Setting Title"
 msgid "Navigation Menu"
 msgstr ""
 
-#: Dashboard.php:42
+#: Dashboard.php:43
 msgctxt "Setting Description"
 msgid "Displays the selected nav-menu as dashboard navigation."
 msgstr ""
 
 #. translators: %s: HTML word
-#: Dashboard.php:48
+#: Dashboard.php:49
 msgctxt "Settings: Setting Description"
 msgid "Adds %s before contents on dashboard homepage."
 msgstr ""
 
 #. translators: %s: HTML word
-#: Dashboard.php:50
+#: Dashboard.php:51
 msgctxt "Settings: Setting Description"
 msgid "Adds %s after contents on dashboard homepage."
 msgstr ""
 
-#: Dashboard.php:60
+#: Dashboard.php:61
 msgctxt "Setting Button"
 msgid "Dashboard Page"
 msgstr ""
 
-#: Dashboard.php:106
+#: Dashboard.php:107
 msgctxt "Widget Area"
 msgid "Editorial: Dashboard"
 msgstr ""
 
-#: Dashboard.php:107
+#: Dashboard.php:108
 msgctxt "Widget Area"
 msgid "Widgets appear on Front-end Dashboard"
 msgstr ""
 
-#: Dashboard.php:170
+#: Dashboard.php:171
 msgctxt "Page-State"
 msgid "Dashboard"
 msgstr ""

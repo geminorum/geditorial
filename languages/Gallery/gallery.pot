@@ -13,45 +13,30 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Gallery\n"
 "X-Domain: geditorial-gallery\n"
 
-#: Gallery.php:60
+#: Gallery.php:61
 msgid "Photo Album"
 msgid_plural "Photo Albums"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:61
+#: Gallery.php:62
 msgid "Album Gallery"
 msgid_plural "Album Galleries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:62
+#: Gallery.php:63
 msgid "Photo Tag"
 msgid_plural "Photo Tags"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:71
-msgctxt "Posttype Menu"
+#: Gallery.php:67
+msgctxt "Label: Menu Name"
 msgid "Gallery"
 msgstr ""
 
-#: Gallery.php:72
-msgctxt "Posttype Featured"
+#: Gallery.php:68
+msgctxt "Label: Featured Image"
 msgid "Featured Photo"
-msgstr ""
-
-#: Gallery.php:75
-msgctxt "Column Title"
-msgid "Album Galleries"
-msgstr ""
-
-#: Gallery.php:78
-msgctxt "Column Title"
-msgid "Photo Tags"
-msgstr ""
-
-#: Gallery.php:106
-msgctxt "Button"
-msgid "Install Default Album Cats"
 msgstr ""
