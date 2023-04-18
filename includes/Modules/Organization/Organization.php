@@ -170,7 +170,12 @@ class Organization extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'primary_posttype', 'primary_paired', 'primary_subterm', 'primary_taxonomy' ];
+		return [
+			'primary_posttype',
+			'primary_paired',
+			'primary_subterm',
+			'primary_taxonomy'
+		];
 	}
 
 	protected function get_taxonomies_for_restrict_manage_posts()
@@ -178,7 +183,6 @@ class Organization extends gEditorial\Module
 		return [
 			'primary_subterm',
 			'primary_taxonomy',
-			'primary_subterm',
 			'type_taxonomy',
 			'status_taxonomy',
 		];
@@ -452,7 +456,7 @@ class Organization extends gEditorial\Module
 		if ( $newpost = $this->get_setting( 'quick_newpost' ) )
 			$this->do_render_thickbox_newpostbutton( $post, 'primary_posttype', 'newpost', [ 'target' => 'paired' ] );
 
-		$this->paired_do_render_metabox( $post, 'primary_posttype', 'primary_paired', 'section_tax', $newpost );
+		$this->paired_do_render_metabox( $post, 'primary_posttype', 'primary_paired', 'primary_subterm', $newpost );
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
@@ -460,7 +464,7 @@ class Organization extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
 
-		$this->paired_do_store_metabox( $post, 'primary_posttype', 'primary_paired', 'section_tax' );
+		$this->paired_do_store_metabox( $post, 'primary_posttype', 'primary_paired', 'primary_subterm' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )
