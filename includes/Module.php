@@ -3382,7 +3382,7 @@ class Module extends Base
 	}
 
 	// PAIRED API
-	protected function paired_register_objects( $posttype, $taxonomy, $subterm = FALSE, $extra = [], $supported = NULL )
+	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $extra = [], $supported = NULL )
 	{
 		if ( is_null( $supported ) )
 			$supported = $this->posttypes();
@@ -3400,17 +3400,17 @@ class Module extends Base
 					'show_in_nav_menus'  => TRUE,
 				], $supported );
 
-			$this->register_taxonomy( $taxonomy, [
+			$this->register_taxonomy( $paired, [
 				Paired::PAIRED_POSTTYPE_PROP => $this->constant( $posttype ),
 				'show_ui'                    => FALSE,
 				'show_in_rest'               => FALSE,
 				'hierarchical'               => TRUE,
 				// the paired taxonomies are often in plural
 				// FIXME: WTF: will confilict with posttype rest base!
-				// 'rest_base'    => $this->constant( $taxonomy.'_slug', str_replace( '_', '-', $this->constant( $taxonomy ) ) ),
+				// 'rest_base'    => $this->constant( $paired.'_slug', str_replace( '_', '-', $this->constant( $paired ) ) ),
 			], $supported );
 
-			$this->_paired = $this->constant( $taxonomy );
+			$this->_paired = $this->constant( $paired );
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
 		}
 
@@ -4100,39 +4100,39 @@ class Module extends Base
 	// PAIRED API
 	// NOTE: subterms must be hierarchical
 	// OLD: `do_render_metabox_assoc()`
-	protected function paired_do_render_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant = FALSE, $display_empty = FALSE )
+	protected function paired_do_render_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE, $display_empty = FALSE )
 	{
-		$sub_tax   = FALSE;
+		$subterm   = FALSE;
 		$dropdowns = $displayed = $parents = [];
 		$excludes  = $this->paired_get_dropdown_excludes();
+		$multiple  = $this->get_setting( 'multiple_instances', FALSE );
 		$forced    = $this->get_setting( 'paired_force_parents', FALSE );
 		$posttype  = $this->constant( $posttype_constant );
-		$taxonomy  = $this->constant( $tax_constant );
-		$terms     = Taxonomy::getPostTerms( $taxonomy, $post );
-		$none_def  = Settings::showOptionNone();
+		$paired    = $this->constant( $paired_constant );
+		$terms     = Taxonomy::getPostTerms( $paired, $post );
 		$none_main = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
 		$prefix    = $this->classs();
 
-		if ( $sub_tax_constant && $this->get_setting( 'subterms_support' ) ) {
+		if ( $subterm_constant && $this->get_setting( 'subterms_support' ) ) {
 
-			$sub_tax  = $this->constant( $sub_tax_constant );
-			$none_sub = Helper::getTaxonomyLabel( $sub_tax, 'show_option_select' );
-			$subterms = Taxonomy::getPostTerms( $sub_tax, $post );
+			$subterm  = $this->constant( $subterm_constant );
+			$none_sub = Helper::getTaxonomyLabel( $subterm, 'show_option_select' );
+			$subterms = Taxonomy::getPostTerms( $subterm, $post );
 		}
 
 		foreach ( $terms as $term ) {
 
-			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant, $tax_constant ) )
+			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant, $paired_constant ) )
 				continue;
 
 			if ( in_array( $to_post_id, $excludes, TRUE ) )
 				continue;
 
-			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, $to_post_id, $prefix, $excludes, $none_main, $display_empty );
+			$dropdown = MetaBox::paired_dropdownToPosts( $posttype, $paired, $to_post_id, $prefix, $excludes, $none_main, $display_empty );
 
-			if ( $sub_tax ) {
+			if ( $subterm ) {
 
-				if ( $this->get_setting( 'multiple_instances' ) ) {
+				if ( $multiple ) {
 
 					$sub_meta = get_post_meta( $post->ID, sprintf( '_%s_subterm_%s', $posttype, $to_post_id ), TRUE );
 					$selected = ( $sub_meta && $subterms && in_array( $sub_meta, $subterms ) ) ? $sub_meta : 0;
@@ -4142,7 +4142,10 @@ class Module extends Base
 					$selected = $subterms ? array_pop( $subterms ) : 0;
 				}
 
-				$dropdown.= MetaBox::paired_dropdownSubTerms( $sub_tax, $to_post_id, $this->classs( $sub_tax ), $selected, $none_sub );
+				$dropdown.= MetaBox::paired_dropdownSubTerms( $subterm, $to_post_id, $this->classs( $subterm ), $selected, $none_sub );
+
+				if ( $multiple )
+					$dropdown.= '<hr />';
 			}
 
 			$parents[] = $term->parent;
@@ -4156,10 +4159,10 @@ class Module extends Base
 		$excludes = Arraay::prepNumeral( $excludes, $displayed );
 
 		if ( empty( $dropdowns ) )
-			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
+			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $paired, '0', $prefix, $excludes, $none_main, $display_empty );
 
-		else if ( $this->get_setting( 'multiple_instances' ) )
-			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $taxonomy, '0', $prefix, $excludes, $none_main, $display_empty );
+		else if ( $multiple )
+			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $paired, '0', $prefix, $excludes, $none_main, $display_empty );
 
 		foreach ( $dropdowns as $dropdown )
 			if ( $dropdown )
@@ -4167,13 +4170,13 @@ class Module extends Base
 
 		// TODO: support for clear all button via js, like `subterms`
 
-		if ( $sub_tax )
+		if ( $subterm )
 			$this->enqueue_asset_js( 'subterms', 'module' );
 	}
 
 	// PAIRED API
 	// OLD: `do_store_metabox_assoc()`
-	protected function paired_do_store_metabox( $post, $posttype_constant, $tax_constant, $sub_tax_constant = FALSE )
+	protected function paired_do_store_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE )
 	{
 		$posttype = $this->constant( $posttype_constant );
 		$forced   = $this->get_setting( 'paired_force_parents', FALSE );
@@ -4189,7 +4192,7 @@ class Module extends Base
 			if ( ! $paired_id )
 				continue;
 
-			if ( ! $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $tax_constant ) )
+			if ( ! $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $paired_constant ) )
 				continue;
 
 			$terms[] = $term->term_id;
@@ -4198,12 +4201,12 @@ class Module extends Base
 				$terms = array_merge( Taxonomy::getTermParents( $term->term_id, $term->taxonomy ), $terms );
 		}
 
-		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $this->constant( $tax_constant ), FALSE );
+		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $this->constant( $paired_constant ), FALSE );
 
-		if ( ! $sub_tax_constant || ! $this->get_setting( 'subterms_support' ) )
+		if ( ! $subterm_constant || ! $this->get_setting( 'subterms_support' ) )
 			return;
 
-		$sub_tax = $this->constant( $sub_tax_constant );
+		$sub_tax = $this->constant( $subterm_constant );
 
 		// no post, no subterm
 		if ( ! count( $terms ) )
@@ -5374,8 +5377,8 @@ class Module extends Base
 		return [
 			FALSE, // posttype: `primary_posttype`
 			FALSE, // taxonomy: `primary_paired`
-			FALSE, // subterm: `primary_subterm`
-			FALSE, // exclude: `primary_taxonomy`
+			FALSE, // subterm:  `primary_subterm`
+			FALSE, // exclude:  `primary_taxonomy`
 		];
 	}
 
