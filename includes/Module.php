@@ -238,7 +238,7 @@ class Module extends Base
 		return TRUE;
 	}
 
-	protected function setup_disabled()
+	public function setup_disabled()
 	{
 		if ( $this->disable_no_customs && ! count( $this->posttypes() ) && ! count( $this->taxonomies() ) )
 			return TRUE;

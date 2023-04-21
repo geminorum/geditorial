@@ -331,7 +331,13 @@ class Plugin
 
 	public function enabled( $module )
 	{
-		return isset( $this->{$module} );
+		if ( ! isset( $this->{$module} ) )
+			return FALSE;
+
+		if ( $this->{$module}->setup_disabled() )
+			return FALSE;
+
+		return TRUE;
 	}
 
 	public function disable_process( $module, $context = 'import' )

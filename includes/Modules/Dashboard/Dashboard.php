@@ -61,7 +61,7 @@ class Dashboard extends gEditorial\Module
 			_x( 'Dashboard Page', 'Setting Button', 'geditorial-dashboard' ), 'link' );
 	}
 
-	protected function setup_disabled()
+	public function setup_disabled()
 	{
 		if ( ! $page = $this->get_setting( 'dashboard_page_id', 0 ) )
 			return TRUE;
