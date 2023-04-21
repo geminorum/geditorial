@@ -50,6 +50,25 @@ class Helper extends Main
 			: ucwords( str_replace( [ '_', '-' ], ' ', $module ) );
 	}
 
+	public static function moduleLoading( $module, $stage = NULL )
+	{
+		if ( 'private' === $module->access && ! GEDITORIAL_LOAD_PRIVATES )
+			return FALSE;
+
+		if ( 'beta' === $module->access && ! GEDITORIAL_BETA_FEATURES )
+			return FALSE;
+
+		$stage = $stage ?? self::const( 'WP_STAGE', 'production' );  // 'development'
+
+		if ( 'production' !== $stage )
+			return TRUE;
+
+		if ( in_array( $module->access, [ 'alpha', 'experimental', 'unknown' ], TRUE ) )
+			return FALSE;
+
+		return TRUE;
+	}
+
 	public static function moduleEnabled( $options )
 	{
 		$enabled = isset( $options->enabled ) ? $options->enabled : FALSE;

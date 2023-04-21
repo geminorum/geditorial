@@ -593,12 +593,17 @@ class Config extends gEditorial\Module
 
 	public function settings_from()
 	{
+		$stage = Helper::const( 'WP_STAGE', 'production' );  // 'development'
+
 		echo '<div class="modules -list">';
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
 			// skip if `config`
 			if ( $this->module->name === $module->name )
+				continue;
+
+			if ( ! Helper::moduleLoading( $module, $stage ) )
 				continue;
 
 			$enabled = gEditorial()->enabled( $module->name );

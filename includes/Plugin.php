@@ -192,20 +192,14 @@ class Plugin
 	private function init_modules()
 	{
 		$locale = apply_filters( 'plugin_locale', L10n::locale(), static::BASE );
-		$env    = Helper::const( 'WP_STAGE', 'production' );                       // 'development'
+		$stage  = Helper::const( 'WP_STAGE', 'production' ); // 'development'
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
 			if ( ! isset( $this->_options->{$mod_name} ) )
 				continue;
 
-			if ( 'private' === $module->access && ! GEDITORIAL_LOAD_PRIVATES )
-				continue;
-
-			if ( 'beta' === $module->access && ! GEDITORIAL_BETA_FEATURES )
-				continue;
-
-			if ( 'production' === $env && in_array( $module->access, [ 'alpha', 'experimental', 'unknown' ], TRUE ) )
+			if ( ! Helper::moduleLoading( $module, $stage ) )
 				continue;
 
 			if ( $module->autoload || Helper::moduleEnabled( $this->_options->{$mod_name} ) ) {
