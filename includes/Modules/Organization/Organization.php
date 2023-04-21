@@ -435,7 +435,7 @@ class Organization extends gEditorial\Module
 
 		if ( $this->get_setting( 'quick_newpost' ) ) {
 
-			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_issue' );
+			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_department' );
 
 		} else {
 
@@ -443,10 +443,10 @@ class Organization extends gEditorial\Module
 				MetaBox::fieldEmptyPostType( $this->constant( 'primary_posttype' ) );
 
 			else
-				$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_issue' );
+				$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_department' );
 		}
 
-		do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_issue' );
+		do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_department' );
 
 		echo '</div>';
 	}

@@ -21,6 +21,7 @@ class WcWidgets extends gEditorial\Module
 			'desc'     => _x( 'Widget Enhancements for WooCommerce', 'Modules: WC Widgets', 'geditorial' ),
 			'icon'     => 'welcome-widgets-menus',
 			'i18n'     => 'adminonly',
+			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
 	}

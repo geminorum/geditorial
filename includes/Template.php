@@ -548,7 +548,9 @@ class Template extends Main
 		if ( FALSE === $meta )
 			return $args['default'];
 
-		$field  = gEditorial()->module( 'meta' )->get_posttype_field_args( $field_key, $post->post_type );
+		if ( ! $field = gEditorial()->module( 'meta' )->get_posttype_field_args( $field_key, $post->post_type ) )
+			return $args['default']; // field data found but currently not enabled for the posttype
+
 		$access = gEditorial()->module( 'meta' )->access_posttype_field( $field, $post, $args['context'] );
 
 		if ( ! $access )

@@ -24,6 +24,7 @@ class Wysiwyg extends gEditorial\Module
 			'desc'     => _x( 'What You See Is What You Get', 'Modules: Wysiwyg', 'geditorial' ),
 			'icon'     => 'embed-generic',
 			'i18n'     => 'adminonly',
+			'access'   => 'beta',
 			'frontend' => FALSE,
 		];
 	}

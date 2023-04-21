@@ -21,6 +21,7 @@ class WcUnits extends gEditorial\Module
 			'desc'     => _x( 'Weight and Dimensions Enhancements for WooCommerce', 'Modules: WC Units', 'geditorial' ),
 			'icon'     => 'image-crop',
 			'i18n'     => 'adminonly',
+			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
 	}

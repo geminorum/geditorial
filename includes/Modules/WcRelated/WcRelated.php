@@ -6,7 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\WooCommerce;
@@ -22,6 +21,7 @@ class WcRelated extends gEditorial\Module
 			'desc'     => _x( 'Related Product Enhancements for WooCommerce', 'Modules: WC Related', 'geditorial' ),
 			'icon'     => 'tagcloud',
 			'i18n'     => 'adminonly',
+			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
 	}

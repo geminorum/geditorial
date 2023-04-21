@@ -20,8 +20,6 @@ use geminorum\gEditorial\WordPress\Strings;
 class Attachments extends gEditorial\Module
 {
 
-	protected $disable_no_posttypes = TRUE;
-
 	public static function module()
 	{
 		return [

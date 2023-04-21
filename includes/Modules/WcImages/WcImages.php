@@ -9,7 +9,6 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\WooCommerce;
 
 class WcImages extends gEditorial\Module
@@ -22,9 +21,10 @@ class WcImages extends gEditorial\Module
 			'title'     => _x( 'WC Images', 'Modules: WC Images', 'geditorial' ),
 			'desc'      => _x( 'Tools for Product Galleries', 'Modules: WC Images', 'geditorial' ),
 			'icon'      => 'images-alt2',
-			'disabled'  => Helper::moduleCheckWooCommerce(),
 			'configure' => 'tools',
+			'access'    => 'beta',
 			'frontend'  => FALSE,
+			'disabled'  => Helper::moduleCheckWooCommerce(),
 		];
 	}
 

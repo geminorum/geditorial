@@ -24,6 +24,7 @@ class WcPurchased extends gEditorial\Module
 			'title'    => _x( 'WC Purchased', 'Modules: WC Purchased', 'geditorial' ),
 			'desc'     => _x( 'Product Purchase Reports for WooCommerce', 'Modules: WC Purchased', 'geditorial' ),
 			'icon'     => 'store',
+			'access'   => 'beta',
 			'frontend' => FALSE,
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];

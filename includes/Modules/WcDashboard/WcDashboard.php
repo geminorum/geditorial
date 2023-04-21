@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 
 class WcDashboard extends gEditorial\Module
@@ -18,6 +17,7 @@ class WcDashboard extends gEditorial\Module
 			'title'    => _x( 'WC Dashboard', 'Modules: WC Dashboard', 'geditorial' ),
 			'desc'     => _x( 'Customer Dashboard Enhancements for WooCommerce', 'Modules: WC Dashboard', 'geditorial' ),
 			'icon'     => 'dashboard',
+			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
 	}

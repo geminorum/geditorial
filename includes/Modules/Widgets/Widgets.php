@@ -13,11 +13,12 @@ class Widgets extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'  => 'widgets',
-			'title' => _x( 'Widgets', 'Modules: Widgets', 'geditorial' ),
-			'desc'  => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial' ),
-			'icon'  => 'welcome-widgets-menus',
-			'i18n'  => 'adminonly',
+			'name'   => 'widgets',
+			'title'  => _x( 'Widgets', 'Modules: Widgets', 'geditorial' ),
+			'desc'   => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial' ),
+			'icon'   => 'welcome-widgets-menus',
+			'i18n'   => 'adminonly',
+			'access' => 'stable',
 		];
 	}
 

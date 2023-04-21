@@ -2092,6 +2092,9 @@ class Module extends Base
 	 */
 	public function access_posttype_field( $field, $post = NULL, $context = 'view', $user_id = NULL )
 	{
+		if ( ! $field )
+			return FALSE; // no field, no access!
+
 		$context = in_array( $context, [ 'view', 'edit' ], TRUE ) ? $context : 'view';
 		$access  = array_key_exists( 'access_'.$context, $field )
 			? $field['access_'.$context] : NULL;
@@ -4117,7 +4120,7 @@ class Module extends Base
 
 			$subterm  = $this->constant( $subterm_constant );
 			$none_sub = Helper::getTaxonomyLabel( $subterm, 'show_option_select' );
-			$subterms = Taxonomy::getPostTerms( $subterm, $post );
+			$subterms = Taxonomy::getPostTerms( $subterm, $post, FALSE );
 		}
 
 		foreach ( $terms as $term ) {
@@ -4206,30 +4209,31 @@ class Module extends Base
 		if ( ! $subterm_constant || ! $this->get_setting( 'subterms_support' ) )
 			return;
 
-		$sub_tax = $this->constant( $subterm_constant );
+		$subterm = $this->constant( $subterm_constant );
 
 		// no post, no subterm
 		if ( ! count( $terms ) )
-			return wp_set_object_terms( $post->ID, [], $sub_tax, FALSE );
+			return wp_set_object_terms( $post->ID, [], $subterm, FALSE );
 
-		$subterm = self::req( $this->classs( $sub_tax ), FALSE );
+		$request = self::req( $this->classs( $subterm ), FALSE );
 
-		if ( FALSE === $subterm )
+		if ( FALSE === $request || ! is_array( $request ) )
 			return;
 
 		$subterms = [];
+		$multiple = $this->get_setting( 'multiple_instances', FALSE );
 
 		foreach ( (array) $paired as $paired_id ) {
 
 			if ( ! $paired_id )
 				continue;
 
-			if ( ! array_key_exists( $paired_id, $subterm ) )
+			if ( ! array_key_exists( $paired_id, $request ) )
 				continue;
 
-			$sub_paired = $subterm[$paired_id];
+			$sub_paired = $request[$paired_id];
 
-			if ( $this->get_setting( 'multiple_instances' ) ) {
+			if ( $multiple ) {
 
 				$sub_metakey = sprintf( '_%s_subterm_%s', $posttype, $paired_id );
 
@@ -4243,7 +4247,7 @@ class Module extends Base
 				$subterms[] = (int) $sub_paired;
 		}
 
-		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $subterms ), $sub_tax, FALSE );
+		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $subterms ), $subterm, FALSE );
 	}
 
 	protected function _hook_store_metabox( $posttype )
@@ -4425,7 +4429,7 @@ class Module extends Base
 		if ( is_null( $title ) && ! empty( $object->labels->metabox_title ) )
 			$title = $object->labels->metabox_title;
 
-		if ( is_null( $title ) )
+		if ( is_null( $title ) && ! empty( $object->labels->name ) )
 			$title = $object->labels->name;
 
 		return $title; // <-- // FIXME: problems with block editor
@@ -6140,6 +6144,20 @@ class Module extends Base
 	public function newpost_content_menu_order( $posttype, $post, $target, $linked )
 	{
 		HTML::inputHidden( 'menu_order', PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
+	}
+
+	protected function _hook_menu_posttype( $constant, $parent_slug = 'index.php', $context = 'adminpage' )
+	{
+		if ( ! $posttype = get_post_type_object( $this->constant( $constant ) ) )
+			return FALSE;
+
+		return add_submenu_page(
+			$parent_slug,
+			HTML::escape( $this->get_string( 'page_title', $constant, $context, $posttype->labels->all_items ) ),
+			HTML::escape( $this->get_string( 'menu_title', $constant, $context, $posttype->labels->menu_name ) ),
+			$posttype->cap->edit_posts,
+			'edit.php?post_type='.$posttype->name
+		);
 	}
 
 	// $parent_slug options: `options-general.php`, `users.php`
