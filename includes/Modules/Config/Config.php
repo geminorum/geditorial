@@ -99,7 +99,7 @@ class Config extends gEditorial\Module
 			if ( FALSE !== $module->disabled )
 				continue;
 
-			if ( ! gEditorial()->enabled( $module->name ) )
+			if ( ! gEditorial()->enabled( $module->name, FALSE ) )
 				continue;
 
 			add_submenu_page(
@@ -583,7 +583,7 @@ class Config extends gEditorial\Module
 		else if ( ! $module = gEditorial()->get_module_by( 'name', $key ) )
 			return Settings::wrapError( HTML::warning( _x( 'Not a registered Editorial module.', 'Page Notice', 'geditorial-config' ), FALSE ) );
 
-		if ( ! gEditorial()->enabled( $module->name ) )
+		if ( ! gEditorial()->enabled( $module->name, FALSE ) )
 			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Page Notice', 'geditorial-config' ), FALSE ) );
 
 		gEditorial()->module( $module->name )->settings_header();
@@ -606,7 +606,7 @@ class Config extends gEditorial\Module
 			if ( ! Helper::moduleLoading( $module, $stage ) )
 				continue;
 
-			$enabled = gEditorial()->enabled( $module->name );
+			$enabled = gEditorial()->enabled( $module->name, FALSE );
 
 			echo '<div data-module="'.$module->name.'" class="module '
 				.( $enabled ? '-enabled' : '-disabled' ).'">';

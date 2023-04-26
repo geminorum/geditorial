@@ -323,12 +323,12 @@ class Plugin
 		return FALSE;
 	}
 
-	public function enabled( $module )
+	public function enabled( $module, $setup_check = TRUE )
 	{
 		if ( ! isset( $this->{$module} ) )
 			return FALSE;
 
-		if ( $this->{$module}->setup_disabled() )
+		if ( $setup_check && $this->{$module}->setup_disabled() )
 			return FALSE;
 
 		return TRUE;
@@ -390,7 +390,7 @@ class Plugin
 			return $list;
 
 		foreach ( $this->modules( $orderby ) as $module )
-			if ( ! $enabled_only || $this->enabled( $module->name ) )
+			if ( ! $enabled_only || $this->enabled( $module->name, FALSE ) )
 				$list[$module->name] = $module->title;
 
 		return $list;
