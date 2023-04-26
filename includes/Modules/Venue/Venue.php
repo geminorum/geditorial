@@ -202,9 +202,7 @@ class Venue extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'place_cpt' );
 
-		$this->paired_register_objects( 'place_cpt', 'place_tax', 'facility_tax', [
-			'primary_taxonomy' => $this->constant( 'place_cat' ),
-		] );
+		$this->paired_register_objects( 'place_cpt', 'place_tax', 'facility_tax', 'place_cat' );
 
 		$this->register_shortcode( 'place_shortcode' );
 

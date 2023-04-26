@@ -3385,7 +3385,7 @@ class Module extends Base
 	}
 
 	// PAIRED API
-	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $extra = [], $supported = NULL )
+	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $extra = [], $supported = NULL )
 	{
 		if ( is_null( $supported ) )
 			$supported = $this->posttypes();
@@ -3417,10 +3417,13 @@ class Module extends Base
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
 		}
 
+		if ( $primary && ! array_key_exists( 'primary_taxonomy', $extra ) )
+			$extra['primary_taxonomy'] = $this->constant( $primary );
+
 		return $this->register_posttype( $posttype, array_merge( [
 			Paired::PAIRED_TAXONOMY_PROP => $this->_paired,
 			'hierarchical'               => TRUE,
-			'show_in_nav_menus'          => FALSE,
+			'show_in_nav_menus'          => TRUE,
 			'show_in_admin_bar'          => FALSE,
 			'rewrite'                    => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),

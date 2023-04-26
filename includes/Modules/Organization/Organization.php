@@ -224,9 +224,7 @@ class Organization extends gEditorial\Module
 			'meta_box_cb'        => '__singleselect_terms_callback',
 		], 'primary_posttype' );
 
-		$this->paired_register_objects( 'primary_posttype', 'primary_paired', 'primary_subterm', [
-			'show_in_nav_menus' => TRUE,
-		] );
+		$this->paired_register_objects( 'primary_posttype', 'primary_paired', 'primary_subterm' );
 
 		if ( $this->get_setting( 'subterms_support' ) )
 			$this->register_shortcode( 'subterm_shortcode' );

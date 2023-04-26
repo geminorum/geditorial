@@ -250,9 +250,7 @@ class Course extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'lesson_cpt' );
 
-		$this->paired_register_objects( 'course_cpt', 'course_tax', 'topic_tax', [
-			'primary_taxonomy' => $this->constant( 'course_cat' ),
-		] );
+		$this->paired_register_objects( 'course_cpt', 'course_tax', 'topic_tax', 'course_cat' );
 
 		$this->register_posttype( 'lesson_cpt' );
 
