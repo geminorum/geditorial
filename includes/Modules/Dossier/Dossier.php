@@ -65,7 +65,7 @@ class Dossier extends gEditorial\Module
 				],
 			],
 			'_content' => [
-				'archive_title',
+				'archive_title' => [ NULL, $this->get_posttype_label( 'dossier_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
 			],

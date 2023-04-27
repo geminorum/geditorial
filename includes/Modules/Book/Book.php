@@ -78,7 +78,7 @@ class Book extends gEditorial\Module
 			'_content' => [
 				'display_searchform',
 				'empty_content',
-				'archive_title',
+				'archive_title' => [ NULL, $this->get_posttype_label( 'publication_cpt', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
 			],

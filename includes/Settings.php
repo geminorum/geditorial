@@ -772,7 +772,7 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function getSetting_archive_title( $description = NULL )
+	public static function getSetting_archive_title( $description = NULL, $placeholder = FALSE )
 	{
 		return [
 			'field'       => 'archive_title',
@@ -780,6 +780,7 @@ class Settings extends Core\Base
 			'title'       => _x( 'Archive Title', 'Setting: Setting Title', 'geditorial' ),
 			/* translators: %s: zero placeholder */
 			'description' => $description ?: sprintf( _x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial' ), HTML::code( '0' ) ),
+			'placeholder' => $placeholder,
 		];
 	}
 
