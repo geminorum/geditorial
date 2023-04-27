@@ -914,7 +914,7 @@ class Template extends Main
 						continue;
 
 					if ( is_null( $title ) )
-						$title = Taxonomy::object( $key )->labels->singular_name;
+						$title = Helper::getTaxonomyLabel( $key, 'singular_name' );
 
 					$rows[$title] = Strings::getJoined( $terms );
 				}

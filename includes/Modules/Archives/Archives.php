@@ -341,7 +341,7 @@ class Archives extends gEditorial\Module
 
 	private function _get_posttype_archive_title( $posttype, $settings = TRUE )
 	{
-		$default = PostType::object( $posttype )->labels->all_items;
+		$default = Helper::getPostTypeLabel( $posttype, 'all_items' );
 		$custom  = $settings ? $this->get_setting( 'posttype_'.$posttype.'_title', $default ) : $default;
 
 		return $this->filters( 'posttype_archive_title', $custom ?: $default, $posttype );
@@ -372,7 +372,7 @@ class Archives extends gEditorial\Module
 
 	private function _get_taxonomy_archive_title( $taxonomy, $settings = TRUE )
 	{
-		$default = Taxonomy::object( $taxonomy )->labels->all_items;
+		$default = Helper::getTaxonomyLabel( $taxonomy, 'all_items' );
 		$custom  = $settings ? $this->get_setting( 'taxonomy_'.$taxonomy.'_title', $default ) : $default;
 
 		return $this->filters( 'taxonomy_archive_title', $custom ?: $default, $taxonomy );

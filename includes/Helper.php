@@ -801,7 +801,7 @@ class Helper extends Main
 		return $pre;
 	}
 
-	public static function getPostTypeLabel( $posttype, $label, $fallback_key = 'name' )
+	public static function getPostTypeLabel( $posttype, $label, $fallback_key = NULL, $fallback = '' )
 	{
 		if ( ! $object = PostType::object( $posttype ) )
 			return $label;
@@ -833,10 +833,10 @@ class Helper extends Main
 				return sprintf( '&ndash; %s &ndash;', trim( $object->labels->parent_item_colon, ':' ) );
 		}
 
-		if ( isset( $object->labels->{$fallback_key} ) )
+		if ( $fallback_key && isset( $object->labels->{$fallback_key} ) )
 			return $object->labels->{$fallback_key};
 
-		return $label;
+		return $fallback;
 	}
 
 	/**
@@ -939,7 +939,7 @@ class Helper extends Main
 		return $pre;
 	}
 
-	public static function getTaxonomyLabel( $taxonomy, $label, $fallback_key = 'name' )
+	public static function getTaxonomyLabel( $taxonomy, $label, $fallback_key = NULL, $fallback = '' )
 	{
 		if ( ! $object = Taxonomy::object( $taxonomy ) )
 			return $label;
@@ -970,10 +970,10 @@ class Helper extends Main
 				return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );
 		}
 
-		if ( isset( $object->labels->{$fallback_key} ) )
+		if ( $fallback_key && isset( $object->labels->{$fallback_key} ) )
 			return $object->labels->{$fallback_key};
 
-		return $label;
+		return $fallback;
 	}
 
 	/**

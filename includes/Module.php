@@ -859,7 +859,7 @@ class Module extends Base
 		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
 			$this->action( 'admin_footer', 0, 20, $context );
 
-		$name  = PostType::object( $post->post_type )->labels->singular_name;
+		$name  = Helper::getPostTypeLabel( $post->post_type, 'singular_name' );
 		$title = $this->get_string( 'mainbutton_title', $context ?: $post->post_type, 'metabox', NULL );
 		$text  = $this->get_string( 'mainbutton_text', $context ?: $post->post_type, 'metabox', $name );
 
@@ -2916,13 +2916,7 @@ class Module extends Base
 
 	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )
 	{
-		if ( ! $object = PostType::object( $this->constant( $constant, $constant ) ) )
-			return $fallback;
-
-		if ( ! isset( $object->labels->{$label} ) )
-			return $fallback;
-
-		return $object->labels->{$label};
+		return Helper::getPostTypeLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
 	}
 
 	public function get_posttype_labels( $constant )
@@ -3085,13 +3079,7 @@ class Module extends Base
 
 	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '' )
 	{
-		if ( ! $object = Taxonomy::object( $this->constant( $constant, $constant ) ) )
-			return $fallback;
-
-		if ( ! isset( $object->labels->{$label} ) )
-			return $fallback;
-
-		return $object->labels->{$label};
+		return Helper::getTaxonomyLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
 	}
 
 	public function get_taxonomy_labels( $constant )
@@ -6471,7 +6459,7 @@ class Module extends Base
 	public function template_get_archive_title( $posttype )
 	{
 		return $this->get_setting_fallback( 'archive_title',
-			PostType::object( $posttype )->labels->all_items );
+			Helper::getPostTypeLabel( $posttype, 'all_items' ) );
 	}
 
 	// no need to check for posttype

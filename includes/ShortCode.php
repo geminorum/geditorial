@@ -353,7 +353,7 @@ class ShortCode extends Main
 		if ( 'posttype' === $args['title'] )
 			$args['title'] = NULL; // reset
 
-		$text = $posttype->labels->{$args['title_label']};
+		$text = Helper::getPostTypeLabel( $posttype, $args['title_label'] );
 		$link = PostType::getArchiveLink( $posttype->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
@@ -426,7 +426,7 @@ class ShortCode extends Main
 		if ( 'taxonomy' === $args['title'] )
 			$args['title'] = NULL; // reset
 
-		$text = $taxonomy->labels->{$args['title_label']};
+		$text = Helper::getTaxonomyLabel( $taxonomy, $args['title_label'] );
 		$link = Taxonomy::getArchiveLink( $taxonomy->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
