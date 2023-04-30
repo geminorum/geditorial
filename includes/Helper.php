@@ -1112,7 +1112,16 @@ class Helper extends Main
 		if ( ! Term::setTaxonomy( $term, $paired_to ) )
 			return FALSE;
 
-		return Post::setPostType( $post, $posttype );
+		if ( ! Post::setPostType( $post, $posttype ) )
+			return FALSE;
+
+		delete_post_meta( $post->ID, '_'.$post->post_type.'_term_id' );
+		delete_term_meta( $term->term_id, $post->post_type.'_linked' );
+
+		update_post_meta( $post->ID, '_'.$posttype->name.'_term_id', $term->term_id );
+		update_term_meta( $term->term_id, $posttype->name.'_linked', $post->ID );
+
+		return TRUE;
 	}
 
 	public static function getLayout( $name, $require = FALSE, $no_cache = FALSE )
