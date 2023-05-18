@@ -219,6 +219,7 @@ class Organization extends gEditorial\Module
 		], 'primary_posttype' );
 
 		$this->register_taxonomy( 'status_taxonomy', [
+			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__singleselect_terms_callback',
@@ -302,6 +303,9 @@ class Organization extends gEditorial\Module
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( $subterms && $subterms === $screen->taxonomy )
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'primary_posttype' ) ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 

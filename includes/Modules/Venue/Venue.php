@@ -293,6 +293,9 @@ class Venue extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
+			if ( $subterms && $subterms === $screen->taxonomy )
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'place_cpt' ) ) );
+
 			if ( 'edit-tags' == $screen->base ) {
 
 				$this->_hook_paired_taxonomy_bulk_actions( $screen->post_type, $screen->taxonomy );

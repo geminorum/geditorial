@@ -3397,7 +3397,7 @@ class Module extends Base
 				'show_in_rest'               => FALSE,
 				'hierarchical'               => TRUE,
 				// the paired taxonomies are often in plural
-				// FIXME: WTF: will confilict with posttype rest base!
+				// FIXME: WTF: conflict on the posttype rest base!
 				// 'rest_base'    => $this->constant( $paired.'_slug', str_replace( '_', '-', $this->constant( $paired ) ) ),
 			], $supported );
 

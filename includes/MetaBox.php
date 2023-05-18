@@ -756,23 +756,21 @@ class MetaBox extends WordPress\Main
 			self::fieldEmptyTaxonomy( $obj, NULL, $post->post_type );
 	}
 
-	public static function glancePosttype( $posttype, $noop, $extra_class = '' )
+	public static function glancePosttype( $posttype, $noop, $extra_class = '', $status = 'publish' )
 	{
 		$posts = WordPress\Database::countPostsByPosttype( $posttype );
 
-		if ( ! $posts['publish'] )
+		if ( empty( $posts[$status] ) )
 			return FALSE;
 
-		$object = WordPress\PostType::object( $posttype );
-
 		$class  = Core\HTML::prepClass( 'geditorial-glance-item', '-posttype', '-posttype-'.$posttype, $extra_class );
-		$format = current_user_can( $object->cap->edit_posts )
+		$format = WordPress\PostType::can( $posttype, 'edit_posts' )
 			? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>'
 			: '<div class="'.$class.'">%1$s %2$s</div>';
 
 		return vsprintf( $format, [
-			Core\Number::format( $posts['publish'] ),
-			Helper::noopedCount( $posts['publish'], $noop ),
+			Core\Number::format( $posts[$status] ),
+			Helper::noopedCount( $posts[$status], $noop ),
 			$posttype,
 		] );
 	}
@@ -782,10 +780,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $terms = WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return FALSE;
 
-		$object = get_taxonomy( $taxonomy );
-
 		$class  = Core\HTML::prepClass( 'geditorial-glance-item', '-tax', '-taxonomy-'.$taxonomy, $extra_class );
-		$format = current_user_can( $object->cap->manage_terms )
+		$format = WordPress\Taxonomy::can( $taxonomy, 'manage_terms' )
 			? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>'
 			: '<div class="'.$class.'">%1$s %2$s</div>';
 
