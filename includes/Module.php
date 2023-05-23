@@ -3744,6 +3744,42 @@ class Module extends Base
 	}
 
 	// PAIRED API
+	// excludes paired posttype from subterm archives
+	protected function _hook_paired_exclude_from_subterm()
+	{
+		if ( ! $this->get_setting( 'subterms_support' ) )
+			return FALSE;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[2] ) )
+			return FALSE;
+
+		add_action( 'pre_get_posts', function( &$wp_query ) use ( $constants ) {
+
+			$subterms = $this->constant( $constants[2] );
+
+			if ( ! $wp_query->is_main_query() || ! $wp_query->is_tax( $subterms ) )
+				return;
+
+			$primaries = PostType::getIDs( $this->constant( $constants[0] ), [
+				'tax_query' => [ [
+					'taxonomy' => $subterms,
+					'terms'    => [ get_queried_object_id() ],
+				] ],
+			] );
+
+			if ( count( $primaries ) ) {
+
+				if ( $not = $wp_query->get( 'post__not_in' ) )
+					$primaries = Core\Arraay::prepNumeral( $not, $primaries );
+
+				$wp_query->set( 'post__not_in', $primaries );
+			}
+		}, 8 );
+	}
+
+	// PAIRED API
 	protected function _hook_paired_thumbnail_fallback( $posttypes = NULL )
 	{
 		if ( ! $this->_paired )

@@ -201,6 +201,7 @@ class Collect extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
+		$this->_hook_paired_exclude_from_subterm();
 		$this->filter( 'term_link', 3 );
 	}
 
