@@ -537,7 +537,11 @@ class Meta extends gEditorial\Module
 
 			// if no access or default is FALSE
 			if ( FALSE !== $meta || $meta === $args['default'] )
-				$list[$args['rest']] = $meta;
+				$list[] = [
+					'name'     => $args['rest'],
+					'title'    => $args['title'],
+					'rendered' => $meta,
+				];
 		}
 
 		return $list;
