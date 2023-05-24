@@ -1209,16 +1209,16 @@ class Meta extends gEditorial\Module
 				return Number::localize( Datetime::stringFormat( $raw ) );
 
 			case 'embed':
-				return Template::doEmbedShortCode( trim( $raw ) );
+				return Template::doEmbedShortCode( trim( $raw ), $post );
 
 			case 'text_source':
-				return Template::doMediaShortCode( trim( $raw ), 'text' );
+				return Template::doMediaShortCode( trim( $raw ), 'text', $post );
 
 			case 'audio_source':
-				return Template::doMediaShortCode( trim( $raw ), 'audio' );
+				return Template::doMediaShortCode( trim( $raw ), 'audio', $post );
 
 			case 'video_source':
-				return Template::doMediaShortCode( trim( $raw ), 'video' );
+				return Template::doMediaShortCode( trim( $raw ), 'video', $post );
 		}
 
 		return $meta;

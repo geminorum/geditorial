@@ -598,7 +598,7 @@ class Template extends Main
 	 * @param string $meta
 	 * @return string $html
 	 */
-	public static function doEmbedShortCode( $meta )
+	public static function doEmbedShortCode( $meta, $post = FALSE )
 	{
 		global $wp_embed;
 
@@ -610,7 +610,7 @@ class Template extends Main
 		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', $url, $url ) );
 	}
 
-	public static function doMediaShortCode( $meta, $type = NULL )
+	public static function doMediaShortCode( $meta, $type = NULL, $post = FALSE )
 	{
 		$html = trim( $meta );
 
@@ -624,7 +624,7 @@ class Template extends Main
 
 			case 'embed':
 
-				$html = self::doEmbedShortCode( $meta );
+				$html = self::doEmbedShortCode( $meta, $post );
 				break;
 
 			// case 'application': // TODO
