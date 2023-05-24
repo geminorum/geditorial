@@ -10,6 +10,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\ISBN;
 use geminorum\gEditorial\Core\HTML;
@@ -1157,7 +1158,6 @@ class Meta extends gEditorial\Module
 
 	// @REF: `Template::getMetaField()`
 	// TODO: for `iban`: display bank as title attr
-	// TODO: for `identity`,`iban`: add class if it's not valid
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args )
 	{
 		switch ( $field ) {
@@ -1174,6 +1174,16 @@ class Meta extends gEditorial\Module
 		}
 
 		switch ( $field_args['type'] ) {
+
+			case 'identity':
+				return sprintf( '<span class="-identity %s">%s</span>',
+					Core\Validation::isIdentityNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
+					$meta );
+
+			case 'iban':
+				return sprintf( '<span class="-iban %s">%s</span>',
+					Core\Validation::isIBAN( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
+					$meta );
 
 			case 'contact':
 				return Helper::prepContact( trim( $raw ) );

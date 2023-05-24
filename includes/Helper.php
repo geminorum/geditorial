@@ -248,6 +248,16 @@ class Helper extends Main
 
 		switch ( $field['type'] ) {
 
+			case 'identity':
+				return sprintf( '<span class="-identity %s">%s</span>',
+					Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+					$raw ?: $value );
+
+			case 'iban':
+				return sprintf( '<span class="-iban %s">%s</span>',
+					Core\Validation::isIBAN( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+					$raw ?: $value );
+
 			case 'isbn':
 				return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ),
 					Info::lookupISBN( $raw ?: $value ), TRUE );
