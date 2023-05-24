@@ -3780,6 +3780,27 @@ class Module extends Base
 	}
 
 	// PAIRED API
+	protected function _hook_paired_override_term_link()
+	{
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		add_filter( 'term_link', function( $link, $term, $taxonomy ) use ( $constants ) {
+
+			if ( $taxonomy !== $this->constant( $constants[1] ) )
+				return $link;
+
+			if ( $post_id = $this->paired_get_to_post_id( $term, $constants[0], $constants[1] ) )
+				return get_permalink( $post_id );
+
+			return $link;
+
+		}, 9, 3 );
+	}
+
+	// PAIRED API
 	protected function _hook_paired_thumbnail_fallback( $posttypes = NULL )
 	{
 		if ( ! $this->_paired )

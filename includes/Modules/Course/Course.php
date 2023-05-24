@@ -266,7 +266,7 @@ class Course extends gEditorial\Module
 			return;
 
 		$this->_hook_paired_exclude_from_subterm();
-		$this->filter( 'term_link', 3 );
+		$this->_hook_paired_override_term_link();
 	}
 
 	public function init_ajax()
@@ -411,17 +411,6 @@ class Course extends gEditorial\Module
 			$items[] = $lessons;
 
 		return $items;
-	}
-
-	public function term_link( $link, $term, $taxonomy )
-	{
-		if ( $this->constant( 'course_tax' ) != $taxonomy )
-			return $link;
-
-		if ( $post_id = $this->paired_get_to_post_id( $term, 'course_cpt', 'course_tax' ) )
-			return get_permalink( $post_id );
-
-		return $link;
 	}
 
 	public function template_redirect()

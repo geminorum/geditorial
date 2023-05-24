@@ -234,7 +234,7 @@ class Organization extends gEditorial\Module
 			return;
 
 		$this->_hook_paired_exclude_from_subterm();
-		$this->filter( 'term_link', 3 );
+		$this->_hook_paired_override_term_link();
 	}
 
 	public function init_ajax()
@@ -353,17 +353,6 @@ class Organization extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function term_link( $link, $term, $taxonomy )
-	{
-		if ( $this->constant( 'primary_paired' ) != $taxonomy )
-			return $link;
-
-		if ( $post_id = $this->paired_get_to_post_id( $term, 'primary_posttype', 'primary_paired' ) )
-			return get_permalink( $post_id );
-
-		return $link;
 	}
 
 	public function template_redirect()

@@ -237,7 +237,7 @@ class Contest extends gEditorial\Module
 			return;
 
 		$this->_hook_paired_exclude_from_subterm();
-		$this->filter( 'term_link', 3 );
+		$this->_hook_paired_override_term_link();
 	}
 
 	public function init_ajax()
@@ -372,17 +372,6 @@ class Contest extends gEditorial\Module
 			$items[] = $applies;
 
 		return $items;
-	}
-
-	public function term_link( $link, $term, $taxonomy )
-	{
-		if ( $this->constant( 'contest_tax' ) != $taxonomy )
-			return $link;
-
-		if ( $post_id = $this->paired_get_to_post_id( $term, 'contest_cpt', 'contest_tax' ) )
-			return get_permalink( $post_id );
-
-		return $link;
 	}
 
 	public function template_redirect()
