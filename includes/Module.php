@@ -2168,6 +2168,7 @@ class Module extends Base
 			case 'text_source':
 			case 'audio_source':
 			case 'video_source':
+			case 'image_source':
 			case 'link':
 				$sanitized = trim( $data );
 

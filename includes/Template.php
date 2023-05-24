@@ -649,6 +649,12 @@ class Template extends Main
 				// @SEE: https://wordpress.org/documentation/article/video-shortcode/
 				$html = apply_shortcodes( sprintf( '[video src="%s" /]', $meta ) );
 				break;
+
+			case 'image':
+
+				// TODO: pass port title as alt into shortcode
+				$html = apply_shortcodes( sprintf( '[image src="%s" /]', $meta ) );
+				break;
 		}
 
 		return apply_filters( static::BASE.'_media_shortcode', $html, $meta, $type );
@@ -888,6 +894,7 @@ class Template extends Main
 			'text_source',
 			'audio_source_url',
 			'video_source_url',
+			'image_source_url',
 			'map_embed_url',
 			'parent_complex',
 			'geo_latitude',

@@ -168,6 +168,7 @@ class Tube extends gEditorial\Module
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
+				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
 			$this->constant( 'channel_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
@@ -177,6 +178,7 @@ class Tube extends gEditorial\Module
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
+				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
 		];
 	}

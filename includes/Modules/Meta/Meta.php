@@ -129,6 +129,7 @@ class Meta extends gEditorial\Module
 				'text_source_url'   => _x( 'Text Source URL', 'Titles', 'geditorial-meta' ),
 				'audio_source_url'  => _x( 'Audio Source URL', 'Titles', 'geditorial-meta' ),
 				'video_source_url'  => _x( 'Video Source URL', 'Titles', 'geditorial-meta' ),
+				'image_source_url'  => _x( 'Image Source URL', 'Titles', 'geditorial-meta' ),
 
 				'date'      => _x( 'Date', 'Titles', 'geditorial-meta' ),
 				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-meta' ),
@@ -172,6 +173,7 @@ class Meta extends gEditorial\Module
 				'text_source_url'   => _x( 'Text Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'audio_source_url'  => _x( 'Audio Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'video_source_url'  => _x( 'Video Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
+				'image_source_url'  => _x( 'Image Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 
 				'date'      => _x( 'Posts can have date to help orginize them.', 'Descriptions', 'geditorial-meta' ),
 				'datetime'  => _x( 'Posts can have date-time to help orginize them.', 'Descriptions', 'geditorial-meta' ),
@@ -247,6 +249,7 @@ class Meta extends gEditorial\Module
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
+				'image_source_url'  => [ 'type' => 'image_source' ],
 
 				'date'      => [ 'type' => 'date' ],
 				'datetime'  => [ 'type' => 'datetime' ],
@@ -630,6 +633,7 @@ class Meta extends gEditorial\Module
 				case 'text_source':
 				case 'audio_source':
 				case 'video_source':
+				case 'image_source':
 				case 'link':
 
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
@@ -812,6 +816,7 @@ class Meta extends gEditorial\Module
 				case 'text_source':
 				case 'audio_source':
 				case 'video_source':
+				case 'image_source':
 				case 'link':
 
 					ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
@@ -1219,6 +1224,9 @@ class Meta extends gEditorial\Module
 
 			case 'video_source':
 				return Template::doMediaShortCode( trim( $raw ), 'video', $post );
+
+			case 'image_source':
+				return Template::doMediaShortCode( trim( $raw ), 'image', $post );
 		}
 
 		return $meta;

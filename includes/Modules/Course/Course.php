@@ -186,6 +186,7 @@ class Course extends gEditorial\Module
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
+				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
 			$this->constant( 'lesson_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
@@ -204,6 +205,7 @@ class Course extends gEditorial\Module
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
+				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
 		];
 	}
