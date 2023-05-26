@@ -279,22 +279,9 @@ class Dossier extends gEditorial\Module
 
 			} else if ( 'post' == $screen->base ) {
 
-				if ( $subterms )
-					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
-
-				$this->class_metabox( $screen, 'pairedbox' );
-				add_meta_box( $this->classs( 'pairedbox' ),
-					$this->get_meta_box_title_posttype( 'dossier_posttype' ),
-					[ $this, 'render_pairedbox_metabox' ],
-					$screen,
-					'side'
-				);
-
-				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				$this->_metabox_remove_subterm( $screen, $subterms );
+				$this->_hook_paired_pairedbox( $screen );
 				$this->_hook_paired_store_metabox( $screen->post_type );
-
-				if ( $this->get_setting( 'quick_newpost' ) )
-					Scripts::enqueueThickBox();
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -401,39 +388,6 @@ class Dossier extends gEditorial\Module
 			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'dossier_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
-	}
-
-	public function render_pairedbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-
-		if ( $this->get_setting( 'quick_newpost' ) ) {
-
-			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_dossier' );
-
-		} else {
-
-			if ( ! Taxonomy::hasTerms( $this->constant( 'dossier_paired' ) ) )
-				MetaBox::fieldEmptyPostType( $this->constant( 'dossier_posttype' ) );
-
-			else
-				$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_dossier' );
-		}
-
-		do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_dossier' );
-
-		echo '</div>';
-	}
-
-	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
-	{
-		if ( $newpost = $this->get_setting( 'quick_newpost' ) )
-			$this->do_render_thickbox_newpostbutton( $post, 'dossier_posttype', 'newpost', [ 'target' => 'paired' ] );
-
-		$this->paired_do_render_metabox( $post, 'dossier_posttype', 'dossier_paired', 'section_taxonomy', $newpost );
 	}
 
 	public function render_mainbox_metabox( $post, $box )

@@ -313,18 +313,8 @@ class Organization extends gEditorial\Module
 
 			} else if ( 'post' == $screen->base ) {
 
-				if ( $subterms )
-					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
-
-				$this->class_metabox( $screen, 'pairedbox' );
-				add_meta_box( $this->classs( 'pairedbox' ),
-					$this->get_meta_box_title_posttype( 'primary_posttype' ),
-					[ $this, 'render_pairedbox_metabox' ],
-					$screen,
-					'side'
-				);
-
-				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				$this->_metabox_remove_subterm( $screen, $subterms );
+				$this->_hook_paired_pairedbox( $screen );
 				$this->_hook_paired_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
@@ -371,39 +361,6 @@ class Organization extends gEditorial\Module
 	public function template_include( $template )
 	{
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
-	}
-
-	public function render_pairedbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-
-		if ( $this->get_setting( 'quick_newpost' ) ) {
-
-			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_department' );
-
-		} else {
-
-			if ( ! Taxonomy::hasTerms( $this->constant( 'primary_paired' ) ) )
-				MetaBox::fieldEmptyPostType( $this->constant( 'primary_posttype' ) );
-
-			else
-				$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_department' );
-		}
-
-		do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_department' );
-
-		echo '</div>';
-	}
-
-	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
-	{
-		if ( $newpost = $this->get_setting( 'quick_newpost' ) )
-			$this->do_render_thickbox_newpostbutton( $post, 'primary_posttype', 'newpost', [ 'target' => 'paired' ] );
-
-		$this->paired_do_render_metabox( $post, 'primary_posttype', 'primary_paired', 'primary_subterm', $newpost );
 	}
 
 	public function render_mainbox_metabox( $post, $box )

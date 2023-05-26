@@ -632,15 +632,7 @@ class Book extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->class_metabox( $screen, 'pairedbox' );
-				add_meta_box( $this->classs( 'pairedbox' ),
-					$this->get_meta_box_title_posttype( 'publication_cpt' ),
-					[ $this, 'render_pairedbox_metabox' ],
-					$screen,
-					'side'
-				);
-
-				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
+				$this->_hook_paired_pairedbox( $screen );
 				$this->_hook_paired_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
@@ -687,29 +679,6 @@ class Book extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
-	}
-
-	public function render_pairedbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-
-		if ( ! Taxonomy::hasTerms( $this->constant( 'publication_paired' ) ) )
-			MetaBox::fieldEmptyPostType( $this->constant( 'publication_cpt' ) );
-
-		else
-			$this->actions( 'render_pairedbox_metabox', $post, $box, NULL, 'pairedbox_publication' );
-
-		do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, 'pairedbox_publication' );
-
-		echo '</div>';
-	}
-
-	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
-	{
-		$this->paired_do_render_metabox( $post, 'publication_cpt', 'publication_paired' );
 	}
 
 	public function render_listbox_metabox( $post, $box )

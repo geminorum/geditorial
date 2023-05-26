@@ -4255,6 +4255,78 @@ class Module extends Base
 			$this->enqueue_asset_js( 'subterms', 'module' );
 	}
 
+	protected function _metabox_remove_subterm( $screen, $subterms = FALSE )
+	{
+		if ( $subterms )
+			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
+	}
+
+	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = 'pairedbox' )
+	{
+		if ( ! $this->_paired )
+			return FALSE;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		if ( empty( $constants[2] ) )
+			$constants[2] = FALSE;
+
+		$this->class_metabox( $screen, $context );
+
+		$action   = sprintf( 'render_%s_metabox', $context );
+		$callback = function( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
+
+			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+				return;
+
+			$action_context = sprintf( '%s_%s', $context, $this->constant( $constants[0] ) );
+
+			echo $this->wrap_open( '-admin-metabox' );
+
+			if ( $this->get_setting( 'quick_newpost' ) ) {
+
+				$this->actions( $action, $post, $box, NULL, $action_context );
+
+			} else {
+
+				if ( ! Taxonomy::hasTerms( $this->constant( $constants[1] ) ) )
+					MetaBox::fieldEmptyPostType( $this->constant( $constants[0] ) );
+
+				else
+					$this->actions( $action, $post, $box, NULL, $action_context );
+			}
+
+			do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, $action_context );
+
+			if ( $menuorder )
+				MetaBox::fieldPostMenuOrder( $post );
+
+			echo '</div>';
+		};
+
+		add_meta_box( $this->classs( $context ),
+			$this->get_meta_box_title_posttype( $constants[0] ),
+			$callback,
+			$screen,
+			'side'
+		);
+
+		add_action( $this->hook( $action ), function( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
+
+			if ( $newpost = $this->get_setting( 'quick_newpost' ) )
+				$this->do_render_thickbox_newpostbutton( $post, $constants[0], 'newpost', [ 'target' => 'paired' ] );
+
+			$this->paired_do_render_metabox( $post, $constants[0], $constants[1], $constants[2], $newpost );
+
+		}, 10, 4 );
+
+		if ( $this->get_setting( 'quick_newpost' ) )
+			Scripts::enqueueThickBox();
+	}
+
 	protected function _hook_paired_store_metabox( $posttype )
 	{
 		if ( ! $this->_paired )
