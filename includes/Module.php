@@ -4262,6 +4262,46 @@ class Module extends Base
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
+	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = 'mainbox' )
+	{
+		$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
+
+		if ( $remove_parent_order ) {
+			$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
+			$this->filter_false_module( 'tweaks', 'metabox_parent' );
+			remove_meta_box( 'pageparentdiv', $screen, 'side' );
+		}
+
+		$this->class_metabox( $screen, $context );
+
+		$action   = sprintf( 'render_%s_metabox', $context );
+		$callback = function( $post, $box ) use ( $context, $action ) {
+
+			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+				return;
+
+			$action_context = sprintf( '%s_%s', $context, $post->post_type );
+
+			echo $this->wrap_open( '-admin-metabox' );
+
+				$this->actions( $action, $post, $box, NULL, $action_context );
+
+				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
+
+				$this->_render_mainbox_extra( $post, $box, $context );
+
+			echo '</div>';
+		};
+
+		add_meta_box( $this->classs( $context ),
+			$this->get_meta_box_title_posttype( $constant_key ),
+			$callback,
+			$screen,
+			'side',
+			'high'
+		);
+	}
+
 	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = 'mainbox' )
 	{
 		if ( ! $this->_paired )
