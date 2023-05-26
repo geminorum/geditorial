@@ -364,7 +364,7 @@ class Course extends gEditorial\Module
 				);
 
 				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_paired_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -374,7 +374,7 @@ class Course extends gEditorial\Module
 				$this->_hook_screen_restrict_paired();
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_paired_store_metabox( $screen->post_type );
 			}
 		}
 
@@ -497,14 +497,6 @@ class Course extends gEditorial\Module
 		$this->paired_do_render_metabox( $post, 'course_cpt', 'course_tax', 'topic_tax' );
 
 		MetaBox::fieldPostMenuOrder( $post );
-	}
-
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$this->paired_do_store_metabox( $post, 'course_cpt', 'course_tax', 'topic_tax' );
 	}
 
 	public function pre_get_posts( &$wp_query )

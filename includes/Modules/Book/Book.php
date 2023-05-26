@@ -641,11 +641,11 @@ class Book extends gEditorial\Module
 				);
 
 				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_paired_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_paired_store_metabox( $screen->post_type );
 			}
 
 		} else if ( $this->_p2p && 'edit' == $screen->base
@@ -710,14 +710,6 @@ class Book extends gEditorial\Module
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
 		$this->paired_do_render_metabox( $post, 'publication_cpt', 'publication_paired' );
-	}
-
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$this->paired_do_store_metabox( $post, 'publication_cpt', 'publication_paired' );
 	}
 
 	public function render_listbox_metabox( $post, $box )

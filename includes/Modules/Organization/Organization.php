@@ -327,17 +327,15 @@ class Organization extends gEditorial\Module
 				);
 
 				add_action( $this->hook( 'render_pairedbox_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
-
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_paired_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_screen_restrict_paired();
+				$this->_hook_paired_store_metabox( $screen->post_type );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
-
-				$this->_hook_store_metabox( $screen->post_type );
 			}
 		}
 
@@ -423,14 +421,6 @@ class Organization extends gEditorial\Module
 			$this->do_render_thickbox_newpostbutton( $post, 'primary_posttype', 'newpost', [ 'target' => 'paired' ] );
 
 		$this->paired_do_render_metabox( $post, 'primary_posttype', 'primary_paired', 'primary_subterm', $newpost );
-	}
-
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$this->paired_do_store_metabox( $post, 'primary_posttype', 'primary_paired', 'primary_subterm' );
 	}
 
 	public function render_mainbox_metabox( $post, $box )

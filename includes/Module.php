@@ -4234,6 +4234,29 @@ class Module extends Base
 			$this->enqueue_asset_js( 'subterms', 'module' );
 	}
 
+	protected function _hook_paired_store_metabox( $posttype )
+	{
+		if ( ! $this->_paired )
+			return;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		if ( empty( $constants[2] ) )
+			$constants[2] = FALSE;
+
+		add_action( 'save_post_'.$posttype, function( $post_id, $post, $update ) use ( $constants ) {
+
+			if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+				return;
+
+			$this->paired_do_store_metabox( $post, $constants[0], $constants[1], $constants[2] );
+
+		}, 20, 3 );
+	}
+
 	// PAIRED API
 	// OLD: `do_store_metabox_assoc()`
 	protected function paired_do_store_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE )
