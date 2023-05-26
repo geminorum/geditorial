@@ -4262,6 +4262,61 @@ class Module extends Base
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
+	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = 'mainbox' )
+	{
+		if ( ! $this->_paired )
+			return FALSE;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
+
+		if ( $remove_parent_order ) {
+			$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
+			$this->filter_false_module( 'tweaks', 'metabox_parent' );
+			remove_meta_box( 'pageparentdiv', $screen, 'side' );
+		}
+
+		$this->class_metabox( $screen, $context );
+
+		$action   = sprintf( 'render_%s_metabox', $context );
+		$callback = function( $post, $box ) use ( $constants, $context, $action ) {
+
+			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+				return;
+
+			$action_context = sprintf( '%s_%s', $context, $this->constant( $constants[0] ) );
+
+			echo $this->wrap_open( '-admin-metabox' );
+
+				$this->actions( $action, $post, $box, NULL, $action_context );
+
+				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
+
+				$this->_render_mainbox_extra( $post, $box );
+
+			echo '</div>';
+		};
+
+		add_meta_box( $this->classs( $context ),
+			$this->get_meta_box_title( $constants[0], FALSE ),
+			$callback,
+			$screen,
+			'side',
+			'high'
+		);
+	}
+
+	// DEFAULT CALLBACK
+	protected function _render_mainbox_extra( $post, $box )
+	{
+		MetaBox::fieldPostMenuOrder( $post );
+		MetaBox::fieldPostParent( $post );
+	}
+
 	protected function _hook_paired_listbox( $screen, $context = 'listbox' )
 	{
 		if ( ! $this->_paired )

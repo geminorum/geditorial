@@ -287,21 +287,8 @@ class Magazine extends gEditorial\Module
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
-				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
-				$this->filter_false_module( 'tweaks', 'metabox_parent' );
-				remove_meta_box( 'pageparentdiv', $screen, 'side' );
-
-				$this->class_metabox( $screen, 'mainbox' );
-				add_meta_box( $this->classs( 'mainbox' ),
-					$this->get_meta_box_title( 'issue_cpt', FALSE ),
-					[ $this, 'render_mainbox_metabox' ],
-					$screen,
-					'side',
-					'high'
-				);
-
 				$this->_hook_post_updated_messages( 'issue_cpt' );
+				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->_hook_paired_sync_primary_posttype();
 
@@ -405,22 +392,6 @@ class Magazine extends gEditorial\Module
 			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'issue_cpt' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
-	}
-
-	public function render_mainbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
-
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
-
-			MetaBox::fieldPostMenuOrder( $post );
-			MetaBox::fieldPostParent( $post );
-
-		echo '</div>';
 	}
 
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )

@@ -252,21 +252,8 @@ class Venue extends gEditorial\Module
 
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
-				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
-				$this->filter_false_module( 'tweaks', 'metabox_parent' );
-				remove_meta_box( 'pageparentdiv', $screen, 'side' );
-
-				$this->class_metabox( $screen, 'mainbox' );
-				add_meta_box( $this->classs( 'mainbox' ),
-					$this->get_meta_box_title( 'place_cpt', FALSE ),
-					[ $this, 'render_mainbox_metabox' ],
-					$screen,
-					'side',
-					'high'
-				);
-
 				$this->_hook_post_updated_messages( 'place_cpt' );
+				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->_hook_paired_sync_primary_posttype();
 
@@ -375,21 +362,5 @@ class Venue extends gEditorial\Module
 			$this->constant( 'place_shortcode', $tag ),
 			$this->key
 		);
-	}
-
-	public function render_mainbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
-
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL, 'mainbox' );
-
-			MetaBox::fieldPostMenuOrder( $post );
-			MetaBox::fieldPostParent( $post );
-
-		echo '</div>';
 	}
 }

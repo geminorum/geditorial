@@ -262,21 +262,8 @@ class Organization extends gEditorial\Module
 
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
-				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
-				$this->filter_false_module( 'tweaks', 'metabox_parent' );
-				remove_meta_box( 'pageparentdiv', $screen, 'side' );
-
-				$this->class_metabox( $screen, 'mainbox' );
-				add_meta_box( $this->classs( 'mainbox' ),
-					$this->get_meta_box_title( 'primary_posttype', FALSE ),
-					[ $this, 'render_mainbox_metabox' ],
-					$screen,
-					'side',
-					'high'
-				);
-
 				$this->_hook_post_updated_messages( 'primary_posttype' );
+				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->_hook_paired_sync_primary_posttype();
 
@@ -355,24 +342,14 @@ class Organization extends gEditorial\Module
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
 	}
 
-	public function render_mainbox_metabox( $post, $box )
+	protected function _render_mainbox_extra( $post, $box )
 	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
+		parent::_render_mainbox_extra( $post, $box );
 
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
-
-			do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
-
-			MetaBox::fieldPostMenuOrder( $post );
-			MetaBox::fieldPostParent( $post );
-			MetaBox::singleselectTerms( $post->ID, [
-				'taxonomy' => $this->constant( 'type_taxonomy' ),
-				'posttype' => $post->post_type,
-			] );
-
-		echo '</div>';
+		MetaBox::singleselectTerms( $post->ID, [
+			'taxonomy' => $this->constant( 'type_taxonomy' ),
+			'posttype' => $post->post_type,
+		] );
 	}
 
 	public function subterm_shortcode( $atts = [], $content = NULL, $tag = '' )
