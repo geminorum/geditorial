@@ -181,7 +181,7 @@ class Course extends gEditorial\Module
 					'description' => _x( 'Subtitle of the Course', 'Field Description', 'geditorial-course' ),
 					'type'        => 'title_after',
 				],
-
+				'lead'              => [ 'type' => 'postbox_html' ],
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
@@ -195,6 +195,7 @@ class Course extends gEditorial\Module
 					'description' => _x( 'Subtitle of the Lesson', 'Field Description', 'geditorial-course' ),
 					'type'        => 'title_after',
 				],
+				'lead'         => [ 'type' => 'postbox_html' ],
 				'byline'       => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'source_title' => [ 'type' => 'text' ],

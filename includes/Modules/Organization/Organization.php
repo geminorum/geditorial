@@ -151,6 +151,7 @@ class Organization extends gEditorial\Module
 			$this->constant( 'primary_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
+				'lead'       => [ 'type' => 'postbox_html' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],

@@ -87,6 +87,7 @@ class Symposium extends gEditorial\Module
 			$this->constant( 'session_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
+				'lead'       => [ 'type' => 'postbox_html' ],
 
 				'featured_people' => [
 					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-symposium' ),

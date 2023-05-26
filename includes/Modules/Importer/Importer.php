@@ -752,7 +752,7 @@ class Importer extends gEditorial\Module
 
 			$this->enqueue_asset_js( [
 				'strings' => $this->strings['js'],
-			], $this->key.'.media', [ 'jquery', 'media-upload' ] );
+			], $this->dotted( 'media' ), [ 'jquery', 'media-upload' ] );
 		}
 	}
 

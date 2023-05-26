@@ -212,8 +212,8 @@ class Event extends gEditorial\Module
 	{
 		return; // FIXME
 
-		register_widget( __NAMESPACE__.'\\Widgets\\Poster' );
-		register_widget( __NAMESPACE__.'\\Widgets\\Currents' );
+		// register_widget( __NAMESPACE__.'\\Widgets\\Poster' ); // FIXME: drop this
+		register_widget( __NAMESPACE__.'\\Widgets\\Upcoming' );
 	}
 
 	public function init()

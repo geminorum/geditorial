@@ -140,6 +140,7 @@ class Magazine extends gEditorial\Module
 			$this->constant( 'issue_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
+				'lead'       => [ 'type' => 'postbox_html' ],
 
 				'number_line' => [
 					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-magazine' ),
@@ -159,6 +160,12 @@ class Magazine extends gEditorial\Module
 				'action_url'   => [ 'type' => 'link' ],
 				'cover_blurb'  => [ 'type' => 'note' ],
 				'cover_price'  => [ 'type' => 'price' ],
+
+				'content_embed_url' => [ 'type' => 'embed' ],
+				'text_source_url'   => [ 'type' => 'text_source' ],
+				'audio_source_url'  => [ 'type' => 'audio_source' ],
+				'video_source_url'  => [ 'type' => 'video_source' ],
+				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
 			'_supported' => [
 				'in_issue_order' => [

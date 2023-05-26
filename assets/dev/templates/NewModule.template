@@ -23,6 +23,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	protected function get_global_settings()
 	{
 		return [
+			'posttypes_option'  => 'posttypes_option',
+			'taxonomies_option' => 'taxonomies_option',
 			'_general' => [
 				[
 					'field'       => 'field',

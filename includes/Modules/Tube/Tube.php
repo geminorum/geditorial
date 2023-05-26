@@ -135,6 +135,7 @@ class Tube extends gEditorial\Module
 			$this->constant( 'video_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
+				'lead'       => [ 'type' => 'postbox_html' ],
 
 				'featured_people' => [
 					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-tube' ),
@@ -173,6 +174,7 @@ class Tube extends gEditorial\Module
 			$this->constant( 'channel_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
+				'lead'       => [ 'type' => 'postbox_html' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],

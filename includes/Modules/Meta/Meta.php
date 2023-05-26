@@ -544,6 +544,7 @@ class Meta extends gEditorial\Module
 					'name'     => $args['rest'],
 					'title'    => $args['title'],
 					'rendered' => $meta,
+					// 'value'    => ModuleTemplate::getMetaFieldRaw( $field, $post['id'], $this->key ),
 				];
 		}
 
