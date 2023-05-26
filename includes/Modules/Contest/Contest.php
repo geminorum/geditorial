@@ -292,12 +292,10 @@ class Contest extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_ordering', TRUE ) )
-					$this->action( 'pre_get_posts' );
-
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
+				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'contest_cpt' );
 				$this->_hook_paired_sync_primary_posttype();
 			}
@@ -441,21 +439,6 @@ class Contest extends gEditorial\Module
 		$this->paired_do_render_metabox( $post, 'contest_cpt', 'contest_tax', 'section_tax' );
 
 		MetaBox::fieldPostMenuOrder( $post );
-	}
-
-	public function pre_get_posts( &$wp_query )
-	{
-		if ( $this->constant( 'contest_cpt' ) == $wp_query->get( 'post_type' ) ) {
-
-			if ( $wp_query->is_admin ) {
-
-				if ( ! isset( $_GET['orderby'] ) )
-					$wp_query->set( 'orderby', 'menu_order' );
-
-				if ( ! isset( $_GET['order'] ) )
-					$wp_query->set( 'order', 'DESC' );
-			}
-		}
 	}
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )

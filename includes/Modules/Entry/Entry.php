@@ -223,14 +223,12 @@ class Entry extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->get_setting( 'admin_ordering', TRUE ) )
-					$this->action( 'pre_get_posts' );
-
 				$this->filter( 'posts_clauses', 2 );
 
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
+				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'entry_cpt' );
 			}
@@ -256,21 +254,6 @@ class Entry extends gEditorial\Module
 			$query_args['post_type'][] = $this->constant( 'entry_cpt' );
 
 		return $query_args;
-	}
-
-	public function pre_get_posts( &$wp_query )
-	{
-		if ( $this->constant( 'entry_cpt' ) == $wp_query->get( 'post_type' ) ) {
-
-			if ( $wp_query->is_admin ) {
-
-				if ( ! isset( $_GET['orderby'] ) )
-					$wp_query->set( 'orderby', 'menu_order' );
-
-				if ( ! isset( $_GET['order'] ) )
-					$wp_query->set( 'order', 'DESC' );
-			}
-		}
 	}
 
 	public function posts_clauses( $pieces, $wp_query )

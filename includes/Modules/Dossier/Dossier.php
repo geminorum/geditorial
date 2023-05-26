@@ -258,15 +258,12 @@ class Dossier extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->_hook_screen_restrict_taxonomies();
-
-				if ( $this->get_setting( 'admin_ordering', TRUE ) )
-					$this->action( 'pre_get_posts' );
-
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
+				$this->_hook_admin_ordering( $screen->post_type );
+				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'dossier_posttype' );
 				$this->_hook_paired_sync_primary_posttype();
 			}
@@ -404,21 +401,6 @@ class Dossier extends gEditorial\Module
 			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'dossier_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
-	}
-
-	public function pre_get_posts( &$wp_query )
-	{
-		if ( $this->constant( 'dossier_posttype' ) == $wp_query->get( 'post_type' ) ) {
-
-			if ( $wp_query->is_admin ) {
-
-				if ( ! isset( $_GET['orderby'] ) )
-					$wp_query->set( 'orderby', 'menu_order' );
-
-				if ( ! isset( $_GET['order'] ) )
-					$wp_query->set( 'order', 'DESC' );
-			}
-		}
 	}
 
 	public function render_pairedbox_metabox( $post, $box )

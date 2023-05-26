@@ -292,13 +292,11 @@ class Organization extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				if ( $this->get_setting( 'admin_ordering', TRUE ) )
-					$this->action( 'pre_get_posts' );
-
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
+				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_sync_primary_posttype();
@@ -373,21 +371,6 @@ class Organization extends gEditorial\Module
 	public function template_include( $template )
 	{
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
-	}
-
-	public function pre_get_posts( &$wp_query )
-	{
-		if ( $this->constant( 'primary_posttype' ) == $wp_query->get( 'post_type' ) ) {
-
-			if ( $wp_query->is_admin ) {
-
-				if ( ! isset( $_GET['orderby'] ) )
-					$wp_query->set( 'orderby', 'menu_order' );
-
-				if ( ! isset( $_GET['order'] ) )
-					$wp_query->set( 'order', 'DESC' );
-			}
-		}
 	}
 
 	public function render_pairedbox_metabox( $post, $box )

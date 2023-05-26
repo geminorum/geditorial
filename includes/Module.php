@@ -3752,6 +3752,27 @@ class Module extends Base
 		return TRUE;
 	}
 
+	protected function _hook_admin_ordering( $posttype, $orderby = 'menu_order', $order = 'DESC' )
+	{
+		if ( ! $this->get_setting( 'admin_ordering', TRUE ) )
+			return FALSE;
+
+		add_action( 'pre_get_posts', function( &$wp_query ) use ( $posttype, $orderby, $order ) {
+
+			if ( ! $wp_query->is_admin )
+				return;
+
+			if ( $posttype !== $wp_query->get( 'post_type' ) )
+				return;
+
+			if ( $orderby && ! isset( $_GET['orderby'] ) )
+				$wp_query->set( 'orderby', $orderby );
+
+			if ( $order && ! isset( $_GET['order'] ) )
+				$wp_query->set( 'order', $order );
+		} );
+	}
+
 	// PAIRED API
 	// excludes paired posttype from subterm archives
 	protected function _hook_paired_exclude_from_subterm()

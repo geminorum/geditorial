@@ -304,9 +304,9 @@ class Event extends gEditorial\Module
 
 					$this->filter( 'request' );
 
-				} else if ( $this->get_setting( 'admin_ordering', TRUE ) ) {
+				} else {
 
-					$this->action( 'pre_get_posts', 1, 20 );
+					$this->_hook_admin_ordering( $screen->post_type, 'date' );
 				}
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
@@ -339,22 +339,6 @@ class Event extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	// FIXME: merge filters
-	public function pre_get_posts( &$wp_query )
-	{
-		if ( $this->constant( 'event_cpt' ) == $wp_query->get( 'post_type' ) ) {
-
-			if ( $wp_query->is_admin ) {
-
-				if ( ! isset( $_GET['orderby'] ) )
-					$wp_query->set( 'orderby', 'date' );
-
-				if ( ! isset( $_GET['order'] ) )
-					$wp_query->set( 'order', 'DESC' );
-			}
-		}
 	}
 
 	public function manage_posts_columns( $columns )
