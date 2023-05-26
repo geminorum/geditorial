@@ -604,8 +604,6 @@ class Book extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->_hook_screen_restrict_taxonomies();
-
 				if ( $this->get_setting( 'admin_rowactions' ) )
 					$this->filter( 'post_row_actions', 2 );
 
@@ -616,6 +614,7 @@ class Book extends gEditorial\Module
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
+				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );
 				$this->_hook_paired_sync_primary_posttype();
 			}

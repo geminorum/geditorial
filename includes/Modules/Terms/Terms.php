@@ -51,8 +51,7 @@ class Terms extends gEditorial\Module
 		'viewable',
 	];
 
-	private $_roles     = [];
-	private $_posttypes = [];
+	private $_roles = [];
 
 	public static function module()
 	{
@@ -917,14 +916,14 @@ class Terms extends gEditorial\Module
 
 			case 'posttype':
 
-				if ( empty( $this->_posttypes ) )
-					$this->_posttypes = PostType::get( 2 );
+				if ( empty( $this->cache['posttypes'] ) )
+					$this->cache['posttypes'] = PostType::get( 2 );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
-						.( empty( $this->_posttypes[$meta] )
+						.( empty( $this->cache['posttypes'][$meta] )
 							? HTML::escape( $meta )
-							: $this->_posttypes[$meta] )
+							: $this->cache['posttypes'][$meta] )
 						.'</span>';
 
 				else
@@ -934,8 +933,8 @@ class Terms extends gEditorial\Module
 
 			case 'posttypes':
 
-				if ( empty( $this->_posttypes ) )
-					$this->_posttypes = PostType::get( 2 );
+				if ( empty( $this->cache['posttypes'] ) )
+					$this->cache['posttypes'] = PostType::get( 2 );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -943,9 +942,9 @@ class Terms extends gEditorial\Module
 
 					foreach ( (array) $meta as $posttype )
 						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
-							.( empty( $this->_posttypes[$posttype] )
+							.( empty( $this->cache['posttypes'][$posttype] )
 								? HTML::escape( $posttype )
-								: $this->_posttypes[$posttype] )
+								: $this->cache['posttypes'][$posttype] )
 							.'</span>';
 
 					$html = Strings::getJoined( $list );

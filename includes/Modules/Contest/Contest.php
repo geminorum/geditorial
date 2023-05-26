@@ -334,7 +334,12 @@ class Contest extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'contest_cpt', 'contest_tax', 'section_tax', 'contest_cat' ];
+		return [
+			'contest_cpt',
+			'contest_tax',
+			'section_tax',
+			'contest_cat',
+		];
 	}
 
 	public function meta_init()

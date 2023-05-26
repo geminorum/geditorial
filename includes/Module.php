@@ -75,6 +75,7 @@ class Module extends Base
 	protected $scripts = [];
 	protected $buttons = [];
 	protected $errors  = [];
+	protected $cache   = [];
 
 	protected $caps = [
 		'default'   => 'manage_options',
@@ -4472,7 +4473,8 @@ class Module extends Base
 
 	protected function _hook_store_metabox( $posttype )
 	{
-		add_action( 'save_post_'.$posttype, [ $this, 'store_metabox' ], 20, 3 );
+		if ( $posttype )
+			add_action( 'save_post_'.$posttype, [ $this, 'store_metabox' ], 20, 3 );
 	}
 
 	// DEFAULT METHOD
@@ -4998,14 +5000,6 @@ class Module extends Base
 			return count( $items );
 
 		return $items;
-	}
-
-	// FIXME: DEPRECATED
-	public function get_assoc_post( $post = NULL, $single = FALSE, $published = TRUE )
-	{
-		self::_dep( '$this->get_linked_to_posts()' );
-
-		return $this->get_linked_to_posts( $post, $single, $published );
 	}
 
 	// DEFAULT METHOD
