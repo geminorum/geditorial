@@ -673,11 +673,6 @@ class Book extends gEditorial\Module
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
 	}
 
-	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
-	{
-		return $this->paired_do_get_to_posts( 'publication_cpt', 'publication_paired', $post, $single, $published );
-	}
-
 	public function tweaks_column_row_p2p_to( $post )
 	{
 		$this->column_row_p2p_to_posttype( 'publication_cpt', $post );

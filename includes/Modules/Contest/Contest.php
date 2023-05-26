@@ -387,11 +387,6 @@ class Contest extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
-	{
-		return $this->paired_do_get_to_posts( 'contest_cpt', 'contest_tax', $post, $single, $published );
-	}
-
 	public function tweaks_column_attr( $post )
 	{
 		$this->paired_tweaks_column_attr( $post, 'contest_cpt', 'contest_tax' );

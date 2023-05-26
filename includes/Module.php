@@ -5011,6 +5011,16 @@ class Module extends Base
 	// DEFAULT METHOD
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
+		if ( $this->_paired ) {
+
+			$constants = $this->paired_get_paired_constants();
+
+			if ( empty( $constants[0] ) || empty( $constants[1] ) )
+				return FALSE;
+
+			return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
+		}
+
 		return FALSE;
 	}
 

@@ -375,11 +375,6 @@ class Organization extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
-	{
-		return $this->paired_do_get_to_posts( 'primary_posttype', 'primary_paired', $post, $single, $published );
-	}
-
 	public function tweaks_column_attr( $post )
 	{
 		$this->paired_tweaks_column_attr( $post, 'primary_posttype', 'primary_paired' );
