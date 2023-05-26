@@ -217,16 +217,11 @@ class Entry extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages' );
-				$this->filter( 'get_default_comment_status', 3 );
-
 				$this->filter_module( 'markdown', 'linking', 8, 8 );
+				$this->filter( 'get_default_comment_status', 3 );
+				$this->_hook_post_updated_messages( 'entry_cpt' );
 
 			} else if ( 'edit' == $screen->base ) {
-
-				$this->filter( 'bulk_post_updated_messages', 2 );
-
-				$this->_hook_screen_restrict_taxonomies();
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
@@ -235,6 +230,9 @@ class Entry extends gEditorial\Module
 
 				$this->_edit_screen( $screen->post_type );
 				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
+
+				$this->_hook_screen_restrict_taxonomies();
+				$this->_hook_bulk_post_updated_messages( 'entry_cpt' );
 			}
 		}
 	}
@@ -299,16 +297,6 @@ class Entry extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'entry_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'entry_cpt', $counts ) );
 	}
 
 	public function the_content( $content )

@@ -278,7 +278,6 @@ class Today extends gEditorial\Module
 
 				$this->_save_meta_supported( $screen->post_type );
 
-				$this->filter( 'post_updated_messages' );
 				$this->action( 'edit_form_after_editor' );
 
 				add_meta_box( $this->classs( 'supportedbox' ),
@@ -302,6 +301,8 @@ class Today extends gEditorial\Module
 					);
 				}
 
+				$this->_hook_post_updated_messages( 'day_cpt' );
+
 			} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 				$this->_save_meta_supported( $screen->post_type );
@@ -320,13 +321,13 @@ class Today extends gEditorial\Module
 			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
-				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				if ( $this->get_setting( 'admin_rowactions' ) )
 					$this->filter( 'post_row_actions', 2 );
 
 				$this->_save_meta_supported( $screen->post_type );
 				$this->_edit_screen_supported( $screen->post_type );
+				$this->_hook_bulk_post_updated_messages( 'day_cpt' );
 				$this->_admin_enabled();
 
 				$this->enqueue_asset_js( [], $screen );
@@ -492,16 +493,6 @@ class Today extends gEditorial\Module
 	public function sortable_columns( $columns )
 	{
 		return array_merge( $columns, [ 'theday' => 'theday' ] ); // FIXME: add var query
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'day_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'day_cpt', $counts ) );
 	}
 
 	// CAUTION: the ordering is crucial

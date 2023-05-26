@@ -270,12 +270,12 @@ class Tube extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages', 1, 12, 'video' );
+				$this->_hook_post_updated_messages( 'video_cpt' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'bulk_post_updated_messages', 2, 12, 'video' );
+				$this->_hook_bulk_post_updated_messages( 'video_cpt' );
 				$this->action_module( 'meta', 'column_row', 3 );
 			}
 
@@ -284,12 +284,12 @@ class Tube extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages', 1, 12, 'channel' );
+				$this->_hook_post_updated_messages( 'channel_cpt' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'bulk_post_updated_messages', 2, 12, 'channel' );
+				$this->_hook_bulk_post_updated_messages( 'channel_cpt' );
 				$this->action_module( 'meta', 'column_row', 3 );
 			}
 		}
@@ -313,26 +313,6 @@ class Tube extends gEditorial\Module
 				$items[] = $glance;
 
 		return $items;
-	}
-
-	public function post_updated_messages_video( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'video_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages_video( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'video_cpt', $counts ) );
-	}
-
-	public function post_updated_messages_channel( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'channel_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages_channel( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'channel_cpt', $counts ) );
 	}
 
 	public function wp_video_shortcode_override( $override, $attr, $content, $instance )

@@ -277,7 +277,6 @@ class Event extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 				if ( $metadata ) {
@@ -295,9 +294,9 @@ class Event extends gEditorial\Module
 					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 				}
 
-			} else if ( 'edit' == $screen->base ) {
+				$this->_hook_post_updated_messages( 'event_cpt' );
 
-				$this->filter( 'bulk_post_updated_messages', 2 );
+			} else if ( 'edit' == $screen->base ) {
 
 				if ( $metadata ) {
 
@@ -314,6 +313,7 @@ class Event extends gEditorial\Module
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_edit_screen( $screen->post_type );
+				$this->_hook_bulk_post_updated_messages( 'event_cpt' );
 			}
 		}
 	}
@@ -422,16 +422,6 @@ class Event extends gEditorial\Module
 		}
 
 		return $query_vars;
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'event_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'event_cpt', $counts ) );
 	}
 
 	public function render_mainbox_metabox( $post, $box )

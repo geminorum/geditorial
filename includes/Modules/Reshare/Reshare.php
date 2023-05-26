@@ -119,14 +119,13 @@ class Reshare extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
+				$this->_hook_post_updated_messages( 'primary_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'bulk_post_updated_messages', 2 );
-
 				$this->_hook_screen_restrict_taxonomies();
+				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
@@ -144,15 +143,5 @@ class Reshare extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'primary_posttype' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'primary_posttype', $counts ) );
 	}
 }

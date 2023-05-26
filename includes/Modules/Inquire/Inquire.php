@@ -174,7 +174,6 @@ class Inquire extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'enter_title_here', 2 );
-				$this->filter( 'post_updated_messages' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
 
@@ -189,11 +188,12 @@ class Inquire extends gEditorial\Module
 					);
 				}
 
+				$this->_hook_post_updated_messages( 'inquiry_cpt' );
+
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'bulk_post_updated_messages', 2 );
-
 				$this->_hook_screen_restrict_taxonomies();
+				$this->_hook_bulk_post_updated_messages( 'inquiry_cpt' );
 			}
 		}
 	}
@@ -231,16 +231,6 @@ class Inquire extends gEditorial\Module
 	public function enter_title_here( $title, $post )
 	{
 		return _x( 'Enter question title here', 'Placeholder', 'geditorial-inquire' );
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'inquiry_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'inquiry_cpt', $counts ) );
 	}
 
 	public function do_metabox_excerpt( $post, $box )

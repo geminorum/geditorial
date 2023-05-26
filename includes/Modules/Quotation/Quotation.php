@@ -169,17 +169,17 @@ class Quotation extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->action_module( 'meta', 'render_metabox', 4, 1 );
 				$this->remove_meta_box( NULL, $screen->post_type, 'parent' );
 
+				$this->_hook_post_updated_messages( 'quote_cpt' );
+
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'bulk_post_updated_messages', 2 );
-
 				$this->_hook_screen_restrict_taxonomies();
+				$this->_hook_bulk_post_updated_messages( 'quote_cpt' );
 
 				$this->filter( 'the_title', 2, 9 );
 				$this->action_module( 'meta', 'column_row', 1, -25, 'source' );
@@ -198,16 +198,6 @@ class Quotation extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'quote_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'quote_cpt', $counts ) );
 	}
 
 	// @REF: `MetaBox::fieldPostParent()`

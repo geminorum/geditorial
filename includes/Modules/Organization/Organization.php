@@ -260,7 +260,6 @@ class Organization extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
@@ -286,14 +285,12 @@ class Organization extends gEditorial\Module
 					'low'
 				);
 
+				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
-				$this->filter( 'bulk_post_updated_messages', 2 );
-
-				$this->_hook_screen_restrict_taxonomies();
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
@@ -302,6 +299,8 @@ class Organization extends gEditorial\Module
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
+				$this->_hook_screen_restrict_taxonomies();
+				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_sync_primary_posttype();
 			}
 
@@ -470,16 +469,6 @@ class Organization extends gEditorial\Module
 	public function tweaks_column_attr( $post )
 	{
 		$this->paired_tweaks_column_attr( $post, 'primary_posttype', 'primary_paired' );
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'primary_posttype' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'primary_posttype', $counts ) );
 	}
 
 	public function subterm_shortcode( $atts = [], $content = NULL, $tag = '' )

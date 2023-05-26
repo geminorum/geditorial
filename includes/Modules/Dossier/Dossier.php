@@ -226,7 +226,6 @@ class Dossier extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
-				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
@@ -252,12 +251,12 @@ class Dossier extends gEditorial\Module
 					'low'
 				);
 
+				$this->_hook_post_updated_messages( 'dossier_posttype' );
 				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
-				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				$this->_hook_screen_restrict_taxonomies();
 
@@ -268,6 +267,7 @@ class Dossier extends gEditorial\Module
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
+				$this->_hook_bulk_post_updated_messages( 'dossier_posttype' );
 				$this->_hook_paired_sync_primary_posttype();
 			}
 
@@ -505,16 +505,6 @@ class Dossier extends gEditorial\Module
 		}
 
 		return $value;
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'dossier_posttype' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'dossier_posttype', $counts ) );
 	}
 
 	public function tools_settings( $sub )

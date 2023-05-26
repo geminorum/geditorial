@@ -294,7 +294,6 @@ class Course extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
-				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
@@ -320,13 +319,10 @@ class Course extends gEditorial\Module
 					'low'
 				);
 
+				$this->_hook_post_updated_messages( 'course_cpt' );
 				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
-
-				$this->filter( 'bulk_post_updated_messages', 2 );
-
-				$this->_hook_screen_restrict_taxonomies();
 
 				if ( $this->get_setting( 'admin_ordering', TRUE ) )
 					$this->action( 'pre_get_posts' );
@@ -334,6 +330,8 @@ class Course extends gEditorial\Module
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
+				$this->_hook_screen_restrict_taxonomies();
+				$this->_hook_bulk_post_updated_messages( 'course_cpt' );
 				$this->_hook_paired_sync_primary_posttype();
 			}
 
@@ -349,7 +347,7 @@ class Course extends gEditorial\Module
 			} else if ( 'post' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
-					$this->filter( 'post_updated_messages', 1, 10, 'supported' );
+					$this->_hook_post_updated_messages( 'lesson_cpt' );
 
 				if ( $subterms )
 					remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
@@ -371,7 +369,7 @@ class Course extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
-					$this->filter( 'bulk_post_updated_messages', 2, 10, 'supported' );
+					$this->_hook_bulk_post_updated_messages( 'lesson_cpt' );
 
 				$this->_hook_screen_restrict_paired();
 
@@ -507,26 +505,6 @@ class Course extends gEditorial\Module
 			return;
 
 		$this->paired_do_store_metabox( $post, 'course_cpt', 'course_tax', 'topic_tax' );
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'course_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'course_cpt', $counts ) );
-	}
-
-	public function post_updated_messages_supported( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'lesson_cpt' ) );
-	}
-
-	public function bulk_post_updated_messages_supported( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'lesson_cpt', $counts ) );
 	}
 
 	public function pre_get_posts( &$wp_query )

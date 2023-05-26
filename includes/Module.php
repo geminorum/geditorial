@@ -3421,18 +3421,26 @@ class Module extends Base
 		], $extra ) );
 	}
 
-	// TODO: convert to auto hook
-	protected function get_post_updated_messages( $constant )
+	protected function _hook_post_updated_messages( $constant )
 	{
-		$posttype = $this->constant( $constant );
-		return [ $posttype => Helper::generatePostTypeMessages( $this->get_noop( $constant ), $posttype ) ];
+		add_filter( 'post_updated_messages', function( $messages ) use ( $constant ) {
+
+			$posttype  = $this->constant( $constant );
+			$generated = Helper::generatePostTypeMessages( $this->get_noop( $constant ), $posttype );
+
+			return array_merge( $messages, [ $posttype => $generated ] );
+		} );
 	}
 
-	// TODO: convert to auto hook
-	protected function get_bulk_post_updated_messages( $constant, $bulk_counts )
+	protected function _hook_bulk_post_updated_messages( $constant )
 	{
-		$posttype = $this->constant( $constant );
-		return [ $posttype => Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $bulk_counts, $posttype ) ];
+		add_filter( 'bulk_post_updated_messages', function( $messages, $counts ) use ( $constant ) {
+
+			$posttype  = $this->constant( $constant );
+			$generated = Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $counts, $posttype );
+
+			return array_merge( $messages, [ $posttype => $generated ] );
+		}, 10, 2 );
 	}
 
 	public function get_image_sizes( $posttype )

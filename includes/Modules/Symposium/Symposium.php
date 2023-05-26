@@ -159,15 +159,15 @@ class Symposium extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'post_updated_messages' );
 				$this->filter( 'get_default_comment_status', 3 );
+				$this->_hook_post_updated_messages( 'session_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
-				$this->filter( 'bulk_post_updated_messages', 2 );
 
 				$this->_hook_screen_restrict_taxonomies();
+				$this->_hook_bulk_post_updated_messages( 'session_posttype' );
 			}
 		}
 	}
@@ -193,15 +193,5 @@ class Symposium extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function post_updated_messages( $messages )
-	{
-		return array_merge( $messages, $this->get_post_updated_messages( 'session_posttype' ) );
-	}
-
-	public function bulk_post_updated_messages( $messages, $counts )
-	{
-		return array_merge( $messages, $this->get_bulk_post_updated_messages( 'session_posttype', $counts ) );
 	}
 }
