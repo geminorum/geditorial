@@ -206,13 +206,13 @@ class Dossier extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'dossier_posttype' ) )
-			$this->_hook_paired_to( $posttype );
+		if ( $this->is_inline_save_posttype( 'dossier_posttype' ) )
+			$this->_hook_paired_sync_primary_posttype();
 	}
 
 	public function setup_restapi()
 	{
-		$this->_hook_paired_to( $this->constant( 'dossier_posttype' ) );
+		$this->_hook_paired_sync_primary_posttype();
 	}
 
 	public function current_screen( $screen )
@@ -252,7 +252,7 @@ class Dossier extends gEditorial\Module
 					'low'
 				);
 
-				$this->_hook_paired_to( $screen->post_type );
+				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -268,7 +268,7 @@ class Dossier extends gEditorial\Module
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
-				$this->_hook_paired_to( $screen->post_type );
+				$this->_hook_paired_sync_primary_posttype();
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -405,33 +405,6 @@ class Dossier extends gEditorial\Module
 			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'dossier_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
-	}
-
-	public function post_updated( $post_id, $post_after, $post_before )
-	{
-		$this->paired_do_save_to_post_update( $post_after, $post_before, 'dossier_posttype', 'dossier_paired' );
-	}
-
-	public function save_post( $post_id, $post, $update )
-	{
-		// we handle updates on another action, @SEE: `post_updated()`
-		if ( ! $update )
-			$this->paired_do_save_to_post_new( $post, 'dossier_posttype', 'dossier_paired' );
-	}
-
-	public function wp_trash_post( $post_id )
-	{
-		$this->paired_do_trash_to_post( $post_id, 'dossier_posttype', 'dossier_paired' );
-	}
-
-	public function untrash_post( $post_id )
-	{
-		$this->paired_do_untrash_to_post( $post_id, 'dossier_posttype', 'dossier_paired' );
-	}
-
-	public function before_delete_post( $post_id )
-	{
-		$this->paired_do_before_delete_to_post( $post_id, 'dossier_posttype', 'dossier_paired' );
 	}
 
 	public function pre_get_posts( &$wp_query )

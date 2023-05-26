@@ -236,13 +236,13 @@ class Collect extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'collection_cpt' ) )
-			$this->_hook_paired_to( $posttype );
+		if ( $this->is_inline_save_posttype( 'collection_cpt' ) )
+			$this->_hook_paired_sync_primary_posttype();
 	}
 
 	public function setup_restapi()
 	{
-		$this->_hook_paired_to( $this->constant( 'collection_cpt' ) );
+		$this->_hook_paired_sync_primary_posttype();
 	}
 
 	public function current_screen( $screen )
@@ -282,7 +282,7 @@ class Collect extends gEditorial\Module
 					'low'
 				);
 
-				$this->_hook_paired_to( $screen->post_type );
+				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -297,7 +297,8 @@ class Collect extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
-				$this->_hook_paired_to( $screen->post_type );
+
+				$this->_hook_paired_sync_primary_posttype();
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -382,33 +383,6 @@ class Collect extends gEditorial\Module
 			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'collection_cpt' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
-	}
-
-	public function post_updated( $post_id, $post_after, $post_before )
-	{
-		$this->paired_do_save_to_post_update( $post_after, $post_before, 'collection_cpt', 'collection_tax' );
-	}
-
-	public function save_post( $post_id, $post, $update )
-	{
-		// we handle updates on another action, see : post_updated()
-		if ( ! $update )
-			$this->paired_do_save_to_post_new( $post, 'collection_cpt', 'collection_tax' );
-	}
-
-	public function wp_trash_post( $post_id )
-	{
-		$this->paired_do_trash_to_post( $post_id, 'collection_cpt', 'collection_tax' );
-	}
-
-	public function untrash_post( $post_id )
-	{
-		$this->paired_do_untrash_to_post( $post_id, 'collection_cpt', 'collection_tax' );
-	}
-
-	public function before_delete_post( $post_id )
-	{
-		$this->paired_do_before_delete_to_post( $post_id, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function pre_get_posts( &$wp_query )
