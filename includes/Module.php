@@ -4261,6 +4261,53 @@ class Module extends Base
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
+	protected function _hook_paired_listbox( $screen, $context = 'listbox' )
+	{
+		if ( ! $this->_paired )
+			return FALSE;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		$this->class_metabox( $screen, $context );
+
+		$action   = sprintf( 'render_%s_metabox', $context );
+		$callback = function( $post, $box ) use ( $constants, $context, $action ) {
+
+			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+				return;
+
+			if ( $this->check_draft_metabox( $box, $post ) )
+				return;
+
+			$action_context = sprintf( '%s_%s', $context, $this->constant( $constants[0] ) );
+
+			echo $this->wrap_open( '-admin-metabox' );
+
+			$this->actions( $action, $post, $box, NULL, $action_context );
+
+			$term = $this->paired_get_to_term( $post->ID, $constants[0], $constants[1] );
+
+			if ( $list = MetaBox::getTermPosts( $this->constant( $constants[1] ), $term, $this->posttypes() ) )
+				echo $list;
+
+			else
+				echo HTML::wrap( _x( 'No items connected!', 'Module: Paired: Message', 'geditorial' ), 'field-wrap -empty' );
+
+			echo '</div>';
+		};
+
+		add_meta_box( $this->classs( $context ),
+			$this->get_meta_box_title_taxonomy( $constants[1], $screen->post_type, FALSE ),
+			$callback,
+			$screen,
+			'advanced',
+			'low'
+		);
+	}
+
 	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = 'pairedbox' )
 	{
 		if ( ! $this->_paired )
@@ -5111,26 +5158,6 @@ class Module extends Base
 			wp_delete_term( $the_term->term_id, $this->constant( $taxonomy_key ) );
 			delete_metadata( 'term', $the_term->term_id, $this->constant( $taxonomy_key ).'_linked' );
 		}
-	}
-
-	// PAIRED API
-	protected function paired_render_listbox_metabox( $post, $box, $posttype_key, $taxonomy_key )
-	{
-		if ( $this->check_draft_metabox( $box, $post ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_listbox_metabox', $post, $box, NULL, sprintf( 'listbox_%s', $this->constant( $posttype_key ) ) );
-
-			$term = $this->paired_get_to_term( $post->ID, $posttype_key, $taxonomy_key );
-
-			if ( $list = MetaBox::getTermPosts( $this->constant( $taxonomy_key ), $term, $this->posttypes() ) )
-				echo $list;
-
-			else
-				echo HTML::wrap( _x( 'No items connected!', 'Module: Paired: Message', 'geditorial' ), 'field-wrap -empty' );
-
-		echo '</div>';
 	}
 
 	// PAIRED API

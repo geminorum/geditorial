@@ -276,16 +276,8 @@ class Organization extends gEditorial\Module
 					'high'
 				);
 
-				$this->class_metabox( $screen, 'listbox' );
-				add_meta_box( $this->classs( 'listbox' ),
-					$this->get_meta_box_title_taxonomy( 'primary_paired', $screen->post_type, FALSE ),
-					[ $this, 'render_listbox_metabox' ],
-					$screen,
-					'advanced',
-					'low'
-				);
-
 				$this->_hook_post_updated_messages( 'primary_posttype' );
+				$this->_hook_paired_listbox( $screen );
 				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
@@ -381,14 +373,6 @@ class Organization extends gEditorial\Module
 			] );
 
 		echo '</div>';
-	}
-
-	public function render_listbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		$this->paired_render_listbox_metabox( $post, $box, 'primary_posttype', 'primary_paired' );
 	}
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )

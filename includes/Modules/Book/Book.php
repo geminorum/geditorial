@@ -596,16 +596,8 @@ class Book extends gEditorial\Module
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
 					$this->add_meta_box_excerpt( 'publication_cpt' );
 
-				$this->class_metabox( $screen, 'listbox' );
-				add_meta_box( $this->classs( 'listbox' ),
-					$this->get_meta_box_title_taxonomy( 'publication_paired', $screen->post_type, FALSE ),
-					[ $this, 'render_listbox_metabox' ],
-					$screen,
-					'advanced',
-					'low'
-				);
-
 				$this->_hook_post_updated_messages( 'publication_cpt' );
+				$this->_hook_paired_listbox( $screen );
 				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
@@ -679,14 +671,6 @@ class Book extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
-	}
-
-	public function render_listbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		$this->paired_render_listbox_metabox( $post, $box, 'publication_cpt', 'publication_paired' );
 	}
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )

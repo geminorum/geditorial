@@ -272,16 +272,8 @@ class Collect extends gEditorial\Module
 					'high'
 				);
 
-				$this->class_metabox( $screen, 'listbox' );
-				add_meta_box( $this->classs( 'listbox' ),
-					$this->get_meta_box_title_taxonomy( 'collection_tax', $screen->post_type, FALSE ),
-					[ $this, 'render_listbox_metabox' ],
-					$screen,
-					'advanced',
-					'low'
-				);
-
 				$this->_hook_post_updated_messages( 'collection_cpt' );
+				$this->_hook_paired_listbox( $screen );
 				$this->_hook_paired_sync_primary_posttype();
 
 			} else if ( 'edit' == $screen->base ) {
@@ -387,14 +379,6 @@ class Collect extends gEditorial\Module
 			MetaBox::fieldPostParent( $post );
 
 		echo '</div>';
-	}
-
-	public function render_listbox_metabox( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		$this->paired_render_listbox_metabox( $post, $box, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
