@@ -5166,45 +5166,55 @@ class Module extends Base
 
 	// PAIRED API
 	// TODO: check capability
-	protected function paired_tweaks_column_attr( $post, $posttype_key, $taxonomy_key )
+	protected function _hook_paired_tweaks_column_attr()
 	{
-		static $types = [];
-
-		$posts = $this->paired_get_from_posts( $post->ID, $posttype_key, $taxonomy_key );
-		$count = count( $posts );
-
-		if ( ! $count )
+		if ( ! $this->_paired )
 			return;
 
-		$title = $this->get_posttype_label( $posttype_key, 'column_title', $this->constant( $posttype_key ) );
+		$constants = $this->paired_get_paired_constants();
 
-		echo '<li class="-row -'.$this->key.' -connected">';
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
 
-			echo $this->get_column_icon( FALSE, NULL, $title );
+		add_action( sprintf( '%s_tweaks_column_attr', $this->base ), function( $post ) use ( $constants ) {
 
-			$posttypes = array_unique( array_map( function( $r ){
-				return $r->post_type;
-			}, $posts ) );
+			$posts = $this->paired_get_from_posts( $post->ID, $constants[0], $constants[1] );
+			$count = count( $posts );
 
-			$args = [ $this->constant( $taxonomy_key ) => $post->post_name ];
+			if ( ! $count )
+				return;
 
-			if ( empty( $types ) )
-				$types = PostType::get( 2 );
+			$title = $this->get_posttype_label( $constants[0], 'column_title', $this->constant( $constants[0] ) );
 
-			echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
+			echo '<li class="-row -'.$this->key.' -connected">';
 
-			$list = [];
+				echo $this->get_column_icon( FALSE, NULL, $title );
 
-			foreach ( $posttypes as $posttype )
-				$list[] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
-					'title'  => _x( 'View the connected list', 'Module: Paired: Title Attr', 'geditorial' ),
-					'target' => '_blank',
-				], $types[$posttype] );
+				$posttypes = array_unique( array_map( function( $r ){
+					return $r->post_type;
+				}, $posts ) );
 
-			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+				$args = [ $this->constant( $constants[1] ) => $post->post_name ];
 
-		echo '</li>';
+				if ( empty( $this->cache['posttypes'] ) )
+					$this->cache['posttypes'] = PostType::get( 2 );
+
+				echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
+
+				$list = [];
+
+				foreach ( $posttypes as $posttype )
+					$list[] = HTML::tag( 'a', [
+						'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
+						'title'  => _x( 'View the connected list', 'Module: Paired: Title Attr', 'geditorial' ),
+						'target' => '_blank',
+					], $this->cache['posttypes'][$posttype] );
+
+				echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+
+			echo '</li>';
+
+		} );
 	}
 
 	// PAIRED API

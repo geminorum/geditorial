@@ -283,12 +283,12 @@ class Collect extends gEditorial\Module
 				$this->_hook_screen_restrict_taxonomies();
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'collection_cpt' );
 				$this->_hook_paired_sync_primary_posttype();
+				$this->_hook_paired_tweaks_column_attr();
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -379,11 +379,6 @@ class Collect extends gEditorial\Module
 			MetaBox::fieldPostParent( $post );
 
 		echo '</div>';
-	}
-
-	public function tweaks_column_attr( $post )
-	{
-		$this->paired_tweaks_column_attr( $post, 'collection_cpt', 'collection_tax' );
 	}
 
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )

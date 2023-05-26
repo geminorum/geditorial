@@ -285,13 +285,13 @@ class Organization extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_sync_primary_posttype();
+				$this->_hook_paired_tweaks_column_attr();
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -373,11 +373,6 @@ class Organization extends gEditorial\Module
 			] );
 
 		echo '</div>';
-	}
-
-	public function tweaks_column_attr( $post )
-	{
-		$this->paired_tweaks_column_attr( $post, 'primary_posttype', 'primary_paired' );
 	}
 
 	public function subterm_shortcode( $atts = [], $content = NULL, $tag = '' )

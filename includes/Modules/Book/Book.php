@@ -611,12 +611,12 @@ class Book extends gEditorial\Module
 					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );
 				$this->_hook_paired_sync_primary_posttype();
+				$this->_hook_paired_tweaks_column_attr();
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -655,11 +655,6 @@ class Book extends gEditorial\Module
 			'audience_tax',
 			'publisher_tax',
 		];
-	}
-
-	public function tweaks_column_attr( $post )
-	{
-		$this->paired_tweaks_column_attr( $post, 'publication_cpt', 'publication_paired' );
 	}
 
 	protected function dashboard_widgets()

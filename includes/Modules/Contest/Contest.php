@@ -284,12 +284,12 @@ class Contest extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->action_module( 'tweaks', 'column_attr' );
 				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'contest_cpt' );
 				$this->_hook_paired_sync_primary_posttype();
+				$this->_hook_paired_tweaks_column_attr();
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -390,11 +390,6 @@ class Contest extends gEditorial\Module
 			MetaBox::fieldPostParent( $post );
 
 		echo '</div>';
-	}
-
-	public function tweaks_column_attr( $post )
-	{
-		$this->paired_tweaks_column_attr( $post, 'contest_cpt', 'contest_tax' );
 	}
 
 	public function contest_shortcode( $atts = [], $content = NULL, $tag = '' )
