@@ -342,7 +342,7 @@ class Organization extends gEditorial\Module
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
 	}
 
-	protected function _render_mainbox_extra( $post, $box )
+	protected function _render_mainbox_extra( $post, $box, $context = 'mainbox' )
 	{
 		parent::_render_mainbox_extra( $post, $box );
 

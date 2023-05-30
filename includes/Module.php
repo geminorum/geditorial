@@ -194,6 +194,8 @@ class Module extends Base
 
 		if ( $admin ) {
 
+			add_action( 'admin_init', [ $this, '_admin_init' ], 1 );
+
 			if ( method_exists( $this, 'admin_init' ) )
 				$this->action( 'admin_init' );
 
@@ -263,13 +265,14 @@ class Module extends Base
 				$this->dashboard_widgets();
 	}
 
+	// NOTE: ALWAYS HOOKED
 	public function _after_setup_theme()
 	{
 		$this->constants = $this->filters( 'constants', $this->get_global_constants(), $this->module );
 		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
-	// MUST ALWAYS CALL THIS
+	// NOTE: MUST ALWAYS CALLED BY THE MODULE
 	public function init()
 	{
 		$this->actions( 'init', $this->options, $this->module );
@@ -277,8 +280,10 @@ class Module extends Base
 		$this->features = $this->filters( 'features', $this->get_global_features(), $this->module );
 		$this->strings  = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 
-		if ( ! is_admin() )
-			return;
+	// NOTE: ALWAYS HOOKED
+	public function _admin_init()
+	{
+		$this->exports_do_check_requests();
 
 		// auto-hook register default terms
 		// helps if strings filtered
@@ -4097,6 +4102,9 @@ class Module extends Base
 
 		$setting = $this->get_setting( $what.$prefix, [] );
 
+		if ( TRUE === $setting || FALSE === $setting )
+			return $setting;
+
 		if ( empty( $setting ) && ! $admins )
 			return $fallback;
 
@@ -4350,8 +4358,8 @@ class Module extends Base
 		);
 	}
 
-	// DEFAULT CALLBACK
-	protected function _render_mainbox_extra( $post, $box )
+	// DEFAULT METHOD
+	protected function _render_mainbox_extra( $post, $box, $context = 'mainbox' )
 	{
 		MetaBox::fieldPostMenuOrder( $post );
 		MetaBox::fieldPostParent( $post );
@@ -4396,7 +4404,7 @@ class Module extends Base
 		};
 
 		add_meta_box( $this->classs( $context ),
-			$this->get_meta_box_title_taxonomy( $constants[1], $screen->post_type, FALSE ),
+			$this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', _x( 'Connected Items', 'Module: Metabox Title', 'geditorial' ) ),
 			$callback,
 			$screen,
 			'advanced',
@@ -6312,7 +6320,7 @@ class Module extends Base
 
 	protected function column_row_p2p_to_posttype( $constant, $post )
 	{
-		static $icons = [], $types = [];
+		static $icons = [];
 
 		if ( ! $this->_p2p )
 			return;
@@ -6332,8 +6340,8 @@ class Module extends Base
 		if ( empty( $icons[$constant] ) )
 			$icons[$constant] = $this->get_column_icon( FALSE, NULL, $this->strings['p2p'][$constant]['title']['to'] );
 
-		if ( empty( $types ) )
-			$types = PostType::get( 2 );
+		if ( empty( $this->cache['posttypes'] ) )
+			$this->cache['posttypes'] = PostType::get( 2 );
 
 		$posttypes = array_unique( array_map( function( $r ){
 			return $r->post_type;
@@ -6358,7 +6366,7 @@ class Module extends Base
 					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
-				], $types[$posttype] );
+				], $this->cache['posttypes'][$posttype] );
 
 			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
@@ -6656,6 +6664,7 @@ class Module extends Base
 		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $posttype, $after );
 	}
 
+	// TODO: move to `MetaBox` main
 	protected function check_draft_metabox( $box, $post, $message = NULL )
 	{
 		if ( ! in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
@@ -6669,6 +6678,7 @@ class Module extends Base
 		return TRUE;
 	}
 
+	// TODO: move to 'User` Core
 	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )
 	{
 		if ( is_null( $fields ) )

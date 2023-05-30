@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Core;
+<?php namespace geminorum\gEditorial\Misc;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 

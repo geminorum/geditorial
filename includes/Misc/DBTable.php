@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\WordPress;
+<?php namespace geminorum\gEditorial\Misc;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
