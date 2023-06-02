@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Estimated extends gEditorial\Module
 {
@@ -160,7 +160,7 @@ class Estimated extends gEditorial\Module
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
-		if ( ! $post = PostType::getPost() )
+		if ( ! $post = WordPress\Post::get() )
 			return;
 
 		if ( $html = $this->get_estimated( $post->ID ) )

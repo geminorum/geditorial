@@ -5,12 +5,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Post;
 
 class Markdown extends gEditorial\Module
 {
@@ -204,7 +203,7 @@ class Markdown extends gEditorial\Module
 		$content = $this->parser->defaultTransform( $content );
 
 		if ( $this->get_setting( 'wiki_linking' ) )
-			$content = $this->linking( $content, PostType::getPost( $id ) );
+			$content = $this->linking( $content, Post::get( $id ) );
 
 		// reference the post_id to make footnote ids unique
 		$content = preg_replace( '/fn(ref)?:/', "fn$1-$id:", $content );
@@ -270,7 +269,7 @@ class Markdown extends gEditorial\Module
 
 	public function process_post( $post )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( empty( $post->post_content_filtered ) )
@@ -294,7 +293,7 @@ class Markdown extends gEditorial\Module
 
 	public function convert_post( $post )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( $this->is_markdown( $post->ID ) )
@@ -323,7 +322,7 @@ class Markdown extends gEditorial\Module
 
 	public function cleanup_post( $post )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( ! $this->is_markdown( $post->ID ) )
@@ -352,7 +351,7 @@ class Markdown extends gEditorial\Module
 
 	public function discard_post( $post )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( empty( $post->post_content_filtered ) )
@@ -398,7 +397,7 @@ class Markdown extends gEditorial\Module
 		if ( ! $this->is_markdown( $post_id ) )
 			return $value;
 
-		$post = PostType::getPost( $post_id );
+		$post = Post::get( $post_id );
 
 		if ( $post && ! empty( $post->post_content_filtered ) )
 			return $post->post_content_filtered;

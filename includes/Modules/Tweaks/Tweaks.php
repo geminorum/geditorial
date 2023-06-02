@@ -1021,7 +1021,7 @@ class Tweaks extends gEditorial\Module
 
 	public function post_submitbox_misc_actions( $post )
 	{
-		if (  $post->post_modified == $post->post_date )
+		if ( $post->post_modified === $post->post_date )
 			return;
 
 		echo '<div class="-misc misc-pub-section misc-pub-modified">';

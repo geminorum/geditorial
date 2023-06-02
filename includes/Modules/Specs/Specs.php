@@ -10,7 +10,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Specs extends gEditorial\Module
@@ -151,7 +151,7 @@ class Specs extends gEditorial\Module
 	// it will append new specs to the old ones
 	public function set_post_specs( $post_id, $specs, $create = FALSE )
 	{
-		if ( ! $post = PostType::getPost( $post_id ) )
+		if ( ! $post = Post::get( $post_id ) )
 			return FALSE;
 
 		$meta       = $this->get_postmeta_legacy( $post_id );

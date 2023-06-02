@@ -10,6 +10,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 
 use geminorum\gNetwork\Core\Orthography;
@@ -282,7 +283,7 @@ class Ortho extends gEditorial\Module
 
 	public function cleanup_post( $post )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		$update = FALSE;

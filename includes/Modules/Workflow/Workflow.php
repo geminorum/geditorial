@@ -11,6 +11,7 @@ use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
@@ -151,7 +152,7 @@ class Workflow extends gEditorial\Module
 			case 'delete_page':
 			// case 'publish_post':
 
-				if ( ! $post = PostType::getPost( $args[0] ) )
+				if ( ! $post = Post::get( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )

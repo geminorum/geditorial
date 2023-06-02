@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Dashboard extends gEditorial\Module
 {
@@ -66,7 +66,7 @@ class Dashboard extends gEditorial\Module
 		if ( ! $page = $this->get_setting( 'dashboard_page_id', 0 ) )
 			return TRUE;
 
-		if ( ! $post = PostType::getPost( $page ) )
+		if ( ! $post = WordPress\Post::get( $page ) )
 			return TRUE;
 
 		// only ASCII slugs!
@@ -136,7 +136,7 @@ class Dashboard extends gEditorial\Module
 		if ( ! $id = $this->get_setting( 'dashboard_page_id', 0 ) )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $id ) )
+		if ( ! $post = WordPress\Post::get( $id ) )
 			return FALSE;
 
 		return $page ? ( $post->post_name.'/'.$page ) : $post->post_name;
@@ -240,7 +240,7 @@ class Dashboard extends gEditorial\Module
 	public function nav_menu_item_title( $title, $menu_item, $args, $depth )
 	{
 		return $menu_item->object_id == $this->get_setting( 'dashboard_page_id', 0 )
-			? PostType::getPostTitle( $menu_item->object_id, $title, FALSE )
+			? WordPress\Post::title( $menu_item->object_id, $title, FALSE )
 			: $title;
 	}
 

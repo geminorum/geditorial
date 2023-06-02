@@ -7,6 +7,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 
 class Roles extends gEditorial\Module
@@ -277,7 +278,7 @@ class Roles extends gEditorial\Module
 			|| 'delete_'.$singular == $cap
 			|| 'read_'.$singular == $cap ) {
 
-			$post = PostType::getPost( $args[0] );
+			$post = Post::get( $args[0] );
 			$type = PostType::object( $post->post_type );
 			$caps = [];
 

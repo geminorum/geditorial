@@ -9,7 +9,7 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Post;
 
 class Shortcodes extends gEditorial\Module
 {
@@ -200,7 +200,7 @@ class Shortcodes extends gEditorial\Module
 	// FIXME: add table action
 	protected function remove_shortcode( $post_id, $shortcode )
 	{
-		if ( ! $post = PostType::getPost( $post_id ) )
+		if ( ! $post = Post::get( $post_id ) )
 			return FALSE;
 
 		$pattern = '#\['.$shortcode.'[^\]]*\]#i';

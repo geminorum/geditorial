@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
 {
@@ -49,7 +49,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
 
-		if ( ! $post = PostType::getPost( $atts['id'] ) )
+		if ( ! $post = WordPress\Post::get( $atts['id'] ) )
 			return $atts['default'];
 
 		if ( $post->post_type === self::constant( 'place_cpt', 'place' ) )

@@ -12,6 +12,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Status;
 
@@ -95,7 +96,7 @@ class Schedule extends gEditorial\Module
 
 				Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
-				if ( ! $target = PostType::getPost( $post['post_id'] ) )
+				if ( ! $target = Post::get( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
 
 				if ( ! $this->can_reschedule( $target ) )
@@ -289,7 +290,7 @@ class Schedule extends gEditorial\Module
 
 	private function get_post_row( $the_day, $post, $calendar_args = [] )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return '';
 
 		$html = '<li data-day="'.$the_day.'" data-status="'.$post->post_status.'"';

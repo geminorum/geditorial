@@ -11,7 +11,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\HTTP;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\Strings;
 
 class Like extends gEditorial\Module
@@ -137,7 +137,7 @@ class Like extends gEditorial\Module
 		if ( ! $post )
 			return FALSE;
 
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( ! in_array( $post->post_type, $this->posttypes() ) )

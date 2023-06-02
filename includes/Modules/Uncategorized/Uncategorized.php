@@ -11,6 +11,7 @@ use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Database;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Strings;
@@ -408,7 +409,7 @@ class Uncategorized extends gEditorial\Module
 
 	private function _do_clean_unattached( $post, $taxonomies = NULL )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $taxonomies ) )
@@ -429,7 +430,7 @@ class Uncategorized extends gEditorial\Module
 	{
 		global $wpdb;
 
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		$taxonomies   = get_object_taxonomies( $post );
@@ -458,7 +459,7 @@ class Uncategorized extends gEditorial\Module
 
 	private function _do_clean_uncategorized( $post, $taxonomies = NULL )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $taxonomies ) )

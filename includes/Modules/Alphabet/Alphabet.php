@@ -168,7 +168,7 @@ class Alphabet extends gEditorial\Module
 
 				} else {
 
-					$title = WordPress\PostType::getPostTitle( $post );
+					$title = WordPress\Post::title( $post );
 					$link  = Core\WordPress::getPostShortLink( $post->ID );
 
 					$html.= '<'.$args['term_tag'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';

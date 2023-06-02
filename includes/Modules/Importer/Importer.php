@@ -725,7 +725,7 @@ class Importer extends gEditorial\Module
 						}
 
 						$this->actions( 'saved',
-							PostType::getPost( $post_id ),
+							Post::get( $post_id ),
 							$insert,
 							$prepared,
 							$field_map,

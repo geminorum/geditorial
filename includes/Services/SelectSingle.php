@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
@@ -32,6 +33,7 @@ class SelectSingle extends Main
 			'permission_callback' => [ __CLASS__, 'permission_callback' ],
 		] );
 	}
+
 	public static function permission_callback( $request )
 	{
 		return TRUE; // later we check for access
@@ -140,7 +142,7 @@ class SelectSingle extends Main
 		foreach ( $query->query( $args ) as $post )
 			$posts[] = (object) [
 				'id'   => $post,
-				'text' => PostType::getPostTitle( $post ),
+				'text' => Post::title( $post ),
 			];
 
 		return [

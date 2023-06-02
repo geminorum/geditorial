@@ -8,7 +8,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Quotation extends gEditorial\Module
 {
@@ -224,13 +224,13 @@ class Quotation extends gEditorial\Module
 		if ( ! empty( $title ) )
 			return $title;
 
-		if ( ! $post = PostType::getPost( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $title;
 
 		if ( $post->post_parent && $this->constant( 'quote_cpt' ) == $post->post_type )
 			/* translators: %1$s: post parent, %2$s: menu order */
 			return vsprintf( _x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ), [
-				PostType::getPostTitle( $post->post_parent, NULL, FALSE ),
+				WordPress\Post::title( $post->post_parent, NULL, FALSE ),
 				Number::format( $post->menu_order ),
 			] );
 

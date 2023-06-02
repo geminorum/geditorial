@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Status;
@@ -294,7 +295,7 @@ class Tablelist extends Main
 			'args'     => [ 'statuses' => Status::get() ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
 
-				$title = PostType::getPostTitle( $row );
+				$title = Post::title( $row );
 
 				if ( 'publish' != $row->post_status ) {
 

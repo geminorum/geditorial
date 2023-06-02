@@ -13,6 +13,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Strings;
@@ -171,7 +172,7 @@ class Attachments extends gEditorial\Module
 	// @REF: https://wordpress.stackexchange.com/a/187817
 	public function attachment_link( $link, $attachment_id )
 	{
-		if ( ! $attachment = PostType::getPost( $attachment_id ) )
+		if ( ! $attachment = Post::get( $attachment_id ) )
 			return $link;
 
 		if ( empty( $attachment->post_parent ) )

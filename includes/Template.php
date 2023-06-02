@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -228,7 +229,7 @@ class Template extends Main
 
 	public static function getPostImageSrc( $thumbnail_id = NULL, $size = NULL, $post_id = NULL )
 	{
-		if ( ! $post = PostType::getPost( $post_id ) )
+		if ( ! $post = Post::get( $post_id ) )
 			return FALSE;
 
 		if ( is_null( $thumbnail_id ) )
@@ -348,7 +349,7 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
 
-		if ( ! $post = PostType::getPost( $args['id'] ) )
+		if ( ! $post = Post::get( $args['id'] ) )
 			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
 
 		$title  = self::getPostField( $args['title'], $post->ID, FALSE );
@@ -537,7 +538,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = PostType::getPost( $args['id'] ) )
+		if ( ! $post = Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$meta = $raw = self::getMetaFieldRaw( $field_key, $post->ID, 'meta' );
@@ -579,7 +580,7 @@ class Template extends Main
 			if ( ! gEditorial()->enabled( 'meta' ) )
 				return FALSE;
 
-			if ( ! $post = PostType::getPost( $post_id ) )
+			if ( ! $post = Post::get( $post_id ) )
 				return FALSE;
 
 			$post_id = $post->ID;
@@ -690,7 +691,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = PostType::getPost( $args['id'] ) )
+		if ( ! $post = Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$context = $args['context'] ?: ( $args['taxonomy'] ?: 'term' );
@@ -781,7 +782,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = PostType::getPost( $args['id'] ) )
+		if ( ! $post = Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$url = $args['url_field'] ? self::getMetaField( $args['url_field'], [
@@ -870,7 +871,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = PostType::getPost( $args['id'] ) )
+		if ( ! $post = Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$rows     = [];

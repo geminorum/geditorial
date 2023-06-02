@@ -10,7 +10,7 @@ use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\User;
 
@@ -264,7 +264,7 @@ class Audit extends gEditorial\Module
 				if ( empty( $locking ) )
 					return $caps;
 
-				if ( ! $post = PostType::getPost( $args[0] ) )
+				if ( ! $post = Post::get( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )

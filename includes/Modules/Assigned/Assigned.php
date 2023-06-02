@@ -255,7 +255,7 @@ class Assigned extends gEditorial\Module
 				if ( empty( $locking ) )
 					return $caps;
 
-				if ( ! $post = PostType::getPost( $args[0] ) )
+				if ( ! $post = WordPress\Post::get( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )

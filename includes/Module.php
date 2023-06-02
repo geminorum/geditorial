@@ -279,6 +279,7 @@ class Module extends Base
 
 		$this->features = $this->filters( 'features', $this->get_global_features(), $this->module );
 		$this->strings  = $this->filters( 'strings', $this->get_global_strings(), $this->module );
+	}
 
 	// NOTE: ALWAYS HOOKED
 	public function _admin_init()
@@ -884,7 +885,7 @@ class Module extends Base
 			'href'  => $link,
 			'id'    => $this->classs( 'mainbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-mainbutton', 'thickbox' ],
-			'title' => $title ? sprintf( $title, PostType::getPostTitle( $post, $name ), $name ) : FALSE,
+			'title' => $title ? sprintf( $title, Post::title( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
 
 		echo HTML::wrap( $html, 'field-wrap -buttons' );
@@ -926,7 +927,7 @@ class Module extends Base
 			'href'  => $link,
 			'id'    => $this->classs( 'newpostbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-newpostbutton', 'thickbox' ],
-			'title' => $title ? sprintf( $title, PostType::getPostTitle( $post, $name ), $name ) : FALSE,
+			'title' => $title ? sprintf( $title, Post::title( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
 
 		echo HTML::wrap( $html, 'field-wrap -buttons hide-if-no-js' );
@@ -991,7 +992,7 @@ class Module extends Base
 
 	public function is_posttype( $posttype_key, $post = NULL )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		return $this->constant( $posttype_key ) == $post->post_type;
@@ -999,7 +1000,7 @@ class Module extends Base
 
 	public function is_post_viewable( $post = NULL )
 	{
-		return $this->filters( 'is_post_viewable', Post::viewable( $post ), PostType::getPost( $post ) );
+		return $this->filters( 'is_post_viewable', Post::viewable( $post ), Post::get( $post ) );
 	}
 
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
@@ -2800,7 +2801,7 @@ class Module extends Base
 
 	public function do_posttype_field( $atts = [], $post = NULL )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return;
 
 		$args = array_merge( [
@@ -4011,7 +4012,7 @@ class Module extends Base
 		if ( ! $linked = $this->get_linked_to_posts( $post->ID, TRUE ) )
 			return $title;
 
-		return $title.' – '.PostType::getPostTitle( $linked );
+		return $title.' – '.Post::title( $linked );
 	}
 
 	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
@@ -5468,7 +5469,7 @@ class Module extends Base
 				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $posttype_key, $taxonomy_key ) )
 					continue;
 
-				if ( ! $post = PostType::getPost( $post_id ) )
+				if ( ! $post = Post::get( $post_id ) )
 					continue;
 
 				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), [ 'description' => $post->post_excerpt ] ) )
@@ -5639,7 +5640,7 @@ class Module extends Base
 
 						$html.= '<hr />';
 
-						if ( ! $post = PostType::getPost( $post_id ) )
+						if ( ! $post = Post::get( $post_id ) )
 							return $html.gEditorial()->na();
 
 						if ( empty( $post->post_excerpt ) )
@@ -5920,7 +5921,7 @@ class Module extends Base
 	protected function _hook_editform_readonly_title()
 	{
 		add_action( 'edit_form_after_title', function( $post ) {
-			$html = PostType::getPostTitle( $post );
+			$html = Post::title( $post );
 			$info = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated', 'Module: ReadOnly Title Info', 'geditorial' ) );
 			echo $this->wrap(
 				$html.' '.$info,
@@ -6880,11 +6881,12 @@ class Module extends Base
 	// DEFAULT FILTER
 	public function template_empty_content( $content )
 	{
-		$post  = PostType::getPost();
-		$title = $this->template_get_empty_title( '' );
+		if ( ! $post = Post::get() )
+			return $content;
 
-		$html = $this->template_get_empty_content();
-		$html.= $this->get_search_form( [ 'post_type[]' => $post->post_type ], $title );
+		$title = $this->template_get_empty_title( '' );
+		$html  = $this->template_get_empty_content();
+		$html .= $this->get_search_form( [ 'post_type[]' => $post->post_type ], $title );
 
 		// TODO: list other entries that linked to this title via content
 

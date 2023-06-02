@@ -9,6 +9,7 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
 
@@ -491,8 +492,8 @@ class ShortCode extends Main
 			'title_dummy'    => '<span class="-dummy"></span>',
 		], $atts );
 
-		$text = PostType::getPostTitle( $post, FALSE );
-		$link = PostType::getPostLink( $post, '' );
+		$text = Post::title( $post, FALSE );
+		$link = Post::link( $post, '' );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $post, $atts, $text, $link ] );
@@ -546,7 +547,7 @@ class ShortCode extends Main
 	// post as item in the list
 	public static function postItem( $post = NULL, $atts = [], $before = '', $after = '' )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return '';
 
 		$args = self::atts( [
@@ -569,8 +570,8 @@ class ShortCode extends Main
 			'order_sep'     => ' &ndash; ',
 		], $atts );
 
-		$text = PostType::getPostTitle( $post );
-		$link = PostType::getPostLink( $post, '' );
+		$text = Post::title( $post );
+		$link = Post::link( $post, '' );
 
 		if ( ! $link && current_user_can( 'edit_post', $post->ID ) )
 			$link = get_preview_post_link( $post );
@@ -610,7 +611,7 @@ class ShortCode extends Main
 			if ( TRUE === $args['item_link'] ) {
 
 				// avoid linking to the same page
-				if ( is_singular() && ( $current = PostType::getPost() ) )
+				if ( is_singular() && ( $current = Post::get() ) )
 					$args['item_link'] = $current->ID !== $post->ID;
 			}
 
@@ -684,7 +685,7 @@ class ShortCode extends Main
 	// post as an image on the list
 	public static function postImage( $post = NULL, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return $fallback;
 
 		$args = self::atts( [
@@ -716,8 +717,8 @@ class ShortCode extends Main
 		if ( ! $thumbnail_img = Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
 
-		$text = PostType::getPostTitle( $post, FALSE );
-		$link = PostType::getPostLink( $post, '' );
+		$text = Post::title( $post, FALSE );
+		$link = Post::link( $post, '' );
 
 		if ( is_null( $args['item_text'] ) )
 			$title = $text;
@@ -913,7 +914,7 @@ class ShortCode extends Main
 			$query['post_type'] = 'attachment';
 			$query['post_status'] = [ 'inherit' ];
 
-			if ( $parent = PostType::getPost( $args['id'] ) )
+			if ( $parent = Post::get( $args['id'] ) )
 				$query['post_parent'] = $parent->ID;
 
 			if ( $args['mime_type'] )
@@ -928,7 +929,7 @@ class ShortCode extends Main
 
 				$query['post_type'] = $posttype;
 
-			} else if ( $post = PostType::getPost( $args['id'] ) ) {
+			} else if ( $post = Post::get( $args['id'] ) ) {
 
 				$query['connected_type']  = $args['connection'];
 				$query['connected_items'] = $post;
@@ -987,7 +988,7 @@ class ShortCode extends Main
 
 			// gets the list of supported posts paired to this post
 
-			if ( ! $post = PostType::getPost() )
+			if ( ! $post = Post::get() )
 				return $content;
 
 			if ( $args['module'] ) {
@@ -1046,7 +1047,7 @@ class ShortCode extends Main
 
 			// gets the list of posts by the taxonomy
 
-			if ( ! $post = PostType::getPost() )
+			if ( ! $post = Post::get() )
 				return $content;
 
 			// NOTE: also used later!
@@ -1191,7 +1192,7 @@ class ShortCode extends Main
 
 		if ( in_array( 'attachment', (array) $args['posttypes'] ) ) {
 
-			if ( $post = PostType::getPost( $args['id'] ) )
+			if ( $post = Post::get( $args['id'] ) )
 				$query_args['post_parent'] = $post->ID;
 
 			if ( $args['mime_type'] )
@@ -1321,7 +1322,7 @@ class ShortCode extends Main
 			return NULL;
 
 		$html = $term = $tax_query = $meta_query = '';
-		$post = PostType::getPost();
+		$post = Post::get();
 
 		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $posttype );
@@ -1520,7 +1521,7 @@ class ShortCode extends Main
 
 		if ( 'thepost' == $list ) {
 
-			if ( ! $parent = PostType::getPost( $args['id'] ) )
+			if ( ! $parent = Post::get( $args['id'] ) )
 				return $content;
 
 			$query['object_ids'] = [ $parent->ID ];

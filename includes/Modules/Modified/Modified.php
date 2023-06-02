@@ -12,7 +12,7 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Modified extends gEditorial\Module
 {
@@ -182,7 +182,7 @@ class Modified extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( ! $post = PostType::getPost( $args['id'] ) )
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return NULL;
 
 		$gmt   = strtotime( $post->post_modified_gmt );
@@ -205,7 +205,7 @@ class Modified extends gEditorial\Module
 
 	public function get_post_modified( $format = NULL, $post = NULL )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		$gmt     = strtotime( $post->post_modified_gmt );
