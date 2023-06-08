@@ -142,7 +142,7 @@ class Schedule extends gEditorial\Module
 			_x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ),
 			_x( 'My Calendar', 'Menu Title', 'geditorial-schedule' ),
 			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
-			$this->get_adminmenu(),
+			$this->get_adminpage_url( FALSE ),
 			[ $this, 'admin_calendar_page' ]
 		);
 
@@ -371,11 +371,11 @@ class Schedule extends gEditorial\Module
 		$cal  = $this->default_calendar();
 		$date = \gPersianDateDate::getByPost( $post, $cal );
 
-		return $this->get_adminmenu( FALSE, [
+		return $this->get_adminpage_url( TRUE, [
 			'cal'   => $cal,
 			'year'  => $date['year'],
 			'month' => $date['mon'],
-		] );
+		], 'adminmenu' );
 	}
 
 	private function can_reschedule( $post )

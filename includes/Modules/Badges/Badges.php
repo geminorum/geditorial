@@ -174,11 +174,6 @@ class Badges extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function template_redirect()
 	{
 		if ( is_embed() )

@@ -341,21 +341,11 @@ class Module extends Base
 		return Settings::helpSidebar( $this->get_module_links() );
 	}
 
+	// FIXME: get dashboard menu for the module
 	protected function get_module_links()
 	{
 		$links  = [];
 		$screen = get_current_screen();
-
-		if ( ( $list = $this->get_adminmenu( FALSE ) ) && method_exists( $this, 'admin_menu' ) && ! Settings::isDashboard( $screen ) )
-			if ( $this->role_can( 'adminmenu' ) )
-				$links[] = [
-					'context' => 'listtable',
-					'sub'     => $this->key,
-					'text'    => $this->module->title,
-					'url'     => $list,
-					/* translators: %s: module title */
-					'title'   => sprintf( _x( '%s Dashboard', 'Module: Extra Link: Listtable', 'geditorial' ), $this->module->title ),
-				];
 
 		if ( method_exists( $this, 'reports_settings' ) && ! Settings::isReports( $screen ) )
 			foreach ( $this->append_sub( [], 'reports' ) as $sub => $title )
@@ -434,7 +424,7 @@ class Module extends Base
 			case 'imports'   : $url = Settings::importsURL(); break;
 			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
 			case 'settings'  : $url = add_query_arg( 'module', $this->module->name, Settings::settingsURL() ); $sub = FALSE; break;
-			case 'listtable' : $url = $this->get_adminmenu( FALSE ); $sub = FALSE; break;
+			case 'listtable' : $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
 			default          : $url = URL::current();
 		}
 
@@ -460,13 +450,15 @@ class Module extends Base
 
 	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage', $admin_base = NULL )
 	{
-		$page = 'mainpage' == $context ? $this->classs() : $this->classs( $context );
+		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )
+			? $this->classs()
+			: $this->classs( $context );
 
 		if ( ! $full )
 			return $page;
 
 		if ( is_null( $admin_base ) )
-			$admin_base = in_array( $context, [ 'printpage', 'framepage', 'newpost' ] )
+			$admin_base = in_array( $context, [ 'adminmenu', 'printpage', 'framepage', 'newpost', 'importitems' ], TRUE )
 				? get_admin_url( NULL, 'index.php' )
 				: get_admin_url( NULL, 'admin.php' );
 

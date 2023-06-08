@@ -370,11 +370,6 @@ class Magazine extends gEditorial\Module
 		}
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function dashboard_glance_items( $items )
 	{
 		if ( $glance = $this->dashboard_glance_post( 'issue_cpt' ) )

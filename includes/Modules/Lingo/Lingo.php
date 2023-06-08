@@ -215,11 +215,6 @@ class Lingo extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'language_taxonomy', 'options-general.php' );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
 		$taxonomy = $this->constant( 'language_taxonomy' );

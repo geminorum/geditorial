@@ -175,11 +175,6 @@ class Licensed extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	protected function dashboard_widgets()
 	{
 		if ( ! $this->role_can( 'reports' ) )

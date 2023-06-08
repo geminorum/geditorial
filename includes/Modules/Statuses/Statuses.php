@@ -222,11 +222,6 @@ class Statuses extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'status_tax', 'options-general.php' );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function current_screen( $screen )
 	{
 		if ( $this->constant( 'status_tax' ) == $screen->taxonomy ) {

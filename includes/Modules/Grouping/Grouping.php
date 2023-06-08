@@ -129,11 +129,6 @@ class Grouping extends gEditorial\Module
 		}
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function current_screen( $screen )
 	{
 		if ( ! $customs = $this->get_custom_taxonomies() )

@@ -210,7 +210,7 @@ class Today extends gEditorial\Module
 			_x( 'Editorial Today', 'Page Title', 'geditorial-today' ),
 			_x( 'My Today', 'Menu Title', 'geditorial-today' ),
 			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
-			$this->get_adminmenu(),
+			$this->get_adminpage_url( FALSE ),
 			[ $this, 'admin_today_page' ]
 		);
 
@@ -404,7 +404,7 @@ class Today extends gEditorial\Module
 
 		$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
 
-		return $this->get_adminmenu( FALSE, $the_day );
+		return $this->get_adminpage_url( TRUE, $the_day, 'adminmenu' );
 	}
 
 	public function render_supportedbox_metabox( $post, $box )

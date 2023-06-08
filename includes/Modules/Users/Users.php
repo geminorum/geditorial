@@ -165,11 +165,6 @@ class Users extends gEditorial\Module
 			$this->_hook_menu_taxonomy( 'type_tax', 'users.php' );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function current_screen( $screen )
 	{
 		$groups     = $this->get_setting( 'user_groups' );

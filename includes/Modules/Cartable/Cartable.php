@@ -374,7 +374,7 @@ class Cartable extends gEditorial\Module
 
 				$this->class_metabox( $screen, 'mainbox' );
 				add_meta_box( $this->classs( 'mainbox' ),
-					$this->get_meta_box_title( 'users', $this->get_adminmenu( FALSE ), TRUE ),
+					$this->get_meta_box_title( 'users', $this->get_adminpage_url( TRUE, [], 'adminmenu' ), TRUE ),
 					[ $this, 'render_mainbox_metabox' ],
 					$screen,
 					'side',
@@ -414,7 +414,7 @@ class Cartable extends gEditorial\Module
 				_x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ),
 				_x( 'My Cartables', 'Menu Title', 'geditorial-cartable' ),
 				'read',
-				$this->get_adminmenu(),
+				$this->get_adminpage_url( FALSE ),
 				[ $this, 'admin_cartable_page' ]
 			);
 		}
@@ -423,7 +423,7 @@ class Cartable extends gEditorial\Module
 	public function admin_cartable_page()
 	{
 		$user = wp_get_current_user();
-		$uri  = $this->get_adminmenu( FALSE );
+		$uri  = $this->get_adminpage_url( TRUE, [], 'adminmenu' );
 
 		$sub  = $slug = $context = FALSE;
 		$subs = [];
@@ -575,7 +575,7 @@ class Cartable extends gEditorial\Module
 
 			$title = _x( 'Your Personal Cartable', 'Dashboard Widget Title', 'geditorial-cartable' );
 			$title.= MetaBox::getTitleAction( [
-				'url'   => $this->get_adminmenu( FALSE ),
+				'url'   => $this->get_adminpage_url( TRUE, [], 'adminemnu' ),
 				'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 				'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 			] );
@@ -596,7 +596,7 @@ class Cartable extends gEditorial\Module
 				/* translators: %s: term name placeholder */
 				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
 				$title.= MetaBox::getTitleAction( [
-					'url'   => $this->get_adminmenu( FALSE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ] ),
+					'url'   => $this->get_adminpage_url( TRUE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ], 'adminmenu' ),
 					'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 					'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 				] );
@@ -618,7 +618,7 @@ class Cartable extends gEditorial\Module
 				/* translators: %s: term name placeholder */
 				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
 				$title.= MetaBox::getTitleAction( [
-					'url'   => $this->get_adminmenu( FALSE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ] ),
+					'url'   => $this->get_adminpage_url( TRUE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ], 'adminmenu' ),
 					'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 					'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 				] );

@@ -113,11 +113,6 @@ class Config extends gEditorial\Module
 		}
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function admin_reports_page()
 	{
 		$can = $this->cuc( 'reports' );

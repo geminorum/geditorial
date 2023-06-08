@@ -69,11 +69,6 @@ class WcPurchased extends gEditorial\Module
 		$this->_hook_submenu_adminpage( 'reports' );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	public function render_submenu_adminpage()
 	{
 		$this->render_default_mainpage( 'reports', 'update' );

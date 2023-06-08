@@ -304,11 +304,7 @@ class Dossier extends gEditorial\Module
 			$this->_hook_submenu_adminpage( 'newpost' );
 			$this->action_self( 'newpost_content', 4, 10, 'menu_order' );
 		}
-	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
 	}
 
 	public function template_redirect()

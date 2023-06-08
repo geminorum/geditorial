@@ -175,11 +175,6 @@ class Roles extends gEditorial\Module
 				unset( $menu[$offset] );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	// OVERWRITE
 	public function post_types( $posttypes = NULL )
 	{

@@ -162,11 +162,6 @@ class Suited extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		return FALSE;
-	}
-
 	protected function get_taxonomies_for_restrict_manage_posts()
 	{
 		return [ 'main_taxonomy' ];
