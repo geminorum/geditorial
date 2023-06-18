@@ -542,22 +542,16 @@ class Module extends Base
 
 	protected function render_default_mainpage( $context = 'mainpage', $action = 'update' )
 	{
-		$uri      = $this->get_adminpage_url( TRUE, [], $context );
-		$subs     = $this->get_adminpage_subs( $context );
-		$default  = $this->get_adminpage_default_sub( $subs, $context );
-		$sub      = self::req( 'sub', $default );
-		$noheader = self::req( 'noheader' );
-		$content  = [ $this, 'render_mainpage_content' ];
+		$uri     = $this->get_adminpage_url( TRUE, [], $context );
+		$subs    = $this->get_adminpage_subs( $context );
+		$default = $this->get_adminpage_default_sub( $subs, $context );
+		$content = [ $this, 'render_mainpage_content' ];
+		$sub     = self::req( 'sub', $default );
 
 		if ( $context && method_exists( $this, 'render_'.$context.'_content' ) )
 			$content = [ $this, 'render_'.$context.'_content' ];
 
-		if ( $noheader ) {
-			self::define( 'IFRAME_REQUEST', TRUE );
-			iframe_header( $this->get_string( 'page_title', $context, 'adminpage', '' ) );
-		}
-
-		Settings::wrapOpen( $this->key, $context );
+		Settings::wrapOpen( $this->key, $context, $this->get_string( 'page_title', $context, 'adminpage', '' ) );
 
 			$this->render_adminpage_header_title( NULL, NULL, NULL, $context );
 			$this->render_adminpage_header_nav( $uri, $sub, $subs, $context );
@@ -568,11 +562,6 @@ class Module extends Base
 			$this->render_adminpage_signature( $uri, $sub, $subs, $context );
 
 		Settings::wrapClose();
-
-		if ( $noheader ) {
-			iframe_footer();
-			exit;
-		}
 	}
 
 	// DEFAULT CALLBACK

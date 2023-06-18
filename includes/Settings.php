@@ -941,8 +941,14 @@ class Settings extends Core\Base
 		return trim( self::req( 'sub', $default ) );
 	}
 
-	public static function wrapOpen( $sub, $context = 'settings' )
+	public static function wrapOpen( $sub, $context = 'settings', $iframe_title = '' )
 	{
+		if ( self::req( 'noheader' ) ) {
+
+			self::define( 'IFRAME_REQUEST', TRUE );
+			iframe_header( $iframe_title );
+		}
+
 		echo '<div id="'.static::BASE.'-'.$context.'" class="'.HTML::prepClass(
 			'wrap',
 			'-settings-wrap',
@@ -953,9 +959,17 @@ class Settings extends Core\Base
 		).'">';
 	}
 
-	public static function wrapClose()
+	public static function wrapClose( $iframe_exit = TRUE )
 	{
 		echo '<div class="clear"></div></div>';
+
+		if ( self::req( 'noheader' ) ) {
+
+			iframe_footer();
+
+			if ( $iframe_exit )
+				exit;
+		}
 	}
 
 	public static function wrapError( $message, $title = NULL )
