@@ -83,7 +83,7 @@ class Ajax extends Core\Base
 			'_base' => static::BASE,
 			'_url'  => sanitize_url( admin_url( 'admin-ajax.php' ) ),
 
-			'_restURL'   => rest_url(),
+			'_restBase'  => rest_url(),
 			'_restNonce' => wp_create_nonce( 'wp_rest' ),
 		] );
 

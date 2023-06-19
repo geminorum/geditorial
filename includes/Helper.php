@@ -368,10 +368,10 @@ class Helper extends Main
 
 	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
 	{
-		if ( ! $post = PostType::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return Plugin::na( FALSE );
 
-		$title = PostType::getPostTitle( $post );
+		$title = Post::title( $post );
 		$after = '';
 
 		if ( $status ) {
@@ -755,6 +755,8 @@ class Helper extends Main
 			'item_published_privately' => _x( '%2$s published privately.', 'Helper: CPT Generator: `item_published_privately`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'item_reverted_to_draft'   => _x( '%2$s reverted to draft.', 'Helper: CPT Generator: `item_reverted_to_draft`', 'geditorial' ),
+			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+			'item_trashed'             => _x( '%2$s trashed.', 'Helper: CPT Generator: `item_trashed`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 			'item_scheduled'           => _x( '%2$s scheduled.', 'Helper: CPT Generator: `item_scheduled`', 'geditorial' ),
 			/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */

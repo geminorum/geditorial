@@ -179,6 +179,9 @@ class Module extends Base
 		if ( method_exists( $this, 'meta_init' ) )
 			add_action( $this->base.'_meta_init', [ $this, 'meta_init' ], 10, 2 );
 
+		if ( method_exists( $this, 'elementor_register' ) )
+			add_action( 'elementor/widgets/register', [ $this, 'elementor_register' ], 10, 1 );
+
 		add_action( 'after_setup_theme', [ $this, '_after_setup_theme' ], 1 );
 
 		if ( method_exists( $this, 'after_setup_theme' ) )
@@ -440,6 +443,8 @@ class Module extends Base
 	// OVERRIDE: if has no admin menu but using the hook
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
+		self::_dep( '$this->get_adminpage_url( FALSE )' );
+
 		if ( $page )
 			return $this->classs();
 
@@ -3455,7 +3460,7 @@ class Module extends Base
 		return $this->image_sizes[$posttype];
 	}
 
-	// FIXME: DEPRICATED
+	// FIXME: DEPRECATED
 	public function get_image_size_key( $constant, $size = 'thumbnail' )
 	{
 		$posttype = $this->constant( $constant );
@@ -3941,7 +3946,7 @@ class Module extends Base
 		}
 
 		if ( ! array_key_exists( '_rest', $args ) )
-			$args['_rest'] = rest_url( $this->restapi_get_namespace() );
+			$args['_rest'] = $this->restapi_get_namespace();
 
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
 			$args['_nonce'] = wp_create_nonce( $this->hook() );
@@ -7278,7 +7283,7 @@ class Module extends Base
 
 	protected function restapi_get_namespace()
 	{
-		return $this->classs().'/'.$this->rest_api_version;
+		return $this->constant( 'restapi_namespace', $this->classs() ).'/'.$this->rest_api_version;
 	}
 
 	// FIXME: add extra args
@@ -7361,13 +7366,21 @@ class Module extends Base
 		);
 	}
 
+	protected function restapi_get_error_rest_forbidden()
+	{
+		return new \WP_Error( 'rest_forbidden', esc_html_x( 'OMG you can not view private data.', 'Error: Rest Forbidden', 'geditorial' ) );
+	}
+
 	// 'Authorization: Basic '. base64_encode("user:password")
 	public function restapi_default_permission_callback( $request )
 	{
 		if ( defined( 'GEDITORIAL_DISABLE_AUTH' ) && GEDITORIAL_DISABLE_AUTH )
 			return TRUE;
 
-		return current_user_can( 'read' ) || User::isSuperAdmin();
+		if ( ! current_user_can( 'read' ) && ! User::isSuperAdmin() )
+			return $this->restapi_get_error_rest_forbidden();
+
+		return TRUE;
 	}
 
 	protected function log( $level, $message = '', $context = [] )

@@ -100,6 +100,7 @@ class Symposium extends gEditorial\Module
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
+				'dashboard'    => [ 'type' => 'postbox_html' ],
 				'abstract'     => [ 'type' => 'postbox_html' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],

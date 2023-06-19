@@ -1093,7 +1093,7 @@ class MetaBox extends WordPress\Main
 			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $parent->ID,
-			], WordPress\PostType::getPostTitle( $parent ) );
+			], WordPress\Post::title( $parent ) );
 
 		$atts = [
 			'name'  => 'parent_id', // sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
@@ -1118,7 +1118,7 @@ class MetaBox extends WordPress\Main
 			],
 		];
 
-		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}
@@ -1147,7 +1147,7 @@ class MetaBox extends WordPress\Main
 			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
-			], WordPress\PostType::getPostTitle( $value ) );
+			], WordPress\Post::title( $value ) );
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
@@ -1172,7 +1172,7 @@ class MetaBox extends WordPress\Main
 			],
 		];
 
-		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}
@@ -1226,7 +1226,7 @@ class MetaBox extends WordPress\Main
 			],
 		];
 
-		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}
@@ -1282,7 +1282,7 @@ class MetaBox extends WordPress\Main
 			],
 		];
 
-		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
 		return Services\SelectSingle::enqueue();
 	}

@@ -715,6 +715,6 @@ class Plugin
 	public static function moment( $wrap = 'p' )
 	{
 		$message = __( 'Wait for a moment &hellip;', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-wrong' ] ], $message ) : $message;
+		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-moment' ] ], $message ) : $message;
 	}
 }

@@ -260,7 +260,7 @@ class SelectSingle extends Main
 		] );
 
 		if ( ! array_key_exists( '_rest', $args ) )
-			$args['_rest'] = rest_url( self::namespace() );
+			$args['_rest'] = self::namespace();
 
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
 			$args['_nonce'] = wp_create_nonce( 'selectsingle' );
