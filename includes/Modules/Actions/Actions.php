@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 class Actions extends gEditorial\Module
@@ -28,11 +29,51 @@ class Actions extends gEditorial\Module
 		if ( is_admin() ) {
 
 			$this->action( 'add_meta_boxes', 2, 9 );
+			$this->action( 'post_submitbox_start', 1, 999 );
+			$this->action( 'save_post', 3, 99 );
 
 		} else {
 
 			$this->filter( 'the_content', 1, 998 );
 		}
+	}
+
+	// @example: `$this->filter_module( 'actions', 'post_actions', 2 );`
+	public function post_submitbox_start( $post )
+	{
+		$actions = $this->filters( 'post_actions', [], $post );
+
+		if ( empty( $actions ) )
+			return;
+
+		echo $this->wrap_open( '-post-actions' );
+
+			echo Core\HTML::dropdown( $actions, [
+				'none_title' => _x( 'Post Actions', 'Modules: Actions: None Title', 'geditorial' ),
+				'name'       => $this->classs( 'post-action' ),
+			] );
+
+			// TODO: add `Do` button
+
+			$this->nonce_field( 'postaction' );
+
+		echo '</div>';
+	}
+
+	// @example: `$this->action_module( 'actions', 'post_action_{$action}', 3 );`
+	public function save_post( $post_id, $post, $update )
+	{
+		if ( ! $action = self::req( $this->classs( 'post-action' ) ) )
+			return;
+
+		$action = sanitize_text_field( self::unslash( $action ) );
+		$hook   = $this->hook( 'post_action', $action );
+
+		if ( did_action( $hook ) )
+			return;
+
+		$this->nonce_check( 'postaction' );
+		do_action( $hook, $post, $action );
 	}
 
 	// @REF: https://wpartisan.me/?p=434
