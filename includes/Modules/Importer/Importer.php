@@ -368,39 +368,26 @@ class Importer extends gEditorial\Module
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
-					$checks    = [];
-					$raw       = array_combine( $args['extra']['headers'], $row );
-					$title_key = array_search( 'importer_post_title', $args['extra']['map'] );
-					$source_id = NULL;
+					$checks = [];
 
-					if ( 'none' !== $args['extra']['source_key']
-						&& array_key_exists( $args['extra']['source_key'], $row ) )
-							$source_id = $row[$args['extra']['source_key']];
-
-					$source_id = $this->filters( 'source_id',
-						$source_id,
-						$args['extra']['post_type'],
-						$raw
-					);
-
-					if ( $source_id )
+					if ( $row['___source_id'] )
 						/* translators: %s: source id */
-						$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), '<code>'.$source_id.'</code>' );
+						$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), HTML::code( $row['___source_id'] ) );
 
-					if ( $matched = $this->_get_source_id_matched( $source_id, $args['extra']['post_type'], $raw ) )
+					if ( $row['___matched'] )
 						/* translators: %s: post title */
 						$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
-							Helper::getPostTitleRow( $matched, 'edit', FALSE, $matched ) );
+							Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] ) );
 
-					if ( FALSE !== $title_key ) {
+					if ( FALSE !== ( $title_key = array_search( 'importer_post_title', $args['extra']['map'] ) ) ) {
 
 						$title = $this->filters( 'prepare',
-							$row[$title_key],
+							$row[$args['extra']['map'][$title_key]],
 							$args['extra']['post_type'],
 							'importer_post_title',
-							$args['extra']['headers'][$title_key],
-							$raw,
-							$source_id,
+							$args['extra']['map'][$title_key],
+							$row,
+							$row['___source_id'],
 							$args['extra']['taxonomies']
 						);
 
@@ -427,10 +414,10 @@ class Importer extends gEditorial\Module
 
 			if ( 'importer_custom_meta' == $field )
 				/* translators: %s: custom metakey */
-				$columns[$key] = sprintf( _x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ), '<code>'.$headers[$key].'</code>' );
+				$columns[$headers[$key]] = sprintf( _x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ), '<code>'.$headers[$key].'</code>' );
 
 			else
-				$columns[$key] = $fields[$field];
+				$columns[$headers[$key]] = $fields[$field];
 		}
 
 		HTML::tableList( $columns, $data, [
@@ -440,7 +427,8 @@ class Importer extends gEditorial\Module
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'     => [
 				'na'         => gEditorial()->na(),
-				'map'        => $map,
+				'map'        => $map, // needed for `[checks]` column
+				'mapped'     => array_combine( $headers, $map ),
 				'headers'    => $headers,
 				'post_type'  => $posttype,
 				'taxonomies' => $taxonomies,
@@ -449,14 +437,13 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
+	// NOTE: combines raw data with header keys and adds source_id and matched
 	public function form_posts_table_row_prep( $row, $index, $args )
 	{
 		// empty rows have one empty cells
-		return count( $row ) > 1 ? $row : FALSE;
-	}
+		if ( count( $row ) < 2 )
+			return FALSE;
 
-	public function form_posts_table_callback( $value, $row, $column, $index, $key, $args )
-	{
 		$raw       = array_combine( $args['extra']['headers'], $row );
 		$source_id = NULL;
 
@@ -464,19 +451,30 @@ class Importer extends gEditorial\Module
 			&& \array_key_exists( $args['extra']['source_key'], $row ) )
 				$source_id = $row[$args['extra']['source_key']];
 
-		$source_id = $this->filters( 'source_id',
+		$raw['___source_id'] = $this->filters( 'source_id',
 			$source_id,
 			$args['extra']['post_type'],
 			$raw
 		);
 
+		if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $raw ) )
+			$raw['___matched'] = intval( $matched );
+		else
+			$raw['___matched'] = 0;
+
+		return $raw;
+	}
+
+	// NOTE: only applies on columns with no `callback`
+	public function form_posts_table_callback( $value, $row, $column, $index, $key, $args )
+	{
 		$filtered = $this->filters( 'prepare',
 			$value,
 			$args['extra']['post_type'],
-			$args['extra']['map'][$key],
-			$args['extra']['headers'][$key],
-			$raw,
-			$source_id,
+			$args['extra']['mapped'][$key],
+			$key,
+			$row,
+			$row['___source_id'],
 			$args['extra']['taxonomies']
 		);
 
