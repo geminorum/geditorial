@@ -368,12 +368,10 @@ class Importer extends gEditorial\Module
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
+					$checks    = [];
 					$raw       = array_combine( $args['extra']['headers'], $row );
 					$title_key = array_search( 'importer_post_title', $args['extra']['map'] );
 					$source_id = NULL;
-
-					if ( FALSE === $title_key )
-						return Helper::htmlEmpty();
 
 					if ( 'none' !== $args['extra']['source_key']
 						&& array_key_exists( $args['extra']['source_key'], $row ) )
@@ -385,30 +383,39 @@ class Importer extends gEditorial\Module
 						$raw
 					);
 
-					$title = $this->filters( 'prepare',
-						$row[$title_key],
-						$args['extra']['post_type'],
-						'importer_post_title',
-						$args['extra']['headers'][$title_key],
-						$raw,
-						$source_id,
-						$args['extra']['taxonomies']
-					);
+					if ( $source_id )
+						/* translators: %s: source id */
+						$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), '<code>'.$source_id.'</code>' );
 
-					if ( ! $title = trim( $title ) )
-						return Helper::htmlEmpty();
+					if ( $matched = $this->_get_source_id_matched( $source_id, $args['extra']['post_type'], $raw ) )
+						/* translators: %s: post title */
+						$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
+							Helper::getPostTitleRow( $matched, 'edit', FALSE, $matched ) );
 
-					$posts = Post::getByTitle( $title, $args['extra']['post_type'] );
+					if ( FALSE !== $title_key ) {
 
-					if ( empty( $posts ) )
-						return Helper::htmlEmpty();
+						$title = $this->filters( 'prepare',
+							$row[$title_key],
+							$args['extra']['post_type'],
+							'importer_post_title',
+							$args['extra']['headers'][$title_key],
+							$raw,
+							$source_id,
+							$args['extra']['taxonomies']
+						);
 
-					$html = '<div class="-danger">'._x( 'Similar to Title:', 'Table Column', 'geditorial-importer' );
+						if ( ( ! $title = trim( $title ) ) && ( $posts = Post::getByTitle( $title, $args['extra']['post_type'] ) ) ) {
 
-					foreach ( $posts as $post_id )
-						$html.= '<br />'.Helper::getPostTitleRow( $post_id ).' <code>'.$post_id.'</code>';
+							$html = '<div class="-danger">'._x( 'Similar:', 'Checks', 'geditorial-importer' ).' ';
 
-					return $html.'</div>';
+							foreach ( $posts as $post_id )
+								$html.= Helper::getPostTitleRow( $post_id, 'edit', FALSE, $post_id ).', ';
+
+							$checks[] = trim( $html, ', ' ).'</div>';
+						}
+					}
+
+					return Strings::getJoined( $checks, '', '', Helper::htmlEmpty(), '<br />' );
 				},
 			],
 		];
@@ -579,22 +586,16 @@ class Importer extends gEditorial\Module
 
 						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
-							( 'none' !== $source_key && array_key_exists( $source_key, $raw )
-								? $raw[$source_key]
+							( 'none' !== $source_key && array_key_exists( $source_key, $row )
+								? $row[$source_key]
 								: NULL
 							),
 							$posttype,
-							$raw,
-							$all_taxonomies
+							$raw
 						);
 
-						if ( $source_id && $this->get_setting( 'match_source_id' ) ) {
-
-							$matched = PostType::getIDbyMeta( $this->constant( 'metakey_source_id' ), $source_id );
-
-							if ( $matched && $posttype === get_post_type( intval( $matched ) ) )
-								$data['ID'] = intval( $matched );
-						}
+						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
+							$data['ID'] = $matched;
 
 						unset( $parser, $items );
 
@@ -1015,6 +1016,28 @@ class Importer extends gEditorial\Module
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
 			Helper::setTaxonomyAudit( $post, $this->default_audit_attribute );
+	}
+
+	private function _get_source_id_matched( $source_id, $posttype, $raw = [] )
+	{
+		if ( ! $source_id || ! $this->get_setting( 'match_source_id' ) )
+			return FALSE;
+
+		$matched = FALSE;
+
+		if ( $matches = PostType::getIDbyMeta( $this->constant( 'metakey_source_id' ), $source_id, FALSE ) ) {
+
+			foreach ( $matches as $match ) {
+
+				if ( $posttype !== get_post_type( intval( $match ) ) )
+					continue;
+
+				$matched = intval( $match );
+				break;
+			}
+		}
+
+		return $this->filters( 'matched', $matched, $source_id, $posttype, $raw );
 	}
 
 	private function _raise_resources( $count = 0 )
