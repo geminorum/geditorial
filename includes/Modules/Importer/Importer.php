@@ -586,6 +586,7 @@ class Importer extends gEditorial\Module
 						$raw       = array_combine( $headers, $row );
 						$data      = [ 'tax_input' => [] ];
 						$prepared  = [];
+						$comments  = [];
 
 						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
@@ -645,6 +646,8 @@ class Importer extends gEditorial\Module
 								case 'importer_post_title': $data['post_title'] = $prepared[$field] = $value; continue 2;
 								case 'importer_post_content': $data['post_content'] = $prepared[$field] = $value; continue 2;
 								case 'importer_post_excerpt': $data['post_excerpt'] = $prepared[$field] = $value; continue 2;
+
+								case 'importer_comment_content': $comments[]['comment_content'] = $prepared[$field] = $value; continue 2;
 							}
 
 							foreach ( $all_taxonomies as $taxonomy => $taxonomy_object ) {
@@ -744,6 +747,27 @@ class Importer extends gEditorial\Module
 								continue;
 
 							wp_set_object_terms( $post_id, Arraay::prepNumeral( $term_id ), $taxonomy, TRUE );
+						}
+
+						if ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) {
+
+							foreach ( $comments as $comment ) {
+
+								if ( empty( $comment ) )
+									continue;
+
+								if ( empty( $comment['comment_post_ID'] ) )
+									$comment['comment_post_ID'] = $post_id;
+
+								if ( empty( $comment['user_id'] ) )
+									$comment['user_id'] = $user_id;
+
+								if ( ! wp_insert_comment( $comment ) )
+									$this->log( 'NOTICE', ( $source_id
+										? sprintf( 'ID: %s :: %s', $source_id, 'FAILED STORING COMMENT' )
+										: 'FAILED STORING COMMENT'
+									) );
+							}
 						}
 
 						$this->actions( 'saved',
@@ -996,11 +1020,12 @@ class Importer extends gEditorial\Module
 	public function get_importer_fields( $posttype = NULL, $taxonomies = [] )
 	{
 		$fields = [
-			'importer_custom_meta'  => _x( 'Extra: Custom Meta', 'Post Field', 'geditorial-importer' ),
-			'importer_menu_order'   => _x( 'Menu Order', 'Post Field', 'geditorial-importer' ),
-			'importer_post_title'   => _x( 'Post Title', 'Post Field', 'geditorial-importer' ),
-			'importer_post_content' => _x( 'Post Content', 'Post Field', 'geditorial-importer' ),
-			'importer_post_excerpt' => _x( 'Post Excerpt', 'Post Field', 'geditorial-importer' ),
+			'importer_custom_meta'     => _x( 'Extra: Custom Meta', 'Post Field', 'geditorial-importer' ),
+			'importer_menu_order'      => _x( 'Menu Order', 'Post Field', 'geditorial-importer' ),
+			'importer_post_title'      => _x( 'Post Title', 'Post Field', 'geditorial-importer' ),
+			'importer_post_content'    => _x( 'Post Content', 'Post Field', 'geditorial-importer' ),
+			'importer_post_excerpt'    => _x( 'Post Excerpt', 'Post Field', 'geditorial-importer' ),
+			'importer_comment_content' => _x( 'Comment Content', 'Post Field', 'geditorial-importer' ),
 		];
 
 		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
@@ -1014,11 +1039,12 @@ class Importer extends gEditorial\Module
 	{
 		switch ( $field ) {
 
-			case 'importer_menu_order'  : return Number::intval( $value );
-			case 'importer_post_title'  : return Helper::kses( $value, 'none' );
-			case 'importer_post_content': return Helper::kses( $value, 'html' );
-			case 'importer_post_excerpt': return Helper::kses( $value, 'text' );
-			case 'importer_custom_meta' : return Helper::kses( $value, 'text' );
+			case 'importer_menu_order'     : return Number::intval( $value );
+			case 'importer_post_title'     : return Helper::kses( $value, 'none' );
+			case 'importer_post_content'   : return Helper::kses( $value, 'html' );
+			case 'importer_post_excerpt'   : return Helper::kses( $value, 'text' );
+			case 'importer_custom_meta'    : return Helper::kses( $value, 'text' );
+			case 'importer_comment_content': return Helper::kses( $value, 'html' );
 		}
 
 		foreach ( array_keys( $all_taxonomies ) as $taxonomy )
