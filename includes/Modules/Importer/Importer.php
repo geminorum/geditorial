@@ -597,7 +597,7 @@ class Importer extends gEditorial\Module
 						);
 
 						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
-							$data['ID'] = $matched;
+							$data['ID'] = intval( $matched );
 
 						unset( $parser, $items );
 
@@ -607,7 +607,7 @@ class Importer extends gEditorial\Module
 								continue;
 
 							$value = $this->filters( 'prepare',
-								$raw[$offsetkey],
+								$row[$offsetkey],
 								$posttype,
 								$field,
 								$headers[$offsetkey],
@@ -772,7 +772,7 @@ class Importer extends gEditorial\Module
 							Post::get( $post_id ),
 							$insert,
 							$prepared,
-							$field_map,
+							array_combine( $headers, $field_map ),
 							$source_id,
 							$attach_id,
 							$terms_all,
