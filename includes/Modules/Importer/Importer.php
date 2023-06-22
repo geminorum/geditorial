@@ -572,6 +572,9 @@ class Importer extends gEditorial\Module
 
 					unset( $parser, $items );
 
+					// NOTE: to avoid `Content, title, and excerpt are empty.` Error on `wp_insert_post()`
+					add_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
+
 					foreach ( $_POST['_cb'] as $offset ) {
 
 						$options['offset'] = $offset;
@@ -703,18 +706,36 @@ class Importer extends gEditorial\Module
 
 							if ( $source_id )
 								$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
-						}
 
-						$post_id = wp_insert_post( $insert, TRUE );
+						} else if ( $this->_check_insert_is_empty( $insert, $insert['ID'] ) ) {
 
-						if ( is_wp_error( $post_id ) ) {
+							if ( $post = Post::get( $insert['ID'] ) ) {
 
-							$this->log( 'NOTICE', ( $source_id
-								? sprintf( 'ID: %s :: %s', $source_id, $post_id->get_error_message() )
-								: $post_id->get_error_message()
-							) );
+								$post_id = $post->ID;
 
-							continue;
+							} else {
+
+								$this->log( 'NOTICE', ( $source_id
+									? sprintf( 'ID: %s :: %s', $source_id, 'PROVIDED POST-ID NOT FOUND' )
+									: 'PROVIDED POST-ID NOT FOUND'
+								) );
+
+								continue;
+							}
+
+						} else {
+
+							$post_id = wp_insert_post( $insert, TRUE );
+
+							if ( is_wp_error( $post_id ) ) {
+
+								$this->log( 'NOTICE', ( $source_id
+									? sprintf( 'ID: %s :: %s', $source_id, $post_id->get_error_message() )
+									: $post_id->get_error_message()
+								) );
+
+								continue;
+							}
 						}
 
 						foreach ( $terms_all as $taxonomy => $term_id ) {
@@ -739,6 +760,7 @@ class Importer extends gEditorial\Module
 						$count++;
 					}
 
+					remove_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
 					unset( $iterator );
 
 					WordPress::redirectReferer( [
@@ -1038,6 +1060,20 @@ class Importer extends gEditorial\Module
 		}
 
 		return $this->filters( 'matched', $matched, $source_id, $posttype, $raw );
+	}
+
+	/**
+	 * Checks if given data is sutable to use on `wp_insert_post()`
+	 *
+	 * @param  array $data
+	 * @param  bool|int $post_id
+	 * @return bool $empty
+	 */
+	private function _check_insert_is_empty( $data, $post_id = FALSE )
+	{
+		unset( $data['ID'] );
+
+		return empty( array_filter( $data ) );
 	}
 
 	private function _raise_resources( $count = 0 )
