@@ -1371,7 +1371,7 @@ class Meta extends gEditorial\Module
 					},
 				],
 				/* translators: %s: title */
-				'meta' => sprintf( _x( 'Meta: %s', 'Table Column', 'geditorial-meta' ), '<code>'.$args['custom_field'].'</code>' ),
+				'meta' => sprintf( _x( 'Meta: %s', 'Table Column', 'geditorial-meta' ), HTML::code( $args['custom_field'] ) ),
 			], Database::getPostMetaRows(
 				stripslashes( $args['custom_field'] ),
 				stripslashes( $args['custom_field_limit'] )

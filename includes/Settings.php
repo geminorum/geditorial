@@ -1624,7 +1624,7 @@ class Settings extends Core\Base
 			$value = constant( $args['constant'] );
 
 			$args['disabled'] = TRUE;
-			$args['after'] = '<code>'.$args['constant'].'</code>';
+			$args['after']    = HTML::code( $args['constant'] );
 		}
 
 		if ( is_null( $args['cap'] ) ) {

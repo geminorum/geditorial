@@ -819,7 +819,7 @@ class Tweaks extends gEditorial\Module
 
 		echo '<li class="-row tweaks-default-atts -post-name">';
 			echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Row Icon Title', 'geditorial-tweaks' ) );
-			echo '<code>'.urldecode( $post->post_name ).'</code>';
+			echo HTML::code( urldecode( $post->post_name ) );
 		echo '</li>';
 	}
 

@@ -68,7 +68,7 @@ class Importer extends gEditorial\Module
 					'field'       => 'add_audit_attribute',
 					'title'       => _x( 'Add Audit Attribute', 'Setting Title', 'geditorial-importer' ),
 					/* translators: %s: default term placeholder */
-					'description' => sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ), '<code>'.$this->default_audit_attribute.'</code>' ),
+					'description' => sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ), HTML::code( $this->default_audit_attribute ) ),
 					'disabled'    => ! gEditorial()->enabled( 'audit' ),
 				],
 			],
@@ -192,6 +192,8 @@ class Importer extends gEditorial\Module
 
 		if ( empty( $map ) )
 			$map = $this->_guessed_fields_map( $headers );
+
+		// TODO: check headers for duplicates and warn
 
 		echo '<table class="base-table-raw"><tbody>';
 
@@ -363,7 +365,7 @@ class Importer extends gEditorial\Module
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 
 		$columns = [
-			'_cb' => '_index',
+			'_cb'           => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
@@ -414,7 +416,7 @@ class Importer extends gEditorial\Module
 
 			if ( 'importer_custom_meta' == $field )
 				/* translators: %s: custom metakey */
-				$columns[$headers[$key]] = sprintf( _x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ), '<code>'.$headers[$key].'</code>' );
+				$columns[$headers[$key]] = sprintf( _x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ), HTML::code( $headers[$key] ) );
 
 			else
 				$columns[$headers[$key]] = $fields[$field];
@@ -422,10 +424,10 @@ class Importer extends gEditorial\Module
 
 		HTML::tableList( $columns, $data, [
 			/* translators: %s: count placeholder */
-			'title'     => HTML::tag( 'h3', Strings::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
-			'callback'  => [ $this, 'form_posts_table_callback' ],
+			'title'    => HTML::tag( 'h3', Strings::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
+			'callback' => [ $this, 'form_posts_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
-			'extra'     => [
+			'extra'    => [
 				'na'         => gEditorial()->na(),
 				'map'        => $map, // needed for `[checks]` column
 				'mapped'     => array_combine( $headers, $map ),
@@ -477,6 +479,8 @@ class Importer extends gEditorial\Module
 			$row['___source_id'],
 			$args['extra']['taxonomies']
 		);
+
+		// TODO: optional check for previously stored data
 
 		if ( FALSE === $filtered )
 			$filtered = $args['extra']['na'];
@@ -709,6 +713,8 @@ class Importer extends gEditorial\Module
 								$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
 
 						} else if ( $this->_check_insert_is_empty( $insert, $insert['ID'] ) ) {
+
+							// TODO: maybe manually store: `tax_input`/`meta_input` to avoid `wp_insert_post`
 
 							if ( $post = Post::get( $insert['ID'] ) ) {
 
