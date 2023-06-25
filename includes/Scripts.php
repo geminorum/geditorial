@@ -230,4 +230,25 @@ class Scripts extends Main
 
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.wp_json_encode( $strings ).');'."\n" : '';
 	}
+
+	public static function printJSConfig( $args, $object = 'gEditorial' )
+	{
+		$props = array_merge( $args, [
+			'_base' => static::BASE,
+			'_url'  => sanitize_url( admin_url( 'admin-ajax.php' ) ),
+
+			'_restBase'  => rest_url(),
+			'_restNonce' => wp_create_nonce( 'wp_rest' ),
+		] );
+
+	?><script type="text/javascript">
+/* <![CDATA[ */
+	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
+	<?php if ( WordPress::isDev() ) {
+		echo 'console.log("'.$object.'", '.$object.');'."\n";
+		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
+	} ?>
+/* ]]> */
+</script><?php
+	}
 }

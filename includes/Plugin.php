@@ -607,7 +607,7 @@ class Plugin
 	public function footer_asset_config()
 	{
 		if ( $this->asset_config )
-			Ajax::printJSConfig( $this->asset_jsargs );
+			Scripts::printJSConfig( $this->asset_jsargs );
 
 		Icon::printSprites( $this->asset_icons );
 	}
