@@ -146,9 +146,7 @@ class Course extends gEditorial\Module
 		$strings['metabox'] = [
 			'course_cpt' => [
 				'metabox_title' => _x( 'The Course', 'MetaBox Title', 'geditorial-course' ),
-			],
-			'course_tax' => [
-				'metabox_title' => _x( 'In This Course', 'MetaBox Title', 'geditorial-course' ),
+				'listbox_title' => _x( 'In This Course', 'MetaBox Title', 'geditorial-course' ),
 			],
 			'lesson_cpt' => [
 				'metabox_title' => _x( 'Course', 'MetaBox Title', 'geditorial-course' ),

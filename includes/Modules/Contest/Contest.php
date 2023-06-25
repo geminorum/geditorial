@@ -131,9 +131,7 @@ class Contest extends gEditorial\Module
 		$strings['metabox'] = [
 			'contest_cpt' => [
 				'metabox_title' => _x( 'The Contest', 'MetaBox Title', 'geditorial-contest' ),
-			],
-			'contest_tax' => [
-				'metabox_title' => _x( 'In This Contest', 'MetaBox Title', 'geditorial-contest' ),
+				'listbox_title' => _x( 'In This Contest', 'MetaBox Title', 'geditorial-contest' ),
 			],
 			'apply_cpt' => [
 				'metabox_title' => _x( 'Contest', 'MetaBox Title', 'geditorial-contest' ),

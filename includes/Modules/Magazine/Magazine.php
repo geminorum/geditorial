@@ -119,10 +119,6 @@ class Magazine extends gEditorial\Module
 			'labels' => [
 				'issue_cpt' => [
 					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-magazine' ),
-					'metabox_title'  => _x( 'The Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
-				],
-				'issue_tax' => [
-					'metabox_title' => _x( 'In This Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
 				],
 			],
 		];
@@ -130,7 +126,12 @@ class Magazine extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		// $strings['misc'] = [];
+		$strings['metabox'] = [
+			'issue_cpt' => [
+				'metabox_title' => _x( 'The Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
+				'listbox_title' => _x( 'In This Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
+			],
+		];
 
 		return $strings;
 	}

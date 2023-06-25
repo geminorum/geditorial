@@ -118,20 +118,17 @@ class Venue extends gEditorial\Module
 				'place_cat'    => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
 				'facility_tax' => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
 			],
-			'labels' => [
-				'place_cpt' => [
-					'metabox_title' => _x( 'Place Details', 'Label: MetaBox Title', 'geditorial-venue' ),
-				],
-				'place_tax' => [
-					'metabox_title' => _x( 'Connected to this Place', 'Label: MetaBox Title', 'geditorial-venue' ),
-				],
-			],
 		];
 
 		if ( ! is_admin() )
 			return $strings;
 
-		// $strings['misc'] = [];
+		$strings['metabox'] = [
+			'place_cpt' => [
+				'metabox_title' => _x( 'Place Details', 'Label: MetaBox Title', 'geditorial-venue' ),
+				'listbox_title' => _x( 'Connected to this Place', 'Label: MetaBox Title', 'geditorial-venue' ),
+			],
+		];
 
 		return $strings;
 	}

@@ -114,10 +114,8 @@ class Collect extends gEditorial\Module
 			'labels' => [
 				'collection_cpt' => [
 					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-collect' ),
-					'metabox_title'  => _x( 'The Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
 				],
 				'collection_tax' => [
-					'metabox_title'   => _x( 'In This Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
 					'show_option_all' => _x( 'Collection', 'Label: Show Option All', 'geditorial-collect' ),
 				],
 			],
@@ -126,7 +124,12 @@ class Collect extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		// $strings['misc'] = [];
+		$strings['metabox'] = [
+			'collection_cpt' => [
+				'metabox_title' => _x( 'The Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
+				'listbox_title' => _x( 'In This Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
+			],
+		];
 
 		return $strings;
 	}

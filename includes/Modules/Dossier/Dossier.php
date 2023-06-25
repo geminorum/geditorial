@@ -127,9 +127,6 @@ class Dossier extends gEditorial\Module
 			'dossier_posttype' => [
 				'metabox_title' => _x( 'The Dossier', 'MetaBox Title', 'geditorial-dossier' ),
 			],
-			'dossier_paired' => [
-				'metabox_title' => _x( 'In This Dossier', 'MetaBox Title', 'geditorial-dossier' ),
-			],
 		];
 
 		// $strings['misc'] = [];

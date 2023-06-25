@@ -4392,8 +4392,13 @@ class Module extends Base
 			echo '</div>';
 		};
 
+		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Module: Metabox Title: `listbox_title`', 'geditorial' );
+		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
+		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
+
 		add_meta_box( $this->classs( $context ),
-			$this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', _x( 'Connected Items', 'Module: Metabox Title', 'geditorial' ) ),
+			sprintf( $title, Post::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
 			'advanced',
