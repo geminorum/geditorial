@@ -75,6 +75,7 @@ class Book extends gEditorial\Module
 				'insert_priority',
 			],
 			'_content' => [
+				'archive_override',
 				'display_searchform',
 				'empty_content',
 				'archive_title' => [ NULL, $this->get_posttype_label( 'publication_cpt', 'all_items' ) ],

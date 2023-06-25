@@ -65,6 +65,7 @@ class Magazine extends gEditorial\Module
 				],
 			],
 			'_content' => [
+				'archive_override',
 				'archive_title',
 				'archive_content',
 				'archive_template',

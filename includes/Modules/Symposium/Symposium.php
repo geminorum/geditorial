@@ -25,6 +25,7 @@ class Symposium extends gEditorial\Module
 				'comment_status',
 			],
 			'_content' => [
+				'archive_override',
 				'archive_title',
 				'archive_content',
 				'archive_template',

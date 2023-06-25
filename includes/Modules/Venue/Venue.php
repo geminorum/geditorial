@@ -63,6 +63,7 @@ class Venue extends gEditorial\Module
 				],
 			],
 			'_content' => [
+				'archive_override',
 				'display_searchform',
 				'empty_content',
 				'archive_title' => [ NULL, $this->get_posttype_label( 'place_cpt', 'all_items' ) ],

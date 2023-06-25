@@ -772,6 +772,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_archive_override( $description = NULL )
+	{
+		return [
+			'field'       => 'archive_override',
+			'title'       => _x( 'Archive Override', 'Setting: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Overrides default template hierarchy for archive.', 'Setting: Setting Description', 'geditorial' ),
+			'default'     => '1',
+		];
+	}
+
 	public static function getSetting_archive_title( $description = NULL, $placeholder = FALSE )
 	{
 		return [

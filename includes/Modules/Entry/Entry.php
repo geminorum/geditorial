@@ -47,6 +47,7 @@ class Entry extends gEditorial\Module
 				'after_content',
 			],
 			'_content' => [
+				'archive_override',
 				'display_searchform',
 				'empty_content',
 				'archive_title' => [ NULL, $this->get_posttype_label( 'entry_cpt', 'all_items' ) ],
