@@ -4042,9 +4042,9 @@ class Module extends Base
 	/**
 	 * Gets posttype parents for use in settings.
 	 *
-	 * @param  array $extra_excludes
-	 * @param  bool  $filtered
-	 * @return array $rols
+	 * @param  array        $extra
+	 * @param  null|string  $capability
+	 * @return array        $posttypes
 	 */
 	protected function get_settings_posttypes_parents( $extra = [], $capability = NULL )
 	{
@@ -4257,7 +4257,7 @@ class Module extends Base
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
-	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = 'mainbox' )
+	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = 'mainbox', $metabox_context = 'side' )
 	{
 		$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
 
@@ -4292,12 +4292,12 @@ class Module extends Base
 			$this->get_meta_box_title_posttype( $constant_key ),
 			$callback,
 			$screen,
-			'side',
-			'high'
+			$metabox_context,
+			'default'
 		);
 	}
 
-	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = 'mainbox' )
+	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = 'mainbox', $metabox_context = 'side' )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4340,7 +4340,7 @@ class Module extends Base
 			$this->get_meta_box_title( $constants[0], FALSE ),
 			$callback,
 			$screen,
-			'side',
+			$metabox_context,
 			'high'
 		);
 	}
@@ -4352,7 +4352,7 @@ class Module extends Base
 		MetaBox::fieldPostParent( $post );
 	}
 
-	protected function _hook_paired_listbox( $screen, $context = 'listbox' )
+	protected function _hook_paired_listbox( $screen, $context = 'listbox', $metabox_context = 'advanced' )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4401,7 +4401,7 @@ class Module extends Base
 			sprintf( $title, Post::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
-			'advanced',
+			$metabox_context,
 			'low'
 		);
 
@@ -7376,10 +7376,17 @@ class Module extends Base
 
 	protected function restapi_get_error_rest_forbidden()
 	{
-		return new \WP_Error( 'rest_forbidden', esc_html_x( 'OMG you can not view private data.', 'Error: Rest Forbidden', 'geditorial' ) );
+		return new \WP_Error(
+			'rest_forbidden',
+			esc_html_x( 'OMG you can not view private data.', 'Error: Rest Forbidden', 'geditorial' ),
+			[
+				'status' => 401,
+			]
+		);
 	}
 
 	// 'Authorization: Basic '. base64_encode("user:password")
+	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/#permissions-callback
 	public function restapi_default_permission_callback( $request )
 	{
 		if ( defined( 'GEDITORIAL_DISABLE_AUTH' ) && GEDITORIAL_DISABLE_AUTH )

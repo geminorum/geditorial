@@ -183,7 +183,7 @@ class Modified extends gEditorial\Module
 			return NULL;
 
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
-			return NULL;
+			return $content;
 
 		$gmt   = strtotime( $post->post_modified_gmt );
 		$local = strtotime( $post->post_modified );

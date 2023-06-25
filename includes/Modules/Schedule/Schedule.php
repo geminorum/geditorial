@@ -351,7 +351,7 @@ class Schedule extends gEditorial\Module
 			return FALSE;
 
 		$data = [
-			'post_title'  => wp_unslash( $title ),
+			'post_title'  => self::unslash( $title ),
 			'post_type'   => $posttype,
 			'post_status' => 'draft',
 			'post_date'   => \gPersianDateDate::makeMySQL( 0, 0, 0, $month, $day, $year, $cal ),

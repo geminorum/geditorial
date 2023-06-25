@@ -446,7 +446,7 @@ class Importer extends gEditorial\Module
 		if ( count( $row ) < 2 )
 			return FALSE;
 
-		$raw       = array_combine( $args['extra']['headers'], $row );
+		$raw       = Arraay::combine( $args['extra']['headers'], $row );
 		$source_id = NULL;
 
 		if ( 'none' !== $args['extra']['source_key']
@@ -585,7 +585,7 @@ class Importer extends gEditorial\Module
 						$items  = $parser->parse();
 						$row    = array_pop( $items );
 
-						$raw       = array_combine( $headers, $row );
+						$raw       = Arraay::combine( $headers, $row );
 						$data      = [ 'tax_input' => [] ];
 						$prepared  = [];
 						$comments  = [];

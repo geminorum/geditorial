@@ -82,6 +82,9 @@ class Countables extends gEditorial\Module
 			'after'      => '',
 		], $atts, $this->constant( 'posttype_shortcode' ) );
 
+		if ( FALSE === $args['context'] )
+			return NULL;
+
 		$html = '';
 
 		if ( is_null( $args['template'] ) )
@@ -128,6 +131,9 @@ class Countables extends gEditorial\Module
 			'before'     => '',
 			'after'      => '',
 		], $atts, $this->constant( 'taxonomy_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
 
 		$html = '';
 

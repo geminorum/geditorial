@@ -31,7 +31,7 @@ class ModuleHelper extends gEditorial\Helper
 			'\\',
 		], '/', $text ) );
 
-		// FIXME: if 4 or 2 digits then yaer only!
+		// NOTE: we can not determine 2 digits!
 		if ( 4 === strlen( $text ) )
 			return [
 				'cal'   => $type,

@@ -208,8 +208,11 @@ class Helper extends Main
 		return $autop ? wpautop( $text ) : $text;
 	}
 
-	public static function prepContact( $value, $title = NULL )
+	public static function prepContact( $value, $title = NULL, $empty = '' )
 	{
+		if ( empty( $value ) )
+			return $empty;
+
 		if ( Core\Email::is( $value ) )
 			$prepared = HTML::mailto( $value, $title );
 
