@@ -193,7 +193,9 @@ class Importer extends gEditorial\Module
 		if ( empty( $map ) )
 			$map = $this->_guessed_fields_map( $headers );
 
-		// TODO: check headers for duplicates and warn
+		if ( $dups = Arraay::duplicates( $headers ) )
+			/* translators: %s: joined duplicate keys */
+			echo HTML::warning( sprintf( _x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ), Strings::getJoined( $dups ) ), FALSE, 'inline' );
 
 		echo '<table class="base-table-raw"><tbody>';
 
