@@ -866,6 +866,7 @@ class Template extends Main
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
+			'render'   => NULL,
 		], $atts );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
@@ -958,29 +959,26 @@ class Template extends Main
 		if ( empty( $rows ) )
 			return $args['default'];
 
-		$html = $args['before'].self::getTableSummary( $rows ).$args['after'];
+		if ( is_null( $args['render'] ) )
+			$args['render'] = [ '\geminorum\gEditorial\Core\HTML', 'tableDouble' ];
+
+		$callback_args = [
+			array_values( $rows ),
+			array_keys( $rows ),
+			TRUE,
+			'table table-bordered',
+		];
+
+		if ( ! $html = self::buffer( $args['render'], $callback_args ) )
+			return $args['default'];
+
+		$html = $args['before'].$html.$args['after'];
 
 		if ( ! $args['echo'] )
 			return $html;
 
 		echo $html;
 		return TRUE;
-	}
-
-	// FIXME: temp!
-	public static function getTableSummary( $data )
-	{
-		$html = '<table class="table table-bordered">';
-
-		foreach ( $data as $key => $value ) {
-			$html.= '<tr><td>';
-				$html.= $key;
-			$html.= '</td><td>';
-				$html.= $value;
-			$html.= '</td></tr>';
-		}
-
-		return $html.'</table>';
 	}
 
 	// FIXME: DEPRECATED
