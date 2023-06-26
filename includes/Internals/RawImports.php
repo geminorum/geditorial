@@ -6,7 +6,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Plugin;
 use geminorum\gEditorial\Helper;
 
-trait Imports
+trait RawImports
 {
 
 	// protected $imports_datafile = ''; // NOTE: MUST SET ON MODULE

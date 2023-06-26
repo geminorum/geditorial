@@ -40,7 +40,7 @@ class Paired extends Main
 		$list = [];
 
 		foreach ( get_post_types( [ '_builtin' => FALSE ] ) as $posttype )
-			if ( $paired = self::isPairedPostType( $posttype ) )
+			if ( $paired = self::isPostType( $posttype ) )
 				$list[$posttype] = $paired;
 
 		return apply_filters( sprintf( '%s_paired_posttypes', static::BASE ), $list );

@@ -56,4 +56,3 @@ trait ViewEngines
 		return $part ? sprintf( '%s/%s.mustache', $path, $part ) : $path;
 	}
 }
-

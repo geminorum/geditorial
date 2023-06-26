@@ -296,7 +296,7 @@ class WcRelated extends gEditorial\Module
 			wc_set_loop_prop( 'name', 'related_by_'.$row['taxonomy'] );
 			wc_set_loop_prop( 'columns', $columns );
 
-			$name = Text::start( $row['taxonomy'], 'pa_' )
+			$name = Text::starts( $row['taxonomy'], 'pa_' )
 				? wc_attribute_label( $row['taxonomy'], $product )
 				: Taxonomy::object( $row['taxonomy'] )->labels->name;
 

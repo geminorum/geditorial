@@ -250,6 +250,7 @@ class Plugin
 		return $plugin_array;
 	}
 
+	// FIXME: move this to listtable main
 	private function _handle_set_screen_options()
 	{
 		add_filter( 'screen_settings', [ $this, 'screen_settings' ], 12, 2 );
@@ -301,7 +302,7 @@ class Plugin
 	// @REF: https://core.trac.wordpress.org/changeset/47951
 	public function set_screen_option( $false, $option, $value )
 	{
-		return Text::start( $option, static::BASE ) ? $value : $false;
+		return Text::starts( $option, static::BASE ) ? $value : $false;
 	}
 
 	// HELPER
