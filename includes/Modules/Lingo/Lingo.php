@@ -4,16 +4,18 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Term;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 
 class Lingo extends gEditorial\Module
 {
+	use Internals\Imports;
 
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafile   = 'languages-20230325.json';

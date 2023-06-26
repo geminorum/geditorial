@@ -62,8 +62,6 @@ class Module extends Base
 	protected $partials_remote  = [];
 	protected $process_disabled = [];
 
-	protected $imports_datafile = '';
-
 	protected $disable_no_customs    = FALSE; // not hooking module if has no posttypes/taxonomies
 	protected $disable_no_posttypes  = FALSE; // not hooking module if has no posttypes
 	protected $disable_no_taxonomies = FALSE; // not hooking module if has no taxonomies
@@ -7340,87 +7338,5 @@ class Module extends Base
 			add_action( 'load-'.$hook, [ $this, sprintf( 'admin_%s_load', $context ) ] );
 
 		return $hook;
-	}
-
-	// IMPORTS API
-	protected function get_imports_datafile()
-	{
-		return empty( $this->imports_datafile ) ? FALSE : sprintf( '%sdata/%s', $this->path, $this->imports_datafile );
-	}
-
-	// IMPORTS API
-	// DEFAULT METHOD
-	protected function get_imports_raw_data()
-	{
-		if ( empty( $this->imports_datafile ) )
-			return FALSE;
-
-		$filetype = wp_check_filetype( $this->imports_datafile, [
-			'csv'  => 'text/csv',
-			'json' => 'application/json',
-			'xml'  => 'application/xml',
-		] );
-
-		switch( $filetype['ext'] ) {
-			case 'csv' : return Helper::parseCSV( $this->get_imports_datafile() );
-			case 'json': return Helper::parseJSON( $this->get_imports_datafile() );
-			case 'xml' : return Helper::parseXML( $this->get_imports_datafile() );
-		}
-
-		return FALSE;
-	}
-
-	// IMPORTS API
-	protected function get_imports_page_url( $sub = NULL )
-	{
-		return $this->get_module_url( 'imports', is_null( $sub ) ? $this->key : $sub );
-	}
-
-	// IMPORTS API
-	protected function render_imports_toolbox_card( $imports_url = NULL )
-	{
-		if ( is_null( $imports_url ) )
-			$imports_url = $this->get_imports_page_url();
-
-		echo $this->wrap_open( 'card -toolbox-card' );
-
-			HTML::h4( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ), 'title' );
-			HTML::desc( $this->get_string( 'description', 'wp_importer', 'misc', '' ) );
-
-			$link = HTML::tag( 'a' , [
-				'href'  => $imports_url,
-				'class' => [ 'button', '-button' ],
-			], $this->get_string( 'button', 'wp_importer', 'misc',
-				_x( 'Go to Imports', 'Module: Importer Button', 'geditorial' ) ) );
-
-			echo HTML::wrap( HTML::renderList( (array) $link ), '-toolbox-links' );
-
-		echo '</div>';
-	}
-
-	protected function _hook_wp_register_importer()
-	{
-		if ( ! function_exists( 'register_importer' ) )
-			return FALSE;
-
-		return register_importer(
-			$this->classs(),
-			$this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ),
-			$this->get_string( 'description', 'wp_importer', 'misc', '' ),
-			[ $this, '_callback_wp_register_importer' ]
-		);
-	}
-
-	public function _callback_wp_register_importer()
-	{
-		$url = $this->get_imports_page_url();
-
-		echo $this->wrap_open( 'wrap' ); // NOTE: needs `wrap` class for admin styles
-
-			HTML::h1( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ) );
-			HTML::desc( sprintf( $this->get_string( 'redirect', 'wp_importer', 'misc', gEditorial\Plugin::moment( FALSE ) ), $url ) );
-
-			WordPress::redirectJS( $url, 1000 );
-		echo '</div>';
 	}
 }
