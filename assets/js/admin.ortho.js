@@ -86,6 +86,18 @@
       .replace(/(”)(.+?)(“)/g, '“$2”');
   }
 
+  /**
+   * Determine whether the given `input` is a number.
+   * @source https://futurestud.io/tutorials/javascript-check-if-a-string-is-a-number
+   *
+   * @param {String} input
+   *
+   * @returns {Boolean}
+   */
+  function isNumericString (input) {
+    return typeof input === 'string' && !Number.isNaN(input);
+  }
+
   // function toPersian (n) {
   //   const p = '۰'.charCodeAt(0);
   //   return n.toString().replace(/\d+/g, function (m) {
@@ -120,7 +132,11 @@
       return false;
     }
 
-    if (value.length !== 10) {
+    if (!isNumericString(value)) {
+      return false;
+    }
+
+    if (value.trim().length !== 10) {
       return false;
     }
 
@@ -133,8 +149,8 @@
     return (sum < 2 && check === sum) || (sum >= 2 && check + sum === 11);
   }
 
-  function iso7064Mod9710 (iban) {
-    let remainder = iban;
+  function iso7064Mod9710 (value) {
+    let remainder = value;
     let block;
 
     while (remainder.length > 2) {
@@ -221,7 +237,7 @@
       return false;
     }
 
-    if (value.length !== 26) {
+    if (value.length.trim() !== 26) {
       return false;
     }
 

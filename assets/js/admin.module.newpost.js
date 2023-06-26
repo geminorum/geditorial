@@ -97,16 +97,16 @@
 
     doSaveDraft: function (endpoint, target) {
       const that = this;
-      const data = that.getFormData(s.form);
+      const form = that.getFormData(s.form);
       const $button = $(s.save, s.wrap);
       const $message = $('.-message', s.wrap);
       const $loading = $('.-loading', s.wrap);
 
-      console.log(data);
+      console.log(form);
 
       that.request = wp.apiRequest({
         url: endpoint,
-        data: data,
+        data: form,
         type: 'POST',
         // async: false,
         dataType: 'json',
