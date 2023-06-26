@@ -4,20 +4,23 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services\O2O;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\User;
-use geminorum\gEditorial\Services\O2O;
 
 class Config extends gEditorial\Module
 {
+
+	use Internals\ViewEngines;
 
 	protected $caps = [
 		'reports'  => 'publish_posts',
