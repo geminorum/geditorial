@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Today\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-14 00:38+0330\n"
+"PO-Revision-Date: 2023-06-26 17:55+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Today\n"
 "X-Domain: geditorial-today\n"
 
@@ -147,17 +147,17 @@ msgctxt "Menu Title"
 msgid "My Today"
 msgstr "امروز من"
 
-#: Today.php:387
+#: Today.php:388
 msgctxt "Title Attr"
 msgid "View on Today"
 msgstr "دیدن در امروز"
 
-#: Today.php:390
+#: Today.php:391
 msgctxt "Action"
 msgid "Today"
 msgstr "امروز"
 
-#: Today.php:537
+#: Today.php:528
 msgctxt "Message"
 msgid ""
 "You can connect posts to this day once you've saved it for the first time."
@@ -165,72 +165,72 @@ msgstr ""
 "وقتی روز را برای اولین بار را ذخیره کردید، می‌توانید فرسته‌ها را به آن متصل "
 "کنید."
 
-#: Today.php:563 Today.php:956
+#: Today.php:554 Today.php:947
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr "نوشته‌ای با اطلاعات روزانه پیدا نشد."
 
-#: Today.php:768
+#: Today.php:759
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr "هیچ اتفاقی نیفتاده است!"
 
-#: Today.php:939
+#: Today.php:930
 msgctxt "Table Column"
 msgid "The Day"
 msgstr "روز"
 
-#: Today.php:955
+#: Today.php:946
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr "مروری بر نوشته‌های همراه با اطلاعات روزانه"
 
-#: Today.php:1001
+#: Today.php:992
 msgctxt "Header"
 msgid "Today Tools"
 msgstr "ابزارهای امروز"
 
-#: Today.php:1004
+#: Today.php:995
 msgctxt "Header"
 msgid "Re-schedule by Day"
 msgstr "بازتنظیم بر اساس روز"
 
-#: Today.php:1010
+#: Today.php:1001
 msgctxt "Setting"
 msgid "Schedule"
 msgstr "زمان‌بندی"
 
-#: Today.php:1012
+#: Today.php:1003
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1044
+#: Today.php:1035
 msgctxt "Default Term: Audit"
 msgid "No day"
 msgstr "بدون روز"
 
-#: Today.php:1051
+#: Today.php:1042
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr "امروز:‌ تقویم"
 
-#: Today.php:1052
+#: Today.php:1043
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr "امروز:‌ سال"
 
-#: Today.php:1053
+#: Today.php:1044
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr "امروز:‌ ماه"
 
-#: Today.php:1054
+#: Today.php:1045
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr "امروز:‌ روز"
 
-#: Today.php:1055
+#: Today.php:1046
 msgctxt "Import Field"
 msgid "Today: Full"
 msgstr "امروز: کامل"

@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Inquire\n"
 "X-Domain: geditorial-inquire\n"
 
@@ -152,7 +152,7 @@ msgctxt "Placeholder"
 msgid "Enter question title here"
 msgstr ""
 
-#: Inquire.php:265
+#: Inquire.php:255
 msgctxt "Dashboard Title"
 msgid "Inquiries"
 msgstr ""

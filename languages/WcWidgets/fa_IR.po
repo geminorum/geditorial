@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WcWidgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2022-07-30 19:43+0430\n"
+"PO-Revision-Date: 2023-06-26 17:59+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
 "X-Domain: geditorial-wc-widgets\n"
 
@@ -30,59 +30,59 @@ msgctxt "Setting Description"
 msgid "Registers widget area on the selected action hooks."
 msgstr ""
 
-#: WcWidgets.php:79
+#: WcWidgets.php:81
 msgctxt "Action Hook"
 msgid "Thank-you (Before Order Details)"
 msgstr "سپاس‌گزاریم (پیش از جزئیات سفارش)"
 
-#: WcWidgets.php:84
+#: WcWidgets.php:86
 msgctxt "Action Hook"
 msgid "Before Checkout Form"
 msgstr "پیش از فرم تسویه حساب"
 
-#: WcWidgets.php:89
+#: WcWidgets.php:91
 msgctxt "Action Hook"
 msgid "After Checkout Form"
 msgstr "پس از فرم تسویه حساب"
 
-#: WcWidgets.php:94
+#: WcWidgets.php:96
 msgctxt "Action Hook"
 msgid "Before Order Notes"
 msgstr "پیش از یادداشت‌های سفارش"
 
-#: WcWidgets.php:99
+#: WcWidgets.php:101
 msgctxt "Action Hook"
 msgid "Review Order: Before Payment"
 msgstr "بازبینی سفارش: پیش از پرداخت"
 
-#: WcWidgets.php:104
+#: WcWidgets.php:106
 msgctxt "Action Hook"
 msgid "Before Edit Account Address Form"
 msgstr "پیش از فرم ویرایش نشانی حساب"
 
-#: WcWidgets.php:109
+#: WcWidgets.php:111
 msgctxt "Action Hook"
 msgid "Account Dashboard"
 msgstr "پیشخوان کاربری"
 
-#: WcWidgets.php:117
+#: WcWidgets.php:119
 msgctxt "Action Hook"
 msgid "Editorial: Dashboard Purchased Empty"
 msgstr "تحریریه: پیشخوان خرید خالی"
 
-#: WcWidgets.php:124
+#: WcWidgets.php:126
 msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr "وودمارت: عرصه پالایه‌های فروشگاه"
 
 #. translators: %s: widget area name
-#: WcWidgets.php:159
+#: WcWidgets.php:161
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr "ووکامرس: %s"
 
 #. translators: %s: widget action hook
-#: WcWidgets.php:161
+#: WcWidgets.php:163
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
 msgstr "ابزارک‌های این عرصه در قلاب کنش %s نمایش داده خواهند شد."

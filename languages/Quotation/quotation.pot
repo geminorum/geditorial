@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Quotation\n"
 "X-Domain: geditorial-quotation\n"
 
@@ -110,19 +110,19 @@ msgctxt "Field Description"
 msgid "Description of the Quote"
 msgstr ""
 
-#: Quotation.php:222
-#: Quotation.php:225
+#: Quotation.php:212
+#: Quotation.php:215
 msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr ""
 
 #. translators: %1$s: post parent, %2$s: menu order
-#: Quotation.php:242
+#: Quotation.php:232
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
 msgstr ""
 
-#: Quotation.php:254
+#: Quotation.php:244
 msgctxt "Row Icon Title"
 msgid "Quotation Source"
 msgstr ""

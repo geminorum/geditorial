@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Inquire\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 13:58+0330\n"
+"PO-Revision-Date: 2023-06-26 18:02+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,168 +11,166 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Inquire\n"
 "X-Domain: geditorial-inquire\n"
 
-#: Inquire.php:33
+#: Inquire.php:34
 msgctxt "Setting Title"
 msgid "Question Roles"
 msgstr "نقش‌های پرسش"
 
-#: Inquire.php:34
+#: Inquire.php:35
 msgctxt "Setting Description"
 msgid "Roles that can change the question."
 msgstr "نقش‌هایی که می‌توانند پرسش را تغییر دهند."
 
-#: Inquire.php:41
+#: Inquire.php:42
 msgctxt "Setting Title"
 msgid "Make Public"
 msgstr "انتشار عمومی"
 
-#: Inquire.php:42
+#: Inquire.php:43
 msgctxt "Setting Description"
 msgid "Displays Inquiries on the front-end."
 msgstr "پرس‌وجوها را در بخش عمومی سایت نمایش می‌دهد."
 
-#: Inquire.php:74
+#: Inquire.php:75
 msgid "Inquiry"
 msgid_plural "Inquiries"
 msgstr[0] "پرسش‌ها"
 msgstr[1] "پرسش"
 
-#: Inquire.php:75
+#: Inquire.php:76
 msgid "Inquiry Subject"
 msgid_plural "Inquiry Subjects"
 msgstr[0] "موضوعات پرس‌وجو"
 msgstr[1] "موضوع پرس‌وجو"
 
-#: Inquire.php:76
+#: Inquire.php:77
 msgid "Inquiry Status"
 msgid_plural "Inquiry Statuses"
 msgstr[0] "وضعیت‌های پرس‌وجو"
 msgstr[1] "وضعیت پرس‌وجو"
 
-#: Inquire.php:77
+#: Inquire.php:78
 msgid "Inquiry Priority"
 msgid_plural "Inquiry Priorities"
 msgstr[0] "اولویت‌های پرس‌وجو"
 msgstr[1] "اولویت پرس‌وجو"
 
-#: Inquire.php:81
+#: Inquire.php:82
 msgctxt "Label: Excerpt Label"
 msgid "Question"
 msgstr "سؤال"
 
-#: Inquire.php:91
+#: Inquire.php:92
 msgctxt "Default Term"
 msgid "Drafted"
 msgstr "پیش‌نویس"
 
-#: Inquire.php:92
+#: Inquire.php:93
 msgctxt "Default Term"
 msgid "Approved"
 msgstr "تأییدشده"
 
-#: Inquire.php:93
+#: Inquire.php:94
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "در انتظار"
 
-#: Inquire.php:94
+#: Inquire.php:95
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr "شاید در آینده"
 
-#: Inquire.php:95
+#: Inquire.php:96
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr "پذیرفته نشد"
 
-#: Inquire.php:96
+#: Inquire.php:97
 msgctxt "Default Term"
 msgid "Assigned"
 msgstr "تخصیص"
 
-#: Inquire.php:97
+#: Inquire.php:98
 msgctxt "Default Term"
 msgid "Answering"
 msgstr "پاسخ‌گویی"
 
-#: Inquire.php:98
+#: Inquire.php:99
 msgctxt "Default Term"
 msgid "Reviewing"
 msgstr "بازبینی"
 
-#: Inquire.php:99
+#: Inquire.php:100
 msgctxt "Default Term"
 msgid "Archived"
 msgstr "بایگانی"
 
-#: Inquire.php:100
+#: Inquire.php:101
 msgctxt "Default Term"
 msgid "Ready"
 msgstr "آماده"
 
-#: Inquire.php:101
+#: Inquire.php:102
 msgctxt "Default Term"
 msgid "Final"
 msgstr "نهایی"
 
-#: Inquire.php:104
+#: Inquire.php:105
 msgctxt "Default Term"
 msgid "Immediate"
 msgstr "فوری"
 
-#: Inquire.php:105
+#: Inquire.php:106
 msgctxt "Default Term"
 msgid "High"
 msgstr "زیاد"
 
-#: Inquire.php:106
+#: Inquire.php:107
 msgctxt "Default Term"
 msgid "Normal"
 msgstr "عادی"
 
-#: Inquire.php:107
+#: Inquire.php:108
 msgctxt "Default Term"
 msgid "Low"
 msgstr "کم"
 
-#: Inquire.php:108
+#: Inquire.php:109
 msgctxt "Default Term"
 msgid "Zero"
 msgstr "ندارد"
 
-#: Inquire.php:131
-msgctxt "Button"
-msgid "Install Default Inquiry Statuses"
-msgstr "نصب وضعیت‌های پرس‌وجوی پیش‌فرض"
-
-#: Inquire.php:132
-msgctxt "Button"
-msgid "Install Default Inquiry Priorities"
-msgstr "نصب اولویت‌های پرس‌وجوی پیش‌فرض"
-
-#: Inquire.php:187
+#: Inquire.php:165
 msgctxt "Template Title"
 msgid "Editorial: Inquire: Dashboard"
 msgstr "تحریریه: پرس‌وجو: پیشخوان"
 
-#: Inquire.php:255
+#: Inquire.php:233
 msgctxt "Placeholder"
 msgid "Enter question title here"
 msgstr "عنوان پرسش را اینجا وارد کنید"
 
-#: Inquire.php:287
+#: Inquire.php:255
 msgctxt "Dashboard Title"
 msgid "Inquiries"
 msgstr "پرس‌وجو"
 
 #: ModuleTemplate.php:28
 msgctxt "Header"
-msgid "Overview of Post Orthography"
+msgid "Overview of Inquiries"
 msgstr ""
+
+#~ msgctxt "Button"
+#~ msgid "Install Default Inquiry Statuses"
+#~ msgstr "نصب وضعیت‌های پرس‌وجوی پیش‌فرض"
+
+#~ msgctxt "Button"
+#~ msgid "Install Default Inquiry Priorities"
+#~ msgstr "نصب اولویت‌های پرس‌وجوی پیش‌فرض"
 
 #~ msgctxt "Posttype Menu"
 #~ msgid "Inquiries"

@@ -9,169 +9,169 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 "X-Domain: geditorial-attachments\n"
 
-#: Attachments.php:41
+#: Attachments.php:40
 msgctxt "Help Tab Title"
 msgid "Shortcodes"
 msgstr ""
 
-#: Attachments.php:68
+#: Attachments.php:67
 msgctxt "Setting Title"
 msgid "Rewrite Permalinks"
 msgstr ""
 
-#: Attachments.php:69
+#: Attachments.php:68
 msgctxt "Setting Description"
 msgid "Changes default permalinks into attachment id."
 msgstr ""
 
-#: Attachments.php:74
+#: Attachments.php:73
 msgctxt "Setting Title"
 msgid "Prefix Permalinks"
 msgstr ""
 
-#: Attachments.php:75
+#: Attachments.php:74
 msgctxt "Setting Description"
 msgid "Adds to the permalink of attachments, before id."
 msgstr ""
 
-#: Attachments.php:82
+#: Attachments.php:81
 msgctxt "Setting Title"
 msgid "Fallback Alt to Title"
 msgstr ""
 
-#: Attachments.php:83
+#: Attachments.php:82
 msgctxt "Setting Description"
 msgid "Tries to fill empty alt attribute with attachment title on images."
 msgstr ""
 
-#: Attachments.php:89
+#: Attachments.php:88
 msgctxt "Setting Title"
 msgid "Attachment Count"
 msgstr ""
 
-#: Attachments.php:90
+#: Attachments.php:89
 msgctxt "Setting Description"
 msgid "Displays attachment summary of the post."
 msgstr ""
 
-#: Attachments.php:92
+#: Attachments.php:91
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
 msgstr ""
 
-#: Attachments.php:95
+#: Attachments.php:94
 msgctxt "Setting Title"
 msgid "Restrict Library"
 msgstr ""
 
-#: Attachments.php:96
+#: Attachments.php:95
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr ""
 
-#: Attachments.php:216
+#: Attachments.php:215
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr ""
 
-#: Attachments.php:266
+#: Attachments.php:265
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachments count
-#: Attachments.php:269
+#: Attachments.php:268
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Attachments.php:274
+#: Attachments.php:273
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr ""
 
-#: Attachments.php:309
+#: Attachments.php:308
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachment parent title
-#: Attachments.php:311
+#: Attachments.php:310
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr ""
 
-#: Attachments.php:404
+#: Attachments.php:403
 msgctxt "Table Action"
 msgid "Delete Permanently"
 msgstr ""
 
-#: Attachments.php:405
+#: Attachments.php:404
 msgctxt "Table Action"
 msgid "Empty Meta-data"
 msgstr ""
 
-#: Attachments.php:406
+#: Attachments.php:405
 msgctxt "Table Action"
 msgid "Remove Thumbnails"
 msgstr ""
 
-#: Attachments.php:423
+#: Attachments.php:422
 msgctxt "Table Column"
 msgid "Custom"
 msgstr ""
 
-#: Attachments.php:435
+#: Attachments.php:434
 msgctxt "Table Column"
 msgid "Search"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:442
+#: Attachments.php:441
 msgctxt "Search Result Prefix"
 msgid "[Parent]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:447
+#: Attachments.php:446
 msgctxt "Search Result Prefix"
 msgid "[Thumb]: %s"
 msgstr ""
 
 #. translators: %s: linked term title
-#: Attachments.php:452
+#: Attachments.php:451
 msgctxt "Search Result Prefix"
 msgid "[Term]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:457
+#: Attachments.php:456
 msgctxt "Search Result Prefix"
 msgid "[Content]: %s"
 msgstr ""
 
-#: Attachments.php:464
+#: Attachments.php:463
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr ""
 
-#: Attachments.php:487
+#: Attachments.php:486
 msgctxt "Table Column"
 msgid "Meta"
 msgstr ""
 
-#: Attachments.php:508
+#: Attachments.php:507
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr ""
 
-#: Attachments.php:509
+#: Attachments.php:508
 msgctxt "Message"
 msgid "No attachments found."
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Specs\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-27 04:26+0330\n"
+"PO-Revision-Date: 2023-06-26 17:53+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,87 +11,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
 
-#: Specs.php:54
+#: Specs.php:55
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: Specs.php:55
+#: Specs.php:56
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Specs.php:56
+#: Specs.php:57
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Specs.php:59
+#: Specs.php:60
 msgctxt "Strings: Description"
 msgid "In Specifications Title"
 msgstr "عنوان در مشخصات"
 
-#: Specs.php:60
+#: Specs.php:61
 msgctxt "Strings: Description"
 msgid "In Specifications Order"
 msgstr "چینش در مشخصات"
 
-#: Specs.php:61
+#: Specs.php:62
 msgctxt "Strings: Description"
 msgid "In Specifications Description"
 msgstr "توضیحات در مشخصات"
 
-#: Specs.php:64
+#: Specs.php:65
 msgctxt "Column Title"
 msgid "Specifications"
 msgstr "ویژگی‌ها"
 
-#: Specs.php:65
+#: Specs.php:66
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Specification &ndash;"
 msgstr "&ndash; انتخاب کنید &ndash;"
 
-#: Specs.php:68
+#: Specs.php:69
 msgid "Specification"
 msgid_plural "Specifications"
 msgstr[0] "ویژگی‌ها"
 msgstr[1] "ویژگی"
 
-#: Specs.php:77
+#: Specs.php:78
 msgctxt "Default Term"
 msgid "Color"
 msgstr "رنگ"
 
-#: Specs.php:78
+#: Specs.php:79
 msgctxt "Default Term"
 msgid "Width"
 msgstr "پهنا"
 
-#: Specs.php:79
+#: Specs.php:80
 msgctxt "Default Term"
 msgid "Height"
 msgstr "بلندا"
 
-#: Specs.php:80
+#: Specs.php:81
 msgctxt "Default Term"
 msgid "Weight"
 msgstr "وزن"
 
-#: Specs.php:317
+#: Specs.php:316
 msgctxt "Sortable Handler"
 msgid "Sort me!"
 msgstr "مرتب کن!"
 
-#: Specs.php:320
+#: Specs.php:319
 msgctxt "Sortable Trash"
 msgid "Trash me!"
 msgstr "حذف کن!"
 
-#: Specs.php:336 Specs.php:470
+#: Specs.php:335 Specs.php:469
 msgctxt "Modules: Specs"
 msgid "Unknown Field"
 msgstr "فیلد ناشناخته"

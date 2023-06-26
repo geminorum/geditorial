@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "X-Domain: geditorial-audit\n"
 
@@ -204,99 +204,99 @@ msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:670
+#: Audit.php:665
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr ""
 
-#: Audit.php:707
+#: Audit.php:702
 msgctxt "Card Title"
 msgid "Posts with Empty Title"
 msgstr ""
 
-#: Audit.php:713
-#: Audit.php:732
-#: Audit.php:751
+#: Audit.php:708
+#: Audit.php:727
+#: Audit.php:746
 msgctxt "Card: None-Title"
 msgid "All Supported Post-Types"
 msgstr ""
 
-#: Audit.php:716
-#: Audit.php:735
-#: Audit.php:754
+#: Audit.php:711
+#: Audit.php:730
+#: Audit.php:749
 msgctxt "Card: Button"
 msgid "Mark Posts"
 msgstr ""
 
-#: Audit.php:717
-#: Audit.php:736
-#: Audit.php:755
+#: Audit.php:712
+#: Audit.php:731
+#: Audit.php:750
 msgctxt "Card: Button"
 msgid "Flush Attribute"
 msgstr ""
 
-#: Audit.php:718
+#: Audit.php:713
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no title."
 msgstr ""
 
-#: Audit.php:726
+#: Audit.php:721
 msgctxt "Card Title"
 msgid "Posts with Empty Content"
 msgstr ""
 
-#: Audit.php:737
+#: Audit.php:732
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no content."
 msgstr ""
 
-#: Audit.php:745
+#: Audit.php:740
 msgctxt "Card Title"
 msgid "Posts with Empty Excerpt"
 msgstr ""
 
-#: Audit.php:756
+#: Audit.php:751
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no excerpt."
 msgstr ""
 
-#: Audit.php:763
+#: Audit.php:758
 msgctxt "Card Title"
 msgid "Posts with Empty Fields"
 msgstr ""
 
-#: Audit.php:764
+#: Audit.php:759
 msgctxt "Message"
 msgid "No empty attribute available. Please install the default attributes."
 msgstr ""
 
 #. translators: %1$s: empty post count, %2$s: assigned term count
-#: Audit.php:779
+#: Audit.php:774
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr ""
 
-#: Audit.php:792
+#: Audit.php:787
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:795
+#: Audit.php:790
 msgctxt "Message"
 msgid "There are no reports available!"
 msgstr ""
 
-#: Audit.php:808
+#: Audit.php:803
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr ""
 
-#: Audit.php:814
+#: Audit.php:809
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:822
+#: Audit.php:817
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr ""

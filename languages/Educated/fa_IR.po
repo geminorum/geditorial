@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Educated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-07 16:50+0330\n"
+"PO-Revision-Date: 2023-06-26 17:42+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,85 +11,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Educated\n"
 "X-Domain: geditorial-educated\n"
 
-#: Educated.php:28
+#: Educated.php:29
 msgctxt "Setting"
 msgid "There are no education definitions available!"
 msgstr "سطوح تحصیلی در دسترس نیست!"
 
-#: Educated.php:36
+#: Educated.php:37
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr "نقش‌های مدیریت بررسی"
 
-#: Educated.php:37
+#: Educated.php:38
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Education Definitions."
 msgstr "نقش‌هایی که میتوانند تعاریف تحصیلی را مدیریت، ویرایش و یا حذف کنند."
 
-#: Educated.php:43
+#: Educated.php:44
 msgctxt "Setting Title"
 msgid "Assign Roles"
 msgstr "نقش‌های مأمور بررسی"
 
-#: Educated.php:44
+#: Educated.php:45
 msgctxt "Setting Description"
 msgid "Roles that can Assign Education Definitions."
 msgstr "نقش‌هایی که میتوانند تعاریف تحصیلی را اختصاص دهند."
 
-#: Educated.php:50
+#: Educated.php:51
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr "نقش‌های گزارشات"
 
-#: Educated.php:51
+#: Educated.php:52
 msgctxt "Setting Description"
 msgid "Roles that can see Education Definitions Reports."
 msgstr "نقش‌هایی که می‌توانند گزارش‌های تعاریف تحصیلی را ببینند."
 
-#: Educated.php:57
+#: Educated.php:58
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr "نقش‌های محدود‌شده"
 
-#: Educated.php:58
+#: Educated.php:59
 msgctxt "Setting Description"
 msgid "Roles that check for Education Definitions visibility."
 msgstr "نقش‌هایی که سطح دسترسی هر تعریف تحصیلی برای نمایش به آن‌ها بررسی می‌شود."
 
-#: Educated.php:64
+#: Educated.php:65
 msgctxt "Setting Title"
 msgid "Restricted Definitions"
 msgstr "سطوح محدودشده"
 
-#: Educated.php:65
+#: Educated.php:66
 msgctxt "Setting Description"
 msgid "Handles visibility of each definition based on meta values."
 msgstr "بر اساس متای هر تعریف، نمایانی آن را مشخص میکند."
 
-#: Educated.php:68
+#: Educated.php:69
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: Educated.php:69
+#: Educated.php:70
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr "پنهانی"
 
-#: Educated.php:103
+#: Educated.php:104
 msgid "Education Definition"
 msgid_plural "Education Definitions"
 msgstr[0] "سطوح تحصیلی"
 msgstr[1] "سطح تحصیلی"
-
-#: Educated.php:107
-msgctxt "Label: Menu Name"
-msgid "Educations"
-msgstr "تحصیلات"
 
 #: Educated.php:108
 msgctxt "Label: Show Option All"
@@ -140,6 +135,10 @@ msgstr "کارشناسی ارشد"
 msgctxt "Default Term"
 msgid "Doctorate"
 msgstr "دکترا"
+
+#~ msgctxt "Label: Menu Name"
+#~ msgid "Educations"
+#~ msgstr "تحصیلات"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Restricted Terms"

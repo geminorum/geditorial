@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Pitches\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 14:18+0330\n"
+"PO-Revision-Date: 2023-06-26 17:50+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,23 +11,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Pitches\n"
 "X-Domain: geditorial-pitches\n"
 
-#: Pitches.php:62
+#: Pitches.php:63
 msgid "Idea"
 msgid_plural "Ideas"
 msgstr[0] "ایده‌ها"
 msgstr[1] "ایده"
 
-#: Pitches.php:63
+#: Pitches.php:64
 msgid "Idea Category"
 msgid_plural "Idea Categories"
 msgstr[0] "دسته‌های ایده"
 msgstr[1] "دسته ایده"
 
-#: Pitches.php:64
+#: Pitches.php:65
 msgid "Idea Pool"
 msgid_plural "Idea Pools"
 msgstr[0] "مخازن ایده"

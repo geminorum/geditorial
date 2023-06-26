@@ -9,26 +9,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Wysiwyg\n"
 "X-Domain: geditorial-wysiwyg\n"
 
-#: Wysiwyg.php:41
+#: Wysiwyg.php:42
 msgctxt "Setting Title"
 msgid "Description Roles"
 msgstr ""
 
-#: Wysiwyg.php:42
+#: Wysiwyg.php:43
 msgctxt "Setting Description"
 msgid "Editor will be available on descriptions for selected Roles."
 msgstr ""
 
-#: Wysiwyg.php:112
+#: Wysiwyg.php:113
 msgctxt "Taxonomy Description: Label"
 msgid "Description"
 msgstr ""
 
-#: Wysiwyg.php:121
+#: Wysiwyg.php:122
 msgctxt "Taxonomy Description: Description"
 msgid "The description is not prominent by default; however, some themes may show it."
 msgstr ""

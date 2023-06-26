@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Licensed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-07 17:09+0330\n"
+"PO-Revision-Date: 2023-06-26 17:47+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,132 +11,132 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Vehicle\n"
 "X-Domain: geditorial-vehicle\n"
 
-#: Licensed.php:28
+#: Licensed.php:29
 msgctxt "Setting"
 msgid "There are no driving licences available!"
 msgstr "هیچ گواهینامه رانندگی در دسترس نیست!"
 
-#: Licensed.php:36
+#: Licensed.php:37
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr "نقش‌های مدیریت بازبینی"
 
-#: Licensed.php:37
+#: Licensed.php:38
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Driving Licences."
 msgstr "نقش‌هایی که میتوانند گواهینامه‌های رانندگی را مدیریت، ویرایش و یا حذف کنند."
 
-#: Licensed.php:43
+#: Licensed.php:44
 msgctxt "Setting Title"
 msgid "Assign Roles"
 msgstr "نقش‌های مأمور بازبینی"
 
-#: Licensed.php:44
+#: Licensed.php:45
 msgctxt "Setting Description"
 msgid "Roles that can Assign Driving Licences."
 msgstr "نقش‌هایی که میتوانند گواهینامه‌های رانندگی را تخصیص دهند."
 
-#: Licensed.php:50
+#: Licensed.php:51
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr "نقش‌های گزارشات"
 
-#: Licensed.php:51
+#: Licensed.php:52
 msgctxt "Setting Description"
 msgid "Roles that can see Driving Licences Reports."
 msgstr "نقش‌هایی که میتوانند گزارشات گواهینامه‌های رانندگی را ببینند."
 
-#: Licensed.php:57
+#: Licensed.php:58
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr "نقش‌های محدود‌شده"
 
-#: Licensed.php:58
+#: Licensed.php:59
 msgctxt "Setting Description"
 msgid "Roles that check for Driving Licences visibility."
 msgstr "نقش‌هایی که سطح دسترسی هر گواهینامه رانندگی برای نمایش به آن‌ها بررسی میشود."
 
-#: Licensed.php:64
+#: Licensed.php:65
 msgctxt "Setting Title"
 msgid "Restricted Licences"
 msgstr "گواهینامه‌های محدودشده"
 
-#: Licensed.php:65
+#: Licensed.php:66
 msgctxt "Setting Description"
 msgid "Handles visibility of each licence based on meta values."
 msgstr "بر اساس متای هر گواهینامه، نمایانی آن را مشخص میکند."
 
-#: Licensed.php:68
+#: Licensed.php:69
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: Licensed.php:69
+#: Licensed.php:70
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr "پنهانی"
 
-#: Licensed.php:103
+#: Licensed.php:104
 msgid "Driving Licence"
 msgid_plural "Driving Licences"
 msgstr[0] "گواهینامه‌های رانندگی"
 msgstr[1] "گواهینامه رانندگی"
 
-#: Licensed.php:107
+#: Licensed.php:108
 msgctxt "Label: Show Option All"
 msgid "Licences"
 msgstr "گواهینامه‌ها"
 
-#: Licensed.php:108
+#: Licensed.php:109
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr "(بدون گواهینامه)"
 
-#: Licensed.php:117
+#: Licensed.php:118
 msgctxt "Dashboard Widget Title"
 msgid "Your Driving Licence Summary"
 msgstr "گزارش گواهینامه رانندگی شما"
 
-#: Licensed.php:118
+#: Licensed.php:119
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Driving Licence Summary"
 msgstr "گزارش گواهینامه رانندگی تحریریه"
 
-#: Licensed.php:123
+#: Licensed.php:124
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr "موتورسیکلت"
 
-#: Licensed.php:124
+#: Licensed.php:125
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr "پایه سه"
 
-#: Licensed.php:125
+#: Licensed.php:126
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr "پایه دو"
 
-#: Licensed.php:126
+#: Licensed.php:127
 msgctxt "Default Term"
 msgid "Category One"
 msgstr "پایه یک"
 
-#: Licensed.php:127
+#: Licensed.php:128
 msgctxt "Default Term"
 msgid "Loader"
 msgstr "لودر"
 
-#: Licensed.php:128
+#: Licensed.php:129
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr "هلیکوپتر"
 
-#: Licensed.php:129
+#: Licensed.php:130
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr "هواپیما"

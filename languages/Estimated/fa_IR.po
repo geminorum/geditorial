@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Estimated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 13:52+0330\n"
+"PO-Revision-Date: 2023-06-26 17:43+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,87 +11,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Estimated\n"
 "X-Domain: geditorial-estimated\n"
 
-#: Estimated.php:36
+#: Estimated.php:37
 msgctxt "Setting Title"
 msgid "Reading Time"
 msgstr "سرعت مطالعه"
 
-#: Estimated.php:37
+#: Estimated.php:38
 msgctxt "Setting Description"
 msgid "Average words per minute"
 msgstr "میانگین سرعت مطالعه کلمات در دقیقه"
 
-#: Estimated.php:43
+#: Estimated.php:44
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr "پیشوند توضیحات"
 
-#: Estimated.php:44
+#: Estimated.php:45
 msgctxt "Setting Description"
 msgid "Custom string before the estimated time on the content."
 msgstr "رشته سفارشی که قبل از برآورد زمان نمایش داده خواهد شد."
 
-#: Estimated.php:45 Estimated.php:199
+#: Estimated.php:46 Estimated.php:200
 msgctxt "Setting Default"
 msgid "Estimated read time:"
 msgstr "برآورد زمان مطالعه:‌"
 
-#: Estimated.php:50
+#: Estimated.php:51
 msgctxt "Setting Title"
 msgid "Content Teaser"
 msgstr "تیزر محتوا"
 
-#: Estimated.php:51
+#: Estimated.php:52
 msgctxt "Setting Description"
 msgid "Calculate teaser text along with rest of the content"
 msgstr "محاسبه متن تیز همراه با محتوای نوشته"
 
-#: Estimated.php:54
+#: Estimated.php:55
 msgctxt "Content Teaser Option"
 msgid "Ignore"
 msgstr "نادیده بگیر"
 
-#: Estimated.php:55
+#: Estimated.php:56
 msgctxt "Content Teaser Option"
 msgid "Include"
 msgstr "در نظر بگیر"
 
-#: Estimated.php:63
+#: Estimated.php:64
 msgctxt "Setting Title"
 msgid "Minimum Words"
 msgstr "کمترین مقدار"
 
-#: Estimated.php:64
+#: Estimated.php:65
 msgctxt "Setting Description"
 msgid "And above this number of words will show the notice"
 msgstr "و بیشتر از این تعداد کلمه نمایش داده خواهد شد"
 
-#: Estimated.php:103
+#: Estimated.php:104
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr "برآورد زمانی"
 
-#: Estimated.php:106
+#: Estimated.php:107
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr "شمار واژه‌ها"
 
 #. translators: %s: words count
-#: Estimated.php:139 Estimated.php:220
+#: Estimated.php:140 Estimated.php:221
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute"
 msgstr "اگر تلاش کنید در هر دقیقه %s کلمه بخوانید"
 
-#: Estimated.php:212
+#: Estimated.php:213
 msgid "less than 1 minute"
 msgstr "کمتر از ۱ دقیقه"
 
 #. translators: %s: number of minutes
-#: Estimated.php:215
+#: Estimated.php:216
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] "%s دقیقه"

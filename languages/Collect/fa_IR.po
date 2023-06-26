@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Collect\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-07 12:52+0330\n"
+"PO-Revision-Date: 2023-06-26 17:29+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,149 +11,149 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Domain: geditorial-collect\n"
 "X-Poedit-Basepath: ../../includes/Modules/Collect\n"
 
-#: Collect.php:41
+#: Collect.php:42
 msgctxt "Settings"
 msgid "Collection Parts"
 msgstr "پاره‌های گردآورده"
 
-#: Collect.php:42
+#: Collect.php:43
 msgctxt "Settings"
 msgid "Partition taxonomy for the collections and supported post-types."
 msgstr "رده‌بندی پاره‌ها را برای گردآورده‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Collect.php:57
+#: Collect.php:58
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Collect.php:58
+#: Collect.php:59
 msgctxt "Settings"
 msgid "Redirects collection archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی گردآورده‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
 "بگذارید."
 
-#: Collect.php:64
+#: Collect.php:65
 msgctxt "Settings"
 msgid "Redirect Groups"
 msgstr "بازگردانی گروه‌ها"
 
-#: Collect.php:65
+#: Collect.php:66
 msgctxt "Settings"
 msgid "Redirects all group archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی همه گروه‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌سازی خالی "
 "بگذارید."
 
-#: Collect.php:108 Collect.php:109
+#: Collect.php:109 Collect.php:110
 msgid "Collection"
 msgid_plural "Collections"
 msgstr[0] "گردآورده‌ها"
 msgstr[1] "گردآورده"
 
-#: Collect.php:110
+#: Collect.php:111
 msgid "Group"
 msgid_plural "Groups"
 msgstr[0] "گروه‌ها"
 msgstr[1] "گروه"
 
-#: Collect.php:111
+#: Collect.php:112
 msgid "Part"
 msgid_plural "Parts"
 msgstr[0] "پاره‌ها"
 msgstr[1] "پاره"
 
-#: Collect.php:115
+#: Collect.php:116
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Collect.php:116
-msgctxt "Label: MetaBox Title"
-msgid "The Collection"
-msgstr "گردآورده"
-
 #: Collect.php:119
-msgctxt "Label: MetaBox Title"
-msgid "In This Collection"
-msgstr "در این گردآورده"
-
-#: Collect.php:120
 msgctxt "Label: Show Option All"
 msgid "Collection"
 msgstr "گردآورده"
 
-#: Collect.php:141
+#: Collect.php:129
+msgctxt "Label: MetaBox Title"
+msgid "The Collection"
+msgstr "گردآورده"
+
+#: Collect.php:130
+msgctxt "Label: MetaBox Title"
+msgid "In This Collection"
+msgstr "در این گردآورده"
+
+#: Collect.php:145
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr "خط شماره"
 
-#: Collect.php:142
+#: Collect.php:146
 msgctxt "Field Description"
 msgid "The collection number line"
 msgstr ""
 
-#: Collect.php:146
+#: Collect.php:150
 msgctxt "Field Title"
 msgid "Total Items"
 msgstr "مجموع موارد"
 
-#: Collect.php:147
+#: Collect.php:151
 msgctxt "Field Description"
 msgid "The collection total items"
 msgstr ""
 
-#: Collect.php:153
+#: Collect.php:157
 msgctxt "Field Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Collect.php:154
+#: Collect.php:158
 msgctxt "Field Description"
 msgid "Post order in the collection"
 msgstr ""
 
-#: Collect.php:160
+#: Collect.php:164
 msgctxt "Field Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: Collect.php:161
+#: Collect.php:165
 msgctxt "Field Description"
 msgid "Override post title in the collection"
 msgstr ""
 
-#: Collect.php:165
+#: Collect.php:169
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr "زیرتیتر"
 
-#: Collect.php:166
+#: Collect.php:170
 msgctxt "Field Description"
 msgid "Post subtitle in the collection"
 msgstr ""
 
-#: Collect.php:170
+#: Collect.php:174
 msgctxt "Field Title"
 msgid "Collaborator"
 msgstr "همدست"
 
-#: Collect.php:171
+#: Collect.php:175
 msgctxt "Field Description"
 msgid "Post collaborator in the collection"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:507
+#: Collect.php:362
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr "چینش در گردآورده: %s"
 
-#: Collect.php:539
+#: Collect.php:384
 msgctxt "Header"
 msgid "Collect Tools"
 msgstr "ابزارهای گردآوری"

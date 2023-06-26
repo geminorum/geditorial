@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Event\n"
 "X-Domain: geditorial-event\n"
 
@@ -181,72 +181,44 @@ msgctxt "Button"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: Event.php:470
+#: Event.php:444
 msgctxt "Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:471
+#: Event.php:445
 msgctxt "Meta Box Input Placeholder"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:480
+#: Event.php:454
 msgctxt "Meta Box Input"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:481
+#: Event.php:455
 msgctxt "Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:492
+#: Event.php:466
 msgctxt "Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:493
+#: Event.php:467
 msgctxt "Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:502
+#: Event.php:476
 msgctxt "Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: Event.php:503
+#: Event.php:477
 msgctxt "Meta Box Input Placeholder"
 msgid "Time End"
-msgstr ""
-
-#: Widgets/Currents.php:18
-msgctxt "Widget Title"
-msgid "Editorial: Currents"
-msgstr ""
-
-#: Widgets/Currents.php:19
-msgctxt "Widget Description"
-msgid "Displays ongoing events."
-msgstr ""
-
-#: Widgets/Currents.php:93
-#: Widgets/Poster.php:93
-msgctxt "Widget: Event Poster"
-msgid "The Event:"
-msgstr ""
-
-#: Widgets/Currents.php:96
-#: Widgets/Poster.php:96
-msgctxt "Widget: Event Poster"
-msgid "Always the latest event"
-msgstr ""
-
-#: Widgets/Currents.php:97
-#: Widgets/Poster.php:97
-msgctxt "Widget: Event Poster"
-msgid "Link to the event"
 msgstr ""
 
 #: Widgets/Poster.php:18
@@ -257,4 +229,32 @@ msgstr ""
 #: Widgets/Poster.php:19
 msgctxt "Widget Description"
 msgid "Displays selected, connected or current event poster."
+msgstr ""
+
+#: Widgets/Poster.php:93
+#: Widgets/Upcoming.php:93
+msgctxt "Widget: Event Poster"
+msgid "The Event:"
+msgstr ""
+
+#: Widgets/Poster.php:96
+#: Widgets/Upcoming.php:96
+msgctxt "Widget: Event Poster"
+msgid "Always the latest event"
+msgstr ""
+
+#: Widgets/Poster.php:97
+#: Widgets/Upcoming.php:97
+msgctxt "Widget: Event Poster"
+msgid "Link to the event"
+msgstr ""
+
+#: Widgets/Upcoming.php:18
+msgctxt "Widget Title"
+msgid "Editorial: Upcoming"
+msgstr ""
+
+#: Widgets/Upcoming.php:19
+msgctxt "Widget Description"
+msgid "Displays on-going events."
 msgstr ""

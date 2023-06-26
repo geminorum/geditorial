@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Wysiwyg\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-07 18:47+0330\n"
+"PO-Revision-Date: 2023-06-26 18:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,26 +11,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Wysiwyg\n"
 "X-Domain: geditorial-wysiwyg\n"
 
-#: Wysiwyg.php:41
+#: Wysiwyg.php:42
 msgctxt "Setting Title"
 msgid "Description Roles"
 msgstr "نقش‌های توضیحات"
 
-#: Wysiwyg.php:42
+#: Wysiwyg.php:43
 msgctxt "Setting Description"
 msgid "Editor will be available on descriptions for selected Roles."
 msgstr "ویرایشگر توضیحات، برای این نقش‌ها در دسترس خواهد بود."
 
-#: Wysiwyg.php:112
+#: Wysiwyg.php:113
 msgctxt "Taxonomy Description: Label"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Wysiwyg.php:121
+#: Wysiwyg.php:122
 msgctxt "Taxonomy Description: Description"
 msgid ""
 "The description is not prominent by default; however, some themes may show it."

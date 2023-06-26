@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Modified\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 14:03+0330\n"
+"PO-Revision-Date: 2023-06-26 17:48+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,56 +11,56 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Modified\n"
 "X-Domain: geditorial-modified\n"
 
-#: Modified.php:45
+#: Modified.php:46
 msgctxt "Setting Title"
 msgid "Last Published"
 msgstr "آخرین انتشار"
 
-#: Modified.php:46
+#: Modified.php:47
 msgctxt "Setting Description"
 msgid "Displays last published instead of modified date."
 msgstr "آخرین تاریخ انتشار را به جای آخرین تاریخ تغییرات نمایش می‌دهد."
 
-#: Modified.php:52
+#: Modified.php:53
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr "پیشوند محتوا"
 
-#: Modified.php:53
+#: Modified.php:54
 msgctxt "Setting Description"
 msgid "Custom string before the modified time on the content."
 msgstr "رشته سفارشی که قبل از زمان تغییرات نمایش داده خواهد شد."
 
-#: Modified.php:54
+#: Modified.php:55
 msgctxt "Setting Default"
 msgid "Last modified on"
 msgstr "آخرین تغییر در"
 
-#: Modified.php:59
+#: Modified.php:60
 msgctxt "Setting Title"
 msgid "Insert Format"
 msgstr "قالب جای‌گذاری"
 
-#: Modified.php:60
+#: Modified.php:61
 msgctxt "Setting Description"
 msgid "Displays the date in this format on the content."
 msgstr ""
 
-#: Modified.php:67
+#: Modified.php:68
 msgctxt "Setting Title"
 msgid "Display After"
 msgstr "نمایش بعد از"
 
-#: Modified.php:68
+#: Modified.php:69
 msgctxt "Setting Description"
 msgid "Skips displaying modified since the original content published time."
 msgstr ""
 
-#: Modified.php:113
+#: Modified.php:114
 msgctxt "Dashboard Widget Title"
 msgid "Latest Changes"
 msgstr "آخرین تغییرات"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Suited\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-07 18:15+0330\n"
+"PO-Revision-Date: 2023-06-26 17:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,87 +11,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Suited\n"
 "X-Domain: geditorial-suited\n"
 
-#: Suited.php:29
+#: Suited.php:30
 msgctxt "Setting"
 msgid "There are no suitable targets available!"
 msgstr "هیچ مخاطب مناسبی پیدا نشد!"
 
-#: Suited.php:37
+#: Suited.php:38
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr "نقش‌های مدیریت واگذاری"
 
-#: Suited.php:38
+#: Suited.php:39
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Suitable Targets."
 msgstr "نقش‌هایی که میتوانند مخاطبین شایسته را مدیریت، ویرایش و یا حذف کنند."
 
-#: Suited.php:44
+#: Suited.php:45
 msgctxt "Setting Title"
 msgid "Assign Roles"
 msgstr "نقش‌های مأمور واگذاری"
 
-#: Suited.php:45
+#: Suited.php:46
 msgctxt "Setting Description"
 msgid "Roles that can Assign Suitable Targets."
 msgstr "نقش‌هایی که می‌توانند مخاطبین شایسته را تخصیص دهند."
 
-#: Suited.php:51
+#: Suited.php:52
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr "نقش‌های بررسی گزارشات"
 
-#: Suited.php:52
+#: Suited.php:53
 msgctxt "Setting Description"
 msgid "Roles that can see Suitable Targets Reports."
 msgstr "نقش‌هایی که می‌توانند گزارش‌های مخاطبین شایسته را ببینند."
 
-#: Suited.php:58
+#: Suited.php:59
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr "نقش‌های محدود‌شده"
 
-#: Suited.php:59
+#: Suited.php:60
 msgctxt "Setting Description"
 msgid "Roles that check for Suitable Targets visibility."
 msgstr "نقش‌هایی که سطح دسترسی هر مخاطب شایسته برای نمایش به آن‌ها بررسی می‌شود."
 
-#: Suited.php:65
+#: Suited.php:66
 msgctxt "Setting Title"
 msgid "Restricted Targets"
 msgstr "مخاطبین محدودشده"
 
-#: Suited.php:66
+#: Suited.php:67
 msgctxt "Setting Description"
 msgid "Handles visibility of each target based on meta values."
 msgstr "بر اساس متای هر مخاطب، نمایانی آن را مشخص میکند."
 
-#: Suited.php:69
+#: Suited.php:70
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: Suited.php:70
+#: Suited.php:71
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr "پنهانی"
 
-#: Suited.php:108
+#: Suited.php:109
 msgid "Suitable Target"
 msgid_plural "Suitable Targets"
 msgstr[0] "مخاطبین شایسته"
 msgstr[1] "مخاطب شایسته"
 
-#: Suited.php:112
+#: Suited.php:113
 msgctxt "Label: Show Option All"
 msgid "Suitable"
 msgstr "شایسته‌گان"
 
-#: Suited.php:113
+#: Suited.php:114
 msgctxt "Label: Show Option No Terms"
 msgid "(Unsuitable)"
 msgstr "(ناشایسته)"

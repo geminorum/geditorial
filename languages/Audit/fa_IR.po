@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Audit\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 13:41+0330\n"
+"PO-Revision-Date: 2023-06-26 17:27+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,290 +11,290 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Domain: geditorial-audit\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 
-#: Audit.php:41
+#: Audit.php:42
 msgctxt "Setting"
 msgid "There are no audit attributes available!"
 msgstr "برچسبی برای بازبینی در دسترس نیست!"
 
-#: Audit.php:48
+#: Audit.php:49
 msgctxt "Setting Title"
 msgid "Auto-Audit for Empties"
 msgstr "بازبینی خودکار برای خالی‌ها"
 
-#: Audit.php:49
+#: Audit.php:50
 msgctxt "Setting Description"
 msgid "Tries to automatically assign empty attributes on supported posts."
 msgstr ""
 "تلاش می‌کند تا برچسب‌های بازبینی خالی را به صورت خودکار برای فرسته‌های پشتیبانی‌شده "
 "تنظیم کند."
 
-#: Audit.php:56
+#: Audit.php:57
 msgctxt "Setting Title"
 msgid "Manage Roles"
 msgstr "نقش‌های مدیریت بازبینی"
 
-#: Audit.php:57
+#: Audit.php:58
 msgctxt "Setting Description"
 msgid "Roles that can Manage, Edit and Delete Audit Attributes."
 msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را مدیریت، ویرایش و یا حذف کنند."
 
-#: Audit.php:63
+#: Audit.php:64
 msgctxt "Setting Title"
 msgid "Assign Roles"
 msgstr "نقش‌های مأمور بازبینی"
 
-#: Audit.php:64
+#: Audit.php:65
 msgctxt "Setting Description"
 msgid "Roles that can Assign Audit Attributes."
 msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را به فرسته‌ها اختصاص دهند."
 
-#: Audit.php:70
+#: Audit.php:71
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr "نقش‌های بررسی گزارشات"
 
-#: Audit.php:71
+#: Audit.php:72
 msgctxt "Setting Description"
 msgid "Roles that can see Audit Attributes Reports."
 msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را ببینند."
 
-#: Audit.php:77
+#: Audit.php:78
 msgctxt "Setting Title"
 msgid "Restricted Roles"
 msgstr "نقش‌های محدود‌شده"
 
-#: Audit.php:78
+#: Audit.php:79
 msgctxt "Setting Description"
 msgid "Roles that check for Audit Attributes visibility."
 msgstr "نقش‌هایی که سطح دسترسی هر برچسب بازبینی برای نمایش به آن‌ها بررسی میشود."
 
-#: Audit.php:84
+#: Audit.php:85
 msgctxt "Setting Title"
 msgid "Restricted Attributes"
 msgstr "برچسب‌های محدودشده"
 
-#: Audit.php:85
+#: Audit.php:86
 msgctxt "Setting Description"
 msgid "Handles visibility of each attribute based on meta values."
 msgstr "بر اساس متای هر برچسب، نمایانی آن را مشخص میکند."
 
-#: Audit.php:88
+#: Audit.php:89
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: Audit.php:89
+#: Audit.php:90
 msgctxt "Setting Option"
 msgid "Hidden"
 msgstr "پنهان"
 
-#: Audit.php:95
+#: Audit.php:96
 msgctxt "Setting Title"
 msgid "Locking Terms"
 msgstr "رده‌های قفل‌کننده"
 
-#: Audit.php:96
+#: Audit.php:97
 msgctxt "Setting Description"
 msgid "Selected terms will lock editing the post to audit managers."
 msgstr "رده‌های انتخاب شده، فرسته را برای مدیران بازبینی قفل میکند."
 
-#: Audit.php:134
+#: Audit.php:135
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] "برچسب‌های بازبینی"
 msgstr[1] "برچسب بازبینی"
 
-#: Audit.php:138
+#: Audit.php:139
 msgctxt "Label: Menu Name"
 msgid "Content Audit"
 msgstr "بازبینی محتوا"
 
-#: Audit.php:139
+#: Audit.php:140
 msgctxt "Label: Show Option All"
 msgid "Audit"
 msgstr "بازبینی"
 
-#: Audit.php:140
+#: Audit.php:141
 msgctxt "Label: Show Option No Terms"
 msgid "(Unaudited)"
 msgstr "(بازبینی‌نشده)"
 
-#: Audit.php:149
+#: Audit.php:150
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr "گزارش بازبینی شما"
 
-#: Audit.php:150
+#: Audit.php:151
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr "گزارش بازبینی تحریریه"
 
-#: Audit.php:155
+#: Audit.php:156
 msgctxt "Default Term"
 msgid "Audited"
 msgstr "تکمیل"
 
-#: Audit.php:156
+#: Audit.php:157
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr "منسوخ"
 
-#: Audit.php:157
+#: Audit.php:158
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr "نالازم"
 
-#: Audit.php:158
+#: Audit.php:159
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr "سئو بازبینی شود"
 
-#: Audit.php:159
+#: Audit.php:160
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr "چینش بازبینی شود"
 
-#: Audit.php:160
+#: Audit.php:161
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr "کم‌اهمیت"
 
-#: Audit.php:161
+#: Audit.php:162
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr "کپی اولیه"
 
-#: Audit.php:162
+#: Audit.php:163
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr "ناتمام"
 
-#: Audit.php:163
+#: Audit.php:164
 msgctxt "Default Term"
 msgid "No Title"
 msgstr "بدون عنوان"
 
-#: Audit.php:164
+#: Audit.php:165
 msgctxt "Default Term"
 msgid "No Content"
 msgstr "بدون محتوا"
 
-#: Audit.php:165
+#: Audit.php:166
 msgctxt "Default Term"
 msgid "No Excerpt"
 msgstr "بدون چکیده"
 
-#: Audit.php:166
+#: Audit.php:167
 msgctxt "Default Term"
 msgid "Imported"
 msgstr "درون‌ریزی‌شده"
 
-#: Audit.php:396
+#: Audit.php:395
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr "برچسب‌های بازبینی"
 
-#: Audit.php:443
+#: Audit.php:442
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr "بازبینی"
 
-#: Audit.php:461
+#: Audit.php:460
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr "برای بارگیری برچسب‌های بازبینی کلیک کنید &hellip;"
 
-#: Audit.php:671
+#: Audit.php:665
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr "ابزارهای بازبینی محتوا"
 
-#: Audit.php:708
+#: Audit.php:702
 msgctxt "Card Title"
 msgid "Posts with Empty Title"
 msgstr "فرسته‌ها با عنوان خالی"
 
-#: Audit.php:714 Audit.php:733 Audit.php:752
+#: Audit.php:708 Audit.php:727 Audit.php:746
 msgctxt "Card: None-Title"
 msgid "All Supported Post-Types"
 msgstr "همه نوع‌فرسته‌های پشتیبانی‌شده"
 
-#: Audit.php:717 Audit.php:736 Audit.php:755
+#: Audit.php:711 Audit.php:730 Audit.php:749
 msgctxt "Card: Button"
 msgid "Mark Posts"
 msgstr "نشان‌گذاری فرسته‌ها"
 
-#: Audit.php:718 Audit.php:737 Audit.php:756
+#: Audit.php:712 Audit.php:731 Audit.php:750
 msgctxt "Card: Button"
 msgid "Flush Attribute"
 msgstr "تخلیه برچسب"
 
-#: Audit.php:719
+#: Audit.php:713
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no title."
 msgstr "برای تنظیم برچسب بازبینی روی فرسته‌های پشتیبانی‌شده بدون عنوان، تلاش می‌کند."
 
-#: Audit.php:727
+#: Audit.php:721
 msgctxt "Card Title"
 msgid "Posts with Empty Content"
 msgstr "فرسته‌ها با محتوای خالی"
 
-#: Audit.php:738
+#: Audit.php:732
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no content."
 msgstr "برای تنظیم برچسب بازبینی روی فرسته‌های پشتیبانی‌شده بدون محتوا، تلاش می‌کند."
 
-#: Audit.php:746
+#: Audit.php:740
 msgctxt "Card Title"
 msgid "Posts with Empty Excerpt"
 msgstr "فرسته‌ها با چکیده خالی"
 
-#: Audit.php:757
+#: Audit.php:751
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no excerpt."
 msgstr "برای تنظیم برچسب بازبینی روی فرسته‌های پشتیبانی‌شده بدون چکیده، تلاش می‌کند."
 
-#: Audit.php:764
+#: Audit.php:758
 msgctxt "Card Title"
 msgid "Posts with Empty Fields"
 msgstr "فرسته‌ها با زمینه‌های خالی"
 
-#: Audit.php:765
+#: Audit.php:759
 msgctxt "Message"
 msgid "No empty attribute available. Please install the default attributes."
 msgstr "برچسب‌های بازبینی خالی در دسترس نیست. لطفاً برچسب‌های پیش‌فرض را نصب کنید."
 
 #. translators: %1$s: empty post count, %2$s: assigned term count
-#: Audit.php:780
+#: Audit.php:774
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr "هم‌اکنون %1$s فرسته خالی و %2$s مورد به برچسب بازبینی مرتبط شده است."
 
-#: Audit.php:793
+#: Audit.php:787
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr "گزارش‌های بازبینی"
 
-#: Audit.php:796
+#: Audit.php:790
 msgctxt "Message"
 msgid "There are no reports available!"
 msgstr "گزارشی در دسترس نیست!"
 
-#: Audit.php:809
+#: Audit.php:803
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr "گزارش کاربری"
 
-#: Audit.php:815
+#: Audit.php:809
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: Audit.php:823
+#: Audit.php:817
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr "اعمال پالایه"

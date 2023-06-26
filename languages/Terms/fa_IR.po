@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-07 12:53+0330\n"
+"PO-Revision-Date: 2023-06-26 17:55+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Domain: geditorial-terms\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
 
@@ -180,6 +180,8 @@ msgid ""
 "Terms are usually ordered alphabetically, but you can choose your own order by "
 "numbers."
 msgstr ""
+"رده‌ها معمولا براساس حروف الفبا مرتب می‌شوند، اما می‌توانید ترتیب عددی خود را اضافه "
+"کنید."
 
 #: Terms.php:135
 msgctxt "Descriptions"
@@ -200,11 +202,12 @@ msgstr "در عبارت کوتاهی، اطلاعات بیشتری درباره 
 msgctxt "Descriptions"
 msgid "Adds a way to contact someone about the term, by url, email or phone."
 msgstr ""
+"راهی برای تماس ایمیل، تلفن و یا نشانی، با کسی درباره این رده را اضافه می‌کند."
 
 #: Terms.php:139
 msgctxt "Descriptions"
 msgid "Assigns a custom image to visually separate terms from each other."
-msgstr ""
+msgstr "یک تصویر سفارشی را برای جداسازی بصری رده‌ها از یکدیگر اختصاص می‌دهد."
 
 #: Terms.php:140
 msgctxt "Descriptions"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Series\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-27 04:26+0330\n"
+"PO-Revision-Date: 2023-06-26 17:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,51 +11,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Series\n"
 "X-Domain: geditorial-series\n"
 
-#: Series.php:69
+#: Series.php:72
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: Series.php:70
+#: Series.php:73
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Series.php:71
+#: Series.php:74
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Series.php:76
+#: Series.php:79
 msgctxt "Strings: Description"
 msgid "In Serie Title"
 msgstr "عنوان در مجموعه"
 
-#: Series.php:77
+#: Series.php:80
 msgctxt "Strings: Description"
 msgid "In Serie Order"
 msgstr "چیدمان در مجموعه"
 
-#: Series.php:78
+#: Series.php:81
 msgctxt "Strings: Description"
 msgid "In Serie Description"
 msgstr "توضیحات در مجموعه"
 
-#: Series.php:82 Series.php:83
+#: Series.php:85
 msgctxt "Column Title"
 msgid "Series"
 msgstr "مجموعه‌ها"
 
-#: Series.php:84
+#: Series.php:86
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Series &ndash;"
 msgstr "&ndash; انتخاب کنید &ndash;"
 
-#: Series.php:87
+#: Series.php:89
 msgid "Serie"
 msgid_plural "Series"
 msgstr[0] "مجموعه‌ها"

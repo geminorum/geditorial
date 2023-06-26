@@ -9,78 +9,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
 "X-Domain: geditorial-wc-widgets\n"
 
-#: WcWidgets.php:34
+#: WcWidgets.php:35
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr ""
 
-#: WcWidgets.php:41
+#: WcWidgets.php:42
 msgctxt "Setting Title"
 msgid "Custom Areas"
 msgstr ""
 
-#: WcWidgets.php:42
+#: WcWidgets.php:43
 msgctxt "Setting Description"
 msgid "Registers widget area on the selected action hooks."
 msgstr ""
 
-#: WcWidgets.php:80
+#: WcWidgets.php:81
 msgctxt "Action Hook"
 msgid "Thank-you (Before Order Details)"
 msgstr ""
 
-#: WcWidgets.php:85
+#: WcWidgets.php:86
 msgctxt "Action Hook"
 msgid "Before Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:90
+#: WcWidgets.php:91
 msgctxt "Action Hook"
 msgid "After Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:95
+#: WcWidgets.php:96
 msgctxt "Action Hook"
 msgid "Before Order Notes"
 msgstr ""
 
-#: WcWidgets.php:100
+#: WcWidgets.php:101
 msgctxt "Action Hook"
 msgid "Review Order: Before Payment"
 msgstr ""
 
-#: WcWidgets.php:105
+#: WcWidgets.php:106
 msgctxt "Action Hook"
 msgid "Before Edit Account Address Form"
 msgstr ""
 
-#: WcWidgets.php:110
+#: WcWidgets.php:111
 msgctxt "Action Hook"
 msgid "Account Dashboard"
 msgstr ""
 
-#: WcWidgets.php:118
+#: WcWidgets.php:119
 msgctxt "Action Hook"
 msgid "Editorial: Dashboard Purchased Empty"
 msgstr ""
 
-#: WcWidgets.php:125
+#: WcWidgets.php:126
 msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr ""
 
 #. translators: %s: widget area name
-#: WcWidgets.php:160
+#: WcWidgets.php:161
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr ""
 
 #. translators: %s: widget action hook
-#: WcWidgets.php:162
+#: WcWidgets.php:163
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
 msgstr ""

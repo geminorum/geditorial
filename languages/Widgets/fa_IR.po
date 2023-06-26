@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-03-12 21:55+0330\n"
+"PO-Revision-Date: 2023-06-26 18:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Domain: geditorial-widgets\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
 
@@ -95,13 +95,13 @@ msgctxt "Setting Description"
 msgid "HTML closing after each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:152
+#: Widgets.php:153
 msgctxt "Widget Area Unnamed"
 msgid "[Unnamed]"
 msgstr "(بی‌نام)"
 
 #. translators: %s: widget area name
-#: Widgets.php:161
+#: Widgets.php:162
 msgctxt "Widget Area Prefix"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
@@ -205,7 +205,8 @@ msgid ""
 "taxonomies."
 msgstr "نتایج جست‌وجوی رده‌های مشابه رده فعلی را در رده‌بندی‌های منتخب نمایش می‌دهد."
 
-#: Widgets/NamesakeTerms.php:100 Widgets/SearchTerms.php:98
+#: Widgets/NamesakeTerms.php:100 Widgets/PostTerms.php:82
+#: Widgets/SearchTerms.php:98
 msgctxt "Widget: Setting"
 msgid "Select none for all taxonomies."
 msgstr "برای تمامی رده‌ها، هیچ رده‌ای را انتخاب نکنید."
@@ -240,43 +241,53 @@ msgctxt "Widget: Setting"
 msgid "Hide on Paged Results"
 msgstr "پنهان‌سازی در صفحات شماره‌خورده"
 
-#: Widgets/ProfileSummary.php:22
+#: Widgets/PostTerms.php:17
+msgctxt "Widget Title"
+msgid "Editorial: Post Terms"
+msgstr "تحریریه:‌ رده‌های نوشته"
+
+#: Widgets/PostTerms.php:18
+msgctxt "Widget Description"
+msgid "Displays the assigned terms of the current post."
+msgstr "فهرست رده‌ها را بر اساس نوشته کنونی نمایش می‌دهد."
+
+#: Widgets/ProfileSummary.php:19
 msgctxt "Widget Title"
 msgid "Editorial: Profile Summary"
 msgstr "تحریریه: گزارش نمایه"
 
-#: Widgets/ProfileSummary.php:23
+#: Widgets/ProfileSummary.php:20
 msgctxt "Widget Description"
 msgid "Displays arbitrary profile info for current logged-in user."
 msgstr "اطلاعات نمایه کاربر واردشده فعلی را نمایش می‌دهد."
 
-#: Widgets/ProfileSummary.php:42
+#: Widgets/ProfileSummary.php:39
 msgctxt "Widget: Profile Summary: Row Icon Title"
 msgid "Name"
 msgstr "نام"
 
-#: Widgets/ProfileSummary.php:49
+#: Widgets/ProfileSummary.php:46
 msgctxt "Widget: Profile Summary: Row Icon Title"
 msgid "Email"
 msgstr "ایمیل"
 
-#: Widgets/ProfileSummary.php:56
+#: Widgets/ProfileSummary.php:53
 msgctxt "Widget: Profile Summary: Row Icon Title"
 msgid "URL"
 msgstr "نشانی"
 
-#: Widgets/ProfileSummary.php:75
+#: Widgets/ProfileSummary.php:72
 msgctxt "Widget: Profile Summary: Row Icon Title"
 msgid "Registered"
 msgstr "نام‌نویسی"
 
 #. translators: %s: date
-#: Widgets/ProfileSummary.php:77
+#: Widgets/ProfileSummary.php:74
 msgctxt "Widget: Profile Summary: Row"
 msgid "Registered on %s"
 msgstr "نام‌نویسی در %s"
 
-#: Widgets/ProfileSummary.php:83
+#: Widgets/ProfileSummary.php:80
 msgctxt "Widget: Profile Summary: Row Icon Title"
 msgid "Roles"
 msgstr "نقش‌ها"

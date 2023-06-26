@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Contest\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 13:45+0330\n"
+"PO-Revision-Date: 2023-06-26 17:30+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,147 +11,146 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Domain: geditorial-contest\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 
-#: Contest.php:40
+#: Contest.php:41
 msgctxt "Settings"
 msgid "Contest Sections"
 msgstr "بخش‌های فراخوان"
 
-#: Contest.php:41
+#: Contest.php:42
 msgctxt "Settings"
 msgid "Section taxonomy for the contests and supported post-types."
 msgstr "رده‌بندی بخش‌ها را برای فراخوان‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Contest.php:57
+#: Contest.php:58
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Contest.php:58
+#: Contest.php:59
 msgctxt "Settings"
 msgid "Redirects contest and apply archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی فراخوان‌ها و درخواست‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی "
 "خالی بگذارید."
 
-#: Contest.php:112 Contest.php:113
+#: Contest.php:113 Contest.php:114
 msgid "Contest"
 msgid_plural "Contests"
 msgstr[0] "فراخوان‌ها"
 msgstr[1] "فراخوان"
 
-#: Contest.php:114
+#: Contest.php:115
 msgid "Contest Category"
 msgid_plural "Contest Categories"
 msgstr[0] "دسته‌های فراخوان"
 msgstr[1] "دسته‌ فراخوان"
 
-#: Contest.php:115
+#: Contest.php:116
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] "بخش‌ها"
 msgstr[1] "بخش"
 
-#: Contest.php:116
+#: Contest.php:117
 msgid "Apply"
 msgid_plural "Applies"
 msgstr[0] "درخواست‌ها"
 msgstr[1] "درخواست"
 
-#: Contest.php:117
+#: Contest.php:118
 msgid "Apply Category"
 msgid_plural "Apply Categories"
 msgstr[0] "دسته‌های درخواست"
 msgstr[1] "دسته درخواست"
 
-#: Contest.php:118
+#: Contest.php:119
 msgid "Apply Status"
 msgid_plural "Apply Statuses"
 msgstr[0] "وضعیت‌های درخواست"
 msgstr[1] "وضعیت درخواست"
 
-#: Contest.php:122
+#: Contest.php:123
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Contest.php:132
+#: Contest.php:133
 msgctxt "MetaBox Title"
 msgid "The Contest"
 msgstr "فراخوان"
 
-#: Contest.php:135
+#: Contest.php:134
 msgctxt "MetaBox Title"
 msgid "In This Contest"
 msgstr "در این فراخوان"
 
-#: Contest.php:138
+#: Contest.php:137
 msgctxt "MetaBox Title"
 msgid "Contest"
 msgstr "فراخوان"
 
-#: Contest.php:144
+#: Contest.php:143
 msgctxt "Column Title"
 msgid "Applies"
 msgstr "درخواست‌ها"
 
-#: Contest.php:150
+#: Contest.php:149
 msgctxt "Default Term"
 msgid "Approved"
 msgstr "تأییدشده"
 
-#: Contest.php:151
+#: Contest.php:150
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "برای بازبینی"
 
-#: Contest.php:152
+#: Contest.php:151
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr "شاید در آینده"
 
-#: Contest.php:153
+#: Contest.php:152
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr "پذیرفته نشد"
 
-#: Contest.php:168
+#: Contest.php:167
 msgctxt "Field Title"
 msgid "Deadline Date"
 msgstr "تاریخ آخرین مهلت"
 
-#: Contest.php:169
+#: Contest.php:168
 msgctxt "Field Description"
 msgid "The last date for submitting the applications."
 msgstr "تاریخ آخرین مهلت ارسال درخواست‌ها."
 
-#: Contest.php:184
+#: Contest.php:183
 msgctxt "Field Title"
 msgid "Submission Date"
 msgstr "تاریخ ارسال"
 
-#: Contest.php:185
+#: Contest.php:184
 msgctxt "Field Description"
 msgid "Verified date for the submitted application."
 msgstr "تاریخ صحت‌سنجی‌شده برای ارسال این درخواست."
 
-#: Contest.php:206
-msgctxt "Button"
-msgid "Install Default Apply Statuses"
-msgstr "نصب وضعیت‌های درخواست پیش‌فرض"
-
-#: Contest.php:608
+#: Contest.php:419
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr "ابزارهای فراخوان"
 
-#: Contest.php:636
+#: Contest.php:447
 msgctxt "Default Term: Audit"
 msgid "Apply Abandoned"
 msgstr "درخواست رهاشده"
+
+#~ msgctxt "Button"
+#~ msgid "Install Default Apply Statuses"
+#~ msgstr "نصب وضعیت‌های درخواست پیش‌فرض"
 
 #~ msgctxt "MetaBox Title"
 #~ msgid "Metadata"

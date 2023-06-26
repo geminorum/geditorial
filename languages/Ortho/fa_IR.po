@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Ortho\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 14:04+0330\n"
+"PO-Revision-Date: 2023-06-26 17:49+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,116 +11,116 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Ortho\n"
 "X-Domain: geditorial-ortho\n"
 
-#: Ortho.php:45
+#: Ortho.php:47
 msgctxt "Help Tab Title"
 msgid "Virastar"
 msgstr "ویراستار"
 
-#: Ortho.php:51
+#: Ortho.php:53
 msgctxt "Help Tab Title"
 msgid "PersianTools"
 msgstr "ابزارهای ایرانی"
 
-#: Ortho.php:133
+#: Ortho.php:135
 msgctxt "Setting Title"
 msgid "Virastar Options"
 msgstr "تنظیمات ویراستار"
 
-#: Ortho.php:134
+#: Ortho.php:136
 msgctxt "Setting Description"
 msgid "For more information, please see the library documentations."
 msgstr "برای اطلاعات بیشتر، مستندات ویراستار را ببینید."
 
-#: Ortho.php:140
+#: Ortho.php:142
 msgctxt "Setting Title"
 msgid "Virastar on Paste"
 msgstr "ویراستار با پیست"
 
-#: Ortho.php:141
+#: Ortho.php:143
 msgctxt "Setting Description"
 msgid "Applies Virastar to pasted texts on targeted inputs."
 msgstr "ویراستار را در هنگام چسباندن (پیست)‌ متن اعمال میکند."
 
-#: Ortho.php:150
+#: Ortho.php:152
 msgctxt "Setting Section Title"
 msgid "Virastar!"
 msgstr "ویراستار!"
 
-#: Ortho.php:159 Ortho.php:161
+#: Ortho.php:161 Ortho.php:163
 msgctxt "Javascript String"
 msgid "Apply Virastar!"
 msgstr "اعمال ویراستار!"
 
-#: Ortho.php:160
+#: Ortho.php:162
 msgctxt "Javascript String"
 msgid "Virastar!"
 msgstr "ویراستار!"
 
-#: Ortho.php:162
+#: Ortho.php:164
 msgctxt "Javascript String"
 msgid "Swap Quotes"
 msgstr "جابه‌جایی نقل‌ها"
 
-#: Ortho.php:163
+#: Ortho.php:165
 msgctxt "Javascript String"
 msgid "Swap Not-Correct Quotes"
 msgstr "جابه‌جایی علامت‌های نقل قول"
 
-#: Ortho.php:164
+#: Ortho.php:166
 msgctxt "Javascript String"
 msgid "Word Footnotes"
 msgstr "پانویس‌های ورد"
 
-#: Ortho.php:165
+#: Ortho.php:167
 msgctxt "Javascript String"
 msgid "MS Word Footnotes to WordPress [ref]"
 msgstr "تبدیل پانویس‌های مایکروسافت ورد به وردپرس"
 
-#: Ortho.php:166
+#: Ortho.php:168
 msgctxt "Javascript String"
 msgid "Download"
 msgstr "دریافت"
 
-#: Ortho.php:167
+#: Ortho.php:169
 msgctxt "Javascript String"
 msgid "Download text as markdown"
 msgstr "دریافت متن در قالب مارک‌داون"
 
-#: Ortho.php:168
+#: Ortho.php:170
 msgctxt "Javascript String"
 msgid "nbsp"
 msgstr ""
 
-#: Ortho.php:169
+#: Ortho.php:171
 msgctxt "Javascript String"
 msgid "Non-Breaking SPace"
 msgstr "فاصلهٔ بدون شکست"
 
-#: Ortho.php:333
+#: Ortho.php:335
 msgctxt "Header"
 msgid "Orthography Sandbox"
 msgstr ""
 
-#: Ortho.php:372
+#: Ortho.php:374
 msgctxt "Button"
 msgid "Cleanup Chars"
 msgstr "پالایش نویسه‌ها"
 
-#: Ortho.php:388
+#: Ortho.php:390
 msgctxt "Char Title"
 msgid "Arabic Yeh U+064A"
 msgstr ""
 
-#: Ortho.php:389
+#: Ortho.php:391
 msgctxt "Char Title"
 msgid "Arabic Kaf U+0643"
 msgstr ""
 
-#: Ortho.php:416
+#: Ortho.php:418
 msgctxt "Header"
 msgid "Overview of Post Orthography"
 msgstr ""

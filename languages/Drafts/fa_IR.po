@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Drafts\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-04-06 13:50+0330\n"
+"PO-Revision-Date: 2023-06-26 17:42+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,85 +11,85 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Drafts\n"
 "X-Domain: geditorial-drafts\n"
 
-#: Drafts.php:36
+#: Drafts.php:39
 msgctxt "Setting Title"
 msgid "Public Preview"
 msgstr "پیش‌نمایش عمومی"
 
-#: Drafts.php:37
+#: Drafts.php:40
 msgctxt "Setting Description"
 msgid "Provides a secret link to non-logged in users to view post drafts."
 msgstr ""
 
-#: Drafts.php:44
+#: Drafts.php:47
 msgctxt "Setting Title"
 msgid "Adminbar Summary"
 msgstr "گزارش در منوی مدیریت"
 
-#: Drafts.php:45
+#: Drafts.php:48
 msgctxt "Setting Description"
 msgid "Summary for the current item as a node in adminbar"
 msgstr ""
 
-#: Drafts.php:52
+#: Drafts.php:55
 msgctxt "Setting Title"
 msgid "Max Posts"
 msgstr "حداکثر نوشته‌ها"
 
-#: Drafts.php:53
+#: Drafts.php:56
 msgctxt "Setting Description"
 msgid "Maximum number of posts for each post-type."
 msgstr ""
 
-#: Drafts.php:137
+#: Drafts.php:140
 msgctxt "Adminbar"
 msgid "Drafts"
 msgstr "پیش‌نویس‌ها"
 
-#: Drafts.php:164
+#: Drafts.php:167
 msgid "Unable to make preview private. Please try again."
 msgstr "پش‌نویس خصوصی‌ نشد. دوباره تلاش کنید."
 
-#: Drafts.php:181
+#: Drafts.php:184
 msgid "Unable to make preview public. Please try again."
 msgstr "پیش‌نویس عمومی نشد. دوباره تلاش کنید."
 
 #. translators: %s: drafts count
-#: Drafts.php:203
+#: Drafts.php:206
 msgctxt "Header"
 msgid "View all %s drafts"
 msgstr "نمایش همه پیش‌نویس‌های %s"
 
-#: Drafts.php:234
+#: Drafts.php:237
 msgctxt "Empty"
 msgid "(none)"
 msgstr "(هیچ)"
 
-#: Drafts.php:299
+#: Drafts.php:302
 msgctxt "Button"
 msgid "Make Preview Public"
 msgstr "پیش‌نمایش عمومی شود"
 
-#: Drafts.php:310
+#: Drafts.php:313
 msgctxt "Button"
 msgid "Make Preview Private"
 msgstr "پیش‌نمایش خصوصی شود"
 
-#: Drafts.php:371
+#: Drafts.php:374
 msgctxt "Action"
 msgid "Public Preview"
 msgstr "پیش‌نمایش عمومی"
 
-#: Drafts.php:389
+#: Drafts.php:392
 msgctxt "Row Icon Title"
 msgid "Preview"
 msgstr "پیش‌نمایش"
 
-#: Drafts.php:395
+#: Drafts.php:398
 msgctxt "Row"
 msgid "Has public preview link"
 msgstr "پیش‌نمایش عمومی دارد"

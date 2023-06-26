@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Views\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-04-23T10:57:53+00:00\n"
-"PO-Revision-Date: 2022-04-23 15:38+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-06-26 17:57+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,21 +11,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.3.1\n"
 "X-Domain: geditorial-views\n"
 "X-Poedit-Basepath: ../../includes/Modules/Views\n"
 
-#: Views.php:30
+#: Views.php:33
 msgctxt "Message"
 msgid "Note that the logget-out users count by default."
 msgstr ""
 
-#: Views.php:47
+#: Views.php:50
 msgctxt "Event Name"
 msgid "Entry Views"
 msgstr "بازدید‌های نوشته"
 
-#: Views.php:68
+#: Views.php:71
 msgctxt "Title Attr"
 msgid "View Summary"
 msgstr "گزارش بازدید‌ها"

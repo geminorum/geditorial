@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Dossier\n"
 "X-Domain: geditorial-dossier\n"
 
@@ -43,67 +43,62 @@ msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Dossier.php:110
 #: Dossier.php:111
+#: Dossier.php:112
 msgid "Dossier"
 msgid_plural "Dossiers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:112
+#: Dossier.php:113
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:113
+#: Dossier.php:114
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:117
+#: Dossier.php:118
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr ""
 
-#: Dossier.php:127
+#: Dossier.php:128
 msgctxt "MetaBox Title"
 msgid "The Dossier"
 msgstr ""
 
-#: Dossier.php:130
-msgctxt "MetaBox Title"
-msgid "In This Dossier"
-msgstr ""
-
-#: Dossier.php:147
+#: Dossier.php:146
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Dossier.php:148
+#: Dossier.php:147
 msgctxt "Field Description"
 msgid "The dossier number line"
 msgstr ""
 
-#: Dossier.php:160
+#: Dossier.php:165
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Dossier.php:161
+#: Dossier.php:166
 msgctxt "Field Description"
 msgid "Post order in dossier list"
 msgstr ""
 
 #. translators: %s: order
-#: Dossier.php:531
+#: Dossier.php:372
 msgctxt "Display"
 msgid "Order in Dossier: %s"
 msgstr ""
 
-#: Dossier.php:563
+#: Dossier.php:394
 msgctxt "Header"
 msgid "Dossiers Tools"
 msgstr ""

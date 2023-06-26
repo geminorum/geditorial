@@ -9,12 +9,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.8.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
 #: Badges.php:31
-#: Badges.php:337
+#: Badges.php:332
 msgctxt "Setting"
 msgid "There are no badges available!"
 msgstr ""
@@ -110,7 +110,7 @@ msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr ""
 
-#: Badges.php:332
+#: Badges.php:327
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr ""
