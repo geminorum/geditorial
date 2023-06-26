@@ -27,7 +27,13 @@ class Post extends Core\Base
 		if ( '-9999' == $post )
 			$post = NULL;
 
-		return get_post( $post, $output, $filter );
+		if ( $_post = get_post( $post, $output, $filter ) )
+			return $_post;
+
+		if ( is_null( $post ) && is_admin() && ( $query = self::req( 'post' ) ) )
+			return get_post( $query, $output, $filter );
+
+		return NULL;
 	}
 
 	/**
@@ -61,6 +67,61 @@ class Post extends Core\Base
 
 		return PostType::viewable( $post->post_type )
 			&& Status::viewable( get_post_status( $post ) );
+	}
+
+	/**
+	 * Retrieves post title given a post ID or post object.
+	 *
+	 * @old `PostType::getPostTitle()`
+	 *
+	 * @param  null|int|object $post
+	 * @param  null|string $fallback
+	 * @param  bool   $filter
+	 * @return string $title
+	 */
+	public static function title( $post, $fallback = NULL, $filter = TRUE )
+	{
+		if ( ! $post = self::get( $post ) )
+			return '';
+
+		$title = $filter ? apply_filters( 'the_title', $post->post_title, $post->ID ) : $post->post_title;
+
+		if ( ! empty( $title ) )
+			return $title;
+
+		if ( FALSE === $fallback )
+			return '';
+
+		if ( is_null( $fallback ) )
+			return __( '(Untitled)' );
+
+		return $fallback;
+	}
+
+	/**
+	 * Retrieves post link given a post ID or post object.
+	 *
+	 * @old `PostType::getPostLink()`
+	 *
+	 * @param  null|int|object $post
+	 * @param  null|string $fallback
+	 * @param  null|string|array $statuses
+	 * @return string $link
+	 */
+	public static function link( $post, $fallback = NULL, $statuses = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		$status = get_post_status( $post );
+
+		if ( is_null( $statuses ) && ! Status::viewable( $status ) )
+			return $fallback;
+
+		if ( $statuses && ! in_array( $status, (array) $statuses, TRUE ) )
+			return $fallback;
+
+		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
 	}
 
 	/**
@@ -130,5 +191,39 @@ class Post extends Core\Base
 		clean_post_cache( $post );
 
 		return $success;
+	}
+
+	/**
+	 * Retrieves a post object default properties.
+	 *
+	 * @return array $props
+	 */
+	public static function props()
+	{
+		return [
+			'ID'                    => NULL,
+			'post_author'           => 0,
+			'post_date'             => '0000-00-00 00:00:00',
+			'post_date_gmt'         => '0000-00-00 00:00:00',
+			'post_content'          => '',
+			'post_title'            => '',
+			'post_excerpt'          => '',
+			'post_status'           => 'publish',
+			'comment_status'        => 'open',
+			'ping_status'           => 'open',
+			'post_password'         => '',
+			'post_name'             => '',
+			'to_ping'               => '',
+			'pinged'                => '',
+			'post_modified'         => '0000-00-00 00:00:00',
+			'post_modified_gmt'     => '0000-00-00 00:00:00',
+			'post_content_filtered' => '',
+			'post_parent'           => 0,
+			'guid'                  => '',
+			'menu_order'            => 0,
+			'post_type'             => 'post',
+			'post_mime_type'        => '',
+			'comment_count'         => 0,
+		];
 	}
 }

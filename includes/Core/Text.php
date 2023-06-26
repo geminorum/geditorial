@@ -15,6 +15,57 @@ class Text extends Base
 		return trim( str_ireplace( [ '_', '.' ], '-', $hook ) );
 	}
 
+	// FIXME: move this to Orthography module
+	public static function formatSlug( $text )
+	{
+		$text = (string) $text;
+		$text = trim( $text );
+
+		if ( 0 === strlen( $text ) )
+			return '';
+
+		$text = strtolower( $text );
+
+		// remove more than one ZWNJs
+		$text = preg_replace( "/(\x{200C})+/u", "\xE2\x80\x8C", $text );
+
+		// remove arabic/persian accents
+		$text = preg_replace( "/[\x{0618}-\x{061A}\x{064B}-\x{065F}]+/u", '', $text );
+
+		// TODO: remove arabic question mark
+		// TODO: remove accents
+
+		$text = str_ireplace( [
+			"\xD8\x8C", // `،` // Arabic Comma
+			"\xD8\x9B", // `؛` // Arabic Semicolon
+			"\xD9\x94", // `ٔ` // Arabic Hamza Above
+			"\xD9\xAC", // `٬` // Arabic Thousands Separator
+			"\xD8\x8D", // `؍` // Arabic Date Separator
+
+			"\xC2\xAB",     // `«`
+			"\xC2\xBB",     // `»`
+			"\xE2\x80\xA6", // `…` // Horizontal Ellipsis
+
+			"'",
+		], '', $text );
+
+		$text = str_ireplace( [
+			"\xE2\x80\x8C\x20", // zwnj + space
+			"\x20\xE2\x80\x8C", // space + znwj
+		], ' ', $text );
+
+		// messes with zwnj
+		// $text = self::stripPunctuation( $text );
+
+		$text = str_replace( [ '%20', '+' ], '-', $text );
+		$text = preg_replace( '/[\r\n\t -]+/', '-', $text );
+		$text = preg_replace( '/\.{2,}/', '.', $text );
+		$text = preg_replace( '/-{2,}/', '-', $text );
+		$text = trim( $text, '.-_' );
+
+		return $text;
+	}
+
 	public static function nameFamilyFirst( $text, $separator = ', ' )
 	{
 		if ( empty( $text ) )
@@ -212,9 +263,10 @@ class Text extends Base
 			: $text;
 	}
 
+	// @SEE: `str_contains()` @since PHP 8.0.0
 	public static function has( $haystack, $needles, $operator = 'OR' )
 	{
-		if ( ! $haystack )
+		if ( ! $haystack || empty( $needles ) )
 			return FALSE;
 
 		if ( ! is_array( $needles ) )
@@ -237,7 +289,8 @@ class Text extends Base
 		return $has;
 	}
 
-	public static function start( $haystack, $needles )
+	// @REF: `str_starts_with()` @since PHP 8.0.0
+	public static function starts( $haystack, $needles )
 	{
 		if ( ! $haystack )
 			return FALSE;
@@ -252,6 +305,7 @@ class Text extends Base
 		return FALSE;
 	}
 
+	// @REF: `str_ends_with()` @since PHP 8.0.0
 	public static function ends( $haystack, $needles )
 	{
 		if ( ! $haystack )
@@ -443,7 +497,7 @@ class Text extends Base
 		$title = preg_replace( $pattern, '', $title );
 
 		// find each word (including punctuation attached)
-		preg_match_all( '/[\w\p{L}&`\'‘’"“\.@:\/\{\(\[<>_]+-? */u', $title, $m1, PREG_OFFSET_CAPTURE );
+		preg_match_all( '/[\w\p{L}&`\'‘’"“\.@:\/\{\(\[<>_]+\-? */u', $title, $m1, PREG_OFFSET_CAPTURE );
 
 		foreach ( $m1[0] as &$m2 ) {
 

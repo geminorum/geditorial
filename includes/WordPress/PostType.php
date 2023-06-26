@@ -631,7 +631,7 @@ class PostType extends Core\Base
 
 	public static function getRestRoute( $post = NULL )
 	{
-		if ( ! $post = self::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return FALSE;
 
 		if ( ! $object = self::object( $post ) )
@@ -643,45 +643,22 @@ class PostType extends Core\Base
 		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $post->ID );
 	}
 
+	// DEPRECATED: use `Post::link()`
 	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
 	{
-		if ( ! $post = self::getPost( $post ) )
-			return FALSE;
-
-		$status = get_post_status( $post );
-
-		if ( is_null( $statuses ) && ! Status::viewable( $status ) )
-			return $fallback;
-
-		if ( $statuses && ! in_array( $status, (array) $statuses, TRUE ) )
-			return $fallback;
-
-		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
+		return Post::link( $post, $fallback, $statuses );
 	}
 
+	// DEPRECATED: use `Post::title()`
 	public static function getPostTitle( $post, $fallback = NULL, $filter = TRUE )
 	{
-		if ( ! $post = self::getPost( $post ) )
-			return '';
-
-		$title = $filter ? apply_filters( 'the_title', $post->post_title, $post->ID ) : $post->post_title;
-
-		if ( ! empty( $title ) )
-			return $title;
-
-		if ( FALSE === $fallback )
-			return '';
-
-		if ( is_null( $fallback ) )
-			return __( '(Untitled)' );
-
-		return $fallback;
+		return Post::title( $post, $fallback, $filter );
 	}
 
 	// NOTE: parent post type can be diffrenet
 	public static function getParentTitles( $post, $suffix = '', $separator = NULL )
 	{
-		if ( ! $post = self::getPost( $post ) )
+		if ( ! $post = Post::get( $post ) )
 			return $suffix;
 
 		if ( is_null( $separator ) )
@@ -693,7 +670,7 @@ class PostType extends Core\Base
 
 		while ( $parent ) {
 
-			$object = self::getPost( (int) $current );
+			$object = Post::get( (int) $current );
 
 			if ( $object && $object->post_parent )
 				$parents[] = self::getPostTitle( $object->post_parent );

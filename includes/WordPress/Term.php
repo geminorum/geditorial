@@ -77,7 +77,7 @@ class Term extends Core\Base
 	 */
 	public static function htmlLink( $term, $title = NULL, $fallback = FALSE )
 	{
-		if ( ! $term = self::get( $term ) );
+		if ( ! $term = self::get( $term ) )
 			return $fallback;
 
 		if ( ! $url = get_term_link( $term ) )
@@ -92,7 +92,7 @@ class Term extends Core\Base
 		if ( is_null( $title ) )
 			$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
-		return HTML::tag( 'a', [
+		return Core\HTML::tag( 'a', [
 			'href'  => $url,
 			'class' => [ '-term', '-term-link' ],
 			'data'  => [
