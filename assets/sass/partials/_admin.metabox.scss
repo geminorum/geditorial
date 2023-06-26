@@ -119,6 +119,11 @@ $spacer: 1rem !default;
           text-decoration: underline;
         }
       }
+
+      + .field-wrap {
+        margin-top: $spacer * .5;
+        margin-bottom: - ( $spacer * .25 );
+      }
     }
 
     &.-inputtext {
@@ -213,7 +218,20 @@ $spacer: 1rem !default;
       .button, // DEPRECATED
       .-button {
         margin-bottom: 4px;
+
+        + .-button {
+          margin-left: $spacer * .25;
+        }
       }
+
+      // NOT USED
+      // .-inline-description {
+      //   margin-left: $spacer * .25;
+      //   display: inline-block;
+      //   line-height: $spacer * 1.75;
+      //   font-size: smaller;
+      //   color: $gray-light;
+      // }
 
       .-button-danger {
         color: $brand-danger;
@@ -257,6 +275,14 @@ $spacer: 1rem !default;
             vertical-align: text-top;
             color: $gray-light;
           }
+        }
+      }
+
+      .button-small {
+        .dashicons {
+          width: 16px !important;
+          height: 16px;
+          top: 2px;
         }
       }
 
@@ -549,6 +575,28 @@ $spacer: 1rem !default;
 
     &.-active {
       display: block;
+    }
+  }
+
+  .base-table-simple {
+    color: #333;
+    background-color: #fff;
+    padding: 1em;
+
+    width: 100%;
+    margin-bottom: 1em;
+    border-collapse: collapse;
+
+    th {
+      font-weight: 700;
+      text-align: left;
+      background-color: #ddd;
+    }
+
+    th,
+    td {
+      padding: 0.5em;
+      border: 1px solid #ccc;
     }
   }
 }

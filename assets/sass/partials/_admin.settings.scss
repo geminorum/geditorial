@@ -9,9 +9,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 .geditorial-admin-wrap {
-  body.iframe & {
-    margin: 0 10px 0 12px;
-  }
+  // #TB_window &,
+  // body.iframe & {
+  //   margin: 0 10px 0 12px;
+  // }
 
   p.submit {
     .button-primary:active {

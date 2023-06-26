@@ -1,0 +1,54 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Next of Kin: Admin Post
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+#geditorial-next-of-kin-supportedbox {
+  > .inside {
+    margin-top: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+.-wrap.-admin-metabox.-next_of_kin {
+  @include mainwrap();
+  margin-top: 0 !important;
+
+  > table {
+    max-width: 100%;
+  }
+
+  > table thead tr th {
+    border-top: none;
+  }
+
+  > table tr th,
+  > table tr td {
+    &:first-of-type,
+    &:last-of-type {
+      border-left: none;
+      border-right: none;
+      margin-left: -1px;
+    }
+  }
+
+  > .field-wrap.-buttons {
+    margin: 0 12px 12px;
+  }
+
+  > .-description.-noaccess,
+  > .-description.-empty {
+    margin: 12px;
+  }
+
+  .-is-valid {
+    color: $brand-success !important;
+  }
+
+  .-not-valid {
+    color: $brand-danger !important;
+  }
+}

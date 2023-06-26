@@ -16,6 +16,7 @@
 @import "partials/listtable.admin.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+@import "partials/actions.admin.post";
 @import "partials/activities.admin.post";
 @import "partials/comments.admin.post";
 @import "partials/drafts.admin.post";
@@ -29,6 +30,7 @@
 @import "partials/today.admin.post";
 @import "partials/wc-postal.admin.post";
 @import "partials/people.admin.post";
+@import "partials/next-of-kin.admin.post";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import "partials/ortho.admin.all";
@@ -81,13 +83,24 @@
     }
 
     td {
-      width: 50%;
       padding: .25rem .5rem;
+
+      &:last-of-type {
+        width: 65%;
+      }
     }
 
     td:nth-child(1) {
       // text-align: right;
     }
+  }
+
+  .-is-valid {
+    color: $brand-success !important;
+  }
+
+  .-not-valid {
+    color: $brand-danger !important;
   }
 }
 
