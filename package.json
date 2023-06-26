@@ -36,15 +36,17 @@
     "issues": "start https://github.com/geminorum/geditorial/issues",
     "phpcs:php": "phpcs -v -p includes/ geditorial.php --standard=PHPCompatibility -d memory_limit=1024M --colors",
     "phpcs:wp": "phpcs -v -p includes/ geditorial.php --standard=WordPress -d memory_limit=1024M  --colors",
+    "comp:valid": "composer validate --strict",
     "comp:show": "composer show --tree",
     "comp:deps": "composer-require-checker check composer.json"
   },
   "devDependencies": {
-    "@wordpress/browserslist-config": "^5.14.0",
-    "@wordpress/stylelint-config": "^21.14.0",
+    "@wordpress/babel-preset-default": "^7.20.0",
+    "@wordpress/browserslist-config": "^5.19.0",
+    "@wordpress/stylelint-config": "^21.19.0",
     "autoprefixer": "^10.4.14",
-    "browserslist": "^4.21.5",
-    "cssnano": "^6.0.0",
+    "browserslist": "^4.21.9",
+    "cssnano": "^6.0.1",
     "del": "^7.0.0",
     "fancy-log": "^2.0.0",
     "fs-extra": "^11.1.1",
@@ -67,16 +69,16 @@
     "js-yaml": "^4.1.0",
     "lodash.template": "^4.5.0",
     "parse-changelog": "^1.0.2",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.24",
     "rtlcss": "^4.1.0",
-    "semistandard": "^16.0.1",
-    "stylelint": "^15.4.0",
+    "semistandard": "^17.0.0",
+    "stylelint": "^15.9.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {
-    "@fontsource/libre-barcode-128": "^4.5.8",
-    "@fontsource/libre-barcode-128-text": "^4.5.8",
-    "@fontsource/libre-barcode-ean13-text": "^4.5.8",
+    "@fontsource/libre-barcode-128": "^5.0.3",
+    "@fontsource/libre-barcode-128-text": "^5.0.3",
+    "@fontsource/libre-barcode-ean13-text": "^5.0.3",
     "jqtree": "^1.7.0",
     "list.js": "^2.3.1",
     "normalize.css": "^8.0.1",
@@ -87,9 +89,7 @@
   },
   "babel": {
     "presets": [
-      [
-        "@babel/preset-env"
-      ]
+      "@wordpress/babel-preset-default"
     ]
   },
   "browserslist": [
@@ -99,6 +99,7 @@
     "ignore": [
       "/assets/packages/",
       "/assets/js/vendor/",
+      "/assets/apps/**/build/*",
       "*.min.js"
     ],
     "globals": [

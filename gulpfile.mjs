@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import sass from 'gulp-dart-sass';
-import compiler from 'sass';
+import * as compiler from 'sass'; // @REF: https://github.com/sass/dart-sass/issues/2008
 // import sourcemaps from 'gulp-sourcemaps';
 import postcss from 'gulp-postcss';
 import cssnano from 'cssnano';
@@ -152,7 +152,7 @@ task('i18n:modules', function () {
         ' --subtract=./languages/' + pkg.name + '.pot' +
         // ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
         ' --package-name="' + pkg.productName + ' ' + folder + '" ' + // no version for fewer commits!
-        ' --headers=\'' + template(JSON.stringify(conf.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder: folder, domain: domain, module: module }) + '\' ' +
+        ' --headers=\'' + template(JSON.stringify(conf.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder, domain, module }) + '\' ' +
         extra;
     }), {
       continueOnError: false,
@@ -201,7 +201,7 @@ task('dev:styles', function () {
       cssnano(conf.cssnano.dev),
       autoprefixer(conf.autoprefixer.dev)
     ]))
-    .pipe(header(banner, { pkg: pkg }))
+    .pipe(header(banner, { pkg }))
     // .pipe(sourcemaps.write(conf.output.sourcemaps))
     .pipe(gulpdebug({ title: 'Changed' }))
     .pipe(dest(conf.output.css)).on('error', log.error)
@@ -251,7 +251,7 @@ task('build:scripts', function () {
 
 task('build:banner', function () {
   return src(conf.input.banner, { base: '.' })
-    .pipe(header(banner, { pkg: pkg }))
+    .pipe(header(banner, { pkg }))
     .pipe(dest('.'));
 });
 
@@ -304,9 +304,9 @@ task('github:package:old', function (done) {
 });
 
 task('github:package', function (done) {
-  const file = pkg.name + '-' + pkg.version + '.zip';
+  const filename = pkg.name + '-' + pkg.version + '.zip';
 
-  if (!fsExists('./' + file)) {
+  if (!fsExists('./' + filename)) {
     log.error('Error: missing required package for github');
     return done();
   }
@@ -316,11 +316,11 @@ task('github:package', function (done) {
   // @REF: https://cli.github.com/manual/gh_release_create
   githubCommand('release create ' +
     pkg.version + ' ' +
-    file + ' ' +
+    filename + ' ' +
     '--draft' + ' ' +
     '--latest' + ' ' + // default: automatic based on date and version
     '--title ' + pkg.version + ' ' +
-    '--notes "' + normalizeEOL(changes.versions[0].rawNote) + '"' +
+    '--notes "' + normalizeEOL(changes.versions[0].rawNote.toString()) + '"' +
     '',
   done);
 });
@@ -368,6 +368,6 @@ task('ready', function (done) {
 
 task('default', function (done) {
   log.info('Hi, I\'m Gulp!');
-  log.info('Sass is:\n' + compiler.info);
+  log.info('Sass is:\n' + compiler.default.info);
   done();
 });

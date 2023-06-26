@@ -1,7 +1,7 @@
 {
   "name": "geminorum/geditorial",
   "description": "Our Editorial in WordPress",
-  "license": "GPL-3+",
+  "license": "GPL-2.0-or-later",
   "type": "wordpress-plugin",
   "keywords": [
     "wordpress",
@@ -33,6 +33,7 @@
     "jwage/easy-csv": "^1.0"
   },
   "require-dev": {
+    "10up/wp-content-connect": "^1.5.0",
     "nicmart/string-template": "^0.1.2",
     "eluceo/ical": "^0.11.4",
     "johngrogg/ics-parser": "^2.2",
