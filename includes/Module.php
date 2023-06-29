@@ -4200,6 +4200,13 @@ class Module extends Base
 
 		foreach ( $terms as $term ) {
 
+			if ( $term->parent )
+				$parents[] = $term->parent;
+
+			// avoid if has child in the list
+			if ( $forced && in_array( $term->term_id, $parents, TRUE ) )
+				continue;
+
 			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant, $paired_constant ) )
 				continue;
 
@@ -4226,12 +4233,12 @@ class Module extends Base
 					$dropdown.= '<hr />';
 			}
 
-			$parents[] = $term->parent;
 			$dropdowns[$term->term_id] = $dropdown;
 			$displayed[] = $to_post_id;
 		}
 
-		if ( $forced )
+		// final check if had children in the list
+		if ( $forced && count( $parents ) )
 			$dropdowns = Arraay::stripByKeys( $dropdowns, Arraay::prepNumeral( $parents ) );
 
 		$excludes = Arraay::prepNumeral( $excludes, $displayed );
@@ -5168,10 +5175,18 @@ class Module extends Base
 	// PAIRED API
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		$posts = [];
-		$terms = Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
+		$posts  = $parents = [];
+		$terms  = Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
+		$forced = $this->get_setting( 'paired_force_parents', FALSE );
 
 		foreach ( $terms as $term ) {
+
+			if ( $term->parent )
+				$parents[] = $term->parent;
+
+			// avoid if has child in the list
+			if ( $forced && in_array( $term->term_id, $parents, TRUE ) )
+				continue;
 
 			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant_key, $tax_constant_key ) )
 				continue;
@@ -5189,7 +5204,14 @@ class Module extends Base
 				$posts[$term->term_id] = $to_post_id;
 		}
 
-		return count( $posts ) ? $posts : FALSE;
+		// final check if had children in the list
+		if ( $forced && count( $parents ) )
+			$posts = Arraay::stripByKeys( $posts, Arraay::prepNumeral( $parents ) );
+
+		if ( ! count( $posts ) )
+			return FALSE;
+
+		return $single ? reset( $posts ) : $posts;
 	}
 
 	// PAIRED API
