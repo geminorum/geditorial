@@ -234,7 +234,7 @@ class Ortho extends gEditorial\Module
 
 		$this->enqueue_asset_js( [
 			'settings' => $settings,
-			'strings'  => $this->strings['js'],
+			'strings'  => $this->get_strings( 'virastar', 'js', [] ),
 			'virastar' => $this->prepare_virastar_options(),
 		], NULL, [ 'jquery', $virastar ] );
 

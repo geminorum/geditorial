@@ -2283,6 +2283,17 @@ class Module extends Base
 		return post_type_supports( $this->constant( $constant ), $type.'_fields' );
 	}
 
+	public function get_strings( $subgroup, $group = 'titles', $fallback = [] )
+	{
+		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
+			return $this->strings[$group][$subgroup];
+
+		if ( isset( $this->strings[$group] ) )
+			return $this->strings[$group];
+
+		return $fallback;
+	}
+
 	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE )
 	{
 		if ( $subgroup && isset( $this->strings[$group][$subgroup][$string] ) )
