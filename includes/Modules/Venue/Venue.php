@@ -3,16 +3,15 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Template;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
 
 class Venue extends gEditorial\Module
 {
+	use Internals\Paired;
 
 	public static function module()
 	{
@@ -286,11 +285,13 @@ class Venue extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_screen_restrict_paired();
-
-				$this->action_module( 'meta', 'column_row', 3 );
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
-
 				$this->_hook_paired_store_metabox( $screen->post_type );
+				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
+
+				// $this->action_module( 'meta', 'column_row', 3 );
+
+				if ( $subterms )
+					$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 

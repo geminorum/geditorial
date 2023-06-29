@@ -6655,13 +6655,14 @@ class Module extends Base
 	// DEFAULT FILTER
 	public function tweaks_taxonomy_info( $info, $object, $posttype )
 	{
-		$paired = $this->paired_get_paired_constants();
+		// NO NEED: paired taxonomy `show_ui` is set to false
+		// $paired = $this->paired_get_paired_constants();
 
-		// avoid paired tax on paired posttype's taxonomy column
-		if ( ! empty( $paired[0] ) && ! empty( $paired[1] )
-			&& $posttype === $this->constant( $paired[0] )
-			&& $object->name === $this->constant( $paired[1] ) )
-				return FALSE;
+		// // avoid paired tax on paired posttype's taxonomy column
+		// if ( ! empty( $paired[0] ) && ! empty( $paired[1] )
+		// 	&& $posttype === $this->constant( $paired[0] )
+		// 	&& $object->name === $this->constant( $paired[1] ) )
+		// 		return FALSE;
 
 		$icons = $this->get_module_icons();
 
@@ -6696,6 +6697,7 @@ class Module extends Base
 	}
 
 	// DEFAULT FILTER
+	// NOTE: used when module defines `_supported` meta fields
 	public function meta_column_row( $post, $fields, $excludes )
 	{
 		foreach ( $fields as $field_key => $field ) {

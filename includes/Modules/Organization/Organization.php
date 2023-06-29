@@ -3,14 +3,15 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Organization extends gEditorial\Module
 {
+	use Internals\Paired;
 
 	public static function module()
 	{
@@ -53,7 +54,7 @@ class Organization extends gEditorial\Module
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-organization' ),
 					'description' => _x( 'Redirects department archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-organization' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 			],
 			'_content' => [
@@ -93,8 +94,9 @@ class Organization extends gEditorial\Module
 				'primary_posttype' => NULL,
 			],
 			'taxonomies' => [
-				'primary_paired' => NULL,
-				'type_taxonomy'  => 'admin-media',
+				'primary_paired'  => NULL,
+				'type_taxonomy'   => 'admin-media',
+				'primary_subterm' => NULL,
 			],
 		];
 	}
@@ -132,6 +134,10 @@ class Organization extends gEditorial\Module
 
 		if ( ! is_admin() )
 			return $strings;
+
+		$strings['misc'] = [
+			'column_icon_title' => _x( 'Department', 'Misc: `column_icon_title`', 'geditorial-organization' ),
+		];
 
 		$strings['default_terms'] = [
 			'status_taxonomy' => [
@@ -301,9 +307,12 @@ class Organization extends gEditorial\Module
 
 				$this->_hook_screen_restrict_paired();
 				$this->_hook_paired_store_metabox( $screen->post_type );
+				$this->paired__hook_tweaks_column( $screen->post_type, 8 );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
+
+				if ( $subterms )
+					$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 
