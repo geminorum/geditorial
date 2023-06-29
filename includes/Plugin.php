@@ -481,6 +481,10 @@ class Plugin
 	{
 		$screen = get_current_screen();
 
+		// NOTE: renders before this plugin styles
+		if ( ! defined( 'GNETWORK_VERSION' ) )
+			Helper::linkStyleSheetAdmin( 'gnetwork' );
+
 		if ( WordPress::isIFrame() )
 			Helper::linkStyleSheetAdmin( 'iframe' );
 
@@ -509,9 +513,6 @@ class Plugin
 
 		else if ( Settings::isDashboard( $screen ) )
 			Helper::linkStyleSheetAdmin( 'dashboard' );
-
-		if ( ! defined( 'GNETWORK_VERSION' ) )
-			Helper::linkStyleSheetAdmin( 'gnetwork' );
 
 		if ( $this->asset_darkmode )
 			Helper::linkStyleSheetAdmin( 'darkmode' );

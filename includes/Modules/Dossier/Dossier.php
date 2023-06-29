@@ -3,14 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress;
 
 class Dossier extends gEditorial\Module
 {
@@ -54,14 +52,14 @@ class Dossier extends gEditorial\Module
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-dossier' ),
 					'description' => _x( 'Redirects dossier archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-dossier' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 				[
 					'field'       => 'redirect_spans',
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Spans', 'Settings', 'geditorial-dossier' ),
 					'description' => _x( 'Redirects all span archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-dossier' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 			],
 			'_content' => [
@@ -311,20 +309,18 @@ class Dossier extends gEditorial\Module
 	{
 		if ( $this->_paired && is_tax( $this->constant( 'dossier_paired' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'dossier_posttype', 'dossier_paired' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'dossier_posttype', 'dossier_paired' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'dossier_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_singular( $this->constant( 'dossier_posttype' ) ) ) {
 
@@ -360,7 +356,7 @@ class Dossier extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'dossier_posttype' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'dossier_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -369,7 +365,7 @@ class Dossier extends gEditorial\Module
 	{
 		switch ( $field_key ) {
 			/* translators: %s: order */
-			case 'in_dossier_order' : return Strings::getCounted( $raw ?: $value, _x( 'Order in Dossier: %s', 'Display', 'geditorial-dossier' ) );
+			case 'in_dossier_order' : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Order in Dossier: %s', 'Display', 'geditorial-dossier' ) );
 		}
 
 		return $value;
@@ -432,7 +428,7 @@ class Dossier extends gEditorial\Module
 	{
 		$type = $this->constant( 'dossier_posttype' );
 		$args = [
-			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
 			'echo' => FALSE,
 		];

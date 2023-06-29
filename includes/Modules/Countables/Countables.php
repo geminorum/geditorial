@@ -24,7 +24,7 @@ class Countables extends gEditorial\Module
 			'title'  => _x( 'Countables', 'Modules: Countables', 'geditorial' ),
 			'desc'   => _x( 'Editorial Countable Items', 'Modules: Countables', 'geditorial' ),
 			'icon'   => 'performance',
-			'i18n'   => 'adminonly',
+			'i18n'   => FALSE,
 			'access' => 'beta',
 		];
 	}

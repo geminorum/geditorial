@@ -864,6 +864,7 @@ class Meta extends gEditorial\Module
 		return $postmeta;
 	}
 
+	// FIXME: Move to ModuleHelper
 	public function sanitize_postmeta_field_key( $field_key )
 	{
 		if ( is_array( $field_key ) )
@@ -1098,7 +1099,7 @@ class Meta extends gEditorial\Module
 			] );
 	}
 
-	// only on excerpt mode
+	// NOTE: only on excerpt mode
 	public function column_row_excerpt( $post, $fields, $exclude )
 	{
 		if ( 'excerpt' !== $GLOBALS['mode'] )

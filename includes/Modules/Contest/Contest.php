@@ -3,17 +3,15 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Template;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Contest extends gEditorial\Module
 {
@@ -353,16 +351,14 @@ class Contest extends gEditorial\Module
 	{
 		if ( is_tax( $this->constant( 'contest_tax' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'contest_cpt', 'contest_tax' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'contest_cpt', 'contest_tax' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'contest_cpt' ) )
 			|| is_post_type_archive( $this->constant( 'apply_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 		}
 	}
 
@@ -385,7 +381,7 @@ class Contest extends gEditorial\Module
 	{
 		$type = $this->constant( 'contest_cpt' );
 		$args = [
-			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
 			'echo' => FALSE,
 		];
@@ -436,8 +432,8 @@ class Contest extends gEditorial\Module
 
 		if ( $exists = term_exists( $this->constant( 'term_abandoned_apply' ), $taxonomy ) ) {
 
-			if ( Taxonomy::hasTerms( $this->constant( 'contest_tax' ), $post->ID ) )
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+			if ( WordPress\Taxonomy::hasTerms( $this->constant( 'contest_tax' ), $post->ID ) )
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else
 				$terms[] = $exists['term_id'];

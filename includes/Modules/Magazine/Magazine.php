@@ -3,14 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress;
 
 class Magazine extends gEditorial\Module
 {
@@ -54,14 +52,14 @@ class Magazine extends gEditorial\Module
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-magazine' ),
 					'description' => _x( 'Redirects issue archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-magazine' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 				[
 					'field'       => 'redirect_spans',
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Spans', 'Settings', 'geditorial-magazine' ),
 					'description' => _x( 'Redirects all span archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-magazine' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 			],
 			'_content' => [
@@ -230,20 +228,18 @@ class Magazine extends gEditorial\Module
 	{
 		if ( $this->_paired && is_tax( $this->constant( 'issue_tax' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'issue_cpt', 'issue_tax' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'issue_cpt', 'issue_tax' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'issue_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_singular( $this->constant( 'issue_cpt' ) ) ) {
 
@@ -388,7 +384,7 @@ class Magazine extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'issue_cpt' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'issue_cpt' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -397,11 +393,11 @@ class Magazine extends gEditorial\Module
 	{
 		switch ( $field_key ) {
 			/* translators: %s: order */
-			case 'in_issue_order'      : return Strings::getCounted( $raw ?: $value, _x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_order'      : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' ) );
 			/* translators: %s: page */
-			case 'in_issue_page_start' : return Strings::getCounted( $raw ?: $value, _x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_page_start' : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) );
 			/* translators: %s: total count */
-			case 'in_issue_pages'      : return Strings::getCounted( $raw ?: $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
+			case 'in_issue_pages'      : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
 		}
 
 		return $value;
@@ -440,7 +436,7 @@ class Magazine extends gEditorial\Module
 	{
 		$type = $this->constant( 'issue_cpt' );
 		$args = [
-			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
 			'echo' => FALSE,
 		];

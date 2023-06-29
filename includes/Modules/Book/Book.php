@@ -3,22 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\ISBN;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Book extends gEditorial\Module
 {
@@ -59,7 +50,7 @@ class Book extends gEditorial\Module
 				'dashboard_widgets',
 				'summary_excludes' => [
 					NULL,
-					Taxonomy::listTerms( $this->constant( 'status_tax' ) ),
+					WordPress\Taxonomy::listTerms( $this->constant( 'status_tax' ) ),
 					$this->get_taxonomy_label( 'status_tax', 'no_terms' ),
 				],
 				'summary_scope',
@@ -505,8 +496,8 @@ class Book extends gEditorial\Module
 	public function get_isbn_link( $isbn, $extra = [] )
 	{
 		return get_option( 'permalink_structure' )
-			? add_query_arg( $extra, sprintf( '%s/%s/%s', URL::untrail( get_bloginfo( 'url' ) ), $this->constant( 'isbn_query' ), ISBN::prep( $isbn ) ) )
-			: add_query_arg( array_merge( [ $this->constant( 'isbn_query' ) => ISBN::prep( $isbn ) ], $extra ), get_bloginfo( 'url' ) );
+			? add_query_arg( $extra, sprintf( '%s/%s/%s', Core\URL::untrail( get_bloginfo( 'url' ) ), $this->constant( 'isbn_query' ), Core\ISBN::prep( $isbn ) ) )
+			: add_query_arg( array_merge( [ $this->constant( 'isbn_query' ) => Core\ISBN::prep( $isbn ) ], $extra ), get_bloginfo( 'url' ) );
 	}
 
 	public function get_isbn( $post = NULL )
@@ -536,10 +527,10 @@ class Book extends gEditorial\Module
 	{
 		if ( ( is_home() || is_404() ) && ( $isbn = get_query_var( $this->constant( 'isbn_query' ) ) ) ) {
 
-			if ( ! $post_id = PostType::getIDbyMeta( '_meta_publication_isbn', $isbn ) )
+			if ( ! $post_id = WordPress\PostType::getIDbyMeta( '_meta_publication_isbn', $isbn ) )
 				return;
 
-			if ( ! $post = Post::get( $post_id ) )
+			if ( ! $post = WordPress\Post::get( $post_id ) )
 				return;
 
 			if ( $post->post_type != $this->constant( 'publication_cpt' ) )
@@ -548,14 +539,12 @@ class Book extends gEditorial\Module
 			if ( ! $this->is_post_viewable( $post ) )
 				return;
 
-			WordPress::redirect( get_page_link( $post->ID ), 302 );
+			Core\WordPress::redirect( get_page_link( $post->ID ), 302 );
 
 		} else if ( $this->_paired && is_tax( $this->constant( 'publication_paired' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'publication_cpt', 'publication_paired' ) )
-					WordPress::redirect( get_permalink( $post_id ), 301 );
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'publication_cpt', 'publication_paired' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_singular( $this->constant( 'publication_cpt' ) ) ) {
 
@@ -681,15 +670,15 @@ class Book extends gEditorial\Module
 	{
 		switch ( $field_key ) {
 			// FIXME: MUST BE DEPRECATED: use type: `isbn`
-			case 'publication_isbn'   : return HTML::link( ISBN::prep( $raw ?: $value, TRUE ), Info::lookupISBN( $raw ?: $value ), TRUE );
+			case 'publication_isbn'   : return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ), Info::lookupISBN( $raw ?: $value ), TRUE );
 			/* translators: %s: edition placeholder */
-			case 'publication_edition': return sprintf( _x( '%s Edition', 'Display', 'geditorial-book' ), Number::localize( Number::toOrdinal( $raw ?: $value ) ) );
+			case 'publication_edition': return sprintf( _x( '%s Edition', 'Display', 'geditorial-book' ), Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) ) );
 			/* translators: %s: print placeholder */
-			case 'publication_print'  : return sprintf( _x( '%s Print', 'Display', 'geditorial-book' ), Number::localize( Number::toOrdinal( $raw ?: $value ) ) );
+			case 'publication_print'  : return sprintf( _x( '%s Print', 'Display', 'geditorial-book' ), Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) ) );
 			/* translators: %s: pages count placeholder */
-			case 'total_pages'        : return Strings::getCounted( $raw ?: $value, _x( '%s Pages', 'Display', 'geditorial-book' ) );
+			case 'total_pages'        : return WordPress\Strings::getCounted( $raw ?: $value, _x( '%s Pages', 'Display', 'geditorial-book' ) );
 			/* translators: %s: volumes count placeholder */
-			case 'total_volumes'      : return Strings::getCounted( $raw ?: $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
+			case 'total_volumes'      : return WordPress\Strings::getCounted( $raw ?: $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
 		}
 
 		return $value;
@@ -732,8 +721,8 @@ class Book extends gEditorial\Module
 		if ( ! $link = $this->get_isbn_link( $isbn ) )
 			return $actions;
 
-		return Arraay::insert( $actions, [
-			$this->classs() => HTML::tag( 'a', [
+		return Core\Arraay::insert( $actions, [
+			$this->classs() => Core\HTML::tag( 'a', [
 				'href'   => $link,
 				'title'  => _x( 'ISBN Link to this publication', 'Title Attr', 'geditorial-book' ),
 				'class'  => '-isbn-link',
@@ -838,7 +827,7 @@ class Book extends gEditorial\Module
 	{
 		$type = $this->constant( 'publication_cpt' );
 		$args = [
-			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
 			'echo' => FALSE,
 		];
@@ -882,7 +871,7 @@ class Book extends gEditorial\Module
 
 	public function get_linked_to_posts_p2p( $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( ! $this->posttype_supported( $post->post_type ) )
@@ -917,7 +906,7 @@ class Book extends gEditorial\Module
 		if ( ! $this->_p2p )
 			return;
 
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return;
 
 		$connected = new \WP_Query( [
@@ -931,10 +920,10 @@ class Book extends gEditorial\Module
 			echo $this->wrap_open( '-p2p '.$class );
 
 			if ( $post->post_type == $this->constant( 'publication_cpt' ) )
-				HTML::h3( $this->get_setting( 'p2p_title_from' ), '-title -p2p-from' );
+				Core\HTML::h3( $this->get_setting( 'p2p_title_from' ), '-title -p2p-from' );
 
 			else
-				HTML::h3( $this->get_setting( 'p2p_title_to' ), '-title -p2p-to' );
+				Core\HTML::h3( $this->get_setting( 'p2p_title_to' ), '-title -p2p-to' );
 
 			echo '<ul>';
 
@@ -942,7 +931,7 @@ class Book extends gEditorial\Module
 				$connected->the_post();
 
 				echo ShortCode::postItem( $GLOBALS['post'], [
-					'item_link'  => Post::link( NULL, FALSE ),
+					'item_link'  => WordPress\Post::link( NULL, FALSE ),
 					'item_after' => $this->p2p_get_meta_row( 'publication_cpt', $GLOBALS['post']->p2p_id, ' &ndash; ', '' ),
 				] );
 			}
@@ -958,7 +947,7 @@ class Book extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'publication_cpt' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'publication_cpt' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -991,7 +980,7 @@ class Book extends gEditorial\Module
 	// NOTE: UNFINISHED: just displayes the imported connected data (not handling)
 	protected function render_tools_html_OLD( $uri, $sub )
 	{
-		$list  = Arraay::keepByKeys( PostType::get( 0, [ 'show_ui' => TRUE ] ), $this->get_setting( 'p2p_posttypes', [] ) );
+		$list  = Core\Arraay::keepByKeys( WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ), $this->get_setting( 'p2p_posttypes', [] ) );
 		$query = [
 			'meta_query' => [
 				'relation'         => 'OR',
@@ -1015,7 +1004,7 @@ class Book extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterPostTypes( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
@@ -1045,7 +1034,7 @@ class Book extends gEditorial\Module
 						$html.= '<div><b>'._x( 'By ID', 'Tools', 'geditorial-book' ).'</b>: '.Helper::getPostTitleRow( $id ).'</div>';
 
 					if ( $title = get_post_meta( $row->ID, 'book_publication_title', TRUE ) )
-						foreach ( (array) Post::getByTitle( $title, $column['args']['type'] ) as $post_id )
+						foreach ( (array) WordPress\Post::getByTitle( $title, $column['args']['type'] ) as $post_id )
 							$html.= '<div><b>'._x( 'By Title', 'Tools', 'geditorial-book' ).'</b>: '.Helper::getPostTitleRow( $post_id ).'</div>';
 
 					return $html ?: Helper::htmlEmpty();
@@ -1054,7 +1043,7 @@ class Book extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Meta Information about Related Publications', 'Header', 'geditorial-book' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Meta Information about Related Publications', 'Header', 'geditorial-book' ) ),
 			'empty'      => $this->get_posttype_label( 'publication_cpt', 'not_found' ),
 			'pagination' => $pagination,
 		] );
@@ -1063,7 +1052,7 @@ class Book extends gEditorial\Module
 	public function meta_sanitize_posttype_field( $sanitized, $field, $post, $data )
 	{
 		switch ( $field['name'] ) {
-			case 'publication_isbn': return trim( ISBN::sanitize( $data, TRUE ) );
+			case 'publication_isbn': return trim( Core\ISBN::sanitize( $data, TRUE ) );
 		}
 
 		return $sanitized;
@@ -1074,19 +1063,19 @@ class Book extends gEditorial\Module
 	{
 		switch ( $field ) {
 			case 'publication_isbn': return ModuleHelper::ISBN( $raw );
-			// case 'publication_date': return Number::localize( Datetime::stringFormat( $raw ) );
-			case 'publication_edition': return Number::localize( Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
-			case 'publication_print': return Number::localize( Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
-			case 'collection': return HTML::link( $raw, WordPress::getSearchLink( $raw ) );
+			// case 'publication_date': return Core\Number::localize( Datetime::stringFormat( $raw ) );
+			case 'publication_edition': return Core\Number::localize( Core\Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
+			case 'publication_print': return Core\Number::localize( Core\Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
+			case 'collection': return Core\HTML::link( $raw, Core\WordPress::getSearchLink( $raw ) );
 
 			/* translators: %s: total pages */
-			case 'total_pages': return sprintf( _nx( '%s Page', '%s Pages', $raw, 'Noop', 'geditorial-book' ), Number::format( $raw ) );
+			case 'total_pages': return sprintf( _nx( '%s Page', '%s Pages', $raw, 'Noop', 'geditorial-book' ), Core\Number::format( $raw ) );
 
 			/* translators: %s: total volumes */
-			case 'total_volumes': return sprintf( _nx( '%s Volume', '%s Volumes', $raw, 'Noop', 'geditorial-book' ), Number::format( $raw ) );
+			case 'total_volumes': return sprintf( _nx( '%s Volume', '%s Volumes', $raw, 'Noop', 'geditorial-book' ), Core\Number::format( $raw ) );
 
 			/* translators: %s: total discs */
-			case 'total_discs': return sprintf( _nx( '%s Disc', '%s Discs', $raw, 'Noop', 'geditorial-book' ), Number::format( $raw ) );
+			case 'total_discs': return sprintf( _nx( '%s Disc', '%s Discs', $raw, 'Noop', 'geditorial-book' ), Core\Number::format( $raw ) );
 		}
 
 		return $meta;

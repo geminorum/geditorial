@@ -553,6 +553,7 @@ class MetaBox extends WordPress\Main
 		$html = $none ? Core\HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
 		$html.= walk_page_dropdown_tree( $posts, 0, [
 			'selected'          => $paired,
+			'walker'            => new Misc\WalkerPageDropdown(),
 			'title_with_parent' => TRUE,
 		] );
 

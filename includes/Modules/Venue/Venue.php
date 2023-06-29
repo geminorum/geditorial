@@ -3,8 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
@@ -58,7 +57,7 @@ class Venue extends gEditorial\Module
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-venue' ),
 					'description' => _x( 'Redirects place archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-venue' ),
-					'placeholder' => URL::home( 'campus' ),
+					'placeholder' => Core\URL::home( 'campus' ),
 				],
 			],
 			'_content' => [
@@ -214,15 +213,13 @@ class Venue extends gEditorial\Module
 	{
 		if ( is_tax( $this->constant( 'place_tax' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'place_cpt', 'place_tax' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'place_cpt', 'place_tax' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'place_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 		}
 	}
 

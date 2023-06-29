@@ -335,9 +335,7 @@ class Organization extends gEditorial\Module
 	{
 		if ( is_tax( $this->constant( 'primary_posttype' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'primary_posttype', 'primary_paired' ) )
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'primary_posttype', 'primary_paired' ) )
 				WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'primary_posttype' ) ) ) {

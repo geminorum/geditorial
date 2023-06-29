@@ -5116,6 +5116,9 @@ class Module extends Base
 	// OLD: `get_linked_post_id()`
 	public function paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
+		if ( ! $term_or_id )
+			return FALSE;
+
 		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 

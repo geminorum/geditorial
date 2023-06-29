@@ -3,16 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Course extends gEditorial\Module
 {
@@ -55,14 +52,14 @@ class Course extends gEditorial\Module
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-course' ),
 					'description' => _x( 'Redirects course and lesson archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-course' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 				[
 					'field'       => 'redirect_spans',
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Spans', 'Settings', 'geditorial-course' ),
 					'description' => _x( 'Redirects all span archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-course' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 			],
 			'_content' => [
@@ -388,21 +385,19 @@ class Course extends gEditorial\Module
 	{
 		if ( is_tax( $this->constant( 'course_tax' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'course_cpt', 'course_tax' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'course_cpt', 'course_tax' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'course_cpt' ) )
 			|| is_post_type_archive( $this->constant( 'lesson_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 		}
 	}
 
@@ -446,7 +441,7 @@ class Course extends gEditorial\Module
 	{
 		$type = $this->constant( 'course_cpt' );
 		$args = [
-			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
 			'echo' => FALSE,
 		];
@@ -497,8 +492,8 @@ class Course extends gEditorial\Module
 
 		if ( $exists = term_exists( $this->constant( 'term_abandoned_lesson' ), $taxonomy ) ) {
 
-			if ( Taxonomy::hasTerms( $this->constant( 'course_tax' ), $post->ID ) )
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+			if ( WordPress\Taxonomy::hasTerms( $this->constant( 'course_tax' ), $post->ID ) )
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else
 				$terms[] = $exists['term_id'];

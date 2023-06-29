@@ -3,14 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress;
 
 class Collect extends gEditorial\Module
 {
@@ -52,14 +50,14 @@ class Collect extends gEditorial\Module
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Archives', 'Settings', 'geditorial-collect' ),
 					'description' => _x( 'Redirects collection archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-collect' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 				[
 					'field'       => 'redirect_groups',
 					'type'        => 'url',
 					'title'       => _x( 'Redirect Groups', 'Settings', 'geditorial-collect' ),
 					'description' => _x( 'Redirects all group archives to this URL. Leave empty to disable.', 'Settings', 'geditorial-collect' ),
-					'placeholder' => URL::home( 'archives' ),
+					'placeholder' => Core\URL::home( 'archives' ),
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -207,20 +205,18 @@ class Collect extends gEditorial\Module
 	{
 		if ( is_tax( $this->constant( 'collection_tax' ) ) ) {
 
-			$term = get_queried_object();
-
-			if ( $post_id = $this->paired_get_to_post_id( $term, 'collection_cpt', 'collection_tax' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'collection_cpt', 'collection_tax' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'group_tax' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_groups', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'collection_cpt' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 
 		} else if ( is_singular( $this->constant( 'collection_cpt' ) ) ) {
 
@@ -348,7 +344,7 @@ class Collect extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => Media::getAttachmentImageDefaultSize( $this->constant( 'collection_cpt' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'collection_cpt' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -357,7 +353,7 @@ class Collect extends gEditorial\Module
 	{
 		switch ( $field_key ) {
 			/* translators: %s: count placeholder */
-			case 'in_collection_order': return Strings::getCounted( $raw ?: $value, _x( 'Order in Collection: %s', 'Display', 'geditorial-collect' ) );
+			case 'in_collection_order': return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Order in Collection: %s', 'Display', 'geditorial-collect' ) );
 		}
 
 		return $value;
@@ -419,7 +415,7 @@ class Collect extends gEditorial\Module
 	{
 		$type = $this->constant( 'collection_cpt' );
 		$args = [
-			'size' => Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
 			'echo' => FALSE,
 		];
