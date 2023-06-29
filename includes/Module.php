@@ -4076,7 +4076,8 @@ class Module extends Base
 		return array_merge( array_diff_key( $supported, array_flip( $excluded ), (array) $force_include ) );
 	}
 
-	protected function role_can( $what = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
+	// NOTE: accepts array and performs `OR` check
+	protected function role_can( $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
 	{
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
@@ -4084,22 +4085,25 @@ class Module extends Base
 		if ( ! $user_id )
 			return $fallback;
 
-		$setting = $this->get_setting( $what.$prefix, [] );
-
-		if ( TRUE === $setting || FALSE === $setting )
-			return $setting;
-
-		if ( empty( $setting ) && ! $admins )
-			return $fallback;
-
-		if ( $admins )
-			$setting = array_merge( $setting, [ 'administrator' ] );
-
-		if ( User::hasRole( $setting, $user_id ) )
-			return TRUE;
-
 		if ( $admins && User::isSuperAdmin( $user_id ) )
 			return TRUE;
+
+		foreach ( (array) $whats as $what ) {
+
+			$setting = $this->get_setting( $what.$prefix, [] );
+
+			if ( TRUE === $setting )
+				return $setting;
+
+			if ( FALSE === $setting || ( empty( $setting ) && ! $admins ) )
+				continue; // check others
+
+			if ( $admins )
+				$setting = array_merge( $setting, [ 'administrator' ] );
+
+			if ( User::hasRole( $setting, $user_id ) )
+				return TRUE;
+		}
 
 		return $fallback;
 	}
