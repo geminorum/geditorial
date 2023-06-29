@@ -2569,7 +2569,7 @@ class Module extends Base
 
 	protected function register_help_tabs( $screen = NULL, $context = 'settings' )
 	{
-		if ( ! WordPress::mustRegisterUI( FALSE ) )
+		if ( ! WordPress::mustRegisterUI( FALSE ) || self::req( 'noheader' ) )
 			return;
 
 		if ( is_null( $screen ) )
