@@ -208,6 +208,7 @@ class Helper extends Main
 		return $autop ? wpautop( $text ) : $text;
 	}
 
+	// FIXME: move to `Contact` DataType
 	public static function prepContact( $value, $title = NULL, $empty = '' )
 	{
 		if ( empty( $value ) )
@@ -229,6 +230,7 @@ class Helper extends Main
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}
 
+	// TODO: support: `dob`,`date`,`datetime`
 	public static function prepMetaRow( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		$filtered = apply_filters( static::BASE.'_prep_meta_row', $value, $field_key, $field, $raw );
@@ -236,6 +238,7 @@ class Helper extends Main
 		if ( $filtered !== $value )
 			return $filtered; // bail if already filtered
 
+		// NOTE: first priority: field key
 		switch ( $field_key ) {
 			case 'twitter'  : return Core\Third::htmlTwitterIntent( $raw ?: $value, TRUE );
 			case 'facebook' : return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
@@ -246,32 +249,41 @@ class Helper extends Main
 			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
 		}
 
-		if ( empty( $field['type'] ) )
-			return Core\HTML::escape( $value );
+		if ( ! empty( $field['type'] ) ) {
 
-		switch ( $field['type'] ) {
+			// NOTE: second priority: field type
+			switch ( $field['type'] ) {
 
-			case 'identity':
-				return sprintf( '<span class="-identity %s">%s</span>',
-					Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
-					$raw ?: $value );
+				case 'identity':
+					return sprintf( '<span class="-identity %s">%s</span>',
+						Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+						$raw ?: $value );
 
-			case 'iban':
-				return sprintf( '<span class="-iban %s">%s</span>',
-					Core\Validation::isIBAN( $raw ?: $value ) ? '-is-valid' : '-not-valid',
-					$raw ?: $value );
+				case 'iban':
+					return sprintf( '<span class="-iban %s">%s</span>',
+						Core\Validation::isIBAN( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+						$raw ?: $value );
 
-			case 'isbn':
-				return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ),
-					Info::lookupISBN( $raw ?: $value ), TRUE );
+				case 'isbn':
+					return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ),
+						Info::lookupISBN( $raw ?: $value ), TRUE );
 
-			case 'contact_method':
-				return Core\URL::isValid( $raw ?: $value )
-					? Core\HTML::link( URL::prepTitle( $raw ?: $value ), $raw ?: $value )
-					: sprintf( '<span title="%s">@%s</span>', empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ), $raw ?: $value );
+				case 'contact_method':
+					return Core\URL::isValid( $raw ?: $value )
+						? Core\HTML::link( URL::prepTitle( $raw ?: $value ), $raw ?: $value )
+						: sprintf( '<span title="%s">@%s</span>', empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ), $raw ?: $value );
+			}
 		}
 
-		return Core\HTML::escape( $value );
+		// NOTE: third priority: general field
+		switch ( $field_key ) {
+			case 'title'      : return self::prepTitle( $raw ?: $value );
+			case 'desc'       : return self::prepDescription( $raw ?: $value );
+			case 'description': return self::prepDescription( $raw ?: $value );
+			case 'contact'    : return self::prepContact( $raw ?: $value );
+		}
+
+		return Core\HTML::escape( trim( $value ) );
 	}
 
 	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
