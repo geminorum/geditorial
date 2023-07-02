@@ -19,7 +19,7 @@ use geminorum\gEditorial\WordPress\User;
 
 class Config extends gEditorial\Module
 {
-
+	use Internals\CoreMenuPage;
 	use Internals\ViewEngines;
 
 	protected $caps = [

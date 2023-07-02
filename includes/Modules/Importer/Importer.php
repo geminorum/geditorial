@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
@@ -23,6 +24,7 @@ use geminorum\gEditorial\WordPress\User;
 
 class Importer extends gEditorial\Module
 {
+	use Internals\CoreToolBox;
 
 	protected $disable_no_posttypes    = TRUE;
 	protected $default_audit_attribute = 'imported';

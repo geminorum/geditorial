@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\ShortCode;
@@ -13,6 +14,8 @@ use geminorum\gEditorial\WordPress;
 
 class Book extends gEditorial\Module
 {
+	use Internals\CoreTemplate;
+	use Internals\MetaBoxCustom;
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
 
@@ -580,10 +583,10 @@ class Book extends gEditorial\Module
 				$this->filter( 'get_default_comment_status', 3 );
 
 				if ( post_type_supports( $screen->post_type, 'author' ) )
-					$this->add_meta_box_author( 'publication_cpt' );
+					$this->metaboxcustom_add_metabox_author( 'publication_cpt' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->add_meta_box_excerpt( 'publication_cpt' );
+					$this->metaboxcustom_add_metabox_excerpt( 'publication_cpt' );
 
 				$this->_hook_post_updated_messages( 'publication_cpt' );
 				$this->_hook_paired_listbox( $screen );

@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 class Dossier extends gEditorial\Module
 {
 	use Internals\Paired;
+	use Internals\CoreTemplate;
 
 	public static function module()
 	{
@@ -121,13 +122,15 @@ class Dossier extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['misc'] = [
+			'column_icon_title' => _x( 'Dossier', 'Misc: `column_icon_title`', 'geditorial-dossier' ),
+		];
+
 		$strings['metabox'] = [
 			'dossier_posttype' => [
 				'metabox_title' => _x( 'The Dossier', 'MetaBox Title', 'geditorial-dossier' ),
 			],
 		];
-
-		// $strings['misc'] = [];
 
 		return $strings;
 	}

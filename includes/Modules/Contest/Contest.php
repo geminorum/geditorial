@@ -141,6 +141,9 @@ class Contest extends gEditorial\Module
 			'contest_cpt' => [
 				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
 			],
+			'contest_tax' => [
+				'column_icon_title' => _x( 'Contest', 'Misc: `column_icon_title`', 'geditorial-contest' ),
+			],
 		];
 
 		$strings['default_terms'] = [

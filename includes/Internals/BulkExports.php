@@ -1,0 +1,288 @@
+<?php namespace geminorum\gEditorial\Internals;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Template;
+use geminorum\gEditorial\WordPress;
+
+trait BulkExports
+{
+
+	protected function exports_get_export_buttons( $post, $context )
+	{
+		$html = '';
+
+		foreach ( $this->exports_get_types( $context ) as $type => $type_args ) {
+
+			$label = sprintf(
+				/* translators: %1$s: icon markup, %2$s: export type title */
+				_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial' ),
+				Helper::getIcon( 'download' ),
+				$type_args['title']
+			);
+
+			$html.= Core\HTML::tag( 'a', [
+				'href'  => $this->exports_get_type_download_link( $post->ID, $type, $context, $type_args['target'] ),
+				'class' => [ 'button', 'button-small', '-button', '-button-icon', '-exportbutton', '-button-download' ],
+				'title' => _x( 'Download Exported CSV File', 'Internal: Exports: Button Title', 'geditorial' ),
+			], $label );
+		}
+
+		return $html;
+	}
+
+	protected function exports_get_types( $context )
+	{
+		$types = [
+			'simple'   => [
+				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial' ),
+				'target' => 'paired',
+			],
+
+			'advanced' => [
+				'title'  => _x( 'Advanced', 'Internal: Export Type Title', 'geditorial' ),
+				'target' => 'paired',
+			],
+
+			'full' => [
+				'title'  => _x( 'Full', 'Internal: Export Type Title', 'geditorial' ),
+				'target' => 'paired',
+			],
+		];
+
+		return $this->filters( 'export_types', $types, $context );
+	}
+
+	protected function exports_get_type_download_link( $reference, $type, $context, $target = 'default', $extra = [] )
+	{
+		return add_query_arg( array_merge( [
+			'action'  => $this->classs( 'exports' ),
+			'ref'     => $reference,
+			'target'  => $target,
+			'type'    => $type,
+			'context' => $context,
+		], $extra ), get_admin_url() );
+	}
+
+	// NOTE: only fires on admin
+	protected function exports_do_check_requests()
+	{
+		if ( $this->classs( 'exports' ) != self::req( 'action' ) )
+			return FALSE;
+
+		$reference = self::req( 'ref', NULL );
+		$target    = self::req( 'target', 'default' );
+		$type      = self::req( 'type', 'simple' );
+		$context   = self::req( 'context', 'default' );
+
+		if ( FALSE !== ( $data = $this->exports_get_export_data( $reference, $target, $type, $context ) ) )
+			Core\Text::download( $data, Core\File::prepName( sprintf( '%s-%s.csv', $context, $type ) ) );
+
+		Core\WordPress::redirectReferer( 'wrong' );
+	}
+
+	protected function exports_prep_posts_for_csv_export( $posts, $props, $fields = [], $metas = [] )
+	{
+		$data  = [ array_merge(
+			$props,
+			Core\Arraay::prefixValues( $fields, 'field__' ),
+			Core\Arraay::prefixValues( $metas, 'meta__' )
+		) ];
+
+		foreach ( $posts as $post ) {
+
+			$row = [];
+
+			foreach ( $props as $prop ) {
+
+				if ( 'post_name' === $prop )
+					$row[] = urldecode( $post->{$prop} );
+
+				else if ( property_exists( $post, $prop ) )
+					$row[] = trim( $post->{$prop} );
+
+				else
+					$row[] = ''; // unknown field!
+			}
+
+			foreach ( $fields as $field )
+				$row[] = Template::getMetaFieldRaw( $field, $post->ID, 'meta' ) ?: '';
+
+			$saved = get_post_meta( $post->ID );
+
+			foreach ( $metas as $meta )
+				$row[] = ( empty( $saved[$meta][0] ) ? '' : trim( $saved[$meta][0] ) ) ?: '';
+
+			$data[] = $row;
+		}
+
+		return Core\Text::toCSV( $data );
+	}
+
+	protected function exports_get_export_data( $reference, $target, $type, $context )
+	{
+		$data = FALSE;
+
+		switch ( $target ) {
+
+			case 'paired':
+
+				$constants = $this->paired_get_paired_constants();
+
+				if ( empty( $constants[0] ) || empty( $constants[1] ) )
+					return FALSE;
+
+				if ( ! $posttypes = $this->posttypes() )
+					return FALSE;
+
+				if ( ! $paired = $this->paired_get_to_term( (int) $reference, $constants[0], $constants[1] ) )
+					return FALSE;
+
+				$args = [
+					'posts_per_page' => -1,
+					'orderby'        => [ 'menu_order', 'date' ],
+					'order'          => 'ASC',
+					'post_type'      => $posttypes,
+					'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
+					'tax_query'      => [ [
+						'taxonomy' => $this->constant( $constants[1] ),
+						'field'    => 'id',
+						'terms'    => [ $paired->term_id ],
+					] ],
+				];
+
+				$posts  = get_posts( $args );
+				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context );
+				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context );
+				$metas  = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context );
+				$data   = $this->exports_prep_posts_for_csv_export( $posts, $props, $fields, $metas );
+
+				break;
+		}
+
+		return $this->filters( 'get_export_data', $data, $reference, $target, $type, $context );
+	}
+
+	protected function exports_get_post_props( $posttypes, $reference, $target, $type, $context )
+	{
+		$list = [
+			'ID',
+			'post_title',
+		];
+
+		switch ( $type ) {
+
+			case 'simple':
+
+				break;
+
+			case 'advanced':
+
+				$list = array_merge( $list, [
+					'post_date',
+					'post_content',
+					'post_excerpt',
+					'post_type',
+				] );
+				break;
+
+			case 'full':
+
+				$list = array_merge( $list, [
+					'post_author',
+					'post_date',
+					'post_content',
+					'post_excerpt',
+					'post_status',
+					'post_name',
+					'post_parent',
+					'menu_order',
+					'post_type',
+				] );
+				break;
+		}
+
+		return $this->filters( 'get_post_props', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+	}
+
+	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context )
+	{
+		$list = [];
+
+		foreach ( $posttypes as $posttype ) {
+
+			$fields = PostType::supports( $posttype, 'meta_fields' );
+
+			if ( empty( $fields ) )
+				continue;
+
+			switch ( $type ) {
+
+				case 'simple':
+
+					$keys = [
+						'first_name',
+						'last_name',
+						'identity_number',
+					];
+
+					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
+					$list  = array_merge( $list, array_keys( $keeps ) );
+
+					break;
+
+				case 'advanced':
+
+					$keys = [
+						'first_name',
+						'last_name',
+						'identity_number',
+						'mobile_number',
+						'date_of_birth',
+					];
+
+					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
+					$list  = array_merge( $list, array_keys( $keeps ) );
+
+					break;
+
+				case 'full':
+
+					$list = array_merge( $list, array_keys( $fields ) );
+
+					break;
+			}
+		}
+
+		return $this->filters( 'get_post_fields', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+	}
+
+	protected function exports_get_post_metas( $posttypes, $reference, $target, $type, $context )
+	{
+		$list = [];
+
+		foreach ( $posttypes as $posttype ) {
+
+			switch ( $type ) {
+
+				case 'simple':
+
+					break;
+
+				case 'advanced':
+
+					$list = array_merge( $list, [] );
+					break;
+
+				case 'full':
+
+					$list = array_merge( $list, [] );
+					break;
+			}
+		}
+
+		return $this->filters( 'get_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+	}
+}

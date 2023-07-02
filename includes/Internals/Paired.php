@@ -8,7 +8,8 @@ use geminorum\gEditorial\WordPress;
 trait Paired
 {
 
-	protected function paired__hook_tweaks_column( $posttype, $priority = 10 )
+	// TODO: add an advance version with modal for paired summary in `Missioned`/`Trained`/`Programmed`/`Meeted`
+	protected function paired__hook_tweaks_column( $posttype = NULL, $priority = 10 )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -23,9 +24,8 @@ trait Paired
 			if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
 				return;
 
-			$paired = $this->constant( $constants[1] );
-			$before = $this->wrap_open_row( $paired, '-paired-row' );
-			$before.= $this->get_column_icon( FALSE, NULL, NULL, $posttype );
+			$before = $this->wrap_open_row( $this->constant( $constants[1] ), '-paired-row' );
+			$before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
 			$after  = '</li>';
 
 			foreach ( $items as $term_id => $post_id ) {

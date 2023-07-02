@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 class Course extends gEditorial\Module
 {
 	use Internals\Paired;
+	use Internals\CoreTemplate;
 
 	public static function module()
 	{
@@ -154,6 +155,9 @@ class Course extends gEditorial\Module
 		$strings['misc'] = [
 			'course_cpt' => [
 				'children_column_title' => _x( 'Lessons', 'Column Title', 'geditorial-course' ),
+			],
+			'course_tax' => [
+				'column_icon_title' => _x( 'Course', 'Misc: `column_icon_title`', 'geditorial-course' ),
 			],
 		];
 

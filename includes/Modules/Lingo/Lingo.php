@@ -16,6 +16,7 @@ use geminorum\gEditorial\WordPress\Term;
 class Lingo extends gEditorial\Module
 {
 	use Internals\RawImports;
+	use Internals\CoreToolBox;
 
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafile   = 'languages-20230325.json';

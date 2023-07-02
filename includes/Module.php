@@ -21,7 +21,6 @@ use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Theme;
 use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\User;
 use geminorum\gEditorial\Services\O2O;
@@ -285,7 +284,8 @@ class Module extends Base
 	// NOTE: ALWAYS HOOKED
 	public function _admin_init()
 	{
-		$this->exports_do_check_requests();
+		if ( method_exists( $this, 'exports_do_check_requests' ) )
+			$this->exports_do_check_requests();
 
 		// auto-hook register default terms
 		// helps if strings filtered
@@ -435,20 +435,6 @@ class Module extends Base
 		return add_query_arg( array_merge( [
 			'sub' => $sub,
 		], $extra ), $url );
-	}
-
-	// FIXME: DEPRECATED: use `$this->get_adminpage_url( FALSE )`
-	// OVERRIDE: if has no admin menu but using the hook
-	public function get_adminmenu( $page = TRUE, $extra = [] )
-	{
-		self::_dep( '$this->get_adminpage_url( FALSE )' );
-
-		if ( $page )
-			return $this->classs();
-
-		$url = get_admin_url( NULL, 'index.php' );
-
-		return add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), $url );
 	}
 
 	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage', $admin_base = NULL )
@@ -1233,33 +1219,6 @@ class Module extends Base
 		];
 	}
 
-	// FIXME: DEPRECATED
-	// get stored post meta by the field
-	public function get_postmeta( $post_id, $field = FALSE, $default = '', $metakey = NULL )
-	{
-		self::_dep( '$this->get_postmeta_legacy() || $this->get_postmeta_field()' );
-
-		global $gEditorialPostMeta;
-
-		if ( is_null( $metakey ) )
-			$metakey = $this->meta_key;
-
-		if ( ! isset( $gEditorialPostMeta[$post_id][$metakey] ) )
-			$gEditorialPostMeta[$post_id][$metakey] = get_metadata( 'post', $post_id, $metakey, TRUE );
-
-		if ( empty( $gEditorialPostMeta[$post_id][$metakey] ) )
-			return $default;
-
-		if ( FALSE === $field )
-			return $gEditorialPostMeta[$post_id][$metakey];
-
-		foreach ( $this->sanitize_postmeta_field_key( $field ) as $field_key )
-			if ( isset( $gEditorialPostMeta[$post_id][$metakey][$field_key] ) )
-				return $gEditorialPostMeta[$post_id][$metakey][$field_key];
-
-		return $default;
-	}
-
 	public function get_postid_by_field( $value, $field, $prefix = NULL )
 	{
 		if ( is_null( $prefix ) )
@@ -1352,21 +1311,6 @@ class Module extends Base
 	public function sanitize_postmeta_field_key( $field_key )
 	{
 		return (array) $field_key;
-	}
-
-	// FIXME: DEPRECATED
-	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
-	{
-		self::_dep( '$this->store_postmeta()' );
-
-		global $gEditorialPostMeta;
-
-		if ( ! empty( $postmeta ) )
-			update_post_meta( $post_id, $this->meta_key.$key_suffix, $postmeta );
-		else
-			delete_post_meta( $post_id, $this->meta_key.$key_suffix );
-
-		unset( $gEditorialPostMeta[$post_id][$this->meta_key.$key_suffix] );
 	}
 
 	public function store_postmeta( $post_id, $data, $metakey = NULL )
@@ -3469,20 +3413,6 @@ class Module extends Base
 		return $this->image_sizes[$posttype];
 	}
 
-	// FIXME: DEPRECATED
-	public function get_image_size_key( $constant, $size = 'thumbnail' )
-	{
-		$posttype = $this->constant( $constant );
-
-		if ( isset( $this->image_sizes[$posttype][$posttype.'-'.$size] ) )
-			return $posttype.'-'.$size;
-
-		if ( isset( $this->image_sizes[$posttype]['post-'.$size] ) )
-			return 'post-'.$size;
-
-		return $size;
-	}
-
 	// use this on 'after_setup_theme'
 	public function register_posttype_thumbnail( $constant )
 	{
@@ -4120,36 +4050,6 @@ class Module extends Base
 		return $fallback;
 	}
 
-	// DEFAULT METHOD
-	public function dISABLED_render_metabox( $post, $box, $fields = NULL, $context = NULL )
-	{
-		if ( is_null( $fields ) )
-			$fields = $this->get_posttype_fields( $post->post_type );
-
-		foreach ( $fields as $field => $args ) {
-
-			if ( $context != $args['context'] )
-				continue;
-
-			echo '<div class="-wrap field-wrap -setting-field" title="'.HTML::escape( $args['description'] ).'">';
-
-			$atts = [
-				'field'       => $this->constant( 'metakey_'.$field, $field ),
-				'type'        => $args['type'],
-				'title'       => $args['title'],
-				'placeholder' => $args['title'],
-				'values'      => $args['values'],
-			];
-
-			if ( 'checkbox' == $atts['type'] )
-				$atts['description'] = $atts['title'];
-
-			$this->do_posttype_field( $atts, $post );
-
-			echo '</div>';
-		}
-	}
-
 	/**
 	 * returns post ids with selected terms from settings
 	 * that will be excluded form dropdown on supported post-types
@@ -4540,28 +4440,16 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	// EXPORTS API
 	// TODO: support for `post_actions` on Actions module
 	protected function _render_listbox_extra( $post, $box, $context = NULL )
 	{
-
-		if ( $this->role_can( 'export', NULL, TRUE ) ) {
-
-			foreach ( $this->exports_get_types( $context ) as $type => $type_args ) {
 		if ( is_null( $context ) )
 			$context = 'listbox';
 
-				/* translators: %1$s: icon markup, %2$s: export type title */
-				$label = sprintf( _x( '%1$s Export: %2$s', 'Module: Exports: Button Label', 'geditorial' ), Helper::getIcon( 'download' ), $type_args['title'] );
 		$html = '';
 
-				$html.= HTML::tag( 'a', [
-					'href'  => $this->exports_get_type_download_link( $post->ID, $type, $context, $type_args['target'] ),
-					'class' => [ 'button', 'button-small', '-button', '-button-icon', '-exportbutton', '-button-download' ],
-					'title' => _x( 'Download Exported CSV File', 'Module: Exports: Button Title', 'geditorial' ),
-				], $label );
-			}
-		}
+		if ( $this->role_can( 'export', NULL, TRUE ) && method_exists( $this, 'exports_get_export_buttons' ) )
+			$html.= $this->exports_get_export_buttons( $post, $context );
 
 		if ( $this->role_can( 'import', NULL, TRUE ) ) {
 
@@ -4571,7 +4459,6 @@ class Module extends Base
 			$args = [
 				'ref'      => $post->ID,
 				'target'   => 'paired',
-				'type'     => $type,
 				'context'  => $context,
 				'noheader' => 1
 			];
@@ -4776,109 +4663,6 @@ class Module extends Base
 
 			// FIXME: DO THE SAVINGS!
 		}
-	}
-
-	// FIXME: DEPRECATED
-	// CAUTION: tax must be hierarchical
-	public function add_meta_box_checklist_terms( $constant, $posttype, $role = NULL, $type = FALSE )
-	{
-		$taxonomy = $this->constant( $constant );
-		$metabox  = $this->classs( $taxonomy );
-		$edit     = WordPress::getEditTaxLink( $taxonomy );
-
-		if ( $type )
-			$this->remove_meta_box( $constant, $posttype, $type );
-
-		add_meta_box( $metabox,
-			$this->get_meta_box_title( $constant, $edit, TRUE ),
-			[ $this, 'add_meta_box_checklist_terms_cb' ],
-			NULL,
-			'side',
-			'default',
-			[
-				'taxonomy' => $taxonomy,
-				'posttype' => $posttype,
-				'metabox'  => $metabox,
-				'edit'     => $edit,
-				'role'     => $role,
-			]
-		);
-	}
-
-	public function add_meta_box_checklist_terms_cb( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, $box['args'] );
-		echo '</div>';
-	}
-
-	public function add_meta_box_author( $constant, $callback = 'post_author_meta_box' )
-	{
-		$posttype = PostType::object( $this->constant( $constant ) );
-
-		if ( PostType::supportBlocks( $posttype->name ) )
-			return;
-
-		if ( ! apply_filters( $this->base.'_module_metabox_author', TRUE, $posttype->name ) )
-			return;
-
-		if ( ! current_user_can( $posttype->cap->edit_others_posts ) )
-			return;
-
-		add_meta_box( 'authordiv', // same as core to override
-			$this->get_posttype_label( $constant, 'author_label', __( 'Author' ) ),
-			$callback,
-			NULL,
-			'normal',
-			'core'
-		);
-	}
-
-	public function add_meta_box_excerpt( $constant, $callback = 'post_excerpt_meta_box' )
-	{
-		$posttype = $this->constant( $constant );
-
-		if ( PostType::supportBlocks( $posttype ) )
-			return;
-
-		if ( ! apply_filters( $this->base.'_module_metabox_excerpt', TRUE, $posttype ) )
-			return;
-
-		add_meta_box( 'postexcerpt', // same as core to override
-			$this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) ),
-			$callback,
-			NULL,
-			'normal',
-			'high'
-		);
-	}
-
-	// FIXME: DEPRECATED
-	public function remove_meta_box( $constant, $posttype, $type = 'tag' )
-	{
-		if ( 'tag' == $type )
-			remove_meta_box( 'tagsdiv-'.$this->constant( $constant ), $posttype, 'side' );
-
-		else if ( 'cat' == $type )
-			remove_meta_box( $this->constant( $constant ).'div', $posttype, 'side' );
-
-		else if ( 'parent' == $type )
-			remove_meta_box( 'pageparentdiv', $posttype, 'side' );
-
-		else if ( 'image' == $type )
-			remove_meta_box( 'postimagediv', $this->constant( $constant ), 'side' );
-
-		else if ( 'author' == $type )
-			remove_meta_box( 'authordiv', $this->constant( $constant ), 'normal' );
-
-		else if ( 'excerpt' == $type )
-			remove_meta_box( 'postexcerpt', $posttype, 'normal' );
-
-		else if ( 'submit' == $type )
-			remove_meta_box( 'submitdiv', $posttype, 'side' );
 	}
 
 	protected function class_metabox( $screen, $context = 'mainbox' )
@@ -5220,14 +5004,6 @@ class Module extends Base
 		return TRUE;
 	}
 
-	// FIXME: DEPRECATED
-	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
-	{
-		self::_dep( '$this->paired_get_to_post_id()' );
-
-		return $this->paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug );
-	}
-
 	// PAIRED API
 	// OLD: `get_linked_post_id()`
 	public function paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
@@ -5244,15 +5020,6 @@ class Module extends Base
 			$post_id = PostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
 
 		return $post_id;
-	}
-
-	// PAIRED API
-	// FIXME: DEPRECATED
-	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
-	{
-		self::_dep( '$this->paired_get_from_posts()' );
-
-		return $this->paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count, $term_id );
 	}
 
 	// PAIRED API: get (from) posts connected to the pair
@@ -6022,43 +5789,6 @@ class Module extends Base
 
 		foreach ( $constants as $constant )
 			Listtable::parseQueryTaxonomy( $query, $this->constant( $constant ) );
-	}
-
-	// FIXME: DEPRECATED
-	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
-	{
-		self::_dev_dep( 'restrict_manage_posts_restrict_taxonomy()' );
-
-		if ( TRUE === $posttype_constant_key ||
-			$this->is_current_posttype( $posttype_constant_key ) ) {
-
-			foreach ( (array) $taxes as $constant )
-				Listtable::restrictByTaxonomy( $this->constant( $constant ) );
-		}
-	}
-
-	// FIXME: DEPRECATED
-	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
-	{
-		self::_dev_dep( 'parse_query_restrict_taxonomy()' );
-
-		if ( TRUE === $posttype_constant_key ||
-			$this->is_current_posttype( $posttype_constant_key ) ) {
-
-			foreach ( (array) $taxes as $constant )
-				Listtable::parseQueryTaxonomy( $query, $this->constant( $constant ) );
-		}
-	}
-
-	// FIXME: DEPRECATED
-	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
-	{
-		self::_dev_dep( 'restrict_manage_posts_restrict_paired()' );
-
-		Listtable::restrictByPosttype(
-			$this->constant( $tax_constant_key ),
-			$this->constant( $posttype_constant_key )
-		);
 	}
 
 	protected function do_posts_clauses_taxes( $pieces, $query, $taxes, $posttype_constant_key = TRUE )
@@ -6908,492 +6638,6 @@ class Module extends Base
 		return $query->get_results();
 	}
 
-	// EXPORTS API
-	protected function exports_get_types( $context )
-	{
-		$types = [
-			'simple'   => [
-				'title'  => _x( 'Simple', 'Module: Export Type Title', 'geditorial' ),
-				'target' => 'paired',
-			],
-
-			'advanced' => [
-				'title'  => _x( 'Advanced', 'Module: Export Type Title', 'geditorial' ),
-				'target' => 'paired',
-			],
-
-			'full' => [
-				'title'  => _x( 'Full', 'Module: Export Type Title', 'geditorial' ),
-				'target' => 'paired',
-			],
-		];
-
-		return $this->filters( 'export_types', $types, $context );
-	}
-
-	// EXPORTS API
-	protected function exports_get_type_download_link( $reference, $type, $context, $target = 'default', $extra = [] )
-	{
-		return add_query_arg( array_merge( [
-			'action'  => $this->classs( 'exports' ),
-			'ref'     => $reference,
-			'target'  => $target,
-			'type'    => $type,
-			'context' => $context,
-		], $extra ), get_admin_url() );
-	}
-
-	// NOTE: only fires on admin
-	// EXPORTS API
-	protected function exports_do_check_requests()
-	{
-		if ( $this->classs( 'exports' ) != self::req( 'action' ) )
-			return FALSE;
-
-		$reference = self::req( 'ref', NULL );
-		$target    = self::req( 'target', 'default' );
-		$type      = self::req( 'type', 'simple' );
-		$context   = self::req( 'context', 'default' );
-
-		if ( FALSE !== ( $data = $this->exports_get_export_data( $reference, $target, $type, $context ) ) )
-			Core\Text::download( $data, Core\File::prepName( sprintf( '%s-%s.csv', $context, $type ) ) );
-
-		Core\WordPress::redirectReferer( 'wrong' );
-	}
-
-	// EXPORTS API
-	protected function exports_prep_posts_for_csv_export( $posts, $props, $fields = [], $metas = [] )
-	{
-		$data  = [ array_merge(
-			$props,
-			Core\Arraay::prefixValues( $fields, 'field__' ),
-			Core\Arraay::prefixValues( $metas, 'meta__' )
-		) ];
-
-		foreach ( $posts as $post ) {
-
-			$row = [];
-
-			foreach ( $props as $prop ) {
-
-				if ( 'post_name' === $prop )
-					$row[] = urldecode( $post->{$prop} );
-
-				else if ( property_exists( $post, $prop ) )
-					$row[] = trim( $post->{$prop} );
-
-				else
-					$row[] = ''; // unknown field!
-			}
-
-			foreach ( $fields as $field )
-				$row[] = Template::getMetaFieldRaw( $field, $post->ID, 'meta' ) ?: '';
-
-			$saved = get_post_meta( $post->ID );
-
-			foreach ( $metas as $meta )
-				$row[] = ( empty( $saved[$meta][0] ) ? '' : trim( $saved[$meta][0] ) ) ?: '';
-
-			$data[] = $row;
-		}
-
-		return Core\Text::toCSV( $data );
-	}
-
-	// EXPORTS API
-	protected function exports_get_export_data( $reference, $target, $type, $context )
-	{
-		$data = FALSE;
-
-		switch ( $target ) {
-
-			case 'paired':
-
-				$constants = $this->paired_get_paired_constants();
-
-				if ( empty( $constants[0] ) || empty( $constants[1] ) )
-					return FALSE;
-
-				if ( ! $posttypes = $this->posttypes() )
-					return FALSE;
-
-				if ( ! $paired = $this->paired_get_to_term( (int) $reference, $constants[0], $constants[1] ) )
-					return FALSE;
-
-				$args = [
-					'posts_per_page' => -1,
-					'orderby'        => [ 'menu_order', 'date' ],
-					'order'          => 'ASC',
-					'post_type'      => $posttypes,
-					'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
-					'tax_query'      => [ [
-						'taxonomy' => $this->constant( $constants[1] ),
-						'field'    => 'id',
-						'terms'    => [ $paired->term_id ],
-					] ],
-				];
-
-				$posts  = get_posts( $args );
-				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context );
-				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context );
-				$metas  = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context );
-				$data   = $this->exports_prep_posts_for_csv_export( $posts, $props, $fields, $metas );
-
-				break;
-		}
-
-		return $this->filters( 'get_export_data', $data, $reference, $target, $type, $context );
-	}
-
-	protected function exports_get_post_props( $posttypes, $reference, $target, $type, $context )
-	{
-		$list = [
-			'ID',
-			'post_title',
-		];
-
-		switch ( $type ) {
-
-			case 'simple':
-
-				break;
-
-			case 'advanced':
-
-				$list = array_merge( $list, [
-					'post_date',
-					'post_content',
-					'post_excerpt',
-					'post_type',
-				] );
-				break;
-
-			case 'full':
-
-				$list = array_merge( $list, [
-					'post_author',
-					'post_date',
-					'post_content',
-					'post_excerpt',
-					'post_status',
-					'post_name',
-					'post_parent',
-					'menu_order',
-					'post_type',
-				] );
-				break;
-		}
-
-		return $this->filters( 'get_post_props', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
-	}
-
-	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context )
-	{
-		$list = [];
-
-		foreach ( $posttypes as $posttype ) {
-
-			$fields = PostType::supports( $posttype, 'meta_fields' );
-
-			if ( empty( $fields ) )
-				continue;
-
-			switch ( $type ) {
-
-				case 'simple':
-
-					$keys = [
-						'first_name',
-						'last_name',
-						'identity_number',
-					];
-
-					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					$list  = array_merge( $list, array_keys( $keeps ) );
-
-					break;
-
-				case 'advanced':
-
-					$keys = [
-						'first_name',
-						'last_name',
-						'identity_number',
-						'mobile_number',
-						'date_of_birth',
-					];
-
-					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					$list  = array_merge( $list, array_keys( $keeps ) );
-
-					break;
-
-				case 'full':
-
-					$list = array_merge( $list, array_keys( $fields ) );
-
-					break;
-			}
-		}
-
-		return $this->filters( 'get_post_fields', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
-	}
-
-	protected function exports_get_post_metas( $posttypes, $reference, $target, $type, $context )
-	{
-		$list = [];
-
-		foreach ( $posttypes as $posttype ) {
-
-			switch ( $type ) {
-
-				case 'simple':
-
-					break;
-
-				case 'advanced':
-
-					$list = array_merge( $list, [] );
-					break;
-
-				case 'full':
-
-					$list = array_merge( $list, [] );
-					break;
-			}
-		}
-
-		return $this->filters( 'get_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
-	}
-
-	protected function do_template_include( $template, $constant, $archive_callback = NULL, $empty_callback = NULL )
-	{
-		if ( ! $this->get_setting( 'archive_override', TRUE ) )
-			return $template;
-
-		if ( is_embed() || is_search() )
-			return $template;
-
-		$posttype = $this->constant( $constant );
-
-		if ( $posttype != $GLOBALS['wp_query']->get( 'post_type' ) )
-			return $template;
-
-		if ( ! is_404() && ! is_post_type_archive( $posttype ) )
-			return $template;
-
-		if ( is_404() ) {
-
-			// if new posttype disabled
-			if ( FALSE === $empty_callback )
-				return $template;
-
-			// helps with 404 redirections
-			if ( ! is_user_logged_in() )
-				return $template;
-
-			if ( is_null( $empty_callback ) )
-				$empty_callback = [ $this, 'template_empty_content' ];
-
-			nocache_headers();
-			// WordPress::doNotCache();
-
-			Theme::resetQuery( [
-				'ID'         => 0,
-				'post_title' => $this->template_get_empty_title(),
-				'post_type'  => $posttype,
-				'is_single'  => TRUE,
-				'is_404'     => TRUE,
-			], $empty_callback );
-
-			$this->filter_append( 'post_class', [ 'empty-posttype', 'empty-'.$posttype ] );
-
-			// $template = get_singular_template();
-			$template = get_single_template();
-
-		} else {
-
-			if ( is_null( $archive_callback ) )
-				$archive_callback = [ $this, 'template_archive_content' ];
-
-			Theme::resetQuery( [
-				'ID'         => 0,
-				'post_title' => $this->template_get_archive_title( $posttype ),
-				'post_type'  => $posttype,
-				'is_page'    => TRUE,
-				'is_archive' => TRUE,
-			], $archive_callback );
-
-			$this->filter_append( 'post_class', [ 'archive-posttype', 'archive-'.$posttype ] );
-			$this->filter( 'post_type_archive_title', 2 );
-			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
-			$this->filter_false( 'gtheme_navigation_crumb_archive' );
-
-			$template = Theme::getTemplate( $this->get_setting( 'archive_template' ) );
-		}
-
-		$this->filter_empty_string( 'previous_post_link' );
-		$this->filter_empty_string( 'next_post_link' );
-
-		$this->enqueue_styles();
-
-		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' )
-			or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-
-		defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
-			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
-
-		return $template;
-	}
-
-	// DEFAULT METHOD: title for overrided empty page
-	public function template_get_empty_title( $fallback = NULL )
-	{
-		if ( $title = URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
-			return $title;
-
-		if ( is_null( $fallback ) )
-			return _x( '[Untitled]', 'Module: Template Title', 'geditorial' );
-
-		return $fallback;
-	}
-
-	// DEFAULT METHOD: content for overrided empty page
-	public function template_get_empty_content( $atts = [] )
-	{
-		if ( $content = $this->get_setting( 'empty_content' ) )
-			return Text::autoP( trim( $content ) );
-
-		return '';
-	}
-
-	// DEFAULT METHOD: title for overrided archive page
-	public function template_get_archive_title( $posttype )
-	{
-		return $this->get_setting_fallback( 'archive_title',
-			Helper::getPostTypeLabel( $posttype, 'all_items' ) );
-	}
-
-	// no need to check for posttype
-	public function post_type_archive_title( $name, $posttype )
-	{
-		return $this->get_setting_fallback( 'archive_title', $name );
-	}
-
-	public function gtheme_navigation_crumb_archive( $crumb, $args )
-	{
-		return $this->get_setting_fallback( 'archive_title', $crumb );
-	}
-
-	// DEFAULT METHOD: content for overrided archive page
-	public function template_get_archive_content()
-	{
-		$setting = $this->get_setting_fallback( 'archive_content', NULL );
-
-		if ( ! is_null( $setting ) )
-			return $setting; // might be empty string
-
-		// NOTE: here to avoid further process
-		if ( $default = $this->template_get_archive_content_default() )
-			return $default;
-
-		if ( is_post_type_archive() )
-			return ShortCode::listPosts( 'assigned',
-				PostType::current(),
-				'',
-				[
-					'orderby' => 'menu_order', // WTF: must apply to `assigned`
-					'id'      => 'all',
-					'future'  => 'off',
-					'title'   => FALSE,
-					'wrap'    => FALSE,
-				]
-			);
-
-		return '';
-	}
-
-	public function template_get_archive_content_default()
-	{
-		return '';
-	}
-
-	// DEFAULT METHOD: button for overrided empty/archive page
-	public function template_get_add_new( $posttype, $title = FALSE, $label = NULL )
-	{
-		$object = PostType::object( $posttype );
-
-		if ( ! current_user_can( $object->cap->create_posts ) )
-			return '';
-
-		// FIXME: must check if post is unpublished
-
-		return HTML::tag( 'a', [
-			'href'          => WordPress::getPostNewLink( $object->name, [ 'post_title' => $title ] ),
-			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$object->name ],
-			'target'        => '_blank',
-			'data-posttype' => $object->name,
-		], $label ?: $object->labels->add_new_item );
-	}
-
-	// DEFAULT FILTER
-	public function template_empty_content( $content )
-	{
-		if ( ! $post = Post::get() )
-			return $content;
-
-		$title = $this->template_get_empty_title( '' );
-		$html  = $this->template_get_empty_content();
-		$html .= $this->get_search_form( [ 'post_type[]' => $post->post_type ], $title );
-
-		// TODO: list other entries that linked to this title via content
-
-		if ( $add_new = $this->template_get_add_new( $post->post_type, $title ) )
-			$html.= '<p class="-actions">'.$add_new.'</p>';
-
-		return HTML::wrap( $html, $this->base.'-empty-content' );
-	}
-
-	// DEFAULT FILTER
-	public function template_archive_content( $content )
-	{
-		return HTML::wrap( $this->template_get_archive_content(), $this->base.'-archive-content' );
-	}
-
-	public function tool_box()
-	{
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-			$this->tool_box_title();
-
-			if ( FALSE !== $this->tool_box_content() ) {
-
-				$links = [];
-
-				foreach ( $this->get_module_links() as $link )
-					$links[] = HTML::tag( 'a' , [
-						'href'  => $link['url'],
-						'class' => [ 'button', '-button' ],
-					], $link['title'] );
-
-				echo HTML::wrap( HTML::renderList( $links ), '-toolbox-links' );
-			}
-
-		echo '</div>';
-	}
-
-	// DEFAULT CALLBACK: use in module for descriptions
-	// protected function tool_box_content() {}
-
-	// DEFAULT CALLBACK
-	protected function tool_box_title()
-	{
-		HTML::h2( sprintf(
-			/* translators: %s: module title */
-			_x( 'Editorial: %s', 'Module', 'geditorial' ),
-			$this->module->title
-		), 'title' );
-	}
-
 	// TODO: customize column position/sorting
 	// FIXME: WTF?!
 	protected function _hook_terms_meta_field( $constant, $field, $args = [] )
@@ -7473,28 +6717,5 @@ class Module extends Base
 	public function enable_process( $context = 'import' )
 	{
 		return $this->process_disabled[$context] = FALSE;
-	}
-
-	protected function _hook_wp_submenu_page( $context, $parent_slug, $page_title, $menu_title = NULL, $capability = NULL, $menu_slug = '', $callback = '', $position = NULL )
-	{
-		if ( ! $context )
-			return FALSE;
-
-		$default_callback = [ $this, sprintf( 'admin_%s_page', $context ) ];
-
-		$hook = add_submenu_page(
-			$parent_slug,
-			$page_title,
-			( is_null( $menu_title ) ? $page_title : $menu_title ),
-			( is_null( $capability ) ? ( isset( $this->caps[$context] ) ? $this->caps[$context] : 'manage_options' ) : $capability ),
-			( empty( $menu_slug ) ? sprintf( '%s-%s', $this->base, $context ) : $menu_slug ),
-			( empty( $callback ) ? ( is_callable( $default_callback ) ? $default_callback : '' ) : $callback ),
-			( is_null( $position ) ? ( isset( $this->positions[$context] ) ? $this->positions[$context] : NULL ) : $position )
-		);
-
-		if ( $hook )
-			add_action( 'load-'.$hook, [ $this, sprintf( 'admin_%s_load', $context ) ] );
-
-		return $hook;
 	}
 }

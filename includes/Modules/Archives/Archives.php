@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Core\HTML;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
@@ -12,6 +13,7 @@ use geminorum\gEditorial\Services\Paired;
 
 class Archives extends gEditorial\Module
 {
+	use Internals\CoreTemplate;
 
 	protected $disable_no_customs = TRUE;
 	protected $priority_init      = 99;    // after all taxonomies registered

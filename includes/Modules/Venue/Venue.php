@@ -11,6 +11,7 @@ use geminorum\gEditorial\ShortCode;
 class Venue extends gEditorial\Module
 {
 	use Internals\Paired;
+	use Internals\CoreTemplate;
 
 	public static function module()
 	{
@@ -120,6 +121,10 @@ class Venue extends gEditorial\Module
 
 		if ( ! is_admin() )
 			return $strings;
+
+		$strings['misc'] = [
+			'column_icon_title' => _x( 'Place', 'Misc: `column_icon_title`', 'geditorial-venue' ),
+		];
 
 		$strings['metabox'] = [
 			'place_cpt' => [

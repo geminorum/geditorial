@@ -117,6 +117,10 @@ class Collect extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['misc'] = [
+			'column_icon_title' => _x( 'Collection', 'Misc: `column_icon_title`', 'geditorial-collect' ),
+		];
+
 		$strings['metabox'] = [
 			'collection_cpt' => [
 				'metabox_title' => _x( 'The Collection', 'Label: MetaBox Title', 'geditorial-collect' ),

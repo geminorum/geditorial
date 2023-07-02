@@ -12,6 +12,7 @@ use geminorum\gEditorial\ShortCode;
 class Organization extends gEditorial\Module
 {
 	use Internals\Paired;
+	use Internals\CoreTemplate;
 
 	public static function module()
 	{

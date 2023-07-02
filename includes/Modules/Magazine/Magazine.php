@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 class Magazine extends gEditorial\Module
 {
 	use Internals\Paired;
+	use Internals\CoreTemplate;
 
 	public static function module()
 	{
@@ -123,6 +124,10 @@ class Magazine extends gEditorial\Module
 
 		if ( ! is_admin() )
 			return $strings;
+
+		$strings['misc'] = [
+			'column_icon_title' => _x( 'Issue', 'Misc: `column_icon_title`', 'geditorial-magazine' ),
+		];
 
 		$strings['metabox'] = [
 			'issue_cpt' => [

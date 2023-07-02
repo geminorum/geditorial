@@ -3,9 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Internals;
 
 class Symposium extends gEditorial\Module
 {
+	use Internals\CoreTemplate;
 
 	public static function module()
 	{
