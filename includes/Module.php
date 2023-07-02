@@ -22,6 +22,7 @@ use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
 use geminorum\gEditorial\WordPress\Theme;
+use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\User;
 use geminorum\gEditorial\Services\O2O;
 use geminorum\gEditorial\Services\Paired;
@@ -4276,7 +4277,95 @@ class Module extends Base
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
+	protected function _hook_term_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default' )
 	{
+		if ( is_null( $context ) )
+			$context = 'supportedbox';
+
+		$this->class_metabox( $screen, $context );
+
+		$callback = function( $object, $box ) use ( $context, $screen ) {
+
+			if ( $this->check_hidden_metabox( $box, $object->taxonomy ) )
+				return;
+
+			echo $this->wrap_open( '-admin-metabox' );
+
+			$this->actions(
+				sprintf( 'render_%s_metabox', $context ),
+				$object,
+				$box,
+				NULL,
+				sprintf( '%s_%s', $context, $object->taxonomy )
+			);
+
+			$this->_render_supportedbox_extra( $object, $box, $context, $screen );
+
+			echo '</div>';
+		};
+
+		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		$default = _x( 'For &ldquo;%1$s&rdquo;', 'Module: Metabox Title: `supportedbox_title`', 'geditorial' );
+		$title   = $this->get_string( sprintf( '%s_title', $context ), $screen->taxonomy, 'metabox', $default );
+		$name    = Helper::getTaxonomyLabel( $screen->taxonomy, 'singular_name' );
+
+		add_meta_box( $this->classs( $context ),
+			sprintf( $title, Term::title( NULL, $name ), $name ),
+			$callback,
+			$screen,
+			$metabox_context,
+			$metabox_priority
+		);
+	}
+
+	protected function _hook_general_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default' )
+	{
+		if ( is_null( $context ) )
+			$context = 'supportedbox';
+
+		$this->class_metabox( $screen, $context );
+
+		$callback = function( $object, $box ) use ( $context, $screen ) {
+
+			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
+				return;
+
+			echo $this->wrap_open( '-admin-metabox' );
+
+			$this->actions(
+				sprintf( 'render_%s_metabox', $context ),
+				$object,
+				$box,
+				NULL,
+				sprintf( '%s_%s', $context, $object->post_type )
+			);
+
+			$this->_render_supportedbox_extra( $object, $box, $context, $screen );
+
+			echo '</div>';
+		};
+
+		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		$default = _x( 'For &ldquo;%1$s&rdquo;', 'Module: Metabox Title: `supportedbox_title`', 'geditorial' );
+		$title   = $this->get_string( sprintf( '%s_title', $context ), $screen->post_type, 'metabox', $default );
+		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
+
+		add_meta_box( $this->classs( $context ),
+			sprintf( $title, Post::title( NULL, $name ), $name ),
+			$callback,
+			$screen,
+			$metabox_context,
+			$metabox_priority
+		);
+	}
+
+	// DEFAULT METHOD
+	protected function _render_supportedbox_extra( $object, $box, $context = NULL, $screen = NULL )
+	{
+		if ( is_null( $context ) )
+			$context = 'supportedbox';
+	}
+
 	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side' )
 	{
 		if ( is_null( $context ) )
