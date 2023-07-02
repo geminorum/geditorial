@@ -20,8 +20,13 @@ class Term extends Core\Base
 
 		if ( ! $term_or_id ) {
 
-			if ( is_admin() )
+			if ( is_admin() ) {
+
+				if ( is_null( $term_or_id ) && ( $query = self::req( 'tag_ID' ) ) )
+					return self::get( (int) $query, $taxonomy );
+
 				return FALSE;
+			}
 
 			if ( 'category' == $taxonomy && ! is_category() )
 				return FALSE;
@@ -51,6 +56,37 @@ class Term extends Core\Base
 			return FALSE;
 
 		return $term;
+	}
+
+	/**
+	 * Retrieves term title given a post ID or post object.
+	 *
+	 * @old `Taxonomy::getTermTitle()`
+	 *
+	 * @param  null|int|object $term
+	 * @param  null|string $fallback
+	 * @param  bool   $filter
+	 * @return string $title
+	 */
+	public static function title( $term, $fallback = NULL, $filter = TRUE )
+	{
+		if ( ! $term = self::get( $term ) )
+			return '';
+
+		$title = $filter
+			? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
+			: $term->name;
+
+		if ( ! empty( $title ) )
+			return $title;
+
+		if ( FALSE === $fallback )
+			return '';
+
+		if ( is_null( $fallback ) )
+			return __( '(Untitled)' );
+
+		return $fallback;
 	}
 
 	/**
@@ -174,5 +210,63 @@ class Term extends Core\Base
 		clean_term_cache( $term->term_taxonomy_id, $taxonomy->name, $clean_taxonomy );
 
 		return $success;
+	}
+
+	/**
+	 * retrieves meta-data for a given term.
+	 *
+	 * @OLD: `Taxonomy::getTermMeta()`
+	 *
+	 * @param  object|int $term
+	 * @param  bool|array $keys `false` for all meta
+	 * @param  bool $single
+	 * @return array
+	 */
+	public static function getMeta( $term, $keys = FALSE, $single = TRUE )
+	{
+		if ( ! $term = self::get( $term ) )
+			return FALSE;
+
+		$list = [];
+
+		if ( FALSE === $keys ) {
+
+			if ( $single ) {
+
+				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
+					$list[$key] = maybe_unserialize( $meta[0] );
+
+			} else {
+
+				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
+					foreach ( $meta as $offset => $value )
+						$list[$key][$offset] = maybe_unserialize( $value );
+			}
+
+		} else {
+
+			foreach ( $keys as $key => $default )
+				$list[$key] = get_term_meta( $term->term_id, $key, $single ) ?: $default;
+		}
+
+		return $list;
+	}
+
+	public static function add( $term, $taxonomy, $sanitize = TRUE )
+	{
+		if ( ! taxonomy_exists( $taxonomy ) )
+			return FALSE;
+
+		if ( self::get( $term, $taxonomy ) )
+			return TRUE;
+
+		if ( TRUE === $sanitize )
+			$slug = sanitize_title( $term );
+		else if ( ! $sanitize )
+			$slug = $term;
+		else
+			$slug = $sanitize;
+
+		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
 	}
 }

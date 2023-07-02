@@ -239,42 +239,10 @@ class Taxonomy extends Core\Base
 		return $terms;
 	}
 
-	/**
-	 * retrieves meta-data for a given term.
-	 *
-	 * @param  object|int $term
-	 * @param  bool|array $keys `false` for all meta
-	 * @param  bool $single
-	 * @return array
-	 */
+	// DEPRECATED: use `Term::getMeta()`
 	public static function getTermMeta( $term, $keys = FALSE, $single = TRUE )
 	{
-		if ( ! $term = self::getTerm( $term ) )
-			return FALSE;
-
-		$list = [];
-
-		if ( FALSE === $keys ) {
-
-			if ( $single ) {
-
-				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
-					$list[$key] = maybe_unserialize( $meta[0] );
-
-			} else {
-
-				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
-					foreach ( $meta as $offset => $value )
-						$list[$key][$offset] = maybe_unserialize( $value );
-			}
-
-		} else {
-
-			foreach ( $keys as $key => $default )
-				$list[$key] = get_term_meta( $term->term_id, $key, $single ) ?: $default;
-		}
-
-		return $list;
+		return Term::getMeta( $term, $keys, $single );
 	}
 
 	// FIXME: rewrite this!
@@ -536,22 +504,10 @@ class Taxonomy extends Core\Base
 		return '0';
 	}
 
+	// DEPRECATED: use `Term::add()`
 	public static function addTerm( $term, $taxonomy, $sanitize = TRUE )
 	{
-		if ( ! taxonomy_exists( $taxonomy ) )
-			return FALSE;
-
-		if ( self::getTerm( $term, $taxonomy ) )
-			return TRUE;
-
-		if ( TRUE === $sanitize )
-			$slug = sanitize_title( $term );
-		else if ( ! $sanitize )
-			$slug = $term;
-		else
-			$slug = $sanitize;
-
-		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
+		return Term::add( $term, $taxonomy, $sanitize );
 	}
 
 	// @REF: `wp_update_term_count_now()`
@@ -1091,7 +1047,7 @@ class Taxonomy extends Core\Base
 	public static function htmlFeaturedImage( $term_id, $size = NULL, $link = TRUE, $metakey = NULL )
 	{
 		if ( is_null( $size ) )
-			$size = Media::getAttachmentImageDefaultSize( NULL, self::getTermTaxonomy( $term_id, NULL ) );
+			$size = Media::getAttachmentImageDefaultSize( NULL, Term::taxonomy( $term_id ) ?: NULL );
 
 		return Media::htmlAttachmentImage(
 			self::getThumbnailID( $term_id, $metakey ),
@@ -1121,25 +1077,10 @@ class Taxonomy extends Core\Base
 		return apply_filters( 'geditorial_taxonomy_archive_link', FALSE, $taxonomy );
 	}
 
+	// DEPRECATED: use `Term::title()`
 	public static function getTermTitle( $term, $fallback = NULL, $filter = TRUE )
 	{
-		if ( ! $term = self::getTerm( $term ) )
-			return '';
-
-		$title = $filter
-			? sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' )
-			: $term->name;
-
-		if ( ! empty( $title ) )
-			return $title;
-
-		if ( FALSE === $fallback )
-			return '';
-
-		if ( is_null( $fallback ) )
-			return __( '(Untitled)' );
-
-		return $fallback;
+		return Term::title( $term, $fallback, $filter );
 	}
 
 	public static function getTargetTaxonomies( $taxonomy, $fallback = FALSE )

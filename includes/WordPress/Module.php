@@ -450,4 +450,16 @@ class Module extends Core\Base
 				.( $id ? ' id="'.$id.'"' : '' )
 				.( $hide ? ' style="display:none"' : '' ).'>';
 	}
+
+	protected function wrap_open_row( $name = '', $extra = '', $id = FALSE, $hide = FALSE, $tag = 'li' )
+	{
+		return '<'.HTML::sanitizeTag( $tag ).' class="'.HTML::prepClass(
+			'-row',
+			'-wrap-row',
+			'-'.$this->key,
+			$name ? ( '-'.$name ) : '',
+			$extra
+		).'"'.( $id ? ' id="'.$id.'"' : '' )
+		.( $hide ? ' style="display:none"' : '' ).'>';
+	}
 }

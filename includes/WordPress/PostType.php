@@ -608,7 +608,7 @@ class PostType extends Core\Base
 		if ( ! self::object( $posttype )->show_ui )
 			return FALSE;
 
-		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
+		if ( ! $term = Term::get( $term_or_id, $taxonomy ) )
 			return FALSE;
 
 		$object = Taxonomy::object( $term->taxonomy );
@@ -656,7 +656,7 @@ class PostType extends Core\Base
 	}
 
 	// NOTE: parent post type can be diffrenet
-	public static function getParentTitles( $post, $suffix = '', $separator = NULL )
+	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
 	{
 		if ( ! $post = Post::get( $post ) )
 			return $suffix;
@@ -671,9 +671,12 @@ class PostType extends Core\Base
 		while ( $parent ) {
 
 			$object = Post::get( (int) $current );
+			$link   = Post::link( $object );
 
 			if ( $object && $object->post_parent )
-				$parents[] = self::getPostTitle( $object->post_parent );
+				$parents[] = $linked && $link
+					? Core\HTML::link( Post::title( $object->post_parent ), $link )
+					: Post::title( $object->post_parent );
 
 			else
 				$parent = FALSE;
