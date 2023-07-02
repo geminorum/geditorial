@@ -38,6 +38,35 @@ class Actions extends gEditorial\Module
 		}
 	}
 
+	public function current_screen( $screen )
+	{
+		if ( 'term' === $screen->base ) {
+			$this->_admin_enabled();
+
+			add_action( "{$screen->taxonomy}_term_edit_form_top", [ $this, 'term_edit_form_open' ], -9999999, 2 );
+			add_action( "{$screen->taxonomy}_edit_form", [ $this, 'term_edit_form_close' ], 9999999, 2 );
+		}
+	}
+
+	public function term_edit_form_open( $term, $taxonomy )
+	{
+		echo '<div id="poststuff">';
+		echo '<div id="post-body" class="metabox-holder columns-2">';
+		echo '<div id="post-body-content">';
+	}
+
+	public function term_edit_form_close( $term, $taxonomy )
+	{
+		echo '</div>';
+		echo '<div id="postbox-container-1" class="postbox-container">';
+			// do_accordion_sections( get_current_screen(), 'side', $term );
+			do_meta_boxes( get_current_screen(), 'side', $term );
+		echo '</div>';
+		echo '<br class="clear">';
+		echo '</div>';
+		echo '</div>';
+	}
+
 	// @example: `$this->filter_module( 'actions', 'post_actions', 2 );`
 	public function post_submitbox_start( $post )
 	{
