@@ -4276,8 +4276,12 @@ class Module extends Base
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
-	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = 'mainbox', $metabox_context = 'side' )
 	{
+	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side' )
+	{
+		if ( is_null( $context ) )
+			$context = 'mainbox';
+
 		$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
 
 		if ( $remove_parent_order ) {
@@ -4288,17 +4292,20 @@ class Module extends Base
 
 		$this->class_metabox( $screen, $context );
 
-		$action   = sprintf( 'render_%s_metabox', $context );
-		$callback = function( $post, $box ) use ( $context, $action ) {
+		$callback = function( $post, $box ) use ( $context ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
 
-			$action_context = sprintf( '%s_%s', $context, $post->post_type );
-
 			echo $this->wrap_open( '-admin-metabox' );
 
-				$this->actions( $action, $post, $box, NULL, $action_context );
+				$this->actions(
+					sprintf( 'render_%s_metabox', $context ),
+					$post,
+					$box,
+					NULL,
+					sprintf( '%s_%s', $context, $post->post_type )
+				);
 
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
@@ -4316,7 +4323,7 @@ class Module extends Base
 		);
 	}
 
-	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = 'mainbox', $metabox_context = 'side' )
+	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side' )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4325,6 +4332,9 @@ class Module extends Base
 
 		if ( empty( $constants[0] ) || empty( $constants[1] ) )
 			return FALSE;
+
+		if ( is_null( $context ) )
+			$context = 'mainbox';
 
 		$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
 
@@ -4336,21 +4346,24 @@ class Module extends Base
 
 		$this->class_metabox( $screen, $context );
 
-		$action   = sprintf( 'render_%s_metabox', $context );
-		$callback = function( $post, $box ) use ( $constants, $context, $action ) {
+		$callback = function( $post, $box ) use ( $constants, $context ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
 
-			$action_context = sprintf( '%s_%s', $context, $this->constant( $constants[0] ) );
-
 			echo $this->wrap_open( '-admin-metabox' );
 
-				$this->actions( $action, $post, $box, NULL, $action_context );
+				$this->actions(
+					sprintf( 'render_%s_metabox', $context ),
+					$post,
+					$box,
+					NULL,
+					sprintf( '%s_%s', $context, $this->constant( $constants[0] ) )
+				);
 
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
-				$this->_render_mainbox_extra( $post, $box );
+				$this->_render_mainbox_extra( $post, $box, $context );
 
 			echo '</div>';
 		};
@@ -4365,13 +4378,16 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	protected function _render_mainbox_extra( $post, $box, $context = 'mainbox' )
+	protected function _render_mainbox_extra( $post, $box, $context = NULL )
 	{
+		if ( is_null( $context ) )
+			$context = 'mainbox';
+
 		MetaBox::fieldPostMenuOrder( $post );
 		MetaBox::fieldPostParent( $post );
 	}
 
-	protected function _hook_paired_listbox( $screen, $context = 'listbox', $metabox_context = 'advanced' )
+	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = 'advanced' )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4381,10 +4397,12 @@ class Module extends Base
 		if ( empty( $constants[0] ) || empty( $constants[1] ) )
 			return FALSE;
 
+		if ( is_null( $context ) )
+			$context = 'listbox';
+
 		$this->class_metabox( $screen, $context );
 
-		$action   = sprintf( 'render_%s_metabox', $context );
-		$callback = function( $post, $box ) use ( $constants, $context, $action ) {
+		$callback = function( $post, $box ) use ( $constants, $context ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
@@ -4392,11 +4410,15 @@ class Module extends Base
 			if ( $this->check_draft_metabox( $box, $post ) )
 				return;
 
-			$action_context = sprintf( '%s_%s', $context, $this->constant( $constants[0] ) );
-
 			echo $this->wrap_open( '-admin-metabox' );
 
-			$this->actions( $action, $post, $box, NULL, $action_context );
+			$this->actions(
+				sprintf( 'render_%s_metabox', $context ),
+				$post,
+				$box,
+				NULL,
+				sprintf( '%s_%s', $context, $this->constant( $constants[0] ) )
+			);
 
 			$term = $this->paired_get_to_term( $post->ID, $constants[0], $constants[1] );
 
@@ -4431,16 +4453,18 @@ class Module extends Base
 	// DEFAULT METHOD
 	// EXPORTS API
 	// TODO: support for `post_actions` on Actions module
-	protected function _render_listbox_extra( $post, $box, $context = 'listbox' )
+	protected function _render_listbox_extra( $post, $box, $context = NULL )
 	{
-		$html = '';
 
 		if ( $this->role_can( 'export', NULL, TRUE ) ) {
 
 			foreach ( $this->exports_get_types( $context ) as $type => $type_args ) {
+		if ( is_null( $context ) )
+			$context = 'listbox';
 
 				/* translators: %1$s: icon markup, %2$s: export type title */
 				$label = sprintf( _x( '%1$s Export: %2$s', 'Module: Exports: Button Label', 'geditorial' ), Helper::getIcon( 'download' ), $type_args['title'] );
+		$html = '';
 
 				$html.= HTML::tag( 'a', [
 					'href'  => $this->exports_get_type_download_link( $post->ID, $type, $context, $type_args['target'] ),
@@ -4474,7 +4498,7 @@ class Module extends Base
 		echo HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 
-	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = 'pairedbox' )
+	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = NULL )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4486,6 +4510,9 @@ class Module extends Base
 
 		if ( empty( $constants[2] ) )
 			$constants[2] = FALSE;
+
+		if ( is_null( $context ) )
+			$context = 'pairedbox';
 
 		$this->class_metabox( $screen, $context );
 
