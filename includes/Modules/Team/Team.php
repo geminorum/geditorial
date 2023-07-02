@@ -3,9 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Services\O2O;
 
 class Team extends gEditorial\Module
 {
@@ -144,7 +144,7 @@ class Team extends gEditorial\Module
 
 	public function o2o_init()
 	{
-		$this->_o2o = O2O\API::registerConnectionType( [
+		$this->_o2o = Services\O2O\API::registerConnectionType( [
 			'name' => $this->constant( 'o2o_name' ),
 			'from' => $this->constant( 'member_cpt' ),
 			'to'   => 'user',
@@ -182,9 +182,9 @@ class Team extends gEditorial\Module
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		switch ( $field_key ) {
-			case 'email_gravatar': return HTML::mailto( $raw ?: $value );
-			case 'email_contact' : return HTML::mailto( $raw ?: $value );
-			case 'personal_site' : return HTML::link( $raw ?: $value );
+			case 'email_gravatar': return Core\HTML::mailto( $raw ?: $value );
+			case 'email_contact' : return Core\HTML::mailto( $raw ?: $value );
+			case 'personal_site' : return Core\HTML::link( $raw ?: $value );
 		}
 
 		return $value;

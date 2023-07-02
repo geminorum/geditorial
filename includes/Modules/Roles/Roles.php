@@ -3,12 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Roles extends gEditorial\Module
 {
@@ -97,7 +95,7 @@ class Roles extends gEditorial\Module
 		$prefix = $this->constant( 'base_prefix' );
 
 		foreach ( $this->get_settings_default_roles() as $role => $title )
-			if ( ! Text::has( $role, $prefix ) )
+			if ( ! Core\Text::has( $role, $prefix ) )
 				$caps[$role] = $title;
 
 		return $caps;
@@ -111,7 +109,7 @@ class Roles extends gEditorial\Module
 			'profile', // gPeople
 		];
 
-		foreach ( PostType::get( 0, [ 'public' => TRUE, '_builtin' => FALSE ] ) as $posttype => $label )
+		foreach ( WordPress\PostType::get( 0, [ 'public' => TRUE, '_builtin' => FALSE ] ) as $posttype => $label )
 			if ( in_array( $posttype, $supported )
 				&& ! in_array( $posttype, $excludes ) )
 					$posttypes[$posttype] = $label;
@@ -171,7 +169,7 @@ class Roles extends gEditorial\Module
 		global $menu;
 
 		foreach ( $menu as $offset => $item )
-			if ( Text::has( $item[2], 'edit-tags.php' ) && ! current_user_can( $item[1] ) )
+			if ( Core\Text::has( $item[2], 'edit-tags.php' ) && ! current_user_can( $item[1] ) )
 				unset( $menu[$offset] );
 	}
 
@@ -273,8 +271,8 @@ class Roles extends gEditorial\Module
 			|| 'delete_'.$singular == $cap
 			|| 'read_'.$singular == $cap ) {
 
-			$post = Post::get( $args[0] );
-			$type = PostType::object( $post->post_type );
+			$post = WordPress\Post::get( $args[0] );
+			$type = WordPress\PostType::object( $post->post_type );
 			$caps = [];
 
 		} else {
@@ -436,7 +434,7 @@ class Roles extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Editorial Roles', 'Header', 'geditorial-roles' ) );
+		Core\HTML::h3( _x( 'Editorial Roles', 'Header', 'geditorial-roles' ) );
 
 		echo '<table class="form-table">';
 
@@ -449,13 +447,13 @@ class Roles extends gEditorial\Module
 		Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Button', 'geditorial-roles' ), 'danger' );
 
 		if ( isset( $_POST['check_current_roles'] ) )
-			echo HTML::tableCode( $this->get_settings_default_roles(), TRUE );
+			echo Core\HTML::tableCode( $this->get_settings_default_roles(), TRUE );
 
 		if ( isset( $_POST['check_current_caps'] ) ) {
 			$prefix = $this->constant( 'base_prefix' );
 			foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core ) {
 				$role = get_role( $prefix.$core );
-				echo HTML::tableCode( $role->capabilities, TRUE, $role->name );
+				echo Core\HTML::tableCode( $role->capabilities, TRUE, $role->name );
 			}
 		}
 

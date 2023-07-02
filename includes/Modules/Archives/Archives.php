@@ -3,13 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Theme;
-use geminorum\gEditorial\Services\Paired;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\WordPress;
 
 class Archives extends gEditorial\Module
 {
@@ -138,7 +136,7 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( get_taxonomies( [
 			'public'                     => FALSE,
 			'has_archive'                => FALSE,   // NOTE: gEditorial prop
-			Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
+			Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
 			] , 'names', 'or' ) + $extra ) );
 	}
 
@@ -163,7 +161,7 @@ class Archives extends gEditorial\Module
 			$screen->set_help_sidebar( Settings::helpSidebar( [ [
 				/* translators: %s: supported object label */
 				'title' => sprintf( _x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
-					Taxonomy::object( $screen->taxonomy )->label ),
+					WordPress\Taxonomy::object( $screen->taxonomy )->label ),
 				'url'   => $this->get_taxonomy_archive_link( $screen->taxonomy ),
 			] ] ) );
 
@@ -177,7 +175,7 @@ class Archives extends gEditorial\Module
 			$screen->set_help_sidebar( Settings::helpSidebar( [ [
 				/* translators: %s: supported object label */
 				'title' => sprintf( _x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
-					PostType::object( $screen->post_type )->label ),
+					WordPress\PostType::object( $screen->post_type )->label ),
 				'url'   => $this->get_posttype_archive_link( $screen->post_type ),
 			] ] ) );
 		}
@@ -221,7 +219,7 @@ class Archives extends gEditorial\Module
 	// not used yet!
 	private function _posttype_archive_slug( $posttype )
 	{
-		if ( ! $object = PostType::object( $posttype ) )
+		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return FALSE;
 
 		if ( ! empty( $object->has_archive ) )
@@ -241,7 +239,7 @@ class Archives extends gEditorial\Module
 		if ( $settings && ( $custom = $this->get_setting( 'taxonomy_'.$taxonomy.'_slug' ) ) )
 			return trim( $custom );
 
-		if ( ! $object = Taxonomy::object( $taxonomy ) )
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
 		// NOTE: it's gEditorial Prop
@@ -264,7 +262,7 @@ class Archives extends gEditorial\Module
 
 			$this->current_queried = $taxonomy;
 
-			Theme::resetQuery( [
+			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->_get_taxonomy_archive_title( $taxonomy ),
 				'post_type'  => 'page',
@@ -278,7 +276,7 @@ class Archives extends gEditorial\Module
 			$this->filter( 'document_title_parts', 1, 12, 'taxonomy' );
 			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
-			return Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
+			return WordPress\Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
 
 		} else if ( is_embed() || is_search() || ! ( $posttype = $GLOBALS['wp_query']->get( 'post_type' ) ) ) {
 
@@ -289,7 +287,7 @@ class Archives extends gEditorial\Module
 
 			$this->current_queried = $posttype;
 
-			Theme::resetQuery( [
+			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->_get_posttype_archive_title( $posttype ),
 				'post_type'  => $posttype,
@@ -303,7 +301,7 @@ class Archives extends gEditorial\Module
 			$this->filter( 'document_title_parts', 1, 12, 'posttype' );
 			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
-			return Theme::getTemplate( $this->get_setting( 'posttype_'.$posttype.'_template' ) );
+			return WordPress\Theme::getTemplate( $this->get_setting( 'posttype_'.$posttype.'_template' ) );
 		}
 
 		return $template;
@@ -358,7 +356,7 @@ class Archives extends gEditorial\Module
 		$html = apply_shortcodes( sprintf( $setting, $this->current_queried ) );
 		$html = $this->filters( 'posttype_archive_content', $html, $this->current_queried );
 
-		return HTML::wrap( $form.$html, '-posttype-archives-content' );
+		return Core\HTML::wrap( $form.$html, '-posttype-archives-content' );
 	}
 
 	public function get_the_archive_title_taxonomy( $title )
@@ -388,7 +386,7 @@ class Archives extends gEditorial\Module
 		$html = apply_shortcodes( sprintf( $setting, $this->current_queried ) );
 		$html = $this->filters( 'taxonomy_archive_content', $html, $this->current_queried );
 
-		return HTML::wrap( $html, '-taxonomy-archives-content' );
+		return Core\HTML::wrap( $html, '-taxonomy-archives-content' );
 	}
 
 	public function get_posttype_archive_link( $posttype )
@@ -396,8 +394,8 @@ class Archives extends gEditorial\Module
 		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return FALSE;
 
-		$link = PostType::getArchiveLink( $posttype );
-		$slug = PostType::object( $posttype )->has_archive;
+		$link = WordPress\PostType::getArchiveLink( $posttype );
+		$slug = WordPress\PostType::object( $posttype )->has_archive;
 
 		return $this->filters( 'posttype_archive_link', $link, $posttype, $slug );
 	}
@@ -472,11 +470,11 @@ class Archives extends gEditorial\Module
 			$icon = $link ? Settings::fieldAfterIcon( $link, _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ) : '';
 
 			/* translators: %s: taxonomy object label */
-			HTML::h4( sprintf( _x( 'Custom Archives Page for &ldquo;%s&rdquo;', 'Card Title', 'geditorial-archives' ), $object->label ).$icon, 'title' );
+			Core\HTML::h4( sprintf( _x( 'Custom Archives Page for &ldquo;%s&rdquo;', 'Card Title', 'geditorial-archives' ), $object->label ).$icon, 'title' );
 
 			if ( $link ) {
 
-				echo HTML::tag( 'input', [
+				echo Core\HTML::tag( 'input', [
 					'type'     => 'url',
 					'readonly' => TRUE,
 					'class'    => [ 'large-text', 'code-text' ],
@@ -484,11 +482,11 @@ class Archives extends gEditorial\Module
 					'value'    => $link,
 				] );
 
-				HTML::desc( _x( 'Link to the custom archives page generated for terms in this taxonomy.', 'Description', 'geditorial-archives' ) );
+				Core\HTML::desc( _x( 'Link to the custom archives page generated for terms in this taxonomy.', 'Description', 'geditorial-archives' ) );
 
 			} else {
 
-				HTML::desc( _x( 'There are no no custom archives pages available!', 'Message', 'geditorial-archives' ), TRUE, '-empty' );
+				Core\HTML::desc( _x( 'There are no no custom archives pages available!', 'Message', 'geditorial-archives' ), TRUE, '-empty' );
 			}
 
 		echo '</div>';

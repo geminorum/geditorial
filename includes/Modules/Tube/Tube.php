@@ -3,19 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\Services\O2O;
 
 class Tube extends gEditorial\Module
 {
-
-	// @SEE: https://github.com/swissspidy/video-post-type
-	// TODO: `video_playlist` taxonomy with owner user meta
-	// TODO: `channel_subject` taxonomy
 
 	private $_wp_video_shortcode_attr = '';
 
@@ -206,14 +200,14 @@ class Tube extends gEditorial\Module
 		$posttypes = $this->get_setting( 'connected_posttypes', [] );
 
 		if ( count( $posttypes ) )
-			$this->_o2o = O2O\API::registerConnectionType( [
+			$this->_o2o = Services\O2O\API::registerConnectionType( [
 				'name' => $this->constant( 'video_cpt_connected' ),
 				'to'   => $this->constant( 'video_cpt' ),
 				'from' => $posttypes,
 			] );
 
 		if ( $this->get_setting( 'video_channels' ) )
-			O2O\API::registerConnectionType( [
+			Services\O2O\API::registerConnectionType( [
 				'name' => $this->constant( 'channel_cpt_connected' ),
 				'to'   => $this->constant( 'channel_cpt' ),
 				'from' => $this->constant( 'video_cpt' ),
@@ -332,31 +326,31 @@ class Tube extends gEditorial\Module
 			return $output;
 
 		if ( ! empty( $attr['title'] ) )
-			$output.= HTML::tag( 'h3', $attr['title'] );
+			$output.= Core\HTML::tag( 'h3', $attr['title'] );
 
 		$html = '';
 
 		if ( ! empty( $attr['date'] ) )
-			$html.= HTML::tag( 'button', [
+			$html.= Core\HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'The date of this video', 'Button', 'geditorial-tube' ),
 			], $this->icon( 'calendar', 'gridicons' ).' '.$attr['date'] );
 
 		if ( ! empty( $attr['time'] ) )
-			$html.= HTML::tag( 'button', [
+			$html.= Core\HTML::tag( 'button', [
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'Total time of this video', 'Button', 'geditorial-tube' ),
-			], $this->icon( 'time' ).' '.Number::localize( $attr['time'] ) );
+			], $this->icon( 'time' ).' '.Core\Number::localize( $attr['time'] ) );
 
 		if ( ! empty( $attr['src'] ) )
-			$html.= HTML::tag( 'a', [
+			$html.= Core\HTML::tag( 'a', [
 				'href'  => $attr['src'],
 				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title' => _x( 'Download this video', 'Button', 'geditorial-tube' ),
 			], $this->icon( 'download' ).' '._x( 'Download', 'Button', 'geditorial-tube' ) );
 
 		if ( ! empty( $attr['youtube'] ) )
-			$html.= HTML::tag( 'a', [
+			$html.= Core\HTML::tag( 'a', [
 				'href'   => $attr['youtube'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title'  => _x( 'View this video on YouTube', 'Button', 'geditorial-tube' ),
@@ -364,44 +358,44 @@ class Tube extends gEditorial\Module
 			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Button', 'geditorial-tube' ) );
 
 		if ( ! empty( $attr['aparat'] ) )
-			$html.= HTML::tag( 'a', [
+			$html.= Core\HTML::tag( 'a', [
 				'href'   => $attr['aparat'],
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title'  => _x( 'View this video on Aparat', 'Button', 'geditorial-tube' ),
 				'target' => '_blank',
 			], $this->icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Button', 'geditorial-tube' ) );
 
-		$link = empty( $attr['shortlink'] ) ? WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
+		$link = empty( $attr['shortlink'] ) ? Core\WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
 
-		$html.= HTML::tag( 'a', [
+		$html.= Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 			'title'  => _x( 'Shortlink to this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Button', 'geditorial-tube' ) );
 
-		$html.= HTML::tag( 'a', [
+		$html.= Core\HTML::tag( 'a', [
 			'href'   => sprintf( 'https://telegram.me/share/url?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'telegram', 'social-logos' ) );
 
-		$html.= HTML::tag( 'a', [
+		$html.= Core\HTML::tag( 'a', [
 			'href'   => sprintf( 'https://twitter.com/intent/tweet?url=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
-		$html.= HTML::tag( 'a', [
+		$html.= Core\HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
 			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
 			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'facebook', 'social-logos' ) );
 
-		return $output.HTML::wrap( $html, $this->classs( 'video' ) );
+		return $output.Core\HTML::wrap( $html, $this->classs( 'video' ) );
 	}
 
 	public function video_cat_shortcode( $atts = [], $content = NULL, $tag = '' )

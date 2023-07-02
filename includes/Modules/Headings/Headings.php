@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core;
 
 class Headings extends gEditorial\Module
 {
@@ -91,10 +91,10 @@ class Headings extends gEditorial\Module
 			return $match[0];
 
 		if ( $match[2] )
-			$atts = HTML::parseAtts( $match[2], [ 'id' => '', 'class' => '' ] );
+			$atts = Core\HTML::parseAtts( $match[2], [ 'id' => '', 'class' => '' ] );
 
 		if ( ! empty( $atts['class'] )
-			&& in_array( 'numeral-section-title', HTML::attrClass( $atts['class'] ) ) )
+			&& in_array( 'numeral-section-title', Core\HTML::attrClass( $atts['class'] ) ) )
 				return $match[0];
 
 		if ( ! empty( $atts['id'] ) ) {
@@ -119,13 +119,13 @@ class Headings extends gEditorial\Module
 			'page'  => $GLOBALS['page'],
 		];
 
-		$html = HTML::tag( 'a', [
+		$html = Core\HTML::tag( 'a', [
 			'href'  => '#'.$slug,
 			'class' => 'anchor-link anchorlink dashicons-before',
 			'title' => $this->get_setting( 'anchor_title', FALSE ),
 		], NULL );
 
-		$html = HTML::tag( 'h'.$match[1], [
+		$html = Core\HTML::tag( 'h'.$match[1], [
 			'id'    => $slug,
 			'class' => 'anchor-title',
 		], $title.$html );
@@ -181,12 +181,12 @@ class Headings extends gEditorial\Module
 
 		echo $this->wrap_open( '-toc-box '.$class );
 
-			HTML::h3( $title, '-toc-title' );
+			Core\HTML::h3( $title, '-toc-title' );
 
-			HTML::menu( $tree, static function( $item ) {
+			Core\HTML::menu( $tree, static function( $item ) {
 
 				if ( FALSE === $item['page'] )
-					return HTML::link( $item['title'], '#'.$item['slug'] );
+					return Core\HTML::link( $item['title'], '#'.$item['slug'] );
 
 				return rtrim( _wp_link_page( $item['page'] ), '">' )
 					.'#'.$item['slug'].'">'.$item['title'].'</a>';

@@ -3,20 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Terms extends gEditorial\Module
 {
@@ -206,7 +199,7 @@ class Terms extends gEditorial\Module
 
 	protected function get_taxonomies_support( $field )
 	{
-		$supported = Taxonomy::get();
+		$supported = WordPress\Taxonomy::get();
 		$excluded  = $this->taxonomies_excluded();
 
 		switch ( $field ) {
@@ -214,7 +207,7 @@ class Terms extends gEditorial\Module
 			case 'plural': $excluded[] = 'post_tag'; break;
 			case 'overwrite': $excluded[] = 'post_tag'; break;
 			case 'tagline': $excluded[] = 'post_tag'; break;
-			case 'arrow': return Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break; // override!
+			case 'arrow': return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break; // override!
 		}
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
@@ -569,7 +562,7 @@ class Terms extends gEditorial\Module
 
 			case 'image':
 				$metakey = $this->get_supported_metakey( 'image', $object_type );
-				return Media::prepAttachmentData( get_term_meta( $term['id'], $metakey, TRUE ) );
+				return WordPress\Media::prepAttachmentData( get_term_meta( $term['id'], $metakey, TRUE ) );
 
 				break;
 		}
@@ -631,7 +624,7 @@ class Terms extends gEditorial\Module
 				? $this->get_column_title_icon( $field, $taxonomy, $fallback )
 				: $this->get_column_title( $field, $taxonomy, $fallback );
 
-			$columns = Arraay::insert( $columns, [
+			$columns = Core\Arraay::insert( $columns, [
 				$this->classs( $field ) => $title,
 			], $position[0], $position[1] );
 		}
@@ -728,7 +721,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta || '0' === $meta ) {
 
-					$html = $meta ? Number::format( $meta ) : Helper::htmlEmpty( '-'.$metakey );
+					$html = $meta ? Core\Number::format( $meta ) : Helper::htmlEmpty( '-'.$metakey );
 
 				} else {
 
@@ -746,11 +739,11 @@ class Terms extends gEditorial\Module
 					$visibility = $this->get_string( 'visibility', FALSE, 'misc', [] );
 
 					if ( '2' == $meta )
-						$icon = HTML::getDashicon( 'visibility', $visibility[$meta], '-icon-danger' );
+						$icon = Core\HTML::getDashicon( 'visibility', $visibility[$meta], '-icon-danger' );
 					else
-						$icon = HTML::getDashicon( 'hidden', $visibility[$meta], '-icon-warning' );
+						$icon = Core\HTML::getDashicon( 'hidden', $visibility[$meta], '-icon-warning' );
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
 
@@ -768,11 +761,11 @@ class Terms extends gEditorial\Module
 					$dirs = $this->get_string( 'arrow_directions', FALSE, 'misc', [] );
 
 					if ( array_key_exists( $meta, $dirs ) )
-						$icon = HTML::getDashicon( sprintf( 'arrow-%s-alt', $meta ), $dirs[$meta], 'icon-arrow' );
+						$icon = Core\HTML::getDashicon( sprintf( 'arrow-%s-alt', $meta ), $dirs[$meta], 'icon-arrow' );
 					else
-						$icon = HTML::getDashicon( 'warning', $meta, '-icon-warning' );
+						$icon = Core\HTML::getDashicon( 'warning', $meta, '-icon-warning' );
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
 
@@ -787,8 +780,8 @@ class Terms extends gEditorial\Module
 
 				if ( $meta ) {
 
-					$icon = HTML::getDashicon( 'tagcloud', $meta, 'icon-barcode' );
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$icon.'</span>';
+					$icon = Core\HTML::getDashicon( 'tagcloud', $meta, 'icon-barcode' );
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
 
@@ -801,7 +794,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$html = '<code class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'.$meta.'</code>';
+					$html = '<code class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$meta.'</code>';
 
 				} else {
 
@@ -817,7 +810,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.Helper::prepTitle( $meta ).'</span>';
 
 				} else {
@@ -831,9 +824,9 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta )
-						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'">'
-						.Helper::prepContact( $meta, HTML::getDashicon( 'phone' ) ).'</span>';
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
+						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'">'
+						.Helper::prepContact( $meta, Core\HTML::getDashicon( 'phone' ) ).'</span>';
 
 				} else {
 
@@ -845,7 +838,7 @@ class Terms extends gEditorial\Module
 			case 'image':
 
 				$size = NULL; // maybe filter fo this module?!
-				$html = $this->filters( 'column_image', Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
+				$html = $this->filters( 'column_image', WordPress\Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
 
 				break;
 
@@ -866,9 +859,9 @@ class Terms extends gEditorial\Module
 			case 'color':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<i class="field-color" data-'.$field.'="'.HTML::escape( $meta )
-						.'" style="background-color:'.HTML::escape( $meta )
-						.'" title="'.HTML::wrapLTR( HTML::escape( $meta ) ).'"></i>';
+					$html = '<i class="field-color" data-'.$field.'="'.Core\HTML::escape( $meta )
+						.'" style="background-color:'.Core\HTML::escape( $meta )
+						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'"></i>';
 
 				break;
 
@@ -878,9 +871,9 @@ class Terms extends gEditorial\Module
 					$this->_roles = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.( empty( $this->_roles[$meta] )
-							? HTML::escape( $meta )
+							? Core\HTML::escape( $meta )
 							: $this->_roles[$meta] )
 						.'</span>';
 
@@ -899,13 +892,13 @@ class Terms extends gEditorial\Module
 					$list = [];
 
 					foreach ( (array) $meta as $role )
-						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $role ).'">'
+						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $role ).'">'
 							.( empty( $this->_roles[$role] )
-								? HTML::escape( $role )
+								? Core\HTML::escape( $role )
 								: $this->_roles[$role] )
 							.'</span>';
 
-					$html = Strings::getJoined( $list );
+					$html = WordPress\Strings::getJoined( $list );
 
 				} else {
 
@@ -917,12 +910,12 @@ class Terms extends gEditorial\Module
 			case 'posttype':
 
 				if ( empty( $this->cache['posttypes'] ) )
-					$this->cache['posttypes'] = PostType::get( 2 );
+					$this->cache['posttypes'] = WordPress\PostType::get( 2 );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.( empty( $this->cache['posttypes'][$meta] )
-							? HTML::escape( $meta )
+							? Core\HTML::escape( $meta )
 							: $this->cache['posttypes'][$meta] )
 						.'</span>';
 
@@ -934,20 +927,20 @@ class Terms extends gEditorial\Module
 			case 'posttypes':
 
 				if ( empty( $this->cache['posttypes'] ) )
-					$this->cache['posttypes'] = PostType::get( 2 );
+					$this->cache['posttypes'] = WordPress\PostType::get( 2 );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$list = [];
 
 					foreach ( (array) $meta as $posttype )
-						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $posttype ).'">'
+						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $posttype ).'">'
 							.( empty( $this->cache['posttypes'][$posttype] )
-								? HTML::escape( $posttype )
+								? Core\HTML::escape( $posttype )
 								: $this->cache['posttypes'][$posttype] )
 							.'</span>';
 
-					$html = Strings::getJoined( $list );
+					$html = WordPress\Strings::getJoined( $list );
 
 				} else {
 
@@ -991,7 +984,7 @@ class Terms extends gEditorial\Module
 			default:
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.HTML::escape( $meta ).'">'
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.Helper::prepTitle( $meta ).'</span>';
 
 				else
@@ -1026,7 +1019,7 @@ class Terms extends gEditorial\Module
 
 			if ( $meta ) {
 
-				$meta = is_array( $meta ) ? array_filter( $meta ) : trim( HTML::escape( $meta ) );
+				$meta = is_array( $meta ) ? array_filter( $meta ) : trim( Core\HTML::escape( $meta ) );
 
 				if ( 'image' == $field ) {
 
@@ -1035,20 +1028,20 @@ class Terms extends gEditorial\Module
 
 				} else if ( in_array( $field, [ 'days', 'unit' ] ) ) {
 
-					$meta = Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::intval( trim( $meta ), FALSE );
 
 				} else if ( in_array( $field, [ 'viewable' ] ) ) {
 
-					$meta = Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::intval( trim( $meta ), FALSE );
 
 				} else if ( in_array( $field, [ 'date' ] ) ) {
 
-					$meta = Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::intval( trim( $meta ), FALSE );
 					$meta = Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
 
 				} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
 
-					$meta = Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::intval( trim( $meta ), FALSE );
 					$meta = Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
 				}
 
@@ -1080,7 +1073,7 @@ class Terms extends gEditorial\Module
 	{
 		echo '<fieldset><div class="inline-edit-col"><label><span class="title">';
 
-			echo HTML::escape( $this->get_supported_field_title( $field, $taxonomy ) );
+			echo Core\HTML::escape( $this->get_supported_field_title( $field, $taxonomy ) );
 
 		echo '</span><span class="input-text-wrap">';
 
@@ -1094,12 +1087,12 @@ class Terms extends gEditorial\Module
 		echo '<div class="form-field term-'.$field.'-wrap">';
 		echo '<label for="term-'.$field.'">';
 
-			echo HTML::escape( $this->get_supported_field_title( $field, $taxonomy, $term ) );
+			echo Core\HTML::escape( $this->get_supported_field_title( $field, $taxonomy, $term ) );
 
 		echo '</label>';
 
 			$this->form_field( $field, $taxonomy, $term );
-			HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
+			Core\HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
 
 		echo '</div>';
 	}
@@ -1109,7 +1102,7 @@ class Terms extends gEditorial\Module
 		echo '<tr class="form-field term-'.$field.'-wrap"><th scope="row" valign="top">';
 		echo '<label for="term-'.$field.'">';
 
-			echo HTML::escape( $this->get_supported_field_title( $field, $taxonomy, $term ) );
+			echo Core\HTML::escape( $this->get_supported_field_title( $field, $taxonomy, $term ) );
 
 		echo '</label></th><td>';
 
@@ -1118,7 +1111,7 @@ class Terms extends gEditorial\Module
 			else
 				$this->form_field( $field, $taxonomy, $term );
 
-			HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
+			Core\HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
 
 		echo '</td></tr>';
 	}
@@ -1143,7 +1136,7 @@ class Terms extends gEditorial\Module
 
 			case 'image':
 
-				$html.= '<div>'.HTML::tag( 'img', [
+				$html.= '<div>'.Core\HTML::tag( 'img', [
 					'id'       => $this->classs( $field, 'img' ),
 					'src'      => empty( $meta ) ? '' : wp_get_attachment_image_url( $meta, 'thumbnail' ),
 					'loading'  => 'lazy',
@@ -1151,7 +1144,7 @@ class Terms extends gEditorial\Module
 					'style'    => empty( $meta ) ? 'display:none' : FALSE,
 				] ).'</div>';
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -1159,11 +1152,11 @@ class Terms extends gEditorial\Module
 					'style' => 'display:none',
 				] );
 
-				$html.= HTML::tag( 'a', [
+				$html.= Core\HTML::tag( 'a', [
 					'class' => [ 'button', 'button-small', 'button-secondary', '-modal' ],
 				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
-				$html.= '&nbsp;'.HTML::tag( 'a', [
+				$html.= '&nbsp;'.Core\HTML::tag( 'a', [
 					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove' ],
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) );
@@ -1174,7 +1167,7 @@ class Terms extends gEditorial\Module
 			case 'unit':
 			case 'order':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'number',
@@ -1198,7 +1191,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'role':
 
-				$html.= HTML::dropdown( $this->get_settings_default_roles(), [
+				$html.= Core\HTML::dropdown( $this->get_settings_default_roles(), [
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
@@ -1212,7 +1205,7 @@ class Terms extends gEditorial\Module
 
 				foreach ( $this->get_settings_default_roles() as $role => $name ) {
 
-					$checkbox = HTML::tag( 'input', [
+					$checkbox = Core\HTML::tag( 'input', [
 						'type'    => 'checkbox',
 						'name'    => 'term-'.$field.'[]',
 						'id'      => $this->classs( $field, 'id', $role ),
@@ -1220,9 +1213,9 @@ class Terms extends gEditorial\Module
 						'checked' => empty( $meta ) ? FALSE : in_array( $role, (array) $meta ),
 					] );
 
-					$html.= '<li>'.HTML::tag( 'label', [
+					$html.= '<li>'.Core\HTML::tag( 'label', [
 						'for' => $this->classs( $field, 'id', $role ),
-					], $checkbox.'&nbsp;'.HTML::escape( $name ) ).'</li>';
+					], $checkbox.'&nbsp;'.Core\HTML::escape( $name ) ).'</li>';
 				}
 
 				$html.= '</ul></div>';
@@ -1230,7 +1223,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'posttype':
 
-				$html.= HTML::dropdown( PostType::get( 2 ), [
+				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2 ), [
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
@@ -1242,9 +1235,9 @@ class Terms extends gEditorial\Module
 
 				$html.= '<div class="wp-tab-panel"><ul>';
 
-				foreach ( PostType::get( 2 ) as $posttype => $name ) {
+				foreach ( WordPress\PostType::get( 2 ) as $posttype => $name ) {
 
-					$checkbox = HTML::tag( 'input', [
+					$checkbox = Core\HTML::tag( 'input', [
 						'type'    => 'checkbox',
 						'name'    => 'term-'.$field.'[]',
 						'id'      => $this->classs( $field, 'id', $posttype ),
@@ -1252,9 +1245,9 @@ class Terms extends gEditorial\Module
 						'checked' => empty( $meta ) ? FALSE : in_array( $posttype, (array) $meta ),
 					] );
 
-					$html.= '<li>'.HTML::tag( 'label', [
+					$html.= '<li>'.Core\HTML::tag( 'label', [
 						'for' => $this->classs( $field, 'id', $posttype ),
-					], $checkbox.'&nbsp;'.HTML::escape( $name ) ).'</li>';
+					], $checkbox.'&nbsp;'.Core\HTML::escape( $name ) ).'</li>';
 				}
 
 				$html.= '</ul></div>';
@@ -1262,7 +1255,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'color':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -1275,7 +1268,7 @@ class Terms extends gEditorial\Module
 			case 'overwrite':
 			case 'tagline':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -1289,7 +1282,7 @@ class Terms extends gEditorial\Module
 			case 'barcode':
 			case 'contact':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -1302,7 +1295,7 @@ class Terms extends gEditorial\Module
 
 			case 'viewable':
 
-				$html.= HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
 					'id'       => $this->classs( $field, 'id' ),
 					'name'     => 'term-'.$field,
 					'selected' => empty( $meta ) ? '0' : $meta,
@@ -1312,7 +1305,7 @@ class Terms extends gEditorial\Module
 
 			case 'arrow':
 
-				$html.= HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
 					'id'       => $this->classs( $field, 'id' ),
 					'name'     => 'term-'.$field,
 					'selected' => empty( $meta ) ? 'undefined' : $meta,
@@ -1322,7 +1315,7 @@ class Terms extends gEditorial\Module
 
 			case 'date':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -1337,7 +1330,7 @@ class Terms extends gEditorial\Module
 			case 'datestart':
 			case 'dateend':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -1351,7 +1344,7 @@ class Terms extends gEditorial\Module
 			case 'label':
 			default:
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
@@ -1373,17 +1366,17 @@ class Terms extends gEditorial\Module
 
 				$html.= '<input type="hidden" name="term-'.$field.'" value="" />';
 
-				$html.= HTML::tag( 'button', [
+				$html.= Core\HTML::tag( 'button', [
 					'class' => [ 'button', 'button-small', 'button-secondary', '-modal', '-quick' ],
 				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
-				$html.= '&nbsp;'.HTML::tag( 'a', [
+				$html.= '&nbsp;'.Core\HTML::tag( 'a', [
 					'href'  => '',
 					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove', '-quick' ],
 					'style' => 'display:none',
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) ).'&nbsp;';
 
-				$html.= HTML::tag( 'img', [
+				$html.= Core\HTML::tag( 'img', [
 					// 'src'   => '',
 					'class' => '-img',
 					'style' => 'display:none',
@@ -1395,7 +1388,7 @@ class Terms extends gEditorial\Module
 			case 'unit':
 			case 'order':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
 					'type'  => 'number',
 					'value' => '',
@@ -1416,7 +1409,7 @@ class Terms extends gEditorial\Module
 
 				// NOTE: better not to use `input[typ=color]` since there is noway to leave it empty!
 				// @REF: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color#value
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
 					'value' => '',
@@ -1428,7 +1421,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'role':
 
-				$html.= HTML::dropdown( $this->get_settings_default_roles(), [
+				$html.= Core\HTML::dropdown( $this->get_settings_default_roles(), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
 					'none_title' => Settings::showOptionNone(),
@@ -1437,7 +1430,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'posttype':
 
-				$html.= HTML::dropdown( PostType::get( 2 ), [
+				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2 ), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
 					'none_title' => Settings::showOptionNone(),
@@ -1449,7 +1442,7 @@ class Terms extends gEditorial\Module
 			case 'barcode':
 			case 'contact':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
 					'value' => '',
@@ -1461,7 +1454,7 @@ class Terms extends gEditorial\Module
 
 			case 'viewable':
 
-				$html.= HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
 					'name'     => 'term-'.$field,
 					'selected' => '0',
 				] );
@@ -1470,7 +1463,7 @@ class Terms extends gEditorial\Module
 
 			case 'arrow':
 
-				$html.= HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
 					'name'     => 'term-'.$field,
 					'selected' => 'undefined',
 				] );
@@ -1482,7 +1475,7 @@ class Terms extends gEditorial\Module
 			case 'datestart':
 			case 'dateend':
 
-				$html.= HTML::tag( 'input', [
+				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
 					'value' => '',
@@ -1525,7 +1518,7 @@ class Terms extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'count' ),
-				'title'  => _x( 'Post Count', 'Adminbar', 'geditorial-terms' ).': '.Strings::getCounted( $term->count ),
+				'title'  => _x( 'Post Count', 'Adminbar', 'geditorial-terms' ).': '.WordPress\Strings::getCounted( $term->count ),
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];
@@ -1538,7 +1531,7 @@ class Terms extends gEditorial\Module
 					'id'     => $this->classs( 'desc' ),
 					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ),
 					'parent' => $this->classs(),
-					'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+					'href'   => Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
 				];
 
 				$nodes[] = [
@@ -1557,7 +1550,7 @@ class Terms extends gEditorial\Module
 					'id'     => $this->classs( 'desc', 'empty' ),
 					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ).': '.gEditorial\Plugin::na(),
 					'parent' => $this->classs(),
-					'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+					'href'   => Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
 				];
 			}
 
@@ -1589,7 +1582,7 @@ class Terms extends gEditorial\Module
 					case 'unit':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Number::format( $meta );
+							$node['title'].= ': '.Core\Number::format( $meta );
 						else
 							$node['title'].= ': &mdash;';
 
@@ -1597,7 +1590,7 @@ class Terms extends gEditorial\Module
 
 					case 'image':
 
-						$image = Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ], TRUE, $metakey );
+						$image = WordPress\Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ], TRUE, $metakey );
 
 						$child['meta'] = [
 							'html'  => $image ?: gEditorial()->na( FALSE ),
@@ -1616,7 +1609,7 @@ class Terms extends gEditorial\Module
 					case 'color':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.'<i class="field-color" style="background-color:'.HTML::escape( $meta ).'"></i>';
+							$node['title'].= ': '.'<i class="field-color" style="background-color:'.Core\HTML::escape( $meta ).'"></i>';
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
@@ -1697,7 +1690,7 @@ class Terms extends gEditorial\Module
 			if ( ! $object = get_taxonomy( $taxonomy ) )
 				continue;
 
-			$terms = Taxonomy::getPostTerms( $taxonomy, $post_id );
+			$terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post_id );
 
 			if ( ! $terms || is_wp_error( $terms ) )
 				continue;
@@ -1706,7 +1699,7 @@ class Terms extends gEditorial\Module
 				'id'     => $this->classs( 'tax', $taxonomy ),
 				'title'  => $object->labels->name.':',
 				'parent' => $this->classs(),
-				'href'   => WordPress::getEditTaxLink( $taxonomy ),
+				'href'   => Core\WordPress::getEditTaxLink( $taxonomy ),
 			];
 
 			foreach ( $terms as $term )
@@ -1733,7 +1726,7 @@ class Terms extends gEditorial\Module
 
 	public function display_media_states( $media_states, $post )
 	{
-		if ( $term_id = Taxonomy::getIDbyMeta( $post->ID, 'image' ) )
+		if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $post->ID, 'image' ) )
 			/* translators: %s: term name */
 			$media_states[] = sprintf( _x( 'Term Image for &ldquo;%s&rdquo;', 'Media State', 'geditorial-terms' ), get_term( $term_id )->name );
 
@@ -2006,7 +1999,7 @@ class Terms extends gEditorial\Module
 		global $wpdb;
 
 		// No need to filter when counting.
-		if ( Text::has( $clauses['fields'], 'COUNT(*)' ) )
+		if ( Core\Text::has( $clauses['fields'], 'COUNT(*)' ) )
 			return $clauses;
 
 		// Force numeric sort if using name_num custom sorting param.

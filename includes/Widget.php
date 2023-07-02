@@ -2,12 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class Widget extends \WP_Widget
 {
@@ -100,7 +96,7 @@ class Widget extends \WP_Widget
 
 		$key = $this->widget_cache_key( $instance );
 
-		if ( WordPress::isFlush() )
+		if ( Core\WordPress::isFlush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $cache = get_transient( $key ) ) )
@@ -169,7 +165,7 @@ class Widget extends \WP_Widget
 		if ( ! empty( $instance['title_image'] ) )
 			$classes[] = '-has-title-image';
 
-		$html = preg_replace( '%{GEDITORIAL_WIDGET_CLASSNAME}%', HTML::prepClass( $classes, $extra ), $args['before_widget'] );
+		$html = preg_replace( '%{GEDITORIAL_WIDGET_CLASSNAME}%', Core\HTML::prepClass( $classes, $extra ), $args['before_widget'] );
 
 		if ( ! empty( $instance['open_widget_html'] ) )
 			$html.= trim( $instance['open_widget_html'] );
@@ -205,10 +201,10 @@ class Widget extends \WP_Widget
 			return '';
 
 		if ( ! empty( $instance['title_image'] ) )
-			$title = HTML::img( $instance['title_image'], '-title-image', $title );
+			$title = Core\HTML::img( $instance['title_image'], '-title-image', $title );
 
 		if ( ! empty( $instance['title_link'] ) )
-			$title = HTML::link( $title, $instance['title_link'] );
+			$title = Core\HTML::link( $title, $instance['title_link'] );
 
 		$html = $args['before_title'].$title.$args['after_title'];
 
@@ -304,23 +300,23 @@ class Widget extends \WP_Widget
 		if ( count( $sizes ) ) {
 
 			foreach ( $sizes as $name => $size )
-				$images[$name] = $size['n'].' ('.Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::localize( $size['h'] ).')';
+				$images[$name] = $size['n'].' ('.Core\Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Core\Number::localize( $size['h'] ).')';
 
 		} else {
 
-			$sizes = Media::getPosttypeImageSizes( $posttype );
+			$sizes = WordPress\Media::getPosttypeImageSizes( $posttype );
 
 			if ( count( $sizes ) ) {
 
 				foreach ( $sizes as $name => $size )
 					$images[$name] = ( isset( $size['title'] ) ? $size['title'] : $name )
-						.' ('.Number::localize( $size['width'] )
+						.' ('.Core\Number::localize( $size['width'] )
 						.'&nbsp;&times;&nbsp;'
-						.Number::localize( $size['height'] ).')';
+						.Core\Number::localize( $size['height'] ).')';
 
 			} else {
-				// foreach ( Media::defaultImageSizes() as $name => $size ) {
-				// 	$images[$posttype.'-'.$name] = $size['n'].' ('.Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Number::localize( $size['h'] ).')';
+				// foreach ( WordPress\Media::defaultImageSizes() as $name => $size ) {
+				// 	$images[$posttype.'-'.$name] = $size['n'].' ('.Core\Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Core\Number::localize( $size['h'] ).')';
 				// }
 			}
 		}
@@ -335,7 +331,7 @@ class Widget extends \WP_Widget
 		if ( static::MODULE )
 			$classes[] = '-'.static::MODULE;
 
-		$html = '<div class="'.HTML::prepClass( $classes ).'">';
+		$html = '<div class="'.Core\HTML::prepClass( $classes ).'">';
 
 		if ( ! $verbose )
 			return $html;
@@ -361,17 +357,17 @@ class Widget extends \WP_Widget
 			return;
 
 		switch ( $title ) {
-			case 'heading': HTML::h4( _x( 'Heading', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
-			case 'misc'   : HTML::h4( _x( 'Miscellaneous', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
-			case 'customs': HTML::h4( _x( 'Customs', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
-			case 'config' : HTML::h4( _x( 'Configuration', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
-			default: HTML::h4( $title, '-title' ); break;
+			case 'heading': Core\HTML::h4( _x( 'Heading', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			case 'misc'   : Core\HTML::h4( _x( 'Miscellaneous', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			case 'customs': Core\HTML::h4( _x( 'Customs', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			case 'config' : Core\HTML::h4( _x( 'Configuration', 'Widget Core: Group', 'geditorial' ), '-title' ); break;
+			default       : Core\HTML::h4( $title, '-title' ); break;
 		}
 	}
 
 	public function form_close_group( $desc = FALSE )
 	{
-		HTML::desc( $desc );
+		Core\HTML::desc( $desc );
 		echo '</div>';
 	}
 
@@ -382,9 +378,9 @@ class Widget extends \WP_Widget
 
 		echo '<p>';
 
-		HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
 
-		echo HTML::tag( 'textarea', [
+		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '3',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
@@ -401,9 +397,9 @@ class Widget extends \WP_Widget
 
 		echo '<p>';
 
-		HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
 
-		echo HTML::tag( 'textarea', [
+		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '1',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
@@ -420,9 +416,9 @@ class Widget extends \WP_Widget
 
 		echo '<p>';
 
-		HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
 
-		echo HTML::tag( 'textarea', [
+		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '1',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
@@ -439,9 +435,9 @@ class Widget extends \WP_Widget
 
 		echo '<p>';
 
-		HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
 
-		echo HTML::tag( 'textarea', [
+		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '1',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
@@ -456,7 +452,7 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Number of posts to show:', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'number',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
@@ -464,7 +460,7 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_trim_chars( $instance, $default = '', $field = 'trim_chars', $label = NULL )
@@ -472,7 +468,7 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Trim Characters:', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'number',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
@@ -480,12 +476,12 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_context( $instance, $default = '', $field = 'context' )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -494,12 +490,12 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		HTML::label( _x( 'Context:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Context:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_class( $instance, $default = '', $field = 'class' )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -508,7 +504,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		HTML::label( _x( 'Class:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Class:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_post_type( $instance, $default = 'post', $field = 'post_type', $any = TRUE )
@@ -517,24 +513,24 @@ class Widget extends \WP_Widget
 		$type = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( $any )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'value'    => 'any',
 				'selected' => $type == 'any',
 			], _x( '&ndash; (Any)', 'Widget Core', 'geditorial' ) );
 
-		foreach ( PostType::get() as $name => $title )
-			$html.= HTML::tag( 'option', [
+		foreach ( WordPress\PostType::get() as $name => $title )
+			$html.= Core\HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $type == $name,
 			], $title );
 
-		$html = HTML::tag( 'select', [
+		$html = Core\HTML::tag( 'select', [
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		HTML::label( _x( 'PostType:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'PostType:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_taxonomies( $instance, $default = '', $field = 'taxonomies', $posttype_field = 'post_type', $posttype_default = 'any' )
@@ -548,9 +544,9 @@ class Widget extends \WP_Widget
 		echo '<div class="-label">'._x( 'Taxonomies:', 'Widget Core', 'geditorial' ).'</div>';
 		echo '<div class="wp-tab-panel"><ul>';
 
-		foreach ( Taxonomy::get( 0, [], $type ) as $value_name => $value_title ) {
+		foreach ( WordPress\Taxonomy::get( 0, [], $type ) as $value_name => $value_title ) {
 
-			$html = HTML::tag( 'input', [
+			$html = Core\HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'id'      => $id.'-'.$value_name,
 				'name'    => $name.'['.$value_name.']',
@@ -558,7 +554,7 @@ class Widget extends \WP_Widget
 				'value'   => '1',
 			] );
 
-			HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name, 'li' );
+			Core\HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name, 'li' );
 		}
 
 		echo '</ul></div>';
@@ -571,28 +567,28 @@ class Widget extends \WP_Widget
 		$tax  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( $option_all )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'value' => $option_all,
 			], _x( '&ndash; All Taxonomies &ndash;', 'Widget Core', 'geditorial' ) );
 
-		foreach ( Taxonomy::get( 0, [], $type ) as $name => $title )
-			$html.= HTML::tag( 'option', [
+		foreach ( WordPress\Taxonomy::get( 0, [], $type ) as $name => $title )
+			$html.= Core\HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $tax == $name,
 			], $title );
 
-		$html = HTML::tag( 'select', [
+		$html = Core\HTML::tag( 'select', [
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		HTML::label( _x( 'Taxonomy:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Taxonomy:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_title( $instance, $default = '', $field = 'title' )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -600,12 +596,12 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( _x( 'Title:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Title:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_title_link( $instance, $default = '', $field = 'title_link' )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'url',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -614,12 +610,12 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		HTML::label( _x( 'Title Link:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Title Link:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_title_image( $instance, $default = '', $field = 'title_image' )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'url',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
@@ -628,7 +624,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		HTML::label( _x( 'Title Image:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Title Image:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )
@@ -636,7 +632,7 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Custom Link:', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text', // `url` will not work on relatives
 			'class' => [ 'widefat', 'code' ],
 			'name'  => $this->get_field_name( $field ),
@@ -645,7 +641,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_code( $instance, $default = '', $field = 'custom_code', $label = NULL )
@@ -653,7 +649,7 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Custom Code:', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => [ 'widefat', 'code' ],
 			'name'  => $this->get_field_name( $field ),
@@ -662,7 +658,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_title( $instance, $default = '', $field = 'custom_title', $label = NULL )
@@ -670,7 +666,7 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Custom Title:', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => [ 'widefat' ],
 			'name'  => $this->get_field_name( $field ),
@@ -679,7 +675,7 @@ class Widget extends \WP_Widget
 			'dir'   => 'ltr',
 		] );
 
-		HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_empty( $instance, $default = '', $field = 'empty', $label = NULL )
@@ -687,7 +683,7 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Empty Message:', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => [ 'widefat' ],
 			'name'  => $this->get_field_name( $field ),
@@ -695,12 +691,12 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
@@ -708,7 +704,7 @@ class Widget extends \WP_Widget
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( _x( 'Avatar Size:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Avatar Size:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_image_size( $instance, $default = NULL, $field = 'image_size', $posttype = 'post' )
@@ -716,7 +712,7 @@ class Widget extends \WP_Widget
 		$sizes = $this->get_images_sizes( $posttype );
 
 		if ( is_null( $default ) )
-			$default = Media::getAttachmentImageDefaultSize( $posttype );
+			$default = WordPress\Media::getAttachmentImageDefaultSize( $posttype );
 
 		if ( count( $sizes ) ) {
 
@@ -724,22 +720,22 @@ class Widget extends \WP_Widget
 			$html     = '';
 
 			foreach ( $sizes as $size => $title )
-				$html.= HTML::tag( 'option', [
+				$html.= Core\HTML::tag( 'option', [
 					'value'    => $size,
 					'selected' => $selected == $size,
 				], $title );
 
-			$html = HTML::tag( 'select', [
+			$html = Core\HTML::tag( 'select', [
 				'class' => 'widefat',
 				'name'  => $this->get_field_name( $field ),
 				'id'    => $this->get_field_id( $field ),
 			], $html );
 
-			HTML::label( _x( 'Image Size:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+			Core\HTML::label( _x( 'Image Size:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 
 		} else {
 
-			HTML::desc( _x( 'There are no image sizes available!', 'Widget Core', 'geditorial' ) );
+			Core\HTML::desc( _x( 'There are no image sizes available!', 'Widget Core', 'geditorial' ) );
 		}
 	}
 
@@ -750,7 +746,7 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = '';
 
-		$html = HTML::dropdown( $values, [
+		$html = Core\HTML::dropdown( $values, [
 			'class'      => 'widefat',
 			'name'       => $this->get_field_name( $field ),
 			'id'         => $this->get_field_id( $field ),
@@ -758,7 +754,7 @@ class Widget extends \WP_Widget
 			'selected'   => $selected,
 		] );
 
-		HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )
@@ -766,14 +762,14 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Checked', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'name'    => $this->get_field_name( $field ),
 			'id'      => $this->get_field_id( $field ),
 			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+		Core\HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
 	}
 
 	// only works on hierarchical
@@ -798,10 +794,10 @@ class Widget extends \WP_Widget
 
 		if ( ! $html ) {
 			$html = ' '.Plugin::na();
-			HTML::inputHidden( $this->get_field_name( $field ), $page_id );
+			Core\HTML::inputHidden( $this->get_field_name( $field ), $page_id );
 		}
 
-		HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_term_id( $instance, $default = '0', $field = 'term_id', $taxonomy_field = 'taxonomy', $taxonomy_default = 'post_tag' )
@@ -810,7 +806,7 @@ class Widget extends \WP_Widget
 		$term_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
 
 		if ( 'all' == $taxonomy )
-			return HTML::desc( '<br />'._x( 'Select taxonomy first!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
+			return Core\HTML::desc( '<br />'._x( 'Select taxonomy first!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
 
 		$terms = get_terms( [
 			'taxonomy'   => $taxonomy,
@@ -818,29 +814,29 @@ class Widget extends \WP_Widget
 		] );
 
 		if ( is_wp_error( $terms ) )
-			return HTML::desc( '<br />'._x( 'The taxonomy is not available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
+			return Core\HTML::desc( '<br />'._x( 'The taxonomy is not available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
 
 		if ( empty( $terms ) )
-			return HTML::desc( '<br />'._x( 'There are no terms available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
+			return Core\HTML::desc( '<br />'._x( 'There are no terms available!', 'Widget Core', 'geditorial' ), TRUE, '-empty' );
 
-		$html = HTML::tag( 'option', [
+		$html = Core\HTML::tag( 'option', [
 			'value'    => '0',
 			'selected' => $term_id == '0',
 		], Settings::showOptionNone() );
 
 		foreach ( $terms as $term )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'value'    => $term->term_id,
 				'selected' => $term_id == $term->term_id,
 			], $term->name );
 
-		$html = HTML::tag( 'select', [
+		$html = Core\HTML::tag( 'select', [
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		HTML::label( _x( 'Term:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label( _x( 'Term:', 'Widget Core', 'geditorial' ).$html, $this->get_field_id( $field ) );
 	}
 
 	public function form_has_thumbnail( $instance, $default = FALSE, $field = 'has_thumbnail', $label = NULL )
@@ -848,14 +844,14 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+		Core\HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
 	}
 
 	public function form_wrap_as_items( $instance, $default = TRUE, $field = 'wrap_as_items', $label = NULL )
@@ -863,13 +859,24 @@ class Widget extends \WP_Widget
 		if ( is_null( $label ) )
 			$label = _x( 'Wrap as List Items', 'Widget Core', 'geditorial' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
 		] );
 
-		HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+		Core\HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+	}
+
+	// NOTE: for front-end only, `$icon` must be array
+	public static function getIcon( $icon, $title = FALSE, $link = FALSE )
+	{
+		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
+			'href'   => $link ?: FALSE,
+			'title'  => $title ?: FALSE,
+			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
+			'target' => $link ? '_blank' : FALSE,
+		], gEditorial()->icon( $icon[1], $icon[0] ) );
 	}
 }

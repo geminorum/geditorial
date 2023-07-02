@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
 {
@@ -12,7 +12,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function getLatestDepartmentID()
 	{
-		return PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'department' ), '', 'ID', 'publish' );
+		return WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'department' ), '', 'ID', 'publish' );
 	}
 
 	public static function theDepartment( $atts = [] )

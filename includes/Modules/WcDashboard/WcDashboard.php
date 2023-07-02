@@ -3,9 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Text;
 
 class WcDashboard extends gEditorial\Module
 {
@@ -115,7 +114,7 @@ class WcDashboard extends gEditorial\Module
 			unset( $items['downloads'] );
 
 		if ( $this->get_setting( 'purchased_dashboard' ) )
-			$items = Arraay::insert( $items, [
+			$items = Core\Arraay::insert( $items, [
 				$this->constant( 'endpoint_purchased' ) => $this->get_setting_fallback( 'purchased_menutitle', _x( 'Purchased', 'Default', 'geditorial-wc-dashboard' ) ),
 			], 'orders', 'after' );
 
@@ -204,10 +203,10 @@ class WcDashboard extends gEditorial\Module
 			'display_name' => $current_user->display_name,
 		];
 
-		$message = Text::replaceTokens( $this->get_setting_fallback( 'main_message', $this->_default_main_message() ), $tokens );
+		$message = Core\Text::replaceTokens( $this->get_setting_fallback( 'main_message', $this->_default_main_message() ), $tokens );
 
 		$this->actions( 'account_dashboard_main_before', $user_id );
-			echo Text::autoP( $message );
+			echo Core\Text::autoP( $message );
 		$this->actions( 'account_dashboard_main_after', $user_id );
 	}
 }

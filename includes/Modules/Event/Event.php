@@ -3,10 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
 
 class Event extends gEditorial\Module
 {
@@ -343,7 +342,7 @@ class Event extends gEditorial\Module
 
 	public function manage_posts_columns( $columns )
 	{
-		return Arraay::insert( $columns, [
+		return Core\Arraay::insert( $columns, [
 			'event_starts' => $this->get_column_title( 'event_starts', 'event_cpt' ),
 			'event_ends'   => $this->get_column_title( 'event_ends', 'event_cpt' ),
 		], 'title', 'before' );
@@ -435,7 +434,7 @@ class Event extends gEditorial\Module
 			'time-end'   => self::req( 'time-end' ),
 		], $atts );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-start',
@@ -445,7 +444,7 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Date Start', 'Meta Box Input Placeholder', 'geditorial-event' ),
 		] );
 
-		$html.= HTML::tag( 'input', [
+		$html.= Core\HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-start',
@@ -455,9 +454,9 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Time Start', 'Meta Box Input Placeholder', 'geditorial-event' ),
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
+		echo Core\HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-date-end',
@@ -467,7 +466,7 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Date End', 'Meta Box Input Placeholder', 'geditorial-event' ),
 		] );
 
-		$html.= HTML::tag( 'input', [
+		$html.= Core\HTML::tag( 'input', [
 			'type'        => 'text',
 			'dir'         => 'ltr',
 			'name'        => 'geditorial-event-time-end',
@@ -477,7 +476,7 @@ class Event extends gEditorial\Module
 			'placeholder' => _x( 'Time End', 'Meta Box Input Placeholder', 'geditorial-event' ),
 		] );
 
-		echo HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
+		echo Core\HTML::wrap( $html, 'field-wrap -inputtext-half ltr' );
 
 		if ( $this->get_setting( 'display_type', TRUE ) )
 			MetaBox::dropdownPostTaxonomy( $this->constant( 'cal_type' ), $post, FALSE, FALSE, '', $args['cal-type'] );

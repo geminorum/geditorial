@@ -4,26 +4,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Date;
 use geminorum\gEditorial\Core\File;
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Icon;
-use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\Term;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Status;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\WooCommerce;
-use geminorum\gEditorial\Services\Paired;
+use geminorum\gEditorial\WordPress;
+use geminorum\gEditorial\Services;
 
-class Helper extends Main
+class Helper extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -84,14 +72,14 @@ class Helper extends Main
 
 	public static function moduleCheckWooCommerce( $message = NULL )
 	{
-		return WooCommerce::isActive()
+		return WordPress\WooCommerce::isActive()
 			? FALSE
 			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Helper', 'geditorial' ) : $message );
 	}
 
 	public static function moduleCheckLocale( $locale, $message = NULL )
 	{
-		return $locale === L10n::locale( TRUE )
+		return $locale === Core\L10n::locale( TRUE )
 			? FALSE
 			: ( is_null( $message ) ? _x( 'Not Available on Current Locale', 'Helper', 'geditorial' ) : $message );
 	}
@@ -106,7 +94,7 @@ class Helper extends Main
 		if ( ! gEditorial()->enabled( 'audit' ) )
 			return FALSE;
 
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( ! gEditorial()->module( 'audit' )->posttype_supported( $post->post_type ) )
@@ -130,20 +118,20 @@ class Helper extends Main
 			return gEditorial()->icon( $icon[1], $icon[0] );
 
 		if ( ! $icon )
-			return HTML::getDashicon( $fallback );
+			return Core\HTML::getDashicon( $fallback );
 
-		return HTML::getDashicon( $icon );
+		return Core\HTML::getDashicon( $icon );
 	}
 
 	// override to use plugin version
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE, $verbose = TRUE )
 	{
-		return HTML::linkStyleSheet( $url, $version, $media, $verbose );
+		return Core\HTML::linkStyleSheet( $url, $version, $media, $verbose );
 	}
 
 	public static function linkStyleSheetAdmin( $page, $verbose = TRUE )
 	{
-		return HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
+		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
 	}
 
 	public static function kses( $text, $context = 'none', $allowed = NULL )
@@ -215,17 +203,17 @@ class Helper extends Main
 			return $empty;
 
 		if ( Core\Email::is( $value ) )
-			$prepared = HTML::mailto( $value, $title );
+			$prepared = Core\HTML::mailto( $value, $title );
 
-		else if ( URL::isValid( $value ) )
+		else if ( Core\URL::isValid( $value ) )
 			// $prepared = HTML::link( $title, URL::untrail( $value ) );
-			$prepared = HTML::link( $title, URL::prepTitle( $value ) );
+			$prepared = Core\HTML::link( $title, URL::prepTitle( $value ) );
 
 		else if ( is_numeric( str_ireplace( [ '+', '-', '.' ], '', $value ) ) )
-			$prepared = HTML::tel( $value, FALSE, $title );
+			$prepared = Core\HTML::tel( $value, FALSE, $title );
 
 		else
-			$prepared = HTML::escape( $value );
+			$prepared = Core\HTML::escape( $value );
 
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}
@@ -288,10 +276,10 @@ class Helper extends Main
 
 	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
-		if ( ! $object = Taxonomy::object( $taxonomy ) )
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
-		if ( ! $terms = Taxonomy::getPostTerms( $object->name, $post ) )
+		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $object->name, $post ) )
 			return;
 
 		$list = [];
@@ -311,22 +299,22 @@ class Helper extends Main
 				$query['term']     = $term->slug;
 			}
 
-			$list[] = HTML::tag( 'a', [
+			$list[] = Core\HTML::tag( 'a', [
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term',
-			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
+			], Core\HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
 		}
 
-		echo Strings::getJoined( $list, $before, $after );
+		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
 
 	public static function renderTaxonomyTermsEditRow( $object, $taxonomy, $before = '', $after = '' )
 	{
-		if ( ! $object = Term::get( $object ) )
+		if ( ! $object = WordPress\Term::get( $object ) )
 			return;
 
-		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
 		if ( ! $terms = wp_get_object_terms( $object->term_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
@@ -336,19 +324,19 @@ class Helper extends Main
 		$link = sprintf( 'edit-tags.php?taxonomy=%s', $object->taxonomy );
 
 		foreach ( $terms as $term )
-			$list[] = HTML::tag( 'a', [
+			$list[] = Core\HTML::tag( 'a', [
 				// better to pass the term_id instead of term slug
 				'href'  => add_query_arg( [ $term->taxonomy => $term->term_id ], $link ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term -taxonomy-term',
-			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+			], Core\HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
 
-		echo Strings::getJoined( $list, $before, $after );
+		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
 
 	public static function renderUserTermsEditRow( $user_id, $taxonomy, $before = '', $after = '' )
 	{
-		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
 		if ( ! $terms = wp_get_object_terms( $user_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
@@ -358,13 +346,13 @@ class Helper extends Main
 		$link = 'users.php?%1$s=%2$s';
 
 		foreach ( $terms as $term )
-			$list[] = HTML::tag( 'a', [
+			$list[] = Core\HTML::tag( 'a', [
 				'href'  => sprintf( $link, $taxonomy->name, $term->slug ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term -user-term',
-			], HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+			], Core\HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
 
-		echo Strings::getJoined( $list, $before, $after );
+		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
 
 	public static function getAuthorsEditRow( $authors, $posttype = 'post', $before = '', $after = '' )
@@ -375,23 +363,23 @@ class Helper extends Main
 		$list = [];
 
 		foreach ( $authors as $author )
-			if ( $html = WordPress::getAuthorEditHTML( $posttype, $author ) )
+			if ( $html = Core\WordPress::getAuthorEditHTML( $posttype, $author ) )
 				$list[] = $html;
 
-		echo Strings::getJoined( $list, $before, $after );
+		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
 
 	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return Plugin::na( FALSE );
 
-		$title = Post::title( $post );
+		$title = WordPress\Post::title( $post );
 		$after = '';
 
 		if ( $status ) {
 
-			$statuses = TRUE === $status ? Status::get() : $status;
+			$statuses = TRUE === $status ? WordPress\Status::get() : $status;
 
 			if ( 'publish' != $post->post_status ) {
 
@@ -403,15 +391,15 @@ class Helper extends Main
 					$status = $post->post_status;
 
 				if ( $status )
-					$after = ' <small class="-status" title="'.HTML::escape( $post->post_status ).'">('.$status.')</small>';
+					$after = ' <small class="-status" title="'.Core\HTML::escape( $post->post_status ).'">('.$status.')</small>';
 			}
 		}
 
 		if ( ! $link )
-			return HTML::escape( $title ).$after;
+			return Core\HTML::escape( $title ).$after;
 
 		if ( 'posttype' === $title_attr )
-			$title_attr = PostType::object( $post->post_type )->label;
+			$title_attr = WordPress\PostType::object( $post->post_type )->label;
 
 		$edit = current_user_can( 'edit_post', $post->ID );
 
@@ -419,8 +407,8 @@ class Helper extends Main
 			$link = 'view';
 
 		if ( 'edit' == $link )
-			return HTML::tag( 'a', [
-				'href'   => WordPress::getPostEditLink( $post->ID ),
+			return Core\HTML::tag( 'a', [
+				'href'   => Core\WordPress::getPostEditLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
@@ -428,43 +416,43 @@ class Helper extends Main
 			], HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
-			return HTML::tag( 'span', [
+			return Core\HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
 				// 'data'  => [ 'post' => $post->ID, 'type' => $post->post_type ],
-			], HTML::escape( $title ) ).$after;
+			], Core\HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link )
-			return HTML::tag( 'a', [
-				'href'   => WordPress::getPostShortLink( $post->ID ),
+			return Core\HTML::tag( 'a', [
+				'href'   => Core\WordPress::getPostShortLink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
-			], HTML::escape( $title ) ).$after;
+			], Core\HTML::escape( $title ) ).$after;
 
-		return HTML::tag( 'a', [
+		return Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
 			'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
-		], HTML::escape( $title ) ).$after;
+		], Core\HTML::escape( $title ) ).$after;
 	}
 
 	public static function getTermTitleRow( $term, $link = 'edit', $taxonomy = FALSE, $title_attr = NULL )
 	{
-		if ( ! $term = Term::get( $term ) )
+		if ( ! $term = WordPress\Term::get( $term ) )
 			return Plugin::na( FALSE );
 
-		$title = Term::title( $term );
+		$title = WordPress\Term::title( $term );
 		$after = '';
 
 		if ( $taxonomy )
-			$after = ' <small class="-taxonomy" title="'.HTML::escape( $term->taxonomy ).'">('.Taxonomy::object( $term->taxonomy )->label.')</small>';
+			$after = ' <small class="-taxonomy" title="'.Core\HTML::escape( $term->taxonomy ).'">('.WordPress\Taxonomy::object( $term->taxonomy )->label.')</small>';
 
 		if ( ! $link )
-			return HTML::escape( $title ).$after;
+			return Core\HTML::escape( $title ).$after;
 
 		$edit = current_user_can( 'edit_term', $term->term_id );
 
@@ -472,37 +460,37 @@ class Helper extends Main
 			$link = 'view';
 
 		if ( 'edit' == $link )
-			return HTML::tag( 'a', [
-				'href'   => WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+			return Core\HTML::tag( 'a', [
+				'href'   => Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 				'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
-			], HTML::escape( $title ) ).$after;
+			], Core\HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && ! is_taxonomy_viewable( $term->taxonomy ) )
-			return HTML::tag( 'span', [
+			return Core\HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
 				// 'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
-			], HTML::escape( $title ) ).$after;
+			], Core\HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link )
-			return HTML::tag( 'a', [
-				'href'   => WordPress::getTermShortLink( $term->term_id ),
+			return Core\HTML::tag( 'a', [
+				'href'   => Core\WordPress::getTermShortLink( $term->term_id ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 				'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
-			], HTML::escape( $title ) ).$after;
+			], Core\HTML::escape( $title ) ).$after;
 
-		return HTML::tag( 'a', [
+		return Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
 			'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
-		], HTML::escape( $title ) ).$after;
+		], Core\HTML::escape( $title ) ).$after;
 	}
 
 	public static function getExtension( $mime_type, $extensions )
@@ -516,7 +504,7 @@ class Helper extends Main
 
 	public static function getAdminBarIcon( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
 	{
-		return HTML::tag( 'span', [
+		return Core\HTML::tag( 'span', [
 			'class' => [
 				'ab-icon',
 				'dashicons',
@@ -528,21 +516,21 @@ class Helper extends Main
 
 	public static function getPostTypeIcon( $posttype, $fallback = 'admin-post' )
 	{
-		$object = PostType::object( $posttype );
+		$object = WordPress\PostType::object( $posttype );
 
 		if ( $object->menu_icon && is_string( $object->menu_icon ) ) {
 
-			if ( Text::has( $object->menu_icon, 'data:image/svg+xml;base64,' ) )
-				return Icon::wrapBase64( $object->menu_icon );
+			if ( Core\Text::has( $object->menu_icon, 'data:image/svg+xml;base64,' ) )
+				return Core\Icon::wrapBase64( $object->menu_icon );
 
 
-			if ( Text::has( $object->menu_icon, 'dashicons-' ) )
-				return HTML::getDashicon( str_ireplace( 'dashicons-', '', $object->menu_icon ) );
+			if ( Core\Text::has( $object->menu_icon, 'dashicons-' ) )
+				return Core\HTML::getDashicon( str_ireplace( 'dashicons-', '', $object->menu_icon ) );
 
-			return Icon::wrapURL( esc_url( $object->menu_icon ) );
+			return Core\Icon::wrapURL( esc_url( $object->menu_icon ) );
 		}
 
-		return HTML::getDashicon( $fallback );
+		return Core\HTML::getDashicon( $fallback );
 	}
 
 	// DEPRECATED
@@ -561,13 +549,13 @@ class Helper extends Main
 
 				/* translators: %s: words count */
 				printf( _x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="word-count">'.Number::format( '0' ).'</span>' );
+					'<span class="word-count">'.Core\Number::format( '0' ).'</span>' );
 
 				echo '&nbsp;|&nbsp;';
 
 				/* translators: %s: chars count */
 				printf( _x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="char-count">'.Number::format( '0' ).'</span>' );
+					'<span class="char-count">'.Core\Number::format( '0' ).'</span>' );
 
 			echo '</div>';
 
@@ -581,7 +569,7 @@ class Helper extends Main
 	{
 		return is_null( $title_attr )
 			? '<span class="-empty '.$class.'">&mdash;</span>'
-			: sprintf( '<span title="%s" class="'.HTML::prepClass( '-empty', $class ).'">&mdash;</span>', $title_attr );
+			: sprintf( '<span title="%s" class="'.Core\HTML::prepClass( '-empty', $class ).'">&mdash;</span>', $title_attr );
 	}
 
 	public static function htmlCount( $count, $title_attr = NULL, $empty = NULL )
@@ -593,7 +581,7 @@ class Helper extends Main
 			$count = count( $count );
 
 		return $count
-			? Number::format( $count )
+			? Core\Number::format( $count )
 			: ( is_null( $empty ) ? self::htmlEmpty( 'column-count-empty', $title_attr ) : $empty );
 	}
 
@@ -603,7 +591,7 @@ class Helper extends Main
 			$title_attr = _x( 'No Order', 'Helper: No Order Title Attribute', 'geditorial' );
 
 		if ( $order )
-			$html = Number::localize( $order );
+			$html = Core\Number::localize( $order );
 		else
 			$html = sprintf( '<span title="%s" class="column-order-empty -empty">&mdash;</span>', $title_attr );
 
@@ -615,19 +603,19 @@ class Helper extends Main
 		if ( empty( $timestamp ) )
 			return self::htmlEmpty();
 
-		if ( ! Date::isTimestamp( $timestamp ) )
+		if ( ! Core\Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
 		$formats = Datetime::dateFormats( FALSE );
 
-		$html = '<span class="-date-date" title="'.HTML::escape( date_i18n( $formats['timeonly'], $timestamp ) );
+		$html = '<span class="-date-date" title="'.Core\HTML::escape( date_i18n( $formats['timeonly'], $timestamp ) );
 		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $formats['default'], $timestamp ).'</span>';
 
 		$html.= '&nbsp;(<span class="-date-diff" title="';
-		$html.= HTML::escape( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
+		$html.= Core\HTML::escape( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
 		$html.= Datetime::humanTimeDiff( $timestamp ).'</span>)';
 
-		return $class ? HTML::wrap( $html, $class, FALSE ) : $html;
+		return $class ? Core\HTML::wrap( $html, $class, FALSE ) : $html;
 	}
 
 	public static function getModifiedEditRow( $post, $class = FALSE )
@@ -635,15 +623,15 @@ class Helper extends Main
 		$timestamp = strtotime( $post->post_modified );
 		$formats   = Datetime::dateFormats( FALSE );
 
-		$html = '<span class="-date-modified" title="'.HTML::escape( date_i18n( $formats['default'], $timestamp ) );
+		$html = '<span class="-date-modified" title="'.Core\HTML::escape( date_i18n( $formats['default'], $timestamp ) );
 		$html.='" data-time="'.date( 'c', $timestamp ).'">'.Datetime::humanTimeDiff( $timestamp ).'</span>';
 
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );
 
 		if ( $edit_last && $post->post_author != $edit_last )
-			$html.= '&nbsp;(<span class="-edit-last">'.WordPress::getAuthorEditHTML( $post->post_type, $edit_last ).'</span>)';
+			$html.= '&nbsp;(<span class="-edit-last">'.Core\WordPress::getAuthorEditHTML( $post->post_type, $edit_last ).'</span>)';
 
-		return $class ? HTML::wrap( $html, $class, FALSE ) : $html;
+		return $class ? Core\HTML::wrap( $html, $class, FALSE ) : $html;
 	}
 
 	// @SOURCE: `translate_nooped_plural()`
@@ -676,8 +664,8 @@ class Helper extends Main
 			return [
 				$name.'s',
 				$name,
-				Text::strToLower( $name.'s' ),
-				Text::strToLower( $name ),
+				Core\Text::strToLower( $name.'s' ),
+				Core\Text::strToLower( $name ),
 				'%s',
 			];
 
@@ -823,14 +811,14 @@ class Helper extends Main
 		if ( $featured )
 			foreach ( $featured_templates as $key => $template )
 				if ( ! array_key_exists( $key, $pre ) )
-					$pre[$key] = vsprintf( $template, [ $featured, Text::strToLower( $featured ) ] );
+					$pre[$key] = vsprintf( $template, [ $featured, Core\Text::strToLower( $featured ) ] );
 
 		return $pre;
 	}
 
 	public static function getPostTypeLabel( $posttype, $label, $fallback_key = NULL, $fallback = '' )
 	{
-		if ( ! $object = PostType::object( $posttype ) )
+		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return $label;
 
 		if ( isset( $object->labels->{$label} ) )
@@ -968,7 +956,7 @@ class Helper extends Main
 
 	public static function getTaxonomyLabel( $taxonomy, $label, $fallback_key = NULL, $fallback = '' )
 	{
-		if ( ! $object = Taxonomy::object( $taxonomy ) )
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return $label;
 
 		if ( isset( $object->labels->{$label} ) )
@@ -1052,7 +1040,7 @@ class Helper extends Main
 		$preview = $scheduled = $view = '';
 		$scheduled_date = Datetime::dateFormat( $post->post_date, 'datetime' );
 
-		if ( PostType::viewable( $post_type_object ) ) {
+		if ( WordPress\PostType::viewable( $post_type_object ) ) {
 			$view      = ' '.HTML::link( $messages['view_post'], $permalink );
 			$preview   = ' '.HTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
 			$scheduled = ' '.HTML::link( $messages['preview_post'], $permalink, TRUE );
@@ -1115,31 +1103,31 @@ class Helper extends Main
 	 */
 	public static function switchPostType( $post, $posttype )
 	{
-		if ( ! $posttype = PostType::object( $posttype ) )
+		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return FALSE;
 
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( $posttype->name === $post->post_type )
 			return TRUE;
 
-		$paired_from = Paired::isPostType( $post->post_type );
-		$paired_to   = Paired::isPostType( $posttype->name );
+		$paired_from = Services\Paired::isPostType( $post->post_type );
+		$paired_to   = Services\Paired::isPostType( $posttype->name );
 
 		// neither is paired
 		if ( ! $paired_from && ! $paired_to )
-			return Post::setPostType( $post, $posttype );
+			return WordPress\Post::setPostType( $post, $posttype );
 
 		// bail if paired term not defined
-		if ( ! $term = Paired::getToTerm( $post->ID, $post->post_type, $paired_from ) )
-			return Post::setPostType( $post, $posttype );
+		if ( ! $term = Services\Paired::getToTerm( $post->ID, $post->post_type, $paired_from ) )
+			return WordPress\Post::setPostType( $post, $posttype );
 
 		// NOTE: the `term_id` remains intact
-		if ( ! Term::setTaxonomy( $term, $paired_to ) )
+		if ( ! WordPress\Term::setTaxonomy( $term, $paired_to ) )
 			return FALSE;
 
-		if ( ! Post::setPostType( $post, $posttype ) )
+		if ( ! WordPress\Post::setPostType( $post, $posttype ) )
 			return FALSE;
 
 		delete_post_meta( $post->ID, '_'.$post->post_type.'_term_id' );
@@ -1164,7 +1152,7 @@ class Helper extends Main
 			$layout = $plugin;
 
 		if ( $no_cache && $layout )
-			WordPress::doNotCache();
+			Core\WordPress::doNotCache();
 
 		if ( $require && $layout )
 			require_once $layout;
@@ -1208,7 +1196,7 @@ class Helper extends Main
 		if ( empty( $file_path ) )
 			return FALSE;
 
-		return json_decode( File::getContents( $file_path ), TRUE );
+		return json_decode( Core\File::getContents( $file_path ), TRUE );
 	}
 
 	public static function parseXML( $file_path )
@@ -1216,7 +1204,7 @@ class Helper extends Main
 		if ( empty( $file_path ) || ! function_exists( 'xml_parser_create' ) )
 			return FALSE;
 
-		if ( ! $contents = File::getContents( $file_path ) )
+		if ( ! $contents = Core\File::getContents( $file_path ) )
 			return $contents;
 
 		$parser = xml_parser_create();
@@ -1284,7 +1272,7 @@ class Helper extends Main
 		if ( is_null( $base ) )
 			$base = self::BASE;
 
-		$path = File::normalize( GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub );
+		$path = Core\File::normalize( GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub );
 
 		if ( file_exists( $path ) )
 			return URL::untrail( $path );
@@ -1292,9 +1280,9 @@ class Helper extends Main
 		if ( ! wp_mkdir_p( $path ) )
 			return FALSE;
 
-		File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
+		Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
 
-		return URL::untrail( $path );
+		return Core\URL::untrail( $path );
 	}
 
 	public static function getCacheURL( $sub, $base = NULL )
@@ -1305,7 +1293,7 @@ class Helper extends Main
 		if ( is_null( $base ) )
 			$base = self::BASE;
 
-		return URL::untrail( GEDITORIAL_CACHE_URL.( $base ? '/'.$base.'/' : '/' ).$sub );
+		return Core\URL::untrail( GEDITORIAL_CACHE_URL.( $base ? '/'.$base.'/' : '/' ).$sub );
 	}
 
 	/**

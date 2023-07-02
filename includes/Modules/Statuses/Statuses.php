@@ -3,13 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Core\L10n;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
 class Statuses extends gEditorial\Module
 {
@@ -33,7 +29,7 @@ class Statuses extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$statuses = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
+		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
 		$roles    = $this->get_settings_default_roles();
 
 		$settings = [
@@ -105,7 +101,7 @@ class Statuses extends gEditorial\Module
 			]
 		);
 
-		$statuses = Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
+		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
 
 		foreach ( $statuses as $status ) {
 
@@ -115,7 +111,7 @@ class Statuses extends gEditorial\Module
 
 				'public'      => TRUE,
 				'label'       => $status->name,
-				'label_count' => L10n::getNooped( $status->name.' <span class="count">(%s)</span>', $status->name.' <span class="count">(%s)</span>' ),
+				'label_count' => Core\L10n::getNooped( $status->name.' <span class="count">(%s)</span>', $status->name.' <span class="count">(%s)</span>' ),
 
 				'show_in_admin_all_list'    => TRUE,
 				'show_in_admin_status_list' => $can,
@@ -180,7 +176,7 @@ class Statuses extends gEditorial\Module
 		$this->map_caps = [];
 
 		foreach ( $this->posttypes() as $posttype ) {
-			$object = PostType::object( $posttype );
+			$object = WordPress\PostType::object( $posttype );
 			$this->map_caps[$object->cap->publish_posts] = $object->cap->edit_posts;
 		}
 
@@ -195,7 +191,7 @@ class Statuses extends gEditorial\Module
 
 			foreach ( $this->posttypes() as $posttype ) {
 
-				$object = PostType::object( $posttype );
+				$object = WordPress\PostType::object( $posttype );
 
 				if ( ! current_user_can( $object->cap->edit_others_posts ) )
 				// if ( ! current_user_can( $object->cap->edit_posts ) )
@@ -212,8 +208,8 @@ class Statuses extends gEditorial\Module
 						if ( $counts->{$status->name} > 0 )
 							$GLOBALS['submenu'][$menu][] = [
 								sprintf( '%1$s <span class="awaiting-mod" data-count="%3$s"><span class="pending-count">%2$s</span></span>',
-									HTML::escape( $status->label ),
-									Number::format( $counts->{$status->name} ),
+									Core\HTML::escape( $status->label ),
+									Core\Number::format( $counts->{$status->name} ),
 									$counts->{$status->name} ),
 								'read',
 								sprintf( 'edit.php?post_status=%1$s&post_type=%2$s', $status->name, $posttype ),
@@ -270,7 +266,7 @@ class Statuses extends gEditorial\Module
 			'suppress_filter' => TRUE,
 			'meta_query'      => [ [
 				'key'     => 'role',
-				'value'   => User::getRoles(),
+				'value'   => WordPress\User::getRoles(),
 				'compare' => 'IN'
 			] ],
 		];

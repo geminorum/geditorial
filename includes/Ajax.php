@@ -2,8 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 
 class Ajax extends Core\Base
 {
@@ -37,7 +36,7 @@ class Ajax extends Core\Base
 			$message = _x( 'Successful!', 'Ajax: Ajax Notice', 'geditorial' );
 
 		if ( $message )
-			self::success( HTML::success( $message ) );
+			self::success( Core\HTML::success( $message ) );
 		else
 			self::success();
 	}
@@ -53,7 +52,7 @@ class Ajax extends Core\Base
 			$message = _x( 'Error!', 'Ajax: Ajax Notice', 'geditorial' );
 
 		if ( $message )
-			self::error( HTML::error( $message ) );
+			self::error( Core\HTML::error( $message ) );
 		else
 			self::error();
 	}

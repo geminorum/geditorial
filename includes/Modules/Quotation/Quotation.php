@@ -3,11 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\WordPress;
 
 class Quotation extends gEditorial\Module
@@ -79,7 +77,7 @@ class Quotation extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		$rtl = HTML::rtl();
+		$rtl = Core\HTML::rtl();
 
 		return [
 			$this->constant( 'quote_cpt' ) => [
@@ -204,7 +202,7 @@ class Quotation extends gEditorial\Module
 	// @REF: `page_attributes_misc_attributes`
 	public function meta_render_metabox( $post, $box, $fields = NULL, $context = 'mainbox' )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'name'        => 'menu_order',
 			'type'        => 'number',
 			'dir'         => 'ltr',
@@ -214,7 +212,7 @@ class Quotation extends gEditorial\Module
 
 		$html.= ' <span>'._x( 'Menu Order', 'Placeholder', 'geditorial-quotation' ).'</span>';
 
-		echo HTML::wrap( $html, 'field-wrap -inputnumber' );
+		echo Core\HTML::wrap( $html, 'field-wrap -inputnumber' );
 
 		echo '<hr />';
 	}
@@ -231,7 +229,7 @@ class Quotation extends gEditorial\Module
 			/* translators: %1$s: post parent, %2$s: menu order */
 			return vsprintf( _x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ), [
 				WordPress\Post::title( $post->post_parent, NULL, FALSE ),
-				Number::format( $post->menu_order ),
+				Core\Number::format( $post->menu_order ),
 			] );
 
 		return $title;

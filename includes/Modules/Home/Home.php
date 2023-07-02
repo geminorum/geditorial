@@ -3,8 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\HTML;
 
 class Home extends gEditorial\Module
 {
@@ -47,9 +47,9 @@ add_theme_support( \'featured-content\', [
 	public function settings_intro()
 	{
 		if ( get_theme_support( 'featured-content' ) )
-			echo HTML::info( _x( 'Current theme supports Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
+			echo Core\HTML::info( _x( 'Current theme supports Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
 		else
-			echo HTML::warning( _x( 'Current theme does not support Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
+			echo Core\HTML::warning( _x( 'Current theme does not support Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
 	}
 
 	public function settings_section_featured()

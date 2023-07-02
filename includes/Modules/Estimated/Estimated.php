@@ -3,9 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 class Estimated extends gEditorial\Module
@@ -137,7 +135,7 @@ class Estimated extends gEditorial\Module
 				.')</span>';
 
 			$avgtime = $this->get_setting( 'average', 250 );
-			$title   = sprintf( _x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ), Number::format( $avgtime ) );
+			$title   = sprintf( _x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ), Core\Number::format( $avgtime ) );
 
 			$nodes[] = [
 				'id'     => $this->classs(),
@@ -172,7 +170,7 @@ class Estimated extends gEditorial\Module
 		$content = get_post_field( 'post_content', $post_id, 'raw' );
 
 		if ( 'ignore' == $this->get_setting( 'teaser', 'include' )
-			|| Text::has( $content, '<!--noteaser-->' ) ) {
+			|| Core\Text::has( $content, '<!--noteaser-->' ) ) {
 
 			if ( preg_match( '/<!--more(.*?)?-->/', $content, $matches ) ) {
 				$content = explode( $matches[0], $content, 2 );
@@ -180,7 +178,7 @@ class Estimated extends gEditorial\Module
 			}
 		}
 
-		$wordcount = Text::wordCountUTF8( $content );
+		$wordcount = Core\Text::wordCountUTF8( $content );
 
 		if ( $update )
 			update_post_meta( $post_id, $this->meta_key, $wordcount );
@@ -213,13 +211,13 @@ class Estimated extends gEditorial\Module
 			$estimated = __( 'less than 1 minute', 'geditorial-estimated' );
 		else
 			/* translators: %s: number of minutes */
-			$estimated = sprintf( _n( '%s minute', '%s minutes', $minutes, 'geditorial-estimated' ), Number::localize( $minutes ) );
+			$estimated = sprintf( _n( '%s minute', '%s minutes', $minutes, 'geditorial-estimated' ), Core\Number::localize( $minutes ) );
 
 		if ( $info )
-			return '<span data-toggle="tooltip" title="'.HTML::escape(
+			return '<span data-toggle="tooltip" title="'.Core\HTML::escape(
 				/* translators: %s: words count */
 				sprintf( _x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ),
-				Number::format( $avgtime ) ) )
+				Core\Number::format( $avgtime ) ) )
 				.'">'.$estimated.'</span>';
 
 		return $estimated;

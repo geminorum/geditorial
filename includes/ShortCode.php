@@ -2,19 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\File;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
-class ShortCode extends Main
+class ShortCode extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -40,12 +31,12 @@ class ShortCode extends Main
 			$classes[] = 'context-'.$args['context'];
 
 		if ( ! empty( $args['class'] ) )
-			$classes = HTML::attrClass( $classes, $args['class'] );
+			$classes = Core\HTML::attrClass( $classes, $args['class'] );
 
 		if ( $after )
-			return $before.HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $html ).$after;
+			return $before.Core\HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $html ).$after;
 
-		return HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $before.$html );
+		return Core\HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $before.$html );
 	}
 
 	// term as title of the list
@@ -55,7 +46,7 @@ class ShortCode extends Main
 		if ( is_array( $term_or_id ) )
 			$term_or_id = $term_or_id[0];
 
-		if ( ! $term = Term::get( $term_or_id, $taxonomy ) )
+		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ) )
 			return '';
 
 		$args = self::atts( [
@@ -90,12 +81,12 @@ class ShortCode extends Main
 
 			$args['title'] = $text;
 
-		} else if ( $args['title'] && Text::has( $args['title'], '%' ) ) {
+		} else if ( $args['title'] && Core\Text::has( $args['title'], '%' ) ) {
 
 			$args['title'] = sprintf( $args['title'],
 				$text,
 				$link,
-				HTML::escape( trim( strip_tags( $term->description ) ) ),
+				Core\HTML::escape( trim( strip_tags( $term->description ) ) ),
 				( $attr ?: '' )
 			);
 
@@ -106,33 +97,33 @@ class ShortCode extends Main
 		if ( $args['title'] ) {
 
 			if ( is_null( $args['title_link'] ) && $term )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $link,
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( 'anchor' === $args['title_link'] && $term )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => '#'.sprintf( $args['title_anchor'], $term->term_id, $term->slug ),
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( $args['title_link'] )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $args['title_link'],
 					'title' => $attr,
 				], $args['title'] );
 		}
 
 		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = HTML::tag( $args['title_tag'], [
+			$args['title'] = Core\HTML::tag( $args['title_tag'], [
 				'id'    => $term ? sprintf( $args['title_anchor'], $term->term_id, $term->slug ) : FALSE,
 				'class' => $args['title_class'],
 			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
 
 		if ( $args['title_after'] ) {
 
-			if ( $term && Text::has( $args['title_after'], '%' ) )
+			if ( $term && Core\Text::has( $args['title_after'], '%' ) )
 				$args['title_after'] = sprintf( $args['title_after'],
 					$text,
 					$link,
@@ -148,7 +139,7 @@ class ShortCode extends Main
 	// term as an item on the list
 	public static function termItem( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
-		if ( ! $term = Term::get( $term ) )
+		if ( ! $term = WordPress\Term::get( $term ) )
 			return $fallback;
 
 		$args = self::atts( [
@@ -174,7 +165,7 @@ class ShortCode extends Main
 		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
 			$title = call_user_func_array( $args['item_text'], [ $term, $args, $text ] );
 
-		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+		else if ( $args['item_text'] && Core\Text::has( $args['item_text'], '%' ) )
 			$title = sprintf( $args['item_text'], $text );
 
 		else if ( $args['item_text'] )
@@ -184,35 +175,35 @@ class ShortCode extends Main
 			$title = ''; // FIXME: WTF: better to bail here!
 
 		if ( $term->count && $args['item_link'] )
-			$item = HTML::tag( 'a', [
+			$item = Core\HTML::tag( 'a', [
 				'href'  => $link,
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => '-link -tax-'.$term->taxonomy,
 			], $title );
 
 		else
-			$item = HTML::tag( 'span', [
+			$item = Core\HTML::tag( 'span', [
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => $args['item_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
 			], $title );
 
-		if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+		if ( $args['item_wrap'] && Core\Text::has( $args['item_wrap'], '%' ) )
 			$item = sprintf( $args['item_wrap'], $item );
 
 		else if ( $args['item_wrap'] )
-			$item = HTML::tag( $args['item_wrap'], $item );
+			$item = Core\HTML::tag( $args['item_wrap'], $item );
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
 			$item.= call_user_func_array( $args['item_after_cb'], [ $term, $args, $item ] );
 
 		} else if ( $args['item_after'] ) {
 
-			if ( Text::has( $args['item_after'], '%' ) )
+			if ( Core\Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
-					HTML::escapeURL( $link ),
+					Core\HTML::escapeURL( $link ),
 					Helper::prepDescription( $term->description ),
-					Text::trimChars( $term->description )
+					Core\Text::trimChars( $term->description )
 				);
 
 			if ( is_string( $args['item_after'] ) )
@@ -222,7 +213,7 @@ class ShortCode extends Main
 		if ( ! $args['item_tag'] )
 			return $before.$item.$after;
 
-		return HTML::tag( $args['item_tag'], [
+		return Core\HTML::tag( $args['item_tag'], [
 			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $term->term_id, $term->slug ) : FALSE,
 			'class' => $args['item_class'],
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
@@ -231,7 +222,7 @@ class ShortCode extends Main
 	// term as an image on the list
 	public static function termImage( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
-		if ( ! $term = Term::get( $term ) )
+		if ( ! $term = WordPress\Term::get( $term ) )
 			return $fallback;
 
 		$args = self::atts( [
@@ -254,13 +245,13 @@ class ShortCode extends Main
 			'item_image_empty'    => FALSE,
 		], $atts );
 
-		if ( ! $image_id = Taxonomy::getThumbnailID( $term->term_id, $args['item_image_metakey'] ) )
+		if ( ! $image_id = WordPress\Taxonomy::getThumbnailID( $term->term_id, $args['item_image_metakey'] ) )
 			return $fallback;
 
 		if ( is_null( $args['item_image_size'] ) )
-			$args['item_image_size'] = Media::getAttachmentImageDefaultSize( NULL, $term->taxonomy );
+			$args['item_image_size'] = WordPress\Media::getAttachmentImageDefaultSize( NULL, $term->taxonomy );
 
-		if ( ! $thumbnail_img = Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
+		if ( ! $thumbnail_img = WordPress\Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
 
 		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
@@ -272,7 +263,7 @@ class ShortCode extends Main
 		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
 			$title = call_user_func_array( $args['item_text'], [ $term, $args, $text ] );
 
-		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+		else if ( $args['item_text'] && Core\Text::has( $args['item_text'], '%' ) )
 			$title = sprintf( $args['item_text'], $text );
 
 		else if ( $args['item_text'] )
@@ -281,43 +272,43 @@ class ShortCode extends Main
 		else
 			$title = '';
 
-		$image = HTML::tag( 'img', [
+		$image = Core\HTML::tag( 'img', [
 			'src'      => $thumbnail_img,
-			'alt'      => Media::getAttachmentImageAlt( $image_id, $title ),
+			'alt'      => WordPress\Media::getAttachmentImageAlt( $image_id, $title ),
 			'loading'  => $args['item_image_loading'],
 			'decoding' => $args['item_image_decoding'],
 		] );
 
 		if ( $term->count && $args['item_link'] )
-			$item = HTML::tag( 'a', [
+			$item = Core\HTML::tag( 'a', [
 				'href'  => $link,
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => '-link -tax-'.$term->taxonomy,
 			], $image );
 
 		else
-			$item = HTML::tag( 'span', [
+			$item = Core\HTML::tag( 'span', [
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => $args['item_link'] ? '-no-link -empty -tax-'.$term->taxonomy : FALSE,
 			], $image );
 
-		if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+		if ( $args['item_wrap'] && Core\Text::has( $args['item_wrap'], '%' ) )
 			$item = sprintf( $args['item_wrap'], $item );
 
 		else if ( $args['item_wrap'] )
-			$item = HTML::tag( $args['item_wrap'], $item );
+			$item = Core\HTML::tag( $args['item_wrap'], $item );
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
 			$item.= call_user_func_array( $args['item_after_cb'], [ $term, $args, $item ] );
 
 		} else if ( $args['item_after'] ) {
 
-			if ( Text::has( $args['item_after'], '%' ) )
+			if ( Core\Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
-					HTML::escapeURL( $link ),
+					Core\HTML::escapeURL( $link ),
 					Helper::prepDescription( $term->description ),
-					Text::trimChars( $term->description )
+					Core\Text::trimChars( $term->description )
 				);
 
 			if ( is_string( $args['item_after'] ) )
@@ -327,7 +318,7 @@ class ShortCode extends Main
 		if ( ! $args['item_tag'] )
 			return $before.$item.$after;
 
-		return HTML::tag( $args['item_tag'], [
+		return Core\HTML::tag( $args['item_tag'], [
 			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $term->term_id, $term->slug ) : FALSE,
 			'class' => $args['item_class'],
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
@@ -336,7 +327,7 @@ class ShortCode extends Main
 	// posttype as title of the list
 	public static function posttypeTitle( $posttype = NULL, $atts = [] )
 	{
-		if ( ! $posttype = PostType::object( $posttype ) )
+		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return '';
 
 		$args = self::atts( [
@@ -356,7 +347,7 @@ class ShortCode extends Main
 			$args['title'] = NULL; // reset
 
 		$text = Helper::getPostTypeLabel( $posttype, $args['title_label'] );
-		$link = PostType::getArchiveLink( $posttype->name );
+		$link = WordPress\PostType::getArchiveLink( $posttype->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $posttype, $atts, $text, $link ] );
@@ -364,7 +355,7 @@ class ShortCode extends Main
 		if ( is_null( $args['title'] ) )
 			$args['title'] = $text;
 
-		else if ( $args['title'] && Text::has( $args['title'], '%' ) )
+		else if ( $args['title'] && Core\Text::has( $args['title'], '%' ) )
 			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
@@ -379,26 +370,26 @@ class ShortCode extends Main
 		if ( $args['title'] ) {
 
 			if ( is_null( $args['title_link'] ) && $link && ! is_post_type_archive( $posttype->name ) )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $link,
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( 'anchor' === $args['title_link'] )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => '#'.sprintf( $args['title_anchor'], $posttype->name, $posttype->rest_base ),
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( $args['title_link'] )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $args['title_link'],
 					'title' => $attr,
 				], $args['title'] );
 		}
 
 		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = HTML::tag( $args['title_tag'], [
+			$args['title'] = Core\HTML::tag( $args['title_tag'], [
 				'id'    => sprintf( $args['title_anchor'], $posttype->name, $posttype->rest_base ),
 				'class' => $args['title_class'],
 			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
@@ -409,7 +400,7 @@ class ShortCode extends Main
 	// taxonomy as title of the list
 	public static function taxonomyTitle( $taxonomy = NULL, $atts = [] )
 	{
-		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return '';
 
 		$args = self::atts( [
@@ -429,7 +420,7 @@ class ShortCode extends Main
 			$args['title'] = NULL; // reset
 
 		$text = Helper::getTaxonomyLabel( $taxonomy, $args['title_label'] );
-		$link = Taxonomy::getArchiveLink( $taxonomy->name );
+		$link = WordPress\Taxonomy::getArchiveLink( $taxonomy->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $taxonomy, $atts, $text, $link ] );
@@ -437,7 +428,7 @@ class ShortCode extends Main
 		if ( is_null( $args['title'] ) )
 			$args['title'] = $text;
 
-		else if ( $args['title'] && Text::has( $args['title'], '%' ) )
+		else if ( $args['title'] && Core\Text::has( $args['title'], '%' ) )
 			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
@@ -452,26 +443,26 @@ class ShortCode extends Main
 		if ( $args['title'] ) {
 
 			if ( is_null( $args['title_link'] ) && $link )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $link,
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( 'anchor' === $args['title_link'] )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => '#'.sprintf( $args['title_anchor'], $taxonomy->name, $taxonomy->rest_base ),
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( $args['title_link'] )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $args['title_link'],
 					'title' => $attr,
 				], $args['title'] );
 		}
 
 		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = HTML::tag( $args['title_tag'], [
+			$args['title'] = Core\HTML::tag( $args['title_tag'], [
 				'id'    => sprintf( $args['title_anchor'], $taxonomy->name, $taxonomy->rest_base ),
 				'class' => $args['title_class'],
 			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
@@ -493,8 +484,8 @@ class ShortCode extends Main
 			'title_dummy'    => '<span class="-dummy"></span>',
 		], $atts );
 
-		$text = Post::title( $post, FALSE );
-		$link = Post::link( $post, '' );
+		$text = WordPress\Post::title( $post, FALSE );
+		$link = WordPress\Post::link( $post, '' );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $post, $atts, $text, $link ] );
@@ -502,7 +493,7 @@ class ShortCode extends Main
 		if ( is_null( $args['title'] ) )
 			$args['title'] = $text;
 
-		else if ( $args['title'] && Text::has( $args['title'], '%' ) )
+		else if ( $args['title'] && Core\Text::has( $args['title'], '%' ) )
 			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
@@ -518,26 +509,26 @@ class ShortCode extends Main
 
 			// only if post present, avoid linking to itself
 			if ( is_null( $args['title_link'] ) && $link && $post )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $link,
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( 'anchor' === $args['title_link'] && $post )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => '#'.sprintf( $args['title_anchor'], $post->ID, $post->post_name ),
 					'title' => $attr,
 				], $args['title'] );
 
 			else if ( $args['title_link'] )
-				$args['title'] = HTML::tag( 'a', [
+				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $args['title_link'],
 					'title' => $attr,
 				], $args['title'] );
 		}
 
 		if ( $args['title'] && $args['title_tag'] )
-			$args['title'] = HTML::tag( $args['title_tag'], [
+			$args['title'] = Core\HTML::tag( $args['title_tag'], [
 				'id'    => $post ? sprintf( $args['title_anchor'], $post->ID, $post->post_name ) : FALSE,
 				'class' => $args['title_class'],
 			], $args['title'].( $args['title_dummy'] ?: '' ) )."\n";
@@ -548,7 +539,7 @@ class ShortCode extends Main
 	// post as item in the list
 	public static function postItem( $post = NULL, $atts = [], $before = '', $after = '' )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
 
 		$args = self::atts( [
@@ -571,8 +562,8 @@ class ShortCode extends Main
 			'order_sep'     => ' &ndash; ',
 		], $atts );
 
-		$text = Post::title( $post );
-		$link = Post::link( $post, '' );
+		$text = WordPress\Post::title( $post );
+		$link = WordPress\Post::link( $post, '' );
 
 		if ( ! $link && current_user_can( 'edit_post', $post->ID ) )
 			$link = get_preview_post_link( $post );
@@ -583,7 +574,7 @@ class ShortCode extends Main
 		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
 			$item = call_user_func_array( $args['item_text'], [ $post, $args, $text ] );
 
-		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+		else if ( $args['item_text'] && Core\Text::has( $args['item_text'], '%' ) )
 			$item = sprintf( $args['item_text'], $text );
 
 		else if ( $args['item_text'] )
@@ -595,7 +586,7 @@ class ShortCode extends Main
 		if ( $item ) {
 
 			if ( $args['trim_chars'] )
-				$item = Text::trimChars( $item, ( TRUE === $args['trim_chars'] ? 45 : $args['trim_chars'] ) );
+				$item = Core\Text::trimChars( $item, ( TRUE === $args['trim_chars'] ? 45 : $args['trim_chars'] ) );
 
 			if ( $args['item_title_cb'] && is_callable( $args['item_title_cb'] ) )
 				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $text ] );
@@ -612,12 +603,12 @@ class ShortCode extends Main
 			if ( TRUE === $args['item_link'] ) {
 
 				// avoid linking to the same page
-				if ( is_singular() && ( $current = Post::get() ) )
+				if ( is_singular() && ( $current = WordPress\Post::get() ) )
 					$args['item_link'] = $current->ID !== $post->ID;
 			}
 
 			if ( $args['item_link'] && 'attachment' == $post->post_type && $args['item_download'] )
-				$item = HTML::tag( 'a', [
+				$item = Core\HTML::tag( 'a', [
 					'href'     => wp_get_attachment_url( $post->ID ),
 					'download' => apply_filters( static::BASE.'_shortcode_attachement_download', basename( get_attached_file( $post->ID ) ), $post ),
 					'title'    => $attr,
@@ -626,33 +617,33 @@ class ShortCode extends Main
 				], $item );
 
 			else if ( $args['item_link'] && $link )
-				$item = HTML::tag( 'a', [
+				$item = Core\HTML::tag( 'a', [
 					'href'  => $link,
 					'title' => $attr,
 					'class' => '-link -posttype-'.$post->post_type,
 				], $item );
 
 			else
-				$item = HTML::tag( 'span', [
+				$item = Core\HTML::tag( 'span', [
 					'title' => $attr,
 					'class' => $args['item_link'] ? '-no-link -future -posttype-'.$post->post_type : '-no-link',
 				], $item );
 
-			if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+			if ( $args['item_wrap'] && Core\Text::has( $args['item_wrap'], '%' ) )
 				$item = sprintf( $args['item_wrap'], $item );
 
 			else if ( $args['item_wrap'] )
-				$item = HTML::tag( $args['item_wrap'], $item );
+				$item = Core\HTML::tag( $args['item_wrap'], $item );
 
 			if ( $args['order_before'] ) {
-				$order = $args['order_zeroise'] ? Number::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
-				$item = Number::localize( $order ).( $args['order_sep'] ? $args['order_sep'] : '' ).$item;
+				$order = $args['order_zeroise'] ? Core\Number::zeroise( $post->menu_order, $args['order_zeroise'] ) : $post->menu_order;
+				$item = Core\Number::localize( $order ).( $args['order_sep'] ? $args['order_sep'] : '' ).$item;
 			}
 		}
 
 		if ( 'attachment' == $post->post_type && $args['item_filesize'] ) {
 			$size = TRUE === $args['item_filesize'] ? '&nbsp;<span class="-filesize">(%s)</span>' : $args['item_filesize'];
-			$item.= sprintf( $size, HTML::wrapLTR( File::formatSize( filesize( get_attached_file( $post->ID ) ), 2 ) ) );
+			$item.= sprintf( $size, Core\HTML::wrapLTR( Core\File::formatSize( filesize( get_attached_file( $post->ID ) ), 2 ) ) );
 		}
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
@@ -660,12 +651,12 @@ class ShortCode extends Main
 
 		} else if ( $args['item_after'] ) {
 
-			if ( Text::has( $args['item_after'], '%' ) )
+			if ( Core\Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
-					HTML::escapeURL( $link ),
+					Core\HTML::escapeURL( $link ),
 					Helper::prepDescription( $post->post_excerpt ),
-					Text::trimChars( $post->post_excerpt )
+					Core\Text::trimChars( $post->post_excerpt )
 					// FIXME: add post_content
 				);
 
@@ -676,7 +667,7 @@ class ShortCode extends Main
 		if ( ! $args['item_tag'] )
 			return $before.$item.$after;
 
-		return HTML::tag( $args['item_tag'], [
+		return Core\HTML::tag( $args['item_tag'], [
 			'id'       => $args['item_anchor'] ? sprintf( $args['item_anchor'], $post->ID, $post->post_name ) : FALSE,
 			'class'    => $args['item_class'],
 			'datetime' => 'publish' == $post->post_status ? date( 'c', strtotime( $post->post_date_gmt ) ) : FALSE,
@@ -686,7 +677,7 @@ class ShortCode extends Main
 	// post as an image on the list
 	public static function postImage( $post = NULL, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;
 
 		$args = self::atts( [
@@ -709,17 +700,17 @@ class ShortCode extends Main
 			'item_image_empty'    => FALSE,
 		], $atts );
 
-		if ( ! $image_id = PostType::getThumbnailID( $post->ID, $args['item_image_metakey'] ) )
+		if ( ! $image_id = WordPress\PostType::getThumbnailID( $post->ID, $args['item_image_metakey'] ) )
 			return $fallback;
 
 		if ( is_null( $args['item_image_size'] ) )
-			$args['item_image_size'] = Media::getAttachmentImageDefaultSize( $post->post_type );
+			$args['item_image_size'] = WordPress\Media::getAttachmentImageDefaultSize( $post->post_type );
 
-		if ( ! $thumbnail_img = Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
+		if ( ! $thumbnail_img = WordPress\Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
 
-		$text = Post::title( $post, FALSE );
-		$link = Post::link( $post, '' );
+		$text = WordPress\Post::title( $post, FALSE );
+		$link = WordPress\Post::link( $post, '' );
 
 		if ( is_null( $args['item_text'] ) )
 			$title = $text;
@@ -727,7 +718,7 @@ class ShortCode extends Main
 		else if ( $args['item_text'] && is_callable( $args['item_text'] ) )
 			$title = call_user_func_array( $args['item_text'], [ $post, $args, $text ] );
 
-		else if ( $args['item_text'] && Text::has( $args['item_text'], '%' ) )
+		else if ( $args['item_text'] && Core\Text::has( $args['item_text'], '%' ) )
 			$title = sprintf( $args['item_text'], $text );
 
 		else if ( $args['item_text'] )
@@ -736,43 +727,43 @@ class ShortCode extends Main
 		else
 			$title = '';
 
-		$image = HTML::tag( 'img', [
+		$image = Core\HTML::tag( 'img', [
 			'src'      => $thumbnail_img,
-			'alt'      => Media::getAttachmentImageAlt( $image_id, $title ),
+			'alt'      => WordPress\Media::getAttachmentImageAlt( $image_id, $title ),
 			'loading'  => $args['item_image_loading'],
 			'decoding' => $args['item_image_decoding'],
 		] );
 
 		if ( $link && $args['item_link'] )
-			$item = HTML::tag( 'a', [
+			$item = Core\HTML::tag( 'a', [
 				'href'  => $link,
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => '-link -type-'.$post->post_type,
 			], $image );
 
 		else
-			$item = HTML::tag( 'span', [
+			$item = Core\HTML::tag( 'span', [
 				'title' => $args['item_title'] ? sprintf( $args['item_title'], $text ) : FALSE,
 				'class' => $args['item_link'] ? '-no-link -empty -type-'.$post->post_type : FALSE,
 			], $image );
 
-		if ( $args['item_wrap'] && Text::has( $args['item_wrap'], '%' ) )
+		if ( $args['item_wrap'] && Core\Text::has( $args['item_wrap'], '%' ) )
 			$item = sprintf( $args['item_wrap'], $item );
 
 		else if ( $args['item_wrap'] )
-			$item = HTML::tag( $args['item_wrap'], $item );
+			$item = Core\HTML::tag( $args['item_wrap'], $item );
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
 			$item.= call_user_func_array( $args['item_after_cb'], [ $post, $args, $item ] );
 
 		} else if ( $args['item_after'] ) {
 
-			if ( Text::has( $args['item_after'], '%' ) )
+			if ( Core\Text::has( $args['item_after'], '%' ) )
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
-					HTML::escapeURL( $link ),
+					Core\HTML::escapeURL( $link ),
 					Helper::prepDescription( $post->post_excerpt ),
-					Text::trimChars( $post->post_excerpt )
+					Core\Text::trimChars( $post->post_excerpt )
 				);
 
 			if ( is_string( $args['item_after'] ) )
@@ -782,7 +773,7 @@ class ShortCode extends Main
 		if ( ! $args['item_tag'] )
 			return $before.$item.$after;
 
-		return HTML::tag( $args['item_tag'], [
+		return Core\HTML::tag( $args['item_tag'], [
 			'id'    => $args['item_anchor'] ? sprintf( $args['item_anchor'], $post->ID, $post->post_name ) : FALSE,
 			'class' => $args['item_class'],
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
@@ -915,7 +906,7 @@ class ShortCode extends Main
 			$query['post_type'] = 'attachment';
 			$query['post_status'] = [ 'inherit' ];
 
-			if ( $parent = Post::get( $args['id'] ) )
+			if ( $parent = WordPress\Post::get( $args['id'] ) )
 				$query['post_parent'] = $parent->ID;
 
 			if ( $args['mime_type'] )
@@ -930,7 +921,7 @@ class ShortCode extends Main
 
 				$query['post_type'] = $posttype;
 
-			} else if ( $post = Post::get( $args['id'] ) ) {
+			} else if ( $post = WordPress\Post::get( $args['id'] ) ) {
 
 				$query['connected_type']  = $args['connection'];
 				$query['connected_items'] = $post;
@@ -989,7 +980,7 @@ class ShortCode extends Main
 
 			// gets the list of supported posts paired to this post
 
-			if ( ! $post = Post::get() )
+			if ( ! $post = WordPress\Post::get() )
 				return $content;
 
 			if ( $args['module'] ) {
@@ -1024,7 +1015,7 @@ class ShortCode extends Main
 
 			// exclude paired posttype
 			if ( empty( $args['posttypes'] ) )
-				$query['post_type'] = Arraay::stripByValue( Taxonomy::object( $taxonomy )->object_type, $posttype );
+				$query['post_type'] = Core\Arraay::stripByValue( WordPress\Taxonomy::object( $taxonomy )->object_type, $posttype );
 
 		} else if ( 'paired' === $list && is_singular( $args['posttypes'] ) ) {
 
@@ -1048,11 +1039,11 @@ class ShortCode extends Main
 
 			// gets the list of posts by the taxonomy
 
-			if ( ! $post = Post::get() )
+			if ( ! $post = WordPress\Post::get() )
 				return $content;
 
 			// NOTE: also used later!
-			if ( ! $term = Taxonomy::getPostTerms( $taxonomy, $post ) )
+			if ( ! $term = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
 				return $content;
 
 			$query['tax_query'] = [ [
@@ -1138,8 +1129,8 @@ class ShortCode extends Main
 		}
 
 		if ( $args['list_tag'] )
-			$html = HTML::tag( $args['list_tag'], [
-				'class' => HTML::attrClass( $args['list_class'], '-posts-list', sprintf( '-type-%s', is_array( $posttype ) ? $posttype[0] : $posttype ) ),
+			$html = Core\HTML::tag( $args['list_tag'], [
+				'class' => Core\HTML::attrClass( $args['list_class'], '-posts-list', sprintf( '-type-%s', is_array( $posttype ) ? $posttype[0] : $posttype ) ),
 			], $html );
 
 		if ( $args['title'] )
@@ -1193,7 +1184,7 @@ class ShortCode extends Main
 
 		if ( in_array( 'attachment', (array) $args['posttypes'] ) ) {
 
-			if ( $post = Post::get( $args['id'] ) )
+			if ( $post = WordPress\Post::get( $args['id'] ) )
 				$query_args['post_parent'] = $post->ID;
 
 			if ( $args['mime_type'] )
@@ -1241,7 +1232,7 @@ class ShortCode extends Main
 		} else if ( is_singular( $posttype ) ) {
 
 			// NOTE: also used late
-			if ( ! $term = Taxonomy::getPostTerms( $taxonomy ) )
+			if ( ! $term = WordPress\Taxonomy::getPostTerms( $taxonomy ) )
 				return $content;
 
 			$query_args['tax_query'] = [ [
@@ -1296,7 +1287,7 @@ class ShortCode extends Main
 		}
 
 		if ( $args['list_tag'] )
-			$html = HTML::tag( $args['list_tag'], [
+			$html = Core\HTML::tag( $args['list_tag'], [
 				'class' => $args['list_class'],
 			], $html );
 
@@ -1323,7 +1314,7 @@ class ShortCode extends Main
 			return NULL;
 
 		$html = $term = $tax_query = $meta_query = '';
-		$post = Post::get();
+		$post = WordPress\Post::get();
 
 		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $posttype );
@@ -1391,7 +1382,7 @@ class ShortCode extends Main
 		} else {
 
 			// NOTE: also used later
-			if ( ! $term = Taxonomy::getPostTerms( $taxonomy ) )
+			if ( ! $term = WordPress\Taxonomy::getPostTerms( $taxonomy ) )
 				return $content;
 
 			$tax_query = [ [
@@ -1456,7 +1447,7 @@ class ShortCode extends Main
 		}
 
 		if ( $args['list_tag'] )
-			$html = HTML::tag( $args['list_tag'], [
+			$html = Core\HTML::tag( $args['list_tag'], [
 				'class' => $args['list_class'],
 			], $html );
 
@@ -1513,7 +1504,7 @@ class ShortCode extends Main
 
 			// $query['update_term_meta_cache'] = FALSE;
 
-			$ref = Taxonomy::object( $args['taxonomy'] );
+			$ref = WordPress\Taxonomy::object( $args['taxonomy'] );
 
 		} else if ( 'allitems' === $list ) {
 
@@ -1522,7 +1513,7 @@ class ShortCode extends Main
 
 		if ( 'thepost' == $list ) {
 
-			if ( ! $parent = Post::get( $args['id'] ) )
+			if ( ! $parent = WordPress\Post::get( $args['id'] ) )
 				return $content;
 
 			$query['object_ids'] = [ $parent->ID ];
@@ -1581,8 +1572,8 @@ class ShortCode extends Main
 		}
 
 		if ( $args['list_tag'] )
-			$html = HTML::tag( $args['list_tag'], [
-				'class' => HTML::attrClass( $args['list_class'], ( 'tiles' == $list ? '-term-tiles' : '-terms-list' ) ),
+			$html = Core\HTML::tag( $args['list_tag'], [
+				'class' => Core\HTML::attrClass( $args['list_class'], ( 'tiles' == $list ? '-term-tiles' : '-terms-list' ) ),
 			], $html );
 
 		if ( $args['title'] )

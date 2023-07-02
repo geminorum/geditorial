@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Services\O2O;
+use geminorum\gEditorial\Services;
 
 class Reshare extends gEditorial\Module
 {
@@ -104,7 +104,7 @@ class Reshare extends gEditorial\Module
 
 	public function o2o_init()
 	{
-		$this->_o2o = O2O\API::registerConnectionType( [
+		$this->_o2o = Services\O2O\API::registerConnectionType( [
 			'name' => $this->constant( 'o2o_name' ),
 			'from' => $this->constant( 'primary_posttype' ),
 			'to'   => $this->posttypes( 'primary_posttype' ),

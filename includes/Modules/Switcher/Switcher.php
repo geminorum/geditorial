@@ -3,10 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Switcher extends gEditorial\Module
 {
@@ -68,8 +67,8 @@ class Switcher extends gEditorial\Module
 	public function bulk_actions( $actions )
 	{
 		$list      = [];
-		$current   = PostType::current();
-		$posttypes = PostType::get( 2, [
+		$current   = WordPress\PostType::current();
+		$posttypes = WordPress\PostType::get( 2, [
 			'public'  => TRUE,
 			'show_ui' => TRUE,
 		], 'edit_others_posts' );
@@ -98,7 +97,7 @@ class Switcher extends gEditorial\Module
 			if ( $doaction !== ( 'switch-to-'.$posttype ) )
 				continue;
 
-			if ( ! PostType::can( $posttype, 'edit_others_posts' ) )
+			if ( ! WordPress\PostType::can( $posttype, 'edit_others_posts' ) )
 				continue;
 
 			$switched = 0;
@@ -122,12 +121,12 @@ class Switcher extends gEditorial\Module
 			return;
 
 		$to  = self::req( $this->hook( 'to' ), 'post' );
-		$all = PostType::get( 2, [ 'public' => TRUE, 'show_ui' => TRUE ] );
+		$all = WordPress\PostType::get( 2, [ 'public' => TRUE, 'show_ui' => TRUE ] );
 
 		$_SERVER['REQUEST_URI'] = remove_query_arg( [ $this->hook( 'count' ), $this->hook( 'to' ) ], $_SERVER['REQUEST_URI'] );
 
 		/* translators: %1$s: count, %2$s: posttype */
 		$message = _x( '%1$s items(s) switched to %2$s!', 'Message', 'geditorial-switcher' );
-		echo HTML::success( sprintf( $message, Number::format( $switched ), $all[$to] ) );
+		echo Core\HTML::success( sprintf( $message, Core\Number::format( $switched ), $all[$to] ) );
 	}
 }

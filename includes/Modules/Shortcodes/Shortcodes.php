@@ -3,13 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Post;
+use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\WordPress;
 
 class Shortcodes extends gEditorial\Module
 {
@@ -117,7 +115,7 @@ class Shortcodes extends gEditorial\Module
 		foreach ( $matches[0] as $offset => $shortcode )
 			$nodes[] = [
 				'id'     => $this->classs( 'shortcode', $offset ),
-				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.Strings::trimChars( strip_tags( $shortcode ), 125 ).'</span>',
+				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.WordPress\Strings::trimChars( strip_tags( $shortcode ), 125 ).'</span>',
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];
@@ -142,7 +140,7 @@ class Shortcodes extends gEditorial\Module
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
-		$pagination['before'][] = HTML::dropdown(
+		$pagination['before'][] = Core\HTML::dropdown(
 			$this->get_shortcode_list(), [
 				'name'       => 'shortcode',
 				'selected'   => self::req( 'shortcode', 'none' ),
@@ -154,7 +152,7 @@ class Shortcodes extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
@@ -171,7 +169,7 @@ class Shortcodes extends gEditorial\Module
 						return $html.'&mdash;</div>';
 
 					foreach ( $matches[0] as $offset => $shortcode )
-						$html.= HTML::wrap( HTML::code( $matches[2][$offset] ).' '.Strings::trimChars( $shortcode, 145 ) );
+						$html.= Core\HTML::wrap( Core\HTML::code( $matches[2][$offset] ).' '.WordPress\Strings::trimChars( $shortcode, 145 ) );
 
 					return $html.'</div>';
 				},
@@ -179,7 +177,7 @@ class Shortcodes extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Header', 'geditorial-shortcodes' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Header', 'geditorial-shortcodes' ) ),
 			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
@@ -200,7 +198,7 @@ class Shortcodes extends gEditorial\Module
 	// FIXME: add table action
 	protected function remove_shortcode( $post_id, $shortcode )
 	{
-		if ( ! $post = Post::get( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return FALSE;
 
 		$pattern = '#\['.$shortcode.'[^\]]*\]#i';
@@ -237,7 +235,7 @@ class Shortcodes extends gEditorial\Module
 	{
 		global $shortcode_tags;
 
-		if ( ! Text::has( $content, '[' ) )
+		if ( ! Core\Text::has( $content, '[' ) )
 			return $content;
 
 		// Check for active shortcodes

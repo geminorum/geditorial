@@ -351,13 +351,13 @@ class Organization extends gEditorial\Module
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
 	}
 
-	protected function _render_mainbox_extra( $post, $box, $context = 'mainbox' )
+	protected function _render_mainbox_extra( $object, $box, $context = NULL, $screen = NULL )
 	{
-		parent::_render_mainbox_extra( $post, $box );
+		parent::_render_mainbox_extra( $object, $box, $context, $screen );
 
-		MetaBox::singleselectTerms( $post->ID, [
+		MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy' => $this->constant( 'type_taxonomy' ),
-			'posttype' => $post->post_type,
+			'posttype' => $object->post_type,
 		] );
 	}
 

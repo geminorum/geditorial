@@ -3,18 +3,14 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Theme;
-use geminorum\gEditorial\WordPress\Post;
+use geminorum\gEditorial\WordPress;
 
 class Today extends gEditorial\Module
 {
@@ -246,12 +242,12 @@ class Today extends gEditorial\Module
 					$title = trim( ModuleHelper::titleTheDay( $this->the_day ), '[]' );
 
 					if ( ! empty( $this->the_post[0] ) )
-						$title = Post::title( $this->the_post[0] ).' ['.$title.']';
+						$title = WordPress\Post::title( $this->the_post[0] ).' ['.$title.']';
 
-					HTML::h3( $title );
+					Core\HTML::h3( $title );
 
 					$html = $this->the_day_content();
-					echo HTML::wrap( $html, $this->classs( 'today' ) );
+					echo Core\HTML::wrap( $html, $this->classs( 'today' ) );
 
 
 				echo '</div>';
@@ -382,8 +378,8 @@ class Today extends gEditorial\Module
 				return $actions;
 
 		if ( $link = $this->get_today_admin_link( $post ) )
-			return Arraay::insert( $actions, [
-				$this->classs() => HTML::tag( 'a', [
+			return Core\Arraay::insert( $actions, [
+				$this->classs() => Core\HTML::tag( 'a', [
 					'href'   => $link,
 					'title'  => _x( 'View on Today', 'Title Attr', 'geditorial-today' ),
 					'class'  => '-today',
@@ -453,7 +449,7 @@ class Today extends gEditorial\Module
 
 	public function manage_posts_columns( $columns )
 	{
-		return Arraay::insert( $columns, [
+		return Core\Arraay::insert( $columns, [
 			'theday' => $this->get_column_title( 'theday', 'day_cpt' ),
 		], 'title', 'before' );
 	}
@@ -463,7 +459,7 @@ class Today extends gEditorial\Module
 		if ( 'theday' == $column_name ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
-				Post::get( $post_id ),
+				WordPress\Post::get( $post_id ),
 				$this->default_calendar(),
 				$this->get_the_day_constants()
 			);
@@ -525,7 +521,7 @@ class Today extends gEditorial\Module
 	{
 		// TODO: use `check_draft_metabox()`
 		if ( ! self::req( 'post' ) )
-			return HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Message', 'geditorial-today' ) );
+			return Core\HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Message', 'geditorial-today' ) );
 
 		echo $this->wrap_open( '-admin-nobox' );
 
@@ -545,7 +541,7 @@ class Today extends gEditorial\Module
 			if ( $buttons = ModuleHelper::theDayNewConnected( $posttypes, $the_day ) )
 				echo $buttons.'<br />';
 
-			HTML::tableList( [
+			Core\HTML::tableList( [
 				'_cb'   => 'ID',
 				'title' => Tablelist::columnPostTitle(),
 				'terms' => Tablelist::columnPostTerms(),
@@ -620,7 +616,7 @@ class Today extends gEditorial\Module
 			if ( 'cal' == $field )
 				$postmeta[$field] = Datetime::sanitizeCalendar( $value, $this->default_calendar() );
 			else
-				$postmeta[$field] = Number::intval( $value, FALSE );
+				$postmeta[$field] = Core\Number::intval( $value, FALSE );
 		}
 
 		$this->set_today_meta( $post->ID, $postmeta, $constants );
@@ -631,7 +627,7 @@ class Today extends gEditorial\Module
 		if ( $title )
 			return $title;
 
-		if ( ! $post = Post::get( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $title;
 
 		if ( $this->constant( 'day_cpt' ) == $post->post_type ) {
@@ -654,7 +650,7 @@ class Today extends gEditorial\Module
 			return;
 
 		$the_day = ModuleHelper::getTheDayFromPost(
-			Post::get(),
+			WordPress\Post::get(),
 			$this->default_calendar(),
 			$this->get_the_day_constants()
 		);
@@ -691,9 +687,9 @@ class Today extends gEditorial\Module
 			$title = trim( ModuleHelper::titleTheDay( $this->the_day, '[]', FALSE ), '[]' );
 
 			if ( ! empty( $this->the_post[0] ) )
-				$title = Post::title( $this->the_post[0] ).' ['.$title.']';
+				$title = WordPress\Post::title( $this->the_post[0] ).' ['.$title.']';
 
-			Theme::resetQuery( [
+			WordPress\Theme::resetQuery( [
 				'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
 				'post_title'  => $title,
 				'post_author' => 0,
@@ -735,7 +731,7 @@ class Today extends gEditorial\Module
 			// has excerpt
 			if ( $this->the_post[0]->post_excerpt ) {
 				$html = wpautop( Helper::prepDescription( $this->the_post[0]->post_excerpt, TRUE, FALSE ), FALSE );
-				echo HTML::wrap( $html, $this->classs( 'theday-excerpt' ) );
+				echo Core\HTML::wrap( $html, $this->classs( 'theday-excerpt' ) );
 			}
 		}
 
@@ -756,7 +752,7 @@ class Today extends gEditorial\Module
 
 		} else {
 
-			HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
+			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
 		}
 
 		if ( ! is_admin() ) {
@@ -767,7 +763,7 @@ class Today extends gEditorial\Module
 			echo $this->get_search_form( $hiddens );
 		}
 
-		return HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
+		return Core\HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
 	}
 
 	public function get_the_date( $the_date, $d, $post )
@@ -920,7 +916,7 @@ class Today extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
@@ -943,7 +939,7 @@ class Today extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post with Day Information', 'Header', 'geditorial-today' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post with Day Information', 'Header', 'geditorial-today' ) ),
 			'empty'      => _x( 'No posts with day information found.', 'Message', 'geditorial-today' ),
 			'pagination' => $pagination,
 		] );
@@ -978,7 +974,7 @@ class Today extends gEditorial\Module
 							$count++;
 					}
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'scheduled',
 						'count'   => $count,
 					] );
@@ -989,18 +985,18 @@ class Today extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Today Tools', 'Header', 'geditorial-today' ) );
+		Core\HTML::h3( _x( 'Today Tools', 'Header', 'geditorial-today' ) );
 		echo '<table class="form-table">';
 
 		echo '<tr><th scope="row">'._x( 'Re-schedule by Day', 'Header', 'geditorial-today' ).'</th><td>';
 
-		echo HTML::dropdown( $this->list_posttypes(), [ 'name' => 'posttype' ] );
+		echo Core\HTML::dropdown( $this->list_posttypes(), [ 'name' => 'posttype' ] );
 
 		echo '&nbsp;&nbsp;';
 
 		Settings::submitButton( 'reschedule_by_day', _x( 'Schedule', 'Setting', 'geditorial-today' ) );
 
-		HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Message', 'geditorial-today' ) );
+		Core\HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Message', 'geditorial-today' ) );
 
 		echo '</td></tr>';
 		echo '</table>';
@@ -1014,7 +1010,7 @@ class Today extends gEditorial\Module
 		if ( $exists = term_exists( $this->constant( 'term_empty_the_day' ), $taxonomy ) ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
-				Post::get( $post ),
+				WordPress\Post::get( $post ),
 				$this->default_calendar(),
 				$this->get_the_day_constants()
 			);
@@ -1023,7 +1019,7 @@ class Today extends gEditorial\Module
 				$terms[] = $exists['term_id'];
 
 			else
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 		}
 
 		return $terms;
@@ -1068,7 +1064,7 @@ class Today extends gEditorial\Module
 			case 'today__cal': return Datetime::sanitizeCalendar( trim( $value ), $this->default_calendar() );
 			case 'today__year':
 			case 'today__month':
-			case 'today__day': return Number::intval( trim( $value ), FALSE );
+			case 'today__day': return Core\Number::intval( trim( $value ), FALSE );
 			case 'today__full': return ModuleHelper::parseTheFullDay( trim( $value ), $this->default_calendar() );
 		}
 
@@ -1103,7 +1099,7 @@ class Today extends gEditorial\Module
 				$postmeta[$key] = Datetime::sanitizeCalendar( $value, $default );
 
 			else
-				$postmeta[$key] = Number::intval( $value, FALSE );
+				$postmeta[$key] = Core\Number::intval( $value, FALSE );
 		}
 
 		if ( count( $postmeta ) )

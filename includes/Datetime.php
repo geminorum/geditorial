@@ -2,19 +2,17 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\Date;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
-class Datetime extends Main
+class Datetime extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
 
 	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE )
 	{
-		return Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );
+		return Core\Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );
 	}
 
 	// @REF: https://unicode-table.com/en/060D/
@@ -35,7 +33,7 @@ class Datetime extends Main
 
 	public static function dateFormat( $timestamp, $context = 'default' )
 	{
-		if ( ! Date::isTimestamp( $timestamp ) )
+		if ( ! Core\Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
 		return date_i18n( self::dateFormats( $context ), $timestamp );
@@ -81,7 +79,7 @@ class Datetime extends Main
 
 		return $attr
 			? sprintf( $title, date_i18n( $format, $local ) )
-			: Date::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
+			: Core\Date::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
 	}
 
 	public static function htmlHumanTime( $timestamp, $flip = FALSE )
@@ -89,19 +87,19 @@ class Datetime extends Main
 		if ( ! $timestamp )
 			return $timestamp;
 
-		if ( ! Date::isTimestamp( $timestamp ) )
+		if ( ! Core\Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
 		$now = current_time( 'timestamp', FALSE );
 
 		if ( $flip )
 			return '<span class="-date-diff" title="'
-					.HTML::escape( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
+					.Core\HTML::escape( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
 					.self::humanTimeDiff( $timestamp, $now )
 				.'</span>';
 
 		return '<span class="-time" title="'
-			.HTML::escape( self::humanTimeAgo( $timestamp, $now ) ).'">'
+			.Core\HTML::escape( self::humanTimeAgo( $timestamp, $now ) ).'">'
 			.self::humanTimeDiffRound( $timestamp, NULL, self::dateFormats( 'default' ), $now )
 		.'</span>';
 	}
@@ -124,7 +122,7 @@ class Datetime extends Main
 			return self::humanTimeAgo( $local, $now );
 
 		if ( is_null( $round ) )
-			$round = Date::DAY_IN_SECONDS;
+			$round = Core\Date::DAY_IN_SECONDS;
 
 		$diff = $now - $local;
 
@@ -166,7 +164,7 @@ class Datetime extends Main
 		if ( empty( $now ) )
 			$now = current_time( 'timestamp', FALSE );
 
-		return Date::humanTimeDiff( $timestamp, $now, $strings );
+		return Core\Date::humanTimeDiff( $timestamp, $now, $strings );
 	}
 
 	public static function htmlFromSeconds( $seconds, $round = FALSE )
@@ -187,7 +185,7 @@ class Datetime extends Main
 				'noop_days'    => _nx_noop( '%s day', '%s days', 'Datetime: From Seconds: Noop', 'geditorial' ),
 			];
 
-		return Date::htmlFromSeconds( $seconds, $round, $strings );
+		return Core\Date::htmlFromSeconds( $seconds, $round, $strings );
 	}
 
 	// not used yet!
@@ -230,7 +228,7 @@ class Datetime extends Main
 		if ( empty( $now ) )
 			$now = current_time( 'timestamp', FALSE );
 
-		return Date::moment( $timestamp, $now, $strings );
+		return Core\Date::moment( $timestamp, $now, $strings );
 	}
 
 	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
@@ -311,7 +309,7 @@ class Datetime extends Main
 
 		// must be here, we can not pass NULL to gPersianDate
 		// if ( is_null( $timezone ) )
-		// 	$timezone = Date::currentTimeZone();
+		// 	$timezone = Core\Date::currentTimeZone();
 
 		return call_user_func_array( $callback, [ $input, $calendar, $timezone, $fallback ] );
 	}
@@ -325,7 +323,7 @@ class Datetime extends Main
 
 		// must be here, we can not pass NULL to gPersianDate
 		// if ( is_null( $timezone ) )
-		// 	$timezone = Date::currentTimeZone();
+		// 	$timezone = Core\Date::currentTimeZone();
 
 		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone, $fallback ] );
 	}
@@ -343,7 +341,7 @@ class Datetime extends Main
 		$timestamp = strtotime( $date );
 		$timeage   = self::humanTimeDiffRound( $timestamp, FALSE );
 
-		return Date::htmlDateTime( $timestamp, NULL, $format, $timeage );
+		return Core\Date::htmlDateTime( $timestamp, NULL, $format, $timeage );
 	}
 
 	// TODO: utilize `htmlDateTime()`
@@ -352,11 +350,11 @@ class Datetime extends Main
 		if ( is_null( $format ) )
 			$format = self::dateFormats( 'default' );
 
-		$age  = Date::calculateAge( $date, $calendar_type, $timezone );
+		$age  = Core\Date::calculateAge( $date, $calendar_type, $timezone );
 		$html = apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone );
 
 		/* translators: %s: year number */
-		$title = sprintf( _nx( '%s year old', '%s years old', $age['year'], 'Datetime: Age Title Attr', 'geditorial' ), Number::format( $age['year'] ) );
+		$title = sprintf( _nx( '%s year old', '%s years old', $age['year'], 'Datetime: Age Title Attr', 'geditorial' ), Core\Number::format( $age['year'] ) );
 
 		return sprintf( '<span title="%s" class="%s">%s</span>', $title, 'date-of-birth', $html );
 	}

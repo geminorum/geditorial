@@ -4,15 +4,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\HTTP;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress;
 
 class Like extends gEditorial\Module
 {
@@ -137,7 +133,7 @@ class Like extends gEditorial\Module
 		if ( ! $post )
 			return FALSE;
 
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( ! in_array( $post->post_type, $this->posttypes() ) )
@@ -149,7 +145,7 @@ class Like extends gEditorial\Module
 		$title = $this->filters( 'loading', $title, $post );
 
 		$html  = '<div class="geditorial-wrap -like" style="display:none;" data-avatars="'.( $avatars ? 'true' : 'false' ).'">';
-		$html.= '<div><a class="like loading" title="'.HTML::escape( $title ).'" href="#" data-id="'.$post->ID.'">';
+		$html.= '<div><a class="like loading" title="'.Core\HTML::escape( $title ).'" href="#" data-id="'.$post->ID.'">';
 
 		// $html.= $this->filters( 'icon', '<span class="genericon genericon-heart"></span>', $post->ID );
 		$html.= $this->icon( 'heart', 'misc-32' );
@@ -185,7 +181,7 @@ class Like extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'users' ),
 				/* translators: %s: count placeholder */
-				'title'  => Strings::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
+				'title'  => WordPress\Strings::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -195,7 +191,7 @@ class Like extends gEditorial\Module
 					'id'     => $this->classs( 'user', $user_id ),
 					'title'  => Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
 					'parent' => $this->classs( 'users' ),
-					'href'   => $cap ? WordPress::getUserEditLink( $user_id ) : FALSE,
+					'href'   => $cap ? Core\WordPress::getUserEditLink( $user_id ) : FALSE,
 					'meta'   => [ 'title' => Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
@@ -205,7 +201,7 @@ class Like extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'guests' ),
 				/* translators: %s: count placeholder */
-				'title'  => Strings::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' ) ),
+				'title'  => WordPress\Strings::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
 			];
@@ -239,7 +235,7 @@ class Like extends gEditorial\Module
 					'remove'  => 'loading',
 					'add'     => $check ? 'unlike' : 'dolike',
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
-					'count'   => Number::format( $count ),
+					'count'   => Core\Number::format( $count ),
 					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
 				] );
 
@@ -255,7 +251,7 @@ class Like extends gEditorial\Module
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
-					'count'   => Number::format( $count ),
+					'count'   => Core\Number::format( $count ),
 					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
 				] );
 
@@ -271,7 +267,7 @@ class Like extends gEditorial\Module
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
-					'count'   => Number::format( $count ),
+					'count'   => Core\Number::format( $count ),
 					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
 				] );
 		}
@@ -354,7 +350,7 @@ class Like extends gEditorial\Module
 		} else {
 
 			$cookie = $this->get_cookie();
-			$ip     = HTTP::IP();
+			$ip     = Core\HTTP::IP();
 
 			if ( ! array_key_exists( $post_id, $cookie )
 				&& ! array_search( $ip, $guests ) ) {
@@ -406,7 +402,7 @@ class Like extends gEditorial\Module
 					if ( function_exists( 'bp_core_get_userlink' ) ) {
 						$html.= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {
-						$html.= '<li><a title="'.HTML::escape( $user->display_name ).'" >'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
+						$html.= '<li><a title="'.Core\HTML::escape( $user->display_name ).'" >'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					}
 				}
 			}
@@ -471,7 +467,7 @@ class Like extends gEditorial\Module
 			echo $this->get_column_icon( FALSE, 'heart', _x( 'Likes', 'Row Icon Title', 'geditorial-like' ) );
 
 			/* translators: %s: likes count */
-			printf( _nx( '%s Like', '%s Likes', $total, 'Noop', 'geditorial-like' ), Number::format( $total ) );
+			printf( _nx( '%s Like', '%s Likes', $total, 'Noop', 'geditorial-like' ), Core\Number::format( $total ) );
 
 			$list   = [];
 			$users  = $this->get_liked_users( $post->ID );
@@ -479,13 +475,13 @@ class Like extends gEditorial\Module
 
 			if ( ! empty( $users ) )
 				/* translators: %s: users count */
-				$list[] = sprintf( _nx( '%s User', '%s Users', count( $users ), 'Noop', 'geditorial-like' ), Number::format( count( $users ) ) );
+				$list[] = sprintf( _nx( '%s User', '%s Users', count( $users ), 'Noop', 'geditorial-like' ), Core\Number::format( count( $users ) ) );
 
 			if ( ! empty( $guests ) )
 				/* translators: %s: guests count */
-				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Noop', 'geditorial-like' ), Number::format( count( $guests ) ) );
+				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Noop', 'geditorial-like' ), Core\Number::format( count( $guests ) ) );
 
-			echo Strings::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
+			echo WordPress\Strings::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
 
 		echo '</li>';
 	}
@@ -519,7 +515,7 @@ class Like extends gEditorial\Module
 						$count++;
 					}
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'synced',
 						'count'   => $count,
 					] );
@@ -534,7 +530,7 @@ class Like extends gEditorial\Module
 						$count++;
 					}
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'synced',
 						'count'   => $count,
 					] );
@@ -563,7 +559,7 @@ class Like extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
@@ -591,13 +587,13 @@ class Like extends gEditorial\Module
 				'title'    => _x( 'Avatars', 'Table Column', 'geditorial-like' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 					$html = $this->avatars( $row->ID );
-					return $html ? HTML::tag( 'ul', $html ) : Helper::htmlEmpty();
+					return $html ? Core\HTML::tag( 'ul', $html ) : Helper::htmlEmpty();
 				},
 			],
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Likes', 'Header', 'geditorial-like' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post Likes', 'Header', 'geditorial-like' ) ),
 			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );

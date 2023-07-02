@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\Arraay;
+use geminorum\gEditorial\Core;
 
 class Widgets extends gEditorial\Module
 {
@@ -154,7 +154,7 @@ class Widgets extends gEditorial\Module
 				dynamic_sidebar( $id );
 			}, $priority, 0 );
 
-			register_sidebar( array_merge( Arraay::stripByKeys( $area, [ 'action', 'priority', 'name' ] ), [
+			register_sidebar( array_merge( Core\Arraay::stripByKeys( $area, [ 'action', 'priority', 'name' ] ), [
 				'id'   => $id,
 				/* translators: %s: widget area name */
 				'name' => sprintf( _x( 'Editorial: %s', 'Widget Area Prefix', 'geditorial-widgets' ), $name ),

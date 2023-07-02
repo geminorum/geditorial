@@ -4,18 +4,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Color;
-use geminorum\gEditorial\Core\L10n;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Term;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
 class Workflow extends gEditorial\Module
 {
@@ -154,7 +146,7 @@ class Workflow extends gEditorial\Module
 			case 'delete_page':
 			// case 'publish_post':
 
-				if ( ! $post = Post::get( $args[0] ) )
+				if ( ! $post = WordPress\Post::get( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )
@@ -183,7 +175,7 @@ class Workflow extends gEditorial\Module
 
 			foreach ( $this->posttypes() as $posttype ) {
 
-				$object = PostType::object( $posttype );
+				$object = WordPress\PostType::object( $posttype );
 
 				if ( ! current_user_can( $object->cap->edit_others_posts ) )
 				// if ( ! current_user_can( $object->cap->edit_posts ) )
@@ -209,8 +201,8 @@ class Workflow extends gEditorial\Module
 					$link = sprintf( 'edit.php?post_status=%1$s&post_type=%2$s', $status->name, $posttype );
 
 					$title = vsprintf( '%1$s <span class="awaiting-mod" data-count="%3$s"><span class="pending-count">%2$s</span></span>', [
-						HTML::escape( $status->label ),
-						Number::format( $counts->{$status->name} ),
+						Core\HTML::escape( $status->label ),
+						Core\Number::format( $counts->{$status->name} ),
 						$counts->{$status->name},
 					] );
 
@@ -235,7 +227,7 @@ class Workflow extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$edit = WordPress::getEditTaxLink( $this->constant( 'status_tax' ), FALSE, [ 'post_type' => $screen->post_type ] );
+				$edit = Core\WordPress::getEditTaxLink( $this->constant( 'status_tax' ), FALSE, [ 'post_type' => $screen->post_type ] );
 				remove_meta_box( 'submitdiv', $screen, 'side' );
 
 				$this->class_metabox( $screen, 'mainbox' );
@@ -286,13 +278,13 @@ class Workflow extends gEditorial\Module
 		];
 
 		$query     = new \WP_Term_Query();
-		$admin     = User::isSuperAdmin();
+		$admin     = WordPress\User::isSuperAdmin();
 		$supported = $this->posttypes();
 		$statuses  = [];
 
 		foreach ( $query->query( $args ) as $term ) {
 
-			$metas = Term::getMeta( $term, [
+			$metas = WordPress\Term::getMeta( $term, [
 				'order'     => '',
 				'color'     => '',
 				'posttype'  => '',
@@ -305,7 +297,7 @@ class Workflow extends gEditorial\Module
 				'term_id'   => $term->term_id,
 				'name'      => $term->slug,
 				'label'     => $term->name,
-				'color'     => Color::validHex( $metas['color'] ) ?: '',
+				'color'     => Core\Color::validHex( $metas['color'] ) ?: '',
 				'order'     => $metas['order'],
 				'post_type' => $metas['posttypes'],
 				'viewable'  => $metas['viewable'],
@@ -319,14 +311,14 @@ class Workflow extends gEditorial\Module
 
 			if ( ! $admin && $metas['roles'] ) {
 
-				if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $metas['roles'] ), $user_id ) )
+				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $metas['roles'] ), $user_id ) )
 					$status['disabled'] = TRUE;
 			}
 
 			$statuses[$term->slug] = (object) $status;
 		}
 
-		return $this->statuses[$user_id] = Arraay::sortObjectByPriority( $statuses, 'order' );
+		return $this->statuses[$user_id] = Core\Arraay::sortObjectByPriority( $statuses, 'order' );
 	}
 
 	private function register_post_statuses()
@@ -343,7 +335,7 @@ class Workflow extends gEditorial\Module
 				'public'      => TRUE,
 				'post_type'   => $status->post_type,
 				'label'       => $status->label,
-				'label_count' => L10n::getNooped( $status->label.' <span class="count">(%s)</span>', $status->label.' <span class="count">(%s)</span>' ),
+				'label_count' => Core\L10n::getNooped( $status->label.' <span class="count">(%s)</span>', $status->label.' <span class="count">(%s)</span>' ),
 
 				'show_in_admin_all_list'    => TRUE,
 				'show_in_admin_status_list' => ! $status->disabled,
@@ -444,7 +436,7 @@ class Workflow extends gEditorial\Module
 		echo '<div id="save-action">';
 
 			// if ( 'draft' === $current )
-			// 	echo HTML::tag( 'input', [
+			// 	echo Core\HTML::tag( 'input', [
 			// 		'type'  => 'submit',
 			// 		'id'    => 'save-post',
 			// 		'name'  => 'save',
@@ -453,7 +445,7 @@ class Workflow extends gEditorial\Module
 			// 	] );
 
 			// else if ( 'pending' === $current )
-			// 	echo HTML::tag( 'input', [
+			// 	echo Core\HTML::tag( 'input', [
 			// 		'type'  => 'submit',
 			// 		'id'    => 'save-post',
 			// 		'name'  => 'save',
@@ -462,7 +454,7 @@ class Workflow extends gEditorial\Module
 			// 	] );
 
 			if ( ! empty( $GLOBALS['publish_callback_args']['revisions_count'] ) )
-				echo HTML::tag( 'a', [
+				echo Core\HTML::tag( 'a', [
 					'href'  => get_edit_post_link( $GLOBALS['publish_callback_args']['revision_id'] ),
 					'id'    => $this->classs( 'browse-revisions' ),
 					'class' => [ 'button', 'button-small', 'hide-if-no-js', '-browse-revisions' ],
@@ -472,10 +464,10 @@ class Workflow extends gEditorial\Module
 
 		echo '</div>';
 
-		if ( PostType::viewable( $post->post_type ) ) {
+		if ( WordPress\PostType::viewable( $post->post_type ) ) {
 
 			echo '<div id="preview-action">';
-				echo HTML::tag( 'a', [
+				echo Core\HTML::tag( 'a', [
 					'href'   => get_preview_post_link( $post ),
 					'id'     => 'post-preview',
 					'target' => 'wp-preview-'.$post->ID,
@@ -500,7 +492,7 @@ class Workflow extends gEditorial\Module
 		$draft = $this->role_can( 'draft' );
 
 		if ( ! $hide || $draft )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'value'    => 'draft',
 				'disabled' => ! $draft,
 				'selected' => $current == 'draft',
@@ -514,12 +506,12 @@ class Workflow extends gEditorial\Module
 			if ( ! in_array( $post->post_type, $status->post_type, TRUE ) )
 				continue;
 
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'value'    => $status->name,
 				'disabled' => $status->disabled,
 				'selected' => $current == $status->name,
-				'style'    => $status->color ? sprintf( 'color:%s;background-color:%s', $status->color, Color::lightOrDark( $status->color ) ) : FALSE,
-			], HTML::escape( $status->label ) );
+				'style'    => $status->color ? sprintf( 'color:%s;background-color:%s', $status->color, Core\Color::lightOrDark( $status->color ) ) : FALSE,
+			], Core\HTML::escape( $status->label ) );
 
 			if ( $status->disabled )
 				continue;
@@ -533,19 +525,19 @@ class Workflow extends gEditorial\Module
 				$class.= ' hidden';
 
 			// TODO: changes via js and `status-` class
-			$info.= HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class );
+			$info.= Core\HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class );
 		}
 
 		if ( empty ( $html ) )
-			return HTML::desc( _x( 'There are no statuses available!', 'Message', 'geditorial-workflow' ), TRUE, 'field-wrap misc-pub-section -empty-status' );
+			return Core\HTML::desc( _x( 'There are no statuses available!', 'Message', 'geditorial-workflow' ), TRUE, 'field-wrap misc-pub-section -empty-status' );
 
-		$html = HTML::tag( 'select', [
+		$html = Core\HTML::tag( 'select', [
 			'id'       => $this->classs( 'post-status' ),
 			'name'     => 'post_status',
 			'disabled' => isset( $list[$current]->disabled ) ? $list[$current]->disabled : FALSE,
 		], $html );
 
-		$label = HTML::tag( 'select', [
+		$label = Core\HTML::tag( 'select', [
 			'for'   => $this->classs( 'post-status' ),
 			'class' => 'screen-reader-text',
 		], __( 'Set status' ) );
@@ -553,7 +545,7 @@ class Workflow extends gEditorial\Module
 		if ( ! empty( $list[$current]->disabled ) )
 			echo '<input type="hidden" name="post_status" value="'.$current.'" />';
 
-		echo HTML::wrap( $label.$html, 'field-wrap -select misc-pub-section' ).$info;
+		echo Core\HTML::wrap( $label.$html, 'field-wrap -select misc-pub-section' ).$info;
 	}
 
 	public function do_time_publishing( $post, $current = '' )
@@ -562,7 +554,7 @@ class Workflow extends gEditorial\Module
 		$html.= date_i18n( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
 		$html.= '</span>';
 
-		echo HTML::wrap( $html, 'field-wrap -select misc-pub-section curtime misc-pub-curtime' );
+		echo Core\HTML::wrap( $html, 'field-wrap -select misc-pub-section curtime misc-pub-curtime' );
 
 		if ( $post->post_modified == $post->post_date )
 			return;
@@ -573,7 +565,7 @@ class Workflow extends gEditorial\Module
 			mysql2date( __( 'g:i a' ), $post->post_modified ) );
 		$html.= '</small>';
 
-		echo HTML::wrap( $html, 'field-wrap -select misc-pub-section curtime misc-pub-curtime' );
+		echo Core\HTML::wrap( $html, 'field-wrap -select misc-pub-section curtime misc-pub-curtime' );
 	}
 
 	public function do_major_publishing( $post, $current = '' )
@@ -586,7 +578,7 @@ class Workflow extends gEditorial\Module
 		echo '<div id="delete-action">';
 
 			if ( current_user_can( 'delete_post', $post->ID ) )
-				echo HTML::tag( 'a', [
+				echo Core\HTML::tag( 'a', [
 					'href'  => get_delete_post_link( $post->ID ),
 					'class' => [ 'submitdelete', 'deletion' ],
 				], ! EMPTY_TRASH_DAYS ? __( 'Delete Permanently' ) : __( 'Move to Trash' ) );

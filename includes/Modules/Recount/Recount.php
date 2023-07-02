@@ -3,12 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Recount extends gEditorial\Module
 {
@@ -118,7 +116,7 @@ class Recount extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
 
-		$columns = Arraay::insert( $columns, [
+		$columns = Core\Arraay::insert( $columns, [
 			$this->classs() => $this->get_column_title_icon( 'posts', $taxonomy, ( empty( $columns['posts'] ) ? _x( 'Count', 'Number/count of items' ) : $columns['posts'] ) ),
 		], 'posts', 'after' );
 
@@ -148,14 +146,14 @@ class Recount extends gEditorial\Module
 			return Helper::htmlEmpty();
 
 		$html = Helper::htmlCount( (int) $count );
-		$edit = PostType::getEditLinkByTerm(
+		$edit = WordPress\PostType::getEditLinkByTerm(
 			(int) $term_id,
 			self::req( 'post_type', 'post' ),
 			self::req( 'taxonomy', '' )
 		);
 
 		// WTF: must print here, wierd bug on category tax!
-		echo ( $edit ? HTML::link( $html, $edit, TRUE ) : $html );
+		echo ( $edit ? Core\HTML::link( $html, $edit, TRUE ) : $html );
 	}
 
 	public function taxonomy_bulk_actions( $actions, $taxonomy )
@@ -197,7 +195,7 @@ class Recount extends gEditorial\Module
 	public function taxonomy_tab_maintenance_content( $taxonomy, $object )
 	{
 		echo $this->wrap_open( '-tab-extras card -toolbox-card' );
-			HTML::h4( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), 'title' );
+			Core\HTML::h4( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), 'title' );
 
 			$this->render_form_start( NULL, 'recount-items', 'maintenance', 'tabs', FALSE );
 				$this->nonce_field( 'do-recount-items' );
@@ -230,7 +228,7 @@ class Recount extends gEditorial\Module
 				$count++;
 			}
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );

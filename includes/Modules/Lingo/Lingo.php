@@ -3,15 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
+use geminorum\gEditorial\WordPress;
 
 class Lingo extends gEditorial\Module
 {
@@ -106,7 +103,7 @@ class Lingo extends gEditorial\Module
 	protected function tool_box_content()
 	{
 		/* translators: %s: iso code */
-		HTML::desc( sprintf( _x( 'Helps with Importing Language Identifiers from %s into WordPress.', 'Tool Box', 'geditorial-lingo' ), HTML::code( 'ISO 639-1' ) ) );
+		Core\HTML::desc( sprintf( _x( 'Helps with Importing Language Identifiers from %s into WordPress.', 'Tool Box', 'geditorial-lingo' ), Core\HTML::code( 'ISO 639-1' ) ) );
 	}
 
 	protected function get_global_strings()
@@ -138,7 +135,7 @@ class Lingo extends gEditorial\Module
 			'wp_importer' => [
 				'title'       => _x( 'Import Language Identifiers', 'Importer: Title', 'geditorial-lingo' ),
 				/* translators: %s: iso code */
-				'description' => sprintf( _x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ), HTML::code( 'ISO 639-1' ) ),
+				'description' => sprintf( _x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ), Core\HTML::code( 'ISO 639-1' ) ),
 				/* translators: %s: redirect url */
 				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-lingo' ),
 			],
@@ -256,7 +253,7 @@ class Lingo extends gEditorial\Module
 				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
 					return $caps;
 
-				if ( ! WordPress\User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
+				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 					return [ 'do_not_allow' ];
 		}
 
@@ -301,11 +298,11 @@ class Lingo extends gEditorial\Module
 				if ( Tablelist::isAction( 'language_taxonomy_create', TRUE ) ) {
 
 					if ( ! $data = $this->get_imports_raw_data() )
-						WordPress::redirectReferer( 'wrong' );
+						Core\WordPress::redirectReferer( 'wrong' );
 
 					$count  = 0;
 					$terms  = [];
-					$data   = Arraay::reKey( $data, 'code' );
+					$data   = Core\Arraay::reKey( $data, 'code' );
 					$update = self::req( 'language_taxonomy_update', FALSE );
 
 					foreach ( $_POST['_cb'] as $code ) {
@@ -326,10 +323,10 @@ class Lingo extends gEditorial\Module
 						$count++;
 					}
 
-					if ( ! Taxonomy::insertDefaultTerms( $this->constant( 'language_taxonomy' ), $terms, ( $update ? 'not_name' : FALSE ) ) )
-						WordPress::redirectReferer( 'noadded' );
+					if ( ! WordPress\Taxonomy::insertDefaultTerms( $this->constant( 'language_taxonomy' ), $terms, ( $update ? 'not_name' : FALSE ) ) )
+						Core\WordPress::redirectReferer( 'noadded' );
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'created',
 						'count'   => $count,
 					] );
@@ -340,14 +337,14 @@ class Lingo extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Import Language Identifiers', 'Header', 'geditorial-lingo' ) );
+		Core\HTML::h3( _x( 'Import Language Identifiers', 'Header', 'geditorial-lingo' ) );
 
 		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'.HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'description' ).'</th><td>';
+		echo '<tr><th scope="row">'.Core\HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'description' ).'</th><td>';
 
 		if ( $data = $this->get_imports_raw_data() ) {
 
-			HTML::tableList( [
+			Core\HTML::tableList( [
 				'_cb'  => 'code',
 				'code' => [
 					'title' => _x( 'Code', 'Table Column', 'geditorial-lingo' ),
@@ -359,7 +356,7 @@ class Lingo extends gEditorial\Module
 					'args'     => [ 'taxonomy' => $this->constant( 'language_taxonomy' ) ],
 					'callback' => function( $value, $row, $column, $index, $key, $args ) {
 
-						if ( $term = Term::exists( $row['name'], $column['args']['taxonomy'] ) )
+						if ( $term = WordPress\Term::exists( $row['name'], $column['args']['taxonomy'] ) )
 							return Helper::getTermTitleRow( $term );
 
 						return Helper::htmlEmpty();
@@ -375,7 +372,7 @@ class Lingo extends gEditorial\Module
 				],
 
 			], $data, [
-				'empty' => HTML::warning( _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ), FALSE ),
+				'empty' => Core\HTML::warning( _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ), FALSE ),
 			] );
 
 		} else {
@@ -395,7 +392,7 @@ class Lingo extends gEditorial\Module
 
 		echo '</p>';
 
-		HTML::desc( _x( 'Check for available language identifiers and create corresponding terms.', 'Message', 'geditorial-lingo' ) );
+		Core\HTML::desc( _x( 'Check for available language identifiers and create corresponding terms.', 'Message', 'geditorial-lingo' ) );
 
 		echo '</td></tr>';
 

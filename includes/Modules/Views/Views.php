@@ -4,9 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class Views extends gEditorial\Module
 {
@@ -30,7 +29,7 @@ class Views extends gEditorial\Module
 
 	public function settings_intro()
 	{
-		HTML::desc( _x( 'Note that the logget-out users count by default.', 'Message', 'geditorial-views' ) );
+		Core\HTML::desc( _x( 'Note that the logget-out users count by default.', 'Message', 'geditorial-views' ) );
 	}
 
 	protected function get_global_settings()
@@ -76,7 +75,7 @@ class Views extends gEditorial\Module
 		foreach ( $this->events() as $event => $title )
 			$nodes[] = [
 				'id'     => $this->classs( 'event', $event ),
-				'title'  => Strings::getCounted( $this->report( $post_id, $event ), $title.' %s' ),
+				'title'  => WordPress\Strings::getCounted( $this->report( $post_id, $event ), $title.' %s' ),
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];
@@ -102,7 +101,7 @@ class Views extends gEditorial\Module
 
 	public function wp_footer()
 	{
-		HTML::wrapjQueryReady( '$.post("'.admin_url( 'admin-ajax.php' ).'",{action:"'.$this->hook().'",_ajax_nonce:"'.wp_create_nonce( $this->classs( $this->current_queried ) ).'",post_id:'.$this->current_queried.',what:"entryview"});' );
+		Core\HTML::wrapjQueryReady( '$.post("'.admin_url( 'admin-ajax.php' ).'",{action:"'.$this->hook().'",_ajax_nonce:"'.wp_create_nonce( $this->classs( $this->current_queried ) ).'",post_id:'.$this->current_queried.',what:"entryview"});' );
 	}
 
 	public function ajax()

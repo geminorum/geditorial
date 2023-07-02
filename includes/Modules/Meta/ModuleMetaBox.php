@@ -3,12 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class ModuleMetaBox extends gEditorial\MetaBox
 {
@@ -45,7 +43,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 	public static function setPostMetaField_Number( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = Number::intval( trim( $_POST[$prefix.$field] ) );
+			$postmeta[$field] = Core\Number::intval( trim( $_POST[$prefix.$field] ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -72,7 +70,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 	public static function setPostMetaField_Term( $post_id, $field, $taxonomy, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && '0' != $_POST[$prefix.$field] )
-			wp_set_object_terms( (int) $post_id, Arraay::prepNumeral( $_POST[$prefix.$field] ), $taxonomy, FALSE );
+			wp_set_object_terms( (int) $post_id, Core\Arraay::prepNumeral( $_POST[$prefix.$field] ), $taxonomy, FALSE );
 
 		else if ( isset( $_POST[$prefix.$field] ) && '0' == $_POST[$prefix.$field] )
 			wp_set_object_terms( (int) $post_id, [], $taxonomy, FALSE );
@@ -111,7 +109,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 		else if ( 'text' == $type )
 			$atts['data']['ortho'] = 'text';
 
-		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputtext' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'input', $atts ), 'field-wrap -inputtext' );
 	}
 
 	public static function legacy_fieldNumber( $field, $fields, $post, $ltr = TRUE, $title = NULL, $key = FALSE, $type = 'number' )
@@ -146,7 +144,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 
 		$atts['data']['ortho'] = 'number';
 
-		echo HTML::wrap( HTML::tag( 'input', $atts ), 'field-wrap -inputnumber' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'input', $atts ), 'field-wrap -inputnumber' );
 	}
 
 	public static function legacy_fieldTerm( $field, $fields, $post, $tax, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'term' )
@@ -159,12 +157,12 @@ class ModuleMetaBox extends gEditorial\MetaBox
 
 		$desc = self::getString( $field, $post->post_type, 'descriptions', $title ); // FIXME: get from fields args
 
-		echo '<div class="-wrap field-wrap -select" title="'.HTML::escape( $desc ).'">';
+		echo '<div class="-wrap field-wrap -select" title="'.Core\HTML::escape( $desc ).'">';
 
 		// FIXME: core dropdown does not support: data attr
 		wp_dropdown_categories( [
 			'taxonomy'          => $tax,
-			'selected'          => Taxonomy::theTerm( $tax, $post->ID ),
+			'selected'          => WordPress\Taxonomy::theTerm( $tax, $post->ID ),
 			'show_option_none'  => Settings::showOptionNone( $title ),
 			'option_none_value' => '0',
 			'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),
@@ -215,9 +213,9 @@ class ModuleMetaBox extends gEditorial\MetaBox
 		else
 			$atts['data']['ortho'] = 'html';
 
-		$html = HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field, '' ) ) );
+		$html = Core\HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field, '' ) ) );
 
-		echo HTML::wrap( $html, 'field-wrap -textarea' );
+		echo Core\HTML::wrap( $html, 'field-wrap -textarea' );
 	}
 
 	// for meta fields before and after post title
@@ -258,7 +256,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 		else
 			$atts['data']['ortho'] = 'text';
 
-		echo HTML::tag( 'input', $atts );
+		echo Core\HTML::tag( 'input', $atts );
 	}
 
 	public static function legacy_fieldBox( $field, $fields, $post, $ltr = FALSE, $title = NULL, $key = FALSE, $type = 'postbox_legacy' )
@@ -302,7 +300,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 		else
 			$atts['data']['ortho'] = 'html';
 
-		$html.= HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field, '' ) ) );
+		$html.= Core\HTML::tag( 'textarea', $atts, esc_textarea( self::getPostMeta( $post->ID, $field, '' ) ) );
 		$html.= '</div></div></div></div>';
 
 		echo $html;

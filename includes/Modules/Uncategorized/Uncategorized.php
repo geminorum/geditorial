@@ -3,19 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress;
 
 class Uncategorized extends gEditorial\Module
 {
@@ -133,7 +125,7 @@ class Uncategorized extends gEditorial\Module
 
 			case $prefix.'_clean_unattached':
 
-				$taxonomies = Taxonomy::get( -1 );
+				$taxonomies = WordPress\Taxonomy::get( -1 );
 				$callback   = [ $this, '_do_clean_unattached' ];
 				break;
 
@@ -163,7 +155,7 @@ class Uncategorized extends gEditorial\Module
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
 
 		/* translators: %s: count */
-		echo HTML::success( sprintf( _x( '%s items(s) cleaned!', 'Message', 'geditorial-uncategorized' ), Number::format( $count ) ) );
+		echo Core\HTML::success( sprintf( _x( '%s items(s) cleaned!', 'Message', 'geditorial-uncategorized' ), Core\Number::format( $count ) ) );
 	}
 
 	// NOTE: already cap checked!
@@ -177,11 +169,11 @@ class Uncategorized extends gEditorial\Module
 		$noopd = _nx_noop( '%s Uncategorized Post', '%s Uncategorized Posts', 'Noop', 'geditorial-uncategorized' );
 		$can   = $this->role_can( 'reports' );
 
-		$items[] = HTML::tag( $can ? 'a' : 'span', [
+		$items[] = Core\HTML::tag( $can ? 'a' : 'span', [
 			'href'  => $can ? $this->get_module_url( 'reports' ) : FALSE,
 			'title' => _x( 'You need to assign categories to some posts!', 'Title Attr', 'geditorial-uncategorized' ),
 			'class' => '-uncategorized-count',
-		], sprintf( Helper::noopedCount( $count, $noopd ), Number::format( $count ) ) );
+		], sprintf( Helper::noopedCount( $count, $noopd ), Core\Number::format( $count ) ) );
 
 		return $items;
 	}
@@ -211,7 +203,7 @@ class Uncategorized extends gEditorial\Module
 						// delete pointer's cache
 						delete_transient( $this->_get_count_cache_key() );
 
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
@@ -230,7 +222,7 @@ class Uncategorized extends gEditorial\Module
 						// delete pointer's cache
 						delete_transient( $this->_get_count_cache_key() );
 
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
@@ -238,7 +230,7 @@ class Uncategorized extends gEditorial\Module
 
 				} else if ( Tablelist::isAction( 'clean_unattached', TRUE ) ) {
 
-					$taxonomies = Taxonomy::get( -1 );
+					$taxonomies = WordPress\Taxonomy::get( -1 );
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
@@ -251,14 +243,14 @@ class Uncategorized extends gEditorial\Module
 						// delete pointer's cache
 						delete_transient( $this->_get_count_cache_key() );
 
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
 					}
 				}
 
-				WordPress::redirectReferer( 'nochange' );
+				Core\WordPress::redirectReferer( 'nochange' );
 			}
 		}
 	}
@@ -281,7 +273,7 @@ class Uncategorized extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterAuthors();
 		$pagination['before'][] = Tablelist::filterSearch();
 
-		HTML::tableList( [
+		Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
@@ -307,16 +299,16 @@ class Uncategorized extends gEditorial\Module
 						$list[$term->taxonomy][] = $term->name;
 
 					foreach ( $list as $taxonomy => $terms )
-						$list[$taxonomy] = sprintf( '<code>%s</code>: %s', $taxonomy, Strings::getJoined( $terms ) );
+						$list[$taxonomy] = sprintf( '<code>%s</code>: %s', $taxonomy, WordPress\Strings::getJoined( $terms ) );
 
-					return HTML::renderList( $list );
+					return Core\HTML::renderList( $list );
 				},
 			],
 
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Posts in Uncategorized Terms', 'Header', 'geditorial-uncategorized' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Posts in Uncategorized Terms', 'Header', 'geditorial-uncategorized' ) ),
 			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
@@ -346,14 +338,14 @@ class Uncategorized extends gEditorial\Module
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
 						if ( FALSE !== $result )
-							WordPress::redirectReferer( [
+							Core\WordPress::redirectReferer( [
 								'message' => 'changed',
 								'count'   => $result,
 							] );
 					}
 				}
 
-				WordPress::redirectReferer( 'nochange' );
+				Core\WordPress::redirectReferer( 'nochange' );
 			}
 		}
 	}
@@ -363,11 +355,11 @@ class Uncategorized extends gEditorial\Module
 	protected function render_tools_html( $uri, $sub )
 	{
 		$available  = FALSE;
-		$db_taxes   = Database::getTaxonomies( TRUE );
-		$live_taxes = Taxonomy::get( 6 );
+		$db_taxes   = WordPress\Database::getTaxonomies( TRUE );
+		$live_taxes = WordPress\Taxonomy::get( 6 );
 		$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
-		HTML::h3( _x( 'Uncategorized Tools', 'Header', 'geditorial-uncategorized' ) );
+		Core\HTML::h3( _x( 'Uncategorized Tools', 'Header', 'geditorial-uncategorized' ) );
 
 		echo '<table class="form-table">';
 
@@ -395,7 +387,7 @@ class Uncategorized extends gEditorial\Module
 
 				Settings::submitButton( 'orphaned_terms', _x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
 
-				HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
+				Core\HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
 
 			echo '</td></tr>';
 
@@ -403,18 +395,18 @@ class Uncategorized extends gEditorial\Module
 		}
 
 		if ( ! $available )
-			HTML::desc( _x( 'There are no tools available!', 'Message', 'geditorial-uncategorized' ) );
+			Core\HTML::desc( _x( 'There are no tools available!', 'Message', 'geditorial-uncategorized' ) );
 
 		echo '</table>';
 	}
 
 	private function _do_clean_unattached( $post, $taxonomies = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $taxonomies ) )
-			$taxonomies = Taxonomy::get( -1 ); // better to be all!
+			$taxonomies = WordPress\Taxonomy::get( -1 ); // better to be all!
 
 		$diff = array_diff( $taxonomies, get_object_taxonomies( $post ) );
 
@@ -431,7 +423,7 @@ class Uncategorized extends gEditorial\Module
 	{
 		global $wpdb;
 
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		$taxonomies   = get_object_taxonomies( $post );
@@ -453,14 +445,14 @@ class Uncategorized extends gEditorial\Module
 		if ( ! $wpdb->query( $query ) )
 			return FALSE;
 
-		Taxonomy::updateTermCount( wp_list_pluck( $unregistered, 'term_id' ) );
+		WordPress\Taxonomy::updateTermCount( wp_list_pluck( $unregistered, 'term_id' ) );
 
 		return TRUE;
 	}
 
 	private function _do_clean_uncategorized( $post, $taxonomies = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( is_null( $taxonomies ) )
@@ -474,11 +466,11 @@ class Uncategorized extends gEditorial\Module
 			if ( ! in_array( $taxonomy, $currents ) )
 				continue;
 
-			if ( ! $default = Taxonomy::getDefaultTermID( $taxonomy ) )
+			if ( ! $default = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
 				continue;
 
 			$terms = wp_get_object_terms( $post->ID, $taxonomy, [ 'fields' => 'ids' ] );
-			$diff  = Arraay::prepNumeral( array_diff( $terms, [ $default ] ) );
+			$diff  = Core\Arraay::prepNumeral( array_diff( $terms, [ $default ] ) );
 
 			// keep default if empty
 			if ( empty( $diff ) )
@@ -495,13 +487,13 @@ class Uncategorized extends gEditorial\Module
 
 	private function _get_uncategorized_tax_query( $taxonomies = NULL )
 	{
-		if ( is_null ( $taxonomies ) )
+		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
 
 		$tax_query = [ 'relation' => 'OR' ];
 
 		foreach ( (array) $taxonomies as $taxonomy )
-			if ( $default = Taxonomy::getDefaultTermID( $taxonomy ) )
+			if ( $default = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
 				$tax_query[] = [
 					'taxonomy' => $taxonomy,
 					'field'    => 'term_id',
@@ -513,7 +505,7 @@ class Uncategorized extends gEditorial\Module
 
 	private function _get_count_cache_key( $taxonomies = NULL )
 	{
-		if ( is_null ( $taxonomies ) )
+		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
 
 		return $this->hash( 'uncategorizedcount', $taxonomies );
@@ -525,7 +517,7 @@ class Uncategorized extends gEditorial\Module
 		$taxonomies = $this->taxonomies();
 		$cache_key  = $this->_get_count_cache_key( $taxonomies );
 
-		if ( WordPress::isFlush( 'edit_others_posts' ) )
+		if ( Core\WordPress::isFlush( 'edit_others_posts' ) )
 			delete_transient( $cache_key );
 
 		if ( FALSE === ( $count = get_transient( $cache_key ) ) ) {
@@ -556,18 +548,18 @@ class Uncategorized extends gEditorial\Module
 
 	private function _get_posttype_view( $posttype )
 	{
-		if ( ! $taxonomy = PostType::getPrimaryTaxonomy( $posttype ) )
+		if ( ! $taxonomy = WordPress\PostType::getPrimaryTaxonomy( $posttype ) )
 			return [];
 
-		if ( ! $default = Taxonomy::getDefaultTermID( $taxonomy ) )
+		if ( ! $default = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
 			return [];
 
-		$object = Taxonomy::object( $taxonomy );
-		$term   = Term::get( $default, $taxonomy );
+		$object = WordPress\Taxonomy::object( $taxonomy );
+		$term   = WordPress\Term::get( $default, $taxonomy );
 
 		return [ $this->key => vsprintf( '<a href="%1$s"%2$s>%3$s <span class="count">(%4$s)</span></a>', [
 
-			WordPress::getPostTypeEditLink( $posttype, 0, [
+			Core\WordPress::getPostTypeEditLink( $posttype, 0, [
 				$object->query_var => $term->slug,
 				'post_status'      => 'all',
 			] ),
@@ -577,9 +569,9 @@ class Uncategorized extends gEditorial\Module
 
 			empty( $object->labels->uncategorized )
 				? _x( 'Uncategorized', 'Default Label', 'geditorial-uncategorized' )
-				: HTML::escape( $object->labels->uncategorized ),
+				: Core\HTML::escape( $object->labels->uncategorized ),
 
-			Number::format( $term->count ),
+			Core\Number::format( $term->count ),
 		] ) ];
 	}
 }

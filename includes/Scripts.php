@@ -2,10 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
-class Scripts extends Main
+class Scripts extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -154,7 +154,7 @@ class Scripts extends Main
 	{
 		$handle = static::BASE.'-vuejs';
 
-		$url = WordPress::isDev()
+		$url = Core\WordPress::isDev()
 			? 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js'
 			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.min.js';
 
@@ -171,7 +171,7 @@ class Scripts extends Main
 	{
 		$handle = static::BASE.'-vuejs';
 
-		$url = WordPress::isDev()
+		$url = Core\WordPress::isDev()
 			? 'https://unpkg.com/vue@next'
 			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.global.min.js';
 
@@ -244,7 +244,7 @@ class Scripts extends Main
 	?><script type="text/javascript">
 /* <![CDATA[ */
 	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
-	<?php if ( WordPress::isDev() ) {
+	<?php if ( Core\WordPress::isDev() ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 	} ?>

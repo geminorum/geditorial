@@ -3,11 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Misc;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
-class Listtable extends Main
+class Listtable extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -42,7 +40,7 @@ class Listtable extends Main
 				foreach ( $the_terms as $the_term )
 					$terms[] = $the_term->name;
 
-				return Strings::getJoined( $terms );
+				return WordPress\Strings::getJoined( $terms );
 			}
 
 		} else {
@@ -174,7 +172,7 @@ SQL;
 	// @SEE: https://core.trac.wordpress.org/ticket/19867
 	public static function restrictByAuthor( $selected = 0, $name = 'author', $extra = [] )
 	{
-		if ( User::isLargeCount() )
+		if ( WordPress\User::isLargeCount() )
 			return '';
 
 		return wp_dropdown_users( array_merge( [

@@ -3,17 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
+use geminorum\gEditorial\WordPress;
 
 class Cartable extends gEditorial\Module
 {
@@ -282,7 +277,7 @@ class Cartable extends gEditorial\Module
 		if ( isset( $_POST['post_type'] )
 			&& $this->posttype_supported( $_POST['post_type'] ) ) {
 
-			$posttype = PostType::object( $_POST['post_type'] );
+			$posttype = WordPress\PostType::object( $_POST['post_type'] );
 
 			// override the cap
 			if ( $cap === $posttype->cap->edit_others_posts )
@@ -329,7 +324,7 @@ class Cartable extends gEditorial\Module
 				if ( empty( $args[0] ) )
 					return $caps;
 
-				if ( ! $post = Post::get( $args[0] ) )
+				if ( ! $post = WordPress\Post::get( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )
@@ -451,7 +446,7 @@ class Cartable extends gEditorial\Module
 				}
 
 				$subs['group-'.$term->slug] = [
-					'title' => HTML::escape( $term->name ),
+					'title' => Core\HTML::escape( $term->name ),
 					'args'  => [
 						'sub'     => 'group-'.$term->slug,
 						'context' => 'group',
@@ -472,7 +467,7 @@ class Cartable extends gEditorial\Module
 				}
 
 				$subs['type-'.$term->slug] = [
-					'title' => HTML::escape( $term->name ),
+					'title' => Core\HTML::escape( $term->name ),
 					'args'  => [
 						'sub'     => 'type-'.$term->slug,
 						'context' => 'type',
@@ -489,7 +484,7 @@ class Cartable extends gEditorial\Module
 			$context = self::req( 'context', $context );
 			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
 
-			$current = Term::get( $slug, $this->constant( $context.'_tax' ) );
+			$current = WordPress\Term::get( $slug, $this->constant( $context.'_tax' ) );
 
 			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
@@ -500,7 +495,7 @@ class Cartable extends gEditorial\Module
 
 			if ( $current && count( $subs ) ) {
 
-				HTML::headerNav( $uri, self::req( 'sub', $sub ), $subs );
+				Core\HTML::headerNav( $uri, self::req( 'sub', $sub ), $subs );
 
 				$this->tableCartable( $current, $context );
 
@@ -526,9 +521,9 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $users as $slug )
 				if ( $user = get_user_by( 'login', $slug ) )
-					$list[] = HTML::escape( $user->display_name ); // FIXME: make clickable
+					$list[] = Core\HTML::escape( $user->display_name ); // FIXME: make clickable
 
-			echo Strings::getJoined( $list );
+			echo WordPress\Strings::getJoined( $list );
 		echo '</li>';
 	}
 
@@ -545,9 +540,9 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $groups as $slug )
 				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'group_tax' ) ) )
-					$list[] = HTML::escape( $term->name ); // FIXME: make clickable
+					$list[] = Core\HTML::escape( $term->name ); // FIXME: make clickable
 
-			echo Strings::getJoined( $list );
+			echo WordPress\Strings::getJoined( $list );
 		echo '</li>';
 	}
 
@@ -564,9 +559,9 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $types as $slug )
 				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'type_tax' ) ) )
-					$list[] = HTML::escape( $term->name ); // FIXME: make clickable
+					$list[] = Core\HTML::escape( $term->name ); // FIXME: make clickable
 
-			echo Strings::getJoined( $list );
+			echo WordPressStrings::getJoined( $list );
 		echo '</li>';
 	}
 
@@ -657,17 +652,17 @@ class Cartable extends gEditorial\Module
 				if ( in_array( $user->user_login, $admins ) )
 					continue;
 
-				if ( Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
+				if ( WordPress\Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
 					$count++;
 			}
 		}
 
 		if ( $this->support_groups )
-			foreach ( Taxonomy::getTerms( $this->constant( 'group_ref' ), FALSE, TRUE ) as $group )
-				if ( Term::add( $group->name, $this->constant( 'group_tax' ), $group->slug ) )
+			foreach ( WordPress\Taxonomy::getTerms( $this->constant( 'group_ref' ), FALSE, TRUE ) as $group )
+				if ( WordPress\Term::add( $group->name, $this->constant( 'group_tax' ), $group->slug ) )
 					$count++;
 
-		WordPress::redirectReferer( [
+		Core\WordPress::redirectReferer( [
 			'message' => 'synced',
 			'count'   => $count,
 		] );
@@ -712,7 +707,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $user = get_user_by( 'id', $user_id ) )
 			return;
 
-		Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE );
+			WordPress\Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE );
 	}
 
 	public function render_widget_summary( $object, $box )
@@ -720,8 +715,8 @@ class Cartable extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		if ( ! $term = Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
-			return HTML::desc( gEditorial\Plugin::wrong( FALSE ), FALSE, '-empty' );
+		if ( ! $term = WordPress\Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
+			return Core\HTML::desc( gEditorial\Plugin::wrong( FALSE ), FALSE, '-empty' );
 
 		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}
@@ -734,7 +729,7 @@ class Cartable extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 
 			if ( 'auto-draft' == $post->post_status )
-				HTML::desc( _x( 'You can see cartable details, once you\'ve saved it for the first time.', 'Message', 'geditorial-cartable' ) );
+				Core\HTML::desc( _x( 'You can see cartable details, once you\'ve saved it for the first time.', 'Message', 'geditorial-cartable' ) );
 
 			else if ( has_action( $this->hook( 'render_metabox' ) ) )
 				$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
@@ -780,7 +775,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $html )
 			$html.= '<li class="-row">'._x( 'This currently is <b>not</b> on any of your cartables.', 'Message', 'geditorial-cartable' ).'</li>';
 
-		return HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap -summary' );
+		return Core\HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap -summary' );
 	}
 
 	public function render_metabox_users( $post, $box )
@@ -849,17 +844,17 @@ class Cartable extends gEditorial\Module
 
 	private function get_users( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return Taxonomy::getPostTerms( $this->constant( 'user_tax' ), $post_id, $object, $key );
+		return WordPress\Taxonomy::getPostTerms( $this->constant( 'user_tax' ), $post_id, $object, $key );
 	}
 
 	private function get_groups( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return Taxonomy::getPostTerms( $this->constant( 'group_tax' ), $post_id, $object, $key );
+		return WordPress\Taxonomy::getPostTerms( $this->constant( 'group_tax' ), $post_id, $object, $key );
 	}
 
 	private function get_types( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return Taxonomy::getPostTerms( $this->constant( 'type_tax' ), $post_id, $object, $key );
+		return WordPress\Taxonomy::getPostTerms( $this->constant( 'type_tax' ), $post_id, $object, $key );
 	}
 
 	private function get_user_groups( $user_id = NULL )
@@ -878,7 +873,7 @@ class Cartable extends gEditorial\Module
 		/* translators: %s: term name placeholder */
 			$title = sprintf( _x( 'Cartable: %s', 'Menu Title', 'geditorial-cartable' ), $term->name );
 
-		HTML::h3( $title );
+		Core\HTML::h3( $title );
 
 		$list  = $this->list_posttypes();
 		$query = [
@@ -895,13 +890,13 @@ class Cartable extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterPostTypes( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			// 'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
 			// 'type'  => Tablelist::columnPostType(), // FIXME: add setting for this
 			'title' => Tablelist::columnPostTitle(),
-			'terms' => Tablelist::columnPostTerms( Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
+			'terms' => Tablelist::columnPostTerms( WordPress\Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
 			'cartable' => [
 				'title'    => _x( 'Cartable', 'Table Column Title', 'geditorial-cartable' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
@@ -952,7 +947,7 @@ class Cartable extends gEditorial\Module
 
 		$columns['modified'] = Tablelist::columnPostDateModified();
 
-		HTML::tableList( $columns, $query->query( $args ), [
+		Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => _x( 'The cartable is empty!', 'Message', 'geditorial-cartable' ),
 		] );
 	}

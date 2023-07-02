@@ -4,26 +4,17 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Status;
+use geminorum\gEditorial\WordPress;
 
 class Schedule extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
-
-	private $posttype_icons    = [];
-	private $posttype_addnew   = NULL;
-	private $posttype_statuses = NULL;
 
 	public static function module()
 	{
@@ -53,7 +44,7 @@ class Schedule extends gEditorial\Module
 					'description' => _x( 'Posts in these statuses can <b>not</b> be rescheduled.', 'Setting Description', 'geditorial-schedule' ),
 					'default'     => [ 'publish', 'future', 'private' ],
 					'exclude'     => [ 'trash', 'inherit', 'auto-draft' ],
-					'values'      => Status::get(),
+					'values'      => WordPress\Status::get(),
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -96,7 +87,7 @@ class Schedule extends gEditorial\Module
 
 				Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
-				if ( ! $target = Post::get( $post['post_id'] ) )
+				if ( ! $target = WordPress\Post::get( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
 
 				if ( ! $this->can_reschedule( $target ) )
@@ -119,7 +110,7 @@ class Schedule extends gEditorial\Module
 
 				parse_str( $post['data'], $data );
 
-				$object = PostType::object( $data['post_type'] );
+				$object = WordPress\PostType::object( $data['post_type'] );
 
 				if ( ! current_user_can( $object->cap->create_posts ) )
 					Ajax::errorUserCant();
@@ -173,8 +164,8 @@ class Schedule extends gEditorial\Module
 			return $actions;
 
 		if ( $link = $this->get_calendar_link( $post ) )
-			return Arraay::insert( $actions, [
-				$this->classs() => HTML::tag( 'a', [
+			return Core\Arraay::insert( $actions, [
+				$this->classs() => Core\HTML::tag( 'a', [
 					'href'   => $link,
 					'title'  => _x( 'View on Calendar', 'Title Attr', 'geditorial-schedule' ),
 					'class'  => '-calendar',
@@ -212,7 +203,7 @@ class Schedule extends gEditorial\Module
 			$links = [];
 
 			foreach ( $calendars as $calendar => $calendar_title )
-				$links[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = HTML::escape( $calendar_title );
+				$links[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = Core\HTML::escape( $calendar_title );
 
 		} else {
 
@@ -223,11 +214,11 @@ class Schedule extends gEditorial\Module
 
 			Settings::headerTitle( _x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ), $links );
 
-			$html = HTML::wrap( '', '-messages' );
+			$html = Core\HTML::wrap( '', '-messages' );
 			$html.= Datetime::getCalendar( $cal, $args );
 			$html.= $this->add_new_box( $cal );
 
-			echo '<div class="'.HTML::prepClass( $this->classs( 'calendar' ) ).'" data-cal="'.$cal.'">'.$html.'</div>';
+			echo '<div class="'.Core\HTML::prepClass( $this->classs( 'calendar' ) ).'" data-cal="'.$cal.'">'.$html.'</div>';
 
 			$this->settings_signature( 'listtable' );
 		Settings::wrapClose();
@@ -235,19 +226,19 @@ class Schedule extends gEditorial\Module
 
 	private function add_new_box( $calendar )
 	{
-		$html = HTML::tag( 'input', [ 'type' => 'text', 'name' => 'post_title', 'data-field' => 'title', 'class' => 'regular-text' ] );
+		$html = Core\HTML::tag( 'input', [ 'type' => 'text', 'name' => 'post_title', 'data-field' => 'title', 'class' => 'regular-text' ] );
 
-		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'post_type', 'data-field' => 'type' ] );
-		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_day', 'data-field' => 'day' ] );
-		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_month', 'data-field' => 'month' ] );
-		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_year', 'data-field' => 'year' ] );
-		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal', 'data-field' => 'cal', 'value' => $calendar ] );
-		$html.= HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce', 'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'post_type', 'data-field' => 'type' ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_day', 'data-field' => 'day' ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_month', 'data-field' => 'month' ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_year', 'data-field' => 'year' ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal', 'data-field' => 'cal', 'value' => $calendar ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce', 'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
 
-		$actions = HTML::button( HTML::getDashicon( 'yes' ), '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'save' ] );
-		$actions.= HTML::button( HTML::getDashicon( 'no-alt' ), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
+		$actions = Core\HTML::button( Core\HTML::getDashicon( 'yes' ), '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'save' ] );
+		$actions.= Core\HTML::button( Core\HTML::getDashicon( 'no-alt' ), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
 
-		$html.= HTML::wrap( $actions, '-actions' );
+		$html.= Core\HTML::wrap( $actions, '-actions' );
 
 		return '<div class="hidden" id="'.$this->classs( 'add-new' ).'">'.$html.'</div>';
 	}
@@ -266,7 +257,7 @@ class Schedule extends gEditorial\Module
 		$cal = self::req( 'cal', $this->default_calendar() );
 
 		$html = Ajax::spinner();
-		$html.= '<span class="-the-day-number">'.Number::localize( $the_day ).'</span>';
+		$html.= '<span class="-the-day-number">'.Core\Number::localize( $the_day ).'</span>';
 
 		if ( $today )
 			$html.= '<span class="-the-day-today">'._x( 'Today', 'Indicator', 'geditorial-schedule' ).'</span>';
@@ -279,18 +270,18 @@ class Schedule extends gEditorial\Module
 
 		$html.= '</ol>';
 
-		if ( is_null( $this->posttype_addnew ) )
-			$this->posttype_addnew = $this->get_addnew_links( $args['post_type'] );
+		if ( ! isset( $this->cache['posttype_addnew'] ) )
+			$this->cache['posttype_addnew'] = $this->get_addnew_links( $args['post_type'] );
 
-		if ( $this->posttype_addnew )
-			$html.= HTML::wrap( $this->posttype_addnew, '-buttons' );
+		if ( ! empty( $this->cache['posttype_addnew'] ) )
+			$html.= Core\HTML::wrap( $this->cache['posttype_addnew'], '-buttons' );
 
 		return $html;
 	}
 
 	private function get_post_row( $the_day, $post, $calendar_args = [] )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
 
 		$html = '<li data-day="'.$the_day.'" data-status="'.$post->post_status.'"';
@@ -305,21 +296,21 @@ class Schedule extends gEditorial\Module
 			$html.= '><span>';
 		}
 
-		if ( is_null( $this->posttype_statuses ) )
-			$this->posttype_statuses = Status::get();
+		if ( ! isset( $this->cache['posttype_statuses'] ) )
+			$this->cache['posttype_statuses'] = WordPress\Status::get();
 
-		if ( ! isset( $this->posttype_icons[$post->post_type] ) )
-			$this->posttype_icons[$post->post_type] = Helper::getPostTypeIcon( $post->post_type );
+		if ( ! isset( $this->cache['posttype_icons'][$post->post_type] ) )
+			$this->cache['posttype_icons'][$post->post_type] = Helper::getPostTypeIcon( $post->post_type );
 
-		$title = Number::localize( date( 'H:i', strtotime( $post->post_date ) ) );
+		$title = Core\Number::localize( date( 'H:i', strtotime( $post->post_date ) ) );
 
 		if ( $author = get_user_by( 'id', $post->post_author ) )
 			$title = $author->display_name.' – '.$title;
 
 		$title = $this->filters( 'post_row_title', $title, $post, $the_day, $calendar_args );
 
-		$html.= $this->posttype_icons[$post->post_type].'</span> ';
-		$html.= Helper::getPostTitleRow( $post, 'edit', $this->posttype_statuses, $title );
+		$html.= $this->cache['posttype_icons'][$post->post_type].'</span> ';
+		$html.= Helper::getPostTitleRow( $post, 'edit', $this->cache['posttype_statuses'], $title );
 
 		return $html.'</li>';
 	}
@@ -330,12 +321,12 @@ class Schedule extends gEditorial\Module
 
 		foreach ( $posttypes as $posttype ) {
 
-			$object = PostType::object( $posttype );
+			$object = WordPress\PostType::object( $posttype );
 
 			if ( current_user_can( $object->cap->create_posts ) ) {
 
-				$buttons.= '<a href="'.WordPress::getPostNewLink( $object->name )
-					.'" title="'.HTML::escape( $object->labels->add_new_item )
+				$buttons.= '<a href="'.Core\WordPress::getPostNewLink( $object->name )
+					.'" title="'.Core\HTML::escape( $object->labels->add_new_item )
 					.'" data-type="'.$object->name.'" data-title="'.$object->labels->new_item
 					.'" class="-the-day-newpost" target="_blank">'
 					.Helper::getPostTypeIcon( $object ).'</a>';

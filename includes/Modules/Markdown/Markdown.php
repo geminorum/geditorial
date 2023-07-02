@@ -4,12 +4,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Post;
+use geminorum\gEditorial\WordPress;
 
 class Markdown extends gEditorial\Module
 {
@@ -203,12 +201,12 @@ class Markdown extends gEditorial\Module
 		$content = $this->parser->defaultTransform( $content );
 
 		if ( $this->get_setting( 'wiki_linking' ) )
-			$content = $this->linking( $content, Post::get( $id ) );
+			$content = $this->linking( $content, WordPress\Post::get( $id ) );
 
 		// reference the post_id to make footnote ids unique
 		$content = preg_replace( '/fn(ref)?:/', "fn$1-$id:", $content );
 
-		$content = Text::removeP( $content );
+		$content = Core\Text::removeP( $content );
 
 		// WordPress expects slashed data. Put needed ones back.
 		return addslashes( $content );
@@ -250,13 +248,13 @@ class Markdown extends gEditorial\Module
 		$slug = $text;
 		$link = $post_id = FALSE;
 
-		if ( Text::has( $text, '|' ) )
+		if ( Core\Text::has( $text, '|' ) )
 			list( $text, $slug ) = explode( '|', $text, 2 );
 
 		$slug = preg_replace( '/\s+/', '-', $slug );
 
-		if ( $post_id = PostType::getIDbySlug( $slug, $post->post_type, TRUE ) )
-			$link = WordPress::getPostShortLink( $post_id );
+		if ( $post_id = WordPress\PostType::getIDbySlug( $slug, $post->post_type, TRUE ) )
+			$link = Core\WordPress::getPostShortLink( $post_id );
 
 		else
 			$link = add_query_arg( [
@@ -269,7 +267,7 @@ class Markdown extends gEditorial\Module
 
 	public function process_post( $post )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( empty( $post->post_content_filtered ) )
@@ -293,7 +291,7 @@ class Markdown extends gEditorial\Module
 
 	public function convert_post( $post )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( $this->is_markdown( $post->ID ) )
@@ -322,7 +320,7 @@ class Markdown extends gEditorial\Module
 
 	public function cleanup_post( $post )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( ! $this->is_markdown( $post->ID ) )
@@ -351,7 +349,7 @@ class Markdown extends gEditorial\Module
 
 	public function discard_post( $post )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		if ( empty( $post->post_content_filtered ) )
@@ -397,7 +395,7 @@ class Markdown extends gEditorial\Module
 		if ( ! $this->is_markdown( $post_id ) )
 			return $value;
 
-		$post = Post::get( $post_id );
+		$post = WordPress\Post::get( $post_id );
 
 		if ( $post && ! empty( $post->post_content_filtered ) )
 			return $post->post_content_filtered;
@@ -422,7 +420,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'converted',
 							'count'   => $count,
 						] );
@@ -434,7 +432,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'changed',
 							'count'   => $count,
 						] );
@@ -446,7 +444,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
@@ -458,7 +456,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'purged',
 							'count'   => $count,
 						] );
@@ -483,7 +481,7 @@ class Markdown extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'      => 'ID',
 			'ID'       => Tablelist::columnPostID(),
 			'date'     => Tablelist::columnPostDate(),
@@ -500,7 +498,7 @@ class Markdown extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Markdown Posts', 'Header', 'geditorial-markdown' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Markdown Posts', 'Header', 'geditorial-markdown' ) ),
 			'empty'      => _x( 'No markdown posts found.', 'Message', 'geditorial-markdown' ),
 			'pagination' => $pagination,
 		] );

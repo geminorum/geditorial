@@ -3,25 +3,15 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
-use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\ISBN;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Meta extends gEditorial\Module
 {
@@ -333,7 +323,7 @@ class Meta extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$contexts   = Arraay::column( $fields, 'context' );
+				$contexts   = Core\Arraay::column( $fields, 'context' );
 				$metabox_id = $this->classs( $screen->post_type );
 
 				$mainbox = $this->filters( 'mainbox_callback', in_array( 'mainbox', $contexts, TRUE ), $screen->post_type );
@@ -386,7 +376,7 @@ class Meta extends gEditorial\Module
 				$this->_hook_default_rows();
 
 				$asset = [
-					'fields' => array_filter( Arraay::column( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
+					'fields' => array_filter( Core\Arraay::column( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
 				];
 
 				$this->enqueue_asset_js( $asset, $screen );
@@ -570,7 +560,7 @@ class Meta extends gEditorial\Module
 	// NO NEED: we use original key, so the core will retrieve the value
 	public function register_prepare_callback( $value, $request, $args )
 	{
-		if ( ! $post = Post::get() )
+		if ( ! $post = WordPress\Post::get() )
 			return $value;
 
 		$fields = $this->get_posttype_fields( $post->post_type );
@@ -585,7 +575,7 @@ class Meta extends gEditorial\Module
 	public function register_sanitize_callback( $meta_value, $meta_key, $object_type )
 	{
 		$field = $this->get_posttype_field_args( $this->stripprefix( $meta_key ), $object_type );
-		return $field ? $this->sanitize_posttype_field( $meta_value, $field, Post::get() ) : $meta_value;
+		return $field ? $this->sanitize_posttype_field( $meta_value, $field, WordPress\Post::get() ) : $meta_value;
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
@@ -695,7 +685,7 @@ class Meta extends gEditorial\Module
 				$this->actions( 'render_metabox', $post, $box, $fields, 'mainbox' );
 
 			else
-				echo HTML::wrap( _x( 'No Meta Fields', 'Message', 'geditorial-meta' ), 'field-wrap -empty' );
+				echo Core\HTML::wrap( _x( 'No Meta Fields', 'Message', 'geditorial-meta' ), 'field-wrap -empty' );
 
 			$this->actions( 'render_metabox_after', $post, $box, $fields, 'mainbox' );
 		echo '</div>';
@@ -747,8 +737,8 @@ class Meta extends gEditorial\Module
 
 						if ( ! empty( $args['description'] ) )
 							$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'
-								.HTML::escape( $args['description'] ).'">'
-								.HTML::getDashicon( 'editor-help' ).'</span>';
+								.Core\HTML::escape( $args['description'] ).'">'
+								.Core\HTML::getDashicon( 'editor-help' ).'</span>';
 
 						MetaBox::classEditorBox( $screen, $metabox );
 
@@ -793,7 +783,7 @@ class Meta extends gEditorial\Module
 		if ( ! count( $fields ) )
 			return $postmeta;
 
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return $postmeta;
 
 		if ( ! $this->nonce_verify( 'mainbox' )
@@ -983,7 +973,7 @@ class Meta extends gEditorial\Module
 
 				$terms = $this->sanitize_posttype_field( $data, $field, $post );
 
-				return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
+				return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
 
 			default:
 
@@ -1019,7 +1009,7 @@ class Meta extends gEditorial\Module
 		if ( in_array( 'byline', $this->posttype_fields( $posttype ) ) )
 			unset( $columns['author'] );
 
-		return Arraay::insert( $columns, [
+		return Core\Arraay::insert( $columns, [
 			$this->classs() => $this->get_column_title( 'meta', $posttype ),
 		], 'title', 'after' );
 	}
@@ -1029,7 +1019,7 @@ class Meta extends gEditorial\Module
 		if ( $this->classs() != $column_name )
 			return;
 
-		if ( ! $post = Post::get( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return;
 
 		$prefix   = $this->classs().'-';
@@ -1156,7 +1146,7 @@ class Meta extends gEditorial\Module
 				continue;
 
 			$name  = $this->classs().'-'.$field; // to protect key underlines
-			$class = HTML::prepClass( $name );
+			$class = Core\HTML::prepClass( $name );
 
 			echo '<label class="hidden '.$class.'">';
 				echo '<span class="title">'.$args['title'].'</span>';
@@ -1175,10 +1165,10 @@ class Meta extends gEditorial\Module
 
 			case 'cover_price':
 				// TODO: format numbers
-				return Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) );
+				return Core\Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) );
 
 			case 'website_url':
-				return HTML::link( URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
+				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 
 			case 'date_of_birth':
 				return Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
@@ -1207,13 +1197,13 @@ class Meta extends gEditorial\Module
 				return apply_shortcodes( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
 
 			case 'isbn':
-				return HTML::link( ISBN::prep( $raw, TRUE ), Info::lookupISBN( $raw ), TRUE );
+				return Core\HTML::link( Core\ISBN::prep( $raw, TRUE ), Info::lookupISBN( $raw ), TRUE );
 
 			case 'date':
 				return Datetime::prepForDisplay( trim( $raw ), 'Y/m/d' );
 
 			case 'datestring':
-				return Number::localize( Datetime::stringFormat( $raw ) );
+				return Core\Number::localize( Datetime::stringFormat( $raw ) );
 
 			case 'embed':
 				return Template::doEmbedShortCode( trim( $raw ), $post );
@@ -1270,7 +1260,7 @@ class Meta extends gEditorial\Module
 
 	public function the_author( $display_name )
 	{
-		if ( ! $post = Post::get() )
+		if ( ! $post = WordPress\Post::get() )
 			return $display_name;
 
 		// NO NEED
@@ -1294,7 +1284,7 @@ class Meta extends gEditorial\Module
 			'custom_field_into'  => '',
 		], 'tools' );
 
-		HTML::h3( _x( 'Meta Tools', 'Header', 'geditorial-meta' ) );
+		Core\HTML::h3( _x( 'Meta Tools', 'Header', 'geditorial-meta' ) );
 
 		echo '<table class="form-table">';
 
@@ -1303,7 +1293,7 @@ class Meta extends gEditorial\Module
 		$this->do_settings_field( [
 			'type'         => 'select',
 			'field'        => 'custom_field',
-			'values'       => Database::getPostMetaKeys( TRUE ),
+			'values'       => WordPress\Database::getPostMetaKeys( TRUE ),
 			'default'      => $args['custom_field'],
 			'option_group' => 'tools',
 		] );
@@ -1344,21 +1334,21 @@ class Meta extends gEditorial\Module
 		Settings::submitButton( 'custom_fields_delete',
 			_x( 'Delete', 'Button', 'geditorial-meta' ), 'danger', TRUE );
 
-		HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Message', 'geditorial-meta' ) );
+		Core\HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Message', 'geditorial-meta' ) );
 
 		if ( isset( $_POST['custom_fields_check'] )
 			&& $args['custom_field'] ) {
 
 			echo '<br />';
 			// FIXME: use table list helpers
-			HTML::tableList( [
+			Core\HTML::tableList( [
 				'post_id' => Tablelist::columnPostID(),
 				'type'   => [
 					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
-					'args'     => [ 'types' => PostType::get( 2 ) ],
+					'args'     => [ 'types' => WordPress\PostType::get( 2 ) ],
 					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
-						$post = Post::get( $row->post_id );
+						$post = WordPress\Post::get( $row->post_id );
 
 						return isset( $column['args']['types'][$post->post_type] )
 							? $column['args']['types'][$post->post_type]
@@ -1368,16 +1358,16 @@ class Meta extends gEditorial\Module
 				'title'   => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
 					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-						return Post::title( $row->post_id );
+						return WordPress\Post::title( $row->post_id );
 					},
 				],
 				/* translators: %s: title */
-				'meta' => sprintf( _x( 'Meta: %s', 'Table Column', 'geditorial-meta' ), HTML::code( $args['custom_field'] ) ),
-			], Database::getPostMetaRows(
+				'meta' => sprintf( _x( 'Meta: %s', 'Table Column', 'geditorial-meta' ), Core\HTML::code( $args['custom_field'] ) ),
+			], WordPress\Database::getPostMetaRows(
 				stripslashes( $args['custom_field'] ),
 				stripslashes( $args['custom_field_limit'] )
 			), [
-				'empty' => HTML::warning( _x( 'There are no meta-data available!', 'Table Empty', 'geditorial-meta' ), FALSE ),
+				'empty' => Core\HTML::warning( _x( 'There are no meta-data available!', 'Table Empty', 'geditorial-meta' ), FALSE ),
 			] );
 		}
 
@@ -1411,7 +1401,7 @@ class Meta extends gEditorial\Module
 							$post['custom_field_limit'] );
 
 					if ( $result )
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'converted',
 							'field'   => $post['custom_field'],
 							'limit'   => $post['custom_field_limit'],
@@ -1429,10 +1419,10 @@ class Meta extends gEditorial\Module
 					$this->_raise_resources();
 
 					if ( $post['custom_field'] )
-						$result = Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
+						$result = WordPress\Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
 
 					if ( $result )
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'deleted',
 							'field'   => $post['custom_field'],
 							'limit'   => $post['custom_field_limit'],
@@ -1446,7 +1436,7 @@ class Meta extends gEditorial\Module
 	// OLD: `import_from_meta()`
 	public function import_field_meta( $post_meta_key, $field, $limit = FALSE )
 	{
-		$rows = Database::getPostMetaRows( $post_meta_key, $limit );
+		$rows = WordPress\Database::getPostMetaRows( $post_meta_key, $limit );
 
 		foreach ( $rows as $row )
 			$this->import_field_raw( explode( ',', $row->meta ), $field, $row->post_id );
@@ -1457,7 +1447,7 @@ class Meta extends gEditorial\Module
 	// OLD: `import_to_meta()`
 	public function import_field_raw( $data, $field_key, $post )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		$field = $this->sanitize_postmeta_field_key( $field_key )[0];
@@ -1500,7 +1490,7 @@ class Meta extends gEditorial\Module
 			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
 		}
 
-		return $this->set_postmeta_field( $post->ID, $field['name'], Strings::getJoined( $strings ) );
+		return $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getJoined( $strings ) );
 	}
 
 	public function import_field_raw_terms( $data, $field, $post )
@@ -1531,7 +1521,7 @@ class Meta extends gEditorial\Module
 
 		$terms = $this->sanitize_posttype_field( $terms, $field, $post );
 
-		return wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
+		return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
 	}
 
 	private function get_importer_fields( $posttype = NULL, $object = FALSE )
@@ -1583,7 +1573,7 @@ class Meta extends gEditorial\Module
 	private function _raise_resources( $count = 0 )
 	{
 		// Media::disableThumbnailGeneration();
-		Taxonomy::disableTermCounting();
+		WordPress\Taxonomy::disableTermCounting();
 		wp_defer_comment_counting( TRUE );
 
 		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections

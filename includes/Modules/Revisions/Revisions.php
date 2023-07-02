@@ -4,14 +4,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Revisions extends gEditorial\Module
 {
@@ -89,7 +86,7 @@ class Revisions extends gEditorial\Module
 
 			if ( 'post' == $screen->base
 				&& ( $post = self::req( 'post', FALSE ) )
-				&& ! PostType::supportBlocks( $screen->post_type ) ) {
+				&& ! WordPress\PostType::supportBlocks( $screen->post_type ) ) {
 
 				$this->_admin_enabled();
 
@@ -141,7 +138,7 @@ class Revisions extends gEditorial\Module
 
 		/* translators: %s: revisions count */
 		$message = _x( '%s items(s) revisions purged!', 'Message', 'geditorial-revisions' );
-		echo HTML::success( sprintf( $message, Number::format( $purged ) ) );
+		echo Core\HTML::success( sprintf( $message, Core\Number::format( $purged ) ) );
 	}
 
 	public function tweaks_column_attr( $post )
@@ -166,10 +163,10 @@ class Revisions extends gEditorial\Module
 					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Row Icon Title', 'geditorial-revisions' ) );
 
 					/* translators: %s: revisions count */
-					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Row', 'geditorial-revisions' ), Number::format( $count ) );
+					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Row', 'geditorial-revisions' ), Core\Number::format( $count ) );
 
 					if ( current_user_can( 'edit_post', $last ) )
-						echo HTML::tag( 'a', [
+						echo Core\HTML::tag( 'a', [
 							'href'   => get_edit_post_link( $last ),
 							'title'  => _x( 'View the last revision', 'Title Attr', 'geditorial-revisions' ),
 							'target' => '_blank',
@@ -199,9 +196,9 @@ class Revisions extends gEditorial\Module
 	public static function wordCount( $revision )
 	{
 		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s/%2$s/%3$s</span>]', [
-			Helper::htmlCount( Text::wordCountUTF8( $revision->post_title ), NULL, '&ndash;' ),
-			Helper::htmlCount( Text::wordCountUTF8( $revision->post_content ), NULL, '&ndash;' ),
-			Helper::htmlCount( Text::wordCountUTF8( $revision->post_excerpt ), NULL, '&ndash;' ),
+			Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_title ), NULL, '&ndash;' ),
+			Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_content ), NULL, '&ndash;' ),
+			Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_excerpt ), NULL, '&ndash;' ),
 			_x( 'Title/Content/Excerpt Word Count', 'Title Attr', 'geditorial-revisions' ),
 		] );
 	}
@@ -232,8 +229,8 @@ class Revisions extends gEditorial\Module
 		}
 
 		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
-			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s" title="%3$s">%2$s<span class="-text"> %3$s</span></a>', get_edit_post_link( $revision->ID ), HTML::getDashicon( 'backup' ), _x( 'Browse', 'Title Attr', 'geditorial-revisions' ) );
-			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s" title="%4$s">%3$s<span class="-text"> %4$s</span></a>', $revision->ID, $revision->post_parent, HTML::getDashicon( 'trash' ), _x( 'Delete', 'Title Attr', 'geditorial-revisions' ) );
+			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s" title="%3$s">%2$s<span class="-text"> %3$s</span></a>', get_edit_post_link( $revision->ID ), Core\HTML::getDashicon( 'backup' ), _x( 'Browse', 'Title Attr', 'geditorial-revisions' ) );
+			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s" title="%4$s">%3$s<span class="-text"> %4$s</span></a>', $revision->ID, $revision->post_parent, Core\HTML::getDashicon( 'trash' ), _x( 'Delete', 'Title Attr', 'geditorial-revisions' ) );
 		} else {
 			$link = FALSE;
 		}
@@ -262,12 +259,12 @@ class Revisions extends gEditorial\Module
 
 		echo '<div class="misc-pub-section geditorial-admin-wrap -revisions">';
 
-			echo HTML::tag( 'a', [
+			echo Core\HTML::tag( 'a', [
 				'id'    => $this->hook( 'purge' ),
 				'class' => 'button button-small -purge hide-if-no-js', // works with no js but need for style
 				'title' => _x( 'Purge all revisions', 'Title Attr', 'geditorial-revisions' ),
 				'data'  => [ 'parent' => $post->ID ],
-				'href'  => WordPress::getAdminPostLink( $this->hook( 'purge' ), [
+				'href'  => Core\WordPress::getAdminPostLink( $this->hook( 'purge' ), [
 					'post_id'  => $post->ID,
 					'_wpnonce' => $this->nonce_create( 'purge_'.$post->ID ),
 				] ),
@@ -275,14 +272,14 @@ class Revisions extends gEditorial\Module
 
 			echo Ajax::spinner();
 
-			echo HTML::tag( 'a', [
+			echo Core\HTML::tag( 'a', [
 				'id'    => $this->hook( 'browse' ),
 				'class' => 'button button-small -browse hide-if-no-js',
 				'title' => _x( 'Browse all revisions', 'Title Attr', 'geditorial-revisions' ),
 				'href'  => get_edit_post_link( $last ),
 			/* translators: %s: revisions count */
 		], sprintf( _x( 'Browse %s Revisions', 'Button', 'geditorial-revisions' ),
-				'<b>'.Number::format( $count ).'</b>' ) );
+				'<b>'.Core\Number::format( $count ).'</b>' ) );
 
 		echo '</div>';
 	}
@@ -312,15 +309,15 @@ class Revisions extends gEditorial\Module
 	public function admin_post()
 	{
 		if ( empty( $_REQUEST['post_id'] ) )
-			WordPress::redirectReferer( 'wrong' );
+			Core\WordPress::redirectReferer( 'wrong' );
 
 		if ( ! $this->nonce_verify( 'purge_'.$_REQUEST['post_id'], $_REQUEST['_wpnonce'] ) )
 			self::cheatin();
 
 		if ( ! current_user_can( $this->caps['purge'], $_REQUEST['post_id'] ) )
-			WordPress::redirectReferer( 'noaccess' );
+			Core\WordPress::redirectReferer( 'noaccess' );
 
-		WordPress::redirectReferer( [
+		Core\WordPress::redirectReferer( [
 			$this->hook( 'purged' ) => $this->purge( $_REQUEST['post_id'] ),
 		] );
 	}
@@ -383,7 +380,7 @@ class Revisions extends gEditorial\Module
 							$count += $this->purge( $post_id );
 					}
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'cleaned',
 						'count'   => $count,
 					] );
@@ -405,7 +402,7 @@ class Revisions extends gEditorial\Module
 		$pagination['before'][] = Tablelist::filterPostTypes( $list );
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Tablelist::columnPostID(),
 			'date'  => Tablelist::columnPostDate(),
@@ -437,7 +434,7 @@ class Revisions extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Header', 'geditorial-revisions' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post Revisions', 'Header', 'geditorial-revisions' ) ),
 			'empty'      => _x( 'No post revisions found.', 'Message', 'geditorial-revisions' ),
 			'pagination' => $pagination,
 		] );
@@ -499,7 +496,7 @@ class Revisions extends gEditorial\Module
 		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
-		$pagination = HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged, $extra );
+		$pagination = Core\HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged, $extra );
 
 		$pagination['order'] = $order;
 

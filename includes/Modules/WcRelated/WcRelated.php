@@ -3,12 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\WooCommerce;
+use geminorum\gEditorial\WordPress;
 
 class WcRelated extends gEditorial\Module
 {
@@ -143,7 +140,7 @@ class WcRelated extends gEditorial\Module
 
 			// TODO: support custom priority
 
-			if ( WooCommerce::isActiveWoodMart() )
+			if ( WordPress\WooCommerce::isActiveWoodMart() )
 				$this->action( 'woocommerce_after_sidebar', 0, 18, FALSE, 'woodmart' );
 
 			else
@@ -164,7 +161,7 @@ class WcRelated extends gEditorial\Module
 		$before = function() { add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
 		$after  = function() { remove_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
 
-		if ( WooCommerce::isActiveWoodMart() ) {
+		if ( WordPress\WooCommerce::isActiveWoodMart() ) {
 
 			add_action( 'woodmart_woocommerce_after_sidebar', $before, ( $priority - 1 ) );
 			add_action( 'woodmart_woocommerce_after_sidebar', $after, ( $priority + 1 ) );
@@ -184,12 +181,12 @@ class WcRelated extends gEditorial\Module
 		$excludes = [];
 
 		if ( $this->get_setting( 'exclude_default_terms' ) )
-			$excludes[] = Taxonomy::getDefaultTermID( 'product_cat' );
+			$excludes[] = WordPress\Taxonomy::getDefaultTermID( 'product_cat' );
 
 		if ( $list = $this->get_setting( 'exclude_product_cats' ) )
-			$excludes = array_merge( $excludes, Strings::getSeparated( $list ) );
+			$excludes = array_merge( $excludes, WordPress\Strings::getSeparated( $list ) );
 
-		if ( ! $excludes = Arraay::prepNumeral( $excludes ) )
+		if ( ! $excludes = Core\Arraay::prepNumeral( $excludes ) )
 			return $term_ids;
 
 		return array_diff( $term_ids, $excludes );
@@ -203,12 +200,12 @@ class WcRelated extends gEditorial\Module
 		$excludes = [];
 
 		if ( $this->get_setting( 'exclude_default_terms' ) )
-			$excludes[] = Taxonomy::getDefaultTermID( 'product_tag' );
+			$excludes[] = WordPress\Taxonomy::getDefaultTermID( 'product_tag' );
 
 		if ( $list = $this->get_setting( 'exclude_product_tags' ) )
-			$excludes = array_merge( $excludes, Strings::getSeparated( $list ) );
+			$excludes = array_merge( $excludes, WordPress\Strings::getSeparated( $list ) );
 
-		if ( ! $excludes = Arraay::prepNumeral( $excludes ) )
+		if ( ! $excludes = Core\Arraay::prepNumeral( $excludes ) )
 			return $term_ids;
 
 		return array_diff( $term_ids, $excludes );
@@ -296,9 +293,9 @@ class WcRelated extends gEditorial\Module
 			wc_set_loop_prop( 'name', 'related_by_'.$row['taxonomy'] );
 			wc_set_loop_prop( 'columns', $columns );
 
-			$name = Text::starts( $row['taxonomy'], 'pa_' )
+			$name = Core\Text::starts( $row['taxonomy'], 'pa_' )
 				? wc_attribute_label( $row['taxonomy'], $product )
-				: Taxonomy::object( $row['taxonomy'] )->labels->name;
+				: WordPress\Taxonomy::object( $row['taxonomy'] )->labels->name;
 
 			$heading  = trim( sprintf( $row['heading'], $name ) );
 			$callback = static function() use ( $heading ) { return $heading; };

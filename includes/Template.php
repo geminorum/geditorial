@@ -2,32 +2,24 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
-class Template extends Main
+class Template extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
 
 	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '' )
 	{
-		if ( ! $term = Term::get( $term_id, $taxonomy ) )
+		if ( ! $term = WordPress\Term::get( $term_id, $taxonomy ) )
 			return FALSE;
 
 		if ( ! $term_image_id = get_term_meta( $term->term_id, 'image', TRUE ) )
 			return FALSE;
 
 		if ( is_null( $size ) )
-			$size = Media::getAttachmentImageDefaultSize( NULL, Term::taxonomy( $term ) ?: NULL );
+			$size = WordPress\Media::getAttachmentImageDefaultSize( NULL, WordPress\Term::taxonomy( $term ) ?: NULL );
 
 		if ( ! $image = image_downsize( $term_image_id, $size ) )
 			return FALSE;
@@ -49,7 +41,7 @@ class Template extends Main
 		], $atts );
 
 		if ( $src = self::getTermImageSrc( $args['size'], $args['id'], $args['taxonomy'] ) )
-			return HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
+			return Core\HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
 		return FALSE;
 	}
@@ -62,7 +54,7 @@ class Template extends Main
 		$html = $image;
 
 		if ( $link )
-			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getTermField( 'title', $args['id'], $args['taxonomy'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+			$html = '<a title="'.Core\HTML::escape( $args['figure'] ? self::getTermField( 'title', $args['id'], $args['taxonomy'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
 		// enable custom caption
 		if ( FALSE === $args['figure'] && $args['caption_text'] )
@@ -73,18 +65,18 @@ class Template extends Main
 			$caption = trim( ( $args['caption_text'] ?: $title ) );
 
 			if ( TRUE === $args['caption_link'] && $link )
-				$caption = HTML::link( $caption, $link );
+				$caption = Core\HTML::link( $caption, $link );
 
 			else if ( $args['caption_link'] )
-				$caption = HTML::link( $caption, $args['caption_link'] );
+				$caption = Core\HTML::link( $caption, $args['caption_link'] );
 
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
 		if ( empty( $args['wrap'] ) )
 			return $html;
 
-		return '<div class="'.HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-term-image-wrap' ).'">'.$html.'</div>';
+		return '<div class="'.Core\HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-term-image-wrap' ).'">'.$html.'</div>';
 	}
 
 	public static function termImage( $atts = [], $module = NULL )
@@ -116,14 +108,14 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'];
 
-		if ( ! $term = Term::get( $args['id'], $args['taxonomy'] ) )
+		if ( ! $term = WordPress\Term::get( $args['id'], $args['taxonomy'] ) )
 			return $args['default'];
 
 		$args['id']       = $term->term_id;
 		$args['taxonomy'] = $term->taxonomy;
 
 		$title    = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
-		$viewable = Taxonomy::viewable( $args['taxonomy'] );
+		$viewable = WordPress\Taxonomy::viewable( $args['taxonomy'] );
 		$meta     = get_term_meta( $args['id'], $args['field'], TRUE );
 
 		if ( $args['link'] ) {
@@ -150,7 +142,7 @@ class Template extends Main
 
 		} else if ( $image ) {
 
-			$html = HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
+			$html = Core\HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
 				'href'  => $args['link'],
 				'title' => $title,
 				'data'  => $args['link'] ? $args['data'] : FALSE,
@@ -158,7 +150,7 @@ class Template extends Main
 
 		} else if ( $args['fallback'] && $viewable ) {
 
-			$html = HTML::tag( 'a', [
+			$html = Core\HTML::tag( 'a', [
 				'href'  => get_term_link( $args['id'], $args['taxonomy'] ),
 				'title' => $title,
 				'data'  => $args['data'],
@@ -202,7 +194,7 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'];
 
-		if ( ! $term = Term::get( $args['id'], $args['taxonomy'] ) )
+		if ( ! $term = WordPress\Term::get( $args['id'], $args['taxonomy'] ) )
 			return $args['default'];
 
 		$args['id']       = $term->term_id;
@@ -230,17 +222,17 @@ class Template extends Main
 
 	public static function getPostImageSrc( $thumbnail_id = NULL, $size = NULL, $post_id = NULL )
 	{
-		if ( ! $post = Post::get( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return FALSE;
 
 		if ( is_null( $thumbnail_id ) )
-			$thumbnail_id = PostType::getThumbnailID( $post->ID );
+			$thumbnail_id = WordPress\PostType::getThumbnailID( $post->ID );
 
 		if ( ! $thumbnail_id )
 			return FALSE;
 
 		if ( is_null( $size ) )
-			$size = Media::getAttachmentImageDefaultSize( $post->post_type );
+			$size = WordPress\Media::getAttachmentImageDefaultSize( $post->post_type );
 
 		if ( ! $image = image_downsize( $thumbnail_id, $size ) )
 			return FALSE;
@@ -265,13 +257,13 @@ class Template extends Main
 		], $atts );
 
 		if ( is_null( $args['alt'] ) && $args['thumbnail'] )
-			$args['alt'] = Media::getAttachmentImageAlt( $args['thumbnail'], FALSE );
+			$args['alt'] = WordPress\Media::getAttachmentImageAlt( $args['thumbnail'], FALSE );
 
 		if ( ! $args['alt'] && 'parent_title' === $args['alt_fallback'] )
 			$args['alt'] = trim( strip_tags( get_the_title( $args['id'] ) ) );
 
 		if ( $src = self::getPostImageSrc( $args['thumbnail'], $args['size'], $args['id'] ) )
-			$html = HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
+			$html = Core\HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
 		return $html;
 	}
@@ -284,26 +276,26 @@ class Template extends Main
 		$html = $image;
 
 		if ( $link )
-			$html = '<a title="'.HTML::escape( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+			$html = '<a title="'.Core\HTML::escape( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
 
 		if ( $title && $args['figure'] ) {
 
 			if ( TRUE === $args['caption_link'] && $link )
-				$caption = HTML::link( $title, $link );
+				$caption = Core\HTML::link( $title, $link );
 
 			else if ( $args['caption_link'] )
-				$caption = HTML::link( $title, $args['caption_link'] );
+				$caption = Core\HTML::link( $title, $args['caption_link'] );
 
 			else
 				$caption = $title;
 
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
 		if ( ! $args['wrap'] )
 			return $html;
 
-		return '<div class="'.HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-post-image-wrap' ).'">'.$html.'</div>';
+		return '<div class="'.Core\HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-post-image-wrap' ).'">'.$html.'</div>';
 	}
 
 	public static function postImage( $atts = [], $module = NULL )
@@ -336,13 +328,13 @@ class Template extends Main
 		], $atts );
 
 		if ( 'latest' == $args['id'] )
-			$args['id'] = PostType::getLastMenuOrder( $args['type'], '', 'ID', [ 'publish' ] );
+			$args['id'] = WordPress\PostType::getLastMenuOrder( $args['type'], '', 'ID', [ 'publish' ] );
 
 		else if ( 'random' == $args['id'] )
-			$args['id'] = PostType::getRandomPostID( $args['type'], TRUE );
+			$args['id'] = WordPress\PostType::getRandomPostID( $args['type'], TRUE );
 
 		else if ( 'parent' == $args['id'] )
-			$args['id'] = PostType::getParentPostID();
+			$args['id'] = WordPress\PostType::getParentPostID();
 
 		else if ( $module && in_array( $args['id'], [ 'assoc', 'linked', 'paired' ] ) )
 			$args['id'] = gEditorial()->module( $module )->get_linked_to_posts( NULL, TRUE );
@@ -350,14 +342,14 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
 
-		if ( ! $post = Post::get( $args['id'] ) )
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'] ? $args['before'].$args['default'].$args['after'] : $args['default'];
 
 		$title  = self::getPostField( $args['title'], $post->ID, FALSE );
 		$status = get_post_status( $post );
 
 		if ( is_null( $args['thumbnail'] ) )
-			$args['thumbnail'] = PostType::getThumbnailID( $post->ID );
+			$args['thumbnail'] = WordPress\PostType::getThumbnailID( $post->ID );
 
 		if ( $args['link'] ) {
 
@@ -380,7 +372,7 @@ class Template extends Main
 
 		} else if ( $image ) {
 
-			$html = HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
+			$html = Core\HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
 				'href'  => $args['link'] ?: FALSE,
 				'title' => $title,
 				'data'  => $args['link'] ? $args['data'] : FALSE,
@@ -388,7 +380,7 @@ class Template extends Main
 
 		} else if ( $args['fallback'] && in_array( $status, [ 'publish', 'inherit' ] ) ) {
 
-			$html = HTML::tag( 'a', [
+			$html = Core\HTML::tag( 'a', [
 				'href'  => apply_filters( 'the_permalink', get_permalink( $post ), $post ),
 				'title' => $title,
 				'data'  => $args['data'],
@@ -446,7 +438,7 @@ class Template extends Main
 			if ( $link = ShortCode::postItem( $post_id, $args ) )
 				$links[] = $link;
 
-		if ( $html = Strings::getJoined( $links, $args['before'], $args['after'] ) ) {
+		if ( $html = WordPress\Strings::getJoined( $links, $args['before'], $args['after'] ) ) {
 
 			if ( ! $args['echo'] )
 				return $html;
@@ -464,7 +456,7 @@ class Template extends Main
 	public static function getTermField( $field = 'name', $term = NULL, $taxonomy = '', $default = '' )
 	{
 		if ( is_null( $term ) )
-			$term = Term::get( $term, $taxonomy );
+			$term = WordPress\Term::get( $term, $taxonomy );
 
 		if ( ! $term )
 			return $default;
@@ -539,7 +531,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Post::get( $args['id'] ) )
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$meta = $raw = self::getMetaFieldRaw( $field_key, $post->ID, 'meta' );
@@ -568,7 +560,7 @@ class Template extends Main
 			$meta = call_user_func( $args['filter'], $meta );
 
 		if ( $meta )
-			return $args['before'].( $args['trim'] ? Strings::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
+			return $args['before'].( $args['trim'] ? WordPress\Strings::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
 
 		return $args['default'];
 	}
@@ -581,7 +573,7 @@ class Template extends Main
 			if ( ! gEditorial()->enabled( 'meta' ) )
 				return FALSE;
 
-			if ( ! $post = Post::get( $post_id ) )
+			if ( ! $post = WordPress\Post::get( $post_id ) )
 				return FALSE;
 
 			$post_id = $post->ID;
@@ -606,7 +598,7 @@ class Template extends Main
 
 		$url = trim( $meta );
 
-		if ( ! URL::isValid( $url ) )
+		if ( ! Core\URL::isValid( $url ) )
 			return $meta;
 
 		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', $url, $url ) );
@@ -633,7 +625,7 @@ class Template extends Main
 
 			case 'text':
 
-				$html = HTML::tag( 'a', [
+				$html = Core\HTML::tag( 'a', [
 					'href'   => $meta,
 					'class'  => '-media-text-link',
 					'target' => '_blank',
@@ -692,7 +684,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Post::get( $args['id'] ) )
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$context = $args['context'] ?: ( $args['taxonomy'] ?: 'term' );
@@ -702,7 +694,7 @@ class Template extends Main
 			'filter' => $args['filter'],
 		], FALSE ) : FALSE;
 
-		if ( $args['taxonomy'] && ( $term = Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) ) {
+		if ( $args['taxonomy'] && ( $term = WordPress\Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) ) {
 
 			if ( ! $meta )
 				$meta = sanitize_term_field( 'name', $term->name, $term->term_id, $args['taxonomy'], 'display' );
@@ -715,7 +707,7 @@ class Template extends Main
 
 		} else if ( $meta && is_null( $args['link'] ) ) {
 
-			$args['link'] = WordPress::getSearchLink( $meta );
+			$args['link'] = Core\WordPress::getSearchLink( $meta );
 
 			if ( is_null( $args['description'] ) )
 				/* translators: %s: search query */
@@ -725,7 +717,7 @@ class Template extends Main
 		if ( ! $meta )
 			return $args['default'];
 
-		$html = $args['image'] ? HTML::img( $args['image'], '-'.$context.'-image', $meta ) : $meta;
+		$html = $args['image'] ? Core\HTML::img( $args['image'], '-'.$context.'-image', $meta ) : $meta;
 
 		if ( ! $html && $args['default'] )
 			$html = $args['default'];
@@ -735,7 +727,7 @@ class Template extends Main
 
 		if ( $args['link'] ) {
 
-			$html = $args['before'].HTML::tag( 'a', [
+			$html = $args['before'].Core\HTML::tag( 'a', [
 				'href'  => $args['link'],
 				'title' => $args['description'] ? $args['description'] : FALSE,
 				'class' => '-'.$context.'-link',
@@ -744,7 +736,7 @@ class Template extends Main
 
 		} else {
 
-			$html = $args['before'].HTML::tag( 'span', [
+			$html = $args['before'].Core\HTML::tag( 'span', [
 				'title' => $args['description'] ? $args['description'] : FALSE,
 				'class' => '-'.$context.'-span',
 				'data'  => $args['description'] ? [ 'toggle' => 'tooltip' ] : FALSE,
@@ -783,7 +775,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Post::get( $args['id'] ) )
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$url = $args['url_field'] ? self::getMetaField( $args['url_field'], [
@@ -792,7 +784,7 @@ class Template extends Main
 			'default' => $args['url_default'],
 		], FALSE ) : $args['url_default'];
 
-		$prepared = $url ? URL::prepTitle( $url ) : '';
+		$prepared = $url ? Core\URL::prepTitle( $url ) : '';
 
 		$title = $args['title_field'] ? self::getMetaField( $args['title_field'], [
 			'id'      => $post->ID,
@@ -802,7 +794,7 @@ class Template extends Main
 
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
 
-			$html = $args['before'].HTML::tag( ( $url ? 'a' : 'span' ), [
+			$html = $args['before'].Core\HTML::tag( ( $url ? 'a' : 'span' ), [
 				'href'  => $url,
 				'class' => $url ? $args['link_class'] : $args['span_class'],
 				'title' => $url ? $args['title_attr'] : FALSE,
@@ -873,7 +865,7 @@ class Template extends Main
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
 
-		if ( ! $post = Post::get( $args['id'] ) )
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
 		$rows     = [];
@@ -920,13 +912,13 @@ class Template extends Main
 					if ( ! is_object_in_taxonomy( $posttype, $key ) )
 						continue;
 
-					if ( ! $terms = Taxonomy::getTheTermList( $key, $post ) )
+					if ( ! $terms = WordPress\Taxonomy::getTheTermList( $key, $post ) )
 						continue;
 
 					if ( is_null( $title ) )
 						$title = Helper::getTaxonomyLabel( $key, 'singular_name' );
 
-					$rows[$title] = Strings::getJoined( $terms );
+					$rows[$title] = WordPress\Strings::getJoined( $terms );
 				}
 
 				continue;
@@ -1038,10 +1030,10 @@ class Template extends Main
 
 	public static function renderRecentByPosttype( $posttype, $link = 'view', $empty = NULL, $title_attr = NULL, $extra = [] )
 	{
-		if ( ! $object = PostType::object( $posttype ) )
+		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return;
 
-		$posts = PostType::getRecent( $object->name, $extra, current_user_can( $object->cap->edit_posts ) );
+		$posts = WordPress\PostType::getRecent( $object->name, $extra, current_user_can( $object->cap->edit_posts ) );
 
 		if ( count( $posts ) ) {
 
@@ -1051,14 +1043,14 @@ class Template extends Main
 				$list[] = Helper::getPostTitleRow( $post, $link, FALSE, $title_attr );
 
 			/* translators: %s: posttype name */
-			HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
-			echo HTML::renderList( $list );
+			Core\HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
+			echo Core\HTML::renderList( $list );
 
 		} else if ( is_null( $empty ) ) {
 
 			/* translators: %s: posttype name */
-			HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
-			HTML::desc( $object->labels->not_found, TRUE, '-empty -empty-posttype-'.$object->name );
+			Core\HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
+			Core\HTML::desc( $object->labels->not_found, TRUE, '-empty -empty-posttype-'.$object->name );
 
 		} else if ( $empty ) {
 
@@ -1086,7 +1078,7 @@ class Template extends Main
 		if ( empty( $args['posttype'] ) || empty( $args['taxonomy'] ) )
 			return $args['fallback'];
 
-		$terms = Taxonomy::listTerms( $args['taxonomy'], 'ids', [ 'order' => 'DESC' ] );
+		$terms = WordPress\Taxonomy::listTerms( $args['taxonomy'], 'ids', [ 'order' => 'DESC' ] );
 
 		foreach ( $terms as $term_id ) {
 
@@ -1108,7 +1100,7 @@ class Template extends Main
 			);
 
 			if ( ! empty( $span ) )
-				$html.= HTML::wrap( $span, '-tile-row' );
+				$html.= Core\HTML::wrap( $span, '-tile-row' );
 		}
 
 		if ( empty( $html ) )
@@ -1116,6 +1108,6 @@ class Template extends Main
 
 		$html = $args['before'].$html.$args['after'];
 
-		return $args['wrap'] ? HTML::wrap( $html, static::BASE.'-span-tiles' ) : $html;
+		return $args['wrap'] ? Core\HTML::wrap( $html, static::BASE.'-span-tiles' ) : $html;
 	}
 }

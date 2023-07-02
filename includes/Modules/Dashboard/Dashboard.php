@@ -3,8 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\URL;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
@@ -145,7 +144,7 @@ class Dashboard extends gEditorial\Module
 	private function _get_dashboard_permalink( $page = FALSE )
 	{
 		$dashboard = get_permalink( $this->get_setting( 'dashboard_page_id', 0 ) );
-		return $page ? URL::trail( $dashboard ).$page : URL::untrail( $dashboard );
+		return $page ? Core\URL::trail( $dashboard ).$page : Core\URL::untrail( $dashboard );
 	}
 
 	private function _get_pages()
@@ -266,9 +265,9 @@ class Dashboard extends gEditorial\Module
 			$after = trim( ob_get_clean() );
 		}
 
-		return HTML::wrap( $before, 'geditorial-wrap-dashbard dashbard-before' )
+		return Core\HTML::wrap( $before, 'geditorial-wrap-dashbard dashbard-before' )
 			.$html
-		.HTML::wrap( $after, 'geditorial-wrap-dashbard dashbard-after' );
+		.Core\HTML::wrap( $after, 'geditorial-wrap-dashbard dashbard-after' );
 	}
 
 	public function dashbard_before_navmenu()

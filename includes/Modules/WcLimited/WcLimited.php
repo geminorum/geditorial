@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class WcLimited extends gEditorial\Module
 {
@@ -35,7 +35,7 @@ class WcLimited extends gEditorial\Module
 					'type'         => 'checkbox-panel',
 					'title'        => _x( 'Limited Terms', 'Setting Title', 'geditorial-wc-limited' ),
 					'description'  => _x( 'Products on the selected categories will be limited to only one per purchase.', 'Setting Description', 'geditorial-wc-limited' ),
-					'values'       => Taxonomy::listTerms( 'product_cat' ),
+					'values'       => WordPress\Taxonomy::listTerms( 'product_cat' ),
 				],
 				[
 					'field'       => 'limited_notice',

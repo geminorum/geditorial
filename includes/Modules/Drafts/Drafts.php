@@ -4,12 +4,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 class Drafts extends gEditorial\Module
 {
@@ -70,15 +68,15 @@ class Drafts extends gEditorial\Module
 	// @REF: https://core.trac.wordpress.org/ticket/43739
 	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
 	{
-		$posttypes = PostType::get( 0, $args );
+		$posttypes = WordPress\PostType::get( 0, $args );
 		$excluded  = $this->posttypes_excluded();
 		$viewables = [];
 
 		if ( ! empty( $excluded ) )
-			$posttypes = Arraay::stripByKeys( $posttypes, $excluded );
+			$posttypes = Core\Arraay::stripByKeys( $posttypes, $excluded );
 
 		foreach ( $posttypes as $posttype => $label )
-			if ( PostType::viewable( $posttype ) )
+			if ( WordPress\PostType::viewable( $posttype ) )
 				$viewables[$posttype] = $label;
 
 		return $viewables;
@@ -208,7 +206,7 @@ class Drafts extends gEditorial\Module
 
 		foreach ( $this->posttypes() as $posttype ) {
 
-			$object = PostType::object( $posttype );
+			$object = WordPress\PostType::object( $posttype );
 
 			if ( ! current_user_can( $object->cap->edit_posts ) )
 				continue;
@@ -226,10 +224,10 @@ class Drafts extends gEditorial\Module
 			if ( ! $block )
 				continue; // FIXME: add new posttype link
 
-			$link = HTML::tag( 'a', [
-				'href'  => WordPress::getPostTypeEditLink( $posttype, $user, [ 'post_status' => 'draft' ] ),
+			$link = Core\HTML::tag( 'a', [
+				'href'  => Core\WordPress::getPostTypeEditLink( $posttype, $user, [ 'post_status' => 'draft' ] ),
 				'title' => sprintf( $all, $object->labels->singular_name ),
-			], HTML::escape( $object->labels->name ) );
+			], Core\HTML::escape( $object->labels->name ) );
 
 			$html.= '<div class="-block"><h3>'.$link.'</h3><ul>'.$block.'</ul></div>';
 		}
@@ -279,7 +277,7 @@ class Drafts extends gEditorial\Module
 
 		echo '<div class="geditorial-admin-wrap -drafts">';
 
-		echo HTML::tag( 'input', [
+		echo Core\HTML::tag( 'input', [
 			'type'     => 'text',
 			'value'    => $this->get_preview_url( $post->ID ),
 			'style'    => $public ? FALSE : 'display:none;',
@@ -290,7 +288,7 @@ class Drafts extends gEditorial\Module
 
 		echo Ajax::spinner();
 
-		echo HTML::tag( 'a', [
+		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
 			'class' => [ 'button', 'button-small', '-button', '-action', '-after-private' ],
 			'style' => $public ? 'display:none;' : FALSE,
@@ -301,7 +299,7 @@ class Drafts extends gEditorial\Module
 			],
 		], _x( 'Make Preview Public', 'Button', 'geditorial-drafts' ) );
 
-		echo HTML::tag( 'a', [
+		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
 			'class' => [ 'button', 'button-small', '-button', '-action', '-after-public' ],
 			'style' => $public ? FALSE : 'display:none;',
@@ -370,7 +368,7 @@ class Drafts extends gEditorial\Module
 			return $actions;
 
 		if ( $this->is_public( $post->ID ) )
-			$actions['public_link'] = HTML::link(
+			$actions['public_link'] = Core\HTML::link(
 				_x( 'Public Preview', 'Action', 'geditorial-drafts' ),
 				$this->get_preview_url( $post->ID )
 			);
@@ -391,7 +389,7 @@ class Drafts extends gEditorial\Module
 		echo '<li class="-row -drafts -preview-link">';
 			echo $this->get_column_icon( FALSE, 'welcome-view-site', _x( 'Preview', 'Row Icon Title', 'geditorial-drafts' ) );
 
-			echo HTML::tag( 'a', [
+			echo Core\HTML::tag( 'a', [
 				'href'   => $link,
 				'class'  => '-link',
 				'target' => '_blank',

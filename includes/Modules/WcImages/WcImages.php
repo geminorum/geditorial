@@ -3,13 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\WooCommerce;
+use geminorum\gEditorial\WordPress;
 
 class WcImages extends gEditorial\Module
 {
@@ -72,13 +70,13 @@ class WcImages extends gEditorial\Module
 							$count++;
 					}
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'synced',
 						'count'   => $count,
 					] );
 				}
 
-				WordPress::redirectReferer( 'huh' );
+				Core\WordPress::redirectReferer( 'huh' );
 			}
 
 			Scripts::enqueueThickBox();
@@ -103,7 +101,7 @@ class WcImages extends gEditorial\Module
 
 		$extra = [];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, WooCommerce::getProductPosttype(), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, WordPress\WooCommerce::getProductPosttype(), $this->get_sub_limit_option( $sub ) );
 
 		$pagination['actions'] = [
 			'shift_thumb_from_gallery' => _x( 'Shift Thumbnail from Gallery', 'Table Action', 'geditorial-wc-images' ),
@@ -111,7 +109,7 @@ class WcImages extends gEditorial\Module
 
 		$pagination['before'][] = Tablelist::filterSearch();
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => Tablelist::columnPostID(),
 			'title' => Tablelist::columnPostTitle(),
@@ -121,7 +119,7 @@ class WcImages extends gEditorial\Module
 				'class'    => 'image-column',
 				'callback' => function( $value, $row, $column, $index, $key, $args ) {
 					$attachment_id = get_post_meta( $row->ID, $this->constant( 'metakey_thumbnail_id' ), TRUE );
-					$html = Media::htmlAttachmentImage( $attachment_id, [ 45, 72 ] );
+					$html = WordPress\Media::htmlAttachmentImage( $attachment_id, [ 45, 72 ] );
 					return $html ?: Helper::htmlEmpty();
 				},
 			],
@@ -134,7 +132,7 @@ class WcImages extends gEditorial\Module
 
 					if ( $gallery = get_post_meta( $row->ID, $this->constant( 'metakey_image_gallery' ), TRUE ) )
 						foreach ( explode( ',', $gallery ) as $attachment_id )
-							$html.= Media::htmlAttachmentImage( $attachment_id, [ 45, 72 ] );
+							$html.= WordPress\Media::htmlAttachmentImage( $attachment_id, [ 45, 72 ] );
 
 					return $html ?: Helper::htmlEmpty();
 				},
@@ -142,7 +140,7 @@ class WcImages extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of WooCommerce Products', 'Header', 'geditorial-wc-images' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of WooCommerce Products', 'Header', 'geditorial-wc-images' ) ),
 			'empty'      => _x( 'No product found.', 'Message', 'geditorial-wc-images' ),
 			'pagination' => $pagination,
 		] );

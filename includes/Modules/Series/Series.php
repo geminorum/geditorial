@@ -3,13 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Series extends gEditorial\Module
 {
@@ -182,7 +180,7 @@ class Series extends gEditorial\Module
 			if ( $term_id && '-1' != $term_id )
 				$pre_terms[$offset] = (int) $term_id;
 
-		wp_set_object_terms( $post_id, Arraay::prepNumeral( $pre_terms ), $this->constant( 'series_tax' ), FALSE );
+		wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $pre_terms ), $this->constant( 'series_tax' ), FALSE );
 
 		foreach ( $pre_terms as $offset => $pre_term ) {
 			foreach ( $fields as $field ) {
@@ -192,7 +190,7 @@ class Series extends gEditorial\Module
 					case 'in_series_order':
 
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
-							$postmeta[$pre_term][$field] = Number::intval( $_POST[$prefix.$field][$offset] );
+							$postmeta[$pre_term][$field] = Core\Number::intval( $_POST[$prefix.$field][$offset] );
 
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$pre_term][$field] );
@@ -236,11 +234,11 @@ class Series extends gEditorial\Module
 	{
 		$taxonomy = $this->constant( 'series_tax' );
 
-		if ( ! Taxonomy::hasTerms( $taxonomy ) )
+		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
 		$posttypes = $this->posttypes();
-		$terms     = Taxonomy::getPostTerms( $taxonomy, $post );
+		$terms     = WordPress\Taxonomy::getPostTerms( $taxonomy, $post );
 		$posts     = $dropdowns = $map = [];
 		$i         = 1;
 
@@ -287,7 +285,7 @@ class Series extends gEditorial\Module
 
 				echo '<div class="field-wrap-group">';
 
-					echo HTML::wrap( $dropdown, 'field-wrap -select' );
+					echo Core\HTML::wrap( $dropdown, 'field-wrap -select' );
 
 					$this->actions( 'render_metabox_item', $index, $map[$index], $fields, $post, $context );
 
@@ -310,7 +308,7 @@ class Series extends gEditorial\Module
 
 			$title = $this->get_string( $field, $post->post_type );
 
-			$html = HTML::tag( 'input', [
+			$html = Core\HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
@@ -323,7 +321,7 @@ class Series extends gEditorial\Module
 				],
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap -inputtext' );
+			echo Core\HTML::wrap( $html, 'field-wrap -inputtext' );
 		}
 
 		$field = 'in_series_order';
@@ -331,7 +329,7 @@ class Series extends gEditorial\Module
 
 			$title = $this->get_string( $field, $post->post_type );
 
-			$html = HTML::tag( 'input', [
+			$html = Core\HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
@@ -342,7 +340,7 @@ class Series extends gEditorial\Module
 				'data'         => [ 'ortho' => 'number' ],
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap -inputtext' );
+			echo Core\HTML::wrap( $html, 'field-wrap -inputtext' );
 		}
 
 		$field = 'in_series_desc';
@@ -350,7 +348,7 @@ class Series extends gEditorial\Module
 
 			$title = $this->get_string( $field, $post->post_type );
 
-			$html = HTML::tag( 'textarea', [
+			$html = Core\HTML::tag( 'textarea', [
 				'rows'        => '1',
 				'class'       => 'textarea-autosize',
 				'name'        => 'geditorial-series-'.$field.'['.$counter.']',
@@ -362,7 +360,7 @@ class Series extends gEditorial\Module
 				],
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::wrap( $html, 'field-wrap -textarea' );
+			echo Core\HTML::wrap( $html, 'field-wrap -textarea' );
 		}
 	}
 

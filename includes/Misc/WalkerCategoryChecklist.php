@@ -2,8 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 require_once ABSPATH.'wp-admin/includes/class-walker-category-checklist.php';
 
@@ -26,7 +26,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 		if ( ! $roles )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
-		if ( User::hasRole( array_merge( [ 'administrator' ], (array) $roles ) ) )
+		if ( WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ) ) )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
 		if ( 'disabled' == $atts['role'] ) {

@@ -2,11 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\HTTP;
-use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
-class Barcode extends Main
+class Barcode extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -76,7 +75,7 @@ class Barcode extends Main
 		], $extra ), 'https://bwipjs-api.metafloor.com' );
 
 		if ( ! $cache )
-			return $tag ? HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ) ] ) : $direct;
+			return $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ) ] ) : $direct;
 
 		$file = sprintf( '%s.png', md5( maybe_serialize( $direct ) ) );
 		$path = self::getCacheDIR( $sub, $base ).'/'.$file;
@@ -84,15 +83,15 @@ class Barcode extends Main
 
 		if ( ! file_exists( $path.'/'.$file ) ) {
 
-			$bypass = $tag ? HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
+			$bypass = $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
 
-			if ( ! $image = HTTP::getContents( $direct ) )
+			if ( ! $image = Core\HTTP::getContents( $direct ) )
 				return $bypass;
 
 			if ( FALSE === file_put_contents( $path.'/'.$file, $image ) )
 				return $bypass;
 		}
 
-		return $tag ? HTML::img( $url, [ '-barcode', sprintf( '-%s', $type ), '-cached' ] ) : $url;
+		return $tag ? Core\HTML::img( $url, [ '-barcode', sprintf( '-%s', $type ), '-cached' ] ) : $url;
 	}
 }

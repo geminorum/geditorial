@@ -4,8 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Overwrite extends gEditorial\Module
 {
@@ -30,7 +29,7 @@ class Overwrite extends gEditorial\Module
 
 		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label ) {
 
-			$posttype_object = PostType::object( $posttype_name );
+			$posttype_object = WordPress\PostType::object( $posttype_name );
 
 			$settings['_posttypes'][] = [
 				'field'       => 'posttype_'.$posttype_name.'_plural',
@@ -73,7 +72,7 @@ class Overwrite extends gEditorial\Module
 
 		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label ) {
 
-			$taxonomy_object = Taxonomy::object( $taxonomy_name );
+			$taxonomy_object = WordPress\Taxonomy::object( $taxonomy_name );
 
 			$settings['_taxonomies'][] = [
 				'field'       => 'taxonomy_'.$taxonomy_name.'_plural',
@@ -262,7 +261,7 @@ class Overwrite extends gEditorial\Module
 
 				add_filter( 'post_updated_messages', function( $messages ) use ( $screen ) {
 
-					if ( ! $posttype = PostType::object( $screen->post_type ) )
+					if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
 						return $messages;
 
 					return array_merge( $messages, [
@@ -277,7 +276,7 @@ class Overwrite extends gEditorial\Module
 
 				add_filter( 'bulk_post_updated_messages', function( $messages, $counts ) use ( $screen ) {
 
-					if ( ! $posttype = PostType::object( $screen->post_type ) )
+					if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
 						return $messages;
 
 					return array_merge( $messages, [

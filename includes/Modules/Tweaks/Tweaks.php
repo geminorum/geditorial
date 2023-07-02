@@ -3,23 +3,16 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Icon;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Status;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
 class Tweaks extends gEditorial\Module
 {
-
-	// TODO: metabox on postedit with similar post names using `Post::getIDByTitle()`
 
 	protected $priority_init = 14;
 
@@ -257,7 +250,7 @@ class Tweaks extends gEditorial\Module
 		$supported = get_post_types_by_support( $feature );
 		$excluded  = Settings::posttypesExcluded( $extra_excludes );
 
-		foreach ( PostType::get( 0, [ 'show_ui' => TRUE ] ) as $posttype => $label )
+		foreach ( WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ) as $posttype => $label )
 			if ( in_array( $posttype, $supported ) && ! in_array( $posttype, $excluded ) )
 				$posttypes[$posttype] = $label;
 
@@ -267,7 +260,7 @@ class Tweaks extends gEditorial\Module
 	// internal helper
 	private function _get_posttypes_support_exclude( $extra_excludes = [] )
 	{
-		$supported = PostType::get( 0, [ 'show_ui' => TRUE ] );
+		$supported = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
 		$excluded  = Settings::posttypesExcluded( $extra_excludes );
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
@@ -284,7 +277,7 @@ class Tweaks extends gEditorial\Module
 		$enqueue = FALSE;
 
 		if ( 'post' == $screen->base
-			&& ! PostType::supportBlocks( $screen->post_type ) ) {
+			&& ! WordPress\PostType::supportBlocks( $screen->post_type ) ) {
 
 			if ( $this->in_setting( $screen->post_type, 'post_modified' ) )
 				$this->action( 'post_submitbox_misc_actions', 1, 1 );
@@ -360,7 +353,7 @@ class Tweaks extends gEditorial\Module
 		// add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
-		if ( ! WordPress::isAJAX() && $this->in_setting( $posttype, 'column_thumb' ) )
+		if ( ! Core\WordPress::isAJAX() && $this->in_setting( $posttype, 'column_thumb' ) )
 			Scripts::enqueueThickBox();
 
 		// INTERNAL HOOKS
@@ -379,7 +372,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->in_setting( $posttype, 'page_template' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
 
-		if ( $this->in_setting( $posttype, 'slug_attribute' ) && PostType::viewable( $posttype ) )
+		if ( $this->in_setting( $posttype, 'slug_attribute' ) && WordPress\PostType::viewable( $posttype ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_slug' ], 50 );
 
 		if ( $this->in_setting( $posttype, 'comment_status' ) && post_type_supports( $posttype, 'comments' ) )
@@ -389,11 +382,11 @@ class Tweaks extends gEditorial\Module
 	// we use this hook to early control `current_screen` on other modules
 	public function add_meta_boxes( $posttype, $post )
 	{
-		if ( PostType::supportBlocksByPost( $post ) )
+		if ( WordPress\PostType::supportBlocksByPost( $post ) )
 			return;
 
 		$screen = get_current_screen();
-		$object = PostType::object( $posttype );
+		$object = WordPress\PostType::object( $posttype );
 
 		if ( $this->in_setting( $posttype, 'post_mainbox' ) ) {
 
@@ -478,7 +471,7 @@ class Tweaks extends gEditorial\Module
 		$new   = [];
 		$added = FALSE;
 
-		$ajax = WordPress::isAJAX();
+		$ajax = Core\WordPress::isAJAX();
 		$rows = $ajax || has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $posttype ) : FALSE;
 		$atts = $ajax || has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $posttype ) : FALSE;
 
@@ -533,7 +526,7 @@ class Tweaks extends gEditorial\Module
 		foreach ( $columns as $key => $value )
 
 			if ( 'title' == $key )
-				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', PostType::current( 'post' ) );
+				$new['geditorial-tweaks-title'] = $this->get_column_title( 'title', WordPress\PostType::current( 'post' ) );
 
 			else
 				$new[$key] = $value;
@@ -579,7 +572,7 @@ class Tweaks extends gEditorial\Module
 			case $this->classs( 'thumb' ):
 
 				$size = NULL; // maybe filter fo this module?!
-				echo $this->filters( 'column_thumb', PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
+				echo $this->filters( 'column_thumb', WordPress\PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
 
 			break;
 			case $this->classs( 'order' ):
@@ -590,7 +583,7 @@ class Tweaks extends gEditorial\Module
 			case $this->classs( 'id' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
-					echo HTML::link( $post_id, WordPress::getPostShortLink( $post_id ), TRUE );
+					echo Core\HTML::link( $post_id, Core\WordPress::getPostShortLink( $post_id ), TRUE );
 				echo '</div>';
 		}
 	}
@@ -710,7 +703,7 @@ class Tweaks extends gEditorial\Module
 			printf( '<a href="%s">%s</a>',
 				esc_url( add_query_arg( 'user_id', $comment->user_id,
 					admin_url( 'edit-comments.php' ) ) ),
-				HTML::escape( $user->display_name )
+				Core\HTML::escape( $user->display_name )
 			);
 		}
 	}
@@ -735,7 +728,7 @@ class Tweaks extends gEditorial\Module
 				continue;
 
 			if ( is_null( $info['edit'] ) )
-				$info['edit'] = WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $post->post_type ] );
+				$info['edit'] = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $post->post_type ] );
 
 			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
 			$before.= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
@@ -763,10 +756,10 @@ class Tweaks extends gEditorial\Module
 				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Row Icon Title', 'geditorial-tweaks' ) );
 
 				if ( ! empty( $this->_page_templates[$post->post_type][$post->page_template] ) )
-					echo '<span title="'.HTML::escape( $post->page_template ).'">'
-						.HTML::escape( $this->_page_templates[$post->post_type][$post->page_template] ).'</span>';
+					echo '<span title="'.Core\HTML::escape( $post->page_template ).'">'
+						.Core\HTML::escape( $this->_page_templates[$post->post_type][$post->page_template] ).'</span>';
 				else
-					echo '<span>'.HTML::escape( $post->page_template ).'</span>';
+					echo '<span>'.Core\HTML::escape( $post->page_template ).'</span>';
 
 			echo '</li>';
 		}
@@ -808,7 +801,7 @@ class Tweaks extends gEditorial\Module
 
 		echo '<li class="-row tweaks-default-atts -post-author -post-author-'.$post->post_author.'">';
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Row Icon Title', 'geditorial-tweaks' ) );
-			echo '<span class="-author">'.WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
+			echo '<span class="-author">'.Core\WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
 	}
 
@@ -819,17 +812,17 @@ class Tweaks extends gEditorial\Module
 
 		echo '<li class="-row tweaks-default-atts -post-name">';
 			echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Row Icon Title', 'geditorial-tweaks' ) );
-			echo HTML::code( urldecode( $post->post_name ) );
+			echo Core\HTML::code( urldecode( $post->post_name ) );
 		echo '</li>';
 	}
 
 	public function column_attr_status( $post )
 	{
 		if ( empty( $this->_post_statuses ) )
-			$this->_post_statuses = Status::get();
+			$this->_post_statuses = WordPress\Status::get();
 
 		if ( isset( $this->_post_statuses[$post->post_status] ) )
-			$status = HTML::escape( $this->_post_statuses[$post->post_status] );
+			$status = Core\HTML::escape( $this->_post_statuses[$post->post_status] );
 		else
 			$status = $post->post_status;
 
@@ -874,7 +867,7 @@ class Tweaks extends gEditorial\Module
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-tweaks' ) );
-		echo Strings::getJoined( User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, '</li>' );
+		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, '</li>' );
 	}
 
 	public function column_contacts_default( $user )
@@ -882,7 +875,7 @@ class Tweaks extends gEditorial\Module
 		if ( $user->user_email ) {
 			echo '<li class="-row tweaks-user-contacts -email">';
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Row Icon Title', 'geditorial-tweaks' ) );
-				echo HTML::mailto( $user->user_email );
+				echo Core\HTML::mailto( $user->user_email );
 			echo '</li>';
 		}
 
@@ -892,7 +885,7 @@ class Tweaks extends gEditorial\Module
 				continue;
 
 			echo '<li class="-row tweaks-user-contacts -contact-'.$method.'">';
-				echo $this->get_column_icon( FALSE, Icon::guess( $method, 'email-alt' ), $title );
+				echo $this->get_column_icon( FALSE, Core\Icon::guess( $method, 'email-alt' ), $title );
 				echo $this->prep_meta_row( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
 			echo '</li>';
 		}
@@ -903,7 +896,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		$posttype = PostType::object( $post->post_type );
+		$posttype = WordPress\PostType::object( $post->post_type );
 
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'mainbox', $post, $box );
@@ -1003,7 +996,7 @@ class Tweaks extends gEditorial\Module
 			echo '<select name="page_template" id="page_template">';
 
 				echo '<option value="default">';
-					echo HTML::escape( apply_filters( 'default_page_template_title', __( 'Default Template' ), 'meta-box' ) );
+					echo Core\HTML::escape( apply_filters( 'default_page_template_title', __( 'Default Template' ), 'meta-box' ) );
 				echo '</option>';
 
 				page_template_dropdown( $template, $post->post_type );

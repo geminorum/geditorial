@@ -3,15 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\Date;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
 use geminorum\gEditorial\WordPress;
 
 class Modified extends gEditorial\Module
@@ -146,7 +144,7 @@ class Modified extends gEditorial\Module
 
 		$columns['modified'] = Tablelist::columnPostDateModified();
 
-		HTML::tableList( $columns, $query->query( $args ), [
+		Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => Helper::getPostTypeLabel( 'post', 'not_found' ),
 		] );
 	}
@@ -195,10 +193,10 @@ class Modified extends gEditorial\Module
 		else
 			$title = $args['title'];
 
-		$html = Date::htmlDateTime( $local, $gmt, $args['format'], $title );
+		$html = Core\Date::htmlDateTime( $local, $gmt, $args['format'], $title );
 
 		if ( $args['link'] )
-			$html = HTML::link( $html, $args['link'] );
+			$html = Core\HTML::link( $html, $args['link'] );
 
 		return ShortCode::wrap( $html, 'post-modified', $args, FALSE );
 	}
@@ -219,7 +217,7 @@ class Modified extends gEditorial\Module
 		$prefix  = $this->get_setting( 'insert_prefix', '' );
 
 		if ( $gmt >= $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) )
-			return $prefix.' '.Date::htmlDateTime( $local, $gmt, $format,
+			return $prefix.' '.Core\Date::htmlDateTime( $local, $gmt, $format,
 					Datetime::humanTimeDiffRound( $local, FALSE ) );
 
 		return FALSE;
@@ -228,7 +226,7 @@ class Modified extends gEditorial\Module
 	// just put {SITE_LAST_MODIFIED} on a menu item text!
 	public function wp_nav_menu_items( $items, $args )
 	{
-		if ( ! Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
+		if ( ! Core\Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
 			return $items;
 
 		return preg_replace( '%{SITE_LAST_MODIFIED}%', $this->get_site_modified() ?: '', $items );
@@ -268,10 +266,10 @@ class Modified extends gEditorial\Module
 		else
 			$title = $args['title'];
 
-		$html = Date::htmlDateTime( $local, $gmt, $args['format'], $title );
+		$html = Core\Date::htmlDateTime( $local, $gmt, $args['format'], $title );
 
 		if ( $args['link'] )
-			$html = HTML::link( $html, $args['link'] );
+			$html = Core\HTML::link( $html, $args['link'] );
 
 		return ShortCode::wrap( $html, 'site-modified', $args, FALSE );
 	}

@@ -3,11 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\WooCommerce;
+use geminorum\gEditorial\WordPress;
 
 class WcWidgets extends gEditorial\Module
 {
@@ -41,7 +39,7 @@ class WcWidgets extends gEditorial\Module
 					'type'        => 'checkboxes-values',
 					'title'       => _x( 'Custom Areas', 'Setting Title', 'geditorial-wc-widgets' ),
 					'description' => _x( 'Registers widget area on the selected action hooks.', 'Setting Description', 'geditorial-wc-widgets' ),
-					'values'      => Arraay::column( $this->_get_widget_action_hooks(), 'title', 'action' ),
+					'values'      => Core\Arraay::column( $this->_get_widget_action_hooks(), 'title', 'action' ),
 				],
 			],
 		];
@@ -120,7 +118,7 @@ class WcWidgets extends gEditorial\Module
 				'priority' => 10,
 			];
 
-		if ( WooCommerce::isActiveWoodMart() ) {
+		if ( WordPress\WooCommerce::isActiveWoodMart() ) {
 			$list[] = [
 				'action'        => 'woodmart_shop_filters_area',
 				'title'         => _x( 'Woodmart: Shop Filters Area', 'Action Hook', 'geditorial-wc-widgets' ),
@@ -143,12 +141,12 @@ class WcWidgets extends gEditorial\Module
 			if ( in_array( $key, $widgets, TRUE ) )
 				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
 
-		$areas = Arraay::reKey( $this->_get_widget_action_hooks(), 'action' );
+		$areas = Core\Arraay::reKey( $this->_get_widget_action_hooks(), 'action' );
 
 		foreach ( $this->get_setting( 'custom_areas', [] ) as $index => $hook ) {
 
 			$sidebar  = $this->classs( 'area', $index );
-			$name     = isset( $areas[$hook]['title'] ) ? $areas[$hook]['title'] : Text::readableKey( $hook );
+			$name     = isset( $areas[$hook]['title'] ) ? $areas[$hook]['title'] : Core\Text::readableKey( $hook );
 			$priority = empty( $areas[$hook]['priority'] ) ? 10 : $areas[$hook]['priority'];
 
 			add_action( $hook, static function() use ( $sidebar ) {
@@ -160,7 +158,7 @@ class WcWidgets extends gEditorial\Module
 				/* translators: %s: widget area name */
 				'name'          => sprintf( _x( 'WooCommerce: %s', 'Widget Area Prefix', 'geditorial-wc-widgets' ), $name ),
 				/* translators: %s: widget action hook */
-				'description'   => sprintf( _x( 'Widgets in this area will appear on %s action hook.', 'Widget Area Description', 'geditorial-wc-widgets' ), HTML::code( $hook ) ),
+				'description'   => sprintf( _x( 'Widgets in this area will appear on %s action hook.', 'Widget Area Description', 'geditorial-wc-widgets' ), Core\HTML::code( $hook ) ),
 				'before_widget' => array_key_exists( 'before_widget', $areas[$hook] ) ? $areas[$hook]['before_widget'] : '', // empty to overrride defaults
 				'after_widget'  => array_key_exists( 'after_widget', $areas[$hook] )  ? $areas[$hook]['after_widget']  : '', // empty to overrride defaults
 				'before_title'  => array_key_exists( 'before_title', $areas[$hook] )  ? $areas[$hook]['before_title']  : '<h2 class="widgettitle">',

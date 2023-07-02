@@ -3,12 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
 
 class Grouping extends gEditorial\Module
 {
@@ -121,8 +119,8 @@ class Grouping extends gEditorial\Module
 
 			add_submenu_page(
 				'users.php',
-				HTML::escape( $taxonomy->labels->name ),
-				HTML::escape( $menu_name ),
+				Core\HTML::escape( $taxonomy->labels->name ),
+				Core\HTML::escape( $menu_name ),
 				$taxonomy->cap->manage_terms,
 				'edit-tags.php?taxonomy='.$taxonomy->name
 			);
@@ -173,7 +171,7 @@ class Grouping extends gEditorial\Module
 	public function tweaks_column_user( $user )
 	{
 		foreach ( $this->get_custom_taxonomies() as $custom ) {
-			$icon = $this->get_column_icon( WordPress::getEditTaxLink( $custom['name'] ), $custom['icon'] ?: NULL, $custom['menu'] );
+			$icon = $this->get_column_icon( Core\WordPress::getEditTaxLink( $custom['name'] ), $custom['icon'] ?: NULL, $custom['menu'] );
 			Helper::renderUserTermsEditRow( $user->ID, $custom['name'], '<li class="-row">'.$icon, '</li>' );
 		}
 	}
@@ -271,7 +269,7 @@ class Grouping extends gEditorial\Module
 		$taxonomies = $this->filters( 'custom_taxonomies', $this->get_setting( 'custom_taxonomies', [] ) );
 
 		if ( $taxonomies )
-			$taxonomies = Arraay::reKey( $taxonomies, 'name' );
+			$taxonomies = Core\Arraay::reKey( $taxonomies, 'name' );
 
 		return $taxonomies;
 	}

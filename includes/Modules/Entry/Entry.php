@@ -3,13 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Entry extends gEditorial\Module
 {
@@ -175,14 +172,14 @@ class Entry extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		if ( ! $terms = Taxonomy::getPostTerms( $this->constant( 'section_tax' ), $post_id ) )
+		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $this->constant( 'section_tax' ), $post_id ) )
 			return;
 
 		$nodes[] = [
 			'id'     => $this->classs(),
 			'title'  => _x( 'Entry Sections', 'Adminbar', 'geditorial-entry' ),
 			'parent' => $parent,
-			'href'   => PostType::getArchiveLink( $this->constant( 'entry_cpt' ) ),
+			'href'   => WordPress\PostType::getArchiveLink( $this->constant( 'entry_cpt' ) ),
 		];
 
 		foreach ( $terms as $term )
@@ -197,11 +194,11 @@ class Entry extends gEditorial\Module
 	public function register_shortcode_ui()
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'section_shortcode' ), [
-			'label'         => HTML::escape( _x( 'Entry Section', 'UI: Label', 'geditorial-entry' ) ),
+			'label'         => Core\HTML::escape( _x( 'Entry Section', 'UI: Label', 'geditorial-entry' ) ),
 			'listItemImage' => $this->get_posttype_icon( 'entry_cpt' ),
 			'attrs'         => [
 				[
-				'label'    => HTML::escape( _x( 'Section', 'UI: Label', 'geditorial-entry' ) ),
+				'label'    => Core\HTML::escape( _x( 'Section', 'UI: Label', 'geditorial-entry' ) ),
 				'attr'     => 'id',
 				'type'     => 'term_select',
 				'taxonomy' => $this->constant( 'section_tax' ),
@@ -266,7 +263,7 @@ class Entry extends gEditorial\Module
 
 	public function manage_posts_columns( $columns )
 	{
-		return Arraay::insert( $columns, [
+		return Core\Arraay::insert( $columns, [
 			'taxonomy-'.$this->constant( 'section_tax' ) => $this->get_column_title_taxonomy( 'section_tax', $this->constant( 'entry_cpt' ) ),
 		], 'cb', 'after' );
 	}
@@ -287,10 +284,10 @@ class Entry extends gEditorial\Module
 
 	public function the_content( $content )
 	{
-		$sections = Taxonomy::prepTerms( $this->constant( 'section_tax' ), [], NULL, 'name' );
+		$sections = WordPress\Taxonomy::prepTerms( $this->constant( 'section_tax' ), [], NULL, 'name' );
 
-		return Text::replaceWords( wp_list_pluck( $sections, 'name' ), $content, static function( $matched ) use ( $sections ) {
-			return HTML::tag( 'a', [
+		return Core\Text::replaceWords( wp_list_pluck( $sections, 'name' ), $content, static function( $matched ) use ( $sections ) {
+			return Core\HTML::tag( 'a', [
 				'href'  => $sections[$matched]->link,
 				'class' => '-entry-section',
 				'data'  => [ 'desc' => trim( strip_tags( $sections[$matched]->description ) ) ],

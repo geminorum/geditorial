@@ -3,9 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core\HTML;
 
 class WcPostal extends gEditorial\Module
 {
@@ -178,9 +178,9 @@ class WcPostal extends gEditorial\Module
 			return;
 
 		echo $this->wrap_open( 'form-field form-field-wide -tracking' );
-			echo HTML::img( $this->_service_icon(), '-before-icon' );
+			echo Core\HTML::img( $this->_service_icon(), '-before-icon' );
 			echo ' '._x( 'Tracking Package ID:', 'Action Title', 'geditorial-wc-postal' );
-			echo ' '.HTML::link( $tracking, $this->_service_url( $tracking ), TRUE );
+			echo ' '.Core\HTML::link( $tracking, $this->_service_url( $tracking ), TRUE );
 		echo '</div>';
 	}
 
@@ -198,12 +198,12 @@ class WcPostal extends gEditorial\Module
 	public function admin_order_actions_end( $order )
 	{
 		if ( $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
-			echo HTML::tag( 'a', [
+			echo Core\HTML::tag( 'a', [
 				'href'   => $this->_service_url( $tracking ),
 				'title'  => $this->get_setting_fallback( 'admin_button_title', _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-postal' ) ),
 				'class'  => [ 'button', $this->classs( 'tracking' ) ],
 				'target' => '_blank',
-			], HTML::img( $this->_service_icon() ) );
+			], Core\HTML::img( $this->_service_icon() ) );
 	}
 
 	// @REF: https://gist.github.com/bekarice/1be29b71731c31131103ff54a096e541

@@ -4,18 +4,15 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Services\O2O;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
 class Config extends gEditorial\Module
 {
@@ -133,7 +130,7 @@ class Config extends gEditorial\Module
 		Settings::wrapOpen( $sub, 'reports' );
 
 			Settings::headerTitle( _x( 'Editorial Reports', 'Page Title', 'geditorial-config' ) );
-			HTML::headerNav( $uri, $sub, $subs );
+			Core\HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -172,7 +169,7 @@ class Config extends gEditorial\Module
 		$subs     = apply_filters( $this->base.'_tools_subs', $subs, 'tools', $can );
 		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub, $can );
 
-		if ( User::isSuperAdmin() ) {
+		if ( WordPress\User::isSuperAdmin() ) {
 			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-config' );
 			$subs['console'] = _x( 'Console', 'Tools Sub', 'geditorial-config' );
 		}
@@ -180,7 +177,7 @@ class Config extends gEditorial\Module
 		Settings::wrapOpen( $sub, 'tools' );
 
 			Settings::headerTitle( _x( 'Editorial Tools', 'Page Title', 'geditorial-config' ) );
-			HTML::headerNav( $uri, $sub, $subs );
+			Core\HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -222,14 +219,14 @@ class Config extends gEditorial\Module
 
 	protected function tools_options( $uri )
 	{
-		User::superAdminOnly();
+		WordPress\User::superAdminOnly();
 
 		echo '<br />';
 
 		if ( $options = get_option( 'geditorial_options' ) )
-			HTML::tableSide( $options );
+			Core\HTML::tableSide( $options );
 		else
-			HTML::desc( gEditorial\Plugin::na() );
+			Core\HTML::desc( gEditorial\Plugin::na() );
 	}
 
 	public function admin_reports_load()
@@ -265,7 +262,7 @@ class Config extends gEditorial\Module
 					$result = gEditorial()->upgrade_old_options();
 
 					if ( $result )
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'upgraded',
 							'count'   => count( $result ),
 						] );
@@ -273,16 +270,16 @@ class Config extends gEditorial\Module
 				} else if ( Tablelist::isAction( 'delete_all_options' ) ) {
 
 					if ( delete_option( 'geditorial_options' ) )
-						WordPress::redirectReferer( 'purged' );
+						Core\WordPress::redirectReferer( 'purged' );
 
 				} else if ( Tablelist::isAction( 'custom_fields_empty' ) ) {
 
 					if ( $post['empty_module'] && isset( gEditorial()->module( $post['empty_module'] )->meta_key ) ) {
 
-						$result = Database::deleteEmptyMeta( gEditorial()->module( $post['empty_module'] )->meta_key );
+						$result = WordPress\Database::deleteEmptyMeta( gEditorial()->module( $post['empty_module'] )->meta_key );
 
 						if ( $result )
-							WordPress::redirectReferer( [
+							Core\WordPress::redirectReferer( [
 								'message' => 'emptied',
 								'count'   => count( $result ),
 							] );
@@ -292,22 +289,22 @@ class Config extends gEditorial\Module
 
 					if ( empty( $_POST['old_o2o_type'] )
 						|| empty( $_POST['new_o2o_type'] ) )
-							WordPress::redirectReferer( 'wrong' );
+							Core\WordPress::redirectReferer( 'wrong' );
 
-					$result = O2O\API::convertConnection( $_POST['old_o2o_type'], $_POST['new_o2o_type'] );
+					$result = Services\O2O\API::convertConnection( $_POST['old_o2o_type'], $_POST['new_o2o_type'] );
 
 					if ( FALSE === $result )
-						WordPress::redirectReferer( 'wrong' );
+						Core\WordPress::redirectReferer( 'wrong' );
 
 					else
-						WordPress::redirectReferer( [
+						Core\WordPress::redirectReferer( [
 							'message' => 'converted',
 							'count'   => count( $result ),
 						] );
 
 				} else {
 
-					WordPress::redirectReferer( 'huh' );
+					Core\WordPress::redirectReferer( 'huh' );
 				}
 			}
 
@@ -327,8 +324,8 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
-		HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-config' ) );
-		HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
+		Core\HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-config' ) );
+		Core\HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
 	}
 
 	protected function render_tools_html( $uri, $sub )
@@ -348,21 +345,21 @@ class Config extends gEditorial\Module
 				Settings::submitButton( 'upgrade_old_options',
 					_x( 'Upgrade Old Options', 'Button', 'geditorial-config' ) );
 
-				HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Tools: Message', 'geditorial-config' ), FALSE );
+				Core\HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Tools: Message', 'geditorial-config' ), FALSE );
 			echo '</p>';
 
-			if ( User::isSuperAdmin() || WordPress::isDev() ) {
+			if ( WordPress\User::isSuperAdmin() || Core\WordPress::isDev() ) {
 				echo '<br /><p>';
 					Settings::submitButton( 'delete_all_options',
 						_x( 'Delete All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );
 
-					HTML::desc( _x( 'Deletes all editorial options on current site', 'Tools: Message', 'geditorial-config' ), FALSE );
+					Core\HTML::desc( _x( 'Deletes all editorial options on current site', 'Tools: Message', 'geditorial-config' ), FALSE );
 				echo '</p>';
 			}
 
 		echo '</td></tr></table>';
 
-		HTML::h2( _x( 'Maintenance Tasks', 'Tools: Header', 'geditorial-config' ) );
+		Core\HTML::h2( _x( 'Maintenance Tasks', 'Tools: Header', 'geditorial-config' ) );
 
 		echo '<table class="form-table">';
 
@@ -381,32 +378,32 @@ class Config extends gEditorial\Module
 			Settings::submitButton( 'custom_fields_empty',
 				_x( 'Empty', 'Button', 'geditorial-config' ), 'danger', TRUE );
 
-			HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Tools: Message', 'geditorial-config' ) );
+			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Tools: Message', 'geditorial-config' ) );
 
 		echo '</td></tr>';
 
 		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Tools', 'geditorial-config' ).'</th><td>';
 
-		// $counts = O2O\API::getConnectionCounts();
+		// $counts = Services\O2O\API::getConnectionCounts();
 
 		if ( empty( $counts ) ) {
 
-			HTML::desc( _x( 'No connection types found.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
+			Core\HTML::desc( _x( 'No connection types found.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
 
 		} else {
 
-			$types = O2O\ConnectionTypeFactory::get_all_instances();
+			$types = Services\O2O\ConnectionTypeFactory::get_all_instances();
 			$empty = TRUE;
 
 			foreach ( $counts as $type => $count ) {
 
-				if ( O2O\API::type( $type ) )
+				if ( Services\O2O\API::type( $type ) )
 					continue;
 
 				$empty = FALSE;
 
-				echo HTML::wrapLTR( '<code>'.$type.'</code>' );
-				echo ' &mdash; ('.Strings::getCounted( $count ).') &mdash; ';
+				echo Core\HTML::wrapLTR( '<code>'.$type.'</code>' );
+				echo ' &mdash; ('.WordPress\Strings::getCounted( $count ).') &mdash; ';
 
 				$this->do_settings_field( [
 					'type'         => 'select',
@@ -423,7 +420,7 @@ class Config extends gEditorial\Module
 			}
 
 			if ( $empty )
-				HTML::desc( _x( 'No orphaned connection types found in the database.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
+				Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
 		}
 
 		echo '</td></tr></table>';
@@ -463,7 +460,7 @@ class Config extends gEditorial\Module
 		Settings::wrapOpen( $sub, 'imports' );
 
 			Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-config' ) );
-			HTML::headerNav( $uri, $sub, $subs );
+			Core\HTML::headerNav( $uri, $sub, $subs );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -521,8 +518,8 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'imports' ) )
 			self::cheatin();
 
-		HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-config' ) );
-		HTML::desc( _x( 'There are no importers available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
+		Core\HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-config' ) );
+		Core\HTML::desc( _x( 'There are no importers available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
 	}
 
 	public function settings_sidebox( $sub, $uri )
@@ -530,15 +527,15 @@ class Config extends gEditorial\Module
 		if ( $user = gEditorial()->user() ) {
 
 			$name = get_userdata( $user )->display_name;
-			$edit = WordPress::getUserEditLink( $user );
+			$edit = Core\WordPress::getUserEditLink( $user );
 
 			/* translators: %s: user link placeholder */
-			HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-config' ),
-				$edit ? HTML::link( $name, $edit, TRUE ) : $name ) );
+			Core\HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-config' ),
+				$edit ? Core\HTML::link( $name, $edit, TRUE ) : $name ) );
 
 		} else {
 
-			HTML::desc( _x( 'Editorial Site User is not available!', 'Sidebox: Message', 'geditorial-config' ), TRUE, '-empty' );
+			Core\HTML::desc( _x( 'Editorial Site User is not available!', 'Sidebox: Message', 'geditorial-config' ), TRUE, '-empty' );
 		}
 	}
 
@@ -579,10 +576,10 @@ class Config extends gEditorial\Module
 			$module = $this->module;
 
 		else if ( ! $module = gEditorial()->get_module_by( 'name', $key ) )
-			return Settings::wrapError( HTML::warning( _x( 'Not a registered Editorial module.', 'Page Notice', 'geditorial-config' ), FALSE ) );
+			return Settings::wrapError( Core\HTML::warning( _x( 'Not a registered Editorial module.', 'Page Notice', 'geditorial-config' ), FALSE ) );
 
 		if ( ! gEditorial()->enabled( $module->name, FALSE ) )
-			return Settings::wrapError( HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Page Notice', 'geditorial-config' ), FALSE ) );
+			return Settings::wrapError( Core\HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Page Notice', 'geditorial-config' ), FALSE ) );
 
 		gEditorial()->module( $module->name )->settings_header();
 		gEditorial()->module( $module->name )->settings_from();
@@ -625,7 +622,7 @@ class Config extends gEditorial\Module
 
 			} else if ( $module->disabled ) {
 
-				echo HTML::wrap( $module->disabled, 'actions -danger' );
+				echo Core\HTML::wrap( $module->disabled, 'actions -danger' );
 			}
 
 			echo '</div>';
@@ -674,10 +671,10 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		if ( gEditorial()->update_module_option( $module->name, 'enabled', FALSE ) )
-			WordPress::redirectReferer( [ 'message' => 'disabled', 'module' => FALSE ] );
+			Core\WordPress::redirectReferer( [ 'message' => 'disabled', 'module' => FALSE ] );
 
 		else
-			WordPress::redirectReferer( 'error' );
+			Core\WordPress::redirectReferer( 'error' );
 	}
 
 	public function settings_reset( $module = FALSE )
@@ -693,7 +690,7 @@ class Config extends gEditorial\Module
 
 		gEditorial()->update_all_module_options( $module->name, [ 'enabled' => TRUE ] );
 
-		WordPress::redirectReferer( 'resetting' );
+		Core\WordPress::redirectReferer( 'resetting' );
 	}
 
 	public function settings_save( $module = FALSE )
@@ -717,6 +714,6 @@ class Config extends gEditorial\Module
 
 		gEditorial()->update_all_module_options( $module->name, $options );
 
-		WordPress::redirectReferer();
+		Core\WordPress::redirectReferer();
 	}
 }

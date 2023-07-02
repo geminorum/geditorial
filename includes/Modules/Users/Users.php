@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
@@ -10,20 +11,7 @@ use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\File;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Icon;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
 class Users extends gEditorial\Module
 {
@@ -313,22 +301,22 @@ class Users extends gEditorial\Module
 			return $output;
 
 		if ( empty( $this->_posttypes ) )
-			$this->_posttypes = PostType::get( 1 );
+			$this->_posttypes = WordPress\PostType::get( 1 );
 
-		$counts = Database::countPostsByUser( $user_id );
+		$counts = WordPress\Database::countPostsByUser( $user_id );
 		$list   = [];
 
 		foreach ( $this->_posttypes as $posttype => $label )
 			if ( ! empty( $counts[$posttype] ) )
-				$list[$label] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $posttype, $user_id ),
+				$list[$label] = Core\HTML::tag( 'a', [
+					'href'   => Core\WordPress::getPostTypeEditLink( $posttype, $user_id ),
 					'target' => '_blank',
-				], Number::format( $counts[$posttype] ) );
+				], Core\Number::format( $counts[$posttype] ) );
 
 		ob_start();
 
 		if ( count( $list ) )
-			echo HTML::tableCode( $list );
+			echo Core\HTML::tableCode( $list );
 		else
 			echo Listtable::columnCount( 0 );
 
@@ -340,7 +328,7 @@ class Users extends gEditorial\Module
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 
-			if ( $terms = Taxonomy::getTerms( $this->constant( 'group_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
+			if ( $terms = WordPress\Taxonomy::getTerms( $this->constant( 'group_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
 
 				foreach ( $terms as $term ) {
 
@@ -354,7 +342,7 @@ class Users extends gEditorial\Module
 
 		if ( $this->get_setting( 'user_types', FALSE ) ) {
 
-			if ( $terms = Taxonomy::getTerms( $this->constant( 'type_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
+			if ( $terms = WordPress\Taxonomy::getTerms( $this->constant( 'type_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
 
 				foreach ( $terms as $term ) {
 
@@ -412,8 +400,8 @@ class Users extends gEditorial\Module
 		$default  = get_option( 'default_category' );
 		$selected = $this->get_user_categories( $user->ID );
 
-		HTML::h2( _x( 'Site Categories', 'Header', 'geditorial-users' ) );
-		HTML::desc( _x( 'Restrict non editor users to post in selected categories only.', 'Message', 'geditorial-users' ) );
+		Core\HTML::h2( _x( 'Site Categories', 'Header', 'geditorial-users' ) );
+		Core\HTML::desc( _x( 'Restrict non editor users to post in selected categories only.', 'Message', 'geditorial-users' ) );
 
 		echo '<table class="form-table">';
 			echo '<tr><th scope="row">'._x( 'User Categories', 'Header', 'geditorial-users' ).'</th><td>';
@@ -427,7 +415,7 @@ class Users extends gEditorial\Module
 					if ( $default == $term->term_id )
 						continue;
 
-					$html = HTML::tag( 'input', [
+					$html = Core\HTML::tag( 'input', [
 						'type'    => 'checkbox',
 						'name'    => 'categories[]',
 						'id'      => 'categories-'.$term->slug,
@@ -435,7 +423,7 @@ class Users extends gEditorial\Module
 						'checked' => in_array( $term->term_id, $selected ),
 					] );
 
-					HTML::label( $html.'&nbsp;'.HTML::escape( $term->name ), 'categories-'.$term->slug, 'li' );
+					Core\HTML::label( $html.'&nbsp;'.Core\HTML::escape( $term->name ), 'categories-'.$term->slug, 'li' );
 				 }
 
 				echo '</ul></div>';
@@ -510,7 +498,7 @@ class Users extends gEditorial\Module
 		$terms = [];
 
 		foreach ( $this->get_user_categories() as $selected )
-			$terms[] = Term::get( $selected, 'category' );
+			$terms[] = WordPress\Term::get( $selected, 'category' );
 
 		echo $this->wrap_open( '-admin-metabox' );
 
@@ -534,7 +522,7 @@ class Users extends gEditorial\Module
 
 		echo '<div class="geditorial-wrap -admin-widget -users -contacts">';
 
-		echo HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );
+		echo Core\HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );
 
 		echo '<ul class="-rows">';
 
@@ -548,14 +536,14 @@ class Users extends gEditorial\Module
 		if ( $user->user_email ) {
 			echo '<li class="-row -email">';
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Row Icon Title', 'geditorial-users' ) );
-				echo HTML::mailto( $user->user_email );
+				echo Core\HTML::mailto( $user->user_email );
 			echo '</li>';
 		}
 
 		if ( $user->user_url ) {
 			echo '<li class="-row -url">';
 				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'URL', 'Row Icon Title', 'geditorial-users' ) );
-				echo HTML::link( URL::prepTitle( $user->user_url ), $user->user_url );
+				echo Core\HTML::link( Core\URL::prepTitle( $user->user_url ), $user->user_url );
 			echo '</li>';
 		}
 
@@ -565,7 +553,7 @@ class Users extends gEditorial\Module
 				continue;
 
 			echo '<li class="-row -contact -contact-'.$method.'">';
-				echo $this->get_column_icon( FALSE, Icon::guess( $method, 'email-alt' ), $title );
+				echo $this->get_column_icon( FALSE, Core\Icon::guess( $method, 'email-alt' ), $title );
 				echo $this->prep_meta_row( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
 			echo '</li>';
 		}
@@ -580,7 +568,7 @@ class Users extends gEditorial\Module
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-users' ) );
-		echo Strings::getJoined( User::getRoleList( $user ), '<li class="-row -roles">'.$role, '</li>' );
+		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), '<li class="-row -roles">'.$role, '</li>' );
 
 		$this->tweaks_column_user( $user );
 
@@ -601,7 +589,7 @@ class Users extends gEditorial\Module
 			'year_month' => '',
 		], 'reports' );
 
-		HTML::h3( _x( 'User Reports', 'Header', 'geditorial-users' ) );
+		Core\HTML::h3( _x( 'User Reports', 'Header', 'geditorial-users' ) );
 
 		echo '<table class="form-table">';
 
@@ -610,7 +598,7 @@ class Users extends gEditorial\Module
 		$this->do_settings_field( [
 			'type'         => 'select',
 			'field'        => 'post_type',
-			'values'       => PostType::get( 0, [ 'show_ui' => TRUE ] ),
+			'values'       => WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ),
 			'default'      => $args['post_type'],
 			'option_group' => 'reports',
 		] );
@@ -644,7 +632,7 @@ class Users extends gEditorial\Module
 
 			$period = $args['year_month'] ? Datetime::monthFirstAndLast( $this->default_calendar(), substr( $args['year_month'], 0, 4 ), substr( $args['year_month'], 4, 2 ) ) : [];
 
-			echo HTML::tableCode( Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
+			echo Core\HTML::tableCode( WordPress\Database::countPostsByPosttype( $args['post_type'], $args['user_id'], $period ) );
 		}
 
 		echo '</td></tr>';
@@ -662,24 +650,24 @@ class Users extends gEditorial\Module
 
 				if ( Tablelist::isAction( 'remap_post_authors' ) ) {
 
-					// FIXME: use `Media::handleImportUpload()`
+					// FIXME: use `WordPress\Media::handleImportUpload()`
 					$file = wp_import_handle_upload();
 
 					if ( isset( $file['error'] ) || empty( $file['file'] ) )
-						WordPress::redirectReferer( 'wrong' );
+						Core\WordPress::redirectReferer( 'wrong' );
 
 					$count = 0;
 					$role  = get_option( 'default_role' );
 
-					$users    = User::get( TRUE, TRUE, [], 'user_email' );
+					$users    = WordPress\User::get( TRUE, TRUE, [], 'user_email' );
 					$currents = $wpdb->get_results( "SELECT post_author as user, GROUP_CONCAT( ID ) as posts FROM {$wpdb->posts} GROUP BY post_author", ARRAY_A );
 
 					// FIXME: use `Helper::parseCSV()`
-					$iterator = new \SplFileObject( File::normalize( $file['file'] ) );
+					$iterator = new \SplFileObject( Core\File::normalize( $file['file'] ) );
 					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 					$header   = $parser->parse();
 					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'offset' => 1, 'header' => $header[0] ] );
-					$old_map  = Arraay::reKey( $parser->parse(), 'ID' );
+					$old_map  = Core\Arraay::reKey( $parser->parse(), 'ID' );
 
 					foreach ( $currents as $current ) {
 
@@ -695,7 +683,7 @@ class Users extends gEditorial\Module
 						}
 					}
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message'    => 'synced',
 						'count'      => $count,
 						'attachment' => $file['id'],
@@ -703,7 +691,7 @@ class Users extends gEditorial\Module
 
 				} else {
 
-					WordPress::redirectReferer( 'huh' );
+					Core\WordPress::redirectReferer( 'huh' );
 				}
 			}
 		}
@@ -714,12 +702,12 @@ class Users extends gEditorial\Module
 		echo '<table class="form-table">';
 		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Header', 'geditorial-users' ).'</th><td>';
 
-		$wpupload = Media::upload();
+		$wpupload = WordPress\Media::upload();
 
 		if ( ! empty( $wpupload['error'] ) ) {
 
 			/* translators: %s: error */
-			echo HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Message', 'geditorial-users' ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
+			echo Core\HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Message', 'geditorial-users' ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
 
 		} else {
 
@@ -730,10 +718,10 @@ class Users extends gEditorial\Module
 				'values'    => [ '.csv' ],
 			] );
 
-			$size = File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
+			$size = Core\File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
 
 			/* translators: %s: size */
-			HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Message', 'geditorial-users' ), HTML::wrapLTR( $size ) ) );
+			Core\HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Message', 'geditorial-users' ), Core\HTML::wrapLTR( $size ) ) );
 
 			echo '<br />';
 			echo $this->wrap_open_buttons();
@@ -761,7 +749,7 @@ class Users extends gEditorial\Module
 					// FIXME: use custom Avatar
 					echo get_avatar( get_the_author_meta( 'email', $user_id ), '96' );
 
-					echo '<h2 class="user-title">'.HTML::tag( 'a', [
+					echo '<h2 class="user-title">'.Core\HTML::tag( 'a', [
 						'href'  => get_author_posts_url( $user_id ),
 						'title' => '',
 					], get_the_author_meta( 'display_name', $user_id ) ).'</h2>';

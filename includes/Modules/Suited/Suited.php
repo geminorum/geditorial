@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Shortcode;
 use geminorum\gEditorial\WordPress;
@@ -219,7 +220,7 @@ class Suited extends gEditorial\Module
 				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
 					return $caps;
 
-				if ( ! WordPress\User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
+				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 					return [ 'do_not_allow' ];
 		}
 

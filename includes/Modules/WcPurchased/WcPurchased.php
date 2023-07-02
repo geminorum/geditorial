@@ -3,14 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\File;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\WooCommerce;
+use geminorum\gEditorial\WordPress;
 
 class WcPurchased extends gEditorial\Module
 {
@@ -42,7 +39,7 @@ class WcPurchased extends gEditorial\Module
 					'title'       => _x( 'Order Statuses', 'Setting Title', 'geditorial-wc-purchased' ),
 					'description' => _x( 'Accepted statuses on order list reports.', 'Setting Description', 'geditorial-wc-purchased' ),
 					'default'     => [ 'completed' ],
-					'values'      => WooCommerce::getOrderStatuses(),
+					'values'      => WordPress\WooCommerce::getOrderStatuses(),
 				],
 			],
 			'_roles' => [
@@ -99,8 +96,8 @@ class WcPurchased extends gEditorial\Module
 			return $actions;
 
 		if ( $link = $this->get_adminpage_url( TRUE, [ 'post' => $post->ID, 'noheader' => 1 ], 'reports' ) )
-			return Arraay::insert( $actions, [
-				$this->classs() => HTML::tag( 'a', [
+			return Core\Arraay::insert( $actions, [
+				$this->classs() => Core\HTML::tag( 'a', [
 					'href'   => $link,
 					'title'  => _x( 'Product Purchase Reports', 'Title Attr', 'geditorial-wc-purchased' ),
 					'class'  => [ '-purchase-reports', 'thickbox' ],
@@ -114,23 +111,23 @@ class WcPurchased extends gEditorial\Module
 	protected function render_mainpage_content()
 	{
 		if ( ! $product_id = self::req( 'post' ) )
-			return HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
+			return Core\HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
 
 		if ( ! $product = wc_get_product( $product_id ) )
-			return HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
+			return Core\HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
 
 		if ( ! $orders = $this->get_product_purchased_orders( $product->get_id() ) )
-			return HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
+			return Core\HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
 
 		$export = $this->role_can( 'export' );
 
 		if ( isset( $_GET['export'] ) && $export )
-			Text::download( $this->get_product_purchased( $orders ), File::prepName( sprintf( 'product-%s.csv', $product->get_sku() ) ) );
+			Core\Text::download( $this->get_product_purchased( $orders ), Core\File::prepName( sprintf( 'product-%s.csv', $product->get_sku() ) ) );
 
 		echo $this->wrap_open( '-header' );
 
 			if ( $export )
-				echo HTML::tag( 'a', [
+				echo Core\HTML::tag( 'a', [
 					'href'    => $this->get_adminpage_url( TRUE, [ 'post' => $product_id, 'noheader' => 1, 'export' => '' ], 'reports' ),
 					'class'   => [ 'button', 'button-small' ],
 				], _x( 'Export CSV', 'Button', 'geditorial-wc-purchased' ) );
@@ -138,11 +135,11 @@ class WcPurchased extends gEditorial\Module
 			$sku   = $product->get_sku();
 			$title = $product->get_title();
 
-			HTML::h3( $sku ? sprintf( '%s &mdash; %s', $title, $sku ) : $title, '-product-name' );
+			Core\HTML::h3( $sku ? sprintf( '%s &mdash; %s', $title, $sku ) : $title, '-product-name' );
 
 		echo '</div>';
 
-		HTML::tableList( [
+		Core\HTML::tableList( [
 			'order_number' => [
 				'title'    => _x( '#', 'Column Title', 'geditorial-wc-purchased' ),
 				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
@@ -237,6 +234,6 @@ class WcPurchased extends gEditorial\Module
 			];
 		}
 
-		return Text::toCSV( $data );
+		return Core\Text::toCSV( $data );
 	}
 }

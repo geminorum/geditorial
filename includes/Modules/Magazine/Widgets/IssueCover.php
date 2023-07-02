@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Modules\Magazine\ModuleTemplate;
-use geminorum\gEditorial\WordPress\Media;
+use geminorum\gEditorial\WordPress;
 
 class IssueCover extends gEditorial\Widget
 {
@@ -52,7 +52,7 @@ class IssueCover extends gEditorial\Widget
 
 		$atts = [
 			'type'  => $type,
-			'size'  => empty( $instance['image_size'] ) ? Media::getAttachmentImageDefaultSize( $type ) : $instance['image_size'],
+			'size'  => empty( $instance['image_size'] ) ? WordPress\Media::getAttachmentImageDefaultSize( $type ) : $instance['image_size'],
 			'title' => empty( $instance['number_line'] ) ? 'title' : 'number',
 			'link'  => $link,
 			'echo'  => FALSE,

@@ -3,13 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
@@ -20,10 +17,10 @@ class ModuleHelper extends gEditorial\Helper
 	// TODO: 4 digit year based on `$type`
 	public static function parseTheFullDay( $text, $type = 'gregorian' )
 	{
-		if ( Strings::isEmpty( $text ) )
+		if ( WordPress\Strings::isEmpty( $text ) )
 			return [];
 
-		$text = Number::intval( trim( $text ), FALSE );
+		$text = Core\Number::intval( trim( $text ), FALSE );
 		$text = trim( str_ireplace( [
 			' ',
 			'.',
@@ -48,8 +45,8 @@ class ModuleHelper extends gEditorial\Helper
 		$temp = [
 			'cal'   => $type,
 			'year'  => $parts[0],
-			'month' => Number::zeroise( $parts[1], 2 ),
-			'day'   => Number::zeroise( $parts[2], 2 ),
+			'month' => Core\Number::zeroise( $parts[1], 2 ),
+			'day'   => Core\Number::zeroise( $parts[2], 2 ),
 		];
 
 		return $temp;
@@ -118,12 +115,12 @@ class ModuleHelper extends gEditorial\Helper
 		$parts = [];
 
 		if ( $the_day['day'] )
-			$parts['day'] = Number::localize( $the_day['day'] );
+			$parts['day'] = Core\Number::localize( $the_day['day'] );
 
 		if ( $the_day['month'] ) {
 
-			$month = Number::intval( $the_day['month'], FALSE );
-			$key   = Number::zeroise( $month, 2 );
+			$month = Core\Number::intval( $the_day['month'], FALSE );
+			$key   = Core\Number::zeroise( $month, 2 );
 
 			if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
 				$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
@@ -132,7 +129,7 @@ class ModuleHelper extends gEditorial\Helper
 		}
 
 		if ( $the_day['year'] )
-			$parts['year'] = Number::localize( $the_day['year'] );
+			$parts['year'] = Core\Number::localize( $the_day['year'] );
 
 		if ( empty( $parts ) )
 			return $empty;
@@ -142,7 +139,7 @@ class ModuleHelper extends gEditorial\Helper
 				? $the_day['cal']
 				: $gEditorialTodayCalendars[$the_day['cal']];
 
-		return Strings::getJoined( $parts, '[', ']', '', Datetime::dateSeparator() );
+		return WordPress\Strings::getJoined( $parts, '[', ']', '', Datetime::dateSeparator() );
 	}
 
 	public static function displayTheDay( $stored, $empty = '&mdash;' )
@@ -172,30 +169,30 @@ class ModuleHelper extends gEditorial\Helper
 			echo '<div class="-today -date-badge">';
 
 				if ( $the_day['day'] )
-					echo '<span class="-day" data-day="'.HTML::escape( $the_day['day'] )
+					echo '<span class="-day" data-day="'.Core\HTML::escape( $the_day['day'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'day' )
-						.'">'.Number::localize( $the_day['day'] ).'</a></span>';
+						.'">'.Core\Number::localize( $the_day['day'] ).'</a></span>';
 
 				if ( $the_day['month'] ) {
 
-					$month = Number::intval( $the_day['month'], FALSE );
-					$key   = Number::zeroise( $month, 2 );
+					$month = Core\Number::intval( $the_day['month'], FALSE );
+					$key   = Core\Number::zeroise( $month, 2 );
 
 					if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
 						$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
 
-					echo '<span class="-month" data-month="'.HTML::escape( $month )
+					echo '<span class="-month" data-month="'.Core\HTML::escape( $month )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'month' )
 						.'">'.$the_day['month'].'</a></span>';
 				}
 
 				if ( $the_day['year'] )
-					echo '<span class="-year" data-year="'.HTML::escape( $the_day['year'] )
+					echo '<span class="-year" data-year="'.Core\HTML::escape( $the_day['year'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'year' )
-						.'">'.Number::localize( $the_day['year'] ).'</a></span>';
+						.'">'.Core\Number::localize( $the_day['year'] ).'</a></span>';
 
 				if ( $the_day['cal'] )
-					echo '<span class="-cal" data-cal="'.HTML::escape( $the_day['cal'] )
+					echo '<span class="-cal" data-cal="'.Core\HTML::escape( $the_day['cal'] )
 						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'cal' )
 						.'">'.( empty( $gEditorialTodayCalendars[$the_day['cal']] )
 							? $the_day['cal']
@@ -384,7 +381,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( $args['count'] )
 			return count( $posts );
 
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], [], $args['all'] );
+		$pagination = Core\HTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], [], $args['all'] );
 
 		return [ $posts, $pagination ];
 	}
@@ -403,7 +400,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		$html = '';
 
-		$html.= HTML::tag( 'input', [
+		$html.= Core\HTML::tag( 'input', [
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -418,7 +415,7 @@ class ModuleHelper extends gEditorial\Helper
 			'onclick'      => 'this.focus();this.select()',
 		] );
 
-		$html.= HTML::tag( 'input', [
+		$html.= Core\HTML::tag( 'input', [
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -434,7 +431,7 @@ class ModuleHelper extends gEditorial\Helper
 		] );
 
 		if ( $year )
-			$html.= HTML::tag( 'input', [
+			$html.= Core\HTML::tag( 'input', [
 				'type'         => 'text',
 				'autocomplete' => 'off',
 				'class'        => '-year',
@@ -448,26 +445,26 @@ class ModuleHelper extends gEditorial\Helper
 				'onclick'      => 'this.focus();this.select()',
 			] );
 
-		echo HTML::wrap( $html, 'field-wrap '.( $year ? '-inputtext-date' : '-inputtext-half' ) );
+		echo Core\HTML::wrap( $html, 'field-wrap '.( $year ? '-inputtext-date' : '-inputtext-half' ) );
 
-		$html = HTML::tag( 'option', [
+		$html = Core\HTML::tag( 'option', [
 			'value' => '',
 		], _x( '&ndash; Select Calendar &ndash;', 'Meta Box Input Option None', 'geditorial-today' ) );
 
 		foreach ( $calendars as $name => $title )
-			$html.= HTML::tag( 'option', [
+			$html.= Core\HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $args['cal'] == $name,
 			], $title );
 
-		$html = HTML::tag( 'select', [
+		$html = Core\HTML::tag( 'select', [
 			'class' => '-cal',
 			'name'  => 'geditorial-today-date-cal',
 			'id'    => 'geditorial-today-date-cal',
 			'title' => _x( 'Calendar', 'Meta Box Input', 'geditorial-today' ),
 		], $html );
 
-		echo HTML::wrap( $html, 'field-wrap -select' );
+		echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	public static function theDayNewConnected( $posttypes, $the_day = [], $the_post = FALSE )
@@ -481,7 +478,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		foreach ( $posttypes as $posttype ) {
 
-			$object = PostType::object( $posttype );
+			$object = WordPress\PostType::object( $posttype );
 
 			if ( ! current_user_can( $object->cap->create_posts ) )
 				continue;
@@ -491,8 +488,8 @@ class ModuleHelper extends gEditorial\Helper
 			if ( is_admin() )
 				$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
-			$html.= HTML::button( $title,
-				WordPress::getPostNewLink( $object->name, $the_day ),
+			$html.= Core\HTML::button( $title,
+				Core\WordPress::getPostNewLink( $object->name, $the_day ),
 				/* translators: %s: singular name */
 				sprintf( _x( 'New %s connected to this day', 'Title Attr', 'geditorial-today' ), $object->labels->singular_name ),
 				is_admin()
@@ -501,7 +498,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( FALSE !== $the_post ) {
 
-			$object = PostType::object( self::constant( 'day_cpt', 'day' ) );
+			$object = WordPress\PostType::object( self::constant( 'day_cpt', 'day' ) );
 
 			if ( TRUE === $the_post ) {
 
@@ -512,8 +509,8 @@ class ModuleHelper extends gEditorial\Helper
 					if ( is_admin() )
 						$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
-					$html.= HTML::button( $title,
-						WordPress::getPostNewLink( $object->name, $the_day ),
+					$html.= Core\HTML::button( $title,
+						Core\WordPress::getPostNewLink( $object->name, $the_day ),
 						_x( 'New Day!', 'Title Attr', 'geditorial-today' ),
 						is_admin()
 					);
@@ -528,8 +525,8 @@ class ModuleHelper extends gEditorial\Helper
 					if ( is_admin() )
 						$title = Helper::getPostTypeIcon( $object ).' '.$title;
 
-					$html.= HTML::button( $title,
-						WordPress::getPostEditLink( $the_post ),
+					$html.= Core\HTML::button( $title,
+						Core\WordPress::getPostEditLink( $the_post ),
 						_x( 'Edit Day!', 'Title Attr', 'geditorial-today' ),
 						is_admin()
 					);
@@ -537,6 +534,6 @@ class ModuleHelper extends gEditorial\Helper
 			}
 		}
 
-		return HTML::wrap( $html, 'field-wrap -buttons' );
+		return Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 }

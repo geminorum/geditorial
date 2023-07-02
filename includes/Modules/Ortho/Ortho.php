@@ -3,15 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 use geminorum\gNetwork\Core\Orthography;
 
@@ -116,7 +113,7 @@ class Ortho extends gEditorial\Module
 		$upper = array_map( 'strtoupper', $words );
 
 		foreach ( (array) $keys as $key )
-			$list[$key] = str_ireplace( $words, $upper, Text::titleCase( str_replace( '_', ' ', $key ) ) );
+			$list[$key] = str_ireplace( $words, $upper, Core\Text::titleCase( str_replace( '_', ' ', $key ) ) );
 
 		return $list;
 	}
@@ -157,7 +154,7 @@ class Ortho extends gEditorial\Module
 	{
 		return [
 			'js' => [
-				// 'button_virastar'        => HTML::getDashicon( 'text' ),
+				// 'button_virastar'        => Core\HTML::getDashicon( 'text' ),
 				'button_virastar_title'  => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
 				'qtag_virastar'          => _x( 'Virastar!', 'Javascript String', 'geditorial-ortho' ),
 				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
@@ -207,7 +204,7 @@ class Ortho extends gEditorial\Module
 	{
 		if ( 'post' == $screen->base ) {
 
-			if ( PostType::supportBlocks( $screen->post_type ) )
+			if ( WordPress\PostType::supportBlocks( $screen->post_type ) )
 				return;
 
 			if ( $this->posttype_supported( $screen->post_type ) )
@@ -283,7 +280,7 @@ class Ortho extends gEditorial\Module
 
 	public function cleanup_post( $post )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		$update = FALSE;
@@ -332,7 +329,7 @@ class Ortho extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Orthography Sandbox', 'Header', 'geditorial-ortho' ) );
+		Core\HTML::h3( _x( 'Orthography Sandbox', 'Header', 'geditorial-ortho' ) );
 
 		$this->do_settings_field( [
 			'type'         => 'textarea-quicktags',
@@ -361,13 +358,13 @@ class Ortho extends gEditorial\Module
 					foreach ( $_POST['_cb'] as $post_id )
 						$count += $this->cleanup_post( $post_id );
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'cleaned',
 						'count'   => $count,
 					] );
 				}
 
-				WordPress::redirectReferer( 'huh' );
+				Core\WordPress::redirectReferer( 'huh' );
 			}
 
 			$this->add_sub_screen_option( $sub );
@@ -386,7 +383,7 @@ class Ortho extends gEditorial\Module
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
 
-		$pagination['before'][] = HTML::dropdown( [
+		$pagination['before'][] = Core\HTML::dropdown( [
 			'ي' => _x( 'Arabic Yeh U+064A', 'Char Title', 'geditorial-ortho' ),
 			'ك' => _x( 'Arabic Kaf U+0643', 'Char Title', 'geditorial-ortho' ),
 		], [
@@ -412,10 +409,10 @@ class Ortho extends gEditorial\Module
 		if ( gEditorial()->enabled( 'meta' ) )
 			$columns['meta'] = gEditorial()->module( 'meta' )->tableColumnPostMeta();
 
-		return HTML::tableList( $columns, $posts, [
+		return Core\HTML::tableList( $columns, $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Header', 'geditorial-ortho' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Header', 'geditorial-ortho' ) ),
 			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );

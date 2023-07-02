@@ -2,16 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
-use geminorum\gEditorial\WordPress\Status;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
-class Tablelist extends Main
+class Tablelist extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -48,8 +42,8 @@ class Tablelist extends Main
 		$query = new \WP_Term_Query();
 		$terms = $query->query( $args );
 
-		// $pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
-		$pagination = HTML::tablePagination( count( $terms ), FALSE, $limit, $paged, $extra );
+		// $pagination = Core\HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
+		$pagination = Core\HTML::tablePagination( count( $terms ), FALSE, $limit, $paged, $extra );
 
 		$pagination['orderby'] = $args['orderby'];
 		$pagination['order']   = $args['order'];
@@ -95,7 +89,7 @@ class Tablelist extends Main
 		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
-		$pagination = HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
+		$pagination = Core\HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
 
 		$pagination['orderby'] = $args['orderby'];
 		$pagination['order']   = $args['order'];
@@ -107,9 +101,9 @@ class Tablelist extends Main
 	public static function filterPostTypes( $list = NULL, $name = 'type' )
 	{
 		if ( is_null( $list ) )
-			$list = PostType::get( 0, [ 'show_ui' => TRUE ] );
+			$list = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
 
-		return HTML::dropdown( $list, [
+		return Core\HTML::dropdown( $list, [
 			'name'       => $name,
 			'selected'   => self::req( $name, 'any' ),
 			'none_value' => 'any',
@@ -124,7 +118,7 @@ class Tablelist extends Main
 
 	public static function filterSearch( $list = NULL, $name = 's' )
 	{
-		return HTML::tag( 'input', [
+		return Core\HTML::tag( 'input', [
 			'type'        => 'search',
 			'name'        => $name,
 			'value'       => self::req( $name, '' ),
@@ -148,7 +142,7 @@ class Tablelist extends Main
 				case 'attached':
 
 					if ( $attached = wp_get_attachment_url( $post_id ) )
-						$list['attached'] = HTML::tag( 'a', [
+						$list['attached'] = Core\HTML::tag( 'a', [
 							'href'   => $attached,
 							'class'  => '-link -row-link -row-link-attached',
 							'data'   => [ 'id' => $post_id, 'row' => 'attached' ],
@@ -160,8 +154,8 @@ class Tablelist extends Main
 					if ( ! $edit )
 						continue 2;
 
-					if ( $revision_id = PostType::getLastRevisionID( $post_id ) )
-						$list['revisions'] = HTML::tag( 'a', [
+					if ( $revision_id = WordPress\PostType::getLastRevisionID( $post_id ) )
+						$list['revisions'] = Core\HTML::tag( 'a', [
 							'href'   => get_edit_post_link( $revision_id ),
 							'class'  => '-link -row-link -row-link-revisions',
 							'data'   => [ 'id' => $post_id, 'row' => 'revisions' ],
@@ -174,8 +168,8 @@ class Tablelist extends Main
 					if ( ! $edit )
 						continue 2;
 
-					$list['edit'] = HTML::tag( 'a', [
-						'href'   => WordPress::getPostEditLink( $post_id ),
+					$list['edit'] = Core\HTML::tag( 'a', [
+						'href'   => Core\WordPress::getPostEditLink( $post_id ),
 						'class'  => '-link -row-link -row-link-edit',
 						'data'   => [ 'id' => $post_id, 'row' => 'edit' ],
 						'target' => '_blank',
@@ -184,8 +178,8 @@ class Tablelist extends Main
 				break;
 				case 'view':
 
-					$list['view'] = HTML::tag( 'a', [
-						'href'   => WordPress::getPostShortLink( $post_id ),
+					$list['view'] = Core\HTML::tag( 'a', [
+						'href'   => Core\WordPress::getPostShortLink( $post_id ),
 						'class'  => '-link -row-link -row-link-view',
 						'data'   => [ 'id' => $post_id, 'row' => 'view' ],
 						'target' => '_blank',
@@ -206,34 +200,34 @@ class Tablelist extends Main
 		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
 		if ( ! $link )
-			return HTML::escape( $title );
+			return Core\HTML::escape( $title );
 
 		if ( 'edit' == $link ) {
-			if ( ! $edit = WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ) )
+			if ( ! $edit = Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ) )
 				$link = 'view';
 		}
 
 		if ( 'edit' == $link )
-			return HTML::tag( 'a', [
+			return Core\HTML::tag( 'a', [
 				'href'   => $edit,
 				'title'  => urldecode( $term->slug ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-			], HTML::escape( $title ) );
+			], Core\HTML::escape( $title ) );
 
 		if ( 'view' == $link )
-			return HTML::tag( 'a', [
+			return Core\HTML::tag( 'a', [
 				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => _x( 'View', 'Tablelist: Row Action', 'geditorial' ),
-			], HTML::escape( $title ) );
+			], Core\HTML::escape( $title ) );
 
-		return HTML::tag( 'a', [
+		return Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
-		], HTML::escape( $title ) );
+		], Core\HTML::escape( $title ) );
 	}
 
 	public static function columnPostID( $icon = TRUE )
@@ -266,7 +260,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
-			'args'     => [ 'types' => PostType::get( 2 ) ],
+			'args'     => [ 'types' => WordPress\PostType::get( 2 ) ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				return isset( $column['args']['types'][$row->post_type] )
 					? $column['args']['types'][$row->post_type]
@@ -293,10 +287,10 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'args'     => [ 'statuses' => Status::get() ],
+			'args'     => [ 'statuses' => WordPress\Status::get() ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
 
-				$title = Post::title( $row );
+				$title = WordPress\Post::title( $row );
 
 				if ( 'publish' != $row->post_status ) {
 
@@ -314,7 +308,7 @@ class Tablelist extends Main
 				}
 
 				if ( 'attachment' == $row->post_type && $attached = wp_get_attachment_url( $row->ID ) )
-					$title.= '<br />'.HTML::tag( 'a', [
+					$title.= '<br />'.Core\HTML::tag( 'a', [
 						'href'   => $attached,
 						'class'  => wp_attachment_is( 'image', $row->ID ) ? 'thickbox' : FALSE,
 						'target' => '_blank',
@@ -358,7 +352,7 @@ class Tablelist extends Main
 	{
 		return [
 			'title'    => _x( 'Status', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'args'     => [ 'statuses' => Status::get() ],
+			'args'     => [ 'statuses' => WordPress\Status::get() ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 				if ( ! $row->post_status )
@@ -367,7 +361,7 @@ class Tablelist extends Main
 				if ( isset( $column['args']['statuses'][$row->post_status] ) )
 					return $column['args']['statuses'][$row->post_status];
 
-				return HTML::tag( 'code', $row->post_status );
+				return Core\HTML::tag( 'code', $row->post_status );
 			},
 		];
 	}
@@ -379,10 +373,10 @@ class Tablelist extends Main
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
 				if ( current_user_can( 'edit_post', $row->ID ) )
-					return WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
+					return Core\WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
 
 				if ( $author_data = get_user_by( 'id', $row->post_author ) )
-					return HTML::escape( $author_data->display_name );
+					return Core\HTML::escape( $author_data->display_name );
 
 				return self::htmlEmpty();
 			},
@@ -392,14 +386,14 @@ class Tablelist extends Main
 	public static function columnPostTerms( $taxonomies = NULL )
 	{
 		if ( is_null( $taxonomies ) )
-			$taxonomies = Taxonomy::get( 4 );
+			$taxonomies = WordPress\Taxonomy::get( 4 );
 
 		return [
 			'title'    => _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
 			'args'     => [ 'taxonomies' => $taxonomies ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 				foreach ( $column['args']['taxonomies'] as $object )
-					if ( Taxonomy::viewable( $object ) )
+					if ( WordPress\Taxonomy::viewable( $object ) )
 						Helper::renderPostTermsEditRow( $row, $object,
 							sprintf( '<div><span title="%s">%s</span>:&nbsp;', $object->name, $object->label ), '</div>' );
 
@@ -419,7 +413,7 @@ class Tablelist extends Main
 			'title'    => $title ?: _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $description ) {
 
-				if ( ! $term = Term::get( $row ) )
+				if ( ! $term = WordPress\Term::get( $row ) )
 					return Plugin::na( FALSE );
 
 				$html = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
@@ -439,14 +433,14 @@ class Tablelist extends Main
 	// TODO: check if taxonomy is viewable
 	public static function getTermRowActions( $row, $actions = NULL )
 	{
-		if ( ! $term = Term::get( $row ) )
+		if ( ! $term = WordPress\Term::get( $row ) )
 			return [];
 
 		if ( is_null( $actions ) )
 			$actions = [ 'edit', 'view' ];
 
 		$list = [];
-		$edit = WordPress::getEditTaxLink( $term->taxonomy, $term->term_id );
+		$edit = Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id );
 
 		foreach ( $actions as $action ) {
 
@@ -455,7 +449,7 @@ class Tablelist extends Main
 				case 'edit':
 
 					if ( $edit ) // already checked for cap
-						$list['edit'] = HTML::tag( 'a', [
+						$list['edit'] = Core\HTML::tag( 'a', [
 							'href'   => $edit,
 							'title'  => $term->term_id,
 							'class'  => '-link -row-link -row-link-edit',
@@ -464,7 +458,7 @@ class Tablelist extends Main
 					break;
 
 				case 'view':
-					$list['view'] = HTML::tag( 'a', [
+					$list['view'] = Core\HTML::tag( 'a', [
 						'href'   => get_term_link( $term->term_id, $term->taxonomy ),
 						'title'  => urldecode( $term->slug ),
 						'class'  => '-link -row-link -row-link-view',
