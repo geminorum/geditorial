@@ -3,10 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Licensed extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 
 	protected $disable_no_posttypes = TRUE;
 

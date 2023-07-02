@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Core\L10n;
 use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\HTML;
@@ -12,6 +13,7 @@ use geminorum\gEditorial\WordPress\User;
 
 class Statuses extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 
 	protected $disable_no_posttypes = TRUE;
 

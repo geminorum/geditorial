@@ -223,4 +223,24 @@ trait Deprecated
 			$this->constant( $posttype_constant_key )
 		);
 	}
+
+	// DEFAULT METHOD
+	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
+	public function dISABLED_store_metabox( $post_id, $post, $update, $context = NULL )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
+
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( $context != $args['context'] )
+				continue;
+
+			$key = $this->constant( 'metakey_'.$field, $field );
+
+			// FIXME: DO THE SAVINGS!
+		}
+	}
 }

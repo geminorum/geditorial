@@ -4,29 +4,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\File;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Icon;
-use geminorum\gEditorial\Core\L10n;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\Validation;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\Module as Base;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Strings;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Term;
-use geminorum\gEditorial\WordPress\User;
-use geminorum\gEditorial\Services\O2O;
-use geminorum\gEditorial\Services\Paired;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\WordPress;
 
-class Module extends Base
+class Module extends WordPress\Module
 {
 
 	public $module;
@@ -95,7 +76,7 @@ class Module extends Base
 	{
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
-		$this->path = File::normalize( $root.$module->folder.'/' );
+		$this->path = Core\File::normalize( $root.$module->folder.'/' );
 		$this->site = get_current_blog_id();
 
 		$this->module  = $module;
@@ -121,7 +102,7 @@ class Module extends Base
 		if ( 'adminonly' === $this->module->i18n && ! is_admin() )
 			return FALSE;
 
-		if ( 'restonly' === $this->module->i18n && ! WordPress::isREST() )
+		if ( 'restonly' === $this->module->i18n && ! Core\WordPress::isREST() )
 			return FALSE;
 
 		if ( 'frontonly' === $this->module->i18n && is_admin() )
@@ -134,7 +115,7 @@ class Module extends Base
 			return FALSE;
 
 		if ( is_null( $locale ) )
-			$locale = apply_filters( 'plugin_locale', L10n::locale(), $this->base );
+			$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
 
 		return load_textdomain( $domain, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
 	}
@@ -147,8 +128,8 @@ class Module extends Base
 	protected function setup( $args = [] )
 	{
 		$admin = is_admin();
-		$ajax  = WordPress::isAJAX();
-		$ui    = WordPress::mustRegisterUI( FALSE );
+		$ajax  = Core\WordPress::isAJAX();
+		$ui    = Core\WordPress::mustRegisterUI( FALSE );
 
 		if ( $admin && $ui && ( TRUE === $this->module->configure || 'settings' === $this->module->configure ) )
 			add_action( $this->base.'_settings_load', [ $this, 'register_settings' ] );
@@ -305,7 +286,7 @@ class Module extends Base
 
 			$this->filter_set(
 				sprintf( 'theme_%s_templates', $this->constant( $constant ) ),
-				Arraay::mapAssoc( $callback, $templates )
+				Core\Arraay::mapAssoc( $callback, $templates )
 			);
 		}
 	}
@@ -426,7 +407,7 @@ class Module extends Base
 			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
 			case 'settings'  : $url = add_query_arg( 'module', $this->module->name, Settings::settingsURL() ); $sub = FALSE; break;
 			case 'listtable' : $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
-			default          : $url = URL::current();
+			default          : $url = Core\URL::current();
 		}
 
 		if ( FALSE === $url )
@@ -470,7 +451,7 @@ class Module extends Base
 		if ( is_null( $subs ) )
 			$subs = $this->get_adminpage_subs( $context );
 
-		return $this->filters( $context.'_default_sub', Arraay::keyFirst( $subs ) );
+		return $this->filters( $context.'_default_sub', Core\Arraay::keyFirst( $subs ) );
 	}
 
 	protected function _hook_menu_adminpage( $context = 'mainpage', $position = NULL )
@@ -556,7 +537,7 @@ class Module extends Base
 	// DEFAULT CALLBACK
 	protected function render_mainpage_content() // ( $sub = NULL, $uri = NULL, $context = '', $subs = [] )
 	{
-		HTML::desc( gEditorial()->na(), TRUE, '-empty' );
+		Core\HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
 	protected function _hook_submenu_adminpage( $context = 'subpage', $parent_slug = '' )
@@ -618,7 +599,7 @@ class Module extends Base
 		$post     = get_default_post_to_edit( $posttype );
 
 		if ( ! current_user_can( $object->cap->create_posts ) )
-			return HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
+			return Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
 
 		$meta = $this->filters( 'newpost_content_meta', $meta, $posttype, $target, $linked, $status );
 
@@ -630,7 +611,7 @@ class Module extends Base
 		$field = $this->classs( $posttype, 'title' );
 		$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'        => 'text',
 			'class'       => 'large-text',
 			'id'          => $field,
@@ -638,14 +619,14 @@ class Module extends Base
 			'placeholder' => apply_filters( 'enter_title_here', $label, $post ),
 		] );
 
-		HTML::label( $html, $field );
+		Core\HTML::label( $html, $field );
 
 		$this->actions( 'newpost_content_after_title', $posttype, $post, $target, $linked, $status, $meta );
 
 		$field = $this->classs( $posttype, 'excerpt' );
 		$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
 
-		$html = HTML::tag( 'textarea', [
+		$html = Core\HTML::tag( 'textarea', [
 			'id'           => $field,
 			'name'         => 'excerpt',
 			'placeholder'  => $label,
@@ -655,12 +636,12 @@ class Module extends Base
 			'autocomplete' => 'off',
 		], '' );
 
-		HTML::label( $html, $field );
+		Core\HTML::label( $html, $field );
 
 		$field = $this->classs( $posttype, 'content' );
 		$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'What&#8217;s on your mind?' ) );
 
-		$html = HTML::tag( 'textarea', [
+		$html = Core\HTML::tag( 'textarea', [
 			'id'           => $field,
 			'name'         => 'content',
 			'placeholder'  => $label,
@@ -670,23 +651,23 @@ class Module extends Base
 			'autocomplete' => 'off',
 		], '' );
 
-		HTML::label( $html, $field );
+		Core\HTML::label( $html, $field );
 
 		if ( $object->hierarchical )
 			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
 
 		$this->actions( 'newpost_content', $posttype, $post, $target, $linked, $status, $meta );
 
-		HTML::inputHidden( 'type', $posttype );
-		HTML::inputHidden( 'status', $status === 'publish' ? 'publish' : 'draft' ); // only publish/draft
-		HTML::inputHiddenArray( $meta, 'meta' );
+		Core\HTML::inputHidden( 'type', $posttype );
+		Core\HTML::inputHidden( 'status', $status === 'publish' ? 'publish' : 'draft' ); // only publish/draft
+		Core\HTML::inputHiddenArray( $meta, 'meta' );
 
 		echo $this->wrap_open_buttons();
 
 		echo '<span class="-message"></span>';
 		echo Ajax::spinner();
 
-		echo HTML::tag( 'a', [
+		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
 			'class' => [ 'button', '-save-draft', 'disabled' ],
 			'data'  => [
@@ -715,7 +696,7 @@ class Module extends Base
 		echo '</div>';
 
 			/* translators: %s: posttype name */
-			HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial' ), $object->labels->name ) );
+			Core\HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial' ), $object->labels->name ) );
 
 		echo '</div></div>';
 
@@ -768,7 +749,7 @@ class Module extends Base
 	protected function get_print_layout_bodyclass( $extra = [] )
 	{
 		return $this->filters( 'print_layout_bodyclass',
-			HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $extra ) );
+			Core\HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $extra ) );
 	}
 
 	protected function get_printpage_url( $extra = [], $context = 'printpage' )
@@ -785,7 +766,7 @@ class Module extends Base
 
 		// prefix to avoid conflicts
 		$func = $this->hook( 'resizeIframe' );
-		$html = HTML::tag( 'iframe', [
+		$html = Core\HTML::tag( 'iframe', [
 			'src'    => $printpage,
 			'width'  => '100%',
 			'height' => '0',
@@ -793,7 +774,7 @@ class Module extends Base
 			'onload' => $func.'(this)',
 		], _x( 'Print Preview', 'Module', 'geditorial' ) );
 
-		echo HTML::wrap( $html, 'field-wrap -iframe -print-iframe' );
+		echo Core\HTML::wrap( $html, 'field-wrap -iframe -print-iframe' );
 
 		// @REF: https://stackoverflow.com/a/9976309
 		echo '<script>function '.$func.'(obj){obj.style.height=obj.contentWindow.document.documentElement.scrollHeight+"px";}</script>';
@@ -808,7 +789,7 @@ class Module extends Base
 		$func = $this->hook( 'printIframe' );
 		$id   = $this->classs( 'printiframe' );
 
-		echo HTML::tag( 'iframe', [
+		echo Core\HTML::tag( 'iframe', [
 			'id'     => $id,
 			'src'    => $printpage,
 			'class'  => '-hidden-print-iframe',
@@ -817,7 +798,7 @@ class Module extends Base
 			'border' => '0',
 		], '' );
 
-		echo HTML::tag( 'a', [
+		echo Core\HTML::tag( 'a', [
 			'href'    => '#',
 			'class'   => [ 'button', $button_class ], //  button-small',
 			'onclick' => $func.'("'.$id.'")',
@@ -851,14 +832,14 @@ class Module extends Base
 				'width'    => $width,
 			], $extra, [ 'TB_iframe' => 'true' ] ), $context );
 
-		$html = HTML::tag( 'a', [
+		$html = Core\HTML::tag( 'a', [
 			'href'  => $link,
 			'id'    => $this->classs( 'mainbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-mainbutton', 'thickbox' ],
-			'title' => $title ? sprintf( $title, Post::title( $post, $name ), $name ) : FALSE,
+			'title' => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
 
-		echo HTML::wrap( $html, 'field-wrap -buttons' );
+		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 
 	// LEGACY: do not use thickbox anymore!
@@ -866,7 +847,7 @@ class Module extends Base
 	public function do_render_thickbox_newpostbutton( $post, $constant, $context = 'newpost', $extra = [], $inline = FALSE, $width = '600' )
 	{
 		$posttype = $this->constant( $constant );
-		$object   = PostType::object( $posttype );
+		$object   = WordPress\PostType::object( $posttype );
 
 		if ( ! current_user_can( $object->cap->create_posts ) )
 			return FALSE;
@@ -893,14 +874,14 @@ class Module extends Base
 				'width'    => $width,
 			], $extra, [ 'TB_iframe' => 'true' ] ), $context );
 
-		$html = HTML::tag( 'a', [
+		$html = Core\HTML::tag( 'a', [
 			'href'  => $link,
 			'id'    => $this->classs( 'newpostbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-newpostbutton', 'thickbox' ],
-			'title' => $title ? sprintf( $title, Post::title( $post, $name ), $name ) : FALSE,
+			'title' => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
 
-		echo HTML::wrap( $html, 'field-wrap -buttons hide-if-no-js' );
+		echo Core\HTML::wrap( $html, 'field-wrap -buttons hide-if-no-js' );
 	}
 
 	// check if this module loaded as remote for another blog's editorial module
@@ -962,7 +943,7 @@ class Module extends Base
 
 	public function is_posttype( $posttype_key, $post = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		return $this->constant( $posttype_key ) == $post->post_type;
@@ -970,7 +951,7 @@ class Module extends Base
 
 	public function is_post_viewable( $post = NULL )
 	{
-		return $this->filters( 'is_post_viewable', Post::viewable( $post ), Post::get( $post ) );
+		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), WordPress\Post::get( $post ) );
 	}
 
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
@@ -981,7 +962,7 @@ class Module extends Base
 		else if ( TRUE === $pre )
 			$pre = [ 'all' => _x( 'All PostTypes', 'Module', 'geditorial' ) ];
 
-		$all = PostType::get( 0, $args, $capability, $user_id );
+		$all = WordPress\PostType::get( 0, $args, $capability, $user_id );
 
 		foreach ( $this->posttypes( $posttypes ) as $posttype ) {
 
@@ -998,7 +979,7 @@ class Module extends Base
 
 	public function all_posttypes( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
 	{
-		return Arraay::stripByKeys( PostType::get( 0, $args ), Arraay::prepString( $this->posttypes_excluded( $exclude_extra ) ) );
+		return Core\Arraay::stripByKeys( WordPress\PostType::get( 0, $args ), Core\Arraay::prepString( $this->posttypes_excluded( $exclude_extra ) ) );
 	}
 
 	protected function taxonomies_excluded( $extra = [] )
@@ -1044,7 +1025,7 @@ class Module extends Base
 		else if ( TRUE === $pre )
 			$pre = [ 'all' => _x( 'All Taxonomies', 'Module', 'geditorial' ) ];
 
-		$all = Taxonomy::get( 0, $args, FALSE, $capability, $user_id );
+		$all = WordPress\Taxonomy::get( 0, $args, FALSE, $capability, $user_id );
 
 		foreach ( $this->taxonomies( $taxonomies ) as $taxonomy ) {
 
@@ -1061,7 +1042,7 @@ class Module extends Base
 
 	public function all_taxonomies( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
 	{
-		return Arraay::stripByKeys( Taxonomy::get( 0, $args ), Arraay::prepString( $this->taxonomies_excluded( $exclude_extra ) ) );
+		return Core\Arraay::stripByKeys( WordPress\Taxonomy::get( 0, $args ), Core\Arraay::prepString( $this->taxonomies_excluded( $exclude_extra ) ) );
 	}
 
 	// allows for filtering the page title
@@ -1088,10 +1069,10 @@ class Module extends Base
 	{
 		if ( self::req( 'noheader' ) ) {
 			echo '<div class="base-tabs-list -base nav-tab-base">';
-			HTML::tabNav( $sub, $subs );
+			Core\HTML::tabNav( $sub, $subs );
 		} else {
 			echo $this->wrap_open( $context, $sub );
-			HTML::headerNav( $uri, $sub, $subs );
+			Core\HTML::headerNav( $uri, $sub, $subs );
 		}
 	}
 
@@ -1115,13 +1096,13 @@ class Module extends Base
 	public function settings_posttypes_option()
 	{
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
-			HTML::desc( $before );
+			Core\HTML::desc( $before );
 
 		echo '<div class="wp-tab-panel"><ul>';
 
 		foreach ( $this->all_posttypes() as $posttype => $label ) {
 
-			$html = HTML::tag( 'input', [
+			$html = Core\HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'type-'.$posttype,
@@ -1129,28 +1110,28 @@ class Module extends Base
 				'checked' => ! empty( $this->options->post_types[$posttype] ),
 			] );
 
-			$html.= '&nbsp;'.HTML::escape( $label );
+			$html.= '&nbsp;'.Core\HTML::escape( $label );
 			$html.= ' &mdash; <code>'.$posttype.'</code>';
 
-			HTML::label( $html, 'type-'.$posttype, 'li' );
+			Core\HTML::label( $html, 'type-'.$posttype, 'li' );
 		}
 
 		echo '</ul></div>';
 
 		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
-			HTML::desc( $after );
+			Core\HTML::desc( $after );
 	}
 
 	public function settings_taxonomies_option()
 	{
 		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
-			HTML::desc( $before );
+			Core\HTML::desc( $before );
 
 		echo '<div class="wp-tab-panel"><ul>';
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
-			$html = HTML::tag( 'input', [
+			$html = Core\HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
@@ -1158,16 +1139,16 @@ class Module extends Base
 				'checked' => ! empty( $this->options->taxonomies[$taxonomy] ),
 			] );
 
-			$html.= '&nbsp;'.HTML::escape( $label );
+			$html.= '&nbsp;'.Core\HTML::escape( $label );
 			$html.= ' &mdash; <code>'.$taxonomy.'</code>';
 
-			HTML::label( $html, 'tax-'.$taxonomy, 'li' );
+			Core\HTML::label( $html, 'tax-'.$taxonomy, 'li' );
 		}
 
 		echo '</ul></div>';
 
 		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
-			HTML::desc( $after );
+			Core\HTML::desc( $after );
 	}
 
 	protected function settings_supports_option( $constant, $defaults = TRUE, $excludes = NULL )
@@ -1224,7 +1205,7 @@ class Module extends Base
 		if ( is_null( $prefix ) )
 			$prefix = 'meta'; // the exception!
 
-		if ( $post_id = PostType::getIDbyMeta( $this->get_postmeta_key( $field, $prefix ), $value ) )
+		if ( $post_id = WordPress\PostType::getIDbyMeta( $this->get_postmeta_key( $field, $prefix ), $value ) )
 			return intval( $post_id );
 
 		return FALSE;
@@ -1465,7 +1446,7 @@ class Module extends Base
 		$id    = $this->base.'_'.$this->module->name.'-fields-'.$args['post_type'].'-'.$args['field'];
 		$value = $this->get_settings_fields_option_val( $args );
 
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'value'   => 'enabled',
 			'class'   => 'fields-check',
@@ -1475,14 +1456,14 @@ class Module extends Base
 		] );
 
 		echo '<div>';
-			HTML::label( $html.'&nbsp;'.$args['field_title'], $id, FALSE );
-			HTML::desc( $args['description'] );
+			Core\HTML::label( $html.'&nbsp;'.$args['field_title'], $id, FALSE );
+			Core\HTML::desc( $args['description'] );
 		echo '</div>';
 	}
 
 	public function settings_fields_option_all( $args )
 	{
-		$html = HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'  => 'checkbox',
 			'class' => 'fields-check-all',
 			'id'    => $args['post_type'].'_fields_all',
@@ -1490,7 +1471,7 @@ class Module extends Base
 
 		$html.= '&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', 'geditorial' ).'</span>';
 
-		HTML::label( $html, $args['post_type'].'_fields_all', FALSE );
+		Core\HTML::label( $html, $args['post_type'].'_fields_all', FALSE );
 	}
 
 	public function settings_fields_option_none( $args )
@@ -1507,13 +1488,13 @@ class Module extends Base
 
 			Settings::moduleSections( $this->base.'_'.$this->module->name );
 
-			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.HTML::escape( $this->module->name ).'" />';
+			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.Core\HTML::escape( $this->module->name ).'" />';
 
 			$this->render_form_buttons();
 
 		echo '</form>';
 
-		if ( WordPress::isDev() )
+		if ( Core\WordPress::isDev() )
 			self::dump( $this->options );
 	}
 
@@ -1573,13 +1554,13 @@ class Module extends Base
 		if ( $check && $sidebox = method_exists( $this, 'settings_sidebox' ) )
 			$class[] = 'has-sidebox';
 
-		echo '<form enctype="multipart/form-data" class="'.HTML::prepClass( $class ).'" method="post" action="">';
+		echo '<form enctype="multipart/form-data" class="'.Core\HTML::prepClass( $class ).'" method="post" action="">';
 
 			if ( in_array( $context, [ 'settings', 'tools', 'reports', 'imports' ] ) )
 				$this->render_form_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {
-				echo '<div class="'.HTML::prepClass( '-sidebox', '-'.$this->module->name, '-sidebox-'.$sub ).'">';
+				echo '<div class="'.Core\HTML::prepClass( '-sidebox', '-'.$this->module->name, '-sidebox-'.$sub ).'">';
 					$this->settings_sidebox( $sub, $uri, $context );
 				echo '</div>';
 			}
@@ -1657,19 +1638,19 @@ class Module extends Base
 			if ( in_array( $key, $excludes ) )
 				continue;
 
-			HTML::inputHidden( $this->base.'_'.$this->module->name.'['.$context.']['.$key.']', $value );
+			Core\HTML::inputHidden( $this->base.'_'.$this->module->name.'['.$context.']['.$key.']', $value );
 		}
 	}
 
 	protected function render_form_fields( $sub, $action = 'update', $context = 'settings' )
 	{
-		HTML::inputHidden( 'base', $this->base );
-		HTML::inputHidden( 'key', $this->key );
-		HTML::inputHidden( 'context', $context );
-		HTML::inputHidden( 'sub', $sub );
-		HTML::inputHidden( 'action', $action );
+		Core\HTML::inputHidden( 'base', $this->base );
+		Core\HTML::inputHidden( 'key', $this->key );
+		Core\HTML::inputHidden( 'context', $context );
+		Core\HTML::inputHidden( 'sub', $sub );
+		Core\HTML::inputHidden( 'action', $action );
 
-		WordPress::fieldReferer();
+		Core\WordPress::fieldReferer();
 		$this->nonce_field( $context, $sub );
 	}
 
@@ -1769,7 +1750,7 @@ class Module extends Base
 					} else {
 
 						$sanitized = [];
-						$first_key = Arraay::keyFirst( $option );
+						$first_key = Core\Arraay::keyFirst( $option );
 
 						foreach ( $option[$first_key] as $index => $unused ) {
 
@@ -1790,7 +1771,7 @@ class Module extends Base
 								switch ( $type ) {
 
 									case 'number':
-										$group[$key] = Number::intval( trim( $option[$key][$index] ) );
+										$group[$key] = Core\Number::intval( trim( $option[$key][$index] ) );
 										break;
 
 									case 'text':
@@ -1872,7 +1853,7 @@ class Module extends Base
 
 	public function posttype_fields_all( $posttype = 'post', $module = NULL )
 	{
-		return PostType::supports( $posttype, ( is_null( $module ) ? $this->module->name : $module ).'_fields' );
+		return WordPress\PostType::supports( $posttype, ( is_null( $module ) ? $this->module->name : $module ).'_fields' );
 	}
 
 	public function posttype_fields_list( $posttype = 'post', $extra = [] )
@@ -2004,7 +1985,7 @@ class Module extends Base
 			], $args );
 		}
 
-		$gEditorialPostTypeFields[$this->key][$posttype] = Arraay::multiSort( $fields, [
+		$gEditorialPostTypeFields[$this->key][$posttype] = Core\Arraay::multiSort( $fields, [
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
 		] );
@@ -2043,11 +2024,11 @@ class Module extends Base
 
 				$access = user_can( $user_id, $access );
 
-			} else if ( $post = Post::get( $post ) ) {
+			} else if ( $post = WordPress\Post::get( $post ) ) {
 
 				$access = in_array( $context, [ 'edit' ], TRUE )
 					? user_can( $user_id, 'edit_post', $post->ID )
-					: Post::viewable( $post );
+					: WordPress\Post::viewable( $post );
 
 			} else {
 
@@ -2094,7 +2075,7 @@ class Module extends Base
 
 			case 'term':
 
-				// TODO: use `Taxonomy::getTerm( $data, $field['taxonomy'] )`
+				// TODO: use `WordPress\Term::get( $data, $field['taxonomy'] )`
 				$sanitized = empty( $data ) ? FALSE : (int) $data;
 
 			break;
@@ -2121,11 +2102,11 @@ class Module extends Base
 
 			break;
 			case 'contact':
-				$sanitized = Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::intval( trim( $data ), FALSE );
 				break;
 
 			case 'identity':
-				$sanitized = Validation::sanitizeIdentityNumber( $data );
+				$sanitized = Core\Validation::sanitizeIdentityNumber( $data );
 				break;
 
 			case 'isbn':
@@ -2133,7 +2114,7 @@ class Module extends Base
 				break;
 
 			case 'iban':
-				$sanitized = Validation::sanitizeIBAN( $data );
+				$sanitized = Core\Validation::sanitizeIBAN( $data );
 				break;
 
 			case 'phone':
@@ -2145,29 +2126,29 @@ class Module extends Base
 				break;
 
 			case 'date':
-				$sanitized = Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::intval( trim( $data ), FALSE );
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, $sanitized );
 				break;
 
 			case 'time':
-				$sanitized = Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::intval( trim( $data ), FALSE );
 				break;
 
 			case 'datetime':
 
 				// @SEE: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#dates
 
-				$sanitized = Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::intval( trim( $data ), FALSE );
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
 				break;
 
 			case 'price':
 			case 'number':
-				$sanitized = Number::intval( trim( $data ) );
+				$sanitized = Core\Number::intval( trim( $data ) );
 
 			break;
 			case 'float':
-				$sanitized = Number::floatval( trim( $data ) );
+				$sanitized = Core\Number::floatval( trim( $data ) );
 
 			break;
 			case 'text':
@@ -2217,7 +2198,7 @@ class Module extends Base
 			return;
 
 		if ( $append )
-			$fields = array_merge( PostType::supports( $posttype, $type.'_fields' ), $fields );
+			$fields = array_merge( WordPress\PostType::supports( $posttype, $type.'_fields' ), $fields );
 
 		add_post_type_support( $posttype, [ $type.'_fields' ], $fields );
 		add_post_type_support( $posttype, 'custom-fields' ); // must for rest meta fields
@@ -2291,7 +2272,7 @@ class Module extends Base
 
 	public function nooped_count( $constant, $count )
 	{
-		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant ) ), Number::format( $count ) );
+		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant ) ), Core\Number::format( $count ) );
 	}
 
 	public function constant( $key, $default = FALSE )
@@ -2324,7 +2305,7 @@ class Module extends Base
 
 	protected function help_tab_default_terms( $constant )
 	{
-		if ( ! $taxonomy = Taxonomy::object( $this->constant( $constant ) ) )
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $this->constant( $constant ) ) )
 			return;
 
 		/* translators: %s: taxonomy object label */
@@ -2332,16 +2313,16 @@ class Module extends Base
 		/* translators: %s: taxonomy object label */
 		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial' ), $taxonomy->label );
 		$terms  = $this->get_default_terms( $constant );
-		$link   = WordPress::getEditTaxLink( $taxonomy->name );
-		$before = HTML::tag( 'p', $title );
-		$after  = HTML::tag( 'p', HTML::link( $edit, $link, TRUE ) );
+		$link   = Core\WordPress::getEditTaxLink( $taxonomy->name );
+		$before = Core\HTML::tag( 'p', $title );
+		$after  = Core\HTML::tag( 'p', Core\HTML::link( $edit, $link, TRUE ) );
 		$args   = [ 'title' => $taxonomy->label, 'id' => $this->classs( 'help-default-terms', '-'.$taxonomy->name ) ];
 
 		if ( ! empty( $terms ) )
-			$args['content'] = $before.HTML::wrap( HTML::tableCode( $terms, TRUE ), '-info' ).$after;
+			$args['content'] = $before.Core\HTML::wrap( Core\HTML::tableCode( $terms, TRUE ), '-info' ).$after;
 
 		else
-			$args['content'] = $before.HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' ).$after;
+			$args['content'] = $before.Core\HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' ).$after;
 
 		get_current_screen()->add_help_tab( $args );
 	}
@@ -2363,7 +2344,7 @@ class Module extends Base
 		if ( empty( $terms ) )
 			$message = 'noadded';
 
-		else if ( $added = Taxonomy::insertDefaultTerms( $taxonomy, $terms ) )
+		else if ( $added = WordPress\Taxonomy::insertDefaultTerms( $taxonomy, $terms ) )
 			$message = [
 				'message' => 'created',
 				'count'   => count( $added ),
@@ -2372,7 +2353,7 @@ class Module extends Base
 		else
 			$message = 'wrong';
 
-		WordPress::redirectReferer( $message );
+		Core\WordPress::redirectReferer( $message );
 	}
 
 	// NOTE: hook filter before `init` on `after_setup_theme`
@@ -2514,7 +2495,7 @@ class Module extends Base
 
 	protected function register_help_tabs( $screen = NULL, $context = 'settings' )
 	{
-		if ( ! WordPress::mustRegisterUI( FALSE ) || self::req( 'noheader' ) )
+		if ( ! Core\WordPress::mustRegisterUI( FALSE ) || self::req( 'noheader' ) )
 			return;
 
 		if ( is_null( $screen ) )
@@ -2541,7 +2522,7 @@ class Module extends Base
 		if ( 'config' == $this->module->name ) {
 			$title   = NULL;
 			$count   = gEditorial()->count();
-			$flush   = WordPress::maybeFlushRules();
+			$flush   = Core\WordPress::maybeFlushRules();
 			$filters = TRUE;
 		} else {
 			/* translators: %s: module title */
@@ -2555,7 +2536,7 @@ class Module extends Base
 			Settings::message();
 
 			if ( $flush )
-				echo HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', 'geditorial' ), FALSE );
+				echo Core\HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', 'geditorial' ), FALSE );
 
 			echo '<div class="-header">';
 
@@ -2740,7 +2721,7 @@ class Module extends Base
 
 	public function do_posttype_field( $atts = [], $post = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return;
 
 		$args = array_merge( [
@@ -2765,7 +2746,7 @@ class Module extends Base
 			return;
 
 		if ( count( $this->scripts ) )
-			HTML::wrapjQueryReady( implode( "\n", $this->scripts ) );
+			Core\HTML::wrapjQueryReady( implode( "\n", $this->scripts ) );
 
 		$this->scripts_printed = TRUE;
 	}
@@ -2918,7 +2899,7 @@ class Module extends Base
 			$icon = $icons['post_types'][$constant];
 
 		if ( is_array( $icon ) )
-			$icon = Icon::getBase64( $icon[1], $icon[0] );
+			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
 
 		else if ( $icon )
 			$icon = 'dashicons-'.$icon;
@@ -2944,7 +2925,7 @@ class Module extends Base
 	{
 		$posttype = $this->constant( $constant );
 		$cap_type = $this->get_posttype_cap_type( $constant );
-		$plural   = str_replace( '_', '-', L10n::pluralize( $posttype ) );
+		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
 
 		$args = self::recursiveParseArgs( $atts, [
 			'description' => isset( $this->strings['labels'][$constant]['description'] ) ? $this->strings['labels'][$constant]['description'] : '',
@@ -2986,8 +2967,8 @@ class Module extends Base
 			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
 
 			/// gEditorial Props
-			PostType::PRIMARY_TAXONOMY_PROP => NULL,   // @SEE: `PostType::getPrimaryTaxonomy()`
-			Paired::PAIRED_TAXONOMY_PROP    => FALSE,  // @SEE: `Paired::isPostType()`
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => NULL,   // @SEE: `PostType::getPrimaryTaxonomy()`
+			Services\Paired::PAIRED_TAXONOMY_PROP     => FALSE,  // @SEE: `Paired::isPostType()`
 
 			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
@@ -3154,7 +3135,7 @@ class Module extends Base
 	{
 		$cpt_tax  = TRUE;
 		$taxonomy = $this->constant( $constant );
-		$plural   = str_replace( '_', '-', L10n::pluralize( $taxonomy ) );
+		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $taxonomy ) );
 
 		if ( is_string( $posttypes ) && in_array( $posttypes, [ 'user', 'comment', 'taxonomy' ] ) )
 			$cpt_tax = FALSE;
@@ -3200,8 +3181,8 @@ class Module extends Base
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			/// gEditorial Props
-			Taxonomy::TARGET_TAXONOMIES_PROP => FALSE,  // or array of taxonomies
-			Paired::PAIRED_POSTTYPE_PROP     => FALSE,  // @SEE: `Paired::isTaxonomy()`
+			WordPress\Taxonomy::TARGET_TAXONOMIES_PROP => FALSE,  // or array of taxonomies
+			Services\Paired::PAIRED_POSTTYPE_PROP      => FALSE,  // @SEE: `Paired::isTaxonomy()`
 		] );
 
 		if ( ! $args['meta_box_cb'] && method_exists( $this, 'meta_box_cb_'.$constant ) )
@@ -3276,7 +3257,7 @@ class Module extends Base
 			return;
 
 		// NOTE: getting reverse-sorted span terms to pass into checklist
-		$terms = Taxonomy::listTerms( $box['args']['taxonomy'], 'all', [ 'order' => 'DESC' ] );
+		$terms = WordPress\Taxonomy::listTerms( $box['args']['taxonomy'], 'all', [ 'order' => 'DESC' ] );
 
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ], $terms );
@@ -3339,10 +3320,11 @@ class Module extends Base
 				], $supported );
 
 			$this->register_taxonomy( $paired, [
-				Paired::PAIRED_POSTTYPE_PROP => $this->constant( $posttype ),
-				'show_ui'                    => FALSE,
-				'show_in_rest'               => FALSE,
-				'hierarchical'               => TRUE,
+				Services\Paired::PAIRED_POSTTYPE_PROP => $this->constant( $posttype ),
+				'show_ui'                             => FALSE,
+				'show_in_rest'                        => FALSE,
+				'hierarchical'                        => TRUE,
+
 				// the paired taxonomies are often in plural
 				// FIXME: WTF: conflict on the posttype rest base!
 				// 'rest_base'    => $this->constant( $paired.'_slug', str_replace( '_', '-', $this->constant( $paired ) ) ),
@@ -3356,11 +3338,11 @@ class Module extends Base
 			$extra['primary_taxonomy'] = $this->constant( $primary );
 
 		return $this->register_posttype( $posttype, array_merge( [
-			Paired::PAIRED_TAXONOMY_PROP => $this->_paired,
-			'hierarchical'               => TRUE,
-			'show_in_nav_menus'          => TRUE,
-			'show_in_admin_bar'          => FALSE,
-			'rewrite'                    => [
+			Services\Paired::PAIRED_TAXONOMY_PROP => $this->_paired,
+			'hierarchical'                        => TRUE,
+			'show_in_nav_menus'                   => TRUE,
+			'show_in_admin_bar'                   => FALSE,
+			'rewrite'                             => [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
@@ -3405,7 +3387,7 @@ class Module extends Base
 
 			} else {
 
-				foreach ( Media::defaultImageSizes() as $size => $args )
+				foreach ( WordPress\Media::defaultImageSizes() as $size => $args )
 					$this->image_sizes[$posttype][$posttype.'-'.$size] = $args;
 			}
 		}
@@ -3421,10 +3403,10 @@ class Module extends Base
 
 		$posttype = $this->constant( $constant );
 
-		Media::themeThumbnails( [ $posttype ] );
+		WordPress\Media::themeThumbnails( [ $posttype ] );
 
 		foreach ( $this->get_image_sizes( $posttype ) as $name => $size )
-			Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
+			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
 	protected function _hook_admin_bulkactions( $screen, $cap_check = NULL )
@@ -3435,7 +3417,7 @@ class Module extends Base
 		if ( FALSE === $cap_check )
 			return;
 
-		if ( TRUE !== $cap_check && ! PostType::can( $screen->post_type, is_null( $cap_check ) ? 'edit_posts' : $cap_check ) )
+		if ( TRUE !== $cap_check && ! WordPress\PostType::can( $screen->post_type, is_null( $cap_check ) ? 'edit_posts' : $cap_check ) )
 			return;
 
 		add_filter( 'bulk_actions-'.$screen->id, [ $this, 'bulk_actions' ] );
@@ -3490,7 +3472,7 @@ class Module extends Base
 			'<input name="'.$this->classs( 'paired-add-new-item-target' ).'" type="text" placeholder="'
 			._x( 'New Item Title', 'Module: Taxonomy Bulk Input PlaceHolder', 'geditorial' ).'" /> ' );
 
-		echo HTML::dropdown( [
+		echo Core\HTML::dropdown( [
 			'separeted-terms' => _x( 'Separeted Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
 			'cross-terms'     => _x( 'Cross Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
 			'union-terms'     => _x( 'Union Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
@@ -3532,7 +3514,7 @@ class Module extends Base
 					return FALSE;
 
 				// bail if post with same slug exists
-				if ( PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
+				if ( WordPress\PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
 					return FALSE;
 
 				$object_lists = [];
@@ -3549,7 +3531,7 @@ class Module extends Base
 					", $term->term_taxonomy_id ) );
 				}
 
-				$object_ids = Arraay::prepNumeral( array_intersect( ...$object_lists ) );
+				$object_ids = Core\Arraay::prepNumeral( array_intersect( ...$object_lists ) );
 
 				// bail if cross term results are ampty
 				if ( empty( $object_ids ) )
@@ -3563,7 +3545,7 @@ class Module extends Base
 					return FALSE;
 
 				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
-				$post_id = PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+				$post_id = WordPress\PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
 				if ( self::isError( $post_id ) )
 					return FALSE;
@@ -3571,7 +3553,7 @@ class Module extends Base
 				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
 					return FALSE;
 
-				Taxonomy::disableTermCounting();
+				WordPress\Taxonomy::disableTermCounting();
 
 				foreach ( $object_ids as $object_id )
 					wp_set_object_terms( $object_id, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
@@ -3585,7 +3567,7 @@ class Module extends Base
 					return FALSE;
 
 				// bail if post with same slug exists
-				if ( PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
+				if ( WordPress\PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
 					return FALSE;
 
 				$object_lists = [];
@@ -3602,7 +3584,7 @@ class Module extends Base
 					", $term->term_taxonomy_id ) );
 				}
 
-				$object_ids = Arraay::prepNumeral( ...$object_lists );
+				$object_ids = Core\Arraay::prepNumeral( ...$object_lists );
 
 				// bail if cross term results are ampty
 				if ( empty( $object_ids ) )
@@ -3616,7 +3598,7 @@ class Module extends Base
 					return FALSE;
 
 				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
-				$post_id = PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+				$post_id = WordPress\PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
 				if ( self::isError( $post_id ) )
 					return FALSE;
@@ -3624,7 +3606,7 @@ class Module extends Base
 				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
 					return FALSE;
 
-				Taxonomy::disableTermCounting();
+				WordPress\Taxonomy::disableTermCounting();
 
 				foreach ( $object_ids as $object_id )
 					wp_set_object_terms( $object_id, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
@@ -3633,14 +3615,14 @@ class Module extends Base
 			default:
 			case 'separeted-terms':
 
-				Taxonomy::disableTermCounting();
+				WordPress\Taxonomy::disableTermCounting();
 
 				foreach ( $term_ids as $term_id ) {
 
 					$term = get_term( $term_id, $taxonomy );
 
 					// bail if post with same slug exists
-					if ( PostType::getIDbySlug( $term->slug, $paired_posttype ) )
+					if ( WordPress\PostType::getIDbySlug( $term->slug, $paired_posttype ) )
 						continue;
 
 					$current_objects = (array) $wpdb->get_col( $wpdb->prepare( "
@@ -3665,7 +3647,7 @@ class Module extends Base
 						continue;
 
 					$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
-					$post_id = PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+					$post_id = WordPress\PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
 					if ( self::isError( $post_id ) )
 						continue;
@@ -3724,7 +3706,7 @@ class Module extends Base
 			if ( ! $wp_query->is_main_query() || ! $wp_query->is_tax( $subterms ) )
 				return;
 
-			$primaries = PostType::getIDs( $this->constant( $constants[0] ), [
+			$primaries = WordPress\PostType::getIDs( $this->constant( $constants[0] ), [
 				'tax_query' => [ [
 					'taxonomy' => $subterms,
 					'terms'    => [ get_queried_object_id() ],
@@ -3783,7 +3765,7 @@ class Module extends Base
 		}, 8, 2 );
 
 		// no need @since WP 5.9.0
-		if ( WordPress::isWPcompatible( '5.9.0' ) )
+		if ( Core\WordPress::isWPcompatible( '5.9.0' ) )
 			return;
 
 		add_filter( 'geditorial_get_post_thumbnail_id', function( $thumbnail_id, $post_id ) use ( $posttypes ) {
@@ -3937,7 +3919,7 @@ class Module extends Base
 		if ( ! $linked = $this->get_linked_to_posts( $post->ID, TRUE ) )
 			return $title;
 
-		return $title.' – '.Post::title( $linked );
+		return $title.' – '.WordPress\Post::title( $linked );
 	}
 
 	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
@@ -3973,7 +3955,7 @@ class Module extends Base
 		$form = str_replace( '</form>', '', $form );
 
 		foreach ( $constant_or_hidden as $name => $value )
-			$form.= '<input type="hidden" name="'.HTML::escape( $name ).'" value="'.HTML::escape( $value ).'" />';
+			$form.= '<input type="hidden" name="'.Core\HTML::escape( $name ).'" value="'.Core\HTML::escape( $value ).'" />';
 
 		return $form.'</form>';
 	}
@@ -3988,7 +3970,7 @@ class Module extends Base
 	protected function get_settings_posttypes_parents( $extra = [], $capability = NULL )
 	{
 		$list       = [];
-		$posttypes = PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
+		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
 
 		foreach ( $this->posttypes_parents( $extra ) as $posttype ) {
 
@@ -4012,7 +3994,7 @@ class Module extends Base
 	 */
 	protected function get_settings_default_roles( $extra_excludes = [], $force_include = [], $filtered = TRUE )
 	{
-		$supported = User::getAllRoleList( $filtered );
+		$supported = WordPress\User::getAllRoleList( $filtered );
 		$excluded  = Settings::rolesExcluded( $extra_excludes );
 
 		return array_merge( array_diff_key( $supported, array_flip( $excluded ), (array) $force_include ) );
@@ -4027,7 +4009,7 @@ class Module extends Base
 		if ( ! $user_id )
 			return $fallback;
 
-		if ( $admins && User::isSuperAdmin( $user_id ) )
+		if ( $admins && WordPress\User::isSuperAdmin( $user_id ) )
 			return TRUE;
 
 		foreach ( (array) $whats as $what ) {
@@ -4043,7 +4025,7 @@ class Module extends Base
 			if ( $admins )
 				$setting = array_merge( $setting, [ 'administrator' ] );
 
-			if ( User::hasRole( $setting, $user_id ) )
+			if ( WordPress\User::hasRole( $setting, $user_id ) )
 				return TRUE;
 		}
 
@@ -4099,7 +4081,7 @@ class Module extends Base
 		$forced    = $this->get_setting( 'paired_force_parents', FALSE );
 		$posttype  = $this->constant( $posttype_constant );
 		$paired    = $this->constant( $paired_constant );
-		$terms     = Taxonomy::getPostTerms( $paired, $post );
+		$terms     = WordPress\Taxonomy::getPostTerms( $paired, $post );
 		$none_main = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
 		$prefix    = $this->classs();
 
@@ -4107,7 +4089,7 @@ class Module extends Base
 
 			$subterm  = $this->constant( $subterm_constant );
 			$none_sub = Helper::getTaxonomyLabel( $subterm, 'show_option_select' );
-			$subterms = Taxonomy::getPostTerms( $subterm, $post, FALSE );
+			$subterms = WordPress\Taxonomy::getPostTerms( $subterm, $post, FALSE );
 		}
 
 		foreach ( $terms as $term ) {
@@ -4151,9 +4133,9 @@ class Module extends Base
 
 		// final check if had children in the list
 		if ( $forced && count( $parents ) )
-			$dropdowns = Arraay::stripByKeys( $dropdowns, Arraay::prepNumeral( $parents ) );
+			$dropdowns = Core\Arraay::stripByKeys( $dropdowns, Core\Arraay::prepNumeral( $parents ) );
 
-		$excludes = Arraay::prepNumeral( $excludes, $displayed );
+		$excludes = Core\Arraay::prepNumeral( $excludes, $displayed );
 
 		if ( empty( $dropdowns ) )
 			$dropdowns[0] = MetaBox::paired_dropdownToPosts( $posttype, $paired, '0', $prefix, $excludes, $none_main, $display_empty );
@@ -4210,7 +4192,7 @@ class Module extends Base
 		$name    = Helper::getTaxonomyLabel( $screen->taxonomy, 'singular_name' );
 
 		add_meta_box( $this->classs( $context ),
-			sprintf( $title, Term::title( NULL, $name ), $name ),
+			sprintf( $title, WordPress\Term::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -4251,7 +4233,7 @@ class Module extends Base
 		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
 
 		add_meta_box( $this->classs( $context ),
-			sprintf( $title, Post::title( NULL, $name ), $name ),
+			sprintf( $title, WordPress\Post::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -4367,13 +4349,10 @@ class Module extends Base
 	}
 
 	// DEFAULT METHOD
-	protected function _render_mainbox_extra( $post, $box, $context = NULL )
+	protected function _render_mainbox_extra( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'mainbox';
-
-		MetaBox::fieldPostMenuOrder( $post );
-		MetaBox::fieldPostParent( $post );
+		MetaBox::fieldPostMenuOrder( $object );
+		MetaBox::fieldPostParent( $object );
 	}
 
 	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = 'advanced' )
@@ -4391,33 +4370,33 @@ class Module extends Base
 
 		$this->class_metabox( $screen, $context );
 
-		$callback = function( $post, $box ) use ( $constants, $context ) {
+		$callback = function( $object, $box ) use ( $constants, $context, $screen ) {
 
-			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
 
-			if ( $this->check_draft_metabox( $box, $post ) )
+			if ( $this->check_draft_metabox( $box, $object ) )
 				return;
 
 			echo $this->wrap_open( '-admin-metabox' );
 
 			$this->actions(
 				sprintf( 'render_%s_metabox', $context ),
-				$post,
+				$object,
 				$box,
 				NULL,
 				sprintf( '%s_%s', $context, $this->constant( $constants[0] ) )
 			);
 
-			$term = $this->paired_get_to_term( $post->ID, $constants[0], $constants[1] );
+			$term = $this->paired_get_to_term( $object->ID, $constants[0], $constants[1] );
 
 			if ( $list = MetaBox::getTermPosts( $this->constant( $constants[1] ), $term, $this->posttypes() ) )
 				echo $list;
 
 			else
-				echo HTML::wrap( _x( 'No items connected!', 'Module: Paired: Message', 'geditorial' ), 'field-wrap -empty' );
+				echo Core\HTML::wrap( _x( 'No items connected!', 'Module: Paired: Message', 'geditorial' ), 'field-wrap -empty' );
 
-			$this->_render_listbox_extra( $post, $box, $context );
+			$this->_render_listbox_extra( $object, $box, $context, $screen );
 
 			echo '</div>';
 		};
@@ -4428,7 +4407,7 @@ class Module extends Base
 		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
 
 		add_meta_box( $this->classs( $context ),
-			sprintf( $title, Post::title( NULL, $name ), $name ),
+			sprintf( $title, WordPress\Post::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -4441,7 +4420,7 @@ class Module extends Base
 
 	// DEFAULT METHOD
 	// TODO: support for `post_actions` on Actions module
-	protected function _render_listbox_extra( $post, $box, $context = NULL )
+	protected function _render_listbox_extra( $post, $box, $context = NULL, $screen = NULL )
 	{
 		if ( is_null( $context ) )
 			$context = 'listbox';
@@ -4464,14 +4443,14 @@ class Module extends Base
 			];
 
 			if ( $link = $this->get_adminpage_url( TRUE, $args, 'importitems' ) )
-				$html.= HTML::tag( 'a', [
+				$html.= Core\HTML::tag( 'a', [
 					'href'  => $link,
 					'class' => [ 'button', 'button-small', '-button', '-button-icon', '-importbutton', 'thickbox' ],
 					'title' => _x( 'Import Items CSV File', 'Module: Exports: Button Title', 'geditorial' ),
 				], $label );
 		}
 
-		echo HTML::wrap( $html, 'field-wrap -buttons' );
+		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 
 	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = NULL )
@@ -4504,18 +4483,36 @@ class Module extends Base
 
 			if ( $this->get_setting( 'quick_newpost' ) ) {
 
-				$this->actions( $action, $post, $box, NULL, $action_context );
+				$this->actions(
+					$action,
+					$post,
+					$box,
+					NULL,
+					$action_context
+				);
 
 			} else {
 
-				if ( ! Taxonomy::hasTerms( $this->constant( $constants[1] ) ) )
+				if ( ! WordPress\Taxonomy::hasTerms( $this->constant( $constants[1] ) ) )
 					MetaBox::fieldEmptyPostType( $this->constant( $constants[0] ) );
 
 				else
-					$this->actions( $action, $post, $box, NULL, $action_context );
+					$this->actions(
+						$action,
+						$post,
+						$box,
+						NULL,
+						$action_context
+					);
 			}
 
-			do_action( $this->base.'_meta_render_metabox', $post, $box, NULL, $action_context );
+			do_action(
+				sprintf( '%s_meta_render_metabox', $this->base ),
+				$post,
+				$box,
+				NULL,
+				$action_context
+			);
 
 			if ( $menuorder )
 				MetaBox::fieldPostMenuOrder( $post );
@@ -4556,7 +4553,7 @@ class Module extends Base
 		if ( empty( $constants[2] ) )
 			$constants[2] = FALSE;
 
-		add_action( 'save_post_'.$posttype, function( $post_id, $post, $update ) use ( $constants ) {
+		add_action( sprintf( 'save_post_%s', $posttype ), function( $post_id, $post, $update ) use ( $constants ) {
 
 			if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 				return;
@@ -4590,10 +4587,10 @@ class Module extends Base
 			$terms[] = $term->term_id;
 
 			if ( $forced )
-				$terms = array_merge( Taxonomy::getTermParents( $term->term_id, $term->taxonomy ), $terms );
+				$terms = array_merge( WordPress\Taxonomy::getTermParents( $term->term_id, $term->taxonomy ), $terms );
 		}
 
-		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $terms ), $this->constant( $paired_constant ), FALSE );
+		wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $this->constant( $paired_constant ), FALSE );
 
 		if ( ! $subterm_constant || ! $this->get_setting( 'subterms_support' ) )
 			return;
@@ -4636,33 +4633,13 @@ class Module extends Base
 				$subterms[] = (int) $sub_paired;
 		}
 
-		wp_set_object_terms( $post->ID, Arraay::prepNumeral( $subterms ), $subterm, FALSE );
+		wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $subterms ), $subterm, FALSE );
 	}
 
 	protected function _hook_store_metabox( $posttype )
 	{
 		if ( $posttype )
-			add_action( 'save_post_'.$posttype, [ $this, 'store_metabox' ], 20, 3 );
-	}
-
-	// DEFAULT METHOD
-	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
-	public function dISABLED_store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		$fields = $this->get_posttype_fields( $post->post_type );
-
-		foreach ( $fields as $field => $args ) {
-
-			if ( $context != $args['context'] )
-				continue;
-
-			$key = $this->constant( 'metakey_'.$field, $field );
-
-			// FIXME: DO THE SAVINGS!
-		}
+			add_action( sprintf( 'save_post_%s', $posttype ), [ $this, 'store_metabox' ], 20, 3 );
 	}
 
 	protected function class_metabox( $screen, $context = 'mainbox' )
@@ -4686,7 +4663,7 @@ class Module extends Base
 
 		// TODO: 'metabox_icon'
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'editor-help' ).'</span>';
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'editor-help' ).'</span>';
 
 		if ( FALSE === $url || FALSE === $edit_cap )
 			return $title;
@@ -4708,7 +4685,7 @@ class Module extends Base
 
 	public function get_meta_box_title_taxonomy( $constant, $posttype, $url = NULL, $title = NULL )
 	{
-		$object = Taxonomy::object( $this->constant( $constant ) );
+		$object = WordPress\Taxonomy::object( $this->constant( $constant ) );
 
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
@@ -4723,10 +4700,10 @@ class Module extends Base
 
 		// TODO: 'metabox_icon'
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
 
 		if ( is_null( $url ) )
-			$url = WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $posttype ] );
+			$url = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $posttype ] );
 
 		if ( $url ) {
 			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
@@ -4738,7 +4715,7 @@ class Module extends Base
 
 	public function get_meta_box_title_posttype( $constant, $url = NULL, $title = NULL )
 	{
-		$object = PostType::object( $this->constant( $constant ) );
+		$object = WordPress\PostType::object( $this->constant( $constant ) );
 
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
@@ -4754,12 +4731,12 @@ class Module extends Base
 		return $title; // <--
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.HTML::escape( $info ).'">'.HTML::getDashicon( 'info' ).'</span>';
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
 
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
 			if ( is_null( $url ) )
-				$url = WordPress::getPostTypeEditLink( $object->name );
+				$url = Core\WordPress::getPostTypeEditLink( $object->name );
 
 			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
@@ -4776,21 +4753,13 @@ class Module extends Base
 
 	public function get_column_title_posttype( $constant, $taxonomy = FALSE, $fallback = NULL )
 	{
-		$object = PostType::object( $this->constant( $constant ) );
-		$title  = empty( $object->labels->column_title )
-			? ( is_null( $fallback ) ? $object->labels->name : $fallback )
-			: $object->labels->column_title;
-
+		$title = Helper::getPostTypeLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
 		return $this->filters( 'column_title', $title, $taxonomy, $constant, $fallback );
 	}
 
 	public function get_column_title_taxonomy( $constant, $posttype = FALSE, $fallback = NULL )
 	{
-		$object = Taxonomy::object( $this->constant( $constant ) );
-		$title  = empty( $object->labels->column_title )
-			? ( is_null( $fallback ) ? $object->labels->name : $fallback )
-			: $object->labels->column_title;
-
+		$title = Helper::getTaxonomyLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
 		return $this->filters( 'column_title', $title, $posttype, $constant, $fallback );
 	}
 
@@ -4811,7 +4780,7 @@ class Module extends Base
 
 	public function is_current_posttype( $constant )
 	{
-		return PostType::current() == $this->constant( $constant );
+		return WordPress\PostType::current() == $this->constant( $constant );
 	}
 
 	public function is_save_post( $post, $constant = FALSE )
@@ -4835,7 +4804,7 @@ class Module extends Base
 	// OLD: `is_inline_save()`
 	public function is_inline_save_posttype( $target = FALSE, $request = NULL, $key = 'post_type' )
 	{
-		if ( ! WordPress::isAdminAJAX() )
+		if ( ! Core\WordPress::isAdminAJAX() )
 			return FALSE;
 
 		if ( is_null( $request ) )
@@ -4863,7 +4832,7 @@ class Module extends Base
 	// for ajax calls on quick edit
 	public function is_inline_save_taxonomy( $target = FALSE, $request = NULL, $key = 'taxonomy' )
 	{
-		if ( ! WordPress::isAdminAJAX() )
+		if ( ! Core\WordPress::isAdminAJAX() )
 			return FALSE;
 
 		if ( is_null( $request ) )
@@ -4942,7 +4911,7 @@ class Module extends Base
 	// NOTE: here so modules can override
 	public function paired_get_to_term_direct( $post_id, $posttype, $taxonomy )
 	{
-		return Paired::getToTerm( $post_id, $posttype, $taxonomy );
+		return Services\Paired::getToTerm( $post_id, $posttype, $taxonomy );
 	}
 
 	// PAIRED API
@@ -4952,7 +4921,7 @@ class Module extends Base
 		if ( ! $post_id )
 			return FALSE;
 
-		if ( ! $the_term = Taxonomy::getTerm( $term_or_id, $this->constant( $taxonomy_key ) ) )
+		if ( ! $the_term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
 			return FALSE;
 
 		update_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id', $the_term->term_id );
@@ -4978,7 +4947,7 @@ class Module extends Base
 	// OLD: `remove_linked_term()`
 	public function paired_remove_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
 	{
-		if ( ! $the_term = Taxonomy::getTerm( $term_or_id, $this->constant( $taxonomy_key ) ) )
+		if ( ! $the_term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
 			return FALSE;
 
 		if ( ! $post_id )
@@ -5011,13 +4980,13 @@ class Module extends Base
 		if ( ! $term_or_id )
 			return FALSE;
 
-		if ( ! $term = Taxonomy::getTerm( $term_or_id, $this->constant( $tax_constant_key ) ) )
+		if ( ! $term = WordPress\Term::get( $term_or_id, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
 		$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
 
 		if ( ! $post_id && $check_slug )
-			$post_id = PostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
+			$post_id = WordPress\PostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
 
 		return $post_id;
 	}
@@ -5073,7 +5042,7 @@ class Module extends Base
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		$posts  = $parents = [];
-		$terms  = Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
+		$terms  = WordPress\Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
 		$forced = $this->get_setting( 'paired_force_parents', FALSE );
 
 		foreach ( $terms as $term ) {
@@ -5103,7 +5072,7 @@ class Module extends Base
 
 		// final check if had children in the list
 		if ( $forced && count( $parents ) )
-			$posts = Arraay::stripByKeys( $posts, Arraay::prepNumeral( $parents ) );
+			$posts = Core\Arraay::stripByKeys( $posts, Core\Arraay::prepNumeral( $parents ) );
 
 		if ( ! count( $posts ) )
 			return FALSE;
@@ -5263,20 +5232,20 @@ class Module extends Base
 				$args = [ $this->constant( $constants[1] ) => $post->post_name ];
 
 				if ( empty( $this->cache['posttypes'] ) )
-					$this->cache['posttypes'] = PostType::get( 2 );
+					$this->cache['posttypes'] = WordPress\PostType::get( 2 );
 
 				echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 
 				$list = [];
 
 				foreach ( $posttypes as $posttype )
-					$list[] = HTML::tag( 'a', [
-						'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
+					$list[] = Core\HTML::tag( 'a', [
+						'href'   => Core\WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 						'title'  => _x( 'View the connected list', 'Module: Paired: Title Attr', 'geditorial' ),
 						'target' => '_blank',
 					], $this->cache['posttypes'][$posttype] );
 
-				echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+				echo WordPress\Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 			echo '</li>';
 
@@ -5354,16 +5323,16 @@ class Module extends Base
 			return FALSE;
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		HTML::h2( _x( 'Paired Tools', 'Module: Paired: Card Title', 'geditorial' ), 'title' );
+		Core\HTML::h2( _x( 'Paired Tools', 'Module: Paired: Card Title', 'geditorial' ), 'title' );
 
 		echo $this->wrap_open( '-wrap-button-row -sync_paired_terms' );
 		Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Module: Paired: Button', 'geditorial' ) );
-		HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Module: Paired: Button Description', 'geditorial' ), FALSE );
+		Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Module: Paired: Button Description', 'geditorial' ), FALSE );
 		echo '</div>';
 
 		echo $this->wrap_open( '-wrap-button-row -create_paired_terms' );
 		Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Module: Paired: Button', 'geditorial' ) );
-		HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Module: Paired: Button Description', 'geditorial' ), FALSE );
+		Core\HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Module: Paired: Button Description', 'geditorial' ), FALSE );
 		echo '</div>';
 
 		echo '</div>';
@@ -5374,7 +5343,7 @@ class Module extends Base
 	{
 		if ( Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
 
-			$terms = Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
+			$terms = WordPress\Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
 			$posts = [];
 
 			foreach ( $_POST['_cb'] as $term_id ) {
@@ -5382,10 +5351,10 @@ class Module extends Base
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				if ( PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
+				if ( WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
 					continue;
 
-				$posts[] = PostType::newPostFromTerm(
+				$posts[] = WordPress\PostType::newPostFromTerm(
 					$terms[$term_id],
 					$this->constant( $taxonomy_key ),
 					$this->constant( $posttype_key ),
@@ -5393,7 +5362,7 @@ class Module extends Base
 				);
 			}
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'created',
 				'count'   => count( $posts ),
 			] );
@@ -5417,7 +5386,7 @@ class Module extends Base
 				$count++;
 			}
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );
@@ -5431,14 +5400,14 @@ class Module extends Base
 				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $posttype_key, $taxonomy_key ) )
 					continue;
 
-				if ( ! $post = Post::get( $post_id ) )
+				if ( ! $post = WordPress\Post::get( $post_id ) )
 					continue;
 
 				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), [ 'description' => $post->post_excerpt ] ) )
 					$count++;
 			}
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );
@@ -5446,7 +5415,7 @@ class Module extends Base
 		} else if ( Tablelist::isAction( 'store_paired_orders', TRUE ) ) {
 
 			if ( ! gEditorial()->enabled( 'meta' ) )
-				WordPress::redirectReferer( 'wrong' );
+				Core\WordPress::redirectReferer( 'wrong' );
 
 			$count = 0;
 			$field = $this->constant( 'field_paired_order', sprintf( 'in_%s_order', $this->constant( $posttype_key ) ) );
@@ -5470,7 +5439,7 @@ class Module extends Base
 				}
 			}
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'ordered',
 				'count'   => $count,
 			] );
@@ -5484,14 +5453,14 @@ class Module extends Base
 				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), $args ) )
 					$count++;
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'purged',
 				'count'   => $count,
 			] );
 
 		} else if ( Tablelist::isAction( 'connect_paired_posts', TRUE ) ) {
 
-			$terms = Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
+			$terms = WordPress\Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
 			$count = 0;
 
 			foreach ( $_POST['_cb'] as $term_id ) {
@@ -5499,14 +5468,14 @@ class Module extends Base
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				if ( ! $post_id = PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
+				if ( ! $post_id = WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
 					continue;
 
 				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $posttype_key, $taxonomy_key ) )
 					$count++;
 			}
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'updated',
 				'count'   => $count,
 			] );
@@ -5526,7 +5495,7 @@ class Module extends Base
 				}
 			}
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'deleted',
 				'count'   => $count,
 			] );
@@ -5534,9 +5503,9 @@ class Module extends Base
 		} else if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $posttype_key, $taxonomy_key ) ) )
-				WordPress::redirectReferer( 'wrong' );
+				Core\WordPress::redirectReferer( 'wrong' );
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );
@@ -5544,9 +5513,9 @@ class Module extends Base
 		} else if ( Tablelist::isAction( 'create_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_create_paired_terms( $posttype_key, $taxonomy_key ) ) )
-				WordPress::redirectReferer( 'wrong' );
+				Core\WordPress::redirectReferer( 'wrong' );
 
-			WordPress::redirectReferer( [
+			Core\WordPress::redirectReferer( [
 				'message' => 'created',
 				'count'   => $count,
 			] );
@@ -5559,8 +5528,8 @@ class Module extends Base
 	protected function paired_tools_render_tablelist( $posttype_key, $taxonomy_key, $actions = NULL, $title = NULL )
 	{
 		if ( ! $this->_paired ) {
-			if ( $title ) echo HTML::tag( 'h3', $title );
-			HTML::desc( gEditorial()->na(), TRUE, '-empty' );
+			if ( $title ) echo Core\HTML::tag( 'h3', $title );
+			Core\HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 			return FALSE;
 		}
 
@@ -5572,7 +5541,7 @@ class Module extends Base
 				'title'    => _x( 'Slugged / Paired', 'Module: Paired: Table Column', 'geditorial' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
 
-					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
+					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
 						$html = Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 					else
 						$html = Helper::htmlEmpty();
@@ -5602,7 +5571,7 @@ class Module extends Base
 
 						$html.= '<hr />';
 
-						if ( ! $post = Post::get( $post_id ) )
+						if ( ! $post = WordPress\Post::get( $post_id ) )
 							return $html.gEditorial()->na();
 
 						if ( empty( $post->post_excerpt ) )
@@ -5619,10 +5588,10 @@ class Module extends Base
 				'title'    => _x( 'Count', 'Module: Paired: Table Column', 'geditorial' ),
 				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
 
-					if ( $post_id = PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
-						return Number::format( $this->paired_get_from_posts( $post_id, $posttype_key, $taxonomy_key, TRUE ) );
+					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
+						return Core\Number::format( $this->paired_get_from_posts( $post_id, $posttype_key, $taxonomy_key, TRUE ) );
 
-					return Number::format( $row->count );
+					return Core\Number::format( $row->count );
 				},
 			],
 
@@ -5633,7 +5602,7 @@ class Module extends Base
 					$html = '';
 
 					if ( $post_id = $this->paired_get_to_post_id( $row, $posttype_key, $taxonomy_key, FALSE ) )
-						$html = PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
+						$html = WordPress\PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
 
 					return $html ?: Helper::htmlEmpty();
 				},
@@ -5643,7 +5612,7 @@ class Module extends Base
 				'title'    => _x( 'Image', 'Module: Paired: Table Column', 'geditorial' ),
 				'class'    => 'image-column',
 				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-					$html = Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
+					$html = WordPress\Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
 					return $html ?: Helper::htmlEmpty();
 				},
 			],
@@ -5672,12 +5641,12 @@ class Module extends Base
 		$args = [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', $title ?: _x( 'Paired Terms Tools', 'Module: Paired: Header', 'geditorial' ) ),
+			'title'      => Core\HTML::tag( 'h3', $title ?: _x( 'Paired Terms Tools', 'Module: Paired: Header', 'geditorial' ) ),
 			'empty'      => _x( 'There are no terms available!', 'Module: Paired: Message', 'geditorial' ),
 			'pagination' => $pagination,
 		];
 
-		return HTML::tableList( $columns, $data, $args );
+		return Core\HTML::tableList( $columns, $data, $args );
 	}
 
 	// PAIRED API
@@ -5846,7 +5815,7 @@ class Module extends Base
 	protected function _hook_editform_readonly_title()
 	{
 		add_action( 'edit_form_after_title', function( $post ) {
-			$html = Post::title( $post );
+			$html = WordPress\Post::title( $post );
 			$info = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated', 'Module: ReadOnly Title Info', 'geditorial' ) );
 			echo $this->wrap(
 				$html.' '.$info,
@@ -5960,15 +5929,15 @@ class Module extends Base
 		// using core styles
 		echo $this->wrap_open( [ '-admin-widget', '-core-styles' ], TRUE, 'dashboard_right_now' );
 
-		$taxonomy = Taxonomy::object( $this->constant( $constant ) );
+		$taxonomy = WordPress\Taxonomy::object( $this->constant( $constant ) );
 
-		if ( ! Taxonomy::hasTerms( $taxonomy->name ) ) {
+		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy->name ) ) {
 
 			if ( is_null( $edit ) )
-				$edit = WordPress::getEditTaxLink( $taxonomy->name );
+				$edit = Core\WordPress::getEditTaxLink( $taxonomy->name );
 
 			if ( $edit )
-				$empty = HTML::tag( 'a', [
+				$empty = Core\HTML::tag( 'a', [
 					'href'   => $edit,
 					'title'  => $taxonomy->labels->add_new_item,
 					'target' => '_blank',
@@ -5977,7 +5946,7 @@ class Module extends Base
 			else
 				$empty = gEditorial()->na();
 
-			HTML::desc( $empty, FALSE, '-empty' );
+			Core\HTML::desc( $empty, FALSE, '-empty' );
 			echo '</div>';
 			return;
 		}
@@ -5986,7 +5955,7 @@ class Module extends Base
 		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
 		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
 
-		if ( WordPress::isFlush( 'read' ) )
+		if ( Core\WordPress::isFlush( 'read' ) )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
@@ -5996,12 +5965,12 @@ class Module extends Base
 
 			if ( $summary = $this->get_dashboard_term_summary( $constant, $posttypes, NULL, $scope ) ) {
 
-				$html = Text::minifyHTML( $summary );
+				$html = Core\Text::minifyHTML( $summary );
 				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
 
 			} else {
 
-				HTML::desc( _x( 'There are no reports available!', 'Module: Message', 'geditorial' ), FALSE, '-empty' );
+				Core\HTML::desc( _x( 'There are no reports available!', 'Module: Message', 'geditorial' ), FALSE, '-empty' );
 			}
 		}
 
@@ -6015,18 +5984,18 @@ class Module extends Base
 	{
 		$html     = '';
 		$check    = FALSE;
-		$all      = PostType::get( 3 );
-		$exclude  = Database::getExcludeStatuses();
+		$all      = WordPress\PostType::get( 3 );
+		$exclude  = WordPress\Database::getExcludeStatuses();
 		$taxonomy = $this->constant( $constant );
 
-		if ( ! $object = Taxonomy::object( $taxonomy ) )
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
 		if ( is_null( $terms ) )
-			$terms = Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [
+			$terms = WordPress\Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [
 				'hide_empty' => TRUE,
 				'exclude'    => $this->get_setting( 'summary_excludes', '' ),
 			] );
@@ -6042,14 +6011,14 @@ class Module extends Base
 
 		if ( count( $terms ) ) {
 
-			$counts  = Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
+			$counts  = WordPress\Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 			$objects = [];
 
 			foreach ( $counts as $term => $posts ) {
 
 				if ( $check && ( $roles = get_term_meta( $terms[$term]->term_id, 'roles', TRUE ) ) ) {
 
-					if ( ! User::hasRole( array_merge( [ 'administrator' ], (array) $roles ), $user_id ) )
+					if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 						continue;
 				}
 
@@ -6061,12 +6030,12 @@ class Module extends Base
 						continue;
 
 					if ( count( $posttypes ) > 1 )
-						$text = sprintf( '<b>%3$s</b> %1$s: <b title="%4$s">%2$s</b>', Helper::noopedCount( $count, $all[$type] ), Strings::trimChars( $name, 35 ), Number::format( $count ), $name );
+						$text = sprintf( '<b>%3$s</b> %1$s: <b title="%4$s">%2$s</b>', Helper::noopedCount( $count, $all[$type] ), WordPress\Strings::trimChars( $name, 35 ), Core\Number::format( $count ), $name );
 					else
-						$text = sprintf( '<b>%2$s</b> %1$s', $name, Number::format( $count ) );
+						$text = sprintf( '<b>%2$s</b> %1$s', $name, Core\Number::format( $count ) );
 
 					if ( empty( $objects[$type] ) )
-						$objects[$type] = PostType::object( $type );
+						$objects[$type] = WordPress\PostType::object( $type );
 
 					$classes = [
 						'geditorial-glance-item',
@@ -6077,15 +6046,15 @@ class Module extends Base
 					];
 
 					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-						$text = HTML::tag( 'a', [
-							'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => $term ] ),
+						$text = Core\HTML::tag( 'a', [
+							'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => $term ] ),
 							'class' => $classes,
 						], $text );
 
 					else
-						$text = HTML::wrap( $text, $classes, FALSE );
+						$text = Core\HTML::wrap( $text, $classes, FALSE );
 
-					$html.= HTML::tag( $list, $text );
+					$html.= Core\HTML::tag( $list, $text );
 				}
 			}
 		}
@@ -6093,7 +6062,7 @@ class Module extends Base
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
 			$none = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
-			$not  = Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
+			$not  = WordPress\Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 
 			foreach ( $not as $type => $count ) {
 
@@ -6101,12 +6070,12 @@ class Module extends Base
 					continue;
 
 				if ( count( $posttypes ) > 1 )
-					$text = sprintf( '<b>%3$s</b> %1$s %2$s', Helper::noopedCount( $count, $all[$type] ), $none, Number::format( $count ) );
+					$text = sprintf( '<b>%3$s</b> %1$s %2$s', Helper::noopedCount( $count, $all[$type] ), $none, Core\Number::format( $count ) );
 				else
-					$text = sprintf( '<b>%2$s</b> %1$s', $none, Number::format( $count ) );
+					$text = sprintf( '<b>%2$s</b> %1$s', $none, Core\Number::format( $count ) );
 
 				if ( empty( $objects[$type] ) )
-					$objects[$type] = PostType::object( $type );
+					$objects[$type] = WordPress\PostType::object( $type );
 
 				$classes = [
 					'geditorial-glance-item',
@@ -6117,15 +6086,15 @@ class Module extends Base
 				];
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
-					$text = HTML::tag( 'a', [
-						'href'  => WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => '-1' ] ),
+					$text = Core\HTML::tag( 'a', [
+						'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => '-1' ] ),
 						'class' => $classes,
 					], $text );
 
 				else
-					$text = HTML::wrap( $text, $classes, FALSE );
+					$text = Core\HTML::wrap( $text, $classes, FALSE );
 
-				$html.= HTML::tag( $list, [ 'class' => 'warning' ], $text );
+				$html.= Core\HTML::tag( $list, [ 'class' => 'warning' ], $text );
 			}
 		}
 
@@ -6140,7 +6109,7 @@ class Module extends Base
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'column_icon_title', $posttype, 'misc', '' );
 
-		return HTML::tag( ( $link ? 'a' : 'span' ), [
+		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ?: FALSE,
 			'title'  => $title ?: FALSE,
 			'class'  => array_merge( [ '-icon', ( $link ? '-link' : '-info' ) ], (array) $extra ),
@@ -6206,7 +6175,7 @@ class Module extends Base
 			$meta = sprintf( $args['template'], $meta );
 
 		if ( ! empty( $args['title'] ) )
-			$meta = '<span title="'.HTML::escape( $args['title'] ).'">'.$meta.'</span>';
+			$meta = '<span title="'.Core\HTML::escape( $args['title'] ).'">'.$meta.'</span>';
 
 		return $before.$meta.$after;
 	}
@@ -6267,7 +6236,7 @@ class Module extends Base
 			$icons[$constant] = $this->get_column_icon( FALSE, NULL, $this->strings['p2p'][$constant]['title']['to'] );
 
 		if ( empty( $this->cache['posttypes'] ) )
-			$this->cache['posttypes'] = PostType::get( 2 );
+			$this->cache['posttypes'] = WordPress\PostType::get( 2 );
 
 		$posttypes = array_unique( array_map( function( $r ){
 			return $r->post_type;
@@ -6288,13 +6257,13 @@ class Module extends Base
 			$list = [];
 
 			foreach ( $posttypes as $posttype )
-				$list[] = HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $posttype, 0, $args ),
+				$list[] = Core\HTML::tag( 'a', [
+					'href'   => Core\WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
 				], $this->cache['posttypes'][$posttype] );
 
-			echo Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+			echo WordPress\Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 		echo '</li>';
 	}
@@ -6332,11 +6301,11 @@ class Module extends Base
 					'connected_items'     => $item->get_id(),
 				];
 
-				echo HTML::tag( 'a', [
-					'href'   => WordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
+				echo Core\HTML::tag( 'a', [
+					'href'   => Core\WordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
 					'title'  => _x( 'View all connected', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
-				], Strings::trimChars( $item->get_title(), 85 ) );
+				], WordPress\Strings::trimChars( $item->get_title(), 85 ) );
 
 				echo $this->p2p_get_meta_row( $constant, $item->p2p_id, ' &ndash; ', '' );
 
@@ -6401,7 +6370,7 @@ class Module extends Base
 	public function wp_insert_post_data_menu_order( $data, $postarr )
 	{
 		if ( ! $data['menu_order'] && $postarr['post_type'] )
-			$data['menu_order'] = PostType::getLastMenuOrder( $postarr['post_type'],
+			$data['menu_order'] = WordPress\PostType::getLastMenuOrder( $postarr['post_type'],
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;
@@ -6411,37 +6380,7 @@ class Module extends Base
 	// USAGE: `$this->action_self( 'newpost_content', 4, 99, 'menu_order' );`
 	public function newpost_content_menu_order( $posttype, $post, $target, $linked )
 	{
-		HTML::inputHidden( 'menu_order', PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
-	}
-
-	protected function _hook_menu_posttype( $constant, $parent_slug = 'index.php', $context = 'adminpage' )
-	{
-		if ( ! $posttype = get_post_type_object( $this->constant( $constant ) ) )
-			return FALSE;
-
-		return add_submenu_page(
-			$parent_slug,
-			HTML::escape( $this->get_string( 'page_title', $constant, $context, $posttype->labels->all_items ) ),
-			HTML::escape( $this->get_string( 'menu_title', $constant, $context, $posttype->labels->menu_name ) ),
-			$posttype->cap->edit_posts,
-			'edit.php?post_type='.$posttype->name
-		);
-	}
-
-	// $parent_slug options: `options-general.php`, `users.php`
-	// also set `$this->filter_string( 'parent_file', $parent_slug );`
-	protected function _hook_menu_taxonomy( $constant, $parent_slug = 'index.php', $context = 'submenu' )
-	{
-		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
-			return FALSE;
-
-		return add_submenu_page(
-			$parent_slug,
-			HTML::escape( $this->get_string( 'page_title', $constant, $context, $taxonomy->labels->name ) ),
-			HTML::escape( $this->get_string( 'menu_title', $constant, $context, $taxonomy->labels->menu_name ) ),
-			$taxonomy->cap->manage_terms,
-			'edit-tags.php?taxonomy='.$taxonomy->name
-		);
+		Core\HTML::inputHidden( 'menu_order', WordPress\PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
 
 	// NOTE: hack to keep the submenu only on primary paired posttype
@@ -6601,7 +6540,7 @@ class Module extends Base
 		if ( is_null( $message ) )
 			$message = _x( 'You can see the contents once you\'ve saved this post for the first time.', 'Module: Draft Metabox', 'geditorial' );
 
-		HTML::desc( $message, TRUE, 'field-wrap -empty' );
+		Core\HTML::desc( $message, TRUE, 'field-wrap -empty' );
 
 		return TRUE;
 	}

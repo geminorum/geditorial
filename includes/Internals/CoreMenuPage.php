@@ -2,8 +2,40 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core;
+
 trait CoreMenuPage
 {
+
+	protected function _hook_menu_posttype( $constant, $parent_slug = 'index.php', $context = 'adminpage' )
+	{
+		if ( ! $posttype = get_post_type_object( $this->constant( $constant ) ) )
+			return FALSE;
+
+		return add_submenu_page(
+			$parent_slug,
+			Core\HTML::escape( $this->get_string( 'page_title', $constant, $context, $posttype->labels->all_items ) ),
+			Core\HTML::escape( $this->get_string( 'menu_title', $constant, $context, $posttype->labels->menu_name ) ),
+			$posttype->cap->edit_posts,
+			'edit.php?post_type='.$posttype->name
+		);
+	}
+
+	// $parent_slug options: `options-general.php`, `users.php`
+	// also set `$this->filter_string( 'parent_file', $parent_slug );`
+	protected function _hook_menu_taxonomy( $constant, $parent_slug = 'index.php', $context = 'submenu' )
+	{
+		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
+			return FALSE;
+
+		return add_submenu_page(
+			$parent_slug,
+			Core\HTML::escape( $this->get_string( 'page_title', $constant, $context, $taxonomy->labels->name ) ),
+			Core\HTML::escape( $this->get_string( 'menu_title', $constant, $context, $taxonomy->labels->menu_name ) ),
+			$taxonomy->cap->manage_terms,
+			'edit-tags.php?taxonomy='.$taxonomy->name
+		);
+	}
 
 	protected function _hook_wp_submenu_page( $context, $parent_slug, $page_title, $menu_title = NULL, $capability = NULL, $menu_slug = '', $callback = '', $position = NULL )
 	{

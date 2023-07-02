@@ -323,7 +323,7 @@ class Helper extends Main
 
 	public static function renderTaxonomyTermsEditRow( $object, $taxonomy, $before = '', $after = '' )
 	{
-		if ( ! $object = Taxonomy::getTerm( $object ) )
+		if ( ! $object = Term::get( $object ) )
 			return;
 
 		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
@@ -454,10 +454,10 @@ class Helper extends Main
 
 	public static function getTermTitleRow( $term, $link = 'edit', $taxonomy = FALSE, $title_attr = NULL )
 	{
-		if ( ! $term = Taxonomy::getTerm( $term ) )
+		if ( ! $term = Term::get( $term ) )
 			return Plugin::na( FALSE );
 
-		$title = Taxonomy::getTermTitle( $term );
+		$title = Term::title( $term );
 		$after = '';
 
 		if ( $taxonomy )

@@ -376,7 +376,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $term_or_id || is_wp_error( $term_or_id ) )
 			return '';
 
-		if ( ! $term = WordPress\Taxonomy::getTerm( $term_or_id, $taxonomy ) )
+		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ) )
 			return '';
 
 		$args = [
@@ -1202,7 +1202,7 @@ class MetaBox extends WordPress\Main
 			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
-			], WordPress\Taxonomy::getTermTitle( $value ) );
+			], WordPress\Term::title( $value ) );
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),

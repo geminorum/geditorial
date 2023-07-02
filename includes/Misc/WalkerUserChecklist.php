@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 
 class WalkerUserChecklist extends \Walker
 {
@@ -20,7 +20,7 @@ class WalkerUserChecklist extends \Walker
 		// FIXME: alse the tax must change back to non-hierarchical
 		// $value = $user->user_login;
 
-		if ( $term = Taxonomy::getTerm( $user->user_login, $args['taxonomy'] ) )
+		if ( $term = Term::get( $user->user_login, $args['taxonomy'] ) )
 			$value = $term->term_id;
 
 		if ( ! empty( $args['atts']['name'] ) )

@@ -17,6 +17,7 @@ class Lingo extends gEditorial\Module
 {
 	use Internals\RawImports;
 	use Internals\CoreToolBox;
+	use Internals\CoreMenuPage;
 
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafile   = 'languages-20230325.json';

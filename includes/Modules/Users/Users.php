@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
@@ -21,10 +22,12 @@ use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\User;
 
 class Users extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 
 	protected $caps = [
 		'tools'   => 'edit_users',
@@ -507,7 +510,7 @@ class Users extends gEditorial\Module
 		$terms = [];
 
 		foreach ( $this->get_user_categories() as $selected )
-			$terms[] = Taxonomy::getTerm( $selected, 'category' );
+			$terms[] = Term::get( $selected, 'category' );
 
 		echo $this->wrap_open( '-admin-metabox' );
 

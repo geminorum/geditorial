@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Core\HTML;
@@ -12,9 +13,11 @@ use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 
 class Cartable extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 
 	// TODO: dynamic cartables based on external taxonomies
 
@@ -486,7 +489,7 @@ class Cartable extends gEditorial\Module
 			$context = self::req( 'context', $context );
 			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
 
-			$current = Taxonomy::getTerm( $slug, $this->constant( $context.'_tax' ) );
+			$current = Term::get( $slug, $this->constant( $context.'_tax' ) );
 
 			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
@@ -654,14 +657,14 @@ class Cartable extends gEditorial\Module
 				if ( in_array( $user->user_login, $admins ) )
 					continue;
 
-				if ( Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
+				if ( Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
 					$count++;
 			}
 		}
 
 		if ( $this->support_groups )
 			foreach ( Taxonomy::getTerms( $this->constant( 'group_ref' ), FALSE, TRUE ) as $group )
-				if ( Taxonomy::addTerm( $group->name, $this->constant( 'group_tax' ), $group->slug ) )
+				if ( Term::add( $group->name, $this->constant( 'group_tax' ), $group->slug ) )
 					$count++;
 
 		WordPress::redirectReferer( [
@@ -709,7 +712,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $user = get_user_by( 'id', $user_id ) )
 			return;
 
-		Taxonomy::addTerm( $user->user_login, $this->constant( 'user_tax' ), FALSE );
+		Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE );
 	}
 
 	public function render_widget_summary( $object, $box )
@@ -717,7 +720,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		if ( ! $term = Taxonomy::getTerm( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
+		if ( ! $term = Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
 			return HTML::desc( gEditorial\Plugin::wrong( FALSE ), FALSE, '-empty' );
 
 		$this->tableCartableSummary( $term, $box['args']['context'] );

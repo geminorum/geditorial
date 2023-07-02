@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress\Media;
 use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 
 class ShortCode extends Main
 {
@@ -54,7 +55,7 @@ class ShortCode extends Main
 		if ( is_array( $term_or_id ) )
 			$term_or_id = $term_or_id[0];
 
-		if ( ! $term = Taxonomy::getTerm( $term_or_id, $taxonomy ) )
+		if ( ! $term = Term::get( $term_or_id, $taxonomy ) )
 			return '';
 
 		$args = self::atts( [
@@ -147,7 +148,7 @@ class ShortCode extends Main
 	// term as an item on the list
 	public static function termItem( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
-		if ( ! $term = Taxonomy::getTerm( $term ) )
+		if ( ! $term = Term::get( $term ) )
 			return $fallback;
 
 		$args = self::atts( [
@@ -230,7 +231,7 @@ class ShortCode extends Main
 	// term as an image on the list
 	public static function termImage( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
-		if ( ! $term = Taxonomy::getTerm( $term ) )
+		if ( ! $term = Term::get( $term ) )
 			return $fallback;
 
 		$args = self::atts( [

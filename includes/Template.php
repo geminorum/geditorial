@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Strings;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 
 class Template extends Main
 {
@@ -19,14 +20,14 @@ class Template extends Main
 
 	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '' )
 	{
-		if ( ! $term = Taxonomy::getTerm( $term_id, $taxonomy ) )
+		if ( ! $term = Term::get( $term_id, $taxonomy ) )
 			return FALSE;
 
 		if ( ! $term_image_id = get_term_meta( $term->term_id, 'image', TRUE ) )
 			return FALSE;
 
 		if ( is_null( $size ) )
-			$size = Media::getAttachmentImageDefaultSize( NULL, Taxonomy::getTermTaxonomy( $term, NULL ) );
+			$size = Media::getAttachmentImageDefaultSize( NULL, Term::taxonomy( $term ) ?: NULL );
 
 		if ( ! $image = image_downsize( $term_image_id, $size ) )
 			return FALSE;
@@ -115,7 +116,7 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'];
 
-		if ( ! $term = Taxonomy::getTerm( $args['id'], $args['taxonomy'] ) )
+		if ( ! $term = Term::get( $args['id'], $args['taxonomy'] ) )
 			return $args['default'];
 
 		$args['id']       = $term->term_id;
@@ -201,7 +202,7 @@ class Template extends Main
 		if ( FALSE === $args['id'] )
 			return $args['default'];
 
-		if ( ! $term = Taxonomy::getTerm( $args['id'], $args['taxonomy'] ) )
+		if ( ! $term = Term::get( $args['id'], $args['taxonomy'] ) )
 			return $args['default'];
 
 		$args['id']       = $term->term_id;
@@ -463,7 +464,7 @@ class Template extends Main
 	public static function getTermField( $field = 'name', $term = NULL, $taxonomy = '', $default = '' )
 	{
 		if ( is_null( $term ) )
-			$term = Taxonomy::getTerm( $term, $taxonomy );
+			$term = Term::get( $term, $taxonomy );
 
 		if ( ! $term )
 			return $default;

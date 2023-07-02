@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\Strings;
 
 class Uncategorized extends gEditorial\Module
@@ -562,7 +563,7 @@ class Uncategorized extends gEditorial\Module
 			return [];
 
 		$object = Taxonomy::object( $taxonomy );
-		$term   = Taxonomy::getTerm( $default, $taxonomy );
+		$term   = Term::get( $default, $taxonomy );
 
 		return [ $this->key => vsprintf( '<a href="%1$s"%2$s>%3$s <span class="count">(%4$s)</span></a>', [
 

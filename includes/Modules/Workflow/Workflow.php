@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\Color;
 use geminorum\gEditorial\Core\L10n;
@@ -13,11 +14,12 @@ use geminorum\gEditorial\Core\Number;
 use geminorum\gEditorial\Core\WordPress;
 use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\User;
 
 class Workflow extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 
 	private $statuses = [];
 
@@ -290,7 +292,7 @@ class Workflow extends gEditorial\Module
 
 		foreach ( $query->query( $args ) as $term ) {
 
-			$metas = Taxonomy::getTermMeta( $term, [
+			$metas = Term::getMeta( $term, [
 				'order'     => '',
 				'color'     => '',
 				'posttype'  => '',

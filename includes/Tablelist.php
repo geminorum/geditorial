@@ -8,6 +8,7 @@ use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Post;
 use geminorum\gEditorial\WordPress\PostType;
 use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress\Term;
 use geminorum\gEditorial\WordPress\Status;
 
 class Tablelist extends Main
@@ -418,7 +419,7 @@ class Tablelist extends Main
 			'title'    => $title ?: _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $description ) {
 
-				if ( ! $term = Taxonomy::getTerm( $row ) )
+				if ( ! $term = Term::get( $row ) )
 					return Plugin::na( FALSE );
 
 				$html = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
@@ -438,7 +439,7 @@ class Tablelist extends Main
 	// TODO: check if taxonomy is viewable
 	public static function getTermRowActions( $row, $actions = NULL )
 	{
-		if ( ! $term = Taxonomy::getTerm( $row ) )
+		if ( ! $term = Term::get( $row ) )
 			return [];
 
 		if ( is_null( $actions ) )
