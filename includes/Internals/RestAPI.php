@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait RestAPI
@@ -99,7 +100,7 @@ trait RestAPI
 			return TRUE;
 
 		if ( ! current_user_can( 'read' ) && ! WordPress\User::isSuperAdmin() )
-			return $this->restapi_get_error_rest_forbidden();
+			return Services\RestAPI::getErrorForbidden();
 
 		return TRUE;
 	}

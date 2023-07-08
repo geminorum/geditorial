@@ -26,12 +26,14 @@ trait RawImports
 			'csv'  => 'text/csv',
 			'json' => 'application/json',
 			'xml'  => 'application/xml',
+			'php'  => 'application/x-httpd-php',
 		] );
 
 		switch( $filetype['ext'] ) {
 			case 'csv' : return Helper::parseCSV( $this->get_imports_datafile() );
 			case 'json': return Helper::parseJSON( $this->get_imports_datafile() );
 			case 'xml' : return Helper::parseXML( $this->get_imports_datafile() );
+			case 'php' : return Core\File::requireData( $this->get_imports_datafile(), [] );
 		}
 
 		return FALSE;

@@ -6711,16 +6711,4 @@ class Module extends WordPress\Module
 	{
 		return $this->process_disabled[$context] = FALSE;
 	}
-
-	// NOTE: used by multiple internals
-	protected function restapi_get_error_rest_forbidden()
-	{
-		return new \WP_Error(
-			'rest_forbidden',
-			esc_html_x( 'OMG you can not view private data.', 'Error: Rest Forbidden', 'geditorial' ),
-			[
-				'status' => 401,
-			]
-		);
-	}
 }

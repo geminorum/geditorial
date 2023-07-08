@@ -9,11 +9,6 @@ class RestAPI extends Main
 
 	const BASE = 'geditorial';
 
-	public static function setup()
-	{
-		// add_action( 'updated_post_meta', [ __CLASS__, 'updated_post_meta' ], 9, 4 );
-	}
-
 	public static function getErrorForbidden( $code = 'rest_forbidden', $status = 401 )
 	{
 		return new \WP_Error(
