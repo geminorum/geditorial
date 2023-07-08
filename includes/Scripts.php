@@ -15,6 +15,46 @@ class Scripts extends WordPress\Main
 		echo Core\HTML::tag( 'noscript', '<strong>'._x( 'We\'re sorry but this application doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'Scripts: No Script Message', 'geditorial' ).'</strong>' );
 	}
 
+	public static function renderAppMounter( $name, $module = FALSE, $html = NULL )
+	{
+		if ( is_null( $html ) )
+			$html = Plugin::moment();
+
+		echo Core\HTML::tag( 'div', [
+			'id'    => sprintf( '%s-app-%s', static::BASE, $name ),
+			'class' => [
+				'-wrap',
+				static::BASE.'-wrap',
+				( $module ? ( '-'.$module ) : '' ),
+				'editorial-app',
+				'hide-if-no-js',
+			],
+		], $html ?: '' );
+	}
+
+	public static function enqueueApp( $name, $dependencies = [], $version = NULL, $path = 'assets/apps', $base_path = GEDITORIAL_DIR, $base_url = GEDITORIAL_URL )
+	{
+		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $name ) );
+
+		$script = sprintf( '%s%s/%s/build/main.js', $base_url, $path, $name );
+		$style  = sprintf( '%s%s/%s/build/main.css', $base_url, $path, $name );
+		$asset  = sprintf( '%s%s/%s/build/main.asset.php', $base_path, $path, $name );
+
+		$config = is_readable( $asset )
+			? require( $asset )
+			: [
+				'dependencies' => [],
+				'version'      => $version ?? GEDITORIAL_VERSION,
+			];
+
+		wp_enqueue_style( $handle, $style, [], $config['version'], 'all' );
+		wp_style_add_data( $handle, 'rtl', 'replace' );
+
+		wp_enqueue_script( $handle, $script, Core\Arraay::prepString( $config['dependencies'], $dependencies ), $config['version'], TRUE );
+
+		return $handle;
+	}
+
 	public static function enqueueStyle( $asset, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/css', $media = 'all' )
 	{
 		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
