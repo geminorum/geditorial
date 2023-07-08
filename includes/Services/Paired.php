@@ -14,6 +14,8 @@ class Paired extends Main
 
 	const PAIRED_TAXONOMY_PROP = 'paired_taxonomy';
 	const PAIRED_POSTTYPE_PROP = 'paired_posttype';
+	const PAIRED_REST_FROM     = 'paired-from-items';
+	const PAIRED_REST_TO       = 'paired-to-items';
 
 	// public static function setup() {}
 

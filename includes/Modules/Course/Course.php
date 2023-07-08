@@ -13,7 +13,7 @@ use geminorum\gEditorial\WordPress;
 
 class Course extends gEditorial\Module
 {
-	use Internals\Paired;
+	use Internals\PairedAdmin;
 	use Internals\CoreTemplate;
 
 	public static function module()

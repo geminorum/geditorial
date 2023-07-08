@@ -91,17 +91,6 @@ trait RestAPI
 		);
 	}
 
-	protected function restapi_get_error_rest_forbidden()
-	{
-		return new \WP_Error(
-			'rest_forbidden',
-			esc_html_x( 'OMG you can not view private data.', 'Error: Rest Forbidden', 'geditorial' ),
-			[
-				'status' => 401,
-			]
-		);
-	}
-
 	// 'Authorization: Basic '. base64_encode("user:password")
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/#permissions-callback
 	public function restapi_default_permission_callback( $request )

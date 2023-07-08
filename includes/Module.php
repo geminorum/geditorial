@@ -1970,6 +1970,7 @@ class Module extends WordPress\Module
 				'prep'        => NULL, // callback
 				'pattern'     => NULL, // HTML5 input pattern
 				'default'     => NULL, // currently only on rest
+				'datatype'    => NULL, // DataType Class
 				'icon'        => 'smiley',
 				'type'        => 'text',
 				'context'     => 'mainbox', // OLD: 'main'
@@ -2209,13 +2210,18 @@ class Module extends WordPress\Module
 		return post_type_supports( $this->constant( $constant ), $type.'_fields' );
 	}
 
+	// NOTE: fallback will merge if is an array
 	public function get_strings( $subgroup, $group = 'titles', $fallback = [] )
 	{
 		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
-			return $this->strings[$group][$subgroup];
+			return is_array( $fallback )
+				? array_merge( $fallback, $this->strings[$group][$subgroup] )
+				: $this->strings[$group][$subgroup];
 
 		if ( isset( $this->strings[$group] ) )
-			return $this->strings[$group];
+			return is_array( $fallback )
+				? array_merge( $fallback, $this->strings[$group] )
+				: $this->strings[$group];
 
 		return $fallback;
 	}
@@ -3337,7 +3343,7 @@ class Module extends WordPress\Module
 		if ( $primary && ! array_key_exists( 'primary_taxonomy', $extra ) )
 			$extra['primary_taxonomy'] = $this->constant( $primary );
 
-		return $this->register_posttype( $posttype, array_merge( [
+		$object = $this->register_posttype( $posttype, array_merge( [
 			Services\Paired::PAIRED_TAXONOMY_PROP => $this->_paired,
 			'hierarchical'                        => TRUE,
 			'show_in_nav_menus'                   => TRUE,
@@ -3347,6 +3353,14 @@ class Module extends WordPress\Module
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
 		], $extra ) );
+
+		if ( self::isError( $object ) )
+			return $object;
+
+		if ( method_exists( $this, 'paired_register_rest_route' ) )
+			$this->paired_register_rest_route( $object );
+
+		return $object;
 	}
 
 	protected function _hook_post_updated_messages( $constant )
@@ -3827,7 +3841,7 @@ class Module extends WordPress\Module
 		return $handle;
 	}
 
-	// WARNING: every script must have a .min copy
+	// NOTE: each script must have a `.min` version
 	public function enqueue_asset_js( $args = [], $name = NULL, $deps = [ 'jquery' ], $key = NULL, $handle = NULL )
 	{
 		if ( is_null( $key ) )
@@ -4477,25 +4491,8 @@ class Module extends WordPress\Module
 		if ( $this->role_can( 'export', NULL, TRUE ) && method_exists( $this, 'exports_get_export_buttons' ) )
 			$html.= $this->exports_get_export_buttons( $post, $context );
 
-		if ( $this->role_can( 'import', NULL, TRUE ) ) {
-
-			/* translators: %s: icon markup */
-			$label = sprintf( _x( '%s Upload', 'Module: Exports: Button Label', 'geditorial' ), Helper::getIcon( 'upload' ) );
-
-			$args = [
-				'ref'      => $post->ID,
-				'target'   => 'paired',
-				'context'  => $context,
-				'noheader' => 1
-			];
-
-			if ( $link = $this->get_adminpage_url( TRUE, $args, 'importitems' ) )
-				$html.= Core\HTML::tag( 'a', [
-					'href'  => $link,
-					'class' => [ 'button', 'button-small', '-button', '-button-icon', '-importbutton', 'thickbox' ],
-					'title' => _x( 'Import Items CSV File', 'Module: Exports: Button Title', 'geditorial' ),
-				], $label );
-		}
+		if ( $this->_paired && $this->role_can( 'import', NULL, TRUE ) && method_exists( $this, 'pairedimports_get_import_buttons' ) )
+			$html.= $this->pairedimports_get_import_buttons( $post, $context );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
@@ -6713,5 +6710,17 @@ class Module extends WordPress\Module
 	public function enable_process( $context = 'import' )
 	{
 		return $this->process_disabled[$context] = FALSE;
+	}
+
+	// NOTE: used by multiple internals
+	protected function restapi_get_error_rest_forbidden()
+	{
+		return new \WP_Error(
+			'rest_forbidden',
+			esc_html_x( 'OMG you can not view private data.', 'Error: Rest Forbidden', 'geditorial' ),
+			[
+				'status' => 401,
+			]
+		);
 	}
 }

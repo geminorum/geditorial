@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\WordPress\Post;
@@ -171,16 +172,9 @@ class SelectSingle extends Main
 			$args['name__like'] = trim( $queried['search'] );
 
 		$query = new \WP_Term_Query();
-		$terms = [];
-
-		foreach ( $query->query( $args ) as $term_id => $term_name )
-			$terms[] = (object) [
-				'id'   => $term_id,
-				'text' => $term_name,
-			];
 
 		return [
-			'results'    => $terms,
+			'results'    => Core\Arraay::toObjectForJS( $query->query( $args ), 'id', 'text' ),
 			'pagination' => [
 				'more' => ( $query->found_posts - $args['number'] ) > 0
 			],

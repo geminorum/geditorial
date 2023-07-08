@@ -12,7 +12,7 @@ use geminorum\gEditorial\WordPress;
 
 class Collect extends gEditorial\Module
 {
-	use Internals\Paired;
+	use Internals\PairedAdmin;
 
 	public static function module()
 	{

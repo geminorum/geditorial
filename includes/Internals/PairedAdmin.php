@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-trait Paired
+trait PairedAdmin
 {
 
 	// TODO: add an advance version with modal for paired summary in `Missioned`/`Trained`/`Programmed`/`Meeted`
@@ -33,12 +33,7 @@ trait Paired
 				if ( ! $post = WordPress\Post::get( $post_id ) )
 					continue;
 
-				$suffix = Core\HTML::link(
-					WordPress\Post::title( $post ),
-					WordPress\Post::link( $post )
-				);
-
-				echo $before.WordPress\PostType::getParentTitles( $post, $suffix, TRUE ).$after;
+				echo $before.WordPress\PostType::fullTitle( $post, TRUE ).$after;
 			}
 
 		}, $priority, 1 );

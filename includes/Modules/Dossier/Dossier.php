@@ -12,8 +12,9 @@ use geminorum\gEditorial\WordPress;
 
 class Dossier extends gEditorial\Module
 {
-	use Internals\Paired;
 	use Internals\CoreTemplate;
+	use Internals\PairedAdmin;
+	use Internals\PairedImports;
 
 	public static function module()
 	{

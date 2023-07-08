@@ -1,6 +1,6 @@
 <?php namespace geminorum\gEditorial\Misc;
 
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\WordPress;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -34,7 +34,7 @@ class WalkerPageDropdown extends \Walker_PageDropdown
 		}
 
 		if ( ! empty( $args['title_with_parent'] ) )
-			$title = PostType::getParentTitles( $page, $title );
+			$title = WordPress\Post::getParentTitles( $page, $title );
 
 		if ( '' === $title )
 			$title = sprintf( __( '#%d (no title)' ), $page->ID );

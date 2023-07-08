@@ -12,7 +12,7 @@ use geminorum\gEditorial\WordPress;
 
 class Magazine extends gEditorial\Module
 {
-	use Internals\Paired;
+	use Internals\PairedAdmin;
 	use Internals\CoreTemplate;
 
 	public static function module()

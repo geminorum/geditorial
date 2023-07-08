@@ -566,7 +566,7 @@ class Template extends WordPress\Main
 	}
 
 	// NOTE: does not check for `access_view` arg
-	public static function getMetaFieldRaw( $field_key, $post_id, $module = 'meta', $check = FALSE )
+	public static function getMetaFieldRaw( $field_key, $post_id, $module = 'meta', $check = FALSE, $default = FALSE )
 	{
 		if ( $check ) {
 
@@ -579,9 +579,9 @@ class Template extends WordPress\Main
 			$post_id = $post->ID;
 		}
 
-		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key );
+		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default );
 
-		return apply_filters( static::BASE.'_get_meta_field', $meta, $field_key, $post_id, $module );
+		return apply_filters( static::BASE.'_get_meta_field', $meta, $field_key, $post_id, $module, $default );
 	}
 
 	/**
