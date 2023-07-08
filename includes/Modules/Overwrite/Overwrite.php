@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
@@ -292,27 +293,46 @@ class Overwrite extends gEditorial\Module
 
 	private function _overwrite_posttype_labels()
 	{
+		$keeps = [
+			'column_title',
+			'metabox_title',
+			'author_label',
+			'excerpt_label',
+		];
+
 		foreach ( $this->posttypes() as $posttype )
-			add_filter( "post_type_labels_{$posttype}", function( $labels ) use ( $posttype ) {
+			add_filter( "post_type_labels_{$posttype}", function( $labels ) use ( $posttype, $keeps ) {
+
+				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
+				$customs['menu_name'] = $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name );
+
 				return (object) Helper::generatePostTypeLabels( [
 					'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype.'_plural', $labels->name ),
 					'singular' => $this->get_setting_fallback( 'posttype_'.$posttype.'_singular', $labels->singular_name ),
-				], $this->get_setting_fallback( 'posttype_'.$posttype.'_featured', $labels->featured_image ), [
-					'menu_name' => $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name ),
-				], $posttype );
+				], $this->get_setting_fallback( 'posttype_'.$posttype.'_featured', $labels->featured_image ), $customs, $posttype );
+
 			}, 9 );
 	}
 
 	private function _overwrite_taxonomy_labels()
 	{
+		$keeps = [
+			'column_title',
+			'metabox_title',
+			'desc_field_title',
+			'uncategorized',
+		];
+
 		foreach ( $this->taxonomies() as $taxonomy )
-			add_filter( "taxonomy_labels_{$taxonomy}", function( $labels ) use ( $taxonomy ) {
+			add_filter( "taxonomy_labels_{$taxonomy}", function( $labels ) use ( $taxonomy, $keeps ) {
+
+				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
+				$customs['menu_name'] = $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_menuname', $labels->menu_name );
+
 				return (object) Helper::generateTaxonomyLabels( [
 					'plural'   => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_plural', $labels->name ),
 					'singular' => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_singular', $labels->singular_name ),
-				], [
-					'menu_name' => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_menuname', $labels->menu_name ),
-				], $taxonomy );
+				], $customs, $taxonomy );
 			}, 9 );
 	}
 }
