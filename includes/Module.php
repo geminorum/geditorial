@@ -4159,12 +4159,10 @@ class Module extends WordPress\Module
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
-	protected function _hook_term_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default' )
+	protected function _hook_term_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default', $extra = [] )
 	{
 		if ( is_null( $context ) )
 			$context = 'supportedbox';
-
-		$this->class_metabox( $screen, $context );
 
 		$callback = function( $object, $box ) use ( $context, $screen ) {
 
@@ -4190,22 +4188,31 @@ class Module extends WordPress\Module
 		$default = _x( 'For &ldquo;%1$s&rdquo;', 'Module: Metabox Title: `supportedbox_title`', 'geditorial' );
 		$title   = $this->get_string( sprintf( '%s_title', $context ), $screen->taxonomy, 'metabox', $default );
 		$name    = Helper::getTaxonomyLabel( $screen->taxonomy, 'singular_name' );
+		$metabox = $this->classs( $context );
 
-		add_meta_box( $this->classs( $context ),
+		add_meta_box(
+			$metabox,
 			sprintf( $title, WordPress\Term::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
 			$metabox_context,
 			$metabox_priority
 		);
+
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+			return array_merge( $classes, [
+				$this->base.'-wrap',
+				'-admin-postbox',
+				'-'.$this->key,
+				'-'.$this->key.'-'.$context,
+			], (array) $extra );
+		} );
 	}
 
-	protected function _hook_general_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default' )
+	protected function _hook_general_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default', $extra = [] )
 	{
 		if ( is_null( $context ) )
 			$context = 'supportedbox';
-
-		$this->class_metabox( $screen, $context );
 
 		$callback = function( $object, $box ) use ( $context, $screen ) {
 
@@ -4231,14 +4238,25 @@ class Module extends WordPress\Module
 		$default = _x( 'For &ldquo;%1$s&rdquo;', 'Module: Metabox Title: `supportedbox_title`', 'geditorial' );
 		$title   = $this->get_string( sprintf( '%s_title', $context ), $screen->post_type, 'metabox', $default );
 		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
+		$metabox = $this->classs( $context );
 
-		add_meta_box( $this->classs( $context ),
+		add_meta_box(
+			$metabox,
 			sprintf( $title, WordPress\Post::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
 			$metabox_context,
 			$metabox_priority
 		);
+
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+			return array_merge( $classes, [
+				$this->base.'-wrap',
+				'-admin-postbox',
+				'-'.$this->key,
+				'-'.$this->key.'-'.$context,
+			], (array) $extra );
+		} );
 	}
 
 	// DEFAULT METHOD
@@ -4248,7 +4266,7 @@ class Module extends WordPress\Module
 			$context = 'supportedbox';
 	}
 
-	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side' )
+	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
 	{
 		if ( is_null( $context ) )
 			$context = 'mainbox';
@@ -4260,8 +4278,6 @@ class Module extends WordPress\Module
 			$this->filter_false_module( 'tweaks', 'metabox_parent' );
 			remove_meta_box( 'pageparentdiv', $screen, 'side' );
 		}
-
-		$this->class_metabox( $screen, $context );
 
 		$callback = function( $post, $box ) use ( $context ) {
 
@@ -4285,16 +4301,28 @@ class Module extends WordPress\Module
 			echo '</div>';
 		};
 
-		add_meta_box( $this->classs( $context ),
+		$metabox = $this->classs( $context );
+
+		add_meta_box(
+			$metabox,
 			$this->get_meta_box_title_posttype( $constant_key ),
 			$callback,
 			$screen,
 			$metabox_context,
 			'default'
 		);
+
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+			return array_merge( $classes, [
+				$this->base.'-wrap',
+				'-admin-postbox',
+				'-'.$this->key,
+				'-'.$this->key.'-'.$context,
+			], (array) $extra );
+		} );
 	}
 
-	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side' )
+	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4314,8 +4342,6 @@ class Module extends WordPress\Module
 			$this->filter_false_module( 'tweaks', 'metabox_parent' );
 			remove_meta_box( 'pageparentdiv', $screen, 'side' );
 		}
-
-		$this->class_metabox( $screen, $context );
 
 		$callback = function( $post, $box ) use ( $constants, $context ) {
 
@@ -4339,13 +4365,25 @@ class Module extends WordPress\Module
 			echo '</div>';
 		};
 
-		add_meta_box( $this->classs( $context ),
+		$metabox = $this->classs( $context );
+
+		add_meta_box(
+			$metabox,
 			$this->get_meta_box_title( $constants[0], FALSE ),
 			$callback,
 			$screen,
 			$metabox_context,
 			'high'
 		);
+
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+			return array_merge( $classes, [
+				$this->base.'-wrap',
+				'-admin-postbox',
+				'-'.$this->key,
+				'-'.$this->key.'-'.$context,
+			], (array) $extra );
+		} );
 	}
 
 	// DEFAULT METHOD
@@ -4355,7 +4393,7 @@ class Module extends WordPress\Module
 		MetaBox::fieldPostParent( $object );
 	}
 
-	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = 'advanced' )
+	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = 'advanced', $extra = [] )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4367,8 +4405,6 @@ class Module extends WordPress\Module
 
 		if ( is_null( $context ) )
 			$context = 'listbox';
-
-		$this->class_metabox( $screen, $context );
 
 		$callback = function( $object, $box ) use ( $constants, $context, $screen ) {
 
@@ -4405,8 +4441,10 @@ class Module extends WordPress\Module
 		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Module: Metabox Title: `listbox_title`', 'geditorial' );
 		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
 		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
+		$metabox = $this->classs( $context );
 
-		add_meta_box( $this->classs( $context ),
+		add_meta_box(
+			$metabox,
 			sprintf( $title, WordPress\Post::title( NULL, $name ), $name ),
 			$callback,
 			$screen,
@@ -4414,8 +4452,17 @@ class Module extends WordPress\Module
 			'low'
 		);
 
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+			return array_merge( $classes, [
+				$this->base.'-wrap',
+				'-admin-postbox',
+				'-'.$this->key,
+				'-'.$this->key.'-'.$context,
+			], (array) $extra );
+		} );
+
 		if ( $this->role_can( 'import', NULL, TRUE ) )
-			Scripts::enqueueThickBox();
+			Scripts::enqueueColorBox();
 	}
 
 	// DEFAULT METHOD
@@ -4453,7 +4500,7 @@ class Module extends WordPress\Module
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 
-	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = NULL )
+	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = NULL, $extra = [] )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -4468,8 +4515,6 @@ class Module extends WordPress\Module
 
 		if ( is_null( $context ) )
 			$context = 'pairedbox';
-
-		$this->class_metabox( $screen, $context );
 
 		$action   = sprintf( 'render_%s_metabox', $context );
 		$callback = function( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
@@ -4520,12 +4565,24 @@ class Module extends WordPress\Module
 			echo '</div>';
 		};
 
-		add_meta_box( $this->classs( $context ),
+		$metabox = $this->classs( $context );
+
+		add_meta_box(
+			$metabox,
 			$this->get_meta_box_title_posttype( $constants[0] ),
 			$callback,
 			$screen,
 			'side'
 		);
+
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+			return array_merge( $classes, [
+				$this->base.'-wrap',
+				'-admin-postbox',
+				'-'.$this->key,
+				'-'.$this->key.'-'.$context,
+			], (array) $extra );
+		} );
 
 		add_action( $this->hook( $action ), function( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
 
