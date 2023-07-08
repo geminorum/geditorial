@@ -10,6 +10,11 @@ class Scripts extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function noScriptMessage()
+	{
+		echo Core\HTML::tag( 'noscript', '<strong>'._x( 'We\'re sorry but this application doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'Scripts: No Script Message', 'geditorial' ).'</strong>' );
+	}
+
 	public static function enqueueStyle( $asset, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/css', $media = 'all' )
 	{
 		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
