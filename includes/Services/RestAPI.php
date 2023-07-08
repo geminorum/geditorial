@@ -1,0 +1,92 @@
+<?php namespace geminorum\gEditorial\Services;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\WordPress\Main;
+
+class RestAPI extends Main
+{
+
+	const BASE = 'geditorial';
+
+	public static function setup()
+	{
+		// add_action( 'updated_post_meta', [ __CLASS__, 'updated_post_meta' ], 9, 4 );
+	}
+
+	public static function getErrorForbidden( $code = 'rest_forbidden', $status = 401 )
+	{
+		return new \WP_Error(
+			$code,
+			esc_html_x( 'OMG you can not view private data.', 'Service: RestAPI: Error Forbidden', 'geditorial' ),
+			[
+				'status' => $status,
+			]
+		);
+	}
+
+	public static function getErrorArgNotEmpty( $key = NULL, $data = [], $code = 'rest_invalid_param', $status = NULL )
+	{
+		$message = is_null( $key )
+			? _x( 'The argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' )
+			/* translators: %s: argument key */
+			: sprintf( _x( 'The `%s` argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' ), $key );
+
+		if ( ! is_null( $status ) )
+			$data['status'] = $status;
+
+		return new \WP_Error( $code, $message, $data );
+	}
+
+	public static function defineArgument_postid( $description = NULL, $required = TRUE )
+	{
+		return [
+			'required'    => (bool) $required,
+			'type'        => 'integer',
+			'description' => $description ?? esc_html_x( 'The id of the post.', 'Service: RestAPI: Arg Description', 'geditorial' ),
+
+			'validate_callback' => [ __CLASS__, 'validateArgument_postid' ],
+		];
+	}
+
+	public static function validateArgument_postid( $param, $request, $key )
+	{
+		if ( empty( $param ) || (int) $param <= 0 )
+			return self::getErrorArgNotEmpty( $key );
+
+		if ( ! $post = get_post( (int) $param ) )
+			return new \WP_Error(
+				'rest_invalid_param',
+				/* translators: %s: argument key */
+				sprintf( _x( 'The `%s` argument must be a post.', 'Error', 'geditorial' ), $key )
+			);
+
+		return TRUE;
+	}
+
+	public static function defineArgument_commentid( $description = NULL, $required = TRUE )
+	{
+		return [
+			'required'    => (bool) $required,
+			'type'        => 'integer',
+			'description' => $description ?? esc_html_x( 'The id of the comment.', 'Service: RestAPI: Arg Description', 'geditorial' ),
+
+			'validate_callback' => [ __CLASS__, 'validateArgument_commentid' ],
+		];
+	}
+
+	public static function validateArgument_commentid( $param, $request, $key )
+	{
+		if ( empty( $param ) || (int) $param <= 0 )
+			return self::getErrorArgNotEmpty( $key );
+
+		if ( ! $comment = get_comment( (int) $param ) )
+			return new \WP_Error(
+				'rest_invalid_param',
+				/* translators: %s: argument key */
+				sprintf( _x( 'The `%s` argument must be a comment.', 'Error', 'geditorial' ), $key )
+			);
+
+		return TRUE;
+	}
+}

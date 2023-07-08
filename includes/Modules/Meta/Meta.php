@@ -431,6 +431,8 @@ class Meta extends gEditorial\Module
 
 	protected function register_meta_fields()
 	{
+		$this->filter( 'paired_rest_prepped_post', 3, 9, FALSE, $this->base );
+
 		foreach ( $this->posttypes() as $posttype ) {
 
 			/**
@@ -514,8 +516,26 @@ class Meta extends gEditorial\Module
 
 	public function attribute_get_callback( $post, $attr, $request, $object_type )
 	{
+		return $this->_get_rest_meta_rendered( (int) $post['id'] );
+	}
+
+	public function paired_rest_prepped_post( $prepped, $post, $parent )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $prepped;
+
+		return array_merge( $prepped, [
+			$this->constant( 'restapi_attribute' ) => $this->_get_rest_meta_rendered( $post, TRUE ),
+		] );
+	}
+
+	private function _get_rest_meta_rendered( $post, $raw = FALSE )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
 		$list   = [];
-		$fields = $this->get_posttype_fields( $post['type'] );
+		$fields = $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
 
@@ -523,19 +543,25 @@ class Meta extends gEditorial\Module
 				continue;
 
 			$meta = ModuleTemplate::getMetaField( $field, [
-				'id'       => $post['id'],
+				'id'       => $post->ID,
 				'default'  => $args['default'],
 				'noaccess' => FALSE,
 			] );
 
 			// if no access or default is FALSE
-			if ( FALSE !== $meta || $meta === $args['default'] )
-				$list[] = [
-					'name'     => $args['rest'],
-					'title'    => $args['title'],
-					'rendered' => $meta,
-					// 'value'    => ModuleTemplate::getMetaFieldRaw( $field, $post['id'], $this->key ),
-				];
+			if ( FALSE === $meta && $meta !== $args['default'] )
+				continue;
+
+			$row = [
+				'name'     => $args['rest'],
+				'title'    => $args['title'],
+				'rendered' => $meta,
+			];
+
+			if ( $raw )
+				$row['value'] = ModuleTemplate::getMetaFieldRaw( $field, $post->ID, $this->key, FALSE, NULL );
+
+			$list[] = $row;
 		}
 
 		return $list;
