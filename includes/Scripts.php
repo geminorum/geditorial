@@ -118,24 +118,27 @@ class Scripts extends WordPress\Main
 			add_thickbox();
 	}
 
-	// @REF: https://www.jacklmoore.com/colorbox/
-	// @REF: https://github.com/jackmoore/colorbox
-	public static function registerColorBox( $ver = '1.6.4' )
-	{
-		$handle = 'jquery-colorbox';
-
-		wp_register_style( $handle, GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
-		wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
-
-		return $handle;
-	}
-
 	public static function enqueueColorBox()
 	{
+		return self::enqueue( 'all.colorbox', [ 'jquery', self::pkgColorBox( TRUE ) ] );
+	}
+
+	// @REF: https://www.jacklmoore.com/colorbox/
+	// @REF: https://github.com/jackmoore/colorbox
+	public static function pkgColorBox( $enqueue = FALSE, $ver = '1.6.4' )
+	{
 		$handle = 'jquery-colorbox';
 
-		wp_enqueue_style( $handle );
-		wp_enqueue_script( $handle );
+		if ( $enqueue ) {
+
+			wp_enqueue_style( $handle, GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
+			wp_enqueue_script( $handle, GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
+
+		} else {
+
+			wp_register_style( $handle, GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
+			wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
+		}
 
 		return $handle;
 	}
