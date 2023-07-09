@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Badges extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\DashboardSummary;
 

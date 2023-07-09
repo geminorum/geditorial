@@ -6,10 +6,12 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Quotation extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 
 	public static function module()
 	{

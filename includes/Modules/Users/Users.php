@@ -15,6 +15,7 @@ use geminorum\gEditorial\WordPress;
 
 class Users extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 
 	protected $caps = [

@@ -12,9 +12,10 @@ use geminorum\gEditorial\WordPress;
 
 class Lingo extends gEditorial\Module
 {
-	use Internals\RawImports;
-	use Internals\CoreToolBox;
+	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreToolBox;
+	use Internals\RawImports;
 
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafile   = 'languages-20230325.json';

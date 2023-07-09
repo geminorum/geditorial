@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Entry extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 	use Internals\CoreTemplate;
 
 	protected $priority_template_include = 9;

@@ -4,12 +4,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 
 class Tube extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 
 	private $_wp_video_shortcode_attr = '';
 

@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
@@ -14,6 +15,7 @@ use geminorum\gEditorial\WordPress;
 
 class Modified extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 
 	protected $disable_no_posttypes = TRUE;
 

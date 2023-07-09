@@ -3,10 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
 
 class Gallery extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 
 	public static function module()
 	{

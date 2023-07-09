@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress;
 
 class Collect extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\PairedAdmin;
 

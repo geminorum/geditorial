@@ -19,6 +19,7 @@ use geminorum\gEditorial\WordPress\User;
 class Audit extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
+	use Internals\CoreDashboard;
 	use Internals\DashboardSummary;
 
 	protected $disable_no_posttypes = TRUE;

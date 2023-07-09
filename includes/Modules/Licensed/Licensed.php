@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 class Licensed extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\DashboardSummary;
 

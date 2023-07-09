@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 
 class Book extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 	use Internals\CoreTemplate;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;

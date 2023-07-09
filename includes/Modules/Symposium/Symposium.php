@@ -7,6 +7,7 @@ use geminorum\gEditorial\Internals;
 
 class Symposium extends gEditorial\Module
 {
+	use Internals\CoreDashboard;
 	use Internals\CoreTemplate;
 
 	public static function module()
