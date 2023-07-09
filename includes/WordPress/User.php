@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\Arraay;
 
 class User extends Core\Base
 {
@@ -16,7 +15,7 @@ class User extends Core\Base
 			'fields'  => ( $all_fields ? 'all_with_meta' : 'all' ),
 		), $extra ) );
 
-		return Arraay::reKey( $users, $rekey );
+		return Core\Arraay::reKey( $users, $rekey );
 	}
 
 	public static function user( $field, $key = FALSE )

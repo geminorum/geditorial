@@ -629,18 +629,10 @@ class PostType extends Core\Base
 		return Post::get( $post, $output, $filter );
 	}
 
+	// DEPRECATED: use `Post::getRestRoute()`
 	public static function getRestRoute( $post = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
-			return FALSE;
-
-		if ( ! $object = self::object( $post ) )
-			return FALSE;
-
-		if ( ! $object->show_in_rest )
-			return FALSE;
-
-		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $post->ID );
+		return Post::getRestRoute( $post );
 	}
 
 	// DEPRECATED: use `Post::link()`
@@ -655,40 +647,10 @@ class PostType extends Core\Base
 		return Post::title( $post, $fallback, $filter );
 	}
 
-	// NOTE: parent post type can be diffrenet
+	// DEPRECATED: use `Post::getParentTitles()`
 	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
-			return $suffix;
-
-		if ( is_null( $separator ) )
-			$separator = Core\HTML::rtl() ? ' &rsaquo; ' : ' &lsaquo; ';
-
-		$current = $post->ID;
-		$parents = [];
-		$parent  = TRUE;
-
-		while ( $parent ) {
-
-			$object = Post::get( (int) $current );
-			$link   = Post::link( $object );
-
-			if ( $object && $object->post_parent )
-				$parents[] = $linked && $link
-					? Core\HTML::link( Post::title( $object->post_parent ), $link )
-					: Post::title( $object->post_parent );
-
-			else
-				$parent = FALSE;
-
-			if ( $object )
-				$current = $object->post_parent;
-		}
-
-		if ( empty( $parents ) )
-			return $suffix;
-
-		return Strings::getJoined( array_reverse( $parents ), '', $suffix ? $separator.$suffix : '', '', $separator );
+		return Post::getParentTitles( $post, $suffix, $linked, $separator );
 	}
 
 	public static function getPrimaryTaxonomy( $posttype, $fallback = FALSE )

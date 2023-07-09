@@ -430,4 +430,11 @@ class File extends Base
 
 		exit;
 	}
+
+	public static function requireData( $path, $fallback = FALSE )
+	{
+		return is_readable( $path )
+			? require( $path )
+			: $fallback;
+	}
 }

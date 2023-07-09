@@ -226,4 +226,90 @@ class Post extends Core\Base
 			'comment_count'         => 0,
 		];
 	}
+
+	/**
+	 * Retrieves post rest route given a post ID or post object.
+	 *
+	 * @param  null|int|object $post
+	 * @return false|string $route
+	 */
+	public static function getRestRoute( $post = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		if ( ! $object = PostType::object( $post ) )
+			return FALSE;
+
+		if ( ! $object->show_in_rest )
+			return FALSE;
+
+		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $post->ID );
+	}
+
+	/**
+	 * Retrieves post full title given a post ID or post object.
+	 *
+	 * @param  null|int|object $post
+	 * @param  bool   $linked
+	 * @param  null|string $separator
+	 * @return string $title
+	 */
+	public static function fullTitle( $post, $linked = FALSE, $separator = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return '';
+
+		$title = self::title( $post );
+
+		if ( $linked )
+			$title = Core\HTML::link( $title, self::link( $post ) );
+
+		return self::getParentTitles( $post, $title, $linked, $separator );
+	}
+
+	/**
+	 * Retrieves post parent titles given a post ID or post object.
+	 * NOTE: parent post type can be diffrenet
+	 *
+	 * @param  null|int|object $post
+	 * @param  string $suffix
+	 * @param  bool   $linked
+	 * @param  null|string $separator
+	 * @return string $titles
+	 */
+	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return $suffix;
+
+		if ( is_null( $separator ) )
+			$separator = Core\HTML::rtl() ? ' &rsaquo; ' : ' &lsaquo; ';
+
+		$current = $post->ID;
+		$parents = [];
+		$parent  = TRUE;
+
+		while ( $parent ) {
+
+			$object = self::get( (int) $current );
+			$link   = self::link( $object );
+
+			if ( $object && $object->post_parent )
+				$parents[] = $linked && $link
+					? Core\HTML::link( self::title( $object->post_parent ), $link )
+					: self::title( $object->post_parent );
+
+			else
+				$parent = FALSE;
+
+			if ( $object )
+				$current = $object->post_parent;
+		}
+
+		if ( empty( $parents ) )
+			return $suffix;
+
+		return Strings::getJoined( array_reverse( $parents ), '', $suffix ? $separator.$suffix : '', '', $separator );
+	}
 }

@@ -3,8 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
 
 class Module extends Core\Base
 {
@@ -30,12 +28,12 @@ class Module extends Core\Base
 
 	protected static function sanitize_hook( $hook )
 	{
-		return Text::sanitizeHook( $hook );
+		return Core\Text::sanitizeHook( $hook );
 	}
 
 	protected static function sanitize_base( $base )
 	{
-		return Text::sanitizeBase( $base );
+		return Core\Text::sanitizeBase( $base );
 	}
 
 	protected function dotted()
@@ -93,7 +91,7 @@ class Module extends Core\Base
 
 	protected function stripprefix( $string, $key = NULL, $template = '_%s_' )
 	{
-		return Text::stripPrefix( $string, sprintf( $template, is_null( $key ) ? $this->key : $key ) );
+		return Core\Text::stripPrefix( $string, sprintf( $template, is_null( $key ) ? $this->key : $key ) );
 	}
 
 	protected function action( $hooks, $args = 1, $priority = 10, $suffix = FALSE, $base = FALSE )
@@ -416,12 +414,12 @@ class Module extends Core\Base
 	protected function wrap( $html, $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<div class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+			? '<div class="'.Core\HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
 				.( $id ? ' id="'.$id.'"' : '' )
 				.( $hide ? ' style="display:none"' : '' )
 				.'>'.$html.'</div>'
 
-			: '<span class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+			: '<span class="'.Core\HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
 				.( $id ? ' id="'.$id.'"' : '' )
 				.( $hide ? ' style="display:none"' : '' )
 				.'>'.$html.'</span>';
@@ -430,11 +428,11 @@ class Module extends Core\Base
 	protected function wrap_open( $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<div class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+			? '<div class="'.Core\HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
 				.( $id ? ' id="'.$id.'"' : '' )
 				.( $hide ? ' style="display:none"' : '' ).'>'
 
-			: '<span class="'.HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
+			: '<span class="'.Core\HTML::prepClass( '-wrap', $this->base.'-wrap', '-'.$this->key, $class ).'"'
 				.( $id ? ' id="'.$id.'"' : '' )
 				.( $hide ? ' style="display:none"' : '' ).'>';
 	}
@@ -442,18 +440,18 @@ class Module extends Core\Base
 	protected function wrap_open_buttons( $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		return $block
-			? '<p class="'.HTML::prepClass( 'submit', $this->base.'-wrap', '-wrap-buttons', '-'.$this->key, $class ).'"'
+			? '<p class="'.Core\HTML::prepClass( 'submit', $this->base.'-wrap', '-wrap-buttons', '-'.$this->key, $class ).'"'
 				.( $id ? ' id="'.$id.'"' : '' )
 				.( $hide ? ' style="display:none"' : '' ).'>'
 
-			: '<span class="'.HTML::prepClass( 'submit', $this->base.'-wrap', '-wrap-buttons', '-'.$this->key, $class ).'"'
+			: '<span class="'.Core\HTML::prepClass( 'submit', $this->base.'-wrap', '-wrap-buttons', '-'.$this->key, $class ).'"'
 				.( $id ? ' id="'.$id.'"' : '' )
 				.( $hide ? ' style="display:none"' : '' ).'>';
 	}
 
 	protected function wrap_open_row( $name = '', $extra = '', $id = FALSE, $hide = FALSE, $tag = 'li' )
 	{
-		return '<'.HTML::sanitizeTag( $tag ).' class="'.HTML::prepClass(
+		return '<'.Core\HTML::sanitizeTag( $tag ).' class="'.Core\HTML::prepClass(
 			'-row',
 			'-wrap-row',
 			'-'.$this->key,
