@@ -5,10 +5,12 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Switcher extends gEditorial\Module
 {
+	use Internals\CoreRowActions;
 
 	public static function module()
 	{
@@ -60,11 +62,11 @@ class Switcher extends gEditorial\Module
 		if ( 'edit' == $screen->base
 			&& $this->in_setting( $screen->post_type, 'bulk_posttypes_from' ) ) {
 
-			$this->_hook_admin_bulkactions( $screen, (bool) $this->cuc( 'bulk' ) );
+			$this->rowactions__hook_admin_bulkactions( $screen, (bool) $this->cuc( 'bulk' ) );
 		}
 	}
 
-	public function bulk_actions( $actions )
+	public function rowactions_bulk_actions( $actions )
 	{
 		$list      = [];
 		$current   = WordPress\PostType::current();
@@ -90,7 +92,7 @@ class Switcher extends gEditorial\Module
 		return array_merge( $actions, $list );
 	}
 
-	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
 	{
 		foreach ( $this->get_setting( 'bulk_posttypes_to', [] ) as $posttype ) {
 
@@ -115,7 +117,7 @@ class Switcher extends gEditorial\Module
 		return $redirect_to;
 	}
 
-	public function admin_notices()
+	public function rowactions_admin_notices()
 	{
 		if ( ! $switched = self::req( $this->hook( 'count' ) ) )
 			return;

@@ -7,11 +7,13 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Revisions extends gEditorial\Module
 {
+	use Internals\CoreRowActions;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -99,7 +101,7 @@ class Revisions extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_admin_bulkactions( $screen, (bool) $this->cuc( 'edit' ) );
+				$this->rowactions__hook_admin_bulkactions( $screen, (bool) $this->cuc( 'edit' ) );
 
 				if ( $this->get_setting( 'revision_summary', FALSE ) )
 					$this->action_module( 'tweaks', 'column_attr', 1, 100 );
@@ -107,12 +109,12 @@ class Revisions extends gEditorial\Module
 		}
 	}
 
-	public function bulk_actions( $actions )
+	public function rowactions_bulk_actions( $actions )
 	{
 		return array_merge( $actions, [ 'purgerevisions' => _x( 'Purge Revisions', 'Bulk Action', 'geditorial-revisions' ) ] );
 	}
 
-	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
 	{
 		if ( 'purgerevisions' != $doaction )
 			return $redirect_to;
@@ -129,7 +131,7 @@ class Revisions extends gEditorial\Module
 		return add_query_arg( $this->hook( 'purged' ), $purged, $redirect_to );
 	}
 
-	public function admin_notices()
+	public function rowactions_admin_notices()
 	{
 		if ( ! $purged = self::req( $this->hook( 'purged' ) ) )
 			return;

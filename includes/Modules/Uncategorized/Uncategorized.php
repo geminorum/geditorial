@@ -5,12 +5,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Uncategorized extends gEditorial\Module
 {
+	use Internals\CoreRowActions;
 
 	public static function module()
 	{
@@ -77,7 +79,7 @@ class Uncategorized extends gEditorial\Module
 				return array_merge( $views, $this->_get_posttype_view( $screen->post_type ) );
 			}, 9 );
 
-			$this->_hook_admin_bulkactions( $screen );
+			$this->rowactions__hook_admin_bulkactions( $screen );
 
 		} else if ( 'dashboard' == $screen->base
 			// NOTE: only for `post` posttype
@@ -93,7 +95,7 @@ class Uncategorized extends gEditorial\Module
 		return 'reports' == $context ? $this->role_can( 'reports' ) : parent::cuc( $context, $fallback );
 	}
 
-	public function bulk_actions( $actions )
+	public function rowactions_bulk_actions( $actions )
 	{
 		$prefix = $this->classs();
 
@@ -104,7 +106,7 @@ class Uncategorized extends gEditorial\Module
 		] );
 	}
 
-	public function handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
 	{
 		$count  = 0;
 		$prefix = $this->classs();
@@ -145,7 +147,7 @@ class Uncategorized extends gEditorial\Module
 		return add_query_arg( $this->hook( 'cleaned' ), $count, $redirect_to );
 	}
 
-	public function admin_notices()
+	public function rowactions_admin_notices()
 	{
 		$hook = $this->hook( 'cleaned' );
 

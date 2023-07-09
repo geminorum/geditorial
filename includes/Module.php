@@ -3416,23 +3416,6 @@ class Module extends WordPress\Module
 			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
-	protected function _hook_admin_bulkactions( $screen, $cap_check = NULL )
-	{
-		if ( ! $this->get_setting( 'admin_bulkactions' ) )
-			return;
-
-		if ( FALSE === $cap_check )
-			return;
-
-		if ( TRUE !== $cap_check && ! WordPress\PostType::can( $screen->post_type, is_null( $cap_check ) ? 'edit_posts' : $cap_check ) )
-			return;
-
-		add_filter( 'bulk_actions-'.$screen->id, [ $this, 'bulk_actions' ] );
-		add_filter( 'handle_bulk_actions-'.$screen->id, [ $this, 'handle_bulk_actions' ], 10, 3 );
-
-		$this->action( 'admin_notices' );
-	}
-
 	// PAIRED API
 	protected function _hook_paired_taxonomy_bulk_actions( $posttype_orogin, $taxonomy_origin )
 	{
