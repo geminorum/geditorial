@@ -15,6 +15,7 @@ class Collect extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\PairedAdmin;
+	use Internals\PairedTools;
 
 	public static function module()
 	{

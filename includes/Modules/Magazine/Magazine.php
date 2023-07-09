@@ -16,6 +16,7 @@ class Magazine extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
+	use Internals\PairedTools;
 
 	public static function module()
 	{

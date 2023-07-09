@@ -18,6 +18,7 @@ class Book extends gEditorial\Module
 	use Internals\CoreTemplate;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;
+	use Internals\PairedTools;
 	use Internals\PostsToPosts;
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];

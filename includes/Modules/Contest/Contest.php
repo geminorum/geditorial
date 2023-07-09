@@ -17,6 +17,7 @@ class Contest extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\PairedAdmin;
+	use Internals\PairedTools;
 
 	// TODO: add span tax
 

@@ -17,6 +17,7 @@ class Dossier extends gEditorial\Module
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedImports;
+	use Internals\PairedTools;
 
 	public static function module()
 	{
