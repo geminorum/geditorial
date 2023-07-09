@@ -67,7 +67,8 @@
         ajax: {
           // @REF: https://select2.org/data-sources/ajax
           // url: plugin[module]._rest + '/query',
-          url: plugin._restBase._rest + '/query',
+          // url: plugin._restBase._rest + '/query',
+          url: plugin._restBase + plugin[module]._rest + '/query',
           dataType: 'json',
           headers: {
             'X-WP-Nonce': plugin._restNonce
