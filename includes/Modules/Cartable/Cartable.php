@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 class Cartable extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
+	use Internals\CoreRoles;
 
 	// TODO: dynamic cartables based on external taxonomies
 
