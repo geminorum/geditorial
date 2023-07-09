@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 class Licensed extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
+	use Internals\DashboardSummary;
 
 	protected $disable_no_posttypes = TRUE;
 
