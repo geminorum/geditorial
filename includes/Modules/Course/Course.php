@@ -13,8 +13,9 @@ use geminorum\gEditorial\WordPress;
 
 class Course extends gEditorial\Module
 {
-	use Internals\PairedAdmin;
+	use Internals\CoreMenuPage;
 	use Internals\CoreTemplate;
+	use Internals\PairedAdmin;
 
 	public static function module()
 	{

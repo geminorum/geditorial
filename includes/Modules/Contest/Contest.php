@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 
 class Contest extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 	use Internals\PairedAdmin;
 
 	// TODO: add span tax

@@ -11,6 +11,7 @@ use geminorum\gEditorial\ShortCode;
 
 class Organization extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedImports;

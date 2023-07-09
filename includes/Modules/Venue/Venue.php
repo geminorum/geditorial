@@ -10,8 +10,9 @@ use geminorum\gEditorial\ShortCode;
 
 class Venue extends gEditorial\Module
 {
-	use Internals\PairedAdmin;
+	use Internals\CoreMenuPage;
 	use Internals\CoreTemplate;
+	use Internals\PairedAdmin;
 
 	public static function module()
 	{
