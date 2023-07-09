@@ -1,5 +1,10 @@
 {
   "search.useIgnoreFiles": false,
+  "search.exclude": {
+    "./assets/components": true,
+    "./assets/vendor": true,
+    "**/.temp": true
+  },
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
