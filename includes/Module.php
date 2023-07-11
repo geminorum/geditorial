@@ -4598,29 +4598,15 @@ class Module extends WordPress\Module
 	protected function paired_do_store_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE )
 	{
 		$posttype = $this->constant( $posttype_constant );
-		$forced   = $this->get_setting( 'paired_force_parents', FALSE );
 		$paired   = self::req( $this->classs( $posttype ), FALSE );
 
 		if ( FALSE === $paired )
 			return;
 
-		$terms = [];
+		$terms = $this->paired_do_store_connection( $post->ID, $paired, $posttype_constant, $paired_constant );
 
-		foreach ( (array) $paired as $paired_id ) {
-
-			if ( ! $paired_id )
-				continue;
-
-			if ( ! $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $paired_constant ) )
-				continue;
-
-			$terms[] = $term->term_id;
-
-			if ( $forced )
-				$terms = array_merge( WordPress\Taxonomy::getTermParents( $term->term_id, $term->taxonomy ), $terms );
-		}
-
-		wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $this->constant( $paired_constant ), FALSE );
+		if ( FALSE === $terms )
+			return FALSE;
 
 		if ( ! $subterm_constant || ! $this->get_setting( 'subterms_support' ) )
 			return;
@@ -4664,6 +4650,52 @@ class Module extends WordPress\Module
 		}
 
 		wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $subterms ), $subterm, FALSE );
+	}
+
+	// TODO: move to `Internals\PairedCore`
+	protected function paired_do_store_connection( $post_ids, $paired_ids, $posttype_constant, $paired_constant, $append = FALSE, $forced = NULL )
+	{
+		$forced = $forced ?? $this->get_setting( 'paired_force_parents', FALSE );
+		$terms  = $stored = [];
+
+		foreach ( (array) $paired_ids as $paired_id ) {
+
+			if ( ! $paired_id )
+				continue;
+
+			if ( ! $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $paired_constant ) )
+				continue;
+
+			$terms[] = $term->term_id;
+
+			if ( $forced )
+				$terms = array_merge( WordPress\Taxonomy::getTermParents( $term->term_id, $term->taxonomy ), $terms );
+		}
+
+		$supported = $this->posttypes();
+		$taxonomy  = $this->constant( $paired_constant );
+		$terms     = Core\Arraay::prepNumeral( $terms );
+
+		foreach ( (array) $post_ids as $post_id ) {
+
+			if ( ! $post_id )
+				continue;
+
+			if ( ! $post = WordPress\Post::get( $post_id ) ) {
+				$stored[$post_id] = FALSE;
+				continue;
+			}
+
+			if ( ! in_array( $post->post_type, $supported, TRUE ) ) {
+				$stored[$post_id] = FALSE;
+				continue;
+			}
+
+			$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, $append );
+			$stored[$post->ID] = self::isError( $result ) ? FALSE : $result;
+		}
+
+		return is_array( $post_ids ) ? $stored : reset( $stored );
 	}
 
 	protected function _hook_store_metabox( $posttype )
