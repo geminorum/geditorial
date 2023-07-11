@@ -33,14 +33,29 @@ class RestAPI extends Main
 		return new \WP_Error( $code, $message, $data );
 	}
 
-	public static function defineArgument_postid( $description = NULL, $required = TRUE )
+	public static function getErrorNoPermission( $code = 'not_authorized', $message = NULL, $data = [], $status = 401 )
+	{
+		if ( ! is_null( $status ) )
+			$data['status'] = $status;
+
+		return new \WP_Error( $code, $message ?? gEdiorial\Plugin::denied( FALSE ), $data );
+	}
+
+	public static function getErrorSomethingIsWrong( $code = 'no_correct_settings', $message = NULL, $data = [], $status = NULL )
+	{
+		if ( ! is_null( $status ) )
+			$data['status'] = $status;
+
+		return new \WP_Error( $code, $message ?? gEdiorial\Plugin::wrong( FALSE ), $data );
+	}
+
+	public static function defineArgument_postid( $description = NULL, $required = TRUE, $validate = NULL )
 	{
 		return [
-			'required'    => (bool) $required,
-			'type'        => 'integer',
-			'description' => $description ?? esc_html_x( 'The id of the post.', 'Service: RestAPI: Arg Description', 'geditorial' ),
-
-			'validate_callback' => [ __CLASS__, 'validateArgument_postid' ],
+			'required'          => (bool) $required,
+			'type'              => 'integer',
+			'description'       => $description ?? esc_html_x( 'The id of the post.', 'Service: RestAPI: Arg Description', 'geditorial' ),
+			'validate_callback' => $validate ?? [ __CLASS__, 'validateArgument_postid' ],
 		];
 	}
 
@@ -49,7 +64,7 @@ class RestAPI extends Main
 		if ( empty( $param ) || (int) $param <= 0 )
 			return self::getErrorArgNotEmpty( $key );
 
-		if ( ! $post = get_post( (int) $param ) )
+		if ( ! get_post( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
 				/* translators: %s: argument key */
@@ -59,14 +74,13 @@ class RestAPI extends Main
 		return TRUE;
 	}
 
-	public static function defineArgument_commentid( $description = NULL, $required = TRUE )
+	public static function defineArgument_commentid( $description = NULL, $required = TRUE, $validate = NULL )
 	{
 		return [
-			'required'    => (bool) $required,
-			'type'        => 'integer',
-			'description' => $description ?? esc_html_x( 'The id of the comment.', 'Service: RestAPI: Arg Description', 'geditorial' ),
-
-			'validate_callback' => [ __CLASS__, 'validateArgument_commentid' ],
+			'required'          => (bool) $required,
+			'type'              => 'integer',
+			'description'       => $description ?? esc_html_x( 'The id of the comment.', 'Service: RestAPI: Arg Description', 'geditorial' ),
+			'validate_callback' => $validate ?? [ __CLASS__, 'validateArgument_commentid' ],
 		];
 	}
 
@@ -75,7 +89,7 @@ class RestAPI extends Main
 		if ( empty( $param ) || (int) $param <= 0 )
 			return self::getErrorArgNotEmpty( $key );
 
-		if ( ! $comment = get_comment( (int) $param ) )
+		if ( ! get_comment( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
 				/* translators: %s: argument key */

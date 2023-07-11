@@ -256,9 +256,7 @@ class Attachments extends gEditorial\Module
 			return;
 
 		$extensions = wp_get_mime_types();
-		$mime_types = array_unique( array_map( function( $r ){
-			return $r->post_mime_type;
-		}, $attachments ) );
+		$mime_types = array_unique( wp_list_pluck( $attachments, 'post_mime_type' ) );
 
 		echo '<li class="-row tweaks-attachment-count">';
 

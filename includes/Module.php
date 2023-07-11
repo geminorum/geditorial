@@ -3416,7 +3416,7 @@ class Module extends WordPress\Module
 			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedRowActions`
 	protected function _hook_paired_taxonomy_bulk_actions( $posttype_orogin, $taxonomy_origin )
 	{
 		if ( ! $this->_paired )
@@ -3454,7 +3454,7 @@ class Module extends WordPress\Module
 		return $key;
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedRowActions`
 	public function paired_bulk_input_add_new_item( $taxonomy, $action )
 	{
 		/* translators: %s: clone into input */
@@ -3473,7 +3473,7 @@ class Module extends WordPress\Module
 		] );
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedRowActions`
 	public function paired_bulk_action_add_new_item( $term_ids, $taxonomy, $action )
 	{
 		global $wpdb;
@@ -3677,8 +3677,8 @@ class Module extends WordPress\Module
 		} );
 	}
 
-	// PAIRED API
 	// excludes paired posttype from subterm archives
+	// TODO: move to `Internals\PairedFront`
 	protected function _hook_paired_exclude_from_subterm()
 	{
 		if ( ! $this->get_setting( 'subterms_support' ) )
@@ -3713,7 +3713,7 @@ class Module extends WordPress\Module
 		}, 8 );
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedFront`
 	protected function _hook_paired_override_term_link()
 	{
 		$constants = $this->paired_get_paired_constants();
@@ -3734,7 +3734,7 @@ class Module extends WordPress\Module
 		}, 9, 3 );
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedThumbnail`
 	protected function _hook_paired_thumbnail_fallback( $posttypes = NULL )
 	{
 		if ( ! $this->_paired )
@@ -3771,7 +3771,7 @@ class Module extends WordPress\Module
 		}, 8, 2 );
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedThumbnail`
 	protected function get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes = NULL )
 	{
 		if ( $thumbnail_id || FALSE === $post )
@@ -4026,7 +4026,7 @@ class Module extends WordPress\Module
 	 * returns post ids with selected terms from settings
 	 * that will be excluded form dropdown on supported post-types
 	 *
-	 * @api PAIRED API
+	 * TODO: move to `Internals\PairedMetaBox`
 	 *
 	 * @return array
 	 */
@@ -4059,9 +4059,9 @@ class Module extends WordPress\Module
 		return $query->query( $args );
 	}
 
-	// PAIRED API
 	// NOTE: subterms must be hierarchical
 	// OLD: `do_render_metabox_assoc()`
+	// TODO: move to `Internals\PairedMetaBox`
 	protected function paired_do_render_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE, $display_empty = FALSE )
 	{
 		$subterm   = FALSE;
@@ -4312,6 +4312,7 @@ class Module extends WordPress\Module
 		} );
 	}
 
+	// TODO: move to `Internals\PairedMetaBox`
 	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
 	{
 		if ( ! $this->_paired )
@@ -4383,6 +4384,7 @@ class Module extends WordPress\Module
 		MetaBox::fieldPostParent( $object );
 	}
 
+	// TODO: move to `Internals\PairedMetaBox`
 	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = 'advanced', $extra = [] )
 	{
 		if ( ! $this->_paired )
@@ -4473,6 +4475,7 @@ class Module extends WordPress\Module
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 
+	// TODO: move to `Internals\PairedMetaBox`
 	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = NULL, $extra = [] )
 	{
 		if ( ! $this->_paired )
@@ -4570,6 +4573,7 @@ class Module extends WordPress\Module
 			Scripts::enqueueThickBox();
 	}
 
+	// TODO: move to `Internals\PairedMetaBox`
 	protected function _hook_paired_store_metabox( $posttype )
 	{
 		if ( ! $this->_paired )
@@ -4593,8 +4597,8 @@ class Module extends WordPress\Module
 		}, 20, 3 );
 	}
 
-	// PAIRED API
 	// OLD: `do_store_metabox_assoc()`
+	// TODO: move to `Internals\PairedMetaBox`
 	protected function paired_do_store_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE )
 	{
 		$posttype = $this->constant( $posttype_constant );
@@ -4919,8 +4923,8 @@ class Module extends WordPress\Module
 		return $request[$key];
 	}
 
-	// PAIRED API
 	// OLD: `_hook_paired_to()`
+	// TODO: move to `Internals\PairedCore`
 	protected function _hook_paired_sync_primary_posttype()
 	{
 		if ( ! $this->_paired )
@@ -4959,8 +4963,8 @@ class Module extends WordPress\Module
 		} );
 	}
 
-	// PAIRED API
 	// OLD: `get_linked_term()`
+	// TODO: move to `Internals\PairedCore`
 	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )
 	{
 		return $this->paired_get_to_term_direct( $post_id,
@@ -4969,15 +4973,15 @@ class Module extends WordPress\Module
 		);
 	}
 
-	// PAIRED API
 	// NOTE: here so modules can override
+	// TODO: move to `Internals\PairedCore`
 	public function paired_get_to_term_direct( $post_id, $posttype, $taxonomy )
 	{
 		return Services\Paired::getToTerm( $post_id, $posttype, $taxonomy );
 	}
 
-	// PAIRED API
 	// OLD: `set_linked_term()`
+	// TODO: move to `Internals\PairedCore`
 	public function paired_set_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $post_id )
@@ -5005,8 +5009,8 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	// PAIRED API
 	// OLD: `remove_linked_term()`
+	// TODO: move to `Internals\PairedCore`
 	public function paired_remove_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $the_term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
@@ -5035,8 +5039,8 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	// PAIRED API
 	// OLD: `get_linked_post_id()`
+	// TODO: move to `Internals\PairedCore`
 	public function paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
 		if ( ! $term_or_id )
@@ -5054,6 +5058,7 @@ class Module extends WordPress\Module
 	}
 
 	// PAIRED API: get (from) posts connected to the pair
+	// TODO: move to `Internals\PairedCore`
 	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		if ( is_null( $term_id ) )
@@ -5100,7 +5105,7 @@ class Module extends WordPress\Module
 		return FALSE;
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedCore`
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		$posts  = $parents = [];
@@ -5142,7 +5147,7 @@ class Module extends WordPress\Module
 		return $single ? reset( $posts ) : $posts;
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedCore`
 	protected function paired_do_save_to_post_update( $after, $before, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->is_save_post( $after, $posttype_key ) )
@@ -5186,7 +5191,7 @@ class Module extends WordPress\Module
 		return $this->paired_set_to_term( $after->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedCore`
 	protected function paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->is_save_post( $post, $posttype_key ) )
@@ -5220,8 +5225,8 @@ class Module extends WordPress\Module
 		return $this->paired_set_to_term( $post->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
-	// PAIRED API:
 	// OLD: `do_trash_post()`
+	// TODO: move to `Internals\PairedCore`
 	protected function paired_do_trash_to_post( $post_id, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
@@ -5234,8 +5239,8 @@ class Module extends WordPress\Module
 			] );
 	}
 
-	// PAIRED API
 	// OLD: `do_untrash_post()`
+	// TODO: move to `Internals\PairedCore`
 	protected function paired_do_untrash_to_post( $post_id, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
@@ -5248,8 +5253,8 @@ class Module extends WordPress\Module
 			] );
 	}
 
-	// PAIRED API
 	// OLD: `do_before_delete_post()`
+	// TODO: move to `Internals\PairedCore`
 	protected function paired_do_before_delete_to_post( $post_id, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
@@ -5314,7 +5319,7 @@ class Module extends WordPress\Module
 		} );
 	}
 
-	// PAIRED API
+	// TODO: move to `Internals\PairedCore`
 	protected function paired_get_paired_constants()
 	{
 		return [

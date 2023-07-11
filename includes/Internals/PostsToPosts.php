@@ -126,10 +126,6 @@ trait PostsToPosts
 		if ( empty( $this->cache['posttypes'] ) )
 			$this->cache['posttypes'] = WordPress\PostType::get( 2 );
 
-		$posttypes = array_unique( array_map( function( $r ){
-			return $r->post_type;
-		}, $p2p->items ) );
-
 		$args = [
 			'connected_direction' => 'to',
 			'connected_type'      => $type,
@@ -144,7 +140,7 @@ trait PostsToPosts
 
 			$list = [];
 
-			foreach ( $posttypes as $posttype )
+			foreach ( array_unique( wp_list_pluck( $p2p->items, 'post_type' ) ) as $posttype )
 				$list[] = Core\HTML::tag( 'a', [
 					'href'   => Core\WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),

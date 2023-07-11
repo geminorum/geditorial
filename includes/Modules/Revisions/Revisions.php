@@ -154,12 +154,6 @@ class Revisions extends gEditorial\Module
 
 			if ( $count > 1 ) {
 
-				$authors = array_unique( array_map( function( $r ){
-					return $r->post_author;
-				}, $revisions ) );
-
-				$edit = current_user_can( 'edit_post', $last );
-
 				echo '<li class="-row -revisions -count">';
 
 					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Row Icon Title', 'geditorial-revisions' ) );
@@ -176,7 +170,11 @@ class Revisions extends gEditorial\Module
 					else
 						echo $title;
 
-					Helper::getAuthorsEditRow( $authors, $post->post_type, ' <span class="-authors">(', ')</span>' );
+					Helper::getAuthorsEditRow(
+						array_unique( wp_list_pluck( $revisions, 'post_author' ) ),
+						$post->post_type,
+						' <span class="-authors">(', ')</span>'
+					);
 
 				echo '</li>';
 			}

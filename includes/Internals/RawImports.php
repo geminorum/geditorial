@@ -29,7 +29,7 @@ trait RawImports
 			'php'  => 'application/x-httpd-php',
 		] );
 
-		switch( $filetype['ext'] ) {
+		switch ( $filetype['ext'] ) {
 			case 'csv' : return Helper::parseCSV( $this->get_imports_datafile() );
 			case 'json': return Helper::parseJSON( $this->get_imports_datafile() );
 			case 'xml' : return Helper::parseXML( $this->get_imports_datafile() );

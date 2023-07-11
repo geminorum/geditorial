@@ -326,6 +326,9 @@ class Plugin
 
 	public function enabled( $module, $setup_check = TRUE )
 	{
+		if ( empty( $module ) )
+			return FALSE;
+
 		if ( ! isset( $this->{$module} ) )
 			return FALSE;
 
