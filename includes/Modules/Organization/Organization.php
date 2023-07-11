@@ -17,6 +17,7 @@ class Organization extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedImports;
 	use Internals\PairedRest;
+	use Internals\PosttypeFields;
 
 	public static function module()
 	{
@@ -170,6 +171,13 @@ class Organization extends gEditorial\Module
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
 				'image_source_url'  => [ 'type' => 'image_source' ],
+
+				'organization_code' => [
+					'title'       => _x( 'Organization Code', 'Field Title', 'geditorial-organization' ),
+					'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),
+					'type'        => 'code',
+					'order'       => 100,
+				],
 			],
 			'_supported' => [
 				'organization_number' => [
@@ -211,6 +219,12 @@ class Organization extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 		$this->add_posttype_fields_supported();
+
+		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
+		// $this->filter_module( 'identified', 'default_posttype_identifier_type', 2 ); // NOTE: no need: default is `code`
+		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
+
+		$this->action( 'meta_set_posttype_fields', 4, 9, FALSE, $this->base );
 	}
 
 	public function init()
@@ -374,6 +388,61 @@ class Organization extends gEditorial\Module
 			$content,
 			$this->constant( 'subterm_shortcode', $tag ),
 			$this->key
+		);
+	}
+
+	public function identified_default_posttype_identifier_metakey( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'primary_posttype' ) )
+			return gEditorial()->module( 'meta' )->get_postmeta_key( 'organization_code' );
+
+		return $default;
+	}
+
+	public function identified_default_posttype_identifier_type( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'primary_posttype' ) )
+			return 'code';
+
+		return $default;
+	}
+
+	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'primary_posttype' ) )
+			return gEditorial()->module( 'meta' )->get_postmeta_key( 'organization_code' );
+
+		return $default;
+	}
+
+	public function meta_set_posttype_fields( $post, $data, $append = TRUE, $check_access = TRUE )
+	{
+		if ( empty( $data ) || empty( $data['organization_code'] ) )
+			return;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return;
+
+		$constants    = $this->paired_get_paired_constants();
+		$organization = $this->posttypefields_get_post_by(
+			'organization_code',
+			$data['organization_code'],
+			$constants[0],
+			TRUE
+		);
+
+		if ( ! $parent = WordPress\Post::get( $organization ) )
+			return;
+
+		$this->paired_do_store_connection(
+			$post,
+			$parent->ID,
+			$constants[0],
+			$constants[1],
+			$this->get_setting( 'multiple_instances' )
 		);
 	}
 }
