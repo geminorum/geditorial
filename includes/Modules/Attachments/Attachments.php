@@ -3,20 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Core\File;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Media;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\Strings;
+use geminorum\gEditorial\WordPress;
 
 class Attachments extends gEditorial\Module
 {
@@ -49,11 +41,11 @@ class Attachments extends gEditorial\Module
 	public function render_help_tab_content_shortcodes()
 	{
 		$list = [
-			HTML::code( '[attachments mime_type="application/pdf" title=0 wrap=0 /]' ),
+			Core\HTML::code( '[attachments mime_type="application/pdf" title=0 wrap=0 /]' ),
 		];
 
 		echo $this->wrap_open( '-help-tab-content -info' );
-			echo HTML::renderList( $list );
+			echo Core\HTML::renderList( $list );
 		echo '</div>';
 	}
 
@@ -172,7 +164,7 @@ class Attachments extends gEditorial\Module
 	// @REF: https://wordpress.stackexchange.com/a/187817
 	public function attachment_link( $link, $attachment_id )
 	{
-		if ( ! $attachment = Post::get( $attachment_id ) )
+		if ( ! $attachment = WordPress\Post::get( $attachment_id ) )
 			return $link;
 
 		if ( empty( $attachment->post_parent ) )
@@ -181,7 +173,7 @@ class Attachments extends gEditorial\Module
 		$prefix = $this->get_prefix_permalink();
 		$parent = get_permalink( $attachment->post_parent );
 
-		return URL::untrail( $parent ).'/'.$prefix.'/'.$attachment_id;
+		return Core\URL::untrail( $parent ).'/'.$prefix.'/'.$attachment_id;
 	}
 
 	// @REF: http://wpbeg.in/2yZXJ2n
@@ -205,7 +197,7 @@ class Attachments extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		$attachments = Media::getAttachments( $post_id, '' );
+		$attachments = WordPress\Media::getAttachments( $post_id, '' );
 
 		if ( empty( $attachments ) )
 			return;
@@ -214,7 +206,7 @@ class Attachments extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Attachment Summary', 'Adminbar', 'geditorial-attachments' ),
 			'parent' => $parent,
-			'href'   => WordPress::getPostAttachmentsLink( $post_id ),
+			'href'   => Core\WordPress::getPostAttachmentsLink( $post_id ),
 		];
 
 		$thumbnail_id  = get_post_meta( $post_id, '_thumbnail_id', TRUE );
@@ -250,24 +242,24 @@ class Attachments extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
 
-		$attachments = Media::getAttachments( $post->ID, '' );
+		$attachments = WordPress\Media::getAttachments( $post->ID, '' );
 
 		if ( ! $count = count( $attachments ) )
 			return;
 
 		$extensions = wp_get_mime_types();
-		$mime_types = array_unique( wp_list_pluck( $attachments, 'post_mime_type' ) );
+		$mime_types = array_unique( Core\Arraay::pluck( $attachments, 'post_mime_type' ) );
 
 		echo '<li class="-row tweaks-attachment-count">';
 
 			echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Row Icon Title', 'geditorial-attachments' ) );
 
 			/* translators: %s: attachments count */
-			$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Noop', 'geditorial-attachments' ), Number::format( $count ) );
+			$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Noop', 'geditorial-attachments' ), Core\Number::format( $count ) );
 
 			if ( current_user_can( 'upload_files' ) )
-				echo HTML::tag( 'a', [
-					'href'   => WordPress::getPostAttachmentsLink( $post->ID ),
+				echo Core\HTML::tag( 'a', [
+					'href'   => Core\WordPress::getPostAttachmentsLink( $post->ID ),
 					'title'  => _x( 'View the list of attachments', 'Title Attr', 'geditorial-attachments' ),
 					'target' => '_blank',
 				], $title );
@@ -282,7 +274,7 @@ class Attachments extends gEditorial\Module
 					if ( $ext = Helper::getExtension( $mime_type, $extensions ) )
 						$list[] = $ext;
 
-				echo Strings::getJoined( $list, ' <span class="-mime-types">(', ')</span>' );
+				echo WordPress\Strings::getJoined( $list, ' <span class="-mime-types">(', ')</span>' );
 			}
 
 		echo '</li>';
@@ -348,7 +340,7 @@ class Attachments extends gEditorial\Module
 						if ( wp_delete_attachment( $post_id, TRUE ) )
 							$count++;
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'deleted',
 						'count'   => $count,
 					] );
@@ -358,10 +350,10 @@ class Attachments extends gEditorial\Module
 					$count = 0;
 
 					foreach ( $_POST['_cb'] as $post_id )
-						if ( Media::emptyAttachmentImageMeta( $post_id ) )
+						if ( WordPress\Media::emptyAttachmentImageMeta( $post_id ) )
 							$count++;
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'emptied',
 						'count'   => $count,
 					] );
@@ -371,10 +363,10 @@ class Attachments extends gEditorial\Module
 					$count = 0;
 
 					foreach ( $_POST['_cb'] as $post_id )
-						if ( Media::deleteAttachmentThumbnails( $post_id ) )
+						if ( WordPress\Media::deleteAttachmentThumbnails( $post_id ) )
 							$count++;
 
-					WordPress::redirectReferer( [
+					Core\WordPress::redirectReferer( [
 						'message' => 'deleted',
 						'count'   => $count,
 					] );
@@ -405,13 +397,13 @@ class Attachments extends gEditorial\Module
 
 		$actions = [
 			// FIXME: must add ajax
-			// 'override-name' => HTML::link( _x( 'Override Name', 'Table Action', 'geditorial-attachments' ) ),
+			// 'override-name' => Core\HTML::link( _x( 'Override Name', 'Table Action', 'geditorial-attachments' ) ),
 
 			// rename filenames
 			// move filenames
 		];
 
-		return HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
 			'ID'     => Tablelist::columnPostID(),
 			'date'   => Tablelist::columnPostDate(),
@@ -421,7 +413,7 @@ class Attachments extends gEditorial\Module
 				'class'    => '-attachment-custom',
 				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
 
-					if ( $custom = Media::isCustom( $row->ID ) )
+					if ( $custom = WordPress\Media::isCustom( $row->ID ) )
 						return strtoupper( str_replace( '_', ' ', $custom ) );
 
 					return Helper::htmlEmpty();
@@ -439,12 +431,12 @@ class Attachments extends gEditorial\Module
 						$list[] = sprintf( _x( '[Parent]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $row->post_parent, 'view', TRUE, 'posttype' ) );
 
-					foreach ( PostType::isThumbnail( $row->ID ) as $post_id )
+					foreach ( WordPress\PostType::isThumbnail( $row->ID ) as $post_id )
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
 
-					foreach ( Taxonomy::isThumbnail( $row->ID ) as $term_id )
+					foreach ( WordPress\Taxonomy::isThumbnail( $row->ID ) as $term_id )
 						/* translators: %s: linked term title */
 						$list[] = sprintf( _x( '[Term]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getTermTitleRow( $term_id, 'view', TRUE ) );
@@ -454,7 +446,7 @@ class Attachments extends gEditorial\Module
 						$list[] = sprintf( _x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
 
-					return $list ? HTML::renderList( $list ) : Helper::htmlEmpty();
+					return $list ? Core\HTML::renderList( $list ) : Helper::htmlEmpty();
 				},
 			],
 			'sizes' => [
@@ -467,7 +459,7 @@ class Attachments extends gEditorial\Module
 					$sizes = [];
 
 					if ( ! empty( $meta['filesize'] ) )
-						$sizes['FILESIZE'] = File::formatSize( $meta['filesize'] );
+						$sizes['FILESIZE'] = Core\File::formatSize( $meta['filesize'] );
 
 					if ( wp_attachment_is( 'image', $row->ID ) )
 						$sizes['ORIGINAL'] = sprintf( '<span title="%s">%s&times;%s</span>', $meta['file'], $meta['width'], $meta['height'] );
@@ -476,7 +468,7 @@ class Attachments extends gEditorial\Module
 						foreach ( $meta['sizes'] as $size_name => $size_args )
 							$sizes[$size_name] = sprintf( '<span title="%s">%s&times;%s</span>', $size_args['file'], $size_args['width'], $size_args['height'] );
 
-					return HTML::tableCode( $sizes, TRUE );
+					return Core\HTML::tableCode( $sizes, TRUE );
 				},
 			],
 
@@ -489,11 +481,11 @@ class Attachments extends gEditorial\Module
 						return Helper::htmlEmpty();
 
 					if ( isset( $meta['image_meta'] ) )
-						return HTML::tableCode( $meta['image_meta'] );
+						return Core\HTML::tableCode( $meta['image_meta'] );
 
 					if ( wp_attachment_is( 'audio', $row->ID )
 						|| wp_attachment_is( 'video', $row->ID ) )
-							return HTML::tableCode( $meta );
+							return Core\HTML::tableCode( $meta );
 
 					return Helper::htmlEmpty();
 				},
@@ -502,7 +494,7 @@ class Attachments extends gEditorial\Module
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => HTML::tag( 'h3', _x( 'Overview of Attachments', 'Header', 'geditorial-attachments' ) ),
+			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Attachments', 'Header', 'geditorial-attachments' ) ),
 			'empty'      => _x( 'No attachments found.', 'Message', 'geditorial-attachments' ),
 			'pagination' => $pagination,
 		] );
@@ -515,9 +507,9 @@ class Attachments extends gEditorial\Module
 		if ( ! $file = get_post_meta( $attachment_id, '_wp_attached_file', TRUE ) )
 			return [];
 
-		$filetype = wp_check_filetype( File::basename( $file ) );
-		$pathfile = File::join( dirname( $file ), File::basename( $file, '.'.$filetype['ext'] ) );
+		$filetype = wp_check_filetype( Core\File::basename( $file ) );
+		$pathfile = Core\File::join( dirname( $file ), Core\File::basename( $file, '.'.$filetype['ext'] ) );
 
-		return PostType::getIDsBySearch( $pathfile );
+		return WordPress\PostType::getIDsBySearch( $pathfile );
 	}
 }

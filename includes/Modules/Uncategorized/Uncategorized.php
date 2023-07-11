@@ -435,7 +435,7 @@ class Uncategorized extends gEditorial\Module
 		if ( empty( $unregistered ) )
 			return FALSE;
 
-		$tt_ids   = wp_list_pluck( $unregistered, 'term_taxonomy_id' );
+		$tt_ids   = Core\Arraay::pluck( $unregistered, 'term_taxonomy_id' );
 		$prepared = "'" . implode( "', '", $tt_ids ) . "'";
 
 		$query = $wpdb->prepare( "
@@ -447,7 +447,7 @@ class Uncategorized extends gEditorial\Module
 		if ( ! $wpdb->query( $query ) )
 			return FALSE;
 
-		WordPress\Taxonomy::updateTermCount( wp_list_pluck( $unregistered, 'term_id' ) );
+		WordPress\Taxonomy::updateTermCount( Core\Arraay::pluck( $unregistered, 'term_id' ) );
 
 		return TRUE;
 	}

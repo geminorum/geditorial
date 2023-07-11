@@ -171,7 +171,7 @@ class Revisions extends gEditorial\Module
 						echo $title;
 
 					Helper::getAuthorsEditRow(
-						array_unique( wp_list_pluck( $revisions, 'post_author' ) ),
+						array_unique( Core\Arraay::pluck( $revisions, 'post_author' ) ),
 						$post->post_type,
 						' <span class="-authors">(', ')</span>'
 					);

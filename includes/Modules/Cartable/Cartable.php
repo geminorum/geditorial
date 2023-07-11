@@ -491,7 +491,7 @@ class Cartable extends gEditorial\Module
 			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
 				// prevents access to other groups
-				if ( ! in_array( $current->slug, wp_list_pluck( $this->get_user_groups( $user->ID ), 'slug' ) ) )
+				if ( ! in_array( $current->slug, Core\Arraay::pluck( $this->get_user_groups( $user->ID ), 'slug' ) ) )
 					$current = FALSE;
 			}
 

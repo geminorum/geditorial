@@ -290,7 +290,7 @@ add_theme_support( \'featured-content\', [
 		if ( ! $featured )
 			return apply_filters( 'featured_content_post_ids', [] );
 
-		$featured_ids = wp_list_pluck( (array) $featured, 'ID' );
+		$featured_ids = Core\Arraay::pluck( (array) $featured, 'ID' );
 		$featured_ids = array_map( 'absint', $featured_ids );
 
 		set_transient( 'featured_content_ids', $featured_ids );

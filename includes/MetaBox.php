@@ -208,7 +208,7 @@ class MetaBox extends WordPress\Main
 		// preserves terms that hidden on the current list
 		if ( $args['selected_preserve'] ) {
 
-			$diff = array_diff( $atts['selected_cats'], wp_list_pluck( $terms, 'term_id' ) );
+			$diff = array_diff( $atts['selected_cats'], Core\Arraay::pluck( $terms, 'term_id' ) );
 
 			foreach ( $diff as $term )
 				$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="'.$term.'" />';
@@ -318,7 +318,7 @@ class MetaBox extends WordPress\Main
 		// preserves users that hidden on the current list
 		if ( $args['selected_preserve'] ) {
 
-			$diff = array_diff( $selected, wp_list_pluck( $users, 'user_login' ) );
+			$diff = array_diff( $selected, Core\Arraay::pluck( $users, 'user_login' ) );
 
 			foreach ( $diff as $term )
 				$hidden.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="'.$term.'" />';

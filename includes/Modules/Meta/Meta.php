@@ -431,7 +431,7 @@ class Meta extends gEditorial\Module
 
 	protected function register_meta_fields()
 	{
-		$this->filter( 'paired_rest_prepped_post', 3, 9, FALSE, $this->base );
+		$this->filter( 'pairedrest_prepped_post', 3, 9, FALSE, $this->base );
 
 		foreach ( $this->posttypes() as $posttype ) {
 
@@ -519,7 +519,7 @@ class Meta extends gEditorial\Module
 		return $this->_get_rest_meta_rendered( (int) $post['id'] );
 	}
 
-	public function paired_rest_prepped_post( $prepped, $post, $parent )
+	public function pairedrest_prepped_post( $prepped, $post, $parent )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $prepped;

@@ -225,7 +225,8 @@ class Organization extends gEditorial\Module
 		// $this->filter_module( 'identified', 'default_posttype_identifier_type', 2 ); // NOTE: no need: default is `code`
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 
-		$this->action( 'meta_set_posttype_fields', 4, 9, FALSE, $this->base );
+		$this->filter( 'pairedimports_import_types', 4, 20, FALSE, $this->base );
+		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
 	}
 
 	public function init()
@@ -405,9 +406,25 @@ class Organization extends gEditorial\Module
 		return $default;
 	}
 
-	public function meta_set_posttype_fields( $post, $data, $append = TRUE, $check_access = TRUE )
+	public function pairedimports_import_types( $types, $linked, $posttypes, $module_key )
 	{
-		if ( empty( $data ) || empty( $data['organization_code'] ) )
+		if ( ! \array_intersect( $this->posttypes(), $posttypes ) )
+			return $types;
+
+		$fields = gEditorial()->module( 'meta' )->get_posttype_fields( $this->constant( 'primary_posttype' ) );
+
+		if ( empty( $fields ) || ! array_key_exists( 'organization_code', $fields ) )
+			return $types;
+
+		// NOTE: only returns selected supported crossing fields
+		return array_merge( $types, [
+			'organization_code' => $fields['organization_code']['title'],
+		] );
+	}
+
+	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
+	{
+		if ( empty( $data ) || empty( $data['organization_code'] ) || $module !== 'meta' )
 			return;
 
 		if ( ! $post = WordPress\Post::get( $post ) )

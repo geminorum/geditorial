@@ -871,7 +871,7 @@ class Template extends WordPress\Main
 		$rows     = [];
 		$posttype = $args['type'] ?: $post->post_type;
 		$fields   = gEditorial()->module( 'meta' )->get_posttype_fields( $posttype );
-		$list     = $args['fields'] ?: wp_list_pluck( $fields, 'title', 'name' );
+		$list     = $args['fields'] ?: Core\Arraay::pluck( $fields, 'title', 'name' );
 		$excludes = is_null( $args['excludes'] ) ? [
 			'over_title',
 			'sub_title',

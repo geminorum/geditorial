@@ -1048,7 +1048,7 @@ class ShortCode extends WordPress\Main
 
 			$query['tax_query'] = [ [
 				'taxonomy' => $taxonomy,
-				'terms'    => wp_list_pluck( $term, 'term_id' ),
+				'terms'    => Core\Arraay::pluck( $term, 'term_id' ),
 			] ];
 
 			$skip = TRUE; // maybe queried itself!
@@ -1237,7 +1237,7 @@ class ShortCode extends WordPress\Main
 
 			$query_args['tax_query'] = [ [
 				'taxonomy' => $taxonomy,
-				'terms'    => wp_list_pluck( $term, 'term_id' ),
+				'terms'    => Core\Arraay::pluck( $term, 'term_id' ),
 			] ];
 
 		} else {
@@ -1387,7 +1387,7 @@ class ShortCode extends WordPress\Main
 
 			$tax_query = [ [
 				'taxonomy' => $taxonomy,
-				'terms'    => wp_list_pluck( $term, 'term_id' ),
+				'terms'    => Core\Arraay::pluck( $term, 'term_id' ),
 			] ];
 		}
 

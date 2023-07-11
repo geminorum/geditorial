@@ -140,7 +140,7 @@ trait PostsToPosts
 
 			$list = [];
 
-			foreach ( array_unique( wp_list_pluck( $p2p->items, 'post_type' ) ) as $posttype )
+			foreach ( array_unique( Core\Arraay::pluck( $p2p->items, 'post_type' ) ) as $posttype )
 				$list[] = Core\HTML::tag( 'a', [
 					'href'   => Core\WordPress::getPostTypeEditLink( $posttype, 0, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),

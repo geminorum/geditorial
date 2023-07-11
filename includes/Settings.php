@@ -2227,7 +2227,7 @@ class Settings extends Core\Base
 			case 'navmenu':
 
 				if ( ! $args['values'] )
-					$args['values'] = wp_list_pluck( wp_get_nav_menus(), 'name', 'term_id' );
+					$args['values'] = Core\Arraay::pluck( wp_get_nav_menus(), 'name', 'term_id' );
 
 				if ( ! empty( $args['values'] ) ) {
 

@@ -54,7 +54,7 @@ class Statuses extends gEditorial\Module
 					'title'   => _x( 'Default Status', 'Setting Title', 'geditorial-statuses' ),
 					'type'    => 'select',
 					'default' => 'draft',
-					'values'  => [ 'draft' => __( 'Draft' ) ] + wp_list_pluck( $statuses, 'name', 'slug' ),
+					'values'  => [ 'draft' => __( 'Draft' ) ] + Core\Arraay::pluck( $statuses, 'name', 'slug' ),
 				],
 			],
 		];

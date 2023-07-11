@@ -660,7 +660,7 @@ class Importer extends gEditorial\Module
 								if ( $taxonomy_object->hierarchical ) {
 
 									if ( $terms = WordPress\Taxonomy::insertDefaultTerms( $taxonomy, Core\Arraay::sameKey( $value ), FALSE ) )
-										$data['tax_input'][$taxonomy] = Core\Arraay::prepNumeral( $already, wp_list_pluck( $terms, 'term_taxonomy_id' ) );
+										$data['tax_input'][$taxonomy] = Core\Arraay::prepNumeral( $already, Core\Arraay::pluck( $terms, 'term_taxonomy_id' ) );
 
 								} else {
 

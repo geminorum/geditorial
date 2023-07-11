@@ -4,17 +4,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
 class Audit extends gEditorial\Module
 {
@@ -41,7 +35,7 @@ class Audit extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$terms = Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
+		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
 		$roles = $this->get_settings_default_roles();
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
@@ -228,7 +222,7 @@ class Audit extends gEditorial\Module
 
 				$terms = empty( $data['tax_input'][$taxonomy] ) ? [] : $data['tax_input'][$taxonomy];
 
-				wp_set_object_terms( $post['post_id'], Arraay::prepNumeral( $terms ), $taxonomy, FALSE );
+				wp_set_object_terms( $post['post_id'], Core\Arraay::prepNumeral( $terms ), $taxonomy, FALSE );
 				clean_object_term_cache( $post['post_id'], $taxonomy );
 
 				Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
@@ -247,7 +241,7 @@ class Audit extends gEditorial\Module
 			'echo'          => FALSE,
 		] );
 
-		return HTML::wrap( '<ul>'.$html.'</ul>', 'geditorial-adminbar-box-wrap' );
+		return Core\HTML::wrap( '<ul>'.$html.'</ul>', 'geditorial-adminbar-box-wrap' );
 	}
 
 	// @REF: https://make.wordpress.org/core/?p=20496
@@ -268,7 +262,7 @@ class Audit extends gEditorial\Module
 				if ( empty( $locking ) )
 					return $caps;
 
-				if ( ! $post = Post::get( $args[0] ) )
+				if ( ! $post = WordPress\Post::get( $args[0] ) )
 					return $caps;
 
 				if ( ! $this->posttype_supported( $post->post_type ) )
@@ -310,7 +304,7 @@ class Audit extends gEditorial\Module
 				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
 					return $caps;
 
-				if ( ! User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 					return [ 'do_not_allow' ];
 		}
 
@@ -335,12 +329,12 @@ class Audit extends gEditorial\Module
 			return;
 
 		$taxonomy = $this->constant( 'main_taxonomy' );
-		$currents = Taxonomy::getObjectTerms( $taxonomy, $post->ID );
+		$currents = WordPress\Taxonomy::getObjectTerms( $taxonomy, $post->ID );
 
 		$terms = $this->filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
-		$terms = Arraay::prepNumeral( $terms );
+		$terms = Core\Arraay::prepNumeral( $terms );
 
-		if ( Arraay::equalNoneAssoc( $terms, $currents ) )
+		if ( Core\Arraay::equalNoneAssoc( $terms, $currents ) )
 			return;
 
 		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy );
@@ -357,7 +351,7 @@ class Audit extends gEditorial\Module
 				$terms[] = $exists['term_id'];
 
 			else
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 		}
 
 		if ( $exists = term_exists( $this->_get_attribute( 'empty_content' ), $taxonomy ) ) {
@@ -366,7 +360,7 @@ class Audit extends gEditorial\Module
 				$terms[] = $exists['term_id'];
 
 			else
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 		}
 
 		if ( $exists = term_exists( $this->_get_attribute( 'empty_excerpt' ), $taxonomy ) ) {
@@ -375,7 +369,7 @@ class Audit extends gEditorial\Module
 				$terms[] = $exists['term_id'];
 
 			else
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 		}
 
 		return $terms;
@@ -401,7 +395,7 @@ class Audit extends gEditorial\Module
 				'href'   => $this->get_module_url(),
 			];
 
-			if ( $terms = Taxonomy::getPostTerms( $taxonomy, $post_id ) )
+			if ( $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post_id ) )
 				foreach ( $terms as $term )
 					$nodes[] = [
 						'id'     => $this->classs( 'attribute', $term->term_id ),
@@ -423,7 +417,7 @@ class Audit extends gEditorial\Module
 		if ( ! $this->role_can( 'assign' ) )
 			return;
 
-		if ( empty( $terms ) && ! Taxonomy::hasTerms( $taxonomy ) )
+		if ( empty( $terms ) && ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return;
 
 		$this->action( 'admin_bar_menu', 1, 699 );
@@ -447,7 +441,7 @@ class Audit extends gEditorial\Module
 			'meta'  => [
 				'class' => 'geditorial-adminbar-node -action quick-assign-action '.$this->classs(),
 				// working but not implemented on js yet!
-				// 'html'  => HTML::tag( 'span', [
+				// 'html'  => Core\HTML::tag( 'span', [
 				// 	'class' => 'quick-assign-data',
 				// 	'data'  => [
 				// 		'post'     => $post_id,
@@ -526,7 +520,7 @@ class Audit extends gEditorial\Module
 				if ( $action = self::req( $this->classs( 'empty-fields' ) ) )
 					$this->_handle_action_empty_fields( $action );
 
-				WordPress::redirectReferer( 'huh' );
+				Core\WordPress::redirectReferer( 'huh' );
 			}
 		}
 	}
@@ -547,18 +541,18 @@ class Audit extends gEditorial\Module
 
 		$this->_raise_resources();
 
-		switch ( Arraay::keyFirst( $action ) ) {
+		switch ( Core\Arraay::keyFirst( $action ) ) {
 
 			case 'flush_empty_title':
 
 				$attribute = $this->_get_attribute( 'empty_title' );
 
-				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					WordPress::redirectReferer( 'wrong' );
+				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				$this->_update_term_count( $attribute, $taxonomy );
 
-				WordPress::redirectReferer( [
+				Core\WordPress::redirectReferer( [
 					'message' => 'emptied',
 					'count'   => $count,
 				] );
@@ -568,12 +562,12 @@ class Audit extends gEditorial\Module
 
 				$attribute = $this->_get_attribute( 'empty_content' );
 
-				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					WordPress::redirectReferer( 'wrong' );
+				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				$this->_update_term_count( $attribute, $taxonomy );
 
-				WordPress::redirectReferer( [
+				Core\WordPress::redirectReferer( [
 					'message' => 'emptied',
 					'count'   => $count,
 				] );
@@ -583,12 +577,12 @@ class Audit extends gEditorial\Module
 
 				$attribute = $this->_get_attribute( 'empty_excerpt' );
 
-				if ( FALSE === ( $count = Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					WordPress::redirectReferer( 'wrong' );
+				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				$this->_update_term_count( $attribute, $taxonomy );
 
-				WordPress::redirectReferer( [
+				Core\WordPress::redirectReferer( [
 					'message' => 'emptied',
 					'count'   => $count,
 				] );
@@ -600,17 +594,17 @@ class Audit extends gEditorial\Module
 				$attribute = $this->_get_attribute( 'empty_title' );
 
 				if ( FALSE === ( $posts = $this->_get_posts_empty( 'title', $attribute, $posttypes ) ) )
-					WordPress::redirectReferer( 'wrong' );
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				if ( empty( $posts ) )
-					WordPress::redirectReferer( 'nochange' );
+					Core\WordPress::redirectReferer( 'nochange' );
 
-				if ( FALSE === ( $count = Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					WordPress::redirectReferer( 'wrong' );
+				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				$this->_update_term_count( $attribute, $taxonomy );
 
-				WordPress::redirectReferer( [
+				Core\WordPress::redirectReferer( [
 					'message' => 'synced',
 					'count'   => $count,
 				] );
@@ -622,17 +616,17 @@ class Audit extends gEditorial\Module
 				$attribute = $this->_get_attribute( 'empty_content' );
 
 				if ( FALSE === ( $posts = $this->_get_posts_empty( 'content', $attribute, $posttypes ) ) )
-					WordPress::redirectReferer( 'wrong' );
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				if ( empty( $posts ) )
-					WordPress::redirectReferer( 'nochange' );
+					Core\WordPress::redirectReferer( 'nochange' );
 
-				if ( FALSE === ( $count = Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					WordPress::redirectReferer( 'wrong' );
+				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				$this->_update_term_count( $attribute, $taxonomy );
 
-				WordPress::redirectReferer( [
+				Core\WordPress::redirectReferer( [
 					'message' => 'synced',
 					'count'   => $count,
 				] );
@@ -644,29 +638,29 @@ class Audit extends gEditorial\Module
 				$attribute = $this->_get_attribute( 'empty_excerpt' );
 
 				if ( FALSE === ( $posts = $this->_get_posts_empty( 'excerpt', $attribute, $posttypes ) ) )
-					WordPress::redirectReferer( 'wrong' );
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				if ( empty( $posts ) )
-					WordPress::redirectReferer( 'nochange' );
+					Core\WordPress::redirectReferer( 'nochange' );
 
-				if ( FALSE === ( $count = Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					WordPress::redirectReferer( 'wrong' );
+				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
+					Core\WordPress::redirectReferer( 'wrong' );
 
 				$this->_update_term_count( $attribute, $taxonomy );
 
-				WordPress::redirectReferer( [
+				Core\WordPress::redirectReferer( [
 					'message' => 'synced',
 					'count'   => $count,
 				] );
 				break;
 		}
 
-		WordPress::redirectReferer( 'huh' );
+		Core\WordPress::redirectReferer( 'huh' );
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
+		Core\HTML::h3( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 		$this->_render_tools_empty_fields();
 	}
 
@@ -680,7 +674,7 @@ class Audit extends gEditorial\Module
 
 		foreach ( [ 'empty_title', 'empty_content', 'empty_excerpt' ] as $for )
 			if ( $exists = term_exists( $this->_get_attribute( $for ), $taxonomy ) )
-				$terms = Arraay::stripByValue( $terms, $exists['term_id'] );
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 		return $terms;
 	}
@@ -703,18 +697,18 @@ class Audit extends gEditorial\Module
 
 		if ( term_exists( $this->_get_attribute( 'empty_title' ), $taxonomy ) ) {
 
-			HTML::h4( _x( 'Posts with Empty Title', 'Card Title', 'geditorial-audit' ), 'title' );
+			Core\HTML::h4( _x( 'Posts with Empty Title', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_title' );
 
 			echo $this->wrap_open( '-wrap-button-row -mark_empty_title' );
-			echo HTML::dropdown( $this->list_posttypes(), [
+			echo Core\HTML::dropdown( $this->list_posttypes(), [
 				'name'       => 'posttype-empty-title',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
 			] );
 			echo '&nbsp;&nbsp;';
 			Settings::submitButton( $action.'[mark_empty_title]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
 			Settings::submitButton( $action.'[flush_empty_title]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
-			HTML::desc( _x( 'Tries to set the attribute on supported posts with no title.', 'Card: Description', 'geditorial-audit' ) );
+			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no title.', 'Card: Description', 'geditorial-audit' ) );
 
 			echo '</div>';
 			$empty = FALSE;
@@ -722,18 +716,18 @@ class Audit extends gEditorial\Module
 
 		if ( term_exists( $this->_get_attribute( 'empty_content' ), $taxonomy ) ) {
 
-			HTML::h4( _x( 'Posts with Empty Content', 'Card Title', 'geditorial-audit' ), 'title' );
+			Core\HTML::h4( _x( 'Posts with Empty Content', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_content' );
 
 			echo $this->wrap_open( '-wrap-button-row -mark_empty_content' );
-			echo HTML::dropdown( $this->list_posttypes(), [
+			echo Core\HTML::dropdown( $this->list_posttypes(), [
 				'name'       => 'posttype-empty-content',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
 			] );
 			echo '&nbsp;&nbsp;';
 			Settings::submitButton( $action.'[mark_empty_content]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
 			Settings::submitButton( $action.'[flush_empty_content]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
-			HTML::desc( _x( 'Tries to set the attribute on supported posts with no content.', 'Card: Description', 'geditorial-audit' ) );
+			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no content.', 'Card: Description', 'geditorial-audit' ) );
 
 			echo '</div>';
 			$empty = FALSE;
@@ -741,26 +735,26 @@ class Audit extends gEditorial\Module
 
 		if ( term_exists( $this->_get_attribute( 'empty_excerpt' ), $taxonomy ) ) {
 
-			HTML::h4( _x( 'Posts with Empty Excerpt', 'Card Title', 'geditorial-audit' ), 'title' );
+			Core\HTML::h4( _x( 'Posts with Empty Excerpt', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_excerpt' );
 
 			echo $this->wrap_open( '-wrap-button-row -mark_empty_excerpt' );
-			echo HTML::dropdown( $this->list_posttypes(), [
+			echo Core\HTML::dropdown( $this->list_posttypes(), [
 				'name'       => 'posttype-empty-excerpt',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
 			] );
 			echo '&nbsp;&nbsp;';
 			Settings::submitButton( $action.'[mark_empty_excerpt]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
 			Settings::submitButton( $action.'[flush_empty_excerpt]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
-			HTML::desc( _x( 'Tries to set the attribute on supported posts with no excerpt.', 'Card: Description', 'geditorial-audit' ) );
+			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no excerpt.', 'Card: Description', 'geditorial-audit' ) );
 
 			echo '</div>';
 			$empty = FALSE;
 		}
 
 		if ( $empty ) {
-			HTML::h4( _x( 'Posts with Empty Fields', 'Card Title', 'geditorial-audit' ), 'title' );
-			HTML::desc( _x( 'No empty attribute available. Please install the default attributes.', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
+			Core\HTML::h4( _x( 'Posts with Empty Fields', 'Card Title', 'geditorial-audit' ), 'title' );
+			Core\HTML::desc( _x( 'No empty attribute available. Please install the default attributes.', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
 		}
 
 		echo '</div>';
@@ -772,12 +766,12 @@ class Audit extends gEditorial\Module
 			return;
 
 		$posts = $this->_get_posts_empty( $for, $attribute, NULL, FALSE );
-		$count = Taxonomy::countTermObjects( $attribute, $this->constant( 'main_taxonomy' ) );
+		$count = WordPress\Taxonomy::countTermObjects( $attribute, $this->constant( 'main_taxonomy' ) );
 
 		/* translators: %1$s: empty post count, %2$s: assigned term count */
-		HTML::desc( vsprintf( _x( 'Currently found %1$s empty posts and %2$s assigned to the attribute.', 'Card: Description', 'geditorial-audit' ), [
-			FALSE === $posts ? gEditorial()->na() : Number::format( count( $posts ) ),
-			FALSE === $count ? gEditorial()->na() : Number::format( $count ),
+		Core\HTML::desc( vsprintf( _x( 'Currently found %1$s empty posts and %2$s assigned to the attribute.', 'Card: Description', 'geditorial-audit' ), [
+			FALSE === $posts ? gEditorial()->na() : Core\Number::format( count( $posts ) ),
+			FALSE === $count ? gEditorial()->na() : Core\Number::format( $count ),
 		] ) );
 	}
 
@@ -788,10 +782,10 @@ class Audit extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
+		Core\HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
 
-		if ( ! Taxonomy::hasTerms( $this->constant( 'main_taxonomy' ) ) )
-			return HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
+		if ( ! WordPress\Taxonomy::hasTerms( $this->constant( 'main_taxonomy' ) ) )
+			return Core\HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
 
 		$this->_render_reports_by_user_summary();
 	}
@@ -804,7 +798,7 @@ class Audit extends gEditorial\Module
 		], 'reports' );
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		HTML::h4( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ), 'title' );
+		Core\HTML::h4( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ), 'title' );
 		echo $this->wrap_open( '-wrap-button-row -mark_empty_excerpt' );
 
 		$this->do_settings_field( [
@@ -911,9 +905,9 @@ class Audit extends gEditorial\Module
 
 	private function _raise_resources( $count = 0 )
 	{
-		Taxonomy::disableTermCounting();
+		WordPress\Taxonomy::disableTermCounting();
 
-		if ( ! WordPress::isDev() )
+		if ( ! Core\WordPress::isDev() )
 			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
 
 		$this->raise_resources( $count, 60, 'audit' );

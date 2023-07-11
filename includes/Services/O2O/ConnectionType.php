@@ -329,7 +329,7 @@ class ConnectionType extends Core\Base
 		if ( empty( $items ) || ! is_object( $items[0] ) )
 			return;
 
-		$post_types = array_unique( wp_list_pluck( $items, 'post_type' ) );
+		$post_types = array_unique( Core\Arraay::pluck( $items, 'post_type' ) );
 
 		if ( count( $post_types ) > 1 )
 			$extra_qv['post_type'] = 'any';

@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
@@ -280,7 +281,7 @@ class Specs extends gEditorial\Module
 			}
 		}
 
-		$the_list = wp_list_pluck( $postmeta, 'spec_order' );
+		$the_list = Core\Arraay::pluck( $postmeta, 'spec_order' );
 		$postmeta = array_combine( $the_list, $postmeta );
 		krsort( $postmeta );
 

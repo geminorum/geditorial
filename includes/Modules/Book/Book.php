@@ -626,7 +626,12 @@ class Book extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'publication_cpt', 'publication_paired', FALSE, 'publication_category' ];
+		return [
+			'publication_cpt',
+			'publication_paired',
+			FALSE,
+			'publication_category',
+		];
 	}
 
 	protected function get_taxonomies_for_restrict_manage_posts()

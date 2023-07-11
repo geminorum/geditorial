@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress\Database;
 use geminorum\gEditorial\WordPress\Main;
 use geminorum\gEditorial\Services\O2O;
@@ -100,7 +101,7 @@ class ObjectToObject extends Main
 	public static function cache_o2o_meta( $the_posts, $wp_query )
 	{
 		if ( isset( $wp_query->_o2o_query ) && ! empty( $the_posts ) )
-			update_meta_cache( 'o2o', wp_list_pluck( $the_posts, 'o2o_id' ) );
+			update_meta_cache( 'o2o', Core\Arraay::pluck( $the_posts, 'o2o_id' ) );
 
 		return $the_posts;
 	}

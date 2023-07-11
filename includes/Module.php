@@ -959,17 +959,23 @@ class Module extends WordPress\Module
 		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
-	public function is_posttype( $posttype_key, $post = NULL )
+	public function is_posttype( $posttype_constant, $post = NULL )
 	{
+		if ( ! $posttype_constant )
+			return FALSE;
+
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		return $this->constant( $posttype_key ) == $post->post_type;
+		return $this->constant( $posttype_constant ) == $post->post_type;
 	}
 
 	public function is_post_viewable( $post = NULL )
 	{
-		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), WordPress\Post::get( $post ) );
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), $post );
 	}
 
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
@@ -3369,8 +3375,8 @@ class Module extends WordPress\Module
 		if ( self::isError( $object ) )
 			return $object;
 
-		if ( method_exists( $this, 'paired_register_rest_route' ) )
-			$this->paired_register_rest_route( $object );
+		if ( method_exists( $this, 'pairedrest_register_rest_route' ) )
+			$this->pairedrest_register_rest_route( $object );
 
 		return $object;
 	}
