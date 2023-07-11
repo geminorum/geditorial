@@ -17,6 +17,7 @@ class Contest extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\PairedAdmin;
+	use Internals\PairedCore;
 	use Internals\PairedTools;
 
 	// TODO: add span tax
@@ -242,17 +243,6 @@ class Contest extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function init_ajax()
-	{
-		if ( $this->is_inline_save_posttype( 'contest_cpt' ) )
-			$this->_hook_paired_sync_primary_posttype();
-	}
-
-	public function setup_restapi()
-	{
-		$this->_hook_paired_sync_primary_posttype();
-	}
-
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
@@ -269,7 +259,7 @@ class Contest extends gEditorial\Module
 				$this->_hook_post_updated_messages( 'contest_cpt' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
-				$this->_hook_paired_sync_primary_posttype();
+				$this->pairedcore__hook_sync_paired();
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -277,7 +267,7 @@ class Contest extends gEditorial\Module
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'contest_cpt' );
-				$this->_hook_paired_sync_primary_posttype();
+				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
 			}
 

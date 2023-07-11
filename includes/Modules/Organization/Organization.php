@@ -15,6 +15,7 @@ class Organization extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
+	use Internals\PairedCore;
 	use Internals\PairedImports;
 	use Internals\PairedRest;
 	use Internals\PosttypeFields;
@@ -265,17 +266,6 @@ class Organization extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function init_ajax()
-	{
-		if ( $this->is_inline_save_posttype( 'primary_posttype' ) )
-			$this->_hook_paired_sync_primary_posttype();
-	}
-
-	public function setup_restapi()
-	{
-		$this->_hook_paired_sync_primary_posttype();
-	}
-
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
@@ -291,7 +281,7 @@ class Organization extends gEditorial\Module
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
-				$this->_hook_paired_sync_primary_posttype();
+				$this->pairedcore__hook_sync_paired();
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -303,7 +293,7 @@ class Organization extends gEditorial\Module
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->_hook_paired_sync_primary_posttype();
+				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
 			}
 

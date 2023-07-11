@@ -18,6 +18,7 @@ class Book extends gEditorial\Module
 	use Internals\CoreTemplate;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;
+	use Internals\PairedCore;
 	use Internals\PairedTools;
 	use Internals\PostsToPosts;
 
@@ -567,17 +568,6 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function init_ajax()
-	{
-		if ( $this->is_inline_save_posttype( 'publication_cpt' ) )
-			$this->_hook_paired_sync_primary_posttype();
-	}
-
-	public function setup_restapi()
-	{
-		$this->_hook_paired_sync_primary_posttype();
-	}
-
 	public function current_screen( $screen )
 	{
 		if ( $screen->post_type == $this->constant( 'publication_cpt' ) ) {
@@ -594,7 +584,7 @@ class Book extends gEditorial\Module
 
 				$this->_hook_post_updated_messages( 'publication_cpt' );
 				$this->_hook_paired_listbox( $screen );
-				$this->_hook_paired_sync_primary_posttype();
+				$this->pairedcore__hook_sync_paired();
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -611,7 +601,7 @@ class Book extends gEditorial\Module
 
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );
-				$this->_hook_paired_sync_primary_posttype();
+				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
 			}
 
