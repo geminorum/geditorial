@@ -427,6 +427,7 @@ class Meta extends gEditorial\Module
 		$this->add_posttype_fields( 'page' );
 
 		$this->filter( 'meta_field', 6, 5, FALSE, $this->base );
+		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
 	}
 
 	protected function register_meta_fields()
@@ -1248,6 +1249,39 @@ class Meta extends gEditorial\Module
 		}
 
 		return $meta;
+	}
+
+	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
+	{
+		if ( empty( $data ) || $module !== $this->key )
+			return;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return;
+
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		if ( ! count( $fields ) )
+			return;
+
+		$user_id = wp_get_current_user();
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( ! array_key_exists( $field, $data ) )
+				continue;
+
+			if ( $check_access && ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
+				continue;
+
+			if ( ! $override && ( FALSE !== ModuleTemplate::getMetaFieldRaw( $field, $post->ID, $this->key ) ) )
+				continue;
+
+			$this->import_posttype_field( $data[$field], $args, $post );
+		}
 	}
 
 	public function content_before( $content )

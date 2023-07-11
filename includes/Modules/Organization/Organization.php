@@ -18,7 +18,7 @@ class Organization extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedImports;
 	use Internals\PairedRest;
-	use Internals\PosttypeFields;
+	use Internals\PostTypeFields;
 
 	public static function module()
 	{
