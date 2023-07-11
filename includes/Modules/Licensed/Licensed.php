@@ -30,8 +30,7 @@ class Licensed extends gEditorial\Module
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
 		$roles = $this->get_settings_default_roles();
-		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_terms',
-			_x( 'There are no driving licences available!', 'Setting', 'geditorial-licensed' ) );
+		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
 			'posttypes_option' => 'posttypes_option',

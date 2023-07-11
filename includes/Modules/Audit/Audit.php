@@ -43,8 +43,7 @@ class Audit extends gEditorial\Module
 	{
 		$terms = Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
 		$roles = $this->get_settings_default_roles();
-		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_terms',
-			_x( 'There are no audit attributes available!', 'Setting', 'geditorial-audit' ) );
+		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
 			'posttypes_option' => 'posttypes_option',

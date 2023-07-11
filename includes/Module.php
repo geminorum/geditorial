@@ -3004,9 +3004,10 @@ class Module extends WordPress\Module
 		return $object;
 	}
 
-	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '' )
+	// NOTE: reversed fallback/fallback-key
+	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '', $fallback_key = NULL )
 	{
-		return Helper::getTaxonomyLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
+		return Helper::getTaxonomyLabel( $this->constant( $constant, $constant ), $label, $fallback_key, $fallback );
 	}
 
 	public function get_taxonomy_labels( $constant )

@@ -951,6 +951,11 @@ class Helper extends WordPress\Main
 			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
 			$pre['uncategorized'] = vsprintf( _x( 'Uncategorized', 'Helper: Tax Generator', 'geditorial' ), $strings );
 
+		// NOTE: this is plugin custom
+		if ( ! array_key_exists( 'no_items_available', $pre ) )
+			/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+			$pre['no_items_available'] = vsprintf( _x( 'There are no %3$s available!', 'Helper: Taxonomy Label: `no_items_available`', 'geditorial' ), $strings );
+
 		return $pre;
 	}
 

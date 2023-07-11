@@ -321,6 +321,7 @@ class Overwrite extends gEditorial\Module
 			'metabox_title',
 			'desc_field_title',
 			'uncategorized',
+			'no_items_available',
 		];
 
 		foreach ( $this->taxonomies() as $taxonomy )
