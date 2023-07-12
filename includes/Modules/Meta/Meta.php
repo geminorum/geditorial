@@ -634,6 +634,7 @@ class Meta extends gEditorial\Module
 					break;
 
 				case 'date':
+				case 'datetime':
 				case 'identity':
 				case 'isbn':
 				case 'iban':
@@ -841,6 +842,7 @@ class Meta extends gEditorial\Module
 
 				break;
 				case 'date':
+				case 'datetime':
 				case 'contact':
 				case 'phone':
 				case 'mobile':
@@ -1228,6 +1230,9 @@ class Meta extends gEditorial\Module
 
 			case 'date':
 				return Datetime::prepForDisplay( trim( $raw ), 'Y/m/d' );
+
+			case 'datetime':
+				return Datetime::prepForDisplay( trim( $raw ), 'Y/m/d H:i' );
 
 			case 'datestring':
 				return Core\Number::localize( Datetime::stringFormat( $raw ) );

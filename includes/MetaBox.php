@@ -931,6 +931,19 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'datetime':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'datetime';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputdate';
+
+				if ( $value )
+					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' );
+
+				break;
+
 			case 'contact':
 			case 'code':
 
