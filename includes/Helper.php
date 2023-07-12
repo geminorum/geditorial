@@ -314,7 +314,7 @@ class Helper extends WordPress\Main
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term',
-			], Core\HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) ) );
+			], sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) );
 		}
 
 		echo WordPress\Strings::getJoined( $list, $before, $after );

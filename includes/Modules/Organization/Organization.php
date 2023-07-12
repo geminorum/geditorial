@@ -16,8 +16,9 @@ class Organization extends gEditorial\Module
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
-	use Internals\PairedImports;
-	use Internals\PairedRest;
+	use Internals\PairedImports; // FIXME: commit the internal
+	use Internals\PairedRest; // FIXME: commit the internal
+	use Internals\PairedTools;
 	use Internals\PostTypeFields;
 
 	public static function module()
@@ -101,7 +102,6 @@ class Organization extends gEditorial\Module
 				'primary_posttype' => NULL,
 			],
 			'taxonomies' => [
-				'primary_paired'  => NULL,
 				'type_taxonomy'   => 'admin-media',
 				'primary_subterm' => NULL,
 			],
@@ -333,6 +333,12 @@ class Organization extends gEditorial\Module
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
+	public function admin_menu()
+	{
+		if ( $this->role_can( 'import', NULL, TRUE ) )
+			$this->_hook_submenu_adminpage( 'importitems' );
+	}
+
 	public function dashboard_glance_items( $items )
 	{
 		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
@@ -451,5 +457,30 @@ class Organization extends gEditorial\Module
 			$constants[1],
 			$this->get_setting( 'multiple_instances' )
 		);
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+				$this->paired_tools_handle_tablelist( 'primary_posttype', 'primary_paired' );
+			}
+		}
+
+		Scripts::enqueueThickBox();
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		return $this->paired_tools_render_tablelist( 'primary_posttype', 'primary_paired', NULL,
+			_x( 'Organization Tools', 'Header', 'geditorial-organization' ) );
+	}
+
+	protected function render_tools_html_after( $uri, $sub )
+	{
+		$this->paired_tools_render_card( 'primary_posttype', 'primary_paired' );
 	}
 }

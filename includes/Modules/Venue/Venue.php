@@ -15,6 +15,7 @@ class Venue extends gEditorial\Module
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
+	use Internals\PairedTools;
 
 	public static function module()
 	{
@@ -298,7 +299,12 @@ class Venue extends gEditorial\Module
 
 	protected function paired_get_paired_constants()
 	{
-		return [ 'place_cpt', 'place_tax', 'facility_tax', 'place_cat' ];
+		return [
+			'place_cpt',
+			'place_tax',
+			'facility_tax',
+			'place_cat',
+		];
 	}
 
 	protected function get_taxonomies_for_restrict_manage_posts()
@@ -355,5 +361,30 @@ class Venue extends gEditorial\Module
 			$this->constant( 'place_shortcode', $tag ),
 			$this->key
 		);
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+				$this->paired_tools_handle_tablelist( 'place_cpt', 'place_tax' );
+			}
+		}
+
+		Scripts::enqueueThickBox();
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		return $this->paired_tools_render_tablelist( 'place_cpt', 'place_tax', NULL,
+			_x( 'Organization Tools', 'Header', 'geditorial-venue' ) );
+	}
+
+	protected function render_tools_html_after( $uri, $sub )
+	{
+		$this->paired_tools_render_card( 'place_cpt', 'place_tax' );
 	}
 }

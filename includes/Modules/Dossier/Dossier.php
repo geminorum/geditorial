@@ -384,7 +384,8 @@ class Dossier extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( 'dossier_posttype', 'dossier_paired', NULL, _x( 'Dossiers Tools', 'Header', 'geditorial-dossier' ) );
+		return $this->paired_tools_render_tablelist( 'dossier_posttype', 'dossier_paired', NULL,
+			_x( 'Dossiers Tools', 'Header', 'geditorial-dossier' ) );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )
