@@ -4424,7 +4424,15 @@ class Module extends WordPress\Module
 		if ( is_null( $context ) )
 			$context = 'listbox';
 
-		$callback = function( $object, $box ) use ( $constants, $context, $screen ) {
+		$post_title    = WordPress\Post::title(); // NOTE: gets post from query-args in admin
+		$singular_name = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
+
+		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Module: Metabox Empty: `listbox_empty`', 'geditorial' );
+		$empty   = $this->get_string( sprintf( '%s_empty', $context ), $constants[0], 'metabox', $default );
+		$noitems = sprintf( $empty, $post_title, $singular_name );
+
+		$callback = function( $object, $box ) use ( $constants, $context, $screen, $noitems ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
@@ -4448,7 +4456,7 @@ class Module extends WordPress\Module
 				echo $list;
 
 			else
-				echo Core\HTML::wrap( _x( 'No items connected!', 'Module: Paired: Message', 'geditorial' ), 'field-wrap -empty' );
+				echo Core\HTML::wrap( $noitems, 'field-wrap -empty' );
 
 			$this->_render_listbox_extra( $object, $box, $context, $screen );
 
@@ -4458,12 +4466,11 @@ class Module extends WordPress\Module
 		/* translators: %1$s: current post title, %2$s: posttype singular name */
 		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Module: Metabox Title: `listbox_title`', 'geditorial' );
 		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
-		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
 		$metabox = $this->classs( $context );
 
 		add_meta_box(
 			$metabox,
-			sprintf( $title, WordPress\Post::title( NULL, $name ), $name ),
+			sprintf( $title, $post_title, $singular_name ),
 			$callback,
 			$screen,
 			$metabox_context,
