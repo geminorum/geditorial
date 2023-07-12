@@ -2177,6 +2177,7 @@ class Module extends WordPress\Module
 
 			break;
 			case 'text':
+			case 'venue':
 			case 'datestring':
 			case 'title_before':
 			case 'title_after':

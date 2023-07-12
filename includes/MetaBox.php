@@ -1023,6 +1023,9 @@ class MetaBox extends WordPress\Main
 					$atts['pattern'] = Core\Validation::getIdentityNumberHTMLPattern();
 
 				break;
+
+			default:
+				$wrap[] = sprintf( '-input%s', $args['type'] ?: 'unknowntype' );
 		}
 
 		if ( ! $atts['pattern'] )

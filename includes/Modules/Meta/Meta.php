@@ -107,6 +107,7 @@ class Meta extends gEditorial\Module
 				'cover_blurb'  => _x( 'Cover Blurb', 'Titles', 'geditorial-meta' ),
 				'cover_price'  => _x( 'Cover Price', 'Titles', 'geditorial-meta' ),
 
+				'venue_string'   => _x( 'Venue', 'Descriptions', 'geditorial-meta' ),
 				'contact_string' => _x( 'Contact', 'Descriptions', 'geditorial-meta' ),
 				'phone_number'   => _x( 'Phone Number', 'Titles', 'geditorial-meta' ),
 				'mobile_number'  => _x( 'Mobile Number', 'Titles', 'geditorial-meta' ),
@@ -151,6 +152,7 @@ class Meta extends gEditorial\Module
 				'cover_blurb'  => _x( 'Description included on the inside cover or on the back', 'Descriptions', 'geditorial-meta' ),
 				'cover_price'  => _x( 'Cover Price of the content', 'Descriptions', 'geditorial-meta' ),
 
+				'venue_string'   => _x( 'Placing Information about the Content', 'Descriptions', 'geditorial-meta' ),
 				'contact_string' => _x( 'A Way to Contact Someone about the Content', 'Descriptions', 'geditorial-meta' ),
 				'phone_number'   => _x( 'Phone Contact Number about the Content', 'Descriptions', 'geditorial-meta' ),
 				'mobile_number'  => _x( 'Mobile Contact Number about the Content', 'Descriptions', 'geditorial-meta' ),
@@ -227,6 +229,7 @@ class Meta extends gEditorial\Module
 				'cover_blurb'  => [ 'type' => 'note' ],
 				'cover_price'  => [ 'type' => 'price' ],
 
+				'venue_string'   => [ 'type' => 'venue' ],
 				'contact_string' => [ 'type' => 'contact' ], // url/email/phone
 				'phone_number'   => [ 'type' => 'phone' ],
 				'mobile_number'  => [ 'type' => 'mobile' ],
@@ -639,6 +642,7 @@ class Meta extends gEditorial\Module
 				case 'isbn':
 				case 'iban':
 				case 'code':
+				case 'venue':
 				case 'contact':
 				case 'mobile':
 				case 'phone':
@@ -843,6 +847,7 @@ class Meta extends gEditorial\Module
 				break;
 				case 'date':
 				case 'datetime':
+				case 'venue':
 				case 'contact':
 				case 'phone':
 				case 'mobile':
