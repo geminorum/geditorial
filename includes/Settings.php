@@ -872,6 +872,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_add_audit_attribute( $description = NULL, $module = 'audit' )
+	{
+		return [
+			'field'       => 'add_audit_attribute',
+			'title'       => _x( 'Add Audit Attribute', 'Setting Title', 'geditorial' ),
+			'description' => $description ?? _x( 'Appends an audit attribute to each item.', 'Setting Description', 'geditorial' ),
+			'disabled'    => ! gEditorial()->enabled( $module ),
+		];
+	}
+
 	public static function getSetting_supported_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [
