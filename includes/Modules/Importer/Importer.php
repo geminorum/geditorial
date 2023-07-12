@@ -15,8 +15,7 @@ class Importer extends gEditorial\Module
 {
 	use Internals\CoreToolBox;
 
-	protected $disable_no_posttypes    = TRUE;
-	protected $default_audit_attribute = 'imported';
+	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
 	{
@@ -55,12 +54,10 @@ class Importer extends gEditorial\Module
 					'title'       => _x( 'Store Source Data', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
 				],
-				[
-					'field'       => 'add_audit_attribute',
-					'title'       => _x( 'Add Audit Attribute', 'Setting Title', 'geditorial-importer' ),
-					/* translators: %s: default term placeholder */
-					'description' => sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ), Core\HTML::code( $this->default_audit_attribute ) ),
-					'disabled'    => ! gEditorial()->enabled( 'audit' ),
+				'add_audit_attribute' => [
+					/* translators: %s: audit attribute placeholder */
+					sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ),
+						Core\HTML::code( $this->constant( 'term_newpost_imported' ) ) ),
 				],
 			],
 			'_defaults' => [
@@ -80,6 +77,7 @@ class Importer extends gEditorial\Module
 			'metakey_prepared_data' => '_import_prepared_data',
 			'metakey_attach_id'     => '_import_attachment_id',
 			'metakey_source_id'     => 'import_source_id',
+			'term_newpost_imported' => 'imported',
 		];
 	}
 
@@ -1060,7 +1058,7 @@ class Importer extends gEditorial\Module
 		}
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
-			Helper::setTaxonomyAudit( $post, $this->default_audit_attribute );
+			Helper::setTaxonomyAudit( $post, $this->constant( 'term_newpost_imported' ) );
 	}
 
 	private function _get_source_id_matched( $source_id, $posttype, $raw = [] )

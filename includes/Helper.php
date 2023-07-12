@@ -100,8 +100,19 @@ class Helper extends WordPress\Main
 		if ( ! gEditorial()->module( 'audit' )->posttype_supported( $post->post_type ) )
 			return FALSE;
 
+		if ( $append && empty( $term_ids ) )
+			return FALSE;
+
+		else if ( empty( $term_ids ) )
+			$terms = NULL;
+
+		else if ( is_string( $term_ids ) )
+			$terms = $term_ids;
+
+		else
+			$terms = Arraay::prepNumeral( $term_ids );
+
 		$taxonomy = gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );
-		$terms    = is_null( $term_ids ) ? $term_ids : Arraay::prepNumeral( $term_ids );
 		$result   = wp_set_object_terms( $post->ID, $terms, $taxonomy, $append );
 
 		if ( is_wp_error( $result ) )
