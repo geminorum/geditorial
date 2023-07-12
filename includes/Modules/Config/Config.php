@@ -88,6 +88,9 @@ class Config extends gEditorial\Module
 		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
 		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
 
+		if ( self::const( 'GEDITORIAL_THRIFT_MODE' ) )
+			return;
+
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
 			if ( ! $module->configure || in_array( $module->configure, [ 'tools', 'reports', 'imports' ], TRUE ) )

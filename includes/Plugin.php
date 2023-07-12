@@ -120,6 +120,7 @@ class Plugin
 		$constants = [
 			'GEDITORIAL_BETA_FEATURES' => TRUE,
 			'GEDITORIAL_LOAD_PRIVATES' => FALSE,
+			'GEDITORIAL_THRIFT_MODE'   => FALSE,
 
 			'GEDITORIAL_CACHE_DIR' => WP_CONTENT_DIR.'/cache', // FALSE to disable
 			'GEDITORIAL_CACHE_URL' => WP_CONTENT_URL.'/cache',
@@ -357,7 +358,7 @@ class Plugin
 		if ( empty( $this->_modules ) )
 			return [];
 
-		if ( FALSE === $orderby )
+		if ( FALSE === $orderby || Base::const( 'GEDITORIAL_THRIFT_MODE' ) )
 			return (array) $this->_modules;
 
 		if ( in_array( L10n::locale(), [ 'fa', 'fa_IR', 'fa_AF' ] ) )
