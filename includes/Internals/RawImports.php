@@ -17,19 +17,24 @@ trait RawImports
 	}
 
 	// DEFAULT METHOD
-	protected function get_imports_raw_data()
+	protected function get_imports_raw_data( $type = NULL )
 	{
 		if ( empty( $this->imports_datafile ) )
 			return FALSE;
 
-		$filetype = wp_check_filetype( $this->imports_datafile, [
-			'csv'  => 'text/csv',
-			'json' => 'application/json',
-			'xml'  => 'application/xml',
-			'php'  => 'application/x-httpd-php',
-		] );
+		if ( is_null( $type ) ) {
 
-		switch ( $filetype['ext'] ) {
+			$filetype = wp_check_filetype( $this->imports_datafile, [
+				'csv'  => 'text/csv',
+				'json' => 'application/json',
+				'xml'  => 'application/xml',
+				'php'  => 'application/x-httpd-php',
+			] );
+
+			$type = $filetype['ext'];
+		}
+
+		switch ( $type ) {
 			case 'csv' : return Helper::parseCSV( $this->get_imports_datafile() );
 			case 'json': return Helper::parseJSON( $this->get_imports_datafile() );
 			case 'xml' : return Helper::parseXML( $this->get_imports_datafile() );
