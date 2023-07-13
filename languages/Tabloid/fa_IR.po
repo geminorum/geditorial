@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Tabloid\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-07-13 23:24+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Tabloid\n"
+"X-Domain: geditorial-tabloid\n"
+
+#. translators: %s: supported object label
+#: Tabloid.php:43
+msgctxt "Setting Title"
+msgid "Action Title for %s"
+msgstr "عنوان کنش برای %s"
+
+#: Tabloid.php:44
+msgctxt "Setting Description"
+msgid "Used as title on the actions row."
+msgstr ""
+
+#: Tabloid.php:45 Tabloid.php:54 Tabloid.php:118
+msgctxt "Action"
+msgid "Overview"
+msgstr "در یک نگاه"
+
+#. translators: %s: supported object label
+#: Tabloid.php:52
+msgctxt "Setting Title"
+msgid "Overview Title for %s"
+msgstr "عنوان نمای‌کلی برای %s"
+
+#: Tabloid.php:53
+msgctxt "Setting Description"
+msgid "Used as title on the overview pages."
+msgstr ""
+
+#: Tabloid.php:62
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr "نقش‌های گزارشات"
+
+#: Tabloid.php:63
+msgctxt "Setting Description"
+msgid "Roles that can view posttype overviews."
+msgstr ""
+
+#: Tabloid.php:69
+msgctxt "Setting Title"
+msgid "Print Roles"
+msgstr "نقش‌های چاپ"
+
+#: Tabloid.php:70
+msgctxt "Setting Description"
+msgid "Roles that can print posttype overviews."
+msgstr ""
+
+#: Tabloid.php:76
+msgctxt "Setting Title"
+msgid "Export Roles"
+msgstr "نقش‌های برون‌بری"
+
+#: Tabloid.php:77
+msgctxt "Setting Description"
+msgid "Roles that can export posttype overviews."
+msgstr ""
+
+#: Tabloid.php:138 Tabloid.php:141
+msgctxt "Message"
+msgid "There are no posts available!"
+msgstr "هیچ فرسته‌ای در دسترس نیست!"
+
+#~ msgctxt "Action"
+#~ msgid "Tabloid"
+#~ msgstr "چکیده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Report Title for %s"
+#~ msgstr "عنوان گزارش برای %s"
+
+#~ msgctxt "Message"
+#~ msgid "No Post Found!"
+#~ msgstr "فرسته‌ای پیدا نشد!"
