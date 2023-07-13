@@ -18,7 +18,8 @@
     phone: '[data-' + module + '=\'phone\']',
     isbn: '[data-' + module + '=\'isbn\']',
     iban: '[data-' + module + '=\'iban\']',
-    date: '[data-' + module + '=\'date\']'
+    date: '[data-' + module + '=\'date\']',
+    datetime: '[data-' + module + '=\'datetime\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
     // currency: '[data-' + module + '=\'currency\']'
@@ -347,6 +348,17 @@
       $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-//]/g, '').trim());
         // TODO: check for pattern/validate date in persian
+      });
+    },
+
+    datetime: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `date`
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish($el.val()).replace(/[^\d.-//: ]/g, '').trim());
+        // TODO: check for pattern/validate datetime in persian
       });
     }
 
