@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial StaticCovers\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-07-13 18:34+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/StaticCovers\n"
+"X-Domain: geditorial-static-covers\n"
+
+#. translators: %s: supported object label
+#: StaticCovers.php:41 StaticCovers.php:81
+msgctxt "Setting Title"
+msgid "Reference Meta-key for %s"
+msgstr "کلید متای مرجع برای %s"
+
+#: StaticCovers.php:42
+msgctxt "Setting Description"
+msgid "Defines reference meta-key for the post-type."
+msgstr ""
+
+#. translators: %s: supported object label
+#: StaticCovers.php:53 StaticCovers.php:93
+msgctxt "Setting Title"
+msgid "URL Template for %s"
+msgstr "الگوی نشانی برای %s"
+
+#. translators: %s: supported object tokens
+#: StaticCovers.php:55
+msgctxt "Setting Description"
+msgid "Defines default URL template for the post-type. Available tokens are %s."
+msgstr ""
+
+#. translators: %s: supported object label
+#: StaticCovers.php:63 StaticCovers.php:103
+msgctxt "Setting Title"
+msgid "Path Template for %s"
+msgstr "الگوی مسیر برای %s"
+
+#. translators: %s: supported object tokens
+#: StaticCovers.php:65
+msgctxt "Setting Description"
+msgid "Defines default path template for the post-type. Available tokens are %s."
+msgstr ""
+
+#: StaticCovers.php:82
+msgctxt "Setting Description"
+msgid "Defines reference meta-key for the taxonomy."
+msgstr ""
+
+#. translators: %s: supported object tokens
+#: StaticCovers.php:95
+msgctxt "Setting Description"
+msgid "Defines default URL template for the taxonomy. Available tokens are %s."
+msgstr ""
+
+#. translators: %s: supported object tokens
+#: StaticCovers.php:105
+msgctxt "Setting Description"
+msgid "Defines default path template for the taxonomy. Available tokens are %s."
+msgstr ""
+
+#: StaticCovers.php:139
+msgctxt "MetaBox Title"
+msgid "Cover"
+msgstr "کاور"
