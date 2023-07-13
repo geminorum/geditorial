@@ -28,7 +28,7 @@ trait CoreRowActions
 	// public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids ) {}
 	// public function rowactions_admin_notices() {}
 
-	protected function rowactions__hook_mainlink( $screen, $action_key = NULL, $setting_key = 'admin_rowactions' )
+	protected function rowactions__hook_mainlink( $screen, $priority = 10, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{
 		if ( FALSE === $setting_key )
 			return FALSE;
@@ -58,8 +58,8 @@ trait CoreRowActions
 			] );
 		};
 
-		add_filter( 'page_row_actions', $callback, 10, 2 );
-		add_filter( 'post_row_actions', $callback, 10, 2 );
+		add_filter( 'page_row_actions', $callback, $priority, 2 );
+		add_filter( 'post_row_actions', $callback, $priority, 2 );
 
 		return TRUE;
 	}
