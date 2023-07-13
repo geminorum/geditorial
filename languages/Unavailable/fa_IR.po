@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Unavailable\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-07-13 17:22+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Unavailable\n"
+"X-Domain: geditorial-unavailable\n"
+
+#: Unavailable.php:31
+msgctxt "Settings"
+msgid "Archived Comments"
+msgstr "بایگانی برای دیدگاه‌ها"
+
+#: Unavailable.php:32
+msgctxt "Settings"
+msgid "Activates archived status for comments and hides them from the counts."
+msgstr "وضعیت بایگانی‌شده برای دیدگاه‌ها را فعال کرده و آن‌ها را از شمارش پنهان می‌کند."
+
+#: Unavailable.php:90
+msgctxt "Message"
+msgid "Restored"
+msgstr "بازنشانی‌شده"
+
+#: Unavailable.php:104
+msgctxt "Message"
+msgid "Archived"
+msgstr "بایگانی"
+
+#: Unavailable.php:141
+msgctxt "Status Link"
+msgid "Archived"
+msgstr "بایگانی"
+
+#: Unavailable.php:158
+msgctxt "Action"
+msgid "Loading"
+msgstr "بارگیری"
+
+#: Unavailable.php:159
+msgctxt "Action"
+msgid "Error!"
+msgstr "خطا!"
+
+#: Unavailable.php:167
+msgctxt "Action"
+msgid "Restore this comment from the Archived"
+msgstr "بازیابی این دیدگاه از بایگانی"
+
+#: Unavailable.php:168
+msgctxt "Action"
+msgid "Restore"
+msgstr "بازیابی"
+
+#: Unavailable.php:177
+msgctxt "Action"
+msgid "Send this comment to the Archived"
+msgstr "ارسال این دیدگاه به بایگانی"
+
+#: Unavailable.php:178
+msgctxt "Action"
+msgid "Archive"
+msgstr "بایگانی"
+
+#: Unavailable.php:185
+msgctxt "Action"
+msgid "Restore from Archived"
+msgstr "بازیابی از بایگانی"
+
+#: Unavailable.php:188
+msgctxt "Action"
+msgid "Move to Archived"
+msgstr "انتقال به بایگانی"
