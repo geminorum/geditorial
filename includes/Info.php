@@ -53,4 +53,21 @@ class Info extends WordPress\Main
 			'<code>P2P</code>'
 		);
 	}
+
+	public static function getHelpTabs( $context = NULL ) {}
+
+	// TODO: add click to select
+	public static function renderHelpTabList( $list )
+	{
+		if ( ! $list )
+			return;
+
+		echo Core\HTML::wrap( Core\HTML::renderList( $list ), [
+			// sprintf( '%s-help-tab-content', static::BASE ),
+			self::classs( 'help-tab-content' ),
+			static::MODULE ? sprintf( '-%s', static::MODULE ) : '',
+			'-help-tab-content',
+			'-info',
+		] );
+	}
 }

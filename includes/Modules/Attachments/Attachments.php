@@ -26,15 +26,10 @@ class Attachments extends gEditorial\Module
 
 	protected function settings_help_tabs( $context = 'settings' )
 	{
-		$tabs = [
-			[
-				'id'      => $this->classs( 'shortcodes' ),
-				'title'   => _x( 'Shortcodes', 'Help Tab Title', 'geditorial-attachments' ),
-				'content' => self::buffer( [ $this, 'render_help_tab_content_shortcodes' ] ),
-			],
-		];
-
-		return array_merge( $tabs, parent::settings_help_tabs( $context ) );
+		return array_merge(
+			ModuleInfo::getHelpTabs( $context ),
+			parent::settings_help_tabs( $context )
+		);
 	}
 
 	// TODO: add click to select

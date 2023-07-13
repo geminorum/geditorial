@@ -34,22 +34,10 @@ class Tweaks extends gEditorial\Module
 
 	protected function settings_help_tabs( $context = 'settings' )
 	{
-		$tabs = [
-			[
-				'id'      => $this->classs( 'category-search' ),
-				'title'   => _x( 'Category Search', 'Help Tab Title', 'geditorial-tweaks' ),
-				'content' => '<div class="-info"><p>Makes it quick and easy for writers to select categories related to what they are writing. As they type in the search box, categories will be shown and hidden in real time, allowing them to easily select what is relevant to their content without having to scroll through possibly hundreds of categories.</p>
-<p class="-from">Adopted from: <a href="https://wordpress.org/plugins/searchable-categories/" target="_blank">Searchable Categories</a> by <a href="http://ididntbreak.it" target="_blank">Jason Corradino</a></p></div>',
-			],
-			[
-				'id'      => $this->classs( 'checklist-tree' ),
-				'title'   => _x( 'Checklist Tree', 'Help Tab Title', 'geditorial-tweaks' ),
-				'content' => '<div class="-info"><p>If you\'ve ever used categories extensively, you will have noticed that after you save a post, the checked categories appear on top of all the other ones. This can be useful if you have a lot of categories, since you don’t have to scroll. Unfortunately, this behaviour has a serious side-effect: it breaks the hierarchy. If you have deeply nested categories that don’t make sense out of context, this will completely screw you over.</p>
-<p class="-from">Adopted from: <a href="https://wordpress.org/plugins/category-checklist-tree/" target="_blank">Category Checklist Tree</a> by <a href="http://scribu.net/wordpress/category-checklist-tree" target="_blank">scribu</a></p></div>',
-			],
-		];
-
-		return array_merge( $tabs, parent::settings_help_tabs( $context ) );
+		return array_merge(
+			ModuleInfo::getHelpTabs( $context ),
+			parent::settings_help_tabs( $context )
+		);
 	}
 
 	protected function get_global_settings()

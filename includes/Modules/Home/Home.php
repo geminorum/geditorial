@@ -25,23 +25,10 @@ class Home extends gEditorial\Module
 
 	protected function settings_help_tabs( $context = 'settings' )
 	{
-		$tabs = [
-			[
-				'id'      => $this->classs( 'featured-content' ),
-				'title'   => _x( 'Featured Content', 'Help Tab Title', 'geditorial-home' ),
-				'content' => '<div class="-info"><p>Featured Content allows users to spotlight their posts and have them uniquely displayed by a theme. The content is intended to be displayed on a blog’s front page; by using the module consistently in this manner, users are given a reliable Featured Content experience on which they can rely even when switching themes.</p>
-<code><pre>
-add_theme_support( \'featured-content\', [
-	\'filter\'     => \'mytheme_get_featured_posts\',
-	\'max_posts\'  => 20,
-	\'post_types\' => [ \'post\', \'page\' ),
-) );
-</pre></code>
-<p class="-from">Adopted from: <a href="https://jetpack.com/support/featured-content/" target="_blank">Jetpack Featured Content</a> by <a href="https://automattic.com/" target="_blank">Automattic</a></p></div>',
-			],
-		];
-
-		return array_merge( $tabs, parent::settings_help_tabs( $context ) );
+		return array_merge(
+			ModuleInfo::getHelpTabs( $context ),
+			parent::settings_help_tabs( $context )
+		);
 	}
 
 	public function settings_intro()

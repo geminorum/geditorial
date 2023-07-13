@@ -18,8 +18,6 @@ class Ortho extends gEditorial\Module
 	protected $disable_no_customs      = TRUE;
 	protected $priority_current_screen = 20;
 
-	private $virastar_version      = '0.21.0';
-	private $persiantools_version  = '0.1.0';
 	private $virastar_enqueued     = FALSE;
 	private $persiantools_enqueued = FALSE;
 
@@ -38,22 +36,10 @@ class Ortho extends gEditorial\Module
 
 	protected function settings_help_tabs( $context = 'settings' )
 	{
-		$tabs = [
-			[
-				'id'       => $this->classs( 'virastar' ),
-				'title'    => _x( 'Virastar', 'Help Tab Title', 'geditorial-ortho' ),
-				'content'  => sprintf( '<div class="-info"><p>Virastar is a Persian text cleaner.</p><p class="-from">Virastar v%s installed. For more information, Please see Virastar <a href="%s" target="_blank">home page</a> or <a href="%s" target="_blank">live demo</a>.</p></div>',
-					$this->virastar_version, 'https://github.com/brothersincode/virastar', 'https://virastar.brothersincode.ir' ),
-			],
-			[
-				'id'       => $this->classs( 'persiantools' ),
-				'title'    => _x( 'PersianTools', 'Help Tab Title', 'geditorial-ortho' ),
-				'content'  => sprintf( '<div class="-info"><p>PersianTools is a Persian text library.</p><p class="-from">PersianTools v%s installed. For more information, Please see PersianTools <a href="%s" target="_blank">home page</a>.</p></div>',
-					$this->persiantools_version, 'https://github.com/Bersam/persiantools' ),
-			],
-		];
-
-		return array_merge( $tabs, parent::settings_help_tabs( $context ) );
+		return array_merge(
+			ModuleInfo::getHelpTabs( $context ),
+			parent::settings_help_tabs( $context )
+		);
 	}
 
 	private function virastar_options()
@@ -223,7 +209,7 @@ class Ortho extends gEditorial\Module
 			return;
 
 		$virastar = Scripts::registerPackage( 'virastar',
-			NULL, [], $this->virastar_version );
+			NULL, [], ModuleInfo::virastar_version );
 
 		// cleanup
 		$settings = $this->options->settings;
@@ -244,7 +230,7 @@ class Ortho extends gEditorial\Module
 			return;
 
 		$persiantools = Scripts::registerPackage( 'persiantools',
-			NULL, [], $this->persiantools_version );
+			NULL, [], ModuleInfo::persiantools_version );
 
 		$this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );
 
