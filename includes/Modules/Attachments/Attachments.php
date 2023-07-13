@@ -32,18 +32,6 @@ class Attachments extends gEditorial\Module
 		);
 	}
 
-	// TODO: add click to select
-	public function render_help_tab_content_shortcodes()
-	{
-		$list = [
-			Core\HTML::code( '[attachments mime_type="application/pdf" title=0 wrap=0 /]' ),
-		];
-
-		echo $this->wrap_open( '-help-tab-content -info' );
-			echo Core\HTML::renderList( $list );
-		echo '</div>';
-	}
-
 	protected function get_global_settings()
 	{
 		return [

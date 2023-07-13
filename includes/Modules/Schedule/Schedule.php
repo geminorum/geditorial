@@ -68,8 +68,6 @@ class Schedule extends gEditorial\Module
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
-		// self::_log( [ $what, $post ] );
-
 		switch ( $what ) {
 
 			case 'reschedule':

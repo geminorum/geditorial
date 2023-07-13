@@ -146,6 +146,11 @@ class Organization extends gEditorial\Module
 			'column_icon_title' => _x( 'Department', 'Misc: `column_icon_title`', 'geditorial-organization' ),
 		];
 
+		$strings['metabox'] = [
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'listbox_title' => _x( '%2$s Members of &ldquo;%1$s&rdquo;', 'Metabox: `listbox_title`', 'geditorial-organization' ),
+		];
+
 		$strings['default_terms'] = [
 			'status_taxonomy' => [
 				'working'  => _x( 'Working', 'Default Term', 'geditorial-organization' ),

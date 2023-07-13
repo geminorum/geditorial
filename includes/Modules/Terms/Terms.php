@@ -327,7 +327,7 @@ class Terms extends gEditorial\Module
 				wp_enqueue_media();
 
 				$this->enqueue_asset_js( [
-					'customs' => array_diff( $fields, $this->_get_supported_raw( FALSE ) ),
+					'customs' => array_values( array_diff( $fields, $this->_get_supported_raw( FALSE ) ) ),
 					'strings' => $this->strings['js'],
 				], NULL, [ 'jquery', 'media-upload' ] );
 			}
