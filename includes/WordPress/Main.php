@@ -19,6 +19,23 @@ class Main extends Core\Base
 		return gEditorial();
 	}
 
+	protected static function classs()
+	{
+		$string = '';
+
+		foreach ( func_get_args() as $arg )
+			if ( $arg )
+				$string.= '-'.strtolower( Core\Text::sanitizeBase( $arg ) );
+
+		if ( static::MODULE )
+			$string = static::MODULE.$string;
+
+		if ( static::BASE )
+			$string = static::BASE.$string;
+
+		return trim( $string, '-' );
+	}
+
 	protected static function hash()
 	{
 		$string = '';

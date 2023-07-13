@@ -185,14 +185,11 @@ class PostType extends Core\Base
 	{
 		global $wpdb, $gEditorialIDbyMeta;
 
-		if ( empty( $meta ) )
+		if ( empty( $meta ) || empty( $value ) )
 			return FALSE;
 
 		if ( empty( $gEditorialIDbyMeta ) )
 			$gEditorialIDbyMeta = [];
-
-		if ( empty( $value ) )
-			return FALSE;
 
 		$group = $single ? 'single' : 'all';
 
@@ -237,7 +234,7 @@ class PostType extends Core\Base
 		if ( empty( $results ) )
 			return [];
 
-		$list = wp_list_pluck( $results, 'post_id', 'meta_value' );
+		$list = Core\Arraay::pluck( $results, 'post_id', 'meta_value' );
 
 		if ( empty( $gEditorialIDbyMeta ) )
 			$gEditorialIDbyMeta = [];

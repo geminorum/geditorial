@@ -20,6 +20,9 @@ class Post extends Core\Base
 	 */
 	public static function get( $post = NULL, $output = OBJECT, $filter = 'raw' )
 	{
+		if ( FALSE === $post )
+			return $post;
+
 		if ( $post instanceof \WP_Post )
 			return $post;
 
@@ -79,7 +82,7 @@ class Post extends Core\Base
 	 * @param  bool   $filter
 	 * @return string $title
 	 */
-	public static function title( $post, $fallback = NULL, $filter = TRUE )
+	public static function title( $post = NULL, $fallback = NULL, $filter = TRUE )
 	{
 		if ( ! $post = self::get( $post ) )
 			return '';
@@ -281,6 +284,9 @@ class Post extends Core\Base
 	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
 	{
 		if ( ! $post = self::get( $post ) )
+			return $suffix;
+
+		if ( ! $post->post_parent )
 			return $suffix;
 
 		if ( is_null( $separator ) )

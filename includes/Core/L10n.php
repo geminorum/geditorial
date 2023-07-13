@@ -202,7 +202,7 @@ class L10n extends Base
 
 		switch ( $locale ) {
 			case 'en': $alphabet = range( 'A', 'Z' ); break;
-			default: $alphabet = wp_list_pluck( self::getAlphabet( $locale ), 'letter' ); break;
+			default: $alphabet = Arraay::pluck( self::getAlphabet( $locale ), 'letter' ); break;
 		}
 
 		return $slice ? array_slice( $alphabet, 0, $slice ) : $alphabet;

@@ -433,7 +433,7 @@ class Media extends Core\Base
 			$meta = wp_get_attachment_metadata( $post_id );
 
 			$original = Core\File::basename( $meta['file'] );
-			$cropped  = wp_list_pluck( $meta['sizes'], 'file' );
+			$cropped  = Core\Arraay::pluck( $meta['sizes'], 'file' );
 
 			if ( $original === $file || in_array( $file, $cropped ) )
 				return $post_id;

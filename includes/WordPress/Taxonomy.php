@@ -231,7 +231,7 @@ class Taxonomy extends Core\Base
 			return [];
 
 		if ( ! $object )
-			return wp_list_pluck( $terms, $key ?: 'term_id' );
+			return Core\Arraay::pluck( $terms, $key ?: 'term_id' );
 
 		if ( $key )
 			return Core\Arraay::reKey( $terms, $key );
@@ -305,7 +305,7 @@ class Taxonomy extends Core\Base
 		if ( ! $terms || is_wp_error( $terms ) )
 			return array();
 
-		$list = wp_list_pluck( $terms, $key );
+		$list = Core\Arraay::pluck( $terms, $key );
 
 		return $object ? array_combine( $list, $terms ) : $list;
 	}
@@ -547,7 +547,7 @@ class Taxonomy extends Core\Base
 			WHERE term_id IN ( ".implode( ", ", esc_sql( $term_ids ) )." )
 		", ARRAY_A );
 
-		return count( $list ) ? wp_list_pluck( $list, 'taxonomy', 'term_id' ) : [];
+		return count( $list ) ? Core\Arraay::pluck( $list, 'taxonomy', 'term_id' ) : [];
 	}
 
 	public static function updateCountCallback( $taxonomy )

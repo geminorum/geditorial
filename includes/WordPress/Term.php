@@ -104,6 +104,24 @@ class Term extends Core\Base
 	}
 
 	/**
+	 * Retrieves term link given a term ID or term object.
+	 *
+	 * @param  null|int|string|object $term
+	 * @param  null|string $fallback
+	 * @return string $link
+	 */
+	public static function link( $term, $fallback = NULL )
+	{
+		if ( ! $term = self::get( $term ) )
+			return $fallback;
+
+		if ( ! $url = get_term_link( $term ) )
+			return $fallback;
+
+		return $url;
+	}
+
+	/**
 	 * Generates HTML link for given term
 	 *
 	 * @param  null|int|string|object $term
