@@ -93,11 +93,6 @@ class Drafts extends gEditorial\Module
 			$this->filter( 'the_posts', 2 );
 	}
 
-	public function init_ajax()
-	{
-		$this->_hook_ajax();
-	}
-
 	public function current_screen( $screen )
 	{
 		if ( ! $this->get_setting( 'public_preview', FALSE ) )
@@ -143,7 +138,7 @@ class Drafts extends gEditorial\Module
 		$this->enqueue_styles();
 	}
 
-	public function ajax()
+	public function do_ajax()
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );

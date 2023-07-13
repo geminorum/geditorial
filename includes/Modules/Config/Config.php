@@ -42,11 +42,6 @@ class Config extends gEditorial\Module
 		];
 	}
 
-	public function init_ajax()
-	{
-		$this->_hook_ajax();
-	}
-
 	public function admin_menu()
 	{
 		$can = $this->cuc( 'settings' );
@@ -542,7 +537,7 @@ class Config extends gEditorial\Module
 		}
 	}
 
-	public function ajax()
+	public function do_ajax()
 	{
 		if ( ! $this->cuc( 'settings' ) )
 			self::cheatin();

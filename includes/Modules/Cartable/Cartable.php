@@ -268,11 +268,6 @@ class Cartable extends gEditorial\Module
 		$this->support_groups = TRUE;
 	}
 
-	public function init_ajax()
-	{
-		$this->_hook_ajax();
-	}
-
 	public function map_meta_cap( $caps, $cap, $user_id, $args )
 	{
 		// hack to bypass the dumb `_wp_translate_postdata()`

@@ -52,7 +52,7 @@ class Views extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		$this->_hook_ajax( NULL );
+		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
@@ -104,7 +104,7 @@ class Views extends gEditorial\Module
 		Core\HTML::wrapjQueryReady( '$.post("'.admin_url( 'admin-ajax.php' ).'",{action:"'.$this->hook().'",_ajax_nonce:"'.wp_create_nonce( $this->classs( $this->current_queried ) ).'",post_id:'.$this->current_queried.',what:"entryview"});' );
 	}
 
-	public function ajax()
+	public function do_ajax_public()
 	{
 		$post = self::unslash( $_POST );
 		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';

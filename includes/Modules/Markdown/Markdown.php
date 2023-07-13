@@ -60,11 +60,6 @@ class Markdown extends gEditorial\Module
 			add_post_type_support( $posttype, 'editorial-markdown' );
 	}
 
-	public function init_ajax()
-	{
-		$this->_hook_ajax();
-	}
-
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -138,7 +133,7 @@ class Markdown extends gEditorial\Module
 		] );
 	}
 
-	public function ajax()
+	public function do_ajax()
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );

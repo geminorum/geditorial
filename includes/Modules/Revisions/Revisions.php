@@ -71,11 +71,6 @@ class Revisions extends gEditorial\Module
 		];
 	}
 
-	public function init_ajax()
-	{
-		$this->_hook_ajax();
-	}
-
 	public function admin_init()
 	{
 		add_action( 'admin_post_'.$this->hook( 'purge' ), [ $this, 'admin_post' ] );
@@ -322,7 +317,7 @@ class Revisions extends gEditorial\Module
 		] );
 	}
 
-	public function ajax()
+	public function do_ajax()
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );

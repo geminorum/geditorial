@@ -98,7 +98,7 @@ class Like extends gEditorial\Module
 
 	public function init_ajax()
 	{
-		$this->_hook_ajax( NULL );
+		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 	}
 
 	public function current_screen( $screen )
@@ -217,7 +217,7 @@ class Like extends gEditorial\Module
 		}
 	}
 
-	public function ajax()
+	public function do_ajax_public()
 	{
 		$post = self::unslash( $_POST );
 		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';

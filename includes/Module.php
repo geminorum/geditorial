@@ -269,6 +269,9 @@ class Module extends WordPress\Module
 	{
 		if ( method_exists( $this, 'pairedcore__hook_sync_paired_for_ajax' ) )
 			$this->pairedcore__hook_sync_paired_for_ajax();
+
+		if ( method_exists( $this, 'do_ajax' ) )
+			$this->_hook_ajax();
 	}
 
 	// NOTE: MUST ALWAYS CALLED BY THE MODULE
@@ -5514,7 +5517,7 @@ class Module extends WordPress\Module
 		Core\HTML::inputHidden( 'menu_order', WordPress\PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
 
-	protected function _hook_ajax( $auth = TRUE, $hook = NULL, $method = 'ajax' )
+	protected function _hook_ajax( $auth = TRUE, $hook = NULL, $method = 'do_ajax' )
 	{
 		if ( is_null( $hook ) )
 			$hook = $this->hook();
@@ -5524,12 +5527,6 @@ class Module extends WordPress\Module
 
 		if ( is_null( $auth ) || FALSE === $auth )
 			add_action( 'wp_ajax_nopriv_'.$hook, [ $this, $method ] );
-	}
-
-	// DEFAULT FILTER
-	public function ajax()
-	{
-		Ajax::errorWhat();
 	}
 
 	protected function _hook_post( $auth = TRUE, $hook = NULL, $method = 'post' )

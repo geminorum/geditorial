@@ -63,12 +63,7 @@ class Schedule extends gEditorial\Module
 		}
 	}
 
-	public function init_ajax()
-	{
-		$this->_hook_ajax();
-	}
-
-	public function ajax()
+	public function do_ajax()
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
