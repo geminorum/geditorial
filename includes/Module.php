@@ -3060,6 +3060,36 @@ class Module extends WordPress\Module
 		return $labels;
 	}
 
+	public function get_taxonomy_icon( $constant = NULL, $hierarchical = FALSE, $fallback = FALSE )
+	{
+		$icons   = $this->get_module_icons();
+		$default = $hierarchical ? 'category' : 'tag';
+		$module  = $this->module->icon ?? FALSE;
+
+		if ( is_null( $fallback ) && $module )
+			$icon = $module;
+
+		else if ( $fallback )
+			$icon = $fallback;
+
+		else
+			$icon = $default;
+
+		if ( $constant && isset( $icons['taxonomies'] ) && array_key_exists( $constant, (array) $icons['taxonomies'] ) )
+			$icon = $icons['taxonomies'][$constant];
+
+		if ( is_null( $icon ) && $module )
+			$icon = $module;
+
+		if ( is_array( $icon ) )
+			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
+
+		else if ( $icon )
+			$icon = 'dashicons-'.$icon;
+
+		return $icon ?: 'dashicons-'.$default;
+	}
+
 	protected function _get_taxonomy_caps( $taxonomy, $caps, $posttypes )
 	{
 		if ( is_array( $caps ) )
@@ -3255,6 +3285,10 @@ class Module extends WordPress\Module
 		// NOTE: gEditorial Prop
 		if ( ! array_key_exists( 'has_archive', $args ) && $args['public'] && $args['show_ui'] )
 			$args['has_archive'] = $this->constant( $constant.'_archive', $plural );
+
+		// NOTE: gEditorial Prop
+		if ( ! array_key_exists( 'menu_icon', $args ) )
+			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
 
 		$object = register_taxonomy( $taxonomy, $posttypes, $args );
 

@@ -125,11 +125,14 @@ class Helper extends WordPress\Main
 
 	public static function getIcon( $icon, $fallback = 'admin-post' )
 	{
+		if ( ! $icon )
+			return Core\HTML::getDashicon( $fallback );
+
 		if ( is_array( $icon ) )
 			return gEditorial()->icon( $icon[1], $icon[0] );
 
-		if ( ! $icon )
-			return Core\HTML::getDashicon( $fallback );
+		if ( Text::starts( $icon, 'data:image/' ) )
+			return Core\HTML::img( $icon, [ '-icon', '-encoded' ] );
 
 		return Core\HTML::getDashicon( $icon );
 	}
