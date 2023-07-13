@@ -122,6 +122,11 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
+	public static function getPrintStylesURL( $name = 'general', $base = GEDITORIAL_URL, $path = 'assets/css' )
+	{
+		return sprintf( '%s%s/print.%s%s.css', $base, $path, $name, Core\HTML::rtl() ? '-rtl' : '' );
+	}
+
 	public static function enqueueWordCount()
 	{
 		return self::enqueue( 'all.wordcount', [
