@@ -263,8 +263,6 @@ class Contest extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
-
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'contest_cpt' );
 				$this->pairedcore__hook_sync_paired();
@@ -302,9 +300,6 @@ class Contest extends gEditorial\Module
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-
-				if ( $subterms )
-					$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 

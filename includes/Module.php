@@ -5553,34 +5553,6 @@ class Module extends WordPress\Module
 		wp_die();
 	}
 
-	// DEFAULT FILTER
-	public function tweaks_taxonomy_info( $info, $object, $posttype )
-	{
-		// NO NEED: paired taxonomy `show_ui` is set to false
-		// $paired = $this->paired_get_paired_constants();
-
-		// // avoid paired tax on paired posttype's taxonomy column
-		// if ( ! empty( $paired[0] ) && ! empty( $paired[1] )
-		// 	&& $posttype === $this->constant( $paired[0] )
-		// 	&& $object->name === $this->constant( $paired[1] ) )
-		// 		return FALSE;
-
-		$icons = $this->get_module_icons();
-
-		if ( empty( $icons['taxonomies'] ) )
-			return $info;
-
-		foreach ( $icons['taxonomies'] as $constant => $icon )
-			if ( $object->name == $this->constant( $constant ) )
-				return [
-					'icon'  => is_null( $icon ) ? $this->module->icon : $icon,
-					'title' => $this->get_column_title( 'tweaks', $constant, $object->labels->name ),
-					'edit'  => NULL,
-				];
-
-		return $info;
-	}
-
 	// MAYBE: move to `Visual` Main
 	public function get_posttype_field_icon( $field, $posttype = 'post', $args = [] )
 	{

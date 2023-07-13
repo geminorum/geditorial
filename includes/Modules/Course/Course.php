@@ -297,8 +297,6 @@ class Course extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
-
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'course_cpt' );
@@ -335,9 +333,6 @@ class Course extends gEditorial\Module
 				$this->_hook_screen_restrict_paired();
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
-
-				if ( $subterms )
-					$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 

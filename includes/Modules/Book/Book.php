@@ -597,7 +597,6 @@ class Book extends gEditorial\Module
 					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );

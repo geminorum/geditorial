@@ -128,8 +128,6 @@ class Reshare extends gEditorial\Module
 
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}

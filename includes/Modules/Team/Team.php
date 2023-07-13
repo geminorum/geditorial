@@ -171,7 +171,6 @@ class Team extends gEditorial\Module
 				$this->_hook_bulk_post_updated_messages( 'member_cpt' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}

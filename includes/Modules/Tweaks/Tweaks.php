@@ -712,26 +712,20 @@ class Tweaks extends gEditorial\Module
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
-		$cat = [ 'icon' => 'category', 'title' => __( 'Categories' ), 'edit' => NULL ];
-		$tag = [ 'icon' => 'tag', 'title' => __( 'Tags' ), 'edit' => NULL ];
-
 		foreach ( $this->taxonomies() as $taxonomy ) {
 
 			if ( ! in_array( $taxonomy, $taxonomies ) )
 				continue;
 
-			$object = get_taxonomy( $taxonomy );
-
-			$info = $this->filters( 'taxonomy_info', ( $object->hierarchical ? $cat : $tag ), $object, $post->post_type );
-
-			if ( FALSE === $info )
+			if ( ! $object = get_taxonomy( $taxonomy ) )
 				continue;
 
-			if ( is_null( $info['edit'] ) )
-				$info['edit'] = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $post->post_type ] );
+			$edit  = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $post->post_type ] );
+			$icon  = $object->menu_icon ?? ( $object->hierarchical ? 'category' : 'tag' );
+			$title = $this->get_string( 'column_icon_title', $taxonomy, 'misc', $object->labels->name );
 
 			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
-			$before.= $this->get_column_icon( $info['edit'], $info['icon'], $info['title'] );
+			$before.= $this->get_column_icon( $edit, $icon, $title );
 
 			Helper::renderPostTermsEditRow( $post, $object, $before, '</li>' );
 		}

@@ -136,9 +136,6 @@ class Series extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_admin_enabled();
-
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
-
 				$this->_hook_screen_restrict_taxonomies();
 			}
 		}

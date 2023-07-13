@@ -480,8 +480,6 @@ class Audit extends gEditorial\Module
 
 				if ( $this->role_can( 'reports' ) )
 					$this->_hook_screen_restrict_taxonomies();
-
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}

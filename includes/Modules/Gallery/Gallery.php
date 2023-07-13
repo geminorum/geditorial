@@ -124,8 +124,6 @@ class Gallery extends gEditorial\Module
 
 				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'album_cpt' );
-
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 	}

@@ -261,7 +261,6 @@ class Collect extends gEditorial\Module
 				$this->_hook_screen_restrict_taxonomies();
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'collection_cpt' );
@@ -291,9 +290,6 @@ class Collect extends gEditorial\Module
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-
-				if ( $subterms )
-					$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 

@@ -293,7 +293,6 @@ class Magazine extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-				$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_screen_restrict_taxonomies();
@@ -324,9 +323,6 @@ class Magazine extends gEditorial\Module
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
 
 				$this->action_module( 'meta', 'column_row', 3 );
-
-				if ( $subterms )
-					$this->filter_module( 'tweaks', 'taxonomy_info', 3 );
 			}
 		}
 
