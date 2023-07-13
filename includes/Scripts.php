@@ -245,6 +245,13 @@ class Scripts extends WordPress\Main
 			: self::registerPackage( 'listjs', 'list.js/list', [], $ver );
 	}
 
+	public static function pkgPrintThis( $enqueue = FALSE, $ver = '2.0.0' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'printthis', 'printThis/printThis', [ 'jquery' ], $ver )
+			: self::registerPackage( 'printthis', 'printThis/printThis', [ 'jquery' ], $ver );
+	}
+
 	// @REF: https://github.com/axenox/onscan.js
 	// @REF: https://a.kabachnik.info/onscan-js.html
 	public static function pkgOnScanJS( $enqueue = FALSE, $ver = '1.5.2' )
