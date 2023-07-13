@@ -1,0 +1,189 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Socialite\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Socialite\n"
+"X-Domain: geditorial-socialite\n"
+
+#: Socialite.php:41
+msgctxt "Setting Title"
+msgid "Supported Fields"
+msgstr ""
+
+#: Socialite.php:42
+msgctxt "Setting Description"
+msgid "Appends custom meta fields for social services to taxonomies. Terms module needs to be enabled."
+msgstr ""
+
+#: Socialite.php:43
+msgctxt "Setting String Empty"
+msgid "The Terms module is not available!"
+msgstr ""
+
+#: Socialite.php:51
+msgctxt "Setting Title"
+msgid "Social Icons"
+msgstr ""
+
+#: Socialite.php:56
+msgctxt "Setting Title"
+msgid "URL"
+msgstr ""
+
+#: Socialite.php:57
+msgctxt "Setting Description"
+msgid "Sets as URL of the social icon."
+msgstr ""
+
+#: Socialite.php:64
+msgctxt "Setting Title"
+msgid "Icon"
+msgstr ""
+
+#: Socialite.php:65
+msgctxt "Setting Description"
+msgid "Sets the icon image of the social icon."
+msgstr ""
+
+#: Socialite.php:72
+msgctxt "Setting Title"
+msgid "Priority"
+msgstr ""
+
+#: Socialite.php:73
+msgctxt "Setting Description"
+msgid "Sets as the priority where the social icon display on the list."
+msgstr ""
+
+#: Socialite.php:79
+msgctxt "Setting Title"
+msgid "Name"
+msgstr ""
+
+#: Socialite.php:80
+msgctxt "Setting Description"
+msgid "Sets as title attribute of the social icon."
+msgstr ""
+
+#: Socialite.php:85
+msgctxt "Setting Title"
+msgid "Before Link"
+msgstr ""
+
+#: Socialite.php:86
+msgctxt "Setting Description"
+msgid "HTML opening before each social icon link."
+msgstr ""
+
+#: Socialite.php:93
+msgctxt "Setting Title"
+msgid "After Link"
+msgstr ""
+
+#: Socialite.php:94
+msgctxt "Setting Description"
+msgid "HTML closing after each social icon link."
+msgstr ""
+
+#: Socialite.php:101
+msgctxt "Setting Title"
+msgid "Before Image"
+msgstr ""
+
+#: Socialite.php:102
+msgctxt "Setting Description"
+msgid "HTML opening before each social icon image."
+msgstr ""
+
+#: Socialite.php:109
+msgctxt "Setting Title"
+msgid "After Image"
+msgstr ""
+
+#: Socialite.php:110
+msgctxt "Setting Description"
+msgid "HTML closing after each social icon image."
+msgstr ""
+
+#: Socialite.php:127
+msgctxt "Title"
+msgid "Twitter"
+msgstr ""
+
+#: Socialite.php:128
+msgctxt "Title"
+msgid "Instagram"
+msgstr ""
+
+#: Socialite.php:129
+msgctxt "Title"
+msgid "Telegram"
+msgstr ""
+
+#: Socialite.php:130
+msgctxt "Title"
+msgid "Facebook"
+msgstr ""
+
+#: Socialite.php:131
+msgctxt "Title"
+msgid "YouTube"
+msgstr ""
+
+#: Socialite.php:132
+msgctxt "Title"
+msgid "Aparat"
+msgstr ""
+
+#: Socialite.php:133
+msgctxt "Title"
+msgid "Eitaa"
+msgstr ""
+
+#: Socialite.php:136
+msgctxt "Description"
+msgid "Handle or URL to an Twitter account."
+msgstr ""
+
+#: Socialite.php:137
+msgctxt "Description"
+msgid "Handle or URL to an Instagram account."
+msgstr ""
+
+#: Socialite.php:138
+msgctxt "Description"
+msgid "Handle or URL to a Telegram user or channel."
+msgstr ""
+
+#: Socialite.php:139
+msgctxt "Description"
+msgid "Handle or URL to a Facebook profile or page."
+msgstr ""
+
+#: Socialite.php:140
+msgctxt "Description"
+msgid "Handle or URL to a YouTube channel."
+msgstr ""
+
+#: Socialite.php:141
+msgctxt "Description"
+msgid "Handle or URL to an Aparat channel."
+msgstr ""
+
+#: Socialite.php:142
+msgctxt "Description"
+msgid "Handle or URL to a Eitaa user or channel."
+msgstr ""
+
+#: Socialite.php:145
+msgctxt "Column Title"
+msgid "Social"
+msgstr ""
