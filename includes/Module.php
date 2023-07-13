@@ -5436,15 +5436,12 @@ class Module extends WordPress\Module
 		], Helper::getIcon( $icon ) );
 	}
 
-	// adds the module enabled class to body in admin
-	public function _admin_enabled()
+	// NOTE: adds the `{$module_key}-enabled` class to body in admin
+	public function _admin_enabled( $extra = [] )
 	{
-		add_action( 'admin_body_class', [ $this, 'admin_body_class_enabled' ] );
-	}
-
-	public function admin_body_class_enabled( $classes )
-	{
-		return ' '.$this->classs( 'enabled' ).$classes;
+		add_action( 'admin_body_class', function( $classes ) use ( $extra ) {
+			return $classes.' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
+		} );
 	}
 
 	// should we insert content?
