@@ -7,6 +7,7 @@ use geminorum\gEditorial\WordPress;
 
 trait RestAPI
 {
+
 	protected function restapi_get_namespace()
 	{
 		return $this->constant( 'restapi_namespace', $this->classs() ).'/'.$this->rest_api_version;

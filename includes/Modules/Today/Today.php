@@ -1053,7 +1053,7 @@ class Today extends gEditorial\Module
 
 	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
+		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
 			return $value;
 
 		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )

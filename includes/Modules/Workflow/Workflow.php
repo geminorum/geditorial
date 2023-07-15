@@ -528,7 +528,7 @@ class Workflow extends gEditorial\Module
 			$info.= Core\HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class );
 		}
 
-		if ( empty ( $html ) )
+		if ( empty( $html ) )
 			return Core\HTML::desc( _x( 'There are no statuses available!', 'Message', 'geditorial-workflow' ), TRUE, 'field-wrap misc-pub-section -empty-status' );
 
 		$html = Core\HTML::tag( 'select', [

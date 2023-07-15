@@ -57,7 +57,7 @@ trait FramePage
 			'data'   => array_merge( [
 				'module'    => $this->key,
 				'linked'    => $post->ID,
-				'target'    => $$args['target'] ?? 'none',
+				'target'    => $args['target'] ?? 'none',
 				'max-width' => $args['maxwidth'],
 			], $args['data'] ),
 		], sprintf( $text, Helper::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );

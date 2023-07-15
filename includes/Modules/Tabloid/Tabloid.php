@@ -114,7 +114,7 @@ class Tabloid extends gEditorial\Module
 		if ( ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
 
-		$custom = $this->get_setting( sprintf( 'posttype_%s_action_title', $post->post_type ),
+		$custom = $this->get_setting_fallback( sprintf( 'posttype_%s_action_title', $post->post_type ),
 			_x( 'Overview', 'Action', 'geditorial-tabloid' ) );
 
 		if ( ! $filtred = $this->filters( 'action', $this->is_post_viewable( $post ) ? $custom : FALSE, $post ) )
