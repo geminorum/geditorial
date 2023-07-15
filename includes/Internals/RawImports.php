@@ -22,6 +22,12 @@ trait RawImports
 		if ( empty( $this->imports_datafile ) )
 			return FALSE;
 
+		$data  = NULL;
+		$group = sprintf( '%s_rawimports_data', $this->base );
+
+		if ( FALSE !== ( $cache = wp_cache_get( $this->key, $group ) ) )
+			return $cache;
+
 		if ( is_null( $type ) ) {
 
 			$filetype = wp_check_filetype( $this->imports_datafile, [
@@ -35,13 +41,19 @@ trait RawImports
 		}
 
 		switch ( $type ) {
-			case 'csv' : return Helper::parseCSV( $this->get_imports_datafile() );
-			case 'json': return Helper::parseJSON( $this->get_imports_datafile() );
-			case 'xml' : return Helper::parseXML( $this->get_imports_datafile() );
-			case 'php' : return Core\File::requireData( $this->get_imports_datafile(), [] );
+			case 'csv' : $data = Helper::parseCSV( $this->get_imports_datafile() ); break;
+			case 'json': $data = Helper::parseJSON( $this->get_imports_datafile() ); break;
+			case 'xml' : $data = Helper::parseXML( $this->get_imports_datafile() ); break;
+			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile(), [] ); break;
 		}
 
-		return FALSE;
+		if ( empty( $data ) )
+			wp_cache_set( $this->key, NULL, $group ); // to avoid repeats
+
+		else
+			wp_cache_set( $this->key, $data, $group );
+
+		return empty( $data ) ? NULL : $data;
 	}
 
 	protected function get_imports_page_url( $sub = NULL )
