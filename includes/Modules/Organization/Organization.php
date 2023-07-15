@@ -440,13 +440,7 @@ class Organization extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		$constants    = $this->paired_get_paired_constants();
-		$organization = $this->posttypefields_get_post_by(
-			'organization_code',
-			$data['organization_code'],
-			$constants[0],
-			TRUE
-		);
+		$this->posttypefields_connect_paired_by( 'organization_code', $data['organization_code'], $post );
 
 		if ( ! $parent = WordPress\Post::get( $organization ) )
 			return;

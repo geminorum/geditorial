@@ -44,4 +44,33 @@ trait PostTypeFields
 
 		return FALSE;
 	}
+
+	protected function posttypefields_connect_paired_by( $field_key, $data, $post )
+	{
+		if ( ! $this->_paired )
+			return FALSE;
+
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		$values = WordPress\Strings::getSeparated( $data );
+		$list   = [];
+
+		foreach ( $values as $value )
+			if ( $parent = $this->posttypefields_get_post_by( $field_key, $value, $constants[0], TRUE ) )
+				$list[] = $parent;
+
+		if ( count( $list ) )
+			$this->paired_do_store_connection(
+				$post,
+				$list,
+				$constants[0],
+				$constants[1],
+				$this->get_setting( 'multiple_instances' )
+			);
+
+		return $list;
+	}
 }
