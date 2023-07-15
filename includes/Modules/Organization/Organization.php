@@ -232,6 +232,13 @@ class Organization extends gEditorial\Module
 
 		$this->filter( 'pairedimports_import_types', 4, 20, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
+
+		if ( ! is_admin() )
+			return;
+
+		$this->filter_module( 'importer', 'fields', 2 );
+		$this->filter_module( 'importer', 'prepare', 7 );
+		$this->action_module( 'importer', 'saved', 8 );
 	}
 
 	public function init()
@@ -413,20 +420,17 @@ class Organization extends gEditorial\Module
 		return $default;
 	}
 
+	// NOTE: only returns selected supported crossing fields
 	public function pairedimports_import_types( $types, $linked, $posttypes, $module_key )
 	{
 		if ( ! \array_intersect( $this->posttypes(), $posttypes ) )
 			return $types;
 
-		$fields = gEditorial()->module( 'meta' )->get_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$field = gEditorial()->module( 'meta' )->get_posttype_field_args( 'organization_code', $this->constant( 'primary_posttype' ) );
 
-		if ( empty( $fields ) || ! array_key_exists( 'organization_code', $fields ) )
-			return $types;
-
-		// NOTE: only returns selected supported crossing fields
-		return array_merge( $types, [
-			'organization_code' => $fields['organization_code']['title'],
-		] );
+		return $field ? array_merge( $types, [
+			$field['name'] => $field['title'],
+		] ) : $types;
 	}
 
 	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
@@ -441,17 +445,77 @@ class Organization extends gEditorial\Module
 			return;
 
 		$this->posttypefields_connect_paired_by( 'organization_code', $data['organization_code'], $post );
+	}
 
-		if ( ! $parent = WordPress\Post::get( $organization ) )
+	private function get_importer_fields( $posttype = NULL )
+	{
+		$field = gEditorial()->module( 'meta' )->get_posttype_field_args( 'organization_code', $this->constant( 'primary_posttype' ) );
+
+		return $field ? [ sprintf( '%s__%s', $this->key, $field['name'] ) => $field['title'] ] : [];
+	}
+
+	public function importer_fields( $fields, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $fields;
+
+		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
+	}
+
+	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
+	{
+		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
+			return $value;
+
+		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
+			return $value;
+
+		if ( 'organization_code' !== Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) )
+			return $value;
+
+		$codes = WordPress\Strings::getSeparated( $value );
+		$list  = [];
+
+		foreach ( $codes as $code )
+			if ( $parent = $this->posttypefields_get_post_by( 'organization_code', $code, 'primary_posttype', TRUE ) )
+				$list[] = WordPress\Post::fullTitle( $parent, TRUE );
+
+		return WordPress\Strings::getJoined( $list, '', '', $value );
+	}
+
+	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		$this->paired_do_store_connection(
-			$post,
-			$parent->ID,
-			$constants[0],
-			$constants[1],
-			$this->get_setting( 'multiple_instances' )
-		);
+		$fields = $this->get_importer_fields( $post->post_type );
+
+		foreach ( $field_map as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( 'organization_code' === Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) ) {
+
+				$codes = WordPress\Strings::getSeparated( $raw[$offset] );
+				$list  = [];
+
+				foreach ( $codes as $code )
+					if ( $parent = $this->posttypefields_get_post_by( 'organization_code', $code, 'primary_posttype', TRUE ) )
+						$list[] = $parent;
+
+				if ( count( $list ) )
+					$this->paired_do_store_connection(
+						$post,
+						$list,
+						'primary_posttype',
+						'primary_paired',
+						$this->get_setting( 'multiple_instances' )
+					);
+
+				break;
+			}
+		}
 	}
 
 	public function tools_settings( $sub )
