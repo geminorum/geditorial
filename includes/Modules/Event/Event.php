@@ -264,7 +264,7 @@ class Event extends gEditorial\Module
 		$this->action( 'pre_get_posts', 1, 20, 'front' );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'event_cpt' ) )
 			$this->_edit_screen( $posttype );

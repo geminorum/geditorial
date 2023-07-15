@@ -277,7 +277,7 @@ class Terms extends gEditorial\Module
 		$this->filter_module( 'datacodes', 'print_template_data', 4, 8 );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $taxonomy = $this->is_inline_save_taxonomy() )
 			$this->_edit_tags_screen( $taxonomy );

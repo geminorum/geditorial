@@ -50,7 +50,7 @@ class Views extends gEditorial\Module
 		];
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 	}

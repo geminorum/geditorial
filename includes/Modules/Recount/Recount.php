@@ -57,7 +57,7 @@ class Recount extends gEditorial\Module
 		$this->filter( 'taxonomy_term_count', 3, 10, FALSE, 'gnetwork' );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $this->taxonomy_supported( $taxonomy = $this->is_inline_save_taxonomy() ) )
 			$this->_edit_tags_screen( $taxonomy );

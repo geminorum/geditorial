@@ -102,7 +102,7 @@ class Attachments extends gEditorial\Module
 			$this->filter( 'wp_get_attachment_image_attributes', 3, 8 );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $this->get_setting( 'restrict_library' ) )
 			$this->filter( 'ajax_query_attachments_args' );

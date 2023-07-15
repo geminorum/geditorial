@@ -128,7 +128,7 @@ class Workflow extends gEditorial\Module
 			$this->filter( 'map_meta_cap', 4, 12 );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $taxonomy = $this->is_inline_save_taxonomy( 'status_tax' ) )
 			$this->_edit_tags_screen( $taxonomy );

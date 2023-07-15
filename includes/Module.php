@@ -23,7 +23,7 @@ class Module extends WordPress\Module
 	protected $rest_api_version = 'v1';
 
 	protected $priority_init              = 10;
-	protected $priority_init_ajax         = 10;
+	protected $priority_init_ajax         = 12;
 	protected $priority_restapi_init      = 10;
 	protected $priority_current_screen    = 10;
 	protected $priority_admin_menu        = 10;
@@ -161,15 +161,12 @@ class Module extends WordPress\Module
 			add_action( 'elementor/widgets/register', [ $this, 'elementor_register' ], 10, 1 );
 
 		add_action( 'after_setup_theme', [ $this, '_after_setup_theme' ], 1 );
-		add_action( 'rest_api_init', [ $this, '_rest_api_init' ], 1 );
+		add_action( 'rest_api_init', [ $this, '_rest_api_init' ], $this->priority_restapi_init );
 
 		if ( method_exists( $this, 'after_setup_theme' ) )
 			$this->action( 'after_setup_theme', 0, 20 );
 
 		$this->action( 'init', 0, $this->priority_init );
-
-		if ( method_exists( $this, 'setup_restapi' ) )
-			add_action( 'rest_api_init', [ $this, 'setup_restapi' ], $this->priority_restapi_init, 0 );
 
 		if ( $ui && method_exists( $this, 'adminbar_init' ) && $this->get_setting( 'adminbar_summary' ) )
 			add_action( $this->base.'_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
@@ -185,10 +182,7 @@ class Module extends WordPress\Module
 				$this->action( 'admin_menu', 0, $this->priority_admin_menu );
 
 			if ( $ajax )
-				add_action( 'init', [ $this, '_init_ajax' ], 12 );
-
-			if ( $ajax && method_exists( $this, 'init_ajax' ) )
-				$this->action( 'init', 0, $this->priority_init_ajax, 'ajax' );
+				add_action( 'init', [ $this, '_init_ajax' ], $this->priority_init_ajax );
 
 			if ( $ui )
 				add_action( 'wp_dashboard_setup', [ $this, 'setup_dashboard' ] );
@@ -260,6 +254,9 @@ class Module extends WordPress\Module
 	// NOTE: ALWAYS HOOKED
 	public function _rest_api_init()
 	{
+		if ( method_exists( $this, 'setup_restapi' ) )
+			$this->setup_restapi();
+
 		if ( method_exists( $this, 'pairedcore__hook_sync_paired' ) )
 			$this->pairedcore__hook_sync_paired();
 	}
@@ -267,6 +264,9 @@ class Module extends WordPress\Module
 	// NOTE: ALWAYS HOOKED: PRIORITY: `12`
 	public function _init_ajax()
 	{
+		if ( method_exists( $this, 'setup_ajax' ) )
+			$this->setup_ajax();
+
 		if ( method_exists( $this, 'pairedcore__hook_sync_paired_for_ajax' ) )
 			$this->pairedcore__hook_sync_paired_for_ajax();
 

@@ -182,7 +182,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'day_cpt' ) ) {
 

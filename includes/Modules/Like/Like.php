@@ -96,7 +96,7 @@ class Like extends gEditorial\Module
 		$this->cookie = $this->classs( $this->site );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 	}

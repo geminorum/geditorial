@@ -155,7 +155,7 @@ class Entry extends gEditorial\Module
 			$this->filter( 'the_content', 1, 9 );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'entry_cpt' ) )
 			$this->_edit_screen( $posttype );

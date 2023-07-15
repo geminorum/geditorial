@@ -94,7 +94,7 @@ class Grouping extends gEditorial\Module
 		$this->init_custom_taxonomies();
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( ! $taxonomy = $this->is_inline_save_taxonomy() )
 			return;

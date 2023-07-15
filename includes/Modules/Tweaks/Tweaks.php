@@ -254,7 +254,7 @@ class Tweaks extends gEditorial\Module
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
-	public function init_ajax()
+	public function setup_ajax()
 	{
 		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			$this->_edit_screen( $posttype );
