@@ -2113,6 +2113,7 @@ class Module extends WordPress\Module
 			case 'audio_source':
 			case 'video_source':
 			case 'image_source':
+			case 'downloadable':
 			case 'link':
 				$sanitized = trim( $data );
 
