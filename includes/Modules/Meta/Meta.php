@@ -715,9 +715,10 @@ class Meta extends gEditorial\Module
 
 					// TODO: migrate to: `ModuleMetaBox::renderFieldTerm( $args, $post )`
 
-					if ( $args['taxonomy'] )
+					if ( $args['taxonomy'] && WordPress\Taxonomy::can( $args['taxonomy'], 'assign_terms' ) )
 						ModuleMetaBox::legacy_fieldTerm( $field, [ $field ], $post, $args['taxonomy'], $args['ltr'], $args['title'] );
-					else
+
+					else if ( ! $args['taxonomy'] )
 						ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 			}
 		}
@@ -853,7 +854,8 @@ class Meta extends gEditorial\Module
 
 				case 'term':
 
-					ModuleMetaBox::setPostMetaField_Term( $post->ID, $field, $args['taxonomy'] );
+					if ( WordPress\Taxonomy::can( $args['taxonomy'], 'assign_terms' ) )
+						ModuleMetaBox::setPostMetaField_Term( $post->ID, $field, $args['taxonomy'] );
 
 				break;
 				case 'embed':
@@ -1030,6 +1032,9 @@ class Meta extends gEditorial\Module
 
 			case 'term':
 
+				if ( ! WordPress\Taxonomy::can( $field['taxonomy'], 'assign_terms' ) )
+					return FALSE;
+
 				$terms = $this->sanitize_posttype_field( $data, $field, $post );
 
 				return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
@@ -1093,7 +1098,7 @@ class Meta extends gEditorial\Module
 			else if ( in_array( $args['name'], [ 'label', 'label_tax', 'source_title', 'source_url', 'action_title', 'action_url' ] ) )
 				$excludes[] = $field;
 
-			else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
+			else if ( in_array( $args['type'], [ 'term', 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
 				$excludes[] = $field;
 		}
 
