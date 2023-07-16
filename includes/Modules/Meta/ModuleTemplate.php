@@ -17,13 +17,15 @@ class ModuleTemplate extends gEditorial\Template
 		return self::metaField( 'byline', $atts );
 	}
 
+	// BACK-COMP
 	public static function metaLabel( $atts = [] )
 	{
 		if ( ! array_key_exists( 'field', $atts ) )
-			$atts['field'] = 'label';
+			$atts['field'] = 'label_string';
 
 		if ( ! array_key_exists( 'taxonomy', $atts ) )
-			$atts['taxonomy'] = self::constant( 'label_tax', 'label' );
+			// TODO: maybe get from labeled Module
+			$atts['taxonomy'] = self::constant( 'label_taxonomy', 'label' );
 
 		return self::metaTermField( $atts, static::MODULE, FALSE );
 	}

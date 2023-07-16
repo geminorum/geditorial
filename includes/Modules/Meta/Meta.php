@@ -79,7 +79,6 @@ class Meta extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'label_tax'         => 'label',
 			'restapi_attribute' => 'meta_rendered',
 		];
 	}
@@ -92,8 +91,6 @@ class Meta extends gEditorial\Module
 				'sub_title'  => _x( 'SubTitle', 'Titles', 'geditorial-meta' ),
 				'byline'     => _x( 'Byline', 'Titles', 'geditorial-meta' ),
 				'lead'       => _x( 'Lead', 'Titles', 'geditorial-meta' ),
-				'label'      => _x( 'Label', 'Titles', 'geditorial-meta' ),
-				'label_tax'  => _x( 'Label Taxonomy', 'Titles', 'geditorial-meta' ),
 
 				'published'    => _x( 'Published', 'Titles', 'geditorial-meta' ),
 				'source_title' => _x( 'Source Title', 'Titles', 'geditorial-meta' ),
@@ -139,8 +136,6 @@ class Meta extends gEditorial\Module
 				'sub_title'  => _x( 'Text to place under the content title', 'Descriptions', 'geditorial-meta' ),
 				'byline'     => _x( 'Text to override the content author', 'Descriptions', 'geditorial-meta' ),
 				'lead'       => _x( 'Notes to place before the content text', 'Descriptions', 'geditorial-meta' ),
-				'label'      => _x( 'Text to indicate that the content is part of a column', 'Descriptions', 'geditorial-meta' ),
-				'label_tax'  => _x( 'Taxonomy for better categorizing columns', 'Descriptions', 'geditorial-meta' ),
 
 				'published'    => _x( 'Text to indicate the original date of the content', 'Descriptions', 'geditorial-meta' ),
 				'source_title' => _x( 'Custom title for the source of the content', 'Descriptions', 'geditorial-meta' ),
@@ -180,9 +175,6 @@ class Meta extends gEditorial\Module
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
 			],
-			'noops' => [
-				'label_tax' => _n_noop( 'Column Header', 'Column Headers', 'geditorial-meta' ),
-			],
 		];
 
 		if ( ! is_admin() )
@@ -198,15 +190,6 @@ class Meta extends gEditorial\Module
 			'author_column_title' => _x( 'Author', 'Column Title', 'geditorial-meta' ),
 		];
 
-		$strings['default_terms'] = [
-			'label_tax' => [
-				'introduction' => _x( 'Introduction', 'Default Term', 'geditorial-meta' ),
-				'interview'    => _x( 'Interview', 'Default Term', 'geditorial-meta' ),
-				'review'       => _x( 'Review', 'Default Term', 'geditorial-meta' ),
-				'report'       => _x( 'Report', 'Default Term', 'geditorial-meta' ),
-			],
-		];
-
 		return $strings;
 	}
 
@@ -218,8 +201,6 @@ class Meta extends gEditorial\Module
 				'sub_title'  => [ 'type' => 'title_after' ],
 				'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'lead'       => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
-				'label'      => [ 'type' => 'text' ],
-				'label_tax'  => [ 'type' => 'term', 'taxonomy' => $this->constant( 'label_tax' ) ],
 
 				'published'    => [ 'type' => 'datestring', 'quickedit' => TRUE ],
 				'source_title' => [ 'type' => 'text' ],
@@ -415,22 +396,6 @@ class Meta extends gEditorial\Module
 
 	protected function init_meta_fields()
 	{
-		$label_tax_tax_posttypes = [];
-
-		foreach ( $this->posttypes() as $posttype )
-			if ( in_array( 'label_tax', $this->posttype_fields( $posttype ), TRUE ) )
-				$label_tax_tax_posttypes[] = $posttype;
-
-		if ( count( $label_tax_tax_posttypes ) ) {
-
-			$this->register_taxonomy( 'label_tax', [
-				'show_in_rest' => FALSE, // temporarily disable in block editor
-			], $label_tax_tax_posttypes );
-
-			// $this->register_default_terms( 'label_tax' );
-		}
-
-		// default fields for custom posttypes
 		foreach ( $this->get_posttypes_support_meta() as $posttype )
 			$this->add_posttype_fields( $posttype, $this->fields['post'] );
 
@@ -924,8 +889,6 @@ class Meta extends gEditorial\Module
 			'sub_title'    => [ 'sub_title', 'st' ],
 			'byline'       => [ 'byline', 'author', 'as' ],
 			'lead'         => [ 'lead', 'le' ],
-			'label'        => [ 'label', 'ch', 'column_header' ],
-			'label_tax'    => [ 'label_tax', 'ct' ],  // term type
 			'start'        => [ 'start', 'in_issue_page_start' ], // general
 			'order'        => [ 'order', 'in_issue_order', 'in_collection_order', 'in_series_order' ], // general
 			'number_line'  => [ 'number_line', 'issue_number_line', 'number' ],
@@ -938,10 +901,18 @@ class Meta extends gEditorial\Module
 			'st' => [ 'sub_title', 'st' ],
 			'le' => [ 'lead', 'le' ],
 			'as' => [ 'byline', 'author', 'as' ],
-			'ch' => [ 'label', 'ch', 'column_header' ],
-			'ct' => [ 'label_tax', 'ct' ],
 			'es' => [ 'source_url', 'es' ],
 			'ol' => [ 'source_url', 'ol' ],
+
+			// Labeled: Currents
+			'label_string'   => [ 'label_string', 'label', 'ch', 'column_header' ],
+			'label_taxonomy' => [ 'label_taxonomy', 'label_tax', 'ct' ],
+
+			// Labeled: DEPRECATED
+			'label'     => [ 'label_string', 'label', 'ch', 'column_header' ],
+			'label_tax' => [ 'label_taxonomy', 'label_tax', 'ct' ],
+			'ch'        => [ 'label_string', 'label', 'ch', 'column_header' ],
+			'ct'        => [ 'label_taxonomy', 'label_tax', 'ct' ],
 
 			// book currents
 			'publication_edition'   => [ 'publication_edition', 'edition' ],
@@ -1026,6 +997,7 @@ class Meta extends gEditorial\Module
 
 			case 'parent_post':
 
+				// FIXME: WTF?! works only on post edit
 				// do nothing! the input name works magic
 
 				break;
@@ -1095,7 +1067,7 @@ class Meta extends gEditorial\Module
 			if ( $args['quickedit'] )
 				$excludes[] = $field;
 
-			else if ( in_array( $args['name'], [ 'label', 'label_tax', 'source_title', 'source_url', 'action_title', 'action_url' ] ) )
+			else if ( in_array( $args['name'], [ 'source_title', 'source_url', 'action_title', 'action_url' ] ) )
 				$excludes[] = $field;
 
 			else if ( in_array( $args['type'], [ 'term', 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
@@ -1131,13 +1103,6 @@ class Meta extends gEditorial\Module
 
 	public function column_row_extra( $post, $fields, $exclude )
 	{
-		if ( array_key_exists( 'label', $fields ) || array_key_exists( 'label_tax', $fields ) )
-			ModuleTemplate::metaLabel( [
-				'before' => '<li class="-row meta-label">'
-					.$this->get_column_icon( FALSE, $fields['label']['icon'], $fields['label']['title'] ),
-				'after'  => '</li>',
-			] );
-
 		if ( array_key_exists( 'source_title', $fields ) || array_key_exists( 'source_url', $fields ) )
 			ModuleTemplate::metaSource( [
 				'before' => '<li class="-row meta-source">'
