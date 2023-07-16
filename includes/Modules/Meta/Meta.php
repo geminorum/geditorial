@@ -1002,8 +1002,11 @@ class Meta extends gEditorial\Module
 		$this->clean_postmeta_legacy( $post->ID, $fields, $legacy );
 	}
 
-	public function import_posttype_field( $data, $field, $post )
+	public function import_posttype_field( $data, $field, $post, $empty_only = FALSE )
 	{
+		if ( $empty_only && FALSE !== $this->get_postmeta_field( $post->ID, $field['name'] ) )
+			return FALSE;
+
 		switch ( $field['type'] ) {
 
 			case 'parent_post':
@@ -1296,10 +1299,10 @@ class Meta extends gEditorial\Module
 			if ( $check_access && ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
 
-			if ( ! $override && ( FALSE !== ModuleTemplate::getMetaFieldRaw( $field, $post->ID, $this->key ) ) )
-				continue;
+			// if ( ! $override && ( FALSE !== ModuleTemplate::getMetaFieldRaw( $field, $post->ID, $this->key ) ) )
+			// 	continue;
 
-			$this->import_posttype_field( $data[$field], $args, $post );
+			$this->import_posttype_field( $data[$field], $args, $post, $override );
 		}
 	}
 
