@@ -2120,8 +2120,12 @@ class Module extends WordPress\Module
  				// @SEE: `esc_url()`
 				if ( $sanitized && ! preg_match( '/^http(s)?:\/\//', $sanitized ) )
 					$sanitized = 'http://'.$sanitized;
+				break;
 
-			break;
+			case 'postcode':
+				$sanitized = Core\Validation::sanitizePostCode( $data );
+				break;
+
 			case 'code':
 				$sanitized = trim( $data );
 

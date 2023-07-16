@@ -1013,6 +1013,14 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'postcode':
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'postcode';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputpostcode';
+				break;
+
 			case 'contact':
 			case 'code':
 

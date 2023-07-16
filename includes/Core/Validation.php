@@ -5,6 +5,16 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Validation extends Base
 {
 
+	public static function sanitizePostCode( $input )
+	{
+		$sanitized = Number::intval( trim( $input ), FALSE );
+
+		if ( ! self::isPostCode( $sanitized ) )
+			return '';
+
+		return $sanitized;
+	}
+
 	public static function isPostCode( $input )
 	{
 		if ( empty( $input ) )

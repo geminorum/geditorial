@@ -115,6 +115,7 @@ class Meta extends gEditorial\Module
 				'website_url'    => _x( 'Website URL', 'Titles', 'geditorial-meta' ),
 				'email_address'  => _x( 'Email Address', 'Titles', 'geditorial-meta' ),
 				'postal_address' => _x( 'Postal Address', 'Titles', 'geditorial-meta' ),
+				'postal_code'    => _x( 'Postal Code', 'Titles', 'geditorial-meta' ),
 
 				'content_embed_url' => _x( 'Content Embed URL', 'Titles', 'geditorial-meta' ),
 				'text_source_url'   => _x( 'Text Source URL', 'Titles', 'geditorial-meta' ),
@@ -161,6 +162,7 @@ class Meta extends gEditorial\Module
 				'website_url'    => _x( 'Public Website URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'email_address'  => _x( 'Email Address about the Content', 'Descriptions', 'geditorial-meta' ),
 				'postal_address' => _x( 'Postal Address about the Content', 'Descriptions', 'geditorial-meta' ),
+				'postal_code'    => _x( 'Postal Code about the Content', 'Descriptions', 'geditorial-meta' ),
 
 				'content_embed_url' => _x( 'Embeddable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
 				'text_source_url'   => _x( 'Text Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
@@ -239,6 +241,7 @@ class Meta extends gEditorial\Module
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 				'postal_address' => [ 'type' => 'address' ],
+				'postal_code'    => [ 'type' => 'postcode' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],
@@ -645,6 +648,7 @@ class Meta extends gEditorial\Module
 				case 'isbn':
 				case 'iban':
 				case 'code':
+				case 'postcode':
 				case 'venue':
 				case 'contact':
 				case 'mobile':
