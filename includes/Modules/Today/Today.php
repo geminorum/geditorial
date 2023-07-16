@@ -165,6 +165,7 @@ class Today extends gEditorial\Module
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 8 );
+		$this->action_module( 'importer', 'edited', 8 );
 	}
 
 	public function template_redirect()
@@ -1104,5 +1105,10 @@ class Today extends gEditorial\Module
 
 		if ( count( $postmeta ) )
 			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
+	}
+
+	public function importer_edited( ...$args )
+	{
+		$this->importer_saved( ...$args );
 	}
 }

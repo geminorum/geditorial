@@ -486,6 +486,7 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 8 );
+		$this->action_module( 'importer', 'edited', 8 );
 	}
 
 	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
@@ -1153,5 +1154,10 @@ class Book extends gEditorial\Module
 			if ( $value = trim( Helper::kses( $raw[$offset], 'none' ) ) )
 				$this->store_postmeta( $post->ID, $value, $field );
 		}
+	}
+
+	public function importer_edited( ...$args )
+	{
+		$this->importer_saved( ...$args );
 	}
 }

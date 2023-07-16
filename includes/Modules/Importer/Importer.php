@@ -490,6 +490,7 @@ class Importer extends gEditorial\Module
 
 			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 7 );
 			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 8 );
+			add_action( $this->hook( 'edited' ), [ $this, 'importer_saved' ], 9, 8 );
 
 			if ( ! empty( $_POST ) ) {
 
@@ -771,7 +772,7 @@ class Importer extends gEditorial\Module
 							}
 						}
 
-						$this->actions( 'saved',
+						$this->actions( empty( $insert['ID'] ) ? 'saved' : 'edited',
 							WordPress\Post::get( $post_id ),
 							$insert,
 							$prepared,
@@ -1055,6 +1056,7 @@ class Importer extends gEditorial\Module
 		return $value;
 	}
 
+	// NOTE: also fired on `importer_edited`
 	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
 		if ( $this->get_setting( 'store_source_data' ) ) {

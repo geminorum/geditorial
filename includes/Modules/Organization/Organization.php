@@ -239,6 +239,7 @@ class Organization extends gEditorial\Module
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 8 );
+		$this->action_module( 'importer', 'edited', 8 );
 	}
 
 	public function init()
@@ -516,6 +517,11 @@ class Organization extends gEditorial\Module
 				break;
 			}
 		}
+	}
+
+	public function importer_edited( ...$args )
+	{
+		$this->importer_saved( ...$args );
 	}
 
 	public function tools_settings( $sub )
