@@ -2011,6 +2011,8 @@ class Module extends WordPress\Module
 				'group'       => 'general',
 				'order'       => 1000 + $i,
 			], $args );
+
+			$this->actions( sprintf( 'init_posttype_field_%s', $field ), $fields[$field], $field, $posttype );
 		}
 
 		$gEditorialPostTypeFields[$this->key][$posttype] = Core\Arraay::multiSort( $fields, [
