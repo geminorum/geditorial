@@ -576,10 +576,11 @@ class Importer extends gEditorial\Module
 						$items  = $parser->parse();
 						$row    = array_pop( $items );
 
-						$raw       = Core\Arraay::combine( $headers, $row );
-						$data      = [ 'tax_input' => [] ];
-						$prepared  = [];
-						$comments  = [];
+						$raw        = Core\Arraay::combine( $headers, $row );
+						$data       = [ 'tax_input' => [] ];
+						$prepared   = [];
+						$comments   = [];
+						$taxonomies = [];
 
 						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
@@ -653,19 +654,19 @@ class Importer extends gEditorial\Module
 									continue;
 
 								// allows to import multiple columns for one taxonomy
-								$already = array_key_exists( $taxonomy, $data['tax_input'] ) ? $data['tax_input'][$taxonomy] : [];
+								$already = array_key_exists( $taxonomy, $taxonomies ) ? $taxonomies[$taxonomy] : [];
 
 								if ( $taxonomy_object->hierarchical ) {
 
 									if ( $terms = WordPress\Taxonomy::insertDefaultTerms( $taxonomy, Core\Arraay::sameKey( $value ), FALSE ) )
-										$data['tax_input'][$taxonomy] = Core\Arraay::prepNumeral( $already, Core\Arraay::pluck( $terms, 'term_taxonomy_id' ) );
+										$taxonomies[$taxonomy] = Core\Arraay::prepNumeral( $already, Core\Arraay::pluck( $terms, 'term_taxonomy_id' ) );
 
 								} else {
 
-									$data['tax_input'][$taxonomy] = Core\Arraay::prepString( $already, $value );
+									$taxonomies[$taxonomy] = Core\Arraay::prepString( $already, $value );
 								}
 
-								$prepared[sprintf( 'taxonomy__%s', $taxonomy )] = $data['tax_input'][$taxonomy];
+								$prepared[sprintf( 'taxonomy__%s', $taxonomy )] = $taxonomies[$taxonomy];
 
 								continue 2;
 							}
@@ -674,7 +675,7 @@ class Importer extends gEditorial\Module
 							$prepared[$field] = $value;
 						}
 
-						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
+						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $taxonomies, $posttype, $source_id, $attach_id, $raw ) ) ) {
 
 							$this->log( 'NOTICE', ( $source_id
 								? sprintf( 'ID: %s :: %s', $source_id, 'SKIPPED BY `insert` FILTER' )
@@ -692,8 +693,8 @@ class Importer extends gEditorial\Module
 								// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
 								// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
 								// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
-								// 'tax_input'      => [], //[ [ <taxonomy> => <array | string> ] ] // For custom taxonomies. Default empty.
 
+								'tax_input'      => $taxonomies, // passing only for new posts
 								'post_type'      => $posttype,
 								'post_status'    => $post_status,
 								'comment_status' => $comment_status,
@@ -710,6 +711,8 @@ class Importer extends gEditorial\Module
 							if ( $post = WordPress\Post::get( $insert['ID'] ) ) {
 
 								$post_id = $post->ID;
+
+								$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id );
 
 							} else {
 
@@ -734,6 +737,9 @@ class Importer extends gEditorial\Module
 
 								continue;
 							}
+
+							// NOTE: `wp_insert_post()` overrides existing terms
+							$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id );
 						}
 
 						foreach ( $terms_all as $taxonomy => $term_id ) {
@@ -1095,6 +1101,24 @@ class Importer extends gEditorial\Module
 		unset( $data['ID'] );
 
 		return empty( array_filter( $data ) );
+	}
+
+	private function _store_taxonomies_for_post( $post_id, $taxonomies, $source_id = NULL, $append = TRUE )
+	{
+		foreach ( $taxonomies as $taxonomy => $terms ) {
+
+			// empty list will override current terms
+			if ( $append && empty( $terms ) )
+				continue;
+
+			$result = wp_set_object_terms( $post_id, $terms, $taxonomy, $append );
+
+			if ( is_wp_error( $result ) )
+				$this->log( 'NOTICE', ( $source_id
+					? sprintf( 'ID: %s :: %s: %s', $source_id, 'ERROR SETTING TERMS FOR TAXONOMY', $taxonomy )
+					: sprintf( '%s: %s', 'ERROR SETTING TERMS FOR TAXONOMY', $taxonomy )
+				) );
+		}
 	}
 
 	private function _raise_resources( $count = 0 )
