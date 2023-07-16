@@ -436,8 +436,16 @@ class Meta extends gEditorial\Module
 
 		$this->add_posttype_fields( 'page' );
 
+		$this->action( 'wp_loaded' );
 		$this->filter( 'meta_field', 6, 5, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
+	}
+
+	public function wp_loaded()
+	{
+		// initiate the posttype fields for each posttype
+		foreach ( $this->posttypes() as $posttype )
+			$this->get_posttype_fields( $posttype );
 	}
 
 	protected function register_meta_fields()
