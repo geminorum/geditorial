@@ -3210,7 +3210,7 @@ class Module extends WordPress\Module
 			$posttypes = $this->posttypes();
 
 		else if ( ! is_array( $posttypes ) )
-			$posttypes = [ $this->constant( $posttypes ) ];
+			$posttypes = $posttypes ? [ $this->constant( $posttypes ) ] : '';
 
 		$args = self::recursiveParseArgs( $atts, [
 			'labels'               => $this->get_taxonomy_labels( $constant ),
