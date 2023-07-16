@@ -868,6 +868,75 @@ class MetaBox extends WordPress\Main
 	}
 
 	/**
+	 * renders an general textarea tag for forms in a metabox
+	 *
+	 * NOTE: HTML5 <textarea> element does not support the pattern attribute.
+	 *
+	 * @param  array $field
+	 * @param  null|int|object $post
+	 * @param  string $module
+	 * @return bool $success
+	 */
+	public static function renderFieldTextarea( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+		$wrap  = [ 'field-wrap', '-textarea' ];
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		$atts = [
+			// 'rows'        => '1',
+			// 'cols'        => '40',
+			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'placeholder' => $args['title'],
+			'class'       => [
+				sprintf( '%s-textarea', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				'textarea-autosize',
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'] ?: $args['name'],
+				'meta-desc'  => $args['description'] ?: '',
+			],
+		];
+
+		switch ( $args['type'] ) {
+
+			case 'address':
+			case 'note':
+				$atts['rows'] = '1';
+				$atts['data']['ortho'] = 'html';
+				break;
+
+			default:
+				$atts['data']['ortho'] = 'html';
+				$wrap[] = sprintf( '-textarea%s', $args['type'] ?: 'unknowntype' );
+		}
+
+		echo Core\HTML::wrap( Core\HTML::tag( 'textarea', $atts, esc_textarea( $value ) ), $wrap );
+
+		return TRUE;
+	}
+
+	/**
 	 * renders an general input tag for forms in a metabox
 	 *
 	 * @param  array $field

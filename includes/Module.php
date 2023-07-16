@@ -2188,6 +2188,7 @@ class Module extends WordPress\Module
 				$sanitized = trim( Helper::kses( $data, 'none' ) );
 
 			break;
+			case 'address':
 			case 'note':
 			case 'textarea':
 			case 'widget': // FIXME: maybe general note fields displayed by a meta widget: `primary`/`side notes`

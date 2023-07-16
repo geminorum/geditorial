@@ -181,7 +181,7 @@ class Contest extends gEditorial\Module
 
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
-				'postal_address' => [ 'type' => 'note' ],
+				'postal_address' => [ 'type' => 'address' ],
 			],
 			'_supported' => [
 				'submission_datetime' => [

@@ -238,7 +238,7 @@ class Meta extends gEditorial\Module
 
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
-				'postal_address' => [ 'type' => 'note' ],
+				'postal_address' => [ 'type' => 'address' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],
@@ -672,13 +672,17 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldNumber( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
 
 				break;
-				case 'note':
-				case 'textarea':
 				case 'widget':
 
 					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
+					break;
 
-				break;
+				case 'address':
+				case 'note':
+				case 'textarea':
+					ModuleMetaBox::renderFieldTextarea( $args, $post, NULL );
+					break;
+
 				case 'parent_post':
 
 					ModuleMetaBox::renderFieldPostParent( $args, $post );

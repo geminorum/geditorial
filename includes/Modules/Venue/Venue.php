@@ -157,7 +157,7 @@ class Venue extends gEditorial\Module
 				'street_address' => [
 					'title'       => _x( 'Street Address', 'Field Title', 'geditorial-venue' ),
 					'description' => _x( 'Full street address, including city, state etc.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'note',
+					'type'        => 'address',
 				],
 				'phone_number' => [
 					'title'       => _x( 'Phone Number', 'Field Title', 'geditorial-venue' ),
