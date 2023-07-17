@@ -582,6 +582,7 @@ class Importer extends gEditorial\Module
 						$prepared   = [];
 						$comments   = [];
 						$taxonomies = [];
+						$post_id    = FALSE;
 
 						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
@@ -693,16 +694,15 @@ class Importer extends gEditorial\Module
 							continue;
 						}
 
-						// only if it's new!
 						if ( empty( $insert['ID'] ) ) {
 
+							// only if it's new!
 							$insert = array_merge( [
 								// 'post_name'      => '', // The name (slug) for your post
 								// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
 								// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
 								// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
 
-								'tax_input'      => $taxonomies, // passing only for new posts
 								'post_type'      => $posttype,
 								'post_status'    => $post_status,
 								'comment_status' => $comment_status,
@@ -712,6 +712,8 @@ class Importer extends gEditorial\Module
 							if ( $source_id )
 								$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
 
+							$post_id = wp_insert_post( $insert, TRUE );
+
 						} else if ( $this->_check_insert_is_empty( $insert, $insert['ID'] ) ) {
 
 							// TODO: maybe manually store: `tax_input`/`meta_input` to avoid `wp_insert_post`
@@ -719,8 +721,6 @@ class Importer extends gEditorial\Module
 							if ( $post = WordPress\Post::get( $insert['ID'] ) ) {
 
 								$post_id = $post->ID;
-
-								$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id );
 
 							} else {
 
@@ -735,20 +735,29 @@ class Importer extends gEditorial\Module
 						} else {
 
 							$post_id = wp_insert_post( $insert, TRUE );
-
-							if ( is_wp_error( $post_id ) ) {
-
-								$this->log( 'NOTICE', ( $source_id
-									? sprintf( 'ID: %s :: %s', $source_id, $post_id->get_error_message() )
-									: $post_id->get_error_message()
-								) );
-
-								continue;
-							}
-
-							// NOTE: `wp_insert_post()` overrides existing terms
-							$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id );
 						}
+
+						if ( ! $post_id ) {
+
+							$this->log( 'NOTICE', ( $source_id
+								? sprintf( 'ID: %s :: %s', $source_id, 'SOMETHING IS WRONG!' )
+								: 'SOMETHING IS WRONG!'
+							) );
+
+							continue;
+
+						} else if ( is_wp_error( $post_id ) ) {
+
+							$this->log( 'NOTICE', ( $source_id
+								? sprintf( 'ID: %s :: %s', $source_id, $post_id->get_error_message() )
+								: $post_id->get_error_message()
+							) );
+
+							continue;
+						}
+
+						// NOTE: `wp_insert_post()` overrides existing terms
+						$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id );
 
 						foreach ( $terms_all as $taxonomy => $term_id ) {
 
