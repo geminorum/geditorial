@@ -857,6 +857,8 @@ class MetaBox extends WordPress\Main
 			'context'     => NULL, // default is `mainbox`
 			'quickedit'   => FALSE,
 			'values'      => [],
+			'none_title'  => NULL,
+			'none_value'  => '',
 			'repeat'      => FALSE,
 			'ltr'         => FALSE,
 			'taxonomy'    => FALSE,
@@ -1133,6 +1135,15 @@ class MetaBox extends WordPress\Main
 
 		if ( is_null( $field['description'] ) )
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		if ( is_null( $args['none_title'] ) )
+			$args['none_title'] = self::getString( $args['name'], $post->post_type, 'none', Settings::showOptionNone( $args['title'] ) );
+
+		if ( $args['none_title'] )
+			$html.= Core\HTML::tag( 'option', [
+				'selected' => $selected == $args['none_value'],
+				'value'    => $args['none_value'],
+			], $args['none_title'] );
 
 		foreach ( $args['values'] as $value => $label )
 			$html.= Core\HTML::tag( 'option', [

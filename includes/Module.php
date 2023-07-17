@@ -1953,8 +1953,10 @@ class Module extends WordPress\Module
 
 			$args = isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [];
 
-			if ( ! array_key_exists( 'context', $args )
-				&& array_key_exists( 'type', $args ) ) {
+			if ( ! array_key_exists( 'type', $args ) )
+				$args['type'] = 'text';
+
+			if ( ! array_key_exists( 'context', $args ) ) {
 
 				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
 					$args['context'] = 'nobox'; // OLD: 'raw'
@@ -1963,8 +1965,7 @@ class Module extends WordPress\Module
 					$args['context'] = 'lonebox'; // OLD: 'lone'
 			}
 
-			if ( ! array_key_exists( 'default', $args )
-				&& array_key_exists( 'type', $args ) ) {
+			if ( ! array_key_exists( 'default', $args ) ) {
 
 				if ( in_array( $args['type'], [ 'array' ] ) || ! empty( $args['repeat'] ) )
 					$args['default'] = [];
@@ -1976,9 +1977,8 @@ class Module extends WordPress\Module
 					$args['default'] = '';
 			}
 
-			if ( ! array_key_exists( 'quickedit', $args )
-				&& array_key_exists( 'type', $args ) )
-					$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
+			if ( ! array_key_exists( 'quickedit', $args ) )
+				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 
 			// TODO: migrate!
 			// $args = PostTypeFields::getFieldDefaults( $field, $args );
@@ -1987,6 +1987,7 @@ class Module extends WordPress\Module
 				$args['icon'] = $this->get_posttype_field_icon( $field, $posttype, $args );
 
 			$fields[$field] = self::atts( [
+				'type'        => 'text',
 				'name'        => $field,
 				'rest'        => $field, // FALSE to disable
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
@@ -1999,10 +2000,11 @@ class Module extends WordPress\Module
 				'default'     => NULL, // currently only on rest
 				'datatype'    => NULL, // DataType Class
 				'icon'        => 'smiley',
-				'type'        => 'text',
 				'context'     => 'mainbox', // OLD: 'main'
 				'quickedit'   => FALSE,
-				'values'      => [],
+				'values'      => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
+				'none_title'  => $this->get_string( $field, $posttype, 'none', NULL ),
+				'none_value'  => '',
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,
 				'taxonomy'    => FALSE,
