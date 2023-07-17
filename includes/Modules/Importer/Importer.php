@@ -642,7 +642,14 @@ class Importer extends gEditorial\Module
 								case 'importer_post_content': $data['post_content'] = $prepared[$field] = $value; continue 2;
 								case 'importer_post_excerpt': $data['post_excerpt'] = $prepared[$field] = $value; continue 2;
 
-								case 'importer_comment_content': $comments[]['comment_content'] = $prepared[$field] = $value; continue 2;
+								case 'importer_comment_content':
+
+									// NOTE: comments have no overrides!
+									if ( ! WordPress\Strings::isEmpty( $value ) )
+										$comments[] = [ 'comment_content' => $value ];
+
+									$prepared[$field] = $value;
+									continue 2;
 							}
 
 							foreach ( $all_taxonomies as $taxonomy => $taxonomy_object ) {
@@ -751,7 +758,7 @@ class Importer extends gEditorial\Module
 							wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $term_id ), $taxonomy, TRUE );
 						}
 
-						if ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) {
+						if ( FALSE !== ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
 
 							foreach ( $comments as $comment ) {
 
