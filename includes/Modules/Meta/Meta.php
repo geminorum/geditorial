@@ -796,87 +796,6 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	// FIXME: DROP THIS!
-	public function sanitize_post_meta( $postmeta, $fields, $post )
-	{
-		if ( ! count( $fields ) )
-			return $postmeta;
-
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return $postmeta;
-
-		if ( ! $this->nonce_verify( 'mainbox' )
-			&& ! $this->nonce_verify( 'nobox' ) )
-				return $postmeta;
-
-		// MAYBE: check for `edit_post_meta`
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
-			return $postmeta;
-
-		foreach ( $fields as $field => $args ) {
-
-			switch ( $args['type'] ) {
-
-				case 'term':
-
-					if ( WordPress\Taxonomy::can( $args['taxonomy'], 'assign_terms' ) )
-						ModuleMetaBox::setPostMetaField_Term( $post->ID, $field, $args['taxonomy'] );
-
-				break;
-				case 'embed':
-				case 'text_source':
-				case 'audio_source':
-				case 'video_source':
-				case 'image_source':
-				case 'downloadable':
-				case 'link':
-
-					ModuleMetaBox::setPostMetaField_URL( $postmeta, $field );
-
-				break;
-				case 'date':
-				case 'datetime':
-				case 'venue':
-				case 'contact':
-				case 'phone':
-				case 'mobile':
-				case 'identity':
-				case 'isbn':
-				case 'iban':
-				case 'email':
-				case 'code':
-
-					ModuleMetaBox::setPostMetaField_Code( $postmeta, $field );
-
-				break;
-				case 'price':
-				case 'number':
-
-					ModuleMetaBox::setPostMetaField_Number( $postmeta, $field );
-
-				break;
-				case 'select':
-				case 'datestring':
-				case 'text':
-				case 'title_before':
-				case 'title_after':
-
-					ModuleMetaBox::setPostMetaField_String( $postmeta, $field );
-
-				break;
-				case 'note':
-				case 'textarea':
-				case 'widget':
-				case 'postbox_legacy':
-				case 'postbox_html':
-
-					ModuleMetaBox::setPostMetaField_Text( $postmeta, $field );
-			}
-		}
-
-		return $postmeta;
-	}
-
 	// FIXME: Move to ModuleHelper
 	public function sanitize_postmeta_field_key( $field_key )
 	{
@@ -1015,24 +934,6 @@ class Meta extends gEditorial\Module
 
 				return $this->set_postmeta_field( $post->ID, $field['name'], $this->sanitize_posttype_field( $data, $field, $post ) );
 		}
-	}
-
-	// FIXME: DROP THIS!
-	public function store_metabox_OLD( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		// NOUNCES MUST CHECKED BY FILTERS
-		// CAPABILITIES MUST CHECKED BY FILTERS : if (current_user_can($post->cap->edit_post, $post_id))
-
-		$this->store_postmeta( $post_id,
-			$this->sanitize_post_meta(
-				$this->get_postmeta_legacy( $post->ID ),
-				$this->get_posttype_fields( $post->post_type ),
-				$post
-			)
-		);
 	}
 
 	public function manage_pages_columns( $columns )

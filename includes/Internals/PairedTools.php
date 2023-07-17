@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -10,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 trait PairedTools
 {
 
+	// TODO: assign parent terms into suported
 	protected function paired_tools_render_card( $posttype_key, $taxonomy_key )
 	{
 		if ( ! $this->_paired )

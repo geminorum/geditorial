@@ -2249,14 +2249,15 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: fallback will merge if is an array
-	public function get_strings( $subgroup, $group = 'titles', $fallback = [] )
+	// NOTE: moveup is FALSE by default
+	public function get_strings( $subgroup, $group = 'titles', $fallback = [], $moveup = FALSE )
 	{
 		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
 			return is_array( $fallback )
 				? array_merge( $fallback, $this->strings[$group][$subgroup] )
 				: $this->strings[$group][$subgroup];
 
-		if ( isset( $this->strings[$group] ) )
+		if ( $moveup && isset( $this->strings[$group] ) )
 			return is_array( $fallback )
 				? array_merge( $fallback, $this->strings[$group] )
 				: $this->strings[$group];
@@ -2264,7 +2265,7 @@ class Module extends WordPress\Module
 		return $fallback;
 	}
 
-	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE )
+	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE, $moveup = TRUE )
 	{
 		if ( $subgroup && isset( $this->strings[$group][$subgroup][$string] ) )
 			return $this->strings[$group][$subgroup][$string];
@@ -2272,7 +2273,7 @@ class Module extends WordPress\Module
 		if ( isset( $this->strings[$group]['post'][$string] ) )
 			return $this->strings[$group]['post'][$string];
 
-		if ( isset( $this->strings[$group][$string] ) )
+		if ( $moveup && isset( $this->strings[$group][$string] ) )
 			return $this->strings[$group][$string];
 
 		if ( FALSE === $fallback )

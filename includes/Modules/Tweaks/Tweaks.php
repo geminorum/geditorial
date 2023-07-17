@@ -285,7 +285,7 @@ class Tweaks extends gEditorial\Module
 			if ( $enqueue )
 				$this->enqueue_asset_js( [
 					'settings' => $this->options->settings,
-					'strings'  => $this->get_strings( 'editpost', 'js', [] ),
+					'strings'  => $this->get_strings( 'editpost', 'js' ),
 				], $screen );
 
 		} else if ( 'edit' == $screen->base ) {

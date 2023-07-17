@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 
@@ -177,6 +178,16 @@ class Organization extends gEditorial\Module
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
 				'image_source_url'  => [ 'type' => 'image_source' ],
+
+				'venue_string'   => [ 'type' => 'venue' ],
+				'contact_string' => [ 'type' => 'contact' ], // url/email/phone
+				'phone_number'   => [ 'type' => 'phone' ],
+				'mobile_number'  => [ 'type' => 'mobile' ],
+
+				'website_url'    => [ 'type' => 'link' ],
+				'email_address'  => [ 'type' => 'email' ],
+				'postal_address' => [ 'type' => 'address' ],
+				'postal_code'    => [ 'type' => 'postcode' ],
 
 				'organization_code' => [
 					'title'       => _x( 'Organization Code', 'Field Title', 'geditorial-organization' ),

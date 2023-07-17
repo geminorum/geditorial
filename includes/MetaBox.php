@@ -849,9 +849,14 @@ class MetaBox extends WordPress\Main
 			'rest'        => $field, // FALSE to disable
 			'title'       => NULL, // self::getString( $field, $posttype, 'titles', $field ),
 			'description' => NULL, // self::getString( $field, $posttype, 'descriptions' ),
+			'access_view' => NULL, // @SEE: `$this->access_posttype_field()`
+			'access_edit' => NULL, // @SEE: `$this->access_posttype_field()`
 			'sanitize'    => NULL,
+			'sanitize'    => NULL, // callback
+			'prep'        => NULL, // callback
 			'pattern'     => NULL, // HTML5 input pattern
-			'default'     => '', // currently only on rest
+			'default'     => NULL, // currently only on rest
+			'datatype'    => NULL, // DataType Class
 			'icon'        => 'smiley',
 			'type'        => 'text',
 			'context'     => NULL, // default is `mainbox`
@@ -1024,6 +1029,12 @@ class MetaBox extends WordPress\Main
 				break;
 
 			case 'contact':
+				$atts['dir'] = 'ltr';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputcontact';
+				break;
+
 			case 'code':
 
 				$atts['dir'] = 'ltr';
