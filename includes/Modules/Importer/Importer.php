@@ -482,9 +482,9 @@ class Importer extends gEditorial\Module
 		return Core\HTML::sanitizeDisplay( $filtered );
 	}
 
-	public function tools_settings( $sub )
+	public function imports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
+		if ( $this->check_settings( $sub, 'imports' ) ) {
 
 			$this->filter( 'import_memory_limit' );
 
@@ -494,7 +494,7 @@ class Importer extends gEditorial\Module
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->nonce_check( 'tools', $sub );
+				$this->nonce_check( 'imports', $sub );
 
 				if ( Tablelist::isAction( 'images_import', TRUE )
 					|| Tablelist::isAction( 'images_import_as_thumbnail', TRUE ) ) {
@@ -805,9 +805,9 @@ class Importer extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_imports_html( $uri, $sub )
 	{
-		$for    = self::req( 'tools_for' );
+		$for    = self::req( 'imports_for' );
 		$images = 'images' == $for || self::req( 'images_step_two' );
 		$posts  = 'posts' == $for || self::req( 'posts_step_two' );
 		$first  = ! $for && ! $images && ! $posts;
@@ -822,23 +822,23 @@ class Importer extends gEditorial\Module
 			echo Core\HTML::tag( 'h4', _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
 
 		if ( $first || $posts )
-			$this->_render_tools_for_posts();
+			$this->_render_imports_for_posts();
 
 		if ( $first )
 			echo '<br /><hr />'.Core\HTML::tag( 'h4', _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
 
 		if ( $first || $images )
-			$this->_render_tools_for_images();
+			$this->_render_imports_for_images();
 
-		// TODO: `_render_tools_for_files()`
+		// TODO: `_render_imports_for_files()`
 		// --- import data from directory of files into fields: like excerpt
 		// - attach file from directory of files into posts with field data to rename
 
-		// TODO: `_render_tools_for_metas()`
+		// TODO: `_render_imports_for_metas()`
 		// - import data by metakey + support types: string/int/comma seperated
 	}
 
-	private function _render_tools_for_posts()
+	private function _render_imports_for_posts()
 	{
 		$field_map  = self::req( 'field_map', [] );
 		$terms_all  = self::req( 'terms_all', [] );
@@ -865,7 +865,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_key', $source_key );
-			Core\HTML::inputHidden( 'tools_for', 'posts' );
+			Core\HTML::inputHidden( 'imports_for', 'posts' );
 
 			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_key );
 
@@ -888,7 +888,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_key', $source_key );
-			Core\HTML::inputHidden( 'tools_for', 'posts' );
+			Core\HTML::inputHidden( 'imports_for', 'posts' );
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
@@ -909,7 +909,7 @@ class Importer extends gEditorial\Module
 
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
-			Core\HTML::inputHidden( 'tools_for', 'posts' );
+			Core\HTML::inputHidden( 'imports_for', 'posts' );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 
 			$this->_form_posts_map( $attach_id, $posttype );
@@ -940,7 +940,7 @@ class Importer extends gEditorial\Module
 		], 'forimages' );
 	}
 
-	private function _render_tools_for_images()
+	private function _render_imports_for_images()
 	{
 		if ( ! current_user_can( 'upload_files' ) )
 			return Core\HTML::desc( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ) );
@@ -955,7 +955,7 @@ class Importer extends gEditorial\Module
 			if ( ! WordPress\PostType::can( $args['posttype'], 'edit_posts' ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
-			Core\HTML::inputHidden( 'tools_for', 'images' );
+			Core\HTML::inputHidden( 'imports_for', 'images' );
 
 			$this->fields_current_form( $args, 'forimages' );
 			$this->_form_images_table( $args );
