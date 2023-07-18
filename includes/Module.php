@@ -1977,6 +1977,12 @@ class Module extends WordPress\Module
 					$args['default'] = '';
 			}
 
+			if ( ! array_key_exists( 'ltr', $args ) ) {
+
+				if ( in_array( $args['type'], [ 'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn' ], TRUE ) )
+					$args['ltr'] = TRUE;
+			}
+
 			if ( ! array_key_exists( 'quickedit', $args ) )
 				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 

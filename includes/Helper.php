@@ -285,6 +285,10 @@ class Helper extends WordPress\Main
 			case 'contact'    : return self::prepContact( $raw ?: $value );
 		}
 
+		// NOTE: forth priority: last resort
+		if ( array_key_exists( 'ltr', $field ) && $field['ltr'] )
+			return sprintf( '<span dir="ltr">%s</span>', Core\HTML::escape( trim( $value ) ) );
+
 		return Core\HTML::escape( trim( $value ) );
 	}
 

@@ -1080,7 +1080,10 @@ class Meta extends gEditorial\Module
 
 			echo '<label class="hidden '.$class.'">';
 				echo '<span class="title">'.$args['title'].'</span>';
-				echo '<span class="input-text-wrap"><input type="text" name="'.$name.'" class="'.$class.'" value=""></span>';
+				echo '<span class="input-text-wrap">';
+				echo '<input type="text" name="'.$name.'" class="'.$class.'" value=""';
+				echo $args['ltr'] ? ' dir="ltr"' : '';
+				echo '></span>';
 			echo '</label>';
 		}
 
