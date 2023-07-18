@@ -151,6 +151,12 @@ class StaticCovers extends gEditorial\Module
 		$this->register_shortcode( 'term_cover_shortcode' );
 	}
 
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			$this->filter_module( 'tweaks', 'column_thumb', 3, 9 );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {
