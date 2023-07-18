@@ -5391,15 +5391,27 @@ class Module extends WordPress\Module
 	{
 		remove_action( 'save_post_'.$post->post_type, [ $this, '_save_autofill_posttitle' ], 20, 3 );
 
-		if ( FALSE === ( $posttitle = $this->_get_autofill_posttitle( $post ) ) )
+		if ( FALSE === ( $posttitle = $this->get_autofill_posttitle( $post ) ) )
 			return;
 
-		if ( ! wp_update_post( [ 'ID' => $post->ID, 'post_title' => $posttitle ] ) )
+		if ( is_array( $posttitle ) )
+			$data = array_merge( $posttitle, [ 'ID' => $post->ID ] );
+
+		else
+			$data = [
+				'ID'         => $post->ID,
+				'post_title' => $posttitle,
+				'post_name'  => Core\Text::formatSlug( $posttitle ),
+			];
+
+		$updated = wp_update_post( $data );
+
+		if ( ! $updated || self::isError( $updated ) )
 			$this->log( 'FAILED', sprintf( 'updating title of post #%s', $post->ID ) );
 	}
 
 	// DEFAULT CALLBACK
-	protected function _get_autofill_posttitle( $post )
+	protected function get_autofill_posttitle( $post )
 	{
 		return FALSE;
 	}
