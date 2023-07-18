@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
@@ -485,7 +486,7 @@ class Organization extends gEditorial\Module
 		if ( 'organization_code' !== Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) )
 			return $value;
 
-		$codes = WordPress\Strings::getSeparated( $value );
+		$codes = Helper::getSeparated( $value );
 		$list  = [];
 
 		foreach ( $codes as $code )
@@ -509,7 +510,7 @@ class Organization extends gEditorial\Module
 
 			if ( 'organization_code' === Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) ) {
 
-				$codes = WordPress\Strings::getSeparated( $raw[$offset] );
+				$codes = Helper::getSeparated( $raw[$offset] );
 				$list  = [];
 
 				foreach ( $codes as $code )

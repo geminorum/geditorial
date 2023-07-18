@@ -1351,4 +1351,36 @@ class Helper extends WordPress\Main
 			return $actions;
 		} );
 	}
+
+	/**
+	 * Separates given string by set of delimiters into an array.
+	 * NOTE: applys the plugin filter on default delimiters
+	 *
+	 * @param  string $string
+	 * @param  null|string|array $delimiters
+	 * @param  null|int $limit
+	 * @param  string $delimiter
+	 * @return array $separated
+	 */
+	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
+	{
+		return WordPress\Strings::getSeparated(
+			$string,
+			$delimiters ?? self::getDelimiters( $delimiter ),
+			$limit,
+			$delimiter
+		);
+	}
+
+	/**
+	 * Retrieves the list of string delimiters.
+	 *
+	 * @param  string $default
+	 * @return null|array $delimiters
+	 */
+	public static function getDelimiters( $default = '|' )
+	{
+		return apply_filters( static::BASE.'_string_delimiters',
+			Core\Arraay::prepSplitters( GEDITORIAL_STRING_DELIMITERS, $default ) );
+	}
 }

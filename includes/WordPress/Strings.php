@@ -63,8 +63,20 @@ class Strings extends Core\Base
 		return Core\Text::trimChars( $text, $length, $append );
 	}
 
+	/**
+	 * Separates given string by set of delimiters into an array.
+	 *
+	 * @param  string $string
+	 * @param  null|string|array $delimiters
+	 * @param  null|int $limit
+	 * @param  string $delimiter
+	 * @return array $separated
+	 */
 	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
 	{
+		if ( '0' === $string || 0 === $string )
+			return [ '0' ];
+
 		if ( empty( $string ) )
 			return [];
 
@@ -83,13 +95,17 @@ class Strings extends Core\Base
 				'|',
 			];
 
-		$string = str_ireplace( $delimiters, $delimiter, $string );
+		else if ( $delimiters && is_string( $delimiters ) )
+			$delimiters = Core\Arraay::prepSplitters( $delimiters, $delimiter );
 
-		$seperated = is_null( $limit )
+		if ( ! empty( $delimiters ) )
+			$string = str_ireplace( $delimiters, $delimiter, $string );
+
+		$separated = is_null( $limit )
 			? explode( $delimiter, $string )
 			: explode( $delimiter, $string, $limit );
 
-		return Core\Arraay::prepString( $seperated );
+		return Core\Arraay::prepString( $separated );
 	}
 
 	public static function getJoined( $items, $before = '', $after = '', $empty = '', $separator = NULL )

@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 trait PostTypeFields
@@ -55,7 +56,7 @@ trait PostTypeFields
 		if ( empty( $constants[0] ) || empty( $constants[1] ) )
 			return FALSE;
 
-		$values = WordPress\Strings::getSeparated( $data );
+		$values = Helper::getSeparated( $data );
 		$list   = [];
 
 		foreach ( $values as $value )

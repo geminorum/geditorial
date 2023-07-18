@@ -118,9 +118,10 @@ class Plugin
 	private function define_constants()
 	{
 		$constants = [
-			'GEDITORIAL_BETA_FEATURES' => TRUE,
-			'GEDITORIAL_LOAD_PRIVATES' => FALSE,
-			'GEDITORIAL_THRIFT_MODE'   => FALSE,
+			'GEDITORIAL_BETA_FEATURES'     => TRUE,
+			'GEDITORIAL_LOAD_PRIVATES'     => FALSE,
+			'GEDITORIAL_THRIFT_MODE'       => FALSE,
+			'GEDITORIAL_STRING_DELIMITERS' => NULL,
 
 			'GEDITORIAL_CACHE_DIR' => WP_CONTENT_DIR.'/cache', // FALSE to disable
 			'GEDITORIAL_CACHE_URL' => WP_CONTENT_URL.'/cache',
