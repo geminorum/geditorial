@@ -7,6 +7,20 @@ trait ViewEngines
 
 	protected $view_engines = [];
 
+	protected function render_view_string( $template, $data = [], $verbose = TRUE )
+	{
+		if ( empty( $this->view_engines[0] ) )
+			$this->view_engines[0] = $this->get_view_engine( 0 );
+
+		$html    = $this->view_engines[0]->render( $template, $data );
+		$filtred = $this->filters( 'render_view_string', $html, $template, $data );
+
+		if ( ! $verbose )
+			return $filtred;
+
+		echo $filtred;
+	}
+
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
 	protected function render_view( $part, $data = [], $path = NULL, $verbose = TRUE )
 	{
@@ -36,14 +50,17 @@ trait ViewEngines
 			// 'cache'           => $this->path.'views/cache',
 			'cache'           => get_temp_dir(),
 
-			'loader'                => new \Mustache_Loader_FilesystemLoader( $path ),
-			'partials_loader'       => new \Mustache_Loader_FilesystemLoader( $path.'/partials' ),
 			'template_class_prefix' => sprintf( '__%s_%s_', $this->base, $this->key ),
 
 			'escape' => static function( $value ) {
 				return htmlspecialchars( $value, ENT_COMPAT, 'UTF-8' );
 			},
-		] ;
+		];
+
+		if ( $path ) {
+			$args['loader']          = new \Mustache_Loader_FilesystemLoader( $path );
+			$args['partials_loader'] = new \Mustache_Loader_FilesystemLoader( $path.'/partials' );
+		}
 
 		return new \Mustache_Engine( $args );
 	}
