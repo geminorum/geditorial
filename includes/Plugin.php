@@ -166,6 +166,7 @@ class Plugin
 			'autoload'   => FALSE, // autoloading a module will remove the ability to enable/disable it
 			'disabled'   => FALSE, // or string explaining why the module is not available
 			'access'     => 'unknown', // or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
+			'keywords'   => [],
 		];
 
 		$this->_modules->{$args['name']} = (object) array_merge( $defaults, $args );

@@ -4,7 +4,16 @@ jQuery(function ($) {
   const moduleList = new List('geditorial-settings', {
     listClass: '-list',
     searchClass: '-search',
-    valueNames: ['-title', '-description', '-th', '-module-key', '-module-title', 'status']
+    valueNames: [
+      '-title',
+      '-description',
+      '-th',
+      '-module-key',
+      '-module-title',
+      '-module-access',
+      '-module-keywords',
+      'status'
+    ]
   });
 
   // https://github.com/javve/list.js/issues/366#issuecomment-274942284
