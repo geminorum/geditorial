@@ -11,7 +11,8 @@
 
     const tagID = $(this).parents('tr').attr('id');
     const postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label');
-    const postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
+    // const postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
+    const postEditDate = $(':input[name="jj"]', '.inline-edit-row').parents('fieldset.inline-edit-date');
 
     for (var field in p[module].fields) { // eslint-disable-line no-var
       switch (p[module].fields[field]) {
@@ -45,7 +46,8 @@
               .find('div.' + prefix + field + '-value')
               .text())
             .parents('label')
-            .insertAfter(postNameLabel);
+            // .insertAfter(postNameLabel); // post_title maybe disabled for this posttype!
+            .insertBefore(postEditDate);
       }
     }
   });

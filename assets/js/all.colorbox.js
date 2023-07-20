@@ -10,13 +10,13 @@
         title: instance.attr('title'),
         iframe: true,
         fastIframe: false,
-        closeButton: false,
+        // closeButton: false,
         // preloading: false,
         transition: 'none',
         width: '95%',
         height: '85%',
-        maxWidth: instance.data('max-width') || '980px',
-        maxHeight: instance.data('max-height') || '640px',
+        maxWidth: instance.data('max-width') || '980',
+        maxHeight: instance.data('max-height') || '640',
         onClosed: function () {
           // @REF: https://www.sitepoint.com/jquery-custom-events/
           $.event.trigger({
