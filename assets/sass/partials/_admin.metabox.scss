@@ -126,6 +126,8 @@ $spacer: 1rem !default;
       }
     }
 
+    // &.-inputgeneral {}
+
     &.-inputtext {
       input {
         width: 100%;
@@ -156,6 +158,18 @@ $spacer: 1rem !default;
 
         /*rtl:ignore*/
         direction: ltr;
+      }
+    }
+
+    &.-inputvenue {
+      input {
+        width: 100%;
+      }
+    }
+
+    &.-inputtext-unknowntype {
+      input[type="text"] {
+        width: 100%;
       }
     }
 
