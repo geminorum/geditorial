@@ -695,7 +695,7 @@ class Book extends gEditorial\Module
 		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
 		$this->filter_module( 'meta', 'sanitize_posttype_field', 4 );
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
-		$this->filter( 'meta_field', 6, 9, FALSE, $this->base );
+		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 
 		$this->filter_module( 'national_library', 'default_posttype_isbn_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
@@ -1061,7 +1061,7 @@ class Book extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args )
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		switch ( $field ) {
 			case 'publication_isbn': return ModuleHelper::ISBN( $raw );

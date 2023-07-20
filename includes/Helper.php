@@ -217,14 +217,13 @@ class Helper extends WordPress\Main
 			return $empty;
 
 		if ( Core\Email::is( $value ) )
-			$prepared = Core\HTML::mailto( $value, $title );
+			$prepared = Core\Email::prep( $value, [ 'title' => $title ], 'display' );
 
 		else if ( Core\URL::isValid( $value ) )
-			// $prepared = HTML::link( $title, URL::untrail( $value ) );
 			$prepared = Core\HTML::link( $title, URL::prepTitle( $value ) );
 
 		else if ( is_numeric( str_ireplace( [ '+', '-', '.' ], '', $value ) ) )
-			$prepared = Core\HTML::tel( $value, FALSE, $title );
+			$prepared = Core\Phone::prep( $value, [ 'title' => $title ], 'display' );
 
 		else
 			$prepared = Core\HTML::escape( $value );
@@ -246,8 +245,8 @@ class Helper extends WordPress\Main
 			case 'facebook' : return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
 			case 'instagram': return Core\Third::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
 			case 'telegram' : return Core\Third::htmlHandle( $value, 'https://t.me/' );
-			case 'phone'    : return Core\HTML::tel( $raw ?: $value );
-			case 'mobile'   : return Core\HTML::tel( $raw ?: $value );
+			case 'phone'    : return Core\Email::prep( $raw ?: $value, $field, 'admin' );
+			case 'mobile'   : return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
 			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
 		}
 
@@ -274,6 +273,15 @@ class Helper extends WordPress\Main
 					return Core\URL::isValid( $raw ?: $value )
 						? Core\HTML::link( URL::prepTitle( $raw ?: $value ), $raw ?: $value )
 						: sprintf( '<span title="%s">@%s</span>', empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ), $raw ?: $value );
+
+				case 'email':
+					return Core\Email::prep( $raw ?: $value, $field, 'admin' );
+
+				case 'phone':
+					return Core\Phone::prep( $raw ?: $value, $field, 'admin' );
+
+				case 'mobile':
+					return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
 			}
 		}
 

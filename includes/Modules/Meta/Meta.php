@@ -402,7 +402,7 @@ class Meta extends gEditorial\Module
 		$this->add_posttype_fields( 'page' );
 
 		$this->action( 'wp_loaded' );
-		$this->filter( 'meta_field', 6, 5, FALSE, $this->base );
+		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
 	}
 
@@ -500,7 +500,7 @@ class Meta extends gEditorial\Module
 
 	public function attribute_get_callback( $post, $attr, $request, $object_type )
 	{
-		return $this->_get_rest_meta_rendered( (int) $post['id'] );
+		return $this->get_posttype_fields_data( (int) $post['id'], FALSE, 'rest' );
 	}
 
 	public function pairedrest_prepped_post( $prepped, $post, $parent )
@@ -509,11 +509,11 @@ class Meta extends gEditorial\Module
 			return $prepped;
 
 		return array_merge( $prepped, [
-			$this->constant( 'restapi_attribute' ) => $this->_get_rest_meta_rendered( $post, TRUE ),
+			$this->constant( 'restapi_attribute' ) => $this->get_posttype_fields_data( $post, TRUE, 'rest' ),
 		] );
 	}
 
-	private function _get_rest_meta_rendered( $post, $raw = FALSE )
+	public function get_posttype_fields_data( $post, $raw = FALSE, $context = 'view' )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -529,6 +529,7 @@ class Meta extends gEditorial\Module
 			$meta = ModuleTemplate::getMetaField( $field, [
 				'id'       => $post->ID,
 				'default'  => $args['default'],
+				'context'  => $context,
 				'noaccess' => FALSE,
 			] );
 
@@ -1092,7 +1093,7 @@ class Meta extends gEditorial\Module
 
 	// @REF: `Template::getMetaField()`
 	// TODO: for `iban`: display bank as title attr
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args )
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		switch ( $field ) {
 
@@ -1104,7 +1105,9 @@ class Meta extends gEditorial\Module
 				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 
 			case 'date_of_birth':
-				return Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
+				return $context == 'print'
+					? Datetime::prepForDisplay( trim( $raw ), 'Y/n/j' )
+					: Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
 		}
 
 		switch ( $field_args['type'] ) {
@@ -1123,38 +1126,40 @@ class Meta extends gEditorial\Module
 				return Helper::prepContact( trim( $raw ) );
 
 			case 'email':
-				return apply_shortcodes( sprintf( '[email]%s[/email]', trim( $raw ) ) );
+				return Core\Email::prep( $raw, $field_args, $context );
 
 			case 'phone':
+				return Core\Phone::prep( trim( $raw ), $field_args, $context );
+
 			case 'mobile':
-				return apply_shortcodes( sprintf( '[tel]%s[/tel]', trim( $raw ) ) );
+				return Core\Mobile::prep( trim( $raw ), $field_args, $context );
 
 			case 'isbn':
 				return Core\HTML::link( Core\ISBN::prep( $raw, TRUE ), Info::lookupISBN( $raw ), TRUE );
 
 			case 'date':
-				return Datetime::prepForDisplay( trim( $raw ), 'Y/m/d' );
+				return Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j' : 'Y/m/d' );
 
 			case 'datetime':
-				return Datetime::prepForDisplay( trim( $raw ), 'Y/m/d H:i' );
+				return Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j H:i' : 'Y/m/d H:i' );
 
 			case 'datestring':
 				return Core\Number::localize( Datetime::stringFormat( $raw ) );
 
 			case 'embed':
-				return Template::doEmbedShortCode( trim( $raw ), $post );
+				return Template::doEmbedShortCode( trim( $raw ), $post, $context );
 
 			case 'text_source':
-				return Template::doMediaShortCode( trim( $raw ), 'text', $post );
+				return Template::doMediaShortCode( trim( $raw ), 'text', $post, $context );
 
 			case 'audio_source':
-				return Template::doMediaShortCode( trim( $raw ), 'audio', $post );
+				return Template::doMediaShortCode( trim( $raw ), 'audio', $post, $context );
 
 			case 'video_source':
-				return Template::doMediaShortCode( trim( $raw ), 'video', $post );
+				return Template::doMediaShortCode( trim( $raw ), 'video', $post, $context );
 
 			case 'image_source':
-				return Template::doMediaShortCode( trim( $raw ), 'image', $post );
+				return Template::doMediaShortCode( trim( $raw ), 'image', $post, $context );
 		}
 
 		return $meta;

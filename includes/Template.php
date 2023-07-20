@@ -517,7 +517,7 @@ class Template extends WordPress\Main
 			'fallback' => FALSE,
 			'default'  => FALSE,
 			'noaccess' => NULL, // returns upon no access, `NULL` for `default` arg
-			'context'  => 'view', // for access checks
+			'context'  => 'view', // for access checks // `FALSE` to disable checks
 			'filter'   => FALSE, // or `__do_embed_shortcode`
 			'trim'     => FALSE, // or number of chars
 			'before'   => '',
@@ -545,13 +545,16 @@ class Template extends WordPress\Main
 		if ( ! $field = gEditorial()->module( 'meta' )->get_posttype_field_args( $field_key, $post->post_type ) )
 			return $args['default']; // field data found but currently not enabled for the posttype
 
-		$access = gEditorial()->module( 'meta' )->access_posttype_field( $field, $post, $args['context'] );
+		if ( FALSE !== $args['context'] ) {
 
-		if ( ! $access )
-			return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
+			$access = gEditorial()->module( 'meta' )->access_posttype_field( $field, $post, $args['context'] );
 
-		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field );
-		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field );
+			if ( ! $access )
+				return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
+		}
+
+		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
+		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
 			$args['filter'] = [ __CLASS__, 'doEmbedShortCode' ];
@@ -592,7 +595,7 @@ class Template extends WordPress\Main
 	 * @param string $meta
 	 * @return string $html
 	 */
-	public static function doEmbedShortCode( $meta, $post = FALSE )
+	public static function doEmbedShortCode( $meta, $post = FALSE, $context = 'display' )
 	{
 		global $wp_embed;
 
@@ -601,10 +604,10 @@ class Template extends WordPress\Main
 		if ( ! Core\URL::isValid( $url ) )
 			return $meta;
 
-		return $wp_embed->run_shortcode( sprintf( '[embed src="%s"]%s[/embed]', $url, $url ) );
+		return $wp_embed->run_shortcode( sprintf( '[embed src="%s" context="%s"]%s[/embed]', $url, $context, $url ) );
 	}
 
-	public static function doMediaShortCode( $meta, $type = NULL, $post = FALSE )
+	public static function doMediaShortCode( $meta, $type = NULL, $post = FALSE, $context = 'display' )
 	{
 		$html = trim( $meta );
 
@@ -618,7 +621,7 @@ class Template extends WordPress\Main
 
 			case 'embed':
 
-				$html = self::doEmbedShortCode( $meta, $post );
+				$html = self::doEmbedShortCode( $meta, $post, $context );
 				break;
 
 			// case 'application': // TODO
@@ -635,23 +638,23 @@ class Template extends WordPress\Main
 			case 'audio':
 
 				// @SEE: https://wordpress.org/documentation/article/audio-shortcode/
-				$html = apply_shortcodes( sprintf( '[audio src="%s" /]', $meta ) );
+				$html = apply_shortcodes( sprintf( '[audio src="%s" context="%s" /]', $meta, $context ) );
 				break;
 
 			case 'video':
 
 				// @SEE: https://wordpress.org/documentation/article/video-shortcode/
-				$html = apply_shortcodes( sprintf( '[video src="%s" /]', $meta ) );
+				$html = apply_shortcodes( sprintf( '[video src="%s" context="%s" /]', $meta, $context ) );
 				break;
 
 			case 'image':
 
 				// TODO: pass port title as alt into shortcode
-				$html = apply_shortcodes( sprintf( '[image src="%s" /]', $meta ) );
+				$html = apply_shortcodes( sprintf( '[image src="%s" context="%s" /]', $meta, $context ) );
 				break;
 		}
 
-		return apply_filters( static::BASE.'_media_shortcode', $html, $meta, $type );
+		return apply_filters( static::BASE.'_media_shortcode', $html, $meta, $type, $context );
 	}
 
 	// FIXME: DEPRECATED
