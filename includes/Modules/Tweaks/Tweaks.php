@@ -14,7 +14,8 @@ use geminorum\gEditorial\WordPress;
 class Tweaks extends gEditorial\Module
 {
 
-	protected $priority_init = 14;
+	protected $priority_init      = 14;
+	protected $priority_init_ajax = 14;
 
 	private $_page_templates = [];
 	private $_site_user_id   = [];
@@ -200,8 +201,10 @@ class Tweaks extends gEditorial\Module
 				'id_column_title'       => _x( 'ID', 'Column Title', 'geditorial-tweaks' ),
 			],
 			'js' => [
-				'search_title'       => _x( 'Type to filter by', 'Meta Box Search Title', 'geditorial-tweaks' ),
-				'search_placeholder' => _x( 'Search &hellip;', 'Meta Box Search Placeholder', 'geditorial-tweaks' ),
+				'editpost' => [
+					'search_title'       => _x( 'Type to filter by', 'Meta Box Search Title', 'geditorial-tweaks' ),
+					'search_placeholder' => _x( 'Search &hellip;', 'Meta Box Search Placeholder', 'geditorial-tweaks' ),
+				],
 			],
 		];
 	}

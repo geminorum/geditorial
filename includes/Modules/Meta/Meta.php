@@ -1083,6 +1083,7 @@ class Meta extends gEditorial\Module
 				echo '<span class="title">'.$args['title'].'</span>';
 				echo '<span class="input-text-wrap">';
 				echo '<input type="text" name="'.$name.'" class="'.$class.'" value=""';
+				echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
 				echo $args['ltr'] ? ' dir="ltr"' : '';
 				echo '></span>';
 			echo '</label>';
@@ -1534,7 +1535,7 @@ class Meta extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
+		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = $this->get_importer_fields( $post->post_type, TRUE );
@@ -1546,7 +1547,7 @@ class Meta extends gEditorial\Module
 
 	public function importer_edited( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
+		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = $this->get_importer_fields( $post->post_type, TRUE );

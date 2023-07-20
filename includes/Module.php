@@ -5387,7 +5387,7 @@ class Module extends WordPress\Module
 	public function _admin_enabled( $extra = [] )
 	{
 		add_action( 'admin_body_class', function( $classes ) use ( $extra ) {
-			return $classes.' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
+			return trim( $classes ).' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
 		} );
 	}
 
@@ -5505,6 +5505,17 @@ class Module extends WordPress\Module
 			case 'published' : return 'calendar-alt';
 			case 'lead'      : return 'editor-paragraph';
 			case 'label'     : return 'megaphone';
+		}
+
+		if ( ! empty( $args['type'] ) ) {
+			switch ( $args['type'] ) {
+				case 'email'   : return 'email';
+				case 'phone'   : return 'phone';
+				case 'mobile'  : return 'smartphone';
+				case 'identity': return 'id-alt';
+				case 'iban'    : return 'bank';
+				case 'isbn'    : return 'book';
+			}
 		}
 
 		return 'admin-post';

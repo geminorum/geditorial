@@ -1141,7 +1141,7 @@ class Book extends gEditorial\Module
 	// FIXME: use `$prepared[$field]`
 	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
+		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );

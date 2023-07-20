@@ -134,10 +134,10 @@ class Tabloid extends gEditorial\Module
 
 	protected function render_overview_content()
 	{
-		if ( ! $post = self::req( 'linked' ) )
+		if ( ! $linked = self::req( 'linked' ) )
 			return Core\HTML::desc( _x( 'There are no posts available!', 'Message', 'geditorial-tabloid' ) );
 
-		if ( ! $post = WordPress\Post::get( $post ) )
+		if ( ! $post = WordPress\Post::get( $linked ) )
 			return Core\HTML::desc( _x( 'There are no posts available!', 'Message', 'geditorial-tabloid' ) );
 
 		$this->_render_view( $post, 'overview' );

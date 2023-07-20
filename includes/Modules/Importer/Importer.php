@@ -851,7 +851,7 @@ class Importer extends gEditorial\Module
 		// - attach file from directory of files into posts with field data to rename
 
 		// TODO: `_render_imports_for_metas()`
-		// - import data by metakey + support types: string/int/comma seperated
+		// - import data by metakey + support types: string/int/comma separated
 	}
 
 	private function _render_imports_for_posts()
@@ -1075,6 +1075,9 @@ class Importer extends gEditorial\Module
 	// NOTE: also fired on `importer_edited`
 	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
+		if ( ! $post )
+			return;
+
 		if ( $this->get_setting( 'store_source_data' ) ) {
 			add_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );
 			add_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ), $prepared );

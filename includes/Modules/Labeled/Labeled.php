@@ -160,7 +160,11 @@ class Labeled extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->posttype_supported( $screen->post_type ) ) {
+		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+
+			$this->filter_string( 'parent_file', 'options-general.php' );
+
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
 				$this->action_module( 'meta', 'column_row', 3, 30 );

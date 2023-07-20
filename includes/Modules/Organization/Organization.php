@@ -194,6 +194,7 @@ class Organization extends gEditorial\Module
 					'title'       => _x( 'Organization Code', 'Field Title', 'geditorial-organization' ),
 					'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),
 					'type'        => 'code',
+					'quickedit'   => TRUE,
 					'order'       => 100,
 				],
 			],
@@ -290,6 +291,12 @@ class Organization extends gEditorial\Module
 
 		$this->_hook_paired_exclude_from_subterm();
 		$this->_hook_paired_override_term_link();
+	}
+
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			$this->_hook_paired_tweaks_column_attr();
 	}
 
 	public function current_screen( $screen )
@@ -498,7 +505,7 @@ class Organization extends gEditorial\Module
 
 	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
+		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = $this->get_importer_fields( $post->post_type );

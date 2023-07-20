@@ -140,18 +140,20 @@ class Ortho extends gEditorial\Module
 	{
 		return [
 			'js' => [
-				// 'button_virastar'        => Core\HTML::getDashicon( 'text' ),
-				'button_virastar_title'  => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_virastar'          => _x( 'Virastar!', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_swapquotes'        => _x( 'Swap Quotes', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_mswordnotes'       => _x( 'Word Footnotes', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_download'          => _x( 'Download', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_download_title'    => _x( 'Download text as markdown', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_nbsp'              => _x( 'nbsp', 'Javascript String', 'geditorial-ortho' ),
-				'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Javascript String', 'geditorial-ortho' ),
+				'virastar' => [
+					// 'button_virastar'        => Core\HTML::getDashicon( 'text' ),
+					'button_virastar_title'  => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_virastar'          => _x( 'Virastar!', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_swapquotes'        => _x( 'Swap Quotes', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_mswordnotes'       => _x( 'Word Footnotes', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_download'          => _x( 'Download', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_download_title'    => _x( 'Download text as markdown', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_nbsp'              => _x( 'nbsp', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Javascript String', 'geditorial-ortho' ),
+				],
 			],
 		];
 	}
