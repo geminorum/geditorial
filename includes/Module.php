@@ -2881,13 +2881,7 @@ class Module extends WordPress\Module
 			'query_var'   => $this->constant( $constant.'_query_var', $posttype ),
 			'has_archive' => $this->constant( $constant.'_archive', $plural ),
 
-			'rewrite' => [
-				'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $posttype ) ),
-				'ep_mask'    => $this->constant( $constant.'_endpoint', EP_PERMALINK | EP_PAGES ), // https://make.wordpress.org/plugins?p=29
-				'with_front' => FALSE,
-				'feeds'      => TRUE,
-				'pages'      => TRUE,
-			],
+			'rewrite' => NULL,
 
 			'hierarchical' => FALSE,
 			'public'       => TRUE,
@@ -2919,6 +2913,20 @@ class Module extends WordPress\Module
 			// @SEE: https://github.com/torounit/simple-post-type-permalinks
 			'sptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
 		] );
+
+		$rewrite = [
+			'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $posttype ) ),
+			'ep_mask'    => $this->constant( $constant.'_endpoint', EP_PERMALINK | EP_PAGES ), // https://make.wordpress.org/plugins?p=29
+			'with_front' => FALSE,
+			'feeds'      => TRUE,
+			'pages'      => TRUE,
+		];
+
+		if ( is_null( $args['rewrite'] ) )
+			$args['rewrite'] = $rewrite;
+
+		else if ( is_array( $args['rewrite'] ) )
+			$args['rewrite'] = array_merge( $rewrite, $args['rewrite'] );
 
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_posttype_labels( $constant );
@@ -3119,7 +3127,6 @@ class Module extends WordPress\Module
 			$posttypes = $posttypes ? [ $this->constant( $posttypes ) ] : '';
 
 		$args = self::recursiveParseArgs( $atts, [
-			'labels'               => $this->get_taxonomy_labels( $constant ),
 			'meta_box_cb'          => FALSE,
 			// @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
 			'meta_box_sanitize_cb' => method_exists( $this, 'meta_box_sanitize_cb_'.$constant ) ? [ $this, 'meta_box_sanitize_cb_'.$constant ] : NULL,
@@ -3133,17 +3140,7 @@ class Module extends WordPress\Module
 			'default_term'         => FALSE,
 			'capabilities'         => $this->_get_taxonomy_caps( $taxonomy, $caps, $posttypes ),
 			'query_var'            => $this->constant( $constant.'_query', $taxonomy ),
-			'rewrite'              => [
-
-				// NOTE: we can use `example.com/cpt/tax` if cpt registered after the tax
-				// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
-
-				// NOTE: taxonomy prefix slugs are singular: `/category/`, `/tag/`
-				'slug'         => $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy ) ),
-				'with_front'   => FALSE,
-				// 'hierarchical' => FALSE, // will set by `hierarchical` in args
-				// 'ep_mask'      => EP_NONE,
-			],
+			'rewrite'              => NULL,
 
 			// 'sort' => NULL, // Whether terms in this taxonomy should be sorted in the order they are provided to `wp_set_object_terms()`.
 			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
@@ -3156,6 +3153,24 @@ class Module extends WordPress\Module
 			WordPress\Taxonomy::TARGET_TAXONOMIES_PROP => FALSE,  // or array of taxonomies
 			Services\Paired::PAIRED_POSTTYPE_PROP      => FALSE,  // @SEE: `Paired::isTaxonomy()`
 		] );
+
+		$rewrite = [
+
+			// NOTE: we can use `example.com/cpt/tax` if cpt registered after the tax
+			// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
+
+			// NOTE: taxonomy prefix slugs are singular: `/category/`, `/tag/`
+			'slug'         => $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy ) ),
+			'with_front'   => FALSE,
+			// 'hierarchical' => FALSE, // will set by `hierarchical` in args
+			// 'ep_mask'      => EP_NONE,
+		];
+
+		if ( is_null( $args['rewrite'] ) )
+			$args['rewrite'] = $rewrite;
+
+		else if ( is_array( $args['rewrite'] ) )
+			$args['rewrite'] = array_merge( $rewrite, $args['rewrite'] );
 
 		if ( ! $args['meta_box_cb'] && method_exists( $this, 'meta_box_cb_'.$constant ) )
 			$args['meta_box_cb'] = [ $this, 'meta_box_cb_'.$constant ];
@@ -3174,6 +3189,9 @@ class Module extends WordPress\Module
 
 		if ( is_array( $args['rewrite'] ) && ! array_key_exists( 'hierarchical', $args['rewrite'] ) )
 			$args['rewrite']['hierarchical'] = $args['hierarchical'];
+
+		if ( ! array_key_exists( 'labels', $args ) )
+			$args['labels'] = $this->get_taxonomy_labels( $constant );
 
 		if ( ! array_key_exists( 'update_count_callback', $args ) ) {
 
@@ -3277,7 +3295,7 @@ class Module extends WordPress\Module
 	}
 
 	// PAIRED API
-	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $extra = [], $supported = NULL )
+	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
 	{
 		if ( is_null( $supported ) )
 			$supported = $this->posttypes();
@@ -3289,17 +3307,22 @@ class Module extends WordPress\Module
 
 			if ( $subterm && $this->get_setting( 'subterms_support' ) )
 				$this->register_taxonomy( $subterm, [
-					'hierarchical'       => TRUE,
-					'meta_box_cb'        => NULL,
-					'show_admin_column'  => FALSE,
-					'show_in_nav_menus'  => TRUE,
+					'public'            => ! $private,
+					'rewrite'           => $private ? FALSE : NULL,
+					'hierarchical'      => TRUE,
+					'meta_box_cb'       => NULL,
+					'show_admin_column' => FALSE,
+					'show_in_nav_menus' => TRUE,
 				], $supported );
 
 			$this->register_taxonomy( $paired, [
 				Services\Paired::PAIRED_POSTTYPE_PROP => $this->constant( $posttype ),
-				'show_ui'                             => FALSE,
-				'show_in_rest'                        => FALSE,
-				'hierarchical'                        => TRUE,
+
+				'public'       => ! $private,
+				'rewrite'      => $private ? FALSE : NULL,
+				'show_ui'      => FALSE,
+				'show_in_rest' => FALSE,
+				'hierarchical' => TRUE,
 
 				// the paired taxonomies are often in plural
 				// FIXME: WTF: conflict on the posttype rest base!
@@ -3315,10 +3338,12 @@ class Module extends WordPress\Module
 
 		$object = $this->register_posttype( $posttype, array_merge( [
 			Services\Paired::PAIRED_TAXONOMY_PROP => $this->_paired,
-			'hierarchical'                        => TRUE,
-			'show_in_nav_menus'                   => TRUE,
-			'show_in_admin_bar'                   => FALSE,
-			'rewrite'                             => [
+
+			'public'            => ! $private,
+			'hierarchical'      => TRUE,
+			'show_in_nav_menus' => TRUE,
+			'show_in_admin_bar' => FALSE,
+			'rewrite'           => $private ? FALSE : [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
