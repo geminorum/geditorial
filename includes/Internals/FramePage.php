@@ -17,6 +17,7 @@ trait FramePage
 		$args = self::atts( [
 			'context'      => 'mainbutton',
 			'link_context' => 'framepage',
+			'refkey'       => 'linked',
 			'posttype'     => $post->post_type,
 			'target'       => 'none',
 			'maxwidth'     => '95%', // '1100px',
@@ -30,9 +31,9 @@ trait FramePage
 		], $atts );
 
 		$link = $args['link'] ?? $this->get_adminpage_url( TRUE, [
-			'linked'   => $post->ID,
-			'target'   => $args['target'] ?? 'none',
-			'noheader' => 1,
+			$args['refkey'] => $post->ID,
+			'target'        => $args['target'] ?? 'none',
+			'noheader'      => 1,
 		], $args['link_context'] ?? 'framepage' );
 
 		$name  = Helper::getPostTypeLabel( $args['posttype'], 'singular_name' );
@@ -55,10 +56,10 @@ trait FramePage
 			'class'  => array_merge( $class, $args['extra'] ),
 			'target' => '_blank',
 			'data'   => array_merge( [
-				'module'    => $this->key,
-				'linked'    => $post->ID,
-				'target'    => $args['target'] ?? 'none',
-				'max-width' => $args['maxwidth'],
+				'module'        => $this->key,
+				$args['refkey'] => $post->ID,
+				'target'        => $args['target'] ?? 'none',
+				'max-width'     => $args['maxwidth'],
 			], $args['data'] ),
 		], sprintf( $text, Helper::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );
 	}
