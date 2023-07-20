@@ -4238,6 +4238,12 @@ class Module extends WordPress\Module
 		if ( is_null( $context ) )
 			$context = 'mainbox';
 
+		if ( ! empty( $screen->post_type ) && method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
+			add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
+
+		else if ( method_exists( $this, 'store_'.$context.'_metabox' ) )
+			add_action( 'save_post', [ $this, 'store_'.$context.'_metabox' ], 20, 3 );
+
 		$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
 
 		if ( $remove_parent_order ) {
@@ -4266,6 +4272,8 @@ class Module extends WordPress\Module
 				$this->_render_mainbox_extra( $post, $box, $context );
 
 			echo '</div>';
+
+			$this->nonce_field( $context );
 		};
 
 		$metabox = $this->classs( $context );
@@ -4292,7 +4300,7 @@ class Module extends WordPress\Module
 	// TODO: move to `Internals\PairedMetaBox`
 	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
 	{
-		if ( ! $this->_paired )
+		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
 
 		$constants = $this->paired_get_paired_constants();
@@ -4302,6 +4310,12 @@ class Module extends WordPress\Module
 
 		if ( is_null( $context ) )
 			$context = 'mainbox';
+
+		if ( method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
+			add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
+
+		else if ( method_exists( $this, 'store_'.$context.'_metabox' ) )
+			add_action( 'save_post', [ $this, 'store_'.$context.'_metabox' ], 20, 3 );
 
 		$this->filter_false_module( 'meta', 'mainbox_callback', 12 );
 
@@ -4331,6 +4345,8 @@ class Module extends WordPress\Module
 				$this->_render_mainbox_extra( $post, $box, $context );
 
 			echo '</div>';
+
+			$this->nonce_field( $context );
 		};
 
 		$metabox = $this->classs( $context );
@@ -4364,7 +4380,7 @@ class Module extends WordPress\Module
 	// TODO: move to `Internals\PairedMetaBox`
 	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = 'advanced', $extra = [] )
 	{
-		if ( ! $this->_paired )
+		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
 
 		$constants = $this->paired_get_paired_constants();
@@ -4412,6 +4428,8 @@ class Module extends WordPress\Module
 			$this->_render_listbox_extra( $object, $box, $context, $screen );
 
 			echo '</div>';
+
+			$this->nonce_field( $context );
 		};
 
 		/* translators: %1$s: current post title, %2$s: posttype singular name */
@@ -4523,6 +4541,8 @@ class Module extends WordPress\Module
 				MetaBox::fieldPostMenuOrder( $post );
 
 			echo '</div>';
+
+			$this->nonce_field( $context );
 		};
 
 		$metabox = $this->classs( $context );
@@ -4558,6 +4578,7 @@ class Module extends WordPress\Module
 	}
 
 	// TODO: move to `Internals\PairedMetaBox`
+	// NOTE: logic separeted for the use on edit screen
 	protected function _hook_paired_store_metabox( $posttype )
 	{
 		if ( ! $this->_paired )
