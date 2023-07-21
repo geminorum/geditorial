@@ -100,7 +100,7 @@ SQL;
 	// TODO: our own `wp_dropdown_categories()` using cutom walker
 	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
 	// ALSO: trim term titles
-	public static function restrictByTaxonomy( $taxonomy )
+	public static function restrictByTaxonomy( $taxonomy, $paired_posttype = FALSE )
 	{
 		if ( ! $object = get_taxonomy( $taxonomy ) )
 			return;
@@ -118,20 +118,31 @@ SQL;
 				$selected = '';
 		}
 
-		wp_dropdown_categories( [
-			'show_option_all'  => Helper::getTaxonomyLabel( $object, 'show_option_all' ),
-			'show_option_none' => Helper::getTaxonomyLabel( $object, 'show_option_no_items' ),
-			'taxonomy'         => $object->name,
-			'name'             => $query_var,
-			'orderby'          => 'name',
-			'value_field'      => 'slug',
-			'selected'         => $selected,
-			'hierarchical'     => $object->hierarchical,
-			'depth'            => 3,
-			'show_count'       => FALSE,
-			'hide_empty'       => TRUE,
-			'hide_if_empty'    => TRUE,
-		] );
+		$args = [
+			'taxonomy'      => $object->name,
+			'name'          => $query_var,
+			'orderby'       => 'name',
+			'value_field'   => 'slug',
+			'selected'      => $selected,
+			'hierarchical'  => $object->hierarchical,
+			'depth'         => 3,
+			'show_count'    => FALSE,
+			'hide_empty'    => TRUE,
+			'hide_if_empty' => TRUE,
+		];
+
+		if ( $posttype = WordPress\PostType::object( $paired_posttype ) ) {
+
+			$args['show_option_all']  = Helper::getPostTypeLabel( $posttype, 'show_option_all' );
+			$args['show_option_none'] = Helper::getPostTypeLabel( $posttype, 'show_option_no_items' );
+
+		} else {
+
+			$args['show_option_all']  = Helper::getTaxonomyLabel( $object, 'show_option_all' );
+			$args['show_option_none'] = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
+		}
+
+		wp_dropdown_categories( $args );
 	}
 
 	// FIXME: DEPRECATED: use `restrictByTaxonomy()`

@@ -5274,7 +5274,7 @@ class Module extends WordPress\Module
 		$taxonomy = $this->constant( $constants[1] );
 
 		if ( FALSE === $selected || in_array( $taxonomy, (array) $selected ) )
-			Listtable::restrictByTaxonomy( $taxonomy );
+			Listtable::restrictByTaxonomy( $taxonomy, $this->constant( $constants[0] ) );
 	}
 
 	// DEFAULT FILTER
