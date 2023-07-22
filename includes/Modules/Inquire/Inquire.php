@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Inquire extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 
 	public static function module()
@@ -204,21 +205,9 @@ class Inquire extends gEditorial\Module
 		}
 	}
 
-	// FIXME: this is a hack for users with no `create_posts` cap
-	// @REF: https://core.trac.wordpress.org/ticket/22895
-	// @REF: https://wordpress.stackexchange.com/a/178059
-	// @REF: https://herbmiller.me/2014/09/21/wordpress-capabilities-restrict-add-new-allowing-edit/
 	public function admin_menu()
 	{
-		$posttype = WordPress\PostType::object( $this->constant( 'inquiry_cpt' ) );
-		add_submenu_page( 'edit.php?post_type='.$posttype->name, '', '', $posttype->cap->edit_posts, $this->classs() );
-		$this->filter( 'add_menu_classes' );
-	}
-
-	public function add_menu_classes( $menu )
-	{
-		remove_submenu_page( 'edit.php?post_type='.$this->constant( 'inquiry_cpt' ), $this->classs() );
-		return $menu;
+		$this->_hack_adminmenu_no_create_posts( $this->constant( 'inquiry_cpt' ) );
 	}
 
 	public function dashboard_glance_items( $items )

@@ -77,4 +77,34 @@ trait CoreMenuPage
 					'post' == $posttype ? 'edit-tags.php?taxonomy='.$taxonomy : 'edit-tags.php?taxonomy='.$taxonomy.'&amp;post_type='.$posttype
 				);
 	}
+
+	/**
+	 * Hacks WordPress core for users with no `create_posts` cap
+	 * @REF: https://core.trac.wordpress.org/ticket/22895
+	 * @REF: https://core.trac.wordpress.org/ticket/29714
+	 * @REF: https://wordpress.stackexchange.com/a/178059
+	 * @REF: https://herbmiller.me/wordpress-capabilities-restrict-add-new-allowing-edit/
+	 *
+	 * @param  string|object $posttype
+	 * @return bool $hooked
+	 */
+	protected function _hack_adminmenu_no_create_posts( $posttype )
+	{
+		if ( ! $object = WordPress\PostType::object( $posttype ) )
+			return FALSE;
+
+		add_submenu_page(
+			'edit.php?post_type='.$object->name,
+			'',
+			'',
+			$object->cap->edit_posts,
+			$this->classs( $object->name )
+		);
+
+		add_filter( 'add_menu_classes',
+			function ( $menu ) use ( $object ) {
+				remove_submenu_page( 'edit.php?post_type='.$object->name, $this->classs( $object->name ) );
+				return $menu;
+			} );
+	}
 }
