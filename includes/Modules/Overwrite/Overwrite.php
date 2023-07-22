@@ -294,6 +294,7 @@ class Overwrite extends gEditorial\Module
 	private function _overwrite_posttype_labels()
 	{
 		$keeps = [
+			'extended_label',
 			'column_title',
 			'metabox_title',
 			'author_label',
@@ -317,6 +318,7 @@ class Overwrite extends gEditorial\Module
 	private function _overwrite_taxonomy_labels()
 	{
 		$keeps = [
+			'extended_label',
 			'column_title',
 			'metabox_title',
 			'desc_field_title',

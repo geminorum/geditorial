@@ -811,6 +811,10 @@ class Helper extends WordPress\Main
 			if ( ! array_key_exists( $key, $pre ) )
 				$pre[$key] = vsprintf( $template, $strings );
 
+		// NOTE: this is plugin custom
+		if ( ! array_key_exists( 'extended_label', $pre ) )
+			$pre['extended_label'] = $pre['name'];
+
 		if ( ! array_key_exists( 'menu_name', $pre ) )
 			$pre['menu_name'] = $strings[0];
 
@@ -856,6 +860,9 @@ class Helper extends WordPress\Main
 		];
 
 		switch ( $label ) {
+			case 'extended_label':
+				return $object->labels->name;
+
 			case 'show_option_no_items':
 				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 				return vsprintf( _x( '(No %3$s)', 'Helper: PostType Label: `show_option_no_items`', 'geditorial' ), self::getStringsFromName( $name ) );
@@ -964,6 +971,10 @@ class Helper extends WordPress\Main
 			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', 'geditorial' ), $strings );
 
 		// NOTE: this is plugin custom
+		if ( ! array_key_exists( 'extended_label', $pre ) )
+			$pre['extended_label'] = $pre['name'];
+
+		// NOTE: this is plugin custom
 		if ( ! array_key_exists( 'column_title', $pre ) )
 			$pre['column_title'] = $strings[0];
 
@@ -1002,6 +1013,9 @@ class Helper extends WordPress\Main
 		];
 
 		switch ( $label ) {
+			case 'extended_label':
+				return $object->labels->name;
+
 			case 'show_option_no_items':
 				return sprintf( '(%s)', $object->labels->no_terms );
 
