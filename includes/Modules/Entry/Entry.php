@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Entry extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
 
 	protected $priority_template_include = 9;
@@ -224,21 +225,15 @@ class Entry extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->filter( 'posts_clauses', 2 );
 
 				$this->_edit_screen( $screen->post_type );
-				add_filter( 'manage_edit-'.$screen->post_type.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
 				$this->_hook_admin_ordering( $screen->post_type );
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'entry_cpt' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'section_tax' );
+				$this->corerestrictposts__hook_sortby_taxonomies( $screen->post_type, 'section_tax' );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'section_tax' ];
 	}
 
 	private function _edit_screen( $posttype )
@@ -257,22 +252,11 @@ class Entry extends gEditorial\Module
 		return $query_args;
 	}
 
-	public function posts_clauses( $pieces, $wp_query )
-	{
-		return $this->do_posts_clauses_taxes( $pieces, $wp_query, 'section_tax' );
-	}
-
 	public function manage_posts_columns( $columns )
 	{
 		return Core\Arraay::insert( $columns, [
 			'taxonomy-'.$this->constant( 'section_tax' ) => $this->get_column_title_taxonomy( 'section_tax', $this->constant( 'entry_cpt' ) ),
 		], 'cb', 'after' );
-	}
-
-	public function sortable_columns( $columns )
-	{
-		$tax = $this->constant( 'section_tax' );
-		return array_merge( $columns, [ 'taxonomy-'.$tax => 'taxonomy-'.$tax ] );
 	}
 
 	public function dashboard_glance_items( $items )

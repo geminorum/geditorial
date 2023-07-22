@@ -5204,12 +5204,6 @@ class Module extends WordPress\Module
 		];
 	}
 
-	// for main posttypes
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [];
-	}
-
 	// PAIRED API
 	protected function _hook_screen_restrict_paired( $priority = 10 )
 	{
@@ -5222,45 +5216,6 @@ class Module extends WordPress\Module
 
 		$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
 		$this->action( 'parse_query', 1, 12, 'restrict_paired' );
-	}
-
-	protected function _hook_screen_restrict_taxonomies( $priority = 10 )
-	{
-		$constants = $this->get_taxonomies_for_restrict_manage_posts();
-
-		if ( empty( $constants ) )
-			return FALSE;
-
-		add_filter( $this->base.'_screen_restrict_taxonomies', function( $taxonomies, $screen ) use ( $constants ) {
-			return array_merge( $taxonomies, $this->constants( $constants ) );
-		}, $priority, 2 );
-
-		$this->action( 'restrict_manage_posts', 2, 20, 'restrict_taxonomy' );
-		$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );
-
-		return TRUE;
-	}
-
-	// DEFAULT FILTER
-	// USAGE: `$this->action( 'restrict_manage_posts', 2, 12, 'restrict_taxonomy' );`
-	public function restrict_manage_posts_restrict_taxonomy( $posttype, $which )
-	{
-		$constants = $this->get_taxonomies_for_restrict_manage_posts();
-
-		if ( empty( $constants ) )
-			return;
-
-		$selected = get_user_option( sprintf( '%s_restrict_%s', $this->base, $posttype ) );
-
-		foreach ( $constants as $constant ) {
-
-			$taxonomy = $this->constant( $constant );
-
-			if ( FALSE !== $selected && ! in_array( $taxonomy, (array) $selected ) )
-				continue;
-
-			Listtable::restrictByTaxonomy( $taxonomy );
-		}
 	}
 
 	// DEFAULT FILTER
@@ -5289,47 +5244,6 @@ class Module extends WordPress\Module
 			return;
 
 		Listtable::parseQueryTaxonomy( $query, $this->constant( $constants[1] ) );
-	}
-
-	// DEFAULT FILTER
-	// USAGE: `$this->action( 'parse_query', 1, 12, 'restrict_taxonomy' );`
-	public function parse_query_restrict_taxonomy( &$query )
-	{
-		$constants = $this->get_taxonomies_for_restrict_manage_posts();
-
-		if ( empty( $constants ) )
-			return;
-
-		foreach ( $constants as $constant )
-			Listtable::parseQueryTaxonomy( $query, $this->constant( $constant ) );
-	}
-
-	protected function do_posts_clauses_taxes( $pieces, $query, $taxes, $posttype_constant_key = TRUE )
-	{
-		if ( TRUE === $posttype_constant_key ||
-			$this->is_current_posttype( $posttype_constant_key ) ) {
-
-			foreach ( (array) $taxes as $constant ) {
-
-				$taxonomy = $this->constant( $constant );
-
-				if ( isset( $query->query['orderby'] ) && 'taxonomy-'.$taxonomy == $query->query['orderby'] )
-					return Listtable::orderClausesByTaxonomy( $pieces, $query, $taxonomy );
-			}
-		}
-
-		return $pieces;
-	}
-
-	protected function do_restrict_manage_posts_authors( $posttype )
-	{
-		$extra = [];
-		$all   = $this->get_string( 'show_option_all', $posttype, 'misc', NULL );
-
-		if ( ! is_null( $all ) )
-			$extra['show_option_all'] = $all;
-
-		Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0, 'author', $extra );
 	}
 
 	// NOTE: cannot use 'wp_insert_post_data' filter

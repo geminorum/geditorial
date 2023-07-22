@@ -8,6 +8,7 @@ use geminorum\gEditorial\Internals;
 class Symposium extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
 
 	public static function module()
@@ -171,20 +172,15 @@ class Symposium extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'session_posttype' );
+				$this->corerestrictposts__hook_screen_taxonomies( [
+					'type_taxonomy',
+					'category_taxonomy',
+					'subject_taxonomy',
+					'audience_taxonomy',
+				] );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [
-			'type_taxonomy',
-			'category_taxonomy',
-			'subject_taxonomy',
-			'audience_taxonomy',
-		];
 	}
 
 	public function template_include( $template )

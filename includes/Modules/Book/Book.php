@@ -15,6 +15,7 @@ use geminorum\gEditorial\WordPress;
 class Book extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;
@@ -382,6 +383,16 @@ class Book extends gEditorial\Module
 		];
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [
+			'publication_cpt',
+			'publication_paired',
+			FALSE,
+			'publication_category',
+		];
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'publication_cpt' );
@@ -598,10 +609,19 @@ class Book extends gEditorial\Module
 
 				$this->action_module( 'meta', 'column_row', 3 );
 
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );
-				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedcore__hook_sync_paired();
+				$this->corerestrictposts__hook_screen_taxonomies( [
+					'type_tax',
+					'publication_category',
+					'subject_tax',
+					'serie_tax',
+					'library_tax',
+					'status_tax',
+					'audience_tax',
+					'publisher_tax',
+				] );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -621,30 +641,6 @@ class Book extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
 		}
-	}
-
-	protected function paired_get_paired_constants()
-	{
-		return [
-			'publication_cpt',
-			'publication_paired',
-			FALSE,
-			'publication_category',
-		];
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [
-			'type_tax',
-			'publication_category',
-			'subject_tax',
-			'serie_tax',
-			'library_tax',
-			'status_tax',
-			'audience_tax',
-			'publisher_tax',
-		];
 	}
 
 	protected function dashboard_widgets()

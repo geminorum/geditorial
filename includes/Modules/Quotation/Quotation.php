@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress;
 class Quotation extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 
 	public static function module()
 	{
@@ -178,18 +179,13 @@ class Quotation extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'quote_cpt' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'topic_tax' );
 
 				$this->filter( 'the_title', 2, 9 );
 				$this->action_module( 'meta', 'column_row', 1, -25, 'source' );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'topic_tax' ];
 	}
 
 	public function dashboard_glance_items( $items )

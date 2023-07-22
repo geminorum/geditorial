@@ -9,6 +9,7 @@ use geminorum\gEditorial\Settings;
 class Gallery extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 
 	public static function module()
 	{
@@ -122,15 +123,10 @@ class Gallery extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'album_cpt' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'album_cat' );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'album_cat' ];
 	}
 
 	public function dashboard_glance_items( $items )

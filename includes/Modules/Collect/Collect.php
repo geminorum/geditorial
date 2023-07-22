@@ -180,6 +180,15 @@ class Collect extends gEditorial\Module
 		];
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [
+			'collection_cpt',
+			'collection_tax',
+			'part_tax',
+		];
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'collection_cpt' );
@@ -257,15 +266,13 @@ class Collect extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
-
-				$this->_hook_screen_restrict_taxonomies();
-
 				$this->action_module( 'meta', 'column_row', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'collection_cpt' );
-				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedcore__hook_sync_paired();
+				$this->corerestrictposts__hook_screen_taxonomies( 'group_tax' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -298,16 +305,6 @@ class Collect extends gEditorial\Module
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
-	}
-
-	protected function paired_get_paired_constants()
-	{
-		return [ 'collection_cpt', 'collection_tax', 'part_tax' ];
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'group_tax' ];
 	}
 
 	public function widgets_init()

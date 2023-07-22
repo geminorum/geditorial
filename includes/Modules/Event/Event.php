@@ -11,6 +11,7 @@ use geminorum\gEditorial\MetaBox;
 class Event extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 
 	public static function module()
 	{
@@ -301,7 +302,7 @@ class Event extends gEditorial\Module
 
 				if ( $metadata ) {
 
-					$this->_hook_screen_restrict_taxonomies();
+					$this->corerestrictposts__hook_screen_taxonomies( 'event_cat' );
 
 					$this->filter( 'request' );
 
@@ -316,11 +317,6 @@ class Event extends gEditorial\Module
 				$this->_hook_bulk_post_updated_messages( 'event_cpt' );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'event_cat' ];
 	}
 
 	private function _edit_screen( $posttype )

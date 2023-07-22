@@ -12,6 +12,7 @@ class Labeled extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
 
 	protected $disable_no_posttypes = TRUE;
@@ -59,6 +60,9 @@ class Labeled extends gEditorial\Module
 					'description' => _x( 'Roles that can see Content Labels Reports.', 'Setting Description', 'geditorial-labeled' ),
 					'values'      => $roles,
 				],
+			],
+			'_editpost' => [
+				'admin_restrict',
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
@@ -169,13 +173,9 @@ class Labeled extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 				$this->action_module( 'meta', 'column_row', 3, 30 );
+				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', 'reports' );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'main_taxonomy' ];
 	}
 
 	protected function dashboard_widgets()

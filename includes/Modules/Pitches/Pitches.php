@@ -8,6 +8,7 @@ use geminorum\gEditorial\Internals;
 class Pitches extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 
 	public static function module()
 	{
@@ -115,15 +116,13 @@ class Pitches extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
+				$this->corerestrictposts__hook_screen_taxonomies( [
+					'primary_taxonomy',
+					'primary_subterm',
+				] );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'primary_taxonomy', 'primary_subterm' ];
 	}
 
 	public function dashboard_glance_items( $items )

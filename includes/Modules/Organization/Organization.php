@@ -15,6 +15,7 @@ class Organization extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
@@ -219,16 +220,6 @@ class Organization extends gEditorial\Module
 		];
 	}
 
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [
-			'primary_subterm',
-			'primary_taxonomy',
-			'type_taxonomy',
-			'status_taxonomy',
-		];
-	}
-
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'primary_posttype' );
@@ -322,10 +313,15 @@ class Organization extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedcore__hook_sync_paired();
+				$this->corerestrictposts__hook_screen_taxonomies( [
+					'primary_subterm',
+					'primary_taxonomy',
+					'type_taxonomy',
+					'status_taxonomy',
+				] );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {

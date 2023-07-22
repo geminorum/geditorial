@@ -11,6 +11,7 @@ use geminorum\gEditorial\Settings;
 class Team extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 
 	public static function module()
 	{
@@ -167,17 +168,12 @@ class Team extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'member_cpt' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'member_group' );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'member_group' ];
 	}
 
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )

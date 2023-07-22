@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
@@ -12,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 
 class Attachments extends gEditorial\Module
 {
+	use Internals\CoreRestrictPosts;
 
 	public static function module()
 	{
@@ -116,15 +118,8 @@ class Attachments extends gEditorial\Module
 				$this->action_module( 'tweaks', 'column_attr', 1, 20 );
 
 		} else if ( 'upload' == $screen->base ) {
-
-			if ( $this->get_setting( 'admin_restrict', FALSE ) )
-				$this->action( 'restrict_manage_posts', 2, 12 );
+			$this->corerestrictposts__hook_screen_authors();
 		}
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_authors( $posttype );
 	}
 
 	private function get_prefix_permalink()

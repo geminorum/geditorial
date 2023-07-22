@@ -14,6 +14,7 @@ class Lingo extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreToolBox;
 	use Internals\RawImports;
 
@@ -200,16 +201,9 @@ class Lingo extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 			} else if ( 'edit' == $screen->base ) {
-
-				if ( $this->role_can( 'reports' ) )
-					$this->_hook_screen_restrict_taxonomies();
+				$this->corerestrictposts__hook_screen_taxonomies( 'language_taxonomy', 'reports' );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'language_taxonomy' ];
 	}
 
 	public function admin_menu()

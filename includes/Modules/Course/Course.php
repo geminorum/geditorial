@@ -15,6 +15,7 @@ class Course extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
@@ -216,6 +217,16 @@ class Course extends gEditorial\Module
 		];
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [
+			'course_cpt',
+			'course_tax',
+			'topic_tax',
+			'course_cat',
+		];
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'course_cpt' );
@@ -298,10 +309,13 @@ class Course extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_admin_ordering( $screen->post_type );
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'course_cpt' );
-				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedcore__hook_sync_paired();
+				$this->corerestrictposts__hook_screen_taxonomies( [
+					'course_cat',
+					'span_tax',
+				] );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -341,19 +355,6 @@ class Course extends gEditorial\Module
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
-	}
-
-	protected function paired_get_paired_constants()
-	{
-		return [ 'course_cpt', 'course_tax', 'topic_tax', 'course_cat' ];
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [
-			'course_cat',
-			'span_tax',
-		];
 	}
 
 	public function meta_init()

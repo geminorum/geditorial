@@ -17,6 +17,7 @@ class Users extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
 
 	protected $caps = [
 		'tools'   => 'edit_users',
@@ -191,8 +192,7 @@ class Users extends gEditorial\Module
 		} else if ( 'edit' == $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( $this->get_setting( 'admin_restrict', FALSE ) )
-				$this->action( 'restrict_manage_posts', 2, 12 );
+			$this->corerestrictposts__hook_screen_authors();
 
 			if ( $this->get_setting( 'author_restrict', FALSE ) )
 				$this->action( 'pre_get_posts' );
@@ -252,11 +252,6 @@ class Users extends gEditorial\Module
 			'title' => $this->get_string( 'action_attr', NULL, 'dashboard', '' ),
 			'link'  => $this->get_string( 'action_link', NULL, 'dashboard', '' ),
 		] );
-	}
-
-	public function restrict_manage_posts( $posttype, $which )
-	{
-		$this->do_restrict_manage_posts_authors( $posttype );
 	}
 
 	public function pre_get_posts( &$wp_query )

@@ -14,6 +14,7 @@ class Magazine extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
@@ -204,6 +205,15 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
+	protected function paired_get_paired_constants()
+	{
+		return [
+			'issue_cpt',
+			'issue_tax',
+			'section_tax',
+		];
+	}
+
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'issue_cpt' );
@@ -295,10 +305,10 @@ class Magazine extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 
 				$this->_hook_admin_ordering( $screen->post_type );
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'issue_cpt' );
-				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedcore__hook_sync_paired();
+				$this->corerestrictposts__hook_screen_taxonomies( 'span_tax' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -331,16 +341,6 @@ class Magazine extends gEditorial\Module
 
 		if ( Settings::isDashboard( $screen ) )
 			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
-	}
-
-	protected function paired_get_paired_constants()
-	{
-		return [ 'issue_cpt', 'issue_tax', 'section_tax' ];
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'span_tax' ];
 	}
 
 	public function widgets_init()

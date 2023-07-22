@@ -12,6 +12,7 @@ class Venue extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
@@ -258,10 +259,10 @@ class Venue extends gEditorial\Module
 
 				$this->action_module( 'meta', 'column_row', 3 );
 
-				$this->_hook_screen_restrict_taxonomies();
 				$this->_hook_bulk_post_updated_messages( 'place_cpt' );
 				$this->pairedcore__hook_sync_paired();
 				$this->_hook_paired_tweaks_column_attr();
+				$this->corerestrictposts__hook_screen_taxonomies( 'place_cat' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -304,11 +305,6 @@ class Venue extends gEditorial\Module
 			'facility_tax',
 			'place_cat',
 		];
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'place_cat' ];
 	}
 
 	public function meta_init()

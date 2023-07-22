@@ -7,10 +7,12 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Series extends gEditorial\Module
 {
+	use Internals\CoreRestrictPosts;
 
 	// TODO: use each parent term as a `set`
 
@@ -136,14 +138,9 @@ class Series extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_admin_enabled();
-				$this->_hook_screen_restrict_taxonomies();
+				$this->corerestrictposts__hook_screen_taxonomies( 'series_tax' );
 			}
 		}
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'series_tax' ];
 	}
 
 	public function store_metabox( $post_id, $post, $update, $context = NULL )

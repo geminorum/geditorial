@@ -11,6 +11,7 @@ class Assigned extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
 
 	protected $disable_no_posttypes = TRUE;
@@ -206,9 +207,7 @@ class Assigned extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
-
-				if ( $this->role_can( 'reports' ) )
-					$this->_hook_screen_restrict_taxonomies();
+				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', 'reports' );
 			}
 		}
 	}
@@ -216,11 +215,6 @@ class Assigned extends gEditorial\Module
 	public function admin_menu()
 	{
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
-	}
-
-	protected function get_taxonomies_for_restrict_manage_posts()
-	{
-		return [ 'main_taxonomy' ];
 	}
 
 	protected function dashboard_widgets()
