@@ -8,6 +8,24 @@ use geminorum\gEditorial\WordPress;
 trait PairedCore
 {
 
+	// NOTE: `paired_get_paired_constants()` with checks
+	// NOTE: not checking for `$this->_paired` for maybe before `init`
+	protected function paired_get_constants()
+	{
+		$constants = $this->paired_get_paired_constants();
+
+		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			return FALSE;
+
+		if ( empty( $constants[2] ) )
+			$constants[2] = FALSE;
+
+		if ( empty( $constants[3] ) )
+			$constants[3] = FALSE;
+
+		return $constants;
+	}
+
 	protected function pairedcore__hook_sync_paired_for_ajax()
 	{
 		$constants = $this->paired_get_paired_constants();

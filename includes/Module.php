@@ -5204,48 +5204,6 @@ class Module extends WordPress\Module
 		];
 	}
 
-	// PAIRED API
-	protected function _hook_screen_restrict_paired( $priority = 10 )
-	{
-		$constants = $this->paired_get_paired_constants();
-
-		if ( ! empty( $constants[1] ) )
-			add_filter( $this->base.'_screen_restrict_taxonomies', function( $taxonomies, $screen ) use ( $constants ) {
-				return array_merge( $taxonomies, [ $this->constant( $constants[1] ) ] );
-			}, $priority, 2 );
-
-		$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );
-		$this->action( 'parse_query', 1, 12, 'restrict_paired' );
-	}
-
-	// DEFAULT FILTER
-	// USAGE: `$this->action( 'restrict_manage_posts', 2, 12, 'restrict_paired' );`
-	public function restrict_manage_posts_restrict_paired( $posttype, $which )
-	{
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
-			return;
-
-		$selected = get_user_option( sprintf( '%s_restrict_%s', $this->base, $posttype ) );
-		$taxonomy = $this->constant( $constants[1] );
-
-		if ( FALSE === $selected || in_array( $taxonomy, (array) $selected ) )
-			Listtable::restrictByTaxonomy( $taxonomy, $this->constant( $constants[0] ) );
-	}
-
-	// DEFAULT FILTER
-	// USAGE: `$this->action( 'parse_query', 1, 12, 'restrict_paired' );`
-	public function parse_query_restrict_paired( &$query )
-	{
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
-			return;
-
-		Listtable::parseQueryTaxonomy( $query, $this->constant( $constants[1] ) );
-	}
-
 	// NOTE: cannot use 'wp_insert_post_data' filter
 	protected function _hook_autofill_posttitle( $posttype )
 	{

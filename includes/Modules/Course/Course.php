@@ -344,9 +344,9 @@ class Course extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'lesson_cpt' ) )
 					$this->_hook_bulk_post_updated_messages( 'lesson_cpt' );
 
-				$this->_hook_screen_restrict_paired();
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
+				$this->paired__hook_screen_restrictposts();
 			}
 		}
 
