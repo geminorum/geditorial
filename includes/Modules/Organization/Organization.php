@@ -251,8 +251,7 @@ class Organization extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 8 );
-		$this->action_module( 'importer', 'edited', 8 );
+		$this->action_module( 'importer', 'saved', 2 );
 	}
 
 	public function init()
@@ -503,21 +502,21 @@ class Organization extends gEditorial\Module
 		return WordPress\Strings::getJoined( $list, '', '', $value );
 	}
 
-	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
+	public function importer_saved( $post, $atts = [] )
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = $this->get_importer_fields( $post->post_type );
 
-		foreach ( $field_map as $offset => $field ) {
+		foreach ( $atts['map'] as $offset => $field ) {
 
 			if ( ! in_array( $field, $fields ) )
 				continue;
 
 			if ( 'organization_code' === Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) ) {
 
-				$codes = Helper::getSeparated( $raw[$offset] );
+				$codes = Helper::getSeparated( $atts['raw'][$offset] );
 				$list  = [];
 
 				foreach ( $codes as $code )
@@ -530,17 +529,12 @@ class Organization extends gEditorial\Module
 						$list,
 						'primary_posttype',
 						'primary_paired',
-						$this->get_setting( 'multiple_instances' )
+						$this->get_setting( 'multiple_instances' ) ? $atts['raw']['override'] : FALSE,
 					);
 
 				break;
 			}
 		}
-	}
-
-	public function importer_edited( ...$args )
-	{
-		$this->importer_saved( ...$args );
 	}
 
 	public function tools_settings( $sub )

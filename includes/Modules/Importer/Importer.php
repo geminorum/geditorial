@@ -489,8 +489,7 @@ class Importer extends gEditorial\Module
 			$this->filter( 'import_memory_limit' );
 
 			add_filter( $this->hook( 'prepare' ), [ $this, 'importer_prepare' ], 9, 7 );
-			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 8 );
-			add_action( $this->hook( 'edited' ), [ $this, 'importer_saved' ], 9, 8 );
+			add_action( $this->hook( 'saved' ), [ $this, 'importer_saved' ], 9, 2 );
 
 			if ( ! empty( $_POST ) ) {
 
@@ -539,7 +538,8 @@ class Importer extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( Tablelist::isAction( 'posts_import', TRUE ) ) {
+				} else if ( Tablelist::isAction( 'posts_import_newonly', TRUE )
+					|| Tablelist::isAction( 'posts_import_override', TRUE ) ) {
 
 					$count      = 0;
 					$field_map  = self::req( 'field_map', [] );
@@ -548,6 +548,7 @@ class Importer extends gEditorial\Module
 					$attach_id  = self::req( 'attach_id', FALSE );
 					$user_id    = self::req( 'user_id', gEditorial()->user( TRUE ) );
 					$source_key = self::req( 'source_key', 'none' );
+					$override   = isset( $_POST['posts_import_override'] );
 
 					if ( ! $file = get_attached_file( $attach_id ) )
 						Core\WordPress::redirectReferer( 'wrong' );
@@ -582,7 +583,7 @@ class Importer extends gEditorial\Module
 						$prepared   = [];
 						$comments   = [];
 						$taxonomies = [];
-						$post_id    = FALSE;
+						$oldpost    = $post_id = FALSE;
 
 						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
@@ -595,7 +596,8 @@ class Importer extends gEditorial\Module
 						);
 
 						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
-							$data['ID'] = intval( $matched );
+							if ( $oldpost = WordPress\Post::get( intval( $matched ) ) )
+								$data['ID'] = $oldpost->ID;
 
 						unset( $parser, $items );
 
@@ -638,10 +640,33 @@ class Importer extends gEditorial\Module
 
 									continue 2;
 
-								case 'importer_menu_order': $data['menu_order'] = $prepared[$field] = $value; continue 2;
-								case 'importer_post_title': $data['post_title'] = $prepared[$field] = $value; continue 2;
-								case 'importer_post_content': $data['post_content'] = $prepared[$field] = $value; continue 2;
-								case 'importer_post_excerpt': $data['post_excerpt'] = $prepared[$field] = $value; continue 2;
+								case 'importer_menu_order':
+
+									if ( $override || ( $oldpost && '' == $oldpost->menu_order ) )
+										$data['menu_order'] = $prepared[$field] = $value;
+
+									continue 2;
+
+								case 'importer_post_title':
+
+									if ( $override || ( $oldpost && '' == $oldpost->post_title ) )
+										$data['post_title'] = $prepared[$field] = $value;
+
+									continue 2;
+
+								case 'importer_post_content':
+
+									if ( $override || ( $oldpost && '' == $oldpost->post_content ) )
+										$data['post_content'] = $prepared[$field] = $value;
+
+									continue 2;
+
+								case 'importer_post_excerpt':
+
+									if ( $override || ( $oldpost && '' == $oldpost->post_excerpt ) )
+										$data['post_excerpt'] = $prepared[$field] = $value;
+
+									continue 2;
 
 								case 'importer_comment_content':
 
@@ -684,7 +709,7 @@ class Importer extends gEditorial\Module
 							$prepared[$field] = $value;
 						}
 
-						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $taxonomies, $posttype, $source_id, $attach_id, $raw ) ) ) {
+						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $taxonomies, $posttype, $source_id, $attach_id, $raw, $override ) ) ) {
 
 							$this->log( 'NOTICE', ( $source_id
 								? sprintf( 'ID: %s :: %s', $source_id, 'SKIPPED BY `insert` FILTER' )
@@ -757,7 +782,7 @@ class Importer extends gEditorial\Module
 						}
 
 						// NOTE: `wp_insert_post()` overrides existing terms
-						$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id );
+						$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id, $override );
 
 						foreach ( $terms_all as $taxonomy => $term_id ) {
 
@@ -788,16 +813,19 @@ class Importer extends gEditorial\Module
 							}
 						}
 
-						$this->actions( empty( $insert['ID'] ) ? 'saved' : 'edited',
-							WordPress\Post::get( $post_id ),
-							$insert,
-							$prepared,
-							array_combine( $headers, $field_map ),
-							$source_id,
-							$attach_id,
-							$terms_all,
-							$raw
-						);
+						$this->actions( 'saved', WordPress\Post::get( $post_id ), [
+							'updated'    => ( ! empty( $insert['ID'] ) ),
+							'data'       => $insert,
+							'prepared'   => $prepared,
+							'raw'        => $raw,
+							'map'        => array_combine( $headers, $field_map ),
+							'source_id'  => $source_id,
+							'attach_id'  => $attach_id,
+							'terms_all'  => $terms_all,
+							'taxonomies' => $taxonomies,
+							'override'   => $override,
+							'oldpost'    => $oldpost,
+						] );
 
 						$count++;
 					}
@@ -886,7 +914,8 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_key );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'posts_import', _x( 'Import', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::submitButton( 'posts_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( isset( $_POST['posts_step_three'] ) ) {
@@ -1072,16 +1101,17 @@ class Importer extends gEditorial\Module
 		return $value;
 	}
 
-	// NOTE: also fired on `importer_edited`
-	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
+	// public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
+	public function importer_saved( $post, $atts = [] )
 	{
 		if ( ! $post )
 			return;
 
 		if ( $this->get_setting( 'store_source_data' ) ) {
-			add_post_meta( $post->ID, $this->constant( 'metakey_source_data' ), $raw );
-			add_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ), $prepared );
-			add_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ), $attach_id );
+			$suffix = '_'.current_time( 'Ymd-His', TRUE );
+			add_post_meta( $post->ID, $this->constant( 'metakey_source_data' ).$suffix , $atts['raw'] );
+			add_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ).$suffix, $atts['prepared'] );
+			add_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ).$suffix, $atts['attach_id'] );
 		}
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
@@ -1124,15 +1154,14 @@ class Importer extends gEditorial\Module
 		return empty( array_filter( $data ) );
 	}
 
-	private function _store_taxonomies_for_post( $post_id, $taxonomies, $source_id = NULL, $append = TRUE )
+	private function _store_taxonomies_for_post( $post_id, $taxonomies, $source_id = NULL, $override = FALSE )
 	{
 		foreach ( $taxonomies as $taxonomy => $terms ) {
 
-			// empty list will override current terms
-			if ( $append && empty( $terms ) )
+			if ( empty( $terms ) )
 				continue;
 
-			$result = wp_set_object_terms( $post_id, $terms, $taxonomy, $append );
+			$result = wp_set_object_terms( $post_id, $terms, $taxonomy, ! $override );
 
 			if ( is_wp_error( $result ) )
 				$this->log( 'NOTICE', ( $source_id

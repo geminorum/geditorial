@@ -485,8 +485,7 @@ class Book extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 8 );
-		$this->action_module( 'importer', 'edited', 8 );
+		$this->action_module( 'importer', 'saved', 2 );
 	}
 
 	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
@@ -1138,26 +1137,21 @@ class Book extends gEditorial\Module
 		return Helper::kses( $value, 'none' );
 	}
 
-	// FIXME: use `$prepared[$field]`
-	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
+	// FIXME: use `$atts['prepared'][$field]`
+	public function importer_saved( $post, $atts = [] )
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = array_keys( $this->get_importer_fields( $post->post_type ) );
 
-		foreach ( $field_map as $offset => $field ) {
+		foreach ( $atts['map'] as $offset => $field ) {
 
 			if ( ! in_array( $field, $fields ) )
 				continue;
 
-			if ( $value = trim( Helper::kses( $raw[$offset], 'none' ) ) )
+			if ( $value = trim( Helper::kses( $atts['raw'][$offset], 'none' ) ) )
 				$this->store_postmeta( $post->ID, $value, $field );
 		}
-	}
-
-	public function importer_edited( ...$args )
-	{
-		$this->importer_saved( ...$args );
 	}
 }

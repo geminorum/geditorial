@@ -164,8 +164,7 @@ class Today extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 8 );
-		$this->action_module( 'importer', 'edited', 8 );
+		$this->action_module( 'importer', 'saved', 2 );
 	}
 
 	public function template_redirect()
@@ -1072,8 +1071,8 @@ class Today extends gEditorial\Module
 		return $value;
 	}
 
-	// FIXME: use `$prepared[$field]`
-	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
+	// FIXME: use `$atts['prepared'][$field]`
+	public function importer_saved( $post, $atts = [] )
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
@@ -1082,12 +1081,12 @@ class Today extends gEditorial\Module
 		$fields   = array_keys( $this->get_importer_fields( $post->post_type ) );
 		$postmeta = [ 'cal' => $default ]; // `set_today_meta()` needs cal
 
-		foreach ( $field_map as $offset => $field ) {
+		foreach ( $atts['map'] as $offset => $field ) {
 
 			if ( ! in_array( $field, $fields ) )
 				continue;
 
-			if ( ! $value = trim( $raw[$offset] ) )
+			if ( ! $value = trim( $atts['raw'][$offset] ) )
 				continue;
 
 			$key = str_ireplace( 'today__', '', $field );
@@ -1105,10 +1104,5 @@ class Today extends gEditorial\Module
 
 		if ( count( $postmeta ) )
 			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
-	}
-
-	public function importer_edited( ...$args )
-	{
-		$this->importer_saved( ...$args );
 	}
 }

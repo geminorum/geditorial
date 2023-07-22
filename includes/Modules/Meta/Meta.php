@@ -272,8 +272,7 @@ class Meta extends gEditorial\Module
 
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 8 );
-		$this->action_module( 'importer', 'edited', 8 );
+		$this->action_module( 'importer', 'saved', 2 );
 	}
 
 	public function template_redirect()
@@ -1533,28 +1532,16 @@ class Meta extends gEditorial\Module
 		return $this->sanitize_posttype_field( $value, $fields[$field] );
 	}
 
-	public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
+	public function importer_saved( $post, $atts = [] )
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$fields = $this->get_importer_fields( $post->post_type, TRUE );
 
-		foreach ( $field_map as $offset => $field )
+		foreach ( $atts['map'] as $offset => $field )
 			if ( array_key_exists( $field, $fields ) )
-				$this->import_posttype_field( $raw[$offset], $fields[$field], $post );
-	}
-
-	public function importer_edited( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
-	{
-		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
-			return;
-
-		$fields = $this->get_importer_fields( $post->post_type, TRUE );
-
-		foreach ( $field_map as $offset => $field )
-			if ( array_key_exists( $field, $fields ) )
-				$this->import_posttype_field( $raw[$offset], $fields[$field], $post, TRUE );
+				$this->import_posttype_field( $atts['raw'][$offset], $fields[$field], $post, $atts['raw']['override'] );
 	}
 
 	private function _raise_resources( $count = 0 )
