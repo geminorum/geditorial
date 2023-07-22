@@ -11,6 +11,9 @@ use geminorum\gEditorial\Settings;
 class StaticCovers extends gEditorial\Module
 {
 
+	// TODO: audit for empty posttypes: see iranian module
+	// TODO: import into media library by bulk or each
+
 	public static function module()
 	{
 		return [

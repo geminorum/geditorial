@@ -22,11 +22,12 @@ class Assigned extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'assigned',
-			'title'  => _x( 'Assigned', 'Modules: Assigned', 'geditorial' ),
-			'desc'   => _x( 'Editorial Assignments', 'Modules: Assigned', 'geditorial' ),
-			'icon'   => 'hammer',
-			'access' => 'beta',
+			'name'     => 'assigned',
+			'title'    => _x( 'Assigned', 'Modules: Assigned', 'geditorial' ),
+			'desc'     => _x( 'Editorial Assignments', 'Modules: Assigned', 'geditorial' ),
+			'icon'     => 'hammer',
+			'access'   => 'beta',
+			'keywords' => [ 'assignment' ],
 		];
 	}
 

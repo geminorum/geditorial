@@ -2232,6 +2232,9 @@ class Module extends WordPress\Module
 
 	public function constant( $key, $default = FALSE )
 	{
+		if ( ! $key )
+			return $default;
+
 		if ( isset( $this->constants[$key] ) )
 			return $this->constants[$key];
 
@@ -2342,7 +2345,9 @@ class Module extends WordPress\Module
 			return FALSE;
 
 		add_filter( 'gnetwork_taxonomy_default_terms_'.$this->constant( $constant ),
-			static function() use ( $terms ) { return $terms; } );
+			static function( $pre ) use ( $terms ) {
+				return array_merge( $pre, Core\Arraay::isAssoc( $terms ) ? $terms : Core\Arraay::sameKey( $terms ) );
+			} );
 	}
 
 	protected function check_settings( $sub, $context = 'tools', $extra = [], $key = NULL )
@@ -3162,7 +3167,7 @@ class Module extends WordPress\Module
 			// NOTE: taxonomy prefix slugs are singular: `/category/`, `/tag/`
 			'slug'         => $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy ) ),
 			'with_front'   => FALSE,
-			// 'hierarchical' => FALSE, // will set by `hierarchical` in args
+			'hierarchical' => $args['hierarchical'],
 			// 'ep_mask'      => EP_NONE,
 		];
 
@@ -3186,9 +3191,6 @@ class Module extends WordPress\Module
 
 		else if ( '__singleselect_terms_callback' === $args['meta_box_cb'] )
 			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_singleselect_terms_cb' ];
-
-		if ( is_array( $args['rewrite'] ) && ! array_key_exists( 'hierarchical', $args['rewrite'] ) )
-			$args['rewrite']['hierarchical'] = $args['hierarchical'];
 
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_taxonomy_labels( $constant );

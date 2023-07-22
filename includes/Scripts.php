@@ -243,7 +243,7 @@ class Scripts extends WordPress\Main
 			: self::registerPackage( 'jquery-sortable', NULL, [ 'jquery' ], $ver );
 	}
 
-	public static function pkgListJS( $enqueue = FALSE, $ver = '2.3.0' )
+	public static function pkgListJS( $enqueue = FALSE, $ver = '2.3.1' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'listjs', 'list.js/list', [], $ver )

@@ -1425,7 +1425,7 @@ class Settings extends Core\Base
 		echo '<span class="-module-title" style="display:none;" aria-hidden="true">'.$module->title.'</span>';
 		echo '<span class="-module-key" style="display:none;" aria-hidden="true">'.$module->name.'</span>';
 		echo '<span class="-module-access" style="display:none;" aria-hidden="true">'.$module->access.'</span>';
-		echo '<span class="-module-keywords" style="display:none;" aria-hidden="true">'.implode( ', ', (array) $module->keywords ).'</span>';
+		echo '<span class="-module-keywords" style="display:none;" aria-hidden="true">'.implode( ' ', (array) $module->keywords ).'</span>';
 		echo '<span class="status" data-do="enabled" style="display:none;" aria-hidden="true">'.( $enabled ? 'true' : 'false' ).'</span>';
 	}
 

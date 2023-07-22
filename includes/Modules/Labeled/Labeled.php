@@ -19,11 +19,12 @@ class Labeled extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'labeled',
-			'title'  => _x( 'Labeled', 'Modules: Labeled', 'geditorial' ),
-			'desc'   => _x( 'Custom Labels for Contents', 'Modules: Labeled', 'geditorial' ),
-			'icon'   => 'tag',
-			'access' => 'beta',
+			'name'     => 'labeled',
+			'title'    => _x( 'Labeled', 'Modules: Labeled', 'geditorial' ),
+			'desc'     => _x( 'Custom Labels for Contents', 'Modules: Labeled', 'geditorial' ),
+			'icon'     => 'tag',
+			'access'   => 'beta',
+			'keywords' => [ 'metafield' ],
 		];
 	}
 

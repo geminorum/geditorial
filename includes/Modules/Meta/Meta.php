@@ -275,6 +275,14 @@ class Meta extends gEditorial\Module
 		$this->action_module( 'importer', 'saved', 2 );
 	}
 
+	// @REF: https://developers.elementor.com/docs/widgets/simple-example/
+	// public function elementor_register( $widgets_manager )
+	// {
+	// 	$this->require_code( 'Elementor/FieldLead' );
+
+	// 	$widgets_manager->register( new Elementor_FieldLead_Widget() );
+	// }
+
 	public function template_redirect()
 	{
 		if ( ! is_singular( $this->posttypes() ) )
