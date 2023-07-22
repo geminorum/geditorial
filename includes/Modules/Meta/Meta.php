@@ -907,11 +907,8 @@ class Meta extends gEditorial\Module
 		$this->clean_postmeta_legacy( $post->ID, $fields, $legacy );
 	}
 
-	public function import_posttype_field( $data, $field, $post, $empty_only = FALSE )
+	public function import_posttype_field( $data, $field, $post, $override = TRUE )
 	{
-		if ( $empty_only && FALSE !== $this->get_postmeta_field( $post->ID, $field['name'] ) )
-			return FALSE;
-
 		switch ( $field['type'] ) {
 
 			case 'parent_post':
@@ -923,7 +920,13 @@ class Meta extends gEditorial\Module
 
 			case 'term':
 
+				if ( empty( $field['taxonomy'] ) )
+					return FALSE;
+
 				if ( ! WordPress\Taxonomy::can( $field['taxonomy'], 'assign_terms' ) )
+					return FALSE;
+
+				if ( ! $override && FALSE !== get_the_terms( $post, $field['taxonomy'] ) )
 					return FALSE;
 
 				$terms = $this->sanitize_posttype_field( $data, $field, $post );
@@ -931,6 +934,9 @@ class Meta extends gEditorial\Module
 				return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
 
 			default:
+
+				if ( ! $override && FALSE !== $this->get_postmeta_field( $post->ID, $field['name'] ) )
+					return FALSE;
 
 				return $this->set_postmeta_field( $post->ID, $field['name'], $this->sanitize_posttype_field( $data, $field, $post ) );
 		}
@@ -1190,9 +1196,6 @@ class Meta extends gEditorial\Module
 
 			if ( $check_access && ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
-
-			// if ( ! $override && ( FALSE !== ModuleTemplate::getMetaFieldRaw( $field, $post->ID, $this->key ) ) )
-			// 	continue;
 
 			$this->import_posttype_field( $data[$field], $args, $post, $override );
 		}
