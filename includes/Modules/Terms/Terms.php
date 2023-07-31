@@ -41,6 +41,8 @@ class Terms extends gEditorial\Module
 		'dateend',
 		'days',
 		'unit',
+		'max',
+		'min',
 		'viewable',
 	];
 
@@ -121,6 +123,8 @@ class Terms extends gEditorial\Module
 				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-terms' ),
 				'days'      => _x( 'Days', 'Titles', 'geditorial-terms' ),
 				'unit'      => _x( 'Unit', 'Titles', 'geditorial-terms' ),
+				'min'       => _x( 'Minimum', 'Titles', 'geditorial-terms' ),
+				'max'       => _x( 'Maximum', 'Titles', 'geditorial-terms' ),
 				'viewable'  => _x( 'Viewable', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
@@ -146,6 +150,8 @@ class Terms extends gEditorial\Module
 				'dateend'   => _x( 'Terms can have date-end to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'days'      => _x( 'Terms can have days number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'unit'      => _x( 'Terms can have unit number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'min'       => _x( 'Terms can have minimum number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'max'       => _x( 'Terms can have maximum number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
 				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
@@ -498,7 +504,7 @@ class Terms extends gEditorial\Module
 			$prepare = 'register_prepare_callback_'.$field;
 
 			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
-			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'unit', 'viewable' ] ) )
+			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'unit', 'min', 'max', 'viewable' ] ) )
 				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
 
 			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
@@ -611,6 +617,8 @@ class Terms extends gEditorial\Module
 			'dateend',
 			'days',
 			'unit',
+			'min',
+			'max',
 			'viewable',
 		];
 
@@ -660,6 +668,8 @@ class Terms extends gEditorial\Module
 			'dateend',
 			'days',
 			'unit',
+			'min',
+			'max',
 			'viewable',
 		];
 
@@ -716,6 +726,8 @@ class Terms extends gEditorial\Module
 
 			case 'days':
 			case 'unit':
+			case 'min':
+			case 'max':
 
 				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
 
@@ -1026,7 +1038,7 @@ class Terms extends gEditorial\Module
 					update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 
-				} else if ( in_array( $field, [ 'days', 'unit' ] ) ) {
+				} else if ( in_array( $field, [ 'days', 'unit', 'min', 'max' ] ) ) {
 
 					$meta = Core\Number::intval( trim( $meta ), FALSE );
 
@@ -1165,6 +1177,8 @@ class Terms extends gEditorial\Module
 
 			case 'days':
 			case 'unit':
+			case 'min':
+			case 'max':
 			case 'order':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -1386,6 +1400,8 @@ class Terms extends gEditorial\Module
 
 			case 'days':
 			case 'unit':
+			case 'min':
+			case 'max':
 			case 'order':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -1580,6 +1596,8 @@ class Terms extends gEditorial\Module
 
 					case 'days':
 					case 'unit':
+					case 'min':
+					case 'max':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 							$node['title'].= ': '.Core\Number::format( $meta );
