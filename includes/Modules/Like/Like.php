@@ -7,15 +7,15 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Like extends gEditorial\Module
 {
+	use Internals\CoreCookies;
 
 	protected $disable_no_posttypes = TRUE;
-
-	protected $cookie = 'geditorial-like';
 
 	public static function module()
 	{
@@ -87,13 +87,6 @@ class Like extends gEditorial\Module
 			'metakey_liked_guests' => '_ge_like_guests',
 			'metakey_liked_total'  => '_ge_like_total',
 		];
-	}
-
-	public function init()
-	{
-		parent::init();
-
-		$this->cookie = $this->classs( $this->site );
 	}
 
 	public function setup_ajax()
@@ -290,7 +283,7 @@ class Like extends gEditorial\Module
 		$users  = $this->get_liked_users( $post_id );
 		$guests = $this->get_liked_guests( $post_id );
 		$total  = count( $users ) + count( $guests );
-		$cookie = $this->get_cookie();
+		$cookie = $this->corecookies_get();
 
 		if ( is_user_logged_in() ) {
 
@@ -319,7 +312,7 @@ class Like extends gEditorial\Module
 
 			unset( $cookie[$post_id] );
 
-			$this->set_cookie( $cookie, FALSE );
+			$this->corecookies_set( $cookie, FALSE );
 		}
 
 		return [ FALSE, $total ];
@@ -349,7 +342,7 @@ class Like extends gEditorial\Module
 
 		} else {
 
-			$cookie = $this->get_cookie();
+			$cookie = $this->corecookies_get();
 			$ip     = Core\HTTP::IP();
 
 			if ( ! array_key_exists( $post_id, $cookie )
@@ -360,7 +353,7 @@ class Like extends gEditorial\Module
 
 				$this->set_liked_guests( $post_id, $guests );
 				$this->set_liked_total( $post_id, $total );
-				$this->set_cookie( [ $post_id => $guests[$time] ] );
+				$this->corecookies_set( [ $post_id => $guests[$time] ] );
 			}
 
 			return [ TRUE, $total ];
@@ -375,7 +368,7 @@ class Like extends gEditorial\Module
 
 		return is_user_logged_in()
 			? [ array_search( get_current_user_id(), $users ), $total ]
-			: [ array_key_exists( $post_id, $this->get_cookie() ), $total ];
+			: [ array_key_exists( $post_id, $this->corecookies_get() ), $total ];
 	}
 
 	public function avatars( $post_id )

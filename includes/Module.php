@@ -17,7 +17,6 @@ class Module extends WordPress\Module
 	public $enabled  = FALSE;
 	public $meta_key = '_ge';
 
-	protected $cookie     = 'geditorial';
 	protected $icon_group = 'genericons-neue';
 
 	protected $rest_api_version = 'v1';
@@ -2761,31 +2760,6 @@ class Module extends WordPress\Module
 	public function update_option( $key, $value )
 	{
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
-	}
-
-	public function set_cookie( $data, $append = TRUE, $expire = '+ 365 day' )
-	{
-		if ( $append ) {
-
-			$old = isset( $_COOKIE[$this->cookie] ) ? json_decode( self::unslash( $_COOKIE[$this->cookie] ) ) : [];
-			$new = wp_json_encode( self::recursiveParseArgs( $data, $old ) );
-
-		} else {
-
-			$new = wp_json_encode( $data );
-		}
-
-		return setcookie( $this->cookie, $new, strtotime( $expire ), COOKIEPATH, COOKIE_DOMAIN, FALSE );
-	}
-
-	public function get_cookie()
-	{
-		return isset( $_COOKIE[$this->cookie] ) ? json_decode( self::unslash( $_COOKIE[$this->cookie] ), TRUE ) : [];
-	}
-
-	public function delete_cookie()
-	{
-		setcookie( $this->cookie, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, FALSE );
 	}
 
 	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )
