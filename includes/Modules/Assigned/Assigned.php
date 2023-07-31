@@ -41,7 +41,7 @@ class Assigned extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
-				'posttypes_parents' => [ NULL, $this->get_settings_posttypes_parents() ],
+				'parent_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
 			],
 			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
 			'_dashboard' => [
@@ -118,7 +118,7 @@ class Assigned extends gEditorial\Module
 					'title'       => _x( 'Assigned To', 'Field Title', 'geditorial-assigned' ),
 					'description' => _x( 'Determines the individual responsible for this assignment.', 'Field Description', 'geditorial-assigned' ),
 					'type'        => 'post',
-					'posttype'    => $this->get_setting( 'posttypes_parents', [] ),
+					'posttype'    => $this->get_setting_posttypes( 'parent' ),
 				],
 				'assigned_due_date' => [
 					'title'       => _x( 'Due Date', 'Field Title', 'geditorial-assigned' ),

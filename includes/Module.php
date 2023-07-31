@@ -2757,6 +2757,31 @@ class Module extends WordPress\Module
 	}
 
 	// for out of context manipulations
+	/**
+	 * Retrieves settings option for the target posttypes.
+	 * NOTE: common targets: `subcontent`, `parent`, `directed`
+	 *
+	 * @param  string $target
+	 * @param  array  $fallback
+	 * @return array  $posttypes
+	 */
+	public function get_setting_posttypes( $target, $fallback = [] )
+	{
+		return $this->get_setting( sprintf( '%s_posttypes', $target ), $fallback );
+	}
+
+	/**
+	 * Retrieves settings option for the target taxonomies.
+	 *
+	 * @param  string $target
+	 * @param  array  $fallback
+	 * @return array  $posttypes
+	 */
+	public function get_setting_taxonomies( $target, $fallback = [] )
+	{
+		return $this->get_setting( sprintf( '%s_taxonomies', $target ), $fallback );
+	}
+
 	public function update_option( $key, $value )
 	{
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
