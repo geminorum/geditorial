@@ -20,11 +20,12 @@ class Licensed extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'licensed',
-			'title'  => _x( 'Licensed', 'Modules: Licensed', 'geditorial' ),
-			'desc'   => _x( 'Driver Licence Management', 'Modules: Licensed', 'geditorial' ),
-			'icon'   => 'id',
-			'access' => 'beta',
+			'name'     => 'licensed',
+			'title'    => _x( 'Licensed', 'Modules: Licensed', 'geditorial' ),
+			'desc'     => _x( 'Driver Licence Management', 'Modules: Licensed', 'geditorial' ),
+			'icon'     => 'id',
+			'access'   => 'beta',
+			'keywords' => [ 'car', 'vehicle' ],
 		];
 	}
 

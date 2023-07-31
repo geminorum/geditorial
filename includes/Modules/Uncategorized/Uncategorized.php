@@ -92,7 +92,9 @@ class Uncategorized extends gEditorial\Module
 	// override
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context ? $this->role_can( 'reports' ) : parent::cuc( $context, $fallback );
+		return 'reports' == $context
+			? $this->role_can( 'reports', NULL, $fallback )
+			: parent::cuc( $context, $fallback );
 	}
 
 	public function rowactions_bulk_actions( $actions )

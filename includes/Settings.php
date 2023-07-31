@@ -740,10 +740,10 @@ class Settings extends Core\Base
 		];
 	}
 
-	public static function getSetting_posttypes_parents( $description = NULL, $values = [], $empty = NULL )
+	public static function getSetting_parent_posttypes( $description = NULL, $values = [], $empty = NULL )
 	{
 		return [
-			'field'        => 'posttypes_parents',
+			'field'        => 'parent_posttypes',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Parent Post-types', 'Settings: Setting Title', 'geditorial' ),
 			'description'  => $description ?: _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial' ),

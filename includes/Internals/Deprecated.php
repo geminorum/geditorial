@@ -224,6 +224,11 @@ trait Deprecated
 		);
 	}
 
+	public function is_current_posttype( $constant )
+	{
+		return WordPress\PostType::current() == $this->constant( $constant );
+	}
+
 	// DEFAULT METHOD
 	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
 	public function dISABLED_store_metabox( $post_id, $post, $update, $context = NULL )

@@ -272,6 +272,7 @@ class Plugin
 		return update_user_option( get_current_user_id(), sprintf( '%s_restrict_%s', static::BASE, $posttype ), array_filter( array_keys( $_POST[$name] ) ) );
 	}
 
+	// NOTE: see `corerestrictposts__hook_screen_taxonomies()`
 	public function screen_settings( $settings, $screen )
 	{
 		$taxonomies = apply_filters( static::BASE.'_screen_restrict_taxonomies', [], $screen );

@@ -2756,7 +2756,6 @@ class Module extends WordPress\Module
 		return in_array( $item, (array) $setting, TRUE );
 	}
 
-	// for out of context manipulations
 	/**
 	 * Retrieves settings option for the target posttypes.
 	 * NOTE: common targets: `subcontent`, `parent`, `directed`
@@ -2782,6 +2781,13 @@ class Module extends WordPress\Module
 		return $this->get_setting( sprintf( '%s_taxonomies', $target ), $fallback );
 	}
 
+	/**
+	 * Updates module options upon out-of-context manipulations.
+	 *
+	 * @param  string $key
+	 * @param  mixed $value
+	 * @return bool $updated
+	 */
 	public function update_option( $key, $value )
 	{
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
@@ -3296,6 +3302,7 @@ class Module extends WordPress\Module
 	}
 
 	// PAIRED API
+	// TODO: move to `PairedCore` Internal
 	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
 	{
 		if ( is_null( $supported ) )
@@ -4875,11 +4882,6 @@ class Module extends WordPress\Module
 				require $this->path.$filename.'.php';
 	}
 
-	public function is_current_posttype( $constant )
-	{
-		return WordPress\PostType::current() == $this->constant( $constant );
-	}
-
 	public function is_save_post( $post, $constant = FALSE )
 	{
 		if ( $constant ) {
@@ -5165,11 +5167,8 @@ class Module extends WordPress\Module
 
 				echo $this->get_column_icon( FALSE, NULL, $title );
 
-				$posttypes = array_unique( array_map( function( $r ){
-					return $r->post_type;
-				}, $posts ) );
-
-				$args = [ $this->constant( $constants[1] ) => $post->post_name ];
+				$posttypes = array_unique( Core\Arraay::pluck( $posts, 'post_type' ) );
+				$args      = [ $this->constant( $constants[1] ) => $post->post_name ];
 
 				if ( empty( $this->cache['posttypes'] ) )
 					$this->cache['posttypes'] = WordPress\PostType::get( 2 );
@@ -5188,7 +5187,6 @@ class Module extends WordPress\Module
 				echo WordPress\Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
 			echo '</li>';
-
 		} );
 	}
 

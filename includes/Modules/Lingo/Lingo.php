@@ -78,7 +78,7 @@ class Lingo extends gEditorial\Module
 					'extended_label'   => _x( 'Language Identifiers', 'Label: `extended_label`', 'geditorial-lingo' ),
 					'show_option_all'  => _x( 'Languages', 'Label: `show_option_all`', 'geditorial-lingo' ),
 					'show_option_none' => _x( '(Unidentified)', 'Label: `show_option_none`', 'geditorial-lingo' ),
-					'uncategorized'    => _x( 'Unidentified', 'Taxonomy Label', 'geditorial-lingo' ),
+					'uncategorized'    => _x( 'Unidentified', 'Label: `uncategorized`', 'geditorial-lingo' ),
 				]
 			],
 			'defaults' => [

@@ -28,9 +28,7 @@ trait PairedCore
 
 	protected function pairedcore__hook_sync_paired_for_ajax()
 	{
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		if ( $this->is_inline_save_posttype( $constants[0] ) )
@@ -45,9 +43,7 @@ trait PairedCore
 
 		if ( is_null( $constants ) ) {
 
-			$constants = $this->paired_get_paired_constants();
-
-			if ( empty( $constants[0] ) || empty( $constants[1] ) )
+			if ( ! $constants = $this->paired_get_constants() )
 				return FALSE;
 		}
 

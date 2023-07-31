@@ -579,7 +579,7 @@ class Importer extends gEditorial\Module
 						$row    = array_pop( $items );
 
 						$raw        = Core\Arraay::combine( $headers, $row );
-						$data       = [ 'tax_input' => [] ];
+						$data       = []; // [ 'tax_input' => [] ];
 						$prepared   = [];
 						$comments   = [];
 						$taxonomies = [];
@@ -741,7 +741,7 @@ class Importer extends gEditorial\Module
 
 						} else if ( $this->_check_insert_is_empty( $insert, $insert['ID'] ) ) {
 
-							// TODO: maybe manually store: `tax_input`/`meta_input` to avoid `wp_insert_post`
+							// TODO: maybe manually store: `meta_input` to avoid `wp_insert_post`
 
 							if ( $post = WordPress\Post::get( $insert['ID'] ) ) {
 

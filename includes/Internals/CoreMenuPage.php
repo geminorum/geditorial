@@ -82,8 +82,11 @@ trait CoreMenuPage
 	 * Hacks WordPress core for users with no `create_posts` cap
 	 * @REF: https://core.trac.wordpress.org/ticket/22895
 	 * @REF: https://core.trac.wordpress.org/ticket/29714
+	 * @REF: https://core.trac.wordpress.org/ticket/56280
 	 * @REF: https://wordpress.stackexchange.com/a/178059
 	 * @REF: https://herbmiller.me/wordpress-capabilities-restrict-add-new-allowing-edit/
+	 * @SEE: https://gist.github.com/luistar15/333a25888e8804fd17490815a74ecc21
+	 * @SEE: https://github.com/WordPress/wordpress-develop/pull/3024
 	 *
 	 * @param  string|object $posttype
 	 * @return bool $hooked
