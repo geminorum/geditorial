@@ -359,6 +359,59 @@ class Datetime extends WordPress\Main
 		return sprintf( '<span title="%s" class="%s">%s</span>', $title, 'date-of-birth', $html );
 	}
 
+	/**
+	 * Provides the distribution of the population according to age.
+	 * @REF: https://en.wikipedia.org/wiki/Demographic_profile
+	 *
+	 * @param  bool  $extended
+	 * @return array $data
+	 */
+	public static function getAgeStructure( $extended = FALSE )
+	{
+		$data = [
+			'00to14' => [
+				'slug' => '00to14',
+				'name' => _x( '0–14 years', 'Age Structure', 'geditorial' ),
+				'meta' => [
+					'max' => 14,
+				],
+			],
+			'15to24' => [
+				'slug' => '15to24',
+				'name' => _x( '15–24 years', 'Age Structure', 'geditorial' ),
+				'meta' => [
+					'min' => 15,
+					'max' => 24,
+				],
+			],
+			'25to54' => [
+				'slug' => '25to54',
+				'name' => _x( '25–54 years', 'Age Structure', 'geditorial' ),
+				'meta' => [
+					'min' => 25,
+					'max' => 54,
+				],
+			],
+			'55to64' => [
+				'slug' => '55to64',
+				'name' => _x( '55–64 years', 'Age Structure', 'geditorial' ),
+				'meta' => [
+					'min' => 55,
+					'max' => 64,
+				],
+			],
+			'65over' => [
+				'slug' => '65over',
+				'name' => _x( '65 years and over', 'Age Structure', 'geditorial' ),
+				'meta' => [
+					'min' => 65,
+				],
+			],
+		];
+
+		return $extended ? $data : Core\Arraay::pluck( $data, 'name', 'slug' );
+	}
+
 	// FIXME: find a better way!
 	public static function getMonths( $calendar_type = 'gregorian' )
 	{
