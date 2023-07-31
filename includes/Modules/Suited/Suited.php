@@ -84,7 +84,9 @@ class Suited extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		// $strings['misc'] = [];
+		$strings['default_terms'] = [
+			'main_taxonomy' => ModuleInfo::getDemographicProfiles( 'strings' ),
+		];
 
 		return $strings;
 	}
