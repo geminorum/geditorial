@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 class Assigned extends gEditorial\Module
 {
+	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -35,7 +36,6 @@ class Assigned extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
-		$roles = $this->get_settings_default_roles();
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
@@ -43,55 +43,7 @@ class Assigned extends gEditorial\Module
 			'_general' => [
 				'posttypes_parents' => [ NULL, $this->get_settings_posttypes_parents() ],
 			],
-			'_roles' => [
-				[
-					'field'       => 'manage_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-assigned' ),
-					'description' => _x( 'Roles that can Manage, Edit and Delete Assignments.', 'Setting Description', 'geditorial-assigned' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'assign_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-assigned' ),
-					'description' => _x( 'Roles that can assign Assignments.', 'Setting Description', 'geditorial-assigned' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-assigned' ),
-					'description' => _x( 'Roles that can see Assignments Reports.', 'Setting Description', 'geditorial-assigned' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-assigned' ),
-					'description' => _x( 'Roles that check for Assignments visibility.', 'Setting Description', 'geditorial-assigned' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted',
-					'type'        => 'select',
-					'title'       => _x( 'Restricted Terms', 'Setting Title', 'geditorial-assigned' ),
-					'description' => _x( 'Handles visibility of each term based on meta values.', 'Setting Description', 'geditorial-assigned' ),
-					'default'     => 'disabled',
-					'values'      => [
-						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-assigned' ),
-						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-assigned' ),
-					],
-				],
-				[
-					'field'        => 'locking_terms',
-					'type'         => 'checkbox-panel',
-					'title'        => _x( 'Locking Terms', 'Setting Title', 'geditorial-assigned' ),
-					'description'  => _x( 'Selected terms will lock editing the post to assignment managers.', 'Setting Description', 'geditorial-assigned' ),
-					'string_empty' => $empty,
-					'values'       => $terms,
-				],
-			],
+			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
 			'_dashboard' => [
 				'dashboard_widgets',
 				'summary_excludes' => [ NULL, $terms, $empty ],
@@ -195,7 +147,7 @@ class Assigned extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_restricted_terms_callback',
 		], NULL, TRUE );
 
-		$this->filter( 'map_meta_cap', 4 );
+		$this->corecaps__init_taxonomy_meta_caps( 'main_taxonomy' );
 	}
 
 	public function current_screen( $screen )
@@ -207,7 +159,9 @@ class Assigned extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
-				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', 'reports' );
+
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 			}
 		}
 	}
@@ -219,7 +173,7 @@ class Assigned extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		if ( ! $this->role_can( 'reports' ) )
+		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;
 
 		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
@@ -228,68 +182,5 @@ class Assigned extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
-	}
-
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
-	{
-		$taxonomy = $this->constant( 'main_taxonomy' );
-
-		switch ( $cap ) {
-
-			case 'edit_post':
-			case 'edit_page':
-			case 'delete_post':
-			case 'delete_page':
-			case 'publish_post':
-
-				$locking = $this->get_setting( 'locking_terms', [] );
-
-				if ( empty( $locking ) )
-					return $caps;
-
-				if ( ! $post = WordPress\Post::get( $args[0] ) )
-					return $caps;
-
-				if ( ! $this->posttype_supported( $post->post_type ) )
-					return $caps;
-
-				foreach ( $locking as $term_id )
-					if ( is_object_in_term( $post->ID, $taxonomy, (int) $term_id ) )
-						return $this->role_can( 'manage', $user_id ) ? $caps : [ 'do_not_allow' ];
-
-			break;
-			case 'manage_'.$taxonomy:
-			case 'edit_'.$taxonomy:
-			case 'delete_'.$taxonomy:
-
-				return $this->role_can( 'manage', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-			break;
-			case 'assign_'.$taxonomy:
-
-				return $this->role_can( 'assign', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-			break;
-			case 'assign_term':
-
-				$term = get_term( (int) $args[0] );
-
-				if ( ! $term || is_wp_error( $term ) )
-					return $caps;
-
-				if ( $taxonomy != $term->taxonomy )
-					return $caps;
-
-				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
-					return $caps;
-
-				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
-					return [ 'do_not_allow' ];
-		}
-
-		return $caps;
 	}
 }

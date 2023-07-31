@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress;
 
 class Lingo extends gEditorial\Module
 {
+	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -34,55 +35,13 @@ class Lingo extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles = $this->get_settings_default_roles();
-
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_editpost' => [
 				'assign_default_term',
 				'metabox_advanced',
 			],
-			'_roles' => [
-				[
-					'field'       => 'manage_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-lingo' ),
-					'description' => _x( 'Roles that can Manage, Edit and Delete Language Identifiers.', 'Setting Description', 'geditorial-lingo' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'assign_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-lingo' ),
-					'description' => _x( 'Roles that can Assign Language Identifiers.', 'Setting Description', 'geditorial-lingo' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-lingo' ),
-					'description' => _x( 'Roles that can see Language Identifiers Reports.', 'Setting Description', 'geditorial-lingo' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-lingo' ),
-					'description' => _x( 'Roles that check for Language Identifiers visibility.', 'Setting Description', 'geditorial-lingo' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted',
-					'type'        => 'select',
-					'title'       => _x( 'Restricted Identifiers', 'Setting Title', 'geditorial-lingo' ),
-					'description' => _x( 'Handles visibility of each identifier based on meta values.', 'Setting Description', 'geditorial-lingo' ),
-					'default'     => 'disabled',
-					'values'      => [
-						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-lingo' ),
-						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-lingo' ),
-					],
-				],
-			],
+			'_roles' => $this->corecaps_taxonomy_get_roles_settings( 'language_taxonomy', TRUE ),
 		];
 	}
 
@@ -116,6 +75,7 @@ class Lingo extends gEditorial\Module
 			],
 			'labels' => [
 				'language_taxonomy' => [
+					'extended_label'   => _x( 'Language Identifiers', 'Label: `extended_label`', 'geditorial-lingo' ),
 					'show_option_all'  => _x( 'Languages', 'Label: `show_option_all`', 'geditorial-lingo' ),
 					'show_option_none' => _x( '(Unidentified)', 'Label: `show_option_none`', 'geditorial-lingo' ),
 					'uncategorized'    => _x( 'Unidentified', 'Taxonomy Label', 'geditorial-lingo' ),
@@ -169,7 +129,7 @@ class Lingo extends gEditorial\Module
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], NULL, TRUE );
 
-		$this->filter( 'map_meta_cap', 4 );
+		$this->corecaps__init_taxonomy_meta_caps( 'language_taxonomy' );
 
 		if ( ! is_admin() )
 			return;
@@ -211,50 +171,6 @@ class Lingo extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'language_taxonomy', 'options-general.php' );
 	}
 
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
-	{
-		$taxonomy = $this->constant( 'language_taxonomy' );
-
-		switch ( $cap ) {
-
-			case 'manage_'.$taxonomy:
-			case 'edit_'.$taxonomy:
-			case 'delete_'.$taxonomy:
-
-				return $this->role_can( 'manage', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_'.$taxonomy:
-
-				return $this->role_can( 'assign', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_term':
-
-				$term = get_term( (int) $args[0] );
-
-				if ( ! $term || is_wp_error( $term ) )
-					return $caps;
-
-				if ( $taxonomy != $term->taxonomy )
-					return $caps;
-
-				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
-					return $caps;
-
-				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
-					return [ 'do_not_allow' ];
-		}
-
-		return $caps;
-	}
-
 	public function dashboard_glance_items( $items )
 	{
 		if ( $glance = $this->dashboard_glance_taxonomy( 'language_taxonomy' ) )
@@ -280,6 +196,14 @@ class Lingo extends gEditorial\Module
 		];
 
 		return $data;
+	}
+
+	// override
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' == $context
+			? $this->corecaps_taxonomy_role_can( 'language_taxonomy', 'reports' )
+			: parent::cuc( $context, $fallback );
 	}
 
 	public function imports_settings( $sub )

@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Labeled extends gEditorial\Module
 {
+	use Internals\CoreCapabilities;
 	use Internals\CoreMenuPage;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
@@ -32,35 +33,11 @@ class Labeled extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
-		$roles = $this->get_settings_default_roles();
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-
-			'_roles' => [
-				[
-					'field'       => 'manage_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-labeled' ),
-					'description' => _x( 'Roles that can Manage, Edit and Delete Content Labels.', 'Setting Description', 'geditorial-labeled' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'assign_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-labeled' ),
-					'description' => _x( 'Roles that can Assign Content Labels.', 'Setting Description', 'geditorial-labeled' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-labeled' ),
-					'description' => _x( 'Roles that can see Content Labels Reports.', 'Setting Description', 'geditorial-labeled' ),
-					'values'      => $roles,
-				],
-			],
+			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_editpost' => [
 				'admin_restrict',
 			],
@@ -89,6 +66,7 @@ class Labeled extends gEditorial\Module
 			],
 			'labels' => [
 				'main_taxonomy' => [
+					'extended_label'       => _x( 'Content Labels', 'Label: `extended_label`', 'geditorial-labeled' ),
 					'menu_name'            => _x( 'Content Labels', 'Label: Menu Name', 'geditorial-labeled' ),
 					'show_option_all'      => _x( 'Labels', 'Label: Show Option All', 'geditorial-labeled' ),
 					'show_option_no_items' => _x( '(Unlabeled)', 'Label: Show Option No Terms', 'geditorial-labeled' ),
@@ -143,7 +121,7 @@ class Labeled extends gEditorial\Module
 			'show_in_rest' => FALSE,   // temporarily disable in block editor
 		], FALSE, TRUE );
 
-		$this->filter( 'map_meta_cap', 4 );
+		$this->corecaps__init_taxonomy_meta_caps( 'main_taxonomy' );
 	}
 
 	public function meta_init()
@@ -173,14 +151,16 @@ class Labeled extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 				$this->action_module( 'meta', 'column_row', 3, 30 );
-				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', 'reports' );
+
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 			}
 		}
 	}
 
 	protected function dashboard_widgets()
 	{
-		if ( ! $this->role_can( 'reports' ) )
+		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;
 
 		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
@@ -200,50 +180,5 @@ class Labeled extends gEditorial\Module
 				'before'   => $this->wrap_open_row().$this->get_column_icon( FALSE, $fields['label_string']['icon'], $fields['label_string']['title'] ),
 				'after'    => '</li>',
 			] );
-	}
-
-	// @REF: https://make.wordpress.org/core/?p=20496
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
-	{
-		$taxonomy = $this->constant( 'main_taxonomy' );
-
-		switch ( $cap ) {
-
-			case 'manage_'.$taxonomy:
-			case 'edit_'.$taxonomy:
-			case 'delete_'.$taxonomy:
-
-				return $this->role_can( 'manage', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_'.$taxonomy:
-
-				return $this->role_can( 'assign', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_term':
-
-				$term = get_term( (int) $args[0] );
-
-				if ( ! $term || is_wp_error( $term ) )
-					return $caps;
-
-				if ( $taxonomy != $term->taxonomy )
-					return $caps;
-
-				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
-					return $caps;
-
-				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
-					return [ 'do_not_allow' ];
-		}
-
-		return $caps;
 	}
 }

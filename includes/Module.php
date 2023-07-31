@@ -3245,8 +3245,8 @@ class Module extends WordPress\Module
 			'posttype' => $post->post_type,
 		];
 
-		if ( $this->role_can( 'restricted', NULL, FALSE, FALSE ) )
-			$args['role'] = $this->get_setting( 'restricted', 'disabled' );
+		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
+			$args['role'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
 
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $args );

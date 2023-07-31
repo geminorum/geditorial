@@ -91,8 +91,8 @@ trait DashboardSummary
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
 
-		if ( 'roles' == $scope && $this->role_can( 'restricted', $user_id, FALSE, FALSE ) )
-			$check = TRUE; // 'hidden' == $this->get_setting( 'restricted', 'disabled' );
+		if ( 'roles' == $scope && $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $taxonomy ), $user_id, FALSE, FALSE ) )
+			$check = TRUE; // 'hidden' == $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $taxonomy ), 'disabled' );
 
 		if ( $this->get_setting( 'summary_drafts', FALSE ) )
 			$exclude = array_diff( $exclude, [ 'draft' ] );

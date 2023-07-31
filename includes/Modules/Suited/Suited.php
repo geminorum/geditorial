@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Suited extends gEditorial\Module
 {
+	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -31,52 +32,11 @@ class Suited extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
-		$roles = $this->get_settings_default_roles();
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles' => [
-				[
-					'field'       => 'manage_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-suited' ),
-					'description' => _x( 'Roles that can Manage, Edit and Delete Suitable Targets.', 'Setting Description', 'geditorial-suited' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'assign_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-suited' ),
-					'description' => _x( 'Roles that can Assign Suitable Targets.', 'Setting Description', 'geditorial-suited' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-suited' ),
-					'description' => _x( 'Roles that can see Suitable Targets Reports.', 'Setting Description', 'geditorial-suited' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-suited' ),
-					'description' => _x( 'Roles that check for Suitable Targets visibility.', 'Setting Description', 'geditorial-suited' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted',
-					'type'        => 'select',
-					'title'       => _x( 'Restricted Targets', 'Setting Title', 'geditorial-suited' ),
-					'description' => _x( 'Handles visibility of each target based on meta values.', 'Setting Description', 'geditorial-suited' ),
-					'default'     => 'disabled',
-					'values'      => [
-						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-suited' ),
-						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-suited' ),
-					],
-				],
-			],
+			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
 			'_supports' => [
 				'shortcode_support',
 			],
@@ -139,7 +99,7 @@ class Suited extends gEditorial\Module
 			'meta_box_cb'  => '__checklist_restricted_terms_callback',
 		] );
 
-		$this->filter( 'map_meta_cap', 4 );
+		$this->corecaps__init_taxonomy_meta_caps( 'main_taxonomy' );
 
 		$this->register_shortcode( 'main_shortcode' );
 	}
@@ -153,7 +113,9 @@ class Suited extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
-				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', 'reports' );
+
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 			}
 		}
 	}
@@ -165,7 +127,7 @@ class Suited extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		if ( ! $this->role_can( 'reports' ) )
+		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;
 
 		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
@@ -174,50 +136,6 @@ class Suited extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
-	}
-
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
-	{
-		$taxonomy = $this->constant( 'main_taxonomy' );
-
-		switch ( $cap ) {
-
-			case 'manage_'.$taxonomy:
-			case 'edit_'.$taxonomy:
-			case 'delete_'.$taxonomy:
-
-				return $this->role_can( 'manage', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_'.$taxonomy:
-
-				return $this->role_can( 'assign', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_term':
-
-				$term = get_term( (int) $args[0] );
-
-				if ( ! $term || is_wp_error( $term ) )
-					return $caps;
-
-				if ( $taxonomy != $term->taxonomy )
-					return $caps;
-
-				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
-					return $caps;
-
-				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
-					return [ 'do_not_allow' ];
-		}
-
-		return $caps;
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )

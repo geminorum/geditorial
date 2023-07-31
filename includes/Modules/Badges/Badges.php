@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Badges extends gEditorial\Module
 {
+	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -31,53 +32,12 @@ class Badges extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
-		$roles = $this->get_settings_default_roles();
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles' => [
-				[
-					'field'       => 'manage_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-badges' ),
-					'description' => _x( 'Roles that can Manage, Edit and Delete Badges.', 'Setting Description', 'geditorial-badges' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'assign_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Assign Roles', 'Setting Title', 'geditorial-badges' ),
-					'description' => _x( 'Roles that can Assign Badges.', 'Setting Description', 'geditorial-badges' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-badges' ),
-					'description' => _x( 'Roles that can see Badges Reports.', 'Setting Description', 'geditorial-badges' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Restricted Roles', 'Setting Title', 'geditorial-badges' ),
-					'description' => _x( 'Roles that check for Badges visibility.', 'Setting Description', 'geditorial-badges' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'restricted',
-					'type'        => 'select',
-					'title'       => _x( 'Restricted Badges', 'Setting Title', 'geditorial-badges' ),
-					'description' => _x( 'Handles visibility of each badge on meta values.', 'Setting Description', 'geditorial-badges' ),
-					'default'     => 'disabled',
-					'values'      => [
-						'disabled' => _x( 'Disabled', 'Setting Option', 'geditorial-badges' ),
-						'hidden'   => _x( 'Hidden', 'Setting Option', 'geditorial-badges' ),
-					],
-				],
-			],
-			'_dashboard' => [
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
@@ -144,7 +104,7 @@ class Badges extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_restricted_terms_callback',
 		], NULL, TRUE );
 
-		$this->filter( 'map_meta_cap', 4 );
+		$this->corecaps__init_taxonomy_meta_caps( 'main_taxonomy' );
 
 		if ( is_admin() )
 			return;
@@ -187,63 +147,20 @@ class Badges extends gEditorial\Module
 		$this->enqueue_styles();
 	}
 
-	protected function dashboard_widgets()
-	{
-		if ( ! $this->role_can( 'reports' ) )
-			return;
-
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
-	}
-
-	// @REF: https://make.wordpress.org/core/?p=20496
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
-	{
-		$taxonomy = $this->constant( 'main_taxonomy' );
-
-		switch ( $cap ) {
-
-			case 'manage_'.$taxonomy:
-			case 'edit_'.$taxonomy:
-			case 'delete_'.$taxonomy:
-
-				return $this->role_can( 'manage', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_'.$taxonomy:
-
-				return $this->role_can( 'assign', $user_id )
-					? [ 'read' ]
-					: [ 'do_not_allow' ];
-
-				break;
-
-			case 'assign_term':
-
-				$term = get_term( (int) $args[0] );
-
-				if ( ! $term || is_wp_error( $term ) )
-					return $caps;
-
-				if ( $taxonomy != $term->taxonomy )
-					return $caps;
-
-				if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
-					return $caps;
-
-				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
-					return [ 'do_not_allow' ];
-		}
-
-		return $caps;
-	}
-
 	// override
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context ? $this->role_can( 'reports' ) : parent::cuc( $context, $fallback );
+		return 'reports' == $context
+			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' )
+			: parent::cuc( $context, $fallback );
+	}
+
+	protected function dashboard_widgets()
+	{
+		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+			return;
+
+		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
 	}
 
 	public function render_widget_term_summary( $object, $box )
