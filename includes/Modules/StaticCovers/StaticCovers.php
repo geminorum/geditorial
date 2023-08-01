@@ -111,6 +111,16 @@ class StaticCovers extends gEditorial\Module
 			];
 		}
 
+		$settings['_defaults'] = [
+			[
+				'field'       => 'counter_threshold',
+				'type'        => 'number',
+				'title'       => _x( 'Counter Threshold', 'Setting Title', 'geditorial-static-covers' ),
+				'description' => _x( 'Defines digit places number needs to be to not have zeros added to the counter token.', 'Setting Description', 'geditorial-static-covers' ),
+				'default'     => 2,
+				'min_attr'    => 1,
+			],
+		];
 		$settings['_supports'] = [
 			'shortcode_support',
 		];
@@ -227,6 +237,12 @@ class StaticCovers extends gEditorial\Module
 		}
 	}
 
+	// TODO: do the actual count!
+	private function _get_counter( $start = 1 )
+	{
+		return Core\Number::zeroise( $start, $this->get_setting( 'counter_threshold', 2 ) );
+	}
+
 	private function _get_html_image( $src, $title = FALSE, $class = '' )
 	{
 		return Core\HTML::tag( 'a', [
@@ -252,6 +268,7 @@ class StaticCovers extends gEditorial\Module
 			return FALSE;
 
 		$tokens = [
+			'counter'   => $this->_get_counter(),
 			'reference' => $reference,
 			'post_id'   => $post->ID,
 			'post_type' => $post->post_type,
@@ -292,6 +309,7 @@ class StaticCovers extends gEditorial\Module
 			return FALSE;
 
 		$tokens = [
+			'counter'   => $this->_get_counter(),
 			'reference' => $reference,
 			'term_id'   => $term->term_id,
 			'taxonomy'  => $term->taxonomy,
@@ -320,6 +338,7 @@ class StaticCovers extends gEditorial\Module
 	private function _get_posttype_template_tokens( $joined = TRUE )
 	{
 		$tokens = [
+			'counter',
 			'reference',
 			'post_id',
 			'post_type',
@@ -336,6 +355,7 @@ class StaticCovers extends gEditorial\Module
 	private function _get_taxonomy_template_tokens( $joined = TRUE )
 	{
 		$tokens = [
+			'counter',
 			'reference',
 			'term_id',
 			'taxonomy',
