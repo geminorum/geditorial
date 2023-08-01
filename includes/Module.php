@@ -4186,14 +4186,22 @@ class Module extends WordPress\Module
 			echo $this->wrap_open( '-admin-metabox' );
 
 			$this->actions(
-				sprintf( 'render_%s_metabox', $context ),
+				sprintf( 'render_%s_metabox_before', $context ),
 				$object,
 				$box,
 				NULL,
 				sprintf( '%s_%s', $context, $object->taxonomy )
 			);
 
-			$this->_render_supportedbox_extra( $object, $box, $context, $screen );
+			$this->_render_supportedbox_content( $object, $box, $context, $screen );
+
+			$this->actions(
+				sprintf( 'render_%s_metabox_after', $context ),
+				$object,
+				$box,
+				NULL,
+				sprintf( '%s_%s', $context, $object->taxonomy )
+			);
 
 			echo '</div>';
 		};
@@ -4236,14 +4244,22 @@ class Module extends WordPress\Module
 			echo $this->wrap_open( '-admin-metabox' );
 
 			$this->actions(
-				sprintf( 'render_%s_metabox', $context ),
+				sprintf( 'render_%s_metabox_before', $context ),
 				$object,
 				$box,
 				NULL,
 				sprintf( '%s_%s', $context, $object->post_type )
 			);
 
-			$this->_render_supportedbox_extra( $object, $box, $context, $screen );
+			$this->_render_supportedbox_content( $object, $box, $context, $screen );
+
+			$this->actions(
+				sprintf( 'render_%s_metabox_after', $context ),
+				$object,
+				$box,
+				NULL,
+				sprintf( '%s_%s', $context, $object->post_type )
+			);
 
 			echo '</div>';
 		};
@@ -4274,10 +4290,18 @@ class Module extends WordPress\Module
 	}
 
 	// DEFAULT METHOD
-	protected function _render_supportedbox_extra( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
 		if ( is_null( $context ) )
 			$context = 'supportedbox';
+
+		$this->actions(
+			sprintf( 'render_%s_metabox', $context ),
+			$object,
+			$box,
+			NULL,
+			sprintf( '%s_%s', $context, $object->post_type )
+		);
 	}
 
 	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
