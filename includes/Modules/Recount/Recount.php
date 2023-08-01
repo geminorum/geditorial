@@ -69,6 +69,7 @@ class Recount extends gEditorial\Module
 
 			$this->_edit_tags_screen( $screen->taxonomy );
 			add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_taxonomy_columns' ] );
+			$this->filter( 'request' );
 
 			$this->filter( 'taxonomy_bulk_actions', 2, 14, FALSE, 'gnetwork' );
 			$this->filter( 'taxonomy_bulk_callback', 3, 14, FALSE, 'gnetwork' );
@@ -128,8 +129,21 @@ class Recount extends gEditorial\Module
 	public function sortable_taxonomy_columns( $columns )
 	{
 		return array_merge( $columns, [
-			$this->classs() => 'count', // FIXME: must sort by meta
+			$this->classs() => $this->key,
 		] );
+	}
+
+	// @REF: https://gist.github.com/scribu/906872
+	public function request( $query_vars )
+	{
+		if ( isset( $query_vars['orderby'] ) && $this->key === $query_vars['orderby'] ) {
+			$query_vars = array_merge( $query_vars, [
+				'meta_key' => 'count',
+				'orderby'  => 'meta_value_num'
+			] );
+		}
+
+		return $query_vars;
 	}
 
 	public function custom_taxonomy_column( $string, $column_name, $term_id )
