@@ -345,18 +345,19 @@ class Datetime extends WordPress\Main
 	}
 
 	// TODO: utilize `htmlDateTime()`
-	public static function prepDateOfBirth( $date, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	public static function prepDateOfBirth( $date, $format = NULL, $reversed = FALSE, $calendar_type = 'gregorian', $timezone = NULL )
 	{
-		if ( is_null( $format ) )
-			$format = self::dateFormats( 'default' );
-
-		$age  = Core\Date::calculateAge( $date, $calendar_type, $timezone );
-		$html = apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone );
+		$age = Core\Date::calculateAge( $date, $calendar_type, $timezone );
 
 		/* translators: %s: year number */
 		$title = sprintf( _nx( '%s year old', '%s years old', $age['year'], 'Datetime: Age Title Attr', 'geditorial' ), Core\Number::format( $age['year'] ) );
 
-		return sprintf( '<span title="%s" class="%s">%s</span>', $title, 'date-of-birth', $html );
+		$html     = apply_filters( 'date_format_i18n', $date, $format ?? self::dateFormats( 'age' ), $calendar_type, $timezone );
+		$template = '<span title="%s" class="%s">%s</span>';
+
+		return $reversed
+			? sprintf( $template, $html, 'date-of-birth', $title )
+			: sprintf( $template, $title, 'date-of-birth', $html );
 	}
 
 	/**
