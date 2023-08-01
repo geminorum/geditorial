@@ -865,15 +865,26 @@ class Module extends WordPress\Module
 		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
-	public function is_posttype( $posttype_constant, $post = NULL )
+	public function is_posttype( $constant, $post = NULL )
 	{
-		if ( ! $posttype_constant )
+		if ( ! $constant )
 			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		return $this->constant( $posttype_constant ) == $post->post_type;
+		return $this->constant( $constant ) == $post->post_type;
+	}
+
+	public function is_taxonomy( $constant, $term = NULL )
+	{
+		if ( ! $constant )
+			return FALSE;
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		return $this->constant( $constant ) == $term->taxonomy;
 	}
 
 	public function is_post_viewable( $post = NULL )

@@ -223,7 +223,7 @@ class Quotation extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $title;
 
-		if ( $post->post_parent && $this->constant( 'quote_cpt' ) == $post->post_type )
+		if ( $post->post_parent && $this->is_posttype( 'quote_cpt', $post ) )
 			/* translators: %1$s: post parent, %2$s: menu order */
 			return vsprintf( _x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ), [
 				WordPress\Post::title( $post->post_parent, NULL, FALSE ),

@@ -802,7 +802,7 @@ class Book extends gEditorial\Module
 		if ( FALSE === $args['title'] )
 			return FALSE;
 
-		if ( $post->post_type == $this->constant( 'publication_cpt' ) ) {
+		if ( $this->is_posttype( 'publication_cpt', $post ) ) {
 
 			if ( $title = $this->get_setting( 'p2p_title_from' ) )
 				return $title;
@@ -916,7 +916,7 @@ class Book extends gEditorial\Module
 
 			echo $this->wrap_open( '-p2p '.$class );
 
-			if ( $post->post_type == $this->constant( 'publication_cpt' ) )
+			if ( $this->is_posttype( 'publication_cpt', $post ) )
 				Core\HTML::h3( $this->get_setting( 'p2p_title_from' ), '-title -p2p-from' );
 
 			else

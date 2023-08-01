@@ -593,7 +593,7 @@ class Today extends gEditorial\Module
 			return;
 
 		if ( ! $this->posttype_supported( $post->post_type )
-			&& $this->constant( 'day_cpt' ) != $post->post_type )
+			&& ! $this->is_posttype( 'day_cpt', $post ) )
 				return;
 
 		if ( ! $this->nonce_verify( 'supportedbox' )
@@ -630,7 +630,7 @@ class Today extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $title;
 
-		if ( $this->constant( 'day_cpt' ) == $post->post_type ) {
+		if ( $this->is_posttype( 'day_cpt', $post ) ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
 				$post,
@@ -835,7 +835,7 @@ class Today extends gEditorial\Module
 
 	public function post_type_link( $post_link, $post, $leavename, $sample )
 	{
-		if ( $post->post_type == $this->constant( 'day_cpt' ) ) {
+		if ( $this->is_posttype( 'day_cpt', $post ) ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
 				$post,
