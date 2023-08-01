@@ -17,6 +17,7 @@ class Datetime extends WordPress\Main
 
 	// @REF: https://unicode-table.com/en/060D/
 	// @SEE: https://www.compart.com/en/unicode/U+002F
+	// @SEE: [Arabic Date Separator U-060D](https://github.com/rastikerdar/vazir-font/issues/81)
 	public static function dateSeparator()
 	{
 		return _x( '/', 'Datetime: Date Separator', 'geditorial' );
@@ -54,6 +55,7 @@ class Datetime extends WordPress\Main
 				'timeonly'  => _x( 'H:i', 'Date Format', 'geditorial' ),
 				'monthday'  => _x( 'n/j', 'Date Format', 'geditorial' ),
 				'default'   => _x( 'm/d/Y', 'Date Format', 'geditorial' ),
+				'age'       => _x( 'Y/m/d', 'Date Format: `age`', 'geditorial' ),
 				'wordpress' => get_option( 'date_format' ),
 			] );
 
@@ -372,14 +374,14 @@ class Datetime extends WordPress\Main
 		$data = [
 			'00to14' => [
 				'slug' => '00to14',
-				'name' => _x( '0–14 years', 'Age Structure', 'geditorial' ),
+				'name' => _x( '0–14 years', 'Datetime: Age Structure', 'geditorial' ),
 				'meta' => [
 					'max' => 14,
 				],
 			],
 			'15to24' => [
 				'slug' => '15to24',
-				'name' => _x( '15–24 years', 'Age Structure', 'geditorial' ),
+				'name' => _x( '15–24 years', 'Datetime: Age Structure', 'geditorial' ),
 				'meta' => [
 					'min' => 15,
 					'max' => 24,
@@ -387,7 +389,7 @@ class Datetime extends WordPress\Main
 			],
 			'25to54' => [
 				'slug' => '25to54',
-				'name' => _x( '25–54 years', 'Age Structure', 'geditorial' ),
+				'name' => _x( '25–54 years', 'Datetime: Age Structure', 'geditorial' ),
 				'meta' => [
 					'min' => 25,
 					'max' => 54,
@@ -395,7 +397,7 @@ class Datetime extends WordPress\Main
 			],
 			'55to64' => [
 				'slug' => '55to64',
-				'name' => _x( '55–64 years', 'Age Structure', 'geditorial' ),
+				'name' => _x( '55–64 years', 'Datetime: Age Structure', 'geditorial' ),
 				'meta' => [
 					'min' => 55,
 					'max' => 64,
@@ -403,7 +405,7 @@ class Datetime extends WordPress\Main
 			],
 			'65over' => [
 				'slug' => '65over',
-				'name' => _x( '65 years and over', 'Age Structure', 'geditorial' ),
+				'name' => _x( '65 years and over', 'Datetime: Age Structure', 'geditorial' ),
 				'meta' => [
 					'min' => 65,
 				],

@@ -7,6 +7,7 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
@@ -323,7 +324,7 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		Core\HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-config' ) );
-		Core\HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
+		Info::renderNoReportsAvailable();
 	}
 
 	protected function render_tools_html( $uri, $sub )

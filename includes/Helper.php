@@ -148,6 +148,7 @@ class Helper extends WordPress\Main
 		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
 	}
 
+	// TODO: move to `WordPress\Strings`
 	public static function kses( $text, $context = 'none', $allowed = NULL )
 	{
 		if ( is_null( $allowed ) ) {
@@ -173,9 +174,11 @@ class Helper extends WordPress\Main
 				$allowed = [];
 		}
 
+		// TODO: drop filters
 		return apply_filters( static::BASE.'_kses', wp_kses( $text, $allowed ), $allowed, $context );
 	}
 
+	// TODO: move to `WordPress\Strings`
 	public static function ksesArray( $array, $context = 'none', $allowed = NULL )
 	{
 		foreach ( $array as $key => $value )
@@ -184,6 +187,7 @@ class Helper extends WordPress\Main
 		return $array;
 	}
 
+	// TODO: move to `WordPress\Strings`
 	public static function prepTitle( $text, $post_id = 0 )
 	{
 		if ( ! $text )
@@ -196,6 +200,7 @@ class Helper extends WordPress\Main
 		return trim( $text );
 	}
 
+	// TODO: move to `WordPress\Strings`
 	public static function prepDescription( $text, $shortcode = TRUE, $autop = TRUE )
 	{
 		if ( ! $text )
@@ -210,7 +215,7 @@ class Helper extends WordPress\Main
 		return $autop ? wpautop( $text ) : $text;
 	}
 
-	// FIXME: move to `Contact` DataType
+	// FIXME: `Contact` DataType
 	public static function prepContact( $value, $title = NULL, $empty = '' )
 	{
 		if ( empty( $value ) )
@@ -519,15 +524,7 @@ class Helper extends WordPress\Main
 		], Core\HTML::escape( $title ) ).$after;
 	}
 
-	public static function getExtension( $mime_type, $extensions )
-	{
-		if ( FALSE === ( $key = array_search( $mime_type, $extensions ) ) )
-			return FALSE;
-
-		$ext = explode( '|', $key );
-		return strtoupper( $ext[0] );
-	}
-
+	// TODO: move to `Visual`
 	public static function getAdminBarIcon( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
 	{
 		return Core\HTML::tag( 'span', [
@@ -540,6 +537,7 @@ class Helper extends WordPress\Main
 		], NULL );
 	}
 
+	// TODO: move to `Visual`
 	public static function getPostTypeIcon( $posttype, $fallback = 'admin-post' )
 	{
 		$object = WordPress\PostType::object( $posttype );
@@ -567,6 +565,7 @@ class Helper extends WordPress\Main
 	}
 
 	// TODO: `line-count`
+	// TODO: move to `Info`
 	public static function renderEditorStatusInfo( $target )
 	{
 		echo '<div class="-wrap -editor-status-info">';
@@ -590,7 +589,7 @@ class Helper extends WordPress\Main
 		echo '</div>';
 	}
 
-	// MOVE TO: `Strings`
+	// TODO: move to `WordPress\Strings`
 	public static function htmlEmpty( $class = '', $title_attr = NULL )
 	{
 		return is_null( $title_attr )
@@ -664,7 +663,7 @@ class Helper extends WordPress\Main
 	public static function nooped( $count, $nooped )
 	{
 		if ( ! array_key_exists( 'domain', $nooped ) )
-			$nooped['domain'] = 'geditorial';
+			$nooped['domain'] = static::BASE;
 
 		if ( empty( $nooped['domain'] ) )
 			return _n( $nooped['singular'], $nooped['plural'], $count );

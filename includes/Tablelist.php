@@ -275,7 +275,7 @@ class Tablelist extends WordPress\Main
 			'title'    => _x( 'Mime', 'Tablelist: Column: Post Mime', 'geditorial' ),
 			'args'     => [ 'mime_types' => wp_get_mime_types() ],
 			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
-				if ( $ext = Helper::getExtension( $row->post_mime_type, $column['args']['mime_types'] ) )
+				if ( $ext = WordPress\Media::getExtension( $row->post_mime_type, $column['args']['mime_types'] ) )
 					return '<span title="'.$row->post_mime_type.'">'.$ext.'</span>';
 
 				return $row->post_mime_type;

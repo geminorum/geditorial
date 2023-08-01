@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\WordPress;
 
 trait DashboardSummary
@@ -58,7 +59,7 @@ trait DashboardSummary
 
 			} else {
 
-				Core\HTML::desc( _x( 'There are no reports available!', 'Internal: DashboardSummary: Message', 'geditorial' ), FALSE, '-empty' );
+				Info::renderNoReportsAvailable();
 			}
 		}
 

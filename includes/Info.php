@@ -54,6 +54,15 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderNoReportsAvailable()
+	{
+		return Core\HTML::desc(
+			_x( 'There are no reports available!', 'Info: Message', 'geditorial' ),
+			FALSE,
+			'-empty'
+		);
+	}
+
 	public static function getHelpTabs( $context = NULL ) {}
 
 	// TODO: add click to select

@@ -166,11 +166,11 @@ class Meta extends gEditorial\Module
 				'image_source_url'  => _x( 'Image Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'main_download_url' => _x( 'Downloadable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
 
-				'date'      => _x( 'Posts can have date to help orginize them.', 'Descriptions', 'geditorial-meta' ),
-				'datetime'  => _x( 'Posts can have date-time to help orginize them.', 'Descriptions', 'geditorial-meta' ),
-				'datestart' => _x( 'Posts can have date-start to help orginize them.', 'Descriptions', 'geditorial-meta' ),
-				'dateend'   => _x( 'Posts can have date-end to help orginize them.', 'Descriptions', 'geditorial-meta' ),
-				'days'      => _x( 'Posts can have days number to help orginize them.', 'Descriptions', 'geditorial-meta' ),
+				'date'      => _x( 'Posts can have date to help organize them.', 'Descriptions', 'geditorial-meta' ),
+				'datetime'  => _x( 'Posts can have date-time to help organize them.', 'Descriptions', 'geditorial-meta' ),
+				'datestart' => _x( 'Posts can have date-start to help organize them.', 'Descriptions', 'geditorial-meta' ),
+				'dateend'   => _x( 'Posts can have date-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
+				'days'      => _x( 'Posts can have days number to help organize them.', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),

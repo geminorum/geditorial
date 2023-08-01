@@ -249,7 +249,7 @@ class Attachments extends gEditorial\Module
 				$list = [];
 
 				foreach ( $mime_types as $mime_type )
-					if ( $ext = Helper::getExtension( $mime_type, $extensions ) )
+					if ( $ext = WordPress\Media::getExtension( $mime_type, $extensions ) )
 						$list[] = $ext;
 
 				echo WordPress\Strings::getJoined( $list, ' <span class="-mime-types">(', ')</span>' );

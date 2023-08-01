@@ -140,18 +140,18 @@ class Terms extends gEditorial\Module
 				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
 				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
 				'posttypes' => _x( 'Terms can have unique posttypes visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
-				'arrow'     => _x( 'Terms can have direction arrow to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'label'     => _x( 'Terms can have text label to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'code'      => _x( 'Terms can have text code to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'barcode'   => _x( 'Terms can have barcode to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'date'      => _x( 'Terms can have date to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'datetime'  => _x( 'Terms can have date-time to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'datestart' => _x( 'Terms can have date-start to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'dateend'   => _x( 'Terms can have date-end to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'days'      => _x( 'Terms can have days number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'unit'      => _x( 'Terms can have unit number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'min'       => _x( 'Terms can have minimum number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
-				'max'       => _x( 'Terms can have maximum number to help orginize them.', 'Descriptions', 'geditorial-terms' ),
+				'arrow'     => _x( 'Terms can have direction arrow to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'label'     => _x( 'Terms can have text label to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'code'      => _x( 'Terms can have text code to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'barcode'   => _x( 'Terms can have barcode to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'date'      => _x( 'Terms can have date to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'datetime'  => _x( 'Terms can have date-time to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'datestart' => _x( 'Terms can have date-start to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'dateend'   => _x( 'Terms can have date-end to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'days'      => _x( 'Terms can have days number to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'unit'      => _x( 'Terms can have unit number to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'min'       => _x( 'Defines the minimum threshold of the term.', 'Descriptions', 'geditorial-terms' ),
+				'max'       => _x( 'Defines the maximum threshold of the term.', 'Descriptions', 'geditorial-terms' ),
 				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
@@ -1930,14 +1930,12 @@ class Terms extends gEditorial\Module
 	}
 
 	/**
-	 * Change get terms defaults for attributes to order by the sorting
-	 * setting, or default to menu_order for sortable taxonomies.
-	 *
+	 * Changes `get_terms()` defaults for supported taxonomies to order by meta.
 	 * @source `wc_change_get_terms_defaults()`
 	 *
-	 * @param array $defaults   An array of default get_terms() arguments.
-	 * @param array $taxonomies An array of taxonomies.
-	 * @return array
+	 * @param array  $defaults
+	 * @param array  $taxonomies
+	 * @return array $defaults
 	 */
 	public function get_terms_defaults_ordering( $defaults, $taxonomies )
 	{
@@ -1954,7 +1952,7 @@ class Terms extends gEditorial\Module
 		// These are in place so we know if a specific order was requested.
 		switch ( $orderby ) {
 			case 'menu_order':
-			case 'name_num':
+			// case 'name_num':
 			case 'parent':
 				$defaults['orderby'] = $orderby;
 				break;
@@ -1964,11 +1962,10 @@ class Terms extends gEditorial\Module
 	}
 
 	/**
-	 * Adds support to get_terms for menu_order argument.
-	 *
+	 * Adds support to `get_terms()` for order by `menu_order`.
 	 * @source `wc_change_pre_get_terms()`
 	 *
-	 * @param WP_Term_Query $terms_query Instance of WP_Term_Query.
+	 * @param WP_Term_Query $terms_query
 	 */
 	public function pre_get_terms_ordering( $terms_query )
 	{
@@ -1977,23 +1974,23 @@ class Terms extends gEditorial\Module
 		// Put back valid orderby values.
 		if ( 'menu_order' === $args['orderby'] ) {
 			$args['orderby']               = 'name';
-			$args['force_menu_order_sort'] = true;
+			$args['force_menu_order_sort'] = TRUE;
 		}
 
-		if ( 'name_num' === $args['orderby'] ) {
-			$args['orderby']            = 'name';
-			$args['force_numeric_name'] = true;
-		}
+		// if ( 'name_num' === $args['orderby'] ) {
+		// 	$args['orderby']            = 'name';
+		// 	$args['force_numeric_name'] = TRUE;
+		// }
 
 		// When COUNTING, disable custom sorting.
 		if ( 'count' === $args['fields'] )
 			return;
 
 		// Support menu_order arg used in previous versions.
-		if ( ! empty( $args['menu_order'] ) ) {
-			$args['order']                 = 'DESC' === strtoupper( $args['menu_order'] ) ? 'DESC' : 'ASC';
-			$args['force_menu_order_sort'] = true;
-		}
+		// if ( ! empty( $args['menu_order'] ) ) {
+		// 	$args['order']                 = 'DESC' === strtoupper( $args['menu_order'] ) ? 'DESC' : 'ASC';
+		// 	$args['force_menu_order_sort'] = TRUE;
+		// }
 
 		if ( ! empty( $args['force_menu_order_sort'] ) ) {
 			$args['orderby']  = 'meta_value_num';
@@ -2003,14 +2000,13 @@ class Terms extends gEditorial\Module
 	}
 
 	/**
-	 * Adjust term query to handle custom sorting parameters.
-	 *
+	 * Adjusts term query to handle custom sorting parameters.
 	 * @source: `wc_terms_clauses()`
 	 *
-	 * @param array $clauses    Clauses.
-	 * @param array $taxonomies Taxonomies.
-	 * @param array $args       Arguments.
-	 * @return array
+	 * @param array  $clauses
+	 * @param array  $taxonomies
+	 * @param array  $args
+	 * @return array $clauses
 	 */
 	public function terms_clauses_ordering( $clauses, $taxonomies, $args )
 	{
@@ -2021,8 +2017,8 @@ class Terms extends gEditorial\Module
 			return $clauses;
 
 		// Force numeric sort if using name_num custom sorting param.
-		if ( ! empty( $args['force_numeric_name'] ) )
-			$clauses['orderby'] = str_replace( 'ORDER BY t.name', 'ORDER BY t.name+0', $clauses['orderby'] );
+		// if ( ! empty( $args['force_numeric_name'] ) )
+		// 	$clauses['orderby'] = str_replace( 'ORDER BY t.name', 'ORDER BY t.name+0', $clauses['orderby'] );
 
 		// For sorting, force left join in case order meta is missing.
 		if ( ! empty( $args['force_menu_order_sort'] ) ) {

@@ -706,7 +706,7 @@ class Plugin
 	public static function na( $wrap = 'code' )
 	{
 		$message = __( 'N/A', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'title' => __( 'Not Available', 'geditorial' ) ], $message ) : $message;
+		return $wrap ? HTML::tag( $wrap, [ 'class' => '-na', 'title' => __( 'Not Available', 'geditorial' ) ], $message ) : $message;
 	}
 
 	public static function denied( $wrap = 'p' )

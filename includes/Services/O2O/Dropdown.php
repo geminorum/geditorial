@@ -53,7 +53,10 @@ abstract class Dropdown
 
 		$args['connected_type'] = key( $_GET['o2o'] );
 
-		list( $args['connected_direction'], $args['connected_items'] ) = each( $tmp );
+		// list( $args['connected_direction'], $args['connected_items'] ) = each( $tmp );
+		// @REF: https://github.com/scribu/wp-posts-to-posts/pull/579/files
+		$args['connected_direction'] = key( $tmp );
+		$args['connected_items']     = current( $tmp );
 
 		if ( ! $args['connected_items'] )
 			return [];

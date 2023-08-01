@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
@@ -665,7 +666,7 @@ class Audit extends gEditorial\Module
 		Core\HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
 
 		if ( ! WordPress\Taxonomy::hasTerms( $this->constant( 'main_taxonomy' ) ) )
-			return Core\HTML::desc( _x( 'There are no reports available!', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
+			return Info::renderNoReportsAvailable();
 
 		$this->_render_reports_by_user_summary();
 	}
