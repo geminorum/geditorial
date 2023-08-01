@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Config\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:29+0330\n"
+"PO-Revision-Date: 2023-08-01 23:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,226 +11,225 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Domain: geditorial-config\n"
 
-#: Config.php:59
+#: Config.php:52
 msgctxt "Menu Title"
 msgid "Editorial Reports"
 msgstr "گزارش‌های تحریریه"
 
-#: Config.php:60
+#: Config.php:53
 msgctxt "Menu Title"
 msgid "My Reports"
 msgstr "گزارش‌های من"
 
-#: Config.php:77 Config.php:80
+#: Config.php:70 Config.php:73
 msgctxt "Menu Title"
 msgid "Editorial Tools"
 msgstr "ابزارهای تحریریه"
 
-#: Config.php:79
+#: Config.php:72
 msgctxt "Menu Title"
 msgid "Tools"
 msgstr "ابزارها"
 
-#: Config.php:88
+#: Config.php:81
 msgctxt "Menu Title"
 msgid "Editorial Imports"
 msgstr "درون‌ریزی‌های تحریریه"
 
-#: Config.php:125
+#: Config.php:121
 msgctxt "Reports Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: Config.php:128
+#: Config.php:124
 msgctxt "Reports Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:135
+#: Config.php:131
 msgctxt "Page Title"
 msgid "Editorial Reports"
 msgstr "گزارش‌های تحریریه"
 
-#: Config.php:167
+#: Config.php:163
 msgctxt "Tools Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: Config.php:170
+#: Config.php:166
 msgctxt "Tools Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:176
+#: Config.php:172
 msgctxt "Tools Sub"
 msgid "Options"
 msgstr "گزینه‌ها"
 
-#: Config.php:177
+#: Config.php:173
 msgctxt "Tools Sub"
 msgid "Console"
 msgstr "پیشانه"
 
-#: Config.php:182
+#: Config.php:178
 msgctxt "Page Title"
 msgid "Editorial Tools"
 msgstr "ابزارهای تحریریه"
 
-#: Config.php:330
+#: Config.php:326
 msgctxt "Header"
 msgid "General Editorial Reports"
 msgstr "گزارش‌های همگانی تحریریه"
 
-#: Config.php:331
-msgctxt "Message"
-msgid "There are no reports available!"
-msgstr "گزارشی در دسترس نیست!"
-
-#: Config.php:345
+#: Config.php:341
 msgctxt "Tools"
 msgid "Options"
 msgstr "گزینه‌ها"
 
-#: Config.php:349
+#: Config.php:345
 msgctxt "Button"
 msgid "Upgrade Old Options"
 msgstr "ارتقاء تنظیمات قدیمی"
 
-#: Config.php:351
+#: Config.php:347
 msgctxt "Tools: Message"
 msgid "Checks for old options and upgrade them. Also deletes the old options."
 msgstr "گزینه‌های قدیمی را بررسی، ارتقاء و حذف می‌کند."
 
-#: Config.php:357
+#: Config.php:353
 msgctxt "Button"
 msgid "Delete All Options"
 msgstr "پاک‌کردن همهٔ تنظیمات"
 
-#: Config.php:359
+#: Config.php:355
 msgctxt "Tools: Message"
 msgid "Deletes all editorial options on current site"
 msgstr "حذف تمامی تنظیمات مربوط به تحریریه"
 
-#: Config.php:365
+#: Config.php:361
 msgctxt "Tools: Header"
 msgid "Maintenance Tasks"
 msgstr "ابزارهای نگه‌داری"
 
-#: Config.php:369
+#: Config.php:365
 msgctxt "Tools"
 msgid "Empty Meta Fields"
 msgstr "تخلیه متا"
 
-#: Config.php:382
+#: Config.php:378
 msgctxt "Button"
 msgid "Empty"
 msgstr "خالی کردن"
 
-#: Config.php:384
+#: Config.php:380
 msgctxt "Tools: Message"
 msgid "Deletes empty meta values. This solves common problems with imported posts."
 msgstr ""
 "مقادیر متای خالی را حذف می‌کند. این فرآیند، مشکلات مرسوم فرسته‌های درون‌ریزی‌شده را "
 "برطرف خواهد کرد."
 
-#: Config.php:388
+#: Config.php:384
 msgctxt "Tools"
 msgid "Orphan Connections"
 msgstr "ارتباطات بی‌صاحب"
 
-#: Config.php:394
+#: Config.php:390
 msgctxt "Tools: Message"
 msgid "No connection types found."
 msgstr "هیچ نوع اتصالی پیدا نشد!"
 
-#: Config.php:422
+#: Config.php:418
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Config.php:426
+#: Config.php:422
 msgctxt "Tools: Message"
 msgid "No orphaned connection types found in the database."
 msgstr "هیچ نوع اتصال یتیم‌شده‌ای در پایگاه‌داده پیدا نشد."
 
-#: Config.php:452
+#: Config.php:448
 msgctxt "Imports Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: Config.php:455
+#: Config.php:451
 msgctxt "Imports Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:461
+#: Config.php:457
 msgctxt "Imports Sub"
 msgid "Data"
 msgstr "داده‌ها"
 
-#: Config.php:465
+#: Config.php:461
 msgctxt "Page Title"
 msgid "Editorial Imports"
 msgstr "درون‌ریزی‌های تحریریه"
 
-#: Config.php:500
+#: Config.php:496
 msgctxt "Imports: Data Summary"
 msgid "Untitled"
 msgstr "بی‌عنوان"
 
-#: Config.php:524
+#: Config.php:520
 msgctxt "Header"
 msgid "General Editorial Imports"
 msgstr "درون‌ریزی‌های همگانی تحریریه"
 
-#: Config.php:525
+#: Config.php:521
 msgctxt "Message"
 msgid "There are no importers available!"
 msgstr "درون‌ریزی در دسترس نیست!"
 
 #. translators: %s: user link placeholder
-#: Config.php:536
+#: Config.php:532
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User Is %s"
 msgstr "حساب کاربری سایت در شبکه: %s"
 
-#: Config.php:541
+#: Config.php:537
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User is not available!"
 msgstr "حساب کاربری سایت در شبکه تعریف نشده است!"
 
-#: Config.php:560
+#: Config.php:556
 msgctxt "Ajax Notice"
 msgid "No action or name!"
 msgstr "نام یا کنش ناشناخته!"
 
-#: Config.php:563
+#: Config.php:559
 msgctxt "Ajax Notice"
 msgid "Cannot find the module!"
 msgstr "پودمان مورد نظر پیدا نشد!"
 
-#: Config.php:568
+#: Config.php:564
 msgctxt "Ajax Notice"
 msgid "Module state successfully changed."
 msgstr "وضعیت پودمان با موفقیت تغییر کرد."
 
-#: Config.php:570
+#: Config.php:566
 msgctxt "Ajax Notice"
 msgid "Cannot change module state!"
 msgstr "وضعیت پودمان غیرقابل تغییر است!"
 
-#: Config.php:582
+#: Config.php:578
 msgctxt "Page Notice"
 msgid "Not a registered Editorial module."
 msgstr "پودمان تحریریه‌ای با این نام ثبت نشده است."
 
-#: Config.php:585
+#: Config.php:581
 msgctxt "Page Notice"
 msgid "Module not enabled. Please enable it from the Editorial settings page."
 msgstr "پودمان غیرفعال است. لطفاً آن را از صفحه تنظیمات تحریریه فعال کنید."
+
+#~ msgctxt "Message"
+#~ msgid "There are no reports available!"
+#~ msgstr "گزارشی در دسترس نیست!"
 
 #~ msgctxt "Message"
 #~ msgid "No reports available!"

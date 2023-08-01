@@ -164,108 +164,108 @@ msgctxt "Button"
 msgid "Sync Users & Groups"
 msgstr ""
 
-#: Cartable.php:414
-#: Cartable.php:484
+#: Cartable.php:409
+#: Cartable.php:479
 msgctxt "Page Title"
 msgid "Editorial Cartables"
 msgstr ""
 
-#: Cartable.php:415
+#: Cartable.php:410
 msgctxt "Menu Title"
 msgid "My Cartables"
 msgstr ""
 
-#: Cartable.php:437
+#: Cartable.php:432
 msgctxt "Sub"
 msgid "Personal"
 msgstr ""
 
-#: Cartable.php:520
-#: Cartable.php:753
+#: Cartable.php:515
+#: Cartable.php:748
 msgctxt "Row Icon Title"
 msgid "User Cartables"
 msgstr ""
 
-#: Cartable.php:539
-#: Cartable.php:765
+#: Cartable.php:534
+#: Cartable.php:760
 msgctxt "Row Icon Title"
 msgid "Group Cartables"
 msgstr ""
 
-#: Cartable.php:558
+#: Cartable.php:553
 msgctxt "Row Icon Title"
 msgid "Type Cartables"
 msgstr ""
 
-#: Cartable.php:576
+#: Cartable.php:571
 msgctxt "Dashboard Widget Title"
 msgid "Your Personal Cartable"
 msgstr ""
 
-#: Cartable.php:579
-#: Cartable.php:600
-#: Cartable.php:622
+#: Cartable.php:574
+#: Cartable.php:595
+#: Cartable.php:617
 msgctxt "Dashboard Widget Title Action"
 msgid "Click to view all items in this cartable"
 msgstr ""
 
-#: Cartable.php:580
-#: Cartable.php:601
-#: Cartable.php:623
+#: Cartable.php:575
+#: Cartable.php:596
+#: Cartable.php:618
 msgctxt "Dashboard Widget Title Action"
 msgid "All Items"
 msgstr ""
 
 #. translators: %s: term name placeholder
-#: Cartable.php:597
-#: Cartable.php:619
+#: Cartable.php:592
+#: Cartable.php:614
 msgctxt "Dashboard Widget Title"
 msgid "Cartable: %s"
 msgstr ""
 
-#: Cartable.php:734
+#: Cartable.php:729
 msgctxt "Message"
 msgid "You can see cartable details, once you've saved it for the first time."
 msgstr ""
 
-#: Cartable.php:754
+#: Cartable.php:749
 msgctxt "Message"
 msgid "This currently is on your cartable."
 msgstr ""
 
-#: Cartable.php:766
+#: Cartable.php:761
 msgctxt "Message"
 msgid "This currently is on your group cartable."
 msgstr ""
 
-#: Cartable.php:778
+#: Cartable.php:773
 msgctxt "Message"
 msgid "This currently is <b>not</b> on any of your cartables."
 msgstr ""
 
-#: Cartable.php:873
+#: Cartable.php:868
 msgctxt "Page Title"
 msgid "Your Cartable"
 msgstr ""
 
 #. translators: %s: term name placeholder
-#: Cartable.php:876
+#: Cartable.php:871
 msgctxt "Menu Title"
 msgid "Cartable: %s"
 msgstr ""
 
-#: Cartable.php:891
+#: Cartable.php:886
 msgctxt "Table Action"
 msgid "Empty Cartable"
 msgstr ""
 
-#: Cartable.php:903
+#: Cartable.php:898
 msgctxt "Table Column Title"
 msgid "Cartable"
 msgstr ""
 
-#: Cartable.php:911
-#: Cartable.php:953
+#: Cartable.php:906
+#: Cartable.php:948
 msgctxt "Message"
 msgid "The cartable is empty!"
 msgstr ""

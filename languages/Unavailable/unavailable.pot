@@ -13,67 +13,67 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Unavailable\n"
 "X-Domain: geditorial-unavailable\n"
 
-#: Unavailable.php:31
+#: Unavailable.php:32
 msgctxt "Settings"
 msgid "Archived Comments"
 msgstr ""
 
-#: Unavailable.php:32
+#: Unavailable.php:33
 msgctxt "Settings"
 msgid "Activates archived status for comments and hides them from the counts."
 msgstr ""
 
-#: Unavailable.php:90
+#: Unavailable.php:89
 msgctxt "Message"
 msgid "Restored"
 msgstr ""
 
-#: Unavailable.php:104
+#: Unavailable.php:103
 msgctxt "Message"
 msgid "Archived"
 msgstr ""
 
-#: Unavailable.php:141
+#: Unavailable.php:140
 msgctxt "Status Link"
 msgid "Archived"
 msgstr ""
 
-#: Unavailable.php:158
+#: Unavailable.php:157
 msgctxt "Action"
 msgid "Loading"
 msgstr ""
 
-#: Unavailable.php:159
+#: Unavailable.php:158
 msgctxt "Action"
 msgid "Error!"
 msgstr ""
 
-#: Unavailable.php:167
+#: Unavailable.php:166
 msgctxt "Action"
 msgid "Restore this comment from the Archived"
 msgstr ""
 
-#: Unavailable.php:168
+#: Unavailable.php:167
 msgctxt "Action"
 msgid "Restore"
 msgstr ""
 
-#: Unavailable.php:177
+#: Unavailable.php:176
 msgctxt "Action"
 msgid "Send this comment to the Archived"
 msgstr ""
 
-#: Unavailable.php:178
+#: Unavailable.php:177
 msgctxt "Action"
 msgid "Archive"
 msgstr ""
 
-#: Unavailable.php:185
+#: Unavailable.php:184
 msgctxt "Action"
 msgid "Restore from Archived"
 msgstr ""
 
-#: Unavailable.php:188
+#: Unavailable.php:187
 msgctxt "Action"
 msgid "Move to Archived"
 msgstr ""

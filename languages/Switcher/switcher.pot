@@ -13,44 +13,44 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Switcher\n"
 "X-Domain: geditorial-switcher\n"
 
-#: Switcher.php:37
+#: Switcher.php:38
 msgctxt "Setting Title"
 msgid "Bulk Action Roles"
 msgstr ""
 
-#: Switcher.php:38
+#: Switcher.php:39
 msgctxt "Setting Description"
 msgid "Roles that can use bulk action to switch post-types."
 msgstr ""
 
-#: Switcher.php:44
+#: Switcher.php:45
 msgctxt "Setting Title"
 msgid "Bulk Action From"
 msgstr ""
 
-#: Switcher.php:45
+#: Switcher.php:46
 msgctxt "Setting Description"
 msgid "Select post-types to be avialable for switch."
 msgstr ""
 
-#: Switcher.php:51
+#: Switcher.php:52
 msgctxt "Setting Title"
 msgid "Bulk Action To"
 msgstr ""
 
-#: Switcher.php:52
+#: Switcher.php:53
 msgctxt "Setting Description"
 msgid "Select post-types to be targetted for switch."
 msgstr ""
 
 #. translators: %s: posttype
-#: Switcher.php:78
+#: Switcher.php:79
 msgctxt "Bulk Action"
 msgid "Switch to %s"
 msgstr ""
 
 #. translators: %1$s: count, %2$s: posttype
-#: Switcher.php:130
+#: Switcher.php:131
 msgctxt "Message"
 msgid "%1$s items(s) switched to %2$s!"
 msgstr ""

@@ -13,81 +13,81 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Drafts\n"
 "X-Domain: geditorial-drafts\n"
 
-#: Drafts.php:39
+#: Drafts.php:37
 msgctxt "Setting Title"
 msgid "Public Preview"
 msgstr ""
 
-#: Drafts.php:40
+#: Drafts.php:38
 msgctxt "Setting Description"
 msgid "Provides a secret link to non-logged in users to view post drafts."
 msgstr ""
 
-#: Drafts.php:47
+#: Drafts.php:45
 msgctxt "Setting Title"
 msgid "Adminbar Summary"
 msgstr ""
 
-#: Drafts.php:48
+#: Drafts.php:46
 msgctxt "Setting Description"
 msgid "Summary for the current item as a node in adminbar"
 msgstr ""
 
-#: Drafts.php:55
+#: Drafts.php:53
 msgctxt "Setting Title"
 msgid "Max Posts"
 msgstr ""
 
-#: Drafts.php:56
+#: Drafts.php:54
 msgctxt "Setting Description"
 msgid "Maximum number of posts for each post-type."
 msgstr ""
 
-#: Drafts.php:140
+#: Drafts.php:133
 msgctxt "Adminbar"
 msgid "Drafts"
 msgstr ""
 
-#: Drafts.php:167
+#: Drafts.php:160
 msgid "Unable to make preview private. Please try again."
 msgstr ""
 
-#: Drafts.php:184
+#: Drafts.php:177
 msgid "Unable to make preview public. Please try again."
 msgstr ""
 
 #. translators: %s: drafts count
-#: Drafts.php:206
+#: Drafts.php:199
 msgctxt "Header"
 msgid "View all %s drafts"
 msgstr ""
 
-#: Drafts.php:237
+#: Drafts.php:230
 msgctxt "Empty"
 msgid "(none)"
 msgstr ""
 
-#: Drafts.php:302
+#: Drafts.php:295
 msgctxt "Button"
 msgid "Make Preview Public"
 msgstr ""
 
-#: Drafts.php:313
+#: Drafts.php:306
 msgctxt "Button"
 msgid "Make Preview Private"
 msgstr ""
 
-#: Drafts.php:374
+#: Drafts.php:367
 msgctxt "Action"
 msgid "Public Preview"
 msgstr ""
 
-#: Drafts.php:392
+#: Drafts.php:385
 msgctxt "Row Icon Title"
 msgid "Preview"
 msgstr ""
 
-#: Drafts.php:398
+#: Drafts.php:391
 msgctxt "Row"
 msgid "Has public preview link"
 msgstr ""

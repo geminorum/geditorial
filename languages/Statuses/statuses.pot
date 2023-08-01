@@ -13,75 +13,75 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Statuses\n"
 "X-Domain: geditorial-statuses\n"
 
-#: Statuses.php:42
+#: Statuses.php:40
 msgctxt "Setting Title"
 msgid "Status Menu"
 msgstr ""
 
-#: Statuses.php:43
+#: Statuses.php:41
 msgctxt "Setting Description"
 msgid "Adds status links to the admin submenus for each supported posttype."
 msgstr ""
 
-#: Statuses.php:52
+#: Statuses.php:50
 msgctxt "Setting Title"
 msgid "Map Status Roles"
 msgstr ""
 
-#: Statuses.php:56
+#: Statuses.php:54
 msgctxt "Setting Title"
 msgid "Default Status"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:69
+#: Statuses.php:67
 msgctxt "Setting Title"
 msgid "Roles for %s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:71
+#: Statuses.php:69
 msgctxt "Setting Description"
 msgid "The <b>%s</b> status will be visibile to the selected roles."
 msgstr ""
 
-#: Statuses.php:93
+#: Statuses.php:91
 msgctxt "Taxonomy Label"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:137
+#: Statuses.php:135
 msgctxt "Metabox Submit"
 msgid "Submit: %s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:139
+#: Statuses.php:137
 msgctxt "Metabox Save On"
 msgid "Save as %s on:"
 msgstr ""
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:141
+#: Statuses.php:139
 msgctxt "Metabox Save Date"
 msgid "Save as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:143
+#: Statuses.php:141
 msgctxt "Metabox Saved On"
 msgid "Saved as %s on:"
 msgstr ""
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:145
+#: Statuses.php:143
 msgctxt "Metabox Saved Date"
 msgid "Saved as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:147
+#: Statuses.php:145
 msgctxt "Metabox Saved On"
 msgid "Save as %s <b>now</b>"
 msgstr ""

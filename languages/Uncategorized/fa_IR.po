@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Uncategorized\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:56+0330\n"
+"PO-Revision-Date: 2023-07-17 22:12+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,90 +11,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Uncategorized\n"
 "X-Domain: geditorial-uncategorized\n"
 
-#: Uncategorized.php:48
+#: Uncategorized.php:43
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr "نقش‌های گزارشات"
 
-#: Uncategorized.php:49
+#: Uncategorized.php:44
 msgctxt "Setting Description"
 msgid "Roles that can see Uncategorized Reports."
 msgstr "نقش‌هایی که می‌توانند گزارش‌های دسته‌بندی‌نشده را ببینند."
 
-#: Uncategorized.php:108 Uncategorized.php:275
+#: Uncategorized.php:103 Uncategorized.php:270
 msgctxt "Action"
 msgid "Clean Uncategorized"
 msgstr "پاک‌سازی دسته‌بندی‌نشده‌ها"
 
-#: Uncategorized.php:109 Uncategorized.php:276
+#: Uncategorized.php:104 Uncategorized.php:271
 msgctxt "Action"
 msgid "Clean Unregistered"
 msgstr "پاک‌سازی ثبت‌نشده‌ها"
 
-#: Uncategorized.php:110 Uncategorized.php:277
+#: Uncategorized.php:105 Uncategorized.php:272
 msgctxt "Action"
 msgid "Clean Unattached"
 msgstr "پاک‌سازی پیوست‌نشده‌ها"
 
 #. translators: %s: count
-#: Uncategorized.php:165
+#: Uncategorized.php:160
 msgctxt "Message"
 msgid "%s items(s) cleaned!"
 msgstr "%s مورد پاک‌سازی شد!"
 
 #. translators: %s: posts count
-#: Uncategorized.php:176
+#: Uncategorized.php:171
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] "%s نوشته دسته‌بندی‌نشده"
 msgstr[1] "%s نوشته دسته‌بندی‌نشده"
 
-#: Uncategorized.php:181
+#: Uncategorized.php:176
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr "لازم است بعضی نوشته‌ها را دسته‌بندی کنید!"
 
-#: Uncategorized.php:291
+#: Uncategorized.php:286
 msgctxt "Table Column"
 msgid "Raw"
 msgstr "خام"
 
-#: Uncategorized.php:318
+#: Uncategorized.php:313
 msgctxt "Header"
 msgid "Overview of Posts in Uncategorized Terms"
 msgstr "مروری بر نوشته‌ها در رده‌های دسته‌بندی‌نشده"
 
-#: Uncategorized.php:369
+#: Uncategorized.php:364
 msgctxt "Header"
 msgid "Uncategorized Tools"
 msgstr "ابزارهای دسته‌بندی‌نشده‌ها"
 
-#: Uncategorized.php:375
+#: Uncategorized.php:370
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr "رده‌های بدون رده‌بندی"
 
-#: Uncategorized.php:395
+#: Uncategorized.php:390
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Uncategorized.php:397
+#: Uncategorized.php:392
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr "رده‌های بدون رده‌بندی را، به رده‌بندی‌های فعال تبدیل می‌کند."
 
-#: Uncategorized.php:405
+#: Uncategorized.php:400
 msgctxt "Message"
 msgid "There are no tools available!"
 msgstr "ابزاری در دسترس نیست!"
 
-#: Uncategorized.php:578
+#: Uncategorized.php:573
 msgctxt "Default Label"
 msgid "Uncategorized"
 msgstr "دسته‌بندی‌نشده"

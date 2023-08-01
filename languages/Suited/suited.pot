@@ -13,83 +13,18 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Suited\n"
 "X-Domain: geditorial-suited\n"
 
-#: Suited.php:30
-msgctxt "Setting"
-msgid "There are no suitable targets available!"
-msgstr ""
-
-#: Suited.php:38
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr ""
-
-#: Suited.php:39
-msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Suitable Targets."
-msgstr ""
-
-#: Suited.php:45
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr ""
-
-#: Suited.php:46
-msgctxt "Setting Description"
-msgid "Roles that can Assign Suitable Targets."
-msgstr ""
-
-#: Suited.php:52
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr ""
-
-#: Suited.php:53
-msgctxt "Setting Description"
-msgid "Roles that can see Suitable Targets Reports."
-msgstr ""
-
-#: Suited.php:59
-msgctxt "Setting Title"
-msgid "Restricted Roles"
-msgstr ""
-
-#: Suited.php:60
-msgctxt "Setting Description"
-msgid "Roles that check for Suitable Targets visibility."
-msgstr ""
-
-#: Suited.php:66
-msgctxt "Setting Title"
-msgid "Restricted Targets"
-msgstr ""
-
-#: Suited.php:67
-msgctxt "Setting Description"
-msgid "Handles visibility of each target based on meta values."
-msgstr ""
-
-#: Suited.php:70
-msgctxt "Setting Option"
-msgid "Disabled"
-msgstr ""
-
-#: Suited.php:71
-msgctxt "Setting Option"
-msgid "Hidden"
-msgstr ""
-
-#: Suited.php:109
+#: Suited.php:74
 msgid "Suitable Target"
 msgid_plural "Suitable Targets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Suited.php:113
+#: Suited.php:78
 msgctxt "Label: Show Option All"
 msgid "Suitable"
 msgstr ""
 
-#: Suited.php:114
+#: Suited.php:79
 msgctxt "Label: Show Option No Terms"
 msgid "(Unsuitable)"
 msgstr ""

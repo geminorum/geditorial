@@ -13,84 +13,84 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Workflow\n"
 "X-Domain: geditorial-workflow\n"
 
-#: Workflow.php:44
+#: Workflow.php:38
 msgctxt "Setting Title"
 msgid "Hide Disabled"
 msgstr ""
 
-#: Workflow.php:45
+#: Workflow.php:39
 msgctxt "Setting Description"
 msgid "Hides statuses disabled for each role on the dropdown."
 msgstr ""
 
-#: Workflow.php:49
+#: Workflow.php:43
 msgctxt "Setting Title"
 msgid "Time Action"
 msgstr ""
 
-#: Workflow.php:50
+#: Workflow.php:44
 msgctxt "Setting Description"
 msgid "Displays time action on the workflow meta-box."
 msgstr ""
 
-#: Workflow.php:55
+#: Workflow.php:49
 msgctxt "Setting Title"
 msgid "Draft Roles"
 msgstr ""
 
-#: Workflow.php:56
+#: Workflow.php:50
 msgctxt "Setting Description"
 msgid "Roles that can rollback to Draft status."
 msgstr ""
 
-#: Workflow.php:63
+#: Workflow.php:57
 msgctxt "Setting Title"
 msgid "Status Menu"
 msgstr ""
 
-#: Workflow.php:64
+#: Workflow.php:58
 msgctxt "Setting Description"
 msgid "Adds status links to the admin submenus for each supported posttype."
 msgstr ""
 
-#: Workflow.php:68
+#: Workflow.php:62
 msgctxt "Setting Title"
 msgid "Display States"
 msgstr ""
 
-#: Workflow.php:69
+#: Workflow.php:63
 msgctxt "Setting Description"
 msgid "Appends current status to the end of the title."
 msgstr ""
 
-#: Workflow.php:74
+#: Workflow.php:68
 msgctxt "Setting Title"
 msgid "Locking Statuses"
 msgstr ""
 
-#: Workflow.php:75
+#: Workflow.php:69
 msgctxt "Setting Description"
 msgid "Selected statuses will lock editing the post to their assigned roles."
 msgstr ""
 
-#: Workflow.php:76
-#: Workflow.php:538
+#: Workflow.php:70
+#: Workflow.php:532
 msgctxt "Message"
 msgid "There are no statuses available!"
 msgstr ""
 
-#: Workflow.php:96
+#: Workflow.php:90
 msgid "Custom Status"
 msgid_plural "Custom Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Workflow.php:100
+#: Workflow.php:94
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Workflow.php:104
+#: Workflow.php:98
 msgctxt "MetaBox Title"
 msgid "Workflow"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Regional\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:47+0330\n"
+"PO-Revision-Date: 2023-08-01 23:09+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,120 +11,65 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Regional\n"
 "X-Domain: geditorial-regional\n"
 
-#: Lingo.php:48
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr "نقش‌های مدیریت واگذاری"
-
-#: Lingo.php:49
-msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Language Identifiers."
-msgstr "نقش‌هایی که میتوانند شناساگرهای زبانی را مدیریت، ویرایش و یا حذف کنند."
-
-#: Lingo.php:55
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr "نقش‌های مأمور واگذاری"
-
-#: Lingo.php:56
-msgctxt "Setting Description"
-msgid "Roles that can Assign Language Identifiers."
-msgstr "نقش‌هایی که می‌توانند شناساگرهای زبانی را تخصیص دهند."
-
-#: Lingo.php:62
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr "نقش‌های بررسی گزارشات"
-
-#: Lingo.php:63
-msgctxt "Setting Description"
-msgid "Roles that can see Language Identifiers Reports."
-msgstr "نقش‌هایی که می‌توانند گزارش‌های شناساگرهای زبانی را ببینند."
-
-#: Lingo.php:69
-msgctxt "Setting Title"
-msgid "Restricted Roles"
-msgstr "نقش‌های محدود‌شده"
-
-#: Lingo.php:70
-msgctxt "Setting Description"
-msgid "Roles that check for Language Identifiers visibility."
-msgstr "نقش‌هایی که سطح دسترسی هر شناساگر زبانی برای نمایش به آن‌ها بررسی میشود."
-
-#: Lingo.php:76
-msgctxt "Setting Title"
-msgid "Restricted Identifiers"
-msgstr "شناساگرهای محدودشده"
-
-#: Lingo.php:77
-msgctxt "Setting Description"
-msgid "Handles visibility of each identifier based on meta values."
-msgstr "بر اساس متای هر شناساگر، نمایانی آن را مشخص میکند."
-
-#: Lingo.php:80
-msgctxt "Setting Option"
-msgid "Disabled"
-msgstr "غیرفعال"
-
-#: Lingo.php:81
-msgctxt "Setting Option"
-msgid "Hidden"
-msgstr "پنهانی"
-
 #. translators: %s: iso code
-#: Lingo.php:107
+#: Lingo.php:67
 msgctxt "Tool Box"
 msgid "Helps with Importing Language Identifiers from %s into WordPress."
 msgstr "به درون‌ریزی شناساگرهای زبانی از %s به وردپرس کمک می‌کند."
 
-#: Lingo.php:114
+#: Lingo.php:74
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] "زبان‌ها"
 msgstr[1] "زبان"
 
-#: Lingo.php:118
+#: Lingo.php:78
+msgctxt "Label: `extended_label`"
+msgid "Language Identifiers"
+msgstr "شناساگرهای زبانی"
+
+#: Lingo.php:79
 msgctxt "Label: `show_option_all`"
 msgid "Languages"
 msgstr "زبان"
 
-#: Lingo.php:119
+#: Lingo.php:80
 msgctxt "Label: `show_option_none`"
 msgid "(Unidentified)"
 msgstr "(ناشناسا)"
 
-#: Lingo.php:120
-msgctxt "Taxonomy Label"
+#: Lingo.php:81
+msgctxt "Label: `uncategorized`"
 msgid "Unidentified"
 msgstr "ناشناسا"
 
-#: Lingo.php:125
+#: Lingo.php:86
 msgctxt "Default Term: Name"
 msgid "[Unidentified]"
 msgstr "[ناشناسا]"
 
-#: Lingo.php:126
+#: Lingo.php:87
 msgctxt "Default Term: Description"
 msgid "Unidentified Languages"
 msgstr "زبان‌های ناشناسا"
 
-#: Lingo.php:137
+#: Lingo.php:98
 msgctxt "Importer: Title"
 msgid "Import Language Identifiers"
 msgstr "درون‌ریزی شناساگرهای زبانی"
 
 #. translators: %s: iso code
-#: Lingo.php:139
+#: Lingo.php:100
 msgctxt "Importer: Description"
 msgid "Language Identifiers from %s into WordPress"
 msgstr "شناساگرهای زبانی از %s به وردپرس"
 
 #. translators: %s: redirect url
-#: Lingo.php:141
+#: Lingo.php:102
 msgctxt "Importer: Redirect"
 msgid ""
 "If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click "
@@ -133,75 +78,131 @@ msgstr ""
 "اگر مرورگر شما به صورت خودکار بازگردانی نشد، به <a href=\"%s\">این صفحه</a> "
 "بروید."
 
-#: Lingo.php:148
+#: Lingo.php:109
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr "عربی"
 
-#: Lingo.php:149
+#: Lingo.php:110
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr "فارسی"
 
-#: Lingo.php:150
+#: Lingo.php:111
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr "انگلیسی"
 
-#: Lingo.php:151
+#: Lingo.php:112
 msgctxt "Default Term: Language"
 msgid "French"
 msgstr "فرانسه"
 
-#: Lingo.php:341
+#: Lingo.php:259
 msgctxt "Header"
 msgid "Import Language Identifiers"
 msgstr "درون‌ریزی شناساگرهای زبانی"
 
-#: Lingo.php:344
+#: Lingo.php:262
 msgctxt "Imports"
 msgid "ISO 639-1 Alpha-2"
 msgstr ""
 
-#: Lingo.php:351
+#: Lingo.php:269
 msgctxt "Table Column"
 msgid "Code"
 msgstr "کد"
 
-#: Lingo.php:355
+#: Lingo.php:273
 msgctxt "Table Column"
 msgid "Term"
 msgstr "رده"
 
-#: Lingo.php:367
+#: Lingo.php:285
 msgctxt "Table Column"
 msgid "English Name"
 msgstr "نام انگلیسی"
 
-#: Lingo.php:371 Lingo.php:409 Lingo.php:416
+#: Lingo.php:289 Lingo.php:327 Lingo.php:334
 msgctxt "Table Column"
 msgid "Native Name"
 msgstr "نام بومی"
 
-#: Lingo.php:376
+#: Lingo.php:294
 msgctxt "Message: Table Empty"
 msgid "There are no language identifiers available!"
 msgstr "هیچ شناساگر زبانی در دسترس نیست!"
 
-#: Lingo.php:389
+#: Lingo.php:307
 msgctxt "Button"
 msgid "Create Language Terms"
 msgstr "ایجاد رده‌های زبان"
 
-#: Lingo.php:392
+#: Lingo.php:310
 msgctxt "Button"
 msgid "Update Existing Terms"
 msgstr "به‌روزرسانی رده‌های موجود"
 
-#: Lingo.php:396
+#: Lingo.php:314
 msgctxt "Message"
-msgid "Check for available language identifiers and create corresponding terms."
-msgstr "شناساگرهای زبانی موجود را بررسی کنید و رده‌های مربوط به آن را ایجاد کنید."
+msgid ""
+"Check for available language identifiers and create corresponding terms."
+msgstr ""
+"شناساگرهای زبانی موجود را بررسی کنید و رده‌های مربوط به آن را ایجاد کنید."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Manage Roles"
+#~ msgstr "نقش‌های مدیریت واگذاری"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Manage, Edit and Delete Language Identifiers."
+#~ msgstr ""
+#~ "نقش‌هایی که میتوانند شناساگرهای زبانی را مدیریت، ویرایش و یا حذف کنند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Assign Roles"
+#~ msgstr "نقش‌های مأمور واگذاری"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Assign Language Identifiers."
+#~ msgstr "نقش‌هایی که می‌توانند شناساگرهای زبانی را تخصیص دهند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Reports Roles"
+#~ msgstr "نقش‌های بررسی گزارشات"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can see Language Identifiers Reports."
+#~ msgstr "نقش‌هایی که می‌توانند گزارش‌های شناساگرهای زبانی را ببینند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Restricted Roles"
+#~ msgstr "نقش‌های محدود‌شده"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that check for Language Identifiers visibility."
+#~ msgstr ""
+#~ "نقش‌هایی که سطح دسترسی هر شناساگر زبانی برای نمایش به آن‌ها بررسی میشود."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Restricted Identifiers"
+#~ msgstr "شناساگرهای محدودشده"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Handles visibility of each identifier based on meta values."
+#~ msgstr "بر اساس متای هر شناساگر، نمایانی آن را مشخص میکند."
+
+#~ msgctxt "Setting Option"
+#~ msgid "Disabled"
+#~ msgstr "غیرفعال"
+
+#~ msgctxt "Setting Option"
+#~ msgid "Hidden"
+#~ msgstr "پنهانی"
+
+#~ msgctxt "Taxonomy Label"
+#~ msgid "Unidentified"
+#~ msgstr "ناشناسا"
 
 #~ msgctxt "Tool Box"
 #~ msgid "Helps with Importing Regional Languages from %s into WordPress."
@@ -236,7 +237,8 @@ msgstr "شناساگرهای زبانی موجود را بررسی کنید و �
 #~ msgstr "هیچ زبانی در دسترس نیست!"
 
 #~ msgctxt "Message"
-#~ msgid "Check for available languages and create corresponding language terms."
+#~ msgid ""
+#~ "Check for available languages and create corresponding language terms."
 #~ msgstr "زبان‌های موجود را بررسی کنید و رده‌های مربوط به زبان را ایجاد کنید."
 
 #~ msgctxt "Show Option All"

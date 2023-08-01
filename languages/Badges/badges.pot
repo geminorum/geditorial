@@ -13,104 +13,43 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
-#: Badges.php:31
-#: Badges.php:332
-msgctxt "Setting"
-msgid "There are no badges available!"
-msgstr ""
-
-#: Badges.php:39
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr ""
-
-#: Badges.php:40
-msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Badges."
-msgstr ""
-
-#: Badges.php:46
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr ""
-
-#: Badges.php:47
-msgctxt "Setting Description"
-msgid "Roles that can Assign Badges."
-msgstr ""
-
-#: Badges.php:53
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr ""
-
-#: Badges.php:54
-msgctxt "Setting Description"
-msgid "Roles that can see Badges Reports."
-msgstr ""
-
-#: Badges.php:60
-msgctxt "Setting Title"
-msgid "Restricted Roles"
-msgstr ""
-
-#: Badges.php:61
-msgctxt "Setting Description"
-msgid "Roles that check for Badges visibility."
-msgstr ""
-
-#: Badges.php:67
-msgctxt "Setting Title"
-msgid "Restricted Badges"
-msgstr ""
-
-#: Badges.php:68
-msgctxt "Setting Description"
-msgid "Handles visibility of each badge on meta values."
-msgstr ""
-
-#: Badges.php:71
-msgctxt "Setting Option"
-msgid "Disabled"
-msgstr ""
-
-#: Badges.php:72
-msgctxt "Setting Option"
-msgid "Hidden"
-msgstr ""
-
-#: Badges.php:110
+#: Badges.php:74
 msgid "Badge"
 msgid_plural "Badges"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Badges.php:114
+#: Badges.php:78
 msgctxt "Label: Menu Name"
 msgid "Content Badges"
 msgstr ""
 
-#: Badges.php:115
+#: Badges.php:79
 msgctxt "Label: Show Option All"
 msgid "Badges"
 msgstr ""
 
-#: Badges.php:116
+#: Badges.php:80
 msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr ""
 
-#: Badges.php:125
+#: Badges.php:89
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Badges Summary"
 msgstr ""
 
-#: Badges.php:126
+#: Badges.php:90
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr ""
 
-#: Badges.php:327
+#: Badges.php:239
 msgctxt "Header"
 msgid "Badge Reports"
+msgstr ""
+
+#: Badges.php:244
+msgctxt "Setting"
+msgid "There are no badges available!"
 msgstr ""

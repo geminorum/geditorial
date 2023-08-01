@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Labeled\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Labeled\n"
+"X-Domain: geditorial-labeled\n"
+
+#: Labeled.php:65
+msgid "Label"
+msgid_plural "Labels"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Labeled.php:69
+msgctxt "Label: `extended_label`"
+msgid "Content Labels"
+msgstr ""
+
+#: Labeled.php:70
+msgctxt "Label: Menu Name"
+msgid "Content Labels"
+msgstr ""
+
+#: Labeled.php:71
+msgctxt "Label: Show Option All"
+msgid "Labels"
+msgstr ""
+
+#: Labeled.php:72
+msgctxt "Label: Show Option No Terms"
+msgid "(Unlabeled)"
+msgstr ""
+
+#: Labeled.php:81
+msgctxt "Dashboard Widget Title"
+msgid "Your Content Labels Summary"
+msgstr ""
+
+#: Labeled.php:82
+msgctxt "Dashboard Widget Title"
+msgid "Content Labels Summary"
+msgstr ""
+
+#: Labeled.php:87
+msgctxt "Main Taxonomy: Default Term"
+msgid "Introduction"
+msgstr ""
+
+#: Labeled.php:88
+msgctxt "Main Taxonomy: Default Term"
+msgid "Interview"
+msgstr ""
+
+#: Labeled.php:89
+msgctxt "Main Taxonomy: Default Term"
+msgid "Review"
+msgstr ""
+
+#: Labeled.php:90
+msgctxt "Main Taxonomy: Default Term"
+msgid "Report"
+msgstr ""
+
+#: Labeled.php:102
+msgctxt "Field Title"
+msgid "Label"
+msgstr ""
+
+#: Labeled.php:103
+msgctxt "Field Description"
+msgid "Text to indicate that the content is part of an editorial column."
+msgstr ""
+
+#: Labeled.php:106
+msgctxt "Field Title"
+msgid "Label Taxonomy"
+msgstr ""
+
+#: Labeled.php:107
+msgctxt "Field Description"
+msgid "Taxonomy for better categorizing editorial columns."
+msgstr ""

@@ -1,0 +1,128 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Labeled\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-08-01 23:08+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Labeled\n"
+"X-Domain: geditorial-labeled\n"
+
+#: Labeled.php:65
+msgid "Label"
+msgid_plural "Labels"
+msgstr[0] "سرستون‌ها"
+msgstr[1] "سرستون"
+
+#: Labeled.php:69
+msgctxt "Label: `extended_label`"
+msgid "Content Labels"
+msgstr "سرستون‌های محتوا"
+
+#: Labeled.php:70
+msgctxt "Label: Menu Name"
+msgid "Content Labels"
+msgstr "سرستون‌های محتوا"
+
+#: Labeled.php:71
+msgctxt "Label: Show Option All"
+msgid "Labels"
+msgstr "سرستون‌ها"
+
+#: Labeled.php:72
+msgctxt "Label: Show Option No Terms"
+msgid "(Unlabeled)"
+msgstr "(بی‌سرستون)"
+
+#: Labeled.php:81
+msgctxt "Dashboard Widget Title"
+msgid "Your Content Labels Summary"
+msgstr ""
+
+#: Labeled.php:82
+msgctxt "Dashboard Widget Title"
+msgid "Content Labels Summary"
+msgstr ""
+
+#: Labeled.php:87
+msgctxt "Main Taxonomy: Default Term"
+msgid "Introduction"
+msgstr "مقدمه"
+
+#: Labeled.php:88
+msgctxt "Main Taxonomy: Default Term"
+msgid "Interview"
+msgstr "گفت‌وگو"
+
+#: Labeled.php:89
+msgctxt "Main Taxonomy: Default Term"
+msgid "Review"
+msgstr "نقد و بررسی"
+
+#: Labeled.php:90
+msgctxt "Main Taxonomy: Default Term"
+msgid "Report"
+msgstr "گزارش"
+
+#: Labeled.php:102
+msgctxt "Field Title"
+msgid "Label"
+msgstr "سرستون"
+
+#: Labeled.php:103
+msgctxt "Field Description"
+msgid "Text to indicate that the content is part of an editorial column."
+msgstr "متنی برای نشان‌دادن این‌که محتوا بخشی از یک ستون تحریریه است."
+
+#: Labeled.php:106
+msgctxt "Field Title"
+msgid "Label Taxonomy"
+msgstr "رده‌بندی سرستون"
+
+#: Labeled.php:107
+msgctxt "Field Description"
+msgid "Taxonomy for better categorizing editorial columns."
+msgstr "رده‌بندی برای دسته‌بندی بهتر ستون‌های تحریریه."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Manage Roles"
+#~ msgstr "نقش‌های مدیریت واگذاری"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Manage, Edit and Delete Content Labels."
+#~ msgstr "نقش‌هایی که می‌توانند سرستون‌های محتوا را مدیریت، ویرایش و یا حذف کنند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Assign Roles"
+#~ msgstr "نقش‌های مأمور واگذاری"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Assign Content Labels."
+#~ msgstr "نقش‌هایی که می‌توانند سرستون‌های محتوا را تخصیص دهند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Reports Roles"
+#~ msgstr "نقش‌های بررسی گزارشات"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can see Content Labels Reports."
+#~ msgstr "نقش‌هایی که می‌توانند گزارش‌های سرستون‌های محتوا را ببینند."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Manage, Edit and Delete Audit Attributes."
+#~ msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را مدیریت، ویرایش و یا حذف کنند."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Assign Audit Attributes."
+#~ msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را به فرسته‌ها اختصاص دهند."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can see Audit Attributes Reports."
+#~ msgstr "نقش‌هایی که میتوانند برچسب‌های بازبینی را ببینند."

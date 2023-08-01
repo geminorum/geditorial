@@ -13,78 +13,78 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcPurchased\n"
 "X-Domain: geditorial-wc-purchased\n"
 
-#: WcPurchased.php:42
+#: WcPurchased.php:39
 msgctxt "Setting Title"
 msgid "Order Statuses"
 msgstr ""
 
-#: WcPurchased.php:43
+#: WcPurchased.php:40
 msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WcPurchased.php:52
+#: WcPurchased.php:49
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: WcPurchased.php:53
+#: WcPurchased.php:50
 msgctxt "Setting Description"
 msgid "Roles that can view product purchase reports."
 msgstr ""
 
-#: WcPurchased.php:59
+#: WcPurchased.php:56
 msgctxt "Setting Title"
 msgid "Export Roles"
 msgstr ""
 
-#: WcPurchased.php:60
+#: WcPurchased.php:57
 msgctxt "Setting Description"
 msgid "Roles that can export product purchase reports."
 msgstr ""
 
-#: WcPurchased.php:105
+#: WcPurchased.php:102
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr ""
 
-#: WcPurchased.php:108
+#: WcPurchased.php:105
 msgctxt "Action"
 msgid "Purchases"
 msgstr ""
 
+#: WcPurchased.php:114
 #: WcPurchased.php:117
-#: WcPurchased.php:120
 msgctxt "Message"
 msgid "No Product!"
 msgstr ""
 
-#: WcPurchased.php:123
+#: WcPurchased.php:120
 msgctxt "Message"
 msgid "No Orders!"
 msgstr ""
 
-#: WcPurchased.php:136
+#: WcPurchased.php:133
 msgctxt "Button"
 msgid "Export CSV"
 msgstr ""
 
-#: WcPurchased.php:147
+#: WcPurchased.php:144
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WcPurchased.php:153
+#: WcPurchased.php:150
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr ""
 
-#: WcPurchased.php:160
+#: WcPurchased.php:157
 msgctxt "Column Title"
 msgid "Address"
 msgstr ""
 
-#: WcPurchased.php:166
+#: WcPurchased.php:163
 msgctxt "Column Title"
 msgid "Total"
 msgstr ""

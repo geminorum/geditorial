@@ -13,95 +13,95 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Like\n"
 "X-Domain: geditorial-like\n"
 
-#: Like.php:43
+#: Like.php:39
 msgctxt "Setting Title"
 msgid "Display Avatars"
 msgstr ""
 
-#: Like.php:44
+#: Like.php:40
 msgctxt "Setting Description"
 msgid "Displays avatars next to the like button."
 msgstr ""
 
-#: Like.php:49
+#: Like.php:45
 msgctxt "Setting Title"
 msgid "Max Avatars"
 msgstr ""
 
-#: Like.php:50
+#: Like.php:46
 msgctxt "Setting Description"
 msgid "Maximum number of avatars to display."
 msgstr ""
 
-#: Like.php:57
+#: Like.php:53
 msgctxt "Setting Title"
 msgid "Like Count"
 msgstr ""
 
-#: Like.php:58
+#: Like.php:54
 msgctxt "Setting Description"
 msgid "Displays likes summary of the post."
 msgstr ""
 
-#: Like.php:65
+#: Like.php:61
 msgctxt "Setting Title"
 msgid "Loading Title"
 msgstr ""
 
-#: Like.php:66
-#: Like.php:73
-#: Like.php:80
+#: Like.php:62
+#: Like.php:69
+#: Like.php:76
 msgctxt "Setting Description"
 msgid "Title attribute of the like button."
 msgstr ""
 
-#: Like.php:67
-#: Like.php:148
+#: Like.php:63
+#: Like.php:137
 msgctxt "Setting Default"
 msgid "Loading &hellip;"
 msgstr ""
 
-#: Like.php:72
+#: Like.php:68
 msgctxt "Setting Title"
 msgid "Like Title"
 msgstr ""
 
-#: Like.php:74
-#: Like.php:287
+#: Like.php:70
+#: Like.php:276
 msgctxt "Setting Default"
 msgid "Like"
 msgstr ""
 
-#: Like.php:79
+#: Like.php:75
 msgctxt "Setting Title"
 msgid "Unlike Title"
 msgstr ""
 
-#: Like.php:81
-#: Like.php:285
+#: Like.php:77
+#: Like.php:274
 msgctxt "Setting Default"
 msgid "Unlike"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Like.php:188
+#: Like.php:177
 msgctxt "Adminbar"
 msgid "Like Summary: Users %s"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Like.php:208
+#: Like.php:197
 msgctxt "Adminbar"
 msgid "Like Summary: Guests %s"
 msgstr ""
 
-#: Like.php:471
+#: Like.php:460
 msgctxt "Row Icon Title"
 msgid "Likes"
 msgstr ""
 
 #. translators: %s: likes count
-#: Like.php:474
+#: Like.php:463
 msgctxt "Noop"
 msgid "%s Like"
 msgid_plural "%s Likes"
@@ -109,7 +109,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: users count
-#: Like.php:482
+#: Like.php:471
 msgctxt "Noop"
 msgid "%s User"
 msgid_plural "%s Users"
@@ -117,44 +117,44 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: guests count
-#: Like.php:486
+#: Like.php:475
 msgctxt "Noop"
 msgid "%s Guest"
 msgid_plural "%s Guests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Like.php:559
+#: Like.php:548
 msgctxt "Table Action"
 msgid "Sync Counts"
 msgstr ""
 
-#: Like.php:560
+#: Like.php:549
 msgctxt "Table Action"
 msgid "Sync All Counts"
 msgstr ""
 
-#: Like.php:573
+#: Like.php:562
 msgctxt "Table Column"
 msgid "Total"
 msgstr ""
 
-#: Like.php:579
+#: Like.php:568
 msgctxt "Table Column"
 msgid "Guests"
 msgstr ""
 
-#: Like.php:585
+#: Like.php:574
 msgctxt "Table Column"
 msgid "Users"
 msgstr ""
 
-#: Like.php:591
+#: Like.php:580
 msgctxt "Table Column"
 msgid "Avatars"
 msgstr ""
 
-#: Like.php:600
+#: Like.php:589
 msgctxt "Header"
 msgid "Overview of Post Likes"
 msgstr ""

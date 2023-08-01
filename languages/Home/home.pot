@@ -13,92 +13,92 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Home\n"
 "X-Domain: geditorial-home\n"
 
-#: Home.php:31
-msgctxt "Help Tab Title"
-msgid "Featured Content"
-msgstr ""
-
-#: Home.php:50
+#: Home.php:37
 msgctxt "Setting Section Notice"
 msgid "Current theme supports Featured Contents"
 msgstr ""
 
-#: Home.php:52
+#: Home.php:39
 msgctxt "Setting Section Notice"
 msgid "Current theme does not support Featured Contents"
 msgstr ""
 
-#: Home.php:58
+#: Home.php:45
 msgctxt "Setting Section Title"
 msgid "Featured Content"
 msgstr ""
 
-#: Home.php:69
+#: Home.php:56
 msgctxt "Setting Title"
 msgid "Posttypes on Feeds"
 msgstr ""
 
-#: Home.php:70
+#: Home.php:57
 msgctxt "Setting Description"
 msgid "Whether to appear supported posttypes on the main feeds of the site."
 msgstr ""
 
-#: Home.php:75
+#: Home.php:62
 msgctxt "Setting Title"
 msgid "Exclude from Search"
 msgstr ""
 
-#: Home.php:76
+#: Home.php:63
 msgctxt "Setting Description"
 msgid "Excludes selected posttypes from the search results."
 msgstr ""
 
-#: Home.php:84
+#: Home.php:71
 msgctxt "Setting Title"
 msgid "Featured Term"
 msgstr ""
 
-#: Home.php:85
+#: Home.php:72
 msgctxt "Setting Description"
 msgid "Specify a term slug to use for theme-designated featured content area."
 msgstr ""
 
-#: Home.php:93
+#: Home.php:80
 msgctxt "Setting Title"
 msgid "Featured Max Count"
 msgstr ""
 
-#: Home.php:94
+#: Home.php:81
 msgctxt "Setting Description"
 msgid "The maximum number of posts that a Featured Content area can contain."
 msgstr ""
 
-#: Home.php:99
+#: Home.php:86
 msgctxt "Setting Title"
 msgid "Exclude Featured Posts"
 msgstr ""
 
-#: Home.php:100
+#: Home.php:87
 msgctxt "Setting Description"
 msgid "Exclude featured contents on the main query."
 msgstr ""
 
-#: Home.php:104
+#: Home.php:91
 msgctxt "Setting Title"
 msgid "Hide Featured Term"
 msgstr ""
 
-#: Home.php:105
+#: Home.php:92
 msgctxt "Setting Description"
 msgid "Hide the term on the front-end."
 msgstr ""
 
-#: Home.php:122
+#: Home.php:109
 msgctxt "Setting Info"
 msgid "Front-end Posttypes"
 msgstr ""
 
-#: Home.php:123
+#: Home.php:110
 msgctxt "Setting Info"
 msgid "Will include in front-end main query."
+msgstr ""
+
+#: ModuleInfo.php:17
+msgctxt "Help Tab Title"
+msgid "Featured Content"
 msgstr ""

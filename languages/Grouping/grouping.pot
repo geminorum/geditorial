@@ -13,42 +13,42 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Grouping\n"
 "X-Domain: geditorial-grouping\n"
 
-#: Grouping.php:34
+#: Grouping.php:32
 msgctxt "Setting Title"
 msgid "Custom Taxonomies"
 msgstr ""
 
-#: Grouping.php:39
+#: Grouping.php:37
 msgctxt "Setting Title"
 msgid "Taxonomy Name"
 msgstr ""
 
-#: Grouping.php:47
+#: Grouping.php:45
 msgctxt "Setting Title"
 msgid "Taxonomy Slug"
 msgstr ""
 
-#: Grouping.php:55
+#: Grouping.php:53
 msgctxt "Setting Title"
 msgid "Singular Label"
 msgstr ""
 
-#: Grouping.php:61
+#: Grouping.php:59
 msgctxt "Setting Title"
 msgid "Plural Label"
 msgstr ""
 
-#: Grouping.php:67
+#: Grouping.php:65
 msgctxt "Setting Title"
 msgid "Menu Label"
 msgstr ""
 
-#: Grouping.php:73
+#: Grouping.php:71
 msgctxt "Setting Title"
 msgid "Icon"
 msgstr ""
 
-#: Grouping.php:163
+#: Grouping.php:161
 msgctxt "Column Title"
 msgid "Users"
 msgstr ""

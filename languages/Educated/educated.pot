@@ -13,123 +13,58 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Educated\n"
 "X-Domain: geditorial-educated\n"
 
-#: Educated.php:29
-msgctxt "Setting"
-msgid "There are no education definitions available!"
-msgstr ""
-
-#: Educated.php:37
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr ""
-
-#: Educated.php:38
-msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Education Definitions."
-msgstr ""
-
-#: Educated.php:44
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr ""
-
-#: Educated.php:45
-msgctxt "Setting Description"
-msgid "Roles that can Assign Education Definitions."
-msgstr ""
-
-#: Educated.php:51
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr ""
-
-#: Educated.php:52
-msgctxt "Setting Description"
-msgid "Roles that can see Education Definitions Reports."
-msgstr ""
-
-#: Educated.php:58
-msgctxt "Setting Title"
-msgid "Restricted Roles"
-msgstr ""
-
-#: Educated.php:59
-msgctxt "Setting Description"
-msgid "Roles that check for Education Definitions visibility."
-msgstr ""
-
-#: Educated.php:65
-msgctxt "Setting Title"
-msgid "Restricted Definitions"
-msgstr ""
-
-#: Educated.php:66
-msgctxt "Setting Description"
-msgid "Handles visibility of each definition based on meta values."
-msgstr ""
-
 #: Educated.php:69
-msgctxt "Setting Option"
-msgid "Disabled"
-msgstr ""
-
-#: Educated.php:70
-msgctxt "Setting Option"
-msgid "Hidden"
-msgstr ""
-
-#: Educated.php:104
 msgid "Education Definition"
 msgid_plural "Education Definitions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Educated.php:108
+#: Educated.php:73
 msgctxt "Label: Show Option All"
 msgid "Educations"
 msgstr ""
 
-#: Educated.php:109
+#: Educated.php:74
 msgctxt "Label: Show Option No Terms"
 msgid "(Uneducated)"
 msgstr ""
 
-#: Educated.php:118
+#: Educated.php:83
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Education Summary"
 msgstr ""
 
-#: Educated.php:119
+#: Educated.php:84
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Education Summary"
 msgstr ""
 
-#: Educated.php:124
+#: Educated.php:89
 msgctxt "Default Term"
 msgid "Illiterate"
 msgstr ""
 
-#: Educated.php:125
+#: Educated.php:90
 msgctxt "Default Term"
 msgid "Primary"
 msgstr ""
 
-#: Educated.php:126
+#: Educated.php:91
 msgctxt "Default Term"
 msgid "Secondary"
 msgstr ""
 
-#: Educated.php:127
+#: Educated.php:92
 msgctxt "Default Term"
 msgid "Bachelor"
 msgstr ""
 
-#: Educated.php:128
+#: Educated.php:93
 msgctxt "Default Term"
 msgid "Master"
 msgstr ""
 
-#: Educated.php:129
+#: Educated.php:94
 msgctxt "Default Term"
 msgid "Doctorate"
 msgstr ""

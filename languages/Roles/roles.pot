@@ -13,115 +13,115 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Roles\n"
 "X-Domain: geditorial-roles\n"
 
-#: Roles.php:44
+#: Roles.php:42
 msgctxt "Setting Title"
 msgid "Editorial Posttypes"
 msgstr ""
 
-#: Roles.php:45
+#: Roles.php:43
 msgctxt "Setting Description"
 msgid "Posttypes to handle via Editorial roles."
 msgstr ""
 
-#: Roles.php:51
+#: Roles.php:49
 msgctxt "Setting Title"
 msgid "Duplicate Roles"
 msgstr ""
 
-#: Roles.php:52
+#: Roles.php:50
 msgctxt "Setting Description"
 msgid "Roles to duplicate as Editorial Roles."
 msgstr ""
 
-#: Roles.php:60
+#: Roles.php:58
 msgctxt "Setting Title"
 msgid "Tags for Authors"
 msgstr ""
 
-#: Roles.php:61
+#: Roles.php:59
 msgctxt "Setting Description"
 msgid "Allows Authors to manage post tags."
 msgstr ""
 
-#: Roles.php:66
+#: Roles.php:64
 msgctxt "Setting Title"
 msgid "Built-in Post & Category"
 msgstr ""
 
-#: Roles.php:67
+#: Roles.php:65
 msgctxt "Setting Description"
 msgid "Removes access to the builtin post post-type and category taxonomy on the admin."
 msgstr ""
 
 #. translators: %s: role name
-#: Roles.php:77
+#: Roles.php:75
 msgctxt "Setting Title"
 msgid "Role Name for %s"
 msgstr ""
 
-#: Roles.php:78
+#: Roles.php:76
 msgctxt "Setting Description"
 msgid "Custom name for the duplicated role."
 msgstr ""
 
 #. translators: %s: role name
-#: Roles.php:80
-#: Roles.php:336
+#: Roles.php:78
+#: Roles.php:334
 msgctxt "Setting Default"
 msgid "Editorial: %s"
 msgstr ""
 
-#: Roles.php:143
+#: Roles.php:141
 msgctxt "Button"
 msgid "Duplicate Default Roles"
 msgstr ""
 
-#: Roles.php:144
+#: Roles.php:142
 msgctxt "Button"
 msgid "Remove Duplicated Roles"
 msgstr ""
 
-#: Roles.php:145
+#: Roles.php:143
 msgctxt "Button"
 msgid "Add Default Caps to Editor Role"
 msgstr ""
 
-#: Roles.php:147
+#: Roles.php:145
 msgctxt "Button"
 msgid "Add Theme Caps to Editor Role"
 msgstr ""
 
-#: Roles.php:439
+#: Roles.php:437
 msgctxt "Header"
 msgid "Editorial Roles"
 msgstr ""
 
-#: Roles.php:443
+#: Roles.php:441
 msgctxt "Header"
 msgid "Current Roles"
 msgstr ""
 
-#: Roles.php:445
+#: Roles.php:443
 msgctxt "Button"
 msgid "Check Roles"
 msgstr ""
 
-#: Roles.php:446
+#: Roles.php:444
 msgctxt "Button"
 msgid "Check Capabilities"
 msgstr ""
 
-#: Roles.php:447
+#: Roles.php:445
 msgctxt "Button"
 msgid "Duplicate Defaults"
 msgstr ""
 
-#: Roles.php:448
+#: Roles.php:446
 msgctxt "Button"
 msgid "Add Default Caps to Editors"
 msgstr ""
 
-#: Roles.php:449
+#: Roles.php:447
 msgctxt "Button"
 msgid "Remove Duplicates"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:24+0330\n"
+"PO-Revision-Date: 2023-08-01 23:37+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -35,69 +35,74 @@ msgstr "ژمای‌نوروم"
 msgid "https://geminorum.ir/"
 msgstr "https://fa.geminorum.ir/"
 
-#: includes/Ajax.php:37
+#: includes/Ajax.php:36
 msgctxt "Ajax: Ajax Notice"
 msgid "Successful!"
 msgstr "موفقیت‌آمیز!"
 
-#: includes/Ajax.php:53
+#: includes/Ajax.php:52
 msgctxt "Ajax: Ajax Notice"
 msgid "Error!"
 msgstr "خطا!"
 
-#: includes/Ajax.php:63
+#: includes/Ajax.php:62
 msgctxt "Ajax: Ajax Notice"
 msgid "You're not authorized!"
 msgstr "شما اجازه ندارید!"
 
-#: includes/Ajax.php:68
+#: includes/Ajax.php:67
 msgctxt "Ajax: Ajax Notice"
 msgid "What?!"
 msgstr "هان؟!"
 
-#: includes/Datetime.php:24
+#: includes/Datetime.php:23
 msgctxt "Datetime: Date Separator"
 msgid "/"
 msgstr "؍"
 
-#: includes/Datetime.php:51
+#: includes/Datetime.php:50
 msgctxt "Date Format"
 msgid "l, M j, Y @ H:i"
-msgstr ""
+msgstr "l، j M Y - G:i"
+
+#: includes/Datetime.php:51
+msgctxt "Date Format"
+msgid "M j, Y @ G:i"
+msgstr "M j, Y @ G:i"
 
 #: includes/Datetime.php:52
 msgctxt "Date Format"
-msgid "M j, Y @ G:i"
-msgstr ""
+msgid "l, F j, Y"
+msgstr "l، j M Y"
 
 #: includes/Datetime.php:53
-msgctxt "Date Format"
-msgid "l, F j, Y"
-msgstr ""
-
-#: includes/Datetime.php:54
 msgctxt "Date Format"
 msgid "H:i - F j, Y"
 msgstr ""
 
-#: includes/Datetime.php:55
+#: includes/Datetime.php:54
 msgctxt "Date Format"
 msgid "g:i a"
-msgstr ""
+msgstr "g:i a"
 
-#: includes/Datetime.php:56
+#: includes/Datetime.php:55
 msgctxt "Date Format"
 msgid "H:i"
 msgstr ""
 
-#: includes/Datetime.php:57
+#: includes/Datetime.php:56
 msgctxt "Date Format"
 msgid "n/j"
 msgstr ""
 
-#: includes/Datetime.php:58
+#: includes/Datetime.php:57
 msgctxt "Date Format"
 msgid "m/d/Y"
+msgstr "Y/m/d"
+
+#: includes/Datetime.php:58
+msgctxt "Date Format: `age`"
+msgid "Y/m/d"
 msgstr ""
 
 #. translators: %s: date string
@@ -314,12 +319,12 @@ msgstr "در ماه بعد"
 #: includes/Datetime.php:226
 msgctxt "Datetime: Date: Moment"
 msgid "l"
-msgstr ""
+msgstr "l"
 
 #: includes/Datetime.php:227
 msgctxt "Datetime: Date: Moment"
 msgid "F Y"
-msgstr ""
+msgstr "F Y"
 
 #: includes/Datetime.php:240
 msgctxt "Datetime: Default Calendar Type"
@@ -337,500 +342,543 @@ msgid "Islamic"
 msgstr "قمری"
 
 #. translators: %s: year number
-#: includes/Datetime.php:359
+#: includes/Datetime.php:355
 msgctxt "Datetime: Age Title Attr"
 msgid "%s year old"
 msgid_plural "%s years old"
 msgstr[0] "%s ساله"
 msgstr[1] "%s ساله"
 
-#: includes/Datetime.php:458
+#: includes/Datetime.php:377
+msgctxt "Datetime: Age Structure"
+msgid "0–14 years"
+msgstr "۰–۱۴ سال"
+
+#: includes/Datetime.php:384
+msgctxt "Datetime: Age Structure"
+msgid "15–24 years"
+msgstr "۱۵–۲۴ سال"
+
+#: includes/Datetime.php:392
+msgctxt "Datetime: Age Structure"
+msgid "25–54 years"
+msgstr "۲۵–۵۴ سال"
+
+#: includes/Datetime.php:400
+msgctxt "Datetime: Age Structure"
+msgid "55–64 years"
+msgstr "۵۵–۶۴ سال"
+
+#: includes/Datetime.php:408
+msgctxt "Datetime: Age Structure"
+msgid "65 years and over"
+msgstr "۶۵ و بالاتر"
+
+#. translators: %s: decade number
+#: includes/Datetime.php:421
+msgctxt "Datetime: Decade Prefix"
+msgid "Decade %s"
+msgstr "دهه %s"
+
+#. translators: %s: year number
+#: includes/Datetime.php:444
+msgctxt "Datetime: Year Prefix"
+msgid "Year %s"
+msgstr "سال %s"
+
+#: includes/Datetime.php:567
 msgctxt "Datetime: Re-Schedule Post"
 msgid "Something is wrong with the new date."
 msgstr "انگار چیزی درباره تاریخ جدید اشتباه است."
 
-#: includes/Helper.php:89
+#: includes/Helper.php:77
 msgctxt "Helper"
 msgid "Needs WooCommerce"
 msgstr "نیازمند ووکامرس"
 
-#: includes/Helper.php:96
+#: includes/Helper.php:84
 msgctxt "Helper"
 msgid "Not Available on Current Locale"
 msgstr "با زبان فعلی در دسترس نیست"
 
-#: includes/Helper.php:414 includes/Helper.php:467
+#: includes/Helper.php:445 includes/Helper.php:498
 msgctxt "Helper: Row Action"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: includes/Helper.php:430 includes/Helper.php:483
+#: includes/Helper.php:461 includes/Helper.php:514
 msgctxt "Helper: Row Action"
 msgid "View"
 msgstr "نمایش"
 
 #. translators: %s: words count
-#: includes/Helper.php:551
+#: includes/Helper.php:576
 msgctxt "Helper: WordCount"
 msgid "Words: %s"
 msgstr "واژه‌ها: %s"
 
 #. translators: %s: chars count
-#: includes/Helper.php:557
+#: includes/Helper.php:582
 msgctxt "Helper: WordCount"
 msgid "Chars: %s"
 msgstr "نویسه‌ها: %s"
 
-#: includes/Helper.php:578
+#: includes/Helper.php:603
 msgctxt "Helper: No Count Title Attribute"
 msgid "No Count"
 msgstr "بدون شمارش"
 
-#: includes/Helper.php:591
+#: includes/Helper.php:616
 msgctxt "Helper: No Order Title Attribute"
 msgid "No Order"
 msgstr "بدون چینش"
 
 #. translators: singular/plural
-#: includes/Helper.php:656
+#: includes/Helper.php:681
 msgctxt "Helper: Nooped Count"
 msgid "plural"
 msgstr "singular"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:712
+#: includes/Helper.php:737
 msgctxt "Helper: CPT Generator: `name`"
 msgid "%1$s"
 msgstr ""
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:716
+#: includes/Helper.php:741
 msgctxt "Helper: CPT Generator: `singular_name`"
 msgid "%2$s"
 msgstr ""
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:718
+#: includes/Helper.php:743
 msgctxt "Helper: CPT Generator: `add_new`"
 msgid "Add New"
 msgstr "افزودن %2$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:720
+#: includes/Helper.php:745
 msgctxt "Helper: CPT Generator: `add_new_item`"
 msgid "Add New %2$s"
 msgstr "افزودن %2$s تازه"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:722
+#: includes/Helper.php:747
 msgctxt "Helper: CPT Generator: `edit_item`"
 msgid "Edit %2$s"
 msgstr "ویرایش %2$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:724
+#: includes/Helper.php:749
 msgctxt "Helper: CPT Generator: `new_item`"
 msgid "New %2$s"
 msgstr "%2$s تازه"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:726
+#: includes/Helper.php:751
 msgctxt "Helper: CPT Generator: `view_item`"
 msgid "View %2$s"
 msgstr "نمایش %2$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:728
+#: includes/Helper.php:753
 msgctxt "Helper: CPT Generator: `view_items`"
 msgid "View %1$s"
 msgstr "نمایش %1$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:730
+#: includes/Helper.php:755
 msgctxt "Helper: CPT Generator: `search_items`"
 msgid "Search %1$s"
 msgstr "جست‌وجوی %1$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:732
+#: includes/Helper.php:757
 msgctxt "Helper: CPT Generator: `not_found`"
 msgid "No %3$s found."
 msgstr "چیزی پیدا نشد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:734
+#: includes/Helper.php:759
 msgctxt "Helper: CPT Generator: `not_found_in_trash`"
 msgid "No %3$s found in Trash."
 msgstr "چیزی در زباله‌دان پیدا نشد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:736
+#: includes/Helper.php:761
 msgctxt "Helper: CPT Generator: `parent_item_colon`"
 msgid "Parent %2$s:"
 msgstr "%2$s مادر:"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:738
+#: includes/Helper.php:763
 msgctxt "Helper: CPT Generator: `all_items`"
 msgid "All %1$s"
 msgstr "همهٔ %1$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:740
+#: includes/Helper.php:765
 msgctxt "Helper: CPT Generator: `archives`"
 msgid "%2$s Archives"
 msgstr "بایگانی %1$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:742
+#: includes/Helper.php:767
 msgctxt "Helper: CPT Generator: `attributes`"
 msgid "%2$s Attributes"
 msgstr "ویژگی‌های %2$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:744
+#: includes/Helper.php:769
 msgctxt "Helper: CPT Generator: `insert_into_item`"
 msgid "Insert into %4$s"
 msgstr "جای‌گذاری در %4$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:746
+#: includes/Helper.php:771
 msgctxt "Helper: CPT Generator: `uploaded_to_this_item`"
 msgid "Uploaded to this %4$s"
 msgstr "بارگذاری شده برای این %4$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:748
+#: includes/Helper.php:773
 msgctxt "Helper: CPT Generator: `filter_items_list`"
 msgid "Filter %3$s list"
 msgstr "پالایه فهرست %3$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:750
+#: includes/Helper.php:775
 msgctxt "Helper: CPT Generator: `filter_by_date`"
 msgid "Filter by date"
 msgstr "پالایه با تاریخ"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:752
+#: includes/Helper.php:777
 msgctxt "Helper: CPT Generator: `items_list_navigation`"
 msgid "%1$s list navigation"
 msgstr "راه‌بری فهرست %1$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:754
+#: includes/Helper.php:779
 msgctxt "Helper: CPT Generator: `items_list`"
 msgid "%1$s list"
 msgstr "فهرست %1$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:756
+#: includes/Helper.php:781
 msgctxt "Helper: CPT Generator: `item_published`"
 msgid "%2$s published."
 msgstr "%2$s منتشر شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:758
+#: includes/Helper.php:783
 msgctxt "Helper: CPT Generator: `item_published_privately`"
 msgid "%2$s published privately."
 msgstr "%2$s به صورت خصوصی منتشر شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:760
+#: includes/Helper.php:785
 msgctxt "Helper: CPT Generator: `item_reverted_to_draft`"
 msgid "%2$s reverted to draft."
 msgstr "%2$s به پیش‌نویس بازگشت."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:762
+#: includes/Helper.php:787
 msgctxt "Helper: CPT Generator: `item_trashed`"
 msgid "%2$s trashed."
 msgstr "%2$s زباله شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:764
+#: includes/Helper.php:789
 msgctxt "Helper: CPT Generator: `item_scheduled`"
 msgid "%2$s scheduled."
 msgstr "%2$s زمان‌بندی شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:766
+#: includes/Helper.php:791
 msgctxt "Helper: CPT Generator: `item_updated`"
 msgid "%2$s updated."
 msgstr "%2$s به‌روز شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:768
+#: includes/Helper.php:793
 msgctxt "Helper: CPT Generator: `item_link`"
 msgid "%2$s Link"
 msgstr "پیوند %2$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:770
+#: includes/Helper.php:795
 msgctxt "Helper: CPT Generator: `item_link_description`"
 msgid "A link to a %4$s."
 msgstr "پیوندی به %4$s."
 
 #. translators: %1$s: featured camel case, %2$s: featured lower case
-#: includes/Helper.php:775
+#: includes/Helper.php:800
 msgctxt "Helper: CPT Generator: `featured_image`"
 msgid "%1$s"
 msgstr ""
 
 #. translators: %1$s: featured camel case, %2$s: featured lower case
-#: includes/Helper.php:777
+#: includes/Helper.php:802
 msgctxt "Helper: CPT Generator: `set_featured_image`"
 msgid "Set %2$s"
 msgstr "تنظیم %2$s"
 
 #. translators: %1$s: featured camel case, %2$s: featured lower case
-#: includes/Helper.php:779
+#: includes/Helper.php:804
 msgctxt "Helper: CPT Generator: `remove_featured_image`"
 msgid "Remove %2$s"
 msgstr "حذف %2$s"
 
 #. translators: %1$s: featured camel case, %2$s: featured lower case
-#: includes/Helper.php:781
+#: includes/Helper.php:806
 msgctxt "Helper: CPT Generator: `use_featured_image`"
 msgid "Use as %2$s"
 msgstr "استفاده به عنوان %2$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:835
+#: includes/Helper.php:867
 msgctxt "Helper: PostType Label: `show_option_no_items`"
 msgid "(No %3$s)"
 msgstr "(بدون %2$s)"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:839
+#: includes/Helper.php:871
 msgctxt "Helper: PostType Label: `show_option_select`"
 msgid "&ndash; Select %2$s &ndash;"
 msgstr "&ndash; انتخاب %2$s &ndash;"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:873
+#: includes/Helper.php:905
 msgctxt "Helper: Tax Generator: `name`"
 msgid "%1$s"
 msgstr ""
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:877
+#: includes/Helper.php:909
 msgctxt "Helper: Tax Generator: `singular_name`"
 msgid "%2$s"
 msgstr ""
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:879
+#: includes/Helper.php:911
 msgctxt "Helper: Tax Generator: `search_items`"
 msgid "Search %1$s"
 msgstr "جست‌وجوی %1$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:882
+#: includes/Helper.php:914
 msgctxt "Helper: Tax Generator: `all_items`"
 msgid "All %1$s"
 msgstr "همهٔ %1$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:884
+#: includes/Helper.php:916
 msgctxt "Helper: Tax Generator: `parent_item`"
 msgid "Parent %2$s"
 msgstr "%2$s مادر"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:886
+#: includes/Helper.php:918
 msgctxt "Helper: Tax Generator: `parent_item_colon`"
 msgid "Parent %2$s:"
 msgstr "%2$s مادر:"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:888
+#: includes/Helper.php:920
 msgctxt "Helper: Tax Generator: `edit_item`"
 msgid "Edit %2$s"
 msgstr "ویرایش %2$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:890
+#: includes/Helper.php:922
 msgctxt "Helper: Tax Generator: `view_item`"
 msgid "View %2$s"
 msgstr "نمایش %2$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:892
+#: includes/Helper.php:924
 msgctxt "Helper: Tax Generator: `update_item`"
 msgid "Update %2$s"
 msgstr "به‌روزرسانی %2$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:894
+#: includes/Helper.php:926
 msgctxt "Helper: Tax Generator: `add_new_item`"
 msgid "Add New %2$s"
 msgstr "افزودن %2$s تازه"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:896
+#: includes/Helper.php:928
 msgctxt "Helper: Tax Generator: `new_item_name`"
 msgid "New %2$s Name"
 msgstr "عنوان %2$s تازه"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:898
+#: includes/Helper.php:930
 msgctxt "Helper: Tax Generator: `separate_items_with_commas`"
 msgid "Separate %3$s with commas"
 msgstr "برچسب‌ها را با ویرگول لاتین (,) جدا کنید"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:900
+#: includes/Helper.php:932
 msgctxt "Helper: Tax Generator: `add_or_remove_items`"
 msgid "Add or remove %3$s"
 msgstr "افزودن یا پاک‌کردن %3$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:902
+#: includes/Helper.php:934
 msgctxt "Helper: Tax Generator: `choose_from_most_used`"
 msgid "Choose from the most used %3$s"
 msgstr "انتخاب از میان %3$s پرکاربرد"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:904
+#: includes/Helper.php:936
 msgctxt "Helper: Tax Generator: `not_found`"
 msgid "No %3$s found."
 msgstr "چیزی پیدا نشد."
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:906
+#: includes/Helper.php:938
 msgctxt "Helper: Tax Generator: `no_terms`"
 msgid "No %3$s"
 msgstr "بدون %4$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:908
+#: includes/Helper.php:940
 msgctxt "Helper: Tax Generator: `filter_by_item`"
 msgid "Filter by %4$s"
 msgstr "پالایه با %2$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:910
+#: includes/Helper.php:942
 msgctxt "Helper: Tax Generator: `items_list_navigation`"
 msgid "%1$s list navigation"
 msgstr "راه‌بری فهرست %1$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:912
+#: includes/Helper.php:944
 msgctxt "Helper: Tax Generator: `items_list`"
 msgid "%1$s list"
 msgstr "فهرست %1$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:914
+#: includes/Helper.php:946
 msgctxt "Helper: Tax Generator: `back_to_items`"
 msgid "&larr; Back to %1$s"
 msgstr "&rarr; بازگشت به %1$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:916
+#: includes/Helper.php:948
 msgctxt "Helper: Tax Generator: `item_link`"
 msgid "%2$s Link"
 msgstr "پیوند %2$s"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:918
+#: includes/Helper.php:950
 msgctxt "Helper: Tax Generator: `item_link_description`"
 msgid "A link to a %4$s."
 msgstr "پیوندی به %4$s."
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:938
+#: includes/Helper.php:970
 msgctxt "Helper: Tax Generator"
 msgid "Most Used"
 msgstr "پرکاربرد"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:948
-msgctxt "Helper: Tax Generator"
+#: includes/Helper.php:986
+msgctxt "Helper: Taxonomy Label: `desc_field_title`"
 msgid "Description"
 msgstr "توضیحات"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:952
-msgctxt "Helper: Tax Generator"
+#: includes/Helper.php:991
+msgctxt "Helper: Taxonomy Label: `uncategorized`"
 msgid "Uncategorized"
 msgstr "دسته‌بندی‌نشده"
 
 #. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
-#: includes/Helper.php:976
+#: includes/Helper.php:996
+msgctxt "Helper: Taxonomy Label: `no_items_available`"
+msgid "There are no %3$s available!"
+msgstr "هیچ کدام از %3$s در دسترس نیست!"
+
+#. translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder
+#: includes/Helper.php:1023
 msgctxt "Helper: Taxonomy Label: `show_option_select`"
 msgid "&ndash; Select %2$s &ndash;"
 msgstr "&ndash; انتخاب %2$s &ndash;"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1009
+#: includes/Helper.php:1056
 msgctxt "Helper: PostType Message Generator"
 msgid "View %4$s"
 msgstr "نمایش %4$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1011
+#: includes/Helper.php:1058
 msgctxt "Helper: PostType Message Generator"
 msgid "Preview %4$s"
 msgstr "پیش‌نمایش %4$s"
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1013
+#: includes/Helper.php:1060
 msgctxt "Helper: PostType Message Generator"
 msgid "%2$s updated."
 msgstr "%2$s به‌روز شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1015
+#: includes/Helper.php:1062
 msgctxt "Helper: PostType Message Generator"
 msgid "Custom field updated."
 msgstr "زمینه‌های دل‌خواه به‌روز شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1017
+#: includes/Helper.php:1064
 msgctxt "Helper: PostType Message Generator"
 msgid "Custom field deleted."
 msgstr "زمینه‌های دل‌خواه حذف شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1019
+#: includes/Helper.php:1066
 msgctxt "Helper: PostType Message Generator"
 msgid "%2$s restored to revision from %5$s."
 msgstr "%2$s از رونوشت %5$s بازیابی شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1021
+#: includes/Helper.php:1068
 msgctxt "Helper: PostType Message Generator"
 msgid "%2$s published."
 msgstr "%2$s منتشر شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1023
+#: includes/Helper.php:1070
 msgctxt "Helper: PostType Message Generator"
 msgid "%2$s saved."
 msgstr "%2$s ذخیره شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1025
+#: includes/Helper.php:1072
 msgctxt "Helper: PostType Message Generator"
 msgid "%2$s submitted."
 msgstr "%2$s ارسال شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1027
+#: includes/Helper.php:1074
 msgctxt "Helper: PostType Message Generator"
 msgid "%2$s scheduled for: %5$s."
 msgstr "%2$s برای انتشار در %5$s زمان‌بندی شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1029
+#: includes/Helper.php:1076
 msgctxt "Helper: PostType Message Generator"
 msgid "%2$s draft updated."
 msgstr "پیش‌نویس %2$s به‌روز شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1077
+#: includes/Helper.php:1124
 msgctxt "Helper: Bulk PostType Message Generator"
 msgid "%5$s %4$s updated."
 msgid_plural "%5$s %3$s updated."
@@ -838,7 +886,7 @@ msgstr[0] "%5$s %4$s به‌روزرسانی شد."
 msgstr[1] "%5$s %3$s به‌روزرسانی شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1079
+#: includes/Helper.php:1126
 msgctxt "Helper: Bulk PostType Message Generator"
 msgid "%5$s %4$s not updated, somebody is editing it."
 msgid_plural "%5$s %3$s not updated, somebody is editing them."
@@ -846,7 +894,7 @@ msgstr[0] "%5$s %4$s به‌روزرسانی نشد. فردی دیگری در ح
 msgstr[1] "%5$s %3$s به‌روزرسانی نشد. شخص دیگری در حال ویرایش است."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1081
+#: includes/Helper.php:1128
 msgctxt "Helper: Bulk PostType Message Generator"
 msgid "%5$s %4$s permanently deleted."
 msgid_plural "%5$s %3$s permanently deleted."
@@ -854,7 +902,7 @@ msgstr[0] "%5$s %4$s صفحه برای همیشه پاک شد."
 msgstr[1] "%5$s %3$s صفحه برای همیشه پاک شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1083
+#: includes/Helper.php:1130
 msgctxt "Helper: Bulk PostType Message Generator"
 msgid "%5$s %4$s moved to the Trash."
 msgid_plural "%5$s %3$s moved to the Trash."
@@ -862,7 +910,7 @@ msgstr[0] "%5$s %4$s به زباله‌دان منتقل شد."
 msgstr[1] "%5$s %3$s به زباله‌دان منتقل شد."
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
-#: includes/Helper.php:1085
+#: includes/Helper.php:1132
 msgctxt "Helper: Bulk PostType Message Generator"
 msgid "%5$s %4$s restored from the Trash."
 msgid_plural "%5$s %3$s restored from the Trash."
@@ -883,57 +931,454 @@ msgctxt "Info: P2P"
 msgid "Connected via %s"
 msgstr "مرتبط به کمک %s"
 
-#: includes/Internals/RawImports.php:59
+#: includes/Info.php:60
+msgctxt "Info: Message"
+msgid "There are no reports available!"
+msgstr "هیچ گزارشی در دسترس نیست!"
+
+#. translators: %1$s: icon markup, %2$s: export type title
+#: includes/Internals/BulkExports.php:21
+msgctxt "Internal: Exports: Button Label"
+msgid "%1$s Export: %2$s"
+msgstr "%1$s برون‌بری: %2$s"
+
+#: includes/Internals/BulkExports.php:29
+msgctxt "Internal: Exports: Button Title"
+msgid "Download Exported CSV File"
+msgstr "دریافت پرونده CSV برون‌بری"
+
+#: includes/Internals/BulkExports.php:40
+msgctxt "Internal: Export Type Title"
+msgid "Simple"
+msgstr "ساده"
+
+#: includes/Internals/BulkExports.php:45
+msgctxt "Internal: Export Type Title"
+msgid "Advanced"
+msgstr "پیشرفته"
+
+#: includes/Internals/BulkExports.php:50
+msgctxt "Internal: Export Type Title"
+msgid "Full"
+msgstr "کامل"
+
+#: includes/Internals/CoreCapabilities.php:139
+msgctxt "Internal: CoreCapabilities: Setting Title"
+msgid "Manage Roles"
+msgstr "نقش‌های مدیریت"
+
+#. translators: %s: taxonomy extended label
+#: includes/Internals/CoreCapabilities.php:141
+msgctxt "Internal: CoreCapabilities: Setting Description"
+msgid "Roles that can Manage, Edit and Delete %s."
+msgstr "نقش‌هایی که می‌توانند %s را مدیریت، ویرایش و یا حذف کنند."
+
+#: includes/Internals/CoreCapabilities.php:147
+msgctxt "Internal: CoreCapabilities: Setting Title"
+msgid "Assign Roles"
+msgstr "نقش‌های تخصیص"
+
+#. translators: %s: taxonomy extended label
+#: includes/Internals/CoreCapabilities.php:149
+msgctxt "Internal: CoreCapabilities: Setting Description"
+msgid "Roles that can Assign %s."
+msgstr "نقش‌هایی که میتوانند %s را تخصیص دهند."
+
+#: includes/Internals/CoreCapabilities.php:155
+msgctxt "Internal: CoreCapabilities: Setting Title"
+msgid "Reports Roles"
+msgstr "نقش‌های گزارش‌ها"
+
+#. translators: %s: taxonomy extended label
+#: includes/Internals/CoreCapabilities.php:157
+msgctxt "Internal: CoreCapabilities: Setting Description"
+msgid "Roles that can see %s Reports."
+msgstr "نقش‌هایی که می‌توانند گزارش‌های %s را ببینند."
+
+#: includes/Internals/CoreCapabilities.php:167
+msgctxt "Internal: CoreCapabilities: Setting Title"
+msgid "Restricted Roles"
+msgstr "نقش‌های محدود‌شده"
+
+#. translators: %s: taxonomy extended label
+#: includes/Internals/CoreCapabilities.php:169
+msgctxt "Internal: CoreCapabilities: Setting Description"
+msgid "Roles that check for %s visibility."
+msgstr "نقش‌هایی که سطح دسترسی هر کدام از %s برای نمایش به آن‌ها بررسی میشود."
+
+#. translators: %s: taxonomy extended label
+#: includes/Internals/CoreCapabilities.php:177
+msgctxt "Internal: CoreCapabilities: Setting Title"
+msgid "Restricted %s"
+msgstr "محدودیت %s"
+
+#: includes/Internals/CoreCapabilities.php:178
+msgctxt "Internal: CoreCapabilities: Setting Description"
+msgid "Handles visibility of each item based on meta values."
+msgstr "بر اساس متای هر مورد، نمایانی آن را مشخص میکند."
+
+#: includes/Internals/CoreCapabilities.php:181
+msgctxt "Internal: CoreCapabilities: Setting Option"
+msgid "Disabled"
+msgstr "غیرفعال"
+
+#: includes/Internals/CoreCapabilities.php:182
+msgctxt "Internal: CoreCapabilities: Setting Option"
+msgid "Hidden"
+msgstr "پنهان"
+
+#: includes/Internals/CoreCapabilities.php:191
+msgctxt "Internal: CoreCapabilities: Setting Title"
+msgid "Locking Terms"
+msgstr "رده‌های قفل‌کننده"
+
+#. translators: %s: taxonomy extended label
+#: includes/Internals/CoreCapabilities.php:193
+msgctxt "Internal: CoreCapabilities: Setting Description"
+msgid "Selected items will lock editing the post to %s managers."
+msgstr "موارد انتخاب‌شده، فرسته را برای مدیران %s قفل می‌کند."
+
+#: includes/Internals/CoreDashboard.php:39
+msgctxt "Module: Dashboard Widget Title"
+msgid "Editorial Content Summary"
+msgstr "گزارش محتوای تحریریه"
+
+#: includes/Internals/CoreTemplate.php:99
+msgctxt "Module: Template Title"
+msgid "[Untitled]"
+msgstr "[بدون عنوان]"
+
+#. translators: %s: module title
+#: includes/Internals/CoreToolBox.php:39
+msgctxt "Internal: CoreToolBox"
+msgid "Editorial: %s"
+msgstr "تحریریه: %s"
+
+#. translators: %s: icon markup
+#: includes/Internals/PairedImports.php:26
+msgctxt "Internal: PairedImports: Button Label"
+msgid "%s Upload"
+msgstr "%s بارگذاری"
+
+#: includes/Internals/PairedImports.php:27
+msgctxt "Internal: PairedImports: Button Title"
+msgid "Import Items CSV File"
+msgstr "درون‌ریزی از پرونده CSV"
+
+#: includes/Internals/PairedImports.php:48
+msgctxt "Internal: PairedImports: Import Type"
+msgid "Title"
+msgstr "عنوان"
+
+#: includes/Internals/PairedImports.php:59
+msgctxt "Internal: PairedImports: Field"
+msgid "Identifier"
+msgstr "شناساگر"
+
+#: includes/Internals/PairedImports.php:60
+msgctxt "Internal: PairedImports: Field"
+msgid "Title"
+msgstr "عنوان"
+
+#: includes/Internals/PairedImports.php:97
+msgctxt "Internal: PairedImports: String"
+msgid "Import Raw Data into this Post"
+msgstr "درون‌ریزی داده‌های خام در این فرسته"
+
+#: includes/Internals/PairedImports.php:98
+msgctxt "Internal: PairedImports: String"
+msgid "Empty Data!"
+msgstr "داده‌های خالی!"
+
+#: includes/Internals/PairedImports.php:99
+msgctxt "Internal: PairedImports: String"
+msgid "Unsupported Data!"
+msgstr "داده‌های پشتیبانی‌نشده!"
+
+#: includes/Internals/PairedImports.php:100
+msgctxt "Internal: PairedImports: String"
+msgid "Discovery"
+msgstr "اکتشاف"
+
+#: includes/Internals/PairedImports.php:101
+msgctxt "Internal: PairedImports: String"
+msgid "Add New on Discovery"
+msgstr "افزودن تازه‌ها در اکتشاف"
+
+#: includes/Internals/PairedImports.php:102
+msgctxt "Internal: PairedImports: String"
+msgid "Add Selected"
+msgstr "افزودن منتخب"
+
+#: includes/Internals/PairedImports.php:103
+msgctxt "Internal: PairedImports: String"
+msgid "Delete Selected"
+msgstr "حذف منتخب"
+
+#: includes/Internals/PairedImports.php:104
+msgctxt "Internal: PairedImports: String"
+msgid "Check Data"
+msgstr "بررسی داده‌ها"
+
+#: includes/Internals/PairedImports.php:105
+msgctxt "Internal: PairedImports: String"
+msgid "Clear All"
+msgstr "پاک‌کردن همه"
+
+#: includes/Internals/PairedImports.php:106
+msgctxt "Internal: PairedImports: String"
+msgid "Paste Column"
+msgstr "چسباندن ستون"
+
+#: includes/Internals/PairedImports.php:107
+msgctxt "Internal: PairedImports: String"
+msgid "Paste CSV"
+msgstr "چسباندن CSV"
+
+#: includes/Internals/PairedImports.php:108
+msgctxt "Internal: PairedImports: String"
+msgid "Paste Excel"
+msgstr "چسباندن اکسل"
+
+#: includes/Internals/PairedImports.php:109
+msgctxt "Internal: PairedImports: String"
+msgid "Upload CSV"
+msgstr "بارگذاری CSV"
+
+#: includes/Internals/PairedImports.php:110
+msgctxt "Internal: PairedImports: String"
+msgid "Undefined"
+msgstr "تعریف‌نشده"
+
+#: includes/Internals/PairedImports.php:111
+msgctxt "Internal: PairedImports: String"
+msgid "Delete Me"
+msgstr "حذف شود"
+
+#: includes/Internals/PairedImports.php:134 includes/Internals/PairedImports.php:137
+msgctxt "Internal: PairedImports: Message"
+msgid "There are no posts available!"
+msgstr "هیچ فرسته‌ای در دسترس نیست!"
+
+#. translators: %s: post title
+#: includes/Internals/PairedImports.php:144
+msgctxt "Internal: PairedImports: Page Title"
+msgid "Import Items for %s"
+msgstr "درون‌ریزی موارد برای %s"
+
+#: includes/Internals/PairedImports.php:182
+msgctxt "Internal: PairedImports: Import Items"
+msgid "Each item on each line"
+msgstr "هر مورد روی یک خط"
+
+#: includes/Internals/PairedImports.php:210
+msgctxt "Internal: PairedImports: Button Text"
+msgid "Save Draft & Close"
+msgstr "ذخیره پیش‌نویس و بازگشت"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/PairedMetaBox.php:27
+msgctxt "Internal: PairedMetaBox: Metabox Empty: `megabox_empty`"
+msgid "No items connected to &ldquo;%1$s&rdquo; %2$s!"
+msgstr "موردی به این %2$s &ldquo;%1$s&rdquo; مرتبط نشده است."
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/PairedMetaBox.php:66
+msgctxt "Internal: PairedMetaBox: Metabox Title: `megabox_title`"
+msgid "In &ldquo;%1$s&rdquo; %2$s"
+msgstr "در %2$s &rdquo;%1$s&ldquo;"
+
+#: includes/Internals/PairedRest.php:21
+msgctxt "Internal: PairedRest"
+msgid "The ID for the parent of the paired."
+msgstr ""
+
+#: includes/Internals/PairedTools.php:21
+msgctxt "Internal: PairedTools: Card Title"
+msgid "Paired Tools"
+msgstr "ابزارهای جفت"
+
+#: includes/Internals/PairedTools.php:24
+msgctxt "Internal: PairedTools: Button"
+msgid "Sync Paired Terms"
+msgstr "همگام‌سازی رده‌های جفت"
+
+#: includes/Internals/PairedTools.php:25
+msgctxt "Internal: PairedTools: Button Description"
+msgid "Tries to set the paired term for all the main posts."
+msgstr "تلاش می‌کند رده جفت را برای همه فرسته‌های اصلی تنظیم کند."
+
+#: includes/Internals/PairedTools.php:29
+msgctxt "Internal: PairedTools: Button"
+msgid "Create Paired Terms"
+msgstr "ایجاد رده‌های جفت"
+
+#: includes/Internals/PairedTools.php:30
+msgctxt "Internal: PairedTools: Button Description"
+msgid "Tries to create paired terms for all the main posts."
+msgstr "تلاش می‌کند رده‌های جفت را برای همه فرسته‌های اصلی ایجاد کند."
+
+#: includes/Internals/PairedTools.php:234
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Slugged / Paired"
+msgstr "هم‌نامک/جفت"
+
+#: includes/Internals/PairedTools.php:254
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Desc. / Exce."
+msgstr "توضـ/چکیـ"
+
+#: includes/Internals/PairedTools.php:281
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Count"
+msgstr "شمار"
+
+#: includes/Internals/PairedTools.php:292
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Thumbnail"
+msgstr "بند‌انگشتی"
+
+#: includes/Internals/PairedTools.php:305
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Image"
+msgstr "تصویر"
+
+#: includes/Internals/PairedTools.php:322
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Create Paired Posts"
+msgstr "ایجاد فرسته‌های جفت"
+
+#: includes/Internals/PairedTools.php:323
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Connect Paired Posts"
+msgstr "بازپیوست فرسته‌های جفت"
+
+#: includes/Internals/PairedTools.php:324
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Re-Sync Paired Images"
+msgstr "همگام‌سازی تصاویر جفت"
+
+#: includes/Internals/PairedTools.php:325
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Re-Sync Paired Descriptions"
+msgstr "همگام‌سازی توضیحات جفت"
+
+#: includes/Internals/PairedTools.php:326
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Empty Paired Descriptions"
+msgstr "خالی‌کردن توضیحات جفت"
+
+#: includes/Internals/PairedTools.php:327
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Store Paired Orders"
+msgstr "ذخیره چینش‌های جفت"
+
+#: includes/Internals/PairedTools.php:328
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Delete Paired Terms"
+msgstr "پاک‌کردن رده‌های جفت"
+
+#: includes/Internals/PairedTools.php:337
+msgctxt "Internal: PairedTools: Header"
+msgid "Paired Terms Tools"
+msgstr "ابزارهای رده‌های جفت"
+
+#: includes/Internals/PairedTools.php:338
+msgctxt "Internal: PairedTools: Message"
+msgid "There are no terms available!"
+msgstr "رده‌ای در دسترس نیست!"
+
+#: includes/Internals/PostsToPosts.php:15
+msgctxt "Internal: PostsToPosts: Setting Section Title"
+msgid "Posts-to-Posts"
+msgstr "نوشته‌ها به نوشته‌ها"
+
+#: includes/Internals/PostsToPosts.php:146
+msgctxt "Module: P2P"
+msgid "View the connected list"
+msgstr "دیدن فهرست مرتبط‌شده‌ها"
+
+#: includes/Internals/PostsToPosts.php:190
+msgctxt "Module: P2P"
+msgid "View all connected"
+msgstr "دیدن همه مرتبط‌شده‌ها"
+
+#: includes/Internals/PrintPage.php:70
+msgctxt "Internal: PrintPage: Page Title"
+msgid "Print Me!"
+msgstr "چاپ کن!"
+
+#: includes/Internals/PrintPage.php:116
+msgctxt "Module"
+msgid "Print Preview"
+msgstr "پیش‌نمایش چاپ"
+
+#: includes/Internals/PrintPage.php:146
+msgctxt "Module"
+msgid "Print"
+msgstr "چاپ"
+
+#: includes/Internals/PrintPage.php:155
+msgctxt "Internal: PrintPage: Setting Section Title"
+msgid "Printing"
+msgstr "چاپ"
+
+#: includes/Internals/RawImports.php:78
 msgctxt "Module: Importer Button"
 msgid "Go to Imports"
 msgstr "صفحه درون‌ریزی"
 
-#: includes/Internals/RelatedMeta.php:78
+#: includes/Internals/RelatedMeta.php:77
 msgctxt "Internal: RelatedMeta Title"
 msgid "Filter"
 msgstr "پالایه"
 
-#: includes/Internals/RelatedMeta.php:79
+#: includes/Internals/RelatedMeta.php:78
 msgctxt "Internal: RelatedMeta Title"
 msgid "Overwrite"
 msgstr "جانویسی"
 
-#: includes/Internals/RelatedMeta.php:80
+#: includes/Internals/RelatedMeta.php:79
 msgctxt "Internal: RelatedMeta Title"
 msgid "Hidden"
 msgstr "پنهانی"
 
-#: includes/Internals/RelatedMeta.php:81
+#: includes/Internals/RelatedMeta.php:80
 msgctxt "Internal: RelatedMeta Title"
 msgid "Serial"
 msgstr "پیاپی"
 
-#: includes/Internals/RelatedMeta.php:82
+#: includes/Internals/RelatedMeta.php:81
 msgctxt "Internal: RelatedMeta Title"
 msgid "Description"
 msgstr "توضیحات"
 
-#: includes/Internals/RelatedMeta.php:83
+#: includes/Internals/RelatedMeta.php:82
 msgctxt "Internal: RelatedMeta Title"
 msgid "Rate"
 msgstr "نرخ"
 
-#: includes/Internals/RelatedMeta.php:84
+#: includes/Internals/RelatedMeta.php:83
 msgctxt "Internal: RelatedMeta Title"
 msgid "Size"
 msgstr "اندازه‌"
 
-#: includes/Internals/RestAPI.php:98
-msgctxt "Error: Rest Forbidden"
-msgid "OMG you can not view private data."
-msgstr ""
+#: includes/Internals/SubContents.php:357
+msgctxt "Internal: SubContents: Empty Notice"
+msgid "There is no information available!"
+msgstr "هیچ اطلاعاتی در دسترس نیست!"
 
-#: includes/Listtable.php:55
+#: includes/Internals/SubContents.php:366
+msgctxt "Internal: SubContents: No-Access Notice"
+msgid "You have not necessary permission to manage the information."
+msgstr "شما مجوز لازم برای مدیریت این داده‌ها را ندارید."
+
+#: includes/Listtable.php:53
 msgctxt "Listtable: No Count Term Attribute"
 msgid "No Term"
 msgstr "بدون رده"
 
-#: includes/Listtable.php:192
+#: includes/Listtable.php:201
 msgctxt "Listtable: Show Option All"
 msgid "All Authors"
 msgstr "همهٔ نویسندگان"
@@ -963,191 +1408,171 @@ msgctxt "MetaBox: Title Action"
 msgid "Refresh"
 msgstr "تازه‌سازی"
 
-#: includes/MetaBox.php:604
+#: includes/MetaBox.php:605
 msgctxt "MetaBox: Title Attr"
 msgid "Order"
 msgstr "چیدمان"
 
-#: includes/MetaBox.php:605
+#: includes/MetaBox.php:606
 msgctxt "MetaBox: Placeholder"
 msgid "Order"
 msgstr "چینش"
 
-#: includes/MetaBox.php:623
+#: includes/MetaBox.php:624
 msgctxt "MetaBox: Title Attr"
 msgid "Slug"
 msgstr "نامک"
 
-#: includes/MetaBox.php:624
+#: includes/MetaBox.php:625
 msgctxt "MetaBox: Placeholder"
 msgid "Slug"
 msgstr "نامک"
 
 #. translators: %s: user id number
-#: includes/MetaBox.php:1260
+#: includes/MetaBox.php:1376
 msgctxt "MetaBox: Title Attr"
 msgid "Unknown User #%s"
 msgstr "کاربر ناشناس #%s"
 
 #. translators: %s: sub title
-#: includes/Module.php:358
+#: includes/Module.php:360
 msgctxt "Module: Extra Link: Reports"
 msgid "%s Reports"
 msgstr "گزارش‌های %s"
 
 #. translators: %s: sub title
-#: includes/Module.php:369
+#: includes/Module.php:371
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Tools"
 msgstr "ابزارهای %s"
 
 #. translators: %s: sub title
-#: includes/Module.php:380
+#: includes/Module.php:382
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Imports"
 msgstr "درون‌ریزی‌های %s"
 
 #. translators: %s: module title
-#: includes/Module.php:390
+#: includes/Module.php:392
 msgctxt "Module: Extra Link: Settings"
 msgid "%s Settings"
 msgstr "تنظیمات %s"
 
 #. translators: %s: module title
-#: includes/Module.php:400
+#: includes/Module.php:402
 msgctxt "Module: Extra Link: Documentation"
 msgid "%s Documentation"
 msgstr "مستندات %s"
 
-#: includes/Module.php:407 includes/Module.php:409
+#: includes/Module.php:409 includes/Module.php:411
 msgctxt "Module: Extra Link: Documentation"
 msgid "Editorial Documentation"
 msgstr "مستندات تحریریه"
 
 #. translators: %1$s: menu title, %2$s: submenu title
-#: includes/Module.php:514
+#: includes/Module.php:502
 msgctxt "Module: Page Title"
 msgid "%1$s &lsaquo; %2$s"
 msgstr "%1$s &lsaquo; %2$s"
 
-#: includes/Module.php:643
-msgctxt "Module: Import Items"
-msgid "Each item on each line"
-msgstr "هر مورد روی یک خط"
-
-#: includes/Module.php:671 includes/Module.php:773
+#: includes/Module.php:699
 msgctxt "Module"
 msgid "Save Draft & Close"
 msgstr "ذخیره پیش‌نویس و بازگشت"
 
 #. translators: %s: posttype singular name
-#: includes/Module.php:784
+#: includes/Module.php:710
 msgctxt "Module: Recents"
 msgid "Or select this %s"
 msgstr "یا این %s را انتخاب کنید"
 
 #. translators: %s: posttype name
-#: includes/Module.php:793
+#: includes/Module.php:719
 msgctxt "Module: Recents"
 msgid "Or select one from Recent %s."
 msgstr "یا یکی از آخرین %s را انتخاب کنید."
 
-#: includes/Module.php:799
+#: includes/Module.php:725
 msgctxt "Module: NewPost: JS String"
 msgid "This frame has no parent window!"
 msgstr "این صفحه، پنجره بالادستی ندارد!"
 
-#: includes/Module.php:800
+#: includes/Module.php:726
 msgctxt "Module: NewPost: JS String"
 msgid "Cannot handle the target window!"
 msgstr "پنجره هدف در درسترس نیست!"
 
-#: includes/Module.php:801
+#: includes/Module.php:727
 msgctxt "Module: NewPost: JS String"
 msgid "New post has been saved you may close this frame!"
 msgstr "فرسته تازه ایجاد شد، می‌توانید این صفحه را ببندید!"
 
-#: includes/Module.php:840 includes/Modules/Datacodes/Datacodes.php:365
-msgctxt "Module"
-msgid "Print Me!"
-msgstr "چاپ کن!"
-
-#: includes/Module.php:869
-msgctxt "Module"
-msgid "Print Preview"
-msgstr "پیش‌نمایش چاپ"
-
-#: includes/Module.php:899
-msgctxt "Module"
-msgid "Print"
-msgstr "چاپ"
-
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: includes/Module.php:955
+#: includes/Module.php:785
 msgctxt "Module: Button Title"
 msgid "Quick New %2$s"
 msgstr "%2$s تازه و سریع"
 
-#: includes/Module.php:1057
+#: includes/Module.php:904
 msgctxt "Module"
 msgid "All PostTypes"
 msgstr "همهٔ نوع‌نوشته‌ها"
 
-#: includes/Module.php:1120
+#: includes/Module.php:967
 msgctxt "Module"
 msgid "All Taxonomies"
 msgstr "همهٔ رده‌بندی‌ها"
 
 #. translators: %s: singular posttype name
-#: includes/Module.php:1279
+#: includes/Module.php:1126
 msgctxt "Module: Setting Title"
 msgid "%s Supports"
 msgstr "ویژگی‌های %s"
 
 #. translators: %s: singular posttype name
-#: includes/Module.php:1281
+#: includes/Module.php:1128
 msgctxt "Module: Setting Description"
 msgid "Support core and extra features for %s posttype."
 msgstr "پشتیبانی از امکانات هسته و بیشتر، برای نوع‌نوشتهٔ %s."
 
-#: includes/Module.php:1292
+#: includes/Module.php:1139
 msgctxt "Module: Setting Title"
 msgid "Insert Priority"
 msgstr "اولویت جای‌گذاری"
 
-#: includes/Module.php:1458
+#: includes/Module.php:1263
 msgctxt "Module"
 msgid "Enable for Post Types"
 msgstr "فعال برای این نوع‌نوشته‌ها"
 
-#: includes/Module.php:1479
+#: includes/Module.php:1284
 msgctxt "Module"
 msgid "Enable for Taxonomies"
 msgstr "فعال برای این رده‌بندی‌ها"
 
 #. translators: %s: posttype
-#: includes/Module.php:1500
+#: includes/Module.php:1305
 msgctxt "Module"
 msgid "Fields for %s"
 msgstr "فیلد‌ها برای %s"
 
-#: includes/Module.php:1608
+#: includes/Module.php:1413
 msgctxt "Module"
 msgid "Select All Fields"
 msgstr "انتخاب همهٔ فیلدها"
 
-#: includes/Module.php:1615
+#: includes/Module.php:1420
 msgctxt "Module"
 msgid "No fields supported"
 msgstr "فیلدی وجود ندارد"
 
-#: includes/Module.php:1643
+#: includes/Module.php:1448
 msgctxt "Module: Button"
 msgid "Disable Module"
 msgstr "غیرفعال کردن پودمان"
 
 #. translators: %s: posts count
-#: includes/Module.php:2372
+#: includes/Module.php:2212
 msgctxt "Module: Noop"
 msgid "%s Post"
 msgid_plural "%s Posts"
@@ -1155,7 +1580,7 @@ msgstr[0] "%s نوشته"
 msgstr[1] "%s نوشته"
 
 #. translators: %s: items count
-#: includes/Module.php:2376
+#: includes/Module.php:2216
 msgctxt "Module: Noop"
 msgid "%s Item Connected"
 msgid_plural "%s Items Connected"
@@ -1163,7 +1588,7 @@ msgstr[0] "%s عنوان مرتبط"
 msgstr[1] "%s عنوان مرتبط"
 
 #. translators: %s: words count
-#: includes/Module.php:2380
+#: includes/Module.php:2220
 msgctxt "Module: Noop"
 msgid "%s Word"
 msgid_plural "%s Words"
@@ -1171,341 +1596,181 @@ msgstr[0] "%s کلمه"
 msgstr[1] "%s کلمه"
 
 #. translators: %s: taxonomy object label
-#: includes/Module.php:2437
+#: includes/Module.php:2280
 msgctxt "Module"
 msgid "Default Terms for %s"
 msgstr "رده‌های پیش‌فرض برای %s"
 
 #. translators: %s: taxonomy object label
-#: includes/Module.php:2439
+#: includes/Module.php:2282
 msgctxt "Module"
 msgid "Edit Terms for %s"
 msgstr "ویرایش رده‌های %s"
 
-#: includes/Module.php:2450
+#: includes/Module.php:2290
 msgctxt "Module"
 msgid "No Default Terms"
 msgstr "رده پیش‌فرضی وجود ندارد"
 
 #. translators: %s: module title
-#: includes/Module.php:2654 includes/Module.php:7380
+#: includes/Module.php:2502
 msgctxt "Module"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
 
-#: includes/Module.php:2664
+#: includes/Module.php:2512
 msgctxt "Module"
 msgid "You need to flush rewrite rules!"
 msgstr "پایاپیوندها نیاز به بازسازی دارند!"
 
-#: includes/Module.php:2694
+#: includes/Module.php:2542
 msgctxt "Module: Setting Section Title"
 msgid "Defaults"
 msgstr "پیش‌فرض‌ها"
 
-#: includes/Module.php:2701
+#: includes/Module.php:2549
 msgctxt "Module: Setting Section Title"
 msgid "Miscellaneous"
 msgstr "متفرقه"
 
-#: includes/Module.php:2708
+#: includes/Module.php:2556
 msgctxt "Module: Setting Section Title"
 msgid "Front-end"
 msgstr "سمت‌کاربری"
 
-#: includes/Module.php:2715
+#: includes/Module.php:2563
 msgctxt "Module: Setting Section Title"
 msgid "Back-end"
 msgstr "سمت‌مدیریت"
 
-#: includes/Module.php:2722
+#: includes/Module.php:2570
 msgctxt "Module: Setting Section Title"
 msgid "Generated Contents"
 msgstr "محتوای تولیدشده"
 
-#: includes/Module.php:2729
+#: includes/Module.php:2577
 msgctxt "Module: Setting Section Title"
 msgid "Admin Dashboard"
 msgstr "پیشخوان مدیریت"
 
-#: includes/Module.php:2736
+#: includes/Module.php:2584
 msgctxt "Module: Setting Section Title"
 msgid "Admin Edit List"
 msgstr "فهرست مدیریت نوشته‌ها"
 
-#: includes/Module.php:2743
+#: includes/Module.php:2591
 msgctxt "Module: Setting Section Title"
 msgid "Admin List Columns"
 msgstr "مدیریت ستون‌های فهرست"
 
-#: includes/Module.php:2750
+#: includes/Module.php:2598
 msgctxt "Module: Setting Section Title"
 msgid "Admin Edit Post"
 msgstr "مدیریت ویرایش نوشته"
 
-#: includes/Module.php:2757
+#: includes/Module.php:2605
 msgctxt "Module: Setting Section Title"
 msgid "Admin Edit Terms"
 msgstr "مدیریت فهرست رده‌ها"
 
-#: includes/Module.php:2764
+#: includes/Module.php:2612
 msgctxt "Module: Setting Section Title"
 msgid "Admin Comment List"
 msgstr "فهرست مدیریت دیدگاه‌ها"
 
-#: includes/Module.php:2771
+#: includes/Module.php:2619
 msgctxt "Module: Setting Section Title"
 msgid "Custom Strings"
 msgstr "رشته‌های سفارشی"
 
-#: includes/Module.php:2778
+#: includes/Module.php:2626
 msgctxt "Module: Setting Section Title"
 msgid "Availability"
 msgstr "دسترسی"
 
-#: includes/Module.php:2779
+#: includes/Module.php:2627
 msgctxt "Module: Setting Section Description"
 msgid "Though Administrators have it all!"
 msgstr "هرچند مدیران به همه چیز دسترسی دارند!"
 
-#: includes/Module.php:2786
-msgctxt "Module: Setting Section Title"
-msgid "Printing"
-msgstr "چاپ"
-
-#: includes/Module.php:2793
-msgctxt "Module: Setting Section Title"
-msgid "Posts-to-Posts"
-msgstr "نوشته‌ها به نوشته‌ها"
-
-#: includes/Module.php:3250
+#: includes/Module.php:3129
 msgctxt "Module: Taxonomy Default Term Name"
 msgid "Uncategorized"
 msgstr "دسته‌بندی‌نشده‌ها"
 
 #. translators: %s: clone into input
-#: includes/Module.php:3609
+#: includes/Module.php:3485
 msgctxt "Module: Taxonomy Bulk Input Label"
 msgid "as: %s"
 msgstr "به‌عنوان: %s"
 
-#: includes/Module.php:3611
+#: includes/Module.php:3487
 msgctxt "Module: Taxonomy Bulk Input PlaceHolder"
 msgid "New Item Title"
 msgstr "عنوان تازه"
 
-#: includes/Module.php:3614
+#: includes/Module.php:3490
 msgctxt "Module: Taxonomy Bulk Input Option"
 msgid "Separeted Terms"
 msgstr "رده‌های جداگانه"
 
-#: includes/Module.php:3615
+#: includes/Module.php:3491
 msgctxt "Module: Taxonomy Bulk Input Option"
 msgid "Cross Terms"
 msgstr "رده‌های متقابل"
 
-#: includes/Module.php:3616
+#: includes/Module.php:3492
 msgctxt "Module: Taxonomy Bulk Input Option"
 msgid "Union Terms"
 msgstr "رده‌های مجتمع"
 
-#: includes/Module.php:4447
-msgctxt "Module: Paired: Message"
-msgid "No items connected!"
-msgstr "چیزی مرتبط نشده است!"
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Module.php:4210 includes/Module.php:4268
+msgctxt "Module: Metabox Title: `supportedbox_title`"
+msgid "For &ldquo;%1$s&rdquo;"
+msgstr "برای &ldquo;%1$s&rdquo;"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: includes/Module.php:4455
+#: includes/Module.php:4469
+msgctxt "Module: Metabox Empty: `listbox_empty`"
+msgid "No items connected to &ldquo;%1$s&rdquo; %2$s!"
+msgstr "موردی به %2$s &ldquo;%1$s&rdquo; مرتبط نشده است!"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Module.php:4507
 msgctxt "Module: Metabox Title: `listbox_title`"
 msgid "In &ldquo;%1$s&rdquo; %2$s"
 msgstr "در %2$s &rdquo;%1$s&ldquo;"
 
-#. translators: %1$s: icon markup, %2$s: export type title
-#: includes/Module.php:4483
-msgctxt "Module: Exports: Button Label"
-msgid "%1$s Export: %2$s"
-msgstr "%1$s برون‌بری: %2$s"
-
-#: includes/Module.php:4488
-msgctxt "Module: Exports: Button Title"
-msgid "Download Exported CSV File"
-msgstr "دریافت پرونده CSV برون‌بری"
-
-#. translators: %s: icon markup
-#: includes/Module.php:4496
-msgctxt "Module: Exports: Button Label"
-msgid "%s Upload"
-msgstr "%s بارگذاری"
-
-#: includes/Module.php:4510
-msgctxt "Module: Exports: Button Title"
-msgid "Import Items CSV File"
-msgstr ""
-
-#: includes/Module.php:4823
+#: includes/Module.php:4802
 msgctxt "Module: MetaBox Default Title"
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/Module.php:4842
+#: includes/Module.php:4821
 msgctxt "Module: MetaBox Default Action"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: includes/Module.php:4872 includes/Module.php:4904
+#: includes/Module.php:4851 includes/Module.php:4883
 msgctxt "Module: MetaBox Default Action"
 msgid "Manage"
 msgstr "مدیریت"
 
-#: includes/Module.php:5414
+#: includes/Module.php:5221
 msgctxt "Module: Paired: Title Attr"
 msgid "View the connected list"
 msgstr "دیدن فهرست مرتبط‌شده‌ها"
 
-#: includes/Module.php:5496 includes/Modules/Districted/Districted.php:295
-msgctxt "Module: Paired: Card Title"
-msgid "Paired Tools"
-msgstr "ابزارهای جفت"
-
-#: includes/Module.php:5499 includes/Modules/Districted/Districted.php:298
-msgctxt "Module: Paired: Button"
-msgid "Sync Paired Terms"
-msgstr "همگام‌سازی رده‌های جفت"
-
-#: includes/Module.php:5500 includes/Modules/Districted/Districted.php:299
-msgctxt "Module: Paired: Button Description"
-msgid "Tries to set the paired term for all the main posts."
-msgstr "تلاش می‌کند رده جفت را برای همه فرسته‌های اصلی تنظیم کند."
-
-#: includes/Module.php:5504 includes/Modules/Districted/Districted.php:303
-msgctxt "Module: Paired: Button"
-msgid "Create Paired Terms"
-msgstr "ایجاد رده‌های جفت"
-
-#: includes/Module.php:5505 includes/Modules/Districted/Districted.php:304
-msgctxt "Module: Paired: Button Description"
-msgid "Tries to create paired terms for all the main posts."
-msgstr "تلاش می‌کند رده‌های جفت را برای همه فرسته‌های اصلی ایجاد کند."
-
-#: includes/Module.php:5711
-msgctxt "Module: Paired: Table Column"
-msgid "Slugged / Paired"
-msgstr "هم‌نامک/جفت"
-
-#: includes/Module.php:5731
-msgctxt "Module: Paired: Table Column"
-msgid "Desc. / Exce."
-msgstr "توضـ/چکیـ"
-
-#: includes/Module.php:5758
-msgctxt "Module: Paired: Table Column"
-msgid "Count"
-msgstr "شمار"
-
-#: includes/Module.php:5769
-msgctxt "Module: Paired: Table Column"
-msgid "Thumbnail"
-msgstr "بند‌انگشتی"
-
-#: includes/Module.php:5782
-msgctxt "Module: Paired: Table Column"
-msgid "Image"
-msgstr "تصویر"
-
-#: includes/Module.php:5799
-msgctxt "Module: Paired: Table Action"
-msgid "Create Paired Posts"
-msgstr "ایجاد فرسته‌های جفت"
-
-#: includes/Module.php:5800
-msgctxt "Module: Paired: Table Action"
-msgid "Connect Paired Posts"
-msgstr "بازپیوست فرسته‌های جفت"
-
-#: includes/Module.php:5801
-msgctxt "Module: Paired: Table Action"
-msgid "Re-Sync Paired Images"
-msgstr "همگام‌سازی تصاویر جفت"
-
-#: includes/Module.php:5802
-msgctxt "Module: Paired: Table Action"
-msgid "Re-Sync Paired Descriptions"
-msgstr "همگام‌سازی توضیحات جفت"
-
-#: includes/Module.php:5803
-msgctxt "Module: Paired: Table Action"
-msgid "Empty Paired Descriptions"
-msgstr "خالی‌کردن توضیحات جفت"
-
-#: includes/Module.php:5804
-msgctxt "Module: Paired: Table Action"
-msgid "Store Paired Orders"
-msgstr "ذخیره چینش‌های جفت"
-
-#: includes/Module.php:5805
-msgctxt "Module: Paired: Table Action"
-msgid "Delete Paired Terms"
-msgstr "پاک‌کردن رده‌های جفت"
-
-#: includes/Module.php:5814
-msgctxt "Module: Paired: Header"
-msgid "Paired Terms Tools"
-msgstr "ابزارهای رده‌های جفت"
-
-#: includes/Module.php:5815
-msgctxt "Module: Paired: Message"
-msgid "There are no terms available!"
-msgstr "رده‌ای در دسترس نیست!"
-
-#: includes/Module.php:6026
+#: includes/Module.php:5282
 msgctxt "Module: ReadOnly Title Info"
 msgid "This Title is Auto-Generated"
 msgstr "این عنوان به صورت خودکار تولید شده است"
 
-#: includes/Module.php:6077
-msgctxt "Module: Dashboard Widget Title"
-msgid "Editorial Content Summary"
-msgstr "گزارش محتوای تحریریه"
-
-#: includes/Module.php:6180
-msgctxt "Module: Message"
-msgid "There are no reports available!"
-msgstr "گزارشی در دسترس نیست!"
-
-#: includes/Module.php:6553
-msgctxt "Module: P2P"
-msgid "View the connected list"
-msgstr "دیدن فهرست مرتبط‌شده‌ها"
-
-#: includes/Module.php:6597
-msgctxt "Module: P2P"
-msgid "View all connected"
-msgstr "دیدن همه مرتبط‌شده‌ها"
-
-#: includes/Module.php:6860
+#: includes/Module.php:5512
 msgctxt "Module: Draft Metabox"
 msgid "You can see the contents once you've saved this post for the first time."
 msgstr "بعد از ذخیرهٔ اولیه، می‌توانید محتوا را ببینید."
-
-#: includes/Module.php:6904
-msgctxt "Module: Export Type Title"
-msgid "Simple"
-msgstr "ساده"
-
-#: includes/Module.php:6909
-msgctxt "Module: Export Type Title"
-msgid "Advanced"
-msgstr "پیشرفته"
-
-#: includes/Module.php:6914
-msgctxt "Module: Export Type Title"
-msgid "Full"
-msgstr "کامل"
-
-#: includes/Module.php:7244
-msgctxt "Module: Template Title"
-msgid "[Untitled]"
-msgstr "[بدون عنوان]"
 
 #: includes/Modules/Actions/Actions.php:16
 msgctxt "Modules: Actions"
@@ -1517,10 +1782,10 @@ msgctxt "Modules: Actions"
 msgid "Editorial Content Actions"
 msgstr "کنش‌های محتوای تحریریه"
 
-#: includes/Modules/Actions/Actions.php:52
+#: includes/Modules/Actions/Actions.php:81
 msgctxt "Modules: Actions: None Title"
 msgid "Post Actions"
-msgstr ""
+msgstr "کنش‌های فرسته"
 
 #: includes/Modules/Activities/Activities.php:22
 msgctxt "Modules: Activities"
@@ -1531,6 +1796,26 @@ msgstr "فعالیت‌ها"
 msgctxt "Modules: Activities"
 msgid "Detailed Activity Logs"
 msgstr "لاگ‌های جزئی از فعالیت‌ها"
+
+#: includes/Modules/Addendum/Addendum.php:31
+msgctxt "Modules: Addendum"
+msgid "Addendum"
+msgstr "الحاقیه"
+
+#: includes/Modules/Addendum/Addendum.php:32
+msgctxt "Modules: Addendum"
+msgid "Content Appendages"
+msgstr "ضمائم محتوا"
+
+#: includes/Modules/Agenda/Agenda.php:34
+msgctxt "Modules: Agenda"
+msgid "Agenda"
+msgstr "دستور جلسه"
+
+#: includes/Modules/Agenda/Agenda.php:35
+msgctxt "Modules: Agenda"
+msgid "Timetable for Contents"
+msgstr "جدول زمانی برای محتوا"
 
 #: includes/Modules/Alphabet/Alphabet.php:19
 msgctxt "Modules: Alphabet"
@@ -1552,16 +1837,6 @@ msgctxt "Modules: Anthology"
 msgid "Compile Collections of Contents"
 msgstr "گردآوری مجموعه‌هایی از محتوا"
 
-#: includes/Modules/Archived/Archived.php:20
-msgctxt "Modules: Archived"
-msgid "Archived"
-msgstr "بایگانی‌شده"
-
-#: includes/Modules/Archived/Archived.php:21
-msgctxt "Modules: Archived"
-msgid "Editorial Archived Contents"
-msgstr "محتوای بایگانی‌شده تحریریه"
-
 #: includes/Modules/Archives/Archives.php:23
 msgctxt "Modules: Archives"
 msgid "Archives"
@@ -1572,62 +1847,62 @@ msgctxt "Modules: Archives"
 msgid "Content Archives Pages"
 msgstr "صفحات بایگانی محتوا"
 
-#: includes/Modules/Assigned/Assigned.php:21
+#: includes/Modules/Assigned/Assigned.php:28
 msgctxt "Modules: Assigned"
 msgid "Assigned"
 msgstr "واگذاری"
 
-#: includes/Modules/Assigned/Assigned.php:22
+#: includes/Modules/Assigned/Assigned.php:29
 msgctxt "Modules: Assigned"
 msgid "Editorial Assignments"
 msgstr "تکالیف تحریریه"
 
-#: includes/Modules/Attachments/Attachments.php:28
+#: includes/Modules/Attachments/Attachments.php:22
 msgctxt "Modules: Attachments"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
-#: includes/Modules/Attachments/Attachments.php:29
+#: includes/Modules/Attachments/Attachments.php:23
 msgctxt "Modules: Attachments"
 msgid "Attachment Management"
 msgstr "مدیریت پیوست‌ها"
 
-#: includes/Modules/Attend/Attend.php:18
+#: includes/Modules/Attend/Attend.php:20
 msgctxt "Modules: Attend"
 msgid "Attend"
 msgstr "حضور"
 
-#: includes/Modules/Attend/Attend.php:19
+#: includes/Modules/Attend/Attend.php:21
 msgctxt "Modules: Attend"
 msgid "Editorial Attendance List"
 msgstr "فهرست حاضرین تحریریه"
 
-#: includes/Modules/Audit/Audit.php:30
+#: includes/Modules/Audit/Audit.php:32
 msgctxt "Modules: Audit"
 msgid "Audit"
 msgstr "بازبینی"
 
-#: includes/Modules/Audit/Audit.php:31
+#: includes/Modules/Audit/Audit.php:33
 msgctxt "Modules: Audit"
 msgid "Content Inventory Tools"
 msgstr "ابزارهایی برای انبارگردانی محتوا"
 
-#: includes/Modules/Badges/Badges.php:19
+#: includes/Modules/Badges/Badges.php:25
 msgctxt "Modules: Badges"
 msgid "Badges"
 msgstr "نشان‌ها"
 
-#: includes/Modules/Badges/Badges.php:20
+#: includes/Modules/Badges/Badges.php:26
 msgctxt "Modules: Badges"
 msgid "Editorial Content Badges"
 msgstr "نشان‌های محتوای تحریریه"
 
-#: includes/Modules/Banking/Banking.php:37
+#: includes/Modules/Banking/Banking.php:40
 msgctxt "Modules: Banking"
 msgid "Banking"
 msgstr "بانک‌داری"
 
-#: includes/Modules/Banking/Banking.php:38
+#: includes/Modules/Banking/Banking.php:41
 msgctxt "Modules: Banking"
 msgid "Bank and Fiscal Management"
 msgstr "مدیریت مالی و بانک"
@@ -1672,27 +1947,27 @@ msgctxt "Modules: Bookmarked"
 msgid "Content External Link Management"
 msgstr "مدیریت پیوندهای بیرونی محتوا"
 
-#: includes/Modules/Calendar/Calendar.php:30
+#: includes/Modules/Calendar/Calendar.php:22
 msgctxt "Modules: Calendar"
 msgid "Calendar"
 msgstr "تقویم"
 
-#: includes/Modules/Calendar/Calendar.php:31
+#: includes/Modules/Calendar/Calendar.php:23
 msgctxt "Modules: Calendar"
 msgid "Front-End Calendar of Contents"
 msgstr "تقویم محتوا برای روی سایت"
 
-#: includes/Modules/Calendar/Calendar.php:34
+#: includes/Modules/Calendar/Calendar.php:26
 msgctxt "Modules: Calendar"
 msgid "Needs gPersianDate"
 msgstr "افزونه تاریخ ایرانی پیدا نشد"
 
-#: includes/Modules/Careers/Careers.php:16
+#: includes/Modules/Careers/Careers.php:18
 msgctxt "Modules: Careers"
 msgid "Careers"
 msgstr "فرصت‌های شغلی"
 
-#: includes/Modules/Careers/Careers.php:17
+#: includes/Modules/Careers/Careers.php:19
 msgctxt "Modules: Careers"
 msgid "Editorial Job Openings"
 msgstr "نیازمندی‌های شغلی تحریریه"
@@ -1707,22 +1982,22 @@ msgctxt "Modules: Cartable"
 msgid "Customized Content Folders"
 msgstr "سفارشی‌سازی پوشه‌های محتوا"
 
-#: includes/Modules/Checked/Checked.php:19
+#: includes/Modules/Checked/Checked.php:23
 msgctxt "Modules: Checked"
 msgid "Checked"
 msgstr "چک‌شده"
 
-#: includes/Modules/Checked/Checked.php:20
+#: includes/Modules/Checked/Checked.php:24
 msgctxt "Modules: Checked"
 msgid "Editorial Content Checklists"
 msgstr "چک‌لیست محتوای تحریریه"
 
-#: includes/Modules/Collect/Collect.php:28
+#: includes/Modules/Collect/Collect.php:25
 msgctxt "Modules: Collect"
 msgid "Collect"
 msgstr "گردآوری"
 
-#: includes/Modules/Collect/Collect.php:29
+#: includes/Modules/Collect/Collect.php:26
 msgctxt "Modules: Collect"
 msgid "Create and use Collections of Posts"
 msgstr "ایجاد و به‌کارگیری گردآورده‌هایی از نوشته‌ها"
@@ -1747,22 +2022,22 @@ msgctxt "Modules: Comments"
 msgid "Restricted Editorial Comments"
 msgstr "دیدگاه‌های محدود به تحریریه"
 
-#: includes/Modules/Committee/Committee.php:15
+#: includes/Modules/Committee/Committee.php:20
 msgctxt "Modules: Committee"
 msgid "Committee"
 msgstr "کارگروه"
 
-#: includes/Modules/Committee/Committee.php:16
+#: includes/Modules/Committee/Committee.php:21
 msgctxt "Modules: Committee"
 msgid "The Assembly of Editorial"
 msgstr "محل گردهمایی تحریریه"
 
-#: includes/Modules/Config/Config.php:40
+#: includes/Modules/Config/Config.php:38
 msgctxt "Modules: Config"
 msgid "Editorial"
 msgstr "تحریریه"
 
-#: includes/Modules/Config/Config.php:41
+#: includes/Modules/Config/Config.php:39
 msgctxt "Modules: Config"
 msgid "WordPress in Magazine Style"
 msgstr "وردپرس، برای تحریریه شما"
@@ -1782,16 +2057,6 @@ msgctxt "Modules: Connected"
 msgid "Needs Posts-to-Posts"
 msgstr "افزونه نوشته‌ها به نوشته‌ها پیدا نشد"
 
-#: includes/Modules/Contacts/Contacts.php:25
-msgctxt "Modules: Contacts"
-msgid "Contacts"
-msgstr "ارتباط‌ها"
-
-#: includes/Modules/Contacts/Contacts.php:26
-msgctxt "Modules: Contacts"
-msgid "Editorial Contact List"
-msgstr "فهرست ارتباط‌های تحریریه"
-
 #: includes/Modules/Contents/Contents.php:17
 msgctxt "Modules: Contents"
 msgid "Contents"
@@ -1802,32 +2067,42 @@ msgctxt "Modules: Contents"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Contest/Contest.php:27
+#: includes/Modules/Contest/Contest.php:29
 msgctxt "Modules: Contest"
 msgid "Contest"
 msgstr "فراخوان"
 
-#: includes/Modules/Contest/Contest.php:28
+#: includes/Modules/Contest/Contest.php:30
 msgctxt "Modules: Contest"
 msgid "Contest Management"
 msgstr "مدریت فراخوان‌ها"
 
-#: includes/Modules/Countables/Countables.php:24
+#: includes/Modules/Costed/Costed.php:21
+msgctxt "Modules: Costed"
+msgid "Costed"
+msgstr "هزینه‌کرد"
+
+#: includes/Modules/Costed/Costed.php:22
+msgctxt "Modules: Costed"
+msgid "Invoice Details for Contents"
+msgstr "صورت‌حساب برای محتوا"
+
+#: includes/Modules/Countables/Countables.php:18
 msgctxt "Modules: Countables"
 msgid "Countables"
 msgstr "شمارنده‌ها"
 
-#: includes/Modules/Countables/Countables.php:25
+#: includes/Modules/Countables/Countables.php:19
 msgctxt "Modules: Countables"
 msgid "Editorial Countable Items"
 msgstr "موارد قابل شمارش تحریریه"
 
-#: includes/Modules/Course/Course.php:24
+#: includes/Modules/Course/Course.php:28
 msgctxt "Modules: Course"
 msgid "Course"
 msgstr "دوره"
 
-#: includes/Modules/Course/Course.php:25
+#: includes/Modules/Course/Course.php:29
 msgctxt "Modules: Course"
 msgid "Course and Lesson Management"
 msgstr "مدیریت درس و دوره"
@@ -1852,25 +2127,35 @@ msgctxt "Modules: Cycle"
 msgid "Through Content Publishing"
 msgstr "انتشار محتوای سرتاسری"
 
-#: includes/Modules/Dashboard/Dashboard.php:20
+#: includes/Modules/Dashboard/Dashboard.php:19
 msgctxt "Modules: Dashboard"
 msgid "Dashboard"
 msgstr "پیشخوان"
 
-#: includes/Modules/Dashboard/Dashboard.php:21
+#: includes/Modules/Dashboard/Dashboard.php:20
 msgctxt "Modules: Dashboard"
 msgid "Front-end Editorial Dashboard"
 msgstr "پیشخوان تحریریه روی سایت"
 
-#: includes/Modules/Datacodes/Datacodes.php:32
+#: includes/Modules/Datacodes/Datacodes.php:35
 msgctxt "Modules: Datacodes"
 msgid "Datacodes"
 msgstr "کدداده‌ها"
 
-#: includes/Modules/Datacodes/Datacodes.php:33
+#: includes/Modules/Datacodes/Datacodes.php:36
 msgctxt "Modules: Datacodes"
 msgid "Barcodes for Everything"
 msgstr "بارکد برای همه‌چیز"
+
+#: includes/Modules/Denominated/Denominated.php:25
+msgctxt "Modules: Denominated"
+msgid "Denominated"
+msgstr "نام‌گذاری"
+
+#: includes/Modules/Denominated/Denominated.php:26
+msgctxt "Modules: Denominated"
+msgid "Naming Tools"
+msgstr "ابزارهایی برای نام‌ها"
 
 #: includes/Modules/Descendants/Descendants.php:15
 msgctxt "Modules: Descendants"
@@ -1882,32 +2167,57 @@ msgctxt "Modules: Descendants"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Directions/Directions.php:18
+#: includes/Modules/Directions/Directions.php:19
 msgctxt "Modules: Directions"
 msgid "Directions"
 msgstr "مسیرها"
 
-#: includes/Modules/Directions/Directions.php:19
+#: includes/Modules/Directions/Directions.php:20
 msgctxt "Modules: Directions"
 msgid "Content Address Management"
-msgstr ""
+msgstr "مدیریت نشانی محتوا"
 
-#: includes/Modules/Districted/Districted.php:22
+#: includes/Modules/Districted/Districted.php:29
 msgctxt "Modules: Districted"
 msgid "Districted"
 msgstr "قلمرو"
 
-#: includes/Modules/Districted/Districted.php:23
+#: includes/Modules/Districted/Districted.php:30
 msgctxt "Modules: Districted"
 msgid "Provincial Divisions for Contents"
 msgstr "تقسیمات استانی برای محتوا"
 
-#: includes/Modules/Divided/Divided.php:23
+#: includes/Modules/Districted/Districted.php:298
+msgctxt "Module: Paired: Card Title"
+msgid "Paired Tools"
+msgstr "ابزارهای جفت"
+
+#: includes/Modules/Districted/Districted.php:301
+msgctxt "Module: Paired: Button"
+msgid "Sync Paired Terms"
+msgstr "همگام‌سازی رده‌های جفت"
+
+#: includes/Modules/Districted/Districted.php:302
+msgctxt "Module: Paired: Button Description"
+msgid "Tries to set the paired term for all the main posts."
+msgstr "تلاش می‌کند رده جفت را برای همه فرسته‌های اصلی تنظیم کند."
+
+#: includes/Modules/Districted/Districted.php:306
+msgctxt "Module: Paired: Button"
+msgid "Create Paired Terms"
+msgstr "ایجاد رده‌های جفت"
+
+#: includes/Modules/Districted/Districted.php:307
+msgctxt "Module: Paired: Button Description"
+msgid "Tries to create paired terms for all the main posts."
+msgstr "تلاش می‌کند رده‌های جفت را برای همه فرسته‌های اصلی ایجاد کند."
+
+#: includes/Modules/Divided/Divided.php:26
 msgctxt "Modules: Divided"
 msgid "Divided"
 msgstr "مجزا"
 
-#: includes/Modules/Divided/Divided.php:24
+#: includes/Modules/Divided/Divided.php:27
 msgctxt "Modules: Divided"
 msgid "Country Divided World"
 msgstr "دنیا براساس کشورها"
@@ -1920,7 +2230,7 @@ msgstr "بخش‌ها"
 #: includes/Modules/Divisions/Divisions.php:43
 msgctxt "Modules: Divisions"
 msgid "Post Divisions Management"
-msgstr ""
+msgstr "مدیریت بخش‌های فرسته"
 
 #: includes/Modules/DocumentRevisions/DocumentRevisions.php:18
 msgctxt "Modules: Document Revisions"
@@ -1947,62 +2257,62 @@ msgctxt "Modules: Documents"
 msgid "Editorial Document Management"
 msgstr "مدیریت اسناد تحریریه"
 
-#: includes/Modules/Dossier/Dossier.php:23
+#: includes/Modules/Dossier/Dossier.php:28
 msgctxt "Modules: Dossier"
 msgid "Dossier"
 msgstr "دوسیه"
 
-#: includes/Modules/Dossier/Dossier.php:24
+#: includes/Modules/Dossier/Dossier.php:29
 msgctxt "Modules: Dossier"
 msgid "Collection of Contents"
 msgstr "مجموعه‌هایی از محتوا"
 
-#: includes/Modules/Drafts/Drafts.php:23
+#: includes/Modules/Drafts/Drafts.php:21
 msgctxt "Modules: Drafts"
 msgid "Drafts"
 msgstr "پیش‌نویس‌ها"
 
-#: includes/Modules/Drafts/Drafts.php:24
+#: includes/Modules/Drafts/Drafts.php:22
 msgctxt "Modules: Drafts"
 msgid "Tools to Work With Drafts"
 msgstr "ابزارهایی برای کار با پیش‌نویس‌ها"
 
-#: includes/Modules/Drivers/Drivers.php:19
-msgctxt "Modules: Drivers"
-msgid "Drivers"
-msgstr "رانندگان"
+#: includes/Modules/Driving/Driving.php:26
+msgctxt "Modules: Driving"
+msgid "Driving"
+msgstr "رانندگی"
 
-#: includes/Modules/Drivers/Drivers.php:20
-msgctxt "Modules: Drivers"
+#: includes/Modules/Driving/Driving.php:27
+msgctxt "Modules: Driving"
 msgid "Editorial Drivers Management"
 msgstr "مدیریت رانندگان تحریریه"
 
-#: includes/Modules/Educated/Educated.php:17
+#: includes/Modules/Educated/Educated.php:24
 msgctxt "Modules: Educated"
 msgid "Educated"
 msgstr "فرهیخته"
 
-#: includes/Modules/Educated/Educated.php:18
+#: includes/Modules/Educated/Educated.php:25
 msgctxt "Modules: Educated"
 msgid "Editorial Educations"
 msgstr "تحصیلات تحریریه"
 
-#: includes/Modules/Entry/Entry.php:22
+#: includes/Modules/Entry/Entry.php:23
 msgctxt "Modules: Entry"
 msgid "Entry"
 msgstr "ورودیه"
 
-#: includes/Modules/Entry/Entry.php:23
+#: includes/Modules/Entry/Entry.php:24
 msgctxt "Modules: Entry"
 msgid "Wiki-like Posts Entries"
 msgstr "نوشته‌ها به روش ویکی"
 
-#: includes/Modules/Estimated/Estimated.php:23
+#: includes/Modules/Estimated/Estimated.php:21
 msgctxt "Modules: Estimated"
 msgid "Estimated"
 msgstr "برآورد"
 
-#: includes/Modules/Estimated/Estimated.php:24
+#: includes/Modules/Estimated/Estimated.php:22
 msgctxt "Modules: Estimated"
 msgid "Average Required Reading Time"
 msgstr "میانگین زمان لازم برای مطالعه"
@@ -2017,12 +2327,12 @@ msgctxt "Modules: Evaluation"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Event/Event.php:18
+#: includes/Modules/Event/Event.php:20
 msgctxt "Modules: Event"
 msgid "Event"
 msgstr "رویداد"
 
-#: includes/Modules/Event/Event.php:19
+#: includes/Modules/Event/Event.php:21
 msgctxt "Modules: Event"
 msgid "Integrated Events"
 msgstr "رویداد‌‌های یکپارچه"
@@ -2077,32 +2387,32 @@ msgctxt "Modules: Find"
 msgid "Custom Search Interface"
 msgstr "بهینه‌سازی رابط جست‌وجو"
 
-#: includes/Modules/Follow/Follow.php:42
+#: includes/Modules/Follow/Follow.php:44
 msgctxt "Modules: Follow"
 msgid "Follow"
 msgstr "پی‌گیری"
 
-#: includes/Modules/Follow/Follow.php:43
+#: includes/Modules/Follow/Follow.php:45
 msgctxt "Modules: Follow"
 msgid "Notifications for Users and Groups"
 msgstr "آگاه‌سازی گروه‌ها و کاربران"
 
-#: includes/Modules/Gallery/Gallery.php:15
+#: includes/Modules/Gallery/Gallery.php:18
 msgctxt "Modules: Gallery"
 msgid "Gallery"
 msgstr "گالری"
 
-#: includes/Modules/Gallery/Gallery.php:16
+#: includes/Modules/Gallery/Gallery.php:19
 msgctxt "Modules: Gallery"
 msgid "Photo Directory"
 msgstr "دایرکتوری برای عکس"
 
-#: includes/Modules/Garden/Garden.php:18
+#: includes/Modules/Garden/Garden.php:20
 msgctxt "Modules: Garden"
 msgid "Garden"
 msgstr "بوستان"
 
-#: includes/Modules/Garden/Garden.php:19
+#: includes/Modules/Garden/Garden.php:21
 msgctxt "Modules: Garden"
 msgid "Trees of Content"
 msgstr "درختان محتوا"
@@ -2117,12 +2427,12 @@ msgctxt "Modules: Geo"
 msgid "Curated Locations"
 msgstr "مکان‌های سرپرستی‌شده"
 
-#: includes/Modules/Grouping/Grouping.php:20
+#: includes/Modules/Grouping/Grouping.php:18
 msgctxt "Modules: Grouping"
 msgid "Grouping"
 msgstr "گروه‌بندی"
 
-#: includes/Modules/Grouping/Grouping.php:21
+#: includes/Modules/Grouping/Grouping.php:19
 msgctxt "Modules: Grouping"
 msgid "Custom Taxonomies for Users"
 msgstr "رده‌بندی‌های سفارشی برای کاربران"
@@ -2157,15 +2467,15 @@ msgctxt "Modules: Highlight"
 msgid "New Posts for Returning Visitors"
 msgstr "نوشته‌های تازه برای بازگشت کاربران"
 
-#: includes/Modules/Historic/Historic.php:29
+#: includes/Modules/Historic/Historic.php:32
 msgctxt "Modules: Historic"
 msgid "Historic"
 msgstr "تاریخ‌گر"
 
-#: includes/Modules/Historic/Historic.php:30
+#: includes/Modules/Historic/Historic.php:33
 msgctxt "Modules: Historic"
-msgid "[CHANGE ME]"
-msgstr ""
+msgid "Studying the History of Contents"
+msgstr "بررسی تاریخچه محتوا"
 
 #: includes/Modules/Home/Home.php:18
 msgctxt "Modules: Home"
@@ -2187,32 +2497,32 @@ msgctxt "Modules: Identical"
 msgid "Similar Content Awareness"
 msgstr "آگاهی از محتوای مشابه"
 
-#: includes/Modules/Identified/Identified.php:31
+#: includes/Modules/Identified/Identified.php:23
 msgctxt "Modules: Identified"
 msgid "Identified"
 msgstr "شناسنده"
 
-#: includes/Modules/Identified/Identified.php:32
+#: includes/Modules/Identified/Identified.php:24
 msgctxt "Modules: Identified"
 msgid "Content Identification Management"
 msgstr "مدیریت شناسنده‌های محتوا"
 
-#: includes/Modules/Importer/Importer.php:34
+#: includes/Modules/Importer/Importer.php:24
 msgctxt "Modules: Importer"
 msgid "Importer"
 msgstr "درون‌ریز"
 
-#: includes/Modules/Importer/Importer.php:35
+#: includes/Modules/Importer/Importer.php:25
 msgctxt "Modules: Importer"
 msgid "Data Import Tools"
 msgstr "ابزارهای درون‌ریزی داده‌ها"
 
-#: includes/Modules/Inquire/Inquire.php:18
+#: includes/Modules/Inquire/Inquire.php:21
 msgctxt "Modules: Inquire"
 msgid "Inquire"
 msgstr "پرس‌وجو"
 
-#: includes/Modules/Inquire/Inquire.php:19
+#: includes/Modules/Inquire/Inquire.php:22
 msgctxt "Modules: Inquire"
 msgid "Questions and Answers"
 msgstr "پرسش‌ها و پاسخ‌ها"
@@ -2237,25 +2547,25 @@ msgctxt "Modules: Instant"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Invoice/Invoice.php:19
-msgctxt "Modules: Invoice"
-msgid "Invoice"
-msgstr "صورت‌حساب"
+#: includes/Modules/Invoiced/Invoiced.php:23
+msgctxt "Modules: Invoiced"
+msgid "Invoiced"
+msgstr "فاکتورشده"
 
-#: includes/Modules/Invoice/Invoice.php:20
-msgctxt "Modules: Invoice"
-msgid "[CHANGE ME]"
-msgstr ""
+#: includes/Modules/Invoiced/Invoiced.php:24
+msgctxt "Modules: Invoiced"
+msgid "Accounting and Invoice Management"
+msgstr "حسابداری و مدیریت فاکتور"
 
-#: includes/Modules/Iran/Iran.php:16
-msgctxt "Modules: Iran"
-msgid "Iran"
-msgstr "ایران"
+#: includes/Modules/Iranian/Iranian.php:25
+msgctxt "Modules: Iranian"
+msgid "Iranian"
+msgstr "ایرانی"
 
-#: includes/Modules/Iran/Iran.php:17
-msgctxt "Modules: Iran"
-msgid "[CHANGE ME]"
-msgstr ""
+#: includes/Modules/Iranian/Iranian.php:26
+msgctxt "Modules: Iranian"
+msgid "Tools for Iranian Editorial"
+msgstr "ابزارهایی برای تحریریه ایرانی"
 
 #: includes/Modules/Kiosk/Kiosk.php:19
 msgctxt "Modules: Kiosk"
@@ -2266,6 +2576,16 @@ msgstr "کوشک"
 msgctxt "Modules: Kiosk"
 msgid "[CHANGE ME]"
 msgstr ""
+
+#: includes/Modules/Labeled/Labeled.php:25
+msgctxt "Modules: Labeled"
+msgid "Labeled"
+msgstr "علامت‌شده"
+
+#: includes/Modules/Labeled/Labeled.php:26
+msgctxt "Modules: Labeled"
+msgid "Custom Labels for Contents"
+msgstr "سرستون‌های سفارشی برای محتوا"
 
 #: includes/Modules/Letter/Letter.php:18
 msgctxt "Modules: Letter"
@@ -2287,62 +2607,62 @@ msgctxt "Modules: Lexicon"
 msgid "The Vocabulary of Content"
 msgstr "واژگان متن"
 
-#: includes/Modules/Licensed/Licensed.php:17
+#: includes/Modules/Licensed/Licensed.php:24
 msgctxt "Modules: Licensed"
 msgid "Licensed"
 msgstr "مجاز"
 
-#: includes/Modules/Licensed/Licensed.php:18
+#: includes/Modules/Licensed/Licensed.php:25
 msgctxt "Modules: Licensed"
 msgid "Driver Licence Management"
 msgstr "مدیریت گواهی‌نامه‌های رانندگی"
 
-#: includes/Modules/Like/Like.php:28
+#: includes/Modules/Like/Like.php:24
 msgctxt "Modules: Like"
 msgid "Like"
 msgstr "پسند"
 
-#: includes/Modules/Like/Like.php:29
+#: includes/Modules/Like/Like.php:25
 msgctxt "Modules: Like"
 msgid "Like Button for Guests and Users"
 msgstr "دکمه پسند برای کاربران و مهمانان"
 
-#: includes/Modules/Lingo/Lingo.php:27
+#: includes/Modules/Lingo/Lingo.php:29
 msgctxt "Modules: Lingo"
 msgid "Lingo"
 msgstr "گویش"
 
-#: includes/Modules/Lingo/Lingo.php:28
+#: includes/Modules/Lingo/Lingo.php:30
 msgctxt "Modules: Lingo"
 msgid "Language Identifiers"
 msgstr "شناساگرهای زبانی"
 
-#: includes/Modules/Magazine/Magazine.php:23
+#: includes/Modules/Magazine/Magazine.php:27
 msgctxt "Modules: Magazine"
 msgid "Magazine"
 msgstr "مجله"
 
-#: includes/Modules/Magazine/Magazine.php:24
+#: includes/Modules/Magazine/Magazine.php:28
 msgctxt "Modules: Magazine"
 msgid "Magazine Issue Management"
 msgstr "مدیریت شماره، برای مجله‌ها"
 
-#: includes/Modules/Markdown/Markdown.php:26
+#: includes/Modules/Markdown/Markdown.php:24
 msgctxt "Modules: Markdown"
 msgid "Markdown"
 msgstr "مارک‌داون"
 
-#: includes/Modules/Markdown/Markdown.php:27
+#: includes/Modules/Markdown/Markdown.php:25
 msgctxt "Modules: Markdown"
 msgid "Write Posts in Markdown"
 msgstr "به مارک‌داون بنویسید"
 
-#: includes/Modules/Market/Market.php:24
+#: includes/Modules/Market/Market.php:28
 msgctxt "Modules: Market"
 msgid "Market"
 msgstr "بازار"
 
-#: includes/Modules/Market/Market.php:25
+#: includes/Modules/Market/Market.php:29
 msgctxt "Modules: Market"
 msgid "Provider Listings"
 msgstr "فهرست‌بندی ارائه‌دهندگان"
@@ -2357,47 +2677,37 @@ msgctxt "Modules: Masthead"
 msgid "Editorial Identifying Information"
 msgstr "اطلاعات شناسایی تحریریه"
 
-#: includes/Modules/Measurements/Measurements.php:36
-msgctxt "Modules: Measurements"
-msgid "Measurements"
-msgstr "ابعاد"
-
-#: includes/Modules/Measurements/Measurements.php:37
-msgctxt "Modules: Measurements"
-msgid "Weighting and Sizing Management"
-msgstr "مدیریت وزن و اندازه"
-
-#: includes/Modules/Medic/Medic.php:19
+#: includes/Modules/Medic/Medic.php:22
 msgctxt "Modules: Medic"
 msgid "Medic"
 msgstr "پزشکی"
 
-#: includes/Modules/Medic/Medic.php:20
+#: includes/Modules/Medic/Medic.php:23
 msgctxt "Modules: Medic"
 msgid "Editorial Medical Records"
 msgstr "سوابق پزشکی تحریریه"
 
-#: includes/Modules/Meeted/Meeted.php:15
+#: includes/Modules/Meeted/Meeted.php:23
 msgctxt "Modules: Meeted"
 msgid "Meeted"
 msgstr "ملاقات"
 
-#: includes/Modules/Meeted/Meeted.php:16
+#: includes/Modules/Meeted/Meeted.php:24
 msgctxt "Modules: Meeted"
 msgid "Editorial Meeting Management"
 msgstr "مدیریت جلسات تحریریه"
 
-#: includes/Modules/Meta/Meta.php:43
+#: includes/Modules/Meta/Meta.php:33
 msgctxt "Modules: Meta"
 msgid "Meta"
 msgstr "متا"
 
-#: includes/Modules/Meta/Meta.php:44
+#: includes/Modules/Meta/Meta.php:34
 msgctxt "Modules: Meta"
 msgid "Curated Metadata"
 msgstr "فراداده‌های سرپرستی‌شده"
 
-#: includes/Modules/Meta/ModuleMetaBox.php:274
+#: includes/Modules/Meta/ModuleMetaBox.php:272
 msgctxt "MetaBox"
 msgid "Click to toggle"
 msgstr "برای تغییر وضعیت کلیک کنید"
@@ -2412,12 +2722,12 @@ msgctxt "Modules: Metering"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Missioned/Missioned.php:15
+#: includes/Modules/Missioned/Missioned.php:28
 msgctxt "Modules: Missioned"
 msgid "Missioned"
 msgstr "مأموریت"
 
-#: includes/Modules/Missioned/Missioned.php:16
+#: includes/Modules/Missioned/Missioned.php:29
 msgctxt "Modules: Missioned"
 msgid "Editorial Mission Management"
 msgstr "مدیریت مأموریت‌های تحریریه"
@@ -2432,12 +2742,22 @@ msgctxt "Modules: Modified"
 msgid "Last Modifications"
 msgstr "آخرین تغییرات"
 
-#: includes/Modules/Movies/Movies.php:16
+#: includes/Modules/Motorcade/Motorcade.php:20
+msgctxt "Modules: Motorcade"
+msgid "Motorcade"
+msgstr "کاروان موتوری"
+
+#: includes/Modules/Motorcade/Motorcade.php:21
+msgctxt "Modules: Motorcade"
+msgid "Editorial Vehicle Management"
+msgstr "مدیریت خودروهای تحریریه"
+
+#: includes/Modules/Movies/Movies.php:20
 msgctxt "Modules: Movies"
 msgid "Movies"
 msgstr "سینما"
 
-#: includes/Modules/Movies/Movies.php:17
+#: includes/Modules/Movies/Movies.php:21
 msgctxt "Modules: Movies"
 msgid "Editorial Library of Films"
 msgstr "کتابخانه فیلم تحریریه"
@@ -2452,42 +2772,12 @@ msgctxt "Modules: National Library"
 msgid "Tools for National Library and Archives"
 msgstr "ابزارهایی برای سازمان اسناد و کتابخانه ملی"
 
-#: includes/Modules/Navigations/Navigations.php:16
-msgctxt "Modules: Navigations"
-msgid "Navigations"
-msgstr "راه‌بری"
-
-#: includes/Modules/Navigations/Navigations.php:17
-msgctxt "Modules: Navigations"
-msgid "Navigation Menu Enhancements"
-msgstr "بهینه‌سازی فهرست‌های راه‌بری"
-
-#: includes/Modules/Negar/Negar.php:17
-msgctxt "Modules: Negar"
-msgid "Negar"
-msgstr "نگار"
-
-#: includes/Modules/Negar/Negar.php:18
-msgctxt "Modules: Negar"
-msgid "Personal Private Contacts"
-msgstr "فهرست مخاطبین شخصی"
-
-#: includes/Modules/Newsroom/Newsroom.php:18
-msgctxt "Modules: Newsroom"
-msgid "Newsroom"
-msgstr "اتاق خبر"
-
-#: includes/Modules/Newsroom/Newsroom.php:19
-msgctxt "Modules: Newsroom"
-msgid "[CHANGE ME]"
-msgstr ""
-
-#: includes/Modules/NextOfKin/NextOfKin.php:24
+#: includes/Modules/NextOfKin/NextOfKin.php:30
 msgctxt "Modules: Next of Kin"
 msgid "Next of Kin"
 msgstr "خویشاوند"
 
-#: includes/Modules/NextOfKin/NextOfKin.php:25
+#: includes/Modules/NextOfKin/NextOfKin.php:31
 msgctxt "Modules: Next of Kin"
 msgid "Familial Relations"
 msgstr "روابط خانوادگی"
@@ -2512,32 +2802,32 @@ msgctxt "Modules: Omni"
 msgid "Global Editorial Search"
 msgstr "جست‌وجوی همگانی در تحریریه"
 
-#: includes/Modules/Operations/Operations.php:19
+#: includes/Modules/Operations/Operations.php:21
 msgctxt "Modules: Operations"
 msgid "Operations"
 msgstr "عملیات‌ها"
 
-#: includes/Modules/Operations/Operations.php:20
+#: includes/Modules/Operations/Operations.php:22
 msgctxt "Modules: Operations"
 msgid "Editorial Operation Management"
 msgstr "مدیریت عملیات‌های تحریریه"
 
-#: includes/Modules/Organization/Organization.php:19
+#: includes/Modules/Organization/Organization.php:31
 msgctxt "Modules: Organization"
 msgid "Organization"
 msgstr "سازمان"
 
-#: includes/Modules/Organization/Organization.php:20
+#: includes/Modules/Organization/Organization.php:32
 msgctxt "Modules: Organization"
 msgid "Departments of Editorial"
 msgstr "دپارتمان‌های تحریریه"
 
-#: includes/Modules/Ortho/Ortho.php:33
+#: includes/Modules/Ortho/Ortho.php:28
 msgctxt "Modules: Ortho"
 msgid "Ortho"
 msgstr "دبیره"
 
-#: includes/Modules/Ortho/Ortho.php:34
+#: includes/Modules/Ortho/Ortho.php:29
 msgctxt "Modules: Ortho"
 msgid "Persian Orthography Tools"
 msgstr "ابزارهایی برای دستور خط فارسی"
@@ -2582,12 +2872,12 @@ msgctxt "Modules: Paper"
 msgid "Printable Version of Posts"
 msgstr "نسخه قابل چاپ از نوشته‌ها"
 
-#: includes/Modules/Papered/Papered.php:20
+#: includes/Modules/Papered/Papered.php:45
 msgctxt "Modules: Papered"
 msgid "Papered"
 msgstr "کاغذی"
 
-#: includes/Modules/Papered/Papered.php:21
+#: includes/Modules/Papered/Papered.php:46
 msgctxt "Modules: Papered"
 msgid "Editorial Print Profiles"
 msgstr "نمایه‌های چاپی تحریریه"
@@ -2602,12 +2892,12 @@ msgctxt "Modules: Penumbra"
 msgid "Editorial Color Palletes"
 msgstr "پالت‌های رنگ تحریریه"
 
-#: includes/Modules/People/People.php:37
+#: includes/Modules/People/People.php:40
 msgctxt "Modules: People"
 msgid "People"
 msgstr "افراد"
 
-#: includes/Modules/People/People.php:38
+#: includes/Modules/People/People.php:41
 msgctxt "Modules: People"
 msgid "People, the Way Involved in Your Site"
 msgstr "افراد، آن‌چنان که در سایت شما مشارکت میکنند"
@@ -2622,15 +2912,25 @@ msgctxt "Modules: Person"
 msgid "People, the Way Involved in Your Site"
 msgstr "افراد، آن‌چنان که در سایت شما مشارکت میکنند"
 
-#: includes/Modules/Persona/Persona.php:18
+#: includes/Modules/Persona/Persona.php:24
 msgctxt "Modules: Persona"
 msgid "Persona"
 msgstr "نقاب"
 
-#: includes/Modules/Persona/Persona.php:19
+#: includes/Modules/Persona/Persona.php:25
 msgctxt "Modules: Persona"
 msgid "Human Resource Management for Editorial"
 msgstr "مدیریت منابع انسانی برای تحریریه"
+
+#: includes/Modules/Phonebook/Phonebook.php:26
+msgctxt "Modules: Phonebook"
+msgid "Phonebook"
+msgstr "دفتر تلفن"
+
+#: includes/Modules/Phonebook/Phonebook.php:27
+msgctxt "Modules: Phonebook"
+msgid "Contact Information for Contents"
+msgstr "اطلاعات تماس برای محتوا"
 
 #: includes/Modules/Phonetic/Phonetic.php:19
 msgctxt "Modules: Phonetic"
@@ -2642,32 +2942,32 @@ msgctxt "Modules: Phonetic"
 msgid "Alphabetic System of Phonetic Notation"
 msgstr "سامانه الفبایی علامت‌گذاری آوایی"
 
-#: includes/Modules/Pitches/Pitches.php:14
+#: includes/Modules/Pitches/Pitches.php:17
 msgctxt "Modules: Pitches"
 msgid "Pitches"
 msgstr "ایده‌ها"
 
-#: includes/Modules/Pitches/Pitches.php:15
+#: includes/Modules/Pitches/Pitches.php:18
 msgctxt "Modules: Pitches"
 msgid "Keep Track of Ideas"
 msgstr "ایده‌ها را پیگیری کنید"
 
-#: includes/Modules/Pointers/Pointers.php:16
+#: includes/Modules/Pointers/Pointers.php:17
 msgctxt "Modules: Pointers"
 msgid "Pointers"
 msgstr "نشانگرها"
 
-#: includes/Modules/Pointers/Pointers.php:17
+#: includes/Modules/Pointers/Pointers.php:18
 msgctxt "Modules: Pointers"
 msgid "Editorial Content Hints"
 msgstr "ایما برای محتوای تحریریه"
 
-#: includes/Modules/Positions/Positions.php:19
+#: includes/Modules/Positions/Positions.php:21
 msgctxt "Modules: Positions"
 msgid "Positions"
 msgstr "موقعیت‌ها"
 
-#: includes/Modules/Positions/Positions.php:20
+#: includes/Modules/Positions/Positions.php:22
 msgctxt "Modules: Positions"
 msgid "Content Position Management"
 msgstr "مدیریت موقعیت‌های محتوا"
@@ -2682,23 +2982,23 @@ msgctxt "Modules: Printer"
 msgid "Editorial Print Server"
 msgstr "سرور چاپ تحریریه"
 
-#: includes/Modules/Priority/Priority.php:22
-msgctxt "Modules: Priority"
-msgid "Priority"
-msgstr "اولویت"
+#: includes/Modules/Prioritized/Prioritized.php:21
+msgctxt "Modules: Prioritized"
+msgid "Prioritized"
+msgstr "اولویت‌بندی"
 
-#: includes/Modules/Priority/Priority.php:23
-msgctxt "Modules: Priority"
+#: includes/Modules/Prioritized/Prioritized.php:22
+msgctxt "Modules: Prioritized"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Programs/Programs.php:18
-msgctxt "Modules: Programs"
-msgid "Programs"
-msgstr "برنامه‌ها"
+#: includes/Modules/Programmed/Programmed.php:18
+msgctxt "Modules: Programmed"
+msgid "Programmed"
+msgstr "برنامه‌ریزی"
 
-#: includes/Modules/Programs/Programs.php:19
-msgctxt "Modules: Programs"
+#: includes/Modules/Programmed/Programmed.php:19
+msgctxt "Modules: Programmed"
 msgid "[CHANGE ME]"
 msgstr ""
 
@@ -2712,12 +3012,12 @@ msgctxt "Modules: Promote"
 msgid "Assign Promotions to Editorial Staff"
 msgstr "واگذاری ارتقاء به کارکنان تحریریه"
 
-#: includes/Modules/Property/Property.php:18
+#: includes/Modules/Property/Property.php:22
 msgctxt "Modules: Property"
 msgid "Property"
 msgstr "اموال"
 
-#: includes/Modules/Property/Property.php:19
+#: includes/Modules/Property/Property.php:23
 msgctxt "Modules: Property"
 msgid "Editorial Property Management"
 msgstr "مدیریت اموال تحریریه"
@@ -2732,12 +3032,12 @@ msgctxt "Modules: Queried"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Quotation/Quotation.php:20
+#: includes/Modules/Quotation/Quotation.php:21
 msgctxt "Modules: Quotation"
 msgid "Quotation"
 msgstr "گفتاورد"
 
-#: includes/Modules/Quotation/Quotation.php:21
+#: includes/Modules/Quotation/Quotation.php:22
 msgctxt "Modules: Quotation"
 msgid "Snippets from Content"
 msgstr "تکه‌هایی از محتوا"
@@ -2752,15 +3052,15 @@ msgctxt "Modules: Quran"
 msgid "Revelation from God"
 msgstr "کلام‌الله مجید"
 
-#: includes/Modules/Ranked/Ranked.php:16
+#: includes/Modules/Ranked/Ranked.php:22
 msgctxt "Modules: Ranked"
 msgid "Ranked"
 msgstr "درجه‌دار"
 
-#: includes/Modules/Ranked/Ranked.php:17
+#: includes/Modules/Ranked/Ranked.php:23
 msgctxt "Modules: Ranked"
-msgid "Editorial Ranks"
-msgstr "درجه‌بندی‌های تحریریه"
+msgid "Ranking for Editorial Staff"
+msgstr "رتبه‌بندی اعضای تحریریه"
 
 #: includes/Modules/Rating/Rating.php:16
 msgctxt "Modules: Rating"
@@ -2782,12 +3082,12 @@ msgctxt "Modules: Recommended"
 msgid "Editorial Recommendations"
 msgstr "پیشنهادهای تحریریه"
 
-#: includes/Modules/Recount/Recount.php:22
+#: includes/Modules/Recount/Recount.php:20
 msgctxt "Modules: Recount"
 msgid "Recount"
 msgstr "بازشماری"
 
-#: includes/Modules/Recount/Recount.php:23
+#: includes/Modules/Recount/Recount.php:21
 msgctxt "Modules: Recount"
 msgid "Custom Counts Interface"
 msgstr "رابط شمارش سفارشی"
@@ -2822,22 +3122,22 @@ msgctxt "Modules: Reporter"
 msgid "Editorial Report Generator"
 msgstr "تولیدکننده گزارش‌های تحریریه"
 
-#: includes/Modules/Request/Request.php:17
+#: includes/Modules/Request/Request.php:19
 msgctxt "Modules: Request"
 msgid "Request"
 msgstr "خواسته"
 
-#: includes/Modules/Request/Request.php:18
+#: includes/Modules/Request/Request.php:20
 msgctxt "Modules: Request"
 msgid "Editorial Requisition Management"
 msgstr "مدیریت درخواست‌های تحریریه"
 
-#: includes/Modules/Reshare/Reshare.php:16
+#: includes/Modules/Reshare/Reshare.php:19
 msgctxt "Modules: Reshare"
 msgid "Reshare"
 msgstr "بازنشر"
 
-#: includes/Modules/Reshare/Reshare.php:17
+#: includes/Modules/Reshare/Reshare.php:20
 msgctxt "Modules: Reshare"
 msgid "Contents from Other Sources"
 msgstr "محتوا از منابع دیگر"
@@ -2852,52 +3152,52 @@ msgctxt "Modules: Resolved"
 msgid "Public Status of the Contents"
 msgstr "وضعیت عمومی محتوا"
 
-#: includes/Modules/Resources/Resources.php:24
+#: includes/Modules/Resources/Resources.php:27
 msgctxt "Modules: Resources"
 msgid "Resources"
 msgstr "منابع"
 
-#: includes/Modules/Resources/Resources.php:25
+#: includes/Modules/Resources/Resources.php:28
 msgctxt "Modules: Resources"
 msgid "Organized Resources"
 msgstr "منابع سازمان‌دهی شده"
 
-#: includes/Modules/Revisions/Revisions.php:34
+#: includes/Modules/Revisions/Revisions.php:33
 msgctxt "Modules: Revisions"
 msgid "Revisions"
 msgstr "رونوشت‌ها"
 
-#: includes/Modules/Revisions/Revisions.php:35
+#: includes/Modules/Revisions/Revisions.php:34
 msgctxt "Modules: Revisions"
 msgid "Revision Management"
 msgstr "مدیریت رونوشت‌ها"
 
-#: includes/Modules/Revisions/Revisions.php:41
+#: includes/Modules/Revisions/Revisions.php:40
 msgctxt "Modules: Revisions"
 msgid "Deactivated by Constant"
 msgstr "غیرفعال به دلیل کانستنت"
 
-#: includes/Modules/Roles/Roles.php:26
+#: includes/Modules/Roles/Roles.php:24
 msgctxt "Modules: Roles"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: includes/Modules/Roles/Roles.php:27
+#: includes/Modules/Roles/Roles.php:25
 msgctxt "Modules: Roles"
 msgid "Member & Role Management"
 msgstr "مدیریت کاربران و نقش‌ها"
 
-#: includes/Modules/Schedule/Schedule.php:32
+#: includes/Modules/Schedule/Schedule.php:23
 msgctxt "Modules: Schedule"
 msgid "Schedule"
 msgstr "زمان‌بندی"
 
-#: includes/Modules/Schedule/Schedule.php:33
+#: includes/Modules/Schedule/Schedule.php:24
 msgctxt "Modules: Schedule"
 msgid "Viewing and Schedule Content in a Customizable Calendar"
 msgstr "نمایش و زمان‌بندی محتوا در روی تقویم"
 
-#: includes/Modules/Schedule/Schedule.php:37
+#: includes/Modules/Schedule/Schedule.php:28
 msgctxt "Modules: Schedule"
 msgid "Needs gPersianDate"
 msgstr "افزونه تاریخ ایرانی پیدا نشد"
@@ -2972,12 +3272,12 @@ msgctxt "Modules: Sharing"
 msgid "Customized Sharing Buttons"
 msgstr "دکمه‌های همخوانی سفارشی"
 
-#: includes/Modules/Shortcodes/Shortcodes.php:21
+#: includes/Modules/Shortcodes/Shortcodes.php:19
 msgctxt "Modules: Shortcodes"
 msgid "Shortcodes"
 msgstr "شورت‌کدها"
 
-#: includes/Modules/Shortcodes/Shortcodes.php:22
+#: includes/Modules/Shortcodes/Shortcodes.php:20
 msgctxt "Modules: Shortcodes"
 msgid "Shortcode Tools"
 msgstr "ابزارهایی برای شورت‌کد‌ها"
@@ -3012,22 +3312,22 @@ msgctxt "Modules: Sitemap"
 msgid "XML Sitemap for Search Engines"
 msgstr "نقشه سایت برای موتورهای جست‌وجو"
 
-#: includes/Modules/Socialite/Socialite.php:38
+#: includes/Modules/Socialite/Socialite.php:26
 msgctxt "Modules: Socialite"
 msgid "Socialite"
 msgstr "معاشر"
 
-#: includes/Modules/Socialite/Socialite.php:39
+#: includes/Modules/Socialite/Socialite.php:27
 msgctxt "Modules: Socialite"
 msgid "Editorial Social Card"
 msgstr "کارت اجتماعی تحریریه"
 
-#: includes/Modules/Specs/Specs.php:27
+#: includes/Modules/Specs/Specs.php:28
 msgctxt "Modules: Specs"
 msgid "Specifications"
 msgstr "ویژگی‌ها"
 
-#: includes/Modules/Specs/Specs.php:28
+#: includes/Modules/Specs/Specs.php:29
 msgctxt "Modules: Specs"
 msgid "Post Specifications"
 msgstr "مشخصات جزئی نوشته"
@@ -3052,6 +3352,16 @@ msgctxt "Modules: Staff"
 msgid "Editorial Employments"
 msgstr "مدیریت استخدامی تحریریه"
 
+#: includes/Modules/StaticCovers/StaticCovers.php:21
+msgctxt "Modules: Static Covers"
+msgid "Static Covers"
+msgstr "کاورهای ایستا"
+
+#: includes/Modules/StaticCovers/StaticCovers.php:22
+msgctxt "Modules: Static Covers"
+msgid "Alternative Cover Management"
+msgstr "جای‌گزین برای مدیریت کاورها"
+
 #: includes/Modules/Statistics/Statistics.php:20
 msgctxt "Modules: Statistics"
 msgid "Statistics"
@@ -3062,17 +3372,17 @@ msgctxt "Modules: Statistics"
 msgid "Editorial Content Reports"
 msgstr "گزارش‌های محتوای تحریریه"
 
-#: includes/Modules/Statuses/Statuses.php:24
+#: includes/Modules/Statuses/Statuses.php:22
 msgctxt "Modules: Statuses"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: includes/Modules/Statuses/Statuses.php:25
+#: includes/Modules/Statuses/Statuses.php:23
 msgctxt "Modules: Statuses"
 msgid "WP-Statuses Companion"
 msgstr "هم‌نشین برای وضعیت‌های وردپرس"
 
-#: includes/Modules/Statuses/Statuses.php:28
+#: includes/Modules/Statuses/Statuses.php:26
 msgctxt "Modules: Statuses"
 msgid "Needs WP Statuses"
 msgstr "نیازمند WP Statuses"
@@ -3087,62 +3397,62 @@ msgctxt "Modules: Submit"
 msgid "FrontPage Submissions"
 msgstr "دریافت مطالب از طریق غیر بخش مدیریت"
 
-#: includes/Modules/Suited/Suited.php:18
+#: includes/Modules/Suited/Suited.php:25
 msgctxt "Modules: Suited"
 msgid "Suited"
 msgstr "شایسته"
 
-#: includes/Modules/Suited/Suited.php:19
+#: includes/Modules/Suited/Suited.php:26
 msgctxt "Modules: Suited"
 msgid "Suitable Targets for Contents"
 msgstr "اهداف مناسب برای محتوا"
 
-#: includes/Modules/Swallow/Swallow.php:18
+#: includes/Modules/Swallow/Swallow.php:21
 msgctxt "Modules: Swallow"
 msgid "Swallow"
 msgstr "چلچله"
 
-#: includes/Modules/Swallow/Swallow.php:19
+#: includes/Modules/Swallow/Swallow.php:22
 msgctxt "Modules: Swallow"
 msgid "Store Incoming Messages"
 msgstr "ذخیره‌سازی پیام‌های ورودی"
 
-#: includes/Modules/Switcher/Switcher.php:18
+#: includes/Modules/Switcher/Switcher.php:19
 msgctxt "Modules: Switcher"
 msgid "Switcher"
 msgstr "عوض‌گر"
 
-#: includes/Modules/Switcher/Switcher.php:19
+#: includes/Modules/Switcher/Switcher.php:20
 msgctxt "Modules: Switcher"
 msgid "Bulk Conversion Utility"
 msgstr "ابزار تبدیل گروهی"
 
-#: includes/Modules/Symposium/Symposium.php:14
+#: includes/Modules/Symposium/Symposium.php:18
 msgctxt "Modules: Symposium"
 msgid "Symposium"
 msgstr "هم‌نشست"
 
-#: includes/Modules/Symposium/Symposium.php:15
+#: includes/Modules/Symposium/Symposium.php:19
 msgctxt "Modules: Symposium"
 msgid "Editorial Session Management"
 msgstr "مدیریت نشست‌های تحریریه"
 
-#: includes/Modules/Tables/Tables.php:17
+#: includes/Modules/Tables/Tables.php:20
 msgctxt "Modules: Tables"
 msgid "Tables"
 msgstr "جدول‌ها"
 
-#: includes/Modules/Tables/Tables.php:18
+#: includes/Modules/Tables/Tables.php:21
 msgctxt "Modules: Tables"
 msgid "Table Management and Spreadsheet Editor"
 msgstr "مدیریت جدول‌ها و ویرایشگر صفحه‌گسترده"
 
-#: includes/Modules/Tabloid/Tabloid.php:20
+#: includes/Modules/Tabloid/Tabloid.php:21
 msgctxt "Modules: Tabloid"
 msgid "Tabloid"
 msgstr "چکیده"
 
-#: includes/Modules/Tabloid/Tabloid.php:21
+#: includes/Modules/Tabloid/Tabloid.php:22
 msgctxt "Modules: Tabloid"
 msgid "Custom Overview of Contents"
 msgstr "مرور سفارشی محتوا"
@@ -3167,22 +3477,22 @@ msgctxt "Modules: Taxonomic"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/Team/Team.php:17
+#: includes/Modules/Team/Team.php:20
 msgctxt "Modules: Team"
 msgid "Team"
 msgstr "گروهه"
 
-#: includes/Modules/Team/Team.php:18
+#: includes/Modules/Team/Team.php:21
 msgctxt "Modules: Team"
 msgid "Profiles for Editorial Teams"
 msgstr "نمایه‌هایی برای گروه تحریریه"
 
-#: includes/Modules/Terms/Terms.php:60
+#: includes/Modules/Terms/Terms.php:55
 msgctxt "Modules: Terms"
 msgid "Terms"
 msgstr "رده‌ها"
 
-#: includes/Modules/Terms/Terms.php:61
+#: includes/Modules/Terms/Terms.php:56
 msgctxt "Modules: Terms"
 msgid "Taxonomy & Term Tools"
 msgstr "ابزارهای رده و رده‌بندی"
@@ -3207,42 +3517,42 @@ msgctxt "Modules: Tickets"
 msgid "Editorial Support Management"
 msgstr "مدیریت پشتیبانی تحریریه"
 
-#: includes/Modules/Today/Today.php:29
+#: includes/Modules/Today/Today.php:25
 msgctxt "Modules: Today"
 msgid "Today"
 msgstr "امروز"
 
-#: includes/Modules/Today/Today.php:30
+#: includes/Modules/Today/Today.php:26
 msgctxt "Modules: Today"
 msgid "The day in History"
 msgstr "هر روز در تاریخ"
 
-#: includes/Modules/Tracking/Tracking.php:25
+#: includes/Modules/Tracking/Tracking.php:26
 msgctxt "Modules: Tracking"
 msgid "Tracking"
 msgstr "ره‌گیری"
 
-#: includes/Modules/Tracking/Tracking.php:26
+#: includes/Modules/Tracking/Tracking.php:27
 msgctxt "Modules: Tracking"
 msgid "Physical Item Tracking"
 msgstr "ره‌گیری موارد فیزیکی"
 
-#: includes/Modules/Trained/Trained.php:18
+#: includes/Modules/Trained/Trained.php:34
 msgctxt "Modules: Trained"
 msgid "Trained"
 msgstr "آموزش‌دیده"
 
-#: includes/Modules/Trained/Trained.php:19
+#: includes/Modules/Trained/Trained.php:35
 msgctxt "Modules: Trained"
-msgid "Editorial Trainings"
-msgstr "آموزش‌های تحریریه"
+msgid "Editorial Training Management"
+msgstr "مدیریت آموزش تحریریه"
 
-#: includes/Modules/Transference/Transference.php:15
+#: includes/Modules/Transference/Transference.php:19
 msgctxt "Modules: Transference"
 msgid "Transference"
 msgstr "تحویل"
 
-#: includes/Modules/Transference/Transference.php:16
+#: includes/Modules/Transference/Transference.php:20
 msgctxt "Modules: Transference"
 msgid "Property Transfer Management"
 msgstr "مدیریت انتقال اموال"
@@ -3257,72 +3567,82 @@ msgctxt "Modules: Trivia"
 msgid "n. something of small importance"
 msgstr "اسم: چیزی با اهمیت کم"
 
-#: includes/Modules/Tube/Tube.php:26
+#: includes/Modules/Tube/Tube.php:23
 msgctxt "Modules: Tube"
 msgid "Tube"
 msgstr "تلویزیون"
 
-#: includes/Modules/Tube/Tube.php:27
+#: includes/Modules/Tube/Tube.php:24
 msgctxt "Modules: Tube"
 msgid "Video Clip Management"
 msgstr "مدیریت ویدئو کلیپ‌ها"
 
-#: includes/Modules/Tweaks/Tweaks.php:34
+#: includes/Modules/Tweaks/Tweaks.php:28
 msgctxt "Modules: Tweaks"
 msgid "Tweaks"
 msgstr "ظرافت‌ها"
 
-#: includes/Modules/Tweaks/Tweaks.php:35
+#: includes/Modules/Tweaks/Tweaks.php:29
 msgctxt "Modules: Tweaks"
 msgid "Admin UI Enhancement"
 msgstr "بهینه‌سازی رابط کاربری در بخش مدیریت"
 
-#: includes/Modules/Uncategorized/Uncategorized.php:26
+#: includes/Modules/Unavailable/Unavailable.php:16
+msgctxt "Modules: Unavailable"
+msgid "Unavailable"
+msgstr "دور از دسترس"
+
+#: includes/Modules/Unavailable/Unavailable.php:17
+msgctxt "Modules: Unavailable"
+msgid "Editorial Archived Contents"
+msgstr "محتوای بایگانی‌شده تحریریه"
+
+#: includes/Modules/Uncategorized/Uncategorized.php:21
 msgctxt "Modules: Uncategorized"
 msgid "Uncategorized"
 msgstr "دسته‌بندی‌نشده"
 
-#: includes/Modules/Uncategorized/Uncategorized.php:27
+#: includes/Modules/Uncategorized/Uncategorized.php:22
 msgctxt "Modules: Uncategorized"
 msgid "Term Leftover Management"
 msgstr "مدیریت رده‌های رهاشده"
 
-#: includes/Modules/Users/Users.php:40
+#: includes/Modules/Units/Units.php:18
+msgctxt "Modules: Units"
+msgid "Units"
+msgstr "واحدها"
+
+#: includes/Modules/Units/Units.php:19
+msgctxt "Modules: Units"
+msgid "Measurement Units for Contents"
+msgstr "واحدهای اندازه‌گیری برای محتوا"
+
+#: includes/Modules/Users/Users.php:33
 msgctxt "Modules: Users"
 msgid "Users"
 msgstr "کاربران"
 
-#: includes/Modules/Users/Users.php:41
+#: includes/Modules/Users/Users.php:34
 msgctxt "Modules: Users"
 msgid "Editorial Users"
 msgstr "کاربران تحریریه"
 
-#: includes/Modules/Vehicle/Vehicle.php:30
-msgctxt "Modules: Vehicle"
-msgid "Vehicle"
-msgstr "خودرو"
-
-#: includes/Modules/Vehicle/Vehicle.php:31
-msgctxt "Modules: Vehicle"
-msgid "Editorial Cars Management"
-msgstr "مدیریت خودروهای تحریریه"
-
-#: includes/Modules/Venue/Venue.php:21
+#: includes/Modules/Venue/Venue.php:25
 msgctxt "Modules: Venue"
 msgid "Venue"
 msgstr "جای‌گاه"
 
-#: includes/Modules/Venue/Venue.php:22
+#: includes/Modules/Venue/Venue.php:26
 msgctxt "Modules: Venue"
 msgid "Place Listings"
 msgstr "فهرست‌بندی مکان‌ها"
 
-#: includes/Modules/Views/Views.php:24
+#: includes/Modules/Views/Views.php:23
 msgctxt "Modules: Views"
 msgid "Views"
 msgstr "بازدیدها"
 
-#: includes/Modules/Views/Views.php:25
+#: includes/Modules/Views/Views.php:24
 msgctxt "Modules: Views"
 msgid "Customized Page Views"
 msgstr "آمار سفارشی‌شده از بازدید صفحات"
@@ -3357,15 +3677,25 @@ msgctxt "Modules: Wallet"
 msgid "Editorial Transactions"
 msgstr "معاملات تحریریه"
 
-#: includes/Modules/Warehouse/Warehouse.php:42
+#: includes/Modules/Warehouse/Warehouse.php:45
 msgctxt "Modules: Warehouse"
 msgid "Warehouse"
 msgstr "بارخانه"
 
-#: includes/Modules/Warehouse/Warehouse.php:43
+#: includes/Modules/Warehouse/Warehouse.php:46
 msgctxt "Modules: Warehouse"
 msgid "Editorial Warehouse Management"
 msgstr "مدیریت انبار تحریریه"
+
+#: includes/Modules/WasBorn/WasBorn.php:34
+msgctxt "Modules: Was Born"
+msgid "Was Born"
+msgstr "متولد"
+
+#: includes/Modules/WasBorn/WasBorn.php:35
+msgctxt "Modules: Was Born"
+msgid "Age Calculation and Statistics"
+msgstr "آمارها و ابزارهایی برای سن"
 
 #: includes/Modules/WcAttributes/WcAttributes.php:18
 msgctxt "Modules: WC Attributes"
@@ -3422,12 +3752,12 @@ msgctxt "Modules: WC Checkout"
 msgid "Checkout Enhancements for WooCommerce"
 msgstr "بهینه‌سازی تسویه‌حساب‌ها برای ووکامرس"
 
-#: includes/Modules/WcDashboard/WcDashboard.php:17
+#: includes/Modules/WcDashboard/WcDashboard.php:16
 msgctxt "Modules: WC Dashboard"
 msgid "WC Dashboard"
 msgstr "وکـ پیشخوان"
 
-#: includes/Modules/WcDashboard/WcDashboard.php:18
+#: includes/Modules/WcDashboard/WcDashboard.php:17
 msgctxt "Modules: WC Dashboard"
 msgid "Customer Dashboard Enhancements for WooCommerce"
 msgstr "بهینه‌سازی پیشخوان مشتریان برای ووکامرس"
@@ -3452,12 +3782,12 @@ msgctxt "Modules: WC Identity"
 msgid "Identity Data Management for WooCommerce"
 msgstr "مدیریت داده‌های هویتی برای ووکامرس"
 
-#: includes/Modules/WcImages/WcImages.php:21
+#: includes/Modules/WcImages/WcImages.php:19
 msgctxt "Modules: WC Images"
 msgid "WC Images"
 msgstr "وکـ تصاویر"
 
-#: includes/Modules/WcImages/WcImages.php:22
+#: includes/Modules/WcImages/WcImages.php:20
 msgctxt "Modules: WC Images"
 msgid "Tools for Product Galleries"
 msgstr "ابزارهایی برای گالری کالاها"
@@ -3492,12 +3822,12 @@ msgctxt "Modules: WC Postal"
 msgid "Package Tracking Enhancements for WooCommerce"
 msgstr "بهینه‌سازی رهگیری مرسولات برای ووکامرس"
 
-#: includes/Modules/WcPurchased/WcPurchased.php:24
+#: includes/Modules/WcPurchased/WcPurchased.php:21
 msgctxt "Modules: WC Purchased"
 msgid "WC Purchased"
 msgstr "وکـ خریداری‌شده"
 
-#: includes/Modules/WcPurchased/WcPurchased.php:25
+#: includes/Modules/WcPurchased/WcPurchased.php:22
 msgctxt "Modules: WC Purchased"
 msgid "Product Purchase Reports for WooCommerce"
 msgstr "گزارشات خرید کالا برای ووکامرس"
@@ -3512,12 +3842,12 @@ msgctxt "Modules: WC Registration"
 msgid "Managing Registrations for WooCommerce"
 msgstr "مدیریت ثبت‌نام‌ها برای ووکامرس"
 
-#: includes/Modules/WcRelated/WcRelated.php:22
+#: includes/Modules/WcRelated/WcRelated.php:19
 msgctxt "Modules: WC Related"
 msgid "WC Related"
 msgstr "وکـ مرتبط"
 
-#: includes/Modules/WcRelated/WcRelated.php:23
+#: includes/Modules/WcRelated/WcRelated.php:20
 msgctxt "Modules: WC Related"
 msgid "Related Product Enhancements for WooCommerce"
 msgstr "بهینه‌سازی کالاهای مرتبط برای ووکامرس"
@@ -3572,22 +3902,22 @@ msgctxt "Modules: WC Tweaks"
 msgid "Tweaks for WooCommerce"
 msgstr "ظرافت‌هایی برای ووکامرس"
 
-#: includes/Modules/WcUnits/WcUnits.php:20
+#: includes/Modules/WcUnits/WcUnits.php:17
 msgctxt "Modules: WC Units"
 msgid "WC Units"
 msgstr "وکـ واحدها"
 
-#: includes/Modules/WcUnits/WcUnits.php:21
+#: includes/Modules/WcUnits/WcUnits.php:18
 msgctxt "Modules: WC Units"
 msgid "Weight and Dimensions Enhancements for WooCommerce"
 msgstr "بهینه‌سازی وزن و ابعاد برای ووکامرس"
 
-#: includes/Modules/WcWidgets/WcWidgets.php:20
+#: includes/Modules/WcWidgets/WcWidgets.php:18
 msgctxt "Modules: WC Widgets"
 msgid "WC Widgets"
 msgstr "وکـ ابزارک‌ها"
 
-#: includes/Modules/WcWidgets/WcWidgets.php:21
+#: includes/Modules/WcWidgets/WcWidgets.php:19
 msgctxt "Modules: WC Widgets"
 msgid "Widget Enhancements for WooCommerce"
 msgstr "بهینه‌سازی ابزارک‌ها برای ووکامرس"
@@ -3602,12 +3932,12 @@ msgctxt "Modules: Widgets"
 msgid "Carefully Customized Widgets"
 msgstr "ابزارک‌های به‌دقت سفارشی‌شده"
 
-#: includes/Modules/Workflow/Workflow.php:28
+#: includes/Modules/Workflow/Workflow.php:22
 msgctxt "Modules: Workflow"
 msgid "Workflow"
 msgstr "گردش کار"
 
-#: includes/Modules/Workflow/Workflow.php:29
+#: includes/Modules/Workflow/Workflow.php:23
 msgctxt "Modules: Workflow"
 msgid "Customized Workflow of Contents"
 msgstr "سفارشی‌سازی گردش کار محتوا"
@@ -3622,37 +3952,37 @@ msgctxt "Modules: Wysiwyg"
 msgid "What You See Is What You Get"
 msgstr "آنچه که می‌بینی همانست که خواهی گرفت"
 
-#: includes/Plugin.php:288
+#: includes/Plugin.php:292
 msgctxt "Plugin: Main: Screen Settings Title"
 msgid "Restrictions"
 msgstr "محدودیت‌ها"
 
-#: includes/Plugin.php:677
+#: includes/Plugin.php:685
 msgctxt "Plugin: Main: Adminbar Node"
 msgid "Editorial"
 msgstr "تحریریه"
 
-#: includes/Plugin.php:706
+#: includes/Plugin.php:714
 msgid "N/A"
 msgstr "خ/د"
 
-#: includes/Plugin.php:707
+#: includes/Plugin.php:715
 msgid "Not Available"
 msgstr "خارج از دسترس"
 
-#: includes/Plugin.php:712
+#: includes/Plugin.php:720
 msgid "You don&#8217;t have permission to do this."
 msgstr "شما اجازه انجام این کار را ندارید."
 
-#: includes/Plugin.php:718
+#: includes/Plugin.php:726
 msgid "Something&#8217;s wrong!"
 msgstr "چیزی اشتباه است!"
 
-#: includes/Plugin.php:724
+#: includes/Plugin.php:732
 msgid "Wait for a moment &hellip;"
 msgstr "چند لحظه صبر کنید &hellip;"
 
-#: includes/Scripts.php:17
+#: includes/Scripts.php:15
 msgctxt "Scripts: No Script Message"
 msgid ""
 "We're sorry but this application doesn't work properly without JavaScript "
@@ -3713,596 +4043,639 @@ msgctxt "O2O"
 msgid "No users found."
 msgstr "کاربری پیدا نشد."
 
-#: includes/Services/ObjectToObject.php:263 includes/Services/ObjectToObject.php:274
+#: includes/Services/ObjectToObject.php:264 includes/Services/ObjectToObject.php:275
 msgctxt "Relation: REST"
 msgid "There are no connection types available!"
 msgstr "هیچ نوع اتصالی در دسترس نیست!"
 
-#: includes/Services/SelectSingle.php:248
+#: includes/Services/RestAPI.php:16
+msgctxt "Service: RestAPI: Error Forbidden"
+msgid "OMG you can not view private data."
+msgstr "شما اجازه دیدن اطلاعات خصوصی را ندارید."
+
+#: includes/Services/RestAPI.php:26
+msgctxt "Service: RestAPI: Error Arg Not Empty"
+msgid "The argument must not be empty."
+msgstr "نشانوند نباید خالی باشد."
+
+#. translators: %s: argument key
+#: includes/Services/RestAPI.php:28
+msgctxt "Service: RestAPI: Error Arg Not Empty"
+msgid "The `%s` argument must not be empty."
+msgstr "نشانوند `%s` نباید خالی باشد."
+
+#: includes/Services/RestAPI.php:57
+msgctxt "Service: RestAPI: Arg Description"
+msgid "The id of the post."
+msgstr "شناسه برای فرسته را تعریف می‌کند."
+
+#. translators: %s: argument key
+#: includes/Services/RestAPI.php:71
+msgctxt "Error"
+msgid "The `%s` argument must be a post."
+msgstr "نشانوند `%s` باید یک فرسته باشد."
+
+#: includes/Services/RestAPI.php:82
+msgctxt "Service: RestAPI: Arg Description"
+msgid "The id of the comment."
+msgstr "شناسه برای دیدگاه را تعریف می‌کند."
+
+#. translators: %s: argument key
+#: includes/Services/RestAPI.php:96
+msgctxt "Error"
+msgid "The `%s` argument must be a comment."
+msgstr "نشانوند `%s` باید یک دیدگاه باشد."
+
+#: includes/Services/SelectSingle.php:242
 msgctxt "Service: SelectSingle"
 msgid "Select an item …"
 msgstr "یک مورد را انتخاب کنید …"
 
-#: includes/Services/SelectSingle.php:249
+#: includes/Services/SelectSingle.php:243
 msgctxt "Service: SelectSingle"
 msgid "Loading more results …"
 msgstr "بارگیری نتایج بیشتر …"
 
-#: includes/Services/SelectSingle.php:250
+#: includes/Services/SelectSingle.php:244
 msgctxt "Service: SelectSingle"
 msgid "Searching …"
 msgstr "در حال جست‌وجو …"
 
-#: includes/Services/SelectSingle.php:251
+#: includes/Services/SelectSingle.php:245
 msgctxt "Service: SelectSingle"
 msgid "No results found"
 msgstr "نتیجه‌ای پیدا نشد"
 
-#: includes/Services/SelectSingle.php:252
+#: includes/Services/SelectSingle.php:246
 msgctxt "Service: SelectSingle"
 msgid "Remove all items"
 msgstr "حذف همه موارد"
 
-#: includes/Services/SelectSingle.php:253
+#: includes/Services/SelectSingle.php:247
 msgctxt "Service: SelectSingle"
 msgid "Remove item"
 msgstr "حذف مورد"
 
-#: includes/Services/SelectSingle.php:254
+#: includes/Services/SelectSingle.php:248
 msgctxt "Service: SelectSingle"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: includes/Services/SelectSingle.php:255
+#: includes/Services/SelectSingle.php:249
 msgctxt "Service: SelectSingle"
 msgid "The results could not be loaded."
 msgstr "امکان بارگیری نتایج وجود ندارد."
 
 #. translators: %s: number of characters
-#: includes/Services/SelectSingle.php:257
+#: includes/Services/SelectSingle.php:251
 msgctxt "Service: SelectSingle"
 msgid "Please enter %s or more characters"
 msgstr "%s نویسه یا بیشتر وارد کنید"
 
 #. translators: %s: number of characters
-#: includes/Services/SelectSingle.php:259
+#: includes/Services/SelectSingle.php:253
 msgctxt "Service: SelectSingle"
 msgid "Please delete %s character(s)"
 msgstr "%s نویسه را حذف کنید"
 
 #. translators: %s: number of items
-#: includes/Services/SelectSingle.php:261
+#: includes/Services/SelectSingle.php:255
 msgctxt "Service: SelectSingle"
 msgid "You can only select %s item(s)"
 msgstr "تنها می‌توانید %s مورد را انتخاب کنید"
 
-#: includes/Settings.php:169
+#: includes/Settings.php:160
 msgctxt "Settings: Option: Time in Minutes"
 msgid "5 Minutes"
 msgstr "۵ دقیقه"
 
-#: includes/Settings.php:170
+#: includes/Settings.php:161
 msgctxt "Settings: Option: Time in Minutes"
 msgid "10 Minutes"
 msgstr "۱۰ دقیقه"
 
-#: includes/Settings.php:171
+#: includes/Settings.php:162
 msgctxt "Settings: Option: Time in Minutes"
 msgid "15 Minutes"
 msgstr "۱۵ دقیقه"
 
-#: includes/Settings.php:172
+#: includes/Settings.php:163
 msgctxt "Settings: Option: Time in Minutes"
 msgid "30 Minutes"
 msgstr "۳۰ دقیقه"
 
-#: includes/Settings.php:173
+#: includes/Settings.php:164
 msgctxt "Settings: Option: Time in Minutes"
 msgid "60 Minutes"
 msgstr "۶۰ دقیقه"
 
-#: includes/Settings.php:174
+#: includes/Settings.php:165
 msgctxt "Settings: Option: Time in Minutes"
 msgid "2 Hours"
 msgstr "۲ ساعت"
 
-#: includes/Settings.php:175
+#: includes/Settings.php:166
 msgctxt "Settings: Option: Time in Minutes"
 msgid "3 Hours"
 msgstr "۳ ساعت"
 
-#: includes/Settings.php:176
+#: includes/Settings.php:167
 msgctxt "Settings: Option: Time in Minutes"
 msgid "4 Hours"
 msgstr "۴ ساعت"
 
-#: includes/Settings.php:177
+#: includes/Settings.php:168
 msgctxt "Settings: Option: Time in Minutes"
 msgid "8 Hours"
 msgstr "۸ ساعت"
 
-#: includes/Settings.php:178
+#: includes/Settings.php:169
 msgctxt "Settings: Option: Time in Minutes"
 msgid "24 Hours"
 msgstr "۲۴ ساعت"
 
-#: includes/Settings.php:185
+#: includes/Settings.php:176
 msgctxt "Settings: Option: PostType Support"
 msgid "Title"
 msgstr "عنوان"
 
-#: includes/Settings.php:186
+#: includes/Settings.php:177
 msgctxt "Settings: Option: PostType Support"
 msgid "Editor"
 msgstr "ویرایشگر"
 
-#: includes/Settings.php:187
+#: includes/Settings.php:178
 msgctxt "Settings: Option: PostType Support"
 msgid "Excerpt"
 msgstr "چکیده"
 
-#: includes/Settings.php:188
+#: includes/Settings.php:179
 msgctxt "Settings: Option: PostType Support"
 msgid "Author"
 msgstr "مؤلف"
 
-#: includes/Settings.php:189
+#: includes/Settings.php:180
 msgctxt "Settings: Option: PostType Support"
 msgid "Thumbnail"
 msgstr "بند‌انگشتی"
 
-#: includes/Settings.php:190
+#: includes/Settings.php:181
 msgctxt "Settings: Option: PostType Support"
 msgid "Comments"
 msgstr "دیدگاه‌ها"
 
-#: includes/Settings.php:191
+#: includes/Settings.php:182
 msgctxt "Settings: Option: PostType Support"
 msgid "Trackbacks"
 msgstr "بازتاب‌ها"
 
-#: includes/Settings.php:192
+#: includes/Settings.php:183
 msgctxt "Settings: Option: PostType Support"
 msgid "Custom Fields"
 msgstr "زمینه‌های دل‌خواه"
 
-#: includes/Settings.php:193
+#: includes/Settings.php:184
 msgctxt "Settings: Option: PostType Support"
 msgid "Post Formats"
 msgstr "قالب‌های نوشته"
 
-#: includes/Settings.php:194
+#: includes/Settings.php:185
 msgctxt "Settings: Option: PostType Support"
 msgid "Revisions"
 msgstr "رونوشت‌ها"
 
-#: includes/Settings.php:195
+#: includes/Settings.php:186
 msgctxt "Settings: Option: PostType Support"
 msgid "Post Attributes"
 msgstr "ویژگی‌های نوشته"
 
-#: includes/Settings.php:196
+#: includes/Settings.php:187
 msgctxt "Settings: Option: PostType Support"
 msgid "Accelerated Mobile Pages"
 msgstr "صفحات سریع موبایل"
 
-#: includes/Settings.php:197
+#: includes/Settings.php:188
 msgctxt "Settings: Option: PostType Support"
 msgid "Persian Date: Date Picker"
 msgstr "تاریخ ایرانی: انتخاب‌گر تاریخ"
 
-#: includes/Settings.php:198
+#: includes/Settings.php:189
 msgctxt "Settings: Option: PostType Support"
 msgid "Editorial: Meta Fields"
 msgstr "تحریریه: گزینه‌های متا"
 
-#: includes/Settings.php:199
+#: includes/Settings.php:190
+msgctxt "Settings: Option: PostType Support"
+msgid "Editorial: Measurement Units"
+msgstr "تحریریه: واحدهای اندازه‌گیری"
+
+#: includes/Settings.php:191
 msgctxt "Settings: Option: PostType Support"
 msgid "Editorial: Custom Roles"
 msgstr "تحریریه: نقش‌های سفارشی"
 
 #. translators: %s: options
-#: includes/Settings.php:287
+#: includes/Settings.php:279
 msgctxt "Settings: Dropdown Select Option None"
 msgid "&ndash; Select %s &ndash;"
 msgstr "&ndash; انتخاب %s &ndash;"
 
-#: includes/Settings.php:289
+#: includes/Settings.php:281
 msgctxt "Settings: Dropdown Select Option None"
 msgid "&ndash; Select &ndash;"
 msgstr "&ndash; انتخاب کنید &ndash;"
 
 #. translators: %s: options
-#: includes/Settings.php:296
+#: includes/Settings.php:288
 msgctxt "Settings: Radio Select Option None"
 msgid "None %s"
 msgstr "هیچ‌کدام %s"
 
-#: includes/Settings.php:298
+#: includes/Settings.php:290
 msgctxt "Settings: Radio Select Option None"
 msgid "None"
 msgstr "هیچ‌کدام"
 
 #. translators: %s: options
-#: includes/Settings.php:305
+#: includes/Settings.php:297
 msgctxt "Settings: Dropdown Select Option All"
 msgid "&ndash; All %s &ndash;"
 msgstr "&ndash; همه %s &ndash;"
 
-#: includes/Settings.php:307
+#: includes/Settings.php:299
 msgctxt "Settings: Dropdown Select Option All"
 msgid "&ndash; All &ndash;"
 msgstr "&ndash; همه &ndash;"
 
-#: includes/Settings.php:313
+#: includes/Settings.php:305
 msgctxt "Settings: Field Separate"
 msgid "count"
 msgstr "شمار"
 
-#: includes/Settings.php:314
+#: includes/Settings.php:306
 msgctxt "Settings: Field Separate"
 msgid "from"
 msgstr "از"
 
-#: includes/Settings.php:315
+#: includes/Settings.php:307
 msgctxt "Settings: Field Separate"
 msgid "into"
 msgstr "به"
 
-#: includes/Settings.php:316
+#: includes/Settings.php:308
 msgctxt "Settings: Field Separate"
 msgid "like"
 msgstr "شبیه"
 
-#: includes/Settings.php:317
+#: includes/Settings.php:309
 msgctxt "Settings: Field Separate"
 msgid "ex"
 msgstr "مثال"
 
-#: includes/Settings.php:318
+#: includes/Settings.php:310
 msgctxt "Settings: Field Separate"
 msgid "in"
 msgstr "در"
 
-#: includes/Settings.php:319
+#: includes/Settings.php:311
 msgctxt "Settings: Field Separate"
 msgid "to"
 msgstr "به"
 
-#: includes/Settings.php:320
+#: includes/Settings.php:312
 msgctxt "Settings: Field Separate"
 msgid "as"
 msgstr "به‌عنوان"
 
-#: includes/Settings.php:321
+#: includes/Settings.php:313
 msgctxt "Settings: Field Separate"
 msgid "or"
 msgstr "یا"
 
-#: includes/Settings.php:322
+#: includes/Settings.php:314
 msgctxt "Settings: Field Separate"
 msgid "on"
 msgstr "در"
 
-#: includes/Settings.php:346
+#: includes/Settings.php:338
 msgctxt "Settings"
 msgid "See More Information"
 msgstr "برای اطلاعات بیشتر"
 
-#: includes/Settings.php:365
+#: includes/Settings.php:357
 msgctxt "Settings: Setting Title"
 msgid "Editor Button"
 msgstr "دکمه ویرایشگر"
 
-#: includes/Settings.php:375
+#: includes/Settings.php:367
 msgctxt "Settings: Setting Title"
 msgid "Quick New Post"
 msgstr "فرسته تازه و سریع"
 
-#: includes/Settings.php:385
+#: includes/Settings.php:377
 msgctxt "Settings: Setting Title"
 msgid "Default Widgets"
 msgstr "ابزارک‌های پیش‌فرض"
 
-#: includes/Settings.php:395
+#: includes/Settings.php:387
 msgctxt "Settings: Setting Title"
 msgid "Default Shortcodes"
 msgstr "شورت‌کد‌های پیش‌فرض"
 
-#: includes/Settings.php:405
+#: includes/Settings.php:397
 msgctxt "Settings: Setting Title"
 msgid "Default Image Sizes"
 msgstr "اندازه‌های تصویر پیش‌فرض"
 
-#: includes/Settings.php:415
+#: includes/Settings.php:407
 msgctxt "Settings: Setting Title"
 msgid "Thumbnail Fallback"
 msgstr "پس‌نشینی بندانگشتی‌ها"
 
-#: includes/Settings.php:416
+#: includes/Settings.php:408
 msgctxt "Settings: Setting Description"
 msgid "Sets the parent post thumbnail image as fallback for the child post."
 msgstr ""
 "به ناچار، تصویر برگزیده فرسته مادر را به عنوان تصویر برای فرسته کودک تنظیم می‌کند."
 
-#: includes/Settings.php:425
+#: includes/Settings.php:417
 msgctxt "Settings: Setting Title"
 msgid "Legacy Migration"
 msgstr "مهاجرت موروثی"
 
-#: includes/Settings.php:426
+#: includes/Settings.php:418
 msgctxt "Settings: Setting Description"
 msgid "Imports metadata from legacy plugin system."
 msgstr "فراداده‌ها را از سیستم افزونه موروثی درون‌ریزی می‌کند."
 
-#: includes/Settings.php:435
+#: includes/Settings.php:427
 msgctxt "Settings: Setting Title"
 msgid "Advanced Meta-Box"
 msgstr "جعبه‌متای پیشرفته"
 
-#: includes/Settings.php:436
+#: includes/Settings.php:428
 msgctxt "Settings: Setting Description"
 msgid "Select to use advanced meta-box UI on edit post screen."
 msgstr "برای به‌کارگیری جعبه‌متای پیشرفته در صفحه ویرایش فرسته، انتخاب کنید."
 
-#: includes/Settings.php:445
+#: includes/Settings.php:437
 msgctxt "Settings: Setting Title"
 msgid "Assign Default Term"
 msgstr "اختصاص رده پیش‌فرض"
 
-#: includes/Settings.php:446
+#: includes/Settings.php:438
 msgctxt "Settings: Setting Description"
 msgid "Applies the fallback default term from primary taxonomy."
 msgstr "به ناچار، رده پیش‌فرض از رده‌بندی را اختصاص می‌دهد."
 
-#: includes/Settings.php:455
+#: includes/Settings.php:447
 msgctxt "Settings: Setting Title"
 msgid "Multiple Instances"
 msgstr "انتخاب چندگانه"
 
-#: includes/Settings.php:466
+#: includes/Settings.php:458
 msgctxt "Settings: Setting Title"
 msgid "Comment Status"
 msgstr "وضعیت دیدگاه‌ها"
 
-#: includes/Settings.php:467
+#: includes/Settings.php:459
 msgctxt "Settings: Setting Description"
 msgid "Determines the default status of the new post comments."
 msgstr "وضعیت پیش‌فرض دیدگاه‌ها در فرستهٔ تازه را تعیین می‌کند."
 
-#: includes/Settings.php:470
+#: includes/Settings.php:462
 msgctxt "Settings: Setting Option"
 msgid "Open"
 msgstr "باز"
 
-#: includes/Settings.php:471
+#: includes/Settings.php:463
 msgctxt "Settings: Setting Option"
 msgid "Closed"
 msgstr "بسته"
 
-#: includes/Settings.php:481
+#: includes/Settings.php:473
 msgctxt "Settings: Setting Title"
 msgid "Post Status"
 msgstr "وضعیت نوشته"
 
-#: includes/Settings.php:498
+#: includes/Settings.php:490
 msgctxt "Settings: Setting Title"
 msgid "Post Type"
 msgstr "نوع نوشته"
 
-#: includes/Settings.php:511
+#: includes/Settings.php:503
 msgctxt "Settings: Setting Title"
 msgid "Insert in Content"
 msgstr "جای‌گذاری در متن"
 
-#: includes/Settings.php:512
+#: includes/Settings.php:504
 msgctxt "Settings: Setting Description"
 msgid "Outputs automatically in the content."
 msgstr "به صورت خودکار در محتوا جای‌گذاری می‌شود."
 
-#: includes/Settings.php:515
+#: includes/Settings.php:507
 msgctxt "Settings: Setting Option"
 msgid "No"
 msgstr "خیر"
 
-#: includes/Settings.php:516
+#: includes/Settings.php:508
 msgctxt "Settings: Setting Option"
 msgid "Before"
 msgstr "قبل از متن"
 
-#: includes/Settings.php:517
+#: includes/Settings.php:509
 msgctxt "Settings: Setting Option"
 msgid "After"
 msgstr "بعد از متن"
 
-#: includes/Settings.php:535
+#: includes/Settings.php:527
 msgctxt "Settings: Setting Title"
 msgid "Insert Cover"
 msgstr "جای‌گذاری کاور"
 
-#: includes/Settings.php:546
+#: includes/Settings.php:538
 msgctxt "Settings: Setting Title"
 msgid "Insert Priority"
 msgstr "اولویت جای‌گذاری"
 
-#: includes/Settings.php:557
+#: includes/Settings.php:549
 msgctxt "Settings: Setting Title"
 msgid "Before Content"
 msgstr "قبل از متن"
 
 #. translators: %s: code placeholder
-#: includes/Settings.php:559
+#: includes/Settings.php:551
 msgctxt "Settings: Setting Description"
 msgid "Adds %s before start of all the supported post-types."
 msgstr "کد %s را قبل از شروع تمامی نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: includes/Settings.php:568
+#: includes/Settings.php:560
 msgctxt "Settings: Setting Title"
 msgid "After Content"
 msgstr "بعد از متن"
 
 #. translators: %s: code placeholder
-#: includes/Settings.php:570
+#: includes/Settings.php:562
 msgctxt "Settings: Setting Description"
 msgid "Adds %s after end of all the supported post-types."
 msgstr "کد %s را بعد از پایان تمامی نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: includes/Settings.php:578
+#: includes/Settings.php:570
 msgctxt "Settings: Setting Title"
 msgid "Ordering"
 msgstr "چیدمان"
 
-#: includes/Settings.php:579
+#: includes/Settings.php:571
 msgctxt "Settings: Setting Description"
 msgid "Enhances item ordering on admin edit pages."
 msgstr "چینش موارد را در صفحات ویرایش مدیریت، بهینه می‌کند."
 
-#: includes/Settings.php:588
+#: includes/Settings.php:580
 msgctxt "Settings: Setting Title"
 msgid "List Restrictions"
 msgstr "محدودیت در فهرست"
 
-#: includes/Settings.php:589
+#: includes/Settings.php:581
 msgctxt "Settings: Setting Description"
 msgid "Enhances restrictions on admin edit pages."
 msgstr "محدودیت‌ها را در صفحات ویرایش مدیریت، بهینه می‌کند."
 
-#: includes/Settings.php:597
+#: includes/Settings.php:589
 msgctxt "Settings: Setting Title"
 msgid "List Columns"
 msgstr "ستون‌های فهرست"
 
-#: includes/Settings.php:598
+#: includes/Settings.php:590
 msgctxt "Settings: Setting Description"
 msgid "Enhances columns on admin edit pages."
 msgstr "ستون‌ها را در صفحات ویرایش مدیریت، بهینه می‌کند."
 
-#: includes/Settings.php:606
+#: includes/Settings.php:598
 msgctxt "Settings: Setting Title"
 msgid "Bulk Actions"
 msgstr "کنش‌های انبوه"
 
-#: includes/Settings.php:607
+#: includes/Settings.php:599
 msgctxt "Settings: Setting Description"
 msgid "Enhances bulk actions on admin edit pages."
 msgstr "کنش‌های انبوه را در صفحات ویرایش مدیریت، بهینه می‌کند."
 
-#: includes/Settings.php:615
+#: includes/Settings.php:607
 msgctxt "Settings: Setting Title"
 msgid "Row Actions"
 msgstr "گزینه‌های خطی"
 
-#: includes/Settings.php:616
+#: includes/Settings.php:608
 msgctxt "Settings: Setting Description"
 msgid "Enhances row actions on admin edit pages."
 msgstr "ردیف کنش‌ها را در صفحات ویرایش مدیریت، بهینه می‌کند."
 
-#: includes/Settings.php:624
+#: includes/Settings.php:616
 msgctxt "Setting: Setting Title"
 msgid "Adminbar Summary"
 msgstr "گزارش در منوی مدیریت"
 
-#: includes/Settings.php:625
+#: includes/Settings.php:617
 msgctxt "Setting: Setting Description"
 msgid "Summary for the current item as a node in admin-bar."
 msgstr "گزارشی از مورد کنونی به عنوان یک گره در نوارابزار نمایش داده شود."
 
-#: includes/Settings.php:633
+#: includes/Settings.php:625
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Widgets"
 msgstr "ابزارک‌های پیشخوان"
 
-#: includes/Settings.php:634
+#: includes/Settings.php:626
 msgctxt "Settings: Setting Description"
 msgid "Enhances admin dashboard with customized widgets."
 msgstr "پیشخوان مدیریت را به کمک ابزارک‌های سفارشی بهینه می‌کند."
 
-#: includes/Settings.php:642
+#: includes/Settings.php:634
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Authors"
 msgstr "نویسندگان پیشخوان"
 
-#: includes/Settings.php:643
+#: includes/Settings.php:635
 msgctxt "Settings: Setting Description"
 msgid "Displays author column on the dashboard widget."
 msgstr "ستون مؤلف را در ابزارک پیشخوان نمایش می‌دهد."
 
-#: includes/Settings.php:651
+#: includes/Settings.php:643
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Statuses"
 msgstr "وضعیت‌های پیشخوان"
 
-#: includes/Settings.php:652
+#: includes/Settings.php:644
 msgctxt "Settings: Setting Description"
 msgid "Displays status column on the dashboard widget."
 msgstr "ستون وضعیت را در ابزارک پیشخوان نمایش می‌دهد."
 
-#: includes/Settings.php:661
+#: includes/Settings.php:653
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Count"
 msgstr "شمارش پیشخوان"
 
-#: includes/Settings.php:662
+#: includes/Settings.php:654
 msgctxt "Settings: Setting Description"
 msgid "Limits displaying rows of items on the dashboard widget."
 msgstr "نمایش ردیف‌ها را در ابزارک پیشخوان محدود می‌کند."
 
-#: includes/Settings.php:672
+#: includes/Settings.php:664
 msgctxt "Settings: Setting Title"
 msgid "Summary Scope"
 msgstr "محدوده گزارش"
 
-#: includes/Settings.php:673
+#: includes/Settings.php:665
 msgctxt "Settings: Setting Description"
 msgid "User scope for the content summary."
 msgstr "محدوده کاربری گزارش محتوا."
 
-#: includes/Settings.php:676
+#: includes/Settings.php:668
 msgctxt "Settings: Setting Option"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: includes/Settings.php:677
+#: includes/Settings.php:669
 msgctxt "Settings: Setting Option"
 msgid "Current User"
 msgstr "کاربر فعلی"
 
-#: includes/Settings.php:678
+#: includes/Settings.php:670
 msgctxt "Settings: Setting Option"
 msgid "Within the Roles"
 msgstr "به نقش‌ها"
 
-#: includes/Settings.php:687
+#: includes/Settings.php:679
 msgctxt "Settings: Setting Title"
 msgid "Include Drafts"
 msgstr "شمارش پیش‌نویس‌ها"
 
-#: includes/Settings.php:688
+#: includes/Settings.php:680
 msgctxt "Settings: Setting Description"
 msgid "Include drafted items in the content summary."
 msgstr "پیش‌نویس‌ها را در گزارش بازبینی شامل میکند."
 
-#: includes/Settings.php:697
+#: includes/Settings.php:689
 msgctxt "Settings: Setting Title"
 msgid "Summary Excludes"
 msgstr "استثنائات گزارش"
 
-#: includes/Settings.php:698
+#: includes/Settings.php:690
 msgctxt "Settings: Setting Description"
 msgid "Selected terms will be excluded on the content summary."
 msgstr "رده‌های انتخاب شده، از گزارش بازبینی کنار گذاشته می‌شوند."
 
-#: includes/Settings.php:699 includes/Settings.php:711
+#: includes/Settings.php:691 includes/Settings.php:703
 msgctxt "Settings: Setting Empty String"
 msgid "There are no items available!"
 msgstr "هیچ موردی در دسترس نیست!"
 
-#: includes/Settings.php:709
+#: includes/Settings.php:701
 msgctxt "Settings: Setting Title"
 msgid "Exclude Terms"
 msgstr "رده‌های مستثنی"
 
-#: includes/Settings.php:710
+#: includes/Settings.php:702
 msgctxt "Settings: Setting Description"
 msgid ""
 "Items with selected terms will be excluded form dropdown on supported post-types."
@@ -4310,812 +4683,1090 @@ msgstr ""
 "مواردی که شامل رده‌های انتخابی باشند، از فهرست انتخابی در نوع‌نوشته‌های پشتیبانی‌شده "
 "استثناء خواهند شد."
 
-#: includes/Settings.php:720
+#: includes/Settings.php:712
 msgctxt "Settings: Setting Title"
 msgid "Force Parents"
 msgstr "تخصیص مادران"
 
-#: includes/Settings.php:721
+#: includes/Settings.php:713
 msgctxt "Settings: Setting Description"
 msgid "Includes parents on the supported post-types."
 msgstr "والدین را در نوع‌نوشته‌های پشتیبانی‌شده شامل می‌شود."
 
-#: includes/Settings.php:729
+#: includes/Settings.php:721
 msgctxt "Settings: Setting Title"
 msgid "Count Not"
 msgstr "شمارش نشده‌ها"
 
-#: includes/Settings.php:730
+#: includes/Settings.php:722
 msgctxt "Settings: Setting Description"
 msgid "Counts not affected items in the content summary."
 msgstr "موارد محاسبه نشده را در گزارش محتوا شمارش می‌کند."
 
-#: includes/Settings.php:738
+#: includes/Settings.php:730
 msgctxt "Settings: Setting Title"
 msgid "Feeds"
 msgstr "خوراک‌ها"
 
-#: includes/Settings.php:739
+#: includes/Settings.php:731
 msgctxt "Settings: Setting Description"
 msgid "Supports feeds for the supported post-types."
 msgstr "خوراک‌ها را برای نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: includes/Settings.php:747
+#: includes/Settings.php:739
 msgctxt "Settings: Setting Title"
 msgid "Pages"
 msgstr "صفحه‌بندی"
 
-#: includes/Settings.php:748
+#: includes/Settings.php:740
 msgctxt "Settings: Setting Description"
 msgid "Supports pagination on the supported post-types."
 msgstr "صفحه‌بندی را برای نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: includes/Settings.php:757
+#: includes/Settings.php:749
+msgctxt "Settings: Setting Title"
+msgid "Supported Post-types"
+msgstr "نوع‌فرسته‌های پشتیبانی‌شده"
+
+#: includes/Settings.php:750
+msgctxt "Settings: Setting Description"
+msgid "Will be available for selected post-type."
+msgstr "برای نوع‌فرسته‌های انتخاب‌شده، در دسترس خواهد بود."
+
+#: includes/Settings.php:751
+msgctxt "Settings: Setting Empty String"
+msgid "There are no supported post-types available!"
+msgstr "هیچ نوع‌فرسته پشتیبانی‌شده‌ای در دسترس نیست!"
+
+#: includes/Settings.php:761
+msgctxt "Settings: Setting Title"
+msgid "Supported Fields"
+msgstr "فیلدهای پشتیبانی‌شده"
+
+#: includes/Settings.php:762
+msgctxt "Settings: Setting Description"
+msgid "Determines the optional fields for each supported post-type."
+msgstr "فیلدهای اختیاری برای هر نوع‌فرسته پشتیبانی‌شده را مشخص می‌کند."
+
+#: includes/Settings.php:763
+msgctxt "Settings: Setting Empty String"
+msgid "There are no supported fields available!"
+msgstr "هیچ فیلد پشتیبانی‌شده‌ای در دسترس نیست!"
+
+#: includes/Settings.php:774
 msgctxt "Settings: Setting Title"
 msgid "Parent Post-types"
 msgstr "نوع‌فرسته‌های والد"
 
-#: includes/Settings.php:758
+#: includes/Settings.php:775
 msgctxt "Settings: Setting Description"
 msgid "Selected parents will be used on the selection box."
 msgstr "والدین منتخب در جعبه انتخاب استفاده خواهند شد."
 
-#: includes/Settings.php:759
+#: includes/Settings.php:776
 msgctxt "Settings: Setting Empty String"
 msgid "There are no parents available!"
 msgstr "هیچ والدی در دسترس نیست!"
 
-#: includes/Settings.php:769
+#: includes/Settings.php:786
 msgctxt "Setting: Setting Title"
 msgid "Empty Content"
 msgstr "محتوای خالی"
 
-#: includes/Settings.php:770
+#: includes/Settings.php:787
 msgctxt "Setting: Setting Description"
 msgid "Displays as empty content placeholder."
 msgstr "برای مکان‌نمای محتوای خالی نمایش داده خواهد شد."
 
-#: includes/Settings.php:771
+#: includes/Settings.php:788
 msgctxt "Setting: Setting Default"
 msgid "There are no content by this title. Search again or create one."
 msgstr ""
 "محتوایی با این عنوان وجود ندارد. دوباره جست‌وجو کنید و یا محتوای تازه‌ای با این "
 "عنوان بسازید."
 
-#: includes/Settings.php:779
+#: includes/Settings.php:796
 msgctxt "Setting: Setting Title"
 msgid "Archive Override"
 msgstr "رونویسی بایگانی"
 
-#: includes/Settings.php:780
+#: includes/Settings.php:797
 msgctxt "Setting: Setting Description"
 msgid "Overrides default template hierarchy for archive."
 msgstr "سلسه مراتب الگوی پیش‌فرض بایگانی را رونویسی می‌کند."
 
-#: includes/Settings.php:790
+#: includes/Settings.php:807
 msgctxt "Setting: Setting Title"
 msgid "Archive Title"
 msgstr "عنوان بایگانی"
 
 #. translators: %s: zero placeholder
-#: includes/Settings.php:792
+#: includes/Settings.php:809
 msgctxt "Setting: Setting Description"
 msgid "Displays as archive title. Leave blank for default or %s to disable."
 msgstr ""
 "برای عنوان بایگانی نمایش داده خواهد شد. برای پیش‌فرض خالی و یا غیرفعال‌سازی %s "
 "بگذارید."
 
-#: includes/Settings.php:802
+#: includes/Settings.php:819
 msgctxt "Setting: Setting Title"
 msgid "Archive Content"
 msgstr "محتوای بایگانی"
 
 #. translators: %s: zero placeholder
-#: includes/Settings.php:804
+#: includes/Settings.php:821
 msgctxt "Setting: Setting Description"
 msgid "Displays as archive content. Leave blank for default or %s to disable."
 msgstr ""
 "برای محتوای بایگانی نمایش داده خواهد شد. برای پیش‌فرض خالی و یا غیرفعال‌سازی %s "
 "بگذارید."
 
-#: includes/Settings.php:813
+#: includes/Settings.php:830
 msgctxt "Setting: Setting Title"
 msgid "Archive Template"
 msgstr "الگوی بایگانی"
 
-#: includes/Settings.php:814
+#: includes/Settings.php:831
 msgctxt "Setting: Setting Description"
 msgid "Used as page template on the archive page."
 msgstr "به عنوان الگوی صفحه در برگه بایگانی استفاده خواهد شد."
 
-#: includes/Settings.php:824
+#: includes/Settings.php:841
 msgctxt "Setting: Setting Title"
 msgid "Display Search Form"
 msgstr "نمایش فرم جست‌وجو"
 
-#: includes/Settings.php:825
+#: includes/Settings.php:842
 msgctxt "Setting: Setting Description"
 msgid "Appends a search form to the content generated on front-end."
 msgstr "فرم جست‌وجو را به محتوای تولیدشده روی سایت اضافه می‌کند."
 
-#: includes/Settings.php:834
+#: includes/Settings.php:851
 msgctxt "Setting: Setting Title"
 msgid "Display Threshold"
 msgstr "آستانه نمایش"
 
-#: includes/Settings.php:835
+#: includes/Settings.php:852
 msgctxt "Setting: Setting Description"
 msgid "Maximum number of items to consider as a long list."
 msgstr ""
 "بیشینه تعداد موارد در هر فهرست تا آن به‌عنوان فهرستی طولانی در نظر گرفته شود."
 
-#: includes/Settings.php:845
+#: includes/Settings.php:862
 msgctxt "Settings: Setting Title"
 msgid "Display Per-Page"
 msgstr "نمایش در هر برگه"
 
-#: includes/Settings.php:846
+#: includes/Settings.php:863
 msgctxt "Settings: Setting Description"
 msgid "Total rows of items per each page of the list."
 msgstr "تعداد ردیف‌های هر صفحه از فهرست را مشخص می‌کند."
 
-#: includes/Settings.php:855
+#: includes/Settings.php:872
 msgctxt "Settings: Setting Title"
 msgid "Default Calendar"
 msgstr "تقویم پیش‌فرض"
 
-#: includes/Settings.php:867
+#: includes/Settings.php:884
 msgctxt "Settings: Setting Title"
 msgid "Calendar List"
 msgstr "فهرست تقویم‌ها"
 
-#: includes/Settings.php:879
+#: includes/Settings.php:896
 msgctxt "Settings: Setting Title"
 msgid "Metadata Support"
 msgstr "پشتیبانی از فراداده‌ها"
 
-#: includes/Settings.php:889
+#: includes/Settings.php:905
+msgctxt "Setting Title"
+msgid "Add Audit Attribute"
+msgstr "افزودن برچسب بازبینی"
+
+#: includes/Settings.php:906
+msgctxt "Setting Description"
+msgid "Appends an audit attribute to each item."
+msgstr "یک برچسب بازبینی برای هر مورد اضافه می‌کند."
+
+#: includes/Settings.php:916
 msgctxt "Settings: Setting Title"
 msgid "Supported Roles"
 msgstr "نقش‌های پشتیبانی‌شده"
 
-#: includes/Settings.php:902
+#: includes/Settings.php:929
 msgctxt "Settings: Setting Title"
 msgid "Excluded Roles"
 msgstr "نقش‌های مستثنی‌شده"
 
-#: includes/Settings.php:915
+#: includes/Settings.php:942
 msgctxt "Settings: Setting Title"
 msgid "Admin Menu Roles"
 msgstr "دسترسی منوی مدیریت"
 
-#: includes/Settings.php:928
+#: includes/Settings.php:955
 msgctxt "Settings: Setting Title"
 msgid "Meta Box Roles"
 msgstr "نقش‌های جعبه‌ها"
 
-#: includes/Settings.php:941
+#: includes/Settings.php:968
 msgctxt "Settings: Setting Title"
 msgid "Adminbar Roles"
 msgstr "دسترسی نوارابزار"
 
-#: includes/Settings.php:999
+#: includes/Settings.php:980
+msgctxt "Settings: Setting Title"
+msgid "Enqueue Libre Fonts"
+msgstr "بارگیری قلم‌های لیبره"
+
+#: includes/Settings.php:981
+msgctxt "Settings: Setting Description"
+msgid "Loads Libre Barcode fonts on print page html head."
+msgstr ""
+
+#: includes/Settings.php:1036
 msgctxt "Settings"
 msgid "Editorial"
 msgstr "تحریریه"
 
-#: includes/Settings.php:1006
+#: includes/Settings.php:1043
 msgctxt "Settings"
 msgid "Back to Editorial"
 msgstr "بازگشت به تحریریه"
 
-#: includes/Settings.php:1036
+#: includes/Settings.php:1073
 msgctxt "Settings: Search Placeholder"
 msgid "Search …"
 msgstr "جست‌وجو …"
 
-#: includes/Settings.php:1042
+#: includes/Settings.php:1079
 msgctxt "Settings"
 msgid "All"
 msgstr "همه"
 
-#: includes/Settings.php:1045 includes/Settings.php:1580
+#: includes/Settings.php:1082 includes/Settings.php:1618
 msgctxt "Settings"
 msgid "Enabled"
 msgstr "فعال"
 
-#: includes/Settings.php:1048 includes/Settings.php:1579
+#: includes/Settings.php:1085 includes/Settings.php:1617
 msgctxt "Settings"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: includes/Settings.php:1075
+#: includes/Settings.php:1112
 msgctxt "Settings: Message"
 msgid "Settings reset."
 msgstr "تنظیمات بازنشانی شد."
 
-#: includes/Settings.php:1076
+#: includes/Settings.php:1113
 msgctxt "Settings: Message"
 msgid "Settings updated."
 msgstr "تنظیمات به‌روز شد."
 
-#: includes/Settings.php:1077
+#: includes/Settings.php:1114
 msgctxt "Settings: Message"
 msgid "Module disabled."
 msgstr "پودمان غیرفعال شد."
 
-#: includes/Settings.php:1078
+#: includes/Settings.php:1115
 msgctxt "Settings: Message"
 msgid "Tables optimized."
 msgstr "جدول داده‌ها، بهینه‌سازی شد."
 
-#: includes/Settings.php:1079
+#: includes/Settings.php:1116
 msgctxt "Settings: Message"
 msgid "Data purged."
 msgstr "داده‌ها دور ریخته شد."
 
-#: includes/Settings.php:1080
+#: includes/Settings.php:1117
 msgctxt "Settings: Message"
 msgid "File/Folder created."
 msgstr "فایل/پوشه ایجاد شد."
 
-#: includes/Settings.php:1081
+#: includes/Settings.php:1118
 msgctxt "Settings: Message"
 msgid "Mail sent successfully."
 msgstr "نامه با موفقیت فرستاده شد."
 
-#: includes/Settings.php:1082
+#: includes/Settings.php:1119
 msgctxt "Settings: Message"
 msgid "Error occurred!"
 msgstr "خطایی رخ داده است!"
 
-#: includes/Settings.php:1083
+#: includes/Settings.php:1120
 msgctxt "Settings: Message"
 msgid "Something&#8217;s wrong!"
 msgstr "چیزی اشتباه است!"
 
-#: includes/Settings.php:1084
+#: includes/Settings.php:1121
 msgctxt "Settings: Message"
 msgid "No item changed!"
 msgstr "موردی تغییر نکرده است!"
 
-#: includes/Settings.php:1085
+#: includes/Settings.php:1122
 msgctxt "Settings: Message"
 msgid "No item added!"
 msgstr "موردی افزوده نشده است!"
 
-#: includes/Settings.php:1086
+#: includes/Settings.php:1123
 msgctxt "Settings: Message"
 msgid "You do not have the access!"
 msgstr "شما دسترسی لازم را ندارید!"
 
 #. translators: %s: count
-#: includes/Settings.php:1088
+#: includes/Settings.php:1125
 msgctxt "Settings: Message"
 msgid "%s items(s) converted!"
 msgstr "%s تبدیل شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1090
+#: includes/Settings.php:1127
 msgctxt "Settings: Message"
 msgid "%s items(s) imported!"
 msgstr "%s مورد درون‌ریزی شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1092
+#: includes/Settings.php:1129
 msgctxt "Settings: Message"
 msgid "%s items(s) created!"
 msgstr "%s مورد افزوده شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1094
+#: includes/Settings.php:1131
 msgctxt "Settings: Message"
 msgid "%s items(s) deleted!"
 msgstr "%s مورد حذف شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1096
+#: includes/Settings.php:1133
 msgctxt "Settings: Message"
 msgid "%s items(s) cleaned!"
 msgstr "%s مورد پاک‌سازی شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1098
+#: includes/Settings.php:1135
 msgctxt "Settings: Message"
 msgid "%s items(s) changed!"
 msgstr "%s مورد تغییر کرد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1100
+#: includes/Settings.php:1137
 msgctxt "Settings: Message"
 msgid "%s items(s) emptied!"
 msgstr "%s مورد خالی شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1102
+#: includes/Settings.php:1139
 msgctxt "Settings: Message"
 msgid "%s items(s) closed!"
 msgstr "%s مورد بسته شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1104
+#: includes/Settings.php:1141
 msgctxt "Settings: Message"
 msgid "%s items(s) re-ordered!"
 msgstr "%s مورد چیده شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1106
+#: includes/Settings.php:1143
 msgctxt "Settings: Message"
 msgid "%s items(s) re-scheduled!"
 msgstr "%s زمان‌بندی دوباره شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1108
+#: includes/Settings.php:1145
 msgctxt "Settings: Message"
 msgid "%s items(s) synced!"
 msgstr "%s مورد همگام شد!"
 
 #. translators: %s: count
-#: includes/Settings.php:1119 includes/Settings.php:1220
+#: includes/Settings.php:1156 includes/Settings.php:1257
 msgctxt "Settings: Message"
 msgid "%s Counted!"
 msgstr "%s شمرده شد!"
 
-#: includes/Settings.php:1148
+#: includes/Settings.php:1185
 msgctxt "Settings: Confirm"
 msgid "Are you sure? This operation can not be undone."
 msgstr "اطمینان دارید؟ این فرآیند قابلیت بازگشت ندارد."
 
-#: includes/Settings.php:1176
+#: includes/Settings.php:1213
 msgctxt "Settings: Button"
 msgid "Reset Settings"
 msgstr "بازنشانی تنظیمات"
 
-#: includes/Settings.php:1177
+#: includes/Settings.php:1214
 msgctxt "Settings: Button"
 msgid "Save Changes"
 msgstr "ذخیره تغییرات"
 
-#: includes/Settings.php:1230
+#: includes/Settings.php:1267
 msgctxt "Settings: Message"
 msgid "Cheatin&#8217; uh?"
 msgstr "کلک میزنی؟!"
 
 #. translators: %s: message
-#: includes/Settings.php:1237
+#: includes/Settings.php:1274
 msgctxt "Settings: Message"
 msgid "huh? %s"
 msgstr "ها؟ %s"
 
-#: includes/Settings.php:1239
+#: includes/Settings.php:1276
 msgctxt "Settings: Message"
 msgid "huh?"
 msgstr "ها؟"
 
-#: includes/Settings.php:1332
+#: includes/Settings.php:1369
 msgctxt "Settings: Notice"
 msgid "Auto-loaded!"
 msgstr "بارگیری خودکار!"
 
-#: includes/Settings.php:1338
+#: includes/Settings.php:1375
 msgctxt "Settings: Button"
 msgid "Enable"
 msgstr "فعال‌سازی"
 
-#: includes/Settings.php:1349
+#: includes/Settings.php:1386
 msgctxt "Settings: Button"
 msgid "Disable"
 msgstr "غیرفعال‌سازی"
 
-#: includes/Settings.php:1360
+#: includes/Settings.php:1397
 msgctxt "Settings: Notice"
 msgid "You have to enable Javascript!"
 msgstr "باید جاوااسکریپت را فعال کنید!"
 
-#: includes/Settings.php:1378
+#: includes/Settings.php:1415
 msgctxt "Settings: Button"
 msgid "Tools"
 msgstr "ابزارها"
 
-#: includes/Settings.php:1390
+#: includes/Settings.php:1427
 msgctxt "Settings: Button"
 msgid "Reports"
 msgstr "گزارشات"
 
-#: includes/Settings.php:1401
+#: includes/Settings.php:1438
 msgctxt "Settings: Button"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: includes/Settings.php:1410
+#: includes/Settings.php:1447
 msgctxt "Settings: Title Attr"
 msgid "Access Code"
 msgstr "کد دسترسی"
 
 #. translators: %s: module title
-#: includes/Settings.php:1416
+#: includes/Settings.php:1453
 msgctxt "Settings"
 msgid "%s Documentation"
 msgstr "مستندات %s"
 
 #. translators: %1$s: plugin url, %2$s: author url
-#: includes/Settings.php:1463
+#: includes/Settings.php:1501
 msgctxt "Settings: Signature"
 msgid "<a href=\"%1$s\">gEditorial</a> is a <a href=\"%2$s\">geminorum</a> project."
 msgstr "<a href=\"%1$s\">تحریریه</a> پروژه‌ای از <a href=\"%2$s\">ژمای‌نوروم</a> است."
 
-#: includes/Settings.php:1495
+#: includes/Settings.php:1533
 msgctxt "Settings: Help Content Title"
 msgid "Editorial Wiki"
 msgstr "ویکی تحریریه"
 
 #. translators: %s: module title
-#: includes/Settings.php:1506
+#: includes/Settings.php:1544
 msgctxt "Settings: Help Content Title"
 msgid "%s Wiki"
 msgstr "ویکی %s"
 
-#: includes/Settings.php:1582
+#: includes/Settings.php:1620
 msgctxt "Settings"
 msgid "No options!"
 msgstr "بدون گزینه!"
 
-#: includes/Settings.php:1583
+#: includes/Settings.php:1621
 msgctxt "Settings"
 msgid "You do not have access to change this option."
 msgstr "شما دسترسی لازم برای تغییر این گزینه را ندارید."
 
-#: includes/Settings.php:2724
+#: includes/Settings.php:2762
 msgctxt "Settings: Switch On-Off"
 msgid "On"
 msgstr "روشن"
 
-#: includes/Settings.php:2725
+#: includes/Settings.php:2763
 msgctxt "Settings: Switch On-Off"
 msgid "Off"
 msgstr "خاموش"
 
-#: includes/ShortCode.php:802
+#: includes/ShortCode.php:794
 msgctxt "ShortCode: Title Attr"
 msgid "Permanent link"
 msgstr "پیوند پایدار"
 
-#: includes/Tablelist.php:115
+#: includes/Tablelist.php:110
 msgctxt "Tablelist: Filter"
 msgid "All PostTypes"
 msgstr "همهٔ نوع‌نوشته‌ها"
 
-#: includes/Tablelist.php:131
+#: includes/Tablelist.php:126
 msgctxt "Tablelist: Filter"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: includes/Tablelist.php:155
+#: includes/Tablelist.php:150
 msgctxt "Tablelist: Row Action: Post"
 msgid "Attached"
 msgstr "پیوست"
 
-#: includes/Tablelist.php:168
+#: includes/Tablelist.php:163
 msgctxt "Tablelist: Row Action: Post"
 msgid "Revisions"
 msgstr "رونوشت‌ها"
 
-#: includes/Tablelist.php:181
+#: includes/Tablelist.php:176
 msgctxt "Tablelist: Row Action: Post"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: includes/Tablelist.php:191
+#: includes/Tablelist.php:186
 msgctxt "Tablelist: Row Action: Post"
 msgid "View"
 msgstr "نمایش"
 
-#: includes/Tablelist.php:228
+#: includes/Tablelist.php:223
 msgctxt "Tablelist: Row Action"
 msgid "View"
 msgstr "نمایش"
 
-#: includes/Tablelist.php:240
+#: includes/Tablelist.php:235
 msgctxt "Tablelist: Column: Post ID"
 msgid "ID"
 msgstr "شناسه"
 
-#: includes/Tablelist.php:247
+#: includes/Tablelist.php:242
 msgctxt "Tablelist: Column: Post Date"
 msgid "Date"
 msgstr "تاریخ"
 
-#: includes/Tablelist.php:257
+#: includes/Tablelist.php:252
 msgctxt "Tablelist: Column: Post Date Modified"
 msgid "On"
 msgstr "تاریخ"
 
-#: includes/Tablelist.php:267
+#: includes/Tablelist.php:262
 msgctxt "Tablelist: Column: Post Type"
 msgid "Type"
 msgstr "نوع"
 
-#: includes/Tablelist.php:280
+#: includes/Tablelist.php:275
 msgctxt "Tablelist: Column: Post Mime"
 msgid "Mime"
 msgstr "مایم"
 
-#: includes/Tablelist.php:294 includes/Tablelist.php:349
+#: includes/Tablelist.php:289 includes/Tablelist.php:344
 msgctxt "Tablelist: Column: Post Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: includes/Tablelist.php:337
+#: includes/Tablelist.php:332
 msgctxt "Tablelist: Column: Post Excerpt"
 msgid "Excerpt"
 msgstr "چکیده"
 
-#: includes/Tablelist.php:359
+#: includes/Tablelist.php:354
 msgctxt "Tablelist: Column: Post Title"
 msgid "Status"
 msgstr "وضعیت"
 
-#: includes/Tablelist.php:377
+#: includes/Tablelist.php:372
 msgctxt "Tablelist: Column: Post Author"
 msgid "Author"
 msgstr "مؤلف"
 
-#: includes/Tablelist.php:397
+#: includes/Tablelist.php:392
 msgctxt "Tablelist: Column: Post Terms"
 msgid "Terms"
 msgstr "رده‌ها"
 
-#: includes/Tablelist.php:412
+#: includes/Tablelist.php:407
 msgctxt "Tablelist: Column: Term ID"
 msgid "ID"
 msgstr "شناسه"
 
-#: includes/Tablelist.php:418
+#: includes/Tablelist.php:413
 msgctxt "Tablelist: Column: Term Name"
 msgid "Name"
 msgstr "نام"
 
-#: includes/Tablelist.php:462
+#: includes/Tablelist.php:457
 msgctxt "Tablelist: Row Action: Term"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: includes/Tablelist.php:471
+#: includes/Tablelist.php:466
 msgctxt "Tablelist: Row Action: Term"
 msgid "View"
 msgstr "نمایش"
 
-#: includes/Tablelist.php:481
+#: includes/Tablelist.php:476
 msgctxt "Tablelist: Column: Term Slug"
 msgid "Slug"
 msgstr "نامک"
 
-#: includes/Tablelist.php:487
+#: includes/Tablelist.php:482
 msgctxt "Tablelist: Column: Term Desc"
 msgid "Description"
 msgstr "توضیحات"
 
-#: includes/Tablelist.php:499
+#: includes/Tablelist.php:494
 msgctxt "Tablelist: Column: Term Meta Date-Start"
 msgid "Date-Start"
 msgstr "تاریخ شروع"
 
-#: includes/Tablelist.php:518
+#: includes/Tablelist.php:513
 msgctxt "Tablelist: Column: Term Meta Date-Start"
 msgid "Date-End"
 msgstr "تاریخ پایان"
 
-#: includes/Template.php:194
+#: includes/Template.php:187
 msgctxt "Template: Term Contact Title"
 msgid "Contact"
 msgstr "ارتباط"
 
-#: includes/Template.php:639
+#: includes/Template.php:635
 msgctxt "Template: Text file label"
 msgid "Text"
 msgstr "متن"
 
 #. translators: %s: search query
-#: includes/Template.php:721
+#: includes/Template.php:717
 msgctxt "Template: Search Link Title Attr"
 msgid "Search for %s"
 msgstr "جست‌وجو برای %s"
 
-#: includes/Template.php:833
+#: includes/Template.php:829
 msgctxt "Template: Meta Link Default Title"
 msgid "External Source"
 msgstr "پیوند بیرونی"
 
-#: includes/Template.php:836
+#: includes/Template.php:832
 msgctxt "Template: Meta Link Default Title Attr"
 msgid "Visit external source"
 msgstr "دیدن پیوند بیرونی"
 
 #. translators: %s: posttype name
-#: includes/Template.php:1053 includes/Template.php:1059
+#: includes/Template.php:1049 includes/Template.php:1055
 msgctxt "Template: Recents"
 msgid "Recent %s"
 msgstr "آخرین %s"
 
-#: includes/Widget.php:364
+#: includes/Widget.php:360
 msgctxt "Widget Core: Group"
 msgid "Heading"
 msgstr "تیتر"
 
-#: includes/Widget.php:365
+#: includes/Widget.php:361
 msgctxt "Widget Core: Group"
 msgid "Miscellaneous"
 msgstr "متفرقه"
 
-#: includes/Widget.php:366
+#: includes/Widget.php:362
 msgctxt "Widget Core: Group"
 msgid "Customs"
 msgstr "سفارشی"
 
-#: includes/Widget.php:367
+#: includes/Widget.php:363
 msgctxt "Widget Core: Group"
 msgid "Configuration"
 msgstr "پیکربندی"
 
-#: includes/Widget.php:381
+#: includes/Widget.php:377
 msgctxt "Widget Core"
 msgid "Custom HTML:"
 msgstr "HTML سفارشی:"
 
-#: includes/Widget.php:400
+#: includes/Widget.php:396
 msgctxt "Widget Core"
 msgid "Custom HTML for Opening Widget:"
 msgstr "HTML سفارشی برای آغاز ابزارک:"
 
-#: includes/Widget.php:419
+#: includes/Widget.php:415
 msgctxt "Widget Core"
 msgid "Custom HTML for Closing Widget:"
 msgstr "HTML سفارشی برای پایان ابزارک:"
 
-#: includes/Widget.php:438
+#: includes/Widget.php:434
 msgctxt "Widget Core"
 msgid "Custom HTML for After Title:"
 msgstr "HTML سفارشی برای بعد از عنوان:"
 
-#: includes/Widget.php:457
+#: includes/Widget.php:453
 msgctxt "Widget Core"
 msgid "Number of posts to show:"
 msgstr "تعداد نوشته‌ها:"
 
-#: includes/Widget.php:473
+#: includes/Widget.php:469
 msgctxt "Widget Core"
 msgid "Trim Characters:"
 msgstr "کوتاه‌کردن نویسه‌ها:"
 
-#: includes/Widget.php:497
+#: includes/Widget.php:493
 msgctxt "Widget Core"
 msgid "Context:"
 msgstr "زمینه:"
 
-#: includes/Widget.php:511
+#: includes/Widget.php:507
 msgctxt "Widget Core"
 msgid "Class:"
 msgstr "کلاس:"
 
-#: includes/Widget.php:523
+#: includes/Widget.php:519
 msgctxt "Widget Core"
 msgid "&ndash; (Any)"
 msgstr "&ndash; (هرکدام)"
 
-#: includes/Widget.php:537
+#: includes/Widget.php:533
 msgctxt "Widget Core"
 msgid "PostType:"
 msgstr "نوع‌نوشته:"
 
-#: includes/Widget.php:548
+#: includes/Widget.php:544
 msgctxt "Widget Core"
 msgid "Taxonomies:"
 msgstr "رده‌بندی‌ها:"
 
-#: includes/Widget.php:576
+#: includes/Widget.php:572
 msgctxt "Widget Core"
 msgid "&ndash; All Taxonomies &ndash;"
 msgstr "&ndash; همهٔ رده‌بندی‌ها &ndash;"
 
-#: includes/Widget.php:590
+#: includes/Widget.php:586
 msgctxt "Widget Core"
 msgid "Taxonomy:"
 msgstr "رده‌بندی:"
 
-#: includes/Widget.php:603
+#: includes/Widget.php:599
 msgctxt "Widget Core"
 msgid "Title:"
 msgstr "عنوان:"
 
-#: includes/Widget.php:617
+#: includes/Widget.php:613
 msgctxt "Widget Core"
 msgid "Title Link:"
 msgstr "پیوند عنوان:"
 
-#: includes/Widget.php:631
+#: includes/Widget.php:627
 msgctxt "Widget Core"
 msgid "Title Image:"
 msgstr "تصویر عنوان:"
 
-#: includes/Widget.php:637
+#: includes/Widget.php:633
 msgctxt "Widget Core"
 msgid "Custom Link:"
 msgstr "پیوند سفارشی:"
 
-#: includes/Widget.php:654
+#: includes/Widget.php:650
 msgctxt "Widget Core"
 msgid "Custom Code:"
 msgstr "کد سفارشی:"
 
-#: includes/Widget.php:671
+#: includes/Widget.php:667
 msgctxt "Widget Core"
 msgid "Custom Title:"
 msgstr "عنوان سفارشی:"
 
-#: includes/Widget.php:688
+#: includes/Widget.php:684
 msgctxt "Widget Core"
 msgid "Empty Message:"
 msgstr "پیام خالی:"
 
-#: includes/Widget.php:711
+#: includes/Widget.php:707
 msgctxt "Widget Core"
 msgid "Avatar Size:"
 msgstr "اندازه آواتار:"
 
-#: includes/Widget.php:738
+#: includes/Widget.php:734
 msgctxt "Widget Core"
 msgid "Image Size:"
 msgstr "اندازه تصویر:"
 
-#: includes/Widget.php:742
+#: includes/Widget.php:738
 msgctxt "Widget Core"
 msgid "There are no image sizes available!"
 msgstr "اندازه تصویری در دسترس نیست!"
 
-#: includes/Widget.php:757
+#: includes/Widget.php:753
 msgctxt "Widget Core"
 msgid "&ndash; Select &ndash;"
 msgstr "&ndash; انتخاب کنید &ndash;"
 
-#: includes/Widget.php:767
+#: includes/Widget.php:763
 msgctxt "Widget Core"
 msgid "Checked"
 msgstr "انتخاب کنید"
 
-#: includes/Widget.php:786
+#: includes/Widget.php:782
 msgctxt "Widget Core"
 msgid "Page:"
 msgstr "برگه:"
 
-#: includes/Widget.php:813
+#: includes/Widget.php:809
 msgctxt "Widget Core"
 msgid "Select taxonomy first!"
 msgstr "ابتدا رده‌بندی را انتخاب کنید!"
 
-#: includes/Widget.php:821
+#: includes/Widget.php:817
 msgctxt "Widget Core"
 msgid "The taxonomy is not available!"
 msgstr "رده‌بندی در دسترس نیست!"
 
-#: includes/Widget.php:824
+#: includes/Widget.php:820
 msgctxt "Widget Core"
 msgid "There are no terms available!"
 msgstr "رده‌ای در دسترس نیست!"
 
-#: includes/Widget.php:843
+#: includes/Widget.php:839
 msgctxt "Widget Core"
 msgid "Term:"
 msgstr "رده:"
 
-#: includes/Widget.php:849
+#: includes/Widget.php:845
 msgctxt "Widget Core"
 msgid "Must has Thumbnail Image"
 msgstr "باید تصویر بندانگشتی داشته باشد"
 
-#: includes/Widget.php:864
+#: includes/Widget.php:860
 msgctxt "Widget Core"
 msgid "Wrap as List Items"
 msgstr "لفافه‌بندی مانند فهرست موارد"
+
+#~ msgctxt "Internal: DashboardSummary: Message"
+#~ msgid "There are no reports available!"
+#~ msgstr "گزارشی در دسترس نیست!"
+
+#~ msgctxt "Modules: Ranked"
+#~ msgid "Editorial Ranks"
+#~ msgstr "درجه‌بندی‌های تحریریه"
+
+#~ msgctxt "Modules: Invoice"
+#~ msgid "Invoice"
+#~ msgstr "صورت‌حساب"
+
+#~ msgctxt "Module"
+#~ msgid "Print Me!"
+#~ msgstr "چاپ کن!"
+
+#~ msgctxt "Module: Setting Section Title"
+#~ msgid "Printing"
+#~ msgstr "چاپ"
+
+#~ msgctxt "Modules: Contacts"
+#~ msgid "Contacts"
+#~ msgstr "ارتباط‌ها"
+
+#~ msgctxt "Modules: Contacts"
+#~ msgid "Editorial Contact List"
+#~ msgstr "فهرست ارتباط‌های تحریریه"
+
+#~ msgctxt "Modules: Iran"
+#~ msgid "Iran"
+#~ msgstr "ایران"
+
+#~ msgctxt "Modules: National Code"
+#~ msgid "National Code"
+#~ msgstr "کد ملی"
+
+#~ msgctxt "Modules: National Code"
+#~ msgid "Tools for National Code"
+#~ msgstr "ابزارهایی برای کد ملی"
+
+#~ msgctxt "Modules: Agenda"
+#~ msgid "Itinerary Information for Contents"
+#~ msgstr "اطلاعات خط سیر محتوا"
+
+#~ msgctxt "Modules: Units"
+#~ msgid "Measurement Units"
+#~ msgstr "واحدهای اندازه‌گیری محتوا"
+
+#~ msgctxt "Modules: Measurements"
+#~ msgid "Measurements"
+#~ msgstr "ابعاد"
+
+#~ msgctxt "Modules: Measurements"
+#~ msgid "Weighting and Sizing Management"
+#~ msgstr "مدیریت وزن و اندازه"
+
+#~ msgctxt "Modules: Archived"
+#~ msgid "Archived"
+#~ msgstr "بایگانی‌شده"
+
+#~ msgctxt "Modules: Archived"
+#~ msgid "Editorial Archived Contents"
+#~ msgstr "محتوای بایگانی‌شده تحریریه"
+
+#~ msgctxt "Modules: Navigations"
+#~ msgid "Navigations"
+#~ msgstr "راه‌بری"
+
+#~ msgctxt "Modules: Navigations"
+#~ msgid "Navigation Menu Enhancements"
+#~ msgstr "بهینه‌سازی فهرست‌های راه‌بری"
+
+#~ msgctxt "Modules: Negar"
+#~ msgid "Negar"
+#~ msgstr "نگار"
+
+#~ msgctxt "Modules: Negar"
+#~ msgid "Personal Private Contacts"
+#~ msgstr "فهرست مخاطبین شخصی"
+
+#~ msgctxt "Modules: Newsroom"
+#~ msgid "Newsroom"
+#~ msgstr "اتاق خبر"
+
+#~ msgctxt "Module: Metabox Empty: `listbox_empty`"
+#~ msgid "No items connected to this %2$s: &ldquo;%1$s&rdquo;"
+#~ msgstr "موردی به این %2$s &ldquo;%1$s&rdquo; مرتبط نشده است."
+
+#~ msgctxt "Module: Paired: Message"
+#~ msgid "No items connected!"
+#~ msgstr "چیزی مرتبط نشده است!"
+
+#~ msgctxt "Modules: Trained"
+#~ msgid "Editorial Trainings"
+#~ msgstr "آموزش‌های تحریریه"
+
+#~ msgctxt "Helper: Tax Generator"
+#~ msgid "Description"
+#~ msgstr "توضیحات"
+
+#~ msgctxt "Helper: Tax Generator"
+#~ msgid "Uncategorized"
+#~ msgstr "دسته‌بندی‌نشده"
+
+#~ msgctxt "Module: Setting Section Title"
+#~ msgid "Posts-to-Posts"
+#~ msgstr "نوشته‌ها به نوشته‌ها"
+
+#~ msgctxt "Module: Paired: Table Column"
+#~ msgid "Slugged / Paired"
+#~ msgstr "هم‌نامک/جفت"
+
+#~ msgctxt "Module: Paired: Table Column"
+#~ msgid "Desc. / Exce."
+#~ msgstr "توضـ/چکیـ"
+
+#~ msgctxt "Module: Paired: Table Column"
+#~ msgid "Count"
+#~ msgstr "شمار"
+
+#~ msgctxt "Module: Paired: Table Column"
+#~ msgid "Thumbnail"
+#~ msgstr "بند‌انگشتی"
+
+#~ msgctxt "Module: Paired: Table Column"
+#~ msgid "Image"
+#~ msgstr "تصویر"
+
+#~ msgctxt "Module: Paired: Table Action"
+#~ msgid "Create Paired Posts"
+#~ msgstr "ایجاد فرسته‌های جفت"
+
+#~ msgctxt "Module: Paired: Table Action"
+#~ msgid "Connect Paired Posts"
+#~ msgstr "بازپیوست فرسته‌های جفت"
+
+#~ msgctxt "Module: Paired: Table Action"
+#~ msgid "Re-Sync Paired Images"
+#~ msgstr "همگام‌سازی تصاویر جفت"
+
+#~ msgctxt "Module: Paired: Table Action"
+#~ msgid "Re-Sync Paired Descriptions"
+#~ msgstr "همگام‌سازی توضیحات جفت"
+
+#~ msgctxt "Module: Paired: Table Action"
+#~ msgid "Empty Paired Descriptions"
+#~ msgstr "خالی‌کردن توضیحات جفت"
+
+#~ msgctxt "Module: Paired: Table Action"
+#~ msgid "Store Paired Orders"
+#~ msgstr "ذخیره چینش‌های جفت"
+
+#~ msgctxt "Module: Paired: Table Action"
+#~ msgid "Delete Paired Terms"
+#~ msgstr "پاک‌کردن رده‌های جفت"
+
+#~ msgctxt "Module: Paired: Header"
+#~ msgid "Paired Terms Tools"
+#~ msgstr "ابزارهای رده‌های جفت"
+
+#~ msgctxt "Module: Paired: Message"
+#~ msgid "There are no terms available!"
+#~ msgstr "رده‌ای در دسترس نیست!"
+
+#~ msgctxt "Module: Message"
+#~ msgid "There are no reports available!"
+#~ msgstr "گزارشی در دسترس نیست!"
+
+#~ msgctxt "Internal: BulkImports: Button Label"
+#~ msgid "%s Upload"
+#~ msgstr "%s بارگذاری"
+
+#~ msgctxt "Internal: BulkImports: Page Title"
+#~ msgid "Import Items for %s"
+#~ msgstr "درون‌ریزی موارد برای %s"
+
+#~ msgctxt "Module: Import Items"
+#~ msgid "Each item on each line"
+#~ msgstr "هر مورد روی یک خط"
+
+#~ msgctxt "Module: Exports: Button Label"
+#~ msgid "%s Upload"
+#~ msgstr "%s بارگذاری"
+
+#~ msgctxt "Modules: Drivers"
+#~ msgid "Drivers"
+#~ msgstr "رانندگان"
+
+#~ msgctxt "Modules: Drivers"
+#~ msgid "Editorial Drivers Management"
+#~ msgstr "مدیریت رانندگان تحریریه"
+
+#~ msgctxt "Modules: Vehicle"
+#~ msgid "Vehicle"
+#~ msgstr "خودرو"
+
+#~ msgctxt "Modules: Vehicle"
+#~ msgid "Editorial Cars Management"
+#~ msgstr "مدیریت خودروهای تحریریه"
+
+#~ msgctxt "Module: Exports: Button Label"
+#~ msgid "%1$s Export: %2$s"
+#~ msgstr "%1$s برون‌بری: %2$s"
+
+#~ msgctxt "Module: Exports: Button Title"
+#~ msgid "Download Exported CSV File"
+#~ msgstr "دریافت پرونده CSV برون‌بری"
+
+#~ msgctxt "Module: Export Type Title"
+#~ msgid "Simple"
+#~ msgstr "ساده"
+
+#~ msgctxt "Module: Export Type Title"
+#~ msgid "Advanced"
+#~ msgstr "پیشرفته"
+
+#~ msgctxt "Module: Export Type Title"
+#~ msgid "Full"
+#~ msgstr "کامل"
+
+#~ msgctxt "Modules: Priority"
+#~ msgid "Priority"
+#~ msgstr "اولویت"
+
+#~ msgctxt "Modules: Programs"
+#~ msgid "Programs"
+#~ msgstr "برنامه‌ها"
 
 #~ msgctxt "Modules: Districted"
 #~ msgid "The World by Country"

@@ -13,128 +13,63 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Licensed\n"
 "X-Domain: geditorial-licensed\n"
 
-#: Licensed.php:29
-msgctxt "Setting"
-msgid "There are no driving licences available!"
-msgstr ""
-
-#: Licensed.php:37
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr ""
-
-#: Licensed.php:38
-msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Driving Licences."
-msgstr ""
-
-#: Licensed.php:44
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr ""
-
-#: Licensed.php:45
-msgctxt "Setting Description"
-msgid "Roles that can Assign Driving Licences."
-msgstr ""
-
-#: Licensed.php:51
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr ""
-
-#: Licensed.php:52
-msgctxt "Setting Description"
-msgid "Roles that can see Driving Licences Reports."
-msgstr ""
-
-#: Licensed.php:58
-msgctxt "Setting Title"
-msgid "Restricted Roles"
-msgstr ""
-
-#: Licensed.php:59
-msgctxt "Setting Description"
-msgid "Roles that check for Driving Licences visibility."
-msgstr ""
-
-#: Licensed.php:65
-msgctxt "Setting Title"
-msgid "Restricted Licences"
-msgstr ""
-
-#: Licensed.php:66
-msgctxt "Setting Description"
-msgid "Handles visibility of each licence based on meta values."
-msgstr ""
-
-#: Licensed.php:69
-msgctxt "Setting Option"
-msgid "Disabled"
-msgstr ""
-
 #: Licensed.php:70
-msgctxt "Setting Option"
-msgid "Hidden"
-msgstr ""
-
-#: Licensed.php:104
 msgid "Driving Licence"
 msgid_plural "Driving Licences"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Licensed.php:108
+#: Licensed.php:74
 msgctxt "Label: Show Option All"
 msgid "Licences"
 msgstr ""
 
-#: Licensed.php:109
+#: Licensed.php:75
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr ""
 
-#: Licensed.php:118
+#: Licensed.php:84
 msgctxt "Dashboard Widget Title"
 msgid "Your Driving Licence Summary"
 msgstr ""
 
-#: Licensed.php:119
+#: Licensed.php:85
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Driving Licence Summary"
 msgstr ""
 
-#: Licensed.php:124
+#: Licensed.php:90
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr ""
 
-#: Licensed.php:125
+#: Licensed.php:91
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr ""
 
-#: Licensed.php:126
+#: Licensed.php:92
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr ""
 
-#: Licensed.php:127
+#: Licensed.php:93
 msgctxt "Default Term"
 msgid "Category One"
 msgstr ""
 
-#: Licensed.php:128
+#: Licensed.php:94
 msgctxt "Default Term"
 msgid "Loader"
 msgstr ""
 
-#: Licensed.php:129
+#: Licensed.php:95
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr ""
 
-#: Licensed.php:130
+#: Licensed.php:96
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr ""

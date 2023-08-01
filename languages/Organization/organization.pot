@@ -13,118 +13,150 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Organization\n"
 "X-Domain: geditorial-organization\n"
 
-#: Organization.php:34
+#: Organization.php:46
 msgctxt "Settings"
 msgid "Sub-departments"
 msgstr ""
 
-#: Organization.php:35
+#: Organization.php:47
 msgctxt "Settings"
 msgid "Substitute taxonomy for the departments and supported post-types."
 msgstr ""
 
-#: Organization.php:55
+#: Organization.php:66
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Organization.php:56
+#: Organization.php:67
 msgctxt "Settings"
 msgid "Redirects department archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Organization.php:107
-#: Organization.php:108
+#: Organization.php:118
+#: Organization.php:119
 msgid "Department"
 msgid_plural "Departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:109
+#: Organization.php:120
 msgid "Department Category"
 msgid_plural "Department Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:110
+#: Organization.php:121
 msgid "Sub-department"
 msgid_plural "Sub-departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:111
+#: Organization.php:122
 msgid "Department Type"
 msgid_plural "Department Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:112
+#: Organization.php:123
 msgid "Department Status"
 msgid_plural "Department Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:116
+#: Organization.php:127
 msgctxt "Label: Featured Image"
 msgid "Department Badge"
 msgstr ""
 
-#: Organization.php:117
+#: Organization.php:128
 msgctxt "Label: MetaBox Title"
 msgid "The Department"
 msgstr ""
 
-#: Organization.php:120
+#: Organization.php:131
 msgctxt "Label: MetaBox Title"
 msgid "In This Department"
 msgstr ""
 
-#: Organization.php:123
+#: Organization.php:134
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Organization.php:126
+#: Organization.php:137
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Organization.php:129
+#: Organization.php:140
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Organization.php:139
+#: Organization.php:149
+msgctxt "Misc: `column_icon_title`"
+msgid "Department"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Organization.php:154
+msgctxt "Metabox: `listbox_title`"
+msgid "%2$s Members of &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: Organization.php:159
 msgctxt "Default Term"
 msgid "Working"
 msgstr ""
 
-#: Organization.php:140
+#: Organization.php:160
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr ""
 
-#: Organization.php:141
+#: Organization.php:161
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr ""
 
-#: Organization.php:142
+#: Organization.php:162
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Organization.php:143
+#: Organization.php:163
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Organization.php:166
+#: Organization.php:195
+msgctxt "Field Title"
+msgid "Organization Code"
+msgstr ""
+
+#: Organization.php:196
+msgctxt "Field Description"
+msgid "Unique Organization Code"
+msgstr ""
+
+#: Organization.php:204
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr ""
 
-#: Organization.php:167
+#: Organization.php:205
 msgctxt "Field Description"
 msgid "Unique Organization Number"
+msgstr ""
+
+#. translators: %1$s: mean-age number, %2$s: count number
+#: Organization.php:486
+msgctxt "Mean-Age"
+msgid "Organization Mean-age is %1$s (from total %2$s)"
+msgstr ""
+
+#: Organization.php:589
+msgctxt "Header"
+msgid "Organization Tools"
 msgstr ""

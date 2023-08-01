@@ -13,151 +13,151 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Inquire\n"
 "X-Domain: geditorial-inquire\n"
 
-#: Inquire.php:34
+#: Inquire.php:37
 msgctxt "Setting Title"
 msgid "Question Roles"
 msgstr ""
 
-#: Inquire.php:35
+#: Inquire.php:38
 msgctxt "Setting Description"
 msgid "Roles that can change the question."
 msgstr ""
 
-#: Inquire.php:42
+#: Inquire.php:45
 msgctxt "Setting Title"
 msgid "Make Public"
 msgstr ""
 
-#: Inquire.php:43
+#: Inquire.php:46
 msgctxt "Setting Description"
 msgid "Displays Inquiries on the front-end."
 msgstr ""
 
-#: Inquire.php:75
+#: Inquire.php:78
 msgid "Inquiry"
 msgid_plural "Inquiries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:76
+#: Inquire.php:79
 msgid "Inquiry Subject"
 msgid_plural "Inquiry Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:77
+#: Inquire.php:80
 msgid "Inquiry Status"
 msgid_plural "Inquiry Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:78
+#: Inquire.php:81
 msgid "Inquiry Priority"
 msgid_plural "Inquiry Priorities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:82
+#: Inquire.php:85
 msgctxt "Label: Excerpt Label"
 msgid "Question"
 msgstr ""
 
-#: Inquire.php:92
+#: Inquire.php:95
 msgctxt "Default Term"
 msgid "Drafted"
 msgstr ""
 
-#: Inquire.php:93
+#: Inquire.php:96
 msgctxt "Default Term"
 msgid "Approved"
 msgstr ""
 
-#: Inquire.php:94
+#: Inquire.php:97
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Inquire.php:95
+#: Inquire.php:98
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr ""
 
-#: Inquire.php:96
+#: Inquire.php:99
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr ""
 
-#: Inquire.php:97
+#: Inquire.php:100
 msgctxt "Default Term"
 msgid "Assigned"
 msgstr ""
 
-#: Inquire.php:98
+#: Inquire.php:101
 msgctxt "Default Term"
 msgid "Answering"
 msgstr ""
 
-#: Inquire.php:99
+#: Inquire.php:102
 msgctxt "Default Term"
 msgid "Reviewing"
 msgstr ""
 
-#: Inquire.php:100
+#: Inquire.php:103
 msgctxt "Default Term"
 msgid "Archived"
 msgstr ""
 
-#: Inquire.php:101
+#: Inquire.php:104
 msgctxt "Default Term"
 msgid "Ready"
 msgstr ""
 
-#: Inquire.php:102
+#: Inquire.php:105
 msgctxt "Default Term"
 msgid "Final"
 msgstr ""
 
-#: Inquire.php:105
+#: Inquire.php:108
 msgctxt "Default Term"
 msgid "Immediate"
 msgstr ""
 
-#: Inquire.php:106
+#: Inquire.php:109
 msgctxt "Default Term"
 msgid "High"
 msgstr ""
 
-#: Inquire.php:107
+#: Inquire.php:110
 msgctxt "Default Term"
 msgid "Normal"
 msgstr ""
 
-#: Inquire.php:108
+#: Inquire.php:111
 msgctxt "Default Term"
 msgid "Low"
 msgstr ""
 
-#: Inquire.php:109
+#: Inquire.php:112
 msgctxt "Default Term"
 msgid "Zero"
 msgstr ""
 
-#: Inquire.php:165
+#: Inquire.php:168
 msgctxt "Template Title"
 msgid "Editorial: Inquire: Dashboard"
 msgstr ""
 
-#: Inquire.php:233
+#: Inquire.php:223
 msgctxt "Placeholder"
 msgid "Enter question title here"
 msgstr ""
 
-#: Inquire.php:255
+#: Inquire.php:245
 msgctxt "Dashboard Title"
 msgid "Inquiries"
 msgstr ""
 
-#: ModuleTemplate.php:28
+#: ModuleTemplate.php:27
 msgctxt "Header"
 msgid "Overview of Inquiries"
 msgstr ""

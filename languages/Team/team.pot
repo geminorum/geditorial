@@ -13,89 +13,89 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Team\n"
 "X-Domain: geditorial-team\n"
 
-#: Team.php:57
+#: Team.php:60
 msgid "Team Member"
 msgid_plural "Team Members"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Team.php:58
+#: Team.php:61
 msgid "Team Member Group"
 msgid_plural "Team Member Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Team.php:62
+#: Team.php:65
 msgctxt "Label Menu Name"
 msgid "The Team"
 msgstr ""
 
-#: Team.php:73
+#: Team.php:76
 msgctxt "Field Title"
 msgid "Role"
 msgstr ""
 
-#: Team.php:74
+#: Team.php:77
 msgctxt "Field Description"
 msgid "Enter a byline for the team member (for example: \"Director of Production\")."
 msgstr ""
 
-#: Team.php:79
+#: Team.php:82
 msgctxt "Field Title"
 msgid "Gravatar E-mail Address"
 msgstr ""
 
-#: Team.php:80
+#: Team.php:83
 msgctxt "Field Description"
 msgid "Enter an e-mail address, to use a Gravatar, instead of using the \"Featured Image\"."
 msgstr ""
 
-#: Team.php:85
+#: Team.php:88
 msgctxt "Field Title"
 msgid "Personal Site"
 msgstr ""
 
-#: Team.php:86
+#: Team.php:89
 msgctxt "Field Description"
 msgid "Enter this team member's URL (for example: https://geminorum.ir/)."
 msgstr ""
 
-#: Team.php:91
+#: Team.php:94
 msgctxt "Field Title"
 msgid "Contact E-mail Address"
 msgstr ""
 
-#: Team.php:92
+#: Team.php:95
 msgctxt "Field Description"
 msgid "Enter a contact email address for this team member to be displayed as a link on the frontend."
 msgstr ""
 
-#: Team.php:97
+#: Team.php:100
 msgctxt "Field Title"
 msgid "Telephone Number"
 msgstr ""
 
-#: Team.php:98
+#: Team.php:101
 msgctxt "Field Description"
 msgid "Enter a telephone number for this team member to be displayed as a link on the frontend."
 msgstr ""
 
-#: Team.php:103
+#: Team.php:106
 msgctxt "Field Title"
 msgid "Twitter Username"
 msgstr ""
 
-#: Team.php:104
+#: Team.php:107
 msgctxt "Field Description"
 msgid "Enter this team member's Twitter username without the @ (for example: geminorumir)."
 msgstr ""
 
-#: Team.php:109
+#: Team.php:112
 msgctxt "Field Title"
 msgid "Network Username"
 msgstr ""
 
-#: Team.php:110
+#: Team.php:113
 msgctxt "Field Description"
 msgid "Map this team member to a user on this site."
 msgstr ""

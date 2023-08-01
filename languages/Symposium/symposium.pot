@@ -13,67 +13,67 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Symposium\n"
 "X-Domain: geditorial-symposium\n"
 
-#: Symposium.php:56
+#: Symposium.php:60
 msgid "Session"
 msgid_plural "Sessions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:57
+#: Symposium.php:61
 msgid "Session Category"
 msgid_plural "Session Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:58
+#: Symposium.php:62
 msgid "Session Type"
 msgid_plural "Session Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:59
+#: Symposium.php:63
 msgid "Session Audience"
 msgid_plural "Session Audiences"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:60
+#: Symposium.php:64
 msgid "Session Subject"
 msgid_plural "Session Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:69
+#: Symposium.php:73
 msgctxt "Session: Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Symposium.php:75
+#: Symposium.php:79
 msgctxt "Session Type: Default Term"
 msgid "Lecture"
 msgstr ""
 
-#: Symposium.php:76
+#: Symposium.php:80
 msgctxt "Session Type: Default Term"
 msgid "Conference"
 msgstr ""
 
-#: Symposium.php:77
+#: Symposium.php:81
 msgctxt "Session Type: Default Term"
 msgid "Colloquium"
 msgstr ""
 
-#: Symposium.php:78
+#: Symposium.php:82
 msgctxt "Session Type: Default Term"
 msgid "Book Review"
 msgstr ""
 
-#: Symposium.php:94
+#: Symposium.php:98
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr ""
 
-#: Symposium.php:95
+#: Symposium.php:99
 msgctxt "Field Description"
 msgid "Featured People in the Session"
 msgstr ""

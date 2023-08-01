@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Badges\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:28+0330\n"
+"PO-Revision-Date: 2023-08-01 23:03+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,110 +11,98 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
-#: Badges.php:31 Badges.php:332
-msgctxt "Setting"
-msgid "There are no badges available!"
-msgstr "نشانی در دسترس نیست!"
-
-#: Badges.php:39
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr "نقش‌های مدیریت بازبینی"
-
-#: Badges.php:40
-msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Badges."
-msgstr "نقش‌هایی که میتوانند نشان‌ها را مدیریت، ویرایش و یا حذف کنند."
-
-#: Badges.php:46
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr "نقش‌های مأمور بازبینی"
-
-#: Badges.php:47
-msgctxt "Setting Description"
-msgid "Roles that can Assign Badges."
-msgstr "نقش‌هایی که میتوانند نشان‌ها را تخصیص دهند."
-
-#: Badges.php:53
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr "نقش‌های گزارشات"
-
-#: Badges.php:54
-msgctxt "Setting Description"
-msgid "Roles that can see Badges Reports."
-msgstr "نقش‌هایی که می‌توانند گزارش‌های نشان‌ها را ببینند."
-
-#: Badges.php:60
-msgctxt "Setting Title"
-msgid "Restricted Roles"
-msgstr "نقش‌های محدود‌شده"
-
-#: Badges.php:61
-msgctxt "Setting Description"
-msgid "Roles that check for Badges visibility."
-msgstr "نقش‌هایی که سطح دسترسی هر نشان برای نمایش به آن‌ها بررسی می‌شود."
-
-#: Badges.php:67
-msgctxt "Setting Title"
-msgid "Restricted Badges"
-msgstr "نشان‌های محدودشده"
-
-#: Badges.php:68
-msgctxt "Setting Description"
-msgid "Handles visibility of each badge on meta values."
-msgstr "بر اساس متای هر نشان، نمایانی آن را مشخص میکند."
-
-#: Badges.php:71
-msgctxt "Setting Option"
-msgid "Disabled"
-msgstr "غیرفعال"
-
-#: Badges.php:72
-msgctxt "Setting Option"
-msgid "Hidden"
-msgstr "پنهانی"
-
-#: Badges.php:110
+#: Badges.php:74
 msgid "Badge"
 msgid_plural "Badges"
 msgstr[0] "نشان‌ها"
 msgstr[1] "نشان"
 
-#: Badges.php:114
+#: Badges.php:78
 msgctxt "Label: Menu Name"
 msgid "Content Badges"
 msgstr "نشان‌های محتوا"
 
-#: Badges.php:115
+#: Badges.php:79
 msgctxt "Label: Show Option All"
 msgid "Badges"
 msgstr "نشان‌ها"
 
-#: Badges.php:116
+#: Badges.php:80
 msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr "(بی‌نشان)"
 
-#: Badges.php:125
+#: Badges.php:89
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Badges Summary"
 msgstr "گزارش نشان‌های محتوای شما"
 
-#: Badges.php:126
+#: Badges.php:90
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr "گزارش نشان‌های تحریریه"
 
-#: Badges.php:327
+#: Badges.php:239
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr "گزارش نشان‌ها"
+
+#: Badges.php:244
+msgctxt "Setting"
+msgid "There are no badges available!"
+msgstr "نشانی در دسترس نیست!"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Manage Roles"
+#~ msgstr "نقش‌های مدیریت بازبینی"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Manage, Edit and Delete Badges."
+#~ msgstr "نقش‌هایی که میتوانند نشان‌ها را مدیریت، ویرایش و یا حذف کنند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Assign Roles"
+#~ msgstr "نقش‌های مأمور بازبینی"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can Assign Badges."
+#~ msgstr "نقش‌هایی که میتوانند نشان‌ها را تخصیص دهند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Reports Roles"
+#~ msgstr "نقش‌های گزارشات"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can see Badges Reports."
+#~ msgstr "نقش‌هایی که می‌توانند گزارش‌های نشان‌ها را ببینند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Restricted Roles"
+#~ msgstr "نقش‌های محدود‌شده"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that check for Badges visibility."
+#~ msgstr "نقش‌هایی که سطح دسترسی هر نشان برای نمایش به آن‌ها بررسی می‌شود."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Restricted Badges"
+#~ msgstr "نشان‌های محدودشده"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Handles visibility of each badge on meta values."
+#~ msgstr "بر اساس متای هر نشان، نمایانی آن را مشخص میکند."
+
+#~ msgctxt "Setting Option"
+#~ msgid "Disabled"
+#~ msgstr "غیرفعال"
+
+#~ msgctxt "Setting Option"
+#~ msgid "Hidden"
+#~ msgstr "پنهانی"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Restricted Terms"

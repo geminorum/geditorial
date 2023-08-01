@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Attend\n"
 "X-Domain: geditorial-attend\n"
 
-#: Attend.php:43
+#: Attend.php:45
 msgid "Attendance"
 msgid_plural "Attendances"
 msgstr[0] ""

@@ -14,61 +14,71 @@ msgstr ""
 "X-Domain: geditorial-static-covers\n"
 
 #. translators: %s: supported object label
-#: StaticCovers.php:41
-#: StaticCovers.php:81
+#: StaticCovers.php:44
+#: StaticCovers.php:84
 msgctxt "Setting Title"
 msgid "Reference Meta-key for %s"
 msgstr ""
 
-#: StaticCovers.php:42
+#: StaticCovers.php:45
 msgctxt "Setting Description"
 msgid "Defines reference meta-key for the post-type."
 msgstr ""
 
 #. translators: %s: supported object label
-#: StaticCovers.php:53
-#: StaticCovers.php:93
+#: StaticCovers.php:56
+#: StaticCovers.php:96
 msgctxt "Setting Title"
 msgid "URL Template for %s"
 msgstr ""
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:55
+#: StaticCovers.php:58
 msgctxt "Setting Description"
 msgid "Defines default URL template for the post-type. Available tokens are %s."
 msgstr ""
 
 #. translators: %s: supported object label
-#: StaticCovers.php:63
-#: StaticCovers.php:103
+#: StaticCovers.php:66
+#: StaticCovers.php:106
 msgctxt "Setting Title"
 msgid "Path Template for %s"
 msgstr ""
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:65
+#: StaticCovers.php:68
 msgctxt "Setting Description"
 msgid "Defines default path template for the post-type. Available tokens are %s."
 msgstr ""
 
-#: StaticCovers.php:82
+#: StaticCovers.php:85
 msgctxt "Setting Description"
 msgid "Defines reference meta-key for the taxonomy."
 msgstr ""
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:95
+#: StaticCovers.php:98
 msgctxt "Setting Description"
 msgid "Defines default URL template for the taxonomy. Available tokens are %s."
 msgstr ""
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:105
+#: StaticCovers.php:108
 msgctxt "Setting Description"
 msgid "Defines default path template for the taxonomy. Available tokens are %s."
 msgstr ""
 
-#: StaticCovers.php:139
+#: StaticCovers.php:118
+msgctxt "Setting Title"
+msgid "Counter Threshold"
+msgstr ""
+
+#: StaticCovers.php:119
+msgctxt "Setting Description"
+msgid "Defines digit places number needs to be to not have zeros added to the counter token."
+msgstr ""
+
+#: StaticCovers.php:152
 msgctxt "MetaBox Title"
 msgid "Cover"
 msgstr ""

@@ -13,63 +13,63 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Schedule\n"
 "X-Domain: geditorial-schedule\n"
 
-#: Schedule.php:52
+#: Schedule.php:43
 msgctxt "Setting Title"
 msgid "Non-Reschedulable Statuses"
 msgstr ""
 
-#: Schedule.php:53
+#: Schedule.php:44
 msgctxt "Setting Description"
 msgid "Posts in these statuses can <b>not</b> be rescheduled."
 msgstr ""
 
-#: Schedule.php:100
+#: Schedule.php:84
 msgctxt "Message"
 msgid "Post not found."
 msgstr ""
 
-#: Schedule.php:103
+#: Schedule.php:87
 msgctxt "Message"
 msgid "Updating the post date dynamically doesn't work for published content."
 msgstr ""
 
-#: Schedule.php:142
-#: Schedule.php:224
+#: Schedule.php:126
+#: Schedule.php:208
 msgctxt "Page Title"
 msgid "Editorial Calendar"
 msgstr ""
 
-#: Schedule.php:143
+#: Schedule.php:127
 msgctxt "Menu Title"
 msgid "My Calendar"
 msgstr ""
 
-#: Schedule.php:179
+#: Schedule.php:163
 msgctxt "Title Attr"
 msgid "View on Calendar"
 msgstr ""
 
-#: Schedule.php:182
+#: Schedule.php:166
 msgctxt "Action"
 msgid "Calendar"
 msgstr ""
 
-#: Schedule.php:247
+#: Schedule.php:231
 msgctxt "Title Attr"
 msgid "Save"
 msgstr ""
 
-#: Schedule.php:248
+#: Schedule.php:232
 msgctxt "Title Attr"
 msgid "Cancel"
 msgstr ""
 
-#: Schedule.php:272
+#: Schedule.php:256
 msgctxt "Indicator"
 msgid "Today"
 msgstr ""
 
-#: Schedule.php:301
+#: Schedule.php:285
 msgctxt "Sortable"
 msgid "Drag me!"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Cartable\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:28+0330\n"
+"PO-Revision-Date: 2023-08-01 23:11+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Domain: geditorial-cartable\n"
 "X-Poedit-Basepath: ../../includes/Modules/Cartable\n"
 
@@ -166,99 +166,99 @@ msgctxt "Button"
 msgid "Sync Users & Groups"
 msgstr "همگام‌سازی گروه‌ها و کاربران"
 
-#: Cartable.php:414 Cartable.php:484
+#: Cartable.php:409 Cartable.php:479
 msgctxt "Page Title"
 msgid "Editorial Cartables"
 msgstr "کارپوشه‌های تحریریه"
 
-#: Cartable.php:415
+#: Cartable.php:410
 msgctxt "Menu Title"
 msgid "My Cartables"
 msgstr "کارپوشه‌های من"
 
-#: Cartable.php:437
+#: Cartable.php:432
 msgctxt "Sub"
 msgid "Personal"
 msgstr "شخصی"
 
-#: Cartable.php:520 Cartable.php:753
+#: Cartable.php:515 Cartable.php:748
 msgctxt "Row Icon Title"
 msgid "User Cartables"
 msgstr "کارپوشه‌های کاربری"
 
-#: Cartable.php:539 Cartable.php:765
+#: Cartable.php:534 Cartable.php:760
 msgctxt "Row Icon Title"
 msgid "Group Cartables"
 msgstr "کارپوشه‌های گروهی"
 
-#: Cartable.php:558
+#: Cartable.php:553
 msgctxt "Row Icon Title"
 msgid "Type Cartables"
 msgstr "کارپوشه‌های نوعی"
 
-#: Cartable.php:576
+#: Cartable.php:571
 msgctxt "Dashboard Widget Title"
 msgid "Your Personal Cartable"
 msgstr "کارپوشه شخصی شما"
 
-#: Cartable.php:579 Cartable.php:600 Cartable.php:622
+#: Cartable.php:574 Cartable.php:595 Cartable.php:617
 msgctxt "Dashboard Widget Title Action"
 msgid "Click to view all items in this cartable"
 msgstr "برای دیدن همه موارد این کارپوشه کلیک کنید"
 
-#: Cartable.php:580 Cartable.php:601 Cartable.php:623
+#: Cartable.php:575 Cartable.php:596 Cartable.php:618
 msgctxt "Dashboard Widget Title Action"
 msgid "All Items"
 msgstr "همه موارد"
 
 #. translators: %s: term name placeholder
-#: Cartable.php:597 Cartable.php:619
+#: Cartable.php:592 Cartable.php:614
 msgctxt "Dashboard Widget Title"
 msgid "Cartable: %s"
 msgstr "کارپوشه: %s"
 
-#: Cartable.php:734
+#: Cartable.php:729
 msgctxt "Message"
 msgid "You can see cartable details, once you've saved it for the first time."
 msgstr "بعد از ذخیرهٔ اولیه، می‌توانید جزئیات کارپوشه را ببینید."
 
-#: Cartable.php:754
+#: Cartable.php:749
 msgctxt "Message"
 msgid "This currently is on your cartable."
 msgstr "هم‌اکنون روی کارپوشه شماست."
 
-#: Cartable.php:766
+#: Cartable.php:761
 msgctxt "Message"
 msgid "This currently is on your group cartable."
 msgstr "هم‌اکنون روی کارپوشه گروه شماست."
 
-#: Cartable.php:778
+#: Cartable.php:773
 msgctxt "Message"
 msgid "This currently is <b>not</b> on any of your cartables."
 msgstr "هم‌اکنون روی هیچ‌کدام از کارپوشه‌های شما <b>نیست</b>."
 
-#: Cartable.php:873
+#: Cartable.php:868
 msgctxt "Page Title"
 msgid "Your Cartable"
 msgstr "کارپوشه شما"
 
 #. translators: %s: term name placeholder
-#: Cartable.php:876
+#: Cartable.php:871
 msgctxt "Menu Title"
 msgid "Cartable: %s"
 msgstr "کارپوشه: %s"
 
-#: Cartable.php:891
+#: Cartable.php:886
 msgctxt "Table Action"
 msgid "Empty Cartable"
 msgstr "تخلیه کارپوشه"
 
-#: Cartable.php:903
+#: Cartable.php:898
 msgctxt "Table Column Title"
 msgid "Cartable"
 msgstr "کارپوشه"
 
-#: Cartable.php:911 Cartable.php:953
+#: Cartable.php:906 Cartable.php:948
 msgctxt "Message"
 msgid "The cartable is empty!"
 msgstr "کارپوشه خالی است!"

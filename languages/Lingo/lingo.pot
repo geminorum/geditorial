@@ -13,188 +13,133 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Lingo\n"
 "X-Domain: geditorial-lingo\n"
 
-#: Lingo.php:48
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr ""
-
-#: Lingo.php:49
-msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Language Identifiers."
-msgstr ""
-
-#: Lingo.php:55
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr ""
-
-#: Lingo.php:56
-msgctxt "Setting Description"
-msgid "Roles that can Assign Language Identifiers."
-msgstr ""
-
-#: Lingo.php:62
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr ""
-
-#: Lingo.php:63
-msgctxt "Setting Description"
-msgid "Roles that can see Language Identifiers Reports."
-msgstr ""
-
-#: Lingo.php:69
-msgctxt "Setting Title"
-msgid "Restricted Roles"
-msgstr ""
-
-#: Lingo.php:70
-msgctxt "Setting Description"
-msgid "Roles that check for Language Identifiers visibility."
-msgstr ""
-
-#: Lingo.php:76
-msgctxt "Setting Title"
-msgid "Restricted Identifiers"
-msgstr ""
-
-#: Lingo.php:77
-msgctxt "Setting Description"
-msgid "Handles visibility of each identifier based on meta values."
-msgstr ""
-
-#: Lingo.php:80
-msgctxt "Setting Option"
-msgid "Disabled"
-msgstr ""
-
-#: Lingo.php:81
-msgctxt "Setting Option"
-msgid "Hidden"
-msgstr ""
-
 #. translators: %s: iso code
-#: Lingo.php:107
+#: Lingo.php:67
 msgctxt "Tool Box"
 msgid "Helps with Importing Language Identifiers from %s into WordPress."
 msgstr ""
 
-#: Lingo.php:114
+#: Lingo.php:74
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Lingo.php:118
+#: Lingo.php:78
+msgctxt "Label: `extended_label`"
+msgid "Language Identifiers"
+msgstr ""
+
+#: Lingo.php:79
 msgctxt "Label: `show_option_all`"
 msgid "Languages"
 msgstr ""
 
-#: Lingo.php:119
+#: Lingo.php:80
 msgctxt "Label: `show_option_none`"
 msgid "(Unidentified)"
 msgstr ""
 
-#: Lingo.php:120
-msgctxt "Taxonomy Label"
+#: Lingo.php:81
+msgctxt "Label: `uncategorized`"
 msgid "Unidentified"
 msgstr ""
 
-#: Lingo.php:125
+#: Lingo.php:86
 msgctxt "Default Term: Name"
 msgid "[Unidentified]"
 msgstr ""
 
-#: Lingo.php:126
+#: Lingo.php:87
 msgctxt "Default Term: Description"
 msgid "Unidentified Languages"
 msgstr ""
 
-#: Lingo.php:137
+#: Lingo.php:98
 msgctxt "Importer: Title"
 msgid "Import Language Identifiers"
 msgstr ""
 
 #. translators: %s: iso code
-#: Lingo.php:139
+#: Lingo.php:100
 msgctxt "Importer: Description"
 msgid "Language Identifiers from %s into WordPress"
 msgstr ""
 
 #. translators: %s: redirect url
-#: Lingo.php:141
+#: Lingo.php:102
 msgctxt "Importer: Redirect"
 msgid "If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click here</a>."
 msgstr ""
 
-#: Lingo.php:148
+#: Lingo.php:109
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr ""
 
-#: Lingo.php:149
+#: Lingo.php:110
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr ""
 
-#: Lingo.php:150
+#: Lingo.php:111
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr ""
 
-#: Lingo.php:151
+#: Lingo.php:112
 msgctxt "Default Term: Language"
 msgid "French"
 msgstr ""
 
-#: Lingo.php:341
+#: Lingo.php:259
 msgctxt "Header"
 msgid "Import Language Identifiers"
 msgstr ""
 
-#: Lingo.php:344
+#: Lingo.php:262
 msgctxt "Imports"
 msgid "ISO 639-1 Alpha-2"
 msgstr ""
 
-#: Lingo.php:351
+#: Lingo.php:269
 msgctxt "Table Column"
 msgid "Code"
 msgstr ""
 
-#: Lingo.php:355
+#: Lingo.php:273
 msgctxt "Table Column"
 msgid "Term"
 msgstr ""
 
-#: Lingo.php:367
+#: Lingo.php:285
 msgctxt "Table Column"
 msgid "English Name"
 msgstr ""
 
-#: Lingo.php:371
-#: Lingo.php:409
-#: Lingo.php:416
+#: Lingo.php:289
+#: Lingo.php:327
+#: Lingo.php:334
 msgctxt "Table Column"
 msgid "Native Name"
 msgstr ""
 
-#: Lingo.php:376
+#: Lingo.php:294
 msgctxt "Message: Table Empty"
 msgid "There are no language identifiers available!"
 msgstr ""
 
-#: Lingo.php:389
+#: Lingo.php:307
 msgctxt "Button"
 msgid "Create Language Terms"
 msgstr ""
 
-#: Lingo.php:392
+#: Lingo.php:310
 msgctxt "Button"
 msgid "Update Existing Terms"
 msgstr ""
 
-#: Lingo.php:396
+#: Lingo.php:314
 msgctxt "Message"
 msgid "Check for available language identifiers and create corresponding terms."
 msgstr ""
