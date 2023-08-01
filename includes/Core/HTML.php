@@ -23,19 +23,20 @@ class HTML extends Base
 		), $html );
 	}
 
-	public static function mailto( $email, $title = NULL, $wrap = FALSE )
+	public static function mailto( $email, $content = NULL, $class = '' )
 	{
-		$title = $title ? $title : self::wrapLTR( trim( $email ) );
-		$link  = '<a class="-mailto" href="mailto:'.trim( $email ).'">'.$title.'</a>';
-		return $wrap ? self::tag( $wrap, $link ) : $link;
+		$content = $content ?: self::wrapLTR( trim( $email ) );
+		return '<a class="'.self::prepClass( '-mailto', $class )
+			.'" href="mailto:'.trim( $email ).'">'.$content.'</a>';
 	}
 
-	public static function tel( $number, $title = FALSE, $content = NULL )
+	public static function tel( $number, $title = FALSE, $content = NULL, $class = '' )
 	{
 		if ( is_null( $content ) )
 			$content = Number::localize( $number );
 
-		return '<a class="-tel" href="'.self::sanitizePhoneNumber( $number )
+		return '<a class="'.self::prepClass( '-tel', $class )
+				.'" href="'.self::sanitizePhoneNumber( $number )
 				.'"'.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
 				.' data-tel-number="'.self::escape( $number ).'">'
 				.self::wrapLTR( $content ).'</a>';
@@ -1408,7 +1409,7 @@ class HTML extends Base
 				$key = property_exists( $value, $args['value'] ) ? $value->{$args['value']} : $offset;
 
 			else if ( is_array( $value ) )
-				$key = array_key_exists( $value, $args['value'] ) ? $value[$args['value']] : $offset;
+				$key = array_key_exists( $args['value'], $value ) ? $value[$args['value']] : $offset;
 
 			else
 				$key = $offset;
@@ -1423,10 +1424,25 @@ class HTML extends Base
 				$title = property_exists( $value, $args['prop'] ) ? $value->{$args['prop']} : $value;
 
 			else if ( is_array( $value ) )
-				$title = array_key_exists( $value, $args['prop'] ) ? $value[$args['prop']] : $value;
+				$title = array_key_exists( $args['prop'], $value ) ? $value[$args['prop']] : $value;
 
 			else
 				$title = $value;
+
+			if ( ! $args['values'] )
+				$suffix = FALSE;
+
+			else if ( TRUE === $args['values'] )
+				$suffix = $key;
+
+			else if ( is_object( $value ) )
+				$suffix = property_exists( $value, $args['values'] ) ? $value->{$args['values']} : $key;
+
+			else if ( is_array( $value ) )
+				$suffix = array_key_exists( $args['values'], $value ) ? $value[$args['values']] : $key;
+
+			else
+				$suffix = FALSE;
 
 			$input = self::tag( 'input', [
 				'type'     => 'checkbox',
@@ -1439,8 +1455,8 @@ class HTML extends Base
 				'data'     => [ 'key' => $key ],
 			] );
 
-			if ( $args['values'] )
-				$title.= ' &mdash; <code>'.$key.'</code>';
+			if ( $suffix )
+				$title.= ' &mdash; <code>'.$suffix.'</code>';
 
 			$label = self::tag( 'label', [ 'for' => $args['id'].'-'.$key ], $input.$title );
 			$html .= $args['item_tag'] ? self::tag( $args['item_tag'], [ 'class' => [ 'description', '-description' ] ], $label ) : $label;

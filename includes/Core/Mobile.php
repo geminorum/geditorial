@@ -55,6 +55,39 @@ class Mobile extends Base
 		return $sanitized;
 	}
 
+	/**
+	 * Prepares a value as mobile number for the given context.
+	 *
+	 * @param  string $value
+	 * @param  array  $field
+	 * @param  string $context
+	 * @return string $prepped
+	 */
+	public static function prep( $value, $field = [], $context = 'display' )
+	{
+		if ( empty( $value ) )
+			return '';
+
+		$raw   = $value;
+		$title = empty( $field['title'] ) ? NULL : $field['title'];
+
+		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
+
+			if ( Text::starts( $value, '+98' ) )
+				$value = '0'.Text::stripPrefix( $value, '+98' );
+
+			$value = Number::localize( $value );
+		}
+
+		switch ( $context ) {
+			case 'edit' : return $raw;
+			case 'print': return $value;
+			     default: return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+		}
+
+		return $value;
+	}
+
 	public static function getHTMLPattern()
 	{
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )

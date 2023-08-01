@@ -238,7 +238,7 @@ class Term extends Core\Base
 	 * @param  object|int $term
 	 * @param  bool|array $keys `false` for all meta
 	 * @param  bool $single
-	 * @return array
+	 * @return array $metadata
 	 */
 	public static function getMeta( $term, $keys = FALSE, $single = TRUE )
 	{
@@ -251,12 +251,12 @@ class Term extends Core\Base
 
 			if ( $single ) {
 
-				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
+				foreach ( (array) get_metadata( 'term', $term->term_id ) as $key => $meta )
 					$list[$key] = maybe_unserialize( $meta[0] );
 
 			} else {
 
-				foreach ( (array) get_term_meta( $term->term_id ) as $key => $meta )
+				foreach ( (array) get_metadata( 'term', $term->term_id ) as $key => $meta )
 					foreach ( $meta as $offset => $value )
 						$list[$key][$offset] = maybe_unserialize( $value );
 			}
@@ -264,7 +264,7 @@ class Term extends Core\Base
 		} else {
 
 			foreach ( $keys as $key => $default )
-				$list[$key] = get_term_meta( $term->term_id, $key, $single ) ?: $default;
+				$list[$key] = get_metadata( 'term', $term->term_id, $key, $single ) ?: $default;
 		}
 
 		return $list;

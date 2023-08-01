@@ -8,6 +8,26 @@ use geminorum\gEditorial\Settings;
 class Media extends Core\Base
 {
 
+	/**
+	 * Retrieves file extension given a mime-type.
+	 *
+	 * @param  string     $mime_type
+	 * @param  null|array $extensions
+	 * @return string      $extension
+	 */
+	public static function getExtension( $mime_type, $extensions = NULL, $uppercase = TRUE )
+	{
+		if ( is_null( $extensions ) )
+			$extensions = wp_get_mime_types();
+
+		if ( FALSE === ( $key = array_search( $mime_type, $extensions ) ) )
+			return FALSE;
+
+		$parts = explode( '|', $key );
+
+		return $uppercase ? strtoupper( $parts[0] ) : $parts[0];
+	}
+
 	// TODO: get title if html is empty
 	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
 	{

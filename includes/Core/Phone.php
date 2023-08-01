@@ -56,6 +56,39 @@ class Phone extends Base
 		return $sanitized;
 	}
 
+	/**
+	 * Prepares a value as phone number for the given context.
+	 *
+	 * @param  string $value
+	 * @param  array  $field
+	 * @param  string $context
+	 * @return string $prepped
+	 */
+	public static function prep( $value, $field = [], $context = 'display' )
+	{
+		if ( empty( $value ) )
+			return '';
+
+		$raw   = $value;
+		$title = empty( $field['title'] ) ? NULL : $field['title'];
+
+		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
+
+			if ( Text::starts( $value, '+98' ) )
+				$value = '0'.Text::stripPrefix( $value, '+98' );
+
+			$value = Number::localize( $value );
+		}
+
+		switch ( $context ) {
+			case 'edit' : return $raw;
+			case 'print': return $value;
+				 default: return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+		}
+
+		return $value;
+	}
+
 	// @REF: https://www.abstractapi.com/guides/validate-phone-number-javascript
 	// @SEE: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel
 	public static function getHTMLPattern()
@@ -82,5 +115,24 @@ class Phone extends Base
 		$number = trim( preg_replace( '/[^\d|\+]/', '', $text ) );
 
 		return $number ? '<a href="tel:'.esc_attr( $number ).'">'.esc_html( $text ).'</a>' : '';
+	}
+
+	public static function prepMobileForUsername( $text )
+	{
+		if ( ! ( $text = trim( $text ) ) )
+			return '';
+
+		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
+
+			$text = preg_replace( '/^\+98(\d{10})$/', '$1', $text );
+			$text = preg_replace( '/^98(\d{10})$/', '$1', $text );
+		}
+
+		$text = preg_replace( '/^0(\d{10})$/', '$1', $text );
+
+		if ( preg_replace( '/\d{10}/', '', $text ) )
+			return '';
+
+		return trim( $text );
 	}
 }

@@ -318,4 +318,42 @@ class Post extends Core\Base
 
 		return Strings::getJoined( array_reverse( $parents ), '', $suffix ? $separator.$suffix : '', '', $separator );
 	}
+
+	/**
+	 * retrieves meta-data for a given post.
+	 *
+	 * @param  object|int $post
+	 * @param  bool|array $keys `false` for all meta
+	 * @param  bool $single
+	 * @return array $metadata
+	 */
+	public static function getMeta( $post, $keys = FALSE, $single = TRUE )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		$list = [];
+
+		if ( FALSE === $keys ) {
+
+			if ( $single ) {
+
+				foreach ( (array) get_metadata( 'post', $post->ID ) as $key => $meta )
+					$list[$key] = maybe_unserialize( $meta[0] );
+
+			} else {
+
+				foreach ( (array) get_metadata( 'post', $post->ID ) as $key => $meta )
+					foreach ( $meta as $offset => $value )
+						$list[$key][$offset] = maybe_unserialize( $value );
+			}
+
+		} else {
+
+			foreach ( $keys as $key => $default )
+				$list[$key] = get_metadata( 'post', $post->ID, $key, $single ) ?: $default;
+		}
+
+		return $list;
+	}
 }
