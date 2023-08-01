@@ -266,6 +266,15 @@ class Scripts extends WordPress\Main
 			: self::registerPackage( 'onscanjs', 'onscan.js/onscan', [], $ver );
 	}
 
+	// @REF: https://github.com/mbraak/jqTree
+	// @REF: http://mbraak.github.io/jqTree/
+	public static function pkgJqTree( $enqueue = FALSE, $ver = '1.7.0' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'jqtree', 'jqtree/tree.jquery', [ 'jquery' ], $ver )
+			: self::registerPackage( 'jqtree', 'jqtree/tree.jquery', [ 'jquery' ], $ver );
+	}
+
 	// @REF: https://github.com/fgnass/spin.js
 	// @REF: https://spin.js.org/
 	public static function pkgSpinJS( $enqueue = FALSE, $ver = '4.1.1' )
