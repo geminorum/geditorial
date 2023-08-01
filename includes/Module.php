@@ -2286,11 +2286,14 @@ class Module extends WordPress\Module
 		$after  = Core\HTML::tag( 'p', Core\HTML::link( $edit, $link, TRUE ) );
 		$args   = [ 'title' => $taxonomy->label, 'id' => $this->classs( 'help-default-terms', '-'.$taxonomy->name ) ];
 
-		if ( ! empty( $terms ) )
+		if ( empty( $terms ) )
+			$args['content'] = $before.Core\HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' ).$after;
+
+		else if ( Core\Arraay::allStringValues( $terms ) )
 			$args['content'] = $before.Core\HTML::wrap( Core\HTML::tableCode( $terms, TRUE ), '-info' ).$after;
 
 		else
-			$args['content'] = $before.Core\HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' ).$after;
+			$args['content'] = $before.Core\HTML::wrap( Core\HTML::tableCode( Core\Arraay::pluck( $terms, 'name', 'slug' ), TRUE ), '-info' ).$after;
 
 		get_current_screen()->add_help_tab( $args );
 	}
