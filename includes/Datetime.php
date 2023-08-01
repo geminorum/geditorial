@@ -413,6 +413,61 @@ class Datetime extends WordPress\Main
 		return $extended ? $data : Core\Arraay::pluck( $data, 'name', 'slug' );
 	}
 
+	public static function getDecades( $from = '-100 years', $count = 10, $prefixed = FALSE, $metakey = NULL )
+	{
+		/* translators: %s: decade number */
+		$name  = $prefixed ? _x( 'Decade %s', 'Datetime: Decade Prefix', 'geditorial' ) : '%s';
+		$slug  = $prefixed ? 'decade-%s' : '%s';
+		$meta  = $metakey ?? 'decade';
+		$epoch = Core\Date::calculateDecade( $from );
+		$list  = [];
+
+		for ( $i = 1; $i <= $count; $i++ ) {
+
+			$decade = $epoch + ( $i * 10 );
+
+			$list[$decade] =  [
+				'slug' => sprintf( $slug, $decade ),
+				'name' => sprintf( $name, Core\Number::localize( $decade ) ),
+				'meta' => [ $meta  => $decade ],
+			];
+		}
+
+		return $list;
+	}
+
+	public static function getYearsByDecades( $from = '-100 years', $count = 10, $prefixed = TRUE, $metakey = NULL )
+	{
+		/* translators: %s: year number */
+		$name    = $prefixed ? _x( 'Year %s', 'Datetime: Year Prefix', 'geditorial' ) : '%s';
+		$slug    = $prefixed ? 'year-%s' : '%s';
+		$meta    = $metakey ?? 'decade';
+		$key     = $metakey ? 'children' : 'years';
+		$decades = self::getDecades( $from, $count, $prefixed, $metakey );
+		$list    = [];
+
+		foreach ( $decades as $decade => $args ) {
+
+			$years = [];
+
+			for ( $i = 1; $i <= 10; $i++ ) {
+
+				$year = $decade + $i;
+
+				$years[$year] = [
+					'slug' => sprintf( $slug, $year ),
+					'name' => sprintf( $name, Core\Number::localize( $decade + $i ) ),
+					'meta' => [ $meta  => $year ],
+				];
+			}
+
+			$args[$key] = $years;
+			$list[$decade] = $args;
+		}
+
+		return $list;
+	}
+
 	// FIXME: find a better way!
 	public static function getMonths( $calendar_type = 'gregorian' )
 	{
