@@ -210,19 +210,24 @@ class Audit extends gEditorial\Module
 		if ( ! in_array( $post->post_status, [ 'publish', 'future', 'draft', 'pending' ], TRUE ) )
 			return;
 
-		$taxonomy = $this->constant( 'main_taxonomy' );
+		if ( FALSE !== $this->_do_auto_audit_post( $post, $update ) )
+			clean_object_term_cache( $post->ID, $this->constant( 'main_taxonomy' ) );
+	}
+
+	private function _do_auto_audit_post( $post, $update = FALSE, $taxonomy = NULL )
+	{
+		$taxonomy = $taxonomy ?? $this->constant( 'main_taxonomy' );
 		$currents = WordPress\Taxonomy::getObjectTerms( $taxonomy, $post->ID );
 
 		$terms = $this->filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
 		$terms = Core\Arraay::prepNumeral( $terms );
 
 		if ( Core\Arraay::equalNoneAssoc( $terms, $currents ) )
-			return;
+			return NULL;
 
 		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy );
 
-		if ( ! is_wp_error( $result ) )
-			clean_object_term_cache( $post->ID, $taxonomy );
+		return self::isError( $result ) ? FALSE : $result;
 	}
 
 	public function auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
