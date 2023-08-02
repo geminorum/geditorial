@@ -3936,13 +3936,7 @@ class Module extends WordPress\Module
 		return $title.' – '.WordPress\Post::title( $linked );
 	}
 
-	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
-	{
-		$settings = $this->get_setting( 'calendar_list', $default );
-		$defaults = Datetime::getDefualtCalendars( $filtered );
-		return array_intersect_key( $defaults, array_flip( $settings ) );
-	}
-
+	// NOTE: better to be on module-core than the internal
 	public function default_calendar( $default = 'gregorian' )
 	{
 		return $this->get_setting( 'calendar_type', $default );

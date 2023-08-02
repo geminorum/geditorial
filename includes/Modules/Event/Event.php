@@ -4,9 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 
 class Event extends gEditorial\Module
 {
@@ -192,7 +192,7 @@ class Event extends gEditorial\Module
 		// TODO: register via gNetwork
 		if ( isset( $_POST['install_def_cal_type'] ) )
 			$this->insert_default_terms( 'cal_type', array_intersect_key(
-				Datetime::getDefualtCalendars( TRUE ),
+				Services\Calendars::getDefualts( TRUE ),
 				array_flip( $this->get_setting( 'calendar_list', [] ) )
 			) );
 	}

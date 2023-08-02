@@ -6,7 +6,9 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
@@ -14,6 +16,7 @@ use geminorum\gEditorial\WordPress;
 
 class Today extends gEditorial\Module
 {
+	use Internals\Calendars;
 
 	protected $the_day  = [];
 	protected $the_post = [];
@@ -614,7 +617,7 @@ class Today extends gEditorial\Module
 				continue;
 
 			if ( 'cal' == $field )
-				$postmeta[$field] = Datetime::sanitizeCalendar( $value, $this->default_calendar() );
+				$postmeta[$field] = Services\Calendars::sanitize( $value, $this->default_calendar() );
 			else
 				$postmeta[$field] = Core\Number::intval( $value, FALSE );
 		}
@@ -1061,7 +1064,7 @@ class Today extends gEditorial\Module
 
 		switch ( $field ) {
 
-			case 'today__cal': return Datetime::sanitizeCalendar( trim( $value ), $this->default_calendar() );
+			case 'today__cal': return Services\Calendars::sanitize( trim( $value ), $this->default_calendar() );
 			case 'today__year':
 			case 'today__month':
 			case 'today__day': return Core\Number::intval( trim( $value ), FALSE );
@@ -1096,7 +1099,7 @@ class Today extends gEditorial\Module
 				$postmeta = ModuleHelper::parseTheFullDay( $value, array_key_exists( 'cal', $postmeta ) ? $postmeta['cal'] : $default );
 
 			else if ( 'cal' == $key )
-				$postmeta[$key] = Datetime::sanitizeCalendar( $value, $default );
+				$postmeta[$key] = Services\Calendars::sanitize( $value, $default );
 
 			else
 				$postmeta[$key] = Core\Number::intval( $value, FALSE );

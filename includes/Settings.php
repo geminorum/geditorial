@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Settings extends Core\Base
@@ -847,7 +848,7 @@ class Settings extends Core\Base
 			'description' => $description ?: '',
 			'type'        => 'select',
 			'default'     => 'gregorian',
-			'values'      => Datetime::getDefualtCalendars( TRUE ),
+			'values'      => Services\Calendars::getDefualts( TRUE ),
 		];
 	}
 
@@ -859,7 +860,7 @@ class Settings extends Core\Base
 			'description' => $description ?: '',
 			'type'        => 'checkboxes',
 			'default'     => [ 'gregorian' ],
-			'values'      => Datetime::getDefualtCalendars( TRUE ),
+			'values'      => Services\Calendars::getDefualts( TRUE ),
 		];
 	}
 

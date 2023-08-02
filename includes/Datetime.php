@@ -233,54 +233,6 @@ class Datetime extends WordPress\Main
 		return Core\Date::moment( $timestamp, $now, $strings );
 	}
 
-	// @REF: [Calendar Classes - ICU User Guide](http://userguide.icu-project.org/datetime/calendar)
-	public static function getDefualtCalendars( $filtered = FALSE )
-	{
-		$calendars = [
-			'gregorian'     => _x( 'Gregorian', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'japanese'      => _x( 'Japanese', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'buddhist'      => _x( 'Buddhist', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'chinese'       => _x( 'Chinese', 'Datetime: Default Calendar Type', 'geditorial' ),
-			'persian'       => _x( 'Persian', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'indian'        => _x( 'Indian', 'Datetime: Default Calendar Type', 'geditorial' ),
-			'islamic'       => _x( 'Islamic', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'islamic-civil' => _x( 'Islamic-Civil', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'coptic'        => _x( 'Coptic', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'ethiopic'      => _x( 'Ethiopic', 'Datetime: Default Calendar Type', 'geditorial' ),
-		];
-
-		return $filtered ? apply_filters( static::BASE.'_default_calendars', $calendars ) : $calendars;
-	}
-
-	public static function sanitizeCalendar( $calendar, $default_type = 'gregorian' )
-	{
-		$calendars = self::getDefualtCalendars( FALSE );
-		$sanitized = $calendar;
-
-		if ( ! $calendar )
-			$sanitized = $default_type;
-
-		else if ( in_array( $calendar, [ 'Jalali', 'jalali', 'Persian', 'persian' ] ) )
-			$sanitized = 'persian';
-
-		else if ( in_array( $calendar, [ 'Hijri', 'hijri', 'Islamic', 'islamic' ] ) )
-			$sanitized = 'islamic';
-
-		else if ( in_array( $calendar, [ 'Gregorian', 'gregorian' ] ) )
-			$sanitized = 'gregorian';
-
-		else if ( in_array( $calendar, array_keys( $calendars ) ) )
-			$sanitized = $calendar;
-
-		else if ( $key = array_search( $calendar, $calendars ) )
-			$sanitized = $key;
-
-		else
-			$sanitized = $default_type;
-
-		return apply_filters( static::BASE.'_sanitize_calendar', $sanitized, $default_type, $calendar );
-	}
-
 	public static function getPostTypeMonths( $calendar_type, $posttype = 'post', $args = [], $user_id = 0 )
 	{
 		$callback = [ __NAMESPACE__.'\\WordPress\\Database', 'getPostTypeMonths' ];

@@ -113,6 +113,7 @@ class Plugin
 		Services\SelectSingle::setup();
 		Services\ObjectToObject::setup();
 		Services\AdvancedQueries::setup();
+		Services\Calendars::setup();
 	}
 
 	private function define_constants()

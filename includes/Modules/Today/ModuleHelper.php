@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
@@ -107,7 +108,7 @@ class ModuleHelper extends gEditorial\Helper
 			return $empty;
 
 		if ( empty( $gEditorialTodayCalendars ) )
-			$gEditorialTodayCalendars = Datetime::getDefualtCalendars();
+			$gEditorialTodayCalendars = Services\Calendars::getDefualts();
 
 		if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
 			$gEditorialTodayMonths[$the_day['cal']] = Datetime::getMonths( $the_day['cal'] );
@@ -161,7 +162,7 @@ class ModuleHelper extends gEditorial\Helper
 		} else {
 
 			if ( empty( $gEditorialTodayCalendars ) )
-				$gEditorialTodayCalendars = Datetime::getDefualtCalendars();
+				$gEditorialTodayCalendars = Services\Calendars::getDefualts();
 
 			if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
 				$gEditorialTodayMonths[$the_day['cal']] = Datetime::getMonths( $the_day['cal'] );
@@ -396,7 +397,7 @@ class ModuleHelper extends gEditorial\Helper
 		], $atts );
 
 		if ( is_null( $calendars ) )
-			$calendars = Datetime::getDefualtCalendars( TRUE );
+			$calendars = Services\Calendars::getDefualts( TRUE );
 
 		$html = '';
 

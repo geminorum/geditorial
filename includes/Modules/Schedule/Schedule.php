@@ -7,12 +7,14 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Schedule extends gEditorial\Module
 {
+	use Internals\Calendars;
 
 	protected $disable_no_posttypes = TRUE;
 
