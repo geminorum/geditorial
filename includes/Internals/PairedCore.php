@@ -26,6 +26,35 @@ trait PairedCore
 		return $constants;
 	}
 
+	protected function paired_all_connected_to( $post, $exclude = [], $posttypes = NULL )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		$term = $this->paired_get_to_term( $post->ID, $constants[0], $constants[1] );
+
+		if ( ! $term || is_wp_error( $term ) )
+			return FALSE;
+
+		$args = [
+			'posts_per_page' => -1,
+			'orderby'        => [ 'menu_order', 'date' ], // TODO: custom order
+			'order'          => 'ASC',
+			'post_type'      => $posttypes ?? $this->posttypes(),
+			'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
+			'post__not_in'   => $exclude,
+			'tax_query'      => [ [
+				'taxonomy' => $this->constant( $constants[1] ),
+				'field'    => 'id',
+				'terms'    => [ $term->term_id ],
+			] ],
+		];
+
+		$posts = get_posts( $args );
+
+		return empty( $posts ) ? FALSE : $posts;
+	}
+
 	protected function pairedcore__hook_sync_paired_for_ajax()
 	{
 		if ( ! $constants = $this->paired_get_constants() )
