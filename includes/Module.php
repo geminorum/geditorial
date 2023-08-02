@@ -3044,14 +3044,15 @@ class Module extends WordPress\Module
 		if ( is_array( $caps ) )
 			return $caps;
 
-		// custom capabilities
+		$custom = [
+			'manage_terms' => 'manage_'.$taxonomy,
+			'edit_terms'   => 'edit_'.$taxonomy,
+			'delete_terms' => 'delete_'.$taxonomy,
+			'assign_terms' => 'assign_'.$taxonomy,
+		];
+
 		if ( TRUE === $caps )
-			return [
-				'manage_terms' => 'manage_'.$taxonomy,
-				'edit_terms'   => 'edit_'.$taxonomy,
-				'delete_terms' => 'delete_'.$taxonomy,
-				'assign_terms' => 'assign_'.$taxonomy,
-			];
+			return $custom;
 
 		// core default
 		if ( FALSE === $caps )
@@ -3078,6 +3079,9 @@ class Module extends WordPress\Module
 				'delete_terms' => 'list_users',
 				'assign_terms' => 'list_users',
 			];
+
+		else if ( 'taxonomy' === $posttypes )
+			return $custom; // FIXME: must filter meta_cap
 
 		else if ( 'comment' == $posttypes )
 			return $defaults; // FIXME: WTF?!
@@ -3246,7 +3250,7 @@ class Module extends WordPress\Module
 		if ( ! array_key_exists( 'menu_icon', $args ) )
 			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
 
-		$object = register_taxonomy( $taxonomy, $posttypes, $args );
+		$object = register_taxonomy( $taxonomy, $cpt_tax ? $posttypes : '', $args );
 
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
