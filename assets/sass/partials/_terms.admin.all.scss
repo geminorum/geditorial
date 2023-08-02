@@ -5,39 +5,35 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+@mixin plugin-listtable-column-icon($name, $content, $prefix: "column") {
+  th.#{$prefix}-#{$name} {
+    span.-column-icon::before {
+      content: $content;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 body.geditorial-terms-enabled {
+  @include plugin-listtable-column-icon("posts", "\f157");
+  @include plugin-listtable-column-icon("order", "\f156", "column-geditorial-terms"); // `dashicons-sort`
+  @include plugin-listtable-column-icon("code", "\f475", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("min", "\f347", "column-geditorial-terms"); // `dashicons-arrow-down-alt2`
+  @include plugin-listtable-column-icon("max", "\f343", "column-geditorial-terms"); // `dashicons-arrow-up-alt2`
+  @include plugin-listtable-column-icon("viewable", "\f177", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("arrow", "\f545", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("barcode", "\f212", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("contact", "\f525", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("label", "\f323", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("color", "\f131", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("author", "\f110", "column-geditorial-terms");
+
   .wp-list-table.tags {
     .column-slug {
       width: 15%;
     }
 
-    .column-posts {
-      width: 50px;
-
-      span.-column-icon::before {
-        content: "\f157";
-      }
-    }
-
-    .column-geditorial-terms-order {
-      width: 50px;
-
-      span.-column-icon::before {
-        content: "\f156"; // `dashicons-sort`
-      }
-    }
-
-    th.column-geditorial-terms-code {
-      width: 55px;
-
-      span.-column-icon::before {
-        content: "\f475";
-      }
-    }
-
     th.column-geditorial-terms-image {
-      width: 55px;
-
       span.-column-icon {
         margin: 0 auto;
 
@@ -47,62 +43,12 @@ body.geditorial-terms-enabled {
       }
     }
 
-    th.column-geditorial-terms-viewable {
-      width: 22px;
-
-      span.-column-icon::before {
-        content: "\f177";
-      }
-    }
-
-    th.column-geditorial-terms-arrow {
-      width: 22px;
-
-      span.-column-icon::before {
-        content: "\f545";
-      }
-    }
-
-    th.column-geditorial-terms-barcode {
-      width: 22px;
-
-      span.-column-icon::before {
-        content: "\f212";
-      }
-    }
-
-    th.column-geditorial-terms-contact {
-      width: 22px;
-
-      span.-column-icon::before {
-        content: "\f525";
-      }
-    }
-
-    th.column-geditorial-terms-label {
-      span.-column-icon::before {
-        content: "\f323";
-      }
-    }
-
     th.column-geditorial-terms-dateend,
     th.column-geditorial-terms-datestart,
     th.column-geditorial-terms-datetime,
     th.column-geditorial-terms-date {
       span.-column-icon::before {
         content: "\f508";
-      }
-    }
-
-    th.column-geditorial-terms-color {
-      span.-column-icon::before {
-        content: "\f131";
-      }
-    }
-
-    th.column-geditorial-terms-author {
-      span.-column-icon::before {
-        content: "\f110";
       }
     }
 
@@ -131,8 +77,24 @@ body.geditorial-terms-enabled {
       width: 120px;
     }
 
+    .column-geditorial-terms-image,
+    .column-geditorial-terms-code {
+      width: 55px;
+    }
+
+    .column-posts,
+    .column-geditorial-terms-min,
+    .column-geditorial-terms-max,
+    .column-geditorial-terms-order,
     .column-geditorial-terms-color {
       width: 50px;
+    }
+
+    .column-geditorial-terms-contact,
+    .column-geditorial-terms-barcode,
+    .column-geditorial-terms-arrow,
+    .column-geditorial-terms-viewable {
+      width: 22px;
     }
 
     td.column-geditorial-terms-viewable,
