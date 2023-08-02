@@ -10,6 +10,46 @@ use geminorum\gEditorial\WordPress;
 trait DashboardSummary
 {
 
+	// USAGE: `$this->add_dashboard_widget( 'dashboard-summary', NULL, 'refresh' );`
+	public function render_widget_dashboard_summary( $object, $box )
+	{
+		if ( $this->check_hidden_metabox( $box ) )
+			return;
+
+		echo $this->wrap_open( [ '-admin-widget', '-core-styles' ], TRUE, 'dashboard_right_now' );
+
+		$scope  = $this->get_setting( 'summary_scope', 'all' );
+		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
+		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
+
+		if ( Core\WordPress::isFlush( 'read' ) )
+			delete_transient( $key );
+
+		if ( FALSE === ( $html = get_transient( $key ) ) ) {
+
+			if ( $this->check_hidden_metabox( $box, FALSE, '</div>' ) )
+				return;
+
+			if ( ! method_exists( $this, 'get_dashboard_summary_content' ) )
+				return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'get_dashboard_summary_content()' ) );
+
+			if ( $summary = $this->get_dashboard_summary_content( $scope, NULL, 'li' ) ) {
+
+				$html = Core\Text::minifyHTML( $summary );
+				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
+
+			} else {
+
+				Info::renderNoReportsAvailable();
+			}
+		}
+
+		if ( $html )
+			echo '<div class="main"><ul>'.$html.'</ul></div>';
+
+		echo '</div>';
+	}
+
 	protected function do_dashboard_term_summary( $constant, $box, $posttypes = NULL, $edit = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
