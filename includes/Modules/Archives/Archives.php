@@ -134,8 +134,8 @@ class Archives extends gEditorial\Module
 	protected function taxonomies_excluded( $extra = [] )
 	{
 		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( get_taxonomies( [
-			'public'                     => FALSE,
-			'has_archive'                => FALSE,   // NOTE: gEditorial prop
+			'public'                              => FALSE,
+			'has_archive'                         => FALSE,   // NOTE: gEditorial prop
 			Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
 			] , 'names', 'or' ) + $extra ) );
 	}

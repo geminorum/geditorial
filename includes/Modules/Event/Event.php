@@ -187,9 +187,9 @@ class Event extends gEditorial\Module
 		return [ $this->constant( 'event_cpt' ) ];
 	}
 
+	// FIXME: WTF: `show_ui` is false so no taxonomy tabs support!
 	public function before_settings( $module = FALSE )
 	{
-		// TODO: register via gNetwork
 		if ( isset( $_POST['install_def_cal_type'] ) )
 			$this->insert_default_terms( 'cal_type', array_intersect_key(
 				Services\Calendars::getDefualts( TRUE ),

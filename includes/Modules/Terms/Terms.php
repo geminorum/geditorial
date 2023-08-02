@@ -150,8 +150,8 @@ class Terms extends gEditorial\Module
 				'dateend'   => _x( 'Terms can have date-end to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'days'      => _x( 'Terms can have days number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'unit'      => _x( 'Terms can have unit number to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'min'       => _x( 'Defines the minimum threshold of the term.', 'Descriptions', 'geditorial-terms' ),
-				'max'       => _x( 'Defines the maximum threshold of the term.', 'Descriptions', 'geditorial-terms' ),
+				'min'       => _x( 'Defines the minimum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
+				'max'       => _x( 'Defines the maximum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
 				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
