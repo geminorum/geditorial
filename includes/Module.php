@@ -5437,6 +5437,8 @@ class Module extends WordPress\Module
 			case 'published' : return 'calendar-alt';
 			case 'lead'      : return 'editor-paragraph';
 			case 'label'     : return 'megaphone';
+			case 'days'      : return 'backup';
+			case 'hours'     : return 'clock';
 		}
 
 		if ( ! empty( $args['type'] ) ) {

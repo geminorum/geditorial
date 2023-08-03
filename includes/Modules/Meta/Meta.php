@@ -126,6 +126,7 @@ class Meta extends gEditorial\Module
 				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-meta' ),
 				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-meta' ),
 				'days'      => _x( 'Days', 'Titles', 'geditorial-meta' ),
+				'hours'     => _x( 'Hours', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
@@ -171,6 +172,7 @@ class Meta extends gEditorial\Module
 				'datestart' => _x( 'Posts can have date-start to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'dateend'   => _x( 'Posts can have date-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'days'      => _x( 'Posts can have days number to help organize them.', 'Descriptions', 'geditorial-meta' ),
+				'hours'     => _x( 'Posts can have hours number to help organize them.', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -236,6 +238,7 @@ class Meta extends gEditorial\Module
 				'datestart' => [ 'type' => 'datetime' ],
 				'dateend'   => [ 'type' => 'datetime' ],
 				'days'      => [ 'type' => 'number' ],
+				'hours'     => [ 'type' => 'number' ],
 			],
 			'page' => [
 				'over_title' => [ 'type' => 'title_before' ],
@@ -1122,6 +1125,20 @@ class Meta extends gEditorial\Module
 				return $context == 'print'
 					? Datetime::prepForDisplay( trim( $raw ), 'Y/n/j' )
 					: Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
+
+			case 'days' :
+				return sprintf( Helper::noopedCount( trim( $raw ),
+					/* translators: %s: day count */
+					_nx_noop( '%s Day', '%s Days', 'Noop', 'geditorial-meta' ) ),
+					Core\Number::format( trim( $raw ) )
+				);
+
+			case 'hours' :
+				return sprintf( Helper::noopedCount( trim( $raw ),
+					/* translators: %s: hour count */
+					_nx_noop( '%s Hour', '%s Hours', 'Noop', 'geditorial-meta' ) ),
+					Core\Number::format( trim( $raw ) )
+				);
 		}
 
 		switch ( $field_args['type'] ) {
