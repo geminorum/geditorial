@@ -664,28 +664,28 @@ class Importer extends gEditorial\Module
 
 								case 'importer_menu_order':
 
-									if ( $override || ( $oldpost && '' == $oldpost->menu_order ) )
+									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->menu_order ) )
 										$data['menu_order'] = $prepared[$field] = $value;
 
 									continue 2;
 
 								case 'importer_post_title':
 
-									if ( $override || ( $oldpost && '' == $oldpost->post_title ) )
+									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_title ) )
 										$data['post_title'] = $prepared[$field] = $value;
 
 									continue 2;
 
 								case 'importer_post_content':
 
-									if ( $override || ( $oldpost && '' == $oldpost->post_content ) )
+									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_content ) )
 										$data['post_content'] = $prepared[$field] = $value;
 
 									continue 2;
 
 								case 'importer_post_excerpt':
 
-									if ( $override || ( $oldpost && '' == $oldpost->post_excerpt ) )
+									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_excerpt ) )
 										$data['post_excerpt'] = $prepared[$field] = $value;
 
 									continue 2;
