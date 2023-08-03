@@ -8,11 +8,6 @@ class Calendars extends Main
 {
 	const BASE = 'geditorial';
 
-	public static function setup()
-	{
-		// add_action( '', [ __CLASS__, '' ], 9, 4 );
-	}
-
 	/**
 	 * Retrieves the list of supported calendars.
 	 * // @OLD: `Datetime::getDefualtCalendars()`
@@ -24,16 +19,16 @@ class Calendars extends Main
 	public static function getDefualts( $filtered = FALSE )
 	{
 		$calendars = [
-			'gregorian'     => _x( 'Gregorian', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'japanese'      => _x( 'Japanese', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'buddhist'      => _x( 'Buddhist', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'chinese'       => _x( 'Chinese', 'Datetime: Default Calendar Type', 'geditorial' ),
-			'persian'       => _x( 'Persian', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'indian'        => _x( 'Indian', 'Datetime: Default Calendar Type', 'geditorial' ),
-			'islamic'       => _x( 'Islamic', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'islamic-civil' => _x( 'Islamic-Civil', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'coptic'        => _x( 'Coptic', 'Datetime: Default Calendar Type', 'geditorial' ),
-			// 'ethiopic'      => _x( 'Ethiopic', 'Datetime: Default Calendar Type', 'geditorial' ),
+			'gregorian'     => _x( 'Gregorian', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			// 'japanese'      => _x( 'Japanese', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			// 'buddhist'      => _x( 'Buddhist', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			// 'chinese'       => _x( 'Chinese', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			'persian'       => _x( 'Persian', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			// 'indian'        => _x( 'Indian', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			'islamic'       => _x( 'Islamic', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			// 'islamic-civil' => _x( 'Islamic-Civil', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			// 'coptic'        => _x( 'Coptic', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
+			// 'ethiopic'      => _x( 'Ethiopic', 'Services: Calendars: Default Calendar Type', 'geditorial' ),
 		];
 
 		return $filtered ? apply_filters( static::BASE.'_default_calendars', $calendars ) : $calendars;

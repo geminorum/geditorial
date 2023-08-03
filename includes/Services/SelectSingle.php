@@ -41,6 +41,7 @@ class SelectSingle extends Main
 	}
 
 	// @REF: https://select2.org/data-sources/formats
+	// FIXME: must handle excludes
 	public static function query_callback( $request )
 	{
 		$queried = self::atts( [

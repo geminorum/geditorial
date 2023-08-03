@@ -1589,7 +1589,7 @@ class Meta extends gEditorial\Module
 
 		foreach ( $atts['map'] as $offset => $field )
 			if ( array_key_exists( $field, $fields ) )
-				$this->import_posttype_field( $atts['raw'][$offset], $fields[$field], $post, $atts['raw']['override'] );
+				$this->import_posttype_field( $atts['raw'][$offset], $fields[$field], $post, $atts['override'] );
 	}
 
 	private function _raise_resources( $count = 0 )

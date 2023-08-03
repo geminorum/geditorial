@@ -525,7 +525,7 @@ class Organization extends gEditorial\Module
 						$list,
 						'primary_posttype',
 						'primary_paired',
-						$this->get_setting( 'multiple_instances' ) ? $atts['raw']['override'] : FALSE,
+						$this->get_setting( 'multiple_instances' ) ? $atts['override'] : FALSE,
 					);
 
 				break;

@@ -67,8 +67,8 @@ trait PairedCore
 	// OLD: `_hook_paired_sync_primary_posttype()`
 	protected function pairedcore__hook_sync_paired( $constants = NULL )
 	{
-		if ( ! $this->_paired )
-			return;
+		// if ( ! $this->_paired )
+		// 	return;
 
 		if ( is_null( $constants ) ) {
 
