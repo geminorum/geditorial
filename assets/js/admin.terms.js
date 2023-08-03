@@ -148,7 +148,10 @@
       app.inlineDate('datestart', tag, event);
       app.inlineDate('dateend', tag, event);
       app.inlineNumber('days', tag, event);
+      app.inlineNumber('hours', tag, event);
       app.inlineNumber('unit', tag, event);
+      app.inlineNumber('min', tag, event);
+      app.inlineNumber('max', tag, event);
 
       // FIXME: WTF: data attr cannot contain underscores!
       // @SEE: https://www.sitepoint.com/how-why-use-html5-custom-data-attributes/

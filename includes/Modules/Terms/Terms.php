@@ -40,6 +40,7 @@ class Terms extends gEditorial\Module
 		'datestart',
 		'dateend',
 		'days',
+		'hours',
 		'unit',
 		'max',
 		'min',
@@ -122,6 +123,7 @@ class Terms extends gEditorial\Module
 				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-terms' ),
 				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-terms' ),
 				'days'      => _x( 'Days', 'Titles', 'geditorial-terms' ),
+				'hours'     => _x( 'Hours', 'Titles', 'geditorial-terms' ),
 				'unit'      => _x( 'Unit', 'Titles', 'geditorial-terms' ),
 				'min'       => _x( 'Minimum', 'Titles', 'geditorial-terms' ),
 				'max'       => _x( 'Maximum', 'Titles', 'geditorial-terms' ),
@@ -149,6 +151,7 @@ class Terms extends gEditorial\Module
 				'datestart' => _x( 'Terms can have date-start to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'dateend'   => _x( 'Terms can have date-end to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'days'      => _x( 'Terms can have days number to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'hours'     => _x( 'Terms can have hours number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'unit'      => _x( 'Terms can have unit number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'min'       => _x( 'Defines the minimum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
 				'max'       => _x( 'Defines the maximum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
@@ -504,7 +507,7 @@ class Terms extends gEditorial\Module
 			$prepare = 'register_prepare_callback_'.$field;
 
 			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
-			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'unit', 'min', 'max', 'viewable' ] ) )
+			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'hours', 'unit', 'min', 'max', 'viewable' ] ) )
 				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
 
 			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
@@ -616,6 +619,7 @@ class Terms extends gEditorial\Module
 			'datestart',
 			'dateend',
 			'days',
+			'hours',
 			'unit',
 			'min',
 			'max',
@@ -667,6 +671,7 @@ class Terms extends gEditorial\Module
 			'datestart',
 			'dateend',
 			'days',
+			'hours',
 			'unit',
 			'min',
 			'max',
@@ -725,6 +730,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'days':
+			case 'hours':
 			case 'unit':
 			case 'min':
 			case 'max':
@@ -1038,7 +1044,7 @@ class Terms extends gEditorial\Module
 					update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
 					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 
-				} else if ( in_array( $field, [ 'days', 'unit', 'min', 'max' ] ) ) {
+				} else if ( in_array( $field, [ 'days', 'hours', 'unit', 'min', 'max' ] ) ) {
 
 					$meta = Core\Number::intval( trim( $meta ), FALSE );
 
@@ -1176,6 +1182,7 @@ class Terms extends gEditorial\Module
 			break;
 
 			case 'days':
+			case 'hours':
 			case 'unit':
 			case 'min':
 			case 'max':
@@ -1399,6 +1406,7 @@ class Terms extends gEditorial\Module
 			break;
 
 			case 'days':
+			case 'hours':
 			case 'unit':
 			case 'min':
 			case 'max':
@@ -1595,6 +1603,7 @@ class Terms extends gEditorial\Module
 						break;
 
 					case 'days':
+					case 'hours':
 					case 'unit':
 					case 'min':
 					case 'max':
