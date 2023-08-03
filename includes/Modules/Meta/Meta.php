@@ -996,12 +996,17 @@ class Meta extends gEditorial\Module
 			$this->actions( 'column_row', $post, $fields, $excludes );
 		echo '</ul></div>';
 
-		// for quick-edit
+		// NOTE: for `quickedit` enabled fields
 		foreach ( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
-			echo '<div class="hidden '.$prefix.$field.'-value">'.$this->get_postmeta_field( $post->ID, $field ).'</div>';
+			echo '<div class="hidden '.$prefix.$field.'-value">'.
+				$this->_prep_posttype_field_for_input(
+					$this->get_postmeta_field( $post->ID, $field ),
+					$field,
+					$args
+				).'</div>';
 	}
 
-	// NOTE: only renders quick-edits
+	// NOTE: only renders `quickedit` enabled fields
 	public function column_row_default( $post, $fields, $excludes )
 	{
 		foreach ( $fields as $field_key => $field ) {
@@ -1080,6 +1085,20 @@ class Meta extends gEditorial\Module
 		$this->posts_custom_column( $this->hook(), $row );
 	}
 
+	// NOTE: for more `MetaBox::renderFieldInput()`
+	private function _prep_posttype_field_for_input( $value, $field_key, $field )
+	{
+		if ( empty( $field['type'] ) )
+			return $value;
+
+		switch ( $field['type'] ) {
+			case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' )    : $value;
+			case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' ): $value;
+		}
+
+		return $value;
+	}
+
 	public function quick_edit_custom_box( $column_name, $posttype )
 	{
 		if ( $this->classs() != $column_name )
@@ -1098,9 +1117,10 @@ class Meta extends gEditorial\Module
 			echo '<label class="hidden '.$class.'">';
 				echo '<span class="title">'.$args['title'].'</span>';
 				echo '<span class="input-text-wrap">';
-				echo '<input type="text" name="'.$name.'" class="'.$class.'" value=""';
+				echo '<input name="'.$name.'" class="'.$class.'" value=""';
 				echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
 				echo $args['ltr'] ? ' dir="ltr"' : '';
+				echo $args['type'] === 'number' ? ' type="number" ' : ' type="text" ';
 				echo '></span>';
 			echo '</label>';
 		}

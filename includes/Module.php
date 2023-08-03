@@ -1893,7 +1893,7 @@ class Module extends WordPress\Module
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn', 'date', 'datetime' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -5443,12 +5443,14 @@ class Module extends WordPress\Module
 
 		if ( ! empty( $args['type'] ) ) {
 			switch ( $args['type'] ) {
-				case 'email'   : return 'email';
-				case 'phone'   : return 'phone';
-				case 'mobile'  : return 'smartphone';
-				case 'identity': return 'id-alt';
-				case 'iban'    : return 'bank';
-				case 'isbn'    : return 'book';
+				case 'email'    : return 'email';
+				case 'phone'    : return 'phone';
+				case 'mobile'   : return 'smartphone';
+				case 'identity' : return 'id-alt';
+				case 'iban'     : return 'bank';
+				case 'isbn'     : return 'book';
+				case 'date'     : return 'calendar';
+				case 'datetime' : return 'calendar-alt';
 			}
 		}
 

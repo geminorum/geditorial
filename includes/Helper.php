@@ -288,6 +288,12 @@ class Helper extends WordPress\Main
 					return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ),
 						Info::lookupISBN( $raw ?: $value ), TRUE );
 
+				case 'date':
+					return Datetime::prepForDisplay( $raw ?: $value, 'Y/m/d' );
+
+				case 'datetime':
+					return Datetime::prepForDisplay( $raw ?: $value, Text::ends( $raw ?: $value, '00:00:00' ) ? 'Y/m/d' : 'Y/m/d H:i' );
+
 				case 'contact_method':
 					return Core\URL::isValid( $raw ?: $value )
 						? Core\HTML::link( URL::prepTitle( $raw ?: $value ), $raw ?: $value )
