@@ -392,13 +392,12 @@ class Importer extends gEditorial\Module
 						$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
 							Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] ) );
 
-					if ( FALSE !== ( $title_key = array_search( 'importer_post_title', $args['extra']['map'] ) ) ) {
-
+					if ( FALSE !== ( $title_key = array_search( 'importer_post_title', $args['extra']['mapped'] ) ) ) {
 						$title = $this->filters( 'prepare',
-							$row[$args['extra']['map'][$title_key]],
+							$row[$title_key],
 							$args['extra']['post_type'],
 							'importer_post_title',
-							$args['extra']['map'][$title_key],
+							$title_key,
 							$row,
 							$row['___source_id'],
 							$args['extra']['taxonomies']
@@ -444,7 +443,6 @@ class Importer extends gEditorial\Module
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'    => [
 				'na'         => gEditorial()->na(),
-				'map'        => $map, // needed for `[checks]` column
 				'mapped'     => array_combine( $headers, $map ),
 				'headers'    => $headers,
 				'post_type'  => $posttype,
