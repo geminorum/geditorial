@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 class Importer extends gEditorial\Module
 {
 	use Internals\CoreToolBox;
+	use Internals\RawImports;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -85,8 +86,14 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'js' => [
-				'modal_title'  => _x( 'Choose a Datasheet', 'Javascript String', 'geditorial-importer' ),
-				'modal_button' => _x( 'Select as Source', 'Javascript String', 'geditorial-importer' ),
+				'edit' => [
+					'button_title' => _x( 'Import Items', 'Javascript String', 'geditorial-importer' ),
+					'button_text'  => _x( 'Import', 'Javascript String', 'geditorial-importer' ),
+				],
+				'media' => [
+					'modal_title'  => _x( 'Choose a Datasheet', 'Javascript String', 'geditorial-importer' ),
+					'modal_button' => _x( 'Select as Source', 'Javascript String', 'geditorial-importer' ),
+				],
 			],
 		];
 	}
@@ -94,6 +101,19 @@ class Importer extends gEditorial\Module
 	protected function tool_box_content()
 	{
 		Core\HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
+	}
+
+	public function current_screen( $screen )
+	{
+		if ( 'edit' == $screen->base
+			&& $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( $this->cuc( 'imports' ) )
+				$this->enqueue_asset_js( [
+					'strings' => $this->get_strings( $screen->base, 'js' ),
+					'link'    => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ),
+				], $screen );
+		}
 	}
 
 	private function _guessed_fields_map( $headers, $key = 'source_map' )
@@ -844,7 +864,7 @@ class Importer extends gEditorial\Module
 			wp_enqueue_media();
 
 			$this->enqueue_asset_js( [
-				'strings' => $this->strings['js'],
+				'strings' => $this->get_strings( 'media', 'js' ),
 			], $this->dotted( 'media' ), [ 'jquery', 'media-upload' ] );
 		}
 	}

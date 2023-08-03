@@ -56,9 +56,9 @@ trait RawImports
 		return empty( $data ) ? NULL : $data;
 	}
 
-	protected function get_imports_page_url( $sub = NULL )
+	protected function get_imports_page_url( $sub = NULL, $extra = [] )
 	{
-		return $this->get_module_url( 'imports', is_null( $sub ) ? $this->key : $sub );
+		return $this->get_module_url( 'imports', is_null( $sub ) ? $this->key : $sub, $extra );
 	}
 
 	protected function render_imports_toolbox_card( $imports_url = NULL )
