@@ -367,10 +367,10 @@ class Importer extends gEditorial\Module
 		$this->store_postmeta( $id, ( 'none' === $source_key ? FALSE : $source_key ), $this->constant( 'metakey_source_key' ) );
 		$this->_store_fields_map( $file, $headers, $map, $source_key );
 
-		$this->_render_data_table( $items, $headers, $map, $posttype, $source_key );
+		$this->_render_data_table( $id, $items, $headers, $map, $posttype, $source_key );
 	}
 
-	private function _render_data_table( $data, $headers, $map = [], $posttype = 'post', $source_key = 'none' )
+	private function _render_data_table( $id, $data, $headers, $map = [], $posttype = 'post', $source_key = 'none' )
 	{
 		$taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
@@ -434,8 +434,12 @@ class Importer extends gEditorial\Module
 		}
 
 		Core\HTML::tableList( $columns, $data, [
-			/* translators: %s: count placeholder */
-			'title'    => Core\HTML::tag( 'h3', WordPress\Strings::getCounted( count( $data ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
+			'title' => Core\HTML::tag( 'h3', sprintf(
+				/* translators: %1$s: count placeholder, %2$s: attachment title */
+				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
+				Core\Number::format( count( $data ) ),
+				get_the_title( $id )
+			) ),
 			'callback' => [ $this, 'form_posts_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'    => [
@@ -946,7 +950,11 @@ class Importer extends gEditorial\Module
 			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
-			Core\HTML::h3( _x( 'Terms to Append All', 'Header', 'geditorial-importer' ) );
+			Core\HTML::h3( sprintf(
+				/* translators: %s: attachment title */
+				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
+				get_the_title( $attach_id )
+			) );
 
 			Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
@@ -970,7 +978,11 @@ class Importer extends gEditorial\Module
 			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
-			Core\HTML::h3( _x( 'Map the Importer', 'Header', 'geditorial-importer' ) );
+			Core\HTML::h3( sprintf(
+				/* translators: %s: attachment title */
+				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
+				get_the_title( $attach_id )
+			) );
 
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
