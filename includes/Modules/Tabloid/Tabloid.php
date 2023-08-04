@@ -233,6 +233,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'print' );
 		$data['__can_export'] = $this->role_can( 'export' );
+		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 
 		return $this->filters( 'view_data', $data, $post, $context );
 	}
