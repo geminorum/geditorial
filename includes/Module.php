@@ -1910,6 +1910,14 @@ class Module extends WordPress\Module
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return $this->strings['noops'][$constant];
 
+		if ( in_array( $constant, [ 'item', 'paired_item' ], TRUE ) )
+			/* translators: %s: items count */
+			return _nx_noop( '%s Item', '%s Items', 'Module: Noop', 'geditorial' );
+
+		if ( in_array( $constant, [ 'member', 'family_member' ], TRUE ) )
+			/* translators: %s: items count */
+			return _nx_noop( '%s Member', '%s Members', 'Module: Noop', 'geditorial' );
+
 		if ( 'post' == $constant )
 			/* translators: %s: posts count */
 			return _nx_noop( '%s Post', '%s Posts', 'Module: Noop', 'geditorial' );
@@ -1923,7 +1931,7 @@ class Module extends WordPress\Module
 			return _nx_noop( '%s Word', '%s Words', 'Module: Noop', 'geditorial' );
 
 		$noop = [
-			'plural'   => $constant,
+			'plural'   => Core\L10n::pluralize( $constant ),
 			'singular' => $constant,
 			// 'context'  => ucwords( $module->name ).' Module: Noop', // no need
 			'domain'   => 'geditorial',
