@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
@@ -15,6 +16,8 @@ use geminorum\gEditorial\WordPress;
 
 class Meta extends gEditorial\Module
 {
+	use Internals\PostTypeFields;
+
 	public $meta_key = '_gmeta';
 
 	protected $priority_init           = 12;
