@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
@@ -713,7 +714,7 @@ class Cartable extends gEditorial\Module
 			return;
 
 		if ( ! $term = WordPress\Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
-			return Core\HTML::desc( gEditorial\Plugin::wrong( FALSE ), FALSE, '-empty' );
+			return Info::renderSomethingIsWrong();
 
 		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}
