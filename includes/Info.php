@@ -54,15 +54,15 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function renderNoReportsAvailable()
 	public static function renderSomethingIsWrong( $before = '', $after = '' )
 	{
 		return Core\HTML::desc( $before.Plugin::wrong( FALSE ).$after, FALSE, '-empty' );
 	}
 
+	public static function renderNoReportsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			_x( 'There are no reports available!', 'Info: Message', 'geditorial' ),
+			$before._x( 'There are no reports available!', 'Info: Message', 'geditorial' ).$after,
 			FALSE,
 			'-empty'
 		);

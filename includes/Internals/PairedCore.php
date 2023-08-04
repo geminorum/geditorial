@@ -52,7 +52,7 @@ trait PairedCore
 
 		$posts = get_posts( $args );
 
-		return empty( $posts ) ? FALSE : $posts;
+		return empty( $posts ) ? [] : $posts;
 	}
 
 	protected function pairedcore__hook_sync_paired_for_ajax()

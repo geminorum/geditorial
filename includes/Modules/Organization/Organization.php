@@ -10,6 +10,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\WordPress;
 
 class Organization extends gEditorial\Module
 {
@@ -375,12 +376,12 @@ class Organization extends gEditorial\Module
 		if ( is_tax( $this->constant( 'primary_posttype' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'primary_posttype', 'primary_paired' ) )
-				WordPress::redirect( get_permalink( $post_id ), 301 );
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'primary_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				WordPress::redirect( $redirect, 301 );
+				Core\WordPress::redirect( $redirect, 301 );
 		}
 	}
 

@@ -174,8 +174,8 @@ class Meta extends gEditorial\Module
 				'datetime'  => _x( 'Posts can have date-time to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'datestart' => _x( 'Posts can have date-start to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'dateend'   => _x( 'Posts can have date-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
-				'days'      => _x( 'Posts can have days number to help organize them.', 'Descriptions', 'geditorial-meta' ),
-				'hours'     => _x( 'Posts can have hours number to help organize them.', 'Descriptions', 'geditorial-meta' ),
+				'days'      => _x( 'The total days number about the post.', 'Descriptions', 'geditorial-meta' ),
+				'hours'     => _x( 'The total hours number about the post.', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),

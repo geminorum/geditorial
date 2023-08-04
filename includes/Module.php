@@ -826,11 +826,13 @@ class Module extends WordPress\Module
 	// DEFAULT METHOD
 	protected function posttypes_excluded( $extra = [] )
 	{
-		$extra  = (array) $extra;
-		$paired = $this->paired_get_paired_constants();
+		$extra = (array) $extra;
 
-		if ( ! empty( $paired[0] ) )
-			$extra[] = $this->constant( $paired[0] );
+		if ( method_exists( $this, 'paired_get_constants' ) ) {
+
+			if ( $paired = $this->paired_get_constants() )
+				$extra[] = $this->constant( $paired[0] );
+		}
 
 		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra ) );
 	}
@@ -2041,6 +2043,10 @@ class Module extends WordPress\Module
 	// NOTE: hook filter before `init` on `after_setup_theme`
 	protected function get_default_terms( $constant )
 	{
+		// constant is not defined (in case custom terms are for another modules)
+		if ( ! $this->constant( $constant ) )
+			return [];
+
 		if ( ! empty( $this->strings['default_terms'][$constant] ) )
 			$terms = $this->strings['default_terms'][$constant];
 
@@ -3756,8 +3762,8 @@ class Module extends WordPress\Module
 	}
 
 	/**
-	 * returns post ids with selected terms from settings
-	 * that will be excluded form dropdown on supported post-types
+	 * Returns post ids with selected terms from settings.
+	 * results will be excluded form dropdown on supported post-types.
 	 *
 	 * TODO: move to `Internals\PairedMetaBox`
 	 *
@@ -4833,14 +4839,10 @@ class Module extends WordPress\Module
 	// DEFAULT METHOD
 	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		if ( $this->_paired ) {
+		if ( $this->_paired && method_exists( $this, 'paired_get_constants' ) ) {
 
-			$constants = $this->paired_get_paired_constants();
-
-			if ( empty( $constants[0] ) || empty( $constants[1] ) )
-				return FALSE;
-
-			return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
+			if ( $constants = $this->paired_get_constants() )
+				return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
 		}
 
 		return FALSE;
