@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 trait Deprecated
@@ -247,5 +248,71 @@ trait Deprecated
 
 			// FIXME: DO THE SAVINGS!
 		}
+	}
+
+	public function get_meta_box_title_posttype( $constant, $url = NULL, $title = NULL )
+	{
+		self::_dep( '$this->strings_metabox_title_via_posttype()' );
+
+		$object = WordPress\PostType::object( $this->constant( $constant ) );
+
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
+
+		if ( is_null( $title ) && ! empty( $object->labels->metabox_title ) )
+			$title = $object->labels->metabox_title;
+
+		// DEPRECATED: for back-comp only
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
+
+		// FIXME: problems with block editor(on panel settings)
+		return $title; // <--
+
+		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
+
+		if ( current_user_can( $object->cap->edit_others_posts ) ) {
+
+			if ( is_null( $url ) )
+				$url = Core\WordPress::getPostTypeEditLink( $object->name );
+
+			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
+			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+		}
+
+		return $title;
+	}
+
+	public function get_meta_box_title_taxonomy( $constant, $posttype, $url = NULL, $title = NULL )
+	{
+		self::_dep( '$this->strings_metabox_title_via_taxonomy()' );
+
+		$object = WordPress\Taxonomy::object( $this->constant( $constant ) );
+
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
+
+		if ( is_null( $title ) && ! empty( $object->labels->metabox_title ) )
+			$title = $object->labels->metabox_title;
+
+		if ( is_null( $title ) && ! empty( $object->labels->name ) )
+			$title = $object->labels->name;
+
+		return $title; // <-- // FIXME: problems with block editor
+
+		// TODO: 'metabox_icon'
+		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
+			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
+
+		if ( is_null( $url ) )
+			$url = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $posttype ] );
+
+		if ( $url ) {
+			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
+			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+		}
+
+		return $title;
 	}
 }

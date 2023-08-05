@@ -4,11 +4,13 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Module extends WordPress\Module
 {
+	use Internals\Strings;
 
 	public $module;
 	public $options;
@@ -1871,86 +1873,6 @@ class Module extends WordPress\Module
 	public function has_posttype_fields_support( $constant, $type = 'meta' )
 	{
 		return post_type_supports( $this->constant( $constant ), $type.'_fields' );
-	}
-
-	// NOTE: fallback will merge if is an array
-	// NOTE: moveup is FALSE by default
-	public function get_strings( $subgroup, $group = 'titles', $fallback = [], $moveup = FALSE )
-	{
-		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
-			return is_array( $fallback )
-				? array_merge( $fallback, $this->strings[$group][$subgroup] )
-				: $this->strings[$group][$subgroup];
-
-		if ( $moveup && isset( $this->strings[$group] ) )
-			return is_array( $fallback )
-				? array_merge( $fallback, $this->strings[$group] )
-				: $this->strings[$group];
-
-		return $fallback;
-	}
-
-	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE, $moveup = TRUE )
-	{
-		if ( $subgroup && isset( $this->strings[$group][$subgroup][$string] ) )
-			return $this->strings[$group][$subgroup][$string];
-
-		if ( isset( $this->strings[$group]['post'][$string] ) )
-			return $this->strings[$group]['post'][$string];
-
-		if ( $moveup && isset( $this->strings[$group][$string] ) )
-			return $this->strings[$group][$string];
-
-		if ( FALSE === $fallback )
-			return $string;
-
-		return $fallback;
-	}
-
-	public function get_noop( $constant )
-	{
-		if ( ! empty( $this->strings['noops'][$constant] ) )
-			return $this->strings['noops'][$constant];
-
-		if ( in_array( $constant, [ 'item', 'paired_item' ], TRUE ) )
-			/* translators: %s: items count */
-			return _nx_noop( '%s Item', '%s Items', 'Module: Noop', 'geditorial' );
-
-		if ( in_array( $constant, [ 'member', 'family_member' ], TRUE ) )
-			/* translators: %s: items count */
-			return _nx_noop( '%s Member', '%s Members', 'Module: Noop', 'geditorial' );
-
-		if ( 'post' == $constant )
-			/* translators: %s: posts count */
-			return _nx_noop( '%s Post', '%s Posts', 'Module: Noop', 'geditorial' );
-
-		if ( 'connected' == $constant )
-			/* translators: %s: items count */
-			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Module: Noop', 'geditorial' );
-
-		if ( 'word' == $constant )
-			/* translators: %s: words count */
-			return _nx_noop( '%s Word', '%s Words', 'Module: Noop', 'geditorial' );
-
-		$noop = [
-			'plural'   => Core\L10n::pluralize( $constant ),
-			'singular' => $constant,
-			// 'context'  => ucwords( $module->name ).' Module: Noop', // no need
-			'domain'   => 'geditorial',
-		];
-
-		if ( ! empty( $this->strings['labels'][$constant]['name'] ) )
-			$noop['plural'] = $this->strings['labels'][$constant]['name'];
-
-		if ( ! empty( $this->strings['labels'][$constant]['singular_name'] ) )
-			$noop['singular'] = $this->strings['labels'][$constant]['singular_name'];
-
-		return $noop;
-	}
-
-	public function nooped_count( $constant, $count )
-	{
-		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant ) ), Core\Number::format( $count ) );
 	}
 
 	public function constant( $key, $default = FALSE )
@@ -3893,6 +3815,7 @@ class Module extends WordPress\Module
 		if ( is_null( $context ) )
 			$context = 'supportedbox';
 
+		$metabox  = $this->classs( $context );
 		$callback = function( $object, $box ) use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->taxonomy ) )
@@ -3921,15 +3844,9 @@ class Module extends WordPress\Module
 			echo '</div>';
 		};
 
-		/* translators: %1$s: current post title, %2$s: posttype singular name */
-		$default = _x( 'For &ldquo;%1$s&rdquo;', 'Module: Metabox Title: `supportedbox_title`', 'geditorial' );
-		$title   = $this->get_string( sprintf( '%s_title', $context ), $screen->taxonomy, 'metabox', $default );
-		$name    = Helper::getTaxonomyLabel( $screen->taxonomy, 'singular_name' );
-		$metabox = $this->classs( $context );
-
 		add_meta_box(
 			$metabox,
-			sprintf( $title, WordPress\Term::title( NULL, $name ), $name ),
+			$this->strings_metabox_title_via_taxonomy( $screen->taxonomy, $context ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -3951,6 +3868,7 @@ class Module extends WordPress\Module
 		if ( is_null( $context ) )
 			$context = 'supportedbox';
 
+		$metabox  = $this->classs( $context );
 		$callback = function( $object, $box ) use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
@@ -3979,15 +3897,9 @@ class Module extends WordPress\Module
 			echo '</div>';
 		};
 
-		/* translators: %1$s: current post title, %2$s: posttype singular name */
-		$default = _x( 'For &ldquo;%1$s&rdquo;', 'Module: Metabox Title: `supportedbox_title`', 'geditorial' );
-		$title   = $this->get_string( sprintf( '%s_title', $context ), $screen->post_type, 'metabox', $default );
-		$name    = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
-		$metabox = $this->classs( $context );
-
 		add_meta_box(
 			$metabox,
-			sprintf( $title, WordPress\Post::title( NULL, $name ), $name ),
+			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -4038,6 +3950,7 @@ class Module extends WordPress\Module
 			remove_meta_box( 'pageparentdiv', $screen, 'side' );
 		}
 
+		$metabox  = $this->classs( $context );
 		$callback = function( $post, $box ) use ( $context ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -4062,11 +3975,9 @@ class Module extends WordPress\Module
 			$this->nonce_field( $context );
 		};
 
-		$metabox = $this->classs( $context );
-
 		add_meta_box(
 			$metabox,
-			$this->get_meta_box_title_posttype( $constant_key ),
+			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -4111,6 +4022,7 @@ class Module extends WordPress\Module
 			remove_meta_box( 'pageparentdiv', $screen, 'side' );
 		}
 
+		$metabox  = $this->classs( $context );
 		$callback = function( $post, $box ) use ( $constants, $context ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -4135,11 +4047,9 @@ class Module extends WordPress\Module
 			$this->nonce_field( $context );
 		};
 
-		$metabox = $this->classs( $context );
-
 		add_meta_box(
 			$metabox,
-			$this->get_meta_box_title( $constants[0], FALSE ),
+			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -4177,15 +4087,8 @@ class Module extends WordPress\Module
 		if ( is_null( $context ) )
 			$context = 'listbox';
 
-		$post_title    = WordPress\Post::title(); // NOTE: gets post from query-args in admin
-		$singular_name = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
-
-		/* translators: %1$s: current post title, %2$s: posttype singular name */
-		$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Module: Metabox Empty: `listbox_empty`', 'geditorial' );
-		$empty   = $this->get_string( sprintf( '%s_empty', $context ), $constants[0], 'metabox', $default );
-		$noitems = sprintf( $empty, $post_title, $singular_name );
-
-		$callback = function( $object, $box ) use ( $constants, $context, $screen, $noitems ) {
+		$metabox  = $this->classs( $context );
+		$callback = function( $object, $box ) use ( $constants, $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
@@ -4209,7 +4112,7 @@ class Module extends WordPress\Module
 				echo $list;
 
 			else
-				echo Core\HTML::wrap( $noitems, 'field-wrap -empty' );
+				echo Core\HTML::wrap( $this->strings_metabox_noitems_via_posttype( $screen->post_type, $context ), 'field-wrap -empty' );
 
 			$this->_render_listbox_extra( $object, $box, $context, $screen );
 
@@ -4218,14 +4121,9 @@ class Module extends WordPress\Module
 			$this->nonce_field( $context );
 		};
 
-		/* translators: %1$s: current post title, %2$s: posttype singular name */
-		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Module: Metabox Title: `listbox_title`', 'geditorial' );
-		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
-		$metabox = $this->classs( $context );
-
 		add_meta_box(
 			$metabox,
-			sprintf( $title, $post_title, $singular_name ),
+			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
 			$metabox_context,
@@ -4280,6 +4178,7 @@ class Module extends WordPress\Module
 		if ( is_null( $context ) )
 			$context = 'pairedbox';
 
+		$metabox  = $this->classs( $context );
 		$action   = sprintf( 'render_%s_metabox', $context );
 		$callback = function( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
 
@@ -4331,11 +4230,9 @@ class Module extends WordPress\Module
 			$this->nonce_field( $context );
 		};
 
-		$metabox = $this->classs( $context );
-
 		add_meta_box(
 			$metabox,
-			$this->get_meta_box_title_posttype( $constants[0] ),
+			$this->strings_metabox_title_via_posttype( $this->constant( $constants[0] ), $context ),
 			$callback,
 			$screen,
 			'side'
@@ -4507,6 +4404,7 @@ class Module extends WordPress\Module
 	}
 
 	// TODO: filter the results
+	// FIXME MUST DEPRECATE
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL )
 	{
 		if ( is_null( $title ) )
@@ -4534,68 +4432,6 @@ class Module extends WordPress\Module
 				$url = $this->get_module_url( 'settings' );
 
 			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial' ) );
-			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
-		}
-
-		return $title;
-	}
-
-	public function get_meta_box_title_taxonomy( $constant, $posttype, $url = NULL, $title = NULL )
-	{
-		$object = WordPress\Taxonomy::object( $this->constant( $constant ) );
-
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
-
-		if ( is_null( $title ) && ! empty( $object->labels->metabox_title ) )
-			$title = $object->labels->metabox_title;
-
-		if ( is_null( $title ) && ! empty( $object->labels->name ) )
-			$title = $object->labels->name;
-
-		return $title; // <-- // FIXME: problems with block editor
-
-		// TODO: 'metabox_icon'
-		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
-
-		if ( is_null( $url ) )
-			$url = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $posttype ] );
-
-		if ( $url ) {
-			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
-			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
-		}
-
-		return $title;
-	}
-
-	public function get_meta_box_title_posttype( $constant, $url = NULL, $title = NULL )
-	{
-		$object = WordPress\PostType::object( $this->constant( $constant ) );
-
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
-
-		if ( is_null( $title ) && ! empty( $object->labels->metabox_title ) )
-			$title = $object->labels->metabox_title;
-
-		// DEPRECATED: for back-comp only
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant, 'misc', $object->labels->name );
-
-		// FIXME: problems with block editor(on panel settings)
-		return $title; // <--
-
-		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
-
-		if ( current_user_can( $object->cap->edit_others_posts ) ) {
-
-			if ( is_null( $url ) )
-				$url = Core\WordPress::getPostTypeEditLink( $object->name );
-
-			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
