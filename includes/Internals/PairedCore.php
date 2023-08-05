@@ -26,6 +26,88 @@ trait PairedCore
 		return $constants;
 	}
 
+	/**
+	 * Renders pointers about given paired posttype.
+	 * @example `$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );`
+	 *
+	 * @param  object      $post
+	 * @param  string      $before
+	 * @param  string      $after
+	 * @param  string      $context
+	 * @param  string|null $screen
+	 * @return void
+	 */
+	public function pointers_post_paired_posttype( $post, $before, $after, $context, $screen )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return;
+
+		if ( ! $this->is_posttype( $constants[0], $post ) )
+			return;
+
+		if ( FALSE === ( $connected = $this->paired_all_connected_to( $post ) ) )
+			return Info::renderSomethingIsWrong( $before, $after );
+
+		$count = count( $connected );
+
+		if ( ! $count )
+			return Core\HTML::desc( $before.$this->get_posttype_label( $constants[0], 'paired_no_items' ).$after, FALSE, '-empty' );
+
+		echo $before.$this->get_column_icon().sprintf(
+			$this->get_posttype_label( $constants[0], 'paired_has_items' ),
+			$this->nooped_count( 'paired_item', $count )
+		).$after;
+
+		$average = apply_filters(
+			sprintf( '%s_%s_%s', $this->base, 'was_born', 'mean_age' ),
+			NULL,
+			$post,
+			$connected,
+			$this->posttypes()
+		);
+
+		if ( $average )
+			echo $before.$this->get_column_icon( FALSE, 'groups' ).sprintf(
+				$this->get_posttype_label( $constants[0], 'paired_mean_age' ),
+				Core\Number::format( $average ),
+				Core\Number::format( $count ),
+			).$after;
+	}
+
+	/**
+	 * Renders pointers about given supported posttype.
+	 * @example `$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );`
+	 *
+	 * @param  object      $post
+	 * @param  string      $before
+	 * @param  string      $after
+	 * @param  string      $context
+	 * @param  string|null $screen
+	 * @return void
+	 */
+	public function pointers_post_paired_supported( $post, $before, $after, $context, $screen )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return;
+
+		if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+			return;
+
+		$before   = $before.$this->get_column_icon();
+		$template = $this->get_posttype_label( $constants[0], 'paired_connected_to' );
+
+		foreach ( $items as $term_id => $post_id ) {
+
+			if ( ! $item = WordPress\Post::get( $post_id ) )
+				continue;
+
+			echo $before.sprintf( $template, WordPress\Post::fullTitle( $item, TRUE ) ).$after;
+		}
+	}
+
 	protected function paired_all_connected_to( $post, $exclude = [], $posttypes = NULL )
 	{
 		if ( ! $constants = $this->paired_get_constants() )

@@ -882,6 +882,22 @@ class Helper extends WordPress\Main
 			case 'extended_label':
 				return $object->labels->name;
 
+			case 'paired_no_items':
+				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+				return vsprintf( _x( 'There are no items available!', 'Helper: PostType Label: `paired_no_items`', 'geditorial' ), self::getStringsFromName( $name ) );
+
+			case 'paired_has_items':
+				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+				return vsprintf( _x( 'The %2$s has %5$s.', 'Helper: PostType Label: `paired_has_items`', 'geditorial' ), self::getStringsFromName( $name ) );
+
+			case 'paired_connected_to':
+				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+				return vsprintf( _x( 'Connected to %5$s', 'Helper: PostType Label: `paired_connected_to`', 'geditorial' ), self::getStringsFromName( $name ) );
+
+			case 'paired_mean_age':
+				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+				return vsprintf( _x( 'The %2$s Mean-age is %5$s.', 'Helper: PostType Label: `paired_mean_age`', 'geditorial' ), self::getStringsFromName( $name ) );
+
 			case 'show_option_no_items':
 				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
 				return vsprintf( _x( '(No %3$s)', 'Helper: PostType Label: `show_option_no_items`', 'geditorial' ), self::getStringsFromName( $name ) );
