@@ -130,6 +130,8 @@ class Meta extends gEditorial\Module
 				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-meta' ),
 				'days'      => _x( 'Days', 'Titles', 'geditorial-meta' ),
 				'hours'     => _x( 'Hours', 'Titles', 'geditorial-meta' ),
+				'period'    => _x( 'Period', 'Titles', 'geditorial-meta' ),
+				'amount'    => _x( 'Amount', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
@@ -176,6 +178,8 @@ class Meta extends gEditorial\Module
 				'dateend'   => _x( 'Posts can have date-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'days'      => _x( 'The total days number about the post.', 'Descriptions', 'geditorial-meta' ),
 				'hours'     => _x( 'The total hours number about the post.', 'Descriptions', 'geditorial-meta' ),
+				'period'    => _x( 'The length of time about the post.', 'Descriptions', 'geditorial-meta' ),
+				'amount'    => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -242,6 +246,8 @@ class Meta extends gEditorial\Module
 				'dateend'   => [ 'type' => 'datetime' ],
 				'days'      => [ 'type' => 'number' ],
 				'hours'     => [ 'type' => 'number' ],
+				'period'    => [ 'type' => 'text' ],
+				'amount'    => [ 'type' => 'number' ],
 			],
 			'page' => [
 				'over_title' => [ 'type' => 'title_before' ],
