@@ -423,7 +423,7 @@ class Tweaks extends gEditorial\Module
 
 		global $wpdb;
 
-		return $join." LEFT JOIN {$wpdb->postmeta} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id ";
+		return $join." LEFT JOIN {$wpdb->postmeta} AS searchmeta ON {$wpdb->posts}.ID = searchmeta.post_id ";
 	}
 
 	// modify the search query with posts_where
@@ -435,7 +435,7 @@ class Tweaks extends gEditorial\Module
 		global $wpdb;
 
 		return preg_replace( "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-			"({$wpdb->posts}.post_title LIKE $1) OR ({$wpdb->postmeta}.meta_value LIKE $1)", $where );
+			"({$wpdb->posts}.post_title LIKE $1) OR (searchmeta.meta_value LIKE $1)", $where );
 	}
 
 	// prevent duplicates
