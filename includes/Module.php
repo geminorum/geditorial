@@ -869,6 +869,17 @@ class Module extends WordPress\Module
 		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
+	public function constant_in( $constant, $array )
+	{
+		if ( ! $constant )
+			return FALSE;
+
+		if ( ! $key = $this->constant( $constant ) )
+			return FALSE;
+
+		return in_array( $key, $array, TRUE );
+	}
+
 	public function is_posttype( $constant, $post = NULL )
 	{
 		if ( ! $constant )
@@ -2419,7 +2430,21 @@ class Module extends WordPress\Module
 	 */
 	public function get_setting_posttypes( $target, $fallback = [] )
 	{
-		return $this->get_setting( sprintf( '%s_posttypes', $target ), $fallback );
+		return $target ? $this->get_setting( sprintf( '%s_posttypes', $target ), $fallback ) : $fallback;
+	}
+
+	/**
+	 * Checks if posttype is in settings option for the target posttypes.
+	 * NOTE: common targets: `subcontent`, `parent`, `directed`
+	 *
+	 * @param  string $posttype
+	 * @param  string $target
+	 * @param  array  $fallback
+	 * @return array  $posttypes
+	 */
+	public function in_setting_posttypes( $posttype, $target, $fallback = FALSE )
+	{
+		return ( $posttype && in_array( $posttype, $this->get_setting_posttypes( $target ) ) ) || $fallback;
 	}
 
 	/**
@@ -2431,7 +2456,20 @@ class Module extends WordPress\Module
 	 */
 	public function get_setting_taxonomies( $target, $fallback = [] )
 	{
-		return $this->get_setting( sprintf( '%s_taxonomies', $target ), $fallback );
+		return $target ? $this->get_setting( sprintf( '%s_taxonomies', $target ), $fallback ): $fallback;
+	}
+
+	/**
+	 * Checks if taxonomy is in settings option for the target taxonomies.
+	 *
+	 * @param  string $taxonomy
+	 * @param  string $target
+	 * @param  array  $fallback
+	 * @return array  $posttypes
+	 */
+	public function in_setting_taxonomies( $taxonomy, $target, $fallback = FALSE )
+	{
+		return ( $taxonomy && in_array( $taxonomy, $this->get_setting_taxonomies( $target ) ) ) || $fallback;
 	}
 
 	/**
