@@ -56,6 +56,18 @@ trait Strings
 			/* translators: %s: items count */
 			return _nx_noop( '%s Member', '%s Members', 'Internal: Strings: Noop', 'geditorial' );
 
+		/**
+		 * Persons vs. People vs. Peoples
+		 * Most of the time, `people` is the correct word to choose as a plural
+		 * for `person`. `Persons` is archaic, and it is safe to avoid using it,
+		 * except in legal writing, which has its own traditional language.
+		 * `Peoples` is only necessary when you refer to distinct ethnic groups.
+		 * @source https://www.grammarly.com/blog/persons-people-peoples/
+		 */
+		if ( in_array( $constant, [ 'people', 'person' ], TRUE ) )
+			/* translators: %s: people count */
+			return _nx_noop( '%s Person', '%s People', 'Internal: Strings: Noop', 'geditorial' );
+
 		if ( 'post' == $constant )
 			/* translators: %s: posts count */
 			return _nx_noop( '%s Post', '%s Posts', 'Internal: Strings: Noop', 'geditorial' );

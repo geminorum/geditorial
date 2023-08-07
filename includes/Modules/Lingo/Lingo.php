@@ -129,7 +129,7 @@ class Lingo extends gEditorial\Module
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], NULL, TRUE );
 
-		$this->corecaps__init_taxonomy_meta_caps( 'language_taxonomy' );
+		$this->corecaps__handle_taxonomy_metacaps_roles( 'language_taxonomy' );
 
 		if ( ! is_admin() )
 			return;

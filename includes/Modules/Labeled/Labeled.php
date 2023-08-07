@@ -121,7 +121,7 @@ class Labeled extends gEditorial\Module
 			'show_in_rest' => FALSE,   // temporarily disable in block editor
 		], FALSE, TRUE );
 
-		$this->corecaps__init_taxonomy_meta_caps( 'main_taxonomy' );
+		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
 
 	public function meta_init()

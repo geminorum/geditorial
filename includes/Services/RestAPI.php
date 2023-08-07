@@ -2,9 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial;
+use geminorum\gEditorial\WordPress;
 
-class RestAPI extends Main
+class RestAPI extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -38,7 +39,7 @@ class RestAPI extends Main
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code, $message ?? gEdiorial\Plugin::denied( FALSE ), $data );
+		return new \WP_Error( $code, $message ?? gEditorial\Plugin::denied( FALSE ), $data );
 	}
 
 	public static function getErrorSomethingIsWrong( $code = 'no_correct_settings', $message = NULL, $data = [], $status = NULL )
@@ -46,7 +47,7 @@ class RestAPI extends Main
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code, $message ?? gEdiorial\Plugin::wrong( FALSE ), $data );
+		return new \WP_Error( $code, $message ?? gEditorial\Plugin::wrong( FALSE ), $data );
 	}
 
 	public static function defineArgument_postid( $description = NULL, $required = TRUE, $validate = NULL )

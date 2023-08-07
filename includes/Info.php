@@ -56,7 +56,7 @@ class Info extends WordPress\Main
 
 	public static function renderSomethingIsWrong( $before = '', $after = '' )
 	{
-		return Core\HTML::desc( $before.Plugin::wrong( FALSE ).$after, FALSE, '-empty' );
+		return Core\HTML::desc( $before.Plugin::wrong( FALSE ).$after, FALSE, '-empty -wrong' );
 	}
 
 	public static function renderNoReportsAvailable( $before = '', $after = '' )
@@ -64,7 +64,16 @@ class Info extends WordPress\Main
 		return Core\HTML::desc(
 			$before._x( 'There are no reports available!', 'Info: Message', 'geditorial' ).$after,
 			FALSE,
-			'-empty'
+			'-empty -no-reports'
+		);
+	}
+
+	public static function renderNoImportsAvailable( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'There are no imports available!', 'Info: Message', 'geditorial' ).$after,
+			FALSE,
+			'-empty -no-imports'
 		);
 	}
 

@@ -51,6 +51,7 @@ class Scripts extends WordPress\Main
 		wp_style_add_data( $handle, 'rtl', 'replace' );
 
 		wp_enqueue_script( $handle, $script, Core\Arraay::prepString( $config['dependencies'], $dependencies ), $config['version'], TRUE );
+		wp_script_add_data( $handle, 'strategy', 'defer' ); // @REF: https://make.wordpress.org/core/2023/07/14/registering-scripts-with-async-and-defer-attributes-in-wordpress-6-3/
 
 		return $handle;
 	}

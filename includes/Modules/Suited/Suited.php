@@ -101,7 +101,7 @@ class Suited extends gEditorial\Module
 			'meta_box_cb'  => '__checklist_restricted_terms_callback',
 		] );
 
-		$this->corecaps__init_taxonomy_meta_caps( 'main_taxonomy' );
+		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 
 		$this->register_shortcode( 'main_shortcode' );
 	}

@@ -846,20 +846,20 @@ class MetaBox extends WordPress\Main
 	{
 		return [
 			'name'        => $field,
-			'rest'        => $field, // FALSE to disable
-			'title'       => NULL, // self::getString( $field, $posttype, 'titles', $field ),
-			'description' => NULL, // self::getString( $field, $posttype, 'descriptions' ),
-			'access_view' => NULL, // @SEE: `$this->access_posttype_field()`
-			'access_edit' => NULL, // @SEE: `$this->access_posttype_field()`
+			'rest'        => $field,      // FALSE to disable
+			'title'       => NULL,        // self::getString( $field, $posttype, 'titles', $field ),
+			'description' => NULL,        // self::getString( $field, $posttype, 'descriptions' ),
+			'access_view' => NULL,        // @SEE: `$this->access_posttype_field()`
+			'access_edit' => NULL,        // @SEE: `$this->access_posttype_field()`
 			'sanitize'    => NULL,
-			'sanitize'    => NULL, // callback
-			'prep'        => NULL, // callback
-			'pattern'     => NULL, // HTML5 input pattern
-			'default'     => NULL, // currently only on rest
-			'datatype'    => NULL, // DataType Class
+			'sanitize'    => NULL,        // callback
+			'prep'        => NULL,        // callback
+			'pattern'     => NULL,        // HTML5 input pattern
+			'default'     => NULL,        // currently only on rest
+			'datatype'    => NULL,        // DataType Class
 			'icon'        => 'smiley',
 			'type'        => 'text',
-			'context'     => NULL, // default is `mainbox`
+			'context'     => NULL,        // default is `mainbox`
 			'quickedit'   => FALSE,
 			'values'      => [],
 			'none_title'  => NULL,

@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 
 class Organization extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -393,9 +394,9 @@ class Organization extends gEditorial\Module
 		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
 	}
 
-	protected function _render_mainbox_extra( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		parent::_render_mainbox_extra( $object, $box, $context, $screen );
+		parent::_render_mainbox_content( $object, $box, $context, $screen );
 
 		MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy' => $this->constant( 'type_taxonomy' ),

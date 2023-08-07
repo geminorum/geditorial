@@ -40,7 +40,7 @@ trait CoreCapabilities
 	 * @param  string $constant
 	 * @return bool $hooked
 	 */
-	protected function corecaps__init_taxonomy_meta_caps( $constant )
+	protected function corecaps__handle_taxonomy_metacaps_roles( $constant )
 	{
 		if ( ! $taxonomy = $this->constant( $constant ) )
 			return FALSE;

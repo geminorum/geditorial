@@ -244,14 +244,14 @@ class Datetime extends WordPress\Main
 		return call_user_func_array( $callback, [ $posttype, $args, $user_id ] );
 	}
 
-	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = 'Y-m-d H:i:s' )
+	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = NULL )
 	{
 		$callback = [ __NAMESPACE__.'\\Core\\Date', 'monthFirstAndLast' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'monthFirstAndLast' ] ) )
 			$callback = [ 'gPersianDateDate', 'monthFirstAndLast' ];
 
-		return call_user_func_array( $callback, [ $year, $month, $format, $calendar_type ] );
+		return call_user_func_array( $callback, [ $year, $month, $format ?? Core\Date::MYSQL_FORMAT, $calendar_type ] );
 	}
 
 	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
@@ -316,7 +316,7 @@ class Datetime extends WordPress\Main
 
 	/**
 	 * Provides the distribution of the population according to age.
-	 * @REF: https://en.wikipedia.org/wiki/Demographic_profile
+	 * @source: https://en.wikipedia.org/wiki/Demographic_profile
 	 *
 	 * @param  bool  $extended
 	 * @return array $data

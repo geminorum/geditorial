@@ -13,6 +13,7 @@ class StaticCovers extends gEditorial\Module
 
 	// TODO: audit for empty posttypes: see iranian module
 	// TODO: import into media library by bulk or each
+	// TODO: cap checks/based on parent posttype
 
 	public static function module()
 	{

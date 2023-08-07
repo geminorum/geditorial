@@ -108,7 +108,7 @@ class Educated extends gEditorial\Module
 			'meta_box_cb'  => '__checklist_restricted_terms_callback',
 		], NULL, TRUE );
 
-		$this->corecaps__init_taxonomy_meta_caps( 'main_taxonomy' );
+		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
 
 	public function current_screen( $screen )

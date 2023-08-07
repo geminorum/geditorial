@@ -4006,11 +4006,11 @@ class Module extends WordPress\Module
 
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
-				$this->_render_mainbox_extra( $post, $box, $context );
+				$this->_render_mainbox_content( $post, $box, $context, $screen );
 
 				do_action(
-					// @HOOK: `geditorial_mainbox_{paired_posttype}_{current_posttype}`
-					$this->hook_base( 'metabox', $context, $this->constant( $constants[0] ), $post->post_type ),
+					// @HOOK: `geditorial_mainbox_{current_posttype}`
+					$this->hook_base( 'metabox', $context, $post->post_type ),
 					$post,
 					$box,
 					$context,
@@ -4087,11 +4087,11 @@ class Module extends WordPress\Module
 
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
-				$this->_render_mainbox_extra( $post, $box, $context );
+				$this->_render_mainbox_content( $post, $box, $context, $screen );
 
 				do_action(
-					// @HOOK: `geditorial_mainbox_{current_posttype}`
-					$this->hook_base( 'metabox', $context, $post->post_type ),
+					// @HOOK: `geditorial_mainbox_{paired_posttype}_{current_posttype}`
+					$this->hook_base( 'metabox', $context, $this->constant( $constants[0] ), $post->post_type ),
 					$post,
 					$box,
 					$context,
@@ -4123,8 +4123,11 @@ class Module extends WordPress\Module
 	}
 
 	// DEFAULT METHOD
-	protected function _render_mainbox_extra( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
+		if ( is_null( $context ) )
+			$context = 'mainbox';
+
 		MetaBox::fieldPostMenuOrder( $object );
 		MetaBox::fieldPostParent( $object );
 	}
@@ -4714,10 +4717,11 @@ class Module extends WordPress\Module
 		];
 
 		if ( $count ) {
-			$args['fields'] = 'ids';
+			$args['fields']                 = 'ids';
+			$args['no_found_rows']          = TRUE;
 			$args['update_post_meta_cache'] = FALSE;
 			$args['update_post_term_cache'] = FALSE;
-			$args['lazy_load_term_meta'] = FALSE;
+			$args['lazy_load_term_meta']    = FALSE;
 		}
 
 		$items = get_posts( $args );

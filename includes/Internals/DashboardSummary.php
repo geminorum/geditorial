@@ -113,12 +113,14 @@ trait DashboardSummary
 	{
 		$html     = '';
 		$check    = FALSE;
-		$all      = WordPress\PostType::get( 3 );
+		$nooped   = WordPress\PostType::get( 3 );
 		$exclude  = WordPress\Database::getExcludeStatuses();
 		$taxonomy = $this->constant( $constant );
 
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
+
+		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
 
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -159,9 +161,18 @@ trait DashboardSummary
 						continue;
 
 					if ( count( $posttypes ) > 1 )
-						$text = sprintf( '<b>%3$s</b> %1$s: <b title="%4$s">%2$s</b>', Helper::noopedCount( $count, $all[$type] ), WordPress\Strings::trimChars( $name, 35 ), Core\Number::format( $count ), $name );
+						$text = vsprintf( '<b>%3$s</b> %1$s: <b title="%4$s">%2$s</b>', [
+							Helper::noopedCount( $count, $nooped[$type] ),
+							WordPress\Strings::trimChars( $name, 35 ),
+							Core\Number::format( $count ),
+							$name,
+						] );
+
 					else
-						$text = sprintf( '<b>%2$s</b> %1$s', $name, Core\Number::format( $count ) );
+						$text = vsprintf( '<b>%2$s</b> %1$s', [
+							$name,
+							Core\Number::format( $count ),
+						] );
 
 					if ( empty( $objects[$type] ) )
 						$objects[$type] = WordPress\PostType::object( $type );
@@ -176,7 +187,7 @@ trait DashboardSummary
 
 					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 						$text = Core\HTML::tag( 'a', [
-							'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => $term ] ),
+							'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $query_var => $term ] ),
 							'class' => $classes,
 						], $text );
 
@@ -199,9 +210,17 @@ trait DashboardSummary
 					continue;
 
 				if ( count( $posttypes ) > 1 )
-					$text = sprintf( '<b>%3$s</b> %1$s %2$s', Helper::noopedCount( $count, $all[$type] ), $none, Core\Number::format( $count ) );
+					$text = vsprintf( '<b>%3$s</b> %1$s %2$s', [
+						Helper::noopedCount( $count, $nooped[$type] ),
+						$none,
+						Core\Number::format( $count ),
+					] );
+
 				else
-					$text = sprintf( '<b>%2$s</b> %1$s', $none, Core\Number::format( $count ) );
+					$text = vsprintf( '<b>%2$s</b> %1$s', [
+						$none,
+						Core\Number::format( $count ),
+					] );
 
 				if ( empty( $objects[$type] ) )
 					$objects[$type] = WordPress\PostType::object( $type );
@@ -216,7 +235,7 @@ trait DashboardSummary
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 					$text = Core\HTML::tag( 'a', [
-						'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $taxonomy => '-1' ] ),
+						'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $query_var => '-1' ] ),
 						'class' => $classes,
 					], $text );
 
