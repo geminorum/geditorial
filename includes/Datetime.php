@@ -367,6 +367,35 @@ class Datetime extends WordPress\Main
 		return $extended ? $data : Core\Arraay::pluck( $data, 'name', 'slug' );
 	}
 
+	/**
+	 * The American Medical Association's age designations.
+	 * @source https://www.nih.gov/nih-style-guide/age
+	 * NOTE: `min`/`max` meta values are based on months
+	 *
+	 * - Neonates or newborns (birth to 1 month)
+	 * - Infants (1 month to 1 year)
+	 * - Children (1 year through 12 years)
+	 * - Adolescents (13 years through 17 years. They may also be referred to as teenagers depending on the context.)
+	 * - Adults (18 years or older)
+	 * - Older adults (65 and older)
+	 *
+	 * @param  bool $extended
+	 * @return array $data
+	 */
+	public static function getMedicalAge( $extended = FALSE )
+	{
+		$data = [
+			'newborns'     => [ 'slug' => 'newborns',     'name' => _x( 'Newborns', 'Datetime: Medical Age', 'geditorial' ),     'meta' => [               'max' => 1   ] ],
+			'infants'      => [ 'slug' => 'infants',      'name' => _x( 'Infants', 'Datetime: Medical Age', 'geditorial' ),      'meta' => [ 'min' => 1,   'max' => 12  ] ],
+			'children'     => [ 'slug' => 'children',     'name' => _x( 'Children', 'Datetime: Medical Age', 'geditorial' ),     'meta' => [ 'min' => 13,  'max' => 144 ] ],
+			'adolescents'  => [ 'slug' => 'adolescents',  'name' => _x( 'Adolescents', 'Datetime: Medical Age', 'geditorial' ),  'meta' => [ 'min' => 145, 'max' => 204 ] ],
+			'adults'       => [ 'slug' => 'adults',       'name' => _x( 'Adults', 'Datetime: Medical Age', 'geditorial' ),       'meta' => [ 'min' => 205, 'max' => 781 ] ],
+			'older-adults' => [ 'slug' => 'older-adults', 'name' => _x( 'Older Adults', 'Datetime: Medical Age', 'geditorial' ), 'meta' => [ 'min' => 781,              ] ],
+		];
+
+		return $extended ? $data : Core\Arraay::pluck( $data, 'name', 'slug' );
+	}
+
 	public static function getDecades( $from = '-100 years', $count = 10, $prefixed = FALSE, $metakey = NULL )
 	{
 		/* translators: %s: decade number */
