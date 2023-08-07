@@ -116,6 +116,54 @@ trait CoreCapabilities
 	}
 
 	/**
+	 * Hooks corresponding filter for `map_meta_cap` of WordPress.
+	 * @REF: https://make.wordpress.org/core/?p=20496
+	 *
+	 * @param  string $constant
+	 * @return bool $hooked
+	 */
+	protected function corecaps__handle_taxonomy_metacaps_forced( $constant )
+	{
+		if ( ! $taxonomy = $this->constant( $constant ) )
+			return FALSE;
+
+		add_filter( 'map_meta_cap', function( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
+
+			switch ( $cap ) {
+
+				case 'manage_'.$taxonomy:
+				case 'edit_'.$taxonomy:
+				case 'delete_'.$taxonomy:
+				case 'assign_'.$taxonomy:
+
+					return $this->role_can( 'manage', $user_id )
+						? [ 'read' ]
+						: [ 'do_not_allow' ];
+
+				case 'assign_term':
+
+					$term = get_term( (int) $args[0] );
+
+					if ( ! $term || is_wp_error( $term ) )
+						return $caps;
+
+					if ( $taxonomy != $term->taxonomy )
+						return $caps;
+
+					if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
+						return $caps;
+
+					if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+						return [ 'do_not_allow' ];
+			}
+
+			return $caps;
+		}, 10, 4 );
+
+		return TRUE;
+	}
+
+	/**
 	 * Retrieves setting arguments for given taxonomy constant roles.
 	 *
 	 * @param  string $constant
