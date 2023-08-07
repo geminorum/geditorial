@@ -1216,7 +1216,7 @@ class MetaBox extends WordPress\Main
 			'name'  => 'parent_id', // sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-selectsingle', static::BASE ),
+				sprintf( '%s-searchselect-select2', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
@@ -1232,13 +1232,13 @@ class MetaBox extends WordPress\Main
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
 
-				'selectsingle-placeholder' => $args['title'],
+				'searchselect-placeholder' => $args['title'],
 			],
 		];
 
 		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
-		return Services\SelectSingle::enqueue();
+		return Services\SearchSelect::enqueueSelect2();
 	}
 
 	// FIXME: WTF: if from same posttype then exclude current
@@ -1272,7 +1272,7 @@ class MetaBox extends WordPress\Main
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-selectsingle', static::BASE ),
+				sprintf( '%s-searchselect-select2', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
@@ -1288,13 +1288,13 @@ class MetaBox extends WordPress\Main
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
 
-				'selectsingle-placeholder' => $args['title'],
+				'searchselect-placeholder' => $args['title'],
 			],
 		];
 
 		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
-		return Services\SelectSingle::enqueue();
+		return Services\SearchSelect::enqueueSelect2();
 	}
 
 	public static function renderFieldTerm( $field, $post = NULL, $module = NULL )
@@ -1327,7 +1327,7 @@ class MetaBox extends WordPress\Main
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-selectsingle', static::BASE ),
+				sprintf( '%s-searchselect-select2', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
@@ -1343,13 +1343,13 @@ class MetaBox extends WordPress\Main
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
 
-				'selectsingle-placeholder' => $args['title'],
+				'searchselect-placeholder' => $args['title'],
 			],
 		];
 
 		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
-		return Services\SelectSingle::enqueue();
+		return Services\SearchSelect::enqueueSelect2();
 	}
 
 	public static function renderFieldUser( $field, $post = NULL, $module = NULL )
@@ -1384,7 +1384,7 @@ class MetaBox extends WordPress\Main
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-selectsingle', static::BASE ),
+				sprintf( '%s-searchselect-select2', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
@@ -1400,12 +1400,12 @@ class MetaBox extends WordPress\Main
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
 
-				'selectsingle-placeholder' => $args['title'],
+				'searchselect-placeholder' => $args['title'],
 			],
 		];
 
 		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
-		return Services\SelectSingle::enqueue();
+		return Services\SearchSelect::enqueueSelect2();
 	}
 }

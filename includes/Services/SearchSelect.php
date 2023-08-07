@@ -5,13 +5,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
-class SelectSingle extends Main
+class SearchSelect extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -37,16 +33,17 @@ class SelectSingle extends Main
 
 	public static function permission_callback( $request )
 	{
-		return TRUE; // later we check for access
+		return TRUE; // NOTE: later we check for access
 	}
 
 	// @REF: https://select2.org/data-sources/formats
-	// FIXME: must handle excludes
 	public static function query_callback( $request )
 	{
 		$queried = self::atts( [
+			'context'  => NULL,   // TODO / default is `select2` compatible
 			'search'   => '',
 			'target'   => '',
+			'exclude'  => '',
 			'posttype' => '',
 			'taxonomy' => '',
 			'role'     => '',
@@ -61,10 +58,11 @@ class SelectSingle extends Main
 				if ( empty( $queried['posttype'] ) )
 					return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
 
-				$queried['posttype'] = explode( ',', $queried['posttype'] );
+				if ( ! is_array( $queried['posttype'] ) )
+					$queried['posttype'] = explode( ',', $queried['posttype'] );
 
 				foreach ( $queried['posttype'] as $index => $posttype )
-					if ( ! PostType::can( $posttype, 'read' ) )
+					if ( ! WordPress\PostType::can( $posttype, 'read' ) )
 						unset( $queried['posttype'][$index] );
 
 				// again check if any left!
@@ -79,10 +77,11 @@ class SelectSingle extends Main
 				if ( empty( $queried['taxonomy'] ) )
 					return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
 
-				$queried['taxonomy'] = explode( ',', $queried['taxonomy'] );
+				if ( ! is_array( $queried['taxonomy'] ) )
+					$queried['taxonomy'] = explode( ',', $queried['taxonomy'] );
 
 				foreach ( $queried['taxonomy'] as $index => $taxonomy )
-					if ( ! Taxonomy::can( $taxonomy, 'assign_terms' ) )
+					if ( ! WordPress\Taxonomy::can( $taxonomy, 'assign_terms' ) )
 						unset( $queried['taxonomy'][$index] );
 
 				// again check if any left!
@@ -94,7 +93,7 @@ class SelectSingle extends Main
 
 			case 'user':
 
-				if ( ! User::cuc( 'list_users' ) )
+				if ( ! WordPress\User::cuc( 'list_users' ) )
 					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
 
 				$response = self::_get_select2_users( $queried );
@@ -108,7 +107,6 @@ class SelectSingle extends Main
 		return new \WP_REST_Response( $response, 200 );
 	}
 
-	// TODO: include/exclude by taxonomy terms
 	private static function _get_select2_posts( $queried )
 	{
 		$args  = [
@@ -126,15 +124,17 @@ class SelectSingle extends Main
 		if ( ! empty( $queried['search'] ) )
 			$args['s'] = trim( $queried['search'] );
 
+		if ( ! empty( $queried['exclude'] ) )
+			$args['post__not_in'] = wp_parse_id_list( $queried['exclude'] );
+
 		if ( ! empty( $queried['per'] ) )
 			$args['posts_per_page'] = trim( $queried['per'] );
 
 		if ( ! empty( $queried['status'] ) )
 			$args['post_status'] = trim( $queried['status'] );
+
 		else
-			// use only with persistent cache
-			// $args['post_status'] = Posttype::getAvailableStatuses( $args['post_type'] );
-			$args['post_status'] = [ 'publish', 'future', 'draft' ];
+			$args['post_status'] = WordPress\Status::available( $args['post_type'] );
 
 		AdvancedQueries::hookSearchPostTitleOnly();
 
@@ -144,7 +144,7 @@ class SelectSingle extends Main
 		foreach ( $query->query( $args ) as $post )
 			$posts[] = (object) [
 				'id'   => $post,
-				'text' => Post::title( $post ),
+				'text' => WordPress\Post::title( $post ),
 			];
 
 		return [
@@ -171,6 +171,9 @@ class SelectSingle extends Main
 
 		if ( ! empty( $queried['search'] ) )
 			$args['name__like'] = trim( $queried['search'] );
+
+		if ( ! empty( $queried['exclude'] ) )
+			$args['exclude'] = wp_parse_id_list( $queried['exclude'] );
 
 		$query = new \WP_Term_Query();
 
@@ -203,6 +206,9 @@ class SelectSingle extends Main
 			'suppress_filters'       => TRUE,
 		];
 
+		if ( ! empty( $queried['exclude'] ) )
+			$args['exclude'] = wp_parse_id_list( $queried['exclude'] );
+
 		if ( ! empty( $queried['role'] ) && 'all' !== trim( $queried['role'] ) )
 			$args['role__in'] = array_diff( explode( ',', $queried['role'] ), $args['role__not_in'] );
 
@@ -215,7 +221,7 @@ class SelectSingle extends Main
 		foreach ( (array) $query->get_results() as $user )
 			$users[] = (object) [
 				'id'   => $user->ID,
-				'text' => User::getTitleRow( $user ),
+				'text' => WordPress\User::getTitleRow( $user ),
 			];
 
 		return [
@@ -227,7 +233,7 @@ class SelectSingle extends Main
 	}
 
 	// TODO: better styling
-	public static function enqueue( $extra = [] )
+	public static function enqueueSelect2( $extra = [] )
 	{
 		static $enqueued = FALSE;
 
@@ -237,20 +243,20 @@ class SelectSingle extends Main
 		$args = self::recursiveParseArgs( $extra, [
 			// 'settings' => [],
 			'strings' => [
-				'placeholder'     => _x( 'Select an item …', 'Service: SelectSingle', 'geditorial' ),
-				'loadingmore'     => _x( 'Loading more results …', 'Service: SelectSingle', 'geditorial' ),
-				'searching'       => _x( 'Searching …', 'Service: SelectSingle', 'geditorial' ),
-				'noresults'       => _x( 'No results found', 'Service: SelectSingle', 'geditorial' ),
-				'removeallitems'  => _x( 'Remove all items', 'Service: SelectSingle', 'geditorial' ),
-				'removeitem'      => _x( 'Remove item', 'Service: SelectSingle', 'geditorial' ),
-				'search'          => _x( 'Search', 'Service: SelectSingle', 'geditorial' ),
-				'errorloading'    => _x( 'The results could not be loaded.', 'Service: SelectSingle', 'geditorial' ),
+				'placeholder'     => _x( 'Select an item …', 'Service: SearchSelect', 'geditorial' ),
+				'loadingmore'     => _x( 'Loading more results …', 'Service: SearchSelect', 'geditorial' ),
+				'searching'       => _x( 'Searching …', 'Service: SearchSelect', 'geditorial' ),
+				'noresults'       => _x( 'No results found', 'Service: SearchSelect', 'geditorial' ),
+				'removeallitems'  => _x( 'Remove all items', 'Service: SearchSelect', 'geditorial' ),
+				'removeitem'      => _x( 'Remove item', 'Service: SearchSelect', 'geditorial' ),
+				'search'          => _x( 'Search', 'Service: SearchSelect', 'geditorial' ),
+				'errorloading'    => _x( 'The results could not be loaded.', 'Service: SearchSelect', 'geditorial' ),
 				/* translators: %s: number of characters */
-				'inputtooshort'   => _x( 'Please enter %s or more characters', 'Service: SelectSingle', 'geditorial' ),
+				'inputtooshort'   => _x( 'Please enter %s or more characters', 'Service: SearchSelect', 'geditorial' ),
 				/* translators: %s: number of characters */
-				'inputtoolong'    => _x( 'Please delete %s character(s)', 'Service: SelectSingle', 'geditorial' ),
+				'inputtoolong'    => _x( 'Please delete %s character(s)', 'Service: SearchSelect', 'geditorial' ),
 				/* translators: %s: number of items */
-				'maximumselected' => _x( 'You can only select %s item(s)', 'Service: SelectSingle', 'geditorial' ),
+				'maximumselected' => _x( 'You can only select %s item(s)', 'Service: SearchSelect', 'geditorial' ),
 			],
 		] );
 
@@ -258,10 +264,10 @@ class SelectSingle extends Main
 			$args['_rest'] = self::namespace();
 
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
-			$args['_nonce'] = wp_create_nonce( 'selectsingle' );
+			$args['_nonce'] = wp_create_nonce( 'searchselect' );
 
-		gEditorial()->enqueue_asset_config( $args, '_selectsingle' );
+		gEditorial()->enqueue_asset_config( $args, 'searchselect' );
 
-		return $enqueued = Scripts::enqueue( 'all.selectsingle', [ 'jquery', Scripts::pkgSelect2() ] );
+		return $enqueued = Scripts::enqueue( 'all.searchselect.select2', [ 'jquery', Scripts::pkgSelect2() ] );
 	}
 }

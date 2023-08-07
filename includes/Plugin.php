@@ -110,7 +110,7 @@ class Plugin
 		$this->init_modules();
 
 		Services\Paired::setup();
-		Services\SelectSingle::setup();
+		Services\SearchSelect::setup();
 		Services\ObjectToObject::setup();
 		Services\AdvancedQueries::setup();
 		Services\Calendars::setup();

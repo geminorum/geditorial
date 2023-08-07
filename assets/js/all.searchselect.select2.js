@@ -2,7 +2,7 @@
   const s = {
     // action: plugin._base + '_' + module,
     // classs: plugin._base + '-' + module,
-    select: 'select.' + plugin._base + '-' + section
+    select: 'select.' + plugin._base + '-' + module + '-' + section
   };
 
   function toPersian (n) {
@@ -66,24 +66,21 @@
         },
         ajax: {
           // @REF: https://select2.org/data-sources/ajax
-          // url: plugin[module]._rest + '/query',
-          // url: plugin._restBase._rest + '/query',
           url: plugin._restBase + plugin[module]._rest + '/query',
           dataType: 'json',
           headers: {
             'X-WP-Nonce': plugin._restNonce
           },
-          // beforeSend: function (request) {
-          //   request.setRequestHeader('X-WP-Nonce', plugin._restNonce);
-          // },
           delay: 500,
           cache: true,
           data: function (params) {
             return {
+              context: el.data('query-context') || section,
               search: params.term,
               target: el.data('query-target'),
               posttype: el.data('query-posttype'),
               taxonomy: el.data('query-taxonomy'),
+              exclude: el.data('query-exclude'),
               role: el.data('query-role'),
               page: params.page || 1
             };
@@ -115,4 +112,4 @@
 
     $(document).trigger('gEditorialReady', [module, app]);
   });
-}(jQuery, gEditorial, '_selectsingle', 'selectsingle'));
+}(jQuery, gEditorial, 'searchselect', 'select2'));
