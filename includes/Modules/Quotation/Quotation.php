@@ -173,7 +173,9 @@ class Quotation extends gEditorial\Module
 				$this->filter( 'get_default_comment_status', 3 );
 
 				$this->action_module( 'meta', 'render_metabox', 4, 1 );
-				$this->remove_meta_box( NULL, $screen->post_type, 'parent' );
+				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
+				$this->filter_false_module( 'tweaks', 'metabox_parent' );
+				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 
 				$this->_hook_post_updated_messages( 'quote_cpt' );
 
