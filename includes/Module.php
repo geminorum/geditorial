@@ -3951,7 +3951,7 @@ class Module extends WordPress\Module
 		}
 
 		$metabox  = $this->classs( $context );
-		$callback = function( $post, $box ) use ( $context ) {
+		$callback = function( $post, $box ) use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
@@ -3969,6 +3969,15 @@ class Module extends WordPress\Module
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
 				$this->_render_mainbox_extra( $post, $box, $context );
+
+				do_action(
+					// @HOOK: `geditorial_mainbox_{paired_posttype}_{current_posttype}`
+					$this->hook_base( 'metabox', $context, $this->constant( $constants[0] ), $post->post_type ),
+					$post,
+					$box,
+					$context,
+					$screen
+				);
 
 			echo '</div>';
 
@@ -4023,7 +4032,7 @@ class Module extends WordPress\Module
 		}
 
 		$metabox  = $this->classs( $context );
-		$callback = function( $post, $box ) use ( $constants, $context ) {
+		$callback = function( $post, $box ) use ( $constants, $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
@@ -4041,6 +4050,15 @@ class Module extends WordPress\Module
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
 				$this->_render_mainbox_extra( $post, $box, $context );
+
+				do_action(
+					// @HOOK: `geditorial_mainbox_{current_posttype}`
+					$this->hook_base( 'metabox', $context, $post->post_type ),
+					$post,
+					$box,
+					$context,
+					$screen
+				);
 
 			echo '</div>';
 
