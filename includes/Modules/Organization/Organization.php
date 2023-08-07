@@ -290,7 +290,7 @@ class Organization extends gEditorial\Module
 	public function setup_ajax()
 	{
 		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			$this->_hook_paired_tweaks_column_attr();
+			$this->pairedadmin__hook_tweaks_column_connected();
 	}
 
 	public function current_screen( $screen )
@@ -318,7 +318,7 @@ class Organization extends gEditorial\Module
 
 				$this->_hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedadmin__hook_tweaks_column_connected();
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'primary_subterm',

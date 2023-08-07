@@ -19,6 +19,7 @@ class Book extends gEditorial\Module
 	use Internals\CoreTemplate;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;
+	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedTools;
 	use Internals\PostsToPosts;
@@ -610,7 +611,7 @@ class Book extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 
 				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );
-				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedadmin__hook_tweaks_column_connected();
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'type_tax',

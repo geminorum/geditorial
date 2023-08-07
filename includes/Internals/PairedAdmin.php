@@ -62,6 +62,78 @@ trait PairedAdmin
 		return TRUE;
 	}
 
+	// TODO: check capability
+	// OLD: `_hook_paired_tweaks_column_attr()`
+	protected function pairedadmin__hook_tweaks_column_connected( $supported = NULL )
+	{
+		if ( ! $this->_paired )
+			return FALSE;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		if ( is_null( $supported ) )
+			$supported = $this->posttypes();
+
+		if ( empty( $supported ) )
+			return FALSE;
+
+		add_action( $this->hook_base( 'tweaks', 'column_attr' ),
+			function( $post ) use ( $constants, $supported ) {
+
+				if ( count( $supported ) > 1 ) {
+
+					// extensive query only for multiple supported
+
+					$posts = $this->paired_get_from_posts( $post->ID, $constants[0], $constants[1] );
+
+					if ( ! $count = count( $posts ) )
+						return;
+
+					$posttypes = array_unique( Core\Arraay::pluck( $posts, 'post_type' ) );
+
+				} else {
+
+					// simple count query for single supported
+
+					$count = $this->paired_get_from_posts( $post->ID, $constants[0], $constants[1], TRUE );
+
+					if ( ! $count )
+						return;
+
+					$posttypes = $supported;
+				}
+
+				$title = $this->get_posttype_label( $constants[0], 'column_title', $this->constant( $constants[0] ) );
+
+				echo '<li class="-row -'.$this->key.' -connected">';
+
+					echo $this->get_column_icon( FALSE, NULL, $title );
+
+					$args = [ $this->constant( $constants[1] ) => $post->post_name ];
+
+					if ( empty( $this->cache['posttypes'] ) )
+						$this->cache['posttypes'] = WordPress\PostType::get( 2 );
+
+					echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
+
+					$list = [];
+
+					foreach ( $posttypes as $posttype )
+						$list[] = Core\HTML::tag( 'a', [
+							'href'   => Core\WordPress::getPostTypeEditLink( $posttype, 0, $args ),
+							'title'  => _x( 'View the connected list', 'Module: Paired: Title Attr', 'geditorial' ),
+							'target' => '_blank',
+						], $this->cache['posttypes'][$posttype] );
+
+					echo WordPress\Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
+
+				echo '</li>';
+			} );
+
+		return TRUE;
+	}
+
 	// TODO: add an advance version with modal for paired summary in `Missioned`/`Trained`/`Programmed`/`Meeted`
 	protected function paired__hook_tweaks_column( $posttype = NULL, $priority = 10 )
 	{

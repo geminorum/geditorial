@@ -261,7 +261,7 @@ class Venue extends gEditorial\Module
 
 				$this->_hook_bulk_post_updated_messages( 'place_cpt' );
 				$this->pairedcore__hook_sync_paired();
-				$this->_hook_paired_tweaks_column_attr();
+				$this->pairedadmin__hook_tweaks_column_connected();
 				$this->corerestrictposts__hook_screen_taxonomies( 'place_cat' );
 			}
 
