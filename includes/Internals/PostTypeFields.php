@@ -72,6 +72,9 @@ trait PostTypeFields
 					$args['ltr'] = TRUE;
 			}
 
+			if ( ! array_key_exists( 'exclude', $args ) )
+				$args['exclude'] = in_array( $args['type'], [ 'parent_post' ] ) ? NULL : FALSE;
+
 			if ( ! array_key_exists( 'quickedit', $args ) )
 				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 
@@ -104,6 +107,7 @@ trait PostTypeFields
 				'ltr'         => FALSE,
 				'taxonomy'    => FALSE,
 				'posttype'    => NULL,
+				'exclude'     => FALSE, // `NULL` means parent post
 				'role'        => FALSE,
 				'group'       => 'general',
 				'order'       => 1000 + $i,

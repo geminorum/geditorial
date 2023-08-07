@@ -868,6 +868,7 @@ class MetaBox extends WordPress\Main
 			'ltr'         => FALSE,
 			'taxonomy'    => FALSE,
 			'posttype'    => FALSE,
+			'exclude'     => FALSE,       // `NULL` means parent post
 			'role'        => FALSE,
 			'group'       => 'general',
 			'order'       => 1000,
@@ -1226,6 +1227,7 @@ class MetaBox extends WordPress\Main
 				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'post',
+				'query-exclude'  => is_null( $args['exclude'] ) ? $post->ID : ( $args['exclude'] ? implode( ',', (array) $args['exclude'] ) : FALSE ),
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
@@ -1281,6 +1283,7 @@ class MetaBox extends WordPress\Main
 				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'post',
+				'query-exclude'  => is_null( $args['exclude'] ) ? $post->ID : ( $args['exclude'] ? implode( ',', (array) $args['exclude'] ) : FALSE ),
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
@@ -1335,6 +1338,7 @@ class MetaBox extends WordPress\Main
 				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'term',
+				'query-exclude'  => FALSE, // NOTE: `exclude` in porttype-fields are only for posts
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
@@ -1391,6 +1395,7 @@ class MetaBox extends WordPress\Main
 				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'user',
+				'query-exclude'  => FALSE, // NOTE: `exclude` in porttype-fields are only for posts
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
