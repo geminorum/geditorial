@@ -251,6 +251,49 @@ class Scripts extends WordPress\Main
 			: self::registerPackage( 'listjs', 'list.js/list', [], $ver );
 	}
 
+	/**
+	 * Registers or Enqueues the JsBarcode package.
+	 * @ref https://github.com/lindell/JsBarcode
+	 *
+	 * @param  bool   $enqueue
+	 * @param  string $barcode
+	 * @param  string $ver
+	 * @return string $key
+	 */
+	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $ver = '3.11.5"' )
+	{
+		switch ( strtolower( $barcode ) ) {
+			case    'all':        $filepath = 'all';        break;  // All the barcodes!
+			case    'code128':    $filepath = 'code128';    break;  // CODE128 (auto and force mode)
+			case    'code39' :    $filepath = 'code39';     break;  // CODE39
+			case    'ean/upc':    $filepath = 'ean-upc';    break;  // EAN-13, EAN-8, EAN-5, EAN-2, UPC (A)
+			case    'itf':        $filepath = 'itf';        break;  // ITF, ITF-14
+			case    'msi':        $filepath = 'msi';        break;  // MSI, MSI10, MSI11, MSI1010, MSI1110
+			case    'pharmacode': $filepath = 'pharmacode'; break;  // Pharmacode
+			case    'codabar':    $filepath = 'codabar';    break;  // Codabar
+			default:              $filepath = 'code128';    break;  // DEFAULT is `CODE128`
+		}
+
+		return $enqueue
+			? self::enqueuePackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $ver )
+			: self::registerPackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $ver );
+	}
+
+	/**
+	 * Registers or Enqueues the QRCodeSVG package.
+	 * @ref https://github.com/papnkukn/qrcode-svg
+	 *
+	 * @param  bool   $enqueue
+	 * @param  string $ver
+	 * @return string $key
+	 */
+	public static function pkgQRCodeSVG( $enqueue = FALSE, $ver = '1.1.0' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'printthis', 'qrcode-svg/qrcode', [], $ver )
+			: self::registerPackage( 'printthis', 'qrcode-svg/qrcode', [], $ver );
+	}
+
 	public static function pkgPrintThis( $enqueue = FALSE, $ver = '2.0.0' )
 	{
 		return $enqueue
