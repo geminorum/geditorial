@@ -21,28 +21,28 @@
     "source": "https://github.com/geminorum/geditorial"
   },
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "composer/installers": "^1.12",
     "mustache/mustache": "^2.14",
     "kzykhys/php-csv-parser": "^1.4",
     "michelf/php-markdown": "^1.9",
     "league/html-to-markdown": "^4.9",
+    "tecnickcom/tc-lib-barcode": "^1.17",
     "hbgl/php-code-128-encoder": "^0.2.5",
     "sinasalek/multi-calendar-date-time": "dev-master",
     "dgoring/dom-query": "^1.0",
-    "jwage/easy-csv": "^1.0"
+    "jwage/easy-csv": "^1.0",
+    "sabre/vobject": "^4.3"
   },
   "require-dev": {
     "10up/wp-content-connect": "^1.5.0",
     "nicmart/string-template": "^0.1.2",
     "eluceo/ical": "^0.11.4",
     "johngrogg/ics-parser": "^2.2",
-    "sabre/vobject": "^4.3",
     "farhadi/intl-datetime": "dev-master",
     "lawondyss/moment-php": "dev-master",
     "seboettg/citeproc-php": "^2",
     "khanamiryan/qrcode-detector-decoder": "^1.0",
-    "tecnickcom/tc-lib-barcode": "^1.17",
     "mustangostang/spyc": "^0.6.3",
     "mpdf/mpdf": "^8.1"
   },
@@ -50,7 +50,7 @@
     "vendor-dir": "assets/vendor",
     "vendor/bin": "assets/bin",
     "platform": {
-      "php": "7.2"
+      "php": "7.4"
     },
     "allow-plugins": {
       "kylekatarnls/update-helper": true,

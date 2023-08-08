@@ -149,7 +149,7 @@ task('i18n:modules', function () {
       return 'wp i18n make-pot ' + file.path +
         ' ./languages/' + folder + '/' + domain + '.pot' +
         ' --domain=' + pkg.name + '-' + domain +
-        ' --subtract=./languages/' + pkg.name + '.pot' +
+        // ' --subtract=./languages/' + pkg.name + '.pot' + // WTF: the text-domain is diffrent!
         // ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
         ' --package-name="' + pkg.productName + ' ' + folder + '" ' + // no version for fewer commits!
         ' --headers=\'' + template(JSON.stringify(conf.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder, domain, module }) + '\' ' +
