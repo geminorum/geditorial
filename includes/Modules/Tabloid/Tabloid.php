@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
@@ -103,13 +104,13 @@ class Tabloid extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $this->role_can( 'overview' )
-					&& $this->rowactions__hook_mainlink( $screen, 9, NULL, TRUE ) )
+					&& $this->rowactions__hook_mainlink_for_post( $screen, 9, NULL, TRUE ) )
 						Scripts::enqueueColorBox();
 			}
 		}
 	}
 
-	public function rowaction_get_mainlink( $post )
+	public function rowaction_get_mainlink_for_post( $post )
 	{
 		if ( ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
@@ -120,7 +121,7 @@ class Tabloid extends gEditorial\Module
 		if ( ! $filtred = $this->filters( 'action', $this->is_post_viewable( $post ) ? $custom : FALSE, $post ) )
 			return FALSE;
 
-		return $this->framepage_get_mainlink( $post, [
+		return $this->framepage_get_mainlink_for_post( $post, [
 			'title'        => $this->get_setting( sprintf( 'posttype_%s_overview_title', $post->post_type ), $filtred ),
 			'text'         => $filtred,
 			'context'      => 'rowaction',
@@ -135,10 +136,10 @@ class Tabloid extends gEditorial\Module
 	protected function render_overview_content()
 	{
 		if ( ! $linked = self::req( 'linked' ) )
-			return Core\HTML::desc( _x( 'There are no posts available!', 'Message', 'geditorial-tabloid' ) );
+			return Info::renderNoPostsAvailable();
 
 		if ( ! $post = WordPress\Post::get( $linked ) )
-			return Core\HTML::desc( _x( 'There are no posts available!', 'Message', 'geditorial-tabloid' ) );
+			return Info::renderNoPostsAvailable();
 
 		$this->_render_view( $post, 'overview' );
 	}

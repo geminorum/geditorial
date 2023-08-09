@@ -44,7 +44,7 @@ class WcPostal extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Service Template', 'Setting Title', 'geditorial-wc-postal' ),
 					'description' => _x( 'Defines the template that used to build the url to the tracking service. Leave empty to use default.', 'Setting Description', 'geditorial-wc-postal' ),
-					'placeholder' => 'https://tracking.post.ir/?id=%s',
+					'placeholder' => 'https://tracking.post.ir/search.aspx?id=%s',
 					'field_class' => [ 'regular-text', 'code-text' ],
 					'after'       => Settings::fieldAfterIcon( 'https://tracking.post.ir' ),
 				],
@@ -118,9 +118,10 @@ class WcPostal extends gEditorial\Module
 		return $this->get_setting_fallback( 'tracking_metakey', 'post_barcode' );
 	}
 
+	// OLD: `https://tracking.post.ir/?id=%s`
 	private function _service_url( $tracking )
 	{
-		return sprintf( $this->get_setting_fallback( 'service_template', 'https://tracking.post.ir/?id=%s' ), $tracking );
+		return sprintf( $this->get_setting_fallback( 'service_template', 'https://tracking.post.ir/search.aspx?id=%s' ), $tracking );
 	}
 
 	private function _service_icon( $default = FALSE )

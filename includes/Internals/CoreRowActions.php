@@ -28,7 +28,7 @@ trait CoreRowActions
 	// public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids ) {}
 	// public function rowactions_admin_notices() {}
 
-	protected function rowactions__hook_mainlink( $screen, $priority = 10, $action_key = NULL, $setting_key = 'admin_rowactions' )
+	protected function rowactions__hook_mainlink_for_post( $screen, $priority = 10, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{
 		if ( FALSE === $setting_key )
 			return FALSE;
@@ -36,8 +36,8 @@ trait CoreRowActions
 		if ( TRUE !== $setting_key && ! $this->get_setting( $setting_key ) )
 			return FALSE;
 
-		if ( ! method_exists( $this, 'rowaction_get_mainlink' ) )
-			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'rowaction_get_mainlink()' ) );
+		if ( ! method_exists( $this, 'rowaction_get_mainlink_for_post' ) )
+			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'rowaction_get_mainlink_for_post()' ) );
 
 		$callback = function( $actions, $post ) use ( $screen, $action_key ) {
 
@@ -47,7 +47,7 @@ trait CoreRowActions
 			if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
 				return $actions;
 
-			if ( ! $links = $this->rowaction_get_mainlink( $post ) )
+			if ( ! $links = $this->rowaction_get_mainlink_for_post( $post ) )
 				return $actions;
 
 			if ( is_array( $links ) )
@@ -65,5 +65,5 @@ trait CoreRowActions
 	}
 
 	// EXAMPLE CALLBACK
-	// protected function rowaction_get_mainlink( $post ) { return ''; }
+	// protected function rowaction_get_mainlink_for_post( $post ) { return ''; }
 }

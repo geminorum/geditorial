@@ -36,7 +36,10 @@ class Suited extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
+			'_editpost' => [
+				'metabox_advanced',
+			],
 			'_supports' => [
 				'shortcode_support',
 			],
@@ -98,7 +101,7 @@ class Suited extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-			'meta_box_cb'  => '__checklist_restricted_terms_callback',
+			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

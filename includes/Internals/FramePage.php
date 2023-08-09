@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 trait FramePage
 {
 
-	protected function framepage_get_mainlink( $post, $atts = [] )
+	protected function framepage_get_mainlink_for_post( $post, $atts = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;

@@ -77,6 +77,15 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderNoPostsAvailable( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'There are no posts available!', 'Info: Message', 'geditorial' ).$after,
+			FALSE,
+			'-empty -no-posts'
+		);
+	}
+
 	public static function getHelpTabs( $context = NULL ) {}
 
 	// TODO: add click to select

@@ -241,7 +241,7 @@ class Badges extends gEditorial\Module
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
 		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
-			return Core\HTML::desc( _x( 'There are no badges available!', 'Setting', 'geditorial-badges' ), TRUE, '-empty' );
+			return Core\HTML::desc( $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' ), TRUE, '-empty' );
 
 		echo Template::getSpanTiles( [
 			'taxonomy' => $taxonomy,

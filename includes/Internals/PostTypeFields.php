@@ -10,7 +10,13 @@ use geminorum\gEditorial\WordPress;
 trait PostTypeFields
 {
 
-	// HELPER METHOD
+	/**
+	 * Retrieves a registered field for a post-type.
+	 *
+	 * @param  string $field_key
+	 * @param  string $posttype
+	 * @return array  $field
+	 */
 	public function get_posttype_field_args( $field_key, $posttype )
 	{
 		if ( ! $posttype || ! $field_key )
@@ -108,9 +114,6 @@ trait PostTypeFields
 			if ( ! array_key_exists( 'quickedit', $args ) )
 				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 
-			// TODO: migrate!
-			// $args = Services\PostTypeFields::getFieldDefaults( $field, $args );
-
 			if ( ! isset( $args['icon'] ) )
 				$args['icon'] = $this->get_posttype_field_icon( $field, $posttype, $args );
 
@@ -156,15 +159,15 @@ trait PostTypeFields
 	/**
 	 * Checks for accessing a posttype field.
 	 *
-	 * - `TRUE`,`FALSE` for public/private
-	 * - `NULL` for posttype `read`/`edit_post` capability
-	 * - String for capability checks
+	 * $arg `TRUE`/`FALSE` for public/private
+	 * $arg `NULL` for posttype `read`/`edit_post` capability check
+	 * $arg String for strait capability check
 	 *
-	 * @param  array $field
-	 * @param  null|int|object $post
-	 * @param  string $context
+	 * @param  array    $field
+	 * @param  mixed    $post
+	 * @param  string   $context
 	 * @param  null|int $user_id
-	 * @return bool $access
+	 * @return bool     $access
 	 */
 	public function access_posttype_field( $field, $post = NULL, $context = 'view', $user_id = NULL )
 	{

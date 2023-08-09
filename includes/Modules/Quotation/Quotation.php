@@ -5,8 +5,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Quotation extends gEditorial\Module
@@ -33,7 +34,7 @@ class Quotation extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'quote_cpt', [
+				$this->settings_supports_option( 'primary_posttype', [
 					'title',
 					'editor',
 					'excerpt',
@@ -49,9 +50,9 @@ class Quotation extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'quote_cpt'       => 'quote',
-			'topic_tax'       => 'quote_topic',
-			'topic_shortcode' => 'quote-topic',
+			'primary_posttype' => 'quote',
+			'primary_taxonomy' => 'quote_topic',
+			'main_shortcode'   => 'quote-topic',
 		];
 	}
 
@@ -59,11 +60,11 @@ class Quotation extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'quote_cpt' => _n_noop( 'Quote', 'Quotes', 'geditorial-quotation' ),
-				'topic_tax' => _n_noop( 'Topic', 'Topics', 'geditorial-quotation' ),
+				'primary_posttype' => _n_noop( 'Quote', 'Quotes', 'geditorial-quotation' ),
+				'primary_taxonomy' => _n_noop( 'Topic', 'Topics', 'geditorial-quotation' ),
 
 				/* translators: %s: count number */
-				'quote_cpt_count' => _n_noop( '%s Quotation', '%s Quotations', 'geditorial-quotation' ),
+				'primary_posttype_count' => _n_noop( '%s Quotation', '%s Quotations', 'geditorial-quotation' ),
 			],
 		];
 
@@ -71,7 +72,7 @@ class Quotation extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'quote_cpt' => [
+			'primary_posttype' => [
 				'menu_name'      => _x( 'Quotation', 'Posttype Menu', 'geditorial-quotation' ),
 				'meta_box_title' => _x( 'Quotation', 'MetaBox Title', 'geditorial-quotation' ),
 			],
@@ -89,7 +90,7 @@ class Quotation extends gEditorial\Module
 		$rtl = Core\HTML::rtl();
 
 		return [
-			$this->constant( 'quote_cpt' ) => [
+			$this->constant( 'primary_posttype' ) => [
 				'parent_post_id' => [
 					'title'       => _x( 'Parent', 'Field Title', 'geditorial-quotation' ),
 					'description' => _x( 'Parent post of the Quote', 'Field Description', 'geditorial-quotation' ),
@@ -141,38 +142,38 @@ class Quotation extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'quote_cpt' ) ] ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'primary_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'quote_cpt' );
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'topic_tax', [
+		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'meta_box_cb'        => NULL,
-		], 'quote_cpt' );
+		], 'primary_posttype' );
 
-		$this->register_posttype( 'quote_cpt' );
+		$this->register_posttype( 'primary_posttype' );
 
-		$this->register_shortcode( 'topic_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 	}
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'quote_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'quote_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -183,7 +184,7 @@ class Quotation extends gEditorial\Module
 				$this->filter_false_module( 'tweaks', 'metabox_parent' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 
-				$this->_hook_post_updated_messages( 'quote_cpt' );
+				$this->_hook_post_updated_messages( 'primary_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -191,28 +192,28 @@ class Quotation extends gEditorial\Module
 
 				// TODO: MAYBE: restrict quotations by parents
 
-				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'quote_cpt' ) ) ) {
+				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) ) {
 					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'book-alt', 'meta', NULL, -10 );
-					$this->corerestrictposts__hook_parsequery_for_post_parent( 'quote_cpt' );
+					$this->corerestrictposts__hook_parsequery_for_post_parent( 'primary_posttype' );
 				}
 
-				$this->corerestrictposts__hook_screen_taxonomies( 'topic_tax' );
-				$this->_hook_bulk_post_updated_messages( 'quote_cpt' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'primary_taxonomy' );
+				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'quote_cpt' ) ) )
-					$this->corerestrictposts__hook_columnrow_for_post_children( 'quote_cpt', NULL, NULL, NULL, -10 );
+				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
+					$this->corerestrictposts__hook_columnrow_for_post_children( 'primary_posttype', NULL, NULL, NULL, -10 );
 			}
 		}
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'quote_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -245,7 +246,7 @@ class Quotation extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $title;
 
-		if ( $post->post_parent && $this->is_posttype( 'quote_cpt', $post ) )
+		if ( $post->post_parent && $this->is_posttype( 'primary_posttype', $post ) )
 			/* translators: %1$s: post parent, %2$s: menu order */
 			return vsprintf( _x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ), [
 				WordPress\Post::title( $post->post_parent, NULL, FALSE ),
@@ -253,5 +254,17 @@ class Quotation extends gEditorial\Module
 			] );
 
 		return $title;
+	}
+
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'assigned',
+			$this->constant( 'primary_posttype' ),
+			$this->constant( 'primary_taxonomy' ),
+			$atts,
+			$content,
+			$this->constant( 'main_shortcode', $tag ),
+			$this->key
+		);
 	}
 }

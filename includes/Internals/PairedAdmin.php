@@ -145,23 +145,24 @@ trait PairedAdmin
 		if ( empty( $constants[0] ) || empty( $constants[1] ) )
 			return FALSE;
 
-		add_action( $this->base.'_tweaks_column_row', function( $post ) use ( $constants, $posttype ) {
+		add_action( $this->hook_base( 'tweaks', 'column_row' ),
+			function( $post ) use ( $constants ) {
 
-			if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
-				return;
+				if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+					return;
 
-			$before = $this->wrap_open_row( $this->constant( $constants[1] ), '-paired-row' );
-			$before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
-			$after  = '</li>';
+				$before = $this->wrap_open_row( $this->constant( $constants[1] ), '-paired-row' );
+				$before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
+				$after  = '</li>';
 
-			foreach ( $items as $term_id => $post_id ) {
+				foreach ( $items as $post_id ) {
 
-				if ( ! $post = WordPress\Post::get( $post_id ) )
-					continue;
+					if ( ! $post = WordPress\Post::get( $post_id ) )
+						continue;
 
-				echo $before.WordPress\Post::fullTitle( $post, TRUE ).$after;
-			}
+					echo $before.WordPress\Post::fullTitle( $post, TRUE ).$after;
+				}
 
-		}, $priority, 1 );
+			}, $priority, 1 );
 	}
 }

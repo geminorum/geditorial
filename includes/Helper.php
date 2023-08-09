@@ -84,6 +84,11 @@ class Helper extends WordPress\Main
 			: ( is_null( $message ) ? _x( 'Not Available on Current Locale', 'Helper', 'geditorial' ) : $message );
 	}
 
+	public static function isTaxonomyGenre( $taxonomy, $fallback = 'genre' )
+	{
+		return $taxonomy === gEditorial()->constant( 'genres', 'main_taxonomy', $fallback );
+	}
+
 	public static function isTaxonomyAudit( $taxonomy, $fallback = 'audit_attribute' )
 	{
 		return $taxonomy === gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );

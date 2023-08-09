@@ -518,7 +518,7 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		Core\HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-config' ) );
-		Core\HTML::desc( _x( 'There are no importers available!', 'Message', 'geditorial-config' ), TRUE, '-empty' );
+		Info::renderNoImportsAvailable();
 	}
 
 	public function settings_sidebox( $sub, $uri )
