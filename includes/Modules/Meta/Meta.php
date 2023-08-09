@@ -435,6 +435,7 @@ class Meta extends gEditorial\Module
 	protected function register_meta_fields()
 	{
 		$this->filter( 'pairedrest_prepped_post', 3, 9, FALSE, $this->base );
+		$this->filter( 'pairedimports_import_types', 4, 5, FALSE, $this->base );
 
 		foreach ( $this->posttypes() as $posttype ) {
 
@@ -1561,7 +1562,7 @@ class Meta extends gEditorial\Module
 		$template = _x( 'Meta: %s', 'Import Field', 'geditorial-meta' );
 		$fields   = [];
 
-		foreach ( $this->get_posttype_fields( $posttype ) as $field => $args )
+		foreach ( $this->get_posttype_fields( $posttype, [ 'import' => TRUE ] ) as $field => $args )
 			if ( ! in_array( $args['type'], [ 'term' ] ) )
 				$fields['meta__'.$field] = $object ? $args : sprintf( $template, $args['title'] );
 
@@ -1599,6 +1600,24 @@ class Meta extends gEditorial\Module
 		foreach ( $atts['map'] as $offset => $field )
 			if ( array_key_exists( $field, $fields ) )
 				$this->import_posttype_field( $atts['raw'][$offset], $fields[$field], $post, $atts['override'] );
+	}
+
+	public function pairedimports_import_types( $types, $linked, $posttypes, $module_key )
+	{
+		foreach ( $this->posttypes() as $posttype ) {
+
+			if ( ! in_array( $posttype, $posttypes, TRUE ) )
+				continue;
+
+			$fields = $this->get_posttype_fields( $posttype, [ 'import' => TRUE ] );
+
+			if ( empty( $fields ) )
+				continue;
+
+			$types = array_merge( $types, Core\Arraay::pluck( $fields, 'title', 'name' ) );
+		}
+
+		return $types;
 	}
 
 	private function _raise_resources( $count = 0 )
