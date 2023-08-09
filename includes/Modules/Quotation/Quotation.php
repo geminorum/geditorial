@@ -61,6 +61,9 @@ class Quotation extends gEditorial\Module
 			'noops' => [
 				'quote_cpt' => _n_noop( 'Quote', 'Quotes', 'geditorial-quotation' ),
 				'topic_tax' => _n_noop( 'Topic', 'Topics', 'geditorial-quotation' ),
+
+				/* translators: %s: count number */
+				'quote_cpt_count' => _n_noop( '%s Quotation', '%s Quotations', 'geditorial-quotation' ),
 			],
 		];
 
@@ -72,7 +75,10 @@ class Quotation extends gEditorial\Module
 				'menu_name'      => _x( 'Quotation', 'Posttype Menu', 'geditorial-quotation' ),
 				'meta_box_title' => _x( 'Quotation', 'MetaBox Title', 'geditorial-quotation' ),
 			],
-			'topic_column_title' => _x( 'Topic', 'Column Title', 'geditorial-quotation' ),
+			'topic_column_title'  => _x( 'Topic', 'Column Title', 'geditorial-quotation' ),
+			'column_icon_title'   => _x( 'Quotation Sources', 'Misc: `column_icon_title`', 'geditorial-quotation' ),
+			'parent_post_empty'   => _x( 'Unknown Source', 'Misc: `parent_post_empty`', 'geditorial-quotation' ),
+			'post_children_empty' => _x( 'Not Quoted', 'Misc: `post_children_empty`', 'geditorial-quotation' ),
 		];
 
 		return $strings;
@@ -181,11 +187,25 @@ class Quotation extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_bulk_post_updated_messages( 'quote_cpt' );
-				$this->corerestrictposts__hook_screen_taxonomies( 'topic_tax' );
-
 				$this->filter( 'the_title', 2, 9 );
-				$this->action_module( 'meta', 'column_row', 1, -25, 'source' );
+
+				// TODO: MAYBE: restrict quotations by parents
+
+				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'quote_cpt' ) ) ) {
+					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'book-alt', 'meta', NULL, -10 );
+					$this->corerestrictposts__hook_parsequery_for_post_parent( 'quote_cpt' );
+				}
+
+				$this->corerestrictposts__hook_screen_taxonomies( 'topic_tax' );
+				$this->_hook_bulk_post_updated_messages( 'quote_cpt' );
+			}
+
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( 'edit' == $screen->base ) {
+
+				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'quote_cpt' ) ) )
+					$this->corerestrictposts__hook_columnrow_for_post_children( 'quote_cpt', NULL, NULL, NULL, -10 );
 			}
 		}
 	}
@@ -233,20 +253,5 @@ class Quotation extends gEditorial\Module
 			] );
 
 		return $title;
-	}
-
-	public function meta_column_row_source( $post )
-	{
-		echo '<li class="-row -cartable-user">';
-
-			echo $this->get_column_icon( FALSE, 'book-alt', _x( 'Quotation Source', 'Row Icon Title', 'geditorial-quotation' ) );
-
-			if ( $post->post_parent )
-				echo Helper::getPostTitleRow( $post->post_parent, 'edit', FALSE ); // , _x( 'Quotation Source', 'Row Title', 'geditorial-quotation' ) );
-
-			else
-				echo gEditorial()->na();
-
-		echo '</li>';
 	}
 }
