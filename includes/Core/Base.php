@@ -292,6 +292,22 @@ class Base
 		return (bool) $var;
 	}
 
+	/**
+	 * Swaps the values of two variables.
+	 * NOTE: There isn't a built-in function!
+	 * @source https://stackoverflow.com/a/26549027
+	 *
+	 * @param  mixed $x
+	 * @param  mixed $y
+	 * @return void
+	 */
+	public static function swap( &$x, &$y )
+	{
+		$t = $x;
+		$x = $y;
+		$y = $t;
+	}
+
 	// ANCESTOR: is_wp_error()
 	public static function isError( $thing )
 	{
