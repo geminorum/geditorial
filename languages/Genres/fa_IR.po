@@ -1,0 +1,112 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Genres\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-08-09 01:05+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Genres\n"
+"X-Domain: geditorial-genres\n"
+
+#: Genres.php:72
+msgid "Genre"
+msgid_plural "Genres"
+msgstr[0] "ژانرها"
+msgstr[1] "ژانر"
+
+#: Genres.php:76
+msgctxt "Label: `extended_label`"
+msgid "Content Genres"
+msgstr "ژانرهای محتوا"
+
+#: Genres.php:77
+msgctxt "Label: `menu_name`"
+msgid "Content Genres"
+msgstr "ژانرهای محتوا"
+
+#: Genres.php:78
+msgctxt "Label: `show_option_all`"
+msgid "Genres"
+msgstr "ژانر"
+
+#: Genres.php:79
+msgctxt "Label: `show_option_no_items`"
+msgid "(UnGenred)"
+msgstr "(بدون ژانر)"
+
+#: Genres.php:88
+msgctxt "Dashboard Widget Title"
+msgid "Your Content Genres Summary"
+msgstr "گزارش ژانرهای محتوای شما"
+
+#: Genres.php:89
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Genres Summary"
+msgstr "گزارش ژانرهای تحریریه"
+
+#: Genres.php:95
+msgctxt "Main Taxonomy: Default Term"
+msgid "Children"
+msgstr "کودک"
+
+#: Genres.php:96
+msgctxt "Main Taxonomy: Default Term"
+msgid "Classic"
+msgstr "کلاسیک"
+
+#: Genres.php:97
+msgctxt "Main Taxonomy: Default Term"
+msgid "Comedy"
+msgstr "کمدی"
+
+#: Genres.php:98
+msgctxt "Main Taxonomy: Default Term"
+msgid "Crime"
+msgstr "جنایی"
+
+#: Genres.php:99
+msgctxt "Main Taxonomy: Default Term"
+msgid "Fantasy"
+msgstr "فانتزی"
+
+#: Genres.php:100
+msgctxt "Main Taxonomy: Default Term"
+msgid "Historical"
+msgstr "تاریخی"
+
+#: Genres.php:101
+msgctxt "Main Taxonomy: Default Term"
+msgid "Horror"
+msgstr "وحشت"
+
+#: Genres.php:102
+msgctxt "Main Taxonomy: Default Term"
+msgid "Mystery"
+msgstr "رازآلود"
+
+#: Genres.php:103
+msgctxt "Main Taxonomy: Default Term"
+msgid "Romance"
+msgstr "عاشقانه"
+
+#: Genres.php:104
+msgctxt "Main Taxonomy: Default Term"
+msgid "Science Fiction"
+msgstr "علمی تخیلی"
+
+#: Genres.php:105
+msgctxt "Main Taxonomy: Default Term"
+msgid "Thriller"
+msgstr "هیجانی"
+
+#: Genres.php:214
+msgctxt "Header"
+msgid "Genre Reports"
+msgstr "گزارش‌های ژانر"
