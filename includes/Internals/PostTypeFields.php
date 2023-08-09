@@ -24,18 +24,48 @@ trait PostTypeFields
 		return $this->filters( 'posttype_field_args', $field, $field_key, $posttype, $fields );
 	}
 
-	// this is for module enabled fields with args for a posttype
-	// static contexts: `nobox`, `lonebox`, `mainbox`
-	// dynamic contexts: `listbox_{$posttype}`, `pairedbox_{$posttype}`, `pairedbox_{$module}`
-	public function get_posttype_fields( $posttype )
+	/**
+	 * Retrieves the registered fields for a post-type.
+	 *
+	 * @param  string $posttype
+	 * @param  array  $filter
+	 * @param  string $operator
+	 * @return array  $fields
+	 */
+	public function get_posttype_fields( $posttype, $filter = [], $operator = 'AND' )
 	{
 		global $gEditorialPostTypeFields;
 
-		if ( isset( $gEditorialPostTypeFields[$this->key][$posttype] ) )
+		if ( ! $posttype )
+			return [];
+
+		if ( ! isset( $gEditorialPostTypeFields[$this->key][$posttype] ) ) {
+
+			$all     = $this->posttype_fields_all( $posttype );
+			$enabled = $this->posttype_fields( $posttype );
+			$fields  = $this->posttypefields_init_for_posttype( $posttype, $all, $enabled );
+
+			$gEditorialPostTypeFields[$this->key][$posttype] = $fields;
+		}
+
+		if ( empty( $filter ) )
 			return $gEditorialPostTypeFields[$this->key][$posttype];
 
-		$all     = $this->posttype_fields_all( $posttype );
-		$enabled = $this->posttype_fields( $posttype );
+		return wp_list_filter( $gEditorialPostTypeFields[$this->key][$posttype], $filter, $operator );
+	}
+
+	/**
+	 * Initiates the registered fields for a post-type.
+	 * NOTE: static contexts: `nobox`, `lonebox`, `mainbox`
+	 * NOTE: dynamic contexts: `listbox_{$posttype}`, `pairedbox_{$posttype}`, `pairedbox_{$module}`
+	 *
+	 * @param  string $posttype
+	 * @param  array  $all
+	 * @param  array  $enabled
+	 * @return array  $fields
+	 */
+	public function posttypefields_init_for_posttype( $posttype, $all, $enabled )
+	{
 		$fields  = [];
 
 		foreach ( $enabled as $i => $field ) {
@@ -116,12 +146,10 @@ trait PostTypeFields
 			$this->actions( sprintf( 'init_posttype_field_%s', $field ), $fields[$field], $field, $posttype );
 		}
 
-		$gEditorialPostTypeFields[$this->key][$posttype] = Core\Arraay::multiSort( $fields, [
+		return Core\Arraay::multiSort( $fields, [
 			'group' => SORT_ASC,
 			'order' => SORT_ASC,
 		] );
-
-		return $gEditorialPostTypeFields[$this->key][$posttype];
 	}
 
 	/**
