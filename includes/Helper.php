@@ -123,6 +123,26 @@ class Helper extends WordPress\Main
 		return $result;
 	}
 
+	/**
+	 * Checks the availability of posttype field for given posttype via certain module.
+	 * TODO: move to `Services\PostTypeFields`
+	 *
+	 * @param  string $field_key
+	 * @param  string $posttype
+	 * @param  string $module
+	 * @return mixed  $available
+	 */
+	public static function isPostTypeFieldAvailable( $field_key, $posttype, $module = 'meta' )
+	{
+		if ( ! $posttype || ! $field_key )
+			return FALSE;
+
+		if ( ! gEditorial()->enabled( $module ) )
+			return FALSE;
+
+		return gEditorial()->module( $module )->get_posttype_field_args( $field_key, $posttype );
+	}
+
 	public static function getIcon( $icon, $fallback = 'admin-post' )
 	{
 		if ( ! $icon )
