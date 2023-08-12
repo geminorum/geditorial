@@ -108,6 +108,31 @@ trait PairedCore
 		}
 	}
 
+	/**
+	 * Strips paired terms rendred for already added data into pointers.
+	 * @example `$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );`
+	 *
+	 * @param  array  $data
+	 * @param  object $post
+	 * @param  string $context
+	 * @return array  $data
+	 */
+	public function tabloid_view_data_paired_supported( $data, $post, $context )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) || empty( $data['terms_rendered'] ) )
+			return $data;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return $data;
+
+		// NOTE: needs to be non-associative array to render via Mustache
+		$data['terms_rendered'] = array_values( Core\Arraay::filter( $data['terms_rendered'], [
+			'name' => $this->constant( $constants[1] ),
+		], 'NOT' ) );
+
+		return $data;
+	}
+
 	protected function paired_all_connected_to( $post, $exclude = [], $posttypes = NULL )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
