@@ -18,6 +18,7 @@ class Audit extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\CoreRowActions;
 	use Internals\DashboardSummary;
 
 	protected $disable_no_posttypes = TRUE;
@@ -58,6 +59,9 @@ class Audit extends gEditorial\Module
 				'summary_scope',
 				'summary_drafts',
 				'count_not',
+			],
+			'_editpost' => [
+				'admin_bulkactions',
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -218,6 +222,9 @@ class Audit extends gEditorial\Module
 
 	private function _do_auto_audit_post( $post, $update = FALSE, $taxonomy = NULL )
 	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
 		$taxonomy = $taxonomy ?? $this->constant( 'main_taxonomy' );
 		$currents = WordPress\Taxonomy::getObjectTerms( $taxonomy, $post->ID );
 
@@ -369,6 +376,9 @@ class Audit extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'assign' ) )
+					$this->rowactions__hook_admin_bulkactions( $screen, TRUE );
 			}
 		}
 	}
@@ -389,6 +399,52 @@ class Audit extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	public function rowactions_bulk_actions( $actions )
+	{
+		return array_merge( $actions, [
+			$this->hook( 'forceautoaudit' ) => _x( 'Force Auto-Audit', 'Action', 'geditorial-audit' ),
+		] );
+	}
+
+	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	{
+		if ( $doaction != $this->hook( 'forceautoaudit' ) )
+			return $redirect_to;
+
+		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'assign' ) )
+			return $redirect_to;
+
+		$count    = 0;
+		$taxonomy = $this->constant( 'main_taxonomy' );
+
+		foreach ( $post_ids as $post_id ) {
+
+			if ( ! current_user_can( 'edit_post', $post_id ) )
+				continue;
+
+			if ( $this->_do_auto_audit_post( $post_id, TRUE, $taxonomy ) )
+				$count++;
+		}
+
+		return add_query_arg( $this->hook( 'audited' ), $count, $redirect_to );
+	}
+
+	public function rowactions_admin_notices()
+	{
+		$hook = $this->hook( 'audited' );
+
+		if ( ! $count = self::req( $hook ) )
+			return;
+
+		$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
+
+		echo Core\HTML::success( sprintf(
+			/* translators: %s: count */
+			_x( '%s items(s) Audited!', 'Message', 'geditorial-audit' ),
+			Core\Number::format( $count )
+		) );
 	}
 
 	public function tools_settings( $sub )
@@ -688,9 +744,6 @@ class Audit extends gEditorial\Module
 
 	private function _post_force_auto_audit( $post, $taxonomy = NULL, $verbose = FALSE )
 	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
 		if ( ! $result = $this->_do_auto_audit_post( $post, TRUE, $taxonomy ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %s: post title */
