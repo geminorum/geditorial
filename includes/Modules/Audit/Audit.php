@@ -9,6 +9,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Audit extends gEditorial\Module
@@ -403,6 +404,8 @@ class Audit extends gEditorial\Module
 
 				Core\WordPress::redirectReferer( 'huh' );
 			}
+
+			$this->add_sub_screen_option( $sub );
 		}
 	}
 
@@ -542,7 +545,12 @@ class Audit extends gEditorial\Module
 	protected function render_tools_html( $uri, $sub )
 	{
 		Core\HTML::h3( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
+
+		if ( $this->_do_tools_force_auto_audit( $sub ) )
+			return;
+
 		$this->_render_tools_empty_fields();
+		$this->_render_tools_force_auto_audit();
 	}
 
 	public function taxonomy_empty_terms( $terms, $taxonomy )
@@ -640,6 +648,81 @@ class Audit extends gEditorial\Module
 		}
 
 		echo '</div>';
+	}
+
+	private function _do_tools_force_auto_audit( $sub )
+	{
+		if ( 'do_tools_force_auto_audit' !== self::req( 'action' ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return Info::renderEmptyPosttype();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		$this->_raise_resources();
+
+		$taxonomy = $this->constant( 'main_taxonomy' );
+		$query    = [];
+
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $this->get_sub_limit_option( $sub ) );
+
+		if ( empty( $posts ) )
+			return FALSE;
+
+		echo '<ul>';
+		foreach ( $posts as $post )
+			$this->_post_force_auto_audit( $post, $taxonomy, TRUE );
+
+		echo '</ul>';
+
+		Core\WordPress::redirectJS( add_query_arg( [
+			'action' => 'do_tools_force_auto_audit',
+			'type'   => $posttype,
+			'paged'  => self::paged() + 1,
+		] ) );
+
+		return TRUE;
+	}
+
+	private function _post_force_auto_audit( $post, $taxonomy = NULL, $verbose = FALSE )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $result = $this->_do_auto_audit_post( $post, TRUE, $taxonomy ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %s: post title */
+				_x( 'No Audits applied for &ldquo;%s&rdquo;', 'Notice', 'geditorial-audit' ) ),
+				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+
+		if ( $verbose )
+			vprintf( '<li>%s: <code>%s</code></li>', [
+				WordPress\Post::title( $post ),
+				count( $result ),
+			] );
+
+		return TRUE;
+	}
+
+	private function _render_tools_force_auto_audit()
+	{
+		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
+		Core\HTML::h2( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ), 'title' );
+
+		echo $this->wrap_open( '-wrap-button-row -force_auto_audit' );
+
+			foreach ( $this->list_posttypes() as $posttype => $label )
+				Settings::submitButton( add_query_arg( [
+					'action' => 'do_tools_force_auto_audit',
+					'type'   => $posttype,
+				/* translators: %s: posttype label */
+				] ), sprintf( _x( 'Auto Audit for %s', 'Button', 'geditorial-audit' ), $label ), 'link' );
+
+			echo '<br /><br />';
+			Core\HTML::desc( _x( 'Tries to auto-set the attributes on supported posts.', 'Button Description', 'geditorial-audit' ) );
+		echo '</div></div>';
 	}
 
 	private function _render_tools_empty_fields_summary( $for )
