@@ -100,7 +100,7 @@ SQL;
 	// TODO: our own `wp_dropdown_categories()` using cutom walker
 	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
 	// ALSO: trim term titles
-	public static function restrictByTaxonomy( $taxonomy, $paired_posttype = FALSE )
+	public static function restrictByTaxonomy( $taxonomy, $paired_posttype = FALSE, $extra = [] )
 	{
 		if ( ! $object = get_taxonomy( $taxonomy ) )
 			return;
@@ -142,7 +142,7 @@ SQL;
 			$args['show_option_none'] = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
 		}
 
-		wp_dropdown_categories( $args );
+		wp_dropdown_categories( array_merge( $args, $extra ) );
 	}
 
 	// FIXME: DEPRECATED: use `restrictByTaxonomy()`

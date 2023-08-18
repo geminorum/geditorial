@@ -412,7 +412,7 @@ class Book extends gEditorial\Module
 			return;
 
 		if ( $this->get_setting( 'p2p_insert_content' ) )
-			add_action( $this->base.'_content_after',
+			add_action( $this->hook_base( 'content', 'after' ),
 				[ $this, 'insert_content_p2p' ],
 				$this->get_setting( 'insert_priority', 100 )
 			);
@@ -569,7 +569,7 @@ class Book extends gEditorial\Module
 		} else if ( is_singular( $this->constant( 'publication_cpt' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
-				add_action( $this->base.'_content_before',
+				add_action( $this->hook_base( 'content', 'before' ),
 					[ $this, 'insert_cover' ],
 					$this->get_setting( 'insert_priority', -50 )
 				);

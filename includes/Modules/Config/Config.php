@@ -123,8 +123,8 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Reports Sub', 'geditorial-config' );
 
-		$subs     = apply_filters( $this->base.'_reports_subs', $subs, 'reports', $can );
-		$messages = apply_filters( $this->base.'_reports_messages', Settings::messages(), $sub. $can );
+		$subs     = apply_filters( $this->hook_base( 'reports', 'subs' ), $subs, 'reports', $can );
+		$messages = apply_filters( $this->hook_base( 'reports', 'messages' ), Settings::messages(), $sub. $can );
 
 		Settings::wrapOpen( $sub, 'reports' );
 
@@ -138,8 +138,8 @@ class Config extends gEditorial\Module
 			else if ( 'console' == $sub )
 				gEditorial()->files( 'Layouts/console.reports' );
 
-			else if ( has_action( $this->base.'_reports_sub_'.$sub ) )
-				do_action( $this->base.'_reports_sub_'.$sub, $uri, $sub );
+			else if ( has_action( $this->hook_base( 'reports', 'sub', $sub ) ) )
+				do_action( $this->hook_base( 'reports', 'sub', $sub ), $uri, $sub );
 
 			else
 				Settings::cheatin();
@@ -151,7 +151,7 @@ class Config extends gEditorial\Module
 
 	protected function reports_overview( $uri )
 	{
-		do_action( $this->base.'_reports_overview', $uri );
+		do_action( $this->hook_base( 'reports', 'overview' ), $uri );
 	}
 
 	public function admin_tools_page()
@@ -165,8 +165,8 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Tools Sub', 'geditorial-config' );
 
-		$subs     = apply_filters( $this->base.'_tools_subs', $subs, 'tools', $can );
-		$messages = apply_filters( $this->base.'_tools_messages', Settings::messages(), $sub, $can );
+		$subs     = apply_filters( $this->hook_base( 'tools', 'subs' ), $subs, 'tools', $can );
+		$messages = apply_filters( $this->hook_base( 'tools', 'messages' ), Settings::messages(), $sub, $can );
 
 		if ( WordPress\User::isSuperAdmin() ) {
 			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-config' );
@@ -188,8 +188,8 @@ class Config extends gEditorial\Module
 			else if ( 'console' == $sub )
 				gEditorial()->files( 'Layouts/console.tools' );
 
-			else if ( has_action( $this->base.'_tools_sub_'.$sub ) )
-				do_action( $this->base.'_tools_sub_'.$sub, $uri, $sub );
+			else if ( has_action( $this->hook_base( 'tools', 'sub', $sub ) ) )
+				do_action( $this->hook_base( 'tools', 'sub', $sub ), $uri, $sub );
 
 			else
 				Settings::cheatin();
@@ -201,7 +201,7 @@ class Config extends gEditorial\Module
 
 	protected function tools_overview( $uri )
 	{
-		do_action( $this->base.'_tools_overview', $uri );
+		do_action( $this->hook_base( 'tools', 'overview' ), $uri );
 	}
 
 	public function tools_overview_notice( $uri )
@@ -234,12 +234,12 @@ class Config extends gEditorial\Module
 
 		if ( 'general' == $sub ) {
 
-			add_action( $this->base.'_reports_sub_general', [ $this, 'reports_sub' ], 10, 2 );
+			add_action( $this->hook_base( 'reports', 'sub', 'general' ), [ $this, 'reports_sub' ], 10, 2 );
 
 			$this->register_help_tabs( NULL, 'reports' );
 		}
 
-		do_action( $this->base.'_reports_settings', $sub );
+		do_action( $this->hook_base( 'reports', 'settings' ), $sub );
 	}
 
 	public function admin_tools_load()
@@ -307,12 +307,12 @@ class Config extends gEditorial\Module
 				}
 			}
 
-			add_action( $this->base.'_tools_sub_'.$sub, [ $this, 'tools_sub' ], 10, 2 );
+			add_action( $this->hook_base( 'tools', 'sub', $sub ), [ $this, 'tools_sub' ], 10, 2 );
 
 			$this->register_help_tabs( NULL, 'tools' );
 		}
 
-		do_action( $this->base.'_tools_settings', $sub );
+		do_action( $this->hook_base( 'tools', 'settings' ), $sub );
 
 		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
 		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
@@ -431,12 +431,12 @@ class Config extends gEditorial\Module
 
 		if ( 'general' == $sub ) {
 
-			add_action( $this->base.'_imports_sub_general', [ $this, 'imports_sub' ], 10, 2 );
+			add_action( $this->hook_base( 'imports', 'sub', 'general' ), [ $this, 'imports_sub' ], 10, 2 );
 
 			$this->register_help_tabs( NULL, 'imports' );
 		}
 
-		do_action( $this->base.'_imports_settings', $sub );
+		do_action( $this->hook_base( 'imports', 'settings' ), $sub );
 	}
 
 	public function admin_imports_page()
@@ -450,8 +450,8 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['general'] = _x( 'General', 'Imports Sub', 'geditorial-config' );
 
-		$subs     = apply_filters( $this->base.'_imports_subs', $subs, 'imports', $can );
-		$messages = apply_filters( $this->base.'_imports_messages', Settings::messages(), $sub, $can );
+		$subs     = apply_filters( $this->hook_base( 'imports', 'subs' ), $subs, 'imports', $can );
+		$messages = apply_filters( $this->hook_base( 'imports', 'messages' ), Settings::messages(), $sub, $can );
 
 		if ( $can )
 			$subs['data'] = _x( 'Data', 'Imports Sub', 'geditorial-config' );
@@ -471,8 +471,8 @@ class Config extends gEditorial\Module
 			else if ( 'console' == $sub )
 				gEditorial()->files( 'Layouts/console.imports' );
 
-			else if ( has_action( $this->base.'_imports_sub_'.$sub ) )
-				do_action( $this->base.'_imports_sub_'.$sub, $uri, $sub );
+			else if ( has_action( $this->hook_base( 'imports', 'sub', $sub ) ) )
+				do_action( $this->hook_base( 'imports', 'sub', $sub ), $uri, $sub );
 
 			else
 				Settings::cheatin();
@@ -484,13 +484,13 @@ class Config extends gEditorial\Module
 
 	protected function imports_overview( $uri )
 	{
-		do_action( $this->base.'_imports_overview', $uri );
+		do_action( $this->hook_base( 'imports', 'overview' ), $uri );
 	}
 
 	// TODO: download link
 	protected function imports_data( $uri )
 	{
-		foreach ( apply_filters( $this->base.'_imports_data_summary', [] ) as $row ) {
+		foreach ( apply_filters( $this->hook_base( 'imports' , 'data_summary' ), [] ) as $row ) {
 
 			$data = self::atts( [
 				'title'       => _x( 'Untitled', 'Imports: Data Summary', 'geditorial-config' ),
@@ -509,7 +509,7 @@ class Config extends gEditorial\Module
 			echo '</div>';
 		}
 
-		do_action( $this->base.'_imports_data', $uri );
+		do_action( $this->hook_base( 'imports', 'data' ), $uri );
 	}
 
 	protected function render_imports_html( $uri, $sub )
@@ -644,7 +644,7 @@ class Config extends gEditorial\Module
 		if ( $module )
 			$GLOBALS['submenu_file'] = $this->base.'-settings&module='.$module;
 
-		do_action( $this->base.'_settings_load', $module );
+		do_action( $this->hook_base( 'settings', 'load' ), $module );
 
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', Scripts::pkgListJS() ] );
 	}

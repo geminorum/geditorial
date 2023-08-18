@@ -136,20 +136,22 @@ class Entry extends gEditorial\Module
 		$this->filter( 'redirect_canonical', 2 );
 
 		if ( $before = $this->get_setting( 'before_content' ) )
-			add_action( $this->base.'_content_before', function( $content ) use ( $before ) {
+			add_action( $this->hook_base( 'content', 'before' ),
+				function( $content ) use ( $before ) {
 
-				if ( $this->is_content_insert( FALSE ) )
-					echo $this->wrap( apply_shortcodes( $before ), '-before' );
+					if ( $this->is_content_insert( FALSE ) )
+						echo $this->wrap( apply_shortcodes( $before ), '-before' );
 
-			}, 100 );
+				}, 100 );
 
 		if ( $after = $this->get_setting( 'after_content' ) )
-			add_action( $this->base.'_content_after', function( $content ) use ( $after ) {
+			add_action( $this->hook_base( 'content', 'after' ),
+				function( $content ) use ( $after ) {
 
-				if ( $this->is_content_insert( FALSE ) )
-					echo $this->wrap( apply_shortcodes( $after ), '-after' );
+					if ( $this->is_content_insert( FALSE ) )
+						echo $this->wrap( apply_shortcodes( $after ), '-after' );
 
-			}, 1 );
+				}, 1 );
 
 		if ( $this->get_setting( 'autolink_terms' ) )
 			$this->filter( 'the_content', 1, 9 );

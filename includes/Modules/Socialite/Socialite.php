@@ -177,8 +177,8 @@ class Socialite extends gEditorial\Module
 		$this->filter_module( 'terms', 'custom_column', 4 );
 
 		foreach ( $this->get_setting( 'extra_meta_fields', [] ) as $field ) {
-			add_filter( $this->base.'_terms_field_'.$field.'_title', [ $this, 'terms_field_title' ], 12, 4 );
-			add_filter( $this->base.'_terms_field_'.$field.'_desc', [ $this, 'terms_field_desc' ], 12, 4 );
+			add_filter( $this->hook_base( 'terms', 'field', $field, 'title' ), [ $this, 'terms_field_title' ], 12, 4 );
+			add_filter( $this->hook_base( 'terms', 'field', $field, 'desc' ), [ $this, 'terms_field_desc' ], 12, 4 );
 		}
 	}
 

@@ -130,18 +130,18 @@ class Actions extends gEditorial\Module
 
 		$before = $after = '';
 
-		if ( has_action( $this->base.'_content_before' ) ) {
+		if ( has_action( $this->hook_base( 'content', 'before' ) ) ) {
 			ob_start();
-				do_action( $this->base.'_content_before', $content );
+				do_action( $this->hook_base( 'content', 'before' ), $content );
 			$before = ob_get_clean();
 
 			if ( trim( $before ) )
 				$before = '<div class="'.$this->base.'-wrap-actions content-before">'.$before.'</div>';
 		}
 
-		if ( has_action( $this->base.'_content_after' ) ) {
+		if ( has_action( $this->hook_base( 'content', 'after' ) ) ) {
 			ob_start();
-				do_action( $this->base.'_content_after', $content );
+				do_action( $this->hook_base( 'content', 'after' ), $content );
 			$after = ob_get_clean();
 
 			if ( trim( $after ) )

@@ -176,7 +176,7 @@ class Today extends gEditorial\Module
 			return;
 
 		if ( $this->get_setting( 'insert_theday' ) ) {
-			add_action( $this->base.'_content_before',
+			add_action( $this->hook_base( 'content', 'before' ),
 				[ $this, 'insert_theday' ],
 				$this->get_setting( 'insert_priority_theday', -20 )
 			);

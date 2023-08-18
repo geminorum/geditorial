@@ -632,7 +632,7 @@ class Audit extends gEditorial\Module
 		$this->render_form_end( NULL, 'empty-fields', 'extra', 'tabs' );
 	}
 
-	// - auto-audit: mark no thumbnail with selected attribiute
+	// TODO: auto-audit: mark no thumbnail with selected attribiute
 	private function _render_tools_empty_fields( $lite = FALSE )
 	{
 		$taxonomy = $this->constant( 'main_taxonomy' );

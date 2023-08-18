@@ -14,7 +14,7 @@ trait MetaBoxCustom
 		if ( WordPress\PostType::supportBlocks( $posttype->name ) )
 			return;
 
-		if ( ! apply_filters( $this->base.'_module_metabox_author', TRUE, $posttype->name ) )
+		if ( ! apply_filters( $this->hook_base( 'module', 'metabox_author' ), TRUE, $posttype->name ) )
 			return;
 
 		if ( ! current_user_can( $posttype->cap->edit_others_posts ) )
@@ -36,7 +36,7 @@ trait MetaBoxCustom
 		if ( WordPress\PostType::supportBlocks( $posttype ) )
 			return;
 
-		if ( ! apply_filters( $this->base.'_module_metabox_excerpt', TRUE, $posttype ) )
+		if ( ! apply_filters( $this->hook_base( 'module', 'metabox_excerpt' ), TRUE, $posttype ) )
 			return;
 
 		add_meta_box( 'postexcerpt', // same as core to override

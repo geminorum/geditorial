@@ -37,10 +37,7 @@ trait CoreRestrictPosts
 		if ( empty( $taxonomies ) )
 			return FALSE;
 
-		add_filter( $this->base.'_screen_restrict_taxonomies',
-			function ( $pre ) use ( $taxonomies ) {
-				return array_merge( $pre, $taxonomies );
-			}, $priority, 2 );
+		$this->filter_append( $this->hook_base( 'screen_restrict_taxonomies' ), $taxonomies, $priority );
 
 		add_action( 'restrict_manage_posts',
 			function ( $posttype, $which ) use ( $taxonomies ) {

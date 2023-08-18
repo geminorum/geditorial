@@ -57,7 +57,7 @@ trait PostTypeFields
 		if ( empty( $filter ) )
 			return $gEditorialPostTypeFields[$this->key][$posttype];
 
-		return wp_list_filter( $gEditorialPostTypeFields[$this->key][$posttype], $filter, $operator );
+		return Core\Arraay::filter( $gEditorialPostTypeFields[$this->key][$posttype], $filter, $operator );
 	}
 
 	/**

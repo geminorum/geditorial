@@ -301,8 +301,8 @@ class Meta extends gEditorial\Module
 			return;
 
 		if ( $this->get_setting( 'insert_content' ) ) {
-			add_action( $this->base.'_content_before', [ $this, 'content_before' ], 50 );
-			add_action( $this->base.'_content_after', [ $this, 'content_after' ], 50 );
+			add_action( $this->hook_base( 'content', 'before' ), [ $this, 'content_before' ], 50 );
+			add_action( $this->hook_base( 'content', 'after' ), [ $this, 'content_after' ], 50 );
 		}
 
 		if ( $this->get_setting( 'overwrite_author', FALSE ) )
@@ -386,7 +386,7 @@ class Meta extends gEditorial\Module
 				$this->_hook_default_rows();
 
 				$asset = [
-					'fields' => array_filter( Core\Arraay::column( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
+					'fields' => array_filter( Core\Arraay::column( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
 				];
 
 				$this->enqueue_asset_js( $asset, $screen );
@@ -595,7 +595,7 @@ class Meta extends gEditorial\Module
 			return $value;
 
 		$fields = $this->get_posttype_fields( $post->post_type );
-		$fields = wp_list_filter( $fields, [ 'rest' => $args['name'] ] );
+		$fields = Core\Arraay::filter( $fields, [ 'rest' => $args['name'] ] );
 
 		foreach ( $fields as $field => $field_args )
 			return $this->get_postmeta_field( $post->ID, $field, $field_args['default'] );
@@ -1007,7 +1007,7 @@ class Meta extends gEditorial\Module
 		echo '</ul></div>';
 
 		// NOTE: for `quickedit` enabled fields
-		foreach ( wp_list_filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
+		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
 			echo '<div class="hidden '.$prefix.$field.'-value">'.
 				$this->_prep_posttype_field_for_input(
 					$this->get_postmeta_field( $post->ID, $field ),
@@ -1306,6 +1306,7 @@ class Meta extends gEditorial\Module
 	}
 
 	// TODO: bulk migrate data to another field with filters for processing
+	// TODO: bulk check fields for empty strings and remove @SEE: `WordPress\Strings::isEmpty()` / Special version for email/phone/postalcodes
 	// - or just rename metakey directly on database!
 	protected function render_tools_html( $uri, $sub )
 	{

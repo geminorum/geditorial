@@ -36,10 +36,7 @@ trait PairedAdmin
 		else if ( ! WordPress\PostType::can( $this->constant( $constants[0] ), 'read' ) )
 			return FALSE;
 
-		add_filter( $this->base.'_screen_restrict_taxonomies',
-			function ( $pre ) use ( $constants ) {
-				return array_merge( $pre, [ $this->constant( $constants[1] ) ] );
-			}, $priority, 2 );
+		$this->filter_append( $this->hook_base( 'screen_restrict_taxonomies' ), $this->constant( $constants[1] ), $priority );
 
 		add_action( 'restrict_manage_posts',
 			function ( $posttype, $which ) use ( $constants ) {
@@ -48,7 +45,7 @@ trait PairedAdmin
 				$taxonomy = $this->constant( $constants[1] );
 
 				if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )
-					Listtable::restrictByTaxonomy( $taxonomy );
+					Listtable::restrictByTaxonomy( $taxonomy, $this->constant( $constants[0] ) );
 
 			}, 20, 2 );
 

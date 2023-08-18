@@ -50,6 +50,7 @@ class Barcode extends WordPress\Main
 
 
 	// @REF: https://github.com/hbgl/php-code-128-encoder
+	// NOTE: depends on `tecnickcom/tc-lib-barcode`
 	public static function encode( $data, $type )
 	{
 		switch ( $type ) {

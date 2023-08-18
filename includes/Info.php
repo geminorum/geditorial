@@ -86,6 +86,42 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderEmptyPosttype( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'The post-type is not provided!', 'Info: Message', 'geditorial' ).$after,
+			FALSE,
+			'-empty -not-empty-posttype'
+		);
+	}
+
+	public static function renderEmptyTaxonomy( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'The taxonomy is not provided!', 'Info: Message', 'geditorial' ).$after,
+			FALSE,
+			'-empty -not-empty-taxonomy'
+		);
+	}
+
+	public static function renderNotSupportedPosttype( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'The post-type is not supported!', 'Info: Message', 'geditorial' ).$after,
+			FALSE,
+			'-empty -not-supported-posttype'
+		);
+	}
+
+	public static function renderNotSupportedTaxonomy( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'The taxonomy is not supported!', 'Info: Message', 'geditorial' ).$after,
+			FALSE,
+			'-empty -not-supported-taxonomy'
+		);
+	}
+
 	public static function getHelpTabs( $context = NULL ) {}
 
 	// TODO: add click to select

@@ -133,7 +133,7 @@ class Module extends WordPress\Module
 		$ui    = Core\WordPress::mustRegisterUI( FALSE );
 
 		if ( $admin && $ui && ( TRUE === $this->module->configure || 'settings' === $this->module->configure ) )
-			add_action( $this->base.'_settings_load', [ $this, 'register_settings' ] );
+			add_action( $this->hook_base( 'settings_load' ), [ $this, 'register_settings' ] );
 
 		if ( $this->setup_disabled() )
 			return FALSE;
@@ -153,10 +153,10 @@ class Module extends WordPress\Module
 			$this->action( 'widgets_init' );
 
 		if ( ! $ajax && method_exists( $this, 'tinymce_strings' ) )
-			add_filter( $this->base.'_tinymce_strings', [ $this, 'tinymce_strings' ] );
+			add_filter( $this->hook_base( 'tinymce_strings' ), [ $this, 'tinymce_strings' ] );
 
 		if ( method_exists( $this, 'meta_init' ) )
-			add_action( $this->base.'_meta_init', [ $this, 'meta_init' ], 10, 2 );
+			add_action( $this->hook_base( 'meta_init' ), [ $this, 'meta_init' ], 10, 2 );
 
 		if ( method_exists( $this, 'elementor_register' ) )
 			add_action( 'elementor/widgets/register', [ $this, 'elementor_register' ], 10, 1 );
@@ -170,7 +170,7 @@ class Module extends WordPress\Module
 		$this->action( 'init', 0, $this->priority_init );
 
 		if ( $ui && method_exists( $this, 'adminbar_init' ) && $this->get_setting( 'adminbar_summary' ) )
-			add_action( $this->base.'_adminbar', [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
+			add_action( $this->hook_base( 'adminbar' ), [ $this, 'adminbar_init' ], $this->priority_adminbar_init, 2 );
 
 		if ( $admin ) {
 
@@ -198,13 +198,13 @@ class Module extends WordPress\Module
 				$this->action( 'current_screen', 1, $this->priority_current_screen );
 
 			if ( $ui && method_exists( $this, 'reports_settings' ) )
-				add_action( $this->base.'_reports_settings', [ $this, 'reports_settings' ] );
+				add_action( $this->hook_base( 'reports_settings' ), [ $this, 'reports_settings' ] );
 
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
-				add_action( $this->base.'_tools_settings', [ $this, 'tools_settings' ] );
+				add_action( $this->hook_base( 'tools_settings' ), [ $this, 'tools_settings' ] );
 
 			if ( $ui && method_exists( $this, 'imports_settings' ) )
-				add_action( $this->base.'_imports_settings', [ $this, 'imports_settings' ] );
+				add_action( $this->hook_base( 'imports_settings' ), [ $this, 'imports_settings' ] );
 
 			if ( $ui && method_exists( $this, 'tool_box_content' ) )
 				$this->action( 'tool_box' );
@@ -2022,7 +2022,7 @@ class Module extends WordPress\Module
 			$key = $this->key;
 
 		if ( $key == $this->key )
-			add_filter( $this->base.'_'.$context.'_subs', [ $this, 'append_sub' ], 10, 2 );
+			add_filter( $this->hook_base( $context, 'subs' ), [ $this, 'append_sub' ], 10, 2 );
 
 		$subs = array_merge( [ $key ], (array) $extra );
 
@@ -2030,7 +2030,7 @@ class Module extends WordPress\Module
 			return FALSE;
 
 		foreach ( $subs as $supported )
-			add_action( $this->base.'_'.$context.'_sub_'.$supported, [ $this, $context.'_sub' ], 10, 2 );
+			add_action( $this->hook_base( $context, 'sub', $supported ), [ $this, $context.'_sub' ], 10, 2 );
 
 		if ( 'settings' != $context ) {
 
@@ -3602,7 +3602,7 @@ class Module extends WordPress\Module
 		remove_shortcode( $shortcode );
 		add_shortcode( $shortcode, $callback );
 
-		add_filter( $this->base.'_shortcode_'.$shortcode, $callback, 10, 3 );
+		add_filter( $this->hook_base( 'shortcode', $shortcode ), $callback, 10, 3 );
 	}
 
 	// DEFAULT FILTER
@@ -4920,7 +4920,7 @@ class Module extends WordPress\Module
 		if ( 'none' == $insert )
 			return FALSE;
 
-		add_action( $this->base.'_content_'.$insert,
+		add_action( $this->hook_base( 'content', $insert ),
 			[ $this, 'insert_content' ],
 			$this->get_setting( 'insert_priority', $default_priority )
 		);
@@ -5079,7 +5079,7 @@ class Module extends WordPress\Module
 	}
 
 	// TODO: customize column position/sorting
-	// FIXME: WTF?!
+	// NOTE: appends custom meta fields into Terms Module
 	protected function _hook_terms_meta_field( $constant, $field, $args = [] )
 	{
 		if ( ! gEditorial()->enabled( 'terms' ) )
@@ -5089,7 +5089,7 @@ class Module extends WordPress\Module
 		$title    = $this->get_string( 'field_title', $field, 'terms_meta_field', $field );
 		$desc     = $this->get_string( 'field_desc', $field, 'terms_meta_field', '' );
 
-		add_filter( $this->base.'_terms_supported_fields', static function( $list, $tax ) use ( $taxonomy, $field ) {
+		add_filter( $this->hook_base( 'terms', 'supported_fields' ), static function( $list, $tax ) use ( $taxonomy, $field ) {
 
 			if ( FALSE === $tax || $tax === $taxonomy )
 				$list[] = $field;
@@ -5097,7 +5097,7 @@ class Module extends WordPress\Module
 			return $list;
 		}, 12, 2 );
 
-		add_filter( $this->base.'_terms_list_supported_fields', static function( $list, $tax ) use ( $taxonomy, $field, $title ) {
+		add_filter( $this->hook_base( 'terms', 'list_supported_fields' ), static function( $list, $tax ) use ( $taxonomy, $field, $title ) {
 
 			if ( FALSE === $tax || $tax === $taxonomy )
 				$list[$field] = $title;
@@ -5105,7 +5105,7 @@ class Module extends WordPress\Module
 			return $list;
 		}, 12, 2 );
 
-		add_filter( $this->base.'_terms_supported_field_taxonomies', static function( $taxonomies, $_field ) use ( $taxonomy, $field ) {
+		add_filter( $this->hook_base( 'terms', 'supported_field_taxonomies' ), static function( $taxonomies, $_field ) use ( $taxonomy, $field ) {
 
 			if ( $_field === $field )
 				$taxonomies[] = $taxonomy;
@@ -5116,10 +5116,10 @@ class Module extends WordPress\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->filter_string( $this->base.'_terms_field_'.$field.'_title', $title );
-		$this->filter_string( $this->base.'_terms_field_'.$field.'_desc', $desc );
+		$this->filter_string( $this->hook_base( 'terms', 'field', $field, 'title' ), $title );
+		$this->filter_string( $this->hook_base( 'terms', 'field', $field, 'desc' ), $desc );
 
-		add_filter( $this->base.'_terms_column_title', static function( $_title, $column, $constant, $fallback ) use ( $taxonomy, $field, $title ) {
+		add_filter( $this->hook_base( 'terms', 'column_title' ), static function( $_title, $column, $constant, $fallback ) use ( $taxonomy, $field, $title ) {
 
 			if ( $column === $field )
 				return $title;

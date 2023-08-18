@@ -232,6 +232,10 @@ class Tweaks extends gEditorial\Module
 			'follow_users',
 			'follow_groups',
 			'status',
+			'audit_attribute', // has it's own overview
+			'year_of_birth', // WasBorn Module
+			'gender',  // WasBorn Module
+			'age_group', // WasBorn Module
 		] + $extra ) );
 	}
 

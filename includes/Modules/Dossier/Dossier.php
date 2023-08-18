@@ -318,7 +318,7 @@ class Dossier extends gEditorial\Module
 		} else if ( is_singular( $this->constant( 'dossier_posttype' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
-				add_action( $this->base.'_content_before',
+				add_action( $this->hook_base( 'content', 'before' ),
 					[ $this, 'insert_cover' ],
 					$this->get_setting( 'insert_priority', -50 )
 				);

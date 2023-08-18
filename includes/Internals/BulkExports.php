@@ -213,7 +213,7 @@ trait BulkExports
 
 		foreach ( $posttypes as $posttype ) {
 
-			$fields = PostType::supports( $posttype, 'meta_fields' );
+			$fields = WordPress\PostType::supports( $posttype, 'meta_fields' );
 
 			if ( empty( $fields ) )
 				continue;
