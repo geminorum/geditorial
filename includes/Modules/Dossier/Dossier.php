@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress;
 
 class Dossier extends gEditorial\Module
 {
+	use Internals\AdminPage;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -20,6 +21,7 @@ class Dossier extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedImports;
 	use Internals\PairedTools;
+	use Internals\QuickPosts;
 
 	public static function module()
 	{

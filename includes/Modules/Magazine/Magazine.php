@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress;
 
 class Magazine extends gEditorial\Module
 {
+	use Internals\AdminPage;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -19,6 +20,7 @@ class Magazine extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedTools;
+	use Internals\QuickPosts;
 
 	public static function module()
 	{

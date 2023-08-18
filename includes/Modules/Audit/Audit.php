@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 
 class Audit extends gEditorial\Module
 {
+	use Internals\AdminPage;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;

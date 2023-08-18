@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 
 class Tabloid extends gEditorial\Module
 {
+	use Internals\AdminPage;
 	use Internals\CoreRowActions;
 	use Internals\FramePage;
 	use Internals\ViewEngines;
