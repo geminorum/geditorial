@@ -66,4 +66,39 @@ trait CoreRowActions
 
 	// EXAMPLE CALLBACK
 	// protected function rowaction_get_mainlink_for_post( $post ) { return ''; }
+
+	protected function rowactions__hook_mainlink_for_term( $screen, $priority = 10, $action_key = NULL, $setting_key = 'admin_rowactions' )
+	{
+		if ( FALSE === $setting_key )
+			return FALSE;
+
+		if ( TRUE !== $setting_key && ! $this->get_setting( $setting_key ) )
+			return FALSE;
+
+		if ( ! method_exists( $this, 'rowaction_get_mainlink_for_term' ) )
+			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'rowaction_get_mainlink_for_term()' ) );
+
+		$callback = function( $actions, $term ) use ( $screen, $action_key ) {
+
+			if ( $term->taxonomy !== $screen->taxonomy )
+				return $actions;
+
+			if ( ! $links = $this->rowaction_get_mainlink_for_term( $term ) )
+				return $actions;
+
+			if ( is_array( $links ) )
+				return array_merge( $actions, $links );
+
+			return array_merge( $actions, [
+				$action_key ?? $this->classs() => $links,
+			] );
+		};
+
+		add_filter( 'tag_row_actions', $callback, $priority, 2 );
+
+		return TRUE;
+	}
+
+	// EXAMPLE CALLBACK
+	// protected function rowaction_get_mainlink_for_term( $term ) { return ''; }
 }
