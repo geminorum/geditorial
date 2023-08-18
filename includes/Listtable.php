@@ -201,4 +201,36 @@ SQL;
 			'include_selected'        => TRUE,
 		], $extra ) );
 	}
+
+	public static function restrictByPostMeta( $metakey, $none = NULL, $extra = [] )
+	{
+		$list = WordPress\Database::getPostMetaForDropdown( $metakey );
+		$list = Core\Arraay::sameKey( array_filter( $list ) );
+
+		echo Core\HTML::dropdown( $list, array_merge( [
+			'name'       => $metakey,
+			'selected'   => self::req( $metakey ),
+			'none_title' => $none ?? Settings::showOptionNone(),
+			'none_value' => '',
+		], $extra ) );
+	}
+
+	public static function parseQueryPostMeta( &$query, $metakey )
+	{
+		if ( ! $selected = self::req( $metakey ) )
+			return;
+
+		$meta_query = isset( $query->query_vars['meta_query'] )
+			? $query->query_vars['meta_query']
+			: [];
+
+		$meta_query[] = [
+			'key'     => $metakey,
+			'value'   => $selected,
+			'compare' => '=',
+			'type'    => 'CHAR'
+		];
+
+		$query->set( 'meta_query', $meta_query );
+	}
 }
