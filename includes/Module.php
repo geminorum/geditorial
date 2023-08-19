@@ -683,54 +683,6 @@ class Module extends WordPress\Module
 		return Core\Arraay::stripByKeys( WordPress\Taxonomy::get( 0, $args ), Core\Arraay::prepString( $this->taxonomies_excluded( $exclude_extra ) ) );
 	}
 
-	// allows for filtering the page title
-	// TODO: add compact mode to hide this on user screen setting
-	protected function render_adminpage_header_title( $title = NULL, $links = NULL, $icon = NULL, $context = 'mainpage' )
-	{
-		if ( self::req( 'noheader' ) )
-			return;
-
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'page_title', $context, 'adminpage', NULL );
-
-		if ( is_null( $links ) )
-			$links = $this->get_adminpage_header_links( $context );
-
-		if ( is_null( $icon ) )
-			$icon = $this->module->icon;
-
-		if ( $title )
-			Settings::headerTitle( $title, $links, NULL, $icon );
-	}
-
-	protected function render_adminpage_header_nav( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )
-	{
-		if ( self::req( 'noheader' ) ) {
-			echo '<div class="base-tabs-list -base nav-tab-base">';
-			Core\HTML::tabNav( $sub, $subs );
-		} else {
-			echo $this->wrap_open( $context, $sub );
-			Core\HTML::headerNav( $uri, $sub, $subs );
-		}
-	}
-
-	protected function render_adminpage_signature( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )
-	{
-		if ( ! self::req( 'noheader' ) )
-			$this->settings_signature( $context );
-
-		echo '</div>';
-	}
-
-	// `array` for custom, `NULL` to settings, `FALSE` to disable
-	protected function get_adminpage_header_links( $context = 'mainpage' )
-	{
-		if ( $action = $this->get_string( 'page_action', $context, 'adminpage', NULL ) )
-			return [ $this->get_adminpage_url() => $action ];
-
-		return FALSE;
-	}
-
 	public function settings_posttypes_option()
 	{
 		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
