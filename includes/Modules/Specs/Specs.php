@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Core\Arraay;
 use geminorum\gEditorial\Core\HTML;
@@ -16,6 +17,7 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 
 class Specs extends gEditorial\Module
 {
+	use Internals\PostMeta;
 
 	public $meta_key = '_ge_specs';
 

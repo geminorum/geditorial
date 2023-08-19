@@ -16,6 +16,7 @@ use geminorum\gEditorial\WordPress;
 
 class Meta extends gEditorial\Module
 {
+	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 
 	public $meta_key = '_gmeta';

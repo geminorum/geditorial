@@ -4,10 +4,12 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Estimated extends gEditorial\Module
 {
+	use Internals\PostMeta;
 
 	public $meta_key = '_ge_estimated';
 

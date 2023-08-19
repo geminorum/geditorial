@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 class Series extends gEditorial\Module
 {
 	use Internals\CoreRestrictPosts;
+	use Internals\PostMeta;
 
 	// TODO: use each parent term as a `set`
 

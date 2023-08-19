@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 class Importer extends gEditorial\Module
 {
 	use Internals\CoreToolBox;
+	use Internals\PostMeta;
 	use Internals\RawImports;
 
 	protected $disable_no_posttypes = TRUE;

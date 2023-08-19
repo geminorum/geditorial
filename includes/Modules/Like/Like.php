@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 class Like extends gEditorial\Module
 {
 	use Internals\CoreCookies;
+	use Internals\PostMeta;
 
 	protected $disable_no_posttypes = TRUE;
 

@@ -22,6 +22,7 @@ class Book extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedTools;
+	use Internals\PostMeta;
 	use Internals\PostsToPosts;
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
