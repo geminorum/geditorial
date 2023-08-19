@@ -415,4 +415,15 @@ trait PostTypeFields
 
 		return $list;
 	}
+
+	public function get_postid_by_field( $value, $field, $prefix = NULL )
+	{
+		if ( is_null( $prefix ) )
+			$prefix = 'meta'; // the exception!
+
+		if ( $post_id = WordPress\PostType::getIDbyMeta( $this->get_postmeta_key( $field, $prefix ), $value ) )
+			return intval( $post_id );
+
+		return FALSE;
+	}
 }
