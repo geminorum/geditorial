@@ -18,6 +18,7 @@ use geminorum\gEditorial\WordPress\Taxonomy;
 class Specs extends gEditorial\Module
 {
 	use Internals\PostMeta;
+	use Internals\SettingsFields;
 
 	public $meta_key = '_ge_specs';
 
