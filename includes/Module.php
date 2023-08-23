@@ -12,6 +12,7 @@ class Module extends WordPress\Module
 {
 	use Internals\CorePostTypes;
 	use Internals\CoreTaxonomies;
+	use Internals\SettingsFields;
 	use Internals\SettingsPostTypes;
 	use Internals\SettingsTaxonomies;
 	use Internals\Strings;
@@ -1581,44 +1582,6 @@ class Module extends WordPress\Module
 
 			return array_merge( $messages, [ $posttype => $generated ] );
 		}, 10, 2 );
-	}
-
-	public function get_image_sizes( $posttype )
-	{
-		if ( ! isset( $this->image_sizes[$posttype] ) ) {
-
-			$sizes = $this->filters( $posttype.'_image_sizes', [] );
-
-			if ( FALSE === $sizes ) {
-
-				$this->image_sizes[$posttype] = []; // no sizes
-
-			} else if ( count( $sizes ) ) {
-
-				$this->image_sizes[$posttype] = $sizes; // custom sizes
-
-			} else {
-
-				foreach ( WordPress\Media::defaultImageSizes() as $size => $args )
-					$this->image_sizes[$posttype][$posttype.'-'.$size] = $args;
-			}
-		}
-
-		return $this->image_sizes[$posttype];
-	}
-
-	// use this on 'after_setup_theme'
-	public function register_posttype_thumbnail( $constant )
-	{
-		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
-			return;
-
-		$posttype = $this->constant( $constant );
-
-		WordPress\Media::themeThumbnails( [ $posttype ] );
-
-		foreach ( $this->get_image_sizes( $posttype ) as $name => $size )
-			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
 	// TODO: move to `Internals\PairedRowActions`

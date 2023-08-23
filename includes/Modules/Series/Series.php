@@ -14,7 +14,6 @@ class Series extends gEditorial\Module
 {
 	use Internals\CoreRestrictPosts;
 	use Internals\PostMeta;
-	use Internals\SettingsFields;
 
 	// TODO: use each parent term as a `set`
 

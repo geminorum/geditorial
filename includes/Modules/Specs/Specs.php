@@ -5,20 +5,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\WordPress;
 
 class Specs extends gEditorial\Module
 {
 	use Internals\PostMeta;
-	use Internals\SettingsFields;
 
 	public $meta_key = '_ge_specs';
 
@@ -156,11 +150,11 @@ class Specs extends gEditorial\Module
 	// it will append new specs to the old ones
 	public function set_post_specs( $post_id, $specs, $create = FALSE )
 	{
-		if ( ! $post = Post::get( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return FALSE;
 
-		$meta       = $this->get_postmeta_legacy( $post_id );
-		$spec_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
+		$meta       = $this->get_postmeta_legacy( $post->ID );
+		$spec_terms = WordPress\Taxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
 		$terms      = [];
 
 		foreach ( $meta as $meta_row )
@@ -206,7 +200,7 @@ class Specs extends gEditorial\Module
 				$row['spec_value'] = Helper::kses( $spec['val'], 'text' );
 
 			if ( isset( $spec['order'] ) && ! empty( $spec['order'] ) )
-				$row['spec_order'] = Number::intval( $spec['order'] ) + 100;
+				$row['spec_order'] = Core\Number::intval( $spec['order'] ) + 100;
 
 			else
 				$row['spec_order'] = $counter + 100;
@@ -229,7 +223,7 @@ class Specs extends gEditorial\Module
 			ksort( $meta );
 
 			$this->store_postmeta( $post_id, $meta );
-			wp_set_object_terms( $post_id, Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
+			wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
 
 			return $post_id;
 		}
@@ -252,7 +246,7 @@ class Specs extends gEditorial\Module
 			if ( $term_id && '-1' != $term_id )
 				$terms[$offset] = (int) $term_id;
 
-		wp_set_object_terms( $post_id, Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
+		wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
 
 		foreach ( $terms as $offset => $term ) {
 
@@ -265,7 +259,7 @@ class Specs extends gEditorial\Module
 					case 'spec_order':
 
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
-							$postmeta[$offset][$field] = Number::intval( $_POST[$prefix.$field][$offset] );
+							$postmeta[$offset][$field] = Core\Number::intval( $_POST[$prefix.$field][$offset] );
 
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
 							unset( $postmeta[$offset][$field] );
@@ -311,10 +305,10 @@ class Specs extends gEditorial\Module
 	{
 		$taxonomy = $this->constant( 'specs_tax' );
 
-		if ( ! Taxonomy::hasTerms( $taxonomy ) )
+		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
-		$terms = Taxonomy::getPostTerms( $taxonomy, $post, TRUE, 'term_id' );
+		$terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post, TRUE, 'term_id' );
 		$metas = $this->get_postmeta_legacy( $post->ID );
 
 		$handle = sprintf( '<span data-icon="dashicons" class="-handle dashicons dashicons-move" title="%s"></span>',
@@ -342,7 +336,7 @@ class Specs extends gEditorial\Module
 					if ( ! empty( $meta['spec_value'] ) )
 						$title.= sprintf( ': %s', $meta['spec_value'] );
 
-					echo Text::subStr( $title, 0, 28 );
+					echo Core\Text::subStr( $title, 0, 28 );
 
 				echo '</span>'.$delete;
 			echo '</div><div class="item-body"><div class="field-wrap-group">';
@@ -361,7 +355,7 @@ class Specs extends gEditorial\Module
 				'echo'             => 0,
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap -select' );
+			echo Core\HTML::wrap( $html, 'field-wrap -select' );
 
 			echo '</div></div></li>';
 		}
@@ -393,7 +387,7 @@ class Specs extends gEditorial\Module
 					'echo'             => 0,
 				] );
 
-				echo HTML::wrap( $html, 'field-wrap -select' );
+				echo Core\HTML::wrap( $html, 'field-wrap -select' );
 
 		echo '</div></div></li></ul>';
 	}
@@ -405,14 +399,14 @@ class Specs extends gEditorial\Module
 
 			$title = $this->get_string( $field, $post->post_type );
 
-			$html = HTML::tag( 'textarea', [
+			$html = Core\HTML::tag( 'textarea', [
 				'class'       => 'textarea-autosize',
 				'name'        => 'geditorial-specs-spec_value[]',
 				'title'       => $title,
 				'placeholder' => $title,
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
-			echo HTML::wrap( $html, 'field-wrap -textarea' );
+			echo Core\HTML::wrap( $html, 'field-wrap -textarea' );
 		}
 
 		$field = 'spec_title';
@@ -420,7 +414,7 @@ class Specs extends gEditorial\Module
 
 			$title = $this->get_string( $field, $post->post_type );
 
-			$html = HTML::tag( 'input', [
+			$html = Core\HTML::tag( 'input', [
 				'type'         => 'text',
 				'name'         => 'geditorial-specs-spec_title[]',
 				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
@@ -429,7 +423,7 @@ class Specs extends gEditorial\Module
 				'autocomplete' => 'off',
 			] );
 
-			echo HTML::wrap( $html, 'field-wrap -inputtext' );
+			echo Core\HTML::wrap( $html, 'field-wrap -inputtext' );
 		}
 
 		echo '<input type="hidden" class="item-order" name="geditorial-specs-spec_order[]" value="'.$order.'" />';
@@ -438,7 +432,6 @@ class Specs extends gEditorial\Module
 	public function shortcode_specs( $atts, $content = null, $tag = '' )
 	{
 		global $post;
-		$error = FALSE;
 
 		$args = shortcode_atts( [
 			'slug'      => '',
@@ -463,7 +456,7 @@ class Specs extends gEditorial\Module
 		if ( FALSE === $args['context'] ) // bailing
 			return NULL;
 
-		$the_terms = Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+		$the_terms = WordPress\Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
 		$metas     = $this->get_postmeta_legacy( $post->ID );
 		$html      = '';
 
@@ -528,7 +521,7 @@ class Specs extends gEditorial\Module
 				$output = '<'.$args['title_tag'].' class="post-specs-wrap-title">'.$args['title'].'</'.$args['title_tag'].'>'.$output;
 
 			if ( ! is_null( $args['context'] ) )
-				$output = '<div class="'.HTML::prepClass( 'multiple-specs-'.$args['context'] ).'">'.$output.'</div>';
+				$output = '<div class="'.Core\HTML::prepClass( 'multiple-specs-'.$args['context'] ).'">'.$output.'</div>';
 
 			return $args['before'].$output.$args['after'];
 		}

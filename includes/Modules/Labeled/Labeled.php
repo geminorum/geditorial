@@ -11,10 +11,11 @@ use geminorum\gEditorial\WordPress;
 class Labeled extends gEditorial\Module
 {
 	use Internals\CoreCapabilities;
-	use Internals\CoreMenuPage;
 	use Internals\CoreDashboard;
+	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\PostMeta;
 
 	protected $disable_no_posttypes = TRUE;
 

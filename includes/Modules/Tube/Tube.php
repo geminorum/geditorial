@@ -12,6 +12,7 @@ use geminorum\gEditorial\ShortCode;
 class Tube extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\PostMeta;
 
 	private $_wp_video_shortcode_attr = '';
 

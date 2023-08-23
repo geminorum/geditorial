@@ -67,6 +67,13 @@ trait AdminPage
 
 	public function load_menu_adminpage( $context = 'mainpage' )
 	{
+		$this->_load_menu_adminpage( $context );
+		// $this->enqueue_asset_js( [], $this->dotted( $context ), [ 'jquery', 'wp-api-request' ] );
+		// $this->enqueue_asset_style( $context );
+	}
+
+	protected function _load_menu_adminpage( $context = 'mainpage' )
+	{
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
 		$page    = self::req( 'page', NULL );
@@ -142,6 +149,11 @@ trait AdminPage
 	}
 
 	public function load_submenu_adminpage( $context = 'subpage' )
+	{
+		$this->_load_submenu_adminpage( $context );
+	}
+
+	protected function _load_submenu_adminpage( $context = 'subpage' )
 	{
 		$page = self::req( 'page', NULL );
 		$sub  = self::req( 'sub', NULL );

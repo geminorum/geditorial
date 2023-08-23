@@ -17,6 +17,7 @@ class Venue extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedTools;
+	use Internals\PostMeta;
 
 	public static function module()
 	{

@@ -21,6 +21,7 @@ class Dossier extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedImports;
 	use Internals\PairedTools;
+	use Internals\PostMeta;
 	use Internals\QuickPosts;
 
 	public static function module()

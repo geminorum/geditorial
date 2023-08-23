@@ -25,6 +25,7 @@ class Organization extends gEditorial\Module
 	use Internals\PairedImports; // FIXME: commit the internal
 	use Internals\PairedRest; // FIXME: commit the internal
 	use Internals\PairedTools;
+	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 
 	public static function module()

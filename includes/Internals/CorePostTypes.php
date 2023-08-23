@@ -4,6 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 trait CorePostTypes
@@ -191,5 +193,43 @@ trait CorePostTypes
 	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )
 	{
 		return Helper::getPostTypeLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
+	}
+
+	public function get_image_sizes_for_posttype( $posttype )
+	{
+		if ( ! isset( $this->image_sizes[$posttype] ) ) {
+
+			$sizes = $this->filters( $posttype.'_image_sizes', [] );
+
+			if ( FALSE === $sizes ) {
+
+				$this->image_sizes[$posttype] = []; // no sizes
+
+			} else if ( count( $sizes ) ) {
+
+				$this->image_sizes[$posttype] = $sizes; // custom sizes
+
+			} else {
+
+				foreach ( WordPress\Media::defaultImageSizes() as $size => $args )
+					$this->image_sizes[$posttype][$posttype.'-'.$size] = $args;
+			}
+		}
+
+		return $this->image_sizes[$posttype];
+	}
+
+	// NOTE: use this on `after_setup_theme` hook
+	public function register_posttype_thumbnail( $constant )
+	{
+		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
+			return;
+
+		$posttype = $this->constant( $constant );
+
+		WordPress\Media::themeThumbnails( [ $posttype ] );
+
+		foreach ( $this->get_image_sizes_for_posttype( $posttype ) as $name => $size )
+			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 }

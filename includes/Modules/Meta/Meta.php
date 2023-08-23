@@ -18,7 +18,6 @@ class Meta extends gEditorial\Module
 {
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
-	use Internals\SettingsFields;
 
 	public $meta_key = '_gmeta';
 

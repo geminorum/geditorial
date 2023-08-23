@@ -12,6 +12,7 @@ class Team extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\PostMeta;
 
 	public static function module()
 	{

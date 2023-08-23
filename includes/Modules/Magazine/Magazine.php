@@ -20,6 +20,7 @@ class Magazine extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedTools;
+	use Internals\PostMeta;
 	use Internals\QuickPosts;
 
 	public static function module()
