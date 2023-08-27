@@ -353,7 +353,7 @@ class Archives extends gEditorial\Module
 			$this->_get_default_posttype_content( $this->current_queried ) );
 
 		$form = $this->get_search_form( [ 'post_type[]' => $this->current_queried ] );
-		$html = apply_shortcodes( sprintf( $setting, $this->current_queried ) );
+		$html = WordPress\ShortCode::apply( sprintf( $setting, $this->current_queried ) );
 		$html = $this->filters( 'posttype_archive_content', $html, $this->current_queried );
 
 		return Core\HTML::wrap( $form.$html, '-posttype-archives-content' );
@@ -383,7 +383,7 @@ class Archives extends gEditorial\Module
 		$setting = $this->get_setting( 'taxonomy_'.$this->current_queried.'_content',
 			$this->_get_default_taxonomy_content( $this->current_queried ) );
 
-		$html = apply_shortcodes( sprintf( $setting, $this->current_queried ) );
+		$html = WordPress\ShortCode::apply( sprintf( $setting, $this->current_queried ) );
 		$html = $this->filters( 'taxonomy_archive_content', $html, $this->current_queried );
 
 		return Core\HTML::wrap( $html, '-taxonomy-archives-content' );

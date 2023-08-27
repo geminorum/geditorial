@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\WordPress;
 
 class WCMessage extends gEditorial\Widget
 {
@@ -26,7 +27,7 @@ class WCMessage extends gEditorial\Widget
 		$notice_type = empty( $instance['notice_type'] ) ? 'notice' : $instance['notice_type'];
 
 		if ( ! empty( $instance['shortcodes'] ) )
-			$content = apply_shortcodes( $content );
+			$content = WordPress\ShortCode::apply( $content );
 
 		if ( ! empty( $instance['legacy'] ) )
 			$content = apply_filters( 'widget_text', $content, $instance, $this );

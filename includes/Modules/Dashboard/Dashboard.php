@@ -297,7 +297,7 @@ class Dashboard extends gEditorial\Module
 		$this->actions( 'content_page_home_before', $page );
 
 		if ( $before = $this->get_setting( 'before_content' ) )
-			echo $this->wrap( apply_shortcodes( $before ), '-before' );
+			echo $this->wrap( WordPress\ShortCode::apply( $before ), '-before' );
 
 		if ( $this->get_setting( 'widget_support' ) )
 			dynamic_sidebar( $this->classs() );
@@ -305,7 +305,7 @@ class Dashboard extends gEditorial\Module
 		$this->actions( 'content_page_home_main', $page );
 
 		if ( $after = $this->get_setting( 'after_content' ) )
-			echo $this->wrap( apply_shortcodes( $after ), '-after' );
+			echo $this->wrap( WordPress\ShortCode::apply( $after ), '-after' );
 
 		$this->actions( 'content_page_home_after', $page );
 	}

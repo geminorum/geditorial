@@ -140,7 +140,7 @@ class Entry extends gEditorial\Module
 				function( $content ) use ( $before ) {
 
 					if ( $this->is_content_insert( FALSE ) )
-						echo $this->wrap( apply_shortcodes( $before ), '-before' );
+						echo $this->wrap( WordPress\ShortCode::apply( $before ), '-before' );
 
 				}, 100 );
 
@@ -149,7 +149,7 @@ class Entry extends gEditorial\Module
 				function( $content ) use ( $after ) {
 
 					if ( $this->is_content_insert( FALSE ) )
-						echo $this->wrap( apply_shortcodes( $after ), '-after' );
+						echo $this->wrap( WordPress\ShortCode::apply( $after ), '-after' );
 
 				}, 1 );
 

@@ -12,31 +12,7 @@ class ShortCode extends WordPress\Main
 
 	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [] )
 	{
-		if ( is_null( $html ) )
-			return $html;
-
-		$before = empty( $args['before'] ) ? '' : $args['before'];
-		$after  = empty( $args['after'] )  ? '' : $args['after'];
-
-		if ( empty( $args['wrap'] ) )
-			return $before.$html.$after;
-
-		$classes = [ '-wrap', static::BASE.'-wrap-shortcode' ];
-		$wrap    = TRUE === $args['wrap'] ? ( $block ? 'div' : 'span' ) : $args['wrap'];
-
-		if ( $suffix )
-			$classes[] = 'shortcode-'.$suffix;
-
-		if ( isset( $args['context'] ) && $args['context'] )
-			$classes[] = 'context-'.$args['context'];
-
-		if ( ! empty( $args['class'] ) )
-			$classes = Core\HTML::attrClass( $classes, $args['class'] );
-
-		if ( $after )
-			return $before.Core\HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $html ).$after;
-
-		return Core\HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $before.$html );
+		return WordPress\ShortCode::wrap( $html, $suffix, $args, $block, $extra, static::BASE );
 	}
 
 	// term as title of the list

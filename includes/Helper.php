@@ -232,7 +232,7 @@ class Helper extends WordPress\Main
 			return '';
 
 		if ( $shortcode )
-			$text = apply_shortcodes( $text, TRUE );
+			$text = WordPress\ShortCode::apply( $text, TRUE );
 
 		$text = apply_filters( 'html_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
