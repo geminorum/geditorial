@@ -59,7 +59,7 @@ trait SettingsTaxonomies
 		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
 			Core\HTML::desc( $before );
 
-		echo '<div class="wp-tab-panel"><ul>';
+		echo Settings::tabPanelOpen();
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 

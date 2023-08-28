@@ -1235,7 +1235,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'roles':
 
-				$html.= '<div class="wp-tab-panel"><ul>';
+				$html.= Settings::tabPanelOpen();
 
 				foreach ( $this->get_settings_default_roles() as $role => $name ) {
 
@@ -1267,7 +1267,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'posttypes':
 
-				$html.= '<div class="wp-tab-panel"><ul>';
+				$html.= Settings::tabPanelOpen();
 
 				foreach ( WordPress\PostType::get( 2 ) as $posttype => $name ) {
 

@@ -647,6 +647,7 @@ class Config extends gEditorial\Module
 		do_action( $this->hook_base( 'settings', 'load' ), $module );
 
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', Scripts::pkgListJS() ] );
+		Scripts::enqueueAdminSelectAll();
 	}
 
 	// no settings/only screen options

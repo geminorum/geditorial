@@ -128,6 +128,12 @@ class Scripts extends WordPress\Main
 		return sprintf( '%s%s/print.%s%s.css', $base, $path, $name, Core\HTML::rtl() ? '-rtl' : '' );
 	}
 
+	// TODO: support all kinds of check-boxes!
+	public static function enqueueAdminSelectAll()
+	{
+		return self::enqueue( 'admin.selectall', [ 'jquery' ] );
+	}
+
 	public static function enqueueWordCount()
 	{
 		return self::enqueue( 'all.wordcount', [

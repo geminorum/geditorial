@@ -1958,7 +1958,7 @@ class Settings extends Core\Base
 
 				if ( $args['values'] && count( $args['values'] ) ) {
 
-					echo '<div class="wp-tab-panel"><ul>';
+					echo self::tabPanelOpen();
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
@@ -2451,7 +2451,7 @@ class Settings extends Core\Base
 					break;
 				}
 
-				echo '<div class="wp-tab-panel"><ul>';
+				echo self::tabPanelOpen();
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -2490,7 +2490,7 @@ class Settings extends Core\Base
 					break;
 				}
 
-				echo '<div class="wp-tab-panel"><ul>';
+				echo self::tabPanelOpen();
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -2756,5 +2756,12 @@ class Settings extends Core\Base
 		echo $html;
 
 		return TRUE;
+	}
+
+	// @REF: https://codepen.io/geminorum/pen/RwEPyWJ
+	public static function tabPanelOpen()
+	{
+		return '<div class="wp-tab-panel -with-select-all" data-select-all-label="'
+			.esc_attr_x( 'Select All', 'Settings: Tab Panel', 'geditorial' ).'"><ul>';
 	}
 }

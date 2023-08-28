@@ -542,7 +542,7 @@ class Widget extends \WP_Widget
 		$id   = $this->get_field_id( $field );
 
 		echo '<div class="-label">'._x( 'Taxonomies:', 'Widget Core', 'geditorial' ).'</div>';
-		echo '<div class="wp-tab-panel"><ul>';
+		echo Settings::tabPanelOpen();
 
 		foreach ( WordPress\Taxonomy::get( 0, [], $type ) as $value_name => $value_title ) {
 

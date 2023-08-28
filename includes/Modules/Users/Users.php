@@ -404,7 +404,7 @@ class Users extends gEditorial\Module
 
 			if ( ! empty( $terms ) ) {
 
-				echo '<div class="wp-tab-panel"><ul>';
+				echo Settings::tabPanelOpen();
 
 				foreach ( $terms as $term ) {
 
