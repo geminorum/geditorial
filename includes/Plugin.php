@@ -111,6 +111,7 @@ class Plugin
 
 		Services\AdvancedQueries::setup();
 		Services\Calendars::setup();
+		Services\LateChores::setup();
 		Services\ObjectToObject::setup();
 		Services\Paired::setup();
 		Services\RestAPI::setup();
