@@ -615,7 +615,6 @@ class Terms extends gEditorial\Module
 
 		$supported = $this->get_supported( $taxonomy );
 		$icons     = [
-			'parent',
 			'order',
 			'contact',
 			'image',

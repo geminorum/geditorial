@@ -1055,6 +1055,8 @@ class Settings extends Core\Base
 		echo '<hr class="wp-header-end">';
 	}
 
+	// @SEE: `wp_admin_notice()` @since WP 6.4.0
+	// @SEE: https://core.trac.wordpress.org/ticket/57791
 	public static function message( $messages = NULL )
 	{
 		if ( is_null( $messages ) )

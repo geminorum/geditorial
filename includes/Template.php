@@ -638,19 +638,34 @@ class Template extends WordPress\Main
 			case 'audio':
 
 				// @SEE: https://wordpress.org/documentation/article/audio-shortcode/
-				$html = apply_shortcodes( sprintf( '[audio src="%s" context="%s" /]', $meta, $context ) );
+				// $html = WordPress\ShortCode::apply( sprintf( '[audio src="%s" context="%s" /]', $meta, $context ) );
+				$html = WordPress\ShortCode::tag( 'audio', [
+					'context' => $context,
+					'src'     => $meta,
+				], $meta );
+
 				break;
 
 			case 'video':
 
 				// @SEE: https://wordpress.org/documentation/article/video-shortcode/
-				$html = apply_shortcodes( sprintf( '[video src="%s" context="%s" /]', $meta, $context ) );
+				// $html = WordPress\ShortCode::apply( sprintf( '[video src="%s" context="%s" /]', $meta, $context ) );
+				$html = WordPress\ShortCode::tag( 'video', [
+					'context' => $context,
+					'src'     => $meta,
+				], $meta );
+
 				break;
 
 			case 'image':
 
-				// TODO: pass port title as alt into shortcode
-				$html = apply_shortcodes( sprintf( '[image src="%s" context="%s" /]', $meta, $context ) );
+				// $html = WordPress\ShortCode::apply( sprintf( '[image src="%s" context="%s" /]', $meta, $context ) );
+				$html = WordPress\ShortCode::tag( 'image', [
+					'context' => $context,
+					'src'     => $meta,
+					'alt'     => WordPress\Post::title( $post ),
+				], $meta );
+
 				break;
 		}
 

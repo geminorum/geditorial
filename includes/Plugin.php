@@ -704,6 +704,7 @@ class Plugin
 		return 0;
 	}
 
+	// TODO: move following into Info!
 	public static function na( $wrap = 'code' )
 	{
 		$message = __( 'N/A', 'geditorial' );
@@ -726,5 +727,11 @@ class Plugin
 	{
 		$message = __( 'Wait for a moment &hellip;', 'geditorial' );
 		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-moment' ] ], $message ) : $message;
+	}
+
+	public static function invalid( $wrap = 'p' )
+	{
+		$message = __( 'Invalid data provided!', 'geditorial' );
+		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-invalid' ] ], $message ) : $message;
 	}
 }

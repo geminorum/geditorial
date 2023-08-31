@@ -6,6 +6,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 trait CoreTaxonomies

@@ -19,7 +19,7 @@ class SearchSelect extends WordPress\Main
 
 	public static function namespace()
 	{
-		return sprintf( '%s-select2/v1', static::BASE );
+		return sprintf( '%s-searchselect/v1', static::BASE );
 	}
 
 	public static function rest_api_init()

@@ -31,7 +31,7 @@ class CustomHTML extends gEditorial\Widget
 		}
 
 		if ( ! empty( $instance['shortcodes'] ) )
-			$content = apply_shortcodes( $content );
+			$content = WordPress\ShortCode::apply( $content );
 
 		if ( ! empty( $instance['legacy'] ) )
 			$content = apply_filters( 'widget_text', $content, $instance, $this );
