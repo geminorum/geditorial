@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 
 class Course extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -308,7 +309,7 @@ class Course extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_admin_ordering( $screen->post_type );
+				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'course_cpt' );
 				$this->pairedadmin__hook_tweaks_column_connected();
 				$this->pairedcore__hook_sync_paired();

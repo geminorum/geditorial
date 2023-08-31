@@ -10,6 +10,7 @@ use geminorum\gEditorial\Services;
 
 class Event extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 	use Internals\PostTypeFields;
@@ -309,7 +310,7 @@ class Event extends gEditorial\Module
 
 				} else {
 
-					$this->_hook_admin_ordering( $screen->post_type, 'date' );
+					$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				}
 
 				$this->filter_true( 'disable_months_dropdown', 12 );

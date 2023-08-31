@@ -10,6 +10,7 @@ use geminorum\gEditorial\ShortCode;
 
 class Venue extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -260,6 +261,7 @@ class Venue extends gEditorial\Module
 
 				$this->action_module( 'meta', 'column_row', 3 );
 
+				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'menu_order', 'ASC' );
 				$this->_hook_bulk_post_updated_messages( 'place_cpt' );
 				$this->pairedcore__hook_sync_paired();
 				$this->pairedadmin__hook_tweaks_column_connected();

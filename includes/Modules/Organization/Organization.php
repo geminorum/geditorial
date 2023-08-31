@@ -16,6 +16,7 @@ class Organization extends gEditorial\Module
 {
 	use Internals\AdminPage;
 	use Internals\BulkExports;
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -320,7 +321,7 @@ class Organization extends gEditorial\Module
 
 				$this->action_module( 'meta', 'column_row', 3 );
 
-				$this->_hook_admin_ordering( $screen->post_type );
+				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'menu_order', 'ASC' );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected();
 				$this->pairedcore__hook_sync_paired();

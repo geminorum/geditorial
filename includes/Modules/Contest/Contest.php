@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 
 class Contest extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\PairedAdmin;
@@ -265,7 +266,7 @@ class Contest extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_admin_ordering( $screen->post_type );
+				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'contest_cpt' );
 				$this->pairedcore__hook_sync_paired();
 				$this->pairedadmin__hook_tweaks_column_connected();

@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Entry extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 	use Internals\CoreTemplate;
@@ -229,7 +230,7 @@ class Entry extends gEditorial\Module
 
 				$this->_edit_screen( $screen->post_type );
 
-				$this->_hook_admin_ordering( $screen->post_type );
+				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->corerestrictposts__hook_screen_taxonomies( 'primary_taxonomy' );
 				$this->corerestrictposts__hook_sortby_taxonomies( $screen->post_type, 'primary_taxonomy' );
