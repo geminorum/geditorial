@@ -19,6 +19,7 @@ class Terms extends gEditorial\Module
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
+		'parent',
 		'order',
 		'plural',
 		'overwrite',
@@ -104,6 +105,7 @@ class Terms extends gEditorial\Module
 	{
 		return [
 			'titles' => [
+				'parent'    => _x( 'Parent', 'Titles', 'geditorial-terms' ),
 				'order'     => _x( 'Order', 'Titles', 'geditorial-terms' ),
 				'plural'    => _x( 'Plural', 'Titles', 'geditorial-terms' ),
 				'overwrite' => _x( 'Overwrite', 'Titles', 'geditorial-terms' ),
@@ -134,6 +136,7 @@ class Terms extends gEditorial\Module
 				'viewable'  => _x( 'Viewable', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
+				'parent'    => _x( 'Terms can have parents from another taxonomies.', 'Descriptions', 'geditorial-terms' ),
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
 				'plural'    => _x( 'Defines the plural form of the term.', 'Descriptions', 'geditorial-terms' ),
 				'overwrite' => _x( 'Replaces the term name on front-page display.', 'Descriptions', 'geditorial-terms' ),
@@ -513,7 +516,7 @@ class Terms extends gEditorial\Module
 			$prepare = 'register_prepare_callback_'.$field;
 
 			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
-			if ( in_array( $field, [ 'order', 'author', 'image', 'days', 'hours', 'amount', 'unit', 'min', 'max', 'viewable' ] ) )
+			if ( in_array( $field, [ 'parent', 'order', 'author', 'image', 'days', 'hours', 'amount', 'unit', 'min', 'max', 'viewable' ] ) )
 				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
 
 			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
@@ -607,6 +610,7 @@ class Terms extends gEditorial\Module
 
 		$supported = $this->get_supported( $taxonomy );
 		$icons     = [
+			'parent',
 			'order',
 			'contact',
 			'image',
@@ -869,6 +873,20 @@ class Terms extends gEditorial\Module
 
 				$size = NULL; // maybe filter fo this module?!
 				$html = $this->filters( 'column_image', WordPress\Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
+
+				break;
+
+			case 'parent':
+
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
+
+					$parent = get_term( (int) $meta ); // allows for empty taxonomy
+					$html   = '<span class="field-'.$field.'" data-'.$field.'="'.$meta.'">'.WordPress\Term::title( $parent ).'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '0', $column );
+				}
 
 				break;
 
@@ -1193,6 +1211,7 @@ class Terms extends gEditorial\Module
 
 			break;
 
+			case 'parent': //  must input the term_id, due to diffrent parent taxonomy support!
 			case 'days':
 			case 'hours':
 			case 'amount':
@@ -1419,6 +1438,7 @@ class Terms extends gEditorial\Module
 
 			break;
 
+			case 'parent':
 			case 'days':
 			case 'hours':
 			case 'amount':
@@ -1642,6 +1662,15 @@ class Terms extends gEditorial\Module
 						];
 
 					break;
+					case 'parent':
+
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+							$node['title'].= ': '.WordPress\Term::title( (int) $meta );
+						else
+							$node['title'].= ': '.gEditorial\Plugin::na();
+
+						break;
+
 					case 'author':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
