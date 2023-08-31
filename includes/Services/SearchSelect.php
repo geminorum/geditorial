@@ -110,9 +110,11 @@ class SearchSelect extends WordPress\Main
 	private static function _get_select2_posts( $queried )
 	{
 		$args  = [
-			'post_type'              => $queried['posttype'],
-			'posts_per_page'         => 10,
-			// 'no_found_rows'          => TRUE, // needs for pagination
+			'post_type'      => $queried['posttype'],
+			'posts_per_page' => $queried['per'],
+			'offset'         => ( $queried['page'] - 1 ) * $queried['per'],
+
+			// 'no_found_rows'          => TRUE, // needed for pagination
 			'suppress_filters'       => TRUE,
 			'ignore_sticky_posts'    => TRUE,
 			'update_post_meta_cache' => FALSE,
@@ -127,9 +129,6 @@ class SearchSelect extends WordPress\Main
 
 		if ( ! empty( $queried['exclude'] ) )
 			$args['post__not_in'] = wp_parse_id_list( $queried['exclude'] );
-
-		if ( ! empty( $queried['per'] ) )
-			$args['posts_per_page'] = trim( $queried['per'] );
 
 		if ( ! empty( $queried['status'] ) )
 			$args['post_status'] = trim( $queried['status'] );
