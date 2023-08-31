@@ -109,11 +109,12 @@ class Plugin
 		$this->load_options();
 		$this->init_modules();
 
-		Services\Paired::setup();
-		Services\SearchSelect::setup();
-		Services\ObjectToObject::setup();
 		Services\AdvancedQueries::setup();
 		Services\Calendars::setup();
+		Services\ObjectToObject::setup();
+		Services\Paired::setup();
+		Services\RestAPI::setup();
+		Services\SearchSelect::setup();
 	}
 
 	private function define_constants()
