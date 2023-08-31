@@ -18,6 +18,24 @@ class Info extends WordPress\Main
 		return $ip;
 	}
 
+	// @SEE: https://www.latlong.net/countries.html
+	// @REF: https://stackoverflow.com/a/52943975
+	public static function lookupLatLng( $latlng )
+	{
+		if ( ! $latlng )
+			return '#';
+
+		if ( ! is_array( $latlng ) )
+			$latlng = Core\Geography::extractLatLng( $latlng );
+
+		$url = add_query_arg( [
+			'api'   => '1',
+			'query' => sprintf( '%s,%s', $latlng[0], $latlng[1] ),
+		], 'https://www.google.com/maps/search/' );
+
+		return apply_filters( static::BASE.'_lookup_latlng', $url, $latlng );
+	}
+
 	// https://books.google.com/books?vid=isbn9789646799950
 	// https://www.google.com/search?tbm=bks&q=9786005334395
 	public static function lookupISBN( $isbn )

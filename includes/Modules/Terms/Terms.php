@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
@@ -15,7 +16,7 @@ class Terms extends gEditorial\Module
 {
 
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `LatLng`, `url`, `subtitle`, `phonetic`
+	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `url`, `subtitle`, `phonetic`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
@@ -36,6 +37,7 @@ class Terms extends gEditorial\Module
 		'label',
 		'code',
 		'barcode',
+		'latlng',
 		'date',
 		'datetime',
 		'datestart',
@@ -122,6 +124,7 @@ class Terms extends gEditorial\Module
 				'label'     => _x( 'Label', 'Titles', 'geditorial-terms' ),
 				'code'      => _x( 'Code', 'Titles', 'geditorial-terms' ),
 				'barcode'   => _x( 'Barcode', 'Titles', 'geditorial-terms' ),
+				'latlng'    => _x( 'Lat/Lng', 'Titles', 'geditorial-terms' ),
 				'date'      => _x( 'Date', 'Titles', 'geditorial-terms' ),
 				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-terms' ),
 				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-terms' ),
@@ -153,6 +156,7 @@ class Terms extends gEditorial\Module
 				'label'     => _x( 'Terms can have text label to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'code'      => _x( 'Terms can have text code to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'barcode'   => _x( 'Terms can have barcode to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'latlng'    => _x( 'Terms can have Latitude and Longitude to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'date'      => _x( 'Terms can have date to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'datetime'  => _x( 'Terms can have date-time to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'datestart' => _x( 'Terms can have date-start to help organize them.', 'Descriptions', 'geditorial-terms' ),
@@ -486,6 +490,7 @@ class Terms extends gEditorial\Module
 			case 'posttype':
 			case 'code':
 			case 'barcode':
+			case 'latlng':
 			case 'arrow':
 			case 'viewable':
 
@@ -624,6 +629,7 @@ class Terms extends gEditorial\Module
 			'label',
 			'code',
 			'barcode',
+			'latlng',
 			'date',
 			'datetime',
 			'datestart',
@@ -678,6 +684,7 @@ class Terms extends gEditorial\Module
 			'label',
 			'code',
 			'barcode',
+			'latlng',
 			'date',
 			'datetime',
 			'datestart',
@@ -815,6 +822,22 @@ class Terms extends gEditorial\Module
 
 					$icon = Core\HTML::getDashicon( 'tagcloud', $meta, 'icon-barcode' );
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
+			case 'latlng':
+
+				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
+
+				if ( $meta ) {
+
+					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
+					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, 'icon-latlng' ), Info::lookupLatLng( $meta ), TRUE ).'</span>';
 
 				} else {
 
@@ -1333,6 +1356,7 @@ class Terms extends gEditorial\Module
 
 			case 'code':
 			case 'barcode':
+			case 'latlng':
 			case 'contact':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -1499,6 +1523,7 @@ class Terms extends gEditorial\Module
 
 			case 'code':
 			case 'barcode':
+			case 'latlng':
 			case 'contact':
 
 				$html.= Core\HTML::tag( 'input', [
