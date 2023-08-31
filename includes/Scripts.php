@@ -200,6 +200,29 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
+	/**
+	 * Enqueues and or registers `SheetJS` package.
+	 *
+	 * @link https://cdn.sheetjs.com/
+	 * @link https://git.sheetjs.com/SheetJS/sheetjs
+	 *
+	 * @param  bool   $enqueue
+	 * @param  string $ver
+	 * @return string $handle
+	 */
+	public static function pkgSheetJS( $enqueue = FALSE, $ver = '0.20.0' )
+	{
+		$handle = 'xlsx'; // NOTE: no prefix to use as dep for apps.
+
+		if ( $enqueue )
+			wp_enqueue_script( $handle, GEDITORIAL_URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
+
+		else
+			wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
+
+		return $handle;
+	}
+
 	public static function pkgAutosize( $ver = '6.0.1' )
 	{
 		$handle = static::BASE.'-autosize';
