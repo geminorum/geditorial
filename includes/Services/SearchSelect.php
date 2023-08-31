@@ -114,6 +114,7 @@ class SearchSelect extends WordPress\Main
 			'posts_per_page'         => 10,
 			// 'no_found_rows'          => TRUE, // needs for pagination
 			'suppress_filters'       => TRUE,
+			'ignore_sticky_posts'    => TRUE,
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
 			'update_menu_item_cache' => FALSE,
@@ -136,21 +137,47 @@ class SearchSelect extends WordPress\Main
 		else
 			$args['post_status'] = WordPress\Status::available( $args['post_type'] );
 
-		AdvancedQueries::hookSearchPostTitleOnly();
+		// NOTE: must return single or array of post ids
+		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_posts', static::BASE ), NULL, $args, $queried );
 
-		$query = new \WP_Query();
-		$posts = [];
+		if ( is_wp_error( $pre ) )
+			return $pre;
 
-		foreach ( $query->query( $args ) as $post )
-			$posts[] = (object) [
+		if ( FALSE === $pre )
+			return new \WP_Error( 'something_is_wrong', gEditorial\Plugin::wrong() );
+
+		if ( is_null( $pre ) ) {
+
+			if ( ! empty( $args['s'] ) )
+				AdvancedQueries::hookSearchPostTitleOnly();
+
+			$query = new \WP_Query();
+			$posts = $query->query( $args );
+			$found = $query->found_posts;
+
+		} else if ( is_numeric( $pre ) ) {
+
+			$posts = [ $pre ];
+			$found = 1;
+
+		} else if ( is_array( $pre ) ) {
+
+			$posts = $pre;
+			$found = count( $pre );
+		}
+
+		$results = [];
+
+		foreach ( $posts as $post )
+			$results[] = (object) [
 				'id'   => $post,
 				'text' => WordPress\Post::title( $post ),
 			];
 
 		return [
-			'results'    => $posts,
+			'results'    => $results,
 			'pagination' => [
-				'more' => ( $query->found_posts - $args['posts_per_page'] ) > 0
+				'more' => ( $found - $args['posts_per_page'] ) > 0
 			],
 		];
 	}
@@ -175,12 +202,45 @@ class SearchSelect extends WordPress\Main
 		if ( ! empty( $queried['exclude'] ) )
 			$args['exclude'] = wp_parse_id_list( $queried['exclude'] );
 
-		$query = new \WP_Term_Query();
+		// NOTE: must return single or array of term ids
+		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_terms', static::BASE ), NULL, $args, $queried );
+
+		if ( is_wp_error( $pre ) )
+			return $pre;
+
+		if ( FALSE === $pre )
+			return new \WP_Error( 'something_is_wrong', gEditorial\Plugin::wrong() );
+
+		if ( is_null( $pre ) ) {
+
+			$query   = new \WP_Term_Query();
+			$results = Core\Arraay::toObjectForJS( $query->query( $args ), 'id', 'text' );
+			$found   = $query->found_posts;
+
+		} else if ( is_numeric( $pre ) ) {
+
+			$found   = 1;
+			$results = [ (object) [
+				'id'   => $pre,
+				'text' => WordPress\Term::title( $pre ),
+			] ];
+
+		} else if ( is_array( $pre ) ) {
+
+			$results = [];
+			$found   = count( $pre );
+
+			foreach( $pre as $term )
+				$results[] = (object) [
+					'id'   => $term,
+					'text' => WordPress\Term::title( $term ),
+				];
+		}
 
 		return [
-			'results'    => Core\Arraay::toObjectForJS( $query->query( $args ), 'id', 'text' ),
+			'results'    => $results,
 			'pagination' => [
-				'more' => ( $query->found_posts - $args['number'] ) > 0
+				'more' => ( $found - $args['number'] ) > 0
 			],
 		];
 	}
@@ -215,19 +275,52 @@ class SearchSelect extends WordPress\Main
 		if ( ! empty( $queried['search'] ) )
 			$args['search'] = trim( $queried['search'] );
 
-		$query = new \WP_User_Query( $args );
-		$users = [];
+		// NOTE: must return single or array of user ids
+		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_users', static::BASE ), NULL, $args, $queried );
 
-		foreach ( (array) $query->get_results() as $user )
-			$users[] = (object) [
-				'id'   => $user->ID,
-				'text' => WordPress\User::getTitleRow( $user ),
-			];
+		if ( is_wp_error( $pre ) )
+			return $pre;
+
+		if ( FALSE === $pre )
+			return new \WP_Error( 'something_is_wrong', gEditorial\Plugin::wrong() );
+
+		if ( is_null( $pre ) ) {
+
+			$query   = new \WP_User_Query( $args );
+			$results = [];
+
+			foreach ( (array) $query->get_results() as $user )
+				$results[] = (object) [
+					'id'   => $user->ID,
+					'text' => WordPress\User::getTitleRow( $user ),
+				];
+
+			$found = $query->found_posts;
+
+		} else if ( is_numeric( $pre ) ) {
+
+			$found   = 1;
+			$results = [ (object) [
+				'id'   => $pre,
+				'text' => WordPress\User::getTitleRow( $pre ),
+			] ];
+
+		} else if ( is_array( $pre ) ) {
+
+			$results = [];
+			$found   = count( $pre );
+
+			foreach( $pre as $user )
+				$results[] = (object) [
+					'id'   => $user,
+					'text' => WordPress\User::getTitleRow( $user ),
+				];
+		}
 
 		return [
-			'results'    => $users,
+			'results'    => $results,
 			'pagination' => [
-				'more' => ( $query->found_posts - $args['number'] ) > 0
+				'more' => ( $found - $args['number'] ) > 0
 			],
 		];
 	}
