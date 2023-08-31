@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\WordPress;
 
 trait PairedCore
@@ -320,5 +321,77 @@ trait PairedCore
 			wp_delete_term( $the_term->term_id, $this->constant( $taxonomy_key ) );
 			delete_metadata( 'term', $the_term->term_id, $this->constant( $taxonomy_key ).'_linked' );
 		}
+	}
+
+	/**
+	 * Tries to store/remove paired connections.
+	 * @OLD: `paired_do_store_connection()`
+	 *
+	 * @param  string    $action
+	 * @param  int|array $post_ids
+	 * @param  int|array $paired_ids
+	 * @param  string    $posttype_constant
+	 * @param  string    $paired_constant
+	 * @param  bool      $keep_olds
+	 * @param  null|bool $forced
+	 * @return bool|int|array $connections
+	 */
+	protected function paired_do_connection( $action, $post_ids, $paired_ids, $posttype_constant, $paired_constant, $keep_olds = FALSE, $forced = NULL )
+	{
+		if ( ! in_array( $action, [ 'store', 'remove' ], TRUE ) )
+			return FALSE;
+
+		$forced = $forced ?? $this->get_setting( 'paired_force_parents', FALSE );
+		$terms  = $connections = [];
+
+		foreach ( (array) $paired_ids as $paired_id ) {
+
+			if ( ! $paired_id )
+				continue;
+
+			if ( ! $term = $this->paired_get_to_term( $paired_id, $posttype_constant, $paired_constant ) )
+				continue;
+
+			$terms[] = $term->term_id;
+
+			if ( $forced )
+				$terms = array_merge( WordPress\Taxonomy::getTermParents( $term->term_id, $term->taxonomy ), $terms );
+		}
+
+		$supported = $this->posttypes();
+		$taxonomy  = $this->constant( $paired_constant );
+		$terms     = Core\Arraay::prepNumeral( $terms );
+
+		foreach ( (array) $post_ids as $post_id ) {
+
+			if ( ! $post_id )
+				continue;
+
+			if ( ! $post = WordPress\Post::get( $post_id ) ) {
+				$connections[$post_id] = FALSE;
+				continue;
+			}
+
+			if ( ! in_array( $post->post_type, $supported, TRUE ) ) {
+				$connections[$post_id] = FALSE;
+				continue;
+			}
+
+			if ( 'remove' === $action ) {
+
+				if ( ! $keep_olds || ! count( $terms ) )
+					$result = wp_set_object_terms( $post->ID, NULL, $taxonomy, FALSE );
+				else
+					$result = wp_remove_object_terms( $post->ID, $terms, $taxonomy );
+
+			} else {
+
+				$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, $keep_olds );
+			}
+
+			$connections[$post->ID] = self::isError( $result ) ? FALSE : $result;
+		}
+
+		return is_array( $post_ids ) ? $connections : reset( $connections );
 	}
 }

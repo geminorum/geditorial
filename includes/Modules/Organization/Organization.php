@@ -528,7 +528,7 @@ class Organization extends gEditorial\Module
 						$list[] = $parent;
 
 				if ( count( $list ) )
-					$this->paired_do_store_connection(
+					$this->paired_do_connection( 'store',
 						$post,
 						$list,
 						'primary_posttype',
