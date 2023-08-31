@@ -104,7 +104,7 @@ class SearchSelect extends WordPress\Main
 				return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
 		}
 
-		return new \WP_REST_Response( $response, 200 );
+		return is_wp_error( $response ) ? $response : new \WP_REST_Response( $response, 200 );
 	}
 
 	private static function _get_select2_posts( $queried )
