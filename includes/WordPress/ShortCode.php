@@ -35,7 +35,7 @@ class ShortCode extends Core\Base
 		if ( isset( $shortcode_tags[$shortcode] ) && is_callable( $shortcode_tags[$shortcode] ) )
 			return call_user_func( $shortcode_tags[$shortcode], $atts, $content, $shortcode );
 
-		return FALSE;
+		return $content;
 	}
 
 	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [], $base = '' )

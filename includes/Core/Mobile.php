@@ -92,6 +92,8 @@ class Mobile extends Base
 	{
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
 			return '[0-9۰-۹+]{11,}';
+			// @REF: https://codepen.io/Hi-mohammad/pen/KKGYWQR
+			// return '09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}';
 
 		return '[0-9+]{11,}';
 	}

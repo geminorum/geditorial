@@ -385,6 +385,25 @@ class Arraay extends Base
 	}
 
 	/**
+	 * Retrieves the objects from the list that match the given arguments.
+	 * Key represents property name, and value represents property value.
+	 * NOTE: wrapper for `wp_list_filter()` and `wp_filter_object_list()`
+	 *
+	 * @param  array  $input
+	 * @param  array  $args
+	 * @param  string $operator
+	 * @param  bool   $field
+	 * @return array  $filtred
+	 */
+	public static function filter( $input, $args = [], $operator = 'and', $field = FALSE )
+	{
+		if ( empty( $input ) || ( empty( $args ) && empty( $field ) ) )
+			return $input;
+
+		return wp_filter_object_list( $input, $args, $operator, $field );
+	}
+
+	/**
 	 * Plucks a certain field out of each object or array in an array.
 	 * NOTE: wrapper for `wp_list_pluck()`
 	 *

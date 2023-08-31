@@ -69,6 +69,22 @@ class Database extends Core\Base
 		return $same_key ? Core\Arraay::sameKey( $taxonomies ) : $taxonomies;
 	}
 
+	public static function getPostMetaForDropdown( $metakey, $exclude_statuses = NULL )
+	{
+		global $wpdb;
+
+		$query = $wpdb->prepare( "
+			SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+			LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+			WHERE pm.meta_key = '%s'
+			AND p.post_status NOT IN ( '".implode( "', '", esc_sql( self::getExcludeStatuses( $exclude_statuses ) ) )."' )
+			ORDER BY pm.meta_value",
+			$metakey
+		);
+
+		return $wpdb->get_col( $query );
+	}
+
 	// @REF: https://github.com/scribu/wp-custom-field-taxonomies
 	// FIXME: must limit to selected posttypes
 	public static function getPostMetaRows( $meta_key, $limit = FALSE )
