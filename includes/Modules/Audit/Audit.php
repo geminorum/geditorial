@@ -8,6 +8,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -21,6 +22,8 @@ class Audit extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\CoreRowActions;
 	use Internals\DashboardSummary;
+	use Internals\FramePage;
+	use Internals\ViewEngines;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -62,6 +65,7 @@ class Audit extends gEditorial\Module
 				'count_not',
 			],
 			'_editpost' => [
+				'admin_rowactions',
 				'admin_bulkactions',
 			],
 			'_frontend' => [
@@ -107,6 +111,18 @@ class Audit extends gEditorial\Module
 		$strings['dashboard'] = [
 			'current' => [ 'widget_title' => _x( 'Your Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
 			'all'     => [ 'widget_title' => _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
+		];
+
+		$strings['metabox'] = [
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'rowaction_title' => _x( 'Audit Attributes of %1$s', 'Action Title', 'geditorial-audit' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'rowaction_text'  => _x( 'Audit', 'Action Text', 'geditorial-audit' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'columnrow_title' => _x( 'Audit Attributes of %1$s', 'Row Title', 'geditorial-audit' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'columnrow_text'  => _x( 'Audit', 'Row Text', 'geditorial-audit' ),
 		];
 
 		$strings['default_terms'] = [
@@ -375,8 +391,13 @@ class Audit extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
-					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) ) {
+					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 5 );
+
+					// TODO: fallback to custom tweaks column/hide on tweaks default
+					if ( $this->rowactions__hook_mainlink_for_post( $screen, 20 ) )
+						Scripts::enqueueColorBox();
+				}
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'assign' ) )
 					$this->rowactions__hook_admin_bulkactions( $screen, TRUE );
@@ -386,7 +407,13 @@ class Audit extends gEditorial\Module
 
 	public function admin_menu()
 	{
+		$this->_hook_submenu_adminpage( 'overview' );
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
+	}
+
+	public function render_submenu_adminpage()
+	{
+		$this->render_default_mainpage( 'overview', 'update' );
 	}
 
 	protected function dashboard_widgets()
@@ -400,6 +427,31 @@ class Audit extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	protected function rowaction_get_mainlink_for_post( $post )
+	{
+		return [
+			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
+				'context'      => 'rowaction',
+				'link_context' => 'overview',
+				'maxwidth'     => '920px',
+				'extra'        => [
+					'-audit-overview',
+				]
+			] ),
+		];
+	}
+
+	protected function render_overview_content()
+	{
+		if ( ! $linked = self::req( 'linked' ) )
+			return Info::renderNoPostsAvailable();
+
+		if ( ! $post = WordPress\Post::get( $linked ) )
+			return Info::renderNoPostsAvailable();
+
+		$this->_render_view( $post, 'overview' );
 	}
 
 	public function rowactions_bulk_actions( $actions )
@@ -920,6 +972,49 @@ class Audit extends gEditorial\Module
 	{
 		global $wpdb;
 		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_excerpt, '')) = '') ";
+	}
+
+	private function _render_view( $post, $context )
+	{
+		$part = $this->get_view_part_by_post( $post, $context );
+		$data = $this->_get_view_data( $post, $context );
+
+		echo $this->wrap_open( '-view -'.$part );
+			$this->actions( 'render_view_before', $post, $context, $data, $part );
+			$this->render_view( $part, $data );
+			$this->actions( 'render_view_after', $post, $context, $data, $part );
+		echo '</div>';
+
+		// $this->_print_script( $post, $context, $data );
+
+		echo $this->wrap_open( '-debug -debug-data', TRUE, $this->classs( 'raw' ), TRUE );
+			Core\HTML::tableSide( $data );
+		echo '</div>';
+	}
+
+	private function _get_view_data( $post, $context )
+	{
+		$data = [];
+
+		if ( $post_route = WordPress\Post::getRestRoute( $post ) )
+			$data['post'] = WordPress\Rest::doInternalRequest( $post_route, [ 'context' => 'view' ] );
+
+		// fallback if `title` is not supported by the posttype
+		if ( empty( $data['post']['title'] ) )
+			$data['post']['title'] = [ 'rendered' => WordPress\Post::title( $post ) ];
+
+		if ( $terms_route = WordPress\Taxonomy::getRestRoute( $this->constant( 'main_taxonomy' ) ) )
+			$data['terms'] = WordPress\Rest::doInternalRequest( $terms_route, [ 'post' => $post->ID, 'context' => 'view' ] );
+
+		foreach ( $data['terms'] as &$term ) {
+			unset( $term['_links'] );
+		}
+
+		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
+		// $data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
+
+		return $this->filters( 'view_data', $data, $post, $context );
 	}
 
 	private function _raise_resources( $count = 0 )
