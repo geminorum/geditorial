@@ -141,12 +141,14 @@
       app.inlineSelect('arrow', tag, event);
       app.inlineSelect('viewable', tag, event);
       app.inlineText('label', tag, event);
+      app.inlineText('latlng', tag, event);
       app.inlineCode('code', tag, event);
       app.inlineText('barcode', tag, event);
       app.inlineDate('date', tag, event);
       app.inlineDate('datetime', tag, event);
       app.inlineDate('datestart', tag, event);
       app.inlineDate('dateend', tag, event);
+      app.inlineNumber('parent', tag, event);
       app.inlineNumber('days', tag, event);
       app.inlineNumber('hours', tag, event);
       app.inlineNumber('unit', tag, event);
