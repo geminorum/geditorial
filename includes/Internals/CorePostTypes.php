@@ -195,6 +195,36 @@ trait CorePostTypes
 		return Helper::getPostTypeLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
 	}
 
+	// @REF: `post_type_supports()`
+	protected function is_posttype_support( $posttype, $feature, $fallback = TRUE )
+	{
+		global $_wp_post_type_features;
+
+		if ( empty( $posttype ) || empty( $feature ) )
+			return FALSE;
+
+		$supported = isset( $_wp_post_type_features[$posttype][$feature] )
+			? $_wp_post_type_features[$posttype][$feature]
+			: $fallback;
+
+		return $this->filters( sprintf( 'posttype_%s_supports_%s', $posttype, $feature ),
+			$supported,
+			$posttype,
+			$feature,
+			$fallback
+		);
+	}
+
+	// NOTE: like core but with `FALSE` support
+	// @REF: `add_post_type_support()`
+	protected function add_posttype_support( $posttype, $feature, $args = TRUE )
+	{
+		global $_wp_post_type_features;
+
+		foreach ( (array) $feature as $key )
+			$_wp_post_type_features[$posttype][$key] = $args;
+	}
+
 	public function get_image_sizes_for_posttype( $posttype )
 	{
 		if ( ! isset( $this->image_sizes[$posttype] ) ) {

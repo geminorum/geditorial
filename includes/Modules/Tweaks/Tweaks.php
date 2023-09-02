@@ -355,14 +355,14 @@ class Tweaks extends gEditorial\Module
 		if ( $this->in_setting( $posttype, 'group_taxonomies' ) )
 			add_action( $this->hook( 'column_row' ), [ $this, 'column_row_taxonomies' ] );
 
-		if ( $this->in_setting( $posttype, 'author_attribute' ) && post_type_supports( $posttype, 'author' ) )
+		if ( $this->in_setting( $posttype, 'author_attribute' ) && $this->is_posttype_support( $posttype, 'author' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_author' ], 1 );
 
 		if ( $this->in_setting( $posttype, 'post_status' ) && ! self::req( 'post_status' ) ) // if the view is NOT set
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_status' ], 2 );
 
-		if ( $this->in_setting( $posttype, 'group_attributes' ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_default' ], 3 );
+		if ( $this->in_setting( $posttype, 'group_attributes' ) && $this->is_posttype_support( $posttype, 'date' ) )
+			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_date' ], 3 );
 
 		if ( $this->in_setting( $posttype, 'page_template' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
@@ -370,7 +370,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->in_setting( $posttype, 'slug_attribute' ) && WordPress\PostType::viewable( $posttype ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_slug' ], 50 );
 
-		if ( $this->in_setting( $posttype, 'comment_status' ) && post_type_supports( $posttype, 'comments' ) )
+		if ( $this->in_setting( $posttype, 'comment_status' ) && $this->is_posttype_support( $posttype, 'comments' ) )
 			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
 	}
 
@@ -403,7 +403,7 @@ class Tweaks extends gEditorial\Module
 		}
 
 		if ( $this->in_setting( $posttype, 'post_excerpt' )
-			&& post_type_supports( $posttype, 'excerpt' ) ) {
+			&& $this->is_posttype_support( $posttype, 'excerpt' ) ) {
 
 			// remove_meta_box( 'postexcerpt', $screen, 'normal' );
 
@@ -829,7 +829,7 @@ class Tweaks extends gEditorial\Module
 		echo '</li>';
 	}
 
-	public function column_attr_default( $post )
+	public function column_attr_date( $post )
 	{
 		echo '<li class="-row tweaks-default-atts -post-date">';
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Row Icon Title', 'geditorial-tweaks' ) );
@@ -890,23 +890,23 @@ class Tweaks extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'mainbox', $post, $box );
 
-			if ( post_type_supports( $posttype->name, 'author' ) && current_user_can( $posttype->cap->edit_others_posts ) )
+			if ( $this->is_posttype_support( $posttype->name, 'author' ) && current_user_can( $posttype->cap->edit_others_posts ) )
 				$this->do_mainbox_author( $post, $posttype );
 
 			if ( ! ( 'pending' == get_post_status( $post ) && ! current_user_can( $posttype->cap->publish_posts ) ) )
 				$this->do_mainbox_slug( $post, $posttype );
 
-			if ( post_type_supports( $posttype->name, 'page-attributes' ) )
+			if ( $this->is_posttype_support( $posttype->name, 'page-attributes' ) )
 				$this->do_mainbox_parent( $post, $posttype );
 
 			if ( get_option( 'page_for_posts' ) != $post->ID
 				&& count( get_page_templates( $post ) ) > 0 )
 					$this->do_mainbox_templates( $post, $posttype );
 
-			if ( post_type_supports( $posttype->name, 'page-attributes' ) )
+			if ( $this->is_posttype_support( $posttype->name, 'page-attributes' ) )
 				$this->do_mainbox_menuorder( $post, $posttype );
 
-			if ( post_type_supports( $posttype->name, 'comments' ) )
+			if ( $this->is_posttype_support( $posttype->name, 'comments' ) )
 				$this->do_mainbox_comment_status( $post, $posttype );
 
 			do_action( 'page_attributes_misc_attributes', $post );
