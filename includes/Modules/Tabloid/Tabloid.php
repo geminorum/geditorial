@@ -156,6 +156,8 @@ class Tabloid extends gEditorial\Module
 			$this->actions( 'render_view_after', $post, $context, $data, $part );
 		echo '</div>';
 
+		$data = $this->_cleanup_view_data( $post, $context, $data );
+
 		$this->_print_script( $post, $context, $data );
 
 		echo $this->wrap_open( '-debug -debug-data', TRUE, $this->classs( 'raw' ), TRUE );
@@ -165,12 +167,6 @@ class Tabloid extends gEditorial\Module
 
 	private function _print_script( $post, $context, $data )
 	{
-		unset( $data['__direction'] );
-		unset( $data['__can_debug'] );
-		unset( $data['__can_print'] );
-		unset( $data['__can_export'] );
-		unset( $data['_links'] );
-
 		Core\HTML::wrapScript( sprintf( 'window.%s = %s;', $this->hook( 'data' ), wp_json_encode( $data, JSON_UNESCAPED_UNICODE ) ) );
 
 		$this->enqueue_asset_js( [
@@ -238,5 +234,21 @@ class Tabloid extends gEditorial\Module
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 
 		return $this->filters( 'view_data', $data, $post, $context );
+	}
+
+	private function _cleanup_view_data( $post, $context, $data )
+	{
+		unset( $data['meta_rendered'] );
+		unset( $data['terms_rendered'] );
+
+		unset( $data['_links'] );
+
+		unset( $data['__summaries'] );
+		unset( $data['__direction'] );
+		unset( $data['__can_debug'] );
+		unset( $data['__can_print'] );
+		unset( $data['__can_export'] );
+
+		return $this->filters( 'cleanup_view_data', $data, $post, $context );
 	}
 }
