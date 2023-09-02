@@ -147,8 +147,8 @@ class Tabloid extends gEditorial\Module
 
 	private function _render_view( $post, $context )
 	{
+		$part = $this->get_view_part_by_post( $post, $context );
 		$data = $this->_get_view_data( $post, $context );
-		$part = $this->_get_view_part( $post, $context );
 
 		echo $this->wrap_open( '-view -'.$part );
 			$this->actions( 'render_view_before', $post, $context, $data, $part );
@@ -178,16 +178,6 @@ class Tabloid extends gEditorial\Module
 			'jquery',
 			Scripts::pkgPrintThis(),
 		] );
-	}
-
-	private function _get_view_part( $post, $context )
-	{
-		$part = sprintf( '%s-type-%s', $context, $post->post_type );
-
-		if ( ! is_readable( $this->get_view_path( $part ) ) )
-			$part = sprintf( '%s-type-default', $context );
-
-		return $this->filters( 'view_part', $part, $post, $context );
 	}
 
 	private function _get_view_data( $post, $context )

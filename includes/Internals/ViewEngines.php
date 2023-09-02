@@ -1,5 +1,8 @@
 <?php namespace geminorum\gEditorial\Internals;
 
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
+
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 trait ViewEngines
@@ -63,6 +66,32 @@ trait ViewEngines
 		}
 
 		return new \Mustache_Engine( $args );
+	}
+
+	protected function get_view_part_by_post( $post, $context, $default = 'default' )
+	{
+		$part = $fallback = sprintf( '%s-type-%s', $context, $default );
+
+		if ( $post = WordPress\Post::get( $post ) )
+			$part = sprintf( '%s-type-%s', $context, $post->post_type );
+
+		if ( ! is_readable( $this->get_view_path( $part ) ) )
+			$part = $fallback;
+
+		return $this->filters( 'view_part_by_post', $part, $post, $context, $fallback );
+	}
+
+	protected function get_view_part_by_term( $term, $context, $default = 'default' )
+	{
+		$part = $fallback = sprintf( '%s-tax-%s', $context, $default );
+
+		if ( $term = WordPress\Term::get( $term ) )
+			$part = sprintf( '%s-tax-%s', $context, $term->taxonomy );
+
+		if ( ! is_readable( $this->get_view_path( $part ) ) )
+			$part = $fallback;
+
+		return $this->filters( 'view_part_by_term', $part, $term, $context, $fallback );
 	}
 
 	protected function get_view_path( $part = FALSE, $path = NULL )
