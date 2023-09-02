@@ -117,6 +117,8 @@ class Plugin
 		Services\Paired::setup();
 		Services\RestAPI::setup();
 		Services\SearchSelect::setup();
+
+		// \TenUp\ContentConnect\Plugin::instance();
 	}
 
 	private function define_constants()

@@ -39,7 +39,7 @@ trait SettingsTaxonomies
 			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
 				_x( 'Enable for Taxonomies', 'Module', 'geditorial' ) );
 
-		$option = $this->base.'_'.$this->module->name;
+		$option = $this->hook_base( $this->module->name );
 
 		Settings::addModuleSection( $option, [
 			'id'            => $option.'_taxonomies',
@@ -67,7 +67,7 @@ trait SettingsTaxonomies
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'tax-'.$taxonomy,
-				'name'    => $this->base.'_'.$this->module->name.'[taxonomies]['.$taxonomy.']',
+				'name'    => $this->hook_base( $this->module->name ).'[taxonomies]['.$taxonomy.']',
 				'checked' => ! empty( $this->options->taxonomies[$taxonomy] ),
 			] );
 

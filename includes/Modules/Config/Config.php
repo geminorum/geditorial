@@ -707,7 +707,8 @@ class Config extends gEditorial\Module
 		if ( ! $this->nonce_verify( 'settings', NULL, $module->name ) )
 			self::cheatin();
 
-		$posted  = empty( $_POST[$this->base.'_'.$module->name] ) ? [] : $_POST[$this->base.'_'.$module->name];
+		$option  = $this->hook_base( $module->name );
+		$posted  = empty( $_POST[$option] ) ? [] : $_POST[$option];
 		$options = gEditorial()->module( $module->name )->settings_validate( $posted );
 
 		$options['enabled'] = TRUE;

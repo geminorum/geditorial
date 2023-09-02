@@ -11,6 +11,7 @@ use geminorum\gEditorial\Settings;
 class StaticCovers extends gEditorial\Module
 {
 
+	// TODO: support for users / override avatars
 	// TODO: audit for empty posttypes: see iranian module
 	// TODO: import into media library by bulk or each
 	// TODO: cap checks/based on parent posttype

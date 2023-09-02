@@ -74,7 +74,7 @@ trait PairedCore
 		).$after;
 
 		$average = apply_filters(
-			sprintf( '%s_%s_%s', $this->base, 'was_born', 'mean_age' ),
+			$this->hook_base( 'was_born', 'mean_age' ),
 			NULL,
 			$post,
 			$connected,

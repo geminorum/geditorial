@@ -166,6 +166,8 @@ class Wysiwyg extends gEditorial\Module
 
 			Core\HTML::wrapScript( 'jQuery("textarea#tag-description").closest(".form-field").remove();' );
 
+			// FIXME: WTF: `geditorial_wysiwyg_add_term`
+
 			$ready = <<<'JS'
 $("#addtag").on("mousedown","#submit",function(){
 	tinyMCE.triggerSave();
@@ -174,6 +176,7 @@ $("#addtag").on("mousedown","#submit",function(){
 			tinyMCE.activeEditor.setContent("");
 		}
 		$(document).off("ajaxSuccess.geditorial_wysiwyg_add_term",false);
+		console.log('here!!');
 	});
 });
 JS;

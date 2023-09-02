@@ -24,7 +24,7 @@ trait SettingsFields
 
 			if ( count( $fields ) ) {
 
-				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
+				Settings::addModuleSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'section_class' => 'fields_option_section fields_option-'.$posttype,
@@ -64,7 +64,7 @@ trait SettingsFields
 
 			} else if ( isset( $all[$posttype] ) ) {
 
-				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
+				Settings::addModuleSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'callback'      => [ $this, 'settings_fields_option_none' ],
@@ -94,8 +94,8 @@ trait SettingsFields
 
 	public function settings_fields_option( $args )
 	{
-		$name  = $this->base.'_'.$this->module->name.'[fields]['.$args['post_type'].']['.$args['field'].']';
-		$id    = $this->base.'_'.$this->module->name.'-fields-'.$args['post_type'].'-'.$args['field'];
+		$name  = $this->hook_base( $this->module->name ).'[fields]['.$args['post_type'].']['.$args['field'].']';
+		$id    = $this->hook_base( $this->module->name ).'-fields-'.$args['post_type'].'-'.$args['field'];
 		$value = $this->get_settings_fields_option_val( $args );
 
 		$html = Core\HTML::tag( 'input', [

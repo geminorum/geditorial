@@ -201,6 +201,7 @@ class Organization extends gEditorial\Module
 					'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),
 					'type'        => 'code',
 					'quickedit'   => TRUE,
+					'icon'        => 'nametag',
 					'order'       => 100,
 				],
 			],

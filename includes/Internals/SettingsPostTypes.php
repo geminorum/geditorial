@@ -11,7 +11,7 @@ trait SettingsPostTypes
 
 	/**
 	 * Retrieves settings option for the target posttypes.
-	 * NOTE: common targets: `subcontent`, `parent`, `directed`
+	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *
 	 * @param  string $target
 	 * @param  array  $fallback
@@ -24,7 +24,7 @@ trait SettingsPostTypes
 
 	/**
 	 * Checks if posttype is in settings option for the target posttypes.
-	 * NOTE: common targets: `subcontent`, `parent`, `directed`
+	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *
 	 * @param  string $posttype
 	 * @param  string $target
@@ -42,7 +42,7 @@ trait SettingsPostTypes
 			$title = $this->get_string( 'post_types_title', 'post', 'settings',
 				_x( 'Enable for Post Types', 'Module', 'geditorial' ) );
 
-		$option = $this->base.'_'.$this->module->name;
+		$option = $this->hook_base( $this->module->name );
 
 		Settings::addModuleSection( $option, [
 			'id'            => $option.'_posttypes',
@@ -70,7 +70,7 @@ trait SettingsPostTypes
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
 				'id'      => 'type-'.$posttype,
-				'name'    => $this->base.'_'.$this->module->name.'[post_types]['.$posttype.']',
+				'name'    => $this->hook_base( $this->module->name ).'[post_types]['.$posttype.']',
 				'checked' => ! empty( $this->options->post_types[$posttype] ),
 			] );
 
