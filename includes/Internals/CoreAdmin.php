@@ -41,4 +41,26 @@ trait CoreAdmin
 
 		return TRUE;
 	}
+
+	/**
+	 * Hooks filter to unset given columns.
+	 *
+	 * @param  string     $posttype
+	 * @param  null|array $list
+	 * @return bool       $hooked
+	 */
+	protected function coreadmin__unset_columns( $posttype, $list = NULL )
+	{
+		if ( is_null( $list ) )
+			$list = [
+				'author',
+			];
+
+		add_filter( sprintf( 'manage_%s_posts_columns', $posttype ),
+			static function ( $columns ) use ( $list ) {
+				return Core\Arraay::stripByKeys( $columns, (array) $list );
+			} );
+
+		return TRUE;
+	}
 }
