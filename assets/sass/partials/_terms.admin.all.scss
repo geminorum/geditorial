@@ -27,6 +27,7 @@ body.geditorial-terms-enabled {
   @include plugin-listtable-column-icon("label", "\f323", "column-geditorial-terms");
   @include plugin-listtable-column-icon("color", "\f131", "column-geditorial-terms");
   @include plugin-listtable-column-icon("author", "\f110", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("latlng", "\f11f", "column-geditorial-terms"); // `dashicons-admin-site-alt3`
 
   .wp-list-table.tags {
     .column-slug {
@@ -90,11 +91,16 @@ body.geditorial-terms-enabled {
       width: 50px;
     }
 
+    .column-geditorial-terms-latlng,
     .column-geditorial-terms-contact,
     .column-geditorial-terms-barcode,
     .column-geditorial-terms-arrow,
     .column-geditorial-terms-viewable {
       width: 22px;
+
+      a:not(:hover) {
+        color: inherit;
+      }
     }
 
     td.column-geditorial-terms-viewable,
