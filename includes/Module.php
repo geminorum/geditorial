@@ -1593,9 +1593,7 @@ class Module extends WordPress\Module
 		if ( TRUE !== $posttype_orogin && ! $this->posttype_supported( $posttype_orogin ) )
 			return FALSE;
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		$paired_posttype = $this->constant( $constants[0] );
@@ -1649,9 +1647,7 @@ class Module extends WordPress\Module
 		if ( ! $this->_paired )
 			return FALSE;
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		$paired_posttype = $this->constant( $constants[0] );
@@ -1831,9 +1827,7 @@ class Module extends WordPress\Module
 		if ( ! $this->get_setting( 'subterms_support' ) )
 			return FALSE;
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[2] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		add_action( 'pre_get_posts', function( &$wp_query ) use ( $constants ) {
@@ -1863,9 +1857,7 @@ class Module extends WordPress\Module
 	// TODO: move to `Internals\PairedFront`
 	protected function _hook_paired_override_term_link()
 	{
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		add_filter( 'term_link', function( $link, $term, $taxonomy ) use ( $constants ) {
@@ -2151,9 +2143,7 @@ class Module extends WordPress\Module
 		if ( ! $terms = $this->get_setting( 'paired_exclude_terms' ) )
 			return [];
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[3] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return [];
 
 		$args = [
@@ -2464,9 +2454,7 @@ class Module extends WordPress\Module
 		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		if ( is_null( $context ) )
@@ -2555,9 +2543,7 @@ class Module extends WordPress\Module
 		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		if ( is_null( $context ) )
@@ -2643,13 +2629,8 @@ class Module extends WordPress\Module
 		if ( ! $this->_paired )
 			return FALSE;
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
-
-		if ( empty( $constants[2] ) )
-			$constants[2] = FALSE;
 
 		if ( is_null( $context ) )
 			$context = 'pairedbox';
@@ -2741,15 +2722,10 @@ class Module extends WordPress\Module
 	protected function _hook_paired_store_metabox( $posttype )
 	{
 		if ( ! $this->_paired )
-			return;
-
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
 			return FALSE;
 
-		if ( empty( $constants[2] ) )
-			$constants[2] = FALSE;
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
 
 		add_action( sprintf( 'save_post_%s', $posttype ), function( $post_id, $post, $update ) use ( $constants ) {
 
@@ -2759,6 +2735,8 @@ class Module extends WordPress\Module
 			$this->paired_do_store_metabox( $post, $constants[0], $constants[1], $constants[2] );
 
 		}, 20, 3 );
+
+		return TRUE;
 	}
 
 	// OLD: `do_store_metabox_assoc()`
@@ -3155,17 +3133,6 @@ class Module extends WordPress\Module
 			return FALSE;
 
 		return $single ? reset( $posts ) : $posts;
-	}
-
-	// TODO: move to `Internals\PairedCore`
-	protected function paired_get_paired_constants()
-	{
-		return [
-			FALSE, // posttype: `primary_posttype`
-			FALSE, // taxonomy: `primary_paired`
-			FALSE, // subterm:  `primary_subterm`
-			FALSE, // exclude:  `primary_taxonomy`
-		];
 	}
 
 	// NOTE: cannot use 'wp_insert_post_data' filter

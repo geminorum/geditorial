@@ -9,10 +9,24 @@ use geminorum\gEditorial\WordPress;
 trait PairedCore
 {
 
-	// NOTE: `paired_get_paired_constants()` with checks
+	// EXAMPLE CALLBACK
+	// protected function paired_get_paired_constants()
+	// {
+	// 	return [
+	// 		FALSE, // posttype: `primary_posttype`
+	// 		FALSE, // taxonomy: `primary_paired`
+	// 		FALSE, // subterm:  `primary_subterm`
+	// 		FALSE, // exclude:  `primary_taxonomy`
+	// 	];
+	// }
+
+	// wraps `paired_get_paired_constants()` with checks
 	// NOTE: not checking for `$this->_paired` for maybe before `init`
 	protected function paired_get_constants()
 	{
+		if ( ! method_exists( $this, 'paired_get_paired_constants' ) )
+			return FALSE;
+
 		$constants = $this->paired_get_paired_constants();
 
 		if ( empty( $constants[0] ) || empty( $constants[1] ) )

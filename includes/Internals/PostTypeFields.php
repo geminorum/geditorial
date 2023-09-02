@@ -392,9 +392,7 @@ trait PostTypeFields
 		if ( ! $this->_paired )
 			return FALSE;
 
-		$constants = $this->paired_get_paired_constants();
-
-		if ( empty( $constants[0] ) || empty( $constants[1] ) )
+		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
 		$values = Helper::getSeparated( $data );

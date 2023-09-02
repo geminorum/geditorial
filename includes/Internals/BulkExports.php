@@ -129,9 +129,7 @@ trait BulkExports
 
 			case 'paired':
 
-				$constants = $this->paired_get_paired_constants();
-
-				if ( empty( $constants[0] ) || empty( $constants[1] ) )
+				if ( ! $constants = $this->paired_get_constants() )
 					return FALSE;
 
 				if ( ! $posttypes = $this->posttypes() )
