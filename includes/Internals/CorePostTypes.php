@@ -225,6 +225,32 @@ trait CorePostTypes
 			$_wp_post_type_features[$posttype][$key] = $args;
 	}
 
+	public function is_post_viewable( $post = NULL )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), $post );
+	}
+
+	// NOTE: only applies if the setting is `disabled`
+	protected function _hook_posttype_viewable( $posttype, $default = TRUE, $setting = 'posttype_viewable' )
+	{
+		if ( $this->get_setting( $setting, $default ) )
+			return;
+
+		add_filter( 'is_post_type_viewable',
+			function ( $is_viewable, $object ) use ( $posttype ) {
+				return $object->name === $posttype ? FALSE : $is_viewable;
+			}, 2, 9 );
+
+		// NOTE: makes Tabloid links visible for non-viewable post-types
+		add_filter( $this->hook_base( 'tabloid', 'is_post_viewable' ),
+			function ( $viewable, $post ) use ( $posttype ) {
+				return $post->post_type === $posttype ? TRUE : $viewable;
+			}, 12, 2 );
+	}
+
 	public function get_image_sizes_for_posttype( $posttype )
 	{
 		if ( ! isset( $this->image_sizes[$posttype] ) ) {

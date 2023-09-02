@@ -65,6 +65,7 @@ class Organization extends gEditorial\Module
 				'assign_default_term',
 			],
 			'_frontend' => [
+				'posttype_viewable',
 				[
 					'field'       => 'redirect_archives',
 					'type'        => 'url',
@@ -285,6 +286,8 @@ class Organization extends gEditorial\Module
 
 		if ( $this->get_setting( 'subterms_support' ) )
 			$this->register_shortcode( 'subterm_shortcode' );
+
+		$this->_hook_posttype_viewable( $this->constant( 'primary_posttype' ) );
 
 		if ( is_admin() )
 			return;

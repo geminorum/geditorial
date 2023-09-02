@@ -89,6 +89,12 @@ class Tabloid extends gEditorial\Module
 		$this->_hook_submenu_adminpage( 'overview' );
 	}
 
+	public function load_overview_adminpage( $context = 'overview' )
+	{
+		$this->_load_submenu_adminpage( $context );
+		$this->_make_linked_viewable();
+	}
+
 	public function render_submenu_adminpage()
 	{
 		$this->render_default_mainpage( 'overview', 'update' );
@@ -132,6 +138,23 @@ class Tabloid extends gEditorial\Module
 				'-tabloid-overview',
 			]
 		] );
+	}
+
+	private function _make_linked_viewable()
+	{
+		if ( ! $linked = self::req( 'linked' ) )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( $linked ) )
+			return FALSE;
+
+		if ( ! current_user_can( 'read', $post->ID ) )
+			return FALSE;
+
+		add_filter( 'is_post_type_viewable',
+			function ( $is_viewable, $posttype ) use ( $post ) {
+				return $posttype->name === $post->post_type ? TRUE : $is_viewable;
+			}, 2, 99 );
 	}
 
 	protected function render_overview_content()
@@ -185,7 +208,7 @@ class Tabloid extends gEditorial\Module
 		$data = [];
 
 		if ( $route = WordPress\Post::getRestRoute( $post ) )
-			$data = WordPress\Rest::doInternalRequest( $route, [ 'context' => 'edit' ] );
+			$data = WordPress\Rest::doInternalRequest( $route, [ 'context' => 'view' ] );
 
 		// fallback if `title` is not supported by the posttype
 		if ( empty( $data['title'] ) )

@@ -840,6 +840,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_posttype_viewable( $description = NULL, $default = 1 )
+	{
+		return [
+			'field'       => 'posttype_viewable',
+			'title'       => _x( 'Viewable Post-Type', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Determines the visibility of the main post-type.', 'Settings: Setting Description', 'geditorial' ),
+			'default'     => $default,
+		];
+	}
+
 	public static function getSetting_calendar_type( $description = NULL )
 	{
 		return [

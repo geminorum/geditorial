@@ -522,14 +522,6 @@ class Module extends WordPress\Module
 		return in_array( $key, $array, TRUE );
 	}
 
-	public function is_post_viewable( $post = NULL )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), $post );
-	}
-
 	protected function settings_supports_option( $constant, $defaults = TRUE, $excludes = NULL )
 	{
 		$supports = $this->filters( $constant.'_supports', Settings::supportsOptions() );
