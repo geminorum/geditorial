@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Ranked\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Ranked\n"
+"X-Domain: geditorial-ranked\n"
+
+#: Ranked.php:59
+msgid "Ranking Definition"
+msgid_plural "Ranking Definitions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranked.php:67
+msgctxt "Dashboard Widget Title"
+msgid "Your Ranking Summary"
+msgstr ""
+
+#: Ranked.php:68
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Ranking Summary"
+msgstr ""
+
+#: Ranked.php:73
+msgctxt "Default Term"
+msgid "Publisher"
+msgstr ""
+
+#: Ranked.php:74
+msgctxt "Default Term"
+msgid "Editor in Chief"
+msgstr ""
+
+#: Ranked.php:75
+msgctxt "Default Term"
+msgid "Editorial Director"
+msgstr ""
+
+#: Ranked.php:76
+msgctxt "Default Term"
+msgid "Managing Editor"
+msgstr ""
+
+#: Ranked.php:77
+msgctxt "Default Term"
+msgid "Senior Editor"
+msgstr ""
+
+#: Ranked.php:78
+msgctxt "Default Term"
+msgid "Digital Producer"
+msgstr ""
+
+#: Ranked.php:79
+msgctxt "Default Term"
+msgid "Copy Editor"
+msgstr ""
+
+#: Ranked.php:80
+msgctxt "Default Term"
+msgid "Proofreader"
+msgstr ""
+
+#: Ranked.php:81
+msgctxt "Default Term"
+msgid "Executive"
+msgstr ""
