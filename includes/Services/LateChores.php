@@ -31,8 +31,15 @@ class LateChores extends WordPress\Main
 	// collecting changed terms
 	public static function termCountCollect()
 	{
+		static $hooked = NULL;
+
+		if ( ! is_null( $hooked ) )
+			return $hooked;
+
 		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms' ], 20, 6 );
 		add_action( 'deleted_term_relationships', [ __CLASS__, 'deleted_term_relationships' ], 20, 3 );
+
+		$hooked = TRUE;
 	}
 
 	public static function set_object_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids )
