@@ -1,0 +1,146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Iranian\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Iranian\n"
+"X-Domain: geditorial-iranian\n"
+
+#. translators: %s: supported object label
+#: Iranian.php:51
+msgctxt "Setting Title"
+msgid "Identity Meta-key for %s"
+msgstr ""
+
+#: Iranian.php:52
+msgctxt "Setting Description"
+msgid "Defines identity meta-key for the post-type."
+msgstr ""
+
+#. translators: %s: supported object label
+#: Iranian.php:63
+msgctxt "Setting Title"
+msgid "Location Meta-key for %s"
+msgstr ""
+
+#: Iranian.php:64
+msgctxt "Setting Description"
+msgid "Defines location meta-key for the post-type."
+msgstr ""
+
+#: Iranian.php:94
+msgctxt "Settings Description"
+msgid "Supports meta fields for the selected post-types."
+msgstr ""
+
+#: Iranian.php:105
+msgctxt "Field Title"
+msgid "Birth Certificate"
+msgstr ""
+
+#: Iranian.php:106
+msgctxt "Field Description"
+msgid "Iranian Birth Certificate Number"
+msgstr ""
+
+#: Iranian.php:130
+msgctxt "RestAPI: Arg Description"
+msgid "The National Code to process."
+msgstr ""
+
+#: Iranian.php:238
+msgctxt "Imports: Header"
+msgid "Iranian Imports"
+msgstr ""
+
+#: Iranian.php:254
+msgctxt "Card Title"
+msgid "Location by Identity"
+msgstr ""
+
+#. translators: %s: posttype label
+#: Iranian.php:266
+msgctxt "Imports: Button"
+msgid "Sync Location for %s"
+msgstr ""
+
+#: Iranian.php:269
+msgctxt "Imports: Button Description"
+msgid "Tries to set the location based on identity data."
+msgstr ""
+
+#. translators: %s: identity code
+#: Iranian.php:337
+msgctxt "Notice"
+msgid "No location data available for %s"
+msgstr ""
+
+#. translators: %s: identity code
+#: Iranian.php:343
+msgctxt "Notice"
+msgid "No city data available for %s"
+msgstr ""
+
+#. translators: %1$s: city data, %2$s: identity code
+#: Iranian.php:349
+msgctxt "Notice"
+msgid "City data is empty for %1$s: %2$s"
+msgstr ""
+
+#. translators: %s: post title
+#: Iranian.php:355
+msgctxt "Notice"
+msgid "There is problem updating location for &ldquo;%s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: city data, %2$s: identity code, %3$s: post title
+#: Iranian.php:361
+msgctxt "Notice"
+msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;"
+msgstr ""
+
+#: Iranian.php:379
+msgctxt "Tools: Header"
+msgid "Iranian Tools"
+msgstr ""
+
+#: Iranian.php:405
+msgctxt "Card Title"
+msgid "Compare Identity to Birth Certificate"
+msgstr ""
+
+#. translators: %s: posttype label
+#: Iranian.php:417
+msgctxt "Tools: Button"
+msgid "Compare Identity for %s"
+msgstr ""
+
+#: Iranian.php:420
+msgctxt "Tools: Button Description"
+msgid "Tries to un-set the certificate duplicated from identity data."
+msgstr ""
+
+#. translators: %1$s: identity code, %2$s: birth certificate number
+#: Iranian.php:486
+msgctxt "Notice"
+msgid "Identiry (%1$s) and Birth Certificate Number (%2$s) are diffrent"
+msgstr ""
+
+#. translators: %s: post title
+#: Iranian.php:492
+msgctxt "Notice"
+msgid "There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: birth certificate number, %2$s: post title
+#: Iranian.php:498
+msgctxt "Notice"
+msgid "Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;"
+msgstr ""
