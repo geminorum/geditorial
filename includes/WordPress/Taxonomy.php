@@ -1116,6 +1116,23 @@ class Taxonomy extends Core\Base
 		return apply_filters( 'geditorial_taxonomy_target_taxonomies', $targets ?: $fallback, $taxonomy, $fallback );
 	}
 
+	/**
+	 * Retrieves taxonomy rest route given taxonomy name or object.
+	 *
+	 * @param  string       $taxonomy
+	 * @return false|string $route
+	 */
+	public static function getRestRoute( $taxonomy )
+	{
+		if ( ! $object = self::object( $taxonomy ) )
+			return FALSE;
+
+		if ( ! $object->show_in_rest )
+			return FALSE;
+
+		return sprintf( '/%s/%s', $object->rest_namespace, $object->rest_base );
+	}
+
 	public static function disableTermCounting()
 	{
 		wp_defer_term_counting( TRUE );

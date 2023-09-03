@@ -287,4 +287,25 @@ class Term extends Core\Base
 
 		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
 	}
+
+	/**
+	 * Retrieves term rest route given a term ID or term object.
+	 *
+	 * @param  int|object   $term_or_id
+	 * @param  string       $taxonomy
+	 * @return false|string $route
+	 */
+	public static function getRestRoute( $term_or_id, $taxonomy = '' )
+	{
+		if ( ! $term = self::get( $term_or_id, $taxonomy ) )
+			return FALSE;
+
+		if ( ! $object = Taxonomy::object( $term ) )
+			return FALSE;
+
+		if ( ! $object->show_in_rest )
+			return FALSE;
+
+		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $term->_term_id );
+	}
 }

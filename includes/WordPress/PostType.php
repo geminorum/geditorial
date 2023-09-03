@@ -479,16 +479,14 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
-	// like WP core but returns the actual array!
-	// @REF: `post_type_supports()`
-	public static function supports( $posttype, $feature )
+	public static function supports( $posttype, $feature, $fallback = [] )
 	{
 		$all = get_all_post_type_supports( $posttype );
 
 		if ( isset( $all[$feature][0] ) && is_array( $all[$feature][0] ) )
 			return $all[$feature][0];
 
-		return array();
+		return $fallback;
 	}
 
 	public static function isThumbnail( $attachment_id, $metakey = '_thumbnail_id' )
@@ -626,12 +624,6 @@ class PostType extends Core\Base
 		return Post::get( $post, $output, $filter );
 	}
 
-	// DEPRECATED: use `Post::getRestRoute()`
-	public static function getRestRoute( $post = NULL )
-	{
-		return Post::getRestRoute( $post );
-	}
-
 	// DEPRECATED: use `Post::link()`
 	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
 	{
@@ -671,5 +663,22 @@ class PostType extends Core\Base
 		}
 
 		return apply_filters( 'geditorial_posttype_primary_taxonomy', $taxonomy, $posttype, $fallback );
+	}
+
+	/**
+	 * Retrieves post-type rest route given post-type name or object.
+	 *
+	 * @param  string       $posttype
+	 * @return false|string $route
+	 */
+	public static function getRestRoute( $posttype )
+	{
+		if ( ! $object = self::object( $posttype ) )
+			return FALSE;
+
+		if ( ! $object->show_in_rest )
+			return FALSE;
+
+		return sprintf( '/%s/%s', $object->rest_namespace, $object->rest_base );
 	}
 }

@@ -139,7 +139,7 @@ class Module extends Core\Base
 	protected function action_module( $module, $hook, $args = 1, $priority = 10, $suffix = '' )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
-			add_action( $this->base.'_'.$module.'_'.$hook, [ $this, $method ], $priority, $args );
+			add_action( $this->hook_base( $module, $hook ), [ $this, $method ], $priority, $args );
 	}
 
 	/**
@@ -157,21 +157,21 @@ class Module extends Core\Base
 	protected function filter_module( $module, $hook, $args = 1, $priority = 10, $suffix = '' )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $module.'_'.$hook.'_'.$suffix : $module.'_'.$hook ) ) )
-			add_filter( $this->base.'_'.$module.'_'.$hook, [ $this, $method ], $priority, $args );
+			add_filter( $this->hook_base( $module, $hook ), [ $this, $method ], $priority, $args );
 	}
 
 	// USAGE: $this->action_self( 'saved', 8 );
 	protected function action_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_action( $this->base.'_'.$this->key.'_'.$hook, [ $this, $method ], $priority, $args );
+			add_action( $this->hook_base( $this->key, $hook ), [ $this, $method ], $priority, $args );
 	}
 
 	// USAGE: $this->filter_self( 'prepare', 7 );
 	protected function filter_self( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_filter( $this->base.'_'.$this->key.'_'.$hook, [ $this, $method ], $priority, $args );
+			add_filter( $this->hook_base( $this->key, $hook ), [ $this, $method ], $priority, $args );
 	}
 
 	// @REF: https://gist.github.com/markjaquith/b752e3aa93d2421285757ada2a4869b1
@@ -211,7 +211,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_true_module( 'meta', 'mainbox_callback' );
 	protected function filter_true_module( $module, $hook, $priority = 10 )
 	{
-		add_filter( $this->base.'_'.$module.'_'.$hook, static function( $first ) {
+		add_filter( $this->hook_base( $module, $hook ), static function( $first ) {
 			return TRUE;
 		}, $priority, 1 );
 	}
@@ -219,7 +219,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_false_module( 'meta', 'mainbox_callback' );
 	protected function filter_false_module( $module, $hook, $priority = 10 )
 	{
-		add_filter( $this->base.'_'.$module.'_'.$hook, static function( $first ) {
+		add_filter( $this->hook_base( $module, $hook ), static function( $first ) {
 			return FALSE;
 		}, $priority, 1 );
 	}
@@ -402,7 +402,7 @@ class Module extends Core\Base
 		if ( is_null( $sub ) )
 			$sub = $this->key;
 
-		$per_page = (int) get_user_option( $this->base.'_'.$sub.'_'.$option );
+		$per_page = (int) get_user_option( $this->hook_base( $sub, $option ) );
 
 		if ( empty( $per_page ) || $per_page < 1 )
 			$per_page = $default;
@@ -418,7 +418,7 @@ class Module extends Core\Base
 
 		add_screen_option( $option, [
 			'default' => $default,
-			'option'  => $this->base.'_'.$sub.'_'.$option,
+			'option'  => $this->hook_base( $sub, $option ),
 			'label'   => $label,
 		] );
 	}
