@@ -1127,6 +1127,79 @@ class MetaBox extends WordPress\Main
 		return TRUE;
 	}
 
+	/**
+	 * renders an number input tag for forms in a metabox.
+	 *
+	 * @param  array $field
+	 * @param  null|int|object $post
+	 * @param  string $module
+	 * @return bool $success
+	 */
+	public static function renderFieldNumber( $field, $post = NULL, $module = NULL )
+	{
+		if ( empty( $field['name'] ) )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
+		$wrap  = [ 'field-wrap', '-inputnumber' ];
+		$label = FALSE;
+
+		if ( is_null( $args['title'] ) )
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+
+		if ( is_null( $field['description'] ) )
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+
+		$atts = [
+			'type'        => 'number',
+			'dir'         => 'ltr',
+			'value'       => $value ?: '',
+			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'pattern'     => $args['pattern'],
+			// 'placeholder' => $args['title'],
+			'class'       => [
+				sprintf( '%s-inputnumber', static::BASE ),
+				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
+				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+			],
+			'data' => [
+				'meta-field' => $args['name'],
+				'meta-type'  => $args['type'],
+				'meta-title' => $args['title'] ?: $args['name'],
+				'meta-desc'  => $args['description'] ?: '',
+			],
+		];
+
+		switch ( $args['type'] ) {
+
+			case 'number':
+			default:
+				$label = sprintf( '<span class="%s" title="%s">%s</span>', '-label', $args['description'], $args['title'] );
+				$wrap[] = sprintf( '-input%s', $args['type'] ?: 'unknowntype' );
+				$atts['data']['ortho'] = 'number';
+		}
+
+		if ( ! $atts['pattern'] )
+			unset( $atts['pattern'] );
+
+		$html = Core\HTML::tag( 'input', $atts );
+
+		if ( $label )
+			$html = '<label>'.$html.' '.$label.'</label>';
+
+		echo Core\HTML::wrap( $html, $wrap );
+
+		return TRUE;
+	}
+
 	public static function renderFieldSelect( $field, $post = NULL, $module = NULL )
 	{
 		if ( empty( $field['name'] ) )

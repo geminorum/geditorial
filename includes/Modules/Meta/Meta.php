@@ -667,10 +667,10 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
 
 				break;
-				case 'price':
+				case 'price': // TODO must use custom text input + code + ortho-number + separeator
 				case 'number':
 
-					ModuleMetaBox::legacy_fieldNumber( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
+					ModuleMetaBox::renderFieldNumber( $args, $post );
 
 				break;
 				case 'widget':
