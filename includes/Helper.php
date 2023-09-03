@@ -280,6 +280,7 @@ class Helper extends WordPress\Main
 			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
 
 			case 'days' :
+			case 'total_days' :
 				return sprintf( self::noopedCount( $raw ?: $value,
 					/* translators: %s: day count */
 					_nx_noop( '%s Day', '%s Days', 'Noop', 'geditorial' ) ),
@@ -287,6 +288,7 @@ class Helper extends WordPress\Main
 				);
 
 			case 'hours' :
+			case 'total_hours' :
 				return sprintf( self::noopedCount( $raw ?: $value,
 					/* translators: %s: hour count */
 					_nx_noop( '%s Hour', '%s Hours', 'Noop', 'geditorial' ) ),
@@ -298,6 +300,34 @@ class Helper extends WordPress\Main
 
 			// NOTE: second priority: field type
 			switch ( $field['type'] ) {
+
+				case 'gram':
+					return sprintf(
+						/* translators: %s: number as gram */
+						_x( '%s g', 'Helper: Number as Gram', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
+				case 'kilogram':
+					return sprintf(
+						/* translators: %s: number as kilogram */
+						_x( '%s kg', 'Helper: Number as Kilogram', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
+				case 'milimeter':
+					return sprintf(
+						/* translators: %s: number as milimeter */
+						_x( '%s mm', 'Helper: Number as Milimeter', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
+				case 'centimeter':
+					return sprintf(
+						/* translators: %s: number as centimeter */
+						_x( '%s cm', 'Helper: Number as Centimeter', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
 
 				case 'identity':
 					return sprintf( '<span class="-identity %s">%s</span>',
