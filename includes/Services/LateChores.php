@@ -84,6 +84,6 @@ class LateChores extends WordPress\Main
 		$count = WordPress\Taxonomy::updateTermCount( $term_ids );
 		$log   = sprintf( 'LATE TERM COUNT: (%s): %s', $count, implode( ',', $term_ids ) );
 
-		do_action( 'gnetwork_logger_site_'.strtolower( 'NOTICE' ), 'latetermscount', $log, $term_ids );
+		Helper::log( $log, static::BASE, 'NOTICE', $term_ids );
 	}
 }

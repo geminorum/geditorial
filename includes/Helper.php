@@ -1465,4 +1465,24 @@ class Helper extends WordPress\Main
 		return apply_filters( static::BASE.'_string_delimiters',
 			Core\Arraay::prepSplitters( GEDITORIAL_STRING_DELIMITERS, $default ) );
 	}
+
+	/**
+	 * Logs a message given agent, level and context.
+	 *
+	 * @param  string      $message
+	 * @param  null|string $agent
+	 * @param  null|string $level
+	 * @param  array       $context
+	 * @return false
+	 */
+	public static function log( $message, $agent = NULL, $level = \null, $context = [] )
+	{
+		do_action( 'gnetwork_logger_site_'.strtolower( $level ?? 'NOTICE' ),
+			strtoupper( $agent ?? static::BASE ),
+			$message,
+			$context
+		);
+
+		return FALSE; // to help the caller!
+	}
 }

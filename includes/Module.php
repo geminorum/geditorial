@@ -3453,8 +3453,7 @@ class Module extends WordPress\Module
 
 	protected function log( $level, $message = '', $context = [] )
 	{
-		do_action( 'gnetwork_logger_site_'.strtolower( $level ), $this->classs(), $message, $context );
-		return FALSE; // to help the caller!
+		return Helper::log( $message, $this->classs(), $level, $context );
 	}
 
 	// self::dump( ini_get( 'memory_limit' ) );
