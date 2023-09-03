@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Territory\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-09-04 01:53+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Territory\n"
+"X-Domain: geditorial-territory\n"
+
+#: Territory.php:72
+msgid "Territorial Arrangement"
+msgid_plural "Territorial Arrangements"
+msgstr[0] "آمایش‌های سرزمینی"
+msgstr[1] "آمایش سرزمینی"
+
+#: Territory.php:76
+msgctxt "Label: Menu Name"
+msgid "Content Territory"
+msgstr "سرزمین محتوا"
+
+#: Territory.php:77
+msgctxt "Label: Show Option All"
+msgid "Territory"
+msgstr "آمایش"
+
+#: Territory.php:78
+msgctxt "Label: Show Option No Terms"
+msgid "(No-Territory)"
+msgstr "(بدون آمایش)"
+
+#: Territory.php:87
+msgctxt "Dashboard Widget Title"
+msgid "Your Territory Arrangements Summary"
+msgstr "گزارش آمایش‌های سرزمینی شما"
+
+#: Territory.php:88
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Territory Arrangements Summary"
+msgstr "گزارش آمایش‌های سرزمینی تحریریه"
