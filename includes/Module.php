@@ -1700,6 +1700,7 @@ class Module extends WordPress\Module
 					return FALSE;
 
 				WordPress\Taxonomy::disableTermCounting();
+				Services\LateChores::termCountCollect();
 
 				foreach ( $object_ids as $object_id )
 					wp_set_object_terms( $object_id, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
@@ -1753,6 +1754,7 @@ class Module extends WordPress\Module
 					return FALSE;
 
 				WordPress\Taxonomy::disableTermCounting();
+				Services\LateChores::termCountCollect();
 
 				foreach ( $object_ids as $object_id )
 					wp_set_object_terms( $object_id, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
@@ -1762,6 +1764,7 @@ class Module extends WordPress\Module
 			case 'separeted-terms':
 
 				WordPress\Taxonomy::disableTermCounting();
+				Services\LateChores::termCountCollect();
 
 				foreach ( $term_ids as $term_id ) {
 

@@ -9,6 +9,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -1020,6 +1021,7 @@ class Audit extends gEditorial\Module
 	private function _raise_resources( $count = 0 )
 	{
 		WordPress\Taxonomy::disableTermCounting();
+		Services\LateChores::termCountCollect();
 
 		if ( ! Core\WordPress::isDev() )
 			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections

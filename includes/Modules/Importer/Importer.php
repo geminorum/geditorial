@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -1208,6 +1209,7 @@ class Importer extends gEditorial\Module
 
 		WordPress\Media::disableThumbnailGeneration();
 		WordPress\Taxonomy::disableTermCounting();
+		Services\LateChores::termCountCollect();
 		wp_defer_comment_counting( TRUE );
 
 		if ( ! Core\WordPress::isDev() )

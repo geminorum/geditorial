@@ -9,6 +9,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
@@ -1626,6 +1627,7 @@ class Meta extends gEditorial\Module
 	{
 		// Media::disableThumbnailGeneration();
 		WordPress\Taxonomy::disableTermCounting();
+		Services\LateChores::termCountCollect();
 		wp_defer_comment_counting( TRUE );
 
 		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
