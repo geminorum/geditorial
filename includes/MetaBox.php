@@ -897,7 +897,7 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap  = [ 'field-wrap', '-textarea' ];
 
 		if ( is_null( $args['title'] ) )
@@ -964,7 +964,7 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap  = [ 'field-wrap', '-inputgeneral' ];
 
 		if ( is_null( $args['title'] ) )
@@ -1213,7 +1213,7 @@ class MetaBox extends WordPress\Main
 
 		$html     = '';
 		$args     = self::atts( self::getFieldDefaults( $field['name'] ), $field );
-		$selected = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+		$selected = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap     = [ 'field-wrap', '-select' ];
 		$label    = FALSE;
 

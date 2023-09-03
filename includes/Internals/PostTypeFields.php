@@ -135,7 +135,7 @@ trait PostTypeFields
 				'quickedit'   => FALSE,
 				'import'      => TRUE, // FALSE to hide on imports
 				'values'      => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
-				'none_title'  => $this->get_string( $field, $posttype, 'none', NULL ),
+				'none_title'  => $this->get_string( $field, $posttype, 'none', $this->get_string( $args['type'], $posttype, 'none', NULL ) ),
 				'none_value'  => '',
 				'repeat'      => FALSE,
 				'ltr'         => FALSE,

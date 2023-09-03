@@ -357,7 +357,7 @@ class Organization extends gEditorial\Module
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 8 );
-				$this->paired__hook_screen_restrictposts();
+				$this->paired__hook_screen_restrictposts( FALSE, 9 );
 
 				$this->action_module( 'meta', 'column_row', 3 );
 			}

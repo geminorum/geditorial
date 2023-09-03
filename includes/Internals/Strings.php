@@ -27,16 +27,17 @@ trait Strings
 	}
 
 	// NOTE: fallback will merge if is an array
+	// NOTE: merge numeric keys will rearrange them!
 	// NOTE: moveup is FALSE by default
 	public function get_strings( $subgroup, $group = 'titles', $fallback = [], $moveup = FALSE )
 	{
 		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
-			return is_array( $fallback )
+			return is_array( $fallback ) && count( $fallback )
 				? array_merge( $fallback, $this->strings[$group][$subgroup] )
 				: $this->strings[$group][$subgroup];
 
 		if ( $moveup && isset( $this->strings[$group] ) )
-			return is_array( $fallback )
+			return is_array( $fallback ) && count( $fallback )
 				? array_merge( $fallback, $this->strings[$group] )
 				: $this->strings[$group];
 
