@@ -31,6 +31,26 @@ trait PostTypeFields
 	}
 
 	/**
+	 * Retrieves the supported post-tyoes for given field key.
+	 *
+	 * @param  string $field_key
+	 * @return array  $supported
+	 */
+	public function get_posttype_field_supported( $field_key )
+	{
+		global $gEditorialPostTypeFields;
+
+		$supported = [];
+
+		if ( $field_key && ! empty( $gEditorialPostTypeFields[$this->key] ) )
+			foreach ( $gEditorialPostTypeFields[$this->key] as $posttype => $list )
+				if ( array_key_exists( $field_key, $list ) )
+					$supported[] = $posttype;
+
+		return $this->filters( 'posttype_field_supported', $supported, $field_key );
+	}
+
+	/**
 	 * Retrieves the registered fields for a post-type.
 	 *
 	 * @param  string $posttype

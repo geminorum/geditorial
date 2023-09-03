@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -192,7 +192,7 @@ class Quotation extends gEditorial\Module
 
 				// TODO: MAYBE: restrict quotations by parents
 
-				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) ) {
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) ) {
 					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'book-alt', 'meta', NULL, -10 );
 					$this->corerestrictposts__hook_parsequery_for_post_parent( 'primary_posttype' );
 				}
@@ -205,7 +205,7 @@ class Quotation extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( Helper::isPostTypeFieldAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
 					$this->corerestrictposts__hook_columnrow_for_post_children( 'primary_posttype', NULL, NULL, NULL, -10 );
 			}
 		}
