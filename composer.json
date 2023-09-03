@@ -35,6 +35,7 @@
     "sabre/vobject": "^4.3"
   },
   "require-dev": {
+    "php-coord/php-coord": "4.x-dev",
     "10up/wp-content-connect": "^1.5.0",
     "nicmart/string-template": "^0.1.2",
     "eluceo/ical": "^0.11.4",
@@ -44,7 +45,7 @@
     "seboettg/citeproc-php": "^2",
     "khanamiryan/qrcode-detector-decoder": "^1.0",
     "mustangostang/spyc": "^0.6.3",
-    "mpdf/mpdf": "^8.1"
+    "mpdf/mpdf": "^8.2"
   },
   "config": {
     "vendor-dir": "assets/vendor",
