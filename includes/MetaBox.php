@@ -1214,6 +1214,8 @@ class MetaBox extends WordPress\Main
 		$html     = '';
 		$args     = self::atts( self::getFieldDefaults( $field['name'] ), $field );
 		$selected = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE );
+		$wrap     = [ 'field-wrap', '-select' ];
+		$label    = FALSE;
 
 		if ( is_null( $args['title'] ) )
 			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
@@ -1252,7 +1254,29 @@ class MetaBox extends WordPress\Main
 			],
 		];
 
-		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select' );
+		switch ( $args['type'] ) {
+
+			case 'european_shoe':
+			case 'international_shirt':
+			case 'international_pants':
+			case 'bookcover':
+			case 'papersize':
+
+				$label = sprintf( '<span class="%s" title="%s">%s</span>', '-label', $args['description'], $args['title'] );
+				$wrap[] = '-inputtext-half';
+
+				break;
+
+			default:
+				$wrap[] = sprintf( '-select%s', $args['type'] ?: 'unknowntype' );
+		}
+
+		$html = Core\HTML::tag( 'select', $atts, $html );
+
+		if ( $label )
+			$html = '<label>'.$html.' '.$label.'</label>';
+
+		echo Core\HTML::wrap( $html, $wrap );
 	}
 
 	// just like any other meta-field but stores in `$post->post_parent`
