@@ -8,9 +8,6 @@ use geminorum\gEditorial\WordPress;
 class LateChores extends WordPress\Main
 {
 
-	// use this after disabling counts
-	// Services\LateChores::termCountCollect();
-
 	const BASE = 'geditorial';
 
 	const TERMS_COUNT_ACTION = 'geditorial_late_terms_counts';
@@ -19,16 +16,10 @@ class LateChores extends WordPress\Main
 	{
 		// custom-actions
 		add_action( static::TERMS_COUNT_ACTION, [ __CLASS__, 'termCountDoCount' ], 10, 1 );
-
-		add_action( 'shutdown', [ __CLASS__, 'shutdown' ] );
 	}
 
-	public static function shutdown()
-	{
-		LateChores::termCountSchedule();
-	}
-
-	// collecting changed terms
+	// use this after disabling counts
+	// Services\LateChores::termCountCollect();
 	public static function termCountCollect()
 	{
 		static $hooked = NULL;
@@ -36,21 +27,23 @@ class LateChores extends WordPress\Main
 		if ( ! is_null( $hooked ) )
 			return $hooked;
 
-		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms' ], 20, 6 );
-		add_action( 'deleted_term_relationships', [ __CLASS__, 'deleted_term_relationships' ], 20, 3 );
+		add_action( 'set_object_terms',
+			function ( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids ) {
+				self::termCount( $tt_ids );
+				self::termCount( $old_tt_ids );
+			}, 20, 6 );
+
+		add_action( 'deleted_term_relationships',
+			function ( $object_id, $tt_ids, $taxonomy ) {
+				self::termCount( $tt_ids );
+			}, 20, 3 );
+
+		add_action( 'shutdown',
+			function () {
+				LateChores::termCountSchedule();
+			} );
 
 		$hooked = TRUE;
-	}
-
-	public static function set_object_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids )
-	{
-		self::termCount( $tt_ids );
-		self::termCount( $old_tt_ids );
-	}
-
-	public static function deleted_term_relationships( $object_id, $tt_ids, $taxonomy )
-	{
-		self::termCount( $tt_ids );
 	}
 
 	public static function termCount( $term_ids )
