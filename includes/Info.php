@@ -95,6 +95,15 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderNoToolsAvailable( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'There are no tools available!', 'Info: Message', 'geditorial' ).$after,
+			FALSE,
+			'-empty -no-tools'
+		);
+	}
+
 	public static function renderNoPostsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(

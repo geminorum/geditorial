@@ -109,6 +109,7 @@ trait DashboardSummary
 		echo '</div>';
 	}
 
+	// TODO: support nooped term title via term meta from Terms module
 	protected function get_dashboard_term_summary( $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $list = 'li' )
 	{
 		$html     = '';

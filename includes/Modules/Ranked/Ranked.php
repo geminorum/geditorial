@@ -15,15 +15,19 @@ class Ranked extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
 
+	protected $disable_no_posttypes = TRUE;
+
 	public static function module()
 	{
 		return [
 			'name'     => 'ranked',
 			'title'    => _x( 'Ranked', 'Modules: Ranked', 'geditorial' ),
-			'desc'     => _x( 'Ranking for Editorial Staff', 'Modules: Ranked', 'geditorial' ),
+			'desc'     => _x( 'Ranking for Editorial Content', 'Modules: Ranked', 'geditorial' ),
 			'icon'     => 'shield-alt',
 			'access'   => 'beta',
-			'keywords' => [ 'ranking' ],
+			'keywords' => [
+				'ranking',
+			],
 		];
 	}
 
@@ -52,11 +56,27 @@ class Ranked extends gEditorial\Module
 		];
 	}
 
+	protected function get_module_icons()
+	{
+		return [
+			'taxonomies' => [
+				'main_taxonomy' => NULL,
+			],
+		];
+	}
+
 	protected function get_global_strings()
 	{
 		$strings = [
 			'noops' => [
 				'main_taxonomy' => _n_noop( 'Ranking Definition', 'Ranking Definitions', 'geditorial-ranked' ),
+			],
+			'labels' => [
+				'main_taxonomy' => [
+					'menu_name'            => _x( 'Content Rankings', 'Label: Menu Name', 'geditorial-ranked' ),
+					'show_option_all'      => _x( 'Rankings', 'Label: Show Option All', 'geditorial-ranked' ),
+					'show_option_no_items' => _x( '(Unranked)', 'Label: Show Option No Terms', 'geditorial-ranked' ),
+				],
 			],
 		];
 
@@ -90,7 +110,6 @@ class Ranked extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'main_taxonomy', [
-			'public'             => TRUE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_menu'       => FALSE,

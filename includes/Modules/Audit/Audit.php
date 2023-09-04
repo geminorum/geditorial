@@ -805,10 +805,12 @@ class Audit extends gEditorial\Module
 				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
 
 		if ( $verbose )
-			vprintf( '<li>%s: <code>%s</code></li>', [
-				WordPress\Post::title( $post ),
-				count( $result ),
-			] );
+			echo Core\HTML::tag( 'li',
+				/* translators: %1$s: count terms, %2$s: post title */
+				sprintf( _x( '%1$s attributes set for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-audit' ),
+				Core\HTML::code( count( $result ) ),
+				WordPress\Post::title( $post )
+			) );
 
 		return TRUE;
 	}
