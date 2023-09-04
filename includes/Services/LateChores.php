@@ -56,7 +56,6 @@ class LateChores extends WordPress\Main
 		$gEditorialLateTerms = array_merge( $gEditorialLateTerms, (array) $term_ids );
 	}
 
-	// @REF: https://github.com/woocommerce/woocommerce/wiki/WC_Queue---WooCommerce-Worker-Queue
 	public static function termCountSchedule()
 	{
 		global $gEditorialLateTerms;
@@ -64,16 +63,15 @@ class LateChores extends WordPress\Main
 		if ( empty( $gEditorialLateTerms ) )
 			return;
 
-		$action_id = FALSE;
-		$term_ids  = Core\Arraay::prepNumeral( $gEditorialLateTerms );
+		$action = FALSE;
+		$list   = Core\Arraay::prepNumeral( $gEditorialLateTerms );
 
-		if ( ! empty( $term_ids ) )
-			// $action_id = WC()->queue()->add( static::TERMS_COUNT_ACTION, [ $term_ids ], static::BASE );
-			$action_id = wp_schedule_single_event( time(), static::TERMS_COUNT_ACTION, [ $term_ids ] );
+		if ( ! empty( $list ) )
+			$action = self::scheduleSingle( static::TERMS_COUNT_ACTION, [ $list ] );
 
 		$gEditorialLateTerms = []; // reset!
 
-		return $action_id;
+		return $action;
 	}
 
 	public static function termCountDoCount( $term_ids )
@@ -85,5 +83,18 @@ class LateChores extends WordPress\Main
 		$log   = sprintf( 'LATE TERM COUNT: (%s): %s', $count, implode( ',', $term_ids ) );
 
 		Helper::log( $log, static::BASE, 'NOTICE', $term_ids );
+	}
+
+	// @REF: https://actionscheduler.org/usage/
+	// @REF: https://github.com/woocommerce/woocommerce/wiki/WC_Queue---WooCommerce-Worker-Queue
+	public static function scheduleSingle( $hook, $args, $group = NULL )
+	{
+		if ( function_exists( 'as_schedule_single_action' ) )
+			return as_schedule_single_action( time(), $hook, $args );
+
+		if ( function_exists( 'WC' ) )
+			return WC()->queue()->add( $hook, $args, $group ?? static::BASE );
+
+		return wp_schedule_single_event( time(), $hook, $args );
 	}
 }
