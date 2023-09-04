@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\WordPress;
 
 trait Strings
@@ -49,37 +50,8 @@ trait Strings
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return $this->strings['noops'][$constant];
 
-		if ( in_array( $constant, [ 'item', 'paired_item' ], TRUE ) )
-			/* translators: %s: items count */
-			return _nx_noop( '%s Item', '%s Items', 'Internal: Strings: Noop', 'geditorial' );
-
-		if ( in_array( $constant, [ 'member', 'family_member' ], TRUE ) )
-			/* translators: %s: items count */
-			return _nx_noop( '%s Member', '%s Members', 'Internal: Strings: Noop', 'geditorial' );
-
-		/**
-		 * Persons vs. People vs. Peoples
-		 * Most of the time, `people` is the correct word to choose as a plural
-		 * for `person`. `Persons` is archaic, and it is safe to avoid using it,
-		 * except in legal writing, which has its own traditional language.
-		 * `Peoples` is only necessary when you refer to distinct ethnic groups.
-		 * @source https://www.grammarly.com/blog/persons-people-peoples/
-		 */
-		if ( in_array( $constant, [ 'people', 'person' ], TRUE ) )
-			/* translators: %s: people count */
-			return _nx_noop( '%s Person', '%s People', 'Internal: Strings: Noop', 'geditorial' );
-
-		if ( 'post' == $constant )
-			/* translators: %s: posts count */
-			return _nx_noop( '%s Post', '%s Posts', 'Internal: Strings: Noop', 'geditorial' );
-
-		if ( 'connected' == $constant )
-			/* translators: %s: items count */
-			return _nx_noop( '%s Item Connected', '%s Items Connected', 'Internal: Strings: Noop', 'geditorial' );
-
-		if ( 'word' == $constant )
-			/* translators: %s: words count */
-			return _nx_noop( '%s Word', '%s Words', 'Internal: Strings: Noop', 'geditorial' );
+		if ( NULL !== ( $pre = Info::getNoop( $constant ) ) )
+			return $pre;
 
 		$noop = [
 			'plural'   => Core\L10n::pluralize( $constant ),

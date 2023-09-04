@@ -259,21 +259,15 @@ class Helper extends WordPress\Main
 			case 'mobile'   : return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
 			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
 
-			case 'days' :
-			case 'total_days' :
-				return sprintf( self::noopedCount( $raw ?: $value,
-					/* translators: %s: day count */
-					_nx_noop( '%s Day', '%s Days', 'Noop', 'geditorial' ) ),
-					Core\Number::format( $raw ?: $value )
-				);
+			case 'days':
+			case 'total_days':
+				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'day' ) ),
+					Core\Number::format( $raw ?: $value ) );
 
-			case 'hours' :
-			case 'total_hours' :
-				return sprintf( self::noopedCount( $raw ?: $value,
-					/* translators: %s: hour count */
-					_nx_noop( '%s Hour', '%s Hours', 'Noop', 'geditorial' ) ),
-					Core\Number::format( $raw ?: $value )
-				);
+			case 'hours':
+			case 'total_hours':
+				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'hour' ) ),
+					Core\Number::format( $raw ?: $value ) );
 		}
 
 		if ( ! empty( $field['type'] ) ) {

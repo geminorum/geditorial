@@ -140,6 +140,86 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function getNoop( $key, $fallback = NULL )
+	{
+		switch ( $key ) {
+
+			case 'item':
+			case 'items':
+			case 'paired_item':
+			case 'paired_items':
+				/* translators: %s: items count */
+				return _nx_noop( '%s Item', '%s Items', 'Info: Noop', 'geditorial' );
+
+			case 'member':
+			case 'members':
+			case 'family_member':
+			case 'family_members':
+				/* translators: %s: items count */
+				return _nx_noop( '%s Member', '%s Members', 'Info: Noop', 'geditorial' );
+
+
+			case 'people':
+			case 'person':
+				/**
+				 * Persons vs. People vs. Peoples
+				 * Most of the time, `people` is the correct word to choose as a plural
+				 * for `person`. `Persons` is archaic, and it is safe to avoid using it,
+				 * except in legal writing, which has its own traditional language.
+				 * `Peoples` is only necessary when you refer to distinct ethnic groups.
+				 * @source https://www.grammarly.com/blog/persons-people-peoples/
+				 */
+				/* translators: %s: people count */
+				return _nx_noop( '%s Person', '%s People', 'Info: Noop', 'geditorial' );
+
+			case 'post':
+			case 'posts':
+				/* translators: %s: posts count */
+				return _nx_noop( '%s Post', '%s Posts', 'Info: Noop', 'geditorial' );
+
+			case 'connected':
+				/* translators: %s: items count */
+				return _nx_noop( '%s Item Connected', '%s Items Connected', 'Info: Noop', 'geditorial' );
+
+			case 'word':
+			case 'words':
+				/* translators: %s: words count */
+				return _nx_noop( '%s Word', '%s Words', 'Info: Noop', 'geditorial' );
+
+			case 'second':
+			case 'seconds':
+				/* translators: %s: second count */
+				return _nx_noop( '%s Second', '%s Seconds', 'Info: Noop', 'geditorial' );
+
+			case 'hour':
+			case 'hours':
+				/* translators: %s: hour count */
+				return _nx_noop( '%s Hour', '%s Hours', 'Info: Noop', 'geditorial' );
+
+			case 'week':
+			case 'weeks':
+				/* translators: %s: week count */
+				return _nx_noop( '%s Week', '%s Weeks', 'Info: Noop', 'geditorial' );
+
+			case 'day':
+			case 'days':
+				/* translators: %s: day count */
+				return _nx_noop( '%s Day', '%s Days', 'Info: Noop', 'geditorial' );
+
+			case 'month':
+			case 'months':
+				/* translators: %s: month count */
+				return _nx_noop( '%s Month', '%s Months', 'Info: Noop', 'geditorial' );
+
+			case 'year':
+			case 'years':
+				/* translators: %s: year count */
+				return _nx_noop( '%s Year', '%s Years', 'Info: Noop', 'geditorial' );
+		}
+
+		return $fallback;
+	}
+
 	public static function getHelpTabs( $context = NULL ) {}
 
 	// TODO: add click to select

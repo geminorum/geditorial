@@ -1159,18 +1159,12 @@ class Meta extends gEditorial\Module
 					: Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
 
 			case 'days' :
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					/* translators: %s: day count */
-					_nx_noop( '%s Day', '%s Days', 'Noop', 'geditorial-meta' ) ),
-					Core\Number::format( trim( $raw ) )
-				);
+				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'day' ) ),
+					Core\Number::format( trim( $raw ) ) );
 
 			case 'hours' :
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					/* translators: %s: hour count */
-					_nx_noop( '%s Hour', '%s Hours', 'Noop', 'geditorial-meta' ) ),
-					Core\Number::format( trim( $raw ) )
-				);
+				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'hour' ) ),
+					Core\Number::format( trim( $raw ) ) );
 		}
 
 		switch ( $field_args['type'] ) {
