@@ -284,7 +284,7 @@ class Entry extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->do_template_include( $template, 'primary_posttype' );
+		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'primary_posttype' ) );
 	}
 
 	public function template_get_archive_content_default()

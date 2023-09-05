@@ -9,15 +9,13 @@ use geminorum\gEditorial\WordPress;
 trait CoreTemplate
 {
 
-	protected function do_template_include( $template, $constant, $archive_callback = NULL, $empty_callback = NULL )
+	protected function coretemplate__include_for_posttype( $template, $posttype, $empty_callback = NULL, $archive_callback = NULL )
 	{
 		if ( ! $this->get_setting( 'archive_override', TRUE ) )
 			return $template;
 
 		if ( is_embed() || is_search() )
 			return $template;
-
-		$posttype = $this->constant( $constant );
 
 		if ( $posttype != $GLOBALS['wp_query']->get( 'post_type' ) )
 			return $template;

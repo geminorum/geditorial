@@ -731,7 +731,7 @@ class Book extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->do_template_include( $template, 'publication_cpt' );
+		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'publication_cpt' ) );
 	}
 
 	public function template_get_archive_content_default()

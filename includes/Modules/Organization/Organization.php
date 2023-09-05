@@ -400,7 +400,7 @@ class Organization extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->do_template_include( $template, 'primary_posttype', NULL, FALSE );
+		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'primary_posttype' ), FALSE );
 	}
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )

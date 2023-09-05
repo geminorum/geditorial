@@ -185,7 +185,7 @@ class Symposium extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->do_template_include( $template, 'session_posttype', NULL, FALSE );
+		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'session_posttype' ), FALSE );
 	}
 
 	public function dashboard_glance_items( $items )
