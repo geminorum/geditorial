@@ -21,6 +21,7 @@ class WasBorn extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\DashboardSummary;
+	use Internals\LateChores;
 
 	public static function module()
 	{
@@ -64,6 +65,12 @@ class WasBorn extends gEditorial\Module
 		}
 
 		$settings['_defaults'] = [
+			[
+				'field'       => 'override_with_dob',
+				'title'       => _x( 'Override Dates', 'Setting Title', 'geditorial-was-born' ),
+				'description' => _x( 'Tries to override post-date with provided date-of-birth on supported post-types.', 'Setting Description', 'geditorial-was-born' ),
+				'default'     => 1,
+			],
 			'calendar_type',
 			'calendar_list',
 			[
@@ -180,10 +187,15 @@ class WasBorn extends gEditorial\Module
 	{
 		parent::init();
 
+		$posttypes = $this->get_setting_posttypes( 'parent' );
+
+		if ( empty( $posttypes ) )
+			return;
+
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-		], $this->get_setting_posttypes( 'parent' ), [
+		], $posttypes, [
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
@@ -193,7 +205,7 @@ class WasBorn extends gEditorial\Module
 		$this->register_taxonomy( 'gender_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-		], $this->get_setting_posttypes( 'parent' ), [
+		], $posttypes, [
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
@@ -205,6 +217,9 @@ class WasBorn extends gEditorial\Module
 			'rewrite'      => FALSE,
 			'show_in_menu' => FALSE,
 		], FALSE, TRUE );
+
+		if ( $this->get_setting( 'override_with_dob', TRUE ) )
+			$this->latechores__init_post_aftercare( $posttypes );
 
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
 
@@ -376,6 +391,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// TODO: make link for restricted under aged posts
+	// @REF: https://stackoverflow.com/a/71815721
 	private function _summary_under_aged( $posttypes )
 	{
 		$nooped    = WordPress\PostType::get( 3 );
@@ -1103,6 +1119,28 @@ class WasBorn extends gEditorial\Module
 		$result = wp_set_object_terms( $post_id, $terms, $taxonomy, FALSE );
 
 		return self::isError( $result ) ? FALSE : $year;
+	}
+
+	protected function latechores_post_aftercare( $post )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
+			return FALSE;
+
+		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
+			return FALSE;
+
+		if ( ! Core\Date::isInFormat( $dob, 'Y-m-d' ) )
+			return $this->log( 'FAILED', sprintf( 'after-care process of #%s: dob is not valid: %s', $post->ID, $dob ), [ $post->ID, $dob ] );
+
+		$datetime = sprintf( '%s 23:59:59', $dob );
+
+		return [
+			'post_date'     => $datetime,
+			'post_date_gmt' => get_gmt_from_date( $datetime ),
+		];
 	}
 
 	private function _raise_resources( $count = 0 )

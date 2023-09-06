@@ -3130,41 +3130,6 @@ class Module extends WordPress\Module
 		return $single ? reset( $posts ) : $posts;
 	}
 
-	// NOTE: cannot use 'wp_insert_post_data' filter
-	protected function _hook_autofill_posttitle( $posttype )
-	{
-		add_action( 'save_post_'.$posttype, [ $this, '_save_autofill_posttitle' ], 20, 3 );
-	}
-
-	public function _save_autofill_posttitle( $post_id, $post, $update )
-	{
-		remove_action( 'save_post_'.$post->post_type, [ $this, '_save_autofill_posttitle' ], 20, 3 );
-
-		if ( FALSE === ( $posttitle = $this->get_autofill_posttitle( $post ) ) )
-			return;
-
-		if ( is_array( $posttitle ) )
-			$data = array_merge( $posttitle, [ 'ID' => $post->ID ] );
-
-		else
-			$data = [
-				'ID'         => $post->ID,
-				'post_title' => $posttitle,
-				'post_name'  => Core\Text::formatSlug( $posttitle ),
-			];
-
-		$updated = wp_update_post( $data );
-
-		if ( ! $updated || self::isError( $updated ) )
-			$this->log( 'FAILED', sprintf( 'updating title of post #%s', $post->ID ) );
-	}
-
-	// DEFAULT CALLBACK
-	protected function get_autofill_posttitle( $post )
-	{
-		return FALSE;
-	}
-
 	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 	protected function _hook_editform_readonly_title()
 	{
