@@ -201,7 +201,7 @@ trait PostTypeFields
 		if ( TRUE !== $access && FALSE !== $access ) {
 
 			if ( is_null( $user_id ) )
-				$user_id = wp_get_current_user();
+				$user_id = get_current_user_id();
 
 			if ( ! is_null( $access ) ) {
 
@@ -210,8 +210,8 @@ trait PostTypeFields
 			} else if ( $post = WordPress\Post::get( $post ) ) {
 
 				$access = in_array( $context, [ 'edit' ], TRUE )
-					? user_can( $user_id, 'edit_post', $post->ID )
-					: WordPress\Post::viewable( $post );
+					? WordPress\Post::can( $post, 'edit_post', $user_id )
+					: WordPress\Post::can( $post, 'read_post', $user_id );
 
 			} else {
 

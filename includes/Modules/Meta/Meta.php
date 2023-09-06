@@ -613,7 +613,7 @@ class Meta extends gEditorial\Module
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
 	{
-		$user_id = wp_get_current_user();
+		$user_id = get_current_user_id();
 
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
@@ -909,7 +909,7 @@ class Meta extends gEditorial\Module
 		if ( ! count( $fields ) )
 			return;
 
-		$user_id = wp_get_current_user();
+		$user_id = get_current_user_id();
 		$legacy  = $this->get_postmeta_legacy( $post->ID );
 
 		foreach ( $fields as $field => $args ) {
@@ -1238,7 +1238,7 @@ class Meta extends gEditorial\Module
 		if ( ! count( $fields ) )
 			return;
 
-		$user_id = wp_get_current_user();
+		$user_id = get_current_user_id();
 
 		foreach ( $fields as $field => $args ) {
 
