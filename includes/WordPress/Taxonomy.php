@@ -42,16 +42,46 @@ class Taxonomy extends Core\Base
 		return FALSE;
 	}
 
-	public static function can( $taxonomy, $capability = 'manage_terms', $user_id = NULL )
+	/**
+	 * Checks for taxonomy capability.
+	 *
+	 * @param  string|object   $taxonomy
+	 * @param  null|string     $capability
+	 * @param  null|int|object $user_id
+	 * @param  bool            $fallback
+	 * @return bool            $can
+	 */
+	public static function can( $taxonomy, $capability = 'manage_terms', $user_id = NULL, $fallback = FALSE )
 	{
+		static $cache = [];
+
 		if ( is_null( $capability ) )
 			return TRUE;
 
-		$cap = self::object( $taxonomy )->cap->{$capability};
+		else if ( ! $capability )
+			return $fallback;
 
-		return is_null( $user_id )
-			? current_user_can( $cap )
-			: user_can( $user_id, $cap );
+		if ( ! $object = self::object( $taxonomy ) )
+			return $fallback;
+
+		if ( ! isset( $object->cap->{$capability} ) )
+			return $fallback;
+
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		else if ( is_object( $user_id ) )
+			$user_id = $user_id->ID;
+
+		if ( ! $user_id )
+			return user_can( $user_id, $object->cap->{$capability} );
+
+		if ( isset( $cache[$user_id][$object->name][$capability] ) )
+			return $cache[$user_id][$object->name][$capability];
+
+		$can = user_can( $user_id, $object->cap->{$capability} );
+
+		return $cache[$user_id][$object->name][$capability] = $can;
 	}
 
 	/**

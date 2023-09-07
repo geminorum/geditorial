@@ -250,6 +250,14 @@ class Arraay extends Base
 		return array_intersect_key( $array, array_flip( $keys ) );
 	}
 
+	public static function keepByValue( $array, $values )
+	{
+		if ( empty( $array ) || empty( $values ) )
+			return $array;
+
+		return array_intersect( $array, $values );
+	}
+
 	// @REF: WooCommerce: `_sort_priority_callback()`
 	public static function sortByPriority( $array, $priority_key )
 	{

@@ -6,6 +6,7 @@ use geminorum\gEditorial\Core;
 
 class Term extends Core\Base
 {
+
 	/**
 	 * Gets all term data.
 	 *
@@ -56,6 +57,46 @@ class Term extends Core\Base
 			return FALSE;
 
 		return $term;
+	}
+
+	/**
+	 * Retrieves the user capability for a given term.
+	 * NOTE: caches the result
+	 *
+	 * @param  int|object      $term
+	 * @param  null|string     $capability
+	 * @param  null|int|object $user_id
+	 * @param  bool            $fallback
+	 * @return bool            $can
+	 */
+	public static function can( $term, $capability, $user_id = NULL, $fallback = FALSE )
+	{
+		static $cache = [];
+
+		if ( is_null( $capability ) )
+			return TRUE;
+
+		else if ( ! $capability )
+			return $fallback;
+
+		if ( ! $term = self::get( $term ) )
+			return $fallback;
+
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		else if ( is_object( $user_id ) )
+			$user_id = $user_id->ID;
+
+		if ( ! $user_id )
+			return user_can( $user_id, $capability, $term->term_id );
+
+		if ( isset( $cache[$user_id][$term->term_id][$capability] ) )
+			return $cache[$user_id][$term->term_id][$capability];
+
+		$can = user_can( $user_id, $capability, $term->term_id );
+
+		return $cache[$user_id][$term->term_id][$capability] = $can;
 	}
 
 	/**
