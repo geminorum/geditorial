@@ -87,6 +87,7 @@ class LateChores extends WordPress\Main
 
 	// @REF: https://actionscheduler.org/usage/
 	// @REF: https://github.com/woocommerce/woocommerce/wiki/WC_Queue---WooCommerce-Worker-Queue
+	// @SEE: https://rudrastyh.com/wordpress/wp_schedule_single_event.html
 	public static function scheduleSingle( $hook, $args, $group = NULL )
 	{
 		if ( function_exists( 'as_schedule_single_action' ) )

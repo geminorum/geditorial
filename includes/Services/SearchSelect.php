@@ -56,7 +56,7 @@ class SearchSelect extends WordPress\Main
 			case 'post':
 
 				if ( empty( $queried['posttype'] ) )
-					return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
+					return RestAPI::getErrorSomethingIsWrong();
 
 				if ( ! is_array( $queried['posttype'] ) )
 					$queried['posttype'] = explode( ',', $queried['posttype'] );
@@ -67,7 +67,7 @@ class SearchSelect extends WordPress\Main
 
 				// again check if any left!
 				if ( empty( $queried['posttype'] ) )
-					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
+					return RestAPI::getErrorForbidden();
 
 				$response = self::_get_select2_posts( $queried );
 				break;
@@ -75,7 +75,7 @@ class SearchSelect extends WordPress\Main
 			case 'term':
 
 				if ( empty( $queried['taxonomy'] ) )
-					return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
+					return RestAPI::getErrorSomethingIsWrong();
 
 				if ( ! is_array( $queried['taxonomy'] ) )
 					$queried['taxonomy'] = explode( ',', $queried['taxonomy'] );
@@ -86,7 +86,7 @@ class SearchSelect extends WordPress\Main
 
 				// again check if any left!
 				if ( empty( $queried['taxonomy'] ) )
-					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
+					return RestAPI::getErrorForbidden();
 
 				$response = self::_get_select2_terms( $queried );
 				break;
@@ -94,14 +94,14 @@ class SearchSelect extends WordPress\Main
 			case 'user':
 
 				if ( ! WordPress\User::cuc( 'list_users' ) )
-					return new \WP_Error( 'not_authorized', gEditorial\Plugin::wrong() );
+					return RestAPI::getErrorForbidden();
 
 				$response = self::_get_select2_users( $queried );
 				break;
 
 			default:
 
-				return new \WP_Error( 'no_correct_settings', gEditorial\Plugin::wrong() );
+				return RestAPI::getErrorSomethingIsWrong();
 		}
 
 		return is_wp_error( $response ) ? $response : new \WP_REST_Response( $response, 200 );
@@ -143,7 +143,7 @@ class SearchSelect extends WordPress\Main
 			return $pre;
 
 		if ( FALSE === $pre )
-			return new \WP_Error( 'something_is_wrong', gEditorial\Plugin::wrong() );
+			return RestAPI::getErrorSomethingIsWrong();
 
 		if ( is_null( $pre ) ) {
 
@@ -208,7 +208,7 @@ class SearchSelect extends WordPress\Main
 			return $pre;
 
 		if ( FALSE === $pre )
-			return new \WP_Error( 'something_is_wrong', gEditorial\Plugin::wrong() );
+			return RestAPI::getErrorSomethingIsWrong();
 
 		if ( is_null( $pre ) ) {
 
@@ -229,7 +229,7 @@ class SearchSelect extends WordPress\Main
 			$results = [];
 			$found   = count( $pre );
 
-			foreach( $pre as $term )
+			foreach ( $pre as $term )
 				$results[] = (object) [
 					'id'   => $term,
 					'text' => WordPress\Term::title( $term ),
@@ -281,7 +281,7 @@ class SearchSelect extends WordPress\Main
 			return $pre;
 
 		if ( FALSE === $pre )
-			return new \WP_Error( 'something_is_wrong', gEditorial\Plugin::wrong() );
+			return RestAPI::getErrorSomethingIsWrong();
 
 		if ( is_null( $pre ) ) {
 
@@ -309,7 +309,7 @@ class SearchSelect extends WordPress\Main
 			$results = [];
 			$found   = count( $pre );
 
-			foreach( $pre as $user )
+			foreach ( $pre as $user )
 				$results[] = (object) [
 					'id'   => $user,
 					'text' => WordPress\User::getTitleRow( $user ),

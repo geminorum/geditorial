@@ -380,7 +380,7 @@ class Venue extends gEditorial\Module
 	protected function render_tools_html( $uri, $sub )
 	{
 		return $this->paired_tools_render_tablelist( 'place_cpt', 'place_tax', NULL,
-			_x( 'Organization Tools', 'Header', 'geditorial-venue' ) );
+			_x( 'Venue Tools', 'Header', 'geditorial-venue' ) );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )

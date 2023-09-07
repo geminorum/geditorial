@@ -97,7 +97,7 @@ trait RestAPI
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/#permissions-callback
 	public function restapi_default_permission_callback( $request )
 	{
-		if ( defined( 'GEDITORIAL_DISABLE_AUTH' ) && GEDITORIAL_DISABLE_AUTH )
+		if ( self::const( 'GEDITORIAL_DISABLE_AUTH' ) )
 			return TRUE;
 
 		if ( ! current_user_can( 'read' ) && ! WordPress\User::isSuperAdmin() )

@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Tabloid extends gEditorial\Module
@@ -207,8 +208,11 @@ class Tabloid extends gEditorial\Module
 	{
 		$data = [];
 
-		if ( $route = WordPress\Post::getRestRoute( $post ) )
-			$data = WordPress\Rest::doInternalRequest( $route, [ 'context' => 'view' ] );
+		// if ( $route = WordPress\Post::getRestRoute( $post ) )
+		// 	$data = WordPress\Rest::doInternalRequest( $route, [ 'context' => 'view' ] );
+
+		if ( $response = Services\RestAPI::getPostResponse( $post, 'view' ) )
+			$data = $response;
 
 		// fallback if `title` is not supported by the posttype
 		if ( empty( $data['title'] ) )

@@ -493,7 +493,7 @@ class Helper extends WordPress\Main
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
-			], HTML::escape( $title ) ).$after;
+			], Core\HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
 			return Core\HTML::tag( 'span', [

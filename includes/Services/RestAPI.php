@@ -10,10 +10,20 @@ class RestAPI extends WordPress\Main
 
 	const BASE = 'geditorial';
 
-	public static function getErrorForbidden( $code = 'rest_forbidden', $status = 401 )
+	public static function getPostResponse( $post, $context = 'view' )
+	{
+		$response = FALSE;
+
+		if ( $route = WordPress\Post::getRestRoute( $post ) )
+			$response = WordPress\Rest::doInternalRequest( $route, [ 'context' => $context ] );
+
+		return apply_filters( static::BASE.'_restapi_post_response', $response, $post, $context, $route );
+	}
+
+	public static function getErrorForbidden( $code = NULL, $status = 401 )
 	{
 		return new \WP_Error(
-			$code,
+			$code ?? 'rest_forbidden',
 			esc_html_x( 'OMG you can not view private data.', 'Service: RestAPI: Error Forbidden', 'geditorial' ),
 			[
 				'status' => $status,
@@ -21,7 +31,7 @@ class RestAPI extends WordPress\Main
 		);
 	}
 
-	public static function getErrorArgNotEmpty( $key = NULL, $data = [], $code = 'rest_invalid_param', $status = NULL )
+	public static function getErrorArgNotEmpty( $key = NULL, $data = [], $code = NULL, $status = NULL )
 	{
 		$message = is_null( $key )
 			? _x( 'The argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' )
@@ -31,23 +41,39 @@ class RestAPI extends WordPress\Main
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code, $message, $data );
+		return new \WP_Error( $code ?? 'rest_invalid_param', $message, $data );
 	}
 
-	public static function getErrorNoPermission( $code = 'not_authorized', $message = NULL, $data = [], $status = 401 )
+	public static function getErrorNoPermission( $code = NULL, $message = NULL, $data = [], $status = 401 )
 	{
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code, $message ?? gEditorial\Plugin::denied( FALSE ), $data );
+		return new \WP_Error( $code ?? 'not_authorized', $message ?? gEditorial\Plugin::denied( FALSE ), $data );
 	}
 
-	public static function getErrorSomethingIsWrong( $code = 'no_correct_settings', $message = NULL, $data = [], $status = NULL )
+	public static function getErrorInvalidData( $code = NULL, $message = NULL, $data = [], $status = NULL )
 	{
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code, $message ?? gEditorial\Plugin::wrong( FALSE ), $data );
+		return new \WP_Error( $code ?? 'invalid_data_provided', $message ?? gEditorial\Plugin::invalid( FALSE ), $data );
+	}
+
+	public static function getErrorNotFound( $code = NULL, $message = NULL, $data = [], $status = 404 )
+	{
+		if ( ! is_null( $status ) )
+			$data['status'] = $status;
+
+		return new \WP_Error( $code ?? 'not_found', $message ?? __( 'Not Available', 'geditorial' ), $data );
+	}
+
+	public static function getErrorSomethingIsWrong( $code = NULL, $message = NULL, $data = [], $status = NULL )
+	{
+		if ( ! is_null( $status ) )
+			$data['status'] = $status;
+
+		return new \WP_Error( $code ?? 'no_correct_settings', $message ?? gEditorial\Plugin::wrong( FALSE ), $data );
 	}
 
 	public static function defineArgument_postid( $description = NULL, $required = TRUE, $validate = NULL )

@@ -877,7 +877,7 @@ class ShortCode extends WordPress\Main
 		else
 			$query['post_status'] = [ 'publish' ];
 
-		if ( 'attached' == $list ) {
+		if ( 'attached' === $list ) {
 
 			$query['post_type'] = 'attachment';
 			$query['post_status'] = [ 'inherit' ];
@@ -891,9 +891,9 @@ class ShortCode extends WordPress\Main
 			if ( ! $args['orderby'] )
 				$query['orderby'] = 'menu_order';
 
-		} else if ( 'connected' == $list ) {
+		} else if ( 'connected' === $list ) {
 
-			if ( is_post_type_archive( $posttype ) ) {
+			if ( $posttype && is_post_type_archive( $posttype ) ) {
 
 				$query['post_type'] = $posttype;
 
@@ -909,7 +909,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'all' == $args['id'] ) {
 
-			if ( empty( $query['post_type'] ) )
+			if ( $posttype && empty( $query['post_type'] ) )
 				$query['post_type'] = $posttype;
 
 		} else if ( $args['id'] ) {
@@ -938,11 +938,11 @@ class ShortCode extends WordPress\Main
 				'terms'    => [ $term->term_id ],
 			] ];
 
-		} else if ( is_post_type_archive( $posttype ) ) {
+		} else if ( $posttype && is_post_type_archive( $posttype ) ) {
 
 			$query['post_type'] = $posttype;
 
-		} else if ( is_tax( $taxonomy ) ) {
+		} else if ( $taxonomy && is_tax( $taxonomy ) ) {
 
 			if ( ! $term = get_queried_object() )
 				return $content;
@@ -952,7 +952,7 @@ class ShortCode extends WordPress\Main
 				'terms'    => [ $term->term_id ],
 			] ];
 
-		} else if ( 'paired' == $list && is_singular( $posttype ) ) {
+		} else if ( 'paired' === $list && $posttype && is_singular( $posttype ) ) {
 
 			// gets the list of supported posts paired to this post
 
@@ -1011,7 +1011,7 @@ class ShortCode extends WordPress\Main
 			$query['post__in'] = $paired_posts;
 			$query['ignore_sticky_posts'] = TRUE;
 
-		} else if ( 'paired' == $list || ( 'assigned' == $list && is_singular( $posttype ) ) ) {
+		} else if ( 'paired' === $list || ( 'assigned' === $list && $posttype && is_singular( $posttype ) ) ) {
 
 			// gets the list of posts by the taxonomy
 
@@ -1029,7 +1029,7 @@ class ShortCode extends WordPress\Main
 
 			$skip = TRUE; // maybe queried itself!
 
-		} else if ( 'assigned' == $list ) {
+		} else if ( 'assigned' === $list ) {
 
 			return $content;
 		}
