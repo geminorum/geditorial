@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PairedCore
@@ -39,6 +40,68 @@ trait PairedCore
 			$constants[3] = FALSE;
 
 		return $constants;
+	}
+
+	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
+	{
+		if ( is_null( $supported ) )
+			$supported = $this->posttypes();
+
+		if ( count( $supported ) ) {
+
+			if ( $subterm && $this->get_setting( 'subterms_support' ) )
+				$this->register_taxonomy( $subterm, [
+					'public'            => ! $private,
+					'rewrite'           => $private ? FALSE : NULL,
+					'hierarchical'      => TRUE,
+					'meta_box_cb'       => NULL,
+					'show_admin_column' => FALSE,
+					'show_in_nav_menus' => TRUE,
+				], array_merge( $supported, [ $this->constant( $posttype ) ] ) );
+
+			$this->register_taxonomy( $paired, [
+				Services\Paired::PAIRED_POSTTYPE_PROP => $this->constant( $posttype ),
+
+				'public'       => ! $private,
+				'rewrite'      => $private ? FALSE : NULL,
+				'show_ui'      => FALSE,
+				'show_in_rest' => FALSE,
+				'hierarchical' => TRUE,
+
+				// the paired taxonomies are often in plural
+				// FIXME: WTF: conflict on the posttype rest base!
+				// 'rest_base'    => $this->constant( $paired.'_slug', str_replace( '_', '-', $this->constant( $paired ) ) ),
+
+			], array_merge( $supported, [ $this->constant( $posttype ) ] ) );
+
+			$this->_paired = $this->constant( $paired );
+			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
+		}
+
+		if ( $primary && ! array_key_exists( 'primary_taxonomy', $extra ) )
+			$extra['primary_taxonomy'] = $this->constant( $primary );
+
+		$object = $this->register_posttype( $posttype, array_merge( [
+			Services\Paired::PAIRED_TAXONOMY_PROP  => $this->_paired,
+			Services\Paired::PAIRED_SUPPORTED_PROP => $supported,
+
+			'public'            => ! $private,
+			'hierarchical'      => TRUE,
+			'show_in_nav_menus' => TRUE,
+			'show_in_admin_bar' => FALSE,
+			'rewrite'           => $private ? FALSE : [
+				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
+				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
+			],
+		], $extra ) );
+
+		if ( self::isError( $object ) )
+			return $object;
+
+		if ( method_exists( $this, 'pairedrest_register_rest_route' ) )
+			$this->pairedrest_register_rest_route( $object );
+
+		return $object;
 	}
 
 	/**
