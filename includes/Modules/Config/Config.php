@@ -84,7 +84,7 @@ class Config extends gEditorial\Module
 		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
 		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
 
-		if ( self::const( 'GEDITORIAL_THRIFT_MODE' ) )
+		if ( $this->is_thrift_mode() )
 			return;
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {

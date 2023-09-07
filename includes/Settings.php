@@ -350,6 +350,16 @@ class Settings extends Core\Base
 		return '<span class="-field-after -icon-wrap">'.$html.'</span>';
 	}
 
+	public static function getSetting_thrift_mode( $description = NULL )
+	{
+		return [
+			'field'       => 'thrift_mode',
+			'type'        => 'disabled',
+			'title'       => _x( 'Thrift Mode', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?? _x( 'Tries to be more careful with system resources!', 'Settings: Setting Description', 'geditorial' ),
+		];
+	}
+
 	public static function getSetting_editor_button( $description = NULL )
 	{
 		return [

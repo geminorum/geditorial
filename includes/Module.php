@@ -3383,4 +3383,12 @@ class Module extends WordPress\Module
 	{
 		return $this->process_disabled[$context] = FALSE;
 	}
+
+	public function is_thrift_mode()
+	{
+		if ( self::const( 'GEDITORIAL_THRIFT_MODE' ) )
+			return TRUE;
+
+		return $this->get_setting( 'thrift_mode', FALSE );
+	}
 }

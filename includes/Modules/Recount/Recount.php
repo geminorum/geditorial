@@ -30,12 +30,7 @@ class Recount extends gEditorial\Module
 		return [
 			'taxonomies_option' => 'taxonomies_option',
 			'_general' => [
-				[
-					'field'       => 'thrift_mode',
-					'type'        => 'disabled',
-					'title'       => _x( 'Thrift Mode', 'Setting Title', 'geditorial-recount' ),
-					'description' => _x( 'Delays counting till needed!', 'Setting Description', 'geditorial-recount' ),
-				],
+				'thrift_mode',
 				[
 					'field'       => 'count_on_display',
 					'title'       => _x( 'Count on Display', 'Setting Title', 'geditorial-recount' ),
@@ -49,7 +44,7 @@ class Recount extends gEditorial\Module
 	{
 		parent::init();
 
-		if ( ! $this->get_setting( 'thrift_mode' ) )
+		if ( ! $this->is_thrift_mode() )
 			$this->action( 'edit_term_taxonomy', 10, 2 );
 
 		// TODO: maybe hook to `added_term_relationship` action
