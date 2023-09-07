@@ -13,7 +13,7 @@ class Entry extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
-	use Internals\CoreTemplate;
+	use Internals\TemplatePostType;
 
 	protected $priority_template_include = 9;
 
@@ -284,15 +284,17 @@ class Entry extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'primary_posttype' ) );
+		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ) );
 	}
 
-	public function template_get_archive_content_default()
+	public function templateposttype_get_archive_content_default( $posttype )
 	{
 		$html = $this->get_search_form( 'primary_posttype' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
-			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [ 'post_type' => $this->constant( 'primary_posttype' ) ] );
+			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
+				'post_type' => $posttype, // $this->constant( 'primary_posttype' )
+			] );
 
 		else
 			$html.= $this->main_shortcode( [

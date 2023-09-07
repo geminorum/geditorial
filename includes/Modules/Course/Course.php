@@ -17,10 +17,10 @@ class Course extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
-	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedTools;
+	use Internals\TemplatePostType;
 
 	public static function module()
 	{
@@ -397,10 +397,10 @@ class Course extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'course_cpt' ), FALSE );
+		return $this->templateposttype__include( $template, $this->constant( 'course_cpt' ), FALSE );
 	}
 
-	public function template_get_archive_content_default()
+	public function templateposttype_get_archive_content_default( $posttype )
 	{
 		return ModuleTemplate::spanTiles();
 	}

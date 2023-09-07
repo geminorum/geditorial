@@ -9,7 +9,7 @@ class Symposium extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
-	use Internals\CoreTemplate;
+	use Internals\TemplatePostType;
 
 	public static function module()
 	{
@@ -185,7 +185,7 @@ class Symposium extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'session_posttype' ), FALSE );
+		return $this->templateposttype__include( $template, $this->constant( 'session_posttype' ), FALSE );
 	}
 
 	public function dashboard_glance_items( $items )

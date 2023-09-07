@@ -20,7 +20,6 @@ class Organization extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
-	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedImports; // FIXME: commit the internal
@@ -28,6 +27,7 @@ class Organization extends gEditorial\Module
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
+	use Internals\TemplatePostType;
 
 	public static function module()
 	{
@@ -400,7 +400,7 @@ class Organization extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'primary_posttype' ), FALSE );
+		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ), FALSE );
 	}
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )

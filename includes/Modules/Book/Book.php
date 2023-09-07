@@ -16,7 +16,6 @@ class Book extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
-	use Internals\CoreTemplate;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;
 	use Internals\PairedAdmin;
@@ -24,6 +23,7 @@ class Book extends gEditorial\Module
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostsToPosts;
+	use Internals\TemplatePostType;
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
 
@@ -731,15 +731,17 @@ class Book extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'publication_cpt' ) );
+		return $this->templateposttype__include( $template, $this->constant( 'publication_cpt' ) );
 	}
 
-	public function template_get_archive_content_default()
+	public function templateposttype_get_archive_content_default( $posttype )
 	{
 		$html = $this->get_search_form( 'publication_cpt' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
-			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [ 'post_type' => $this->constant( 'publication_cpt' ) ] );
+			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
+				'post_type' => $posttype, // $this->constant( 'publication_cpt' )
+			] );
 
 		else
 			$html.= $this->subject_shortcode( [

@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 
 class Archives extends gEditorial\Module
 {
-	use Internals\CoreTemplate;
+	use Internals\TemplatePostType;
 
 	protected $disable_no_customs = TRUE;
 	protected $priority_init      = 99;    // after all taxonomies registered
@@ -293,7 +293,7 @@ class Archives extends gEditorial\Module
 				'post_type'  => $posttype,
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
-			], [ $this, 'template_archive_content' ] );
+			], [ $this, 'templateposttype_archive_content' ] );
 
 			$this->template_include_extra( 'archive-entry' );
 
@@ -334,7 +334,7 @@ class Archives extends gEditorial\Module
 		return $title;
 	}
 
-	public function template_get_archive_title( $posttype )
+	public function templateposttype_get_archive_title( $posttype )
 	{
 		return _get_posttype_archive_title( $posttype );
 	}
@@ -347,7 +347,7 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'posttype_archive_title', $custom ?: $default, $posttype );
 	}
 
-	public function template_get_archive_content()
+	public function templateposttype_get_archive_content( $posttype )
 	{
 		$setting = $this->get_setting( 'posttype_'.$this->current_queried.'_content',
 			$this->_get_default_posttype_content( $this->current_queried ) );

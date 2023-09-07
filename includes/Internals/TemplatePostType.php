@@ -3,27 +3,36 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
-trait CoreTemplate
+trait TemplatePostType
 {
 
-	protected function coretemplate__include_for_posttype( $template, $posttype, $empty_callback = NULL, $archive_callback = NULL )
+	protected function templateposttype__include( $template, $posttypes, $empty_callback = NULL, $archive_callback = NULL )
 	{
+		global $wp_query;
+
+		if ( ! isset( $wp_query ) )
+			return $template;
+
 		if ( ! $this->get_setting( 'archive_override', TRUE ) )
 			return $template;
 
-		if ( is_embed() || is_search() )
+		if ( $wp_query->is_embed() || $wp_query->is_search() )
 			return $template;
 
-		if ( $posttype != $GLOBALS['wp_query']->get( 'post_type' ) )
+		if ( ! $posttype = $wp_query->get( 'post_type' ) )
 			return $template;
 
-		if ( ! is_404() && ! is_post_type_archive( $posttype ) )
+		if ( ! in_array( $posttype, (array) $posttypes, TRUE ) )
 			return $template;
 
-		if ( is_404() ) {
+		if ( ! $wp_query->is_404() && ! $wp_query->is_post_type_archive( $posttype ) )
+			return $template;
+
+		if ( $wp_query->is_404() ) {
 
 			// if new posttype disabled
 			if ( FALSE === $empty_callback )
@@ -34,14 +43,14 @@ trait CoreTemplate
 				return $template;
 
 			if ( is_null( $empty_callback ) )
-				$empty_callback = [ $this, 'template_empty_content' ];
+				$empty_callback = [ $this, 'templateposttype_empty_content' ];
 
 			nocache_headers();
 			// Core\WordPress::doNotCache();
 
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
-				'post_title' => $this->template_get_empty_title(),
+				'post_title' => $this->templateposttype_get_empty_title( $posttype ),
 				'post_type'  => $posttype,
 				'is_single'  => TRUE,
 				'is_404'     => TRUE,
@@ -55,11 +64,11 @@ trait CoreTemplate
 		} else {
 
 			if ( is_null( $archive_callback ) )
-				$archive_callback = [ $this, 'template_archive_content' ];
+				$archive_callback = [ $this, 'templateposttype_archive_content' ];
 
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
-				'post_title' => $this->template_get_archive_title( $posttype ),
+				'post_title' => $this->templateposttype_get_archive_title( $posttype ),
 				'post_type'  => $posttype,
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
@@ -78,17 +87,14 @@ trait CoreTemplate
 
 		$this->enqueue_styles();
 
-		defined( 'GNETWORK_DISABLE_CONTENT_ACTIONS' )
-			or define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-
-		defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
-			or define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
+		self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
+		self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 
 		return $template;
 	}
 
 	// DEFAULT METHOD: title for overrided empty page
-	public function template_get_empty_title( $fallback = NULL )
+	public function templateposttype_get_empty_title( $posttype, $fallback = NULL )
 	{
 		if ( $title = Core\URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
 			return $title;
@@ -100,7 +106,7 @@ trait CoreTemplate
 	}
 
 	// DEFAULT METHOD: content for overrided empty page
-	public function template_get_empty_content( $atts = [] )
+	public function templateposttype_get_empty_content( $posttype, $atts = [] )
 	{
 		if ( $content = $this->get_setting( 'empty_content' ) )
 			return Core\Text::autoP( trim( $content ) );
@@ -109,7 +115,7 @@ trait CoreTemplate
 	}
 
 	// DEFAULT METHOD: title for overrided archive page
-	public function template_get_archive_title( $posttype )
+	public function templateposttype_get_archive_title( $posttype )
 	{
 		return $this->get_setting_fallback( 'archive_title',
 			Helper::getPostTypeLabel( $posttype, 'all_items' ) );
@@ -126,9 +132,8 @@ trait CoreTemplate
 		return $this->get_setting_fallback( 'archive_title', $name );
 	}
 
-
 	// DEFAULT METHOD: content for overrided archive page
-	public function template_get_archive_content()
+	public function templateposttype_get_archive_content( $posttype )
 	{
 		$setting = $this->get_setting_fallback( 'archive_content', NULL );
 
@@ -136,12 +141,14 @@ trait CoreTemplate
 			return $setting; // might be empty string
 
 		// NOTE: here to avoid further process
-		if ( $default = $this->template_get_archive_content_default() )
+		if ( $default = $this->templateposttype_get_archive_content_default( $posttype ) )
 			return $default;
+
+		// TODO: add widget area
 
 		if ( is_post_type_archive() )
 			return ShortCode::listPosts( 'assigned',
-				WordPress\PostType::current(),
+			$posttype, // WordPress\PostType::current(),
 				'',
 				[
 					'orderby' => 'menu_order', // WTF: must apply to `assigned`
@@ -155,13 +162,13 @@ trait CoreTemplate
 		return '';
 	}
 
-	public function template_get_archive_content_default()
+	public function templateposttype_get_archive_content_default( $posttype )
 	{
 		return '';
 	}
 
 	// DEFAULT METHOD: button for overrided empty/archive page
-	public function template_get_add_new( $posttype, $title = FALSE, $label = NULL )
+	public function templateposttype_get_add_new( $posttype, $title = FALSE, $label = NULL )
 	{
 		$object = WordPress\PostType::object( $posttype );
 
@@ -170,7 +177,7 @@ trait CoreTemplate
 
 		// FIXME: must check if post is unpublished
 
-		return HTML::tag( 'a', [
+		return Core\HTML::tag( 'a', [
 			'href'          => Core\WordPress::getPostNewLink( $object->name, [ 'post_title' => $title ] ),
 			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$object->name ],
 			'target'        => '_blank',
@@ -178,27 +185,30 @@ trait CoreTemplate
 		], $label ?: $object->labels->add_new_item );
 	}
 
-	// DEFAULT FILTER
-	public function template_empty_content( $content )
+	// will hook to `the_content` filter on 404
+	public function templateposttype_empty_content( $content )
 	{
 		if ( ! $post = WordPress\Post::get() )
 			return $content;
 
-		$title = $this->template_get_empty_title( '' );
-		$html  = $this->template_get_empty_content();
+		$title = $this->templateposttype_get_empty_title( $post->post_type, '' );
+		$html  = $this->templateposttype_get_empty_content( $post->post_type );
 		$html .= $this->get_search_form( [ 'post_type[]' => $post->post_type ], $title );
 
 		// TODO: list other entries that linked to this title via content
 
-		if ( $add_new = $this->template_get_add_new( $post->post_type, $title ) )
+		if ( $add_new = $this->templateposttype_get_add_new( $post->post_type, $title ) )
 			$html.= '<p class="-actions">'.$add_new.'</p>';
 
 		return Core\HTML::wrap( $html, $this->base.'-empty-content' );
 	}
 
-	// DEFAULT FILTER
-	public function template_archive_content( $content )
+	// will hook to `the_content` filter on archive
+	public function templateposttype_archive_content( $content )
 	{
-		return Core\HTML::wrap( $this->template_get_archive_content(), $this->base.'-archive-content' );
+		return Core\HTML::wrap(
+			$this->templateposttype_get_archive_content( get_query_var( 'post_type' ) ),
+			$this->base.'-archive-content'
+		);
 	}
 }

@@ -14,11 +14,11 @@ class Venue extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
-	use Internals\CoreTemplate;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
+	use Internals\TemplatePostType;
 
 	public static function module()
 	{
@@ -326,15 +326,17 @@ class Venue extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->coretemplate__include_for_posttype( $template, $this->constant( 'place_cpt' ) );
+		return $this->templateposttype__include( $template, $this->constant( 'place_cpt' ) );
 	}
 
-	public function template_get_archive_content_default()
+	public function templateposttype_get_archive_content_default( $posttype )
 	{
 		$html = $this->get_search_form( 'place_cpt' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
-			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [ 'post_type' => $this->constant( 'place_cpt' ) ] );
+			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
+				'post_type' => $posttype, // $this->constant( 'place_cpt' ),
+			] );
 
 		else
 			$html.= $this->place_shortcode( [
