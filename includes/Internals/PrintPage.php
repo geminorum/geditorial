@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 trait PrintPage
@@ -13,17 +15,31 @@ trait PrintPage
 		$this->render_content_printpage();
 	}
 
+	public function load_printpage_adminpage()
+	{
+		$this->action_self( 'printpage_render_head', 1 );
+		$this->action_self( 'printpage_render_contents', 1 );
+	}
+
+	public function printpage_render_head( $profile = FALSE ) {}
+	public function printpage_render_contents( $profile = FALSE ) {}
+
 	public function render_content_printpage()
 	{
-		$head_callback = [ $this, 'render_print_head' ];
-		$head_title    = $this->get_print_layout_pagetitle();
-		$body_class    = $this->get_print_layout_bodyclass();
-		$rtl           = is_rtl();
+		$profile = WordPress\Post::get( self::req( 'profile', FALSE ) );
+
+		$head_callback = [ $this, 'printpage__render_head' ];
+		$head_title    = $this->printpage__get_layout_pagetitle( $profile );
+		$body_class    = $this->printpage__get_layout_bodyclass( $profile );
+		$wrap_class    = $this->printpage__get_layout_wrapclass( $profile );
+
+		$rtl  = is_rtl();
+		$lang = get_bloginfo( 'language', 'display' );
 
 		if ( $header = Helper::getLayout( 'print.header' ) )
 			require_once $header; // to expose scope vars
 
-		$this->actions( 'print_contents' );
+		$this->actions( 'printpage_render_contents', $profile );
 
 		if ( $footer = Helper::getLayout( 'print.footer' ) )
 			require_once $footer; // to expose scope vars
@@ -31,21 +47,52 @@ trait PrintPage
 		exit; // avoiding query monitor output
 	}
 
-	protected function render_print_head()
+	protected function printpage__render_head( $profile = FALSE )
 	{
-		$this->actions( 'print_head' );
+		// https://github.com/graphicore/librebarcode
+		// https://graphicore.github.io/librebarcode/
+		if ( $this->get_setting( 'printpage_enqueue_librefonts' ) ) {
+			Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-ean13-text/index.css', GEDITORIAL_VERSION, 'all' );
+			Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128-text/index.css', GEDITORIAL_VERSION, 'all' );
+			Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128/index.css', GEDITORIAL_VERSION, 'all' );
+		}
+
+		$this->actions( 'printpage_render_head', $profile );
 	}
 
-	protected function get_print_layout_pagetitle()
+	protected function printpage__get_layout_pagetitle( $profile = FALSE )
 	{
-		return $this->filters( 'print_layout_pagetitle',
-			_x( 'Print Me!', 'Module', 'geditorial' ) );
+		if ( method_exists( $this, 'printpage_get_layout_pagetitle' ) )
+			$pagettitle = $this->printpage_get_layout_pagetitle( $profile );
+
+		else
+			$pagettitle = WordPress\Post::title( $profile );
+
+		return $this->filters( 'printpage_layout_pagetitle',
+			$pagettitle ?? _x( 'Print Me!', 'Internal: PrintPage: Page Title', 'geditorial' ), $profile );
 	}
 
-	protected function get_print_layout_bodyclass( $extra = [] )
+	protected function printpage__get_layout_bodyclass( $profile = FALSE, $extra = [] )
 	{
-		return $this->filters( 'print_layout_bodyclass',
-			Core\HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $extra ) );
+		if ( method_exists( $this, 'printpage_get_layout_bodyclass' ) )
+			$list = $this->printpage_get_layout_bodyclass( $profile );
+		else
+			$list = [];
+
+		return $this->filters( 'printpage_layout_bodyclass',
+			Core\HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $list, $extra ), $profile );
+	}
+
+	// FIXME: handle padding
+	protected function printpage__get_layout_wrapclass( $profile = FALSE, $extra = [] )
+	{
+		if ( method_exists( $this, 'printpage_get_layout_wrapclass' ) )
+			$list = $this->printpage_get_layout_wrapclass( $profile );
+		else
+			$list = [];
+
+		return $this->filters( 'printpage_layout_wrapclass',
+			Core\HTML::prepClass( 'wrap', $list, $extra ), $profile );
 	}
 
 	protected function get_printpage_url( $extra = [], $context = 'printpage' )

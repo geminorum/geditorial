@@ -968,6 +968,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_printpage_enqueue_librefonts( $description = NULL )
+	{
+		return [
+			'field'       => 'printpage_enqueue_librefonts',
+			'title'       => _x( 'Enqueue Libre Fonts', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Loads Libre Barcode fonts on print page html head.', 'Settings: Setting Description', 'geditorial' ),
+			'after'       => self::fieldAfterIcon( 'https://graphicore.github.io/librebarcode/' ),
+		];
+	}
+
 	public static function sub( $default = 'general' )
 	{
 		return trim( self::req( 'sub', $default ) );
