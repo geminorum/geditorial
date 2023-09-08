@@ -1385,27 +1385,6 @@ class Module extends WordPress\Module
 		Settings::fieldType( $args, $this->scripts );
 	}
 
-	public function do_posttype_field( $atts = [], $post = NULL )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return;
-
-		$args = array_merge( [
-			'option_base'  => $this->hook(),
-			'option_group' => 'fields',
-			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
-			'cap'          => TRUE,
-		], $atts );
-
-		if ( ! array_key_exists( 'options', $args ) )
-			$args['options'] = get_post_meta( $post->ID ); //  $this->get_postmeta_legacy( $post->ID );
-
-		if ( empty( $args['cap'] ) )
-			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
-
-		Settings::fieldType( $args, $this->scripts );
-	}
-
 	public function settings_print_scripts()
 	{
 		if ( $this->scripts_printed )

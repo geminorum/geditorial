@@ -327,6 +327,7 @@ class Config extends gEditorial\Module
 		Info::renderNoReportsAvailable();
 	}
 
+	// TODO: add button to use `wp_set_options_autoload()`
 	protected function render_tools_html( $uri, $sub )
 	{
 		if ( ! $this->cuc( 'tools' ) )

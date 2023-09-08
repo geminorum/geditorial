@@ -106,6 +106,7 @@ class Scripts extends WordPress\Main
 		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_enqueue_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
+		wp_script_add_data( $handle, 'strategy', 'defer' );
 
 		return $handle;
 	}
@@ -197,6 +198,8 @@ class Scripts extends WordPress\Main
 			wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
 		}
 
+		wp_script_add_data( $handle, 'strategy', 'defer' );
+
 		return $handle;
 	}
 
@@ -219,6 +222,8 @@ class Scripts extends WordPress\Main
 
 		else
 			wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
+
+		wp_script_add_data( $handle, 'strategy', 'defer' );
 
 		return $handle;
 	}

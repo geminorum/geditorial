@@ -15,6 +15,8 @@ class AdvancedQueries extends Main
 	{
 		// WORKING BUT DISABLED
 		// add_filter( 'posts_where', [ __CLASS__, 'posts_where_metakey_like' ] );
+
+		// add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts_empty_compare' ] );
 	}
 
 	// @REF: https://stackoverflow.com/a/64184587
@@ -79,5 +81,38 @@ class AdvancedQueries extends Main
 		}
 
 		return $search;
+	}
+
+	/**
+	 * Sets empty compare with `IN` on Meta Query
+	 * This will set the value of the meta-query to [-1], if the value is empty.
+	 * @source https://core.trac.wordpress.org/ticket/33341#comment:5
+	 *
+	 * @param  object $query
+	 * @return void
+	 */
+	public static function pre_get_posts_empty_compare( &$query )
+	{
+		$the_meta_query = $query->get( 'meta_query' );
+
+		if ( is_array( $the_meta_query ) ) {
+
+			foreach ( $the_meta_query as $id => $meta_query ) {
+
+				if ( isset( $meta_query['compare'] )
+					&& isset( $meta_query ['value'] ) ) {
+
+					if ( 'IN' === $meta_query['compare'] ) {
+
+						if ( empty( $meta_query['value'] ) ) {
+
+							$the_meta_query[$id]['value'] = [ -1 ];
+
+							$query->set( 'meta_query', $the_meta_query );
+						}
+					}
+				}
+			}
+		}
 	}
 }

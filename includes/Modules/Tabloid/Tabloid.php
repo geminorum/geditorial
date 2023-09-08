@@ -208,9 +208,6 @@ class Tabloid extends gEditorial\Module
 	{
 		$data = [];
 
-		// if ( $route = WordPress\Post::getRestRoute( $post ) )
-		// 	$data = WordPress\Rest::doInternalRequest( $route, [ 'context' => 'view' ] );
-
 		if ( $response = Services\RestAPI::getPostResponse( $post, 'view' ) )
 			$data = $response;
 
