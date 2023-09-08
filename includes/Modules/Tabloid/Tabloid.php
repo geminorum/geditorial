@@ -249,6 +249,14 @@ class Tabloid extends gEditorial\Module
 		$data['__can_print']  = $this->role_can( 'print' );
 		$data['__can_export'] = $this->role_can( 'export' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
+		$data['___hooks']     = array_fill_keys( [
+			'after-actions',
+			'after-post',
+			'after-meta',
+			'after-term',
+			'after-custom',
+			'after-content',
+		], '' );
 
 		return $this->filters( 'view_data', $data, $post, $context );
 	}
@@ -260,6 +268,7 @@ class Tabloid extends gEditorial\Module
 
 		unset( $data['_links'] );
 
+		unset( $data['__hooks'] );
 		unset( $data['__summaries'] );
 		unset( $data['__direction'] );
 		unset( $data['__can_debug'] );
