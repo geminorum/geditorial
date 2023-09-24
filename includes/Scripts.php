@@ -353,7 +353,7 @@ class Scripts extends WordPress\Main
 
 	// @REF: https://github.com/mbraak/jqTree
 	// @REF: http://mbraak.github.io/jqTree/
-	public static function pkgJqTree( $enqueue = FALSE, $ver = '1.7.1' )
+	public static function pkgJqTree( $enqueue = FALSE, $ver = '1.7.3' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'jqtree', 'jqtree/tree.jquery', [ 'jquery' ], $ver )
