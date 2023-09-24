@@ -8,7 +8,10 @@ use geminorum\gEditorial\WordPress;
 class Scripts extends WordPress\Main
 {
 
-	const BASE = 'geditorial';
+	const BASE    = 'geditorial';
+	const PATH    = GEDITORIAL_DIR;
+	const URL     = GEDITORIAL_URL;
+	const VERSION = GEDITORIAL_VERSION;
 
 	public static function noScriptMessage()
 	{
@@ -32,19 +35,19 @@ class Scripts extends WordPress\Main
 		], $html ?: '' );
 	}
 
-	public static function enqueueApp( $name, $dependencies = [], $version = NULL, $path = 'assets/apps', $base_path = GEDITORIAL_DIR, $base_url = GEDITORIAL_URL )
+	public static function enqueueApp( $name, $dependencies = [], $version = NULL, $path = 'assets/apps', $base_path = NULL, $base_url = NULL )
 	{
 		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $name ) );
 
-		$script = sprintf( '%s%s/%s/build/main.js', $base_url, $path, $name );
-		$style  = sprintf( '%s%s/%s/build/main.css', $base_url, $path, $name );
-		$asset  = sprintf( '%s%s/%s/build/main.asset.php', $base_path, $path, $name );
+		$script = sprintf( '%s%s/%s/build/main.js', $base_url ?? static::URL, $path, $name );
+		$style  = sprintf( '%s%s/%s/build/main.css', $base_url ?? static::URL, $path, $name );
+		$asset  = sprintf( '%s%s/%s/build/main.asset.php', $base_path ?? static::PATH, $path, $name );
 
 		$config = is_readable( $asset )
 			? require( $asset )
 			: [
 				'dependencies' => [],
-				'version'      => $version ?? GEDITORIAL_VERSION,
+				'version'      => $version ?? static::VERSION,
 			];
 
 		wp_enqueue_style( $handle, $style, [], $config['version'], 'all' );
@@ -56,11 +59,11 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
-	public static function enqueueStyle( $asset, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/css', $media = 'all' )
+	public static function enqueueStyle( $asset, $dep = [], $version = NULL, $base = NULL, $path = 'assets/css', $media = 'all' )
 	{
 		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
 
-		wp_enqueue_style( $handle, $base.$path.'/'.$asset.'.css', $dep, $version, $media );
+		wp_enqueue_style( $handle, ( $base ?? static::URL ).$path.'/'.$asset.'.css', $dep, $version ?? static::VERSION, $media );
 		wp_style_add_data( $handle, 'rtl', 'replace' );
 
 		return $handle;
@@ -82,51 +85,51 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
-	public static function enqueue( $asset, $dep = [ 'jquery' ], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js' )
+	public static function enqueue( $asset, $dep = [ 'jquery' ], $version = NULL, $base = NULL, $path = 'assets/js' )
 	{
 		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
-		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
-		wp_enqueue_script( $handle, $base.$path.'/'.$asset.$variant.'.js', $dep, $version, TRUE );
+		wp_enqueue_script( $handle, ( $base ?? static::URL ).$path.'/'.$asset.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
 
 		return $handle;
 	}
 
-	public static function enqueueVendor( $asset, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/js/vendor' )
+	public static function enqueueVendor( $asset, $dep = [], $version = NULL, $base = NULL, $path = 'assets/js/vendor' )
 	{
 		return self::enqueue( $asset, $dep, $version, $base, $path );
 	}
 
-	public static function enqueuePackage( $asset, $package = NULL, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/packages' )
+	public static function enqueuePackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
 		if ( is_null( $package ) )
 			$package = $asset.'/'.$asset;
 
 		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
-		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
-		wp_enqueue_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
+		wp_enqueue_script( $handle, ( $base ?? static::URL ).$path.'/'.$package.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
 		wp_script_add_data( $handle, 'strategy', 'defer' );
 
 		return $handle;
 	}
 
-	public static function registerPackage( $asset, $package = NULL, $dep = [], $version = GEDITORIAL_VERSION, $base = GEDITORIAL_URL, $path = 'assets/packages' )
+	public static function registerPackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
 		if ( is_null( $package ) )
 			$package = $asset.'/'.$asset;
 
 		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
-		$variant = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
-		wp_register_script( $handle, $base.$path.'/'.$package.$variant.'.js', $dep, $version, TRUE );
+		wp_register_script( $handle, ( $base ?? static::URL ).$path.'/'.$package.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
 
 		return $handle;
 	}
 
-	public static function getPrintStylesURL( $name = 'general', $base = GEDITORIAL_URL, $path = 'assets/css' )
+	public static function getPrintStylesURL( $name = 'general', $base = NULL, $path = 'assets/css' )
 	{
-		return sprintf( '%s%s/print.%s%s.css', $base, $path, $name, Core\HTML::rtl() ? '-rtl' : '' );
+		return sprintf( '%s%s/print.%s%s.css', $base ?? static::URL, $path, $name, Core\HTML::rtl() ? '-rtl' : '' );
 	}
 
 	// TODO: support all kinds of check-boxes!
@@ -189,13 +192,13 @@ class Scripts extends WordPress\Main
 
 		if ( $enqueue ) {
 
-			wp_enqueue_style( $handle, GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
-			wp_enqueue_script( $handle, GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
+			wp_enqueue_style( $handle, static::URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
+			wp_enqueue_script( $handle, static::URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
 
 		} else {
 
-			wp_register_style( $handle, GEDITORIAL_URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
-			wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
+			wp_register_style( $handle, static::URL.'assets/css/admin.colorbox.css', [], $ver, 'screen' );
+			wp_register_script( $handle, static::URL.'assets/packages/jquery-colorbox/jquery.colorbox-min.js', [ 'jquery' ], $ver, TRUE );
 		}
 
 		wp_script_add_data( $handle, 'strategy', 'defer' );
@@ -218,10 +221,10 @@ class Scripts extends WordPress\Main
 		$handle = 'xlsx'; // NOTE: no prefix to use as dep for apps.
 
 		if ( $enqueue )
-			wp_enqueue_script( $handle, GEDITORIAL_URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
+			wp_enqueue_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
 
 		else
-			wp_register_script( $handle, GEDITORIAL_URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
+			wp_register_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
 
 		wp_script_add_data( $handle, 'strategy', 'defer' );
 
