@@ -143,8 +143,11 @@ trait PostTypeFields
 				'rest'        => $field, // FALSE to disable
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
-				'access_view' => NULL, // @SEE: `$this->access_posttype_field()`
-				'access_edit' => NULL, // @SEE: `$this->access_posttype_field()`
+
+				'access_view'   => NULL,   // @SEE: `$this->access_posttype_field()`
+				'access_edit'   => NULL,   // @SEE: `$this->access_posttype_field()`
+				'access_export' => NULL,   // @SEE: `$this->access_posttype_field()`
+
 				'sanitize'    => NULL, // callback
 				'prep'        => NULL, // callback
 				'pattern'     => NULL, // HTML5 input pattern
@@ -194,7 +197,7 @@ trait PostTypeFields
 		if ( ! $field )
 			return FALSE; // no field, no access!
 
-		$context = in_array( $context, [ 'view', 'edit' ], TRUE ) ? $context : 'view';
+		$context = in_array( $context, [ 'view', 'edit', 'export' ], TRUE ) ? $context : 'view';
 		$access  = array_key_exists( 'access_'.$context, $field )
 			? $field['access_'.$context] : NULL;
 

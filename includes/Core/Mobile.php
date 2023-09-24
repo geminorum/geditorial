@@ -75,14 +75,13 @@ class Mobile extends Base
 
 			if ( Text::starts( $value, '+98' ) )
 				$value = '0'.Text::stripPrefix( $value, '+98' );
-
-			$value = Number::localize( $value );
 		}
 
 		switch ( $context ) {
-			case 'edit' : return $raw;
-			case 'print': return $value;
-			     default: return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+			case 'edit'  : return $raw;
+			case 'export': return $value;
+			case 'print' : return Number::localize( $value );
+			default      : return HTML::tel( $raw, $title ?: FALSE, Number::localize( $value ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
 
 		return $value;

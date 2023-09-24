@@ -1154,9 +1154,14 @@ class Meta extends gEditorial\Module
 				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 
 			case 'date_of_birth':
-				return $context == 'print'
-					? Datetime::prepForDisplay( trim( $raw ), 'Y/n/j' )
-					: Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
+
+				if ( 'print' === $context )
+					return Datetime::prepForDisplay( trim( $raw ), 'Y/n/j' );
+
+				if ( 'export' === $context )
+					return Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
+
+				return Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
 
 			case 'days' :
 				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'day' ) ),
@@ -1170,6 +1175,10 @@ class Meta extends gEditorial\Module
 		switch ( $field_args['type'] ) {
 
 			case 'identity':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta; // FIXME: zeroize
+
 				return sprintf( '<span class="-identity %s">%s</span>',
 					Core\Validation::isIdentityNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
 					$meta );

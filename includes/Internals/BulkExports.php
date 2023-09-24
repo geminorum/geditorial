@@ -108,7 +108,7 @@ trait BulkExports
 			}
 
 			foreach ( $fields as $field )
-				$row[] = Template::getMetaFieldRaw( $field, $post->ID, 'meta' ) ?: '';
+				$row[] = Template::getMetaField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE ) ?: '';
 
 			$saved = get_post_meta( $post->ID );
 
