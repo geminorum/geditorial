@@ -15,7 +15,11 @@ class Scripts extends WordPress\Main
 
 	public static function noScriptMessage()
 	{
-		echo Core\HTML::tag( 'noscript', '<strong>'._x( 'We\'re sorry but this application doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'Scripts: No Script Message', 'geditorial' ).'</strong>' );
+		echo Core\HTML::tag( 'noscript',
+			'<strong>'.
+				_x( 'We\'re sorry but this application doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'Scripts: No Script Message', 'geditorial' )
+			.'</strong>'
+		);
 	}
 
 	public static function renderAppMounter( $name, $module = FALSE, $html = NULL )

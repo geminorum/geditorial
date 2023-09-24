@@ -1338,7 +1338,6 @@ class MetaBox extends WordPress\Main
 		return Services\SearchSelect::enqueueSelect2();
 	}
 
-	// FIXME: WTF: if from same posttype then exclude current
 	public static function renderFieldPost( $field, $post = NULL, $module = NULL )
 	{
 		if ( empty( $field['name'] ) )

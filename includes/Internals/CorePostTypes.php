@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 trait CorePostTypes
 {
 
+	// TODO: support for `quick_edit_enabled_for_post_type`
 	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ], $block_editor = FALSE )
 	{
 		$posttype = $this->constant( $constant );
