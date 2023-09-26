@@ -586,7 +586,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['item_link'] && 'attachment' == $post->post_type && $args['item_download'] )
 				$item = Core\HTML::tag( 'a', [
 					'href'     => wp_get_attachment_url( $post->ID ),
-					'download' => apply_filters( static::BASE.'_shortcode_attachement_download', basename( get_attached_file( $post->ID ) ), $post ),
+					'download' => apply_filters( static::BASE.'_shortcode_attachment_download', basename( get_attached_file( $post->ID ) ), $post ),
 					'title'    => $attr,
 					'class'    => '-download',
 					'rel'      => 'attachment',
@@ -617,6 +617,7 @@ class ShortCode extends WordPress\Main
 			}
 		}
 
+		// TODO: use `WordPress\Media::getAttachmentFileSize()`
 		if ( 'attachment' == $post->post_type && $args['item_filesize'] ) {
 			$size = TRUE === $args['item_filesize'] ? '&nbsp;<span class="-filesize">(%s)</span>' : $args['item_filesize'];
 			$item.= sprintf( $size, Core\HTML::wrapLTR( Core\File::formatSize( filesize( get_attached_file( $post->ID ) ), 2 ) ) );

@@ -2854,7 +2854,6 @@ class Module extends WordPress\Module
 		return $request[$key];
 	}
 
-
 	// OLD: `get_linked_term()`
 	// TODO: move to `Internals\PairedCore`
 	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )

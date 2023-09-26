@@ -86,7 +86,6 @@ LEFT OUTER JOIN {$wpdb->term_relationships} ON {$wpdb->posts}.ID={$wpdb->term_re
 LEFT OUTER JOIN {$wpdb->term_taxonomy} USING (term_taxonomy_id)
 LEFT OUTER JOIN {$wpdb->terms} USING (term_id)
 SQL;
-
 		$pieces['where'].= $wpdb->prepare( " AND (taxonomy = %s OR taxonomy IS NULL)", $taxonomy );
 
 		$pieces['orderby'] = "GROUP_CONCAT({$wpdb->terms}.name ORDER BY name ASC) ";

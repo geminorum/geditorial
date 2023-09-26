@@ -876,7 +876,7 @@ class MetaBox extends WordPress\Main
 	}
 
 	/**
-	 * renders an general textarea tag for forms in a metabox
+	 * renders an general textarea tag for forms in a metabox.
 	 *
 	 * NOTE: HTML5 <textarea> element does not support the pattern attribute.
 	 *
