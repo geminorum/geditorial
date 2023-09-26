@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Module extends WordPress\Module
 {
+	use Internals\CoreIncludes;
 	use Internals\CorePostTypes;
 	use Internals\CoreTaxonomies;
 	use Internals\SettingsFields;
@@ -2777,15 +2778,6 @@ class Module extends WordPress\Module
 	{
 		$title = $this->get_column_title( $column, $constant, $fallback );
 		return sprintf( '<span class="-column-icon %3$s" title="%2$s">%1$s</span>', $title, esc_attr( $title ), $this->classs( $column ) );
-	}
-
-	protected function require_code( $filenames = 'Templates', $once = TRUE )
-	{
-		foreach ( (array) $filenames as $filename )
-			if ( $once )
-				require_once $this->path.$filename.'.php';
-			else
-				require $this->path.$filename.'.php';
 	}
 
 	public function is_save_post( $post, $constant = FALSE )
