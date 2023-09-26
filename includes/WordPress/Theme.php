@@ -7,12 +7,21 @@ use geminorum\gEditorial\Core;
 class Theme extends Core\Base
 {
 
-	// core duplicate with extra action/filter hooks
-	// @REF: `get_template_part()`
-	public static function getPart( $slug, $name = NULL, $locate = TRUE )
+	/**
+	 * Loads a template part into a template.
+	 * Core's duplicate with extra action hooks.
+	 * @source `get_template_part()`
+	 *
+	 * @param  string      $slug
+	 * @param  string|null $name
+	 * @param  bool        $locate
+	 * @param  array       $args
+	 * @return void|array  $templates
+	 */
+	public static function getPart( $slug, $name = NULL, $locate = TRUE, $args = [] )
 	{
-		$templates = array();
 		$name      = (string) $name;
+		$templates = [];
 
 		if ( '' !== $name )
 			$templates[] = "{$slug}-{$name}.php";
@@ -22,12 +31,12 @@ class Theme extends Core\Base
 		if ( ! $locate )
 			return $templates;
 
-		do_action( "get_template_part_{$slug}", $slug, $name, $templates );
-		do_action( 'get_template_part', $slug, $name, $templates );
+		do_action( "get_template_part_{$slug}", $slug, $name, $args );
+		do_action( 'get_template_part', $slug, $name, $templates, $args );
 
-		locate_template( $templates, TRUE, FALSE );
+		locate_template( $templates, TRUE, FALSE, $args );
 
-		do_action( "get_template_part_{$slug}_after", $slug, $name, $templates );
+		do_action( "get_template_part_{$slug}_after", $slug, $name, $templates, $args );
 	}
 
 	// @REF: `get_page_template()`
@@ -284,5 +293,19 @@ class Theme extends Core\Base
 		add_filter( 'get_edit_post_link', static function( $edit_link = '', $post_id = 0 ) {
 			return 0 === $post_id ? FALSE : $edit_link;
 		}, 10, 2 );
+	}
+
+	public static function render_template( $template, $post, $args = [] )
+	{
+		if ( ! $post = Post::get( $post ) )
+			return;
+
+		// @REF: https://developer.wordpress.org/?p=2837#comment-874
+		$GLOBALS['post'] = $post;
+		setup_postdata( $post );
+
+		load_template( $template, FALSE, $args );
+
+		wp_reset_postdata(); // since callback used setup post data
 	}
 }

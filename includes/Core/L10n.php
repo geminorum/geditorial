@@ -63,10 +63,17 @@ class L10n extends Base
 		return $info;
 	}
 
-	// @REF: https://en.wikipedia.org/wiki/ISO_639
-	// @REF: http://stackoverflow.com/a/16838443
-	// @REF: `bp_core_register_common_scripts()`
-	// @REF: https://make.wordpress.org/polyglots/handbook/translating/packaging-localized-wordpress/working-with-the-translation-repository/#repository-file-structure
+	/**
+	 * Retrieves current locale base in ISO-639.
+	 *
+	 * @REF: https://en.wikipedia.org/wiki/ISO_639
+	 * @REF: http://stackoverflow.com/a/16838443
+	 * @REF: `bp_core_register_common_scripts()`
+	 * @REF: https://make.wordpress.org/polyglots/handbook/translating/packaging-localized-wordpress/working-with-the-translation-repository/#repository-file-structure
+	 *
+	 * @param  string|null $locale
+	 * @return string      $iso639
+	 */
 	public static function getISO639( $locale = NULL )
 	{
 		if ( is_null( $locale ) )
@@ -75,8 +82,8 @@ class L10n extends Base
 		if ( ! $locale )
 			return 'en';
 
-		$ISO639 = str_replace( '_', '-', strtolower( $locale ) );
-		return substr( $ISO639, 0, strpos( $ISO639, '-' ) );
+		$dashed = str_replace( '_', '-', strtolower( $locale ) );
+		return substr( $dashed, 0, strpos( $dashed, '-' ) );
 	}
 
 	public static function getNooped( $singular, $plural )

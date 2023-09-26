@@ -448,4 +448,75 @@ class HTTP extends Base
 
 		return $status;
 	}
+
+	/**
+	 * Returns the size of a file without downloading.
+	 * @source https://stackoverflow.com/a/2602624
+	 *
+	 * @param  string   $url
+	 * @param  bool     $verify_ssl
+	 * @return int|bool $size
+	 */
+	public static function getSize( $url, $verify_ssl = TRUE )
+	{
+		if ( empty( $url ) )
+			return FALSE;
+
+		if ( ! extension_loaded( 'curl' ) )
+			return self::getSizeFromHeaders( $url );
+
+		$ch = curl_init( $url );
+
+		// issue a HEAD request and follow any redirects
+		curl_setopt( $ch, CURLOPT_NOBODY, TRUE );
+		curl_setopt( $ch, CURLOPT_HEADER, TRUE );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
+		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, TRUE );
+
+		if ( ! $verify_ssl ) {
+			curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, FALSE );
+			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+		}
+
+		$result = -1; // assume failure
+		$output = curl_exec( $ch );
+
+		curl_close( $ch );
+
+		if ( $output ) {
+
+			$length = 'unknown';
+			$status = 'unknown';
+
+			if ( preg_match( "/^HTTP\/1\.[01] (\d\d\d)/", $output, $matches ) )
+				$status = (int) $matches[1];
+
+			if ( preg_match( "/Content-Length: (\d+)/", $output, $matches ) )
+				$length = (int) $matches[1];
+
+			// http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+			if ( $status == 200 || ( $status > 300 && $status <= 308 ) )
+				$result = $length;
+		}
+
+		return $result;
+	}
+
+	// @REF: https://stackoverflow.com/a/43520299
+	public static function getSizeFromHeaders( $url )
+	{
+		if ( empty( $url ) )
+			return FALSE;
+
+		if ( ! $headers = get_headers( $url, TRUE ) )
+			return FALSE;
+
+		if ( \array_key_exists( 'content-length', $headers ) )
+			return $headers['content-length'];
+
+		if ( \array_key_exists( 'Content-Length', $headers ) )
+			return $headers['Content-Length'];
+
+		return -1;
+	}
 }

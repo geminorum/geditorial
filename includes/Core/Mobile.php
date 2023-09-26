@@ -81,7 +81,7 @@ class Mobile extends Base
 			case 'edit'  : return $raw;
 			case 'export': return $value;
 			case 'print' : return Number::localize( $value );
-			default      : return HTML::tel( $raw, $title ?: FALSE, Number::localize( $value ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+			     default : return HTML::tel( $raw, $title ?: FALSE, Number::localize( $value ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
 
 		return $value;

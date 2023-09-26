@@ -81,9 +81,10 @@ class Phone extends Base
 		}
 
 		switch ( $context ) {
-			case 'edit' : return $raw;
-			case 'print': return $value;
-				 default: return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+			case 'edit'  : return $raw;
+			case 'export': return $value;
+			case 'print' : return $value;
+			     default : return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
 
 		return $value;
