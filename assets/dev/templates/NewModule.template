@@ -109,6 +109,23 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return '';
+		$args = shortcode_atts( [
+			'id'      => get_queried_object_id(),
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'class'   => '',
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $content;
+
+		$html = '';
+
+		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
 }
