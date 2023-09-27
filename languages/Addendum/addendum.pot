@@ -1,0 +1,126 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Addendum\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Addendum\n"
+"X-Domain: geditorial-addendum\n"
+
+#: Addendum.php:51
+msgctxt "Settings"
+msgid "Appendage Necessities"
+msgstr ""
+
+#: Addendum.php:52
+msgctxt "Settings"
+msgid "Substitute taxonomy for the appendages and supported post-types."
+msgstr ""
+
+#: Addendum.php:71
+msgctxt "Settings"
+msgid "Redirect Archives"
+msgstr ""
+
+#: Addendum.php:72
+msgctxt "Settings"
+msgid "Redirects appendage archives to this URL. Leave empty to disable."
+msgstr ""
+
+#: Addendum.php:117
+#: Addendum.php:118
+msgid "Appendage"
+msgid_plural "Appendages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Addendum.php:119
+msgid "Appendage Category"
+msgid_plural "Appendage Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Addendum.php:120
+msgid "Appendage Necessity"
+msgid_plural "Appendage Necessities"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Addendum.php:121
+msgid "Appendage Type"
+msgid_plural "Appendage Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Addendum.php:122
+msgid "Appendage Status"
+msgid_plural "Appendage Statuses"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Addendum.php:126
+msgctxt "Label: Featured Image"
+msgid "Appendage Cover"
+msgstr ""
+
+#: Addendum.php:127
+msgctxt "Label: MetaBox Title"
+msgid "The Appendage"
+msgstr ""
+
+#: Addendum.php:130
+msgctxt "Label: MetaBox Title"
+msgid "To This Appendage"
+msgstr ""
+
+#: Addendum.php:133
+msgctxt "Label: Menu Name"
+msgid "Categories"
+msgstr ""
+
+#: Addendum.php:136
+msgctxt "Label: Menu Name"
+msgid "Necessities"
+msgstr ""
+
+#: Addendum.php:139
+msgctxt "Label: Menu Name"
+msgid "Types"
+msgstr ""
+
+#: Addendum.php:142
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr ""
+
+#: Addendum.php:151
+msgctxt "Misc: `column_icon_title`"
+msgid "Appendage"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Addendum.php:156
+msgctxt "Metabox: `listbox_title`"
+msgid "%2$s Appendages of &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: Addendum.php:161
+msgctxt "Necessity Taxonomy: Default Term"
+msgid "Required"
+msgstr ""
+
+#: Addendum.php:162
+msgctxt "Necessity Taxonomy: Default Term"
+msgid "Mandatory"
+msgstr ""
+
+#: Addendum.php:431
+msgctxt "Header"
+msgid "Appendages Tools"
+msgstr ""
