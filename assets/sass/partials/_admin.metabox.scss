@@ -192,9 +192,11 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-inputprice,
     &.-inputtext-half {
+      select,
       input {
-        width: 49%;
+        width: 49% !important;
       }
     }
 
