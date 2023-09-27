@@ -35,7 +35,7 @@ class Addendum extends gEditorial\Module
 			'title'  => _x( 'Addendum', 'Modules: Addendum', 'geditorial' ),
 			'desc'   => _x( 'Content Appendages', 'Modules: Addendum', 'geditorial' ),
 			'icon'   => 'carrot',
-			'access' => 'alpha',
+			'access' => 'beta',
 		];
 	}
 

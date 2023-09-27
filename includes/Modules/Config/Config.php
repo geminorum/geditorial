@@ -156,7 +156,7 @@ class Config extends gEditorial\Module
 
 	public function admin_tools_page()
 	{
-		$can = $this->cuc( 'settings' );
+		$can = $this->cuc( 'tools' );
 		$uri = Settings::toolsURL( FALSE, ! $can );
 		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
