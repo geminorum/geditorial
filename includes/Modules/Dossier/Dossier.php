@@ -20,6 +20,7 @@ class Dossier extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedImports;
+	use Internals\PairedRest;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\QuickPosts;
@@ -300,6 +301,8 @@ class Dossier extends gEditorial\Module
 			$this->action_self( 'newpost_content', 4, 10, 'menu_order' );
 		}
 
+		if ( $this->role_can( 'import', NULL, TRUE ) )
+			$this->_hook_submenu_adminpage( 'importitems' );
 	}
 
 	public function template_redirect()

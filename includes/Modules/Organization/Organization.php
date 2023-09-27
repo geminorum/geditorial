@@ -22,8 +22,8 @@ class Organization extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
-	use Internals\PairedImports; // FIXME: commit the internal
-	use Internals\PairedRest; // FIXME: commit the internal
+	use Internals\PairedImports;
+	use Internals\PairedRest;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
@@ -356,6 +356,7 @@ class Organization extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
+				$this->pairedimports__hook_append_import_button( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 8 );
 				$this->paired__hook_screen_restrictposts( FALSE, 9 );
 
