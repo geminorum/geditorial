@@ -1,0 +1,265 @@
+@import "../../../../sass/modules/all";
+@import "../../../../sass/partials/base";
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////
+.main-app-wrap {
+  box-sizing: border-box;
+
+  *,
+  *::after,
+  *::before,
+  &::after,
+  &::before {
+    box-sizing: border-box;
+  }
+
+  display: flex;
+}
+
+.main-app-side {
+  &.from-side {
+    padding-left: .25rem;
+    flex-grow: 1;
+  }
+
+  &.to-side {
+    padding-right: .25rem;
+    width: 36%;
+    max-width: 295px;
+  }
+}
+
+.side-to-head {
+  padding-bottom: .25rem;
+}
+
+.side-from-head {
+  padding-bottom: .25rem;
+}
+
+.side-to-search {
+  position: relative;
+
+  input {
+    width: calc(100% - 34px);
+    border-radius: 0;
+    margin-bottom: .125rem;
+    min-height: auto !important;
+    font-size: small;
+  }
+
+  button {
+    padding: 0.25rem;
+  }
+}
+
+.side-from-buttons {
+  button {
+    font-size: smaller;
+    margin-bottom: .25rem;
+  }
+
+  label + label,
+  label + button,
+  button + label,
+  button + button {
+    margin-left: .25rem !important;
+  }
+
+  label {
+    display: inline-block;
+    padding: .33rem .25rem 0;
+    white-space: nowrap;
+    font-size: smaller;
+
+    span,
+    input {
+      vertical-align: middle;
+    }
+  }
+}
+
+.form-extra-info {
+  display: inline-block;
+  // margin-right: .25rem;
+  float: right;
+  font-size: smaller;
+  margin-top: 0.25rem;
+
+  > span {
+    &::after {
+      content: "/";
+      color: #898989;
+      padding: 0 .125rem;
+    }
+  }
+
+  > span:last-of-type {
+    &::after {
+      content: "";
+      padding: 0;
+    }
+  }
+
+  .-file-name {}
+}
+
+.table-actions {
+  padding: 0 !important;
+  text-align: center !important;
+
+  .spinner {
+    margin-top: 1px !important;
+    background-size: 16px 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// th.table-actions {
+//   // width: 40px;
+// }
+
+.app-table {
+  border: 1px solid #e2e2e2;
+  background-color: #fff;
+  width: 100%;
+  font-size: smaller;
+
+  th,
+  td {
+    padding: .125rem .25rem;
+
+    &.-checkbox {
+      vertical-align: middle;
+      text-align: center;
+
+      input {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    &.-actions {
+      padding: 0;
+      text-align: center;
+    }
+
+    &.-founded {
+      font-size: smaller;
+    }
+  }
+
+  th {
+    text-align: left;
+    background-color: #e8e8e8;
+
+    &.-checkbox {
+      width: 18px;
+    }
+
+    .from-side &.-actions {
+      width: calc(28px + 2px + 28px);
+    }
+
+    // &.title {}
+
+    &.identifier {
+      width: 65px;
+    }
+  }
+
+  td {
+    &.-is-valid {
+      input {
+        color: $brand-success;
+      }
+    }
+
+    &.-is-not-valid {
+      input {
+        color: $brand-danger;
+      }
+    }
+
+    &.-actions {
+      button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+      }
+    }
+  }
+
+  .dashicons-yes-alt,
+  .dashicons-info {
+    color: $brand-info;
+  }
+
+  .dashicons-edit {
+    color: $brand-warning;
+  }
+
+  .dashicons-insert {
+    color: $brand-success;
+  }
+
+  .dashicons-warning,
+  .dashicons-remove {
+    color: $brand-danger;
+  }
+
+  .is-editing {
+    .dashicons {
+      color: $brand-danger !important;
+    }
+  }
+}
+
+.table-column-select {
+  padding: 0 !important;
+
+  select {
+    width: 100%;
+    max-width: unset;
+    margin: 0 !important;
+    padding: 3px 6px !important;
+    min-height: auto !important;
+    border-radius: 0 !important;
+    font-size: smaller !important;
+  }
+
+  option {
+    padding: .125rem .25rem;
+    font-size: small !important;
+
+    &.-undefined {
+      color: $brand-info;
+    }
+
+    &.-deleteme,
+    &.-flipdate {
+      color: $brand-danger;
+    }
+  }
+}
+
+.table-column-input {
+  padding: 0 !important;
+
+  input {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    min-height: auto !important;
+    font-size: small;
+  }
+}
