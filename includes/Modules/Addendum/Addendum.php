@@ -26,7 +26,8 @@ class Addendum extends gEditorial\Module
 	use Internals\PostTypeFields;
 	use Internals\TemplatePostType;
 
-	protected $deafults = [ 'multiple_instances' => TRUE ];
+	protected $deafults  = [ 'multiple_instances' => TRUE ];
+	protected $positions = [ 'primary_posttype' => 18 ];
 
 	public static function module()
 	{
@@ -358,6 +359,8 @@ class Addendum extends gEditorial\Module
 		return $this->maindownload__get_file_data_for_latechores( $post );
 	}
 
+	// TODO: must sort appendages by menu_order
+	// TODO: optional append child appendages
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
