@@ -28,7 +28,7 @@ class Meta extends gEditorial\Module
 	protected $disable_no_posttypes = TRUE;
 
 	protected $caps = [
-		'tools' => 'import',
+		'imports' => 'import',
 	];
 
 	public static function module()
@@ -1320,37 +1320,55 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
-	// TODO: bulk migrate data to another field with filters for processing
-	// TODO: bulk check fields for empty strings and remove @SEE: `WordPress\Strings::isEmpty()` / Special version for email/phone/postalcodes
+	// TODO: imports: bulk migrate data to another field with filters for processing
+	// TODO: tools: bulk check fields for empty strings and remove
+	// - @SEE: `WordPress\Strings::isEmpty()`
+	// - Special version for email/phone/postalcodes
 	// - or just rename metakey directly on database!
-	protected function render_tools_html( $uri, $sub )
+	protected function render_imports_html( $uri, $sub )
 	{
+		$na   = TRUE;
 		$args = $this->get_current_form( [
 			'custom_field'       => '',
 			'custom_field_limit' => '',
 			'custom_field_type'  => 'post',
 			'custom_field_into'  => '',
-		], 'tools' );
+		], 'imports' );
 
-		Core\HTML::h3( _x( 'Meta Tools', 'Header', 'geditorial-meta' ) );
+		Core\HTML::h3( _x( 'Meta Imports', 'Header', 'geditorial-meta' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'Import Custom Fields', 'Header', 'geditorial-meta' ).'</th><td>';
+		if ( $metakeys = WordPress\Database::getPostMetaKeys( TRUE ) ) {
+			echo '<tr><th scope="row">';
+				echo _x( 'Import Custom Fields', 'Header', 'geditorial-meta' );
+			echo '</th><td>';
+				$this->_render_imports_db_metakeys( $metakeys, $args );
+			echo '</td></tr>';
+			$na = FALSE;
+		}
 
+		echo '</table>';
+
+		if ( $na )
+			Info::renderNoImportsAvailable();
+	}
+
+	private function _render_imports_db_metakeys( $metakeys, $args )
+	{
 		$this->do_settings_field( [
 			'type'         => 'select',
 			'field'        => 'custom_field',
 			'values'       => WordPress\Database::getPostMetaKeys( TRUE ),
 			'default'      => $args['custom_field'],
-			'option_group' => 'tools',
+			'option_group' => 'imports',
 		] );
 
 		$this->do_settings_field( [
 			'type'         => 'text',
 			'field'        => 'custom_field_limit',
 			'default'      => $args['custom_field_limit'],
-			'option_group' => 'tools',
+			'option_group' => 'imports',
 			'field_class'  => 'small-text',
 			'placeholder'  => 'limit',
 		] );
@@ -1360,7 +1378,7 @@ class Meta extends gEditorial\Module
 			'field'        => 'custom_field_type',
 			'values'       => $this->list_posttypes(),
 			'default'      => $args['custom_field_type'],
-			'option_group' => 'tools',
+			'option_group' => 'imports',
 		] );
 
 		$this->do_settings_field( [
@@ -1368,7 +1386,7 @@ class Meta extends gEditorial\Module
 			'field'        => 'custom_field_into',
 			'values'       => $this->posttype_fields_list( $args['custom_field_type'] ),
 			'default'      => $args['custom_field_into'],
-			'option_group' => 'tools',
+			'option_group' => 'imports',
 		] );
 
 		echo '&nbsp;&nbsp;';
@@ -1418,18 +1436,15 @@ class Meta extends gEditorial\Module
 				'empty' => Core\HTML::warning( _x( 'There are no meta-data available!', 'Table Empty', 'geditorial-meta' ), FALSE ),
 			] );
 		}
-
-		echo '</td></tr>';
-		echo '</table>';
 	}
 
-	public function tools_settings( $sub )
+	public function imports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
+		if ( $this->check_settings( $sub, 'imports' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->nonce_check( 'tools', $sub );
+				$this->nonce_check( 'imports', $sub );
 
 				if ( Tablelist::isAction( 'custom_fields_convert' ) ) {
 
@@ -1437,7 +1452,7 @@ class Meta extends gEditorial\Module
 						'custom_field'       => FALSE,
 						'custom_field_into'  => FALSE,
 						'custom_field_limit' => '25',
-					], 'tools' );
+					], 'imports' );
 
 					$result = 0;
 					$this->_raise_resources();
@@ -1461,7 +1476,7 @@ class Meta extends gEditorial\Module
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
 						'custom_field_limit' => '',
-					], 'tools' );
+					], 'imports' );
 
 					$result = [];
 					$this->_raise_resources();
