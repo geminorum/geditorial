@@ -84,143 +84,138 @@ msgctxt "Header"
 msgid "General Editorial Reports"
 msgstr ""
 
-#: Config.php:341
+#: Config.php:342
 msgctxt "Tools"
 msgid "Options"
 msgstr ""
 
-#: Config.php:345
+#: Config.php:346
 msgctxt "Button"
 msgid "Upgrade Old Options"
 msgstr ""
 
-#: Config.php:347
+#: Config.php:348
 msgctxt "Tools: Message"
 msgid "Checks for old options and upgrade them. Also deletes the old options."
 msgstr ""
 
-#: Config.php:353
+#: Config.php:354
 msgctxt "Button"
 msgid "Delete All Options"
 msgstr ""
 
-#: Config.php:355
+#: Config.php:356
 msgctxt "Tools: Message"
 msgid "Deletes all editorial options on current site"
 msgstr ""
 
-#: Config.php:361
+#: Config.php:362
 msgctxt "Tools: Header"
 msgid "Maintenance Tasks"
 msgstr ""
 
-#: Config.php:365
+#: Config.php:366
 msgctxt "Tools"
 msgid "Empty Meta Fields"
 msgstr ""
 
-#: Config.php:378
+#: Config.php:379
 msgctxt "Button"
 msgid "Empty"
 msgstr ""
 
-#: Config.php:380
+#: Config.php:381
 msgctxt "Tools: Message"
 msgid "Deletes empty meta values. This solves common problems with imported posts."
 msgstr ""
 
-#: Config.php:384
+#: Config.php:385
 msgctxt "Tools"
 msgid "Orphan Connections"
 msgstr ""
 
-#: Config.php:390
+#: Config.php:391
 msgctxt "Tools: Message"
 msgid "No connection types found."
 msgstr ""
 
-#: Config.php:418
+#: Config.php:419
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Config.php:422
+#: Config.php:423
 msgctxt "Tools: Message"
 msgid "No orphaned connection types found in the database."
 msgstr ""
 
-#: Config.php:448
+#: Config.php:449
 msgctxt "Imports Sub"
 msgid "Overview"
 msgstr ""
 
-#: Config.php:451
+#: Config.php:452
 msgctxt "Imports Sub"
 msgid "General"
 msgstr ""
 
-#: Config.php:457
+#: Config.php:458
 msgctxt "Imports Sub"
 msgid "Data"
 msgstr ""
 
-#: Config.php:461
+#: Config.php:462
 msgctxt "Page Title"
 msgid "Editorial Imports"
 msgstr ""
 
-#: Config.php:496
+#: Config.php:497
 msgctxt "Imports: Data Summary"
 msgid "Untitled"
 msgstr ""
 
-#: Config.php:520
+#: Config.php:521
 msgctxt "Header"
 msgid "General Editorial Imports"
 msgstr ""
 
-#: Config.php:521
-msgctxt "Message"
-msgid "There are no importers available!"
-msgstr ""
-
 #. translators: %s: user link placeholder
-#: Config.php:532
+#: Config.php:533
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User Is %s"
 msgstr ""
 
-#: Config.php:537
+#: Config.php:538
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User is not available!"
 msgstr ""
 
-#: Config.php:556
+#: Config.php:557
 msgctxt "Ajax Notice"
 msgid "No action or name!"
 msgstr ""
 
-#: Config.php:559
+#: Config.php:560
 msgctxt "Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: Config.php:564
+#: Config.php:565
 msgctxt "Ajax Notice"
 msgid "Module state successfully changed."
 msgstr ""
 
-#: Config.php:566
+#: Config.php:567
 msgctxt "Ajax Notice"
 msgid "Cannot change module state!"
 msgstr ""
 
-#: Config.php:578
+#: Config.php:579
 msgctxt "Page Notice"
 msgid "Not a registered Editorial module."
 msgstr ""
 
-#: Config.php:581
+#: Config.php:582
 msgctxt "Page Notice"
 msgid "Module not enabled. Please enable it from the Editorial settings page."
 msgstr ""

@@ -13,116 +13,133 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Quotation\n"
 "X-Domain: geditorial-quotation\n"
 
-#: Quotation.php:62
+#: Quotation.php:63
 msgid "Quote"
 msgid_plural "Quotes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Quotation.php:63
+#: Quotation.php:64
 msgid "Topic"
 msgid_plural "Topics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Quotation.php:72
+#. translators: %s: count number
+#: Quotation.php:67
+msgid "%s Quotation"
+msgid_plural "%s Quotations"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Quotation.php:76
 msgctxt "Posttype Menu"
 msgid "Quotation"
 msgstr ""
 
-#: Quotation.php:73
+#: Quotation.php:77
 msgctxt "MetaBox Title"
 msgid "Quotation"
 msgstr ""
 
-#: Quotation.php:75
+#: Quotation.php:79
 msgctxt "Column Title"
 msgid "Topic"
 msgstr ""
 
-#: Quotation.php:88
-msgctxt "Field Title"
-msgid "Parent"
+#: Quotation.php:80
+msgctxt "Misc: `column_icon_title`"
+msgid "Quotation Sources"
 msgstr ""
 
-#: Quotation.php:89
-msgctxt "Field Description"
-msgid "Parent post of the Quote"
+#: Quotation.php:81
+msgctxt "Misc: `parent_post_empty`"
+msgid "Unknown Source"
+msgstr ""
+
+#: Quotation.php:82
+msgctxt "Misc: `post_children_empty`"
+msgid "Not Quoted"
 msgstr ""
 
 #: Quotation.php:95
 msgctxt "Field Title"
-msgid "Pages"
+msgid "Parent"
 msgstr ""
 
 #: Quotation.php:96
 msgctxt "Field Description"
-msgid "Source Pages of the Quote"
+msgid "Parent post of the Quote"
 msgstr ""
 
 #: Quotation.php:102
 msgctxt "Field Title"
-msgid "Page Start"
+msgid "Pages"
 msgstr ""
 
 #: Quotation.php:103
 msgctxt "Field Description"
-msgid "Source Start Page of the Quote"
+msgid "Source Pages of the Quote"
 msgstr ""
 
 #: Quotation.php:109
 msgctxt "Field Title"
-msgid "Page End"
+msgid "Page Start"
 msgstr ""
 
 #: Quotation.php:110
 msgctxt "Field Description"
-msgid "Source End Page of the Quote"
+msgid "Source Start Page of the Quote"
 msgstr ""
 
 #: Quotation.php:116
 msgctxt "Field Title"
-msgid "Volume"
+msgid "Page End"
 msgstr ""
 
 #: Quotation.php:117
 msgctxt "Field Description"
-msgid "Source Volume of the Quote"
+msgid "Source End Page of the Quote"
 msgstr ""
 
 #: Quotation.php:123
 msgctxt "Field Title"
-msgid "Reference"
+msgid "Volume"
 msgstr ""
 
 #: Quotation.php:124
 msgctxt "Field Description"
+msgid "Source Volume of the Quote"
+msgstr ""
+
+#: Quotation.php:130
+msgctxt "Field Title"
+msgid "Reference"
+msgstr ""
+
+#: Quotation.php:131
+msgctxt "Field Description"
 msgid "Reference to the Quote Source"
 msgstr ""
 
-#: Quotation.php:128
+#: Quotation.php:135
 msgctxt "Field Title"
 msgid "Description"
 msgstr ""
 
-#: Quotation.php:129
+#: Quotation.php:136
 msgctxt "Field Description"
 msgid "Description of the Quote"
 msgstr ""
 
-#: Quotation.php:208
-#: Quotation.php:211
+#: Quotation.php:231
+#: Quotation.php:234
 msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr ""
 
 #. translators: %1$s: post parent, %2$s: menu order
-#: Quotation.php:228
+#: Quotation.php:251
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
-msgstr ""
-
-#: Quotation.php:240
-msgctxt "Row Icon Title"
-msgid "Quotation Source"
 msgstr ""

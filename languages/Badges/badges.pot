@@ -48,8 +48,3 @@ msgstr ""
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr ""
-
-#: Badges.php:244
-msgctxt "Setting"
-msgid "There are no badges available!"
-msgstr ""

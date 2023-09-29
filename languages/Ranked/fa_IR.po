@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Ranked\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-04 00:56+0330\n"
+"PO-Revision-Date: 2023-09-04 01:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,63 +15,78 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Ranked\n"
 "X-Domain: geditorial-ranked\n"
 
-#: Ranked.php:59
+#: Ranked.php:72
 msgid "Ranking Definition"
 msgid_plural "Ranking Definitions"
 msgstr[0] "تعاریف رتبه"
 msgstr[1] "تعریف رتبه"
 
-#: Ranked.php:67
+#: Ranked.php:76
+msgctxt "Label: Menu Name"
+msgid "Content Rankings"
+msgstr "رتبه‌بندی محتوا"
+
+#: Ranked.php:77
+msgctxt "Label: Show Option All"
+msgid "Rankings"
+msgstr "رتبه‌بندی"
+
+#: Ranked.php:78
+msgctxt "Label: Show Option No Terms"
+msgid "(Unranked)"
+msgstr "(بی‌رتبه)"
+
+#: Ranked.php:87
 msgctxt "Dashboard Widget Title"
 msgid "Your Ranking Summary"
 msgstr "گزارش رتبه‌بندی‌های شما"
 
-#: Ranked.php:68
+#: Ranked.php:88
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Ranking Summary"
 msgstr "گزارش رتبه‌بندی‌های تحریریه"
 
-#: Ranked.php:73
+#: Ranked.php:93
 msgctxt "Default Term"
 msgid "Publisher"
 msgstr "ناشر"
 
-#: Ranked.php:74
+#: Ranked.php:94
 msgctxt "Default Term"
 msgid "Editor in Chief"
 msgstr "سردبیر"
 
-#: Ranked.php:75
+#: Ranked.php:95
 msgctxt "Default Term"
 msgid "Editorial Director"
 msgstr "مدیر تحریریه"
 
-#: Ranked.php:76
+#: Ranked.php:96
 msgctxt "Default Term"
 msgid "Managing Editor"
 msgstr "دبیر اجرایی"
 
-#: Ranked.php:77
+#: Ranked.php:97
 msgctxt "Default Term"
 msgid "Senior Editor"
 msgstr "دبیر ارشد"
 
-#: Ranked.php:78
+#: Ranked.php:98
 msgctxt "Default Term"
 msgid "Digital Producer"
 msgstr "تولیدکننده دیجیتال"
 
-#: Ranked.php:79
+#: Ranked.php:99
 msgctxt "Default Term"
 msgid "Copy Editor"
 msgstr "دبیر رونوشت"
 
-#: Ranked.php:80
+#: Ranked.php:100
 msgctxt "Default Term"
 msgid "Proofreader"
 msgstr "نمونه‌خوان"
 
-#: Ranked.php:81
+#: Ranked.php:101
 msgctxt "Default Term"
 msgid "Executive"
 msgstr "مدیر اجرایی"

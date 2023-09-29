@@ -254,89 +254,89 @@ msgctxt "Meta Box Search Placeholder"
 msgid "Search &hellip;"
 msgstr ""
 
-#: Tweaks.php:741
+#: Tweaks.php:745
 msgctxt "Row Icon Title"
 msgid "Page Template"
 msgstr ""
 
-#: Tweaks.php:762
+#: Tweaks.php:766
 msgctxt "Row Icon Title"
 msgid "Comment Status"
 msgstr ""
 
-#: Tweaks.php:765
+#: Tweaks.php:769
 msgctxt "Comment Status"
 msgid "Closed"
 msgstr ""
 
-#: Tweaks.php:768
+#: Tweaks.php:772
 msgctxt "Comment Status"
 msgid "Closed for Old Posts"
 msgstr ""
 
 #. translators: %s: status
-#: Tweaks.php:774
+#: Tweaks.php:778
 msgctxt "Comment Status"
 msgid "Comments are %s"
 msgstr ""
 
-#: Tweaks.php:788
+#: Tweaks.php:792
 msgctxt "Row Icon Title"
 msgid "Author"
 msgstr ""
 
-#: Tweaks.php:799
+#: Tweaks.php:803
 msgctxt "Row Icon Title"
 msgid "Post Slug"
 msgstr ""
 
-#: Tweaks.php:819
+#: Tweaks.php:823
 msgctxt "Attr: Status"
 msgid "Missed schedule"
 msgstr ""
 
-#: Tweaks.php:823
+#: Tweaks.php:827
 msgctxt "Row Icon Title"
 msgid "Status"
 msgstr ""
 
-#: Tweaks.php:831
+#: Tweaks.php:835
 msgctxt "Row Icon Title"
 msgid "Publish Date"
 msgstr ""
 
-#: Tweaks.php:839
+#: Tweaks.php:843
 msgctxt "Row Icon Title"
 msgid "Last Edit"
 msgstr ""
 
-#: Tweaks.php:849
+#: Tweaks.php:853
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr ""
 
-#: Tweaks.php:854
+#: Tweaks.php:858
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr ""
 
-#: Tweaks.php:862
+#: Tweaks.php:866
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr ""
 
 #. translators: %s: codex url
-#: Tweaks.php:962
+#: Tweaks.php:966
 msgctxt "MainBox"
 msgid "Allow <a href=\"%s\">trackbacks and pingbacks</a>"
 msgstr ""
 
-#: Tweaks.php:1006
+#: Tweaks.php:1010
 msgctxt "Misc Action"
 msgid "Last Modified"
 msgstr ""
 
-#: Tweaks.php:1007
+#: Tweaks.php:1011
 msgctxt "Misc Action"
 msgid "Modified:"
 msgstr ""

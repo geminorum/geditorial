@@ -13,140 +13,140 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
 "X-Domain: geditorial-magazine\n"
 
-#: Magazine.php:42
+#: Magazine.php:46
 msgctxt "Settings"
 msgid "Issue Sections"
 msgstr ""
 
-#: Magazine.php:43
+#: Magazine.php:47
 msgctxt "Settings"
 msgid "Section taxonomy for the issues and supported post-types."
 msgstr ""
 
-#: Magazine.php:59
+#: Magazine.php:63
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Magazine.php:60
+#: Magazine.php:64
 msgctxt "Settings"
 msgid "Redirects issue archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Magazine.php:66
+#: Magazine.php:70
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Magazine.php:67
+#: Magazine.php:71
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Magazine.php:118
-#: Magazine.php:119
+#: Magazine.php:122
+#: Magazine.php:123
 msgid "Issue"
 msgid_plural "Issues"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:120
+#: Magazine.php:124
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:121
+#: Magazine.php:125
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:125
+#: Magazine.php:129
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr ""
 
-#: Magazine.php:134
+#: Magazine.php:138
 msgctxt "Misc: `column_icon_title`"
 msgid "Issue"
 msgstr ""
 
-#: Magazine.php:139
+#: Magazine.php:143
 msgctxt "Label: MetaBox Title"
 msgid "The Issue"
 msgstr ""
 
-#: Magazine.php:140
+#: Magazine.php:144
 msgctxt "Label: MetaBox Title"
 msgid "In This Issue"
 msgstr ""
 
-#: Magazine.php:156
+#: Magazine.php:160
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Magazine.php:157
+#: Magazine.php:161
 msgctxt "Field Description"
 msgid "The issue number line"
 msgstr ""
 
-#: Magazine.php:161
-#: Magazine.php:198
+#: Magazine.php:165
+#: Magazine.php:202
 msgctxt "Field Title"
 msgid "Total Pages"
 msgstr ""
 
-#: Magazine.php:162
+#: Magazine.php:166
 msgctxt "Field Description"
 msgid "The issue total pages"
 msgstr ""
 
-#: Magazine.php:182
+#: Magazine.php:186
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Magazine.php:183
+#: Magazine.php:187
 msgctxt "Field Description"
 msgid "Post order in issue list"
 msgstr ""
 
-#: Magazine.php:190
+#: Magazine.php:194
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr ""
 
-#: Magazine.php:191
+#: Magazine.php:195
 msgctxt "Field Description"
 msgid "Post start page on issue (printed)"
 msgstr ""
 
-#: Magazine.php:199
+#: Magazine.php:203
 msgctxt "Field Description"
 msgid "Post total pages on issue (printed)"
 msgstr ""
 
 #. translators: %s: order
-#: Magazine.php:390
+#: Magazine.php:394
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr ""
 
 #. translators: %s: page
-#: Magazine.php:392
+#: Magazine.php:396
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr ""
 
 #. translators: %s: total count
-#: Magazine.php:394
+#: Magazine.php:398
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr ""
 
-#: Magazine.php:469
+#: Magazine.php:473
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr ""

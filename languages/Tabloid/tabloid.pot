@@ -14,66 +14,60 @@ msgstr ""
 "X-Domain: geditorial-tabloid\n"
 
 #. translators: %s: supported object label
-#: Tabloid.php:43
+#: Tabloid.php:46
 msgctxt "Setting Title"
 msgid "Action Title for %s"
 msgstr ""
 
-#: Tabloid.php:44
+#: Tabloid.php:47
 msgctxt "Setting Description"
 msgid "Used as title on the actions row."
 msgstr ""
 
-#: Tabloid.php:45
-#: Tabloid.php:54
-#: Tabloid.php:118
+#: Tabloid.php:48
+#: Tabloid.php:57
+#: Tabloid.php:127
 msgctxt "Action"
 msgid "Overview"
 msgstr ""
 
 #. translators: %s: supported object label
-#: Tabloid.php:52
+#: Tabloid.php:55
 msgctxt "Setting Title"
 msgid "Overview Title for %s"
 msgstr ""
 
-#: Tabloid.php:53
+#: Tabloid.php:56
 msgctxt "Setting Description"
 msgid "Used as title on the overview pages."
 msgstr ""
 
-#: Tabloid.php:62
+#: Tabloid.php:65
 msgctxt "Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
-#: Tabloid.php:63
+#: Tabloid.php:66
 msgctxt "Setting Description"
 msgid "Roles that can view posttype overviews."
 msgstr ""
 
-#: Tabloid.php:69
+#: Tabloid.php:72
 msgctxt "Setting Title"
 msgid "Print Roles"
 msgstr ""
 
-#: Tabloid.php:70
+#: Tabloid.php:73
 msgctxt "Setting Description"
 msgid "Roles that can print posttype overviews."
 msgstr ""
 
-#: Tabloid.php:76
+#: Tabloid.php:79
 msgctxt "Setting Title"
 msgid "Export Roles"
 msgstr ""
 
-#: Tabloid.php:77
+#: Tabloid.php:80
 msgctxt "Setting Description"
 msgid "Roles that can export posttype overviews."
-msgstr ""
-
-#: Tabloid.php:138
-#: Tabloid.php:141
-msgctxt "Message"
-msgid "There are no posts available!"
 msgstr ""

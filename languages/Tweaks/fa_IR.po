@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Tweaks\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:56+0330\n"
+"PO-Revision-Date: 2023-09-04 20:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,336 +11,336 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Domain: geditorial-tweaks\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tweaks\n"
 
-#: Tweaks.php:47
+#: ModuleInfo.php:17
 msgctxt "Help Tab Title"
 msgid "Category Search"
 msgstr "جست‌وجوی دسته‌ها"
 
-#: Tweaks.php:53
+#: ModuleInfo.php:22
 msgctxt "Help Tab Title"
 msgid "Checklist Tree"
 msgstr "سیاهه درختی"
 
-#: Tweaks.php:71
+#: Tweaks.php:53
 msgctxt "Setting Title"
 msgid "Group Taxonomies"
 msgstr "تجمیع رده‌بندی‌ها"
 
-#: Tweaks.php:72
+#: Tweaks.php:54
 msgctxt "Setting Description"
 msgid "Group selected taxonomies on selected post type edit pages"
 msgstr ""
 
-#: Tweaks.php:78
+#: Tweaks.php:60
 msgctxt "Setting Title"
 msgid "Group Attributes"
 msgstr "تجمیع ویژگی‌ها"
 
-#: Tweaks.php:79
+#: Tweaks.php:61
 msgctxt "Setting Description"
 msgid "Group post attributes on selected post type edit pages"
 msgstr ""
 
-#: Tweaks.php:85
+#: Tweaks.php:67
 msgctxt "Setting Title"
 msgid "Author Attribute"
 msgstr "ویژه‌گی نویسنده"
 
-#: Tweaks.php:86
+#: Tweaks.php:68
 msgctxt "Setting Description"
 msgid "Displays author name as post type attribute"
 msgstr ""
 
-#: Tweaks.php:92
+#: Tweaks.php:74
 msgctxt "Setting Title"
 msgid "Post Status"
 msgstr "وضعیت نوشته"
 
-#: Tweaks.php:93
+#: Tweaks.php:75
 msgctxt "Setting Description"
 msgid "Displays post status as post type attribute"
 msgstr ""
 
-#: Tweaks.php:99
+#: Tweaks.php:81
 msgctxt "Setting Title"
 msgid "Slug Attribute"
 msgstr "ویژگی نامک"
 
-#: Tweaks.php:100
+#: Tweaks.php:82
 msgctxt "Setting Description"
 msgid "Displays post name as post type attribute."
 msgstr ""
 
-#: Tweaks.php:106
+#: Tweaks.php:88
 msgctxt "Setting Title"
 msgid "Page Template"
 msgstr "الگوی برگه"
 
-#: Tweaks.php:107
+#: Tweaks.php:89
 msgctxt "Setting Description"
 msgid "Displays the template used for the post."
 msgstr ""
 
-#: Tweaks.php:113
+#: Tweaks.php:95
 msgctxt "Setting Title"
 msgid "Comment Status"
 msgstr "وضعیت دیدگاه‌ها"
 
-#: Tweaks.php:114
+#: Tweaks.php:96
 msgctxt "Setting Description"
 msgid "Displays only the closed comment status for the post."
 msgstr ""
 
-#: Tweaks.php:120
+#: Tweaks.php:102
 msgctxt "Setting Title"
 msgid "Search Meta"
 msgstr "جست‌وجوی متا"
 
-#: Tweaks.php:121
+#: Tweaks.php:103
 msgctxt "Setting Description"
 msgid "Extends admin search to include custom fields."
 msgstr ""
 
-#: Tweaks.php:129
+#: Tweaks.php:111
 msgctxt "Setting Title"
 msgid "ID Column"
 msgstr "ستون شناسه"
 
-#: Tweaks.php:130
+#: Tweaks.php:112
 msgctxt "Setting Description"
 msgid "Displays ID Column on the post list table."
 msgstr ""
 
-#: Tweaks.php:136
+#: Tweaks.php:118
 msgctxt "Setting Title"
 msgid "Order Column"
 msgstr "ستون چیدمان"
 
-#: Tweaks.php:137
+#: Tweaks.php:119
 msgctxt "Setting Description"
 msgid "Displays Order Column on the post list table."
 msgstr ""
 
-#: Tweaks.php:147
+#: Tweaks.php:129
 msgctxt "Setting Title"
 msgid "Thumbnail Column"
 msgstr "ستون بندانگشتی"
 
-#: Tweaks.php:148
+#: Tweaks.php:130
 msgctxt "Setting Description"
 msgid "Displays Thumbnail Column on the post list table."
 msgstr ""
 
-#: Tweaks.php:160
+#: Tweaks.php:142
 msgctxt "Setting Title"
 msgid "Group Post-Boxes"
 msgstr "تجمیع جعبه‌ها"
 
-#: Tweaks.php:161
+#: Tweaks.php:143
 msgctxt "Setting Description"
 msgid "Groups common post-boxes into one for simpler editing experience."
 msgstr ""
 
-#: Tweaks.php:167
+#: Tweaks.php:149
 msgctxt "Setting Title"
 msgid "Modified Action"
 msgstr "کنش دست‌کاری"
 
-#: Tweaks.php:168
+#: Tweaks.php:150
 msgctxt "Setting Description"
 msgid "Displays last modified time as post misc action on publish metabox."
 msgstr ""
 
-#: Tweaks.php:174
+#: Tweaks.php:156
 msgctxt "Setting Title"
 msgid "Advanced Excerpt"
 msgstr "چکیده پیشرفته"
 
-#: Tweaks.php:175
+#: Tweaks.php:157
 msgctxt "Setting Description"
 msgid ""
 "Replaces the default Post Excerpt meta box with a superior editing "
 "experience."
 msgstr ""
 
-#: Tweaks.php:183
+#: Tweaks.php:165
 msgctxt "Setting Title"
 msgid "Excerpt After Title"
 msgstr "چکیده بعد از عنوان"
 
-#: Tweaks.php:184
+#: Tweaks.php:166
 msgctxt "Setting Description"
 msgid "Moves up advanced excerpt to after title field."
 msgstr ""
 
-#: Tweaks.php:188
+#: Tweaks.php:170
 msgctxt "Setting Title"
 msgid "Category Search"
 msgstr "جست‌وجوی دسته‌ها"
 
-#: Tweaks.php:189
+#: Tweaks.php:171
 msgctxt "Setting Description"
 msgid "Replaces the category selector to include searching categories"
 msgstr ""
 
-#: Tweaks.php:193
+#: Tweaks.php:175
 msgctxt "Setting Title"
 msgid "Checklist Tree"
 msgstr "سیاهه درختی"
 
-#: Tweaks.php:194
+#: Tweaks.php:176
 msgctxt "Setting Description"
 msgid "Preserves the category hierarchy on the post editing screen"
 msgstr ""
 
-#: Tweaks.php:200
+#: Tweaks.php:182
 msgctxt "Setting Title"
 msgid "Comments User Column"
 msgstr "ستون کاربر در دیدگاه‌ها"
 
-#: Tweaks.php:201
+#: Tweaks.php:183
 msgctxt "Setting Description"
 msgid ""
 "Displays a logged-in comment author's site display name on the comments admin"
 msgstr ""
 
-#: Tweaks.php:211
+#: Tweaks.php:193
 msgctxt "Column Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: Tweaks.php:212
+#: Tweaks.php:194
 msgctxt "Column Title"
 msgid "Extra"
 msgstr "بیشتر"
 
-#: Tweaks.php:213
+#: Tweaks.php:195
 msgctxt "Column Title"
 msgid "Attributes"
 msgstr "ویژگی‌ها"
 
-#: Tweaks.php:214 Tweaks.php:219
+#: Tweaks.php:196 Tweaks.php:201
 msgctxt "Column Title"
 msgid "ID"
 msgstr "شـ"
 
-#: Tweaks.php:215
+#: Tweaks.php:197
 msgctxt "Column Title"
 msgid "Featured"
 msgstr "تصویر"
 
-#: Tweaks.php:216
+#: Tweaks.php:198
 msgctxt "Column Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Tweaks.php:217
+#: Tweaks.php:199
 msgctxt "Column Title"
 msgid "User"
 msgstr "کاربر"
 
-#: Tweaks.php:218
+#: Tweaks.php:200
 msgctxt "Column Title"
 msgid "Contacts"
 msgstr "ارتباط‌ها"
 
-#: Tweaks.php:222
+#: Tweaks.php:205
 msgctxt "Meta Box Search Title"
 msgid "Type to filter by"
 msgstr "برای پالایش تایپ کنید"
 
-#: Tweaks.php:223
+#: Tweaks.php:206
 msgctxt "Meta Box Search Placeholder"
 msgid "Search &hellip;"
 msgstr "جست‌وجو &hellip;"
 
-#: Tweaks.php:763
+#: Tweaks.php:745
 msgctxt "Row Icon Title"
 msgid "Page Template"
 msgstr "الگوی برگه"
 
-#: Tweaks.php:784
+#: Tweaks.php:766
 msgctxt "Row Icon Title"
 msgid "Comment Status"
 msgstr "وضعیت دیدگاه‌ها"
 
-#: Tweaks.php:787
+#: Tweaks.php:769
 msgctxt "Comment Status"
 msgid "Closed"
 msgstr "بسته است"
 
-#: Tweaks.php:790
+#: Tweaks.php:772
 msgctxt "Comment Status"
 msgid "Closed for Old Posts"
 msgstr "برای نوشته‌های قدیمی بسته است"
 
 #. translators: %s: status
-#: Tweaks.php:796
+#: Tweaks.php:778
 msgctxt "Comment Status"
 msgid "Comments are %s"
 msgstr "دیدگاه‌ها %s"
 
-#: Tweaks.php:810
+#: Tweaks.php:792
 msgctxt "Row Icon Title"
 msgid "Author"
 msgstr "نویسنده"
 
-#: Tweaks.php:821
+#: Tweaks.php:803
 msgctxt "Row Icon Title"
 msgid "Post Slug"
 msgstr "نامک نوشته"
 
-#: Tweaks.php:841
+#: Tweaks.php:823
 msgctxt "Attr: Status"
 msgid "Missed schedule"
 msgstr "زمان‌بندی ازدست‌رفته"
 
-#: Tweaks.php:845
+#: Tweaks.php:827
 msgctxt "Row Icon Title"
 msgid "Status"
 msgstr "وضعیت"
 
-#: Tweaks.php:853
+#: Tweaks.php:835
 msgctxt "Row Icon Title"
 msgid "Publish Date"
 msgstr "تاریخ انتشار"
 
-#: Tweaks.php:861
+#: Tweaks.php:843
 msgctxt "Row Icon Title"
 msgid "Last Edit"
 msgstr "آخرین ویرایش"
 
-#: Tweaks.php:871
+#: Tweaks.php:853
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr "نام"
 
-#: Tweaks.php:876
+#: Tweaks.php:858
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Tweaks.php:884
+#: Tweaks.php:866
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr "ایمیل"
 
 #. translators: %s: codex url
-#: Tweaks.php:984
+#: Tweaks.php:966
 msgctxt "MainBox"
 msgid "Allow <a href=\"%s\">trackbacks and pingbacks</a>"
 msgstr "پذیرفتن <a href=\"%s\">بازتاب و بازخوان</a>"
 
-#: Tweaks.php:1028
+#: Tweaks.php:1010
 msgctxt "Misc Action"
 msgid "Last Modified"
 msgstr "آخرین دست‌کاری"
 
-#: Tweaks.php:1029
+#: Tweaks.php:1011
 msgctxt "Misc Action"
 msgid "Modified:"
 msgstr "دست‌کاری:"

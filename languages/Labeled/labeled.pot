@@ -13,78 +13,78 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Labeled\n"
 "X-Domain: geditorial-labeled\n"
 
-#: Labeled.php:65
+#: Labeled.php:66
 msgid "Label"
 msgid_plural "Labels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Labeled.php:69
+#: Labeled.php:70
 msgctxt "Label: `extended_label`"
 msgid "Content Labels"
 msgstr ""
 
-#: Labeled.php:70
+#: Labeled.php:71
 msgctxt "Label: Menu Name"
 msgid "Content Labels"
 msgstr ""
 
-#: Labeled.php:71
+#: Labeled.php:72
 msgctxt "Label: Show Option All"
 msgid "Labels"
 msgstr ""
 
-#: Labeled.php:72
+#: Labeled.php:73
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlabeled)"
 msgstr ""
 
-#: Labeled.php:81
+#: Labeled.php:82
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Labels Summary"
 msgstr ""
 
-#: Labeled.php:82
+#: Labeled.php:83
 msgctxt "Dashboard Widget Title"
 msgid "Content Labels Summary"
 msgstr ""
 
-#: Labeled.php:87
+#: Labeled.php:88
 msgctxt "Main Taxonomy: Default Term"
 msgid "Introduction"
 msgstr ""
 
-#: Labeled.php:88
+#: Labeled.php:89
 msgctxt "Main Taxonomy: Default Term"
 msgid "Interview"
 msgstr ""
 
-#: Labeled.php:89
+#: Labeled.php:90
 msgctxt "Main Taxonomy: Default Term"
 msgid "Review"
 msgstr ""
 
-#: Labeled.php:90
+#: Labeled.php:91
 msgctxt "Main Taxonomy: Default Term"
 msgid "Report"
 msgstr ""
 
-#: Labeled.php:102
+#: Labeled.php:103
 msgctxt "Field Title"
 msgid "Label"
 msgstr ""
 
-#: Labeled.php:103
+#: Labeled.php:104
 msgctxt "Field Description"
 msgid "Text to indicate that the content is part of an editorial column."
 msgstr ""
 
-#: Labeled.php:106
+#: Labeled.php:107
 msgctxt "Field Title"
 msgid "Label Taxonomy"
 msgstr ""
 
-#: Labeled.php:107
+#: Labeled.php:108
 msgctxt "Field Description"
 msgid "Taxonomy for better categorizing editorial columns."
 msgstr ""

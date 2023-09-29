@@ -13,12 +13,12 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Entry\n"
 "X-Domain: geditorial-entry\n"
 
-#: Entry.php:44
+#: Entry.php:45
 msgctxt "Settings"
 msgid "Auto-link Sections"
 msgstr ""
 
-#: Entry.php:45
+#: Entry.php:46
 msgctxt "Settings"
 msgid "Tries to linkify the section titles in the entry content."
 msgstr ""
@@ -60,17 +60,17 @@ msgctxt "Default Term: Description"
 msgid "Unsectioned Entries"
 msgstr ""
 
-#: Entry.php:182
+#: Entry.php:184
 msgctxt "Adminbar"
 msgid "Entry Sections"
 msgstr ""
 
-#: Entry.php:199
+#: Entry.php:201
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr ""
 
-#: Entry.php:203
+#: Entry.php:205
 msgctxt "UI: Label"
 msgid "Section"
 msgstr ""

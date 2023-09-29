@@ -13,97 +13,97 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Dossier\n"
 "X-Domain: geditorial-dossier\n"
 
-#: Dossier.php:43
+#: Dossier.php:48
 msgctxt "Settings"
 msgid "Dossier Sections"
 msgstr ""
 
-#: Dossier.php:44
+#: Dossier.php:49
 msgctxt "Settings"
 msgid "Section taxonomy for the dossiers and supported post-types."
 msgstr ""
 
-#: Dossier.php:60
+#: Dossier.php:65
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Dossier.php:61
+#: Dossier.php:66
 msgctxt "Settings"
 msgid "Redirects dossier archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Dossier.php:67
+#: Dossier.php:72
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Dossier.php:68
+#: Dossier.php:73
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Dossier.php:116
-#: Dossier.php:117
+#: Dossier.php:121
+#: Dossier.php:122
 msgid "Dossier"
 msgid_plural "Dossiers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:118
+#: Dossier.php:123
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:119
+#: Dossier.php:124
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:123
+#: Dossier.php:128
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr ""
 
-#: Dossier.php:132
+#: Dossier.php:137
 msgctxt "Misc: `column_icon_title`"
 msgid "Dossier"
 msgstr ""
 
-#: Dossier.php:137
+#: Dossier.php:142
 msgctxt "MetaBox Title"
 msgid "The Dossier"
 msgstr ""
 
-#: Dossier.php:153
+#: Dossier.php:158
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Dossier.php:154
+#: Dossier.php:159
 msgctxt "Field Description"
 msgid "The dossier number line"
 msgstr ""
 
-#: Dossier.php:172
+#: Dossier.php:177
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Dossier.php:173
+#: Dossier.php:178
 msgctxt "Field Description"
 msgid "Post order in dossier list"
 msgstr ""
 
 #. translators: %s: order
-#: Dossier.php:363
+#: Dossier.php:368
 msgctxt "Display"
 msgid "Order in Dossier: %s"
 msgstr ""
 
-#: Dossier.php:386
+#: Dossier.php:391
 msgctxt "Header"
 msgid "Dossiers Tools"
 msgstr ""

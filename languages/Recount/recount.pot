@@ -15,35 +15,25 @@ msgstr ""
 
 #: Recount.php:36
 msgctxt "Setting Title"
-msgid "Thrift Mode"
+msgid "Count on Display"
 msgstr ""
 
 #: Recount.php:37
 msgctxt "Setting Description"
-msgid "Delays counting till needed!"
-msgstr ""
-
-#: Recount.php:41
-msgctxt "Setting Title"
-msgid "Count on Display"
-msgstr ""
-
-#: Recount.php:42
-msgctxt "Setting Description"
 msgid "Tries to re-count posts on empty data display."
 msgstr ""
 
-#: Recount.php:176
+#: Recount.php:171
 msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:212
+#: Recount.php:207
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:218
+#: Recount.php:213
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr ""
