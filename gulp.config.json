@@ -32,6 +32,7 @@
       "./assets/images/**/*",
       "./assets/js/**/*.js",
       "./assets/js/**/*.html",
+      "./assets/apps/build/**/*",
       "./assets/packages/**/*",
       "./assets/templates/**/*",
       "./assets/vendor/**/*.php",
