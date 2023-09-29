@@ -245,6 +245,7 @@ trait PostTypeFields
 
 		switch ( $field['type'] ) {
 
+			case 'attachment':
 			case 'parent_post':
 			case 'post':
 

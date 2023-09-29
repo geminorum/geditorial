@@ -125,6 +125,7 @@ class Meta extends gEditorial\Module
 				'video_source_url'  => _x( 'Video Source URL', 'Titles', 'geditorial-meta' ),
 				'image_source_url'  => _x( 'Image Source URL', 'Titles', 'geditorial-meta' ),
 				'main_download_url' => _x( 'Main Download URL', 'Titles', 'geditorial-meta' ),
+				'main_download_id'  => _x( 'Main Download Attachment', 'Titles', 'geditorial-meta' ),
 
 				'date'      => _x( 'Date', 'Titles', 'geditorial-meta' ),
 				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-meta' ),
@@ -173,6 +174,7 @@ class Meta extends gEditorial\Module
 				'video_source_url'  => _x( 'Video Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'image_source_url'  => _x( 'Image Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'main_download_url' => _x( 'Downloadable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
+				'main_download_id'  => _x( 'Downloadable Attachment of the External Content', 'Descriptions', 'geditorial-meta' ),
 
 				'date'      => _x( 'Posts can have date to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'datetime'  => _x( 'Posts can have date-time to help organize them.', 'Descriptions', 'geditorial-meta' ),
@@ -241,6 +243,7 @@ class Meta extends gEditorial\Module
 				'video_source_url'  => [ 'type' => 'video_source' ],
 				'image_source_url'  => [ 'type' => 'image_source' ],
 				'main_download_url' => [ 'type' => 'downloadable' ],
+				'main_download_id'  => [ 'type' => 'attachment' ],
 
 				'date'      => [ 'type' => 'date' ],
 				'datetime'  => [ 'type' => 'datetime' ],
@@ -692,6 +695,13 @@ class Meta extends gEditorial\Module
 				case 'user':
 
 					ModuleMetaBox::renderFieldUser( $args, $post );
+					break;
+
+				case 'attachment':
+
+					// FIXME
+					// ModuleMetaBox::renderFieldAttachment( $args, $post );
+					ModuleMetaBox::renderFieldNumber( $args, $post );
 					break;
 
 				case 'post':
