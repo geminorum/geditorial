@@ -1,3 +1,184 @@
+### 3.26.0
+* app/import-items: :new: vue js app
+* internal/core-admin: unset columns on table-list
+* internal/core-capabilities: handle forced caps for taxonomy
+* internal/core-post-types: check for feature support
+* internal/core-post-types: check for post-type visibility
+* internal/core-restrict-posts: extract methods
+* internal/core-row-actions: main-link for term
+* internal/core-row-actions: passing priority
+* internal/core-template: include template renamed
+* internal/dashboard-summary: general summary renderer
+* internal/frame-page: custom ref-key
+* internal/frame-page: main-link for term
+* internal/imports: extract from main module
+* internal/late-chores: :new: post after-care
+* internal/paired-core: do connection
+* internal/paired-core: get all connected to
+* internal/paired-core: pointer actions
+* internal/paired-core: register objects
+* internal/paired-core: simpler check for constants
+* internal/paired-imports: :new: server-side for import-items
+* internal/paired-rest: :new: paired connect/disconnect via rest
+* internal/post-type-fields: check for read post instead of viewable
+* internal/post-type-fields: connect paired by
+* internal/post-type-fields: filter for fields
+* internal/posttype-fields: support for exclude posts
+* internal/print-page: layout api revised
+* internal/raw-imports: cache data
+* internal/raw-imports: passing manual file-type
+* internal/rest-api: extract from main module
+* internal/template-post-type: limit api to posttypes
+* internal/template-taxonomy: support override for terms
+* internal/view-engines: get view part by post/term
+* internal/view-engines: render string templates
+* main/datetime: common age structure info
+* main/datetime: decade/year generators
+* main/datetime: medical age designations
+* main/datetime: reversed prepping date-of-birth
+* main/helper: check if post-type-field is available
+* main/helper: get separated with filtered delimiters
+* main/helper: priorities for prep meta row
+* main/helper: rename meta-keys on switch paired post-types
+* main/helper: support prepping measurements
+* main/helper: taxonomy label for no items available
+* main/info: get noop for common strings
+* main/info: helpers for screen help tabs
+* main/info: wrong message helper
+* main/listtable: paired labels by post-type
+* main/listtable: restrict by post-meta
+* main/metabox: customize select for types
+* main/metabox: render field number
+* main/metabox: render texarea for fields
+* main/metabox: support for none title/value
+* main/module: auto check for linked to posts for paired
+* main/module: auto hook default ajax callback
+* main/module: auto hook sync primary paired post-type
+* main/module: auto-hook override term link for paired
+* main/module: auto-hook save post for supported meta-boxes
+* main/module: autofill post-title with slugs
+* main/module: better caps for taxonomy for taxonomy
+* main/module: better css class for meta-boxes
+* main/module: better handling admin class
+* main/module: better handling private post-type/taxonomy
+* main/module: check for archive override
+* main/module: check for thrift mode
+* main/module: check post/term by posttype/taxonomy constant
+* main/module: customize list-box titles
+* main/module: exclude paired post-type from sub-term archives
+* main/module: export buttons as list-box extra
+* main/module: extensive actions for supported-box
+* main/module: fewer hook callbacks for ajax/rest
+* main/module: get admin menu deprecated
+* main/module: handle non-flat default terms on help tabs
+* main/module: init action for each posttype field
+* main/module: main-box action by post-type
+* main/module: menu icon for taxonomies
+* main/module: paired better handling parent exclusions
+* main/module: paired naming updated
+* main/module: primary taxonomy on paired register
+* main/module: register taxonomy with no posttypes
+* main/module: role can now accepts arrays
+* main/module: settings option for posttypes/taxonomies
+* main/module: skip register help tabs on iframe
+* main/module: template for no connected items on list-box
+* main/module: tweaks taxonomies display paired connected
+* main/module: using helper method for object labels
+* main/plugin: check setup disabled
+* main/plugin: initial support for thrift mode
+* main/plugin: support for module keywords
+* main/template: table render callback
+* module/actions: initial support for post actions
+* module/actions: meta-box sidebar for terms
+* module/addendum: :new: module
+* module/audit: bulk action for force auto-audit
+* module/audit: initial support for frame-page
+* module/audit: separate auto-audit logic
+* module/audit: tool for bulk force auto-audit
+* module/genres: :new: module
+* module/importer: :warning: fixed post pros for new posts
+* module/importer: :warning: missing insert for new posts
+* module/importer: always display attachment title
+* module/importer: avoid empty comments
+* module/importer: avoid override terms for existing posts
+* module/importer: avoid repeating filters on preview table
+* module/importer: check headers for duplicates
+* module/importer: checks for empty post data
+* module/importer: correct audit attribute handling
+* module/importer: correct search key on table-list
+* module/importer: different action hook for existing posts
+* module/importer: moved to imports subs
+* module/importer: override option on posts
+* module/importer: pass correct data into filters
+* module/importer: rethinking source id
+* module/importer: support for comments
+* module/importer: title action for each supported post-types
+* module/iranian: :new: module
+* module/labeled: :new: module
+* module/meta: append supported fields as column type on paired-imports
+* module/meta: better handling quick-edit
+* module/meta: check for assign cap before term type fields
+* module/meta: check for empty meta before import
+* module/meta: downloadable field type
+* module/meta: fallback for unknown type ltr fields
+* module/meta: field for image source
+* module/meta: initial support for attachment field type
+* module/meta: initiate the posttype fields for each posttype
+* module/meta: meta data on prepped for paired
+* module/meta: migrate to imports
+* module/meta: missing datetime type handling
+* module/meta: proper checks for override
+* module/meta: support for export context
+* module/meta: support for hours field
+* module/meta: support for period/amount fields
+* module/meta: support for postal-code field type
+* module/meta: support for venue string field
+* module/meta: titles for meta rendered on rest
+* module/meta: validation class for identity/iban fields
+* module/organization: :warning: correct constant for subterms
+* module/organization: hide departments on tabloid overview terms
+* module/organization: importer support for code field
+* module/organization: support for organization code identifier
+* module/ortho: support for date-time inputs
+* module/overwrite: keep custom labels
+* module/pointers: :new: module
+* module/quotation: column-row for quote/parents
+* module/quotation: proper remove parent/menu-order meta-boxes
+* module/ranked: :new: module
+* module/recount: apply sortable column
+* module/socialite: :new: module
+* module/static-covers: :new: module
+* module/static-covers: image on inline edit
+* module/static-covers: initial support for counter token
+* module/static-covers: support tabloid overview
+* module/suited: default terms
+* module/tabloid: :new: module
+* module/tabloid: better cleanup export data
+* module/tabloid: support for custom summaries
+* module/tabloid: support for hooks on overview
+* module/terms: support for hours field
+* module/terms: support for Lat/Lng
+* module/terms: support for min/max fields
+* module/terms: support for parent field
+* module/terms: support for period/amount fields
+* module/territory: :new: module
+* module/tweaks: alias for post-meta table on db queries
+* module/tweaks: use menu icon prop for taxonomies
+* module/unavailable: :new: module
+* module/units: :new: module
+* module/was-born: :new: module
+* service/late-chores: :new: service
+* service/late-chores: avoid wondering shutdown hook
+* service/late-chores: one time hooked for terms count
+* service/late-chores: support for late terms count after disabling
+* service/late-chores: support for wc queue/action scheduler
+* service/line-discovery: :new: service
+* service/post-type-fields: :new: service
+* service/search-select: offset on posts
+* service/search-select: pre query filters
+* service/search-select: renamed from select-single
+* service/search-select: support for wp error as result
+
 ### 3.25.0
 * main/helper: action hook for editor status info
 * main/helper: description field label for taxonomies
