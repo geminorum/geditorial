@@ -25,6 +25,16 @@ class Taxonomy extends Core\Base
 		return is_taxonomy_viewable( $taxonomy );
 	}
 
+	public static function queryVar( $taxonomy )
+	{
+		if ( ! $object = self::object( $taxonomy ) )
+			return FALSE;
+
+		return empty( $object->query_var )
+			? $object->name
+			: $object->query_var;
+	}
+
 	/**
 	 * Determines whether the taxonomy object is hierarchical.
 	 * Also accepts taxonomy object.
