@@ -1,3 +1,7 @@
+### 3.26.1
+* internal/main-download: better handling file length
+* main/template: avoid bail-out on undefined fields
+
 ### 3.26.0
 * app/import-items: :new: vue js app
 * internal/core-admin: unset columns on table-list
