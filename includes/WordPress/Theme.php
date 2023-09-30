@@ -113,9 +113,21 @@ class Theme extends Core\Base
 		return $meta;
 	}
 
-	public static function restPost_accessMetaField( $access, $field, $post, $context, $user_id )
+	public static function restPost_metaFieldArgs( $field, $field_key, $posttype, $fields  )
 	{
-		return 'view' === $context ? TRUE : $access;
+		if ( ! $field )
+			return $field;
+
+		$prop = sprintf( '_meta_%s', $field_key );
+
+		if ( ! isset( $GLOBALS['post']->_metadata->{$prop} ) )
+			return $field;
+
+		return [
+			'name'        => $field_key,
+			'type'        => 'text',
+			'access_view' => TRUE, // avoid core cap checks
+		];
 	}
 
 	public static function restPost_thumbnailHTML( $html, $post_id, $post_thumbnail_id, $size, $attr )
@@ -153,7 +165,7 @@ class Theme extends Core\Base
 		add_filter( 'post_thumbnail_url', [ __CLASS__, 'restPost_thumbnailURL' ], 9999, 3 );
 		add_filter( 'post_thumbnail_id', '__return_zero', 9999 );
 		add_filter( 'geditorial_get_meta_field', [ __CLASS__, 'restPost_getMetaField' ], 9999, 4 );
-		add_filter( 'geditorial_meta_access_posttype_field', [ __CLASS__, 'restPost_accessMetaField' ], 9999, 5 );
+		add_filter( 'geditorial_meta_posttype_field_args', [ __CLASS__, 'restPost_metaFieldArgs' ], 9999, 4 );
 		add_filter( 'gtheme_image_get_thumbnail_id', '__return_false', 9999, 2 );
 	}
 
@@ -166,7 +178,7 @@ class Theme extends Core\Base
 		remove_filter( 'post_thumbnail_url', [ __CLASS__, 'restPost_thumbnailURL' ], 9999 );
 		remove_filter( 'post_thumbnail_id', '__return_zero', 9999 );
 		remove_filter( 'geditorial_get_meta_field', [ __CLASS__, 'restPost_getMetaField' ], 9999 );
-		remove_filter( 'geditorial_meta_access_posttype_field', [ __CLASS__, 'restPost_accessMetaField' ], 9999 );
+		remove_filter( 'geditorial_meta_posttype_field_args', [ __CLASS__, 'restPost_metaFieldArgs' ], 9999 );
 		remove_filter( 'gtheme_image_get_thumbnail_id', '__return_false', 9999 );
 	}
 

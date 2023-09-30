@@ -542,15 +542,8 @@ class Template extends WordPress\Main
 		if ( FALSE === $meta )
 			return $args['default'];
 
-		$field = gEditorial()->module( 'meta' )->get_posttype_field_args( $field_key, $post->post_type );
-
-		if ( ! $field )
-			/**
-			 * meta-data stored for the field-key
-			 * but currently not enabled for the posttype
-			 * or overrided via filters
-			 */
-			$field = [ 'name' => $field_key ];
+		if ( ! $field = gEditorial()->module( 'meta' )->get_posttype_field_args( $field_key, $post->post_type ) )
+			return $args['default']; // field data found but currently not enabled for the posttype
 
 		if ( FALSE !== $args['context'] ) {
 
