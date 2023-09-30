@@ -27,17 +27,18 @@ trait MainDownload
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
+		$verify   = ! Core\WordPress::isDev();
 		$filesize = $httpstatus = FALSE;
 
 		if ( $url = Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
 
-			$filesize   = Core\HTTP::getSize( $url );
-			$httpstatus = Core\HTTP::getStatus( $url );
+			$filesize   = Core\HTTP::getSize( $url, $verify );
+			$httpstatus = Core\HTTP::getStatus( $url, $verify );
 
 		} else if ( $attachment = Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
 
 			if ( $url = wp_get_attachment_url( (int) $attachment ) )
-				$httpstatus = Core\HTTP::getStatus( $url );
+				$httpstatus = Core\HTTP::getStatus( $url, $verify );
 
 			if ( $meta = wp_get_attachment_metadata( (int) $attachment ) ) {
 
@@ -46,8 +47,11 @@ trait MainDownload
 			}
 
 			if ( ! $filesize && $url )
-				$filesize = Core\HTTP::getSize( $url );
+				$filesize = Core\HTTP::getSize( $url, $verify );
 		}
+
+		if ( ! $filesize || $filesize < 0 )
+			$filesize = FALSE;
 
 		return [
 			'meta_input' => [
@@ -64,6 +68,7 @@ trait MainDownload
 			return FALSE;
 
 		$flush    = Core\WordPress::isFlush();
+		$verify   = ! Core\WordPress::isDev();
 		$metakey  = $this->constant( 'maindownload_filesize', '_main_download_filesize' );
 		$filesize = '';
 
@@ -73,7 +78,9 @@ trait MainDownload
 
 		} else if ( $url = Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
 
-			if ( $filesize = Core\HTTP::getSize( $url ) )
+			$filesize = Core\HTTP::getSize( $url, $verify );
+
+			if ( $filesize && $filesize > 0 )
 				update_post_meta( $post->ID, $metakey, $filesize );
 
 		} else if ( $attachment = Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
@@ -85,9 +92,9 @@ trait MainDownload
 			}
 
 			if ( ! $filesize && ( $url = wp_get_attachment_url( (int) $attachment ) ) )
-				$filesize = Core\HTTP::getSize( $url );
+				$filesize = Core\HTTP::getSize( $url, $verify );
 
-			if ( $filesize )
+			if ( $filesize && $filesize > 0 )
 				update_post_meta( $post->ID, $metakey, $filesize );
 		}
 
