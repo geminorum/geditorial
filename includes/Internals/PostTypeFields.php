@@ -212,9 +212,20 @@ trait PostTypeFields
 
 			} else if ( $post = WordPress\Post::get( $post ) ) {
 
-				$access = in_array( $context, [ 'edit' ], TRUE )
-					? WordPress\Post::can( $post, 'edit_post', $user_id )
-					: WordPress\Post::can( $post, 'read_post', $user_id );
+				if ( NULL === WordPress\PostType::object( $post ) ) {
+
+					// NOTE: fallback to `post` if posttype is not registered
+
+					$access = in_array( $context, [ 'edit' ], TRUE )
+						? WordPress\PostType::can( 'post', 'edit_post', $user_id )
+						: WordPress\PostType::can( 'post', 'read_post', $user_id );
+
+				} else {
+
+					$access = in_array( $context, [ 'edit' ], TRUE )
+						? WordPress\Post::can( $post, 'edit_post', $user_id )
+						: WordPress\Post::can( $post, 'read_post', $user_id );
+				}
 
 			} else {
 

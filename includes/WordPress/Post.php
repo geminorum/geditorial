@@ -95,6 +95,10 @@ class Post extends Core\Base
 		if ( ! $post = self::get( $post ) )
 			return $fallback;
 
+		// handling dummy posts!
+		if ( '-9999' == $post->ID )
+			return $fallback;
+
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
 
