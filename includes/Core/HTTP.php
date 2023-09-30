@@ -433,7 +433,7 @@ class HTTP extends Base
 
 		curl_setopt( $ch, CURLOPT_HEADER, TRUE ); // we want headers
 		curl_setopt( $ch, CURLOPT_NOBODY, TRUE ); // we don't need body
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
 		curl_setopt( $ch, CURLOPT_TIMEOUT, 10 );
 
 		if ( ! $verify_ssl ) {
@@ -467,11 +467,11 @@ class HTTP extends Base
 
 		$ch = curl_init( $url );
 
-		// issue a HEAD request and follow any redirects
 		curl_setopt( $ch, CURLOPT_NOBODY, TRUE );
 		curl_setopt( $ch, CURLOPT_HEADER, TRUE );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
 		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, TRUE );
+		curl_setopt( $ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
 
 		if ( ! $verify_ssl ) {
 			curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, FALSE );
@@ -481,23 +481,14 @@ class HTTP extends Base
 		$result = -1; // assume failure
 		$output = curl_exec( $ch );
 
+		$status = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+		$length = curl_getinfo( $ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD );
+
 		curl_close( $ch );
 
-		if ( $output ) {
-
-			$length = 'unknown';
-			$status = 'unknown';
-
-			if ( preg_match( "/^HTTP\/1\.[01] (\d\d\d)/", $output, $matches ) )
-				$status = (int) $matches[1];
-
-			if ( preg_match( "/Content-Length: (\d+)/", $output, $matches ) )
-				$length = (int) $matches[1];
-
-			// http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-			if ( $status == 200 || ( $status > 300 && $status <= 308 ) )
-				$result = $length;
-		}
+		// http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+		if ( $status == 200 || ( $status > 300 && $status <= 308 ) )
+			$result = $length;
 
 		return $result;
 	}

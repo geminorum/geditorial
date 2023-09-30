@@ -369,7 +369,7 @@ class L10n extends Base
 
 			case 'o':
 
-				$plural = in_array( $word, [ 'photo', 'piano', 'halo', 'gas' ], TRUE )
+				$plural = in_array( $word, [ 'photo', 'piano', 'halo', 'gas', 'video' ], TRUE )
 					? sprintf( '%ss', $word )
 					: sprintf( '%ses', $word );
 
