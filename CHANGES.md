@@ -1,3 +1,6 @@
+### 3.26.2
+* main/template: override field args for remote posts
+
 ### 3.26.1
 * internal/main-download: better handling file length
 * main/template: avoid bail-out on undefined fields
