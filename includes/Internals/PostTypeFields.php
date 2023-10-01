@@ -219,13 +219,17 @@ trait PostTypeFields
 
 					$access = in_array( $context, [ 'edit' ], TRUE )
 						? WordPress\PostType::can( 'post', 'edit_posts', $user_id )
-						: WordPress\PostType::can( 'post', 'read', $user_id );
+						: WordPress\PostType::viewable( 'post' );
+						// @SEE: https://core.trac.wordpress.org/ticket/50123
+						// : WordPress\PostType::can( 'post', 'read', $user_id );
 
 				} else {
 
 					$access = in_array( $context, [ 'edit' ], TRUE )
 						? WordPress\Post::can( $post, 'edit_post', $user_id )
-						: WordPress\Post::can( $post, 'read_post', $user_id );
+						: WordPress\Post::viewable( $post );
+						// @SEE: https://core.trac.wordpress.org/ticket/50123
+						// : WordPress\Post::can( $post, 'read_post', $user_id );
 				}
 
 			} else {
