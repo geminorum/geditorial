@@ -212,7 +212,8 @@ trait PostTypeFields
 
 			} else if ( $post = WordPress\Post::get( $post ) ) {
 
-				if ( NULL === WordPress\PostType::object( $post ) ) {
+				if ( WordPress\SwitchSite::is()
+					|| NULL === WordPress\PostType::object( $post ) ) {
 
 					// NOTE: fallback to `post` if posttype is not registered
 
