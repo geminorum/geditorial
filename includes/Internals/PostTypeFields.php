@@ -217,8 +217,8 @@ trait PostTypeFields
 					// NOTE: fallback to `post` if posttype is not registered
 
 					$access = in_array( $context, [ 'edit' ], TRUE )
-						? WordPress\PostType::can( 'post', 'edit_post', $user_id )
-						: WordPress\PostType::can( 'post', 'read_post', $user_id );
+						? WordPress\PostType::can( 'post', 'edit_posts', $user_id )
+						: WordPress\PostType::can( 'post', 'read', $user_id );
 
 				} else {
 
