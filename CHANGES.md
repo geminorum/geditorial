@@ -1,4 +1,8 @@
-### 3.26.3 
+### 3.26.4
+* internal/post-type-fields: check for correct caps
+* internal/post-type-fields: check if site is switched
+
+### 3.26.3
 * main/template: handle pseudo-meta on switch sites
 
 ### 3.26.2
