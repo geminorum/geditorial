@@ -1,3 +1,6 @@
+### 3.26.5
+* internal/post-type-fields: check for viewable for logged-out
+
 ### 3.26.4
 * internal/post-type-fields: check for correct caps
 * internal/post-type-fields: check if site is switched
