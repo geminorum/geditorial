@@ -1,3 +1,6 @@
+### 3.26.3 
+* main/template: handle pseudo-meta on switch sites
+
 ### 3.26.2
 * main/template: override field args for remote posts
 
