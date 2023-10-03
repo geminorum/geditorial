@@ -1,0 +1,202 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Identified\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Identified\n"
+"X-Domain: geditorial-identified\n"
+
+#. translators: %s: supported object label
+#: Identified.php:45
+msgctxt "Setting Title"
+msgid "Identifier Meta-key for %s"
+msgstr ""
+
+#: Identified.php:46
+msgctxt "Setting Description"
+msgid "Defines identifier meta-key for the post-type."
+msgstr ""
+
+#. translators: %s: supported object label
+#: Identified.php:57
+msgctxt "Setting Title"
+msgid "Identifier Type for %s"
+msgstr ""
+
+#: Identified.php:58
+msgctxt "Setting Description"
+msgid "Defines available identifier type for the post-type."
+msgstr ""
+
+#: Identified.php:59
+msgctxt "Setting"
+msgid "There are no identifier types available!"
+msgstr ""
+
+#. translators: %s: audit attribute placeholder
+#: Identified.php:68
+msgctxt "Setting Description"
+msgid "Appends %s audit attribute to each created item via identifier."
+msgstr ""
+
+#: Identified.php:110
+msgctxt "Identifier Type"
+msgid "Code"
+msgstr ""
+
+#: Identified.php:111
+msgctxt "Identifier Type"
+msgid "GTIN"
+msgstr ""
+
+#: Identified.php:112
+msgctxt "Identifier Type"
+msgid "ISBN"
+msgstr ""
+
+#: Identified.php:113
+msgctxt "Identifier Type"
+msgid "ISSN"
+msgstr ""
+
+#: Identified.php:114
+msgctxt "Identifier Type"
+msgid "SKU"
+msgstr ""
+
+#: Identified.php:115
+msgctxt "Identifier Type"
+msgid "DDC"
+msgstr ""
+
+#: Identified.php:116
+msgctxt "Identifier Type"
+msgid "VIN"
+msgstr ""
+
+#: Identified.php:117
+msgctxt "Identifier Type"
+msgid "Plate"
+msgstr ""
+
+#: Identified.php:118
+msgctxt "Identifier Type"
+msgid "TIN"
+msgstr ""
+
+#: Identified.php:119
+msgctxt "Identifier Type"
+msgid "EIN"
+msgstr ""
+
+#: Identified.php:120
+msgctxt "Identifier Type"
+msgid "Mobile"
+msgstr ""
+
+#: Identified.php:121
+msgctxt "Identifier Type"
+msgid "Identity"
+msgstr ""
+
+#: Identified.php:125
+msgctxt "Identifier Type Description"
+msgid "Arbitrary Identifier Code"
+msgstr ""
+
+#: Identified.php:126
+msgctxt "Identifier Type Description"
+msgid "Global Trade Item Number"
+msgstr ""
+
+#: Identified.php:127
+msgctxt "Identifier Type Description"
+msgid "International Standard Book Number"
+msgstr ""
+
+#: Identified.php:128
+msgctxt "Identifier Type Description"
+msgid "International Standard Serial Number"
+msgstr ""
+
+#: Identified.php:129
+msgctxt "Identifier Type Description"
+msgid "Stock Keeping Unit"
+msgstr ""
+
+#: Identified.php:130
+msgctxt "Identifier Type Description"
+msgid "Dewey Decimal Classification"
+msgstr ""
+
+#: Identified.php:131
+msgctxt "Identifier Type Description"
+msgid "Vehicle Identification Number"
+msgstr ""
+
+#: Identified.php:132
+msgctxt "Identifier Type Description"
+msgid "Vehicle Registration Plate"
+msgstr ""
+
+#: Identified.php:133
+msgctxt "Identifier Type Description"
+msgid "Taxpayer Identification Number"
+msgstr ""
+
+#: Identified.php:134
+msgctxt "Identifier Type Description"
+msgid "Employer Identification Number"
+msgstr ""
+
+#: Identified.php:135
+msgctxt "Identifier Type Description"
+msgid "Mobile Phone Number"
+msgstr ""
+
+#: Identified.php:136
+msgctxt "Identifier Type Description"
+msgid "National Identity Number"
+msgstr ""
+
+#: Identified.php:144
+msgctxt "Settings Description"
+msgid "Supports identifiers for the selected post-types."
+msgstr ""
+
+#: Identified.php:176
+msgctxt "RestAPI: Arg Description"
+msgid "The identifier type to process."
+msgstr ""
+
+#: Identified.php:182
+msgctxt "RestAPI: Arg Description"
+msgid "The identifier code to process."
+msgstr ""
+
+#: Identified.php:316
+msgctxt "Possible Identifier Key"
+msgid "Identifier"
+msgstr ""
+
+#: Identified.php:463
+msgctxt "Default Term: Audit"
+msgid "Empty Identification"
+msgstr ""
+
+#: Identified.php:464
+msgctxt "Default Term: Audit"
+msgid "Duplicate Identification"
+msgstr ""
+
+#: Identified.php:465
+msgctxt "Default Term: Audit"
+msgid "Invalid Identification"
+msgstr ""
