@@ -101,16 +101,16 @@ SQL;
 	// ALSO: trim term titles
 	public static function restrictByTaxonomy( $taxonomy, $paired_posttype = FALSE, $extra = [] )
 	{
-		if ( ! $object = get_taxonomy( $taxonomy ) )
-			return;
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
+			return FALSE;
 
-		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$query_var = empty( $taxonomy->query_var ) ? $taxonomy->name : $taxonomy->query_var;
 		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
 
 		// if selected is term_id instead of term slug
 		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
 
-			if ( $term = get_term_by( 'id', $selected, $taxonomy ) )
+			if ( $term = get_term_by( 'id', $selected, $taxonomy->name ) )
 				$selected = $term->slug;
 
 			else
@@ -118,12 +118,12 @@ SQL;
 		}
 
 		$args = [
-			'taxonomy'      => $object->name,
+			'taxonomy'      => $taxonomy->name,
 			'name'          => $query_var,
 			'orderby'       => 'name',
 			'value_field'   => 'slug',
 			'selected'      => $selected,
-			'hierarchical'  => $object->hierarchical,
+			'hierarchical'  => $taxonomy->hierarchical,
 			'depth'         => 3,
 			'show_count'    => FALSE,
 			'hide_empty'    => TRUE,
@@ -137,8 +137,8 @@ SQL;
 
 		} else {
 
-			$args['show_option_all']  = Helper::getTaxonomyLabel( $object, 'show_option_all' );
-			$args['show_option_none'] = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
+			$args['show_option_all']  = Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' );
+			$args['show_option_none'] = Helper::getTaxonomyLabel( $taxonomy, 'show_option_no_items' );
 		}
 
 		wp_dropdown_categories( array_merge( $args, $extra ) );
