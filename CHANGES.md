@@ -1,3 +1,11 @@
+### 3.26.6
+* main/list-table: passing object as taxonomy
+* module/identified: :new: module
+* module/iranian: location database revised
+* module/missioned: :new: module
+* module/persona: :new: module
+* module/trained: :new: module
+
 ### 3.26.5
 * internal/post-type-fields: check for viewable for logged-out
 
