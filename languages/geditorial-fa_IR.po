@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-29 22:27+0330\n"
+"PO-Revision-Date: 2023-10-04 14:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -1259,7 +1259,7 @@ msgctxt "Module: MetaBox Default Action"
 msgid "Manage"
 msgstr "مدیریت"
 
-#: includes/Internals/MainDownload.php:99
+#: includes/Internals/MainDownload.php:106
 msgctxt "Internal: Main Download: Title Attr"
 msgid "File Size"
 msgstr "حجم پرونده"
@@ -1275,156 +1275,156 @@ msgctxt "Internal: PairedImports: Button Label"
 msgid "Upload into %s"
 msgstr "درون‌ریزی به %s"
 
-#: includes/Internals/PairedImports.php:66
+#: includes/Internals/PairedImports.php:70
 msgctxt "Internal: PairedImports: Button Title"
 msgid "Import Items CSV File"
 msgstr "درون‌ریزی از پرونده CSV"
 
 #. translators: %s: icon markup
-#: includes/Internals/PairedImports.php:69
+#: includes/Internals/PairedImports.php:73
 msgctxt "Internal: PairedImports: Button Label"
 msgid "%s Upload"
 msgstr "%s بارگذاری"
 
-#: includes/Internals/PairedImports.php:92
+#: includes/Internals/PairedImports.php:96
 msgctxt "Internal: PairedImports: Import Type"
 msgid "Title"
 msgstr "عنوان"
 
-#: includes/Internals/PairedImports.php:103
+#: includes/Internals/PairedImports.php:107
 msgctxt "Internal: PairedImports: Field"
 msgid "Identifier"
 msgstr "شناساگر"
 
-#: includes/Internals/PairedImports.php:104
+#: includes/Internals/PairedImports.php:108
 msgctxt "Internal: PairedImports: Field"
 msgid "Title"
 msgstr "عنوان"
 
-#: includes/Internals/PairedImports.php:139
+#: includes/Internals/PairedImports.php:143
 msgctxt "Internal: PairedImports: String"
 msgid "Import Raw Data into this Post"
 msgstr "درون‌ریزی داده‌های خام در این فرسته"
 
-#: includes/Internals/PairedImports.php:140
+#: includes/Internals/PairedImports.php:144
 msgctxt "Internal: PairedImports: String"
 msgid "Empty Data!"
 msgstr "داده‌های خالی!"
 
-#: includes/Internals/PairedImports.php:141
+#: includes/Internals/PairedImports.php:145
 msgctxt "Internal: PairedImports: String"
 msgid "Unsupported Data!"
 msgstr "داده‌های پشتیبانی‌نشده!"
 
-#: includes/Internals/PairedImports.php:142
+#: includes/Internals/PairedImports.php:146
 msgctxt "Internal: PairedImports: String"
 msgid "Discovery"
 msgstr "اکتشاف"
 
-#: includes/Internals/PairedImports.php:143
+#: includes/Internals/PairedImports.php:147
 msgctxt "Internal: PairedImports: String"
 msgid "Add New on Discovery"
 msgstr "افزودن تازه‌ها در اکتشاف"
 
-#: includes/Internals/PairedImports.php:144
+#: includes/Internals/PairedImports.php:148
 msgctxt "Internal: PairedImports: String"
 msgid "Add"
 msgstr "افزودن"
 
-#: includes/Internals/PairedImports.php:145
+#: includes/Internals/PairedImports.php:149
 msgctxt "Internal: PairedImports: String"
 msgid "Add selected rows"
 msgstr "افزودن ردیف‌های انتخاب‌شده"
 
-#: includes/Internals/PairedImports.php:146 includes/Internals/PairedImports.php:158
+#: includes/Internals/PairedImports.php:150 includes/Internals/PairedImports.php:162
 msgctxt "Internal: PairedImports: String"
 msgid "Delete"
 msgstr "حذف"
 
-#: includes/Internals/PairedImports.php:147
+#: includes/Internals/PairedImports.php:151
 msgctxt "Internal: PairedImports: String"
 msgid "Delete selected rows"
 msgstr "حذف ردیف‌های انتخاب‌شده"
 
-#: includes/Internals/PairedImports.php:148
+#: includes/Internals/PairedImports.php:152
 msgctxt "Internal: PairedImports: String"
 msgid "Clear"
 msgstr "پاک‌سازی"
 
-#: includes/Internals/PairedImports.php:149
+#: includes/Internals/PairedImports.php:153
 msgctxt "Internal: PairedImports: String"
 msgid "Clear all data on table"
 msgstr "پاک‌سازی همه داده‌های روی جدول"
 
-#: includes/Internals/PairedImports.php:150
+#: includes/Internals/PairedImports.php:154
 msgctxt "Internal: PairedImports: String"
 msgid "Paste"
 msgstr "چسباندن"
 
-#: includes/Internals/PairedImports.php:151
+#: includes/Internals/PairedImports.php:155
 msgctxt "Internal: PairedImports: String"
 msgid "Paste from supported formats"
 msgstr "چسباندن از قالب‌های پشتیبانی‌شده"
 
-#: includes/Internals/PairedImports.php:152
+#: includes/Internals/PairedImports.php:156
 msgctxt "Internal: PairedImports: String"
 msgid "Upload"
 msgstr "بارگذاری"
 
-#: includes/Internals/PairedImports.php:153
+#: includes/Internals/PairedImports.php:157
 msgctxt "Internal: PairedImports: String"
 msgid "Upload from supported files"
 msgstr "بارگذاری از پرونده‌های پشتیبانی‌شده"
 
-#: includes/Internals/PairedImports.php:154
+#: includes/Internals/PairedImports.php:158
 msgctxt "Internal: PairedImports: String"
 msgid "Undefined"
 msgstr "تعریف‌نشده"
 
-#: includes/Internals/PairedImports.php:155
+#: includes/Internals/PairedImports.php:159
 msgctxt "Internal: PairedImports: String"
 msgid "Delete Me"
 msgstr "حذف شود"
 
-#: includes/Internals/PairedImports.php:156
+#: includes/Internals/PairedImports.php:160
 msgctxt "Internal: PairedImports: String"
 msgid "Flip Date"
 msgstr "تاریخ وارونه"
 
-#: includes/Internals/PairedImports.php:157
+#: includes/Internals/PairedImports.php:161
 msgctxt "Internal: PairedImports: String"
 msgid "Founded"
 msgstr "پیداشده"
 
-#: includes/Internals/PairedImports.php:159
+#: includes/Internals/PairedImports.php:163
 msgctxt "Internal: PairedImports: String"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: includes/Internals/PairedImports.php:160
+#: includes/Internals/PairedImports.php:164
 msgctxt "Internal: PairedImports: String"
 msgid "Open Item"
 msgstr "باز کردن"
 
-#: includes/Internals/PairedImports.php:161
+#: includes/Internals/PairedImports.php:165
 msgctxt "Internal: PairedImports: String"
 msgid "Search …"
 msgstr "جست‌وجو …"
 
 #. translators: %s: count number
-#: includes/Internals/PairedImports.php:164
+#: includes/Internals/PairedImports.php:168
 msgctxt "Internal: PairedImports: String"
 msgid "%s lines"
 msgstr "%s خط"
 
 #. translators: %s: count number
-#: includes/Internals/PairedImports.php:166
+#: includes/Internals/PairedImports.php:170
 msgctxt "Internal: PairedImports: String"
 msgid "%s selected"
 msgstr "%s انتخاب‌شده"
 
 #. translators: %s: post title
-#: includes/Internals/PairedImports.php:198
+#: includes/Internals/PairedImports.php:202
 msgctxt "Internal: PairedImports: Page Title"
 msgid "Import Items for %s"
 msgstr "درون‌ریزی موارد برای %s"
@@ -2236,12 +2236,12 @@ msgctxt "Modules: Cartable"
 msgid "Customized Content Folders"
 msgstr "سفارشی‌سازی پوشه‌های محتوا"
 
-#: includes/Modules/Checked/Checked.php:23
+#: includes/Modules/Checked/Checked.php:34
 msgctxt "Modules: Checked"
 msgid "Checked"
 msgstr "چک‌شده"
 
-#: includes/Modules/Checked/Checked.php:24
+#: includes/Modules/Checked/Checked.php:35
 msgctxt "Modules: Checked"
 msgid "Editorial Content Checklists"
 msgstr "چک‌لیست محتوای تحریریه"
@@ -2811,12 +2811,12 @@ msgctxt "Modules: Identical"
 msgid "Similar Content Awareness"
 msgstr "آگاهی از محتوای مشابه"
 
-#: includes/Modules/Identified/Identified.php:27
+#: includes/Modules/Identified/Identified.php:22
 msgctxt "Modules: Identified"
 msgid "Identified"
 msgstr "شناسنده"
 
-#: includes/Modules/Identified/Identified.php:28
+#: includes/Modules/Identified/Identified.php:23
 msgctxt "Modules: Identified"
 msgid "Content Identification Management"
 msgstr "مدیریت شناسنده‌های محتوا"
@@ -3000,6 +3000,16 @@ msgstr "بازار"
 msgctxt "Modules: Market"
 msgid "Provider Listings"
 msgstr "فهرست‌بندی ارائه‌دهندگان"
+
+#: includes/Modules/Marksman/Marksman.php:23
+msgctxt "Modules: Marksman"
+msgid "Marksman"
+msgstr "تیرانداز"
+
+#: includes/Modules/Marksman/Marksman.php:24
+msgctxt "Modules: Marksman"
+msgid "Precision Shooting Data"
+msgstr "داده‌های تیراندازی دقیق"
 
 #: includes/Modules/Masthead/Masthead.php:16
 msgctxt "Modules: Masthead"
@@ -3216,12 +3226,12 @@ msgctxt "Modules: Paper"
 msgid "Printable Version of Posts"
 msgstr "نسخه قابل چاپ از نوشته‌ها"
 
-#: includes/Modules/Papered/Papered.php:47
+#: includes/Modules/Papered/Papered.php:49
 msgctxt "Modules: Papered"
 msgid "Papered"
 msgstr "کاغذی"
 
-#: includes/Modules/Papered/Papered.php:48
+#: includes/Modules/Papered/Papered.php:50
 msgctxt "Modules: Papered"
 msgid "Editorial Print Profiles"
 msgstr "نمایه‌های چاپی تحریریه"
@@ -3531,12 +3541,12 @@ msgctxt "Modules: Roles"
 msgid "Member & Role Management"
 msgstr "مدیریت کاربران و نقش‌ها"
 
-#: includes/Modules/Rulesets/Rulesets.php:22
+#: includes/Modules/Rulesets/Rulesets.php:26
 msgctxt "Modules: Rulesets"
 msgid "Rulesets"
 msgstr "قواعد"
 
-#: includes/Modules/Rulesets/Rulesets.php:23
+#: includes/Modules/Rulesets/Rulesets.php:27
 msgctxt "Modules: Rulesets"
 msgid "Content Protections"
 msgstr "حفاظت از محتوا"
@@ -4196,12 +4206,12 @@ msgctxt "Modules: WC Notify"
 msgid "[CHANGE ME]"
 msgstr ""
 
-#: includes/Modules/WcPostal/WcPostal.php:19
+#: includes/Modules/WcPostal/WcPostal.php:20
 msgctxt "Modules: WC Postal"
 msgid "WC Postal"
 msgstr "وکـ پستی"
 
-#: includes/Modules/WcPostal/WcPostal.php:20
+#: includes/Modules/WcPostal/WcPostal.php:21
 msgctxt "Modules: WC Postal"
 msgid "Package Tracking Enhancements for WooCommerce"
 msgstr "بهینه‌سازی رهگیری مرسولات برای ووکامرس"
@@ -5776,29 +5786,29 @@ msgctxt "Template: Term Contact Title"
 msgid "Contact"
 msgstr "ارتباط"
 
-#: includes/Template.php:635
+#: includes/Template.php:638
 msgctxt "Template: Text file label"
 msgid "Text"
 msgstr "متن"
 
 #. translators: %s: search query
-#: includes/Template.php:732
+#: includes/Template.php:735
 msgctxt "Template: Search Link Title Attr"
 msgid "Search for %s"
 msgstr "جست‌وجو برای %s"
 
-#: includes/Template.php:844
+#: includes/Template.php:847
 msgctxt "Template: Meta Link Default Title"
 msgid "External Source"
 msgstr "پیوند بیرونی"
 
-#: includes/Template.php:847
+#: includes/Template.php:850
 msgctxt "Template: Meta Link Default Title Attr"
 msgid "Visit external source"
 msgstr "دیدن پیوند بیرونی"
 
 #. translators: %s: posttype name
-#: includes/Template.php:1064 includes/Template.php:1070
+#: includes/Template.php:1067 includes/Template.php:1073
 msgctxt "Template: Recents"
 msgid "Recent %s"
 msgstr "آخرین %s"

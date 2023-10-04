@@ -13,105 +13,105 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcPostal\n"
 "X-Domain: geditorial-wc-postal\n"
 
-#: WcPostal.php:36
+#: WcPostal.php:37
 msgctxt "Setting Title"
 msgid "Tracking Metakey"
 msgstr ""
 
-#: WcPostal.php:37
+#: WcPostal.php:38
 msgctxt "Setting Description"
 msgid "Defines the meta-key that stored the tracking identifier data. Leave empty to use default."
 msgstr ""
 
-#: WcPostal.php:45
+#: WcPostal.php:46
 msgctxt "Setting Title"
 msgid "Service Template"
 msgstr ""
 
-#: WcPostal.php:46
+#: WcPostal.php:47
 msgctxt "Setting Description"
 msgid "Defines the template that used to build the url to the tracking service. Leave empty to use default."
 msgstr ""
 
-#: WcPostal.php:54
+#: WcPostal.php:55
 msgctxt "Setting Title"
 msgid "Service Icon"
 msgstr ""
 
-#: WcPostal.php:55
+#: WcPostal.php:56
 msgctxt "Setting Description"
 msgid "Defines the image that used as visual identifier of the tracking service. Leave empty to use default."
 msgstr ""
 
-#: WcPostal.php:58
+#: WcPostal.php:59
 msgctxt "Setting Icon"
 msgid "View Default Icon"
 msgstr ""
 
-#: WcPostal.php:65
+#: WcPostal.php:66
 msgctxt "Setting Title"
 msgid "Email Before Text"
 msgstr ""
 
-#: WcPostal.php:66
+#: WcPostal.php:67
 msgctxt "Setting Description"
 msgid "String to use before tracking info button on email template of the order details. Leave empty to use default."
 msgstr ""
 
-#: WcPostal.php:67
-#: WcPostal.php:144
+#: WcPostal.php:68
+#: WcPostal.php:145
 msgctxt "Setting Default"
 msgid "You can view the status of package at any time by visiting this page:"
 msgstr ""
 
-#: WcPostal.php:72
+#: WcPostal.php:73
 msgctxt "Setting Title"
 msgid "Email Button Text"
 msgstr ""
 
-#: WcPostal.php:73
+#: WcPostal.php:74
 msgctxt "Setting Description"
 msgid "String to use as prefix to tracking info button on email template of the order details. Leave empty to use default."
 msgstr ""
 
-#: WcPostal.php:74
-#: WcPostal.php:148
+#: WcPostal.php:75
+#: WcPostal.php:149
 msgctxt "Setting Default"
 msgid "Tracking Postal Package"
 msgstr ""
 
-#: WcPostal.php:79
+#: WcPostal.php:80
 msgctxt "Setting Title"
 msgid "Admin Button Title"
 msgstr ""
 
-#: WcPostal.php:80
+#: WcPostal.php:81
 msgctxt "Setting Description"
 msgid "String to use as title of order action button on admin area. Leave empty to use default."
 msgstr ""
 
-#: WcPostal.php:81
-#: WcPostal.php:204
+#: WcPostal.php:82
+#: WcPostal.php:205
 msgctxt "Setting Default"
 msgid "Tracking Package"
 msgstr ""
 
-#: WcPostal.php:90
+#: WcPostal.php:91
 msgctxt "Setting Section Title"
 msgid "Tracking"
 msgstr ""
 
-#: WcPostal.php:107
+#: WcPostal.php:108
 msgctxt "Export Column"
 msgid "Tracking"
 msgstr ""
 
-#: WcPostal.php:183
+#: WcPostal.php:184
 msgctxt "Action Title"
 msgid "Tracking Package ID:"
 msgstr ""
 
-#: WcPostal.php:193
+#: WcPostal.php:194
 msgctxt "Action"
 msgid "Tracking"
 msgstr ""

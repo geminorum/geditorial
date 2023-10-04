@@ -55,92 +55,92 @@ msgctxt "RestAPI: Arg Description"
 msgid "The National Code to process."
 msgstr ""
 
-#: Iranian.php:238
+#: Iranian.php:214
 msgctxt "Imports: Header"
 msgid "Iranian Imports"
 msgstr ""
 
-#: Iranian.php:254
+#: Iranian.php:230
 msgctxt "Card Title"
 msgid "Location by Identity"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Iranian.php:266
+#: Iranian.php:242
 msgctxt "Imports: Button"
 msgid "Sync Location for %s"
 msgstr ""
 
-#: Iranian.php:269
+#: Iranian.php:245
 msgctxt "Imports: Button Description"
 msgid "Tries to set the location based on identity data."
 msgstr ""
 
 #. translators: %s: identity code
-#: Iranian.php:337
+#: Iranian.php:313
 msgctxt "Notice"
 msgid "No location data available for %s"
 msgstr ""
 
 #. translators: %s: identity code
-#: Iranian.php:343
+#: Iranian.php:319
 msgctxt "Notice"
 msgid "No city data available for %s"
 msgstr ""
 
 #. translators: %1$s: city data, %2$s: identity code
-#: Iranian.php:349
+#: Iranian.php:325
 msgctxt "Notice"
 msgid "City data is empty for %1$s: %2$s"
 msgstr ""
 
 #. translators: %s: post title
-#: Iranian.php:355
+#: Iranian.php:331
 msgctxt "Notice"
 msgid "There is problem updating location for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: city data, %2$s: identity code, %3$s: post title
-#: Iranian.php:361
+#: Iranian.php:337
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;"
 msgstr ""
 
-#: Iranian.php:379
+#: Iranian.php:355
 msgctxt "Tools: Header"
 msgid "Iranian Tools"
 msgstr ""
 
-#: Iranian.php:405
+#: Iranian.php:381
 msgctxt "Card Title"
 msgid "Compare Identity to Birth Certificate"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Iranian.php:417
+#: Iranian.php:393
 msgctxt "Tools: Button"
 msgid "Compare Identity for %s"
 msgstr ""
 
-#: Iranian.php:420
+#: Iranian.php:396
 msgctxt "Tools: Button Description"
 msgid "Tries to un-set the certificate duplicated from identity data."
 msgstr ""
 
 #. translators: %1$s: identity code, %2$s: birth certificate number
-#: Iranian.php:486
+#: Iranian.php:462
 msgctxt "Notice"
 msgid "Identiry (%1$s) and Birth Certificate Number (%2$s) are diffrent"
 msgstr ""
 
 #. translators: %s: post title
-#: Iranian.php:492
+#: Iranian.php:468
 msgctxt "Notice"
 msgid "There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: birth certificate number, %2$s: post title
-#: Iranian.php:498
+#: Iranian.php:474
 msgctxt "Notice"
 msgid "Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;"
 msgstr ""
