@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Missioned\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Missioned\n"
+"X-Domain: geditorial-missioned\n"
+
+#: Missioned.php:92
+#: Missioned.php:93
+msgid "Mission"
+msgid_plural "Missions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Missioned.php:94
+msgid "Mission Category"
+msgid_plural "Mission Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Missioned.php:95
+msgid "Mission Span"
+msgid_plural "Mission Spans"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Missioned.php:96
+msgid "Mission Type"
+msgid_plural "Mission Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Missioned.php:97
+msgid "Mission Status"
+msgid_plural "Mission Statuses"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Missioned.php:101
+msgctxt "Label: `menu_name`"
+msgid "Missions"
+msgstr ""
+
+#: Missioned.php:102
+msgctxt "Label: Featured Image"
+msgid "Mission Poster"
+msgstr ""
+
+#: Missioned.php:103
+msgctxt "Label: MetaBox Title"
+msgid "The Mission"
+msgstr ""
+
+#: Missioned.php:112
+msgctxt "Misc: `column_icon_title`"
+msgid "Missions"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Missioned.php:117
+msgctxt "Metabox: `megabox_title`"
+msgid "Participants on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: Missioned.php:161
+msgctxt "Field Title"
+msgid "Mission Code"
+msgstr ""
+
+#: Missioned.php:162
+msgctxt "Field Description"
+msgid "Unique Mission Code"
+msgstr ""
+
+#: Missioned.php:392
+msgctxt "Header"
+msgid "Mission Tools"
+msgstr ""
