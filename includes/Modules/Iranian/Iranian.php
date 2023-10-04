@@ -17,7 +17,7 @@ class Iranian extends gEditorial\Module
 	use Internals\RawImports;
 	use Internals\RestAPI;
 
-	protected $imports_datafile = 'identity-locations-20230711.json';
+	protected $imports_datafile = 'identity-locations.json'; // 2023-10-03 23:32:42
 
 	public static function module()
 	{
@@ -177,31 +177,7 @@ class Iranian extends gEditorial\Module
 		if ( ! array_key_exists( $prefix, $data ) )
 			return $fallback;
 
-		if ( $this->_same_city_province( $prefix, $identity ) )
-			return [
-				'province' => $data[$prefix]['province'],
-				'city'     => $data[$prefix]['province'],
-			];
-
 		return $data[$prefix];
-	}
-
-	private function _same_city_province( $prefix, $identity = NULL )
-	{
-		return in_array( $prefix, [
-			'001',  // تهران مرکزی
-			'002',  // تهران مرکزی
-			'003',  // تهران مرکزی
-			'004',  // تهران مرکزی
-			'005',  // تهران مرکزی
-			'006',  // تهران مرکزی
-			'007',  // تهران مرکزی
-			'008',  // تهران مرکزی
-			'011',  // تهران جنوب
-			'015',  // تهران غرب
-			'020',  // تهران شرق
-			'025',  // تهران شمال
-		], TRUE );
 	}
 
 	private function _get_posttype_identity_metakey( $posttype )
