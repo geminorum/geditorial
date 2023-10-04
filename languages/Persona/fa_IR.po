@@ -1,0 +1,546 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Persona\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-10-04 13:40+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Persona\n"
+"X-Domain: geditorial-persona\n"
+
+#: Persona.php:77
+msgctxt "Setting Title"
+msgid "Check Identity Number"
+msgstr "بررسی شماره شناسایی"
+
+#: Persona.php:78
+msgctxt "Setting Description"
+msgid "Validates Identity Number prior to importing data."
+msgstr "پیش از درون‌ریزی، شماره شناسایی را صحت‌سنجی می‌کند."
+
+#: Persona.php:82
+msgctxt "Setting Title"
+msgid "Fill Post Title"
+msgstr "پرکردن عنوان فرسته"
+
+#: Persona.php:83
+msgctxt "Setting Description"
+msgid "Tries to fill the post title with meta-data prior to importing data."
+msgstr "برای پر کردن عنوان نوشته به کمک متا، پیش از دورن‌ریزی تلاش می‌کند."
+
+#: Persona.php:123
+msgid "Human"
+msgid_plural "Humans"
+msgstr[0] "انسان‌ها"
+msgstr[1] "انسان"
+
+#: Persona.php:124
+msgid "Human Group"
+msgid_plural "Humans Groups"
+msgstr[0] "گروه‌های انسانی"
+msgstr[1] "گروه انسانی"
+
+#: Persona.php:125
+msgid "Skill"
+msgid_plural "Skills"
+msgstr[0] "مهارت‌ها"
+msgstr[1] "مهارت"
+
+#: Persona.php:126
+msgid "Job Title"
+msgid_plural "Job Titles"
+msgstr[0] "عناوین شغلی"
+msgstr[1] "عنوان شغل"
+
+#: Persona.php:127
+msgid "Conscription"
+msgid_plural "Conscriptions"
+msgstr[0] "نظام‌وظیفه"
+msgstr[1] "نظام‌وظیفه"
+
+#: Persona.php:128
+msgid "Blood Type"
+msgid_plural "Blood Types"
+msgstr[0] "گروه خونی"
+msgstr[1] "گروه خونی"
+
+#: Persona.php:129
+msgid "Human Status"
+msgid_plural "Human Statuses"
+msgstr[0] "وضعیت‌های انسانی"
+msgstr[1] "وضعیت انسانی"
+
+#: Persona.php:133
+msgctxt "Label: Featured Image"
+msgid "Profile Picture"
+msgstr "تصویر نمایه"
+
+#: Persona.php:134
+msgctxt "Label: MetaBox Title"
+msgid "Persona"
+msgstr "نقاب"
+
+#: Persona.php:135
+msgctxt "Label: `excerpt_label`"
+msgid "Biography"
+msgstr "زندگی‌نامه"
+
+#: Persona.php:138
+msgctxt "Label: Menu Name"
+msgid "Groups"
+msgstr "گروه‌ها"
+
+#: Persona.php:139
+msgctxt "Label: Show Option All"
+msgid "Humans Groups"
+msgstr "گروه انسانی"
+
+#: Persona.php:140
+msgctxt "Label: Show Option No Terms"
+msgid "(Un-Grouped)"
+msgstr "(بی‌گروه)"
+
+#: Persona.php:143
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr "وضعیت‌ها"
+
+#: Persona.php:146
+msgctxt "Label: Show Option All"
+msgid "Job Titles"
+msgstr "عنوان شغلی"
+
+#: Persona.php:147 Persona.php:151 Persona.php:155 Persona.php:159
+msgctxt "Label: Show Option No Terms"
+msgid "(Unknown)"
+msgstr "(نامعلوم)"
+
+#: Persona.php:150
+msgctxt "Label: Show Option All"
+msgid "Conscription"
+msgstr "نظام‌وظیفه"
+
+#: Persona.php:154
+msgctxt "Label: Show Option All"
+msgid "Blood Type"
+msgstr "گروه خونی"
+
+#: Persona.php:158
+msgctxt "Label: Show Option All"
+msgid "Statuses"
+msgstr "وضعیت"
+
+#: Persona.php:164
+msgctxt "Default Term: Name"
+msgid "[Ungrouped]"
+msgstr "[گروه‌بندی‌نشده‌ها]"
+
+#: Persona.php:165
+msgctxt "Default Term: Description"
+msgid "Ungrouped Humans"
+msgstr "افراد بدون گروه"
+
+#: Persona.php:175
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Human Status Summary"
+msgstr "گزارش وضعیت انسانی گروهه شما"
+
+#: Persona.php:176
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Human Status Summary"
+msgstr "گزارش وضعیت انسانی تحریریه"
+
+#: Persona.php:182
+msgctxt "Default Term"
+msgid "Subject to Service"
+msgstr "مشمول خدمت"
+
+#: Persona.php:183
+msgctxt "Default Term"
+msgid "Medical Exemption"
+msgstr "معافیت پزشکی"
+
+#: Persona.php:184
+msgctxt "Default Term"
+msgid "Permanent Exemption"
+msgstr "معافیت دائم"
+
+#: Persona.php:185
+msgctxt "Default Term"
+msgid "Education Exemption"
+msgstr "معافیت تحصیلی"
+
+#: Persona.php:189
+msgctxt "Default Term"
+msgid "A&plus;"
+msgstr ""
+
+#: Persona.php:190
+msgctxt "Default Term"
+msgid "A&minus;"
+msgstr ""
+
+#: Persona.php:191
+msgctxt "Default Term"
+msgid "B&plus;"
+msgstr ""
+
+#: Persona.php:192
+msgctxt "Default Term"
+msgid "B&minus;"
+msgstr ""
+
+#: Persona.php:193
+msgctxt "Default Term"
+msgid "O&plus;"
+msgstr ""
+
+#: Persona.php:194
+msgctxt "Default Term"
+msgid "O&minus;"
+msgstr ""
+
+#: Persona.php:195
+msgctxt "Default Term"
+msgid "AB&plus;"
+msgstr ""
+
+#: Persona.php:196
+msgctxt "Default Term"
+msgid "AB&minus;"
+msgstr ""
+
+#: Persona.php:210
+msgctxt "Field Title"
+msgid "First Name"
+msgstr "نام"
+
+#: Persona.php:211
+msgctxt "Field Description"
+msgid "Given Name of the Person"
+msgstr "نام کوچک فرد"
+
+#: Persona.php:216
+msgctxt "Field Title"
+msgid "Middle Name"
+msgstr "نام میانی"
+
+#: Persona.php:217
+msgctxt "Field Description"
+msgid "Middle Name of the Person"
+msgstr "نام میانی فرد"
+
+#: Persona.php:221
+msgctxt "Field Title"
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: Persona.php:222
+msgctxt "Field Description"
+msgid "Family Name of the Person"
+msgstr "نام خانوادگی فرد"
+
+#: Persona.php:227
+msgctxt "Field Title"
+msgid "Full Name"
+msgstr "نام کامل"
+
+#: Persona.php:228
+msgctxt "Field Description"
+msgid "Full Name of the Person"
+msgstr "نام کامل فرد"
+
+#: Persona.php:233
+msgctxt "Field Title"
+msgid "Father Name"
+msgstr "نام پدر"
+
+#: Persona.php:234
+msgctxt "Field Description"
+msgid "Name of the Father of the Person"
+msgstr "نام پدر فرد"
+
+#: Persona.php:238
+msgctxt "Field Title"
+msgid "Father Profile"
+msgstr "نمایه پدر"
+
+#: Persona.php:239
+msgctxt "Field Description"
+msgid "Profile of the Father of the Person"
+msgstr "نمایه پدر فرد"
+
+#: Persona.php:245
+msgctxt "Field Title"
+msgid "Mother Name"
+msgstr "نام مادر"
+
+#: Persona.php:246
+msgctxt "Field Description"
+msgid "Name of the Mother of the Person"
+msgstr "نام مادر فرد"
+
+#: Persona.php:250
+msgctxt "Field Title"
+msgid "Mother Profile"
+msgstr "نمایه مادر"
+
+#: Persona.php:251
+msgctxt "Field Description"
+msgid "Profile of the Mother of the Person"
+msgstr "نمایه مادر فرد"
+
+#: Persona.php:257
+msgctxt "Field Title"
+msgid "Spouse Name"
+msgstr "نام همسر"
+
+#: Persona.php:258
+msgctxt "Field Description"
+msgid "Name of the Spouse of the Person"
+msgstr "نام همسر فرد"
+
+#: Persona.php:262
+msgctxt "Field Title"
+msgid "Spouse Profile"
+msgstr "نمایه همسر"
+
+#: Persona.php:263
+msgctxt "Field Description"
+msgid "Profile of the Spouse of the Person"
+msgstr "نمایه همسر فرد"
+
+#: Persona.php:269
+msgctxt "Field Description"
+msgid "Primary Mobile Contact Number of the Person"
+msgstr "شماره تماس با همراه اصلی فرد"
+
+#: Persona.php:275
+msgctxt "Field Title"
+msgid "Secondary Mobile"
+msgstr "همراه دوم"
+
+#: Persona.php:276
+msgctxt "Field Description"
+msgid "Secondary Mobile Contact Number of the Person"
+msgstr "شماره تماس با همراه فرعی فرد"
+
+#: Persona.php:281
+msgctxt "Field Description"
+msgid "Primary Phone Contact Number of the Person"
+msgstr "شماره تماس ثابت اصلی فرد"
+
+#: Persona.php:286
+msgctxt "Field Title"
+msgid "Secondary Phone"
+msgstr "تلفن دوم"
+
+#: Persona.php:287
+msgctxt "Field Description"
+msgid "Secondary Phone Contact Number of the Person"
+msgstr "شماره تماس ثابت فرعی فرد"
+
+#: Persona.php:292
+msgctxt "Field Title"
+msgid "Identity Number"
+msgstr "کد ملی"
+
+#: Persona.php:293
+msgctxt "Field Description"
+msgid "Unique National Identity Number"
+msgstr "شماره ملی شناسایی یکتا"
+
+#: Persona.php:299
+msgctxt "Field Title"
+msgid "Passport Number"
+msgstr "شماره گذرنامه"
+
+#: Persona.php:300
+msgctxt "Field Description"
+msgid "Personal Passport Number"
+msgstr "شماره گذرنامه شخصی"
+
+#: Persona.php:306
+msgctxt "Field Title"
+msgid "Date of Birth"
+msgstr "تاریخ تولد"
+
+#: Persona.php:307
+msgctxt "Field Description"
+msgid "Birthday of the Person"
+msgstr "تاریخ تولد فرد"
+
+#: Persona.php:316
+msgctxt "Field Title"
+msgid "Place of Birth"
+msgstr "محل تولد"
+
+#: Persona.php:317
+msgctxt "Field Description"
+msgid "Place Where the Person was Born"
+msgstr "مکانی که فرد در آن متولد شده است"
+
+#: Persona.php:325
+msgctxt "Field Title"
+msgid "Home Address"
+msgstr "نشانی خانه"
+
+#: Persona.php:326
+msgctxt "Field Description"
+msgid "Full home address, including city, state etc."
+msgstr "نشانی کامل خانه، شامل شهر و استان و غیره."
+
+#: Persona.php:330
+msgctxt "Field Title"
+msgid "Work Address"
+msgstr "نشانی محل کار"
+
+#: Persona.php:331
+msgctxt "Field Description"
+msgid "Full work address, including city, state etc."
+msgstr "نشانی کامل محل کار، شامل شهر و استان و غیره."
+
+#: Persona.php:541
+msgctxt "Bulk Action"
+msgid "Force After-Care"
+msgstr "اجرای پس‌نگهداری"
+
+#. translators: %s: post count
+#: Persona.php:568
+msgctxt "Message"
+msgid "%s human after-cared!"
+msgstr "%s انسان پس‌نگهداری شد!"
+
+#: Persona.php:596
+msgctxt "Default Term: Audit"
+msgid "Empty Identity Number"
+msgstr "شماره شناسایی خالی"
+
+#: Persona.php:597
+msgctxt "Default Term: Audit"
+msgid "Empty Mobile Number"
+msgstr "شماره همراه خالی"
+
+#: Persona.php:675
+msgctxt "Possible Identifier Key"
+msgid "Identity"
+msgstr "شناسایی"
+
+#~ msgctxt "Possible Identity Keys"
+#~ msgid "Title"
+#~ msgstr "عنوان"
+
+#~ msgctxt "Possible Identity Keys"
+#~ msgid "Identifier"
+#~ msgstr "شناساگر"
+
+#~ msgctxt "Possible Identity Keys"
+#~ msgid "Identity"
+#~ msgstr "شناسایی"
+
+#~ msgctxt "Bulk Action"
+#~ msgid "Auto-fill Post Title"
+#~ msgstr "پرکردن خودکار عنوان"
+
+#~ msgctxt "Message"
+#~ msgid "%s human post-title(s) auto-filled!"
+#~ msgstr "%s عنوان نوشته فرد به صورت خودکار پر شد!"
+
+#~ msgctxt "Label: Show Option No Terms"
+#~ msgid "(Unknown Conscription)"
+#~ msgstr "(نظام‌وظیفه نامشخص)"
+
+#~ msgctxt "Label: Show Option No Terms"
+#~ msgid "(Unknown Blood Type)"
+#~ msgstr "(گروه خونی نامشخص)"
+
+#~ msgid "Marital Status"
+#~ msgid_plural "Marital Statuses"
+#~ msgstr[0] "وضعیت‌های تأهل"
+#~ msgstr[1] "وضعیت تأهل"
+
+#~ msgctxt "Label: Menu Name"
+#~ msgid "Marital"
+#~ msgstr "ازدواج"
+
+#~ msgctxt "Default Term"
+#~ msgid "Single"
+#~ msgstr "مجرد"
+
+#~ msgctxt "Default Term"
+#~ msgid "Married"
+#~ msgstr "متأهل"
+
+#~ msgctxt "Default Term"
+#~ msgid "Divorced"
+#~ msgstr "مطلقه"
+
+#~ msgctxt "Posttype Featured"
+#~ msgid "Profile Picture"
+#~ msgstr "تصویر نمایه"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Persona"
+#~ msgstr "نقاب"
+
+#~ msgid "Education"
+#~ msgid_plural "Educations"
+#~ msgstr[0] "تحصیلات"
+#~ msgstr[1] "تحصیلات"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Personnel Summary"
+#~ msgstr "گزاش کارگزینی شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Personnel Summary"
+#~ msgstr "گزارش کارگزینی تحریریه"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Personnel"
+#~ msgstr "کارگزینی"
+
+#~ msgctxt "Default Term"
+#~ msgid "Illiterate"
+#~ msgstr "بی‌سواد"
+
+#~ msgctxt "Default Term"
+#~ msgid "Primary"
+#~ msgstr "ابتدائی"
+
+#~ msgctxt "Default Term"
+#~ msgid "Secondary"
+#~ msgstr "متوسطه"
+
+#~ msgctxt "Default Term"
+#~ msgid "Bachelor"
+#~ msgstr "کارشناسی"
+
+#~ msgctxt "Default Term"
+#~ msgid "Master"
+#~ msgstr "کارشناسی ارشد"
+
+#~ msgctxt "Default Term"
+#~ msgid "Doctorate"
+#~ msgstr "دکترا"
+
+#~ msgid "Rank"
+#~ msgid_plural "Ranks"
+#~ msgstr[0] "رتبه‌ها"
+#~ msgstr[1] "رتبه"
+
+#~ msgid "Human Education"
+#~ msgid_plural "Human Educations"
+#~ msgstr[0] "تحصیلات انسانی"
+#~ msgstr[1] "تحصیلات انسانی"
+
+#~ msgctxt "Label: Menu Name"
+#~ msgid "Educations"
+#~ msgstr "تحصیلات"
