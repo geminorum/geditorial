@@ -11,11 +11,13 @@ use geminorum\gEditorial\WordPress;
 trait PairedTools
 {
 
-	// TODO: assign parent terms into suported
-	protected function paired_tools_render_card( $posttype_key, $taxonomy_key )
+	protected function paired_tools_render_card( $uri = '', $sub = NULL, $supported_list = NULL )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return;
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 		Core\HTML::h2( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
@@ -69,11 +71,14 @@ trait PairedTools
 		}
 	}
 
-	protected function paired_tools_handle_tablelist( $posttype_key, $taxonomy_key )
+	protected function paired_tools_handle_tablelist( $sub = NULL )
 	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return;
+
 		if ( Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
 
-			$terms = WordPress\Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
+			$terms = WordPress\Taxonomy::getTerms( $this->constant( $constants[1] ), FALSE, TRUE );
 			$posts = [];
 
 			foreach ( $_POST['_cb'] as $term_id ) {
@@ -81,13 +86,13 @@ trait PairedTools
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				if ( WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
+				if ( WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $constants[0] ) ) )
 					continue;
 
 				$posts[] = WordPress\PostType::newPostFromTerm(
 					$terms[$term_id],
-					$this->constant( $taxonomy_key ),
-					$this->constant( $posttype_key ),
+					$this->constant( $constants[1] ),
+					$this->constant( $constants[0] ),
 					gEditorial()->user( TRUE )
 				);
 			}
@@ -104,7 +109,7 @@ trait PairedTools
 
 			foreach ( $_POST['_cb'] as $term_id ) {
 
-				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $posttype_key, $taxonomy_key ) )
+				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $constants[0], $constants[1] ) )
 					continue;
 
 				if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
@@ -127,13 +132,13 @@ trait PairedTools
 
 			foreach ( $_POST['_cb'] as $term_id ) {
 
-				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $posttype_key, $taxonomy_key ) )
+				if ( ! $post_id = $this->paired_get_to_post_id( $term_id, $constants[0], $constants[1] ) )
 					continue;
 
 				if ( ! $post = WordPress\Post::get( $post_id ) )
 					continue;
 
-				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), [ 'description' => $post->post_excerpt ] ) )
+				if ( wp_update_term( $term_id, $this->constant( $constants[1] ), [ 'description' => $post->post_excerpt ] ) )
 					$count++;
 			}
 
@@ -148,11 +153,11 @@ trait PairedTools
 				Core\WordPress::redirectReferer( 'wrong' );
 
 			$count = 0;
-			$field = $this->constant( 'field_paired_order', sprintf( 'in_%s_order', $this->constant( $posttype_key ) ) );
+			$field = $this->constant( 'field_paired_order', sprintf( 'in_%s_order', $this->constant( $constants[0] ) ) );
 
 			foreach ( $_POST['_cb'] as $term_id ) {
 
-				foreach ( $this->paired_get_from_posts( NULL, $posttype_key, $taxonomy_key, FALSE, $term_id ) as $post ) {
+				foreach ( $this->paired_get_from_posts( NULL, $constants[0], $constants[1], FALSE, $term_id ) as $post ) {
 
 					if ( $post->menu_order )
 						continue;
@@ -176,11 +181,12 @@ trait PairedTools
 
 		} else if ( Tablelist::isAction( 'empty_paired_descs', TRUE ) ) {
 
-			$args  = [ 'description' => '' ];
-			$count = 0;
+			$taxonomy = $this->constant( $constants[1] );
+			$args     = [ 'description' => '' ];
+			$count    = 0;
 
 			foreach ( $_POST['_cb'] as $term_id )
-				if ( wp_update_term( $term_id, $this->constant( $taxonomy_key ), $args ) )
+				if ( wp_update_term( $term_id, $taxonomy, $args ) )
 					$count++;
 
 			Core\WordPress::redirectReferer( [
@@ -190,18 +196,19 @@ trait PairedTools
 
 		} else if ( Tablelist::isAction( 'connect_paired_posts', TRUE ) ) {
 
-			$terms = WordPress\Taxonomy::getTerms( $this->constant( $taxonomy_key ), FALSE, TRUE );
-			$count = 0;
+			$posttype = $this->constant( $constants[0] );
+			$terms    = WordPress\Taxonomy::getTerms( $this->constant( $constants[1] ), FALSE, TRUE );
+			$count    = 0;
 
 			foreach ( $_POST['_cb'] as $term_id ) {
 
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				if ( ! $post_id = WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $posttype_key ) ) )
+				if ( ! $post_id = WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $posttype ) )
 					continue;
 
-				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $posttype_key, $taxonomy_key ) )
+				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $constants[0], $constants[1] ) )
 					$count++;
 			}
 
@@ -212,13 +219,14 @@ trait PairedTools
 
 		} else if ( Tablelist::isAction( 'delete_paired_terms', TRUE ) ) {
 
-			$count = 0;
+			$taxonomy = $this->constant( $constants[1] );
+			$count    = 0;
 
 			foreach ( $_POST['_cb'] as $term_id ) {
 
-				if ( $this->paired_remove_to_term( NULL, $term_id, $posttype_key, $taxonomy_key ) ) {
+				if ( $this->paired_remove_to_term( NULL, $term_id, $constants[0], $constants[1] ) ) {
 
-					$deleted = wp_delete_term( $term_id, $this->constant( $taxonomy_key ) );
+					$deleted = wp_delete_term( $term_id, $taxonomy );
 
 					if ( $deleted && ! is_wp_error( $deleted ) )
 						$count++;
@@ -232,7 +240,7 @@ trait PairedTools
 
 		} else if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
 
-			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $posttype_key, $taxonomy_key ) ) )
+			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $constants[0], $constants[1] ) ) )
 				Core\WordPress::redirectReferer( 'wrong' );
 
 			Core\WordPress::redirectReferer( [
@@ -242,7 +250,7 @@ trait PairedTools
 
 		} else if ( Tablelist::isAction( 'create_paired_terms' ) ) {
 
-			if ( FALSE === ( $count = $this->paired_create_paired_terms( $posttype_key, $taxonomy_key ) ) )
+			if ( FALSE === ( $count = $this->paired_create_paired_terms( $constants[0], $constants[1] ) ) )
 				Core\WordPress::redirectReferer( 'wrong' );
 
 			Core\WordPress::redirectReferer( [
@@ -254,9 +262,9 @@ trait PairedTools
 		return TRUE;
 	}
 
-	protected function paired_tools_render_tablelist( $posttype_key, $taxonomy_key, $actions = NULL, $title = NULL )
+	protected function paired_tools_render_tablelist( $uri = '', $sub = NULL, $actions = NULL, $title = NULL )
 	{
-		if ( ! $this->_paired ) {
+		if ( ! $this->_paired || ! $constants = $this->paired_get_constants() ) {
 			if ( $title ) echo Core\HTML::tag( 'h3', $title );
 			Core\HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 			return FALSE;
@@ -268,16 +276,16 @@ trait PairedTools
 
 			'related' => [
 				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
-					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
+					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
 						$html = Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 					else
 						$html = Helper::htmlEmpty();
 
 					$html.= '<hr />';
 
-					if ( $post_id = $this->paired_get_to_post_id( $row, $posttype_key, $taxonomy_key, FALSE ) )
+					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) )
 						$html.= Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 					else
 						$html.= Helper::htmlEmpty();
@@ -289,14 +297,14 @@ trait PairedTools
 			'description' => [
 				'title'    => _x( 'Desc. / Exce.', 'Internal: PairedTools: Table Column', 'geditorial' ),
 				'class'    => 'html-column',
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( empty( $row->description ) )
 						$html = Helper::htmlEmpty();
 					else
 						$html = Helper::prepDescription( $row->description );
 
-					if ( $post_id = $this->paired_get_to_post_id( $row, $posttype_key, $taxonomy_key, FALSE ) ) {
+					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) ) {
 
 						$html.= '<hr />';
 
@@ -315,10 +323,10 @@ trait PairedTools
 
 			'count' => [
 				'title'    => _x( 'Count', 'Internal: PairedTools: Table Column', 'geditorial' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
-					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $posttype_key ) ) )
-						return Core\Number::format( $this->paired_get_from_posts( $post_id, $posttype_key, $taxonomy_key, TRUE ) );
+					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
+						return Core\Number::format( $this->paired_get_from_posts( $post_id, $constants[0], $constants[1], TRUE ) );
 
 					return Core\Number::format( $row->count );
 				},
@@ -327,10 +335,10 @@ trait PairedTools
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Internal: PairedTools: Table Column', 'geditorial' ),
 				'class'    => 'image-column',
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $posttype_key, $taxonomy_key ) {
+				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 					$html = '';
 
-					if ( $post_id = $this->paired_get_to_post_id( $row, $posttype_key, $taxonomy_key, FALSE ) )
+					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) )
 						$html = WordPress\PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
 
 					return $html ?: Helper::htmlEmpty();
@@ -347,7 +355,7 @@ trait PairedTools
 			],
 		];
 
-		list( $data, $pagination ) = Tablelist::getTerms( [], [], $this->constant( $taxonomy_key ) );
+		list( $data, $pagination ) = Tablelist::getTerms( [], [], $this->constant( $constants[1] ) );
 
 		if ( FALSE !== $actions ) {
 

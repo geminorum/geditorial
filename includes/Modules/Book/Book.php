@@ -50,6 +50,7 @@ class Book extends gEditorial\Module
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
+				'paired_force_parents',
 				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
@@ -959,21 +960,27 @@ class Book extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );
-				$this->paired_tools_handle_tablelist( 'publication_cpt', 'publication_paired' );
+				$this->paired_tools_handle_tablelist( $sub );
 			}
-		}
 
-		Scripts::enqueueThickBox();
+			Scripts::enqueueThickBox();
+		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( 'publication_cpt', 'publication_paired', NULL, _x( 'Publication Tools', 'Header', 'geditorial-book' ) );
+		return $this->paired_tools_render_tablelist( $uri, $sub, NULL,
+			_x( 'Publication Tools', 'Header', 'geditorial-book' ) );
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )
 	{
-		$this->paired_tools_render_card( 'publication_cpt', 'publication_paired' );
+		return $this->paired_tools_render_card( $uri, $sub );
 	}
 
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687

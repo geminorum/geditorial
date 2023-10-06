@@ -378,7 +378,7 @@ class Dossier extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );
-				$this->paired_tools_handle_tablelist( 'dossier_posttype', 'dossier_paired' );
+				$this->paired_tools_handle_tablelist( $sub );
 			}
 
 			Scripts::enqueueThickBox();
@@ -387,13 +387,18 @@ class Dossier extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( 'dossier_posttype', 'dossier_paired', NULL,
+		return $this->paired_tools_render_tablelist( $uri, $sub, NULL,
 			_x( 'Dossiers Tools', 'Header', 'geditorial-dossier' ) );
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )
 	{
-		$this->paired_tools_render_card( 'dossier_posttype', 'dossier_paired' );
+		return $this->paired_tools_render_card( $uri, $sub );
 	}
 
 	public function dossier_shortcode( $atts = [], $content = NULL, $tag = '' )

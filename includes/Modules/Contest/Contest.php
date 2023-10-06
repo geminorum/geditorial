@@ -40,6 +40,7 @@ class Contest extends gEditorial\Module
 		return [
 			'_general' => [
 				'multiple_instances',
+				'paired_force_parents',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Contest Sections', 'Settings', 'geditorial-contest' ),
@@ -401,21 +402,27 @@ class Contest extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );
-				$this->paired_tools_handle_tablelist( 'contest_cpt', 'contest_tax' );
+				$this->paired_tools_handle_tablelist( $sub );
 			}
-		}
 
-		Scripts::enqueueThickBox();
+			Scripts::enqueueThickBox();
+		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( 'contest_cpt', 'contest_tax', NULL, _x( 'Contest Tools', 'Header', 'geditorial-contest' ) );
+		return $this->paired_tools_render_tablelist( $uri, $sub, NULL,
+			_x( 'Contest Tools', 'Header', 'geditorial-contest' ) );
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )
 	{
-		$this->paired_tools_render_card( 'contest_cpt', 'contest_tax' );
+		return $this->paired_tools_render_card( $uri, $sub );
 	}
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )

@@ -36,6 +36,7 @@ class Collect extends gEditorial\Module
 		return [
 			'_general' => [
 				'multiple_instances',
+				'paired_force_parents',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Collection Parts', 'Settings', 'geditorial-collect' ),
@@ -358,7 +359,7 @@ class Collect extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );
-				$this->paired_tools_handle_tablelist( 'collection_cpt', 'collection_tax' );
+				$this->paired_tools_handle_tablelist( $sub );
 			}
 
 			Scripts::enqueueThickBox();
@@ -367,12 +368,18 @@ class Collect extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( 'collection_cpt', 'collection_tax', NULL, _x( 'Collect Tools', 'Header', 'geditorial-collect' ) );
+		return $this->paired_tools_render_tablelist( $uri, $sub, NULL,
+			_x( 'Collect Tools', 'Header', 'geditorial-collect' ) );
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )
 	{
-		$this->paired_tools_render_card( 'collection_cpt', 'collection_tax' );
+		return $this->paired_tools_render_card( $uri, $sub );
 	}
 
 	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )

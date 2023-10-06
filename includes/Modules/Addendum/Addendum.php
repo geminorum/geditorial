@@ -419,21 +419,26 @@ class Addendum extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'tools', $sub );
-				$this->paired_tools_handle_tablelist( 'primary_posttype', 'primary_paired' );
+				$this->paired_tools_handle_tablelist( $sub );
 			}
-		}
 
-		Scripts::enqueueThickBox();
+			Scripts::enqueueThickBox();
+		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( 'primary_posttype', 'primary_paired', NULL,
+		return $this->paired_tools_render_tablelist( $uri, $sub, NULL,
 			_x( 'Appendages Tools', 'Header', 'geditorial-addendum' ) );
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )
 	{
-		$this->paired_tools_render_card( 'primary_posttype', 'primary_paired' );
+		return $this->paired_tools_render_card( $uri, $sub );
 	}
 }
