@@ -669,6 +669,9 @@ class Module extends WordPress\Module
 	{
 		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
 
+			if ( FALSE === $this->render_tools_html_before( $uri, $sub ) )
+				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+
 			if ( $this->render_tools_html( $uri, $sub ) )
 				$this->render_form_buttons();
 
@@ -679,12 +682,16 @@ class Module extends WordPress\Module
 
 	// DEFAULT METHOD: used for tools default sub html
 	protected function render_tools_html( $uri, $sub ) {}
+	protected function render_tools_html_before( $uri, $sub ) {}
 	protected function render_tools_html_after( $uri, $sub ) {}
 
 	// DEFAULT METHOD: reports sub html
 	public function reports_sub( $uri, $sub )
 	{
 		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
+
+			if ( FALSE === $this->render_reports_html_before( $uri, $sub ) )
+				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
 
 			if ( $this->render_reports_html( $uri, $sub ) )
 				$this->render_form_buttons();
@@ -696,12 +703,16 @@ class Module extends WordPress\Module
 
 	// DEFAULT METHOD: used for reports default sub html
 	protected function render_reports_html( $uri, $sub ) {}
+	protected function render_reports_html_before( $uri, $sub ) {}
 	protected function render_reports_html_after( $uri, $sub ) {}
 
 	// DEFAULT METHOD: imports sub html
 	public function imports_sub( $uri, $sub )
 	{
 		$this->render_form_start( $uri, $sub, 'bulk', 'imports', FALSE );
+
+			if ( FALSE === $this->render_imports_html_before( $uri, $sub ) )
+				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
 
 			if ( $this->render_imports_html( $uri, $sub ) )
 				$this->render_form_buttons();
@@ -713,6 +724,7 @@ class Module extends WordPress\Module
 
 	// DEFAULT METHOD: used for imports default sub html
 	protected function render_imports_html( $uri, $sub ) {}
+	protected function render_imports_html_before( $uri, $sub ) {}
 	protected function render_imports_html_after( $uri, $sub ) {}
 
 	protected function get_current_form( $defaults, $context = 'settings' )
