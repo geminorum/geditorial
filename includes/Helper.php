@@ -908,6 +908,10 @@ class Helper extends WordPress\Main
 		];
 
 		switch ( $label ) {
+
+			case 'noop':
+				return $name;
+
 			case 'extended_label':
 				return $object->labels->name;
 
@@ -1077,6 +1081,10 @@ class Helper extends WordPress\Main
 		];
 
 		switch ( $label ) {
+
+			case 'noop':
+				return $name;
+
 			case 'extended_label':
 				return $object->labels->name;
 

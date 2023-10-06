@@ -45,6 +45,9 @@ trait Strings
 		return $fallback;
 	}
 
+	// NOTE: for posttype/taxonomy use:
+	// - `Helper::getPostTypeLabel( $posttype, 'noop' );`
+	// - `Helper::getTaxonomyLabel( $taxonomy, 'noop' );`
 	public function get_noop( $constant )
 	{
 		if ( ! empty( $this->strings['noops'][$constant] ) )
@@ -54,17 +57,19 @@ trait Strings
 			return $pre;
 
 		$noop = [
-			'plural'   => Core\L10n::pluralize( $constant ),
-			'singular' => $constant,
-			// 'context'  => ucwords( $module->name ).' Internal: Strings: Noop', // no need
-			'domain'   => 'geditorial',
+			// 'context' => ucwords( $module->name ).' Internal: Strings: Noop',   // no need
+			'domain'  => 'geditorial',
 		];
 
 		if ( ! empty( $this->strings['labels'][$constant]['name'] ) )
 			$noop['plural'] = $this->strings['labels'][$constant]['name'];
+		else
+			$noop['plural'] = Core\L10n::pluralize( $constant );
 
 		if ( ! empty( $this->strings['labels'][$constant]['singular_name'] ) )
 			$noop['singular'] = $this->strings['labels'][$constant]['singular_name'];
+		else
+			$noop['singular'] = $constant;
 
 		return $noop;
 	}

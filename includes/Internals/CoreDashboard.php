@@ -3,25 +3,31 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\WordPress;
 
 trait CoreDashboard
 {
+
 	protected function dashboard_glance_post( $constant )
 	{
+		$posttype = $this->constant( $constant );
+
 		return MetaBox::glancePosttype(
-			$this->constant( $constant ),
-			$this->get_noop( $constant ),
+			$posttype,
+			Helper::getPostTypeLabel( $posttype, 'noop' ),
 			'-'.$this->slug()
 		);
 	}
 
 	protected function dashboard_glance_taxonomy( $constant )
 	{
+		$taxonomy = $this->constant( $constant );
+
 		return MetaBox::glanceTaxonomy(
-			$this->constant( $constant ),
-			$this->get_noop( $constant ),
+			$taxonomy,
+			Helper::getTaxonomyLabel( $taxonomy, 'noop' ),
 			'-'.$this->slug()
 		);
 	}
