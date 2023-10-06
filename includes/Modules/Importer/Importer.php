@@ -580,6 +580,7 @@ class Importer extends gEditorial\Module
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
 					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );
+					$terms_all      = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
 
 					$this->_raise_resources();
 
@@ -807,14 +808,7 @@ class Importer extends gEditorial\Module
 
 						// NOTE: `wp_insert_post()` overrides existing terms
 						$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id, $override );
-
-						foreach ( $terms_all as $taxonomy => $term_id ) {
-
-							if ( ! $taxonomy || ! $term_id )
-								continue;
-
-							wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $term_id ), $taxonomy, TRUE );
-						}
+						$this->_store_taxonomies_for_post( $post_id, $terms_all, $source_id, FALSE );
 
 						if ( FALSE !== ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
 
@@ -1190,10 +1184,20 @@ class Importer extends gEditorial\Module
 	{
 		foreach ( $taxonomies as $taxonomy => $terms ) {
 
-			if ( empty( $terms ) )
+			if ( ! $taxonomy )
 				continue;
 
-			$result = wp_set_object_terms( $post_id, $terms, $taxonomy, ! $override );
+			if ( FALSE === ( $filtered = $this->filters( 'terms', $terms, $taxonomy, $source_id, $post_id ) ) )
+				continue;
+
+			if ( is_null( $filtered ) )
+				$result = wp_set_object_terms( $post_id, NULL, $taxonomy );
+
+			else if ( ! empty( $filtered ) )
+				$result = wp_set_object_terms( $post_id, $terms, $taxonomy, ! $override );
+
+			else
+				continue;
 
 			if ( is_wp_error( $result ) )
 				$this->log( 'NOTICE', ( $source_id
