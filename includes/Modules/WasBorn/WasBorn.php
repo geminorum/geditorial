@@ -366,7 +366,8 @@ class WasBorn extends gEditorial\Module
 		foreach ( $this->filters( 'dashboard_summary_main', [], $posttypes, $scope, $user_id ) as $class => $filtred )
 			$html.= Core\HTML::tag( $list, [ 'class' => $class ], $filtred );
 
-		$html.= '</ul></div><div class="sub"><ul class="-pointers">';
+		if ( $html )
+			$html.= '</ul></div><div class="sub"><ul class="-pointers">';
 
 		// TODO: mean-age by gender
 		$gender_summary = $this->get_dashboard_term_summary( 'gender_taxonomy',
@@ -431,7 +432,9 @@ class WasBorn extends gEditorial\Module
 
 			$query = new \WP_Query();
 			$posts = $query->query( $args );
-			$count = count( $posts );
+
+			if ( ! $count = count( $posts ) )
+				continue;
 
 			$title = _x( 'Under-Aged', 'Summary', 'geditorial-was-born' );
 
@@ -575,7 +578,8 @@ class WasBorn extends gEditorial\Module
 				AND trim(coalesce(m.meta_value, '')) <> ''
 			", $metakey[$posttype] );
 
-			$average = $wpdb->get_var( $query );
+			if ( ! $average = $wpdb->get_var( $query ) )
+				continue;
 
 			if ( $roundup )
 				// $average = ceil( $average );
@@ -653,7 +657,9 @@ class WasBorn extends gEditorial\Module
 
 			$query = new \WP_Query();
 			$posts = $query->query( $args );
-			$count = count( $posts );
+
+			if ( ! $count = count( $posts ) )
+				continue;
 
 			$title = _x( 'No Birthday', 'Summary', 'geditorial-was-born' );
 
