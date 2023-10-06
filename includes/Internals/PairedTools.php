@@ -31,6 +31,42 @@ trait PairedTools
 		echo '</div>';
 
 		echo '</div>';
+
+		if ( $this->get_setting( 'paired_force_parents' ) ) {
+
+			echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
+			Core\HTML::h2( _x( 'Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
+
+			echo $this->wrap_open( '-wrap-button-row -force_assign_parents' );
+
+			foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
+				Settings::submitButton( add_query_arg( [
+					'action' => 'force_assign_parents',
+					'type'   => $posttype,
+				/* translators: %s: posttype label */
+				] ), sprintf( _x( 'Force Assign for %s', 'Internal: PairedTools: Button', 'geditorial' ), $label ), 'link' );
+
+			echo '<br /><br />';
+			Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial' ) );
+			echo '</div>';
+			echo '</div>';
+		}
+	}
+
+	protected function paired_tools_render_before( $uri = '', $sub = NULL )
+	{
+		if ( ! $this->_paired )
+			return FALSE;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return;
+
+		if ( 'force_assign_parents' === self::req( 'action' )
+			&& $this->get_setting( 'paired_force_parents' ) ) {
+
+			if ( $this->paired_force_assign_parents( $constants[0], $constants[1], $this->get_sub_limit_option( $sub ) ) )
+				return FALSE;
+		}
 	}
 
 	protected function paired_tools_handle_tablelist( $posttype_key, $taxonomy_key )
@@ -402,5 +438,73 @@ trait PairedTools
 				$count++;
 
 		return $count;
+	}
+
+	protected function paired_force_assign_parents( $posttype_key, $taxonomy_key, $limit )
+	{
+		if ( ! $posttype = self::req( 'type' ) )
+			return Info::renderEmptyPosttype();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		if ( method_exists( $this, '_raise_resources' ) )
+			$this->_raise_resources( $limit );
+
+		else
+			$this->raise_resources( $limit );
+
+		$taxonomy = $this->constant( $taxonomy_key );
+		$query    = [
+			'tax_query' => [ [
+				'taxonomy' => $taxonomy,
+				'operator' => 'EXISTS',
+			] ],
+		];
+
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+
+		if ( empty( $posts ) )
+			return FALSE;
+
+		echo '<ul>';
+
+		foreach ( $posts as $post )
+			$this->paired__do_force_assign_parents( $post, $taxonomy, TRUE );
+
+		echo '</ul>';
+
+		Core\WordPress::redirectJS( add_query_arg( [
+			'action' => 'force_assign_parents',
+			'type'   => $posttype,
+			'paged'  => self::paged() + 1,
+		] ) );
+
+		return TRUE;
+	}
+
+	protected function paired__do_force_assign_parents( $post, $taxonomy, $verbose = FALSE )
+	{
+		if ( FALSE === ( $result = $this->do_force_assign_parents( $post, $taxonomy ) ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %s: post title */
+				_x( 'Something is wrong for &ldquo;%s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial' ) ),
+				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+
+		if ( self::isError( $result ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %1$s: post title, %2$s: error message */
+				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial' ) ),
+				WordPress\Post::title( $post ), $result->get_error_message() ) : TRUE ) && FALSE;
+
+		if ( $verbose )
+			echo Core\HTML::tag( 'li',
+				/* translators: %1$s: count terms, %2$s: post title */
+				sprintf( _x( '%1$s terms set for &ldquo;%2$s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial' ),
+				Core\HTML::code( count( $result ) ),
+				WordPress\Post::title( $post )
+			) );
+
+		return TRUE;
 	}
 }

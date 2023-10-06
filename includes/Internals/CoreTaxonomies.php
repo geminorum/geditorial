@@ -363,4 +363,22 @@ trait CoreTaxonomies
 	{
 		return Helper::getTaxonomyLabel( $this->constant( $constant, $constant ), $label, $fallback_key, $fallback );
 	}
+
+	protected function do_force_assign_parents( $post, $taxonomy )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		$currents = wp_get_object_terms( $post->ID, $taxonomy, [
+			'fields'                 => 'ids',
+			'orderby'                => 'none',
+			'hide_empty'             => FALSE,
+			'update_term_meta_cache' => FALSE,
+		] );
+
+		if ( empty( $currents ) || self::isError( $currents ) )
+			return FALSE;
+
+		return wp_set_object_terms( $post->ID, WordPress\Taxonomy::appendParentTermIDs( $currents, $taxonomy ), $taxonomy, TRUE );
+	}
 }

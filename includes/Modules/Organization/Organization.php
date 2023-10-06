@@ -518,7 +518,8 @@ class Organization extends gEditorial\Module
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		$fields = $this->get_importer_fields( $post->post_type );
+		$fields  = $this->get_importer_fields( $post->post_type );
+		$already = FALSE;
 
 		foreach ( $atts['map'] as $offset => $field ) {
 
@@ -543,9 +544,16 @@ class Organization extends gEditorial\Module
 						$this->get_setting( 'multiple_instances' ) ? $atts['override'] : FALSE,
 					);
 
+				$already = TRUE;
+
 				break;
 			}
 		}
+
+		if ( $already || ! $this->get_setting( 'paired_force_parents' ) )
+			return;
+
+		$this->do_force_assign_parents( $post, $this->constant( 'primary_paired' ) );
 	}
 
 	public function tools_settings( $sub )
@@ -566,6 +574,11 @@ class Organization extends gEditorial\Module
 	{
 		return $this->paired_tools_render_tablelist( 'primary_posttype', 'primary_paired', NULL,
 			_x( 'Organization Tools', 'Header', 'geditorial-organization' ) );
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
 	protected function render_tools_html_after( $uri, $sub )
