@@ -51,6 +51,10 @@ trait PairedImports
 
 		Scripts::enqueueColorBox();
 
+		// TODO: add row action to remove from paired via ajax
+		// TODO: add bulk action to remove from paired
+		$this->current_queried = $post->ID;
+
 		return TRUE;
 	}
 

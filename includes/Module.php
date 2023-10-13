@@ -1489,7 +1489,7 @@ class Module extends WordPress\Module
 		add_filter( 'post_updated_messages', function( $messages ) use ( $constant ) {
 
 			$posttype  = $this->constant( $constant );
-			$generated = Helper::generatePostTypeMessages( $this->get_noop( $constant ), $posttype );
+			$generated = Helper::generatePostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $posttype );
 
 			return array_merge( $messages, [ $posttype => $generated ] );
 		} );
@@ -1500,7 +1500,7 @@ class Module extends WordPress\Module
 		add_filter( 'bulk_post_updated_messages', function( $messages, $counts ) use ( $constant ) {
 
 			$posttype  = $this->constant( $constant );
-			$generated = Helper::generateBulkPostTypeMessages( $this->get_noop( $constant ), $counts, $posttype );
+			$generated = Helper::generateBulkPostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $counts, $posttype );
 
 			return array_merge( $messages, [ $posttype => $generated ] );
 		}, 10, 2 );
