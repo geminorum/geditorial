@@ -45,6 +45,7 @@ class Addendum extends gEditorial\Module
 		return [
 			'_general' => [
 				'paired_force_parents',
+				'paired_manage_restricted',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Appendage Necessities', 'Settings', 'geditorial-addendum' ),

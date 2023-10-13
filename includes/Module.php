@@ -69,6 +69,9 @@ class Module extends WordPress\Module
 		'tools'     => 'edit_others_posts',
 		'adminbar'  => 'edit_others_posts',
 		'dashboard' => 'edit_others_posts',
+
+		// 'paired_create' => 'manage_options', // to restrict main post
+		// 'paired_delete' => 'manage_options', // to restrict main post
 	];
 
 	protected $root_key = FALSE; // ROOT CONSTANT

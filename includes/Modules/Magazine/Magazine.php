@@ -41,6 +41,7 @@ class Magazine extends gEditorial\Module
 			'_general' => [
 				'multiple_instances',
 				'paired_force_parents',
+				'paired_manage_restricted',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Issue Sections', 'Settings', 'geditorial-magazine' ),

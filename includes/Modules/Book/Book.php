@@ -51,6 +51,7 @@ class Book extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
 				'paired_force_parents',
+				'paired_manage_restricted',
 				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,

@@ -725,6 +725,15 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_paired_manage_restricted( $description = NULL )
+	{
+		return [
+			'field'        => 'paired_manage_restricted',
+			'title'       => _x( 'Management Restricted', 'Settings: Setting Title', 'geditorial' ),
+			'description' => $description ?: _x( 'Limits creation and deletion of the main posts to administrators.', 'Settings: Setting Description', 'geditorial' ),
+		];
+	}
+
 	public static function getSetting_count_not( $description = NULL )
 	{
 		return [

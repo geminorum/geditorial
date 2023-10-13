@@ -44,6 +44,7 @@ class Trained extends gEditorial\Module
 		return [
 			'_general' => [
 				'paired_force_parents',
+				'paired_manage_restricted',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Training Levels', 'Settings', 'geditorial-trained' ),

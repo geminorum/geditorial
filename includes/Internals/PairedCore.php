@@ -78,6 +78,21 @@ trait PairedCore
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
 		}
 
+		if ( $this->get_setting( 'paired_manage_restricted' )
+			&& ! array_key_exists( 'capabilities', $extra ) ) {
+
+			$create = array_key_exists( 'paired_create', $this->caps ) ? $this->caps['paired_create'] : 'manage_options';
+			$delete = array_key_exists( 'paired_delete', $this->caps ) ? $this->caps['paired_delete'] : 'manage_options';
+
+			$extra['capabilities'] = [
+				'create_posts'           => $create,
+				'delete_posts'           => $delete,
+				'delete_private_posts'   => $delete,
+				'delete_published_posts' => $delete,
+				'delete_others_posts'    => $delete,
+			];
+		}
+
 		if ( $primary && ! array_key_exists( 'primary_taxonomy', $extra ) )
 			$extra['primary_taxonomy'] = $this->constant( $primary );
 
