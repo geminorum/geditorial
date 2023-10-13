@@ -200,6 +200,9 @@ class StaticCovers extends gEditorial\Module
 		if ( $html )
 			return $html;
 
+		if ( ! WordPress\Post::can( $post_id, 'read_post' ) )
+			return $html;
+
 		if ( $src = $this->_get_posttype_image( $post_id ) )
 			return $this->_get_html_image( $src, WordPress\Post::title( $post_id ), '-attachment-image' );
 
@@ -393,6 +396,9 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $data;
 
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
+			return $data;
+
 		if ( ! $src = $this->_get_posttype_image( $post ) )
 			return $data;
 
@@ -407,6 +413,7 @@ class StaticCovers extends gEditorial\Module
 		$args = shortcode_atts( [
 			'id' => is_singular() ? get_queried_object_id() : NULL,
 
+			'check'     => NULL,     // cap check, `NULL` for default, `FALSE` to disable
 			'link'      => NULL,     // `parent`/`image`/`FALSE`
 			'size'      => '',       // empty means raw
 			'width'     => FALSE,
@@ -428,6 +435,12 @@ class StaticCovers extends gEditorial\Module
 			return NULL;
 
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $content;
+
+		if ( is_null( $args['check'] ) )
+			$args['check'] = 'read_post';
+
+		if ( $args['check'] && ! WordPress\Post::can( $post, $args['check'] ) )
 			return $content;
 
 		if ( ! $src = $this->_get_posttype_image( $post ) )
@@ -476,6 +489,7 @@ class StaticCovers extends gEditorial\Module
 		$args = shortcode_atts( [
 			'id' => ( is_tax() || is_tag() || is_category() ) ? get_queried_object_id() : NULL,
 
+			'check'     => NULL,     // cap check, `NULL` for default, `FALSE` to disable
 			'link'      => NULL,     // `parent`/`image`/`FALSE`
 			'size'      => '',       // empty means raw
 			'width'     => FALSE,
@@ -497,6 +511,12 @@ class StaticCovers extends gEditorial\Module
 			return NULL;
 
 		if ( ! $term = WordPress\Term::get( $args['id'] ) )
+			return $content;
+
+		if ( is_null( $args['check'] ) )
+			$args['check'] = FALSE; // default is viewable
+
+		if ( $args['check'] && ! WordPress\Term::can( $term, $args['check'] ) )
 			return $content;
 
 		if ( ! $src = $this->_get_taxonomy_image( $term ) )
