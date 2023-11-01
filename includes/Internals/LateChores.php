@@ -21,15 +21,18 @@ trait LateChores
 		if ( empty( $posttypes ) || ! method_exists( $this, 'latechores_post_aftercare' ) )
 			return FALSE;
 
+		$action = $this->hook( 'latechores', 'post_aftercare' );
+		add_action( $action, [ $this, 'latechores__do_post_aftercare' ], 10, 2 );
+
+		if ( Core\WordPress::isCRON() )
+			return $action;
+
 		$collectors = [];
 
 		foreach ( (array) $posttypes as $posttype ) {
 			$collectors[$posttype] = sprintf( 'save_post_%s', $posttype );
 			add_action( $collectors[$posttype], [ $this, 'latechores__collector_post_aftercare' ], 20, 3 );
 		}
-
-		$action = $this->hook( 'latechores', 'post_aftercare' );
-		add_action( $action, [ $this, 'latechores__do_post_aftercare' ], 10, 2 );
 
 		add_action( 'shutdown', function () use ( $action, $collectors ) {
 			$this->latechores__schedule_post_aftercare( $action, $collectors );

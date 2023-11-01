@@ -24,7 +24,7 @@ class LateChores extends WordPress\Main
 	{
 		static $hooked = NULL;
 
-		if ( ! is_null( $hooked ) )
+		if ( ! is_null( $hooked ) || Core\WordPress::isCRON() )
 			return $hooked;
 
 		add_action( 'set_object_terms',
