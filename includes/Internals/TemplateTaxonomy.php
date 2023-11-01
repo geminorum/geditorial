@@ -159,6 +159,7 @@ trait TemplateTaxonomy
 				'',
 				$taxonomy,
 				[
+					'context' => 'template_taxonomy',
 					'orderby' => 'menu_order', // WTF: must apply to `assigned`
 					'id'      => $this->current_queried,
 					'future'  => 'off',

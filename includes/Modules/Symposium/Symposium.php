@@ -104,6 +104,8 @@ class Symposium extends gEditorial\Module
 				'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'source_title' => [ 'type' => 'text' ],
 				'source_url'   => [ 'type' => 'link' ],
+				'action_title' => [ 'type' => 'text' ],
+				'action_url'   => [ 'type' => 'link' ],
 				'highlight'    => [ 'type' => 'note' ],
 				'dashboard'    => [ 'type' => 'postbox_html' ],
 				'abstract'     => [ 'type' => 'postbox_html' ],
@@ -113,6 +115,8 @@ class Symposium extends gEditorial\Module
 				'audio_source_url'  => [ 'type' => 'audio_source' ],
 				'video_source_url'  => [ 'type' => 'video_source' ],
 				'image_source_url'  => [ 'type' => 'image_source' ],
+
+				'datetime' => [ 'type' => 'datetime' ],
 			],
 		];
 	}

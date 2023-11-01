@@ -8,6 +8,8 @@ use geminorum\gEditorial\Core;
 class ModuleInfo extends gEditorial\Info
 {
 
+	// TODO: https://www.neenahpaper.com/resources/paper-101/basis-weights
+
 	const MODULE = 'units';
 
 	public static function getHelpTabs( $context = NULL )
@@ -38,7 +40,8 @@ class ModuleInfo extends gEditorial\Info
 		];
 	}
 
-	// @REF https://papersizes.io/
+	// @REF: https://papersizes.io/
+	// @SEE: https://www.neenahpaper.com/resources/paper-101/international-sizes
 	public static function getPaperSizes( $context = NULL )
 	{
 		return [

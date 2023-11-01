@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 

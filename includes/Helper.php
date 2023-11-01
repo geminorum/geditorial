@@ -3,11 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\File;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\URL;
 use geminorum\gEditorial\WordPress;
 use geminorum\gEditorial\Services;
 
@@ -115,7 +110,7 @@ class Helper extends WordPress\Main
 			$terms = $term_ids;
 
 		else
-			$terms = Arraay::prepNumeral( $term_ids );
+			$terms = Core\Arraay::prepNumeral( $term_ids );
 
 		$taxonomy = gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );
 		$result   = wp_set_object_terms( $post->ID, $terms, $taxonomy, $append );
@@ -136,7 +131,7 @@ class Helper extends WordPress\Main
 		if ( is_array( $icon ) )
 			return gEditorial()->icon( $icon[1], $icon[0] );
 
-		if ( Text::starts( $icon, 'data:image/' ) )
+		if ( Core\Text::starts( $icon, 'data:image/' ) )
 			return Core\HTML::img( $icon, [ '-icon', '-encoded' ] );
 
 		return Core\HTML::getDashicon( $icon );
@@ -230,7 +225,7 @@ class Helper extends WordPress\Main
 			$prepared = Core\Email::prep( $value, [ 'title' => $title ], 'display' );
 
 		else if ( Core\URL::isValid( $value ) )
-			$prepared = Core\HTML::link( $title, URL::prepTitle( $value ) );
+			$prepared = Core\HTML::link( $title, Core\URL::prepTitle( $value ) );
 
 		else if ( is_numeric( str_ireplace( [ '+', '-', '.' ], '', $value ) ) )
 			$prepared = Core\Phone::prep( $value, [ 'title' => $title ], 'display' );
@@ -321,11 +316,11 @@ class Helper extends WordPress\Main
 					return Datetime::prepForDisplay( $raw ?: $value, 'Y/m/d' );
 
 				case 'datetime':
-					return Datetime::prepForDisplay( $raw ?: $value, Text::ends( $raw ?: $value, '00:00:00' ) ? 'Y/m/d' : 'Y/m/d H:i' );
+					return Datetime::prepForDisplay( $raw ?: $value, Core\Text::ends( $raw ?: $value, '00:00:00' ) ? 'Y/m/d' : 'Y/m/d H:i' );
 
 				case 'contact_method':
 					return Core\URL::isValid( $raw ?: $value )
-						? Core\HTML::link( URL::prepTitle( $raw ?: $value ), $raw ?: $value )
+						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
 						: sprintf( '<span title="%s">@%s</span>', empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ), $raw ?: $value );
 
 				case 'email':
@@ -548,7 +543,7 @@ class Helper extends WordPress\Main
 				'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
 			], Core\HTML::escape( $title ) ).$after;
 
-		if ( 'view' == $link && ! $edit && ! is_taxonomy_viewable( $term->taxonomy ) )
+		if ( 'view' == $link && ! $edit && ! WordPress\Taxonomy::viewable( $term->taxonomy ) )
 			return Core\HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
@@ -755,8 +750,8 @@ class Helper extends WordPress\Main
 				$name['singular'],
 			];
 
-		$strings[2] = Text::strToLower( $strings[0] );
-		$strings[3] = Text::strToLower( $strings[1] );
+		$strings[2] = Core\Text::strToLower( $strings[0] );
+		$strings[3] = Core\Text::strToLower( $strings[1] );
 
 		$strings[4] = '%s';
 
@@ -1161,9 +1156,9 @@ class Helper extends WordPress\Main
 		$scheduled_date = Datetime::dateFormat( $post->post_date, 'datetime' );
 
 		if ( WordPress\PostType::viewable( $post_type_object ) ) {
-			$view      = ' '.HTML::link( $messages['view_post'], $permalink );
-			$preview   = ' '.HTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
-			$scheduled = ' '.HTML::link( $messages['preview_post'], $permalink, TRUE );
+			$view      = ' '.Core\HTML::link( $messages['view_post'], $permalink );
+			$preview   = ' '.Core\HTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
+			$scheduled = ' '.Core\HTML::link( $messages['preview_post'], $permalink, TRUE );
 		}
 
 		return [
@@ -1287,7 +1282,7 @@ class Helper extends WordPress\Main
 		if ( empty( $file_path ) )
 			return FALSE;
 
-		// $iterator = new \SplFileObject( File::normalize( $file_path ) );
+		// $iterator = new \SplFileObject( Core\File::normalize( $file_path ) );
 		// $parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
 
 		$list = [];
@@ -1296,7 +1291,7 @@ class Helper extends WordPress\Main
 		if ( ! is_null( $limit ) )
 			$args['limit'] =  (int) $limit;
 
-		$parser  = \KzykHys\CsvParser\CsvParser::fromFile( File::normalize( $file_path ), $args );
+		$parser  = \KzykHys\CsvParser\CsvParser::fromFile( Core\File::normalize( $file_path ), $args );
 		$items   = $parser->parse();
 		$headers = $items[0];
 
@@ -1395,7 +1390,7 @@ class Helper extends WordPress\Main
 		$path = Core\File::normalize( GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub );
 
 		if ( file_exists( $path ) )
-			return URL::untrail( $path );
+			return Core\URL::untrail( $path );
 
 		if ( ! wp_mkdir_p( $path ) )
 			return FALSE;

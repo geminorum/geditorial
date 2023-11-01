@@ -143,7 +143,7 @@ trait BulkExports
 					'orderby'        => [ 'menu_order', 'date' ],
 					'order'          => 'ASC',
 					'post_type'      => $posttypes,
-					'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
+					'post_status'    => [ 'publish', 'future' ],
 					'tax_query'      => [ [
 						'taxonomy' => $this->constant( $constants[1] ),
 						'field'    => 'id',

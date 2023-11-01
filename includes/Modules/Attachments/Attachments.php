@@ -480,6 +480,7 @@ class Attachments extends gEditorial\Module
 
 	// searches only for portion of the attached file
 	// like: `2021/10/filename` where `filename.ext` is the filename
+	// FIXME: move up
 	public function search_attachment( $attachment_id )
 	{
 		if ( ! $file = get_post_meta( $attachment_id, '_wp_attached_file', TRUE ) )

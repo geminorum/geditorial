@@ -148,9 +148,10 @@ trait TemplatePostType
 
 		if ( is_post_type_archive() )
 			return ShortCode::listPosts( 'assigned',
-			$posttype, // WordPress\PostType::current(),
+				$posttype, // WordPress\PostType::current(),
 				'',
 				[
+					'context' => 'template_posttype',
 					'orderby' => 'menu_order', // WTF: must apply to `assigned`
 					'id'      => 'all',
 					'future'  => 'off',
