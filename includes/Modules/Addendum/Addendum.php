@@ -383,14 +383,20 @@ class Addendum extends gEditorial\Module
 
 		if ( $this->constant( 'primary_posttype' ) === $post->post_type ) {
 
+			$appendages = [];
+
+			// self as an appendage only if has download
+			if ( $this->maindownload__get_link( $post ) )
+				$appendages[] = $post;
+
 			$extra = [
 				'post_parent' => $post->ID,
 				'orderby'     => 'menu_order, title',
 				'order'       => 'ASC',
 			];
 
-			if ( ! $appendages = WordPress\PostType::getIDs( $post->post_type, $extra ) )
-				$appendages[] = $post; // self as an appendage!
+			if ( $children = WordPress\PostType::getIDs( $post->post_type, $extra, 'all' ) )
+				$appendages = [ ...$appendages,  ...$children ];
 
 		} else {
 
