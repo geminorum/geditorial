@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -454,7 +455,8 @@ class Book extends gEditorial\Module
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'publisher_tax', [
-			'meta_box_cb' => NULL, // default meta box
+			'meta_box_cb'                             => NULL,   // default meta box
+			Services\Sitemaps::VIEWABLE_TAXONOMY_PROP => TRUE,   // even empty shows on sitemaps
 		], 'publication_cpt' );
 
 		$this->register_taxonomy( 'type_tax', [

@@ -381,4 +381,25 @@ trait CoreTaxonomies
 
 		return wp_set_object_terms( $post->ID, WordPress\Taxonomy::appendParentTermIDs( $currents, $taxonomy ), $taxonomy, TRUE );
 	}
+
+	/**
+	 * Makes available empty terms on sitempas.
+	 *
+	 * @param  string $constant
+	 * @return bool   $hooked
+	 */
+	protected function hook_taxonomy_sitemap_show_empty( $constant )
+	{
+		if ( ! $target = $this->constant( $constant ) )
+			return FALSE;
+
+		add_filter( 'wp_sitemaps_taxonomies_query_args',
+			static function ( $args, $taxonomy ) use ( $target ) {
+				if ( $target === $taxonomy )
+					$args['hide_empty'] = FALSE;
+				return $args;
+			}, 10, 2 );
+
+		return TRUE;
+	}
 }

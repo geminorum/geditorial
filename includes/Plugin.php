@@ -117,6 +117,7 @@ class Plugin
 		Services\Paired::setup();
 		Services\RestAPI::setup();
 		Services\SearchSelect::setup();
+		Services\Sitemaps::setup();
 
 		// \TenUp\ContentConnect\Plugin::instance();
 	}
