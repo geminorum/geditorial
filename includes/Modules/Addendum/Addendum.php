@@ -398,6 +398,9 @@ class Addendum extends gEditorial\Module
 			if ( $children = WordPress\PostType::getIDs( $post->post_type, $extra, 'all' ) )
 				$appendages = [ ...$appendages,  ...$children ];
 
+			if ( empty( $appendages ) )
+				return $content;
+
 		} else {
 
 			if ( ! $this->posttype_supported( $post->post_type ) )

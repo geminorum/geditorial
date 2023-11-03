@@ -6,11 +6,13 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
 
 class WcPurchased extends gEditorial\Module
 {
+	use Internals\AdminPage;
 
 	// TODO: export limit to: time after
 
