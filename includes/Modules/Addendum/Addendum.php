@@ -381,11 +381,26 @@ class Addendum extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $content;
 
-		if ( ! $this->posttype_supported( $post->post_type ) )
-			return $content;
+		if ( $this->constant( 'primary_posttype' ) === $post->post_type ) {
 
-		if ( ! $appendages = $this->get_linked_to_posts( $post ) )
-			return $content;
+			$extra = [
+				'post_parent' => $post->ID,
+				'orderby'     => 'menu_order, title',
+				'order'       => 'ASC',
+			];
+
+			if ( ! $appendages = WordPress\PostType::getIDs( $post->post_type, $extra ) )
+				$appendages[] = $post; // self as an appendage!
+
+		} else {
+
+			if ( ! $this->posttype_supported( $post->post_type ) )
+				return $content;
+
+			// TODO: sort the appendages if more than one
+			if ( ! $appendages = $this->get_linked_to_posts( $post ) )
+				return $content;
+		}
 
 		if ( is_null( $args['template'] ) )
 			$args['template'] = 'downloadbox';
