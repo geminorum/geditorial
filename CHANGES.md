@@ -1,3 +1,22 @@
+### 3.26.7
+* internal/late-chores: avoid re-hooking on cron calls
+* internal/paired-core: optional manage restricted to admins
+* internal/paired-tools: force assign parents
+* internal/paired-tools: rethink passing constants
+* internal/strings: noop from filtered
+* main/info: front-end icon methods
+* main/info: registered message
+* main/module: render tools/reports/imports/ html before
+* module/addendum: self as an appendage only if has download
+* module/addendum: support short-code on main post-type
+* module/importer: filter for assigned terms
+* module/static-covers: check parent cap before display
+* module/was-born: avoid zero summaries
+* module/widgets: :new: edit theme options for roles
+* module/widgets: :new: post terms widget
+* module/widgets: :new: profile summary widget
+* service/sitemaps: display empty terms
+
 ### 3.26.6
 * main/list-table: passing object as taxonomy
 * module/identified: :new: module
