@@ -838,14 +838,12 @@ class Persona extends gEditorial\Module
 		if ( ! array_key_exists( $key, $row ) )
 			return $discovered;
 
-		$title = $row[$key]; // FIXME: sanaitze!
-
-		$args = [
-			'post_type'   => $this->constant( 'primary_posttype' ),
-			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
-		];
-
-		$search = WordPress\PostType::getIDsByTitle( $title, $args );
+		$search = WordPress\Post::getByTitle(
+			$row[$key],   // FIXME: sanaitze!
+			$this->constant( 'primary_posttype' ),
+			'ids',
+			[ 'publish', 'future', 'draft', 'pending' ]
+		);
 
 		if ( count( $search ) )
 			return reset( $search );

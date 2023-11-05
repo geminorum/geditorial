@@ -127,7 +127,7 @@ trait CoreCapabilities
 		if ( ! $taxonomy = $this->constant( $constant ) )
 			return FALSE;
 
-		add_filter( 'map_meta_cap', function( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
+		add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
 
 			switch ( $cap ) {
 
