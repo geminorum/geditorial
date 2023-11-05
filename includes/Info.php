@@ -150,6 +150,15 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderRegistered( $datetime_string, $before = '', $after = '' )
+	{
+		echo $before.sprintf(
+			/* translators: %s: datetime string */
+			_x( 'Registered on %s', 'Info: Message', 'geditorial' ),
+			Helper::getDateEditRow( $datetime_string, '-registered' )
+		).$after;
+	}
+
 	// NOTE: for front-end only, `$icon` must be array
 	public static function getIcon( $icon, $title = FALSE, $link = FALSE )
 	{
