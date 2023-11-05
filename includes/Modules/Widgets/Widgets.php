@@ -110,6 +110,7 @@ class Widgets extends gEditorial\Module
 		return [
 			'Custom-HTML'     => 'CustomHTML',
 			'GCal-Events'     => 'GCalEvents',
+			'Post-Terms'      => 'PostTerms',
 			'Search-Terms'    => 'SearchTerms',
 			'Namesake-Terms'  => 'NamesakeTerms',
 			'WPRest-Posts'    => 'WPRestPosts',
