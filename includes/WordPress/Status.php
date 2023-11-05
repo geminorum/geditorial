@@ -58,7 +58,6 @@ class Status extends Core\Base
 
 		$statuses = Core\WordPress::isAdvancedCache()
 			? get_available_post_statuses( $posttype )
-			// : [ 'publish', 'future', 'draft' ];
 			: [ 'publish', 'future' ];
 
 		return array_diff_key( $statuses, (array) $excludes );

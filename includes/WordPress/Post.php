@@ -177,11 +177,12 @@ class Post extends Core\Base
 	 * @see `get_page_by_title()`
 	 * @source https://make.wordpress.org/core/2023/03/06/get_page_by_title-deprecated/
 	 *
-	 * @param  string $title
+	 * @param  string       $title
 	 * @param  string|array $posttype
-	 * @return array $posts
+	 * @param  string|array $status
+	 * @return array        $posts
 	 */
-	public static function getByTitle( $title, $posttype = 'any', $fields = 'ids' )
+	public static function getByTitle( $title, $posttype = 'any', $fields = 'ids', $status = 'all' )
 	{
 		if ( ! $title = trim( $title ) )
 			return [];
@@ -190,7 +191,7 @@ class Post extends Core\Base
 			'title'          => $title,
 			'fields'         => $fields,
 			'post_type'      => $posttype,
-			'post_status'    => 'all',
+			'post_status'    => $status,
 			'orderby'        => 'post_date ID',
 			'order'          => 'ASC',
 			'posts_per_page' => -1,
