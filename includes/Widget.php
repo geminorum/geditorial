@@ -868,15 +868,4 @@ class Widget extends \WP_Widget
 
 		Core\HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
 	}
-
-	// NOTE: for front-end only, `$icon` must be array
-	public static function getIcon( $icon, $title = FALSE, $link = FALSE )
-	{
-		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
-			'href'   => $link ?: FALSE,
-			'title'  => $title ?: FALSE,
-			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
-			'target' => $link ? '_blank' : FALSE,
-		], gEditorial()->icon( $icon[1], $icon[0] ) );
-	}
 }

@@ -150,6 +150,38 @@ class Info extends WordPress\Main
 		);
 	}
 
+	// NOTE: for front-end only, `$icon` must be array
+	public static function getIcon( $icon, $title = FALSE, $link = FALSE )
+	{
+		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
+			'href'   => $link ?: FALSE,
+			'title'  => $title ?: FALSE,
+			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
+			'target' => $link ? '_blank' : FALSE,
+		], gEditorial()->icon( $icon[1], $icon[0] ) );
+	}
+
+	public static function renderIcon( $for, $text = NULL, $link = FALSE, $verbose = TRUE )
+	{
+		$html = '';
+
+		switch ( $for ) {
+			case 'url'       : $html = self::getIcon( [ 'octicons', 'link' ], $text ?? _x( 'URL', 'Info: Icon Title', 'geditorial' ), $link ); break;
+			case 'email'     : $html = self::getIcon( [ 'octicons', 'mail' ], $text ?? _x( 'Email', 'Info: Icon Title', 'geditorial' ), $link ); break;
+			case 'roles'     : $html = self::getIcon( [ 'gridicons', 'user-circle' ], $text ?? _x( 'Roles', 'Info: Icon Title', 'geditorial' ), $link ); break;
+			case 'fullname'  : $html = self::getIcon( [ 'octicons', 'note' ], $text ?? _x( 'Name', 'Info: Icon Title', 'geditorial' ), $link ); break;
+			case 'registered': $html = self::getIcon( [ 'octicons', 'calendar' ], $text ?? _x( 'Registered', 'Info: Icon Title', 'geditorial' ), $link ); break;
+			default          : $html = self::getIcon( Core\Icon::guess( $for, [ 'social-logos', 'mail' ] ), $text ?? _x( 'Contact', 'Info: Icon Title', 'geditorial' ), $link ); break;
+		}
+
+		if ( ! $verbose )
+			return $html;
+
+		echo $html.' '; // NOTE: extra space only on verbose
+
+		return $html ? TRUE : FALSE;
+	}
+
 	public static function getNoop( $key, $fallback = NULL )
 	{
 		switch ( $key ) {
