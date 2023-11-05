@@ -9,155 +9,155 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
 "X-Domain: geditorial-course\n"
 
-#: Course.php:43
+#: Course.php:45
 msgctxt "Settings"
 msgid "Course Topics"
 msgstr ""
 
-#: Course.php:44
+#: Course.php:46
 msgctxt "Settings"
 msgid "Topic taxonomy for the courses and supported post-types."
 msgstr ""
 
-#: Course.php:60
+#: Course.php:62
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Course.php:61
+#: Course.php:63
 msgctxt "Settings"
 msgid "Redirects course and lesson archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Course.php:67
+#: Course.php:69
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Course.php:68
+#: Course.php:70
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Course.php:132
-#: Course.php:133
+#: Course.php:134
+#: Course.php:135
 msgid "Course"
 msgid_plural "Courses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:134
+#: Course.php:136
 msgid "Course Category"
 msgid_plural "Course Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:135
+#: Course.php:137
 msgid "Course Span"
 msgid_plural "Course Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:136
+#: Course.php:138
 msgid "Course Topic"
 msgid_plural "Course Topics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:137
+#: Course.php:139
 msgid "Lesson"
 msgid_plural "Lessons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:138
+#: Course.php:140
 msgid "Lesson Format"
 msgid_plural "Lesson Formats"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:139
+#: Course.php:141
 msgid "Lesson Status"
 msgid_plural "Lesson Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:143
+#: Course.php:145
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr ""
 
-#: Course.php:153
+#: Course.php:155
 msgctxt "MetaBox Title"
 msgid "The Course"
 msgstr ""
 
-#: Course.php:154
+#: Course.php:156
 msgctxt "MetaBox Title"
 msgid "In This Course"
 msgstr ""
 
-#: Course.php:157
+#: Course.php:159
 msgctxt "MetaBox Title"
 msgid "Course"
 msgstr ""
 
-#: Course.php:163
+#: Course.php:165
 msgctxt "Column Title"
 msgid "Lessons"
 msgstr ""
 
-#: Course.php:166
+#: Course.php:168
 msgctxt "Misc: `column_icon_title`"
 msgid "Course"
 msgstr ""
 
-#: Course.php:172
+#: Course.php:174
 msgctxt "Default Term"
 msgid "Ongoing"
 msgstr ""
 
-#: Course.php:173
+#: Course.php:175
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Course.php:174
+#: Course.php:176
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Course.php:175
+#: Course.php:177
 msgctxt "Default Term"
 msgid "Cancelled"
 msgstr ""
 
-#: Course.php:187
-#: Course.php:201
+#: Course.php:189
+#: Course.php:203
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: Course.php:188
+#: Course.php:190
 msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr ""
 
-#: Course.php:202
+#: Course.php:204
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr ""
 
-#: Course.php:474
+#: Course.php:477
 msgctxt "Header"
 msgid "Course Tools"
 msgstr ""
 
-#: Course.php:502
+#: Course.php:510
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr ""

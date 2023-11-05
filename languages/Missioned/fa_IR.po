@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Missioned\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-10-04 14:19+0330\n"
+"PO-Revision-Date: 2023-11-03 12:38+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,77 +11,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Missioned\n"
 "X-Domain: geditorial-missioned\n"
 
-#: Missioned.php:92 Missioned.php:93
+#: Missioned.php:93 Missioned.php:94
 msgid "Mission"
 msgid_plural "Missions"
 msgstr[0] "مأموریت‌ها"
 msgstr[1] "مأموریت"
 
-#: Missioned.php:94
+#: Missioned.php:95
 msgid "Mission Category"
 msgid_plural "Mission Categories"
 msgstr[0] "دسته‌های مأموریت"
 msgstr[1] "دسته مأموریت"
 
-#: Missioned.php:95
+#: Missioned.php:96
 msgid "Mission Span"
 msgid_plural "Mission Spans"
 msgstr[0] "دوره‌های مأموریت"
 msgstr[1] "دوره مأموریت"
 
-#: Missioned.php:96
+#: Missioned.php:97
 msgid "Mission Type"
 msgid_plural "Mission Types"
 msgstr[0] "انواع مأموریت"
 msgstr[1] "نوع مأموریت"
 
-#: Missioned.php:97
+#: Missioned.php:98
 msgid "Mission Status"
 msgid_plural "Mission Statuses"
 msgstr[0] "وضعیت‌های مأموریت"
 msgstr[1] "وضعیت مأموریت"
 
-#: Missioned.php:101
+#: Missioned.php:102
 msgctxt "Label: `menu_name`"
 msgid "Missions"
 msgstr "مأموریت‌ها"
 
-#: Missioned.php:102
+#: Missioned.php:103
 msgctxt "Label: Featured Image"
 msgid "Mission Poster"
 msgstr "اعلان مأموریت"
 
-#: Missioned.php:103
+#: Missioned.php:104
 msgctxt "Label: MetaBox Title"
 msgid "The Mission"
 msgstr "مأموریت"
 
-#: Missioned.php:112
+#: Missioned.php:113
 msgctxt "Misc: `column_icon_title`"
 msgid "Missions"
 msgstr "مأموریت‌ها"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Missioned.php:117
+#: Missioned.php:118
 msgctxt "Metabox: `megabox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr "مشارکت‌کنندگان در &ldquo;%1$s&rdquo;"
 
-#: Missioned.php:161
+#: Missioned.php:162
 msgctxt "Field Title"
 msgid "Mission Code"
 msgstr "کد مأموریت"
 
-#: Missioned.php:162
+#: Missioned.php:163
 msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr "کد مأموریت یکتا"
 
-#: Missioned.php:392
+#: Missioned.php:394
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr "ابزارهای مأموریت"

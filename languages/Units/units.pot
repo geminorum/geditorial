@@ -9,256 +9,256 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Units\n"
 "X-Domain: geditorial-units\n"
 
-#: ModuleInfo.php:17
+#: ModuleInfo.php:19
 msgctxt "Help Tab Title"
 msgid "Shortcodes"
 msgstr ""
 
-#: ModuleInfo.php:32
+#: ModuleInfo.php:34
 msgctxt "Book Cover"
 msgid "Octavo"
 msgstr ""
 
-#: ModuleInfo.php:33
+#: ModuleInfo.php:35
 msgctxt "Book Cover"
 msgid "Folio"
 msgstr ""
 
-#: ModuleInfo.php:34
+#: ModuleInfo.php:36
 msgctxt "Book Cover"
 msgid "Medium Octavo"
 msgstr ""
 
-#: ModuleInfo.php:35
+#: ModuleInfo.php:37
 msgctxt "Book Cover"
 msgid "Quatro"
 msgstr ""
 
-#: ModuleInfo.php:36
+#: ModuleInfo.php:38
 msgctxt "Book Cover"
 msgid "Duodecimo"
 msgstr ""
 
-#: ModuleInfo.php:37
+#: ModuleInfo.php:39
 msgctxt "Book Cover"
 msgid "Sextodecimo"
 msgstr ""
 
-#: ModuleInfo.php:45
+#: ModuleInfo.php:48
 msgctxt "Paper Size"
 msgid "A1"
 msgstr ""
 
-#: ModuleInfo.php:46
+#: ModuleInfo.php:49
 msgctxt "Paper Size"
 msgid "A2"
 msgstr ""
 
-#: ModuleInfo.php:47
+#: ModuleInfo.php:50
 msgctxt "Paper Size"
 msgid "A3"
 msgstr ""
 
-#: ModuleInfo.php:48
+#: ModuleInfo.php:51
 msgctxt "Paper Size"
 msgid "A4"
 msgstr ""
 
-#: ModuleInfo.php:49
+#: ModuleInfo.php:52
 msgctxt "Paper Size"
 msgid "A5"
 msgstr ""
 
-#: ModuleInfo.php:50
+#: ModuleInfo.php:53
 msgctxt "Paper Size"
 msgid "A6"
 msgstr ""
 
-#: ModuleInfo.php:57
-msgctxt "Shoe Size"
-msgid "35"
-msgstr ""
-
-#: ModuleInfo.php:58
-msgctxt "Shoe Size"
-msgid "36"
-msgstr ""
-
-#: ModuleInfo.php:59
-msgctxt "Shoe Size"
-msgid "37"
-msgstr ""
-
 #: ModuleInfo.php:60
 msgctxt "Shoe Size"
-msgid "38"
+msgid "35"
 msgstr ""
 
 #: ModuleInfo.php:61
 msgctxt "Shoe Size"
-msgid "39"
+msgid "36"
 msgstr ""
 
 #: ModuleInfo.php:62
 msgctxt "Shoe Size"
-msgid "40"
+msgid "37"
 msgstr ""
 
 #: ModuleInfo.php:63
 msgctxt "Shoe Size"
-msgid "41"
+msgid "38"
 msgstr ""
 
 #: ModuleInfo.php:64
 msgctxt "Shoe Size"
-msgid "42"
+msgid "39"
 msgstr ""
 
 #: ModuleInfo.php:65
 msgctxt "Shoe Size"
-msgid "43"
+msgid "40"
 msgstr ""
 
 #: ModuleInfo.php:66
 msgctxt "Shoe Size"
-msgid "44"
+msgid "41"
 msgstr ""
 
 #: ModuleInfo.php:67
 msgctxt "Shoe Size"
-msgid "45"
+msgid "42"
 msgstr ""
 
 #: ModuleInfo.php:68
 msgctxt "Shoe Size"
-msgid "46"
+msgid "43"
 msgstr ""
 
 #: ModuleInfo.php:69
 msgctxt "Shoe Size"
-msgid "47"
+msgid "44"
 msgstr ""
 
 #: ModuleInfo.php:70
 msgctxt "Shoe Size"
-msgid "48"
+msgid "45"
 msgstr ""
 
 #: ModuleInfo.php:71
 msgctxt "Shoe Size"
+msgid "46"
+msgstr ""
+
+#: ModuleInfo.php:72
+msgctxt "Shoe Size"
+msgid "47"
+msgstr ""
+
+#: ModuleInfo.php:73
+msgctxt "Shoe Size"
+msgid "48"
+msgstr ""
+
+#: ModuleInfo.php:74
+msgctxt "Shoe Size"
 msgid "50"
-msgstr ""
-
-#: ModuleInfo.php:79
-msgctxt "Shirt Size"
-msgid "Small"
-msgstr ""
-
-#: ModuleInfo.php:80
-msgctxt "Shirt Size"
-msgid "Medium"
-msgstr ""
-
-#: ModuleInfo.php:81
-msgctxt "Shirt Size"
-msgid "Large"
 msgstr ""
 
 #: ModuleInfo.php:82
 msgctxt "Shirt Size"
-msgid "X-Large"
+msgid "Small"
 msgstr ""
 
 #: ModuleInfo.php:83
 msgctxt "Shirt Size"
-msgid "2X-Large"
+msgid "Medium"
 msgstr ""
 
 #: ModuleInfo.php:84
 msgctxt "Shirt Size"
+msgid "Large"
+msgstr ""
+
+#: ModuleInfo.php:85
+msgctxt "Shirt Size"
+msgid "X-Large"
+msgstr ""
+
+#: ModuleInfo.php:86
+msgctxt "Shirt Size"
+msgid "2X-Large"
+msgstr ""
+
+#: ModuleInfo.php:87
+msgctxt "Shirt Size"
 msgid "3X-Large"
-msgstr ""
-
-#: ModuleInfo.php:93
-msgctxt "Pant Size"
-msgid "30"
-msgstr ""
-
-#: ModuleInfo.php:94
-msgctxt "Pant Size"
-msgid "32"
-msgstr ""
-
-#: ModuleInfo.php:95
-msgctxt "Pant Size"
-msgid "33"
 msgstr ""
 
 #: ModuleInfo.php:96
 msgctxt "Pant Size"
-msgid "34"
+msgid "30"
 msgstr ""
 
 #: ModuleInfo.php:97
 msgctxt "Pant Size"
-msgid "35"
+msgid "32"
 msgstr ""
 
 #: ModuleInfo.php:98
 msgctxt "Pant Size"
-msgid "36"
+msgid "33"
 msgstr ""
 
 #: ModuleInfo.php:99
 msgctxt "Pant Size"
-msgid "38"
+msgid "34"
 msgstr ""
 
 #: ModuleInfo.php:100
 msgctxt "Pant Size"
-msgid "40"
+msgid "35"
 msgstr ""
 
 #: ModuleInfo.php:101
 msgctxt "Pant Size"
-msgid "42"
+msgid "36"
 msgstr ""
 
 #: ModuleInfo.php:102
 msgctxt "Pant Size"
-msgid "44"
+msgid "38"
 msgstr ""
 
 #: ModuleInfo.php:103
 msgctxt "Pant Size"
-msgid "46"
+msgid "40"
 msgstr ""
 
 #: ModuleInfo.php:104
 msgctxt "Pant Size"
-msgid "48"
+msgid "42"
 msgstr ""
 
 #: ModuleInfo.php:105
 msgctxt "Pant Size"
-msgid "50"
+msgid "44"
 msgstr ""
 
 #: ModuleInfo.php:106
 msgctxt "Pant Size"
-msgid "52"
+msgid "46"
 msgstr ""
 
 #: ModuleInfo.php:107
 msgctxt "Pant Size"
-msgid "54"
+msgid "48"
 msgstr ""
 
 #: ModuleInfo.php:108
+msgctxt "Pant Size"
+msgid "50"
+msgstr ""
+
+#: ModuleInfo.php:109
+msgctxt "Pant Size"
+msgid "52"
+msgstr ""
+
+#: ModuleInfo.php:110
+msgctxt "Pant Size"
+msgid "54"
+msgstr ""
+
+#: ModuleInfo.php:111
 msgctxt "Pant Size"
 msgid "56"
 msgstr ""

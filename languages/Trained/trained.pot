@@ -9,135 +9,135 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Trained\n"
 "X-Domain: geditorial-trained\n"
 
-#: Trained.php:49
+#: Trained.php:50
 msgctxt "Settings"
 msgid "Training Levels"
 msgstr ""
 
-#: Trained.php:50
+#: Trained.php:51
 msgctxt "Settings"
 msgid "Substitute taxonomy for the trainings and supported post-types."
 msgstr ""
 
-#: Trained.php:103
 #: Trained.php:104
+#: Trained.php:105
 msgid "Training Course"
 msgid_plural "Training Courses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:105
+#: Trained.php:106
 msgid "Training Category"
 msgid_plural "Training Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:106
+#: Trained.php:107
 msgid "Training Level"
 msgid_plural "Training Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:107
+#: Trained.php:108
 msgid "Training Program"
 msgid_plural "Training Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:108
+#: Trained.php:109
 msgid "Training Span"
 msgid_plural "Training Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:109
+#: Trained.php:110
 msgid "Training Type"
 msgid_plural "Training Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:110
+#: Trained.php:111
 msgid "Training Status"
 msgid_plural "Training Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:114
+#: Trained.php:115
 msgctxt "Label: `menu_name`"
 msgid "Trainings"
 msgstr ""
 
-#: Trained.php:115
+#: Trained.php:116
 msgctxt "Label: Featured Image"
 msgid "Training Poster"
 msgstr ""
 
-#: Trained.php:116
+#: Trained.php:117
 msgctxt "Label: MetaBox Title"
 msgid "The Trainings"
 msgstr ""
 
-#: Trained.php:119
+#: Trained.php:120
 msgctxt "Label: MetaBox Title"
 msgid "In This Training"
 msgstr ""
 
-#: Trained.php:122
+#: Trained.php:123
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Trained.php:125
+#: Trained.php:126
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Trained.php:128
+#: Trained.php:129
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Trained.php:131
+#: Trained.php:132
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Trained.php:134
+#: Trained.php:135
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Trained.php:143
+#: Trained.php:144
 msgctxt "Misc: `column_icon_title`"
 msgid "Training Courses"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Trained.php:148
+#: Trained.php:149
 msgctxt "Metabox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Trained.php:157
+#: Trained.php:158
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Trained.php:196
+#: Trained.php:197
 msgctxt "Field Title"
 msgid "Training Code"
 msgstr ""
 
-#: Trained.php:197
+#: Trained.php:198
 msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr ""
 
-#: Trained.php:436
+#: Trained.php:438
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WasBorn\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-04 20:51+0330\n"
+"PO-Revision-Date: 2023-11-05 15:56+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/WasBorn\n"
 "X-Domain: geditorial-was-born\n"
 
@@ -146,98 +146,98 @@ msgctxt "Default Term"
 msgid "Female"
 msgstr "زن"
 
-#: WasBorn.php:436
+#: WasBorn.php:439
 msgctxt "Summary"
 msgid "Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:516
+#: WasBorn.php:519
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr "تاریخ تولد نامعتبر"
 
-#: WasBorn.php:584
+#: WasBorn.php:588
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr "میانگین سنی"
 
-#: WasBorn.php:658
+#: WasBorn.php:664
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr "بدون تاریخ تولد"
 
 #. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:739
+#: WasBorn.php:745
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr "از %1$s تا %2$s"
 
-#: WasBorn.php:741
+#: WasBorn.php:747
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr "آغاز"
 
-#: WasBorn.php:742
+#: WasBorn.php:748
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr "حالا"
 
-#: WasBorn.php:923
+#: WasBorn.php:929
 msgctxt "Pointer Notice"
 msgid "Under-Aged!"
 msgstr "زیر سن قانونی!"
 
-#: WasBorn.php:933
+#: WasBorn.php:939
 msgctxt "Default Term: Audit"
 msgid "Empty Date-of-Birth"
 msgstr "تاریخ تولد خالی"
 
-#: WasBorn.php:934
+#: WasBorn.php:940
 msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:978
+#: WasBorn.php:984
 msgctxt "Imports: Header"
 msgid "Birthday Tools"
 msgstr "ابزارهای تولد"
 
-#: WasBorn.php:994
+#: WasBorn.php:1000
 msgctxt "Imports: Card Title"
 msgid "Post-Date by Birthday"
 msgstr "تاریخ فرسته بر اساس تاریخ تولد"
 
 #. translators: %s: posttype label
-#: WasBorn.php:1006
+#: WasBorn.php:1012
 msgctxt "Imports: Button"
 msgid "Sync Dates for %s"
 msgstr "هم‌گام‌سازی تاریخ‌ها برای %s"
 
-#: WasBorn.php:1010
+#: WasBorn.php:1016
 msgctxt "Imports: Button Description"
 msgid "Tries to set the post-date based on date of birth data."
 msgstr "تلاش می‌کند تاریخ فرسته را بر اساس داده‌های تاریخ تولد تنظیم کند."
 
 #. translators: %1$s: date of birth, %2$s: post title
-#: WasBorn.php:1071
+#: WasBorn.php:1077
 msgctxt "Notice"
 msgid "Date of Birth (%1$s) is not valid for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: post date, %2$s: post title
-#: WasBorn.php:1087
+#: WasBorn.php:1093
 msgctxt "Notice"
 msgid "There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1093
+#: WasBorn.php:1099
 msgctxt "Notice"
 msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1099
+#: WasBorn.php:1105
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
 msgstr ""

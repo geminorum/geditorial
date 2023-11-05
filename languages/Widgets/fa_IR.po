@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 18:00+0330\n"
+"PO-Revision-Date: 2023-11-05 16:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,97 +11,107 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Domain: geditorial-widgets\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
 
-#: Widgets.php:31
+#: Widgets.php:32
+msgctxt "Setting Title"
+msgid "Theme Options"
+msgstr "گزینه‌های پوسته"
+
+#: Widgets.php:33
+msgctxt "Setting Description"
+msgid "Enables &ldquo;Edit Theme Options&rdquo; capability for selected roles."
+msgstr "دسترسی به «ویرایش گزینه‌های پوسته» را برای نقش‌های منتخب فعال می‌کند."
+
+#: Widgets.php:38
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr "ابزارک‌ها"
 
-#: Widgets.php:40
+#: Widgets.php:47
 msgctxt "Setting Title"
 msgid "Widget Areas"
 msgstr "مکان‌های ابزارک"
 
-#: Widgets.php:45
+#: Widgets.php:52
 msgctxt "Setting Title"
 msgid "Action"
 msgstr "کنش"
 
-#: Widgets.php:46
+#: Widgets.php:53
 msgctxt "Setting Description"
 msgid "Action hook where the widget appears on front-end."
-msgstr ""
+msgstr "قلاب کنشی روی سایت که ابزارک‌های در آن نمایش داده می‌شوند."
 
-#: Widgets.php:53
+#: Widgets.php:60
 msgctxt "Setting Title"
 msgid "Priority"
 msgstr "اولویت"
 
-#: Widgets.php:54
+#: Widgets.php:61
 msgctxt "Setting Description"
 msgid "Action priority where the widget runs on the action."
-msgstr ""
+msgstr "اولویتی که ابزارک‌ها در آن کنش اجرا می‌شوند."
 
-#: Widgets.php:60
+#: Widgets.php:67
 msgctxt "Setting Title"
 msgid "Name"
 msgstr "نام"
 
-#: Widgets.php:61
+#: Widgets.php:68
 msgctxt "Setting Description"
 msgid "The name or title of the sidebar displayed in the Widgets interface."
-msgstr ""
+msgstr "نام یا عنوان ستون‌کناری که در رابط کاربری ابزارک‌ها نمایش داده می‌شود."
 
-#: Widgets.php:66
+#: Widgets.php:73
 msgctxt "Setting Title"
 msgid "Before Widget"
 msgstr "پیش از ابزارک"
 
-#: Widgets.php:67
+#: Widgets.php:74
 msgctxt "Setting Description"
 msgid "HTML opening before each widget markup on front-end."
 msgstr ""
 
-#: Widgets.php:74
+#: Widgets.php:81
 msgctxt "Setting Title"
 msgid "After Widget"
 msgstr "پس از ابزارک"
 
-#: Widgets.php:75
+#: Widgets.php:82
 msgctxt "Setting Description"
 msgid "HTML closing after each widget markup on front-end."
 msgstr ""
 
-#: Widgets.php:82
+#: Widgets.php:89
 msgctxt "Setting Title"
 msgid "Before Title"
 msgstr "پیش از عنوان"
 
-#: Widgets.php:83
+#: Widgets.php:90
 msgctxt "Setting Description"
 msgid "HTML opening before each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:90
+#: Widgets.php:97
 msgctxt "Setting Title"
 msgid "After Title"
 msgstr "پس از عنوان"
 
-#: Widgets.php:91
+#: Widgets.php:98
 msgctxt "Setting Description"
 msgid "HTML closing after each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:153
+#: Widgets.php:163
 msgctxt "Widget Area Unnamed"
 msgid "[Unnamed]"
 msgstr "(بی‌نام)"
 
 #. translators: %s: widget area name
-#: Widgets.php:162
+#: Widgets.php:172
 msgctxt "Widget Area Prefix"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
@@ -229,7 +239,7 @@ msgstr "فقط مشابهت با نام"
 #: Widgets/NamesakeTerms.php:106 Widgets/SearchTerms.php:104
 msgctxt "Widget: Setting"
 msgid "Exclude Default Terms"
-msgstr "استنثنای رده‌های پیش‌فرض"
+msgstr "استثنای رده‌های پیش‌فرض"
 
 #: Widgets/NamesakeTerms.php:107 Widgets/SearchTerms.php:105
 msgctxt "Widget: Setting"
@@ -251,46 +261,15 @@ msgctxt "Widget Description"
 msgid "Displays the assigned terms of the current post."
 msgstr "فهرست رده‌ها را بر اساس نوشته کنونی نمایش می‌دهد."
 
-#: Widgets/ProfileSummary.php:19
+#: Widgets/ProfileSummary.php:20
 msgctxt "Widget Title"
 msgid "Editorial: Profile Summary"
 msgstr "تحریریه: گزارش نمایه"
 
-#: Widgets/ProfileSummary.php:20
+#: Widgets/ProfileSummary.php:21
 msgctxt "Widget Description"
 msgid "Displays arbitrary profile info for current logged-in user."
 msgstr "اطلاعات نمایه کاربر واردشده فعلی را نمایش می‌دهد."
-
-#: Widgets/ProfileSummary.php:39
-msgctxt "Widget: Profile Summary: Row Icon Title"
-msgid "Name"
-msgstr "نام"
-
-#: Widgets/ProfileSummary.php:46
-msgctxt "Widget: Profile Summary: Row Icon Title"
-msgid "Email"
-msgstr "ایمیل"
-
-#: Widgets/ProfileSummary.php:53
-msgctxt "Widget: Profile Summary: Row Icon Title"
-msgid "URL"
-msgstr "نشانی"
-
-#: Widgets/ProfileSummary.php:72
-msgctxt "Widget: Profile Summary: Row Icon Title"
-msgid "Registered"
-msgstr "نام‌نویسی"
-
-#. translators: %s: date
-#: Widgets/ProfileSummary.php:74
-msgctxt "Widget: Profile Summary: Row"
-msgid "Registered on %s"
-msgstr "نام‌نویسی در %s"
-
-#: Widgets/ProfileSummary.php:80
-msgctxt "Widget: Profile Summary: Row Icon Title"
-msgid "Roles"
-msgstr "نقش‌ها"
 
 #: Widgets/SearchTerms.php:18
 msgctxt "Widget Title"
@@ -382,6 +361,30 @@ msgstr "شناسه نوشته:"
 msgctxt "Widget: WP-REST Single"
 msgid "No post!"
 msgstr "چیزی اشتباه است!"
+
+#~ msgctxt "Widget: Profile Summary: Row Icon Title"
+#~ msgid "Name"
+#~ msgstr "نام"
+
+#~ msgctxt "Widget: Profile Summary: Row Icon Title"
+#~ msgid "Email"
+#~ msgstr "ایمیل"
+
+#~ msgctxt "Widget: Profile Summary: Row Icon Title"
+#~ msgid "URL"
+#~ msgstr "نشانی"
+
+#~ msgctxt "Widget: Profile Summary: Row Icon Title"
+#~ msgid "Registered"
+#~ msgstr "نام‌نویسی"
+
+#~ msgctxt "Widget: Profile Summary: Row"
+#~ msgid "Registered on %s"
+#~ msgstr "نام‌نویسی در %s"
+
+#~ msgctxt "Widget: Profile Summary: Row Icon Title"
+#~ msgid "Roles"
+#~ msgstr "نقش‌ها"
 
 #~ msgctxt "Widget: WP-REST Single: Row Icon Title"
 #~ msgid "Name"

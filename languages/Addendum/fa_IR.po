@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Addendum\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-29 22:28+0330\n"
+"PO-Revision-Date: 2023-11-05 15:55+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,117 +11,117 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Addendum\n"
 "X-Domain: geditorial-addendum\n"
 
-#: Addendum.php:50
+#: Addendum.php:51
 msgctxt "Settings"
 msgid "Appendage Necessities"
 msgstr "ضروریات ضمیمه"
 
-#: Addendum.php:51
+#: Addendum.php:52
 msgctxt "Settings"
 msgid "Substitute taxonomy for the appendages and supported post-types."
 msgstr ""
 
-#: Addendum.php:70
+#: Addendum.php:71
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Addendum.php:71
+#: Addendum.php:72
 msgctxt "Settings"
 msgid "Redirects appendage archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Addendum.php:116 Addendum.php:117
+#: Addendum.php:117 Addendum.php:118
 msgid "Appendage"
 msgid_plural "Appendages"
 msgstr[0] "ضمائم"
 msgstr[1] "ضمیمه"
 
-#: Addendum.php:118
+#: Addendum.php:119
 msgid "Appendage Category"
 msgid_plural "Appendage Categories"
 msgstr[0] "دسته‌های ضمیمه"
 msgstr[1] "دسته ضمیمه"
 
-#: Addendum.php:119
+#: Addendum.php:120
 msgid "Appendage Necessity"
 msgid_plural "Appendage Necessities"
 msgstr[0] "ضروریات ضمیمه"
 msgstr[1] "ضروری ضمیمه"
 
-#: Addendum.php:120
+#: Addendum.php:121
 msgid "Appendage Type"
 msgid_plural "Appendage Types"
 msgstr[0] "انواع ضمیمه"
 msgstr[1] "نوع ضمیمه"
 
-#: Addendum.php:121
+#: Addendum.php:122
 msgid "Appendage Status"
 msgid_plural "Appendage Statuses"
 msgstr[0] "وضعیت‌های ضمیمه"
 msgstr[1] "وضعیت ضمیمه"
 
-#: Addendum.php:125
+#: Addendum.php:126
 msgctxt "Label: Featured Image"
 msgid "Appendage Cover"
 msgstr "کاور ضمیمه"
 
-#: Addendum.php:126
+#: Addendum.php:127
 msgctxt "Label: MetaBox Title"
 msgid "The Appendage"
 msgstr "این ضمیمه"
 
-#: Addendum.php:129
+#: Addendum.php:130
 msgctxt "Label: MetaBox Title"
 msgid "To This Appendage"
 msgstr "به این ضمیمه"
 
-#: Addendum.php:132
+#: Addendum.php:133
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Addendum.php:135
+#: Addendum.php:136
 msgctxt "Label: Menu Name"
 msgid "Necessities"
 msgstr "ضروریات"
 
-#: Addendum.php:138
+#: Addendum.php:139
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Addendum.php:141
+#: Addendum.php:142
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: Addendum.php:150
+#: Addendum.php:151
 msgctxt "Misc: `column_icon_title`"
 msgid "Appendage"
 msgstr "ضمیمه"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Addendum.php:155
+#: Addendum.php:156
 msgctxt "Metabox: `listbox_title`"
-msgid "%2$s Appendages of &ldquo;%1$s&rdquo;"
-msgstr ""
+msgid "Posts with &ldquo;%1$s&rdquo; %2$s"
+msgstr "فرسته‌های همراه با %2$s &rdquo;%1$s&ldquo;"
 
-#: Addendum.php:160
+#: Addendum.php:161
 msgctxt "Necessity Taxonomy: Default Term"
 msgid "Required"
 msgstr "ضروری"
 
-#: Addendum.php:161
+#: Addendum.php:162
 msgctxt "Necessity Taxonomy: Default Term"
 msgid "Mandatory"
 msgstr "اجباری"
 
-#: Addendum.php:432
+#: Addendum.php:457
 msgctxt "Header"
 msgid "Appendages Tools"
 msgstr "ابزارهای ضمائم"
