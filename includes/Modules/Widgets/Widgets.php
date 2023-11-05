@@ -27,6 +27,13 @@ class Widgets extends gEditorial\Module
 		return [
 			'_general' => [
 				[
+					'field'       => 'manage_roles',
+					'type'        => 'checkboxes',
+					'title'       => _x( 'Theme Options', 'Setting Title', 'geditorial-widgets' ),
+					'description' => _x( 'Enables &ldquo;Edit Theme Options&rdquo; capability for selected roles.', 'Setting Description', 'geditorial-widgets' ),
+					'values'      => $this->get_settings_default_roles( 'contributor' ),
+				],
+				[
 					'field'  => 'widgets',
 					'title'  => _x( 'Widgets', 'Setting Title', 'geditorial-widgets' ),
 					'type'   => 'checkboxes',
@@ -126,6 +133,9 @@ class Widgets extends gEditorial\Module
 
 	public function widgets_init()
 	{
+		if ( count( $this->get_setting( 'manage_roles', [] ) ) )
+			$this->filter( 'map_meta_cap', 4 );
+
 		$this->_register_widgets();
 		$this->_register_areas();
 	}
@@ -160,5 +170,21 @@ class Widgets extends gEditorial\Module
 				'name' => sprintf( _x( 'Editorial: %s', 'Widget Area Prefix', 'geditorial-widgets' ), $name ),
 			] ) );
 		}
+	}
+
+	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	{
+		switch ( $cap ) {
+
+			case 'edit_theme_options':
+
+				return $this->role_can( 'manage', $user_id )
+					? [ 'read' ]
+					: [ 'do_not_allow' ];
+
+				break;
+		}
+
+		return $caps;
 	}
 }
