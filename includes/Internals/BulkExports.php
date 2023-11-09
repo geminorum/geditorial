@@ -78,9 +78,21 @@ trait BulkExports
 		$context   = self::req( 'context', 'default' );
 
 		if ( FALSE !== ( $data = $this->exports_get_export_data( $reference, $target, $type, $context ) ) )
-			Core\Text::download( $data, Core\File::prepName( sprintf( '%s-%s.csv', $context, $type ) ) );
+			Core\Text::download( $data, Core\File::prepName( $this->exports_get_export_filename( $reference, $target, $type, $context ).'.csv' ) );
 
 		Core\WordPress::redirectReferer( 'wrong' );
+	}
+
+	protected function exports_get_export_filename( $reference, $target, $type, $context )
+	{
+		if ( ! $post = WordPress\Post::get( $reference ) )
+			return sprintf( '%s-%s', $context, $type );
+
+		return vsprintf( '%s-%s-%s', [
+			$post->post_name ?: $post->post_title,
+			$context,
+			$type,
+		] );
 	}
 
 	protected function exports_prep_posts_for_csv_export( $posts, $props, $fields = [], $metas = [] )
