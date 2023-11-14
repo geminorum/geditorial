@@ -221,6 +221,7 @@ class WasBorn extends gEditorial\Module
 		$this->filter_self( 'mean_age', 4 );
 		$this->action_module( 'pointers', 'post', 5, 100 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
+		$this->filter_module( 'tabloid', 'view_data', 3, 9 );
 	}
 
 	public function current_screen( $screen )
@@ -965,6 +966,19 @@ class WasBorn extends gEditorial\Module
 		}
 
 		return $terms;
+	}
+
+	public function tabloid_view_data( $data, $post, $context )
+	{
+		if ( ! $this->in_setting( $post->post_type, 'parent_posttypes' ) || empty( $data['terms_rendered'] ) )
+			return $data;
+
+		// NOTE: needs to be non-associative array to render via Mustache
+		$data['terms_rendered'] = array_values( Core\Arraay::filter( $data['terms_rendered'], [
+			'name' => $this->constant( 'gender_taxonomy' ),
+		], 'NOT' ) );
+
+		return $data;
 	}
 
 	public function imports_settings( $sub )
