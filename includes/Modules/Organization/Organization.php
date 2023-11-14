@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -430,7 +431,7 @@ class Organization extends gEditorial\Module
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'organization_code' );
+			return Services\PostTypeFields::getPostMetaKey( 'organization_code' );
 
 		return $default;
 	}
@@ -446,7 +447,7 @@ class Organization extends gEditorial\Module
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'organization_code' );
+			return Services\PostTypeFields::getPostMetaKey( 'organization_code' );
 
 		return $default;
 	}

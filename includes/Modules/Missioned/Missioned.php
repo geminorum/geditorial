@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 
 class Missioned extends gEditorial\Module
 {
@@ -326,7 +327,7 @@ class Missioned extends gEditorial\Module
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'mission_code' );
+			return Services\PostTypeFields::getPostMetaKey( 'mission_code' );
 
 		return $default;
 	}
@@ -342,7 +343,7 @@ class Missioned extends gEditorial\Module
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'mission_code' );
+			return Services\PostTypeFields::getPostMetaKey( 'mission_code' );
 
 		return $default;
 	}

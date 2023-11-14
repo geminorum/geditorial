@@ -11,6 +11,18 @@ class PostTypeFields extends WordPress\Main
 	const BASE = 'geditorial';
 
 	/**
+	 * Retrieves the post meta-key for given field.
+	 *
+	 * @param  string $field_key
+	 * @param  string $module
+	 * @return string $meta_key
+	 */
+	public static function getPostMetaKey( $field_key, $module = 'meta' )
+	{
+		return gEditorial()->module( $module )->get_postmeta_key( $field_key );
+	}
+
+	/**
 	 * Checks the availability of posttype field for given posttype via certain module.
 	 * OLD: `Helper::isPostTypeFieldAvailable()`
 	 *

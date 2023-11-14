@@ -370,7 +370,7 @@ class Trained extends gEditorial\Module
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'training_code' );
+			return Services\PostTypeFields::getPostMetaKey( 'training_code' );
 
 		return $default;
 	}
@@ -386,7 +386,7 @@ class Trained extends gEditorial\Module
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'training_code' );
+			return Services\PostTypeFields::getPostMetaKey( 'training_code' );
 
 		return $default;
 	}

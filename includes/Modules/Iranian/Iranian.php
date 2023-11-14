@@ -409,7 +409,7 @@ class Iranian extends gEditorial\Module
 			return Info::renderNotSupportedPosttype();
 
 		$identity_metakey    = $this->_get_posttype_identity_metakey( $posttype );
-		$certificate_metakey = gEditorial()->module( 'meta' )->get_postmeta_key( 'birth_certificate_number' );
+		$certificate_metakey = Services\PostTypeFields::getPostMetaKey( 'birth_certificate_number' );
 
 		$query = [
 			'meta_query' => [

@@ -627,7 +627,7 @@ class Persona extends gEditorial\Module
 	public function was_born_default_posttype_dob_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'date_of_birth' );
+			return Services\PostTypeFields::getPostMetaKey( 'date_of_birth' );
 
 		return $default;
 	}
@@ -635,7 +635,7 @@ class Persona extends gEditorial\Module
 	public function iranian_default_posttype_identity_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'identity_number' );
+			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
 	}
@@ -643,7 +643,7 @@ class Persona extends gEditorial\Module
 	public function iranian_default_posttype_location_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'place_of_birth' );
+			return Services\PostTypeFields::getPostMetaKey( 'place_of_birth' );
 
 		return $default;
 	}
@@ -651,7 +651,7 @@ class Persona extends gEditorial\Module
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'identity_number' );
+			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
 	}
@@ -686,7 +686,7 @@ class Persona extends gEditorial\Module
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return gEditorial()->module( 'meta' )->get_postmeta_key( 'identity_number' );
+			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
 	}
