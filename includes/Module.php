@@ -3009,8 +3009,10 @@ class Module extends WordPress\Module
 	}
 
 	// TODO: move to `Internals\PairedCore`
+	// must be public
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
+		$admin  = is_admin();
 		$posts  = $parents = [];
 		$terms  = WordPress\Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
 		$forced = $this->get_setting( 'paired_force_parents', FALSE );
@@ -3033,7 +3035,7 @@ class Module extends WordPress\Module
 			if ( is_null( $published ) )
 				$posts[$term->term_id] = $to_post_id;
 
-			else if ( $published && ! $this->is_post_viewable( $to_post_id ) )
+			else if ( $published && $admin && ! $this->is_post_viewable( $to_post_id ) )
 				continue;
 
 			else

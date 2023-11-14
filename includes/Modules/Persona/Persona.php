@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Persona extends gEditorial\Module
@@ -265,23 +266,27 @@ class Persona extends gEditorial\Module
 					'posttype'    => $primary,
 					'order'       => 15,
 				],
+				// TODO: move to `ContactCards`
 				'mobile_number' => [
 					'description' => _x( 'Primary Mobile Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
 					'type'        => 'mobile',
 					'quickedit'   => TRUE,
 					'order'       => 21,
 				],
+				// TODO: move to `ContactCards`
 				'mobile_secondary' => [
 					'title'       => _x( 'Secondary Mobile', 'Field Title', 'geditorial-persona' ),
 					'description' => _x( 'Secondary Mobile Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
 					'type'        => 'mobile',
 					'order'       => 21,
 				],
+				// TODO: move to `ContactCards`
 				'phone_number'  => [
 					'description' => _x( 'Primary Phone Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
 					'type'        => 'phone',
 					'order'       => 22,
 				],
+				// TODO: move to `ContactCards`
 				'phone_secondary'  => [
 					'title'       => _x( 'Secondary Phone', 'Field Title', 'geditorial-persona' ),
 					'description' => _x( 'Secondary Phone Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
@@ -321,11 +326,13 @@ class Persona extends gEditorial\Module
 				'postal_code' => [
 					'type' => 'postcode',
 				],
+				// TODO: move to `ContactCards`
 				'home_address' => [
 					'title'       => _x( 'Home Address', 'Field Title', 'geditorial-persona' ),
 					'description' => _x( 'Full home address, including city, state etc.', 'Field Description', 'geditorial-persona' ),
 					'type'        => 'address',
 				],
+				// TODO: move to `ContactCards`
 				'work_address' => [
 					'title'       => _x( 'Work Address', 'Field Title', 'geditorial-persona' ),
 					'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-persona' ),
@@ -784,7 +791,7 @@ class Persona extends gEditorial\Module
 		if ( is_null( $names ) )
 			$names = $this->_get_human_names( $post );
 
-		return ModuleHelper::makeFullname( $names, $fallback );
+		return $this->filters( 'make_human_title', ModuleHelper::makeFullname( $names, $fallback ), $post, $names, $fallback, $checks );
 	}
 
 	private function _get_human_names( $post = NULL, $checks = FALSE )
@@ -839,7 +846,7 @@ class Persona extends gEditorial\Module
 			return $discovered;
 
 		$search = WordPress\Post::getByTitle(
-			$row[$key],   // FIXME: sanaitze!
+			Core\Text::trim( $row[$key] ),   // FIXME: sanaitze!
 			$this->constant( 'primary_posttype' ),
 			'ids',
 			[ 'publish', 'future', 'draft', 'pending' ]

@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 class LateChores extends WordPress\Main
@@ -40,7 +41,7 @@ class LateChores extends WordPress\Main
 
 		add_action( 'shutdown',
 			function () {
-				LateChores::termCountSchedule();
+				self::termCountSchedule();
 			} );
 
 		$hooked = TRUE;

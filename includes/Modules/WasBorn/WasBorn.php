@@ -1012,7 +1012,7 @@ class WasBorn extends gEditorial\Module
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 		Core\HTML::h2( _x( 'Post-Date by Birthday', 'Imports: Card Title', 'geditorial-was-born' ), 'title' );
 
-		echo $this->wrap_open( '-wrap-button-row -sync_paired_terms' );
+		echo $this->wrap_open( '-wrap-button-row' );
 
 		$all = $this->get_settings_posttypes_parents();
 

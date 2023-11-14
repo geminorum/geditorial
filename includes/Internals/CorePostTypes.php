@@ -245,13 +245,19 @@ trait CorePostTypes
 				return $object->name === $posttype ? FALSE : $is_viewable;
 			}, 2, 9 );
 
-		// add_filter( $this->hook_base( 'meta', 'access_posttype_field' ),
-		// 	function ( $access, $field, $post, $context, $user_id ) use ( $posttype ) {
-		// 		return $post->post_type === $posttype ? TRUE : $access;
-		// 	}, 12, 5 );
+		add_filter( $this->hook_base( 'meta', 'access_posttype_field' ),
+			function ( $access, $field, $post, $context, $user_id ) use ( $posttype ) {
+				return $post->post_type === $posttype ? TRUE : $access;
+			}, 12, 5 );
 
 		// NOTE: makes Tabloid links visible for non-viewable post-types
 		add_filter( $this->hook_base( 'tabloid', 'is_post_viewable' ),
+			function ( $viewable, $post ) use ( $posttype ) {
+				return $post->post_type === $posttype ? TRUE : $viewable;
+			}, 12, 2 );
+
+		// makes available on current module
+		add_filter( $this->hook_base( $this->key, 'is_post_viewable' ),
 			function ( $viewable, $post ) use ( $posttype ) {
 				return $post->post_type === $posttype ? TRUE : $viewable;
 			}, 12, 2 );

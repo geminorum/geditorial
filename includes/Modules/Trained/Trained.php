@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
@@ -156,6 +157,7 @@ class Trained extends gEditorial\Module
 			'status_taxonomy' => [
 				// TODO: finish the list
 				'planned' => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
+				'held'    => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
 			],
 		];
 

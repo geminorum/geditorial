@@ -235,6 +235,7 @@ trait BulkExports
 					$keys = [
 						'first_name',
 						'last_name',
+						'fullname',
 						'identity_number',
 					];
 
@@ -248,6 +249,7 @@ trait BulkExports
 					$keys = [
 						'first_name',
 						'last_name',
+						'fullname',
 						'father_name',
 						'identity_number',
 						'mobile_number',

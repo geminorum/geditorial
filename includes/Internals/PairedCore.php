@@ -23,7 +23,7 @@ trait PairedCore
 
 	// wraps `paired_get_paired_constants()` with checks
 	// NOTE: not checking for `$this->_paired` for maybe before `init`
-	protected function paired_get_constants()
+	public function paired_get_constants()
 	{
 		if ( ! method_exists( $this, 'paired_get_paired_constants' ) )
 			return FALSE;
@@ -42,6 +42,8 @@ trait PairedCore
 		return $constants;
 	}
 
+	// TODO: get constants from `paired_get_constants()`
+	// TODO: make `hierarchical` optional
 	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
 	{
 		if ( is_null( $supported ) )

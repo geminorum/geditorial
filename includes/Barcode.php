@@ -8,6 +8,8 @@ use geminorum\gEditorial\WordPress;
 class Barcode extends WordPress\Main
 {
 
+	// FIXME: migrate to services
+
 	const BASE = 'geditorial';
 
 	// QRCode
