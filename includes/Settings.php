@@ -870,6 +870,16 @@ class Settings extends Core\Base
 		];
 	}
 
+	public static function getSetting_override_dates( $description = NULL, $default = 1 )
+	{
+		return [
+			'field'        => 'override_dates',
+			'title'        => _x( 'Override Dates', 'Settings: Setting Title', 'geditorial' ),
+			'description'  => $description ?: _x( 'Tries to override post-date with provided date data on supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+			'default'     => $default,
+		];
+	}
+
 	public static function getSetting_calendar_type( $description = NULL )
 	{
 		return [

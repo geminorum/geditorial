@@ -65,12 +65,7 @@ class WasBorn extends gEditorial\Module
 		}
 
 		$settings['_defaults'] = [
-			[
-				'field'       => 'override_with_dob',
-				'title'       => _x( 'Override Dates', 'Setting Title', 'geditorial-was-born' ),
-				'description' => _x( 'Tries to override post-date with provided date-of-birth on supported post-types.', 'Setting Description', 'geditorial-was-born' ),
-				'default'     => 1,
-			],
+			'override_dates' => [ _x( 'Tries to override post-date with provided date-of-birth on supported post-types.', 'Setting Description', 'geditorial-was-born' ), ],
 			'calendar_type',
 			'calendar_list',
 			[
@@ -218,7 +213,7 @@ class WasBorn extends gEditorial\Module
 			'show_in_menu' => FALSE,
 		], FALSE, TRUE );
 
-		if ( $this->get_setting( 'override_with_dob', TRUE ) )
+		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $posttypes );
 
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
@@ -991,7 +986,11 @@ class WasBorn extends gEditorial\Module
 		if ( ! count( $posttypes ) )
 			return Info::renderNoImportsAvailable();
 
-		$this->_render_imports_card_sync_post_dates( $posttypes );
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->_render_imports_card_sync_post_dates( $posttypes );
+
+		else
+			return Info::renderNoImportsAvailable();
 	}
 
 	private function _render_imports_card_sync_post_dates( $posttypes = NULL )
