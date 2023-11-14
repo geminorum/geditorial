@@ -341,9 +341,17 @@ trait PostTypeFields
 				break;
 
 			case 'date':
+
 				$sanitized = Core\Number::intval( trim( $data ), FALSE );
-				$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, $sanitized );
-				break;
+
+				// avoid accepting year only
+				if ( strlen( $sanitized ) > 4 )
+					$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, $sanitized );
+
+				else
+					$sanitized = FALSE;
+
+					break;
 
 			case 'time':
 				$sanitized = Core\Number::intval( trim( $data ), FALSE );
