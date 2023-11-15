@@ -396,7 +396,7 @@ class Importer extends gEditorial\Module
 
 					if ( FALSE !== ( $title_key = array_search( 'importer_post_title', $args['extra']['mapped'] ) ) ) {
 						$title = $this->filters( 'prepare',
-							$row[$title_key],
+							Core\Text::trim( $row[$title_key] ),
 							$args['extra']['post_type'],
 							'importer_post_title',
 							$title_key,
@@ -486,7 +486,7 @@ class Importer extends gEditorial\Module
 	public function form_posts_table_callback( $value, $row, $column, $index, $key, $args )
 	{
 		$filtered = $this->filters( 'prepare',
-			$value,
+			Core\Text::trim( $value ),
 			$args['extra']['post_type'],
 			$args['extra']['mapped'][$key],
 			$key,
@@ -632,7 +632,7 @@ class Importer extends gEditorial\Module
 								continue;
 
 							$value = $this->filters( 'prepare',
-								$row[$offsetkey],
+								Core\Text::trim( $row[$offsetkey] ),
 								$posttype,
 								$field,
 								$headers[$offsetkey],
@@ -661,35 +661,35 @@ class Importer extends gEditorial\Module
 								case 'importer_custom_meta':
 
 									if ( $custom_metakey = $this->filters( 'custom_metakey', $headers[$offsetkey], $posttype, $field, $raw, $all_taxonomies ) )
-										$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = $value;
+										$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = Core\Text::normalizeWhitespace( $value );
 
 									continue 2;
 
 								case 'importer_menu_order':
 
 									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->menu_order ) )
-										$data['menu_order'] = $prepared[$field] = $value;
+										$data['menu_order'] = $prepared[$field] = Core\Number::intval( trim( $value ), FALSE );
 
 									continue 2;
 
 								case 'importer_post_title':
 
 									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_title ) )
-										$data['post_title'] = $prepared[$field] = $value;
+										$data['post_title'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value );
 
 									continue 2;
 
 								case 'importer_post_content':
 
 									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_content ) )
-										$data['post_content'] = $prepared[$field] = $value;
+										$data['post_content'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
 
 									continue 2;
 
 								case 'importer_post_excerpt':
 
 									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_excerpt ) )
-										$data['post_excerpt'] = $prepared[$field] = $value;
+										$data['post_excerpt'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
 
 									continue 2;
 
