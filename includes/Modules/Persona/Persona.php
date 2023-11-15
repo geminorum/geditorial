@@ -305,6 +305,7 @@ class Persona extends gEditorial\Module
 					'description' => _x( 'Personal Passport Number', 'Field Description', 'geditorial-persona' ),
 					'type'        => 'code',
 					'order'       => 200,
+					'sanitize'    => [ $this, 'sanitize_passport_number' ],
 				],
 				// TODO: move to WasBorn
 				'date_of_birth' => [
@@ -856,5 +857,13 @@ class Persona extends gEditorial\Module
 			return reset( $search );
 
 		return $discovered;
+	}
+
+	public function sanitize_passport_number( $data, $field, $post )
+	{
+		$sanitized = Core\Number::intval( trim( $data ), FALSE );
+		$sanitized = Core\Text::stripAllSpaces( strtoupper( $sanitized ) );
+
+		return $sanitized ?: '';
 	}
 }
