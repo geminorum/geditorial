@@ -156,7 +156,10 @@ trait PostTypeFields
 				'icon'        => 'smiley',
 				'context'     => 'mainbox', // OLD: 'main'
 				'quickedit'   => FALSE,
-				'import'      => TRUE, // FALSE to hide on imports
+
+				'import'         => TRUE,    // FALSE to hide on imports
+				'import_ignored' => FALSE,   // TRUE to make duplicate one taht will ignored on import
+
 				'values'      => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
 				'none_title'  => $this->get_string( $field, $posttype, 'none', $this->get_string( $args['type'], $posttype, 'none', NULL ) ),
 				'none_value'  => '',

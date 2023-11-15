@@ -1591,11 +1591,20 @@ class Meta extends gEditorial\Module
 	{
 		/* translators: %s: field title */
 		$template = _x( 'Meta: %s', 'Import Field', 'geditorial-meta' );
+		/* translators: %s: field title */
+		$ignored  = _x( 'Ignored: %s', 'Import Field', 'geditorial-meta' );
 		$fields   = [];
 
-		foreach ( $this->get_posttype_fields( $posttype, [ 'import' => TRUE ] ) as $field => $args )
-			if ( ! in_array( $args['type'], [ 'term' ] ) )
-				$fields['meta__'.$field] = $object ? $args : sprintf( $template, $args['title'] );
+		foreach ( $this->get_posttype_fields( $posttype, [ 'import' => TRUE ] ) as $field => $args ) {
+
+			if ( in_array( $args['type'], [ 'term' ] ) )
+				continue;
+
+			$fields['meta__'.$field] = $object ? $args : sprintf( $template, $args['title'] );
+
+			if ( ! empty( $args['import_ignored'] ) )
+				$fields['meta_ignored__'.$field] = $object ? $args : sprintf( $ignored, $args['title'] );
+		}
 
 		return $fields;
 	}
@@ -1628,9 +1637,22 @@ class Meta extends gEditorial\Module
 
 		$fields = $this->get_importer_fields( $post->post_type, TRUE );
 
-		foreach ( $atts['map'] as $offset => $field )
-			if ( array_key_exists( $field, $fields ) )
+		foreach ( $atts['map'] as $offset => $field ) {
+
+			if ( ! array_key_exists( $field, $fields ) )
+				continue;
+
+			if ( Core\Text::starts( $field, 'meta_ignored__' ) ) {
+
+				// saves only if it is a new post
+				if ( empty( $atts['updated'] ) )
+					$this->import_posttype_field( $atts['raw'][$offset], $fields[$field], $post );
+
+			} else {
+
 				$this->import_posttype_field( $atts['raw'][$offset], $fields[$field], $post, $atts['override'] );
+			}
+		}
 	}
 
 	public function pairedimports_import_types( $types, $linked, $posttypes, $module_key )
