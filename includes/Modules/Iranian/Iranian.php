@@ -453,10 +453,31 @@ class Iranian extends gEditorial\Module
 		if ( ! $certificate = get_post_meta( $post->ID, $certificate_metakey, TRUE ) )
 			return FALSE;
 
+		$cleaned = Core\Text::stripNonNumeric( Core\Text::trim( $certificate ) );
+
+		if ( WordPress\Strings::isEmpty( $cleaned ) ) {
+
+			if ( ! delete_post_meta( $post->ID, $certificate_metakey ) )
+				return ( $verbose ? printf( Core\HTML::tag( 'li',
+					/* translators: %s: post title */
+					_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
+					WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+
+			if ( $verbose )
+				echo Core\HTML::tag( 'li',
+					/* translators: %1$s: birth certificate number, %2$s: post title */
+					sprintf( _x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-iranian' ),
+					Core\HTML::code( $certificate ),
+					WordPress\Post::title( $post )
+				) );
+
+			return TRUE;
+		}
+
 		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
 			return FALSE;
 
-		if ( $identity != $certificate )
+		if ( $identity !== Core\Validation::sanitizeIdentityNumber( $cleaned ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %1$s: identity code, %2$s: birth certificate number */
 				_x( 'Identiry (%1$s) and Birth Certificate Number (%2$s) are diffrent', 'Notice', 'geditorial-iranian' ) ),
