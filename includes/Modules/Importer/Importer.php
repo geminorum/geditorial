@@ -696,10 +696,23 @@ class Importer extends gEditorial\Module
 								case 'importer_comment_content':
 
 									// NOTE: comments have no overrides!
-									if ( ! WordPress\Strings::isEmpty( $value ) )
-										$comments[] = [ 'comment_content' => $value ];
+									// TODO: support multiple comment fields
 
-									$prepared[$field] = $value;
+									// skip empty values on comments
+									if ( ! $value ) {
+
+										$prepared[$field] = '';
+
+									} else {
+
+										$prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
+
+										$comments[] = [
+											// prefixes the comment content with column name
+											'comment_content' => sprintf( '[%s]: %s', $headers[$offsetkey], $prepared[$field] ),
+										];
+									}
+
 									continue 2;
 							}
 
