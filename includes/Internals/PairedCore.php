@@ -191,6 +191,7 @@ trait PairedCore
 		if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
 			return;
 
+		$canedit  = WordPress\PostType::can( $this->constant( $constants[0] ), 'edit_posts' );
 		$before   = $before.$this->get_column_icon();
 		$template = $this->get_posttype_label( $constants[0], 'paired_connected_to' );
 
@@ -199,7 +200,7 @@ trait PairedCore
 			if ( ! $item = WordPress\Post::get( $post_id ) )
 				continue;
 
-			echo $before.sprintf( $template, WordPress\Post::fullTitle( $item, TRUE ) ).$after;
+			echo $before.sprintf( $template, WordPress\Post::fullTitle( $item, $canedit ? 'edit' : TRUE ) ).$after;
 		}
 	}
 
