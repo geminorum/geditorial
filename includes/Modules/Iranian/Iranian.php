@@ -507,6 +507,9 @@ class Iranian extends gEditorial\Module
 		if ( empty( $sanitized ) )
 			return '';
 
+		if ( FALSE === $post || ( ! $post = WordPress\Post::get( $post ) ) )
+			return $sanitized;
+
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $sanitized;
 
