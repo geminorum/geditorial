@@ -1194,6 +1194,10 @@ class Meta extends gEditorial\Module
 					$meta );
 
 			case 'iban':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
 				return sprintf( '<span class="-iban %s">%s</span>',
 					Core\Validation::isIBAN( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
 					$meta );
@@ -1214,27 +1218,55 @@ class Meta extends gEditorial\Module
 				return Core\HTML::link( Core\ISBN::prep( $raw, TRUE ), Info::lookupISBN( $raw ), TRUE );
 
 			case 'date':
+
+				if ( 'export' === $context )
+					return Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
+
 				return Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j' : 'Y/m/d' );
 
 			case 'datetime':
+
+				if ( 'export' === $context )
+					return Datetime::prepForInput( trim( $raw ), 'Y/m/d H:i', 'gregorian' );
+
 				return Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j H:i' : 'Y/m/d H:i' );
 
 			case 'datestring':
 				return Core\Number::localize( Datetime::stringFormat( $raw ) );
 
 			case 'embed':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
 				return Template::doEmbedShortCode( trim( $raw ), $post, $context );
 
 			case 'text_source':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
 				return Template::doMediaShortCode( trim( $raw ), 'text', $post, $context );
 
 			case 'audio_source':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
 				return Template::doMediaShortCode( trim( $raw ), 'audio', $post, $context );
 
 			case 'video_source':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
 				return Template::doMediaShortCode( trim( $raw ), 'video', $post, $context );
 
 			case 'image_source':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
 				return Template::doMediaShortCode( trim( $raw ), 'image', $post, $context );
 		}
 

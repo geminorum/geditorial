@@ -208,10 +208,11 @@ class Persona extends gEditorial\Module
 		return [
 			$primary => [
 				'first_name' => [
-					'title'       => _x( 'First Name', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Given Name of the Person', 'Field Description', 'geditorial-persona' ),
-					'quickedit'   => TRUE,
-					'order'       => 10,
+					'title'          => _x( 'First Name', 'Field Title', 'geditorial-persona' ),
+					'description'    => _x( 'Given Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'quickedit'      => TRUE,
+					'import_ignored' => TRUE,
+					'order'          => 10,
 				],
 				'middle_name' => [
 					'title'       => _x( 'Middle Name', 'Field Title', 'geditorial-persona' ),
@@ -219,21 +220,25 @@ class Persona extends gEditorial\Module
 					'order'       => 10,
 				],
 				'last_name' => [
-					'title'       => _x( 'Last Name', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Family Name of the Person', 'Field Description', 'geditorial-persona' ),
-					'quickedit'   => TRUE,
-					'order'       => 10,
+					'title'          => _x( 'Last Name', 'Field Title', 'geditorial-persona' ),
+					'description'    => _x( 'Family Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'quickedit'      => TRUE,
+					'import_ignored' => TRUE,
+					'order'          => 10,
 				],
 				'fullname' => [
-					'title'       => _x( 'Full Name', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Full Name of the Person', 'Field Description', 'geditorial-persona' ),
-					'quickedit'   => TRUE,
-					'order'       => 11,
+					'title'          => _x( 'Full Name', 'Field Title', 'geditorial-persona' ),
+					'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'quickedit'      => TRUE,
+					'import_ignored' => TRUE,
+					'order'          => 11,
 				],
 				'father_name' => [
-					'title'       => _x( 'Father Name', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Name of the Father of the Person', 'Field Description', 'geditorial-persona' ),
-					'order'       => 12,
+					'title'          => _x( 'Father Name', 'Field Title', 'geditorial-persona' ),
+					'description'    => _x( 'Name of the Father of the Person', 'Field Description', 'geditorial-persona' ),
+					'quickedit'      => TRUE,
+					'import_ignored' => TRUE,
+					'order'          => 12,
 				],
 				'father_postid' => [
 					'title'       => _x( 'Father Profile', 'Field Title', 'geditorial-persona' ),
