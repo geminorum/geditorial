@@ -51,7 +51,8 @@ class Tablelist extends WordPress\Main
 		return [ $terms, $pagination ];
 	}
 
-	// TODO: support the parent type
+	// TODO: duolicate to support the parent type: `getAttachments()`
+	// - must alter query to filter the parent posttype
 	public static function getPosts( $atts = [], $extra = [], $posttypes = 'any', $perpage = 25 )
 	{
 		$limit  = self::limit( $perpage );

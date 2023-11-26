@@ -345,7 +345,7 @@ class Config extends gEditorial\Module
 				Settings::submitButton( 'upgrade_old_options',
 					_x( 'Upgrade Old Options', 'Button', 'geditorial-config' ) );
 
-				Core\HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Tools: Message', 'geditorial-config' ), FALSE );
+				Core\HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Message', 'geditorial-config' ), FALSE );
 			echo '</p>';
 
 			if ( WordPress\User::isSuperAdmin() || Core\WordPress::isDev() ) {
@@ -353,13 +353,13 @@ class Config extends gEditorial\Module
 					Settings::submitButton( 'delete_all_options',
 						_x( 'Delete All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );
 
-					Core\HTML::desc( _x( 'Deletes all editorial options on current site', 'Tools: Message', 'geditorial-config' ), FALSE );
+					Core\HTML::desc( _x( 'Deletes all editorial options on current site', 'Message', 'geditorial-config' ), FALSE );
 				echo '</p>';
 			}
 
 		echo '</td></tr></table>';
 
-		Core\HTML::h2( _x( 'Maintenance Tasks', 'Tools: Header', 'geditorial-config' ) );
+		Core\HTML::h2( _x( 'Maintenance Tasks', 'Header', 'geditorial-config' ) );
 
 		echo '<table class="form-table">';
 
@@ -378,7 +378,7 @@ class Config extends gEditorial\Module
 			Settings::submitButton( 'custom_fields_empty',
 				_x( 'Empty', 'Button', 'geditorial-config' ), 'danger', TRUE );
 
-			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Tools: Message', 'geditorial-config' ) );
+			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Message', 'geditorial-config' ) );
 
 		echo '</td></tr>';
 
@@ -388,7 +388,7 @@ class Config extends gEditorial\Module
 
 		if ( empty( $counts ) ) {
 
-			Core\HTML::desc( _x( 'No connection types found.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
+			Core\HTML::desc( _x( 'No connection types found.', 'Message', 'geditorial-config' ), TRUE, '-empty' );
 
 		} else {
 
@@ -420,7 +420,7 @@ class Config extends gEditorial\Module
 			}
 
 			if ( $empty )
-				Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Tools: Message', 'geditorial-config' ), TRUE, '-empty' );
+				Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Message', 'geditorial-config' ), TRUE, '-empty' );
 		}
 
 		echo '</td></tr></table>';

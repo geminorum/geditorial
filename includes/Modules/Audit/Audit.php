@@ -698,7 +698,7 @@ class Audit extends gEditorial\Module
 			Core\HTML::h4( _x( 'Posts with Empty Title', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_title' );
 
-			echo $this->wrap_open( '-wrap-button-row -mark_empty_title' );
+			echo $this->wrap_open( '-wrap-button-row' );
 			echo Core\HTML::dropdown( $this->list_posttypes(), [
 				'name'       => 'posttype-empty-title',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
@@ -717,7 +717,7 @@ class Audit extends gEditorial\Module
 			Core\HTML::h4( _x( 'Posts with Empty Content', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_content' );
 
-			echo $this->wrap_open( '-wrap-button-row -mark_empty_content' );
+			echo $this->wrap_open( '-wrap-button-row' );
 			echo Core\HTML::dropdown( $this->list_posttypes(), [
 				'name'       => 'posttype-empty-content',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
@@ -736,7 +736,7 @@ class Audit extends gEditorial\Module
 			Core\HTML::h4( _x( 'Posts with Empty Excerpt', 'Card Title', 'geditorial-audit' ), 'title' );
 			if ( ! $lite ) $this->_render_tools_empty_fields_summary( 'empty_excerpt' );
 
-			echo $this->wrap_open( '-wrap-button-row -mark_empty_excerpt' );
+			echo $this->wrap_open( '-wrap-button-row' );
 			echo Core\HTML::dropdown( $this->list_posttypes(), [
 				'name'       => 'posttype-empty-excerpt',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
@@ -817,18 +817,17 @@ class Audit extends gEditorial\Module
 	private function _render_tools_force_auto_audit()
 	{
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h2( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ), 'title' );
+		Core\HTML::h4( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ), 'title' );
 
-		echo $this->wrap_open( '-wrap-button-row -force_auto_audit' );
+		echo $this->wrap_open( '-wrap-button-row' );
 
 			foreach ( $this->list_posttypes() as $posttype => $label )
 				Settings::submitButton( add_query_arg( [
 					'action' => 'do_tools_force_auto_audit',
 					'type'   => $posttype,
 				/* translators: %s: posttype label */
-				] ), sprintf( _x( 'Auto Audit for %s', 'Button', 'geditorial-audit' ), $label ), 'link' );
+				] ), sprintf( _x( 'On %s', 'Button', 'geditorial-audit' ), $label ), 'link-small' );
 
-			echo '<br /><br />';
 			Core\HTML::desc( _x( 'Tries to auto-set the attributes on supported posts.', 'Button Description', 'geditorial-audit' ) );
 		echo '</div></div>';
 	}
@@ -872,7 +871,7 @@ class Audit extends gEditorial\Module
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 		Core\HTML::h4( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ), 'title' );
-		echo $this->wrap_open( '-wrap-button-row -mark_empty_excerpt' );
+		echo $this->wrap_open( '-wrap-button-row' );
 
 		$this->do_settings_field( [
 			'type'         => 'user',

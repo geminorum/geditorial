@@ -381,8 +381,6 @@ class Revisions extends gEditorial\Module
 					] );
 				}
 			}
-
-			// $this->register_button( 'cleanup_revisions', _x( 'Cleanup Revisions', 'Button', 'geditorial-revisions' ) );
 		}
 	}
 
@@ -443,8 +441,8 @@ class Revisions extends gEditorial\Module
 		$extra  = [];
 		$limit  = $this->get_sub_limit_option();
 		$order  = self::order( 'asc' );
-		$paged  = self::paged();
-		$offset = ( $paged - 1 ) * $limit;
+		$paged  = self::paged(); // @SEE: `_do_tool_empty_metadata()` on Attachments Module
+		$offset = ( $paged - 1 ) * $limit; // @SEE: `_do_tool_empty_metadata()` on Attachments Module
 
 		if ( $user = self::req( 'author' ) ) {
 			$where.= $wpdb->prepare( "AND post_author = %d", (int) $user );
@@ -453,8 +451,9 @@ class Revisions extends gEditorial\Module
 
 		// $this->posttypes(),
 		// FIXME: must limit to selected posttypes
-		// SEE `_update_post_term_count()` for parent status/posttype checks
+		// @SEE `_update_post_term_count()` for parent status/posttype checks
 		// `WHERE post_type IN ( '".implode( "', '", esc_sql( (array) $posttypes ) )."' )`
+		// @SEE: `_do_tool_empty_metadata()` on Attachments Module
 
 		$ids = $wpdb->get_col( "
 			SELECT DISTINCT post_parent

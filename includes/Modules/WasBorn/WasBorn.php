@@ -988,10 +988,7 @@ class WasBorn extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Birthday Tools', 'Imports: Header', 'geditorial-was-born' ) );
-
-		if ( $this->_do_import_date_from_dob( $sub ) )
-			return;
+		Core\HTML::h3( _x( 'Birthday Tools', 'Header', 'geditorial-was-born' ) );
 
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 
@@ -1008,7 +1005,7 @@ class WasBorn extends gEditorial\Module
 	private function _render_imports_card_sync_post_dates( $posttypes = NULL )
 	{
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h2( _x( 'Post-Date by Birthday', 'Imports: Card Title', 'geditorial-was-born' ), 'title' );
+		Core\HTML::h4( _x( 'Post-Date by Birthday', 'Card Title', 'geditorial-was-born' ), 'title' );
 
 		echo $this->wrap_open( '-wrap-button-row' );
 
@@ -1020,13 +1017,16 @@ class WasBorn extends gEditorial\Module
 				'action' => 'do_import_date_from_dob',
 				'type'   => $posttype,
 			/* translators: %s: posttype label */
-			] ), sprintf( _x( 'Sync Dates for %s', 'Imports: Button', 'geditorial-was-born' ), $all[$posttype] ), 'link' );
+			] ), sprintf( _x( 'On %s', 'Button', 'geditorial-was-born' ), $all[$posttype] ), 'link-small' );
 
-		echo '<br />';
+			Core\HTML::desc( _x( 'Tries to set the post-date based on date of birth data.', 'Button Description', 'geditorial-was-born' ) );
+		echo '</div></div>';
+	}
 
-		Core\HTML::desc( _x( 'Tries to set the post-date based on date of birth data.', 'Imports: Button Description', 'geditorial-was-born' ) );
-		echo '</div>';
-		echo '</div>';
+	protected function render_imports_html_before( $uri, $sub )
+	{
+		if ( $this->_do_import_date_from_dob( $sub ) )
+			return FALSE; // avoid further UI
 	}
 
 	private function _do_import_date_from_dob( $sub )
@@ -1059,11 +1059,12 @@ class WasBorn extends gEditorial\Module
 		if ( empty( $posts ) )
 			return FALSE;
 
-		echo '<ul>';
+		echo Settings::processingListOpen();
+
 		foreach ( $posts as $post )
 			$this->_post_set_postdate_from_dob( $post, $dob_metakey, $taxonomy, TRUE );
 
-		echo '</ul>';
+		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
 			'action' => 'do_import_date_from_dob',

@@ -20,16 +20,16 @@ trait PairedTools
 			return;
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h2( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
+		Core\HTML::h4( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
 
-		echo $this->wrap_open( '-wrap-button-row -sync_paired_terms' );
-		Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Internal: PairedTools: Button', 'geditorial' ) );
-		Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial' ), FALSE );
+		echo $this->wrap_open( '-wrap-button-row' );
+			Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Internal: PairedTools: Button', 'geditorial' ), 'small' );
+			Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial' ), FALSE );
 		echo '</div>';
 
-		echo $this->wrap_open( '-wrap-button-row -create_paired_terms' );
-		Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Internal: PairedTools: Button', 'geditorial' ) );
-		Core\HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial' ), FALSE );
+		echo $this->wrap_open( '-wrap-button-row' );
+			Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Internal: PairedTools: Button', 'geditorial' ), 'small' );
+			Core\HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial' ), FALSE );
 		echo '</div>';
 
 		echo '</div>';
@@ -37,21 +37,19 @@ trait PairedTools
 		if ( $this->get_setting( 'paired_force_parents' ) ) {
 
 			echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-			Core\HTML::h2( _x( 'Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
+			Core\HTML::h4( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
 
-			echo $this->wrap_open( '-wrap-button-row -force_assign_parents' );
+			echo $this->wrap_open( '-wrap-button-row' );
 
-			foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
-				Settings::submitButton( add_query_arg( [
-					'action' => 'force_assign_parents',
-					'type'   => $posttype,
-				/* translators: %s: posttype label */
-				] ), sprintf( _x( 'Force Assign for %s', 'Internal: PairedTools: Button', 'geditorial' ), $label ), 'link' );
+				foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
+					Settings::submitButton( add_query_arg( [
+						'action' => 'force_assign_parents',
+						'type'   => $posttype,
+					/* translators: %s: posttype label */
+					] ), sprintf( _x( 'On %s', 'Internal: PairedTools: Button', 'geditorial' ), $label ), 'link-small' );
 
-			echo '<br /><br />';
-			Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial' ) );
-			echo '</div>';
-			echo '</div>';
+				Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial' ) );
+			echo '</div></div>';
 		}
 	}
 

@@ -209,7 +209,7 @@ class Iranian extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Iranian Imports', 'Imports: Header', 'geditorial-iranian' ) );
+		Core\HTML::h3( _x( 'Iranian Imports', 'Header', 'geditorial-iranian' ) );
 
 		if ( $this->_do_import_location_from_identity( $sub ) )
 			return;
@@ -225,9 +225,9 @@ class Iranian extends gEditorial\Module
 	private function _render_imports_card_sync_locations( $posttypes = NULL )
 	{
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h2( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ), 'title' );
+		Core\HTML::h4( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ), 'title' );
 
-		echo $this->wrap_open( '-wrap-button-row -import_location_from_identity' );
+		echo $this->wrap_open( '-wrap-button-row' );
 
 			$all = $this->get_settings_posttypes_parents();
 
@@ -237,10 +237,9 @@ class Iranian extends gEditorial\Module
 					'action' => 'do_import_location_from_identity',
 					'type'   => $posttype,
 				/* translators: %s: posttype label */
-				] ), sprintf( _x( 'Sync Location for %s', 'Imports: Button', 'geditorial-iranian' ), $all[$posttype] ), 'link' );
+				] ), sprintf( _x( 'On %s', 'Button', 'geditorial-iranian' ), $all[$posttype] ), 'link-small' );
 
-			echo '<br />';
-			Core\HTML::desc( _x( 'Tries to set the location based on identity data.', 'Imports: Button Description', 'geditorial-iranian' ) );
+			Core\HTML::desc( _x( 'Tries to set the location based on identity data.', 'Button Description', 'geditorial-iranian' ) );
 		echo '</div></div>';
 	}
 
@@ -349,7 +348,7 @@ class Iranian extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Iranian Tools', 'Tools: Header', 'geditorial-iranian' ) );
+		Core\HTML::h3( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
 
 		if ( $this->_do_tool_compare_identity_certificate( $sub ) )
 			return;
@@ -375,9 +374,9 @@ class Iranian extends gEditorial\Module
 	private function _render_tools_card_purge_duplicates( $posttypes = NULL )
 	{
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h2( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ), 'title' );
+		Core\HTML::h4( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ), 'title' );
 
-		echo $this->wrap_open( '-wrap-button-row -tool_compare_identity_certificate' );
+		echo $this->wrap_open( '-wrap-button-row' );
 
 			$all = $this->get_settings_posttypes_parents();
 
@@ -387,10 +386,9 @@ class Iranian extends gEditorial\Module
 					'action' => 'do_tool_compare_identity_certificate',
 					'type'   => $posttype,
 				/* translators: %s: posttype label */
-				] ), sprintf( _x( 'Compare Identity for %s', 'Tools: Button', 'geditorial-iranian' ), $all[$posttype] ), 'link' );
+				] ), sprintf( _x( 'Compare Identity for %s', 'Button', 'geditorial-iranian' ), $all[$posttype] ), 'link-small' );
 
-			echo '<br />';
-			Core\HTML::desc( _x( 'Tries to un-set the certificate duplicated from identity data.', 'Tools: Button Description', 'geditorial-iranian' ) );
+			Core\HTML::desc( _x( 'Tries to un-set the certificate duplicated from identity data.', 'Button Description', 'geditorial-iranian' ) );
 		echo '</div></div>';
 	}
 

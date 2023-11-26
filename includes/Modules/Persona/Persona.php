@@ -262,14 +262,14 @@ class Persona extends gEditorial\Module
 				'spouse_name' => [
 					'title'       => _x( 'Spouse Name', 'Field Title', 'geditorial-persona' ),
 					'description' => _x( 'Name of the Spouse of the Person', 'Field Description', 'geditorial-persona' ),
-					'order'       => 14,
+					'order'       => 16,
 				],
 				'spouse_postid' => [
 					'title'       => _x( 'Spouse Profile', 'Field Title', 'geditorial-persona' ),
 					'description' => _x( 'Profile of the Spouse of the Person', 'Field Description', 'geditorial-persona' ),
 					'type'        => 'post',
 					'posttype'    => $primary,
-					'order'       => 15,
+					'order'       => 17,
 				],
 				// TODO: move to `ContactCards`
 				'mobile_number' => [
