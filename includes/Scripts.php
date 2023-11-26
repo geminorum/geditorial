@@ -301,7 +301,7 @@ class Scripts extends WordPress\Main
 	 * @param  string $ver
 	 * @return string $key
 	 */
-	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $ver = '3.11.5"' )
+	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $ver = '3.11.6' )
 	{
 		switch ( strtolower( $barcode ) ) {
 			case    'all':        $filepath = 'all';        break;  // All the barcodes!
