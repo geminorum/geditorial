@@ -1239,14 +1239,17 @@ class Settings extends Core\Base
 		if ( 'primary' == $primary )
 			$primary = TRUE;
 
-		else if ( 'link' == $primary )
+		else if ( 'link' === $primary || 'link-small' === $primary )
 			$link = TRUE;
 
 		if ( TRUE === $primary )
 			$classes[] = 'button-primary';
 
-		else if ( $primary && 'link' != $primary )
+		else if ( $primary && 'link' !== $primary && 'link-small' !== $primary )
 			$classes[] = 'button-'.$primary;
+
+		else if ( 'link-small' === $primary )
+			$classes[] = 'button-small';
 
 		if ( $link )
 			echo Core\HTML::tag( 'a', array_merge( $atts, [
