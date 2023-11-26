@@ -35,6 +35,10 @@ trait LateChores
 		}
 
 		add_action( 'shutdown', function () use ( $action, $collectors ) {
+
+			if ( ! empty( $this->process_disabled['aftercare'] ) )
+				return;
+
 			$this->latechores__schedule_post_aftercare( $action, $collectors );
 		} );
 
@@ -46,6 +50,9 @@ trait LateChores
 
 	public function latechores__collector_post_aftercare( $post_id, $post, $update )
 	{
+		if ( ! empty( $this->process_disabled['aftercare'] ) )
+			return;
+
 		if ( ! in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
 			$this->latechores__collect_post_aftercare( $post_id );
 	}
