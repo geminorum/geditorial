@@ -123,8 +123,7 @@ class Shortcodes extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'reports' ) )
-			$this->add_sub_screen_option( $sub );
+		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
 	protected function render_reports_html( $uri, $sub )

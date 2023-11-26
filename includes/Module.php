@@ -1086,7 +1086,7 @@ class Module extends WordPress\Module
 			} );
 	}
 
-	protected function check_settings( $sub, $context = 'tools', $extra = [], $key = NULL )
+	protected function check_settings( $sub, $context = 'tools', $screen_option = FALSE, $extra = [], $key = NULL )
 	{
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
@@ -1108,6 +1108,9 @@ class Module extends WordPress\Module
 		if ( 'settings' != $context ) {
 
 			$this->register_help_tabs( NULL, $context );
+
+			if ( $screen_option )
+				$this->add_sub_screen_option( $sub, TRUE === $screen_option ? 'per_page' : $screen_option );
 
 			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 		}

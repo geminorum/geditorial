@@ -333,7 +333,7 @@ class Ortho extends gEditorial\Module
 		if ( ! class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
 			return FALSE;
 
-		if ( $this->check_settings( $sub, 'reports' ) ) {
+		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -355,7 +355,6 @@ class Ortho extends gEditorial\Module
 				Core\WordPress::redirectReferer( 'huh' );
 			}
 
-			$this->add_sub_screen_option( $sub );
 			$this->register_button( 'cleanup_chars', _x( 'Cleanup Chars', 'Button', 'geditorial-ortho' ), TRUE );
 		}
 	}

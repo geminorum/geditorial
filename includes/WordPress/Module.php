@@ -411,10 +411,13 @@ class Module extends Core\Base
 	}
 
 	// NOTE: `add_screen_option()` only accept 2 methods: `per_page` and `layout_columns`
-	protected function add_sub_screen_option( $sub = NULL, $option = 'per_page', $default = 25, $label = NULL )
+	protected function add_sub_screen_option( $sub = NULL, $option = 'per_page', $default = NULL, $label = NULL )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->key;
+
+		if ( is_null( $default ) )
+			$default = 'per_page' == $option ? 25 : 2;
 
 		add_screen_option( $option, [
 			'default' => $default,

@@ -503,7 +503,7 @@ class Audit extends gEditorial\Module
 
 	public function tools_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
+		if ( $this->check_settings( $sub, 'tools', 'per_page' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -514,8 +514,6 @@ class Audit extends gEditorial\Module
 
 				Core\WordPress::redirectReferer( 'huh' );
 			}
-
-			$this->add_sub_screen_option( $sub );
 		}
 	}
 

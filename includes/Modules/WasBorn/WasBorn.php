@@ -983,9 +983,7 @@ class WasBorn extends gEditorial\Module
 
 	public function imports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'imports' ) ) {
-			$this->add_sub_screen_option( $sub );
-		}
+		$this->check_settings( $sub, 'imports', 'per_page' );
 	}
 
 	protected function render_imports_html( $uri, $sub )

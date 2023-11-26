@@ -204,9 +204,7 @@ class Iranian extends gEditorial\Module
 
 	public function imports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'imports' ) ) {
-			$this->add_sub_screen_option( $sub );
-		}
+		$this->check_settings( $sub, 'imports', 'per_page' );
 	}
 
 	protected function render_imports_html( $uri, $sub )
@@ -345,9 +343,7 @@ class Iranian extends gEditorial\Module
 
 	public function tools_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
-			$this->add_sub_screen_option( $sub );
-		}
+		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
 	protected function render_tools_html( $uri, $sub )

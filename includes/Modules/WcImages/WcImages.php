@@ -36,7 +36,7 @@ class WcImages extends gEditorial\Module
 
 	public function tools_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
+		if ( $this->check_settings( $sub, 'tools', 'per_page' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 				$this->nonce_check( 'tools', $sub );
@@ -80,7 +80,6 @@ class WcImages extends gEditorial\Module
 			}
 
 			Scripts::enqueueThickBox();
-			$this->add_sub_screen_option( $sub );
 		}
 	}
 

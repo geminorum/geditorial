@@ -304,7 +304,7 @@ class Attachments extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'reports' ) ) {
+		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -352,7 +352,6 @@ class Attachments extends gEditorial\Module
 			}
 
 			Scripts::enqueueThickBox();
-			$this->add_sub_screen_option( $sub );
 		}
 	}
 

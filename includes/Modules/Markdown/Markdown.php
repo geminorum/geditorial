@@ -400,7 +400,7 @@ class Markdown extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'reports' ) ) {
+		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
@@ -457,8 +457,6 @@ class Markdown extends gEditorial\Module
 						] );
 				}
 			}
-
-			$this->add_sub_screen_option( $sub );
 		}
 	}
 
