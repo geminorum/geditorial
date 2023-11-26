@@ -276,11 +276,12 @@ class Iranian extends gEditorial\Module
 		if ( empty( $posts ) )
 			return FALSE;
 
-		echo '<ul>';
+		echo Settings::processingListOpen();
+
 		foreach ( $posts as $post )
 			$this->_post_set_location_from_identity( $post, $identity_metakey, $location_metakey, TRUE );
 
-		echo '</ul>';
+		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
 			'action' => 'do_import_location_from_identity',
@@ -426,11 +427,12 @@ class Iranian extends gEditorial\Module
 		if ( empty( $posts ) )
 			return FALSE;
 
-		echo '<ul>';
+		echo Settings::processingListOpen();
+
 		foreach ( $posts as $post )
 			$this->_post_compare_identity_certificate( $post, $identity_metakey, $certificate_metakey, TRUE );
 
-		echo '</ul>';
+		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
 			'action' => 'do_tool_compare_identity_certificate',

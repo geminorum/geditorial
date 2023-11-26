@@ -779,11 +779,12 @@ class Audit extends gEditorial\Module
 		if ( empty( $posts ) )
 			return FALSE;
 
-		echo '<ul>';
+		echo Settings::processingListOpen();
+
 		foreach ( $posts as $post )
 			$this->_post_force_auto_audit( $post, $taxonomy, TRUE );
 
-		echo '</ul>';
+		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
 			'action' => 'do_tools_force_auto_audit',

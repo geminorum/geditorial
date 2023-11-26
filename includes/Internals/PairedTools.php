@@ -475,12 +475,12 @@ trait PairedTools
 		if ( empty( $posts ) )
 			return FALSE;
 
-		echo '<ul>';
+		echo Settings::processingListOpen();
 
 		foreach ( $posts as $post )
 			$this->paired__do_force_assign_parents( $post, $taxonomy, TRUE );
 
-		echo '</ul>';
+		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
 			'action' => 'force_assign_parents',

@@ -2816,4 +2816,9 @@ class Settings extends Core\Base
 		return '<div class="wp-tab-panel -with-select-all" data-select-all-label="'
 			.esc_attr_x( 'Select All', 'Settings: Tab Panel', 'geditorial' ).'"><ul>';
 	}
+
+	public static function processingListOpen()
+	{
+		return '<div class="'.static::BASE.'-processing-wrap"><ul>';
+	}
 }
