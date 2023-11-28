@@ -401,9 +401,6 @@ class Persona extends gEditorial\Module
 		$this->filter( 'the_title', 2, 8 );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
-		$this->filter_module( 'importer', 'source_id', 3 );
-		$this->filter_module( 'importer', 'matched', 4 );
-		$this->filter_module( 'importer', 'insert', 8 );
 
 		$this->add_posttype_support( $this->constant( 'primary_posttype' ), 'date', FALSE );
 		$this->_hook_posttype_viewable( $this->constant( 'primary_posttype' ), FALSE );
@@ -423,6 +420,13 @@ class Persona extends gEditorial\Module
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 
 		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
+	}
+
+	public function importer_init()
+	{
+		$this->filter_module( 'importer', 'source_id', 3 );
+		$this->filter_module( 'importer', 'matched', 4 );
+		$this->filter_module( 'importer', 'insert', 8 );
 	}
 
 	public function current_screen( $screen )

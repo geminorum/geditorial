@@ -245,10 +245,10 @@ class Organization extends gEditorial\Module
 
 		$this->filter( 'pairedimports_import_types', 4, 20, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
+	}
 
-		if ( ! is_admin() )
-			return;
-
+	public function importer_init()
+	{
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 2 );

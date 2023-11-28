@@ -283,10 +283,10 @@ class Meta extends gEditorial\Module
 
 		$this->init_meta_fields();
 		$this->register_meta_fields();
+	}
 
-		if ( ! is_admin() )
-			return;
-
+	public function importer_init()
+	{
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 2 );

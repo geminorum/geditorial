@@ -497,9 +497,10 @@ class Book extends gEditorial\Module
 		$this->_do_add_custom_queries();
 		$this->action( 'pre_get_posts' );
 
-		if ( ! is_admin() )
-			return;
+	}
 
+	public function importer_init()
+	{
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 2 );

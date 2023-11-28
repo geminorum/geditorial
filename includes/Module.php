@@ -167,6 +167,9 @@ class Module extends WordPress\Module
 		if ( method_exists( $this, 'meta_init' ) )
 			add_action( $this->hook_base( 'meta_init' ), [ $this, 'meta_init' ], 10, 2 );
 
+		if ( method_exists( $this, 'importer_init' ) )
+			add_action( $this->hook_base( 'importer_init' ), [ $this, 'importer_init' ], 10, 2 );
+
 		if ( method_exists( $this, 'elementor_register' ) )
 			add_action( 'elementor/widgets/register', [ $this, 'elementor_register' ], 10, 1 );
 

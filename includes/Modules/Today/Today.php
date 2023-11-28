@@ -151,6 +151,13 @@ class Today extends gEditorial\Module
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
+	public function importer_init()
+	{
+		$this->filter_module( 'importer', 'fields', 2 );
+		$this->filter_module( 'importer', 'prepare', 7 );
+		$this->action_module( 'importer', 'saved', 2 );
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -164,10 +171,6 @@ class Today extends gEditorial\Module
 			return;
 
 		$this->filter( 'the_title', 2, 8 );
-
-		$this->filter_module( 'importer', 'fields', 2 );
-		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 2 );
 	}
 
 	public function template_redirect()
