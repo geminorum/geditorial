@@ -34,8 +34,8 @@ class Book extends gEditorial\Module
 	{
 		return [
 			'name'   => 'book',
-			'title'  => _x( 'Book', 'Modules: Book', 'geditorial' ),
-			'desc'   => _x( 'Online House of Publications', 'Modules: Book', 'geditorial' ),
+			'title'  => _x( 'Book', 'Modules: Book', 'geditorial-admin' ),
+			'desc'   => _x( 'Online House of Publications', 'Modules: Book', 'geditorial-admin' ),
 			'icon'   => 'book-alt',
 			'access' => 'stable',
 		];

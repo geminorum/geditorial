@@ -158,39 +158,39 @@ class Settings extends Core\Base
 	public static function minutesOptions()
 	{
 		return [
-			'5'    => _x( '5 Minutes', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'10'   => _x( '10 Minutes', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'15'   => _x( '15 Minutes', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'30'   => _x( '30 Minutes', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'60'   => _x( '60 Minutes', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'120'  => _x( '2 Hours', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'180'  => _x( '3 Hours', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'240'  => _x( '4 Hours', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'480'  => _x( '8 Hours', 'Settings: Option: Time in Minutes', 'geditorial' ),
-			'1440' => _x( '24 Hours', 'Settings: Option: Time in Minutes', 'geditorial' ),
+			'5'    => _x( '5 Minutes', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'10'   => _x( '10 Minutes', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'15'   => _x( '15 Minutes', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'30'   => _x( '30 Minutes', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'60'   => _x( '60 Minutes', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'120'  => _x( '2 Hours', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'180'  => _x( '3 Hours', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'240'  => _x( '4 Hours', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'480'  => _x( '8 Hours', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
+			'1440' => _x( '24 Hours', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
 		];
 	}
 
 	public static function supportsOptions()
 	{
 		return [
-			'title'           => _x( 'Title', 'Settings: Option: PostType Support', 'geditorial' ),
-			'editor'          => _x( 'Editor', 'Settings: Option: PostType Support', 'geditorial' ),
-			'excerpt'         => _x( 'Excerpt', 'Settings: Option: PostType Support', 'geditorial' ),
-			'author'          => _x( 'Author', 'Settings: Option: PostType Support', 'geditorial' ),
-			'thumbnail'       => _x( 'Thumbnail', 'Settings: Option: PostType Support', 'geditorial' ),
-			'comments'        => _x( 'Comments', 'Settings: Option: PostType Support', 'geditorial' ),
-			'trackbacks'      => _x( 'Trackbacks', 'Settings: Option: PostType Support', 'geditorial' ),
-			'custom-fields'   => _x( 'Custom Fields', 'Settings: Option: PostType Support', 'geditorial' ),
-			'post-formats'    => _x( 'Post Formats', 'Settings: Option: PostType Support', 'geditorial' ),
-			'revisions'       => _x( 'Revisions', 'Settings: Option: PostType Support', 'geditorial' ),
-			'page-attributes' => _x( 'Post Attributes', 'Settings: Option: PostType Support', 'geditorial' ),
-			'amp'             => _x( 'Accelerated Mobile Pages', 'Settings: Option: PostType Support', 'geditorial' ),
-			'date-picker'     => _x( 'Persian Date: Date Picker', 'Settings: Option: PostType Support', 'geditorial' ),
-			'editorial-meta'  => _x( 'Editorial: Meta Fields', 'Settings: Option: PostType Support', 'geditorial' ),
-			'editorial-geo'   => _x( 'Editorial: Geo Data', 'Settings: Option: PostType Support', 'geditorial' ),
-			'editorial-units' => _x( 'Editorial: Measurement Units', 'Settings: Option: PostType Support', 'geditorial' ),
-			'editorial-roles' => _x( 'Editorial: Custom Roles', 'Settings: Option: PostType Support', 'geditorial' ),
+			'title'           => _x( 'Title', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'editor'          => _x( 'Editor', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'excerpt'         => _x( 'Excerpt', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'author'          => _x( 'Author', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'thumbnail'       => _x( 'Thumbnail', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'comments'        => _x( 'Comments', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'trackbacks'      => _x( 'Trackbacks', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'custom-fields'   => _x( 'Custom Fields', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'post-formats'    => _x( 'Post Formats', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'revisions'       => _x( 'Revisions', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'page-attributes' => _x( 'Post Attributes', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'amp'             => _x( 'Accelerated Mobile Pages', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'date-picker'     => _x( 'Persian Date: Date Picker', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'editorial-meta'  => _x( 'Editorial: Meta Fields', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'editorial-geo'   => _x( 'Editorial: Geo Data', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'editorial-units' => _x( 'Editorial: Measurement Units', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'editorial-roles' => _x( 'Editorial: Custom Roles', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 		];
 	}
 
@@ -278,42 +278,42 @@ class Settings extends Core\Base
 	{
 		if ( $string )
 			/* translators: %s: options */
-			return sprintf( _x( '&ndash; Select %s &ndash;', 'Settings: Dropdown Select Option None', 'geditorial' ), $string );
+			return sprintf( _x( '&ndash; Select %s &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' ), $string );
 
-		return _x( '&ndash; Select &ndash;', 'Settings: Dropdown Select Option None', 'geditorial' );
+		return _x( '&ndash; Select &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' );
 	}
 
 	public static function showRadioNone( $string = NULL )
 	{
 		if ( $string )
 			/* translators: %s: options */
-			return sprintf( _x( 'None %s', 'Settings: Radio Select Option None', 'geditorial' ), $string );
+			return sprintf( _x( 'None %s', 'Settings: Radio Select Option None', 'geditorial-admin' ), $string );
 
-		return _x( 'None', 'Settings: Radio Select Option None', 'geditorial' );
+		return _x( 'None', 'Settings: Radio Select Option None', 'geditorial-admin' );
 	}
 
 	public static function showOptionAll( $string = NULL )
 	{
 		if ( $string )
 			/* translators: %s: options */
-			return sprintf( _x( '&ndash; All %s &ndash;', 'Settings: Dropdown Select Option All', 'geditorial' ), $string );
+			return sprintf( _x( '&ndash; All %s &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' ), $string );
 
-		return _x( '&ndash; All &ndash;', 'Settings: Dropdown Select Option All', 'geditorial' );
+		return _x( '&ndash; All &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' );
 	}
 
 	public static function fieldSeparate( $string = 'from' )
 	{
 		switch ( $string ) {
-			case 'count': $string = _x( 'count', 'Settings: Field Separate', 'geditorial' ); break;
-			case 'from' : $string = _x( 'from', 'Settings: Field Separate', 'geditorial' );  break;
-			case 'into' : $string = _x( 'into', 'Settings: Field Separate', 'geditorial' );  break;
-			case 'like' : $string = _x( 'like', 'Settings: Field Separate', 'geditorial' );  break;
-			case 'ex'   : $string = _x( 'ex', 'Settings: Field Separate', 'geditorial' );    break;
-			case 'in'   : $string = _x( 'in', 'Settings: Field Separate', 'geditorial' );    break;
-			case 'to'   : $string = _x( 'to', 'Settings: Field Separate', 'geditorial' );    break;
-			case 'as'   : $string = _x( 'as', 'Settings: Field Separate', 'geditorial' );    break;
-			case 'or'   : $string = _x( 'or', 'Settings: Field Separate', 'geditorial' );    break;
-			case 'on'   : $string = _x( 'on', 'Settings: Field Separate', 'geditorial' );    break;
+			case 'count': $string = _x( 'count', 'Settings: Field Separate', 'geditorial-admin' ); break;
+			case 'from' : $string = _x( 'from', 'Settings: Field Separate', 'geditorial-admin' );  break;
+			case 'into' : $string = _x( 'into', 'Settings: Field Separate', 'geditorial-admin' );  break;
+			case 'like' : $string = _x( 'like', 'Settings: Field Separate', 'geditorial-admin' );  break;
+			case 'ex'   : $string = _x( 'ex', 'Settings: Field Separate', 'geditorial-admin' );    break;
+			case 'in'   : $string = _x( 'in', 'Settings: Field Separate', 'geditorial-admin' );    break;
+			case 'to'   : $string = _x( 'to', 'Settings: Field Separate', 'geditorial-admin' );    break;
+			case 'as'   : $string = _x( 'as', 'Settings: Field Separate', 'geditorial-admin' );    break;
+			case 'or'   : $string = _x( 'or', 'Settings: Field Separate', 'geditorial-admin' );    break;
+			case 'on'   : $string = _x( 'on', 'Settings: Field Separate', 'geditorial-admin' );    break;
 		}
 
 		printf( '<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>', $string );
@@ -337,7 +337,7 @@ class Settings extends Core\Base
 			return '';
 
 		if ( is_null( $title ) )
-			$title = _x( 'See More Information', 'Settings', 'geditorial' );
+			$title = _x( 'See More Information', 'Settings', 'geditorial-admin' );
 
 		$html = Core\HTML::tag( 'a', [
 			'href'   => $url,
@@ -357,8 +357,8 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'thrift_mode',
 			'type'        => 'disabled',
-			'title'       => _x( 'Thrift Mode', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?? _x( 'Tries to be more careful with system resources!', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Thrift Mode', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Tries to be more careful with system resources!', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -366,7 +366,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'editor_button',
-			'title'       => _x( 'Editor Button', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Editor Button', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => '1',
 		];
@@ -376,7 +376,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'quick_newpost',
-			'title'       => _x( 'Quick New Post', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Quick New Post', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => '0',
 		];
@@ -386,7 +386,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'widget_support',
-			'title'       => _x( 'Default Widgets', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Default Widgets', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => '0',
 		];
@@ -396,7 +396,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'shortcode_support',
-			'title'       => _x( 'Default Shortcodes', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Default Shortcodes', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => '0',
 		];
@@ -406,7 +406,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'thumbnail_support',
-			'title'       => _x( 'Default Image Sizes', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Default Image Sizes', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => '0',
 		];
@@ -416,8 +416,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'thumbnail_fallback',
-			'title'       => _x( 'Thumbnail Fallback', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Sets the parent post thumbnail image as fallback for the child post.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Thumbnail Fallback', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Sets the parent post thumbnail image as fallback for the child post.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '0',
 		];
 	}
@@ -426,8 +426,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'legacy_migration',
-			'title'       => _x( 'Legacy Migration', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Imports metadata from legacy plugin system.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Legacy Migration', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Imports metadata from legacy plugin system.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '0',
 		];
 	}
@@ -436,8 +436,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'metabox_advanced',
-			'title'       => _x( 'Advanced Meta-Box', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Select to use advanced meta-box UI on edit post screen.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Advanced Meta-Box', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Select to use advanced meta-box UI on edit post screen.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '0',
 		];
 	}
@@ -446,8 +446,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'assign_default_term',
-			'title'       => _x( 'Assign Default Term', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Applies the fallback default term from primary taxonomy.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Assign Default Term', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Applies the fallback default term from primary taxonomy.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '0',
 		];
 	}
@@ -456,7 +456,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'multiple_instances',
-			'title'       => _x( 'Multiple Instances', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Multiple Instances', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => '0',
 		];
@@ -467,12 +467,12 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'comment_status',
 			'type'        => 'select',
-			'title'       => _x( 'Comment Status', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Determines the default status of the new post comments.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Comment Status', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Determines the default status of the new post comments.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 'closed',
 			'values'      => [
-				'open'   => _x( 'Open', 'Settings: Setting Option', 'geditorial' ),
-				'closed' => _x( 'Closed', 'Settings: Setting Option', 'geditorial' ),
+				'open'   => _x( 'Open', 'Settings: Setting Option', 'geditorial-admin' ),
+				'closed' => _x( 'Closed', 'Settings: Setting Option', 'geditorial-admin' ),
 			],
 		];
 	}
@@ -482,7 +482,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'post_status',
 			'type'        => 'select',
-			'title'       => _x( 'Post Status', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Post Status', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => 'pending',
 			'values'      => Core\Arraay::stripByKeys( WordPress\Status::get(), [
@@ -499,7 +499,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'post_type',
 			'type'        => 'select',
-			'title'       => _x( 'Post Type', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Post Type', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => 'post',
 			'values'      => WordPress\PostType::get( 2 ),
@@ -512,13 +512,13 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'insert_content',
 			'type'        => 'select',
-			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Outputs automatically in the content.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Outputs automatically in the content.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 'none',
 			'values'      => [
-				'none'   => _x( 'No', 'Settings: Setting Option', 'geditorial' ),
-				'before' => _x( 'Before', 'Settings: Setting Option', 'geditorial' ),
-				'after'  => _x( 'After', 'Settings: Setting Option', 'geditorial' ),
+				'none'   => _x( 'No', 'Settings: Setting Option', 'geditorial-admin' ),
+				'before' => _x( 'Before', 'Settings: Setting Option', 'geditorial-admin' ),
+				'after'  => _x( 'After', 'Settings: Setting Option', 'geditorial-admin' ),
 			],
 		];
 	}
@@ -536,7 +536,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'insert_cover',
-			'title'       => _x( 'Insert Cover', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Insert Cover', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 		];
 	}
@@ -547,7 +547,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'insert_priority',
 			'type'        => 'priority',
-			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => '10',
 		];
@@ -558,9 +558,9 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'before_content',
 			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'Before Content', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Before Content', 'Settings: Setting Title', 'geditorial-admin' ),
 			/* translators: %s: code placeholder */
-			'description' => $description ?: sprintf( _x( 'Adds %s before start of all the supported post-types.', 'Settings: Setting Description', 'geditorial' ), '<code>HTML</code>' ),
+			'description' => $description ?: sprintf( _x( 'Adds %s before start of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ), '<code>HTML</code>' ),
 		];
 	}
 
@@ -569,9 +569,9 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'after_content',
 			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'After Content', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'After Content', 'Settings: Setting Title', 'geditorial-admin' ),
 			/* translators: %s: code placeholder */
-			'description' => $description ?: sprintf( _x( 'Adds %s after end of all the supported post-types.', 'Settings: Setting Description', 'geditorial' ), '<code>HTML</code>' ),
+			'description' => $description ?: sprintf( _x( 'Adds %s after end of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ), '<code>HTML</code>' ),
 		];
 	}
 
@@ -579,8 +579,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'admin_ordering',
-			'title'       => _x( 'Ordering', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Enhances item ordering on admin edit pages.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Ordering', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Enhances item ordering on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '1',
 		];
 	}
@@ -589,8 +589,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'admin_restrict',
-			'title'       => _x( 'List Restrictions', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Enhances restrictions on admin edit pages.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'List Restrictions', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Enhances restrictions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -598,8 +598,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'admin_columns',
-			'title'       => _x( 'List Columns', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Enhances columns on admin edit pages.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'List Columns', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Enhances columns on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -607,8 +607,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'admin_bulkactions',
-			'title'       => _x( 'Bulk Actions', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Enhances bulk actions on admin edit pages.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Bulk Actions', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Enhances bulk actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -616,8 +616,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'admin_rowactions',
-			'title'       => _x( 'Row Actions', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Enhances row actions on admin edit pages.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Row Actions', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Enhances row actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -625,8 +625,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'adminbar_summary',
-			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Summary for the current item as a node in admin-bar.', 'Setting: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Summary for the current item as a node in admin-bar.', 'Setting: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -634,8 +634,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'dashboard_widgets',
-			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Enhances admin dashboard with customized widgets.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Enhances admin dashboard with customized widgets.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -643,8 +643,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'dashboard_authors',
-			'title'       => _x( 'Dashboard Authors', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Displays author column on the dashboard widget.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Dashboard Authors', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Displays author column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -652,8 +652,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'dashboard_statuses',
-			'title'       => _x( 'Dashboard Statuses', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Displays status column on the dashboard widget.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Dashboard Statuses', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Displays status column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -662,8 +662,8 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'dashboard_count',
 			'type'        => 'number',
-			'title'       => _x( 'Dashboard Count', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Limits displaying rows of items on the dashboard widget.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Dashboard Count', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Limits displaying rows of items on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 10,
 		];
 	}
@@ -673,13 +673,13 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'summary_scope',
 			'type'        => 'select',
-			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'User scope for the content summary.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'User scope for the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 'all',
 			'values'      => [
-				'all'     => _x( 'All Users', 'Settings: Setting Option', 'geditorial' ),
-				'current' => _x( 'Current User', 'Settings: Setting Option', 'geditorial' ),
-				'roles'   => _x( 'Within the Roles', 'Settings: Setting Option', 'geditorial' ),
+				'all'     => _x( 'All Users', 'Settings: Setting Option', 'geditorial-admin' ),
+				'current' => _x( 'Current User', 'Settings: Setting Option', 'geditorial-admin' ),
+				'roles'   => _x( 'Within the Roles', 'Settings: Setting Option', 'geditorial-admin' ),
 			],
 		];
 	}
@@ -688,8 +688,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'summary_drafts',
-			'title'       => _x( 'Include Drafts', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Include drafted items in the content summary.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Include Drafts', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Include drafted items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -698,9 +698,9 @@ class Settings extends Core\Base
 		return [
 			'field'        => 'summary_excludes',
 			'type'         => 'checkboxes-values',
-			'title'        => _x( 'Summary Excludes', 'Settings: Setting Title', 'geditorial' ),
-			'description'  => $description ?: _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial' ),
-			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial' ),
+			'title'        => _x( 'Summary Excludes', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
 	}
@@ -710,9 +710,9 @@ class Settings extends Core\Base
 		return [
 			'field'        => 'paired_exclude_terms',
 			'type'         => 'checkbox-panel',
-			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial' ),
-			'description'  => $description ?: _x( 'Items with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial' ),
-			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial' ),
+			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Items with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => WordPress\Taxonomy::listTerms( $taxonomy ),
 		];
 	}
@@ -721,8 +721,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'        => 'paired_force_parents',
-			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Includes parents on the supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Includes parents on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -730,8 +730,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'        => 'paired_manage_restricted',
-			'title'       => _x( 'Management Restricted', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Limits creation and deletion of the main posts to administrators.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Management Restricted', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Limits creation and deletion of the main posts to administrators.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -739,8 +739,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'count_not',
-			'title'       => _x( 'Count Not', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Counts not affected items in the content summary.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Count Not', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Counts not affected items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -748,8 +748,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'posttype_feeds',
-			'title'       => _x( 'Feeds', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Supports feeds for the supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Feeds', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Supports feeds for the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -757,8 +757,33 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'posttype_pages',
-			'title'       => _x( 'Pages', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Supports pagination on the supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Pages', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Supports pagination on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+		];
+	}
+
+	public static function getSetting_subcontent_posttypes( $description = NULL, $values = [], $empty = NULL )
+	{
+		return [
+			'field'        => 'subcontent_posttypes',
+			'type'         => 'checkboxes-values',
+			'title'        => _x( 'Supported Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no supported post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+			'values'       => $values,
+		];
+	}
+
+	public static function getSetting_subcontent_fields( $description = NULL, $values = [], $empty = NULL, $default = TRUE )
+	{
+		return [
+			'field'        => 'subcontent_fields',
+			'type'         => 'checkboxes-values',
+			'title'        => _x( 'Supported Fields', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Determines the optional fields for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no supported fields available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+			'values'       => $values,
+			'default'      => $default,
 		];
 	}
 
@@ -767,9 +792,9 @@ class Settings extends Core\Base
 		return [
 			'field'        => 'parent_posttypes',
 			'type'         => 'checkboxes-values',
-			'title'        => _x( 'Parent Post-types', 'Settings: Setting Title', 'geditorial' ),
-			'description'  => $description ?: _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial' ),
-			'string_empty' => $empty ?: _x( 'There are no parents available!', 'Settings: Setting Empty String', 'geditorial' ),
+			'title'        => _x( 'Parent Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no parents available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
 	}
@@ -779,9 +804,9 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'empty_content',
 			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'Empty Content', 'Setting: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Displays as empty content placeholder.', 'Setting: Setting Description', 'geditorial' ),
-			'default'     => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial' ),
+			'title'       => _x( 'Empty Content', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Displays as empty content placeholder.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'default'     => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial-admin' ),
 		];
 	}
 
@@ -789,8 +814,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'archive_override',
-			'title'       => _x( 'Archive Override', 'Setting: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Overrides default template hierarchy for archive.', 'Setting: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Archive Override', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Overrides default template hierarchy for archive.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'default'     => '1',
 		];
 	}
@@ -800,9 +825,9 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'archive_title',
 			'type'        => 'text',
-			'title'       => _x( 'Archive Title', 'Setting: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Archive Title', 'Setting: Setting Title', 'geditorial-admin' ),
 			/* translators: %s: zero placeholder */
-			'description' => $description ?: sprintf( _x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial' ), Core\HTML::code( '0' ) ),
+			'description' => $description ?: sprintf( _x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ), Core\HTML::code( '0' ) ),
 			'placeholder' => $placeholder,
 		];
 	}
@@ -812,9 +837,9 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'archive_content',
 			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'Archive Content', 'Setting: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Archive Content', 'Setting: Setting Title', 'geditorial-admin' ),
 			/* translators: %s: zero placeholder */
-			'description' => $description ?: sprintf( _x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial' ), Core\HTML::code( '0' ) ),
+			'description' => $description ?: sprintf( _x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ), Core\HTML::code( '0' ) ),
 		];
 	}
 
@@ -823,8 +848,8 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'archive_template',
 			'type'        => 'select',
-			'title'       => _x( 'Archive Template', 'Setting: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Archive Template', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'none_title'  => self::showOptionNone(),
 			'values'      => wp_get_theme()->get_page_templates(),
 		];
@@ -834,8 +859,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'display_searchform',
-			'title'       => _x( 'Display Search Form', 'Setting: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Display Search Form', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -844,8 +869,8 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'display_threshold',
 			'type'        => 'number',
-			'title'       => _x( 'Display Threshold', 'Setting: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Maximum number of items to consider as a long list.', 'Setting: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Display Threshold', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Maximum number of items to consider as a long list.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'default'     => '5',
 		];
 	}
@@ -855,8 +880,8 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'display_perpage',
 			'type'        => 'number',
-			'title'       => _x( 'Display Per-Page', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Total rows of items per each page of the list.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Display Per-Page', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Total rows of items per each page of the list.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 15,
 		];
 	}
@@ -865,8 +890,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'posttype_viewable',
-			'title'       => _x( 'Viewable Post-Type', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Determines the visibility of the main post-type.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Viewable Post-Type', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Determines the visibility of the main post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default,
 		];
 	}
@@ -875,8 +900,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'        => 'override_dates',
-			'title'        => _x( 'Override Dates', 'Settings: Setting Title', 'geditorial' ),
-			'description'  => $description ?: _x( 'Tries to override post-date with provided date data on supported post-types.', 'Settings: Setting Description', 'geditorial' ),
+			'title'        => _x( 'Override Dates', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Tries to override post-date with provided date data on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default,
 		];
 	}
@@ -885,7 +910,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'calendar_type',
-			'title'       => _x( 'Default Calendar', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Default Calendar', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'type'        => 'select',
 			'default'     => 'gregorian',
@@ -897,7 +922,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'calendar_list',
-			'title'       => _x( 'Calendar List', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Calendar List', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'type'        => 'checkboxes',
 			'default'     => [ 'gregorian' ],
@@ -909,7 +934,7 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'extra_metadata',
-			'title'       => _x( 'Metadata Support', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Metadata Support', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 		];
 	}
@@ -918,8 +943,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'add_audit_attribute',
-			'title'       => _x( 'Add Audit Attribute', 'Setting Title', 'geditorial' ),
-			'description' => $description ?? _x( 'Appends an audit attribute to each item.', 'Setting Description', 'geditorial' ),
+			'title'       => _x( 'Add Audit Attribute', 'Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Appends an audit attribute to each item.', 'Setting Description', 'geditorial-admin' ),
 			'disabled'    => ! gEditorial()->enabled( $module ),
 		];
 	}
@@ -929,7 +954,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'supported_roles',
 			'type'        => 'checkboxes',
-			'title'       => _x( 'Supported Roles', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Supported Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
@@ -942,7 +967,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'excluded_roles',
 			'type'        => 'checkboxes',
-			'title'       => _x( 'Excluded Roles', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Excluded Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
@@ -955,7 +980,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'adminmenu_roles',
 			'type'        => 'checkboxes',
-			'title'       => _x( 'Admin Menu Roles', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Admin Menu Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
@@ -968,7 +993,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'metabox_roles',
 			'type'        => 'checkboxes',
-			'title'       => _x( 'Meta Box Roles', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Meta Box Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
@@ -981,7 +1006,7 @@ class Settings extends Core\Base
 		return [
 			'field'       => 'adminbar_roles',
 			'type'        => 'checkboxes',
-			'title'       => _x( 'Adminbar Roles', 'Settings: Setting Title', 'geditorial' ),
+			'title'       => _x( 'Adminbar Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
@@ -993,8 +1018,8 @@ class Settings extends Core\Base
 	{
 		return [
 			'field'       => 'printpage_enqueue_librefonts',
-			'title'       => _x( 'Enqueue Libre Fonts', 'Settings: Setting Title', 'geditorial' ),
-			'description' => $description ?: _x( 'Loads Libre Barcode fonts on print page html head.', 'Settings: Setting Description', 'geditorial' ),
+			'title'       => _x( 'Enqueue Libre Fonts', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Loads Libre Barcode fonts on print page html head.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'after'       => self::fieldAfterIcon( 'https://graphicore.github.io/librebarcode/' ),
 		];
 	}
@@ -1049,14 +1074,14 @@ class Settings extends Core\Base
 		$before = $class = '';
 
 		if ( is_null( $title ) )
-			$title = _x( 'Editorial', 'Settings', 'geditorial' );
+			$title = _x( 'Editorial', 'Settings', 'geditorial-admin' );
 
 		// FIXME: get cap from settings module
 		if ( is_null( $back ) && current_user_can( 'manage_options' ) )
 			$back = self::settingsURL();
 
 		if ( is_null( $to ) )
-			$to = _x( 'Back to Editorial', 'Settings', 'geditorial' );
+			$to = _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );
 
 		if ( is_array( $icon ) )
 			$before = gEditorial()->icon( $icon[1], $icon[0] );
@@ -1086,19 +1111,19 @@ class Settings extends Core\Base
 			echo Core\HTML::tag( 'input', [
 				'type'        => 'search',
 				'class'       => [ 'settings-title-search', '-search', 'hide-if-no-js' ], // 'fuzzy-search' // fuzzy wont work persian
-				'placeholder' => _x( 'Search …', 'Settings: Search Placeholder', 'geditorial' ),
+				'placeholder' => _x( 'Search …', 'Settings: Search Placeholder', 'geditorial-admin' ),
 				'autofocus'   => 'autofocus',
 			] );
 
 		if ( $filters ) {
 			echo '<div class="settings-title-filters">';
-				echo '<label>'._x( 'All', 'Settings', 'geditorial' );
+				echo '<label>'._x( 'All', 'Settings', 'geditorial-admin' );
 				echo ' <input type="radio" name="filter-status" data-filter="all" value="all" checked="checked" /></label> ';
 
-				echo '<label>'._x( 'Enabled', 'Settings', 'geditorial' );
+				echo '<label>'._x( 'Enabled', 'Settings', 'geditorial-admin' );
 				echo ' <input type="radio" name="filter-status" data-filter="enabled" value="true" /></label> ';
 
-				echo '<label>'._x( 'Disabled', 'Settings', 'geditorial' );
+				echo '<label>'._x( 'Disabled', 'Settings', 'geditorial-admin' );
 				echo ' <input type="radio" name="filter-status" data-filter="disabled" value="false" /></label>';
 			echo '</div>';
 		}
@@ -1127,40 +1152,40 @@ class Settings extends Core\Base
 	public static function messages()
 	{
 		return [
-			'resetting' => self::success( _x( 'Settings reset.', 'Settings: Message', 'geditorial' ) ),
-			'updated'   => self::success( _x( 'Settings updated.', 'Settings: Message', 'geditorial' ) ),
-			'disabled'  => self::success( _x( 'Module disabled.', 'Settings: Message', 'geditorial' ) ),
-			'optimized' => self::success( _x( 'Tables optimized.', 'Settings: Message', 'geditorial' ) ),
-			'purged'    => self::success( _x( 'Data purged.', 'Settings: Message', 'geditorial' ) ),
-			'maked'     => self::success( _x( 'File/Folder created.', 'Settings: Message', 'geditorial' ) ),
-			'mailed'    => self::success( _x( 'Mail sent successfully.', 'Settings: Message', 'geditorial' ) ),
-			'error'     => self::error( _x( 'Error occurred!', 'Settings: Message', 'geditorial' ) ),
-			'wrong'     => self::error( _x( 'Something&#8217;s wrong!', 'Settings: Message', 'geditorial' ) ),
-			'nochange'  => self::error( _x( 'No item changed!', 'Settings: Message', 'geditorial' ) ),
-			'noadded'   => self::error( _x( 'No item added!', 'Settings: Message', 'geditorial' ) ),
-			'noaccess'  => self::error( _x( 'You do not have the access!', 'Settings: Message', 'geditorial' ) ),
+			'resetting' => self::success( _x( 'Settings reset.', 'Settings: Message', 'geditorial-admin' ) ),
+			'updated'   => self::success( _x( 'Settings updated.', 'Settings: Message', 'geditorial-admin' ) ),
+			'disabled'  => self::success( _x( 'Module disabled.', 'Settings: Message', 'geditorial-admin' ) ),
+			'optimized' => self::success( _x( 'Tables optimized.', 'Settings: Message', 'geditorial-admin' ) ),
+			'purged'    => self::success( _x( 'Data purged.', 'Settings: Message', 'geditorial-admin' ) ),
+			'maked'     => self::success( _x( 'File/Folder created.', 'Settings: Message', 'geditorial-admin' ) ),
+			'mailed'    => self::success( _x( 'Mail sent successfully.', 'Settings: Message', 'geditorial-admin' ) ),
+			'error'     => self::error( _x( 'Error occurred!', 'Settings: Message', 'geditorial-admin' ) ),
+			'wrong'     => self::error( _x( 'Something&#8217;s wrong!', 'Settings: Message', 'geditorial-admin' ) ),
+			'nochange'  => self::error( _x( 'No item changed!', 'Settings: Message', 'geditorial-admin' ) ),
+			'noadded'   => self::error( _x( 'No item added!', 'Settings: Message', 'geditorial-admin' ) ),
+			'noaccess'  => self::error( _x( 'You do not have the access!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'converted' => self::counted( _x( '%s items(s) converted!', 'Settings: Message', 'geditorial' ) ),
+			'converted' => self::counted( _x( '%s items(s) converted!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'imported'  => self::counted( _x( '%s items(s) imported!', 'Settings: Message', 'geditorial' ) ),
+			'imported'  => self::counted( _x( '%s items(s) imported!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'created'   => self::counted( _x( '%s items(s) created!', 'Settings: Message', 'geditorial' ) ),
+			'created'   => self::counted( _x( '%s items(s) created!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'deleted'   => self::counted( _x( '%s items(s) deleted!', 'Settings: Message', 'geditorial' ) ),
+			'deleted'   => self::counted( _x( '%s items(s) deleted!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'cleaned'   => self::counted( _x( '%s items(s) cleaned!', 'Settings: Message', 'geditorial' ) ),
+			'cleaned'   => self::counted( _x( '%s items(s) cleaned!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'changed'   => self::counted( _x( '%s items(s) changed!', 'Settings: Message', 'geditorial' ) ),
+			'changed'   => self::counted( _x( '%s items(s) changed!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', 'geditorial' ) ),
+			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'closed'    => self::counted( _x( '%s items(s) closed!', 'Settings: Message', 'geditorial' ) ),
+			'closed'    => self::counted( _x( '%s items(s) closed!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', 'geditorial' ) ),
+			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'scheduled' => self::counted( _x( '%s items(s) re-scheduled!', 'Settings: Message', 'geditorial' ) ),
+			'scheduled' => self::counted( _x( '%s items(s) re-scheduled!', 'Settings: Message', 'geditorial-admin' ) ),
 			/* translators: %s: count */
-			'synced'    => self::counted( _x( '%s items(s) synced!', 'Settings: Message', 'geditorial' ) ),
+			'synced'    => self::counted( _x( '%s items(s) synced!', 'Settings: Message', 'geditorial-admin' ) ),
 			'huh'       => Core\HTML::error( self::huh( self::req( 'huh', NULL ) ) ),
 		];
 	}
@@ -1171,7 +1196,7 @@ class Settings extends Core\Base
 
 		if ( isset( $_REQUEST['count'] ) )
 			/* translators: %s: count */
-			$extra[] = sprintf( _x( '%s Counted!', 'Settings: Message', 'geditorial' ),
+			$extra[] = sprintf( _x( '%s Counted!', 'Settings: Message', 'geditorial-admin' ),
 				Core\Number::format( $_REQUEST['count'] ) );
 
 		return count( $extra ) ? ' ('.implode( WordPress\Strings::separator(), $extra ).')' : '';
@@ -1200,7 +1225,7 @@ class Settings extends Core\Base
 	public static function getButtonConfirm( $message = NULL )
 	{
 		if ( is_null( $message ) )
-			$message = _x( 'Are you sure? This operation can not be undone.', 'Settings: Confirm', 'geditorial' );
+			$message = _x( 'Are you sure? This operation can not be undone.', 'Settings: Confirm', 'geditorial-admin' );
 
 		return [ 'onclick' => sprintf( 'return confirm(\'%s\')', Core\HTML::escape( $message ) ) ];
 	}
@@ -1228,8 +1253,8 @@ class Settings extends Core\Base
 
 		if ( is_null( $text ) )
 			$text = 'reset' == $name
-				? _x( 'Reset Settings', 'Settings: Button', 'geditorial' )
-				: _x( 'Save Changes', 'Settings: Button', 'geditorial' );
+				? _x( 'Reset Settings', 'Settings: Button', 'geditorial-admin' )
+				: _x( 'Save Changes', 'Settings: Button', 'geditorial-admin' );
 
 		if ( TRUE === $atts )
 			$atts = self::getButtonConfirm();
@@ -1275,7 +1300,7 @@ class Settings extends Core\Base
 	{
 		if ( is_null( $message ) )
 			/* translators: %s: count */
-			$message = _x( '%s Counted!', 'Settings: Message', 'geditorial' );
+			$message = _x( '%s Counted!', 'Settings: Message', 'geditorial-admin' );
 
 		if ( is_null( $count ) )
 			$count = self::req( 'count', 0 );
@@ -1285,16 +1310,16 @@ class Settings extends Core\Base
 
 	public static function cheatin( $message = NULL )
 	{
-		echo Core\HTML::error( is_null( $message ) ? _x( 'Cheatin&#8217; uh?', 'Settings: Message', 'geditorial' ) : $message );
+		echo Core\HTML::error( is_null( $message ) ? _x( 'Cheatin&#8217; uh?', 'Settings: Message', 'geditorial-admin' ) : $message );
 	}
 
 	public static function huh( $message = NULL )
 	{
 		if ( $message )
 			/* translators: %s: message */
-			return sprintf( _x( 'huh? %s', 'Settings: Message', 'geditorial' ), $message );
+			return sprintf( _x( 'huh? %s', 'Settings: Message', 'geditorial-admin' ), $message );
 
-		return _x( 'huh?', 'Settings: Message', 'geditorial' );
+		return _x( 'huh?', 'Settings: Message', 'geditorial-admin' );
 	}
 
 	// @SOURCE: `add_settings_section()`
@@ -1387,13 +1412,13 @@ class Settings extends Core\Base
 	public static function moduleButtons( $module, $enabled = FALSE )
 	{
 		if ( $module->autoload ) {
-			echo Core\HTML::wrap( _x( 'Auto-loaded!', 'Settings: Notice', 'geditorial' ), '-autoloaded -warning', FALSE );
+			echo Core\HTML::wrap( _x( 'Auto-loaded!', 'Settings: Notice', 'geditorial-admin' ), '-autoloaded -warning', FALSE );
 			return;
 		}
 
 		echo Core\HTML::tag( 'input', [
 			'type'  => 'submit',
-			'value' => _x( 'Enable', 'Settings: Button', 'geditorial' ),
+			'value' => _x( 'Enable', 'Settings: Button', 'geditorial-admin' ),
 			'style' => $enabled ? 'display:none' : FALSE,
 			'class' => [ 'hide-if-no-js', 'button-primary', 'button', 'button-small', '-button' ],
 			'data'  => [
@@ -1404,7 +1429,7 @@ class Settings extends Core\Base
 
 		echo Core\HTML::tag( 'input', [
 			'type'  => 'submit',
-			'value' => _x( 'Disable', 'Settings: Button', 'geditorial' ),
+			'value' => _x( 'Disable', 'Settings: Button', 'geditorial-admin' ),
 			'style' => $enabled ? FALSE : 'display:none',
 			'class' => [ 'hide-if-no-js', 'button-secondary', 'button', 'button-small', '-button', '-button-danger' ],
 			'data'  => [
@@ -1415,7 +1440,7 @@ class Settings extends Core\Base
 
 		echo Core\HTML::tag( 'span', [
 			'class' => [ 'button', 'hide-if-js' ],
-		], _x( 'You have to enable Javascript!', 'Settings: Notice', 'geditorial' ) );
+		], _x( 'You have to enable Javascript!', 'Settings: Notice', 'geditorial-admin' ) );
 	}
 
 	// FIXME: use `Settings::subURL()`
@@ -1433,7 +1458,7 @@ class Settings extends Core\Base
 					'module' => $module->name,
 					'do'     => 'configure',
 				],
-			], _x( 'Tools', 'Settings: Button', 'geditorial' ) );
+			], _x( 'Tools', 'Settings: Button', 'geditorial-admin' ) );
 
 
 		else if ( 'reports' === $module->configure )
@@ -1445,7 +1470,7 @@ class Settings extends Core\Base
 					'module' => $module->name,
 					'do'     => 'configure',
 				],
-			], _x( 'Reports', 'Settings: Button', 'geditorial' ) );
+			], _x( 'Reports', 'Settings: Button', 'geditorial-admin' ) );
 
 		else
 			echo Core\HTML::tag( 'a', [
@@ -1456,7 +1481,7 @@ class Settings extends Core\Base
 					'module' => $module->name,
 					'do'     => 'configure',
 				],
-			], _x( 'Configure', 'Settings: Button', 'geditorial' ) );
+			], _x( 'Configure', 'Settings: Button', 'geditorial-admin' ) );
 	}
 
 	public static function moduleInfo( $module, $enabled = FALSE, $tag = 'h3' )
@@ -1465,13 +1490,13 @@ class Settings extends Core\Base
 			? sprintf( ' <code title="%3$s" class="-acccess -access-%1$s">%2$s</code>',
 				$module->access,
 				strtoupper( $module->access ),
-				_x( 'Access Code', 'Settings: Title Attr', 'geditorial' )
+				_x( 'Access Code', 'Settings: Title Attr', 'geditorial-admin' )
 			) : '';
 
 		Core\HTML::h3( Core\HTML::tag( 'a', [
 			'href'   => self::getModuleDocsURL( $module ),
 			/* translators: %s: module title */
-			'title'  => sprintf( _x( '%s Documentation', 'Settings', 'geditorial' ), $module->title ),
+			'title'  => sprintf( _x( '%s Documentation', 'Settings', 'geditorial-admin' ), $module->title ),
 			'target' => '_blank',
 		], $module->title ).$access, '-title' );
 
@@ -1519,7 +1544,7 @@ class Settings extends Core\Base
 	{
 		echo '<div class="signature clear"><p>';
 			/* translators: %1$s: plugin url, %2$s: author url */
-			printf( _x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', 'geditorial' ),
+			printf( _x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', 'geditorial-admin' ),
 				'https://github.com/geminorum/geditorial',
 				'https://geminorum.ir/' );
 		echo '</p></div>';
@@ -1551,7 +1576,7 @@ class Settings extends Core\Base
 
 		$wikihome = [
 			'id'       => 'geditorial-wikihome',
-			'title'    => _x( 'Editorial Wiki', 'Settings: Help Content Title', 'geditorial' ),
+			'title'    => _x( 'Editorial Wiki', 'Settings: Help Content Title', 'geditorial-admin' ),
 			'callback' => [ __CLASS__, 'add_help_tab_home_callback' ],
 			'module'   => $module,
 		];
@@ -1562,7 +1587,7 @@ class Settings extends Core\Base
 		$wikimodule = [
 			'id'       => 'geditorial-'.$module->name.'-wikihome',
 			/* translators: %s: module title */
-			'title'    => sprintf( _x( '%s Wiki', 'Settings: Help Content Title', 'geditorial' ), $module->title ),
+			'title'    => sprintf( _x( '%s Wiki', 'Settings: Help Content Title', 'geditorial-admin' ), $module->title ),
 			'callback' => [ __CLASS__, 'add_help_tab_module_callback' ],
 			'module'   => $module,
 		];
@@ -1635,11 +1660,11 @@ class Settings extends Core\Base
 			'wrap'         => FALSE,
 			'cap'          => NULL,
 
-			'string_disabled' => _x( 'Disabled', 'Settings', 'geditorial' ),
-			'string_enabled'  => _x( 'Enabled', 'Settings', 'geditorial' ),
+			'string_disabled' => _x( 'Disabled', 'Settings', 'geditorial-admin' ),
+			'string_enabled'  => _x( 'Enabled', 'Settings', 'geditorial-admin' ),
 			'string_select'   => self::showOptionNone(),
-			'string_empty'    => _x( 'No options!', 'Settings', 'geditorial' ),
-			'string_noaccess' => _x( 'You do not have access to change this option.', 'Settings', 'geditorial' ),
+			'string_empty'    => _x( 'No options!', 'Settings', 'geditorial-admin' ),
+			'string_noaccess' => _x( 'You do not have access to change this option.', 'Settings', 'geditorial-admin' ),
 
 			'template_value' => '%s', // used on display value output
 		], $atts );
@@ -2780,8 +2805,8 @@ class Settings extends Core\Base
 			'class'      => FALSE,
 			'checked'    => FALSE,
 			'disabled'   => FALSE,
-			'string_on'  => _x( 'On', 'Settings: Switch On-Off', 'geditorial' ),
-			'string_off' => _x( 'Off', 'Settings: Switch On-Off', 'geditorial' ),
+			'string_on'  => _x( 'On', 'Settings: Switch On-Off', 'geditorial-admin' ),
+			'string_off' => _x( 'Off', 'Settings: Switch On-Off', 'geditorial-admin' ),
 			'echo'       => TRUE,
 		], $atts );
 
@@ -2818,7 +2843,7 @@ class Settings extends Core\Base
 	public static function tabPanelOpen()
 	{
 		return '<div class="wp-tab-panel -with-select-all" data-select-all-label="'
-			.esc_attr_x( 'Select All', 'Settings: Tab Panel', 'geditorial' ).'"><ul>';
+			.esc_attr_x( 'Select All', 'Settings: Tab Panel', 'geditorial-admin' ).'"><ul>';
 	}
 
 	public static function processingListOpen()

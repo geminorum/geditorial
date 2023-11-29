@@ -20,8 +20,8 @@ class Views extends gEditorial\Module
 	{
 		return [
 			'name'   => 'views',
-			'title'  => _x( 'Views', 'Modules: Views', 'geditorial' ),
-			'desc'   => _x( 'Customized Page Views', 'Modules: Views', 'geditorial' ),
+			'title'  => _x( 'Views', 'Modules: Views', 'geditorial-admin' ),
+			'desc'   => _x( 'Customized Page Views', 'Modules: Views', 'geditorial-admin' ),
 			'icon'   => 'admin-views',
 			'access' => 'beta',
 		];

@@ -30,14 +30,14 @@ class Revisions extends gEditorial\Module
 	{
 		return [
 			'name'     => 'revisions',
-			'title'    => _x( 'Revisions', 'Modules: Revisions', 'geditorial' ),
-			'desc'     => _x( 'Revision Management', 'Modules: Revisions', 'geditorial' ),
+			'title'    => _x( 'Revisions', 'Modules: Revisions', 'geditorial-admin' ),
+			'desc'     => _x( 'Revision Management', 'Modules: Revisions', 'geditorial-admin' ),
 			'icon'     => 'backup',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
 			'frontend' => FALSE,
 			'disabled' => defined( 'WP_POST_REVISIONS' ) && ! WP_POST_REVISIONS
-				? _x( 'Deactivated by Constant', 'Modules: Revisions', 'geditorial' )
+				? _x( 'Deactivated by Constant', 'Modules: Revisions', 'geditorial-admin' )
 				: FALSE,
 		];
 	}

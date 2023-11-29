@@ -21,8 +21,8 @@ class Ranked extends gEditorial\Module
 	{
 		return [
 			'name'     => 'ranked',
-			'title'    => _x( 'Ranked', 'Modules: Ranked', 'geditorial' ),
-			'desc'     => _x( 'Ranking for Editorial Content', 'Modules: Ranked', 'geditorial' ),
+			'title'    => _x( 'Ranked', 'Modules: Ranked', 'geditorial-admin' ),
+			'desc'     => _x( 'Ranking for Editorial Content', 'Modules: Ranked', 'geditorial-admin' ),
 			'icon'     => 'shield-alt',
 			'access'   => 'beta',
 			'keywords' => [

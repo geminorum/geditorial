@@ -19,11 +19,11 @@ class Statuses extends gEditorial\Module
 	{
 		return [
 			'name'     => 'statuses',
-			'title'    => _x( 'Statuses', 'Modules: Statuses', 'geditorial' ),
-			'desc'     => _x( 'WP-Statuses Companion', 'Modules: Statuses', 'geditorial' ),
+			'title'    => _x( 'Statuses', 'Modules: Statuses', 'geditorial-admin' ),
+			'desc'     => _x( 'WP-Statuses Companion', 'Modules: Statuses', 'geditorial-admin' ),
 			'icon'     => 'post-status',
 			'access'   => 'beta',
-			'disabled' => class_exists( 'WP_Statuses' ) ? FALSE : _x( 'Needs WP Statuses', 'Modules: Statuses', 'geditorial' ),
+			'disabled' => class_exists( 'WP_Statuses' ) ? FALSE : _x( 'Needs WP Statuses', 'Modules: Statuses', 'geditorial-admin' ),
 		];
 	}
 

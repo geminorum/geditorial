@@ -40,7 +40,7 @@ trait SettingsPostTypes
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'post_types_title', 'post', 'settings',
-				_x( 'Enable for Post Types', 'Module', 'geditorial' ) );
+				_x( 'Enable for Post Types', 'Module', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );
 
@@ -116,7 +116,7 @@ trait SettingsPostTypes
 			$pre = [];
 
 		else if ( TRUE === $pre )
-			$pre = [ 'all' => _x( 'All PostTypes', 'Module', 'geditorial' ) ];
+			$pre = [ 'all' => _x( 'All PostTypes', 'Module', 'geditorial-admin' ) ];
 
 		$all = WordPress\PostType::get( 0, $args, $capability, $user_id );
 

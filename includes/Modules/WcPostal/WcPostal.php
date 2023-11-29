@@ -14,8 +14,8 @@ class WcPostal extends gEditorial\Module
 	{
 		return [
 			'name'     => 'wc_postal',
-			'title'    => _x( 'WC Postal', 'Modules: WC Postal', 'geditorial' ),
-			'desc'     => _x( 'Package Tracking Enhancements for WooCommerce', 'Modules: WC Postal', 'geditorial' ),
+			'title'    => _x( 'WC Postal', 'Modules: WC Postal', 'geditorial-admin' ),
+			'desc'     => _x( 'Package Tracking Enhancements for WooCommerce', 'Modules: WC Postal', 'geditorial-admin' ),
 			'icon'     => [ 'misc-48', 'iripost' ], // 'buddicons-tracking',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),

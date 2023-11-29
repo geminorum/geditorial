@@ -69,14 +69,14 @@ class Helper extends WordPress\Main
 	{
 		return WordPress\WooCommerce::isActive()
 			? FALSE
-			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Helper', 'geditorial' ) : $message );
+			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Helper', 'geditorial-admin' ) : $message );
 	}
 
 	public static function moduleCheckLocale( $locale, $message = NULL )
 	{
 		return $locale === Core\L10n::locale( TRUE )
 			? FALSE
-			: ( is_null( $message ) ? _x( 'Not Available on Current Locale', 'Helper', 'geditorial' ) : $message );
+			: ( is_null( $message ) ? _x( 'Not Available on Current Locale', 'Helper', 'geditorial-admin' ) : $message );
 	}
 
 	public static function isTaxonomyGenre( $taxonomy, $fallback = 'genre' )

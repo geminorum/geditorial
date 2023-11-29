@@ -17,8 +17,8 @@ class Headings extends gEditorial\Module
 	{
 		return [
 			'name'   => 'headings',
-			'title'  => _x( 'Headings', 'Modules: Headings', 'geditorial' ),
-			'desc'   => _x( 'Table of Contents', 'Modules: Headings', 'geditorial' ),
+			'title'  => _x( 'Headings', 'Modules: Headings', 'geditorial-admin' ),
+			'desc'   => _x( 'Table of Contents', 'Modules: Headings', 'geditorial-admin' ),
 			'icon'   => 'tablet',
 			'i18n'   => 'adminonly',
 			'access' => 'stable',

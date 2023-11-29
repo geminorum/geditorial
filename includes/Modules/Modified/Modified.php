@@ -23,8 +23,8 @@ class Modified extends gEditorial\Module
 	{
 		return [
 			'name'   => 'modified',
-			'title'  => _x( 'Modified', 'Modules: Modified', 'geditorial' ),
-			'desc'   => _x( 'Last Modifications', 'Modules: Modified', 'geditorial' ),
+			'title'  => _x( 'Modified', 'Modules: Modified', 'geditorial-admin' ),
+			'desc'   => _x( 'Last Modifications', 'Modules: Modified', 'geditorial-admin' ),
 			'icon'   => 'update',
 			'access' => 'beta',
 		];

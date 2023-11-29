@@ -24,8 +24,8 @@ class Units extends gEditorial\Module
 	{
 		return [
 			'name'   => 'units',
-			'title'  => _x( 'Units', 'Modules: Units', 'geditorial' ),
-			'desc'   => _x( 'Measurement Units for Contents', 'Modules: Units', 'geditorial' ),
+			'title'  => _x( 'Units', 'Modules: Units', 'geditorial-admin' ),
+			'desc'   => _x( 'Measurement Units for Contents', 'Modules: Units', 'geditorial-admin' ),
 			'icon'   => 'image-crop',
 			'access' => 'beta',
 		];

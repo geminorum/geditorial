@@ -15,8 +15,8 @@ class WcWidgets extends gEditorial\Module
 	{
 		return [
 			'name'     => 'wc_widgets',
-			'title'    => _x( 'WC Widgets', 'Modules: WC Widgets', 'geditorial' ),
-			'desc'     => _x( 'Widget Enhancements for WooCommerce', 'Modules: WC Widgets', 'geditorial' ),
+			'title'    => _x( 'WC Widgets', 'Modules: WC Widgets', 'geditorial-admin' ),
+			'desc'     => _x( 'Widget Enhancements for WooCommerce', 'Modules: WC Widgets', 'geditorial-admin' ),
 			'icon'     => 'welcome-widgets-menus',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',

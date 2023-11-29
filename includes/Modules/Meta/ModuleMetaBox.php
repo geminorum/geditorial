@@ -269,7 +269,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 
 		$html = '<div id="geditorial-meta-'.$field.'-wrap" class="postbox geditorial-wrap -admin-postbox -admin-postbox-manual geditorial-meta-field-'.$field.'">';
 		$html.= '<button type="button" class="handlediv button-link" aria-expanded="true">';
-		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', 'geditorial' ).'</span>';
+		$html.= '<span class="screen-reader-text">'.esc_attr_x( 'Click to toggle', 'MetaBox', 'geditorial-admin' ).'</span>';
 		$html.= '<span class="toggle-indicator" aria-hidden="true"></span></button>';
 		$html.= '<h2 class="hndle"><span>'.$title.'</span></h2><div class="inside">';
 		$html.= '<div class="geditorial-admin-wrap-textbox">';

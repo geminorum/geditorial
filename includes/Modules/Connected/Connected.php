@@ -13,12 +13,12 @@ class Connected extends gEditorial\Module
 	{
 		return [
 			'name'     => 'connected',
-			'title'    => _x( 'Connected', 'Modules: Connected', 'geditorial' ),
-			'desc'     => _x( 'Posts-to-Posts Extended', 'Modules: Connected', 'geditorial' ),
+			'title'    => _x( 'Connected', 'Modules: Connected', 'geditorial-admin' ),
+			'desc'     => _x( 'Posts-to-Posts Extended', 'Modules: Connected', 'geditorial-admin' ),
 			'icon'     => 'controls-repeat',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => defined( 'P2P_PLUGIN_VERSION' ) ? FALSE : _x( 'Needs Posts-to-Posts', 'Modules: Connected', 'geditorial' ),
+			'disabled' => defined( 'P2P_PLUGIN_VERSION' ) ? FALSE : _x( 'Needs Posts-to-Posts', 'Modules: Connected', 'geditorial-admin' ),
 		];
 	}
 

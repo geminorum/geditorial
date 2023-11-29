@@ -20,8 +20,8 @@ class WcPurchased extends gEditorial\Module
 	{
 		return [
 			'name'     => 'wc_purchased',
-			'title'    => _x( 'WC Purchased', 'Modules: WC Purchased', 'geditorial' ),
-			'desc'     => _x( 'Product Purchase Reports for WooCommerce', 'Modules: WC Purchased', 'geditorial' ),
+			'title'    => _x( 'WC Purchased', 'Modules: WC Purchased', 'geditorial-admin' ),
+			'desc'     => _x( 'Product Purchase Reports for WooCommerce', 'Modules: WC Purchased', 'geditorial-admin' ),
 			'icon'     => 'store',
 			'access'   => 'beta',
 			'frontend' => FALSE,

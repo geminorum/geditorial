@@ -22,8 +22,8 @@ class Like extends gEditorial\Module
 	{
 		return [
 			'name'   => 'like',
-			'title'  => _x( 'Like', 'Modules: Like', 'geditorial' ),
-			'desc'   => _x( 'Like Button for Guests and Users', 'Modules: Like', 'geditorial' ),
+			'title'  => _x( 'Like', 'Modules: Like', 'geditorial-admin' ),
+			'desc'   => _x( 'Like Button for Guests and Users', 'Modules: Like', 'geditorial-admin' ),
 			'icon'   => 'heart',
 			'access' => 'stable',
 		];

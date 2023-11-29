@@ -22,8 +22,8 @@ class Specs extends gEditorial\Module
 	{
 		return [
 			'name'   => 'specs',
-			'title'  => _x( 'Specifications', 'Modules: Specs', 'geditorial' ),
-			'desc'   => _x( 'Post Specifications', 'Modules: Specs', 'geditorial' ),
+			'title'  => _x( 'Specifications', 'Modules: Specs', 'geditorial-admin' ),
+			'desc'   => _x( 'Post Specifications', 'Modules: Specs', 'geditorial-admin' ),
 			'icon'   => 'list-view',
 			'access' => 'deprecated',
 		];

@@ -59,7 +59,7 @@ class Info extends WordPress\Main
 			return;
 
 		/* translators: %1$s: plugin url, %2$s: plugin url */
-		Core\HTML::desc( sprintf( _x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Info: P2P', 'geditorial' ),
+		Core\HTML::desc( sprintf( _x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Info: P2P', 'geditorial-admin' ),
 			'https://github.com/scribu/wp-posts-to-posts/', 'https://github.com/voceconnect/objects-to-objects' ) );
 	}
 
@@ -68,7 +68,7 @@ class Info extends WordPress\Main
 	{
 		return sprintf(
 			/* translators: %s: code placeholder */
-			_x( 'Connected via %s', 'Info: P2P', 'geditorial' ),
+			_x( 'Connected via %s', 'Info: P2P', 'geditorial-admin' ),
 			'<code>P2P</code>'
 		);
 	}
@@ -81,7 +81,7 @@ class Info extends WordPress\Main
 	public static function renderNoReportsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'There are no reports available!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'There are no reports available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-reports'
 		);
@@ -90,7 +90,7 @@ class Info extends WordPress\Main
 	public static function renderNoImportsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'There are no imports available!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'There are no imports available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-imports'
 		);
@@ -99,7 +99,7 @@ class Info extends WordPress\Main
 	public static function renderNoToolsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'There are no tools available!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'There are no tools available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-tools'
 		);
@@ -108,7 +108,7 @@ class Info extends WordPress\Main
 	public static function renderNoPostsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'There are no posts available!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'There are no posts available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-posts'
 		);
@@ -117,7 +117,7 @@ class Info extends WordPress\Main
 	public static function renderEmptyPosttype( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'The post-type is not provided!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'The post-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-empty-posttype'
 		);
@@ -126,7 +126,7 @@ class Info extends WordPress\Main
 	public static function renderEmptyTaxonomy( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'The taxonomy is not provided!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'The taxonomy is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-empty-taxonomy'
 		);
@@ -135,7 +135,7 @@ class Info extends WordPress\Main
 	public static function renderNotSupportedPosttype( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'The post-type is not supported!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'The post-type is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-supported-posttype'
 		);
@@ -144,7 +144,7 @@ class Info extends WordPress\Main
 	public static function renderNotSupportedTaxonomy( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(
-			$before._x( 'The taxonomy is not supported!', 'Info: Message', 'geditorial' ).$after,
+			$before._x( 'The taxonomy is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-supported-taxonomy'
 		);
@@ -154,7 +154,7 @@ class Info extends WordPress\Main
 	{
 		echo $before.sprintf(
 			/* translators: %s: datetime string */
-			_x( 'Registered on %s', 'Info: Message', 'geditorial' ),
+			_x( 'Registered on %s', 'Info: Message', 'geditorial-admin' ),
 			Helper::getDateEditRow( $datetime_string, '-registered' )
 		).$after;
 	}

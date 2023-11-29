@@ -19,8 +19,8 @@ class Workflow extends gEditorial\Module
 	{
 		return [
 			'name'   => 'workflow',
-			'title'  => _x( 'Workflow', 'Modules: Workflow', 'geditorial' ),
-			'desc'   => _x( 'Customized Workflow of Contents', 'Modules: Workflow', 'geditorial' ),
+			'title'  => _x( 'Workflow', 'Modules: Workflow', 'geditorial-admin' ),
+			'desc'   => _x( 'Customized Workflow of Contents', 'Modules: Workflow', 'geditorial-admin' ),
 			'icon'   => 'clipboard',
 			'access' => 'beta',
 		];

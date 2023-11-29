@@ -18,8 +18,8 @@ class Inquire extends gEditorial\Module
 	{
 		return [
 			'name'   => 'inquire',
-			'title'  => _x( 'Inquire', 'Modules: Inquire', 'geditorial' ),
-			'desc'   => _x( 'Questions and Answers', 'Modules: Inquire', 'geditorial' ),
+			'title'  => _x( 'Inquire', 'Modules: Inquire', 'geditorial-admin' ),
+			'desc'   => _x( 'Questions and Answers', 'Modules: Inquire', 'geditorial-admin' ),
 			'icon'   => 'editor-help',
 			'access' => 'beta',
 		];

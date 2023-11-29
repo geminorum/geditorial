@@ -36,7 +36,7 @@ trait CoreToolBox
 	{
 		Core\HTML::h2( sprintf(
 			/* translators: %s: module title */
-			_x( 'Editorial: %s', 'Internal: CoreToolBox', 'geditorial' ),
+			_x( 'Editorial: %s', 'Internal: CoreToolBox', 'geditorial-admin' ),
 			$this->module->title
 		), 'title' );
 	}

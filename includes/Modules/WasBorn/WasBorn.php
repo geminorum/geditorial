@@ -27,8 +27,8 @@ class WasBorn extends gEditorial\Module
 	{
 		return [
 			'name'     => 'was_born',
-			'title'    => _x( 'Was Born', 'Modules: Was Born', 'geditorial' ),
-			'desc'     => _x( 'Age Calculation and Statistics', 'Modules: Was Born', 'geditorial' ),
+			'title'    => _x( 'Was Born', 'Modules: Was Born', 'geditorial-admin' ),
+			'desc'     => _x( 'Age Calculation and Statistics', 'Modules: Was Born', 'geditorial-admin' ),
 			'icon'     => 'buddicons-community',
 			'access'   => 'beta',
 			'keywords' => [

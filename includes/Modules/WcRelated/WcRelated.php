@@ -14,8 +14,8 @@ class WcRelated extends gEditorial\Module
 	{
 		return [
 			'name'     => 'wc_related',
-			'title'    => _x( 'WC Related', 'Modules: WC Related', 'geditorial' ),
-			'desc'     => _x( 'Related Product Enhancements for WooCommerce', 'Modules: WC Related', 'geditorial' ),
+			'title'    => _x( 'WC Related', 'Modules: WC Related', 'geditorial-admin' ),
+			'desc'     => _x( 'Related Product Enhancements for WooCommerce', 'Modules: WC Related', 'geditorial-admin' ),
 			'icon'     => 'tagcloud',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',

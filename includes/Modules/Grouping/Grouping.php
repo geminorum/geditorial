@@ -15,8 +15,8 @@ class Grouping extends gEditorial\Module
 	{
 		return [
 			'name'   => 'grouping',
-			'title'  => _x( 'Grouping', 'Modules: Grouping', 'geditorial' ),
-			'desc'   => _x( 'Custom Taxonomies for Users', 'Modules: Grouping', 'geditorial' ),
+			'title'  => _x( 'Grouping', 'Modules: Grouping', 'geditorial-admin' ),
+			'desc'   => _x( 'Custom Taxonomies for Users', 'Modules: Grouping', 'geditorial-admin' ),
 			'icon'   => 'buddicons-tracking',
 			'access' => 'beta',
 		];

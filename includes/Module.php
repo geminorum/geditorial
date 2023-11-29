@@ -376,7 +376,7 @@ class Module extends WordPress\Module
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'reports', $sub ),
 					/* translators: %s: sub title */
-					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial' ), $title ),
+					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ), $title ),
 				];
 
 		if ( method_exists( $this, 'tools_settings' ) && ! Settings::isTools( $screen ) )
@@ -387,7 +387,7 @@ class Module extends WordPress\Module
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'tools', $sub ),
 					/* translators: %s: sub title */
-					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial' ), $title ),
+					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
 				];
 
 		if ( method_exists( $this, 'imports_settings' ) && ! Settings::isImports( $screen ) )
@@ -398,7 +398,7 @@ class Module extends WordPress\Module
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'imports', $sub ),
 					/* translators: %s: sub title */
-					'title'   => sprintf( _x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial' ), $title ),
+					'title'   => sprintf( _x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
 				];
 
 		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( 'settings' ) )
@@ -408,7 +408,7 @@ class Module extends WordPress\Module
 				'text'    => $this->module->title,
 				'url'     => $this->get_module_url( 'settings' ),
 				/* translators: %s: module title */
-				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial' ), $this->module->title ),
+				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ), $this->module->title ),
 			];
 
 		if ( $docs = $this->get_module_url( 'docs' ) )
@@ -418,16 +418,16 @@ class Module extends WordPress\Module
 				'text'    => $this->module->title,
 				'url'     => $docs,
 				/* translators: %s: module title */
-				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial' ), $this->module->title ),
+				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ), $this->module->title ),
 			];
 
 		if ( 'config' != $this->module->name )
 			$links[] = [
 				'context' => 'docs',
 				'sub'     => FALSE,
-				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial' ),
+				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
 				'url'     => Settings::getModuleDocsURL( FALSE ),
-				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial' ),
+				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
 			];
 
 		return $links;
@@ -565,9 +565,9 @@ class Module extends WordPress\Module
 			'field'       => $constant.'_supports',
 			'type'        => 'checkboxes-values',
 			/* translators: %s: singular posttype name */
-			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', 'geditorial' ), $singular ),
+			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', 'geditorial-admin' ), $singular ),
 			/* translators: %s: singular posttype name */
-			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial' ), $singular ),
+			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial-admin' ), $singular ),
 			'default'     => $defaults,
 			'values'      => $supports,
 		];
@@ -578,7 +578,7 @@ class Module extends WordPress\Module
 		return [
 			'field'   => 'insert_priority'.( $prefix ? '_'.$prefix : '' ),
 			'type'    => 'priority',
-			'title'   => _x( 'Insert Priority', 'Module: Setting Title', 'geditorial' ),
+			'title'   => _x( 'Insert Priority', 'Module: Setting Title', 'geditorial-admin' ),
 			'default' => $default,
 		];
 	}
@@ -608,7 +608,7 @@ class Module extends WordPress\Module
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
 
 		if ( ! $this->module->autoload )
-			$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', 'geditorial' ), 'danger' );
+			$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', 'geditorial-admin' ), 'danger' );
 
 		foreach ( $this->get_module_links() as $link )
 			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'listtable' ] ) )
@@ -1004,9 +1004,9 @@ class Module extends WordPress\Module
 			return;
 
 		/* translators: %s: taxonomy object label */
-		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial' ), $taxonomy->label );
+		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial-admin' ), $taxonomy->label );
 		/* translators: %s: taxonomy object label */
-		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial' ), $taxonomy->label );
+		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ), $taxonomy->label );
 		$terms  = $this->get_default_terms( $constant );
 		$link   = Core\WordPress::getEditTaxLink( $taxonomy->name );
 		$before = Core\HTML::tag( 'p', $title );
@@ -1014,7 +1014,7 @@ class Module extends WordPress\Module
 		$args   = [ 'title' => $taxonomy->label, 'id' => $this->classs( 'help-default-terms', '-'.$taxonomy->name ) ];
 
 		if ( empty( $terms ) )
-			$args['content'] = $before.Core\HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial' ), '-info' ).$after;
+			$args['content'] = $before.Core\HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial-admin' ), '-info' ).$after;
 
 		else if ( Core\Arraay::allStringValues( $terms ) )
 			$args['content'] = $before.Core\HTML::wrap( Core\HTML::tableCode( $terms, TRUE ), '-info' ).$after;
@@ -1233,7 +1233,7 @@ class Module extends WordPress\Module
 			$filters = TRUE;
 		} else {
 			/* translators: %s: module title */
-			$title = sprintf( _x( 'Editorial: %s', 'Module', 'geditorial' ), $this->module->title );
+			$title = sprintf( _x( 'Editorial: %s', 'Module', 'geditorial-admin' ), $this->module->title );
 			$back  = Settings::settingsURL();
 		}
 
@@ -1243,7 +1243,7 @@ class Module extends WordPress\Module
 			Settings::message();
 
 			if ( $flush )
-				echo Core\HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', 'geditorial' ), FALSE );
+				echo Core\HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', 'geditorial-admin' ), FALSE );
 
 			echo '<div class="-header">';
 
@@ -1273,92 +1273,92 @@ class Module extends WordPress\Module
 	public function settings_section_defaults()
 	{
 		Settings::fieldSection(
-			_x( 'Defaults', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Defaults', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_misc()
 	{
 		Settings::fieldSection(
-			_x( 'Miscellaneous', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Miscellaneous', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_frontend()
 	{
 		Settings::fieldSection(
-			_x( 'Front-end', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Front-end', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_backend()
 	{
 		Settings::fieldSection(
-			_x( 'Back-end', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Back-end', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_content()
 	{
 		Settings::fieldSection(
-			_x( 'Generated Contents', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Generated Contents', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_dashboard()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Dashboard', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Admin Dashboard', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_editlist()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Edit List', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Admin Edit List', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_columns()
 	{
 		Settings::fieldSection(
-			_x( 'Admin List Columns', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Admin List Columns', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_editpost()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Edit Post', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Admin Edit Post', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_edittags()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Edit Terms', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Admin Edit Terms', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_comments()
 	{
 		Settings::fieldSection(
-			_x( 'Admin Comment List', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Admin Comment List', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_strings()
 	{
 		Settings::fieldSection(
-			_x( 'Custom Strings', 'Module: Setting Section Title', 'geditorial' )
+			_x( 'Custom Strings', 'Module: Setting Section Title', 'geditorial-admin' )
 		);
 	}
 
 	public function settings_section_roles()
 	{
 		Settings::fieldSection(
-			_x( 'Availability', 'Module: Setting Section Title', 'geditorial' ),
-			_x( 'Though Administrators have it all!', 'Module: Setting Section Description', 'geditorial' )
+			_x( 'Availability', 'Module: Setting Section Title', 'geditorial-admin' ),
+			_x( 'Though Administrators have it all!', 'Module: Setting Section Description', 'geditorial-admin' )
 		);
 	}
 
@@ -1557,14 +1557,14 @@ class Module extends WordPress\Module
 	public function paired_bulk_input_add_new_item( $taxonomy, $action )
 	{
 		/* translators: %s: clone into input */
-		printf( _x( 'as: %s', 'Module: Taxonomy Bulk Input Label', 'geditorial' ),
+		printf( _x( 'as: %s', 'Module: Taxonomy Bulk Input Label', 'geditorial-admin' ),
 			'<input name="'.$this->classs( 'paired-add-new-item-target' ).'" type="text" placeholder="'
-			._x( 'New Item Title', 'Module: Taxonomy Bulk Input PlaceHolder', 'geditorial' ).'" /> ' );
+			._x( 'New Item Title', 'Module: Taxonomy Bulk Input PlaceHolder', 'geditorial-admin' ).'" /> ' );
 
 		echo Core\HTML::dropdown( [
-			'separeted-terms' => _x( 'Separeted Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
-			'cross-terms'     => _x( 'Cross Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
-			'union-terms'     => _x( 'Union Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial' ),
+			'separeted-terms' => _x( 'Separeted Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial-admin' ),
+			'cross-terms'     => _x( 'Cross Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial-admin' ),
+			'union-terms'     => _x( 'Union Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial-admin' ),
 		], [
 			'name'     => $this->classs( 'paired-add-new-item-type' ),
 			'style'    => 'float:none',
@@ -2756,7 +2756,7 @@ class Module extends WordPress\Module
 
 		// DEPRECATED: for back-comp only
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial' ) );
+			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial-admin' ) );
 
 		return $title; // <-- // FIXME: problems with block editor
 
@@ -2775,7 +2775,7 @@ class Module extends WordPress\Module
 			if ( is_null( $url ) )
 				$url = $this->get_module_url( 'settings' );
 
-			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial' ) );
+			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial-admin' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
 		}
 
@@ -3068,7 +3068,7 @@ class Module extends WordPress\Module
 	{
 		add_action( 'edit_form_after_title', function ( $post ) {
 			$html = WordPress\Post::title( $post );
-			$info = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated', 'Module: ReadOnly Title Info', 'geditorial' ) );
+			$info = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated', 'Module: ReadOnly Title Info', 'geditorial-admin' ) );
 			echo $this->wrap(
 				$html.' '.$info,
 				'-readonly-title',
@@ -3295,7 +3295,7 @@ class Module extends WordPress\Module
 			return FALSE;
 
 		if ( is_null( $message ) )
-			$message = _x( 'You can see the contents once you\'ve saved this post for the first time.', 'Module: Draft Metabox', 'geditorial' );
+			$message = _x( 'You can see the contents once you\'ve saved this post for the first time.', 'Module: Draft Metabox', 'geditorial-admin' );
 
 		Core\HTML::desc( $message, TRUE, 'field-wrap -empty' );
 

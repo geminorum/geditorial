@@ -26,8 +26,8 @@ class Course extends gEditorial\Module
 	{
 		return [
 			'name'   => 'course',
-			'title'  => _x( 'Course', 'Modules: Course', 'geditorial' ),
-			'desc'   => _x( 'Course and Lesson Management', 'Modules: Course', 'geditorial' ),
+			'title'  => _x( 'Course', 'Modules: Course', 'geditorial-admin' ),
+			'desc'   => _x( 'Course and Lesson Management', 'Modules: Course', 'geditorial-admin' ),
 			'icon'   => 'welcome-learn-more',
 			'access' => 'beta',
 		];

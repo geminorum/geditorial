@@ -22,8 +22,8 @@ class Badges extends gEditorial\Module
 	{
 		return [
 			'name'   => 'badges',
-			'title'  => _x( 'Badges', 'Modules: Badges', 'geditorial' ),
-			'desc'   => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial' ),
+			'title'  => _x( 'Badges', 'Modules: Badges', 'geditorial-admin' ),
+			'desc'   => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial-admin' ),
 			'icon'   => 'superhero',
 			'access' => 'beta',
 		];

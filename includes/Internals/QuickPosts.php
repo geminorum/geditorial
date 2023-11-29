@@ -106,7 +106,7 @@ trait QuickPosts
 				'linked'   => $linked,
 				'endpoint' => rest_url( sprintf( '/wp/v2/%s', $object->rest_base ) ), // TODO: use `rest_get_route_for_post_type_items()`
 			],
-		], _x( 'Save Draft & Close', 'Module', 'geditorial' ) );
+		], _x( 'Save Draft & Close', 'Module', 'geditorial-admin' ) );
 
 		echo '</p></div><div class="-side">';
 		echo '<div class="-recents">';
@@ -117,7 +117,7 @@ trait QuickPosts
 			// TODO: hook action from Book module: suggestd the book by passed meta
 
 			/* translators: %s: posttype singular name */
-			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial' ), $object->labels->singular_name );
+			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ), $object->labels->singular_name );
 
 			Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
 				'post_status' => [ 'publish', 'future', 'draft' ],
@@ -126,15 +126,15 @@ trait QuickPosts
 		echo '</div>';
 
 			/* translators: %s: posttype name */
-			Core\HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial' ), $object->labels->name ) );
+			Core\HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial-admin' ), $object->labels->name ) );
 
 		echo '</div></div>';
 
 		$this->enqueue_asset_js( [
 			'strings' => [
-				'noparent' => _x( 'This frame has no parent window!', 'Module: NewPost: JS String', 'geditorial' ),
-				'notarget' => _x( 'Cannot handle the target window!', 'Module: NewPost: JS String', 'geditorial' ),
-				'closeme'  => _x( 'New post has been saved you may close this frame!', 'Module: NewPost: JS String', 'geditorial' ),
+				'noparent' => _x( 'This frame has no parent window!', 'Module: NewPost: JS String', 'geditorial-admin' ),
+				'notarget' => _x( 'Cannot handle the target window!', 'Module: NewPost: JS String', 'geditorial-admin' ),
+				'closeme'  => _x( 'New post has been saved you may close this frame!', 'Module: NewPost: JS String', 'geditorial-admin' ),
 			],
 		], 'module.newpost', [
 			'jquery',
@@ -165,7 +165,7 @@ trait QuickPosts
 			$this->action( 'admin_footer', 0, 20, $context );
 
 		/* translators: %1$s: current post title, %2$s: posttype singular name */
-		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %2$s', 'Module: Button Title', 'geditorial' ) );
+		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %2$s', 'Module: Button Title', 'geditorial-admin' ) );
 		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', sprintf( '%s %s', '%1$s', $object->labels->add_new_item ) );
 		$name  = $object->labels->singular_name;
 

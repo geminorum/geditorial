@@ -19,8 +19,8 @@ class Uncategorized extends gEditorial\Module
 	{
 		return [
 			'name'   => 'uncategorized',
-			'title'  => _x( 'Uncategorized', 'Modules: Uncategorized', 'geditorial' ),
-			'desc'   => _x( 'Term Leftover Management', 'Modules: Uncategorized', 'geditorial' ),
+			'title'  => _x( 'Uncategorized', 'Modules: Uncategorized', 'geditorial-admin' ),
+			'desc'   => _x( 'Term Leftover Management', 'Modules: Uncategorized', 'geditorial-admin' ),
 			'icon'   => 'hammer',
 			'i18n'   => 'adminonly',
 			'access' => 'stable',

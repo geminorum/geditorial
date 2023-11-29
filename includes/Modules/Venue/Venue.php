@@ -25,8 +25,8 @@ class Venue extends gEditorial\Module
 	{
 		return [
 			'name'   => 'venue',
-			'title'  => _x( 'Venue', 'Modules: Venue', 'geditorial' ),
-			'desc'   => _x( 'Place Listings', 'Modules: Venue', 'geditorial' ),
+			'title'  => _x( 'Venue', 'Modules: Venue', 'geditorial-admin' ),
+			'desc'   => _x( 'Place Listings', 'Modules: Venue', 'geditorial-admin' ),
 			'icon'   => 'location-alt',
 			'access' => 'beta',
 		];

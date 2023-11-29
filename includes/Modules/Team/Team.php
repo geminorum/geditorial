@@ -18,8 +18,8 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'name'   => 'team',
-			'title'  => _x( 'Team', 'Modules: Team', 'geditorial' ),
-			'desc'   => _x( 'Profiles for Editorial Teams', 'Modules: Team', 'geditorial' ),
+			'title'  => _x( 'Team', 'Modules: Team', 'geditorial-admin' ),
+			'desc'   => _x( 'Profiles for Editorial Teams', 'Modules: Team', 'geditorial-admin' ),
 			'icon'   => 'groups',
 			'access' => 'beta',
 		];

@@ -20,8 +20,8 @@ class Wysiwyg extends gEditorial\Module
 	{
 		return [
 			'name'     => 'wysiwyg',
-			'title'    => _x( 'Wysiwyg', 'Modules: Wysiwyg', 'geditorial' ),
-			'desc'     => _x( 'What You See Is What You Get', 'Modules: Wysiwyg', 'geditorial' ),
+			'title'    => _x( 'Wysiwyg', 'Modules: Wysiwyg', 'geditorial-admin' ),
+			'desc'     => _x( 'What You See Is What You Get', 'Modules: Wysiwyg', 'geditorial-admin' ),
 			'icon'     => 'embed-generic',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',

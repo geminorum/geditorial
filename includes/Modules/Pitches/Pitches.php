@@ -14,8 +14,8 @@ class Pitches extends gEditorial\Module
 	{
 		return [
 			'name'     => 'pitches',
-			'title'    => _x( 'Pitches', 'Modules: Pitches', 'geditorial' ),
-			'desc'     => _x( 'Keep Track of Ideas', 'Modules: Pitches', 'geditorial' ),
+			'title'    => _x( 'Pitches', 'Modules: Pitches', 'geditorial-admin' ),
+			'desc'     => _x( 'Keep Track of Ideas', 'Modules: Pitches', 'geditorial-admin' ),
 			'icon'     => 'lightbulb',
 			'access'   => 'beta',
 			'frontend' => FALSE,

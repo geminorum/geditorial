@@ -16,8 +16,8 @@ class Shortcodes extends gEditorial\Module
 	{
 		return [
 			'name'   => 'shortcodes',
-			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes', 'geditorial' ),
-			'desc'   => _x( 'Shortcode Tools', 'Modules: Shortcodes', 'geditorial' ),
+			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes', 'geditorial-admin' ),
+			'desc'   => _x( 'Shortcode Tools', 'Modules: Shortcodes', 'geditorial-admin' ),
 			'icon'   => 'media-code',
 			'access' => 'stable',
 		];

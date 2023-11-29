@@ -35,8 +35,8 @@ class Meta extends gEditorial\Module
 	{
 		return [
 			'name'   => 'meta',
-			'title'  => _x( 'Meta', 'Modules: Meta', 'geditorial' ),
-			'desc'   => _x( 'Curated Meta-data', 'Modules: Meta', 'geditorial' ),
+			'title'  => _x( 'Meta', 'Modules: Meta', 'geditorial-admin' ),
+			'desc'   => _x( 'Curated Meta-data', 'Modules: Meta', 'geditorial-admin' ),
 			'icon'   => 'tag',
 			'access' => 'stable',
 		];

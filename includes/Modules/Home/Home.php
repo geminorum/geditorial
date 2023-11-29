@@ -15,8 +15,8 @@ class Home extends gEditorial\Module
 	{
 		return [
 			'name'   => 'home',
-			'title'  => _x( 'Home', 'Modules: Home', 'geditorial' ),
-			'desc'   => _x( 'Customized Homepage', 'Modules: Home', 'geditorial' ),
+			'title'  => _x( 'Home', 'Modules: Home', 'geditorial-admin' ),
+			'desc'   => _x( 'Customized Homepage', 'Modules: Home', 'geditorial-admin' ),
 			'icon'   => 'admin-home',
 			'i18n'   => 'adminonly',
 			'access' => 'stable',

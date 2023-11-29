@@ -18,7 +18,7 @@ trait BulkExports
 
 			$label = sprintf(
 				/* translators: %1$s: icon markup, %2$s: export type title */
-				_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial' ),
+				_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial-admin' ),
 				Helper::getIcon( 'download' ),
 				$type_args['title']
 			);
@@ -26,7 +26,7 @@ trait BulkExports
 			$html.= Core\HTML::tag( 'a', [
 				'href'  => $this->exports_get_type_download_link( $post->ID, $type, $context, $type_args['target'] ),
 				'class' => [ 'button', 'button-small', '-button', '-button-icon', '-exportbutton', '-button-download' ],
-				'title' => _x( 'Download Exported CSV File', 'Internal: Exports: Button Title', 'geditorial' ),
+				'title' => _x( 'Download Exported CSV File', 'Internal: Exports: Button Title', 'geditorial-admin' ),
 			], $label );
 		}
 
@@ -37,17 +37,17 @@ trait BulkExports
 	{
 		$types = [
 			'simple'   => [
-				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial' ),
+				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
 			],
 
 			'advanced' => [
-				'title'  => _x( 'Advanced', 'Internal: Export Type Title', 'geditorial' ),
+				'title'  => _x( 'Advanced', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
 			],
 
 			'full' => [
-				'title'  => _x( 'Full', 'Internal: Export Type Title', 'geditorial' ),
+				'title'  => _x( 'Full', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
 			],
 		];

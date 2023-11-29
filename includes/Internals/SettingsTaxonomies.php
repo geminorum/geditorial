@@ -37,7 +37,7 @@ trait SettingsTaxonomies
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
-				_x( 'Enable for Taxonomies', 'Module', 'geditorial' ) );
+				_x( 'Enable for Taxonomies', 'Module', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );
 
@@ -113,7 +113,7 @@ trait SettingsTaxonomies
 			$pre = [];
 
 		else if ( TRUE === $pre )
-			$pre = [ 'all' => _x( 'All Taxonomies', 'Module', 'geditorial' ) ];
+			$pre = [ 'all' => _x( 'All Taxonomies', 'Module', 'geditorial-admin' ) ];
 
 		$all = WordPress\Taxonomy::get( 0, $args, FALSE, $capability, $user_id );
 

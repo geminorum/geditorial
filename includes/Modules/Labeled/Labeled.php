@@ -23,8 +23,8 @@ class Labeled extends gEditorial\Module
 	{
 		return [
 			'name'     => 'labeled',
-			'title'    => _x( 'Labeled', 'Modules: Labeled', 'geditorial' ),
-			'desc'     => _x( 'Custom Labels for Contents', 'Modules: Labeled', 'geditorial' ),
+			'title'    => _x( 'Labeled', 'Modules: Labeled', 'geditorial-admin' ),
+			'desc'     => _x( 'Custom Labels for Contents', 'Modules: Labeled', 'geditorial-admin' ),
 			'icon'     => 'tag',
 			'access'   => 'beta',
 			'keywords' => [ 'metafield' ],

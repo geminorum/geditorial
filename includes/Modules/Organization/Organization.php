@@ -34,8 +34,8 @@ class Organization extends gEditorial\Module
 	{
 		return [
 			'name'   => 'organization',
-			'title'  => _x( 'Organization', 'Modules: Organization', 'geditorial' ),
-			'desc'   => _x( 'Departments of Editorial', 'Modules: Organization', 'geditorial' ),
+			'title'  => _x( 'Organization', 'Modules: Organization', 'geditorial-admin' ),
+			'desc'   => _x( 'Departments of Editorial', 'Modules: Organization', 'geditorial-admin' ),
 			'icon'   => 'bank',
 			'access' => 'beta',
 		];

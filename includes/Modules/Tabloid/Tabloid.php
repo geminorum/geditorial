@@ -21,8 +21,8 @@ class Tabloid extends gEditorial\Module
 	{
 		return [
 			'name'     => 'tabloid',
-			'title'    => _x( 'Tabloid', 'Modules: Tabloid', 'geditorial' ),
-			'desc'     => _x( 'Custom Overview of Contents', 'Modules: Tabloid', 'geditorial' ),
+			'title'    => _x( 'Tabloid', 'Modules: Tabloid', 'geditorial-admin' ),
+			'desc'     => _x( 'Custom Overview of Contents', 'Modules: Tabloid', 'geditorial-admin' ),
 			'icon'     => 'analytics',
 			'access'   => 'beta',
 			'frontend' => FALSE,

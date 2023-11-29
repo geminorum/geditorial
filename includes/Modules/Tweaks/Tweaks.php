@@ -25,8 +25,8 @@ class Tweaks extends gEditorial\Module
 	{
 		return [
 			'name'     => 'tweaks',
-			'title'    => _x( 'Tweaks', 'Modules: Tweaks', 'geditorial' ),
-			'desc'     => _x( 'Admin UI Enhancement', 'Modules: Tweaks', 'geditorial' ),
+			'title'    => _x( 'Tweaks', 'Modules: Tweaks', 'geditorial-admin' ),
+			'desc'     => _x( 'Admin UI Enhancement', 'Modules: Tweaks', 'geditorial-admin' ),
 			'icon'     => 'admin-tools',
 			'frontend' => FALSE,
 			'access'   => 'stable',

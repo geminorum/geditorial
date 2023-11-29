@@ -22,12 +22,12 @@ class Schedule extends gEditorial\Module
 	{
 		return [
 			'name'     => 'schedule',
-			'title'    => _x( 'Schedule', 'Modules: Schedule', 'geditorial' ),
-			'desc'     => _x( 'Viewing and Schedule Content in a Customizable Calendar', 'Modules: Schedule', 'geditorial' ),
+			'title'    => _x( 'Schedule', 'Modules: Schedule', 'geditorial-admin' ),
+			'desc'     => _x( 'Viewing and Schedule Content in a Customizable Calendar', 'Modules: Schedule', 'geditorial-admin' ),
 			'icon'     => 'calendar-alt',
 			'access'   => 'beta',
 			'frontend' => FALSE,
-			'disabled' => defined( 'GPERSIANDATE_VERSION' ) ? FALSE : _x( 'Needs gPersianDate', 'Modules: Schedule', 'geditorial' ),
+			'disabled' => defined( 'GPERSIANDATE_VERSION' ) ? FALSE : _x( 'Needs gPersianDate', 'Modules: Schedule', 'geditorial-admin' ),
 		];
 	}
 

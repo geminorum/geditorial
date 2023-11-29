@@ -25,8 +25,8 @@ class Ortho extends gEditorial\Module
 	{
 		return [
 			'name'     => 'ortho',
-			'title'    => _x( 'Ortho', 'Modules: Ortho', 'geditorial' ),
-			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', 'geditorial' ),
+			'title'    => _x( 'Ortho', 'Modules: Ortho', 'geditorial-admin' ),
+			'desc'     => _x( 'Persian Orthography Tools', 'Modules: Ortho', 'geditorial-admin' ),
 			'icon'     => [ 'misc-32', 'pen' ],
 			'frontend' => FALSE,
 			'access'   => 'stable',

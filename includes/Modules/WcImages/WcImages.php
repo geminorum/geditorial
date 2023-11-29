@@ -16,8 +16,8 @@ class WcImages extends gEditorial\Module
 	{
 		return [
 			'name'      => 'wc_images',
-			'title'     => _x( 'WC Images', 'Modules: WC Images', 'geditorial' ),
-			'desc'      => _x( 'Tools for Product Galleries', 'Modules: WC Images', 'geditorial' ),
+			'title'     => _x( 'WC Images', 'Modules: WC Images', 'geditorial-admin' ),
+			'desc'      => _x( 'Tools for Product Galleries', 'Modules: WC Images', 'geditorial-admin' ),
 			'icon'      => 'images-alt2',
 			'configure' => 'tools',
 			'access'    => 'beta',

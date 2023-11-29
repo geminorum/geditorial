@@ -21,8 +21,8 @@ class Entry extends gEditorial\Module
 	{
 		return [
 			'name'   => 'entry',
-			'title'  => _x( 'Entry', 'Modules: Entry', 'geditorial' ),
-			'desc'   => _x( 'Wiki-like Posts Entries', 'Modules: Entry', 'geditorial' ),
+			'title'  => _x( 'Entry', 'Modules: Entry', 'geditorial-admin' ),
+			'desc'   => _x( 'Wiki-like Posts Entries', 'Modules: Entry', 'geditorial-admin' ),
 			'icon'   => 'media-document',
 			'access' => 'stable',
 		];

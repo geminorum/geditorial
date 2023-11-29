@@ -58,8 +58,8 @@ class Terms extends gEditorial\Module
 	{
 		return [
 			'name'   => 'terms',
-			'title'  => _x( 'Terms', 'Modules: Terms', 'geditorial' ),
-			'desc'   => _x( 'Taxonomy & Term Tools', 'Modules: Terms', 'geditorial' ),
+			'title'  => _x( 'Terms', 'Modules: Terms', 'geditorial-admin' ),
+			'desc'   => _x( 'Taxonomy & Term Tools', 'Modules: Terms', 'geditorial-admin' ),
 			'icon'   => 'image-filter',
 			'access' => 'stable',
 		];

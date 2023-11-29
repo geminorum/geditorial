@@ -36,8 +36,8 @@ class Audit extends gEditorial\Module
 	{
 		return [
 			'name'   => 'audit',
-			'title'  => _x( 'Audit', 'Modules: Audit', 'geditorial' ),
-			'desc'   => _x( 'Content Inventory Tools', 'Modules: Audit', 'geditorial' ),
+			'title'  => _x( 'Audit', 'Modules: Audit', 'geditorial-admin' ),
+			'desc'   => _x( 'Content Inventory Tools', 'Modules: Audit', 'geditorial-admin' ),
 			'icon'   => 'visibility',
 			'access' => 'stable',
 		];

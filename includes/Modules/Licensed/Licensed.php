@@ -21,8 +21,8 @@ class Licensed extends gEditorial\Module
 	{
 		return [
 			'name'     => 'licensed',
-			'title'    => _x( 'Licensed', 'Modules: Licensed', 'geditorial' ),
-			'desc'     => _x( 'Driver Licence Management', 'Modules: Licensed', 'geditorial' ),
+			'title'    => _x( 'Licensed', 'Modules: Licensed', 'geditorial-admin' ),
+			'desc'     => _x( 'Driver Licence Management', 'Modules: Licensed', 'geditorial-admin' ),
 			'icon'     => 'id',
 			'access'   => 'beta',
 			'keywords' => [ 'car', 'vehicle' ],

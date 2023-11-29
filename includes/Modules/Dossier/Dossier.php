@@ -30,8 +30,8 @@ class Dossier extends gEditorial\Module
 	{
 		return [
 			'name'   => 'dossier',
-			'title'  => _x( 'Dossier', 'Modules: Dossier', 'geditorial' ),
-			'desc'   => _x( 'Collection of Contents', 'Modules: Dossier', 'geditorial' ),
+			'title'  => _x( 'Dossier', 'Modules: Dossier', 'geditorial-admin' ),
+			'desc'   => _x( 'Collection of Contents', 'Modules: Dossier', 'geditorial-admin' ),
 			'icon'   => 'portfolio',
 			'access' => 'beta',
 		];

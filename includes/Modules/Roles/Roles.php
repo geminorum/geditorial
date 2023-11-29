@@ -21,8 +21,8 @@ class Roles extends gEditorial\Module
 	{
 		return [
 			'name'   => 'roles',
-			'title'  => _x( 'Roles', 'Modules: Roles', 'geditorial' ),
-			'desc'   => _x( 'Member & Role Management', 'Modules: Roles', 'geditorial' ),
+			'title'  => _x( 'Roles', 'Modules: Roles', 'geditorial-admin' ),
+			'desc'   => _x( 'Member & Role Management', 'Modules: Roles', 'geditorial-admin' ),
 			'icon'   => 'privacy',
 			'i18n'   => 'adminonly',
 			'access' => 'beta',

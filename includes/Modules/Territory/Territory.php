@@ -21,8 +21,8 @@ class Territory extends gEditorial\Module
 	{
 		return [
 			'name'     => 'territory',
-			'title'    => _x( 'Territory', 'Modules: Territory', 'geditorial' ),
-			'desc'     => _x( 'Territorial Arrangements', 'Modules: Territory', 'geditorial' ),
+			'title'    => _x( 'Territory', 'Modules: Territory', 'geditorial-admin' ),
+			'desc'     => _x( 'Territorial Arrangements', 'Modules: Territory', 'geditorial-admin' ),
 			'icon'     => 'location-alt',
 			'access'   => 'beta',
 			'keywords' => [

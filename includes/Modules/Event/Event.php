@@ -19,8 +19,8 @@ class Event extends gEditorial\Module
 	{
 		return [
 			'name'   => 'event',
-			'title'  => _x( 'Event', 'Modules: Event', 'geditorial' ),
-			'desc'   => _x( 'Integrated Events', 'Modules: Event', 'geditorial' ),
+			'title'  => _x( 'Event', 'Modules: Event', 'geditorial-admin' ),
+			'desc'   => _x( 'Integrated Events', 'Modules: Event', 'geditorial-admin' ),
 			'icon'   => 'calendar-alt',
 			'access' => 'beta',
 		];

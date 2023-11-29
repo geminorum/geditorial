@@ -19,8 +19,8 @@ class Identified extends gEditorial\Module
 	{
 		return [
 			'name'   => 'identified',
-			'title'  => _x( 'Identified', 'Modules: Identified', 'geditorial' ),
-			'desc'   => _x( 'Content Identification Management', 'Modules: Identified', 'geditorial' ),
+			'title'  => _x( 'Identified', 'Modules: Identified', 'geditorial-admin' ),
+			'desc'   => _x( 'Content Identification Management', 'Modules: Identified', 'geditorial-admin' ),
 			'icon'   => [ 'misc-32', 'barcode' ],
 			'access' => 'beta',
 		];

@@ -18,8 +18,8 @@ class Drafts extends gEditorial\Module
 	{
 		return [
 			'name'   => 'drafts',
-			'title'  => _x( 'Drafts', 'Modules: Drafts', 'geditorial' ),
-			'desc'   => _x( 'Tools to Work With Drafts', 'Modules: Drafts', 'geditorial' ),
+			'title'  => _x( 'Drafts', 'Modules: Drafts', 'geditorial-admin' ),
+			'desc'   => _x( 'Tools to Work With Drafts', 'Modules: Drafts', 'geditorial-admin' ),
 			'icon'   => 'admin-post',
 			'access' => 'stable',
 		];

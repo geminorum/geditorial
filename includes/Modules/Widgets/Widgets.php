@@ -14,8 +14,8 @@ class Widgets extends gEditorial\Module
 	{
 		return [
 			'name'   => 'widgets',
-			'title'  => _x( 'Widgets', 'Modules: Widgets', 'geditorial' ),
-			'desc'   => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial' ),
+			'title'  => _x( 'Widgets', 'Modules: Widgets', 'geditorial-admin' ),
+			'desc'   => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial-admin' ),
 			'icon'   => 'welcome-widgets-menus',
 			'i18n'   => 'adminonly',
 			'access' => 'stable',

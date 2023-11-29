@@ -19,8 +19,8 @@ class Quotation extends gEditorial\Module
 	{
 		return [
 			'name'   => 'quotation',
-			'title'  => _x( 'Quotation', 'Modules: Quotation', 'geditorial' ),
-			'desc'   => _x( 'Snippets from Content', 'Modules: Quotation', 'geditorial' ),
+			'title'  => _x( 'Quotation', 'Modules: Quotation', 'geditorial-admin' ),
+			'desc'   => _x( 'Snippets from Content', 'Modules: Quotation', 'geditorial-admin' ),
 			'icon'   => 'format-quote',
 			'access' => 'beta',
 		];

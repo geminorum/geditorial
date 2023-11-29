@@ -33,8 +33,8 @@ class Trained extends gEditorial\Module
 	{
 		return [
 			'name'   => 'trained',
-			'title'  => _x( 'Trained', 'Modules: Trained', 'geditorial' ),
-			'desc'   => _x( 'Editorial Training Management', 'Modules: Trained', 'geditorial' ),
+			'title'  => _x( 'Trained', 'Modules: Trained', 'geditorial-admin' ),
+			'desc'   => _x( 'Editorial Training Management', 'Modules: Trained', 'geditorial-admin' ),
 			'icon'   => 'universal-access-alt',
 			'access' => 'beta',
 		];

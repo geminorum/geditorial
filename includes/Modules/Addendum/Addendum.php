@@ -33,8 +33,8 @@ class Addendum extends gEditorial\Module
 	{
 		return [
 			'name'   => 'addendum',
-			'title'  => _x( 'Addendum', 'Modules: Addendum', 'geditorial' ),
-			'desc'   => _x( 'Content Appendages', 'Modules: Addendum', 'geditorial' ),
+			'title'  => _x( 'Addendum', 'Modules: Addendum', 'geditorial-admin' ),
+			'desc'   => _x( 'Content Appendages', 'Modules: Addendum', 'geditorial-admin' ),
 			'icon'   => 'carrot',
 			'access' => 'beta',
 		];

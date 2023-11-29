@@ -28,8 +28,8 @@ class Contest extends gEditorial\Module
 	{
 		return [
 			'name'   => 'contest',
-			'title'  => _x( 'Contest', 'Modules: Contest', 'geditorial' ),
-			'desc'   => _x( 'Contest Management', 'Modules: Contest', 'geditorial' ),
+			'title'  => _x( 'Contest', 'Modules: Contest', 'geditorial-admin' ),
+			'desc'   => _x( 'Contest Management', 'Modules: Contest', 'geditorial-admin' ),
 			'icon'   => 'megaphone',
 			'access' => 'beta',
 		];

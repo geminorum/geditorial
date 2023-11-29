@@ -28,8 +28,8 @@ class Magazine extends gEditorial\Module
 	{
 		return [
 			'name'   => 'magazine',
-			'title'  => _x( 'Magazine', 'Modules: Magazine', 'geditorial' ),
-			'desc'   => _x( 'Magazine Issue Management', 'Modules: Magazine', 'geditorial' ),
+			'title'  => _x( 'Magazine', 'Modules: Magazine', 'geditorial-admin' ),
+			'desc'   => _x( 'Magazine Issue Management', 'Modules: Magazine', 'geditorial-admin' ),
 			'icon'   => 'book',
 			'access' => 'stable',
 		];

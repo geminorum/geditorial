@@ -30,8 +30,8 @@ class Users extends gEditorial\Module
 	{
 		return [
 			'name'   => 'users',
-			'title'  => _x( 'Users', 'Modules: Users', 'geditorial' ),
-			'desc'   => _x( 'Editorial Users', 'Modules: Users', 'geditorial' ),
+			'title'  => _x( 'Users', 'Modules: Users', 'geditorial-admin' ),
+			'desc'   => _x( 'Editorial Users', 'Modules: Users', 'geditorial-admin' ),
 			'icon'   => 'admin-users',
 			'access' => 'beta',
 		];

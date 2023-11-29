@@ -23,8 +23,8 @@ class Iranian extends gEditorial\Module
 	{
 		return [
 			'name'     => 'iranian',
-			'title'    => _x( 'Iranian', 'Modules: Iranian', 'geditorial' ),
-			'desc'     => _x( 'Tools for Iranian Editorial', 'Modules: Iranian', 'geditorial' ),
+			'title'    => _x( 'Iranian', 'Modules: Iranian', 'geditorial-admin' ),
+			'desc'     => _x( 'Tools for Iranian Editorial', 'Modules: Iranian', 'geditorial-admin' ),
 			'icon'     => [ 'misc-1000', 'ir-map' ],
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',

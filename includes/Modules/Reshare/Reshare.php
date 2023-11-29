@@ -16,8 +16,8 @@ class Reshare extends gEditorial\Module
 	{
 		return [
 			'name'   => 'reshare',
-			'title'  => _x( 'Reshare', 'Modules: Reshare', 'geditorial' ),
-			'desc'   => _x( 'Contents from Other Sources', 'Modules: Reshare', 'geditorial' ),
+			'title'  => _x( 'Reshare', 'Modules: Reshare', 'geditorial-admin' ),
+			'desc'   => _x( 'Contents from Other Sources', 'Modules: Reshare', 'geditorial-admin' ),
 			'icon'   => 'share-alt',
 			'access' => 'beta',
 		];

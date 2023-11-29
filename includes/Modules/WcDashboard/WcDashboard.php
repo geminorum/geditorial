@@ -13,8 +13,8 @@ class WcDashboard extends gEditorial\Module
 	{
 		return [
 			'name'     => 'wc_dashboard',
-			'title'    => _x( 'WC Dashboard', 'Modules: WC Dashboard', 'geditorial' ),
-			'desc'     => _x( 'Customer Dashboard Enhancements for WooCommerce', 'Modules: WC Dashboard', 'geditorial' ),
+			'title'    => _x( 'WC Dashboard', 'Modules: WC Dashboard', 'geditorial-admin' ),
+			'desc'     => _x( 'Customer Dashboard Enhancements for WooCommerce', 'Modules: WC Dashboard', 'geditorial-admin' ),
 			'icon'     => 'dashboard',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),

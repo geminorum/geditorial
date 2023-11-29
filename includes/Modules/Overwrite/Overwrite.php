@@ -14,8 +14,8 @@ class Overwrite extends gEditorial\Module
 	{
 		return [
 			'name'   => 'overwrite',
-			'title'  => _x( 'Overwrite', 'Modules: Overwrite', 'geditorial' ),
-			'desc'   => _x( 'Customized Translation Strings', 'Modules: Overwrite', 'geditorial' ),
+			'title'  => _x( 'Overwrite', 'Modules: Overwrite', 'geditorial-admin' ),
+			'desc'   => _x( 'Customized Translation Strings', 'Modules: Overwrite', 'geditorial-admin' ),
 			'icon'   => 'editor-strikethrough',
 			'i18n'   => 'adminonly',
 			'access' => 'beta',

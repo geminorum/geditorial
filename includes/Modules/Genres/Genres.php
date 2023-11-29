@@ -20,8 +20,8 @@ class Genres extends gEditorial\Module
 	{
 		return [
 			'name'   => 'genres',
-			'title'  => _x( 'Genres', 'Modules: Genres', 'geditorial' ),
-			'desc'   => _x( 'Stylistic Categories', 'Modules: Genres', 'geditorial' ),
+			'title'  => _x( 'Genres', 'Modules: Genres', 'geditorial-admin' ),
+			'desc'   => _x( 'Stylistic Categories', 'Modules: Genres', 'geditorial-admin' ),
 			'icon'   => 'category',
 			'access' => 'beta',
 		];

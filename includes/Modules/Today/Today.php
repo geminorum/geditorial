@@ -25,8 +25,8 @@ class Today extends gEditorial\Module
 	{
 		return [
 			'name'   => 'today',
-			'title'  => _x( 'Today', 'Modules: Today', 'geditorial' ),
-			'desc'   => _x( 'The day in History', 'Modules: Today', 'geditorial' ),
+			'title'  => _x( 'Today', 'Modules: Today', 'geditorial-admin' ),
+			'desc'   => _x( 'The day in History', 'Modules: Today', 'geditorial-admin' ),
 			'icon'   => 'calendar-alt',
 			'access' => 'beta',
 		];

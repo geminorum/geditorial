@@ -16,8 +16,8 @@ class Dashboard extends gEditorial\Module
 	{
 		return [
 			'name'   => 'dashboard',
-			'title'  => _x( 'Dashboard', 'Modules: Dashboard', 'geditorial' ),
-			'desc'   => _x( 'Front-end Editorial Dashboard', 'Modules: Dashboard', 'geditorial' ),
+			'title'  => _x( 'Dashboard', 'Modules: Dashboard', 'geditorial-admin' ),
+			'desc'   => _x( 'Front-end Editorial Dashboard', 'Modules: Dashboard', 'geditorial-admin' ),
 			'icon'   => 'dashboard',
 			'access' => 'beta',
 		];

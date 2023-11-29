@@ -24,8 +24,8 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'name'     => 'importer',
-			'title'    => _x( 'Importer', 'Modules: Importer', 'geditorial' ),
-			'desc'     => _x( 'Data Import Tools', 'Modules: Importer', 'geditorial' ),
+			'title'    => _x( 'Importer', 'Modules: Importer', 'geditorial-admin' ),
+			'desc'     => _x( 'Data Import Tools', 'Modules: Importer', 'geditorial-admin' ),
 			'icon'     => 'upload',
 			'access'   => 'stable',
 			'frontend' => FALSE,

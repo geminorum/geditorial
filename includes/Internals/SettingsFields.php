@@ -13,7 +13,7 @@ trait SettingsFields
 	{
 		if ( is_null( $section_title ) )
 			/* translators: %s: posttype */
-			$section_title = _x( 'Fields for %s', 'Module', 'geditorial' );
+			$section_title = _x( 'Fields for %s', 'Module', 'geditorial-admin' );
 
 		$all = $this->all_posttypes();
 
@@ -121,14 +121,14 @@ trait SettingsFields
 			'id'    => $args['post_type'].'_fields_all',
 		] );
 
-		$html.= '&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', 'geditorial' ).'</span>';
+		$html.= '&nbsp;<span class="description">'._x( 'Select All Fields', 'Module', 'geditorial-admin' ).'</span>';
 
 		Core\HTML::label( $html, $args['post_type'].'_fields_all', FALSE );
 	}
 
 	public function settings_fields_option_none( $args )
 	{
-		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', 'geditorial' ) );
+		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', 'geditorial-admin' ) );
 	}
 
 	public function posttype_fields_all( $posttype = 'post', $module = NULL )

@@ -26,8 +26,8 @@ class Lingo extends gEditorial\Module
 	{
 		return [
 			'name'   => 'lingo',
-			'title'  => _x( 'Lingo', 'Modules: Lingo', 'geditorial' ),
-			'desc'   => _x( 'Language Identifiers', 'Modules: Lingo', 'geditorial' ),
+			'title'  => _x( 'Lingo', 'Modules: Lingo', 'geditorial-admin' ),
+			'desc'   => _x( 'Language Identifiers', 'Modules: Lingo', 'geditorial-admin' ),
 			'icon'   => 'translation',
 			'access' => 'beta',
 		];

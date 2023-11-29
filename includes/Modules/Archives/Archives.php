@@ -21,8 +21,8 @@ class Archives extends gEditorial\Module
 	{
 		return [
 			'name'   => 'archives',
-			'title'  => _x( 'Archives', 'Modules: Archives', 'geditorial' ),
-			'desc'   => _x( 'Content Archives Pages', 'Modules: Archives', 'geditorial' ),
+			'title'  => _x( 'Archives', 'Modules: Archives', 'geditorial-admin' ),
+			'desc'   => _x( 'Content Archives Pages', 'Modules: Archives', 'geditorial-admin' ),
 			'icon'   => 'editor-ul',
 			'i18n'   => 'adminonly',
 			'access' => 'stable',

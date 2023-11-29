@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class IBAN extends Base
 {
 
+	// TODO: convert into `DataType`
+
 	// NOTE: `bcmod()` needs `ext-bcmath`
 
 	/**

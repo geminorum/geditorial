@@ -26,8 +26,8 @@ class Persona extends gEditorial\Module
 	{
 		return [
 			'name'     => 'persona',
-			'title'    => _x( 'Persona', 'Modules: Persona', 'geditorial' ),
-			'desc'     => _x( 'Human Resource Management for Editorial', 'Modules: Persona', 'geditorial' ),
+			'title'    => _x( 'Persona', 'Modules: Persona', 'geditorial-admin' ),
+			'desc'     => _x( 'Human Resource Management for Editorial', 'Modules: Persona', 'geditorial-admin' ),
 			'icon'     => 'id-alt',
 			'access'   => 'beta',
 			'keywords' => [

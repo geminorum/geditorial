@@ -35,9 +35,9 @@ class Config extends gEditorial\Module
 	{
 		return [
 			'name'     => 'config',
-			'title'    => _x( 'Editorial', 'Modules: Config', 'geditorial' ),
-			'desc'     => _x( 'WordPress in Magazine Style', 'Modules: Config', 'geditorial' ),
-			'frontend' => FALSE,
+			'title'    => _x( 'Editorial', 'Modules: Config', 'geditorial-admin' ),
+			'desc'     => _x( 'WordPress in Magazine Style', 'Modules: Config', 'geditorial-admin' ),
+			'frontend' => FALSE, // move all strings to `geditorial-admin` text-domain
 			'autoload' => TRUE,
 			'access'   => 'stable',
 		];

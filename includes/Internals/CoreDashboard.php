@@ -43,7 +43,7 @@ trait CoreDashboard
 			$title = $this->get_string( 'widget_title',
 				$this->get_setting( 'summary_scope', 'all' ),
 				$context,
-				_x( 'Editorial Content Summary', 'Module: Dashboard Widget Title', 'geditorial' )
+				_x( 'Editorial Content Summary', 'Module: Dashboard Widget Title', 'geditorial-admin' )
 			);
 
 		$screen = get_current_screen();

@@ -13,8 +13,8 @@ class WcLimited extends gEditorial\Module
 	{
 		return [
 			'name'     => 'wc_limited',
-			'title'    => _x( 'WC Limited', 'Modules: WC Limited', 'geditorial' ),
-			'desc'     => _x( 'Product Purchasing Limits for WooCommerce', 'Modules: WC Limited', 'geditorial' ),
+			'title'    => _x( 'WC Limited', 'Modules: WC Limited', 'geditorial-admin' ),
+			'desc'     => _x( 'Product Purchasing Limits for WooCommerce', 'Modules: WC Limited', 'geditorial-admin' ),
 			'icon'     => 'store',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),

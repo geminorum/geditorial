@@ -15,8 +15,8 @@ class Gallery extends gEditorial\Module
 	{
 		return [
 			'name'   => 'gallery',
-			'title'  => _x( 'Gallery', 'Modules: Gallery', 'geditorial' ),
-			'desc'   => _x( 'Photo Directory', 'Modules: Gallery', 'geditorial' ),
+			'title'  => _x( 'Gallery', 'Modules: Gallery', 'geditorial-admin' ),
+			'desc'   => _x( 'Photo Directory', 'Modules: Gallery', 'geditorial-admin' ),
 			'icon'   => 'format-gallery',
 			'access' => 'beta',
 		];

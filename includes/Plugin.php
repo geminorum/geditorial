@@ -302,7 +302,7 @@ class Plugin
 		$selected = get_user_option( sprintf( '%s_restrict_%s', static::BASE, $screen->post_type ) );
 		$name     = sprintf( '%s-restrict-%s', static::BASE, $screen->post_type );
 
-		$html = '<fieldset><legend>'._x( 'Restrictions', 'Plugin: Main: Screen Settings Title', 'geditorial' ).'</legend>';
+		$html = '<fieldset><legend>'._x( 'Restrictions', 'Plugin: Main: Screen Settings Title', 'geditorial-admin' ).'</legend>';
 
 		$html.= HTML::multiSelect( array_map( 'get_taxonomy', $taxonomies ), [
 			'item_tag' => FALSE, // 'span',

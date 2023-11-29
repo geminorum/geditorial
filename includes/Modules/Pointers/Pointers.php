@@ -14,8 +14,8 @@ class Pointers extends gEditorial\Module
 	{
 		return [
 			'name'       => 'pointers',
-			'title'      => _x( 'Pointers', 'Modules: Pointers', 'geditorial' ),
-			'desc'       => _x( 'Editorial Content Hints', 'Modules: Pointers', 'geditorial' ),
+			'title'      => _x( 'Pointers', 'Modules: Pointers', 'geditorial-admin' ),
+			'desc'       => _x( 'Editorial Content Hints', 'Modules: Pointers', 'geditorial-admin' ),
 			'icon'       => 'sticky',
 			'textdomain' => FALSE,
 			'access'     => 'beta',

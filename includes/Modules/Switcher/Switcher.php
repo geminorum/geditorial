@@ -16,8 +16,8 @@ class Switcher extends gEditorial\Module
 	{
 		return [
 			'name'     => 'switcher',
-			'title'    => _x( 'Switcher', 'Modules: Switcher', 'geditorial' ),
-			'desc'     => _x( 'Bulk Conversion Utility', 'Modules: Switcher', 'geditorial' ),
+			'title'    => _x( 'Switcher', 'Modules: Switcher', 'geditorial-admin' ),
+			'desc'     => _x( 'Bulk Conversion Utility', 'Modules: Switcher', 'geditorial-admin' ),
 			'icon'     => 'randomize',
 			'access'   => 'beta',
 			'frontend' => FALSE,

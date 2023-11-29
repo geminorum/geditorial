@@ -20,8 +20,8 @@ class Estimated extends gEditorial\Module
 	{
 		return [
 			'name'   => 'estimated',
-			'title'  => _x( 'Estimated', 'Modules: Estimated', 'geditorial' ),
-			'desc'   => _x( 'Average Required Reading Time', 'Modules: Estimated', 'geditorial' ),
+			'title'  => _x( 'Estimated', 'Modules: Estimated', 'geditorial-admin' ),
+			'desc'   => _x( 'Average Required Reading Time', 'Modules: Estimated', 'geditorial-admin' ),
 			'icon'   => 'clock',
 			'access' => 'beta',
 		];
