@@ -119,30 +119,27 @@ class Importer extends gEditorial\Module
 		}
 	}
 
-	private function _guessed_fields_map( $headers, $key = 'source_map' )
+	private function _guess_fields_map( $headers, $attachment_id = NULL )
 	{
-		if ( ! $stored = get_option( $this->hook( $key ), [] ) )
-			return [];
-
-		$samekey = Core\Arraay::sameKey( $headers );
-
-		foreach ( array_reverse( $stored ) as $map )
-			if ( Core\Arraay::equalKeys( $samekey, $map ) )
-				return array_values( $map );
-
-		return [];
+		return $this->filters( 'guessed_fields_map',
+			Core\Arraay::keepByKeys(
+				(array) get_option( $this->hook( 'fields_history' ), [] ),
+				$headers
+			),
+			$headers,
+			$attachment_id
+		);
 	}
 
-	private function _store_fields_map( $file, $headers, $map, $key = 'source_map' )
+	private function _record_fields_map( $map )
 	{
-		$option = $this->hook( $key );
-		$stored = get_option( $option, [] );
+		$option = $this->hook( 'fields_history' );
 
-		// override the old data, if any
-		// key's better to be file-name than file-path
-		$stored[Core\File::basename( $file )] = array_combine( $headers, $map );
+		$filtered = array_filter( array_map( function( $value ) {
+			return $value && 'none' !== $value ? $value : FALSE;
+		}, $map ) );
 
-		return update_option( $option, $stored );
+		return update_option( $option, array_merge( (array) get_option( $option, [] ), $filtered ) );
 	}
 
 	private function _render_posttype_taxonomies( $posttype )
@@ -203,7 +200,7 @@ class Importer extends gEditorial\Module
 		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
 		if ( empty( $map ) )
-			$map = $this->_guessed_fields_map( $headers );
+			$map = $this->_guess_fields_map( $headers, $id );
 
 		if ( $dups = Core\Arraay::duplicates( $headers ) )
 			/* translators: %s: joined duplicate keys */
@@ -368,7 +365,7 @@ class Importer extends gEditorial\Module
 
 		$this->store_postmeta( $id, $map, $this->constant( 'metakey_source_map' ) );
 		$this->store_postmeta( $id, ( 'none' === $source_key ? FALSE : $source_key ), $this->constant( 'metakey_source_key' ) );
-		$this->_store_fields_map( $file, $headers, $map, $source_key );
+		$this->_record_fields_map( $map );
 
 		$this->_render_data_table( $id, $items, $headers, $map, $posttype, $source_key );
 	}
