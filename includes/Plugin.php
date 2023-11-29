@@ -102,8 +102,7 @@ class Plugin
 
 	public function plugins_loaded()
 	{
-		load_plugin_textdomain( 'geditorial', FALSE, 'geditorial/languages' );
-
+		$this->load_textdomains( GEDITORIAL_DIR );
 		$this->define_constants();
 		$this->load_modules();
 		$this->load_options();
@@ -120,6 +119,19 @@ class Plugin
 		Services\Sitemaps::setup();
 
 		// \TenUp\ContentConnect\Plugin::instance();
+	}
+
+	// NOTE: `custom path` once set by `load_plugin_textdomain()`
+	// NOTE: assumes the plugin directory is the same as the textdomain
+	private function load_textdomains( $path )
+	{
+		load_plugin_textdomain( static::BASE, FALSE, static::BASE.'/languages' );
+
+		if ( ! is_admin() )
+			return;
+
+		$locale = apply_filters( 'plugin_locale', L10n::locale(), static::BASE );
+		load_textdomain( static::BASE.'-admin', $path."languages/admin-{$locale}.mo" );
 	}
 
 	private function define_constants()

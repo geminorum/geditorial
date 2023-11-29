@@ -13,9 +13,9 @@ class Actions extends gEditorial\Module
 	{
 		return [
 			'name'       => 'actions',
-			'title'      => _x( 'Actions', 'Modules: Actions', 'geditorial' ),
-			'desc'       => _x( 'Editorial Content Actions', 'Modules: Actions', 'geditorial' ),
-			'textdomain' => FALSE, // loaded via plugin
+			'title'      => _x( 'Actions', 'Modules: Actions', 'geditorial-admin' ),
+			'desc'       => _x( 'Editorial Content Actions', 'Modules: Actions', 'geditorial-admin' ),
+			'textdomain' => FALSE, // strings in this module are loaded via plugin
 			'configure'  => FALSE,
 			'autoload'   => TRUE,
 			'access'     => 'stable',
@@ -78,7 +78,7 @@ class Actions extends gEditorial\Module
 		echo $this->wrap_open( '-post-actions' );
 
 			echo Core\HTML::dropdown( $actions, [
-				'none_title' => _x( 'Post Actions', 'Modules: Actions: None Title', 'geditorial' ),
+				'none_title' => _x( 'Post Actions', 'Modules: Actions: None Title', 'geditorial-admin' ),
 				'name'       => $this->classs( 'post-action' ),
 			] );
 
