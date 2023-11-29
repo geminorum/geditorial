@@ -386,6 +386,7 @@ class Event extends gEditorial\Module
 		] );
 	}
 
+	// TODO: migrate to meta: `datestart`/`dateend`
 	public function request( $query_vars )
 	{
 		if ( isset( $query_vars['orderby'] ) ) {

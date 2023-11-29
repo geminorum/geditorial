@@ -153,10 +153,11 @@ class Units extends gEditorial\Module
 
 	private function get_posttypes_support_units()
 	{
-		$posttypes = [ 'post', 'page' ];
+		$posttypes = [ 'post' ];
 		$supported = get_post_types_by_support( 'editorial-units' );
 		$excludes  = [
 			'attachment',
+			'page',
 		];
 
 		$list = array_diff( array_merge( $posttypes, $supported ), $excludes );

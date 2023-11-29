@@ -188,6 +188,7 @@ class Settings extends Core\Base
 			'amp'             => _x( 'Accelerated Mobile Pages', 'Settings: Option: PostType Support', 'geditorial' ),
 			'date-picker'     => _x( 'Persian Date: Date Picker', 'Settings: Option: PostType Support', 'geditorial' ),
 			'editorial-meta'  => _x( 'Editorial: Meta Fields', 'Settings: Option: PostType Support', 'geditorial' ),
+			'editorial-geo'   => _x( 'Editorial: Geo Data', 'Settings: Option: PostType Support', 'geditorial' ),
 			'editorial-units' => _x( 'Editorial: Measurement Units', 'Settings: Option: PostType Support', 'geditorial' ),
 			'editorial-roles' => _x( 'Editorial: Custom Roles', 'Settings: Option: PostType Support', 'geditorial' ),
 		];

@@ -36,7 +36,7 @@ class Meta extends gEditorial\Module
 		return [
 			'name'   => 'meta',
 			'title'  => _x( 'Meta', 'Modules: Meta', 'geditorial' ),
-			'desc'   => _x( 'Curated Metadata', 'Modules: Meta', 'geditorial' ),
+			'desc'   => _x( 'Curated Meta-data', 'Modules: Meta', 'geditorial' ),
 			'icon'   => 'tag',
 			'access' => 'stable',
 		];
@@ -209,7 +209,8 @@ class Meta extends gEditorial\Module
 	protected function get_global_fields()
 	{
 		return [
-			'post' => [
+			'post' => [ // FIXME: rename to `_supported`
+
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 				'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
@@ -287,6 +288,7 @@ class Meta extends gEditorial\Module
 
 	public function importer_init()
 	{
+		// $this->posttypefields__hook_importer_init();
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 2 );
@@ -421,7 +423,7 @@ class Meta extends gEditorial\Module
 	protected function init_meta_fields()
 	{
 		foreach ( $this->get_posttypes_support_meta() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields['post'] );
+			$this->add_posttype_fields( $posttype, $this->fields['post'], TRUE, 'meta' );
 
 		$this->add_posttype_fields( 'page' );
 
@@ -1444,7 +1446,7 @@ class Meta extends gEditorial\Module
 				'type'   => [
 					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
 					'args'     => [ 'types' => WordPress\PostType::get( 2 ) ],
-					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 						$post = WordPress\Post::get( $row->post_id );
 
@@ -1455,7 +1457,7 @@ class Meta extends gEditorial\Module
 				],
 				'title'   => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
-					'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 						return WordPress\Post::title( $row->post_id );
 					},
 				],

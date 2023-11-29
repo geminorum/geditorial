@@ -55,7 +55,7 @@ trait ViewEngines
 
 			'template_class_prefix' => sprintf( '__%s_%s_', $this->base, $this->key ),
 
-			'escape' => static function( $value ) {
+			'escape' => static function ( $value ) {
 				return htmlspecialchars( $value, ENT_COMPAT, 'UTF-8' );
 			},
 		];

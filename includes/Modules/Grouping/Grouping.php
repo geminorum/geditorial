@@ -155,17 +155,19 @@ class Grouping extends gEditorial\Module
 
 	private function _edit_tags_screen( $taxonomy )
 	{
-		add_filter( 'manage_edit-'.$taxonomy.'_columns', function( $columns ) use ( $taxonomy ) {
-			unset( $columns['posts'] );
-			return array_merge( $columns, [
-				'users' => $this->get_column_title( 'users', $taxonomy, _x( 'Users', 'Column Title', 'geditorial-grouping' ) ),
-			] );
-		} );
+		add_filter( 'manage_edit-'.$taxonomy.'_columns',
+			function ( $columns ) use ( $taxonomy ) {
+				unset( $columns['posts'] );
+				return array_merge( $columns, [
+					'users' => $this->get_column_title( 'users', $taxonomy, _x( 'Users', 'Column Title', 'geditorial-grouping' ) ),
+				] );
+			} );
 
-		add_action( 'manage_'.$taxonomy.'_custom_column', static function( $display, $column, $term_id ) use ( $taxonomy ) {
-			if ( 'users' == $column )
-				echo Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
-		}, 10, 3 );
+		add_action( 'manage_'.$taxonomy.'_custom_column',
+			static function ( $display, $column, $term_id ) use ( $taxonomy ) {
+				if ( 'users' == $column )
+					echo Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
+			}, 10, 3 );
 	}
 
 	public function tweaks_column_user( $user )

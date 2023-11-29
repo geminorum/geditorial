@@ -13,7 +13,7 @@ trait PairedRest
 		if ( empty( $object ) || empty( $object->show_in_rest ) )
 			return FALSE;
 
-		add_action( 'rest_api_init', function() use ( $object ) {
+		add_action( 'rest_api_init', function () use ( $object ) {
 			register_rest_route( $object->rest_namespace,
 				'/'.$object->rest_base.'/(?P<parent>[\d]+)/'.Services\Paired::PAIRED_REST_FROM,
 				[

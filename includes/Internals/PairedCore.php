@@ -282,7 +282,7 @@ trait PairedCore
 		$paired_posttype = $this->constant( $constants[0] );
 		// $paired_taxonomy = $this->constant( $constants[1] );
 
-		add_action( 'save_post_'.$paired_posttype, function( $post_id, $post, $update ) use ( $constants ) {
+		add_action( 'save_post_'.$paired_posttype, function ( $post_id, $post, $update ) use ( $constants ) {
 
 			// we handle updates on another action, @SEE: `post_updated` action
 			if ( ! $update )
@@ -290,19 +290,19 @@ trait PairedCore
 
 		}, 20, 3 );
 
-		add_action( 'post_updated', function( $post_id, $post_after, $post_before ) use ( $constants ) {
+		add_action( 'post_updated', function ( $post_id, $post_after, $post_before ) use ( $constants ) {
 			$this->paired_do_save_to_post_update( $post_after, $post_before, $constants[0], $constants[1] );
 		}, 20, 3 );
 
-		add_action( 'wp_trash_post', function( $post_id ) use ( $constants ) {
+		add_action( 'wp_trash_post', function ( $post_id ) use ( $constants ) {
 			$this->paired_do_trash_to_post( $post_id, $constants[0], $constants[1] );
 		} );
 
-		add_action( 'untrash_post', function( $post_id ) use ( $constants ) {
+		add_action( 'untrash_post', function ( $post_id ) use ( $constants ) {
 			$this->paired_do_untrash_to_post( $post_id, $constants[0], $constants[1] );
 		} );
 
-		add_action( 'before_delete_post', function( $post_id ) use ( $constants ) {
+		add_action( 'before_delete_post', function ( $post_id ) use ( $constants ) {
 			$this->paired_do_before_delete_to_post( $post_id, $constants[0], $constants[1] );
 		} );
 	}

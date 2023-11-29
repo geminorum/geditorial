@@ -260,7 +260,7 @@ class Overwrite extends gEditorial\Module
 
 			if ( 'post' === $screen->base ) {
 
-				add_filter( 'post_updated_messages', function( $messages ) use ( $screen ) {
+				add_filter( 'post_updated_messages', function ( $messages ) use ( $screen ) {
 
 					if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
 						return $messages;
@@ -275,7 +275,7 @@ class Overwrite extends gEditorial\Module
 
 			} else if ( 'edit' === $screen->base ) {
 
-				add_filter( 'bulk_post_updated_messages', function( $messages, $counts ) use ( $screen ) {
+				add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $screen ) {
 
 					if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
 						return $messages;
@@ -302,7 +302,7 @@ class Overwrite extends gEditorial\Module
 		];
 
 		foreach ( $this->posttypes() as $posttype )
-			add_filter( "post_type_labels_{$posttype}", function( $labels ) use ( $posttype, $keeps ) {
+			add_filter( "post_type_labels_{$posttype}", function ( $labels ) use ( $posttype, $keeps ) {
 
 				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
 				$customs['menu_name'] = $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name );
@@ -327,7 +327,7 @@ class Overwrite extends gEditorial\Module
 		];
 
 		foreach ( $this->taxonomies() as $taxonomy )
-			add_filter( "taxonomy_labels_{$taxonomy}", function( $labels ) use ( $taxonomy, $keeps ) {
+			add_filter( "taxonomy_labels_{$taxonomy}", function ( $labels ) use ( $taxonomy, $keeps ) {
 
 				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
 				$customs['menu_name'] = $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_menuname', $labels->menu_name );

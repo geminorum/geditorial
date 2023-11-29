@@ -318,13 +318,13 @@ class Terms extends gEditorial\Module
 				if ( $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy ) )
 					continue;
 
-				add_action( $screen->taxonomy.'_add_form_fields', function( $taxonomy ) use ( $field ) {
+				add_action( $screen->taxonomy.'_add_form_fields', function ( $taxonomy ) use ( $field ) {
 					$this->add_form_field( $field, $taxonomy );
 				}, 8, 1 );
 
 				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) ) {
 
-					add_action( 'quick_edit_custom_box', function( $column, $screen, $taxonomy ) use ( $field ) {
+					add_action( 'quick_edit_custom_box', function ( $column, $screen, $taxonomy ) use ( $field ) {
 						if ( $this->classs( $field ) == $column )
 							$this->quick_form_field( $field, $taxonomy );
 					}, 10, 3 );
@@ -380,7 +380,7 @@ class Terms extends gEditorial\Module
 
 				$disabled = $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy );
 
-				add_action( $screen->taxonomy.'_edit_form_fields', function( $term, $taxonomy ) use ( $field, $disabled ) {
+				add_action( $screen->taxonomy.'_edit_form_fields', function ( $term, $taxonomy ) use ( $field, $disabled ) {
 					$this->edit_form_field( $field, $taxonomy, $term, $disabled );
 				}, 8, 2 );
 
@@ -2121,7 +2121,7 @@ class Terms extends gEditorial\Module
 
 		$this->filter_self( 'sanitize_name', 3, 9 );
 
-		add_filter( 'single_term_title', function( $name ) use ( $taxonomies ) {
+		add_filter( 'single_term_title', function ( $name ) use ( $taxonomies ) {
 
 			if ( ! is_tax( $taxonomies ) )
 				return $name;
@@ -2136,7 +2136,7 @@ class Terms extends gEditorial\Module
 		}, 8 );
 
 		foreach ( $taxonomies as $taxonomy )
-			add_filter( $taxonomy.'_name', function( $value, $term_id, $context ) {
+			add_filter( $taxonomy.'_name', function ( $value, $term_id, $context ) {
 
 				if ( 'display' !== $context )
 					return $value;

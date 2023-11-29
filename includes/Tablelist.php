@@ -241,7 +241,7 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => _x( 'Date', 'Tablelist: Column: Post Date', 'geditorial' ),
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return Datetime::humanTimeDiffRound( strtotime( $row->post_date ) );
 			},
 		];
@@ -251,7 +251,7 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => is_null( $title ) ? _x( 'On', 'Tablelist: Column: Post Date Modified', 'geditorial' ) : $title,
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return Datetime::htmlHumanTime( $row->post_modified, TRUE );
 			},
 		];
@@ -262,7 +262,7 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
 			'args'     => [ 'types' => WordPress\PostType::get( 2 ) ],
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return isset( $column['args']['types'][$row->post_type] )
 					? $column['args']['types'][$row->post_type]
 					: $row->post_type;
@@ -275,7 +275,7 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Mime', 'Tablelist: Column: Post Mime', 'geditorial' ),
 			'args'     => [ 'mime_types' => wp_get_mime_types() ],
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				if ( $ext = WordPress\Media::getExtension( $row->post_mime_type, $column['args']['mime_types'] ) )
 					return '<span title="'.$row->post_mime_type.'">'.$ext.'</span>';
 
@@ -289,7 +289,7 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
 			'args'     => [ 'statuses' => WordPress\Status::get() ],
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
 
 				$title = WordPress\Post::title( $row );
 
@@ -321,7 +321,7 @@ class Tablelist extends WordPress\Main
 
 				return $title;
 			},
-			'actions' => static function( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
+			'actions' => static function ( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
 				return array_merge( self::getPostRowActions( $row->ID, $actions ), $custom );
 			},
 		];
@@ -331,7 +331,7 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => _x( 'Excerpt', 'Tablelist: Column: Post Excerpt', 'geditorial' ),
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return $row->post_excerpt
 					? wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
 					: Helper::htmlEmpty();
@@ -343,7 +343,7 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return Helper::getPostTitleRow( $row, 'edit' );
 			},
 		];
@@ -354,7 +354,7 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Status', 'Tablelist: Column: Post Title', 'geditorial' ),
 			'args'     => [ 'statuses' => WordPress\Status::get() ],
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 				if ( ! $row->post_status )
 					return gEditorial()->na();
@@ -371,7 +371,7 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => _x( 'Author', 'Tablelist: Column: Post Author', 'geditorial' ),
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 				if ( current_user_can( 'edit_post', $row->ID ) )
 					return Core\WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
@@ -392,7 +392,7 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
 			'args'     => [ 'taxonomies' => $taxonomies ],
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				foreach ( $column['args']['taxonomies'] as $object )
 					if ( WordPress\Taxonomy::viewable( $object ) )
 						Helper::renderPostTermsEditRow( $row, $object,
@@ -412,7 +412,7 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => $title ?: _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
-			'callback' => static function( $value, $row, $column, $index, $key, $args ) use ( $description ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $description ) {
 
 				if ( ! $term = WordPress\Term::get( $row ) )
 					return Plugin::na( FALSE );
@@ -424,7 +424,7 @@ class Tablelist extends WordPress\Main
 
 				return $html;
 			},
-			'actions' => static function( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
+			'actions' => static function ( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
 				return array_merge( self::getTermRowActions( $row, $actions ), $custom );
 			},
 		];

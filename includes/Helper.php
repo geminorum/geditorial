@@ -444,6 +444,8 @@ class Helper extends WordPress\Main
 		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
 
+	// NOTE: the output of `the_title()` is unescaped
+	// @REF: https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html
 	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -471,7 +473,7 @@ class Helper extends WordPress\Main
 		}
 
 		if ( ! $link )
-			return Core\HTML::escape( $title ).$after;
+			return $title.$after;
 
 		if ( 'posttype' === $title_attr )
 			$title_attr = WordPress\PostType::object( $post->post_type )->label;
@@ -488,14 +490,14 @@ class Helper extends WordPress\Main
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
-			], Core\HTML::escape( $title ) ).$after;
+			], $title ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
 			return Core\HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
 				// 'data'  => [ 'post' => $post->ID, 'type' => $post->post_type ],
-			], Core\HTML::escape( $title ) ).$after;
+			], $title ).$after;
 
 		if ( 'view' == $link )
 			return Core\HTML::tag( 'a', [
@@ -504,7 +506,7 @@ class Helper extends WordPress\Main
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
 				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
-			], Core\HTML::escape( $title ) ).$after;
+			], $title ).$after;
 
 		return Core\HTML::tag( 'a', [
 			'href'   => $link,
@@ -512,7 +514,7 @@ class Helper extends WordPress\Main
 			'target' => '_blank',
 			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
 			'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
-		], Core\HTML::escape( $title ) ).$after;
+		], $title ).$after;
 	}
 
 	public static function getTermTitleRow( $term, $link = 'edit', $taxonomy = FALSE, $title_attr = NULL )
@@ -892,7 +894,7 @@ class Helper extends WordPress\Main
 	public static function getPostTypeLabel( $posttype, $label, $fallback_key = NULL, $fallback = '' )
 	{
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
-			return $label;
+			return $fallback ?? Plugin::na();
 
 		if ( isset( $object->labels->{$label} ) )
 			return $object->labels->{$label};
@@ -1065,7 +1067,7 @@ class Helper extends WordPress\Main
 	public static function getTaxonomyLabel( $taxonomy, $label, $fallback_key = NULL, $fallback = '' )
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
-			return $label;
+			return $fallback ?? Plugin::na();
 
 		if ( isset( $object->labels->{$label} ) )
 			return $object->labels->{$label};
@@ -1346,7 +1348,7 @@ class Helper extends WordPress\Main
 
 			'loader'          => new \Mustache_Loader_FilesystemLoader( $base.'assets/views' ),
 			'partials_loader' => new \Mustache_Loader_FilesystemLoader( $base.'assets/views/partials' ),
-			'escape'          => static function( $value ) {
+			'escape'          => static function ( $value ) {
 				return htmlspecialchars( $value, ENT_COMPAT, 'UTF-8' );
 			},
 		] );
@@ -1423,19 +1425,19 @@ class Helper extends WordPress\Main
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		add_filter( 'page_row_actions', static function( $actions, $post) use ( $screen ) {
+		add_filter( 'page_row_actions', static function ( $actions, $post) use ( $screen ) {
 			if ( $post->post_type === $screen->post_type )
 				unset( $actions['inline hide-if-no-js'] );
 			return $actions;
 		}, 12, 2 );
 
-		add_filter( 'post_row_actions', static function( $actions, $post ) use ( $screen ) {
+		add_filter( 'post_row_actions', static function ( $actions, $post ) use ( $screen ) {
 			if ( $post->post_type === $screen->post_type )
 				unset( $actions['inline hide-if-no-js'] );
 			return $actions;
 		}, 12, 2 );
 
-		add_filter( 'bulk_actions-'.$screen->id, static function( $actions ) {
+		add_filter( 'bulk_actions-'.$screen->id, static function ( $actions ) {
 			unset( $actions['edit'] );
 			return $actions;
 		} );

@@ -76,7 +76,7 @@ class Uncategorized extends gEditorial\Module
 			// TODO: add separate list of posttypes on settings for this
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			add_filter( "views_{$screen->id}", function( $views ) use ( $screen ) {
+			add_filter( "views_{$screen->id}", function ( $views ) use ( $screen ) {
 				return array_merge( $views, $this->_get_posttype_view( $screen->post_type ) );
 			}, 9 );
 
@@ -288,7 +288,7 @@ class Uncategorized extends gEditorial\Module
 			'raw'   => [
 				'title'    => _x( 'Raw', 'Table Column', 'geditorial-uncategorized' ),
 				'class'    => '-has-list',
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 					$query = new \WP_Term_Query( [
 						'object_ids' => $row->ID,

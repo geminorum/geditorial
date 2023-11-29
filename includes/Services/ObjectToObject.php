@@ -212,22 +212,22 @@ class ObjectToObject extends Main
 			'callback' => [ __CLASS__, 'rest_connect' ],
 			'args'     => [
 				'name' => [
-					'validate_callback' => static function( $param, $request, $key ) {
+					'validate_callback' => static function ( $param, $request, $key ) {
 						return TRUE; // FIXME
 					}
 				],
 				'from' => [
-					'validate_callback' => static function( $param, $request, $key ) {
+					'validate_callback' => static function ( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 				'to' => [
-					'validate_callback' => static function( $param, $request, $key ) {
+					'validate_callback' => static function ( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 			],
-			'permission_callback' => static function( $request ) {
+			'permission_callback' => static function ( $request ) {
 				return current_user_can( 'edit_post', (int) $request['to'] );
 			},
 		] );
@@ -237,22 +237,22 @@ class ObjectToObject extends Main
 			'callback' => [ __CLASS__, 'rest_disconnect' ],
 			'args'     => [
 				'name' => [
-					'validate_callback' => static function( $param, $request, $key ) {
+					'validate_callback' => static function ( $param, $request, $key ) {
 						return TRUE; // FIXME
 					}
 				],
 				'from' => [
-					'validate_callback' => static function( $param, $request, $key ) {
+					'validate_callback' => static function ( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 				'to' => [
-					'validate_callback' => static function( $param, $request, $key ) {
+					'validate_callback' => static function ( $param, $request, $key ) {
 						return is_numeric( $param );
 					}
 				],
 			],
-			'permission_callback' => static function( $request ) {
+			'permission_callback' => static function ( $request ) {
 				return current_user_can( 'edit_post', (int) $request['to'] );
 			},
 		] );

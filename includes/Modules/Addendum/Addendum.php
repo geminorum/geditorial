@@ -23,7 +23,7 @@ class Addendum extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
-	use Internals\PostTypeFields;
+	// use Internals\PostTypeFields;
 	use Internals\TemplatePostType;
 
 	protected $deafults  = [ 'multiple_instances' => TRUE ];

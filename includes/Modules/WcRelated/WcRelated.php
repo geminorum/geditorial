@@ -298,7 +298,7 @@ class WcRelated extends gEditorial\Module
 				: WordPress\Taxonomy::object( $row['taxonomy'] )->labels->name;
 
 			$heading  = trim( sprintf( $row['heading'], $name ) );
-			$callback = static function() use ( $heading ) { return $heading; };
+			$callback = static function () use ( $heading ) { return $heading; };
 
 			add_filter( 'woocommerce_product_related_products_heading', $callback );
 			wc_get_template( 'single-product/related.php', $args );

@@ -242,7 +242,7 @@ class Workflow extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				// FIXME: Temporarily hiding inline/bulk edit action
-				Helper::disableQuickEdit( $screen->post_type );
+				Helper::disableQuickEdit( $screen );
 
 				if ( $this->get_setting( 'display_states' ) )
 					$this->filter( 'display_post_states', 2 );

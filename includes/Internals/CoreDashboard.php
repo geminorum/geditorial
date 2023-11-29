@@ -80,7 +80,7 @@ trait CoreDashboard
 
 		add_meta_box( $id, $title, $callback, $screen, 'normal', 'default', $args );
 
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function( $classes ) use ( $name, $context ) {
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function ( $classes ) use ( $name, $context ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',

@@ -144,26 +144,26 @@ class WcPurchased extends gEditorial\Module
 		Core\HTML::tableList( [
 			'order_number' => [
 				'title'    => _x( '#', 'Column Title', 'geditorial-wc-purchased' ),
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					return $row->get_id(); // FIXME: link to order edit page
 				},
 			],
 			'date_paid' => [
 				'title'    => _x( 'Paid On', 'Column Title', 'geditorial-wc-purchased' ),
 				'args'     => [ 'formats' => Datetime::dateFormats( FALSE ) ],
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					return wp_date( $column['args']['formats']['datetime'], $row->get_date_paid() );
 				},
 			],
 			'shipping_address' => [
 				'title'    => _x( 'Address', 'Column Title', 'geditorial-wc-purchased' ),
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					return $row->get_formatted_shipping_address();
 				},
 			],
 			'total_price' => [
 				'title'    => _x( 'Total', 'Column Title', 'geditorial-wc-purchased' ),
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					return wc_price( $row->get_total() );
 				},
 			],

@@ -99,7 +99,7 @@ trait CorePostTypes
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
 		if ( ! $block_editor )
-			add_filter( 'use_block_editor_for_post_type', static function( $edit, $type ) use ( $posttype ) {
+			add_filter( 'use_block_editor_for_post_type', static function ( $edit, $type ) use ( $posttype ) {
 				return $posttype === $type ? FALSE : $edit;
 			}, 12, 2 );
 

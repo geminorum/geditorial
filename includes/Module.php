@@ -309,7 +309,7 @@ class Module extends WordPress\Module
 				$this->register_default_terms( $taxonomy_constant );
 
 		$prefix   = self::sanitize_base( $this->key );
-		$callback = static function( $key, $value ) use ( $prefix ) {
+		$callback = static function ( $key, $value ) use ( $prefix ) {
 			return [ sprintf( '%s-%s.php', $prefix, $key ) => $value ];
 		};
 
@@ -1084,7 +1084,7 @@ class Module extends WordPress\Module
 			return FALSE;
 
 		add_filter( 'gnetwork_taxonomy_default_terms_'.$this->constant( $constant ),
-			static function( $pre ) use ( $terms ) {
+			static function ( $pre ) use ( $terms ) {
 				return array_merge( $pre, Core\Arraay::isAssoc( $terms ) ? $terms : Core\Arraay::sameKey( $terms ) );
 			} );
 	}
@@ -1492,7 +1492,7 @@ class Module extends WordPress\Module
 
 	protected function _hook_post_updated_messages( $constant )
 	{
-		add_filter( 'post_updated_messages', function( $messages ) use ( $constant ) {
+		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {
 
 			$posttype  = $this->constant( $constant );
 			$generated = Helper::generatePostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $posttype );
@@ -1503,7 +1503,7 @@ class Module extends WordPress\Module
 
 	protected function _hook_bulk_post_updated_messages( $constant )
 	{
-		add_filter( 'bulk_post_updated_messages', function( $messages, $counts ) use ( $constant ) {
+		add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $constant ) {
 
 			$posttype  = $this->constant( $constant );
 			$generated = Helper::generateBulkPostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $counts, $posttype );
@@ -1533,15 +1533,15 @@ class Module extends WordPress\Module
 		$label = $this->get_posttype_label( $constants[0], 'add_new_item' );
 		$key   = sprintf( 'paired_add_new_%s', $paired_posttype );
 
-		add_filter( 'gnetwork_taxonomy_bulk_actions', static function( $actions, $taxonomy ) use ( $taxonomy_origin, $key, $label ) {
+		add_filter( 'gnetwork_taxonomy_bulk_actions', static function ( $actions, $taxonomy ) use ( $taxonomy_origin, $key, $label ) {
 			return $taxonomy === $taxonomy_origin ? array_merge( $actions, [ $key => $label ] ) : $actions;
 		}, 20, 2 );
 
-		add_filter( 'gnetwork_taxonomy_bulk_input', function( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
+		add_filter( 'gnetwork_taxonomy_bulk_input', function ( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
 			return ( $taxonomy === $taxonomy_origin && $action === $key ) ? [ $this, 'paired_bulk_input_add_new_item' ] : $callback;
 		}, 20, 3 );
 
-		add_filter( 'gnetwork_taxonomy_bulk_callback', function( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
+		add_filter( 'gnetwork_taxonomy_bulk_callback', function ( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
 			return ( $taxonomy === $taxonomy_origin && $action === $key ) ? [ $this, 'paired_bulk_action_add_new_item' ] : $callback;
 		}, 20, 3 );
 
@@ -1761,7 +1761,7 @@ class Module extends WordPress\Module
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( 'pre_get_posts', function( &$wp_query ) use ( $constants ) {
+		add_action( 'pre_get_posts', function ( &$wp_query ) use ( $constants ) {
 
 			$subterms = $this->constant( $constants[2] );
 
@@ -1791,7 +1791,7 @@ class Module extends WordPress\Module
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_filter( 'term_link', function( $link, $term, $taxonomy ) use ( $constants ) {
+		add_filter( 'term_link', function ( $link, $term, $taxonomy ) use ( $constants ) {
 
 			if ( $taxonomy !== $this->constant( $constants[1] ) )
 				return $link;
@@ -1820,7 +1820,7 @@ class Module extends WordPress\Module
 			$posttypes = $this->posttypes();
 
 		// core filter @since WP 5.9.0
-		add_filter( 'post_thumbnail_id', function( $thumbnail_id, $post ) use ( $posttypes ) {
+		add_filter( 'post_thumbnail_id', function ( $thumbnail_id, $post ) use ( $posttypes ) {
 			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes );
 		}, 8, 2 );
 
@@ -1828,15 +1828,15 @@ class Module extends WordPress\Module
 		if ( Core\WordPress::isWPcompatible( '5.9.0' ) )
 			return;
 
-		add_filter( 'geditorial_get_post_thumbnail_id', function( $thumbnail_id, $post_id ) use ( $posttypes ) {
+		add_filter( 'geditorial_get_post_thumbnail_id', function ( $thumbnail_id, $post_id ) use ( $posttypes ) {
 			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
 		}, 8, 2 );
 
-		add_filter( 'gtheme_image_get_thumbnail_id', function( $thumbnail_id, $post_id ) use ( $posttypes ) {
+		add_filter( 'gtheme_image_get_thumbnail_id', function ( $thumbnail_id, $post_id ) use ( $posttypes ) {
 			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
 		}, 8, 2 );
 
-		add_filter( 'gnetwork_rest_thumbnail_id', function( $thumbnail_id, $post_array ) use ( $posttypes ) {
+		add_filter( 'gnetwork_rest_thumbnail_id', function ( $thumbnail_id, $post_array ) use ( $posttypes ) {
 			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_array['id'], $posttypes );
 		}, 8, 2 );
 	}
@@ -1994,7 +1994,7 @@ class Module extends WordPress\Module
 			return '';
 
 		if ( $search_query )
-			add_filter( 'get_search_query', static function( $query ) use ( $search_query ) {
+			add_filter( 'get_search_query', static function ( $query ) use ( $search_query ) {
 				return $query ? $query : $search_query;
 			} );
 
@@ -2229,7 +2229,7 @@ class Module extends WordPress\Module
 			$metabox_priority
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',
@@ -2282,7 +2282,7 @@ class Module extends WordPress\Module
 			$metabox_priority
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',
@@ -2369,7 +2369,7 @@ class Module extends WordPress\Module
 			'default'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',
@@ -2448,7 +2448,7 @@ class Module extends WordPress\Module
 			'high'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',
@@ -2523,7 +2523,7 @@ class Module extends WordPress\Module
 			'low'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',
@@ -2626,7 +2626,7 @@ class Module extends WordPress\Module
 			'side'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function( $classes ) use ( $context, $extra ) {
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
 			return array_merge( $classes, [
 				$this->base.'-wrap',
 				'-admin-postbox',
@@ -2635,7 +2635,7 @@ class Module extends WordPress\Module
 			], (array) $extra );
 		} );
 
-		add_action( $this->hook( $action ), function( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
+		add_action( $this->hook( $action ), function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
 
 			if ( ( $newpost = $this->get_setting( 'quick_newpost' ) ) && method_exists( $this, 'do_render_thickbox_newpostbutton' ) )
 				$this->do_render_thickbox_newpostbutton( $post, $constants[0], 'newpost', [ 'target' => 'paired' ] );
@@ -2658,7 +2658,7 @@ class Module extends WordPress\Module
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( sprintf( 'save_post_%s', $posttype ), function( $post_id, $post, $update ) use ( $constants ) {
+		add_action( sprintf( 'save_post_%s', $posttype ), function ( $post_id, $post, $update ) use ( $constants ) {
 
 			if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 				return;
@@ -2737,7 +2737,7 @@ class Module extends WordPress\Module
 
 	protected function class_metabox( $screen, $context = 'mainbox' )
 	{
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ), function( $classes ) use ( $context ) {
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ), function ( $classes ) use ( $context ) {
 			return array_merge( $classes, [ $this->base.'-wrap', '-admin-postbox', '-'.$this->key, '-'.$this->key.'-'.$context ] );
 		} );
 	}
@@ -3061,7 +3061,7 @@ class Module extends WordPress\Module
 	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 	protected function _hook_editform_readonly_title()
 	{
-		add_action( 'edit_form_after_title', function( $post ) {
+		add_action( 'edit_form_after_title', function ( $post ) {
 			$html = WordPress\Post::title( $post );
 			$info = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated', 'Module: ReadOnly Title Info', 'geditorial' ) );
 			echo $this->wrap(
@@ -3075,7 +3075,7 @@ class Module extends WordPress\Module
 
 	protected function _hook_editform_meta_summary( $fields = NULL )
 	{
-		add_action( 'edit_form_after_title', function( $post ) use ( $fields ) {
+		add_action( 'edit_form_after_title', function ( $post ) use ( $fields ) {
 			echo $this->wrap( Template::metaSummary( [
 				'echo'   => FALSE,
 				'id'     => $post->ID,
@@ -3104,7 +3104,7 @@ class Module extends WordPress\Module
 	// NOTE: adds the `{$module_key}-enabled` class to body in admin
 	public function _admin_enabled( $extra = [] )
 	{
-		add_action( 'admin_body_class', function( $classes ) use ( $extra ) {
+		add_action( 'admin_body_class', function ( $classes ) use ( $extra ) {
 			return trim( $classes ).' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
 		} );
 	}
@@ -3308,29 +3308,32 @@ class Module extends WordPress\Module
 		$title    = $this->get_string( 'field_title', $field, 'terms_meta_field', $field );
 		$desc     = $this->get_string( 'field_desc', $field, 'terms_meta_field', '' );
 
-		add_filter( $this->hook_base( 'terms', 'supported_fields' ), static function( $list, $tax ) use ( $taxonomy, $field ) {
+		add_filter( $this->hook_base( 'terms', 'supported_fields' ),
+			static function ( $list, $tax ) use ( $taxonomy, $field ) {
 
-			if ( FALSE === $tax || $tax === $taxonomy )
-				$list[] = $field;
+				if ( FALSE === $tax || $tax === $taxonomy )
+					$list[] = $field;
 
-			return $list;
-		}, 12, 2 );
+				return $list;
+			}, 12, 2 );
 
-		add_filter( $this->hook_base( 'terms', 'list_supported_fields' ), static function( $list, $tax ) use ( $taxonomy, $field, $title ) {
+		add_filter( $this->hook_base( 'terms', 'list_supported_fields' ),
+			static function ( $list, $tax ) use ( $taxonomy, $field, $title ) {
 
-			if ( FALSE === $tax || $tax === $taxonomy )
-				$list[$field] = $title;
+				if ( FALSE === $tax || $tax === $taxonomy )
+					$list[$field] = $title;
 
-			return $list;
-		}, 12, 2 );
+				return $list;
+			}, 12, 2 );
 
-		add_filter( $this->hook_base( 'terms', 'supported_field_taxonomies' ), static function( $taxonomies, $_field ) use ( $taxonomy, $field ) {
+		add_filter( $this->hook_base( 'terms', 'supported_field_taxonomies' ),
+			static function ( $taxonomies, $_field ) use ( $taxonomy, $field ) {
 
-			if ( $_field === $field )
-				$taxonomies[] = $taxonomy;
+				if ( $_field === $field )
+					$taxonomies[] = $taxonomy;
 
-			return $taxonomies;
-		}, 12, 2 );
+				return $taxonomies;
+			}, 12, 2 );
 
 		if ( ! is_admin() )
 			return;
@@ -3338,13 +3341,14 @@ class Module extends WordPress\Module
 		$this->filter_string( $this->hook_base( 'terms', 'field', $field, 'title' ), $title );
 		$this->filter_string( $this->hook_base( 'terms', 'field', $field, 'desc' ), $desc );
 
-		add_filter( $this->hook_base( 'terms', 'column_title' ), static function( $_title, $column, $constant, $fallback ) use ( $taxonomy, $field, $title ) {
+		add_filter( $this->hook_base( 'terms', 'column_title' ),
+			static function ( $_title, $column, $constant, $fallback ) use ( $taxonomy, $field, $title ) {
 
-			if ( $column === $field )
-				return $title;
+				if ( $column === $field )
+					return $title;
 
-			return $_title;
-		}, 12, 4 );
+				return $_title;
+			}, 12, 4 );
 	}
 
 	protected function log( $level, $message = '', $context = [] )

@@ -51,6 +51,7 @@ class Importer extends gEditorial\Module
 					'field'       => 'match_source_id',
 					'title'       => _x( 'Match Source ID', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Tries to find the previously imported by provided source id.', 'Setting Description', 'geditorial-importer' ),
+					'default'     => '1',
 				],
 				[
 					'field'       => 'store_source_data',
@@ -317,7 +318,7 @@ class Importer extends gEditorial\Module
 				'title'    => _x( 'Image', 'Table Column', 'geditorial-importer' ),
 				'args'     => $args,
 				'class'    => 'image-column',
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 					if ( ! $id = get_post_meta( $row->ID, $column['args']['metakey'], TRUE ) )
 						return Helper::htmlEmpty();
@@ -337,7 +338,7 @@ class Importer extends gEditorial\Module
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-importer' ),
 				'class'    => 'image-column',
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					$html = WordPress\PostType::htmlFeaturedImage( $row->ID, [ 45, 72 ] );
 					return $html ?: Helper::htmlEmpty();
 				},
@@ -603,6 +604,8 @@ class Importer extends gEditorial\Module
 						$items  = $parser->parse();
 						$row    = array_pop( $items );
 
+						unset( $parser, $items );
+
 						$raw        = Core\Arraay::combine( $headers, $row );
 						$data       = []; // [ 'tax_input' => [] ];
 						$prepared   = [];
@@ -623,8 +626,6 @@ class Importer extends gEditorial\Module
 						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
 							if ( $oldpost = WordPress\Post::get( intval( $matched ) ) )
 								$data['ID'] = $oldpost->ID;
-
-						unset( $parser, $items );
 
 						foreach ( $field_map as $offsetkey => $field ) {
 
@@ -1159,7 +1160,7 @@ class Importer extends gEditorial\Module
 
 	private function _get_source_id_matched( $source_id, $posttype, $raw = [] )
 	{
-		if ( ! $source_id || ! $this->get_setting( 'match_source_id' ) )
+		if ( ! $source_id || ! $this->get_setting( 'match_source_id', TRUE ) )
 			return FALSE;
 
 		$matched = FALSE;

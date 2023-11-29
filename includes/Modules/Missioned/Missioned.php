@@ -354,11 +354,12 @@ class Missioned extends gEditorial\Module
 		if ( ! \array_intersect( $this->posttypes(), $posttypes ) )
 			return $types;
 
-		$field = gEditorial()->module( 'meta' )->get_posttype_field_args( 'mission_code', $this->constant( 'primary_posttype' ) );
+		if ( $field = Services\PostTypeFields::isAvailable( 'mission_code', $this->constant( 'primary_posttype' ), 'meta' ) )
+			return array_merge( $types, [
+				$field['name'] => $field['title'],
+			] );
 
-		return $field ? array_merge( $types, [
-			$field['name'] => $field['title'],
-		] ) : $types;
+		return $types;
 	}
 
 	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )

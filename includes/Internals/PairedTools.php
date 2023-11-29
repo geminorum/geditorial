@@ -333,7 +333,7 @@ trait PairedTools
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Internal: PairedTools: Table Column', 'geditorial' ),
 				'class'    => 'image-column',
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 					$html = '';
 
 					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) )
@@ -346,7 +346,7 @@ trait PairedTools
 			'term_image' => [
 				'title'    => _x( 'Image', 'Internal: PairedTools: Table Column', 'geditorial' ),
 				'class'    => 'image-column',
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					$html = WordPress\Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
 					return $html ?: Helper::htmlEmpty();
 				},

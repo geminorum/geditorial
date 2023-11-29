@@ -1024,7 +1024,7 @@ class Book extends gEditorial\Module
 			'metas' => [
 				'title'    => _x( 'Import Meta', 'Table Column', 'geditorial-book' ),
 				'args'     => [ 'fields' => $this->get_importer_fields() ],
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					$html = '';
 
 					foreach ( $column['args']['fields'] as $field => $title )
@@ -1037,7 +1037,7 @@ class Book extends gEditorial\Module
 			'related' => [
 				'title'    => _x( 'Import Related', 'Table Column', 'geditorial-book' ),
 				'args'     => [ 'type' => $this->constant( 'publication_cpt' ) ],
-				'callback' => static function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 					$html = '';
 

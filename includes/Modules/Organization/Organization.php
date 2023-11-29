@@ -458,11 +458,12 @@ class Organization extends gEditorial\Module
 		if ( ! array_intersect( $this->posttypes(), $posttypes ) )
 			return $types;
 
-		$field = gEditorial()->module( 'meta' )->get_posttype_field_args( 'organization_code', $this->constant( 'primary_posttype' ) );
+		if ( $field = Services\PostTypeFields::isAvailable( 'organization_code', $this->constant( 'primary_posttype' ), 'meta' ) )
+			return array_merge( $types, [
+				$field['name'] => $field['title'],
+			] );
 
-		return $field ? array_merge( $types, [
-			$field['name'] => $field['title'],
-		] ) : $types;
+		return $types;
 	}
 
 	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
@@ -481,9 +482,12 @@ class Organization extends gEditorial\Module
 
 	private function get_importer_fields( $posttype = NULL )
 	{
-		$field = gEditorial()->module( 'meta' )->get_posttype_field_args( 'organization_code', $this->constant( 'primary_posttype' ) );
+		if ( $field = Services\PostTypeFields::isAvailable( 'organization_code', $this->constant( 'primary_posttype' ), 'meta' ) )
+			return [
+				sprintf( '%s__%s', $this->key, $field['name'] ) => $field['title'],
+			];
 
-		return $field ? [ sprintf( '%s__%s', $this->key, $field['name'] ) => $field['title'] ] : [];
+		return [];
 	}
 
 	public function importer_fields( $fields, $posttype )

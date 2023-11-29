@@ -162,7 +162,7 @@ class Widgets extends gEditorial\Module
 			$priority = empty( $area['priority'] ) ? 10 : $area['priority'];
 			$name     = empty( $area['name'] ) ? _x( '[Unnamed]', 'Widget Area Unnamed', 'geditorial-widgets' ) : $area['name'];
 
-			add_action( $area['action'], static function() use ( $id ) {
+			add_action( $area['action'], static function () use ( $id ) {
 				dynamic_sidebar( $id );
 			}, $priority, 0 );
 

@@ -171,7 +171,7 @@ class Wysiwyg extends gEditorial\Module
 			$ready = <<<'JS'
 $("#addtag").on("mousedown","#submit",function(){
 	tinyMCE.triggerSave();
-	$(document).on("ajaxSuccess.geditorial_wysiwyg_add_term", function(){
+	$(document).on("ajaxSuccess.geditorial_wysiwyg_add_term", function (){
 		if (tinyMCE.activeEditor) {
 			tinyMCE.activeEditor.setContent("");
 		}

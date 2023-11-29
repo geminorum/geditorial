@@ -149,7 +149,7 @@ class WcWidgets extends gEditorial\Module
 			$name     = isset( $areas[$hook]['title'] ) ? $areas[$hook]['title'] : Core\Text::readableKey( $hook );
 			$priority = empty( $areas[$hook]['priority'] ) ? 10 : $areas[$hook]['priority'];
 
-			add_action( $hook, static function() use ( $sidebar ) {
+			add_action( $hook, static function () use ( $sidebar ) {
 				dynamic_sidebar( $sidebar );
 			}, $priority, 0 );
 

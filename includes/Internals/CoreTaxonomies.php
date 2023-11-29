@@ -361,7 +361,12 @@ trait CoreTaxonomies
 	// NOTE: reversed fallback/fallback-key
 	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '', $fallback_key = NULL )
 	{
-		return Helper::getTaxonomyLabel( $this->constant( $constant, $constant ), $label, $fallback_key, $fallback );
+		return Helper::getTaxonomyLabel(
+			$this->constant( $constant, $constant ),
+			$label,
+			$fallback_key,
+			$fallback
+		);
 	}
 
 	protected function do_force_assign_parents( $post, $taxonomy )
