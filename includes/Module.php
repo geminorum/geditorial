@@ -106,6 +106,8 @@ class Module extends WordPress\Module
 
 	protected function setup_textdomain( $locale = NULL, $domain = NULL )
 	{
+		global $wp_textdomain_registry;
+
 		if ( FALSE === $this->module->i18n )
 			return FALSE;
 
@@ -127,7 +129,10 @@ class Module extends WordPress\Module
 		if ( is_null( $locale ) )
 			$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
 
-		return load_textdomain( $domain, GEDITORIAL_DIR."languages/{$this->module->folder}/{$locale}.mo" );
+		$path = GEDITORIAL_DIR."languages/{$this->module->folder}";
+		$wp_textdomain_registry->set_custom_path( $domain, $path );
+
+		return load_textdomain( $domain, $path."/{$locale}.mo" );
 	}
 
 	protected function setup_remote( $args = [] )
