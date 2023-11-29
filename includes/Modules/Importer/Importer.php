@@ -38,6 +38,12 @@ class Importer extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
 				[
+					'field'       => 'skip_no_source_id',
+					'title'       => _x( 'Skip No Source ID', 'Setting Title', 'geditorial-importer' ),
+					'description' => _x( 'Tries to avoid creating posts with no source IDs.', 'Setting Description', 'geditorial-importer' ),
+					'default'     => '1',
+				],
+				[
 					'field'       => 'skip_same_title',
 					'title'       => _x( 'Skip Same Title', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Tries to avoid creating posts with the same titles.', 'Setting Description', 'geditorial-importer' ),
@@ -387,6 +393,12 @@ class Importer extends gEditorial\Module
 						/* translators: %s: source id */
 						$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), Core\HTML::code( $row['___source_id'] ) );
 
+					else if ( FALSE === $row['___source_id'] )
+						$checks[] = _x( 'Skipped: Filtered', 'Checks', 'geditorial-importer' );
+
+					else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_key'] )
+						$checks[] = _x( 'Skipped: No SourceID', 'Checks', 'geditorial-importer' );
+
 					if ( $row['___matched'] )
 						/* translators: %s: post title */
 						$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
@@ -472,7 +484,15 @@ class Importer extends gEditorial\Module
 			$raw
 		);
 
-		if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $raw ) )
+		// skipped by filter
+		if ( FALSE === $raw['___source_id'] )
+			$raw['___matched'] = 0;
+
+		// no source id provided in the row
+		else if ( ! $raw['___source_id'] && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_key'] )
+			$raw['___matched'] = 0;
+
+		else if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $raw ) )
 			$raw['___matched'] = intval( $matched );
 		else
 			$raw['___matched'] = 0;
@@ -619,6 +639,13 @@ class Importer extends gEditorial\Module
 							$posttype,
 							$raw
 						);
+
+						// skipped by filter
+						if ( FALSE === $source_id )
+							continue;
+
+						if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $source_key )
+							continue;
 
 						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
 							if ( $oldpost = WordPress\Post::get( intval( $matched ) ) )
