@@ -208,9 +208,8 @@ class Meta extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
-			'post' => [ // FIXME: rename to `_supported`
-
+		return [ 'meta' => [
+			'_supported' => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 				'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
@@ -261,7 +260,7 @@ class Meta extends gEditorial\Module
 
 				'content_embed_url' => [ 'type' => 'embed' ],
 			],
-		];
+		] ];
 	}
 
 	private function get_posttypes_support_meta()
@@ -423,9 +422,9 @@ class Meta extends gEditorial\Module
 	protected function init_meta_fields()
 	{
 		foreach ( $this->get_posttypes_support_meta() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields['post'], TRUE, 'meta' );
+			$this->add_posttype_fields( $posttype, $this->fields[$this->key]['_supported'], TRUE, $this->key );
 
-		$this->add_posttype_fields( 'page' );
+		$this->add_posttype_fields( 'page', $this->fields[$this->key]['page'] );
 
 		$this->action( 'wp_loaded' );
 		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );

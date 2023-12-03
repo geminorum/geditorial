@@ -177,7 +177,55 @@ trait CorePostTypes
 		if ( isset( $this->options->settings[$constant.'_supports'] ) )
 			return $this->options->settings[$constant.'_supports'];
 
-		return array_keys( Settings::supportsOptions() );
+		return array_keys( $this->settings_supports_defaults( $constant ) );
+	}
+
+	protected function settings_supports_defaults( $constant, $excludes = NULL )
+	{
+		// default excludes
+		if ( is_null( $excludes ) )
+			$excludes = [ 'post-formats', 'trackbacks' ];
+
+		$posttype = $this->constant( $constant );
+		$supports = $this->filters( $constant.'_supports', Settings::supportsOptions(), $posttype, $excludes );
+
+		// has custom fields
+		foreach ( [ 'meta', 'units', 'geo', 'seo' ] as $type )
+			if ( isset( $this->fields[$type][$posttype] ) )
+				unset( $supports['editorial-'.$type] );
+
+		if ( count( $excludes ) )
+			$supports = array_diff_key( $supports, array_flip( (array) $excludes ) );
+
+		return $supports;
+	}
+
+	protected function settings_supports_option( $constant, $defaults = TRUE, $excludes = NULL )
+	{
+		$supports = $this->settings_supports_defaults( $constant, $excludes );
+
+		if ( FALSE === $defaults )
+			$defaults = [];
+
+		else if ( TRUE === $defaults )
+			$defaults = array_keys( $supports );
+
+		// NOTE: filtered noop strings may omit context/domain keys!
+		$singular = translate_nooped_plural( array_merge( [
+			'context' => NULL,
+			'domain'  => $this->get_textdomain() ?: 'default',
+		], $this->strings['noops'][$constant] ), 1 );
+
+		return [
+			'field'       => $constant.'_supports',
+			'type'        => 'checkboxes-values',
+			/* translators: %s: singular posttype name */
+			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', 'geditorial-admin' ), $singular ),
+			/* translators: %s: singular posttype name */
+			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial-admin' ), $singular ),
+			'default'     => $defaults,
+			'values'      => $supports,
+		];
 	}
 
 	public function is_posttype( $constant, $post = NULL )

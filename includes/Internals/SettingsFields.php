@@ -180,8 +180,17 @@ trait SettingsFields
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
-		if ( is_null( $fields ) )
-			$fields = array_key_exists( '_supported', $this->fields ) ? $this->fields['_supported'] : [];
+		if ( is_null( $fields ) ) {
+
+			if ( $type && isset( $this->fields[$type]['_supported'] ) )
+				$fields = $this->fields[$type]['_supported'];
+
+			else if ( array_key_exists( '_supported', $this->fields ) )
+				$fields = $this->fields['_supported'];
+
+			else
+				$fields = [];
+		}
 
 		if ( empty( $fields ) )
 			return;
@@ -192,8 +201,17 @@ trait SettingsFields
 
 	public function add_posttype_fields( $posttype, $fields = NULL, $append = TRUE, $type = 'meta' )
 	{
-		if ( is_null( $fields ) )
-			$fields = array_key_exists( $posttype, $this->fields ) ? $this->fields[$posttype] : [];
+		if ( is_null( $fields ) ) {
+
+			if ( $type && isset( $this->fields[$type][$posttype] ) )
+				$fields = $this->fields[$type][$posttype];
+
+			else if ( array_key_exists( $posttype, $this->fields ) )
+				$fields = $this->fields[$posttype];
+
+			else
+				$fields = [];
+		}
 
 		if ( empty( $fields ) )
 			return;

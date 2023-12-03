@@ -534,45 +534,6 @@ class Module extends WordPress\Module
 		return in_array( $key, $array, TRUE );
 	}
 
-	protected function settings_supports_option( $constant, $defaults = TRUE, $excludes = NULL )
-	{
-		$supports = $this->filters( $constant.'_supports', Settings::supportsOptions() );
-
-		// has custom fields
-		if ( isset( $this->fields[$this->constant( $constant )] ) )
-			unset( $supports['editorial-meta'] );
-
-		// default excludes
-		if ( is_null( $excludes ) )
-			$excludes = [ 'post-formats', 'trackbacks' ];
-
-		if ( count( $excludes ) )
-			$supports = array_diff_key( $supports, array_flip( (array) $excludes ) );
-
-		if ( FALSE === $defaults )
-			$defaults = [];
-
-		else if ( TRUE === $defaults )
-			$defaults = array_keys( $supports );
-
-		// NOTE: filtered noop strings may omit context/domain keys!
-		$singular = translate_nooped_plural( array_merge( [
-			'context' => NULL,
-			'domain'  => $this->get_textdomain() ?: 'default',
-		], $this->strings['noops'][$constant] ), 1 );
-
-		return [
-			'field'       => $constant.'_supports',
-			'type'        => 'checkboxes-values',
-			/* translators: %s: singular posttype name */
-			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', 'geditorial-admin' ), $singular ),
-			/* translators: %s: singular posttype name */
-			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial-admin' ), $singular ),
-			'default'     => $defaults,
-			'values'      => $supports,
-		];
-	}
-
 	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
 	{
 		return [
