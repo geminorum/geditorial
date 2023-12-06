@@ -243,7 +243,7 @@ class WasBorn extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				add_action( $this->hook_base( 'metabox', 'mainbox', $screen->post_type ),
-					function( $object, $box, $context, $screen ) {
+					function ( $object, $box, $context, $screen ) {
 						MetaBox::singleselectTerms( $object->ID, [
 							'taxonomy' => $this->constant( 'gender_taxonomy' ),
 							'posttype' => $object->post_type,

@@ -270,7 +270,7 @@ trait PairedTools
 
 			'related' => [
 				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
 						$html = Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -291,7 +291,7 @@ trait PairedTools
 			'description' => [
 				'title'    => _x( 'Desc. / Exce.', 'Internal: PairedTools: Table Column', 'geditorial' ),
 				'class'    => 'html-column',
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( empty( $row->description ) )
 						$html = Helper::htmlEmpty();
@@ -317,7 +317,7 @@ trait PairedTools
 
 			'count' => [
 				'title'    => _x( 'Count', 'Internal: PairedTools: Table Column', 'geditorial' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
 						return Core\Number::format( $this->paired_get_from_posts( $post_id, $constants[0], $constants[1], TRUE ) );

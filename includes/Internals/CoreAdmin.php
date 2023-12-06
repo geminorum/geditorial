@@ -24,7 +24,7 @@ trait CoreAdmin
 			return FALSE;
 
 		add_action( 'pre_get_posts',
-			function( &$wp_query ) use ( $posttype, $orderby, $order ) {
+			function ( &$wp_query ) use ( $posttype, $orderby, $order ) {
 
 				if ( ! $wp_query->is_admin )
 					return;

@@ -186,7 +186,7 @@ trait CoreRestrictPosts
 		$status   = WordPress\Status::available( $posttype );
 
 		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row' ),
-			function( $post ) use ( $constant, $posttype, $notice, $can, $edit, $status ) {
+			function ( $post ) use ( $constant, $posttype, $notice, $can, $edit, $status ) {
 
 				$children = get_children( [
 					'post_parent' => $post->ID,
@@ -237,7 +237,7 @@ trait CoreRestrictPosts
 		$notice = $empty ?? $this->get_string( 'parent_post_empty', $posttype, 'misc', gEditorial()->na() );
 
 		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row' ),
-			function( $post ) use ( $posttype, $notice, $can, $edit ) {
+			function ( $post ) use ( $posttype, $notice, $can, $edit ) {
 
 				if ( ! $post->post_parent && ! $notice )
 					return;

@@ -2158,7 +2158,7 @@ class Module extends WordPress\Module
 			$context = 'supportedbox';
 
 		$metabox  = $this->classs( $context );
-		$callback = function( $object, $box ) use ( $context, $screen ) {
+		$callback = function ( $object, $box ) use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->taxonomy ) )
 				return;
@@ -2211,7 +2211,7 @@ class Module extends WordPress\Module
 			$context = 'supportedbox';
 
 		$metabox  = $this->classs( $context );
-		$callback = function( $object, $box ) use ( $context, $screen ) {
+		$callback = function ( $object, $box ) use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
@@ -2293,7 +2293,7 @@ class Module extends WordPress\Module
 		}
 
 		$metabox  = $this->classs( $context );
-		$callback = function( $post, $box ) use ( $context, $screen ) {
+		$callback = function ( $post, $box ) use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
@@ -2372,7 +2372,7 @@ class Module extends WordPress\Module
 		}
 
 		$metabox  = $this->classs( $context );
-		$callback = function( $post, $box ) use ( $constants, $context, $screen ) {
+		$callback = function ( $post, $box ) use ( $constants, $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
@@ -2447,7 +2447,7 @@ class Module extends WordPress\Module
 			$context = 'listbox';
 
 		$metabox  = $this->classs( $context );
-		$callback = function( $object, $box ) use ( $constants, $context, $screen ) {
+		$callback = function ( $object, $box ) use ( $constants, $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
@@ -2534,7 +2534,7 @@ class Module extends WordPress\Module
 
 		$metabox  = $this->classs( $context );
 		$action   = sprintf( 'render_%s_metabox', $context );
-		$callback = function( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
+		$callback = function ( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;

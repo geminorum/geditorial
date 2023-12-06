@@ -40,7 +40,7 @@ trait CoreRowActions
 		if ( ! method_exists( $this, 'rowaction_get_mainlink_for_post' ) )
 			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'rowaction_get_mainlink_for_post()' ) );
 
-		$callback = function( $actions, $post ) use ( $screen, $action_key ) {
+		$callback = function ( $actions, $post ) use ( $screen, $action_key ) {
 
 			if ( $post->post_type !== $screen->post_type )
 				return $actions;
@@ -79,7 +79,7 @@ trait CoreRowActions
 		if ( ! method_exists( $this, 'rowaction_get_mainlink_for_term' ) )
 			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'rowaction_get_mainlink_for_term()' ) );
 
-		$callback = function( $actions, $term ) use ( $screen, $action_key ) {
+		$callback = function ( $actions, $term ) use ( $screen, $action_key ) {
 
 			if ( $term->taxonomy !== $screen->taxonomy )
 				return $actions;

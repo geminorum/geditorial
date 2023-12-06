@@ -76,7 +76,7 @@ trait PairedAdmin
 			return FALSE;
 
 		add_action( $this->hook_base( 'tweaks', 'column_attr' ),
-			function( $post ) use ( $constants, $supported ) {
+			function ( $post ) use ( $constants, $supported ) {
 
 				if ( count( $supported ) > 1 ) {
 
@@ -141,7 +141,7 @@ trait PairedAdmin
 			return FALSE;
 
 		add_action( $this->hook_base( 'tweaks', 'column_row' ),
-			function( $post ) use ( $constants ) {
+			function ( $post ) use ( $constants ) {
 
 				if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
 					return;

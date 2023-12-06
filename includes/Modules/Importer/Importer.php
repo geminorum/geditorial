@@ -141,7 +141,7 @@ class Importer extends gEditorial\Module
 	{
 		$option = $this->hook( 'fields_history' );
 
-		$filtered = array_filter( array_map( function( $value ) {
+		$filtered = array_filter( array_map( function ( $value ) {
 			return $value && 'none' !== $value ? $value : FALSE;
 		}, $map ) );
 
@@ -385,7 +385,7 @@ class Importer extends gEditorial\Module
 			'_cb'           => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
-				'callback' => function( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
 
 					$checks = [];
 

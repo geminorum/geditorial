@@ -138,7 +138,7 @@ class Entry extends gEditorial\Module
 
 		if ( $before = $this->get_setting( 'before_content' ) )
 			add_action( $this->hook_base( 'content', 'before' ),
-				function( $content ) use ( $before ) {
+				function ( $content ) use ( $before ) {
 
 					if ( $this->is_content_insert( FALSE ) )
 						echo $this->wrap( WordPress\ShortCode::apply( $before ), '-before' );
@@ -147,7 +147,7 @@ class Entry extends gEditorial\Module
 
 		if ( $after = $this->get_setting( 'after_content' ) )
 			add_action( $this->hook_base( 'content', 'after' ),
-				function( $content ) use ( $after ) {
+				function ( $content ) use ( $after ) {
 
 					if ( $this->is_content_insert( FALSE ) )
 						echo $this->wrap( WordPress\ShortCode::apply( $after ), '-after' );

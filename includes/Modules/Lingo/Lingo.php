@@ -273,7 +273,7 @@ class Lingo extends gEditorial\Module
 					'title'    => _x( 'Term', 'Table Column', 'geditorial-lingo' ),
 					'class'    => '-ltr',
 					'args'     => [ 'taxonomy' => $this->constant( 'language_taxonomy' ) ],
-					'callback' => function( $value, $row, $column, $index, $key, $args ) {
+					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 						if ( $term = WordPress\Term::exists( $row['name'], $column['args']['taxonomy'] ) )
 							return Helper::getTermTitleRow( $term );

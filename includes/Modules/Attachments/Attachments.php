@@ -421,7 +421,7 @@ class Attachments extends gEditorial\Module
 						$list[] = sprintf( _x( '[Term]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getTermTitleRow( $term_id, 'view', TRUE ) );
 
-					foreach ( $this->search_attachment( $row->ID ) as $post_id )
+					foreach ( WordPress\Media::searchAttachment( $row->ID ) as $post_id )
 						/* translators: %s: linked post title */
 						$list[] = sprintf( _x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
@@ -580,20 +580,6 @@ class Attachments extends gEditorial\Module
 			$posttype,
 			$this->get_sub_limit_option( $sub )
 		);
-	}
-
-	// searches only for portion of the attached file
-	// like: `2021/10/filename` where `filename.ext` is the filename
-	// FIXME: move up
-	public function search_attachment( $attachment_id )
-	{
-		if ( ! $file = get_post_meta( $attachment_id, '_wp_attached_file', TRUE ) )
-			return [];
-
-		$filetype = wp_check_filetype( Core\File::basename( $file ) );
-		$pathfile = Core\File::join( dirname( $file ), Core\File::basename( $file, '.'.$filetype['ext'] ) );
-
-		return WordPress\PostType::getIDsBySearch( $pathfile );
 	}
 
 	private function _raise_resources( $count = 0 )
