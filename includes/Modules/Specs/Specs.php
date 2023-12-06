@@ -85,13 +85,13 @@ class Specs extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
-			$this->constant( 'post_cpt' ) => [
+		return [ 'specs' => [
+			'_supported' => [
 				'spec_title' => TRUE,
 				'spec_order' => TRUE,
 				'spec_value' => TRUE,
 			],
-		];
+		] ];
 	}
 
 	public function init()
@@ -101,7 +101,7 @@ class Specs extends gEditorial\Module
 		$this->register_taxonomy( 'specs_tax' );
 
 		foreach ( $this->posttypes() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], TRUE, 'specs' );
+			$this->add_posttype_fields( $posttype, $this->fields[$this->key]['_supported'], TRUE, $this->key );
 
 		// add_shortcode( $this->constant( 'specs_shortcode' ), [ $this, 'shortcode_specs' ] );
 		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );

@@ -205,7 +205,7 @@ class Persona extends gEditorial\Module
 	{
 		$primary = $this->constant( 'primary_posttype' );
 
-		return [
+		return [ 'meta' => [
 			$primary => [
 				'first_name' => [
 					'title'          => _x( 'First Name', 'Field Title', 'geditorial-persona' ),
@@ -345,7 +345,7 @@ class Persona extends gEditorial\Module
 					'type'        => 'address',
 				],
 			],
-		];
+		] ];
 	}
 
 	public function after_setup_theme()

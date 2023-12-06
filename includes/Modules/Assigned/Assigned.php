@@ -107,7 +107,7 @@ class Assigned extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			'_supported' => [
 				'assigned_to_userid' => [
 					'title'       => _x( 'Assigned To', 'Field Title', 'geditorial-assigned' ),
@@ -126,7 +126,7 @@ class Assigned extends gEditorial\Module
 					'type'        => 'datetime',
 				],
 			],
-		];
+		] ];
 	}
 
 	public function meta_init()

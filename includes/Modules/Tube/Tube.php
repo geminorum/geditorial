@@ -128,7 +128,7 @@ class Tube extends gEditorial\Module
 	// @REF: https://www.videouniversity.com/?p=6660
 	public function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'video_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -179,7 +179,7 @@ class Tube extends gEditorial\Module
 				'video_source_url'  => [ 'type' => 'video_source' ],
 				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
-		];
+		] ];
 	}
 
 	protected function posttypes_excluded( $extra = [] )

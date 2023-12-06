@@ -51,8 +51,13 @@ class Tablelist extends WordPress\Main
 		return [ $terms, $pagination ];
 	}
 
-	// TODO: duolicate to support the parent type: `getAttachments()`
+	// TODO: support the parent posttype
 	// - must alter query to filter the parent posttype
+	public static function getAttachments( $atts = [], $extra = [], $posttypes = 'attachment', $perpage = 25 )
+	{
+		return self::getPosts( $atts, $extra, $posttypes, $perpage );
+	}
+
 	public static function getPosts( $atts = [], $extra = [], $posttypes = 'any', $perpage = 25 )
 	{
 		$limit  = self::limit( $perpage );
@@ -77,6 +82,9 @@ class Tablelist extends WordPress\Main
 
 		if ( ! empty( $_REQUEST['type'] ) )
 			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
+
+		if ( ! empty( $_REQUEST['mime'] ) )
+			$args['post_mime_type'] = $extra['mime'] = $_REQUEST['mime'];
 
 		if ( ! empty( $_REQUEST['author'] ) )
 			$args['author'] = $extra['author'] = $_REQUEST['author'];

@@ -15,7 +15,6 @@ trait Strings
 		if ( $subgroup && isset( $this->strings[$group][$subgroup][$string] ) )
 			return $this->strings[$group][$subgroup][$string];
 
-		// FIXME: rename to `_supported`
 		if ( isset( $this->strings[$group]['post'][$string] ) )
 			return $this->strings[$group]['post'][$string];
 

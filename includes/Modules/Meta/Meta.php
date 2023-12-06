@@ -436,6 +436,8 @@ class Meta extends gEditorial\Module
 		// initiate the posttype fields for each posttype
 		foreach ( $this->posttypes() as $posttype )
 			$this->get_posttype_fields( $posttype );
+
+		$this->fields = NULL; // unload initial data
 	}
 
 	protected function register_meta_fields()

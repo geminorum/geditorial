@@ -89,7 +89,7 @@ class Quotation extends gEditorial\Module
 	{
 		$rtl = Core\HTML::rtl();
 
-		return [
+		return [ 'meta' => [
 			$this->constant( 'primary_posttype' ) => [
 				'parent_post_id' => [
 					'title'       => _x( 'Parent', 'Field Title', 'geditorial-quotation' ),
@@ -137,7 +137,7 @@ class Quotation extends gEditorial\Module
 					'type'        => 'note',
 				],
 			],
-		];
+		] ];
 	}
 
 	protected function posttypes_excluded( $extra = [] )

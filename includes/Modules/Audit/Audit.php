@@ -751,6 +751,7 @@ class Audit extends gEditorial\Module
 		}
 
 		if ( $empty ) {
+
 			Core\HTML::h4( _x( 'Posts with Empty Fields', 'Card Title', 'geditorial-audit' ), 'title' );
 			Core\HTML::desc( _x( 'No empty attribute available. Please install the default attributes.', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
 		}

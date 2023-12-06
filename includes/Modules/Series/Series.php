@@ -94,13 +94,13 @@ class Series extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
-			$this->constant( 'post_cpt' ) => [
+		return [ 'series' => [
+			'_supported' => [
 				'in_series_title' => TRUE,
 				'in_series_order' => TRUE,
 				'in_series_desc'  => FALSE,
 			],
-		];
+		] ];
 	}
 
 	public function init()
@@ -113,7 +113,7 @@ class Series extends gEditorial\Module
 		] );
 
 		foreach ( $this->posttypes() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields[$this->constant( 'post_cpt' )], TRUE, 'series' );
+			$this->add_posttype_fields( $posttype, $this->fields[$this->key]['_supported'], TRUE, $this->key );
 
 		$this->register_shortcode( 'series_shortcode' );
 	}

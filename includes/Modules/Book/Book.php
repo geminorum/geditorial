@@ -292,7 +292,7 @@ class Book extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'publication_cpt' ) => [
 				'publication_tagline' => [
 					'title'       => _x( 'Cover Tagline', 'Field Title', 'geditorial-book' ),
@@ -385,7 +385,7 @@ class Book extends gEditorial\Module
 				'cover_blurb'  => [ 'type' => 'note' ],
 				'cover_price'  => [ 'type' => 'price' ],
 			],
-		];
+		] ];
 	}
 
 	protected function paired_get_paired_constants()

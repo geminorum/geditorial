@@ -88,7 +88,7 @@ class Symposium extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'session_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -118,7 +118,7 @@ class Symposium extends gEditorial\Module
 
 				'datetime' => [ 'type' => 'datetime' ],
 			],
-		];
+		] ];
 	}
 
 	public function after_setup_theme()

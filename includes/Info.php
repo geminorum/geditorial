@@ -114,6 +114,15 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderEmptyMIMEtype( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'The MIME-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
+			FALSE,
+			'-empty -not-empty-mimetype'
+		);
+	}
+
 	public static function renderEmptyPosttype( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(

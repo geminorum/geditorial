@@ -128,7 +128,7 @@ class Units extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'units' => [
 			'_supported' => [
 				'weight_in_g'  => [ 'type' => 'gram',      'icon' => 'image-filter' ],
 				'width_in_mm'  => [ 'type' => 'milimeter', 'icon' => 'leftright'    ],
@@ -148,7 +148,7 @@ class Units extends gEditorial\Module
 				'book_cover' => [ 'type' => 'bookcover' ],
 				'paper_size' => [ 'type' => 'papersize' ],
 			],
-		];
+		] ];
 	}
 
 	private function get_posttypes_support_units()

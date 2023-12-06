@@ -58,7 +58,7 @@ class Event extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'event_cpt' ) => [
 				'event_start' => [
 					'title'       => _x( 'Event Start', 'Fields', 'geditorial-event' ),
@@ -96,7 +96,7 @@ class Event extends gEditorial\Module
 					'icon'        => 'thumbs-down',
 				],
 			],
-		];
+		] ];
 	}
 
 	protected function get_global_constants()

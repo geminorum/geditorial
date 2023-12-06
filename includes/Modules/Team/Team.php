@@ -71,7 +71,7 @@ class Team extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'member_cpt' ) => [
 				'team_role' => [
 					'title'       => _x( 'Role', 'Field Title', 'geditorial-team' ),
@@ -116,7 +116,7 @@ class Team extends gEditorial\Module
 					'icon'        => 'nametag',
 				],
 			],
-		];
+		] ];
 	}
 
 	protected function posttypes_excluded( $extra = [] )

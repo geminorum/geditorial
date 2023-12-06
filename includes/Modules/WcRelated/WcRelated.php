@@ -158,8 +158,8 @@ class WcRelated extends gEditorial\Module
 		if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) )
 			return;
 
-		$before = function() { add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
-		$after  = function() { remove_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
+		$before = function () { add_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
+		$after  = function () { remove_filter( 'pre_option_woocommerce_hide_out_of_stock_items', [ $this, '_return_string_yes' ] ); };
 
 		if ( WordPress\WooCommerce::isActiveWoodMart() ) {
 
