@@ -1231,7 +1231,7 @@ class Settings extends WordPress\Main
 		return [ 'onclick' => sprintf( 'return confirm(\'%s\')', Core\HTML::escape( $message ) ) ];
 	}
 
-	public static function submitCheckBox( $name = 'submit', $text = '', $atts = [], $after = '&nbsp;&nbsp;' )
+	public static function submitCheckBox( $name = 'submit', $text = '', $atts = [], $after = '' )
 	{
 		$id = Core\Text::sanitizeBase( $name );
 
@@ -1247,7 +1247,7 @@ class Settings extends WordPress\Main
 		echo $after;
 	}
 
-	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [], $after = '&nbsp;&nbsp;' )
+	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [], $after = '' )
 	{
 		$link    = FALSE;
 		$classes = [ '-button', 'button' ];

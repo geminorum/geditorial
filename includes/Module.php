@@ -2,7 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
@@ -23,7 +22,7 @@ class Module extends WordPress\Module
 	public $settings;
 
 	public $enabled  = FALSE;
-	public $meta_key = '_ge';
+	public $meta_key = '_ge'; // FIXME: DEPRECATED
 
 	protected $icon_group = 'genericons-neue';
 
@@ -951,7 +950,7 @@ class Module extends WordPress\Module
 			if ( $constant = $this->constant( $key ) )
 				$pre[] = $constant;
 
-		return array_unique( $pre );
+		return Core\Arraay::prepString( $pre );
 	}
 
 	public function slug()

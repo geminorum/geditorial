@@ -703,7 +703,7 @@ class Audit extends gEditorial\Module
 				'name'       => 'posttype-empty-title',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
 			] );
-			echo '&nbsp;&nbsp;';
+
 			Settings::submitButton( $action.'[mark_empty_title]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
 			Settings::submitButton( $action.'[flush_empty_title]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
 			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no title.', 'Card: Description', 'geditorial-audit' ) );
@@ -722,7 +722,7 @@ class Audit extends gEditorial\Module
 				'name'       => 'posttype-empty-content',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
 			] );
-			echo '&nbsp;&nbsp;';
+
 			Settings::submitButton( $action.'[mark_empty_content]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
 			Settings::submitButton( $action.'[flush_empty_content]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
 			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no content.', 'Card: Description', 'geditorial-audit' ) );
@@ -741,7 +741,7 @@ class Audit extends gEditorial\Module
 				'name'       => 'posttype-empty-excerpt',
 				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
 			] );
-			echo '&nbsp;&nbsp;';
+
 			Settings::submitButton( $action.'[mark_empty_excerpt]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
 			Settings::submitButton( $action.'[flush_empty_excerpt]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
 			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no excerpt.', 'Card: Description', 'geditorial-audit' ) );
@@ -879,7 +879,6 @@ class Audit extends gEditorial\Module
 			'cap'          => TRUE,
 		] );
 
-		echo '&nbsp;&nbsp;';
 		Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Card: Button', 'geditorial-audit' ) );
 		echo '</div>';
 

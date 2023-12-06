@@ -373,11 +373,7 @@ class Config extends gEditorial\Module
 				'option_group' => 'tools',
 			] );
 
-			echo '&nbsp;&nbsp;';
-
-			Settings::submitButton( 'custom_fields_empty',
-				_x( 'Empty', 'Button', 'geditorial-config' ), 'danger', TRUE );
-
+			Settings::submitButton( 'custom_fields_empty', _x( 'Empty', 'Button', 'geditorial-config' ), 'danger', TRUE );
 			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Message', 'geditorial-config' ) );
 
 		echo '</td></tr>';
@@ -413,10 +409,7 @@ class Config extends gEditorial\Module
 					'option_group' => 'tools',
 				] );
 
-				echo '&nbsp;&nbsp;';
-
-				Settings::submitButton( 'convert_connection_type',
-					_x( 'Convert', 'Button', 'geditorial-config' ), 'danger', TRUE );
+				Settings::submitButton( 'convert_connection_type', _x( 'Convert', 'Button', 'geditorial-config' ), 'danger', TRUE );
 			}
 
 			if ( $empty )

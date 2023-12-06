@@ -100,7 +100,7 @@ class ModuleSettings extends gEditorial\Settings
 			'post_mime_type' => $mimetype,
 		], [], 'attachment', $limit );
 
-		if ( empty( $posts ) )
+		if ( empty( $attachments ) )
 			return FALSE;
 
 		echo self::processingListOpen();
