@@ -14,8 +14,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		return [
 			'name'   => '<%= moduleUnderline %>',
-			'title'  => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
-			'desc'   => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= pluginTexdomain %>' ),
+			'title'  => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
+			'desc'   => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
 			'icon'   => '<%= moduleDashicon %>',
 			'access' => 'planned',
 		];

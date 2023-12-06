@@ -126,7 +126,34 @@
         "assets/dev",
         "assets/blocks/**/src",
         "includes/Modules/**/.temp",
-        "gulpfile.js"
+        "gulpfile.mjs"
+      ],
+      "comment": "",
+      "headers": {
+        "Last-Translator": "NULL",
+        "Language-Team": "NULL",
+        "POT-Creation-Date": "YEAR-MO-DA HO:MI+ZONE",
+        "Report-Msgid-Bugs-To": "<%= data.bugs %>",
+        "X-Poedit-Basepath": ".."
+      }
+    },
+    "admin": {
+      "exclude": [
+        ".temp",
+        ".git",
+        ".imdone",
+        ".build",
+        ".github",
+        "assets/vendor",
+        "assets/components",
+        "assets/js/vendor",
+        "assets/packages",
+        "assets/apps/**/src",
+        "assets/dev",
+        "assets/blocks/**/src",
+        "includes/Modules/**/.temp",
+        "gulpfile.mjs",
+        "./geditorial.php"
       ],
       "comment": "",
       "headers": {
@@ -196,6 +223,7 @@
         "namespaceAuthor": "geminorum",
         "namespaceBase": "gEditorial",
         "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
         "moduleTextdomain": "geditorial-new-module",
         "moduleBase": "geditorial",
         "moduleTitle": "New Module",

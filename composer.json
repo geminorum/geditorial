@@ -30,7 +30,7 @@
     "tecnickcom/tc-lib-barcode": "^1.17",
     "hbgl/php-code-128-encoder": "^0.2.5",
     "sinasalek/multi-calendar-date-time": "dev-master",
-    "dgoring/dom-query": "^1.0",
+    "rct567/dom-query": "^1.0",
     "jwage/easy-csv": "^1.0",
     "sabre/vobject": "^4.3"
   },

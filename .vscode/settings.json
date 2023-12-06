@@ -1,7 +1,9 @@
 {
   "search.useIgnoreFiles": false,
   "search.exclude": {
+    "./assets/bin": true,
     "./assets/components": true,
+    "./assets/packages": true,
     "./assets/vendor": true,
     "**/.temp": true
   },
@@ -31,5 +33,11 @@
   "files.readonlyFromPermissions": true,
   "files.readonlyInclude": {
     "node_modules": true
-  }
+  },
+  "php.files.exclude": [
+    "**/.temp",
+    "./assets/bin",
+    "./assets/packages",
+    "./assets/vendor"
+  ]
 }

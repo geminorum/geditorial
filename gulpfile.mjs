@@ -137,6 +137,25 @@ task('i18n:plugin', function (cb) {
   });
 });
 
+task('i18n:admin', function (cb) {
+  const command = 'wp i18n make-pot . ' +
+    ' ./languages/admin.pot' +
+    ' --domain=' + pkg.name + '-admin' +
+    // ' --subtract=./languages/' + pkg.name + '.pot' + // FIXME: temporarly disabled for migration
+    ' --headers=\'' + template(JSON.stringify(conf.i18n.admin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\'' +
+    i18nExtra(conf.i18n.admin);
+
+  exec(command, function (err, stdout, stderr) {
+    if (stdout) {
+      log('WP-CLI:', stdout.trim());
+    }
+    if (stderr) {
+      log.error('Errors:', stderr.trim());
+    }
+    cb(err);
+  });
+});
+
 task('i18n:modules', function () {
   const extra = i18nExtra(conf.i18n.modules);
 
@@ -165,7 +184,7 @@ task('i18n:modules', function () {
     }));
 });
 
-task('i18n', series('i18n:plugin', 'i18n:modules'));
+task('i18n', series('i18n:plugin', 'i18n:admin', 'i18n:modules'));
 
 task('dev:sass', function () {
   return src(conf.input.sass)
