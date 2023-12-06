@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Labeled\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-01 23:08+0330\n"
+"PO-Revision-Date: 2023-11-05 19:12+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,82 +11,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: ../../includes/Modules/Labeled\n"
 "X-Domain: geditorial-labeled\n"
 
-#: Labeled.php:65
+#: Labeled.php:66
 msgid "Label"
 msgid_plural "Labels"
 msgstr[0] "سرستون‌ها"
 msgstr[1] "سرستون"
 
-#: Labeled.php:69
+#: Labeled.php:70
 msgctxt "Label: `extended_label`"
 msgid "Content Labels"
 msgstr "سرستون‌های محتوا"
 
-#: Labeled.php:70
+#: Labeled.php:71
 msgctxt "Label: Menu Name"
 msgid "Content Labels"
 msgstr "سرستون‌های محتوا"
 
-#: Labeled.php:71
+#: Labeled.php:72
 msgctxt "Label: Show Option All"
 msgid "Labels"
 msgstr "سرستون‌ها"
 
-#: Labeled.php:72
+#: Labeled.php:73
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlabeled)"
 msgstr "(بی‌سرستون)"
 
-#: Labeled.php:81
-msgctxt "Dashboard Widget Title"
-msgid "Your Content Labels Summary"
-msgstr ""
-
 #: Labeled.php:82
 msgctxt "Dashboard Widget Title"
-msgid "Content Labels Summary"
-msgstr ""
+msgid "Your Content Labels Summary"
+msgstr "گزارش سرستون‌های محتوایی شما"
 
-#: Labeled.php:87
+#: Labeled.php:83
+msgctxt "Dashboard Widget Title"
+msgid "Content Labels Summary"
+msgstr "گزارش سرستون‌های محتوایی"
+
+#: Labeled.php:88
 msgctxt "Main Taxonomy: Default Term"
 msgid "Introduction"
 msgstr "مقدمه"
 
-#: Labeled.php:88
+#: Labeled.php:89
 msgctxt "Main Taxonomy: Default Term"
 msgid "Interview"
 msgstr "گفت‌وگو"
 
-#: Labeled.php:89
+#: Labeled.php:90
 msgctxt "Main Taxonomy: Default Term"
 msgid "Review"
 msgstr "نقد و بررسی"
 
-#: Labeled.php:90
+#: Labeled.php:91
 msgctxt "Main Taxonomy: Default Term"
 msgid "Report"
 msgstr "گزارش"
 
-#: Labeled.php:102
+#: Labeled.php:103
 msgctxt "Field Title"
 msgid "Label"
 msgstr "سرستون"
 
-#: Labeled.php:103
+#: Labeled.php:104
 msgctxt "Field Description"
 msgid "Text to indicate that the content is part of an editorial column."
 msgstr "متنی برای نشان‌دادن این‌که محتوا بخشی از یک ستون تحریریه است."
 
-#: Labeled.php:106
+#: Labeled.php:107
 msgctxt "Field Title"
 msgid "Label Taxonomy"
 msgstr "رده‌بندی سرستون"
 
-#: Labeled.php:107
+#: Labeled.php:108
 msgctxt "Field Description"
 msgid "Taxonomy for better categorizing editorial columns."
 msgstr "رده‌بندی برای دسته‌بندی بهتر ستون‌های تحریریه."

@@ -28,12 +28,12 @@ msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:207
+#: Recount.php:206
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:213
+#: Recount.php:212
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr ""

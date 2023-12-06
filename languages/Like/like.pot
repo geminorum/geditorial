@@ -124,37 +124,37 @@ msgid_plural "%s Guests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Like.php:549
+#: Like.php:547
 msgctxt "Table Action"
 msgid "Sync Counts"
 msgstr ""
 
-#: Like.php:550
+#: Like.php:548
 msgctxt "Table Action"
 msgid "Sync All Counts"
 msgstr ""
 
-#: Like.php:563
+#: Like.php:561
 msgctxt "Table Column"
 msgid "Total"
 msgstr ""
 
-#: Like.php:569
+#: Like.php:567
 msgctxt "Table Column"
 msgid "Guests"
 msgstr ""
 
-#: Like.php:575
+#: Like.php:573
 msgctxt "Table Column"
 msgid "Users"
 msgstr ""
 
-#: Like.php:581
+#: Like.php:579
 msgctxt "Table Column"
 msgid "Avatars"
 msgstr ""
 
-#: Like.php:590
+#: Like.php:588
 msgctxt "Header"
 msgid "Overview of Post Likes"
 msgstr ""

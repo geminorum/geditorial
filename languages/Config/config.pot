@@ -95,7 +95,7 @@ msgid "Upgrade Old Options"
 msgstr ""
 
 #: Config.php:348
-msgctxt "Tools: Message"
+msgctxt "Message"
 msgid "Checks for old options and upgrade them. Also deletes the old options."
 msgstr ""
 
@@ -105,12 +105,12 @@ msgid "Delete All Options"
 msgstr ""
 
 #: Config.php:356
-msgctxt "Tools: Message"
+msgctxt "Message"
 msgid "Deletes all editorial options on current site"
 msgstr ""
 
 #: Config.php:362
-msgctxt "Tools: Header"
+msgctxt "Header"
 msgid "Maintenance Tasks"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgid "Empty"
 msgstr ""
 
 #: Config.php:381
-msgctxt "Tools: Message"
+msgctxt "Message"
 msgid "Deletes empty meta values. This solves common problems with imported posts."
 msgstr ""
 
@@ -135,7 +135,7 @@ msgid "Orphan Connections"
 msgstr ""
 
 #: Config.php:391
-msgctxt "Tools: Message"
+msgctxt "Message"
 msgid "No connection types found."
 msgstr ""
 
@@ -145,7 +145,7 @@ msgid "Convert"
 msgstr ""
 
 #: Config.php:423
-msgctxt "Tools: Message"
+msgctxt "Message"
 msgid "No orphaned connection types found in the database."
 msgstr ""
 

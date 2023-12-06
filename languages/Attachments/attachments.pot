@@ -13,165 +13,258 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 "X-Domain: geditorial-attachments\n"
 
-#: Attachments.php:44
+#: Attachments.php:46
 msgctxt "Setting Title"
 msgid "Rewrite Permalinks"
 msgstr ""
 
-#: Attachments.php:45
+#: Attachments.php:47
 msgctxt "Setting Description"
 msgid "Changes default permalinks into attachment id."
 msgstr ""
 
-#: Attachments.php:50
+#: Attachments.php:52
 msgctxt "Setting Title"
 msgid "Prefix Permalinks"
 msgstr ""
 
-#: Attachments.php:51
+#: Attachments.php:53
 msgctxt "Setting Description"
 msgid "Adds to the permalink of attachments, before id."
 msgstr ""
 
-#: Attachments.php:58
+#: Attachments.php:60
 msgctxt "Setting Title"
 msgid "Fallback Alt to Title"
 msgstr ""
 
-#: Attachments.php:59
+#: Attachments.php:61
 msgctxt "Setting Description"
 msgid "Tries to fill empty alt attribute with attachment title on images."
 msgstr ""
 
-#: Attachments.php:65
+#: Attachments.php:67
 msgctxt "Setting Title"
 msgid "Attachment Count"
 msgstr ""
 
-#: Attachments.php:66
+#: Attachments.php:68
 msgctxt "Setting Description"
 msgid "Displays attachment summary of the post."
 msgstr ""
 
-#: Attachments.php:68
+#: Attachments.php:70
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
 msgstr ""
 
-#: Attachments.php:71
+#: Attachments.php:73
 msgctxt "Setting Title"
 msgid "Restrict Library"
 msgstr ""
 
-#: Attachments.php:72
+#: Attachments.php:74
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr ""
 
-#: Attachments.php:185
+#: Attachments.php:187
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr ""
 
-#: Attachments.php:233
+#: Attachments.php:235
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachments count
-#: Attachments.php:236
+#: Attachments.php:238
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Attachments.php:241
+#: Attachments.php:243
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr ""
 
-#: Attachments.php:276
+#: Attachments.php:278
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachment parent title
-#: Attachments.php:278
+#: Attachments.php:280
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr ""
 
-#: Attachments.php:371
+#: Attachments.php:373
 msgctxt "Table Action"
 msgid "Delete Permanently"
 msgstr ""
 
-#: Attachments.php:372
+#: Attachments.php:374
 msgctxt "Table Action"
 msgid "Empty Meta-data"
 msgstr ""
 
-#: Attachments.php:373
+#: Attachments.php:375
 msgctxt "Table Action"
 msgid "Remove Thumbnails"
 msgstr ""
 
-#: Attachments.php:390
+#: Attachments.php:392
 msgctxt "Table Column"
 msgid "Custom"
 msgstr ""
 
-#: Attachments.php:402
+#: Attachments.php:404
 msgctxt "Table Column"
 msgid "Search"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:409
+#: Attachments.php:411
 msgctxt "Search Result Prefix"
 msgid "[Parent]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:414
+#: Attachments.php:416
 msgctxt "Search Result Prefix"
 msgid "[Thumb]: %s"
 msgstr ""
 
 #. translators: %s: linked term title
-#: Attachments.php:419
+#: Attachments.php:421
 msgctxt "Search Result Prefix"
 msgid "[Term]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:424
+#: Attachments.php:426
 msgctxt "Search Result Prefix"
 msgid "[Content]: %s"
 msgstr ""
 
-#: Attachments.php:431
+#: Attachments.php:433
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr ""
 
-#: Attachments.php:454
+#: Attachments.php:456
 msgctxt "Table Column"
 msgid "Meta"
 msgstr ""
 
-#: Attachments.php:475
+#: Attachments.php:477
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr ""
 
-#: Attachments.php:476
+#: Attachments.php:478
 msgctxt "Message"
 msgid "No attachments found."
+msgstr ""
+
+#: Attachments.php:491
+msgctxt "Header"
+msgid "Attachment Tools"
 msgstr ""
 
 #: ModuleInfo.php:17
 msgctxt "Help Tab Title"
 msgid "Shortcodes"
+msgstr ""
+
+#: ModuleSettings.php:17
+msgctxt "Card Title"
+msgid "Re-attach Un-Parented"
+msgstr ""
+
+#. translators: %s: posttype label
+#: ModuleSettings.php:24
+#: ModuleSettings.php:39
+msgctxt "Button"
+msgid "On %s"
+msgstr ""
+
+#: ModuleSettings.php:26
+msgctxt "Button Description"
+msgid "Tries to re-attach un-parented via thumbnail meta-data."
+msgstr ""
+
+#: ModuleSettings.php:32
+msgctxt "Card Title"
+msgid "Empty Meta-data"
+msgstr ""
+
+#: ModuleSettings.php:41
+msgctxt "Button Description"
+msgid "Tries to clean attachemnt raw meta-data."
+msgstr ""
+
+#: ModuleSettings.php:47
+msgctxt "Card Title"
+msgid "Deletion by MIME"
+msgstr ""
+
+#: ModuleSettings.php:55
+msgctxt "Button Description"
+msgid "Tries to delete attachemnts by MIME types."
+msgstr ""
+
+#. translators: %s: attachment id
+#: ModuleSettings.php:126
+#: ModuleSettings.php:213
+msgctxt "Notice"
+msgid "Attachment ID (%s) is not valid!"
+msgstr ""
+
+#. translators: %1$s: attachment title, %2$s: attachment id
+#: ModuleSettings.php:132
+msgctxt "Notice"
+msgid "There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s)"
+msgstr ""
+
+#. translators: %1$s: attachment title, %2$s: attachment id
+#: ModuleSettings.php:138
+msgctxt "Notice"
+msgid "Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)"
+msgstr ""
+
+#. translators: %s: attachment
+#: ModuleSettings.php:151
+msgctxt "Notice"
+msgid "Attachment (%s) is not valid!"
+msgstr ""
+
+#. translators: %1$s: attachment id, %2$s: attachment title
+#. translators: %1$s: attachment id, %2$s: parent title
+#: ModuleSettings.php:157
+#: ModuleSettings.php:225
+msgctxt "Notice"
+msgid "There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: attachment title, %2$s: attachment id
+#: ModuleSettings.php:163
+msgctxt "Notice"
+msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted."
+msgstr ""
+
+#. translators: %s: parent id
+#: ModuleSettings.php:219
+msgctxt "Notice"
+msgid "Parent ID (%s) is not valid!"
+msgstr ""
+
+#. translators: %1$s: attachment title, %2$s: attachment id, %3$s: parent title
+#: ModuleSettings.php:231
+msgctxt "Notice"
+msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;"
 msgstr ""

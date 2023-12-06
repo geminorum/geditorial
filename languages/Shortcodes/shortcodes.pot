@@ -58,17 +58,17 @@ msgctxt "Title Attr"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:148
+#: Shortcodes.php:147
 msgctxt "None Title"
 msgid "All Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:162
+#: Shortcodes.php:161
 msgctxt "Table Column"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:180
+#: Shortcodes.php:179
 msgctxt "Header"
 msgid "Overview of Post Shortcodes"
 msgstr ""

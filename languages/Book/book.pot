@@ -456,71 +456,71 @@ msgid "Full reference to this publication"
 msgstr ""
 
 #. translators: %s: edition placeholder
-#: Book.php:678
+#: Book.php:679
 msgctxt "Display"
 msgid "%s Edition"
 msgstr ""
 
 #. translators: %s: print placeholder
-#: Book.php:680
+#: Book.php:681
 msgctxt "Display"
 msgid "%s Print"
 msgstr ""
 
 #. translators: %s: pages count placeholder
-#: Book.php:682
+#: Book.php:683
 msgctxt "Display"
 msgid "%s Pages"
 msgstr ""
 
 #. translators: %s: volumes count placeholder
-#: Book.php:684
+#: Book.php:685
 msgctxt "Display"
 msgid "%s Volumes"
 msgstr ""
 
-#: Book.php:729
+#: Book.php:730
 msgctxt "Title Attr"
 msgid "ISBN Link to this publication"
 msgstr ""
 
-#: Book.php:732
+#: Book.php:733
 msgctxt "Action"
 msgid "ISBN"
 msgstr ""
 
-#: Book.php:976
+#: Book.php:977
 msgctxt "Header"
 msgid "Publication Tools"
 msgstr ""
 
-#: Book.php:1024
+#: Book.php:1025
 msgctxt "Table Column"
 msgid "Import Meta"
 msgstr ""
 
-#: Book.php:1037
+#: Book.php:1038
 msgctxt "Table Column"
 msgid "Import Related"
 msgstr ""
 
-#: Book.php:1044
+#: Book.php:1045
 msgctxt "Tools"
 msgid "By ID"
 msgstr ""
 
-#: Book.php:1048
+#: Book.php:1049
 msgctxt "Tools"
 msgid "By Title"
 msgstr ""
 
-#: Book.php:1056
+#: Book.php:1057
 msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr ""
 
 #. translators: %s: total pages
-#: Book.php:1073
+#: Book.php:1074
 msgctxt "Noop"
 msgid "%s Page"
 msgid_plural "%s Pages"
@@ -528,7 +528,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: total volumes
-#: Book.php:1076
+#: Book.php:1077
 msgctxt "Noop"
 msgid "%s Volume"
 msgid_plural "%s Volumes"
@@ -536,29 +536,29 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: total discs
-#: Book.php:1079
+#: Book.php:1080
 msgctxt "Noop"
 msgid "%s Disc"
 msgid_plural "%s Discs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Book.php:1116
+#: Book.php:1117
 msgctxt "Import Field"
 msgid "Book: Publication ID"
 msgstr ""
 
-#: Book.php:1117
+#: Book.php:1118
 msgctxt "Import Field"
 msgid "Book: Publication Title"
 msgstr ""
 
-#: Book.php:1118
+#: Book.php:1119
 msgctxt "Import Field"
 msgid "Book: Publication Ref (P2P)"
 msgstr ""
 
-#: Book.php:1119
+#: Book.php:1120
 msgctxt "Import Field"
 msgid "Book: Publication Desc (P2P)"
 msgstr ""

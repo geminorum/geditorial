@@ -13,74 +13,74 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Missioned\n"
 "X-Domain: geditorial-missioned\n"
 
-#: Missioned.php:93
 #: Missioned.php:94
+#: Missioned.php:95
 msgid "Mission"
 msgid_plural "Missions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:95
+#: Missioned.php:96
 msgid "Mission Category"
 msgid_plural "Mission Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:96
+#: Missioned.php:97
 msgid "Mission Span"
 msgid_plural "Mission Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:97
+#: Missioned.php:98
 msgid "Mission Type"
 msgid_plural "Mission Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:98
+#: Missioned.php:99
 msgid "Mission Status"
 msgid_plural "Mission Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:102
+#: Missioned.php:103
 msgctxt "Label: `menu_name`"
 msgid "Missions"
 msgstr ""
 
-#: Missioned.php:103
+#: Missioned.php:104
 msgctxt "Label: Featured Image"
 msgid "Mission Poster"
 msgstr ""
 
-#: Missioned.php:104
+#: Missioned.php:105
 msgctxt "Label: MetaBox Title"
 msgid "The Mission"
 msgstr ""
 
-#: Missioned.php:113
+#: Missioned.php:114
 msgctxt "Misc: `column_icon_title`"
 msgid "Missions"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Missioned.php:118
+#: Missioned.php:119
 msgctxt "Metabox: `megabox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Missioned.php:162
+#: Missioned.php:163
 msgctxt "Field Title"
 msgid "Mission Code"
 msgstr ""
 
-#: Missioned.php:163
+#: Missioned.php:164
 msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr ""
 
-#: Missioned.php:394
+#: Missioned.php:396
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr ""

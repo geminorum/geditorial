@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Config\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-01 23:39+0330\n"
+"PO-Revision-Date: 2023-11-27 01:33+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Domain: geditorial-config\n"
 
 #: Config.php:52
@@ -84,148 +84,147 @@ msgctxt "Header"
 msgid "General Editorial Reports"
 msgstr "گزارش‌های همگانی تحریریه"
 
-#: Config.php:341
+#: Config.php:342
 msgctxt "Tools"
 msgid "Options"
 msgstr "گزینه‌ها"
 
-#: Config.php:345
+#: Config.php:346
 msgctxt "Button"
 msgid "Upgrade Old Options"
 msgstr "ارتقاء تنظیمات قدیمی"
 
-#: Config.php:347
-msgctxt "Tools: Message"
+#: Config.php:348
+msgctxt "Message"
 msgid "Checks for old options and upgrade them. Also deletes the old options."
 msgstr "گزینه‌های قدیمی را بررسی، ارتقاء و حذف می‌کند."
 
-#: Config.php:353
+#: Config.php:354
 msgctxt "Button"
 msgid "Delete All Options"
 msgstr "پاک‌کردن همهٔ تنظیمات"
 
-#: Config.php:355
-msgctxt "Tools: Message"
+#: Config.php:356
+msgctxt "Message"
 msgid "Deletes all editorial options on current site"
 msgstr "حذف تمامی تنظیمات مربوط به تحریریه"
 
-#: Config.php:361
-msgctxt "Tools: Header"
+#: Config.php:362
+msgctxt "Header"
 msgid "Maintenance Tasks"
 msgstr "ابزارهای نگه‌داری"
 
-#: Config.php:365
+#: Config.php:366
 msgctxt "Tools"
 msgid "Empty Meta Fields"
 msgstr "تخلیه متا"
 
-#: Config.php:378
+#: Config.php:379
 msgctxt "Button"
 msgid "Empty"
 msgstr "خالی کردن"
 
-#: Config.php:380
-msgctxt "Tools: Message"
+#: Config.php:381
+msgctxt "Message"
 msgid "Deletes empty meta values. This solves common problems with imported posts."
 msgstr ""
 "مقادیر متای خالی را حذف می‌کند. این فرآیند، مشکلات مرسوم فرسته‌های درون‌ریزی‌شده را "
 "برطرف خواهد کرد."
 
-#: Config.php:384
+#: Config.php:385
 msgctxt "Tools"
 msgid "Orphan Connections"
 msgstr "ارتباطات بی‌صاحب"
 
-#: Config.php:390
-msgctxt "Tools: Message"
+#: Config.php:391
+msgctxt "Message"
 msgid "No connection types found."
 msgstr "هیچ نوع اتصالی پیدا نشد!"
 
-#: Config.php:418
+#: Config.php:419
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Config.php:422
-msgctxt "Tools: Message"
+#: Config.php:423
+msgctxt "Message"
 msgid "No orphaned connection types found in the database."
 msgstr "هیچ نوع اتصال یتیم‌شده‌ای در پایگاه‌داده پیدا نشد."
 
-#: Config.php:448
+#: Config.php:449
 msgctxt "Imports Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: Config.php:451
+#: Config.php:452
 msgctxt "Imports Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:457
+#: Config.php:458
 msgctxt "Imports Sub"
 msgid "Data"
 msgstr "داده‌ها"
 
-#: Config.php:461
+#: Config.php:462
 msgctxt "Page Title"
 msgid "Editorial Imports"
 msgstr "درون‌ریزی‌های تحریریه"
 
-#: Config.php:496
+#: Config.php:497
 msgctxt "Imports: Data Summary"
 msgid "Untitled"
 msgstr "بی‌عنوان"
 
-#: Config.php:520
+#: Config.php:521
 msgctxt "Header"
 msgid "General Editorial Imports"
 msgstr "درون‌ریزی‌های همگانی تحریریه"
 
-#: Config.php:521
-msgctxt "Message"
-msgid "There are no importers available!"
-msgstr "درون‌ریزی در دسترس نیست!"
-
 #. translators: %s: user link placeholder
-#: Config.php:532
+#: Config.php:533
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User Is %s"
 msgstr "حساب کاربری سایت در شبکه: %s"
 
-#: Config.php:537
+#: Config.php:538
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User is not available!"
 msgstr "حساب کاربری سایت در شبکه تعریف نشده است!"
 
-#: Config.php:556
+#: Config.php:557
 msgctxt "Ajax Notice"
 msgid "No action or name!"
 msgstr "نام یا کنش ناشناخته!"
 
-#: Config.php:559
+#: Config.php:560
 msgctxt "Ajax Notice"
 msgid "Cannot find the module!"
 msgstr "پودمان مورد نظر پیدا نشد!"
 
-#: Config.php:564
+#: Config.php:565
 msgctxt "Ajax Notice"
 msgid "Module state successfully changed."
 msgstr "وضعیت پودمان با موفقیت تغییر کرد."
 
-#: Config.php:566
+#: Config.php:567
 msgctxt "Ajax Notice"
 msgid "Cannot change module state!"
 msgstr "وضعیت پودمان غیرقابل تغییر است!"
 
-#: Config.php:578
+#: Config.php:579
 msgctxt "Page Notice"
 msgid "Not a registered Editorial module."
 msgstr "پودمان تحریریه‌ای با این نام ثبت نشده است."
 
-#: Config.php:581
+#: Config.php:582
 msgctxt "Page Notice"
 msgid "Module not enabled. Please enable it from the Editorial settings page."
 msgstr "پودمان غیرفعال است. لطفاً آن را از صفحه تنظیمات تحریریه فعال کنید."
+
+#~ msgctxt "Message"
+#~ msgid "There are no importers available!"
+#~ msgstr "درون‌ریزی در دسترس نیست!"
 
 #~ msgctxt "Message"
 #~ msgid "There are no reports available!"

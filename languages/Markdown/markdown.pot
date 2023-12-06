@@ -68,37 +68,37 @@ msgctxt "Message"
 msgid "Unable discard Makrdown content back into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:471
+#: Markdown.php:469
 msgctxt "Table Action"
 msgid "Convert into Markdown"
 msgstr ""
 
-#: Markdown.php:472
+#: Markdown.php:470
 msgctxt "Table Action"
 msgid "Re-Process Markdown"
 msgstr ""
 
-#: Markdown.php:473
+#: Markdown.php:471
 msgctxt "Table Action"
 msgid "Cleanup Markdown"
 msgstr ""
 
-#: Markdown.php:474
+#: Markdown.php:472
 msgctxt "Table Action"
 msgid "Discard Markdown"
 msgstr ""
 
-#: Markdown.php:485
+#: Markdown.php:483
 msgctxt "Table Column"
 msgid "Markdown"
 msgstr ""
 
-#: Markdown.php:496
+#: Markdown.php:494
 msgctxt "Header"
 msgid "Overview of Markdown Posts"
 msgstr ""
 
-#: Markdown.php:497
+#: Markdown.php:495
 msgctxt "Message"
 msgid "No markdown posts found."
 msgstr ""

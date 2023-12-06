@@ -181,42 +181,42 @@ msgctxt "Button"
 msgid "Install Default Calendar Types"
 msgstr ""
 
-#: Event.php:442
+#: Event.php:443
 msgctxt "Meta Box Input"
 msgid "Date Start"
 msgstr ""
 
-#: Event.php:443
+#: Event.php:444
 msgctxt "Meta Box Input Placeholder"
 msgid "Date Start"
-msgstr ""
-
-#: Event.php:452
-msgctxt "Meta Box Input"
-msgid "Time Start"
 msgstr ""
 
 #: Event.php:453
+msgctxt "Meta Box Input"
+msgid "Time Start"
+msgstr ""
+
+#: Event.php:454
 msgctxt "Meta Box Input Placeholder"
 msgid "Time Start"
 msgstr ""
 
-#: Event.php:464
+#: Event.php:465
 msgctxt "Meta Box Input"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:465
+#: Event.php:466
 msgctxt "Meta Box Input Placeholder"
 msgid "Date End"
 msgstr ""
 
-#: Event.php:474
+#: Event.php:475
 msgctxt "Meta Box Input"
 msgid "Time End"
 msgstr ""
 
-#: Event.php:475
+#: Event.php:476
 msgctxt "Meta Box Input Placeholder"
 msgid "Time End"
 msgstr ""

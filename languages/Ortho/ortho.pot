@@ -104,22 +104,22 @@ msgctxt "Header"
 msgid "Orthography Sandbox"
 msgstr ""
 
-#: Ortho.php:359
+#: Ortho.php:358
 msgctxt "Button"
 msgid "Cleanup Chars"
 msgstr ""
 
-#: Ortho.php:375
+#: Ortho.php:374
 msgctxt "Char Title"
 msgid "Arabic Yeh U+064A"
 msgstr ""
 
-#: Ortho.php:376
+#: Ortho.php:375
 msgctxt "Char Title"
 msgid "Arabic Kaf U+0643"
 msgstr ""
 
-#: Ortho.php:403
+#: Ortho.php:402
 msgctxt "Header"
 msgid "Overview of Post Orthography"
 msgstr ""

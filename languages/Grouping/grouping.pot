@@ -48,7 +48,7 @@ msgctxt "Setting Title"
 msgid "Icon"
 msgstr ""
 
-#: Grouping.php:161
+#: Grouping.php:162
 msgctxt "Column Title"
 msgid "Users"
 msgstr ""

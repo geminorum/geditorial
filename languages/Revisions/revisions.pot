@@ -119,22 +119,22 @@ msgctxt "Button"
 msgid "Browse %s Revisions"
 msgstr ""
 
-#: Revisions.php:396
+#: Revisions.php:393
 msgctxt "Table Action"
 msgid "Cleanup Revisions"
 msgstr ""
 
-#: Revisions.php:407
+#: Revisions.php:404
 msgctxt "Table Column"
 msgid "Revisions"
 msgstr ""
 
-#: Revisions.php:432
+#: Revisions.php:429
 msgctxt "Header"
 msgid "Overview of Post Revisions"
 msgstr ""
 
-#: Revisions.php:433
+#: Revisions.php:430
 msgctxt "Message"
 msgid "No post revisions found."
 msgstr ""

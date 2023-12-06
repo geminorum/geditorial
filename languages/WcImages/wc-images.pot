@@ -13,27 +13,27 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcImages\n"
 "X-Domain: geditorial-wc-images\n"
 
-#: WcImages.php:107
+#: WcImages.php:106
 msgctxt "Table Action"
 msgid "Shift Thumbnail from Gallery"
 msgstr ""
 
-#: WcImages.php:118
+#: WcImages.php:117
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr ""
 
-#: WcImages.php:128
+#: WcImages.php:127
 msgctxt "Table Column"
 msgid "Gallery"
 msgstr ""
 
-#: WcImages.php:143
+#: WcImages.php:142
 msgctxt "Header"
 msgid "Overview of WooCommerce Products"
 msgstr ""
 
-#: WcImages.php:144
+#: WcImages.php:143
 msgctxt "Message"
 msgid "No product found."
 msgstr ""

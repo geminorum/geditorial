@@ -135,99 +135,99 @@ msgctxt "Template Title"
 msgid "Editorial: Today: Front-page"
 msgstr ""
 
-#: Today.php:209
-#: Today.php:240
+#: Today.php:212
+#: Today.php:243
 msgctxt "Page Title"
 msgid "Editorial Today"
 msgstr ""
 
-#: Today.php:210
+#: Today.php:213
 msgctxt "Menu Title"
 msgid "My Today"
 msgstr ""
 
-#: Today.php:387
+#: Today.php:390
 msgctxt "Title Attr"
 msgid "View on Today"
 msgstr ""
 
-#: Today.php:390
+#: Today.php:393
 msgctxt "Action"
 msgid "Today"
 msgstr ""
 
-#: Today.php:527
+#: Today.php:530
 msgctxt "Message"
 msgid "You can connect posts to this day once you've saved it for the first time."
 msgstr ""
 
-#: Today.php:553
-#: Today.php:943
+#: Today.php:556
+#: Today.php:947
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr ""
 
-#: Today.php:755
+#: Today.php:758
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr ""
 
-#: Today.php:926
+#: Today.php:929
 msgctxt "Table Column"
 msgid "The Day"
 msgstr ""
 
-#: Today.php:942
+#: Today.php:946
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr ""
 
-#: Today.php:988
+#: Today.php:992
 msgctxt "Header"
 msgid "Today Tools"
 msgstr ""
 
-#: Today.php:991
+#: Today.php:995
 msgctxt "Header"
 msgid "Re-schedule by Day"
 msgstr ""
 
-#: Today.php:997
+#: Today.php:1001
 msgctxt "Setting"
 msgid "Schedule"
 msgstr ""
 
-#: Today.php:999
+#: Today.php:1003
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1031
+#: Today.php:1035
 msgctxt "Default Term: Audit"
 msgid "No day"
 msgstr ""
 
-#: Today.php:1038
+#: Today.php:1042
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr ""
 
-#: Today.php:1039
+#: Today.php:1043
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr ""
 
-#: Today.php:1040
+#: Today.php:1044
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr ""
 
-#: Today.php:1041
+#: Today.php:1045
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr ""
 
-#: Today.php:1042
+#: Today.php:1046
 msgctxt "Import Field"
 msgid "Today: Full"
 msgstr ""
