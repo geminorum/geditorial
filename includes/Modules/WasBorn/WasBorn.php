@@ -22,6 +22,7 @@ class WasBorn extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\DashboardSummary;
 	use Internals\LateChores;
+	use Internals\PostDate;
 
 	public static function module()
 	{
@@ -1137,6 +1138,18 @@ class WasBorn extends gEditorial\Module
 	}
 
 	protected function latechores_post_aftercare( $post )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
+			return FALSE;
+
+		return $this->postdate__get_post_data_for_latechores( $post, $metakey );
+	}
+
+	// FIXME: DROP THIS
+	protected function latechores_post_aftercare_OLD( $post )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
