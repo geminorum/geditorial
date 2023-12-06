@@ -6,7 +6,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
-class Settings extends Core\Base
+class Settings extends WordPress\Main
 {
 
 	const BASE     = 'geditorial';
