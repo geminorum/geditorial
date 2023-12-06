@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
@@ -1243,6 +1244,59 @@ class Importer extends gEditorial\Module
 					: sprintf( '%s: %s', 'ERROR SETTING TERMS FOR TAXONOMY', $taxonomy )
 				) );
 		}
+	}
+
+	public function tools_settings( $sub )
+	{
+		$this->check_settings( $sub, 'tools', 'per_page' );
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		Core\HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+
+		$available = FALSE;
+		$posttypes = $this->list_posttypes();
+
+		if ( count( $posttypes ) ) {
+
+			ModuleSettings::renderCard_cleanup_raw_data( $posttypes );
+
+			$available = TRUE;
+		}
+
+		if ( ! $available )
+			Info::renderNoToolsAvailable();
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		if ( $this->_do_tool_cleanup_raw_data( $sub ) )
+			return FALSE; // avoid further UI
+	}
+
+	private function _do_tool_cleanup_raw_data( $sub )
+	{
+		if ( ! self::do( ModuleSettings::ACTION_CLEANUP_RAW_DATA ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return Info::renderEmptyPosttype();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		$this->_raise_resources();
+
+		return ModuleSettings::handleTool_cleanup_raw_data(
+			$posttype,
+			$this->constants( [
+				'metakey_source_data',
+				'metakey_prepared_data',
+				'metakey_attach_id',
+			] ),
+			$this->get_sub_limit_option( $sub )
+		);
 	}
 
 	private function _raise_resources( $count = 0 )
