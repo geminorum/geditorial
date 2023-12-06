@@ -5,8 +5,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -478,6 +480,108 @@ class Attachments extends gEditorial\Module
 		] );
 	}
 
+	public function tools_settings( $sub )
+	{
+		$this->check_settings( $sub, 'tools', 'per_page' );
+	}
+
+	// TODO: bulk action to delete all attachments with parent as supported post
+	protected function render_tools_html( $uri, $sub )
+	{
+		Core\HTML::h3( _x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
+
+		$available = FALSE;
+		$posttypes = $this->list_posttypes();
+		$mimetypes = WordPress\Media::availableMIMETypes( 'attachment' );
+
+		if ( count( $posttypes ) ) {
+
+			ModuleSettings::renderCard_reattach_thumbnails( $posttypes );
+			ModuleSettings::renderCard_empty_raw_metadata( $posttypes );
+
+			$available = TRUE;
+		}
+
+		if ( count( $mimetypes ) ) {
+
+			ModuleSettings::renderCard_deletion_by_mime( $mimetypes, wp_get_mime_types() );
+
+			$available = TRUE;
+		}
+
+		if ( ! $available )
+			Info::renderNoToolsAvailable();
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		if ( $this->_do_tool_reattach_thumbnails( $sub ) )
+			return FALSE; // avoid further UI
+
+		if ( $this->_do_tool_empty_raw_metadata( $sub ) )
+			return FALSE; // avoid further UI
+
+		if ( $this->_do_tool_deletion_by_mime( $sub ) )
+			return FALSE; // avoid further UI
+	}
+
+	private function _do_tool_deletion_by_mime( $sub )
+	{
+		if ( 'do_tool_deletion_by_mime' !== self::req( 'action' ) )
+			return FALSE;
+
+		if ( ! $mimetype = self::req( 'mime' ) )
+			return Info::renderEmptyMIMEtype();
+
+		$this->_raise_resources();
+
+		return ModuleSettings::handleTool_deletion_by_mime(
+			'do_tool_deletion_by_mime',
+			$mimetype,
+			$this->get_sub_limit_option( $sub )
+		);
+	}
+
+	private function _do_tool_empty_raw_metadata( $sub )
+	{
+		if ( 'do_tool_empty_raw_metadata' !== self::req( 'action' ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return Info::renderEmptyPosttype();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		$this->_raise_resources();
+
+		return ModuleSettings::handleTool_empty_raw_metadata(
+			'do_tool_empty_raw_metadata',
+			$posttype,
+			$this->get_sub_limit_option( $sub )
+		);
+	}
+
+	private function _do_tool_reattach_thumbnails( $sub )
+	{
+		if ( 'do_tool_reattach_thumbnails' !== self::req( 'action' ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return Info::renderEmptyPosttype();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		$this->_raise_resources();
+
+		return ModuleSettings::handleTool_reattach_thumbnails(
+			'do_tool_reattach_thumbnails',
+			$posttype,
+			$this->get_sub_limit_option( $sub )
+		);
+	}
+
 	// searches only for portion of the attached file
 	// like: `2021/10/filename` where `filename.ext` is the filename
 	// FIXME: move up
@@ -490,5 +594,22 @@ class Attachments extends gEditorial\Module
 		$pathfile = Core\File::join( dirname( $file ), Core\File::basename( $file, '.'.$filetype['ext'] ) );
 
 		return WordPress\PostType::getIDsBySearch( $pathfile );
+	}
+
+	private function _raise_resources( $count = 0 )
+	{
+		gEditorial()->disable_process( 'audit', 'import' );
+		gEditorial()->disable_process( 'persona', 'aftercare' );
+		gEditorial()->disable_process( 'was_born', 'aftercare' );
+
+		WordPress\Media::disableThumbnailGeneration();
+		WordPress\Taxonomy::disableTermCounting();
+		Services\LateChores::termCountCollect();
+		wp_defer_comment_counting( TRUE );
+
+		if ( ! Core\WordPress::isDev() )
+			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+
+		$this->raise_resources( $count );
 	}
 }
