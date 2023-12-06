@@ -9,6 +9,27 @@ class Media extends Core\Base
 {
 
 	/**
+	 * Retrieves available mime types for given posttype in media library.
+	 * @ref `wp_count_attachments()`
+	 *
+	 * @return array $mime_types
+	 */
+	public static function availableMIMETypes( $posttype = 'attachment', $excludes = NULL )
+	{
+		global $wpdb;
+
+		$query = $wpdb->prepare( "
+			SELECT DISTINCT post_mime_type
+			FROM {$wpdb->posts}
+			WHERE post_type = '%s'
+			AND post_status != 'trash'
+			ORDER BY post_mime_type ASC
+		", $posttype );
+
+		return $wpdb->get_col( $query );
+	}
+
+	/**
 	 * Retrieves file extension given a mime-type.
 	 *
 	 * @param  string     $mime_type
@@ -410,6 +431,25 @@ class Media extends Core\Base
 		);
 	}
 
+	/**
+	 * Retrieves post-ids with text containing given attachment.
+	 * NOTE: searches only for portion of the attached file
+	 * like: `2021/10/filename` where `filename.ext` is the filename
+	 *
+	 * @param  int  $attachment_id
+	 * @return array $post_ids
+	 */
+	public static function searchAttachment( $attachment_id )
+	{
+		if ( ! $file = get_post_meta( $attachment_id, '_wp_attached_file', TRUE ) )
+			return [];
+
+		$filetype = wp_check_filetype( Core\File::basename( $file ) );
+		$pathfile = Core\File::join( dirname( $file ), Core\File::basename( $file, '.'.$filetype['ext'] ) );
+
+		return PostType::getIDsBySearch( $pathfile );
+	}
+
 	// @REF: https://pippinsplugins.com/retrieve-attachment-id-from-image-url/
 	// NOTE: doesn't really work if the guid gets out of sync
 	// or if the URL you have is for a cropped image.
@@ -660,7 +700,8 @@ class Media extends Core\Base
 		if ( ! $attachment_id )
 			return FALSE;
 
-		$metadata = wp_get_attachment_metadata( $attachment_id );
+		if ( ! $metadata = wp_get_attachment_metadata( $attachment_id ) )
+			return TRUE;
 
 		unset( $metadata['image_meta'] );
 

@@ -114,12 +114,12 @@ class Text extends Base
 
 	public static function sanitizeHook( $hook )
 	{
-		return trim( str_ireplace( [ '-', '.', '/', '\\' ], '_', $hook ) );
+		return self::trim( str_ireplace( [ '-', '.', '/', '\\' ], '_', $hook ) );
 	}
 
 	public static function sanitizeBase( $hook )
 	{
-		return trim( str_ireplace( [ '_', '.' ], '-', $hook ) );
+		return self::trim( str_ireplace( [ '_', '.' ], '-', $hook ) );
 	}
 
 	// FIXME: move this to Orthography module
@@ -170,7 +170,7 @@ class Text extends Base
 		$text = preg_replace( '/-{2,}/', '-', $text );
 		$text = trim( $text, '.-_' );
 
-		return $text;
+		return self::trim( $text );
 	}
 
 	public static function nameFamilyFirst( $text, $separator = ', ' )
@@ -338,8 +338,8 @@ class Text extends Base
 		$text = str_replace( "\r", "\n", trim( $text ) );
 
 		return $multiline
-			? preg_replace( [ "/\n\n+/", "/[ \t]+/" ], [ "\n\n", ' ' ], $text )
-			: preg_replace( [ "/\n+/", "/[ \t]+/" ], [ "\n", ' ' ], $text);
+			? self::trim( preg_replace( [ "/\n\n+/", "/[ \t]+/" ], [ "\n\n", ' ' ], $text ) )
+			: self::trim( preg_replace( [ "/\n+/", "/[ \t]+/" ], [ "\n", ' ' ], $text ) );
 	}
 
 	// @REF: http://stackoverflow.com/a/3226746
@@ -348,14 +348,14 @@ class Text extends Base
 		if ( $check && ! self::seemsUTF8( $text ) )
 			return self::normalizeWhitespace( $text );
 
-		return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text );
+		return self::trim( preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text ) );
 	}
 
 	// @REF: _cleanup_image_add_caption()
 	// remove any line breaks from inside the tags
 	public static function noLineBreak( $text )
 	{
-		return preg_replace( '/[\r\n\t]+/', ' ', $text );
+		return self::trim( preg_replace( '/[\r\n\t]+/', ' ', $text ) );
 	}
 
 	public static function stripWidthHeight( $text )
@@ -913,7 +913,7 @@ class Text extends Base
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#96899
 	public static function hex2str( $text )
 	{
-		return preg_replace_callback( '#\%[a-zA-Z0-9]{2}#', static function( $hex ) {
+		return preg_replace_callback( '#\%[a-zA-Z0-9]{2}#', static function ( $hex ) {
 			$hex = substr( $hex[0], 1 );
 			$str = '';
 			for ( $i = 0; $i < strlen( $hex ); $i += 2 )
@@ -923,7 +923,7 @@ class Text extends Base
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#91950
-	// USAGE: echo Text::replaceWords( $words, $text, static function( $matched ) { return "<strong>{$matched}</strong>"; } );
+	// USAGE: echo Text::replaceWords( $words, $text, static function ( $matched ) { return "<strong>{$matched}</strong>"; } );
 	// FIXME: maybe space before/after the words
 	public static function replaceWords( $words, $text, $callback, $skip_links = TRUE )
 	{
@@ -932,17 +932,18 @@ class Text extends Base
 		if ( $skip_links )
 			$pattern = '<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|'.$pattern;
 
-		return preg_replace_callback( '/'.$pattern.'/miu', static function( $matched ) use ( $callback ) {
+		return preg_replace_callback( '/'.$pattern.'/miu', static function ( $matched ) use ( $callback ) {
 			return $matched[1].call_user_func( $callback, $matched[2] ).$matched[3];
 		}, $text );
 	}
 
-	// USAGE: echo Text::replaceSymbols( [ '#', '$' ], $text, static function( $matched, $text ) { return "<strong>{$matched}</strong>"; });
+	// USAGE: echo Text::replaceSymbols( [ '#', '$' ], $text, static function ( $matched, $text ) { return "<strong>{$matched}</strong>"; });
 	public static function replaceSymbols( $symbols, $text, $callback, $skip_links = TRUE )
 	{
-		return preg_replace_callback( self::replaceSymbolsPattern( implode( ',', (array) $symbols ), $skip_links ), static function( $matches ) use ( $callback ) {
-			return call_user_func( $callback, $matches[0], $matches[1] );
-		}, $text );
+		return preg_replace_callback( self::replaceSymbolsPattern( implode( ',', (array) $symbols ), $skip_links ),
+			static function ( $matches ) use ( $callback ) {
+				return call_user_func( $callback, $matches[0], $matches[1] );
+			}, $text );
 	}
 
 	// @REF: https://stackoverflow.com/a/381001/
@@ -1128,7 +1129,7 @@ class Text extends Base
 	// @SEE: https://github.com/neitanod/forceutf8
 	public static function correctMixedEncoding( $text )
 	{
-		return preg_replace_callback( '/\\P{Arabic}+/u', static function( $matches ) {
+		return preg_replace_callback( '/\\P{Arabic}+/u', static function ( $matches ) {
 			return iconv( 'UTF-8', 'ISO-8859-1', $matches[0] );
 		}, hex2bin( bin2hex( $text ) ) );
 	}

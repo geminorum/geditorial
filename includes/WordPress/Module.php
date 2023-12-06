@@ -178,7 +178,7 @@ class Module extends Core\Base
 	protected function filter_once( $hook, $args = 1, $priority = 10, $suffix = FALSE )
 	{
 		if ( $method = self::sanitize_hook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
-			add_filter( $hook, function() use ( $method ) {
+			add_filter( $hook, function () use ( $method ) {
 				static $ran = FALSE;
 
 				$params = func_get_args();
@@ -195,7 +195,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_true( 'disable_months_dropdown' );
 	protected function filter_true( $hook, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) {
+		add_filter( $hook, static function ( $first ) {
 			return TRUE;
 		}, $priority, 1 );
 	}
@@ -203,7 +203,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_false( 'disable_months_dropdown' );
 	protected function filter_false( $hook, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) {
+		add_filter( $hook, static function ( $first ) {
 			return FALSE;
 		}, $priority, 1 );
 	}
@@ -211,7 +211,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_true_module( 'meta', 'mainbox_callback' );
 	protected function filter_true_module( $module, $hook, $priority = 10 )
 	{
-		add_filter( $this->hook_base( $module, $hook ), static function( $first ) {
+		add_filter( $this->hook_base( $module, $hook ), static function ( $first ) {
 			return TRUE;
 		}, $priority, 1 );
 	}
@@ -219,7 +219,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_false_module( 'meta', 'mainbox_callback' );
 	protected function filter_false_module( $module, $hook, $priority = 10 )
 	{
-		add_filter( $this->hook_base( $module, $hook ), static function( $first ) {
+		add_filter( $this->hook_base( $module, $hook ), static function ( $first ) {
 			return FALSE;
 		}, $priority, 1 );
 	}
@@ -227,7 +227,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_zero( 'option_blog_public' );
 	protected function filter_zero( $hook, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) {
+		add_filter( $hook, static function ( $first ) {
 			return 0;
 		}, $priority, 1 );
 	}
@@ -235,7 +235,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_empty_string( 'option_blog_public' );
 	protected function filter_empty_string( $hook, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) {
+		add_filter( $hook, static function ( $first ) {
 			return '';
 		}, $priority, 1 );
 	}
@@ -243,7 +243,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_empty_array( 'option_blog_public' );
 	protected function filter_empty_array( $hook, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) {
+		add_filter( $hook, static function ( $first ) {
 			return [];
 		}, $priority, 1 );
 	}
@@ -251,7 +251,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_append( 'body_class', 'foo' );
 	protected function filter_append( $hook, $items, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) use ( $items ) {
+		add_filter( $hook, static function ( $first ) use ( $items ) {
 			foreach ( (array) $items as $value )
 				$first[] = $value;
 			return $first;
@@ -261,7 +261,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_set( 'shortcode_atts_gallery', [ 'columns' => 4 ] );
 	protected function filter_set( $hook, $items, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) use ( $items ) {
+		add_filter( $hook, static function ( $first ) use ( $items ) {
 			foreach ( $items as $key => $value )
 				$first[$key] = $value;
 			return $first;
@@ -271,7 +271,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_unset( 'shortcode_atts_gallery', [ 'columns' ] );
 	protected function filter_unset( $hook, $items, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) use ( $items ) {
+		add_filter( $hook, static function ( $first ) use ( $items ) {
 			foreach ( (array) $items as $key )
 				unset( $first[$key] );
 			return $first;
@@ -281,7 +281,7 @@ class Module extends Core\Base
 	// USAGE: $this->filter_string( 'parent_file', 'options-general.php' );
 	protected function filter_string( $hook, $string, $priority = 10 )
 	{
-		add_filter( $hook, static function( $first ) use ( $string ) {
+		add_filter( $hook, static function ( $first ) use ( $string ) {
 			return $string;
 		}, $priority, 1 );
 	}
@@ -327,7 +327,7 @@ class Module extends Core\Base
 	// USAGE: add_filter( 'body_class', self::_array_append( 'foo' ) );
 	public static function _array_append( $item )
 	{
-		return function( $array ) use ( $item ) {
+		return function ( $array ) use ( $item ) {
 			$array[] = $item;
 			return $array;
 		};
@@ -336,7 +336,7 @@ class Module extends Core\Base
 	// USAGE: add_filter( 'shortcode_atts_gallery', self::_array_set( 'columns', 4 ) );
 	public static function _array_set( $key, $value )
 	{
-		return function( $array ) use ( $key, $value ) {
+		return function ( $array ) use ( $key, $value ) {
 			$array[$key] = $value;
 			return $array;
 		};

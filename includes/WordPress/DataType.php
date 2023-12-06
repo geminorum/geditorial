@@ -10,6 +10,11 @@ class DataType extends Core\Base
 	const BASE = 'geditorial';
 	const TYPE = 'undefined';
 
+	// Date Sub-Types: `datetime`/`date`/`time`
+	// Vcard Sub-Types: `Vcard4`/`Vcard3`
+	// Contact Sub-Types: `Email`/`URL`/`Phone`
+	protected $__sub_type = NULL;
+
 	protected $_value = '';
 	protected $_name  = FALSE;
 	protected $_field = [];
@@ -50,6 +55,8 @@ class DataType extends Core\Base
 	public function getName( $context = '' ) { return $this->_name; }
 	public function getField( $context = '' ) { return $this->_field; }
 	public function getArgs( $context = '' ) { return $this->_args; }
+	public function getType( $context = '' ) { return static::TYPE; }
+	public function getSubType( $context = '' ) { return $this->__sub_type ?? static::TYPE; }
 
 	public function prep( $value, $context = '' ) { return trim( $value ); }
 	public function isEmpty( $value ) { return parent::empty( $value ); }

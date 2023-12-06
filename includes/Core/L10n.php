@@ -114,7 +114,7 @@ class L10n extends Base
 		foreach ( $orderby as $field => $direction )
 			$orderby[$field] = 'DESC' === strtoupper( $direction ) ? 'DESC' : 'ASC';
 
-		$sort( $array, static function( $a, $b ) use ( $orderby, $alphabet, $letters ) {
+		$sort( $array, static function ( $a, $b ) use ( $orderby, $alphabet, $letters ) {
 
 			$a = (array) $a;
 			$b = (array) $b;
@@ -158,7 +158,7 @@ class L10n extends Base
 		$letters  = Arraay::column( $alphabet, 'letter' );
 		$sort     = $preserve_keys ? 'uasort' : 'usort';
 
-		$sort( $array, static function( $a, $b ) use ( $order, $alphabet, $letters ) {
+		$sort( $array, static function ( $a, $b ) use ( $order, $alphabet, $letters ) {
 
 			$results = 'DESC' === strtoupper( $order ) ? [ 1, -1 ] : [ -1, 1 ];
 

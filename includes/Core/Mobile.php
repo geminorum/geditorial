@@ -25,7 +25,6 @@ class Mobile extends Base
 		return TRUE;
 	}
 
-	// @SEE: `HTML::sanitizePhoneNumber()`
 	public static function sanitize( $input )
 	{
 		$sanitized = Number::intval( trim( $input ), FALSE );
@@ -38,6 +37,9 @@ class Mobile extends Base
 			'.',
 			'-',
 			'#',
+			'|',
+			'(',
+			')',
 		], '', $sanitized ) );
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {

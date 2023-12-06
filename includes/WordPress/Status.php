@@ -40,7 +40,7 @@ class Status extends Core\Base
 	}
 
 	/**
-	 * Retrieves available posty statuses for given posttype
+	 * Retrieves available post statuses for given posttype.
 	 * TODO: https://developer.wordpress.org/apis/transients/
 	 *
 	 * @param  string     $posttype

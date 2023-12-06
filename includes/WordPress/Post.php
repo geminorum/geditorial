@@ -310,7 +310,10 @@ class Post extends Core\Base
 
 		$title = self::title( $post );
 
-		if ( $linked )
+		if ( 'edit' === $linked )
+			$title = Core\HTML::link( $title, get_edit_post_link( $post, 'edit' ) );
+
+		else if ( $linked )
 			$title = Core\HTML::link( $title, self::link( $post ) );
 
 		return self::getParentTitles( $post, $title, $linked, $separator );
@@ -321,10 +324,10 @@ class Post extends Core\Base
 	 * NOTE: parent post type can be diffrenet
 	 *
 	 * @param  null|int|object $post
-	 * @param  string $suffix
-	 * @param  bool   $linked
-	 * @param  null|string $separator
-	 * @return string $titles
+	 * @param  string          $suffix
+	 * @param  string|bool     $linked
+	 * @param  null|string     $separator
+	 * @return string          $titles
 	 */
 	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
 	{
@@ -344,7 +347,7 @@ class Post extends Core\Base
 		while ( $parent ) {
 
 			$object = self::get( (int) $current );
-			$link   = self::link( $object );
+			$link   = 'edit' === $linked ? get_edit_post_link( $object, 'edit' ) : self::link( $object );
 
 			if ( $object && $object->post_parent )
 				$parents[] = $linked && $link
@@ -400,5 +403,27 @@ class Post extends Core\Base
 		}
 
 		return $list;
+	}
+
+	public static function setParent( $post_id, $parent_id, $checks = TRUE )
+	{
+		if ( $checks ) {
+
+			if ( ! $post = self::get( $post_id ) )
+				return FALSE;
+
+			if ( ! $parent = self::get( $parent_id ) )
+				return FALSE;
+
+			$post_id   = $post->ID;
+			$parent_id = $parent->ID;
+		}
+
+		$updated = wp_update_post( [
+			'ID'          => $post_id,
+			'post_parent' => $parent_id,
+		], TRUE, FALSE );
+
+		return is_wp_error( $updated ) ? FALSE : $updated;
 	}
 }
