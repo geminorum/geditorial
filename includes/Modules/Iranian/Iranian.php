@@ -224,10 +224,7 @@ class Iranian extends gEditorial\Module
 
 	private function _render_imports_card_sync_locations( $posttypes = NULL )
 	{
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h4( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ), 'title' );
-
-		echo $this->wrap_open( '-wrap-button-row' );
+		echo Settings::toolboxCardOpen( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ) );
 
 			$all = $this->get_settings_posttypes_parents();
 
@@ -373,10 +370,7 @@ class Iranian extends gEditorial\Module
 
 	private function _render_tools_card_purge_duplicates( $posttypes = NULL )
 	{
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h4( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ), 'title' );
-
-		echo $this->wrap_open( '-wrap-button-row' );
+		echo Settings::toolboxCardOpen( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ) );
 
 			$all = $this->get_settings_posttypes_parents();
 

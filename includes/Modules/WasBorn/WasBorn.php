@@ -1004,10 +1004,7 @@ class WasBorn extends gEditorial\Module
 
 	private function _render_imports_card_sync_post_dates( $posttypes = NULL )
 	{
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h4( _x( 'Post-Date by Birthday', 'Card Title', 'geditorial-was-born' ), 'title' );
-
-		echo $this->wrap_open( '-wrap-button-row' );
+		echo Settings::toolboxCardOpen( _x( 'Post-Date by Birthday', 'Card Title', 'geditorial-was-born' ) );
 
 		$all = $this->get_settings_posttypes_parents();
 

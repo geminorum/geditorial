@@ -19,8 +19,7 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h4( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
+		echo Settings::toolboxCardOpen( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial' ), FALSE );
 
 		echo $this->wrap_open( '-wrap-button-row' );
 			Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Internal: PairedTools: Button', 'geditorial' ), 'small' );
@@ -36,10 +35,7 @@ trait PairedTools
 
 		if ( $this->get_setting( 'paired_force_parents' ) ) {
 
-			echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-			Core\HTML::h4( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial' ), 'title' );
-
-			echo $this->wrap_open( '-wrap-button-row' );
+			echo Settings::toolboxCardOpen( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial' ) );
 
 				foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
 					Settings::submitButton( add_query_arg( [

@@ -203,8 +203,7 @@ class Recount extends gEditorial\Module
 
 	public function taxonomy_tab_maintenance_content( $taxonomy, $object )
 	{
-		echo $this->wrap_open( '-tab-extras card -toolbox-card' );
-			Core\HTML::h4( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), 'title' );
+		echo Settings::toolboxCardOpen( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), FALSE );
 
 			$this->render_form_start( NULL, 'recount-items', 'maintenance', 'tabs', FALSE );
 				$this->nonce_field( 'do-recount-items' );

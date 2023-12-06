@@ -816,10 +816,7 @@ class Audit extends gEditorial\Module
 
 	private function _render_tools_force_auto_audit()
 	{
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h4( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ), 'title' );
-
-		echo $this->wrap_open( '-wrap-button-row' );
+		echo Settings::toolboxCardOpen( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ) );
 
 			foreach ( $this->list_posttypes() as $posttype => $label )
 				Settings::submitButton( add_query_arg( [
@@ -869,9 +866,7 @@ class Audit extends gEditorial\Module
 			'user_id' => '0',
 		], 'reports' );
 
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-		Core\HTML::h4( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ), 'title' );
-		echo $this->wrap_open( '-wrap-button-row' );
+		echo Settings::toolboxCardOpen( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ) );
 
 		$this->do_settings_field( [
 			'type'         => 'user',

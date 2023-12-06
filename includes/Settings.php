@@ -2850,4 +2850,11 @@ class Settings extends WordPress\Main
 	{
 		return '<div class="'.static::BASE.'-processing-wrap"><ul>';
 	}
+
+	public static function toolboxCardOpen( $title = '', $buttons = TRUE )
+	{
+		return '<div class="-wrap '.static::BASE.'-wrap -tab-extras card -toolbox-card">'
+			.( $title ? sprintf( '<h4 class="title">%s</h4>', $title ) : '' )
+			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
+	}
 }
