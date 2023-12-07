@@ -1071,29 +1071,6 @@ class WasBorn extends gEditorial\Module
 		return $this->postdate__get_post_data_for_latechores( $post, $metakey );
 	}
 
-	// FIXME: DROP THIS
-	protected function latechores_post_aftercare_OLD( $post )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
-			return FALSE;
-
-		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
-			return FALSE;
-
-		if ( ! Core\Date::isInFormat( $dob, 'Y-m-d' ) )
-			return $this->log( 'FAILED', sprintf( 'after-care process of #%s: dob is not valid: %s', $post->ID, $dob ), [ $post->ID, $dob ] );
-
-		$datetime = sprintf( '%s 23:59:59', $dob );
-
-		return [
-			'post_date'     => $datetime,
-			'post_date_gmt' => get_gmt_from_date( $datetime ),
-		];
-	}
-
 	private function _raise_resources( $count = 0 )
 	{
 		gEditorial()->disable_process( 'audit', 'import' );

@@ -366,7 +366,7 @@ class Config extends gEditorial\Module
 
 		echo '</td></tr></table>';
 
-		Core\HTML::h2( _x( 'Maintenance Tasks', 'Header', 'geditorial-config' ) );
+		Core\HTML::h3( _x( 'Maintenance Tasks', 'Header', 'geditorial-config' ) );
 
 		echo '<table class="form-table">';
 

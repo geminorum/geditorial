@@ -99,7 +99,7 @@ class Iranian extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			'_supported' => [
 				'birth_certificate_number' => [
 					'title'       => _x( 'Birth Certificate', 'Field Title', 'geditorial-iranian' ),
@@ -109,7 +109,7 @@ class Iranian extends gEditorial\Module
 					'sanitize'    => [ $this, 'sanitize_birth_certificate_number' ],
 				],
 			],
-		];
+		] ];
 	}
 
 	public function meta_init()
@@ -209,7 +209,7 @@ class Iranian extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Iranian Imports', 'Header', 'geditorial-iranian' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Iranian Imports', 'Header', 'geditorial-iranian' ) );
 
 		if ( $this->_do_import_location_from_identity( $sub ) )
 			return;
@@ -220,6 +220,8 @@ class Iranian extends gEditorial\Module
 			return Info::renderNoImportsAvailable();
 
 		$this->_render_imports_card_sync_locations( $posttypes );
+
+		echo '</div>';
 	}
 
 	private function _render_imports_card_sync_locations( $posttypes = NULL )
@@ -345,7 +347,7 @@ class Iranian extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
 
 		if ( $this->_do_tool_compare_identity_certificate( $sub ) )
 			return;
@@ -366,6 +368,8 @@ class Iranian extends gEditorial\Module
 			return Info::renderNoToolsAvailable();
 
 		$this->_render_tools_card_purge_duplicates( $intersect );
+
+		echo '</div>';
 	}
 
 	private function _render_tools_card_purge_duplicates( $posttypes = NULL )

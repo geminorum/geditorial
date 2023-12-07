@@ -133,6 +133,7 @@ trait BulkExports
 		return Core\Text::toCSV( $data );
 	}
 
+	// TODO: export target: `paired_by_term`
 	protected function exports_get_export_data( $reference, $target, $type, $context )
 	{
 		$data = FALSE;

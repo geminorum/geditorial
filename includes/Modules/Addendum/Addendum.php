@@ -168,7 +168,7 @@ class Addendum extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'primary_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -183,7 +183,7 @@ class Addendum extends gEditorial\Module
 				'main_download_id'  => [ 'type' => 'attachment' ],
 			],
 			// '_supported' => [],
-		];
+		] ];
 	}
 
 	protected function paired_get_paired_constants()

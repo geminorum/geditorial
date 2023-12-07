@@ -1260,7 +1260,7 @@ class Importer extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
 
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();
@@ -1274,6 +1274,8 @@ class Importer extends gEditorial\Module
 
 		if ( ! $available )
 			Info::renderNoToolsAvailable();
+
+		echo '</div>';
 	}
 
 	protected function render_tools_html_before( $uri, $sub )

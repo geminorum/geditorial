@@ -171,7 +171,7 @@ class Trained extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'primary_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -210,7 +210,7 @@ class Trained extends gEditorial\Module
 				],
 			],
 			// '_supported' => [],
-		];
+		] ];
 	}
 
 	protected function paired_get_paired_constants()
@@ -317,7 +317,7 @@ class Trained extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 
 				$this->coreadmin__unset_columns( $screen->post_type );
-				// $this->coreadmin__hook_admin_ordering( $screen->post_type ); // NO NEED: orders by dates
+				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedcore__hook_sync_paired();
 				$this->pairedadmin__hook_tweaks_column_connected();

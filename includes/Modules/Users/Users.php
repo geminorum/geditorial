@@ -396,7 +396,7 @@ class Users extends gEditorial\Module
 		$default  = get_option( 'default_category' );
 		$selected = $this->get_user_categories( $user->ID );
 
-		Core\HTML::h2( _x( 'Site Categories', 'Header', 'geditorial-users' ) );
+		Core\HTML::h3( _x( 'Site Categories', 'Header', 'geditorial-users' ) );
 		Core\HTML::desc( _x( 'Restrict non editor users to post in selected categories only.', 'Message', 'geditorial-users' ) );
 
 		echo '<table class="form-table">';

@@ -149,7 +149,7 @@ class Dossier extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'dossier_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -183,7 +183,7 @@ class Dossier extends gEditorial\Module
 					'order'       => 400,
 				],
 			],
-		];
+		] ];
 	}
 
 	protected function paired_get_paired_constants()

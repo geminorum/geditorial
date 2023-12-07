@@ -148,7 +148,7 @@ class Venue extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'place_cpt' ) => [
 				'parent_complex' => [
 					'title'       => _x( 'Parent Complex', 'Field Title', 'geditorial-venue' ),
@@ -196,7 +196,7 @@ class Venue extends gEditorial\Module
 					'type'        => 'code',
 				],
 			],
-		];
+		] ];
 	}
 
 	public function after_setup_theme()

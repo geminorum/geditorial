@@ -19,6 +19,12 @@ class PostTypeFields extends WordPress\Main
 	 */
 	public static function getPostMetaKey( $field_key, $module = 'meta' )
 	{
+		if ( ! $field_key )
+			return FALSE;
+
+		if ( ! gEditorial()->enabled( $module ) )
+			return FALSE;
+
 		return gEditorial()->module( $module )->get_postmeta_key( $field_key );
 	}
 

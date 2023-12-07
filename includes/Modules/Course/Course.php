@@ -183,7 +183,7 @@ class Course extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'course_cpt' ) => [
 				'sub_title' => [
 					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-course' ),
@@ -217,7 +217,7 @@ class Course extends gEditorial\Module
 				'video_source_url'  => [ 'type' => 'video_source' ],
 				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
-		];
+		] ];
 	}
 
 	protected function paired_get_paired_constants()

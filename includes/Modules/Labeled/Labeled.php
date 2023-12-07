@@ -97,7 +97,7 @@ class Labeled extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			'_supported' => [
 				'label_string' => [
 					'title'       => _x( 'Label', 'Field Title', 'geditorial-labeled' ),
@@ -110,7 +110,7 @@ class Labeled extends gEditorial\Module
 					'type'        => 'term',
 				],
 			],
-		];
+		] ];
 	}
 
 	public function init()

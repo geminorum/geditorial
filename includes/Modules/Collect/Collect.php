@@ -141,7 +141,7 @@ class Collect extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'collection_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -181,7 +181,7 @@ class Collect extends gEditorial\Module
 					'context'     => 'pairedbox_collection',
 				],
 			],
-		];
+		] ];
 	}
 
 	protected function paired_get_paired_constants()

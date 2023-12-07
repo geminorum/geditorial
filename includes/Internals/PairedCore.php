@@ -18,6 +18,7 @@ trait PairedCore
 	// 		FALSE, // taxonomy: `primary_paired`
 	// 		FALSE, // subterm:  `primary_subterm`
 	// 		FALSE, // exclude:  `primary_taxonomy`
+	// 		TRUE,  // hierarchical
 	// 	];
 	// }
 
@@ -38,6 +39,9 @@ trait PairedCore
 
 		if ( empty( $constants[3] ) )
 			$constants[3] = FALSE;
+
+		if ( empty( $constants[4] ) )
+			$constants[3] = TRUE;
 
 		return $constants;
 	}

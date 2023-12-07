@@ -652,13 +652,15 @@ class Audit extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 
 		if ( $this->_do_tools_force_auto_audit( $sub ) )
 			return;
 
 		$this->_render_tools_empty_fields();
 		$this->_render_tools_force_auto_audit();
+
+		echo '</div>';
 	}
 
 	public function taxonomy_empty_terms( $terms, $taxonomy )

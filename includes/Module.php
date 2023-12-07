@@ -2503,6 +2503,7 @@ class Module extends WordPress\Module
 
 	// DEFAULT METHOD
 	// TODO: support for `post_actions` on Actions module
+	// TODO: move to `Internals\PairedMetaBox`
 	protected function _render_listbox_extra( $post, $box, $context = NULL, $screen = NULL )
 	{
 		if ( is_null( $context ) )

@@ -9,6 +9,7 @@ use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -488,7 +489,7 @@ class Attachments extends gEditorial\Module
 	// TODO: bulk action to delete all attachments with parent as supported post
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
 
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();
@@ -511,6 +512,8 @@ class Attachments extends gEditorial\Module
 
 		if ( ! $available )
 			Info::renderNoToolsAvailable();
+
+		echo '</div>';
 	}
 
 	protected function render_tools_html_before( $uri, $sub )

@@ -19,32 +19,32 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
-		echo Settings::toolboxCardOpen( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial' ), FALSE );
+		echo Settings::toolboxCardOpen( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
 
 		echo $this->wrap_open( '-wrap-button-row' );
-			Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Internal: PairedTools: Button', 'geditorial' ), 'small' );
-			Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial' ), FALSE );
+			Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
+			Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
 		echo '</div>';
 
 		echo $this->wrap_open( '-wrap-button-row' );
-			Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Internal: PairedTools: Button', 'geditorial' ), 'small' );
-			Core\HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial' ), FALSE );
+			Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
+			Core\HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
 		echo '</div>';
 
 		echo '</div>';
 
 		if ( $this->get_setting( 'paired_force_parents' ) ) {
 
-			echo Settings::toolboxCardOpen( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial' ) );
+			echo Settings::toolboxCardOpen( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial-admin' ) );
 
 				foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
 					Settings::submitButton( add_query_arg( [
 						'action' => 'force_assign_parents',
 						'type'   => $posttype,
 					/* translators: %s: posttype label */
-					] ), sprintf( _x( 'On %s', 'Internal: PairedTools: Button', 'geditorial' ), $label ), 'link-small' );
+					] ), sprintf( _x( 'On %s', 'Internal: PairedTools: Button', 'geditorial-admin' ), $label ), 'link-small' );
 
-				Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial' ) );
+				Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
 			echo '</div></div>';
 		}
 	}
@@ -269,7 +269,7 @@ trait PairedTools
 			'name' => Tablelist::columnTermName(),
 
 			'related' => [
-				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial' ),
+				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
@@ -289,7 +289,7 @@ trait PairedTools
 			],
 
 			'description' => [
-				'title'    => _x( 'Desc. / Exce.', 'Internal: PairedTools: Table Column', 'geditorial' ),
+				'title'    => _x( 'Desc. / Exce.', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'class'    => 'html-column',
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
@@ -316,7 +316,7 @@ trait PairedTools
 			],
 
 			'count' => [
-				'title'    => _x( 'Count', 'Internal: PairedTools: Table Column', 'geditorial' ),
+				'title'    => _x( 'Count', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
@@ -327,7 +327,7 @@ trait PairedTools
 			],
 
 			'thumb_image' => [
-				'title'    => _x( 'Thumbnail', 'Internal: PairedTools: Table Column', 'geditorial' ),
+				'title'    => _x( 'Thumbnail', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'class'    => 'image-column',
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 					$html = '';
@@ -340,7 +340,7 @@ trait PairedTools
 			],
 
 			'term_image' => [
-				'title'    => _x( 'Image', 'Internal: PairedTools: Table Column', 'geditorial' ),
+				'title'    => _x( 'Image', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'class'    => 'image-column',
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					$html = WordPress\Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
@@ -357,13 +357,13 @@ trait PairedTools
 				$actions = [];
 
 			$pagination['actions'] = array_merge( [
-				'create_paired_posts'  => _x( 'Create Paired Posts', 'Internal: PairedTools: Table Action', 'geditorial' ),
-				'connect_paired_posts' => _x( 'Connect Paired Posts', 'Internal: PairedTools: Table Action', 'geditorial' ),
-				'resync_paired_images' => _x( 'Re-Sync Paired Images', 'Internal: PairedTools: Table Action', 'geditorial' ),
-				'resync_paired_descs'  => _x( 'Re-Sync Paired Descriptions', 'Internal: PairedTools: Table Action', 'geditorial' ),
-				'empty_paired_descs'   => _x( 'Empty Paired Descriptions', 'Internal: PairedTools: Table Action', 'geditorial' ),
-				'store_paired_orders'  => _x( 'Store Paired Orders', 'Internal: PairedTools: Table Action', 'geditorial' ),
-				'delete_paired_terms'  => _x( 'Delete Paired Terms', 'Internal: PairedTools: Table Action', 'geditorial' ),
+				'create_paired_posts'  => _x( 'Create Paired Posts', 'Internal: PairedTools: Table Action', 'geditorial-admin' ),
+				'connect_paired_posts' => _x( 'Connect Paired Posts', 'Internal: PairedTools: Table Action', 'geditorial-admin' ),
+				'resync_paired_images' => _x( 'Re-Sync Paired Images', 'Internal: PairedTools: Table Action', 'geditorial-admin' ),
+				'resync_paired_descs'  => _x( 'Re-Sync Paired Descriptions', 'Internal: PairedTools: Table Action', 'geditorial-admin' ),
+				'empty_paired_descs'   => _x( 'Empty Paired Descriptions', 'Internal: PairedTools: Table Action', 'geditorial-admin' ),
+				'store_paired_orders'  => _x( 'Store Paired Orders', 'Internal: PairedTools: Table Action', 'geditorial-admin' ),
+				'delete_paired_terms'  => _x( 'Delete Paired Terms', 'Internal: PairedTools: Table Action', 'geditorial-admin' ),
 			], $actions );
 		}
 
@@ -372,8 +372,8 @@ trait PairedTools
 		$args = [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => Core\HTML::tag( 'h3', $title ?: _x( 'Paired Terms Tools', 'Internal: PairedTools: Header', 'geditorial' ) ),
-			'empty'      => _x( 'There are no terms available!', 'Internal: PairedTools: Message', 'geditorial' ),
+			'title'      => Core\HTML::tag( 'h3', $title ?: _x( 'Paired Terms Tools', 'Internal: PairedTools: Header', 'geditorial-admin' ) ),
+			'empty'      => _x( 'There are no terms available!', 'Internal: PairedTools: Message', 'geditorial-admin' ),
 			'pagination' => $pagination,
 		];
 
@@ -490,19 +490,19 @@ trait PairedTools
 		if ( FALSE === ( $result = $this->do_force_assign_parents( $post, $taxonomy ) ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %s: post title */
-				_x( 'Something is wrong for &ldquo;%s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial' ) ),
+				_x( 'Something is wrong for &ldquo;%s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial-admin' ) ),
 				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
 
 		if ( self::isError( $result ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %1$s: post title, %2$s: error message */
-				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial' ) ),
+				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ) ),
 				WordPress\Post::title( $post ), $result->get_error_message() ) : TRUE ) && FALSE;
 
 		if ( $verbose )
 			echo Core\HTML::tag( 'li',
 				/* translators: %1$s: count terms, %2$s: post title */
-				sprintf( _x( '%1$s terms set for &ldquo;%2$s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial' ),
+				sprintf( _x( '%1$s terms set for &ldquo;%2$s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial-admin' ),
 				Core\HTML::code( count( $result ) ),
 				WordPress\Post::title( $post )
 			) );

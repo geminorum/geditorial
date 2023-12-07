@@ -167,7 +167,7 @@ class Contest extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'contest_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -197,7 +197,7 @@ class Contest extends gEditorial\Module
 					'type'        => 'date'
 				],
 			],
-		];
+		] ];
 	}
 
 	public function after_setup_theme()

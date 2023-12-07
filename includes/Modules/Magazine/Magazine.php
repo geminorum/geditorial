@@ -151,7 +151,7 @@ class Magazine extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [
+		return [ 'meta' => [
 			$this->constant( 'issue_cpt' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
@@ -207,7 +207,7 @@ class Magazine extends gEditorial\Module
 					'order'       => 420,
 				],
 			],
-		];
+		] ];
 	}
 
 	protected function paired_get_paired_constants()
