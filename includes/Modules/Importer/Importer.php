@@ -113,6 +113,13 @@ class Importer extends gEditorial\Module
 		Core\HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
 	}
 
+	// public function init()
+	// {
+	// 	parent::init();
+
+	// 	$this->filter( 'imports_general_summary', 1, 10, FALSE, $this->base );
+	// }
+
 	public function current_screen( $screen )
 	{
 		if ( 'edit' == $screen->base
@@ -1297,6 +1304,11 @@ class Importer extends gEditorial\Module
 			] ),
 			$this->get_sub_limit_option( $sub )
 		);
+	}
+
+	public function imports_general_summary( $uri )
+	{
+		// TODO: report on available imports
 	}
 
 	private function _raise_resources( $count = 0 )

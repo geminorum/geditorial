@@ -324,7 +324,14 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		Core\HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-config' ) );
-		Info::renderNoReportsAvailable();
+
+		$action = $this->hook_base( 'reports' , 'general_summary' );
+
+		if ( has_action( $action ) )
+			do_action( $action, $uri );
+
+		else
+			Info::renderNoReportsAvailable();
 	}
 
 	// TODO: add button to use `wp_set_options_autoload()`
@@ -512,7 +519,14 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		Core\HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-config' ) );
-		Info::renderNoImportsAvailable();
+
+		$action = $this->hook_base( 'imports' , 'general_summary' );
+
+		if ( has_action( $action ) )
+			do_action( $action, $uri );
+
+		else
+			Info::renderNoImportsAvailable();
 	}
 
 	public function settings_sidebox( $sub, $uri )
