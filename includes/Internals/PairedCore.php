@@ -493,4 +493,168 @@ trait PairedCore
 
 		return is_array( $post_ids ) ? $connections : reset( $connections );
 	}
+
+	// OLD: `get_linked_term()`
+	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )
+	{
+		return $this->paired_get_to_term_direct( $post_id,
+			$this->constant( $posttype_constant_key ),
+			$this->constant( $tax_constant_key )
+		);
+	}
+
+	// NOTE: here so modules can override
+	public function paired_get_to_term_direct( $post_id, $posttype, $taxonomy )
+	{
+		return Services\Paired::getToTerm( $post_id, $posttype, $taxonomy );
+	}
+
+	// OLD: `set_linked_term()`
+	public function paired_set_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
+	{
+		if ( ! $post_id )
+			return FALSE;
+
+		if ( ! $the_term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
+			return FALSE;
+
+		update_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id', $the_term->term_id );
+		update_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked', $post_id );
+
+		wp_set_object_terms( (int) $post_id, $the_term->term_id, $the_term->taxonomy, FALSE );
+
+		if ( $this->get_setting( 'thumbnail_support' ) ) {
+
+			$meta_key = $this->constant( 'metakey_term_image', 'image' );
+
+			if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
+				update_term_meta( $the_term->term_id, $meta_key, $thumbnail );
+
+			else
+				delete_term_meta( $the_term->term_id, $meta_key );
+		}
+
+		return TRUE;
+	}
+
+	// OLD: `remove_linked_term()`
+	public function paired_remove_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
+	{
+		if ( ! $the_term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
+			return FALSE;
+
+		if ( ! $post_id )
+			$post_id = $this->paired_get_to_post_id( $the_term, $posttype_key, $taxonomy_key );
+
+		if ( $post_id ) {
+			delete_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id' );
+			wp_set_object_terms( (int) $post_id, [], $the_term->taxonomy, FALSE );
+		}
+
+		delete_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked' );
+
+		if ( $this->get_setting( 'thumbnail_support' ) ) {
+
+			$meta_key  = $this->constant( 'metakey_term_image', 'image' );
+			$stored    = get_term_meta( $the_term->term_id, $meta_key, TRUE );
+			$thumbnail = get_post_thumbnail_id( $post_id );
+
+			if ( $stored && $thumbnail && $thumbnail == $stored )
+				delete_term_meta( $the_term->term_id, $meta_key );
+		}
+
+		return TRUE;
+	}
+
+	// OLD: `get_linked_post_id()`
+	public function paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
+	{
+		if ( ! $term_or_id )
+			return FALSE;
+
+		if ( ! $term = WordPress\Term::get( $term_or_id, $this->constant( $tax_constant_key ) ) )
+			return FALSE;
+
+		$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
+
+		if ( ! $post_id && $check_slug )
+			$post_id = WordPress\PostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
+
+		return $post_id;
+	}
+
+	// PAIRED API: get (from) posts connected to the pair
+	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
+	{
+		if ( is_null( $term_id ) )
+			$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
+
+		$args = [
+			'tax_query' => [ [
+				'taxonomy' => $this->constant( $tax_constant_key ),
+				'field'    => 'id',
+				'terms'    => [ $term_id ]
+			] ],
+			'post_type'   => $this->posttypes(),
+			'numberposts' => -1,
+		];
+
+		if ( $count ) {
+			$args['fields']                 = 'ids';
+			$args['no_found_rows']          = TRUE;
+			$args['update_post_meta_cache'] = FALSE;
+			$args['update_post_term_cache'] = FALSE;
+			$args['lazy_load_term_meta']    = FALSE;
+		}
+
+		$items = get_posts( $args );
+
+		if ( $count )
+			return count( $items );
+
+		return $items;
+	}
+
+	// NOTE: must be public
+	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		$admin  = is_admin();
+		$posts  = $parents = [];
+		$terms  = WordPress\Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
+		$forced = $this->get_setting( 'paired_force_parents', FALSE );
+
+		foreach ( $terms as $term ) {
+
+			if ( $term->parent )
+				$parents[] = $term->parent;
+
+			// avoid if has child in the list
+			if ( $forced && in_array( $term->term_id, $parents, TRUE ) )
+				continue;
+
+			if ( ! $to_post_id = $this->paired_get_to_post_id( $term, $posttype_constant_key, $tax_constant_key ) )
+				continue;
+
+			if ( $single )
+				return $to_post_id;
+
+			if ( is_null( $published ) )
+				$posts[$term->term_id] = $to_post_id;
+
+			else if ( $published && $admin && ! $this->is_post_viewable( $to_post_id ) )
+				continue;
+
+			else
+				$posts[$term->term_id] = $to_post_id;
+		}
+
+		// final check if had children in the list
+		if ( $forced && count( $parents ) )
+			$posts = Core\Arraay::stripByKeys( $posts, Core\Arraay::prepNumeral( $parents ) );
+
+		if ( ! count( $posts ) )
+			return FALSE;
+
+		return $single ? reset( $posts ) : $posts;
+	}
 }

@@ -24,7 +24,9 @@ class Organization extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedImports;
+	use Internals\PairedMetaBox;
 	use Internals\PairedRest;
+	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;

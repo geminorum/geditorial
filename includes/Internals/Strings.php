@@ -114,11 +114,13 @@ trait Strings
 					$default = _x( 'The %2$s', 'Internal: Strings: Metabox via Posttype: `mainbox_title`', 'geditorial' );
 					break;
 
+				case 'overviewbox':
 				case 'pairedbox':
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
 					$default = _x( 'Connected &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `pairedbox_title`', 'geditorial' );
 					break;
 
+				case 'megabox':
 				case 'listbox':
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
 					$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: Strings: Metabox via Posttype: `listbox_title`', 'geditorial' );

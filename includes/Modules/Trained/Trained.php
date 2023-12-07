@@ -24,7 +24,9 @@ class Trained extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedImports;
+	use Internals\PairedMetaBox;
 	use Internals\PairedRest;
+	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostDate;
 	use Internals\PostMeta;
@@ -307,7 +309,7 @@ class Trained extends gEditorial\Module
 
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
-				$this->_hook_paired_listbox( $screen );
+				$this->pairedmetabox__hook_megabox( $screen );
 				$this->pairedcore__hook_sync_paired();
 
 			} else if ( 'edit' == $screen->base ) {
@@ -342,9 +344,7 @@ class Trained extends gEditorial\Module
 			} else if ( 'post' == $screen->base ) {
 
 				$this->_metabox_remove_subterm( $screen, $subterms );
-				// TODO: add summary metabox
-				// $this->_hook_paired_pairedbox( $screen );
-				// $this->_hook_paired_store_metabox( $screen->post_type );
+				$this->_hook_paired_overviewbox( $screen );
 
 			} else if ( 'edit' == $screen->base ) {
 

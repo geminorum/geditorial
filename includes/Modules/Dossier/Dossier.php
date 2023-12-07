@@ -19,6 +19,8 @@ class Dossier extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
+	use Internals\PairedMetaBox;
+	use Internals\PairedRowActions;
 	use Internals\PairedImports;
 	use Internals\PairedRest;
 	use Internals\PairedTools;

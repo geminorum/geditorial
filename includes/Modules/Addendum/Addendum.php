@@ -21,9 +21,10 @@ class Addendum extends gEditorial\Module
 	use Internals\MainDownload;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
+	use Internals\PairedMetaBox;
+	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
-	// use Internals\PostTypeFields;
 	use Internals\TemplatePostType;
 
 	protected $deafults  = [ 'multiple_instances' => TRUE ];

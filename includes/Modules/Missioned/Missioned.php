@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
@@ -21,9 +22,10 @@ class Missioned extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedImports;
-	// use Internals\PairedMetaBox;
+	use Internals\PairedMetaBox;
 	use Internals\PairedRest;
 	use Internals\PairedRest;
+	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostDate;
 	use Internals\PostMeta;
@@ -259,8 +261,7 @@ class Missioned extends gEditorial\Module
 
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
-				// $this->_hook_paired_listbox( $screen );
-				// $this->pairedmetabox__hook_megabox( $screen ); // FIXME
+				$this->pairedmetabox__hook_megabox( $screen );
 				$this->pairedcore__hook_sync_paired();
 
 			} else if ( 'edit' == $screen->base ) {
@@ -288,9 +289,7 @@ class Missioned extends gEditorial\Module
 
 			} else if ( 'post' == $screen->base ) {
 
-				// TODO: add summary metabox
-				// $this->_hook_paired_pairedbox( $screen );
-				// $this->_hook_paired_store_metabox( $screen->post_type );
+				$this->_hook_paired_overviewbox( $screen );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -319,6 +318,8 @@ class Missioned extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
+		MetaBox::fieldPostParent( $object );
+
 		MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy' => $this->constant( 'type_taxonomy' ),
 			'posttype' => $object->post_type,
@@ -329,7 +330,7 @@ class Missioned extends gEditorial\Module
 			'posttype' => $object->post_type,
 		] );
 
-		parent::_render_mainbox_content( $object, $box, $context, $screen );
+		MetaBox::fieldPostMenuOrder( $object );
 	}
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )

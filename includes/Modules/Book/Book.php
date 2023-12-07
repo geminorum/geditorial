@@ -21,6 +21,7 @@ class Book extends gEditorial\Module
 	use Internals\MetaBoxCustom;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
+	use Internals\PairedMetaBox;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostsToPosts;
