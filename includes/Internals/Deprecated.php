@@ -382,4 +382,33 @@ trait Deprecated
 
 		return is_array( $post_ids ) ? $stored : reset( $stored );
 	}
+
+	// DEPRECATED: use `$this->register_default_terms()`
+	protected function insert_default_terms( $constant, $terms = NULL )
+	{
+		if ( ! $this->nonce_verify( 'settings' ) )
+			return;
+
+		$taxonomy = $this->constant( $constant );
+
+		if ( ! taxonomy_exists( $taxonomy ) )
+			return;
+
+		if ( is_null( $terms ) )
+			$terms = $this->get_default_terms( $constant );
+
+		if ( empty( $terms ) )
+			$message = 'noadded';
+
+		else if ( $added = WordPress\Taxonomy::insertDefaultTerms( $taxonomy, $terms ) )
+			$message = [
+				'message' => 'created',
+				'count'   => count( $added ),
+			];
+
+		else
+			$message = 'wrong';
+
+		Core\WordPress::redirectReferer( $message );
+	}
 }

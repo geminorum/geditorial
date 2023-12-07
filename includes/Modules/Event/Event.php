@@ -13,6 +13,7 @@ class Event extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\Deprecated;
 	use Internals\PostTypeFields;
 
 	public static function module()
