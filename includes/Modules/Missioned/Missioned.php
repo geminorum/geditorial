@@ -3,10 +3,12 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
 
 class Missioned extends gEditorial\Module
 {
@@ -15,6 +17,7 @@ class Missioned extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\LateChores;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedImports;
@@ -22,6 +25,7 @@ class Missioned extends gEditorial\Module
 	use Internals\PairedRest;
 	use Internals\PairedRest;
 	use Internals\PairedTools;
+	use Internals\PostDate;
 	use Internals\PostMeta;
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
@@ -52,6 +56,7 @@ class Missioned extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports'        => [
+				'override_dates',
 				'assign_default_term',
 				'comment_status',
 				'thumbnail_support',
@@ -231,6 +236,9 @@ class Missioned extends gEditorial\Module
 
 		$this->paired_register_objects( 'primary_posttype', 'primary_paired' );
 
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
+
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		// $this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
@@ -376,6 +384,24 @@ class Missioned extends gEditorial\Module
 		$this->posttypefields_connect_paired_by( 'mission_code', $data['mission_code'], $post );
 	}
 
+	private function get_postdate_metakeys()
+	{
+		return [
+			Services\PostTypeFields::getPostMetaKey( 'date' ),
+			Services\PostTypeFields::getPostMetaKey( 'datetime' ),
+			Services\PostTypeFields::getPostMetaKey( 'datestart' ),
+			Services\PostTypeFields::getPostMetaKey( 'dateend' ),
+		];
+	}
+
+	protected function latechores_post_aftercare( $post )
+	{
+		return $this->postdate__get_post_data_for_latechores(
+			$post,
+			$this->get_postdate_metakeys()
+		);
+	}
+
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -404,5 +430,38 @@ class Missioned extends gEditorial\Module
 	protected function render_tools_html_after( $uri, $sub )
 	{
 		return $this->paired_tools_render_card( $uri, $sub );
+	}
+
+	public function imports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'imports', 'per_page' );
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		echo Settings::toolboxColumnOpen( _x( 'Mission Imports', 'Header', 'geditorial-missioned' ) );
+
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->postdate__render_card_override_dates(
+				$uri,
+				$sub,
+				$this->constant( 'primary_posttype' ),
+				_x( 'Mission Date from Meta-data', 'Card', 'geditorial-missioned' )
+			);
+
+		else
+			return Info::renderNoImportsAvailable();
+
+		echo '</div>';
+	}
+
+	protected function render_imports_html_before( $uri, $sub )
+	{
+		return $this->postdate__render_before_override_dates(
+			$this->constant( 'primary_posttype' ),
+			$this->get_postdate_metakeys(),
+			$uri,
+			$sub
+		);
 	}
 }

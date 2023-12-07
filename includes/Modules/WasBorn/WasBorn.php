@@ -984,12 +984,15 @@ class WasBorn extends gEditorial\Module
 
 	public function imports_settings( $sub )
 	{
-		$this->check_settings( $sub, 'imports', 'per_page' );
+		if ( ! $this->check_settings( $sub, 'imports', 'per_page' ) )
+			return;
+
+		$this->action_self( 'postdate_after_post_override_date', 4 );
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Birthday Tools', 'Header', 'geditorial-was-born' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Birthday Tools', 'Header', 'geditorial-was-born' ) );
 
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 
@@ -997,133 +1000,36 @@ class WasBorn extends gEditorial\Module
 			return Info::renderNoImportsAvailable();
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
-			$this->_render_imports_card_sync_post_dates( $posttypes );
+			$this->postdate__render_card_override_dates(
+				$uri,
+				$sub,
+				$posttypes,
+				_x( 'Post-Date by Birthday', 'Card Title', 'geditorial-was-born' )
+			);
 
 		else
 			return Info::renderNoImportsAvailable();
-	}
 
-	private function _render_imports_card_sync_post_dates( $posttypes = NULL )
-	{
-		echo Settings::toolboxCardOpen( _x( 'Post-Date by Birthday', 'Card Title', 'geditorial-was-born' ) );
-
-		$all = $this->get_settings_posttypes_parents();
-
-		// TODO: display empty dob count for each posttype: see dashboard summary
-		foreach ( $posttypes as $posttype )
-			Settings::submitButton( add_query_arg( [
-				'action' => 'do_import_date_from_dob',
-				'type'   => $posttype,
-			/* translators: %s: posttype label */
-			] ), sprintf( _x( 'On %s', 'Button', 'geditorial-was-born' ), $all[$posttype] ), 'link-small' );
-
-			Core\HTML::desc( _x( 'Tries to set the post-date based on date of birth data.', 'Button Description', 'geditorial-was-born' ) );
-		echo '</div></div>';
+		echo '</div>';
 	}
 
 	protected function render_imports_html_before( $uri, $sub )
 	{
-		if ( $this->_do_import_date_from_dob( $sub ) )
-			return FALSE; // avoid further UI
+		return $this->postdate__render_before_override_dates(
+			$this->get_setting( 'parent_posttypes', [] ),
+			$this->_get_posttype_dob_metakey( self::req( 'type' ) ),
+			$uri,
+			$sub
+		);
 	}
 
-	private function _do_import_date_from_dob( $sub )
-	{
-		if ( 'do_import_date_from_dob' !== self::req( 'action' ) )
-			return FALSE;
-
-		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
-
-		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
-			return Info::renderNotSupportedPosttype();
-
-		$this->_raise_resources();
-
-		$dob_metakey = $this->_get_posttype_dob_metakey( $posttype );
-		$taxonomy    = $this->constant( 'main_taxonomy' );
-
-		$query = [
-			'meta_query' => [
-				[
-					'key'     => $dob_metakey,
-					'compare' => 'EXISTS',
-				],
-			],
-		];
-
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $this->get_sub_limit_option( $sub ) );
-
-		if ( empty( $posts ) )
-			return FALSE;
-
-		echo Settings::processingListOpen();
-
-		foreach ( $posts as $post )
-			$this->_post_set_postdate_from_dob( $post, $dob_metakey, $taxonomy, TRUE );
-
-		echo '</ul></div>';
-
-		Core\WordPress::redirectJS( add_query_arg( [
-			'action' => 'do_import_date_from_dob',
-			'type'   => $posttype,
-			'paged'  => self::paged() + 1,
-		] ) );
-
-		return TRUE;
-	}
-
-	private function _post_set_postdate_from_dob( $post, $dob_metakey, $taxonomy, $verbose = FALSE )
+	public function postdate_after_post_override_date( $post, $datetime, $metakeys, $verbose )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $dob = get_post_meta( $post->ID, $dob_metakey, TRUE ) )
-			return FALSE;
-
-		if ( ! Core\Date::isInFormat( $dob, 'Y-m-d' ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %1$s: date of birth, %2$s: post title */
-				_x( 'Date of Birth (%1$s) is not valid for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-was-born' ) ),
-				Core\HTML::code( $dob ), WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
-
-		$datetime = sprintf( '%s 23:59:59', $dob );
-
-		$data = [
-			'ID'            => $post->ID,
-			'post_date'     => $datetime,
-			'post_date_gmt' => get_gmt_from_date( $datetime ),
-		];
-
-		$updated = wp_update_post( $data );
-
-		if ( self::isError( $updated ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %1$s: post date, %2$s: post title */
-				_x( 'There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-was-born' ) ),
-				Core\HTML::code( $datetime ), WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
-
-		if ( ! $year = $this->_post_set_year_taxonomy_from_dob( $updated, $datetime, $taxonomy ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %1$s: year taxonomy, %2$s: post title */
-				_x( 'There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-was-born' ) ),
-				Core\HTML::code( $year ), WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
-
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title */
-				sprintf( _x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-was-born' ),
-				Core\HTML::code( Datetime::prepDateOfBirth( trim( $dob ), 'Y/m/d' ) ),
-				Core\HTML::code( $year ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
-	}
-
-	private function _post_set_year_taxonomy_from_dob( $post_id, $datetime, $taxonomy )
-	{
-		$date = Core\Date::getObject( $datetime );
+		$taxonomy = $this->constant( 'main_taxonomy' );
+		$date     = Core\Date::getObject( $datetime );
 
 		if ( ! $year = wp_date( 'Y', $date->getTimestamp() ) )
 			return FALSE;
@@ -1132,9 +1038,26 @@ class WasBorn extends gEditorial\Module
 			return FALSE;
 
 		$terms  = WordPress\Taxonomy::appendParentTermIDs( $term->term_id, $term->taxonomy );
-		$result = wp_set_object_terms( $post_id, $terms, $taxonomy, FALSE );
+		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
 
 		return self::isError( $result ) ? FALSE : $year;
+
+		if ( self::isError( $result ) )
+			return ( $verbose ? print( Core\HTML::row( sprintf(
+				/* translators: %1$s: year taxonomy, %2$s: post title */
+				_x( 'There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-was-born' ) ),
+				Core\HTML::code( $year ), WordPress\Post::title( $post ) ) ) : TRUE ) && FALSE;
+
+		if ( $verbose )
+			echo Core\HTML::row( sprintf(
+				/* translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title */
+				_x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-was-born' ),
+				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ), 'Y/m/d' ) ),
+				Core\HTML::code( $year ),
+				WordPress\Post::title( $post )
+			) );
+
+		return TRUE;
 	}
 
 	protected function latechores_post_aftercare( $post )
