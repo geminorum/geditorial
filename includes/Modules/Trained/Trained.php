@@ -377,6 +377,23 @@ class Trained extends gEditorial\Module
 		return $items;
 	}
 
+	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
+	{
+		MetaBox::fieldPostParent( $object );
+
+		MetaBox::singleselectTerms( $object->ID, [
+			'taxonomy' => $this->constant( 'type_taxonomy' ),
+			'posttype' => $object->post_type,
+		] );
+
+		MetaBox::singleselectTerms( $object->ID, [
+			'taxonomy' => $this->constant( 'status_taxonomy' ),
+			'posttype' => $object->post_type,
+		] );
+
+		MetaBox::fieldPostMenuOrder( $object );
+	}
+
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
