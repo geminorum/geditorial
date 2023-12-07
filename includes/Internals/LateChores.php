@@ -79,10 +79,11 @@ trait LateChores
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$data = $this->latechores_post_aftercare( $post );
+		if ( TRUE === ( $data = $this->latechores_post_aftercare( $post ) ) )
+			return TRUE; // already ok!
 
 		if ( empty( $data ) || ! is_array( $data ) )
-			return FALSE;
+			return FALSE; // something's wrong
 
 		$updated = wp_update_post( array_merge( $data, [ 'ID' => $post->ID ] ) );
 
