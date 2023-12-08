@@ -85,6 +85,13 @@ class Tabloid extends gEditorial\Module
 		return $settings;
 	}
 
+	public function init()
+	{
+		parent::init();
+
+		$this->filter( 'post_overview_pre_link', 3, 12, FALSE, $this->base );
+	}
+
 	public function admin_menu()
 	{
 		$this->_hook_submenu_adminpage( 'overview' );
@@ -139,6 +146,20 @@ class Tabloid extends gEditorial\Module
 				'-tabloid-overview',
 			]
 		] );
+	}
+
+	public function post_overview_pre_link( $link, $post, $context )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $link;
+
+		if ( ! current_user_can( 'read', $post->ID ) )
+			return $link;
+
+		return $this->get_adminpage_url( TRUE, [
+			'linked'   => $post->ID,
+			'noheader' => 1,
+		], 'overview' );
 	}
 
 	private function _make_linked_viewable()
