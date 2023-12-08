@@ -155,7 +155,7 @@ trait PairedAdmin
 					if ( ! $post = WordPress\Post::get( $post_id ) )
 						continue;
 
-					echo $before.WordPress\Post::fullTitle( $post, TRUE ).$after;
+					echo $before.WordPress\Post::fullTitle( $post, 'overview' ).$after;
 				}
 
 			}, $priority, 1 );

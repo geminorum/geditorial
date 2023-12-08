@@ -394,7 +394,7 @@ class Addendum extends gEditorial\Module
 
 			$extra = [
 				'post_parent' => $post->ID,
-				'orderby'     => 'menu_order, title',
+				'orderby'     => 'menu_order',
 				'order'       => 'ASC',
 			];
 

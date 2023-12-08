@@ -126,12 +126,12 @@ class Tabloid extends gEditorial\Module
 		$custom = $this->get_setting_fallback( sprintf( 'posttype_%s_action_title', $post->post_type ),
 			_x( 'Overview', 'Action', 'geditorial-tabloid' ) );
 
-		if ( ! $filtred = $this->filters( 'action', $this->is_post_viewable( $post ) ? $custom : FALSE, $post ) )
+		if ( ! $filtered = $this->filters( 'action', $this->is_post_viewable( $post ) ? $custom : FALSE, $post ) )
 			return FALSE;
 
 		return $this->framepage_get_mainlink_for_post( $post, [
-			'title'        => $this->get_setting( sprintf( 'posttype_%s_overview_title', $post->post_type ), $filtred ),
-			'text'         => $filtred,
+			'title'        => $this->get_setting( sprintf( 'posttype_%s_overview_title', $post->post_type ), $filtered ),
+			'text'         => $filtered,
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',

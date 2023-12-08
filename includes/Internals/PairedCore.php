@@ -204,7 +204,7 @@ trait PairedCore
 			if ( ! $item = WordPress\Post::get( $post_id ) )
 				continue;
 
-			echo $before.sprintf( $template, WordPress\Post::fullTitle( $item, $canedit ? 'edit' : TRUE ) ).$after;
+			echo $before.sprintf( $template, WordPress\Post::fullTitle( $item, $canedit ? 'overview' : TRUE ) ).$after;
 		}
 	}
 

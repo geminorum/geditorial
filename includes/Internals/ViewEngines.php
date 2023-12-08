@@ -15,13 +15,13 @@ trait ViewEngines
 		if ( empty( $this->view_engines[0] ) )
 			$this->view_engines[0] = $this->get_view_engine( 0 );
 
-		$html    = $this->view_engines[0]->render( $template, $data );
-		$filtred = $this->filters( 'render_view_string', $html, $template, $data );
+		$html     = $this->view_engines[0]->render( $template, $data );
+		$filtered = $this->filters( 'render_view_string', $html, $template, $data );
 
 		if ( ! $verbose )
-			return $filtred;
+			return $filtered;
 
-		echo $filtred;
+		echo $filtered;
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
@@ -33,13 +33,13 @@ trait ViewEngines
 		if ( empty( $this->view_engines[$path] ) )
 			$this->view_engines[$path] = $this->get_view_engine( $path );
 
-		$html    = $this->view_engines[$path]->loadTemplate( $part )->render( $data );
-		$filtred = $this->filters( 'render_view', $html, $part, $data );
+		$html     = $this->view_engines[$path]->loadTemplate( $part )->render( $data );
+		$filtered = $this->filters( 'render_view', $html, $part, $data );
 
 		if ( ! $verbose )
-			return $filtred;
+			return $filtered;
 
-		echo $filtred;
+		echo $filtered;
 	}
 
 	// NOTE: always gets a new instance

@@ -374,13 +374,13 @@ trait SettingsCore
 						continue;
 
 					if ( is_string( $key ) && $setting == $key )
-						return method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$key )
-							? call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$key ], (array) $field )
+						return method_exists( Settings::class, 'getSetting_'.$key )
+							? call_user_func_array( [ Settings::class, 'getSetting_'.$key ], (array) $field )
 							: [];
 
 					else if ( is_string( $field ) && $setting == $field )
-						return method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field )
-							? call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] )
+						return method_exists( Settings::class, 'getSetting_'.$field )
+							? call_user_func( [ Settings::class, 'getSetting_'.$field ] )
 							: [];
 
 					else if ( is_array( $field ) && isset( $field['field'] ) && $setting == $field['field'] )
@@ -452,8 +452,8 @@ trait SettingsCore
 
 				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
 					$callback = [ $this, 'settings_section'.$section_suffix ];
-				else if ( method_exists( __NAMESPACE__.'\\Settings', 'settings_section'.$section_suffix ) )
-					$callback = [ __NAMESPACE__.'\\Settings', 'settings_section'.$section_suffix ];
+				else if ( method_exists( Settings::class, 'settings_section'.$section_suffix ) )
+					$callback = [ Settings::class, 'settings_section'.$section_suffix ];
 				else
 					$callback = '__return_false';
 
@@ -468,11 +468,11 @@ trait SettingsCore
 					if ( FALSE === $field )
 						continue;
 
-					if ( is_string( $key ) && method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$key ) )
-						$args = call_user_func_array( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$key ], (array) $field );
+					if ( is_string( $key ) && method_exists( Settings::class, 'getSetting_'.$key ) )
+						$args = call_user_func_array( [ Settings::class, 'getSetting_'.$key ], (array) $field );
 
-					else if ( is_string( $field ) && method_exists( __NAMESPACE__.'\\Settings', 'getSetting_'.$field ) )
-						$args = call_user_func( [ __NAMESPACE__.'\\Settings', 'getSetting_'.$field ] );
+					else if ( is_string( $field ) && method_exists( Settings::class, 'getSetting_'.$field ) )
+						$args = call_user_func( [ Settings::class, 'getSetting_'.$field ] );
 
 					else if ( ! is_string( $key ) && is_array( $field ) )
 						$args = $field;

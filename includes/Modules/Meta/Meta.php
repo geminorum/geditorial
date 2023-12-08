@@ -518,10 +518,10 @@ class Meta extends gEditorial\Module
 					$register_args['show_in_rest'] = FALSE; // only for explicitly private fields
 
 				$meta_key = $this->get_postmeta_key( $field );
-				$filtred  = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );
+				$filtered = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );
 
-				if ( FALSE !== $filtred )
-					register_meta( 'post', $meta_key, $filtred );
+				if ( FALSE !== $filtered )
+					register_meta( 'post', $meta_key, $filtered );
 			}
 		}
 	}

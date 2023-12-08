@@ -95,17 +95,17 @@ trait CoreTaxonomies
 		if ( ! array_key_exists( 'update_count_callback', $args ) ) {
 
 			if ( $cpt_tax )
-				// $args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+				// $args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
 				$args['update_count_callback'] = '_update_post_term_count';
 
 			else if ( 'user' == $posttypes )
-				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateUserTermCountCallback' ];
+				$args['update_count_callback'] = [ WordPress\Database::class, 'updateUserTermCountCallback' ];
 
 			else if ( 'comment' == $posttypes )
-				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+				$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
 
 			else if ( 'taxonomy' == $posttypes )
-				$args['update_count_callback'] = [ __NAMESPACE__.'\\WordPress\\Database', 'updateCountCallback' ];
+				$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
 
 			// WTF: if not else ?!
 

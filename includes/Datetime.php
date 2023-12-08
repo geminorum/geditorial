@@ -235,7 +235,7 @@ class Datetime extends WordPress\Main
 
 	public static function getPostTypeMonths( $calendar_type, $posttype = 'post', $args = [], $user_id = 0 )
 	{
-		$callback = [ __NAMESPACE__.'\\WordPress\\Database', 'getPostTypeMonths' ];
+		$callback = [ WordPress\Database::class, 'getPostTypeMonths' ];
 
 		if ( 'persian' == $calendar_type
 			&& is_callable( [ 'gPersianDateWordPress', 'getPostTypeMonths' ] ) )
@@ -246,7 +246,7 @@ class Datetime extends WordPress\Main
 
 	public static function monthFirstAndLast( $calendar_type, $year, $month, $format = NULL )
 	{
-		$callback = [ __NAMESPACE__.'\\Core\\Date', 'monthFirstAndLast' ];
+		$callback = [ Core\Date::class, 'monthFirstAndLast' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'monthFirstAndLast' ] ) )
 			$callback = [ 'gPersianDateDate', 'monthFirstAndLast' ];
@@ -256,7 +256,7 @@ class Datetime extends WordPress\Main
 
 	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
 	{
-		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeFromInput' ];
+		$callback = [ Core\Date::class, 'makeFromInput' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'makeFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeFromInput' ];
@@ -270,7 +270,7 @@ class Datetime extends WordPress\Main
 
 	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL, $fallback = NULL )
 	{
-		$callback = [ __NAMESPACE__.'\\Core\\Date', 'makeMySQLFromInput' ];
+		$callback = [ Core\Date::class, 'makeMySQLFromInput' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeMySQLFromInput' ];

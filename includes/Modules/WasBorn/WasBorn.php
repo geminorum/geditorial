@@ -360,8 +360,8 @@ class WasBorn extends gEditorial\Module
 		foreach ( $this->_summary_age_empty_dob( $posttypes ) as $empty_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -empty-dob' ], $empty_dob );
 
-		foreach ( $this->filters( 'dashboard_summary_main', [], $posttypes, $scope, $user_id ) as $class => $filtred )
-			$html.= Core\HTML::tag( $list, [ 'class' => $class ], $filtred );
+		foreach ( $this->filters( 'dashboard_summary_main', [], $posttypes, $scope, $user_id ) as $class => $filtered )
+			$html.= Core\HTML::tag( $list, [ 'class' => $class ], $filtered );
 
 		if ( $html )
 			$html.= '</ul></div><div class="sub"><ul class="-pointers">';
@@ -382,8 +382,8 @@ class WasBorn extends gEditorial\Module
 		foreach ( $this->_summary_age_invalid_dob( $posttypes ) as $invalid_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -invalid-dob' ], $invalid_dob );
 
-		foreach ( $this->filters( 'dashboard_summary_sub', [], $posttypes, $scope, $user_id ) as $class => $filtred )
-			$html.= Core\HTML::tag( $list, [ 'class' => $class ], $filtred );
+		foreach ( $this->filters( 'dashboard_summary_sub', [], $posttypes, $scope, $user_id ) as $class => $filtered )
+			$html.= Core\HTML::tag( $list, [ 'class' => $class ], $filtered );
 
 		return $html;
 	}

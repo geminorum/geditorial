@@ -112,6 +112,21 @@ class Missioned extends gEditorial\Module
 					'featured_image' => _x( 'Mission Poster', 'Label: Featured Image', 'geditorial-missioned' ),
 					'metabox_title'  => _x( 'The Mission', 'Label: MetaBox Title', 'geditorial-missioned' ),
 				],
+				'primary_paired' => [
+					'metabox_title' => _x( 'In This Mission', 'Label: MetaBox Title', 'geditorial-missioned' ),
+				],
+				'primary_taxonomy' => [
+					'menu_name' => _x( 'Categories', 'Label: Menu Name', 'geditorial-missioned' ),
+				],
+				'span_taxonomy' => [
+					'menu_name' => _x( 'Spans', 'Label: Menu Name', 'geditorial-missioned' ),
+				],
+				'type_taxonomy' => [
+					'menu_name' => _x( 'Types', 'Label: Menu Name', 'geditorial-missioned' ),
+				],
+				'status_taxonomy' => [
+					'menu_name' => _x( 'Statuses', 'Label: Menu Name', 'geditorial-missioned' ),
+				],
 			],
 		];
 

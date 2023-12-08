@@ -97,8 +97,8 @@ trait PairedRest
 				'link'  => WordPress\Post::link( $post ),
 			];
 
-			if ( $filtred = apply_filters( $this->hook_base( 'pairedrest', 'prepped_post' ), $prepped, $post, $parent ) )
-				$data[] = (object) $filtred;
+			if ( $filtered = apply_filters( $this->hook_base( 'pairedrest', 'prepped_post' ), $prepped, $post, $parent ) )
+				$data[] = (object) $filtered;
 		}
 
 		return rest_ensure_response( $data );

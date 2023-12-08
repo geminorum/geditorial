@@ -545,7 +545,7 @@ trait PairedMetaBox
 				if ( ! $post = WordPress\Post::get( $post_id ) )
 					continue;
 
-				echo $before.WordPress\Post::fullTitle( $post, 'edit' ).$after;
+				echo $before.WordPress\Post::fullTitle( $post, 'overview' ).$after;
 			}
 
 			echo '</ol></div>';

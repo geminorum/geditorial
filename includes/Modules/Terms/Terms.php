@@ -419,9 +419,9 @@ class Terms extends gEditorial\Module
 		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
 	}
 
-	private function _get_supported_raw( $filtred = TRUE )
+	private function _get_supported_raw( $filtered = TRUE )
 	{
-		return $filtred ? $this->filters( 'supported_fields_raw', $this->supported ) : $this->supported;
+		return $filtered ? $this->filters( 'supported_fields_raw', $this->supported ) : $this->supported;
 	}
 
 	// FALSE for all
@@ -563,10 +563,10 @@ class Terms extends gEditorial\Module
 					'description'    => $this->get_string( $field, $taxonomy, 'descriptions', '' ),
 				] );
 
-				$filtred = $this->filters( 'register_field_args', $args, $field, $taxonomy );
+				$filtered = $this->filters( 'register_field_args', $args, $field, $taxonomy );
 
-				if ( FALSE !== $filtred )
-					register_meta( 'term', $field, $filtred );
+				if ( FALSE !== $filtered )
+					register_meta( 'term', $field, $filtered );
 			}
 
 			// register general field for prepared meta data

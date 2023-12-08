@@ -102,6 +102,7 @@ trait Strings
 	protected function strings_metabox_title_via_posttype( $posttype, $context = 'default', $default = NULL, $post = NULL, $prop = 'title', $group = 'metabox' )
 	{
 		if ( is_null( $default ) ) {
+
 			switch ( $context ) {
 
 				case 'supportedbox':

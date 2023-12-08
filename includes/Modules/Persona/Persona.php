@@ -825,7 +825,7 @@ class Persona extends gEditorial\Module
 		return $names;
 	}
 
-	private function _get_human_name_metakeys( $post = NULL, $filtred = TRUE )
+	private function _get_human_name_metakeys( $post = NULL, $filtered = TRUE )
 	{
 		$keys  = [
 			'first_name',
@@ -836,7 +836,7 @@ class Persona extends gEditorial\Module
 			'mother_name',
 		];
 
-		return $filtred
+		return $filtered
 			? array_filter( $this->filters( 'human_name_metakeys', $keys, $post ) )
 			: $keys;
 	}

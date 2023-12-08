@@ -117,7 +117,7 @@ class Importer extends gEditorial\Module
 	// {
 	// 	parent::init();
 
-	// 	$this->filter( 'imports_general_summary', 1, 10, FALSE, $this->base );
+	// 	$this->action( 'imports_general_summary', 1, 10, FALSE, $this->base );
 	// }
 
 	public function current_screen( $screen )
