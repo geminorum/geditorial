@@ -4,12 +4,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\WordPress;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\WordPress;
 
 class StaticCovers extends gEditorial\Module
 {
+	use Internals\MetaBoxSupported;
 
 	public static function module()
 	{

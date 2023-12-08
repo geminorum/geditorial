@@ -18,6 +18,7 @@ class Persona extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\LateChores;
 	use Internals\MetaBoxCustom;
+	use Internals\MetaBoxMain;
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 	use Internals\TemplateTaxonomy;
@@ -548,8 +549,6 @@ class Persona extends gEditorial\Module
 			'taxonomy' => $this->constant( 'status_taxonomy' ),
 			'posttype' => $object->post_type,
 		] );
-
-		// parent::_render_mainbox_content( $object, $box, $context, $screen );
 	}
 
 	public function rowactions_bulk_actions( $actions )

@@ -343,7 +343,8 @@ class Addendum extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		parent::_render_mainbox_content( $object, $box, $context, $screen );
+		MetaBox::fieldPostMenuOrder( $object );
+		MetaBox::fieldPostParent( $object );
 
 		MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy' => $this->constant( 'type_taxonomy' ),
