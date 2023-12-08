@@ -150,7 +150,9 @@ class Trained extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'column_icon_title' => _x( 'Training Courses', 'Misc: `column_icon_title`', 'geditorial-trained' ),
+			/* translators: %s: item count */
+			'tabloid_post_summaries' => _x( 'Training Attendees (%s)', 'Misc: `tabloid_post_summaries`', 'geditorial-trained' ),
+			'column_icon_title'      => _x( 'Training Courses', 'Misc: `column_icon_title`', 'geditorial-trained' ),
 		];
 
 		$strings['metabox'] = [
@@ -288,6 +290,7 @@ class Trained extends gEditorial\Module
 
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		// $this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
 
 		if ( is_admin() )

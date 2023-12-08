@@ -233,6 +233,45 @@ trait PairedCore
 		return $data;
 	}
 
+	/**
+	 * Appends List of supported posts to current paired
+	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );`
+	 *
+	 * @param  array  $list
+	 * @param  array  $data
+	 * @param  object $post
+	 * @param  string $context
+	 * @return array  $list
+	 */
+	public function tabloid_post_summaries_paired_posttype( $list, $data, $post, $context )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return $list;
+
+		if ( $post->post_type !== $this->constant( $constants[0] ) )
+			return $list;
+
+		if ( ! $items = $this->paired_all_connected_to( $post ) )
+			return $list;
+
+		/* translators: %s: item count */
+		$default  = _x( 'Connected (%s)', 'Internal: Paired: Post Summary Title', 'geditorial-admin' );
+		$template = $this->get_string( 'tabloid_post_summaries', $constants[0], 'misc', $default );
+		$posts    = [];
+
+		foreach ( $items as $item )
+			$posts[] = WordPress\Post::fullTitle( $item, 'overview' );
+
+		$list[] = [
+			'key'     => $this->key,
+			'class'   => '-paired-summary',
+			'title'   => sprintf( $template, WordPress\Strings::getCounted( count( $items ) ) ),
+			'content' => Core\HTML::wrap( Core\HTML::renderList( $posts ), 'field-wrap -list' ),
+		];
+
+		return $list;
+	}
+
 	protected function paired_all_connected_to( $post, $exclude = [], $posttypes = NULL )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
