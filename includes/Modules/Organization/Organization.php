@@ -23,6 +23,7 @@ class Organization extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
+	use Internals\PairedFront;
 	use Internals\PairedImports;
 	use Internals\PairedMetaBox;
 	use Internals\PairedRest;

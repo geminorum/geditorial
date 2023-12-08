@@ -19,8 +19,10 @@ class Course extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
+	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
 	use Internals\PairedRowActions;
+	use Internals\PairedThumbnail;
 	use Internals\PairedTools;
 	use Internals\TemplatePostType;
 
