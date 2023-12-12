@@ -507,10 +507,9 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	// TODO: support for other modules
 	// TODO: DEPRECATE
 	// TODO: rename to `getPosttypeField()`
-	public static function getMetaField( $field_key, $atts = [], $check = TRUE )
+	public static function getMetaField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
 	{
 		$args = self::atts( [
 			'id'       => NULL,
@@ -528,13 +527,13 @@ class Template extends WordPress\Main
 		if ( is_null( $args['default'] ) )
 			$args['default'] = '';
 
-		if ( $check && ! gEditorial()->enabled( 'meta' ) )
+		if ( $check && ! gEditorial()->enabled( $module ) )
 			return $args['default'];
 
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
-		$meta = $raw = self::getMetaFieldRaw( $field_key, $post->ID, 'meta' );
+		$meta = $raw = self::getMetaFieldRaw( $field_key, $post->ID, $module );
 
 		if ( FALSE === $meta && $args['fallback'] )
 			return self::getMetaField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
@@ -542,7 +541,7 @@ class Template extends WordPress\Main
 		if ( FALSE === $meta )
 			return $args['default'];
 
-		$field = gEditorial()->module( 'meta' )->get_posttype_field_args( $field_key, $post->post_type );
+		$field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );
 
 		// NOTE: field maybe disabled or overrided
 		if ( FALSE === $field )
@@ -550,7 +549,7 @@ class Template extends WordPress\Main
 
 		if ( FALSE !== $args['context'] ) {
 
-			$access = gEditorial()->module( 'meta' )->access_posttype_field( $field, $post, $args['context'] );
+			$access = gEditorial()->module( $module )->access_posttype_field( $field, $post, $args['context'] );
 
 			if ( ! $access )
 				return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
@@ -576,7 +575,7 @@ class Template extends WordPress\Main
 	{
 		if ( $check ) {
 
-			if ( ! gEditorial()->enabled( 'meta' ) )
+			if ( ! gEditorial()->enabled( $module ) )
 				return FALSE;
 
 			if ( ! $post = WordPress\Post::get( $post_id ) )

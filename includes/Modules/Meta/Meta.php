@@ -564,7 +564,7 @@ class Meta extends gEditorial\Module
 				'default'  => $args['default'],
 				'context'  => $context,
 				'noaccess' => FALSE,
-			] );
+			], FALSE, $this->key );
 
 			// if no access or default is FALSE
 			if ( FALSE === $meta && $meta !== $args['default'] )
