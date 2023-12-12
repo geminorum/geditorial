@@ -133,6 +133,20 @@ class Importer extends gEditorial\Module
 		}
 	}
 
+	// @REF: https://www.kristinfalkner.com/adding-url-link-custom-post-type-wordpress-admin-submenu/
+	public function admin_menu()
+	{
+		global $submenu;
+
+		if ( $this->cuc( 'imports' ) )
+			foreach ( $this->posttypes() as $posttype )
+				$submenu[('post' == $posttype ? 'edit.php' : 'edit.php?post_type='.$posttype)][] = [
+					Helper::getPostTypeLabel( $posttype, 'import_items', FALSE, _x( 'Import', 'Sub-Menu Menu Title', 'geditorial-importer' ) ),
+					'read', // already checked
+					$this->get_imports_page_url( NULL, [ 'posttype' => $posttype ] ),
+				];
+	}
+
 	private function _guess_fields_map( $headers, $attachment_id = NULL )
 	{
 		return $this->filters( 'guessed_fields_map',

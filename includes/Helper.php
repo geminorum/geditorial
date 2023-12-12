@@ -944,6 +944,10 @@ class Helper extends WordPress\Main
 
 			case 'show_option_parent':
 				return sprintf( '&ndash; %s &ndash;', trim( $object->labels->parent_item_colon, ':' ) );
+
+			case 'import_items':
+				/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+				return vsprintf( _x( 'Import %1$s', 'Helper: PostType Label: `import_items`', 'geditorial' ), self::getStringsFromName( $name ) );
 		}
 
 		if ( $fallback_key && isset( $object->labels->{$fallback_key} ) )
@@ -1100,6 +1104,10 @@ class Helper extends WordPress\Main
 
 			case 'show_option_parent':
 				return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );
+
+			case 'import_items':
+				/* translators: %1$s: camel case / plural taxonomy, %2$s: camel case / singular taxonomy, %3$s: lower case / plural taxonomy, %4$s: lower case / singular taxonomy, %5$s: `%s` placeholder */
+				return vsprintf( _x( 'Import %1$s', 'Helper: Taxonomy Label: `import_items`', 'geditorial' ), self::getStringsFromName( $name ) );
 		}
 
 		if ( $fallback_key && isset( $object->labels->{$fallback_key} ) )
