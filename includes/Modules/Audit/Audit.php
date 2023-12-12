@@ -399,7 +399,7 @@ class Audit extends gEditorial\Module
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 5 );
 
 					// TODO: fallback to custom tweaks column/hide on tweaks default
-					if ( $this->rowactions__hook_mainlink_for_post( $screen, 20 ) )
+					if ( $this->rowactions__hook_mainlink_for_post( $screen->post_type, 20 ) )
 						Scripts::enqueueColorBox();
 				}
 
