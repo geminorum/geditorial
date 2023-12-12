@@ -158,14 +158,17 @@ class Addendum extends gEditorial\Module
 			'listbox_title' => _x( 'Posts with &ldquo;%1$s&rdquo; %2$s', 'Metabox: `listbox_title`', 'geditorial-addendum' ),
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'primary_subterm' => [
 				'required'  => _x( 'Required', 'Necessity Taxonomy: Default Term', 'geditorial-addendum' ),
 				'mandatory' => _x( 'Mandatory', 'Necessity Taxonomy: Default Term', 'geditorial-addendum' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	protected function get_global_fields()

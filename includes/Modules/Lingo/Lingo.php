@@ -103,7 +103,12 @@ class Lingo extends gEditorial\Module
 			],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'language_taxonomy' => [
 				// @SEE: https://en.wikipedia.org/wiki/ISO_639
 				'arabic'  => _x( 'Arabic', 'Default Term: Language', 'geditorial-lingo' ),
@@ -112,8 +117,6 @@ class Lingo extends gEditorial\Module
 				'french'  => _x( 'French', 'Default Term: Language', 'geditorial-lingo' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function init()

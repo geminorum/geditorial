@@ -84,12 +84,6 @@ class Executed extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Execution Summary', 'Dashboard Widget Title', 'geditorial-executed' ), ],
 		];
 
-		$strings['default_terms'] = [
-			'main_taxonomy' => [
-				// 'illiterate' => _x( 'Illiterate', 'Default Term', 'geditorial-executed' ),
-			],
-		];
-
 		return $strings;
 	}
 

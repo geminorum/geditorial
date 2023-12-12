@@ -171,7 +171,12 @@ class Event extends gEditorial\Module
 			],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'event_type' => [
 				'holiday' => _x( 'Holiday', 'Default Term', 'geditorial-event' ),
 				'birth'   => _x( 'Birth', 'Default Term', 'geditorial-event' ),
@@ -180,8 +185,6 @@ class Event extends gEditorial\Module
 				'end'     => _x( 'End', 'Default Term', 'geditorial-event' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	// needed for fields options

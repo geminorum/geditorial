@@ -160,7 +160,12 @@ class Trained extends gEditorial\Module
 			'listbox_title' => _x( 'Attendees on &ldquo;%1$s&rdquo;', 'Metabox: `listbox_title`', 'geditorial-trained' ),
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			// 'primary_subterm' => [
 			// 	'' => _x( '', 'Subterm Taxonomy: Default Term', 'geditorial-trained' ),
 			// ],
@@ -170,8 +175,6 @@ class Trained extends gEditorial\Module
 				'held'    => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	protected function get_global_fields()

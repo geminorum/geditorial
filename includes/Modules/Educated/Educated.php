@@ -84,18 +84,14 @@ class Educated extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Education Summary', 'Dashboard Widget Title', 'geditorial-educated' ), ],
 		];
 
-		$strings['default_terms'] = [
-			'main_taxonomy' => [
-				'illiterate' => _x( 'Illiterate', 'Default Term', 'geditorial-educated' ),
-				'primary'    => _x( 'Primary', 'Default Term', 'geditorial-educated' ),
-				'secondary'  => _x( 'Secondary', 'Default Term', 'geditorial-educated' ),
-				'bachelor'   => _x( 'Bachelor', 'Default Term', 'geditorial-educated' ),
-				'master'     => _x( 'Master', 'Default Term', 'geditorial-educated' ),
-				'doctorate'  => _x( 'Doctorate', 'Default Term', 'geditorial-educated' ),
-			],
-		];
-
 		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
+			'main_taxonomy' => ModuleInfo::getEducationDefaultTerms(),
+		];
 	}
 
 	public function init()

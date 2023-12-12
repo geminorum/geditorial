@@ -165,7 +165,12 @@ class Organization extends gEditorial\Module
 			'listbox_title' => _x( '%2$s Members of &ldquo;%1$s&rdquo;', 'Metabox: `listbox_title`', 'geditorial-organization' ),
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'status_taxonomy' => [
 				'working'  => _x( 'Working', 'Default Term', 'geditorial-organization' ),
 				'inactive' => _x( 'Inactive', 'Default Term', 'geditorial-organization' ),
@@ -174,8 +179,6 @@ class Organization extends gEditorial\Module
 				'pending'  => _x( 'Pending', 'Default Term', 'geditorial-organization' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	protected function get_global_fields()

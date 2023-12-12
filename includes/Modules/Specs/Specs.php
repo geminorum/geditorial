@@ -68,10 +68,12 @@ class Specs extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
+		return $strings;
+	}
 
-		$strings['default_terms'] = [
+	protected function define_default_terms()
+	{
+		return [
 			'specs_tax' => [
 				'color'  => _x( 'Color', 'Default Term', 'geditorial-specs' ),
 				'width'  => _x( 'Width', 'Default Term', 'geditorial-specs' ),
@@ -79,8 +81,6 @@ class Specs extends gEditorial\Module
 				'weight' => _x( 'Weight', 'Default Term', 'geditorial-specs' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	protected function get_global_fields()

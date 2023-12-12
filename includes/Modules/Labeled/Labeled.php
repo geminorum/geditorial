@@ -83,7 +83,12 @@ class Labeled extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Content Labels Summary', 'Dashboard Widget Title', 'geditorial-labeled' ), ],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => [
 				'introduction' => _x( 'Introduction', 'Main Taxonomy: Default Term', 'geditorial-labeled' ),
 				'interview'    => _x( 'Interview', 'Main Taxonomy: Default Term', 'geditorial-labeled' ),
@@ -91,8 +96,6 @@ class Labeled extends gEditorial\Module
 				'report'       => _x( 'Report', 'Main Taxonomy: Default Term', 'geditorial-labeled' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	protected function get_global_fields()

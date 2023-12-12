@@ -92,7 +92,12 @@ class Genres extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Genres Summary', 'Dashboard Widget Title', 'geditorial-genres' ) ],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => [
 				// @REF: https://en.wikipedia.org/wiki/List_of_writing_genres
 				'children'   => _x( 'Children', 'Main Taxonomy: Default Term', 'geditorial-genres' ),
@@ -108,8 +113,6 @@ class Genres extends gEditorial\Module
 				'thriller'   => _x( 'Thriller', 'Main Taxonomy: Default Term', 'geditorial-genres' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function init()

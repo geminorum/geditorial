@@ -84,14 +84,14 @@ class Suited extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
+		return $strings;
+	}
 
-		$strings['default_terms'] = [
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => ModuleInfo::getDemographicProfiles( 'strings' ),
 		];
-
-		return $strings;
 	}
 
 	public function init()

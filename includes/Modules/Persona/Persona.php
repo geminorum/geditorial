@@ -178,7 +178,12 @@ class Persona extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Human Status Summary', 'Dashboard Widget Title', 'geditorial-persona' ), ],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'conscription_taxonomy' => [
 				// TODO: finish the list
 				'subject-to-service'  => _x( 'Subject to Service', 'Default Term', 'geditorial-persona' ),
@@ -198,8 +203,6 @@ class Persona extends gEditorial\Module
 				'ab-negative' => _x( 'AB&minus;', 'Default Term', 'geditorial-persona' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function get_global_fields()

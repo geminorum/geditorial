@@ -12,6 +12,7 @@ class Module extends WordPress\Module
 	use Internals\CoreIncludes;
 	use Internals\CorePostTypes;
 	use Internals\CoreTaxonomies;
+	use Internals\DefaultTerms;
 	use Internals\SettingsCore;
 	use Internals\SettingsFields;
 	use Internals\SettingsHelp;
@@ -308,11 +309,7 @@ class Module extends WordPress\Module
 		if ( method_exists( $this, 'exports_do_check_requests' ) )
 			$this->exports_do_check_requests();
 
-		// auto-hook register default terms
-		// helps if strings filtered
-		if ( ! empty( $this->strings['default_terms'] ) )
-			foreach ( array_keys( $this->strings['default_terms'] ) as $taxonomy_constant )
-				$this->register_default_terms( $taxonomy_constant );
+		$this->init_default_terms();
 
 		$prefix   = self::sanitize_base( $this->key );
 		$callback = static function ( $key, $value ) use ( $prefix ) {
@@ -564,46 +561,6 @@ class Module extends WordPress\Module
 	public function slug()
 	{
 		return str_replace( '_', '-', $this->module->name );
-	}
-
-	// NOTE: hook filter before `init` on `after_setup_theme`
-	protected function get_default_terms( $constant )
-	{
-		// constant is not defined (in case custom terms are for another modules)
-		if ( ! $this->constant( $constant ) )
-			return [];
-
-		if ( ! empty( $this->strings['default_terms'][$constant] ) )
-			$terms = $this->strings['default_terms'][$constant];
-
-		// DEPRECATED: use `default_terms` key
-		else if ( ! empty( $this->strings['terms'][$constant] ) )
-			$terms = $this->strings['terms'][$constant];
-
-		else
-			$terms = [];
-
-		return $this->filters( 'get_default_terms', $terms, $this->constant( $constant ) );
-	}
-
-	protected function register_default_terms( $constant, $terms = NULL )
-	{
-		if ( ! defined( 'GNETWORK_VERSION' ) )
-			return FALSE;
-
-		if ( ! is_admin() )
-			return FALSE;
-
-		if ( is_null( $terms ) )
-			$terms = $this->get_default_terms( $constant );
-
-		if ( empty( $terms ) )
-			return FALSE;
-
-		add_filter( 'gnetwork_taxonomy_default_terms_'.$this->constant( $constant ),
-			static function ( $pre ) use ( $terms ) {
-				return array_merge( $pre, Core\Arraay::isAssoc( $terms ) ? $terms : Core\Arraay::sameKey( $terms ) );
-			} );
 	}
 
 	// NOTE: features are `TRUE` by default

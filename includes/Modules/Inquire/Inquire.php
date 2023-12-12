@@ -87,10 +87,12 @@ class Inquire extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
+		return $strings;
+	}
 
-		$strings['default_terms'] = [
+	protected function define_default_terms()
+	{
+		return [
 			'status_tax' => [
 				'status_drafted'     => _x( 'Drafted', 'Default Term', 'geditorial-inquire' ),
 				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-inquire' ),
@@ -112,8 +114,6 @@ class Inquire extends gEditorial\Module
 				'priority_zero'      => _x( 'Zero', 'Default Term', 'geditorial-inquire' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function init()

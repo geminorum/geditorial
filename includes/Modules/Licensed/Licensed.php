@@ -85,7 +85,12 @@ class Licensed extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Driving Licence Summary', 'Dashboard Widget Title', 'geditorial-licensed' ), ],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => [
 				'motorcycle'     => _x( 'Motorcycle', 'Default Term', 'geditorial-licensed' ),
 				'category-three' => _x( 'Category Three', 'Default Term', 'geditorial-licensed' ),
@@ -96,8 +101,6 @@ class Licensed extends gEditorial\Module
 				'airplane'       => _x( 'Airplane', 'Default Term', 'geditorial-licensed' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function init()

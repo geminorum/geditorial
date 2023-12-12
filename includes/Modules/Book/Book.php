@@ -243,30 +243,6 @@ class Book extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
 		];
 
-		$strings['default_terms'] = [
-			'type_tax' => [
-				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ), // shomiz
-				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ), // gallingor
-				'ebook'     => _x( 'E-Book', 'Publication Type: Default Term', 'geditorial-book' ),
-				'disc'      => _x( 'Disc', 'Publication Type: Default Term', 'geditorial-book' ),
-			],
-			'size_tax' => [
-				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // vaziri
-				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ), // soltani
-				'medium'      => _x( 'Medium Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // roghee
-				'quatro'      => _x( 'Quatro', 'Publication Size: Default Term', 'geditorial-book' ), // rahli
-				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // paltoyee
-				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // jibi
-			],
-			'status_tax' => [
-				'not-available-in-print' => _x( 'Not Available in Print', 'Publication Status: Default Term', 'geditorial-book' ),
-				'soon-to-be-published'   => _x( 'Soon to be Published', 'Publication Status: Default Term', 'geditorial-book' ),
-				'secondary-print'        => _x( 'Secondary Print', 'Publication Status: Default Term', 'geditorial-book' ),
-				'repeat-print'           => _x( 'Repeat Print', 'Publication Status: Default Term', 'geditorial-book' ),
-				'first-print'            => _x( 'First Print', 'Publication Status: Default Term', 'geditorial-book' ),
-			],
-		];
-
 		$strings['p2p']['publication_cpt']['title'] = [
 			'from' => _x( 'Connected Publications', 'P2P', 'geditorial-book' ),
 			'to'   => _x( 'Connected Posts', 'P2P', 'geditorial-book' ),
@@ -289,6 +265,33 @@ class Book extends gEditorial\Module
 		$strings['p2p']['publication_cpt']['admin_column'] = FALSE; // adding through tweaks module
 
 		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
+			'type_tax' => [
+				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ), // shomiz
+				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ), // gallingor
+				'ebook'     => _x( 'E-Book', 'Publication Type: Default Term', 'geditorial-book' ),
+				'disc'      => _x( 'Disc', 'Publication Type: Default Term', 'geditorial-book' ),
+			],
+			'size_tax' => [
+				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // vaziri
+				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ), // soltani
+				'medium'      => _x( 'Medium Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // roghee
+				'quatro'      => _x( 'Quatro', 'Publication Size: Default Term', 'geditorial-book' ), // rahli
+				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // paltoyee
+				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // jibi
+			],
+			'status_tax' => [
+				'not-available-in-print' => _x( 'Not Available in Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'soon-to-be-published'   => _x( 'Soon to be Published', 'Publication Status: Default Term', 'geditorial-book' ),
+				'secondary-print'        => _x( 'Secondary Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'repeat-print'           => _x( 'Repeat Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'first-print'            => _x( 'First Print', 'Publication Status: Default Term', 'geditorial-book' ),
+			],
+		];
 	}
 
 	public function get_global_fields()

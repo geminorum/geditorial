@@ -69,13 +69,18 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['default_terms'] = [
+		// $strings['misc'] = [];
+
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => [
 				'' => _x( '', 'Main Taxonomy: Default Term', '<%= moduleTextdomain %>' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function after_setup_theme()

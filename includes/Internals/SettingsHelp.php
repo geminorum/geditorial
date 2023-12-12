@@ -35,25 +35,27 @@ trait SettingsHelp
 		if ( ! in_array( $context, [ 'settings' ], TRUE ) )
 			return;
 
-		if ( ! empty( $this->strings['default_terms'] ) )
-			foreach ( array_keys( $this->strings['default_terms'] ) as $taxonomy_constant )
-				$this->help_tab_default_terms( $taxonomy_constant );
+		if ( method_exists( $this, 'define_default_terms' ) )
+			foreach ( $this->define_default_terms() as $constant => $terms )
+				$this->help_tab_default_terms(
+					$this->constant( $constant ),
+					$this->get_default_terms( $constant, $terms )
+				);
 	}
 
-	protected function help_tab_default_terms( $constant )
+	protected function help_tab_default_terms( $taxonomy, $terms )
 	{
-		if ( ! $taxonomy = WordPress\Taxonomy::object( $this->constant( $constant ) ) )
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
 		/* translators: %s: taxonomy object label */
-		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial-admin' ), $taxonomy->label );
+		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
 		/* translators: %s: taxonomy object label */
-		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ), $taxonomy->label );
-		$terms  = $this->get_default_terms( $constant );
-		$link   = Core\WordPress::getEditTaxLink( $taxonomy->name );
+		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
+		$link   = Core\WordPress::getEditTaxLink( $object->name );
 		$before = Core\HTML::tag( 'p', $title );
 		$after  = Core\HTML::tag( 'p', Core\HTML::link( $edit, $link, TRUE ) );
-		$args   = [ 'title' => $taxonomy->label, 'id' => $this->classs( 'help-default-terms', '-'.$taxonomy->name ) ];
+		$args   = [ 'title' => $object->label, 'id' => $this->classs( 'help-default-terms', '-'.$object->name ) ];
 
 		if ( empty( $terms ) )
 			$args['content'] = $before.Core\HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial-admin' ), '-info' ).$after;

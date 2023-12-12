@@ -144,12 +144,6 @@ class Missioned extends gEditorial\Module
 			'megabox_title' => _x( 'Participants on &ldquo;%1$s&rdquo;', 'Metabox: `megabox_title`', 'geditorial-missioned' ),
 		];
 
-		$strings['default_terms'] = [
-			// 'type_taxonomy' => [
-			// 	'' => _x( '', 'Type Taxonomy: Default Term', 'geditorial-missioned' ),
-			// ],
-		];
-
 		return $strings;
 	}
 

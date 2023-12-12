@@ -173,7 +173,12 @@ class Course extends gEditorial\Module
 			],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'status_tax' => [
 				'ongoing'   => _x( 'Ongoing', 'Default Term', 'geditorial-course' ),
 				'planned'   => _x( 'Planned', 'Default Term', 'geditorial-course' ),
@@ -181,8 +186,6 @@ class Course extends gEditorial\Module
 				'cancelled' => _x( 'Cancelled', 'Default Term', 'geditorial-course' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	protected function get_global_fields()

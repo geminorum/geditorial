@@ -88,21 +88,24 @@ class Ranked extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Ranking Summary', 'Dashboard Widget Title', 'geditorial-ranked' ), ],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => [
-				'Publisher'          => _x( 'Publisher', 'Default Term', 'geditorial-ranked' ),
-				'Editor-in-Chief'    => _x( 'Editor in Chief', 'Default Term', 'geditorial-ranked' ),
-				'Editorial-Director' => _x( 'Editorial Director', 'Default Term', 'geditorial-ranked' ),
-				'Managing-Editor'    => _x( 'Managing Editor', 'Default Term', 'geditorial-ranked' ),
-				'Senior-Editor'      => _x( 'Senior Editor', 'Default Term', 'geditorial-ranked' ),
+				'publisher'          => _x( 'Publisher', 'Default Term', 'geditorial-ranked' ),
+				'editor-in-chief'    => _x( 'Editor in Chief', 'Default Term', 'geditorial-ranked' ),
+				'editorial-director' => _x( 'Editorial Director', 'Default Term', 'geditorial-ranked' ),
+				'managing-editor'    => _x( 'Managing Editor', 'Default Term', 'geditorial-ranked' ),
+				'senior-editor'      => _x( 'Senior Editor', 'Default Term', 'geditorial-ranked' ),
 				'digital-producer'   => _x( 'Digital Producer', 'Default Term', 'geditorial-ranked' ),
 				'copy-editor'        => _x( 'Copy Editor', 'Default Term', 'geditorial-ranked' ),
 				'proofreader'        => _x( 'Proofreader', 'Default Term', 'geditorial-ranked' ),
 				'executive'          => _x( 'Executive', 'Default Term', 'geditorial-ranked' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function init()

@@ -126,7 +126,12 @@ class Audit extends gEditorial\Module
 			'columnrow_text'  => _x( 'Audit', 'Row Text', 'geditorial-audit' ),
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => [
 				'audited'       => _x( 'Audited', 'Default Term', 'geditorial-audit' ),
 				'outdated'      => _x( 'Outdated', 'Default Term', 'geditorial-audit' ),
@@ -142,8 +147,6 @@ class Audit extends gEditorial\Module
 				'imported'      => _x( 'Imported', 'Default Term', 'geditorial-audit' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function init()

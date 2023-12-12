@@ -162,7 +162,12 @@ class WasBorn extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy'   => Datetime::getYearsByDecades( '-100 year', 10, TRUE, 'code' ),
 			'group_taxonomy'  => Datetime::getAgeStructure( TRUE ),
 			'gender_taxonomy' => [
@@ -170,8 +175,6 @@ class WasBorn extends gEditorial\Module
 				'female' => _x( 'Female', 'Default Term', 'geditorial-was-born' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function after_setup_theme()

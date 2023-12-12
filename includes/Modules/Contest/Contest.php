@@ -156,7 +156,12 @@ class Contest extends gEditorial\Module
 			],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'status_tax' => [
 				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-contest' ),
 				'status_pending'     => _x( 'Pending', 'Default Term', 'geditorial-contest' ),
@@ -164,8 +169,6 @@ class Contest extends gEditorial\Module
 				'status_rejected'    => _x( 'Rejected', 'Default Term', 'geditorial-contest' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	protected function get_global_fields()

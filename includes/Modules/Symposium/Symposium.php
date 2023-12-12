@@ -74,7 +74,12 @@ class Symposium extends gEditorial\Module
 			],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'type_taxonomy' => [
 				'lecture'     => _x( 'Lecture', 'Session Type: Default Term', 'geditorial-symposium' ),
 				'conference'  => _x( 'Conference', 'Session Type: Default Term', 'geditorial-symposium' ),
@@ -82,8 +87,6 @@ class Symposium extends gEditorial\Module
 				'book-review' => _x( 'Book Review', 'Session Type: Default Term', 'geditorial-symposium' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function get_global_fields()

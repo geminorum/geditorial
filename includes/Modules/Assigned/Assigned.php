@@ -93,7 +93,12 @@ class Assigned extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Assignments Summary', 'Dashboard Widget Title', 'geditorial-assigned' ), ],
 		];
 
-		$strings['default_terms'] = [
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
 			'main_taxonomy' => [
 				'research'  => _x( 'Research', 'Default Term', 'geditorial-assigned' ),
 				'planning'  => _x( 'Planning', 'Default Term', 'geditorial-assigned' ),
@@ -101,8 +106,6 @@ class Assigned extends gEditorial\Module
 				'reporting' => _x( 'Reporting', 'Default Term', 'geditorial-assigned' ),
 			],
 		];
-
-		return $strings;
 	}
 
 	public function get_global_fields()
