@@ -114,6 +114,15 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderNoTermsAvailable( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'There are no terms available!', 'Info: Message', 'geditorial-admin' ).$after,
+			FALSE,
+			'-empty -no-terms'
+		);
+	}
+
 	public static function renderEmptyMIMEtype( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(

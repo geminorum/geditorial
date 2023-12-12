@@ -302,6 +302,12 @@ class Trained extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) )
+			$this->coreadmin__unset_columns( $posttype );
+	}
+
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
@@ -332,6 +338,7 @@ class Trained extends gEditorial\Module
 				$this->pairedadmin__hook_tweaks_column_connected();
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'primary_taxonomy',
+					'primary_subterm',
 					'program_taxonomy',
 					'span_taxonomy',
 					'type_taxonomy',

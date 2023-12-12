@@ -304,11 +304,14 @@ class Organization extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	// public function setup_ajax()
-	// {
-	// 	if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-	// 		$this->pairedadmin__hook_tweaks_column_connected();
-	// }
+	public function setup_ajax()
+	{
+		// if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+		// 	$this->pairedadmin__hook_tweaks_column_connected();
+
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) )
+			$this->coreadmin__unset_columns( $posttype );
+	}
 
 	public function current_screen( $screen )
 	{

@@ -264,6 +264,12 @@ class Missioned extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) )
+			$this->coreadmin__unset_columns( $posttype );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
