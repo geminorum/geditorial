@@ -445,6 +445,8 @@ class Meta extends gEditorial\Module
 		$this->filter( 'pairedrest_prepped_post', 3, 9, FALSE, $this->base );
 		$this->filter( 'pairedimports_import_types', 4, 5, FALSE, $this->base );
 
+		$is_rest = Core\WordPress::isREST();
+
 		foreach ( $this->posttypes() as $posttype ) {
 
 			/**
@@ -504,15 +506,18 @@ class Meta extends gEditorial\Module
 					 */
 					'object_subtype' => $posttype,
 
-					'description'       => sprintf( '%s: %s', $args['title'], $args['description'] ),
-					'auth_callback'     => [ $this, 'register_auth_callback' ],
-					'sanitize_callback' => [ $this, 'register_sanitize_callback' ],
-					'show_in_rest'      => TRUE,
+					'description'   => sprintf( '%s: %s', $args['title'], $args['description'] ),
+					'auth_callback' => [ $this, 'register_auth_callback' ],
+					'show_in_rest'  => TRUE,
+
 					// TODO: must prepare object scheme on repeatable fields
 					// @SEE: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/#read-and-write-a-post-meta-field-in-post-responses
 					// @SEE: `rest_validate_value_from_schema()`, `wp_register_persisted_preferences_meta()`
 					// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback' ] ],
 				] );
+
+				if ( $is_rest ) // WTF: double sanitizes along with store metabox default sanitize
+					$register_args['sanitize_callback'] = [ $this, 'register_sanitize_callback_posttypefields' ];
 
 				if ( FALSE === $args['access_view'] )
 					$register_args['show_in_rest'] = FALSE; // only for explicitly private fields
