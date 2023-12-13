@@ -422,6 +422,7 @@ class Persona extends gEditorial\Module
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
+		$this->filter_module( 'papered', 'view_data', 4 );
 
 		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
 	}
@@ -708,6 +709,20 @@ class Persona extends gEditorial\Module
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
+	}
+
+	public function papered_view_data( $data, $profile, $source, $context )
+	{
+		if ( ! $post = WordPress\Post::get( $source ) )
+			return $data;
+
+		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
+			return $data;
+
+		if ( $fullname = $this->_make_human_title( $post, 'print' ) )
+			$data['source']['rendered']['posttitle'] = $fullname;
+
+		return $data;
 	}
 
 	// FIXME: add setting for using source id as identity
