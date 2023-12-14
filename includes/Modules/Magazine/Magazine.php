@@ -238,7 +238,7 @@ class Magazine extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'issue_cpt' );
 
-		$this->paired_register_objects( 'issue_cpt', 'issue_tax', 'section_tax' );
+		$this->paired_register();
 
 		$this->register_shortcode( 'issue_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );

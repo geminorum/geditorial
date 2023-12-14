@@ -19,6 +19,7 @@ trait PairedCore
 	// 		FALSE, // subterm:  `primary_subterm`
 	// 		FALSE, // exclude:  `primary_taxonomy`
 	// 		TRUE,  // hierarchical
+	// 		FALSE, // private
 	// 	];
 	// }
 
@@ -41,46 +42,50 @@ trait PairedCore
 			$constants[3] = FALSE;
 
 		if ( empty( $constants[4] ) )
-			$constants[3] = TRUE;
+			$constants[4] = TRUE;
+
+		if ( empty( $constants[5] ) )
+			$constants[5] = FALSE;
 
 		return $constants;
 	}
 
-	// TODO: get constants from `paired_get_constants()`
-	// TODO: make `hierarchical` optional
-	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
+	protected function paired_register( $extra = [], $supported = NULL )
 	{
-		if ( is_null( $supported ) )
+		if ( ! $paired = $this->paired_get_constants() )
+			return FALSE;
+
+			if ( is_null( $supported ) )
 			$supported = $this->posttypes();
 
 		if ( count( $supported ) ) {
 
-			if ( $subterm && $this->get_setting( 'subterms_support' ) )
-				$this->register_taxonomy( $subterm, [
-					'public'            => ! $private,
-					'rewrite'           => $private ? FALSE : NULL,
+			if ( $paired[2] && $this->get_setting( 'subterms_support' ) )
+				$this->register_taxonomy( $paired[2], [
+					'public'            => ! $paired[5],
+					'rewrite'           => $paired[5] ? FALSE : NULL,
 					'hierarchical'      => TRUE,
 					'meta_box_cb'       => NULL,
 					'show_admin_column' => FALSE,
 					'show_in_nav_menus' => TRUE,
-				], array_merge( $supported, [ $this->constant( $posttype ) ] ) );
+				], array_merge( $supported, [ $this->constant( $paired[0] ) ] ) );
 
-			$this->register_taxonomy( $paired, [
-				Services\Paired::PAIRED_POSTTYPE_PROP => $this->constant( $posttype ),
+			$this->register_taxonomy( $paired[1], [
+				Services\Paired::PAIRED_POSTTYPE_PROP => $this->constant( $paired[0] ),
 
-				'public'       => ! $private,
-				'rewrite'      => $private ? FALSE : NULL,
+				'public'       => ! $paired[5],
+				'rewrite'      => $paired[5] ? FALSE : NULL,
 				'show_ui'      => FALSE,
 				'show_in_rest' => FALSE,
-				'hierarchical' => TRUE,
+				'hierarchical' => $paired[4],
 
 				// the paired taxonomies are often in plural
 				// FIXME: WTF: conflict on the posttype rest base!
-				// 'rest_base'    => $this->constant( $paired.'_slug', str_replace( '_', '-', $this->constant( $paired ) ) ),
+				// 'rest_base'    => $this->constant( $paired[1].'_slug', str_replace( '_', '-', $this->constant( $paired[1] ) ) ),
 
-			], array_merge( $supported, [ $this->constant( $posttype ) ] ) );
+			], array_merge( $supported, [ $this->constant( $paired[0] ) ] ) );
 
-			$this->_paired = $this->constant( $paired );
+			$this->_paired = $this->constant( $paired[1] );
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
 		}
 
@@ -99,18 +104,18 @@ trait PairedCore
 			];
 		}
 
-		if ( $primary && ! array_key_exists( 'primary_taxonomy', $extra ) )
-			$extra['primary_taxonomy'] = $this->constant( $primary );
+		if ( $paired[3] && ! array_key_exists( 'primary_taxonomy', $extra ) )
+			$extra['primary_taxonomy'] = $this->constant( $paired[3] );
 
-		$object = $this->register_posttype( $posttype, array_merge( [
+		$object = $this->register_posttype( $paired[0], array_merge( [
 			Services\Paired::PAIRED_TAXONOMY_PROP  => $this->_paired,
 			Services\Paired::PAIRED_SUPPORTED_PROP => $supported,
 
-			'public'            => ! $private,
-			'hierarchical'      => TRUE,
+			'public'            => ! $paired[5],
+			'hierarchical'      => $paired[4],
 			'show_in_nav_menus' => TRUE,
 			'show_in_admin_bar' => FALSE,
-			'rewrite'           => $private ? FALSE : [
+			'rewrite'           => $paired[5] ? FALSE : [
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
@@ -122,7 +127,24 @@ trait PairedCore
 		if ( method_exists( $this, 'pairedrest_register_rest_route' ) )
 			$this->pairedrest_register_rest_route( $object );
 
+		do_action( $this->hook_base( 'paired_registered' ),
+			$this->constant( $paired[0] ), // `posttype`
+			$this->constant( $paired[1] ), // `taxonomy`
+			$this->constant( $paired[2] ), // `subterm`
+			$this->constant( $paired[3] ), // `primary`
+			$paired[4], // `hierarchical`
+			$paired[5], // private
+			$supported
+		);
+
 		return $object;
+	}
+
+	// FIXME: DEPRECATED
+	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
+	{
+		self::_dep( '$this->paired_register()' );
+		return $this->paired_register( $extra, $supported );
 	}
 
 	/**

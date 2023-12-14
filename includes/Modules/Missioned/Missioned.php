@@ -248,7 +248,7 @@ class Missioned extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype' );
 
-		$this->paired_register_objects( 'primary_posttype', 'primary_paired' );
+		$this->paired_register();
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );

@@ -286,7 +286,7 @@ class Organization extends gEditorial\Module
 			'meta_box_cb'        => '__singleselect_terms_callback',
 		], 'primary_posttype' );
 
-		$this->paired_register_objects( 'primary_posttype', 'primary_paired', 'primary_subterm' );
+		$this->paired_register();
 
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );

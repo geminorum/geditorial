@@ -238,7 +238,7 @@ class Contest extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'apply_cpt' );
 
-		$this->paired_register_objects( 'contest_cpt', 'contest_tax', 'section_tax', 'contest_cat' );
+		$this->paired_register();
 
 		$this->register_posttype( 'apply_cpt' );
 

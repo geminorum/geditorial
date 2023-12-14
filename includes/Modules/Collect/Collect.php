@@ -212,7 +212,7 @@ class Collect extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'collection_cpt' );
 
-		$this->paired_register_objects( 'collection_cpt', 'collection_tax', 'part_tax' );
+		$this->paired_register();
 
 		$this->register_shortcode( 'collection_shortcode' );
 		$this->register_shortcode( 'group_shortcode' );

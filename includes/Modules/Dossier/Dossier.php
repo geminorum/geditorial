@@ -214,7 +214,7 @@ class Dossier extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'dossier_posttype' );
 
-		$this->paired_register_objects( 'dossier_posttype', 'dossier_paired', 'section_taxonomy' );
+		$this->paired_register();
 
 		$this->register_shortcode( 'dossier_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );
