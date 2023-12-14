@@ -19,6 +19,8 @@ trait PrintPage
 	{
 		$this->action_self( 'printpage_render_head', 1 );
 		$this->action_self( 'printpage_render_contents', 1 );
+
+		$this->filter_false( 'show_admin_bar', 999999 );
 	}
 
 	public function printpage_render_head( $profile = FALSE ) {}
@@ -50,6 +52,8 @@ trait PrintPage
 
 	protected function printpage__render_head( $profile = FALSE )
 	{
+		wp_print_head_scripts();
+
 		// https://github.com/graphicore/librebarcode
 		// https://graphicore.github.io/librebarcode/
 		if ( $this->get_setting( 'printpage_enqueue_librefonts' ) ) {
@@ -64,6 +68,8 @@ trait PrintPage
 	protected function printpage__render_foot( $profile = FALSE )
 	{
 		$this->actions( 'printpage_render_foot', $profile );
+
+		wp_print_footer_scripts();
 	}
 
 	protected function printpage__get_layout_pagetitle( $profile = FALSE )
