@@ -747,6 +747,12 @@ class Persona extends gEditorial\Module
 		if ( $fullname = $this->make_human_title( $post, 'print' ) )
 			$data['source']['rendered']['posttitle'] = $fullname;
 
+		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
+			$data['source']['rendered']['identity'] = $identity;
+
+		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
+			$data['source']['rendered']['vcarddata'] = $vcard;
+
 		return $data;
 	}
 
