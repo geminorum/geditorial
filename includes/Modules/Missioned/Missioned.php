@@ -288,6 +288,7 @@ class Missioned extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 
 				$this->coreadmin__unset_columns( $screen->post_type );
+				$this->coreadmin__unset_views( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected();

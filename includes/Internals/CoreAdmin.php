@@ -63,4 +63,26 @@ trait CoreAdmin
 
 		return TRUE;
 	}
+
+	/**
+	 * Hooks `views_{$this->screen->id}` filter to unset given views.
+	 *
+	 * @param  string     $posttype
+	 * @param  null|array $list
+	 * @return bool       $hooked
+	 */
+	protected function coreadmin__unset_views( $posttype, $list = NULL )
+	{
+		if ( is_null( $list ) )
+			$list = [
+				'mine',
+			];
+
+		add_filter( sprintf( 'views_edit-%s', $posttype ),
+			static function ( $views ) use ( $list ) {
+				return Core\Arraay::stripByKeys( $views, (array) $list );
+			} );
+
+		return TRUE;
+	}
 }
