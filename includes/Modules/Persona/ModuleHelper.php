@@ -6,10 +6,27 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
+use geminorum\gNetwork\Core\Orthography;
+
 class ModuleHelper extends gEditorial\Helper
 {
 
 	const MODULE = 'persona';
+
+	public static function cleanupChars( $string, $html = FALSE )
+	{
+		if ( empty( $string ) )
+			return $string;
+
+		if ( ! class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
+			return apply_filters( 'string_format_i18n', $string );
+
+		// return $html
+		// 	? Orthography::cleanupPersianHTML( $string )
+		// 	: Orthography::cleanupPersian( $string );
+
+		return Orthography::cleanupPersianChars( $string );
+	}
 
 	// TODO: support more complex naming
 	public static function makeFullname( $data, $context = 'display', $fallback = FALSE )
