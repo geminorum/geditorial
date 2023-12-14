@@ -45,7 +45,8 @@ trait PairedAdmin
 				$taxonomy = $this->constant( $constants[1] );
 
 				if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )
-					Listtable::restrictByTaxonomy( $taxonomy, $this->constant( $constants[0] ) );
+					// Listtable::restrictByTaxonomy( $taxonomy, $this->constant( $constants[0] ) );
+					Listtable::restrictByTaxonomy( $taxonomy );
 
 			}, $priority, 2 );
 

@@ -174,6 +174,8 @@ class Overwrite extends gEditorial\Module
 	{
 		$this->_overwrite_posttype_labels();
 		$this->_overwrite_taxonomy_labels();
+
+		$this->action( 'paired_registered', 7, 99, FALSE, $this->base );
 	}
 
 	public function init()
@@ -337,5 +339,35 @@ class Overwrite extends gEditorial\Module
 					'singular' => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_singular', $labels->singular_name ),
 				], $customs, $taxonomy );
 			}, 9 );
+	}
+
+	public function paired_registered( $posttype, $taxonomy, $subterm, $primary, $hierarchical, $private, $supported )
+	{
+		global $wp_post_types, $wp_taxonomies;
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		if ( empty( $wp_taxonomies[$taxonomy] )
+			|| empty( $wp_taxonomies[$taxonomy]->labels )
+			|| empty( $wp_post_types[$posttype]->labels ) )
+				return;
+
+		$keeps = [
+			'desc_field_title',
+			'uncategorized',
+			'no_items_available',
+		];
+
+		$labels  = $wp_post_types[$posttype]->labels;
+		$customs = Core\Arraay::keepByKeys( (array) $wp_taxonomies[$taxonomy]->labels, $keeps );
+		$customs['menu_name'] = $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name );
+
+		$wp_taxonomies[$taxonomy]->labels = (object) Helper::generateTaxonomyLabels( [
+			'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype.'_plural', $labels->name ),
+			'singular' => $this->get_setting_fallback( 'posttype_'.$posttype.'_singular', $labels->singular_name ),
+		], $customs, $taxonomy );
+
+		$wp_taxonomies[$taxonomy]->label  = $wp_taxonomies[$taxonomy]->labels->name;
 	}
 }
