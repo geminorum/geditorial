@@ -593,7 +593,7 @@ class Persona extends gEditorial\Module
 
 	public function the_title( $title, $post_id = NULL )
 	{
-		return $this->_make_human_title( $post_id, 'display', $title, NULL, TRUE );
+		return $this->make_human_title( $post_id, 'display', $title, NULL, TRUE );
 	}
 
 	protected function latechores_post_aftercare( $post )
@@ -601,7 +601,7 @@ class Persona extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $posttitle = $this->_make_human_title( $post, 'display', $post->post_title ) )
+		if ( ! $posttitle = $this->make_human_title( $post, 'display', $post->post_title ) )
 			return FALSE;
 
 		$identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID );
@@ -744,7 +744,7 @@ class Persona extends gEditorial\Module
 		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
 			return $data;
 
-		if ( $fullname = $this->_make_human_title( $post, 'print' ) )
+		if ( $fullname = $this->make_human_title( $post, 'print' ) )
 			$data['source']['rendered']['posttitle'] = $fullname;
 
 		return $data;
@@ -821,12 +821,12 @@ class Persona extends gEditorial\Module
 				? $prepared[$metakey] : '';
 		}
 
-		$data['post_title'] = $this->_make_human_title( FALSE, 'import', '', $names );
+		$data['post_title'] = $this->make_human_title( FALSE, 'import', '', $names );
 
 		return $data;
 	}
 
-	private function _make_human_title( $post = NULL, $context = 'display', $fallback = FALSE, $names = NULL, $checks = FALSE )
+	public function make_human_title( $post = NULL, $context = 'display', $fallback = FALSE, $names = NULL, $checks = FALSE )
 	{
 		if ( $checks ) {
 

@@ -88,7 +88,7 @@ trait Strings
 				case 'default':
 				default:
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
-					$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Module: Metabox Empty: `listbox_empty`', 'geditorial' );
+					$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Module: Metabox Empty: `listbox_empty`', 'geditorial-admin' );
 			}
 		}
 
@@ -107,30 +107,35 @@ trait Strings
 
 				case 'supportedbox':
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
-					$default = _x( 'For this &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `supportedbox_title`', 'geditorial' );
+					$default = _x( 'For this &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `supportedbox_title`', 'geditorial-admin' );
+					break;
+
+				case 'printingbox':
+					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					$default = _x( 'Prints for this &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `printingbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'mainbox':
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
-					$default = _x( 'The %2$s', 'Internal: Strings: Metabox via Posttype: `mainbox_title`', 'geditorial' );
+					$default = _x( 'The %2$s', 'Internal: Strings: Metabox via Posttype: `mainbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'overviewbox':
 				case 'pairedbox':
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
-					$default = _x( 'Connected &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `pairedbox_title`', 'geditorial' );
+					$default = _x( 'Connected &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `pairedbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'megabox':
 				case 'listbox':
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
-					$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: Strings: Metabox via Posttype: `listbox_title`', 'geditorial' );
+					$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: Strings: Metabox via Posttype: `listbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'default':
 				default:
 					/* translators: %1$s: current post title, %2$s: posttype singular name */
-					$default = _x( 'About &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `default_title`', 'geditorial' );
+					$default = _x( 'About &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Posttype: `default_title`', 'geditorial-admin' );
 			}
 		}
 
@@ -148,13 +153,13 @@ trait Strings
 
 				case 'supportedbox':
 					/* translators: %1$s: current term title, %2$s: taxonomy singular name */
-					$default = _x( 'For this &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Taxonomy: `supportedbox_title`', 'geditorial' );
+					$default = _x( 'For this &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Taxonomy: `supportedbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'default':
 				default:
 					/* translators: %1$s: current term title, %2$s: taxonomy singular name */
-					$default = _x( 'About &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Taxonomy: `default_title`', 'geditorial' );
+					$default = _x( 'About &ldquo;%2$s&rdquo;', 'Internal: Strings: Metabox via Taxonomy: `default_title`', 'geditorial-admin' );
 			}
 		}
 

@@ -44,14 +44,16 @@ class ModuleHelper extends gEditorial\Helper
 		], $data );
 
 		if ( empty( $parts['last_name'] ) && empty( $parts['first_name'] ) )
-			return empty( $parts['fullname'] ) ? $fallback : $parts['fullname'];
+			return empty( $parts['fullname'] )
+				? $fallback
+				: Core\Text::normalizeWhitespace( $parts['fullname'], FALSE );
 
 		switch ( $context ) {
 
 			case 'import':
 			case 'edit':
 
-				return Core\Text::normalizeWhitespace( vsprintf(
+				$fullname = vsprintf(
 					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
 					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Edit', 'geditorial-persona' ),
 					[
@@ -61,12 +63,14 @@ class ModuleHelper extends gEditorial\Helper
 						$parts['father_name'],
 						$parts['mother_name'],
 					]
-				), FALSE );
+				);
+
+				break;
 
 			case 'export':
 			case 'print':
 
-				return Core\Text::normalizeWhitespace( vsprintf(
+				$fullname = vsprintf(
 					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
 					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Print', 'geditorial-persona' ),
 					[
@@ -76,12 +80,14 @@ class ModuleHelper extends gEditorial\Helper
 						$parts['father_name'],
 						$parts['mother_name'],
 					]
-				), FALSE );
+				);
+
+				break;
 
 			case 'display':
 			default:
 
-				return Core\Text::normalizeWhitespace( vsprintf(
+				$fullname = vsprintf(
 					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
 					_x( '%2$s, %1$s %3$s', 'Helper: Make Full-name: Display', 'geditorial-persona' ),
 					[
@@ -91,9 +97,9 @@ class ModuleHelper extends gEditorial\Helper
 						$parts['father_name'],
 						$parts['mother_name'],
 					]
-				), FALSE );
+				);
 		}
 
-		return $fallback;
+		return Core\Text::normalizeWhitespace( $fullname, FALSE );
 	}
 }

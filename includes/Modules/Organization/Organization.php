@@ -245,6 +245,8 @@ class Organization extends gEditorial\Module
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 		$this->add_posttype_fields_supported();
 
+		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
+
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		// $this->filter_module( 'identified', 'default_posttype_identifier_type', 2 ); // NOTE: no need: default is `code`
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
@@ -290,6 +292,7 @@ class Organization extends gEditorial\Module
 
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
 
 		if ( $this->get_setting( 'subterms_support' ) )
@@ -337,6 +340,7 @@ class Organization extends gEditorial\Module
 				$this->action_module( 'meta', 'column_row', 3 );
 
 				$this->coreadmin__unset_columns( $screen->post_type );
+				$this->coreadmin__unset_views( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'menu_order', 'ASC' );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected();
@@ -436,6 +440,16 @@ class Organization extends gEditorial\Module
 			$this->constant( 'subterm_shortcode', $tag ),
 			$this->key
 		);
+	}
+
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	{
+		switch ( $field ) {
+			case 'organization_number': return 'print' === $context ? Core\Number::localize( trim( $raw ) ) : $meta;
+		}
+
+		return $meta;
 	}
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )

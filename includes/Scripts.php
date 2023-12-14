@@ -331,8 +331,8 @@ class Scripts extends WordPress\Main
 	public static function pkgQRCodeSVG( $enqueue = FALSE, $ver = '1.1.0' )
 	{
 		return $enqueue
-			? self::enqueuePackage( 'printthis', 'qrcode-svg/qrcode', [], $ver )
-			: self::registerPackage( 'printthis', 'qrcode-svg/qrcode', [], $ver );
+			? self::enqueuePackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $ver )
+			: self::registerPackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $ver );
 	}
 
 	public static function pkgPrintThis( $enqueue = FALSE, $ver = '2.0.0' )
@@ -401,6 +401,7 @@ class Scripts extends WordPress\Main
 	<?php if ( Core\WordPress::isDev() ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
+		echo "\t".'jQuery(document).on("gEditorial:Module:Loaded", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 	} ?>
 /* ]]> */
 </script><?php

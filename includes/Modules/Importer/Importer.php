@@ -267,7 +267,7 @@ class Importer extends gEditorial\Module
 
 			echo '</td><td>'
 				.Core\HTML::dropdown( $fields, [
-					'selected'   => array_key_exists( $key, $map ) ? $map[$key] : 'none',
+					'selected'   => array_key_exists( $title, $map ) ? $map[$title] : 'none',
 					'name'       => 'field_map['.$key.']',
 					'none_title' => Settings::showOptionNone(),
 					'none_value' => 'none',
@@ -391,9 +391,9 @@ class Importer extends gEditorial\Module
 
 		unset( $iterator, $parser, $items[0] );
 
-		$this->store_postmeta( $id, $map, $this->constant( 'metakey_source_map' ) );
+		$this->store_postmeta( $id, array_combine( $headers, $map ), $this->constant( 'metakey_source_map' ) );
 		$this->store_postmeta( $id, ( 'none' === $source_key ? FALSE : $source_key ), $this->constant( 'metakey_source_key' ) );
-		$this->_record_fields_map( $map );
+		$this->_record_fields_map( array_combine( $headers, $map ) );
 
 		$this->_render_data_table( $id, $items, $headers, $map, $posttype, $source_key );
 	}

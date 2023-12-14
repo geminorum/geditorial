@@ -1194,8 +1194,11 @@ class Meta extends gEditorial\Module
 
 			case 'identity':
 
+				if ( 'print' === $context )
+					return Core\Number::localize( Core\Number::zeroise( $raw ?: $meta, 10 ) );
+
 				if ( 'export' === $context )
-					return $raw ?: $meta; // FIXME: zeroize
+					return Core\Number::zeroise( $raw ?: $meta, 10 );
 
 				return sprintf( '<span class="-identity %s">%s</span>',
 					Core\Validation::isIdentityNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
