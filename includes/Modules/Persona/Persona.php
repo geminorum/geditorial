@@ -415,6 +415,8 @@ class Persona extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 
+		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
+
 		$this->filter_module( 'was_born', 'default_posttype_dob_metakey', 2 );
 		$this->filter_module( 'iranian', 'default_posttype_identity_metakey', 2 );
 		$this->filter_module( 'iranian', 'default_posttype_location_metakey', 2 );
@@ -642,6 +644,29 @@ class Persona extends gEditorial\Module
 		}
 
 		return $terms;
+	}
+
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	{
+		switch ( $field ) {
+
+			case 'first_name':
+			case 'middle_name':
+			case 'last_name':
+			case 'fullname':
+			case 'father_name':
+			case 'mother_name':
+			case 'spouse_name':
+			case 'place_of_birth':
+			case 'home_address':
+			case 'work_address':
+
+				// in all contexts!
+				return ModuleHelper::cleanupChars( $meta );
+		}
+
+		return $meta;
 	}
 
 	public function was_born_default_posttype_dob_metakey( $default, $posttype )
