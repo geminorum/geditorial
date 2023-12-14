@@ -29,6 +29,7 @@ trait PrintPage
 		$profile = WordPress\Post::get( self::req( 'profile', FALSE ) );
 
 		$head_callback = [ $this, 'printpage__render_head' ];
+		$foot_callback = [ $this, 'printpage__render_foot' ];
 		$head_title    = $this->printpage__get_layout_pagetitle( $profile );
 		$body_class    = $this->printpage__get_layout_bodyclass( $profile );
 		$wrap_class    = $this->printpage__get_layout_wrapclass( $profile );
@@ -58,6 +59,11 @@ trait PrintPage
 		}
 
 		$this->actions( 'printpage_render_head', $profile );
+	}
+
+	protected function printpage__render_foot( $profile = FALSE )
+	{
+		$this->actions( 'printpage_render_foot', $profile );
 	}
 
 	protected function printpage__get_layout_pagetitle( $profile = FALSE )
