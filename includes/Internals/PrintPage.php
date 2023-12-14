@@ -21,6 +21,9 @@ trait PrintPage
 		$this->action_self( 'printpage_render_contents', 1 );
 
 		$this->filter_false( 'show_admin_bar', 999999 );
+
+		if ( method_exists( $this, '_load_printpage_adminpage' ) )
+			$this->_load_printpage_adminpage();
 	}
 
 	public function printpage_render_head( $profile = FALSE ) {}
