@@ -342,6 +342,28 @@ class Scripts extends WordPress\Main
 			: self::registerPackage( 'printthis', 'printThis/printThis', [ 'jquery' ], $ver );
 	}
 
+	// @REF: https://printjs.crabbly.com/
+	// @REF: https://github.com/crabbly/Print.js
+	public static function pkgPrintJS( $enqueue = FALSE, $ver = '1.6.0' )
+	{
+		$handle = 'printjs';
+
+		if ( $enqueue ) {
+
+			wp_enqueue_style( $handle, static::URL.'assets/packages/printjs/print.min.css', [], $ver, 'screen' );
+			wp_enqueue_script( $handle, static::URL.'assets/packages/printjs/print.min.js', [], $ver, TRUE );
+
+		} else {
+
+			wp_register_style( $handle, static::URL.'assets/packages/printjs/print.min.css', [], $ver, 'screen' );
+			wp_register_script( $handle, static::URL.'assets/packages/printjs/print.min.js', [], $ver, TRUE );
+		}
+
+		wp_script_add_data( $handle, 'strategy', 'defer' );
+
+		return $handle;
+	}
+
 	// @REF: https://github.com/axenox/onscan.js
 	// @REF: https://a.kabachnik.info/onscan-js.html
 	public static function pkgOnScanJS( $enqueue = FALSE, $ver = '1.5.2' )
