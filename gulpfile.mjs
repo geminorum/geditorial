@@ -87,18 +87,25 @@ task('dev:newmodule', function (done) {
     return done();
   }
 
+  const template = 'template' in args ? args.template : 'generalModule';
+
+  if (!(template in conf.templates)) {
+    log.error('Error: provided template not exist in configuration: `' + template + '`');
+    return done();
+  }
+
   const name = capitalize(args.name); // TODO: sanitize this!
   const parts = name.split(/(?=[A-Z])/);
 
-  const data = extend(conf.templates.newmodule.defaults, {
+  const data = extend(conf.templates[template].defaults, {
     moduleTitle: parts.join(' '),
     moduleCamelCase: name,
     moduleUnderline: parts.join('_').toLowerCase(),
-    moduleTextdomain: conf.templates.newmodule.defaults.pluginTexdomain + '-' + parts.join('-').toLowerCase()
+    moduleTextdomain: conf.templates[template].defaults.pluginTexdomain + '-' + parts.join('-').toLowerCase()
   });
 
-  const file = data.moduleCamelCase + '.' + conf.templates.newmodule.ext;
-  const targ = path.join(conf.templates.newmodule.dest, data.moduleCamelCase);
+  const file = data.moduleCamelCase + '.' + conf.templates[template].ext;
+  const targ = path.join(conf.templates[template].dest, data.moduleCamelCase);
 
   if (debug) log.info(data, path.join(targ, file));
 
@@ -107,7 +114,7 @@ task('dev:newmodule', function (done) {
     log.error('Error: the module already exists');
     return done();
   } catch (e) {
-    return src(conf.templates.newmodule.src)
+    return src(conf.templates[template].src)
       .pipe(gulptemplate(data))
       .pipe(rename(file))
       .pipe(dest(targ));

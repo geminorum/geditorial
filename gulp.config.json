@@ -215,8 +215,8 @@
     ""
   ],
   "templates": {
-    "newmodule" : {
-      "src": "./assets/dev/templates/NewModule.template",
+    "generalModule" : {
+      "src": "./assets/dev/templates/generalModule.template",
       "dest": "./includes/Modules/",
       "ext": "php",
       "defaults": {
@@ -224,11 +224,29 @@
         "namespaceBase": "gEditorial",
         "pluginTexdomain": "geditorial",
         "adminTexdomain": "geditorial-admin",
-        "moduleTextdomain": "geditorial-new-module",
+        "moduleTextdomain": "geditorial-general-module",
         "moduleBase": "geditorial",
-        "moduleTitle": "New Module",
-        "moduleCamelCase": "NewModule",
-        "moduleUnderline": "new_module",
+        "moduleTitle": "General Module",
+        "moduleCamelCase": "GeneralModule",
+        "moduleUnderline": "general_module",
+        "moduleTagline": "[CHANGE ME]",
+        "moduleDashicon": "smiley"
+      }
+    },
+    "taxModule" : {
+      "src": "./assets/dev/templates/taxModule.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-tax-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "Tax Module",
+        "moduleCamelCase": "TaxModule",
+        "moduleUnderline": "tax_module",
         "moduleTagline": "[CHANGE ME]",
         "moduleDashicon": "smiley"
       }

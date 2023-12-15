@@ -27,12 +27,13 @@
     "kzykhys/php-csv-parser": "^1.4",
     "michelf/php-markdown": "^1.9",
     "league/html-to-markdown": "^4.9",
-    "tecnickcom/tc-lib-barcode": "^1.17",
-    "hbgl/php-code-128-encoder": "^0.2.5",
+    "tecnickcom/tc-lib-barcode": "^1.18",
+    "hbgl/php-code-128-encoder": "^0.2.7",
     "sinasalek/multi-calendar-date-time": "dev-master",
     "rct567/dom-query": "^1.0",
     "jwage/easy-csv": "^1.0",
-    "sabre/vobject": "^4.3"
+    "sabre/vobject": "^4.3",
+    "jeroendesloovere/vcard": "^1.7"
   },
   "require-dev": {
     "php-coord/php-coord": "4.x-dev",
