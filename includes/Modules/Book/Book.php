@@ -350,6 +350,22 @@ class Book extends gEditorial\Module
 					'icon'        => 'menu',
 					'quickedit'   => TRUE,
 				],
+				'publication_ddc' => [
+					// @REF: https://en.wikipedia.org/wiki/Dewey_Decimal_Classification
+					'title'       => _x( 'DDC', 'Field Title', 'geditorial-book' ),
+					'description' => _x( 'Dewey Decimal Classification', 'Field Description', 'geditorial-book' ),
+					'type'        => 'code',
+					'icon'        => 'shortcode',
+					'quickedit'   => TRUE,
+				],
+				'publication_lcc' => [
+					// @REF: https://en.wikipedia.org/wiki/Library_of_Congress_Classification
+					'title'       => _x( 'LCC', 'Field Title', 'geditorial-book' ),
+					'description' => _x( 'Library of Congress Classification', 'Field Description', 'geditorial-book' ),
+					'type'        => 'code',
+					'icon'        => 'shortcode',
+					'quickedit'   => TRUE,
+				],
 				'total_pages' => [
 					'title'       => _x( 'Pages', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Total Pages of the Publication', 'Field Description', 'geditorial-book' ),
