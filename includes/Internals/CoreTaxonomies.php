@@ -89,6 +89,9 @@ trait CoreTaxonomies
 		else if ( '__singleselect_terms_callback' === $args['meta_box_cb'] )
 			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_singleselect_terms_cb' ];
 
+		else if ( '__singleselect_restricted_terms_callback' === $args['meta_box_cb'] )
+			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_singleselect_restricted_terms_cb' ];
+
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_taxonomy_labels( $constant );
 
@@ -344,6 +347,28 @@ trait CoreTaxonomies
 				'none'     => Settings::showOptionNone(),
 				'empty'    => NULL, // displays empty box with link
 			] );
+		echo '</div>';
+	}
+
+	// DEFAULT CALLBACK for `__singleselect_restricted_terms_callback`
+	public function taxonomy_meta_box_singleselect_restricted_terms_cb( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		$args = [
+			'taxonomy' => $box['args']['taxonomy'],
+			'posttype' => $post->post_type,
+			// NOTE: taxonomy label already displayed on the metabox title
+			'none'     => Settings::showOptionNone(),
+			'empty'    => NULL, // displays empty box with link
+		];
+
+		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
+			$args['restricted'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
+
+		echo $this->wrap_open( '-admin-metabox' );
+			MetaBox::singleselectTerms_NEW( $post->ID, $args );
 		echo '</div>';
 	}
 

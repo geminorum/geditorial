@@ -33,6 +33,54 @@ class MetaBox extends WordPress\Main
 	public static function singleselectTerms( $object_id = 0, $atts = [], $terms = NULL )
 	{
 		$args = self::args( $atts, [
+			'taxonomy'    => NULL,
+			'posttype'    => FALSE,
+			'restricted'  => FALSE,   // `disabled` / `hidden` / FALSE
+			'with_meta'   => NULL,    // override name meta field
+			'with_parent' => NULL,    // `NULL` for hierarchical
+			'echo'        => TRUE,
+			'none'        => NULL,    // `NULL` for label check, `FALSE` for disable
+			'empty'       => FALSE,   // `NULL` for empty box, `FALSE` for disable
+		] );
+
+		if ( ! $args['taxonomy'] || ( ! $taxonomy = WordPress\Taxonomy::object( $args['taxonomy'] ) ) )
+			return FALSE;
+
+		$selected = wp_get_object_terms( $object_id, $taxonomy->name, [
+			'fields' => $taxonomy->hierarchical ? 'ids' : 'slugs'
+		] );
+
+		$dropdown = [
+			'taxonomy'          => $taxonomy->name,
+			'selected'          => count( $selected ) ? $selected[0] : '0',
+			'hierarchical'      => $taxonomy->hierarchical,
+			'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
+			'name'              => 'tax_input['.$taxonomy->name.'][]',
+			'include'           => $terms ?? [],
+			'show_option_none'  => $args['none'] ?? Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' ),
+			'show_count'        => FALSE,
+			'hide_empty'        => FALSE,
+			'hide_if_empty'     => FALSE,
+			'title_with_meta'   => $args['with_meta'] ?? FALSE,
+			'title_with_parent' => $args['with_parent'] ?? $taxonomy->hierarchical,
+			'restricted'        => $args['restricted'],
+			'walker'            => new Misc\WalkerCategoryDropdown(),
+			'class'             => static::BASE.'-admin-dropbown -dropdown-with-reset',
+			'echo'              => FALSE,
+		];
+
+		$html = wp_dropdown_categories( $dropdown );
+
+		if ( ! $args['echo'] )
+			return;
+
+		echo $html;
+	}
+
+	// FIXME: DROP THIS
+	public static function singleselectTerms_OLD( $object_id = 0, $atts = [], $terms = NULL )
+	{
+		$args = self::args( $atts, [
 			'taxonomy' => NULL,
 			'posttype' => FALSE,
 			'echo'     => TRUE,
