@@ -18,7 +18,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 
 		$atts = $args['atts'];
 
-		if ( empty( $atts['role'] ) )
+		if ( empty( $atts['restricted'] ) )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
 		$roles = get_term_meta( $term->term_id, 'roles', TRUE );
@@ -29,7 +29,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 		if ( WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ) ) )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
-		if ( 'disabled' == $atts['role'] ) {
+		if ( 'disabled' == $atts['restricted'] ) {
 			$args['disabled'] = TRUE;
 			$this->_start_el( $output, $term, $depth, $args, $id );
 		} else {
