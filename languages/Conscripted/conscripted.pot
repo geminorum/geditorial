@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Conscripted\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Conscripted\n"
+"X-Domain: geditorial-conscripted\n"
+
+#: Conscripted.php:69
+msgid "Conscription"
+msgid_plural "Conscriptions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Conscripted.php:73
+msgctxt "Label: Show Option All"
+msgid "Conscription"
+msgstr ""
+
+#: Conscripted.php:74
+msgctxt "Label: Show Option No Terms"
+msgid "(Unknown)"
+msgstr ""
+
+#: Conscripted.php:83
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Conscription Summary"
+msgstr ""
+
+#: Conscripted.php:84
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Conscription Summary"
+msgstr ""
+
+#: Conscripted.php:94
+msgctxt "Main Taxonomy: Default Term"
+msgid "Underage for Service"
+msgstr ""
+
+#: Conscripted.php:95
+msgctxt "Main Taxonomy: Default Term"
+msgid "Subject to Service"
+msgstr ""
+
+#: Conscripted.php:96
+msgctxt "Main Taxonomy: Default Term"
+msgid "Currently in Service"
+msgstr ""
+
+#: Conscripted.php:97
+msgctxt "Main Taxonomy: Default Term"
+msgid "End of Service"
+msgstr ""
+
+#: Conscripted.php:98
+msgctxt "Main Taxonomy: Default Term"
+msgid "Medical Exemption"
+msgstr ""
+
+#: Conscripted.php:99
+msgctxt "Main Taxonomy: Default Term"
+msgid "Education Exemption"
+msgstr ""
+
+#: Conscripted.php:100
+msgctxt "Main Taxonomy: Default Term"
+msgid "Permanent Exemption"
+msgstr ""

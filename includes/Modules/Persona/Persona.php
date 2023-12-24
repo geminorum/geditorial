@@ -91,13 +91,12 @@ class Persona extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype'      => 'human',
-			'primary_taxonomy'      => 'human_group',
-			'skill_taxonomy'        => 'skill',            // MAYBE ANOTHER MODULE: `Skilled`
-			'job_title_taxonomy'    => 'job_title',        // MAYBE ANOTHER MODULE: `Jobs`
-			'conscription_taxonomy' => 'conscription',     // MAYBE ANOTHER MODULE: `Mobilized`/`Conscripted`/`compulsorily`: اجباری
-			'blood_type_taxonomy'   => 'blood_type',       // MAYBE ANOTHER MODULE: `Medic`
-			'status_taxonomy'       => 'human_status',
+			'primary_posttype'    => 'human',
+			'primary_taxonomy'    => 'human_group',
+			'skill_taxonomy'      => 'skill',          // MAYBE ANOTHER MODULE: `Skilled`
+			'job_title_taxonomy'  => 'job_title',      // MAYBE ANOTHER MODULE: `Jobs`
+			'blood_type_taxonomy' => 'blood_type',     // MAYBE ANOTHER MODULE: `Medic`
+			'status_taxonomy'     => 'human_status',
 
 			'term_empty_identity_number' => 'identity-number-empty',
 			'term_empty_mobile_number'   => 'mobile-number-empty',
@@ -108,12 +107,11 @@ class Persona extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'primary_taxonomy'      => NULL,
-				'skill_taxonomy'        => 'admin-tools',
-				'job_title_taxonomy'    => 'businessperson',
-				'conscription_taxonomy' => 'superhero-alt',
-				'blood_type_taxonomy'   => 'heart',
-				'status_taxonomy'       => 'post-status',
+				'primary_taxonomy'    => NULL,
+				'skill_taxonomy'      => 'admin-tools',
+				'job_title_taxonomy'  => 'businessperson',
+				'blood_type_taxonomy' => 'heart',
+				'status_taxonomy'     => 'post-status',
 			],
 		];
 	}
@@ -122,13 +120,12 @@ class Persona extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype'      => _n_noop( 'Human', 'Humans', 'geditorial-persona' ),
-				'primary_taxonomy'      => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-persona' ),
-				'skill_taxonomy'        => _n_noop( 'Skill', 'Skills', 'geditorial-persona' ),
-				'job_title_taxonomy'    => _n_noop( 'Job Title', 'Job Titles', 'geditorial-persona' ),
-				'conscription_taxonomy' => _n_noop( 'Conscription', 'Conscriptions', 'geditorial-persona' ),
-				'blood_type_taxonomy'   => _n_noop( 'Blood Type', 'Blood Types', 'geditorial-persona' ),
-				'status_taxonomy'       => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-persona' ),
+				'primary_posttype'    => _n_noop( 'Human', 'Humans', 'geditorial-persona' ),
+				'primary_taxonomy'    => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-persona' ),
+				'skill_taxonomy'      => _n_noop( 'Skill', 'Skills', 'geditorial-persona' ),
+				'job_title_taxonomy'  => _n_noop( 'Job Title', 'Job Titles', 'geditorial-persona' ),
+				'blood_type_taxonomy' => _n_noop( 'Blood Type', 'Blood Types', 'geditorial-persona' ),
+				'status_taxonomy'     => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-persona' ),
 			],
 			'labels' => [
 				'primary_posttype' => [
@@ -146,10 +143,6 @@ class Persona extends gEditorial\Module
 				],
 				'job_title_taxonomy' => [
 					'show_option_all'      => _x( 'Job Titles', 'Label: Show Option All', 'geditorial-persona' ),
-					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-persona' ),
-				],
-				'conscription_taxonomy' => [
-					'show_option_all'      => _x( 'Conscription', 'Label: Show Option All', 'geditorial-persona' ),
 					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-persona' ),
 				],
 				'blood_type_taxonomy' => [
@@ -184,15 +177,6 @@ class Persona extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'conscription_taxonomy' => [
-				'underage-for-service' => _x( 'Underage for Service', 'Default Term', 'geditorial-persona' ),
-				'subject-to-service'   => _x( 'Subject to Service', 'Default Term', 'geditorial-persona' ),
-				'currently-in-service' => _x( 'Currently in Service', 'Default Term', 'geditorial-persona' ),
-				'end-of-service'       => _x( 'End of Service', 'Default Term', 'geditorial-persona' ),
-				'medical-exemption'    => _x( 'Medical Exemption', 'Default Term', 'geditorial-persona' ),
-				'education-exemption'  => _x( 'Education Exemption', 'Default Term', 'geditorial-persona' ),
-				'permanent-exemption'  => _x( 'Permanent Exemption', 'Default Term', 'geditorial-persona' ),
-			],
 			'blood_type_taxonomy' => [
 				// @REF: https://www.redcrossblood.org/donate-blood/blood-types.html
 				'a-positive'  => _x( 'A&plus;', 'Default Term', 'geditorial-persona' ),
@@ -382,11 +366,6 @@ class Persona extends gEditorial\Module
 			'meta_box_cb'  => NULL,
 		], 'primary_posttype' );
 
-		$this->register_taxonomy( 'conscription_taxonomy', [
-			// 'hierarchical' => TRUE,
-			// 'meta_box_cb'  => '__singleselect_terms_callback',
-		], 'primary_posttype' );
-
 		$this->register_taxonomy( 'blood_type_taxonomy', [
 			'hierarchical' => TRUE,
 			// 'meta_box_cb'  => '__singleselect_terms_callback',
@@ -463,7 +442,6 @@ class Persona extends gEditorial\Module
 					'identity_number' => NULL,
 					'date_of_birth'   => NULL,
 
-					$this->constant( 'conscription_taxonomy' ) => NULL,
 					$this->constant( 'blood_type_taxonomy' )   => NULL,
 				] );
 
@@ -484,7 +462,6 @@ class Persona extends gEditorial\Module
 					'primary_taxonomy',
 					'skill_taxonomy',
 					'job_title_taxonomy',
-					'conscription_taxonomy',
 					'blood_type_taxonomy',
 				] );
 
@@ -513,7 +490,6 @@ class Persona extends gEditorial\Module
 			return $template;
 
 		return $this->templatetaxonomy__include( $template, [
-			$this->constant( 'conscription_taxonomy' ),
 			$this->constant( 'skill_taxonomy' ),
 			$this->constant( 'job_title_taxonomy' ),
 		] );
@@ -550,11 +526,6 @@ class Persona extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		MetaBox::singleselectTerms( $object->ID, [
-			'taxonomy' => $this->constant( 'conscription_taxonomy' ),
-			'posttype' => $object->post_type,
-		] );
-
 		MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy' => $this->constant( 'blood_type_taxonomy' ),
 			'posttype' => $object->post_type,
