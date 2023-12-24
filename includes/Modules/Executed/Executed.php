@@ -140,4 +140,9 @@ class Executed extends gEditorial\Module
 			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
 			: parent::cuc( $context, $fallback );
 	}
+
+	public function template_include( $template )
+	{
+		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
+	}
 }

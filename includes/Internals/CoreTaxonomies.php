@@ -323,7 +323,7 @@ trait CoreTaxonomies
 		];
 
 		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
-			$args['role'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
+			$args['restricted'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
 
 		echo $this->wrap_open( '-admin-metabox' );
 			MetaBox::checklistTerms( $post->ID, $args );
@@ -340,7 +340,7 @@ trait CoreTaxonomies
 			MetaBox::singleselectTerms( $post->ID, [
 				'taxonomy' => $box['args']['taxonomy'],
 				'posttype' => $post->post_type,
-				// NOTE: metabox title already displays the taxonomy label
+				// NOTE: taxonomy label already displayed on the metabox title
 				'none'     => Settings::showOptionNone(),
 				'empty'    => NULL, // displays empty box with link
 			] );

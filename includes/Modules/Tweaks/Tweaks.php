@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
@@ -13,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 
 class Tweaks extends gEditorial\Module
 {
+	use Internals\PostMeta;
 
 	protected $priority_init      = 14;
 	protected $priority_init_ajax = 14;

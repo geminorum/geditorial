@@ -110,17 +110,17 @@ class MetaBox extends WordPress\Main
 		$args = self::args( $atts, [
 			'taxonomy'             => NULL,
 			'posttype'             => FALSE,
-			'metabox'              => NULL, // metabox id to check for hidden
+			'metabox'              => NULL,          // metabox id to check for hidden
 			'list_only'            => NULL,
 			'selected_only'        => NULL,
-			'selected_preserve'    => NULL, // keep hidden selected / NULL to check for assign cap
+			'selected_preserve'    => NULL,          // keep hidden selected / NULL to check for assign cap
 			'descendants_and_self' => 0,
 			'selected_cats'        => FALSE,
 			'popular_cats'         => FALSE,
 			'checked_ontop'        => TRUE,
-			'edit'                 => NULL, // manage page if has no terms, FALSE to disable
-			'role'                 => FALSE, // `disabled` / `hidden`
-			'name'                 => 'tax_input', // override if not saving by core
+			'edit'                 => NULL,          // manage page if has no terms, FALSE to disable
+			'restricted'           => FALSE,         // `disabled` / `hidden`
+			'name'                 => 'tax_input',   // override if not saving by core
 			'field_class'          => '',
 			'walker'               => NULL,
 			'echo'                 => TRUE,
@@ -258,12 +258,12 @@ class MetaBox extends WordPress\Main
 			'posttype'          => FALSE,
 			'metabox'           => NULL,
 			'edit'              => FALSE,
-			'role'              => NULL,
+			'restricted'        => NULL,
 			'list_only'         => NULL,
 			'selected_only'     => NULL,
-			'selected_preserve' => NULL, // keep hidden selected / NULL to check for assign cap
+			'selected_preserve' => NULL,          // keep hidden selected / NULL to check for assign cap
 			'walker'            => NULL,
-			'name'              => 'tax_input', // override if not saving by core
+			'name'              => 'tax_input',   // override if not saving by core
 		] );
 
 		if ( ! $args['taxonomy'] )

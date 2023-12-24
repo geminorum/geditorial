@@ -18,6 +18,7 @@ class Users extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\PostMeta;
 
 	protected $caps = [
 		'tools'   => 'edit_users',
