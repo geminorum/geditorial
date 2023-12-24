@@ -148,7 +148,8 @@ class StaticCovers extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			'supportedbox_title' => _x( 'Cover', 'MetaBox Title', 'geditorial-static-covers' ),
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'supportedbox_title' => _x( 'Cover for this &ldquo;%2$s&rdquo;', 'MetaBox Title', 'geditorial-static-covers' ),
 		];
 
 		return $strings;

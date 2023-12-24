@@ -84,7 +84,7 @@ class ObjectToObject extends Main
 		if ( ! isset( $wp_query->_o2o_query ) )
 			return $clauses;
 
-		return $wp_query->_o2o_query->alter_clauses( $clauses, "$wpdb->posts.ID" );
+		return $wp_query->_o2o_query->alter_clauses( $clauses, "{$wpdb->posts}.ID" );
 	}
 
 	public static function capture( $request, $wp_query )

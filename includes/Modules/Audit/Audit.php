@@ -455,7 +455,7 @@ class Audit extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $linked ) )
 			return Info::renderNoPostsAvailable();
 
-		$this->_render_view( $post, 'overview' );
+		$this->_render_view_for_post( $post, 'overview' );
 	}
 
 	public function rowactions_bulk_actions( $actions )
@@ -975,10 +975,10 @@ class Audit extends gEditorial\Module
 		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_excerpt, '')) = '') ";
 	}
 
-	private function _render_view( $post, $context )
+	private function _render_view_for_post( $post, $context )
 	{
 		$part = $this->get_view_part_by_post( $post, $context );
-		$data = $this->_get_view_data( $post, $context );
+		$data = $this->_get_view_data_for_post( $post, $context );
 
 		echo $this->wrap_open( '-view -'.$part );
 			$this->actions( 'render_view_before', $post, $context, $data, $part );
@@ -993,7 +993,7 @@ class Audit extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function _get_view_data( $post, $context )
+	private function _get_view_data_for_post( $post, $context )
 	{
 		$data = [];
 

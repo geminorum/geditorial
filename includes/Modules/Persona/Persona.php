@@ -185,11 +185,13 @@ class Persona extends gEditorial\Module
 	{
 		return [
 			'conscription_taxonomy' => [
-				// TODO: finish the list
-				'subject-to-service'  => _x( 'Subject to Service', 'Default Term', 'geditorial-persona' ),
-				'medical-exemption'   => _x( 'Medical Exemption', 'Default Term', 'geditorial-persona' ),
-				'permanent-exemption' => _x( 'Permanent Exemption', 'Default Term', 'geditorial-persona' ),
-				'education-exemption' => _x( 'Education Exemption', 'Default Term', 'geditorial-persona' ),
+				'underage-for-service' => _x( 'Underage for Service', 'Default Term', 'geditorial-persona' ),
+				'subject-to-service'   => _x( 'Subject to Service', 'Default Term', 'geditorial-persona' ),
+				'currently-in-service' => _x( 'Currently in Service', 'Default Term', 'geditorial-persona' ),
+				'end-of-service'       => _x( 'End of Service', 'Default Term', 'geditorial-persona' ),
+				'medical-exemption'    => _x( 'Medical Exemption', 'Default Term', 'geditorial-persona' ),
+				'education-exemption'  => _x( 'Education Exemption', 'Default Term', 'geditorial-persona' ),
+				'permanent-exemption'  => _x( 'Permanent Exemption', 'Default Term', 'geditorial-persona' ),
 			],
 			'blood_type_taxonomy' => [
 				// @REF: https://www.redcrossblood.org/donate-blood/blood-types.html
@@ -434,6 +436,13 @@ class Persona extends gEditorial\Module
 		$this->filter_module( 'importer', 'source_id', 3 );
 		$this->filter_module( 'importer', 'matched', 4 );
 		$this->filter_module( 'importer', 'insert', 8 );
+	}
+
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
+			$this->coreadmin__unset_columns( $posttype );
+		}
 	}
 
 	public function current_screen( $screen )

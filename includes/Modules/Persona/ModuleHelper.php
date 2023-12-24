@@ -123,6 +123,8 @@ class ModuleHelper extends gEditorial\Helper
 		return TRUE;
 	}
 
+	// FIXME: maybe moving to `Naming` Module
+	// TODO: bulk tool to process name fields
 	public static function parseFullname( $raw, $fallback = FALSE )
 	{
 		if ( empty( $raw ) )
@@ -150,7 +152,7 @@ class ModuleHelper extends gEditorial\Helper
 			'father_name' => '',
 			'mother_name' => '',
 			'gender'      => '',
-			'honorific'   => [],
+			'honorific'   => [], // @SEE `Honored` Module
 		];
 
 		if ( Core\Text::starts( $parts, 'دکتر' ) ) {
@@ -238,7 +240,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( Core\Text::starts( $names['fullname'], 'سیده' ) ) {
 
 			$names['gender']      = 'female';
-			$names['honorific'][] = 'saadaat';
+			$names['honorific'][] = 'sayyidah';
 
 			$prefix = 'سیده';
 			$parts  = Core\Text::trim( Core\Text::leftTrim( $names['fullname'], 'سیده', FALSE ) );
@@ -246,7 +248,7 @@ class ModuleHelper extends gEditorial\Helper
 		} else if ( Core\Text::starts( $names['fullname'], 'سید' ) ) {
 
 			$names['gender']      = 'male';
-			$names['honorific'][] = 'saadaat';
+			$names['honorific'][] = 'sayyid';
 
 			$prefix = 'سید';
 			$parts  = Core\Text::trim( Core\Text::leftTrim( $names['fullname'], 'سید', FALSE ) );
@@ -383,6 +385,8 @@ class ModuleHelper extends gEditorial\Helper
 			'نسب',
 			'لو',
 			'تبار',
+			'وند',
+			'منش',
 		] );
 	}
 

@@ -9,6 +9,10 @@ use geminorum\gEditorial\Core;
 class Unavailable extends gEditorial\Module
 {
 
+	// TODO: archived support for posttypes: only selected roles can view/edit content
+	// https://wordpress.org/plugins/archived-post-status/
+	// https://github.com/joshuadavidnelson/archived-post-status/
+
 	public static function module()
 	{
 		return [
@@ -24,8 +28,7 @@ class Unavailable extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			// TODO: archived support for posttypes: only selected roles can view/edit content
-			// 'posttypes_option' => 'posttypes_option',
+			'posttypes_option' => 'posttypes_option',
 			'_general' => [
 				[
 					'field'       => 'archived_comments',

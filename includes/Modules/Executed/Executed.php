@@ -133,4 +133,11 @@ class Executed extends gEditorial\Module
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
 	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' == $context
+			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
+			: parent::cuc( $context, $fallback );
+	}
 }

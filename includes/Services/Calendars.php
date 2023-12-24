@@ -10,6 +10,7 @@ class Calendars extends Main
 
 	/**
 	 * Retrieves the list of supported calendars.
+	 * @SEE `Almanac` Module
 	 * // @OLD: `Datetime::getDefualtCalendars()`
 	 * @source https://unicode-org.github.io/icu/userguide/datetime/calendar/
 	 *
