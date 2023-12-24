@@ -176,7 +176,7 @@ trait CoreRestrictPosts
 	 * @param  int               $priority
 	 * @return bool              $hooked
 	 */
-	protected function corerestrictposts__hook_columnrow_for_post_children( $constant, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
+	protected function corerestrictposts__hook_columnrow_for_post_children( $parent_type, $constant, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{
 		$posttype = $this->constant( $constant, $constant );
 		$can      = WordPress\PostType::can( $posttype, 'edit_posts' );
@@ -185,8 +185,8 @@ trait CoreRestrictPosts
 		$notice   = $empty ?? $this->get_string( 'post_children_empty', $constant, 'misc', gEditorial()->na() );
 		$status   = WordPress\Status::available( $posttype );
 
-		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row' ),
-			function ( $post ) use ( $constant, $posttype, $notice, $can, $edit, $status ) {
+		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row', $parent_type ),
+			function ( $post, $before, $after ) use ( $constant, $posttype, $notice, $can, $edit, $status ) {
 
 				$children = get_children( [
 					'post_parent' => $post->ID,
@@ -198,7 +198,7 @@ trait CoreRestrictPosts
 				if ( ( ! $count = count( $children ) ) && ! $notice )
 					return;
 
-				echo $this->wrap_open_row( 'post-children', [ '-'.$posttype, $count ? '-has-children' : '-has-not-children' ] );
+				printf( $before, '-post-children -type-'.$posttype.( $count ? ' -has-children' : ' -has-not-children' ) );
 
 				if ( $count = count( $children ) )
 					echo $edit.Core\HTML::tag( $can ? 'a' : 'span', [
@@ -211,9 +211,9 @@ trait CoreRestrictPosts
 				else
 					echo $edit.Core\HTML::tag( 'span', [ 'class' => '-na -empty-parent-post' ], $notice );
 
-				echo '</li>';
+				echo $after;
 
-			}, $priority, 1 );
+			}, $priority, 3 );
 
 		return TRUE;
 	}
@@ -236,13 +236,13 @@ trait CoreRestrictPosts
 		$edit   = $this->get_column_icon( $link, $icon, NULL, $posttype );
 		$notice = $empty ?? $this->get_string( 'parent_post_empty', $posttype, 'misc', gEditorial()->na() );
 
-		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row' ),
-			function ( $post ) use ( $posttype, $notice, $can, $edit ) {
+		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row', $posttype ),
+			function ( $post, $before, $after ) use ( $posttype, $notice, $can, $edit ) {
 
 				if ( ! $post->post_parent && ! $notice )
 					return;
 
-				echo $this->wrap_open_row( 'parent-post', [ '-'.$posttype, $post->post_parent ? '-has-parent-post' : '-has-not-parent-post' ] );
+				printf( $before, '-parent-post -type-'.$posttype.( $post->post_parent ? ' -has-parent-post' : ' -has-not-parent-post' ) );
 
 					if ( $post->post_parent )
 						echo $edit.Helper::getPostTitleRow( $post->post_parent, $can ? 'edit' : FALSE, FALSE, 'posttype' );
@@ -250,9 +250,9 @@ trait CoreRestrictPosts
 					else
 						echo $edit.Core\HTML::tag( 'span', [ 'class' => '-na -empty-parent-post' ], $notice );
 
-				echo '</li>';
+				echo $after;
 
-			}, $priority, 1 );
+			}, $priority, 3 );
 
 		return TRUE;
 	}

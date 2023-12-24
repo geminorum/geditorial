@@ -310,11 +310,10 @@ class Magazine extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->action_module( 'meta', 'column_row', 3 );
-
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'issue_cpt' );
-				$this->pairedadmin__hook_tweaks_column_connected();
+				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( 'span_tax' );
 			}
@@ -339,8 +338,7 @@ class Magazine extends gEditorial\Module
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
 				$this->paired__hook_screen_restrictposts();
-
-				$this->action_module( 'meta', 'column_row', 3 );
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
 

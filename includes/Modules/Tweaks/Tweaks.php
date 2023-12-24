@@ -316,8 +316,8 @@ class Tweaks extends gEditorial\Module
 			$this->filter( 'manage_users_sortable_columns' );
 
 			// INTERNAL HOOKS
-			add_action( $this->hook( 'column_user' ), [ $this, 'column_user_default' ] );
-			add_action( $this->hook( 'column_contacts' ), [ $this, 'column_contacts_default' ] );
+			add_action( $this->hook( 'column_user' ), [ $this, 'column_user_default' ], 10, 3 );
+			add_action( $this->hook( 'column_contacts' ), [ $this, 'column_contacts_default' ], 20, 3 );
 
 		} else if ( 'edit-tags' == $screen->base ) {
 
@@ -339,12 +339,12 @@ class Tweaks extends gEditorial\Module
 
 	private function _edit_screen( $posttype )
 	{
-		add_filter( 'manage_taxonomies_for_'.$posttype.'_columns', [ $this, 'manage_taxonomies_columns' ], 10, 2 );
+		$this->filter_unset( 'manage_taxonomies_for_'.$posttype.'_columns', $this->taxonomies() );
 
 		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ], 1, 2 );
 		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 1, 1 );
-		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 		add_filter( 'manage_edit-'.$posttype.'_sortable_columns', [ $this, 'sortable_columns' ] );
+		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 
 		// add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
@@ -354,25 +354,25 @@ class Tweaks extends gEditorial\Module
 
 		// INTERNAL HOOKS
 		if ( $this->in_setting( $posttype, 'group_taxonomies' ) )
-			add_action( $this->hook( 'column_row' ), [ $this, 'column_row_taxonomies' ] );
+			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_taxonomies' ], 10, 3 );
 
 		if ( $this->in_setting( $posttype, 'author_attribute' ) && $this->is_posttype_support( $posttype, 'author' ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_author' ], 1 );
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_author' ], 1, 3 );
 
 		if ( $this->in_setting( $posttype, 'post_status' ) && ! self::req( 'post_status' ) ) // if the view is NOT set
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_status' ], 2 );
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_status' ], 2, 3 );
 
 		if ( $this->in_setting( $posttype, 'group_attributes' ) && $this->is_posttype_support( $posttype, 'date' ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_date' ], 3 );
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_date' ], 3, 3 );
 
 		if ( $this->in_setting( $posttype, 'page_template' ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_page_template' ], 50 );
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_page_template' ], 50, 3 );
 
 		if ( $this->in_setting( $posttype, 'slug_attribute' ) && WordPress\PostType::viewable( $posttype ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_slug' ], 50 );
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_slug' ], 50, 3 );
 
 		if ( $this->in_setting( $posttype, 'comment_status' ) && $this->is_posttype_support( $posttype, 'comments' ) )
-			add_action( $this->hook( 'column_attr' ), [ $this, 'column_attr_comment_status' ], 15 );
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_comment_status' ], 15, 3 );
 	}
 
 	// we use this hook to early control `current_screen` on other modules
@@ -449,14 +449,6 @@ class Tweaks extends gEditorial\Module
 		return $wp_query->is_search() ? "DISTINCT" : $distinct;
 	}
 
-	public function manage_taxonomies_columns( $taxonomies, $posttype )
-	{
-		foreach ( $this->taxonomies() as $taxonomy )
-			unset( $taxonomies[$taxonomy] );
-
-		return $taxonomies;
-	}
-
 	public function manage_pages_columns( $columns )
 	{
 		return $this->manage_posts_columns( $columns, 'page' );
@@ -467,9 +459,8 @@ class Tweaks extends gEditorial\Module
 		$new   = [];
 		$added = FALSE;
 
-		$ajax = Core\WordPress::isAJAX();
-		$rows = $ajax || has_action( $this->hook( 'column_row' ) ) ? $this->get_column_title( 'rows', $posttype ) : FALSE;
-		$atts = $ajax || has_action( $this->hook( 'column_attr' ) ) ? $this->get_column_title( 'atts', $posttype ) : FALSE;
+		$rows = has_action( $this->hook( 'column_row', $posttype ) ) ? $this->get_column_title( 'rows', $posttype ) : FALSE;
+		$atts = has_action( $this->hook( 'column_attr', $posttype ) ) ? $this->get_column_title( 'atts', $posttype ) : FALSE;
 
 		foreach ( $columns as $key => $value ) {
 
@@ -554,14 +545,40 @@ class Tweaks extends gEditorial\Module
 			case $this->classs( 'rows' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul class="-rows">';
+
+					// FIXME: DEPRECATED
 					do_action( $this->hook( 'column_row' ), $post );
+
+					do_action( $this->hook( 'column_row', $post->post_type ),
+						$post,
+						$this->wrap_open_row( 'row', [
+							'-column-row',
+							'-type-'.$post->post_type,
+							'%s',
+						] ),
+						'</li>'
+					);
+
 				echo '</ul></div>';
 
 			break;
 			case $this->classs( 'atts' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul class="-rows">';
+
+					// FIXME: DEPRECATED
 					do_action( $this->hook( 'column_attr' ), $post );
+
+					do_action( $this->hook( 'column_attr', $post->post_type ),
+						$post,
+						$this->wrap_open_row( 'attr', [
+							'-column-attr',
+							'-type-'.$post->post_type,
+							'%s', // to use by caller
+						] ),
+						'</li>'
+					);
+
 				echo '</ul></div>';
 
 			break;
@@ -635,7 +652,14 @@ class Tweaks extends gEditorial\Module
 			ob_start();
 
 			echo '<div class="geditorial-admin-wrap-column -tweaks -user"><ul class="-rows">';
-				do_action( $this->hook( 'column_user' ), get_userdata( $user_id ) );
+				do_action( $this->hook( 'column_user' ),
+					get_userdata( $user_id ),
+					$this->wrap_open_row( 'attr', [
+						'-column-user',
+						'%s', // to use by caller
+					] ),
+					'</li>'
+				);
 			echo '</ul></div>';
 
 			$output.= ob_get_clean();
@@ -645,7 +669,14 @@ class Tweaks extends gEditorial\Module
 			ob_start();
 
 			echo '<div class="geditorial-admin-wrap-column -tweaks -contacts"><ul class="-rows">';
-				do_action( $this->hook( 'column_contacts' ), get_userdata( $user_id ) );
+				do_action( $this->hook( 'column_contacts' ),
+					get_userdata( $user_id ),
+					$this->wrap_open_row( 'attr', [
+						'-column-contacts',
+						'%s', // to use by caller
+					] ),
+					'</li>'
+				);
 			echo '</ul></div>';
 
 			$output.= ob_get_clean();
@@ -704,7 +735,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_taxonomies( $post )
+	public function column_row_taxonomies( $post, $before, $after )
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
@@ -720,17 +751,19 @@ class Tweaks extends gEditorial\Module
 			$icon  = $object->menu_icon ?? ( $object->hierarchical ? 'category' : 'tag' );
 			$title = $this->get_string( 'column_icon_title', $taxonomy, 'misc', $object->labels->name );
 
-			$before = '<li class="-row tweaks-tax-'.$taxonomy.'">';
-			$before.= $this->get_column_icon( $edit, $icon, $title );
-
-			Helper::renderPostTermsEditRow( $post, $object, $before, '</li>' );
+			Helper::renderPostTermsEditRow(
+				$post,
+				$object,
+				sprintf( $before, '-taxonomy-'.$taxonomy ).$this->get_column_icon( $edit, $icon, $title ),
+				$after
+			);
 		}
 	}
 
 	// @SEE: [Post Type Templates in 4.7](https://make.wordpress.org/core/?p=20437)
 	// @SEE: [#18375 (Post type templates)](https://core.trac.wordpress.org/ticket/18375)
 	// FIXME: use `get_file_description( untrailingslashit( get_stylesheet_directory() ).'/'.get_page_template_slug() )`
-	public function column_attr_page_template( $post )
+	public function column_attr_page_template( $post, $before, $after )
 	{
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
@@ -741,7 +774,7 @@ class Tweaks extends gEditorial\Module
 			if ( ! isset( $this->_page_templates[$post->post_type] ) )
 				$this->_page_templates[$post->post_type] = wp_get_theme()->get_page_templates( $post, $post->post_type );
 
-			echo '<li class="-row tweaks-page-template">';
+			printf( $before, '-page-template' );
 
 				echo $this->get_column_icon( FALSE, 'admin-page', _x( 'Page Template', 'Row Icon Title', 'geditorial-tweaks' ) );
 
@@ -751,16 +784,16 @@ class Tweaks extends gEditorial\Module
 				else
 					echo '<span>'.Core\HTML::escape( $post->page_template ).'</span>';
 
-			echo '</li>';
+			echo $after;
 		}
 	}
 
-	public function column_attr_comment_status( $post )
+	public function column_attr_comment_status( $post, $before, $after )
 	{
 		if ( $filtered = comments_open( $post ) )
 			return;
 
-		echo '<li class="-row tweaks-page-template">';
+		printf( $before, '-comment-status' );
 
 			$link = add_query_arg( [ 'p' => $post->ID ], admin_url( 'edit-comments.php' ) );
 
@@ -778,10 +811,10 @@ class Tweaks extends gEditorial\Module
 			/* translators: %s: status */
 			printf( _x( 'Comments are %s', 'Comment Status', 'geditorial-tweaks' ), $status );
 
-		echo '</li>';
+		echo $after;
 	}
 
-	public function column_attr_author( $post )
+	public function column_attr_author( $post, $before, $after )
 	{
 		if ( empty( $this->_site_user_id ) )
 			$this->_site_user_id = gEditorial()->user();
@@ -789,24 +822,24 @@ class Tweaks extends gEditorial\Module
 		if ( $post->post_author == $this->_site_user_id )
 			return;
 
-		echo '<li class="-row tweaks-default-atts -post-author -post-author-'.$post->post_author.'">';
+		printf( $before, '-post-author' );
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Row Icon Title', 'geditorial-tweaks' ) );
 			echo '<span class="-author">'.Core\WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
 	}
 
-	public function column_attr_slug( $post )
+	public function column_attr_slug( $post, $before, $after )
 	{
 		if ( ! $post->post_name )
 			return;
 
-		echo '<li class="-row tweaks-default-atts -post-name">';
+		printf( $before, '-post-name' );
 			echo $this->get_column_icon( FALSE, 'admin-links', _x( 'Post Slug', 'Row Icon Title', 'geditorial-tweaks' ) );
 			echo Core\HTML::code( urldecode( $post->post_name ) );
-		echo '</li>';
+		echo $after;
 	}
 
-	public function column_attr_status( $post )
+	public function column_attr_status( $post, $before, $after )
 	{
 		if ( empty( $this->_post_statuses ) )
 			$this->_post_statuses = WordPress\Status::get();
@@ -824,49 +857,49 @@ class Tweaks extends gEditorial\Module
 				$status = '<strong class="error-message">'._x( 'Missed schedule', 'Attr: Status', 'geditorial-tweaks' ).'</strong>';
 		}
 
-		echo '<li class="-row tweaks-default-atts -post-status -post-status-'.$post->post_status.'">';
+		printf( $before, '-post-status -post-status-'.$post->post_status );
 			echo $this->get_column_icon( FALSE, 'post-status', _x( 'Status', 'Row Icon Title', 'geditorial-tweaks' ) );
 			echo '<span class="-status" title="'.$post->post_status.'">'.$status.'</span>';
-		echo '</li>';
+		echo $after;
 	}
 
-	public function column_attr_date( $post )
+	public function column_attr_date( $post, $before, $after )
 	{
-		echo '<li class="-row tweaks-default-atts -post-date">';
+		printf( $before, '-post-date' );
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Row Icon Title', 'geditorial-tweaks' ) );
 			echo Helper::getDateEditRow( $post->post_date, '-date' );
-		echo '</li>';
+		echo $after;
 
 		if ( $post->post_modified != $post->post_date
 			&& current_user_can( 'edit_post', $post->ID ) ) {
 
-			echo '<li class="-row tweaks-default-atts -post-modified">';
+			printf( $before, '-post-modified' );
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Row Icon Title', 'geditorial-tweaks' ) );
 				echo Helper::getModifiedEditRow( $post, '-edit' );
-			echo '</li>';
+			echo $after;
 		}
 	}
 
-	public function column_user_default( $user )
+	public function column_user_default( $user, $before, $after )
 	{
 		if ( $user->first_name || $user->last_name ) {
-			echo '<li class="-row tweaks-user-atts -name">';
+			printf( $before, '-user-fullname' );
 				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Row Icon Title', 'geditorial-tweaks' ) );
 				echo "$user->first_name $user->last_name";
-			echo '</li>';
+			echo $after;
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-tweaks' ) );
-		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, '</li>' );
+		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, $after );
 	}
 
-	public function column_contacts_default( $user )
+	public function column_contacts_default( $user, $before, $after )
 	{
 		if ( $user->user_email ) {
-			echo '<li class="-row tweaks-user-contacts -email">';
+			printf( $before, '-user-contact -email' );
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Row Icon Title', 'geditorial-tweaks' ) );
 				echo Core\HTML::mailto( $user->user_email );
-			echo '</li>';
+			echo $after;
 		}
 
 		foreach ( wp_get_user_contact_methods( $user ) as $method => $title ) {
@@ -874,10 +907,10 @@ class Tweaks extends gEditorial\Module
 			if ( ! $value = get_user_meta( $user->ID, $method, TRUE ) )
 				continue;
 
-			echo '<li class="-row tweaks-user-contacts -contact-'.$method.'">';
+			printf( $before, '-user-contact -contact-'.$method );
 				echo $this->get_column_icon( FALSE, Core\Icon::guess( $method, 'email-alt' ), $title );
 				echo $this->prep_meta_row( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
-			echo '</li>';
+			echo $after;
 		}
 	}
 

@@ -154,7 +154,8 @@ class Labeled extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
-				$this->action_module( 'meta', 'column_row', 3, 30 );
+
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );

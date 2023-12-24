@@ -101,7 +101,7 @@ trait PostsToPosts
 		return TRUE;
 	}
 
-	protected function column_row_p2p_to_posttype( $constant, $post )
+	protected function column_row_p2p_to_posttype( $constant, $post, $before, $after )
 	{
 		static $icons = [];
 
@@ -132,7 +132,7 @@ trait PostsToPosts
 			'connected_items'     => $post->ID,
 		];
 
-		echo '<li class="-row -p2p -connected">';
+		printf( $before, '-p2p -connected' );
 
 			echo $icons[$constant];
 
@@ -149,10 +149,10 @@ trait PostsToPosts
 
 			echo WordPress\Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
-		echo '</li>';
+		echo $after;
 	}
 
-	protected function column_row_p2p_from_posttype( $constant, $post )
+	protected function column_row_p2p_from_posttype( $constant, $post, $before, $after )
 	{
 		static $icons = [];
 
@@ -171,7 +171,8 @@ trait PostsToPosts
 		$p2p = $p2p_type->get_connected( $post, $extra, 'abstract' );
 
 		foreach ( $p2p->items as $item ) {
-			echo '<li class="-row -book -p2p -connected">';
+
+			printf( $before, '-p2p -connected' );
 
 				if ( current_user_can( 'edit_post', $item->get_id() ) )
 					echo $this->get_column_icon( get_edit_post_link( $item->get_id() ),
@@ -193,7 +194,7 @@ trait PostsToPosts
 
 				echo $this->p2p_get_meta_row( $constant, $item->p2p_id, ' &ndash; ', '' );
 
-			echo '</li>';
+			echo $after;
 		}
 	}
 }

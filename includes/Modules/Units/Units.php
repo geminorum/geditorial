@@ -185,7 +185,7 @@ class Units extends gEditorial\Module
 	{
 		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) {
 			$this->_edit_screen( $posttype );
-			$this->_hook_default_rows();
+			$this->_hook_default_rows( $posttype );
 			$this->_hook_store_metabox( $posttype );
 		}
 	}
@@ -239,7 +239,7 @@ class Units extends gEditorial\Module
 
 				$this->_admin_enabled();
 				$this->_edit_screen( $screen->post_type );
-				$this->_hook_default_rows();
+				$this->_hook_default_rows( $screen->post_type );
 
 				$asset = [
 					'fields' => array_filter( Core\Arraay::column( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
@@ -262,11 +262,11 @@ class Units extends gEditorial\Module
 	}
 
 	// early and late actions to make room for other modules
-	private function _hook_default_rows()
+	private function _hook_default_rows( $posttype )
 	{
-		$this->action_self( 'column_row', 3, 5, 'default' );
-		// $this->action_self( 'column_row', 3, 15, 'extra' );
-		// $this->action_self( 'column_row', 3, 20, 'excerpt' );
+		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 5 );
+		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 5 );
+		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 5 );
 	}
 
 	protected function init_meta_fields()
@@ -681,7 +681,22 @@ class Units extends gEditorial\Module
 		}
 
 		echo '<div class="geditorial-admin-wrap-column -units"><ul class="-rows">';
+
+			// FIXME: DEPRECATED
 			$this->actions( 'column_row', $post, $fields, $excludes );
+
+			do_action( $this->hook( 'column_row', $post->post_type ),
+				$post,
+				$this->wrap_open_row( 'attr', [
+					'-column-attr',
+					'-type-'.$post->post_type,
+					'%s', // to use by caller
+				] ),
+				'</li>',
+				$fields,
+				$excludes
+			);
+
 		echo '</ul></div>';
 
 		// NOTE: for `quickedit` enabled fields
@@ -695,7 +710,7 @@ class Units extends gEditorial\Module
 	}
 
 	// NOTE: only renders `quickedit` enabled fields
-	public function column_row_default( $post, $fields, $excludes )
+	public function column_row_default( $post, $before, $after, $fields, $excludes )
 	{
 		foreach ( $fields as $field_key => $field ) {
 
@@ -705,10 +720,10 @@ class Units extends gEditorial\Module
 			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
 				continue;
 
-			echo $this->wrap_open_row( $field_key );
+			printf( $before, '-units-'.$field_key );
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
-			echo '</li>';
+			echo $after;
 		}
 	}
 

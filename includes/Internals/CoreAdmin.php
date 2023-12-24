@@ -85,4 +85,30 @@ trait CoreAdmin
 
 		return TRUE;
 	}
+
+	protected function coreadmin__hook_tweaks_column_row( $posttype, $priority = 20, $callback_suffix = FALSE )
+	{
+		$method = $callback_suffix ? sprintf( 'tweaks_column_row_%s', $callback_suffix ) : 'tweaks_column_row';
+
+		if ( ! method_exists( $this, $method ) )
+			return FALSE;
+
+		add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
+			function ( $post, $before, $after ) use ( $method ) {
+				call_user_func_array( [ $this, $method ], [ $post, $before, $after ] );
+			}, $priority, 3 );
+	}
+
+	protected function coreadmin__hook_tweaks_column_attr( $posttype, $priority = 20, $callback_suffix = FALSE )
+	{
+		$method = $callback_suffix ? sprintf( 'tweaks_column_attr_%s', $callback_suffix ) : 'tweaks_column_attr';
+
+		if ( ! method_exists( $this, $method ) )
+			return FALSE;
+
+		add_action( $this->hook_base( 'tweaks', 'column_attr', $posttype ),
+			function ( $post, $before, $after ) use ( $method ) {
+				call_user_func_array( [ $this, $method ], [ $post, $before, $after ] );
+			}, $priority, 3 );
+	}
 }

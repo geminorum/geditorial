@@ -7,10 +7,12 @@ use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Drafts extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -114,7 +116,7 @@ class Drafts extends gEditorial\Module
 					$this->filter( 'post_row_actions', 2 );
 				}
 
-				$this->action_module( 'tweaks', 'column_attr', 1, 90 );
+				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 90 );
 			}
 		}
 	}
@@ -371,7 +373,7 @@ class Drafts extends gEditorial\Module
 		return $actions;
 	}
 
-	public function tweaks_column_attr( $post )
+	public function tweaks_column_attr( $post, $before, $after )
 	{
 		if ( ! $this->_is_preview_status( $post ) )
 			return;
@@ -381,7 +383,7 @@ class Drafts extends gEditorial\Module
 
 		$link = $this->get_preview_url( $post->ID );
 
-		echo '<li class="-row -drafts -preview-link">';
+		printf( $before, '-public-preview' );
 			echo $this->get_column_icon( FALSE, 'welcome-view-site', _x( 'Preview', 'Row Icon Title', 'geditorial-drafts' ) );
 
 			echo Core\HTML::tag( 'a', [
@@ -390,6 +392,6 @@ class Drafts extends gEditorial\Module
 				'target' => '_blank',
 			], _x( 'Has public preview link', 'Row', 'geditorial-drafts' ) );
 
-		echo '</li>';
+		echo $after;
 	}
 }

@@ -62,7 +62,7 @@ trait PairedAdmin
 
 	// TODO: check capability
 	// OLD: `_hook_paired_tweaks_column_attr()`
-	protected function pairedadmin__hook_tweaks_column_connected( $supported = NULL )
+	protected function pairedadmin__hook_tweaks_column_connected( $posttype, $supported = NULL )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -76,8 +76,8 @@ trait PairedAdmin
 		if ( empty( $supported ) )
 			return FALSE;
 
-		add_action( $this->hook_base( 'tweaks', 'column_attr' ),
-			function ( $post ) use ( $constants, $supported ) {
+		add_action( $this->hook_base( 'tweaks', 'column_attr', $posttype ),
+			function ( $post, $before, $after ) use ( $constants, $supported ) {
 
 				if ( count( $supported ) > 1 ) {
 
@@ -104,7 +104,7 @@ trait PairedAdmin
 
 				$title = $this->get_posttype_label( $constants[0], 'column_title', $this->constant( $constants[0] ) );
 
-				echo '<li class="-row -'.$this->key.' -connected">';
+				printf( $before, '-connected -'.$this->key );
 
 					echo $this->get_column_icon( FALSE, NULL, $title );
 
@@ -126,14 +126,14 @@ trait PairedAdmin
 
 					echo WordPress\Strings::getJoined( $list, ' <span class="-posttypes">(', ')</span>' );
 
-				echo '</li>';
-			} );
+				echo $after;
+			}, 12, 3 );
 
 		return TRUE;
 	}
 
 	// TODO: add an advance version with modal for paired summary in `Missioned`/`Trained`/`Programmed`/`Meeted`
-	protected function paired__hook_tweaks_column( $posttype = NULL, $priority = 10 )
+	protected function paired__hook_tweaks_column( $posttype, $priority = 10 )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -141,15 +141,14 @@ trait PairedAdmin
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( $this->hook_base( 'tweaks', 'column_row' ),
-			function ( $post ) use ( $constants ) {
+		add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
+			function ( $post, $before, $after ) use ( $constants ) {
 
 				if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
 					return;
 
-				$before = $this->wrap_open_row( $this->constant( $constants[1] ), '-paired-row' );
+				$before = sprintf( $before, '-paired-row '.$this->constant( $constants[1] ) );
 				$before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
-				$after  = '</li>';
 
 				foreach ( $items as $post_id ) {
 
@@ -159,6 +158,6 @@ trait PairedAdmin
 					echo $before.WordPress\Post::fullTitle( $post, 'overview' ).$after;
 				}
 
-			}, $priority, 1 );
+			}, $priority, 3 );
 	}
 }

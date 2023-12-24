@@ -319,7 +319,7 @@ class Course extends gEditorial\Module
 
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'course_cpt' );
-				$this->pairedadmin__hook_tweaks_column_connected();
+				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'course_cat',

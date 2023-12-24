@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 trait PostMeta
@@ -110,5 +111,54 @@ trait PostMeta
 		$data = get_metadata( 'post', $post_id, $metakey, TRUE );
 
 		return $data ?: $default;
+	}
+
+	protected function postmeta__hook_meta_column_row( $posttype, $priority = 20, $callback_suffix = FALSE )
+	{
+		$method = $callback_suffix ? sprintf( 'meta_column_row_%s', $callback_suffix ) : 'meta_column_row';
+
+		if ( ! method_exists( $this, $method ) )
+			return FALSE;
+
+		add_action( $this->hook_base( 'meta', 'column_row', $posttype ),
+			function ( $post, $before, $after, $fields, $excludes ) use ( $method ) {
+				call_user_func_array( [ $this, $method ], [ $post, $before, $after, $fields, $excludes ] );
+			}, $priority, 5 );
+	}
+
+	// DEFAULT FILTER
+	// NOTE: used when module defines `_supported` meta fields
+	public function meta_column_row( $post, $before, $after, $fields, $excludes )
+	{
+		foreach ( $fields as $field_key => $field ) {
+
+			if ( in_array( $field_key, $excludes ) )
+				continue;
+
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
+				continue;
+
+			printf( $before, '-'.$this->module->name.' -meta-'.$field_key );
+				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
+				echo $this->prep_meta_row( $value, $field_key, $field, $value );
+			echo $after;
+		}
+	}
+
+	// DEFAULT METHOD
+	public function prep_meta_row( $value, $field_key = NULL, $field = [], $raw = NULL )
+	{
+		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
+			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw ] );
+
+		if ( method_exists( $this, 'prep_meta_row_module' ) ) {
+
+			$prepped = $this->prep_meta_row_module( $value, $field_key, $field, $raw );
+
+			if ( $prepped !== $value )
+				return $prepped; // bail if already prepped
+		}
+
+		return Helper::prepMetaRow( $value, $field_key, $field, $raw );
 	}
 }

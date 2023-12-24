@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 
 class Cartable extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRoles;
@@ -358,13 +359,13 @@ class Cartable extends gEditorial\Module
 			if ( 'edit' == $screen->base ) {
 
 				if ( $this->support_users && $this->role_can( 'view_user' ) )
-					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'users' );
+					$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20, 'users' );
 
 				if ( $this->support_groups && $this->role_can( 'view_group' ) )
-					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'groups' );
+					$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20, 'groups' );
 
 				if ( $this->support_types && $this->role_can( 'view_type' ) )
-					$this->action_module( 'tweaks', 'column_attr', 1, 20, 'types' );
+					$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20, 'types' );
 
 			} else if ( 'post' == $screen->base ) {
 
@@ -506,12 +507,12 @@ class Cartable extends gEditorial\Module
 		Settings::wrapClose();
 	}
 
-	public function tweaks_column_attr_users( $post )
+	public function tweaks_column_attr_users( $post, $before, $after )
 	{
 		if ( ! $users = $this->get_users( $post->ID ) )
 			return FALSE;
 
-		echo '<li class="-row -cartable-user">';
+		printf( $before, '-cartable-users' );
 
 			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Row Icon Title', 'geditorial-cartable' ) );
 
@@ -522,15 +523,15 @@ class Cartable extends gEditorial\Module
 					$list[] = Core\HTML::escape( $user->display_name ); // FIXME: make clickable
 
 			echo WordPress\Strings::getJoined( $list );
-		echo '</li>';
+		echo $after;
 	}
 
-	public function tweaks_column_attr_groups( $post )
+	public function tweaks_column_attr_groups( $post, $before, $after )
 	{
 		if ( ! $groups = $this->get_groups( $post->ID ) )
 			return FALSE;
 
-		echo '<li class="-row -cartable-user">';
+		printf( $before, '-cartable-groups' );
 
 			echo $this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Row Icon Title', 'geditorial-cartable' ) );
 
@@ -541,15 +542,15 @@ class Cartable extends gEditorial\Module
 					$list[] = Core\HTML::escape( $term->name ); // FIXME: make clickable
 
 			echo WordPress\Strings::getJoined( $list );
-		echo '</li>';
+		echo $after;
 	}
 
-	public function tweaks_column_attr_types( $post )
+	public function tweaks_column_attr_types( $post, $before, $after )
 	{
 		if ( ! $types = $this->get_types( $post->ID ) )
 			return FALSE;
 
-		echo '<li class="-row -cartable-type">';
+		printf( $before, '-cartable-types' );
 
 			echo $this->get_column_icon( FALSE, 'portfolio', _x( 'Type Cartables', 'Row Icon Title', 'geditorial-cartable' ) );
 
@@ -560,7 +561,7 @@ class Cartable extends gEditorial\Module
 					$list[] = Core\HTML::escape( $term->name ); // FIXME: make clickable
 
 			echo WordPressStrings::getJoined( $list );
-		echo '</li>';
+		echo $after;
 	}
 
 	protected function dashboard_widgets()

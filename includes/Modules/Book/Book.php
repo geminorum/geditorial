@@ -616,12 +616,12 @@ class Book extends gEditorial\Module
 					$this->filter( 'post_row_actions', 2 );
 
 				if ( $this->_p2p )
-					$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_to' );
+					$this->coreadmin__hook_tweaks_column_row( $screen->post_type, -25, 'p2p_to' );
 
-				$this->action_module( 'meta', 'column_row', 3 );
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 
 				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );
-				$this->pairedadmin__hook_tweaks_column_connected();
+				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'type_tax',
@@ -650,7 +650,7 @@ class Book extends gEditorial\Module
 		} else if ( $this->_p2p && 'edit' == $screen->base
 			&& $this->in_setting( $screen->post_type, 'p2p_posttypes' ) ) {
 
-			$this->action_module( 'tweaks', 'column_row', 1, -25, 'p2p_from' );
+			$this->coreadmin__hook_tweaks_column_row( $screen->post_type, -25, 'p2p_from' );
 		}
 	}
 
@@ -664,14 +664,14 @@ class Book extends gEditorial\Module
 		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
 	}
 
-	public function tweaks_column_row_p2p_to( $post )
+	public function tweaks_column_row_p2p_to( $post, $before, $after )
 	{
-		$this->column_row_p2p_to_posttype( 'publication_cpt', $post );
+		$this->column_row_p2p_to_posttype( 'publication_cpt', $post, $before, $after );
 	}
 
-	public function tweaks_column_row_p2p_from( $post )
+	public function tweaks_column_row_p2p_from( $post, $before, $after )
 	{
-		$this->column_row_p2p_from_posttype( 'publication_cpt', $post );
+		$this->column_row_p2p_from_posttype( 'publication_cpt', $post, $before, $after );
 	}
 
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )

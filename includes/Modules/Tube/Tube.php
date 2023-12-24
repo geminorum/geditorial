@@ -273,7 +273,7 @@ class Tube extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'video_cpt' );
-				$this->action_module( 'meta', 'column_row', 3 );
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 
 		} else if ( $screen->post_type == $this->constant( 'channel_cpt' )
@@ -287,7 +287,7 @@ class Tube extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'channel_cpt' );
-				$this->action_module( 'meta', 'column_row', 3 );
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
 	}

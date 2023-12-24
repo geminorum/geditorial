@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 
 class Revisions extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreRowActions;
 
 	protected $disable_no_posttypes = TRUE;
@@ -99,7 +100,7 @@ class Revisions extends gEditorial\Module
 				$this->rowactions__hook_admin_bulkactions( $screen, (bool) $this->cuc( 'edit' ) );
 
 				if ( $this->get_setting( 'revision_summary', FALSE ) )
-					$this->action_module( 'tweaks', 'column_attr', 1, 100 );
+					$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 100 );
 			}
 		}
 	}
@@ -138,7 +139,7 @@ class Revisions extends gEditorial\Module
 		echo Core\HTML::success( sprintf( $message, Core\Number::format( $purged ) ) );
 	}
 
-	public function tweaks_column_attr( $post )
+	public function tweaks_column_attr( $post, $before, $after )
 	{
 		if ( wp_revisions_enabled( $post ) ) {
 
@@ -149,7 +150,7 @@ class Revisions extends gEditorial\Module
 
 			if ( $count > 1 ) {
 
-				echo '<li class="-row -revisions -count">';
+				printf( $before, '-revision-count' );
 
 					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Row Icon Title', 'geditorial-revisions' ) );
 
@@ -171,7 +172,7 @@ class Revisions extends gEditorial\Module
 						' <span class="-authors">(', ')</span>'
 					);
 
-				echo '</li>';
+				echo $after;
 			}
 		}
 	}

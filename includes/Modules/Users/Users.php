@@ -171,7 +171,7 @@ class Users extends gEditorial\Module
 				$this->filter( 'manage_users_custom_column', 3 );
 			}
 
-			$this->action_module( 'tweaks', 'column_user', 1, 12 );
+			$this->action_module( 'tweaks', 'column_user', 3, 12 );
 
 		} else if ( $categories && 'post' == $screen->base
 			&& is_object_in_taxonomy( $screen->post_type, 'category' ) ) {
@@ -320,7 +320,7 @@ class Users extends gEditorial\Module
 	}
 
 	// FIXME: use `Helper::renderUserTermsEditRow()`
-	public function tweaks_column_user( $user )
+	public function tweaks_column_user( $user, $before, $after )
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 
@@ -328,10 +328,10 @@ class Users extends gEditorial\Module
 
 				foreach ( $terms as $term ) {
 
-					echo '<li class="-row -groups">';
+					printf( $before, '-user-group' );
 						echo $this->get_column_icon( FALSE, 'networking', _x( 'Group', 'Row Icon Title', 'geditorial-users' ) );
 						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-					echo '</li>';
+					echo $after;
 				}
 			}
 		}
@@ -342,10 +342,10 @@ class Users extends gEditorial\Module
 
 				foreach ( $terms as $term ) {
 
-					echo '<li class="-row -types">';
+					printf( $before, '-user-type' );
 						echo $this->get_column_icon( FALSE, 'networking', _x( 'Type', 'Row Icon Title', 'geditorial-users' ) );
 						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-					echo '</li>';
+					echo $after;
 				}
 			}
 		}
@@ -514,7 +514,12 @@ class Users extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		$user = wp_get_current_user();
+		$user   = wp_get_current_user();
+		$after  = '</li>';
+		$before = $this->wrap_open_row( 'row', [
+			'-profile-row',
+			'%s', // to use by caller
+		] );
 
 		echo '<div class="geditorial-wrap -admin-widget -users -contacts">';
 
@@ -523,24 +528,24 @@ class Users extends gEditorial\Module
 		echo '<ul class="-rows">';
 
 		if ( $user->first_name || $user->last_name ) {
-			echo '<li class="-row -name">';
+			printf( $before, '-fullname' );
 				echo $this->get_column_icon( FALSE, 'nametag', _x( 'Name', 'Row Icon Title', 'geditorial-users' ) );
 				echo "$user->first_name $user->last_name";
-			echo '</li>';
+			echo $after;
 		}
 
 		if ( $user->user_email ) {
-			echo '<li class="-row -email">';
+			printf( $before, '-email' );
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Row Icon Title', 'geditorial-users' ) );
 				echo Core\HTML::mailto( $user->user_email );
-			echo '</li>';
+			echo $after;
 		}
 
 		if ( $user->user_url ) {
-			echo '<li class="-row -url">';
+			printf( $before, '-url' );
 				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'URL', 'Row Icon Title', 'geditorial-users' ) );
 				echo Core\HTML::link( Core\URL::prepTitle( $user->user_url ), $user->user_url );
-			echo '</li>';
+			echo $after;
 		}
 
 		foreach ( wp_get_user_contact_methods( $user ) as $method => $title ) {
@@ -548,25 +553,25 @@ class Users extends gEditorial\Module
 			if ( ! $value = get_user_meta( $user->ID, $method, TRUE ) )
 				continue;
 
-			echo '<li class="-row -contact -contact-'.$method.'">';
+			printf( $before, '-contact -contact-'.$method );
 				echo $this->get_column_icon( FALSE, Core\Icon::guess( $method, 'email-alt' ), $title );
 				echo $this->prep_meta_row( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
-			echo '</li>';
+			echo $after;
 		}
 
 		if ( $user->user_registered ) {
-			echo '<li class="-row -registered">';
+			printf( $before, '-registered' );
 				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Row Icon Title', 'geditorial-users' ) );
 				/* translators: %s: date */
 				printf( _x( 'Registered on %s', 'Row', 'geditorial-users' ),
 					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
-			echo '</li>';
+			echo $after;
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-users' ) );
-		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), '<li class="-row -roles">'.$role, '</li>' );
+		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), sprintf( $before, '-roles' ).$role, $after );
 
-		$this->tweaks_column_user( $user );
+		$this->tweaks_column_user( $user, $before, $after );
 
 		echo '</ul><div class="clear"></div></div>';
 	}

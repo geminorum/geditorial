@@ -16,6 +16,7 @@ use geminorum\gEditorial\WordPress;
 
 class Attachments extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreRestrictPosts;
 
 	public static function module()
@@ -115,10 +116,11 @@ class Attachments extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base && $this->posttype_supported( $screen->post_type ) ) {
+		if ( 'edit' == $screen->base
+			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'attachment_count' ) )
-				$this->action_module( 'tweaks', 'column_attr', 1, 20 );
+				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20 );
 
 		} else if ( 'upload' == $screen->base ) {
 			$this->corerestrictposts__hook_screen_authors();
@@ -218,7 +220,7 @@ class Attachments extends gEditorial\Module
 		}
 	}
 
-	public function tweaks_column_attr( $post )
+	public function tweaks_column_attr( $post, $before, $after )
 	{
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
@@ -231,7 +233,7 @@ class Attachments extends gEditorial\Module
 		$extensions = wp_get_mime_types();
 		$mime_types = array_unique( Core\Arraay::pluck( $attachments, 'post_mime_type' ) );
 
-		echo '<li class="-row tweaks-attachment-count">';
+		printf( $before, '-attachment-count' );
 
 			echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Row Icon Title', 'geditorial-attachments' ) );
 
@@ -258,7 +260,7 @@ class Attachments extends gEditorial\Module
 				echo WordPress\Strings::getJoined( $list, ' <span class="-mime-types">(', ')</span>' );
 			}
 
-		echo '</li>';
+		echo $after;
 	}
 
 	public function wp_get_attachment_image_attributes( $attr, $attachment, $size )

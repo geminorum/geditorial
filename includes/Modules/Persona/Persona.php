@@ -479,7 +479,7 @@ class Persona extends gEditorial\Module
 					'blood_type_taxonomy',
 				] );
 
-				$this->action_module( 'meta', 'column_row', 3 );
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
 	}

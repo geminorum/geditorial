@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 class Estimated extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\PostMeta;
 
 	public $meta_key = '_ge_estimated';
@@ -90,16 +91,16 @@ class Estimated extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->action_module( 'tweaks', 'column_attr', 1, 12 );
+				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 40 );
 			}
 		}
 	}
 
-	public function tweaks_column_attr( $post )
+	public function tweaks_column_attr( $post, $before, $after )
 	{
 		if ( $wordcount = $this->fetch_postmeta( $post->ID ) ) {
 
-			echo '<li class="-row -estimated -wordcount">';
+			printf( $before, '-estimated-wordcount' );
 
 				echo $this->get_column_icon( FALSE, NULL, _x( 'Estimated Time', 'Row Icon Title', 'geditorial-estimated' ) );
 
@@ -112,7 +113,7 @@ class Estimated extends gEditorial\Module
 					.$this->get_time_estimated( $wordcount )
 					.')</span>';
 
-			echo '</li>';
+			echo $after;
 		}
 	}
 

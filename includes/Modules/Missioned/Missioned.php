@@ -266,8 +266,10 @@ class Missioned extends gEditorial\Module
 
 	public function setup_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) )
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
+			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
+		}
 	}
 
 	public function current_screen( $screen )
@@ -285,13 +287,12 @@ class Missioned extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->action_module( 'meta', 'column_row', 3 );
-
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__unset_columns( $screen->post_type );
 				$this->coreadmin__unset_views( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->pairedadmin__hook_tweaks_column_connected();
+				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'primary_taxonomy',
@@ -316,8 +317,7 @@ class Missioned extends gEditorial\Module
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				// $this->paired__hook_tweaks_column( $screen->post_type, 12 );
 				// $this->paired__hook_screen_restrictposts();
-
-				// $this->action_module( 'meta', 'column_row', 3 );
+				// $this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
 	}

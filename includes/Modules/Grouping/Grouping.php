@@ -134,7 +134,7 @@ class Grouping extends gEditorial\Module
 
 		if ( 'users' == $screen->base ) {
 
-			$this->action_module( 'tweaks', 'column_user', 1, 12 );
+			$this->action_module( 'tweaks', 'column_user', 3, 12 );
 			$this->filter( 'users_list_table_query_args' );
 
 		} else if ( 'profile' == $screen->base || 'user-edit' == $screen->base ) {
@@ -170,11 +170,11 @@ class Grouping extends gEditorial\Module
 			}, 10, 3 );
 	}
 
-	public function tweaks_column_user( $user )
+	public function tweaks_column_user( $user, $before, $after )
 	{
 		foreach ( $this->get_custom_taxonomies() as $custom ) {
 			$icon = $this->get_column_icon( Core\WordPress::getEditTaxLink( $custom['name'] ), $custom['icon'] ?: NULL, $custom['menu'] );
-			Helper::renderUserTermsEditRow( $user->ID, $custom['name'], '<li class="-row">'.$icon, '</li>' );
+			Helper::renderUserTermsEditRow( $user->ID, $custom['name'], sprintf( $before, '-taxonomy-'.$custom ).$icon, $after );
 		}
 	}
 

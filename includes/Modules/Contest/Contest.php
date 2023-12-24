@@ -277,7 +277,7 @@ class Contest extends gEditorial\Module
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'contest_cpt' );
 				$this->pairedcore__hook_sync_paired();
-				$this->pairedadmin__hook_tweaks_column_connected();
+				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -309,8 +309,7 @@ class Contest extends gEditorial\Module
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
 				$this->paired__hook_screen_restrictposts();
-
-				$this->action_module( 'meta', 'column_row', 3 );
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
 

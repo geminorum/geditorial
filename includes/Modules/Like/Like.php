@@ -13,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 
 class Like extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreCookies;
 	use Internals\PostMeta;
 
@@ -101,7 +102,7 @@ class Like extends gEditorial\Module
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'like_count' ) )
-				$this->action_module( 'tweaks', 'column_attr', 1, 50 );
+				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 50 );
 		}
 	}
 
@@ -446,7 +447,7 @@ class Like extends gEditorial\Module
 		return $this->store_postmeta( $post_id, $data, $this->constant( 'metakey_liked_total' ) );
 	}
 
-	public function tweaks_column_attr( $post )
+	public function tweaks_column_attr( $post, $before, $after )
 	{
 		if ( ! current_user_can( 'read_post', $post->ID ) )
 			return;
@@ -456,7 +457,7 @@ class Like extends gEditorial\Module
 		if ( empty( $total ) )
 			return;
 
-		echo '<li class="-row tweaks-like-count">';
+		printf( $before, '-like-count' );
 
 			echo $this->get_column_icon( FALSE, 'heart', _x( 'Likes', 'Row Icon Title', 'geditorial-like' ) );
 
@@ -477,7 +478,7 @@ class Like extends gEditorial\Module
 
 			echo WordPress\Strings::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
 
-		echo '</li>';
+		echo $after;
 	}
 
 	public function reports_settings( $sub )
