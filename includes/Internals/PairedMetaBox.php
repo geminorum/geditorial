@@ -173,8 +173,10 @@ trait PairedMetaBox
 				$this->_render_mainbox_content( $post, $box, $context, $screen );
 
 				do_action(
-					// @HOOK: `geditorial_mainbox_{paired_posttype}_{current_posttype}`
-					$this->hook_base( 'metabox', $context, $this->constant( $constants[0] ), $post->post_type ),
+					// // @HOOK: `geditorial_mainbox_{paired_posttype}_{current_posttype}`
+					// $this->hook_base( 'metabox', $context, $this->constant( $constants[0] ), $post->post_type ),
+					// @HOOK: `geditorial_metabox_mainbox_{current_posttype}`
+					$this->hook_base( 'metabox', $context, $post->post_type ),
 					$post,
 					$box,
 					$context,

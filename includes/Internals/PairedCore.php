@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Metabox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -108,6 +109,7 @@ trait PairedCore
 			$extra['primary_taxonomy'] = $this->constant( $paired[3] );
 
 		$object = $this->register_posttype( $paired[0], array_merge( [
+			Metabox::POSTTYPE_MAINBOX_PROP         => TRUE,
 			Services\Paired::PAIRED_TAXONOMY_PROP  => $this->_paired,
 			Services\Paired::PAIRED_SUPPORTED_PROP => $supported,
 

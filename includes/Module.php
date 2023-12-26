@@ -1114,6 +1114,9 @@ class Module extends WordPress\Module
 	// checks to bail early if metabox/widget is hidden
 	protected function check_hidden_metabox( $box, $posttype = FALSE, $after = '' )
 	{
+		if ( FALSE === $box )
+			return FALSE;
+
 		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $posttype, $after );
 	}
 

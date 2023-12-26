@@ -507,6 +507,7 @@ class Book extends gEditorial\Module
 
 		$this->register_posttype( 'publication_cpt', [
 			'primary_taxonomy' => $this->constant( 'publication_category' ),
+			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
 		] );
 
 		$this->register_shortcode( 'publication_shortcode' );

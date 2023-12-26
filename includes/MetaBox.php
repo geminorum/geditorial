@@ -12,8 +12,13 @@ class MetaBox extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	const POSTTYPE_MAINBOX_PROP = 'editorial_mainbox';
+
 	public static function checkHidden( $metabox_id, $posttype = FALSE, $after = '' )
 	{
+		if ( ! $metabox_id )
+			return FALSE;
+
 		if ( $posttype && WordPress\PostType::supportBlocks( $posttype ) )
 			return FALSE;
 
@@ -74,7 +79,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $args['echo'] )
 			return;
 
-		echo $html;
+		echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	// FIXME: DROP THIS
@@ -142,7 +147,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $args['echo'] )
 			return $html;
 
-		echo $html;
+		echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
 	// TODO: radio list box using custom walker

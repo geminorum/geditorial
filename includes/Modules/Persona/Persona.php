@@ -379,8 +379,10 @@ class Persona extends gEditorial\Module
 		], 'primary_posttype' );
 
 		$this->register_posttype( 'primary_posttype', [
-			'hierarchical'     => FALSE,
-			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
+			'hierarchical' => FALSE,
+
+			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		] );
 
 		$this->filter( 'the_title', 2, 8 );

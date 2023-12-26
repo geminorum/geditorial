@@ -109,7 +109,6 @@ class Conscripted extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-			'meta_box_cb'  => '__singleselect_restricted_terms_callback',
 		], NULL, TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -127,6 +126,14 @@ class Conscripted extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				$this->hook_taxonomy_metabox_mainbox(
+					'main_taxonomy',
+					$screen->post_type,
+					'__singleselect_restricted_terms_callback',
+				);
 			}
 		}
 	}

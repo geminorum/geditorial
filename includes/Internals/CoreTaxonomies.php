@@ -74,23 +74,7 @@ trait CoreTaxonomies
 		else if ( is_array( $args['rewrite'] ) )
 			$args['rewrite'] = array_merge( $rewrite, $args['rewrite'] );
 
-		if ( ! $args['meta_box_cb'] && method_exists( $this, 'meta_box_cb_'.$constant ) )
-			$args['meta_box_cb'] = [ $this, 'meta_box_cb_'.$constant ];
-
-		else if ( '__checklist_terms_callback' === $args['meta_box_cb'] )
-			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_terms_cb' ];
-
-		else if ( '__checklist_reverse_terms_callback' === $args['meta_box_cb'] )
-			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_reverse_terms_cb' ];
-
-		else if ( '__checklist_restricted_terms_callback' === $args['meta_box_cb'] )
-			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_checklist_restricted_terms_cb' ];
-
-		else if ( '__singleselect_terms_callback' === $args['meta_box_cb'] )
-			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_singleselect_terms_cb' ];
-
-		else if ( '__singleselect_restricted_terms_callback' === $args['meta_box_cb'] )
-			$args['meta_box_cb'] = [ $this, 'taxonomy_meta_box_singleselect_restricted_terms_cb' ];
+		$args['meta_box_cb'] = $this->determine_taxonomy_meta_box_cb( $constant, $args['meta_box_cb'] );
 
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_taxonomy_labels( $constant );
@@ -290,86 +274,122 @@ trait CoreTaxonomies
 	}
 
 	// DEFAULT CALLBACK for `__checklist_terms_callback`
-	public function taxonomy_meta_box_checklist_terms_cb( $post, $box )
+	public function taxonomy_meta_box_checklist_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ] );
-		echo '</div>';
+		$args = [
+			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
+			'posttype' => $post->post_type,
+		];
+
+		if ( FALSE !== $box )
+			echo $this->wrap_open( '-admin-metabox' );
+
+			MetaBox::checklistTerms( $post->ID, $args );
+
+		if ( FALSE !== $box )
+			echo '</div>';
 	}
 
 	// DEFAULT CALLBACK for `__checklist_reverse_terms_callback`
-	public function taxonomy_meta_box_checklist_reverse_terms_cb( $post, $box )
+	public function taxonomy_meta_box_checklist_reverse_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		// NOTE: getting reverse-sorted span terms to pass into checklist
-		$terms = WordPress\Taxonomy::listTerms( $box['args']['taxonomy'], 'all', [ 'order' => 'DESC' ] );
+		$args = [
+			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
+			'posttype' => $post->post_type,
+		];
 
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::checklistTerms( $post->ID, [ 'taxonomy' => $box['args']['taxonomy'], 'posttype' => $post->post_type ], $terms );
-		echo '</div>';
+		// NOTE: getting reverse-sorted span terms to pass into checklist
+		$terms = WordPress\Taxonomy::listTerms( $args['taxonomy'], 'all', [ 'order' => 'DESC' ] );
+
+		if ( FALSE !== $box )
+			echo $this->wrap_open( '-admin-metabox' );
+
+			MetaBox::checklistTerms( $post->ID, $args, $terms );
+
+		if ( FALSE !== $box )
+			echo '</div>';
 	}
 
 	// DEFAULT CALLBACK for `__checklist_restricted_terms_callback`
-	public function taxonomy_meta_box_checklist_restricted_terms_cb( $post, $box )
+	public function taxonomy_meta_box_checklist_restricted_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		$args = [
-			'taxonomy' => $box['args']['taxonomy'],
+			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
 		];
 
 		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
 			$args['restricted'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
 
-		echo $this->wrap_open( '-admin-metabox' );
+		if ( FALSE !== $box )
+			echo $this->wrap_open( '-admin-metabox' );
+
 			MetaBox::checklistTerms( $post->ID, $args );
-		echo '</div>';
+
+		if ( FALSE !== $box )
+			echo '</div>';
 	}
 
 	// DEFAULT CALLBACK for `__singleselect_terms_callback`
-	public function taxonomy_meta_box_singleselect_terms_cb( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::singleselectTerms( $post->ID, [
-				'taxonomy' => $box['args']['taxonomy'],
-				'posttype' => $post->post_type,
-				// NOTE: taxonomy label already displayed on the metabox title
-				'none'     => Settings::showOptionNone(),
-				'empty'    => NULL, // displays empty box with link
-			] );
-		echo '</div>';
-	}
-
-	// DEFAULT CALLBACK for `__singleselect_restricted_terms_callback`
-	public function taxonomy_meta_box_singleselect_restricted_terms_cb( $post, $box )
+	public function taxonomy_meta_box_singleselect_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
 		$args = [
-			'taxonomy' => $box['args']['taxonomy'],
+			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
-			// NOTE: taxonomy label already displayed on the metabox title
-			'none'     => Settings::showOptionNone(),
-			'empty'    => NULL, // displays empty box with link
 		];
+
+		if ( FALSE !== $box ) {
+			$args['none']  = Settings::showOptionNone();  // label already displayed on the metabox title
+			$args['empty'] = NULL;                        // displays empty box with link
+		}
+
+		if ( FALSE !== $box )
+			echo $this->wrap_open( '-admin-metabox' );
+
+			MetaBox::singleselectTerms( $post->ID, $args );
+
+		if ( FALSE !== $box )
+			echo '</div>';
+	}
+
+	// DEFAULT CALLBACK for `__singleselect_restricted_terms_callback`
+	public function taxonomy_meta_box_singleselect_restricted_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		$args = [
+			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
+			'posttype' => $post->post_type,
+		];
+
+		if ( FALSE !== $box ) {
+			$args['none']  = Settings::showOptionNone();  // label already displayed on the metabox title
+			$args['empty'] = NULL;                        // displays empty box with link
+		}
 
 		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
 			$args['restricted'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
 
-		echo $this->wrap_open( '-admin-metabox' );
-			MetaBox::singleselectTerms_NEW( $post->ID, $args );
-		echo '</div>';
+		if ( FALSE !== $box )
+			echo $this->wrap_open( '-admin-metabox' );
+
+			MetaBox::singleselectTerms( $post->ID, $args );
+
+		if ( FALSE !== $box )
+			echo '</div>';
 	}
 
 	public function is_taxonomy( $constant, $term = NULL )
@@ -431,5 +451,80 @@ trait CoreTaxonomies
 			}, 10, 2 );
 
 		return TRUE;
+	}
+
+	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL )
+	{
+		if ( ! $arg && method_exists( $this, 'meta_box_cb_'.$constant ) )
+			return [ $this, 'meta_box_cb_'.$constant ];
+
+		if ( ! $arg || is_array( $arg ) )
+			return $arg;
+
+		if ( '__checklist_terms_callback' === $arg )
+			return [ $this, 'taxonomy_meta_box_checklist_terms_cb' ];
+
+		if ( '__checklist_reverse_terms_callback' === $arg )
+			return [ $this, 'taxonomy_meta_box_checklist_reverse_terms_cb' ];
+
+		if ( '__checklist_restricted_terms_callback' === $arg )
+			return [ $this, 'taxonomy_meta_box_checklist_restricted_terms_cb' ];
+
+		if ( '__singleselect_terms_callback' === $arg )
+			return [ $this, 'taxonomy_meta_box_singleselect_terms_cb' ];
+
+		if ( '__singleselect_restricted_terms_callback' === $arg )
+			return [ $this, 'taxonomy_meta_box_singleselect_restricted_terms_cb' ];
+
+		return $arg;
+	}
+
+	// @REF: `register_and_do_post_meta_boxes()`
+	protected function add_taxonomy_meta_box( $constant, $callback = NULL )
+	{
+		$taxonomy = get_taxonomy( $this->constant( $constant, $constant ) );
+
+		add_meta_box(
+			sprintf( $taxonomy->hierarchical ? '%sdiv' : 'tagsdiv-%s', $taxonomy->name ),
+			$taxonomy->labels->name,
+			$this->determine_taxonomy_meta_box_cb( $constant, $callback ?: FALSE ),
+			NULL,
+			'side',
+			'core',
+			[
+				'taxonomy'               => $taxonomy->name,
+				'__back_compat_meta_box' => TRUE,
+			]
+		);
+	}
+
+	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 20, $context = NULL )
+	{
+		if ( is_null( $context ) )
+			$context = 'mainbox';
+
+		add_action( 'add_meta_boxes',
+			function ( $posttype, $post ) use ( $constant, $callback ) {
+
+				if ( ! $object = WordPress\PostType::object( $posttype ) )
+					return;
+
+				if ( empty( $object->{Metabox::POSTTYPE_MAINBOX_PROP} ) )
+					$this->add_taxonomy_meta_box( $constant, $callback );
+
+			}, 20, 2 );
+
+
+		$taxonomy = $this->constant( $constant );
+		$callback = $this->determine_taxonomy_meta_box_cb( $constant, $callback );
+
+		if ( is_null( $callback ) )
+			$callback = is_taxonomy_hierarchical( $taxonomy ) ? 'post_categories_meta_box' : 'post_tags_meta_box';
+
+		add_action( $this->hook_base( 'metabox', $context, $posttype ),
+			function ( $object, $box, $context, $screen ) use ( $taxonomy, $callback ) {
+				call_user_func_array( $callback, [ $object, FALSE, $taxonomy ] );
+			}, $priority, 4 );
+
 	}
 }
