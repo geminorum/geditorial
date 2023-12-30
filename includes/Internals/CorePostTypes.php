@@ -11,8 +11,7 @@ use geminorum\gEditorial\WordPress;
 trait CorePostTypes
 {
 
-	// TODO: support for `quick_edit_enabled_for_post_type`
-	public function register_posttype( $constant, $atts = [], $taxonomies = [ 'post_tag' ], $block_editor = FALSE )
+	public function register_posttype( $constant, $atts = [], $settings = [], $taxonomies = [ 'post_tag' ] )
 	{
 		$posttype = $this->constant( $constant );
 		$cap_type = $this->get_posttype_cap_type( $constant );
@@ -98,12 +97,43 @@ trait CorePostTypes
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
-		if ( ! $block_editor )
-			add_filter( 'use_block_editor_for_post_type', static function ( $edit, $type ) use ( $posttype ) {
-				return $posttype === $type ? FALSE : $edit;
-			}, 12, 2 );
+		$this->apply_posttype_settings( $posttype, $settings );
 
 		return $object;
+	}
+
+	// TODO: adopt `_hook_posttype_viewable`
+	protected function apply_posttype_settings( $posttype, $args = [] )
+	{
+		$settings = self::atts( [
+			'block_editor' => FALSE,
+			'quick_edit'   => NULL,
+		], $args );
+
+		foreach ( $settings as $setting => $value ) {
+
+			if ( is_null( $value ) )
+				continue;
+
+			switch ( $setting ) {
+
+				case 'block_editor':
+					add_filter( 'use_block_editor_for_post_type',
+						static function ( $edit, $type ) use ( $posttype, $value ) {
+							return $posttype === $type ? (bool) $value : $edit;
+						}, 12, 2 );
+					break;
+
+				case 'quick_edit':
+					add_filter( 'quick_edit_enabled_for_post_type',
+						static function ( $edit, $type ) use ( $posttype, $value ) {
+							return $posttype === $type ? (bool) $value : $edit;
+						}, 12, 2 );
+					break;
+			}
+		}
+
+		return $posttype;
 	}
 
 	// NOTE: also accepts: `[ 'story', 'stories' ]`
