@@ -451,6 +451,26 @@ class Datetime extends WordPress\Main
 		return $list;
 	}
 
+	public static function getYears( $from = '-10 years' )
+	{
+		$list  = [];
+		$start = Core\Number::intval( wp_date( 'Y', strtotime( $from ) ), FALSE );
+		$end   = Core\Number::intval( wp_date( 'Y', strtotime( 'now' ) ), FALSE );
+
+		if ( ! Core\Text::starts( $from, '-' ) ) {
+
+			for ( $i = $start; $i > $end; $i-- )
+				$list[$i-1] = Core\Number::localize( $i-1 );
+
+			return array_reverse( $list );
+		}
+
+		for ( $i = $start; $i < $end; $i++ )
+			$list[$i+1] = Core\Number::localize( $i+1 );
+
+		return $list;
+	}
+
 	// FIXME: find a better way!
 	public static function getMonths( $calendar_type = 'gregorian' )
 	{
