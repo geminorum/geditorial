@@ -13,11 +13,20 @@ trait DefaultTerms
 		if ( ! method_exists( $this, 'define_default_terms' ) )
 			return FALSE;
 
-		foreach ( $this->define_default_terms() as $constant => $terms )
-			$this->register_default_terms(
-				$this->constant( $constant ),
-				$this->get_default_terms( $constant, $terms )
-			);
+		$this->filter( 'taxonomy_default_terms', 2, 12, FALSE, 'gnetwork' );
+	}
+
+	public function taxonomy_default_terms( $terms, $taxonomy )
+	{
+		foreach ( $this->define_default_terms() as $constant => $defaults )
+			if ( $taxonomy === $this->constant( $constant ) )
+				return $terms + $this->get_default_terms( $constant,
+					Core\Arraay::isAssoc( $defaults )
+						? $defaults
+						: Core\Arraay::sameKey( $defaults )
+					);
+
+		return $terms;
 	}
 
 	// protected function define_default_terms() { return []; }
@@ -26,7 +35,7 @@ trait DefaultTerms
 	{
 		// constant is not defined (in case custom terms are for another modules)
 		if ( ! $this->constant( $constant ) )
-			return [];
+			return []; // must return empty
 
 		if ( is_null( $terms ) ) {
 
@@ -52,22 +61,5 @@ trait DefaultTerms
 
 		// NOTE: hook filter before `init` on `after_setup_theme`
 		return $this->filters( 'get_default_terms', $terms, $this->constant( $constant ) );
-	}
-
-	protected function register_default_terms( $taxonomy, $terms )
-	{
-		if ( ! defined( 'GNETWORK_VERSION' ) || ! $taxonomy )
-			return FALSE;
-
-		if ( ! is_admin() )
-			return FALSE;
-
-		if ( empty( $terms ) )
-			return FALSE;
-
-		add_filter( sprintf( 'gnetwork_taxonomy_default_terms_%s', $taxonomy ),
-			static function ( $pre ) use ( $terms ) {
-				return array_merge( $pre, Core\Arraay::isAssoc( $terms ) ? $terms : Core\Arraay::sameKey( $terms ) );
-			} );
 	}
 }
