@@ -67,6 +67,13 @@ class Persona extends gEditorial\Module
 					'editorial-roles'
 				] ),
 			],
+			'_editlist' => [
+				'show_in_quickedit' => [ sprintf(
+					/* translators: %s: primary taxonomy name */
+					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-persona' ),
+					$this->get_taxonomy_label( 'primary_taxonomy' )
+				), '1' ],
+			],
 			'_frontend' => [
 				'posttype_viewable' => [ NULL, FALSE ],
 				'insert_content',
@@ -374,8 +381,8 @@ class Persona extends gEditorial\Module
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
-			'show_in_quick_edit' => TRUE,
 			// 'meta_box_cb'        => '__singleselect_terms_callback',
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype' );
 
 		$this->register_posttype( 'primary_posttype', [

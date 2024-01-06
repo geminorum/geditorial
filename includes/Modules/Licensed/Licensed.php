@@ -44,6 +44,15 @@ class Licensed extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
+			'_editpost' => [
+				'selectmultiple_term',
+			],
+			'_editlist' => [
+				'show_in_quickedit',
+			],
+			'_frontend' => [
+				'show_in_navmenus',
+			],
 		];
 	}
 
@@ -108,9 +117,10 @@ class Licensed extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'main_taxonomy', [
-			'hierarchical' => TRUE,
-			'show_in_menu' => FALSE,
-			'meta_box_cb'  => '__checklist_restricted_terms_callback',
+			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -128,6 +138,16 @@ class Licensed extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				$this->hook_taxonomy_metabox_mainbox(
+					'main_taxonomy',
+					$screen->post_type,
+					$this->get_setting( 'selectmultiple_term' )
+						? '__singleselect_restricted_terms_callback'
+						: '__checklist_restricted_terms_callback'
+				);
 			}
 		}
 	}

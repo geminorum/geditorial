@@ -42,6 +42,12 @@ class Labeled extends gEditorial\Module
 			'_editpost' => [
 				'admin_restrict',
 			],
+			'_editlist' => [
+				'show_in_quickedit',
+			],
+			'_frontend' => [
+				'show_in_navmenus',
+			],
 			'_dashboard' => [
 				'dashboard_widgets',
 				'summary_excludes' => [ NULL, $terms, $empty ],
@@ -121,8 +127,10 @@ class Labeled extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'main_taxonomy', [
-			'show_in_menu' => FALSE,
-			'show_in_rest' => FALSE,   // temporarily disable in block editor
+			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], FALSE, TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

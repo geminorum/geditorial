@@ -46,6 +46,15 @@ class Ranked extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
+			'_editpost' => [
+				'selectmultiple_term',
+			],
+			'_editlist' => [
+				'show_in_quickedit',
+			],
+			'_frontend' => [
+				'show_in_navmenus',
+			],
 		];
 	}
 
@@ -114,9 +123,9 @@ class Ranked extends gEditorial\Module
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
-			'show_in_quick_edit' => TRUE,
 			'show_in_menu'       => FALSE,
-			'meta_box_cb'        => '__checklist_restricted_terms_callback',
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -134,6 +143,16 @@ class Ranked extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				$this->hook_taxonomy_metabox_mainbox(
+					'main_taxonomy',
+					$screen->post_type,
+					$this->get_setting( 'selectmultiple_term' )
+						? '__singleselect_restricted_terms_callback'
+						: '__checklist_restricted_terms_callback'
+				);
 			}
 		}
 	}

@@ -443,6 +443,36 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_show_in_quickedit( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'show_in_quickedit',
+			'title'       => _x( 'Show in Quick-Edit', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Whether to show the taxonomy in the quick/bulk edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
+	public static function getSetting_show_in_navmenus( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'show_in_navmenus',
+			'title'       => _x( 'Show in Navigation', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Makes available for selection in navigation menus.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
+	public static function getSetting_selectmultiple_term( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'selectmultiple_term',
+			'title'       => _x( 'Multiple Terms', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Whether to assign multiple terms in edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_assign_default_term( $description = NULL )
 	{
 		return [

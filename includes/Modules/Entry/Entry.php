@@ -37,8 +37,18 @@ class Entry extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
+				'show_in_quickedit' => [ sprintf(
+					/* translators: %s: primary taxonomy name */
+					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-entry' ),
+					$this->get_taxonomy_label( 'primary_taxonomy' )
+				), '1' ],
 			],
 			'_frontend' => [
+				'show_in_navmenus' => [ sprintf(
+					/* translators: %s: primary taxonomy name */
+					_x( 'Makes <strong>%s</strong> available for selection in navigation menus.', 'Settings', 'geditorial-entry' ),
+					$this->get_taxonomy_label( 'primary_taxonomy' )
+				), '1' ],
 				'adminbar_summary',
 				[
 					'field'       => 'autolink_terms',
@@ -116,8 +126,8 @@ class Entry extends gEditorial\Module
 
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
-			'show_in_quick_edit' => TRUE,
-			'show_in_nav_menus'  => TRUE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus', TRUE ),
 			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], 'primary_posttype' );

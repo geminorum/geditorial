@@ -51,6 +51,12 @@ class Assigned extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
+			'_editpost' => [
+				'selectmultiple_term',
+			],
+			'_editlist' => [
+				'show_in_quickedit',
+			],
 		];
 	}
 
@@ -145,9 +151,8 @@ class Assigned extends gEditorial\Module
 			'public'             => FALSE,
 			'rewrite'            => FALSE,
 			'hierarchical'       => TRUE,
-			'show_in_quick_edit' => TRUE,
 			'show_in_menu'       => FALSE,
-			'meta_box_cb'        => '__checklist_restricted_terms_callback',
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 		], NULL, TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -165,6 +170,16 @@ class Assigned extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				$this->hook_taxonomy_metabox_mainbox(
+					'main_taxonomy',
+					$screen->post_type,
+					$this->get_setting( 'selectmultiple_term' )
+						? '__singleselect_restricted_terms_callback'
+						: '__checklist_restricted_terms_callback'
+				);
 			}
 		}
 	}
