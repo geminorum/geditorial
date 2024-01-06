@@ -36,7 +36,7 @@ trait CoreTaxonomies
 			'public'               => TRUE,
 			'show_ui'              => TRUE,
 			'show_admin_column'    => FALSE,
-			'show_in_quick_edit'   => FALSE,
+			'show_in_quick_edit'   => FALSE, // TODO: support single select on quick/bulk edit
 			'show_in_nav_menus'    => FALSE,
 			'show_tagcloud'        => FALSE,
 			'default_term'         => FALSE,
@@ -498,33 +498,44 @@ trait CoreTaxonomies
 		);
 	}
 
+	/**
+	 * Sets actions/filters for given taxonomy metabox.
+	 *
+	 * @param  string        $constant
+	 * @param  string        $posttype
+	 * @param  null|callable $callback
+	 * @param  int           $priority
+	 * @param  null|string   $context
+	 * @return bool          $hooked
+	 */
 	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 20, $context = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'mainbox';
+		if ( ! $object = WordPress\PostType::object( $posttype ) )
+			return FALSE;
 
-		add_action( 'add_meta_boxes',
-			function ( $posttype, $post ) use ( $constant, $callback ) {
+		if ( empty( $object->{Metabox::POSTTYPE_MAINBOX_PROP} ) ) {
 
-				if ( ! $object = WordPress\PostType::object( $posttype ) )
-					return;
-
-				if ( empty( $object->{Metabox::POSTTYPE_MAINBOX_PROP} ) )
+			add_action( 'add_meta_boxes',
+				function ( $posttype, $post ) use ( $constant, $callback ) {
 					$this->add_taxonomy_meta_box( $constant, $callback );
+				}, 20, 2 );
 
-			}, 20, 2 );
-
+			return TRUE;
+		}
 
 		$taxonomy = $this->constant( $constant );
 		$callback = $this->determine_taxonomy_meta_box_cb( $constant, $callback );
 
 		if ( is_null( $callback ) )
-			$callback = is_taxonomy_hierarchical( $taxonomy ) ? 'post_categories_meta_box' : 'post_tags_meta_box';
+			$callback = is_taxonomy_hierarchical( $taxonomy )
+				? 'post_categories_meta_box'
+				: 'post_tags_meta_box';
 
-		add_action( $this->hook_base( 'metabox', $context, $posttype ),
-			function ( $object, $box, $context, $screen ) use ( $taxonomy, $callback ) {
-				call_user_func_array( $callback, [ $object, FALSE, $taxonomy ] );
+		add_action( $this->hook_base( 'metabox', $context ?? 'mainbox', $posttype ),
+			function ( $post, $box, $context, $screen ) use ( $taxonomy, $callback ) {
+				call_user_func_array( $callback, [ $post, FALSE, $taxonomy ] );
 			}, $priority, 4 );
 
+		return TRUE;
 	}
 }
