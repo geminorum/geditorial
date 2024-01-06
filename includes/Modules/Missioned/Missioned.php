@@ -136,8 +136,9 @@ class Missioned extends gEditorial\Module
 
 		$strings['misc'] = [
 			/* translators: %s: item count */
-			'tabloid_post_summaries' => _x( 'Mission Participants (%s)', 'Misc: `tabloid_post_summaries`', 'geditorial-missioned' ),
-			'column_icon_title'      => _x( 'Missions', 'Misc: `column_icon_title`', 'geditorial-missioned' ),
+			'tabloid_paired_posttype'  => _x( 'Mission Participants (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-missioned' ),
+			'tabloid_paired_supported' => _x( 'Mission Participations (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-missioned' ),
+			'column_icon_title'        => _x( 'Missions', 'Misc: `column_icon_title`', 'geditorial-missioned' ),
 		];
 
 		$strings['metabox'] = [
@@ -262,7 +263,7 @@ class Missioned extends gEditorial\Module
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
-		// $this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
 

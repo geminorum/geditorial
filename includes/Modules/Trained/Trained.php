@@ -151,8 +151,9 @@ class Trained extends gEditorial\Module
 
 		$strings['misc'] = [
 			/* translators: %s: item count */
-			'tabloid_post_summaries' => _x( 'Training Attendees (%s)', 'Misc: `tabloid_post_summaries`', 'geditorial-trained' ),
-			'column_icon_title'      => _x( 'Training Courses', 'Misc: `column_icon_title`', 'geditorial-trained' ),
+			'tabloid_paired_posttype'  => _x( 'Training Attendees (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-trained' ),
+			'tabloid_paired_supported' => _x( 'Training Courses (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-trained' ),
+			'column_icon_title'        => _x( 'Training Courses', 'Misc: `column_icon_title`', 'geditorial-trained' ),
 		];
 
 		$strings['metabox'] = [
@@ -292,7 +293,7 @@ class Trained extends gEditorial\Module
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
-		// $this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
 

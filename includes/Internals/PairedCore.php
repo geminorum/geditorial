@@ -258,6 +258,45 @@ trait PairedCore
 	}
 
 	/**
+	 * Appends the list of main posts for current supported.
+	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_supported' );`
+	 *
+	 * @param  array  $list
+	 * @param  array  $data
+	 * @param  object $post
+	 * @param  string $context
+	 * @return array  $list
+	 */
+	public function tabloid_post_summaries_paired_supported( $list, $data, $post, $context )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $list;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return $list;
+
+		if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+			return $list;
+
+		/* translators: %s: item count */
+		$default  = _x( 'Connected (%s)', 'Internal: Paired: Post Summary Title', 'geditorial-admin' );
+		$template = $this->get_string( 'tabloid_paired_supported', $post->post_type, 'misc', $default );
+		$posts    = [];
+
+		foreach ( $items as $item )
+			$posts[] = WordPress\Post::fullTitle( $item, 'overview' );
+
+		$list[] = [
+			'key'     => $this->key,
+			'class'   => '-paired-summary',
+			'title'   => sprintf( $template, WordPress\Strings::getCounted( count( $items ) ) ),
+			'content' => Core\HTML::wrap( Core\HTML::renderList( $posts ), 'field-wrap -list' ),
+		];
+
+		return $list;
+	}
+
+	/**
 	 * Appends List of supported posts to current paired
 	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );`
 	 *
@@ -280,7 +319,7 @@ trait PairedCore
 
 		/* translators: %s: item count */
 		$default  = _x( 'Connected (%s)', 'Internal: Paired: Post Summary Title', 'geditorial-admin' );
-		$template = $this->get_string( 'tabloid_post_summaries', $constants[0], 'misc', $default );
+		$template = $this->get_string( 'tabloid_paired_posttype', $constants[0], 'misc', $default );
 		$posts    = [];
 
 		foreach ( $items as $item )
