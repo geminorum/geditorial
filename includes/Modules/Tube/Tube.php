@@ -8,6 +8,7 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\WordPress;
 
 class Tube extends gEditorial\Module
 {
@@ -232,7 +233,7 @@ class Tube extends gEditorial\Module
 		], 'video_cpt' );
 
 		$this->register_posttype( 'video_cpt', [
-			'primary_taxonomy' => $this->constant( 'video_cat' ),
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'video_cat' ),
 		] );
 
 		$this->register_shortcode( 'video_cat_shortcode' );

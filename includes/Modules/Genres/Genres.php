@@ -19,11 +19,14 @@ class Genres extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'genres',
-			'title'  => _x( 'Genres', 'Modules: Genres', 'geditorial-admin' ),
-			'desc'   => _x( 'Stylistic Categories', 'Modules: Genres', 'geditorial-admin' ),
-			'icon'   => 'category',
-			'access' => 'beta',
+			'name'     => 'genres',
+			'title'    => _x( 'Genres', 'Modules: Genres', 'geditorial-admin' ),
+			'desc'     => _x( 'Stylistic Categories', 'Modules: Genres', 'geditorial-admin' ),
+			'icon'     => 'category',
+			'access'   => 'beta',
+			'keywords' => [
+				'taxmodule',
+			],
 		];
 	}
 

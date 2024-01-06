@@ -79,7 +79,7 @@ class Workflow extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'status_tax' => 'custom_status',
+			'main_taxonomy' => 'custom_status',
 		];
 	}
 
@@ -87,10 +87,10 @@ class Workflow extends gEditorial\Module
 	{
 		return [
 			'noops' => [
-				'status_tax' => _n_noop( 'Custom Status', 'Custom Statuses', 'geditorial-workflow' ),
+				'main_taxonomy' => _n_noop( 'Custom Status', 'Custom Statuses', 'geditorial-workflow' ),
 			],
 			'labels' => [
-				'status_tax' => [
+				'main_taxonomy' => [
 					'menu_name' => _x( 'Statuses', 'Label: Menu Name', 'geditorial-workflow' ),
 				],
 			],
@@ -105,10 +105,10 @@ class Workflow extends gEditorial\Module
 		parent::init();
 
 		register_taxonomy(
-			$this->constant( 'status_tax' ),
+			$this->constant( 'main_taxonomy' ),
 			[],
 			[
-				'labels'       => $this->get_taxonomy_labels( 'status_tax' ),
+				'labels'       => $this->get_taxonomy_labels( 'main_taxonomy' ),
 				'show_ui'      => $this->cuc( 'settings' ),
 				'public'       => FALSE,
 				'rewrite'      => FALSE,
@@ -130,7 +130,7 @@ class Workflow extends gEditorial\Module
 
 	public function setup_ajax()
 	{
-		if ( $taxonomy = $this->is_inline_save_taxonomy( 'status_tax' ) )
+		if ( $taxonomy = $this->is_inline_save_taxonomy( 'main_taxonomy' ) )
 			$this->_edit_tags_screen( $taxonomy );
 	}
 
@@ -211,12 +211,12 @@ class Workflow extends gEditorial\Module
 			}
 		}
 
-		$this->_hook_menu_taxonomy( 'status_tax', 'options-general.php' );
+		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'status_tax' ) == $screen->taxonomy ) {
+		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 
@@ -227,7 +227,7 @@ class Workflow extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$edit = Core\WordPress::getEditTaxLink( $this->constant( 'status_tax' ), FALSE, [ 'post_type' => $screen->post_type ] );
+				$edit = Core\WordPress::getEditTaxLink( $this->constant( 'main_taxonomy' ), FALSE, [ 'post_type' => $screen->post_type ] );
 				remove_meta_box( 'submitdiv', $screen, 'side' );
 
 				$this->class_metabox( $screen, 'mainbox' );
@@ -271,7 +271,7 @@ class Workflow extends gEditorial\Module
 			return $this->statuses[$user_id];
 
 		$args = [
-			'taxonomy'   => $this->constant( 'status_tax' ),
+			'taxonomy'   => $this->constant( 'main_taxonomy' ),
 			'hide_empty' => FALSE,
 			'orderby'    => 'none',
 			// NOTE: needs meta cache updated
@@ -516,7 +516,7 @@ class Workflow extends gEditorial\Module
 			if ( $status->disabled )
 				continue;
 
-			if ( ! $desc = get_term_field( 'description', $status->term_id, $this->constant( 'status_tax' ) ) )
+			if ( ! $desc = get_term_field( 'description', $status->term_id, $this->constant( 'main_taxonomy' ) ) )
 				continue;
 
 			$class = 'field-wrap -desc misc-pub-section status-'.$status->name;

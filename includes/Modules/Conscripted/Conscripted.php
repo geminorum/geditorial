@@ -14,17 +14,23 @@ class Conscripted extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
 	{
 		return [
-			'name'   => 'conscripted',
-			'title'  => _x( 'Conscripted', 'Modules: Conscripted', 'geditorial-admin' ),
-			'desc'   => _x( 'State-mandated National Service', 'Modules: Conscripted', 'geditorial-admin' ),
-			'icon'   => 'superhero-alt',
-			'access' => 'beta',
+			'name'     => 'conscripted',
+			'title'    => _x( 'Conscripted', 'Modules: Conscripted', 'geditorial-admin' ),
+			'desc'     => _x( 'State-mandated National Service', 'Modules: Conscripted', 'geditorial-admin' ),
+			'icon'     => 'superhero-alt',
+			'access'   => 'beta',
+			'keywords' => [
+				'taxmodule',
+				'conscription',
+				'compulsorily',
+			],
 		];
 	}
 
@@ -139,7 +145,7 @@ class Conscripted extends gEditorial\Module
 				$this->hook_taxonomy_metabox_mainbox(
 					'main_taxonomy',
 					$screen->post_type,
-					'__singleselect_restricted_terms_callback',
+					'__singleselect_restricted_terms_callback'
 				);
 			}
 		}

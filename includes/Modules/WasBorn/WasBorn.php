@@ -168,7 +168,7 @@ class WasBorn extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'main_taxonomy'   => Datetime::getYearsByDecades( '-100 year', 10, TRUE, 'code' ),
+			'main_taxonomy'   => Datetime::getYearsByDecades( '-100 years', 10, TRUE, 'code' ),
 			'group_taxonomy'  => Datetime::getAgeStructure( TRUE ),
 			'gender_taxonomy' => [
 				'male'   => _x( 'Male', 'Default Term', 'geditorial-was-born' ),

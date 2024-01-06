@@ -21,11 +21,15 @@ class Suited extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'suited',
-			'title'  => _x( 'Suited', 'Modules: Suited', 'geditorial-admin' ),
-			'desc'   => _x( 'Suitable Targets for Contents', 'Modules: Suited', 'geditorial-admin' ),
-			'icon'   => 'superhero-alt',
-			'access' => 'beta',
+			'name'     => 'suited',
+			'title'    => _x( 'Suited', 'Modules: Suited', 'geditorial-admin' ),
+			'desc'     => _x( 'Suitable Targets for Contents', 'Modules: Suited', 'geditorial-admin' ),
+			'icon'     => 'superhero-alt',
+			'access'   => 'beta',
+			'keywords' => [
+				'taxmodule',
+				'suitable',
+			],
 		];
 	}
 

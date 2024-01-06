@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress;
 
 class Persona extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 	use Internals\CoreRowActions;
@@ -33,6 +34,7 @@ class Persona extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'human',
+				'people',
 			],
 		];
 	}
@@ -375,13 +377,11 @@ class Persona extends gEditorial\Module
 
 		$this->register_taxonomy( 'blood_type_taxonomy', [
 			'hierarchical' => TRUE,
-			// 'meta_box_cb'  => '__singleselect_terms_callback',
 		], 'primary_posttype' );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
-			// 'meta_box_cb'        => '__singleselect_terms_callback',
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype' );
 

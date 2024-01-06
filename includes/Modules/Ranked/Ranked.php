@@ -14,6 +14,7 @@ class Ranked extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -26,6 +27,7 @@ class Ranked extends gEditorial\Module
 			'icon'     => 'shield-alt',
 			'access'   => 'beta',
 			'keywords' => [
+				'taxmodule',
 				'ranking',
 			],
 		];
@@ -162,13 +164,6 @@ class Ranked extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
-	{
-		return 'reports' == $context
-			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
-			: parent::cuc( $context, $fallback );
-	}
-
 	protected function dashboard_widgets()
 	{
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
@@ -180,5 +175,17 @@ class Ranked extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' == $context
+			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
+			: parent::cuc( $context, $fallback );
+	}
+
+	public function template_include( $template )
+	{
+		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
 	}
 }

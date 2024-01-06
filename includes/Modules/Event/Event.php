@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\WordPress;
 
 class Event extends gEditorial\Module
 {
@@ -257,7 +258,7 @@ class Event extends gEditorial\Module
 
 		$this->register_posttype( 'event_cpt', [
 			'hierarchical'     => TRUE,
-			'primary_taxonomy' => $this->constant( 'event_cat' ),
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'event_cat' ),
 		] );
 
 		if ( $metadata )

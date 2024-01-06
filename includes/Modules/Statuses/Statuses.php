@@ -29,7 +29,7 @@ class Statuses extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
+		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'main_taxonomy' ), FALSE, TRUE );
 		$roles    = $this->get_settings_default_roles();
 
 		$settings = [
@@ -76,7 +76,7 @@ class Statuses extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'status_tax' => 'custom_status',
+			'main_taxonomy' => 'custom_status',
 		];
 	}
 
@@ -85,7 +85,7 @@ class Statuses extends gEditorial\Module
 		parent::init();
 
 		register_taxonomy(
-			$this->constant( 'status_tax' ),
+			$this->constant( 'main_taxonomy' ),
 			[],
 			[
 				'label'        => _x( 'Statuses', 'Taxonomy Label', 'geditorial-statuses' ),
@@ -101,7 +101,7 @@ class Statuses extends gEditorial\Module
 			]
 		);
 
-		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'status_tax' ), FALSE, TRUE );
+		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'main_taxonomy' ), FALSE, TRUE );
 
 		foreach ( $statuses as $status ) {
 
@@ -217,17 +217,17 @@ class Statuses extends gEditorial\Module
 			}
 		}
 
-		$this->_hook_menu_taxonomy( 'status_tax', 'options-general.php' );
+		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'status_tax' ) == $screen->taxonomy ) {
+		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 
 			if ( 'edit-tags' == $screen->base )
-				add_filter( 'manage_edit-'.$this->constant( 'status_tax' ).'_columns', [ $this, 'manage_columns' ] );
+				add_filter( 'manage_edit-'.$this->constant( 'main_taxonomy' ).'_columns', [ $this, 'manage_columns' ] );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -261,7 +261,7 @@ class Statuses extends gEditorial\Module
 			return;
 
 		$args = [
-			'taxonomy'        => $this->constant( 'status_tax' ),
+			'taxonomy'        => $this->constant( 'main_taxonomy' ),
 			'hide_empty'      => FALSE,
 			'suppress_filter' => TRUE,
 			'meta_query'      => [ [

@@ -14,17 +14,22 @@ class Educated extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
 	{
 		return [
-			'name'   => 'educated',
-			'title'  => _x( 'Educated', 'Modules: Educated', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Educations', 'Modules: Educated', 'geditorial-admin' ),
-			'icon'   => 'welcome-learn-more',
-			'access' => 'beta',
+			'name'     => 'educated',
+			'title'    => _x( 'Educated', 'Modules: Educated', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Educations', 'Modules: Educated', 'geditorial-admin' ),
+			'icon'     => 'welcome-learn-more',
+			'access'   => 'beta',
+			'keywords' => [
+				'taxmodule',
+				'education',
+			],
 		];
 	}
 
@@ -159,5 +164,17 @@ class Educated extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' == $context
+			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
+			: parent::cuc( $context, $fallback );
+	}
+
+	public function template_include( $template )
+	{
+		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
 	}
 }

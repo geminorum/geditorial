@@ -27,7 +27,10 @@ class Labeled extends gEditorial\Module
 			'desc'     => _x( 'Custom Labels for Contents', 'Modules: Labeled', 'geditorial-admin' ),
 			'icon'     => 'tag',
 			'access'   => 'beta',
-			'keywords' => [ 'metafield' ],
+			'keywords' => [
+				'taxmodule',
+				'metafield',
+			],
 		];
 	}
 

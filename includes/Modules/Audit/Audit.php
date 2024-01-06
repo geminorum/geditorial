@@ -35,11 +35,14 @@ class Audit extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'audit',
-			'title'  => _x( 'Audit', 'Modules: Audit', 'geditorial-admin' ),
-			'desc'   => _x( 'Content Inventory Tools', 'Modules: Audit', 'geditorial-admin' ),
-			'icon'   => 'visibility',
-			'access' => 'stable',
+			'name'     => 'audit',
+			'title'    => _x( 'Audit', 'Modules: Audit', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Inventory Tools', 'Modules: Audit', 'geditorial-admin' ),
+			'icon'     => 'visibility',
+			'access'   => 'stable',
+			'keywords' => [
+				'taxmodule',
+			],
 		];
 	}
 

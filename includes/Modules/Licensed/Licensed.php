@@ -14,6 +14,7 @@ class Licensed extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -25,7 +26,11 @@ class Licensed extends gEditorial\Module
 			'desc'     => _x( 'Driver Licence Management', 'Modules: Licensed', 'geditorial-admin' ),
 			'icon'     => 'id',
 			'access'   => 'beta',
-			'keywords' => [ 'car', 'vehicle' ],
+			'keywords' => [
+				'taxmodule',
+				'vehicle',
+				'car',
+			],
 		];
 	}
 
@@ -168,5 +173,17 @@ class Licensed extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' == $context
+			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
+			: parent::cuc( $context, $fallback );
+	}
+
+	public function template_include( $template )
+	{
+		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
 	}
 }

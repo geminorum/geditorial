@@ -264,14 +264,25 @@ trait PostTypeFields
 
 		switch ( $field['type'] ) {
 
+			case 'post':
 			case 'attachment':
 			case 'parent_post':
-			case 'post':
 
 				if ( ! empty( $data ) && ( $object = get_post( (int) $data ) ) )
 					$sanitized = $object->ID;
 
 				else
+					$sanitized = FALSE;
+
+				break;
+
+			case 'posts':
+			case 'attachments':
+
+				$sanitized = Core\Arraay::prepNumeral( $data );
+				// $sanitized = array_filter( $sanitized, 'get_post' );
+
+				if ( empty( $sanitized ) )
 					$sanitized = FALSE;
 
 				break;

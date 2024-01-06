@@ -16,6 +16,9 @@ class ConnectionType extends Core\Base
 	public $args;
 	public $strategy;
 
+	public $sortable;
+	public $data = [];
+
 	protected $title;
 
 	public function __construct( $args, $sides )

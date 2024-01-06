@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
@@ -167,14 +168,18 @@ class Trained extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			// 'primary_subterm' => [
-			// 	'' => _x( '', 'Subterm Taxonomy: Default Term', 'geditorial-trained' ),
-			// ],
+			'primary_subterm' => [
+				'preliminary'  => _x( 'Preliminary', 'Subterm Taxonomy: Default Term', 'geditorial-trained' ),
+				'intermediate' => _x( 'Intermediate', 'Subterm Taxonomy: Default Term', 'geditorial-trained' ),
+				'advanced'     => _x( 'Advanced', 'Subterm Taxonomy: Default Term', 'geditorial-trained' ),
+				'special'      => _x( 'Special', 'Subterm Taxonomy: Default Term', 'geditorial-trained' ),
+			],
 			'status_taxonomy' => [
 				// TODO: finish the list
 				'planned' => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
 				'held'    => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
 			],
+			'span_taxonomy' => Datetime::getYears( '-5 years' ),
 		];
 	}
 

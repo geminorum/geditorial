@@ -322,7 +322,7 @@ class Dossier extends gEditorial\Module
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'dossier_posttype', 'dossier_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
-		} else if ( is_tax( $this->constant( 'span_tax' ) ) ) {
+		} else if ( is_tax( $this->constant( 'span_taxonomy' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
@@ -433,7 +433,7 @@ class Dossier extends gEditorial\Module
 	{
 		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'dossier_posttype' ),
-			$this->constant( 'span_tax' ),
+			$this->constant( 'span_taxonomy' ),
 			$atts,
 			$content,
 			$this->constant( 'span_shortcode' )

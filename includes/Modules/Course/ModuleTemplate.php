@@ -12,7 +12,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function getLatestCourseID()
 	{
-		return PostType::getLastMenuOrder( self::constant( 'course_cpt', 'course' ), '', 'ID', 'publish' );
+		return PostType::getLastMenuOrder( self::constant( 'course_posttype', 'course' ), '', 'ID', 'publish' );
 	}
 
 	public static function theCourse( $atts = [] )
@@ -48,7 +48,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'course_cpt', 'course' );
+			$atts['type'] = self::constant( 'course_posttype', 'course' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}
@@ -56,10 +56,10 @@ class ModuleTemplate extends gEditorial\Template
 	public static function spanTiles( $atts = [] )
 	{
 		if ( ! array_key_exists( 'taxonomy', $atts ) )
-			$atts['taxonomy'] = self::constant( 'span_tax', 'course_span' );
+			$atts['taxonomy'] = self::constant( 'span_taxonomy', 'course_span' );
 
 		if ( ! array_key_exists( 'posttype', $atts ) )
-			$atts['posttype'] = self::constant( 'course_cpt', 'course' );
+			$atts['posttype'] = self::constant( 'course_posttype', 'course' );
 
 		return parent::getSpanTiles( $atts, static::MODULE );
 	}

@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\WordPress;
 
 class Reshare extends gEditorial\Module
 {
@@ -101,7 +102,7 @@ class Reshare extends gEditorial\Module
 		], 'primary_posttype' );
 
 		$this->register_posttype( 'primary_posttype', [
-			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		] );
 	}
 

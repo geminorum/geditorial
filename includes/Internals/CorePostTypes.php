@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
@@ -55,6 +56,7 @@ trait CorePostTypes
 			/// gEditorial Props
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => NULL,   // @SEE: `PostType::getPrimaryTaxonomy()`
 			Services\Paired::PAIRED_TAXONOMY_PROP     => FALSE,  // @SEE: `Paired::isPostType()`
+			MetaBox::POSTTYPE_MAINBOX_PROP            => FALSE,  // @SEE: `hook_taxonomy_metabox_mainbox()`
 
 			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks

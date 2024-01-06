@@ -56,7 +56,7 @@ trait PairedCore
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
 
-			if ( is_null( $supported ) )
+		if ( is_null( $supported ) )
 			$supported = $this->posttypes();
 
 		if ( count( $supported ) ) {
@@ -82,7 +82,7 @@ trait PairedCore
 
 				// the paired taxonomies are often in plural
 				// FIXME: WTF: conflict on the posttype rest base!
-				// 'rest_base'    => $this->constant( $paired[1].'_slug', str_replace( '_', '-', $this->constant( $paired[1] ) ) ),
+				// 'rest_base' => $this->constant( $paired[1].'_slug', str_replace( '_', '-', $this->constant( $paired[1] ) ) ),
 
 			], array_merge( $supported, [ $this->constant( $paired[0] ) ] ) );
 

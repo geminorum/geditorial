@@ -35,6 +35,8 @@ class MetaBox extends WordPress\Main
 		return TRUE;
 	}
 
+	// FIXME: adopt `wp_dropdown_categories()`
+	// FIXME: add taxonomy `title::description` as dropdown title attr
 	public static function singleselectTerms( $object_id = 0, $atts = [], $terms = NULL )
 	{
 		$args = self::args( $atts, [
@@ -151,6 +153,7 @@ class MetaBox extends WordPress\Main
 	}
 
 	// TODO: radio list box using custom walker
+	// TODO: support label
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs,
 	// whereas non-hierarchical save by slugs
@@ -294,9 +297,10 @@ class MetaBox extends WordPress\Main
 			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
 
 		if ( $html )
-			$html = Core\HTML::wrap( '<ul>'.$html.'</ul>', [ 'field-wrap', '-list', $args['field_class'] ] );
+			$html = Core\HTML::wrap( '<ul>'.$html.'</ul>'.$hidden, [ 'field-wrap', '-list', $args['field_class'] ] );
 
-		$html.= $hidden;
+		else
+			$html = $hidden;
 
 		if ( ! $args['echo'] )
 			return $html;

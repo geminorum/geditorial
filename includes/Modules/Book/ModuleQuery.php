@@ -12,8 +12,8 @@ class ModuleQuery extends \WP_Query
 
 	public function __construct( $args = [] )
 	{
-		$this->cpt = gEditorial()->constant( 'book', 'publication_cpt', 'publication' );
-		$this->tax = gEditorial()->constant( 'book', 'subject_tax', 'publication_subject' );
+		$this->cpt = gEditorial()->constant( 'book', 'publication_posttype', 'publication' );
+		$this->tax = gEditorial()->constant( 'book', 'subject_taxonomy', 'publication_subject' );
 
 		// force these args
 		$args = array_merge( $args, [

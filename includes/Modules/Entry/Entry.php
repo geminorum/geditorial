@@ -133,7 +133,7 @@ class Entry extends gEditorial\Module
 		], 'primary_posttype' );
 
 		$this->register_posttype( 'primary_posttype', [
-			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );

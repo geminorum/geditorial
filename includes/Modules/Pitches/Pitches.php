@@ -3,7 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\WordPress;
 
 class Pitches extends gEditorial\Module
 {
@@ -102,7 +104,7 @@ class Pitches extends gEditorial\Module
 		], 'primary_posttype' );
 
 		$this->register_posttype( 'primary_posttype', [
-			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		] );
 	}
 

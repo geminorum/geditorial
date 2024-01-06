@@ -15,6 +15,7 @@ class Badges extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -26,6 +27,9 @@ class Badges extends gEditorial\Module
 			'desc'   => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial-admin' ),
 			'icon'   => 'superhero',
 			'access' => 'beta',
+			'keywords' => [
+				'taxmodule',
+			],
 		];
 	}
 
@@ -131,6 +135,7 @@ class Badges extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
+
 				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', 'reports' );
 
 			} else if ( 'post' === $screen->base ) {
@@ -183,6 +188,11 @@ class Badges extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	public function template_include( $template )
+	{
+		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
 	}
 
 	public function post_class( $classes, $css_class, $post_id )

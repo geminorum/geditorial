@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Metabox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
@@ -19,6 +20,7 @@ class Book extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;
+	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedMetaBox;
@@ -65,8 +67,8 @@ class Book extends gEditorial\Module
 				'dashboard_widgets',
 				'summary_excludes' => [
 					NULL,
-					WordPress\Taxonomy::listTerms( $this->constant( 'status_tax' ) ),
-					$this->get_taxonomy_label( 'status_tax', 'no_terms' ),
+					WordPress\Taxonomy::listTerms( $this->constant( 'status_taxonomy' ) ),
+					$this->get_taxonomy_label( 'status_taxonomy', 'no_terms' ),
 				],
 				'summary_scope',
 				'summary_drafts',
@@ -84,7 +86,7 @@ class Book extends gEditorial\Module
 				'archive_override',
 				'display_searchform',
 				'empty_content',
-				'archive_title' => [ NULL, $this->get_posttype_label( 'publication_cpt', 'all_items' ) ],
+				'archive_title' => [ NULL, $this->get_posttype_label( 'publication_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
 			],
@@ -93,7 +95,7 @@ class Book extends gEditorial\Module
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'publication_cpt', TRUE ),
+				$this->settings_supports_option( 'publication_posttype', TRUE ),
 			],
 		];
 
@@ -127,18 +129,18 @@ class Book extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'publication_cpt'      => 'publication',
-			'publication_cpt_p2p'  => 'related_publications',
-			'publication_paired'   => 'related_publication',
-			'publication_category' => 'publication_category',
-			'subject_tax'          => 'publication_subject',
-			'serie_tax'            => 'publication_serie',
-			'library_tax'          => 'publication_library',
-			'publisher_tax'        => 'publication_publisher',
-			'type_tax'             => 'publication_type',
-			'status_tax'           => 'publication_status',
-			'size_tax'             => 'publication_size', // TODO: move to Measurements Module
-			'audience_tax'         => 'publication_audience',
+			'publication_posttype'     => 'publication',
+			'publication_posttype_p2p' => 'related_publications',
+			'publication_paired'       => 'related_publication',
+			'publication_category'     => 'publication_category',
+			'subject_taxonomy'         => 'publication_subject',
+			'serie_taxonomy'           => 'publication_serie',       // TODO: move to new TaxModule
+			'library_taxonomy'         => 'publication_library',
+			'publisher_taxonomy'       => 'publication_publisher',
+			'type_taxonomy'            => 'publication_type',
+			'status_taxonomy'          => 'publication_status',
+			'size_taxonomy'            => 'publication_size',        // TODO: move to `Units` Module: `book_cover`
+			'audience_taxonomy'        => 'publication_audience',
 
 			'publication_shortcode' => 'publication',
 			'subject_shortcode'     => 'publication-subject',
@@ -159,14 +161,14 @@ class Book extends gEditorial\Module
 		return [
 			'taxonomies' => [
 				'publication_category' => 'category',
-				'subject_tax'          => 'tag',
-				'serie_tax'            => 'tag',
-				'library_tax'          => 'book-alt',
-				'publisher_tax'        => 'book',
-				'type_tax'             => 'admin-media',
-				'status_tax'           => 'post-status',
-				'size_tax'             => 'image-crop',
-				'audience_tax'         => 'groups',
+				'subject_taxonomy'     => 'tag',
+				'serie_taxonomy'       => 'tag',
+				'library_taxonomy'     => 'book-alt',
+				'publisher_taxonomy'   => 'book',
+				'type_taxonomy'        => 'admin-media',
+				'status_taxonomy'      => 'post-status',
+				'size_taxonomy'        => 'image-crop',
+				'audience_taxonomy'    => 'groups',
 			],
 		];
 	}
@@ -175,38 +177,38 @@ class Book extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'publication_cpt'      => _n_noop( 'Publication', 'Publications', 'geditorial-book' ),
+				'publication_posttype' => _n_noop( 'Publication', 'Publications', 'geditorial-book' ),
 				'publication_category' => _n_noop( 'Publication Category', 'Publication Categories', 'geditorial-book' ),
-				'subject_tax'          => _n_noop( 'Subject', 'Subjects', 'geditorial-book' ),
-				'serie_tax'            => _n_noop( 'Serie', 'Series', 'geditorial-book' ),
-				'library_tax'          => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
-				'publisher_tax'        => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
-				'type_tax'             => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
-				'status_tax'           => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
-				'size_tax'             => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
-				'audience_tax'         => _n_noop( 'Publication Audience', 'Publication Audiences', 'geditorial-book' ),
+				'subject_taxonomy'     => _n_noop( 'Subject', 'Subjects', 'geditorial-book' ),
+				'serie_taxonomy'       => _n_noop( 'Serie', 'Series', 'geditorial-book' ),
+				'library_taxonomy'     => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
+				'publisher_taxonomy'   => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
+				'type_taxonomy'        => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
+				'status_taxonomy'      => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
+				'size_taxonomy'        => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
+				'audience_taxonomy'    => _n_noop( 'Publication Audience', 'Publication Audiences', 'geditorial-book' ),
 			],
 			'labels' => [
-				'publication_cpt' => [
+				'publication_posttype' => [
 					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-book' ),
 					'author_label'   => _x( 'Curator', 'Label: Author Label', 'geditorial-book' ),
 					'excerpt_label'  => _x( 'Summary', 'Label: Excerpt Label', 'geditorial-book' ),
 				],
-				'type_tax' => [
+				'type_taxonomy' => [
 					'show_option_all'      => _x( 'Type', 'Label: Show Option All', 'geditorial-book' ),
 					'show_option_no_items' => _x( '(Untyped)', 'Label: Show Option No Items', 'geditorial-book' ),
 				],
-				'serie_tax' => [
+				'serie_taxonomy' => [
 					'show_option_all'      => _x( 'Serie', 'Label: Show Option All', 'geditorial-book' ),
 					'show_option_no_items' => _x( '(Non-Series)', 'Label: Show Option No Items', 'geditorial-book' ),
 				],
-				'publisher_tax' => [
+				'publisher_taxonomy' => [
 					'show_option_all'      => _x( 'Publisher', 'Label: Show Option All', 'geditorial-book' ),
 					'show_option_no_items' => _x( '(Without Publisher)', 'Label: Show Option No Items', 'geditorial-book' ),
 				],
 			],
 			'p2p' => [
-				'publication_cpt' => [
+				'publication_posttype' => [
 					'fields' => [
 						'page' => [
 							'title'    => _x( 'Pages', 'P2P', 'geditorial-book' ),
@@ -243,26 +245,26 @@ class Book extends gEditorial\Module
 			'all'     => [ 'widget_title' => _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
 		];
 
-		$strings['p2p']['publication_cpt']['title'] = [
+		$strings['p2p']['publication_posttype']['title'] = [
 			'from' => _x( 'Connected Publications', 'P2P', 'geditorial-book' ),
 			'to'   => _x( 'Connected Posts', 'P2P', 'geditorial-book' ),
 		];
 
-		$strings['p2p']['publication_cpt']['from_labels'] = [
+		$strings['p2p']['publication_posttype']['from_labels'] = [
 			'singular_name' => _x( 'Post', 'P2P', 'geditorial-book' ),
 			'search_items'  => _x( 'Search Posts', 'P2P', 'geditorial-book' ),
 			'not_found'     => _x( 'No posts found.', 'P2P', 'geditorial-book' ),
 			'create'        => _x( 'Connect to a post', 'P2P', 'geditorial-book' ),
 		];
 
-		$strings['p2p']['publication_cpt']['to_labels'] = [
+		$strings['p2p']['publication_posttype']['to_labels'] = [
 			'singular_name' => _x( 'Publications', 'P2P', 'geditorial-book' ),
 			'search_items'  => _x( 'Search Publications', 'P2P', 'geditorial-book' ),
 			'not_found'     => _x( 'No publications found.', 'P2P', 'geditorial-book' ),
 			'create'        => _x( 'Connect to a publication', 'P2P', 'geditorial-book' ),
 		];
 
-		$strings['p2p']['publication_cpt']['admin_column'] = FALSE; // adding through tweaks module
+		$strings['p2p']['publication_posttype']['admin_column'] = FALSE; // adding through tweaks module
 
 		return $strings;
 	}
@@ -270,13 +272,13 @@ class Book extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'type_tax' => [
+			'type_taxonomy' => [
 				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ), // shomiz
 				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ), // gallingor
 				'ebook'     => _x( 'E-Book', 'Publication Type: Default Term', 'geditorial-book' ),
 				'disc'      => _x( 'Disc', 'Publication Type: Default Term', 'geditorial-book' ),
 			],
-			'size_tax' => [
+			'size_taxonomy' => [
 				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // vaziri
 				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ), // soltani
 				'medium'      => _x( 'Medium Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // roghee
@@ -284,7 +286,7 @@ class Book extends gEditorial\Module
 				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // paltoyee
 				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // jibi
 			],
-			'status_tax' => [
+			'status_taxonomy' => [
 				'not-available-in-print' => _x( 'Not Available in Print', 'Publication Status: Default Term', 'geditorial-book' ),
 				'soon-to-be-published'   => _x( 'Soon to be Published', 'Publication Status: Default Term', 'geditorial-book' ),
 				'secondary-print'        => _x( 'Secondary Print', 'Publication Status: Default Term', 'geditorial-book' ),
@@ -297,7 +299,7 @@ class Book extends gEditorial\Module
 	public function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'publication_cpt' ) => [
+			$this->constant( 'publication_posttype' ) => [
 				'publication_tagline' => [
 					'title'       => _x( 'Cover Tagline', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Promotional Text on the Cover of this Publication', 'Field Description', 'geditorial-book' ),
@@ -388,7 +390,7 @@ class Book extends gEditorial\Module
 					'title'       => _x( 'Size', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Size of the Publication, Mainly Books', 'Field Description', 'geditorial-book' ),
 					'type'        => 'term',
-					'taxonomy'    => $this->constant( 'size_tax' ),
+					'taxonomy'    => $this->constant( 'size_taxonomy' ),
 				],
 				'publication_reference' => [
 					'title'       => _x( 'Reference', 'Field Title', 'geditorial-book' ),
@@ -411,7 +413,7 @@ class Book extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [
-			'publication_cpt',
+			'publication_posttype',
 			'publication_paired',
 			FALSE,
 			'publication_category',
@@ -420,7 +422,7 @@ class Book extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'publication_cpt' );
+		$this->register_posttype_thumbnail( 'publication_posttype' );
 	}
 
 	public function p2p_init()
@@ -430,7 +432,7 @@ class Book extends gEditorial\Module
 		if ( empty( $posttypes ) )
 			return FALSE;
 
-		$this->p2p_register( 'publication_cpt', $posttypes );
+		$this->p2p_register( 'publication_posttype', $posttypes );
 
 		if ( is_admin() )
 			return;
@@ -457,43 +459,43 @@ class Book extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->register_taxonomy( 'subject_tax', [
+		$this->register_taxonomy( 'subject_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->register_taxonomy( 'serie_tax', [
+		$this->register_taxonomy( 'serie_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->register_taxonomy( 'library_tax', [
+		$this->register_taxonomy( 'library_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->register_taxonomy( 'publisher_tax', [
+		$this->register_taxonomy( 'publisher_taxonomy', [
 			'meta_box_cb'                             => NULL,   // default meta box
 			Services\Sitemaps::VIEWABLE_TAXONOMY_PROP => TRUE,   // even empty shows on sitemaps
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->register_taxonomy( 'type_tax', [
+		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->register_taxonomy( 'status_tax', [
+		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->register_taxonomy( 'audience_tax', [
+		$this->register_taxonomy( 'audience_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
 		if ( count( $this->posttypes() ) ) {
 
@@ -505,9 +507,10 @@ class Book extends gEditorial\Module
 			$this->_paired = $this->constant( 'publication_paired' );
 		}
 
-		$this->register_posttype( 'publication_cpt', [
-			'primary_taxonomy' => $this->constant( 'publication_category' ),
+		// FIXME: WTF: use `$this->paired_register()`
+		$this->register_posttype( 'publication_posttype', [
 			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'publication_category' ),
 		] );
 
 		$this->register_shortcode( 'publication_shortcode' );
@@ -531,7 +534,7 @@ class Book extends gEditorial\Module
 	private function _do_add_custom_queries()
 	{
 		$query    = $this->constant( 'isbn_query' );
-		$posttype = $this->constant( 'publication_cpt' );
+		$posttype = $this->constant( 'publication_posttype' );
 
 		$this->filter_append( 'query_vars', $query );
 
@@ -557,7 +560,7 @@ class Book extends gEditorial\Module
 		if ( is_admin() || ! $query->is_main_query() )
 			return;
 
-		if ( ! is_post_type_archive( $this->constant( 'publication_cpt' ) ) )
+		if ( ! is_post_type_archive( $this->constant( 'publication_posttype' ) ) )
 			return;
 
 		$isbn = get_query_var( $this->constant( 'isbn_query' ) );
@@ -580,7 +583,7 @@ class Book extends gEditorial\Module
 			if ( ! $post = WordPress\Post::get( $post_id ) )
 				return;
 
-			if ( $post->post_type != $this->constant( 'publication_cpt' ) )
+			if ( $post->post_type != $this->constant( 'publication_posttype' ) )
 				return;
 
 			if ( ! $this->is_post_viewable( $post ) )
@@ -590,10 +593,10 @@ class Book extends gEditorial\Module
 
 		} else if ( $this->_paired && is_tax( $this->constant( 'publication_paired' ) ) ) {
 
-			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'publication_cpt', 'publication_paired' ) )
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'publication_posttype', 'publication_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
-		} else if ( is_singular( $this->constant( 'publication_cpt' ) ) ) {
+		} else if ( is_singular( $this->constant( 'publication_posttype' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
 				add_action( $this->hook_base( 'content', 'before' ),
@@ -609,19 +612,21 @@ class Book extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'publication_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'publication_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->_hook_general_mainbox( $screen, 'publication_posttype' );
+
 				if ( post_type_supports( $screen->post_type, 'author' ) )
-					$this->metaboxcustom_add_metabox_author( 'publication_cpt' );
+					$this->metaboxcustom_add_metabox_author( 'publication_posttype' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->metaboxcustom_add_metabox_excerpt( 'publication_cpt' );
+					$this->metaboxcustom_add_metabox_excerpt( 'publication_posttype' );
 
-				$this->_hook_post_updated_messages( 'publication_cpt' );
+				$this->_hook_post_updated_messages( 'publication_posttype' );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
 
@@ -637,18 +642,18 @@ class Book extends gEditorial\Module
 
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 
-				$this->_hook_bulk_post_updated_messages( 'publication_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'publication_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( [
-					'type_tax',
+					'type_taxonomy',
 					'publication_category',
-					'subject_tax',
-					'serie_tax',
-					'library_tax',
-					'status_tax',
-					'audience_tax',
-					'publisher_tax',
+					'subject_taxonomy',
+					'serie_taxonomy',
+					'library_taxonomy',
+					'status_taxonomy',
+					'audience_taxonomy',
+					'publisher_taxonomy',
 				] );
 			}
 
@@ -678,17 +683,17 @@ class Book extends gEditorial\Module
 
 	public function render_widget_term_summary( $object, $box )
 	{
-		$this->do_dashboard_term_summary( 'status_tax', $box, [ $this->constant( 'publication_cpt' ) ] );
+		$this->do_dashboard_term_summary( 'status_taxonomy', $box, [ $this->constant( 'publication_posttype' ) ] );
 	}
 
 	public function tweaks_column_row_p2p_to( $post, $before, $after )
 	{
-		$this->column_row_p2p_to_posttype( 'publication_cpt', $post, $before, $after );
+		$this->column_row_p2p_to_posttype( 'publication_posttype', $post, $before, $after );
 	}
 
 	public function tweaks_column_row_p2p_from( $post, $before, $after )
 	{
-		$this->column_row_p2p_from_posttype( 'publication_cpt', $post, $before, $after );
+		$this->column_row_p2p_from_posttype( 'publication_posttype', $post, $before, $after );
 	}
 
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
@@ -711,11 +716,12 @@ class Book extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->register_taxonomy( 'size_tax', [
+		// FIXME: DEPRECATED: use `Units` Module
+		$this->register_taxonomy( 'size_taxonomy', [
 			'meta_box_cb' => FALSE,
-		], 'publication_cpt' );
+		], 'publication_posttype' );
 
-		$this->add_posttype_fields( $this->constant( 'publication_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'publication_posttype' ) );
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 
@@ -723,12 +729,12 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
 
-		// $this->register_default_terms( 'size_tax' );
+		// $this->register_default_terms( 'size_taxonomy' );
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'publication_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'publication_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -757,16 +763,16 @@ class Book extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->templateposttype__include( $template, $this->constant( 'publication_cpt' ) );
+		return $this->templateposttype__include( $template, $this->constant( 'publication_posttype' ) );
 	}
 
 	public function templateposttype_get_archive_content_default( $posttype )
 	{
-		$html = $this->get_search_form( 'publication_cpt' );
+		$html = $this->get_search_form( 'publication_posttype' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
 			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
-				'post_type' => $posttype, // $this->constant( 'publication_cpt' )
+				'post_type' => $posttype, // $this->constant( 'publication_posttype' )
 			] );
 
 		else
@@ -783,8 +789,8 @@ class Book extends gEditorial\Module
 	public function subject_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'assigned',
-			$this->constant( 'publication_cpt' ),
-			$this->constant( 'subject_tax' ),
+			$this->constant( 'publication_posttype' ),
+			$this->constant( 'subject_taxonomy' ),
 			$atts,
 			$content,
 			$this->constant( 'subject_shortcode', $tag ),
@@ -795,8 +801,8 @@ class Book extends gEditorial\Module
 	public function serie_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'assigned',
-			$this->constant( 'publication_cpt' ),
-			$this->constant( 'serie_tax' ),
+			$this->constant( 'publication_posttype' ),
+			$this->constant( 'serie_taxonomy' ),
 			$atts,
 			$content,
 			$this->constant( 'serie_shortcode', $tag ),
@@ -810,7 +816,7 @@ class Book extends gEditorial\Module
 			return $content;
 
 		return ShortCode::listPosts( 'connected',
-			$this->constant( 'publication_cpt' ),
+			$this->constant( 'publication_posttype' ),
 			'',
 			array_merge( [
 				'connection'    => $this->_p2p,
@@ -831,7 +837,7 @@ class Book extends gEditorial\Module
 		if ( FALSE === $args['title'] )
 			return FALSE;
 
-		if ( $this->is_posttype( 'publication_cpt', $post ) ) {
+		if ( $this->is_posttype( 'publication_posttype', $post ) ) {
 
 			if ( $title = $this->get_setting( 'p2p_title_from' ) )
 				return $title;
@@ -846,12 +852,12 @@ class Book extends gEditorial\Module
 
 	public function shortcode_item_after_cb( $post, $args, $item )
 	{
-		return $this->_p2p ? $this->p2p_get_meta_row( 'publication_cpt', $post->p2p_id, ' &ndash; ', '' ) : '';
+		return $this->_p2p ? $this->p2p_get_meta_row( 'publication_posttype', $post->p2p_id, ' &ndash; ', '' ) : '';
 	}
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		$type = $this->constant( 'publication_cpt' );
+		$type = $this->constant( 'publication_posttype' );
 		$args = [
 			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
@@ -906,7 +912,7 @@ class Book extends gEditorial\Module
 		$posts = [];
 		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
 
-		if ( ! $p2p_type = p2p_type( $this->constant( 'publication_cpt_p2p' ) ) )
+		if ( ! $p2p_type = p2p_type( $this->constant( 'publication_posttype_p2p' ) ) )
 			return FALSE;
 
 		$p2p = $p2p_type->get_connected( $post, $extra, 'abstract' );
@@ -936,7 +942,7 @@ class Book extends gEditorial\Module
 			return;
 
 		$connected = new \WP_Query( [
-			'connected_type'  => $this->constant( 'publication_cpt_p2p' ),
+			'connected_type'  => $this->constant( 'publication_posttype_p2p' ),
 			'connected_items' => $post,
 			'posts_per_page'  => -1,
 		] );
@@ -945,7 +951,7 @@ class Book extends gEditorial\Module
 
 			echo $this->wrap_open( '-p2p '.$class );
 
-			if ( $this->is_posttype( 'publication_cpt', $post ) )
+			if ( $this->is_posttype( 'publication_posttype', $post ) )
 				Core\HTML::h3( $this->get_setting( 'p2p_title_from' ), '-title -p2p-from' );
 
 			else
@@ -958,7 +964,7 @@ class Book extends gEditorial\Module
 
 				echo ShortCode::postItem( $GLOBALS['post'], [
 					'item_link'  => WordPress\Post::link( NULL, FALSE ),
-					'item_after' => $this->p2p_get_meta_row( 'publication_cpt', $GLOBALS['post']->p2p_id, ' &ndash; ', '' ),
+					'item_after' => $this->p2p_get_meta_row( 'publication_posttype', $GLOBALS['post']->p2p_id, ' &ndash; ', '' ),
 				] );
 			}
 
@@ -973,7 +979,7 @@ class Book extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'publication_cpt' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'publication_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -1057,7 +1063,7 @@ class Book extends gEditorial\Module
 			],
 			'related' => [
 				'title'    => _x( 'Import Related', 'Table Column', 'geditorial-book' ),
-				'args'     => [ 'type' => $this->constant( 'publication_cpt' ) ],
+				'args'     => [ 'type' => $this->constant( 'publication_posttype' ) ],
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 					$html = '';
@@ -1076,7 +1082,7 @@ class Book extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Meta Information about Related Publications', 'Header', 'geditorial-book' ) ),
-			'empty'      => $this->get_posttype_label( 'publication_cpt', 'not_found' ),
+			'empty'      => $this->get_posttype_label( 'publication_posttype', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}
@@ -1106,7 +1112,7 @@ class Book extends gEditorial\Module
 
 	public function national_library_default_posttype_isbn_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'publication_cpt' ) )
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
 			return '_meta_publication_isbn';
 
 		return $default;
@@ -1114,7 +1120,7 @@ class Book extends gEditorial\Module
 
 	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'publication_cpt' ) )
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
 			return '_meta_publication_isbn';
 
 		return $default;
@@ -1122,7 +1128,7 @@ class Book extends gEditorial\Module
 
 	public function datacodes_default_posttype_barcode_type( $default, $posttype, $types )
 	{
-		if ( $posttype == $this->constant( 'publication_cpt' ) )
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
 			return $this->barcode_type;
 
 		return $default;
@@ -1130,7 +1136,7 @@ class Book extends gEditorial\Module
 
 	private function get_importer_fields( $posttype = NULL )
 	{
-		if ( $posttype == $this->constant( 'publication_cpt' ) )
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
 			return [];
 
 		if ( $this->posttype_supported( $posttype ) )

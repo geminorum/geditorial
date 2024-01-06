@@ -153,9 +153,9 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( ! wp_delete_attachment( $attachment->ID, TRUE ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %1$s: attachment id, %2$s: attachment title */
-				_x( 'There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-attachments' ) ),
-				Core\HTML::code( $attachment->ID ), WordPress\Post::title( $attachment->ID ) ) : TRUE ) && FALSE;
+				/* translators: %1$s: attachment title, %2$s: attachment id */
+				_x( 'There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s)', 'Notice', 'geditorial-attachments' ) ),
+				WordPress\Post::title( $attachment->ID ), Core\HTML::code( $attachment->ID ) ) : TRUE ) && FALSE;
 
 		if ( $verbose )
 			echo Core\HTML::tag( 'li',

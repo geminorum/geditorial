@@ -98,7 +98,7 @@ class Home extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'featured_tax' => 'post_tag',
+			'featured_taxonomy' => 'post_tag',
 		];
 	}
 
@@ -117,7 +117,7 @@ class Home extends gEditorial\Module
 		parent::init();
 
 		$posttypes = $this->posttypes();
-		$featured  = $this->constant( 'featured_tax' );
+		$featured  = $this->constant( 'featured_taxonomy' );
 
 		if ( is_admin() ) {
 
@@ -146,7 +146,7 @@ class Home extends gEditorial\Module
 
 			add_action( 'save_post', [ $this, 'delete_transient' ] );
 			add_action( 'switch_theme', [ $this, 'delete_transient' ] );
-			add_action( 'delete_'.$featured, [ $this, 'delete_featured_tax' ], 10, 4 );
+			add_action( 'delete_'.$featured, [ $this, 'delete_featured_taxonomy' ], 10, 4 );
 
 			if ( ! is_admin() && $this->get_setting( 'featured_hide', FALSE ) ) {
 				add_filter( 'get_terms', [ $this, 'hide_featured_term' ], 10, 3 );
@@ -261,7 +261,7 @@ class Home extends gEditorial\Module
 
 		if ( ! $term = get_term_by( 'slug',
 			$this->get_setting( 'featured_term', 'featured' ),
-				$this->constant( 'featured_tax' ) ) )
+				$this->constant( 'featured_taxonomy' ) ) )
 					return apply_filters( 'featured_content_post_ids', [] );
 
 		$featured = get_posts( [
@@ -269,7 +269,7 @@ class Home extends gEditorial\Module
 			'numberposts' => $this->featured['max_posts'],
 			'tax_query'   => [ [
 				'field'    => 'term_id',
-				'taxonomy' => $this->constant( 'featured_tax' ),
+				'taxonomy' => $this->constant( 'featured_taxonomy' ),
 				'terms'    => $term->term_id,
 			] ],
 		] );
@@ -290,7 +290,7 @@ class Home extends gEditorial\Module
 		delete_transient( 'featured_content_ids' );
 	}
 
-	public function delete_featured_tax( $term, $tt_id, $deleted_term, $object_ids )
+	public function delete_featured_taxonomy( $term, $tt_id, $deleted_term, $object_ids )
 	{
 		if ( is_wp_error( $deleted_term ) )
 			return;
@@ -303,7 +303,7 @@ class Home extends gEditorial\Module
 	{
 		if ( empty( $terms )
 			|| 'all' != $args['fields']
-			|| ! in_array( $this->constant( 'featured_tax' ), $taxonomies ) )
+			|| ! in_array( $this->constant( 'featured_taxonomy' ), $taxonomies ) )
 				return $terms;
 
 		$slug = $this->get_setting( 'featured_term', 'featured' );
@@ -318,7 +318,7 @@ class Home extends gEditorial\Module
 	public function hide_the_featured_term( $terms, $id, $taxonomy )
 	{
 		if ( empty( $terms )
-			|| $taxonomy != $this->constant( 'featured_tax' ) )
+			|| $taxonomy != $this->constant( 'featured_taxonomy' ) )
 				return $terms;
 
 		$slug = $this->get_setting( 'featured_term', 'featured' );

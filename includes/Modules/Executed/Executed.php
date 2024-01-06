@@ -14,17 +14,23 @@ class Executed extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
 	{
 		return [
-			'name'   => 'executed',
-			'title'  => _x( 'Executed', 'Modules: Executed', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Executions', 'Modules: Executed', 'geditorial-admin' ),
-			'icon'   => 'hammer',
-			'access' => 'beta',
+			'name'     => 'executed',
+			'title'    => _x( 'Executed', 'Modules: Executed', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Executions', 'Modules: Executed', 'geditorial-admin' ),
+			'icon'     => 'hammer',
+			'access'   => 'beta',
+			'keywords' => [
+				'taxmodule',
+				'executive',
+				'execution',
+			],
 		];
 	}
 

@@ -26,6 +26,7 @@ class Territory extends gEditorial\Module
 			'icon'     => 'location-alt',
 			'access'   => 'beta',
 			'keywords' => [
+				'taxmodule',
 				'geo',
 			],
 		];

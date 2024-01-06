@@ -17,12 +17,12 @@ class DirectedConnectionType
 
 	function __get( $key )
 	{
-		return $this->ctype->$key;
+		return $this->ctype->{$key};
 	}
 
 	function __isset( $key )
 	{
-		return isset( $this->ctype->$key );
+		return isset( $this->ctype->{$key} );
 	}
 
 	public function get_direction()
