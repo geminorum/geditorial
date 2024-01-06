@@ -383,6 +383,8 @@ class Persona extends gEditorial\Module
 
 			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
+		], [
+			'is_viewable' => $this->get_setting( 'posttype_viewable', FALSE ),
 		] );
 
 		$this->filter( 'the_title', 2, 8 );

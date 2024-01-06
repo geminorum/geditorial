@@ -92,23 +92,21 @@ trait CorePostTypes
 		if ( ! array_key_exists( 'capabilities', $args ) && 'post' != $cap_type )
 			$args['capabilities'] = [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ];
 
-		$object = register_post_type( $posttype, $args );
+		$object = register_post_type( $posttype, $this->apply_posttype_settings( $posttype, $args, $settings ) );
 
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
-		$this->apply_posttype_settings( $posttype, $settings );
-
 		return $object;
 	}
 
-	// TODO: adopt `_hook_posttype_viewable`
-	protected function apply_posttype_settings( $posttype, $args = [] )
+	protected function apply_posttype_settings( $posttype, $args = [], $atts = [] )
 	{
 		$settings = self::atts( [
 			'block_editor' => FALSE,
 			'quick_edit'   => NULL,
-		], $args );
+			'is_viewable'  => NULL,
+		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
 
@@ -130,10 +128,27 @@ trait CorePostTypes
 							return $posttype === $type ? (bool) $value : $edit;
 						}, 12, 2 );
 					break;
+
+				case 'is_viewable':
+
+					if ( $value )
+						break;
+
+					$args = array_merge( $args, [
+						'public'              => FALSE,
+						'exclude_from_search' => TRUE,
+						'publicly_queryable'  => FALSE,
+						'show_in_nav_menus'   => FALSE,
+						'show_in_admin_bar'   => FALSE,
+					] );
+
+					// TODO: migrate `_hook_posttype_viewable` here!
+
+					break;
 			}
 		}
 
-		return $posttype;
+		return $args;
 	}
 
 	// NOTE: also accepts: `[ 'story', 'stories' ]`

@@ -51,7 +51,7 @@ trait PairedCore
 		return $constants;
 	}
 
-	protected function paired_register( $extra = [], $supported = NULL )
+	protected function paired_register( $extra = [], $settings = [], $supported = NULL )
 	{
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
@@ -121,7 +121,7 @@ trait PairedCore
 				'feeds' => (bool) $this->get_setting( 'posttype_feeds', FALSE ),
 				'pages' => (bool) $this->get_setting( 'posttype_pages', FALSE ),
 			],
-		], $extra ) );
+		], $extra ), $settings );
 
 		if ( self::isError( $object ) )
 			return $object;

@@ -39,12 +39,10 @@ class Inquire extends gEditorial\Module
 					'values'      => $roles,
 				],
 			],
+			'_frontend' => [
+				'posttype_viewable',
+			],
 			'_supports' => [
-				[
-					'field'       => 'make_public',
-					'title'       => _x( 'Make Public', 'Setting Title', 'geditorial-inquire' ),
-					'description' => _x( 'Displays Inquiries on the front-end.', 'Setting Description', 'geditorial-inquire' ),
-				],
 				$this->settings_supports_option( 'inquiry_cpt', TRUE ),
 			],
 		];
@@ -139,20 +137,11 @@ class Inquire extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'inquiry_cpt' );
 
-		$args = [];
+		$this->register_posttype( 'inquiry_cpt', [], [
+			'is_viewable' => $this->get_setting( 'posttype_viewable', TRUE ),
+		] );
 
-		if ( ! $this->get_setting( 'make_public' ) )
-			$args = [
-				'public'              => FALSE,
-				'show_ui'             => TRUE,
-				'exclude_from_search' => TRUE,
-				'publicly_queryable'  => FALSE,
-				'show_in_nav_menus'   => FALSE,
-				'show_in_admin_bar'   => FALSE,
-				'show_in_rest'        => FALSE,
-			];
-
-		$this->register_posttype( 'inquiry_cpt', $args );
+		$this->_hook_posttype_viewable( $this->constant( 'inquiry_cpt' ), FALSE );
 	}
 
 	public function after_setup_theme()
