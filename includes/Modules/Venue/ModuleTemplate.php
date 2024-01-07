@@ -16,7 +16,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = NULL;
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'place_cpt', 'place' );
+			$atts['type'] = self::constant( 'place_posttype', 'place' );
 
 		return self::metaSummary( $atts );
 	}
@@ -35,7 +35,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'place_cpt', 'place' );
+			$atts['type'] = self::constant( 'place_posttype', 'place' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}
@@ -52,7 +52,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( ! $post = WordPress\Post::get( $atts['id'] ) )
 			return $atts['default'];
 
-		if ( $post->post_type === self::constant( 'place_cpt', 'place' ) )
+		if ( $post->post_type === self::constant( 'place_posttype', 'place' ) )
 			return self::metaField( 'map_embed_url', array_merge( $atts, [
 				'fallback' => 'content_embed_url',
 				// 'filter'   => '__do_embed_shortcode', // NO NEED: filtering the raw meta

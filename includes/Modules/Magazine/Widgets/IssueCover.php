@@ -42,7 +42,7 @@ class IssueCover extends gEditorial\Widget
 	public function widget_html( $args, $instance )
 	{
 		$link = 'parent';
-		$type = self::constant( 'issue_cpt', 'issue' );
+		$type = self::constant( 'issue_posttype', 'issue' );
 
 		if ( ! empty( $instance['custom_link'] ) )
 			$link = $instance['custom_link'];
@@ -86,7 +86,7 @@ class IssueCover extends gEditorial\Widget
 
 	public function form( $instance )
 	{
-		$type = self::constant( 'issue_cpt', 'issue' );
+		$type = self::constant( 'issue_posttype', 'issue' );
 
 		$this->before_form( $instance );
 

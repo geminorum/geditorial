@@ -30,7 +30,7 @@ class Gallery extends gEditorial\Module
 			],
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'album_cpt', TRUE ),
+				$this->settings_supports_option( 'album_posttype', TRUE ),
 			],
 		];
 	}
@@ -38,12 +38,12 @@ class Gallery extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'album_cpt'         => 'photo_album',
-			'album_cpt_slug'    => 'album',
-			'album_cpt_archive' => 'albums',
-			'album_cat'         => 'photo_gallery',
-			'album_cat_slug'    => 'gallery',
-			'photo_tag'         => 'photo_tag',
+			'album_posttype'         => 'photo_album',
+			'album_posttype_slug'    => 'album',
+			'album_posttype_archive' => 'albums',
+			'category_taxonomy'      => 'photo_gallery',
+			'category_taxonomy_slug' => 'gallery',
+			'tag_taxonomy'           => 'photo_tag',
 		];
 	}
 
@@ -51,8 +51,8 @@ class Gallery extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'album_cat' => 'format-image',
-				'photo_tag' => 'images-alt2',
+				'category_taxonomy' => 'format-image',
+				'tag_taxonomy' => 'images-alt2',
 			],
 		];
 	}
@@ -61,12 +61,12 @@ class Gallery extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'album_cpt' => _n_noop( 'Photo Album', 'Photo Albums', 'geditorial-gallery' ),
-				'album_cat' => _n_noop( 'Album Gallery', 'Album Galleries', 'geditorial-gallery' ),
-				'photo_tag' => _n_noop( 'Photo Tag', 'Photo Tags', 'geditorial-gallery' ),
+				'album_posttype'    => _n_noop( 'Photo Album', 'Photo Albums', 'geditorial-gallery' ),
+				'category_taxonomy' => _n_noop( 'Album Gallery', 'Album Galleries', 'geditorial-gallery' ),
+				'tag_taxonomy'      => _n_noop( 'Photo Tag', 'Photo Tags', 'geditorial-gallery' ),
 			],
 			'labels' => [
-				'album_cpt' => [
+				'album_posttype' => [
 					'menu_name'      => _x( 'Gallery', 'Label: Menu Name', 'geditorial-gallery' ),
 					'featured_image' => _x( 'Featured Photo', 'Label: Featured Image', 'geditorial-gallery' ),
 				],
@@ -83,55 +83,55 @@ class Gallery extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'album_cpt' ) ] ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'album_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'album_cpt' );
+		$this->register_posttype_thumbnail( 'album_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'album_cat', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'album_cpt' );
+		], 'album_posttype' );
 
-		$this->register_taxonomy( 'photo_tag', [
+		$this->register_taxonomy( 'tag_taxonomy', [
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], [ 'attachments' ] );
 
-		$this->register_posttype( 'album_cpt' );
+		$this->register_posttype( 'album_posttype' );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'album_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'album_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'get_default_comment_status', 3 );
-				$this->_hook_post_updated_messages( 'album_cpt' );
+				$this->_hook_post_updated_messages( 'album_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_bulk_post_updated_messages( 'album_cpt' );
-				$this->corerestrictposts__hook_screen_taxonomies( 'album_cat' );
+				$this->_hook_bulk_post_updated_messages( 'album_posttype' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
 			}
 		}
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'album_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'album_posttype' ) )
 			$items[] = $glance;
 
 		return $items;

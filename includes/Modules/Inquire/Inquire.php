@@ -43,7 +43,7 @@ class Inquire extends gEditorial\Module
 				'posttype_viewable',
 			],
 			'_supports' => [
-				$this->settings_supports_option( 'inquiry_cpt', TRUE ),
+				$this->settings_supports_option( 'inquiry_posttype', TRUE ),
 			],
 		];
 	}
@@ -51,10 +51,10 @@ class Inquire extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'inquiry_cpt'  => 'inquiry',
-			'subject_tax'  => 'inquiry_subject',
-			'status_tax'   => 'inquire_status',
-			'priority_tax' => 'inquire_priority',
+			'inquiry_posttype'  => 'inquiry',
+			'subject_taxonomy'  => 'inquiry_subject',
+			'status_taxonomy'   => 'inquire_status',
+			'priority_taxonomy' => 'inquire_priority',
 		];
 	}
 
@@ -62,9 +62,9 @@ class Inquire extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'subject_tax'  => NULL,
-				'status_tax'   => 'tag',
-				'priority_tax' => 'clipboard',
+				'subject_taxonomy'  => NULL,
+				'status_taxonomy'   => 'tag',
+				'priority_taxonomy' => 'clipboard',
 			],
 		];
 	}
@@ -73,13 +73,13 @@ class Inquire extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'inquiry_cpt'  => _n_noop( 'Inquiry', 'Inquiries', 'geditorial-inquire' ),
-				'subject_tax'  => _n_noop( 'Inquiry Subject', 'Inquiry Subjects', 'geditorial-inquire' ),
-				'status_tax'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
-				'priority_tax' => _n_noop( 'Inquiry Priority', 'Inquiry Priorities', 'geditorial-inquire' ),
+				'inquiry_posttype'  => _n_noop( 'Inquiry', 'Inquiries', 'geditorial-inquire' ),
+				'subject_taxonomy'  => _n_noop( 'Inquiry Subject', 'Inquiry Subjects', 'geditorial-inquire' ),
+				'status_taxonomy'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
+				'priority_taxonomy' => _n_noop( 'Inquiry Priority', 'Inquiry Priorities', 'geditorial-inquire' ),
 			],
 			'labels' => [
-				'inquiry_cpt' => [
+				'inquiry_posttype' => [
 					'excerpt_label' => _x( 'Question', 'Label: Excerpt Label', 'geditorial-inquire' ),
 				],
 			],
@@ -91,7 +91,7 @@ class Inquire extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'status_tax' => [
+			'status_taxonomy' => [
 				'status_drafted'     => _x( 'Drafted', 'Default Term', 'geditorial-inquire' ),
 				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-inquire' ),
 				'status_pending'     => _x( 'Pending', 'Default Term', 'geditorial-inquire' ),
@@ -104,7 +104,7 @@ class Inquire extends gEditorial\Module
 				'status_ready'       => _x( 'Ready', 'Default Term', 'geditorial-inquire' ),
 				'status_final'       => _x( 'Final', 'Default Term', 'geditorial-inquire' ),
 			],
-			'priority_tax' => [
+			'priority_taxonomy' => [
 				'priority_immediate' => _x( 'Immediate', 'Default Term', 'geditorial-inquire' ),
 				'priority_high'      => _x( 'High', 'Default Term', 'geditorial-inquire' ),
 				'priority_normal'    => _x( 'Normal', 'Default Term', 'geditorial-inquire' ),
@@ -118,30 +118,30 @@ class Inquire extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'subject_tax', [
+		$this->register_taxonomy( 'subject_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'inquiry_cpt' );
+		], 'inquiry_posttype' );
 
-		$this->register_taxonomy( 'status_tax', [
+		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'inquiry_cpt' );
+		], 'inquiry_posttype' );
 
-		$this->register_taxonomy( 'priority_tax', [
+		$this->register_taxonomy( 'priority_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'inquiry_cpt' );
+		], 'inquiry_posttype' );
 
-		$this->register_posttype( 'inquiry_cpt', [], [
+		$this->register_posttype( 'inquiry_posttype', [], [
 			'is_viewable' => $this->get_setting( 'posttype_viewable', TRUE ),
 		] );
 
-		$this->_hook_posttype_viewable( $this->constant( 'inquiry_cpt' ), FALSE );
+		$this->_hook_posttype_viewable( $this->constant( 'inquiry_posttype' ), FALSE );
 	}
 
 	public function after_setup_theme()
@@ -153,7 +153,7 @@ class Inquire extends gEditorial\Module
 	protected function get_module_templates()
 	{
 		return [
-			'page_cpt' => [
+			'page_posttype' => [
 				'main' => _x( 'Editorial: Inquire: Dashboard', 'Template Title', 'geditorial-inquire' ),
 			],
 		];
@@ -161,7 +161,7 @@ class Inquire extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'inquiry_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'inquiry_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -173,22 +173,22 @@ class Inquire extends gEditorial\Module
 					MetaBox::classEditorBox( $screen, $this->classs( 'question' ) );
 
 					add_meta_box( $this->classs( 'question' ),
-						$this->get_posttype_label( 'inquiry_cpt', 'excerpt_label' ),
+						$this->get_posttype_label( 'inquiry_posttype', 'excerpt_label' ),
 						[ $this, 'do_metabox_excerpt' ],
 						$screen,
 						'after_title'
 					);
 				}
 
-				$this->_hook_post_updated_messages( 'inquiry_cpt' );
+				$this->_hook_post_updated_messages( 'inquiry_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_bulk_post_updated_messages( 'inquiry_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'inquiry_posttype' );
 				$this->corerestrictposts__hook_screen_taxonomies( [
-					'subject_tax',
-					'status_tax',
-					'priority_tax',
+					'subject_taxonomy',
+					'status_taxonomy',
+					'priority_taxonomy',
 				] );
 			}
 		}
@@ -196,12 +196,12 @@ class Inquire extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$this->_hack_adminmenu_no_create_posts( $this->constant( 'inquiry_cpt' ) );
+		$this->_hack_adminmenu_no_create_posts( $this->constant( 'inquiry_posttype' ) );
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'inquiry_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'inquiry_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -221,7 +221,7 @@ class Inquire extends gEditorial\Module
 			MetaBox::fieldEditorBox(
 				$post->post_excerpt,
 				'excerpt',
-				$this->get_posttype_label( 'inquiry_cpt', 'excerpt_label' )
+				$this->get_posttype_label( 'inquiry_posttype', 'excerpt_label' )
 			);
 
 		else

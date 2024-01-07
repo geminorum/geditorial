@@ -41,7 +41,7 @@ class CollectionPoster extends gEditorial\Widget
 	public function widget_html( $args, $instance )
 	{
 		$link = 'parent';
-		$type = self::constant( 'collection_cpt', 'collection' );
+		$type = self::constant( 'collection_posttype', 'collection' );
 
 		if ( ! empty( $instance['custom_link'] ) )
 			$link = $instance['custom_link'];
@@ -85,7 +85,7 @@ class CollectionPoster extends gEditorial\Widget
 
 	public function form( $instance )
 	{
-		$type = self::constant( 'collection_cpt', 'collection' );
+		$type = self::constant( 'collection_posttype', 'collection' );
 
 		$this->before_form( $instance );
 

@@ -56,8 +56,8 @@ class Tube extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'video_cpt', TRUE ),
-				$this->settings_supports_option( 'channel_cpt', TRUE ),
+				$this->settings_supports_option( 'video_posttype', TRUE ),
+				$this->settings_supports_option( 'channel_posttype', TRUE ),
 			],
 		];
 	}
@@ -65,18 +65,18 @@ class Tube extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'video_cpt'             => 'video', // `clip`
-			'video_cpt_connected'   => 'connected_videos',
-			'video_cat'             => 'video_category',
-			'subject_tax'           => 'video_subject',
-			'channel_cpt'           => 'channel',
-			'channel_cpt_connected' => 'connected_channels',
-			'channel_cat'           => 'channel_category',
+			'video_posttype'             => 'video',                   // ALT: `clip`
+			'video_posttype_connected'   => 'connected_videos',
+			'category_video'             => 'video_category',
+			'subject_taxonomy'           => 'video_subject',
+			'channel_posttype'           => 'channel',
+			'channel_posttype_connected' => 'connected_channels',
+			'category_channel'           => 'channel_category',
 
-			'video_shortcode'       => 'tube-video',
-			'video_cat_shortcode'   => 'tube-video-category',
-			'channel_shortcode'     => 'tube-channel',
-			'channel_cat_shortcode' => 'tube-channel-category',
+			'video_shortcode'            => 'tube-video',
+			'category_video_shortcode'   => 'tube-video-category',
+			'channel_shortcode'          => 'tube-channel',
+			'category_channel_shortcode' => 'tube-channel-category',
 		];
 	}
 
@@ -84,12 +84,12 @@ class Tube extends gEditorial\Module
 	{
 		return [
 			'post_types' => [
-				'video_cpt'   => NULL,
-				'channel_cpt' => 'playlist-video',
+				'video_posttype'   => NULL,
+				'channel_posttype' => 'playlist-video',
 			],
 			'taxonomies' => [
-				'video_cat'   => NULL,
-				'channel_cat' => 'playlist-video',
+				'category_video'   => NULL,
+				'category_channel' => 'playlist-video',
 			],
 		];
 	}
@@ -98,10 +98,10 @@ class Tube extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'video_cpt'   => _n_noop( 'Video', 'Videos', 'geditorial-tube' ),
-				'video_cat'   => _n_noop( 'Video Category', 'Video Categories', 'geditorial-tube' ),
-				'channel_cpt' => _n_noop( 'Channel', 'Channels', 'geditorial-tube' ),
-				'channel_cat' => _n_noop( 'Channel Category', 'Channel Categories', 'geditorial-tube' ),
+				'video_posttype'   => _n_noop( 'Video', 'Videos', 'geditorial-tube' ),
+				'category_video'   => _n_noop( 'Video Category', 'Video Categories', 'geditorial-tube' ),
+				'channel_posttype' => _n_noop( 'Channel', 'Channels', 'geditorial-tube' ),
+				'category_channel' => _n_noop( 'Channel Category', 'Channel Categories', 'geditorial-tube' ),
 			],
 		];
 
@@ -109,13 +109,13 @@ class Tube extends gEditorial\Module
 			return $strings;
 
 		$strings['p2p'] = [
-			'video_cpt' => [
+			'video_posttype' => [
 				'title' => [
 					'from' => _x( 'Connected Videos', 'O2O', 'geditorial-tube' ),
 					'to'   => _x( 'Connected Posts', 'O2O', 'geditorial-tube' ),
 				],
 			],
-			'channel_cpt' => [
+			'channel_posttype' => [
 				'title' => [
 					'from' => _x( 'Connected Channels', 'O2O', 'geditorial-tube' ),
 					'to'   => _x( 'Connected Videos', 'O2O', 'geditorial-tube' ),
@@ -130,7 +130,7 @@ class Tube extends gEditorial\Module
 	public function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'video_cpt' ) => [
+			$this->constant( 'video_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 				'lead'       => [ 'type' => 'postbox_html' ],
@@ -169,7 +169,7 @@ class Tube extends gEditorial\Module
 				'video_source_url'  => [ 'type' => 'video_source' ],
 				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
-			$this->constant( 'channel_cpt' ) => [
+			$this->constant( 'channel_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 				'lead'       => [ 'type' => 'postbox_html' ],
@@ -186,17 +186,17 @@ class Tube extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [
-			$this->constant( 'video_cpt' ),
-			$this->constant( 'channel_cpt' ),
+			$this->constant( 'video_posttype' ),
+			$this->constant( 'channel_posttype' ),
 		] ) );
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'video_cpt' );
+		$this->register_posttype_thumbnail( 'video_posttype' );
 
 		if ( $this->get_setting( 'video_channels' ) )
-			$this->register_posttype_thumbnail( 'channel_cpt' );
+			$this->register_posttype_thumbnail( 'channel_posttype' );
 	}
 
 	public function o2o_init()
@@ -205,16 +205,16 @@ class Tube extends gEditorial\Module
 
 		if ( count( $posttypes ) )
 			$this->_o2o = Services\O2O\API::registerConnectionType( [
-				'name' => $this->constant( 'video_cpt_connected' ),
-				'to'   => $this->constant( 'video_cpt' ),
+				'name' => $this->constant( 'video_posttype_connected' ),
+				'to'   => $this->constant( 'video_posttype' ),
 				'from' => $posttypes,
 			] );
 
 		if ( $this->get_setting( 'video_channels' ) )
 			Services\O2O\API::registerConnectionType( [
-				'name' => $this->constant( 'channel_cpt_connected' ),
-				'to'   => $this->constant( 'channel_cpt' ),
-				'from' => $this->constant( 'video_cpt' ),
+				'name' => $this->constant( 'channel_posttype_connected' ),
+				'to'   => $this->constant( 'channel_posttype' ),
+				'from' => $this->constant( 'video_posttype' ),
 
 				'reciprocal' => TRUE,
 			] );
@@ -224,36 +224,36 @@ class Tube extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'video_cat', [
+		$this->register_taxonomy( 'category_video', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'video_cpt' );
+		], 'video_posttype' );
 
-		$this->register_posttype( 'video_cpt', [
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'video_cat' ),
+		$this->register_posttype( 'video_posttype', [
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'category_video' ),
 		] );
 
-		$this->register_shortcode( 'video_cat_shortcode' );
+		$this->register_shortcode( 'category_video_shortcode' );
 
 		if ( $this->get_setting( 'video_channels' ) ) {
 
-			$this->register_taxonomy( 'channel_cat', [
+			$this->register_taxonomy( 'category_channel', [
 				'hierarchical'       => TRUE,
 				'meta_box_cb'        => NULL,
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
 				'default_term'       => NULL,
-			], 'channel_cpt' );
+			], 'channel_posttype' );
 
-			$this->register_posttype( 'channel_cpt', [
+			$this->register_posttype( 'channel_posttype', [
 				'show_in_admin_bar' => FALSE,
-				'primary_taxonomy'  => $this->constant( 'channel_cat' ),
+				'primary_taxonomy'  => $this->constant( 'category_channel' ),
 			] );
 
-			$this->register_shortcode( 'channel_cat_shortcode' );
+			$this->register_shortcode( 'category_channel_shortcode' );
 		}
 
 		if ( ! is_admin() && $this->get_setting( 'video_toolbar' ) ) {
@@ -264,30 +264,30 @@ class Tube extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'video_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'video_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
-				$this->_hook_post_updated_messages( 'video_cpt' );
+				$this->_hook_post_updated_messages( 'video_posttype' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_bulk_post_updated_messages( 'video_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'video_posttype' );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 
-		} else if ( $screen->post_type == $this->constant( 'channel_cpt' )
+		} else if ( $screen->post_type == $this->constant( 'channel_posttype' )
 			&& $this->get_setting( 'video_channels' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
-				$this->_hook_post_updated_messages( 'channel_cpt' );
+				$this->_hook_post_updated_messages( 'channel_posttype' );
 				$this->filter( 'get_default_comment_status', 3 );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_bulk_post_updated_messages( 'channel_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'channel_posttype' );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
@@ -295,19 +295,19 @@ class Tube extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'video_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'video_posttype' ) );
 
 		if ( $this->get_setting( 'video_channels' ) )
-			$this->add_posttype_fields( $this->constant( 'channel_cpt' ) );
+			$this->add_posttype_fields( $this->constant( 'channel_posttype' ) );
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'video_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'video_posttype' ) )
 			$items[] = $glance;
 
 		if ( $this->get_setting( 'video_channels' )
-			&& ( $glance = $this->dashboard_glance_post( 'channel_cpt' ) ) )
+			&& ( $glance = $this->dashboard_glance_post( 'channel_posttype' ) ) )
 				$items[] = $glance;
 
 		return $items;
@@ -402,26 +402,26 @@ class Tube extends gEditorial\Module
 		return $output.Core\HTML::wrap( $html, $this->classs( 'video' ) );
 	}
 
-	public function video_cat_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function category_video_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'assigned',
-			$this->constant( 'video_cpt' ),
-			$this->constant( 'video_cat' ),
+			$this->constant( 'video_posttype' ),
+			$this->constant( 'category_video' ),
 			$atts,
 			$content,
-			$this->constant( 'video_cat_shortcode', $tag ),
+			$this->constant( 'category_video_shortcode', $tag ),
 			$this->key
 		);
 	}
 
-	public function channel_cat_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function category_channel_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'assigned',
-			$this->constant( 'channel_cpt' ),
-			$this->constant( 'channel_cat' ),
+			$this->constant( 'channel_posttype' ),
+			$this->constant( 'category_channel' ),
 			$atts,
 			$content,
-			$this->constant( 'channel_cat_shortcode', $tag ),
+			$this->constant( 'category_channel_shortcode', $tag ),
 			$this->key
 		);
 	}

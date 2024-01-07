@@ -51,8 +51,8 @@ class Venue extends gEditorial\Module
 				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
-					$this->constant( 'place_cat' ),
-					$this->get_taxonomy_label( 'place_cat', 'no_terms' ),
+					$this->constant( 'category_taxonomy' ),
+					$this->get_taxonomy_label( 'category_taxonomy', 'no_terms' ),
 				],
 			],
 			'_editlist' => [
@@ -78,7 +78,7 @@ class Venue extends gEditorial\Module
 				'archive_override',
 				'display_searchform',
 				'empty_content',
-				'archive_title' => [ NULL, $this->get_posttype_label( 'place_cpt', 'all_items' ) ],
+				'archive_title' => [ NULL, $this->get_posttype_label( 'place_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
 			],
@@ -87,7 +87,7 @@ class Venue extends gEditorial\Module
 				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'place_cpt', [
+				$this->settings_supports_option( 'place_posttype', [
 					'title',
 					'editor',
 					'excerpt',
@@ -101,12 +101,11 @@ class Venue extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'place_cpt'    => 'place',
-			'place_tax'    => 'places',
-			'place_cat'    => 'place_category',
-			'facility_tax' => 'place_facility',
-
-			'place_shortcode' => 'place',
+			'place_posttype'    => 'place',
+			'place_paired'      => 'places',
+			'category_taxonomy' => 'place_category',
+			'facility_taxonomy' => 'place_facility',
+			'place_shortcode'   => 'place',
 		];
 	}
 
@@ -114,9 +113,9 @@ class Venue extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'place_tax'    => NULL,
-				'place_cat'    => 'category',
-				'facility_tax' => 'building',
+				'place_paired'      => NULL,
+				'category_taxonomy' => 'category',
+				'facility_taxonomy' => 'building',
 			],
 		];
 	}
@@ -125,10 +124,10 @@ class Venue extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'place_cpt'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'place_tax'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'place_cat'    => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
-				'facility_tax' => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
+				'place_posttype'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'place_paired'      => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'category_taxonomy' => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
+				'facility_taxonomy' => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
 			],
 		];
 
@@ -140,7 +139,7 @@ class Venue extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			'place_cpt' => [
+			'place_posttype' => [
 				'metabox_title' => _x( 'Place Details', 'Label: MetaBox Title', 'geditorial-venue' ),
 				'listbox_title' => _x( 'Connected to this Place', 'Label: MetaBox Title', 'geditorial-venue' ),
 			],
@@ -152,7 +151,7 @@ class Venue extends gEditorial\Module
 	protected function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'place_cpt' ) => [
+			$this->constant( 'place_posttype' ) => [
 				'parent_complex' => [
 					'title'       => _x( 'Parent Complex', 'Field Title', 'geditorial-venue' ),
 					'description' => _x( 'Parent complex title of the location', 'Field Description', 'geditorial-venue' ),
@@ -204,20 +203,20 @@ class Venue extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'place_cpt' );
+		$this->register_posttype_thumbnail( 'place_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'place_cat', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'place_cpt' );
+		], 'place_posttype' );
 
 		$this->paired_register();
 
@@ -232,12 +231,12 @@ class Venue extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_tax( $this->constant( 'place_tax' ) ) ) {
+		if ( is_tax( $this->constant( 'place_paired' ) ) ) {
 
-			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'place_cpt', 'place_tax' ) )
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'place_posttype', 'place_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
-		} else if ( is_post_type_archive( $this->constant( 'place_cpt' ) ) ) {
+		} else if ( is_post_type_archive( $this->constant( 'place_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
@@ -247,16 +246,16 @@ class Venue extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
-			? $this->constant( 'facility_tax' )
+			? $this->constant( 'facility_taxonomy' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'place_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'place_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->_hook_post_updated_messages( 'place_cpt' );
+				$this->_hook_post_updated_messages( 'place_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
@@ -267,16 +266,16 @@ class Venue extends gEditorial\Module
 
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'menu_order', 'ASC' );
-				$this->_hook_bulk_post_updated_messages( 'place_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'place_posttype' );
 				$this->pairedcore__hook_sync_paired();
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
-				$this->corerestrictposts__hook_screen_taxonomies( 'place_cat' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $subterms && $subterms === $screen->taxonomy )
-				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'place_cpt' ) ) );
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'place_posttype' ) ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 
@@ -307,22 +306,22 @@ class Venue extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [
-			'place_cpt',
-			'place_tax',
-			'facility_tax',
-			'place_cat',
+			'place_posttype',
+			'place_paired',
+			'facility_taxonomy',
+			'category_taxonomy',
 		];
 	}
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'place_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'place_posttype' ) );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'place_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'place_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -330,16 +329,16 @@ class Venue extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->templateposttype__include( $template, $this->constant( 'place_cpt' ) );
+		return $this->templateposttype__include( $template, $this->constant( 'place_posttype' ) );
 	}
 
 	public function templateposttype_get_archive_content_default( $posttype )
 	{
-		$html = $this->get_search_form( 'place_cpt' );
+		$html = $this->get_search_form( 'place_posttype' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
 			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
-				'post_type' => $posttype, // $this->constant( 'place_cpt' ),
+				'post_type' => $posttype, // $this->constant( 'place_posttype' ),
 			] );
 
 		else
@@ -355,8 +354,8 @@ class Venue extends gEditorial\Module
 	public function place_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
-			$this->constant( 'place_cpt' ),
-			$this->constant( 'place_tax' ),
+			$this->constant( 'place_posttype' ),
+			$this->constant( 'place_paired' ),
 			array_merge( [
 				'posttypes' => $this->posttypes(),
 				'orderby'   => 'menu_order',

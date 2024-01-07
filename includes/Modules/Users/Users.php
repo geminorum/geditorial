@@ -80,10 +80,10 @@ class Users extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'group_tax'      => 'user_group',
-			'group_tax_slug' => 'users/group',
-			'type_tax'       => 'user_type',
-			'type_tax_slug'  => 'users/type',
+			'group_taxonomy'      => 'user_group',
+			'group_taxonomy_slug' => 'users/group',
+			'type_taxonomy'       => 'user_type',
+			'type_taxonomy_slug'  => 'users/type',
 
 			'metakey_categories' => 'author_categories_%s',
 		];
@@ -98,12 +98,12 @@ class Users extends gEditorial\Module
 				'action_link'  => _x( 'Edit', 'Dashboard Widget Action', 'geditorial-users' ),
 			],
 			'misc' => [
-				'group_tax' => [
+				'group_taxonomy' => [
 					'menu_name'          => _x( 'Groups', 'Taxonomy Menu', 'geditorial-users' ),
 					'users_column_title' => _x( 'Users', 'Column Title', 'geditorial-users' ),
 					'show_option_all'    => _x( 'All user groups', 'Show Option All', 'geditorial-users' ),
 				],
-				'type_tax' => [
+				'type_taxonomy' => [
 					'menu_name'          => _x( 'Types', 'Taxonomy Menu', 'geditorial-users' ),
 					'users_column_title' => _x( 'Users', 'Column Title', 'geditorial-users' ),
 					'show_option_all'    => _x( 'All user types', 'Show Option All', 'geditorial-users' ),
@@ -111,14 +111,14 @@ class Users extends gEditorial\Module
 				'counts_column_title' => _x( 'Summary', 'Column Title', 'geditorial-users' ),
 			],
 			'noops' => [
-				'group_tax' => _n_noop( 'User Group', 'User Groups', 'geditorial-users' ),
-				'type_tax'  => _n_noop( 'User Type', 'User Types', 'geditorial-users' ),
+				'group_taxonomy' => _n_noop( 'User Group', 'User Groups', 'geditorial-users' ),
+				'type_taxonomy'  => _n_noop( 'User Type', 'User Types', 'geditorial-users' ),
 			],
 			'labels' => [
-				'group_tax' => [
+				'group_taxonomy' => [
 					'not_found' => _x( 'There are no groups available.', 'Label: Not Found', 'geditorial-users' ),
 				],
-				'type_tax'  => [
+				'type_taxonomy'  => [
 					'not_found' => _x( 'There are no types available.', 'Label: Not Found', 'geditorial-users' ),
 				],
 			],
@@ -131,7 +131,7 @@ class Users extends gEditorial\Module
 
 		if ( $this->get_setting( 'user_groups' ) ) {
 
-			$this->register_taxonomy( 'group_tax', [
+			$this->register_taxonomy( 'group_taxonomy', [
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
 			], 'user' );
@@ -141,7 +141,7 @@ class Users extends gEditorial\Module
 		}
 
 		if ( $this->get_setting( 'user_types' ) )
-			$this->register_taxonomy( 'type_tax', [
+			$this->register_taxonomy( 'type_taxonomy', [
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
 			], 'user' );
@@ -153,10 +153,10 @@ class Users extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->get_setting( 'user_groups' ) )
-			$this->_hook_menu_taxonomy( 'group_tax', 'users.php' );
+			$this->_hook_menu_taxonomy( 'group_taxonomy', 'users.php' );
 
 		if ( $this->get_setting( 'user_types' ) )
-			$this->_hook_menu_taxonomy( 'type_tax', 'users.php' );
+			$this->_hook_menu_taxonomy( 'type_taxonomy', 'users.php' );
 	}
 
 	public function current_screen( $screen )
@@ -214,7 +214,7 @@ class Users extends gEditorial\Module
 				add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ] );
 				add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ] );
 
-			} else if ( $screen->taxonomy == $this->constant( 'group_tax' ) ) {
+			} else if ( $screen->taxonomy == $this->constant( 'group_taxonomy' ) ) {
 
 				$this->filter_string( 'parent_file', 'users.php' );
 
@@ -223,7 +223,7 @@ class Users extends gEditorial\Module
 					add_action( 'manage_'.$screen->taxonomy.'_custom_column', [ $this, 'custom_column_groups' ], 10, 3 );
 				}
 
-			} else if ( $screen->taxonomy == $this->constant( 'type_tax' ) ) {
+			} else if ( $screen->taxonomy == $this->constant( 'type_taxonomy' ) ) {
 
 				$this->filter_string( 'parent_file', 'users.php' );
 
@@ -237,10 +237,10 @@ class Users extends gEditorial\Module
 
 	public function sanitize_user( $username )
 	{
-		if ( $username == $this->constant( 'group_tax_slug' ) )
+		if ( $username == $this->constant( 'group_taxonomy_slug' ) )
 			$username = '';
 
-		else if ( $username == $this->constant( 'type_tax_slug' ) )
+		else if ( $username == $this->constant( 'type_taxonomy_slug' ) )
 			$username = '';
 
 		return $username;
@@ -325,7 +325,7 @@ class Users extends gEditorial\Module
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 
-			if ( $terms = WordPress\Taxonomy::getTerms( $this->constant( 'group_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
+			if ( $terms = WordPress\Taxonomy::getTerms( $this->constant( 'group_taxonomy' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
 
 				foreach ( $terms as $term ) {
 
@@ -339,7 +339,7 @@ class Users extends gEditorial\Module
 
 		if ( $this->get_setting( 'user_types', FALSE ) ) {
 
-			if ( $terms = WordPress\Taxonomy::getTerms( $this->constant( 'type_tax' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
+			if ( $terms = WordPress\Taxonomy::getTerms( $this->constant( 'type_taxonomy' ), $user->ID, TRUE, 'term_id', [], FALSE ) ) {
 
 				foreach ( $terms as $term ) {
 
@@ -355,34 +355,48 @@ class Users extends gEditorial\Module
 	public function manage_columns_groups( $columns )
 	{
 		unset( $columns['posts'] );
-		return array_merge( $columns, [ 'users' => $this->get_column_title( 'users', 'group_tax' ) ] );
+		return array_merge( $columns, [ 'users' => $this->get_column_title( 'users', 'group_taxonomy' ) ] );
 	}
 
 	public function custom_column_groups( $display, $column, $term_id )
 	{
 		if ( 'users' == $column )
-			echo Listtable::columnCount( get_term( $term_id, $this->constant( 'group_tax' ) )->count );
+			echo Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
 	}
 
 	public function manage_columns_types( $columns )
 	{
 		unset( $columns['posts'] );
-		return array_merge( $columns, [ 'users' => $this->get_column_title( 'users', 'type_tax' ) ] );
+		return array_merge( $columns, [ 'users' => $this->get_column_title( 'users', 'type_taxonomy' ) ] );
 	}
 
 	public function custom_column_types( $display, $column, $term_id )
 	{
 		if ( 'users' == $column )
-			echo Listtable::columnCount( get_term( $term_id, $this->constant( 'type_tax' ) )->count );
+			echo Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
 	}
 
 	public function edit_user_profile( $user )
 	{
 		if ( $this->get_setting( 'user_groups' ) )
-			MetaBox::tableRowObjectTaxonomy( $this->constant( 'group_tax' ), $user->ID, $this->classs( 'custom_tax' ), NULL, '<table class="form-table">', '</table>' );
+			MetaBox::tableRowObjectTaxonomy(
+				$this->constant( 'group_taxonomy' ),
+				$user->ID,
+				$this->classs( 'group-taxonomy' ),
+				NULL,
+				'<table class="form-table">',
+				'</table>'
+			);
 
 		if ( $this->get_setting( 'user_types' ) )
-			MetaBox::tableRowObjectTaxonomy( $this->constant( 'type_tax' ), $user->ID, $this->classs( 'custom_tax' ), NULL, '<table class="form-table">', '</table>' );
+			MetaBox::tableRowObjectTaxonomy(
+				$this->constant( 'type_taxonomy' ),
+				$user->ID,
+				$this->classs( 'type-taxonomy' ),
+				NULL,
+				'<table class="form-table">',
+				'</table>'
+			);
 
 		if ( $this->get_setting( 'author_categories' ) ) {
 
@@ -457,15 +471,22 @@ class Users extends gEditorial\Module
 		if ( ! current_user_can( 'edit_user', $user_id ) )
 			return FALSE;
 
-		$selected = self::req( $this->classs( 'custom_tax' ), [] );
-
 		if ( $this->get_setting( 'user_groups' ) )
-			MetaBox::storeObjectTaxonomy( $this->constant( 'group_tax' ), $user_id, $selected );
+			MetaBox::storeObjectTaxonomy(
+				$this->constant( 'group_taxonomy' ),
+				$user_id,
+				self::req( $this->classs( 'group-taxonomy' ), [] )
+			);
 
 		if ( $this->get_setting( 'user_types' ) )
-			MetaBox::storeObjectTaxonomy( $this->constant( 'type_tax' ), $user_id, $selected );
+			MetaBox::storeObjectTaxonomy(
+				$this->constant( 'type_taxonomy' ),
+				$user_id,
+				self::req( $this->classs( 'type-taxonomy' ), [] )
+			);
 
-		if ( $this->get_setting( 'author_categories' ) && isset( $_POST['categories'] ) ) {
+		if ( $this->get_setting( 'author_categories' )
+			&& isset( $_POST['categories'] ) ) {
 
 			$key = sprintf( $this->constant( 'metakey_categories' ), $this->site );
 			update_user_meta( $user_id, $key, array_filter( $_POST['categories'] ) );

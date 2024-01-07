@@ -30,7 +30,7 @@ class Team extends gEditorial\Module
 		return [
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'member_cpt', TRUE ),
+				$this->settings_supports_option( 'member_posttype', TRUE ),
 			],
 		];
 	}
@@ -38,8 +38,8 @@ class Team extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'member_cpt'   => 'team_member',
-			'member_group' => 'team_member_group',
+			'member_posttype' => 'team_member',
+			'group_taxonomy'  => 'team_member_group',
 
 			'o2o_name' => 'team_member_to_user',
 		];
@@ -49,7 +49,7 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'member_group' => NULL,
+				'group_taxonomy' => NULL,
 			],
 		];
 	}
@@ -58,11 +58,11 @@ class Team extends gEditorial\Module
 	{
 		return [
 			'noops' => [
-				'member_cpt'   => _n_noop( 'Team Member', 'Team Members', 'geditorial-team' ),
-				'member_group' => _n_noop( 'Team Member Group', 'Team Member Groups', 'geditorial-team' ),
+				'member_posttype' => _n_noop( 'Team Member', 'Team Members', 'geditorial-team' ),
+				'group_taxonomy'  => _n_noop( 'Team Member Group', 'Team Member Groups', 'geditorial-team' ),
 			],
 			'labels' => [
-				'member_cpt' => [
+				'member_posttype' => [
 					'menu_name' => _x( 'The Team', 'Label Menu Name', 'geditorial-team' ),
 				],
 			],
@@ -72,7 +72,7 @@ class Team extends gEditorial\Module
 	public function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'member_cpt' ) => [
+			$this->constant( 'member_posttype' ) => [
 				'team_role' => [
 					'title'       => _x( 'Role', 'Field Title', 'geditorial-team' ),
 					'description' => _x( 'Enter a byline for the team member (for example: "Director of Production").', 'Field Description', 'geditorial-team' ),
@@ -121,26 +121,26 @@ class Team extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'member_cpt' ) ] ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'member_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'member_cpt' );
+		$this->register_posttype_thumbnail( 'member_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'member_group', [
+		$this->register_taxonomy( 'group_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'member_cpt' );
+		], 'member_posttype' );
 
-		$this->register_posttype( 'member_cpt', [
+		$this->register_posttype( 'member_posttype', [
 			'menu_position'     => 65,
 			'show_in_admin_bar' => FALSE,
 		] );
@@ -150,7 +150,7 @@ class Team extends gEditorial\Module
 	{
 		$this->_o2o = Services\O2O\API::registerConnectionType( [
 			'name' => $this->constant( 'o2o_name' ),
-			'from' => $this->constant( 'member_cpt' ),
+			'from' => $this->constant( 'member_posttype' ),
 			'to'   => 'user',
 
 			'to_query_vars' => [
@@ -161,16 +161,16 @@ class Team extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'member_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'member_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
-				$this->_hook_post_updated_messages( 'member_cpt' );
+				$this->_hook_post_updated_messages( 'member_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_bulk_post_updated_messages( 'member_cpt' );
-				$this->corerestrictposts__hook_screen_taxonomies( 'member_group' );
+				$this->_hook_bulk_post_updated_messages( 'member_posttype' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'group_taxonomy' );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
@@ -189,14 +189,14 @@ class Team extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'member_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'member_posttype' ) );
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'member_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'member_posttype' ) )
 			$items[] = $glance;
 
 		return $items;

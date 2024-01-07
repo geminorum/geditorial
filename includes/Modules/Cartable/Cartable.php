@@ -164,10 +164,10 @@ class Cartable extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'user_tax'  => 'cartable_user',
-			'group_tax' => 'cartable_group',
-			'type_tax'  => 'cartable_type',
-			'group_ref' => 'user_group', // ref to the constant in Users module
+			'user_taxonomy'  => 'cartable_user',
+			'group_taxonomy' => 'cartable_group',
+			'type_taxonomy'  => 'cartable_type',
+			'group_ref'      => 'user_group',       // ref to the constant in Users module
 		];
 	}
 
@@ -179,7 +179,7 @@ class Cartable extends gEditorial\Module
 				'metabox_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),
 			],
 			'noops' => [
-				'type_tax' => _n_noop( 'Cartable Type', 'Cartable Types', 'geditorial-cartable' ),
+				'type_taxonomy' => _n_noop( 'Cartable Type', 'Cartable Types', 'geditorial-cartable' ),
 			],
 			'settings' => [
 				'sync_terms' => _x( 'Sync Users & Groups', 'Button', 'geditorial-cartable' ),
@@ -205,7 +205,7 @@ class Cartable extends gEditorial\Module
 
 		if ( $this->get_setting( 'support_users' ) ) {
 
-			$this->register_taxonomy( 'user_tax', [
+			$this->register_taxonomy( 'user_taxonomy', [
 				'hierarchical' => TRUE,
 				'public'       => FALSE,
 				'rewrite'      => FALSE,
@@ -215,7 +215,7 @@ class Cartable extends gEditorial\Module
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
-				'assign_terms' => 'assign_'.$this->constant( 'user_tax' ),
+				'assign_terms' => 'assign_'.$this->constant( 'user_taxonomy' ),
 			] );
 
 			// new term for new users
@@ -229,7 +229,7 @@ class Cartable extends gEditorial\Module
 
 		if ( $this->get_setting( 'support_types' ) ) {
 
-			$this->register_taxonomy( 'type_tax', [
+			$this->register_taxonomy( 'type_taxonomy', [
 				'hierarchical' => TRUE,
 				'public'       => FALSE,
 				'rewrite'      => FALSE,
@@ -238,7 +238,7 @@ class Cartable extends gEditorial\Module
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
-				'assign_terms' => 'assign_'.$this->constant( 'type_tax' ),
+				'assign_terms' => 'assign_'.$this->constant( 'type_taxonomy' ),
 			]  );
 
 			$this->support_types = TRUE;
@@ -252,7 +252,7 @@ class Cartable extends gEditorial\Module
 		if ( empty( $options->settings['user_groups'] ) )
 			return;
 
-		$this->register_taxonomy( 'group_tax', [
+		$this->register_taxonomy( 'group_taxonomy', [
 			'hierarchical' => TRUE,
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
@@ -261,7 +261,7 @@ class Cartable extends gEditorial\Module
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => 'assign_'.$this->constant( 'group_tax' ),
+			'assign_terms' => 'assign_'.$this->constant( 'group_taxonomy' ),
 		] );
 
 		$this->filter( 'wp_update_term_data', 4 );
@@ -288,7 +288,7 @@ class Cartable extends gEditorial\Module
 
 		switch ( $cap ) {
 
-			case 'assign_'.$this->constant( 'user_tax' ):
+			case 'assign_'.$this->constant( 'user_taxonomy' ):
 
 				if ( $this->support_users )
 					return $this->role_can( 'assign_user', $user_id )
@@ -296,7 +296,7 @@ class Cartable extends gEditorial\Module
 						: [ 'do_not_allow' ];
 
 			break;
-			case 'assign_'.$this->constant( 'group_tax' ):
+			case 'assign_'.$this->constant( 'group_taxonomy' ):
 
 				if ( $this->support_groups )
 					return $this->role_can( 'assign_group', $user_id )
@@ -304,7 +304,7 @@ class Cartable extends gEditorial\Module
 						: [ 'do_not_allow' ];
 
 			break;
-			case 'assign_'.$this->constant( 'type_tax' ):
+			case 'assign_'.$this->constant( 'type_taxonomy' ):
 
 				if ( $this->support_types )
 					return $this->role_can( 'assign_type', $user_id )
@@ -350,7 +350,7 @@ class Cartable extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'type_tax' ) == $screen->taxonomy ) {
+		if ( $this->constant( 'type_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 
@@ -393,7 +393,7 @@ class Cartable extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->support_types )
-			$this->_hook_menu_taxonomy( 'type_tax', 'options-general.php' );
+			$this->_hook_menu_taxonomy( 'type_taxonomy', 'options-general.php' );
 
 		if ( ! $this->support_users
 			&& ! $this->support_groups
@@ -483,7 +483,7 @@ class Cartable extends gEditorial\Module
 			$context = self::req( 'context', $context );
 			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
 
-			$current = WordPress\Term::get( $slug, $this->constant( $context.'_tax' ) );
+			$current = WordPress\Term::get( $slug, $this->constant( $context.'_taxonomy' ) );
 
 			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
@@ -538,7 +538,7 @@ class Cartable extends gEditorial\Module
 			$list = [];
 
 			foreach ( $groups as $slug )
-				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'group_tax' ) ) )
+				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'group_taxonomy' ) ) )
 					$list[] = Core\HTML::escape( $term->name ); // FIXME: make clickable
 
 			echo WordPress\Strings::getJoined( $list );
@@ -557,7 +557,7 @@ class Cartable extends gEditorial\Module
 			$list = [];
 
 			foreach ( $types as $slug )
-				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'type_tax' ) ) )
+				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'type_taxonomy' ) ) )
 					$list[] = Core\HTML::escape( $term->name ); // FIXME: make clickable
 
 			echo WordPressStrings::getJoined( $list );
@@ -651,14 +651,14 @@ class Cartable extends gEditorial\Module
 				if ( in_array( $user->user_login, $admins ) )
 					continue;
 
-				if ( WordPress\Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE ) )
+				if ( WordPress\Term::add( $user->user_login, $this->constant( 'user_taxonomy' ), FALSE ) )
 					$count++;
 			}
 		}
 
 		if ( $this->support_groups )
 			foreach ( WordPress\Taxonomy::getTerms( $this->constant( 'group_ref' ), FALSE, TRUE ) as $group )
-				if ( WordPress\Term::add( $group->name, $this->constant( 'group_tax' ), $group->slug ) )
+				if ( WordPress\Term::add( $group->name, $this->constant( 'group_taxonomy' ), $group->slug ) )
 					$count++;
 
 		Core\WordPress::redirectReferer( [
@@ -683,8 +683,8 @@ class Cartable extends gEditorial\Module
 		$before = $this->before_terms[$term_id];
 		$edited = get_term_by( 'id', $term_id, $this->constant( 'group_ref' ) );
 
-		if ( $mirrored = get_term_by( 'slug', $before->slug, $this->constant( 'group_tax' ) ) )
-			wp_update_term( $mirrored->term_id, $this->constant( 'group_tax' ), [
+		if ( $mirrored = get_term_by( 'slug', $before->slug, $this->constant( 'group_taxonomy' ) ) )
+			wp_update_term( $mirrored->term_id, $this->constant( 'group_taxonomy' ), [
 				'name' => $edited->name,
 				'slug' => $edited->slug,
 			] );
@@ -693,7 +693,7 @@ class Cartable extends gEditorial\Module
 	public function created_term( $term_id, $tt_id )
 	{
 		if ( $term = get_term_by( 'id', $term_id, $this->constant( 'group_ref' ) ) )
-			wp_insert_term( $term->name, $this->constant( 'group_tax' ), [
+			wp_insert_term( $term->name, $this->constant( 'group_taxonomy' ), [
 				'slug' => $term->slug,
 			] );
 	}
@@ -706,7 +706,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $user = get_user_by( 'id', $user_id ) )
 			return;
 
-			WordPress\Term::add( $user->user_login, $this->constant( 'user_tax' ), FALSE );
+			WordPress\Term::add( $user->user_login, $this->constant( 'user_taxonomy' ), FALSE );
 	}
 
 	public function render_widget_summary( $object, $box )
@@ -714,7 +714,7 @@ class Cartable extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		if ( ! $term = WordPress\Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_tax' ) ) )
+		if ( ! $term = WordPress\Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_taxonomy' ) ) )
 			return Info::renderSomethingIsWrong();
 
 		$this->tableCartableSummary( $term, $box['args']['context'] );
@@ -802,7 +802,7 @@ class Cartable extends gEditorial\Module
 		}
 
 		$list = MetaBox::checklistUserTerms( $post->ID, [
-			'taxonomy'          => $this->constant( 'user_tax' ),
+			'taxonomy'          => $this->constant( 'user_taxonomy' ),
 			'posttype'          => $post->post_type,
 			'list_only'         => $disable,
 			'selected_only'     => $disable,
@@ -818,7 +818,7 @@ class Cartable extends gEditorial\Module
 		$disable = ! $this->role_can( 'assign_group' );
 
 		MetaBox::checklistTerms( $post->ID, [
-			'taxonomy'          => $this->constant( 'group_tax' ),
+			'taxonomy'          => $this->constant( 'group_taxonomy' ),
 			'posttype'          => $post->post_type,
 			'edit'              => FALSE,
 			'list_only'         => $disable,
@@ -832,7 +832,7 @@ class Cartable extends gEditorial\Module
 		$disable = ! $this->role_can( 'assign_type' );
 
 		MetaBox::checklistTerms( $post->ID, [
-			'taxonomy'          => $this->constant( 'type_tax' ),
+			'taxonomy'          => $this->constant( 'type_taxonomy' ),
 			'posttype'          => $post->post_type,
 			'edit'              => FALSE,
 			'list_only'         => $disable,
@@ -843,17 +843,17 @@ class Cartable extends gEditorial\Module
 
 	private function get_users( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return WordPress\Taxonomy::getPostTerms( $this->constant( 'user_tax' ), $post_id, $object, $key );
+		return WordPress\Taxonomy::getPostTerms( $this->constant( 'user_taxonomy' ), $post_id, $object, $key );
 	}
 
 	private function get_groups( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return WordPress\Taxonomy::getPostTerms( $this->constant( 'group_tax' ), $post_id, $object, $key );
+		return WordPress\Taxonomy::getPostTerms( $this->constant( 'group_taxonomy' ), $post_id, $object, $key );
 	}
 
 	private function get_types( $post_id, $object = FALSE, $key = 'slug' )
 	{
-		return WordPress\Taxonomy::getPostTerms( $this->constant( 'type_tax' ), $post_id, $object, $key );
+		return WordPress\Taxonomy::getPostTerms( $this->constant( 'type_taxonomy' ), $post_id, $object, $key );
 	}
 
 	private function get_user_groups( $user_id = NULL )
@@ -877,7 +877,7 @@ class Cartable extends gEditorial\Module
 		$list  = $this->list_posttypes();
 		$query = [
 			'tax_query' => [ [
-				'taxonomy' => $this->constant( $context.'_tax' ),
+				'taxonomy' => $this->constant( $context.'_taxonomy' ),
 				'field'    => 'id',
 				'terms'    => [ $term->term_id ],
 			] ],
@@ -915,7 +915,7 @@ class Cartable extends gEditorial\Module
 		$args = [
 
 			'tax_query'      => [ [
-				'taxonomy' => $this->constant( $context.'_tax' ),
+				'taxonomy' => $this->constant( $context.'_taxonomy' ),
 				'field'    => 'id',
 				'terms'    => [ $term->term_id ],
 			] ],

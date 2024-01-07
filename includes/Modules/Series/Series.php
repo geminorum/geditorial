@@ -49,10 +49,10 @@ class Series extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'series_tax'       => 'series',
-			'series_tax_slug'  => 'serie',
-			'series_tax_rest'  => 'series',
-			'series_shortcode' => 'series',
+			'main_taxonomy'      => 'series',
+			'main_taxonomy_slug' => 'serie',
+			'main_taxonomy_rest' => 'series',
+			'main_shortcode'     => 'series',
 		];
 	}
 
@@ -60,7 +60,7 @@ class Series extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'series_tax' => NULL,
+				'main_taxonomy' => NULL,
 			],
 		];
 	}
@@ -87,7 +87,7 @@ class Series extends gEditorial\Module
 				'show_option_none' => _x( '&ndash; Choose a Series &ndash;', 'Show Option None', 'geditorial-series' ),
 			],
 			'noops' => [
-				'series_tax' => _n_noop( 'Serie', 'Series', 'geditorial-series' ),
+				'main_taxonomy' => _n_noop( 'Serie', 'Series', 'geditorial-series' ),
 			],
 		];
 	}
@@ -107,7 +107,7 @@ class Series extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'series_tax', [
+		$this->register_taxonomy( 'main_taxonomy', [
 			'show_admin_column' => TRUE,
 			'show_in_rest'      => FALSE, // disables in block editor, temporarily!
 		] );
@@ -115,7 +115,7 @@ class Series extends gEditorial\Module
 		foreach ( $this->posttypes() as $posttype )
 			$this->add_posttype_fields( $posttype, $this->fields[$this->key]['_supported'], TRUE, $this->key );
 
-		$this->register_shortcode( 'series_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 	}
 
 	public function current_screen( $screen )
@@ -126,8 +126,8 @@ class Series extends gEditorial\Module
 
 				$this->class_metabox( $screen, 'supportedbox' );
 				add_meta_box( $this->classs( 'supportedbox' ),
-					// $this->get_meta_box_title_taxonomy( 'series_tax', $screen->post_type ),
-					$this->strings_metabox_title_via_taxonomy( $this->constant( 'series_tax' ), 'supportedbox' ),
+					// $this->get_meta_box_title_taxonomy( 'main_taxonomy', $screen->post_type ),
+					$this->strings_metabox_title_via_taxonomy( $this->constant( 'main_taxonomy' ), 'supportedbox' ),
 					[ $this, 'render_supportedbox_metabox' ],
 					$screen,
 					'side'
@@ -140,7 +140,7 @@ class Series extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_admin_enabled();
-				$this->corerestrictposts__hook_screen_taxonomies( 'series_tax' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 			}
 		}
 	}
@@ -176,7 +176,7 @@ class Series extends gEditorial\Module
 			if ( $term_id && '-1' != $term_id )
 				$pre_terms[$offset] = (int) $term_id;
 
-		wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $pre_terms ), $this->constant( 'series_tax' ), FALSE );
+		wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $pre_terms ), $this->constant( 'main_taxonomy' ), FALSE );
 
 		foreach ( $pre_terms as $offset => $pre_term ) {
 			foreach ( $fields as $field ) {
@@ -228,7 +228,7 @@ class Series extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$taxonomy = $this->constant( 'series_tax' );
+		$taxonomy = $this->constant( 'main_taxonomy' );
 
 		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
@@ -360,26 +360,26 @@ class Series extends gEditorial\Module
 		}
 	}
 
-	public function series_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return Shortcode::listPosts( 'assigned',
 			'post',
-			$this->constant( 'series_tax' ),
+			$this->constant( 'main_taxonomy' ),
 			array_merge( [
 				'title_after' => '<div class="-desc">%3$s</div>',
 				'item_wrap'   => 'h4',
 				'item_after'  => TRUE, // see the callback
-				'item_cb'     => [ $this, 'series_shortcode_item_cb' ],
-				'order_cb'    => [ $this, 'series_shortcode_order_cb' ],
+				'item_cb'     => [ $this, 'main_shortcode_item_cb' ],
+				'order_cb'    => [ $this, 'main_shortcode_order_cb' ],
 				'orderby'     => 'order',
 				'posttypes'   => $this->posttypes(),
 			], (array) $atts ),
 			$content,
-			$this->constant( 'series_shortcode' )
+			$this->constant( 'main_shortcode' )
 		);
 	}
 
-	public function series_shortcode_order_cb( $posts, $args, $term )
+	public function main_shortcode_order_cb( $posts, $args, $term )
 	{
 		if ( is_array( $term ) )
 			$term = $term[0];
@@ -418,7 +418,7 @@ class Series extends gEditorial\Module
 		return $o;
 	}
 
-	public function series_shortcode_item_cb( $post, $args, $term )
+	public function main_shortcode_item_cb( $post, $args, $term )
 	{
 		if ( ! empty( $post->series_meta ) ) {
 

@@ -12,7 +12,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function getLatestCollectionID()
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'collection_cpt', 'collection' ), '', 'ID', 'publish' );
+		return WordPress\PostType::getLastMenuOrder( self::constant( 'collection_posttype', 'collection' ), '', 'ID', 'publish' );
 	}
 
 	public static function theCollection( $atts = [] )
@@ -62,7 +62,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'collection_cpt', 'collection' );
+			$atts['type'] = self::constant( 'collection_posttype', 'collection' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}

@@ -303,7 +303,7 @@ class ModuleHelper extends gEditorial\Helper
 		$splits = self::getCommonSplits();
 
 		foreach ( $parts as &$part ) {
-			foreach( $splits as $before => $after ) {
+			foreach ( $splits as $before => $after ) {
 				if ( $before === $part ) {
 					$part = $after;
 					break;

@@ -70,7 +70,7 @@ class Today extends gEditorial\Module
 			],
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'day_cpt', [
+				$this->settings_supports_option( 'day_posttype', [
 					'title',
 					'excerpt',
 					'editorial-roles'
@@ -82,7 +82,7 @@ class Today extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'day_cpt' => 'day',
+			'day_posttype' => 'day',
 
 			'metakey_cal'   => '_theday_cal',
 			'metakey_day'   => '_theday_day',
@@ -97,10 +97,10 @@ class Today extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'day_cpt' => _n_noop( 'Day', 'Days', 'geditorial-today' ),
+				'day_posttype' => _n_noop( 'Day', 'Days', 'geditorial-today' ),
 			],
 			'labels' => [
-				'day_cpt' => [
+				'day_posttype' => [
 					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-today' ),
 					'metabox_title'  => _x( 'The Day', 'Label: MetaBox Label', 'geditorial-today' ),
 					'excerpt_label'  => _x( 'Summary', 'MetaBox Title', 'geditorial-today' ),
@@ -121,7 +121,7 @@ class Today extends gEditorial\Module
 	protected function get_module_templates()
 	{
 		return [
-			'page_cpt' => [
+			'page_posttype' => [
 				'frontpage' => _x( 'Editorial: Today: Front-page', 'Template Title', 'geditorial-today' ),
 			],
 		];
@@ -129,7 +129,7 @@ class Today extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'day_cpt' ) ] ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'day_posttype' ) ] ) );
 	}
 
 	public function setup( $args = [] )
@@ -147,7 +147,7 @@ class Today extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'day_cpt' );
+		$this->register_posttype_thumbnail( 'day_posttype' );
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
@@ -163,7 +163,7 @@ class Today extends gEditorial\Module
 		parent::init();
 
 		// TODO: main posttype must be optional
-		$this->register_posttype( 'day_cpt' );
+		$this->register_posttype( 'day_posttype' );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
@@ -190,7 +190,7 @@ class Today extends gEditorial\Module
 
 	public function setup_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'day_cpt' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'day_posttype' ) ) {
 
 			$this->_edit_screen_supported( $posttype );
 			$this->_save_meta_supported( $posttype );
@@ -274,7 +274,7 @@ class Today extends gEditorial\Module
 	{
 		if ( 'post' == $screen->base ) {
 
-			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
+			if ( $screen->post_type == $this->constant( 'day_posttype' ) ) {
 
 				// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 
@@ -283,7 +283,7 @@ class Today extends gEditorial\Module
 				$this->action( 'edit_form_after_editor' );
 
 				add_meta_box( $this->classs( 'supportedbox' ),
-					$this->get_meta_box_title( 'day_cpt' ),
+					$this->get_meta_box_title( 'day_posttype' ),
 					[ $this, 'render_supportedbox_metabox' ],
 					$screen,
 					'side',
@@ -296,14 +296,14 @@ class Today extends gEditorial\Module
 					MetaBox::classEditorBox( $screen, $this->classs( 'excerpt' ) );
 
 					add_meta_box( $this->classs( 'excerpt' ),
-						$this->get_posttype_label( 'day_cpt', 'excerpt_label' ),
+						$this->get_posttype_label( 'day_posttype', 'excerpt_label' ),
 						[ $this, 'do_metabox_excerpt' ],
 						$screen,
 						'after_title'
 					);
 				}
 
-				$this->_hook_post_updated_messages( 'day_cpt' );
+				$this->_hook_post_updated_messages( 'day_posttype' );
 
 			} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -320,7 +320,7 @@ class Today extends gEditorial\Module
 
 		} else if ( 'edit' == $screen->base ) {
 
-			if ( $screen->post_type == $this->constant( 'day_cpt' ) ) {
+			if ( $screen->post_type == $this->constant( 'day_posttype' ) ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
@@ -329,7 +329,7 @@ class Today extends gEditorial\Module
 
 				$this->_save_meta_supported( $screen->post_type );
 				$this->_edit_screen_supported( $screen->post_type );
-				$this->_hook_bulk_post_updated_messages( 'day_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'day_posttype' );
 				$this->_admin_enabled();
 
 				$this->enqueue_asset_js( [], $screen );
@@ -380,7 +380,7 @@ class Today extends gEditorial\Module
 			return $actions;
 
 		if ( ! $this->posttype_supported( $post->post_type )
-			&& $post->post_type != $this->constant( 'day_cpt' ) )
+			&& $post->post_type != $this->constant( 'day_posttype' ) )
 				return $actions;
 
 		if ( $link = $this->get_today_admin_link( $post ) )
@@ -401,7 +401,7 @@ class Today extends gEditorial\Module
 		if ( ! $this->role_can( 'adminmenu' ) )
 			return FALSE;
 
-		$display_year = $post->post_type != $this->constant( 'day_cpt' );
+		$display_year = $post->post_type != $this->constant( 'day_posttype' );
 		$default_type = $this->default_calendar();
 
 		$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
@@ -417,7 +417,7 @@ class Today extends gEditorial\Module
 		echo $this->wrap_open( '-admin-metabox' );
 			$this->actions( 'render_metabox', $post, $box, NULL, 'supportedbox' );
 
-			$display_year = $post->post_type != $this->constant( 'day_cpt' );
+			$display_year = $post->post_type != $this->constant( 'day_posttype' );
 			$default_type = $this->default_calendar();
 
 			// FIXME: must first check query
@@ -449,14 +449,14 @@ class Today extends gEditorial\Module
 		MetaBox::fieldEditorBox(
 			$post->post_excerpt,
 			'excerpt',
-			$this->get_posttype_label( 'day_cpt', 'excerpt_label' )
+			$this->get_posttype_label( 'day_posttype', 'excerpt_label' )
 		);
 	}
 
 	public function manage_posts_columns( $columns )
 	{
 		return Core\Arraay::insert( $columns, [
-			'theday' => $this->get_column_title( 'theday', 'day_cpt' ),
+			'theday' => $this->get_column_title( 'theday', 'day_posttype' ),
 		], 'title', 'before' );
 	}
 
@@ -516,7 +516,7 @@ class Today extends gEditorial\Module
 	protected function check_the_day_posttype( $the_day = [] )
 	{
 		return ModuleHelper::getPostsConnected( [
-			'type'    => $this->constant( 'day_cpt' ),
+			'type'    => $this->constant( 'day_posttype' ),
 			'the_day' => $the_day,
 			'all'     => TRUE,
 			'count'   => TRUE,
@@ -599,7 +599,7 @@ class Today extends gEditorial\Module
 			return;
 
 		if ( ! $this->posttype_supported( $post->post_type )
-			&& ! $this->is_posttype( 'day_cpt', $post ) )
+			&& ! $this->is_posttype( 'day_posttype', $post ) )
 				return;
 
 		if ( ! $this->nonce_verify( 'supportedbox' )
@@ -607,7 +607,7 @@ class Today extends gEditorial\Module
 				return;
 
 		$postmeta  = [];
-		$constants = $this->get_the_day_constants( $post->post_type != $this->constant( 'day_cpt' ) );
+		$constants = $this->get_the_day_constants( $post->post_type != $this->constant( 'day_posttype' ) );
 
 		foreach ( $constants as $field => $constant ) {
 
@@ -636,7 +636,7 @@ class Today extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $title;
 
-		if ( $this->is_posttype( 'day_cpt', $post ) ) {
+		if ( $this->is_posttype( 'day_posttype', $post ) ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
 				$post,
@@ -670,7 +670,7 @@ class Today extends gEditorial\Module
 			return $template;
 
 		if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
-			|| is_post_type_archive( $this->constant( 'day_cpt' ) )
+			|| is_post_type_archive( $this->constant( 'day_posttype' ) )
 			|| is_page_template( 'today-frontpage.php' ) ) {
 
 			$constants = $this->get_the_day_constants();
@@ -699,7 +699,7 @@ class Today extends gEditorial\Module
 				'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
 				'post_title'  => $title,
 				'post_author' => 0,
-				'post_type'   => $this->constant( 'day_cpt' ),
+				'post_type'   => $this->constant( 'day_posttype' ),
 				'is_single'   => TRUE,
 			], [ $this, 'the_day_content' ] );
 
@@ -838,7 +838,7 @@ class Today extends gEditorial\Module
 
 	public function post_type_link( $post_link, $post, $leavename, $sample )
 	{
-		if ( $this->is_posttype( 'day_cpt', $post ) ) {
+		if ( $this->is_posttype( 'day_posttype', $post ) ) {
 
 			$the_day = ModuleHelper::getTheDayFromPost(
 				$post,
@@ -855,39 +855,39 @@ class Today extends gEditorial\Module
 	// `/cal/month/day/year/posttype`
 	public function rewrite_rules_array( $rules )
 	{
-		$new_rules = [];
-		$day_cpt   = $this->constant( 'day_cpt' );
-		$pattern = '([^/]+)';
+		$list     = [];
+		$posttype = $this->constant( 'day_posttype' );
+		// $pattern   = '([^/]+)';
 
-		foreach ( $this->get_setting( 'calendar_list', [] ) as $cal ) {
+		foreach ( $this->get_setting( 'calendar_list', [] ) as $calendar ) {
 
-			$new_rules[$cal.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/(.+)/?$'] = 'index.php?post_type='.$day_cpt
-				.'&day_cal='.$cal
+			$list[$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/(.+)/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]'
 				.'&day_year=$matches[3]'
 				.'&day_posttype=$matches[4]';
 
-			$new_rules[$cal.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/?$'] = 'index.php?post_type='.$day_cpt
-				.'&day_cal='.$cal
+			$list[$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]'
 				.'&day_year=$matches[3]';
 
-			$new_rules[$cal.'/([0-9]{1,2})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$day_cpt
-				.'&day_cal='.$cal
+			$list[$calendar.'/([0-9]{1,2})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]';
 
-			$new_rules[$cal.'/([0-9]{1,2})/?$'] = 'index.php?post_type='.$day_cpt
-				.'&day_cal='.$cal
+			$list[$calendar.'/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]';
 
-			$new_rules[$cal.'/?$'] = 'index.php?post_type='.$day_cpt
-				.'&day_cal='.$cal;
+			$list[$calendar.'/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar;
 		}
 
-		return array_merge( $new_rules, $rules );
+		return array_merge( $list, $rules );
 	}
 
 	private function build_meta_query( $constants, $relation = 'OR' )

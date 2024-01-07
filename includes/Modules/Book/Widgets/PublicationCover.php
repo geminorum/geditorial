@@ -37,7 +37,7 @@ class PublicationCover extends gEditorial\Widget
 	public function widget_html( $args, $instance )
 	{
 		$link = 'parent';
-		$type = self::constant( 'publication_cpt', 'publication' );
+		$type = self::constant( 'publication_posttype', 'publication' );
 
 		if ( ! empty( $instance['custom_link'] ) )
 			$link = $instance['custom_link'];
@@ -77,7 +77,7 @@ class PublicationCover extends gEditorial\Widget
 
 	public function form( $instance )
 	{
-		$type = self::constant( 'publication_cpt', 'publication' );
+		$type = self::constant( 'publication_posttype', 'publication' );
 
 		$this->before_form( $instance );
 

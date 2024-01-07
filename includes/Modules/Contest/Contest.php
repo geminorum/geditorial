@@ -53,8 +53,8 @@ class Contest extends gEditorial\Module
 				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
-					$this->constant( 'contest_cat' ),
-					$this->get_taxonomy_label( 'contest_cat', 'no_terms' ),
+					$this->constant( 'category_contest' ),
+					$this->get_taxonomy_label( 'category_contest', 'no_terms' ),
 				],
 			],
 			'_editlist' => [
@@ -74,8 +74,8 @@ class Contest extends gEditorial\Module
 				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'contest_cpt', TRUE ),
-				$this->settings_supports_option( 'apply_cpt', TRUE ),
+				$this->settings_supports_option( 'contest_posttype', TRUE ),
+				$this->settings_supports_option( 'apply_posttype', TRUE ),
 			],
 		];
 	}
@@ -83,13 +83,13 @@ class Contest extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'contest_cpt' => 'contest',
-			'contest_tax' => 'contests',
-			'section_tax' => 'contest_section',
-			'apply_cpt'   => 'apply',
-			'contest_cat' => 'contest_category',
-			'apply_cat'   => 'apply_category',
-			'status_tax'  => 'apply_status',
+			'contest_posttype' => 'contest',
+			'contest_paired'   => 'contests',
+			'section_taxonomy' => 'contest_section',
+			'apply_posttype'   => 'apply',
+			'category_contest' => 'contest_category',
+			'category_apply'   => 'apply_category',
+			'status_taxonomy'  => 'apply_status',
 
 			'contest_shortcode' => 'contest',
 			'cover_shortcode'   => 'contest-cover',
@@ -102,15 +102,15 @@ class Contest extends gEditorial\Module
 	{
 		return [
 			'post_types' => [
-				'contest_cpt' => NULL,
-				'apply_cpt'   => 'portfolio',
+				'contest_posttype' => NULL,
+				'apply_posttype'   => 'portfolio',
 			],
 			'taxonomies' => [
-				'contest_cat' => 'category',
-				'contest_tax' => 'megaphone',
-				'section_tax' => 'category',
-				'apply_cat'   => 'category',
-				'status_tax'  => 'post-status', // 'portfolio',
+				'category_contest' => 'category',
+				'contest_paired' => 'megaphone',
+				'section_taxonomy' => 'category',
+				'category_apply'   => 'category',
+				'status_taxonomy'  => 'post-status', // 'portfolio',
 			],
 		];
 	}
@@ -119,16 +119,16 @@ class Contest extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'contest_cpt' => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
-				'contest_tax' => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
-				'contest_cat' => _n_noop( 'Contest Category', 'Contest Categories', 'geditorial-contest' ),
-				'section_tax' => _n_noop( 'Section', 'Sections', 'geditorial-contest' ),
-				'apply_cpt'   => _n_noop( 'Apply', 'Applies', 'geditorial-contest' ),
-				'apply_cat'   => _n_noop( 'Apply Category', 'Apply Categories', 'geditorial-contest' ),
-				'status_tax'  => _n_noop( 'Apply Status', 'Apply Statuses', 'geditorial-contest' ),
+				'contest_posttype' => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
+				'contest_paired'   => _n_noop( 'Contest', 'Contests', 'geditorial-contest' ),
+				'category_contest' => _n_noop( 'Contest Category', 'Contest Categories', 'geditorial-contest' ),
+				'section_taxonomy' => _n_noop( 'Section', 'Sections', 'geditorial-contest' ),
+				'apply_posttype'   => _n_noop( 'Apply', 'Applies', 'geditorial-contest' ),
+				'category_apply'   => _n_noop( 'Apply Category', 'Apply Categories', 'geditorial-contest' ),
+				'status_taxonomy'  => _n_noop( 'Apply Status', 'Apply Statuses', 'geditorial-contest' ),
 			],
 			'labels' => [
-				'contest_cpt' => [
+				'contest_posttype' => [
 					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-contest' ),
 				],
 			],
@@ -138,20 +138,20 @@ class Contest extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			'contest_cpt' => [
+			'contest_posttype' => [
 				'metabox_title' => _x( 'The Contest', 'MetaBox Title', 'geditorial-contest' ),
 				'listbox_title' => _x( 'In This Contest', 'MetaBox Title', 'geditorial-contest' ),
 			],
-			'apply_cpt' => [
+			'apply_posttype' => [
 				'metabox_title' => _x( 'Contest', 'MetaBox Title', 'geditorial-contest' ),
 			],
 		];
 
 		$strings['misc'] = [
-			'contest_cpt' => [
+			'contest_posttype' => [
 				'children_column_title' => _x( 'Applies', 'Column Title', 'geditorial-contest' ),
 			],
-			'contest_tax' => [
+			'contest_paired' => [
 				'column_icon_title' => _x( 'Contest', 'Misc: `column_icon_title`', 'geditorial-contest' ),
 			],
 		];
@@ -162,7 +162,7 @@ class Contest extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'status_tax' => [
+			'status_taxonomy' => [
 				'status_approved'    => _x( 'Approved', 'Default Term', 'geditorial-contest' ),
 				'status_pending'     => _x( 'Pending', 'Default Term', 'geditorial-contest' ),
 				'status_maybe_later' => _x( 'Maybe Later', 'Default Term', 'geditorial-contest' ),
@@ -174,7 +174,7 @@ class Contest extends gEditorial\Module
 	protected function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'contest_cpt' ) => [
+			$this->constant( 'contest_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 
@@ -208,7 +208,7 @@ class Contest extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'contest_cpt' );
+		$this->register_posttype_thumbnail( 'contest_posttype' );
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
@@ -216,31 +216,31 @@ class Contest extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'contest_cat', [
+		$this->register_taxonomy( 'category_contest', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'contest_cpt' );
+		], 'contest_posttype' );
 
-		$this->register_taxonomy( 'apply_cat', [
+		$this->register_taxonomy( 'category_apply', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'apply_cpt' );
+		], 'apply_posttype' );
 
-		$this->register_taxonomy( 'status_tax', [
+		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'apply_cpt' );
+		], 'apply_posttype' );
 
 		$this->paired_register();
 
-		$this->register_posttype( 'apply_cpt' );
+		$this->register_posttype( 'apply_posttype' );
 
 		$this->register_shortcode( 'contest_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
@@ -257,17 +257,17 @@ class Contest extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
-			? $this->constant( 'section_tax' )
+			? $this->constant( 'section_taxonomy' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'contest_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'contest_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->_hook_post_updated_messages( 'contest_cpt' );
+				$this->_hook_post_updated_messages( 'contest_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
@@ -275,7 +275,7 @@ class Contest extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
-				$this->_hook_bulk_post_updated_messages( 'contest_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'contest_posttype' );
 				$this->pairedcore__hook_sync_paired();
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 			}
@@ -283,7 +283,7 @@ class Contest extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $subterms && $subterms === $screen->taxonomy )
-				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'contest_cpt' ) ) );
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'contest_posttype' ) ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 
@@ -291,20 +291,20 @@ class Contest extends gEditorial\Module
 
 			} else if ( 'post' == $screen->base ) {
 
-				if ( $screen->post_type == $this->constant( 'apply_cpt' ) ) {
-					$this->_hook_post_updated_messages( 'apply_cpt' );
+				if ( $screen->post_type == $this->constant( 'apply_posttype' ) ) {
+					$this->_hook_post_updated_messages( 'apply_posttype' );
 					$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
 					remove_meta_box( 'pageparentdiv', $screen, 'side' );
 				}
 
 				$this->_metabox_remove_subterm( $screen, $subterms );
-				$this->_hook_paired_pairedbox( $screen, ( $screen->post_type == $this->constant( 'apply_cpt' ) ) );
+				$this->_hook_paired_pairedbox( $screen, ( $screen->post_type == $this->constant( 'apply_posttype' ) ) );
 				$this->_hook_paired_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $screen->post_type == $this->constant( 'apply_cpt' ) )
-					$this->_hook_bulk_post_updated_messages( 'apply_cpt' );
+				if ( $screen->post_type == $this->constant( 'apply_posttype' ) )
+					$this->_hook_bulk_post_updated_messages( 'apply_posttype' );
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
@@ -323,25 +323,25 @@ class Contest extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [
-			'contest_cpt',
-			'contest_tax',
-			'section_tax',
-			'contest_cat',
+			'contest_posttype',
+			'contest_paired',
+			'section_taxonomy',
+			'category_contest',
 		];
 	}
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'contest_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'contest_posttype' ) );
 		$this->add_posttype_fields_supported();
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $contests = $this->dashboard_glance_post( 'contest_cpt' ) )
+		if ( $contests = $this->dashboard_glance_post( 'contest_posttype' ) )
 			$items[] = $contests;
 
-		if ( $applies = $this->dashboard_glance_post( 'apply_cpt' ) )
+		if ( $applies = $this->dashboard_glance_post( 'apply_posttype' ) )
 			$items[] = $applies;
 
 		return $items;
@@ -349,13 +349,13 @@ class Contest extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_tax( $this->constant( 'contest_tax' ) ) ) {
+		if ( is_tax( $this->constant( 'contest_paired' ) ) ) {
 
-			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'contest_cpt', 'contest_tax' ) )
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'contest_posttype', 'contest_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
-		} else if ( is_post_type_archive( $this->constant( 'contest_cpt' ) )
-			|| is_post_type_archive( $this->constant( 'apply_cpt' ) ) ) {
+		} else if ( is_post_type_archive( $this->constant( 'contest_posttype' ) )
+			|| is_post_type_archive( $this->constant( 'apply_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
@@ -365,8 +365,8 @@ class Contest extends gEditorial\Module
 	public function contest_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
-			$this->constant( 'contest_cpt' ),
-			$this->constant( 'contest_tax' ),
+			$this->constant( 'contest_posttype' ),
+			$this->constant( 'contest_paired' ),
 			array_merge( [
 				'posttypes' => $this->posttypes(),
 				'orderby'   => 'menu_order',
@@ -379,7 +379,7 @@ class Contest extends gEditorial\Module
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		$type = $this->constant( 'contest_cpt' );
+		$type = $this->constant( 'contest_posttype' );
 		$args = [
 			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
@@ -438,7 +438,7 @@ class Contest extends gEditorial\Module
 
 		if ( $exists = term_exists( $this->constant( 'term_abandoned_apply' ), $taxonomy ) ) {
 
-			if ( WordPress\Taxonomy::hasTerms( $this->constant( 'contest_tax' ), $post->ID ) )
+			if ( WordPress\Taxonomy::hasTerms( $this->constant( 'contest_paired' ), $post->ID ) )
 				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else

@@ -215,7 +215,14 @@ class Grouping extends gEditorial\Module
 			if ( ! $taxonomy = get_taxonomy( $custom['name'] ) )
 				continue;
 
-			MetaBox::tableRowObjectTaxonomy( $taxonomy->name, $user->ID, $this->classs( 'custom_tax' ), NULL, '<table class="form-table">', '</table>' );
+			MetaBox::tableRowObjectTaxonomy(
+				$taxonomy->name,
+				$user->ID,
+				$this->classs( $taxonomy->name, 'taxonomy' ),
+				NULL,
+				'<table class="form-table">',
+				'</table>'
+			);
 		}
 	}
 
@@ -224,11 +231,12 @@ class Grouping extends gEditorial\Module
 		if ( ! current_user_can( 'edit_user', $user_id ) )
 			return;
 
-		if ( ! $selected = self::req( $this->classs( 'custom_tax' ) ) )
-			return;
-
 		foreach ( $this->get_custom_taxonomies() as $custom )
-			MetaBox::storeObjectTaxonomy( $custom['name'], $user_id, $selected );
+			MetaBox::storeObjectTaxonomy(
+				$custom['name'],
+				$user_id,
+				self::req( $this->classs( $custom['name'], 'taxonomy' ) )
+			);
 	}
 
 	private function init_custom_taxonomies()

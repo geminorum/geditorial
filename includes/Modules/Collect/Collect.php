@@ -76,7 +76,7 @@ class Collect extends gEditorial\Module
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'collection_cpt', TRUE ),
+				$this->settings_supports_option( 'collection_posttype', TRUE ),
 			],
 		];
 	}
@@ -84,10 +84,10 @@ class Collect extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'collection_cpt' => 'collection',
-			'collection_tax' => 'collections',
-			'group_tax'      => 'collection_group',
-			'part_tax'       => 'collection_part',
+			'collection_posttype' => 'collection',
+			'collection_paired'   => 'collections',
+			'group_taxonomy'      => 'collection_group',
+			'part_taxonomy'       => 'collection_part',
 
 			'collection_shortcode' => 'collection',
 			'group_shortcode'      => 'collection-group',
@@ -99,9 +99,9 @@ class Collect extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'collection_tax' => 'star-filled',
-				'group_tax'      => 'clipboard',
-				'part_tax'       => 'exerpt-view',
+				'collection_paired' => 'star-filled',
+				'group_taxonomy'    => 'clipboard',
+				'part_taxonomy'     => 'exerpt-view',
 			],
 		];
 	}
@@ -110,16 +110,16 @@ class Collect extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'collection_cpt' => _n_noop( 'Collection', 'Collections', 'geditorial-collect' ),
-				'collection_tax' => _n_noop( 'Collection', 'Collections', 'geditorial-collect' ),
-				'group_tax'      => _n_noop( 'Group', 'Groups', 'geditorial-collect' ),
-				'part_tax'       => _n_noop( 'Part', 'Parts', 'geditorial-collect' ),
+				'collection_posttype' => _n_noop( 'Collection', 'Collections', 'geditorial-collect' ),
+				'collection_paired'   => _n_noop( 'Collection', 'Collections', 'geditorial-collect' ),
+				'group_taxonomy'      => _n_noop( 'Group', 'Groups', 'geditorial-collect' ),
+				'part_taxonomy'       => _n_noop( 'Part', 'Parts', 'geditorial-collect' ),
 			],
 			'labels' => [
-				'collection_cpt' => [
+				'collection_posttype' => [
 					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-collect' ),
 				],
-				'collection_tax' => [
+				'collection_paired' => [
 					'show_option_all' => _x( 'Collection', 'Label: Show Option All', 'geditorial-collect' ),
 				],
 			],
@@ -133,7 +133,7 @@ class Collect extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			'collection_cpt' => [
+			'collection_posttype' => [
 				'metabox_title' => _x( 'The Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
 				'listbox_title' => _x( 'In This Collection', 'Label: MetaBox Title', 'geditorial-collect' ),
 			],
@@ -145,7 +145,7 @@ class Collect extends gEditorial\Module
 	protected function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'collection_cpt' ) => [
+			$this->constant( 'collection_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 
@@ -190,27 +190,27 @@ class Collect extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [
-			'collection_cpt',
-			'collection_tax',
-			'part_tax',
+			'collection_posttype',
+			'collection_paired',
+			'part_taxonomy',
 		];
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'collection_cpt' );
+		$this->register_posttype_thumbnail( 'collection_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'group_tax', [
+		$this->register_taxonomy( 'group_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'collection_cpt' );
+		], 'collection_posttype' );
 
 		$this->paired_register();
 
@@ -227,22 +227,22 @@ class Collect extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_tax( $this->constant( 'collection_tax' ) ) ) {
+		if ( is_tax( $this->constant( 'collection_paired' ) ) ) {
 
-			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'collection_cpt', 'collection_tax' ) )
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'collection_posttype', 'collection_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
-		} else if ( is_tax( $this->constant( 'group_tax' ) ) ) {
+		} else if ( is_tax( $this->constant( 'group_taxonomy' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_groups', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
 
-		} else if ( is_post_type_archive( $this->constant( 'collection_cpt' ) ) ) {
+		} else if ( is_post_type_archive( $this->constant( 'collection_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
 
-		} else if ( is_singular( $this->constant( 'collection_cpt' ) ) ) {
+		} else if ( is_singular( $this->constant( 'collection_posttype' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
 				add_action( $this->hook_base( 'content', 'before' ),
@@ -255,17 +255,17 @@ class Collect extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
-			? $this->constant( 'part_tax' )
+			? $this->constant( 'part_taxonomy' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'collection_cpt' ) ) {
+		if ( $screen->post_type == $this->constant( 'collection_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->_hook_post_updated_messages( 'collection_cpt' );
+				$this->_hook_post_updated_messages( 'collection_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
@@ -276,16 +276,16 @@ class Collect extends gEditorial\Module
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
-				$this->_hook_bulk_post_updated_messages( 'collection_cpt' );
+				$this->_hook_bulk_post_updated_messages( 'collection_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
-				$this->corerestrictposts__hook_screen_taxonomies( 'group_tax' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'group_taxonomy' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $subterms && $subterms === $screen->taxonomy )
-				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'collection_cpt' ) ) );
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'collection_posttype' ) ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 
@@ -320,7 +320,7 @@ class Collect extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'collection_cpt' ) );
+		$this->add_posttype_fields( $this->constant( 'collection_posttype' ) );
 		$this->add_posttype_fields_supported();
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
@@ -328,7 +328,7 @@ class Collect extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'collection_cpt' ) )
+		if ( $glance = $this->dashboard_glance_post( 'collection_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -340,7 +340,7 @@ class Collect extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'collection_cpt' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'collection_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -388,8 +388,8 @@ class Collect extends gEditorial\Module
 	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
-			$this->constant( 'collection_cpt' ),
-			$this->constant( 'collection_tax' ),
+			$this->constant( 'collection_posttype' ),
+			$this->constant( 'collection_paired' ),
 			array_merge( [
 				'posttypes'   => $this->posttypes(),
 				'order_cb'    => NULL, // NULL for default ordering by meta
@@ -405,8 +405,8 @@ class Collect extends gEditorial\Module
 	public function group_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return Shortcode::listPosts( 'assigned',
-			$this->constant( 'collection_cpt' ),
-			$this->constant( 'group_tax' ),
+			$this->constant( 'collection_posttype' ),
+			$this->constant( 'group_taxonomy' ),
 			$atts,
 			$content,
 			$this->constant( 'group_shortcode' )
@@ -415,7 +415,7 @@ class Collect extends gEditorial\Module
 
 	public function poster_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		$type = $this->constant( 'collection_cpt' );
+		$type = $this->constant( 'collection_posttype' );
 		$args = [
 			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
