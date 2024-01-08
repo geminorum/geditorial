@@ -47,7 +47,7 @@
     "@wordpress/stylelint-config": "^21.31.0",
     "autoprefixer": "^10.4.16",
     "browserslist": "^4.22.2",
-    "cssnano": "^6.0.2",
+    "cssnano": "^6.0.3",
     "del": "^7.1.0",
     "fancy-log": "^2.0.0",
     "fs-extra": "^11.2.0",
@@ -70,10 +70,10 @@
     "js-yaml": "^4.1.0",
     "lodash.template": "^4.5.0",
     "parse-changelog": "^1.0.2",
-    "postcss": "^8.4.32",
+    "postcss": "^8.4.33",
     "rtlcss": "^4.1.1",
     "semistandard": "^17.0.0",
-    "stylelint": "^16.0.2",
+    "stylelint": "^16.1.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {

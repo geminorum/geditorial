@@ -14,17 +14,21 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
 	{
 		return [
-			'name'   => '<%= moduleUnderline %>',
-			'title'  => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
-			'desc'   => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
-			'icon'   => '<%= moduleDashicon %>',
-			'access' => 'planned',
+			'name'     => '<%= moduleUnderline %>',
+			'title'    => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
+			'desc'     => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
+			'icon'     => '<%= moduleDashicon %>',
+			'access'   => 'planned',
+			'keywords' => [
+				'taxmodule',
+			],
 		];
 	}
 
@@ -42,6 +46,12 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'summary_scope',
 				'summary_drafts',
 				'count_not',
+			],
+			'_editlist' => [
+				'show_in_quick_edit',
+			],
+			'_frontend' => [
+				'show_in_nav_menus',
 			],
 		];
 	}
@@ -101,9 +111,9 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		parent::init();
 
 		$this->register_taxonomy( 'main_taxonomy', [
-			'hierarchical' => TRUE,
-			'show_in_menu' => FALSE,
-			'meta_box_cb'  => '__checklist_restricted_terms_callback',
+			'hierarchical'       => TRUE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -121,6 +131,15 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				$this->hook_taxonomy_metabox_mainbox(
+					'main_taxonomy',
+					$screen->post_type,
+					// '__singleselect_restricted_terms_callback',
+					'__checklist_restricted_terms_callback',
+				);
 			}
 		}
 	}
@@ -148,5 +167,10 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return 'reports' == $context
 			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
 			: parent::cuc( $context, $fallback );
+	}
+
+	public function template_include( $template )
+	{
+		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
 	}
 }
