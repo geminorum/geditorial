@@ -932,6 +932,10 @@ class Meta extends gEditorial\Module
 
 		foreach ( $fields as $field => $args ) {
 
+			// skip for fields that are auto-saved on admin edit-post page
+			if ( in_array( $field, [ 'parent_post' ], TRUE ) )
+				continue;
+
 			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
 
@@ -954,8 +958,11 @@ class Meta extends gEditorial\Module
 
 			case 'parent_post':
 
-				// FIXME: WTF?! works only on post edit
-				// do nothing! the input name works magic
+				if ( ! $parent = WordPress\Post::get( (int) $data ) )
+					return FALSE;
+
+				if ( ! WordPress\Post::setParent( $post->ID, $parent->ID, FALSE ) )
+					return FALSE;
 
 				break;
 
