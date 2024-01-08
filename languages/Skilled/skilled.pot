@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Skilled\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Skilled\n"
+"X-Domain: geditorial-skilled\n"
+
+#: Skilled.php:94
+msgid "Skill"
+msgid_plural "Skills"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Skilled.php:98
+msgctxt "Label: Show Option All"
+msgid "Skills"
+msgstr ""
+
+#: Skilled.php:99
+msgctxt "Label: Show Option No Terms"
+msgid "(No Skill)"
+msgstr ""
+
+#: Skilled.php:108
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Skill Summary"
+msgstr ""
+
+#: Skilled.php:109
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Skill Summary"
+msgstr ""

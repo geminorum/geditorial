@@ -102,7 +102,6 @@ class Persona extends gEditorial\Module
 		return [
 			'primary_posttype'    => 'human',
 			'primary_taxonomy'    => 'human_group',
-			'skill_taxonomy'      => 'skill',          // MAYBE ANOTHER MODULE: `Skilled`
 			'job_title_taxonomy'  => 'job_title',      // MAYBE ANOTHER MODULE: `Jobs`
 			'blood_type_taxonomy' => 'blood_type',     // MAYBE ANOTHER MODULE: `Medic`
 			'status_taxonomy'     => 'human_status',
@@ -117,7 +116,6 @@ class Persona extends gEditorial\Module
 		return [
 			'taxonomies' => [
 				'primary_taxonomy'    => NULL,
-				'skill_taxonomy'      => 'admin-tools',
 				'job_title_taxonomy'  => 'businessperson',
 				'blood_type_taxonomy' => 'heart',
 				'status_taxonomy'     => 'post-status',
@@ -131,7 +129,6 @@ class Persona extends gEditorial\Module
 			'noops' => [
 				'primary_posttype'    => _n_noop( 'Human', 'Humans', 'geditorial-persona' ),
 				'primary_taxonomy'    => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-persona' ),
-				'skill_taxonomy'      => _n_noop( 'Skill', 'Skills', 'geditorial-persona' ),
 				'job_title_taxonomy'  => _n_noop( 'Job Title', 'Job Titles', 'geditorial-persona' ),
 				'blood_type_taxonomy' => _n_noop( 'Blood Type', 'Blood Types', 'geditorial-persona' ),
 				'status_taxonomy'     => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-persona' ),
@@ -365,11 +362,6 @@ class Persona extends gEditorial\Module
 			'default_term'       => NULL,
 		], 'primary_posttype' );
 
-		$this->register_taxonomy( 'skill_taxonomy', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL,
-		], 'primary_posttype' );
-
 		$this->register_taxonomy( 'job_title_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL,
@@ -471,7 +463,6 @@ class Persona extends gEditorial\Module
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'status_taxonomy',
 					'primary_taxonomy',
-					'skill_taxonomy',
 					'job_title_taxonomy',
 					'blood_type_taxonomy',
 				] );
@@ -501,7 +492,6 @@ class Persona extends gEditorial\Module
 			return $template;
 
 		return $this->templatetaxonomy__include( $template, [
-			$this->constant( 'skill_taxonomy' ),
 			$this->constant( 'job_title_taxonomy' ),
 		] );
 	}
