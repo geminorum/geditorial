@@ -533,7 +533,7 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Post Type', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => 'post',
-			'values'      => WordPress\PostType::get( 2 ),
+			'values'      => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ),
 			'exclude'     => [ 'attachment', 'wp_theme' ],
 		];
 	}
@@ -2555,7 +2555,7 @@ class Settings extends WordPress\Main
 				// FIXME: false to disable
 				if ( ! $args['values'] )
 					$args['values'] = WordPress\PostType::get( 0,
-						array_merge( [ 'public' => TRUE ], $args['extra'] ) );
+						array_merge( [ 'show_ui' => TRUE ], $args['extra'] ) );
 
 				if ( empty( $args['values'] ) ) {
 

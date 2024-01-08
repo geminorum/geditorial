@@ -124,7 +124,7 @@ trait PostsToPosts
 			$icons[$constant] = $this->get_column_icon( FALSE, NULL, $this->strings['p2p'][$constant]['title']['to'] );
 
 		if ( empty( $this->cache['posttypes'] ) )
-			$this->cache['posttypes'] = WordPress\PostType::get( 2 );
+			$this->cache['posttypes'] = WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] );
 
 		$args = [
 			'connected_direction' => 'to',

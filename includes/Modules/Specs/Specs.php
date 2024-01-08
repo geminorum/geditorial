@@ -40,9 +40,9 @@ class Specs extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'specs_tax'                => 'spec',
-			'specs_shortcode'          => 'specs',
-			'multiple_specs_shortcode' => 'multiple-specs',
+			'main_taxonomy'           => 'spec',
+			'main_shortcode'          => 'specs',
+			'multiple_main_shortcode' => 'multiple-specs',
 		];
 	}
 
@@ -64,7 +64,7 @@ class Specs extends gEditorial\Module
 				'show_option_none' => _x( '&ndash; Choose a Specification &ndash;', 'Show Option None', 'geditorial-specs' ),
 			],
 			'noops' => [
-				'specs_tax' => _n_noop( 'Specification', 'Specifications', 'geditorial-specs' ),
+				'main_taxonomy' => _n_noop( 'Specification', 'Specifications', 'geditorial-specs' ),
 			],
 		];
 
@@ -74,7 +74,7 @@ class Specs extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'specs_tax' => [
+			'main_taxonomy' => [
 				'color'  => _x( 'Color', 'Default Term', 'geditorial-specs' ),
 				'width'  => _x( 'Width', 'Default Term', 'geditorial-specs' ),
 				'height' => _x( 'Height', 'Default Term', 'geditorial-specs' ),
@@ -98,13 +98,13 @@ class Specs extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'specs_tax' );
+		$this->register_taxonomy( 'main_taxonomy' );
 
 		foreach ( $this->posttypes() as $posttype )
 			$this->add_posttype_fields( $posttype, $this->fields[$this->key]['_supported'], TRUE, $this->key );
 
-		// add_shortcode( $this->constant( 'specs_shortcode' ), [ $this, 'shortcode_specs' ] );
-		// add_shortcode( $this->constant( 'multiple_specs_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );
+		// add_shortcode( $this->constant( 'main_shortcode' ), [ $this, 'shortcode_specs' ] );
+		// add_shortcode( $this->constant( 'multiple_main_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );
 	}
 
 	public function current_screen( $screen )
@@ -114,8 +114,8 @@ class Specs extends gEditorial\Module
 
 			$this->class_metabox( $screen, 'supportedbox' );
 			add_meta_box( $this->classs( 'supportedbox' ),
-				// $this->get_meta_box_title_taxonomy( 'specs_tax', $screen->post_type ),
-				$this->strings_metabox_title_via_taxonomy( $this->constant( 'specs_tax' ), 'supportedbox' ),
+				// $this->get_meta_box_title_taxonomy( 'main_taxonomy', $screen->post_type ),
+				$this->strings_metabox_title_via_taxonomy( $this->constant( 'main_taxonomy' ), 'supportedbox' ),
 				[ $this, 'render_supportedbox_metabox' ],
 				$screen,
 				'side',
@@ -154,7 +154,7 @@ class Specs extends gEditorial\Module
 			return FALSE;
 
 		$meta       = $this->get_postmeta_legacy( $post->ID );
-		$spec_terms = WordPress\Taxonomy::getTerms( $this->constant( 'specs_tax' ), FALSE, TRUE, 'slug' );
+		$spec_terms = WordPress\Taxonomy::getTerms( $this->constant( 'main_taxonomy' ), FALSE, TRUE, 'slug' );
 		$terms      = [];
 
 		foreach ( $meta as $meta_row )
@@ -172,10 +172,10 @@ class Specs extends gEditorial\Module
 			} else if ( $create ) { // create new term object
 
 				if ( isset( $spec['title'] ) && $spec['title'] )
-					$new_term = wp_insert_term( $spec['title'], $this->constant( 'specs_tax' ), [ 'slug' => $spec['name'] ] );
+					$new_term = wp_insert_term( $spec['title'], $this->constant( 'main_taxonomy' ), [ 'slug' => $spec['name'] ] );
 
 				else
-					$new_term = wp_insert_term( $spec['name'], $this->constant( 'specs_tax' ) );
+					$new_term = wp_insert_term( $spec['name'], $this->constant( 'main_taxonomy' ) );
 
 				if ( is_wp_error( $new_term ) ) {
 
@@ -183,8 +183,8 @@ class Specs extends gEditorial\Module
 
 				} else {
 
-					//$spec_terms[$new_term['term_id']] = get_term_by( 'id', $new_term['term_id'], $this->constant( 'specs_tax' ) );
-					$new_tetm_obj = get_term_by( 'id', $new_term['term_id'], $this->constant( 'specs_tax' ) );
+					//$spec_terms[$new_term['term_id']] = get_term_by( 'id', $new_term['term_id'], $this->constant( 'main_taxonomy' ) );
+					$new_tetm_obj = get_term_by( 'id', $new_term['term_id'], $this->constant( 'main_taxonomy' ) );
 					$spec_terms[$new_tetm_obj->slug] = $new_tetm_obj;
 
 					$row['spec_term_id'] = $spec_terms[$spec['name']]->term_id;
@@ -223,7 +223,7 @@ class Specs extends gEditorial\Module
 			ksort( $meta );
 
 			$this->store_postmeta( $post_id, $meta );
-			wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
+			wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $terms ), $this->constant( 'main_taxonomy' ), FALSE );
 
 			return $post_id;
 		}
@@ -246,7 +246,7 @@ class Specs extends gEditorial\Module
 			if ( $term_id && '-1' != $term_id )
 				$terms[$offset] = (int) $term_id;
 
-		wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $terms ), $this->constant( 'specs_tax' ), FALSE );
+		wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $terms ), $this->constant( 'main_taxonomy' ), FALSE );
 
 		foreach ( $terms as $offset => $term ) {
 
@@ -303,7 +303,7 @@ class Specs extends gEditorial\Module
 
 	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
 	{
-		$taxonomy = $this->constant( 'specs_tax' );
+		$taxonomy = $this->constant( 'main_taxonomy' );
 
 		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
@@ -451,12 +451,12 @@ class Specs extends gEditorial\Module
 			'before'    => '',
 			'after'     => '',
 			'context'   => NULL,
-		], $atts, $this->constant( 'specs_shortcode' ) );
+		], $atts, $this->constant( 'main_shortcode' ) );
 
 		if ( FALSE === $args['context'] ) // bailing
 			return NULL;
 
-		$the_terms = WordPress\Taxonomy::getTerms( $this->constant( 'specs_tax' ), $post->ID, TRUE );
+		$the_terms = WordPress\Taxonomy::getTerms( $this->constant( 'main_taxonomy' ), $post->ID, TRUE );
 		$metas     = $this->get_postmeta_legacy( $post->ID );
 		$html      = '';
 
@@ -491,14 +491,14 @@ class Specs extends gEditorial\Module
 			'after'     => '',
 			'context'   => NULL,
 			'args'      => [],
-		], $atts, $this->constant( 'multiple_specs_shortcode' ) );
+		], $atts, $this->constant( 'multiple_main_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
 
 		if ( empty( $args['ids'] ) ) {
 
-			$terms = wp_get_object_terms( $post->ID, $this->constant( 'specs_tax' ), [
+			$terms = wp_get_object_terms( $post->ID, $this->constant( 'main_taxonomy' ), [
 				'order'   => $args['order'],
 				'orderby' => $args['orderby'],
 				'fields'  => 'ids',
@@ -513,7 +513,7 @@ class Specs extends gEditorial\Module
 			$output.= $this->shortcode_specs( array_merge( [
 				'id'        => $id,
 				'title_tag' => 'h4',
-			], $args['args'] ), NULL, $this->constant( 'specs_shortcode' ) );
+			], $args['args'] ), NULL, $this->constant( 'main_shortcode' ) );
 
 		if ( ! empty( $output ) ) {
 

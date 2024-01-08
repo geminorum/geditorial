@@ -111,7 +111,7 @@ trait PairedAdmin
 					$args = [ $this->constant( $constants[1] ) => $post->post_name ];
 
 					if ( empty( $this->cache['posttypes'] ) )
-						$this->cache['posttypes'] = WordPress\PostType::get( 2 );
+						$this->cache['posttypes'] = WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] );
 
 					echo '<span class="-counted">'.$this->nooped_count( 'connected', $count ).'</span>';
 

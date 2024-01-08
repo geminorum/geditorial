@@ -393,7 +393,7 @@ class WasBorn extends gEditorial\Module
 	// @REF: https://stackoverflow.com/a/71815721
 	private function _summary_under_aged( $posttypes )
 	{
-		$nooped    = WordPress\PostType::get( 3 );
+		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$legal     = $this->get_setting( 'age_of_majority', 18 );
 		$query_var = 'underaged';
 		$list      = $access = [];
@@ -475,7 +475,7 @@ class WasBorn extends gEditorial\Module
 	// @SEE: https://stackoverflow.com/a/35733405
 	private function _summary_age_invalid_dob( $posttypes )
 	{
-		$nooped    = WordPress\PostType::get( 3 );
+		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$query_var = 'invaliddob';
 		$list      = $access = [];
 
@@ -558,7 +558,7 @@ class WasBorn extends gEditorial\Module
 		global $wpdb;
 
 		$roundup = $this->get_setting( 'average_round_up', TRUE );
-		$labels  = WordPress\PostType::get( 0 );
+		$labels  = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
 		$list    = $metakey = [];
 
 		foreach ( $posttypes as $posttype ) {
@@ -616,7 +616,7 @@ class WasBorn extends gEditorial\Module
 		$taxonomy = $this->constant( 'group_taxonomy' );
 		$object    = WordPress\Taxonomy::object( $taxonomy );
 		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
-		$nooped    = WordPress\PostType::get( 3 );
+		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$list      = $access = $metakey = [];
 
 		foreach ( $posttypes as $posttype ) {
@@ -707,7 +707,7 @@ class WasBorn extends gEditorial\Module
 
 		$object    = WordPress\Taxonomy::object( $taxonomy );
 		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
-		$nooped    = WordPress\PostType::get( 3 );
+		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$list      = $access = $metakey = [];
 
 		foreach ( $terms as $term ) {

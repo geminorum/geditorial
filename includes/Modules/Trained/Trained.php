@@ -153,6 +153,7 @@ class Trained extends gEditorial\Module
 		$strings['misc'] = [
 			/* translators: %s: item count */
 			'tabloid_paired_posttype'  => _x( 'Training Attendees (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-trained' ),
+			/* translators: %s: item count */
 			'tabloid_paired_supported' => _x( 'Training Courses (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-trained' ),
 			'column_icon_title'        => _x( 'Training Courses', 'Misc: `column_icon_title`', 'geditorial-trained' ),
 		];

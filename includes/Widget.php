@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
+#[\AllowDynamicProperties]
 class Widget extends \WP_Widget
 {
 
@@ -518,7 +519,7 @@ class Widget extends \WP_Widget
 				'selected' => $type == 'any',
 			], _x( '&ndash; (Any)', 'Widget Core', 'geditorial-admin' ) );
 
-		foreach ( WordPress\PostType::get() as $name => $title )
+		foreach ( WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ) as $name => $title )
 			$html.= Core\HTML::tag( 'option', [
 				'value'    => $name,
 				'selected' => $type == $name,

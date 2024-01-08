@@ -586,7 +586,7 @@ class Datetime extends WordPress\Main
 		// self::_log( [ $data['post_date'], $data['post_date_gmt'], $data['post_modified'], $data['post_modified_gmt'] ] );
 
 		// @SEE http://core.trac.wordpress.org/ticket/18362
-		if ( ! $update = $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
+		if ( ! $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )
 			return FALSE;
 
 		clean_post_cache( $post->ID );

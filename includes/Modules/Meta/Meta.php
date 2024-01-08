@@ -918,7 +918,7 @@ class Meta extends gEditorial\Module
 			&& ! $this->nonce_verify( 'nobox' ) )
 				return;
 
-		// MAYBE: check for `edit_post_meta`
+		// here only check for cap to edit this post
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
 
@@ -1477,7 +1477,7 @@ class Meta extends gEditorial\Module
 				'post_id' => Tablelist::columnPostID(),
 				'type'   => [
 					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
-					'args'     => [ 'types' => WordPress\PostType::get( 2 ) ],
+					'args'     => [ 'types' => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ) ],
 					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 						$post = WordPress\Post::get( $row->post_id );

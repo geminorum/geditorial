@@ -105,6 +105,9 @@ trait PostMeta
 
 	public function fetch_postmeta( $post_id, $default = '', $metakey = NULL )
 	{
+		if ( ! $post_id )
+			return $default;
+
 		if ( is_null( $metakey ) )
 			$metakey = $this->meta_key; // back-comp
 

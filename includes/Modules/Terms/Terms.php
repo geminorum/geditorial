@@ -980,7 +980,7 @@ class Terms extends gEditorial\Module
 			case 'posttype':
 
 				if ( empty( $this->cache['posttypes'] ) )
-					$this->cache['posttypes'] = WordPress\PostType::get( 2 );
+					$this->cache['posttypes'] = WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
@@ -997,7 +997,7 @@ class Terms extends gEditorial\Module
 			case 'posttypes':
 
 				if ( empty( $this->cache['posttypes'] ) )
-					$this->cache['posttypes'] = WordPress\PostType::get( 2 );
+					$this->cache['posttypes'] = WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1298,7 +1298,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'posttype':
 
-				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2 ), [
+				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ), [
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
@@ -1512,7 +1512,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'posttype':
 
-				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2 ), [
+				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
 					'none_title' => Settings::showOptionNone(),

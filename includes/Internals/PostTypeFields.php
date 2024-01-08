@@ -148,6 +148,7 @@ trait PostTypeFields
 				'access_edit'   => NULL,   // @SEE: `$this->access_posttype_field()`
 				'access_export' => NULL,   // @SEE: `$this->access_posttype_field()`
 
+				'metakey'     => $this->get_postmeta_key( $field ), // for referencing
 				'sanitize'    => NULL, // callback
 				'prep'        => NULL, // callback
 				'pattern'     => NULL, // HTML5 input pattern
@@ -218,7 +219,9 @@ trait PostTypeFields
 				if ( WordPress\SwitchSite::is()
 					|| NULL === WordPress\PostType::object( $post ) ) {
 
-					// NOTE: fallback to `post` if posttype is not registered
+					/**
+					 * falls back to `post` if posttype is not registered
+					 */
 
 					$access = in_array( $context, [ 'edit' ], TRUE )
 						? WordPress\PostType::can( 'post', 'edit_posts', $user_id )
@@ -227,6 +230,14 @@ trait PostTypeFields
 						// : WordPress\PostType::can( 'post', 'read', $user_id );
 
 				} else {
+
+					/**
+					 * this is cap check fallback to the parent post
+					 * each field is go through this check individually
+					 * so no need to check for `edit_post_meta` for the field:
+					 * `user_can( $user_id, 'edit_post_meta', $post->ID, $metakey )`
+					 * @REF: `register_auth_callback_posttypefields()`
+					 */
 
 					$access = in_array( $context, [ 'edit' ], TRUE )
 						? WordPress\Post::can( $post, 'edit_post', $user_id )

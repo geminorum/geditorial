@@ -269,7 +269,7 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
-			'args'     => [ 'types' => WordPress\PostType::get( 2 ) ],
+			'args'     => [ 'types' => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ) ],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return isset( $column['args']['types'][$row->post_type] )
 					? $column['args']['types'][$row->post_type]

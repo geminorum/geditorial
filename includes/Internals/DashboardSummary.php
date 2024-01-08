@@ -114,7 +114,7 @@ trait DashboardSummary
 	{
 		$html     = '';
 		$check    = FALSE;
-		$nooped   = WordPress\PostType::get( 3 );
+		$nooped   = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$exclude  = WordPress\Database::getExcludeStatuses();
 		$taxonomy = $this->constant( $constant );
 

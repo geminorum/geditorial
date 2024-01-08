@@ -25,8 +25,6 @@ class Users extends gEditorial\Module
 		'reports' => 'edit_others_posts',
 	];
 
-	private $_posttypes = [];
-
 	public static function module()
 	{
 		return [
@@ -297,13 +295,13 @@ class Users extends gEditorial\Module
 		if ( $this->classs( 'counts' ) != $column_name )
 			return $output;
 
-		if ( empty( $this->_posttypes ) )
-			$this->_posttypes = WordPress\PostType::get( 1 );
+		if ( empty( $this->cache['posttypes'] ) )
+		$this->cache['posttypes'] = WordPress\PostType::get( 1, [ 'show_ui' => TRUE ] );
 
 		$counts = WordPress\Database::countPostsByUser( $user_id );
 		$list   = [];
 
-		foreach ( $this->_posttypes as $posttype => $label )
+		foreach ( $this->cache['posttypes'] as $posttype => $label )
 			if ( ! empty( $counts[$posttype] ) )
 				$list[$label] = Core\HTML::tag( 'a', [
 					'href'   => Core\WordPress::getPostTypeEditLink( $posttype, $user_id ),
@@ -603,7 +601,7 @@ class Users extends gEditorial\Module
 		$this->check_settings( $sub, 'reports' );
 	}
 
-	// MAYBE: move to Statistics module
+	// MAYBE: move to `Statistics` module
 	protected function render_reports_html( $uri, $sub )
 	{
 		$args = $this->get_current_form( [

@@ -109,7 +109,7 @@ class Roles extends gEditorial\Module
 			'profile', // gPeople
 		];
 
-		foreach ( WordPress\PostType::get( 0, [ 'public' => TRUE, '_builtin' => FALSE ] ) as $posttype => $label )
+		foreach ( WordPress\PostType::get( 0, [ 'show_ui' => TRUE, '_builtin' => FALSE ] ) as $posttype => $label )
 			if ( in_array( $posttype, $supported )
 				&& ! in_array( $posttype, $excludes ) )
 					$posttypes[$posttype] = $label;

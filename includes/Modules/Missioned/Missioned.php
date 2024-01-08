@@ -137,6 +137,7 @@ class Missioned extends gEditorial\Module
 		$strings['misc'] = [
 			/* translators: %s: item count */
 			'tabloid_paired_posttype'  => _x( 'Mission Participants (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-missioned' ),
+			/* translators: %s: item count */
 			'tabloid_paired_supported' => _x( 'Mission Participations (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-missioned' ),
 			'column_icon_title'        => _x( 'Missions', 'Misc: `column_icon_title`', 'geditorial-missioned' ),
 		];

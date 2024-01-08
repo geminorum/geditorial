@@ -586,7 +586,7 @@ class Units extends gEditorial\Module
 			&& ! $this->nonce_verify( 'nobox' ) )
 				return;
 
-		// MAYBE: check for `edit_post_meta`
+		// here only check for cap to edit this post
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
 

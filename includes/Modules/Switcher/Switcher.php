@@ -71,7 +71,7 @@ class Switcher extends gEditorial\Module
 		$list      = [];
 		$current   = WordPress\PostType::current();
 		$posttypes = WordPress\PostType::get( 2, [
-			'public'  => TRUE,
+			// 'public'  => TRUE,
 			'show_ui' => TRUE,
 		], 'edit_others_posts' );
 
