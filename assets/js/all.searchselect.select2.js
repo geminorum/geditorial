@@ -22,7 +22,8 @@
   }
 
   const app = {
-    rtl: false,
+    // rtl: false,
+    // lang: 'en',
 
     strings: $.extend({}, {
       placeholder: 'Select an item &hellip;',
@@ -45,10 +46,12 @@
       return el.data(section + '-' + key) || app.strings[key];
     },
 
+    // @REF: https://select2.org/configuration/options-api
     init: function (el) {
       el.select2({
-        rtl: app.rtl,
+        dir: $('html').attr('dir'),
         width: '100%', // 'element'
+        theme: el.data('theme') || plugin._base,
         // allowClear: true, // problems with button positioning
         minimumInputLength: el.data('query-minimum') || 5,
         placeholder: { id: '0', text: app.str(el, 'placeholder') },
@@ -91,7 +94,7 @@
   };
 
   $(function () {
-    app.rtl = $('html').attr('dir') === 'rtl';
+    // app.rtl = $('html').attr('dir') === 'rtl';
     app.lang = $('html').attr('lang');
 
     $(s.select).each(function () {
