@@ -7,6 +7,8 @@ use geminorum\gEditorial\Core;
 class Term extends Core\Base
 {
 
+	// TODO: `Term::setParent()`
+
 	/**
 	 * Gets all term data.
 	 *
@@ -128,6 +130,54 @@ class Term extends Core\Base
 			return __( '(Untitled)' );
 
 		return $fallback;
+	}
+
+	/**
+	 * Retrieves term parent titles given a term ID or term object.
+	 * NOTE: parent post type can be diffrenet
+	 *
+	 * @param  null|int|object $term
+	 * @param  string          $suffix
+	 * @param  string|bool     $linked
+	 * @param  null|string     $separator
+	 * @return string          $titles
+	 */
+	public static function getParentTitles( $term, $suffix = '', $linked = FALSE, $separator = NULL )
+	{
+		if ( ! $term = self::get( $term ) )
+			return $suffix;
+
+		if ( ! $term->parent )
+			return $suffix;
+
+		if ( is_null( $separator ) )
+			$separator = Core\HTML::rtl() ? ' &rsaquo; ' : ' &lsaquo; ';
+
+		$current = $term->term_id;
+		$parents = [];
+		$parent  = TRUE;
+
+		while ( $parent ) {
+
+			$object = self::get( (int) $current );
+			$link   = 'edit' === $linked ? get_edit_term_link( $object, 'edit' ) : self::link( $object );
+
+			if ( $object && $object->parent )
+				$parents[] = $linked && $link
+					? Core\HTML::link( self::title( $object->parent ), $link )
+					: self::title( $object->parent );
+
+			else
+				$parent = FALSE;
+
+			if ( $object )
+				$current = $object->parent;
+		}
+
+		if ( empty( $parents ) )
+			return $suffix;
+
+		return Strings::getJoined( array_reverse( $parents ), '', $suffix ? $separator.$suffix : '', '', $separator );
 	}
 
 	/**

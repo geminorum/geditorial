@@ -94,6 +94,10 @@ class PostType extends Core\Base
 
 		$can = user_can( $user_id, $object->cap->{$capability} );
 
+		// fallback for super-admins
+		// if ( ! $can && is_multisite() )
+		// 	$can = user_can( $user_id, 'manage_network' );
+
 		return $cache[$user_id][$object->name][$capability] = $can;
 	}
 
@@ -236,16 +240,16 @@ class PostType extends Core\Base
 		if ( empty( $meta ) )
 			return FALSE;
 
-		$filtred = array_filter( (array) $values );
+		$filtered = array_filter( (array) $values );
 
-		if ( empty( $filtred ) )
+		if ( empty( $filtered ) )
 			return FALSE;
 
 		$query = $wpdb->prepare( "
 			SELECT post_id, meta_value
 			FROM {$wpdb->postmeta}
 			WHERE meta_key = %s
-			AND meta_value IN ( '".implode( "', '", esc_sql( $filtred ) )."' )
+			AND meta_value IN ( '".implode( "', '", esc_sql( $filtered ) )."' )
 		", $meta );
 
 		$results = $wpdb->get_results( $query, ARRAY_A );
@@ -259,7 +263,7 @@ class PostType extends Core\Base
 			$gEditorialIDbyMeta = [];
 
 		// update cache
-		foreach ( $filtred as $value )
+		foreach ( $filtered as $value )
 			$gEditorialIDbyMeta[$meta]['single'][$value] = array_key_exists( $value, $list ) ? $list[$value] : FALSE;
 
 		return $list;

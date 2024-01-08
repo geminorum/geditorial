@@ -150,10 +150,10 @@ class Post extends Core\Base
 	 *
 	 * @old `PostType::getPostLink()`
 	 *
-	 * @param  null|int|object $post
-	 * @param  null|string $fallback
+	 * @param  null|int|object   $post
+	 * @param  null|string       $fallback
 	 * @param  null|string|array $statuses
-	 * @return string $link
+	 * @return false|string      $link
 	 */
 	public static function link( $post, $fallback = NULL, $statuses = NULL )
 	{
@@ -169,6 +169,32 @@ class Post extends Core\Base
 			return $fallback;
 
 		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
+	}
+
+	/**
+	 * Retrieves a contextual link given a post ID or post object.
+	 *
+	 * @param  null|int|object $post
+	 * @param  null|string     $context
+	 * @return false|string    $link
+	 */
+	public static function overview( $post, $context = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		$filtered = apply_filters( 'geditorial_post_overview_pre_link', NULL, $post, $context );
+
+		if ( ! is_null( $filtered ) )
+			return $filtered;
+
+		if ( is_admin() && self::can( $post, 'edit_post' ) )
+			return get_edit_post_link( $post, $context );
+
+		if ( PostType::viewable( $post->post_type ) )
+			return self::link( $post, FALSE );
+
+		return FALSE;
 	}
 
 	/**
@@ -207,7 +233,7 @@ class Post extends Core\Base
 	}
 
 	/**
-	 * Updates the posttype for the post.
+	 * Updates the posttype for the given post.
 	 *
 	 * also accepts post and posttype objects
 	 * and checks if its a different posttype
@@ -299,9 +325,9 @@ class Post extends Core\Base
 	 * Retrieves post full title given a post ID or post object.
 	 *
 	 * @param  null|int|object $post
-	 * @param  bool   $linked
-	 * @param  null|string $separator
-	 * @return string $title
+	 * @param  bool|string     $linked
+	 * @param  null|string     $separator
+	 * @return string          $title
 	 */
 	public static function fullTitle( $post, $linked = FALSE, $separator = NULL )
 	{
@@ -310,7 +336,13 @@ class Post extends Core\Base
 
 		$title = self::title( $post );
 
-		if ( 'edit' === $linked )
+		if ( 'overview' === $linked )
+			$title = Core\HTML::tag( 'a', [
+				'href'  => self::overview( $post, 'overview' ),
+				'class' => [ '-overview', 'do-colorbox-iframe' ],
+			], $title );
+
+		else if ( 'edit' === $linked )
 			$title = Core\HTML::link( $title, get_edit_post_link( $post, 'edit' ) );
 
 		else if ( $linked )
@@ -368,7 +400,7 @@ class Post extends Core\Base
 	}
 
 	/**
-	 * retrieves meta-data for a given post.
+	 * Retrieves meta-data for a given post.
 	 *
 	 * @param  object|int $post
 	 * @param  bool|array $keys `false` for all meta
@@ -405,8 +437,19 @@ class Post extends Core\Base
 		return $list;
 	}
 
+	/**
+	 * Updates the parnt for the given post.
+	 * NOTE: directly updates db to avoid `wp_update_post()`
+	 *
+	 * @param  int  $post_id
+	 * @param  int  $parent_id
+	 * @param  bool $checks
+	 * @return bool $updated
+	 */
 	public static function setParent( $post_id, $parent_id, $checks = TRUE )
 	{
+		global $wpdb;
+
 		if ( $checks ) {
 
 			if ( ! $post = self::get( $post_id ) )
@@ -419,11 +462,11 @@ class Post extends Core\Base
 			$parent_id = $parent->ID;
 		}
 
-		$updated = wp_update_post( [
-			'ID'          => $post_id,
-			'post_parent' => $parent_id,
-		], TRUE, FALSE );
+		if ( ! $wpdb->update( $wpdb->posts, [ 'post_parent' => $parent_id ], [ 'ID' => $post_id ] ) )
+			return FALSE;
 
-		return is_wp_error( $updated ) ? FALSE : $updated;
+		clean_post_cache( $post_id );
+
+		return TRUE;
 	}
 }
