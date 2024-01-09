@@ -927,6 +927,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_contents_viewable( $description = NULL, $default = 1 )
+	{
+		return [
+			'field'       => 'contents_viewable',
+			'title'       => _x( 'Viewable Contents', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Determines whether the contents are publicly viewable.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default,
+		];
+	}
+
 	public static function getSetting_override_dates( $description = NULL, $default = 1 )
 	{
 		return [

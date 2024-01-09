@@ -77,7 +77,7 @@ class Persona extends gEditorial\Module
 				), '1' ],
 			],
 			'_frontend' => [
-				'posttype_viewable' => [ NULL, FALSE ],
+				'contents_viewable' => [ NULL, FALSE ],
 				'insert_content',
 				'insert_cover',
 				'insert_priority',
@@ -354,28 +354,38 @@ class Persona extends gEditorial\Module
 	{
 		parent::init();
 
+		$viewable = $this->get_setting( 'contents_viewable', FALSE );
+
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_taxonomy( 'job_title_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_taxonomy( 'blood_type_taxonomy', [
 			'hierarchical' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_posttype( 'primary_posttype', [
 			'hierarchical' => FALSE,
@@ -383,7 +393,7 @@ class Persona extends gEditorial\Module
 			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		], [
-			'is_viewable' => $this->get_setting( 'posttype_viewable', FALSE ),
+			'is_viewable' => $viewable,
 		] );
 
 		$this->filter( 'the_title', 2, 8 );
@@ -391,7 +401,6 @@ class Persona extends gEditorial\Module
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
 		$this->add_posttype_support( $this->constant( 'primary_posttype' ), 'date', FALSE );
-		$this->_hook_posttype_viewable( $this->constant( 'primary_posttype' ), FALSE );
 		$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 	}
 
@@ -488,7 +497,7 @@ class Persona extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		if ( ! $this->get_setting( 'posttype_viewable', FALSE ) )
+		if ( ! $this->get_setting( 'contents_viewable', FALSE ) )
 			return $template;
 
 		return $this->templatetaxonomy__include( $template, [

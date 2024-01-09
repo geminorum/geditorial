@@ -40,7 +40,7 @@ class Inquire extends gEditorial\Module
 				],
 			],
 			'_frontend' => [
-				'posttype_viewable',
+				'contents_viewable',
 			],
 			'_supports' => [
 				$this->settings_supports_option( 'inquiry_posttype', TRUE ),
@@ -118,30 +118,36 @@ class Inquire extends gEditorial\Module
 	{
 		parent::init();
 
+		$viewable = $this->get_setting( 'contents_viewable', TRUE );
+
 		$this->register_taxonomy( 'subject_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'inquiry_posttype' );
+		], 'inquiry_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'inquiry_posttype' );
+		], 'inquiry_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_taxonomy( 'priority_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'inquiry_posttype' );
-
-		$this->register_posttype( 'inquiry_posttype', [], [
-			'is_viewable' => $this->get_setting( 'posttype_viewable', TRUE ),
+		], 'inquiry_posttype', [
+			'is_viewable' => $viewable,
 		] );
 
-		$this->_hook_posttype_viewable( $this->constant( 'inquiry_posttype' ), FALSE );
+		$this->register_posttype( 'inquiry_posttype', [], [
+			'is_viewable' => $viewable,
+		] );
 	}
 
 	public function after_setup_theme()

@@ -70,7 +70,7 @@ class Organization extends gEditorial\Module
 				'assign_default_term',
 			],
 			'_frontend' => [
-				'posttype_viewable',
+				'contents_viewable',
 				[
 					'field'       => 'redirect_archives',
 					'type'        => 'url',
@@ -266,30 +266,40 @@ class Organization extends gEditorial\Module
 	{
 		parent::init();
 
+		$viewable = $this->get_setting( 'contents_viewable', TRUE );
+
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
 			// 'meta_box_cb'        => '__singleselect_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__singleselect_terms_callback',
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $viewable,
+		] );
 
 		$this->paired_register( [], [
-			'is_viewable' => $this->get_setting( 'posttype_viewable', TRUE ),
+			'is_viewable' => $viewable,
+		], [
+			'is_viewable' => $viewable,
 		] );
 
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
@@ -300,9 +310,10 @@ class Organization extends gEditorial\Module
 		if ( $this->get_setting( 'subterms_support' ) )
 			$this->register_shortcode( 'subterm_shortcode' );
 
-		$this->_hook_posttype_viewable( $this->constant( 'primary_posttype' ) );
-
 		if ( is_admin() )
+			return;
+
+		if ( ! $viewable )
 			return;
 
 		$this->_hook_paired_exclude_from_subterm();

@@ -133,6 +133,7 @@ trait CorePostTypes
 
 				case 'is_viewable':
 
+					// NOTE: only applies if the setting is `disabled`
 					if ( $value )
 						break;
 
@@ -144,7 +145,27 @@ trait CorePostTypes
 						'show_in_admin_bar'   => FALSE,
 					] );
 
-					// TODO: migrate `_hook_posttype_viewable` here!
+					add_filter( 'is_post_type_viewable',
+						static function ( $is_viewable, $object ) use ( $posttype ) {
+							return $object->name === $posttype ? FALSE : $is_viewable;
+						}, 2, 9 );
+
+					add_filter( $this->hook_base( 'meta', 'access_posttype_field' ),
+						static function ( $access, $field, $post, $context, $user_id ) use ( $posttype ) {
+							return $post->post_type === $posttype ? TRUE : $access;
+						}, 12, 5 );
+
+					// makes `Tabloid` links visible for non-viewable post-types
+					add_filter( $this->hook_base( 'tabloid', 'is_post_viewable' ),
+						static function ( $viewable, $post ) use ( $posttype ) {
+							return $post->post_type === $posttype ? TRUE : $viewable;
+						}, 12, 2 );
+
+					// makes available on current module
+					add_filter( $this->hook_base( $this->key, 'is_post_viewable' ),
+						static function ( $viewable, $post ) use ( $posttype ) {
+							return $post->post_type === $posttype ? TRUE : $viewable;
+						}, 12, 2 );
 
 					break;
 			}
@@ -329,6 +350,7 @@ trait CorePostTypes
 		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), $post );
 	}
 
+	// FIXME: DEPRECATED
 	// NOTE: only applies if the setting is `disabled`
 	protected function _hook_posttype_viewable( $posttype, $default = TRUE, $setting = 'posttype_viewable' )
 	{
