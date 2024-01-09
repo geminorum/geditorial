@@ -1,0 +1,97 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Almanac\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-01-09 15:00+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Almanac\n"
+"X-Domain: geditorial-almanac\n"
+
+#: Almanac.php:80
+msgid "Calendar Type"
+msgid_plural "Calendar Types"
+msgstr[0] "انواع تقویم"
+msgstr[1] "نوع تقویم"
+
+#: Almanac.php:84
+msgctxt "Label: Menu Name"
+msgid "Calendars"
+msgstr "تقویم‌ها"
+
+#: Almanac.php:85
+msgctxt "Label: Show Option All"
+msgid "Calendars"
+msgstr "تقویم‌ها"
+
+#: Almanac.php:86
+msgctxt "Label: Show Option No Terms"
+msgid "(Undefined)"
+msgstr "(تعریف‌نشده)"
+
+#: Almanac.php:95
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Almanac Summary"
+msgstr "گزارش تقویمی گروهه شما"
+
+#: Almanac.php:96
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Almanac Summary"
+msgstr "گزارش تقویمی تحریریه"
+
+#: Almanac.php:108
+msgctxt "Main Taxonomy: Default Term"
+msgid "Gregorian"
+msgstr "میلادی"
+
+#: Almanac.php:109
+msgctxt "Main Taxonomy: Default Term"
+msgid "Japanese"
+msgstr "ژاپنی"
+
+#: Almanac.php:110
+msgctxt "Main Taxonomy: Default Term"
+msgid "Buddhist"
+msgstr "بودایی"
+
+#: Almanac.php:111
+msgctxt "Main Taxonomy: Default Term"
+msgid "Chinese"
+msgstr "چینی"
+
+#: Almanac.php:112
+msgctxt "Main Taxonomy: Default Term"
+msgid "Persian"
+msgstr "شمسی"
+
+#: Almanac.php:113
+msgctxt "Main Taxonomy: Default Term"
+msgid "Indian"
+msgstr "هندی"
+
+#: Almanac.php:114
+msgctxt "Main Taxonomy: Default Term"
+msgid "Islamic"
+msgstr "قمری"
+
+#: Almanac.php:115
+msgctxt "Main Taxonomy: Default Term"
+msgid "Islamic-Civil"
+msgstr "قمری-مدنی"
+
+#: Almanac.php:116
+msgctxt "Main Taxonomy: Default Term"
+msgid "Coptic"
+msgstr "مصری"
+
+#: Almanac.php:117
+msgctxt "Main Taxonomy: Default Term"
+msgid "Ethiopic"
+msgstr "اتیوپیایی"
