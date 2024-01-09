@@ -106,7 +106,7 @@ class Skilled extends gEditorial\Module
 			'meta_box_cb'        => NULL, // default hierarchical ui
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
-		], NULL, TRUE );
+		], NULL, [], TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}

@@ -13,7 +13,7 @@ trait CoreTaxonomies
 {
 
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
-	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $caps = NULL )
+	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $settings = [], $caps = NULL )
 	{
 		$cpt_tax  = TRUE;
 		$taxonomy = $this->constant( $constant );
@@ -111,12 +111,44 @@ trait CoreTaxonomies
 		if ( ! array_key_exists( 'menu_icon', $args ) )
 			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
 
-		$object = register_taxonomy( $taxonomy, $cpt_tax ? $posttypes : '', $args );
+		$object = register_taxonomy( $taxonomy, $cpt_tax ? $posttypes : '', $this->apply_taxonomy_object_settings( $taxonomy, $args, $settings ) );
 
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
 		return $object;
+	}
+
+	protected function apply_taxonomy_object_settings( $taxonomy, $args = [], $atts = [], $posttypes = NULL )
+	{
+		$settings = self::atts( [
+			'is_viewable' => NULL,
+		], $atts );
+
+		foreach ( $settings as $setting => $value ) {
+
+			if ( is_null( $value ) )
+				continue;
+
+			switch ( $setting ) {
+
+				case 'is_viewable':
+
+					if ( $value )
+						break;
+
+					$args = array_merge( $args, [
+						'public'             => FALSE,
+						'publicly_queryable' => FALSE,
+						'show_in_nav_menus'  => FALSE,
+						'rewrite'            => FALSE,   // WTF?!
+					] );
+
+					break;
+			}
+		}
+
+		return $args;
 	}
 
 	public function get_taxonomy_labels( $constant )

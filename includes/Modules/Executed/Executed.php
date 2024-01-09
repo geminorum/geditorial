@@ -101,7 +101,7 @@ class Executed extends gEditorial\Module
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
 			'meta_box_cb'  => '__checklist_restricted_terms_callback',
-		], NULL, TRUE );
+		], NULL, [], TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}

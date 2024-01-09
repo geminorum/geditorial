@@ -51,7 +51,7 @@ trait PairedCore
 		return $constants;
 	}
 
-	protected function paired_register( $extra = [], $settings = [], $supported = NULL )
+	protected function paired_register( $extra = [], $settings = [], $subterm_settings = [], $supported = NULL )
 	{
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
@@ -69,7 +69,7 @@ trait PairedCore
 					'meta_box_cb'       => NULL,
 					'show_admin_column' => FALSE,
 					'show_in_nav_menus' => TRUE,
-				], array_merge( $supported, [ $this->constant( $paired[0] ) ] ) );
+				], array_merge( $supported, [ $this->constant( $paired[0] ) ] ), $subterm_settings );
 
 			$this->register_taxonomy( $paired[1], [
 				Services\Paired::PAIRED_POSTTYPE_PROP => $this->constant( $paired[0] ),
@@ -84,7 +84,7 @@ trait PairedCore
 				// FIXME: WTF: conflict on the posttype rest base!
 				// 'rest_base' => $this->constant( $paired[1].'_slug', str_replace( '_', '-', $this->constant( $paired[1] ) ) ),
 
-			], array_merge( $supported, [ $this->constant( $paired[0] ) ] ) );
+			], array_merge( $supported, [ $this->constant( $paired[0] ) ] ), $settings );
 
 			$this->_paired = $this->constant( $paired[1] );
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
@@ -146,7 +146,7 @@ trait PairedCore
 	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
 	{
 		self::_dep( '$this->paired_register()' );
-		return $this->paired_register( $extra, $supported );
+		return $this->paired_register( $extra, [], [], $supported );
 	}
 
 	/**

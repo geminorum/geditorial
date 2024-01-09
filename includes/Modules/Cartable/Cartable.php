@@ -211,7 +211,7 @@ class Cartable extends gEditorial\Module
 				'rewrite'      => FALSE,
 				'show_ui'      => FALSE,
 				'meta_box_cb'  => FALSE,
-			], NULL, [
+			], NULL, [], [
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
@@ -234,7 +234,7 @@ class Cartable extends gEditorial\Module
 				'public'       => FALSE,
 				'rewrite'      => FALSE,
 				'show_in_menu' => FALSE,
-			], NULL, [
+			], NULL, [], [
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
@@ -257,7 +257,7 @@ class Cartable extends gEditorial\Module
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
 			'show_ui'      => FALSE,
-		], NULL, [
+		], NULL, [], [
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
