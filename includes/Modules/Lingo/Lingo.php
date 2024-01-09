@@ -25,11 +25,15 @@ class Lingo extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'lingo',
-			'title'  => _x( 'Lingo', 'Modules: Lingo', 'geditorial-admin' ),
-			'desc'   => _x( 'Language Identifiers', 'Modules: Lingo', 'geditorial-admin' ),
-			'icon'   => 'translation',
-			'access' => 'beta',
+			'name'     => 'lingo',
+			'title'    => _x( 'Lingo', 'Modules: Lingo', 'geditorial-admin' ),
+			'desc'     => _x( 'Language Identifiers', 'Modules: Lingo', 'geditorial-admin' ),
+			'icon'     => 'translation',
+			'access'   => 'beta',
+			'keywords' => [
+				'taxmodule',
+				'language',
+			],
 		];
 	}
 
@@ -38,7 +42,6 @@ class Lingo extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_editpost' => [
-				'assign_default_term',
 				'metabox_advanced',
 			],
 			'_roles' => $this->corecaps_taxonomy_get_roles_settings( 'language_taxonomy', TRUE ),

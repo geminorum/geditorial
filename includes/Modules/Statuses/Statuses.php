@@ -24,6 +24,10 @@ class Statuses extends gEditorial\Module
 			'icon'     => 'post-status',
 			'access'   => 'beta',
 			'disabled' => class_exists( 'WP_Statuses' ) ? FALSE : _x( 'Needs WP Statuses', 'Modules: Statuses', 'geditorial-admin' ),
+			'keywords' => [
+				'companion',
+				'status',
+			],
 		];
 	}
 

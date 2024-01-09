@@ -1663,7 +1663,7 @@ class Meta extends gEditorial\Module
 
 		foreach ( $this->get_posttype_fields( $posttype, [ 'import' => TRUE ] ) as $field => $args ) {
 
-			if ( in_array( $args['type'], [ 'term' ] ) )
+			if ( in_array( $args['type'], [ 'term', 'parent_post' ], TRUE ) )
 				continue;
 
 			$fields['meta__'.$field] = $object ? $args : sprintf( $template, $args['title'] );
