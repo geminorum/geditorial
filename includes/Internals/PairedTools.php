@@ -4,12 +4,16 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Metabox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 trait PairedTools
 {
+
+	public static $pairedtools__action_move_from_to = 'pairedtools_do_move_from_to';
 
 	protected function paired_tools_render_card( $uri = '', $sub = NULL, $supported_list = NULL )
 	{
@@ -18,6 +22,33 @@ trait PairedTools
 
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
+
+		echo Settings::toolboxCardOpen( _x( 'Paired Move From-To', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
+
+			Metabox::checklistTerms( 0, [
+				'taxonomy'    => $this->constant( $constants[1] ),
+				'name'        => 'movefrom',
+				'show_count'  => TRUE,
+				'minus_count' => 1, // the main posttype also get assigned
+			] );
+
+			Metabox::singleselectTerms( 0, [
+				'taxonomy' => $this->constant( $constants[1] ),
+				'name'     => 'moveto',
+			] );
+
+			echo $this->wrap_open( '-wrap-button-row' );
+
+			foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
+				Settings::submitButton( self::$pairedtools__action_move_from_to.'['.$posttype.']', sprintf(
+					/* translators: %s: posttype label */
+					_x( 'On %s', 'Button', 'geditorial-admin' ),
+					$label
+				), 'small' );
+
+			Core\HTML::desc( _x( 'Tries to move suppored posts from selected to another main post.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
+
+		echo '</div></div>';
 
 		echo Settings::toolboxCardOpen( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
 
@@ -57,10 +88,13 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
+		if ( FALSE !== $this->paired_tools_handlemove_from_to( $constants, $this->get_sub_limit_option( $sub ) ) )
+			return FALSE;
+
 		if ( 'force_assign_parents' === self::req( 'action' )
 			&& $this->get_setting( 'paired_force_parents' ) ) {
 
-			if ( $this->paired_force_assign_parents( $constants[0], $constants[1], $this->get_sub_limit_option( $sub ) ) )
+			if ( FALSE !== $this->paired_force_assign_parents( $constants[0], $constants[1], $this->get_sub_limit_option( $sub ) ) )
 				return FALSE;
 		}
 	}
@@ -440,6 +474,91 @@ trait PairedTools
 				$count++;
 
 		return $count;
+	}
+
+	protected function paired_tools_handlemove_from_to( $constants, $limit )
+	{
+		if ( ! $posttype = self::req( self::$pairedtools__action_move_from_to ) )
+			return FALSE; // must print nothing
+
+		if ( is_array( $posttype ) )
+			$posttype = Core\Arraay::keyFirst( $posttype );
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		if ( ! $movefrom = self::req( 'movefrom' ) )
+			return Info::renderSomethingIsWrong();
+
+		if ( ! $moveto = self::req( 'moveto' ) )
+			return Info::renderSomethingIsWrong();
+
+		$taxonomy = $this->constant( $constants[1] );
+		$movefrom = Core\Arraay::prepNumeral( is_array( $movefrom ) ? $movefrom : explode( ',', $movefrom ) );
+		$moveto   = Core\Arraay::prepNumeral( is_array( $moveto ) ? $moveto : explode( ',', $moveto ) );
+
+		if ( empty( $movefrom ) || empty( $moveto ) )
+			return FALSE;
+
+		$this->_raise_resources();
+
+		$query = [
+			'tax_query' => [ [
+				'taxonomy' => $taxonomy,
+				'field'    => 'id',
+				'terms'    => $movefrom,
+			] ],
+		];
+
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+
+		if ( empty( $posts ) )
+			return FALSE;
+
+		if ( $this->get_setting( 'paired_force_parents' ) ) {
+			$movefrom = WordPress\Taxonomy::appendParentTermIDs( $movefrom, $taxonomy );
+			$moveto   = WordPress\Taxonomy::appendParentTermIDs( $moveto, $taxonomy );
+		}
+
+		echo Settings::processingListOpen();
+
+		foreach ( $posts as $post )
+			$this->paired__do_post_move_from_to( $post, $taxonomy, $movefrom, $moveto, TRUE );
+
+		echo '</ul></div>';
+
+		Core\WordPress::redirectJS( add_query_arg( [
+			self::$pairedtools__action_move_from_to => $posttype,
+
+			'movefrom' => implode( ',', $movefrom ),
+			'moveto'   => implode( ',', $moveto ),
+			'paged'    => self::paged() + 1,
+		] ) );
+
+		return TRUE;
+	}
+
+	protected function paired__do_post_move_from_to( $post, $taxonomy, $movefrom, $moveto, $verbose = FALSE )
+	{
+		$currents = wp_get_object_terms( $post->ID, $taxonomy, [ 'fields' => 'ids' ] );
+		$terms    = Core\Arraay::prepNumeral( array_diff( array_merge( $currents, $moveto ), $movefrom ) );
+		$result   = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
+
+		if ( self::isError( $result ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %1$s: post title, %2$s: error message */
+				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ) ),
+				WordPress\Post::title( $post ), $result->get_error_message() ) : TRUE ) && FALSE;
+
+		if ( $verbose )
+			echo Core\HTML::tag( 'li',
+				/* translators: %1$s: count terms, %2$s: post title */
+				sprintf( _x( '%1$s terms set for &ldquo;%2$s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial-admin' ),
+				Core\HTML::code( count( $result ) ),
+				WordPress\Post::title( $post )
+			) );
+
+		return TRUE;
 	}
 
 	protected function paired_force_assign_parents( $posttype_key, $taxonomy_key, $limit )
