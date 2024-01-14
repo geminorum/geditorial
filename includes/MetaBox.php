@@ -47,6 +47,7 @@ class MetaBox extends WordPress\Main
 			'with_parent' => NULL,    // `NULL` for hierarchical
 			'empty_link'  => NULL,    // `NULL` for cap check or string for edit link, `FALSE` for disable
 			'echo'        => TRUE,
+			'name'        => NULL,
 			'none'        => NULL,    // `NULL` for label check, `FALSE` for disable
 			'empty'       => FALSE,   // `NULL` for empty box, `FALSE` for disable
 		] );
@@ -63,7 +64,7 @@ class MetaBox extends WordPress\Main
 			'selected'          => count( $selected ) ? $selected[0] : '0',
 			'hierarchical'      => $taxonomy->hierarchical,
 			'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
-			'name'              => 'tax_input['.$taxonomy->name.'][]',
+			'name'              => $args['name'] ?? 'tax_input['.$taxonomy->name.'][]',
 			'include'           => $terms ?? [],
 			'show_option_none'  => $args['none'] ?? Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' ),
 			'show_count'        => FALSE,
@@ -180,7 +181,7 @@ class MetaBox extends WordPress\Main
 			'minus_count'          => FALSE,         // or number to subtract from count
 			'edit'                 => NULL,          // manage page if has no terms, FALSE to disable
 			'restricted'           => FALSE,         // `disabled` / `hidden`
-			'name'                 => 'tax_input',   // override if not saving by core
+			'name'                 => NULL,          // override if not saving by core
 			'field_class'          => '',
 			'walker'               => NULL,
 			'echo'                 => TRUE,
@@ -223,6 +224,7 @@ class MetaBox extends WordPress\Main
 		$header = $html = $hidden = '';
 		$tax  = get_taxonomy( $args['taxonomy'] );
 		$atts = [ 'taxonomy' => $args['taxonomy'], 'atts' => $args ];
+		$name = $args['name'] ?? 'tax_input['.$tax->name.']';
 
 		if ( TRUE === $args['header'] )
 			$args['header'] = '<h4 class="-title">%s</h4>';
@@ -280,7 +282,7 @@ class MetaBox extends WordPress\Main
 			$diff = array_diff( $atts['selected_cats'], Core\Arraay::pluck( $terms, 'term_id' ) );
 
 			foreach ( $diff as $term )
-				$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="'.$term.'" />';
+				$hidden.= '<input type="hidden" name="'.$name.'[]" value="'.$term.'" />';
 		}
 
 		if ( $args['checked_ontop'] || $atts['selected_only'] ) {
@@ -307,7 +309,7 @@ class MetaBox extends WordPress\Main
 		// allows for an empty term set to be sent. 0 is an invalid Term ID
 		// and will be ignored by empty() checks
 		if ( ! $args['list_only'] && ! $atts['disabled'] )
-			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
+			$hidden.= '<input type="hidden" name="'.$name.'[]" value="0" />';
 
 		if ( $html )
 			$html = Core\HTML::wrap( $header.'<ul>'.$html.'</ul>'.$hidden, [ 'field-wrap', '-list', $args['field_class'] ] );

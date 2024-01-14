@@ -50,7 +50,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 	private function _get_name( $atts = [], $taxonomy = 'category' )
 	{
 		if ( ! empty( $atts['name'] ) )
-			return $atts['name'].'['.$taxonomy.']';
+			return $atts['name'];
 
 		if ( $taxonomy == 'category' )
 			return 'post_category';
