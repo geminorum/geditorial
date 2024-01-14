@@ -174,6 +174,7 @@ class MetaBox extends WordPress\Main
 			'selected_cats'        => FALSE,
 			'popular_cats'         => FALSE,
 			'checked_ontop'        => TRUE,
+			'show_count'           => FALSE,         // `TRUE`, `NULL`, or template
 			'edit'                 => NULL,          // manage page if has no terms, FALSE to disable
 			'restricted'           => FALSE,         // `disabled` / `hidden`
 			'name'                 => 'tax_input',   // override if not saving by core

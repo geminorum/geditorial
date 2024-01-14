@@ -66,6 +66,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 		$selected = empty( $args['selected_cats'] ) ? [] : $args['selected_cats'];
 		$popular  = empty( $args['popular_cats'] ) ? [] : $args['popular_cats'];
 		$class    = in_array( $term->term_id, $popular ) ? ' class="popular-category"' : '';
+		$count    = empty( $atts['show_count'] ) ? FALSE : $atts['show_count'];
 
 		if ( ! empty( $args['list_only'] ) ) {
 
@@ -83,6 +84,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 				.'<div class="'.$inner_class.'" data-term-id='.$term->term_id
 				.' tabindex="0" role="checkbox" aria-checked="'.$aria_checked.'">'
 				.esc_html( apply_filters( 'the_category', $term->name, '', '' ) )
+				.WordPress\Strings::getCounted( $term->count, $count )
 				.$icon_after.'</div>';
 
 		} else {
@@ -93,7 +95,8 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 				.'[]" id="in-'.$taxonomy.'-'.$term->term_id.'"'
 				.checked( in_array( $term->term_id, $selected ), TRUE, FALSE )
 				.disabled( empty( $args['disabled'] ), FALSE, FALSE ).' /> '
-				.esc_html( apply_filters( 'the_category', $term->name, '', '' ) ).'</label>';
+				.esc_html( apply_filters( 'the_category', $term->name, '', '' ) )
+				.WordPress\Strings::getCounted( $term->count, $count ).'</label>';
 		}
 	}
 
