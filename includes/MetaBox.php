@@ -153,7 +153,6 @@ class MetaBox extends WordPress\Main
 	}
 
 	// TODO: radio list box using custom walker
-	// TODO: support label
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs,
 	// whereas non-hierarchical save by slugs
@@ -167,6 +166,7 @@ class MetaBox extends WordPress\Main
 			'taxonomy'             => NULL,
 			'posttype'             => FALSE,
 			'metabox'              => NULL,          // metabox id to check for hidden
+			'header'               => FALSE,         // `TRUE`, `NULL`, or template
 			'list_only'            => NULL,
 			'selected_only'        => NULL,
 			'selected_preserve'    => NULL,          // keep hidden selected / NULL to check for assign cap
@@ -216,9 +216,18 @@ class MetaBox extends WordPress\Main
 		if ( ! count( $terms ) )
 			return self::fieldEmptyTaxonomy( $args['taxonomy'], $args['edit'], $args['posttype'] );
 
-		$html = $hidden = '';
+		$header = $html = $hidden = '';
 		$tax  = get_taxonomy( $args['taxonomy'] );
 		$atts = [ 'taxonomy' => $args['taxonomy'], 'atts' => $args ];
+
+		if ( TRUE === $args['header'] )
+			$args['header'] = '<h4 class="-title">%s</h4>';
+
+		if ( is_null( $args['header'] ) )
+			$args['header'] = '%s';
+
+		if ( $args['header'] )
+			$header = sprintf( $args['header'], Helper::getTaxonomyLabel( $tax, 'metabox_title', 'name' ) );
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
 
@@ -297,7 +306,7 @@ class MetaBox extends WordPress\Main
 			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$tax->name.'][]" value="0" />';
 
 		if ( $html )
-			$html = Core\HTML::wrap( '<ul>'.$html.'</ul>'.$hidden, [ 'field-wrap', '-list', $args['field_class'] ] );
+			$html = Core\HTML::wrap( $header.'<ul>'.$html.'</ul>'.$hidden, [ 'field-wrap', '-list', $args['field_class'] ] );
 
 		else
 			$html = $hidden;

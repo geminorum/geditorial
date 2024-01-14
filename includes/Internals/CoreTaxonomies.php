@@ -314,6 +314,7 @@ trait CoreTaxonomies
 		$args = [
 			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
+			'header'   => FALSE === $box,
 		];
 
 		if ( FALSE !== $box )
@@ -334,6 +335,7 @@ trait CoreTaxonomies
 		$args = [
 			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
+			'header'   => FALSE === $box,
 		];
 
 		// NOTE: getting reverse-sorted span terms to pass into checklist
@@ -357,6 +359,7 @@ trait CoreTaxonomies
 		$args = [
 			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
+			'header'   => FALSE === $box,
 		];
 
 		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
@@ -380,6 +383,7 @@ trait CoreTaxonomies
 		$args = [
 			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
+			// 'header'   => FALSE === $box, // no need for header on dropdowns
 		];
 
 		if ( FALSE !== $box ) {
@@ -405,6 +409,7 @@ trait CoreTaxonomies
 		$args = [
 			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
+			// 'header'   => FALSE === $box, // no need for header on dropdowns
 		];
 
 		if ( FALSE !== $box ) {
