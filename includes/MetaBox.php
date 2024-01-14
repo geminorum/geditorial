@@ -45,6 +45,7 @@ class MetaBox extends WordPress\Main
 			'restricted'  => FALSE,   // `disabled` / `hidden` / FALSE
 			'with_meta'   => NULL,    // override name meta field
 			'with_parent' => NULL,    // `NULL` for hierarchical
+			'empty_link'  => NULL,    // `NULL` for cap check or string for edit link, `FALSE` for disable
 			'echo'        => TRUE,
 			'none'        => NULL,    // `NULL` for label check, `FALSE` for disable
 			'empty'       => FALSE,   // `NULL` for empty box, `FALSE` for disable
@@ -67,7 +68,7 @@ class MetaBox extends WordPress\Main
 			'show_option_none'  => $args['none'] ?? Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' ),
 			'show_count'        => FALSE,
 			'hide_empty'        => FALSE,
-			'hide_if_empty'     => FALSE,
+			'hide_if_empty'     => TRUE,
 			'title_with_meta'   => $args['with_meta'] ?? FALSE,
 			'title_with_parent' => $args['with_parent'] ?? $taxonomy->hierarchical,
 			'restricted'        => $args['restricted'],
@@ -76,7 +77,8 @@ class MetaBox extends WordPress\Main
 			'echo'              => FALSE,
 		];
 
-		$html = wp_dropdown_categories( $dropdown );
+		if ( ! $html = wp_dropdown_categories( $dropdown ) )
+			return self::fieldEmptyTaxonomy( $taxonomy->name, $args['empty_link'], $args['posttype'], $args['echo'] );
 
 		if ( ! $args['echo'] )
 			return;
@@ -488,21 +490,18 @@ class MetaBox extends WordPress\Main
 		if ( FALSE === $edit )
 			return FALSE;
 
-		$taxonomy = WordPress\Taxonomy::object( $taxonomy );
-		$extra    = $posttype ? [ 'post_type' => $posttype ] : [];
-
 		if ( is_null( $edit ) )
-			$edit = Core\WordPress::getEditTaxLink( $taxonomy->name, FALSE, $extra );
+			$edit = Core\WordPress::getEditTaxLink( $taxonomy, FALSE, $posttype ? [ 'post_type' => $posttype ] : [] );
 
 		if ( $edit )
 			$html = Core\HTML::tag( 'a', [
 				'href'   => $edit,
-				'title'  => $taxonomy->labels->add_new_item,
+				'title'  => Helper::getTaxonomyLabel( $taxonomy, 'add_new_item' ),
 				'target' => '_blank',
-			], $taxonomy->labels->not_found );
+			], Helper::getTaxonomyLabel( $taxonomy, 'no_items_available', 'not_found' ) );
 
 		else
-			$html = '<span>'.$taxonomy->labels->not_found.'</span>';
+			$html = '<span>'.Helper::getTaxonomyLabel( $taxonomy, 'no_items_available', 'not_found' ).'</span>';
 
 		$html = Core\HTML::wrap( $html, 'field-wrap -empty' );
 
