@@ -76,7 +76,7 @@ trait PairedCore
 
 				'public'       => ! $paired[5],
 				'rewrite'      => $paired[5] ? FALSE : NULL,
-				'show_ui'      => FALSE,
+				'show_ui'      => $this->is_debug_mode(),
 				'show_in_rest' => FALSE,
 				'hierarchical' => $paired[4],
 

@@ -1225,4 +1225,12 @@ class Module extends WordPress\Module
 
 		return $this->get_setting( 'thrift_mode', FALSE );
 	}
+
+	public function is_debug_mode()
+	{
+		if ( self::const( 'GEDITORIAL_DEBUG_MODE' ) )
+			return TRUE;
+
+		return $this->get_setting( 'debug_mode', FALSE );
+	}
 }

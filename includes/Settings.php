@@ -363,6 +363,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_debug_mode( $description = NULL )
+	{
+		return [
+			'field'       => 'debug_mode',
+			'type'        => 'disabled',
+			'title'       => _x( 'Debug Mode', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Tries to figure out what happens behind the curtains!', 'Settings: Setting Description', 'geditorial-admin' ),
+		];
+	}
+
 	public static function getSetting_editor_button( $description = NULL )
 	{
 		return [
