@@ -364,6 +364,38 @@ trait PairedCore
 		return empty( $posts ) ? [] : $posts;
 	}
 
+	/**
+	 * Hooks the filter for paired parent terms on imports.
+	 * EQUAL: `$this->filter_module( 'importer', 'terms', 4 );`
+	 *
+	 * @param  bool|string $setting
+	 * @return bool        $hooked
+	 */
+	protected function pairedcore__hook_importer_term_parents( $setting = 'paired_force_parents' )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'importer', 'terms' ),
+			function ( $terms, $taxonomy, $source_id, $post_id ) use ( $constants ) {
+				if ( $taxonomy !== $this->constant( $constants[1] ) )
+				return $terms;
+
+				$parents = [];
+
+				foreach ( (array) $terms as $term )
+					$parents = array_merge( $parents, WordPress\Taxonomy::getTermParents( $term, $taxonomy ) );
+
+				return Core\Arraay::prepNumeral( $terms, $parents );
+
+			}, 12, 4 );
+
+		return TRUE;
+	}
+
 	protected function pairedcore__hook_sync_paired_for_ajax()
 	{
 		if ( ! $constants = $this->paired_get_constants() )

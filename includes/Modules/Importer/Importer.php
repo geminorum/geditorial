@@ -1247,6 +1247,8 @@ class Importer extends gEditorial\Module
 			if ( ! $taxonomy )
 				continue;
 
+			// NOTE: modules with `paired_force_parents` must filter this to include parent terms.
+			// @SEE: `pairedcore__hook_importer_term_parents()`
 			if ( FALSE === ( $filtered = $this->filters( 'terms', $terms, $taxonomy, $source_id, $post_id ) ) )
 				continue;
 
