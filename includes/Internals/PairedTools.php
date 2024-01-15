@@ -73,7 +73,7 @@ trait PairedTools
 						'action' => 'force_assign_parents',
 						'type'   => $posttype,
 					/* translators: %s: posttype label */
-					] ), sprintf( _x( 'On %s', 'Internal: PairedTools: Button', 'geditorial-admin' ), $label ), 'link-small' );
+					] ), sprintf( _x( 'On %s', 'Button', 'geditorial-admin' ), $label ), 'link-small' );
 
 				Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
 			echo '</div></div>';
@@ -430,7 +430,11 @@ trait PairedTools
 		if ( ! $terms || is_wp_error( $terms ) )
 			return FALSE;
 
-		$this->raise_resources( count( $terms ) );
+		if ( method_exists( $this, '_raise_resources' ) )
+			$this->_raise_resources( count( $terms ) );
+
+		else
+			$this->raise_resources( count( $terms ) );
 
 		foreach ( $terms as $term_id ) {
 
@@ -467,7 +471,11 @@ trait PairedTools
 		if ( empty( $posts ) )
 			return FALSE;
 
-		$this->raise_resources( count( $posts ) );
+		if ( method_exists( $this, '_raise_resources' ) )
+			$this->_raise_resources( count( $posts ) );
+
+		else
+			$this->raise_resources( count( $posts ) );
 
 		foreach ( $posts as $post )
 			if ( $this->paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key ) )
@@ -500,7 +508,11 @@ trait PairedTools
 		if ( empty( $movefrom ) || empty( $moveto ) )
 			return FALSE;
 
-		$this->_raise_resources();
+		if ( method_exists( $this, '_raise_resources' ) )
+			$this->_raise_resources( $limit );
+
+		else
+			$this->raise_resources( $limit );
 
 		$query = [
 			'tax_query' => [ [

@@ -180,8 +180,8 @@ class Assigned extends gEditorial\Module
 					'main_taxonomy',
 					$screen->post_type,
 					$this->get_setting( 'selectmultiple_term' )
-						? '__singleselect_restricted_terms_callback'
-						: '__checklist_restricted_terms_callback'
+						? '__checklist_restricted_terms_callback'
+						: '__singleselect_restricted_terms_callback'
 				);
 			}
 		}

@@ -36,7 +36,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 			$this->el_opened = FALSE;
 		}
 
-		// to avoid clearing the non visible relationship
+		// to avoid clearing the non visible relationships
 
 		$taxonomy = empty( $args['taxonomy'] ) ? 'category' : $args['taxonomy'];
 		$selected = empty( $args['selected_cats'] ) ? [] : $args['selected_cats'];

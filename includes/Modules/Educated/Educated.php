@@ -49,7 +49,7 @@ class Educated extends gEditorial\Module
 				'count_not',
 			],
 			'_editpost' => [
-				'selectmultiple_term',
+				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
 				'show_in_quickedit',
@@ -140,9 +140,9 @@ class Educated extends gEditorial\Module
 				$this->hook_taxonomy_metabox_mainbox(
 					'main_taxonomy',
 					$screen->post_type,
-					$this->get_setting( 'selectmultiple_term' )
-						? '__singleselect_restricted_terms_callback'
-						: '__checklist_restricted_terms_callback'
+					$this->get_setting( 'selectmultiple_term', TRUE )
+						? '__checklist_restricted_terms_callback'
+						: '__singleselect_restricted_terms_callback'
 				);
 			}
 		}

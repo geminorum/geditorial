@@ -999,7 +999,7 @@ class Units extends gEditorial\Module
 		$fields   = [];
 
 		foreach ( $this->get_posttype_fields( $posttype ) as $field => $args )
-			if ( ! in_array( $args['type'], [ 'term' ] ) )
+			if ( ! in_array( $args['type'], [ 'term', 'parent_post' ], TRUE ) )
 				$fields['units__'.$field] = $object ? $args : sprintf( $template, $args['title'] );
 
 		return $fields;

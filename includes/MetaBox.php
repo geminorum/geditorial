@@ -55,9 +55,9 @@ class MetaBox extends WordPress\Main
 		if ( ! $args['taxonomy'] || ( ! $taxonomy = WordPress\Taxonomy::object( $args['taxonomy'] ) ) )
 			return FALSE;
 
-		$selected = wp_get_object_terms( $object_id, $taxonomy->name, [
+		$selected = $object_id ? wp_get_object_terms( $object_id, $taxonomy->name, [
 			'fields' => $taxonomy->hierarchical ? 'ids' : 'slugs'
-		] );
+		] ) : [];
 
 		$dropdown = [
 			'taxonomy'          => $taxonomy->name,
@@ -67,6 +67,7 @@ class MetaBox extends WordPress\Main
 			'name'              => $args['name'] ?? 'tax_input['.$taxonomy->name.'][]',
 			'include'           => $terms ?? [],
 			'show_option_none'  => $args['none'] ?? Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' ),
+			'option_none_value' => '0',
 			'show_count'        => FALSE,
 			'hide_empty'        => FALSE,
 			'hide_if_empty'     => TRUE,

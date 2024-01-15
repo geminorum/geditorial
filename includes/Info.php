@@ -78,6 +78,11 @@ class Info extends WordPress\Main
 		return Core\HTML::desc( $before.Plugin::wrong( FALSE ).$after, FALSE, '-empty -wrong' );
 	}
 
+	public static function renderWaitForAMoment( $before = '', $after = '' )
+	{
+		return Core\HTML::desc( $before.Plugin::moment( FALSE ).$after, FALSE, '-empty -moment' );
+	}
+
 	public static function renderNoReportsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(

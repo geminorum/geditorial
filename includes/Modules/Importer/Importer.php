@@ -125,7 +125,7 @@ class Importer extends gEditorial\Module
 		if ( 'edit' == $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( $this->cuc( 'imports' ) )
+			if ( ! self::req( 's' ) && $this->cuc( 'imports' ) )
 				$this->enqueue_asset_js( [
 					'strings' => $this->get_strings( $screen->base, 'js' ),
 					'link'    => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ),
