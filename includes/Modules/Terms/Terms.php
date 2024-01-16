@@ -449,6 +449,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// by default the metakey is the same as the field
+	// TODO: handle `$taxonomy` is an array
 	private function get_supported_metakey( $field, $taxonomy = FALSE )
 	{
 		return $this->filters( 'supported_field_metakey', $field, $field, $taxonomy );
@@ -2071,9 +2072,12 @@ class Terms extends gEditorial\Module
 		// 	$args['force_menu_order_sort'] = TRUE;
 		// }
 
-		if ( ! empty( $args['force_menu_order_sort'] ) ) {
+		if ( ! empty( $args['force_menu_order_sort'] )
+			&& ( $metakey = $this->get_supported_metakey( 'order', $args['taxonomy'] ) ) ) {
+
+			$args['meta_key'] = $metakey;
 			$args['orderby']  = 'meta_value_num';
-			$args['meta_key'] = 'order'; // phpcs:ignore
+
 			$terms_query->meta_query->parse_query_vars( $args );
 		}
 	}
@@ -2100,10 +2104,22 @@ class Terms extends gEditorial\Module
 		// 	$clauses['orderby'] = str_replace( 'ORDER BY t.name', 'ORDER BY t.name+0', $clauses['orderby'] );
 
 		// For sorting, force left join in case order meta is missing.
-		if ( ! empty( $args['force_menu_order_sort'] ) ) {
-			$clauses['join']    = str_replace( "INNER JOIN {$wpdb->termmeta} ON ( t.term_id = {$wpdb->termmeta}.term_id )", "LEFT JOIN {$wpdb->termmeta} ON ( t.term_id = {$wpdb->termmeta}.term_id AND {$wpdb->termmeta}.meta_key='order')", $clauses['join'] );
-			$clauses['where']   = str_replace( "{$wpdb->termmeta}.meta_key = 'order'", "( {$wpdb->termmeta}.meta_key = 'order' OR {$wpdb->termmeta}.meta_key IS NULL )", $clauses['where'] );
-			$clauses['orderby'] = 'DESC' === $args['order'] ? str_replace( 'meta_value+0', 'meta_value+0 DESC, t.name', $clauses['orderby'] ) : str_replace( 'meta_value+0', 'meta_value+0 ASC, t.name', $clauses['orderby'] );
+		if ( ! empty( $args['force_menu_order_sort'] )
+			&& ( $metakey = $this->get_supported_metakey( 'order', $args['taxonomy'] ) ) ) {
+
+			$clauses['join'] = str_replace(
+				"INNER JOIN {$wpdb->termmeta} ON ( t.term_id = {$wpdb->termmeta}.term_id )",
+				"LEFT JOIN {$wpdb->termmeta} ON ( t.term_id = {$wpdb->termmeta}.term_id AND {$wpdb->termmeta}.meta_key='{$metakey}')",
+			$clauses['join'] );
+
+			$clauses['where'] = str_replace(
+				"{$wpdb->termmeta}.meta_key = '{$metakey}'",
+				"( {$wpdb->termmeta}.meta_key = '{$metakey}' OR {$wpdb->termmeta}.meta_key IS NULL )",
+			$clauses['where'] );
+
+			$clauses['orderby'] = 'DESC' === $args['order']
+				? str_replace( 'meta_value+0', 'meta_value+0 DESC, t.name', $clauses['orderby'] )
+				: str_replace( 'meta_value+0', 'meta_value+0 ASC, t.name', $clauses['orderby'] );
 		}
 
 		return $clauses;
