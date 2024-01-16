@@ -1521,7 +1521,7 @@ class Meta extends gEditorial\Module
 					], 'imports' );
 
 					$result = 0;
-					$this->_raise_resources();
+					$this->raise_resources();
 
 					if ( $post['custom_field'] && $post['custom_field_into'] )
 						$result = $this->import_field_meta(
@@ -1545,7 +1545,7 @@ class Meta extends gEditorial\Module
 					], 'imports' );
 
 					$result = [];
-					$this->_raise_resources();
+					$this->raise_resources();
 
 					if ( $post['custom_field'] )
 						$result = WordPress\Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
@@ -1737,17 +1737,5 @@ class Meta extends gEditorial\Module
 		}
 
 		return $types;
-	}
-
-	private function _raise_resources( $count = 0 )
-	{
-		// Media::disableThumbnailGeneration();
-		WordPress\Taxonomy::disableTermCounting();
-		Services\LateChores::termCountCollect();
-		wp_defer_comment_counting( TRUE );
-
-		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
-
-		$this->raise_resources( $count, 60, 'import' );
 	}
 }

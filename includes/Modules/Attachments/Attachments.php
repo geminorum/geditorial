@@ -538,7 +538,7 @@ class Attachments extends gEditorial\Module
 		if ( ! $mimetype = self::req( 'mime' ) )
 			return Info::renderEmptyMIMEtype();
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		return ModuleSettings::handleTool_deletion_by_mime(
 			'do_tool_deletion_by_mime',
@@ -558,7 +558,7 @@ class Attachments extends gEditorial\Module
 		if ( ! $this->posttype_supported( $posttype ) )
 			return Info::renderNotSupportedPosttype();
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		return ModuleSettings::handleTool_empty_raw_metadata(
 			'do_tool_empty_raw_metadata',
@@ -578,29 +578,12 @@ class Attachments extends gEditorial\Module
 		if ( ! $this->posttype_supported( $posttype ) )
 			return Info::renderNotSupportedPosttype();
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		return ModuleSettings::handleTool_reattach_thumbnails(
 			'do_tool_reattach_thumbnails',
 			$posttype,
 			$this->get_sub_limit_option( $sub )
 		);
-	}
-
-	private function _raise_resources( $count = 0 )
-	{
-		gEditorial()->disable_process( 'audit', 'import' );
-		gEditorial()->disable_process( 'persona', 'aftercare' );
-		gEditorial()->disable_process( 'was_born', 'aftercare' );
-
-		WordPress\Media::disableThumbnailGeneration();
-		WordPress\Taxonomy::disableTermCounting();
-		Services\LateChores::termCountCollect();
-		wp_defer_comment_counting( TRUE );
-
-		if ( ! Core\WordPress::isDev() )
-			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
-
-		$this->raise_resources( $count );
 	}
 }

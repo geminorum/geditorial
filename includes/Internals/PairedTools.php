@@ -430,11 +430,7 @@ trait PairedTools
 		if ( ! $terms || is_wp_error( $terms ) )
 			return FALSE;
 
-		if ( method_exists( $this, '_raise_resources' ) )
-			$this->_raise_resources( count( $terms ) );
-
-		else
-			$this->raise_resources( count( $terms ) );
+		$this->raise_resources( count( $terms ) );
 
 		foreach ( $terms as $term_id ) {
 
@@ -471,11 +467,7 @@ trait PairedTools
 		if ( empty( $posts ) )
 			return FALSE;
 
-		if ( method_exists( $this, '_raise_resources' ) )
-			$this->_raise_resources( count( $posts ) );
-
-		else
-			$this->raise_resources( count( $posts ) );
+		$this->raise_resources( count( $posts ) );
 
 		foreach ( $posts as $post )
 			if ( $this->paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key ) )
@@ -508,11 +500,7 @@ trait PairedTools
 		if ( empty( $movefrom ) || empty( $moveto ) )
 			return FALSE;
 
-		if ( method_exists( $this, '_raise_resources' ) )
-			$this->_raise_resources( $limit );
-
-		else
-			$this->raise_resources( $limit );
+		$this->raise_resources( $limit );
 
 		$query = [
 			'tax_query' => [ [
@@ -581,11 +569,7 @@ trait PairedTools
 		if ( ! $this->posttype_supported( $posttype ) )
 			return Info::renderNotSupportedPosttype();
 
-		if ( method_exists( $this, '_raise_resources' ) )
-			$this->_raise_resources( $limit );
-
-		else
-			$this->raise_resources( $limit );
+		$this->raise_resources( $limit );
 
 		$taxonomy = $this->constant( $taxonomy_key );
 		$query    = [

@@ -34,11 +34,7 @@ trait PostDate
 		if ( ! in_array( $posttype, (array) $supported, TRUE ) )
 			return Info::renderNotSupportedPosttype();
 
-		if ( method_exists( $this, '_raise_resources' ) )
-			$this->_raise_resources( $limit );
-
-		else
-			$this->raise_resources( $limit );
+		$this->raise_resources( $limit );
 
 		$query = [
 			'meta_query' => [

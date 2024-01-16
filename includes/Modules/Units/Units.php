@@ -1055,16 +1055,4 @@ class Units extends gEditorial\Module
 
 		return $types;
 	}
-
-	private function _raise_resources( $count = 0 )
-	{
-		// Media::disableThumbnailGeneration();
-		WordPress\Taxonomy::disableTermCounting();
-		Services\LateChores::termCountCollect();
-		wp_defer_comment_counting( TRUE );
-
-		do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
-
-		$this->raise_resources( $count, 60, 'import' );
-	}
 }

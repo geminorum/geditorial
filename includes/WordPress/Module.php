@@ -475,4 +475,16 @@ class Module extends Core\Base
 		).'"'.( $id ? ' id="'.$id.'"' : '' )
 		.( $hide ? ' style="display:none"' : '' ).'>';
 	}
+
+	// self::dump( ini_get( 'memory_limit' ) );
+	protected function raise_memory_limit( $count = 1, $per = 60, $context = NULL )
+	{
+		$limit = $count ? ( 300 + ( $per * $count ) ) : 0;
+
+		@set_time_limit( $limit );
+		// @ini_set( 'max_execution_time', $limit ); // maybe `-1`
+		// @ini_set( 'max_input_time', $limit ); // maybe `-1`
+
+		return wp_raise_memory_limit( $context ?? $this->base );
+	}
 }

@@ -1071,19 +1071,4 @@ class WasBorn extends gEditorial\Module
 
 		return $this->postdate__get_post_data_for_latechores( $post, $metakey );
 	}
-
-	private function _raise_resources( $count = 0 )
-	{
-		gEditorial()->disable_process( 'audit', 'import' );
-
-		WordPress\Media::disableThumbnailGeneration();
-		WordPress\Taxonomy::disableTermCounting();
-		Services\LateChores::termCountCollect();
-		wp_defer_comment_counting( TRUE );
-
-		if ( ! Core\WordPress::isDev() )
-			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
-
-		$this->raise_resources( $count, 60, 'import' );
-	}
 }

@@ -537,7 +537,7 @@ class Audit extends gEditorial\Module
 	{
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		switch ( Core\Arraay::keyFirst( $action ) ) {
 
@@ -778,7 +778,7 @@ class Audit extends gEditorial\Module
 		if ( ! $this->posttype_supported( $posttype ) )
 			return Info::renderNotSupportedPosttype();
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		$taxonomy = $this->constant( 'main_taxonomy' );
 		$query    = [];
@@ -1021,7 +1021,7 @@ class Audit extends gEditorial\Module
 		return $this->filters( 'view_data', $data, $post, $context );
 	}
 
-	private function _raise_resources( $count = 0 )
+	protected function raise_resources( $count = 1, $per = 60, $context = NULL )
 	{
 		WordPress\Taxonomy::disableTermCounting();
 		Services\LateChores::termCountCollect();
@@ -1029,6 +1029,6 @@ class Audit extends gEditorial\Module
 		if ( ! Core\WordPress::isDev() )
 			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
 
-		$this->raise_resources( $count, 60, 'audit' );
+		return $this->raise_memory_limit( $count, $per, $context ?? 'audit' );
 	}
 }

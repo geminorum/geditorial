@@ -1193,19 +1193,21 @@ class Module extends WordPress\Module
 		return Helper::log( $message, $this->classs(), $level, $context );
 	}
 
-	// self::dump( ini_get( 'memory_limit' ) );
 	protected function raise_resources( $count = 1, $per = 60, $context = NULL )
 	{
-		$limit = $count ? ( 300 + ( $per * $count ) ) : 0;
+		gEditorial()->disable_process( 'audit', $context ?? 'import' );
+		gEditorial()->disable_process( 'persona', 'aftercare' );
+		gEditorial()->disable_process( 'was_born', 'aftercare' );
 
-		@set_time_limit( $limit );
-		// @ini_set( 'max_execution_time', $limit ); // maybe `-1`
-		// @ini_set( 'max_input_time', $limit ); // maybe `-1`
+		WordPress\Media::disableThumbnailGeneration();
+		WordPress\Taxonomy::disableTermCounting();
+		Services\LateChores::termCountCollect();
+		wp_defer_comment_counting( TRUE );
 
-		if ( is_null( $context ) )
-			$context = $this->base;
+		if ( ! Core\WordPress::isDev() )
+			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
 
-		return wp_raise_memory_limit( $context );
+		return $this->raise_memory_limit( $count, $per, $context ?? 'import' );
 	}
 
 	public function disable_process( $context = 'import' )

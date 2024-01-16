@@ -212,7 +212,7 @@ class Importer extends gEditorial\Module
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( Core\File::normalize( $file ) );
@@ -380,7 +380,7 @@ class Importer extends gEditorial\Module
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( Core\File::normalize( $file ) );
@@ -565,7 +565,7 @@ class Importer extends gEditorial\Module
 					$count = 0;
 					$args  = $this->_get_current_form_images();
 
-					$this->_raise_resources();
+					$this->raise_resources();
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
@@ -622,7 +622,7 @@ class Importer extends gEditorial\Module
 					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );
 					$terms_all      = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
 
-					$this->_raise_resources();
+					$this->raise_resources();
 
 					$iterator = new \SplFileObject( Core\File::normalize( $file ) );
 					$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
@@ -1311,7 +1311,7 @@ class Importer extends gEditorial\Module
 		if ( ! $this->posttype_supported( $posttype ) )
 			return Info::renderNotSupportedPosttype();
 
-		$this->_raise_resources();
+		$this->raise_resources();
 
 		return ModuleSettings::handleTool_cleanup_raw_data(
 			$posttype,
@@ -1327,20 +1327,5 @@ class Importer extends gEditorial\Module
 	public function imports_general_summary( $uri )
 	{
 		// TODO: report on available imports
-	}
-
-	private function _raise_resources( $count = 0 )
-	{
-		gEditorial()->disable_process( 'audit', 'import' );
-
-		WordPress\Media::disableThumbnailGeneration();
-		WordPress\Taxonomy::disableTermCounting();
-		Services\LateChores::termCountCollect();
-		wp_defer_comment_counting( TRUE );
-
-		if ( ! Core\WordPress::isDev() )
-			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
-
-		$this->raise_resources( $count, 60, 'import' );
 	}
 }
