@@ -443,13 +443,13 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function getSetting_metabox_advanced( $description = NULL )
+	public static function getSetting_metabox_advanced( $description = NULL, $default = NULL )
 	{
 		return [
 			'field'       => 'metabox_advanced',
 			'title'       => _x( 'Advanced Meta-Box', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Select to use advanced meta-box UI on edit post screen.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => '0',
+			'default'     => $default ?? '0',
 		];
 	}
 

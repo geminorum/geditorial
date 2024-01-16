@@ -30,11 +30,15 @@ class Contest extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'contest',
-			'title'  => _x( 'Contest', 'Modules: Contest', 'geditorial-admin' ),
-			'desc'   => _x( 'Contest Management', 'Modules: Contest', 'geditorial-admin' ),
-			'icon'   => 'megaphone',
-			'access' => 'beta',
+			'name'     => 'contest',
+			'title'    => _x( 'Contest', 'Modules: Contest', 'geditorial-admin' ),
+			'desc'     => _x( 'Contest Management', 'Modules: Contest', 'geditorial-admin' ),
+			'icon'     => 'megaphone',
+			'access'   => 'beta',
+			'keywords' => [
+				'paired',
+				'apply',
+			],
 		];
 	}
 

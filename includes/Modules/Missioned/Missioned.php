@@ -37,11 +37,14 @@ class Missioned extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'missioned',
-			'title'  => _x( 'Missioned', 'Modules: Missioned', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Mission Management', 'Modules: Missioned', 'geditorial-admin' ),
-			'icon'   => 'fullscreen-exit-alt',
-			'access' => 'beta',
+			'name'     => 'missioned',
+			'title'    => _x( 'Missioned', 'Modules: Missioned', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Mission Management', 'Modules: Missioned', 'geditorial-admin' ),
+			'icon'     => 'fullscreen-exit-alt',
+			'access'   => 'beta',
+			'keywords' => [
+				'paired',
+			],
 		];
 	}
 

@@ -34,11 +34,14 @@ class Addendum extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'addendum',
-			'title'  => _x( 'Addendum', 'Modules: Addendum', 'geditorial-admin' ),
-			'desc'   => _x( 'Content Appendages', 'Modules: Addendum', 'geditorial-admin' ),
-			'icon'   => 'carrot',
-			'access' => 'beta',
+			'name'     => 'addendum',
+			'title'    => _x( 'Addendum', 'Modules: Addendum', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Appendages', 'Modules: Addendum', 'geditorial-admin' ),
+			'icon'     => 'carrot',
+			'access'   => 'beta',
+			'keywords' => [
+				'paired',
+			],
 		];
 	}
 

@@ -46,7 +46,7 @@ trait PairedTools
 					$label
 				), 'small' );
 
-			Core\HTML::desc( _x( 'Tries to move suppored posts from selected to another main post.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
+			Core\HTML::desc( _x( 'Tries to move supported posts from selected to another main post.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
 
 		echo '</div></div>';
 
@@ -551,7 +551,11 @@ trait PairedTools
 	{
 		$currents = wp_get_object_terms( $post->ID, $taxonomy, [ 'fields' => 'ids' ] );
 		$terms    = Core\Arraay::prepNumeral( array_diff( array_merge( $currents, $moveto ), $movefrom ) );
-		$result   = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
+
+		if ( $this->get_setting( 'paired_force_parents' ) )
+			$terms = WordPress\Taxonomy::appendParentTermIDs( $terms, $taxonomy );
+
+		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
 
 		if ( self::isError( $result ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',

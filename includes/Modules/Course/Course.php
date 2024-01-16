@@ -29,11 +29,14 @@ class Course extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'course',
-			'title'  => _x( 'Course', 'Modules: Course', 'geditorial-admin' ),
-			'desc'   => _x( 'Course and Lesson Management', 'Modules: Course', 'geditorial-admin' ),
-			'icon'   => 'welcome-learn-more',
-			'access' => 'beta',
+			'name'     => 'course',
+			'title'    => _x( 'Course', 'Modules: Course', 'geditorial-admin' ),
+			'desc'     => _x( 'Course and Lesson Management', 'Modules: Course', 'geditorial-admin' ),
+			'icon'     => 'welcome-learn-more',
+			'access'   => 'beta',
+			'keywords' => [
+				'paired',
+			],
 		];
 	}
 

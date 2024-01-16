@@ -30,11 +30,14 @@ class Magazine extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'magazine',
-			'title'  => _x( 'Magazine', 'Modules: Magazine', 'geditorial-admin' ),
-			'desc'   => _x( 'Magazine Issue Management', 'Modules: Magazine', 'geditorial-admin' ),
-			'icon'   => 'book',
-			'access' => 'stable',
+			'name'     => 'magazine',
+			'title'    => _x( 'Magazine', 'Modules: Magazine', 'geditorial-admin' ),
+			'desc'     => _x( 'Magazine Issue Management', 'Modules: Magazine', 'geditorial-admin' ),
+			'icon'     => 'book',
+			'access'   => 'stable',
+			'keywords' => [
+				'paired',
+			],
 		];
 	}
 

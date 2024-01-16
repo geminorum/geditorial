@@ -49,6 +49,17 @@ class Executed extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
+			'_editpost' => [
+				'metabox_advanced',
+				'selectmultiple_term' => [ NULL, TRUE ],
+			],
+			'_editlist' => [
+				'show_in_quickedit',
+			],
+			'_frontend' => [
+				'contents_viewable',
+				'show_in_navmenus',
+			],
 		];
 	}
 
@@ -98,10 +109,14 @@ class Executed extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'main_taxonomy', [
-			'hierarchical' => TRUE,
-			'show_in_menu' => FALSE,
-			'meta_box_cb'  => '__checklist_restricted_terms_callback',
-		], NULL, [], TRUE );
+			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+		], NULL, [
+			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+		], TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
@@ -118,6 +133,17 @@ class Executed extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				if ( ! $this->get_setting( 'metabox_advanced' ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'main_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term', TRUE )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 			}
 		}
 	}
@@ -149,6 +175,8 @@ class Executed extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
+		return $this->get_setting( 'contents_viewable', TRUE )
+			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
+			: $template;
 	}
 }

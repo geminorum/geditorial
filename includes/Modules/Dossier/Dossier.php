@@ -33,11 +33,14 @@ class Dossier extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'dossier',
-			'title'  => _x( 'Dossier', 'Modules: Dossier', 'geditorial-admin' ),
-			'desc'   => _x( 'Collection of Contents', 'Modules: Dossier', 'geditorial-admin' ),
-			'icon'   => 'portfolio',
-			'access' => 'beta',
+			'name'     => 'dossier',
+			'title'    => _x( 'Dossier', 'Modules: Dossier', 'geditorial-admin' ),
+			'desc'     => _x( 'Collection of Contents', 'Modules: Dossier', 'geditorial-admin' ),
+			'icon'     => 'portfolio',
+			'access'   => 'beta',
+			'keywords' => [
+				'paired',
+			],
 		];
 	}
 
@@ -81,7 +84,7 @@ class Dossier extends gEditorial\Module
 			],
 			'_content' => [
 				'archive_override',
-				'archive_title' => [ NULL, $this->get_posttype_label( 'dossier_posttype', 'all_items' ) ],
+				'archive_title' => [ NULL, $this->get_posttype_label( 'primary_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
 			],
@@ -89,7 +92,7 @@ class Dossier extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'dossier_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
 		];
 	}
@@ -97,10 +100,10 @@ class Dossier extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'dossier_posttype' => 'dossier',
-			'dossier_paired'   => 'dossiers',
+			'primary_posttype' => 'dossier',
+			'primary_paired'   => 'dossiers',
 			'span_taxonomy'    => 'dossier_span',
-			'section_taxonomy' => 'dossier_section',
+			'primary_subterm' => 'dossier_section',
 
 			'dossier_shortcode' => 'dossier',
 			'span_shortcode'    => 'dossier-span',
@@ -112,9 +115,9 @@ class Dossier extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'dossier_paired'   => NULL,
+				'primary_paired'   => NULL,
 				'span_taxonomy'    => 'backup',
-				'section_taxonomy' => 'category',
+				'primary_subterm' => 'category',
 			],
 		];
 	}
@@ -123,13 +126,13 @@ class Dossier extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'dossier_posttype' => _n_noop( 'Dossier', 'Dossiers', 'geditorial-dossier' ),
-				'dossier_paired'   => _n_noop( 'Dossier', 'Dossiers', 'geditorial-dossier' ),
+				'primary_posttype' => _n_noop( 'Dossier', 'Dossiers', 'geditorial-dossier' ),
+				'primary_paired'   => _n_noop( 'Dossier', 'Dossiers', 'geditorial-dossier' ),
 				'span_taxonomy'    => _n_noop( 'Span', 'Spans', 'geditorial-dossier' ),
-				'section_taxonomy' => _n_noop( 'Section', 'Sections', 'geditorial-dossier' ),
+				'primary_subterm'  => _n_noop( 'Section', 'Sections', 'geditorial-dossier' ),
 			],
 			'labels' => [
-				'dossier_posttype' => [
+				'primary_posttype' => [
 					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-dossier' ),
 				],
 			],
@@ -143,7 +146,7 @@ class Dossier extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			'dossier_posttype' => [
+			'primary_posttype' => [
 				'metabox_title' => _x( 'The Dossier', 'MetaBox Title', 'geditorial-dossier' ),
 			],
 		];
@@ -161,7 +164,7 @@ class Dossier extends gEditorial\Module
 	protected function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'dossier_posttype' ) => [
+			$this->constant( 'primary_posttype' ) => [
 				'over_title' => [ 'type' => 'title_before' ],
 				'sub_title'  => [ 'type' => 'title_after' ],
 				'lead'       => [ 'type' => 'postbox_html' ],
@@ -200,15 +203,15 @@ class Dossier extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [
-			'dossier_posttype',
-			'dossier_paired',
-			'section_taxonomy',
+			'primary_posttype',
+			'primary_paired',
+			'primary_subterm',
 		];
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'dossier_posttype' );
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function init()
@@ -220,7 +223,7 @@ class Dossier extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'dossier_posttype' );
+		], 'primary_posttype' );
 
 		$this->paired_register();
 
@@ -238,17 +241,17 @@ class Dossier extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
-			? $this->constant( 'section_taxonomy' )
+			? $this->constant( 'primary_subterm' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'dossier_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->_hook_post_updated_messages( 'dossier_posttype' );
+				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
@@ -259,7 +262,7 @@ class Dossier extends gEditorial\Module
 
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
-				$this->_hook_bulk_post_updated_messages( 'dossier_posttype' );
+				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( 'span_taxonomy' );
@@ -268,7 +271,7 @@ class Dossier extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $subterms && $subterms === $screen->taxonomy )
-				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'dossier_posttype' ) ) );
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'primary_posttype' ) ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 
@@ -298,7 +301,7 @@ class Dossier extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'dossier_posttype' ) );
+		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 		$this->add_posttype_fields_supported();
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
@@ -317,9 +320,9 @@ class Dossier extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( $this->_paired && is_tax( $this->constant( 'dossier_paired' ) ) ) {
+		if ( $this->_paired && is_tax( $this->constant( 'primary_paired' ) ) ) {
 
-			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'dossier_posttype', 'dossier_paired' ) )
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'primary_posttype', 'primary_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_taxonomy' ) ) ) {
@@ -327,12 +330,12 @@ class Dossier extends gEditorial\Module
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
 
-		} else if ( is_post_type_archive( $this->constant( 'dossier_posttype' ) ) ) {
+		} else if ( is_post_type_archive( $this->constant( 'primary_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
 
-		} else if ( is_singular( $this->constant( 'dossier_posttype' ) ) ) {
+		} else if ( is_singular( $this->constant( 'primary_posttype' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
 				add_action( $this->hook_base( 'content', 'before' ),
@@ -344,7 +347,7 @@ class Dossier extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->templateposttype__include( $template, $this->constant( 'dossier_posttype' ), FALSE );
+		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ), FALSE );
 	}
 
 	public function templateposttype_get_archive_content_default( $posttype )
@@ -354,7 +357,7 @@ class Dossier extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'dossier_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -366,7 +369,7 @@ class Dossier extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'dossier_posttype' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'primary_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -433,8 +436,8 @@ class Dossier extends gEditorial\Module
 	public function dossier_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
-			$this->constant( 'dossier_posttype' ),
-			$this->constant( 'dossier_paired' ),
+			$this->constant( 'primary_posttype' ),
+			$this->constant( 'primary_paired' ),
 			array_merge( [
 				'posttypes'   => $this->posttypes(),
 				'order_cb'    => NULL, // NULL for default ordering by meta
@@ -451,7 +454,7 @@ class Dossier extends gEditorial\Module
 	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return Shortcode::listPosts( 'assigned',
-			$this->constant( 'dossier_posttype' ),
+			$this->constant( 'primary_posttype' ),
 			$this->constant( 'span_taxonomy' ),
 			$atts,
 			$content,
@@ -461,7 +464,7 @@ class Dossier extends gEditorial\Module
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		$type = $this->constant( 'dossier_posttype' );
+		$type = $this->constant( 'primary_posttype' );
 		$args = [
 			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,

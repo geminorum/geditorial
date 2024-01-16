@@ -16,6 +16,22 @@ class Skilled extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
+	/**
+	 * TODO: add level taxonomy for each skill
+	 * WTF: or maybe new module!
+	 * @SEE: https://ielts.org/organisations/ielts-for-organisations/ielts-scoring-in-detail
+	 * 9 - Expert
+	 * 8 - Very good
+	 * 7 - Good
+	 * 6 - Competent
+	 * 5 - Modest
+	 * 4 - Limited
+	 * 3 - Extremely limited
+	 * 2 - Intermittent
+	 * 1 - Non-user
+	 * 0 - Did not attempt the test
+	 */
+
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
@@ -47,10 +63,15 @@ class Skilled extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
+			'_editpost' => [
+				'metabox_advanced' => [ NULL, TRUE ],
+				'selectmultiple_term' => [ NULL, TRUE ],
+			],
 			'_editlist' => [
 				'show_in_quick_edit',
 			],
 			'_frontend' => [
+				'contents_viewable',
 				'show_in_nav_menus',
 			],
 		];
@@ -103,11 +124,13 @@ class Skilled extends gEditorial\Module
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
-			'meta_box_cb'        => NULL, // default hierarchical ui
 			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced', TRUE ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
-		], NULL, [], TRUE );
+		], NULL, [
+			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+		], TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
@@ -127,12 +150,14 @@ class Skilled extends gEditorial\Module
 
 			} else if ( 'post' === $screen->base ) {
 
-				// $this->hook_taxonomy_metabox_mainbox(
-				// 	'main_taxonomy',
-				// 	$screen->post_type,
-				// 	// '__singleselect_restricted_terms_callback',
-				// 	'__checklist_restricted_terms_callback',
-				// );
+				if ( ! $this->get_setting( 'metabox_advanced', TRUE ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'main_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term', TRUE )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 			}
 		}
 	}
@@ -164,6 +189,8 @@ class Skilled extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
+		return $this->get_setting( 'contents_viewable', TRUE )
+			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
+			: $template;
 	}
 }

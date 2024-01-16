@@ -26,11 +26,14 @@ class Collect extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'collect',
-			'title'  => _x( 'Collect', 'Modules: Collect', 'geditorial-admin' ),
-			'desc'   => _x( 'Create and use Collections of Posts', 'Modules: Collect', 'geditorial-admin' ),
-			'icon'   => 'star-filled',
-			'access' => 'beta',
+			'name'     => 'collect',
+			'title'    => _x( 'Collect', 'Modules: Collect', 'geditorial-admin' ),
+			'desc'     => _x( 'Create and use Collections of Posts', 'Modules: Collect', 'geditorial-admin' ),
+			'icon'     => 'star-filled',
+			'access'   => 'beta',
+			'keywords' => [
+				'paired',
+			],
 		];
 	}
 

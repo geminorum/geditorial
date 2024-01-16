@@ -145,6 +145,11 @@ trait CoreTaxonomies
 					] );
 
 					break;
+
+				// TODO: support combination of settings:
+				// -- restrricted terms
+				// -- `metabox_advanced`
+				// -- `selectmultiple_term`
 			}
 		}
 
@@ -490,6 +495,7 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
+	// TODO: integrate to `apply_taxonomy_object_settings()`
 	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL )
 	{
 		if ( ! $arg && method_exists( $this, 'meta_box_cb_'.$constant ) )

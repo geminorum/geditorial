@@ -49,12 +49,14 @@ class Ranked extends gEditorial\Module
 				'count_not',
 			],
 			'_editpost' => [
+				'metabox_advanced',
 				'selectmultiple_term',
 			],
 			'_editlist' => [
 				'show_in_quickedit',
 			],
 			'_frontend' => [
+				'contents_viewable',
 				'show_in_navmenus',
 			],
 		];
@@ -115,6 +117,7 @@ class Ranked extends gEditorial\Module
 				'copy-editor'        => _x( 'Copy Editor', 'Default Term', 'geditorial-ranked' ),
 				'proofreader'        => _x( 'Proofreader', 'Default Term', 'geditorial-ranked' ),
 				'executive'          => _x( 'Executive', 'Default Term', 'geditorial-ranked' ),
+				// Contributing Writer
 			],
 		];
 	}
@@ -126,9 +129,12 @@ class Ranked extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
-		], NULL, [], TRUE );
+		], NULL, [
+			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+		], TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
@@ -148,13 +154,14 @@ class Ranked extends gEditorial\Module
 
 			} else if ( 'post' === $screen->base ) {
 
-				$this->hook_taxonomy_metabox_mainbox(
-					'main_taxonomy',
-					$screen->post_type,
-					$this->get_setting( 'selectmultiple_term' )
-						? '__checklist_restricted_terms_callback'
-						: '__singleselect_restricted_terms_callback'
-				);
+				if ( ! $this->get_setting( 'metabox_advanced' ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'main_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term' )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 			}
 		}
 	}
@@ -186,6 +193,8 @@ class Ranked extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
+		return $this->get_setting( 'contents_viewable', TRUE )
+			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
+			: $template;
 	}
 }

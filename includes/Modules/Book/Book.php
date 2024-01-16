@@ -36,11 +36,14 @@ class Book extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'book',
-			'title'  => _x( 'Book', 'Modules: Book', 'geditorial-admin' ),
-			'desc'   => _x( 'Online House of Publications', 'Modules: Book', 'geditorial-admin' ),
-			'icon'   => 'book-alt',
-			'access' => 'stable',
+			'name'     => 'book',
+			'title'    => _x( 'Book', 'Modules: Book', 'geditorial-admin' ),
+			'desc'     => _x( 'Online House of Publications', 'Modules: Book', 'geditorial-admin' ),
+			'icon'     => 'book-alt',
+			'access'   => 'stable',
+			'keywords' => [
+				'paired',
+			],
 		];
 	}
 
