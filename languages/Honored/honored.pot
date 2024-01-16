@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Honored\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Honored\n"
+"X-Domain: geditorial-honored\n"
+
+#: Honored.php:85
+msgid "Honorific"
+msgid_plural "Honorifics"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Honored.php:89
+msgctxt "Label: Show Option All"
+msgid "Honors"
+msgstr ""
+
+#: Honored.php:90
+msgctxt "Label: Show Option No Terms"
+msgid "(Undefined)"
+msgstr ""
+
+#: Honored.php:99
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Honors Summary"
+msgstr ""
+
+#: Honored.php:100
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Honors Summary"
+msgstr ""
+
+#: Honored.php:115
+msgctxt "Main Taxonomy: Default Term"
+msgid "Clergy"
+msgstr ""
+
+#: Honored.php:116
+msgctxt "Main Taxonomy: Default Term"
+msgid "Doctor"
+msgstr ""
+
+#: Honored.php:117
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sadat"
+msgstr ""
+
+#: Honored.php:118
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sayyid"
+msgstr ""
+
+#: Honored.php:119
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sayyidah"
+msgstr ""
+
+#: Honored.php:120
+msgctxt "Main Taxonomy: Default Term"
+msgid "Engineer"
+msgstr ""
+
+#: Honored.php:121
+msgctxt "Main Taxonomy: Default Term"
+msgid "Lawyer"
+msgstr ""

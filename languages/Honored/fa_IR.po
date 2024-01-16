@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Honored\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-01-16 16:39+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ../../includes/Modules/Honored\n"
+"X-Domain: geditorial-honored\n"
+
+#: Honored.php:85
+msgid "Honorific"
+msgid_plural "Honorifics"
+msgstr[0] "تجلیلی‌ها"
+msgstr[1] "تجلیلی"
+
+#: Honored.php:89
+msgctxt "Label: Show Option All"
+msgid "Honors"
+msgstr "افتخارات"
+
+#: Honored.php:90
+msgctxt "Label: Show Option No Terms"
+msgid "(Undefined)"
+msgstr "(تعریف‌نشده)"
+
+#: Honored.php:99
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Honors Summary"
+msgstr "گزارش افتخارات تیم شما"
+
+#: Honored.php:100
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Honors Summary"
+msgstr "گزارش افتخارات تحریریه"
+
+#: Honored.php:115
+msgctxt "Main Taxonomy: Default Term"
+msgid "Clergy"
+msgstr "طلبه"
+
+#: Honored.php:116
+msgctxt "Main Taxonomy: Default Term"
+msgid "Doctor"
+msgstr "دکتر"
+
+#: Honored.php:117
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sadat"
+msgstr "سادات"
+
+#: Honored.php:118
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sayyid"
+msgstr "سید"
+
+#: Honored.php:119
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sayyidah"
+msgstr "سیده"
+
+#: Honored.php:120
+msgctxt "Main Taxonomy: Default Term"
+msgid "Engineer"
+msgstr "مهندس"
+
+#: Honored.php:121
+msgctxt "Main Taxonomy: Default Term"
+msgid "Lawyer"
+msgstr "وکیل"
