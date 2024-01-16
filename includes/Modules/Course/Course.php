@@ -479,8 +479,12 @@ class Course extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( $uri, $sub, NULL,
+		echo Settings::toolboxColumnOpen(
 			_x( 'Course Tools', 'Header', 'geditorial-course' ) );
+
+			$this->paired_tools_render_card( $uri, $sub );
+
+		echo '</div>';
 	}
 
 	protected function render_tools_html_before( $uri, $sub )
@@ -488,9 +492,24 @@ class Course extends gEditorial\Module
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
-	protected function render_tools_html_after( $uri, $sub )
+	public function imports_settings( $sub )
 	{
-		return $this->paired_tools_render_card( $uri, $sub );
+		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'imports', $sub );
+				$this->paired_imports_handle_tablelist( $sub );
+			}
+
+			Scripts::enqueueThickBox();
+		}
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		return $this->paired_imports_render_tablelist( $uri, $sub, NULL,
+			_x( 'Course Imports', 'Header', 'geditorial-course' ) );
 	}
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )

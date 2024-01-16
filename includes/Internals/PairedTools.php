@@ -99,7 +99,7 @@ trait PairedTools
 		}
 	}
 
-	protected function paired_tools_handle_tablelist( $sub = NULL )
+	protected function paired_imports_handle_tablelist( $sub = NULL )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
@@ -265,8 +265,17 @@ trait PairedTools
 				'message' => 'deleted',
 				'count'   => $count,
 			] );
+		}
 
-		} else if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
+		return TRUE;
+	}
+
+	protected function paired_tools_handle_tablelist( $sub = NULL )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return;
+
+		if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $constants[0], $constants[1] ) ) )
 				Core\WordPress::redirectReferer( 'wrong' );
@@ -290,7 +299,7 @@ trait PairedTools
 		return TRUE;
 	}
 
-	protected function paired_tools_render_tablelist( $uri = '', $sub = NULL, $actions = NULL, $title = NULL )
+	protected function paired_imports_render_tablelist( $uri = '', $sub = NULL, $actions = NULL, $title = NULL )
 	{
 		if ( ! $this->_paired || ! $constants = $this->paired_get_constants() ) {
 			if ( $title ) echo Core\HTML::tag( 'h3', $title );

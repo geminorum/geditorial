@@ -502,50 +502,52 @@ class Trained extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		return $this->paired_tools_render_tablelist( $uri, $sub, NULL,
+		echo Settings::toolboxColumnOpen(
 			_x( 'Training Course Tools', 'Header', 'geditorial-trained' ) );
-	}
 
-	protected function render_tools_html_before( $uri, $sub )
-	{
-		return $this->paired_tools_render_before( $uri, $sub );
-	}
+			$this->paired_tools_render_card( $uri, $sub );
 
-	protected function render_tools_html_after( $uri, $sub )
-	{
-		return $this->paired_tools_render_card( $uri, $sub );
-	}
-
-	public function imports_settings( $sub )
-	{
-		$this->check_settings( $sub, 'imports', 'per_page' );
-	}
-
-	protected function render_imports_html( $uri, $sub )
-	{
-		echo Settings::toolboxColumnOpen( _x( 'Training Imports', 'Header', 'geditorial-trained' ) );
-
-		if ( $this->get_setting( 'override_dates', TRUE ) )
-			$this->postdate__render_card_override_dates(
-				$uri,
-				$sub,
-				$this->constant( 'primary_posttype' ),
-				_x( 'Training Course Date from Meta-data', 'Card', 'geditorial-trained' )
-			);
-
-		else
-			return Info::renderNoImportsAvailable();
+			if ( $this->get_setting( 'override_dates', TRUE ) )
+				$this->postdate__render_card_override_dates(
+					$uri,
+					$sub,
+					$this->constant( 'primary_posttype' ),
+					_x( 'Training Course Date from Meta-data', 'Card', 'geditorial-trained' )
+				);
 
 		echo '</div>';
 	}
 
-	protected function render_imports_html_before( $uri, $sub )
+	protected function render_tools_html_before( $uri, $sub )
 	{
-		return $this->postdate__render_before_override_dates(
+		if ( FALSE === $this->postdate__render_before_override_dates(
 			$this->constant( 'primary_posttype' ),
 			$this->get_postdate_metakeys(),
 			$uri,
 			$sub
-		);
+		) )
+			return FALSE;
+
+		return $this->paired_tools_render_before( $uri, $sub );
+	}
+
+	public function imports_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'imports', $sub );
+				$this->paired_imports_handle_tablelist( $sub );
+			}
+
+			Scripts::enqueueThickBox();
+		}
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		return $this->paired_imports_render_tablelist( $uri, $sub, NULL,
+			_x( 'Training Course Imports', 'Header', 'geditorial-trained' ) );
 	}
 }
