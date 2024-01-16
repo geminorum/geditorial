@@ -9,6 +9,7 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
@@ -747,6 +748,9 @@ class Tweaks extends gEditorial\Module
 				continue;
 
 			if ( ! $object = get_taxonomy( $taxonomy ) )
+				continue;
+
+			if ( ! empty( $object->{Services\Paired::PAIRED_POSTTYPE_PROP} ) )
 				continue;
 
 			$edit  = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $post->post_type ] );
