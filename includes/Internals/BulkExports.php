@@ -95,12 +95,13 @@ trait BulkExports
 		] );
 	}
 
-	protected function exports_prep_posts_for_csv_export( $posts, $props, $fields = [], $metas = [] )
+	protected function exports_prep_posts_for_csv_export( $posts, $props, $fields = [], $metas = [], $taxes = [] )
 	{
 		$data  = [ array_merge(
 			$props,
 			Core\Arraay::prefixValues( $fields, 'field__' ),
-			Core\Arraay::prefixValues( $metas, 'meta__' )
+			Core\Arraay::prefixValues( $metas, 'meta__' ),
+			Core\Arraay::prefixValues( $taxes, 'taxonomy__' )
 		) ];
 
 		foreach ( $posts as $post ) {
@@ -126,6 +127,9 @@ trait BulkExports
 
 			foreach ( $metas as $meta )
 				$row[] = ( empty( $saved[$meta][0] ) ? '' : trim( $saved[$meta][0] ) ) ?: '';
+
+			foreach ( $taxes as $tax )
+				$row[] = implode( '|', WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
 
 			$data[] = $row;
 		}
