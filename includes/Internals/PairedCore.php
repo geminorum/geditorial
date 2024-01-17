@@ -396,6 +396,27 @@ trait PairedCore
 		return TRUE;
 	}
 
+	/**
+	 * Hooks the action for sync paired on imports.
+	 *
+	 * @return bool $hooked
+	 */
+	protected function pairedcore__hook_importer_before_import()
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		add_action( $this->hook_base( 'importer', 'before' ),
+			function ( $posttype ) use ( $constants ) {
+
+				if ( $posttype === $this->constant( $constants[0] ) )
+					$this->pairedcore__hook_sync_paired( $constants );
+
+			}, 1, 12 );
+
+		return TRUE;
+	}
+
 	protected function pairedcore__hook_sync_paired_for_ajax()
 	{
 		if ( ! $constants = $this->paired_get_constants() )

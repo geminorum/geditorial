@@ -635,6 +635,8 @@ class Importer extends gEditorial\Module
 					// NOTE: to avoid `Content, title, and excerpt are empty.` Error on `wp_insert_post()`
 					add_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
 
+					$this->actions( 'before', $posttype );
+
 					foreach ( $_POST['_cb'] as $offset ) {
 
 						$options['offset'] = $offset;
@@ -907,6 +909,8 @@ class Importer extends gEditorial\Module
 
 						$count++;
 					}
+
+					$this->actions( 'after', $posttype );
 
 					remove_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
 					unset( $iterator );
