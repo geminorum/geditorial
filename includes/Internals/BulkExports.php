@@ -168,7 +168,8 @@ trait BulkExports
 				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context );
 				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context );
 				$metas  = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context );
-				$data   = $this->exports_prep_posts_for_csv_export( $posts, $props, $fields, $metas );
+				$taxes  = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context );
+				$data   = $this->exports_prep_posts_for_csv_export( $posts, $props, $fields, $metas, $taxes );
 
 				break;
 		}
@@ -298,5 +299,38 @@ trait BulkExports
 		}
 
 		return $this->filters( 'get_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+	}
+
+	protected function exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context )
+	{
+		$list = [];
+
+		foreach ( $posttypes as $posttype ) {
+
+			if ( ! post_type_exists( $posttype ) )
+				continue;
+
+			switch ( $type ) {
+
+				case 'simple':
+
+					break;
+
+				case 'advanced':
+
+					$list = array_merge( $list, [
+						'post_tag',
+					] );
+
+					break;
+
+				case 'full':
+
+					$list = array_merge( $list, get_object_taxonomies( $posttype ) );
+					break;
+			}
+		}
+
+		return $this->filters( 'export_post_taxonomies', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
 	}
 }
