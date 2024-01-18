@@ -1,0 +1,136 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Employed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Employed\n"
+"X-Domain: geditorial-employed\n"
+
+#: Employed.php:87
+msgid "Employment"
+msgid_plural "Employments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Employed.php:91
+msgctxt "Label: Show Option All"
+msgid "Employments"
+msgstr ""
+
+#: Employed.php:92
+msgctxt "Label: Show Option No Terms"
+msgid "(UnEmployed)"
+msgstr ""
+
+#: Employed.php:101
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Employment Summary"
+msgstr ""
+
+#: Employed.php:102
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Employment Summary"
+msgstr ""
+
+#: ModuleInfo.php:88
+msgctxt "Default Term Title"
+msgid "Contracted"
+msgstr ""
+
+#: ModuleInfo.php:89
+msgctxt "Default Term Description"
+msgid "Employed for a predefined period to provide work according to contract terms."
+msgstr ""
+
+#: ModuleInfo.php:93
+msgctxt "Default Term Title"
+msgid "Full-Time"
+msgstr ""
+
+#: ModuleInfo.php:94
+msgctxt "Default Term Description"
+msgid "Employed for 40 hours or more per week with salary and benefits."
+msgstr ""
+
+#: ModuleInfo.php:98
+msgctxt "Default Term Title"
+msgid "Independent Contractor"
+msgstr ""
+
+#: ModuleInfo.php:99
+msgctxt "Default Term Description"
+msgid "Non-employee providing labor according to contract terms."
+msgstr ""
+
+#: ModuleInfo.php:103
+msgctxt "Default Term Title"
+msgid "Intern"
+msgstr ""
+
+#: ModuleInfo.php:104
+msgctxt "Default Term Description"
+msgid "Temporary employee providing labor for educational benefit."
+msgstr ""
+
+#: ModuleInfo.php:108
+msgctxt "Default Term Title"
+msgid "Part-Time"
+msgstr ""
+
+#: ModuleInfo.php:109
+msgctxt "Default Term Description"
+msgid "Employed at hourly wage for fewer than 40 hours per week."
+msgstr ""
+
+#: ModuleInfo.php:113
+msgctxt "Default Term Title"
+msgid "Self-Employed"
+msgstr ""
+
+#: ModuleInfo.php:114
+msgctxt "Default Term Description"
+msgid "The employer and employee are the same person."
+msgstr ""
+
+#: ModuleInfo.php:118
+msgctxt "Default Term Title"
+msgid "Temporary"
+msgstr ""
+
+#: ModuleInfo.php:119
+#: ModuleInfo.php:124
+msgctxt "Default Term Description"
+msgid "Short-term employee or contractor with predefined work dates."
+msgstr ""
+
+#: ModuleInfo.php:123
+msgctxt "Default Term Title"
+msgid "Seasonal"
+msgstr ""
+
+#: ModuleInfo.php:128
+msgctxt "Default Term Title"
+msgid "Unemployed"
+msgstr ""
+
+#: ModuleInfo.php:129
+msgctxt "Default Term Description"
+msgid "Former employee no longer providing work for the employer."
+msgstr ""
+
+#: ModuleInfo.php:133
+msgctxt "Default Term Title"
+msgid "Volunteer"
+msgstr ""
+
+#: ModuleInfo.php:134
+msgctxt "Default Term Description"
+msgid "Non-employee voluntarily providing labor with no expectation of payment"
+msgstr ""
