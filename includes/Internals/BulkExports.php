@@ -147,15 +147,15 @@ trait BulkExports
 			case 'paired':
 
 				if ( ! $constants = $this->paired_get_constants() )
-					return FALSE;
+					break;
 
 				if ( ! $posttypes = $this->posttypes() )
-					return FALSE;
+					break;
 
 				if ( ! $paired = $this->paired_get_to_term( (int) $reference, $constants[0], $constants[1] ) )
-					return FALSE;
+					break;
 
-				$args = [
+				$args = $this->filters( 'export_query_args', [
 					'posts_per_page' => -1,
 					'orderby'        => [ 'menu_order', 'date' ],
 					'order'          => 'ASC',
@@ -166,9 +166,15 @@ trait BulkExports
 						'field'    => 'id',
 						'terms'    => [ $paired->term_id ],
 					] ],
-				];
+				], $reference, $target, $type, $context );
 
-				$posts  = get_posts( $args );
+				$posts = get_posts( $args );
+
+				if ( empty( $posts ) )
+					break;
+
+				// TODO: support field meta fro paired
+
 				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context );
 				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context );
 				$metas  = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context );
@@ -178,7 +184,7 @@ trait BulkExports
 				break;
 		}
 
-		return $this->filters( 'get_export_data', $data, $reference, $target, $type, $context );
+		return $this->filters( 'export_get_data', $data, $reference, $target, $type, $context );
 	}
 
 	protected function exports_get_post_props( $posttypes, $reference, $target, $type, $context )
@@ -220,7 +226,7 @@ trait BulkExports
 				break;
 		}
 
-		return $this->filters( 'get_post_props', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+		return $this->filters( 'export_post_props', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
 	}
 
 	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context )
@@ -228,6 +234,9 @@ trait BulkExports
 		$list = [];
 
 		foreach ( $posttypes as $posttype ) {
+
+			if ( ! post_type_exists( $posttype ) )
+				continue;
 
 			$fields = WordPress\PostType::supports( $posttype, 'meta_fields' );
 
@@ -275,7 +284,7 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'get_post_fields', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+		return $this->filters( 'export_post_fields', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
 	}
 
 	protected function exports_get_post_metas( $posttypes, $reference, $target, $type, $context )
@@ -302,7 +311,7 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'get_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+		return $this->filters( 'export_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
 	}
 
 	protected function exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context )

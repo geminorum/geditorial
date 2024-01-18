@@ -442,8 +442,9 @@ class Organization extends gEditorial\Module
 		MetaBox::fieldPostParent( $object );
 
 		MetaBox::singleselectTerms( $object->ID, [
-			'taxonomy' => $this->constant( 'type_taxonomy' ),
-			'posttype' => $object->post_type,
+			'taxonomy'   => $this->constant( 'type_taxonomy' ),
+			'posttype'   => $object->post_type,
+			'empty_link' => FALSE,
 		] );
 	}
 

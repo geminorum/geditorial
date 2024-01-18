@@ -14,6 +14,7 @@ class Territory extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -46,6 +47,17 @@ class Territory extends gEditorial\Module
 				'summary_scope',
 				'summary_drafts',
 				'count_not',
+			],
+			'_editpost' => [
+				'metabox_advanced'    => [ NULL, TRUE ],
+				'selectmultiple_term' => [ NULL, TRUE ],
+			],
+			'_editlist' => [
+				'show_in_quick_edit',
+			],
+			'_frontend' => [
+				'contents_viewable',
+				'show_in_nav_menus',
 			],
 		];
 	}
@@ -97,10 +109,14 @@ class Territory extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'main_taxonomy', [
-			'hierarchical' => TRUE,
-			'show_in_menu' => FALSE,
-			'meta_box_cb'  => NULL,
-		] );
+			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced', TRUE ) ? NULL : FALSE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+		], NULL, [
+			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+		], TRUE );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
@@ -117,6 +133,17 @@ class Territory extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				if ( ! $this->get_setting( 'metabox_advanced', TRUE ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'main_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term', TRUE )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 			}
 		}
 	}
@@ -144,5 +171,12 @@ class Territory extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	public function template_include( $template )
+	{
+		return $this->get_setting( 'contents_viewable', TRUE )
+			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
+			: $template;
 	}
 }

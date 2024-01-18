@@ -124,7 +124,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn', 'date', 'datetime' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn', 'date', 'datetime' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 

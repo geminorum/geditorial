@@ -277,7 +277,7 @@ class Importer extends gEditorial\Module
 				Settings::fieldSeparate( 'ex' );
 
 			echo '</td><td class="-val"><code>'
-				.Core\HTML::sanitizeDisplay( $items[1][$key] )
+				.Core\HTML::sanitizeDisplay( empty( $items[1][$key] ) ? '' : $items[1][$key] )
 			.'</code></td><td class="-sep">';
 
 				Settings::fieldSeparate( 'count' );

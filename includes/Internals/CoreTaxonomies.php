@@ -317,9 +317,10 @@ trait CoreTaxonomies
 			return;
 
 		$args = [
-			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
-			'posttype' => $post->post_type,
-			'header'   => FALSE === $box,
+			'taxonomy'   => $taxonomy ?? $box['args']['taxonomy'],
+			'posttype'   => $post->post_type,
+			'header'     => FALSE === $box,
+			'empty_link' => FALSE === $box ? FALSE : NULL,
 		];
 
 		if ( FALSE !== $box )
@@ -338,9 +339,10 @@ trait CoreTaxonomies
 			return;
 
 		$args = [
-			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
-			'posttype' => $post->post_type,
-			'header'   => FALSE === $box,
+			'taxonomy'   => $taxonomy ?? $box['args']['taxonomy'],
+			'posttype'   => $post->post_type,
+			'header'     => FALSE === $box,
+			'empty_link' => FALSE === $box ? FALSE : NULL,
 		];
 
 		// NOTE: getting reverse-sorted span terms to pass into checklist
@@ -362,9 +364,10 @@ trait CoreTaxonomies
 			return;
 
 		$args = [
-			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
-			'posttype' => $post->post_type,
-			'header'   => FALSE === $box,
+			'taxonomy'   => $taxonomy ?? $box['args']['taxonomy'],
+			'posttype'   => $post->post_type,
+			'header'     => FALSE === $box,
+			'empty_link' => FALSE === $box ? FALSE : NULL,
 		];
 
 		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
@@ -394,6 +397,8 @@ trait CoreTaxonomies
 		if ( FALSE !== $box ) {
 			$args['none']  = Settings::showOptionNone();  // label already displayed on the metabox title
 			$args['empty'] = NULL;                        // displays empty box with link
+		} else {
+			$args['empty_link'] = FALSE;
 		}
 
 		if ( FALSE !== $box )
@@ -420,6 +425,8 @@ trait CoreTaxonomies
 		if ( FALSE !== $box ) {
 			$args['none']  = Settings::showOptionNone();  // label already displayed on the metabox title
 			$args['empty'] = NULL;                        // displays empty box with link
+		} else {
+			$args['empty_link'] = FALSE;
 		}
 
 		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
@@ -551,7 +558,7 @@ trait CoreTaxonomies
 	 * @param  null|string   $context
 	 * @return bool          $hooked
 	 */
-	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 20, $context = NULL )
+	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 80, $context = NULL )
 	{
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return FALSE;
@@ -578,6 +585,37 @@ trait CoreTaxonomies
 			function ( $post, $box, $context, $screen ) use ( $taxonomy, $callback ) {
 				call_user_func_array( $callback, [ $post, FALSE, $taxonomy ] );
 			}, $priority, 4 );
+
+		return TRUE;
+	}
+
+	/**
+	 * Hooks the filter for taxonomy parent terms on imports.
+	 * EQUAL: `$this->filter_module( 'importer', 'terms', 4 );`
+	 * @SEE: `pairedcore__hook_importer_term_parents()`
+	 *
+	 * @param  bool|string $setting
+	 * @return bool        $hooked
+	 */
+	protected function hook_taxonomy_importer_term_parents( $taxonomy, $setting = 'force_parents' )
+	{
+		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'importer', 'terms' ),
+			static function ( $terms, $tax, $source_id, $post_id ) use ( $taxonomy ) {
+
+				if ( $tax !== $taxonomy )
+					return $terms;
+
+				$parents = [];
+
+				foreach ( (array) $terms as $term )
+					$parents = array_merge( $parents, WordPress\Taxonomy::getTermParents( $term, $taxonomy ) );
+
+				return Core\Arraay::prepNumeral( $terms, $parents );
+
+			}, 12, 4 );
 
 		return TRUE;
 	}

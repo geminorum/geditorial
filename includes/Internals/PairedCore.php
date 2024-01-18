@@ -357,6 +357,13 @@ trait PairedCore
 				'field'    => 'id',
 				'terms'    => [ $term->term_id ],
 			] ],
+
+			'ignore_sticky_posts'    => TRUE,
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
 		];
 
 		$posts = get_posts( $args );
@@ -367,6 +374,7 @@ trait PairedCore
 	/**
 	 * Hooks the filter for paired parent terms on imports.
 	 * EQUAL: `$this->filter_module( 'importer', 'terms', 4 );`
+	 * @SEE: `hook_taxonomy_importer_term_parents()`
 	 *
 	 * @param  bool|string $setting
 	 * @return bool        $hooked
@@ -381,8 +389,9 @@ trait PairedCore
 
 		add_filter( $this->hook_base( 'importer', 'terms' ),
 			function ( $terms, $taxonomy, $source_id, $post_id ) use ( $constants ) {
+
 				if ( $taxonomy !== $this->constant( $constants[1] ) )
-				return $terms;
+					return $terms;
 
 				$parents = [];
 
@@ -752,15 +761,17 @@ trait PairedCore
 			] ],
 			'post_type'   => $this->posttypes(),
 			'numberposts' => -1,
+
+			'ignore_sticky_posts'    => TRUE,
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
 		];
 
-		if ( $count ) {
-			$args['fields']                 = 'ids';
-			$args['no_found_rows']          = TRUE;
-			$args['update_post_meta_cache'] = FALSE;
-			$args['update_post_term_cache'] = FALSE;
-			$args['lazy_load_term_meta']    = FALSE;
-		}
+		if ( $count )
+			$args['fields'] = 'ids';
 
 		$items = get_posts( $args );
 

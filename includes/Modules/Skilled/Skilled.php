@@ -41,7 +41,7 @@ class Skilled extends gEditorial\Module
 			'title'    => _x( 'Skilled', 'Modules: Skilled', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Expertise', 'Modules: Skilled', 'geditorial-admin' ),
 			'icon'     => 'admin-tools',
-			'access'   => 'planned',
+			'access'   => 'beta',
 			'keywords' => [
 				'taxmodule',
 			],
@@ -64,7 +64,7 @@ class Skilled extends gEditorial\Module
 				'count_not',
 			],
 			'_editpost' => [
-				'metabox_advanced' => [ NULL, TRUE ],
+				'metabox_advanced'    => [ NULL, TRUE ],
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [

@@ -761,7 +761,7 @@ class Settings extends WordPress\Main
 	public static function getSetting_paired_force_parents( $description = NULL )
 	{
 		return [
-			'field'        => 'paired_force_parents',
+			'field'       => 'paired_force_parents',
 			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Includes parents on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
@@ -770,9 +770,19 @@ class Settings extends WordPress\Main
 	public static function getSetting_paired_manage_restricted( $description = NULL )
 	{
 		return [
-			'field'        => 'paired_manage_restricted',
+			'field'       => 'paired_manage_restricted',
 			'title'       => _x( 'Management Restricted', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Limits creation and deletion of the main posts to administrators.', 'Settings: Setting Description', 'geditorial-admin' ),
+		];
+	}
+
+	public static function getSetting_force_parents( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'force_parents',
+			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Includes parents when selecting the main contents.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
 		];
 	}
 

@@ -537,13 +537,15 @@ class Persona extends gEditorial\Module
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
 		MetaBox::singleselectTerms( $object->ID, [
-			'taxonomy' => $this->constant( 'blood_type_taxonomy' ),
-			'posttype' => $object->post_type,
+			'taxonomy'   => $this->constant( 'blood_type_taxonomy' ),
+			'posttype'   => $object->post_type,
+			'empty_link' => FALSE,
 		] );
 
 		MetaBox::singleselectTerms( $object->ID, [
-			'taxonomy' => $this->constant( 'status_taxonomy' ),
-			'posttype' => $object->post_type,
+			'taxonomy'   => $this->constant( 'status_taxonomy' ),
+			'posttype'   => $object->post_type,
+			'empty_link' => FALSE,
 		] );
 	}
 
@@ -591,7 +593,8 @@ class Persona extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $posttitle = $this->make_human_title( $post, 'display', $post->post_title ) )
+		// NOTE: we use `export` context to store formal full-name as post-title
+		if ( ! $posttitle = $this->make_human_title( $post, 'export', $post->post_title ) )
 			return FALSE;
 
 		$identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID );
