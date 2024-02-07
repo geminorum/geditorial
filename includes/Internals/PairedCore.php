@@ -150,6 +150,29 @@ trait PairedCore
 	}
 
 	/**
+	 * Appends List of supported posts to source paired posttype.
+	 * @example `$this->filter_module( 'papered', 'view_list', 6, 10, 'paired_posttype' );`
+	 *
+	 * @param  array  $list
+	 * @param  object $source
+	 * @param  object $profile
+	 * @param  string $context
+	 * @param  array  $data
+	 * @param  bool   $meta
+	 * @return array  $list
+	 */
+	public function papered_view_list_paired_posttype( $list, $source, $profile, $context, $data, $meta )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return $list;
+
+		if ( ! $this->is_posttype( $constants[0], $source ) )
+			return $list;
+
+		return $this->paired_all_connected_to( $source );
+	}
+
+	/**
 	 * Renders pointers about given paired posttype.
 	 * @example `$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );`
 	 *
