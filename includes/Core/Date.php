@@ -666,4 +666,47 @@ class Date extends Base
 			return $time - ( $time % self::DAY_IN_SECONDS );
 		}
 	}
+
+	/**
+	 * Gets all days between the two end-points.
+	 *
+	 * @source http://stackoverflow.com/q/33543003/2908724
+	 * @source https://3v4l.org/vrhsa
+	 *
+	 * @param  \DateTime $begin
+	 * @param  \DateTime $end
+	 * @return array     $workdays
+	 */
+	public static function workDays(\DateTime $begin, \DateTime $end)
+	{
+		$workdays = [];
+		$all_days = new \DatePeriod( $begin, new \DateInterval( 'P1D' ), $end->modify( '+1 day' ) );
+
+		foreach ( $all_days as $day ) {
+
+			$dow = (int) $day->format( 'w' );
+			$dom = (int) $day->format( 'j' );
+
+			if ( 1 <= $dow && $dow <= 5 ) { // Mon - Fri
+
+				$workdays[] = $day;
+
+			} else if ( 6 == $dow && 0 == $dom % 2 ) { // Even Saturday
+
+				$workdays[] = $day;
+			}
+		}
+
+		return $workdays;
+	}
+
+	public static function testWorkDays()
+	{
+		$begin = new \DateTime( '2015-11-01' );
+		$end   = new \DateTime( '2015-11-14' );
+		$days  = self::workDays( $begin, $end );
+
+		foreach ( $days as $day )
+			echo $day->format( 'Y-m-d' ).PHP_EOL;
+	}
 }

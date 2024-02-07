@@ -495,6 +495,9 @@ class Arraay extends Base
 	}
 
 	// @REF: https://stackoverflow.com/a/4254008
+	// To merely check whether the array has non-integer keys, not whether the
+	// array is sequentially-indexed or zero-indexed. If there is at least one
+	// string key, the array will be regarded as an associative array.
 	public static function hasStringKeys( $array )
 	{
 		return count( array_filter( array_keys( $array ), 'is_string' ) ) > 0;
@@ -797,5 +800,41 @@ class Arraay extends Base
 	public static function allStringValues( $array )
 	{
 		return array_sum( array_map( 'is_string', $array ) ) === count( $array );
+	}
+
+	/**
+	 * Divides an array into a desired number of split lists.
+	 *
+	 * useful procedure for "chunking" up objects or text items into
+	 * columns, or partitioning any type of data resource.
+	 *
+	 * NOTE: `array_chunk()`: fixed number of sub-items
+	 * NOTE: `::partition()`: fixed number of columns
+	 *
+	 * @source https://www.php.net/manual/en/function.array-chunk.php#75022
+	 * @source https://stackoverflow.com/a/15723262
+	 *
+	 * @param  array $array
+	 * @param  int   $columns
+	 * @return array $partition
+	 */
+	public static function partition( $array, $columns )
+	{
+		if ( $columns < 2 )
+        	return [ $array ];
+
+		$partition = [];
+		$count     = count( $array );
+		$length    = floor( $count / $columns );
+		$remains   = $count % $columns;
+		$marked    = 0;
+
+		for ( $i = 0; $i < $columns; $i++ ) {
+			$increase = ($i < $remains) ? $length + 1 : $length;
+			$partition[$i] = array_slice( $array, $marked, $increase );
+			$marked += $increase;
+		}
+
+		return $partition;
 	}
 }

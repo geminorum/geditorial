@@ -14,7 +14,9 @@ class Text extends Base
 	public static function trim( $text )
 	{
 		$text = (string) $text;
-		$text = trim( $text, " \n\t\r\0\x0B," );
+		// $text = trim( $text, " \n\t\r\0\x0B," );
+		$text = preg_replace( '/^[\s\x{200C}]/u', '', $text );
+		$text = preg_replace( '/[\s\x{200C}]$/u', '', $text );
 
 		if ( 0 === strlen( $text ) )
 			return '';
@@ -223,6 +225,24 @@ class Text extends Base
 		return $text ? ucwords( trim( str_replace( [ '_', '-', '.' ], ' ', $text ) ) ) : $text;
 	}
 
+	// @REF: https://davidwalsh.name/php-email-encode-prevent-spam
+	public static function encodeEmail( $text )
+	{
+		$encoded = '';
+
+		for ( $i = 0; $i < strlen( $text ); $i++ )
+			$encoded.= '&#'.ord( $text[$i] ).';';
+
+		return $encoded;
+	}
+
+	// @REF: http://php.net/manual/en/function.htmlspecialchars-decode.php#68962
+	// @REF: `htmlspecialchars_decode()`
+	public static function decodeHTML( $text )
+	{
+		return strtr( $text, array_flip( get_html_translation_table() ) );
+	}
+
 	// simpler version of `wpautop()`
 	// @REF: https://stackoverflow.com/a/5240825
 	// @SEE: https://stackoverflow.com/a/7409591
@@ -249,7 +269,7 @@ class Text extends Base
 		// remove a P of entirely whitespace
 		$text = preg_replace( '|<p>\s*</p>|', '', $text );
 
-		return trim( $text );
+		return self::trim( $text );
 	}
 
 	// @REF: https://github.com/michelf/php-markdown/issues/230#issuecomment-303023862
@@ -335,6 +355,23 @@ class Text extends Base
 		return TRUE;
 	}
 
+	/**
+	 * Consolidates contiguous whitespace.
+	 *
+	 * @param  string $text
+	 * @return string $text
+	 */
+	public static function singleWhitespace( $text )
+	{
+		$text = preg_replace( '/\x{200C}+/u', '‌', $text );
+		$text = preg_replace( '/\s+/', ' ', $text );
+
+		if ( 0 === strlen( $text ) )
+			return '';
+
+		return self::trim( $text );
+	}
+
 	// @REF: `normalize_whitespace()`
 	public static function normalizeWhitespace( $text, $multiline = FALSE )
 	{
@@ -356,19 +393,7 @@ class Text extends Base
 		if ( $check && ! self::seemsUTF8( $text ) )
 			return self::normalizeWhitespace( $text );
 
-		return self::trim( preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text ) );
-	}
-
-	// @REF: _cleanup_image_add_caption()
-	// remove any line breaks from inside the tags
-	public static function noLineBreak( $text )
-	{
-		return self::trim( preg_replace( '/[\r\n\t]+/', ' ', $text ) );
-	}
-
-	public static function stripWidthHeight( $text )
-	{
-		return preg_replace( '/(width|height)="\d*"\s*/', '', $text );
+		return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text );
 	}
 
 	public static function stripPrefix( $text, $prefix )
@@ -491,7 +516,7 @@ class Text extends Base
 
 		$buffer = preg_replace( '/\x{FEFF}/u', '', $buffer ); // remove utf8 bom
 
-		return trim( $buffer );
+		return self::trim( $buffer );
 	}
 
 	// @REF: http://php.net/manual/en/function.ob-start.php#71953
@@ -516,7 +541,7 @@ class Text extends Base
 			'\\1'
 		), $buffer );
 
-		return trim( $buffer );
+		return self::trim( $buffer );
 	}
 
 	// @REF: http://davidwalsh.name/word-wrap-mootools-php
@@ -897,6 +922,22 @@ class Text extends Base
 		return trim( $html );
 	}
 
+	public static function noLineBreak( $text )
+	{
+		return preg_replace( '/[\r\n\t ]+/', ' ', $text );
+	}
+
+	public static function stripWidthHeight( $text )
+	{
+		return preg_replace( '/(width|height)="\d*"\s/', '', $text );
+	}
+
+	// @SOURCE: `wp_strip_all_tags()`
+	public static function stripTags( $text )
+	{
+		return self::trim( strip_tags( preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text ) ) );
+	}
+
 	// @SEE: [wp_strip_all_tags()](https://developer.wordpress.org/reference/functions/wp_strip_all_tags/)
 	public static function stripHTMLforEmail( $html )
 	{
@@ -915,7 +956,7 @@ class Text extends Base
 		$html = preg_replace( '@</?((div)|(h[1-9])|(/tr)|(p)|(pre))@iu', "\n\$0", $html );
 		$html = preg_replace( '@</((td)|(th))@iu', " \$0", $html );
 
-		return trim( strip_tags( $html ) );
+		return self::trim( strip_tags( $html ) );
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#96899
@@ -960,8 +1001,22 @@ class Text extends Base
 	{
 		return $skip_links
 			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"
-			? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"
+			? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}{$symbols}]+)\b/u"
 			: "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u";
+	}
+
+	// @REF: https://regex101.com/r/5K24IU/1
+	// @REF: https://stackoverflow.com/a/42551826
+	public static function linkifyHashtags( $text, $callback )
+	{
+		return preg_replace_callback( "/(?:^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]{1,})(?:\b|\r)/gmu", static function ( $matches ) use ( $callback ) {
+			return call_user_func( $callback, $matches[0], $matches[1] );
+		}, $text );
+	}
+
+	public static function replaceOnce( $search, $replace, $text )
+	{
+		return preg_replace( ( '/'.preg_quote( $search, '/' ).'/' ), $replace, $text, 1 );
 	}
 
 	// @SOURCE: http://snipplr.com/view/3618/

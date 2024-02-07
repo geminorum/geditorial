@@ -5,6 +5,27 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class WordPress extends Base
 {
 
+	// @REF: https://wordpress.org/support/topic/how-to-change-plugins-load-order/
+	// @USAGE: add_action( 'activated_plugin', function () {} );
+	public static function pluginFirst( $plugin )
+	{
+		if ( empty( $plugin ) )
+			return;
+
+		// ensure path to this file is via main wp plugin path
+		// $wp_path_to_this_file = preg_replace('/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__);
+		// $plugin = plugin_basename(trim($wp_path_to_this_file));
+
+		$active = get_option( 'active_plugins' );
+
+		// if it's 0 it's the first plugin already, no need to continue
+		if ( $key = array_search( $plugin, $active ) ) {
+			array_splice( $active, $key, 1 );
+			array_unshift( $active, $plugin );
+			update_option( 'active_plugins', $active );
+		}
+	}
+
 	// checks compatibility with the current WordPress version
 	// @REF: `is_wp_version_compatible()`
 	public static function isWPcompatible( $required )
@@ -49,6 +70,8 @@ class WordPress extends Base
 		return in_array( $now, (array) $page );
 	}
 
+	// @SEE: `is_login()` @since WP 6.1.0
+	// @REF: https://make.wordpress.org/core/2022/09/11/new-is_login-function-for-determining-if-a-page-is-the-login-screen/
 	// @REF: https://core.trac.wordpress.org/ticket/19898
 	public static function isLogin()
 	{
@@ -227,18 +250,29 @@ class WordPress extends Base
 		HTML::inputHidden( '_wp_http_referer', self::unslash( remove_query_arg( [
 			'_wp_http_referer',
 			'message',
+			'action',
+			'paged',
 			'count',
 		] ) ) );
 	}
 
+	// wrapper for `wp_get_referer()`
+	public static function getReferer()
+	{
+		return remove_query_arg( [
+			'_wp_http_referer',
+			'message',
+			'action',
+			'paged',
+			'count',
+		], wp_get_referer() );
+	}
+
 	public static function redirectJS( $location = NULL, $timeout = 3000 )
 	{
-		if ( is_null( $location ) )
-			$location = add_query_arg( wp_get_referer() );
-
 		?><script type="text/javascript">
 function nextpage() {
-	location.href = "<?php echo $location; ?>";
+	location.href = "<?php echo ( $location ?? self::getReferer() ); ?>";
 }
 setTimeout( "nextpage()", <?php echo $timeout; ?> );
 </script><?php
@@ -246,10 +280,7 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 
 	public static function redirect( $location = NULL, $status = 302 )
 	{
-		if ( is_null( $location ) )
-			$location = add_query_arg( wp_get_referer() );
-
-		if ( wp_redirect( $location, $status ) )
+		if ( wp_redirect( $location ?? self::getReferer(), $status ) )
 			exit;
 
 		wp_die(); // something's wrong!
@@ -258,9 +289,9 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 	public static function redirectReferer( $message = 'updated', $key = 'message' )
 	{
 		if ( is_array( $message ) )
-			$url = add_query_arg( $message, wp_get_referer() );
+			$url = add_query_arg( $message, self::getReferer() );
 		else
-			$url = add_query_arg( $key, $message, wp_get_referer() );
+			$url = add_query_arg( $key, $message, self::getReferer() );
 
 		self::redirect( $url );
 	}

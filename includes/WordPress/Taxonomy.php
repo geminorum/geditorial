@@ -17,6 +17,23 @@ class Taxonomy extends Core\Base
 		return is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
 	}
 
+	/**
+	 * Determines whether the taxonomy name exists.
+	 * @source: `taxonomy_exists()`
+	 *
+	 * @param  string $taxonomy
+	 * @return bool   $exists
+	 */
+	public static function exists( $taxonomy )
+	{
+		global $wp_taxonomies;
+
+		if ( empty( $taxonomy ) )
+			return FALSE;
+
+		return is_string( $taxonomy ) && isset( $wp_taxonomies[$taxonomy] );
+	}
+
 	public static function viewable( $taxonomy )
 	{
 		if ( ! $taxonomy )
@@ -350,6 +367,7 @@ class Taxonomy extends Core\Base
 		return $object ? array_combine( $list, $terms ) : $list;
 	}
 
+	// FIXME: check and exclude terms with `trashed` meta
 	// @REF: https://developer.wordpress.org/?p=22286
 	public static function listTerms( $taxonomy, $fields = NULL, $extra = array() )
 	{
@@ -359,6 +377,7 @@ class Taxonomy extends Core\Base
 			'orderby'    => 'meta_value_num,name', // 'name',
 			'meta_query' => [
 				// @REF: https://core.trac.wordpress.org/ticket/34996
+				// FIXME: drop order here: see Terms: `apply_ordering`
 				'relation' => 'OR',
 				[
 					'key'     => 'order',
@@ -1148,7 +1167,7 @@ class Taxonomy extends Core\Base
 
 				foreach ( (array) $object->{self::TARGET_TAXONOMIES_PROP} as $target )
 
-					if ( taxonomy_exists( $target ) )
+					if ( self::exists( $target ) )
 						$targets[] = $target;
 			}
 		}

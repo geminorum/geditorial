@@ -222,6 +222,67 @@ class File extends Base
 		return file_put_contents( self::join( $dir, $filename ), $contents.PHP_EOL );
 	}
 
+	/**
+	 * Reads the last n lines of a file without reading through all of it.
+	 *
+	 * @source http://stackoverflow.com/a/6451391
+	 *
+	 * @param  string $path
+	 * @param  int    $count
+	 * @param  int    $block_size
+	 * @return array  $lines
+	 */
+	public static function getLastLines( $path, $count, $block_size = 512 )
+	{
+		// we will always have a fragment of a non-complete line
+		// keep this in here till we have our next entire line.
+		$leftover = '';
+
+		$lines  = [];
+		$handle = fopen( $path, 'r' );
+
+		// go to the end of the file
+		fseek( $handle, 0, SEEK_END );
+
+		do {
+
+			// need to know whether we can actually go back
+			$can_read = $block_size; // $block_size in bytes
+
+			if ( ftell( $handle ) < $block_size )
+				$can_read = ftell( $handle );
+
+			if ( ! $can_read )
+				break;
+
+			// go back as many bytes as we can
+			// read them to $data and then move the file pointer
+			// back to where we were.
+			fseek( $handle, -$can_read, SEEK_CUR );
+			$data = fread( $handle, $can_read );
+			$data.= $leftover;
+			fseek( $handle, -$can_read, SEEK_CUR );
+
+			// split lines by \n. Then reverse them,
+			// now the last line is most likely not a complete
+			// line which is why we do not directly add it, but
+			// append it to the data read the next time.
+			$split_data = array_reverse( explode( "\n", $data ) );
+			$new_lines  = array_slice( $split_data, 0, -1 );
+			$lines      = array_merge( $lines, $new_lines );
+			$leftover   = $split_data[count( $split_data ) - 1];
+
+		} while ( count( $lines ) < $count && 0 != ftell( $handle ) );
+
+		if ( 0 === ftell( $handle ) )
+			$lines[] = $leftover;
+
+		fclose( $handle );
+
+		// usually, we will read too many lines, correct that here.
+		return array_slice( $lines, 0, $count );
+	}
+
 	// @REF: https://gist.github.com/eusonlito/5099936
 	public static function getFolderSize( $path, $format = TRUE )
 	{
@@ -278,30 +339,95 @@ class File extends Base
 		return FALSE;
 	}
 
-	/**
-	 * Prepares a filename with the site name and current date.
-	 *
-	 * @param  null|string       $suffix
-	 * @param  null|string       $prefix
-	 * @param  null|false|string $date_format
-	 * @return string            $filename
-	 */
-	public static function prepName( $suffix = NULL, $prefix = NULL, $date_format = NULL )
+	// @REF: https://www.php.net/manual/en/function.disk-free-space.php#103382
+	// @SEE: https://en.wikipedia.org/wiki/Binary_prefix
+	// @SEE: https://en.wikipedia.org/wiki/International_System_of_Units#Prefixes
+	// @USAGE: `File::prefixSI( disk_free_space( '.' ) )`
+	public static function prefixSI( $bytes, $poweroftwo = TRUE )
 	{
-		$filename = '';
+		if ( $poweroftwo ) {
 
-		if ( $prefix )
-			$filename.= $prefix.'-';
+			$base   = 1024;
+			$prefix = [ 'B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB' ];
 
-		$filename.= WordPress::currentSiteName();
+		} else {
 
-		if ( FALSE !== $date_format )
-			$filename.= '-'.wp_date( $date_format ?? 'Ymd' );
+			$base   = 1000;
+			$prefix = [ 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' ];
+		}
 
-		if ( $suffix )
-			$filename.= '-'.$suffix;
+		$class = min( (int) log( $bytes, $base ), count( $prefix ) - 1 );
 
-		return $filename;
+		return sprintf( '%1.2f', $bytes / pow( $base, $class ) ).' '.$prefix[$class];
+	}
+
+	public static function remove( $files )
+	{
+		$count = 0;
+
+		foreach ( (array) $files as $file )
+			if ( @unlink( self::normalize( $file ) ) )
+				$count++;
+
+		return $count;
+	}
+
+	// FIXME: TEST THIS
+	// @SOURCE: http://stackoverflow.com/a/11267139
+	public static function removeDir( $dir )
+	{
+		foreach ( glob( "{$dir}/*" ) as $file )
+			if ( is_dir( $file ) )
+				self::removeDir( $file );
+			else
+				unlink( $file );
+
+		rmdir( $dir );
+	}
+
+	protected static function emptyDir( $path, $put_access_deny = FALSE )
+	{
+		if ( ! $path )
+			return FALSE;
+
+		try {
+
+			// @SOURCE: http://stackoverflow.com/a/4594268
+			foreach ( new \DirectoryIterator( $path ) as $file )
+				if ( ! $file->isDot() )
+					unlink( $file->getPathname() );
+
+		} catch ( Exception $e ) {
+
+			self::_log( $e->getMessage().': '.sprintf( '%s', $path ) );
+		}
+
+		return $put_access_deny ? self::putHTAccessDeny( $path, FALSE ) : TRUE;
+	}
+
+	// output up to 5MB is kept in memory, if it becomes bigger
+	// it will automatically be written to a temporary file
+	// @REF: http://php.net/manual/en/function.fputcsv.php#74118
+	public static function toCSV( $data, $maxmemory = NULL )
+	{
+		if ( is_null( $maxmemory ) )
+			$maxmemory =  5 * 1024 * 1024; // 5MB
+
+		$handle = fopen( 'php://temp/maxmemory:'.$maxmemory, 'r+' );
+
+		foreach ( $data as $fields ) {
+
+			// @SEE: https://github.com/parsecsv/parsecsv-for-php/issues/167
+			fputcsv( $handle, $fields );
+		}
+
+		rewind( $handle );
+
+		$csv = stream_get_contents( $handle );
+
+		fclose( $handle );
+
+		return $csv;
 	}
 
 	// @REF: https://www.hashbangcode.com/article/remove-last-line-file-php
@@ -467,6 +593,67 @@ class File extends Base
 		return is_readable( $path )
 			? require( $path )
 			: $fallback;
+	}
+
+	/**
+	 * Prepares a filename with the site name and current date.
+	 *
+	 * @param  null|string       $suffix
+	 * @param  null|string       $prefix
+	 * @param  null|false|string $date_format
+	 * @return string            $filename
+	 */
+	public static function prepName( $suffix = NULL, $prefix = NULL, $date_format = NULL )
+	{
+		$filename = '';
+
+		if ( $prefix )
+			$filename.= $prefix.'-';
+
+		$filename.= WordPress::currentSiteName();
+
+		if ( FALSE !== $date_format )
+			$filename.= '-'.wp_date( $date_format ?? 'Ymd' );
+
+		if ( $suffix )
+			$filename.= '-'.$suffix;
+
+		return $filename;
+	}
+
+	// @REF: https://www.tutorialsmade.com/find-string-get-line-number-file-using-php/
+	public static function find_line_number_by_string( $filename, $search, $case_sensitive = FALSE )
+	{
+		$line_number = '';
+
+		if ( $file_handler = fopen( $filename, "r" ) ) {
+
+			$i = 0;
+
+			while ( $line = fgets( $file_handler ) ) {
+
+				$i++;
+
+				// case sensitive is false by default
+				if ( $case_sensitive == false ) {
+					$search = strtolower( $search );  //convert file and search string
+					$line   = strtolower( $line );    //to lowercase
+				}
+
+				//find the string and store it in an array
+				if ( strpos( $line, $search ) !== false ) {
+					$line_number .=  $i.",";
+				}
+			}
+
+			fclose( $file_handler );
+
+		} else {
+
+			return "File not exists, Please check the file path or filename";
+		}
+
+		return $line_number ? substr( $line_number, 0, -1 ) : "No match found";
 	}
 
 	/**

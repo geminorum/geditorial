@@ -23,6 +23,18 @@ class PostType extends Core\Base
 		return get_post_type_object( $posttype_or_post );
 	}
 
+	/**
+	 * Determines whether a post type is registered.
+	 * @source `post_type_exists()`
+	 *
+	 * @param  string|object $posttype_or_post
+	 * @return bool          $exists
+	 */
+	public static function exists( $posttype_or_post )
+	{
+		return (bool) self::object( $posttype_or_post );
+	}
+
 	public static function viewable( $posttype )
 	{
 		if ( ! $posttype )
@@ -504,6 +516,9 @@ class PostType extends Core\Base
 
 	public static function supports( $posttype, $feature, $fallback = [] )
 	{
+		if ( empty( $posttype ) || empty( $feature ) )
+			return $fallback;
+
 		$all = get_all_post_type_supports( $posttype );
 
 		if ( isset( $all[$feature][0] ) && is_array( $all[$feature][0] ) )
@@ -681,7 +696,7 @@ class PostType extends Core\Base
 		if ( ! $taxonomy && ( $object = self::object( $posttype ) ) ) {
 
 			if ( ! empty( $object->{self::PRIMARY_TAXONOMY_PROP} )
-				&& taxonomy_exists( $object->{self::PRIMARY_TAXONOMY_PROP} ) )
+				&& Taxonomy::exists( $object->{self::PRIMARY_TAXONOMY_PROP} ) )
 					$taxonomy = $object->{self::PRIMARY_TAXONOMY_PROP};
 		}
 

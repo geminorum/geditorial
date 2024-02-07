@@ -90,27 +90,6 @@ class Base
 		die();
 	}
 
-	public static function stat( $format = NULL )
-	{
-		if ( is_null( $format ) )
-			$format = '%d queries in %.3f seconds, using %.2fMB memory.';
-
-		return sprintf( $format,
-			@$GLOBALS['wpdb']->num_queries,
-			self::timerStop( FALSE, 3 ),
-			memory_get_peak_usage() / 1024 / 1024
-		);
-	}
-
-	// WP core function without number_format_i18n
-	public static function timerStop( $verbose = FALSE, $precision = 3 )
-	{
-		global $timestart;
-		$total = number_format( ( microtime( TRUE ) - $timestart ), $precision );
-		if ( $verbose ) echo $total;
-		return $total;
-	}
-
 	public static function cheatin( $message = NULL )
 	{
 		if ( is_null( $message ) )
@@ -194,6 +173,91 @@ class Base
 			self::_log( sprintf( 'DEP: \'%1$s\' function, since %2$s, Use \'%3$s\'', $func, $version, $replacement ) );
 	}
 
+	public static function console( $data, $table = FALSE )
+	{
+		$func = $table ? 'table' : 'log';
+
+		if ( is_array( $data ) || is_object( $data ) )
+			echo '<script>console.'.$func.'('.wp_json_encode( $data ).');</script>';
+		else
+			echo '<script>console.'.$func.'('.$data.');</script>';
+	}
+
+	public static function trace( $old = TRUE )
+	{
+		// https://gist.github.com/eddieajau/2651181
+		if ( $old ) {
+			foreach ( debug_backtrace() as $trace )
+				printf( "\n%s:%s %s::%s", $trace['file'], $trace['line'], $trace['class'], $trace['function'] );
+			die();
+		}
+
+		// http://stackoverflow.com/a/7039409
+		$e = new Exception();
+		self::dump( $e->getTraceAsString() );
+		die();
+	}
+
+	// USAGE: Base::callStack( debug_backtrace() );
+	// @REF: http://stackoverflow.com/a/8497530
+	public static function callStack( $stacktrace )
+	{
+		print str_repeat( '=', 50 )."\n";
+		$i = 1;
+		foreach ( $stacktrace as $node ) {
+			print "$i. ".basename( $node['file'] ).':'.$node['function'].'('.$node['line'].")\n";
+			$i++;
+		}
+	}
+
+	public static function stat( $format = NULL )
+	{
+		if ( is_null( $format ) )
+			$format = '%d queries in %.3f seconds, using %.2fMB memory.';
+
+		return sprintf( $format,
+			@$GLOBALS['wpdb']->num_queries,
+			self::timerStop( FALSE, 3 ),
+			memory_get_peak_usage() / 1024 / 1024
+		);
+	}
+
+	// WP core function without number_format_i18n
+	public static function timerStop( $verbose = FALSE, $precision = 3 )
+	{
+		global $timestart;
+		$total = number_format( ( microtime( TRUE ) - $timestart ), $precision );
+		if ( $verbose ) echo $total;
+		return $total;
+	}
+
+	public static function isFuncDisabled( $func = NULL )
+	{
+		$disabled = explode( ',', ini_get( 'disable_functions' ) );
+
+		if ( is_null( $func ) )
+			return $disabled;
+
+		return in_array( $func, $disabled, TRUE );
+	}
+
+	// http://stackoverflow.com/a/13272939
+	public static function varSize( $var )
+	{
+		try {
+
+			$start_memory = memory_get_usage();
+			$var = unserialize( serialize( $var ) );
+			return memory_get_usage() - $start_memory - PHP_INT_SIZE * 8;
+
+		} catch ( \Exception $e ) {
+
+			self::_log( 'varSize() :: '.$e->getMessage() );
+
+			return 0;
+		}
+	}
+
 	// @REF: `shortcode_atts()`
 	public static function atts( $pairs, $atts )
 	{
@@ -254,6 +318,35 @@ class Base
 				$r[$k] = $v;
 
 		return $r;
+	}
+
+	// @SOURCE: https://github.com/kallookoo/wp_parse_args_recursive
+	public static function recursiveParseArgsALT( $args, $defaults, $preserve_type = TRUE, $preserve_integer_keys = FALSE )
+	{
+		$output = array();
+
+		foreach ( array( $defaults, $args ) as $list ) {
+
+			foreach ( (array) $list as $key => $value ) {
+
+				if ( is_integer( $key ) && ! $preserve_integer_keys ) {
+
+					$output[] = $value;
+
+				} else if ( isset( $output[$key] )
+					&& ( is_array( $output[$key] ) || is_object( $output[$key] ) )
+					&& ( is_array( $value ) || is_object( $value ) ) ) {
+
+					$output[$key] = self::recursiveParseArgsALT( $value, $output[$key], $preserve_type, $preserve_integer_keys );
+
+				} else {
+
+					$output[$key] = $value;
+				}
+			}
+		}
+
+		return ( $preserve_type && ( is_object( $args ) || is_object( $defaults ) ) ) ? (object) $output : $output;
 	}
 
 	// maps a function to all non-iterable elements of an array or an object

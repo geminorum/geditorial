@@ -498,7 +498,7 @@ class HTML extends Base
 			$value = self::joined( $value, '[', ']', ',', 'EMPTY ARRAY' );
 
 		else if ( is_object( $value ) )
-			$value = json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+			$value = json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
 
 		else if ( is_int( $value ) )
 			$value = $value;
@@ -1279,6 +1279,7 @@ class HTML extends Base
 		echo $script;
 	}
 
+	// TODO: migrate to `wp_get_admin_notice()` @since WP 6.4.0
 	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
 	// CLASSES: notice-error, notice-warning, notice-success, notice-info, is-dismissible, fade, inline
 	public static function notice( $notice, $class = 'notice-success fade', $dismissible = TRUE )

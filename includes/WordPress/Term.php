@@ -363,7 +363,7 @@ class Term extends Core\Base
 
 	public static function add( $term, $taxonomy, $sanitize = TRUE )
 	{
-		if ( ! taxonomy_exists( $taxonomy ) )
+		if ( ! Taxonomy::exists( $taxonomy ) )
 			return FALSE;
 
 		if ( self::get( $term, $taxonomy ) )
