@@ -41,6 +41,13 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
+			'_editlist' => [
+				'show_in_quickedit',
+			],
+			'_frontend' => [
+				'contents_viewable',
+				'show_in_navmenus',
+			],
 		];
 	}
 
@@ -94,14 +101,20 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => TRUE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+		] );
 
 		$this->register_posttype( 'primary_posttype', [
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
+		], [
+			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
 		] );
 
 		$this->register_taxonomy( 'main_taxonomy', [

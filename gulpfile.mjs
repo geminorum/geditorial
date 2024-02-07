@@ -129,9 +129,9 @@ function i18nExtra (i18n) {
 }
 
 task('i18n:plugin', function (cb) {
-  const command = 'wp i18n make-pot . ' +
-    i18nExtra(conf.i18n.plugin) +
-    ' --headers=\'' + template(JSON.stringify(conf.i18n.plugin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\'';
+  const command = 'wp i18n make-pot .' +
+  ' --headers=\'' + template(JSON.stringify(conf.i18n.plugin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\' ' +
+  i18nExtra(conf.i18n.plugin);
 
   exec(command, function (err, stdout, stderr) {
     if (stdout) {
@@ -149,7 +149,7 @@ task('i18n:admin', function (cb) {
     ' ./languages/admin.pot' +
     ' --domain=' + pkg.name + '-admin' +
     // ' --subtract=./languages/' + pkg.name + '.pot' + // FIXME: temporarly disabled for migration
-    ' --headers=\'' + template(JSON.stringify(conf.i18n.admin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\'' +
+    ' --headers=\'' + template(JSON.stringify(conf.i18n.admin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\' ' +
     i18nExtra(conf.i18n.admin);
 
   exec(command, function (err, stdout, stderr) {

@@ -30,13 +30,13 @@
     "tecnickcom/tc-lib-barcode": "^1.18",
     "hbgl/php-code-128-encoder": "^0.2.7",
     "sinasalek/multi-calendar-date-time": "dev-master",
-    "rct567/dom-query": "^1.0",
+    "rct567/dom-query": "^1.1",
     "jwage/easy-csv": "^1.0",
     "sabre/vobject": "^4.3",
     "jeroendesloovere/vcard": "^1.7"
   },
   "require-dev": {
-    "php-coord/php-coord": "4.x-dev",
+    "php-coord/php-coord": "4.7.0",
     "10up/wp-content-connect": "^1.5.0",
     "nicmart/string-template": "^0.1.2",
     "eluceo/ical": "^0.11.4",
