@@ -35,6 +35,7 @@ class Persona extends gEditorial\Module
 			'keywords' => [
 				'human',
 				'people',
+				'cptmodule',
 			],
 		];
 	}
@@ -102,7 +103,7 @@ class Persona extends gEditorial\Module
 		return [
 			'primary_posttype'    => 'human',
 			'primary_taxonomy'    => 'human_group',
-			'job_title_taxonomy'  => 'job_title',      // MAYBE ANOTHER MODULE: `Jobs`
+			'job_title_taxonomy'  => 'job_title',      // FIXME: move to `Employed` / OR: `Jobbed`
 			'blood_type_taxonomy' => 'blood_type',     // MAYBE ANOTHER MODULE: `Medic`
 			'status_taxonomy'     => 'human_status',
 

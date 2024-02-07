@@ -136,7 +136,7 @@ class Countables extends gEditorial\Module
 
 		foreach ( Helper::getSeparated( $args['taxonomy'] ) as $taxonomy ) {
 
-			if ( ! $taxonomy || ! taxonomy_exists( $taxonomy ) )
+			if ( ! WordPress\Taxonomy::exists( $taxonomy ) )
 				continue;
 
 			if ( ! $count = WordPress\Taxonomy::hasTerms( $taxonomy ) )

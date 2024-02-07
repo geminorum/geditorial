@@ -187,8 +187,11 @@ class Labeled extends gEditorial\Module
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
 	}
 
-	public function meta_column_row( $post, $fields, $exclude )
+	public function meta_column_row( $post, $before, $after, $fields, $excludes )
 	{
+		if ( empty( $fields ) )
+			return;
+
 		if ( array_key_exists( 'label_string', $fields ) || array_key_exists( 'label_taxonomy', $fields ) )
 			Template::metaTermField( [
 				'field'    => 'label_string',

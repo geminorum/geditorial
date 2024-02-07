@@ -82,7 +82,7 @@ trait DashboardSummary
 
 		$scope  = $this->get_setting( 'summary_scope', 'all' );
 		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
-		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
+		$key    = $this->hash( 'widgetsummary', $taxonomy, $scope, $suffix );
 
 		if ( Core\WordPress::isFlush( 'read' ) )
 			delete_transient( $key );

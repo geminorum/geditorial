@@ -19,6 +19,9 @@ class Lingo extends gEditorial\Module
 	use Internals\CoreToolBox;
 	use Internals\RawImports;
 
+	// FIXME: WTF: must not be hierarchical?!
+	// TODO: dashboard summary support
+
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafile   = 'languages-20230325.json';
 

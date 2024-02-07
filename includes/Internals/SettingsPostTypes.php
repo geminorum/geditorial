@@ -126,7 +126,7 @@ trait SettingsPostTypes
 				$pre[$posttype] = $all[$posttype];
 
 			// only if no checks required
-			else if ( is_null( $capability ) && post_type_exists( $posttype ) )
+			else if ( is_null( $capability ) && WordPress\PostType::exists( $posttype ) )
 				$pre[$posttype] = $posttype;
 		}
 
@@ -176,7 +176,7 @@ trait SettingsPostTypes
 				$list[$posttype] = $posttypes[$posttype];
 
 			// only if no checks required
-			else if ( is_null( $capability ) && post_type_exists( $posttype ) )
+			else if ( is_null( $capability ) && WordPress\PostType::exists( $posttype ) )
 				$list[$posttype] = $posttype;
 		}
 

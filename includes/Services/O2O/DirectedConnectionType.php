@@ -9,6 +9,9 @@ class DirectedConnectionType
 	protected $ctype;
 	protected $direction;
 
+	protected $self_connections;
+	protected $duplicate_connections;
+
 	function __construct( $ctype, $direction )
 	{
 		$this->ctype     = $ctype;

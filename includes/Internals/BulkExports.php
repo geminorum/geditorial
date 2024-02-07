@@ -235,7 +235,7 @@ trait BulkExports
 
 		foreach ( $posttypes as $posttype ) {
 
-			if ( ! post_type_exists( $posttype ) )
+			if ( ! WordPress\PostType::exists( $posttype ) )
 				continue;
 
 			$fields = WordPress\PostType::supports( $posttype, 'meta_fields' );
@@ -320,7 +320,7 @@ trait BulkExports
 
 		foreach ( $posttypes as $posttype ) {
 
-			if ( ! post_type_exists( $posttype ) )
+			if ( ! WordPress\PostType::exists( $posttype ) )
 				continue;
 
 			switch ( $type ) {

@@ -12,6 +12,9 @@ trait ViewEngines
 
 	protected function render_view_string( $template, $data = [], $verbose = TRUE )
 	{
+		if ( empty( $template ) )
+			return $verbose ? FALSE : '';
+
 		if ( empty( $this->view_engines[0] ) )
 			$this->view_engines[0] = $this->get_view_engine( 0 );
 

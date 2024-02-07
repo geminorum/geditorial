@@ -111,7 +111,11 @@ trait CoreTaxonomies
 		if ( ! array_key_exists( 'menu_icon', $args ) )
 			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
 
-		$object = register_taxonomy( $taxonomy, $cpt_tax ? $posttypes : '', $this->apply_taxonomy_object_settings( $taxonomy, $args, $settings ) );
+		$object = register_taxonomy(
+			$taxonomy,
+			$cpt_tax ? $posttypes : '',
+			$this->apply_taxonomy_object_settings( $taxonomy, $args, $settings )
+		);
 
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
@@ -150,6 +154,8 @@ trait CoreTaxonomies
 				// -- restrricted terms
 				// -- `metabox_advanced`
 				// -- `selectmultiple_term`
+
+				// TODO: select-single as arg prop
 			}
 		}
 

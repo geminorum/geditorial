@@ -924,7 +924,7 @@ class Template extends WordPress\Main
 				if ( is_null( $args['fields'] ) )
 					continue;
 
-				if ( taxonomy_exists( $key ) ) {
+				if ( WordPress\Taxonomy::exists( $key ) ) {
 
 					if ( ! is_object_in_taxonomy( $posttype, $key ) )
 						continue;

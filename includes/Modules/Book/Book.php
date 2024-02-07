@@ -43,6 +43,7 @@ class Book extends gEditorial\Module
 			'access'   => 'stable',
 			'keywords' => [
 				'paired',
+				'cptmodule',
 			],
 		];
 	}
