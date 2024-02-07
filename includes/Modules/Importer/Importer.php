@@ -869,8 +869,8 @@ class Importer extends gEditorial\Module
 						}
 
 						// NOTE: `wp_insert_post()` overrides existing terms
-						$this->_store_taxonomies_for_post( $post_id, $taxonomies, $source_id, $override );
-						$this->_store_taxonomies_for_post( $post_id, $terms_all, $source_id, FALSE );
+						$this->_set_terms_for_post( $post_id, $taxonomies, $source_id, $oldpost, ! $override, FALSE );
+						$this->_set_terms_for_post( $post_id, $terms_all, $source_id, $oldpost );
 
 						if ( FALSE !== ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
 
@@ -1244,23 +1244,38 @@ class Importer extends gEditorial\Module
 		return empty( array_filter( $data ) );
 	}
 
-	private function _store_taxonomies_for_post( $post_id, $taxonomies, $source_id = NULL, $override = FALSE )
+	private function _set_terms_for_post( $post_id, $taxonomies, $source_id = NULL, $oldpost = FALSE, $newonly = FALSE, $append = TRUE )
 	{
 		foreach ( $taxonomies as $taxonomy => $terms ) {
 
-			if ( ! $taxonomy )
+			if ( ! WordPress\Taxonomy::exists( $taxonomy ) )
 				continue;
 
-			// NOTE: modules with `paired_force_parents` must filter this to include parent terms.
-			// @SEE: `pairedcore__hook_importer_term_parents()`
-			if ( FALSE === ( $filtered = $this->filters( 'terms', $terms, $taxonomy, $source_id, $post_id ) ) )
+			$currents = $oldpost
+				? WordPress\Taxonomy::getPostTerms( $taxonomy, $oldpost, FALSE )
+				: [];
+
+			if ( $newonly && count( $currents ) )
+				continue;
+
+			$filtered = $this->filters( 'set_terms_'.$taxonomy,
+				$terms,
+				$currents,
+				$source_id,
+				$post_id,
+				$oldpost,
+				$newonly,
+				$append
+			);
+
+			if ( FALSE === $filtered )
 				continue;
 
 			if ( is_null( $filtered ) )
 				$result = wp_set_object_terms( $post_id, NULL, $taxonomy );
 
 			else if ( ! empty( $filtered ) )
-				$result = wp_set_object_terms( $post_id, $terms, $taxonomy, ! $override );
+				$result = wp_set_object_terms( $post_id, $terms, $taxonomy, $append );
 
 			else
 				continue;

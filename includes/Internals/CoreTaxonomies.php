@@ -591,7 +591,6 @@ trait CoreTaxonomies
 
 	/**
 	 * Hooks the filter for taxonomy parent terms on imports.
-	 * EQUAL: `$this->filter_module( 'importer', 'terms', 4 );`
 	 * @SEE: `pairedcore__hook_importer_term_parents()`
 	 *
 	 * @param  bool|string $setting
@@ -602,20 +601,38 @@ trait CoreTaxonomies
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'importer', 'terms' ),
-			static function ( $terms, $tax, $source_id, $post_id ) use ( $taxonomy ) {
-
-				if ( $tax !== $taxonomy )
-					return $terms;
+		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
+			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $newonly, $append ) use ( $taxonomy ) {
 
 				$parents = [];
+
+				foreach ( (array) $currents as $current )
+					$parents = array_merge( $parents, WordPress\Taxonomy::getTermParents( $current, $taxonomy ) );
 
 				foreach ( (array) $terms as $term )
 					$parents = array_merge( $parents, WordPress\Taxonomy::getTermParents( $term, $taxonomy ) );
 
 				return Core\Arraay::prepNumeral( $terms, $parents );
 
-			}, 12, 4 );
+			}, 12, 7 );
+
+		return TRUE;
+	}
+
+	protected function hook_taxonomy_importer_term_singleselect( $taxonomy, $setting = 'selectmultiple_term', $default_setting = FALSE )
+	{
+		if ( TRUE !== $setting && $this->get_setting( $setting, $default_setting ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
+			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $newonly, $append ) use ( $taxonomy ) {
+
+				if ( count( $currents ) )
+					return FALSE;
+
+				return $terms;
+
+			}, 22, 7 );
 
 		return TRUE;
 	}
