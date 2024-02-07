@@ -373,7 +373,6 @@ trait PairedCore
 
 	/**
 	 * Hooks the filter for paired parent terms on imports.
-	 * EQUAL: `$this->filter_module( 'importer', 'terms', 4 );`
 	 * @SEE: `hook_taxonomy_importer_term_parents()`
 	 *
 	 * @param  bool|string $setting
@@ -387,20 +386,22 @@ trait PairedCore
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'importer', 'terms' ),
-			function ( $terms, $taxonomy, $source_id, $post_id ) use ( $constants ) {
+		$taxonomy = $this->constant( $constants[1] );
 
-				if ( $taxonomy !== $this->constant( $constants[1] ) )
-					return $terms;
+		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
+			function ( $terms, $currents, $source_id, $post_id, $oldpost, $newonly, $append ) use ( $taxonomy ) {
 
 				$parents = [];
+
+				foreach ( (array) $currents as $current )
+					$parents = array_merge( $parents, WordPress\Taxonomy::getTermParents( $current, $taxonomy ) );
 
 				foreach ( (array) $terms as $term )
 					$parents = array_merge( $parents, WordPress\Taxonomy::getTermParents( $term, $taxonomy ) );
 
 				return Core\Arraay::prepNumeral( $terms, $parents );
 
-			}, 12, 4 );
+			}, 12, 7 );
 
 		return TRUE;
 	}
