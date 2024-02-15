@@ -90,7 +90,8 @@ trait CorePostTypes
 		if ( ! array_key_exists( 'supports', $args ) )
 			$args['supports'] = $this->get_posttype_supports( $constant );
 
-		// @ALSO SEE: https://core.trac.wordpress.org/ticket/22895
+		// TODO: migrate to `apply_posttype_object_settings()`
+		// @SEE: https://core.trac.wordpress.org/ticket/22895
 		if ( ! array_key_exists( 'capabilities', $args ) && 'post' != $cap_type )
 			$args['capabilities'] = [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ];
 
@@ -174,6 +175,8 @@ trait CorePostTypes
 		return $args;
 	}
 
+	// TODO: migrate to `apply_posttype_object_settings()`
+	// @SEE: `get_post_type_capabilities()`
 	// NOTE: also accepts: `[ 'story', 'stories' ]`
 	public function get_posttype_cap_type( $constant )
 	{

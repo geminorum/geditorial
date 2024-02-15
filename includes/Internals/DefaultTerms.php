@@ -21,9 +21,9 @@ trait DefaultTerms
 		foreach ( $this->define_default_terms() as $constant => $defaults )
 			if ( $taxonomy === $this->constant( $constant ) )
 				return $terms + $this->get_default_terms( $constant,
-					Core\Arraay::isAssoc( $defaults )
-						? $defaults
-						: Core\Arraay::sameKey( $defaults )
+					Core\Arraay::isList( $defaults )
+						? Core\Arraay::sameKey( $defaults )
+						: $defaults
 					);
 
 		return $terms;

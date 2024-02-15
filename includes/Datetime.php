@@ -55,7 +55,7 @@ class Datetime extends WordPress\Main
 				'timeonly'  => _x( 'H:i', 'Date Format', 'geditorial' ),
 				'monthday'  => _x( 'n/j', 'Date Format', 'geditorial' ),
 				'default'   => _x( 'm/d/Y', 'Date Format', 'geditorial' ),
-				'age'       => _x( 'Y/m/d', 'Date Format: `age`', 'geditorial' ),
+				'age'       => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
 				'wordpress' => get_option( 'date_format' ),
 			] );
 

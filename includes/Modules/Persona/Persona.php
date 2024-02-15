@@ -464,6 +464,10 @@ class Persona extends gEditorial\Module
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
 					$this->metaboxcustom_add_metabox_excerpt( 'primary_posttype' );
 
+				// FIXME: WTF: disable the meta-box
+				$this->filter_false_module( 'tweaks', 'metabox_author' );
+				$this->filter_false_module( 'tweaks', 'metabox_slug' );
+
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );

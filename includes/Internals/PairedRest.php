@@ -130,7 +130,7 @@ trait PairedRest
 		if ( FALSE === $result )
 			return Services\RestAPI::getErrorSomethingIsWrong();
 
-		// NOTE: must returns the endpoint as `get`
+		// NOTE: must return the endpoint as `get`
 		return $this->pairedrest_get_posts( $request );
 	}
 
@@ -157,7 +157,7 @@ trait PairedRest
 		if ( FALSE === $result )
 			return Services\RestAPI::getErrorSomethingIsWrong();
 
-		// NOTE: must returns the endpoint as `get`
+		// NOTE: must return the endpoint as `get`
 		return $this->pairedrest_get_posts( $request );
 	}
 }

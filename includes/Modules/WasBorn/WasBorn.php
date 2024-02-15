@@ -920,7 +920,7 @@ class WasBorn extends gEditorial\Module
 		echo $before;
 		echo $this->get_column_icon();
 
-		echo Datetime::prepDateOfBirth( $dob, 'Y/m/d', TRUE, $cal );
+		echo Datetime::prepDateOfBirth( $dob, NULL, TRUE, $cal );
 
 		if ( Core\Date::isUnderAged( $dob, $legal, $cal ) )
 			printf( ' (<span class="%s">%s</span>)', '-color-danger -is-under-aged',
@@ -1053,7 +1053,7 @@ class WasBorn extends gEditorial\Module
 			echo Core\HTML::row( sprintf(
 				/* translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title */
 				_x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-was-born' ),
-				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ), 'Y/m/d' ) ),
+				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ) ) ),
 				Core\HTML::code( $year ),
 				WordPress\Post::title( $post )
 			) );

@@ -395,7 +395,7 @@ class Tweaks extends gEditorial\Module
 			remove_meta_box( 'authordiv', $screen, 'normal' );
 			remove_meta_box( 'slugdiv', $screen, 'normal' );
 
-			$this->filter_false_module( 'module', 'metabox_parent' ); // for all modules
+			// $this->filter_false_module( 'module', 'metabox_parent' ); // for all modules
 
 			add_meta_box( $this->classs( 'mainbox' ),
 				$object->labels->attributes,
@@ -989,6 +989,9 @@ class Tweaks extends gEditorial\Module
 	// @REF: `post_comment_status_meta_box()`
 	private function do_mainbox_comment_status( $post, $posttype )
 	{
+		if ( ! $this->filters( 'metabox_commentstatus', TRUE, $posttype->name, $post ) )
+			return;
+
 		echo '<input name="advanced_view" type="hidden" value="1" />'; // FIXME: check this
 
 		echo '<label for="comment_status" class="selectit">';

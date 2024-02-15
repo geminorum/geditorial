@@ -113,7 +113,7 @@ class Tube extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['p2p'] = [
+		$strings['o2o'] = [
 			'video_posttype' => [
 				'title' => [
 					'from' => _x( 'Connected Videos', 'O2O', 'geditorial-tube' ),

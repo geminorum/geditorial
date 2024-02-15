@@ -281,7 +281,7 @@ class WcRelated extends gEditorial\Module
 
 		foreach ( $this->get_setting( 'related_by_taxonomy', [] ) as $index => $row ) {
 
-			if ( empty( $row['taxonomy'] ) || ! taxonomy_exists( $row['taxonomy'] ) )
+			if ( empty( $row['taxonomy'] ) || ! WordPress\Taxonomy::exists( $row['taxonomy'] ) )
 				continue;
 
 			$related  = $this->get_related_products( $product_id, $row['taxonomy'], $args['posts_per_page'], $excludes );

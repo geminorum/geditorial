@@ -18,9 +18,8 @@ trait DashboardSummary
 
 		echo $this->wrap_open( [ '-admin-widget', '-core-styles' ], TRUE, 'dashboard_right_now' );
 
-		$scope  = $this->get_setting( 'summary_scope', 'all' );
-		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
-		$key    = $this->hash( 'widgetsummary', $scope, $suffix );
+		$scope = $this->get_setting( 'summary_scope', 'all' );
+		$key   = $this->hash( 'widgetsummary', $scope, get_current_user_id() );
 
 		if ( Core\WordPress::isFlush( 'read' ) )
 			delete_transient( $key );
@@ -80,9 +79,8 @@ trait DashboardSummary
 			return;
 		}
 
-		$scope  = $this->get_setting( 'summary_scope', 'all' );
-		$suffix = 'all' == $scope ? 'all' : get_current_user_id();
-		$key    = $this->hash( 'widgetsummary', $taxonomy, $scope, $suffix );
+		$scope = $this->get_setting( 'summary_scope', 'all' );
+		$key   = $this->hash( 'widgetsummary', $taxonomy, $scope, get_current_user_id() );
 
 		if ( Core\WordPress::isFlush( 'read' ) )
 			delete_transient( $key );

@@ -902,10 +902,7 @@ class MetaBox extends WordPress\Main
 		if ( empty( $data ) || ! is_array( $data ) )
 			return FALSE;
 
-		if ( ! array_key_exists( $object->name, $data ) )
-			return FALSE;
-
-		$result = wp_set_object_terms( $object_id, Core\Arraay::prepNumeral( $data[$object->name] ), $object->name, FALSE );
+		$result = wp_set_object_terms( $object_id, Core\Arraay::prepNumeral( $data ), $object->name, FALSE );
 
 		clean_object_term_cache( $object_id, $object->name );
 

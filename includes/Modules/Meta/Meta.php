@@ -1202,7 +1202,7 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
 
-				return Datetime::prepDateOfBirth( trim( $raw ), 'Y/m/d' );
+				return Datetime::prepDateOfBirth( trim( $raw ) );
 
 			case 'days' :
 				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'day' ) ),
