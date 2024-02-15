@@ -938,6 +938,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	// FIXME: DEPRECATED
 	public static function getSetting_posttype_viewable( $description = NULL, $default = 1 )
 	{
 		return [

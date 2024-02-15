@@ -114,7 +114,13 @@ trait CoreTaxonomies
 		$object = register_taxonomy(
 			$taxonomy,
 			$cpt_tax ? $posttypes : '',
-			$this->apply_taxonomy_object_settings( $taxonomy, $args, $settings )
+			$this->apply_taxonomy_object_settings(
+				$taxonomy,
+				$args,
+				$settings,
+				$posttypes,
+				$constant
+			)
 		);
 
 		if ( self::isError( $object ) )
@@ -123,10 +129,11 @@ trait CoreTaxonomies
 		return $object;
 	}
 
-	protected function apply_taxonomy_object_settings( $taxonomy, $args = [], $atts = [], $posttypes = NULL )
+	protected function apply_taxonomy_object_settings( $taxonomy, $args = [], $atts = [], $posttypes = NULL, $constant = FALSE )
 	{
 		$settings = self::atts( [
-			'is_viewable' => NULL,
+			'is_viewable'    => NULL,
+			'custom_captype' => NULL, // FIXME: migrate from :`_get_taxonomy_caps()`
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -222,6 +229,15 @@ trait CoreTaxonomies
 		if ( is_array( $caps ) )
 			return $caps;
 
+		// wp core default
+		if ( FALSE === $caps )
+			return [
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts',
+			];
+
 		$custom = [
 			'manage_terms' => 'manage_'.$taxonomy,
 			'edit_terms'   => 'edit_'.$taxonomy,
@@ -231,15 +247,6 @@ trait CoreTaxonomies
 
 		if ( TRUE === $caps )
 			return $custom;
-
-		// core default
-		if ( FALSE === $caps )
-			return [
-				'manage_terms' => 'manage_categories',
-				'edit_terms'   => 'manage_categories',
-				'delete_terms' => 'manage_categories',
-				'assign_terms' => 'edit_posts',
-			];
 
 		$defaults = [
 			'manage_terms' => 'edit_others_posts',

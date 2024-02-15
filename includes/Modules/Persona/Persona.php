@@ -368,6 +368,7 @@ class Persona extends gEditorial\Module
 		parent::init();
 
 		$viewable = $this->get_setting( 'contents_viewable', FALSE );
+		$captype  = $this->get_setting( 'custom_captype', FALSE );
 
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
@@ -376,20 +377,23 @@ class Persona extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 		], 'primary_posttype', [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->register_taxonomy( 'job_title_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL,
 		], 'primary_posttype', [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->register_taxonomy( 'blood_type_taxonomy', [
 			'hierarchical' => TRUE,
 		], 'primary_posttype', [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
@@ -397,7 +401,8 @@ class Persona extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype', [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->register_posttype( 'primary_posttype', [
@@ -407,7 +412,7 @@ class Persona extends gEditorial\Module
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		], [
 			'is_viewable'    => $viewable,
-			'custom_captype' => (bool) $this->get_setting( 'custom_captype' ),
+			'custom_captype' => $captype,
 		] );
 
 		$this->filter( 'the_title', 2, 8 );

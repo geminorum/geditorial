@@ -95,7 +95,16 @@ trait CorePostTypes
 		if ( ! array_key_exists( 'capabilities', $args ) && 'post' != $cap_type )
 			$args['capabilities'] = [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ];
 
-		$object = register_post_type( $posttype, $this->apply_posttype_object_settings( $posttype, $args, $settings ) );
+		$object = register_post_type(
+			$posttype,
+			$this->apply_posttype_object_settings(
+				$posttype,
+				$args,
+				$settings,
+				$taxonomies,
+				$constant
+			)
+		);
 
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
@@ -103,7 +112,7 @@ trait CorePostTypes
 		return $object;
 	}
 
-	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = [ 'post_tag' ] )
+	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = [ 'post_tag' ], $constant = FALSE )
 	{
 		$settings = self::atts( [
 			'block_editor'   => FALSE,
@@ -120,17 +129,21 @@ trait CorePostTypes
 			switch ( $setting ) {
 
 				case 'block_editor':
+
 					add_filter( 'use_block_editor_for_post_type',
 						static function ( $edit, $type ) use ( $posttype, $value ) {
 							return $posttype === $type ? (bool) $value : $edit;
 						}, 12, 2 );
+
 					break;
 
 				case 'quick_edit':
+
 					add_filter( 'quick_edit_enabled_for_post_type',
 						static function ( $edit, $type ) use ( $posttype, $value ) {
 							return $posttype === $type ? (bool) $value : $edit;
 						}, 12, 2 );
+
 					break;
 
 				case 'is_viewable':
