@@ -28,12 +28,12 @@ trait AdminPage
 		return $this->filters( $context.'_default_sub', Core\Arraay::keyFirst( $subs ) );
 	}
 
-	protected function _hook_menu_adminpage( $context = 'mainpage', $position = NULL )
+	protected function _hook_menu_adminpage( $context = 'mainpage', $position = NULL, $capability = NULL )
 	{
 		$slug    = $this->get_adminpage_url( FALSE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
-		$can     = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		$cap     = $capability ?? $this->role_can( $context ) ? 'read' : 'do_not_allow';
 		$menu    = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
 
 		if ( is_null( $position ) )
@@ -42,7 +42,7 @@ trait AdminPage
 		$hook = add_menu_page(
 			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
 			$menu,
-			$can,
+			$cap,
 			$slug,
 			[ $this, 'render_menu_adminpage' ],
 			$this->get_posttype_icon(),
@@ -55,7 +55,7 @@ trait AdminPage
 				/* translators: %1$s: menu title, %2$s: submenu title */
 				sprintf( _x( '%1$s &lsaquo; %2$s', 'Module: Page Title', 'geditorial-admin' ), $submenu, $menu ), // FIXME: only shows the first sub
 				$submenu,
-				$can,
+				$cap,
 				$slug.( $sub == $default ? '' : '&sub='.$sub ),
 				[ $this, 'render_menu_adminpage' ]
 			);
@@ -121,10 +121,10 @@ trait AdminPage
 		Core\HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
-	protected function _hook_submenu_adminpage( $context = 'subpage', $parent_slug = '' )
+	protected function _hook_submenu_adminpage( $context = 'subpage', $capability = NULL, $parent_slug = '' )
 	{
 		$slug = $this->get_adminpage_url( FALSE, [], $context );
-		$can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		$cap  = $capability ?? $this->role_can( $context ) ? 'read' : 'do_not_allow';
 		$cb   = [ $this, 'render_submenu_adminpage' ];
 		$load = [ $this, 'load_submenu_adminpage' ];
 
@@ -138,7 +138,7 @@ trait AdminPage
 			$parent_slug, // or `index.php`
 			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
 			$this->get_string( 'menu_title', $context, 'adminpage', '' ),
-			$can,
+			$cap,
 			$slug,
 			$cb
 		);

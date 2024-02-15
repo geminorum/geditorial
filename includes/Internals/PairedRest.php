@@ -49,30 +49,30 @@ trait PairedRest
 		if ( ! current_user_can( 'read_post', (int) $request['parent'] ) )
 			return Services\RestAPI::getErrorForbidden();
 
-		if ( ! $this->role_can( 'paired' ) ) // FIXME
-			return Services\RestAPI::getErrorForbidden();
+		// if ( ! $this->role_can( 'paired' ) ) // FIXME
+		// 	return Services\RestAPI::getErrorForbidden();
 
 		return TRUE;
 	}
 
 	public function pairedrest_connect_post_permissions_check( $request )
 	{
-		if ( ! current_user_can( 'read_post', (int) $request['parent'] ) )
+		if ( ! current_user_can( 'edit_post', (int) $request['parent'] ) )
 			return Services\RestAPI::getErrorForbidden();
 
-		if ( ! $this->role_can( 'assign' ) ) // FIXME
-			return Services\RestAPI::getErrorForbidden();
+		// if ( ! $this->role_can( 'assign' ) ) // FIXME
+		// 	return Services\RestAPI::getErrorForbidden();
 
 		return TRUE;
 	}
 
 	public function pairedrest_disconnect_post_permissions_check( $request )
 	{
-		if ( ! current_user_can( 'read_post', (int) $request['parent'] ) )
+		if ( ! current_user_can( 'edit_post', (int) $request['parent'] ) )
 			return Services\RestAPI::getErrorForbidden();
 
-		if ( ! $this->role_can( 'assign' ) ) // FIXME
-			return Services\RestAPI::getErrorForbidden();
+		// if ( ! $this->role_can( 'assign' ) ) // FIXME
+		// 	return Services\RestAPI::getErrorForbidden();
 
 		return TRUE;
 	}

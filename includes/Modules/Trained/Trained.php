@@ -391,8 +391,7 @@ class Trained extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		if ( $this->role_can( 'import', NULL, TRUE ) )
-			$this->_hook_submenu_adminpage( 'importitems' );
+		$this->_hook_submenu_adminpage( 'importitems', 'read' );
 	}
 
 	public function dashboard_glance_items( $items )

@@ -314,8 +314,7 @@ class Dossier extends gEditorial\Module
 			$this->action_self( 'newpost_content', 4, 10, 'menu_order' );
 		}
 
-		if ( $this->role_can( 'import', NULL, TRUE ) )
-			$this->_hook_submenu_adminpage( 'importitems' );
+		$this->_hook_submenu_adminpage( 'importitems', 'read' );
 	}
 
 	public function template_redirect()

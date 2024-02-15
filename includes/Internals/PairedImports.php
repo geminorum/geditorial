@@ -196,7 +196,7 @@ trait PairedImports
 
 		$context = 'importitems';
 
-		if ( $this->role_can( 'import', NULL, TRUE ) ) {
+		if ( current_user_can( 'edit_post', $post->ID ) ) {
 
 			/* translators: %s: post title */
 			$title = sprintf( _x( 'Import Items for %s', 'Internal: PairedImports: Page Title', 'geditorial' ), WordPress\Post::title( $post ) );
