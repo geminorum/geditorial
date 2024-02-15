@@ -42,9 +42,20 @@ class Persona extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'_general' => [
 				'admin_bulkactions',
+			],
+			'_roles' => [
+				[
+					'field'       => 'reports_roles',
+					'type'        => 'checkboxes',
+					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-persona' ),
+					'description' => _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-persona' ),
+					'values'      => $roles,
+				],
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
@@ -531,7 +542,8 @@ class Persona extends gEditorial\Module
 
 	protected function dashboard_widgets()
 	{
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
+		if ( $this->role_can( [ 'reports' ] ) )
+			$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
 	}
 
 	public function render_widget_term_summary( $object, $box )
