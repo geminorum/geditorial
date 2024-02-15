@@ -49,6 +49,7 @@ class Persona extends gEditorial\Module
 				'admin_bulkactions',
 			],
 			'_roles' => [
+				'custom_captype',
 				[
 					'field'       => 'reports_roles',
 					'type'        => 'checkboxes',
@@ -405,7 +406,8 @@ class Persona extends gEditorial\Module
 			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		], [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => (bool) $this->get_setting( 'custom_captype' ),
 		] );
 
 		$this->filter( 'the_title', 2, 8 );

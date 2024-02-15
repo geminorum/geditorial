@@ -958,6 +958,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_custom_captype( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'custom_captype',
+			'title'       => _x( 'Custom Capabilities', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Registers custom capability-type for the contents.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_override_dates( $description = NULL, $default = 1 )
 	{
 		return [

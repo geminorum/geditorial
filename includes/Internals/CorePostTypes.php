@@ -106,9 +106,10 @@ trait CorePostTypes
 	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = [ 'post_tag' ] )
 	{
 		$settings = self::atts( [
-			'block_editor' => FALSE,
-			'quick_edit'   => NULL,
-			'is_viewable'  => NULL,
+			'block_editor'   => FALSE,
+			'quick_edit'     => NULL,
+			'is_viewable'    => NULL,
+			'custom_captype' => NULL,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -167,6 +168,16 @@ trait CorePostTypes
 						static function ( $viewable, $post ) use ( $posttype ) {
 							return $post->post_type === $posttype ? TRUE : $viewable;
 						}, 12, 2 );
+
+					break;
+
+				case 'custom_captype':
+
+					if ( ! $value )
+						break;
+
+					$args['capability_type'] = $posttype;
+					$args['capabilities']['create_posts'] = sprintf( 'create_%s', Core\L10n::pluralize( $posttype ) );
 
 					break;
 			}
