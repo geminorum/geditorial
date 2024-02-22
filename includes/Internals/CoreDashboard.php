@@ -10,8 +10,11 @@ use geminorum\gEditorial\WordPress;
 trait CoreDashboard
 {
 
-	protected function dashboard_glance_post( $constant )
+	protected function dashboard_glance_post( $constant, $roles = NULL )
 	{
+		if ( ! $this->role_can( $roles ) )
+			return FALSE;
+
 		$posttype = $this->constant( $constant );
 
 		return MetaBox::glancePosttype(
@@ -21,8 +24,11 @@ trait CoreDashboard
 		);
 	}
 
-	protected function dashboard_glance_taxonomy( $constant )
+	protected function dashboard_glance_taxonomy( $constant, $roles = NULL )
 	{
+		if ( ! $this->role_can( $roles ) )
+			return FALSE;
+
 		$taxonomy = $this->constant( $constant );
 
 		return MetaBox::glanceTaxonomy(
