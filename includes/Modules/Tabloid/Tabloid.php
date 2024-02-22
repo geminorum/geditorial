@@ -59,27 +59,9 @@ class Tabloid extends gEditorial\Module
 		}
 
 		$settings['_roles'] = [
-			[
-				'field'       => 'overview_roles',
-				'type'        => 'checkboxes',
-				'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-tabloid' ),
-				'description' => _x( 'Roles that can view posttype overviews.', 'Setting Description', 'geditorial-tabloid' ),
-				'values'      => $roles,
-			],
-			[
-				'field'       => 'print_roles',
-				'type'        => 'checkboxes',
-				'title'       => _x( 'Print Roles', 'Setting Title', 'geditorial-tabloid' ),
-				'description' => _x( 'Roles that can print posttype overviews.', 'Setting Description', 'geditorial-tabloid' ),
-				'values'      => $roles,
-			],
-			[
-				'field'       => 'export_roles',
-				'type'        => 'checkboxes',
-				'title'       => _x( 'Export Roles', 'Setting Title', 'geditorial-tabloid' ),
-				'description' => _x( 'Roles that can export posttype overviews.', 'Setting Description', 'geditorial-tabloid' ),
-				'values'      => $roles,
-			],
+			'overview_roles' => [ _x( 'Roles that can view posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
+			'prints_roles'   => [ _x( 'Roles that can print posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
+			'exports_roles'  => [ _x( 'Roles that can export posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
 		];
 
 		return $settings;
@@ -270,8 +252,8 @@ class Tabloid extends gEditorial\Module
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
 		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
-		$data['__can_print']  = $this->role_can( 'print' );
-		$data['__can_export'] = $this->role_can( 'export' );
+		$data['__can_print']  = $this->role_can( 'prints' );
+		$data['__can_export'] = $this->role_can( 'exports' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___hooks']     = array_fill_keys( [
 			'after-actions',

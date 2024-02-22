@@ -50,13 +50,7 @@ class Persona extends gEditorial\Module
 			],
 			'_roles' => [
 				'custom_captype',
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-persona' ),
-					'description' => _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-persona' ),
-					'values'      => $roles,
-				],
+				'reports_roles' => [ NULL, $roles ],
 			],
 			'_dashboard' => [
 				'dashboard_widgets',

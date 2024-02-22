@@ -45,20 +45,8 @@ class WcPurchased extends gEditorial\Module
 				],
 			],
 			'_roles' => [
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-wc-purchased' ),
-					'description' => _x( 'Roles that can view product purchase reports.', 'Setting Description', 'geditorial-wc-purchased' ),
-					'values'      => $roles,
-				],
-				[
-					'field'       => 'export_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Export Roles', 'Setting Title', 'geditorial-wc-purchased' ),
-					'description' => _x( 'Roles that can export product purchase reports.', 'Setting Description', 'geditorial-wc-purchased' ),
-					'values'      => $roles,
-				],
+				'reports_roles' => [ NULL, $roles ],
+				'exports_roles' => [ NULL, $roles ],
 			],
 		];
 	}
@@ -121,7 +109,7 @@ class WcPurchased extends gEditorial\Module
 		if ( ! $orders = $this->get_product_purchased_orders( $product->get_id() ) )
 			return Core\HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
 
-		$export = $this->role_can( 'export' );
+		$export = $this->role_can( 'exports' );
 
 		if ( isset( $_GET['export'] ) && $export )
 			Core\Text::download( $this->get_product_purchased( $orders ), Core\File::prepName( sprintf( 'product-%s.csv', $product->get_sku() ) ) );

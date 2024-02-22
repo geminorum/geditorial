@@ -38,13 +38,7 @@ class Uncategorized extends gEditorial\Module
 				'admin_bulkactions',
 			],
 			'_roles' => [
-				[
-					'field'       => 'reports_roles',
-					'type'        => 'checkboxes',
-					'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-uncategorized' ),
-					'description' => _x( 'Roles that can see Uncategorized Reports.', 'Setting Description', 'geditorial-uncategorized' ),
-					'values'      => $roles,
-				],
+				'reports_roles' => [ _x( 'Roles that can see Uncategorized Reports.', 'Setting Description', 'geditorial-uncategorized' ), $roles ],
 			],
 		];
 	}

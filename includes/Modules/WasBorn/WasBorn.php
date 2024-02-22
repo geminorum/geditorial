@@ -97,20 +97,8 @@ class WasBorn extends gEditorial\Module
 		];
 
 		$settings['_roles'] = [
-			[
-				'field'       => 'manage_roles',
-				'type'        => 'checkboxes',
-				'title'       => _x( 'Manage Roles', 'Setting Title', 'geditorial-was-born' ),
-				'description' => _x( 'Roles that can Manage, Edit and Delete Age Groups', 'Setting Description', 'geditorial-was-born' ),
-				'values'      => $roles,
-			],
-			[
-				'field'       => 'reports_roles',
-				'type'        => 'checkboxes',
-				'title'       => _x( 'Reports Roles', 'Setting Title', 'geditorial-was-born' ),
-				'description' => _x( 'Roles that can view age related reports.', 'Setting Description', 'geditorial-was-born' ),
-				'values'      => $roles,
-			],
+			'manage_roles'  => [ _x( 'Roles that can manage, edit and delete age groups.', 'Setting Description', 'geditorial-was-born' ), $roles ],
+			'reports_roles' => [ _x( 'Roles that can view age related reports.', 'Setting Description', 'geditorial-was-born' ), $roles ],
 		];
 
 		return $settings;

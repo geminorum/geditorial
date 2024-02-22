@@ -1087,6 +1087,84 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_reports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'reports_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Reports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
+	public static function getSetting_exports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'exports_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Exports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Roles that can export data entries.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
+	public static function getSetting_prints_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'prints_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Prints Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Roles that can print data entries.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
+	public static function getSetting_overview_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'overview_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Exports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Roles that can view data overviews.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
+	public static function getSetting_manage_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'manage_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Manage Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Roles that can manage, edit and delete entry defenitions.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
+	public static function getSetting_assign_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'assign_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Assign Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
 	public static function getSetting_printpage_enqueue_librefonts( $description = NULL )
 	{
 		return [

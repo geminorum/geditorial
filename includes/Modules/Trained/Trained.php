@@ -78,6 +78,9 @@ class Trained extends gEditorial\Module
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
+			'_roles' => [
+				'reports_roles' => [ NULL, $roles ],
+			],
 		];
 	}
 
@@ -396,7 +399,7 @@ class Trained extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype', [ 'reports' ] ) )
 			$items[] = $glance;
 
 		return $items;
