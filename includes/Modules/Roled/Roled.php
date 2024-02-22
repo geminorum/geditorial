@@ -104,7 +104,7 @@ class Roled extends gEditorial\Module
 	private function get_posttypes_support_editorial()
 	{
 		$posttypes = [];
-		$supported = get_post_types_by_support( 'editorial-roled' );
+		$supported = get_post_types_by_support( 'editorial-roles' );
 		$excludes  = [
 			'profile', // gPeople
 		];

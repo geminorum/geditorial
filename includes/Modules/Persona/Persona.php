@@ -80,7 +80,7 @@ class Persona extends gEditorial\Module
 				'show_in_quickedit' => [ sprintf(
 					/* translators: %s: primary taxonomy name */
 					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-persona' ),
-					$this->get_taxonomy_label( 'primary_taxonomy' )
+					$this->get_taxonomy_label( 'status_taxonomy' )
 				), '1' ],
 			],
 			'_frontend' => [
@@ -539,6 +539,14 @@ class Persona extends gEditorial\Module
 			return;
 
 		echo $this->wrap( ModuleTemplate::summary( [ 'echo' => FALSE ] ) );
+	}
+
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype', [ 'reports' ] ) )
+			$items[] = $glance;
+
+		return $items;
 	}
 
 	protected function dashboard_widgets()

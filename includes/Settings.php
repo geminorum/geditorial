@@ -206,18 +206,29 @@ class Settings extends WordPress\Main
 		return apply_filters( static::BASE.'_posttypes_parents', array_merge( $list, (array) $extra ), $context );
 	}
 
+	/**
+	 * Returns the filtred list of general excluded post-types.
+	 *
+	 * @param  array  $extra
+	 * @param  string $context
+	 * @return array  $excluded
+	 */
 	public static function posttypesExcluded( $extra = [], $context = 'settings' )
 	{
 		$list = [
-			'attachment',        // WP Core
-			'wp_theme',          // WP Core
-			'wp_block',          // WP Core
-			'wp_navigation',     // WP Core
-			'wp_global_styles',  // WP Core
-			'wp_template_part',  // WP Core
-			'wp_template',       // WP Core
-			'user_request',      // WP Core
-			'oembed_cache',      // WP Core
+			'attachment',          // WP Core
+			'revision',            // WP Core
+			'nav_menu_item',       // WP Core
+			'custom_css',          // WP Core
+			'customize_changeset', // WP Core
+			'wp_block',            // WP Core
+			'wp_global_styles',    // WP Core
+			'wp_navigation',       // WP Core
+			'wp_template_part',    // WP Core
+			'wp_template',         // WP Core
+			'user_request',        // WP Core
+			'oembed_cache',        // WP Core
+
 			'bp-email',          // BuddyPress
 			'shop_order',        // WooCommerce
 			'shop_coupon',       // WooCommerce

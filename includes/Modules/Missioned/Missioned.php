@@ -54,7 +54,6 @@ class Missioned extends gEditorial\Module
 			'_general' => [
 				'paired_force_parents',
 				'paired_manage_restricted',
-				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'primary_taxonomy' ),

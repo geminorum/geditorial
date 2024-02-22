@@ -54,6 +54,8 @@ class Trained extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'_general' => [
 				'paired_force_parents',
@@ -63,7 +65,6 @@ class Trained extends gEditorial\Module
 					'title'       => _x( 'Training Levels', 'Settings', 'geditorial-trained' ),
 					'description' => _x( 'Substitute taxonomy for the trainings and supported post-types.', 'Settings', 'geditorial-trained' ),
 				],
-				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'primary_taxonomy' ),
