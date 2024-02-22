@@ -558,6 +558,20 @@ class Module extends WordPress\Module
 		return Core\Arraay::prepString( $pre );
 	}
 
+	public function constant_plural( $key, $default = FALSE )
+	{
+		if ( ! $key )
+			return $default;
+
+		if ( ! $singular = $this->constant( $key ) )
+			return $default;
+
+		if ( ! $plural = $this->constant( sprintf( '%s_plural', $key ) ) )
+			return [ $singular, Core\L10n::pluralize( $singular ) ];
+
+		return [ $singular, $plural ];
+	}
+
 	public function slug()
 	{
 		return str_replace( '_', '-', $this->module->name );
@@ -735,6 +749,12 @@ class Module extends WordPress\Module
 	// NOTE: accepts array and performs `OR` check
 	protected function role_can( $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
 	{
+		if ( is_null( $whats ) )
+			return TRUE;
+
+		if ( FALSE === $whats )
+			return FALSE;
+
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
 
