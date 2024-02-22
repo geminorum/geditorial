@@ -42,7 +42,7 @@ trait CoreCapabilities
 	 */
 	protected function corecaps__handle_taxonomy_metacaps_roles( $constant )
 	{
-		if ( ! $taxonomy = $this->constant( $constant ) )
+		if ( ! $taxonomy = $this->constant_plural( $constant ) )
 			return FALSE;
 
 		add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
@@ -55,7 +55,7 @@ trait CoreCapabilities
 				case 'delete_page':
 				case 'publish_post':
 
-					$locking = $this->get_setting( sprintf( 'taxonomy_%s_locking_terms', $taxonomy ), [] );
+					$locking = $this->get_setting( sprintf( 'taxonomy_%s_locking_terms', $taxonomy[0] ), [] );
 
 					if ( empty( $locking ) )
 						return $caps;
@@ -67,16 +67,20 @@ trait CoreCapabilities
 						return $caps;
 
 					foreach ( $locking as $term_id )
-						if ( is_object_in_term( $post->ID, $taxonomy, (int) $term_id ) )
+						if ( is_object_in_term( $post->ID, $taxonomy[0], (int) $term_id ) )
 							return $this->corecaps_taxonomy_role_can( $constant, 'manage', $user_id )
 								? $caps
 								: [ 'do_not_allow' ];
 
 					break;
 
-				case 'manage_'.$taxonomy:
-				case 'edit_'.$taxonomy:
-				case 'delete_'.$taxonomy:
+				case 'manage_'.$taxonomy[0]:  // FIXME: DEPRECATED
+				case 'edit_'.$taxonomy[0]:    // FIXME: DEPRECATED
+				case 'delete_'.$taxonomy[0]:  // FIXME: DEPRECATED
+
+				case 'manage_'.$taxonomy[1]:
+				case 'edit_'.$taxonomy[1]:
+				case 'delete_'.$taxonomy[1]:
 
 					return $this->corecaps_taxonomy_role_can( $constant, 'manage', $user_id )
 						? [ 'read' ]
@@ -84,7 +88,8 @@ trait CoreCapabilities
 
 					break;
 
-				case 'assign_'.$taxonomy:
+				case 'assign_'.$taxonomy[0]:  // FIXME: DEPRECATED
+				case 'assign_'.$taxonomy[1]:
 
 					return $this->corecaps_taxonomy_role_can( $constant, 'assign', $user_id )
 						? [ 'read' ]
@@ -124,17 +129,22 @@ trait CoreCapabilities
 	 */
 	protected function corecaps__handle_taxonomy_metacaps_forced( $constant )
 	{
-		if ( ! $taxonomy = $this->constant( $constant ) )
+		if ( ! $taxonomy = $this->constant_plural( $constant ) )
 			return FALSE;
 
 		add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
 
 			switch ( $cap ) {
 
-				case 'manage_'.$taxonomy:
-				case 'edit_'.$taxonomy:
-				case 'delete_'.$taxonomy:
-				case 'assign_'.$taxonomy:
+				case 'manage_'.$taxonomy[0]: // FIXME: DEPRECATED
+				case 'edit_'.$taxonomy[0]:   // FIXME: DEPRECATED
+				case 'delete_'.$taxonomy[0]: // FIXME: DEPRECATED
+				case 'assign_'.$taxonomy[0]: // FIXME: DEPRECATED
+
+				case 'manage_'.$taxonomy[1]:
+				case 'edit_'.$taxonomy[1]:
+				case 'delete_'.$taxonomy[1]:
+				case 'assign_'.$taxonomy[1]:
 
 					return $this->role_can( 'manage', $user_id )
 						? [ 'read' ]
@@ -147,7 +157,7 @@ trait CoreCapabilities
 					if ( ! $term || is_wp_error( $term ) )
 						return $caps;
 
-					if ( $taxonomy != $term->taxonomy )
+					if ( $taxonomy[0] != $term->taxonomy )
 						return $caps;
 
 					if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
