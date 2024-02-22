@@ -206,13 +206,13 @@ trait CorePostTypes
 	{
 		$default = $this->constant( $constant.'_cap_type', 'post' );
 
-		if ( ! gEditorial()->enabled( 'roles' ) )
+		if ( ! gEditorial()->enabled( 'roled' ) )
 			return $default;
 
-		if ( ! in_array( $this->constant( $constant ), gEditorial()->module( 'roles' )->posttypes() ) )
+		if ( ! in_array( $this->constant( $constant ), gEditorial()->module( 'roled' )->posttypes() ) )
 			return $default;
 
-		return gEditorial()->module( 'roles' )->constant( 'base_type' );
+		return gEditorial()->module( 'roled' )->constant( 'base_type' );
 	}
 
 	public function get_posttype_icon( $constant = NULL, $default = 'welcome-write-blog' )

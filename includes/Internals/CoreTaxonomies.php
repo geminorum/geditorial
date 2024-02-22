@@ -271,7 +271,7 @@ trait CoreTaxonomies
 		else if ( 'comment' == $posttypes )
 			return $defaults; // FIXME: WTF?!
 
-		if ( ! gEditorial()->enabled( 'roles' ) )
+		if ( ! gEditorial()->enabled( 'roled' ) )
 			return $defaults;
 
 		if ( ! is_null( $caps ) )
@@ -283,10 +283,10 @@ trait CoreTaxonomies
 		else
 			return $defaults;
 
-		if ( ! in_array( $posttype, gEditorial()->module( 'roles' )->posttypes() ) )
+		if ( ! in_array( $posttype, gEditorial()->module( 'roled' )->posttypes() ) )
 			return $defaults;
 
-		$base = gEditorial()->module( 'roles' )->constant( 'base_type' );
+		$base = gEditorial()->module( 'roled' )->constant( 'base_type' );
 
 		return [
 			'manage_terms' => 'edit_others_'.$base[1],

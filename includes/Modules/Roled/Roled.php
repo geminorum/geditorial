@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Roles;
+<?php namespace geminorum\gEditorial\Modules\Roled;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -8,7 +8,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
-class Roles extends gEditorial\Module
+class Roled extends gEditorial\Module
 {
 
 	protected $caps = [
@@ -20,9 +20,9 @@ class Roles extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'roles',
-			'title'  => _x( 'Roles', 'Modules: Roles', 'geditorial-admin' ),
-			'desc'   => _x( 'Member & Role Management', 'Modules: Roles', 'geditorial-admin' ),
+			'name'   => 'roled',
+			'title'  => _x( 'Roled', 'Modules: Roled', 'geditorial-admin' ),
+			'desc'   => _x( 'Member & Role Management', 'Modules: Roled', 'geditorial-admin' ),
 			'icon'   => 'privacy',
 			'i18n'   => 'adminonly',
 			'access' => 'beta',
@@ -39,15 +39,15 @@ class Roles extends gEditorial\Module
 				[
 					'field'       => 'editorial_posttypes',
 					'type'        => 'posttypes',
-					'title'       => _x( 'Editorial Posttypes', 'Setting Title', 'geditorial-roles' ),
-					'description' => _x( 'Posttypes to handle via Editorial roles.', 'Setting Description', 'geditorial-roles' ),
+					'title'       => _x( 'Editorial Posttypes', 'Setting Title', 'geditorial-roled' ),
+					'description' => _x( 'Posttypes to handle via Editorial roles.', 'Setting Description', 'geditorial-roled' ),
 					'values'      => $this->get_posttypes_support_editorial(),
 				],
 				[
 					'field'       => 'duplicate_roles',
 					'type'        => 'checkboxes',
-					'title'       => _x( 'Duplicate Roles', 'Setting Title', 'geditorial-roles' ),
-					'description' => _x( 'Roles to duplicate as Editorial Roles.', 'Setting Description', 'geditorial-roles' ),
+					'title'       => _x( 'Duplicate Roles', 'Setting Title', 'geditorial-roled' ),
+					'description' => _x( 'Roles to duplicate as Editorial Roles.', 'Setting Description', 'geditorial-roled' ),
 					'exclude'     => $exclude,
 					'values'      => $roles,
 				],
@@ -55,14 +55,14 @@ class Roles extends gEditorial\Module
 			'_misc' => [
 				[
 					'field'       => 'author_posttags',
-					'title'       => _x( 'Tags for Authors', 'Setting Title', 'geditorial-roles' ),
-					'description' => _x( 'Allows Authors to manage post tags.', 'Setting Description', 'geditorial-roles' ),
+					'title'       => _x( 'Tags for Authors', 'Setting Title', 'geditorial-roled' ),
+					'description' => _x( 'Allows Authors to manage post tags.', 'Setting Description', 'geditorial-roled' ),
 				],
 				[
 					'field'       => 'disable_builtin_post',
 					'type'        => 'disabled',
-					'title'       => _x( 'Built-in Post & Category', 'Setting Title', 'geditorial-roles' ),
-					'description' => _x( 'Removes access to the builtin post post-type and category taxonomy on the admin.', 'Setting Description', 'geditorial-roles' ),
+					'title'       => _x( 'Built-in Post & Category', 'Setting Title', 'geditorial-roled' ),
+					'description' => _x( 'Removes access to the builtin post post-type and category taxonomy on the admin.', 'Setting Description', 'geditorial-roled' ),
 				],
 			],
 		];
@@ -72,10 +72,10 @@ class Roles extends gEditorial\Module
 				'field'       => 'role_name_'.$role,
 				'type'        => 'text',
 				/* translators: %s: role name */
-				'title'       => sprintf( _x( 'Role Name for %s', 'Setting Title', 'geditorial-roles' ), $roles[$role] ),
-				'description' => _x( 'Custom name for the duplicated role.', 'Setting Description', 'geditorial-roles' ),
+				'title'       => sprintf( _x( 'Role Name for %s', 'Setting Title', 'geditorial-roled' ), $roles[$role] ),
+				'description' => _x( 'Custom name for the duplicated role.', 'Setting Description', 'geditorial-roled' ),
 				/* translators: %s: role name */
-				'default'     => sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roles' ), $roles[$role] ),
+				'default'     => sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ), $roles[$role] ),
 			];
 
 		return $settings;
@@ -104,7 +104,7 @@ class Roles extends gEditorial\Module
 	private function get_posttypes_support_editorial()
 	{
 		$posttypes = [];
-		$supported = get_post_types_by_support( 'editorial-roles' );
+		$supported = get_post_types_by_support( 'editorial-roled' );
 		$excludes  = [
 			'profile', // gPeople
 		];
@@ -138,11 +138,11 @@ class Roles extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( 'duplicate_default_roles', _x( 'Duplicate Default Roles', 'Button', 'geditorial-roles' ) );
-		$this->register_button( 'remove_duplicate_roles', _x( 'Remove Duplicated Roles', 'Button', 'geditorial-roles' ), 'danger' );
-		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Button', 'geditorial-roles' ) );
+		$this->register_button( 'duplicate_default_roles', _x( 'Duplicate Default Roles', 'Button', 'geditorial-roled' ) );
+		$this->register_button( 'remove_duplicate_roles', _x( 'Remove Duplicated Roles', 'Button', 'geditorial-roled' ), 'danger' );
+		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Button', 'geditorial-roled' ) );
 
-		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Button', 'geditorial-roles' ) );
+		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Button', 'geditorial-roled' ) );
 	}
 
 	public function after_setup_theme()
@@ -331,7 +331,7 @@ class Roles extends gEditorial\Module
 
 			if ( ! $name = $this->get_setting( 'role_name_'.$core, FALSE ) )
 				/* translators: %s: role name */
-				$name = sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roles' ), translate_user_role( $roles[$core] ) );
+				$name = sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ), translate_user_role( $roles[$core] ) );
 
 			$role = add_role( $prefix.$core, $name );
 
@@ -434,17 +434,17 @@ class Roles extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Editorial Roles', 'Header', 'geditorial-roles' ) );
+		Core\HTML::h3( _x( 'Editorial Roles', 'Header', 'geditorial-roled' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'Current Roles', 'Header', 'geditorial-roles' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Current Roles', 'Header', 'geditorial-roled' ).'</th><td>';
 
-		Settings::submitButton( 'check_current_roles', _x( 'Check Roles', 'Button', 'geditorial-roles' ), TRUE );
-		Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Button', 'geditorial-roles' ) );
-		Settings::submitButton( 'duplicate_default_roles', _x( 'Duplicate Defaults', 'Button', 'geditorial-roles' ) );
-		Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Button', 'geditorial-roles' ) );
-		Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Button', 'geditorial-roles' ), 'danger' );
+		Settings::submitButton( 'check_current_roles', _x( 'Check Roles', 'Button', 'geditorial-roled' ), TRUE );
+		Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Button', 'geditorial-roled' ) );
+		Settings::submitButton( 'duplicate_default_roles', _x( 'Duplicate Defaults', 'Button', 'geditorial-roled' ) );
+		Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Button', 'geditorial-roled' ) );
+		Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Button', 'geditorial-roled' ), 'danger' );
 
 		if ( isset( $_POST['check_current_roles'] ) )
 			echo Core\HTML::tableCode( $this->get_settings_default_roles(), TRUE );
