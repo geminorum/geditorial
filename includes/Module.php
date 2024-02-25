@@ -69,6 +69,7 @@ class Module extends WordPress\Module
 		'settings'  => 'manage_options',
 		'reports'   => 'edit_others_posts',
 		'tools'     => 'edit_others_posts',
+		'roles'     => 'edit_users',
 		'adminbar'  => 'edit_others_posts',
 		'dashboard' => 'edit_others_posts',
 
@@ -221,6 +222,9 @@ class Module extends WordPress\Module
 
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
 				add_action( $this->hook_base( 'tools_settings' ), [ $this, 'tools_settings' ] );
+
+			if ( $ui && method_exists( $this, 'roles_settings' ) )
+				add_action( $this->hook_base( 'roles_settings' ), [ $this, 'roles_settings' ] );
 
 			if ( $ui && method_exists( $this, 'imports_settings' ) )
 				add_action( $this->hook_base( 'imports_settings' ), [ $this, 'imports_settings' ] );
@@ -378,6 +382,17 @@ class Module extends WordPress\Module
 					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
 				];
 
+		if ( method_exists( $this, 'roles_settings' ) && ! Settings::isRoles( $screen ) )
+			foreach ( $this->append_sub( [], 'roles' ) as $sub => $title )
+				$links[] = [
+					'context' => 'roles',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => $this->get_module_url( 'roles', $sub ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ), $title ),
+				];
+
 		if ( method_exists( $this, 'imports_settings' ) && ! Settings::isImports( $screen ) )
 			foreach ( $this->append_sub( [], 'imports' ) as $sub => $title )
 				$links[] = [
@@ -430,6 +445,7 @@ class Module extends WordPress\Module
 			case 'config'    : $url = Settings::settingsURL(); break;
 			case 'reports'   : $url = Settings::reportsURL(); break;
 			case 'tools'     : $url = Settings::toolsURL(); break;
+			case 'rols'      : $url = Settings::rolesURL(); break;
 			case 'imports'   : $url = Settings::importsURL(); break;
 			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
 			case 'settings'  : $url = add_query_arg( 'module', $this->module->name, Settings::settingsURL() ); $sub = FALSE; break;

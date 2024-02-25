@@ -13,6 +13,7 @@ class Settings extends WordPress\Main
 	const REPORTS  = 'geditorial-reports';
 	const SETTINGS = 'geditorial-settings';
 	const TOOLS    = 'geditorial-tools';
+	const ROLES    = 'geditorial-roles';
 	const IMPORTS  = 'geditorial-imports';
 
 	// better to use `$this->get_module_url()`
@@ -22,6 +23,7 @@ class Settings extends WordPress\Main
 			case 'reports' : $url = self::reportsURL();  break;
 			case 'settings': $url = self::settingsURL(); break;
 			case 'tools'   : $url = self::toolsURL();    break;
+			case 'roles'   : $url = self::rolesURL();    break;
 			case 'imports' : $url = self::importsURL();  break;
 			default        : $url = Core\URL::current();
 		}
@@ -57,6 +59,17 @@ class Settings extends WordPress\Main
 	public static function toolsURL( $full = TRUE, $tools_menu = FALSE )
 	{
 		$relative = $tools_menu ? 'tools.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
+
+		if ( $full )
+			return get_admin_url( NULL, $relative );
+
+		return $relative;
+	}
+
+	// FIXME: MUST DEPRICATE: problem with dashboard
+	public static function rolesURL( $full = TRUE, $tools_menu = FALSE )
+	{
+		$relative = $tools_menu ? 'tools.php?page='.self::ROLES : 'admin.php?page='.self::ROLES;
 
 		if ( $full )
 			return get_admin_url( NULL, $relative );
@@ -103,6 +116,17 @@ class Settings extends WordPress\Main
 			$screen = get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::TOOLS ) )
+			return TRUE;
+
+		return FALSE;
+	}
+
+	public static function isRoles( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::ROLES ) )
 			return TRUE;
 
 		return FALSE;

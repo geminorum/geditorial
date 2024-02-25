@@ -110,6 +110,15 @@ class Info extends WordPress\Main
 		);
 	}
 
+	public static function renderNoRolesAvailable( $before = '', $after = '' )
+	{
+		return Core\HTML::desc(
+			$before._x( 'There are no roles available!', 'Info: Message', 'geditorial-admin' ).$after,
+			FALSE,
+			'-empty -no-roles'
+		);
+	}
+
 	public static function renderNoPostsAvailable( $before = '', $after = '' )
 	{
 		return Core\HTML::desc(

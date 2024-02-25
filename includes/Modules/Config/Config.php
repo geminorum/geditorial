@@ -24,11 +24,13 @@ class Config extends gEditorial\Module
 		'reports'  => 'publish_posts',
 		'settings' => 'manage_options',
 		'tools'    => 'edit_posts',
+		'roles'    => 'edit_users',
 		'imports'  => 'import',
 	];
 
 	protected $positions = [
 		'imports' => 1,
+		'roles'   => 2,
 	];
 
 	public static function module()
@@ -76,6 +78,9 @@ class Config extends gEditorial\Module
 			$this->base.'-tools',
 			[ $this, 'admin_tools_page' ]
 		);
+
+		$this->_hook_wp_submenu_page( 'roles', 'users.php',
+			_x( 'Editorial Roles', 'Menu Title', 'geditorial-config' ) );
 
 		$this->_hook_wp_submenu_page( 'imports', 'tools.php',
 			_x( 'Editorial Imports', 'Menu Title', 'geditorial-config' ) );
@@ -228,6 +233,53 @@ class Config extends gEditorial\Module
 			Core\HTML::desc( gEditorial\Plugin::na() );
 	}
 
+
+	public function admin_roles_page()
+	{
+		$can = $this->cuc( 'roles' );
+		$uri = Settings::rolesURL( FALSE, ! $can );
+		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
+
+		$subs = [ 'overview' => _x( 'Overview', 'Roles Sub', 'geditorial-config' ) ];
+
+		if ( $can )
+			$subs['general'] = _x( 'General', 'Roles Sub', 'geditorial-config' );
+
+		$subs     = apply_filters( $this->hook_base( 'roles', 'subs' ), $subs, 'roles', $can );
+		$messages = apply_filters( $this->hook_base( 'roles', 'messages' ), Settings::messages(), $sub, $can );
+
+		if ( WordPress\User::isSuperAdmin() ) {
+			$subs['console'] = _x( 'Console', 'Roles Sub', 'geditorial-config' );
+		}
+
+		Settings::wrapOpen( $sub, 'roles' );
+
+			Settings::headerTitle( _x( 'Editorial Roles', 'Page Title', 'geditorial-config' ) );
+			Core\HTML::headerNav( $uri, $sub, $subs );
+			Settings::message( $messages );
+
+			if ( 'overview' == $sub )
+				$this->roles_overview( $uri );
+
+			else if ( 'console' == $sub )
+				gEditorial()->files( 'Layouts/console.roles' );
+
+			else if ( has_action( $this->hook_base( 'roles', 'sub', $sub ) ) )
+				do_action( $this->hook_base( 'roles', 'sub', $sub ), $uri, $sub );
+
+			else
+				Settings::cheatin();
+
+			$this->settings_signature( 'roles' );
+
+		Settings::wrapClose();
+	}
+
+	protected function roles_overview( $uri )
+	{
+		do_action( $this->hook_base( 'roles', 'overview' ), $uri );
+	}
+
 	public function admin_reports_load()
 	{
 		$sub = Settings::sub();
@@ -316,6 +368,25 @@ class Config extends gEditorial\Module
 
 		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
 		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
+	}
+
+
+	public function admin_roles_load()
+	{
+		$sub = Settings::sub();
+
+		if ( 'general' == $sub ) {
+
+			// if ( ! empty( $_POST ) ) {
+			// 	$this->nonce_check( 'roles', $sub );
+			// }
+
+			add_action( $this->hook_base( 'roles', 'sub', $sub ), [ $this, 'roles_sub' ], 10, 2 );
+
+			$this->register_help_tabs( NULL, 'roles' );
+		}
+
+		do_action( $this->hook_base( 'roles', 'settings' ), $sub );
 	}
 
 	protected function render_reports_html( $uri, $sub )
@@ -424,6 +495,22 @@ class Config extends gEditorial\Module
 		}
 
 		echo '</td></tr></table>';
+	}
+
+	protected function render_roles_html( $uri, $sub )
+	{
+		if ( ! $this->cuc( 'roles' ) )
+			self::cheatin();
+
+		Core\HTML::h3( _x( 'General Editorial Roles', 'Header', 'geditorial-config' ) );
+
+		$action = $this->hook_base( 'roles' , 'general_summary' );
+
+		if ( has_action( $action ) )
+			do_action( $action, $uri );
+
+		else
+			Info::renderNoRolesAvailable();
 	}
 
 	public function admin_imports_load()

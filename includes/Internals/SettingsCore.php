@@ -121,6 +121,27 @@ trait SettingsCore
 	protected function render_tools_html_before( $uri, $sub ) {}
 	protected function render_tools_html_after( $uri, $sub ) {}
 
+	// DEFAULT METHOD: roles sub html
+	public function roles_sub( $uri, $sub )
+	{
+		$this->render_form_start( $uri, $sub, 'bulk', 'roles', FALSE );
+
+			if ( FALSE === $this->render_roles_html_before( $uri, $sub ) )
+				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+
+			if ( $this->render_roles_html( $uri, $sub ) )
+				$this->render_form_buttons();
+
+			$this->render_roles_html_after( $uri, $sub );
+
+		$this->render_form_end( $uri, $sub );
+	}
+
+	// DEFAULT METHOD: used for roles default sub html
+	protected function render_roles_html( $uri, $sub ) {}
+	protected function render_roles_html_before( $uri, $sub ) {}
+	protected function render_roles_html_after( $uri, $sub ) {}
+
 	// DEFAULT METHOD: reports sub html
 	public function reports_sub( $uri, $sub )
 	{
