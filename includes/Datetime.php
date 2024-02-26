@@ -32,6 +32,11 @@ class Datetime extends WordPress\Main
 		return trim( $string );
 	}
 
+	public static function isDateOnly( $date_string )
+	{
+		return Core\Text::ends( $date_string, '00:00:00' );
+	}
+
 	public static function dateFormat( $timestamp, $context = 'default' )
 	{
 		if ( ! Core\Date::isTimestamp( $timestamp ) )

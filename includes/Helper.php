@@ -316,7 +316,7 @@ class Helper extends WordPress\Main
 					return Datetime::prepForDisplay( $raw ?: $value, 'Y/m/d' );
 
 				case 'datetime':
-					return Datetime::prepForDisplay( $raw ?: $value, Core\Text::ends( $raw ?: $value, '00:00:00' ) ? 'Y/m/d' : 'Y/m/d H:i' );
+					return Datetime::prepForDisplay( $raw ?: $value, Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i' );
 
 				case 'contact_method':
 					return Core\URL::isValid( $raw ?: $value )

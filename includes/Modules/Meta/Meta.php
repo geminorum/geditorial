@@ -1263,7 +1263,16 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Datetime::prepForInput( trim( $raw ), 'Y/m/d H:i', 'gregorian' );
 
-				return Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j H:i' : 'Y/m/d H:i' );
+				if ( 'print' === $context )
+					return Datetime::prepForDisplay(
+						trim( $raw ),
+						Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i'
+					);
+
+				return Datetime::prepForDisplay(
+					trim( $raw ),
+					Datetime::isDateOnly( trim( $raw ) ) ? 'Y/m/d' : 'Y/m/d H:i'
+				);
 
 			case 'datestring':
 				return Core\Number::localize( Datetime::stringFormat( $raw ) );
