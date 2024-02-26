@@ -115,6 +115,7 @@ trait CorePostTypes
 
 		foreach ( $settings as $setting => $value ) {
 
+			// NOTE: `NULL` means do not touch!
 			if ( is_null( $value ) )
 				continue;
 

@@ -838,7 +838,7 @@ class MetaBox extends WordPress\Main
 		$class  = Core\HTML::prepClass( 'geditorial-glance-item', '-posttype', '-posttype-'.$posttype, $extra_class );
 		$format = WordPress\PostType::can( $posttype, 'edit_posts' )
 			? '<a class="'.$class.'" href="edit.php?post_type=%3$s">%1$s %2$s</a>'
-			: '<div class="'.$class.'">%1$s %2$s</div>';
+			: '<span class="'.$class.'">%1$s %2$s</span>';
 
 		return vsprintf( $format, [
 			Core\Number::format( $posts[$status] ),
@@ -855,7 +855,7 @@ class MetaBox extends WordPress\Main
 		$class  = Core\HTML::prepClass( 'geditorial-glance-item', '-tax', '-taxonomy-'.$taxonomy, $extra_class );
 		$format = WordPress\Taxonomy::can( $taxonomy, 'manage_terms' )
 			? '<a class="'.$class.'" href="edit-tags.php?taxonomy=%3$s">%1$s %2$s</a>'
-			: '<div class="'.$class.'">%1$s %2$s</div>';
+			: '<span class="'.$class.'">%1$s %2$s</span>';
 
 		return vsprintf( $format, [
 			Core\Number::format( $terms ),

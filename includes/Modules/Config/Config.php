@@ -286,7 +286,11 @@ class Config extends gEditorial\Module
 
 		if ( 'general' == $sub ) {
 
-			add_action( $this->hook_base( 'reports', 'sub', 'general' ), [ $this, 'reports_sub' ], 10, 2 );
+			// if ( ! empty( $_POST ) ) {
+			// 	$this->nonce_check( 'roles', $sub );
+			// }
+
+			add_action( $this->hook_base( 'reports', 'sub', $sub ), [ $this, 'reports_sub' ], 10, 2 );
 
 			$this->register_help_tabs( NULL, 'reports' );
 		}

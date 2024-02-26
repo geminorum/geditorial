@@ -80,7 +80,18 @@ class Trained extends gEditorial\Module
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
 			'_roles' => [
+				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
+			],
+			'_editlist' => [
+				'show_in_quickedit' => [ sprintf(
+					/* translators: %s: primary taxonomy name */
+					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-trained' ),
+					$this->get_taxonomy_label( 'status_taxonomy' )
+				), '1' ],
+			],
+			'_frontend' => [
+				'contents_viewable',
 			],
 		];
 	}
@@ -268,40 +279,69 @@ class Trained extends gEditorial\Module
 	{
 		parent::init();
 
+		$viewable = $this->get_setting( 'contents_viewable', TRUE );
+		$captype  = $this->get_setting( 'custom_captype', FALSE )
+			? $this->constant_plural( 'primary_posttype' )
+			: FALSE;
+
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		] );
 
 		$this->register_taxonomy( 'program_taxonomy', [
 			'hierarchical'      => TRUE,
 			'meta_box_cb'       => NULL,
 			'show_admin_column' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		] );
 
 		$this->register_taxonomy( 'span_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
+		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
-			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
+		] );
 
-		$this->paired_register();
+		$this->paired_register( [], [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		], [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		] );
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );

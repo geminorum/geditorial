@@ -276,6 +276,7 @@ trait PairedMetaBox
 
 	// DEFAULT METHOD
 	// TODO: support for `post_actions` on Actions module
+	// TODO: support for empty paired items with js button confirmation
 	protected function _render_listbox_extra( $post, $box, $context = NULL, $screen = NULL )
 	{
 		if ( is_null( $context ) )

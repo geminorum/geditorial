@@ -255,4 +255,11 @@ trait CoreCapabilities
 
 		return $settings;
 	}
+
+	protected function corecaps__render_captype_install( $constant, $setting = NULL )
+	{
+		// display table with generated caps using the captype
+		// list available roles to add the cap types
+		// add/remove buttons for selected roles
+	}
 }

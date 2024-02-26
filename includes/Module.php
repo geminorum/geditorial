@@ -582,6 +582,9 @@ class Module extends WordPress\Module
 		if ( ! $singular = $this->constant( $key ) )
 			return $default;
 
+		if ( is_array( $singular ) )
+			return $singular; // already defined
+
 		if ( ! $plural = $this->constant( sprintf( '%s_plural', $key ) ) )
 			return [ $singular, Core\L10n::pluralize( $singular ) ];
 
