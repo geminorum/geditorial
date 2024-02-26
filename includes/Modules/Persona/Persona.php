@@ -362,7 +362,9 @@ class Persona extends gEditorial\Module
 		parent::init();
 
 		$viewable = $this->get_setting( 'contents_viewable', FALSE );
-		$captype  = $this->get_setting( 'custom_captype', FALSE );
+		$captype  = $this->get_setting( 'custom_captype', FALSE )
+			? $this->constant_plural( 'primary_posttype' )
+			: FALSE;
 
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
@@ -388,6 +390,7 @@ class Persona extends gEditorial\Module
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
@@ -397,6 +400,7 @@ class Persona extends gEditorial\Module
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
 		] );
 
 		$this->register_posttype( 'primary_posttype', [

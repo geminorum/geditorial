@@ -136,7 +136,9 @@ class Lingo extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
-		], NULL, [], TRUE );
+		], NULL, [
+			'custom_captype' => TRUE,
+		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'language_taxonomy' );
 

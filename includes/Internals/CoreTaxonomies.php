@@ -13,7 +13,7 @@ trait CoreTaxonomies
 {
 
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
-	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $settings = [], $caps = NULL )
+	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $settings = [] )
 	{
 		$cpt_tax  = TRUE;
 		$taxonomy = $this->constant( $constant );
@@ -40,7 +40,6 @@ trait CoreTaxonomies
 			'show_in_nav_menus'    => FALSE,
 			'show_tagcloud'        => FALSE,
 			'default_term'         => FALSE,
-			'capabilities'         => $this->_get_taxonomy_caps( $taxonomy, $caps, $posttypes ),
 			'query_var'            => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'              => NULL,
 
@@ -133,7 +132,8 @@ trait CoreTaxonomies
 	{
 		$settings = self::atts( [
 			'is_viewable'    => NULL,
-			'custom_captype' => NULL, // FIXME: migrate from :`_get_taxonomy_caps()`
+			'custom_captype' => FALSE,
+			'admin_managed'  => NULL,    // psudo-setting: manage only for admins
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -154,6 +154,102 @@ trait CoreTaxonomies
 						'show_in_nav_menus'  => FALSE,
 						'rewrite'            => FALSE,   // WTF?!
 					] );
+
+					break;
+
+				case 'custom_captype':
+
+					if ( TRUE === $value ) {
+
+						$captype = $this->constant_plural( $constant );
+
+						$args['capabilities'] = [
+							'manage_terms' => sprintf( 'manage_%s', $captype[1] ),
+							'edit_terms'   => sprintf( 'edit_%s', $captype[1] ),
+							'delete_terms' => sprintf( 'delete_%s', $captype[1] ),
+							'assign_terms' => sprintf( 'assign_%s', $captype[1] ),
+						];
+
+					} else if ( self::bool( $value ) ) {
+
+						$captype = empty( $value )
+							? $this->constant_plural( $constant )
+							: $value; // FIXME: WTF: what if passed `1`?!
+
+						if ( $settings['admin_managed'] )
+							$args['capabilities'] = [
+								'manage_terms' => 'manage_options',
+								'edit_terms'   => 'manage_options',
+								'delete_terms' => 'manage_options',
+								'assign_terms' => sprintf( 'edit_%s', $captype[1] ),
+							];
+
+						else
+							$args['capabilities'] = [
+								'manage_terms' => sprintf( 'manage_%s', $captype[1] ),
+								'edit_terms'   => sprintf( 'manage_%s', $captype[1] ),
+								'delete_terms' => sprintf( 'manage_%s', $captype[1] ),
+								'assign_terms' => sprintf( 'edit_%s', $captype[1] ),
+							];
+
+					} else if ( 'comment' === $posttypes ) {
+
+						// FIXME: WTF?!
+
+					} else if ( 'taxonomy' === $posttypes ) {
+
+						// FIXME: must filter meta_cap
+
+					} else if ( 'user' === $posttypes ) {
+
+						// FIXME: `edit_users` is not working!
+						// maybe map meta cap
+
+						// FIXME: WTF: maybe merge the capabilities
+						// if ( ! array_key_exists( 'capabilities', $args ) )
+						$args['capabilities'] = [
+							'manage_terms' => 'edit_users',
+							'edit_terms'   => 'list_users',
+							'delete_terms' => 'list_users',
+							'assign_terms' => 'list_users',
+						];
+
+					} else if ( is_array( $posttypes ) && count( $posttypes ) && gEditorial()->enabled( 'roled' ) ) {
+
+						if ( in_array( $posttypes[0], gEditorial()->module( 'roled' )->posttypes() ) ) {
+
+							$captype = gEditorial()->module( 'roled' )->constant( 'base_type' );
+
+							$args['capabilities'] = [
+								'manage_terms' => sprintf( 'edit_others_%s', $captype[1] ),
+								'edit_terms'   => sprintf( 'edit_others_%s', $captype[1] ),
+								'delete_terms' => sprintf( 'edit_others_%s', $captype[1] ),
+								'assign_terms' => sprintf( 'edit_%s', $captype[1] ),
+							];
+						}
+
+					} else if ( $settings['admin_managed'] ) {
+
+						// TODO: suppport custom cap instead of `manage_options`
+
+						if ( ! array_key_exists( 'capabilities', $args ) )
+							$args['capabilities'] = [
+								'manage_terms' => 'manage_options',
+								'edit_terms'   => 'manage_options',
+								'delete_terms' => 'manage_options',
+								'assign_terms' => 'edit_posts',
+							];
+
+					} else {
+
+						if ( ! array_key_exists( 'capabilities', $args ) )
+							$args['capabilities'] = [
+								'manage_terms' => 'edit_others_posts',
+								'edit_terms'   => 'edit_others_posts',
+								'delete_terms' => 'edit_others_posts',
+								'assign_terms' => 'edit_posts',
+							];
+					}
 
 					break;
 
@@ -224,6 +320,7 @@ trait CoreTaxonomies
 		return $icon ?: 'dashicons-'.$default;
 	}
 
+	// FIXME: DEPRECATED
 	protected function _get_taxonomy_caps( $taxonomy, $caps, $posttypes )
 	{
 		if ( is_array( $caps ) )

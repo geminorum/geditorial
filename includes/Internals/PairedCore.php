@@ -91,7 +91,13 @@ trait PairedCore
 		}
 
 		if ( $this->get_setting( 'paired_manage_restricted' )
-			&& ! array_key_exists( 'capabilities', $extra ) ) {
+			&& ! array_key_exists( 'capabilities', $extra )
+			&& empty( $settings['custom_captype'] ) ) {
+
+			/**
+			 * NOTE: WTF: cant use `edit_posts` without `create_posts`
+			 * @SEE: https://core.trac.wordpress.org/ticket/22895
+			 */
 
 			$create = array_key_exists( 'paired_create', $this->caps ) ? $this->caps['paired_create'] : 'manage_options';
 			$delete = array_key_exists( 'paired_delete', $this->caps ) ? $this->caps['paired_delete'] : 'manage_options';

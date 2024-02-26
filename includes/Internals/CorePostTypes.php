@@ -15,7 +15,6 @@ trait CorePostTypes
 	public function register_posttype( $constant, $atts = [], $settings = [], $taxonomies = [ 'post_tag' ] )
 	{
 		$posttype = $this->constant( $constant );
-		$cap_type = $this->get_posttype_cap_type( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
 
 		$args = self::recursiveParseArgs( $atts, [
@@ -37,9 +36,7 @@ trait CorePostTypes
 			'hierarchical' => FALSE,
 			'public'       => TRUE,
 			'show_ui'      => TRUE,
-
-			'capability_type' => $cap_type,
-			'map_meta_cap'    => TRUE,
+			'map_meta_cap' => TRUE,
 
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant )
 				? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
@@ -90,11 +87,6 @@ trait CorePostTypes
 		if ( ! array_key_exists( 'supports', $args ) )
 			$args['supports'] = $this->get_posttype_supports( $constant );
 
-		// TODO: migrate to `apply_posttype_object_settings()`
-		// @SEE: https://core.trac.wordpress.org/ticket/22895
-		if ( ! array_key_exists( 'capabilities', $args ) && 'post' != $cap_type )
-			$args['capabilities'] = [ 'create_posts' => is_array( $cap_type ) ? 'create_'.$cap_type[1] : 'create_'.$cap_type.'s' ];
-
 		$object = register_post_type(
 			$posttype,
 			$this->apply_posttype_object_settings(
@@ -118,7 +110,7 @@ trait CorePostTypes
 			'block_editor'   => FALSE,
 			'quick_edit'     => NULL,
 			'is_viewable'    => NULL,
-			'custom_captype' => NULL,
+			'custom_captype' => FALSE,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -186,11 +178,49 @@ trait CorePostTypes
 
 				case 'custom_captype':
 
-					if ( ! $value )
-						break;
+					// @SEE: `get_post_type_capabilities()`
 
-					$args['capability_type'] = $posttype;
-					$args['capabilities']['create_posts'] = sprintf( 'create_%s', Core\L10n::pluralize( $posttype ) );
+					if ( self::bool( $value ) ) {
+
+						$captype = empty( $value )
+							? $this->constant_plural( $constant )
+							: $value; // FIXME: WTF: what if passed `1`?!
+
+						if ( is_array( $captype ) )
+							$args['capability_type'] = $captype;
+
+						else
+							$args['capability_type'] = [
+								$captype,
+								Core\L10n::pluralize( $captype ),
+							];
+
+						if ( ! array_key_exists( 'capabilities', $args ) )
+							$args['capabilities'] = [ 'create_posts' => sprintf( 'create_%s', $args['capability_type'][1] ) ];
+
+						else if ( ! array_key_exists( 'create_posts', $args['capabilities'] ) )
+							$args['capabilities']['create_posts'] = sprintf( 'create_%s', $args['capability_type'][1] );
+
+					} else if ( gEditorial()->enabled( 'roled' ) ) {
+
+						if ( in_array( $posttype, gEditorial()->module( 'roled' )->posttypes() ) ) {
+
+							$args['capability_type'] = gEditorial()->module( 'roled' )->constant( 'base_type' );
+
+							// @SEE: https://core.trac.wordpress.org/ticket/22895
+							if ( ! array_key_exists( 'capabilities', $args ) )
+								$args['capabilities'] = [
+									'create_posts' => sprintf( 'create_%s',
+										is_array( $args['capability_type'] )
+											? $args['capability_type'][1]
+											: Core\L10n::pluralize( $args['capability_type'] ) )
+									];
+						}
+
+					} else {
+
+						$args['capability_type'] = 'post';
+					}
 
 					break;
 			}
@@ -199,9 +229,7 @@ trait CorePostTypes
 		return $args;
 	}
 
-	// TODO: migrate to `apply_posttype_object_settings()`
-	// @SEE: `get_post_type_capabilities()`
-	// NOTE: also accepts: `[ 'story', 'stories' ]`
+	// FIXME: DEPRECATED
 	public function get_posttype_cap_type( $constant )
 	{
 		$default = $this->constant( $constant.'_cap_type', 'post' );

@@ -182,28 +182,24 @@ class WasBorn extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-		], $posttypes, [], [
-			'manage_terms' => $this->caps['settings'],
-			'edit_terms'   => $this->caps['settings'],
-			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => $this->caps['settings'],
+		], $posttypes, [
+			'admin_managed' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'gender_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-		], $posttypes, [], [
-			'manage_terms' => $this->caps['settings'],
-			'edit_terms'   => $this->caps['settings'],
-			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => $this->caps['settings'],
+		], $posttypes, [
+			'admin_managed' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'group_taxonomy', [
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
 			'show_in_menu' => FALSE,
-		], FALSE, [], TRUE );
+		], FALSE, [
+			'custom_captype' => TRUE,
+		] );
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $posttypes );

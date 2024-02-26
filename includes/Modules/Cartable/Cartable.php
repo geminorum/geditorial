@@ -211,11 +211,13 @@ class Cartable extends gEditorial\Module
 				'rewrite'      => FALSE,
 				'show_ui'      => FALSE,
 				'meta_box_cb'  => FALSE,
-			], NULL, [], [
-				'manage_terms' => $this->caps['settings'],
-				'edit_terms'   => $this->caps['settings'],
-				'delete_terms' => $this->caps['settings'],
-				'assign_terms' => 'assign_'.$this->constant( 'user_taxonomy' ),
+				'capabilities' => [
+					// TODO: migrate to settings
+					'manage_terms' => $this->caps['settings'],
+					'edit_terms'   => $this->caps['settings'],
+					'delete_terms' => $this->caps['settings'],
+					'assign_terms' => 'assign_'.$this->constant( 'user_taxonomy' ),
+				],
 			] );
 
 			// new term for new users

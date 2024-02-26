@@ -113,7 +113,9 @@ class Badges extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
-		], NULL, [], TRUE );
+		], NULL, [
+			'custom_captype' => TRUE,
+		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 
