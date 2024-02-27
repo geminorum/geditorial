@@ -104,7 +104,7 @@ trait CorePostTypes
 		return $object;
 	}
 
-	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = [ 'post_tag' ], $constant = FALSE )
+	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
 	{
 		$settings = self::atts( [
 			'block_editor'   => FALSE,
@@ -201,6 +201,24 @@ trait CorePostTypes
 
 						else if ( ! array_key_exists( 'create_posts', $args['capabilities'] ) )
 							$args['capabilities']['create_posts'] = sprintf( 'create_%s', $args['capability_type'][1] );
+
+						if ( is_array( $taxonomies ) && in_array( 'post_tag', $taxonomies, TRUE ) )
+							add_filter( 'map_meta_cap',
+								function ( $caps, $cap, $user_id ) use ( $args ) {
+
+									if ( [ 'read' ] === $caps )
+										return $caps; // already cleared!
+
+									if ( 'assign_post_tags' === $cap
+										&& user_can( $user_id, sprintf( 'edit_%s', $args['capability_type'][1] ) ) )
+											return [ 'read' ];
+
+									if ( in_array( $cap, [ 'manage_post_tags', 'edit_post_tags', 'delete_post_tags' ], TRUE )
+										&& user_can( $user_id, sprintf( 'manage_%s', $args['capability_type'][1] ) ) )
+											return [ 'read' ];
+
+									return $caps;
+								}, 12, 3 );
 
 					} else if ( gEditorial()->enabled( 'roled' ) ) {
 
