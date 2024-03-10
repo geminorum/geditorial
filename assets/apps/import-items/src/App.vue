@@ -186,10 +186,13 @@ export default {
       return this.items.filter(item => {
         // return true if the item should be visible
 
+        const title = item.title || '';
+        const identifier = item.identifier || '';
+
         // in this example we just check if the search string
         // is a substring of the item title (case insensitive)
-        return (item.title.toLowerCase().indexOf(this.search.toLowerCase()) != -1)
-        || (item.identifier.toLowerCase().indexOf(this.search.toLowerCase()) != -1);
+        return (title.toLowerCase().indexOf(this.search.toLowerCase()) != -1)
+        || (identifier.toLowerCase().indexOf(this.search.toLowerCase()) != -1);
       });
     },
     countLines() {
