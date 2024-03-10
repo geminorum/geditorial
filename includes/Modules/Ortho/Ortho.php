@@ -321,10 +321,40 @@ class Ortho extends gEditorial\Module
 
 		$this->do_settings_field( [
 			'type'         => 'textarea-quicktags',
-			'field'        => 'sandbox',
+			'field'        => 'sandbox-text',
 			'dir'          => 'rtl',
 			'field_class'  => [ 'large-text', 'textarea-autosize' ],
 			'option_group' => 'tools',
+		] );
+
+		echo '<br />';
+		echo '<br />';
+
+		$this->do_settings_field( [
+			'type'         => 'text',
+			'field'        => 'sandbox-identity',
+			'dir'          => 'rtl',
+			'field_class'  => [ 'large-text', 'code' ],
+			'option_group' => 'tools',
+			'placeholder' => 'xxxxxxxxxx',
+			'data' => [
+				'ortho' => 'identity',
+			],
+		] );
+
+		echo '<br />';
+		echo '<br />';
+
+		$this->do_settings_field( [
+			'type'         => 'text',
+			'field'        => 'sandbox-iban',
+			'dir'          => 'rtl',
+			'field_class'  => [ 'large-text', 'code' ],
+			'option_group' => 'tools',
+			'placeholder' => 'IRxxxxxxxxxxxxxxxxxxxxxxx',
+			'data' => [
+				'ortho' => 'iban',
+			],
 		] );
 	}
 
