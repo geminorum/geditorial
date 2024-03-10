@@ -233,6 +233,24 @@
         "moduleDashicon": "smiley"
       }
     },
+    "cptModule" : {
+      "src": "./assets/dev/templates/cptModule.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-cpt-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "CPT Module",
+        "moduleCamelCase": "CptModule",
+        "moduleUnderline": "cpt_module",
+        "moduleTagline": "[CHANGE ME]",
+        "moduleDashicon": "smiley"
+      }
+    },
     "taxModule" : {
       "src": "./assets/dev/templates/taxModule.template",
       "dest": "./includes/Modules/",

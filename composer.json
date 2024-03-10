@@ -46,7 +46,8 @@
     "seboettg/citeproc-php": "^2",
     "khanamiryan/qrcode-detector-decoder": "^1.0",
     "mustangostang/spyc": "^0.6.3",
-    "mpdf/mpdf": "^8.2"
+    "mpdf/mpdf": "^8.2",
+    "spatie/icalendar-generator": "^2.6"
   },
   "config": {
     "vendor-dir": "assets/vendor",

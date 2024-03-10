@@ -34,7 +34,7 @@ import { readFileSync, accessSync } from 'node:fs';
 
 // @REF: https://www.stefanjudis.com/snippets/how-to-import-json-files-in-es-modules-node-js/
 import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+const customRequire = createRequire(import.meta.url);
 
 const { src, dest, watch, series, parallel, task } = gulp;
 
@@ -42,8 +42,8 @@ const { src, dest, watch, series, parallel, task } = gulp;
 // const conf = JSON.parse(await readFile(new URL('./gulp.config.json', import.meta.url))); // eslint-disable-line
 // const pkg = JSON.parse(await readFile(new URL('./package.json', import.meta.url))); // eslint-disable-line
 
-const conf = require('./gulp.config.json');
-const pkg = require('./package.json');
+const conf = customRequire('./gulp.config.json');
+const pkg = customRequire('./package.json');
 
 // @REF: https://www.sitepoint.com/pass-parameters-gulp-tasks/
 const devBuild = ((process.env.NODE_ENV || 'development').trim().toLowerCase() === 'development'); // eslint-disable-line
