@@ -87,6 +87,7 @@ class WasBorn extends gEditorial\Module
 
 		$settings['_editpost'] = [
 			'admin_restrict',
+			'admin_bulkactions',
 		];
 
 		$settings['_dashboard'] = [
@@ -248,6 +249,8 @@ class WasBorn extends gEditorial\Module
 						$this->constant( 'group_taxonomy' ),
 					] );
 				}
+
+				$this->latechores__hook_admin_bulkactions( $screen );
 			}
 		}
 	}

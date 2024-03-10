@@ -84,6 +84,7 @@ class Trained extends gEditorial\Module
 				'reports_roles' => [ NULL, $roles ],
 			],
 			'_editlist' => [
+				'admin_bulkactions',
 				'show_in_quickedit' => [ sprintf(
 					/* translators: %s: primary taxonomy name */
 					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-trained' ),
@@ -386,6 +387,7 @@ class Trained extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__unset_columns( $screen->post_type );
 				$this->coreadmin__unset_views( $screen->post_type );

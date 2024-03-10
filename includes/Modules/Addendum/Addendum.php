@@ -65,6 +65,7 @@ class Addendum extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
+				'admin_bulkactions',
 			],
 			'_editpost' => [
 				'assign_default_term',
@@ -275,6 +276,7 @@ class Addendum extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );

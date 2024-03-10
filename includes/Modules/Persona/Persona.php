@@ -489,7 +489,7 @@ class Persona extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->rowactions__hook_admin_bulkactions( $screen );
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'status_taxonomy',
 					'primary_taxonomy',
@@ -577,40 +577,6 @@ class Persona extends gEditorial\Module
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
-	}
-
-	public function rowactions_bulk_actions( $actions )
-	{
-		return array_merge( $actions, [
-			'force_aftercare' => _x( 'Force After-Care', 'Bulk Action', 'geditorial-persona' ),
-		] );
-	}
-
-	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
-	{
-		if ( 'force_aftercare' != $doaction )
-			return $redirect_to;
-
-		$saved = 0;
-
-		foreach ( $post_ids as $post_id )
-			if ( FALSE !== ( $data = $this->latechores_post_aftercare( WordPress\Post::get( (int) $post_id ) ) ) )
-				if ( wp_update_post( array_merge( $data, [ 'ID' => (int) $post_id ] ) ) )
-					$saved++;
-
-		return add_query_arg( $this->hook( 'aftercare' ), $saved, $redirect_to );
-	}
-
-	public function rowactions_admin_notices()
-	{
-		if ( ! $saved = self::req( $this->hook( 'aftercare' ) ) )
-			return;
-
-		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'aftercare' ), $_SERVER['REQUEST_URI'] );
-
-		/* translators: %s: post count */
-		$message = _x( '%s human after-cared!', 'Message', 'geditorial-persona' );
-		echo Core\HTML::success( sprintf( $message, Core\Number::format( $saved ) ) );
 	}
 
 	public function the_title( $title, $post_id = NULL )

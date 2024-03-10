@@ -68,6 +68,9 @@ class Missioned extends gEditorial\Module
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
+			'_editpost' => [
+				'admin_bulkactions',
+			],
 		];
 	}
 
@@ -299,6 +302,7 @@ class Missioned extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__unset_columns( $screen->post_type );
 				$this->coreadmin__unset_views( $screen->post_type );

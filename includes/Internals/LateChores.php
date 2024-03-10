@@ -129,4 +129,61 @@ trait LateChores
 
 		return $ref;
 	}
+
+	protected function latechores__hook_admin_bulkactions( $screen, $cap_check = NULL )
+	{
+		if ( ! $this->get_setting( 'admin_bulkactions' ) )
+			return FALSE;
+
+		if ( ! method_exists( $this, 'latechores_post_aftercare' ) )
+			return FALSE;
+
+		if ( FALSE === $cap_check )
+			return FALSE;
+
+		if ( TRUE !== $cap_check && ! WordPress\PostType::can( $screen->post_type, is_null( $cap_check ) ? 'edit_posts' : $cap_check ) )
+			return FALSE;
+
+		add_filter( 'bulk_actions-'.$screen->id, [ $this, 'latechores_bulk_actions' ] );
+		add_filter( 'handle_bulk_actions-'.$screen->id, [ $this, 'latechores_handle_bulk_actions' ], 20, 3 );
+		add_action( 'admin_notices', [ $this, 'latechores_admin_notices' ] );
+	}
+
+	public function latechores_bulk_actions( $actions )
+	{
+		return array_merge( $actions, [
+			$this->hook( 'aftercare' ) => sprintf(
+				/* translators: %s: module title */
+				_x( '[%s] Force After-Care', 'Late Chores: Bulk Action', 'geditorial-admin' ),
+				$this->module->title
+			),
+		] );
+	}
+
+	public function latechores_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	{
+		if ( $this->hook( 'aftercare' ) != $doaction )
+			return $redirect_to;
+
+		$saved = 0;
+
+		foreach ( $post_ids as $post_id )
+			if ( FALSE !== ( $data = $this->latechores_post_aftercare( WordPress\Post::get( (int) $post_id ) ) ) )
+				if ( wp_update_post( array_merge( $data, [ 'ID' => (int) $post_id ] ) ) )
+					$saved++;
+
+		return add_query_arg( $this->hook( 'aftercaremsg' ), $saved, $redirect_to );
+	}
+
+	public function latechores_admin_notices()
+	{
+		if ( ! $saved = self::req( $this->hook( 'aftercaremsg' ) ) )
+			return;
+
+		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'aftercaremsg' ), $_SERVER['REQUEST_URI'] );
+
+		/* translators: %s: post count */
+		$message = _x( '%s posts after-cared!', 'Late Chores: Message', 'geditorial-admin' );
+		echo Core\HTML::success( sprintf( $message, Core\Number::format( $saved ) ) );
+	}
 }
