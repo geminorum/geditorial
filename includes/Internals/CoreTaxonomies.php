@@ -713,7 +713,7 @@ trait CoreTaxonomies
 			return FALSE;
 
 		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
-			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $newonly, $append ) use ( $taxonomy ) {
+			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append ) use ( $taxonomy ) {
 
 				$parents = [];
 
@@ -736,7 +736,10 @@ trait CoreTaxonomies
 			return FALSE;
 
 		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
-			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $newonly, $append ) use ( $taxonomy ) {
+			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append ) use ( $taxonomy ) {
+
+				if ( $override && count( $terms ) )
+					return $terms[Core\Arraay::keyFirst( $terms )];
 
 				if ( count( $currents ) )
 					return FALSE;

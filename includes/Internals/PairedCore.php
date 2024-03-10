@@ -418,7 +418,7 @@ trait PairedCore
 		$taxonomy = $this->constant( $constants[1] );
 
 		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
-			function ( $terms, $currents, $source_id, $post_id, $oldpost, $newonly, $append ) use ( $taxonomy ) {
+			function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append ) use ( $taxonomy ) {
 
 				$parents = [];
 

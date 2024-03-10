@@ -869,7 +869,7 @@ class Importer extends gEditorial\Module
 						}
 
 						// NOTE: `wp_insert_post()` overrides existing terms
-						$this->_set_terms_for_post( $post_id, $taxonomies, $source_id, $oldpost, ! $override, FALSE );
+						$this->_set_terms_for_post( $post_id, $taxonomies, $source_id, $oldpost, $override, FALSE );
 						$this->_set_terms_for_post( $post_id, $terms_all, $source_id, $oldpost );
 
 						if ( FALSE !== ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
@@ -1244,7 +1244,7 @@ class Importer extends gEditorial\Module
 		return empty( array_filter( $data ) );
 	}
 
-	private function _set_terms_for_post( $post_id, $taxonomies, $source_id = NULL, $oldpost = FALSE, $newonly = FALSE, $append = TRUE )
+	private function _set_terms_for_post( $post_id, $taxonomies, $source_id = NULL, $oldpost = FALSE, $override = TRUE, $append = TRUE )
 	{
 		foreach ( $taxonomies as $taxonomy => $terms ) {
 
@@ -1255,7 +1255,7 @@ class Importer extends gEditorial\Module
 				? WordPress\Taxonomy::getPostTerms( $taxonomy, $oldpost, FALSE )
 				: [];
 
-			if ( $newonly && count( $currents ) )
+			if ( ! $override && count( $currents ) )
 				continue;
 
 			$filtered = $this->filters( 'set_terms_'.$taxonomy,
@@ -1264,7 +1264,7 @@ class Importer extends gEditorial\Module
 				$source_id,
 				$post_id,
 				$oldpost,
-				$newonly,
+				$override,
 				$append
 			);
 
