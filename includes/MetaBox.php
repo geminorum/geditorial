@@ -77,6 +77,7 @@ class MetaBox extends WordPress\Main
 			'walker'            => new Misc\WalkerCategoryDropdown(),
 			'class'             => static::BASE.'-admin-dropbown -dropdown-with-reset',
 			'echo'              => FALSE,
+			'disabled'          => ! current_user_can( $taxonomy->cap->assign_terms ),
 		];
 
 		if ( ! $html = wp_dropdown_categories( $dropdown ) )

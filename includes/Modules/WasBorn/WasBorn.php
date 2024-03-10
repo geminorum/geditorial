@@ -9,10 +9,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Listtable;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class WasBorn extends gEditorial\Module

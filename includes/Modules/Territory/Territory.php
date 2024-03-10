@@ -53,11 +53,11 @@ class Territory extends gEditorial\Module
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
-				'show_in_quick_edit',
+				'show_in_quickedit',
 			],
 			'_frontend' => [
 				'contents_viewable',
-				'show_in_nav_menus',
+				'show_in_navmenus',
 			],
 		];
 	}

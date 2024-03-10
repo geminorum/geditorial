@@ -45,9 +45,6 @@ class Persona extends gEditorial\Module
 		$roles = $this->get_settings_default_roles();
 
 		return [
-			'_general' => [
-				'admin_bulkactions',
-			],
 			'_roles' => [
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
@@ -77,6 +74,7 @@ class Persona extends gEditorial\Module
 				] ),
 			],
 			'_editlist' => [
+				'admin_bulkactions',
 				'show_in_quickedit' => [ sprintf(
 					/* translators: %s: primary taxonomy name */
 					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-persona' ),
@@ -232,6 +230,13 @@ class Persona extends gEditorial\Module
 				'fullname' => [
 					'title'          => _x( 'Full Name', 'Field Title', 'geditorial-persona' ),
 					'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'quickedit'      => TRUE,
+					'import_ignored' => TRUE,
+					'order'          => 11,
+				],
+				'pseudonym' => [
+					'title'          => _x( 'Pseudonym', 'Field Title', 'geditorial-persona' ),
+					'description'    => _x( 'Alias Name of the Person', 'Field Description', 'geditorial-persona' ),
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 11,
@@ -644,6 +649,7 @@ class Persona extends gEditorial\Module
 			case 'middle_name':
 			case 'last_name':
 			case 'fullname':
+			case 'pseudonym':
 			case 'father_name':
 			case 'mother_name':
 			case 'spouse_name':

@@ -43,7 +43,7 @@ class IBAN extends Base
     ];
 
     /**
-     * International Back Account Number constructor.
+     * International Bank Account Number constructor.
      *
      * @param string $countryCode   country code using ISO 3166-1 alpha-2 - two letters
      * @param int    $check         check digits - two digits
