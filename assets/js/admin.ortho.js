@@ -238,7 +238,7 @@
       return false;
     }
 
-    if (value.length.trim() !== 26) {
+    if (value.trim().length !== 26) {
       return false;
     }
 
