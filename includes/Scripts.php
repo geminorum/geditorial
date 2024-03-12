@@ -382,6 +382,15 @@ class Scripts extends WordPress\Main
 			: self::registerPackage( 'jqtree', 'jqtree/tree.jquery', [ 'jquery' ], $ver );
 	}
 
+	// @REF: https://igorescobar.github.io/jQuery-Mask-Plugin/
+	// @REF: https://github.com/igorescobar/jQuery-Mask-Plugin
+	public static function pkgJqueryMask( $enqueue = FALSE, $ver = '1.14.16' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'jquery-mask', 'jquery-mask/jquery.mask', [ 'jquery' ], $ver )
+			: self::registerPackage( 'jquery-mask', 'jquery-mask/jquery.mask', [ 'jquery' ], $ver );
+	}
+
 	// @REF: https://github.com/fgnass/spin.js
 	// @REF: https://spin.js.org/
 	public static function pkgSpinJS( $enqueue = FALSE, $ver = '4.1.1' )
