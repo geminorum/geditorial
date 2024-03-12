@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Regioned\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Regioned\n"
+"X-Domain: geditorial-regioned\n"
+
+#: Regioned.php:83
+msgid "Regionality Definition"
+msgid_plural "Regionality Definitions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Regioned.php:87
+msgctxt "Label: Show Option All"
+msgid "Regionalities"
+msgstr ""
+
+#: Regioned.php:88
+msgctxt "Label: Show Option No Terms"
+msgid "(Undefined)"
+msgstr ""
+
+#: Regioned.php:97
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Regionality Summary"
+msgstr ""
+
+#: Regioned.php:98
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Regionality Summary"
+msgstr ""
