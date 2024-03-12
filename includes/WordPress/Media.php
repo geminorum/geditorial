@@ -282,13 +282,13 @@ class Media extends Core\Base
 			return FALSE;
 
 		// filters the list of allowed file extensions when sideloading an image from a URL @since 5.6.0
-		$extensions = apply_filters( 'image_sideload_extensions', [ 'jpg', 'jpeg', 'jpe', 'png', 'gif', 'webp' ], $url );
+		$extensions = apply_filters( 'image_sideload_extensions', [ 'jpg', 'jpeg', 'jpe', 'png', 'gif', 'webp', 'avif' ], $url );
 
 		// set variables for storage, fix file filename for query strings
 		preg_match( '/[^\?]+\.(' . implode( '|', array_map( 'preg_quote', $extensions ) ) . ')\b/i', $url, $matches );
 
 		if ( ! $matches )
-			return FALSE; // new WP_Error( 'image_sideload_failed', __( 'Invalid image URL.' ) );
+			return FALSE; // new \WP_Error( 'image_sideload_failed', __( 'Invalid image URL.' ) );
 
 		// download file to temp location
 		$file = [ 'tmp_name' => download_url( $url ) ];

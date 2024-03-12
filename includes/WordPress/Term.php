@@ -380,6 +380,27 @@ class Term extends Core\Base
 	}
 
 	/**
+	 * Retrieves a term object default properties.
+	 *
+	 * @return array $props
+	 */
+	public static function props()
+	{
+		return [
+			'term_id'          => 0,
+			'name'             => '',
+			'slug'             => '',
+			'term_group'       => '',
+			'term_taxonomy_id' => 0,
+			'taxonomy'         => '',
+			'description'      => '',
+			'parent'           => 0,
+			'count'            => 0,
+			'filter'           => 'raw',
+		];
+	}
+
+	/**
 	 * Retrieves term rest route given a term ID or term object.
 	 *
 	 * @param  int|object   $term_or_id
