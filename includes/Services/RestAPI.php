@@ -20,6 +20,16 @@ class RestAPI extends WordPress\Main
 		return apply_filters( static::BASE.'_restapi_post_response', $response, $post, $context, $route );
 	}
 
+	public static function getTermResponse( $term, $context = 'view' )
+	{
+		$response = FALSE;
+
+		if ( $route = WordPress\Term::getRestRoute( $term ) )
+			$response = WordPress\Rest::doInternalRequest( $route, [ 'context' => $context ] );
+
+		return apply_filters( static::BASE.'_restapi_term_response', $response, $term, $context, $route );
+	}
+
 	public static function getErrorForbidden( $code = NULL, $status = 401 )
 	{
 		return new \WP_Error(

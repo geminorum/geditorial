@@ -129,6 +129,7 @@ class Conscripted extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'main_taxonomy' ), TRUE );
 	}
 
 	public function current_screen( $screen )
