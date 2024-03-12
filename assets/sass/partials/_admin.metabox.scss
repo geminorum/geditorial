@@ -220,16 +220,23 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-select-multiple,
     &.-select {
       select {
         width: 100%;
+        max-width: unset;
       }
     }
 
     &.-checkbox {}
 
     &.-buttons {
-      margin-bottom: -2px;
+      margin-top: $spacer * .25;
+      // margin-bottom: -2px;
+
+      &:last-of-type {
+        margin-bottom: - $spacer * .25;
+      }
 
       .button, // DEPRECATED
       .-button {
@@ -262,6 +269,7 @@ $spacer: 1rem !default;
         width: 100%;
         padding-right: 7px;
         padding-left: 7px;
+        margin-bottom: 0;
       }
 
       .-button-icon {
@@ -323,10 +331,22 @@ $spacer: 1rem !default;
       // }
     }
 
+    &.-buttons-half {
+      display: flex;
+
+      .-button {
+        width: 50%;
+      }
+    }
+
     &.-image {
       text-align: center;
-      margin: 0;
       padding: 0;
+      margin: $spacer * .5;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
 
       img {
         max-width: 100%;
@@ -393,6 +413,10 @@ $spacer: 1rem !default;
     &:last-of-type {
       margin-bottom: 0;
     }
+
+    + .field-wrap.-list {
+      margin-top: -6px;
+    }
   }
 
   .field-wrap-list, // DEPRECATED
@@ -401,6 +425,7 @@ $spacer: 1rem !default;
     background-color: #fdfdfd;
     border: solid 1px #ddd;
     border-radius: 3px;
+    padding-top: .25rem;
   }
 
   .field-wrap.-radio {
@@ -464,11 +489,13 @@ $spacer: 1rem !default;
 
     ol,
     ul {
-      max-height: 240px;
-      overflow: auto;
-
       margin: 0;
       padding: 0;
+
+      &:not(.children) {
+        max-height: 240px;
+        overflow: auto;
+      }
 
       &.children {
         margin-left: $spacer * .5;
@@ -483,6 +510,12 @@ $spacer: 1rem !default;
 
         span.edit {
           font-size: 0.8em;
+        }
+
+        span.-count-wrap {
+          font-size: smaller;
+          color: #82878c;
+          vertical-align: middle;
         }
 
         &.-user {
@@ -523,9 +556,10 @@ $spacer: 1rem !default;
     }
 
     ol {
+      list-style-position: inside;
+
       li {
         font-size: smaller;
-        margin-left: 16px;
       }
     }
 
