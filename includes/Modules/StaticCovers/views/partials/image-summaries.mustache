@@ -1,0 +1,17 @@
+<div class="-wrap -image-summaries">
+	{{#covers}}{{#url}}
+		<div class="image_card">
+			<div class="image_card-photo_content -{{key}}-image {{class}}">
+				<a class="image_card-link" href="{{{url}}}" target="_blank">
+					<img src="{{{url}}}" class="image_card-photo img-fluid" alt="">
+					<div class="image_card-photo_hint">View full image</div>
+				</a>
+			</div>
+			<div class="image_card-content">
+				<p class="image_card-name">{{{filename}}}</p>
+				{{! <p class="image_card-job_title">Freelance Software Engineer</p> }}
+			</div>
+		</div>
+
+	{{/url}}{{/covers}}
+</div>

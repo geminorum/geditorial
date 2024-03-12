@@ -4,14 +4,19 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class StaticCovers extends gEditorial\Module
 {
+	use Internals\AdminPage;
+	use Internals\FramePage;
 	use Internals\MetaBoxSupported;
+	use Internals\ViewEngines;
 
 	public static function module()
 	{
@@ -68,6 +73,28 @@ class StaticCovers extends gEditorial\Module
 				'field_class'  => [ 'semi-large-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
 			];
+
+			$settings['_posttypes'][] = [
+				'field' => $posttype_name.'_posttype_counter_support',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Support Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
+					'<i>'.$posttype_label.'</i>'
+				),
+				'description' => _x( 'Supports number counter token for the post-type.', 'Setting Description', 'geditorial-static-covers' ),
+			];
+
+			$settings['_posttypes'][] = [
+				'field' => $posttype_name.'_posttype_counter_max',
+				'type'  => 'number',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Max Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
+					'<i>'.$posttype_label.'</i>'
+				),
+				'description' => _x( 'Defines maximum number of the counter for the post-type.', 'Setting Description', 'geditorial-static-covers' ),
+				'default'     => '10',
+			];
 		}
 
 		$settings['taxonomies_option'] = 'taxonomies_option';
@@ -107,6 +134,28 @@ class StaticCovers extends gEditorial\Module
 				'description'  => sprintf( _x( 'Defines default path template for the taxonomy. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ), $taxonomy_tokens ),
 				'field_class'  => [ 'semi-large-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
+			];
+
+			$settings['_taxonomies'][] = [
+				'field' => $taxonomy_name.'_taxonomy_counter_support',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Support Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
+					'<i>'.$taxonomy_label.'</i>'
+				),
+				'description' => _x( 'Supports number counter token for the taxonomy.', 'Setting Description', 'geditorial-static-covers' ),
+			];
+
+			$settings['_taxonomies'][] = [
+				'field' => $taxonomy_name.'_taxonomy_counter_max',
+				'type'  => 'number',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Max Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
+					'<i>'.$taxonomy_label.'</i>'
+				),
+				'description' => _x( 'Defines maximum number of the counter for the taxonomy.', 'Setting Description', 'geditorial-static-covers' ),
+				'default'     => '10',
 			];
 		}
 
@@ -150,6 +199,11 @@ class StaticCovers extends gEditorial\Module
 		$strings['metabox'] = [
 			/* translators: %1$s: current post title, %2$s: posttype singular name */
 			'supportedbox_title' => _x( 'Cover for this &ldquo;%2$s&rdquo;', 'MetaBox Title', 'geditorial-static-covers' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'mainbutton_title' => _x( 'Covers for %1$s', 'Button Title', 'geditorial-static-covers' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'mainbutton_text'  => _x( '%1$s Static Covers of the %2$s', 'Button Text', 'geditorial-static-covers' ),
 		];
 
 		return $strings;
@@ -161,6 +215,7 @@ class StaticCovers extends gEditorial\Module
 
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
 		$this->filter_module( 'tabloid', 'view_data', 3, 20 );
+		$this->filter_module( 'papered', 'view_data', 4 );
 		$this->register_shortcode( 'post_cover_shortcode' );
 		$this->register_shortcode( 'term_cover_shortcode' );
 	}
@@ -198,6 +253,128 @@ class StaticCovers extends gEditorial\Module
 		}
 	}
 
+	public function admin_menu()
+	{
+		$this->_hook_submenu_adminpage( 'overview' );
+	}
+
+	public function render_submenu_adminpage()
+	{
+		$this->render_default_mainpage( 'overview', 'update' );
+	}
+
+	protected function render_overview_content()
+	{
+		if ( 'term' == self::req( 'target', 'post' ) ) {
+
+			if ( ! $linked = self::req( 'linked' ) )
+				return Info::renderNoTermsAvailable();
+
+			if ( ! $term = WordPress\Term::get( $linked ) )
+				return Info::renderNoTermsAvailable();
+
+			$this->_render_view_for_term( $term, 'overview' );
+
+		} else {
+
+			if ( ! $linked = self::req( 'linked' ) )
+				return Info::renderNoPostsAvailable();
+
+			if ( ! $post = WordPress\Post::get( $linked ) )
+				return Info::renderNoPostsAvailable();
+
+			$this->_render_view_for_post( $post, 'overview' );
+		}
+	}
+
+	private function _render_view_for_term( $term, $context )
+	{
+		$part = $this->get_view_part_by_term( $term, $context );
+		$data = $this->_get_view_data_for_term( $term, $context );
+
+		echo $this->wrap_open( '-view -'.$part );
+			$this->actions( 'render_view_before', $term, $context, $data, $part );
+			$this->render_view( $part, $data );
+			$this->actions( 'render_view_after', $term, $context, $data, $part );
+		echo '</div>';
+	}
+
+	private function _get_view_data_for_term( $term, $context )
+	{
+		$data = [];
+
+		if ( $response = Services\RestAPI::getTermResponse( $term, 'view' ) )
+			$data = $response;
+
+		foreach ( (array) $this->_get_taxonomy_images( $term ) as $image )
+			$data['covers'][] = [
+				'url'      => $image,
+				'filename' => Core\File::filename( $image ),
+				'headers'  => @get_headers( $image, TRUE ),
+			];
+
+		$data['__direction'] = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['___hooks']    = array_fill_keys( [
+			'after-actions',
+			'after-post',
+			'after-meta',
+			'after-term',
+			'after-image',
+			'after-custom',
+			'after-content',
+		], '' );
+
+		return $this->filters( 'view_data_for_term', $data, $term, $context );
+	}
+
+	private function _render_view_for_post( $post, $context )
+	{
+		$part = $this->get_view_part_by_post( $post, $context );
+		$data = $this->_get_view_data_for_post( $post, $context );
+
+		echo $this->wrap_open( '-view -'.$part );
+			$this->actions( 'render_view_before', $post, $context, $data, $part );
+			$this->render_view( $part, $data );
+			$this->actions( 'render_view_after', $post, $context, $data, $part );
+		echo '</div>';
+	}
+
+	private function _get_view_data_for_post( $post, $context )
+	{
+		$data = [];
+
+		if ( $response = Services\RestAPI::getPostResponse( $post, 'view' ) )
+			$data = $response;
+
+		// fallback if `title` is not supported by the posttype
+		if ( empty( $data['title'] ) )
+			$data['title'] = [ 'rendered' => WordPress\Post::title( $post ) ];
+
+		// strip the generated excerpt
+		if ( empty( $data['excerpt']['raw'] ) )
+			$data['excerpt']['rendered'] = '';
+
+		foreach ( (array) $this->_get_posttype_images( $post ) as $image )
+			$data['covers'][] = [
+				'url'      => $image,
+				'filename' => Core\File::filename( $image ),
+				'headers'  => @get_headers( $image, TRUE ),
+			];
+
+		$data['__direction'] = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['___hooks']    = array_fill_keys( [
+			'after-actions',
+			'after-post',
+			'after-meta',
+			'after-term',
+			'after-image',
+			'after-custom',
+			'after-content',
+		], '' );
+
+		return $this->filters( 'view_data_for_post', $data, $post, $context );
+	}
+
 	public function tweaks_column_thumb( $html, $post_id, $size )
 	{
 		if ( $html )
@@ -220,20 +397,40 @@ class StaticCovers extends gEditorial\Module
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		$src = $title = FALSE;
+		$src = $title = $link = FALSE;
 
 		if ( 'post' === $screen->base ) {
+
 			$src   = $this->_get_posttype_image( $object );
 			$title = WordPress\Post::title( $object );
 
+			if ( $this->get_setting( $object->post_type.'_posttype_counter_support' ) )
+				$link = $this->framepage_get_mainlink_for_post( $object, [
+					'target'       => 'post',
+					'context'      => 'mainbutton',
+					'link_context' => 'overview',
+					'maxwidth'     => '920px',
+				] );
+
+
 		} else if ( 'term' === $screen->base ) {
-			$src = $this->_get_taxonomy_image( $object );
+
+			$src   = $this->_get_taxonomy_image( $object );
 			$title = WordPress\Term::title( $object );
+
+			if ( $this->get_setting( $object->taxonomy.'_taxonomy_counter_support' ) )
+				$link = $this->framepage_get_mainlink_for_term( $object, [
+					'target'       => 'term',
+					'context'      => 'mainbutton',
+					'link_context' => 'overview',
+					'maxwidth'     => '920px',
+				] );
 		}
 
 		if ( $src ) {
 
 			echo Core\HTML::wrap( $this->_get_html_image( $src, $title ), 'field-wrap -image' );
+			echo Core\HTML::wrap( $link, 'field-wrap -buttons' );
 
 		} else {
 
@@ -257,6 +454,68 @@ class StaticCovers extends gEditorial\Module
 		], Core\HTML::img( $src, $class ) );
 	}
 
+	// NOTE: counter starts from `0`
+	private function _get_posttype_images( $post, $metakey = NULL )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $this->get_setting( $post->post_type.'_posttype_counter_support' ) )
+			return $this->_get_posttype_image( $post, $metakey );
+
+		if ( ! $url_template = $this->get_setting( $post->post_type.'_posttype_url_template' ) )
+			return FALSE;
+
+		if ( is_null( $metakey ) )
+			$metakey = $this->_get_posttype_metakey( $post->post_type );
+
+		if ( ! $reference = get_post_meta( $post->ID, $metakey, TRUE ) )
+			return FALSE;
+
+		$path_template = $this->get_setting( $post->post_type.'_posttype_path_template' );
+
+		$list = [];
+		$max  = $this->get_setting( $post->post_type.'_posttype_counter_max', 10 );
+
+		for ( $i = 0; $i <= $max; $i++ ) {
+
+			$tokens = [
+				'counter'   => $this->_get_counter( $i ),
+				'reference' => $reference,
+				'post_id'   => $post->ID,
+				'post_type' => $post->post_type,
+				'post_name' => $post->post_name,
+			];
+
+			if ( $path_template ) {
+
+				$path = Core\Text::replaceTokens( $path_template, $tokens );
+
+				if ( ! Core\File::exists( $path ) )
+					if ( 0 === $i )
+						continue;
+					else
+						break;
+
+				$list[$i] = Core\Text::replaceTokens( $url_template, $tokens );
+
+			} else {
+
+				$url = Core\Text::replaceTokens( $url_template, $tokens );
+
+				if ( 200 !== Core\HTTP::getStatus( $url, FALSE ) )
+					if ( 0 === $i )
+						continue;
+					else
+						break;
+
+				$list[$i] = $url;
+			}
+		}
+
+		return $list;
+	}
+
 	private function _get_posttype_image( $post, $metakey = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -276,13 +535,14 @@ class StaticCovers extends gEditorial\Module
 			'reference' => $reference,
 			'post_id'   => $post->ID,
 			'post_type' => $post->post_type,
+			'post_name' => $post->post_name,
 		];
 
 		if ( $path_template = $this->get_setting( $post->post_type.'_posttype_path_template' ) ) {
 
 			$path = Core\Text::replaceTokens( $path_template, $tokens );
 
-			if ( ! file_exists( ABSPATH.$path ) )
+			if ( ! Core\File::exists( $path ) )
 				return FALSE;
 
 			$url = Core\Text::replaceTokens( $url_template, $tokens );
@@ -296,6 +556,69 @@ class StaticCovers extends gEditorial\Module
 		}
 
 		return $this->filters( 'get_posttype_image', $url, $post, $reference, $metakey );
+	}
+
+	// NOTE: counter starts from `0`
+	private function _get_taxonomy_images( $term, $metakey = NULL )
+	{
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		if ( ! $this->get_setting( $term->taxonomy.'_taxonomy_counter_support' ) )
+			return $this->_get_taxonomy_image( $term, $metakey );
+
+		if ( ! $url_template = $this->get_setting( $term->taxonomy.'_taxonomy_url_template' ) )
+			return FALSE;
+
+		if ( is_null( $metakey ) )
+			$metakey = $this->_get_posttype_metakey( $term->taxonomy );
+
+		if ( ! $reference = get_term_meta( $term->term_id, $metakey, TRUE ) )
+			return FALSE;
+
+		$path_template = $this->get_setting( $term->taxonomy.'_taxonomy_path_template' );
+
+		$list = [];
+		$max  = $this->get_setting( $term->taxonomy.'_taxonomy_counter_max', 10 );
+
+		for ( $i = 0; $i <= $max; $i++ ) {
+
+			$tokens = [
+				'counter'   => $this->_get_counter( $i ),
+				'reference' => $reference,
+				'term_id'   => $term->term_id,
+				'taxonomy'  => $term->taxonomy,
+				'slug'      => $term->slug,
+			];
+
+			if ( $path_template ) {
+
+				$path = Core\Text::replaceTokens( $path_template, $tokens );
+
+				if ( ! Core\File::exists( $path ) )
+					if ( 0 === $i )
+						continue;
+					else
+						break;
+
+				$list[$i] = Core\Text::replaceTokens( $url_template, $tokens );
+
+			} else {
+
+				$url = Core\Text::replaceTokens( $url_template, $tokens );
+
+				if ( 200 !== Core\HTTP::getStatus( $url, FALSE ) )
+					if ( 0 === $i )
+						continue;
+					else
+						break;
+
+
+				$list[$i] = $url;
+			}
+		}
+
+		return $list;
 	}
 
 	private function _get_taxonomy_image( $term, $metakey = NULL )
@@ -317,13 +640,14 @@ class StaticCovers extends gEditorial\Module
 			'reference' => $reference,
 			'term_id'   => $term->term_id,
 			'taxonomy'  => $term->taxonomy,
+			'slug'      => $term->slug,
 		];
 
 		if ( $path_template = $this->get_setting( $term->taxonomy.'_taxonomy_path_template' ) ) {
 
 			$path = Core\Text::replaceTokens( $path_template, $tokens );
 
-			if ( ! file_exists( ABSPATH.$path ) )
+			if ( ! Core\File::exists( $path ) )
 				return FALSE;
 
 			$url = Core\Text::replaceTokens( $url_template, $tokens );
@@ -346,6 +670,7 @@ class StaticCovers extends gEditorial\Module
 			'reference',
 			'post_id',
 			'post_type',
+			'post_name',
 		];
 
 		$list = [];
@@ -363,6 +688,7 @@ class StaticCovers extends gEditorial\Module
 			'reference',
 			'term_id',
 			'taxonomy',
+			'slug',
 		];
 
 		$list = [];
@@ -407,6 +733,20 @@ class StaticCovers extends gEditorial\Module
 
 		$data['___hooks']['after-post'].= '<div class="-wrap side-wrap">'.$this->wrap( Core\HTML::img( $src ), '-side-image' ).'<div class="-side-table">';
 		$data['___hooks']['after-meta'].= '</div></div>';
+
+		return $data;
+	}
+
+	public function papered_view_data( $data, $profile, $source, $context )
+	{
+		if ( ! $post = WordPress\Post::get( $source ) )
+			return $data;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $data;
+
+		$data['source']['covers'] = Core\Arraay::prepString( $this->_get_posttype_images( $post ) );
+		$data['source']['rendered']['coverurl'] = isset( $data['source']['covers'][0] ) ? $data['source']['covers'][0] : '';
 
 		return $data;
 	}

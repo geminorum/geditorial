@@ -1,0 +1,12 @@
+<div class="-wrap" id="geditorial-static-covers-wrap" dir="{{__direction}}">
+	{{> title-actions}}
+	{{{___hooks.after-actions}}}
+	{{> post-summary}}
+	{{{___hooks.after-post}}}
+	{{> image-summaries }}
+	{{{___hooks.after-image}}}
+	{{> custom-summaries}}
+	{{{___hooks.after-custom}}}
+	<div class="wrap-content">{{{content.rendered}}}</div>
+	{{{___hooks.after-content}}}
+</div>
