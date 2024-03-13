@@ -203,6 +203,7 @@ class WasBorn extends gEditorial\Module
 			$this->latechores__init_post_aftercare( $posttypes );
 
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
+		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'gender_taxonomy' ), TRUE );
 
 		$this->filter_self( 'mean_age', 4 );
 		$this->action_module( 'pointers', 'post', 5, 100 );
