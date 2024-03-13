@@ -9,32 +9,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Executed\n"
 "X-Domain: geditorial-executed\n"
 
-#: Executed.php:69
+#: Executed.php:86
 msgid "Executive"
 msgid_plural "Executives"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Executed.php:73
+#: Executed.php:90
 msgctxt "Label: Show Option All"
 msgid "Executives"
 msgstr ""
 
-#: Executed.php:74
+#: Executed.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(Unexecutived)"
 msgstr ""
 
-#: Executed.php:83
+#: Executed.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Execution Summary"
 msgstr ""
 
-#: Executed.php:84
+#: Executed.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Execution Summary"
 msgstr ""

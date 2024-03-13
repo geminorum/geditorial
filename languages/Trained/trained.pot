@@ -9,145 +9,188 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Trained\n"
 "X-Domain: geditorial-trained\n"
 
-#: Trained.php:58
+#: Trained.php:65
 msgctxt "Settings"
 msgid "Training Levels"
 msgstr ""
 
-#: Trained.php:59
+#: Trained.php:66
 msgctxt "Settings"
 msgid "Substitute taxonomy for the trainings and supported post-types."
 msgstr ""
 
-#: Trained.php:113
-#: Trained.php:114
+#. translators: %s: primary taxonomy name
+#: Trained.php:90
+msgctxt "Settings"
+msgid "Whether to show the <strong>%s</strong> in the quick/bulk edit panel."
+msgstr ""
+
+#: Trained.php:134
+#: Trained.php:135
 msgid "Training Course"
 msgid_plural "Training Courses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:115
+#: Trained.php:136
 msgid "Training Category"
 msgid_plural "Training Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:116
+#: Trained.php:137
 msgid "Training Level"
 msgid_plural "Training Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:117
+#: Trained.php:138
 msgid "Training Program"
 msgid_plural "Training Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:118
+#: Trained.php:139
 msgid "Training Span"
 msgid_plural "Training Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:119
+#: Trained.php:140
 msgid "Training Type"
 msgid_plural "Training Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:120
+#: Trained.php:141
 msgid "Training Status"
 msgid_plural "Training Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Trained.php:124
+#: Trained.php:145
 msgctxt "Label: `menu_name`"
 msgid "Trainings"
 msgstr ""
 
-#: Trained.php:125
+#: Trained.php:146
 msgctxt "Label: Featured Image"
 msgid "Training Poster"
 msgstr ""
 
-#: Trained.php:126
+#: Trained.php:147
 msgctxt "Label: MetaBox Title"
 msgid "The Trainings"
 msgstr ""
 
-#: Trained.php:129
+#: Trained.php:150
 msgctxt "Label: MetaBox Title"
 msgid "In This Training"
 msgstr ""
 
-#: Trained.php:132
+#: Trained.php:153
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Trained.php:135
+#: Trained.php:156
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Trained.php:138
+#: Trained.php:159
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Trained.php:141
+#: Trained.php:162
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Trained.php:144
+#: Trained.php:165
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Trained.php:153
+#. translators: %s: item count
+#: Trained.php:175
+msgctxt "Misc: `tabloid_paired_posttype`"
+msgid "Training Attendees (%s)"
+msgstr ""
+
+#. translators: %s: item count
+#: Trained.php:177
+msgctxt "Misc: `tabloid_paired_supported`"
+msgid "Training Courses (%s)"
+msgstr ""
+
+#: Trained.php:178
 msgctxt "Misc: `column_icon_title`"
 msgid "Training Courses"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Trained.php:158
+#: Trained.php:183
 msgctxt "Metabox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Trained.php:167
+#: Trained.php:193
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Preliminary"
+msgstr ""
+
+#: Trained.php:194
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Intermediate"
+msgstr ""
+
+#: Trained.php:195
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Advanced"
+msgstr ""
+
+#: Trained.php:196
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Special"
+msgstr ""
+
+#: Trained.php:200
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Trained.php:168
+#: Trained.php:201
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Trained.php:207
+#: Trained.php:239
 msgctxt "Field Title"
 msgid "Training Code"
 msgstr ""
 
-#: Trained.php:208
+#: Trained.php:240
 msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr ""
 
-#: Trained.php:479
+#: Trained.php:557
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr ""
 
-#: Trained.php:499
+#: Trained.php:566
+msgctxt "Card"
+msgid "Training Course Date from Meta-data"
+msgstr ""
+
+#: Trained.php:602
 msgctxt "Header"
-msgid "Training Tools"
+msgid "Training Course Imports"
 msgstr ""

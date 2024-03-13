@@ -9,11 +9,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attend\n"
 "X-Domain: geditorial-attend\n"
 
-#: Attend.php:45
+#: Attend.php:52
 msgid "Attendance"
 msgid_plural "Attendances"
 msgstr[0] ""

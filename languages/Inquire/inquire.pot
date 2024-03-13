@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Inquire\n"
 "X-Domain: geditorial-inquire\n"
 
@@ -23,41 +23,31 @@ msgctxt "Setting Description"
 msgid "Roles that can change the question."
 msgstr ""
 
-#: Inquire.php:45
-msgctxt "Setting Title"
-msgid "Make Public"
-msgstr ""
-
-#: Inquire.php:46
-msgctxt "Setting Description"
-msgid "Displays Inquiries on the front-end."
-msgstr ""
-
-#: Inquire.php:78
+#: Inquire.php:76
 msgid "Inquiry"
 msgid_plural "Inquiries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:79
+#: Inquire.php:77
 msgid "Inquiry Subject"
 msgid_plural "Inquiry Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:80
+#: Inquire.php:78
 msgid "Inquiry Status"
 msgid_plural "Inquiry Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:81
+#: Inquire.php:79
 msgid "Inquiry Priority"
 msgid_plural "Inquiry Priorities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Inquire.php:85
+#: Inquire.php:83
 msgctxt "Label: Excerpt Label"
 msgid "Question"
 msgstr ""
@@ -142,17 +132,17 @@ msgctxt "Default Term"
 msgid "Zero"
 msgstr ""
 
-#: Inquire.php:168
+#: Inquire.php:163
 msgctxt "Template Title"
 msgid "Editorial: Inquire: Dashboard"
 msgstr ""
 
-#: Inquire.php:223
+#: Inquire.php:218
 msgctxt "Placeholder"
 msgid "Enter question title here"
 msgstr ""
 
-#: Inquire.php:245
+#: Inquire.php:240
 msgctxt "Dashboard Title"
 msgid "Inquiries"
 msgstr ""

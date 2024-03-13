@@ -9,67 +9,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Conscripted\n"
 "X-Domain: geditorial-conscripted\n"
 
-#: Conscripted.php:69
+#: Conscripted.php:82
 msgid "Conscription"
 msgid_plural "Conscriptions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Conscripted.php:73
+#: Conscripted.php:86
 msgctxt "Label: Show Option All"
 msgid "Conscription"
 msgstr ""
 
-#: Conscripted.php:74
+#: Conscripted.php:87
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Conscripted.php:83
+#: Conscripted.php:96
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Conscription Summary"
 msgstr ""
 
-#: Conscripted.php:84
+#: Conscripted.php:97
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Conscription Summary"
 msgstr ""
 
-#: Conscripted.php:94
+#: Conscripted.php:107
 msgctxt "Main Taxonomy: Default Term"
 msgid "Underage for Service"
 msgstr ""
 
-#: Conscripted.php:95
+#: Conscripted.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject to Service"
 msgstr ""
 
-#: Conscripted.php:96
+#: Conscripted.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Currently in Service"
 msgstr ""
 
-#: Conscripted.php:97
+#: Conscripted.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "End of Service"
 msgstr ""
 
-#: Conscripted.php:98
+#: Conscripted.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Medical Exemption"
 msgstr ""
 
-#: Conscripted.php:99
+#: Conscripted.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Education Exemption"
 msgstr ""
 
-#: Conscripted.php:100
+#: Conscripted.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Permanent Exemption"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WasBorn\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-11-05 15:56+0330\n"
+"PO-Revision-Date: 2024-03-13 08:32+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,236 +11,230 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/WasBorn\n"
 "X-Domain: geditorial-was-born\n"
 
 #. translators: %s: supported object label
-#: WasBorn.php:58
+#: WasBorn.php:56
 msgctxt "Setting Title"
 msgid "Date of Birth Meta-key for %s"
 msgstr "کلید متای تاریخ تولد برای %s"
 
-#: WasBorn.php:59
+#: WasBorn.php:57
 msgctxt "Setting Description"
 msgid "Defines date-of-birth meta-key for the post-type."
 msgstr ""
 
-#: WasBorn.php:70
-msgctxt "Setting Title"
-msgid "Override Dates"
-msgstr "رونویسی تاریخ‌ها"
-
-#: WasBorn.php:71
+#: WasBorn.php:66
 msgctxt "Setting Description"
 msgid ""
 "Tries to override post-date with provided date-of-birth on supported post-"
 "types."
 msgstr ""
 
-#: WasBorn.php:79
+#: WasBorn.php:72
 msgctxt "Setting Title"
 msgid "Age of Majority"
 msgstr "سن قانونی"
 
-#: WasBorn.php:80
+#: WasBorn.php:73
 msgctxt "Setting Description"
 msgid "The threshold of legal adulthood as recognized or declared in law."
 msgstr "آستانه بلوغ قانونی که در قانون به رسمیت شناخته‌شده یا اعلام‌شده است."
 
-#: WasBorn.php:86
+#: WasBorn.php:79
 msgctxt "Setting Title"
 msgid "Round-up Average"
 msgstr "گرد به بالا برای میانگین‌ها"
 
-#: WasBorn.php:87
+#: WasBorn.php:80
 msgctxt "Setting Description"
 msgid "Tries to calculate average numbers rounded."
 msgstr ""
 
-#: WasBorn.php:107
-msgctxt "Setting Title"
-msgid "Manage Roles"
-msgstr "نقش‌های مدیریت"
-
-#: WasBorn.php:108
+#: WasBorn.php:98
 msgctxt "Setting Description"
-msgid "Roles that can Manage, Edit and Delete Age Groups"
+msgid "Roles that can manage, edit and delete age groups."
 msgstr ""
 
-#: WasBorn.php:114
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr "نقش‌های بررسی گزارشات"
-
-#: WasBorn.php:115
+#: WasBorn.php:99
 msgctxt "Setting Description"
 msgid "Roles that can view age related reports."
 msgstr ""
 
-#: WasBorn.php:141
+#: WasBorn.php:123
 msgid "Birth Year"
 msgid_plural "Birth Years"
 msgstr[0] "سال‌های تولد"
 msgstr[1] "سال تولد"
 
-#: WasBorn.php:142
+#: WasBorn.php:124
 msgid "Gender"
 msgid_plural "Genders"
 msgstr[0] "جنسیت‌ها"
 msgstr[1] "جنسیت"
 
-#: WasBorn.php:143
+#: WasBorn.php:125
 msgid "Age Group"
 msgid_plural "Age Groups"
 msgstr[0] "گروه‌های سنی"
 msgstr[1] "گروه سنی"
 
-#: WasBorn.php:147
+#: WasBorn.php:129
 msgctxt "Label: `show_option_all`"
 msgid "Birth Years"
 msgstr "سال تولد"
 
-#: WasBorn.php:148
+#: WasBorn.php:130
 msgctxt "Label: `show_option_no_items`"
 msgid "(No Birthdays)"
 msgstr "(بدون تولد)"
 
-#: WasBorn.php:151
+#: WasBorn.php:133
 msgctxt "Label: `show_option_all`"
 msgid "All Genders"
 msgstr "جنسیت"
 
-#: WasBorn.php:152
+#: WasBorn.php:134
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined Gender)"
 msgstr "(جنسیت نامشخص)"
 
-#: WasBorn.php:155
+#: WasBorn.php:137
 msgctxt "Label: `show_option_all`"
 msgid "Age Groups"
 msgstr "گروه سنی"
 
-#: WasBorn.php:156
+#: WasBorn.php:138
 msgctxt "Label: `show_option_no_items`"
 msgid "(Empty Birthdays)"
 msgstr "(تولد خالی)"
 
-#: WasBorn.php:165
+#: WasBorn.php:147
 msgctxt "Dashboard Widget Title"
 msgid "Your Staff Age Summary"
 msgstr "گزارش سنی کارکنان شما"
 
-#: WasBorn.php:166
+#: WasBorn.php:148
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Staff Age Summary"
 msgstr "گزارش سنی کارکنان تحریریه"
 
-#: WasBorn.php:173
+#: WasBorn.php:160
 msgctxt "Default Term"
 msgid "Male"
 msgstr "مرد"
 
-#: WasBorn.php:174
+#: WasBorn.php:161
 msgctxt "Default Term"
 msgid "Female"
 msgstr "زن"
 
-#: WasBorn.php:439
+#: WasBorn.php:423
 msgctxt "Summary"
 msgid "Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:519
+#: WasBorn.php:503
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr "تاریخ تولد نامعتبر"
 
-#: WasBorn.php:588
+#: WasBorn.php:572
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr "میانگین سنی"
 
-#: WasBorn.php:664
+#: WasBorn.php:648
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr "بدون تاریخ تولد"
 
 #. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:745
+#: WasBorn.php:729
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr "از %1$s تا %2$s"
 
-#: WasBorn.php:747
+#: WasBorn.php:731
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr "آغاز"
 
-#: WasBorn.php:748
+#: WasBorn.php:732
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr "حالا"
 
-#: WasBorn.php:929
+#: WasBorn.php:913
 msgctxt "Pointer Notice"
 msgid "Under-Aged!"
 msgstr "زیر سن قانونی!"
 
-#: WasBorn.php:939
+#: WasBorn.php:923
 msgctxt "Default Term: Audit"
 msgid "Empty Date-of-Birth"
 msgstr "تاریخ تولد خالی"
 
-#: WasBorn.php:940
+#: WasBorn.php:924
 msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:984
-msgctxt "Imports: Header"
+#: WasBorn.php:1009
+msgctxt "Header"
 msgid "Birthday Tools"
 msgstr "ابزارهای تولد"
 
-#: WasBorn.php:1000
-msgctxt "Imports: Card Title"
+#: WasBorn.php:1021
+msgctxt "Card Title"
 msgid "Post-Date by Birthday"
 msgstr "تاریخ فرسته بر اساس تاریخ تولد"
 
-#. translators: %s: posttype label
-#: WasBorn.php:1012
-msgctxt "Imports: Button"
-msgid "Sync Dates for %s"
-msgstr "هم‌گام‌سازی تاریخ‌ها برای %s"
-
-#: WasBorn.php:1016
-msgctxt "Imports: Button Description"
-msgid "Tries to set the post-date based on date of birth data."
-msgstr "تلاش می‌کند تاریخ فرسته را بر اساس داده‌های تاریخ تولد تنظیم کند."
-
-#. translators: %1$s: date of birth, %2$s: post title
-#: WasBorn.php:1077
-msgctxt "Notice"
-msgid "Date of Birth (%1$s) is not valid for &ldquo;%2$s&rdquo;"
-msgstr ""
-
-#. translators: %1$s: post date, %2$s: post title
-#: WasBorn.php:1093
-msgctxt "Notice"
-msgid "There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;"
-msgstr ""
-
 #. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1099
+#: WasBorn.php:1062
 msgctxt "Notice"
 msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1105
+#: WasBorn.php:1068
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
 msgstr ""
+
+#~ msgctxt "Setting Title"
+#~ msgid "Manage Roles"
+#~ msgstr "نقش‌های مدیریت"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Reports Roles"
+#~ msgstr "نقش‌های بررسی گزارشات"
+
+#~ msgctxt "Button"
+#~ msgid "On %s"
+#~ msgstr "در %s"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Override Dates"
+#~ msgstr "رونویسی تاریخ‌ها"
+
+#~ msgctxt "Imports: Header"
+#~ msgid "Birthday Tools"
+#~ msgstr "ابزارهای تولد"
+
+#~ msgctxt "Imports: Card Title"
+#~ msgid "Post-Date by Birthday"
+#~ msgstr "تاریخ فرسته بر اساس تاریخ تولد"
+
+#~ msgctxt "Imports: Button"
+#~ msgid "Sync Dates for %s"
+#~ msgstr "هم‌گام‌سازی تاریخ‌ها برای %s"
+
+#~ msgctxt "Imports: Button Description"
+#~ msgid "Tries to set the post-date based on date of birth data."
+#~ msgstr "تلاش می‌کند تاریخ فرسته را بر اساس داده‌های تاریخ تولد تنظیم کند."
 
 #~ msgctxt "Summary"
 #~ msgid "With No Birthday"

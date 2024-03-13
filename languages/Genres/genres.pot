@@ -9,102 +9,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Genres\n"
 "X-Domain: geditorial-genres\n"
 
-#: Genres.php:75
+#: Genres.php:78
 msgid "Genre"
 msgid_plural "Genres"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Genres.php:79
+#: Genres.php:82
 msgctxt "Label: `extended_label`"
 msgid "Content Genres"
 msgstr ""
 
-#: Genres.php:80
+#: Genres.php:83
 msgctxt "Label: `menu_name`"
 msgid "Content Genres"
 msgstr ""
 
-#: Genres.php:81
+#: Genres.php:84
 msgctxt "Label: `show_option_all`"
 msgid "Genres"
 msgstr ""
 
-#: Genres.php:82
+#: Genres.php:85
 msgctxt "Label: `show_option_no_items`"
 msgid "(UnGenred)"
 msgstr ""
 
-#: Genres.php:91
+#: Genres.php:94
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Genres Summary"
 msgstr ""
 
-#: Genres.php:92
+#: Genres.php:95
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Genres Summary"
 msgstr ""
 
-#: Genres.php:98
+#: Genres.php:106
 msgctxt "Main Taxonomy: Default Term"
 msgid "Children"
 msgstr ""
 
-#: Genres.php:99
+#: Genres.php:107
 msgctxt "Main Taxonomy: Default Term"
 msgid "Classic"
 msgstr ""
 
-#: Genres.php:100
+#: Genres.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "Comedy"
 msgstr ""
 
-#: Genres.php:101
+#: Genres.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Crime"
 msgstr ""
 
-#: Genres.php:102
+#: Genres.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Fantasy"
 msgstr ""
 
-#: Genres.php:103
+#: Genres.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Historical"
 msgstr ""
 
-#: Genres.php:104
+#: Genres.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Horror"
 msgstr ""
 
-#: Genres.php:105
+#: Genres.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Mystery"
 msgstr ""
 
-#: Genres.php:106
+#: Genres.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Romance"
 msgstr ""
 
-#: Genres.php:107
+#: Genres.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Science Fiction"
 msgstr ""
 
-#: Genres.php:108
+#: Genres.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Thriller"
 msgstr ""
 
-#: Genres.php:216
+#: Genres.php:222
 msgctxt "Header"
 msgid "Genre Reports"
 msgstr ""

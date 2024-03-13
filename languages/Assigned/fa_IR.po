@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Assigned\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-23 22:02+0330\n"
+"PO-Revision-Date: 2024-02-10 01:23+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,77 +11,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Assigned\n"
 "X-Domain: geditorial-assigned\n"
 
-#: Assigned.php:77
+#: Assigned.php:86
 msgid "Assignment"
 msgid_plural "Assignments"
 msgstr[0] "تکالیف"
 msgstr[1] "تکلیف"
 
-#: Assigned.php:81
+#: Assigned.php:90
 msgctxt "Label: Menu Name"
 msgid "Content Assignments"
 msgstr "تکالیف محتوایی"
 
-#: Assigned.php:82
+#: Assigned.php:91
 msgctxt "Label: Show Option All"
 msgid "Assignment"
 msgstr "تکالیف"
 
-#: Assigned.php:83
+#: Assigned.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Unassigned)"
 msgstr "(تکلیف‌نشده)"
 
-#: Assigned.php:92
+#: Assigned.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Assignments Summary"
 msgstr "گزارش تکالیف شما"
 
-#: Assigned.php:93
+#: Assigned.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Assignments Summary"
 msgstr "گزارش تکالیف تحریریه"
 
-#: Assigned.php:98
+#: Assigned.php:112
 msgctxt "Default Term"
 msgid "Research"
 msgstr "تحقیق"
 
-#: Assigned.php:99
+#: Assigned.php:113
 msgctxt "Default Term"
 msgid "Planning"
 msgstr "برنامه‌ریزی"
 
-#: Assigned.php:100
+#: Assigned.php:114
 msgctxt "Default Term"
 msgid "Execution"
 msgstr "اجرا"
 
-#: Assigned.php:101
+#: Assigned.php:115
 msgctxt "Default Term"
 msgid "Reporting"
 msgstr "گزارش‌گیری"
 
-#: Assigned.php:113 Assigned.php:118
+#: Assigned.php:125 Assigned.php:130
 msgctxt "Field Title"
 msgid "Assigned To"
 msgstr "واگذارشده به"
 
-#: Assigned.php:114
+#: Assigned.php:126
 msgctxt "Field Description"
 msgid "Determines the user responsible for this assignment."
 msgstr "کاربر مسؤول این تکلیف را مشخص می‌کند."
 
-#: Assigned.php:119
+#: Assigned.php:131
 msgctxt "Field Description"
 msgid "Determines the individual responsible for this assignment."
 msgstr "فرد مسؤول این تکلیف را مشخص می‌کند."
 
-#: Assigned.php:124
+#: Assigned.php:136
 msgctxt "Field Title"
 msgid "Due Date"
 msgstr "تاریخ نهایی"

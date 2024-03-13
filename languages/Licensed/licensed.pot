@@ -9,67 +9,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Licensed\n"
 "X-Domain: geditorial-licensed\n"
 
-#: Licensed.php:70
+#: Licensed.php:86
 msgid "Driving Licence"
 msgid_plural "Driving Licences"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Licensed.php:74
+#: Licensed.php:90
 msgctxt "Label: Show Option All"
 msgid "Licences"
 msgstr ""
 
-#: Licensed.php:75
+#: Licensed.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr ""
 
-#: Licensed.php:84
+#: Licensed.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Your Driving Licence Summary"
 msgstr ""
 
-#: Licensed.php:85
+#: Licensed.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Driving Licence Summary"
 msgstr ""
 
-#: Licensed.php:90
+#: Licensed.php:111
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr ""
 
-#: Licensed.php:91
+#: Licensed.php:112
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr ""
 
-#: Licensed.php:92
+#: Licensed.php:113
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr ""
 
-#: Licensed.php:93
+#: Licensed.php:114
 msgctxt "Default Term"
 msgid "Category One"
 msgstr ""
 
-#: Licensed.php:94
+#: Licensed.php:115
 msgctxt "Default Term"
 msgid "Loader"
 msgstr ""
 
-#: Licensed.php:95
+#: Licensed.php:116
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr ""
 
-#: Licensed.php:96
+#: Licensed.php:117
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr ""

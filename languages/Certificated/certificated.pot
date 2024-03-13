@@ -9,32 +9,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Certificated\n"
 "X-Domain: geditorial-certificated\n"
 
-#: Certificated.php:84
+#: Certificated.php:85
 msgid "Certification"
 msgid_plural "Certifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Certificated.php:88
+#: Certificated.php:89
 msgctxt "Label: Show Option All"
 msgid "Certifications"
 msgstr ""
 
-#: Certificated.php:89
+#: Certificated.php:90
 msgctxt "Label: Show Option No Terms"
 msgid "(Un-certificated)"
 msgstr ""
 
-#: Certificated.php:98
+#: Certificated.php:99
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Certification Summary"
 msgstr ""
 
-#: Certificated.php:99
+#: Certificated.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Certification Summary"
 msgstr ""

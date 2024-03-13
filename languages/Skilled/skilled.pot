@@ -9,32 +9,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Skilled\n"
 "X-Domain: geditorial-skilled\n"
 
-#: Skilled.php:94
+#: Skilled.php:100
 msgid "Skill"
 msgid_plural "Skills"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Skilled.php:98
+#: Skilled.php:104
 msgctxt "Label: Show Option All"
 msgid "Skills"
 msgstr ""
 
-#: Skilled.php:99
+#: Skilled.php:105
 msgctxt "Label: Show Option No Terms"
 msgid "(No Skill)"
 msgstr ""
 
-#: Skilled.php:108
+#: Skilled.php:114
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Skill Summary"
 msgstr ""
 
-#: Skilled.php:109
+#: Skilled.php:115
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Skill Summary"
 msgstr ""

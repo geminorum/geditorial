@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Meta\n"
 "X-Domain: geditorial-meta\n"
 
@@ -509,70 +509,70 @@ msgctxt "Column Title"
 msgid "Author"
 msgstr ""
 
-#: Meta.php:743
+#: Meta.php:748
 msgctxt "Message"
 msgid "No Meta Fields"
 msgstr ""
 
-#: Meta.php:1373
+#: Meta.php:1413
 msgctxt "Header"
 msgid "Meta Imports"
 msgstr ""
 
-#: Meta.php:1379
+#: Meta.php:1419
 msgctxt "Header"
 msgid "Import Custom Fields"
 msgstr ""
 
-#: Meta.php:1430
+#: Meta.php:1470
 msgctxt "Button"
 msgid "Check"
 msgstr ""
 
-#: Meta.php:1433
+#: Meta.php:1473
 msgctxt "Button"
 msgid "Covert"
 msgstr ""
 
-#: Meta.php:1436
+#: Meta.php:1476
 msgctxt "Button"
 msgid "Delete"
 msgstr ""
 
-#: Meta.php:1438
+#: Meta.php:1478
 msgctxt "Message"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr ""
 
-#: Meta.php:1448
+#: Meta.php:1488
 msgctxt "Table Column"
 msgid "Type"
 msgstr ""
 
-#: Meta.php:1460
+#: Meta.php:1500
 msgctxt "Table Column"
 msgid "Title"
 msgstr ""
 
 #. translators: %s: title
-#: Meta.php:1466
+#: Meta.php:1506
 msgctxt "Table Column"
 msgid "Meta: %s"
 msgstr ""
 
-#: Meta.php:1471
+#: Meta.php:1511
 msgctxt "Table Empty"
 msgid "There are no meta-data available!"
 msgstr ""
 
 #. translators: %s: field title
-#: Meta.php:1628
+#: Meta.php:1668
 msgctxt "Import Field"
 msgid "Meta: %s"
 msgstr ""
 
 #. translators: %s: field title
-#: Meta.php:1630
+#: Meta.php:1670
 msgctxt "Import Field"
 msgid "Ignored: %s"
 msgstr ""

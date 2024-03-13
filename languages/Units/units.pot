@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Units\n"
 "X-Domain: geditorial-units\n"
 
@@ -463,13 +463,13 @@ msgctxt "Column Title"
 msgid "Measurements"
 msgstr ""
 
-#: Units.php:599
+#: Units.php:601
 msgctxt "Message"
 msgid "No Measurement Units"
 msgstr ""
 
 #. translators: %s: day count
-#: Units.php:791
+#: Units.php:815
 msgctxt "Noop"
 msgid "%s Day"
 msgid_plural "%s Days"
@@ -477,7 +477,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: hour count
-#: Units.php:798
+#: Units.php:822
 msgctxt "Noop"
 msgid "%s Hour"
 msgid_plural "%s Hours"
@@ -485,7 +485,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: hour count
-#: Units.php:808
+#: Units.php:832
 msgctxt "Noop"
 msgid "%s Gram"
 msgid_plural "%s Grams"
@@ -493,7 +493,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: hour count
-#: Units.php:815
+#: Units.php:839
 msgctxt "Noop"
 msgid "%s Kilogram"
 msgid_plural "%s Kilograms"
@@ -501,7 +501,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: hour count
-#: Units.php:822
+#: Units.php:846
 msgctxt "Noop"
 msgid "%s Milimeter"
 msgid_plural "%s Milimeters"
@@ -509,7 +509,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: hour count
-#: Units.php:829
+#: Units.php:853
 msgctxt "Noop"
 msgid "%s Centimeter"
 msgid_plural "%s Centimeters"
@@ -517,25 +517,25 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:852
+#: Units.php:876
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:861
+#: Units.php:885
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:870
+#: Units.php:894
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr ""
 
 #. translators: %s: field title
-#: Units.php:1001
+#: Units.php:1025
 msgctxt "Import Field"
 msgid "Units: %s"
 msgstr ""

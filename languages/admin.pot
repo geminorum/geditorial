@@ -1,34 +1,40 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial 3.26.7\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/geditorial\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-06T15:43:08+00:00\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ..\n"
 "X-Domain: geditorial-admin\n"
 
 #. Plugin Name of the plugin
+#: K:/Localhost/wpn/wp-content/plugins/geditorial/geditorial.php
 msgid "gEditorial"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: K:/Localhost/wpn/wp-content/plugins/geditorial/geditorial.php
 msgid "https://geminorum.ir/wordpress/geditorial"
 msgstr ""
 
 #. Description of the plugin
+#: K:/Localhost/wpn/wp-content/plugins/geditorial/geditorial.php
 msgid "Our Editorial in WordPress"
 msgstr ""
 
 #. Author of the plugin
+#: K:/Localhost/wpn/wp-content/plugins/geditorial/geditorial.php
 msgid "geminorum"
 msgstr ""
 
 #. Author URI of the plugin
+#: K:/Localhost/wpn/wp-content/plugins/geditorial/geditorial.php
 msgid "https://geminorum.ir/"
 msgstr ""
 
@@ -64,53 +70,63 @@ msgctxt "Info: P2P"
 msgid "Connected via %s"
 msgstr ""
 
-#: includes/Info.php:84
+#: includes/Info.php:89
 msgctxt "Info: Message"
 msgid "There are no reports available!"
 msgstr ""
 
-#: includes/Info.php:93
+#: includes/Info.php:98
 msgctxt "Info: Message"
 msgid "There are no imports available!"
 msgstr ""
 
-#: includes/Info.php:102
+#: includes/Info.php:107
 msgctxt "Info: Message"
 msgid "There are no tools available!"
 msgstr ""
 
-#: includes/Info.php:111
+#: includes/Info.php:116
+msgctxt "Info: Message"
+msgid "There are no roles available!"
+msgstr ""
+
+#: includes/Info.php:125
 msgctxt "Info: Message"
 msgid "There are no posts available!"
 msgstr ""
 
-#: includes/Info.php:120
+#: includes/Info.php:134
+msgctxt "Info: Message"
+msgid "There are no terms available!"
+msgstr ""
+
+#: includes/Info.php:143
 msgctxt "Info: Message"
 msgid "The MIME-type is not provided!"
 msgstr ""
 
-#: includes/Info.php:129
+#: includes/Info.php:152
 msgctxt "Info: Message"
 msgid "The post-type is not provided!"
 msgstr ""
 
-#: includes/Info.php:138
+#: includes/Info.php:161
 msgctxt "Info: Message"
 msgid "The taxonomy is not provided!"
 msgstr ""
 
-#: includes/Info.php:147
+#: includes/Info.php:170
 msgctxt "Info: Message"
 msgid "The post-type is not supported!"
 msgstr ""
 
-#: includes/Info.php:156
+#: includes/Info.php:179
 msgctxt "Info: Message"
 msgid "The taxonomy is not supported!"
 msgstr ""
 
 #. translators: %s: datetime string
-#: includes/Info.php:166
+#: includes/Info.php:189
 msgctxt "Info: Message"
 msgid "Registered on %s"
 msgstr ""
@@ -147,95 +163,95 @@ msgctxt "Internal: Export Type Title"
 msgid "Full"
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:187
+#: includes/Internals/CoreCapabilities.php:197
 msgctxt "Internal: CoreCapabilities: Setting Title"
 msgid "Manage Roles"
 msgstr ""
 
 #. translators: %s: taxonomy extended label
-#: includes/Internals/CoreCapabilities.php:189
+#: includes/Internals/CoreCapabilities.php:199
 msgctxt "Internal: CoreCapabilities: Setting Description"
 msgid "Roles that can Manage, Edit and Delete %s."
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:195
+#: includes/Internals/CoreCapabilities.php:205
 msgctxt "Internal: CoreCapabilities: Setting Title"
 msgid "Assign Roles"
 msgstr ""
 
 #. translators: %s: taxonomy extended label
-#: includes/Internals/CoreCapabilities.php:197
+#: includes/Internals/CoreCapabilities.php:207
 msgctxt "Internal: CoreCapabilities: Setting Description"
 msgid "Roles that can Assign %s."
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:203
+#: includes/Internals/CoreCapabilities.php:213
 msgctxt "Internal: CoreCapabilities: Setting Title"
 msgid "Reports Roles"
 msgstr ""
 
 #. translators: %s: taxonomy extended label
-#: includes/Internals/CoreCapabilities.php:205
+#: includes/Internals/CoreCapabilities.php:215
 msgctxt "Internal: CoreCapabilities: Setting Description"
 msgid "Roles that can see %s Reports."
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:215
+#: includes/Internals/CoreCapabilities.php:225
 msgctxt "Internal: CoreCapabilities: Setting Title"
 msgid "Restricted Roles"
 msgstr ""
 
 #. translators: %s: taxonomy extended label
-#: includes/Internals/CoreCapabilities.php:217
+#: includes/Internals/CoreCapabilities.php:227
 msgctxt "Internal: CoreCapabilities: Setting Description"
 msgid "Roles that check for %s visibility."
 msgstr ""
 
 #. translators: %s: taxonomy extended label
-#: includes/Internals/CoreCapabilities.php:225
+#: includes/Internals/CoreCapabilities.php:235
 msgctxt "Internal: CoreCapabilities: Setting Title"
 msgid "Restricted %s"
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:226
+#: includes/Internals/CoreCapabilities.php:236
 msgctxt "Internal: CoreCapabilities: Setting Description"
 msgid "Handles visibility of each item based on meta values."
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:229
+#: includes/Internals/CoreCapabilities.php:239
 msgctxt "Internal: CoreCapabilities: Setting Option"
 msgid "Disabled"
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:230
+#: includes/Internals/CoreCapabilities.php:240
 msgctxt "Internal: CoreCapabilities: Setting Option"
 msgid "Hidden"
 msgstr ""
 
-#: includes/Internals/CoreCapabilities.php:239
+#: includes/Internals/CoreCapabilities.php:249
 msgctxt "Internal: CoreCapabilities: Setting Title"
 msgid "Locking Terms"
 msgstr ""
 
 #. translators: %s: taxonomy extended label
-#: includes/Internals/CoreCapabilities.php:241
+#: includes/Internals/CoreCapabilities.php:251
 msgctxt "Internal: CoreCapabilities: Setting Description"
 msgid "Selected items will lock editing the post to %s managers."
 msgstr ""
 
-#: includes/Internals/CoreDashboard.php:46
+#: includes/Internals/CoreDashboard.php:52
 msgctxt "Module: Dashboard Widget Title"
 msgid "Editorial Content Summary"
 msgstr ""
 
 #. translators: %s: singular posttype name
-#: includes/Internals/CorePostTypes.php:223
+#: includes/Internals/CorePostTypes.php:365
 msgctxt "Module: Setting Title"
 msgid "%s Supports"
 msgstr ""
 
 #. translators: %s: singular posttype name
-#: includes/Internals/CorePostTypes.php:225
+#: includes/Internals/CorePostTypes.php:367
 msgctxt "Module: Setting Description"
 msgid "Support core and extra features for %s posttype."
 msgstr ""
@@ -250,6 +266,239 @@ msgstr ""
 #: includes/Internals/Deprecated.php:333
 msgctxt "Module: MetaBox Default Action"
 msgid "Manage"
+msgstr ""
+
+#. translators: %s: module title
+#: includes/Internals/LateChores.php:157
+msgctxt "Late Chores: Bulk Action"
+msgid "[%s] Force After-Care"
+msgstr ""
+
+#. translators: %s: post count
+#: includes/Internals/LateChores.php:186
+msgctxt "Late Chores: Message"
+msgid "%s posts after-cared!"
+msgstr ""
+
+#. translators: %s: item count
+#: includes/Internals/PairedCore.php:311
+#: includes/Internals/PairedCore.php:350
+msgctxt "Internal: Paired: Post Summary Title"
+msgid "Connected (%s)"
+msgstr ""
+
+#. translators: %s: clone into input
+#: includes/Internals/PairedRowActions.php:49
+msgctxt "Module: Taxonomy Bulk Input Label"
+msgid "as: %s"
+msgstr ""
+
+#: includes/Internals/PairedRowActions.php:51
+msgctxt "Module: Taxonomy Bulk Input PlaceHolder"
+msgid "New Item Title"
+msgstr ""
+
+#: includes/Internals/PairedRowActions.php:54
+msgctxt "Module: Taxonomy Bulk Input Option"
+msgid "Separeted Terms"
+msgstr ""
+
+#: includes/Internals/PairedRowActions.php:55
+msgctxt "Module: Taxonomy Bulk Input Option"
+msgid "Cross Terms"
+msgstr ""
+
+#: includes/Internals/PairedRowActions.php:56
+msgctxt "Module: Taxonomy Bulk Input Option"
+msgid "Union Terms"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:26
+msgctxt "Internal: PairedTools: Card Title"
+msgid "Paired Move From-To"
+msgstr ""
+
+#. translators: %s: posttype label
+#: includes/Internals/PairedTools.php:45
+#: includes/Internals/PairedTools.php:76
+#: includes/Internals/PostDate.php:118
+#: includes/Internals/PostDate.php:130
+msgctxt "Button"
+msgid "On %s"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:49
+msgctxt "Internal: PairedTools: Button Description"
+msgid "Tries to move supported posts from selected to another main post."
+msgstr ""
+
+#: includes/Internals/PairedTools.php:53
+msgctxt "Internal: PairedTools: Card Title"
+msgid "Paired Tools"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:56
+msgctxt "Internal: PairedTools: Button"
+msgid "Sync Paired Terms"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:57
+msgctxt "Internal: PairedTools: Button Description"
+msgid "Tries to set the paired term for all the main posts."
+msgstr ""
+
+#: includes/Internals/PairedTools.php:61
+msgctxt "Internal: PairedTools: Button"
+msgid "Create Paired Terms"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:62
+msgctxt "Internal: PairedTools: Button Description"
+msgid "Tries to create paired terms for all the main posts."
+msgstr ""
+
+#: includes/Internals/PairedTools.php:69
+msgctxt "Internal: PairedTools: Card Title"
+msgid "Force Assign Paired Parents"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:78
+msgctxt "Internal: PairedTools: Button Description"
+msgid "Forces assignment of parents to supported posts."
+msgstr ""
+
+#: includes/Internals/PairedTools.php:315
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Slugged / Paired"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:335
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Desc. / Exce."
+msgstr ""
+
+#: includes/Internals/PairedTools.php:362
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Count"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:373
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Thumbnail"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:386
+msgctxt "Internal: PairedTools: Table Column"
+msgid "Image"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:403
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Create Paired Posts"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:404
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Connect Paired Posts"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:405
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Re-Sync Paired Images"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:406
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Re-Sync Paired Descriptions"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:407
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Empty Paired Descriptions"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:408
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Store Paired Orders"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:409
+msgctxt "Internal: PairedTools: Table Action"
+msgid "Delete Paired Terms"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:418
+msgctxt "Internal: PairedTools: Header"
+msgid "Paired Terms Tools"
+msgstr ""
+
+#: includes/Internals/PairedTools.php:419
+msgctxt "Internal: PairedTools: Message"
+msgid "There are no terms available!"
+msgstr ""
+
+#. translators: %1$s: post title, %2$s: error message
+#: includes/Internals/PairedTools.php:563
+#: includes/Internals/PairedTools.php:627
+msgctxt "Internal: PairedTools: Notice"
+msgid "Something is wrong for &ldquo;%1$s&rdquo;: %2$s"
+msgstr ""
+
+#. translators: %1$s: count terms, %2$s: post title
+#: includes/Internals/PairedTools.php:569
+#: includes/Internals/PairedTools.php:633
+msgctxt "Internal: PairedTools: Notice"
+msgid "%1$s terms set for &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %s: post title
+#: includes/Internals/PairedTools.php:621
+msgctxt "Internal: PairedTools: Notice"
+msgid "Something is wrong for &ldquo;%s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: post date, %2$s: post title
+#: includes/Internals/PostDate.php:85
+msgctxt "Notice"
+msgid "There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: post date, %2$s: post title
+#: includes/Internals/PostDate.php:95
+msgctxt "Notice"
+msgid "&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#: includes/Internals/PostDate.php:105
+msgctxt "Internal: PostDate: Card Title"
+msgid "Post-date by Meta-fields"
+msgstr ""
+
+#: includes/Internals/PostDate.php:108
+msgctxt "Internal: PostDate: Button"
+msgid "Sync Dates"
+msgstr ""
+
+#: includes/Internals/PostDate.php:139
+msgctxt "Button"
+msgid "Set Post-Date"
+msgstr ""
+
+#: includes/Internals/PostDate.php:141
+msgctxt "Internal: PostDate: Button Description"
+msgid "Tries to set the post-date form meta field data for all the main posts."
+msgstr ""
+
+#. translators: %1$s: date-time, %2$s: post title
+#: includes/Internals/PostDate.php:169
+msgctxt "Notice"
+msgid "Date data (%1$s) is not valid for &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: date-time, %2$s: post title
+#: includes/Internals/PostDate.php:180
+msgctxt "Notice"
+msgid "Date data (%1$s) already is set for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #: includes/Internals/QuickPosts.php:110
@@ -290,6 +539,92 @@ msgctxt "Module: Button Title"
 msgid "Quick New %2$s"
 msgstr ""
 
+#: includes/Internals/SettingsCore.php:36
+msgctxt "Module: Button"
+msgid "Disable Module"
+msgstr ""
+
+#. translators: %s: module title
+#: includes/Internals/SettingsCore.php:533
+msgctxt "Module"
+msgid "Editorial: %s"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:543
+msgctxt "Module"
+msgid "You need to flush rewrite rules!"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:573
+msgctxt "Module: Setting Section Title"
+msgid "Defaults"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:580
+msgctxt "Module: Setting Section Title"
+msgid "Miscellaneous"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:587
+msgctxt "Module: Setting Section Title"
+msgid "Front-end"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:594
+msgctxt "Module: Setting Section Title"
+msgid "Back-end"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:601
+msgctxt "Module: Setting Section Title"
+msgid "Generated Contents"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:608
+msgctxt "Module: Setting Section Title"
+msgid "Admin Dashboard"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:615
+msgctxt "Module: Setting Section Title"
+msgid "Admin Edit List"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:622
+msgctxt "Module: Setting Section Title"
+msgid "Admin List Columns"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:629
+msgctxt "Module: Setting Section Title"
+msgid "Admin Edit Post"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:636
+msgctxt "Module: Setting Section Title"
+msgid "Admin Edit Terms"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:643
+msgctxt "Module: Setting Section Title"
+msgid "Admin Comment List"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:650
+msgctxt "Module: Setting Section Title"
+msgid "Custom Strings"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:657
+msgctxt "Module: Setting Section Title"
+msgid "Availability"
+msgstr ""
+
+#: includes/Internals/SettingsCore.php:658
+msgctxt "Module: Setting Section Description"
+msgid "Though Administrators have it all!"
+msgstr ""
+
 #. translators: %s: posttype
 #: includes/Internals/SettingsFields.php:16
 msgctxt "Module"
@@ -304,6 +639,23 @@ msgstr ""
 #: includes/Internals/SettingsFields.php:131
 msgctxt "Module"
 msgid "No fields supported"
+msgstr ""
+
+#. translators: %s: taxonomy object label
+#: includes/Internals/SettingsHelp.php:52
+msgctxt "Module"
+msgid "Default Terms for %s"
+msgstr ""
+
+#. translators: %s: taxonomy object label
+#: includes/Internals/SettingsHelp.php:54
+msgctxt "Module"
+msgid "Edit Terms for %s"
+msgstr ""
+
+#: includes/Internals/SettingsHelp.php:61
+msgctxt "Module"
+msgid "No Default Terms"
 msgstr ""
 
 #: includes/Internals/SettingsPostTypes.php:43
@@ -326,192 +678,123 @@ msgctxt "Module"
 msgid "All Taxonomies"
 msgstr ""
 
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/Strings.php:91
+msgctxt "Module: Metabox Empty: `listbox_empty`"
+msgid "No items connected to &ldquo;%1$s&rdquo; %2$s!"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/Strings.php:110
+msgctxt "Internal: Strings: Metabox via Posttype: `supportedbox_title`"
+msgid "For this &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/Strings.php:115
+msgctxt "Internal: Strings: Metabox via Posttype: `printingbox_title`"
+msgid "Prints for this &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/Strings.php:120
+msgctxt "Internal: Strings: Metabox via Posttype: `mainbox_title`"
+msgid "The %2$s"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/Strings.php:126
+msgctxt "Internal: Strings: Metabox via Posttype: `pairedbox_title`"
+msgid "Connected &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/Strings.php:132
+msgctxt "Internal: Strings: Metabox via Posttype: `listbox_title`"
+msgid "In &ldquo;%1$s&rdquo; %2$s"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: includes/Internals/Strings.php:138
+msgctxt "Internal: Strings: Metabox via Posttype: `default_title`"
+msgid "About &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: current term title, %2$s: taxonomy singular name
+#: includes/Internals/Strings.php:156
+msgctxt "Internal: Strings: Metabox via Taxonomy: `supportedbox_title`"
+msgid "For this &ldquo;%2$s&rdquo;"
+msgstr ""
+
+#. translators: %1$s: current term title, %2$s: taxonomy singular name
+#: includes/Internals/Strings.php:162
+msgctxt "Internal: Strings: Metabox via Taxonomy: `default_title`"
+msgid "About &ldquo;%2$s&rdquo;"
+msgstr ""
+
 #. translators: %s: sub title
-#: includes/Module.php:379
+#: includes/Module.php:371
 msgctxt "Module: Extra Link: Reports"
 msgid "%s Reports"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:390
+#: includes/Module.php:382
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Tools"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:401
+#: includes/Module.php:393
+msgctxt "Module: Extra Link: Roles"
+msgid "%s Roles"
+msgstr ""
+
+#. translators: %s: sub title
+#: includes/Module.php:404
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Imports"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Module.php:411
+#: includes/Module.php:414
 msgctxt "Module: Extra Link: Settings"
 msgid "%s Settings"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Module.php:421
+#: includes/Module.php:424
 msgctxt "Module: Extra Link: Documentation"
 msgid "%s Documentation"
 msgstr ""
 
-#: includes/Module.php:428
-#: includes/Module.php:430
+#: includes/Module.php:431
+#: includes/Module.php:433
 msgctxt "Module: Extra Link: Documentation"
 msgid "Editorial Documentation"
 msgstr ""
 
-#: includes/Module.php:542
+#: includes/Module.php:546
 msgctxt "Module: Setting Title"
 msgid "Insert Priority"
 msgstr ""
 
-#: includes/Module.php:572
-msgctxt "Module: Button"
-msgid "Disable Module"
-msgstr ""
-
-#. translators: %s: taxonomy object label
-#: includes/Module.php:968
-msgctxt "Module"
-msgid "Default Terms for %s"
-msgstr ""
-
-#. translators: %s: taxonomy object label
-#: includes/Module.php:970
-msgctxt "Module"
-msgid "Edit Terms for %s"
-msgstr ""
-
-#: includes/Module.php:978
-msgctxt "Module"
-msgid "No Default Terms"
-msgstr ""
-
-#. translators: %s: module title
-#: includes/Module.php:1197
-msgctxt "Module"
-msgid "Editorial: %s"
-msgstr ""
-
-#: includes/Module.php:1207
-msgctxt "Module"
-msgid "You need to flush rewrite rules!"
-msgstr ""
-
-#: includes/Module.php:1237
-msgctxt "Module: Setting Section Title"
-msgid "Defaults"
-msgstr ""
-
-#: includes/Module.php:1244
-msgctxt "Module: Setting Section Title"
-msgid "Miscellaneous"
-msgstr ""
-
-#: includes/Module.php:1251
-msgctxt "Module: Setting Section Title"
-msgid "Front-end"
-msgstr ""
-
-#: includes/Module.php:1258
-msgctxt "Module: Setting Section Title"
-msgid "Back-end"
-msgstr ""
-
-#: includes/Module.php:1265
-msgctxt "Module: Setting Section Title"
-msgid "Generated Contents"
-msgstr ""
-
-#: includes/Module.php:1272
-msgctxt "Module: Setting Section Title"
-msgid "Admin Dashboard"
-msgstr ""
-
-#: includes/Module.php:1279
-msgctxt "Module: Setting Section Title"
-msgid "Admin Edit List"
-msgstr ""
-
-#: includes/Module.php:1286
-msgctxt "Module: Setting Section Title"
-msgid "Admin List Columns"
-msgstr ""
-
-#: includes/Module.php:1293
-msgctxt "Module: Setting Section Title"
-msgid "Admin Edit Post"
-msgstr ""
-
-#: includes/Module.php:1300
-msgctxt "Module: Setting Section Title"
-msgid "Admin Edit Terms"
-msgstr ""
-
-#: includes/Module.php:1307
-msgctxt "Module: Setting Section Title"
-msgid "Admin Comment List"
-msgstr ""
-
-#: includes/Module.php:1314
-msgctxt "Module: Setting Section Title"
-msgid "Custom Strings"
-msgstr ""
-
-#: includes/Module.php:1321
-msgctxt "Module: Setting Section Title"
-msgid "Availability"
-msgstr ""
-
-#: includes/Module.php:1322
-msgctxt "Module: Setting Section Description"
-msgid "Though Administrators have it all!"
-msgstr ""
-
-#. translators: %s: clone into input
-#: includes/Module.php:1521
-msgctxt "Module: Taxonomy Bulk Input Label"
-msgid "as: %s"
-msgstr ""
-
-#: includes/Module.php:1523
-msgctxt "Module: Taxonomy Bulk Input PlaceHolder"
-msgid "New Item Title"
-msgstr ""
-
-#: includes/Module.php:1526
-msgctxt "Module: Taxonomy Bulk Input Option"
-msgid "Separeted Terms"
-msgstr ""
-
-#: includes/Module.php:1527
-msgctxt "Module: Taxonomy Bulk Input Option"
-msgid "Cross Terms"
-msgstr ""
-
-#: includes/Module.php:1528
-msgctxt "Module: Taxonomy Bulk Input Option"
-msgid "Union Terms"
-msgstr ""
-
-#: includes/Module.php:2720
+#: includes/Module.php:834
 msgctxt "Module: MetaBox Default Title"
 msgid "Settings"
 msgstr ""
 
-#: includes/Module.php:2739
+#: includes/Module.php:853
 msgctxt "Module: MetaBox Default Action"
 msgid "Configure"
 msgstr ""
 
-#: includes/Module.php:3032
+#: includes/Module.php:975
 msgctxt "Module: ReadOnly Title Info"
 msgid "This Title is Auto-Generated"
 msgstr ""
 
-#: includes/Module.php:3259
+#: includes/Module.php:1169
 msgctxt "Module: Draft Metabox"
 msgid "You can see the contents once you've saved this post for the first time."
 msgstr ""
@@ -541,32 +824,32 @@ msgctxt "Modules: Activities"
 msgid "Detailed Activity Logs"
 msgstr ""
 
-#: includes/Modules/Addendum/Addendum.php:36
+#: includes/Modules/Addendum/Addendum.php:38
 msgctxt "Modules: Addendum"
 msgid "Addendum"
 msgstr ""
 
-#: includes/Modules/Addendum/Addendum.php:37
+#: includes/Modules/Addendum/Addendum.php:39
 msgctxt "Modules: Addendum"
 msgid "Content Appendages"
 msgstr ""
 
-#: includes/Modules/Agenda/Agenda.php:35
+#: includes/Modules/Agenda/Agenda.php:37
 msgctxt "Modules: Agenda"
 msgid "Agenda"
 msgstr ""
 
-#: includes/Modules/Agenda/Agenda.php:36
+#: includes/Modules/Agenda/Agenda.php:38
 msgctxt "Modules: Agenda"
 msgid "Timetable for Contents"
 msgstr ""
 
-#: includes/Modules/Almanac/Almanac.php:19
+#: includes/Modules/Almanac/Almanac.php:24
 msgctxt "Modules: Almanac"
 msgid "Almanac"
 msgstr ""
 
-#: includes/Modules/Almanac/Almanac.php:20
+#: includes/Modules/Almanac/Almanac.php:25
 msgctxt "Modules: Almanac"
 msgid "Calendar Classifications for Contents"
 msgstr ""
@@ -621,22 +904,22 @@ msgctxt "Modules: Athlete"
 msgid "Physical Skills Data"
 msgstr ""
 
-#: includes/Modules/Attachments/Attachments.php:24
+#: includes/Modules/Attachments/Attachments.php:26
 msgctxt "Modules: Attachments"
 msgid "Attachments"
 msgstr ""
 
-#: includes/Modules/Attachments/Attachments.php:25
+#: includes/Modules/Attachments/Attachments.php:27
 msgctxt "Modules: Attachments"
 msgid "Attachment Management"
 msgstr ""
 
-#: includes/Modules/Attend/Attend.php:20
+#: includes/Modules/Attend/Attend.php:27
 msgctxt "Modules: Attend"
 msgid "Attend"
 msgstr ""
 
-#: includes/Modules/Attend/Attend.php:21
+#: includes/Modules/Attend/Attend.php:28
 msgctxt "Modules: Attend"
 msgid "Editorial Attendance List"
 msgstr ""
@@ -651,22 +934,22 @@ msgctxt "Modules: Audit"
 msgid "Content Inventory Tools"
 msgstr ""
 
-#: includes/Modules/Badges/Badges.php:25
+#: includes/Modules/Badges/Badges.php:26
 msgctxt "Modules: Badges"
 msgid "Badges"
 msgstr ""
 
-#: includes/Modules/Badges/Badges.php:26
+#: includes/Modules/Badges/Badges.php:27
 msgctxt "Modules: Badges"
 msgid "Editorial Content Badges"
 msgstr ""
 
-#: includes/Modules/Banking/Banking.php:43
+#: includes/Modules/Banking/Banking.php:45
 msgctxt "Modules: Banking"
 msgid "Banking"
 msgstr ""
 
-#: includes/Modules/Banking/Banking.php:44
+#: includes/Modules/Banking/Banking.php:46
 msgctxt "Modules: Banking"
 msgid "Bank and Fiscal Management"
 msgstr ""
@@ -681,22 +964,22 @@ msgctxt "Modules: Biblio"
 msgid "Editorial Bibliography Tools"
 msgstr ""
 
-#: includes/Modules/Book/Book.php:37
+#: includes/Modules/Book/Book.php:40
 msgctxt "Modules: Book"
 msgid "Book"
 msgstr ""
 
-#: includes/Modules/Book/Book.php:38
+#: includes/Modules/Book/Book.php:41
 msgctxt "Modules: Book"
 msgid "Online House of Publications"
 msgstr ""
 
-#: includes/Modules/Booked/Booked.php:20
+#: includes/Modules/Booked/Booked.php:21
 msgctxt "Modules: Booked"
 msgid "Booked"
 msgstr ""
 
-#: includes/Modules/Booked/Booked.php:21
+#: includes/Modules/Booked/Booked.php:22
 msgctxt "Modules: Booked"
 msgid "Editorial Resource Scheduling"
 msgstr ""
@@ -726,57 +1009,67 @@ msgctxt "Modules: Calendar"
 msgid "Needs gPersianDate"
 msgstr ""
 
-#: includes/Modules/Careers/Careers.php:18
+#: includes/Modules/Careers/Careers.php:19
 msgctxt "Modules: Careers"
 msgid "Careers"
 msgstr ""
 
-#: includes/Modules/Careers/Careers.php:19
+#: includes/Modules/Careers/Careers.php:20
 msgctxt "Modules: Careers"
 msgid "Editorial Job Openings"
 msgstr ""
 
-#: includes/Modules/Cartable/Cartable.php:34
+#: includes/Modules/Cartable/Cartable.php:35
 msgctxt "Modules: Cartable"
 msgid "Cartable"
 msgstr ""
 
-#: includes/Modules/Cartable/Cartable.php:35
+#: includes/Modules/Cartable/Cartable.php:36
 msgctxt "Modules: Cartable"
 msgid "Customized Content Folders"
 msgstr ""
 
-#: includes/Modules/Checked/Checked.php:34
+#: includes/Modules/Certificated/Certificated.php:25
+msgctxt "Modules: Certificated"
+msgid "Certificated"
+msgstr ""
+
+#: includes/Modules/Certificated/Certificated.php:26
+msgctxt "Modules: Certificated"
+msgid "Content Certifications"
+msgstr ""
+
+#: includes/Modules/Checked/Checked.php:37
 msgctxt "Modules: Checked"
 msgid "Checked"
 msgstr ""
 
-#: includes/Modules/Checked/Checked.php:35
+#: includes/Modules/Checked/Checked.php:38
 msgctxt "Modules: Checked"
 msgid "Editorial Content Checklists"
 msgstr ""
 
-#: includes/Modules/Chores/Chores.php:17
+#: includes/Modules/Chores/Chores.php:19
 msgctxt "Modules: Chores"
 msgid "Chores"
 msgstr ""
 
-#: includes/Modules/Collect/Collect.php:27
+#: includes/Modules/Collect/Collect.php:30
 msgctxt "Modules: Collect"
 msgid "Collect"
 msgstr ""
 
-#: includes/Modules/Collect/Collect.php:28
+#: includes/Modules/Collect/Collect.php:31
 msgctxt "Modules: Collect"
 msgid "Create and use Collections of Posts"
 msgstr ""
 
-#: includes/Modules/Combination/Combination.php:17
+#: includes/Modules/Combination/Combination.php:19
 msgctxt "Modules: Combination"
 msgid "Combination"
 msgstr ""
 
-#: includes/Modules/Combination/Combination.php:18
+#: includes/Modules/Combination/Combination.php:20
 msgctxt "Modules: Combination"
 msgid "Alternate Word Forms"
 msgstr ""
@@ -791,22 +1084,22 @@ msgctxt "Modules: Comments"
 msgid "Restricted Editorial Comments"
 msgstr ""
 
-#: includes/Modules/Committee/Committee.php:22
+#: includes/Modules/Committee/Committee.php:25
 msgctxt "Modules: Committee"
 msgid "Committee"
 msgstr ""
 
-#: includes/Modules/Committee/Committee.php:23
+#: includes/Modules/Committee/Committee.php:26
 msgctxt "Modules: Committee"
 msgid "The Assembly of Editorial"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:38
+#: includes/Modules/Config/Config.php:40
 msgctxt "Modules: Config"
 msgid "Editorial"
 msgstr ""
 
-#: includes/Modules/Config/Config.php:39
+#: includes/Modules/Config/Config.php:41
 msgctxt "Modules: Config"
 msgid "WordPress in Magazine Style"
 msgstr ""
@@ -826,7 +1119,17 @@ msgctxt "Modules: Connected"
 msgid "Needs Posts-to-Posts"
 msgstr ""
 
-#: includes/Modules/ContactCards/ContactCards.php:23
+#: includes/Modules/Conscripted/Conscripted.php:25
+msgctxt "Modules: Conscripted"
+msgid "Conscripted"
+msgstr ""
+
+#: includes/Modules/Conscripted/Conscripted.php:26
+msgctxt "Modules: Conscripted"
+msgid "State-mandated National Service"
+msgstr ""
+
+#: includes/Modules/ContactCards/ContactCards.php:24
 msgctxt "Modules: Contact Cards"
 msgid "Contact Cards"
 msgstr ""
@@ -841,12 +1144,12 @@ msgctxt "Modules: Contents"
 msgid "Contents"
 msgstr ""
 
-#: includes/Modules/Contest/Contest.php:31
+#: includes/Modules/Contest/Contest.php:34
 msgctxt "Modules: Contest"
 msgid "Contest"
 msgstr ""
 
-#: includes/Modules/Contest/Contest.php:32
+#: includes/Modules/Contest/Contest.php:35
 msgctxt "Modules: Contest"
 msgid "Contest Management"
 msgstr ""
@@ -871,12 +1174,12 @@ msgctxt "Modules: Countables"
 msgid "Editorial Countable Items"
 msgstr ""
 
-#: includes/Modules/Course/Course.php:29
+#: includes/Modules/Course/Course.php:33
 msgctxt "Modules: Course"
 msgid "Course"
 msgstr ""
 
-#: includes/Modules/Course/Course.php:30
+#: includes/Modules/Course/Course.php:34
 msgctxt "Modules: Course"
 msgid "Course and Lesson Management"
 msgstr ""
@@ -926,12 +1229,12 @@ msgctxt "Modules: Descendants"
 msgid "Descendants"
 msgstr ""
 
-#: includes/Modules/Designated/Designated.php:21
+#: includes/Modules/Designated/Designated.php:23
 msgctxt "Modules: Designated"
 msgid "Designated"
 msgstr ""
 
-#: includes/Modules/Designated/Designated.php:22
+#: includes/Modules/Designated/Designated.php:24
 msgctxt "Modules: Designated"
 msgid "Content Term Designations"
 msgstr ""
@@ -946,47 +1249,47 @@ msgctxt "Modules: Directions"
 msgid "Content Address Management"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:29
+#: includes/Modules/Districted/Districted.php:31
 msgctxt "Modules: Districted"
 msgid "Districted"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:30
+#: includes/Modules/Districted/Districted.php:32
 msgctxt "Modules: Districted"
 msgid "Provincial Divisions for Contents"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:297
+#: includes/Modules/Districted/Districted.php:299
 msgctxt "Module: Paired: Card Title"
 msgid "Paired Tools"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:300
+#: includes/Modules/Districted/Districted.php:302
 msgctxt "Module: Paired: Button"
 msgid "Sync Paired Terms"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:301
+#: includes/Modules/Districted/Districted.php:303
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to set the paired term for all the main posts."
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:305
+#: includes/Modules/Districted/Districted.php:307
 msgctxt "Module: Paired: Button"
 msgid "Create Paired Terms"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:306
+#: includes/Modules/Districted/Districted.php:308
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to create paired terms for all the main posts."
 msgstr ""
 
-#: includes/Modules/Divided/Divided.php:26
+#: includes/Modules/Divided/Divided.php:28
 msgctxt "Modules: Divided"
 msgid "Divided"
 msgstr ""
 
-#: includes/Modules/Divided/Divided.php:27
+#: includes/Modules/Divided/Divided.php:29
 msgctxt "Modules: Divided"
 msgid "Country Divided World"
 msgstr ""
@@ -1001,17 +1304,17 @@ msgctxt "Modules: Divisions"
 msgid "Post Divisions Management"
 msgstr ""
 
-#: includes/Modules/DocumentRevisions/DocumentRevisions.php:18
+#: includes/Modules/DocumentRevisions/DocumentRevisions.php:26
 msgctxt "Modules: Document Revisions"
 msgid "Document Revisions"
 msgstr ""
 
-#: includes/Modules/DocumentRevisions/DocumentRevisions.php:19
+#: includes/Modules/DocumentRevisions/DocumentRevisions.php:27
 msgctxt "Modules: Document Revisions"
 msgid "WP-Document-Revisions Companion"
 msgstr ""
 
-#: includes/Modules/DocumentRevisions/DocumentRevisions.php:22
+#: includes/Modules/DocumentRevisions/DocumentRevisions.php:30
 msgctxt "Modules: Document Revisions"
 msgid "Needs WP-Document-Revisions"
 msgstr ""
@@ -1026,32 +1329,32 @@ msgctxt "Modules: Documents"
 msgid "Editorial Document Management"
 msgstr ""
 
-#: includes/Modules/Dossier/Dossier.php:33
+#: includes/Modules/Dossier/Dossier.php:37
 msgctxt "Modules: Dossier"
 msgid "Dossier"
 msgstr ""
 
-#: includes/Modules/Dossier/Dossier.php:34
+#: includes/Modules/Dossier/Dossier.php:38
 msgctxt "Modules: Dossier"
 msgid "Collection of Contents"
 msgstr ""
 
-#: includes/Modules/Drafts/Drafts.php:21
+#: includes/Modules/Drafts/Drafts.php:23
 msgctxt "Modules: Drafts"
 msgid "Drafts"
 msgstr ""
 
-#: includes/Modules/Drafts/Drafts.php:22
+#: includes/Modules/Drafts/Drafts.php:24
 msgctxt "Modules: Drafts"
 msgid "Tools to Work With Drafts"
 msgstr ""
 
-#: includes/Modules/Driving/Driving.php:27
+#: includes/Modules/Driving/Driving.php:29
 msgctxt "Modules: Driving"
 msgid "Driving"
 msgstr ""
 
-#: includes/Modules/Driving/Driving.php:28
+#: includes/Modules/Driving/Driving.php:30
 msgctxt "Modules: Driving"
 msgid "Editorial Drivers Management"
 msgstr ""
@@ -1061,22 +1364,22 @@ msgctxt "Modules: Echelon"
 msgid "Echelon"
 msgstr ""
 
-#: includes/Modules/Educated/Educated.php:24
+#: includes/Modules/Educated/Educated.php:25
 msgctxt "Modules: Educated"
 msgid "Educated"
 msgstr ""
 
-#: includes/Modules/Educated/Educated.php:25
+#: includes/Modules/Educated/Educated.php:26
 msgctxt "Modules: Educated"
 msgid "Editorial Educations"
 msgstr ""
 
-#: includes/Modules/Employed/Employed.php:20
+#: includes/Modules/Employed/Employed.php:29
 msgctxt "Modules: Employed"
 msgid "Employed"
 msgstr ""
 
-#: includes/Modules/Employed/Employed.php:21
+#: includes/Modules/Employed/Employed.php:30
 msgctxt "Modules: Employed"
 msgid "Editorial Employment Records"
 msgstr ""
@@ -1091,12 +1394,12 @@ msgctxt "Modules: Entry"
 msgid "Wiki-like Posts Entries"
 msgstr ""
 
-#: includes/Modules/Estimated/Estimated.php:23
+#: includes/Modules/Estimated/Estimated.php:24
 msgctxt "Modules: Estimated"
 msgid "Estimated"
 msgstr ""
 
-#: includes/Modules/Estimated/Estimated.php:24
+#: includes/Modules/Estimated/Estimated.php:25
 msgctxt "Modules: Estimated"
 msgid "Average Required Reading Time"
 msgstr ""
@@ -1106,12 +1409,12 @@ msgctxt "Modules: Evaluation"
 msgid "Evaluation"
 msgstr ""
 
-#: includes/Modules/Event/Event.php:22
+#: includes/Modules/Event/Event.php:24
 msgctxt "Modules: Event"
 msgid "Event"
 msgstr ""
 
-#: includes/Modules/Event/Event.php:23
+#: includes/Modules/Event/Event.php:25
 msgctxt "Modules: Event"
 msgid "Integrated Events"
 msgstr ""
@@ -1119,6 +1422,16 @@ msgstr ""
 #: includes/Modules/Excluder/Excluder.php:20
 msgctxt "Modules: Excluder"
 msgid "Excluder"
+msgstr ""
+
+#: includes/Modules/Executed/Executed.php:25
+msgctxt "Modules: Executed"
+msgid "Executed"
+msgstr ""
+
+#: includes/Modules/Executed/Executed.php:26
+msgctxt "Modules: Executed"
+msgid "Editorial Executions"
 msgstr ""
 
 #: includes/Modules/Exporter/Exporter.php:29
@@ -1131,12 +1444,12 @@ msgctxt "Modules: Exporter"
 msgid "Data Export Tools"
 msgstr ""
 
-#: includes/Modules/External/External.php:23
+#: includes/Modules/External/External.php:21
 msgctxt "Modules: External"
 msgid "External"
 msgstr ""
 
-#: includes/Modules/External/External.php:24
+#: includes/Modules/External/External.php:22
 msgctxt "Modules: External"
 msgid "Outbound Link Management"
 msgstr ""
@@ -1221,12 +1534,12 @@ msgctxt "Modules: Geo"
 msgid "Curated Geo-data"
 msgstr ""
 
-#: includes/Modules/Grouping/Grouping.php:18
+#: includes/Modules/Grouping/Grouping.php:19
 msgctxt "Modules: Grouping"
 msgid "Grouping"
 msgstr ""
 
-#: includes/Modules/Grouping/Grouping.php:19
+#: includes/Modules/Grouping/Grouping.php:20
 msgctxt "Modules: Grouping"
 msgid "Custom Taxonomies for Users"
 msgstr ""
@@ -1241,22 +1554,22 @@ msgctxt "Modules: Headings"
 msgid "Table of Contents"
 msgstr ""
 
-#: includes/Modules/Helpdesk/Helpdesk.php:20
+#: includes/Modules/Helpdesk/Helpdesk.php:21
 msgctxt "Modules: Helpdesk"
 msgid "Helpdesk"
 msgstr ""
 
-#: includes/Modules/Helpdesk/Helpdesk.php:21
+#: includes/Modules/Helpdesk/Helpdesk.php:22
 msgctxt "Modules: Helpdesk"
 msgid "Editorial Support Management"
 msgstr ""
 
-#: includes/Modules/Highlight/Highlight.php:20
+#: includes/Modules/Highlight/Highlight.php:23
 msgctxt "Modules: Highlight"
 msgid "Highlight"
 msgstr ""
 
-#: includes/Modules/Highlight/Highlight.php:21
+#: includes/Modules/Highlight/Highlight.php:24
 msgctxt "Modules: Highlight"
 msgid "New Posts for Returning Visitors"
 msgstr ""
@@ -1281,6 +1594,16 @@ msgctxt "Modules: Home"
 msgid "Customized Homepage"
 msgstr ""
 
+#: includes/Modules/Honored/Honored.php:25
+msgctxt "Modules: Honored"
+msgid "Honored"
+msgstr ""
+
+#: includes/Modules/Honored/Honored.php:26
+msgctxt "Modules: Honored"
+msgid "With Great Respect"
+msgstr ""
+
 #: includes/Modules/Identical/Identical.php:22
 msgctxt "Modules: Identical"
 msgid "Identical"
@@ -1301,12 +1624,12 @@ msgctxt "Modules: Identified"
 msgid "Content Identification Management"
 msgstr ""
 
-#: includes/Modules/Importer/Importer.php:27
+#: includes/Modules/Importer/Importer.php:28
 msgctxt "Modules: Importer"
 msgid "Importer"
 msgstr ""
 
-#: includes/Modules/Importer/Importer.php:28
+#: includes/Modules/Importer/Importer.php:29
 msgctxt "Modules: Importer"
 msgid "Data Import Tools"
 msgstr ""
@@ -1391,6 +1714,16 @@ msgctxt "Modules: Labeled"
 msgid "Custom Labels for Contents"
 msgstr ""
 
+#: includes/Modules/Laddered/Laddered.php:19
+msgctxt "Modules: Laddered"
+msgid "Laddered"
+msgstr ""
+
+#: includes/Modules/Laddered/Laddered.php:20
+msgctxt "Modules: Laddered"
+msgid "Hierarchy of Contents"
+msgstr ""
+
 #: includes/Modules/Letter/Letter.php:19
 msgctxt "Modules: Letter"
 msgid "Letter"
@@ -1411,42 +1744,42 @@ msgctxt "Modules: Lexicon"
 msgid "The Vocabulary of Content"
 msgstr ""
 
-#: includes/Modules/Licensed/Licensed.php:24
+#: includes/Modules/Licensed/Licensed.php:25
 msgctxt "Modules: Licensed"
 msgid "Licensed"
 msgstr ""
 
-#: includes/Modules/Licensed/Licensed.php:25
+#: includes/Modules/Licensed/Licensed.php:26
 msgctxt "Modules: Licensed"
 msgid "Driver Licence Management"
 msgstr ""
 
-#: includes/Modules/Like/Like.php:25
+#: includes/Modules/Like/Like.php:26
 msgctxt "Modules: Like"
 msgid "Like"
 msgstr ""
 
-#: includes/Modules/Like/Like.php:26
+#: includes/Modules/Like/Like.php:27
 msgctxt "Modules: Like"
 msgid "Like Button for Guests and Users"
 msgstr ""
 
-#: includes/Modules/Lingo/Lingo.php:29
+#: includes/Modules/Lingo/Lingo.php:32
 msgctxt "Modules: Lingo"
 msgid "Lingo"
 msgstr ""
 
-#: includes/Modules/Lingo/Lingo.php:30
+#: includes/Modules/Lingo/Lingo.php:33
 msgctxt "Modules: Lingo"
 msgid "Language Identifiers"
 msgstr ""
 
-#: includes/Modules/Magazine/Magazine.php:31
+#: includes/Modules/Magazine/Magazine.php:35
 msgctxt "Modules: Magazine"
 msgid "Magazine"
 msgstr ""
 
-#: includes/Modules/Magazine/Magazine.php:32
+#: includes/Modules/Magazine/Magazine.php:36
 msgctxt "Modules: Magazine"
 msgid "Magazine Issue Management"
 msgstr ""
@@ -1461,12 +1794,12 @@ msgctxt "Modules: Markdown"
 msgid "Write Posts in Markdown"
 msgstr ""
 
-#: includes/Modules/Market/Market.php:29
+#: includes/Modules/Market/Market.php:32
 msgctxt "Modules: Market"
 msgid "Market"
 msgstr ""
 
-#: includes/Modules/Market/Market.php:30
+#: includes/Modules/Market/Market.php:33
 msgctxt "Modules: Market"
 msgid "Provider Listings"
 msgstr ""
@@ -1491,22 +1824,22 @@ msgctxt "Modules: Masthead"
 msgid "Editorial Identifying Information"
 msgstr ""
 
-#: includes/Modules/Medic/Medic.php:22
+#: includes/Modules/Medic/Medic.php:23
 msgctxt "Modules: Medic"
 msgid "Medic"
 msgstr ""
 
-#: includes/Modules/Medic/Medic.php:23
+#: includes/Modules/Medic/Medic.php:24
 msgctxt "Modules: Medic"
 msgid "Editorial Medical Records"
 msgstr ""
 
-#: includes/Modules/Meeted/Meeted.php:27
+#: includes/Modules/Meeted/Meeted.php:30
 msgctxt "Modules: Meeted"
 msgid "Meeted"
 msgstr ""
 
-#: includes/Modules/Meeted/Meeted.php:28
+#: includes/Modules/Meeted/Meeted.php:31
 msgctxt "Modules: Meeted"
 msgid "Editorial Meeting Management"
 msgstr ""
@@ -1531,12 +1864,12 @@ msgctxt "Modules: Metering"
 msgid "Metering"
 msgstr ""
 
-#: includes/Modules/Missioned/Missioned.php:33
+#: includes/Modules/Missioned/Missioned.php:41
 msgctxt "Modules: Missioned"
 msgid "Missioned"
 msgstr ""
 
-#: includes/Modules/Missioned/Missioned.php:34
+#: includes/Modules/Missioned/Missioned.php:42
 msgctxt "Modules: Missioned"
 msgid "Editorial Mission Management"
 msgstr ""
@@ -1551,32 +1884,32 @@ msgctxt "Modules: Modified"
 msgid "Last Modifications"
 msgstr ""
 
-#: includes/Modules/Motorcade/Motorcade.php:22
+#: includes/Modules/Motorcade/Motorcade.php:24
 msgctxt "Modules: Motorcade"
 msgid "Motorcade"
 msgstr ""
 
-#: includes/Modules/Motorcade/Motorcade.php:23
+#: includes/Modules/Motorcade/Motorcade.php:25
 msgctxt "Modules: Motorcade"
 msgid "Editorial Vehicle Management"
 msgstr ""
 
-#: includes/Modules/Movies/Movies.php:21
+#: includes/Modules/Movies/Movies.php:24
 msgctxt "Modules: Movies"
 msgid "Movies"
 msgstr ""
 
-#: includes/Modules/Movies/Movies.php:22
+#: includes/Modules/Movies/Movies.php:25
 msgctxt "Modules: Movies"
 msgid "Editorial Library of Films"
 msgstr ""
 
-#: includes/Modules/Naming/Naming.php:27
+#: includes/Modules/Naming/Naming.php:29
 msgctxt "Modules: Naming"
 msgid "Naming"
 msgstr ""
 
-#: includes/Modules/Naming/Naming.php:28
+#: includes/Modules/Naming/Naming.php:30
 msgctxt "Modules: Naming"
 msgid "Name Tools and Enhancements"
 msgstr ""
@@ -1591,12 +1924,12 @@ msgctxt "Modules: National Library"
 msgid "Tools for National Library and Archives"
 msgstr ""
 
-#: includes/Modules/NextOfKin/NextOfKin.php:32
+#: includes/Modules/NextOfKin/NextOfKin.php:36
 msgctxt "Modules: Next of Kin"
 msgid "Next of Kin"
 msgstr ""
 
-#: includes/Modules/NextOfKin/NextOfKin.php:33
+#: includes/Modules/NextOfKin/NextOfKin.php:37
 msgctxt "Modules: Next of Kin"
 msgid "Familial Relations"
 msgstr ""
@@ -1631,12 +1964,12 @@ msgctxt "Modules: Operations"
 msgid "Editorial Operation Management"
 msgstr ""
 
-#: includes/Modules/Organization/Organization.php:37
+#: includes/Modules/Organization/Organization.php:40
 msgctxt "Modules: Organization"
 msgid "Organization"
 msgstr ""
 
-#: includes/Modules/Organization/Organization.php:38
+#: includes/Modules/Organization/Organization.php:41
 msgctxt "Modules: Organization"
 msgid "Departments of Editorial"
 msgstr ""
@@ -1691,12 +2024,12 @@ msgctxt "Modules: Paper"
 msgid "Printable Version of Posts"
 msgstr ""
 
-#: includes/Modules/Papered/Papered.php:49
+#: includes/Modules/Papered/Papered.php:41
 msgctxt "Modules: Papered"
 msgid "Papered"
 msgstr ""
 
-#: includes/Modules/Papered/Papered.php:50
+#: includes/Modules/Papered/Papered.php:42
 msgctxt "Modules: Papered"
 msgid "Editorial Print Profiles"
 msgstr ""
@@ -1731,84 +2064,89 @@ msgctxt "Modules: Person"
 msgid "People, the Way Involved in Your Site"
 msgstr ""
 
-#: includes/Modules/Persona/Persona.php:29
+#: includes/Modules/Persona/Persona.php:31
 msgctxt "Modules: Persona"
 msgid "Persona"
 msgstr ""
 
-#: includes/Modules/Persona/Persona.php:30
+#: includes/Modules/Persona/Persona.php:32
 msgctxt "Modules: Persona"
 msgid "Human Resource Management for Editorial"
 msgstr ""
 
-#: includes/Modules/Phonebook/Phonebook.php:28
+#: includes/Modules/Phonebook/Phonebook.php:30
 msgctxt "Modules: Phonebook"
 msgid "Phonebook"
 msgstr ""
 
-#: includes/Modules/Phonebook/Phonebook.php:29
+#: includes/Modules/Phonebook/Phonebook.php:31
 msgctxt "Modules: Phonebook"
 msgid "Contact Information for Contents"
 msgstr ""
 
-#: includes/Modules/Phonetic/Phonetic.php:19
+#: includes/Modules/Phonetic/Phonetic.php:20
 msgctxt "Modules: Phonetic"
 msgid "Phonetic"
 msgstr ""
 
-#: includes/Modules/Phonetic/Phonetic.php:20
+#: includes/Modules/Phonetic/Phonetic.php:21
 msgctxt "Modules: Phonetic"
 msgid "Alphabetic System of Phonetic Notation"
 msgstr ""
 
-#: includes/Modules/Pitches/Pitches.php:17
+#: includes/Modules/Pitches/Pitches.php:19
 msgctxt "Modules: Pitches"
 msgid "Pitches"
 msgstr ""
 
-#: includes/Modules/Pitches/Pitches.php:18
+#: includes/Modules/Pitches/Pitches.php:20
 msgctxt "Modules: Pitches"
 msgid "Keep Track of Ideas"
 msgstr ""
 
-#: includes/Modules/Pointers/Pointers.php:17
+#: includes/Modules/Pointers/Pointers.php:18
 msgctxt "Modules: Pointers"
 msgid "Pointers"
 msgstr ""
 
-#: includes/Modules/Pointers/Pointers.php:18
+#: includes/Modules/Pointers/Pointers.php:19
 msgctxt "Modules: Pointers"
 msgid "Editorial Content Hints"
 msgstr ""
 
-#: includes/Modules/Positions/Positions.php:21
+#: includes/Modules/Positions/Positions.php:22
 msgctxt "Modules: Positions"
 msgid "Positions"
 msgstr ""
 
-#: includes/Modules/Positions/Positions.php:22
+#: includes/Modules/Positions/Positions.php:23
 msgctxt "Modules: Positions"
 msgid "Content Position Management"
 msgstr ""
 
-#: includes/Modules/Printer/Printer.php:18
+#: includes/Modules/Printer/Printer.php:19
 msgctxt "Modules: Printer"
 msgid "Printer"
 msgstr ""
 
-#: includes/Modules/Printer/Printer.php:19
+#: includes/Modules/Printer/Printer.php:20
 msgctxt "Modules: Printer"
 msgid "Editorial Print Server"
 msgstr ""
 
-#: includes/Modules/Prioritized/Prioritized.php:21
+#: includes/Modules/Prioritized/Prioritized.php:22
 msgctxt "Modules: Prioritized"
 msgid "Prioritized"
 msgstr ""
 
-#: includes/Modules/Programmed/Programmed.php:18
+#: includes/Modules/Programmed/Programmed.php:41
 msgctxt "Modules: Programmed"
 msgid "Programmed"
+msgstr ""
+
+#: includes/Modules/Programmed/Programmed.php:42
+msgctxt "Modules: Programmed"
+msgid "Editorial Program Management"
 msgstr ""
 
 #: includes/Modules/Promote/Promote.php:18
@@ -1821,17 +2159,17 @@ msgctxt "Modules: Promote"
 msgid "Assign Promotions to Editorial Staff"
 msgstr ""
 
-#: includes/Modules/Property/Property.php:24
+#: includes/Modules/Property/Property.php:26
 msgctxt "Modules: Property"
 msgid "Property"
 msgstr ""
 
-#: includes/Modules/Property/Property.php:25
+#: includes/Modules/Property/Property.php:27
 msgctxt "Modules: Property"
 msgid "Editorial Property Management"
 msgstr ""
 
-#: includes/Modules/Queried/Queried.php:18
+#: includes/Modules/Queried/Queried.php:19
 msgctxt "Modules: Queried"
 msgid "Queried"
 msgstr ""
@@ -1846,22 +2184,22 @@ msgctxt "Modules: Quotation"
 msgid "Snippets from Content"
 msgstr ""
 
-#: includes/Modules/Quran/Quran.php:16
+#: includes/Modules/Quran/Quran.php:17
 msgctxt "Modules: Quran"
 msgid "Quran"
 msgstr ""
 
-#: includes/Modules/Quran/Quran.php:17
+#: includes/Modules/Quran/Quran.php:18
 msgctxt "Modules: Quran"
 msgid "Revelation from God"
 msgstr ""
 
-#: includes/Modules/Ranked/Ranked.php:24
+#: includes/Modules/Ranked/Ranked.php:25
 msgctxt "Modules: Ranked"
 msgid "Ranked"
 msgstr ""
 
-#: includes/Modules/Ranked/Ranked.php:25
+#: includes/Modules/Ranked/Ranked.php:26
 msgctxt "Modules: Ranked"
 msgid "Ranking for Editorial Content"
 msgstr ""
@@ -1876,12 +2214,12 @@ msgctxt "Modules: Rating"
 msgid "Quality Assessment of Contents"
 msgstr ""
 
-#: includes/Modules/Recommended/Recommended.php:18
+#: includes/Modules/Recommended/Recommended.php:19
 msgctxt "Modules: Recommended"
 msgid "Recommended"
 msgstr ""
 
-#: includes/Modules/Recommended/Recommended.php:19
+#: includes/Modules/Recommended/Recommended.php:20
 msgctxt "Modules: Recommended"
 msgid "Editorial Recommendations"
 msgstr ""
@@ -1904,6 +2242,16 @@ msgstr ""
 #: includes/Modules/Redundancy/Redundancy.php:48
 msgctxt "Modules: Redundancy"
 msgid "Redundant Term Strings"
+msgstr ""
+
+#: includes/Modules/Regioned/Regioned.php:25
+msgctxt "Modules: Regioned"
+msgid "Regioned"
+msgstr ""
+
+#: includes/Modules/Regioned/Regioned.php:26
+msgctxt "Modules: Regioned"
+msgid "Reginality of Contents"
 msgstr ""
 
 #: includes/Modules/Related/Related.php:21
@@ -1936,12 +2284,12 @@ msgctxt "Modules: Request"
 msgid "Editorial Requisition Management"
 msgstr ""
 
-#: includes/Modules/Reshare/Reshare.php:19
+#: includes/Modules/Reshare/Reshare.php:20
 msgctxt "Modules: Reshare"
 msgid "Reshare"
 msgstr ""
 
-#: includes/Modules/Reshare/Reshare.php:20
+#: includes/Modules/Reshare/Reshare.php:21
 msgctxt "Modules: Reshare"
 msgid "Contents from Other Sources"
 msgstr ""
@@ -1956,38 +2304,38 @@ msgctxt "Modules: Resolved"
 msgid "Public Status of the Contents"
 msgstr ""
 
-#: includes/Modules/Resources/Resources.php:27
+#: includes/Modules/Resources/Resources.php:30
 msgctxt "Modules: Resources"
 msgid "Resources"
 msgstr ""
 
-#: includes/Modules/Resources/Resources.php:28
+#: includes/Modules/Resources/Resources.php:31
 msgctxt "Modules: Resources"
 msgid "Organized Resources"
 msgstr ""
 
-#: includes/Modules/Revisions/Revisions.php:33
+#: includes/Modules/Revisions/Revisions.php:34
 msgctxt "Modules: Revisions"
 msgid "Revisions"
 msgstr ""
 
-#: includes/Modules/Revisions/Revisions.php:34
+#: includes/Modules/Revisions/Revisions.php:35
 msgctxt "Modules: Revisions"
 msgid "Revision Management"
 msgstr ""
 
-#: includes/Modules/Revisions/Revisions.php:40
+#: includes/Modules/Revisions/Revisions.php:41
 msgctxt "Modules: Revisions"
 msgid "Deactivated by Constant"
 msgstr ""
 
-#: includes/Modules/Roles/Roles.php:24
-msgctxt "Modules: Roles"
-msgid "Roles"
+#: includes/Modules/Roled/Roled.php:24
+msgctxt "Modules: Roled"
+msgid "Roled"
 msgstr ""
 
-#: includes/Modules/Roles/Roles.php:25
-msgctxt "Modules: Roles"
+#: includes/Modules/Roled/Roled.php:25
+msgctxt "Modules: Roled"
 msgid "Member & Role Management"
 msgstr ""
 
@@ -2016,12 +2364,12 @@ msgctxt "Modules: Schedule"
 msgid "Needs gPersianDate"
 msgstr ""
 
-#: includes/Modules/School/School.php:24
+#: includes/Modules/School/School.php:25
 msgctxt "Modules: School"
 msgid "School"
 msgstr ""
 
-#: includes/Modules/School/School.php:25
+#: includes/Modules/School/School.php:26
 msgctxt "Modules: School"
 msgid "Where Teaching and Learning"
 msgstr ""
@@ -2031,12 +2379,12 @@ msgctxt "Modules: Scores"
 msgid "Scores"
 msgstr ""
 
-#: includes/Modules/Scrape/Scrape.php:21
+#: includes/Modules/Scrape/Scrape.php:22
 msgctxt "Modules: Scrape"
 msgid "Scrape"
 msgstr ""
 
-#: includes/Modules/Scrape/Scrape.php:22
+#: includes/Modules/Scrape/Scrape.php:23
 msgctxt "Modules: Scrape"
 msgid "Managing Raw Data Stacks"
 msgstr ""
@@ -2121,6 +2469,16 @@ msgctxt "Modules: Sitemap"
 msgid "XML Sitemap for Search Engines"
 msgstr ""
 
+#: includes/Modules/Skilled/Skilled.php:41
+msgctxt "Modules: Skilled"
+msgid "Skilled"
+msgstr ""
+
+#: includes/Modules/Skilled/Skilled.php:42
+msgctxt "Modules: Skilled"
+msgid "Editorial Expertise"
+msgstr ""
+
 #: includes/Modules/Socialite/Socialite.php:26
 msgctxt "Modules: Socialite"
 msgid "Socialite"
@@ -2141,7 +2499,7 @@ msgctxt "Modules: Specs"
 msgid "Post Specifications"
 msgstr ""
 
-#: includes/Modules/Speedy/Speedy.php:23
+#: includes/Modules/Speedy/Speedy.php:24
 msgctxt "Modules: Speedy"
 msgid "Speedy"
 msgstr ""
@@ -2156,12 +2514,12 @@ msgctxt "Modules: Staff"
 msgid "Editorial Employments"
 msgstr ""
 
-#: includes/Modules/StaticCovers/StaticCovers.php:18
+#: includes/Modules/StaticCovers/StaticCovers.php:25
 msgctxt "Modules: Static Covers"
 msgid "Static Covers"
 msgstr ""
 
-#: includes/Modules/StaticCovers/StaticCovers.php:19
+#: includes/Modules/StaticCovers/StaticCovers.php:26
 msgctxt "Modules: Static Covers"
 msgid "Alternative Cover Management"
 msgstr ""
@@ -2176,17 +2534,17 @@ msgctxt "Modules: Statistics"
 msgid "Editorial Content Reports"
 msgstr ""
 
-#: includes/Modules/Statuses/Statuses.php:24
+#: includes/Modules/Statuses/Statuses.php:22
 msgctxt "Modules: Statuses"
 msgid "Statuses"
 msgstr ""
 
-#: includes/Modules/Statuses/Statuses.php:25
+#: includes/Modules/Statuses/Statuses.php:23
 msgctxt "Modules: Statuses"
 msgid "WP-Statuses Companion"
 msgstr ""
 
-#: includes/Modules/Statuses/Statuses.php:28
+#: includes/Modules/Statuses/Statuses.php:26
 msgctxt "Modules: Statuses"
 msgid "Needs WP Statuses"
 msgstr ""
@@ -2199,6 +2557,16 @@ msgstr ""
 #: includes/Modules/Submit/Submit.php:19
 msgctxt "Modules: Submit"
 msgid "FrontPage Submissions"
+msgstr ""
+
+#: includes/Modules/Sufficed/Sufficed.php:26
+msgctxt "Modules: Sufficed"
+msgid "Sufficed"
+msgstr ""
+
+#: includes/Modules/Sufficed/Sufficed.php:27
+msgctxt "Modules: Sufficed"
+msgid "Content Deficiencies"
 msgstr ""
 
 #: includes/Modules/Suited/Suited.php:25
@@ -2231,22 +2599,22 @@ msgctxt "Modules: Switcher"
 msgid "Bulk Conversion Utility"
 msgstr ""
 
-#: includes/Modules/Symposium/Symposium.php:18
+#: includes/Modules/Symposium/Symposium.php:19
 msgctxt "Modules: Symposium"
 msgid "Symposium"
 msgstr ""
 
-#: includes/Modules/Symposium/Symposium.php:19
+#: includes/Modules/Symposium/Symposium.php:20
 msgctxt "Modules: Symposium"
 msgid "Editorial Session Management"
 msgstr ""
 
-#: includes/Modules/Tables/Tables.php:20
+#: includes/Modules/Tables/Tables.php:21
 msgctxt "Modules: Tables"
 msgid "Tables"
 msgstr ""
 
-#: includes/Modules/Tables/Tables.php:21
+#: includes/Modules/Tables/Tables.php:22
 msgctxt "Modules: Tables"
 msgid "Table Management and Spreadsheet Editor"
 msgstr ""
@@ -2306,12 +2674,12 @@ msgctxt "Modules: Terms"
 msgid "Taxonomy & Term Tools"
 msgstr ""
 
-#: includes/Modules/Territory/Territory.php:24
+#: includes/Modules/Territory/Territory.php:25
 msgctxt "Modules: Territory"
 msgid "Territory"
 msgstr ""
 
-#: includes/Modules/Territory/Territory.php:25
+#: includes/Modules/Territory/Territory.php:26
 msgctxt "Modules: Territory"
 msgid "Territorial Arrangements"
 msgstr ""
@@ -2346,22 +2714,22 @@ msgctxt "Modules: Today"
 msgid "The day in History"
 msgstr ""
 
-#: includes/Modules/Tracking/Tracking.php:27
+#: includes/Modules/Tracking/Tracking.php:28
 msgctxt "Modules: Tracking"
 msgid "Tracking"
 msgstr ""
 
-#: includes/Modules/Tracking/Tracking.php:28
+#: includes/Modules/Tracking/Tracking.php:29
 msgctxt "Modules: Tracking"
 msgid "Physical Item Tracking"
 msgstr ""
 
-#: includes/Modules/Trained/Trained.php:43
+#: includes/Modules/Trained/Trained.php:44
 msgctxt "Modules: Trained"
 msgid "Trained"
 msgstr ""
 
-#: includes/Modules/Trained/Trained.php:44
+#: includes/Modules/Trained/Trained.php:45
 msgctxt "Modules: Trained"
 msgid "Editorial Training Management"
 msgstr ""
@@ -2386,32 +2754,32 @@ msgctxt "Modules: Trivia"
 msgid "n. something of small importance"
 msgstr ""
 
-#: includes/Modules/Tube/Tube.php:24
+#: includes/Modules/Tube/Tube.php:25
 msgctxt "Modules: Tube"
 msgid "Tube"
 msgstr ""
 
-#: includes/Modules/Tube/Tube.php:25
+#: includes/Modules/Tube/Tube.php:26
 msgctxt "Modules: Tube"
 msgid "Video Clip Management"
 msgstr ""
 
-#: includes/Modules/Tweaks/Tweaks.php:28
+#: includes/Modules/Tweaks/Tweaks.php:31
 msgctxt "Modules: Tweaks"
 msgid "Tweaks"
 msgstr ""
 
-#: includes/Modules/Tweaks/Tweaks.php:29
+#: includes/Modules/Tweaks/Tweaks.php:32
 msgctxt "Modules: Tweaks"
 msgid "Admin UI Enhancement"
 msgstr ""
 
-#: includes/Modules/Unavailable/Unavailable.php:16
+#: includes/Modules/Unavailable/Unavailable.php:20
 msgctxt "Modules: Unavailable"
 msgid "Unavailable"
 msgstr ""
 
-#: includes/Modules/Unavailable/Unavailable.php:17
+#: includes/Modules/Unavailable/Unavailable.php:21
 msgctxt "Modules: Unavailable"
 msgid "Editorial Archived Contents"
 msgstr ""
@@ -2436,22 +2804,32 @@ msgctxt "Modules: Units"
 msgid "Measurement Units for Contents"
 msgstr ""
 
-#: includes/Modules/Users/Users.php:33
+#: includes/Modules/Users/Users.php:32
 msgctxt "Modules: Users"
 msgid "Users"
 msgstr ""
 
-#: includes/Modules/Users/Users.php:34
+#: includes/Modules/Users/Users.php:33
 msgctxt "Modules: Users"
 msgid "Editorial Users"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:28
+#: includes/Modules/Validator/Validator.php:19
+msgctxt "Modules: Validator"
+msgid "Validator"
+msgstr ""
+
+#: includes/Modules/Validator/Validator.php:20
+msgctxt "Modules: Validator"
+msgid "Data Validity Checker"
+msgstr ""
+
+#: includes/Modules/Venue/Venue.php:31
 msgctxt "Modules: Venue"
 msgid "Venue"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:29
+#: includes/Modules/Venue/Venue.php:32
 msgctxt "Modules: Venue"
 msgid "Place Listings"
 msgstr ""
@@ -2466,12 +2844,12 @@ msgctxt "Modules: Views"
 msgid "Customized Page Views"
 msgstr ""
 
-#: includes/Modules/Visualized/Visualized.php:16
+#: includes/Modules/Visualized/Visualized.php:20
 msgctxt "Modules: Visualized"
 msgid "Visualized"
 msgstr ""
 
-#: includes/Modules/Visualized/Visualized.php:17
+#: includes/Modules/Visualized/Visualized.php:21
 msgctxt "Modules: Visualized"
 msgid "Imaginative Narratives"
 msgstr ""
@@ -2501,22 +2879,22 @@ msgctxt "Modules: Wandered"
 msgid "Dynamic Redirects"
 msgstr ""
 
-#: includes/Modules/Warehouse/Warehouse.php:46
+#: includes/Modules/Warehouse/Warehouse.php:37
 msgctxt "Modules: Warehouse"
 msgid "Warehouse"
 msgstr ""
 
-#: includes/Modules/Warehouse/Warehouse.php:47
+#: includes/Modules/Warehouse/Warehouse.php:38
 msgctxt "Modules: Warehouse"
 msgid "Editorial Warehouse Management"
 msgstr ""
 
-#: includes/Modules/WasBorn/WasBorn.php:31
+#: includes/Modules/WasBorn/WasBorn.php:28
 msgctxt "Modules: Was Born"
 msgid "Was Born"
 msgstr ""
 
-#: includes/Modules/WasBorn/WasBorn.php:32
+#: includes/Modules/WasBorn/WasBorn.php:29
 msgctxt "Modules: Was Born"
 msgid "Age Calculation and Statistics"
 msgstr ""
@@ -2681,22 +3059,22 @@ msgctxt "Modules: WC Statuses"
 msgid "Managing Statuses for WooCommerce"
 msgstr ""
 
-#: includes/Modules/WcStocks/WcStocks.php:18
+#: includes/Modules/WcStocks/WcStocks.php:19
 msgctxt "Modules: WC Stocks"
 msgid "WC Stocks"
 msgstr ""
 
-#: includes/Modules/WcStocks/WcStocks.php:19
+#: includes/Modules/WcStocks/WcStocks.php:20
 msgctxt "Modules: WC Stocks"
 msgid "Stock Enhancements for WooCommerce"
 msgstr ""
 
-#: includes/Modules/WcTabs/WcTabs.php:20
+#: includes/Modules/WcTabs/WcTabs.php:19
 msgctxt "Modules: WC Tabs"
 msgid "WC Tabs"
 msgstr ""
 
-#: includes/Modules/WcTabs/WcTabs.php:21
+#: includes/Modules/WcTabs/WcTabs.php:20
 msgctxt "Modules: WC Tabs"
 msgid "Product Tab Enhancements for WooCommerce"
 msgstr ""
@@ -2771,1289 +3149,1411 @@ msgctxt "Modules: Wysiwyg"
 msgid "What You See Is What You Get"
 msgstr ""
 
-#: includes/Plugin.php:305
+#: includes/Plugin.php:306
 msgctxt "Plugin: Main: Screen Settings Title"
 msgid "Restrictions"
 msgstr ""
 
-#: includes/Settings.php:161
+#: includes/Settings.php:185
 msgctxt "Settings: Option: Time in Minutes"
 msgid "5 Minutes"
 msgstr ""
 
-#: includes/Settings.php:162
+#: includes/Settings.php:186
 msgctxt "Settings: Option: Time in Minutes"
 msgid "10 Minutes"
 msgstr ""
 
-#: includes/Settings.php:163
+#: includes/Settings.php:187
 msgctxt "Settings: Option: Time in Minutes"
 msgid "15 Minutes"
 msgstr ""
 
-#: includes/Settings.php:164
+#: includes/Settings.php:188
 msgctxt "Settings: Option: Time in Minutes"
 msgid "30 Minutes"
 msgstr ""
 
-#: includes/Settings.php:165
+#: includes/Settings.php:189
 msgctxt "Settings: Option: Time in Minutes"
 msgid "60 Minutes"
 msgstr ""
 
-#: includes/Settings.php:166
+#: includes/Settings.php:190
 msgctxt "Settings: Option: Time in Minutes"
 msgid "2 Hours"
 msgstr ""
 
-#: includes/Settings.php:167
+#: includes/Settings.php:191
 msgctxt "Settings: Option: Time in Minutes"
 msgid "3 Hours"
 msgstr ""
 
-#: includes/Settings.php:168
+#: includes/Settings.php:192
 msgctxt "Settings: Option: Time in Minutes"
 msgid "4 Hours"
 msgstr ""
 
-#: includes/Settings.php:169
+#: includes/Settings.php:193
 msgctxt "Settings: Option: Time in Minutes"
 msgid "8 Hours"
 msgstr ""
 
-#: includes/Settings.php:170
+#: includes/Settings.php:194
 msgctxt "Settings: Option: Time in Minutes"
 msgid "24 Hours"
 msgstr ""
 
-#: includes/Settings.php:177
+#: includes/Settings.php:201
 msgctxt "Settings: Option: PostType Support"
 msgid "Title"
 msgstr ""
 
-#: includes/Settings.php:178
+#: includes/Settings.php:202
 msgctxt "Settings: Option: PostType Support"
 msgid "Editor"
 msgstr ""
 
-#: includes/Settings.php:179
+#: includes/Settings.php:203
 msgctxt "Settings: Option: PostType Support"
 msgid "Excerpt"
 msgstr ""
 
-#: includes/Settings.php:180
+#: includes/Settings.php:204
 msgctxt "Settings: Option: PostType Support"
 msgid "Author"
 msgstr ""
 
-#: includes/Settings.php:181
+#: includes/Settings.php:205
 msgctxt "Settings: Option: PostType Support"
 msgid "Thumbnail"
 msgstr ""
 
-#: includes/Settings.php:182
+#: includes/Settings.php:206
 msgctxt "Settings: Option: PostType Support"
 msgid "Comments"
 msgstr ""
 
-#: includes/Settings.php:183
+#: includes/Settings.php:207
 msgctxt "Settings: Option: PostType Support"
 msgid "Trackbacks"
 msgstr ""
 
-#: includes/Settings.php:184
+#: includes/Settings.php:208
 msgctxt "Settings: Option: PostType Support"
 msgid "Custom Fields"
 msgstr ""
 
-#: includes/Settings.php:185
+#: includes/Settings.php:209
 msgctxt "Settings: Option: PostType Support"
 msgid "Post Formats"
 msgstr ""
 
-#: includes/Settings.php:186
+#: includes/Settings.php:210
 msgctxt "Settings: Option: PostType Support"
 msgid "Revisions"
 msgstr ""
 
-#: includes/Settings.php:187
+#: includes/Settings.php:211
 msgctxt "Settings: Option: PostType Support"
 msgid "Post Attributes"
 msgstr ""
 
-#: includes/Settings.php:188
+#: includes/Settings.php:212
 msgctxt "Settings: Option: PostType Support"
 msgid "Accelerated Mobile Pages"
 msgstr ""
 
-#: includes/Settings.php:189
+#: includes/Settings.php:213
 msgctxt "Settings: Option: PostType Support"
 msgid "Persian Date: Date Picker"
 msgstr ""
 
-#: includes/Settings.php:190
+#: includes/Settings.php:214
 msgctxt "Settings: Option: PostType Support"
 msgid "Editorial: Meta Fields"
 msgstr ""
 
-#: includes/Settings.php:191
+#: includes/Settings.php:215
 msgctxt "Settings: Option: PostType Support"
 msgid "Editorial: SEO"
 msgstr ""
 
-#: includes/Settings.php:192
+#: includes/Settings.php:216
 msgctxt "Settings: Option: PostType Support"
 msgid "Editorial: Geo Data"
 msgstr ""
 
-#: includes/Settings.php:193
+#: includes/Settings.php:217
 msgctxt "Settings: Option: PostType Support"
 msgid "Editorial: Measurement Units"
 msgstr ""
 
-#: includes/Settings.php:194
+#: includes/Settings.php:218
 msgctxt "Settings: Option: PostType Support"
 msgid "Editorial: Custom Roles"
 msgstr ""
 
 #. translators: %s: options
-#: includes/Settings.php:282
+#: includes/Settings.php:318
 msgctxt "Settings: Dropdown Select Option None"
 msgid "&ndash; Select %s &ndash;"
 msgstr ""
 
-#: includes/Settings.php:284
+#: includes/Settings.php:320
 msgctxt "Settings: Dropdown Select Option None"
 msgid "&ndash; Select &ndash;"
 msgstr ""
 
 #. translators: %s: options
-#: includes/Settings.php:291
+#: includes/Settings.php:327
 msgctxt "Settings: Radio Select Option None"
 msgid "None %s"
 msgstr ""
 
-#: includes/Settings.php:293
+#: includes/Settings.php:329
 msgctxt "Settings: Radio Select Option None"
 msgid "None"
 msgstr ""
 
 #. translators: %s: options
-#: includes/Settings.php:300
+#: includes/Settings.php:336
 msgctxt "Settings: Dropdown Select Option All"
 msgid "&ndash; All %s &ndash;"
 msgstr ""
 
-#: includes/Settings.php:302
+#: includes/Settings.php:338
 msgctxt "Settings: Dropdown Select Option All"
 msgid "&ndash; All &ndash;"
 msgstr ""
 
-#: includes/Settings.php:308
+#: includes/Settings.php:344
 msgctxt "Settings: Field Separate"
 msgid "count"
 msgstr ""
 
-#: includes/Settings.php:309
+#: includes/Settings.php:345
 msgctxt "Settings: Field Separate"
 msgid "from"
 msgstr ""
 
-#: includes/Settings.php:310
+#: includes/Settings.php:346
 msgctxt "Settings: Field Separate"
 msgid "into"
 msgstr ""
 
-#: includes/Settings.php:311
+#: includes/Settings.php:347
 msgctxt "Settings: Field Separate"
 msgid "like"
 msgstr ""
 
-#: includes/Settings.php:312
+#: includes/Settings.php:348
 msgctxt "Settings: Field Separate"
 msgid "ex"
 msgstr ""
 
-#: includes/Settings.php:313
+#: includes/Settings.php:349
 msgctxt "Settings: Field Separate"
 msgid "in"
 msgstr ""
 
-#: includes/Settings.php:314
+#: includes/Settings.php:350
 msgctxt "Settings: Field Separate"
 msgid "to"
 msgstr ""
 
-#: includes/Settings.php:315
+#: includes/Settings.php:351
 msgctxt "Settings: Field Separate"
 msgid "as"
 msgstr ""
 
-#: includes/Settings.php:316
+#: includes/Settings.php:352
 msgctxt "Settings: Field Separate"
 msgid "or"
 msgstr ""
 
-#: includes/Settings.php:317
+#: includes/Settings.php:353
 msgctxt "Settings: Field Separate"
 msgid "on"
 msgstr ""
 
-#: includes/Settings.php:341
+#: includes/Settings.php:377
 msgctxt "Settings"
 msgid "See More Information"
 msgstr ""
 
-#: includes/Settings.php:361
+#: includes/Settings.php:397
 msgctxt "Settings: Setting Title"
 msgid "Thrift Mode"
 msgstr ""
 
-#: includes/Settings.php:362
+#: includes/Settings.php:398
 msgctxt "Settings: Setting Description"
 msgid "Tries to be more careful with system resources!"
 msgstr ""
 
-#: includes/Settings.php:370
+#: includes/Settings.php:407
+msgctxt "Settings: Setting Title"
+msgid "Debug Mode"
+msgstr ""
+
+#: includes/Settings.php:408
+msgctxt "Settings: Setting Description"
+msgid "Tries to figure out what happens behind the curtains!"
+msgstr ""
+
+#: includes/Settings.php:416
 msgctxt "Settings: Setting Title"
 msgid "Editor Button"
 msgstr ""
 
-#: includes/Settings.php:380
+#: includes/Settings.php:426
 msgctxt "Settings: Setting Title"
 msgid "Quick New Post"
 msgstr ""
 
-#: includes/Settings.php:390
+#: includes/Settings.php:436
 msgctxt "Settings: Setting Title"
 msgid "Default Widgets"
 msgstr ""
 
-#: includes/Settings.php:400
+#: includes/Settings.php:446
 msgctxt "Settings: Setting Title"
 msgid "Default Shortcodes"
 msgstr ""
 
-#: includes/Settings.php:410
+#: includes/Settings.php:456
 msgctxt "Settings: Setting Title"
 msgid "Default Image Sizes"
 msgstr ""
 
-#: includes/Settings.php:420
+#: includes/Settings.php:466
 msgctxt "Settings: Setting Title"
 msgid "Thumbnail Fallback"
 msgstr ""
 
-#: includes/Settings.php:421
+#: includes/Settings.php:467
 msgctxt "Settings: Setting Description"
 msgid "Sets the parent post thumbnail image as fallback for the child post."
 msgstr ""
 
-#: includes/Settings.php:430
+#: includes/Settings.php:476
 msgctxt "Settings: Setting Title"
 msgid "Legacy Migration"
 msgstr ""
 
-#: includes/Settings.php:431
+#: includes/Settings.php:477
 msgctxt "Settings: Setting Description"
 msgid "Imports metadata from legacy plugin system."
 msgstr ""
 
-#: includes/Settings.php:440
+#: includes/Settings.php:486
 msgctxt "Settings: Setting Title"
 msgid "Advanced Meta-Box"
 msgstr ""
 
-#: includes/Settings.php:441
+#: includes/Settings.php:487
 msgctxt "Settings: Setting Description"
 msgid "Select to use advanced meta-box UI on edit post screen."
 msgstr ""
 
-#: includes/Settings.php:450
+#: includes/Settings.php:496
 msgctxt "Settings: Setting Title"
-msgid "Assign Default Term"
+msgid "Show in Quick-Edit"
 msgstr ""
 
-#: includes/Settings.php:451
+#: includes/Settings.php:497
 msgctxt "Settings: Setting Description"
-msgid "Applies the fallback default term from primary taxonomy."
+msgid "Whether to show the taxonomy in the quick/bulk edit panel."
 msgstr ""
 
-#: includes/Settings.php:460
+#: includes/Settings.php:506
 msgctxt "Settings: Setting Title"
-msgid "Multiple Instances"
+msgid "Show in Navigation"
 msgstr ""
 
-#: includes/Settings.php:471
-msgctxt "Settings: Setting Title"
-msgid "Comment Status"
-msgstr ""
-
-#: includes/Settings.php:472
+#: includes/Settings.php:507
 msgctxt "Settings: Setting Description"
-msgid "Determines the default status of the new post comments."
-msgstr ""
-
-#: includes/Settings.php:475
-msgctxt "Settings: Setting Option"
-msgid "Open"
-msgstr ""
-
-#: includes/Settings.php:476
-msgctxt "Settings: Setting Option"
-msgid "Closed"
-msgstr ""
-
-#: includes/Settings.php:486
-msgctxt "Settings: Setting Title"
-msgid "Post Status"
-msgstr ""
-
-#: includes/Settings.php:503
-msgctxt "Settings: Setting Title"
-msgid "Post Type"
+msgid "Makes available for selection in navigation menus."
 msgstr ""
 
 #: includes/Settings.php:516
 msgctxt "Settings: Setting Title"
-msgid "Insert in Content"
+msgid "Multiple Terms"
 msgstr ""
 
 #: includes/Settings.php:517
 msgctxt "Settings: Setting Description"
+msgid "Whether to assign multiple terms in edit panel."
+msgstr ""
+
+#: includes/Settings.php:526
+msgctxt "Settings: Setting Title"
+msgid "Assign Default Term"
+msgstr ""
+
+#: includes/Settings.php:527
+msgctxt "Settings: Setting Description"
+msgid "Applies the fallback default term from primary taxonomy."
+msgstr ""
+
+#: includes/Settings.php:536
+msgctxt "Settings: Setting Title"
+msgid "Multiple Instances"
+msgstr ""
+
+#: includes/Settings.php:547
+msgctxt "Settings: Setting Title"
+msgid "Comment Status"
+msgstr ""
+
+#: includes/Settings.php:548
+msgctxt "Settings: Setting Description"
+msgid "Determines the default status of the new post comments."
+msgstr ""
+
+#: includes/Settings.php:551
+msgctxt "Settings: Setting Option"
+msgid "Open"
+msgstr ""
+
+#: includes/Settings.php:552
+msgctxt "Settings: Setting Option"
+msgid "Closed"
+msgstr ""
+
+#: includes/Settings.php:562
+msgctxt "Settings: Setting Title"
+msgid "Post Status"
+msgstr ""
+
+#: includes/Settings.php:579
+msgctxt "Settings: Setting Title"
+msgid "Post Type"
+msgstr ""
+
+#: includes/Settings.php:592
+msgctxt "Settings: Setting Title"
+msgid "Insert in Content"
+msgstr ""
+
+#: includes/Settings.php:593
+msgctxt "Settings: Setting Description"
 msgid "Outputs automatically in the content."
 msgstr ""
 
-#: includes/Settings.php:520
+#: includes/Settings.php:596
 msgctxt "Settings: Setting Option"
 msgid "No"
 msgstr ""
 
-#: includes/Settings.php:521
+#: includes/Settings.php:597
 msgctxt "Settings: Setting Option"
 msgid "Before"
 msgstr ""
 
-#: includes/Settings.php:522
+#: includes/Settings.php:598
 msgctxt "Settings: Setting Option"
 msgid "After"
 msgstr ""
 
-#: includes/Settings.php:540
+#: includes/Settings.php:616
 msgctxt "Settings: Setting Title"
 msgid "Insert Cover"
 msgstr ""
 
-#: includes/Settings.php:551
+#: includes/Settings.php:627
 msgctxt "Settings: Setting Title"
 msgid "Insert Priority"
 msgstr ""
 
-#: includes/Settings.php:562
+#: includes/Settings.php:638
 msgctxt "Settings: Setting Title"
 msgid "Before Content"
 msgstr ""
 
 #. translators: %s: code placeholder
-#: includes/Settings.php:564
+#: includes/Settings.php:640
 msgctxt "Settings: Setting Description"
 msgid "Adds %s before start of all the supported post-types."
 msgstr ""
 
-#: includes/Settings.php:573
+#: includes/Settings.php:649
 msgctxt "Settings: Setting Title"
 msgid "After Content"
 msgstr ""
 
 #. translators: %s: code placeholder
-#: includes/Settings.php:575
+#: includes/Settings.php:651
 msgctxt "Settings: Setting Description"
 msgid "Adds %s after end of all the supported post-types."
 msgstr ""
 
-#: includes/Settings.php:583
+#: includes/Settings.php:659
 msgctxt "Settings: Setting Title"
 msgid "Ordering"
 msgstr ""
 
-#: includes/Settings.php:584
+#: includes/Settings.php:660
 msgctxt "Settings: Setting Description"
 msgid "Enhances item ordering on admin edit pages."
 msgstr ""
 
-#: includes/Settings.php:593
+#: includes/Settings.php:669
 msgctxt "Settings: Setting Title"
 msgid "List Restrictions"
 msgstr ""
 
-#: includes/Settings.php:594
+#: includes/Settings.php:670
 msgctxt "Settings: Setting Description"
 msgid "Enhances restrictions on admin edit pages."
 msgstr ""
 
-#: includes/Settings.php:602
+#: includes/Settings.php:678
 msgctxt "Settings: Setting Title"
 msgid "List Columns"
 msgstr ""
 
-#: includes/Settings.php:603
+#: includes/Settings.php:679
 msgctxt "Settings: Setting Description"
 msgid "Enhances columns on admin edit pages."
 msgstr ""
 
-#: includes/Settings.php:611
+#: includes/Settings.php:687
 msgctxt "Settings: Setting Title"
 msgid "Bulk Actions"
 msgstr ""
 
-#: includes/Settings.php:612
+#: includes/Settings.php:688
 msgctxt "Settings: Setting Description"
 msgid "Enhances bulk actions on admin edit pages."
 msgstr ""
 
-#: includes/Settings.php:620
+#: includes/Settings.php:696
 msgctxt "Settings: Setting Title"
 msgid "Row Actions"
 msgstr ""
 
-#: includes/Settings.php:621
+#: includes/Settings.php:697
 msgctxt "Settings: Setting Description"
 msgid "Enhances row actions on admin edit pages."
 msgstr ""
 
-#: includes/Settings.php:629
+#: includes/Settings.php:705
 msgctxt "Setting: Setting Title"
 msgid "Adminbar Summary"
 msgstr ""
 
-#: includes/Settings.php:630
+#: includes/Settings.php:706
 msgctxt "Setting: Setting Description"
 msgid "Summary for the current item as a node in admin-bar."
 msgstr ""
 
-#: includes/Settings.php:638
+#: includes/Settings.php:714
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Widgets"
 msgstr ""
 
-#: includes/Settings.php:639
+#: includes/Settings.php:715
 msgctxt "Settings: Setting Description"
 msgid "Enhances admin dashboard with customized widgets."
 msgstr ""
 
-#: includes/Settings.php:647
+#: includes/Settings.php:723
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Authors"
 msgstr ""
 
-#: includes/Settings.php:648
+#: includes/Settings.php:724
 msgctxt "Settings: Setting Description"
 msgid "Displays author column on the dashboard widget."
 msgstr ""
 
-#: includes/Settings.php:656
+#: includes/Settings.php:732
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Statuses"
 msgstr ""
 
-#: includes/Settings.php:657
+#: includes/Settings.php:733
 msgctxt "Settings: Setting Description"
 msgid "Displays status column on the dashboard widget."
 msgstr ""
 
-#: includes/Settings.php:666
+#: includes/Settings.php:742
 msgctxt "Settings: Setting Title"
 msgid "Dashboard Count"
 msgstr ""
 
-#: includes/Settings.php:667
+#: includes/Settings.php:743
 msgctxt "Settings: Setting Description"
 msgid "Limits displaying rows of items on the dashboard widget."
 msgstr ""
 
-#: includes/Settings.php:677
+#: includes/Settings.php:753
 msgctxt "Settings: Setting Title"
 msgid "Summary Scope"
 msgstr ""
 
-#: includes/Settings.php:678
+#: includes/Settings.php:754
 msgctxt "Settings: Setting Description"
 msgid "User scope for the content summary."
 msgstr ""
 
-#: includes/Settings.php:681
+#: includes/Settings.php:757
 msgctxt "Settings: Setting Option"
 msgid "All Users"
 msgstr ""
 
-#: includes/Settings.php:682
+#: includes/Settings.php:758
 msgctxt "Settings: Setting Option"
 msgid "Current User"
 msgstr ""
 
-#: includes/Settings.php:683
+#: includes/Settings.php:759
 msgctxt "Settings: Setting Option"
 msgid "Within the Roles"
 msgstr ""
 
-#: includes/Settings.php:692
+#: includes/Settings.php:768
 msgctxt "Settings: Setting Title"
 msgid "Include Drafts"
 msgstr ""
 
-#: includes/Settings.php:693
+#: includes/Settings.php:769
 msgctxt "Settings: Setting Description"
 msgid "Include drafted items in the content summary."
 msgstr ""
 
-#: includes/Settings.php:702
+#: includes/Settings.php:778
 msgctxt "Settings: Setting Title"
 msgid "Summary Excludes"
 msgstr ""
 
-#: includes/Settings.php:703
+#: includes/Settings.php:779
 msgctxt "Settings: Setting Description"
 msgid "Selected terms will be excluded on the content summary."
 msgstr ""
 
-#: includes/Settings.php:704
-#: includes/Settings.php:716
+#: includes/Settings.php:780
+#: includes/Settings.php:792
 msgctxt "Settings: Setting Empty String"
 msgid "There are no items available!"
 msgstr ""
 
-#: includes/Settings.php:714
+#: includes/Settings.php:790
 msgctxt "Settings: Setting Title"
 msgid "Exclude Terms"
 msgstr ""
 
-#: includes/Settings.php:715
+#: includes/Settings.php:791
 msgctxt "Settings: Setting Description"
 msgid "Items with selected terms will be excluded form dropdown on supported post-types."
 msgstr ""
 
-#: includes/Settings.php:725
+#: includes/Settings.php:801
+#: includes/Settings.php:819
 msgctxt "Settings: Setting Title"
 msgid "Force Parents"
 msgstr ""
 
-#: includes/Settings.php:726
+#: includes/Settings.php:802
 msgctxt "Settings: Setting Description"
 msgid "Includes parents on the supported post-types."
 msgstr ""
 
-#: includes/Settings.php:734
+#: includes/Settings.php:810
 msgctxt "Settings: Setting Title"
 msgid "Management Restricted"
 msgstr ""
 
-#: includes/Settings.php:735
+#: includes/Settings.php:811
 msgctxt "Settings: Setting Description"
 msgid "Limits creation and deletion of the main posts to administrators."
 msgstr ""
 
-#: includes/Settings.php:743
+#: includes/Settings.php:820
+msgctxt "Settings: Setting Description"
+msgid "Includes parents when selecting the main contents."
+msgstr ""
+
+#: includes/Settings.php:829
 msgctxt "Settings: Setting Title"
 msgid "Count Not"
 msgstr ""
 
-#: includes/Settings.php:744
+#: includes/Settings.php:830
 msgctxt "Settings: Setting Description"
 msgid "Counts not affected items in the content summary."
 msgstr ""
 
-#: includes/Settings.php:752
+#: includes/Settings.php:838
 msgctxt "Settings: Setting Title"
 msgid "Feeds"
 msgstr ""
 
-#: includes/Settings.php:753
+#: includes/Settings.php:839
 msgctxt "Settings: Setting Description"
 msgid "Supports feeds for the supported post-types."
 msgstr ""
 
-#: includes/Settings.php:761
+#: includes/Settings.php:847
 msgctxt "Settings: Setting Title"
 msgid "Pages"
 msgstr ""
 
-#: includes/Settings.php:762
+#: includes/Settings.php:848
 msgctxt "Settings: Setting Description"
 msgid "Supports pagination on the supported post-types."
 msgstr ""
 
-#: includes/Settings.php:771
+#: includes/Settings.php:857
 msgctxt "Settings: Setting Title"
 msgid "Supported Post-types"
 msgstr ""
 
-#: includes/Settings.php:772
+#: includes/Settings.php:858
 msgctxt "Settings: Setting Description"
 msgid "Will be available for selected post-type."
 msgstr ""
 
-#: includes/Settings.php:773
+#: includes/Settings.php:859
 msgctxt "Settings: Setting Empty String"
 msgid "There are no supported post-types available!"
 msgstr ""
 
-#: includes/Settings.php:783
+#: includes/Settings.php:869
 msgctxt "Settings: Setting Title"
 msgid "Supported Fields"
 msgstr ""
 
-#: includes/Settings.php:784
+#: includes/Settings.php:870
 msgctxt "Settings: Setting Description"
 msgid "Determines the optional fields for each supported post-type."
 msgstr ""
 
-#: includes/Settings.php:785
+#: includes/Settings.php:871
 msgctxt "Settings: Setting Empty String"
 msgid "There are no supported fields available!"
 msgstr ""
 
-#: includes/Settings.php:796
+#: includes/Settings.php:882
 msgctxt "Settings: Setting Title"
 msgid "Parent Post-types"
 msgstr ""
 
-#: includes/Settings.php:797
+#: includes/Settings.php:883
 msgctxt "Settings: Setting Description"
 msgid "Selected parents will be used on the selection box."
 msgstr ""
 
-#: includes/Settings.php:798
+#: includes/Settings.php:884
 msgctxt "Settings: Setting Empty String"
 msgid "There are no parents available!"
 msgstr ""
 
-#: includes/Settings.php:808
+#: includes/Settings.php:894
 msgctxt "Setting: Setting Title"
 msgid "Empty Content"
 msgstr ""
 
-#: includes/Settings.php:809
+#: includes/Settings.php:895
 msgctxt "Setting: Setting Description"
 msgid "Displays as empty content placeholder."
 msgstr ""
 
-#: includes/Settings.php:810
+#: includes/Settings.php:896
 msgctxt "Setting: Setting Default"
 msgid "There are no content by this title. Search again or create one."
 msgstr ""
 
-#: includes/Settings.php:818
+#: includes/Settings.php:904
 msgctxt "Setting: Setting Title"
 msgid "Archive Override"
 msgstr ""
 
-#: includes/Settings.php:819
+#: includes/Settings.php:905
 msgctxt "Setting: Setting Description"
 msgid "Overrides default template hierarchy for archive."
 msgstr ""
 
-#: includes/Settings.php:829
+#: includes/Settings.php:915
 msgctxt "Setting: Setting Title"
 msgid "Archive Title"
 msgstr ""
 
 #. translators: %s: zero placeholder
-#: includes/Settings.php:831
+#: includes/Settings.php:917
 msgctxt "Setting: Setting Description"
 msgid "Displays as archive title. Leave blank for default or %s to disable."
 msgstr ""
 
-#: includes/Settings.php:841
+#: includes/Settings.php:927
 msgctxt "Setting: Setting Title"
 msgid "Archive Content"
 msgstr ""
 
 #. translators: %s: zero placeholder
-#: includes/Settings.php:843
+#: includes/Settings.php:929
 msgctxt "Setting: Setting Description"
 msgid "Displays as archive content. Leave blank for default or %s to disable."
 msgstr ""
 
-#: includes/Settings.php:852
+#: includes/Settings.php:938
 msgctxt "Setting: Setting Title"
 msgid "Archive Template"
 msgstr ""
 
-#: includes/Settings.php:853
+#: includes/Settings.php:939
 msgctxt "Setting: Setting Description"
 msgid "Used as page template on the archive page."
 msgstr ""
 
-#: includes/Settings.php:863
+#: includes/Settings.php:949
 msgctxt "Setting: Setting Title"
 msgid "Display Search Form"
 msgstr ""
 
-#: includes/Settings.php:864
+#: includes/Settings.php:950
 msgctxt "Setting: Setting Description"
 msgid "Appends a search form to the content generated on front-end."
 msgstr ""
 
-#: includes/Settings.php:873
+#: includes/Settings.php:959
 msgctxt "Setting: Setting Title"
 msgid "Display Threshold"
 msgstr ""
 
-#: includes/Settings.php:874
+#: includes/Settings.php:960
 msgctxt "Setting: Setting Description"
 msgid "Maximum number of items to consider as a long list."
 msgstr ""
 
-#: includes/Settings.php:884
+#: includes/Settings.php:970
 msgctxt "Settings: Setting Title"
 msgid "Display Per-Page"
 msgstr ""
 
-#: includes/Settings.php:885
+#: includes/Settings.php:971
 msgctxt "Settings: Setting Description"
 msgid "Total rows of items per each page of the list."
 msgstr ""
 
-#: includes/Settings.php:894
+#: includes/Settings.php:981
 msgctxt "Settings: Setting Title"
 msgid "Viewable Post-Type"
 msgstr ""
 
-#: includes/Settings.php:895
+#: includes/Settings.php:982
 msgctxt "Settings: Setting Description"
 msgid "Determines the visibility of the main post-type."
 msgstr ""
 
-#: includes/Settings.php:904
+#: includes/Settings.php:991
+msgctxt "Settings: Setting Title"
+msgid "Viewable Contents"
+msgstr ""
+
+#: includes/Settings.php:992
+msgctxt "Settings: Setting Description"
+msgid "Determines whether the contents are publicly viewable."
+msgstr ""
+
+#: includes/Settings.php:1001
+msgctxt "Settings: Setting Title"
+msgid "Custom Capabilities"
+msgstr ""
+
+#: includes/Settings.php:1002
+msgctxt "Settings: Setting Description"
+msgid "Registers custom capability-type for the contents."
+msgstr ""
+
+#: includes/Settings.php:1011
 msgctxt "Settings: Setting Title"
 msgid "Override Dates"
 msgstr ""
 
-#: includes/Settings.php:905
+#: includes/Settings.php:1012
 msgctxt "Settings: Setting Description"
 msgid "Tries to override post-date with provided date data on supported post-types."
 msgstr ""
 
-#: includes/Settings.php:914
+#: includes/Settings.php:1021
 msgctxt "Settings: Setting Title"
 msgid "Default Calendar"
 msgstr ""
 
-#: includes/Settings.php:926
+#: includes/Settings.php:1033
 msgctxt "Settings: Setting Title"
 msgid "Calendar List"
 msgstr ""
 
-#: includes/Settings.php:938
+#: includes/Settings.php:1045
 msgctxt "Settings: Setting Title"
 msgid "Metadata Support"
 msgstr ""
 
-#: includes/Settings.php:947
+#: includes/Settings.php:1054
 msgctxt "Setting Title"
 msgid "Add Audit Attribute"
 msgstr ""
 
-#: includes/Settings.php:948
+#: includes/Settings.php:1055
 msgctxt "Setting Description"
 msgid "Appends an audit attribute to each item."
 msgstr ""
 
-#: includes/Settings.php:958
+#: includes/Settings.php:1065
 msgctxt "Settings: Setting Title"
 msgid "Supported Roles"
 msgstr ""
 
-#: includes/Settings.php:971
+#: includes/Settings.php:1078
 msgctxt "Settings: Setting Title"
 msgid "Excluded Roles"
 msgstr ""
 
-#: includes/Settings.php:984
+#: includes/Settings.php:1091
 msgctxt "Settings: Setting Title"
 msgid "Admin Menu Roles"
 msgstr ""
 
-#: includes/Settings.php:997
+#: includes/Settings.php:1104
 msgctxt "Settings: Setting Title"
 msgid "Meta Box Roles"
 msgstr ""
 
-#: includes/Settings.php:1010
+#: includes/Settings.php:1117
 msgctxt "Settings: Setting Title"
 msgid "Adminbar Roles"
 msgstr ""
 
-#: includes/Settings.php:1022
+#: includes/Settings.php:1130
+msgctxt "Settings: Setting Title"
+msgid "Reports Roles"
+msgstr ""
+
+#: includes/Settings.php:1131
+msgctxt "Setting Description"
+msgid "Roles that can access data reports."
+msgstr ""
+
+#: includes/Settings.php:1143
+#: includes/Settings.php:1169
+msgctxt "Settings: Setting Title"
+msgid "Exports Roles"
+msgstr ""
+
+#: includes/Settings.php:1144
+msgctxt "Setting Description"
+msgid "Roles that can export data entries."
+msgstr ""
+
+#: includes/Settings.php:1156
+msgctxt "Settings: Setting Title"
+msgid "Prints Roles"
+msgstr ""
+
+#: includes/Settings.php:1157
+msgctxt "Setting Description"
+msgid "Roles that can print data entries."
+msgstr ""
+
+#: includes/Settings.php:1170
+msgctxt "Setting Description"
+msgid "Roles that can view data overviews."
+msgstr ""
+
+#: includes/Settings.php:1182
+msgctxt "Settings: Setting Title"
+msgid "Manage Roles"
+msgstr ""
+
+#: includes/Settings.php:1183
+msgctxt "Setting Description"
+msgid "Roles that can manage, edit and delete entry defenitions."
+msgstr ""
+
+#: includes/Settings.php:1195
+msgctxt "Settings: Setting Title"
+msgid "Assign Roles"
+msgstr ""
+
+#: includes/Settings.php:1196
+msgctxt "Setting Description"
+msgid "Roles that can assign entry defenitions."
+msgstr ""
+
+#: includes/Settings.php:1207
 msgctxt "Settings: Setting Title"
 msgid "Enqueue Libre Fonts"
 msgstr ""
 
-#: includes/Settings.php:1023
+#: includes/Settings.php:1208
 msgctxt "Settings: Setting Description"
 msgid "Loads Libre Barcode fonts on print page html head."
 msgstr ""
 
-#: includes/Settings.php:1078
+#: includes/Settings.php:1263
 msgctxt "Settings"
 msgid "Editorial"
 msgstr ""
 
-#: includes/Settings.php:1085
+#: includes/Settings.php:1270
 msgctxt "Settings"
 msgid "Back to Editorial"
 msgstr ""
 
-#: includes/Settings.php:1115
+#: includes/Settings.php:1300
 msgctxt "Settings: Search Placeholder"
 msgid "Search …"
 msgstr ""
 
-#: includes/Settings.php:1121
+#: includes/Settings.php:1306
 msgctxt "Settings"
 msgid "All"
 msgstr ""
 
-#: includes/Settings.php:1124
-#: includes/Settings.php:1665
+#: includes/Settings.php:1309
+#: includes/Settings.php:1850
 msgctxt "Settings"
 msgid "Enabled"
 msgstr ""
 
-#: includes/Settings.php:1127
-#: includes/Settings.php:1664
+#: includes/Settings.php:1312
+#: includes/Settings.php:1849
 msgctxt "Settings"
 msgid "Disabled"
 msgstr ""
 
-#: includes/Settings.php:1156
+#: includes/Settings.php:1341
 msgctxt "Settings: Message"
 msgid "Settings reset."
 msgstr ""
 
-#: includes/Settings.php:1157
+#: includes/Settings.php:1342
 msgctxt "Settings: Message"
 msgid "Settings updated."
 msgstr ""
 
-#: includes/Settings.php:1158
+#: includes/Settings.php:1343
 msgctxt "Settings: Message"
 msgid "Module disabled."
 msgstr ""
 
-#: includes/Settings.php:1159
+#: includes/Settings.php:1344
 msgctxt "Settings: Message"
 msgid "Tables optimized."
 msgstr ""
 
-#: includes/Settings.php:1160
+#: includes/Settings.php:1345
 msgctxt "Settings: Message"
 msgid "Data purged."
 msgstr ""
 
-#: includes/Settings.php:1161
+#: includes/Settings.php:1346
 msgctxt "Settings: Message"
 msgid "File/Folder created."
 msgstr ""
 
-#: includes/Settings.php:1162
+#: includes/Settings.php:1347
 msgctxt "Settings: Message"
 msgid "Mail sent successfully."
 msgstr ""
 
-#: includes/Settings.php:1163
+#: includes/Settings.php:1348
 msgctxt "Settings: Message"
 msgid "Error occurred!"
 msgstr ""
 
-#: includes/Settings.php:1164
+#: includes/Settings.php:1349
 msgctxt "Settings: Message"
 msgid "Something&#8217;s wrong!"
 msgstr ""
 
-#: includes/Settings.php:1165
+#: includes/Settings.php:1350
 msgctxt "Settings: Message"
 msgid "No item changed!"
 msgstr ""
 
-#: includes/Settings.php:1166
+#: includes/Settings.php:1351
 msgctxt "Settings: Message"
 msgid "No item added!"
 msgstr ""
 
-#: includes/Settings.php:1167
+#: includes/Settings.php:1352
 msgctxt "Settings: Message"
 msgid "You do not have the access!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1169
+#: includes/Settings.php:1354
 msgctxt "Settings: Message"
 msgid "%s items(s) converted!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1171
+#: includes/Settings.php:1356
 msgctxt "Settings: Message"
 msgid "%s items(s) imported!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1173
+#: includes/Settings.php:1358
 msgctxt "Settings: Message"
 msgid "%s items(s) created!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1175
+#: includes/Settings.php:1360
 msgctxt "Settings: Message"
 msgid "%s items(s) deleted!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1177
+#: includes/Settings.php:1362
 msgctxt "Settings: Message"
 msgid "%s items(s) cleaned!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1179
+#: includes/Settings.php:1364
 msgctxt "Settings: Message"
 msgid "%s items(s) changed!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1181
+#: includes/Settings.php:1366
 msgctxt "Settings: Message"
 msgid "%s items(s) emptied!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1183
+#: includes/Settings.php:1368
 msgctxt "Settings: Message"
 msgid "%s items(s) closed!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1185
+#: includes/Settings.php:1370
 msgctxt "Settings: Message"
 msgid "%s items(s) re-ordered!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1187
+#: includes/Settings.php:1372
 msgctxt "Settings: Message"
 msgid "%s items(s) re-scheduled!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1189
+#: includes/Settings.php:1374
 msgctxt "Settings: Message"
 msgid "%s items(s) synced!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1200
-#: includes/Settings.php:1304
+#: includes/Settings.php:1385
+#: includes/Settings.php:1489
 msgctxt "Settings: Message"
 msgid "%s Counted!"
 msgstr ""
 
-#: includes/Settings.php:1229
+#: includes/Settings.php:1414
 msgctxt "Settings: Confirm"
 msgid "Are you sure? This operation can not be undone."
 msgstr ""
 
-#: includes/Settings.php:1257
+#: includes/Settings.php:1442
 msgctxt "Settings: Button"
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/Settings.php:1258
+#: includes/Settings.php:1443
 msgctxt "Settings: Button"
 msgid "Save Changes"
 msgstr ""
 
-#: includes/Settings.php:1314
+#: includes/Settings.php:1499
 msgctxt "Settings: Message"
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
 #. translators: %s: message
-#: includes/Settings.php:1321
+#: includes/Settings.php:1506
 msgctxt "Settings: Message"
 msgid "huh? %s"
 msgstr ""
 
-#: includes/Settings.php:1323
+#: includes/Settings.php:1508
 msgctxt "Settings: Message"
 msgid "huh?"
 msgstr ""
 
-#: includes/Settings.php:1416
+#: includes/Settings.php:1601
 msgctxt "Settings: Notice"
 msgid "Auto-loaded!"
 msgstr ""
 
-#: includes/Settings.php:1422
+#: includes/Settings.php:1607
 msgctxt "Settings: Button"
 msgid "Enable"
 msgstr ""
 
-#: includes/Settings.php:1433
+#: includes/Settings.php:1618
 msgctxt "Settings: Button"
 msgid "Disable"
 msgstr ""
 
-#: includes/Settings.php:1444
+#: includes/Settings.php:1629
 msgctxt "Settings: Notice"
 msgid "You have to enable Javascript!"
 msgstr ""
 
-#: includes/Settings.php:1462
+#: includes/Settings.php:1647
 msgctxt "Settings: Button"
 msgid "Tools"
 msgstr ""
 
-#: includes/Settings.php:1474
+#: includes/Settings.php:1659
 msgctxt "Settings: Button"
 msgid "Reports"
 msgstr ""
 
-#: includes/Settings.php:1485
+#: includes/Settings.php:1670
 msgctxt "Settings: Button"
 msgid "Configure"
 msgstr ""
 
-#: includes/Settings.php:1494
+#: includes/Settings.php:1679
 msgctxt "Settings: Title Attr"
 msgid "Access Code"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Settings.php:1500
+#: includes/Settings.php:1685
 msgctxt "Settings"
 msgid "%s Documentation"
 msgstr ""
 
 #. translators: %1$s: plugin url, %2$s: author url
-#: includes/Settings.php:1548
+#: includes/Settings.php:1733
 msgctxt "Settings: Signature"
 msgid "<a href=\"%1$s\">gEditorial</a> is a <a href=\"%2$s\">geminorum</a> project."
 msgstr ""
 
-#: includes/Settings.php:1580
+#: includes/Settings.php:1765
 msgctxt "Settings: Help Content Title"
 msgid "Editorial Wiki"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Settings.php:1591
+#: includes/Settings.php:1776
 msgctxt "Settings: Help Content Title"
 msgid "%s Wiki"
 msgstr ""
 
-#: includes/Settings.php:1667
+#: includes/Settings.php:1852
 msgctxt "Settings"
 msgid "No options!"
 msgstr ""
 
-#: includes/Settings.php:1668
+#: includes/Settings.php:1853
 msgctxt "Settings"
 msgid "You do not have access to change this option."
 msgstr ""
 
-#: includes/Settings.php:2809
+#: includes/Settings.php:2994
 msgctxt "Settings: Switch On-Off"
 msgid "On"
 msgstr ""
 
-#: includes/Settings.php:2810
+#: includes/Settings.php:2995
 msgctxt "Settings: Switch On-Off"
 msgid "Off"
 msgstr ""
 
-#: includes/Settings.php:2847
+#: includes/Settings.php:3032
 msgctxt "Settings: Tab Panel"
 msgid "Select All"
 msgstr ""
 
-#: includes/Widget.php:360
+#: includes/Widget.php:361
 msgctxt "Widget Core: Group"
 msgid "Heading"
 msgstr ""
 
-#: includes/Widget.php:361
+#: includes/Widget.php:362
 msgctxt "Widget Core: Group"
 msgid "Miscellaneous"
 msgstr ""
 
-#: includes/Widget.php:362
+#: includes/Widget.php:363
 msgctxt "Widget Core: Group"
 msgid "Customs"
 msgstr ""
 
-#: includes/Widget.php:363
+#: includes/Widget.php:364
 msgctxt "Widget Core: Group"
 msgid "Configuration"
 msgstr ""
 
-#: includes/Widget.php:377
+#: includes/Widget.php:378
 msgctxt "Widget Core"
 msgid "Custom HTML:"
 msgstr ""
 
-#: includes/Widget.php:396
+#: includes/Widget.php:397
 msgctxt "Widget Core"
 msgid "Custom HTML for Opening Widget:"
 msgstr ""
 
-#: includes/Widget.php:415
+#: includes/Widget.php:416
 msgctxt "Widget Core"
 msgid "Custom HTML for Closing Widget:"
 msgstr ""
 
-#: includes/Widget.php:434
+#: includes/Widget.php:435
 msgctxt "Widget Core"
 msgid "Custom HTML for After Title:"
 msgstr ""
 
-#: includes/Widget.php:453
+#: includes/Widget.php:454
 msgctxt "Widget Core"
 msgid "Number of posts to show:"
 msgstr ""
 
-#: includes/Widget.php:469
+#: includes/Widget.php:470
 msgctxt "Widget Core"
 msgid "Trim Characters:"
 msgstr ""
 
-#: includes/Widget.php:493
+#: includes/Widget.php:494
 msgctxt "Widget Core"
 msgid "Context:"
 msgstr ""
 
-#: includes/Widget.php:507
+#: includes/Widget.php:508
 msgctxt "Widget Core"
 msgid "Class:"
 msgstr ""
 
-#: includes/Widget.php:519
+#: includes/Widget.php:520
 msgctxt "Widget Core"
 msgid "&ndash; (Any)"
 msgstr ""
 
-#: includes/Widget.php:533
+#: includes/Widget.php:534
 msgctxt "Widget Core"
 msgid "PostType:"
 msgstr ""
 
-#: includes/Widget.php:544
+#: includes/Widget.php:545
 msgctxt "Widget Core"
 msgid "Taxonomies:"
 msgstr ""
 
-#: includes/Widget.php:572
+#: includes/Widget.php:573
 msgctxt "Widget Core"
 msgid "&ndash; All Taxonomies &ndash;"
 msgstr ""
 
-#: includes/Widget.php:586
+#: includes/Widget.php:587
 msgctxt "Widget Core"
 msgid "Taxonomy:"
 msgstr ""
 
-#: includes/Widget.php:599
+#: includes/Widget.php:600
 msgctxt "Widget Core"
 msgid "Title:"
 msgstr ""
 
-#: includes/Widget.php:613
+#: includes/Widget.php:614
 msgctxt "Widget Core"
 msgid "Title Link:"
 msgstr ""
 
-#: includes/Widget.php:627
+#: includes/Widget.php:628
 msgctxt "Widget Core"
 msgid "Title Image:"
 msgstr ""
 
-#: includes/Widget.php:633
+#: includes/Widget.php:634
 msgctxt "Widget Core"
 msgid "Custom Link:"
 msgstr ""
 
-#: includes/Widget.php:650
+#: includes/Widget.php:651
 msgctxt "Widget Core"
 msgid "Custom Code:"
 msgstr ""
 
-#: includes/Widget.php:667
+#: includes/Widget.php:668
 msgctxt "Widget Core"
 msgid "Custom Title:"
 msgstr ""
 
-#: includes/Widget.php:684
+#: includes/Widget.php:685
 msgctxt "Widget Core"
 msgid "Empty Message:"
 msgstr ""
 
-#: includes/Widget.php:707
+#: includes/Widget.php:708
 msgctxt "Widget Core"
 msgid "Avatar Size:"
 msgstr ""
 
-#: includes/Widget.php:734
+#: includes/Widget.php:735
 msgctxt "Widget Core"
 msgid "Image Size:"
 msgstr ""
 
-#: includes/Widget.php:738
+#: includes/Widget.php:739
 msgctxt "Widget Core"
 msgid "There are no image sizes available!"
 msgstr ""
 
-#: includes/Widget.php:753
+#: includes/Widget.php:754
 msgctxt "Widget Core"
 msgid "&ndash; Select &ndash;"
 msgstr ""
 
-#: includes/Widget.php:763
+#: includes/Widget.php:764
 msgctxt "Widget Core"
 msgid "Checked"
 msgstr ""
 
-#: includes/Widget.php:782
+#: includes/Widget.php:783
 msgctxt "Widget Core"
 msgid "Page:"
 msgstr ""
 
-#: includes/Widget.php:809
+#: includes/Widget.php:810
 msgctxt "Widget Core"
 msgid "Select taxonomy first!"
 msgstr ""
 
-#: includes/Widget.php:817
+#: includes/Widget.php:818
 msgctxt "Widget Core"
 msgid "The taxonomy is not available!"
 msgstr ""
 
-#: includes/Widget.php:820
+#: includes/Widget.php:821
 msgctxt "Widget Core"
 msgid "There are no terms available!"
 msgstr ""
 
-#: includes/Widget.php:839
+#: includes/Widget.php:840
 msgctxt "Widget Core"
 msgid "Term:"
 msgstr ""
 
-#: includes/Widget.php:845
+#: includes/Widget.php:846
 msgctxt "Widget Core"
 msgid "Must has Thumbnail Image"
 msgstr ""
 
-#: includes/Widget.php:860
+#: includes/Widget.php:861
 msgctxt "Widget Core"
 msgid "Wrap as List Items"
 msgstr ""

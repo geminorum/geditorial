@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Course\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:32+0330\n"
+"PO-Revision-Date: 2024-03-13 08:46+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,151 +11,161 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
 "X-Domain: geditorial-course\n"
 
-#: Course.php:38
+#: Course.php:52
 msgctxt "Settings"
 msgid "Course Topics"
 msgstr "جستارهای دوره"
 
-#: Course.php:39
+#: Course.php:53
 msgctxt "Settings"
 msgid "Topic taxonomy for the courses and supported post-types."
 msgstr "رده‌بندی جستارها را برای دوره‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Course.php:55
+#: Course.php:69
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Course.php:56
+#: Course.php:70
 msgctxt "Settings"
 msgid "Redirects course and lesson archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی دوره‌ها و درس‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
 "بگذارید."
 
-#: Course.php:62
+#: Course.php:76
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr "بازگردانی بازه‌ها"
 
-#: Course.php:63
+#: Course.php:77
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی همه بازه‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌سازی خالی بگذارید."
 
-#: Course.php:127 Course.php:128
+#: Course.php:141 Course.php:142
 msgid "Course"
 msgid_plural "Courses"
 msgstr[0] "دوره‌ها"
 msgstr[1] "دوره"
 
-#: Course.php:129
+#: Course.php:143
 msgid "Course Category"
 msgid_plural "Course Categories"
 msgstr[0] "دسته‌های دوره"
 msgstr[1] "دسته دوره"
 
-#: Course.php:130
+#: Course.php:144
 msgid "Course Span"
 msgid_plural "Course Spans"
 msgstr[0] "بازه‌های دوره"
 msgstr[1] "بازه دوره"
 
-#: Course.php:131
+#: Course.php:145
 msgid "Course Topic"
 msgid_plural "Course Topics"
 msgstr[0] "جستارهای دوره"
 msgstr[1] "جستار دوره"
 
-#: Course.php:132
+#: Course.php:146
 msgid "Lesson"
 msgid_plural "Lessons"
 msgstr[0] "درس‌ها"
 msgstr[1] "درس"
 
-#: Course.php:133
+#: Course.php:147
 msgid "Lesson Format"
 msgid_plural "Lesson Formats"
 msgstr[0] "قالب‌های درس"
 msgstr[1] "قالب درس"
 
-#: Course.php:134
+#: Course.php:148
 msgid "Lesson Status"
 msgid_plural "Lesson Statuses"
 msgstr[0] "وضعیت‌های درس"
 msgstr[1] "وضعیت درس"
 
-#: Course.php:138
+#: Course.php:152
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Course.php:148
+#: Course.php:162
 msgctxt "MetaBox Title"
 msgid "The Course"
 msgstr "دوره"
 
-#: Course.php:149
+#: Course.php:163
 msgctxt "MetaBox Title"
 msgid "In This Course"
 msgstr "در این دوره"
 
-#: Course.php:152
+#: Course.php:166
 msgctxt "MetaBox Title"
 msgid "Course"
 msgstr "دوره"
 
-#: Course.php:158
+#: Course.php:172
 msgctxt "Column Title"
 msgid "Lessons"
 msgstr "درس‌ها"
 
-#: Course.php:164
+#: Course.php:175
+msgctxt "Misc: `column_icon_title`"
+msgid "Course"
+msgstr "دوره"
+
+#: Course.php:186
 msgctxt "Default Term"
 msgid "Ongoing"
 msgstr "در حال اجرا"
 
-#: Course.php:165
+#: Course.php:187
 msgctxt "Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Course.php:166
+#: Course.php:188
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "برای بازبینی"
 
-#: Course.php:167
+#: Course.php:189
 msgctxt "Default Term"
 msgid "Cancelled"
 msgstr "لغو شده"
 
-#: Course.php:179 Course.php:193
+#: Course.php:199 Course.php:213
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr "زیرعنوان"
 
-#: Course.php:180
+#: Course.php:200
 msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr "زیرعنوان دوره"
 
-#: Course.php:194
+#: Course.php:214
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr "زیرعنوان درس"
 
-#: Course.php:482
+#: Course.php:486
 msgctxt "Header"
 msgid "Course Tools"
 msgstr "ابزارهای دوره"
 
-#: Course.php:510
+#: Course.php:515
+msgctxt "Header"
+msgid "Course Imports"
+msgstr "درون‌ریزی‌های دوره"
+
+#: Course.php:538
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr "درس رهاشده"

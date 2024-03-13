@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tweaks\n"
 "X-Domain: geditorial-tweaks\n"
 
@@ -23,320 +23,320 @@ msgctxt "Help Tab Title"
 msgid "Checklist Tree"
 msgstr ""
 
-#: Tweaks.php:53
+#: Tweaks.php:56
 msgctxt "Setting Title"
 msgid "Group Taxonomies"
 msgstr ""
 
-#: Tweaks.php:54
+#: Tweaks.php:57
 msgctxt "Setting Description"
 msgid "Group selected taxonomies on selected post type edit pages"
 msgstr ""
 
-#: Tweaks.php:60
+#: Tweaks.php:63
 msgctxt "Setting Title"
 msgid "Group Attributes"
 msgstr ""
 
-#: Tweaks.php:61
+#: Tweaks.php:64
 msgctxt "Setting Description"
 msgid "Group post attributes on selected post type edit pages"
 msgstr ""
 
-#: Tweaks.php:67
+#: Tweaks.php:70
 msgctxt "Setting Title"
 msgid "Author Attribute"
 msgstr ""
 
-#: Tweaks.php:68
+#: Tweaks.php:71
 msgctxt "Setting Description"
 msgid "Displays author name as post type attribute"
 msgstr ""
 
-#: Tweaks.php:74
+#: Tweaks.php:77
 msgctxt "Setting Title"
 msgid "Post Status"
 msgstr ""
 
-#: Tweaks.php:75
+#: Tweaks.php:78
 msgctxt "Setting Description"
 msgid "Displays post status as post type attribute"
 msgstr ""
 
-#: Tweaks.php:81
+#: Tweaks.php:84
 msgctxt "Setting Title"
 msgid "Slug Attribute"
 msgstr ""
 
-#: Tweaks.php:82
+#: Tweaks.php:85
 msgctxt "Setting Description"
 msgid "Displays post name as post type attribute."
 msgstr ""
 
-#: Tweaks.php:88
+#: Tweaks.php:91
 msgctxt "Setting Title"
 msgid "Page Template"
 msgstr ""
 
-#: Tweaks.php:89
+#: Tweaks.php:92
 msgctxt "Setting Description"
 msgid "Displays the template used for the post."
 msgstr ""
 
-#: Tweaks.php:95
+#: Tweaks.php:98
 msgctxt "Setting Title"
 msgid "Comment Status"
 msgstr ""
 
-#: Tweaks.php:96
+#: Tweaks.php:99
 msgctxt "Setting Description"
 msgid "Displays only the closed comment status for the post."
 msgstr ""
 
-#: Tweaks.php:102
+#: Tweaks.php:105
 msgctxt "Setting Title"
 msgid "Search Meta"
 msgstr ""
 
-#: Tweaks.php:103
+#: Tweaks.php:106
 msgctxt "Setting Description"
 msgid "Extends admin search to include custom fields."
 msgstr ""
 
-#: Tweaks.php:111
+#: Tweaks.php:114
 msgctxt "Setting Title"
 msgid "ID Column"
 msgstr ""
 
-#: Tweaks.php:112
+#: Tweaks.php:115
 msgctxt "Setting Description"
 msgid "Displays ID Column on the post list table."
 msgstr ""
 
-#: Tweaks.php:118
+#: Tweaks.php:121
 msgctxt "Setting Title"
 msgid "Order Column"
 msgstr ""
 
-#: Tweaks.php:119
+#: Tweaks.php:122
 msgctxt "Setting Description"
 msgid "Displays Order Column on the post list table."
 msgstr ""
 
-#: Tweaks.php:129
+#: Tweaks.php:132
 msgctxt "Setting Title"
 msgid "Thumbnail Column"
 msgstr ""
 
-#: Tweaks.php:130
+#: Tweaks.php:133
 msgctxt "Setting Description"
 msgid "Displays Thumbnail Column on the post list table."
 msgstr ""
 
-#: Tweaks.php:142
+#: Tweaks.php:145
 msgctxt "Setting Title"
 msgid "Group Post-Boxes"
 msgstr ""
 
-#: Tweaks.php:143
+#: Tweaks.php:146
 msgctxt "Setting Description"
 msgid "Groups common post-boxes into one for simpler editing experience."
 msgstr ""
 
-#: Tweaks.php:149
+#: Tweaks.php:152
 msgctxt "Setting Title"
 msgid "Modified Action"
 msgstr ""
 
-#: Tweaks.php:150
+#: Tweaks.php:153
 msgctxt "Setting Description"
 msgid "Displays last modified time as post misc action on publish metabox."
 msgstr ""
 
-#: Tweaks.php:156
+#: Tweaks.php:159
 msgctxt "Setting Title"
 msgid "Advanced Excerpt"
 msgstr ""
 
-#: Tweaks.php:157
+#: Tweaks.php:160
 msgctxt "Setting Description"
 msgid "Replaces the default Post Excerpt meta box with a superior editing experience."
 msgstr ""
 
-#: Tweaks.php:165
+#: Tweaks.php:168
 msgctxt "Setting Title"
 msgid "Excerpt After Title"
 msgstr ""
 
-#: Tweaks.php:166
+#: Tweaks.php:169
 msgctxt "Setting Description"
 msgid "Moves up advanced excerpt to after title field."
 msgstr ""
 
-#: Tweaks.php:170
+#: Tweaks.php:173
 msgctxt "Setting Title"
 msgid "Category Search"
 msgstr ""
 
-#: Tweaks.php:171
+#: Tweaks.php:174
 msgctxt "Setting Description"
 msgid "Replaces the category selector to include searching categories"
 msgstr ""
 
-#: Tweaks.php:175
+#: Tweaks.php:178
 msgctxt "Setting Title"
 msgid "Checklist Tree"
 msgstr ""
 
-#: Tweaks.php:176
+#: Tweaks.php:179
 msgctxt "Setting Description"
 msgid "Preserves the category hierarchy on the post editing screen"
 msgstr ""
 
-#: Tweaks.php:182
+#: Tweaks.php:185
 msgctxt "Setting Title"
 msgid "Comments User Column"
 msgstr ""
 
-#: Tweaks.php:183
+#: Tweaks.php:186
 msgctxt "Setting Description"
 msgid "Displays a logged-in comment author's site display name on the comments admin"
 msgstr ""
 
-#: Tweaks.php:193
+#: Tweaks.php:196
 msgctxt "Column Title"
 msgid "Title"
 msgstr ""
 
-#: Tweaks.php:194
+#: Tweaks.php:197
 msgctxt "Column Title"
 msgid "Extra"
 msgstr ""
 
-#: Tweaks.php:195
+#: Tweaks.php:198
 msgctxt "Column Title"
 msgid "Attributes"
 msgstr ""
 
-#: Tweaks.php:196
-#: Tweaks.php:201
+#: Tweaks.php:199
+#: Tweaks.php:204
 msgctxt "Column Title"
 msgid "ID"
 msgstr ""
 
-#: Tweaks.php:197
+#: Tweaks.php:200
 msgctxt "Column Title"
 msgid "Featured"
 msgstr ""
 
-#: Tweaks.php:198
+#: Tweaks.php:201
 msgctxt "Column Title"
 msgid "Order"
 msgstr ""
 
-#: Tweaks.php:199
+#: Tweaks.php:202
 msgctxt "Column Title"
 msgid "User"
 msgstr ""
 
-#: Tweaks.php:200
+#: Tweaks.php:203
 msgctxt "Column Title"
 msgid "Contacts"
 msgstr ""
 
-#: Tweaks.php:205
+#: Tweaks.php:208
 msgctxt "Meta Box Search Title"
 msgid "Type to filter by"
 msgstr ""
 
-#: Tweaks.php:206
+#: Tweaks.php:209
 msgctxt "Meta Box Search Placeholder"
 msgid "Search &hellip;"
 msgstr ""
 
-#: Tweaks.php:746
+#: Tweaks.php:785
 msgctxt "Row Icon Title"
 msgid "Page Template"
 msgstr ""
 
-#: Tweaks.php:767
+#: Tweaks.php:806
 msgctxt "Row Icon Title"
 msgid "Comment Status"
 msgstr ""
 
-#: Tweaks.php:770
+#: Tweaks.php:809
 msgctxt "Comment Status"
 msgid "Closed"
 msgstr ""
 
-#: Tweaks.php:773
+#: Tweaks.php:812
 msgctxt "Comment Status"
 msgid "Closed for Old Posts"
 msgstr ""
 
 #. translators: %s: status
-#: Tweaks.php:779
+#: Tweaks.php:818
 msgctxt "Comment Status"
 msgid "Comments are %s"
 msgstr ""
 
-#: Tweaks.php:793
+#: Tweaks.php:832
 msgctxt "Row Icon Title"
 msgid "Author"
 msgstr ""
 
-#: Tweaks.php:804
+#: Tweaks.php:843
 msgctxt "Row Icon Title"
 msgid "Post Slug"
 msgstr ""
 
-#: Tweaks.php:824
+#: Tweaks.php:863
 msgctxt "Attr: Status"
 msgid "Missed schedule"
 msgstr ""
 
-#: Tweaks.php:828
+#: Tweaks.php:867
 msgctxt "Row Icon Title"
 msgid "Status"
 msgstr ""
 
-#: Tweaks.php:836
+#: Tweaks.php:875
 msgctxt "Row Icon Title"
 msgid "Publish Date"
 msgstr ""
 
-#: Tweaks.php:844
+#: Tweaks.php:883
 msgctxt "Row Icon Title"
 msgid "Last Edit"
 msgstr ""
 
-#: Tweaks.php:854
+#: Tweaks.php:893
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr ""
 
-#: Tweaks.php:859
+#: Tweaks.php:898
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr ""
 
-#: Tweaks.php:867
+#: Tweaks.php:906
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr ""
 
 #. translators: %s: codex url
-#: Tweaks.php:967
+#: Tweaks.php:1009
 msgctxt "MainBox"
 msgid "Allow <a href=\"%s\">trackbacks and pingbacks</a>"
 msgstr ""
 
-#: Tweaks.php:1011
+#: Tweaks.php:1053
 msgctxt "Misc Action"
 msgid "Last Modified"
 msgstr ""
 
-#: Tweaks.php:1012
+#: Tweaks.php:1054
 msgctxt "Misc Action"
 msgid "Modified:"
 msgstr ""

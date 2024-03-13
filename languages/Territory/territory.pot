@@ -9,37 +9,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Territory\n"
 "X-Domain: geditorial-territory\n"
 
-#: Territory.php:72
+#: Territory.php:85
 msgid "Territorial Arrangement"
 msgid_plural "Territorial Arrangements"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Territory.php:76
+#: Territory.php:89
 msgctxt "Label: Menu Name"
 msgid "Content Territory"
 msgstr ""
 
-#: Territory.php:77
+#: Territory.php:90
 msgctxt "Label: Show Option All"
 msgid "Territory"
 msgstr ""
 
-#: Territory.php:78
+#: Territory.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(No-Territory)"
 msgstr ""
 
-#: Territory.php:87
+#: Territory.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Your Territory Arrangements Summary"
 msgstr ""
 
-#: Territory.php:88
+#: Territory.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Territory Arrangements Summary"
 msgstr ""

@@ -9,78 +9,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Assigned\n"
 "X-Domain: geditorial-assigned\n"
 
-#: Assigned.php:77
+#: Assigned.php:86
 msgid "Assignment"
 msgid_plural "Assignments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Assigned.php:81
+#: Assigned.php:90
 msgctxt "Label: Menu Name"
 msgid "Content Assignments"
 msgstr ""
 
-#: Assigned.php:82
+#: Assigned.php:91
 msgctxt "Label: Show Option All"
 msgid "Assignment"
 msgstr ""
 
-#: Assigned.php:83
+#: Assigned.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Unassigned)"
 msgstr ""
 
-#: Assigned.php:92
+#: Assigned.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Assignments Summary"
 msgstr ""
 
-#: Assigned.php:93
+#: Assigned.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Assignments Summary"
 msgstr ""
 
-#: Assigned.php:98
+#: Assigned.php:112
 msgctxt "Default Term"
 msgid "Research"
 msgstr ""
 
-#: Assigned.php:99
+#: Assigned.php:113
 msgctxt "Default Term"
 msgid "Planning"
 msgstr ""
 
-#: Assigned.php:100
+#: Assigned.php:114
 msgctxt "Default Term"
 msgid "Execution"
 msgstr ""
 
-#: Assigned.php:101
+#: Assigned.php:115
 msgctxt "Default Term"
 msgid "Reporting"
 msgstr ""
 
-#: Assigned.php:113
-#: Assigned.php:118
+#: Assigned.php:125
+#: Assigned.php:130
 msgctxt "Field Title"
 msgid "Assigned To"
 msgstr ""
 
-#: Assigned.php:114
+#: Assigned.php:126
 msgctxt "Field Description"
 msgid "Determines the user responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:119
+#: Assigned.php:131
 msgctxt "Field Description"
 msgid "Determines the individual responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:124
+#: Assigned.php:136
 msgctxt "Field Title"
 msgid "Due Date"
 msgstr ""

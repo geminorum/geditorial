@@ -9,148 +9,153 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Organization\n"
 "X-Domain: geditorial-organization\n"
 
-#: Organization.php:53
+#: Organization.php:60
 msgctxt "Settings"
 msgid "Sub-departments"
 msgstr ""
 
-#: Organization.php:54
+#: Organization.php:61
 msgctxt "Settings"
 msgid "Substitute taxonomy for the departments and supported post-types."
 msgstr ""
 
-#: Organization.php:74
+#: Organization.php:81
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Organization.php:75
+#: Organization.php:82
 msgctxt "Settings"
 msgid "Redirects department archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Organization.php:126
-#: Organization.php:127
+#: Organization.php:133
+#: Organization.php:134
 msgid "Department"
 msgid_plural "Departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:128
+#: Organization.php:135
 msgid "Department Category"
 msgid_plural "Department Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:129
+#: Organization.php:136
 msgid "Sub-department"
 msgid_plural "Sub-departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:130
+#: Organization.php:137
 msgid "Department Type"
 msgid_plural "Department Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:131
+#: Organization.php:138
 msgid "Department Status"
 msgid_plural "Department Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:135
+#: Organization.php:142
 msgctxt "Label: Featured Image"
 msgid "Department Badge"
 msgstr ""
 
-#: Organization.php:136
+#: Organization.php:143
 msgctxt "Label: MetaBox Title"
 msgid "The Department"
 msgstr ""
 
-#: Organization.php:139
+#: Organization.php:146
 msgctxt "Label: MetaBox Title"
 msgid "In This Department"
 msgstr ""
 
-#: Organization.php:142
+#: Organization.php:149
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Organization.php:145
+#: Organization.php:152
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Organization.php:148
+#: Organization.php:155
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Organization.php:157
+#: Organization.php:164
 msgctxt "Misc: `column_icon_title`"
 msgid "Department"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Organization.php:162
+#: Organization.php:169
 msgctxt "Metabox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Organization.php:167
+#: Organization.php:179
 msgctxt "Default Term"
 msgid "Working"
 msgstr ""
 
-#: Organization.php:168
+#: Organization.php:180
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr ""
 
-#: Organization.php:169
+#: Organization.php:181
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr ""
 
-#: Organization.php:170
+#: Organization.php:182
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Organization.php:171
+#: Organization.php:183
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Organization.php:203
+#: Organization.php:213
 msgctxt "Field Title"
 msgid "Organization Code"
 msgstr ""
 
-#: Organization.php:204
+#: Organization.php:214
 msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr ""
 
-#: Organization.php:213
+#: Organization.php:223
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr ""
 
-#: Organization.php:214
+#: Organization.php:224
 msgctxt "Field Description"
 msgid "Unique Organization Number"
 msgstr ""
 
-#: Organization.php:582
+#: Organization.php:624
 msgctxt "Header"
 msgid "Organization Tools"
+msgstr ""
+
+#: Organization.php:653
+msgctxt "Header"
+msgid "Organization Imports"
 msgstr ""

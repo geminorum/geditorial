@@ -9,433 +9,412 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Persona\n"
 "X-Domain: geditorial-persona\n"
 
 #. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
-#: ModuleHelper.php:34
-msgctxt "Helper: Make Full-name"
+#: ModuleHelper.php:61
+msgctxt "Helper: Make Full-name: Edit"
+msgid "%1$s %3$s %2$s"
+msgstr ""
+
+#. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
+#: ModuleHelper.php:78
+msgctxt "Helper: Make Full-name: Print"
+msgid "%1$s %3$s %2$s"
+msgstr ""
+
+#. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
+#: ModuleHelper.php:95
+msgctxt "Helper: Make Full-name: Display"
 msgid "%2$s, %1$s %3$s"
 msgstr ""
 
-#: Persona.php:78
+#. translators: %s: primary taxonomy name
+#: Persona.php:80
+msgctxt "Settings"
+msgid "Whether to show the <strong>%s</strong> in the quick/bulk edit panel."
+msgstr ""
+
+#: Persona.php:93
 msgctxt "Setting Title"
 msgid "Check Identity Number"
 msgstr ""
 
-#: Persona.php:79
+#: Persona.php:94
 msgctxt "Setting Description"
 msgid "Validates Identity Number prior to importing data."
 msgstr ""
 
-#: Persona.php:83
+#: Persona.php:98
 msgctxt "Setting Title"
 msgid "Fill Post Title"
 msgstr ""
 
-#: Persona.php:84
+#: Persona.php:99
 msgctxt "Setting Description"
 msgid "Tries to fill the post title with meta-data prior to importing data."
 msgstr ""
 
-#: Persona.php:124
+#: Persona.php:135
 msgid "Human"
 msgid_plural "Humans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Persona.php:125
+#: Persona.php:136
 msgid "Human Group"
 msgid_plural "Humans Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Persona.php:126
-msgid "Skill"
-msgid_plural "Skills"
-msgstr[0] ""
-msgstr[1] ""
-
-#: Persona.php:127
+#: Persona.php:137
 msgid "Job Title"
 msgid_plural "Job Titles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Persona.php:128
-msgid "Conscription"
-msgid_plural "Conscriptions"
-msgstr[0] ""
-msgstr[1] ""
-
-#: Persona.php:129
+#: Persona.php:138
 msgid "Blood Type"
 msgid_plural "Blood Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Persona.php:130
+#: Persona.php:139
 msgid "Human Status"
 msgid_plural "Human Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Persona.php:134
+#: Persona.php:143
 msgctxt "Label: Featured Image"
 msgid "Profile Picture"
 msgstr ""
 
-#: Persona.php:135
+#: Persona.php:144
 msgctxt "Label: MetaBox Title"
 msgid "Persona"
 msgstr ""
 
-#: Persona.php:136
+#: Persona.php:145
 msgctxt "Label: `excerpt_label`"
 msgid "Biography"
 msgstr ""
 
-#: Persona.php:139
+#: Persona.php:148
 msgctxt "Label: Menu Name"
 msgid "Groups"
 msgstr ""
 
-#: Persona.php:140
+#: Persona.php:149
 msgctxt "Label: Show Option All"
 msgid "Humans Groups"
 msgstr ""
 
-#: Persona.php:141
+#: Persona.php:150
 msgctxt "Label: Show Option No Terms"
 msgid "(Un-Grouped)"
 msgstr ""
 
-#: Persona.php:144
+#: Persona.php:153
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Persona.php:147
+#: Persona.php:156
 msgctxt "Label: Show Option All"
 msgid "Job Titles"
 msgstr ""
 
-#: Persona.php:148
-#: Persona.php:152
-#: Persona.php:156
-#: Persona.php:160
+#: Persona.php:157
+#: Persona.php:161
+#: Persona.php:165
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Persona.php:151
-msgctxt "Label: Show Option All"
-msgid "Conscription"
-msgstr ""
-
-#: Persona.php:155
+#: Persona.php:160
 msgctxt "Label: Show Option All"
 msgid "Blood Type"
 msgstr ""
 
-#: Persona.php:159
+#: Persona.php:164
 msgctxt "Label: Show Option All"
 msgid "Statuses"
 msgstr ""
 
-#: Persona.php:165
+#: Persona.php:170
 msgctxt "Default Term: Name"
 msgid "[Ungrouped]"
 msgstr ""
 
-#: Persona.php:166
+#: Persona.php:171
 msgctxt "Default Term: Description"
 msgid "Ungrouped Humans"
 msgstr ""
 
-#: Persona.php:176
+#: Persona.php:181
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Human Status Summary"
 msgstr ""
 
-#: Persona.php:177
+#: Persona.php:182
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Human Status Summary"
 msgstr ""
 
-#: Persona.php:183
-msgctxt "Default Term"
-msgid "Subject to Service"
-msgstr ""
-
-#: Persona.php:184
-msgctxt "Default Term"
-msgid "Medical Exemption"
-msgstr ""
-
-#: Persona.php:185
-msgctxt "Default Term"
-msgid "Permanent Exemption"
-msgstr ""
-
-#: Persona.php:186
-msgctxt "Default Term"
-msgid "Education Exemption"
-msgstr ""
-
-#: Persona.php:190
+#: Persona.php:193
 msgctxt "Default Term"
 msgid "A&plus;"
 msgstr ""
 
-#: Persona.php:191
+#: Persona.php:194
 msgctxt "Default Term"
 msgid "A&minus;"
 msgstr ""
 
-#: Persona.php:192
+#: Persona.php:195
 msgctxt "Default Term"
 msgid "B&plus;"
 msgstr ""
 
-#: Persona.php:193
+#: Persona.php:196
 msgctxt "Default Term"
 msgid "B&minus;"
 msgstr ""
 
-#: Persona.php:194
+#: Persona.php:197
 msgctxt "Default Term"
 msgid "O&plus;"
 msgstr ""
 
-#: Persona.php:195
+#: Persona.php:198
 msgctxt "Default Term"
 msgid "O&minus;"
 msgstr ""
 
-#: Persona.php:196
+#: Persona.php:199
 msgctxt "Default Term"
 msgid "AB&plus;"
 msgstr ""
 
-#: Persona.php:197
+#: Persona.php:200
 msgctxt "Default Term"
 msgid "AB&minus;"
 msgstr ""
 
-#: Persona.php:211
+#: Persona.php:212
 msgctxt "Field Title"
 msgid "First Name"
 msgstr ""
 
-#: Persona.php:212
+#: Persona.php:213
 msgctxt "Field Description"
 msgid "Given Name of the Person"
 msgstr ""
 
-#: Persona.php:218
+#: Persona.php:219
 msgctxt "Field Title"
 msgid "Middle Name"
 msgstr ""
 
-#: Persona.php:219
+#: Persona.php:220
 msgctxt "Field Description"
 msgid "Middle Name of the Person"
 msgstr ""
 
-#: Persona.php:223
+#: Persona.php:224
 msgctxt "Field Title"
 msgid "Last Name"
 msgstr ""
 
-#: Persona.php:224
+#: Persona.php:225
 msgctxt "Field Description"
 msgid "Family Name of the Person"
 msgstr ""
 
-#: Persona.php:230
+#: Persona.php:231
 msgctxt "Field Title"
 msgid "Full Name"
 msgstr ""
 
-#: Persona.php:231
+#: Persona.php:232
 msgctxt "Field Description"
 msgid "Full Name of the Person"
 msgstr ""
 
-#: Persona.php:237
+#: Persona.php:238
+msgctxt "Field Title"
+msgid "Pseudonym"
+msgstr ""
+
+#: Persona.php:239
+msgctxt "Field Description"
+msgid "Alias Name of the Person"
+msgstr ""
+
+#: Persona.php:245
 msgctxt "Field Title"
 msgid "Father Name"
 msgstr ""
 
-#: Persona.php:238
+#: Persona.php:246
 msgctxt "Field Description"
 msgid "Name of the Father of the Person"
 msgstr ""
 
-#: Persona.php:244
+#: Persona.php:252
 msgctxt "Field Title"
 msgid "Father Profile"
 msgstr ""
 
-#: Persona.php:245
+#: Persona.php:253
 msgctxt "Field Description"
 msgid "Profile of the Father of the Person"
 msgstr ""
 
-#: Persona.php:251
+#: Persona.php:259
 msgctxt "Field Title"
 msgid "Mother Name"
 msgstr ""
 
-#: Persona.php:252
+#: Persona.php:260
 msgctxt "Field Description"
 msgid "Name of the Mother of the Person"
 msgstr ""
 
-#: Persona.php:256
+#: Persona.php:264
 msgctxt "Field Title"
 msgid "Mother Profile"
 msgstr ""
 
-#: Persona.php:257
+#: Persona.php:265
 msgctxt "Field Description"
 msgid "Profile of the Mother of the Person"
 msgstr ""
 
-#: Persona.php:263
+#: Persona.php:271
 msgctxt "Field Title"
 msgid "Spouse Name"
 msgstr ""
 
-#: Persona.php:264
+#: Persona.php:272
 msgctxt "Field Description"
 msgid "Name of the Spouse of the Person"
 msgstr ""
 
-#: Persona.php:268
+#: Persona.php:276
 msgctxt "Field Title"
 msgid "Spouse Profile"
 msgstr ""
 
-#: Persona.php:269
+#: Persona.php:277
 msgctxt "Field Description"
 msgid "Profile of the Spouse of the Person"
 msgstr ""
 
-#: Persona.php:276
+#: Persona.php:284
 msgctxt "Field Description"
 msgid "Primary Mobile Contact Number of the Person"
 msgstr ""
 
-#: Persona.php:283
+#: Persona.php:291
 msgctxt "Field Title"
 msgid "Secondary Mobile"
 msgstr ""
 
-#: Persona.php:284
+#: Persona.php:292
 msgctxt "Field Description"
 msgid "Secondary Mobile Contact Number of the Person"
 msgstr ""
 
-#: Persona.php:290
+#: Persona.php:298
 msgctxt "Field Description"
 msgid "Primary Phone Contact Number of the Person"
 msgstr ""
 
-#: Persona.php:296
+#: Persona.php:304
 msgctxt "Field Title"
 msgid "Secondary Phone"
 msgstr ""
 
-#: Persona.php:297
+#: Persona.php:305
 msgctxt "Field Description"
 msgid "Secondary Phone Contact Number of the Person"
 msgstr ""
 
-#: Persona.php:302
+#: Persona.php:310
 msgctxt "Field Title"
 msgid "Identity Number"
 msgstr ""
 
-#: Persona.php:303
+#: Persona.php:311
 msgctxt "Field Description"
 msgid "Unique National Identity Number"
 msgstr ""
 
-#: Persona.php:309
+#: Persona.php:317
 msgctxt "Field Title"
 msgid "Passport Number"
 msgstr ""
 
-#: Persona.php:310
+#: Persona.php:318
 msgctxt "Field Description"
 msgid "Personal Passport Number"
 msgstr ""
 
-#: Persona.php:317
+#: Persona.php:325
 msgctxt "Field Title"
 msgid "Date of Birth"
 msgstr ""
 
-#: Persona.php:318
+#: Persona.php:326
 msgctxt "Field Description"
 msgid "Birthday of the Person"
 msgstr ""
 
-#: Persona.php:327
+#: Persona.php:335
 msgctxt "Field Title"
 msgid "Place of Birth"
 msgstr ""
 
-#: Persona.php:328
+#: Persona.php:336
 msgctxt "Field Description"
 msgid "Place Where the Person was Born"
 msgstr ""
 
-#: Persona.php:337
+#: Persona.php:345
 msgctxt "Field Title"
 msgid "Home Address"
 msgstr ""
 
-#: Persona.php:338
+#: Persona.php:346
 msgctxt "Field Description"
 msgid "Full home address, including city, state etc."
 msgstr ""
 
-#: Persona.php:343
+#: Persona.php:351
 msgctxt "Field Title"
 msgid "Work Address"
 msgstr ""
 
-#: Persona.php:344
+#: Persona.php:352
 msgctxt "Field Description"
 msgid "Full work address, including city, state etc."
 msgstr ""
 
-#: Persona.php:558
-msgctxt "Bulk Action"
-msgid "Force After-Care"
-msgstr ""
-
-#. translators: %s: post count
-#: Persona.php:585
-msgctxt "Message"
-msgid "%s human after-cared!"
-msgstr ""
-
-#: Persona.php:613
+#: Persona.php:612
 msgctxt "Default Term: Audit"
 msgid "Empty Identity Number"
 msgstr ""
 
-#: Persona.php:614
+#: Persona.php:613
 msgctxt "Default Term: Audit"
 msgid "Empty Mobile Number"
 msgstr ""
 
-#: Persona.php:692
+#: Persona.php:715
 msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr ""

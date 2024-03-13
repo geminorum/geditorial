@@ -9,46 +9,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Grouping\n"
 "X-Domain: geditorial-grouping\n"
 
-#: Grouping.php:32
+#: Grouping.php:33
 msgctxt "Setting Title"
 msgid "Custom Taxonomies"
 msgstr ""
 
-#: Grouping.php:37
+#: Grouping.php:38
 msgctxt "Setting Title"
 msgid "Taxonomy Name"
 msgstr ""
 
-#: Grouping.php:45
+#: Grouping.php:46
 msgctxt "Setting Title"
 msgid "Taxonomy Slug"
 msgstr ""
 
-#: Grouping.php:53
+#: Grouping.php:54
 msgctxt "Setting Title"
 msgid "Singular Label"
 msgstr ""
 
-#: Grouping.php:59
+#: Grouping.php:60
 msgctxt "Setting Title"
 msgid "Plural Label"
 msgstr ""
 
-#: Grouping.php:65
+#: Grouping.php:66
 msgctxt "Setting Title"
 msgid "Menu Label"
 msgstr ""
 
-#: Grouping.php:71
+#: Grouping.php:72
 msgctxt "Setting Title"
 msgid "Icon"
 msgstr ""
 
-#: Grouping.php:162
+#: Grouping.php:163
 msgctxt "Column Title"
 msgid "Users"
 msgstr ""

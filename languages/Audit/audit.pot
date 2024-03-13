@@ -9,277 +9,277 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "X-Domain: geditorial-audit\n"
 
-#: Audit.php:56
+#: Audit.php:59
 msgctxt "Setting Title"
 msgid "Auto-Audit for Empties"
 msgstr ""
 
-#: Audit.php:57
+#: Audit.php:60
 msgctxt "Setting Description"
 msgid "Tries to automatically assign empty attributes on supported posts."
 msgstr ""
 
-#: Audit.php:98
+#: Audit.php:101
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Audit.php:102
+#: Audit.php:105
 msgctxt "Label: Menu Name"
 msgid "Content Audit"
 msgstr ""
 
-#: Audit.php:103
+#: Audit.php:106
 msgctxt "Label: Show Option All"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:104
+#: Audit.php:107
 msgctxt "Label: Show Option No Terms"
 msgid "(Unaudited)"
 msgstr ""
 
-#: Audit.php:113
+#: Audit.php:116
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr ""
 
-#: Audit.php:114
+#: Audit.php:117
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Audit.php:119
+#: Audit.php:122
 msgctxt "Action Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Audit.php:121
+#: Audit.php:124
 msgctxt "Action Text"
 msgid "Audit"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Audit.php:124
+#: Audit.php:127
 msgctxt "Row Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Audit.php:126
+#: Audit.php:129
 msgctxt "Row Text"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:131
+#: Audit.php:139
 msgctxt "Default Term"
 msgid "Audited"
 msgstr ""
 
-#: Audit.php:132
+#: Audit.php:140
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr ""
 
-#: Audit.php:133
+#: Audit.php:141
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr ""
 
-#: Audit.php:134
+#: Audit.php:142
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr ""
 
-#: Audit.php:135
+#: Audit.php:143
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr ""
 
-#: Audit.php:136
+#: Audit.php:144
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr ""
 
-#: Audit.php:137
+#: Audit.php:145
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr ""
 
-#: Audit.php:138
+#: Audit.php:146
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr ""
 
-#: Audit.php:139
+#: Audit.php:147
 msgctxt "Default Term"
 msgid "No Title"
 msgstr ""
 
-#: Audit.php:140
+#: Audit.php:148
 msgctxt "Default Term"
 msgid "No Content"
 msgstr ""
 
-#: Audit.php:141
+#: Audit.php:149
 msgctxt "Default Term"
 msgid "No Excerpt"
 msgstr ""
 
-#: Audit.php:142
+#: Audit.php:150
 msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 
-#: Audit.php:307
+#: Audit.php:315
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:354
+#: Audit.php:362
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:372
+#: Audit.php:380
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:461
+#: Audit.php:469
 msgctxt "Action"
 msgid "Force Auto-Audit"
 msgstr ""
 
 #. translators: %s: count
-#: Audit.php:499
+#: Audit.php:507
 msgctxt "Message"
 msgid "%s items(s) Audited!"
 msgstr ""
 
-#: Audit.php:655
+#: Audit.php:663
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr ""
 
-#: Audit.php:698
+#: Audit.php:708
 msgctxt "Card Title"
 msgid "Posts with Empty Title"
 msgstr ""
 
-#: Audit.php:704
-#: Audit.php:723
-#: Audit.php:742
+#: Audit.php:714
+#: Audit.php:733
+#: Audit.php:752
 msgctxt "Card: None-Title"
 msgid "All Supported Post-Types"
 msgstr ""
 
-#: Audit.php:707
-#: Audit.php:726
-#: Audit.php:745
+#: Audit.php:717
+#: Audit.php:736
+#: Audit.php:755
 msgctxt "Card: Button"
 msgid "Mark Posts"
 msgstr ""
 
-#: Audit.php:708
-#: Audit.php:727
-#: Audit.php:746
+#: Audit.php:718
+#: Audit.php:737
+#: Audit.php:756
 msgctxt "Card: Button"
 msgid "Flush Attribute"
 msgstr ""
 
-#: Audit.php:709
+#: Audit.php:719
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no title."
 msgstr ""
 
-#: Audit.php:717
+#: Audit.php:727
 msgctxt "Card Title"
 msgid "Posts with Empty Content"
 msgstr ""
 
-#: Audit.php:728
+#: Audit.php:738
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no content."
 msgstr ""
 
-#: Audit.php:736
+#: Audit.php:746
 msgctxt "Card Title"
 msgid "Posts with Empty Excerpt"
 msgstr ""
 
-#: Audit.php:747
+#: Audit.php:757
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no excerpt."
 msgstr ""
 
-#: Audit.php:755
+#: Audit.php:765
 msgctxt "Card Title"
 msgid "Posts with Empty Fields"
 msgstr ""
 
-#: Audit.php:756
+#: Audit.php:766
 msgctxt "Message"
 msgid "No empty attribute available. Please install the default attributes."
 msgstr ""
 
 #. translators: %s: post title
-#: Audit.php:804
+#: Audit.php:814
 msgctxt "Notice"
 msgid "No Audits applied for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: count terms, %2$s: post title
-#: Audit.php:810
+#: Audit.php:820
 msgctxt "Notice"
 msgid "%1$s attributes set for &ldquo;%2$s&rdquo;"
 msgstr ""
 
-#: Audit.php:820
+#: Audit.php:830
 msgctxt "Card Title"
 msgid "Force Auto Audit"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Audit.php:827
+#: Audit.php:837
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
-#: Audit.php:829
+#: Audit.php:839
 msgctxt "Button Description"
 msgid "Tries to auto-set the attributes on supported posts."
 msgstr ""
 
 #. translators: %1$s: empty post count, %2$s: assigned term count
-#: Audit.php:842
+#: Audit.php:852
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr ""
 
-#: Audit.php:855
+#: Audit.php:865
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:870
+#: Audit.php:880
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr ""
 
-#: Audit.php:875
+#: Audit.php:885
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:883
+#: Audit.php:892
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr ""

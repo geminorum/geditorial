@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Licensed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-01 23:09+0330\n"
+"PO-Revision-Date: 2024-03-13 08:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,67 +11,67 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Vehicle\n"
 "X-Domain: geditorial-vehicle\n"
 
-#: Licensed.php:70
+#: Licensed.php:86
 msgid "Driving Licence"
 msgid_plural "Driving Licences"
 msgstr[0] "گواهینامه‌های رانندگی"
 msgstr[1] "گواهینامه رانندگی"
 
-#: Licensed.php:74
+#: Licensed.php:90
 msgctxt "Label: Show Option All"
 msgid "Licences"
 msgstr "گواهینامه‌ها"
 
-#: Licensed.php:75
+#: Licensed.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr "(بدون گواهینامه)"
 
-#: Licensed.php:84
+#: Licensed.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Your Driving Licence Summary"
 msgstr "گزارش گواهینامه رانندگی شما"
 
-#: Licensed.php:85
+#: Licensed.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Driving Licence Summary"
 msgstr "گزارش گواهینامه رانندگی تحریریه"
 
-#: Licensed.php:90
+#: Licensed.php:111
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr "موتورسیکلت"
 
-#: Licensed.php:91
+#: Licensed.php:112
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr "پایه سه"
 
-#: Licensed.php:92
+#: Licensed.php:113
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr "پایه دو"
 
-#: Licensed.php:93
+#: Licensed.php:114
 msgctxt "Default Term"
 msgid "Category One"
 msgstr "پایه یک"
 
-#: Licensed.php:94
+#: Licensed.php:115
 msgctxt "Default Term"
 msgid "Loader"
 msgstr "لودر"
 
-#: Licensed.php:95
+#: Licensed.php:116
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr "هلیکوپتر"
 
-#: Licensed.php:96
+#: Licensed.php:117
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr "هواپیما"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Executed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-12-07 21:34+0330\n"
+"PO-Revision-Date: 2023-12-29 02:42+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,32 +11,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Executed\n"
 "X-Domain: geditorial-executed\n"
 
-#: Executed.php:69
+#: Executed.php:70
 msgid "Executive"
 msgid_plural "Executives"
 msgstr[0] "مجریان"
 msgstr[1] "مجری"
 
-#: Executed.php:73
+#: Executed.php:74
 msgctxt "Label: Show Option All"
 msgid "Executives"
 msgstr "مجریان"
 
-#: Executed.php:74
+#: Executed.php:75
 msgctxt "Label: Show Option No Terms"
 msgid "(Unexecutived)"
 msgstr "(بدون مجری)"
 
-#: Executed.php:83
+#: Executed.php:84
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Execution Summary"
 msgstr "گزارش اجرای شما"
 
-#: Executed.php:84
+#: Executed.php:85
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Execution Summary"
 msgstr "گزارش اجرای تحریریه"

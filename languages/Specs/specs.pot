@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
 
@@ -59,22 +59,22 @@ msgid_plural "Specifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Specs.php:76
+#: Specs.php:78
 msgctxt "Default Term"
 msgid "Color"
 msgstr ""
 
-#: Specs.php:77
+#: Specs.php:79
 msgctxt "Default Term"
 msgid "Width"
 msgstr ""
 
-#: Specs.php:78
+#: Specs.php:80
 msgctxt "Default Term"
 msgid "Height"
 msgstr ""
 
-#: Specs.php:79
+#: Specs.php:81
 msgctxt "Default Term"
 msgid "Weight"
 msgstr ""

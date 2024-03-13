@@ -9,79 +9,79 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Statuses\n"
 "X-Domain: geditorial-statuses\n"
 
-#: Statuses.php:42
+#: Statuses.php:44
 msgctxt "Setting Title"
 msgid "Status Menu"
 msgstr ""
 
-#: Statuses.php:43
+#: Statuses.php:45
 msgctxt "Setting Description"
 msgid "Adds status links to the admin submenus for each supported posttype."
 msgstr ""
 
-#: Statuses.php:52
+#: Statuses.php:54
 msgctxt "Setting Title"
 msgid "Map Status Roles"
 msgstr ""
 
-#: Statuses.php:56
+#: Statuses.php:58
 msgctxt "Setting Title"
 msgid "Default Status"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:69
+#: Statuses.php:71
 msgctxt "Setting Title"
 msgid "Roles for %s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:71
+#: Statuses.php:73
 msgctxt "Setting Description"
 msgid "The <b>%s</b> status will be visibile to the selected roles."
 msgstr ""
 
-#: Statuses.php:93
+#: Statuses.php:95
 msgctxt "Taxonomy Label"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:137
+#: Statuses.php:139
 msgctxt "Metabox Submit"
 msgid "Submit: %s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:139
+#: Statuses.php:141
 msgctxt "Metabox Save On"
 msgid "Save as %s on:"
 msgstr ""
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:141
+#: Statuses.php:143
 msgctxt "Metabox Save Date"
 msgid "Save as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:143
+#: Statuses.php:145
 msgctxt "Metabox Saved On"
 msgid "Saved as %s on:"
 msgstr ""
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:145
+#: Statuses.php:147
 msgctxt "Metabox Saved Date"
 msgid "Saved as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:147
+#: Statuses.php:149
 msgctxt "Metabox Saved On"
 msgid "Save as %s <b>now</b>"
 msgstr ""

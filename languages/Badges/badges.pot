@@ -9,42 +9,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
-#: Badges.php:74
+#: Badges.php:85
 msgid "Badge"
 msgid_plural "Badges"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Badges.php:78
+#: Badges.php:89
 msgctxt "Label: Menu Name"
 msgid "Content Badges"
 msgstr ""
 
-#: Badges.php:79
+#: Badges.php:90
 msgctxt "Label: Show Option All"
 msgid "Badges"
 msgstr ""
 
-#: Badges.php:80
+#: Badges.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr ""
 
-#: Badges.php:89
+#: Badges.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Badges Summary"
 msgstr ""
 
-#: Badges.php:90
+#: Badges.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr ""
 
-#: Badges.php:239
+#: Badges.php:268
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr ""

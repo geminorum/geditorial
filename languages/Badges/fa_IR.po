@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Badges\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-01 23:03+0330\n"
+"PO-Revision-Date: 2024-03-13 08:48+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,50 +11,49 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
-#: Badges.php:74
+#: Badges.php:85
 msgid "Badge"
 msgid_plural "Badges"
 msgstr[0] "نشان‌ها"
 msgstr[1] "نشان"
 
-#: Badges.php:78
+#: Badges.php:89
 msgctxt "Label: Menu Name"
 msgid "Content Badges"
 msgstr "نشان‌های محتوا"
 
-#: Badges.php:79
+#: Badges.php:90
 msgctxt "Label: Show Option All"
 msgid "Badges"
 msgstr "نشان‌ها"
 
-#: Badges.php:80
+#: Badges.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr "(بی‌نشان)"
 
-#: Badges.php:89
+#: Badges.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Badges Summary"
 msgstr "گزارش نشان‌های محتوای شما"
 
-#: Badges.php:90
+#: Badges.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr "گزارش نشان‌های تحریریه"
 
-#: Badges.php:239
+#: Badges.php:268
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr "گزارش نشان‌ها"
 
-#: Badges.php:244
-msgctxt "Setting"
-msgid "There are no badges available!"
-msgstr "نشانی در دسترس نیست!"
+#~ msgctxt "Setting"
+#~ msgid "There are no badges available!"
+#~ msgstr "نشانی در دسترس نیست!"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Manage Roles"

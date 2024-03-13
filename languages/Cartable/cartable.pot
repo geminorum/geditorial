@@ -9,263 +9,263 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Cartable\n"
 "X-Domain: geditorial-cartable\n"
 
-#: Cartable.php:51
+#: Cartable.php:52
 msgctxt "Setting Title"
 msgid "User Cartables"
 msgstr ""
 
-#: Cartable.php:52
+#: Cartable.php:53
 msgctxt "Setting Description"
 msgid "Enables cartables based on registered users."
 msgstr ""
 
-#: Cartable.php:56
+#: Cartable.php:57
 msgctxt "Setting Title"
 msgid "Group Cartables"
 msgstr ""
 
-#: Cartable.php:57
+#: Cartable.php:58
 msgctxt "Setting Description"
 msgid "Enables cartables based on custom groups. Needs <i>Users</i> module."
 msgstr ""
 
-#: Cartable.php:61
+#: Cartable.php:62
 msgctxt "Setting Title"
 msgid "Type Cartables"
 msgstr ""
 
-#: Cartable.php:62
+#: Cartable.php:63
 msgctxt "Setting Description"
 msgid "Enables cartables based on custom types."
 msgstr ""
 
-#: Cartable.php:70
+#: Cartable.php:71
 msgctxt "Setting Title"
 msgid "Map User Capabilities"
 msgstr ""
 
-#: Cartable.php:71
+#: Cartable.php:72
 msgctxt "Setting Description"
 msgid "Gives access to edit posts based on user cartables."
 msgstr ""
 
-#: Cartable.php:77
+#: Cartable.php:78
 msgctxt "Setting Title"
 msgid "Map Group Capabilities"
 msgstr ""
 
-#: Cartable.php:78
+#: Cartable.php:79
 msgctxt "Setting Description"
 msgid "Gives access to edit posts based on group cartables."
 msgstr ""
 
-#: Cartable.php:83
+#: Cartable.php:84
 msgctxt "Setting Description"
 msgid "Roles that excluded from cartables."
 msgstr ""
 
-#: Cartable.php:91
+#: Cartable.php:92
 msgctxt "Setting Title"
 msgid "View User Cartable"
 msgstr ""
 
-#: Cartable.php:92
+#: Cartable.php:93
 msgctxt "Setting Description"
 msgid "Roles that can view user cartables."
 msgstr ""
 
-#: Cartable.php:100
+#: Cartable.php:101
 msgctxt "Setting Title"
 msgid "View Group Cartable"
 msgstr ""
 
-#: Cartable.php:101
+#: Cartable.php:102
 msgctxt "Setting Description"
 msgid "Roles that can view group cartables."
 msgstr ""
 
-#: Cartable.php:109
+#: Cartable.php:110
 msgctxt "Setting Title"
 msgid "View Type Cartable"
 msgstr ""
 
-#: Cartable.php:110
+#: Cartable.php:111
 msgctxt "Setting Description"
 msgid "Roles that can view type cartables."
 msgstr ""
 
-#: Cartable.php:118
+#: Cartable.php:119
 msgctxt "Setting Title"
 msgid "Assign User Cartables"
 msgstr ""
 
-#: Cartable.php:119
+#: Cartable.php:120
 msgctxt "Setting Description"
 msgid "Roles that can assign user cartables."
 msgstr ""
 
-#: Cartable.php:127
+#: Cartable.php:128
 msgctxt "Setting Title"
 msgid "Assign Group Cartables"
 msgstr ""
 
-#: Cartable.php:128
+#: Cartable.php:129
 msgctxt "Setting Description"
 msgid "Roles that can assign gorup cartables."
 msgstr ""
 
-#: Cartable.php:136
+#: Cartable.php:137
 msgctxt "Setting Title"
 msgid "Assign Type Cartables"
 msgstr ""
 
-#: Cartable.php:137
+#: Cartable.php:138
 msgctxt "Setting Description"
 msgid "Roles that can assign type cartables."
 msgstr ""
 
-#: Cartable.php:145
+#: Cartable.php:146
 msgctxt "Setting Title"
 msgid "Restricted Groups"
 msgstr ""
 
-#: Cartable.php:146
+#: Cartable.php:147
 msgctxt "Setting Description"
 msgid "Roles that restricted to their group users."
 msgstr ""
 
-#: Cartable.php:151
+#: Cartable.php:152
 msgctxt "Setting Description"
 msgid "Maximum number of users to display the search box."
 msgstr ""
 
-#: Cartable.php:177
+#: Cartable.php:178
 msgctxt "MetaBox Title"
 msgid "Cartable"
 msgstr ""
 
-#: Cartable.php:178
+#: Cartable.php:179
 msgctxt "MetaBox Action"
 msgid "View All"
 msgstr ""
 
-#: Cartable.php:181
+#: Cartable.php:182
 msgid "Cartable Type"
 msgid_plural "Cartable Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Cartable.php:184
+#: Cartable.php:185
 msgctxt "Button"
 msgid "Sync Users & Groups"
 msgstr ""
 
-#: Cartable.php:410
-#: Cartable.php:480
+#: Cartable.php:413
+#: Cartable.php:483
 msgctxt "Page Title"
 msgid "Editorial Cartables"
 msgstr ""
 
-#: Cartable.php:411
+#: Cartable.php:414
 msgctxt "Menu Title"
 msgid "My Cartables"
 msgstr ""
 
-#: Cartable.php:433
+#: Cartable.php:436
 msgctxt "Sub"
 msgid "Personal"
 msgstr ""
 
-#: Cartable.php:516
-#: Cartable.php:749
+#: Cartable.php:519
+#: Cartable.php:752
 msgctxt "Row Icon Title"
 msgid "User Cartables"
 msgstr ""
 
-#: Cartable.php:535
-#: Cartable.php:761
+#: Cartable.php:538
+#: Cartable.php:764
 msgctxt "Row Icon Title"
 msgid "Group Cartables"
 msgstr ""
 
-#: Cartable.php:554
+#: Cartable.php:557
 msgctxt "Row Icon Title"
 msgid "Type Cartables"
 msgstr ""
 
-#: Cartable.php:572
+#: Cartable.php:575
 msgctxt "Dashboard Widget Title"
 msgid "Your Personal Cartable"
 msgstr ""
 
-#: Cartable.php:575
-#: Cartable.php:596
-#: Cartable.php:618
+#: Cartable.php:578
+#: Cartable.php:599
+#: Cartable.php:621
 msgctxt "Dashboard Widget Title Action"
 msgid "Click to view all items in this cartable"
 msgstr ""
 
-#: Cartable.php:576
-#: Cartable.php:597
-#: Cartable.php:619
+#: Cartable.php:579
+#: Cartable.php:600
+#: Cartable.php:622
 msgctxt "Dashboard Widget Title Action"
 msgid "All Items"
 msgstr ""
 
 #. translators: %s: term name placeholder
-#: Cartable.php:593
-#: Cartable.php:615
+#: Cartable.php:596
+#: Cartable.php:618
 msgctxt "Dashboard Widget Title"
 msgid "Cartable: %s"
 msgstr ""
 
-#: Cartable.php:730
+#: Cartable.php:733
 msgctxt "Message"
 msgid "You can see cartable details, once you've saved it for the first time."
 msgstr ""
 
-#: Cartable.php:750
+#: Cartable.php:753
 msgctxt "Message"
 msgid "This currently is on your cartable."
 msgstr ""
 
-#: Cartable.php:762
+#: Cartable.php:765
 msgctxt "Message"
 msgid "This currently is on your group cartable."
 msgstr ""
 
-#: Cartable.php:774
+#: Cartable.php:777
 msgctxt "Message"
 msgid "This currently is <b>not</b> on any of your cartables."
 msgstr ""
 
-#: Cartable.php:869
+#: Cartable.php:872
 msgctxt "Page Title"
 msgid "Your Cartable"
 msgstr ""
 
 #. translators: %s: term name placeholder
-#: Cartable.php:872
+#: Cartable.php:875
 msgctxt "Menu Title"
 msgid "Cartable: %s"
 msgstr ""
 
-#: Cartable.php:887
+#: Cartable.php:890
 msgctxt "Table Action"
 msgid "Empty Cartable"
 msgstr ""
 
-#: Cartable.php:899
+#: Cartable.php:902
 msgctxt "Table Column Title"
 msgid "Cartable"
 msgstr ""
 
-#: Cartable.php:907
-#: Cartable.php:949
+#: Cartable.php:910
+#: Cartable.php:952
 msgctxt "Message"
 msgid "The cartable is empty!"
 msgstr ""

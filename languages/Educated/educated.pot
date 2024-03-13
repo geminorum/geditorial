@@ -9,62 +9,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Educated\n"
 "X-Domain: geditorial-educated\n"
 
-#: Educated.php:69
+#: Educated.php:85
 msgid "Education Definition"
 msgid_plural "Education Definitions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Educated.php:73
+#: Educated.php:89
 msgctxt "Label: Show Option All"
 msgid "Educations"
 msgstr ""
 
-#: Educated.php:74
+#: Educated.php:90
 msgctxt "Label: Show Option No Terms"
 msgid "(Uneducated)"
 msgstr ""
 
-#: Educated.php:83
+#: Educated.php:99
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Education Summary"
 msgstr ""
 
-#: Educated.php:84
+#: Educated.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Education Summary"
 msgstr ""
 
-#: Educated.php:89
+#: ModuleInfo.php:66
 msgctxt "Default Term"
 msgid "Illiterate"
 msgstr ""
 
-#: Educated.php:90
+#: ModuleInfo.php:67
 msgctxt "Default Term"
 msgid "Primary"
 msgstr ""
 
-#: Educated.php:91
+#: ModuleInfo.php:68
 msgctxt "Default Term"
 msgid "Secondary"
 msgstr ""
 
-#: Educated.php:92
+#: ModuleInfo.php:69
 msgctxt "Default Term"
 msgid "Bachelor"
 msgstr ""
 
-#: Educated.php:93
+#: ModuleInfo.php:70
 msgctxt "Default Term"
 msgid "Master"
 msgstr ""
 
-#: Educated.php:94
+#: ModuleInfo.php:71
 msgctxt "Default Term"
 msgid "Doctorate"
 msgstr ""

@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Terms\n"
 "X-Domain: geditorial-terms\n"
 
@@ -430,62 +430,62 @@ msgctxt "Setting Description"
 msgid "Supports %s for terms in the selected taxonomies."
 msgstr ""
 
-#: Terms.php:1227
-#: Terms.php:1448
+#: Terms.php:1228
+#: Terms.php:1449
 msgctxt "Button"
 msgid "Choose"
 msgstr ""
 
-#: Terms.php:1232
-#: Terms.php:1454
+#: Terms.php:1233
+#: Terms.php:1455
 msgctxt "Button"
 msgid "Remove"
 msgstr ""
 
-#: Terms.php:1598
+#: Terms.php:1599
 msgctxt "Adminbar"
 msgid "Term Summary"
 msgstr ""
 
-#: Terms.php:1605
+#: Terms.php:1606
 msgctxt "Adminbar"
 msgid "Post Count"
 msgstr ""
 
-#: Terms.php:1616
-#: Terms.php:1635
+#: Terms.php:1617
+#: Terms.php:1636
 msgctxt "Adminbar"
 msgid "Description"
 msgstr ""
 
 #. translators: %s: meta title
-#: Terms.php:1647
+#: Terms.php:1648
 msgctxt "Adminbar"
 msgid "Meta: %s"
 msgstr ""
 
-#: Terms.php:1757
+#: Terms.php:1758
 msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr ""
 
-#: Terms.php:1780
+#: Terms.php:1781
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr ""
 
 #. translators: %s: term name
-#: Terms.php:1828
+#: Terms.php:1829
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Terms.php:1892
+#: Terms.php:1893
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr ""
 
-#: Terms.php:1895
+#: Terms.php:1896
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr ""

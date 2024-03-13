@@ -9,71 +9,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Symposium\n"
 "X-Domain: geditorial-symposium\n"
 
-#: Symposium.php:60
+#: Symposium.php:61
 msgid "Session"
 msgid_plural "Sessions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:61
+#: Symposium.php:62
 msgid "Session Category"
 msgid_plural "Session Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:62
+#: Symposium.php:63
 msgid "Session Type"
 msgid_plural "Session Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:63
+#: Symposium.php:64
 msgid "Session Audience"
 msgid_plural "Session Audiences"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:64
+#: Symposium.php:65
 msgid "Session Subject"
 msgid_plural "Session Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:73
+#: Symposium.php:74
 msgctxt "Session: Featured"
 msgid "Poster Image"
 msgstr ""
 
-#: Symposium.php:79
+#: Symposium.php:85
 msgctxt "Session Type: Default Term"
 msgid "Lecture"
 msgstr ""
 
-#: Symposium.php:80
+#: Symposium.php:86
 msgctxt "Session Type: Default Term"
 msgid "Conference"
 msgstr ""
 
-#: Symposium.php:81
+#: Symposium.php:87
 msgctxt "Session Type: Default Term"
 msgid "Colloquium"
 msgstr ""
 
-#: Symposium.php:82
+#: Symposium.php:88
 msgctxt "Session Type: Default Term"
 msgid "Book Review"
 msgstr ""
 
-#: Symposium.php:98
+#: Symposium.php:102
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr ""
 
-#: Symposium.php:99
+#: Symposium.php:103
 msgctxt "Field Description"
 msgid "Featured People in the Session"
 msgstr ""
