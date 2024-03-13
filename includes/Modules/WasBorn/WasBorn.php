@@ -208,6 +208,7 @@ class WasBorn extends gEditorial\Module
 		$this->action_module( 'pointers', 'post', 5, 100 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9 );
+		$this->filter_module( 'papered', 'view_data', 4 );
 	}
 
 	public function current_screen( $screen )
@@ -963,6 +964,33 @@ class WasBorn extends gEditorial\Module
 		$data['terms_rendered'] = array_values( Core\Arraay::filter( $data['terms_rendered'], [
 			'name' => $this->constant( 'gender_taxonomy' ),
 		], 'NOT' ) );
+
+		return $data;
+	}
+
+	public function papered_view_data( $data, $profile, $source, $context )
+	{
+		if ( ! $post = WordPress\Post::get( $source ) )
+			return $data;
+
+		if ( ! $this->in_setting( $post->post_type, 'parent_posttypes' ) )
+			return $data;
+
+		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
+			return $data;
+
+		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
+			return $data;
+
+		$cal   = $this->default_calendar();
+		$legal = $this->get_setting( 'age_of_majority', 18 );
+
+		$data['source']['dob']['raw']           = $dob;
+		$data['source']['dob']['cal']           = $cal;
+		$data['source']['dob']['age']           = Core\Date::calculateAge( $dob, $cal );
+		$data['source']['dob']['is_under_aged'] = Core\Date::isUnderAged( $dob, $legal, $cal );
+		$data['source']['rendered']['dob']      = Datetime::prepDateOfBirth( $dob, NULL, FALSE, $cal );
+		$data['source']['rendered']['age']      = Core\Number::localize( $data['source']['dob']['age'] );
 
 		return $data;
 	}
