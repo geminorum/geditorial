@@ -196,6 +196,19 @@ trait PrintPage
 		return $handle;
 	}
 
+	protected function printpage_link_bootstrap_5()
+	{
+		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
+		$dir = Core\HTML::rtl( 'SCRIPT_DEBUG' ) ? '' : '.rtl';
+
+		return Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/bootstrap/bootstrap'.$dir.$var.'.css', '5.3.3', 'all' );
+	}
+
+	protected function printpage_link_vazir_fonts()
+	{
+		return Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/vazirmatn/Vazirmatn-font-face.css', '33.0.3', 'all' );
+	}
+
 	public function settings_section_printpage()
 	{
 		Settings::fieldSection(
