@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
 
 trait PrintPage
@@ -164,6 +165,35 @@ trait PrintPage
 
 		// @REF: https://hdtuto.com/article/print-iframe-content-using-jquery-example
 		echo '<script>function '.$func.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
+	}
+
+	protected function printpage__enqueue_barcode_scripts()
+	{
+		$handle = $this->classs( 'barcode' );
+
+		Scripts::inlineScript( $handle,
+			'JsBarcode(".barcode").init();',
+			[
+				Scripts::pkgJSBarcode( FALSE, 'all' ),
+			]
+		);
+
+		return $handle;
+	}
+
+	protected function printpage__enqueue_qrcode_scripts()
+	{
+		$handle = $this->classs( 'qrcode' );
+
+		Scripts::inlineScript( $handle,
+			'jQuery(".qrcode").each(function(i,obj){const qrcode=new QRCode({content:jQuery(this).data("code"),container:"svg-viewbox",join:true});const svg=qrcode.svg();jQuery(this).html(svg);});',
+			[
+				'jquery',
+				Scripts::pkgQRCodeSVG(),
+			]
+		);
+
+		return $handle;
 	}
 
 	public function settings_section_printpage()
