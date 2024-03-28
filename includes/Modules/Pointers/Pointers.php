@@ -84,7 +84,7 @@ class Pointers extends gEditorial\Module
 
 		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-post-%s', $this->key ) ] ).'<ul class="-rows">';
 
-		$this->actions(
+		$fired = $this->actions(
 			'post',
 			$post,
 			$this->wrap_open_row( 'pointer', [
@@ -98,6 +98,9 @@ class Pointers extends gEditorial\Module
 			$screen
 		);
 
+		if ( ! $fired )
+			echo Core\HTML::row( _x( 'There are no pointers available!', 'Message', 'geditorial-admin' ), '-empty -no-pointers' );
+
 		echo '</ul></div>';
 	}
 
@@ -107,7 +110,7 @@ class Pointers extends gEditorial\Module
 
 		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-term-%s', $this->key ) ] ).'<ul class="-rows">';
 
-		$this->actions(
+		$fired = $this->actions(
 			'term',
 			$term,
 			$this->wrap_open_row( 'pointer', [
@@ -120,6 +123,9 @@ class Pointers extends gEditorial\Module
 			$action_context,
 			$screen
 		);
+
+		if ( ! $fired )
+			echo Core\HTML::row( _x( 'There are no pointers available!', 'Message', 'geditorial-admin' ), '-empty -no-pointers' );
 
 		echo '</ul></div>';
 	}
