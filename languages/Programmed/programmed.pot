@@ -1,0 +1,176 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Programmed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Programmed\n"
+"X-Domain: geditorial-programmed\n"
+
+#: Programmed.php:64
+msgctxt "Settings"
+msgid "Program Levels"
+msgstr ""
+
+#: Programmed.php:65
+msgctxt "Settings"
+msgid "Substitute taxonomy for the programs and supported post-types."
+msgstr ""
+
+#. translators: %s: primary taxonomy name
+#: Programmed.php:98
+msgctxt "Settings"
+msgid "Whether to show the <strong>%s</strong> in the quick/bulk edit panel."
+msgstr ""
+
+#: Programmed.php:142
+#: Programmed.php:143
+msgid "Program"
+msgid_plural "Programs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Programmed.php:144
+msgid "Program Category"
+msgid_plural "Program Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Programmed.php:145
+msgid "Program Level"
+msgid_plural "Program Levels"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Programmed.php:146
+msgid "Program Project"
+msgid_plural "Program Projects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Programmed.php:147
+msgid "Program Span"
+msgid_plural "Program Spans"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Programmed.php:148
+msgid "Program Type"
+msgid_plural "Program Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Programmed.php:149
+msgid "Program Status"
+msgid_plural "Program Statuses"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Programmed.php:153
+msgctxt "Label: `menu_name`"
+msgid "Programs"
+msgstr ""
+
+#: Programmed.php:154
+msgctxt "Label: Featured Image"
+msgid "Program Poster"
+msgstr ""
+
+#: Programmed.php:155
+msgctxt "Label: MetaBox Title"
+msgid "The Program"
+msgstr ""
+
+#: Programmed.php:158
+msgctxt "Label: MetaBox Title"
+msgid "In This Program"
+msgstr ""
+
+#: Programmed.php:161
+msgctxt "Label: Menu Name"
+msgid "Categories"
+msgstr ""
+
+#: Programmed.php:164
+msgctxt "Label: Menu Name"
+msgid "Projects"
+msgstr ""
+
+#: Programmed.php:167
+msgctxt "Label: Menu Name"
+msgid "Spans"
+msgstr ""
+
+#: Programmed.php:170
+msgctxt "Label: Menu Name"
+msgid "Types"
+msgstr ""
+
+#: Programmed.php:173
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr ""
+
+#. translators: %s: item count
+#: Programmed.php:183
+msgctxt "Misc: `tabloid_paired_posttype`"
+msgid "Program Participants (%s)"
+msgstr ""
+
+#. translators: %s: item count
+#: Programmed.php:185
+msgctxt "Misc: `tabloid_paired_supported`"
+msgid "Program Participations (%s)"
+msgstr ""
+
+#: Programmed.php:186
+msgctxt "Misc: `column_icon_title`"
+msgid "Programs"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Programmed.php:191
+msgctxt "Metabox: `listbox_title`"
+msgid "Participants on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: Programmed.php:202
+msgctxt "Status Taxonomy: Default Term"
+msgid "Planned"
+msgstr ""
+
+#: Programmed.php:203
+msgctxt "Status Taxonomy: Default Term"
+msgid "Held"
+msgstr ""
+
+#: Programmed.php:241
+msgctxt "Field Title"
+msgid "Program Code"
+msgstr ""
+
+#: Programmed.php:242
+msgctxt "Field Description"
+msgid "Unique Program Code"
+msgstr ""
+
+#: Programmed.php:559
+msgctxt "Header"
+msgid "Program Tools"
+msgstr ""
+
+#: Programmed.php:568
+msgctxt "Card"
+msgid "Program Date from Meta-data"
+msgstr ""
+
+#: Programmed.php:604
+msgctxt "Header"
+msgid "Program Imports"
+msgstr ""
