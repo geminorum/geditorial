@@ -1,3 +1,9 @@
+### 3.27.1
+* module/meeted: :new: module
+* module/missioned: upgrade to latest
+* module/programmed: :new: module
+* module/yearly: :new: module
+
 ### 3.27.0
 * app/import-items: account for the lack of identifier prop
 * internal/admin-page: cap check revised for non admins
