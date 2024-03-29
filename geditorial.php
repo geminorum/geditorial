@@ -18,6 +18,7 @@ Release Asset: true
 Requires WP: 5.7.0
 Requires at least: 5.7.0
 Requires PHP: 7.4
+Requires Plugins: gnetwork, gpersiandate
 */
 
 define( 'GEDITORIAL_VERSION', '3.26.7' );
