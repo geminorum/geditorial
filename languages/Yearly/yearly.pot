@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Yearly\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Yearly\n"
+"X-Domain: geditorial-yearly\n"
+
+#: Yearly.php:85
+msgid "Year Span"
+msgid_plural "Year Spans"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Yearly.php:89
+msgctxt "Label: Show Option All"
+msgid "Years"
+msgstr ""
+
+#: Yearly.php:90
+msgctxt "Label: Show Option No Terms"
+msgid "(Undefined)"
+msgstr ""
+
+#: Yearly.php:99
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Years Summary"
+msgstr ""
+
+#: Yearly.php:100
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Years Summary"
+msgstr ""
