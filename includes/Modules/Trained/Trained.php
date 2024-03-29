@@ -77,7 +77,16 @@ class Trained extends gEditorial\Module
 				'assign_default_term',
 				'comment_status',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype', [
+					'title',
+					// 'editor',
+					'excerpt',
+					'author',
+					'thumbnail',
+					'comments',
+					'custom-fields',
+					'page-attributes'
+				] ),
 			],
 			'_roles' => [
 				'custom_captype',

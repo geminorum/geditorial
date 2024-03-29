@@ -15,7 +15,6 @@ class Papered extends gEditorial\Module
 	use Internals\AdminPage;
 	use Internals\CoreMenuPage;
 	use Internals\FramePage;
-	use Internals\MetaBoxMega;
 	use Internals\MetaBoxSupported;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
