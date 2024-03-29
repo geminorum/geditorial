@@ -60,7 +60,6 @@ class Organization extends gEditorial\Module
 					'title'       => _x( 'Sub-departments', 'Settings', 'geditorial-organization' ),
 					'description' => _x( 'Substitute taxonomy for the departments and supported post-types.', 'Settings', 'geditorial-organization' ),
 				],
-				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'primary_taxonomy' ),

@@ -272,7 +272,7 @@ class Units extends gEditorial\Module
 	protected function init_meta_fields()
 	{
 		foreach ( $this->get_posttypes_support_units() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields['_supported'], TRUE, 'units' );
+			$this->add_posttype_fields( $posttype, $this->fields['units']['_supported'], TRUE, 'units' );
 
 		$this->action( 'wp_loaded' );
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );

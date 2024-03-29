@@ -56,7 +56,6 @@ class Addendum extends gEditorial\Module
 					'title'       => _x( 'Appendage Necessities', 'Settings', 'geditorial-addendum' ),
 					'description' => _x( 'Substitute taxonomy for the appendages and supported post-types.', 'Settings', 'geditorial-addendum' ),
 				],
-				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'primary_taxonomy' ),

@@ -70,7 +70,7 @@ class Persona extends gEditorial\Module
 					// 'author',
 					'comments',
 					'date-picker',
-					'editorial-roles'
+					'editorial-units',
 				] ),
 			],
 			'_editlist' => [
