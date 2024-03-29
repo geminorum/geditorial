@@ -155,6 +155,7 @@ trait PrintPage
 			'width'  => '0',
 			'height' => '0',
 			'border' => '0',
+			'style'  => 'display:none',
 		], '' );
 
 		echo Core\HTML::tag( 'a', [

@@ -28,6 +28,7 @@ class Regioned extends gEditorial\Module
 			'access'   => 'alpha',
 			'keywords' => [
 				'taxmodule',
+				'regional',
 			],
 		];
 	}
