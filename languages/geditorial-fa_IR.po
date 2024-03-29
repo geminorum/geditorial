@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-12 06:21+0330\n"
+"PO-Revision-Date: 2024-03-28 22:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -1332,22 +1332,22 @@ msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s [Ignored]"
 msgstr "فیلد: %s [نادیده]"
 
-#: includes/Internals/PrintPage.php:87
+#: includes/Internals/PrintPage.php:88
 msgctxt "Internal: PrintPage: Page Title"
 msgid "Print Me!"
 msgstr "چاپ کن!"
 
-#: includes/Internals/PrintPage.php:133
+#: includes/Internals/PrintPage.php:134
 msgctxt "Module"
 msgid "Print Preview"
 msgstr "پیش‌نمایش چاپ"
 
-#: includes/Internals/PrintPage.php:163
+#: includes/Internals/PrintPage.php:165
 msgctxt "Module"
 msgid "Print"
 msgstr "چاپ"
 
-#: includes/Internals/PrintPage.php:172
+#: includes/Internals/PrintPage.php:203
 msgctxt "Internal: PrintPage: Setting Section Title"
 msgid "Printing"
 msgstr "چاپ"

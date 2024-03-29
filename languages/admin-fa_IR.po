@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-12 06:20+0330\n"
+"PO-Revision-Date: 2024-03-29 04:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -1247,47 +1247,47 @@ msgctxt "Modules: Directions"
 msgid "Content Address Management"
 msgstr "مدیریت نشانی محتوا"
 
-#: includes/Modules/Districted/Districted.php:31
+#: includes/Modules/Districted/Districted.php:32
 msgctxt "Modules: Districted"
 msgid "Districted"
 msgstr "قلمرو"
 
-#: includes/Modules/Districted/Districted.php:32
+#: includes/Modules/Districted/Districted.php:33
 msgctxt "Modules: Districted"
 msgid "Provincial Divisions for Contents"
 msgstr "تقسیمات استانی برای محتوا"
 
-#: includes/Modules/Districted/Districted.php:299
+#: includes/Modules/Districted/Districted.php:300
 msgctxt "Module: Paired: Card Title"
 msgid "Paired Tools"
 msgstr "ابزارهای جفت"
 
-#: includes/Modules/Districted/Districted.php:302
+#: includes/Modules/Districted/Districted.php:303
 msgctxt "Module: Paired: Button"
 msgid "Sync Paired Terms"
 msgstr "همگام‌سازی رده‌های جفت"
 
-#: includes/Modules/Districted/Districted.php:303
+#: includes/Modules/Districted/Districted.php:304
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to set the paired term for all the main posts."
 msgstr "تلاش می‌کند رده جفت را برای همه فرسته‌های اصلی تنظیم کند."
 
-#: includes/Modules/Districted/Districted.php:307
+#: includes/Modules/Districted/Districted.php:308
 msgctxt "Module: Paired: Button"
 msgid "Create Paired Terms"
 msgstr "ایجاد رده‌های جفت"
 
-#: includes/Modules/Districted/Districted.php:308
+#: includes/Modules/Districted/Districted.php:309
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to create paired terms for all the main posts."
 msgstr "تلاش می‌کند رده‌های جفت را برای همه فرسته‌های اصلی ایجاد کند."
 
-#: includes/Modules/Divided/Divided.php:28
+#: includes/Modules/Divided/Divided.php:29
 msgctxt "Modules: Divided"
 msgid "Divided"
 msgstr "مجزا"
 
-#: includes/Modules/Divided/Divided.php:29
+#: includes/Modules/Divided/Divided.php:30
 msgctxt "Modules: Divided"
 msgid "Country Divided World"
 msgstr "دنیا براساس کشورها"
@@ -2022,12 +2022,12 @@ msgctxt "Modules: Paper"
 msgid "Printable Version of Posts"
 msgstr "نسخه قابل چاپ از نوشته‌ها"
 
-#: includes/Modules/Papered/Papered.php:41
+#: includes/Modules/Papered/Papered.php:36
 msgctxt "Modules: Papered"
 msgid "Papered"
 msgstr "کاغذی"
 
-#: includes/Modules/Papered/Papered.php:42
+#: includes/Modules/Papered/Papered.php:37
 msgctxt "Modules: Papered"
 msgid "Editorial Print Profiles"
 msgstr "نمایه‌های چاپی تحریریه"
@@ -2111,6 +2111,12 @@ msgstr "نشانگرها"
 msgctxt "Modules: Pointers"
 msgid "Editorial Content Hints"
 msgstr "ایما برای محتوای تحریریه"
+
+#: includes/Modules/Pointers/Pointers.php:102
+#: includes/Modules/Pointers/Pointers.php:128
+msgctxt "Message"
+msgid "There are no pointers available!"
+msgstr "هیچ نشان‌گری در دسترس نیست!"
 
 #: includes/Modules/Positions/Positions.php:22
 msgctxt "Modules: Positions"
@@ -4064,7 +4070,7 @@ msgstr "نقش‌های چاپ"
 #: includes/Settings.php:1157
 msgctxt "Setting Description"
 msgid "Roles that can print data entries."
-msgstr ""
+msgstr "نقش‌هایی که می‌توانند ورودیه‌های داده را چاپ کنند."
 
 #: includes/Settings.php:1170
 msgctxt "Setting Description"

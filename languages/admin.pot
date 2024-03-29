@@ -1249,47 +1249,47 @@ msgctxt "Modules: Directions"
 msgid "Content Address Management"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:31
+#: includes/Modules/Districted/Districted.php:32
 msgctxt "Modules: Districted"
 msgid "Districted"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:32
+#: includes/Modules/Districted/Districted.php:33
 msgctxt "Modules: Districted"
 msgid "Provincial Divisions for Contents"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:299
+#: includes/Modules/Districted/Districted.php:300
 msgctxt "Module: Paired: Card Title"
 msgid "Paired Tools"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:302
+#: includes/Modules/Districted/Districted.php:303
 msgctxt "Module: Paired: Button"
 msgid "Sync Paired Terms"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:303
+#: includes/Modules/Districted/Districted.php:304
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to set the paired term for all the main posts."
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:307
+#: includes/Modules/Districted/Districted.php:308
 msgctxt "Module: Paired: Button"
 msgid "Create Paired Terms"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:308
+#: includes/Modules/Districted/Districted.php:309
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to create paired terms for all the main posts."
 msgstr ""
 
-#: includes/Modules/Divided/Divided.php:28
+#: includes/Modules/Divided/Divided.php:29
 msgctxt "Modules: Divided"
 msgid "Divided"
 msgstr ""
 
-#: includes/Modules/Divided/Divided.php:29
+#: includes/Modules/Divided/Divided.php:30
 msgctxt "Modules: Divided"
 msgid "Country Divided World"
 msgstr ""
@@ -2024,12 +2024,12 @@ msgctxt "Modules: Paper"
 msgid "Printable Version of Posts"
 msgstr ""
 
-#: includes/Modules/Papered/Papered.php:41
+#: includes/Modules/Papered/Papered.php:36
 msgctxt "Modules: Papered"
 msgid "Papered"
 msgstr ""
 
-#: includes/Modules/Papered/Papered.php:42
+#: includes/Modules/Papered/Papered.php:37
 msgctxt "Modules: Papered"
 msgid "Editorial Print Profiles"
 msgstr ""
@@ -2112,6 +2112,12 @@ msgstr ""
 #: includes/Modules/Pointers/Pointers.php:19
 msgctxt "Modules: Pointers"
 msgid "Editorial Content Hints"
+msgstr ""
+
+#: includes/Modules/Pointers/Pointers.php:102
+#: includes/Modules/Pointers/Pointers.php:128
+msgctxt "Message"
+msgid "There are no pointers available!"
 msgstr ""
 
 #: includes/Modules/Positions/Positions.php:22
