@@ -1,3 +1,118 @@
+### 3.27.0
+* app/import-items: account for the lack of identifier prop
+* internal/admin-page: cap check revised for non admins
+* internal/bulk-exports: better file names
+* internal/bulk-exports: support for terms
+* internal/core-admin: unset views
+* internal/core-capabilities: check for plural cap
+* internal/core-dashboard: optional check for roles
+* internal/core-post-types: apply cap-type on post-tags
+* internal/core-post-types: apply settings
+* internal/core-post-types: support viewable in settings
+* internal/core-post-types: supports defaults
+* internal/core-posttypes: initial support for custom capabilities
+* internal/core-row-actions: support prepend
+* internal/core-taxonomies: apply settings for object
+* internal/core-taxonomies: meta-box callbacks revised
+* internal/default-terms: avoid generating defaults on all calls
+* internal/default-terms: better handling default terms
+* internal/late-chores: admin bulk actions for after-care
+* internal/late-chores: skip updates upon no changes
+* internal/late-chores: support process disabled
+* internal/paired-core: edit cap checks for pointers on supported
+* internal/paired-core: hook importer term parents
+* internal/paired-core: list of main posts for current supported
+* internal/paired-core: simplified register method
+* internal/paired-core: tabloid post summary for paired post-type
+* internal/paired-core: view list for papred
+* internal/paired-tools: cards revised
+* internal/paired-tools: move from to card
+* internal/post-date: aftercare via meta
+* internal/post-date: bulk action for post date by meta fields
+* internal/post-type-fields: avoid accepting year only on dates
+* internal/print-page: additional on loading admin-page
+* internal/print-page: inline script for barcode/qr-code
+* internal/print-page: link style-sheet for boostrap/vazir fonts
+* internal/print-page: print core default scripts
+* internal/print-page: render footer callback
+* main/datetime: is date only checker
+* main/datetime: number of years helper
+* main/metabox: better handling empty notices
+* main/metabox: better support for custom name attr
+* main/metabox: header support for check-lists
+* main/metabox: minus count support for check-lists
+* main/metabox: select single restricted terms
+* main/metabox: show count support for check-lists
+* main/module: auto hook screen options on check settings
+* main/module: auto-hook importer init
+* main/module: column markup revised
+* main/module: generate constant plural
+* main/module: module custom path on text-domain registry
+* main/module: moving up into internals
+* main/module: raise resources revised
+* main/module: support debug mode for each module
+* main/module: support for custom capability type api
+* main/plugin: text-domain for admin area
+* main/settings: contents viewable handling
+* main/settings: extend from main
+* main/settings: more control over taxonomy register arguments
+* main/settings: predefined settings for roles
+* main/settings: processing list open
+* main/settings: support link small
+* main/settings: tool-box card open
+* main/template: check for given module on meta fields
+* module/almanac: :new: module
+* module/attachments: bulk tools for supported
+* module/book: ddc/lcc meta field support
+* module/certificated: :new: module
+* module/config: initial support for roles pages
+* module/config: reports/imports general summary hook
+* module/conscripted: :new: module
+* module/employed: :new: module
+* module/executed: :new: module
+* module/honored: :new: module
+* module/importer: before/after process actions
+* module/importer: bulk cleanup raw data
+* module/importer: clarify override setting on set terms filter
+* module/importer: initial string checks on values
+* module/importer: prefix comments with column name
+* module/importer: record fields map entries
+* module/importer: setting terms for post revised
+* module/importer: skip no source id
+* module/importer: submenu for each supported
+* module/iranian: avoid certificate checks if has no post
+* module/iranian: more bulk checks on certificate numbers
+* module/meta: avoid double sanitize fields
+* module/meta: optional import field ignored
+* module/meta: save post parent fields on non edit pages
+* module/ortho: :warning: fixed iban validation
+* module/ortho: simple identity/iban validation fields on tools
+* module/overwrite: support paired taxonomy
+* module/papered: :new: module
+* module/persona: cleanup chars helper
+* module/persona: initial process of names
+* module/persona: print context on papered
+* module/persona: raw vcard/identity data for papered
+* module/persona: restrict reports to selected roles
+* module/persona: reverse name family on full-name
+* module/persona: support context on make full-name
+* module/persona: vcard generator
+* module/personal: sanitize passport number
+* module/pointer: not available action notice
+* module/regioned: :new: module
+* module/roled: renamed from roles
+* module/skilled: :new: module
+* module/static-covers: counter support
+* module/tabloid: filter post overview link
+* module/terms: support for custom meta-key for order
+* module/trained: add missing taxonomy dropdowns
+* module/tweaks: skip paired taxonomies on attr-column
+* module/was-born: calculated data on papered
+* module/was-born: hide gender on tabloid terms rendered
+* module/was-born: override-dates imports by settings
+* module/was-born: single-select on gender
+* service/post-type-fields: post meta-key helper
+
 ### 3.26.7
 * internal/late-chores: avoid re-hooking on cron calls
 * internal/paired-core: optional manage restricted to admins
