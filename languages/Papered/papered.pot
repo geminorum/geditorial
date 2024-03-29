@@ -13,210 +13,210 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Papered\n"
 "X-Domain: geditorial-papered\n"
 
-#: Papered.php:55
+#: Papered.php:54
 msgctxt "Setting Title"
 msgid "Direct Post-types"
 msgstr ""
 
-#: Papered.php:56
+#: Papered.php:55
 msgctxt "Setting Description"
 msgid "Supported post-types to use profiles directly."
 msgstr ""
 
-#: Papered.php:57
+#: Papered.php:56
 msgctxt "Setting Empty"
 msgid "There are no directed post-types available!"
 msgstr ""
 
+#: Papered.php:88
 #: Papered.php:89
-#: Papered.php:90
 msgid "Print Profile"
 msgid_plural "Print Profiles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Papered.php:91
+#: Papered.php:90
 msgid "Print Profile Type"
 msgid_plural "Print Profile Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Papered.php:92
+#: Papered.php:91
 msgid "Print Profile Flag"
 msgid_plural "Print Profile Flags"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Papered.php:96
+#: Papered.php:95
 msgctxt "Menu Title"
 msgid "Flags"
 msgstr ""
 
-#: Papered.php:101
+#: Papered.php:100
 msgctxt "PaperSize"
 msgid "A3 Portrait (297&times;420)"
 msgstr ""
 
-#: Papered.php:102
+#: Papered.php:101
 msgctxt "PaperSize"
 msgid "A3 Landscape (420&times;297)"
 msgstr ""
 
-#: Papered.php:103
+#: Papered.php:102
 msgctxt "PaperSize"
 msgid "A4 Portrait (210&times;297)"
 msgstr ""
 
-#: Papered.php:104
+#: Papered.php:103
 msgctxt "PaperSize"
 msgid "A4 Landscape (297&times;210)"
 msgstr ""
 
-#: Papered.php:105
+#: Papered.php:104
 msgctxt "PaperSize"
 msgid "A5 Portrait (148&times;210)"
 msgstr ""
 
-#: Papered.php:106
+#: Papered.php:105
 msgctxt "PaperSize"
 msgid "A5 Landscape (210&times;148)"
 msgstr ""
 
-#: Papered.php:107
+#: Papered.php:106
 msgctxt "PaperSize"
 msgid "Letter Portrait (216&times;280)"
 msgstr ""
 
-#: Papered.php:108
+#: Papered.php:107
 msgctxt "PaperSize"
 msgid "Letter Landscape (280&times;216)"
 msgstr ""
 
-#: Papered.php:109
+#: Papered.php:108
 msgctxt "PaperSize"
 msgid "Legal Portrait (216&times;357)"
 msgstr ""
 
-#: Papered.php:110
+#: Papered.php:109
 msgctxt "PaperSize"
 msgid "Legal Landscape (357&times;216)"
 msgstr ""
 
-#: Papered.php:113
+#: Papered.php:112
 msgctxt "Sheet Padding"
 msgid "5mm Sheet Padding"
 msgstr ""
 
-#: Papered.php:114
+#: Papered.php:113
 msgctxt "Sheet Padding"
 msgid "10mm Sheet Padding"
 msgstr ""
 
-#: Papered.php:115
+#: Papered.php:114
 msgctxt "Sheet Padding"
 msgid "15mm Sheet Padding"
 msgstr ""
 
-#: Papered.php:116
+#: Papered.php:115
 msgctxt "Sheet Padding"
 msgid "20mm Sheet Padding"
 msgstr ""
 
-#: Papered.php:117
+#: Papered.php:116
 msgctxt "Sheet Padding"
 msgid "25mm Sheet Padding"
 msgstr ""
 
-#: Papered.php:129
+#: Papered.php:128
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Libre Fonts"
 msgstr ""
 
-#: Papered.php:130
+#: Papered.php:129
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Vazir Fonts"
 msgstr ""
 
-#: Papered.php:131
+#: Papered.php:130
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Nastaliq Fonts"
 msgstr ""
 
-#: Papered.php:132
+#: Papered.php:131
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Bootstrap 5"
 msgstr ""
 
-#: Papered.php:133
+#: Papered.php:132
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Titr Fonts"
 msgstr ""
 
-#: Papered.php:134
+#: Papered.php:133
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Barcode"
 msgstr ""
 
-#: Papered.php:135
+#: Papered.php:134
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs QR-Code"
 msgstr ""
 
-#: Papered.php:476
+#: Papered.php:475
 msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr ""
 
-#: Papered.php:643
+#: Papered.php:642
 msgctxt "None Title"
 msgid "&ndash; Select Peper Size &ndash;"
 msgstr ""
 
-#: Papered.php:654
+#: Papered.php:653
 msgctxt "None Title"
 msgid "&ndash; Select Sheet Padding &ndash;"
 msgstr ""
 
-#: Papered.php:665
+#: Papered.php:664
 msgctxt "Input Title"
 msgid "Row per Sheet"
 msgstr ""
 
-#: Papered.php:683
+#: Papered.php:682
 msgctxt "None Title"
 msgid "&ndash; Select Direct Post-Type &ndash;"
 msgstr ""
 
-#: Papered.php:741
+#: Papered.php:740
 msgctxt "MetaBox Title"
 msgid "Template for Rows"
 msgstr ""
 
-#: Papered.php:742
+#: Papered.php:741
 msgctxt "MetaBox Title"
 msgid "Template Before"
 msgstr ""
 
-#: Papered.php:743
+#: Papered.php:742
 msgctxt "MetaBox Title"
 msgid "Template After"
 msgstr ""
 
-#: Papered.php:744
+#: Papered.php:743
 msgctxt "MetaBox Title"
 msgid "Template Styles"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:816
-#: Papered.php:873
+#: Papered.php:815
+#: Papered.php:872
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:829
-#: Papered.php:895
+#: Papered.php:828
+#: Papered.php:894
 msgctxt "Button"
 msgid "%1$s Print Profile"
 msgstr ""

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.26.7\n"
+"Project-Id-Version: gEditorial 3.27.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -1834,12 +1834,12 @@ msgctxt "Modules: Medic"
 msgid "Editorial Medical Records"
 msgstr ""
 
-#: includes/Modules/Meeted/Meeted.php:30
+#: includes/Modules/Meeted/Meeted.php:44
 msgctxt "Modules: Meeted"
 msgid "Meeted"
 msgstr ""
 
-#: includes/Modules/Meeted/Meeted.php:31
+#: includes/Modules/Meeted/Meeted.php:45
 msgctxt "Modules: Meeted"
 msgid "Editorial Meeting Management"
 msgstr ""
@@ -1864,12 +1864,12 @@ msgctxt "Modules: Metering"
 msgid "Metering"
 msgstr ""
 
-#: includes/Modules/Missioned/Missioned.php:41
+#: includes/Modules/Missioned/Missioned.php:44
 msgctxt "Modules: Missioned"
 msgid "Missioned"
 msgstr ""
 
-#: includes/Modules/Missioned/Missioned.php:42
+#: includes/Modules/Missioned/Missioned.php:45
 msgctxt "Modules: Missioned"
 msgid "Editorial Mission Management"
 msgstr ""
@@ -2024,12 +2024,12 @@ msgctxt "Modules: Paper"
 msgid "Printable Version of Posts"
 msgstr ""
 
-#: includes/Modules/Papered/Papered.php:36
+#: includes/Modules/Papered/Papered.php:35
 msgctxt "Modules: Papered"
 msgid "Papered"
 msgstr ""
 
-#: includes/Modules/Papered/Papered.php:37
+#: includes/Modules/Papered/Papered.php:36
 msgctxt "Modules: Papered"
 msgid "Editorial Print Profiles"
 msgstr ""
@@ -2145,12 +2145,12 @@ msgctxt "Modules: Prioritized"
 msgid "Prioritized"
 msgstr ""
 
-#: includes/Modules/Programmed/Programmed.php:41
+#: includes/Modules/Programmed/Programmed.php:44
 msgctxt "Modules: Programmed"
 msgid "Programmed"
 msgstr ""
 
-#: includes/Modules/Programmed/Programmed.php:42
+#: includes/Modules/Programmed/Programmed.php:45
 msgctxt "Modules: Programmed"
 msgid "Editorial Program Management"
 msgstr ""
@@ -3153,6 +3153,16 @@ msgstr ""
 #: includes/Modules/Wysiwyg/Wysiwyg.php:24
 msgctxt "Modules: Wysiwyg"
 msgid "What You See Is What You Get"
+msgstr ""
+
+#: includes/Modules/Yearly/Yearly.php:26
+msgctxt "Modules: Yearly"
+msgid "Yearly"
+msgstr ""
+
+#: includes/Modules/Yearly/Yearly.php:27
+msgctxt "Modules: Yearly"
+msgid "Content By Years"
 msgstr ""
 
 #: includes/Plugin.php:306

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-29 04:52+0330\n"
+"PO-Revision-Date: 2024-03-29 22:55+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -1832,12 +1832,12 @@ msgctxt "Modules: Medic"
 msgid "Editorial Medical Records"
 msgstr "سوابق پزشکی تحریریه"
 
-#: includes/Modules/Meeted/Meeted.php:30
+#: includes/Modules/Meeted/Meeted.php:44
 msgctxt "Modules: Meeted"
 msgid "Meeted"
 msgstr "ملاقات"
 
-#: includes/Modules/Meeted/Meeted.php:31
+#: includes/Modules/Meeted/Meeted.php:45
 msgctxt "Modules: Meeted"
 msgid "Editorial Meeting Management"
 msgstr "مدیریت جلسات تحریریه"
@@ -1862,12 +1862,12 @@ msgctxt "Modules: Metering"
 msgid "Metering"
 msgstr "اندازه‌گیری"
 
-#: includes/Modules/Missioned/Missioned.php:41
+#: includes/Modules/Missioned/Missioned.php:44
 msgctxt "Modules: Missioned"
 msgid "Missioned"
 msgstr "مأموریت"
 
-#: includes/Modules/Missioned/Missioned.php:42
+#: includes/Modules/Missioned/Missioned.php:45
 msgctxt "Modules: Missioned"
 msgid "Editorial Mission Management"
 msgstr "مدیریت مأموریت‌های تحریریه"
@@ -2022,12 +2022,12 @@ msgctxt "Modules: Paper"
 msgid "Printable Version of Posts"
 msgstr "نسخه قابل چاپ از نوشته‌ها"
 
-#: includes/Modules/Papered/Papered.php:36
+#: includes/Modules/Papered/Papered.php:35
 msgctxt "Modules: Papered"
 msgid "Papered"
 msgstr "کاغذی"
 
-#: includes/Modules/Papered/Papered.php:37
+#: includes/Modules/Papered/Papered.php:36
 msgctxt "Modules: Papered"
 msgid "Editorial Print Profiles"
 msgstr "نمایه‌های چاپی تحریریه"
@@ -2143,12 +2143,12 @@ msgctxt "Modules: Prioritized"
 msgid "Prioritized"
 msgstr "اولویت‌بندی"
 
-#: includes/Modules/Programmed/Programmed.php:41
+#: includes/Modules/Programmed/Programmed.php:44
 msgctxt "Modules: Programmed"
 msgid "Programmed"
 msgstr "برنامه‌ریزی"
 
-#: includes/Modules/Programmed/Programmed.php:42
+#: includes/Modules/Programmed/Programmed.php:45
 msgctxt "Modules: Programmed"
 msgid "Editorial Program Management"
 msgstr "مدیریت برنامه‌های تحریریه"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Units\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-11-28 22:09+0330\n"
+"PO-Revision-Date: 2024-03-30 00:14+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ../../includes/Modules/Units\n"
 "X-Domain: geditorial-units\n"
 
@@ -462,13 +462,13 @@ msgctxt "Column Title"
 msgid "Measurements"
 msgstr "ابعاد"
 
-#: Units.php:599
+#: Units.php:601
 msgctxt "Message"
 msgid "No Measurement Units"
 msgstr "بدون واحد اندازه‌گیری"
 
 #. translators: %s: day count
-#: Units.php:791
+#: Units.php:815
 msgctxt "Noop"
 msgid "%s Day"
 msgid_plural "%s Days"
@@ -476,7 +476,7 @@ msgstr[0] "%s روز"
 msgstr[1] "%s روز"
 
 #. translators: %s: hour count
-#: Units.php:798
+#: Units.php:822
 msgctxt "Noop"
 msgid "%s Hour"
 msgid_plural "%s Hours"
@@ -484,7 +484,7 @@ msgstr[0] "%s ساعت"
 msgstr[1] "%s ساعت"
 
 #. translators: %s: hour count
-#: Units.php:808
+#: Units.php:832
 msgctxt "Noop"
 msgid "%s Gram"
 msgid_plural "%s Grams"
@@ -492,7 +492,7 @@ msgstr[0] "%s گرم"
 msgstr[1] "%s گرم"
 
 #. translators: %s: hour count
-#: Units.php:815
+#: Units.php:839
 msgctxt "Noop"
 msgid "%s Kilogram"
 msgid_plural "%s Kilograms"
@@ -500,7 +500,7 @@ msgstr[0] "%s کیلوگرم"
 msgstr[1] "%s کیلوگرم"
 
 #. translators: %s: hour count
-#: Units.php:822
+#: Units.php:846
 msgctxt "Noop"
 msgid "%s Milimeter"
 msgid_plural "%s Milimeters"
@@ -508,7 +508,7 @@ msgstr[0] "%s میلی‌متر"
 msgstr[1] "%s میلی‌متر"
 
 #. translators: %s: hour count
-#: Units.php:829
+#: Units.php:853
 msgctxt "Noop"
 msgid "%s Centimeter"
 msgid_plural "%s Centimeters"
@@ -516,25 +516,25 @@ msgstr[0] "%s سانتی‌متر"
 msgstr[1] "%s سانتی‌متر"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:852
+#: Units.php:876
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr "کفش %s"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:861
+#: Units.php:885
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr "پیراهن %s"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:870
+#: Units.php:894
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr "شلوار %s"
 
 #. translators: %s: field title
-#: Units.php:1001
+#: Units.php:1025
 msgctxt "Import Field"
 msgid "Units: %s"
 msgstr "واحد: %s"

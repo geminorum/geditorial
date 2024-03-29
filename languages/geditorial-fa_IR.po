@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-28 22:39+0330\n"
+"PO-Revision-Date: 2024-03-29 22:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -1347,7 +1347,7 @@ msgctxt "Module"
 msgid "Print"
 msgstr "چاپ"
 
-#: includes/Internals/PrintPage.php:203
+#: includes/Internals/PrintPage.php:216
 msgctxt "Internal: PrintPage: Setting Section Title"
 msgid "Printing"
 msgstr "چاپ"

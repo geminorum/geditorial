@@ -13,121 +13,164 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Missioned\n"
 "X-Domain: geditorial-missioned\n"
 
-#: Missioned.php:108
-#: Missioned.php:109
+#: Missioned.php:64
+msgctxt "Settings"
+msgid "Mission Levels"
+msgstr ""
+
+#: Missioned.php:65
+msgctxt "Settings"
+msgid "Substitute taxonomy for the missions and supported post-types."
+msgstr ""
+
+#. translators: %s: primary taxonomy name
+#: Missioned.php:98
+msgctxt "Settings"
+msgid "Whether to show the <strong>%s</strong> in the quick/bulk edit panel."
+msgstr ""
+
+#: Missioned.php:142
+#: Missioned.php:143
 msgid "Mission"
 msgid_plural "Missions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:110
+#: Missioned.php:144
 msgid "Mission Category"
 msgid_plural "Mission Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:111
+#: Missioned.php:145
+msgid "Mission Level"
+msgid_plural "Mission Levels"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Missioned.php:146
+msgid "Mission Program"
+msgid_plural "Mission Programs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Missioned.php:147
 msgid "Mission Span"
 msgid_plural "Mission Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:112
+#: Missioned.php:148
 msgid "Mission Type"
 msgid_plural "Mission Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:113
+#: Missioned.php:149
 msgid "Mission Status"
 msgid_plural "Mission Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:117
+#: Missioned.php:153
 msgctxt "Label: `menu_name`"
 msgid "Missions"
 msgstr ""
 
-#: Missioned.php:118
+#: Missioned.php:154
 msgctxt "Label: Featured Image"
 msgid "Mission Poster"
 msgstr ""
 
-#: Missioned.php:119
+#: Missioned.php:155
 msgctxt "Label: MetaBox Title"
 msgid "The Mission"
 msgstr ""
 
-#: Missioned.php:122
+#: Missioned.php:158
 msgctxt "Label: MetaBox Title"
 msgid "In This Mission"
 msgstr ""
 
-#: Missioned.php:125
+#: Missioned.php:161
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Missioned.php:128
+#: Missioned.php:164
+msgctxt "Label: Menu Name"
+msgid "Programs"
+msgstr ""
+
+#: Missioned.php:167
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Missioned.php:131
+#: Missioned.php:170
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Missioned.php:134
+#: Missioned.php:173
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: item count
-#: Missioned.php:144
+#: Missioned.php:183
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Mission Participants (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Missioned.php:146
+#: Missioned.php:185
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Mission Participations (%s)"
 msgstr ""
 
-#: Missioned.php:147
+#: Missioned.php:186
 msgctxt "Misc: `column_icon_title`"
 msgid "Missions"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Missioned.php:152
-msgctxt "Metabox: `megabox_title`"
+#: Missioned.php:191
+msgctxt "Metabox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Missioned.php:197
+#: Missioned.php:202
+msgctxt "Status Taxonomy: Default Term"
+msgid "Planned"
+msgstr ""
+
+#: Missioned.php:203
+msgctxt "Status Taxonomy: Default Term"
+msgid "Held"
+msgstr ""
+
+#: Missioned.php:241
 msgctxt "Field Title"
 msgid "Mission Code"
 msgstr ""
 
-#: Missioned.php:198
+#: Missioned.php:242
 msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr ""
 
-#: Missioned.php:460
+#: Missioned.php:559
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr ""
 
-#: Missioned.php:469
+#: Missioned.php:568
 msgctxt "Card"
 msgid "Mission Date from Meta-data"
 msgstr ""
 
-#: Missioned.php:505
+#: Missioned.php:604
 msgctxt "Header"
 msgid "Mission Imports"
 msgstr ""
