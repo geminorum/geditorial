@@ -11,6 +11,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\WordPress;
 
 class Missioned extends gEditorial\Module
 {
@@ -18,6 +19,7 @@ class Missioned extends gEditorial\Module
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
+	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\LateChores;
 	use Internals\PairedAdmin;
@@ -26,11 +28,12 @@ class Missioned extends gEditorial\Module
 	use Internals\PairedImports;
 	use Internals\PairedMetaBox;
 	use Internals\PairedRest;
-	use Internals\PairedRest;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostDate;
 	use Internals\PostMeta;
+	use Internals\PostTypeFields;
+	use Internals\TemplatePostType;
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
 
@@ -50,10 +53,17 @@ class Missioned extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'_general' => [
 				'paired_force_parents',
 				'paired_manage_restricted',
+				[
+					'field'       => 'subterms_support',
+					'title'       => _x( 'Mission Levels', 'Settings', 'geditorial-missioned' ),
+					'description' => _x( 'Substitute taxonomy for the missions and supported post-types.', 'Settings', 'geditorial-missioned' ),
+				],
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'primary_taxonomy' ),
@@ -66,10 +76,31 @@ class Missioned extends gEditorial\Module
 				'assign_default_term',
 				'comment_status',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype', [
+					'title',
+					// 'editor',
+					'excerpt',
+					'author',
+					'thumbnail',
+					'comments',
+					'custom-fields',
+					'page-attributes'
+				] ),
 			],
-			'_editpost' => [
+			'_roles' => [
+				'custom_captype',
+				'reports_roles' => [ NULL, $roles ],
+			],
+			'_editlist' => [
 				'admin_bulkactions',
+				'show_in_quickedit' => [ sprintf(
+					/* translators: %s: primary taxonomy name */
+					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-missioned' ),
+					$this->get_taxonomy_label( 'status_taxonomy' )
+				), '1' ],
+			],
+			'_frontend' => [
+				'contents_viewable',
 			],
 		];
 	}
@@ -80,6 +111,8 @@ class Missioned extends gEditorial\Module
 			'primary_posttype' => 'mission',
 			'primary_taxonomy' => 'mission_category',
 			'primary_paired'   => 'missions',
+			'primary_subterm'  => 'mission_level',
+			'program_taxonomy' => 'mission_program',
 			'span_taxonomy'    => 'mission_span',
 			'type_taxonomy'    => 'mission_type',
 			'status_taxonomy'  => 'mission_status',
@@ -94,6 +127,7 @@ class Missioned extends gEditorial\Module
 			],
 			'taxonomies' => [
 				'primary_taxonomy' => NULL,
+				'primary_subterm'  => 'performance',
 				'span_taxonomy'    => 'backup',
 				'type_taxonomy'    => 'screenoptions',
 				'status_taxonomy'  => 'post-status',
@@ -108,6 +142,8 @@ class Missioned extends gEditorial\Module
 				'primary_posttype' => _n_noop( 'Mission', 'Missions', 'geditorial-missioned' ),
 				'primary_paired'   => _n_noop( 'Mission', 'Missions', 'geditorial-missioned' ),
 				'primary_taxonomy' => _n_noop( 'Mission Category', 'Mission Categories', 'geditorial-missioned' ),
+				'primary_subterm'  => _n_noop( 'Mission Level', 'Mission Levels', 'geditorial-missioned' ),
+				'program_taxonomy' => _n_noop( 'Mission Program', 'Mission Programs', 'geditorial-missioned' ),
 				'span_taxonomy'    => _n_noop( 'Mission Span', 'Mission Spans', 'geditorial-missioned' ),
 				'type_taxonomy'    => _n_noop( 'Mission Type', 'Mission Types', 'geditorial-missioned' ),
 				'status_taxonomy'  => _n_noop( 'Mission Status', 'Mission Statuses', 'geditorial-missioned' ),
@@ -123,6 +159,9 @@ class Missioned extends gEditorial\Module
 				],
 				'primary_taxonomy' => [
 					'menu_name' => _x( 'Categories', 'Label: Menu Name', 'geditorial-missioned' ),
+				],
+				'program_taxonomy' => [
+					'menu_name' => _x( 'Programs', 'Label: Menu Name', 'geditorial-missioned' ),
 				],
 				'span_taxonomy' => [
 					'menu_name' => _x( 'Spans', 'Label: Menu Name', 'geditorial-missioned' ),
@@ -149,7 +188,7 @@ class Missioned extends gEditorial\Module
 
 		$strings['metabox'] = [
 			/* translators: %1$s: current post title, %2$s: posttype singular name */
-			'megabox_title' => _x( 'Participants on &ldquo;%1$s&rdquo;', 'Metabox: `megabox_title`', 'geditorial-missioned' ),
+			'listbox_title' => _x( 'Participants on &ldquo;%1$s&rdquo;', 'Metabox: `listbox_title`', 'geditorial-missioned' ),
 		];
 
 		return $strings;
@@ -158,6 +197,11 @@ class Missioned extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
+			'status_taxonomy' => [
+				// TODO: finish the list
+				'planned' => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-missioned' ),
+				'held'    => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-missioned' ),
+			],
 			'span_taxonomy' => Datetime::getYears( '-5 years' ),
 		];
 	}
@@ -211,6 +255,8 @@ class Missioned extends gEditorial\Module
 		return [
 			'primary_posttype',
 			'primary_paired',
+			'primary_subterm',
+			'primary_taxonomy',
 		];
 	}
 
@@ -236,34 +282,69 @@ class Missioned extends gEditorial\Module
 	{
 		parent::init();
 
+		$viewable = $this->get_setting( 'contents_viewable', TRUE );
+		$captype  = $this->get_setting( 'custom_captype', FALSE )
+			? $this->constant_plural( 'primary_posttype' )
+			: FALSE;
+
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		] );
+
+		$this->register_taxonomy( 'program_taxonomy', [
+			'hierarchical'      => TRUE,
+			'meta_box_cb'       => NULL,
+			'show_admin_column' => TRUE,
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		] );
 
 		$this->register_taxonomy( 'span_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
+		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
-			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
+		] );
 
-		$this->paired_register();
+		$this->paired_register( [], [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		], [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		] );
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
@@ -289,6 +370,10 @@ class Missioned extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
+		$subterms = $this->get_setting( 'subterms_support' )
+			? $this->constant( 'primary_subterm' )
+			: FALSE;
+
 		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
@@ -302,16 +387,20 @@ class Missioned extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter_true( 'disable_months_dropdown', 12 );
+
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
 				$this->coreadmin__unset_columns( $screen->post_type );
 				$this->coreadmin__unset_views( $screen->post_type );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
+				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'primary_taxonomy',
+					'primary_subterm',
+					'program_taxonomy',
 					'span_taxonomy',
 					'type_taxonomy',
 					'status_taxonomy',
@@ -320,22 +409,32 @@ class Missioned extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
+			if ( $subterms && $subterms === $screen->taxonomy )
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'primary_posttype' ) ) );
+
 			if ( 'edit-tags' == $screen->base ) {
 
 				$this->_hook_paired_taxonomy_bulk_actions( $screen->post_type, $screen->taxonomy );
 
 			} else if ( 'post' == $screen->base ) {
 
+				$this->_metabox_remove_subterm( $screen, $subterms );
 				$this->_hook_paired_overviewbox( $screen );
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
-				// $this->paired__hook_tweaks_column( $screen->post_type, 12 );
+				// $this->paired__hook_tweaks_column( $screen->post_type, 8 );
 				// $this->paired__hook_screen_restrictposts();
-				// $this->postmeta__hook_meta_column_row( $screen->post_type );
+				$this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
+
+		// only for supported posttypes
+		$this->remove_taxonomy_submenu( $subterms );
+
+		if ( Settings::isDashboard( $screen ) )
+			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
 	}
 
 	public function admin_menu()
@@ -345,7 +444,7 @@ class Missioned extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype', [ 'reports' ] ) )
 			$items[] = $glance;
 
 		return $items;
