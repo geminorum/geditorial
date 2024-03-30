@@ -50,6 +50,8 @@ class Organization extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -66,10 +68,12 @@ class Organization extends gEditorial\Module
 					$this->get_taxonomy_label( 'primary_taxonomy', 'no_terms' ),
 				],
 			],
+			'_roles' => [
+				'custom_captype',
+				'reports_roles' => [ NULL, $roles ],
+			],
 			'_editlist' => [
 				'admin_ordering',
-			],
-			'_editpost' => [
 				'assign_default_term',
 			],
 			'_frontend' => [
@@ -273,6 +277,9 @@ class Organization extends gEditorial\Module
 		parent::init();
 
 		$viewable = $this->get_setting( 'contents_viewable', TRUE );
+		$captype  = $this->get_setting( 'custom_captype', FALSE )
+			? $this->constant_plural( 'primary_posttype' )
+			: FALSE;
 
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
@@ -281,7 +288,8 @@ class Organization extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 		], 'primary_posttype', [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
@@ -290,7 +298,8 @@ class Organization extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
@@ -299,13 +308,17 @@ class Organization extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__singleselect_terms_callback',
 		], 'primary_posttype', [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			'admin_managed'  => TRUE,
 		] );
 
 		$this->paired_register( [], [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		], [
-			'is_viewable' => $viewable,
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
@@ -410,7 +423,7 @@ class Organization extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype', [ 'reports' ] ) )
 			$items[] = $glance;
 
 		return $items;
