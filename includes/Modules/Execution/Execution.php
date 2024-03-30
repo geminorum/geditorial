@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Executed;
+<?php namespace geminorum\gEditorial\Modules\Execution;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -7,7 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
-class Executed extends gEditorial\Module
+class Execution extends gEditorial\Module
 {
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
@@ -18,12 +18,13 @@ class Executed extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
+	// NOTE: `Executed` wording is not acceptable in some server environments
 	public static function module()
 	{
 		return [
-			'name'     => 'executed',
-			'title'    => _x( 'Executed', 'Modules: Executed', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Executions', 'Modules: Executed', 'geditorial-admin' ),
+			'name'     => 'execution',
+			'title'    => _x( 'Execution', 'Modules: Execution', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Executions', 'Modules: Execution', 'geditorial-admin' ),
 			'icon'     => 'hammer',
 			'access'   => 'beta',
 			'keywords' => [
@@ -83,12 +84,12 @@ class Executed extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'main_taxonomy' => _n_noop( 'Executive', 'Executives', 'geditorial-executed' ),
+				'main_taxonomy' => _n_noop( 'Executive', 'Executives', 'geditorial-execution' ),
 			],
 			'labels' => [
 				'main_taxonomy' => [
-					'show_option_all'      => _x( 'Executives', 'Label: Show Option All', 'geditorial-executed' ),
-					'show_option_no_items' => _x( '(Unexecutived)', 'Label: Show Option No Terms', 'geditorial-executed' ),
+					'show_option_all'      => _x( 'Executives', 'Label: Show Option All', 'geditorial-execution' ),
+					'show_option_no_items' => _x( '(No-executive)', 'Label: Show Option No Terms', 'geditorial-execution' ),
 				],
 			],
 		];
@@ -97,8 +98,8 @@ class Executed extends gEditorial\Module
 			return $strings;
 
 		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Team Execution Summary', 'Dashboard Widget Title', 'geditorial-executed' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Execution Summary', 'Dashboard Widget Title', 'geditorial-executed' ), ],
+			'current' => [ 'widget_title' => _x( 'Your Team Execution Summary', 'Dashboard Widget Title', 'geditorial-execution' ), ],
+			'all'     => [ 'widget_title' => _x( 'Editorial Execution Summary', 'Dashboard Widget Title', 'geditorial-execution' ), ],
 		];
 
 		return $strings;

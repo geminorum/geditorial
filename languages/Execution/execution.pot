@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Executed\n"
+"Project-Id-Version: gEditorial Execution\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -10,31 +10,31 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
-"X-Poedit-Basepath: ../../includes/Modules/Executed\n"
-"X-Domain: geditorial-executed\n"
+"X-Poedit-Basepath: ../../includes/Modules/Execution\n"
+"X-Domain: geditorial-execution\n"
 
-#: Executed.php:86
+#: Execution.php:87
 msgid "Executive"
 msgid_plural "Executives"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Executed.php:90
+#: Execution.php:91
 msgctxt "Label: Show Option All"
 msgid "Executives"
 msgstr ""
 
-#: Executed.php:91
+#: Execution.php:92
 msgctxt "Label: Show Option No Terms"
-msgid "(Unexecutived)"
+msgid "(No-executive)"
 msgstr ""
 
-#: Executed.php:100
+#: Execution.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Execution Summary"
 msgstr ""
 
-#: Executed.php:101
+#: Execution.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Execution Summary"
 msgstr ""

@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Executed\n"
+"Project-Id-Version: gEditorial Execution\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-12-29 02:42+0330\n"
+"PO-Revision-Date: 2024-03-30 23:40+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -12,31 +12,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 "X-Generator: Poedit 3.4.2\n"
-"X-Poedit-Basepath: ../../includes/Modules/Executed\n"
-"X-Domain: geditorial-executed\n"
+"X-Poedit-Basepath: ../../includes/Modules/Execution\n"
+"X-Domain: geditorial-execution\n"
 
-#: Executed.php:70
+#: Execution.php:87
 msgid "Executive"
 msgid_plural "Executives"
 msgstr[0] "مجریان"
 msgstr[1] "مجری"
 
-#: Executed.php:74
+#: Execution.php:91
 msgctxt "Label: Show Option All"
 msgid "Executives"
 msgstr "مجریان"
 
-#: Executed.php:75
+#: Execution.php:92
 msgctxt "Label: Show Option No Terms"
-msgid "(Unexecutived)"
-msgstr "(بدون مجری)"
+msgid "(No-executive)"
+msgstr "(بدون‌مجری)"
 
-#: Executed.php:84
+#: Execution.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Execution Summary"
 msgstr "گزارش اجرای شما"
 
-#: Executed.php:85
+#: Execution.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Execution Summary"
 msgstr "گزارش اجرای تحریریه"
+
+#~ msgctxt "Label: Show Option No Terms"
+#~ msgid "(Unexecutived)"
+#~ msgstr "(بدون مجری)"
