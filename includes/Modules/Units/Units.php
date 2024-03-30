@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
@@ -92,6 +93,9 @@ class Units extends gEditorial\Module
 				'total_days'  => _x( 'The Total of the Days', 'Descriptions', 'geditorial-units' ),
 				'total_hours' => _x( 'The Total of the Hours', 'Descriptions', 'geditorial-units' ),
 
+				'total_members'     => _x( 'The Total of the Members', 'Descriptions', 'geditorial-units' ),
+				'total_participant' => _x( 'The Total of the Participant', 'Descriptions', 'geditorial-units' ),
+
 				'book_cover' => _x( 'The Book Cover Size', 'Descriptions', 'geditorial-units' ),
 				'paper_size' => _x( 'The Standard Paper Size', 'Descriptions', 'geditorial-units' ),
 			],
@@ -144,6 +148,9 @@ class Units extends gEditorial\Module
 
 				'total_days'  => [ 'type' => 'day'  ],
 				'total_hours' => [ 'type' => 'hour' ],
+
+				'total_members'     => [ 'type' => 'member' ],
+				'total_participant' => [ 'type' => 'person' ],   // `contributor`/`competitor`/`player`
 
 				'book_cover' => [ 'type' => 'bookcover' ],
 				'paper_size' => [ 'type' => 'papersize' ],
@@ -509,6 +516,8 @@ class Units extends gEditorial\Module
 					// ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
 					break;
 
+				case 'member':
+				case 'person':
 				case 'day':
 				case 'hour':
 				case 'gram':
@@ -798,6 +807,11 @@ class Units extends gEditorial\Module
 		}
 
 		switch ( $field_args['type'] ) {
+
+			case 'member':
+			case 'person':
+				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( $field_args['type'] ) ),
+					Core\Number::format( trim( $raw ) ) );
 
 			case 'gram':
 				return sprintf( Helper::noopedCount( trim( $raw ),

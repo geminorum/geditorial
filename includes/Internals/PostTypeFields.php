@@ -390,6 +390,8 @@ trait PostTypeFields
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
 				break;
 
+			case 'member':
+			case 'person':
 			case 'price':
 			case 'number':
 				$sanitized = Core\Number::intval( trim( $data ) );

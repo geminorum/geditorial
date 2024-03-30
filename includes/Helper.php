@@ -270,6 +270,11 @@ class Helper extends WordPress\Main
 			// NOTE: second priority: field type
 			switch ( $field['type'] ) {
 
+				case 'member':
+				case 'person':
+					return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( $field['type'] ) ),
+						Core\Number::format( $raw ?: $value ) );
+
 				case 'gram':
 					return sprintf(
 						/* translators: %s: number as gram */
