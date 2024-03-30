@@ -24,7 +24,7 @@ class Execution extends gEditorial\Module
 		return [
 			'name'     => 'execution',
 			'title'    => _x( 'Execution', 'Modules: Execution', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Executions', 'Modules: Execution', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Executives', 'Modules: Execution', 'geditorial-admin' ),
 			'icon'     => 'hammer',
 			'access'   => 'beta',
 			'keywords' => [

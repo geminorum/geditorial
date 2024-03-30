@@ -392,6 +392,12 @@ trait PostTypeFields
 
 			case 'member':
 			case 'person':
+			case 'day':
+			case 'hour':
+			case 'gram':
+			case 'milimeter':
+			case 'kilogram':
+			case 'centimeter':
 			case 'price':
 			case 'number':
 				$sanitized = Core\Number::intval( trim( $data ) );

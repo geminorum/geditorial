@@ -118,6 +118,13 @@ class Units extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['importer'] = [
+			/* translators: %s: field title */
+			'field_title' => _x( 'Units: %s', 'Import Field Title', 'geditorial-units' ),
+			/* translators: %s: field title */
+			'ignored_title' => _x( 'Units: %s [Ignored]', 'Import Field Title', 'geditorial-units' ),
+		];
+
 		$strings['metabox'] = [
 			'metabox_title'  => _x( 'Measurements', 'MetaBox Title', 'geditorial-units' ),
 			'metabox_action' => _x( 'Configure', 'MetaBox Action', 'geditorial-units' ),
