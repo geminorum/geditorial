@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.27.0\n"
+"Project-Id-Version: gEditorial 3.27.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -1424,14 +1424,14 @@ msgctxt "Modules: Excluder"
 msgid "Excluder"
 msgstr ""
 
-#: includes/Modules/Executed/Executed.php:25
-msgctxt "Modules: Executed"
-msgid "Executed"
+#: includes/Modules/Execution/Execution.php:26
+msgctxt "Modules: Execution"
+msgid "Execution"
 msgstr ""
 
-#: includes/Modules/Executed/Executed.php:26
-msgctxt "Modules: Executed"
-msgid "Editorial Executions"
+#: includes/Modules/Execution/Execution.php:27
+msgctxt "Modules: Execution"
+msgid "Editorial Executives"
 msgstr ""
 
 #: includes/Modules/Exporter/Exporter.php:29
@@ -2800,12 +2800,12 @@ msgctxt "Modules: Uncategorized"
 msgid "Term Leftover Management"
 msgstr ""
 
-#: includes/Modules/Units/Units.php:27
+#: includes/Modules/Units/Units.php:28
 msgctxt "Modules: Units"
 msgid "Units"
 msgstr ""
 
-#: includes/Modules/Units/Units.php:28
+#: includes/Modules/Units/Units.php:29
 msgctxt "Modules: Units"
 msgid "Measurement Units for Contents"
 msgstr ""
@@ -3125,12 +3125,12 @@ msgctxt "Modules: Widgets"
 msgid "Carefully Customized Widgets"
 msgstr ""
 
-#: includes/Modules/WordType/WordType.php:20
+#: includes/Modules/WordType/WordType.php:22
 msgctxt "Modules: Word Type"
 msgid "Word Type"
 msgstr ""
 
-#: includes/Modules/WordType/WordType.php:21
+#: includes/Modules/WordType/WordType.php:23
 msgctxt "Modules: Word Type"
 msgid "Grammatical Word Types"
 msgstr ""

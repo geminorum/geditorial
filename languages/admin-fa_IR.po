@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-29 22:55+0330\n"
+"PO-Revision-Date: 2024-03-30 23:44+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -1422,15 +1422,15 @@ msgctxt "Modules: Excluder"
 msgid "Excluder"
 msgstr "مستثناگر"
 
-#: includes/Modules/Executed/Executed.php:25
-msgctxt "Modules: Executed"
-msgid "Executed"
+#: includes/Modules/Execution/Execution.php:26
+msgctxt "Modules: Execution"
+msgid "Execution"
 msgstr "اجرا"
 
-#: includes/Modules/Executed/Executed.php:26
-msgctxt "Modules: Executed"
-msgid "Editorial Executions"
-msgstr "اجراهای تحریریه"
+#: includes/Modules/Execution/Execution.php:27
+msgctxt "Modules: Execution"
+msgid "Editorial Executives"
+msgstr "مجریان تحریریه"
 
 #: includes/Modules/Exporter/Exporter.php:29
 msgctxt "Modules: Exporter"
@@ -3123,12 +3123,12 @@ msgctxt "Modules: Widgets"
 msgid "Carefully Customized Widgets"
 msgstr "ابزارک‌های به‌دقت سفارشی‌شده"
 
-#: includes/Modules/WordType/WordType.php:20
+#: includes/Modules/WordType/WordType.php:22
 msgctxt "Modules: Word Type"
 msgid "Word Type"
 msgstr "واژه‌گونه"
 
-#: includes/Modules/WordType/WordType.php:21
+#: includes/Modules/WordType/WordType.php:23
 msgctxt "Modules: Word Type"
 msgid "Grammatical Word Types"
 msgstr "انواع کلمات دستوری"
@@ -3152,6 +3152,16 @@ msgstr "وایسیویگ"
 msgctxt "Modules: Wysiwyg"
 msgid "What You See Is What You Get"
 msgstr "آنچه که می‌بینی همانست که خواهی گرفت"
+
+#: includes/Modules/Yearly/Yearly.php:26
+msgctxt "Modules: Yearly"
+msgid "Yearly"
+msgstr "سالانه"
+
+#: includes/Modules/Yearly/Yearly.php:27
+msgctxt "Modules: Yearly"
+msgid "Content By Years"
+msgstr "محتوا بر اساس سال"
 
 #: includes/Plugin.php:306
 msgctxt "Plugin: Main: Screen Settings Title"
@@ -4567,6 +4577,14 @@ msgstr "باید تصویر بندانگشتی داشته باشد"
 msgctxt "Widget Core"
 msgid "Wrap as List Items"
 msgstr "لفافه‌بندی مانند فهرست موارد"
+
+#~ msgctxt "Modules: Executed"
+#~ msgid "Executed"
+#~ msgstr "اجرا"
+
+#~ msgctxt "Modules: Executed"
+#~ msgid "Editorial Executions"
+#~ msgstr "اجراهای تحریریه"
 
 #~ msgctxt "Modules: Roles"
 #~ msgid "Roles"
