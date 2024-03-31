@@ -93,11 +93,11 @@ class Units extends gEditorial\Module
 				'shirt_size_int' => _x( 'Size of the Shirt by International standards', 'Descriptions', 'geditorial-units' ),
 				'pants_size_int' => _x( 'Size of the Pants by International standards', 'Descriptions', 'geditorial-units' ),
 
-				'total_days'  => _x( 'The Total of the Days', 'Descriptions', 'geditorial-units' ),
-				'total_hours' => _x( 'The Total of the Hours', 'Descriptions', 'geditorial-units' ),
+				'total_days'  => _x( 'The Total Number of the Days', 'Descriptions', 'geditorial-units' ),
+				'total_hours' => _x( 'The Total Number of the Hours', 'Descriptions', 'geditorial-units' ),
 
-				'total_members'     => _x( 'The Total of the Members', 'Descriptions', 'geditorial-units' ),
-				'total_participants' => _x( 'The Total of the Participants', 'Descriptions', 'geditorial-units' ),
+				'total_members'      => _x( 'The Total Number of the Members', 'Descriptions', 'geditorial-units' ),
+				'total_participants' => _x( 'The Total Number of the Participants', 'Descriptions', 'geditorial-units' ),
 
 				'book_cover' => _x( 'The Book Cover Size', 'Descriptions', 'geditorial-units' ),
 				'paper_size' => _x( 'The Standard Paper Size', 'Descriptions', 'geditorial-units' ),
