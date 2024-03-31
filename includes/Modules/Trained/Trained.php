@@ -85,7 +85,9 @@ class Trained extends gEditorial\Module
 					'thumbnail',
 					'comments',
 					'custom-fields',
-					'page-attributes'
+					'page-attributes',
+					'editorial-geo',
+					'editorial-units',
 				] ),
 			],
 			'_roles' => [

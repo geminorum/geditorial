@@ -70,6 +70,9 @@ class Units extends gEditorial\Module
 				'total_days'  => _x( 'Total Days', 'Titles', 'geditorial-units' ),
 				'total_hours' => _x( 'Total Hours', 'Titles', 'geditorial-units' ),
 
+				'total_members'      => _x( 'Total Members', 'Titles', 'geditorial-units' ),
+				'total_participants' => _x( 'Total Participants', 'Titles', 'geditorial-units' ),
+
 				'book_cover' => _x( 'Book Cover', 'Titles', 'geditorial-units' ),
 				'paper_size' => _x( 'Paper Size', 'Titles', 'geditorial-units' ),
 			],
@@ -94,7 +97,7 @@ class Units extends gEditorial\Module
 				'total_hours' => _x( 'The Total of the Hours', 'Descriptions', 'geditorial-units' ),
 
 				'total_members'     => _x( 'The Total of the Members', 'Descriptions', 'geditorial-units' ),
-				'total_participant' => _x( 'The Total of the Participant', 'Descriptions', 'geditorial-units' ),
+				'total_participants' => _x( 'The Total of the Participants', 'Descriptions', 'geditorial-units' ),
 
 				'book_cover' => _x( 'The Book Cover Size', 'Descriptions', 'geditorial-units' ),
 				'paper_size' => _x( 'The Standard Paper Size', 'Descriptions', 'geditorial-units' ),
@@ -156,8 +159,8 @@ class Units extends gEditorial\Module
 				'total_days'  => [ 'type' => 'day'  ],
 				'total_hours' => [ 'type' => 'hour' ],
 
-				'total_members'     => [ 'type' => 'member' ],
-				'total_participant' => [ 'type' => 'person' ],   // `contributor`/`competitor`/`player`
+				'total_members'      => [ 'type' => 'member' ],
+				'total_participants' => [ 'type' => 'person' ],   // `contributor`/`competitor`/`player`
 
 				'book_cover' => [ 'type' => 'bookcover' ],
 				'paper_size' => [ 'type' => 'papersize' ],
