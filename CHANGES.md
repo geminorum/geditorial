@@ -1,3 +1,8 @@
+### 3.27.2
+* module/execution: renamed from `executed`
+* module/organization: support for custom cap-type
+* module/units: support for member/person fields
+
 ### 3.27.1
 * module/meeted: :new: module
 * module/missioned: upgrade to latest
