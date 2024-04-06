@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Persona;
+<?php namespace geminorum\gEditorial\Modules\Personage;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -11,7 +11,7 @@ use geminorum\gNetwork\Core\Orthography;
 class ModuleHelper extends gEditorial\Helper
 {
 
-	const MODULE = 'persona';
+	const MODULE = 'personage';
 
 	public static function cleanupChars( $string, $html = FALSE )
 	{
@@ -58,7 +58,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				$fullname = vsprintf(
 					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
-					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Edit', 'geditorial-persona' ),
+					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Edit', 'geditorial-personage' ),
 					[
 						$parts['first_name'],
 						$parts['last_name'],
@@ -75,7 +75,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				$fullname = vsprintf(
 					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
-					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Print', 'geditorial-persona' ),
+					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Print', 'geditorial-personage' ),
 					[
 						$parts['first_name'],
 						$parts['last_name'],
@@ -92,7 +92,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				$fullname = vsprintf(
 					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
-					_x( '%2$s, %1$s %3$s', 'Helper: Make Full-name: Display', 'geditorial-persona' ),
+					_x( '%2$s, %1$s %3$s', 'Helper: Make Full-name: Display', 'geditorial-personage' ),
 					[
 						$parts['first_name'],
 						$parts['last_name'],

@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Persona;
+<?php namespace geminorum\gEditorial\Modules\Personage;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -10,7 +10,7 @@ use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
-class Persona extends gEditorial\Module
+class Personage extends gEditorial\Module
 {
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
@@ -27,9 +27,9 @@ class Persona extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'     => 'persona',
-			'title'    => _x( 'Persona', 'Modules: Persona', 'geditorial-admin' ),
-			'desc'     => _x( 'Human Resource Management for Editorial', 'Modules: Persona', 'geditorial-admin' ),
+			'name'     => 'personage',
+			'title'    => _x( 'Personage', 'Modules: Personage', 'geditorial-admin' ),
+			'desc'     => _x( 'Human Resource Management for Editorial', 'Modules: Personage', 'geditorial-admin' ),
 			'icon'     => 'id-alt',
 			'access'   => 'beta',
 			'keywords' => [
@@ -77,7 +77,7 @@ class Persona extends gEditorial\Module
 				'admin_bulkactions',
 				'show_in_quickedit' => [ sprintf(
 					/* translators: %s: primary taxonomy name */
-					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-persona' ),
+					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-personage' ),
 					$this->get_taxonomy_label( 'status_taxonomy' )
 				), '1' ],
 			],
@@ -90,13 +90,13 @@ class Persona extends gEditorial\Module
 			'_importer' => [
 				[
 					'field'       => 'import_check_identity_number',
-					'title'       => _x( 'Check Identity Number', 'Setting Title', 'geditorial-persona' ),
-					'description' => _x( 'Validates Identity Number prior to importing data.', 'Setting Description', 'geditorial-persona' ),
+					'title'       => _x( 'Check Identity Number', 'Setting Title', 'geditorial-personage' ),
+					'description' => _x( 'Validates Identity Number prior to importing data.', 'Setting Description', 'geditorial-personage' ),
 				],
 				[
 					'field'       => 'import_fill_post_title',
-					'title'       => _x( 'Fill Post Title', 'Setting Title', 'geditorial-persona' ),
-					'description' => _x( 'Tries to fill the post title with meta-data prior to importing data.', 'Setting Description', 'geditorial-persona' ),
+					'title'       => _x( 'Fill Post Title', 'Setting Title', 'geditorial-personage' ),
+					'description' => _x( 'Tries to fill the post title with meta-data prior to importing data.', 'Setting Description', 'geditorial-personage' ),
 				],
 			],
 		];
@@ -132,43 +132,43 @@ class Persona extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype'    => _n_noop( 'Human', 'Humans', 'geditorial-persona' ),
-				'primary_taxonomy'    => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-persona' ),
-				'job_title_taxonomy'  => _n_noop( 'Job Title', 'Job Titles', 'geditorial-persona' ),
-				'blood_type_taxonomy' => _n_noop( 'Blood Type', 'Blood Types', 'geditorial-persona' ),
-				'status_taxonomy'     => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-persona' ),
+				'primary_posttype'    => _n_noop( 'Human', 'Humans', 'geditorial-personage' ),
+				'primary_taxonomy'    => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-personage' ),
+				'job_title_taxonomy'  => _n_noop( 'Job Title', 'Job Titles', 'geditorial-personage' ),
+				'blood_type_taxonomy' => _n_noop( 'Blood Type', 'Blood Types', 'geditorial-personage' ),
+				'status_taxonomy'     => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-personage' ),
 			],
 			'labels' => [
 				'primary_posttype' => [
-					'featured_image' => _x( 'Profile Picture', 'Label: Featured Image', 'geditorial-persona' ),
-					'metabox_title'  => _x( 'Persona', 'Label: MetaBox Title', 'geditorial-persona' ),
-					'excerpt_label'  => _x( 'Biography', 'Label: `excerpt_label`', 'geditorial-persona' ),
+					'featured_image' => _x( 'Profile Picture', 'Label: Featured Image', 'geditorial-personage' ),
+					'metabox_title'  => _x( 'Personage', 'Label: MetaBox Title', 'geditorial-personage' ),
+					'excerpt_label'  => _x( 'Biography', 'Label: `excerpt_label`', 'geditorial-personage' ),
 				],
 				'primary_taxonomy' => [
-					'menu_name'            => _x( 'Groups', 'Label: Menu Name', 'geditorial-persona' ),
-					'show_option_all'      => _x( 'Humans Groups', 'Label: Show Option All', 'geditorial-persona' ),
-					'show_option_no_items' => _x( '(Un-Grouped)', 'Label: Show Option No Terms', 'geditorial-persona' ),
+					'menu_name'            => _x( 'Groups', 'Label: Menu Name', 'geditorial-personage' ),
+					'show_option_all'      => _x( 'Humans Groups', 'Label: Show Option All', 'geditorial-personage' ),
+					'show_option_no_items' => _x( '(Un-Grouped)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
 				'status_taxonomy' => [
-					'menu_name' => _x( 'Statuses', 'Label: Menu Name', 'geditorial-persona' ),
+					'menu_name' => _x( 'Statuses', 'Label: Menu Name', 'geditorial-personage' ),
 				],
 				'job_title_taxonomy' => [
-					'show_option_all'      => _x( 'Job Titles', 'Label: Show Option All', 'geditorial-persona' ),
-					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-persona' ),
+					'show_option_all'      => _x( 'Job Titles', 'Label: Show Option All', 'geditorial-personage' ),
+					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
 				'blood_type_taxonomy' => [
-					'show_option_all'      => _x( 'Blood Type', 'Label: Show Option All', 'geditorial-persona' ),
-					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-persona' ),
+					'show_option_all'      => _x( 'Blood Type', 'Label: Show Option All', 'geditorial-personage' ),
+					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
 				'status_taxonomy' => [
-					'show_option_all'      => _x( 'Statuses', 'Label: Show Option All', 'geditorial-persona' ),
-					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-persona' ),
+					'show_option_all'      => _x( 'Statuses', 'Label: Show Option All', 'geditorial-personage' ),
+					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
 			],
 			'defaults' => [
 				'primary_taxonomy' => [
-					'name'        => _x( '[Ungrouped]', 'Default Term: Name', 'geditorial-persona' ),
-					'description' => _x( 'Ungrouped Humans', 'Default Term: Description', 'geditorial-persona' ),
+					'name'        => _x( '[Ungrouped]', 'Default Term: Name', 'geditorial-personage' ),
+					'description' => _x( 'Ungrouped Humans', 'Default Term: Description', 'geditorial-personage' ),
 					'slug'        => 'ungrouped',
 				],
 			],
@@ -178,8 +178,8 @@ class Persona extends gEditorial\Module
 			return $strings;
 
 		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Team Human Status Summary', 'Dashboard Widget Title', 'geditorial-persona' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Human Status Summary', 'Dashboard Widget Title', 'geditorial-persona' ), ],
+			'current' => [ 'widget_title' => _x( 'Your Team Human Status Summary', 'Dashboard Widget Title', 'geditorial-personage' ), ],
+			'all'     => [ 'widget_title' => _x( 'Editorial Human Status Summary', 'Dashboard Widget Title', 'geditorial-personage' ), ],
 		];
 
 		return $strings;
@@ -190,14 +190,14 @@ class Persona extends gEditorial\Module
 		return [
 			'blood_type_taxonomy' => [
 				// @REF: https://www.redcrossblood.org/donate-blood/blood-types.html
-				'a-positive'  => _x( 'A&plus;', 'Default Term', 'geditorial-persona' ),
-				'a-negative'  => _x( 'A&minus;', 'Default Term', 'geditorial-persona' ),
-				'b-positive'  => _x( 'B&plus;', 'Default Term', 'geditorial-persona' ),
-				'b-negative'  => _x( 'B&minus;', 'Default Term', 'geditorial-persona' ),
-				'o-positive'  => _x( 'O&plus;', 'Default Term', 'geditorial-persona' ),
-				'o-negative'  => _x( 'O&minus;', 'Default Term', 'geditorial-persona' ),
-				'ab-positive' => _x( 'AB&plus;', 'Default Term', 'geditorial-persona' ),
-				'ab-negative' => _x( 'AB&minus;', 'Default Term', 'geditorial-persona' ),
+				'a-positive'  => _x( 'A&plus;', 'Default Term', 'geditorial-personage' ),
+				'a-negative'  => _x( 'A&minus;', 'Default Term', 'geditorial-personage' ),
+				'b-positive'  => _x( 'B&plus;', 'Default Term', 'geditorial-personage' ),
+				'b-negative'  => _x( 'B&minus;', 'Default Term', 'geditorial-personage' ),
+				'o-positive'  => _x( 'O&plus;', 'Default Term', 'geditorial-personage' ),
+				'o-negative'  => _x( 'O&minus;', 'Default Term', 'geditorial-personage' ),
+				'ab-positive' => _x( 'AB&plus;', 'Default Term', 'geditorial-personage' ),
+				'ab-negative' => _x( 'AB&minus;', 'Default Term', 'geditorial-personage' ),
 			],
 		];
 	}
@@ -209,121 +209,121 @@ class Persona extends gEditorial\Module
 		return [ 'meta' => [
 			$primary => [
 				'first_name' => [
-					'title'          => _x( 'First Name', 'Field Title', 'geditorial-persona' ),
-					'description'    => _x( 'Given Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'          => _x( 'First Name', 'Field Title', 'geditorial-personage' ),
+					'description'    => _x( 'Given Name of the Person', 'Field Description', 'geditorial-personage' ),
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 10,
 				],
 				'middle_name' => [
-					'title'       => _x( 'Middle Name', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Middle Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Middle Name', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Middle Name of the Person', 'Field Description', 'geditorial-personage' ),
 					'order'       => 10,
 				],
 				'last_name' => [
-					'title'          => _x( 'Last Name', 'Field Title', 'geditorial-persona' ),
-					'description'    => _x( 'Family Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'          => _x( 'Last Name', 'Field Title', 'geditorial-personage' ),
+					'description'    => _x( 'Family Name of the Person', 'Field Description', 'geditorial-personage' ),
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 10,
 				],
 				'fullname' => [
-					'title'          => _x( 'Full Name', 'Field Title', 'geditorial-persona' ),
-					'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'          => _x( 'Full Name', 'Field Title', 'geditorial-personage' ),
+					'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-personage' ),
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 11,
 				],
 				'pseudonym' => [
-					'title'          => _x( 'Pseudonym', 'Field Title', 'geditorial-persona' ),
-					'description'    => _x( 'Alias Name of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'          => _x( 'Pseudonym', 'Field Title', 'geditorial-personage' ),
+					'description'    => _x( 'Alias Name of the Person', 'Field Description', 'geditorial-personage' ),
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 11,
 				],
 				'father_name' => [
-					'title'          => _x( 'Father Name', 'Field Title', 'geditorial-persona' ),
-					'description'    => _x( 'Name of the Father of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'          => _x( 'Father Name', 'Field Title', 'geditorial-personage' ),
+					'description'    => _x( 'Name of the Father of the Person', 'Field Description', 'geditorial-personage' ),
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 12,
 				],
 				'father_postid' => [
-					'title'       => _x( 'Father Profile', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Profile of the Father of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Father Profile', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Profile of the Father of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'post',
 					'posttype'    => $primary,
 					'order'       => 13,
 				],
 				'mother_name' => [
-					'title'       => _x( 'Mother Name', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Name of the Mother of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Mother Name', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Name of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
 					'order'       => 14,
 				],
 				'mother_postid' => [
-					'title'       => _x( 'Mother Profile', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Profile of the Mother of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Mother Profile', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Profile of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'post',
 					'posttype'    => $primary,
 					'order'       => 15,
 				],
 				'spouse_name' => [
-					'title'       => _x( 'Spouse Name', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Name of the Spouse of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Spouse Name', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Name of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
 					'order'       => 16,
 				],
 				'spouse_postid' => [
-					'title'       => _x( 'Spouse Profile', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Profile of the Spouse of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Spouse Profile', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Profile of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'post',
 					'posttype'    => $primary,
 					'order'       => 17,
 				],
 				// TODO: move to `ContactCards`
 				'mobile_number' => [
-					'description' => _x( 'Primary Mobile Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
+					'description' => _x( 'Primary Mobile Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'mobile',
 					'quickedit'   => TRUE,
 					'order'       => 21,
 				],
 				// TODO: move to `ContactCards`
 				'mobile_secondary' => [
-					'title'       => _x( 'Secondary Mobile', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Secondary Mobile Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Secondary Mobile', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Secondary Mobile Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'mobile',
 					'order'       => 21,
 				],
 				// TODO: move to `ContactCards`
 				'phone_number'  => [
-					'description' => _x( 'Primary Phone Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
+					'description' => _x( 'Primary Phone Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'phone',
 					'order'       => 22,
 				],
 				// TODO: move to `ContactCards`
 				'phone_secondary'  => [
-					'title'       => _x( 'Secondary Phone', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Secondary Phone Contact Number of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Secondary Phone', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Secondary Phone Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'phone',
 					'order'       => 22,
 				],
 				'identity_number' => [
-					'title'       => _x( 'Identity Number', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Unique National Identity Number', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Identity Number', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Unique National Identity Number', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'identity',
 					'quickedit'   => TRUE,
 					'order'       => 1,
 				],
 				'passport_number' => [
-					'title'       => _x( 'Passport Number', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Personal Passport Number', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Passport Number', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Personagel Passport Number', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'code',
 					'order'       => 200,
 					'sanitize'    => [ $this, 'sanitize_passport_number' ],
 				],
 				// TODO: move to WasBorn
 				'date_of_birth' => [
-					'title'       => _x( 'Date of Birth', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Birthday of the Person', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Date of Birth', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Birthday of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'date',
 					'quickedit'   => TRUE,
 					'order'       => 18,
@@ -332,8 +332,8 @@ class Persona extends gEditorial\Module
 				// 'date_of_death' => [],
 				// TODO: move to WasBorn
 				'place_of_birth' => [
-					'title'       => _x( 'Place of Birth', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Place Where the Person was Born', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Place of Birth', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Place Where the Person was Born', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'venue',
 					'order'       => 18,
 				],
@@ -342,14 +342,14 @@ class Persona extends gEditorial\Module
 				],
 				// TODO: move to `ContactCards`
 				'home_address' => [
-					'title'       => _x( 'Home Address', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Full home address, including city, state etc.', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Home Address', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Full home address, including city, state etc.', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'address',
 				],
 				// TODO: move to `ContactCards`
 				'work_address' => [
-					'title'       => _x( 'Work Address', 'Field Title', 'geditorial-persona' ),
-					'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-persona' ),
+					'title'       => _x( 'Work Address', 'Field Title', 'geditorial-personage' ),
+					'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'address',
 				],
 			],
@@ -558,7 +558,7 @@ class Persona extends gEditorial\Module
 		return $items;
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		if ( $this->role_can( [ 'reports' ] ) )
 			$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
@@ -609,8 +609,8 @@ class Persona extends gEditorial\Module
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
-			$this->constant( 'term_empty_identity_number' ) => _x( 'Empty Identity Number', 'Default Term: Audit', 'geditorial-persona' ),
-			$this->constant( 'term_empty_mobile_number' )   => _x( 'Empty Mobile Number', 'Default Term: Audit', 'geditorial-persona' ),
+			$this->constant( 'term_empty_identity_number' ) => _x( 'Empty Identity Number', 'Default Term: Audit', 'geditorial-personage' ),
+			$this->constant( 'term_empty_mobile_number' )   => _x( 'Empty Mobile Number', 'Default Term: Audit', 'geditorial-personage' ),
 		] ) : $terms;
 	}
 
@@ -712,7 +712,7 @@ class Persona extends gEditorial\Module
 				'identity_number' => 'identity',
 				'identity'        => 'identity',
 
-				_x( 'Identity', 'Possible Identifier Key', 'geditorial-persona' ) => 'identity',
+				_x( 'Identity', 'Possible Identifier Key', 'geditorial-personage' ) => 'identity',
 
 				'کد ملی' => 'identity',
 				'کدملی'  => 'identity',

@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Persona;
+<?php namespace geminorum\gEditorial\Modules\Personage;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 class ModuleTemplate extends gEditorial\Template
 {
 
-	const MODULE = 'persona';
+	const MODULE = 'personage';
 
 	public static function vcard( $atts = [], $check = TRUE )
 	{
@@ -36,7 +36,7 @@ class ModuleTemplate extends gEditorial\Template
 			'default' => '',
 		];
 
-		// gEditorial()->module( 'persona' )->make_human_title( $post, 'export' )
+		// gEditorial()->module( 'personage' )->make_human_title( $post, 'export' )
 		$vcard->addName(
 			self::getMetaField( 'last_name', $field, FALSE ),
 			self::getMetaField( 'first_name', $field, FALSE ),
