@@ -282,7 +282,7 @@ task('build:banner', function () {
 });
 
 task('build:copy', function () {
-  return src(conf.input.final, { base: '.' })
+  return src(conf.input.final, { base: '.', allowEmpty: true })
     .pipe(dest(conf.output.ready + pkg.name));
 });
 

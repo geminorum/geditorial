@@ -32,6 +32,8 @@
       "./assets/images/**/*",
       "./assets/js/**/*.js",
       "./assets/js/**/*.html",
+      "./assets/blocks/**/build/**/*",
+      "!/assets/blocks/**/src/**/*",
       "./assets/apps/**/build/**/*",
       "!/assets/apps/**/node_modules/**/*",
       "!/assets/apps/**/src/**/*",

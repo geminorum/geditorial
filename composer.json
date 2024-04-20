@@ -33,7 +33,8 @@
     "rct567/dom-query": "^1.1",
     "jwage/easy-csv": "^1.0",
     "sabre/vobject": "^4.3",
-    "jeroendesloovere/vcard": "^1.7"
+    "jeroendesloovere/vcard": "^1.7",
+    "adbario/php-dot-notation": "^3.3"
   },
   "require-dev": {
     "php-coord/php-coord": "4.7.0",

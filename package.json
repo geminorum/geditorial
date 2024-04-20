@@ -42,16 +42,16 @@
     "comp:deps": "composer-require-checker check composer.json"
   },
   "devDependencies": {
-    "@wordpress/babel-preset-default": "^7.38.0",
-    "@wordpress/browserslist-config": "^5.37.0",
-    "@wordpress/stylelint-config": "^21.37.0",
+    "@wordpress/babel-preset-default": "^7.40.0",
+    "@wordpress/browserslist-config": "^5.39.0",
+    "@wordpress/stylelint-config": "^21.39.0",
     "autoprefixer": "^10.4.19",
     "browserslist": "^4.23.0",
     "cssnano": "^6.1.2",
     "del": "^7.1.0",
     "fancy-log": "^2.0.0",
     "fs-extra": "^11.2.0",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-bump": "^3.2.0",
     "gulp-changed-in-place": "^2.3.0",
     "gulp-dart-sass": "^1.1.0",
@@ -77,9 +77,9 @@
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {
-    "@fontsource/libre-barcode-128": "^5.0.18",
-    "@fontsource/libre-barcode-128-text": "^5.0.18",
-    "@fontsource/libre-barcode-ean13-text": "^5.0.18",
+    "@fontsource/libre-barcode-128": "^5.0.19",
+    "@fontsource/libre-barcode-128-text": "^5.0.19",
+    "@fontsource/libre-barcode-ean13-text": "^5.0.19",
     "bootstrap": "^5.3.3",
     "jqtree": "^1.8.2",
     "jquery": "^3.7.1",
