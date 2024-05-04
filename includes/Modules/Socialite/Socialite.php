@@ -162,13 +162,13 @@ class Socialite extends gEditorial\Module
 		parent::init();
 
 		$this->register_shortcode( 'socialite_shortcode' );
-
-		if ( ! empty( $this->get_setting( 'extra_meta_fields' ) ) )
-			$this->_extra_meta_fields();
 	}
 
-	private function _extra_meta_fields()
+	public function terms_init()
 	{
+		if ( empty( $this->get_setting( 'extra_meta_fields' ) ) )
+			return;
+
 		$this->filter_module( 'terms', 'supported_fields_raw', 1 );
 		$this->filter_module( 'terms', 'supported_field_metatype', 3 );
 		$this->filter_module( 'terms', 'supported_field_position', 3 );
