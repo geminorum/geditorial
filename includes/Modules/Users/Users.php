@@ -244,7 +244,7 @@ class Users extends gEditorial\Module
 		return $username;
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		$this->add_dashboard_widget( 'profile-summary', NULL, [
 			'url'   => admin_url( 'profile.php' ),

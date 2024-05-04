@@ -193,7 +193,7 @@ trait AdminPage
 			echo '<div class="base-tabs-list -base nav-tab-base">';
 			Core\HTML::tabNav( $sub, $subs );
 		} else {
-			echo $this->wrap_open( $context, $sub );
+			echo $this->wrap_open( [ $context, $sub ?? '' ] );
 			Core\HTML::headerNav( $uri, $sub, $subs );
 		}
 	}

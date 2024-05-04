@@ -160,7 +160,7 @@ class Educated extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;

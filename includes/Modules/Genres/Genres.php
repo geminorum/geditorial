@@ -178,7 +178,7 @@ class Genres extends gEditorial\Module
 			: parent::cuc( $context, $fallback );
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;

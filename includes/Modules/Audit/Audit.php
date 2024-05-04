@@ -425,7 +425,7 @@ class Audit extends gEditorial\Module
 		$this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;

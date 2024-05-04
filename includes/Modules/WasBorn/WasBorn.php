@@ -325,7 +325,7 @@ class WasBorn extends gEditorial\Module
 		}
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		if ( ! $posttypes = $this->get_setting_posttypes( 'parent' ) )
 			return;

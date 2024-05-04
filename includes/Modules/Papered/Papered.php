@@ -35,7 +35,7 @@ class Papered extends gEditorial\Module
 			'title'    => _x( 'Papered', 'Modules: Papered', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Print Profiles', 'Modules: Papered', 'geditorial-admin' ),
 			'icon'     => 'printer',
-			'access'   => 'alpha',
+			'access'   => 'beta',
 			'keywords' => [
 				'paired',
 				'print',

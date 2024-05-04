@@ -566,7 +566,7 @@ class Cartable extends gEditorial\Module
 		echo $after;
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		$user_id = get_current_user_id();
 

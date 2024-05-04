@@ -109,7 +109,7 @@ class Modified extends gEditorial\Module
 			$this->enqueue_styles(); // widget must add this itself!
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		$this->add_dashboard_widget( 'latest-summary', _x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' ) );
 	}

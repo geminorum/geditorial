@@ -1235,7 +1235,7 @@ class Module extends WordPress\Module
 	protected function raise_resources( $count = 1, $per = 60, $context = NULL )
 	{
 		gEditorial()->disable_process( 'audit', $context ?? 'import' );
-		gEditorial()->disable_process( 'persona', 'aftercare' );
+		gEditorial()->disable_process( 'personage', 'aftercare' );
 		gEditorial()->disable_process( 'was_born', 'aftercare' );
 
 		WordPress\Media::disableThumbnailGeneration();

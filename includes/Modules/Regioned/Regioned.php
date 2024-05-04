@@ -25,7 +25,7 @@ class Regioned extends gEditorial\Module
 			'title'    => _x( 'Regioned', 'Modules: Regioned', 'geditorial-admin' ),
 			'desc'     => _x( 'Reginality of Contents', 'Modules: Regioned', 'geditorial-admin' ),
 			'icon'     => 'admin-site-alt3',
-			'access'   => 'alpha',
+			'access'   => 'beta',
 			'keywords' => [
 				'taxmodule',
 				'regional',
@@ -150,7 +150,7 @@ class Regioned extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;

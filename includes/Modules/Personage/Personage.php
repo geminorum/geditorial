@@ -54,7 +54,7 @@ class Personage extends gEditorial\Module
 				'summary_excludes' => [
 					NULL,
 					WordPress\Taxonomy::listTerms( $this->constant( 'status_taxonomy' ) ),
-					$this->get_taxonomy_label( 'status_taxonomy', 'no_terms' ),
+					$this->get_taxonomy_label( 'status_taxonomy', 'no_items_available', NULL, 'no_terms' ),
 				],
 				'summary_scope',
 				'summary_drafts',
@@ -149,9 +149,6 @@ class Personage extends gEditorial\Module
 					'show_option_all'      => _x( 'Humans Groups', 'Label: Show Option All', 'geditorial-personage' ),
 					'show_option_no_items' => _x( '(Un-Grouped)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
-				'status_taxonomy' => [
-					'menu_name' => _x( 'Statuses', 'Label: Menu Name', 'geditorial-personage' ),
-				],
 				'job_title_taxonomy' => [
 					'show_option_all'      => _x( 'Job Titles', 'Label: Show Option All', 'geditorial-personage' ),
 					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
@@ -161,6 +158,7 @@ class Personage extends gEditorial\Module
 					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
 				'status_taxonomy' => [
+					'menu_name'            => _x( 'Statuses', 'Label: Menu Name', 'geditorial-personage' ),
 					'show_option_all'      => _x( 'Statuses', 'Label: Show Option All', 'geditorial-personage' ),
 					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],

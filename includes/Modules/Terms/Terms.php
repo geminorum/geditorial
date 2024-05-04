@@ -16,14 +16,16 @@ class Terms extends gEditorial\Module
 {
 
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `url`, `subtitle`, `phonetic`, `time`, `pseudonym`
+	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `url`, `mapurl` `subtitle`, `phonetic`, `time`, `pseudonym`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
 		'parent',
 		'order',
 		'plural',
+		// 'singular', // TODO
 		'overwrite',
+		// 'fullname', // TODO
 		'tagline',
 		'contact',
 		'image',

@@ -44,7 +44,7 @@ class Meeted extends gEditorial\Module
 			'title'    => _x( 'Meeted', 'Modules: Meeted', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Meeting Management', 'Modules: Meeted', 'geditorial-admin' ),
 			'icon'     => 'buddicons-groups',
-			'access'   => 'alpha',
+			'access'   => 'beta',
 			'keywords' => [
 				'paired',
 			],

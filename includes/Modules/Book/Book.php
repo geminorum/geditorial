@@ -680,7 +680,7 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	protected function dashboard_widgets()
+	public function dashboard_widgets()
 	{
 		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
 	}

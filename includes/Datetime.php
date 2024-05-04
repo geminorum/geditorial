@@ -412,10 +412,11 @@ class Datetime extends WordPress\Main
 
 		for ( $i = 1; $i <= $count; $i++ ) {
 
-			$decade = $epoch + ( $i * 10 );
+			$decade      = $epoch + ( $i * 10 );
+			$decade_slug = sprintf( $slug, $decade );
 
-			$list[$decade] =  [
-				'slug' => sprintf( $slug, $decade ),
+			$list[$decade_slug] =  [
+				'slug' => $decade_slug,
 				'name' => sprintf( $name, Core\Number::localize( $decade ) ),
 				'meta' => [ $meta  => $decade ],
 			];
@@ -434,23 +435,25 @@ class Datetime extends WordPress\Main
 		$decades = self::getDecades( $from, $count, $prefixed, $metakey );
 		$list    = [];
 
-		foreach ( $decades as $decade => $args ) {
+		foreach ( $decades as $decade_slug => $args ) {
 
-			$years = [];
+			$years  = [];
+			$decade = $args['meta'][$meta];
 
 			for ( $i = 1; $i <= 10; $i++ ) {
 
-				$year = $decade + $i;
+				$year      = $decade + $i;
+				$year_slug = sprintf( $slug, $year );
 
-				$years[$year] = [
-					'slug' => sprintf( $slug, $year ),
-					'name' => sprintf( $name, Core\Number::localize( $decade + $i ) ),
+				$years[$year_slug] = [
+					'slug' => $year_slug,
+					'name' => sprintf( $name, Core\Number::localize( $year ) ),
 					'meta' => [ $meta  => $year ],
 				];
 			}
 
 			$args[$key] = $years;
-			$list[$decade] = $args;
+			$list[$decade_slug] = $args;
 		}
 
 		return $list;
