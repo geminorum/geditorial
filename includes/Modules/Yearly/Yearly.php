@@ -116,6 +116,7 @@ class Yearly extends gEditorial\Module
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),

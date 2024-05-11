@@ -18,6 +18,7 @@ class Magazine extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedFront;

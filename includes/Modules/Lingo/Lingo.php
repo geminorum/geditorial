@@ -145,12 +145,18 @@ class Lingo extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->filter_module( 'terms', 'column_title', 4 );
-		$this->filter_module( 'terms', 'field_tagline_title', 4 );
-
 		$this->filter( 'imports_data_summary', 1, 10, FALSE, $this->base );
 
 		$this->_hook_wp_register_importer();
+	}
+
+	public function terms_init()
+	{
+		if ( ! is_admin() )
+			return;
+
+		$this->filter_module( 'terms', 'column_title', 4 );
+		$this->filter_module( 'terms', 'field_tagline_title', 4 );
 	}
 
 	public function current_screen( $screen )
@@ -341,6 +347,9 @@ class Lingo extends gEditorial\Module
 
 	public function terms_field_tagline_title( $title, $taxonomy, $field, $term )
 	{
+		if ( 'tagline' !== $field )
+			return $title;
+
 		return $taxonomy === $this->constant( 'language_taxonomy' )
 			? _x( 'Native Name', 'Table Column', 'geditorial-lingo' )
 			: $title;
