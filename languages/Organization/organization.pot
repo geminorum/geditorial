@@ -101,7 +101,7 @@ msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: Organization.php:172
-msgctxt "Metabox: `listbox_title`"
+msgctxt "MetaBox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr ""
 

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Statuses\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:53+0330\n"
+"PO-Revision-Date: 2024-05-24 04:50+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,79 +11,89 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Domain: geditorial-statuses\n"
 "X-Poedit-Basepath: ../../includes/Modules/Statuses\n"
 
-#: Statuses.php:42
+#: Statuses.php:44
 msgctxt "Setting Title"
 msgid "Status Menu"
 msgstr "منوی وضعیت‌ها"
 
-#: Statuses.php:43
+#: Statuses.php:45
 msgctxt "Setting Description"
 msgid "Adds status links to the admin submenus for each supported posttype."
 msgstr ""
 
-#: Statuses.php:52
+#: Statuses.php:54
 msgctxt "Setting Title"
 msgid "Map Status Roles"
 msgstr ""
 
-#: Statuses.php:56
+#: Statuses.php:58
 msgctxt "Setting Title"
 msgid "Default Status"
 msgstr "وضعیت پیش‌فرض"
 
 #. translators: %s: status name
-#: Statuses.php:69
+#: Statuses.php:71
 msgctxt "Setting Title"
 msgid "Roles for %s"
 msgstr "نقش‌ها برای %s"
 
 #. translators: %s: status name
-#: Statuses.php:71
+#: Statuses.php:73
 msgctxt "Setting Description"
 msgid "The <b>%s</b> status will be visibile to the selected roles."
 msgstr ""
 
-#: Statuses.php:93
+#: Statuses.php:91
+msgctxt "Default Term"
+msgid "Expired"
+msgstr "منقضی"
+
+#: Statuses.php:92
+msgctxt "Default Term"
+msgid "Achieved"
+msgstr ""
+
+#: Statuses.php:105
 msgctxt "Taxonomy Label"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:137
-msgctxt "Metabox Submit"
+#: Statuses.php:149
+msgctxt "MetaBox Submit"
 msgid "Submit: %s"
 msgstr "ارسال: %s"
 
 #. translators: %s: status name
-#: Statuses.php:139
-msgctxt "Metabox Save On"
+#: Statuses.php:151
+msgctxt "MetaBox Save On"
 msgid "Save as %s on:"
 msgstr "%s در:"
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:141
-msgctxt "Metabox Save Date"
+#: Statuses.php:153
+msgctxt "MetaBox Save Date"
 msgid "Save as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:143
-msgctxt "Metabox Saved On"
+#: Statuses.php:155
+msgctxt "MetaBox Saved On"
 msgid "Saved as %s on:"
 msgstr "%s در:"
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:145
-msgctxt "Metabox Saved Date"
+#: Statuses.php:157
+msgctxt "MetaBox Saved Date"
 msgid "Saved as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:147
-msgctxt "Metabox Saved On"
+#: Statuses.php:159
+msgctxt "MetaBox Saved On"
 msgid "Save as %s <b>now</b>"
 msgstr "%s: <b>هم‌اکنون</b>"

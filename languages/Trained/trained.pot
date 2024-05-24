@@ -136,7 +136,7 @@ msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: Trained.php:194
-msgctxt "Metabox: `listbox_title`"
+msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
 

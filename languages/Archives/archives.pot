@@ -97,7 +97,7 @@ msgstr ""
 #. translators: %s: supported object label
 #: Archives.php:443
 #: Archives.php:452
-msgctxt "Navigation Metabox"
+msgctxt "Navigation MetaBox"
 msgid "%s Archives"
 msgstr ""
 

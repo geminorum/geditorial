@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.27.1\n"
+"Project-Id-Version: gEditorial 3.27.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -399,12 +399,12 @@ msgid "Decade %s"
 msgstr ""
 
 #. translators: %s: year number
-#: includes/Datetime.php:430
+#: includes/Datetime.php:431
 msgctxt "Datetime: Year Prefix"
 msgid "Year %s"
 msgstr ""
 
-#: includes/Datetime.php:573
+#: includes/Datetime.php:576
 msgctxt "Datetime: Re-Schedule Post"
 msgid "Something is wrong with the new date."
 msgstr ""
@@ -1291,13 +1291,13 @@ msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/PairedMetaBox.php:575
-msgctxt "Internal: PairedMetaBox: Metabox Empty: `megabox_empty`"
+msgctxt "Internal: PairedMetaBox: MetaBox Empty: `megabox_empty`"
 msgid "No items connected to &ldquo;%1$s&rdquo; %2$s!"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/PairedMetaBox.php:614
-msgctxt "Internal: PairedMetaBox: Metabox Title: `megabox_title`"
+msgctxt "Internal: PairedMetaBox: MetaBox Title: `megabox_title`"
 msgid "In &ldquo;%1$s&rdquo; %2$s"
 msgstr ""
 
@@ -1527,7 +1527,7 @@ msgstr ""
 
 #. translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder
 #: includes/Services/O2O/API.php:338
-msgctxt "O2O: Metabox Title"
+msgctxt "O2O: MetaBox Title"
 msgid "Connected %1$s"
 msgstr ""
 

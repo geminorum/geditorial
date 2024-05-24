@@ -362,7 +362,7 @@ msgid "Tries to clean imported raw meta-data."
 msgstr ""
 
 #. translators: %1$s: post title, %2$s: post id
-#: ModuleSettings.php:75
+#: ModuleSettings.php:77
 msgctxt "Notice"
 msgid "Imported raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)"
 msgstr ""

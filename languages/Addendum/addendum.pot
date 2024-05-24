@@ -106,7 +106,7 @@ msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: Addendum.php:161
-msgctxt "Metabox: `listbox_title`"
+msgctxt "MetaBox: `listbox_title`"
 msgid "Posts with &ldquo;%1$s&rdquo; %2$s"
 msgstr ""
 

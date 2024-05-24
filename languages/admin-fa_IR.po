@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-30 23:44+0330\n"
+"PO-Revision-Date: 2024-05-24 04:46+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Domain: geditorial-admin\n"
 
 #. Plugin Name of the plugin
@@ -679,121 +679,121 @@ msgstr "همهٔ رده‌بندی‌ها"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:91
-msgctxt "Module: Metabox Empty: `listbox_empty`"
+msgctxt "Module: MetaBox Empty: `listbox_empty`"
 msgid "No items connected to &ldquo;%1$s&rdquo; %2$s!"
 msgstr "موردی به %2$s &ldquo;%1$s&rdquo; مرتبط نشده است!"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:110
-msgctxt "Internal: Strings: Metabox via Posttype: `supportedbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `supportedbox_title`"
 msgid "For this &ldquo;%2$s&rdquo;"
 msgstr "برای این &rdquo;%2$s&ldquo;"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:115
-msgctxt "Internal: Strings: Metabox via Posttype: `printingbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `printingbox_title`"
 msgid "Prints for this &ldquo;%2$s&rdquo;"
 msgstr "چاپ برای این &rdquo;%2$s&ldquo;"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:120
-msgctxt "Internal: Strings: Metabox via Posttype: `mainbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `mainbox_title`"
 msgid "The %2$s"
 msgstr "%2$s"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:126
-msgctxt "Internal: Strings: Metabox via Posttype: `pairedbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `pairedbox_title`"
 msgid "Connected &ldquo;%2$s&rdquo;"
 msgstr "&rdquo;%2$s&ldquo; مرتبط"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:132
-msgctxt "Internal: Strings: Metabox via Posttype: `listbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `listbox_title`"
 msgid "In &ldquo;%1$s&rdquo; %2$s"
 msgstr "در %2$s &rdquo;%1$s&ldquo;"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:138
-msgctxt "Internal: Strings: Metabox via Posttype: `default_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `default_title`"
 msgid "About &ldquo;%2$s&rdquo;"
 msgstr "درباره &rdquo;%2$s&ldquo;"
 
 #. translators: %1$s: current term title, %2$s: taxonomy singular name
 #: includes/Internals/Strings.php:156
-msgctxt "Internal: Strings: Metabox via Taxonomy: `supportedbox_title`"
+msgctxt "Internal: Strings: MetaBox via Taxonomy: `supportedbox_title`"
 msgid "For this &ldquo;%2$s&rdquo;"
 msgstr "برای این &rdquo;%2$s&ldquo;"
 
 #. translators: %1$s: current term title, %2$s: taxonomy singular name
 #: includes/Internals/Strings.php:162
-msgctxt "Internal: Strings: Metabox via Taxonomy: `default_title`"
+msgctxt "Internal: Strings: MetaBox via Taxonomy: `default_title`"
 msgid "About &ldquo;%2$s&rdquo;"
 msgstr "درباره &rdquo;%2$s&ldquo;"
 
 #. translators: %s: sub title
-#: includes/Module.php:371
+#: includes/Module.php:377
 msgctxt "Module: Extra Link: Reports"
 msgid "%s Reports"
 msgstr "گزارش‌های %s"
 
 #. translators: %s: sub title
-#: includes/Module.php:382
+#: includes/Module.php:388
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Tools"
 msgstr "ابزارهای %s"
 
 #. translators: %s: sub title
-#: includes/Module.php:393
+#: includes/Module.php:399
 msgctxt "Module: Extra Link: Roles"
 msgid "%s Roles"
 msgstr "نقش‌های %s"
 
 #. translators: %s: sub title
-#: includes/Module.php:404
+#: includes/Module.php:410
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Imports"
 msgstr "درون‌ریزی‌های %s"
 
 #. translators: %s: module title
-#: includes/Module.php:414
+#: includes/Module.php:420
 msgctxt "Module: Extra Link: Settings"
 msgid "%s Settings"
 msgstr "تنظیمات %s"
 
 #. translators: %s: module title
-#: includes/Module.php:424
+#: includes/Module.php:430
 msgctxt "Module: Extra Link: Documentation"
 msgid "%s Documentation"
 msgstr "مستندات %s"
 
-#: includes/Module.php:431 includes/Module.php:433
+#: includes/Module.php:437 includes/Module.php:439
 msgctxt "Module: Extra Link: Documentation"
 msgid "Editorial Documentation"
 msgstr "مستندات تحریریه"
 
-#: includes/Module.php:546
+#: includes/Module.php:552
 msgctxt "Module: Setting Title"
 msgid "Insert Priority"
 msgstr "اولویت جای‌گذاری"
 
-#: includes/Module.php:834
+#: includes/Module.php:840
 msgctxt "Module: MetaBox Default Title"
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: includes/Module.php:853
+#: includes/Module.php:859
 msgctxt "Module: MetaBox Default Action"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: includes/Module.php:975
+#: includes/Module.php:981
 msgctxt "Module: ReadOnly Title Info"
 msgid "This Title is Auto-Generated"
 msgstr "این عنوان به صورت خودکار تولید شده است"
 
-#: includes/Module.php:1169
-msgctxt "Module: Draft Metabox"
+#: includes/Module.php:1175
+msgctxt "Module: Draft MetaBox"
 msgid "You can see the contents once you've saved this post for the first time."
 msgstr "بعد از ذخیرهٔ اولیه، می‌توانید محتوا را ببینید."
 
@@ -1052,12 +1052,22 @@ msgctxt "Modules: Chores"
 msgid "Chores"
 msgstr "روزمره‌ها"
 
-#: includes/Modules/Collect/Collect.php:30
+#: includes/Modules/Cine/Cine.php:24
+msgctxt "Modules: Cine"
+msgid "Cine"
+msgstr "سینما"
+
+#: includes/Modules/Cine/Cine.php:25
+msgctxt "Modules: Cine"
+msgid "Editorial Library of Films"
+msgstr "کتابخانه فیلم تحریریه"
+
+#: includes/Modules/Collect/Collect.php:34
 msgctxt "Modules: Collect"
 msgid "Collect"
 msgstr "گردآوری"
 
-#: includes/Modules/Collect/Collect.php:31
+#: includes/Modules/Collect/Collect.php:35
 msgctxt "Modules: Collect"
 msgid "Create and use Collections of Posts"
 msgstr "ایجاد و به‌کارگیری گردآورده‌هایی از نوشته‌ها"
@@ -1142,12 +1152,12 @@ msgctxt "Modules: Contents"
 msgid "Contents"
 msgstr "محتوا"
 
-#: includes/Modules/Contest/Contest.php:34
+#: includes/Modules/Contest/Contest.php:35
 msgctxt "Modules: Contest"
 msgid "Contest"
 msgstr "فراخوان"
 
-#: includes/Modules/Contest/Contest.php:35
+#: includes/Modules/Contest/Contest.php:36
 msgctxt "Modules: Contest"
 msgid "Contest Management"
 msgstr "مدریت فراخوان‌ها"
@@ -1172,12 +1182,12 @@ msgctxt "Modules: Countables"
 msgid "Editorial Countable Items"
 msgstr "موارد قابل شمارش تحریریه"
 
-#: includes/Modules/Course/Course.php:33
+#: includes/Modules/Course/Course.php:34
 msgctxt "Modules: Course"
 msgid "Course"
 msgstr "دوره"
 
-#: includes/Modules/Course/Course.php:34
+#: includes/Modules/Course/Course.php:35
 msgctxt "Modules: Course"
 msgid "Course and Lesson Management"
 msgstr "مدیریت درس و دوره"
@@ -1282,12 +1292,12 @@ msgctxt "Module: Paired: Button Description"
 msgid "Tries to create paired terms for all the main posts."
 msgstr "تلاش می‌کند رده‌های جفت را برای همه فرسته‌های اصلی ایجاد کند."
 
-#: includes/Modules/Divided/Divided.php:29
+#: includes/Modules/Divided/Divided.php:24
 msgctxt "Modules: Divided"
 msgid "Divided"
 msgstr "مجزا"
 
-#: includes/Modules/Divided/Divided.php:30
+#: includes/Modules/Divided/Divided.php:25
 msgctxt "Modules: Divided"
 msgid "Country Divided World"
 msgstr "دنیا براساس کشورها"
@@ -1327,12 +1337,12 @@ msgctxt "Modules: Documents"
 msgid "Editorial Document Management"
 msgstr "مدیریت اسناد تحریریه"
 
-#: includes/Modules/Dossier/Dossier.php:37
+#: includes/Modules/Dossier/Dossier.php:38
 msgctxt "Modules: Dossier"
 msgid "Dossier"
 msgstr "دوسیه"
 
-#: includes/Modules/Dossier/Dossier.php:38
+#: includes/Modules/Dossier/Dossier.php:39
 msgctxt "Modules: Dossier"
 msgid "Collection of Contents"
 msgstr "مجموعه‌هایی از محتوا"
@@ -1431,6 +1441,16 @@ msgstr "اجرا"
 msgctxt "Modules: Execution"
 msgid "Editorial Executives"
 msgstr "مجریان تحریریه"
+
+#: includes/Modules/Expired/Expired.php:29
+msgctxt "Modules: Expired"
+msgid "Expired"
+msgstr "منقضی"
+
+#: includes/Modules/Expired/Expired.php:30
+msgctxt "Modules: Expired"
+msgid "[CHANGE ME]"
+msgstr ""
 
 #: includes/Modules/Exporter/Exporter.php:29
 msgctxt "Modules: Exporter"
@@ -1692,12 +1712,12 @@ msgctxt "Modules: Iranian"
 msgid "Tools for Iranian Editorial"
 msgstr "ابزارهایی برای تحریریه ایرانی"
 
-#: includes/Modules/Kiosk/Kiosk.php:21
+#: includes/Modules/Kiosk/Kiosk.php:22
 msgctxt "Modules: Kiosk"
 msgid "Kiosk"
 msgstr "کوشک"
 
-#: includes/Modules/Kiosk/Kiosk.php:22
+#: includes/Modules/Kiosk/Kiosk.php:23
 msgctxt "Modules: Kiosk"
 msgid "Administration Point of Entry"
 msgstr "محل ورودی مدیریت"
@@ -1772,12 +1792,12 @@ msgctxt "Modules: Lingo"
 msgid "Language Identifiers"
 msgstr "شناساگرهای زبانی"
 
-#: includes/Modules/Magazine/Magazine.php:35
+#: includes/Modules/Magazine/Magazine.php:36
 msgctxt "Modules: Magazine"
 msgid "Magazine"
 msgstr "مجله"
 
-#: includes/Modules/Magazine/Magazine.php:36
+#: includes/Modules/Magazine/Magazine.php:37
 msgctxt "Modules: Magazine"
 msgid "Magazine Issue Management"
 msgstr "مدیریت شماره، برای مجله‌ها"
@@ -1892,22 +1912,12 @@ msgctxt "Modules: Motorcade"
 msgid "Editorial Vehicle Management"
 msgstr "مدیریت خودروهای تحریریه"
 
-#: includes/Modules/Movies/Movies.php:24
-msgctxt "Modules: Movies"
-msgid "Movies"
-msgstr "سینما"
-
-#: includes/Modules/Movies/Movies.php:25
-msgctxt "Modules: Movies"
-msgid "Editorial Library of Films"
-msgstr "کتابخانه فیلم تحریریه"
-
-#: includes/Modules/Naming/Naming.php:29
+#: includes/Modules/Naming/Naming.php:31
 msgctxt "Modules: Naming"
 msgid "Naming"
 msgstr "نام‌گذاری"
 
-#: includes/Modules/Naming/Naming.php:30
+#: includes/Modules/Naming/Naming.php:32
 msgctxt "Modules: Naming"
 msgid "Name Tools and Enhancements"
 msgstr "بهینه‌سازی و ابزارهایی برای نام‌ها"
@@ -2062,13 +2072,13 @@ msgctxt "Modules: Person"
 msgid "People, the Way Involved in Your Site"
 msgstr "افراد، آن‌چنان که در سایت شما مشارکت میکنند"
 
-#: includes/Modules/Persona/Persona.php:31
-msgctxt "Modules: Persona"
-msgid "Persona"
-msgstr "نقاب"
+#: includes/Modules/Personage/Personage.php:31
+msgctxt "Modules: Personage"
+msgid "Personage"
+msgstr "شخصیت"
 
-#: includes/Modules/Persona/Persona.php:32
-msgctxt "Modules: Persona"
+#: includes/Modules/Personage/Personage.php:32
+msgctxt "Modules: Personage"
 msgid "Human Resource Management for Editorial"
 msgstr "مدیریت منابع انسانی برای تحریریه"
 
@@ -2668,12 +2678,12 @@ msgctxt "Modules: Team"
 msgid "Profiles for Editorial Teams"
 msgstr "نمایه‌هایی برای گروه تحریریه"
 
-#: includes/Modules/Terms/Terms.php:61
+#: includes/Modules/Terms/Terms.php:63
 msgctxt "Modules: Terms"
 msgid "Terms"
 msgstr "رده‌ها"
 
-#: includes/Modules/Terms/Terms.php:62
+#: includes/Modules/Terms/Terms.php:64
 msgctxt "Modules: Terms"
 msgid "Taxonomy & Term Tools"
 msgstr "ابزارهای رده و رده‌بندی"
@@ -2798,12 +2808,12 @@ msgctxt "Modules: Uncategorized"
 msgid "Term Leftover Management"
 msgstr "مدیریت رده‌های رهاشده"
 
-#: includes/Modules/Units/Units.php:27
+#: includes/Modules/Units/Units.php:28
 msgctxt "Modules: Units"
 msgid "Units"
 msgstr "واحدها"
 
-#: includes/Modules/Units/Units.php:28
+#: includes/Modules/Units/Units.php:29
 msgctxt "Modules: Units"
 msgid "Measurement Units for Contents"
 msgstr "واحدهای اندازه‌گیری برای محتوا"
@@ -2828,12 +2838,12 @@ msgctxt "Modules: Validator"
 msgid "Data Validity Checker"
 msgstr "بررسی اعتبار داده‌ها"
 
-#: includes/Modules/Venue/Venue.php:31
+#: includes/Modules/Venue/Venue.php:32
 msgctxt "Modules: Venue"
 msgid "Venue"
 msgstr "جای‌گاه"
 
-#: includes/Modules/Venue/Venue.php:32
+#: includes/Modules/Venue/Venue.php:33
 msgctxt "Modules: Venue"
 msgid "Place Listings"
 msgstr "فهرست‌بندی مکان‌ها"
@@ -5458,11 +5468,11 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgid "Import Items for %s"
 #~ msgstr "درون‌ریزی موارد برای %s"
 
-#~ msgctxt "Internal: PairedMetaBox: Metabox Empty: `megabox_empty`"
+#~ msgctxt "Internal: PairedMetaBox: MetaBox Empty: `megabox_empty`"
 #~ msgid "No items connected to &ldquo;%1$s&rdquo; %2$s!"
 #~ msgstr "موردی به این %2$s &ldquo;%1$s&rdquo; مرتبط نشده است!"
 
-#~ msgctxt "Internal: PairedMetaBox: Metabox Title: `megabox_title`"
+#~ msgctxt "Internal: PairedMetaBox: MetaBox Title: `megabox_title`"
 #~ msgid "In &ldquo;%1$s&rdquo; %2$s"
 #~ msgstr "در %2$s &rdquo;%1$s&ldquo;"
 
@@ -5644,7 +5654,7 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgid "Creatable!"
 #~ msgstr "ایجاد کنید!"
 
-#~ msgctxt "O2O: Metabox Title"
+#~ msgctxt "O2O: MetaBox Title"
 #~ msgid "Connected %1$s"
 #~ msgstr "%1$s مرتبط"
 
@@ -5963,15 +5973,15 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgid "There are no posts available!"
 #~ msgstr "هیچ فرسته‌ای در دسترس نیست!"
 
-#~ msgctxt "Internal: Strings: Metabox via Posttype: `{$context}_title`"
+#~ msgctxt "Internal: Strings: MetaBox via Posttype: `{$context}_title`"
 #~ msgid "About &ldquo;%2$s&rdquo;"
 #~ msgstr "درباره &rdquo;%2$s&ldquo;"
 
-#~ msgctxt "Module: Metabox Title: `supportedbox_title`"
+#~ msgctxt "Module: MetaBox Title: `supportedbox_title`"
 #~ msgid "For &ldquo;%1$s&rdquo;"
 #~ msgstr "برای &ldquo;%1$s&rdquo;"
 
-#~ msgctxt "Module: Metabox Title: `listbox_title`"
+#~ msgctxt "Module: MetaBox Title: `listbox_title`"
 #~ msgid "In &ldquo;%1$s&rdquo; %2$s"
 #~ msgstr "در %2$s &rdquo;%1$s&ldquo;"
 
@@ -6083,7 +6093,7 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgid "Newsroom"
 #~ msgstr "اتاق خبر"
 
-#~ msgctxt "Module: Metabox Empty: `listbox_empty`"
+#~ msgctxt "Module: MetaBox Empty: `listbox_empty`"
 #~ msgid "No items connected to this %2$s: &ldquo;%1$s&rdquo;"
 #~ msgstr "موردی به این %2$s &ldquo;%1$s&rdquo; مرتبط نشده است."
 
@@ -6239,7 +6249,7 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgid "Provincial Divisions for Contents"
 #~ msgstr "تقسیمات استانی برای محتوا"
 
-#~ msgctxt "Module: Metabox Title"
+#~ msgctxt "Module: MetaBox Title"
 #~ msgid "Connected Items"
 #~ msgstr "موارد مرتبط"
 
@@ -6332,7 +6342,7 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgstr "&ndash; بدون مادر &ndash;"
 
 #~ msgctxt "Modules: Movie"
-#~ msgid "Movies"
+#~ msgid "Cine"
 #~ msgstr "سینما"
 
 #~ msgctxt "Modules: Ranking"
@@ -7940,19 +7950,19 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgid "Roles for %s"
 #~ msgstr "نقش‌ها برای %s"
 
-#~ msgctxt "Modules: Statuses: Metabox Submit"
+#~ msgctxt "Modules: Statuses: MetaBox Submit"
 #~ msgid "Submit: %s"
 #~ msgstr "ارسال: %s"
 
-#~ msgctxt "Modules: Statuses: Metabox Save On"
+#~ msgctxt "Modules: Statuses: MetaBox Save On"
 #~ msgid "Save as %s on:"
 #~ msgstr "%s در:"
 
-#~ msgctxt "Modules: Statuses: Metabox Saved On"
+#~ msgctxt "Modules: Statuses: MetaBox Saved On"
 #~ msgid "Saved as %s on:"
 #~ msgstr "%s در:"
 
-#~ msgctxt "Modules: Statuses: Metabox Saved On"
+#~ msgctxt "Modules: Statuses: MetaBox Saved On"
 #~ msgid "Save as %s <b>now</b>"
 #~ msgstr "%s: <b>هم‌اکنون</b>"
 

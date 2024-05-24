@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.27.1\n"
+"Project-Id-Version: gEditorial 3.27.2\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -680,122 +680,122 @@ msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:91
-msgctxt "Module: Metabox Empty: `listbox_empty`"
+msgctxt "Module: MetaBox Empty: `listbox_empty`"
 msgid "No items connected to &ldquo;%1$s&rdquo; %2$s!"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:110
-msgctxt "Internal: Strings: Metabox via Posttype: `supportedbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `supportedbox_title`"
 msgid "For this &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:115
-msgctxt "Internal: Strings: Metabox via Posttype: `printingbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `printingbox_title`"
 msgid "Prints for this &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:120
-msgctxt "Internal: Strings: Metabox via Posttype: `mainbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `mainbox_title`"
 msgid "The %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:126
-msgctxt "Internal: Strings: Metabox via Posttype: `pairedbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `pairedbox_title`"
 msgid "Connected &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:132
-msgctxt "Internal: Strings: Metabox via Posttype: `listbox_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `listbox_title`"
 msgid "In &ldquo;%1$s&rdquo; %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: includes/Internals/Strings.php:138
-msgctxt "Internal: Strings: Metabox via Posttype: `default_title`"
+msgctxt "Internal: Strings: MetaBox via Posttype: `default_title`"
 msgid "About &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: current term title, %2$s: taxonomy singular name
 #: includes/Internals/Strings.php:156
-msgctxt "Internal: Strings: Metabox via Taxonomy: `supportedbox_title`"
+msgctxt "Internal: Strings: MetaBox via Taxonomy: `supportedbox_title`"
 msgid "For this &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: current term title, %2$s: taxonomy singular name
 #: includes/Internals/Strings.php:162
-msgctxt "Internal: Strings: Metabox via Taxonomy: `default_title`"
+msgctxt "Internal: Strings: MetaBox via Taxonomy: `default_title`"
 msgid "About &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:371
+#: includes/Module.php:377
 msgctxt "Module: Extra Link: Reports"
 msgid "%s Reports"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:382
+#: includes/Module.php:388
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Tools"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:393
+#: includes/Module.php:399
 msgctxt "Module: Extra Link: Roles"
 msgid "%s Roles"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:404
+#: includes/Module.php:410
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Imports"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Module.php:414
+#: includes/Module.php:420
 msgctxt "Module: Extra Link: Settings"
 msgid "%s Settings"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Module.php:424
+#: includes/Module.php:430
 msgctxt "Module: Extra Link: Documentation"
 msgid "%s Documentation"
 msgstr ""
 
-#: includes/Module.php:431
-#: includes/Module.php:433
+#: includes/Module.php:437
+#: includes/Module.php:439
 msgctxt "Module: Extra Link: Documentation"
 msgid "Editorial Documentation"
 msgstr ""
 
-#: includes/Module.php:546
+#: includes/Module.php:552
 msgctxt "Module: Setting Title"
 msgid "Insert Priority"
 msgstr ""
 
-#: includes/Module.php:834
+#: includes/Module.php:840
 msgctxt "Module: MetaBox Default Title"
 msgid "Settings"
 msgstr ""
 
-#: includes/Module.php:853
+#: includes/Module.php:859
 msgctxt "Module: MetaBox Default Action"
 msgid "Configure"
 msgstr ""
 
-#: includes/Module.php:975
+#: includes/Module.php:981
 msgctxt "Module: ReadOnly Title Info"
 msgid "This Title is Auto-Generated"
 msgstr ""
 
-#: includes/Module.php:1169
-msgctxt "Module: Draft Metabox"
+#: includes/Module.php:1175
+msgctxt "Module: Draft MetaBox"
 msgid "You can see the contents once you've saved this post for the first time."
 msgstr ""
 
@@ -1054,12 +1054,22 @@ msgctxt "Modules: Chores"
 msgid "Chores"
 msgstr ""
 
-#: includes/Modules/Collect/Collect.php:30
+#: includes/Modules/Cine/Cine.php:24
+msgctxt "Modules: Cine"
+msgid "Cine"
+msgstr ""
+
+#: includes/Modules/Cine/Cine.php:25
+msgctxt "Modules: Cine"
+msgid "Editorial Library of Films"
+msgstr ""
+
+#: includes/Modules/Collect/Collect.php:34
 msgctxt "Modules: Collect"
 msgid "Collect"
 msgstr ""
 
-#: includes/Modules/Collect/Collect.php:31
+#: includes/Modules/Collect/Collect.php:35
 msgctxt "Modules: Collect"
 msgid "Create and use Collections of Posts"
 msgstr ""
@@ -1144,12 +1154,12 @@ msgctxt "Modules: Contents"
 msgid "Contents"
 msgstr ""
 
-#: includes/Modules/Contest/Contest.php:34
+#: includes/Modules/Contest/Contest.php:35
 msgctxt "Modules: Contest"
 msgid "Contest"
 msgstr ""
 
-#: includes/Modules/Contest/Contest.php:35
+#: includes/Modules/Contest/Contest.php:36
 msgctxt "Modules: Contest"
 msgid "Contest Management"
 msgstr ""
@@ -1174,12 +1184,12 @@ msgctxt "Modules: Countables"
 msgid "Editorial Countable Items"
 msgstr ""
 
-#: includes/Modules/Course/Course.php:33
+#: includes/Modules/Course/Course.php:34
 msgctxt "Modules: Course"
 msgid "Course"
 msgstr ""
 
-#: includes/Modules/Course/Course.php:34
+#: includes/Modules/Course/Course.php:35
 msgctxt "Modules: Course"
 msgid "Course and Lesson Management"
 msgstr ""
@@ -1284,12 +1294,12 @@ msgctxt "Module: Paired: Button Description"
 msgid "Tries to create paired terms for all the main posts."
 msgstr ""
 
-#: includes/Modules/Divided/Divided.php:29
+#: includes/Modules/Divided/Divided.php:24
 msgctxt "Modules: Divided"
 msgid "Divided"
 msgstr ""
 
-#: includes/Modules/Divided/Divided.php:30
+#: includes/Modules/Divided/Divided.php:25
 msgctxt "Modules: Divided"
 msgid "Country Divided World"
 msgstr ""
@@ -1329,12 +1339,12 @@ msgctxt "Modules: Documents"
 msgid "Editorial Document Management"
 msgstr ""
 
-#: includes/Modules/Dossier/Dossier.php:37
+#: includes/Modules/Dossier/Dossier.php:38
 msgctxt "Modules: Dossier"
 msgid "Dossier"
 msgstr ""
 
-#: includes/Modules/Dossier/Dossier.php:38
+#: includes/Modules/Dossier/Dossier.php:39
 msgctxt "Modules: Dossier"
 msgid "Collection of Contents"
 msgstr ""
@@ -1432,6 +1442,16 @@ msgstr ""
 #: includes/Modules/Execution/Execution.php:27
 msgctxt "Modules: Execution"
 msgid "Editorial Executives"
+msgstr ""
+
+#: includes/Modules/Expired/Expired.php:29
+msgctxt "Modules: Expired"
+msgid "Expired"
+msgstr ""
+
+#: includes/Modules/Expired/Expired.php:30
+msgctxt "Modules: Expired"
+msgid "[CHANGE ME]"
 msgstr ""
 
 #: includes/Modules/Exporter/Exporter.php:29
@@ -1694,12 +1714,12 @@ msgctxt "Modules: Iranian"
 msgid "Tools for Iranian Editorial"
 msgstr ""
 
-#: includes/Modules/Kiosk/Kiosk.php:21
+#: includes/Modules/Kiosk/Kiosk.php:22
 msgctxt "Modules: Kiosk"
 msgid "Kiosk"
 msgstr ""
 
-#: includes/Modules/Kiosk/Kiosk.php:22
+#: includes/Modules/Kiosk/Kiosk.php:23
 msgctxt "Modules: Kiosk"
 msgid "Administration Point of Entry"
 msgstr ""
@@ -1774,12 +1794,12 @@ msgctxt "Modules: Lingo"
 msgid "Language Identifiers"
 msgstr ""
 
-#: includes/Modules/Magazine/Magazine.php:35
+#: includes/Modules/Magazine/Magazine.php:36
 msgctxt "Modules: Magazine"
 msgid "Magazine"
 msgstr ""
 
-#: includes/Modules/Magazine/Magazine.php:36
+#: includes/Modules/Magazine/Magazine.php:37
 msgctxt "Modules: Magazine"
 msgid "Magazine Issue Management"
 msgstr ""
@@ -1894,22 +1914,12 @@ msgctxt "Modules: Motorcade"
 msgid "Editorial Vehicle Management"
 msgstr ""
 
-#: includes/Modules/Movies/Movies.php:24
-msgctxt "Modules: Movies"
-msgid "Movies"
-msgstr ""
-
-#: includes/Modules/Movies/Movies.php:25
-msgctxt "Modules: Movies"
-msgid "Editorial Library of Films"
-msgstr ""
-
-#: includes/Modules/Naming/Naming.php:29
+#: includes/Modules/Naming/Naming.php:31
 msgctxt "Modules: Naming"
 msgid "Naming"
 msgstr ""
 
-#: includes/Modules/Naming/Naming.php:30
+#: includes/Modules/Naming/Naming.php:32
 msgctxt "Modules: Naming"
 msgid "Name Tools and Enhancements"
 msgstr ""
@@ -2064,13 +2074,13 @@ msgctxt "Modules: Person"
 msgid "People, the Way Involved in Your Site"
 msgstr ""
 
-#: includes/Modules/Persona/Persona.php:31
-msgctxt "Modules: Persona"
-msgid "Persona"
+#: includes/Modules/Personage/Personage.php:31
+msgctxt "Modules: Personage"
+msgid "Personage"
 msgstr ""
 
-#: includes/Modules/Persona/Persona.php:32
-msgctxt "Modules: Persona"
+#: includes/Modules/Personage/Personage.php:32
+msgctxt "Modules: Personage"
 msgid "Human Resource Management for Editorial"
 msgstr ""
 
@@ -2670,12 +2680,12 @@ msgctxt "Modules: Team"
 msgid "Profiles for Editorial Teams"
 msgstr ""
 
-#: includes/Modules/Terms/Terms.php:61
+#: includes/Modules/Terms/Terms.php:63
 msgctxt "Modules: Terms"
 msgid "Terms"
 msgstr ""
 
-#: includes/Modules/Terms/Terms.php:62
+#: includes/Modules/Terms/Terms.php:64
 msgctxt "Modules: Terms"
 msgid "Taxonomy & Term Tools"
 msgstr ""
@@ -2830,12 +2840,12 @@ msgctxt "Modules: Validator"
 msgid "Data Validity Checker"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:31
+#: includes/Modules/Venue/Venue.php:32
 msgctxt "Modules: Venue"
 msgid "Venue"
 msgstr ""
 
-#: includes/Modules/Venue/Venue.php:32
+#: includes/Modules/Venue/Venue.php:33
 msgctxt "Modules: Venue"
 msgid "Place Listings"
 msgstr ""

@@ -45,43 +45,53 @@ msgctxt "Setting Description"
 msgid "The <b>%s</b> status will be visibile to the selected roles."
 msgstr ""
 
-#: Statuses.php:95
+#: Statuses.php:91
+msgctxt "Default Term"
+msgid "Expired"
+msgstr ""
+
+#: Statuses.php:92
+msgctxt "Default Term"
+msgid "Achieved"
+msgstr ""
+
+#: Statuses.php:105
 msgctxt "Taxonomy Label"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:139
-msgctxt "Metabox Submit"
+#: Statuses.php:149
+msgctxt "MetaBox Submit"
 msgid "Submit: %s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:141
-msgctxt "Metabox Save On"
+#: Statuses.php:151
+msgctxt "MetaBox Save On"
 msgid "Save as %s on:"
 msgstr ""
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:143
-msgctxt "Metabox Save Date"
+#: Statuses.php:153
+msgctxt "MetaBox Save Date"
 msgid "Save as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:145
-msgctxt "Metabox Saved On"
+#: Statuses.php:155
+msgctxt "MetaBox Saved On"
 msgid "Saved as %s on:"
 msgstr ""
 
 #. translators: %1$s: status name, %2$s: time placeholder
-#: Statuses.php:147
-msgctxt "Metabox Saved Date"
+#: Statuses.php:157
+msgctxt "MetaBox Saved Date"
 msgid "Saved as %1$s on: %2$s"
 msgstr ""
 
 #. translators: %s: status name
-#: Statuses.php:149
-msgctxt "Metabox Saved On"
+#: Statuses.php:159
+msgctxt "MetaBox Saved On"
 msgid "Save as %s <b>now</b>"
 msgstr ""

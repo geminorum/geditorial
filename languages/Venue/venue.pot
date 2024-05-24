@@ -13,151 +13,151 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Venue\n"
 "X-Domain: geditorial-venue\n"
 
-#: Venue.php:54
+#: Venue.php:55
 msgctxt "Settings"
 msgid "Place Facilities"
 msgstr ""
 
-#: Venue.php:55
+#: Venue.php:56
 msgctxt "Settings"
 msgid "Facility taxonomy for the places and supported post-types."
 msgstr ""
 
-#: Venue.php:68
+#: Venue.php:69
 msgctxt "Settings"
 msgid "Specifies location based on the actual latitude and longitude."
 msgstr ""
 
-#: Venue.php:78
+#: Venue.php:79
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Venue.php:79
+#: Venue.php:80
 msgctxt "Settings"
 msgid "Redirects place archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Venue.php:133
 #: Venue.php:134
+#: Venue.php:135
 msgid "Place"
 msgid_plural "Places"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Venue.php:135
+#: Venue.php:136
 msgid "Place Category"
 msgid_plural "Place Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Venue.php:136
+#: Venue.php:137
 msgid "Facility"
 msgid_plural "Facilities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Venue.php:144
+#: Venue.php:145
 msgctxt "Misc: `column_icon_title`"
 msgid "Place"
 msgstr ""
 
-#: Venue.php:149
+#: Venue.php:150
 msgctxt "Label: MetaBox Title"
 msgid "Place Details"
 msgstr ""
 
-#: Venue.php:150
+#: Venue.php:151
 msgctxt "Label: MetaBox Title"
 msgid "Connected to this Place"
 msgstr ""
 
-#: Venue.php:162
+#: Venue.php:163
 msgctxt "Field Title"
 msgid "Parent Complex"
 msgstr ""
 
-#: Venue.php:163
+#: Venue.php:164
 msgctxt "Field Description"
 msgid "Parent complex title of the location"
 msgstr ""
 
-#: Venue.php:167
+#: Venue.php:168
 msgctxt "Field Title"
 msgid "Full Title"
 msgstr ""
 
-#: Venue.php:168
+#: Venue.php:169
 msgctxt "Field Description"
 msgid "Full title of the location"
 msgstr ""
 
-#: Venue.php:175
+#: Venue.php:176
 msgctxt "Field Title"
 msgid "Street Address"
 msgstr ""
 
-#: Venue.php:176
+#: Venue.php:177
 msgctxt "Field Description"
 msgid "Full street address, including city, state etc."
 msgstr ""
 
-#: Venue.php:180
+#: Venue.php:181
 msgctxt "Field Title"
 msgid "Phone Number"
 msgstr ""
 
-#: Venue.php:181
+#: Venue.php:182
 msgctxt "Field Description"
 msgid "Full contact number for the location."
 msgstr ""
 
-#: Venue.php:185
+#: Venue.php:186
 msgctxt "Field Title"
 msgid "Website URL"
 msgstr ""
 
-#: Venue.php:186
+#: Venue.php:187
 msgctxt "Field Description"
 msgid "Official website URL of the location."
 msgstr ""
 
-#: Venue.php:190
+#: Venue.php:191
 msgctxt "Field Title"
 msgid "Map Embed URL"
 msgstr ""
 
-#: Venue.php:191
+#: Venue.php:192
 msgctxt "Field Description"
 msgid "Embeddable map URL of the location."
 msgstr ""
 
-#: Venue.php:197
+#: Venue.php:198
 msgctxt "Field Title"
 msgid "Latitude"
 msgstr ""
 
-#: Venue.php:198
+#: Venue.php:199
 msgctxt "Field Description"
 msgid "The latitude (in decimal notation) for this location."
 msgstr ""
 
-#: Venue.php:202
+#: Venue.php:203
 msgctxt "Field Title"
 msgid "Longitude"
 msgstr ""
 
-#: Venue.php:203
+#: Venue.php:204
 msgctxt "Field Description"
 msgid "The longitude (in decimal notation) for this location."
 msgstr ""
 
-#: Venue.php:392
+#: Venue.php:393
 msgctxt "Header"
 msgid "Venue Tools"
 msgstr ""
 
-#: Venue.php:421
+#: Venue.php:422
 msgctxt "Header"
 msgid "Venue Imports"
 msgstr ""

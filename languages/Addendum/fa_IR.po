@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Addendum\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-03 00:40+0330\n"
+"PO-Revision-Date: 2024-05-24 05:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/Addendum\n"
 "X-Domain: geditorial-addendum\n"
 
@@ -107,7 +107,7 @@ msgstr "ضمیمه"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: Addendum.php:161
-msgctxt "Metabox: `listbox_title`"
+msgctxt "MetaBox: `listbox_title`"
 msgid "Posts with &ldquo;%1$s&rdquo; %2$s"
 msgstr "فرسته‌های همراه با %2$s &rdquo;%1$s&ldquo;"
 
@@ -121,12 +121,12 @@ msgctxt "Necessity Taxonomy: Default Term"
 msgid "Mandatory"
 msgstr "اجباری"
 
-#: Addendum.php:465
+#: Addendum.php:466
 msgctxt "Header"
 msgid "Appendage Tools"
 msgstr "ابزارهای ضمائم"
 
-#: Addendum.php:494
+#: Addendum.php:495
 msgctxt "Header"
 msgid "Appendage Imports"
 msgstr "درون‌ریزی‌های ضمائم"

@@ -92,54 +92,54 @@ msgctxt "Default Term: Language"
 msgid "French"
 msgstr ""
 
-#: Lingo.php:270
+#: Lingo.php:278
 msgctxt "Header"
 msgid "Import Language Identifiers"
 msgstr ""
 
-#: Lingo.php:273
+#: Lingo.php:281
 msgctxt "Imports"
 msgid "ISO 639-1 Alpha-2"
 msgstr ""
 
-#: Lingo.php:280
+#: Lingo.php:288
 msgctxt "Table Column"
 msgid "Code"
 msgstr ""
 
-#: Lingo.php:284
+#: Lingo.php:292
 msgctxt "Table Column"
 msgid "Term"
 msgstr ""
 
-#: Lingo.php:296
+#: Lingo.php:304
 msgctxt "Table Column"
 msgid "English Name"
 msgstr ""
 
-#: Lingo.php:300
-#: Lingo.php:338
-#: Lingo.php:345
+#: Lingo.php:308
+#: Lingo.php:346
+#: Lingo.php:356
 msgctxt "Table Column"
 msgid "Native Name"
 msgstr ""
 
-#: Lingo.php:305
+#: Lingo.php:313
 msgctxt "Message: Table Empty"
 msgid "There are no language identifiers available!"
 msgstr ""
 
-#: Lingo.php:318
+#: Lingo.php:326
 msgctxt "Button"
 msgid "Create Language Terms"
 msgstr ""
 
-#: Lingo.php:321
+#: Lingo.php:329
 msgctxt "Button"
 msgid "Update Existing Terms"
 msgstr ""
 
-#: Lingo.php:325
+#: Lingo.php:333
 msgctxt "Message"
 msgid "Check for available language identifiers and create corresponding terms."
 msgstr ""

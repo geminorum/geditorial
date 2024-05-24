@@ -79,7 +79,7 @@ msgid "Description"
 msgstr ""
 
 #: Connected.php:91
-msgctxt "Metabox Title"
+msgctxt "MetaBox Title"
 msgid "Connected"
 msgstr ""
 
