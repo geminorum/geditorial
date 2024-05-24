@@ -1,3 +1,8 @@
+### 3.27.3
+* main/module: auto-hook terms init action
+* module/importer: prep meta-keys for purge
+* module/personage: renamed from `persona`
+
 ### 3.27.2
 * module/execution: renamed from `executed`
 * module/organization: support for custom cap-type
