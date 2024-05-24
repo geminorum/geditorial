@@ -23,7 +23,7 @@
     "build": "md .build && cd .build && git clone https://github.com/geminorum/geditorial . && composer install --no-dev --optimize-autoloader --prefer-dist -v && yarn install && gulp build",
     "ready:old": "gulp ready",
     "ready": "gulp dev:scripts ready",
-    "refresh": "gulp dev:styles dev:scripts",
+    "refresh": "gulp dev:styles dev:scripts --stack-size=1000",
     "i18n:gulp": "gulp pot",
     "i18n:pot": "gulp i18n",
     "i18n:mo": "wp i18n make-mo ./languages --skip-plugins --skip-themes --skip-packages",
@@ -73,7 +73,7 @@
     "postcss": "^8.4.38",
     "rtlcss": "^4.1.1",
     "semistandard": "^17.0.0",
-    "stylelint": "^16.3.1",
+    "stylelint": "^16.4.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {
