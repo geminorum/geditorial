@@ -62,10 +62,12 @@ class ModuleSettings extends gEditorial\Settings
 
 		foreach ( $metakeys as $metakey ) {
 
-			if ( ! $keys = Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', $metakey ) ) )
-				continue;
+			$keys = Core\Arraay::prepString(
+				$metakey, // original key
+				Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', $metakey ) )
+			);
 
-			foreach ( $keys as $key => $data )
+			foreach ( $keys as $key )
 				delete_post_meta( $post->ID, $key );
 		}
 

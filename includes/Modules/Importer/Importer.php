@@ -1334,13 +1334,22 @@ class Importer extends gEditorial\Module
 
 		return ModuleSettings::handleTool_cleanup_raw_data(
 			$posttype,
-			$this->constants( [
-				'metakey_source_data',
-				'metakey_prepared_data',
-				'metakey_attach_id',
-			] ),
+			$this->_get_metakeys(),
 			$this->get_sub_limit_option( $sub )
 		);
+	}
+
+	private function _get_metakeys()
+	{
+		return Core\Arraay::prepString( $this->constants( [
+			'metakey_source_data',
+			'metakey_prepared_data',
+			'metakey_attach_id',
+		] ), [
+			// OLD KEYS: DEPRECATED
+			'_importer_source_data',
+			'_importer_attachment_id',
+		] );
 	}
 
 	public function imports_general_summary( $uri )
