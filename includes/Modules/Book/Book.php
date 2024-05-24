@@ -7,7 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Metabox;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
@@ -513,7 +513,7 @@ class Book extends gEditorial\Module
 
 		// FIXME: WTF: use `$this->paired_register()`
 		$this->register_posttype( 'publication_posttype', [
-			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
+			MetaBox::POSTTYPE_MAINBOX_PROP            => TRUE,
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'publication_category' ),
 		] );
 

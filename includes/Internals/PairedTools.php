@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Metabox;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -25,14 +25,14 @@ trait PairedTools
 
 		echo Settings::toolboxCardOpen( _x( 'Paired Move From-To', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
 
-			Metabox::checklistTerms( 0, [
+			MetaBox::checklistTerms( 0, [
 				'taxonomy'    => $this->constant( $constants[1] ),
 				'name'        => 'movefrom',
 				'show_count'  => TRUE,
 				'minus_count' => 1, // the main posttype also get assigned
 			] );
 
-			Metabox::singleselectTerms( 0, [
+			MetaBox::singleselectTerms( 0, [
 				'taxonomy' => $this->constant( $constants[1] ),
 				'name'     => 'moveto',
 			] );

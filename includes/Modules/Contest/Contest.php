@@ -17,6 +17,7 @@ class Contest extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedFront;

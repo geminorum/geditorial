@@ -674,7 +674,7 @@ trait CoreTaxonomies
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return FALSE;
 
-		if ( empty( $object->{Metabox::POSTTYPE_MAINBOX_PROP} ) ) {
+		if ( empty( $object->{MetaBox::POSTTYPE_MAINBOX_PROP} ) ) {
 
 			add_action( 'add_meta_boxes',
 				function ( $posttype, $post ) use ( $constant, $callback ) {

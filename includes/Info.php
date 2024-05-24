@@ -303,7 +303,7 @@ class Info extends WordPress\Main
 		return $fallback;
 	}
 
-	public static function getHelpTabs( $context = NULL ) {}
+	public static function getHelpTabs( $context = NULL ) { return []; }
 
 	// TODO: add click to select
 	public static function renderHelpTabList( $list )

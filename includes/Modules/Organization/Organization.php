@@ -169,7 +169,7 @@ class Organization extends gEditorial\Module
 
 		$strings['metabox'] = [
 			/* translators: %1$s: current post title, %2$s: posttype singular name */
-			'listbox_title' => _x( '%2$s Members of &ldquo;%1$s&rdquo;', 'Metabox: `listbox_title`', 'geditorial-organization' ),
+			'listbox_title' => _x( '%2$s Members of &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-organization' ),
 		];
 
 		return $strings;

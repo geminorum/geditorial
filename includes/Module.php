@@ -1169,7 +1169,7 @@ class Module extends WordPress\Module
 			return FALSE;
 
 		if ( is_null( $message ) )
-			$message = _x( 'You can see the contents once you\'ve saved this post for the first time.', 'Module: Draft Metabox', 'geditorial-admin' );
+			$message = _x( 'You can see the contents once you\'ve saved this post for the first time.', 'Module: Draft MetaBox', 'geditorial-admin' );
 
 		Core\HTML::desc( $message, TRUE, 'field-wrap -empty' );
 

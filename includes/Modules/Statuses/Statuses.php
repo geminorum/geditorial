@@ -84,6 +84,16 @@ class Statuses extends gEditorial\Module
 		];
 	}
 
+	protected function define_default_terms()
+	{
+		return [
+			'main_taxonomy' => [
+				'expired'  => _x( 'Expired', 'Default Term', 'geditorial-statuses' ),
+				'achieved' => _x( 'Achieved', 'Default Term', 'geditorial-statuses' ),
+			],
+		];
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -136,19 +146,19 @@ class Statuses extends gEditorial\Module
 					'inline_dropdown'  => $status->name,
 
 					/* translators: %s: status name */
-					'metabox_submit'     => sprintf( _x( 'Submit: %s', 'Metabox Submit', 'geditorial-statuses' ), $status->name ),
+					'metabox_submit'     => sprintf( _x( 'Submit: %s', 'MetaBox Submit', 'geditorial-statuses' ), $status->name ),
 					/* translators: %s: status name */
-					'metabox_save_on'    => sprintf( _x( 'Save as %s on:', 'Metabox Save On', 'geditorial-statuses' ), $status->name ),
+					'metabox_save_on'    => sprintf( _x( 'Save as %s on:', 'MetaBox Save On', 'geditorial-statuses' ), $status->name ),
 					/* translators: %1$s: status name, %2$s: time placeholder */
-					'metabox_save_date'  => sprintf( _x( 'Save as %1$s on: %2$s', 'Metabox Save Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
+					'metabox_save_date'  => sprintf( _x( 'Save as %1$s on: %2$s', 'MetaBox Save Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
 					/* translators: %s: status name */
-					'metabox_saved_on'   => sprintf( _x( 'Saved as %s on:', 'Metabox Saved On', 'geditorial-statuses' ), $status->name ),
+					'metabox_saved_on'   => sprintf( _x( 'Saved as %s on:', 'MetaBox Saved On', 'geditorial-statuses' ), $status->name ),
 					/* translators: %1$s: status name, %2$s: time placeholder */
-					'metabox_saved_date' => sprintf( _x( 'Saved as %1$s on: %2$s', 'Metabox Saved Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
+					'metabox_saved_date' => sprintf( _x( 'Saved as %1$s on: %2$s', 'MetaBox Saved Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
 					/* translators: %s: status name */
-					'metabox_save_now'   => sprintf( _x( 'Save as %s <b>now</b>', 'Metabox Saved On', 'geditorial-statuses' ), $status->name ),
+					'metabox_save_now'   => sprintf( _x( 'Save as %s <b>now</b>', 'MetaBox Saved On', 'geditorial-statuses' ), $status->name ),
 					/* translators: %s: time placeholder */
-					// 'metabox_save_later' => sprintf( _x( 'Schedule for: %s', 'Metabox Saved On', 'geditorial-statuses' ), '<b>%1$s</b>' ),
+					// 'metabox_save_later' => sprintf( _x( 'Schedule for: %s', 'MetaBox Saved On', 'geditorial-statuses' ), '<b>%1$s</b>' ),
 				],
 			];
 

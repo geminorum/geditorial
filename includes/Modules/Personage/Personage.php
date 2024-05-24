@@ -409,7 +409,7 @@ class Personage extends gEditorial\Module
 		$this->register_posttype( 'primary_posttype', [
 			'hierarchical' => FALSE,
 
-			Metabox::POSTTYPE_MAINBOX_PROP            => TRUE,
+			MetaBox::POSTTYPE_MAINBOX_PROP            => TRUE,
 			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		], [
 			'is_viewable'    => $viewable,

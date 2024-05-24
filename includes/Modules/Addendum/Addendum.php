@@ -158,7 +158,7 @@ class Addendum extends gEditorial\Module
 
 		$strings['metabox'] = [
 			/* translators: %1$s: current post title, %2$s: posttype singular name */
-			'listbox_title' => _x( 'Posts with &ldquo;%1$s&rdquo; %2$s', 'Metabox: `listbox_title`', 'geditorial-addendum' ),
+			'listbox_title' => _x( 'Posts with &ldquo;%1$s&rdquo; %2$s', 'MetaBox: `listbox_title`', 'geditorial-addendum' ),
 		];
 
 		return $strings;

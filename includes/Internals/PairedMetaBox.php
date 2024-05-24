@@ -572,7 +572,7 @@ trait PairedMetaBox
 		$singular_name = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
 
 		/* translators: %1$s: current post title, %2$s: posttype singular name */
-		$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Internal: PairedMetaBox: Metabox Empty: `megabox_empty`', 'geditorial' );
+		$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Internal: PairedMetaBox: MetaBox Empty: `megabox_empty`', 'geditorial' );
 		$empty   = $this->get_string( sprintf( '%s_empty', $context ), $constants[0], 'metabox', $default );
 		$noitems = sprintf( $empty, $post_title, $singular_name );
 
@@ -611,7 +611,7 @@ trait PairedMetaBox
 		};
 
 		/* translators: %1$s: current post title, %2$s: posttype singular name */
-		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: PairedMetaBox: Metabox Title: `megabox_title`', 'geditorial' );
+		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: PairedMetaBox: MetaBox Title: `megabox_title`', 'geditorial' );
 		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
 		$metabox = $this->classs( $context );
 

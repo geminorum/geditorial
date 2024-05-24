@@ -157,6 +157,7 @@ class Lingo extends gEditorial\Module
 
 		$this->filter_module( 'terms', 'column_title', 4 );
 		$this->filter_module( 'terms', 'field_tagline_title', 4 );
+		$this->filter_module( 'terms', 'disable_field_edit', 3, 12 );
 	}
 
 	public function current_screen( $screen )
@@ -165,6 +166,7 @@ class Lingo extends gEditorial\Module
 
 			if ( 'edit-tags' == $screen->base ) {
 
+				$this->_admin_enabled();
 				$this->action( 'taxonomy_tab_extra_content', 2, 12, FALSE, 'gnetwork' );
 
 			} else if ( 'term' == $screen->base ) {
@@ -353,6 +355,13 @@ class Lingo extends gEditorial\Module
 		return $taxonomy === $this->constant( 'language_taxonomy' )
 			? _x( 'Native Name', 'Table Column', 'geditorial-lingo' )
 			: $title;
+	}
+
+	public function terms_disable_field_edit( $disabled, $field, $taxonomy )
+	{
+		return $taxonomy === $this->constant( 'language_taxonomy' )
+			? current_user_can( 'manage_options' ) // restrict to administrators only!
+			: $disabled;
 	}
 
 	public function taxonomy_tab_extra_content( $taxonomy, $object )

@@ -96,6 +96,7 @@ class Event extends gEditorial\Module
 					'title'       => _x( 'Event Expire', 'Fields', 'geditorial-event' ),
 					'description' => _x( 'Event Expire', 'Fields', 'geditorial-event' ),
 					'icon'        => 'thumbs-down',
+					'type'        => 'datetime',
 				],
 			],
 		] ];

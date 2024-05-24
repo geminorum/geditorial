@@ -145,7 +145,7 @@ class Socialite extends gEditorial\Module
 				'social_column_title' => _x( 'Social', 'Column Title', 'geditorial-socialite' ),
 			],
 			'metabox' => [
-				// 'metabox_title' => _x( 'Social', 'Metabox: Title', 'geditorial-socialite' ),
+				// 'metabox_title' => _x( 'Social', 'MetaBox: Title', 'geditorial-socialite' ),
 			],
 		];
 	}

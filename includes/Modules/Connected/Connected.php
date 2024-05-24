@@ -88,7 +88,7 @@ class Connected extends gEditorial\Module
 				'context' => $this->get_setting( 'admin_box_context', FALSE ) ? 'advanced' : 'normal',
 			],
 
-			'title'     => _x( 'Connected', 'Metabox Title', 'geditorial-connected' ),
+			'title'     => _x( 'Connected', 'MetaBox Title', 'geditorial-connected' ),
 			'to_labels' => [
 				'singular_name' => _x( 'Connectie', 'Label', 'geditorial-connected' ),
 				'search_items'  => _x( 'Search Connecties', 'Label', 'geditorial-connected' ),

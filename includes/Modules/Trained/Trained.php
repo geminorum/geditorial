@@ -191,7 +191,7 @@ class Trained extends gEditorial\Module
 
 		$strings['metabox'] = [
 			/* translators: %1$s: current post title, %2$s: posttype singular name */
-			'listbox_title' => _x( 'Attendees on &ldquo;%1$s&rdquo;', 'Metabox: `listbox_title`', 'geditorial-trained' ),
+			'listbox_title' => _x( 'Attendees on &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-trained' ),
 		];
 
 		return $strings;
