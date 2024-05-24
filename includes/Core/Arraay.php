@@ -406,7 +406,7 @@ class Arraay extends Base
 	public static function filter( $input, $args = [], $operator = 'and', $field = FALSE )
 	{
 		if ( empty( $input ) || ( empty( $args ) && empty( $field ) ) )
-			return $input;
+			return [];
 
 		return wp_filter_object_list( $input, $args, $operator, $field );
 	}
@@ -423,7 +423,7 @@ class Arraay extends Base
 	public static function pluck( $input, $field, $index_key = NULL )
 	{
 		if ( empty( $input ) || empty( $field ) )
-			return $input;
+			return [];
 
 		return wp_list_pluck( $input, $field, $index_key );
 	}
@@ -862,5 +862,50 @@ class Arraay extends Base
 		}
 
 		return $partition;
+	}
+
+	// @REF: https://medium.com/@assertchris/dot-notation-3fd3e42edc61
+	// This is from `Illuminate/Support/Arr.php`
+	public static function getByNotation( $array, $key, $default = NULL, $notation = '.' )
+	{
+		if ( is_null( $key ) )
+			return $default;
+
+		if ( array_key_exists( $key, $array ) )
+			return $array[$key];
+
+		foreach ( explode( $notation, $key ) as $segment ) {
+
+			if ( ! is_array( $array ) || ! array_key_exists( $segment, $array ) )
+				return value( $default );
+
+			$array = $array[$segment];
+	  	}
+
+		return $array;
+	}
+
+	// @REF: https://medium.com/@assertchris/dot-notation-3fd3e42edc61
+	// This is from `Illuminate/Support/Arr.php`
+	public static function setByNotation( &$array, $key, $value, $notation = '.' )
+	{
+		if ( is_null( $key ) )
+			return $array = $value;
+
+		$keys = explode( $notation, $key );
+
+		while ( count( $keys ) > 1 ) {
+
+			$key = array_shift( $keys );
+
+			if ( ! isset($array[$key] ) || ! is_array( $array[$key] ) )
+				$array[$key] = [];
+
+			$array =& $array[$key];
+		}
+
+		$array[array_shift( $keys )] = $value;
+
+		return $array;
 	}
 }

@@ -25,6 +25,7 @@ class Mobile extends Base
 		return TRUE;
 	}
 
+	// TODO: strip prefix: `tel:+98912000000`
 	public static function sanitize( $input )
 	{
 		$sanitized = Number::intval( trim( $input ), FALSE );

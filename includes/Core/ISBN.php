@@ -19,7 +19,7 @@ class ISBN extends Base
 			return $wrap ? '<span class="isbn -valid">&#8206;'.$string.'&#8207;<span>' : $string;
 		}
 
-		// CAUTION: returns the original
+		// NOTE: returns the original if not valid
 		return $wrap ? '<span class="isbn -not-valid">&#8206;'.$input.'&#8207;<span>' : $input;
 	}
 

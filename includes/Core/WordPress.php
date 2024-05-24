@@ -197,6 +197,7 @@ class WordPress extends Base
 		return defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST;
 	}
 
+	// @SEE: `wp_is_serving_rest_request()`/`wp_is_rest_endpoint()`
 	public static function isREST()
 	{
 		return defined( 'REST_REQUEST' ) && REST_REQUEST;
@@ -485,8 +486,10 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 			}
 		}
 
-		if ( $missing && $flush )
+		if ( $missing && $flush ) {
 			flush_rewrite_rules();
+			wp_cache_delete( 'rewrite_rules', 'options' );
+		}
 
 		return $missing;
 	}
