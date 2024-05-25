@@ -1,8 +1,8 @@
 {
+  "intelephense.environment.phpVersion": "7.4.0",
   "search.useIgnoreFiles": false,
   "search.exclude": {
     "./assets/bin": true,
-    "./assets/components": true,
     "./assets/packages": true,
     "./assets/vendor": true,
     "**/.temp": true

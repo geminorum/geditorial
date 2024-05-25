@@ -15,7 +15,6 @@ import uglify from 'gulp-uglify';
 import zip from 'gulp-zip';
 import bump from 'gulp-bump';
 import changedInPlace from 'gulp-changed-in-place';
-import githubRelease from 'gulp-github-release';
 import log from 'fancy-log';
 import rtlcss from 'rtlcss';
 import livereload from 'gulp-livereload';
@@ -67,7 +66,7 @@ const debug = /--debug/.test(process.argv.slice(2));
 const patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
 
 try {
-  env = extend(conf.env, yaml.load(readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true }));
+  env = extend(conf.env, yaml.load(readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true })); // eslint-disable-line no-unused-vars
 } catch (e) {
   log.warn('no environment.yml loaded!');
 }
@@ -298,7 +297,12 @@ task('build:clean', function (done) {
 });
 
 task('build:zip', function () {
-  return src(conf.input.ready)
+  return src(conf.input.ready, {
+    allowEmpty: true,
+    buffer: true,
+    encoding: false,
+    removeBOM: false
+  })
     .pipe(zip(pkg.name + '-' + pkg.version + '.zip'))
     .pipe(dest(conf.output.final));
 });
@@ -314,26 +318,6 @@ task('build', series(
     done();
   }
 ));
-
-task('github:package:old', function (done) {
-  if (!env.github) {
-    log.error('Error: missing required token for github');
-    return done();
-  }
-
-  const changes = parseChangelog(readFileSync(conf.root.changelog, { encoding: 'utf-8' }), { title: false });
-  const options = {
-    token: env.github,
-    tag: pkg.version,
-    notes: changes.versions[0].rawNote,
-    manifest: pkg,
-    skipIfPublished: true,
-    draft: true
-  };
-
-  return src(pkg.name + '-' + pkg.version + '.zip')
-    .pipe(githubRelease(options));
-});
 
 task('github:package', function (done) {
   const filename = pkg.name + '-' + pkg.version + '.zip';
