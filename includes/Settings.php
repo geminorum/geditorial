@@ -80,7 +80,12 @@ class Settings extends WordPress\Main
 	// FIXME: MUST DEPRICATE
 	public static function importsURL( $full = TRUE )
 	{
-		$relative = 'tools.php?page='.self::IMPORTS;
+		// NOTE: `tools.php` hard-coded for users with `edit_posts` cap!
+		if ( current_user_can( 'edit_posts' ) )
+			$relative = 'tools.php?page='.self::IMPORTS;
+
+		else
+			$relative = 'import.php?page='.self::IMPORTS;
 
 		if ( $full )
 			return get_admin_url( NULL, $relative );
