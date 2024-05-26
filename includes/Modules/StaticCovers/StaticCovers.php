@@ -213,11 +213,19 @@ class StaticCovers extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->filter( 'rest_thumbnail_data', 4, 99, FALSE, 'gnetwork' );
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
 		$this->filter_module( 'tabloid', 'view_data', 3, 20 );
 		$this->filter_module( 'papered', 'view_data', 4 );
 		$this->register_shortcode( 'post_cover_shortcode' );
 		$this->register_shortcode( 'term_cover_shortcode' );
+	}
+
+	public function setup_restapi()
+	{
+		register_rest_field( $this->posttypes(), $this->constant( 'restapi_attribute' ), [
+			'get_callback' => [ $this, 'rest_field_callback' ],
+		] );
 	}
 
 	public function setup_ajax()
@@ -708,6 +716,30 @@ class StaticCovers extends gEditorial\Module
 			return $default;
 
 		return $this->constant( 'metakey_reference_posttype' );
+	}
+
+	private function _prep_attachment_data( $url, $post_id )
+	{
+		return [
+			'url' => $url,
+			'alt' => WordPress\Post::title( $post_id ),
+		];
+	}
+
+	public function rest_field_callback( $post_array, $attr, $request, $object_type )
+	{
+		if ( ! $url = $this->_get_posttype_image( $post_array['id'] ) )
+			return [];
+
+		return $this->_prep_attachment_data( $url, $post_array['id'] );
+	}
+
+	public function rest_thumbnail_data( $data, $thumbnail_id, $post_id, $post_array )
+	{
+		if ( ! $url = $this->_get_posttype_image( $post_id ) )
+			return $data;
+
+		return $this->_prep_attachment_data( $url, $post_id );
 	}
 
 	public function pairedrest_prepped_post( $prepped, $post, $parent )
