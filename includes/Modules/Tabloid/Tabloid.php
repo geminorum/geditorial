@@ -270,11 +270,12 @@ class Tabloid extends gEditorial\Module
 	private function _cleanup_view_data( $post, $context, $data )
 	{
 		unset( $data['meta_rendered'] );
+		unset( $data['units_rendered'] );
 		unset( $data['terms_rendered'] );
 
 		unset( $data['_links'] );
 
-		unset( $data['__hooks'] );
+		unset( $data['___hooks'] );
 		unset( $data['__summaries'] );
 		unset( $data['__direction'] );
 		unset( $data['__can_debug'] );

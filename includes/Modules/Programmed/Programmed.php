@@ -239,6 +239,14 @@ class Programmed extends gEditorial\Module
 				'postal_address' => [ 'type' => 'address' ],
 				'postal_code'    => [ 'type' => 'postcode' ],
 
+				'featured_people' => [
+					'title'       => _x( 'Organizers', 'Field Title', 'geditorial-programmed' ),
+					'description' => _x( 'People Who Participate as Organizers in This Program', 'Field Description', 'geditorial-programmed' ),
+					'icon'        => 'groups',
+					'quickedit'   => TRUE,
+					'order'       => 90,
+				],
+
 				'program_code' => [
 					'title'       => _x( 'Program Code', 'Field Title', 'geditorial-programmed' ),
 					'description' => _x( 'Unique Program Code', 'Field Description', 'geditorial-programmed' ),

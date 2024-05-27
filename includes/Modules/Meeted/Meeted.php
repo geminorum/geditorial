@@ -239,6 +239,14 @@ class Meeted extends gEditorial\Module
 				'postal_address' => [ 'type' => 'address' ],
 				'postal_code'    => [ 'type' => 'postcode' ],
 
+				'featured_people' => [
+					'title'       => _x( 'Coordinators', 'Field Title', 'geditorial-meeted' ),
+					'description' => _x( 'People Who Participate as Coordinators in This Meeting', 'Field Description', 'geditorial-meeted' ),
+					'icon'        => 'groups',
+					'quickedit'   => TRUE,
+					'order'       => 90,
+				],
+
 				'meeting_code' => [
 					'title'       => _x( 'Meeting Code', 'Field Title', 'geditorial-meeted' ),
 					'description' => _x( 'Unique Meeting Code', 'Field Description', 'geditorial-meeted' ),

@@ -212,6 +212,14 @@ class Organization extends gEditorial\Module
 				'postal_address' => [ 'type' => 'address' ],
 				'postal_code'    => [ 'type' => 'postcode' ],
 
+				'featured_people' => [
+					'title'       => _x( 'Administrators', 'Field Title', 'geditorial-organization' ),
+					'description' => _x( 'People Who Participate as Administrators in This Organization', 'Field Description', 'geditorial-organization' ),
+					'icon'        => 'groups',
+					'quickedit'   => TRUE,
+					'order'       => 90,
+				],
+
 				'organization_code' => [
 					'title'       => _x( 'Organization Code', 'Field Title', 'geditorial-organization' ),
 					'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),

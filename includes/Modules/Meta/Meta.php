@@ -1570,7 +1570,7 @@ class Meta extends gEditorial\Module
 							'message' => 'deleted',
 							'field'   => $post['custom_field'],
 							'limit'   => $post['custom_field_limit'],
-							'count'   => count( $result ),
+							'count'   => $result,
 						] );
 				}
 			}
@@ -1583,7 +1583,7 @@ class Meta extends gEditorial\Module
 		$rows = WordPress\Database::getPostMetaRows( $post_meta_key, $limit );
 
 		foreach ( $rows as $row )
-			$this->import_field_raw( explode( ',', $row->meta ), $field, $row->post_id );
+			$this->import_field_raw( WordPress\Strings::getSeparated( $row->meta ), $field, $row->post_id );
 
 		return count( $rows );
 	}
@@ -1626,7 +1626,7 @@ class Meta extends gEditorial\Module
 
 		foreach ( (array) $data as $name ) {
 
-			$sanitized = $this->sanitize_posttype_field( $data, $field, $post );
+			$sanitized = $this->sanitize_posttype_field( $name, $field, $post );
 
 			if ( empty( $sanitized ) )
 				continue;
@@ -1634,7 +1634,7 @@ class Meta extends gEditorial\Module
 			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
 		}
 
-		return $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getJoined( $strings ) );
+		return $this->set_postmeta_field( $post->ID, $field['name'], implode( '|', $strings ) );
 	}
 
 	public function import_field_raw_terms( $data, $field, $post )

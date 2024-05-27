@@ -211,7 +211,7 @@ class Ortho extends gEditorial\Module
 			return;
 
 		$virastar = Scripts::registerPackage( 'virastar',
-			NULL, [], ModuleInfo::virastar_version );
+			NULL, [], ModuleInfo::VIRASTAR_VERSION );
 
 		// cleanup
 		$settings = $this->options->settings;
@@ -232,7 +232,7 @@ class Ortho extends gEditorial\Module
 			return;
 
 		$persiantools = Scripts::registerPackage( 'persiantools',
-			NULL, [], ModuleInfo::persiantools_version );
+			NULL, [], ModuleInfo::PERSIANTOOLS_VERSION );
 
 		$this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );
 

@@ -100,7 +100,7 @@ class Symposium extends gEditorial\Module
 
 				'featured_people' => [
 					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-symposium' ),
-					'description' => _x( 'Featured People in the Session', 'Field Description', 'geditorial-symposium' ),
+					'description' => _x( 'People Who Featured in This Session', 'Field Description', 'geditorial-symposium' ),
 					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 				],

@@ -239,6 +239,14 @@ class Missioned extends gEditorial\Module
 				'postal_address' => [ 'type' => 'address' ],
 				'postal_code'    => [ 'type' => 'postcode' ],
 
+				'featured_people' => [
+					'title'       => _x( 'Officers', 'Field Title', 'geditorial-missioned' ),
+					'description' => _x( 'People Who Participate as Officers in This Mission', 'Field Description', 'geditorial-missioned' ),
+					'icon'        => 'groups',
+					'quickedit'   => TRUE,
+					'order'       => 90,
+				],
+
 				'mission_code' => [
 					'title'       => _x( 'Mission Code', 'Field Title', 'geditorial-missioned' ),
 					'description' => _x( 'Unique Mission Code', 'Field Description', 'geditorial-missioned' ),

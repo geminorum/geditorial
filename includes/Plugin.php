@@ -131,7 +131,7 @@ class Plugin
 			return;
 
 		$locale = apply_filters( 'plugin_locale', L10n::locale(), static::BASE );
-		load_textdomain( static::BASE.'-admin', $path."languages/admin-{$locale}.mo" );
+		load_textdomain( static::BASE.'-admin', $path."languages/admin-{$locale}.mo", $locale );
 	}
 
 	private function define_constants()

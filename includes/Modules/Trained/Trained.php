@@ -246,6 +246,14 @@ class Trained extends gEditorial\Module
 				'postal_address' => [ 'type' => 'address' ],
 				'postal_code'    => [ 'type' => 'postcode' ],
 
+				'featured_people' => [
+					'title'       => _x( 'Instructors', 'Field Title', 'geditorial-trained' ),
+					'description' => _x( 'People Who Participate as Instructors in This Training Course', 'Field Description', 'geditorial-trained' ),
+					'icon'        => 'groups',
+					'quickedit'   => TRUE,
+					'order'       => 90,
+				],
+
 				'training_code' => [
 					'title'       => _x( 'Training Code', 'Field Title', 'geditorial-trained' ),
 					'description' => _x( 'Unique Training Code', 'Field Description', 'geditorial-trained' ),
