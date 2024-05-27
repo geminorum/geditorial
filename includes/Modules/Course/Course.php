@@ -202,6 +202,7 @@ class Course extends gEditorial\Module
 					'type'        => 'title_after',
 				],
 				'lead'              => [ 'type' => 'postbox_html' ],
+				'content_fee'       => [ 'type' => 'price' ],
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],

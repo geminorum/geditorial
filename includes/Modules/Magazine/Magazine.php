@@ -190,6 +190,7 @@ class Magazine extends gEditorial\Module
 				'action_url'   => [ 'type' => 'link' ],
 				'cover_blurb'  => [ 'type' => 'note' ],
 				'cover_price'  => [ 'type' => 'price' ],
+				'content_fee'  => [ 'type' => 'price' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],

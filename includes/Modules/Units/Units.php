@@ -249,7 +249,7 @@ class Units extends gEditorial\Module
 					// 'fields' => $fields, // not used yet!
 				];
 
-				$this->enqueue_asset_js( $asset, $screen );
+				// $this->enqueue_asset_js( $asset, $screen );
 				$this->_hook_store_metabox( $screen->post_type );
 
 			} else if ( 'edit' == $screen->base ) {
@@ -268,6 +268,8 @@ class Units extends gEditorial\Module
 		}
 	}
 
+	// TODO: optional display of column for each supported: `column_posttypes`
+	// -- with fallback to tweaks column
 	private function _edit_screen( $posttype )
 	{
 		$this->filter( 'manage_posts_columns', 2, 15 );

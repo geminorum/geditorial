@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
@@ -243,6 +244,8 @@ class StaticCovers extends gEditorial\Module
 				if ( 'post' == $screen->base ) {
 
 					$this->_hook_general_supportedbox( $screen, NULL, 'side', 'high' );
+					Scripts::enqueueThickBox();
+					Scripts::enqueueColorBox();
 
 				} else if ( 'edit' == $screen->base ) {
 
