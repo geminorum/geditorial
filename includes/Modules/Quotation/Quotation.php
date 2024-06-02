@@ -123,6 +123,12 @@ class Quotation extends gEditorial\Module
 					'icon'        => $rtl ? 'controls-skipback' : 'controls-skipforward',
 					'quickedit'   => TRUE,
 				],
+				'quotation_section' => [
+					'title'       => _x( 'Section', 'Field Title', 'geditorial-quotation' ),
+					'description' => _x( 'Source Section of the Quote', 'Field Description', 'geditorial-quotation' ),
+					'type'        => 'number',
+					'quickedit'   => TRUE,
+				],
 				'quotation_volume' => [
 					'title'       => _x( 'Volume', 'Field Title', 'geditorial-quotation' ),
 					'description' => _x( 'Source Volume of the Quote', 'Field Description', 'geditorial-quotation' ),
@@ -173,6 +179,8 @@ class Quotation extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 	}
 
 	public function current_screen( $screen )
@@ -270,5 +278,47 @@ class Quotation extends gEditorial\Module
 			$this->constant( 'main_shortcode', $tag ),
 			$this->key
 		);
+	}
+
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	{
+		switch ( $field_key ) {
+
+			case 'quotation_pagestart':
+				return sprintf(
+					/* translators: %s: page start placeholder */
+					_x( 'Starts on Page %s', 'Display', 'geditorial-quotation' ),
+					Core\Number::localize( $raw ?: $value )
+				);
+
+			case 'quotation_pageend':
+				return sprintf(
+					/* translators: %s: page end placeholder */
+					_x( 'Ends in Page %s', 'Display', 'geditorial-quotation' ),
+					Core\Number::localize( $raw ?: $value )
+				);
+
+			case 'quotation_section':
+				return sprintf(
+					/* translators: %s: section placeholder */
+					_x( 'Section %s', 'Display', 'geditorial-quotation' ),
+					Core\Number::localize( $raw ?: $value )
+				);
+
+			case 'quotation_volume':
+				return sprintf(
+					/* translators: %s: volume placeholder */
+					_x( 'Volume %s', 'Display', 'geditorial-quotation' ),
+					Core\Number::localize( $raw ?: $value )
+				);
+		}
+
+		return $value;
+	}
+
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	{
+		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
 	}
 }
