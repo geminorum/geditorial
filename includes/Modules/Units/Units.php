@@ -805,15 +805,13 @@ class Units extends gEditorial\Module
 
 			case 'total_days' :
 				return sprintf( Helper::noopedCount( trim( $raw ),
-					/* translators: %s: day count */
-					_nx_noop( '%s Day', '%s Days', 'Noop', 'geditorial-units' ) ),
+					Info::getNoop( 'days' ) ),
 					Core\Number::format( trim( $raw ) )
 				);
 
 			case 'total_hours' :
 				return sprintf( Helper::noopedCount( trim( $raw ),
-					/* translators: %s: hour count */
-					_nx_noop( '%s Hour', '%s Hours', 'Noop', 'geditorial-units' ) ),
+					Info::getNoop( 'hours' ) ),
 					Core\Number::format( trim( $raw ) )
 				);
 		}
@@ -822,34 +820,13 @@ class Units extends gEditorial\Module
 
 			case 'member':
 			case 'person':
-				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( $field_args['type'] ) ),
-					Core\Number::format( trim( $raw ) ) );
-
 			case 'gram':
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					/* translators: %s: hour count */
-					_nx_noop( '%s Gram', '%s Grams', 'Noop', 'geditorial-units' ) ),
-					Core\Number::format( trim( $raw ) )
-				);
-
 			case 'kilogram':
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					/* translators: %s: hour count */
-					_nx_noop( '%s Kilogram', '%s Kilograms', 'Noop', 'geditorial-units' ) ),
-					Core\Number::format( trim( $raw ) )
-				);
-
 			case 'milimeter':
-					return sprintf( Helper::noopedCount( trim( $raw ),
-						/* translators: %s: hour count */
-						_nx_noop( '%s Milimeter', '%s Milimeters', 'Noop', 'geditorial-units' ) ),
-						Core\Number::format( trim( $raw ) )
-					);
-
 			case 'centimeter':
+
 				return sprintf( Helper::noopedCount( trim( $raw ),
-					/* translators: %s: hour count */
-					_nx_noop( '%s Centimeter', '%s Centimeters', 'Noop', 'geditorial-units' ) ),
+					Info::getNoop( $field_args['type'] ) ),
 					Core\Number::format( trim( $raw ) )
 				);
 		}

@@ -710,10 +710,6 @@ class Book extends gEditorial\Module
 			case 'publication_edition': return sprintf( _x( '%s Edition', 'Display', 'geditorial-book' ), Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) ) );
 			/* translators: %s: print placeholder */
 			case 'publication_print'  : return sprintf( _x( '%s Print', 'Display', 'geditorial-book' ), Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) ) );
-			/* translators: %s: pages count placeholder */
-			case 'total_pages'        : return WordPress\Strings::getCounted( $raw ?: $value, _x( '%s Pages', 'Display', 'geditorial-book' ) );
-			/* translators: %s: volumes count placeholder */
-			case 'total_volumes'      : return WordPress\Strings::getCounted( $raw ?: $value, _x( '%s Volumes', 'Display', 'geditorial-book' ) );
 		}
 
 		return $value;
@@ -1121,14 +1117,17 @@ class Book extends gEditorial\Module
 			case 'publication_print': return Core\Number::localize( Core\Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
 			case 'collection': return Core\HTML::link( $raw, Core\WordPress::getSearchLink( $raw ) );
 
-			/* translators: %s: total pages */
-			case 'total_pages': return sprintf( _nx( '%s Page', '%s Pages', $raw, 'Noop', 'geditorial-book' ), Core\Number::format( $raw ) );
+			case 'total_pages':
+				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'page' ) ),
+					Core\Number::format( trim( $raw ) ) );
 
-			/* translators: %s: total volumes */
-			case 'total_volumes': return sprintf( _nx( '%s Volume', '%s Volumes', $raw, 'Noop', 'geditorial-book' ), Core\Number::format( $raw ) );
+			case 'total_volumes':
+				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'volume' ) ),
+					Core\Number::format( trim( $raw ) ) );
 
-			/* translators: %s: total discs */
-			case 'total_discs': return sprintf( _nx( '%s Disc', '%s Discs', $raw, 'Noop', 'geditorial-book' ), Core\Number::format( $raw ) );
+			case 'total_discs':
+				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'disc' ) ),
+					Core\Number::format( trim( $raw ) ) );
 		}
 
 		return $meta;

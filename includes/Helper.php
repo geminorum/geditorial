@@ -263,6 +263,26 @@ class Helper extends WordPress\Main
 			case 'total_hours':
 				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'hour' ) ),
 					Core\Number::format( $raw ?: $value ) );
+
+			case 'items':
+			case 'total_items':
+				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'item' ) ),
+					Core\Number::format( $raw ?: $value ) );
+
+			case 'pages':
+			case 'total_pages':
+				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'page' ) ),
+					Core\Number::format( $raw ?: $value ) );
+
+			case 'volumes':
+			case 'total_volumes':
+				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'volume' ) ),
+					Core\Number::format( $raw ?: $value ) );
+
+			case 'discs':
+			case 'total_discs':
+				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'disc' ) ),
+					Core\Number::format( $raw ?: $value ) );
 		}
 
 		if ( ! empty( $field['type'] ) ) {

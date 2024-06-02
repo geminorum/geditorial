@@ -298,6 +298,44 @@ class Info extends WordPress\Main
 			case 'years':
 				/* translators: %s: year count */
 				return _nx_noop( '%s Year', '%s Years', 'Info: Noop', 'geditorial' );
+
+			case 'page':
+			case 'pages':
+				/* translators: %s: page count */
+				return _nx_noop( '%s Page', '%s Pages', 'Info: Noop', 'geditorial' );
+
+			case 'volume':
+			case 'volumes':
+				/* translators: %s: volume count */
+				return _nx_noop( '%s Volume', '%s Volumes', 'Info: Noop', 'geditorial' );
+
+			case 'disc':
+			case 'discs':
+				/* translators: %s: disc count */
+				return _nx_noop( '%s Disc', '%s Discs', 'Info: Noop', 'geditorial' );
+
+			case 'gram':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Gram', '%s Grams', 'Info: Noop', 'geditorial' );
+
+			case 'kg':
+			case 'kilogram':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Kilogram', '%s Kilograms', 'Info: Noop', 'geditorial' );
+
+			case 'mm':
+			case 'milimeter':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Millimetre', '%s Millimetres', 'Info: Noop', 'geditorial' );
+
+			case 'cm':
+			case 'centimeter':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Centimeter', '%s Centimeters', 'Info: Noop', 'geditorial' );
+
+			case 'meter':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Meter', '%s Meters', 'Info: Noop', 'geditorial' );
 		}
 
 		return $fallback;
