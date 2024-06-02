@@ -127,6 +127,11 @@ class Strings extends Core\Base
 		return $empty;
 	}
 
+	public static function getPiped( $items, $before = '', $after = '', $empty = '', $separator = NULL )
+	{
+		return self::getJoined( $items, $before, $after, $empty, $separator ?? '|' );
+	}
+
 	public static function getCounted( $count, $template = '%s' )
 	{
 		if ( TRUE === $template )

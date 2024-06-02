@@ -984,7 +984,7 @@ class Units extends gEditorial\Module
 			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
 		}
 
-		return $this->set_postmeta_field( $post->ID, $field['name'], implode( '|', $strings ) );
+		return $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getPiped( $strings ) );
 	}
 
 	public function import_field_raw_terms( $data, $field, $post )

@@ -129,7 +129,7 @@ trait BulkExports
 				$row[] = ( empty( $saved[$meta][0] ) ? '' : trim( $saved[$meta][0] ) ) ?: '';
 
 			foreach ( $taxes as $tax )
-				$row[] = implode( '|', WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
+				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
 
 			$data[] = $row;
 		}
