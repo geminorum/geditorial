@@ -99,6 +99,18 @@
     return typeof input === 'string' && !Number.isNaN(input);
   }
 
+  /**
+   * Removes the given string from the beginning of a string.
+   * @source https://stackoverflow.com/a/70518537
+   *
+   * @param {String} input
+   * @param {String} prefix
+   * @returns {String}
+   */
+  function removePrefix (input, prefix) {
+    return input.startsWith(prefix) ? input.slice(prefix.length) : input;
+  }
+
   // function toPersian (n) {
   //   const p = '۰'.charCodeAt(0);
   //   return n.toString().replace(/\d+/g, function (m) {
@@ -298,7 +310,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `tel`
       } catch (e) {}
       $el.on('change', function () {
-        const val = toEnglish($el.val()).replace(/[^\d+]/g, '').trim();
+        const val = removePrefix(toEnglish($el.val()), 'tel:').replace(/[^\d+]/g, '').trim();
         $el.val(val);
         if (validatePhone(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
