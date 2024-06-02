@@ -874,7 +874,7 @@ class ShortCode extends WordPress\Main
 			$query['orderby'] = $args['orderby'];
 
 		if ( 'on' == $args['future'] )
-			$query['post_status'] = [ 'publish', 'future', 'draft' ];
+			$query['post_status'] = [ 'publish', 'future' ];
 		else
 			$query['post_status'] = [ 'publish' ];
 
@@ -1155,7 +1155,7 @@ class ShortCode extends WordPress\Main
 			$query_args['orderby'] = $args['orderby'];
 
 		if ( 'on' == $args['future'] )
-			$query_args['post_status'] = [ 'publish', 'future', 'draft' ];
+			$query_args['post_status'] = [ 'publish', 'future' ];
 		else
 			$query_args['post_status'] = [ 'publish' ];
 
@@ -1377,7 +1377,7 @@ class ShortCode extends WordPress\Main
 		$args['title'] = self::postTitle( $post, $args );
 
 		if ( 'on' == $args['future'] )
-			$post_status = [ 'publish', 'future', 'draft' ];
+			$post_status = [ 'publish', 'future' ];
 		else
 			$post_status = [ 'publish' ];
 

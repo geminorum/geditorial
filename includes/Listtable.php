@@ -172,7 +172,7 @@ SQL;
 			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_all' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
-			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
+			'post_status'      => WordPress\Status::acceptable( $posttype, 'dropdown' ),
 			'value_field'      => 'post_name',
 			'walker'           => new Misc\WalkerPageDropdown(),
 		] );

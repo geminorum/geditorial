@@ -119,10 +119,11 @@ class Modified extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
+		$type = $this->posttypes();
 		$args = [
 			'orderby'     => 'modified',
-			'post_type'   => $this->posttypes(),
-			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
+			'post_type'   => $type,
+			'post_status' => WordPress\Status::acceptable( $type ),
 
 			'posts_per_page'      => $this->get_setting( 'dashboard_count', 10 ),
 			'ignore_sticky_posts' => TRUE,

@@ -708,7 +708,7 @@ class WasBorn extends gEditorial\Module
 
 				$args = [
 					'post_type'              => $posttype,
-					'post_status'            => [ 'publish', 'future', 'draft', 'pending' ],
+					'post_status'            => WordPress\Status::acceptable( $posttype ),
 					'meta_query'             => [ $group['meta'] ],
 					'orderby'                => 'none',
 					'fields'                 => 'ids',

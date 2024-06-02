@@ -453,12 +453,14 @@ class MetaBox extends WordPress\Main
 		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ) )
 			return '';
 
+		$posttype = is_null( $posttypes ) ? 'any' : (array) $posttypes;
+
 		$args = [
 			'posts_per_page' => -1,
 			'orderby'        => [ 'menu_order', 'date' ],
 			'order'          => 'ASC',
-			'post_type'      => is_null( $posttypes ) ? 'any' : (array) $posttypes,
-			'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
+			'post_type'      => $posttype,
+			'post_status'    => WordPress\Status::acceptable( $posttype ),
 			'post__not_in'   => $exclude,
 			'tax_query'      => [ [
 				'taxonomy' => $taxonomy,
@@ -592,7 +594,7 @@ class MetaBox extends WordPress\Main
 		$args = [
 			'post_type'    => $posttype,
 			'post__not_in' => $exclude,
-			'post_status'  => [ 'publish', 'future', 'draft', 'pending' ],
+			'post_status'  => WordPress\Status::acceptable( $posttype ),
 			'orderby'      => 'menu_order',
 			'order'        => 'desc',
 
@@ -652,7 +654,7 @@ class MetaBox extends WordPress\Main
 			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_select' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
-			'post_status'      => [ 'publish', 'future', 'draft', 'pending' ],
+			'post_status'      => WordPress\Status::acceptable( $posttype, 'dropdown' ),
 			'value_field'      => 'post_name',
 			'exclude'          => $exclude,
 			'echo'             => 0,
@@ -719,7 +721,7 @@ class MetaBox extends WordPress\Main
 		echo Core\HTML::wrap( $label.$html, 'field-wrap -select' );
 	}
 
-	public static function fieldPostParent( $post, $check = TRUE, $name = NULL, $posttype = NULL, $statuses = [ 'publish', 'future', 'draft' ] )
+	public static function fieldPostParent( $post, $check = TRUE, $name = NULL, $posttype = NULL, $statuses = NULL )
 	{
 		// allows for a parent of diffrent type
 		if ( is_null( $posttype ) )
@@ -738,7 +740,7 @@ class MetaBox extends WordPress\Main
 			'show_option_none'  => Helper::getPostTypeLabel( $object, 'show_option_parent' ),
 			'sort_column'       => 'menu_order, post_title',
 			'sort_order'        => 'desc',
-			'post_status'       => $statuses,
+			'post_status'       => $statuses ?? WordPress\Status::acceptable( $posttype, 'dropdown', [ 'pending' ] ),
 			'exclude_tree'      => $post->ID,
 			'echo'              => 0,
 			'walker'            => new Misc\WalkerPageDropdown(),

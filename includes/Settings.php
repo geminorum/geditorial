@@ -2474,7 +2474,7 @@ class Settings extends WordPress\Main
 					'exclude'     => implode( ',', $exclude ),
 					'sort_column' => 'menu_order',
 					'sort_order'  => 'asc',
-					'post_status' => [ 'publish', 'future', 'draft' ],
+					'post_status' => WordPress\Status::acceptable( $args['values'], 'dropdown', [ 'pending' ] ),
 				], $args['extra'] );
 
 				$pages = get_pages( $query );

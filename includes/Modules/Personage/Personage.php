@@ -898,11 +898,12 @@ class Personage extends gEditorial\Module
 		if ( ! array_key_exists( $key, $row ) )
 			return $discovered;
 
+		$type   = $this->constant( 'primary_posttype' );
 		$search = WordPress\Post::getByTitle(
 			Core\Text::trim( $row[$key] ),   // FIXME: sanaitze!
-			$this->constant( 'primary_posttype' ),
+			$type,
 			'ids',
-			[ 'publish', 'future', 'draft', 'pending' ]
+			WordPress\Status::acceptable( $type, 'search' ),
 		);
 
 		if ( count( $search ) )

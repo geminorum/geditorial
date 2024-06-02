@@ -239,7 +239,7 @@ class Audit extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		if ( ! in_array( $post->post_status, [ 'publish', 'future', 'draft', 'pending' ], TRUE ) )
+		if ( ! in_array( $post->post_status, WordPress\Status::acceptable( $post->post_type, 'audit' ), TRUE ) )
 			return;
 
 		if ( FALSE !== $this->_do_auto_audit_post( $post, $update ) )
@@ -930,9 +930,12 @@ class Audit extends gEditorial\Module
 			default: return FALSE;
 		}
 
+		if ( is_null( $posttypes ) )
+			$posttypes = $this->posttypes();
+
 		$args = [
-			'post_type'   => $posttypes ?: $this->posttypes(),
-			'post_status' => [ 'publish', 'future', 'draft', 'pending' ],
+			'post_type'   => $posttypes,
+			'post_status' => WordPress\Status::acceptable( $posttypes ),
 
 			'orderby' => 'none',
 			'fields'  => 'ids',

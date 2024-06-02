@@ -70,7 +70,7 @@ class Tablelist extends WordPress\Main
 			'orderby'          => self::orderby( 'ID' ),
 			'order'            => self::order( 'DESC' ),
 			'post_type'        => $posttypes, // 'any',
-			'post_status'      => 'any', // [ 'publish', 'future', 'draft', 'pending' ],
+			'post_status'      => 'any', // WordPress\Status::acceptable( $posttypes ),
 			'suppress_filters' => TRUE,
 		], $atts );
 

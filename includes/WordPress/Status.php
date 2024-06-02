@@ -76,4 +76,32 @@ class Status extends Core\Base
 
 		return is_post_status_viewable( $status );
 	}
+
+	/**
+	 * Retrieves filtered post statuses for given posttypes.
+	 *
+	 * @param  string|array $posttypes
+	 * @param  string       $context
+	 * @param  null|array   $excludes
+	 * @return array        $statuses
+	 */
+	public static function acceptable( $posttypes = 'any', $context = 'query', $excludes = NULL )
+	{
+		if ( is_null( $excludes ) )
+			$excludes = [];
+
+		$statuses = [
+			'publish',
+			'future',
+			'pending',
+			'draft',
+		];
+
+		return apply_filters( 'geditorial_status_acceptable',
+			array_diff_key( $statuses, (array) $excludes ),
+			(array) $posttypes,
+			$context,
+			$excludes
+		);
+	}
 }

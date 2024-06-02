@@ -121,7 +121,7 @@ trait QuickPosts
 			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ), $object->labels->singular_name );
 
 			Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
-				'post_status' => [ 'publish', 'future', 'draft' ],
+				'post_status' => WordPress\Status::acceptable( $posttype, 'recent', [ 'pending' ] ),
 			] );
 
 		echo '</div>';

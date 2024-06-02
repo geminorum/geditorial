@@ -374,12 +374,15 @@ trait PairedCore
 		if ( ! $term || is_wp_error( $term ) )
 			return FALSE;
 
+		if ( is_null($posttypes ) )
+			$posttypes = $this->posttypes();
+
 		$args = [
 			'posts_per_page' => -1,
 			'orderby'        => [ 'menu_order', 'date' ], // TODO: custom order
 			'order'          => 'ASC',
-			'post_type'      => $posttypes ?? $this->posttypes(),
-			'post_status'    => [ 'publish', 'future', 'pending', 'draft' ],
+			'post_type'      => $posttypes,
+			'post_status'    => WordPress\Status::acceptable( $posttypes ),
 			'post__not_in'   => $exclude,
 			'tax_query'      => [ [
 				'taxonomy' => $this->constant( $constants[1] ),
