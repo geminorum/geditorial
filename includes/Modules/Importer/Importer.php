@@ -125,7 +125,7 @@ class Importer extends gEditorial\Module
 		if ( 'edit' == $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( ! self::req( 's' ) && $this->cuc( 'imports' ) )
+			if ( ! self::req( 's' ) && WordPress\PostType::can( $screen->post_type, 'edit_others_posts' ) )
 				$this->enqueue_asset_js( [
 					'strings' => $this->get_strings( $screen->base, 'js' ),
 					'link'    => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ),
@@ -138,8 +138,8 @@ class Importer extends gEditorial\Module
 	{
 		global $submenu;
 
-		if ( $this->cuc( 'imports' ) )
-			foreach ( $this->posttypes() as $posttype )
+		foreach ( $this->posttypes() as $posttype )
+			if ( WordPress\PostType::can( $posttype, 'edit_others_posts' ) )
 				$submenu[('post' == $posttype ? 'edit.php' : 'edit.php?post_type='.$posttype)][] = [
 					Helper::getPostTypeLabel( $posttype, 'import_items', FALSE, _x( 'Import', 'Sub-Menu Menu Title', 'geditorial-importer' ) ),
 					'read', // already checked
