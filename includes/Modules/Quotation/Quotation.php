@@ -18,11 +18,15 @@ class Quotation extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'quotation',
-			'title'  => _x( 'Quotation', 'Modules: Quotation', 'geditorial-admin' ),
-			'desc'   => _x( 'Snippets from Content', 'Modules: Quotation', 'geditorial-admin' ),
-			'icon'   => 'format-quote',
-			'access' => 'beta',
+			'name'     => 'quotation',
+			'title'    => _x( 'Quotation', 'Modules: Quotation', 'geditorial-admin' ),
+			'desc'     => _x( 'Snippets from Content', 'Modules: Quotation', 'geditorial-admin' ),
+			'icon'     => 'format-quote',
+			'access'   => 'beta',
+			'keywords' => [
+				'quote',
+				'cptmodule',
+			],
 		];
 	}
 
@@ -42,7 +46,7 @@ class Quotation extends gEditorial\Module
 					'comments',
 					'custom-fields',
 					'editorial-roles',
-				]  ),
+				] ),
 			],
 		];
 	}

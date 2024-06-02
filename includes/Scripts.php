@@ -267,7 +267,7 @@ class Scripts extends WordPress\Main
 		$handle = static::BASE.'-vuejs';
 
 		$url = Core\WordPress::isDev()
-			? 'https://unpkg.com/vue@next'
+			? 'https://unpkg.com/vue@'.$ver.'/dist/vue.global.js'
 			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.global.min.js';
 
 		if ( $enqueue )

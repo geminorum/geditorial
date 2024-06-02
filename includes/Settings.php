@@ -207,6 +207,7 @@ class Settings extends WordPress\Main
 			'editor'          => _x( 'Editor', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 			'excerpt'         => _x( 'Excerpt', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 			'author'          => _x( 'Author', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'autosave'        => _x( 'Auto-Save', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 			'thumbnail'       => _x( 'Thumbnail', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 			'comments'        => _x( 'Comments', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 			'trackbacks'      => _x( 'Trackbacks', 'Settings: Option: PostType Support', 'geditorial-admin' ),

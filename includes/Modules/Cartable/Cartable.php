@@ -241,7 +241,7 @@ class Cartable extends gEditorial\Module
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
 				'assign_terms' => 'assign_'.$this->constant( 'type_taxonomy' ),
-			]  );
+			] );
 
 			$this->support_types = TRUE;
 		}

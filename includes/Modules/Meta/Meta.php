@@ -1214,11 +1214,11 @@ class Meta extends gEditorial\Module
 
 				return Datetime::prepDateOfBirth( trim( $raw ) );
 
-			case 'days' :
+			case 'days':
 				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'day' ) ),
 					Core\Number::format( trim( $raw ) ) );
 
-			case 'hours' :
+			case 'hours':
 				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'hour' ) ),
 					Core\Number::format( trim( $raw ) ) );
 		}

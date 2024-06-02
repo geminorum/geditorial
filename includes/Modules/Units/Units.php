@@ -803,13 +803,13 @@ class Units extends gEditorial\Module
 	{
 		switch ( $field ) {
 
-			case 'total_days' :
+			case 'total_days':
 				return sprintf( Helper::noopedCount( trim( $raw ),
 					Info::getNoop( 'days' ) ),
 					Core\Number::format( trim( $raw ) )
 				);
 
-			case 'total_hours' :
+			case 'total_hours':
 				return sprintf( Helper::noopedCount( trim( $raw ),
 					Info::getNoop( 'hours' ) ),
 					Core\Number::format( trim( $raw ) )

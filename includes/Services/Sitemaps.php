@@ -33,7 +33,7 @@ class Sitemaps extends WordPress\Main
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return $args;
 
-		if ( ! empty ( $object->{self::VIEWABLE_TAXONOMY_PROP} ) )
+		if ( ! empty( $object->{self::VIEWABLE_TAXONOMY_PROP} ) )
 			$args['hide_empty'] = FALSE;
 
 		return $args;

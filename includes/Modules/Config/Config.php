@@ -701,7 +701,8 @@ class Config extends gEditorial\Module
 
 			$enabled = gEditorial()->enabled( $module->name, FALSE );
 
-			echo '<div data-module="'.$module->name.'" class="module '
+			echo '<div id="wrap-module-'.$module->name.'" '
+				.'data-module="'.$module->name.'" class="module '
 				.( $enabled ? '-enabled' : '-disabled' ).'">';
 
 			if ( $module->icon )
