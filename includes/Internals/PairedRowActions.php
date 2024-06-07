@@ -243,4 +243,69 @@ trait PairedRowActions
 
 		return TRUE;
 	}
+
+	protected function pairedrowactions__hook_for_supported_posttypes( $screen, $cap_check = NULL )
+	{
+		if ( ! $this->get_setting( 'admin_bulkactions' ) )
+			return;
+
+		if ( FALSE === $cap_check )
+			return;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return;
+
+		if ( TRUE !== $cap_check && ! WordPress\PostType::can( $this->constant( $constants[0] ), is_null( $cap_check ) ? 'edit_posts' : $cap_check ) )
+			return;
+
+		add_filter( 'bulk_actions-'.$screen->id,
+			function ( $actions ) use ( $constants ) {
+				return array_merge( $actions, [
+
+					// bulk action to strip all paired terms fro selected supported posts
+					$this->classs( 'do_abandon' ) => sprintf(
+						/* translators: %s: count */
+						_x( 'Abandon All %s', 'Internal: PairedRowAction: Action', 'geditorial-admin' ),
+						$this->get_posttype_label( $constants[0] )
+					)
+				] );
+			} );
+
+		add_filter( 'handle_bulk_actions-'.$screen->id,
+			function ( $redirect_to, $doaction, $post_ids ) use ( $constants ) {
+
+				if ( $this->classs( 'do_abandon' ) !== $doaction )
+					return $redirect_to;
+
+				$count  = 0;
+				$paired = $this->constant( $constants[1] );
+
+				foreach ( $post_ids as $post_id ) {
+
+					if ( ! current_user_can( 'edit_post', (int) $post_id ) )
+						continue;
+
+					$result = wp_set_object_terms( (int) $post_id, NULL, $paired );
+
+					if ( ! is_wp_error( $result ) )
+						$count++;
+				}
+
+				return add_query_arg( $this->hook( 'processed' ), $count, $redirect_to );
+
+			}, 10, 3 );
+
+		add_action( 'admin_notices',
+			function () {
+				$hook = $this->hook( 'processed' );
+
+				if ( ! $count = self::req( $hook ) )
+					return;
+
+				$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
+
+				/* translators: %s: count */
+				echo Core\HTML::success( sprintf( _x( '%s items(s) processed!', 'Message', 'geditorial-admin' ), Core\Number::format( $count ) ) );
+			} );
+	}
 }

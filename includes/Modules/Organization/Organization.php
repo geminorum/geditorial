@@ -73,6 +73,7 @@ class Organization extends gEditorial\Module
 				'reports_roles' => [ NULL, $roles ],
 			],
 			'_editlist' => [
+				'admin_bulkactions',
 				'admin_ordering',
 				'assign_default_term',
 			],
@@ -411,6 +412,7 @@ class Organization extends gEditorial\Module
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->pairedimports__hook_append_import_button( $screen->post_type );
+				$this->pairedrowactions__hook_for_supported_posttypes( $screen );
 				$this->paired__hook_tweaks_column( $screen->post_type, 8 );
 				$this->paired__hook_screen_restrictposts( FALSE, 9 );
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
