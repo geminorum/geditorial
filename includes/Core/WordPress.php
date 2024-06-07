@@ -13,8 +13,8 @@ class WordPress extends Base
 			return;
 
 		// ensure path to this file is via main wp plugin path
-		// $wp_path_to_this_file = preg_replace('/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__);
-		// $plugin = plugin_basename(trim($wp_path_to_this_file));
+		// $wp_path_to_this_file = preg_replace( '/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__ );
+		// $plugin = plugin_basename( trim( $wp_path_to_this_file ) );
 
 		$active = get_option( 'active_plugins' );
 
