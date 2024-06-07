@@ -357,4 +357,38 @@ class Info extends WordPress\Main
 			'-info',
 		] );
 	}
+
+	public static function getPosttypePropTitle( $prop, $context = NULL )
+	{
+		$title = '';
+
+		switch ( $prop ) {
+			case 'ID'                   : $title = _x( 'ID', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_author'          : $title = _x( 'Author', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_date'            : $title = _x( 'Date', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_date_gmt'        : $title = _x( 'Date (GMT)', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_content'         : $title = _x( 'Content', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_title'           : $title = _x( 'Title', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_excerpt'         : $title = _x( 'Excerpt', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_status'          : $title = _x( 'Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'comment_status'       : $title = _x( 'Comment Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'ping_status'          : $title = _x( 'Ping Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_password'        : $title = _x( 'Password', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_name'            : $title = _x( 'Slug', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'to_ping'              : $title = _x( 'Ping', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'pinged'               : $title = _x( 'Pinged', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_modified'        : $title = _x( 'Modified', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_modified_gmt'    : $title = _x( 'Modified (GMT)', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_content_filtered': $title = _x( 'Content Filtered', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_parent'          : $title = _x( 'Parent ID', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'guid'                 : $title = _x( 'GUID', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'menu_order'           : $title = _x( 'Order', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_type'            : $title = _x( 'Type', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_mime_type'       : $title = _x( 'Mime-Type', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'comment_count'        : $title = _x( 'Comment Count', 'Info: Posttype Prop Title', 'geditorial' ); break;
+
+		}
+
+		return apply_filters( static::BASE.'_posttype_prop_title', $title, $prop, $context );
+	}
 }
