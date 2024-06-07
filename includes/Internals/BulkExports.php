@@ -4,6 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
@@ -24,9 +26,9 @@ trait BulkExports
 			);
 
 			$html.= Core\HTML::tag( 'a', [
-				'href'  => $this->exports_get_type_download_link( $post->ID, $type, $context, $type_args['target'] ),
+				'href'  => $this->exports_get_type_download_link( $post->ID, $type, $context, $type_args['target'], $type_args['format'] ),
 				'class' => [ 'button', 'button-small', '-button', '-button-icon', '-exportbutton', '-button-download' ],
-				'title' => _x( 'Download Exported CSV File', 'Internal: Exports: Button Title', 'geditorial-admin' ),
+				'title' => _x( 'Click to Download the Generated File', 'Internal: Exports: Button Title', 'geditorial-admin' ),
 			], $label );
 		}
 
@@ -39,23 +41,26 @@ trait BulkExports
 			'simple'   => [
 				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
+				'format' => 'xlsx',
 			],
 
 			'advanced' => [
 				'title'  => _x( 'Advanced', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
+				'format' => 'xlsx',
 			],
 
 			'full' => [
 				'title'  => _x( 'Full', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
+				'format' => 'csv',
 			],
 		];
 
 		return $this->filters( 'export_types', $types, $context );
 	}
 
-	protected function exports_get_type_download_link( $reference, $type, $context, $target = 'default', $extra = [] )
+	protected function exports_get_type_download_link( $reference, $type, $context, $target = 'default', $format = 'xlsx', $extra = [] )
 	{
 		return add_query_arg( array_merge( [
 			'action'  => $this->classs( 'exports' ),
@@ -63,6 +68,7 @@ trait BulkExports
 			'target'  => $target,
 			'type'    => $type,
 			'context' => $context,
+			'format'  => $format,
 		], $extra ), get_admin_url() );
 	}
 
@@ -76,33 +82,33 @@ trait BulkExports
 		$target    = self::req( 'target', 'default' );
 		$type      = self::req( 'type', 'simple' );
 		$context   = self::req( 'context', 'default' );
+		$format    = self::req( 'format', 'xlsx' );
 
-		if ( FALSE !== ( $data = $this->exports_get_export_data( $reference, $target, $type, $context ) ) )
-			Core\Text::download( $data, Core\File::prepName( $this->exports_get_export_filename( $reference, $target, $type, $context ).'.csv' ) );
+		if ( FALSE !== ( $data = $this->exports_get_export_data( $reference, $target, $type, $context, $format ) ) )
+			Core\Text::download( $data, Core\File::prepName( $this->exports_get_export_filename( $reference, $target, $type, $context, $format ) ) );
 
 		Core\WordPress::redirectReferer( 'wrong' );
 	}
 
-	protected function exports_get_export_filename( $reference, $target, $type, $context )
+	protected function exports_get_export_filename( $reference, $target, $type, $context, $format )
 	{
 		if ( ! $post = WordPress\Post::get( $reference ) )
 			return sprintf( '%s-%s', $context, $type );
 
-		return vsprintf( '%s-%s-%s', [
+		return vsprintf( '%s-%s-%s.%s', [
 			$post->post_name ?: $post->post_title,
 			$context,
 			$type,
+			in_array( $format, [
+				'csv',
+				'xlsx',
+			], TRUE ) ? $format : 'txt',
 		] );
 	}
 
-	protected function exports_prep_posts_for_csv_export( $posts, $props, $fields = [], $metas = [], $taxes = [] )
+	protected function exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields = [], $metas = [], $taxes = [], $format = 'xlsx' )
 	{
-		$data  = [ array_merge(
-			$props,
-			Core\Arraay::prefixValues( $fields, 'field__' ),
-			Core\Arraay::prefixValues( $metas, 'meta__' ),
-			Core\Arraay::prefixValues( $taxes, 'taxonomy__' )
-		) ];
+		$data = [];
 
 		foreach ( $posts as $post ) {
 
@@ -134,11 +140,44 @@ trait BulkExports
 			$data[] = $row;
 		}
 
-		return Core\Text::toCSV( $data );
+		switch ( $format ) {
+
+			case 'csv':
+
+				$headers = array_merge(
+					$props,
+					Core\Arraay::prefixValues( $fields, 'field__' ),
+					Core\Arraay::prefixValues( $metas, 'meta__' ),
+					Core\Arraay::prefixValues( $taxes, 'taxonomy__' )
+				);
+
+
+				return Core\Text::toCSV( [ $headers ] + $data );
+
+			case 'xlsx':
+
+				$headers = [];
+
+				foreach ( $props as $prop )
+					$headers[] = Info::getPosttypePropTitle( $prop, 'export' ) ?: $prop;
+
+				foreach ( $fields as $field )
+					$headers[] = Services\PostTypeFields::isAvailable( $field, $posttypes[0], 'meta' )['title'];
+
+				foreach ( $metas as $meta )
+					$headers[] = $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
+
+				foreach ( $taxes as $taxonomy )
+					$headers[] = Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy );
+
+				return Helper::generateXLSX( $data, $headers, WordPress\Post::title( $reference, NULL, FALSE ) );
+		}
+
+		return $data;
 	}
 
 	// TODO: export target: `paired_by_term`
-	protected function exports_get_export_data( $reference, $target, $type, $context )
+	protected function exports_get_export_data( $reference, $target, $type, $context, $format )
 	{
 		$data = FALSE;
 
@@ -175,19 +214,19 @@ trait BulkExports
 
 				// TODO: support field meta fro paired
 
-				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context );
-				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context );
-				$metas  = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context );
-				$taxes  = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context );
-				$data   = $this->exports_prep_posts_for_csv_export( $posts, $props, $fields, $metas, $taxes );
+				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
+				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
+				$metas  = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
+				$taxes  = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
+				$data   = $this->exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields, $metas, $taxes, $format );
 
 				break;
 		}
 
-		return $this->filters( 'export_get_data', $data, $reference, $target, $type, $context );
+		return $this->filters( 'export_get_data', $data, $reference, $target, $type, $context, $format );
 	}
 
-	protected function exports_get_post_props( $posttypes, $reference, $target, $type, $context )
+	protected function exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format )
 	{
 		$list = [
 			'ID',
@@ -226,10 +265,10 @@ trait BulkExports
 				break;
 		}
 
-		return $this->filters( 'export_post_props', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+		return $this->filters( 'export_post_props', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
 	}
 
-	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context )
+	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format )
 	{
 		$list = [];
 
@@ -284,10 +323,10 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_fields', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+		return $this->filters( 'export_post_fields', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
 	}
 
-	protected function exports_get_post_metas( $posttypes, $reference, $target, $type, $context )
+	protected function exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format )
 	{
 		$list = [];
 
@@ -311,10 +350,10 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+		return $this->filters( 'export_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
 	}
 
-	protected function exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context )
+	protected function exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format )
 	{
 		$list = [];
 
@@ -344,6 +383,6 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_taxonomies', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context );
+		return $this->filters( 'export_post_taxonomies', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
 	}
 }
