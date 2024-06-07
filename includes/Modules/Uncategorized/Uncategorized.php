@@ -137,7 +137,7 @@ class Uncategorized extends gEditorial\Module
 
 		foreach ( $post_ids as $post_id ) {
 
-			if ( ! current_user_can( 'edit_post', $post_id ) )
+			if ( ! current_user_can( 'edit_post', (int) $post_id ) )
 				continue;
 
 			if ( call_user_func_array( $callback, [ $post_id, $taxonomies ] ) )

@@ -845,7 +845,7 @@ class Units extends gEditorial\Module
 				case 'european_shoe':
 
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
-						? $this->strings['values'][$field['type']][($raw ?: $value)]
+						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
 					/* translators: %s: shoe size placeholder */
@@ -854,7 +854,7 @@ class Units extends gEditorial\Module
 				case 'international_shirt':
 
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
-						? $this->strings['values'][$field['type']][($raw ?: $value)]
+						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
 					/* translators: %s: shoe size placeholder */
@@ -863,7 +863,7 @@ class Units extends gEditorial\Module
 				case 'international_pants':
 
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
-						? $this->strings['values'][$field['type']][($raw ?: $value)]
+						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
 					/* translators: %s: shoe size placeholder */

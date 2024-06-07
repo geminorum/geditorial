@@ -1345,6 +1345,8 @@ class Settings extends WordPress\Main
 		}
 	}
 
+	// `processed`
+	// `cleared`
 	public static function messages()
 	{
 		return [

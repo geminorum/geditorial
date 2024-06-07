@@ -45,7 +45,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 	}
 
 	// FIXME: back-compat
-	global $gEditorial;
+	// global $gEditorial;
 
 	$gEditorial = gEditorial();
 

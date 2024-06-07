@@ -25,6 +25,8 @@ class Collect extends gEditorial\Module
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 
+	// FIXME: rename to `Collecting`/`Collective`
+
 	public static function module()
 	{
 		return [

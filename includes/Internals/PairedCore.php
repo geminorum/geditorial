@@ -374,7 +374,7 @@ trait PairedCore
 		if ( ! $term || is_wp_error( $term ) )
 			return FALSE;
 
-		if ( is_null($posttypes ) )
+		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
 		$args = [

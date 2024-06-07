@@ -782,6 +782,7 @@ class StaticCovers extends gEditorial\Module
 
 		$data['source']['covers'] = Core\Arraay::prepString( $this->_get_posttype_images( $post ) );
 		$data['source']['rendered']['coverurl'] = isset( $data['source']['covers'][0] ) ? $data['source']['covers'][0] : '';
+		$data['source']['rendered']['coverimg'] = isset( $data['source']['covers'][0] ) ? Core\HTML::img( $data['source']['covers'][0] ) : '';
 
 		return $data;
 	}

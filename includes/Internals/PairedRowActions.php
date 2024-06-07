@@ -8,12 +8,12 @@ use geminorum\gEditorial\WordPress;
 
 trait PairedRowActions
 {
-	protected function _hook_paired_taxonomy_bulk_actions( $posttype_orogin, $taxonomy_origin )
+	protected function _hook_paired_taxonomy_bulk_actions( $posttype_origin, $taxonomy_origin )
 	{
 		if ( ! $this->_paired )
 			return FALSE;
 
-		if ( TRUE !== $posttype_orogin && ! $this->posttype_supported( $posttype_orogin ) )
+		if ( TRUE !== $posttype_origin && ! $this->posttype_supported( $posttype_origin ) )
 			return FALSE;
 
 		if ( ! $constants = $this->paired_get_constants() )
