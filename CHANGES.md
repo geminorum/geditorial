@@ -1,3 +1,16 @@
+### 3.27.4
+* internal/bulk-exports: support for format
+* internal/paired-row-actions: actions for supported post-types
+* main/helper: xlsx generator
+* main/info: post-type prop titles
+* main/info: support for more noops
+* main/settings: check for top-level on imports context
+* module/conditioned: :new: module
+* module/importer: check for each type permissions
+* module/ortho: strip tel link prefix
+* module/quotation: prep meta fields for display
+* module/static-covers: support rest field
+
 ### 3.27.3
 * main/module: auto-hook terms init action
 * module/importer: prep meta-keys for purge
