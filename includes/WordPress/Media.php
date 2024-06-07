@@ -8,6 +8,20 @@ use geminorum\gEditorial\Settings;
 class Media extends Core\Base
 {
 
+	public static function upload( $post = FALSE )
+	{
+		if ( FALSE === $post )
+			return wp_upload_dir( NULL, FALSE, FALSE );
+
+		if ( ! $post = get_post( $post ) )
+			return wp_upload_dir( NULL, TRUE, FALSE );
+
+		if ( 'page' === $post->post_type )
+			return wp_upload_dir( NULL, TRUE, FALSE );
+
+		return wp_upload_dir( ( substr( $post->post_date, 0, 4 ) > 0 ? $post->post_date : NULL ), TRUE, FALSE );
+	}
+
 	/**
 	 * Retrieves available mime types for given posttype in media library.
 	 * @ref `wp_count_attachments()`
@@ -47,17 +61,6 @@ class Media extends Core\Base
 		$parts = explode( '|', $key );
 
 		return $uppercase ? strtoupper( $parts[0] ) : $parts[0];
-	}
-
-	// TODO: get title if html is empty
-	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
-	{
-		return Core\HTML::tag( 'a', [
-			'href'  => Core\WordPress::getPostShortLink( $id ),
-			'rel'   => $rel,
-			'class' => Core\HTML::attrClass( $extra, '-attachment' ),
-			'data'  => [ 'id' => $id ],
-		], $html );
 	}
 
 	// WP default sizes from options
@@ -314,20 +317,6 @@ class Media extends Core\Base
 		return $attachment;
 	}
 
-	public static function upload( $post = FALSE )
-	{
-		if ( FALSE === $post )
-			return wp_upload_dir( NULL, FALSE, FALSE );
-
-		if ( ! $post = get_post( $post ) )
-			return wp_upload_dir( NULL, TRUE, FALSE );
-
-		if ( 'page' === $post->post_type )
-			return wp_upload_dir( NULL, TRUE, FALSE );
-
-		return wp_upload_dir( ( substr( $post->post_date, 0, 4 ) > 0 ? $post->post_date : NULL ), TRUE, FALSE );
-	}
-
 	public static function getUploadDirectory( $sub = '', $create = FALSE, $htaccess = TRUE )
 	{
 		$upload = wp_upload_dir( NULL, FALSE, FALSE );
@@ -376,6 +365,17 @@ class Media extends Core\Base
 			'orderby'        => 'menu_order',
 			'order'          => 'ASC',
 		) );
+	}
+
+	// TODO: get title if html is empty
+	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
+	{
+		return Core\HTML::tag( 'a', [
+			'href'  => Core\WordPress::getPostShortLink( $id ),
+			'rel'   => $rel,
+			'class' => Core\HTML::attrClass( $extra, '-attachment' ),
+			'data'  => [ 'id' => $id ],
+		], $html );
 	}
 
 	public static function isCustom( $attachment_id )

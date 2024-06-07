@@ -741,17 +741,17 @@ class Text extends Base
 			// open/close quotes.
 				'/[\p{Z}\p{Cc}\p{Cf}\p{Cs}\p{Pi}\p{Pf}]/u',
 			// Remove other punctuation except special cases
-				'/\p{Po}(?<![' . $specialquotes .
-					$numseparators . $urlall . $nummodifiers . '])/u',
+				'/\p{Po}(?<!['.$specialquotes.
+					$numseparators.$urlall.$nummodifiers.'])/u',
 			// Remove non-URL open/close brackets, except URL brackets.
-				'/[\p{Ps}\p{Pe}](?<![' . $urlbrackets . '])/u',
+				'/[\p{Ps}\p{Pe}](?<!['.$urlbrackets.'])/u',
 			// Remove special quotes, dashes, connectors, number
 			// separators, and URL characters followed by a space
-				'/[' . $specialquotes . $numseparators . $urlspaceafter .
+				'/['.$specialquotes.$numseparators.$urlspaceafter.
 					'\p{Pd}\p{Pc}]+((?= )|$)/u',
 			// Remove special quotes, connectors, and URL characters
 			// preceded by a space
-				'/((?<= )|^)[' . $specialquotes . $urlspacebefore . '\p{Pc}]+/u',
+				'/((?<= )|^)['.$specialquotes.$urlspacebefore.'\p{Pc}]+/u',
 			// Remove dashes preceded by a space, but not followed by a number
 				'/((?<= )|^)\p{Pd}+(?![\p{N}\p{Sc}])/u',
 			// Remove consecutive spaces
@@ -1328,7 +1328,7 @@ class Text extends Base
 			return mb_convert_encoding( $text, 'UTF-8', 'ISO-8859-1' );
 
 		if ( is_callable( [ 'UConverter', 'transcode' ] ) )
-			return UConverter::transcode( $text, 'UTF8', 'ISO-8859-1' );
+			return \UConverter::transcode( $text, 'UTF8', 'ISO-8859-1' );
 
 		if ( function_exists( 'iconv' ) )
 			return iconv( 'ISO-8859-1', 'UTF-8', $text );
@@ -1392,5 +1392,25 @@ class Text extends Base
 		];
 
 		return html_entity_decode( mb_convert_encoding( strtr( $text, $map ), 'UTF-8', 'ISO-8859-2' ), ENT_QUOTES, 'UTF-8' );
+	}
+
+	/**
+	 * Tries to decode all entities.
+	 * @source https://www.php.net/manual/en/function.html-entity-decode.php#117876
+	 *
+	 * I've checked these special entities:
+	 * - double quotes (&#34;)
+	 * - single quotes (&#39; and &apos;)
+	 * - non printable chars (e.g. &#13;)
+	 * With other $flags some or all won't be decoded.
+	 *
+	 * It seems that ENT_XML1 and ENT_XHTML are identical when decoding.
+	 *
+	 * @param  string $text
+	 * @return string $decoded
+	 */
+	public static function decodeEntities( $text )
+	{
+		return html_entity_decode( $text, ENT_QUOTES | ENT_XML1, 'UTF-8' );
 	}
 }

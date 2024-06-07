@@ -706,7 +706,7 @@ class Color extends Base
 		$gd = $g1 - $g2;
 		$bd = $b1 - $b2;
 
-		return sqrt( $rd * $rd + $gd * $gd + $bd * $bd ) ;
+		return sqrt( $rd * $rd + $gd * $gd + $bd * $bd );
 	}
 
 	/**

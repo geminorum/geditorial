@@ -532,9 +532,8 @@ class Number extends Base
 		$r = 0;
 		$l = strlen( $a );
 
-		for ( $i = 0; $i < $l; $i++ ) {
-			$r += pow( 26, $i ) * ( ord( $a[$l - $i - 1]) - 0x40 );
-		}
+		for ( $i = 0; $i < $l; $i++ )
+			$r += pow( 26, $i ) * ( ord( $a[$l - $i - 1] ) - 0x40 );
 
 		return $r - 1;
 	}

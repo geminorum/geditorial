@@ -316,7 +316,7 @@ class PostType extends Core\Base
 		$args = array_merge( [
 			'fields'         => is_null( $fields ) ? 'ids' : $fields, // OR: `id=>parent`
 			'post_type'      => $posttype,
-			'post_status'    => [ 'publish', 'future', 'draft', 'pending' ],
+			'post_status'    => Status::acceptable( $posttype ),
 			'posts_per_page' => -1,
 
 			'no_found_rows'          => TRUE,
@@ -421,14 +421,14 @@ class PostType extends Core\Base
 	}
 
 	// TODO: use db query
-	public static function getLastMenuOrder( $posttype = 'post', $exclude = '', $key = 'menu_order', $status = [ 'publish', 'future', 'draft' ] )
+	public static function getLastMenuOrder( $posttype = 'post', $exclude = '', $key = 'menu_order', $statuses = NULL )
 	{
 		$post = get_posts( [
 			'posts_per_page' => 1,
 			'orderby'        => 'menu_order',
 			'exclude'        => $exclude,
 			'post_type'      => $posttype,
-			'post_status'    => $status,
+			'post_status'    => $statuses ?? Status::acceptable( $posttype, 'recent', [ 'pending' ] ),
 
 			'no_found_rows'          => TRUE,
 			'suppress_filters'       => TRUE,
@@ -497,7 +497,7 @@ class PostType extends Core\Base
 	{
 		$args = array_merge( [
 			'post_type'      => $posttypes,
-			'post_status'    => $published ? 'publish' : [ 'publish', 'future', 'draft', 'pending' ],
+			'post_status'    => $published ? 'publish' : Status::acceptable( $posttypes, 'recent' ),
 			// 'posts_per_page' => 7, // will use default
 			'orderby'        => 'modified',
 			'order'          => 'DESC',
