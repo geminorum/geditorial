@@ -152,25 +152,35 @@ msgstr ""
 
 #: Missioned.php:243
 msgctxt "Field Title"
-msgid "Mission Code"
+msgid "Officers"
 msgstr ""
 
 #: Missioned.php:244
 msgctxt "Field Description"
+msgid "People Who Participate as Officers in This Mission"
+msgstr ""
+
+#: Missioned.php:251
+msgctxt "Field Title"
+msgid "Mission Code"
+msgstr ""
+
+#: Missioned.php:252
+msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr ""
 
-#: Missioned.php:561
+#: Missioned.php:569
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr ""
 
-#: Missioned.php:570
+#: Missioned.php:578
 msgctxt "Card"
 msgid "Mission Date from Meta-data"
 msgstr ""
 
-#: Missioned.php:606
+#: Missioned.php:614
 msgctxt "Header"
 msgid "Mission Imports"
 msgstr ""

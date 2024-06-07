@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Units\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-24 04:54+0330\n"
+"PO-Revision-Date: 2024-06-02 17:45+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -487,77 +487,65 @@ msgctxt "Message"
 msgid "No Measurement Units"
 msgstr "بدون واحد اندازه‌گیری"
 
-#. translators: %s: day count
-#: Units.php:827
-msgctxt "Noop"
-msgid "%s Day"
-msgid_plural "%s Days"
-msgstr[0] "%s روز"
-msgstr[1] "%s روز"
-
-#. translators: %s: hour count
-#: Units.php:834
-msgctxt "Noop"
-msgid "%s Hour"
-msgid_plural "%s Hours"
-msgstr[0] "%s ساعت"
-msgstr[1] "%s ساعت"
-
-#. translators: %s: hour count
-#: Units.php:849
-msgctxt "Noop"
-msgid "%s Gram"
-msgid_plural "%s Grams"
-msgstr[0] "%s گرم"
-msgstr[1] "%s گرم"
-
-#. translators: %s: hour count
-#: Units.php:856
-msgctxt "Noop"
-msgid "%s Kilogram"
-msgid_plural "%s Kilograms"
-msgstr[0] "%s کیلوگرم"
-msgstr[1] "%s کیلوگرم"
-
-#. translators: %s: hour count
-#: Units.php:863
-msgctxt "Noop"
-msgid "%s Milimeter"
-msgid_plural "%s Milimeters"
-msgstr[0] "%s میلی‌متر"
-msgstr[1] "%s میلی‌متر"
-
-#. translators: %s: hour count
-#: Units.php:870
-msgctxt "Noop"
-msgid "%s Centimeter"
-msgid_plural "%s Centimeters"
-msgstr[0] "%s سانتی‌متر"
-msgstr[1] "%s سانتی‌متر"
-
 #. translators: %s: shoe size placeholder
-#: Units.php:893
+#: Units.php:870
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr "کفش %s"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:902
+#: Units.php:879
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr "پیراهن %s"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:911
+#: Units.php:888
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr "شلوار %s"
 
 #. translators: %s: field title
-#: Units.php:1042
+#: Units.php:1019
 msgctxt "Import Field"
 msgid "Units: %s"
 msgstr "واحد: %s"
+
+#~ msgctxt "Noop"
+#~ msgid "%s Day"
+#~ msgid_plural "%s Days"
+#~ msgstr[0] "%s روز"
+#~ msgstr[1] "%s روز"
+
+#~ msgctxt "Noop"
+#~ msgid "%s Hour"
+#~ msgid_plural "%s Hours"
+#~ msgstr[0] "%s ساعت"
+#~ msgstr[1] "%s ساعت"
+
+#~ msgctxt "Noop"
+#~ msgid "%s Gram"
+#~ msgid_plural "%s Grams"
+#~ msgstr[0] "%s گرم"
+#~ msgstr[1] "%s گرم"
+
+#~ msgctxt "Noop"
+#~ msgid "%s Kilogram"
+#~ msgid_plural "%s Kilograms"
+#~ msgstr[0] "%s کیلوگرم"
+#~ msgstr[1] "%s کیلوگرم"
+
+#~ msgctxt "Noop"
+#~ msgid "%s Milimeter"
+#~ msgid_plural "%s Milimeters"
+#~ msgstr[0] "%s میلی‌متر"
+#~ msgstr[1] "%s میلی‌متر"
+
+#~ msgctxt "Noop"
+#~ msgid "%s Centimeter"
+#~ msgid_plural "%s Centimeters"
+#~ msgstr[0] "%s سانتی‌متر"
+#~ msgstr[1] "%s سانتی‌متر"
 
 #~ msgctxt "Descriptions"
 #~ msgid "The Total of the Days"

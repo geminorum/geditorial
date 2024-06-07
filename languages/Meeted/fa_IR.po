@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Meeted\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-24 04:58+0330\n"
+"PO-Revision-Date: 2024-05-27 04:08+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -153,25 +153,35 @@ msgstr "برگزار شده"
 
 #: Meeted.php:243
 msgctxt "Field Title"
+msgid "Coordinators"
+msgstr "هماهنگ‌کنندگان"
+
+#: Meeted.php:244
+msgctxt "Field Description"
+msgid "People Who Participate as Coordinators in This Meeting"
+msgstr "افرادی که به عنوان هماهنگ‌کننده در این جلسه شرکت کرده‌اند"
+
+#: Meeted.php:251
+msgctxt "Field Title"
 msgid "Meeting Code"
 msgstr "کد جلسه"
 
-#: Meeted.php:244
+#: Meeted.php:252
 msgctxt "Field Description"
 msgid "Unique Meeting Code"
 msgstr "کد یکتا برای جلسه"
 
-#: Meeted.php:561
+#: Meeted.php:569
 msgctxt "Header"
 msgid "Meeting Tools"
 msgstr "ابزارهای جلسه"
 
-#: Meeted.php:570
+#: Meeted.php:578
 msgctxt "Card"
 msgid "Meeting Date from Meta-data"
 msgstr ""
 
-#: Meeted.php:606
+#: Meeted.php:614
 msgctxt "Header"
 msgid "Meeting Imports"
 msgstr "درون‌ریزی‌های جلسه"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Programmed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-24 04:55+0330\n"
+"PO-Revision-Date: 2024-05-27 04:07+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -153,25 +153,35 @@ msgstr "برگزار شده"
 
 #: Programmed.php:243
 msgctxt "Field Title"
+msgid "Organizers"
+msgstr "برگزارکنندگان"
+
+#: Programmed.php:244
+msgctxt "Field Description"
+msgid "People Who Participate as Organizers in This Program"
+msgstr "افرادی که به عنوان برگزارکننده در این برنامه شرکت کرده‌اند"
+
+#: Programmed.php:251
+msgctxt "Field Title"
 msgid "Program Code"
 msgstr "کد برنامه"
 
-#: Programmed.php:244
+#: Programmed.php:252
 msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr "کد برنامه یکتا"
 
-#: Programmed.php:561
+#: Programmed.php:569
 msgctxt "Header"
 msgid "Program Tools"
 msgstr "ابزارهای برنامه"
 
-#: Programmed.php:570
+#: Programmed.php:578
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr "تاریخ برنامه از داده‌های متا"
 
-#: Programmed.php:606
+#: Programmed.php:614
 msgctxt "Header"
 msgid "Program Imports"
 msgstr "درون‌ریزی‌های برنامه"

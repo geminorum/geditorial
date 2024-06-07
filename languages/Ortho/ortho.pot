@@ -13,12 +13,12 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Ortho\n"
 "X-Domain: geditorial-ortho\n"
 
-#: ModuleInfo.php:21
+#: ModuleInfo.php:20
 msgctxt "Help Tab Title"
 msgid "Virastar"
 msgstr ""
 
-#: ModuleInfo.php:26
+#: ModuleInfo.php:25
 msgctxt "Help Tab Title"
 msgid "PersianTools"
 msgstr ""

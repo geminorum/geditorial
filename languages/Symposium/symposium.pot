@@ -75,5 +75,5 @@ msgstr ""
 
 #: Symposium.php:103
 msgctxt "Field Description"
-msgid "Featured People in the Session"
+msgid "People Who Featured in This Session"
 msgstr ""

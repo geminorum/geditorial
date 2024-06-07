@@ -488,74 +488,26 @@ msgctxt "Message"
 msgid "No Measurement Units"
 msgstr ""
 
-#. translators: %s: day count
-#: Units.php:827
-msgctxt "Noop"
-msgid "%s Day"
-msgid_plural "%s Days"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: hour count
-#: Units.php:834
-msgctxt "Noop"
-msgid "%s Hour"
-msgid_plural "%s Hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: hour count
-#: Units.php:849
-msgctxt "Noop"
-msgid "%s Gram"
-msgid_plural "%s Grams"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: hour count
-#: Units.php:856
-msgctxt "Noop"
-msgid "%s Kilogram"
-msgid_plural "%s Kilograms"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: hour count
-#: Units.php:863
-msgctxt "Noop"
-msgid "%s Milimeter"
-msgid_plural "%s Milimeters"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: hour count
-#: Units.php:870
-msgctxt "Noop"
-msgid "%s Centimeter"
-msgid_plural "%s Centimeters"
-msgstr[0] ""
-msgstr[1] ""
-
 #. translators: %s: shoe size placeholder
-#: Units.php:893
+#: Units.php:870
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:902
+#: Units.php:879
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:911
+#: Units.php:888
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr ""
 
 #. translators: %s: field title
-#: Units.php:1042
+#: Units.php:1019
 msgctxt "Import Field"
 msgid "Units: %s"
 msgstr ""

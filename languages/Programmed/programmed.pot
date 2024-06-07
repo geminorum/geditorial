@@ -152,25 +152,35 @@ msgstr ""
 
 #: Programmed.php:243
 msgctxt "Field Title"
-msgid "Program Code"
+msgid "Organizers"
 msgstr ""
 
 #: Programmed.php:244
 msgctxt "Field Description"
+msgid "People Who Participate as Organizers in This Program"
+msgstr ""
+
+#: Programmed.php:251
+msgctxt "Field Title"
+msgid "Program Code"
+msgstr ""
+
+#: Programmed.php:252
+msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr ""
 
-#: Programmed.php:561
+#: Programmed.php:569
 msgctxt "Header"
 msgid "Program Tools"
 msgstr ""
 
-#: Programmed.php:570
+#: Programmed.php:578
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr ""
 
-#: Programmed.php:606
+#: Programmed.php:614
 msgctxt "Header"
 msgid "Program Imports"
 msgstr ""

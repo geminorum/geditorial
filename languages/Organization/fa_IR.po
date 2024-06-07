@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Organization\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-24 04:56+0330\n"
+"PO-Revision-Date: 2024-05-27 04:10+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -136,30 +136,40 @@ msgstr "برای بازبینی"
 
 #: Organization.php:216
 msgctxt "Field Title"
+msgid "Administrators"
+msgstr "مدیران"
+
+#: Organization.php:217
+msgctxt "Field Description"
+msgid "People Who Participate as Administrators in This Organization"
+msgstr "افرادی که به عنوان مدیر در این سازمان حضور دارند"
+
+#: Organization.php:224
+msgctxt "Field Title"
 msgid "Organization Code"
 msgstr "کد سازمان"
 
-#: Organization.php:217
+#: Organization.php:225
 msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr "کد یکتا برای سازمان"
 
-#: Organization.php:226
+#: Organization.php:234
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr "شماره سازمانی"
 
-#: Organization.php:227
+#: Organization.php:235
 msgctxt "Field Description"
 msgid "Unique Organization Number"
 msgstr "شماره سازمانی یکتا"
 
-#: Organization.php:636
+#: Organization.php:644
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr "ابزارهای سازمان"
 
-#: Organization.php:665
+#: Organization.php:673
 msgctxt "Header"
 msgid "Organization Imports"
 msgstr "درون‌ریزی‌های سازمان"

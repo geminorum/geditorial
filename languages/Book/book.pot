@@ -476,97 +476,61 @@ msgid "Full reference to this publication"
 msgstr ""
 
 #. translators: %s: edition placeholder
-#: Book.php:709
+#: Book.php:710
 msgctxt "Display"
 msgid "%s Edition"
 msgstr ""
 
 #. translators: %s: print placeholder
-#: Book.php:711
+#: Book.php:712
 msgctxt "Display"
 msgid "%s Print"
 msgstr ""
 
-#. translators: %s: pages count placeholder
-#: Book.php:713
-msgctxt "Display"
-msgid "%s Pages"
-msgstr ""
-
-#. translators: %s: volumes count placeholder
-#: Book.php:715
-msgctxt "Display"
-msgid "%s Volumes"
-msgstr ""
-
-#: Book.php:761
+#: Book.php:758
 msgctxt "Title Attr"
 msgid "ISBN Link to this publication"
 msgstr ""
 
-#: Book.php:764
+#: Book.php:761
 msgctxt "Action"
 msgid "ISBN"
 msgstr ""
 
-#: Book.php:1008
+#: Book.php:1005
 msgctxt "Header"
 msgid "Publication Tools"
 msgstr ""
 
-#: Book.php:1037
+#: Book.php:1034
 msgctxt "Header"
 msgid "Publication Imports"
 msgstr ""
 
-#: Book.php:1075
+#: Book.php:1072
 msgctxt "Table Column"
 msgid "Import Meta"
 msgstr ""
 
-#: Book.php:1088
+#: Book.php:1085
 msgctxt "Table Column"
 msgid "Import Related"
 msgstr ""
 
-#: Book.php:1095
+#: Book.php:1092
 msgctxt "Tools"
 msgid "By ID"
 msgstr ""
 
-#: Book.php:1099
+#: Book.php:1096
 msgctxt "Tools"
 msgid "By Title"
 msgstr ""
 
-#: Book.php:1107
+#: Book.php:1104
 msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr ""
-
-#. translators: %s: total pages
-#: Book.php:1124
-msgctxt "Noop"
-msgid "%s Page"
-msgid_plural "%s Pages"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: total volumes
-#: Book.php:1127
-msgctxt "Noop"
-msgid "%s Volume"
-msgid_plural "%s Volumes"
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: total discs
-#: Book.php:1130
-msgctxt "Noop"
-msgid "%s Disc"
-msgid_plural "%s Discs"
-msgstr[0] ""
-msgstr[1] ""
 
 #: Book.php:1167
 msgctxt "Import Field"

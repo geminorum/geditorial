@@ -95,7 +95,7 @@ msgstr ""
 
 #: Tube.php:155
 msgctxt "Field Description"
-msgid "Featured People in the Video"
+msgid "People Who Featured in This Video"
 msgstr ""
 
 #: Tube.php:160

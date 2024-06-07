@@ -152,25 +152,35 @@ msgstr ""
 
 #: Meeted.php:243
 msgctxt "Field Title"
-msgid "Meeting Code"
+msgid "Coordinators"
 msgstr ""
 
 #: Meeted.php:244
 msgctxt "Field Description"
+msgid "People Who Participate as Coordinators in This Meeting"
+msgstr ""
+
+#: Meeted.php:251
+msgctxt "Field Title"
+msgid "Meeting Code"
+msgstr ""
+
+#: Meeted.php:252
+msgctxt "Field Description"
 msgid "Unique Meeting Code"
 msgstr ""
 
-#: Meeted.php:561
+#: Meeted.php:569
 msgctxt "Header"
 msgid "Meeting Tools"
 msgstr ""
 
-#: Meeted.php:570
+#: Meeted.php:578
 msgctxt "Card"
 msgid "Meeting Date from Meta-data"
 msgstr ""
 
-#: Meeted.php:606
+#: Meeted.php:614
 msgctxt "Header"
 msgid "Meeting Imports"
 msgstr ""

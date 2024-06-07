@@ -172,25 +172,35 @@ msgstr ""
 
 #: Trained.php:250
 msgctxt "Field Title"
-msgid "Training Code"
+msgid "Instructors"
 msgstr ""
 
 #: Trained.php:251
 msgctxt "Field Description"
+msgid "People Who Participate as Instructors in This Training Course"
+msgstr ""
+
+#: Trained.php:258
+msgctxt "Field Title"
+msgid "Training Code"
+msgstr ""
+
+#: Trained.php:259
+msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr ""
 
-#: Trained.php:568
+#: Trained.php:576
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr ""
 
-#: Trained.php:577
+#: Trained.php:585
 msgctxt "Card"
 msgid "Training Course Date from Meta-data"
 msgstr ""
 
-#: Trained.php:613
+#: Trained.php:621
 msgctxt "Header"
 msgid "Training Course Imports"
 msgstr ""

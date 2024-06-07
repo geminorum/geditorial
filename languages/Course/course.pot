@@ -137,7 +137,7 @@ msgid "Cancelled"
 msgstr ""
 
 #: Course.php:200
-#: Course.php:214
+#: Course.php:215
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
@@ -147,22 +147,22 @@ msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr ""
 
-#: Course.php:215
+#: Course.php:216
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr ""
 
-#: Course.php:487
+#: Course.php:488
 msgctxt "Header"
 msgid "Course Tools"
 msgstr ""
 
-#: Course.php:516
+#: Course.php:517
 msgctxt "Header"
 msgid "Course Imports"
 msgstr ""
 
-#: Course.php:539
+#: Course.php:540
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr ""

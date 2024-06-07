@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Trained\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-24 04:51+0330\n"
+"PO-Revision-Date: 2024-05-27 04:06+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -175,25 +175,35 @@ msgstr "برگزار شده"
 
 #: Trained.php:250
 msgctxt "Field Title"
+msgid "Instructors"
+msgstr "مربیان"
+
+#: Trained.php:251
+msgctxt "Field Description"
+msgid "People Who Participate as Instructors in This Training Course"
+msgstr "افرادی که به عنوان مربی در این دوره آموزشی شرکت کرده‌اند"
+
+#: Trained.php:258
+msgctxt "Field Title"
 msgid "Training Code"
 msgstr "کد آموزشی"
 
-#: Trained.php:251
+#: Trained.php:259
 msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr "کد آموزشی یکتا"
 
-#: Trained.php:568
+#: Trained.php:576
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr "ابزارهایی برای دوره‌های آموزشی"
 
-#: Trained.php:577
+#: Trained.php:585
 msgctxt "Card"
 msgid "Training Course Date from Meta-data"
 msgstr "تاریخ دوره‌های آموزشی بر اساس داده‌های متا"
 
-#: Trained.php:613
+#: Trained.php:621
 msgctxt "Header"
 msgid "Training Course Imports"
 msgstr "درون‌ریزی‌های دوره‌های آموزشی"
