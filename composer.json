@@ -34,7 +34,9 @@
     "jwage/easy-csv": "^1.0",
     "sabre/vobject": "^4.5.4",
     "jeroendesloovere/vcard": "^1.7.4",
-    "adbario/php-dot-notation": "^3.3"
+    "adbario/php-dot-notation": "^3.3",
+    "maksimovic/php-xlsx-writer": "^1.0",
+    "shuchkin/simplexlsx": "^1.1"
   },
   "require-dev": {
     "php-coord/php-coord": "4.7.1",

@@ -85,6 +85,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			],
 			'labels' => [
 				'main_taxonomy' => [
+					'menu_name'            => _x( 'Content Definitions', 'Label: Menu Name', '<%= moduleTextdomain %>' ),
 					'show_option_all'      => _x( 'Definitions', 'Label: Show Option All', '<%= moduleTextdomain %>' ),
 					'show_option_no_items' => _x( '(Undefined)', 'Label: Show Option No Terms', '<%= moduleTextdomain %>' ),
 				],
