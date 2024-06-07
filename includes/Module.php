@@ -67,6 +67,7 @@ class Module extends WordPress\Module
 	protected $caps = [
 		'default'   => 'manage_options',
 		'settings'  => 'manage_options',
+		'imports'   => 'import',
 		'reports'   => 'edit_others_posts',
 		'tools'     => 'edit_others_posts',
 		'roles'     => 'edit_users',
@@ -671,6 +672,7 @@ class Module extends WordPress\Module
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
 	}
 
+	// TODO: move to internals
 	protected function _hook_post_updated_messages( $constant )
 	{
 		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {
@@ -682,6 +684,7 @@ class Module extends WordPress\Module
 		} );
 	}
 
+	// TODO: move to internals
 	protected function _hook_bulk_post_updated_messages( $constant )
 	{
 		add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $constant ) {

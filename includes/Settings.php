@@ -1317,6 +1317,10 @@ class Settings extends WordPress\Main
 
 				echo '<label>'._x( 'Disabled', 'Settings', 'geditorial-admin' );
 				echo ' <input type="radio" name="filter-status" data-filter="disabled" value="false" /></label>';
+
+				// TODO: add more filter for `access`:
+				// `unknown` or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
+
 			echo '</div>';
 		}
 

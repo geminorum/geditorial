@@ -212,7 +212,7 @@ trait BulkExports
 				if ( empty( $posts ) )
 					break;
 
-				// TODO: support field meta fro paired
+				// TODO: support field meta from paired
 
 				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
 				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
