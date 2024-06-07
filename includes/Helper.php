@@ -1365,6 +1365,67 @@ class Helper extends WordPress\Main
 		return [ $values, $index ];
 	}
 
+	/**
+	 * Generates simple XLSX data string from given data.
+	 * @REF: https://github.com/mk-j/PHP_XLSXWriter
+	 *
+	 * @param  array  $data
+	 * @param  array  $headers
+	 * @param  string $sheet
+	 * @param  array  $options
+	 * @param  array  $styles
+	 * @param  string $title
+	 * @param  string $desc
+	 * @return string $content
+	 */
+	public static function generateXLSX( $data, $headers = [], $sheet = NULL, $options = NULL, $styles = NULL, $title = NULL, $desc = NULL )
+	{
+		$writer = new \XLSXWriter();
+		$writer->setTempDir( get_temp_dir() );
+
+		if ( Core\HTML::rtl() )
+			$writer->setRightToLeft( TRUE );
+
+		if ( ! is_null( $title ) )
+			$writer->setTitle( $title );
+
+		if ( ! is_null( $desc ) )
+			$writer->setDescription( $desc );
+
+		if ( $user = gEditorial()->user() )
+			$writer->setAuthor( get_userdata( $user )->display_name );
+
+		if ( is_null( $sheet ) )
+			$sheet = 'Sheet1';
+
+		if ( is_null( $options ) )
+			$options = [
+				'border'      => 'left,right,top,bottom',
+				'fill'        => '#eee',
+				'font'        => 'Arial',
+				'font-style'  => 'bold',
+				'freeze_rows' => TRUE,
+				'widths'      => array_fill( 0, count( $headers ), 20 ),
+			];
+
+		if ( is_null( $styles ) )
+			$styles = [
+				'border'    => 'left,right,top,bottom',
+				'font'      => 'Segoe UI',
+				'font-size' => 10,
+			];
+
+		if ( Core\Arraay::isList( $headers ) )
+			$headers = array_combine( $headers, array_fill( 0, count( $headers ), 'string' ) );
+
+		$writer->writeSheetHeader( $sheet, $headers, $options );
+
+		foreach ( $data as $row )
+			$writer->writeSheetRow( $sheet, $row, $styles );
+
+		return $writer->writeToString();
+	}
+
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki
 	public static function getMustache( $base = GEDITORIAL_DIR )
 	{
