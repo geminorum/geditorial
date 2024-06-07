@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Conditioned\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Conditioned\n"
+"X-Domain: geditorial-conditioned\n"
+
+#: Conditioned.php:84
+msgid "Condition"
+msgid_plural "Conditions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Conditioned.php:88
+msgctxt "Label: Menu Name"
+msgid "Condition Ranks"
+msgstr ""
+
+#: Conditioned.php:89
+msgctxt "Label: Show Option All"
+msgid "Condition Ranks"
+msgstr ""
+
+#: Conditioned.php:90
+msgctxt "Label: Show Option No Terms"
+msgid "(Unranked)"
+msgstr ""
+
+#: Conditioned.php:99
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Definition Summary"
+msgstr ""
+
+#: Conditioned.php:100
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Definition Summary"
+msgstr ""
+
+#: ModuleInfo.php:19
+msgctxt "Condition Rank: Name"
+msgid "Brand New"
+msgstr ""
+
+#: ModuleInfo.php:26
+msgctxt "Condition Rank: Name"
+msgid "Unused"
+msgstr ""
+
+#: ModuleInfo.php:27
+msgctxt "Condition Rank: Description"
+msgid "Unused items on display that may be slightly scratched or sun-bleached etc and/or items with considerable period of time since its manufacturing date."
+msgstr ""
+
+#: ModuleInfo.php:33
+msgctxt "Condition Rank: Name"
+msgid "Almost New"
+msgstr ""
+
+#: ModuleInfo.php:34
+msgctxt "Condition Rank: Description"
+msgid "A pre-owned item used several times."
+msgstr ""
+
+#: ModuleInfo.php:40
+msgctxt "Condition Rank: Name"
+msgid "Used: SA"
+msgstr ""
+
+#: ModuleInfo.php:41
+msgctxt "Condition Rank: Description"
+msgid "An item with small scratches and/or stains but near an Almost New item."
+msgstr ""
+
+#: ModuleInfo.php:47
+msgctxt "Condition Rank: Name"
+msgid "Used: A"
+msgstr ""
+
+#: ModuleInfo.php:48
+msgctxt "Condition Rank: Description"
+msgid "An used item with damage from general usage but still in good condition."
+msgstr ""
+
+#: ModuleInfo.php:54
+msgctxt "Condition Rank: Name"
+msgid "Used: AB"
+msgstr ""
+
+#: ModuleInfo.php:55
+msgctxt "Condition Rank: Description"
+msgid "A frequently used item with damage, recommendable for those unaffected by minor flaws."
+msgstr ""
+
+#: ModuleInfo.php:61
+msgctxt "Condition Rank: Name"
+msgid "Used: B"
+msgstr ""
+
+#: ModuleInfo.php:62
+msgctxt "Condition Rank: Description"
+msgid "A considerably used item with some noticeable damage."
+msgstr ""
+
+#: ModuleInfo.php:68
+msgctxt "Condition Rank: Name"
+msgid "Used: C"
+msgstr ""
+
+#: ModuleInfo.php:69
+msgctxt "Condition Rank: Description"
+msgid "A heavily used item with very noticeable damage."
+msgstr ""
+
+#: ModuleInfo.php:75
+msgctxt "Condition Rank: Name"
+msgid "Used: D"
+msgstr ""
+
+#: ModuleInfo.php:76
+msgctxt "Condition Rank: Description"
+msgid "An item with broken parts etc. A non-functional junk item."
+msgstr ""
