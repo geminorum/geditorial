@@ -151,8 +151,7 @@ trait BulkExports
 					Core\Arraay::prefixValues( $taxes, 'taxonomy__' )
 				);
 
-
-				return Core\Text::toCSV( [ $headers ] + $data );
+				return Core\Text::toCSV( array_merge( [ $headers ], $data ) );
 
 			case 'xlsx':
 

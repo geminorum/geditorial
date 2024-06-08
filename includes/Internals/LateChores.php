@@ -168,7 +168,7 @@ trait LateChores
 		$saved = 0;
 
 		foreach ( $post_ids as $post_id )
-			if ( FALSE !== ( $data = $this->latechores_post_aftercare( WordPress\Post::get( (int) $post_id ) ) ) )
+			if ( FALSE !== ( $data = $this->latechores_post_aftercare( (int) $post_id ) ) )
 				if ( wp_update_post( array_merge( $data, [ 'ID' => (int) $post_id ] ) ) )
 					$saved++;
 

@@ -223,6 +223,9 @@ class Trained extends gEditorial\Module
 				'sub_title'  => [ 'type' => 'title_after' ],
 				'lead'       => [ 'type' => 'postbox_html' ],
 
+				'print_title' => [ 'type' => 'text' ],
+				'print_date'  => [ 'type' => 'date' ],
+
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],
 				'audio_source_url'  => [ 'type' => 'audio_source' ],

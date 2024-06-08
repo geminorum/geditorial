@@ -264,7 +264,7 @@ trait PairedRowActions
 
 					// bulk action to strip all paired terms fro selected supported posts
 					$this->classs( 'do_abandon' ) => sprintf(
-						/* translators: %s: count */
+						/* translators: %s: posttype plural label  */
 						_x( 'Abandon All %s', 'Internal: PairedRowAction: Action', 'geditorial-admin' ),
 						$this->get_posttype_label( $constants[0] )
 					)

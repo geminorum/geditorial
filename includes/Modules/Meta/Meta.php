@@ -9,7 +9,6 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
@@ -97,6 +96,9 @@ class Meta extends gEditorial\Module
 				'byline'     => _x( 'Byline', 'Titles', 'geditorial-meta' ),
 				'lead'       => _x( 'Lead', 'Titles', 'geditorial-meta' ),
 
+				'print_title' => _x( 'Print Title', 'Titles', 'geditorial-meta' ),
+				'print_date'  => _x( 'Print Date', 'Titles', 'geditorial-meta' ),
+
 				'published'     => _x( 'Published', 'Titles', 'geditorial-meta' ),
 				'status_string' => _x( 'Status', 'Titles', 'geditorial-meta' ),
 				'source_title'  => _x( 'Source Title', 'Titles', 'geditorial-meta' ),
@@ -148,6 +150,9 @@ class Meta extends gEditorial\Module
 				'sub_title'  => _x( 'Text to place under the content title', 'Descriptions', 'geditorial-meta' ),
 				'byline'     => _x( 'Text to override the content author', 'Descriptions', 'geditorial-meta' ),
 				'lead'       => _x( 'Notes to place before the content text', 'Descriptions', 'geditorial-meta' ),
+
+				'print_title' => _x( 'Text to Overwrite the Original Title on Printing', 'Descriptions', 'geditorial-meta' ),
+				'print_date'  => _x( 'Date to Overwrite the Original Date on Printing', 'Descriptions', 'geditorial-meta' ),
 
 				'published'     => _x( 'Text to indicate the original date of the content', 'Descriptions', 'geditorial-meta' ),
 				'status_string' => _x( 'Text to indicate the current status of the content', 'Descriptions', 'geditorial-meta' ),
@@ -221,6 +226,8 @@ class Meta extends gEditorial\Module
 				'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'lead'       => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
 
+				'print_title'   => [ 'type' => 'text' ],
+				'print_date'    => [ 'type' => 'date' ],
 				'published'     => [ 'type' => 'datestring', 'quickedit' => TRUE ],
 				'status_string' => [ 'type' => 'text', 'quickedit' => TRUE ],
 				'source_title'  => [ 'type' => 'text' ],
