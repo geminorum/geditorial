@@ -8,6 +8,8 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Personage extends gEditorial\Module
@@ -918,5 +920,57 @@ class Personage extends gEditorial\Module
 		$sanitized = Core\Text::stripAllSpaces( strtoupper( $sanitized ) );
 
 		return $sanitized ?: '';
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+
+				if ( Tablelist::isAction( 'parse_people_pool' ) ) {
+
+					if ( ! $pool = $_REQUEST[$this->hook()]['tools']['pool'] )
+						Core\WordPress::redirectReferer( 'huh' );
+
+					$parsed = [];
+
+					foreach ( Core\Text::splitLines( $pool ) as $row )
+						$parsed[] = ModuleHelper::parseFullname( $row );
+
+					if ( ! $parsed = array_values( array_filter( $parsed ) ) )
+						Core\WordPress::redirectReferer( 'huh' );
+
+					$headers = array_keys( $parsed[0] );
+
+					if ( FALSE !== ( $data = Core\Text::toCSV( array_merge( [ $headers ], $parsed ) ) ) )
+						Core\Text::download( $data, Core\File::prepName( 'parsed-pool.csv' ) );
+
+				} else {
+
+					Core\WordPress::redirectReferer( 'huh' );
+				}
+			}
+		}
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		Core\HTML::h3( _x( 'People Parser', 'Header', 'geditorial-personage' ) );
+
+		$this->do_settings_field( [
+			'type'         => 'textarea',
+			'field'        => 'pool',
+			'dir'          => 'rtl',
+			'field_class'  => 'textarea-autosize',
+			'option_group' => 'tools',
+		] );
+
+		echo '<br />';
+		echo $this->wrap_open_buttons();
+			Settings::submitButton( 'parse_people_pool', _x( 'Parse Lines', 'Button', 'geditorial-personage' ) );
+		echo '</p>';
 	}
 }
