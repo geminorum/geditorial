@@ -1,0 +1,272 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Banking\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-11-08 23:09+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ../../includes/Modules/Banking\n"
+"X-Domain: geditorial-banking\n"
+
+#: Banking.php:65
+msgctxt "Setting Title"
+msgid "Reports Roles"
+msgstr "نقش‌های بررسی گزارشات"
+
+#: Banking.php:66
+msgctxt "Setting Description"
+msgid "Roles that can view bank accounts."
+msgstr "نقش‌هایی که می‌توانند حساب‌های بانکی را مشاهده کنند."
+
+#: Banking.php:72
+msgctxt "Setting Title"
+msgid "Assign Roles"
+msgstr "نقش‌های مأمور واگذاری"
+
+#: Banking.php:73
+msgctxt "Setting Description"
+msgid "Roles that can assign bank accounts."
+msgstr "نقش‌هایی که می‌توانند حساب‌های بانکی را تخصیص دهند."
+
+#. translators: %s: count number
+#: Banking.php:108
+msgid "%s Account"
+msgid_plural "%s Accounts"
+msgstr[0] "%s حساب"
+msgstr[1] "%s حساب"
+
+#: Banking.php:112
+msgctxt "Field Label"
+msgid "Bank"
+msgstr "بانک"
+
+#: Banking.php:113
+msgctxt "Field Label"
+msgid "Account"
+msgstr "حساب"
+
+#: Banking.php:114
+msgctxt "Field Label"
+msgid "IBAN"
+msgstr "شبا"
+
+#: Banking.php:115
+msgctxt "Field Label"
+msgid "Card"
+msgstr "کارت"
+
+#: Banking.php:116
+msgctxt "Field Label"
+msgid "Fullname"
+msgstr "نام کامل"
+
+#: Banking.php:117
+msgctxt "Field Label"
+msgid "Relation"
+msgstr "نسبت"
+
+#: Banking.php:118
+msgctxt "Field Label"
+msgid "Contact"
+msgstr "تماس"
+
+#: Banking.php:119
+msgctxt "Field Label"
+msgid "Type"
+msgstr "نوع"
+
+#: Banking.php:120
+msgctxt "Field Label"
+msgid "Status"
+msgstr "وضعیت"
+
+#: Banking.php:121
+msgctxt "Field Label"
+msgid "Description"
+msgstr "توضیحات"
+
+#: Banking.php:127
+msgctxt "Notice"
+msgid "There is no account information available!"
+msgstr "هیچ اطلاعات بانکی در دسترس نیست!"
+
+#: Banking.php:128
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the bank accounts."
+msgstr "شما مجوز لازم برای مدیریت حساب‌های بانکی را ندارید."
+
+#: Banking.php:135
+msgctxt "MetaBox Title"
+msgid "Banking"
+msgstr "بانک‌داری"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Banking.php:139
+msgctxt "Button Title"
+msgid "Bank Accounts of %1$s"
+msgstr "حساب‌های بانکی %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Banking.php:141
+msgctxt "Button Text"
+msgid "%1$s Manage the Accounts of %2$s"
+msgstr "%1$s مدیریت حساب‌های %2$s"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Banking.php:144
+msgctxt "Action Title"
+msgid "Bank Accounts of %1$s"
+msgstr "حساب‌های بانکی %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Banking.php:146
+msgctxt "Action Text"
+msgid "Bank Accounts"
+msgstr "حساب‌های بانکی"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Banking.php:149
+msgctxt "Row Title"
+msgid "Bank Accounts of %1$s"
+msgstr "حساب‌های بانکی %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Banking.php:151
+msgctxt "Row Text"
+msgid "Bank Accounts"
+msgstr "حساب‌های بانکی"
+
+#: Banking.php:156
+msgctxt "Javascript String"
+msgid "Actions"
+msgstr "کنش‌ها"
+
+#: Banking.php:157
+msgctxt "Javascript String"
+msgid "Information"
+msgstr "اطلاعات"
+
+#: Banking.php:158
+msgctxt "Javascript String"
+msgid "Insert"
+msgstr "درج"
+
+#: Banking.php:159
+msgctxt "Javascript String"
+msgid "Edit"
+msgstr "ویرایش"
+
+#: Banking.php:160
+msgctxt "Javascript String"
+msgid "Remove"
+msgstr "حذف"
+
+#: Banking.php:161
+msgctxt "Javascript String"
+msgid "Loading"
+msgstr "در حال بارگذاری"
+
+#: Banking.php:162
+msgctxt "Javascript String"
+msgid "Here you can add, edit and manage the bank accounts."
+msgstr "اینجا می‌توانید حساب‌های بانکی را اضافه، ویرایش و مدیریت کنید."
+
+#: Banking.php:163
+msgctxt "Javascript String"
+msgid "The account edited successfully."
+msgstr "حساب با موفقیت ویرایش شد."
+
+#: Banking.php:164
+msgctxt "Javascript String"
+msgid "New account saved successfully."
+msgstr "حساب تازه با موفقیت ذخیره شد."
+
+#: Banking.php:165
+msgctxt "Javascript String"
+msgid "The account data are not valid!"
+msgstr "اطلاعات حساب نامعتبر است!"
+
+#: Banking.php:177
+msgctxt "Field Title"
+msgid "IBAN"
+msgstr "شبا"
+
+#: Banking.php:178
+msgctxt "Field Description"
+msgid "International Bank Account Number"
+msgstr "شماره حساب بانکی بین‌المللی"
+
+#: Banking.php:183
+msgctxt "Field Title"
+msgid "Card Number"
+msgstr "شماره کارت"
+
+#: Banking.php:184
+msgctxt "Field Description"
+msgid "Bank Card Number"
+msgstr "شماره کارت بانکی"
+
+#. translators: %s: post title
+#: Banking.php:364
+msgctxt "Page Title"
+msgid "Bank Grid for %s"
+msgstr "شبکه بانکی برای %s"
+
+#. translators: %s: post title
+#: Banking.php:376
+msgctxt "Page Title"
+msgid "Bank Overview for %s"
+msgstr "بررسی بانک %s"
+
+#: Banking.php:403
+msgctxt "Rest"
+msgid "The id of the parent post."
+msgstr "شناسه برای فرسته مادر."
+
+#: Banking.php:516
+msgctxt "Default Term: Audit"
+msgid "Empty Banking Data"
+msgstr "داده‌های بانک خالی"
+
+#: Banking.php:518
+msgctxt "Default Term: Audit"
+msgid "Empty IBAN"
+msgstr "شبا خالی"
+
+#: Banking.php:519
+msgctxt "Default Term: Audit"
+msgid "Invalid IBAN"
+msgstr "شبا نامعتبر"
+
+#: Banking.php:520
+msgctxt "Default Term: Audit"
+msgid "Duplicate IBAN"
+msgstr "شبا تکراری"
+
+#: Banking.php:583
+msgctxt "Title"
+msgid "Bank Accounts"
+msgstr "حساب‌های بانکی"
+
+#~ msgctxt "Message"
+#~ msgid "There are no posts available!"
+#~ msgstr "هیچ فرسته‌ای در دسترس نیست!"
+
+#~ msgctxt "Error"
+#~ msgid "The id argument must not be empty."
+#~ msgstr "نشانوند id نباید خالی باشد."
+
+#~ msgctxt "Error"
+#~ msgid "The id argument must be a post."
+#~ msgstr "نشانوند id باید یک فرسته باشد."
+
+#~ msgctxt "Action"
+#~ msgid "Bank Accounts"
+#~ msgstr "حساب‌های بانکی"

@@ -1,0 +1,244 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Banking\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Banking\n"
+"X-Domain: geditorial-banking\n"
+
+#: Banking.php:65
+msgctxt "Setting Description"
+msgid "Roles that can view bank accounts."
+msgstr ""
+
+#: Banking.php:66
+msgctxt "Setting Description"
+msgid "Roles that can assign bank accounts."
+msgstr ""
+
+#. translators: %s: count number
+#: Banking.php:99
+msgid "%s Account"
+msgid_plural "%s Accounts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Banking.php:103
+msgctxt "Field Label"
+msgid "Bank"
+msgstr ""
+
+#: Banking.php:104
+msgctxt "Field Label"
+msgid "Account"
+msgstr ""
+
+#: Banking.php:105
+msgctxt "Field Label"
+msgid "IBAN"
+msgstr ""
+
+#: Banking.php:106
+msgctxt "Field Label"
+msgid "Card"
+msgstr ""
+
+#: Banking.php:107
+msgctxt "Field Label"
+msgid "Fullname"
+msgstr ""
+
+#: Banking.php:108
+msgctxt "Field Label"
+msgid "Relation"
+msgstr ""
+
+#: Banking.php:109
+msgctxt "Field Label"
+msgid "Contact"
+msgstr ""
+
+#: Banking.php:110
+msgctxt "Field Label"
+msgid "Type"
+msgstr ""
+
+#: Banking.php:111
+msgctxt "Field Label"
+msgid "Status"
+msgstr ""
+
+#: Banking.php:112
+msgctxt "Field Label"
+msgid "Description"
+msgstr ""
+
+#: Banking.php:118
+msgctxt "Notice"
+msgid "There is no account information available!"
+msgstr ""
+
+#: Banking.php:119
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the bank accounts."
+msgstr ""
+
+#: Banking.php:126
+msgctxt "MetaBox Title"
+msgid "Banking"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Banking.php:130
+msgctxt "Button Title"
+msgid "Bank Accounts of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Banking.php:132
+msgctxt "Button Text"
+msgid "%1$s Manage the Accounts of %2$s"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Banking.php:135
+msgctxt "Action Title"
+msgid "Bank Accounts of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Banking.php:137
+msgctxt "Action Text"
+msgid "Bank Accounts"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Banking.php:140
+msgctxt "Row Title"
+msgid "Bank Accounts of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Banking.php:142
+msgctxt "Row Text"
+msgid "Bank Accounts"
+msgstr ""
+
+#: Banking.php:147
+msgctxt "Javascript String"
+msgid "Actions"
+msgstr ""
+
+#: Banking.php:148
+msgctxt "Javascript String"
+msgid "Information"
+msgstr ""
+
+#: Banking.php:149
+msgctxt "Javascript String"
+msgid "Insert"
+msgstr ""
+
+#: Banking.php:150
+msgctxt "Javascript String"
+msgid "Edit"
+msgstr ""
+
+#: Banking.php:151
+msgctxt "Javascript String"
+msgid "Remove"
+msgstr ""
+
+#: Banking.php:152
+msgctxt "Javascript String"
+msgid "Loading"
+msgstr ""
+
+#: Banking.php:153
+msgctxt "Javascript String"
+msgid "Here you can add, edit and manage the bank accounts."
+msgstr ""
+
+#: Banking.php:154
+msgctxt "Javascript String"
+msgid "The account edited successfully."
+msgstr ""
+
+#: Banking.php:155
+msgctxt "Javascript String"
+msgid "New account saved successfully."
+msgstr ""
+
+#: Banking.php:156
+msgctxt "Javascript String"
+msgid "The account data are not valid!"
+msgstr ""
+
+#: Banking.php:168
+msgctxt "Field Title"
+msgid "IBAN"
+msgstr ""
+
+#: Banking.php:169
+msgctxt "Field Description"
+msgid "International Bank Account Number"
+msgstr ""
+
+#: Banking.php:174
+msgctxt "Field Title"
+msgid "Card Number"
+msgstr ""
+
+#: Banking.php:175
+msgctxt "Field Description"
+msgid "Bank Card Number"
+msgstr ""
+
+#. translators: %s: post title
+#: Banking.php:356
+msgctxt "Page Title"
+msgid "Bank Grid for %s"
+msgstr ""
+
+#. translators: %s: post title
+#: Banking.php:368
+msgctxt "Page Title"
+msgid "Bank Overview for %s"
+msgstr ""
+
+#: Banking.php:395
+msgctxt "Rest"
+msgid "The id of the parent post."
+msgstr ""
+
+#: Banking.php:508
+msgctxt "Default Term: Audit"
+msgid "Empty Banking Data"
+msgstr ""
+
+#: Banking.php:510
+msgctxt "Default Term: Audit"
+msgid "Empty IBAN"
+msgstr ""
+
+#: Banking.php:511
+msgctxt "Default Term: Audit"
+msgid "Invalid IBAN"
+msgstr ""
+
+#: Banking.php:512
+msgctxt "Default Term: Audit"
+msgid "Duplicate IBAN"
+msgstr ""
+
+#: Banking.php:575
+msgctxt "Title"
+msgid "Bank Accounts"
+msgstr ""
