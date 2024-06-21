@@ -1,0 +1,97 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Diagnosed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-06-22 02:34+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/Diagnosed\n"
+"X-Domain: geditorial-diagnosed\n"
+
+#: Diagnosed.php:86
+msgid "Diagnosis"
+msgid_plural "Diagnoses"
+msgstr[0] "تشخیص‌ها"
+msgstr[1] "تشخیص"
+
+#: Diagnosed.php:90
+msgctxt "Label: `menu_name`"
+msgid "Diagnosis Definitions"
+msgstr "تعاریف تشخیص"
+
+#: Diagnosed.php:91
+msgctxt "Label: `extended_label`"
+msgid "Diagnosis Definitions"
+msgstr "تعاریف تشخیص"
+
+#: Diagnosed.php:92
+msgctxt "Label: `show_option_all`"
+msgid "Diagnoses"
+msgstr "تشخیص‌ها"
+
+#: Diagnosed.php:93
+msgctxt "Label: `show_option_no_items`"
+msgid "(Undiagnosed)"
+msgstr "(بدون‌تشخیص)"
+
+#: Diagnosed.php:105
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sciatica"
+msgstr "سیاتیک"
+
+#: Diagnosed.php:106
+msgctxt "Main Taxonomy: Default Term"
+msgid "Diabetes"
+msgstr "دیابت"
+
+#: Diagnosed.php:107
+msgctxt "Main Taxonomy: Default Term"
+msgid "Glasses"
+msgstr "عینک"
+
+#: Diagnosed.php:108
+msgctxt "Main Taxonomy: Default Term"
+msgid "Migraine"
+msgstr "میگرن"
+
+#: Diagnosed.php:109
+msgctxt "Main Taxonomy: Default Term"
+msgid "Epilepsy"
+msgstr "صرع"
+
+#: Diagnosed.php:110
+msgctxt "Main Taxonomy: Default Term"
+msgid "Gastro"
+msgstr "معده"
+
+#: Diagnosed.php:111
+msgctxt "Main Taxonomy: Default Term"
+msgid "Kidney"
+msgstr "کلیه"
+
+#: Diagnosed.php:112
+msgctxt "Main Taxonomy: Default Term"
+msgid "Liver"
+msgstr "کبد"
+
+#: Diagnosed.php:113
+msgctxt "Main Taxonomy: Default Term"
+msgid "Heart"
+msgstr "قلب"
+
+#: Diagnosed.php:114
+msgctxt "Main Taxonomy: Default Term"
+msgid "Knee"
+msgstr "زانو"
+
+#: Diagnosed.php:115
+msgctxt "Main Taxonomy: Default Term"
+msgid "Ankle"
+msgstr "مچ‌پا"
