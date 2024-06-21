@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Housed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-06-22 02:50+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/Housed\n"
+"X-Domain: geditorial-housed\n"
+
+#: Housed.php:81
+msgid "Housing Condition"
+msgid_plural "Housing Conditions"
+msgstr[0] "وضعیت‌های مسکن"
+msgstr[1] "وضعیت مسکن"
+
+#: Housed.php:85
+msgctxt "Label: `menu_name`"
+msgid "Housing Conditions"
+msgstr "وضعیت‌های مسکن"
+
+#: Housed.php:86
+msgctxt "Label: `extended_label`"
+msgid "Housing Conditions"
+msgstr "وضعیت‌های مسکن"
+
+#: Housed.php:87
+msgctxt "Label: `show_option_all`"
+msgid "Housings"
+msgstr "مسکن"
+
+#: Housed.php:88
+msgctxt "Label: `show_option_no_items`"
+msgid "(Undefined)"
+msgstr "(تعریف‌نشده)"
+
+#: Housed.php:100
+msgctxt "Main Taxonomy: Default Term"
+msgid "Ownership"
+msgstr "صاحب‌خانه"
+
+#: Housed.php:101
+msgctxt "Main Taxonomy: Default Term"
+msgid "Rental"
+msgstr "مستأجر"
+
+#: Housed.php:102
+msgctxt "Main Taxonomy: Default Term"
+msgid "Parental"
+msgstr "والدین"
+
+#: Housed.php:103
+msgctxt "Main Taxonomy: Default Term"
+msgid "Dormitory"
+msgstr "خواب‌گاهی"
+
+#: Housed.php:104
+msgctxt "Main Taxonomy: Default Term"
+msgid "Homeless"
+msgstr "بی‌خانه"
