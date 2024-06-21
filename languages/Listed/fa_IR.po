@@ -1,0 +1,211 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Listed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-06-22 03:08+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/Listed\n"
+"X-Domain: geditorial-listed\n"
+
+#: Listed.php:65
+msgctxt "Settings"
+msgid "Listing Levels"
+msgstr "سطوح فهرستی"
+
+#: Listed.php:66
+msgctxt "Settings"
+msgid "Substitute taxonomy for the listings and supported post-types."
+msgstr ""
+
+#. translators: %s: primary taxonomy name
+#: Listed.php:101
+msgctxt "Settings"
+msgid "Whether to show the <strong>%s</strong> in the quick/bulk edit panel."
+msgstr ""
+
+#: Listed.php:145 Listed.php:146
+msgid "Listing"
+msgid_plural "Listings"
+msgstr[0] "فهرست‌ها"
+msgstr[1] "فهرست"
+
+#: Listed.php:147
+msgid "Listing Category"
+msgid_plural "Listing Categories"
+msgstr[0] "دسته‌های فهرست"
+msgstr[1] "دسته فهرست"
+
+#: Listed.php:148
+msgid "Listing Level"
+msgid_plural "Listing Levels"
+msgstr[0] "سطوح فهرست"
+msgstr[1] "سطح فهرست"
+
+#: Listed.php:149
+msgid "Listing Program"
+msgid_plural "Listing Programs"
+msgstr[0] "برنامه‌های فهرست"
+msgstr[1] "برنامه فهرست"
+
+#: Listed.php:150
+msgid "Listing Span"
+msgid_plural "Listing Spans"
+msgstr[0] "دوره‌های فهرست"
+msgstr[1] "دوره فهرست"
+
+#: Listed.php:151
+msgid "Listing Type"
+msgid_plural "Listing Types"
+msgstr[0] "انواع فهرست"
+msgstr[1] "نوع فهرست"
+
+#: Listed.php:152
+msgid "Listing Status"
+msgid_plural "Listing Statuses"
+msgstr[0] "وضعیت‌های فهرست"
+msgstr[1] "وضعیت فهرست"
+
+#: Listed.php:156
+msgctxt "Label: `menu_name`"
+msgid "Listings"
+msgstr "فهرست‌ها"
+
+#: Listed.php:157
+msgctxt "Label: Featured Image"
+msgid "Listing Poster"
+msgstr "نشان فهرست"
+
+#: Listed.php:158
+msgctxt "Label: MetaBox Title"
+msgid "The Listings"
+msgstr "فهرست"
+
+#: Listed.php:161
+msgctxt "Label: MetaBox Title"
+msgid "In This Listing"
+msgstr "در این فهرست"
+
+#: Listed.php:164
+msgctxt "Label: Menu Name"
+msgid "Categories"
+msgstr "دسته‌ها"
+
+#: Listed.php:167
+msgctxt "Label: Menu Name"
+msgid "Programs"
+msgstr "برنامه"
+
+#: Listed.php:170
+msgctxt "Label: Menu Name"
+msgid "Spans"
+msgstr "دوره"
+
+#: Listed.php:173
+msgctxt "Label: Menu Name"
+msgid "Types"
+msgstr "انواع"
+
+#: Listed.php:176
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr "وضعیت"
+
+#. translators: %s: item count
+#: Listed.php:186
+msgctxt "Misc: `tabloid_paired_posttype`"
+msgid "Listing Attendees (%s)"
+msgstr "حاضرین فهرست (%s)"
+
+#. translators: %s: item count
+#: Listed.php:188
+msgctxt "Misc: `tabloid_paired_supported`"
+msgid "Listings (%s)"
+msgstr "فهرست (%s)"
+
+#: Listed.php:189
+msgctxt "Misc: `column_icon_title`"
+msgid "Listings"
+msgstr "فهرست‌ها"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Listed.php:194
+msgctxt "MetaBox: `listbox_title`"
+msgid "Attendees on &ldquo;%1$s&rdquo;"
+msgstr "حاضرین در &rdquo;%1$s&ldquo;"
+
+#: Listed.php:204
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Preliminary"
+msgstr "مقدماتی"
+
+#: Listed.php:205
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Intermediate"
+msgstr "متوسطه"
+
+#: Listed.php:206
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Advanced"
+msgstr "پیشرفته"
+
+#: Listed.php:207
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Special"
+msgstr "ویژه"
+
+#: Listed.php:211
+msgctxt "Status Taxonomy: Default Term"
+msgid "Planned"
+msgstr "برنامه‌ریزی شده"
+
+#: Listed.php:212
+msgctxt "Status Taxonomy: Default Term"
+msgid "Held"
+msgstr "برگزار شده"
+
+#: Listed.php:253
+msgctxt "Field Title"
+msgid "Notaries"
+msgstr "ثبت‌کننده‌ها"
+
+#: Listed.php:254
+msgctxt "Field Description"
+msgid "People Who is the Notary of This Listing"
+msgstr "افرادی که ثبت‌کننده این فهرست بوده‌اند"
+
+#: Listed.php:261
+msgctxt "Field Title"
+msgid "Listing Code"
+msgstr "کد فهرست"
+
+#: Listed.php:262
+msgctxt "Field Description"
+msgid "Unique Listing Code"
+msgstr "کد یکتای فهرست"
+
+#: Listed.php:579
+msgctxt "Header"
+msgid "Listing Tools"
+msgstr "ابزارهای فهرست"
+
+#: Listed.php:588
+msgctxt "Card"
+msgid "Listing Date from Meta-data"
+msgstr ""
+
+#: Listed.php:624
+msgctxt "Header"
+msgid "Listing Imports"
+msgstr "درون‌ریزی‌های فهرست"
+
+#~ msgctxt "Field Title"
+#~ msgid "Instructors"
+#~ msgstr "مربیان"
