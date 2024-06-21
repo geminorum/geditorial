@@ -1,0 +1,58 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Equipped\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-06-22 02:59+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/Equipped\n"
+"X-Domain: geditorial-equipped\n"
+
+#: Equipped.php:85
+msgid "Equipment Item"
+msgid_plural "Equipment Items"
+msgstr[0] "موارد تجهیزات"
+msgstr[1] "مورد تجهیزات"
+
+#: Equipped.php:89
+msgctxt "Label: `menu_name`"
+msgid "Content Equipments"
+msgstr "تجهیزات محتوا"
+
+#: Equipped.php:90
+msgctxt "Label: `extended_label`"
+msgid "Content Equipments"
+msgstr "تجهیزات محتوا"
+
+#: Equipped.php:91
+msgctxt "Label: `show_option_all`"
+msgid "Equipments"
+msgstr "تجهیزات"
+
+#: Equipped.php:92
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unequipped)"
+msgstr "(بدون‌تجهیز)"
+
+#~ msgctxt "Label: Show Option All"
+#~ msgid "Equipments"
+#~ msgstr "تجهیزات"
+
+#~ msgctxt "Label: Show Option No Terms"
+#~ msgid "(Unequipped)"
+#~ msgstr "(بدون‌تجهیز)"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Team Equipment Summary"
+#~ msgstr "گزارش تجهیزات گروهه شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Equipment Summary"
+#~ msgstr "گزارش تجهیزات تحریریه"

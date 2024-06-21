@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Equipped\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Equipped\n"
+"X-Domain: geditorial-equipped\n"
+
+#: Equipped.php:85
+msgid "Equipment Item"
+msgid_plural "Equipment Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Equipped.php:89
+msgctxt "Label: `menu_name`"
+msgid "Content Equipments"
+msgstr ""
+
+#: Equipped.php:90
+msgctxt "Label: `extended_label`"
+msgid "Content Equipments"
+msgstr ""
+
+#: Equipped.php:91
+msgctxt "Label: `show_option_all`"
+msgid "Equipments"
+msgstr ""
+
+#: Equipped.php:92
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unequipped)"
+msgstr ""
