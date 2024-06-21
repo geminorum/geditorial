@@ -107,11 +107,10 @@ class Personage extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype'    => 'human',
-			'primary_taxonomy'    => 'human_group',
-			'job_title_taxonomy'  => 'job_title',      // FIXME: move to `Employed` / OR: `Jobbed`
-			'blood_type_taxonomy' => 'blood_type',     // MAYBE ANOTHER MODULE: `Medic`
-			'status_taxonomy'     => 'human_status',
+			'primary_posttype'   => 'human',
+			'primary_taxonomy'   => 'human_group',
+			'job_title_taxonomy' => 'job_title',      // FIXME: move to `Employed` / OR: `Jobbed`
+			'status_taxonomy'    => 'human_status',
 
 			'term_empty_identity_number' => 'identity-number-empty',
 			'term_empty_mobile_number'   => 'mobile-number-empty',
@@ -124,7 +123,6 @@ class Personage extends gEditorial\Module
 			'taxonomies' => [
 				'primary_taxonomy'    => NULL,
 				'job_title_taxonomy'  => 'businessperson',
-				'blood_type_taxonomy' => 'heart',
 				'status_taxonomy'     => 'post-status',
 			],
 		];
@@ -134,11 +132,10 @@ class Personage extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype'    => _n_noop( 'Human', 'Humans', 'geditorial-personage' ),
-				'primary_taxonomy'    => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-personage' ),
-				'job_title_taxonomy'  => _n_noop( 'Job Title', 'Job Titles', 'geditorial-personage' ),
-				'blood_type_taxonomy' => _n_noop( 'Blood Type', 'Blood Types', 'geditorial-personage' ),
-				'status_taxonomy'     => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-personage' ),
+				'primary_posttype'   => _n_noop( 'Human', 'Humans', 'geditorial-personage' ),
+				'primary_taxonomy'   => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-personage' ),
+				'job_title_taxonomy' => _n_noop( 'Job Title', 'Job Titles', 'geditorial-personage' ),
+				'status_taxonomy'    => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-personage' ),
 			],
 			'labels' => [
 				'primary_posttype' => [
@@ -153,10 +150,6 @@ class Personage extends gEditorial\Module
 				],
 				'job_title_taxonomy' => [
 					'show_option_all'      => _x( 'Job Titles', 'Label: Show Option All', 'geditorial-personage' ),
-					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
-				],
-				'blood_type_taxonomy' => [
-					'show_option_all'      => _x( 'Blood Type', 'Label: Show Option All', 'geditorial-personage' ),
 					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
 				'status_taxonomy' => [
@@ -183,23 +176,6 @@ class Personage extends gEditorial\Module
 		];
 
 		return $strings;
-	}
-
-	protected function define_default_terms()
-	{
-		return [
-			'blood_type_taxonomy' => [
-				// @REF: https://www.redcrossblood.org/donate-blood/blood-types.html
-				'a-positive'  => _x( 'A&plus;', 'Default Term', 'geditorial-personage' ),
-				'a-negative'  => _x( 'A&minus;', 'Default Term', 'geditorial-personage' ),
-				'b-positive'  => _x( 'B&plus;', 'Default Term', 'geditorial-personage' ),
-				'b-negative'  => _x( 'B&minus;', 'Default Term', 'geditorial-personage' ),
-				'o-positive'  => _x( 'O&plus;', 'Default Term', 'geditorial-personage' ),
-				'o-negative'  => _x( 'O&minus;', 'Default Term', 'geditorial-personage' ),
-				'ab-positive' => _x( 'AB&plus;', 'Default Term', 'geditorial-personage' ),
-				'ab-negative' => _x( 'AB&minus;', 'Default Term', 'geditorial-personage' ),
-			],
-		];
 	}
 
 	public function get_global_fields()
@@ -390,14 +366,6 @@ class Personage extends gEditorial\Module
 			'custom_captype' => $captype,
 		] );
 
-		$this->register_taxonomy( 'blood_type_taxonomy', [
-			'hierarchical' => TRUE,
-		], 'primary_posttype', [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-			'admin_managed'  => TRUE,
-		] );
-
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
@@ -475,8 +443,6 @@ class Personage extends gEditorial\Module
 					'mobile_number'   => NULL,
 					'identity_number' => NULL,
 					'date_of_birth'   => NULL,
-
-					$this->constant( 'blood_type_taxonomy' )   => NULL,
 				] );
 
 				$this->_hook_post_updated_messages( 'primary_posttype' );
@@ -499,7 +465,6 @@ class Personage extends gEditorial\Module
 					'status_taxonomy',
 					'primary_taxonomy',
 					'job_title_taxonomy',
-					'blood_type_taxonomy',
 				] );
 
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
@@ -571,12 +536,6 @@ class Personage extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		MetaBox::singleselectTerms( $object->ID, [
-			'taxonomy'   => $this->constant( 'blood_type_taxonomy' ),
-			'posttype'   => $object->post_type,
-			'empty_link' => FALSE,
-		] );
-
 		MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
