@@ -27,9 +27,9 @@ class Conscripted extends gEditorial\Module
 			'icon'     => 'superhero-alt',
 			'access'   => 'beta',
 			'keywords' => [
-				'taxmodule',
 				'conscription',
 				'compulsorily',
+				'taxmodule',
 			],
 		];
 	}
@@ -83,6 +83,7 @@ class Conscripted extends gEditorial\Module
 			],
 			'labels' => [
 				'main_taxonomy' => [
+					'extended_label'       => _x( 'Conscription', 'Label: `extended_label`', 'geditorial-conscripted' ),
 					'show_option_all'      => _x( 'Conscription', 'Label: Show Option All', 'geditorial-conscripted' ),
 					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-conscripted' ),
 				],
@@ -121,9 +122,9 @@ class Conscripted extends gEditorial\Module
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
-			'show_in_menu'       => FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+			'show_in_menu'       => FALSE,
 		], NULL, [
 			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
 			'custom_captype' => TRUE,

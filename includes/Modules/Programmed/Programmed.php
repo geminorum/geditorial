@@ -46,7 +46,7 @@ class Programmed extends gEditorial\Module
 			'icon'     => 'fullscreen-exit-alt',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
+				'multipaired',
 			],
 		];
 	}

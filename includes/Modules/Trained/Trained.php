@@ -46,8 +46,8 @@ class Trained extends gEditorial\Module
 			'icon'     => 'universal-access-alt',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
 				'training',
+				'multipaired',
 			],
 		];
 	}

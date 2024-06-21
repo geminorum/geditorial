@@ -123,7 +123,7 @@ class Yearly extends gEditorial\Module
 		], NULL, [
 			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
 			'custom_captype' => TRUE,
-		], TRUE );
+		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}

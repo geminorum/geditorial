@@ -755,7 +755,7 @@ class Tweaks extends gEditorial\Module
 
 			$edit  = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $post->post_type ] );
 			$icon  = $object->menu_icon ?? ( $object->hierarchical ? 'category' : 'tag' );
-			$title = $this->get_string( 'column_icon_title', $taxonomy, 'misc', $object->labels->name );
+			$title = Helper::getTaxonomyLabel( $object, 'extended_label' );
 
 			Helper::renderPostTermsEditRow(
 				$post,

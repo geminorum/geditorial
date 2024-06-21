@@ -46,7 +46,7 @@ class Meeted extends gEditorial\Module
 			'icon'     => 'buddicons-groups',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
+				'multipaired',
 			],
 		];
 	}

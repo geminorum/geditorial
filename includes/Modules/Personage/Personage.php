@@ -927,7 +927,6 @@ class Personage extends gEditorial\Module
 			'option_group' => 'tools',
 		] );
 
-		echo '<br />';
 		echo $this->wrap_open_buttons();
 			Settings::submitButton( 'parse_people_pool', _x( 'Parse Lines', 'Button', 'geditorial-personage' ) );
 		echo '</p>';
