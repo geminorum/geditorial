@@ -7,7 +7,7 @@ class Validation extends Base
 
 	public static function sanitizePostCode( $input )
 	{
-		$sanitized = Number::intval( trim( $input ), FALSE );
+		$sanitized = Number::translate( Text::trim( $input ) );
 
 		if ( ! self::isPostCode( $sanitized ) )
 			return '';
@@ -17,7 +17,7 @@ class Validation extends Base
 
 	public static function isPostCode( $input )
 	{
-		if ( empty( $input ) )
+		if ( self::empty( $input ) )
 			return FALSE;
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
@@ -34,7 +34,8 @@ class Validation extends Base
 	// @REF: https://www.dotnettips.info/newsarchive/details/14187
 	public static function isIranPostCode( $input )
 	{
-		return (bool) preg_match( '/(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}/', trim( str_ireplace( [ '-', ' ' ], '', Number::intval( $input, FALSE ) ) ) );
+		return (bool) preg_match( '/(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}/',
+			trim( str_ireplace( [ '-', ' ' ], '', Number::translate( Text::trim( $input ) ) ) ) );
 	}
 
 	public static function getIdentityNumberHTMLPattern()
@@ -47,7 +48,7 @@ class Validation extends Base
 
 	public static function isIdentityNumber( $input )
 	{
-		if ( empty( $input ) )
+		if ( self::empty( $input ) )
 			return FALSE;
 
 		// @SOURCE: `WC_Validation::is_phone()`
@@ -62,7 +63,7 @@ class Validation extends Base
 
 	public static function sanitizeIdentityNumber( $input )
 	{
-		$sanitized = Number::intval( trim( $input ), FALSE );
+		$sanitized = Number::translate( Text::trim( $input ) );
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
 			$sanitized = Number::zeroise( $sanitized, 10 );
@@ -77,6 +78,9 @@ class Validation extends Base
 	// @REF: https://gist.github.com/ebraminio/5292017#gistcomment-3435493
 	public static function isIranNationalCode( $input )
 	{
+		if ( self::empty( $input ) )
+			return FALSE;
+
 		if ( ! preg_match( '/^\d{10}$/', $input ) )
 			return FALSE;
 
@@ -105,7 +109,7 @@ class Validation extends Base
 	// @SEE: https://gist.github.com/mhf-ir/c17374fae395a57c9f8e5fe7a92bbf23
 	public static function sanitizeIBAN( $input )
 	{
-		$sanitized = Number::intval( trim( $input ), FALSE );
+		$sanitized = Number::translate( Text::trim( $input ) );
 
 		if ( ! self::isIBAN( $sanitized ) )
 			return '';
@@ -136,6 +140,9 @@ class Validation extends Base
 	// @SEE: https://en.wikipedia.org/wiki/International_Bank_Account_Number#Validating_the_IBAN
 	public static function checkIBAN( $input )
 	{
+		if ( self::empty( $input ) )
+			return FALSE;
+
 		// normalize input: remove spaces and make uppercase
 		$input = strtoupper( str_replace( ' ', '', $input ) );
 
@@ -155,9 +162,22 @@ class Validation extends Base
 		return ( 98 - $checksum ) == $check;
 	}
 
+	public static function sanitizeCardNumber( $input )
+	{
+		$sanitized = Number::translate( Text::trim( $input ) );
+
+		if ( ! self::isCardNumber( $sanitized ) )
+			return '';
+
+		return $sanitized;
+	}
+
 	// https://github.com/persian-tools/php-persian-tools/blob/master/src/Traits/VerifyCardNumber.php
-	public static function verifyCardNumber( $input )
+	public static function isCardNumber( $input )
     {
+		if ( self::empty( $input ) )
+			return FALSE;
+
 		if ( 16 !== strlen( $input )
 			|| 0 === intval( substr( $input, 1, 11 ) )
 			|| 0 === intval( substr( $input, 10 ) ) )

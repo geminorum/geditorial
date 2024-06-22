@@ -117,6 +117,22 @@ class Text extends Base
 		return array_filter( (array) preg_split( '/\s/u', $text ), 'strlen' );
 	}
 
+	/**
+	 * Splits string by new line characters.
+	 *
+	 * @param  string $text
+	 * @return array  $lines
+	 */
+	public static function splitLines( $text )
+	{
+		if ( empty( $text ) )
+			return [];
+
+		$text = self::normalizeWhitespace( self::trim( $text ), TRUE );
+
+		return array_filter( array_map( [ __CLASS__, 'trim' ], preg_split( "/\r\n|\n|\r/", $text ) ) );
+	}
+
 	public static function stripNonNumeric( $text )
 	{
 		return preg_replace( '/[^0-9۰-۹۰-۹]/miu', '', $text );
@@ -394,6 +410,19 @@ class Text extends Base
 			return self::normalizeWhitespace( $text );
 
 		return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text );
+	}
+
+	/**
+	 * Normalizes all line endings in this string by using a single unified
+	 * newline sequence (which may be specified manually)
+	 * @source https://github.com/delight-im/PHP-Str
+	 *
+	 * @param string|null $newlineSequence (optional) the target newline sequence to use
+	 * @return static a new instance of this class
+	 */
+	public static function normalizeLineEndings( $text, $newline = NULL )
+	{
+		return \preg_replace('/\R/u', $newline ?? "\n", $text );
 	}
 
 	public static function stripPrefix( $text, $prefix )
@@ -1130,7 +1159,7 @@ class Text extends Base
 	}
 
 	// @REF: http://php.net/manual/en/function.fputcsv.php#87120
-	public static function toCSV( $data, $delimiter = ',', $enclosure = '"', $null = FALSE )
+	public static function toCSV( $data, $delimiter = ',', $enclosure = '"', $null = FALSE, $pipe = '|' )
 	{
 		$delimiter_esc = preg_quote( $delimiter, '/' );
 		$enclosure_esc = preg_quote( $enclosure, '/' );
@@ -1150,6 +1179,9 @@ class Text extends Base
 					$row[] = 'NULL';
 					continue;
 				}
+
+				if ( is_array( $field ) )
+					$field = implode( $pipe, $field );
 
 				$row[] = preg_match( "/(?:{$delimiter_esc}|{$enclosure_esc}|\s)/", $field )
 					? ( $enclosure.str_replace( $enclosure, $enclosure.$enclosure, $field ).$enclosure )

@@ -18,6 +18,20 @@ class File extends Base
 	}
 
 	/**
+	 * Wraps the `wp_is_writable()` with fallback to `is_writable()`
+	 *
+	 * @param  string $path
+	 * @return bool   $writable
+	 */
+	public static function writable( $path )
+	{
+		if ( function_exists( 'wp_is_writable' ) )
+			return wp_is_writable( $path );
+
+		return @is_writable( $path );
+	}
+
+	/**
 	 * normalize a filesystem path
 	 *
 	 * on windows systems, replaces backslashes with forward slashes and forces upper-case drive letters.
@@ -91,7 +105,7 @@ class File extends Base
 
 		$fp = @fopen( $temp, 'x' );
 
-		if ( ! $fp && is_writable( $dir ) && file_exists( $temp ) )
+		if ( ! $fp && self::writable( $dir ) && file_exists( $temp ) )
 			return self::tempName( $name, $dir );
 
 		if ( $fp )
@@ -220,7 +234,7 @@ class File extends Base
 			if ( TRUE === $dir )
 				$dir = $path;
 
-		} else if ( wp_is_writable( $path ) ) {
+		} else if ( self::writable( $path ) ) {
 
 			$dir = $path;
 		}

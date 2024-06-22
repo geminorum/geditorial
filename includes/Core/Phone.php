@@ -59,7 +59,7 @@ class Phone extends Base
 
 			// 8 digits and starts with non `0`
 			else if ( preg_match( '/^[1-9]{1}\d{7}$/', $sanitized ) )
-				$sanitized = sprintf( '+98%s%s', self::const( 'GCORE_DEFAULT_PROVINCE_CODE', '21' ), $sanitized );
+				$sanitized = sprintf( '+98%s%s', self::const( 'GCORE_DEFAULT_PROVINCE_PHONE', '21' ), $sanitized );
 
 			// NOTE: invalidate likes of `+982530000000`, `+982100000000`
 			if ( 13 === strlen( $sanitized ) && '0000000' === substr( $sanitized, -7 ) )
