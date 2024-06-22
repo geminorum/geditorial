@@ -36,6 +36,14 @@ class Info extends WordPress\Main
 		return apply_filters( static::BASE.'_lookup_latlng', $url, $latlng );
 	}
 
+	public static function lookupCountry( $code )
+	{
+		if ( function_exists( 'gnetwork_country_lookup' ) )
+			return gnetwork_country_lookup( $code );
+
+		return $code;
+	}
+
 	// https://books.google.com/books?vid=isbn9789646799950
 	// https://www.google.com/search?tbm=bks&q=9786005334395
 	// https://www.google.com/search?q=9786229627747

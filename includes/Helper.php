@@ -756,14 +756,17 @@ class Helper extends WordPress\Main
 
 	private static function getStringsFromName( $name )
 	{
-		if ( ! is_array( $name ) )
-			return [
-				$name.'s',
-				$name,
-				Core\Text::strToLower( $name.'s' ),
-				Core\Text::strToLower( $name ),
-				'%s',
-			];
+		if ( ! is_array( $name ) ) {
+
+			if ( FALSE === ( $noop = Info::getNoop( $name, FALSE ) ) )
+				$name = [
+					'singular' => $name,
+					'plural'   => Core\L10n::pluralize( $name ),
+				];
+
+			else
+				$name = $noop;
+		}
 
 		if ( array_key_exists( 'domain', $name ) )
 			$strings = [

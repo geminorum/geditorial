@@ -515,7 +515,6 @@ class Banking extends gEditorial\Module
 				else
 					$terms[] = $exists['term_id'];
 			}
-
 		}
 
 		if ( $this->posttype_supported( $post->post_type ) ) {

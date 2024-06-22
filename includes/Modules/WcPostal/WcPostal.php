@@ -16,7 +16,7 @@ class WcPostal extends gEditorial\Module
 			'name'     => 'wc_postal',
 			'title'    => _x( 'WC Postal', 'Modules: WC Postal', 'geditorial-admin' ),
 			'desc'     => _x( 'Package Tracking Enhancements for WooCommerce', 'Modules: WC Postal', 'geditorial-admin' ),
-			'icon'     => [ 'misc-48', 'iripost' ], // 'buddicons-tracking',
+			'icon'     => [ 'misc-48', 'ir-post' ], // 'buddicons-tracking',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 		];
@@ -124,7 +124,7 @@ class WcPostal extends gEditorial\Module
 
 	private function _service_icon( $default = FALSE )
 	{
-		$icon = $this->filters( 'service_icon', GEDITORIAL_URL.'assets/images/iripost.svg' );
+		$icon = $this->filters( 'service_icon', GEDITORIAL_URL.'assets/images/irpost.svg' );
 		return $default ? $icon : $this->get_setting_fallback( 'service_icon', $icon );
 	}
 

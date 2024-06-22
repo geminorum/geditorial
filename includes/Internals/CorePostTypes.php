@@ -353,11 +353,7 @@ trait CorePostTypes
 		else if ( TRUE === $defaults )
 			$defaults = array_keys( $supports );
 
-		// NOTE: filtered noop strings may omit context/domain keys!
-		$singular = translate_nooped_plural( array_merge( [
-			'context' => NULL,
-			'domain'  => $this->get_textdomain() ?: 'default',
-		], $this->strings['noops'][$constant] ), 1 );
+		$singular = $this->get_posttype_label( $constant, 'singular_name' );
 
 		return [
 			'field'       => $constant.'_supports',
