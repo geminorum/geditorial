@@ -142,6 +142,22 @@ class Scripts extends WordPress\Main
 		return self::enqueue( 'admin.selectall', [ 'jquery' ] );
 	}
 
+	public static function enqueueTableOverflow()
+	{
+		static $enqueued = FALSE;
+
+		if ( $enqueued )
+			return $enqueued;
+
+		return $enqueued = self::inlineScript( static::BASE.'-tableoverflow',
+			'jQuery("table.-table-overflow").tableoverflow();',
+			[
+				self::enqueueVendor( 'jquery-tableoverflow', [ 'jquery' ] ),
+				'jquery',
+			]
+		);
+	}
+
 	public static function enqueueWordCount()
 	{
 		return self::enqueue( 'all.wordcount', [
