@@ -125,7 +125,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		], NULL, [
 			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
 			'custom_captype' => TRUE,
-		], TRUE );
+		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
@@ -167,7 +167,12 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;
 
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
+		// $this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
+		$this->add_dashboard_widget(
+			'term-summary',
+			$this->get_taxonomy_label( 'main_taxonomy', 'extended_label' ),
+			'refresh'
+		);
 	}
 
 	public function render_widget_term_summary( $object, $box )
