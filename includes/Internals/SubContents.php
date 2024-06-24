@@ -209,7 +209,6 @@ trait SubContents
 		if ( is_object( $raw ) )
 			$raw = Core\Arraay::fromObject( $raw );
 
-		$raw  = $this->filters( 'subcontent_pre_prep_data', $raw, $post, $mapping, $metas );
 		$data = [];
 
 		foreach ( $mapping as $map_from => $map_to )

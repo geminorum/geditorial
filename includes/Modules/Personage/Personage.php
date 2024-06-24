@@ -26,6 +26,8 @@ class Personage extends gEditorial\Module
 	use Internals\PostTypeFields;
 	use Internals\TemplateTaxonomy;
 
+	protected $positions = [ 'primary_posttype' => 2 ];
+
 	public static function module()
 	{
 		return [
@@ -328,6 +330,11 @@ class Personage extends gEditorial\Module
 					'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'address',
 				],
+
+				'website_url'    => [ 'type' => 'link',    'order' => 610 ],
+				'wiki_url'       => [ 'type' => 'link',    'order' => 620 ],
+				'email_address'  => [ 'type' => 'email',   'order' => 630 ],
+				'contact_string' => [ 'type' => 'contact', 'order' => 640 ],   // url/email/phone
 			],
 		] ];
 	}

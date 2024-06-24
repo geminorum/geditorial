@@ -200,7 +200,7 @@ trait PrintPage
 	protected function printpage_link_bootstrap_5()
 	{
 		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
-		$dir = Core\HTML::rtl( 'SCRIPT_DEBUG' ) ? '' : '.rtl';
+		$dir = Core\HTML::rtl() ? '.rtl' : '';
 
 		return Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/bootstrap/bootstrap'.$dir.$var.'.css', '5.3.3', 'all' );
 	}

@@ -310,7 +310,7 @@ class Banking extends gEditorial\Module
 			$this->_hook_submenu_adminpage( 'framepage', 'read' );
 	}
 
-	public function load_submenu_adminpage( $context = 'framepage' )
+	public function load_framepage_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );
 
@@ -340,12 +340,14 @@ class Banking extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return Info::renderNoPostsAvailable();
 
+		$context = 'framepage';
+
 		if ( $this->role_can( 'assign' ) ) {
 
 			/* translators: %s: post title */
 			$title = sprintf( _x( 'Bank Grid for %s', 'Page Title', 'geditorial-banking' ), WordPress\Post::title( $post ) );
 
-			Settings::wrapOpen( $this->key, 'framepage', $title );
+			Settings::wrapOpen( $this->key, $context, $title );
 
 				Scripts::renderAppMounter( 'bank-grid', $this->key );
 				Scripts::noScriptMessage();
@@ -357,13 +359,13 @@ class Banking extends gEditorial\Module
 			/* translators: %s: post title */
 			$title = sprintf( _x( 'Bank Overview for %s', 'Page Title', 'geditorial-banking' ), WordPress\Post::title( $post ) );
 
-			Settings::wrapOpen( $this->key, 'framepage', $title );
+			Settings::wrapOpen( $this->key, $context, $title );
 
 				echo $this->main_shortcode( [
 					'id'      => $post,
-					'context' => 'framepage',
+					'context' => $context,
 					'class'   => '-table-content',
-				], $this->subcontent_get_empty_notice( 'framepage' ) );
+				], $this->subcontent_get_empty_notice( $context ) );
 
 			Settings::wrapClose();
 

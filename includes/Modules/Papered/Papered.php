@@ -163,7 +163,6 @@ class Papered extends gEditorial\Module
 			'custom_captype' => TRUE,
 		] );
 
-
 		$this->paired_register( [
 			'public'       => FALSE,
 			'rewrite'      => FALSE,

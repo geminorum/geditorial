@@ -119,6 +119,7 @@ class Meta extends gEditorial\Module
 				'mobile_number'  => _x( 'Mobile Number', 'Titles', 'geditorial-meta' ),
 
 				'website_url'    => _x( 'Website URL', 'Titles', 'geditorial-meta' ),
+				'wiki_url'       => _x( 'Wiki URL', 'Titles', 'geditorial-meta' ),
 				'email_address'  => _x( 'Email Address', 'Titles', 'geditorial-meta' ),
 				'postal_address' => _x( 'Postal Address', 'Titles', 'geditorial-meta' ),
 				'postal_code'    => _x( 'Postal Code', 'Titles', 'geditorial-meta' ),
@@ -174,6 +175,7 @@ class Meta extends gEditorial\Module
 				'mobile_number'  => _x( 'Mobile Contact Number about the Content', 'Descriptions', 'geditorial-meta' ),
 
 				'website_url'    => _x( 'Public Website URL of the Content', 'Descriptions', 'geditorial-meta' ),
+				'wiki_url'       => _x( 'Public Wiki URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'email_address'  => _x( 'Email Address about the Content', 'Descriptions', 'geditorial-meta' ),
 				'postal_address' => _x( 'Postal Address about the Content', 'Descriptions', 'geditorial-meta' ),
 				'postal_code'    => _x( 'Postal Code about the Content', 'Descriptions', 'geditorial-meta' ),
@@ -248,6 +250,7 @@ class Meta extends gEditorial\Module
 				'mobile_number'  => [ 'type' => 'mobile' ],
 
 				'website_url'    => [ 'type' => 'link' ],
+				'wiki_url'       => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 				'postal_address' => [ 'type' => 'address' ],
 				'postal_code'    => [ 'type' => 'postcode' ],

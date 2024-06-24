@@ -222,7 +222,14 @@ trait BulkExports
 				break;
 		}
 
-		return $this->filters( 'export_get_data', $data, $reference, $target, $type, $context, $format );
+		return $this->filters( 'export_get_data',
+			$data,
+			$reference,
+			$target,
+			$type,
+			$context,
+			$format
+		);
 	}
 
 	protected function exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format )
@@ -246,6 +253,7 @@ trait BulkExports
 					'post_excerpt',
 					'post_type',
 				] );
+
 				break;
 
 			case 'full':
@@ -261,12 +269,22 @@ trait BulkExports
 					'menu_order',
 					'post_type',
 				] );
+
 				break;
 		}
 
-		return $this->filters( 'export_post_props', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
+		return $this->filters( 'export_post_props',
+			Core\Arraay::prepString( $list ),
+			$posttypes,
+			$reference,
+			$target,
+			$type,
+			$context,
+			$format
+		);
 	}
 
+	// TODO: must support the other than `meta` types of fields like `units`/`geo`/`seo`/`contact`
 	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format )
 	{
 		$list = [];
@@ -322,7 +340,15 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_fields', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
+		return $this->filters( 'export_post_fields',
+			Core\Arraay::prepString( $list ),
+			$posttypes,
+			$reference,
+			$target,
+			$type,
+			$context,
+			$format
+		);
 	}
 
 	protected function exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format )
@@ -340,16 +366,26 @@ trait BulkExports
 				case 'advanced':
 
 					$list = array_merge( $list, [] );
+
 					break;
 
 				case 'full':
 
 					$list = array_merge( $list, [] );
+
 					break;
 			}
 		}
 
-		return $this->filters( 'export_post_metas', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
+		return $this->filters( 'export_post_metas',
+			Core\Arraay::prepString( $list ),
+			$posttypes,
+			$reference,
+			$target,
+			$type,
+			$context,
+			$format
+		);
 	}
 
 	protected function exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format )
@@ -378,10 +414,19 @@ trait BulkExports
 				case 'full':
 
 					$list = array_merge( $list, get_object_taxonomies( $posttype ) );
+
 					break;
 			}
 		}
 
-		return $this->filters( 'export_post_taxonomies', Core\Arraay::prepString( $list ), $posttypes, $reference, $target, $type, $context, $format );
+		return $this->filters( 'export_post_taxonomies',
+			Core\Arraay::prepString( $list ),
+			$posttypes,
+			$reference,
+			$target,
+			$type,
+			$context,
+			$format
+		);
 	}
 }

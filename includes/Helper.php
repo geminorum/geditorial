@@ -1313,7 +1313,7 @@ class Helper extends WordPress\Main
 			return $layout;
 	}
 
-	// TODO: myabe migrate to: https://github.com/jwage/easy-csv
+	// TODO: maybe migrate to: https://github.com/jwage/easy-csv
 	// @REF: https://github.com/kzykhys/PHPCsvParser
 	public static function parseCSV( $file_path, $limit = NULL )
 	{
@@ -1370,7 +1370,8 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Generates simple XLSX data string from given data.
-	 * @REF: https://github.com/mk-j/PHP_XLSXWriter
+	 * @package `maksimovic/php-xlsx-writer`
+	 * @REF: https://github.com/maksimovic/PHP_XLSXWriter
 	 *
 	 * @param  array  $data
 	 * @param  array  $headers

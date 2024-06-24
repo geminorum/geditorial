@@ -1216,6 +1216,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_force_sanitize( $description = NULL, $default = 0 )
+	{
+		return [
+			'field'        => 'force_sanitize',
+			'title'        => _x( 'Force Sanitize', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Tries to force the sanitization upon storing data.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default,
+		];
+	}
+
 	public static function sub( $default = 'general' )
 	{
 		return trim( self::req( 'sub', $default ) );

@@ -129,9 +129,9 @@ class NextOfKin extends gEditorial\Module
 					'relation'   => _x( 'Relation', 'Field Label', 'geditorial-next-of-kin' ),
 					'identity'   => _x( 'Identity', 'Field Label', 'geditorial-next-of-kin' ),
 					'contact'    => _x( 'Contact', 'Field Label', 'geditorial-next-of-kin' ),
+					'dob'        => _x( 'Date of Birth', 'Field Label', 'geditorial-next-of-kin' ),
 					'education'  => _x( 'Education', 'Field Label', 'geditorial-next-of-kin' ),
 					'occupation' => _x( 'Occupation', 'Field Label', 'geditorial-next-of-kin' ),
-					'dob'        => _x( 'Date of Birth', 'Field Label', 'geditorial-next-of-kin' ),
 					'desc'       => _x( 'Description', 'Field Label', 'geditorial-next-of-kin' ),
 				],
 			],
@@ -380,7 +380,6 @@ class NextOfKin extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	// public function load_submenu_adminpage( $context = 'framepage' )
 	public function load_framepage_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );

@@ -34,7 +34,8 @@ class Programmed extends gEditorial\Module
 	use Internals\PostTypeFields;
 	use Internals\TemplatePostType;
 
-	protected $deafults = [ 'multiple_instances' => TRUE ];
+	protected $deafults  = [ 'multiple_instances' => TRUE ];
+	protected $positions = [ 'primary_posttype' => 3 ];
 
 	public static function module()
 	{
