@@ -705,7 +705,7 @@ class Book extends gEditorial\Module
 	{
 		switch ( $field_key ) {
 			// FIXME: MUST BE DEPRECATED: use type: `isbn`
-			case 'publication_isbn'   : return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ), Info::lookupISBN( $raw ?: $value ), TRUE );
+			case 'publication_isbn'   : return Info::lookupISBN( $raw ?: $value );
 			/* translators: %s: edition placeholder */
 			case 'publication_edition': return sprintf( _x( '%s Edition', 'Display', 'geditorial-book' ), Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) ) );
 			/* translators: %s: print placeholder */
@@ -1111,7 +1111,7 @@ class Book extends gEditorial\Module
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		switch ( $field ) {
-			case 'publication_isbn': return ModuleHelper::ISBN( $raw );
+			case 'publication_isbn': return Info::lookupISBN( $raw );
 			// case 'publication_date': return Core\Number::localize( Datetime::stringFormat( $raw ) );
 			case 'publication_edition': return Core\Number::localize( Core\Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
 			case 'publication_print': return Core\Number::localize( Core\Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize

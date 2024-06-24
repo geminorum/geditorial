@@ -1269,7 +1269,7 @@ class Meta extends gEditorial\Module
 				return Core\Mobile::prep( trim( $raw ), $field_args, $context );
 
 			case 'isbn':
-				return Core\HTML::link( Core\ISBN::prep( $raw, TRUE ), Info::lookupISBN( $raw ), TRUE );
+				return Info::lookupISBN( trim ( $raw ) );
 
 			case 'date':
 

@@ -839,7 +839,7 @@ class Terms extends gEditorial\Module
 				if ( $meta ) {
 
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
-					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, 'icon-latlng' ), Info::lookupLatLng( $meta ), TRUE ).'</span>';
+					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, 'icon-latlng' ), Info::lookupURLforLatLng( $meta ), TRUE ).'</span>';
 
 				} else {
 

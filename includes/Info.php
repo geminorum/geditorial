@@ -18,9 +18,20 @@ class Info extends WordPress\Main
 		return $ip;
 	}
 
+	// NOTE: must return link html tag
+	public static function lookupLatLng( $latlng )
+	{
+		return Core\HTML::tag( 'a', [
+			'href'   => self::lookupURLforLatLng( $latlng ),
+			'class'  => '-latlng-lookup',
+			'target' => '_blank',
+			'rel'    => 'noreferrer',
+		], Core\Geography::prepLatLng( $latlng, TRUE ) );
+	}
+
 	// @SEE: https://www.latlong.net/countries.html
 	// @REF: https://stackoverflow.com/a/52943975
-	public static function lookupLatLng( $latlng )
+	public static function lookupURLforLatLng( $latlng )
 	{
 		if ( ! $latlng )
 			return '#';
@@ -44,10 +55,21 @@ class Info extends WordPress\Main
 		return $code;
 	}
 
+	// NOTE: must return link html tag
+	public static function lookupISBN( $isbn )
+	{
+		return Core\HTML::tag( 'a', [
+			'href'   => self::lookupURLforISBN( $isbn ),
+			'class'  => '-isbn-lookup',
+			'target' => '_blank',
+			'rel'    => 'noreferrer',
+		], Core\ISBN::prep( $isbn, TRUE ) );
+	}
+
 	// https://books.google.com/books?vid=isbn9789646799950
 	// https://www.google.com/search?tbm=bks&q=9786005334395
 	// https://www.google.com/search?q=9786229627747
-	public static function lookupISBN( $isbn )
+	public static function lookupURLforISBN( $isbn )
 	{
 		// $url = add_query_arg( [
 		// 	// 'q' => 'ISBN:'.urlencode( ISBN::sanitize( $isbn ) ),

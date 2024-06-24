@@ -334,8 +334,7 @@ class Helper extends WordPress\Main
 						$raw ?: $value );
 
 				case 'isbn':
-					return Core\HTML::link( Core\ISBN::prep( $raw ?: $value, TRUE ),
-						Info::lookupISBN( $raw ?: $value ), TRUE );
+					return Info::lookupISBN( $raw ?: $value );
 
 				case 'date':
 					return Datetime::prepForDisplay( $raw ?: $value, 'Y/m/d' );

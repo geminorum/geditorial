@@ -12,9 +12,13 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'book';
 
+	// FIXME: DEPRECATED: use `Info::lookupISBN()`
 	public static function ISBN( $string )
 	{
-		return Core\HTML::link( Core\ISBN::prep( $string, TRUE ), Info::lookupISBN( $string ), TRUE );
+		self::_dep( 'Info::lookupISBN()' );
+
+		// return Core\HTML::link( Core\ISBN::prep( $string, TRUE ), Info::lookupISBN( $string ), TRUE );
+		return Info::lookupISBN( $string );
 	}
 
 	// FIXME: DEPRECATED: use `Info::lookupISBN()`
