@@ -114,7 +114,7 @@ trait BulkExports
 
 			$row = [];
 
-			foreach ( $props as $prop ) {
+			foreach ( $props as $prop => $prop_title ) {
 
 				if ( 'post_name' === $prop )
 					$row[] = urldecode( $post->{$prop} );
@@ -126,18 +126,18 @@ trait BulkExports
 					$row[] = ''; // unknown field!
 			}
 
-			foreach ( $fields as $field )
+			foreach ( $fields as $field => $field_title )
 				$row[] = Template::getMetaField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE ) ?: '';
 
 			$saved = get_post_meta( $post->ID );
 
-			foreach ( $metas as $meta )
+			foreach ( $metas as $meta => $meta_title )
 				$row[] = ( empty( $saved[$meta][0] ) ? '' : trim( $saved[$meta][0] ) ) ?: '';
 
-			foreach ( $taxes as $tax )
+			foreach ( $taxes as $tax => $tax_title )
 				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
 
-			foreach ( $customs as $custom )
+			foreach ( $customs as $custom => $custom_title )
 				$row[] = $this->filters( 'export_prep_custom_for_post', '', $custom, $post, $reference, $posttypes, $format );
 
 			$data[] = $row;
@@ -148,11 +148,11 @@ trait BulkExports
 			case 'csv':
 
 				$headers = array_merge(
-					$props,
-					Core\Arraay::prefixValues( $fields, 'field__' ),
-					Core\Arraay::prefixValues( $metas, 'meta__' ),
-					Core\Arraay::prefixValues( $taxes, 'taxonomy__' ),
-					Core\Arraay::prefixValues( $customs, 'custom__' )
+					array_keys( $props ),
+					Core\Arraay::prefixValues( array_keys( $fields ), 'field__' ),
+					Core\Arraay::prefixValues( array_keys( $metas ), 'meta__' ),
+					Core\Arraay::prefixValues( array_keys( $taxes ), 'taxonomy__' ),
+					Core\Arraay::prefixValues( array_keys( $customs ), 'custom__' )
 				);
 
 				return Core\Text::toCSV( array_merge( [ $headers ], $data ) );
@@ -161,20 +161,20 @@ trait BulkExports
 
 				$headers = [];
 
-				foreach ( $props as $prop )
-					$headers[] = Info::getPosttypePropTitle( $prop, 'export' ) ?: $prop;
+				foreach ( $props as $prop => $prop_title )
+					$headers[] = $prop_title ?? Info::getPosttypePropTitle( $prop, 'export' ) ?: $prop;
 
-				foreach ( $fields as $field )
-					$headers[] = Services\PostTypeFields::isAvailable( $field, $posttypes[0], 'meta' )['title'];
+				foreach ( $fields as $field => $field_title )
+					$headers[] = $field_title ?? Services\PostTypeFields::isAvailable( $field, $posttypes[0], 'meta' )['title'];
 
-				foreach ( $metas as $meta )
-					$headers[] = $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
+				foreach ( $metas as $meta => $meta_title )
+					$headers[] = $meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
 
-				foreach ( $taxes as $taxonomy )
-					$headers[] = Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy );
+				foreach ( $taxes as $taxonomy => $taxonomy_title )
+					$headers[] = $taxonomy_title ?? Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy );
 
-				foreach ( $customs as $custom )
-					$headers[] = $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ); // FIXME: move-up!
+				foreach ( $customs as $custom => $custom_title )
+					$headers[] = $custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ); // FIXME: move-up!
 
 				return Helper::generateXLSX( $data, $headers, WordPress\Post::title( $reference, NULL, FALSE ) );
 		}
@@ -282,7 +282,7 @@ trait BulkExports
 		}
 
 		return $this->filters( 'export_post_props',
-			Core\Arraay::prepString( $list ),
+			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
 			$posttypes,
 			$reference,
 			$target,
@@ -349,7 +349,7 @@ trait BulkExports
 		}
 
 		return $this->filters( 'export_post_fields',
-			Core\Arraay::prepString( $list ),
+			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
 			$posttypes,
 			$reference,
 			$target,
@@ -386,7 +386,7 @@ trait BulkExports
 		}
 
 		return $this->filters( 'export_post_metas',
-			Core\Arraay::prepString( $list ),
+			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
 			$posttypes,
 			$reference,
 			$target,
@@ -428,7 +428,7 @@ trait BulkExports
 		}
 
 		return $this->filters( 'export_post_taxonomies',
-			Core\Arraay::prepString( $list ),
+			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
 			$posttypes,
 			$reference,
 			$target,
@@ -465,7 +465,7 @@ trait BulkExports
 		}
 
 		return $this->filters( 'export_post_customs',
-			Core\Arraay::prepString( $list ),
+			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
 			$posttypes,
 			$reference,
 			$target,
