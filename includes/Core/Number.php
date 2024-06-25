@@ -275,6 +275,18 @@ class Number extends Base
 		return sprintf( '%0'.$threshold.'s', $number );
 	}
 
+	/**
+	 * Removes all leading zeroes in a string.
+	 * @source https://stackoverflow.com/a/30622697
+	 *
+	 * @param  string $zeroised
+	 * @return string $number
+	 */
+	public static function notZeroise( $zeroised )
+	{
+		return preg_replace( '/^0+/', '', self::translate( $zeroised ) );
+	}
+
 	public static $readable_suffix = array(
 		'trillion' => '%s trillion',
 		'billion'  => '%s billion',

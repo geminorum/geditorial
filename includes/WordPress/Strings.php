@@ -18,6 +18,9 @@ class Strings extends Core\Base
 
 	public static function isEmpty( $string, $empties = NULL )
 	{
+		if ( self::empty( $string ) )
+			return TRUE;
+
 		if ( ! is_string( $string ) )
 			return FALSE;
 

@@ -10,12 +10,12 @@ class ISBN extends Base
 		return FALSE; // FIXME!
 	}
 
-	public static function prep( $input, $wrap = FALSE, $link = FALSE )
+	public static function prep( $input, $wrap = FALSE )
 	{
-		$string = Number::intval( $input, FALSE );
+		$string = Number::translate( $input );
 
 		if ( self::validate( $string ) ) {
-			$string = self::sanitize( $string );
+			$string = self::sanitize( $string, FALSE );
 			return $wrap ? '<span class="isbn -valid">&#8206;'.$string.'&#8207;<span>' : $string;
 		}
 
@@ -23,10 +23,10 @@ class ISBN extends Base
 		return $wrap ? '<span class="isbn -not-valid">&#8206;'.$input.'&#8207;<span>' : $input;
 	}
 
-	public static function sanitize( $string, $intval = FALSE )
+	public static function sanitize( $string, $translate = FALSE )
 	{
-		if ( $intval )
-			$string = Number::intval( $string, FALSE );
+		if ( $translate )
+			$string = Number::translate( $string );
 
 		return trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $string ) );
 	}

@@ -29,4 +29,30 @@ class Geography extends Base
 	{
 		return sscanf( sprintf( '(%s)', $string ), '(%[^,], %[^)]' );
 	}
+
+	public static function prepLatLng( $input, $wrap = FALSE )
+	{
+		$string = Number::translate( $input );
+
+		if ( self::validateLatLng( $string ) ) {
+			$string = self::sanitizeLatLng( $string );
+			return $wrap ? '<span class="latlng -valid">&#8206;'.$string.'&#8207;<span>' : $string;
+		}
+
+		// NOTE: returns the original if not valid
+		return $wrap ? '<span class="latlng -not-valid">&#8206;'.$input.'&#8207;<span>' : $input;
+	}
+
+	public static function sanitizeLatLng( $string, $translate = FALSE )
+	{
+		if ( $translate )
+			$string = Number::translate( $string );
+
+		return trim( str_ireplace( [ '-', ':', ' ' ], '', $string ) );
+	}
+
+	public static function validateLatLng( $string )
+	{
+		return TRUE; // FIXME: WTF?!
+	}
 }

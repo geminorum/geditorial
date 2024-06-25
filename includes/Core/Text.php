@@ -432,7 +432,22 @@ class Text extends Base
 			: $text;
 	}
 
-	// @SEE: `str_contains()` @since PHP 8.0.0
+	/**
+	 * Determines if a string contains a given substring.
+	 *
+	 * @param  string $haystack
+	 * @param  string $needle
+	 * @return bool   $contains
+	 */
+	public static function contains( $haystack, $needle )
+	{
+		// @since PHP 8.0.0
+		if ( function_exists( 'str_contains' ) )
+			return str_contains( $haystack, $needle );
+
+		return '' !== $needle && FALSE !== strpos( $haystack, $needle );
+	}
+
 	public static function has( $haystack, $needles, $operator = 'OR' )
 	{
 		if ( ! $haystack || empty( $needles ) )
@@ -1125,12 +1140,30 @@ class Text extends Base
 		return preg_replace( '/<img[^>]+./', '', $text );
 	}
 
-	// @SOURCE: `bp_core_replace_tokens_in_text()`
-	public static function replaceTokens( $text, $tokens, $callback_args = [] )
+	/**
+	 * Replaces all tokens in the input text with appropriate values.
+	 * @source `bp_core_replace_tokens_in_text()`
+	 *
+	 * @param  string   $text
+	 * @param  array    $tokens
+	 * @param  array    $callback_args
+	 * @param  callback $general_callback
+	 * @return string   $replaced
+	 */
+	public static function replaceTokens( $text, $tokens, $callback_args = [], $general_callback = NULL )
 	{
-		$unescaped = $escaped = array();
+		// bail early if it has not have tokens!
+		if ( ! self::has( $text, '{{' ) )
+			return $text;
+
+		$unescaped = $escaped = [];
 
 		foreach ( $tokens as $token => $value ) {
+
+			if ( $general_callback ) {
+				$token = $value;
+				$value = $general_callback;
+			}
 
 			if ( ! is_string( $value ) && is_callable( $value ) )
 				$value = call_user_func_array( $value, [ $token, $callback_args ] );

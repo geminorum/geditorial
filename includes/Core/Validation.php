@@ -166,7 +166,11 @@ class Validation extends Base
 	{
 		$sanitized = Number::translate( Text::trim( $input ) );
 
-		if ( ! self::isCardNumber( $sanitized ) )
+		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' )
+			&& ! self::isIranCardNumber( $sanitized ) )
+			return '';
+
+		else if ( ! self::isCardNumber( $sanitized ) )
 			return '';
 
 		return $sanitized;
@@ -193,4 +197,34 @@ class Validation extends Base
 
         return $sum % 10 == 0;
     }
+
+	// @REF https://www.webhostingtalk.ir/showthread.php?t=202847
+	public static function isIranCardNumber( $input = '', $iranian = TRUE )
+	{
+		$input  = (string) preg_replace( '/\D/','',$input );
+		$strlen = strlen( $input );
+
+		if ( $iranian && 16 !== $strlen )
+			return FALSE;
+
+		if ( ! $iranian && ( $strlen < 13 || $strlen > 19 ) )
+			return FALSE;
+
+		if ( ! in_array( $input[0], [ 2, 4, 5, 6, 9 ] ) )
+			return FALSE;
+
+		for ( $i = 0; $i < $strlen; $i++ ) {
+
+			$res[$i] = $input[$i];
+
+			if ( ( $strlen % 2 ) == ( $i % 2 ) ) {
+				$res[$i] *= 2;
+
+				if ( $res[$i] > 9 )
+					$res[$i] -= 9;
+			}
+		}
+
+		return array_sum( $res ) % 10 == 0;
+	}
 }
