@@ -140,7 +140,7 @@
   .-wrap.-summary {
     margin: 0 0 1rem;
 
-    &.-table-summary {}
+    // &.-table-summary {}
 
     &.-paired-summary {
       .-list ul {
@@ -190,7 +190,7 @@
     }
   }
 
-  .-description {}
+  // .-description {}
 }
 
 .-wrap.side-wrap {
@@ -304,7 +304,7 @@
   padding: $spacer * .5;
 
   > .-description {
-    &.-wrong {}
+    // &.-wrong {}
 
     &.-moment {
       padding: $spacer;

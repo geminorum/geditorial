@@ -15,6 +15,15 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 @mixin plugin-subcontent-datagrid-table-simple() {
+
+  // https://stackoverflow.com/a/48930521
+  .wrap-base-table-simple {
+    overflow-x: auto;
+    table {
+      white-space: nowrap;
+    }
+  }
+
   .base-table-simple {
     color: #333;
     background-color: #fff;
@@ -48,6 +57,11 @@
       width: 75px;
     }
 
+    th[data-key="status"],
+    th[data-key="type"] {
+      width: 80px;
+    }
+
     th[data-key="dob"] {
       width: 70px;
     }
@@ -56,7 +70,24 @@
       width: 168px;
     }
 
+    th[data-key="card"] {
+      width: 120px;
+    }
+
+    th[data-key="contact"],
+    th[data-key="account"] {
+      width: 140px;
+    }
+
+    th[data-key="bankname"],
+    th[data-key="fullname"],
+    th[data-key="relation"] {
+      width: 120px;
+    }
+
     td[data-key="iban"],
+    td[data-key="card"],
+    td[data-key="account"],
     td[data-key="contact"],
     td[data-key="identity"],
     td[data-key="dob"] {
@@ -72,7 +103,7 @@
   @include mainwrap();
   margin-top: 0 !important;
 
-  > table {
+  > div table {
     max-width: 100%;
     font-size: smaller;
 
@@ -81,12 +112,12 @@
     }
   }
 
-  > table thead tr th {
+  > div table thead tr th {
     border-top: none;
   }
 
-  > table tr th,
-  > table tr td {
+  > div table tr th,
+  > div table tr td {
     &:first-of-type,
     &:last-of-type {
       border-left: none;
