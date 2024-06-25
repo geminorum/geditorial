@@ -113,6 +113,15 @@ class Iranian extends gEditorial\Module
 		] ];
 	}
 
+	public function init()
+	{
+		parent::init();
+
+		$this->filter( 'info_from_iban', 4, 8, FALSE, $this->base );
+		$this->filter( 'info_from_card_number', 4, 8, FALSE, $this->base );
+		$this->filter_module( 'banking', 'subcontent_pre_prep_data', 4, 8 );
+	}
+
 	public function meta_init()
 	{
 		$this->add_posttype_fields_supported();
@@ -515,5 +524,36 @@ class Iranian extends gEditorial\Module
 			return '';
 
 		return $sanitized;
+	}
+
+	public function info_from_iban( $info, $raw, $input, $pre )
+	{
+		if ( empty( $info ) )
+			return $info;
+
+		if ( FALSE !== ( $data = ModuleHelper::infoFromIBAN( $raw, FALSE, FALSE ) ) )
+			return \array_merge( $info, $data );
+
+		return $info;
+	}
+
+	public function info_from_card_number( $info, $raw, $input, $pre )
+	{
+		if ( empty( $info ) )
+			return $info;
+
+		if ( FALSE !== ( $data = ModuleHelper::infoFromCardNumber( $raw, FALSE, FALSE ) ) )
+			return \array_merge( $info, $data );
+
+		return $info;
+	}
+
+	public function banking_subcontent_pre_prep_data( $raw, $post, $mapping, $metas )
+	{
+		$data             = $raw;
+		$data['bank']     = ModuleHelper::sanitizeBank( $raw['bank'], $raw['bankname'] );
+		$data['bankname'] = ModuleHelper::sanitizeBankName( $raw['bankname'], $raw['bank'] );
+
+		return $data;
 	}
 }
