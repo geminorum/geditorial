@@ -7,13 +7,13 @@
     <table class="table table-striped table-bordered app-table">
       <thead>
         <tr>
-          <th v-for="(field, key) in fields" :class="[key, { required: config.required.includes(key) }]">{{ field }}</th>
+          <th v-for="(field, key) in fields" :class="['field-'+key, { required: config.required.includes(key) }]">{{ field }}</th>
           <th class="actions">{{ $translate('actions') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in items" :key="item._id" :class="{ 'is-editing': editing == item._id }">
-          <td v-for="(field, key) in fields" :title="field" :class="[key, cellClass(item[key], key)]">{{item[key]}}</td>
+          <td v-for="(field, key) in fields" :title="field" :class="['field-'+key, cellClass(item[key], key)]">{{item[key]}}</td>
           <td class="actions">
             <GridButton @click="removeItem(item._id)" dashicon="remove" :title="i18n.remove" />
             <GridButton @click="infoItem(item._id)" dashicon="info" :title="i18n.info" />
@@ -26,7 +26,7 @@
               :field="key"
               :label="field"
               :value="form[key]"
-              :class="[key, cellClass(form[key], key)]"
+              :class="['field-'+key, cellClass(form[key], key)]"
               @change="event => updateInput(key, event.target.value)"
             />
           </td>
@@ -45,8 +45,8 @@
 <script>
 import { debounce } from 'lodash-es';
 import { EnterToTabMixin } from '../../vue-plugins/vue-enter-to-tab.v2'; // https://github.com/ajomuch92/vue-enter-to-tab
-import { verifyDateString, verifyYearString } from '../../js-utils/datetime.v1';
-import { checkMobileByLocale } from '../../js-utils/mobile.v1';
+// import { verifyDateString, verifyYearString } from '../../js-utils/datetime.v1';
+// import { checkMobileByLocale } from '../../js-utils/mobile.v1';
 
 // https://github.com/WordPress/gutenberg/tree/trunk/packages/api-fetch
 import apiFetch from '@wordpress/api-fetch'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
@@ -88,20 +88,11 @@ export default {
     // @REF: https://beginnersoftwaredeveloper.com/can-i-pass-a-parameter-to-a-computed-property-vue/
     cellClass(cell, offset) {
       if(!cell) {
-
         return '-empty';
-
-      // } else if (this.isDateField(offset)) {
-
-      //   return 'fa-IR'===this.locale && ( verifyDateString(cell) || verifyYearString(cell) ) ? '-is-valid' : '-is-not-valid';
-
-      // } else if (offset=='identity'||offset=='identifier') {
-
-      //   return 'fa-IR'===this.locale && verifyIranianNationalId(cell) ? '-is-valid' : '-is-not-valid';
-
-      // } else if (offset=='mobile'||offset=='phone') {
-
-      //   return checkMobileByLocale(cell, this.locale) ? '-is-valid' : '-is-not-valid';
+      } else if (offset=='iban') {
+        return 'fa-IR'===this.locale && isShebaValid(cell) ? '-is-valid' : '-is-not-valid';
+      } else if (offset === 'card') {
+        return 'fa-IR'===this.locale && verifyCardNumber(cell) ? '-is-valid' : '-is-not-valid';
       }
 
       return '-unknown';
@@ -113,8 +104,7 @@ export default {
 
     isNotValidInput(field) {
       if(!field) return false;
-      // console.log(field);
-      if(!this.form[field].trim()) return false;
+      if(!this.form[field]||!this.form[field].trim()) return false;
 
       if (field === 'iban') {
         return ! isShebaValid(this.form[field]);
@@ -154,6 +144,9 @@ export default {
     },
 
     insertItem () {
+
+      // TODO: check for duplicate rows
+
       if (this.hasValidInput()) {
         this.spinner = true;
 
@@ -223,15 +216,32 @@ export default {
     // https://vuejs.org/guide/essentials/reactivity-fundamentals.html#stateful-methods
     this.debouncedDoQuery = debounce(this.doQuery, 500);
 
+    if ('card' in this.fields) {
+      this.$watch('form.card', (newValue) => {
+        if(verifyCardNumber(newValue)) {
+          // console.log(getBankNameFromCardNumber(newValue));
+          if ('bankname' in this.fields && ! this.form.bankname) {
+            this.form.bankname = getBankNameFromCardNumber(newValue);
+          }
+        }
+      });
+    }
+
     if ('iban' in this.fields) {
       this.$watch('form.iban', (newValue) => {
         if(isShebaValid(newValue)) {
           const info = getShebaInfo(newValue);
-          console.log(info);
+          // console.log(info);
           this.form.bank = info.nickname;
-          if ('bankname' in this.fields) {
+
+          if ('bankname' in this.fields && ! this.form.bankname) {
             this.form.bankname = info.persianName;
           }
+
+          // WORKING: but incorrect process of the account number
+          // if ('account' in this.fields && info.accountNumberAvailable) {
+          //   this.form.account = info.formattedAccountNumber;
+          // }
         }
       });
     }

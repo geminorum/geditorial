@@ -43,7 +43,8 @@ $brand-danger:  #d9534f !default;
 }
 
 .app-table {
-  /* http://jsfiddle.net/mr_eirenaios/WFYBG/1/ */
+  // http://jsfiddle.net/mr_eirenaios/WFYBG/1/
+  
   width: 100%;
   color: #333;
   background-color: #fff;
@@ -68,16 +69,31 @@ $brand-danger:  #d9534f !default;
       margin-left: .125rem;
     }
 
-    &.fullname {
-     width: 120px;
+    &.field-bankname,
+    &.field-fullname {
+     width: 140px;
     }
 
-    &.relation {
+    &.field-account {
+     width: 180px;
+    }
+
+    &.field-iban {
+     width: 220px;
+    }
+
+    &.field-card {
+     width: 145px;
+    }
+
+    &.field-type,
+    &.field-status,
+    &.field-relation {
      width: 100px;
     }
 
-    &.dob {
-      width: 80px;
+    &.field-desc {
+      width: auto;
     }
 
     &.actions {
@@ -90,14 +106,10 @@ $brand-danger:  #d9534f !default;
   td {
     padding: 0.5em;
     border: 1px solid #ccc;
+    line-height: initial;
   }
 
   td {
-
-    &.dob {
-      text-align: center;
-    }
-
     &.actions {
       text-align: right;
       padding: .25rem;
@@ -113,6 +125,31 @@ $brand-danger:  #d9534f !default;
 
     &.is-not-valid {
       background-color: $brand-danger;
+
+      input {
+        // border-color: $brand-danger !important;
+        box-shadow: 0 0 0 1px $brand-danger;
+      }
+    }
+  }
+
+  td,
+  input {
+    &.field-account,
+    &.field-iban,
+    &.field-card {
+      // HACK: `rtl:ignore` not working!
+      body.rtl & {
+        text-align: right;
+      }
+    }
+
+    &.-is-valid {
+      color: $brand-success;
+    }
+
+    &.-is-not-valid {
+      color: $brand-danger;
     }
   }
 }
