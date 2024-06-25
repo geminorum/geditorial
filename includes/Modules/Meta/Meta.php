@@ -447,6 +447,7 @@ class Meta extends gEditorial\Module
 
 		$this->action( 'wp_loaded' );
 		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );
+		$this->filter( 'meta_field', 7, 15, 'tokens', $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
 	}
 
@@ -1334,6 +1335,47 @@ class Meta extends gEditorial\Module
 		}
 
 		return $meta;
+	}
+
+	public function meta_field_tokens( $meta, $field, $post, $args, $raw, $field_args, $context )
+	{
+		// bail early if it has not have tokens!
+		if ( ! Core\Text::has( $meta, '{{' ) )
+			return $meta;
+
+		if ( in_array( $field_args['type'], [
+			'integer', 'number', 'float', 'price',
+			'member', 'person',
+			'day', 'hour', 'gram', 'milimeter', 'kilogram', 'centimeter',
+			'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn', 'postcode',
+			'post', 'attachment', 'parent_post', 'posts', 'attachments',
+			'user', 'term',
+		], TRUE ) )
+			return $meta;
+
+		$tokens = [
+			'today',
+		];
+
+		return Core\Text::replaceTokens( $meta, $tokens, [
+			'meta'       => $meta,
+			'field'      => $field,
+			'post'       => $post,
+			'args'       => $args,
+			'raw'        => $raw,
+			'field_args' => $field_args,
+			'context'    => $context,
+		], [ $this, '_meta_field_replace_token' ] );
+	}
+
+	private function _meta_field_replace_token( $token, $args )
+	{
+		switch ( strtolower( $token ) ) {
+
+			case 'today': return date_i18n( Datetime::dateFormats( empty( $args['context'] ) ? 'default' : $args['context'] ) );
+		}
+
+		return '';
 	}
 
 	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
