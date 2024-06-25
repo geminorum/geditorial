@@ -50,6 +50,7 @@ class Banking extends gEditorial\Module
 					$this->subcontent_define_fields(),
 					$this->subcontent_get_required_fields( 'settings' )
 				) ],
+				'force_sanitize',
 			],
 			'_roles' => [
 				'reports_roles' => [ _x( 'Roles that can view bank accounts.', 'Setting Description', 'geditorial-banking' ), $roles ],
@@ -219,6 +220,7 @@ class Banking extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->filter_self( 'subcontent_pre_prep_data', 4, 10 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 		$this->register_shortcode( 'main_shortcode' );
 
@@ -555,6 +557,113 @@ class Banking extends gEditorial\Module
 		}
 
 		return $terms;
+	}
+
+	// TODO: force sanitize: `type`/`status`/`relation`
+	public function subcontent_pre_prep_data( $raw, $post, $mapping, $metas )
+	{
+		$sanitize = $this->get_setting( 'force_sanitize' );
+		$data     = [];
+
+		foreach ( $raw as $key => $value ) {
+
+			$value = Core\Text::trim( $value );
+
+			if ( WordPress\Strings::isEmpty( $value ) ) {
+
+				if ( empty( $data[$key] ) )
+					$data[$key] = '';
+
+				continue;
+			}
+
+			switch ( $key ) {
+
+				case 'card':
+
+					if ( FALSE === ( $card = Info::fromCardNumber( $value ) ) ) {
+
+						if ( $sanitize )
+							$data[$key] = '';
+
+					} else {
+
+						if ( ! empty( $card['raw'] ) )
+							$data[$key] = $card['raw'];
+
+						if ( ! empty( $card['country'] ) && empty( $data['country'] ) )
+							$data['country'] = $card['country'];
+
+						if ( ! empty( $card['bank'] ) && empty( $data['bank'] ) )
+							$data['bank'] = $card['bank'];
+
+						if ( ! empty( $card['bankname'] ) && empty( $data['bankname'] ) )
+							$data['bankname'] = $card['bankname'];
+
+						if ( ! empty( $card['account'] ) && empty( $data['account'] ) )
+							$data['account'] = $card['account'];
+					}
+
+					break;
+
+				case 'iban':
+
+					if ( FALSE === ( $iban = Info::fromIBAN( $value ) ) ) {
+
+						if ( $sanitize )
+							$data[$key] = '';
+
+					} else {
+
+						if ( ! empty( $iban['raw'] ) )
+							$data[$key] = $iban['raw'];
+
+						if ( ! empty( $iban['country'] ) && empty( $data['country'] ) )
+							$data['country'] = $iban['country'];
+
+						if ( ! empty( $iban['bank'] ) && empty( $data['bank'] ) )
+							$data['bank'] = $iban['bank'];
+
+						if ( ! empty( $iban['bankname'] ) && empty( $data['bankname'] ) )
+							$data['bankname'] = $iban['bankname'];
+
+						if ( ! empty( $iban['account'] ) && empty( $data['account'] ) )
+							$data['account'] = $iban['account'];
+					}
+
+					break;
+
+				case 'fullname':
+				case 'bankname':
+				case 'relation':
+				case 'status':
+				case 'type':
+
+					$data[$key] = apply_filters( 'string_format_i18n',
+						$sanitize ? WordPress\Strings::cleanupChars( $value ) : $value );
+
+					break;
+
+				case 'desc':
+
+					$data[$key] = apply_filters( 'html_format_i18n',
+						$sanitize ? WordPress\Strings::cleanupChars( $value, TRUE ) : $value );
+
+					break;
+
+				case 'account':
+
+					$data[$key] = Core\Number::translate( $value );
+
+					break;
+
+				default:
+
+					$data[$key] = $value;
+			}
+		}
+
+		return $data;
 	}
 
 	public function tabloid_post_summaries( $list, $data, $post, $context )
