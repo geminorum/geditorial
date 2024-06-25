@@ -7,13 +7,13 @@
     <table class="table table-striped table-bordered app-table">
       <thead>
         <tr>
-          <th v-for="(field, key) in fields" :class="[key, { required: config.required.includes(key) }]">{{ field }}</th>
+          <th v-for="(field, key) in fields" :class="['field-'+key, { required: config.required.includes(key) }]">{{ field }}</th>
           <th class="actions">{{ $translate('actions') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in items" :key="item._id" :class="{ 'is-editing': editing == item._id }">
-          <td v-for="(field, key) in fields" :title="field" :class="[key, cellClass(item[key], key)]">{{item[key]}}</td>
+          <td v-for="(field, key) in fields" :title="field" :class="['field-'+key, cellClass(item[key], key)]">{{item[key]}}</td>
           <td class="actions">
             <GridButton @click="removeItem(item._id)" dashicon="remove" :title="i18n.remove" />
             <GridPopper>
@@ -31,7 +31,7 @@
               :field="key"
               :label="field"
               :value="form[key]"
-              :class="[key, cellClass(form[key], key)]"
+              :class="['field-'+key, cellClass(form[key], key)]"
               @change="event => updateInput(key, event.target.value)"
             />
           </td>
@@ -129,8 +129,7 @@ export default {
 
     isNotValidInput(field) {
       if(!field) return false;
-      // console.log(field);
-      if(!this.form[field].trim()) return false;
+      if(!this.form[field]||!this.form[field].trim()) return false;
 
       // if (field === 'iban') {
       //   return ! isShebaValid(this.form[field]);
@@ -170,6 +169,9 @@ export default {
     },
 
     insertItem () {
+
+      // TODO: check for duplicate rows
+
       if (this.hasValidInput()) {
         this.spinner = true;
 

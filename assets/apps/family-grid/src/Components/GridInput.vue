@@ -1,24 +1,16 @@
 <template>
-  <input class="grid-input" type="text" :title="label" :value="value" />
+  <input class="grid-input" :class="class" type="text" :title="label" :value="value" />
 </template>
 
 <style lang="scss">
-
-$brand-success: #5cb85c !default;
-$brand-info:    #5bc0de !default;
-$brand-warning: #f0ad4e !default;
-$brand-danger:  #d9534f !default;
-
   .grid-input {
-    border: none !important;
-    border-radius: 0 !important;
-    width: calc( 100% - 2px );
-    /* margin: 0 1px; */
-    box-sizing: border-box;
-    /* background-color: transparent !important; */
-    /* cursor: pointer; */
-    /* margin: 0; */
-    /* padding: 0; */
+	  box-sizing: border-box;
+	  width: calc( 100% - 2px );
+	  border: none !important;
+	  border-radius: 0 !important;
+	  padding: 0 calc( .5em - 2px ) !important;
+	  font-family: inherit !important;
+	  font-size: inherit !important;
 
     &:focus {
       /* box-shadow: none !important; */
