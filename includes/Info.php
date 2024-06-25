@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress;
 
 class Info extends WordPress\Main
@@ -81,6 +82,38 @@ class Info extends WordPress\Main
 		], 'https://books.google.com/books' );
 
 		return apply_filters( static::BASE.'_lookup_isbn', $url, $isbn );
+	}
+
+	public static function fromIBAN( $input, $pre = [] )
+	{
+		$info = $pre;
+		$raw  = Core\Number::translate( $input );
+
+		try {
+
+			$iban = Misc\IBAN::createFromString( $raw );
+
+			$info['raw']     = $iban->toFormattedString( '' );
+			$info['country'] = $iban->getCountryCode();
+
+		} catch ( \Exception $e ) {
+
+			$info = FALSE;
+		}
+
+		return apply_filters( static::BASE.'_info_from_iban', $info, $raw, $input, $pre );
+	}
+
+	public static function fromCardNumber( $input, $pre = [] )
+	{
+		$info = $pre;
+
+		if ( $raw = Core\Validation::sanitizeCardNumber( $input ) )
+			$info['raw'] = $raw;
+		else
+			$info = FALSE;
+
+		return apply_filters( static::BASE.'_info_from_card_number', $info, $raw, $input, $pre );
 	}
 
 	public static function renderNoticeP2P()
