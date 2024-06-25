@@ -106,7 +106,7 @@ trait BulkExports
 		] );
 	}
 
-	protected function exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields = [], $metas = [], $taxes = [], $format = 'xlsx' )
+	protected function exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )
 	{
 		$data = [];
 
@@ -137,6 +137,9 @@ trait BulkExports
 			foreach ( $taxes as $tax )
 				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
 
+			foreach ( $customs as $custom )
+				$row[] = $this->filters( 'export_prep_custom_for_post', '', $custom, $post, $reference, $posttypes, $format );
+
 			$data[] = $row;
 		}
 
@@ -148,7 +151,8 @@ trait BulkExports
 					$props,
 					Core\Arraay::prefixValues( $fields, 'field__' ),
 					Core\Arraay::prefixValues( $metas, 'meta__' ),
-					Core\Arraay::prefixValues( $taxes, 'taxonomy__' )
+					Core\Arraay::prefixValues( $taxes, 'taxonomy__' ),
+					Core\Arraay::prefixValues( $customs, 'custom__' )
 				);
 
 				return Core\Text::toCSV( array_merge( [ $headers ], $data ) );
@@ -168,6 +172,9 @@ trait BulkExports
 
 				foreach ( $taxes as $taxonomy )
 					$headers[] = Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy );
+
+				foreach ( $customs as $custom )
+					$headers[] = $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ); // FIXME: move-up!
 
 				return Helper::generateXLSX( $data, $headers, WordPress\Post::title( $reference, NULL, FALSE ) );
 		}
@@ -213,11 +220,12 @@ trait BulkExports
 
 				// TODO: support field meta from paired
 
-				$props  = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
-				$fields = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
-				$metas  = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
-				$taxes  = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
-				$data   = $this->exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields, $metas, $taxes, $format );
+				$props   = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
+				$fields  = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
+				$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
+				$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
+				$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
+				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields, $metas, $taxes, $customs, $format );
 
 				break;
 		}
@@ -420,6 +428,43 @@ trait BulkExports
 		}
 
 		return $this->filters( 'export_post_taxonomies',
+			Core\Arraay::prepString( $list ),
+			$posttypes,
+			$reference,
+			$target,
+			$type,
+			$context,
+			$format
+		);
+	}
+
+	protected function exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format )
+	{
+		$list = [];
+
+		foreach ( $posttypes as $posttype ) {
+
+			switch ( $type ) {
+
+				case 'simple':
+
+					break;
+
+				case 'advanced':
+
+					$list = array_merge( $list, [] );
+
+					break;
+
+				case 'full':
+
+					$list = array_merge( $list, [] );
+
+					break;
+			}
+		}
+
+		return $this->filters( 'export_post_customs',
 			Core\Arraay::prepString( $list ),
 			$posttypes,
 			$reference,
