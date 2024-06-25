@@ -90,13 +90,12 @@ class Banking extends gEditorial\Module
 			],
 			'fields' => [
 				'subcontent' => [
-					'bankname' => _x( 'Bank', 'Field Label', 'geditorial-banking' ),
-					'account'  => _x( 'Account', 'Field Label', 'geditorial-banking' ),
 					'iban'     => _x( 'IBAN', 'Field Label', 'geditorial-banking' ),
-					'card'     => _x( 'Card', 'Field Label', 'geditorial-banking' ),
-					'fullname' => _x( 'Fullname', 'Field Label', 'geditorial-banking' ),
+					'card'     => _x( 'Card Number', 'Field Label', 'geditorial-banking' ),
+					'account'  => _x( 'Account Number', 'Field Label', 'geditorial-banking' ),
+					'bankname' => _x( 'Bank Name', 'Field Label', 'geditorial-banking' ),
+					'fullname' => _x( 'Account Owner', 'Field Label', 'geditorial-banking' ),
 					'relation' => _x( 'Relation', 'Field Label', 'geditorial-banking' ),
-					'contact'  => _x( 'Contact', 'Field Label', 'geditorial-banking' ),
 					'type'     => _x( 'Type', 'Field Label', 'geditorial-banking' ),
 					'status'   => _x( 'Status', 'Field Label', 'geditorial-banking' ),
 					'desc'     => _x( 'Description', 'Field Label', 'geditorial-banking' ),
@@ -176,7 +175,7 @@ class Banking extends gEditorial\Module
 			'comment_content'      => 'desc',       // `text`
 			'comment_author'       => 'fullname',   // `tinytext`
 			'comment_author_url'   => 'card',       // `varchar(200)`
-			'comment_author_email' => 'contact',    // `varchar(100)`
+			'comment_author_email' => 'country',    // `varchar(100)`
 			'comment_author_IP'    => 'account',    // `varchar(100)`
 			'comment_agent'        => 'iban',       // `varchar(255)`
 			'comment_karma'        => 'ref',        // `int(11)`
@@ -198,6 +197,7 @@ class Banking extends gEditorial\Module
 	{
 		return [
 			'bank',
+			'country',
 			'ref',
 		];
 	}
