@@ -624,7 +624,7 @@ class Personage extends gEditorial\Module
 			case 'work_address':
 
 				// in all contexts!
-				return ModuleHelper::cleanupChars( $meta );
+				return WordPress\Strings::cleanupChars( $meta );
 		}
 
 		return $meta;

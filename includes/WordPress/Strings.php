@@ -206,4 +206,19 @@ class Strings extends Core\Base
 	{
 		return \preg_replace( '`\[[^\]]+\]`s', '', \strip_shortcodes( $text ) );
 	}
+
+	public static function cleanupChars( $string, $html = FALSE )
+	{
+		if ( self::empty( $string ) )
+			return $string;
+
+		if ( ! class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
+			return apply_filters( 'string_format_i18n', $string );
+
+		// return $html
+		// 	? \geminorum\gNetwork\Core\Orthography::cleanupPersianHTML( $string )
+		// 	: \geminorum\gNetwork\Core\Orthography::cleanupPersian( $string );
+
+		return \geminorum\gNetwork\Core\Orthography::cleanupPersianChars( $string );
+	}
 }

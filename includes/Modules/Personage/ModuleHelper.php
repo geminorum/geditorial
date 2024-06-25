@@ -6,27 +6,10 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-use geminorum\gNetwork\Core\Orthography;
-
 class ModuleHelper extends gEditorial\Helper
 {
 
 	const MODULE = 'personage';
-
-	public static function cleanupChars( $string, $html = FALSE )
-	{
-		if ( empty( $string ) )
-			return $string;
-
-		if ( ! class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
-			return apply_filters( 'string_format_i18n', $string );
-
-		// return $html
-		// 	? Orthography::cleanupPersianHTML( $string )
-		// 	: Orthography::cleanupPersian( $string );
-
-		return Orthography::cleanupPersianChars( $string );
-	}
 
 	// TODO: support more complex naming
 	public static function makeFullname( $data, $context = 'display', $fallback = FALSE )
@@ -44,7 +27,7 @@ class ModuleHelper extends gEditorial\Helper
 		], $data );
 
 		foreach ( $parts as $key => $value )
-			$parts[$key] = self::replaceSplits( self::cleanupChars( $value ) );
+			$parts[$key] = self::replaceSplits( WordPress\Strings::cleanupChars( $value ) );
 
 		if ( empty( $parts['last_name'] ) && empty( $parts['first_name'] ) )
 			return empty( $parts['fullname'] )
@@ -115,7 +98,7 @@ class ModuleHelper extends gEditorial\Helper
 			return FALSE;
 
 		// already cleaned!
-		// $text = self::cleanupChars( $text );
+		// $text = WordPress\Strings::cleanupChars( $text );
 
 		if ( in_array( $nospace, self::getBlacklistStrings(), TRUE ) )
 			return FALSE;
@@ -130,7 +113,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( empty( $raw ) )
 			return $fallback;
 
-		$normalized = Core\Text::normalizeWhitespaceUTF8( self::cleanupChars( $raw ), FALSE );
+		$normalized = Core\Text::normalizeWhitespaceUTF8( WordPress\Strings::cleanupChars( $raw ), FALSE );
 
 		if ( ! self::isValidFullname( $normalized ) )
 			return $fallback;
