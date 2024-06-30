@@ -124,7 +124,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn', 'date', 'datetime' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'date', 'datetime' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -355,6 +355,10 @@ trait PostTypeFields
 
 			case 'iban':
 				$sanitized = Core\Validation::sanitizeIBAN( $data );
+				break;
+
+			case 'bankcard':
+				$sanitized = Core\Validation::sanitizeCardNumber( $data );
 				break;
 
 			case 'phone':

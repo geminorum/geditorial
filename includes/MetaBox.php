@@ -1172,6 +1172,19 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'bankcard':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'bankcard';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputbankcard';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\Validation::getCardNumberHTMLPattern();
+
+				break;
+
 			case 'identity':
 
 				$atts['dir'] = 'ltr';

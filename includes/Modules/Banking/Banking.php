@@ -163,7 +163,7 @@ class Banking extends gEditorial\Module
 				'bank_card_number' => [
 					'title'       => _x( 'Card Number', 'Field Title', 'geditorial-banking' ),
 					'description' => _x( 'Bank Card Number', 'Field Description', 'geditorial-banking' ),
-					'type'        => 'code',
+					'type'        => 'bankcard',
 					'order'       => 200,
 				],
 			],

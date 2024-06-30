@@ -675,6 +675,7 @@ class Meta extends gEditorial\Module
 				case 'identity':
 				case 'isbn':
 				case 'iban':
+				case 'bankcard':
 				case 'code':
 				case 'postcode':
 				case 'venue':
@@ -1257,6 +1258,16 @@ class Meta extends gEditorial\Module
 					Core\Validation::isIBAN( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
 					$meta );
 
+			case 'bankcard':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				return sprintf( '<span class="-bankcard %s">%s</span>',
+					Core\Validation::isCardNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
+					$meta );
+
+
 			case 'contact':
 				return Helper::prepContact( trim( $raw ) );
 
@@ -1347,7 +1358,7 @@ class Meta extends gEditorial\Module
 			'integer', 'number', 'float', 'price',
 			'member', 'person',
 			'day', 'hour', 'gram', 'milimeter', 'kilogram', 'centimeter',
-			'phone', 'mobile', 'contact', 'identity', 'iban', 'isbn', 'postcode',
+			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'postcode',
 			'post', 'attachment', 'parent_post', 'posts', 'attachments',
 			'user', 'term',
 		], TRUE ) )
