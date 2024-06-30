@@ -567,9 +567,10 @@ class Papered extends gEditorial\Module
 
 	private function _get_view_list_for_post( $profile, $source, $context, $config )
 	{
-		$data = [];
-		$meta = gEditorial()->enabled( 'meta' );
-		$list = $this->filters( 'view_list', [], $source, $profile, $context, $data, $meta );
+		$data  = [];
+		$meta  = gEditorial()->enabled( 'meta' );
+		$units = gEditorial()->enabled( 'units' );
+		$list  = $this->filters( 'view_list', [], $source, $profile, $context, $data );
 
 		foreach ( $list as $item ) {
 
@@ -590,6 +591,13 @@ class Papered extends gEditorial\Module
 				);
 
 			$data[] = $row;
+			if ( $units )
+				$row['unitsdata'] = Core\Arraay::pluck(
+					gEditorial()->module( 'units' )->get_posttype_fields_data( $item, FALSE, 'print' ),
+					'rendered',
+					'name'
+				);
+
 		}
 
 		return $data;
@@ -597,8 +605,9 @@ class Papered extends gEditorial\Module
 
 	private function _get_view_data_for_post( $profile, $source, $context, $config )
 	{
-		$data = [];
-		$meta = gEditorial()->enabled( 'meta' );
+		$data  = [];
+		$meta  = gEditorial()->enabled( 'meta' );
+		$units = gEditorial()->enabled( 'units' );
 
 		if ( $profile ) {
 
@@ -614,6 +623,13 @@ class Papered extends gEditorial\Module
 			if ( $meta )
 				$data['profile']['metadata'] = Core\Arraay::pluck(
 					gEditorial()->module( 'meta' )->get_posttype_fields_data( $profile, FALSE, 'print' ),
+					'rendered',
+					'name'
+				);
+
+			if ( $units )
+				$data['profile']['unitsdata'] = Core\Arraay::pluck(
+					gEditorial()->module( 'units' )->get_posttype_fields_data( $profile, FALSE, 'print' ),
 					'rendered',
 					'name'
 				);
@@ -633,6 +649,13 @@ class Papered extends gEditorial\Module
 			if ( $meta )
 				$data['source']['metadata'] = Core\Arraay::pluck(
 					gEditorial()->module( 'meta' )->get_posttype_fields_data( $source, FALSE, 'print' ),
+					'rendered',
+					'name'
+				);
+
+			if ( $units )
+				$data['source']['unitsdata'] = Core\Arraay::pluck(
+					gEditorial()->module( 'units' )->get_posttype_fields_data( $source, FALSE, 'print' ),
 					'rendered',
 					'name'
 				);
