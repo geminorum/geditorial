@@ -530,15 +530,15 @@ class Papered extends gEditorial\Module
 
 		if ( ! empty( $config['row_per_sheet'] ) && ! empty( $list ) ) {
 
-			foreach ( array_chunk( $list, (int) $config['row_per_sheet'] ) as $index => $chunk ) {
+			foreach ( $chunks as $offset => $chunk ) {
 
 				$data_sheet = array_merge( $data, [
 					'list'  => $chunk,
-					'paged' => $index + 1,
+					'paged' => Core\Number::format( $offset + 1 ),
 					'rows'  => $this->render_view_string( $rows, [
 						'data'  => $data,
 						'list'  => $chunk,
-						'paged' => $index + 1,
+						'paged' => Core\Number::format( $offset + 1 ),
 					], FALSE ),
 				] );
 
@@ -571,6 +571,7 @@ class Papered extends gEditorial\Module
 		$meta  = gEditorial()->enabled( 'meta' );
 		$units = gEditorial()->enabled( 'units' );
 		$list  = $this->filters( 'view_list', [], $source, $profile, $context, $data );
+		$index = 1;
 
 		foreach ( $list as $item ) {
 
@@ -578,6 +579,7 @@ class Papered extends gEditorial\Module
 				'rawpost'  => get_object_vars( $item ),
 				'rawmeta'  => WordPress\Post::getMeta( $item ),
 				'rendered' => [
+					'index'     => Core\Number::format( $index ),
 					'posttitle' => WordPress\Post::title( $item ),
 					'fulltitle' => WordPress\Post::fullTitle( $item ),
 				],
@@ -598,6 +600,7 @@ class Papered extends gEditorial\Module
 					'name'
 				);
 
+			$index++;
 		}
 
 		return $data;
