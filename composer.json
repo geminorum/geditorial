@@ -31,12 +31,12 @@
     "hbgl/php-code-128-encoder": "^0.2.7",
     "rct567/dom-query": "^1.1",
     "jwage/easy-csv": "^1.0",
-    "sabre/vobject": "^4.5.4",
     "jeroendesloovere/vcard": "^1.7.4",
     "adbario/php-dot-notation": "^3.3",
     "maksimovic/php-xlsx-writer": "^1.0"
   },
   "require-dev": {
+    "sabre/vobject": "^4.5.4",
     "sinasalek/multi-calendar-date-time": "dev-master",
     "php-coord/php-coord": "4.7.1",
     "10up/wp-content-connect": "^1.5.0",
