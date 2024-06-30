@@ -1,3 +1,39 @@
+### 3.28.0
+* internal/bulk-exports: support custom export fields
+* internal/bulk-exports: support for column titles
+* internal/settings-taxonomies: show in quick-edit
+* internal/sub-contents: :new: internal trait
+* internal/sub-contents: common field types
+* main/helper: info for card/iban
+* main/info: info from iban/card
+* main/info: lookup return markup
+* main/module: filter edit-form meta summary
+* main/scripts: table overflow
+* module/abo: :new: module
+* module/banking: :new: module
+* module/banking: advanced prep data
+* module/banking: app tuned
+* module/banking: country field support
+* module/diagnosed: :new: module
+* module/equipped: :new: module
+* module/housed: :new: module
+* module/iranian: support info from iban/card
+* module/listed: :new: module
+* module/meta: bank-card field type
+* module/meta: support for tokens within values
+* module/next-of-kin: :new: module
+* module/next-of-kin: advanced prep data
+* module/next-of-kin: app tuned
+* module/papered: list view revised
+* module/papered: support for index
+* module/papered: support for meta fields
+* module/papered: support for units fields
+* module/personage: default status terms
+* module/personage: line parser tool
+* module/personage: sort by last/first name on paired lists
+* module/personage: support for public statuses
+* module/personage: support view item on papred
+
 ### 3.27.4
 * internal/bulk-exports: support for format
 * internal/paired-row-actions: actions for supported post-types
