@@ -20,56 +20,61 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: Conscripted.php:86
-msgctxt "Label: Show Option All"
+msgctxt "Label: `extended_label`"
 msgid "Conscription"
 msgstr ""
 
 #: Conscripted.php:87
+msgctxt "Label: Show Option All"
+msgid "Conscription"
+msgstr ""
+
+#: Conscripted.php:88
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Conscripted.php:96
+#: Conscripted.php:97
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Conscription Summary"
 msgstr ""
 
-#: Conscripted.php:97
+#: Conscripted.php:98
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Conscription Summary"
 msgstr ""
 
-#: Conscripted.php:107
+#: Conscripted.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "Underage for Service"
 msgstr ""
 
-#: Conscripted.php:108
+#: Conscripted.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject to Service"
 msgstr ""
 
-#: Conscripted.php:109
+#: Conscripted.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Currently in Service"
 msgstr ""
 
-#: Conscripted.php:110
+#: Conscripted.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "End of Service"
 msgstr ""
 
-#: Conscripted.php:111
+#: Conscripted.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Medical Exemption"
 msgstr ""
 
-#: Conscripted.php:112
+#: Conscripted.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Education Exemption"
 msgstr ""
 
-#: Conscripted.php:113
+#: Conscripted.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Permanent Exemption"
 msgstr ""

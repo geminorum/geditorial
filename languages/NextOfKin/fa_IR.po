@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial NextOfKin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-04 20:56+0330\n"
+"PO-Revision-Date: 2024-06-30 14:38+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,200 +11,180 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/NextOfKin\n"
 "X-Domain: geditorial-next-of-kin\n"
 
-#: NextOfKin.php:61
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr "نقش‌های بررسی گزارشات"
-
-#: NextOfKin.php:62
-msgctxt "Setting Description"
-msgid "Roles that can view familial relations."
-msgstr "نقش‌هایی که می‌توانند روابط خانوادگی را مشاهده کنند."
-
-#: NextOfKin.php:68
-msgctxt "Setting Title"
-msgid "Assign Roles"
-msgstr "نقش‌های مأمور واگذاری"
-
-#: NextOfKin.php:69
-msgctxt "Setting Description"
-msgid "Roles that can assign familial relations."
-msgstr "نقش‌هایی که می‌توانند روابط خانوادگی را تخصیص دهند."
-
 #. translators: %s: count number
-#: NextOfKin.php:118
+#: NextOfKin.php:113
 msgid "%s Member"
 msgid_plural "%s Members"
 msgstr[0] "%s عضو"
 msgstr[1] "%s عضو"
 
-#: NextOfKin.php:119
+#: NextOfKin.php:114
 msgid "Marital Status"
 msgid_plural "Marital Statuses"
 msgstr[0] "وضعیت‌های تأهل"
 msgstr[1] "وضعیت تأهل"
 
-#: NextOfKin.php:123
+#: NextOfKin.php:118
 msgctxt "Label: Menu Name"
 msgid "Marital"
 msgstr "تأهل"
 
-#: NextOfKin.php:124
+#: NextOfKin.php:119
 msgctxt "Label: Show Option All"
 msgid "Marital Status"
 msgstr "تأهل"
 
-#: NextOfKin.php:125
+#: NextOfKin.php:120
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr "(نامعلوم)"
 
-#: NextOfKin.php:130
+#: NextOfKin.php:125
 msgctxt "Field Label"
 msgid "Fullname"
 msgstr "نام و نام خانوادگی"
 
-#: NextOfKin.php:131
+#: NextOfKin.php:126
 msgctxt "Field Label"
 msgid "Relation"
 msgstr "نسبت"
 
-#: NextOfKin.php:132
+#: NextOfKin.php:127
 msgctxt "Field Label"
 msgid "Identity"
 msgstr "کد ملی"
 
-#: NextOfKin.php:133
+#: NextOfKin.php:128
 msgctxt "Field Label"
 msgid "Contact"
 msgstr "تماس"
 
-#: NextOfKin.php:134
-msgctxt "Field Label"
-msgid "Education"
-msgstr "تحصیلات"
-
-#: NextOfKin.php:135
-msgctxt "Field Label"
-msgid "Occupation"
-msgstr "اشتغال"
-
-#: NextOfKin.php:136
+#: NextOfKin.php:129
 msgctxt "Field Label"
 msgid "Date of Birth"
 msgstr "تاریخ تولد"
 
-#: NextOfKin.php:137
+#: NextOfKin.php:130
+msgctxt "Field Label"
+msgid "Education"
+msgstr "تحصیلات"
+
+#: NextOfKin.php:131
+msgctxt "Field Label"
+msgid "Occupation"
+msgstr "اشتغال"
+
+#: NextOfKin.php:132
 msgctxt "Field Label"
 msgid "Description"
 msgstr "توضیحات"
 
-#: NextOfKin.php:143
+#: NextOfKin.php:138
 msgctxt "Notice"
 msgid "There is no family information available!"
 msgstr "هیچ اطلاعات خانوادگی در دسترس نیست!"
 
-#: NextOfKin.php:144
+#: NextOfKin.php:139
 msgctxt "Notice"
 msgid "You have not necessary permission to manage this family data."
 msgstr "شما مجوز لازم برای مدیریت داده‌های این خانواده را ندارید."
 
-#: NextOfKin.php:151
+#: NextOfKin.php:146
 msgctxt "Settings Description"
 msgid "Supports marital statuses for the selected post-types."
 msgstr "وضعیت تأهل را برای نوع‌فرسته‌های انتخاب‌شده، پشتیبانی می‌کند."
 
-#: NextOfKin.php:155
+#: NextOfKin.php:150
 msgctxt "MetaBox Title"
 msgid "Family"
 msgstr "خانواده"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:159
+#: NextOfKin.php:154
 msgctxt "Button Title"
 msgid "Family of %1$s"
 msgstr "خانواده %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:161
+#: NextOfKin.php:156
 msgctxt "Button Text"
 msgid "%1$s Manage the Family of %2$s"
 msgstr "%1$s مدیریت خانواده %2$s"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:164
+#: NextOfKin.php:159
 msgctxt "Action Title"
 msgid "Family of %1$s"
 msgstr "خانواده %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:166
+#: NextOfKin.php:161
 msgctxt "Action Text"
 msgid "Family"
 msgstr "خانواده"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:169
+#: NextOfKin.php:164
 msgctxt "Row Title"
 msgid "Family of %1$s"
 msgstr "خانواده %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:171
+#: NextOfKin.php:166
 msgctxt "Row Text"
 msgid "Family"
 msgstr "خانواده"
 
-#: NextOfKin.php:176
+#: NextOfKin.php:171
 msgctxt "Javascript String"
 msgid "Actions"
 msgstr "کنش‌ها"
 
-#: NextOfKin.php:177
+#: NextOfKin.php:172
 msgctxt "Javascript String"
 msgid "Information"
 msgstr "اطلاعات"
 
-#: NextOfKin.php:178
+#: NextOfKin.php:173
 msgctxt "Javascript String"
 msgid "Insert"
 msgstr "جای‌گذاری"
 
-#: NextOfKin.php:179
+#: NextOfKin.php:174
 msgctxt "Javascript String"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: NextOfKin.php:180
+#: NextOfKin.php:175
 msgctxt "Javascript String"
 msgid "Remove"
 msgstr "حذف"
 
-#: NextOfKin.php:181
+#: NextOfKin.php:176
 msgctxt "Javascript String"
 msgid "Loading"
 msgstr "بارگیری"
 
-#: NextOfKin.php:182
+#: NextOfKin.php:177
 msgctxt "Javascript String"
 msgid "Here you can add, edit and manage the related members of the family."
 msgstr "اینجا می‌توانید اعضای مرتبط خانواده را اضافه، ویرایش و مدیریت کنید."
 
-#: NextOfKin.php:183
+#: NextOfKin.php:178
 msgctxt "Javascript String"
 msgid "The member edited successfully."
 msgstr "عضو خانواده با موفقیت ویرایش شد."
 
-#: NextOfKin.php:184
+#: NextOfKin.php:179
 msgctxt "Javascript String"
 msgid "New member saved successfully."
 msgstr "عضو تازه با موفقیت ذخیره شد."
 
-#: NextOfKin.php:185
+#: NextOfKin.php:180
 msgctxt "Javascript String"
 msgid "The member data are not valid!"
 msgstr "اطلاعات عضو نامعتبر است!"
@@ -240,36 +220,52 @@ msgid "Registered"
 msgstr "عقد"
 
 #. translators: %s: post title
-#: NextOfKin.php:402
+#: NextOfKin.php:416
 msgctxt "Page Title"
 msgid "Family Grid for %s"
 msgstr "شبکه خانوادگی برای %s"
 
 #. translators: %s: post title
-#: NextOfKin.php:414
+#: NextOfKin.php:428
 msgctxt "Page Title"
 msgid "Family Overview for %s"
 msgstr "بررسی خانواده %s"
 
-#: NextOfKin.php:442
+#: NextOfKin.php:456
 msgctxt "Rest"
 msgid "The id of the parent post."
 msgstr "شناسه برای فرسته مادر."
 
-#: NextOfKin.php:454
+#: NextOfKin.php:468
 msgctxt "Rest"
 msgid "The id of the subcontent comment."
 msgstr "شناسه برای دیدگاه زیرمحتوا."
 
-#: NextOfKin.php:583
+#: NextOfKin.php:597
 msgctxt "Default Term: Audit"
 msgid "Empty Family Data"
 msgstr "داده‌های خانواده خالی"
 
-#: NextOfKin.php:610
+#: NextOfKin.php:687
 msgctxt "Title"
 msgid "Family"
 msgstr "خانواده"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Reports Roles"
+#~ msgstr "نقش‌های بررسی گزارشات"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can view familial relations."
+#~ msgstr "نقش‌هایی که می‌توانند روابط خانوادگی را مشاهده کنند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Assign Roles"
+#~ msgstr "نقش‌های مأمور واگذاری"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Roles that can assign familial relations."
+#~ msgstr "نقش‌هایی که می‌توانند روابط خانوادگی را تخصیص دهند."
 
 #~ msgctxt "Message"
 #~ msgid "There are no posts available!"

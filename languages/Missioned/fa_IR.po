@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Missioned\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-27 04:06+0330\n"
+"PO-Revision-Date: 2024-06-23 17:57+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -151,37 +151,37 @@ msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr "برگزار شده"
 
-#: Missioned.php:243
+#: Missioned.php:246
 msgctxt "Field Title"
 msgid "Officers"
 msgstr "افسران"
 
-#: Missioned.php:244
+#: Missioned.php:247
 msgctxt "Field Description"
 msgid "People Who Participate as Officers in This Mission"
 msgstr "افرادی که به عنوان افسر در این مأموریت شرکت کرده‌اند"
 
-#: Missioned.php:251
+#: Missioned.php:254
 msgctxt "Field Title"
 msgid "Mission Code"
 msgstr "کد مأموریت"
 
-#: Missioned.php:252
+#: Missioned.php:255
 msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr "کد مأموریت یکتا"
 
-#: Missioned.php:569
+#: Missioned.php:572
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr "ابزارهای مأموریت"
 
-#: Missioned.php:578
+#: Missioned.php:581
 msgctxt "Card"
 msgid "Mission Date from Meta-data"
 msgstr "تاریخ مأموریت‌ها بر اساس داده‌های متا"
 
-#: Missioned.php:614
+#: Missioned.php:617
 msgctxt "Header"
 msgid "Mission Imports"
 msgstr "درون‌ریزی‌های مأموریت"

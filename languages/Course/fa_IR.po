@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Course\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-24 04:59+0330\n"
+"PO-Revision-Date: 2024-06-30 14:37+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -140,7 +140,7 @@ msgctxt "Default Term"
 msgid "Cancelled"
 msgstr "لغو شده"
 
-#: Course.php:200 Course.php:214
+#: Course.php:200 Course.php:215
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr "زیرعنوان"
@@ -150,22 +150,22 @@ msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr "زیرعنوان دوره"
 
-#: Course.php:215
+#: Course.php:216
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr "زیرعنوان درس"
 
-#: Course.php:487
+#: Course.php:488
 msgctxt "Header"
 msgid "Course Tools"
 msgstr "ابزارهای دوره"
 
-#: Course.php:516
+#: Course.php:517
 msgctxt "Header"
 msgid "Course Imports"
 msgstr "درون‌ریزی‌های دوره"
 
-#: Course.php:539
+#: Course.php:540
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr "درس رهاشده"

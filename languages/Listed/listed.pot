@@ -23,184 +23,178 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the listings and supported post-types."
 msgstr ""
 
-#. translators: %s: primary taxonomy name
-#: Listed.php:101
-msgctxt "Settings"
-msgid "Whether to show the <strong>%s</strong> in the quick/bulk edit panel."
-msgstr ""
-
-#: Listed.php:145
-#: Listed.php:146
+#: Listed.php:141
+#: Listed.php:142
 msgid "Listing"
 msgid_plural "Listings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:147
+#: Listed.php:143
 msgid "Listing Category"
 msgid_plural "Listing Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:148
+#: Listed.php:144
 msgid "Listing Level"
 msgid_plural "Listing Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:149
+#: Listed.php:145
 msgid "Listing Program"
 msgid_plural "Listing Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:150
+#: Listed.php:146
 msgid "Listing Span"
 msgid_plural "Listing Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:151
+#: Listed.php:147
 msgid "Listing Type"
 msgid_plural "Listing Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:152
+#: Listed.php:148
 msgid "Listing Status"
 msgid_plural "Listing Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:156
+#: Listed.php:152
 msgctxt "Label: `menu_name`"
 msgid "Listings"
 msgstr ""
 
-#: Listed.php:157
+#: Listed.php:153
 msgctxt "Label: Featured Image"
 msgid "Listing Poster"
 msgstr ""
 
-#: Listed.php:158
+#: Listed.php:154
 msgctxt "Label: MetaBox Title"
 msgid "The Listings"
 msgstr ""
 
-#: Listed.php:161
+#: Listed.php:157
 msgctxt "Label: MetaBox Title"
 msgid "In This Listing"
 msgstr ""
 
-#: Listed.php:164
+#: Listed.php:160
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Listed.php:167
+#: Listed.php:163
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Listed.php:170
+#: Listed.php:166
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Listed.php:173
+#: Listed.php:169
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Listed.php:176
+#: Listed.php:172
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: item count
-#: Listed.php:186
+#: Listed.php:182
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Listing Attendees (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Listed.php:188
+#: Listed.php:184
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Listings (%s)"
 msgstr ""
 
-#: Listed.php:189
+#: Listed.php:185
 msgctxt "Misc: `column_icon_title`"
 msgid "Listings"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Listed.php:194
+#: Listed.php:190
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Listed.php:204
+#: Listed.php:200
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr ""
 
-#: Listed.php:205
+#: Listed.php:201
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr ""
 
-#: Listed.php:206
+#: Listed.php:202
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr ""
 
-#: Listed.php:207
+#: Listed.php:203
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr ""
 
-#: Listed.php:211
+#: Listed.php:207
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Listed.php:212
+#: Listed.php:208
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Listed.php:253
+#: Listed.php:249
 msgctxt "Field Title"
 msgid "Notaries"
 msgstr ""
 
-#: Listed.php:254
+#: Listed.php:250
 msgctxt "Field Description"
 msgid "People Who is the Notary of This Listing"
 msgstr ""
 
-#: Listed.php:261
+#: Listed.php:257
 msgctxt "Field Title"
 msgid "Listing Code"
 msgstr ""
 
-#: Listed.php:262
+#: Listed.php:258
 msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr ""
 
-#: Listed.php:579
+#: Listed.php:575
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr ""
 
-#: Listed.php:588
+#: Listed.php:584
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
 msgstr ""
 
-#: Listed.php:624
+#: Listed.php:620
 msgctxt "Header"
 msgid "Listing Imports"
 msgstr ""

@@ -127,96 +127,96 @@ msgctxt "Sheet Padding"
 msgid "25mm Sheet Padding"
 msgstr ""
 
-#: Papered.php:128
+#: Papered.php:162
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Libre Fonts"
 msgstr ""
 
-#: Papered.php:129
+#: Papered.php:163
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Vazir Fonts"
 msgstr ""
 
-#: Papered.php:130
+#: Papered.php:164
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Nastaliq Fonts"
 msgstr ""
 
-#: Papered.php:131
+#: Papered.php:165
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Bootstrap 5"
 msgstr ""
 
-#: Papered.php:132
+#: Papered.php:166
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Titr Fonts"
 msgstr ""
 
-#: Papered.php:133
+#: Papered.php:167
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Barcode"
 msgstr ""
 
-#: Papered.php:134
+#: Papered.php:168
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs QR-Code"
 msgstr ""
 
-#: Papered.php:475
+#: Papered.php:513
 msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr ""
 
-#: Papered.php:642
+#: Papered.php:714
 msgctxt "None Title"
 msgid "&ndash; Select Peper Size &ndash;"
 msgstr ""
 
-#: Papered.php:653
+#: Papered.php:725
 msgctxt "None Title"
 msgid "&ndash; Select Sheet Padding &ndash;"
 msgstr ""
 
-#: Papered.php:664
+#: Papered.php:736
 msgctxt "Input Title"
 msgid "Row per Sheet"
 msgstr ""
 
-#: Papered.php:682
+#: Papered.php:754
 msgctxt "None Title"
 msgid "&ndash; Select Direct Post-Type &ndash;"
 msgstr ""
 
-#: Papered.php:740
+#: Papered.php:812
 msgctxt "MetaBox Title"
 msgid "Template for Rows"
 msgstr ""
 
-#: Papered.php:741
+#: Papered.php:813
 msgctxt "MetaBox Title"
 msgid "Template Before"
 msgstr ""
 
-#: Papered.php:742
+#: Papered.php:814
 msgctxt "MetaBox Title"
 msgid "Template After"
 msgstr ""
 
-#: Papered.php:743
+#: Papered.php:815
 msgctxt "MetaBox Title"
 msgid "Template Styles"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:815
-#: Papered.php:872
+#: Papered.php:887
+#: Papered.php:944
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:828
-#: Papered.php:894
+#: Papered.php:900
+#: Papered.php:966
 msgctxt "Button"
 msgid "%1$s Print Profile"
 msgstr ""

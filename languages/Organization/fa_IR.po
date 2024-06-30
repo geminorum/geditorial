@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Organization\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-27 04:10+0330\n"
+"PO-Revision-Date: 2024-06-30 14:38+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,161 +15,161 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Organization\n"
 "X-Domain: geditorial-organization\n"
 
-#: Organization.php:62
+#: Organization.php:64
 msgctxt "Settings"
 msgid "Sub-departments"
 msgstr "زیردپارتمان"
 
-#: Organization.php:63
+#: Organization.php:65
 msgctxt "Settings"
 msgid "Substitute taxonomy for the departments and supported post-types."
 msgstr ""
 "رده‌بندی زیرمجموعه را برای دپارتمان‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Organization.php:84
+#: Organization.php:87
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Organization.php:85
+#: Organization.php:88
 msgctxt "Settings"
 msgid "Redirects department archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی دپارتمان‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
 "بگذارید."
 
-#: Organization.php:136 Organization.php:137
+#: Organization.php:139 Organization.php:140
 msgid "Department"
 msgid_plural "Departments"
 msgstr[0] "دپارتمان‌ها"
 msgstr[1] "دپارتمان"
 
-#: Organization.php:138
+#: Organization.php:141
 msgid "Department Category"
 msgid_plural "Department Categories"
 msgstr[0] "دسته‌های دپارتمان"
 msgstr[1] "دسته دپارتمان"
 
-#: Organization.php:139
+#: Organization.php:142
 msgid "Sub-department"
 msgid_plural "Sub-departments"
 msgstr[0] "زیردپارتمان‌ها"
 msgstr[1] "زیردپارتمان"
 
-#: Organization.php:140
+#: Organization.php:143
 msgid "Department Type"
 msgid_plural "Department Types"
 msgstr[0] "انواع دپارتمان"
 msgstr[1] "نوع دپارتمان"
 
-#: Organization.php:141
+#: Organization.php:144
 msgid "Department Status"
 msgid_plural "Department Statuses"
 msgstr[0] "وضعیت‌های دپارتمان"
 msgstr[1] "وضعیت دپارتمان"
 
-#: Organization.php:145
+#: Organization.php:148
 msgctxt "Label: Featured Image"
 msgid "Department Badge"
 msgstr "نشان دپارتمان"
 
-#: Organization.php:146
+#: Organization.php:149
 msgctxt "Label: MetaBox Title"
 msgid "The Department"
 msgstr "این دپارتمان"
 
-#: Organization.php:149
+#: Organization.php:152
 msgctxt "Label: MetaBox Title"
 msgid "In This Department"
 msgstr "در این دپارتمان"
 
-#: Organization.php:152
+#: Organization.php:155
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Organization.php:155
+#: Organization.php:158
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Organization.php:158
+#: Organization.php:161
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: Organization.php:167
+#: Organization.php:170
 msgctxt "Misc: `column_icon_title`"
 msgid "Department"
 msgstr "دپارتمان"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Organization.php:172
+#: Organization.php:175
 msgctxt "MetaBox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr "اعضای %2$s &ldquo;%1$s&rdquo;"
 
-#: Organization.php:182
+#: Organization.php:185
 msgctxt "Default Term"
 msgid "Working"
 msgstr "فعال"
 
-#: Organization.php:183
+#: Organization.php:186
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr "غیرفعال"
 
-#: Organization.php:184
+#: Organization.php:187
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr "منحل‌شده"
 
-#: Organization.php:185
+#: Organization.php:188
 msgctxt "Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Organization.php:186
+#: Organization.php:189
 msgctxt "Default Term"
 msgid "Pending"
 msgstr "برای بازبینی"
 
-#: Organization.php:216
+#: Organization.php:219
 msgctxt "Field Title"
 msgid "Administrators"
 msgstr "مدیران"
 
-#: Organization.php:217
+#: Organization.php:220
 msgctxt "Field Description"
 msgid "People Who Participate as Administrators in This Organization"
 msgstr "افرادی که به عنوان مدیر در این سازمان حضور دارند"
 
-#: Organization.php:224
+#: Organization.php:227
 msgctxt "Field Title"
 msgid "Organization Code"
 msgstr "کد سازمان"
 
-#: Organization.php:225
+#: Organization.php:228
 msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr "کد یکتا برای سازمان"
 
-#: Organization.php:234
+#: Organization.php:237
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr "شماره سازمانی"
 
-#: Organization.php:235
+#: Organization.php:238
 msgctxt "Field Description"
 msgid "Unique Organization Number"
 msgstr "شماره سازمانی یکتا"
 
-#: Organization.php:644
+#: Organization.php:648
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr "ابزارهای سازمان"
 
-#: Organization.php:673
+#: Organization.php:677
 msgctxt "Header"
 msgid "Organization Imports"
 msgstr "درون‌ریزی‌های سازمان"

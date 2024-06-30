@@ -14,135 +14,135 @@ msgstr ""
 "X-Domain: geditorial-iranian\n"
 
 #. translators: %s: supported object label
-#: Iranian.php:51
+#: Iranian.php:52
 msgctxt "Setting Title"
 msgid "Identity Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:52
+#: Iranian.php:53
 msgctxt "Setting Description"
 msgid "Defines identity meta-key for the post-type."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Iranian.php:63
+#: Iranian.php:64
 msgctxt "Setting Title"
 msgid "Location Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:64
+#: Iranian.php:65
 msgctxt "Setting Description"
 msgid "Defines location meta-key for the post-type."
 msgstr ""
 
-#: Iranian.php:94
+#: Iranian.php:95
 msgctxt "Settings Description"
 msgid "Supports meta fields for the selected post-types."
 msgstr ""
 
-#: Iranian.php:105
+#: Iranian.php:106
 msgctxt "Field Title"
 msgid "Birth Certificate"
 msgstr ""
 
-#: Iranian.php:106
+#: Iranian.php:107
 msgctxt "Field Description"
 msgid "Iranian Birth Certificate Number"
 msgstr ""
 
-#: Iranian.php:130
+#: Iranian.php:140
 msgctxt "RestAPI: Arg Description"
 msgid "The National Code to process."
 msgstr ""
 
-#: Iranian.php:212
+#: Iranian.php:222
 msgctxt "Header"
 msgid "Iranian Imports"
 msgstr ""
 
-#: Iranian.php:229
+#: Iranian.php:239
 msgctxt "Card Title"
 msgid "Location by Identity"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Iranian.php:239
+#: Iranian.php:249
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
-#: Iranian.php:241
+#: Iranian.php:251
 msgctxt "Button Description"
 msgid "Tries to set the location based on identity data."
 msgstr ""
 
 #. translators: %s: identity code
-#: Iranian.php:310
+#: Iranian.php:320
 msgctxt "Notice"
 msgid "No location data available for %s"
 msgstr ""
 
 #. translators: %s: identity code
-#: Iranian.php:316
+#: Iranian.php:326
 msgctxt "Notice"
 msgid "No city data available for %s"
 msgstr ""
 
 #. translators: %1$s: city data, %2$s: identity code
-#: Iranian.php:322
+#: Iranian.php:332
 msgctxt "Notice"
 msgid "City data is empty for %1$s: %2$s"
 msgstr ""
 
 #. translators: %s: post title
-#: Iranian.php:328
+#: Iranian.php:338
 msgctxt "Notice"
 msgid "There is problem updating location for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: city data, %2$s: identity code, %3$s: post title
-#: Iranian.php:334
+#: Iranian.php:344
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;"
 msgstr ""
 
-#: Iranian.php:350
+#: Iranian.php:360
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr ""
 
-#: Iranian.php:377
+#: Iranian.php:387
 msgctxt "Card Title"
 msgid "Compare Identity to Birth Certificate"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Iranian.php:387
+#: Iranian.php:397
 msgctxt "Button"
 msgid "Compare Identity for %s"
 msgstr ""
 
-#: Iranian.php:389
+#: Iranian.php:399
 msgctxt "Button Description"
 msgid "Tries to un-set the certificate duplicated from identity data."
 msgstr ""
 
 #. translators: %s: post title
-#: Iranian.php:457
-#: Iranian.php:483
+#: Iranian.php:467
+#: Iranian.php:493
 msgctxt "Notice"
 msgid "There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: birth certificate number, %2$s: post title
-#: Iranian.php:463
-#: Iranian.php:489
+#: Iranian.php:473
+#: Iranian.php:499
 msgctxt "Notice"
 msgid "Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: identity code, %2$s: birth certificate number
-#: Iranian.php:477
+#: Iranian.php:487
 msgctxt "Notice"
 msgid "Identiry (%1$s) and Birth Certificate Number (%2$s) are diffrent"
 msgstr ""
