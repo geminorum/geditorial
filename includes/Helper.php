@@ -1405,7 +1405,7 @@ class Helper extends WordPress\Main
 			$options = [
 				'border'      => 'left,right,top,bottom',
 				'fill'        => '#eee',
-				'font'        => 'Arial',
+				'font'        => 'Arial,Tahoma,sans-serif',
 				'font-style'  => 'bold',
 				'freeze_rows' => TRUE,
 				'widths'      => array_fill( 0, count( $headers ), 20 ),
@@ -1414,7 +1414,7 @@ class Helper extends WordPress\Main
 		if ( is_null( $styles ) )
 			$styles = [
 				'border'    => 'left,right,top,bottom',
-				'font'      => 'Segoe UI',
+				'font'      => 'Segoe UI,Tahoma,sans-serif',
 				'font-size' => 10,
 			];
 

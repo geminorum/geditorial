@@ -323,6 +323,11 @@ class Info extends WordPress\Main
 				/* translators: %s: posts count */
 				return _nx_noop( '%s Post', '%s Posts', 'Info: Noop', 'geditorial' );
 
+			case 'term':
+			case 'terms':
+				/* translators: %s: terms count */
+				return _nx_noop( '%s Term', '%s Terms', 'Info: Noop', 'geditorial' );
+
 			case 'connected':
 				/* translators: %s: items count */
 				return _nx_noop( '%s Item Connected', '%s Items Connected', 'Info: Noop', 'geditorial' );

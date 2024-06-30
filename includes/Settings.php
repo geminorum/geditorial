@@ -788,6 +788,18 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_public_statuses( $description = NULL, $values = [], $empty = NULL )
+	{
+		return [
+			'field'        => 'public_statuses',
+			'type'         => 'checkboxes-values',
+			'title'        => _x( 'Public Statuses', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Selected terms will be acceptable on the public content queries.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+			'values'       => $values,
+		];
+	}
+
 	public static function getSetting_paired_exclude_terms( $description = NULL, $taxonomy = 'post_tag', $empty = NULL )
 	{
 		return [

@@ -353,7 +353,7 @@ trait SubContents
 	protected function subcontent_get_empty_notice( $context = 'display', $string_key = 'empty' )
 	{
 		if ( $this->is_thrift_mode() )
-			return '';
+			return '<div class="-placeholder-empty"></div>';
 
 		$default = _x( 'There is no information available!', 'Internal: SubContents: Empty Notice', 'geditorial' );
 

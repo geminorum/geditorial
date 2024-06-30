@@ -731,7 +731,8 @@ class Personage extends gEditorial\Module
 		if ( $familyfirst = $this->make_human_title( $post, 'familyfirst' ) )
 			$data['source']['rendered']['familyfirst'] = $familyfirst;
 
-		if ( $identity = ModuleTemplate::getMetaField( 'identity_number', [ 'id' => $post->ID, 'context' => 'print' ] ) )
+		// NOTE: must be raw, the filtred is available on `metadata.identity_number`
+		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
 			$data['source']['rendered']['identity'] = $identity;
 
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
@@ -754,7 +755,8 @@ class Personage extends gEditorial\Module
 		if ( $familyfirst = $this->make_human_title( $post, 'familyfirst' ) )
 			$row['rendered']['familyfirst'] = $familyfirst;
 
-		if ( $identity = ModuleTemplate::getMetaField( 'identity_number', [ 'id' => $post->ID, 'context' => 'print' ] ) )
+		// NOTE: must be raw, the filtred is available on `metadata.identity_number`
+		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
 			$row['rendered']['identity'] = $identity;
 
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
