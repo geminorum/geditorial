@@ -530,6 +530,11 @@ class Papered extends gEditorial\Module
 
 		if ( ! empty( $config['row_per_sheet'] ) && ! empty( $list ) ) {
 
+			$this->render_view_string( $before, $data );
+
+			$chunks = array_chunk( $list, (int) $config['row_per_sheet'] );
+			$pages  = count( $chunks );
+
 			foreach ( $chunks as $offset => $chunk ) {
 
 				$data_sheet = array_merge( $data, [
@@ -542,10 +547,13 @@ class Papered extends gEditorial\Module
 					], FALSE ),
 				] );
 
-				$this->render_view_string( $before, $data_sheet );
 				$this->render_view_string( $sheet, $data_sheet );
-				$this->render_view_string( $after, $data_sheet );
+
+				if ( $pages > 1 && $pages !== ( $offset + 1 ) )
+					$this->printpage__render_pagebreak( $profile );
 			}
+
+			$this->render_view_string( $after, $data );
 
 		} else {
 
@@ -592,7 +600,6 @@ class Papered extends gEditorial\Module
 					'name'
 				);
 
-			$data[] = $row;
 			if ( $units )
 				$row['unitsdata'] = Core\Arraay::pluck(
 					gEditorial()->module( 'units' )->get_posttype_fields_data( $item, FALSE, 'print' ),
@@ -600,6 +607,7 @@ class Papered extends gEditorial\Module
 					'name'
 				);
 
+			$data[] = $this->filters( 'view_list_item', $row, $item, $index, $source, $profile, $context, $list );
 			$index++;
 		}
 

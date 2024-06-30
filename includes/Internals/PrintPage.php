@@ -111,6 +111,14 @@ trait PrintPage
 			Core\HTML::prepClass( 'wrap', $list, $extra ), $profile );
 	}
 
+	protected function printpage__render_pagebreak( $profile )
+	{
+		$wrap_class = $this->printpage__get_layout_wrapclass( $profile );
+
+		if ( ! empty( $wrap_class ) )
+			echo '</div><div class="'.$wrap_class.'">';
+	}
+
 	protected function get_printpage_url( $extra = [], $context = 'printpage' )
 	{
 		$extra['noheader'] = 1;
