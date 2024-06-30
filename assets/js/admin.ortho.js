@@ -18,6 +18,7 @@
     phone: '[data-' + module + '=\'phone\']',
     isbn: '[data-' + module + '=\'isbn\']',
     iban: '[data-' + module + '=\'iban\']',
+    bankcard: '[data-' + module + '=\'bankcard\']',
     date: '[data-' + module + '=\'date\']',
     datetime: '[data-' + module + '=\'datetime\']'
     // code: '[data-' + module + '=\'code\']',
@@ -266,6 +267,26 @@
     return iso7064Mod9710(check) === 1;
   }
 
+  // @source https://github.com/sunnywebco/bankcardcheckiran
+  // @REF: https://vrgl.ir/QaQIP
+  function validateCard (value) {
+    if (typeof value === 'undefined' || !value) return false;
+    const length = value.trim().length;
+    if (length < 16 || parseInt(value.substr(1, 10), 10) === 0 || parseInt(value.substr(10, 6), 10) === 0) return false;
+    // const c = parseInt(value.substr(15, 1), 10);
+    let s = 0;
+    let k;
+    let d;
+
+    for (let i = 0; i < 16; i++) {
+      k = (i % 2 === 0) ? 2 : 1;
+      d = parseInt(value.substr(i, 1), 10) * k;
+      s += (d > 9) ? d - 9 : d;
+    }
+
+    return ((s % 10) === 0);
+  }
+
   const inputCallbacks = {
 
     number: function () {
@@ -345,6 +366,22 @@
         const val = toEnglish($el.val()).replace(/IR[^\d.-]/g, '').trim();
         $el.val(val);
         if (validateIBAN(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else {
+          $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
+        }
+      });
+    },
+
+    bankcard: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `number`
+      } catch (e) {}
+      $el.on('change', function () {
+        const val = toEnglish($el.val()).replace(/[^\d.-]/g, '').trim();
+        $el.val(val);
+        if (validateCard(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
         } else {
           $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
