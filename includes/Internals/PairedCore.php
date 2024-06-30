@@ -397,7 +397,7 @@ trait PairedCore
 			'lazy_load_term_meta'    => FALSE,
 		];
 
-		$posts = get_posts( $args );
+		$posts = get_posts( apply_filters( $this->hook_base( 'paired', 'all_connected_to', 'args' ), $args, $post, (array) $posttypes, $context ) );
 
 		return empty( $posts ) ? [] : $posts;
 	}

@@ -47,6 +47,8 @@ class Personage extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$roles = $this->get_settings_default_roles();
+		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'status_taxonomy' ) );
+		$empty = $this->get_taxonomy_label( 'status_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
 			'_roles' => [
@@ -65,6 +67,7 @@ class Personage extends gEditorial\Module
 				'count_not',
 			],
 			'_supports' => [
+				'public_statuses' => [ NULL, $terms, $empty ],
 				'assign_default_term',
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', [
@@ -406,6 +409,9 @@ class Personage extends gEditorial\Module
 		] );
 
 		$this->filter( 'the_title', 2, 8 );
+
+		if ( $this->get_setting( 'public_statuses' ) )
+			$this->filter( 'paired_all_connected_to_args', 4, 12, 'status', $this->base );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
@@ -895,6 +901,24 @@ class Personage extends gEditorial\Module
 			return reset( $search );
 
 		return $discovered;
+	}
+
+	public function paired_all_connected_to_args_status( $args, $post, $posttypes, $context )
+	{
+		if ( count( $posttypes ) > 1 && $this->constant( 'primary_posttype' ) !== $posttypes[0] )
+			return $args;
+
+		if ( empty( $args['tax_query'] ) )
+			$args['tax_query'] = [];
+
+		$args['tax_query']['relation'] = 'AND';
+		$args['tax_query'][] = [
+			'taxonomy' => $this->constant( 'status_taxonomy' ),
+			'terms'    => $this->get_setting( 'public_statuses', [] ),
+			'field'    => 'id',
+		];
+
+		return $args;
 	}
 
 	public function sanitize_passport_number( $data, $field, $post )
