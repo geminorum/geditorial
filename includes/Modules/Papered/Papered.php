@@ -121,6 +121,40 @@ class Papered extends gEditorial\Module
 		return $strings;
 	}
 
+	public function get_global_fields()
+	{
+		$primary = $this->constant( 'primary_posttype' );
+
+		return [
+			'meta' => [
+				$primary => [
+					'over_title'  => [ 'type' => 'text' ],
+					'print_title' => [ 'type' => 'text' ],
+					'sub_title'   => [ 'type' => 'text' ],
+					'print_date'  => [ 'type' => 'date' ],
+
+					'date'      => [ 'type' => 'date' ],
+					'datetime'  => [ 'type' => 'datetime' ],
+					'datestart' => [ 'type' => 'datetime' ],
+					'dateend'   => [ 'type' => 'datetime' ],
+					'days'      => [ 'type' => 'number' ],
+					'hours'     => [ 'type' => 'number' ],
+
+					'venue_string'   => [ 'type' => 'venue' ],
+					'contact_string' => [ 'type' => 'contact' ], // url/email/phone
+					'phone_number'   => [ 'type' => 'phone' ],
+					'mobile_number'  => [ 'type' => 'mobile' ],
+
+					// 'first_name' => [
+					// 	'title'       => _x( 'First Name', 'Field Title', 'geditorial-papered' ),
+					// 	'description' => _x( 'Given Name of the Person', 'Field Description', 'geditorial-papered' ),
+					// ],
+				],
+			]
+		];
+	}
+
+
 	protected function define_default_terms()
 	{
 		return [
@@ -168,6 +202,11 @@ class Papered extends gEditorial\Module
 			'rewrite'      => FALSE,
 			'show_in_menu' => FALSE, // NOTE: better to be `FALSE`, adding parent-slug will override the `mainpage`
 		] );
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 	}
 
 	public function admin_menu()
