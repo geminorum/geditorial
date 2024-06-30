@@ -313,7 +313,15 @@ trait SubContents
 
 	protected function subcontent_defaine_field_types()
 	{
-		return Core\Arraay::sameKey( $this->subcontent_define_fields() );
+		$types = Core\Arraay::sameKey( array_keys( $this->subcontent_define_fields() ) );
+
+		if ( array_key_exists( 'card', $types ) )
+			$types['card'] = 'bankcard';
+
+		if ( array_key_exists( 'desc', $types ) )
+			$types['desc'] = 'html';
+
+		return $types;
 	}
 
 	protected function subcontent_get_field_types( $context = 'display' )
