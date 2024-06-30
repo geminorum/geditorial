@@ -145,4 +145,13 @@ trait SettingsTaxonomies
 		$hook = sprintf( '%s_%s_taxonomies_excluded', $this->base, is_null( $module ) ? $this->module->name : $module );
 		$this->filter_append( $hook, $this->constant( $constant ) );
 	}
+
+	protected function get_taxonomy_show_in_quickedit_desc( $constant )
+	{
+		return sprintf(
+			/* translators: %s: taxonomy name */
+			_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings: Taxonomies', 'geditorial-admin' ),
+			$this->get_taxonomy_label( $constant )
+		);
+	}
 }

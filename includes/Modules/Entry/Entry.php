@@ -37,11 +37,7 @@ class Entry extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
-				'show_in_quickedit' => [ sprintf(
-					/* translators: %s: primary taxonomy name */
-					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-entry' ),
-					$this->get_taxonomy_label( 'primary_taxonomy' )
-				), '1' ],
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'primary_taxonomy' ), '1' ],
 			],
 			'_frontend' => [
 				'show_in_navmenus' => [ sprintf(

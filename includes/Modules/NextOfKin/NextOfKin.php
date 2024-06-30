@@ -63,11 +63,7 @@ class NextOfKin extends gEditorial\Module
 			],
 			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_editlist' => [
-				'show_in_quickedit' => [ sprintf(
-					/* translators: %s: primary taxonomy name */
-					_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings', 'geditorial-next-of-kin' ),
-					$this->get_taxonomy_label( 'main_taxonomy' )
-				) ],
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
 			'_editpost' => [
 				'admin_rowactions',
