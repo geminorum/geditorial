@@ -77,6 +77,11 @@ class ModuleInfo extends gEditorial\Info
 						'name'        => 'کارآموز',
 						'description' => 'جهت آموزش مشغول است و درآمد ندارد.',
 					],
+					'retired' => [
+						'slug'        => 'retired',
+						'name'        => 'بازنشسته',
+						'description' => 'از فعالیت حرفه‌ای دست کشیده است.',
+					],
 				];
 
 			default:
@@ -131,7 +136,12 @@ class ModuleInfo extends gEditorial\Info
 					'volunteer' => [
 						'slug'        => 'volunteer',
 						'name'        => _x( 'Volunteer', 'Default Term Title', 'geditorial-employed' ),
-						'description' => _x( 'Non-employee voluntarily providing labor with no expectation of payment', 'Default Term Description', 'geditorial-employed' ),
+						'description' => _x( 'Non-employee voluntarily providing labor with no expectation of payment.', 'Default Term Description', 'geditorial-employed' ),
+					],
+					'retired' => [
+						'slug'        => 'retired',
+						'name'        => _x( 'Retired', 'Default Term Title', 'geditorial-employed' ),
+						'description' => _x( 'Withdrawn from active working life.', 'Default Term Description', 'geditorial-employed' ),
 					],
 				];
 		}

@@ -813,6 +813,8 @@ class Personage extends gEditorial\Module
 
 	private function _get_human_names( $post = NULL, $checks = FALSE )
 	{
+		static $cache = [];
+
 		if ( $checks ) {
 
 			if ( ! gEditorial()->enabled( 'meta' ) )
@@ -825,12 +827,15 @@ class Personage extends gEditorial\Module
 				return FALSE;
 		}
 
+		if ( ! empty( $cache[$post->ID] ) )
+			return $cache[$post->ID];
+
 		$names = [];
 
 		foreach ( $this->_get_human_name_metakeys( $post ) as $key )
 			$names[$key] = ModuleTemplate::getMetaFieldRaw( $key, $post->ID ) ?: '';
 
-		return $names;
+		return $cache[$post->ID] = $names;
 	}
 
 	private function _get_human_name_metakeys( $post = NULL, $filtered = TRUE )

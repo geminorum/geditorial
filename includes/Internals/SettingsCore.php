@@ -15,7 +15,7 @@ trait SettingsCore
 
 			$this->render_form_fields( $this->module->name );
 
-			Settings::moduleSections( $this->base.'_'.$this->module->name );
+			Settings::moduleSections( $this->hook_base( $this->module->name ) );
 
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.Core\HTML::escape( $this->module->name ).'" />';
 
@@ -186,9 +186,9 @@ trait SettingsCore
 
 	protected function get_current_form( $defaults, $context = 'settings' )
 	{
-		$req = empty( $_REQUEST[$this->base.'_'.$this->module->name][$context] )
+		$req = empty( $_REQUEST[$this->hook_base( $this->module->name )][$context] )
 			? []
-			: $_REQUEST[$this->base.'_'.$this->module->name][$context];
+			: $_REQUEST[$this->hook_base( $this->module->name )][$context];
 
 		return self::atts( $defaults, $req );
 	}
@@ -200,7 +200,7 @@ trait SettingsCore
 			if ( in_array( $key, $excludes ) )
 				continue;
 
-			Core\HTML::inputHidden( $this->base.'_'.$this->module->name.'['.$context.']['.$key.']', $value );
+			Core\HTML::inputHidden( $this->hook_base( $this->module->name ).'['.$context.']['.$key.']', $value );
 		}
 	}
 
@@ -469,7 +469,7 @@ trait SettingsCore
 
 			if ( is_array( $fields ) ) {
 
-				$section = $this->base.'_'.$this->module->name.$section_suffix;
+				$section = $this->hook_base( $this->module->name ).$section_suffix;
 
 				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
 					$callback = [ $this, 'settings_section'.$section_suffix ];
@@ -478,7 +478,7 @@ trait SettingsCore
 				else
 					$callback = '__return_false';
 
-				Settings::addModuleSection( $this->base.'_'.$this->module->name, [
+				Settings::addModuleSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'callback'      => $callback,
 					'section_class' => 'settings_section',
@@ -662,8 +662,8 @@ trait SettingsCore
 	public function add_settings_field( $r = [] )
 	{
 		$args = array_merge( [
-			'page'        => $this->base.'_'.$this->module->name,
-			'section'     => $this->base.'_'.$this->module->name.'_general',
+			'page'        => $this->hook_base( $this->module->name ),
+			'section'     => $this->hook_base( $this->module->name, 'general' ),
 			'field'       => FALSE,
 			'label_for'   => '',
 			'title'       => '',
@@ -698,7 +698,7 @@ trait SettingsCore
 	{
 		$args = array_merge( [
 			'options'      => isset( $this->options->settings ) ? $this->options->settings : [],
-			'option_base'  => $this->base.'_'.$this->module->name,
+			'option_base'  => $this->hook_base( $this->module->name ),
 			'option_group' => 'settings',
 			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
 		], $atts );

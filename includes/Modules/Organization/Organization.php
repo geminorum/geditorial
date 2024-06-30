@@ -336,7 +336,7 @@ class Organization extends gEditorial\Module
 		$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
-		$this->filter_module( 'papered', 'view_list', 6, 9, 'paired_posttype' );
+		$this->filter_module( 'papered', 'view_list', 5, 9, 'paired_posttype' );
 
 		if ( $this->get_setting( 'subterms_support' ) )
 			$this->register_shortcode( 'subterm_shortcode' );

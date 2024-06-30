@@ -157,17 +157,16 @@ trait PairedCore
 
 	/**
 	 * Appends List of supported posts to source paired posttype.
-	 * @example `$this->filter_module( 'papered', 'view_list', 6, 10, 'paired_posttype' );`
+	 * @example `$this->filter_module( 'papered', 'view_list', 5, 10, 'paired_posttype' );`
 	 *
 	 * @param  array  $list
 	 * @param  object $source
 	 * @param  object $profile
 	 * @param  string $context
 	 * @param  array  $data
-	 * @param  bool   $meta
 	 * @return array  $list
 	 */
-	public function papered_view_list_paired_posttype( $list, $source, $profile, $context, $data, $meta )
+	public function papered_view_list_paired_posttype( $list, $source, $profile, $context, $data )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return $list;
@@ -175,7 +174,7 @@ trait PairedCore
 		if ( ! $this->is_posttype( $constants[0], $source ) )
 			return $list;
 
-		return $this->paired_all_connected_to( $source );
+		return $this->paired_all_connected_to( $source, $context );
 	}
 
 	/**
@@ -197,7 +196,7 @@ trait PairedCore
 		if ( ! $this->is_posttype( $constants[0], $post ) )
 			return;
 
-		if ( FALSE === ( $connected = $this->paired_all_connected_to( $post ) ) )
+		if ( FALSE === ( $connected = $this->paired_all_connected_to( $post, $context ) ) )
 			return Info::renderSomethingIsWrong( $before, $after );
 
 		$count = count( $connected );
@@ -343,7 +342,7 @@ trait PairedCore
 		if ( $post->post_type !== $this->constant( $constants[0] ) )
 			return $list;
 
-		if ( ! $items = $this->paired_all_connected_to( $post ) )
+		if ( ! $items = $this->paired_all_connected_to( $post, $context ) )
 			return $list;
 
 		/* translators: %s: item count */
@@ -364,7 +363,7 @@ trait PairedCore
 		return $list;
 	}
 
-	protected function paired_all_connected_to( $post, $exclude = [], $posttypes = NULL )
+	protected function paired_all_connected_to( $post, $context, $exclude = [], $posttypes = NULL )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
