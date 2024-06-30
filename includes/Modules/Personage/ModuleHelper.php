@@ -70,6 +70,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				break;
 
+			case 'familyfirst':
 			case 'display':
 			default:
 

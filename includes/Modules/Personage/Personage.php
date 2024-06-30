@@ -433,6 +433,7 @@ class Personage extends gEditorial\Module
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 		$this->filter_module( 'papered', 'view_data', 4 );
+		$this->filter_module( 'papered', 'view_list_item', 7 );
 
 		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
 		$this->filter( 'paired_all_connected_to_args', 4, 18, 'clause', $this->base );
@@ -727,13 +728,39 @@ class Personage extends gEditorial\Module
 		if ( $fullname = $this->make_human_title( $post, 'print' ) )
 			$data['source']['rendered']['posttitle'] = $fullname;
 
-		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
+		if ( $familyfirst = $this->make_human_title( $post, 'familyfirst' ) )
+			$data['source']['rendered']['familyfirst'] = $familyfirst;
+
+		if ( $identity = ModuleTemplate::getMetaField( 'identity_number', [ 'id' => $post->ID, 'context' => 'print' ] ) )
 			$data['source']['rendered']['identity'] = $identity;
 
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
 			$data['source']['rendered']['vcarddata'] = $vcard;
 
 		return $data;
+	}
+
+	public function papered_view_list_item( $row, $item, $index, $source, $profile, $context, $list )
+	{
+		if ( ! $post = WordPress\Post::get( $item ) )
+			return $row;
+
+		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
+			return $row;
+
+		if ( $fullname = $this->make_human_title( $post, 'print' ) )
+			$row['rendered']['posttitle'] = $fullname;
+
+		if ( $familyfirst = $this->make_human_title( $post, 'familyfirst' ) )
+			$row['rendered']['familyfirst'] = $familyfirst;
+
+		if ( $identity = ModuleTemplate::getMetaField( 'identity_number', [ 'id' => $post->ID, 'context' => 'print' ] ) )
+			$row['rendered']['identity'] = $identity;
+
+		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
+			$row['rendered']['vcarddata'] = $vcard;
+
+		return $row;
 	}
 
 	// FIXME: add setting for using source id as identity
