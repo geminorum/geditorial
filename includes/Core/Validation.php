@@ -162,6 +162,11 @@ class Validation extends Base
 		return ( 98 - $checksum ) == $check;
 	}
 
+	public static function getCardNumberHTMLPattern()
+	{
+		return FALSE; // FIXME!
+	}
+
 	public static function sanitizeCardNumber( $input )
 	{
 		$sanitized = Number::translate( Text::trim( $input ) );

@@ -23,7 +23,7 @@ class Module extends Core\Base
 
 	protected function options_key()
 	{
-		return $this->base.'_'.$this->key;
+		return $this->hook();
 	}
 
 	protected static function sanitize_hook( $hook )
