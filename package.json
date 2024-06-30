@@ -42,8 +42,8 @@
     "comp:deps": "composer-require-checker check composer.json"
   },
   "devDependencies": {
-    "@wordpress/babel-preset-default": "^8.1.0",
-    "@wordpress/browserslist-config": "^6.1.0",
+    "@wordpress/babel-preset-default": "^8.2.0",
+    "@wordpress/browserslist-config": "^6.2.0",
     "autoprefixer": "^10.4.19",
     "browserslist": "^4.23.1",
     "cssnano": "^7.0.3",
@@ -68,7 +68,7 @@
     "js-yaml": "^4.1.0",
     "lodash.template": "^4.5.0",
     "parse-changelog": "^1.0.2",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.39",
     "rtlcss": "^4.1.1",
     "semistandard": "^17.0.0",
     "stylelint": "^16.6.1",
