@@ -135,6 +135,10 @@
     margin: 12px;
   }
 
+  > .-placeholder-empty {
+    margin-bottom: 12px;
+  }
+
   .-is-valid {
     color: $brand-success !important;
   }

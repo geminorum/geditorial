@@ -76,9 +76,7 @@ $spacer: 1rem !default;
         padding: 0;
         list-style-position: inside;
 
-        li {
-
-        }
+        // li {}
       }
     }
 
@@ -183,7 +181,8 @@ $spacer: 1rem !default;
     }
 
     &.-inputisbn,
-    &.-inputiban {
+    &.-inputiban,
+    &.-inputbankcard {
       input {
         width: 100%;
 
@@ -228,7 +227,7 @@ $spacer: 1rem !default;
       }
     }
 
-    &.-checkbox {}
+    // &.-checkbox {}
 
     &.-buttons {
       margin-top: $spacer * .25;
