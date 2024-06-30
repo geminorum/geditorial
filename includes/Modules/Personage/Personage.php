@@ -435,6 +435,7 @@ class Personage extends gEditorial\Module
 		$this->filter_module( 'papered', 'view_data', 4 );
 
 		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
+		$this->filter( 'paired_all_connected_to_args', 4, 18, 'clause', $this->base );
 	}
 
 	public function importer_init()
@@ -916,6 +917,34 @@ class Personage extends gEditorial\Module
 			'taxonomy' => $this->constant( 'status_taxonomy' ),
 			'terms'    => $this->get_setting( 'public_statuses', [] ),
 			'field'    => 'id',
+		];
+
+		return $args;
+	}
+
+	public function paired_all_connected_to_args_clause( $args, $post, $posttypes, $context )
+	{
+		if ( count( $posttypes ) > 1 && $this->constant( 'primary_posttype' ) !== $posttypes[0] )
+			return $args;
+
+		if ( empty( $args['meta_query'] ) )
+			$args['meta_query'] = [];
+
+		$args['meta_query']['relation'] = 'AND';
+
+		$args['meta_query']['last_name_clause'] = [
+			'key'     => Services\PostTypeFields::getPostMetaKey( 'last_name' ),
+			'compare' => 'EXISTS',
+		];
+
+		$args['meta_query']['first_name_clause'] = [
+			'key'     => Services\PostTypeFields::getPostMetaKey( 'first_name' ),
+			'compare' => 'EXISTS',
+		];
+
+		$args['orderby'] = [
+			'last_name_clause'  => 'ASC',
+			'first_name_clause' => 'ASC',
 		];
 
 		return $args;
