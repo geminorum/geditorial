@@ -329,9 +329,28 @@ class Helper extends WordPress\Main
 						$raw ?: $value );
 
 				case 'iban':
-					return sprintf( '<span class="-iban %s">%s</span>',
-						Core\Validation::isIBAN( $raw ?: $value ) ? '-is-valid' : '-not-valid',
-						$raw ?: $value );
+
+					if ( FALSE === ( $iban = Info::fromIBAN( $raw ?: $value ) ) )
+						return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $value );
+
+					else
+						return sprintf( '<span class="-iban %s" title="%s">%s</span>',
+							'-is-valid',
+							empty( $iban['bankname'] ) ? gEditorial()->na( FALSE ) : $iban['bankname'],
+							$raw ?: $value
+						);
+
+				case 'bankcard':
+
+					if ( FALSE === ( $card = Info::fromCardNumber( $raw ?: $value ) ) )
+						return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $value );
+
+					else
+						return sprintf( '<span class="-bankcard %s" title="%s">%s</span>',
+							'-is-valid',
+							empty( $card['bankname'] ) ? gEditorial()->na( FALSE ) : $card['bankname'],
+							$raw ?: $value
+						);
 
 				case 'isbn':
 					return Info::lookupISBN( $raw ?: $value );

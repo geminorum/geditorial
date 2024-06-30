@@ -255,7 +255,7 @@ class ModuleHelper extends gEditorial\Helper
 				return $fallback;
 		}
 
-		$prefix = substr( $card, 0, 5 );
+		$prefix = substr( $card, 0, 6 );
 
 		if ( array_key_exists( $prefix, static::$cardPrefixes ) )
 			return [

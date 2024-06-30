@@ -1203,7 +1203,6 @@ class Meta extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	// TODO: for `iban`: display bank as title attr
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		switch ( $field ) {
@@ -1254,19 +1253,30 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return sprintf( '<span class="-iban %s">%s</span>',
-					Core\Validation::isIBAN( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
-					$meta );
+				if ( FALSE === ( $iban = Info::fromIBAN( $raw ?: $meta ) ) )
+					return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $meta );
+
+				else
+					return sprintf( '<span class="-iban %s" title="%s">%s</span>',
+						'-is-valid',
+						empty( $iban['bankname'] ) ? gEditorial()->na( FALSE ) : $iban['bankname'],
+						$raw ?: $meta
+					);
 
 			case 'bankcard':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return sprintf( '<span class="-bankcard %s">%s</span>',
-					Core\Validation::isCardNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
-					$meta );
+				if ( FALSE === ( $card = Info::fromCardNumber( $raw ?: $meta ) ) )
+					return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $meta );
 
+				else
+					return sprintf( '<span class="-bankcard %s" title="%s">%s</span>',
+						'-is-valid',
+						empty( $card['bankname'] ) ? gEditorial()->na( FALSE ) : $card['bankname'],
+						$raw ?: $meta
+					);
 
 			case 'contact':
 				return Helper::prepContact( trim( $raw ) );
