@@ -233,6 +233,7 @@ class Banking extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields_supported();
+		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
 	}
 
 	public function current_screen( $screen )
@@ -681,5 +682,13 @@ class Banking extends gEditorial\Module
 			];
 
 		return $list;
+	}
+
+	public function personage_editform_meta_summary( $fields, $post )
+	{
+		$fields['iban']             = NULL;
+		$fields['bank_card_number'] = NULL;
+
+		return $fields;
 	}
 }

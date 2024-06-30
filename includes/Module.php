@@ -995,7 +995,7 @@ class Module extends WordPress\Module
 				'echo'   => FALSE,
 				'id'     => $post->ID,
 				'type'   => $post->post_type,
-				'fields' => $fields,
+				'fields' => $this->filters( 'editform_meta_summary', $fields, $post ),
 			] ), '-meta-summary' );
 		}, 1, 9 );
 	}
