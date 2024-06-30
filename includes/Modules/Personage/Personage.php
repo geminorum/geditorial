@@ -176,6 +176,22 @@ class Personage extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function define_default_terms()
+	{
+		return [
+			'status_taxonomy' => [
+				'active'      => _x( 'Active', 'Default Term: `Status`', 'geditorial-personage' ),
+				'inactive'    => _x( 'Inactive', 'Default Term: `Status`', 'geditorial-personage' ),
+				'deceased'    => _x( 'Deceased', 'Default Term: `Status`', 'geditorial-personage' ),
+				'martyred'    => _x( 'Martyred', 'Default Term: `Status`', 'geditorial-personage' ),
+				'expelled'    => _x( 'Expelled', 'Default Term: `Status`', 'geditorial-personage' ),
+				'dismissed'   => _x( 'Dismissed', 'Default Term: `Status`', 'geditorial-personage' ),
+				'hushed'      => _x( 'Hushed', 'Default Term: `Status`', 'geditorial-personage' ),
+				'concurrency' => _x( 'Concurrency', 'Default Term: `Status`', 'geditorial-personage' ),
+			],
+		];
+	}
+
 	public function get_global_fields()
 	{
 		$primary = $this->constant( 'primary_posttype' );
