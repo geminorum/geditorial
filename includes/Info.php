@@ -286,6 +286,27 @@ class Info extends WordPress\Main
 		return $html ? TRUE : FALSE;
 	}
 
+	public static function getUnit( $key, $fallback = NULL )
+	{
+		switch ( $key ) {
+
+			case 'day'          : return _x( 'Days', 'Info: Unit', 'geditorial' );
+			case 'hour'         : return _x( 'Hours', 'Info: Unit', 'geditorial' );
+			case 'week'         : return _x( 'Weeks', 'Info: Unit', 'geditorial' );
+			case 'gram'         : return _x( 'Grams', 'Info: Unit', 'geditorial' );
+			case 'kilogram'     : return _x( 'Kilograms', 'Info: Unit', 'geditorial' );
+			case 'milimeter'    : return _x( 'Milimeters', 'Info: Unit', 'geditorial' );
+			case 'centimeter'   : return _x( 'Centimeters', 'Info: Unit', 'geditorial' );
+			case 'meter'        : return _x( 'Meters', 'Info: Unit', 'geditorial' );
+			case 'kilometer'    : return _x( 'Kilometers', 'Info: Unit', 'geditorial' );
+			case 'european'     : return _x( 'European', 'Info: Unit', 'geditorial' );
+			case 'international': return _x( 'International', 'Info: Unit', 'geditorial' );
+			case 'person'       : return _x( 'Persons', 'Info: Unit', 'geditorial' );
+		}
+
+		return $fallback;
+	}
+
 	public static function getNoop( $key, $fallback = NULL )
 	{
 		switch ( $key ) {

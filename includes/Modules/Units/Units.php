@@ -144,23 +144,23 @@ class Units extends gEditorial\Module
 	{
 		return [ 'units' => [
 			'_supported' => [
-				'weight_in_g'  => [ 'type' => 'gram',      'icon' => 'image-filter' ],
-				'width_in_mm'  => [ 'type' => 'milimeter', 'icon' => 'leftright'    ],
-				'height_in_mm' => [ 'type' => 'milimeter', 'icon' => 'sort'         ],
-				'length_in_mm' => [ 'type' => 'milimeter', 'icon' => 'editor-break' ],
+				'weight_in_g'  => [ 'type' => 'gram',      'icon' => 'image-filter', 'data_unit' => 'gram'      ],
+				'width_in_mm'  => [ 'type' => 'milimeter', 'icon' => 'leftright'   , 'data_unit' => 'milimeter' ],
+				'height_in_mm' => [ 'type' => 'milimeter', 'icon' => 'sort'        , 'data_unit' => 'milimeter' ],
+				'length_in_mm' => [ 'type' => 'milimeter', 'icon' => 'editor-break', 'data_unit' => 'milimeter' ],
 
-				'mass_in_kg'    => [ 'type' => 'kilogram',   'icon' => 'image-filter' ],
-				'stature_in_cm' => [ 'type' => 'centimeter', 'icon' => 'sort'         ],
+				'mass_in_kg'    => [ 'type' => 'kilogram',   'icon' => 'image-filter', 'data_unit' => 'kilogram'   ],
+				'stature_in_cm' => [ 'type' => 'centimeter', 'icon' => 'sort'        , 'data_unit' => 'centimeter' ],
 
-				'shoe_size_eu'   => [ 'type' => 'european_shoe', 'icon' => 'universal-access-alt'   ],
-				'shirt_size_int' => [ 'type' => 'international_shirt', 'icon' => 'universal-access' ],
-				'pants_size_int' => [ 'type' => 'international_pants', 'icon' => 'universal-access' ],
+				'shoe_size_eu'   => [ 'type' => 'european_shoe', 'icon' => 'universal-access-alt'  , 'data_unit' => 'european'      ],
+				'shirt_size_int' => [ 'type' => 'international_shirt', 'icon' => 'universal-access', 'data_unit' => 'international' ],
+				'pants_size_int' => [ 'type' => 'international_pants', 'icon' => 'universal-access', 'data_unit' => 'international' ],
 
-				'total_days'  => [ 'type' => 'day'  ],
-				'total_hours' => [ 'type' => 'hour' ],
+				'total_days'  => [ 'type' => 'day' , 'data_unit' => 'day'  ],
+				'total_hours' => [ 'type' => 'hour', 'data_unit' => 'hour' ],
 
-				'total_members'      => [ 'type' => 'member' ],
-				'total_participants' => [ 'type' => 'person' ],   // `contributor`/`competitor`/`player`
+				'total_members'      => [ 'type' => 'member', 'data_unit' => 'person' ],
+				'total_participants' => [ 'type' => 'person', 'data_unit' => 'person' ],   // `contributor`/`competitor`/`player`
 
 				'book_cover' => [ 'type' => 'bookcover' ],
 				'paper_size' => [ 'type' => 'papersize' ],

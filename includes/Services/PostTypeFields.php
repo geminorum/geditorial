@@ -49,6 +49,25 @@ class PostTypeFields extends WordPress\Main
 	}
 
 	/**
+	 * Retrieves the export title of field for given posttype via certain module.
+	 *
+	 * @param  string $field_key
+	 * @param  string $posttype
+	 * @param  string $module
+	 * @return string $export_title
+	 */
+	public static function getExportTitle( $field_key, $posttype, $module = 'meta' )
+	{
+		if ( ! $posttype )
+			return $field_key;
+
+		if ( ! gEditorial()->enabled( $module ) )
+			return $field_key;
+
+		return gEditorial()->module( $module )->get_posttype_field_export_title( $field_key, $posttype );
+	}
+
+	/**
 	 * Retrieves the supported post-types given a field key via certain module.
 	 * OLD: `Helper::getPostTypeFieldSupported()`
 	 *

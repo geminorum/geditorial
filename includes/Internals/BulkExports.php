@@ -169,10 +169,10 @@ trait BulkExports
 					$headers[] = $prop_title ?? Info::getPosttypePropTitle( $prop, 'export' ) ?: $prop;
 
 				foreach ( $fields as $field => $field_title )
-					$headers[] = $field_title ?? Services\PostTypeFields::isAvailable( $field, $posttypes[0], 'meta' )['title'];
+					$headers[] = $field_title ?? Services\PostTypeFields::getExportTitle( $field, $posttypes[0], 'meta' );
 
 				foreach ( $units as $unit => $unit_title )
-					$headers[] = $unit_title ?? Services\PostTypeFields::isAvailable( $unit, $posttypes[0], 'units' )['title'];
+					$headers[] = $unit_title ?? Services\PostTypeFields::getExportTitle( $unit, $posttypes[0], 'units' );
 
 				foreach ( $metas as $meta => $meta_title )
 					$headers[] = $meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
@@ -326,7 +326,7 @@ trait BulkExports
 					];
 
 					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					$list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
+					$list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );
 
 					break;
 
@@ -343,13 +343,13 @@ trait BulkExports
 					];
 
 					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					$list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
+					$list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );
 
 					break;
 
 				case 'full':
 
-					$list = array_merge( $list, Core\Arraay::pluck( $fields, 'title', 'name' ) );
+					$list = array_merge( $list, array_fill_keys( array_keys( $fields ), NULL ) );
 
 					break;
 			}
@@ -386,7 +386,7 @@ trait BulkExports
 
 					// $keys  = [];
 					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					// $list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
+					// $list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );
 
 					break;
 
@@ -394,13 +394,13 @@ trait BulkExports
 
 					// $keys  = [];
 					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					// $list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
+					// $list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );
 
 					break;
 
 				case 'full':
 
-					$list = array_merge( $list, Core\Arraay::pluck( $fields, 'description', 'name' ) );
+					$list = array_merge( $list, array_fill_keys( array_keys( $fields ), NULL ) );
 
 					break;
 			}

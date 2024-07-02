@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\WordPress;
 
 trait PostTypeFields
@@ -31,7 +32,38 @@ trait PostTypeFields
 	}
 
 	/**
-	 * Retrieves the supported post-tyoes for given field key.
+	 * Retrieves the export title for given field key.
+	 *
+	 * @param  string $field_key
+	 * @return string $export_title
+	 */
+	public function get_posttype_field_export_title( $field_key, $posttype )
+	{
+		if ( ! $field = $this->get_posttype_field_args( $field_key, $posttype ) )
+			return $field;
+
+		if ( ! empty( $field['export_title'] ) ) {
+
+			$export_title = $field['export_title'];
+
+		} else if ( ! empty( $field['data_unit'] ) ) {
+
+			$export_title = Core\Text::trim( sprintf( '%s (%s)', $field['title'], Info::getUnit( $field['data_unit'], '' ) ) );
+
+		} else if ( ! empty( $field['title'] ) ) {
+
+			$export_title = $field['title'];
+
+		} else {
+
+			$export_title = $field_key;
+		}
+
+		return $this->filters( 'posttype_field_export_title', $export_title, $field_key, $field );
+	}
+
+	/**
+	 * Retrieves the supported post-types for given field key.
 	 *
 	 * @param  string $field_key
 	 * @return array  $supported
@@ -159,7 +191,9 @@ trait PostTypeFields
 				'quickedit'   => FALSE,
 
 				'import'         => TRUE,    // FALSE to hide on imports
-				'import_ignored' => FALSE,   // TRUE to make duplicate one taht will ignored on import
+				'import_ignored' => FALSE,   // TRUE to make duplicate one that will ignored on import
+				'export_title'   => NULL,    // the export column title
+				'data_unit'      => NULL,    // the unit which in the data is stored
 
 				'values'      => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
 				'none_title'  => $this->get_string( $field, $posttype, 'none', $this->get_string( $args['type'], $posttype, 'none', NULL ) ),
