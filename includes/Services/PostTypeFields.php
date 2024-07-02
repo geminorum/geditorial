@@ -66,4 +66,24 @@ class PostTypeFields extends WordPress\Main
 
 		return gEditorial()->module( $module )->get_posttype_field_supported( $field_key );
 	}
+
+	/**
+	 * Retrieves the enabled post-type fields given a post-type via certain module.
+	 *
+	 * @param  string $posttype
+	 * @param  string $module
+	 * @param  array  $filter
+	 * @param  string $operator
+	 * @return array  $enabled
+	 */
+	public static function getEnabled( $posttype, $module = 'meta', $filter = [], $operator = 'AND' )
+	{
+		if ( ! $posttype )
+			return [];
+
+		if ( ! gEditorial()->enabled( $module ) )
+			return [];
+
+		return gEditorial()->module( $module )->get_posttype_fields( $posttype, $filter, $operator );
+	}
 }

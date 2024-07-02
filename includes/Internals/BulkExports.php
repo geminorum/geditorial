@@ -302,7 +302,7 @@ trait BulkExports
 			if ( ! WordPress\PostType::exists( $posttype ) )
 				continue;
 
-			$fields = WordPress\PostType::supports( $posttype, 'meta_fields' );
+			$fields = Services\PostTypeFields::getEnabled( $posttype, 'meta' );
 
 			if ( empty( $fields ) )
 				continue;
@@ -319,7 +319,7 @@ trait BulkExports
 					];
 
 					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					$list  = array_merge( $list, array_keys( $keeps ) );
+					$list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
 
 					break;
 
@@ -336,20 +336,20 @@ trait BulkExports
 					];
 
 					$keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					$list  = array_merge( $list, array_keys( $keeps ) );
+					$list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
 
 					break;
 
 				case 'full':
 
-					$list = array_merge( $list, array_keys( $fields ) );
+					$list = array_merge( $list, Core\Arraay::pluck( $fields, 'title', 'name' ) );
 
 					break;
 			}
 		}
 
 		return $this->filters( 'export_post_fields',
-			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
+			$list,
 			$posttypes,
 			$reference,
 			$target,
