@@ -804,6 +804,10 @@ class Units extends gEditorial\Module
 		switch ( $field ) {
 
 			case 'total_days':
+
+				if ( 'export' === $context )
+					return trim( $raw );
+
 				return sprintf( Helper::noopedCount( trim( $raw ),
 					Info::getNoop( 'days' ) ),
 					Core\Number::format( trim( $raw ) )
@@ -824,6 +828,9 @@ class Units extends gEditorial\Module
 			case 'kilogram':
 			case 'milimeter':
 			case 'centimeter':
+
+				if ( 'export' === $context )
+					return trim( $raw );
 
 				return sprintf( Helper::noopedCount( trim( $raw ),
 					Info::getNoop( $field_args['type'] ) ),

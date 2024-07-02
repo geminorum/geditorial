@@ -106,7 +106,7 @@ trait BulkExports
 		] );
 	}
 
-	protected function exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )
+	protected function exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields = [], $units = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )
 	{
 		$data = [];
 
@@ -127,7 +127,10 @@ trait BulkExports
 			}
 
 			foreach ( $fields as $field => $field_title )
-				$row[] = Template::getMetaField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE ) ?: '';
+				$row[] = Template::getMetaField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE, 'meta' ) ?: '';
+
+			foreach ( $units as $unit => $unit_title )
+				$row[] = Template::getMetaField( $unit, [ 'id' => $post, 'context' => 'export' ], FALSE, 'units' ) ?: '';
 
 			$saved = get_post_meta( $post->ID );
 
@@ -150,6 +153,7 @@ trait BulkExports
 				$headers = array_merge(
 					array_keys( $props ),
 					Core\Arraay::prefixValues( array_keys( $fields ), 'field__' ),
+					Core\Arraay::prefixValues( array_keys( $units ), 'unit__' ),
 					Core\Arraay::prefixValues( array_keys( $metas ), 'meta__' ),
 					Core\Arraay::prefixValues( array_keys( $taxes ), 'taxonomy__' ),
 					Core\Arraay::prefixValues( array_keys( $customs ), 'custom__' )
@@ -166,6 +170,9 @@ trait BulkExports
 
 				foreach ( $fields as $field => $field_title )
 					$headers[] = $field_title ?? Services\PostTypeFields::isAvailable( $field, $posttypes[0], 'meta' )['title'];
+
+				foreach ( $units as $unit => $unit_title )
+					$headers[] = $unit_title ?? Services\PostTypeFields::isAvailable( $unit, $posttypes[0], 'units' )['title'];
 
 				foreach ( $metas as $meta => $meta_title )
 					$headers[] = $meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
@@ -222,10 +229,11 @@ trait BulkExports
 
 				$props   = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
 				$fields  = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
+				$units   = $this->exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format );
 				$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
 				$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
 				$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
-				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields, $metas, $taxes, $customs, $format );
+				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
 
 				break;
 		}
@@ -292,7 +300,6 @@ trait BulkExports
 		);
 	}
 
-	// TODO: must support the other than `meta` types of fields like `units`/`geo`/`seo`/`contact`
 	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format )
 	{
 		$list = [];
@@ -349,6 +356,57 @@ trait BulkExports
 		}
 
 		return $this->filters( 'export_post_fields',
+			$list,
+			$posttypes,
+			$reference,
+			$target,
+			$type,
+			$context,
+			$format
+		);
+	}
+
+	protected function exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format )
+	{
+		$list = [];
+
+		foreach ( $posttypes as $posttype ) {
+
+			if ( ! WordPress\PostType::exists( $posttype ) )
+				continue;
+
+			$fields = Services\PostTypeFields::getEnabled( $posttype, 'units' );
+
+			if ( empty( $fields ) )
+				continue;
+
+			switch ( $type ) {
+
+				case 'simple':
+
+					// $keys  = [];
+					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
+					// $list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
+
+					break;
+
+				case 'advanced':
+
+					// $keys  = [];
+					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
+					// $list  = array_merge( $list, Core\Arraay::pluck( $keeps, 'title', 'name' ) );
+
+					break;
+
+				case 'full':
+
+					$list = array_merge( $list, Core\Arraay::pluck( $fields, 'description', 'name' ) );
+
+					break;
+			}
+		}
+
+		return $this->filters( 'export_post_units',
 			$list,
 			$posttypes,
 			$reference,
