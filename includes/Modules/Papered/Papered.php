@@ -433,7 +433,6 @@ class Papered extends gEditorial\Module
 					'A5',
 				],
 			];
-
 		}
 
 		return $default;
@@ -584,8 +583,9 @@ class Papered extends gEditorial\Module
 		foreach ( $list as $item ) {
 
 			$row = [
-				'rawpost'  => get_object_vars( $item ),
-				'rawmeta'  => WordPress\Post::getMeta( $item ),
+				'rawpost'  => ModuleHelper::getPostProps( $item ),
+				'rawmeta'  => ModuleHelper::getPostMetas( $item ),
+				'tokens'   => ModuleHelper::getGeneralTokens( $item ),
 				'rendered' => [
 					'index'     => Core\Number::format( $index ),
 					'posttitle' => WordPress\Post::title( $item ),
@@ -594,18 +594,10 @@ class Papered extends gEditorial\Module
 			];
 
 			if ( $meta )
-				$row['metadata'] = Core\Arraay::pluck(
-					gEditorial()->module( 'meta' )->get_posttype_fields_data( $item, FALSE, 'print' ),
-					'rendered',
-					'name'
-				);
+				$row['metadata'] = ModuleHelper::getPosttypeFieldsData( $item, 'meta' );
 
 			if ( $units )
-				$row['unitsdata'] = Core\Arraay::pluck(
-					gEditorial()->module( 'units' )->get_posttype_fields_data( $item, FALSE, 'print' ),
-					'rendered',
-					'name'
-				);
+				$row['unitsdata'] = ModuleHelper::getPosttypeFieldsData( $item, 'units' );
 
 			$data[] = $this->filters( 'view_list_item', $row, $item, $index, $source, $profile, $context, $list );
 			$index++;
@@ -623,8 +615,9 @@ class Papered extends gEditorial\Module
 		if ( $profile ) {
 
 			$data['profile'] = [
-				'rawpost'  => get_object_vars( $profile ),
-				'rawmeta'  => WordPress\Post::getMeta( $profile ),
+				'rawpost'  => ModuleHelper::getPostProps( $profile ),
+				'rawmeta'  => ModuleHelper::getPostMetas( $profile ),
+				'tokens'   => ModuleHelper::getGeneralTokens( $profile ),
 				'rendered' => [
 					'posttitle' => WordPress\Post::title( $profile ),
 					'fulltitle' => WordPress\Post::fullTitle( $profile ),
@@ -632,25 +625,18 @@ class Papered extends gEditorial\Module
 			];
 
 			if ( $meta )
-				$data['profile']['metadata'] = Core\Arraay::pluck(
-					gEditorial()->module( 'meta' )->get_posttype_fields_data( $profile, FALSE, 'print' ),
-					'rendered',
-					'name'
-				);
+				$data['profile']['metadata'] = ModuleHelper::getPosttypeFieldsData( $profile, 'meta' );
 
 			if ( $units )
-				$data['profile']['unitsdata'] = Core\Arraay::pluck(
-					gEditorial()->module( 'units' )->get_posttype_fields_data( $profile, FALSE, 'print' ),
-					'rendered',
-					'name'
-				);
+				$data['profile']['unitsdata'] = ModuleHelper::getPosttypeFieldsData( $profile, 'units' );
 		}
 
 		if ( $source ) {
 
 			$data['source'] = [
-				'rawpost'  => get_object_vars( $source ),
-				'rawmeta'  => WordPress\Post::getMeta( $source ),
+				'rawpost'  => ModuleHelper::getPostProps( $source ),
+				'rawmeta'  => ModuleHelper::getPostMetas( $source ),
+				'tokens'   => ModuleHelper::getGeneralTokens( $source ),
 				'rendered' => [
 					'posttitle' => WordPress\Post::title( $source ),
 					'fulltitle' => WordPress\Post::fullTitle( $source ),
@@ -658,18 +644,10 @@ class Papered extends gEditorial\Module
 			];
 
 			if ( $meta )
-				$data['source']['metadata'] = Core\Arraay::pluck(
-					gEditorial()->module( 'meta' )->get_posttype_fields_data( $source, FALSE, 'print' ),
-					'rendered',
-					'name'
-				);
+				$data['source']['metadata'] = ModuleHelper::getPosttypeFieldsData( $source, 'meta' );
 
 			if ( $units )
-				$data['source']['unitsdata'] = Core\Arraay::pluck(
-					gEditorial()->module( 'units' )->get_posttype_fields_data( $source, FALSE, 'print' ),
-					'rendered',
-					'name'
-				);
+				$data['source']['unitsdata'] = ModuleHelper::getPosttypeFieldsData( $source, 'units' );
 		}
 
 		return $this->filters( 'view_data', $data, $profile, $source, $context );
