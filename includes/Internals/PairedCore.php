@@ -375,6 +375,43 @@ trait PairedCore
 		return $list;
 	}
 
+	/**
+	 * Appends the bulk export buttons for current post.
+	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 20, 'paired_exports' );`
+	 *
+	 * @param  array  $list
+	 * @param  array  $data
+	 * @param  object $post
+	 * @param  string $context
+	 * @return array  $list
+	 */
+	public function tabloid_post_summaries_paired_exports( $list, $data, $post, $context )
+	{
+		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
+			return $list;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return $list;
+
+		if ( $post->post_type !== $this->constant( $constants[0] ) )
+			return $list;
+
+		if ( ! $this->role_can( 'exports' ) )
+			return $list;
+
+		$default  = _x( 'Export Options', 'Internal: Paired: Post Summary Title', 'geditorial-admin' );
+		$template = $this->get_string( 'tabloid_export_buttons', $post->post_type, 'misc', $default );
+
+		$list[] = [
+			'key'     => $this->classs( 'paired', 'exports' ),
+			'class'   => '-paired-exports',
+			'title'   => $template,
+			'content' => Core\HTML::wrap( $this->exports_get_export_buttons( $post, $context ), 'field-wrap -buttons' ),
+		];
+
+		return $list;
+	}
+
 	protected function paired_all_connected_to( $post, $context, $exclude = [], $posttypes = NULL )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
