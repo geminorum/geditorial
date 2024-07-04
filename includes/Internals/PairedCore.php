@@ -196,6 +196,9 @@ trait PairedCore
 		if ( ! $this->is_posttype( $constants[0], $post ) )
 			return;
 
+		if ( ! $this->role_can( 'reports' ) )
+			return;
+
 		if ( FALSE === ( $connected = $this->paired_all_connected_to( $post, $context ) ) )
 			return Info::renderSomethingIsWrong( $before, $after );
 
@@ -242,6 +245,9 @@ trait PairedCore
 			return;
 
 		if ( ! $constants = $this->paired_get_constants() )
+			return;
+
+		if ( ! $this->role_can( 'reports' ) )
 			return;
 
 		if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
@@ -303,6 +309,9 @@ trait PairedCore
 		if ( ! $constants = $this->paired_get_constants() )
 			return $list;
 
+		if ( ! $this->role_can( 'reports' ) )
+			return $list;
+
 		if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
 			return $list;
 
@@ -340,6 +349,9 @@ trait PairedCore
 			return $list;
 
 		if ( $post->post_type !== $this->constant( $constants[0] ) )
+			return $list;
+
+		if ( ! $this->role_can( 'reports' ) )
 			return $list;
 
 		if ( ! $items = $this->paired_all_connected_to( $post, $context ) )

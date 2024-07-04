@@ -93,6 +93,7 @@ class Trained extends gEditorial\Module
 			'_roles' => [
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
+				'exports_roles' => [ NULL, $roles ],
 			],
 			'_editlist' => [
 				'admin_bulkactions',
