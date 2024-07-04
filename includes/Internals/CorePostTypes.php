@@ -208,6 +208,28 @@ trait CorePostTypes
 						else if ( ! array_key_exists( 'create_posts', $args['capabilities'] ) )
 							$args['capabilities']['create_posts'] = sprintf( 'create_%s', $args['capability_type'][1] );
 
+						if ( in_array( 'comments', $args['supports'], TRUE ) )
+							add_filter( 'map_meta_cap',
+								function ( $caps, $cap, $user_id, $passed_args ) use ( $posttype, $args ) {
+
+									if ( 'edit_comment' !== $cap )
+										return $caps;
+
+									if ( empty( $passed_args[0] ) || ! $comment = get_comment( $passed_args[0] ) )
+										return $caps;
+
+									if ( empty( $comment->comment_post_ID ) || ! $post = get_post( $comment->comment_post_ID ) )
+										return $caps;
+
+									if ( $posttype !== $post->post_type )
+										return $caps;
+
+									if ( user_can( $user_id, sprintf( 'manage_%s', $args['capability_type'][1] ) ) )
+										return [ 'read' ];
+
+									return [ 'do_not_allow' ];
+								}, 12, 4 );
+
 						if ( is_array( $taxonomies ) && in_array( 'post_tag', $taxonomies, TRUE ) )
 							add_filter( 'map_meta_cap',
 								function ( $caps, $cap, $user_id ) use ( $args ) {
