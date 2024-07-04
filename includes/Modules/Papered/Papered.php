@@ -56,6 +56,11 @@ class Papered extends gEditorial\Module
 					'string_empty' => _x( 'There are no directed post-types available!', 'Setting Empty', 'geditorial-papered' ),
 					'values'       => $this->get_settings_posttypes_parents(),
 				],
+				'paired_exclude_terms' => [
+					NULL,
+					$this->constant( 'primary_taxonomy' ),
+					$this->get_taxonomy_label( 'primary_taxonomy', 'no_terms' ),
+				],
 			],
 			'_roles' => [
 				'prints_roles',
@@ -77,6 +82,7 @@ class Papered extends gEditorial\Module
 			'primary_posttype' => 'print_profile',
 			'primary_paired'   => 'print_profiles',
 			'primary_subterm'  => 'print_profile_type',
+			'primary_taxonomy' => 'print_profile_category',
 			'flag_taxonomy'    => 'print_profile_flag',
 		];
 	}
@@ -88,6 +94,7 @@ class Papered extends gEditorial\Module
 				'primary_posttype' => _n_noop( 'Print Profile', 'Print Profiles', 'geditorial-papered' ),
 				'primary_paired'   => _n_noop( 'Print Profile', 'Print Profiles', 'geditorial-papered' ),
 				'primary_subterm'  => _n_noop( 'Print Profile Type', 'Print Profile Types', 'geditorial-papered' ),
+				'primary_taxonomy' => _n_noop( 'Print Profile Category', 'Print Profile Categories', 'geditorial-papered' ),
 				'flag_taxonomy'    => _n_noop( 'Print Profile Flag', 'Print Profile Flags', 'geditorial-papered' ),
 			],
 			'labels' => [
@@ -158,6 +165,10 @@ class Papered extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
+			'primary_taxonomy' => [
+				'featured'   => _x( 'Featured', 'Primary Taxonomy: Default Term', 'geditorial-papered' ), // TODO: display profile with `featured` on Tabloid Overviews
+				'deprecated' => _x( 'Deprecated', 'Primary Taxonomy: Default Term', 'geditorial-papered' ),
+			],
 			'flag_taxonomy' => [
 				'needs-libre-fonts'    => _x( 'Needs Libre Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),  // FIXME: add support
 				'needs-vazir-fonts'    => _x( 'Needs Vazir Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
@@ -176,7 +187,7 @@ class Papered extends gEditorial\Module
 			'primary_posttype',
 			'primary_paired',
 			'primary_subterm',
-			FALSE,
+			'primary_taxonomy',
 			FALSE,  // hierarchical!
 			TRUE,   // private
 		];
@@ -185,6 +196,16 @@ class Papered extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
+
+		// FIXME: handle caps
+		$this->register_taxonomy( 'primary_taxonomy', [
+			'hierarchical'       => TRUE,
+			'meta_box_cb'        => NULL,
+			'show_admin_column'  => TRUE,
+			'show_in_quick_edit' => TRUE,
+			'default_term'       => NULL,
+			'show_in_menu'       => FALSE,
+		], 'primary_posttype' );
 
 		// FIXME: handle caps
 		$this->register_taxonomy( 'flag_taxonomy', [
@@ -212,6 +233,7 @@ class Papered extends gEditorial\Module
 	public function admin_menu()
 	{
 		$this->_hook_menu_posttype( 'primary_posttype', 'themes.php' );
+		$this->_hook_menu_taxonomy( 'primary_taxonomy', 'themes.php' );
 		$this->_hook_menu_taxonomy( 'flag_taxonomy', 'options-general.php' );
 
 		if ( $this->role_can( 'prints' ) )
@@ -220,7 +242,11 @@ class Papered extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'flag_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->constant( 'primary_taxonomy' ) == $screen->taxonomy ) {
+
+			$this->filter_string( 'parent_file', 'themes.php' );
+
+		} else if ( $this->constant( 'flag_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 
