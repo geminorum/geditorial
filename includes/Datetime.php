@@ -51,17 +51,18 @@ class Datetime extends WordPress\Main
 		static $formats;
 
 		if ( empty( $formats ) )
-			$formats = apply_filters( 'custom_date_formats', [
-				'fulltime'  => _x( 'l, M j, Y @ H:i', 'Date Format', 'geditorial' ),
-				'datetime'  => _x( 'M j, Y @ G:i', 'Date Format', 'geditorial' ),
-				'dateonly'  => _x( 'l, F j, Y', 'Date Format', 'geditorial' ),
-				'timedate'  => _x( 'H:i - F j, Y', 'Date Format', 'geditorial' ),
-				'timeampm'  => _x( 'g:i a', 'Date Format', 'geditorial' ),
-				'timeonly'  => _x( 'H:i', 'Date Format', 'geditorial' ),
-				'monthday'  => _x( 'n/j', 'Date Format', 'geditorial' ),
-				'default'   => _x( 'm/d/Y', 'Date Format', 'geditorial' ),
-				'age'       => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
-				'print'     => _x( 'j/n/Y', 'Date Format: `print`', 'geditorial' ),
+			$formats = apply_filters( static::BASE.'_custom_date_formats', [
+				'age'      => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
+				'dateonly' => _x( 'l, F j, Y', 'Date Format: `dateonly`', 'geditorial' ),
+				'datetime' => _x( 'M j, Y @ G:i', 'Date Format: `datetime`', 'geditorial' ),
+				'default'  => _x( 'm/d/Y', 'Date Format: `default`', 'geditorial' ),
+				'fulltime' => _x( 'l, M j, Y @ H:i', 'Date Format: `fulltime`', 'geditorial' ),
+				'monthday' => _x( 'n/j', 'Date Format: `monthday`', 'geditorial' ),
+				'print'    => _x( 'j/n/Y', 'Date Format: `print`', 'geditorial' ),
+				'timeampm' => _x( 'g:i a', 'Date Format: `timeampm`', 'geditorial' ),
+				'timedate' => _x( 'H:i - F j, Y', 'Date Format: `timedate`', 'geditorial' ),
+				'timeonly' => _x( 'H:i', 'Date Format: `timeonly`', 'geditorial' ),
+
 				'wordpress' => get_option( 'date_format' ),
 			] );
 

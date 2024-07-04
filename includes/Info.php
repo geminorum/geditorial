@@ -425,6 +425,11 @@ class Info extends WordPress\Main
 			case 'meter':
 				/* translators: %s: unit amount */
 				return _nx_noop( '%s Meter', '%s Meters', 'Info: Noop', 'geditorial' );
+
+			case 'km':
+			case 'kilometer':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Kilometer', '%s Kilometers', 'Info: Noop', 'geditorial' );
 		}
 
 		return $fallback;

@@ -29,6 +29,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
+		// @package `jeroendesloovere/vcard`
 		$vcard = new \JeroenDesloovere\VCard\VCard();
 		$field = [
 			'id'      => $post,
