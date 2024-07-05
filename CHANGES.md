@@ -1,3 +1,13 @@
+### 3.28.1
+* internal/bulk-exports: get enabled fields for full export
+* internal/bulk-exports: support for export title
+* internal/bulk-exports: support for unit fields
+* internal/core-post-types: mapping edit comment cap
+* internal/paired-core: check for reports/exports roles
+* internal/paired-core: support for export buttons on tabloid overviews
+* module/papered: refactoring helpers
+* module/papered: support for primary taxonomy
+
 ### 3.28.0
 * internal/bulk-exports: support custom export fields
 * internal/bulk-exports: support for column titles
