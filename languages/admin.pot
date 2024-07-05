@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.27.4\n"
+"Project-Id-Version: gEditorial 3.28.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -245,13 +245,13 @@ msgid "Editorial Content Summary"
 msgstr ""
 
 #. translators: %s: singular posttype name
-#: includes/Internals/CorePostTypes.php:362
+#: includes/Internals/CorePostTypes.php:389
 msgctxt "Module: Setting Title"
 msgid "%s Supports"
 msgstr ""
 
 #. translators: %s: singular posttype name
-#: includes/Internals/CorePostTypes.php:364
+#: includes/Internals/CorePostTypes.php:391
 msgctxt "Module: Setting Description"
 msgid "Support core and extra features for %s posttype."
 msgstr ""
@@ -281,10 +281,15 @@ msgid "%s posts after-cared!"
 msgstr ""
 
 #. translators: %s: item count
-#: includes/Internals/PairedCore.php:310
-#: includes/Internals/PairedCore.php:349
+#: includes/Internals/PairedCore.php:319
+#: includes/Internals/PairedCore.php:361
 msgctxt "Internal: Paired: Post Summary Title"
 msgid "Connected (%s)"
+msgstr ""
+
+#: includes/Internals/PairedCore.php:402
+msgctxt "Internal: Paired: Post Summary Title"
+msgid "Export Options"
 msgstr ""
 
 #. translators: %s: clone into input
@@ -1177,7 +1182,7 @@ msgctxt "Modules: Conscripted"
 msgid "State-mandated National Service"
 msgstr ""
 
-#: includes/Modules/ContactCards/ContactCards.php:24
+#: includes/Modules/ContactCards/ContactCards.php:25
 msgctxt "Modules: Contact Cards"
 msgid "Contact Cards"
 msgstr ""
@@ -1317,27 +1322,27 @@ msgctxt "Modules: Districted"
 msgid "Provincial Divisions for Contents"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:300
+#: includes/Modules/Districted/Districted.php:301
 msgctxt "Module: Paired: Card Title"
 msgid "Paired Tools"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:303
+#: includes/Modules/Districted/Districted.php:304
 msgctxt "Module: Paired: Button"
 msgid "Sync Paired Terms"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:304
+#: includes/Modules/Districted/Districted.php:305
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to set the paired term for all the main posts."
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:308
+#: includes/Modules/Districted/Districted.php:309
 msgctxt "Module: Paired: Button"
 msgid "Create Paired Terms"
 msgstr ""
 
-#: includes/Modules/Districted/Districted.php:309
+#: includes/Modules/Districted/Districted.php:310
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to create paired terms for all the main posts."
 msgstr ""
@@ -2157,12 +2162,12 @@ msgctxt "Modules: Personage"
 msgid "Human Resource Management for Editorial"
 msgstr ""
 
-#: includes/Modules/Phonebook/Phonebook.php:30
+#: includes/Modules/Phonebook/Phonebook.php:32
 msgctxt "Modules: Phonebook"
 msgid "Phonebook"
 msgstr ""
 
-#: includes/Modules/Phonebook/Phonebook.php:31
+#: includes/Modules/Phonebook/Phonebook.php:33
 msgctxt "Modules: Phonebook"
 msgid "Contact Information for Contents"
 msgstr ""
@@ -2203,12 +2208,12 @@ msgctxt "Message"
 msgid "There are no pointers available!"
 msgstr ""
 
-#: includes/Modules/Positions/Positions.php:22
+#: includes/Modules/Positions/Positions.php:24
 msgctxt "Modules: Positions"
 msgid "Positions"
 msgstr ""
 
-#: includes/Modules/Positions/Positions.php:23
+#: includes/Modules/Positions/Positions.php:25
 msgctxt "Modules: Positions"
 msgid "Content Position Management"
 msgstr ""

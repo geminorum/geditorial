@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.27.4\n"
+"Project-Id-Version: gEditorial 3.28.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -64,86 +64,86 @@ msgid "/"
 msgstr ""
 
 #: includes/Datetime.php:55
-msgctxt "Date Format"
-msgid "l, M j, Y @ H:i"
-msgstr ""
-
-#: includes/Datetime.php:56
-msgctxt "Date Format"
-msgid "M j, Y @ G:i"
-msgstr ""
-
-#: includes/Datetime.php:57
-msgctxt "Date Format"
-msgid "l, F j, Y"
-msgstr ""
-
-#: includes/Datetime.php:58
-msgctxt "Date Format"
-msgid "H:i - F j, Y"
-msgstr ""
-
-#: includes/Datetime.php:59
-msgctxt "Date Format"
-msgid "g:i a"
-msgstr ""
-
-#: includes/Datetime.php:60
-msgctxt "Date Format"
-msgid "H:i"
-msgstr ""
-
-#: includes/Datetime.php:61
-msgctxt "Date Format"
-msgid "n/j"
-msgstr ""
-
-#: includes/Datetime.php:62
-msgctxt "Date Format"
-msgid "m/d/Y"
-msgstr ""
-
-#: includes/Datetime.php:63
 msgctxt "Date Format: `age`"
 msgid "m/d/Y"
 msgstr ""
 
-#: includes/Datetime.php:64
+#: includes/Datetime.php:56
+msgctxt "Date Format: `dateonly`"
+msgid "l, F j, Y"
+msgstr ""
+
+#: includes/Datetime.php:57
+msgctxt "Date Format: `datetime`"
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: includes/Datetime.php:58
+msgctxt "Date Format: `default`"
+msgid "m/d/Y"
+msgstr ""
+
+#: includes/Datetime.php:59
+msgctxt "Date Format: `fulltime`"
+msgid "l, M j, Y @ H:i"
+msgstr ""
+
+#: includes/Datetime.php:60
+msgctxt "Date Format: `monthday`"
+msgid "n/j"
+msgstr ""
+
+#: includes/Datetime.php:61
 msgctxt "Date Format: `print`"
 msgid "j/n/Y"
 msgstr ""
 
+#: includes/Datetime.php:62
+msgctxt "Date Format: `timeampm`"
+msgid "g:i a"
+msgstr ""
+
+#: includes/Datetime.php:63
+msgctxt "Date Format: `timedate`"
+msgid "H:i - F j, Y"
+msgstr ""
+
+#: includes/Datetime.php:64
+msgctxt "Date Format: `timeonly`"
+msgid "H:i"
+msgstr ""
+
 #. translators: %s: date string
-#: includes/Datetime.php:86
+#: includes/Datetime.php:87
 msgctxt "Datetime: Post Modified"
 msgid "Last Modified on %s"
 msgstr ""
 
 #. translators: %s: time string
-#: includes/Datetime.php:119
+#: includes/Datetime.php:120
 msgctxt "Datetime: Human Time Ago"
 msgid "%s ago"
 msgstr ""
 
-#: includes/Datetime.php:152
+#: includes/Datetime.php:153
 msgctxt "Datetime: Human Time Diff"
 msgid "Now"
 msgstr ""
 
 #. translators: %s: time string
-#: includes/Datetime.php:154
+#: includes/Datetime.php:155
 msgctxt "Datetime: Human Time Diff"
 msgid "%s ago"
 msgstr ""
 
 #. translators: %s: time string
-#: includes/Datetime.php:156
+#: includes/Datetime.php:157
 msgctxt "Datetime: Human Time Diff"
 msgid "in %s"
 msgstr ""
 
 #. translators: %s: number of minutes
-#: includes/Datetime.php:159
+#: includes/Datetime.php:160
 msgctxt "Datetime: Human Time Diff: Noop"
 msgid "%s min"
 msgid_plural "%s mins"
@@ -151,7 +151,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of hours
-#: includes/Datetime.php:161
+#: includes/Datetime.php:162
 msgctxt "Datetime: Human Time Diff: Noop"
 msgid "%s hour"
 msgid_plural "%s hours"
@@ -159,7 +159,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of days
-#: includes/Datetime.php:163
+#: includes/Datetime.php:164
 msgctxt "Datetime: Human Time Diff: Noop"
 msgid "%s day"
 msgid_plural "%s days"
@@ -167,7 +167,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of weeks
-#: includes/Datetime.php:165
+#: includes/Datetime.php:166
 msgctxt "Datetime: Human Time Diff: Noop"
 msgid "%s week"
 msgid_plural "%s weeks"
@@ -175,7 +175,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of months
-#: includes/Datetime.php:167
+#: includes/Datetime.php:168
 msgctxt "Datetime: Human Time Diff: Noop"
 msgid "%s month"
 msgid_plural "%s months"
@@ -183,7 +183,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of years
-#: includes/Datetime.php:169
+#: includes/Datetime.php:170
 msgctxt "Datetime: Human Time Diff: Noop"
 msgid "%s year"
 msgid_plural "%s years"
@@ -191,7 +191,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of seconds
-#: includes/Datetime.php:187
+#: includes/Datetime.php:188
 msgctxt "Datetime: From Seconds: Noop"
 msgid "%s second"
 msgid_plural "%s seconds"
@@ -199,7 +199,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of minutes
-#: includes/Datetime.php:189
+#: includes/Datetime.php:190
 msgctxt "Datetime: From Seconds: Noop"
 msgid "%s min"
 msgid_plural "%s mins"
@@ -207,7 +207,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of hours
-#: includes/Datetime.php:191
+#: includes/Datetime.php:192
 msgctxt "Datetime: From Seconds: Noop"
 msgid "%s hour"
 msgid_plural "%s hours"
@@ -215,201 +215,201 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: number of days
-#: includes/Datetime.php:193
+#: includes/Datetime.php:194
 msgctxt "Datetime: From Seconds: Noop"
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Datetime.php:206
+#: includes/Datetime.php:207
 msgctxt "Datetime: Date: Moment"
 msgid "Now"
 msgstr ""
 
-#: includes/Datetime.php:207
+#: includes/Datetime.php:208
 msgctxt "Datetime: Date: Moment"
 msgid "Just now"
 msgstr ""
 
-#: includes/Datetime.php:208
+#: includes/Datetime.php:209
 msgctxt "Datetime: Date: Moment"
 msgid "One minute ago"
 msgstr ""
 
 #. translators: %s: number of minutes
-#: includes/Datetime.php:210
+#: includes/Datetime.php:211
 msgctxt "Datetime: Date: Moment"
 msgid "%s minutes ago"
 msgstr ""
 
-#: includes/Datetime.php:211
+#: includes/Datetime.php:212
 msgctxt "Datetime: Date: Moment"
 msgid "One hour ago"
 msgstr ""
 
 #. translators: %s: number of hours
-#: includes/Datetime.php:213
+#: includes/Datetime.php:214
 msgctxt "Datetime: Date: Moment"
 msgid "%s hours ago"
 msgstr ""
 
-#: includes/Datetime.php:214
+#: includes/Datetime.php:215
 msgctxt "Datetime: Date: Moment"
 msgid "Yesterday"
 msgstr ""
 
 #. translators: %s: number of days
-#: includes/Datetime.php:216
+#: includes/Datetime.php:217
 msgctxt "Datetime: Date: Moment"
 msgid "%s days ago"
 msgstr ""
 
 #. translators: %s: number of weeks
-#: includes/Datetime.php:218
+#: includes/Datetime.php:219
 msgctxt "Datetime: Date: Moment"
 msgid "%s weeks ago"
 msgstr ""
 
-#: includes/Datetime.php:219
+#: includes/Datetime.php:220
 msgctxt "Datetime: Date: Moment"
 msgid "Last month"
 msgstr ""
 
-#: includes/Datetime.php:220
+#: includes/Datetime.php:221
 msgctxt "Datetime: Date: Moment"
 msgid "Last year"
 msgstr ""
 
-#: includes/Datetime.php:221
+#: includes/Datetime.php:222
 msgctxt "Datetime: Date: Moment"
 msgid "in a minute"
 msgstr ""
 
 #. translators: %s: number of minutes
-#: includes/Datetime.php:223
+#: includes/Datetime.php:224
 msgctxt "Datetime: Date: Moment"
 msgid "in %s minutes"
 msgstr ""
 
-#: includes/Datetime.php:224
+#: includes/Datetime.php:225
 msgctxt "Datetime: Date: Moment"
 msgid "in an hour"
 msgstr ""
 
 #. translators: %s: number of hours
-#: includes/Datetime.php:226
+#: includes/Datetime.php:227
 msgctxt "Datetime: Date: Moment"
 msgid "in %s hours"
 msgstr ""
 
-#: includes/Datetime.php:227
+#: includes/Datetime.php:228
 msgctxt "Datetime: Date: Moment"
 msgid "Tomorrow"
 msgstr ""
 
-#: includes/Datetime.php:228
+#: includes/Datetime.php:229
 msgctxt "Datetime: Date: Moment"
 msgid "next week"
 msgstr ""
 
 #. translators: %s: number of weeks
-#: includes/Datetime.php:230
+#: includes/Datetime.php:231
 msgctxt "Datetime: Date: Moment"
 msgid "in %s weeks"
 msgstr ""
 
-#: includes/Datetime.php:231
+#: includes/Datetime.php:232
 msgctxt "Datetime: Date: Moment"
 msgid "next month"
 msgstr ""
 
-#: includes/Datetime.php:232
+#: includes/Datetime.php:233
 msgctxt "Datetime: Date: Moment"
 msgid "l"
 msgstr ""
 
-#: includes/Datetime.php:233
+#: includes/Datetime.php:234
 msgctxt "Datetime: Date: Moment"
 msgid "F Y"
 msgstr ""
 
 #. translators: %s: year number
-#: includes/Datetime.php:313
+#: includes/Datetime.php:314
 msgctxt "Datetime: Age Title Attr"
 msgid "%s year old"
 msgid_plural "%s years old"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Datetime.php:335
+#: includes/Datetime.php:336
 msgctxt "Datetime: Age Structure"
 msgid "0–14 years"
 msgstr ""
 
-#: includes/Datetime.php:342
+#: includes/Datetime.php:343
 msgctxt "Datetime: Age Structure"
 msgid "15–24 years"
 msgstr ""
 
-#: includes/Datetime.php:350
+#: includes/Datetime.php:351
 msgctxt "Datetime: Age Structure"
 msgid "25–54 years"
 msgstr ""
 
-#: includes/Datetime.php:358
+#: includes/Datetime.php:359
 msgctxt "Datetime: Age Structure"
 msgid "55–64 years"
 msgstr ""
 
-#: includes/Datetime.php:366
+#: includes/Datetime.php:367
 msgctxt "Datetime: Age Structure"
 msgid "65 years and over"
 msgstr ""
 
-#: includes/Datetime.php:394
+#: includes/Datetime.php:395
 msgctxt "Datetime: Medical Age"
 msgid "Newborns"
 msgstr ""
 
-#: includes/Datetime.php:395
+#: includes/Datetime.php:396
 msgctxt "Datetime: Medical Age"
 msgid "Infants"
 msgstr ""
 
-#: includes/Datetime.php:396
+#: includes/Datetime.php:397
 msgctxt "Datetime: Medical Age"
 msgid "Children"
 msgstr ""
 
-#: includes/Datetime.php:397
+#: includes/Datetime.php:398
 msgctxt "Datetime: Medical Age"
 msgid "Adolescents"
 msgstr ""
 
-#: includes/Datetime.php:398
+#: includes/Datetime.php:399
 msgctxt "Datetime: Medical Age"
 msgid "Adults"
 msgstr ""
 
-#: includes/Datetime.php:399
+#: includes/Datetime.php:400
 msgctxt "Datetime: Medical Age"
 msgid "Older Adults"
 msgstr ""
 
 #. translators: %s: decade number
-#: includes/Datetime.php:408
+#: includes/Datetime.php:409
 msgctxt "Datetime: Decade Prefix"
 msgid "Decade %s"
 msgstr ""
 
 #. translators: %s: year number
-#: includes/Datetime.php:432
+#: includes/Datetime.php:433
 msgctxt "Datetime: Year Prefix"
 msgid "Year %s"
 msgstr ""
 
-#: includes/Datetime.php:577
+#: includes/Datetime.php:578
 msgctxt "Datetime: Re-Schedule Post"
 msgid "Something is wrong with the new date."
 msgstr ""
@@ -1022,8 +1022,68 @@ msgctxt "Info: Icon Title"
 msgid "Contact"
 msgstr ""
 
-#. translators: %s: items count
+#: includes/Info.php:293
+msgctxt "Info: Unit"
+msgid "Days"
+msgstr ""
+
+#: includes/Info.php:294
+msgctxt "Info: Unit"
+msgid "Hours"
+msgstr ""
+
+#: includes/Info.php:295
+msgctxt "Info: Unit"
+msgid "Weeks"
+msgstr ""
+
+#: includes/Info.php:296
+msgctxt "Info: Unit"
+msgid "Grams"
+msgstr ""
+
+#: includes/Info.php:297
+msgctxt "Info: Unit"
+msgid "Kilograms"
+msgstr ""
+
 #: includes/Info.php:298
+msgctxt "Info: Unit"
+msgid "Milimeters"
+msgstr ""
+
+#: includes/Info.php:299
+msgctxt "Info: Unit"
+msgid "Centimeters"
+msgstr ""
+
+#: includes/Info.php:300
+msgctxt "Info: Unit"
+msgid "Meters"
+msgstr ""
+
+#: includes/Info.php:301
+msgctxt "Info: Unit"
+msgid "Kilometers"
+msgstr ""
+
+#: includes/Info.php:302
+msgctxt "Info: Unit"
+msgid "European"
+msgstr ""
+
+#: includes/Info.php:303
+msgctxt "Info: Unit"
+msgid "International"
+msgstr ""
+
+#: includes/Info.php:304
+msgctxt "Info: Unit"
+msgid "Persons"
+msgstr ""
+
+#. translators: %s: items count
+#: includes/Info.php:319
 msgctxt "Info: Noop"
 msgid "%s Item"
 msgid_plural "%s Items"
@@ -1031,7 +1091,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: items count
-#: includes/Info.php:305
+#: includes/Info.php:326
 msgctxt "Info: Noop"
 msgid "%s Member"
 msgid_plural "%s Members"
@@ -1039,7 +1099,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: people count
-#: includes/Info.php:319
+#: includes/Info.php:340
 msgctxt "Info: Noop"
 msgid "%s Person"
 msgid_plural "%s People"
@@ -1047,7 +1107,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: posts count
-#: includes/Info.php:324
+#: includes/Info.php:345
 msgctxt "Info: Noop"
 msgid "%s Post"
 msgid_plural "%s Posts"
@@ -1055,7 +1115,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: terms count
-#: includes/Info.php:329
+#: includes/Info.php:350
 msgctxt "Info: Noop"
 msgid "%s Term"
 msgid_plural "%s Terms"
@@ -1063,7 +1123,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: items count
-#: includes/Info.php:333
+#: includes/Info.php:354
 msgctxt "Info: Noop"
 msgid "%s Item Connected"
 msgid_plural "%s Items Connected"
@@ -1071,7 +1131,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: words count
-#: includes/Info.php:338
+#: includes/Info.php:359
 msgctxt "Info: Noop"
 msgid "%s Word"
 msgid_plural "%s Words"
@@ -1079,7 +1139,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: second count
-#: includes/Info.php:343
+#: includes/Info.php:364
 msgctxt "Info: Noop"
 msgid "%s Second"
 msgid_plural "%s Seconds"
@@ -1087,7 +1147,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: hour count
-#: includes/Info.php:348
+#: includes/Info.php:369
 msgctxt "Info: Noop"
 msgid "%s Hour"
 msgid_plural "%s Hours"
@@ -1095,7 +1155,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: week count
-#: includes/Info.php:353
+#: includes/Info.php:374
 msgctxt "Info: Noop"
 msgid "%s Week"
 msgid_plural "%s Weeks"
@@ -1103,7 +1163,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: day count
-#: includes/Info.php:358
+#: includes/Info.php:379
 msgctxt "Info: Noop"
 msgid "%s Day"
 msgid_plural "%s Days"
@@ -1111,7 +1171,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: month count
-#: includes/Info.php:363
+#: includes/Info.php:384
 msgctxt "Info: Noop"
 msgid "%s Month"
 msgid_plural "%s Months"
@@ -1119,7 +1179,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: year count
-#: includes/Info.php:368
+#: includes/Info.php:389
 msgctxt "Info: Noop"
 msgid "%s Year"
 msgid_plural "%s Years"
@@ -1127,7 +1187,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: page count
-#: includes/Info.php:373
+#: includes/Info.php:394
 msgctxt "Info: Noop"
 msgid "%s Page"
 msgid_plural "%s Pages"
@@ -1135,7 +1195,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: volume count
-#: includes/Info.php:378
+#: includes/Info.php:399
 msgctxt "Info: Noop"
 msgid "%s Volume"
 msgid_plural "%s Volumes"
@@ -1143,7 +1203,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: disc count
-#: includes/Info.php:383
+#: includes/Info.php:404
 msgctxt "Info: Noop"
 msgid "%s Disc"
 msgid_plural "%s Discs"
@@ -1151,7 +1211,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:387
+#: includes/Info.php:408
 msgctxt "Info: Noop"
 msgid "%s Gram"
 msgid_plural "%s Grams"
@@ -1159,7 +1219,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:392
+#: includes/Info.php:413
 msgctxt "Info: Noop"
 msgid "%s Kilogram"
 msgid_plural "%s Kilograms"
@@ -1167,7 +1227,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:397
+#: includes/Info.php:418
 msgctxt "Info: Noop"
 msgid "%s Millimetre"
 msgid_plural "%s Millimetres"
@@ -1175,7 +1235,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:402
+#: includes/Info.php:423
 msgctxt "Info: Noop"
 msgid "%s Centimeter"
 msgid_plural "%s Centimeters"
@@ -1183,124 +1243,132 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:406
+#: includes/Info.php:427
 msgctxt "Info: Noop"
 msgid "%s Meter"
 msgid_plural "%s Meters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Info.php:434
+#. translators: %s: unit amount
+#: includes/Info.php:432
+msgctxt "Info: Noop"
+msgid "%s Kilometer"
+msgid_plural "%s Kilometers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/Info.php:460
 msgctxt "Info: Posttype Prop Title"
 msgid "ID"
 msgstr ""
 
-#: includes/Info.php:435
+#: includes/Info.php:461
 msgctxt "Info: Posttype Prop Title"
 msgid "Author"
 msgstr ""
 
-#: includes/Info.php:436
+#: includes/Info.php:462
 msgctxt "Info: Posttype Prop Title"
 msgid "Date"
 msgstr ""
 
-#: includes/Info.php:437
+#: includes/Info.php:463
 msgctxt "Info: Posttype Prop Title"
 msgid "Date (GMT)"
 msgstr ""
 
-#: includes/Info.php:438
+#: includes/Info.php:464
 msgctxt "Info: Posttype Prop Title"
 msgid "Content"
 msgstr ""
 
-#: includes/Info.php:439
+#: includes/Info.php:465
 msgctxt "Info: Posttype Prop Title"
 msgid "Title"
 msgstr ""
 
-#: includes/Info.php:440
+#: includes/Info.php:466
 msgctxt "Info: Posttype Prop Title"
 msgid "Excerpt"
 msgstr ""
 
-#: includes/Info.php:441
+#: includes/Info.php:467
 msgctxt "Info: Posttype Prop Title"
 msgid "Status"
 msgstr ""
 
-#: includes/Info.php:442
+#: includes/Info.php:468
 msgctxt "Info: Posttype Prop Title"
 msgid "Comment Status"
 msgstr ""
 
-#: includes/Info.php:443
+#: includes/Info.php:469
 msgctxt "Info: Posttype Prop Title"
 msgid "Ping Status"
 msgstr ""
 
-#: includes/Info.php:444
+#: includes/Info.php:470
 msgctxt "Info: Posttype Prop Title"
 msgid "Password"
 msgstr ""
 
-#: includes/Info.php:445
+#: includes/Info.php:471
 msgctxt "Info: Posttype Prop Title"
 msgid "Slug"
 msgstr ""
 
-#: includes/Info.php:446
+#: includes/Info.php:472
 msgctxt "Info: Posttype Prop Title"
 msgid "Ping"
 msgstr ""
 
-#: includes/Info.php:447
+#: includes/Info.php:473
 msgctxt "Info: Posttype Prop Title"
 msgid "Pinged"
 msgstr ""
 
-#: includes/Info.php:448
+#: includes/Info.php:474
 msgctxt "Info: Posttype Prop Title"
 msgid "Modified"
 msgstr ""
 
-#: includes/Info.php:449
+#: includes/Info.php:475
 msgctxt "Info: Posttype Prop Title"
 msgid "Modified (GMT)"
 msgstr ""
 
-#: includes/Info.php:450
+#: includes/Info.php:476
 msgctxt "Info: Posttype Prop Title"
 msgid "Content Filtered"
 msgstr ""
 
-#: includes/Info.php:451
+#: includes/Info.php:477
 msgctxt "Info: Posttype Prop Title"
 msgid "Parent ID"
 msgstr ""
 
-#: includes/Info.php:452
+#: includes/Info.php:478
 msgctxt "Info: Posttype Prop Title"
 msgid "GUID"
 msgstr ""
 
-#: includes/Info.php:453
+#: includes/Info.php:479
 msgctxt "Info: Posttype Prop Title"
 msgid "Order"
 msgstr ""
 
-#: includes/Info.php:454
+#: includes/Info.php:480
 msgctxt "Info: Posttype Prop Title"
 msgid "Type"
 msgstr ""
 
-#: includes/Info.php:455
+#: includes/Info.php:481
 msgctxt "Info: Posttype Prop Title"
 msgid "Mime-Type"
 msgstr ""
 
-#: includes/Info.php:456
+#: includes/Info.php:482
 msgctxt "Info: Posttype Prop Title"
 msgid "Comment Count"
 msgstr ""
@@ -1374,109 +1442,114 @@ msgstr ""
 
 #: includes/Internals/PairedImports.php:147
 msgctxt "Internal: PairedImports: String"
-msgid "Add New on Discovery"
+msgid "Clear Added"
 msgstr ""
 
 #: includes/Internals/PairedImports.php:148
 msgctxt "Internal: PairedImports: String"
-msgid "Add"
+msgid "Add New on Discovery"
 msgstr ""
 
 #: includes/Internals/PairedImports.php:149
 msgctxt "Internal: PairedImports: String"
-msgid "Add selected rows"
+msgid "Add"
 msgstr ""
 
 #: includes/Internals/PairedImports.php:150
-#: includes/Internals/PairedImports.php:162
+msgctxt "Internal: PairedImports: String"
+msgid "Add selected rows"
+msgstr ""
+
+#: includes/Internals/PairedImports.php:151
+#: includes/Internals/PairedImports.php:163
 msgctxt "Internal: PairedImports: String"
 msgid "Delete"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:151
+#: includes/Internals/PairedImports.php:152
 msgctxt "Internal: PairedImports: String"
 msgid "Delete selected rows"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:152
+#: includes/Internals/PairedImports.php:153
 msgctxt "Internal: PairedImports: String"
 msgid "Clear"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:153
+#: includes/Internals/PairedImports.php:154
 msgctxt "Internal: PairedImports: String"
 msgid "Clear all data on table"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:154
+#: includes/Internals/PairedImports.php:155
 msgctxt "Internal: PairedImports: String"
 msgid "Paste"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:155
+#: includes/Internals/PairedImports.php:156
 msgctxt "Internal: PairedImports: String"
 msgid "Paste from supported formats"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:156
+#: includes/Internals/PairedImports.php:157
 msgctxt "Internal: PairedImports: String"
 msgid "Upload"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:157
+#: includes/Internals/PairedImports.php:158
 msgctxt "Internal: PairedImports: String"
 msgid "Upload from supported files"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:158
+#: includes/Internals/PairedImports.php:159
 msgctxt "Internal: PairedImports: String"
 msgid "Undefined"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:159
+#: includes/Internals/PairedImports.php:160
 msgctxt "Internal: PairedImports: String"
 msgid "Delete Me"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:160
+#: includes/Internals/PairedImports.php:161
 msgctxt "Internal: PairedImports: String"
 msgid "Flip Date"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:161
+#: includes/Internals/PairedImports.php:162
 msgctxt "Internal: PairedImports: String"
 msgid "Founded"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:163
+#: includes/Internals/PairedImports.php:164
 msgctxt "Internal: PairedImports: String"
 msgid "Search"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:164
+#: includes/Internals/PairedImports.php:165
 msgctxt "Internal: PairedImports: String"
 msgid "Open Item"
 msgstr ""
 
-#: includes/Internals/PairedImports.php:165
+#: includes/Internals/PairedImports.php:166
 msgctxt "Internal: PairedImports: String"
 msgid "Search …"
 msgstr ""
 
 #. translators: %s: count number
-#: includes/Internals/PairedImports.php:168
+#: includes/Internals/PairedImports.php:169
 msgctxt "Internal: PairedImports: String"
 msgid "%s lines"
 msgstr ""
 
 #. translators: %s: count number
-#: includes/Internals/PairedImports.php:170
+#: includes/Internals/PairedImports.php:171
 msgctxt "Internal: PairedImports: String"
 msgid "%s selected"
 msgstr ""
 
 #. translators: %s: post title
-#: includes/Internals/PairedImports.php:202
+#: includes/Internals/PairedImports.php:203
 msgctxt "Internal: PairedImports: Page Title"
 msgid "Import Items for %s"
 msgstr ""
@@ -1514,13 +1587,13 @@ msgid "View all connected"
 msgstr ""
 
 #. translators: %s: field title
-#: includes/Internals/PostTypeFields.php:766
+#: includes/Internals/PostTypeFields.php:800
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s"
 msgstr ""
 
 #. translators: %s: field title
-#: includes/Internals/PostTypeFields.php:770
+#: includes/Internals/PostTypeFields.php:804
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s [Ignored]"
 msgstr ""

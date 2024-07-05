@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 18:51+0330\n"
+"PO-Revision-Date: 2024-07-05 21:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -248,13 +248,13 @@ msgid "Editorial Content Summary"
 msgstr "گزارش محتوای تحریریه"
 
 #. translators: %s: singular posttype name
-#: includes/Internals/CorePostTypes.php:362
+#: includes/Internals/CorePostTypes.php:389
 msgctxt "Module: Setting Title"
 msgid "%s Supports"
 msgstr "ویژگی‌های %s"
 
 #. translators: %s: singular posttype name
-#: includes/Internals/CorePostTypes.php:364
+#: includes/Internals/CorePostTypes.php:391
 msgctxt "Module: Setting Description"
 msgid "Support core and extra features for %s posttype."
 msgstr "پشتیبانی از امکانات هسته و بیشتر، برای نوع‌نوشتهٔ %s."
@@ -283,10 +283,15 @@ msgid "%s posts after-cared!"
 msgstr "%s فرسته پسانگهداری شد!"
 
 #. translators: %s: item count
-#: includes/Internals/PairedCore.php:310 includes/Internals/PairedCore.php:349
+#: includes/Internals/PairedCore.php:319 includes/Internals/PairedCore.php:361
 msgctxt "Internal: Paired: Post Summary Title"
 msgid "Connected (%s)"
 msgstr "مرتبط (%s)"
+
+#: includes/Internals/PairedCore.php:402
+msgctxt "Internal: Paired: Post Summary Title"
+msgid "Export Options"
+msgstr "گزینه‌های برون‌بری"
 
 #. translators: %s: clone into input
 #: includes/Internals/PairedRowActions.php:49
@@ -1175,7 +1180,7 @@ msgctxt "Modules: Conscripted"
 msgid "State-mandated National Service"
 msgstr "خدمت ملی الزامی"
 
-#: includes/Modules/ContactCards/ContactCards.php:24
+#: includes/Modules/ContactCards/ContactCards.php:25
 msgctxt "Modules: Contact Cards"
 msgid "Contact Cards"
 msgstr "کارت‌های تماس"
@@ -1315,27 +1320,27 @@ msgctxt "Modules: Districted"
 msgid "Provincial Divisions for Contents"
 msgstr "تقسیمات استانی برای محتوا"
 
-#: includes/Modules/Districted/Districted.php:300
+#: includes/Modules/Districted/Districted.php:301
 msgctxt "Module: Paired: Card Title"
 msgid "Paired Tools"
 msgstr "ابزارهای جفت"
 
-#: includes/Modules/Districted/Districted.php:303
+#: includes/Modules/Districted/Districted.php:304
 msgctxt "Module: Paired: Button"
 msgid "Sync Paired Terms"
 msgstr "همگام‌سازی رده‌های جفت"
 
-#: includes/Modules/Districted/Districted.php:304
+#: includes/Modules/Districted/Districted.php:305
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to set the paired term for all the main posts."
 msgstr "تلاش می‌کند رده جفت را برای همه فرسته‌های اصلی تنظیم کند."
 
-#: includes/Modules/Districted/Districted.php:308
+#: includes/Modules/Districted/Districted.php:309
 msgctxt "Module: Paired: Button"
 msgid "Create Paired Terms"
 msgstr "ایجاد رده‌های جفت"
 
-#: includes/Modules/Districted/Districted.php:309
+#: includes/Modules/Districted/Districted.php:310
 msgctxt "Module: Paired: Button Description"
 msgid "Tries to create paired terms for all the main posts."
 msgstr "تلاش می‌کند رده‌های جفت را برای همه فرسته‌های اصلی ایجاد کند."
@@ -2155,12 +2160,12 @@ msgctxt "Modules: Personage"
 msgid "Human Resource Management for Editorial"
 msgstr "مدیریت منابع انسانی برای تحریریه"
 
-#: includes/Modules/Phonebook/Phonebook.php:30
+#: includes/Modules/Phonebook/Phonebook.php:32
 msgctxt "Modules: Phonebook"
 msgid "Phonebook"
 msgstr "دفتر تلفن"
 
-#: includes/Modules/Phonebook/Phonebook.php:31
+#: includes/Modules/Phonebook/Phonebook.php:33
 msgctxt "Modules: Phonebook"
 msgid "Contact Information for Contents"
 msgstr "اطلاعات تماس برای محتوا"
@@ -2201,12 +2206,12 @@ msgctxt "Message"
 msgid "There are no pointers available!"
 msgstr "هیچ نشان‌گری در دسترس نیست!"
 
-#: includes/Modules/Positions/Positions.php:22
+#: includes/Modules/Positions/Positions.php:24
 msgctxt "Modules: Positions"
 msgid "Positions"
 msgstr "موقعیت‌ها"
 
-#: includes/Modules/Positions/Positions.php:23
+#: includes/Modules/Positions/Positions.php:25
 msgctxt "Modules: Positions"
 msgid "Content Position Management"
 msgstr "مدیریت موقعیت‌های محتوا"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Listed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 14:39+0330\n"
+"PO-Revision-Date: 2024-07-05 20:58+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -25,177 +25,177 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the listings and supported post-types."
 msgstr ""
 
-#: Listed.php:141 Listed.php:142
+#: Listed.php:142 Listed.php:143
 msgid "Listing"
 msgid_plural "Listings"
 msgstr[0] "فهرست‌ها"
 msgstr[1] "فهرست"
 
-#: Listed.php:143
+#: Listed.php:144
 msgid "Listing Category"
 msgid_plural "Listing Categories"
 msgstr[0] "دسته‌های فهرست"
 msgstr[1] "دسته فهرست"
 
-#: Listed.php:144
+#: Listed.php:145
 msgid "Listing Level"
 msgid_plural "Listing Levels"
 msgstr[0] "سطوح فهرست"
 msgstr[1] "سطح فهرست"
 
-#: Listed.php:145
+#: Listed.php:146
 msgid "Listing Program"
 msgid_plural "Listing Programs"
 msgstr[0] "برنامه‌های فهرست"
 msgstr[1] "برنامه فهرست"
 
-#: Listed.php:146
+#: Listed.php:147
 msgid "Listing Span"
 msgid_plural "Listing Spans"
 msgstr[0] "دوره‌های فهرست"
 msgstr[1] "دوره فهرست"
 
-#: Listed.php:147
+#: Listed.php:148
 msgid "Listing Type"
 msgid_plural "Listing Types"
 msgstr[0] "انواع فهرست"
 msgstr[1] "نوع فهرست"
 
-#: Listed.php:148
+#: Listed.php:149
 msgid "Listing Status"
 msgid_plural "Listing Statuses"
 msgstr[0] "وضعیت‌های فهرست"
 msgstr[1] "وضعیت فهرست"
 
-#: Listed.php:152
+#: Listed.php:153
 msgctxt "Label: `menu_name`"
 msgid "Listings"
 msgstr "فهرست‌ها"
 
-#: Listed.php:153
+#: Listed.php:154
 msgctxt "Label: Featured Image"
 msgid "Listing Poster"
 msgstr "نشان فهرست"
 
-#: Listed.php:154
+#: Listed.php:155
 msgctxt "Label: MetaBox Title"
 msgid "The Listings"
 msgstr "فهرست"
 
-#: Listed.php:157
+#: Listed.php:158
 msgctxt "Label: MetaBox Title"
 msgid "In This Listing"
 msgstr "در این فهرست"
 
-#: Listed.php:160
+#: Listed.php:161
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Listed.php:163
+#: Listed.php:164
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr "برنامه"
 
-#: Listed.php:166
+#: Listed.php:167
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr "دوره"
 
-#: Listed.php:169
+#: Listed.php:170
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Listed.php:172
+#: Listed.php:173
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت"
 
 #. translators: %s: item count
-#: Listed.php:182
+#: Listed.php:183
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Listing Attendees (%s)"
 msgstr "حاضرین فهرست (%s)"
 
 #. translators: %s: item count
-#: Listed.php:184
+#: Listed.php:185
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Listings (%s)"
 msgstr "فهرست (%s)"
 
-#: Listed.php:185
+#: Listed.php:186
 msgctxt "Misc: `column_icon_title`"
 msgid "Listings"
 msgstr "فهرست‌ها"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Listed.php:190
+#: Listed.php:191
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr "حاضرین در &rdquo;%1$s&ldquo;"
 
-#: Listed.php:200
+#: Listed.php:201
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr "مقدماتی"
 
-#: Listed.php:201
+#: Listed.php:202
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr "متوسطه"
 
-#: Listed.php:202
+#: Listed.php:203
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr "پیشرفته"
 
-#: Listed.php:203
+#: Listed.php:204
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr "ویژه"
 
-#: Listed.php:207
+#: Listed.php:208
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Listed.php:208
+#: Listed.php:209
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr "برگزار شده"
 
-#: Listed.php:249
+#: Listed.php:250
 msgctxt "Field Title"
 msgid "Notaries"
 msgstr "ثبت‌کننده‌ها"
 
-#: Listed.php:250
+#: Listed.php:251
 msgctxt "Field Description"
 msgid "People Who is the Notary of This Listing"
 msgstr "افرادی که ثبت‌کننده این فهرست بوده‌اند"
 
-#: Listed.php:257
+#: Listed.php:258
 msgctxt "Field Title"
 msgid "Listing Code"
 msgstr "کد فهرست"
 
-#: Listed.php:258
+#: Listed.php:259
 msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr "کد یکتای فهرست"
 
-#: Listed.php:575
+#: Listed.php:577
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr "ابزارهای فهرست"
 
-#: Listed.php:584
+#: Listed.php:586
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
 msgstr ""
 
-#: Listed.php:620
+#: Listed.php:622
 msgctxt "Header"
 msgid "Listing Imports"
 msgstr "درون‌ریزی‌های فهرست"

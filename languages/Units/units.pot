@@ -489,25 +489,25 @@ msgid "No Measurement Units"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:870
+#: Units.php:877
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:879
+#: Units.php:886
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:888
+#: Units.php:895
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr ""
 
 #. translators: %s: field title
-#: Units.php:1019
+#: Units.php:1026
 msgctxt "Import Field"
 msgid "Units: %s"
 msgstr ""

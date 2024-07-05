@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Personage\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 13:51+0330\n"
+"PO-Revision-Date: 2024-07-05 21:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -402,12 +402,12 @@ msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr "شناسایی"
 
-#: Personage.php:1024
+#: Personage.php:1026
 msgctxt "Header"
 msgid "People Parser"
 msgstr "تجزیه‌کننده افراد"
 
-#: Personage.php:1035
+#: Personage.php:1037
 msgctxt "Button"
 msgid "Parse Lines"
 msgstr "تجزیه خطوط"
