@@ -165,37 +165,25 @@ class Units extends gEditorial\Module
 				'book_cover' => [ 'type' => 'bookcover' ],
 				'paper_size' => [ 'type' => 'papersize' ],
 			],
+			'page' => [],
 		] ];
-	}
-
-	private function get_posttypes_support_units()
-	{
-		$posttypes = [ 'post' ];
-		$supported = get_post_types_by_support( 'editorial-units' );
-		$excludes  = [
-			'attachment',
-			'page',
-		];
-
-		$list = array_diff( array_merge( $posttypes, $supported ), $excludes );
-
-		return $this->filters( 'support_posttypes', $list );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->init_meta_fields();
-		$this->register_meta_fields();
+		$this->posttypefields_init_meta_fields();
+		$this->posttypefields_register_meta_fields();
 
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );
+		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
 	}
 
 	public function importer_init()
 	{
-		$this->filter_module( 'importer', 'fields', 2 );
-		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 2 );
+		$this->posttypefields__hook_importer_init();
 	}
 
 	public function setup_ajax()
@@ -286,185 +274,6 @@ class Units extends gEditorial\Module
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 5 );
 		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 5 );
 		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 5 );
-	}
-
-	protected function init_meta_fields()
-	{
-		foreach ( $this->get_posttypes_support_units() as $posttype )
-			$this->add_posttype_fields( $posttype, $this->fields['units']['_supported'], TRUE, 'units' );
-
-		$this->action( 'wp_loaded' );
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
-		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );
-		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
-	}
-
-	public function wp_loaded()
-	{
-		// initiate the posttype fields for each posttype
-		foreach ( $this->posttypes() as $posttype )
-			$this->get_posttype_fields( $posttype );
-	}
-
-	protected function register_meta_fields()
-	{
-		$this->filter( 'pairedrest_prepped_post', 3, 9, FALSE, $this->base );
-		$this->filter( 'pairedimports_import_types', 4, 5, FALSE, $this->base );
-
-		foreach ( $this->posttypes() as $posttype ) {
-
-			/**
-			 * registering general field for all meta data
-			 * mainly for display purposes
-			 */
-			register_rest_field( $posttype, $this->constant( 'restapi_attribute' ), [
-				'get_callback' => [ $this, 'attribute_get_callback' ],
-			] );
-
-			/**
-			 * the posttype must have `custom-fields` support
-			 * otherwise the meta fields will not appear in the REST API
-			 */
-			if ( ! post_type_supports( $posttype, 'custom-fields' ) )
-				continue;
-
-			$fields = $this->get_posttype_fields( $posttype );
-
-			foreach ( $fields as $field => $args ) {
-
-				if ( empty( $args['rest'] ) )
-					continue;
-
-				if ( $args['repeat'] ) {
-
-					$defaults = [
-						// NOTE: require an item schema when registering `array` meta
-						'type'    => 'array',
-						'single'  => FALSE,
-						'default' => (array) $args['default'],
-					];
-
-				} else if ( in_array( $args['type'], [ 'integer', 'number', 'float', 'price' ] ) ) {
-
-					$defaults = [
-						'type'    => 'integer',
-						'single'  => TRUE,
-						'default' => $args['default'] ?: 0,
-					];
-
-				} else {
-
-					$defaults = [
-						// NOTE: valid values: `string`, `boolean`, `integer`, `number`, `array`, `object`
-						'type'    => 'string',
-						'single'  => TRUE,
-						'default' => $args['default'] ?: '',
-					];
-				}
-
-				$register_args = array_merge( $defaults, [
-
-					/**
-					 * accepts `post`, `comment`, `term`, `user`
-					 * or any other object type with an associated meta table
-					 */
-					'object_subtype' => $posttype,
-
-					'description'       => sprintf( '%s: %s', $args['title'], $args['description'] ),
-					'auth_callback'     => [ $this, 'register_auth_callback' ],
-					'sanitize_callback' => [ $this, 'register_sanitize_callback' ],
-					'show_in_rest'      => TRUE,
-					// TODO: must prepare object scheme on repeatable fields
-					// @SEE: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/#read-and-write-a-post-meta-field-in-post-responses
-					// @SEE: `rest_validate_value_from_schema()`, `wp_register_persisted_preferences_meta()`
-					// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback' ] ],
-				] );
-
-				if ( FALSE === $args['access_view'] )
-					$register_args['show_in_rest'] = FALSE; // only for explicitly private fields
-
-				$meta_key = $this->get_postmeta_key( $field );
-				$filtered = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );
-
-				if ( FALSE !== $filtered )
-					register_meta( 'post', $meta_key, $filtered );
-			}
-		}
-	}
-
-	public function attribute_get_callback( $post, $attr, $request, $object_type )
-	{
-		return $this->get_posttype_fields_data( (int) $post['id'] );
-	}
-
-	public function pairedrest_prepped_post( $prepped, $post, $parent )
-	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
-			return $prepped;
-
-		return array_merge( $prepped, [
-			$this->constant( 'restapi_attribute' ) => $this->get_posttype_fields_data( $post, TRUE ),
-		] );
-	}
-
-	public function get_posttype_fields_data( $post, $raw = FALSE )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		$list   = [];
-		$fields = $this->get_posttype_fields( $post->post_type );
-
-		foreach ( $fields as $field => $args ) {
-
-			if ( empty( $args['rest'] ) )
-				continue;
-
-			$meta = ModuleTemplate::getMetaField( $field, [
-				'id'       => $post->ID,
-				'default'  => $args['default'],
-				'noaccess' => FALSE,
-			] );
-
-			// if no access or default is FALSE
-			if ( FALSE === $meta && $meta !== $args['default'] )
-				continue;
-
-			$row = [
-				'name'     => $args['rest'],
-				'title'    => $args['title'],
-				'rendered' => $meta,
-			];
-
-			if ( $raw )
-				$row['value'] = ModuleTemplate::getMetaFieldRaw( $field, $post->ID, $this->key, FALSE, NULL );
-
-			$list[] = $row;
-		}
-
-		return $list;
-	}
-
-	// WORKING BUT DISABLED
-	// NO NEED: we use original key, so the core will retrieve the value
-	public function register_prepare_callback( $value, $request, $args )
-	{
-		if ( ! $post = WordPress\Post::get() )
-			return $value;
-
-		$fields = $this->get_posttype_fields( $post->post_type );
-		$fields = Core\Arraay::filter( $fields, [ 'rest' => $args['name'] ] );
-
-		foreach ( $fields as $field => $field_args )
-			return $this->get_postmeta_field( $post->ID, $field, $field_args['default'] );
-
-		return $value;
-	}
-
-	public function register_sanitize_callback( $meta_value, $meta_key, $object_type )
-	{
-		$field = $this->get_posttype_field_args( $this->stripprefix( $meta_key ), $object_type );
-		return $field ? $this->sanitize_posttype_field( $meta_value, $field, WordPress\Post::get() ) : $meta_value;
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
@@ -630,45 +439,7 @@ class Units extends gEditorial\Module
 			$request = sprintf( '%s-%s-%s', $this->base, $this->module->name, $field );
 
 			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
-				$this->import_posttype_field( $data, $args, $post );
-		}
-	}
-
-	public function import_posttype_field( $data, $field, $post, $override = TRUE )
-	{
-		switch ( $field['type'] ) {
-
-			case 'parent_post':
-
-				if ( ! $parent = WordPress\Post::get( (int) $data ) )
-					return FALSE;
-
-				if ( ! WordPress\Post::setParent( $post->ID, $parent->ID, FALSE ) )
-					return FALSE;
-
-				break;
-
-			case 'term':
-
-				if ( empty( $field['taxonomy'] ) )
-					return FALSE;
-
-				if ( ! WordPress\Taxonomy::can( $field['taxonomy'], 'assign_terms' ) )
-					return FALSE;
-
-				if ( ! $override && FALSE !== get_the_terms( $post, $field['taxonomy'] ) )
-					return FALSE;
-
-				$terms = $this->sanitize_posttype_field( $data, $field, $post );
-
-				return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
-
-			default:
-
-				if ( ! $override && FALSE !== $this->get_postmeta_field( $post->ID, $field['name'] ) )
-					return FALSE;
-
-				return $this->set_postmeta_field( $post->ID, $field['name'], $this->sanitize_posttype_field( $data, $field, $post ) );
+				$this->posttypefields_do_import_field( $data, $args, $post );
 		}
 	}
 
@@ -907,162 +678,7 @@ class Units extends gEditorial\Module
 			if ( $check_access && ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
 
-			$this->import_posttype_field( $data[$field], $args, $post, $override );
+			$this->posttypefields_do_import_field( $data[$field], $args, $post, $override );
 		}
-	}
-
-	// OLD: `import_from_meta()`
-	public function import_field_meta( $post_meta_key, $field, $limit = FALSE )
-	{
-		$rows = WordPress\Database::getPostMetaRows( $post_meta_key, $limit );
-
-		foreach ( $rows as $row )
-			$this->import_field_raw( WordPress\Strings::getSeparated( $row->meta ), $field, $row->post_id );
-
-		return count( $rows );
-	}
-
-	// OLD: `import_to_meta()`
-	public function import_field_raw( $data, $field_key, $post )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		$field = $this->sanitize_postmeta_field_key( $field_key )[0];
-		$data  = $this->filters( 'import_field_raw_pre', $data, $field, $post );
-
-		if ( FALSE === $data )
-			return FALSE;
-
-		$fields = $this->get_posttype_fields( $post->post_type );
-
-		if ( ! array_key_exists( $field, $fields ) )
-			return FALSE;
-
-		switch ( $fields[$field]['type'] ) {
-
-			case 'term':
-
-				$this->import_field_raw_terms( $data, $fields[$field], $post );
-
-			break;
-			default:
-
-				$this->import_field_raw_strings( $data, $fields[$field], $post );
-		}
-
-		return $post->ID;
-	}
-
-	public function import_field_raw_strings( $data, $field, $post )
-	{
-		$strings = [];
-
-		foreach ( (array) $data as $name ) {
-
-			$sanitized = $this->sanitize_posttype_field( $name, $field, $post );
-
-			if ( empty( $sanitized ) )
-				continue;
-
-			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
-		}
-
-		return $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getPiped( $strings ) );
-	}
-
-	public function import_field_raw_terms( $data, $field, $post )
-	{
-		$terms = [];
-
-		foreach ( (array) $data as $name ) {
-
-			$sanitized = trim( Helper::kses( $name, 'none' ) );
-
-			if ( empty( $sanitized ) )
-				continue;
-
-			$formatted = apply_filters( 'string_format_i18n', $sanitized );
-
-			if ( ! $term = get_term_by( 'name', $formatted, $field['taxonomy'] ) ) {
-
-				$term = wp_insert_term( $formatted, $field['taxonomy'] );
-
-				if ( ! is_wp_error( $term ) )
-					$terms[] = $term->term_id;
-
-			} else {
-
-				$terms[] = $term->term_id;
-			}
-		}
-
-		$terms = $this->sanitize_posttype_field( $terms, $field, $post );
-
-		return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
-	}
-
-	private function get_importer_fields( $posttype = NULL, $object = FALSE )
-	{
-		/* translators: %s: field title */
-		$template = _x( 'Units: %s', 'Import Field', 'geditorial-units' );
-		$fields   = [];
-
-		foreach ( $this->get_posttype_fields( $posttype ) as $field => $args )
-			if ( ! in_array( $args['type'], [ 'term', 'parent_post' ], TRUE ) )
-				$fields['units__'.$field] = $object ? $args : sprintf( $template, $args['title'] );
-
-		return $fields;
-	}
-
-	public function importer_fields( $fields, $posttype )
-	{
-		if ( ! $this->posttype_supported( $posttype ) )
-			return $fields;
-
-		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
-	}
-
-	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
-	{
-		if ( ! $this->posttype_supported( $posttype ) )
-			return $value;
-
-		$fields = $this->get_importer_fields( $posttype, TRUE );
-
-		if ( ! array_key_exists( $field, $fields ) )
-			return $value;
-
-		return $this->sanitize_posttype_field( $value, $fields[$field] );
-	}
-
-	public function importer_saved( $post, $atts = [] )
-	{
-		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
-			return;
-
-		$fields = $this->get_importer_fields( $post->post_type, TRUE );
-
-		foreach ( $atts['map'] as $offset => $field )
-			if ( array_key_exists( $field, $fields ) )
-				$this->import_posttype_field( $atts['raw'][$offset], $fields[$field], $post, $atts['override'] );
-	}
-
-	public function pairedimports_import_types( $types, $linked, $posttypes, $module_key )
-	{
-		foreach ( $this->posttypes() as $posttype ) {
-
-			if ( ! in_array( $posttype, $posttypes, TRUE ) )
-				continue;
-
-			$fields = $this->get_posttype_fields( $posttype, [ 'import' => TRUE ] );
-
-			if ( empty( $fields ) )
-				continue;
-
-			$types = array_merge( $types, Core\Arraay::pluck( $fields, 'title', 'name' ) );
-		}
-
-		return $types;
 	}
 }
