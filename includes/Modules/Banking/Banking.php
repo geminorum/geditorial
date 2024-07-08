@@ -185,6 +185,7 @@ class Banking extends gEditorial\Module
 			'bank',
 			'country',
 			'ref',
+			'order',
 		];
 	}
 
@@ -365,6 +366,8 @@ class Banking extends gEditorial\Module
 
 	public function setup_restapi()
 	{
+		$this->subcontent_restapi_register_routes();
+
 		$this->restapi_register_route( 'query', [ 'get', 'post', 'delete' ], '(?P<linked>[\d]+)' );
 		$this->restapi_register_route( 'markup', 'get', '(?P<linked>[\d]+)' );
 	}

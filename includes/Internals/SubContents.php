@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SubContents
@@ -81,6 +82,7 @@ trait SubContents
 	{
 		return [
 			// 'name' // <---- EXAMPLE
+			'order',
 		];
 	}
 
@@ -122,6 +124,14 @@ trait SubContents
 	protected function subcontent_get_data_mapping()
 	{
 		return $this->subcontent_base_data_mapping();
+	}
+
+	protected function subcontent_update_sort( $raw = [], $post = FALSE, $mapping = NULL )
+	{
+		foreach ( $raw as $offset => $comment_id )
+			update_comment_meta( $comment_id, 'order', $offset + 1 );
+
+		return count( $raw );
 	}
 
 	protected function subcontent_insert_data( $raw = [], $post = FALSE, $mapping = NULL )
@@ -220,10 +230,17 @@ trait SubContents
 			if ( array_key_exists( $meta_from, $raw ) )
 				$data['comment_meta'][$meta_to] = $raw[$meta_from];
 
+		if ( ! empty( $data['comment_meta']['order'] ) )
+			return $data;
+
+		$data['comment_meta']['order'] = empty( $raw['order'] )
+			? $this->subcontent_get_data_count( $post ) + 1
+			: $raw['order'];
+
 		return $data;
 	}
 
-	protected function subcontent_prep_data_from_query( $raw, $post = FALSE, $mapping = NULL, $metas = NULL )
+	protected function subcontent_prep_data_from_query( $raw, $post = FALSE, $mapping = NULL, $metas = NULL, $order = NULL )
 	{
 		if ( is_null( $mapping ) )
 			$mapping = $this->subcontent_get_data_mapping();
@@ -247,6 +264,18 @@ trait SubContents
 				$data[$meta_name] = empty( $meta[$meta_key][0] ) ? '' : $meta[$meta_key][0];
 			else
 				$data[$meta_name] = '';
+
+		if ( ! empty( $data['order'] ) )
+			return $data;
+
+		if ( ! empty( $meta['order'] ) )
+			$data['order'] = $meta['order'][0];
+
+		else if ( $order )
+			$data['order'] = $order;
+
+		else
+			$data['order'] = '1';
 
 		return $data;
 	}
@@ -282,9 +311,10 @@ trait SubContents
 		if ( is_null( $metas ) )
 			$metas = $this->subcontent_get_meta_mapping();
 
-		$data = array_map( function ( $item ) use ( $post, $mapping, $metas ) {
-			return $this->subcontent_prep_data_from_query( $item, $post, $mapping, $metas );
-		}, $items );
+		$data = [];
+
+		foreach ( $items as $offset => $item )
+			$data[] = $this->subcontent_prep_data_from_query( $item, $post, $mapping, $metas, $offset + 1 );
 
 		return $this->filters( 'subcontent_data_mapped', $data, $post, $items, $mapping, $metas );
 	}
@@ -302,6 +332,22 @@ trait SubContents
 			'fields'    => '', // 'ids', // empty for all
 			'number'    => '', // empty for all
 			'order'     => 'ASC',
+
+			'orderby'    => 'order_clause',
+			'meta_query' => [
+				// @REF: https://core.trac.wordpress.org/ticket/34996
+				// @SEE: https://wordpress.stackexchange.com/a/246206
+				// @SEE: https://wordpress.stackexchange.com/a/277755
+				'relation' => 'OR',
+				'order_clause' => [
+					'key'  => 'order',
+					'type' => 'NUMERIC'
+				],
+				[
+					'key'     => 'order',
+					'compare' => 'NOT EXISTS'
+				],
+			],
 
 			'update_comment_meta_cache' => TRUE,
 			'update_comment_post_cache' => FALSE,
@@ -402,5 +448,39 @@ trait SubContents
 		return Core\HTML::tag( 'p', [
 			'class' => [ 'description', '-description', '-noaccess' ],
 		], $this->get_string( $string_key, $context, 'notices', $default ) );
+	}
+
+	protected function subcontent_restapi_register_routes()
+	{
+		$namespace = $this->restapi_get_namespace();
+		$arguments = [
+			'linked' => Services\RestAPI::defineArgument_postid( _x( 'The id of the parent post.', 'Internal: SubContent: Rest Argument', 'geditorial-admin' ) ),
+		];
+
+		$edit_perm = function ( $request ) {
+
+			if ( ! current_user_can( 'edit_post', (int) $request['linked'] ) )
+				return Services\RestAPI::getErrorForbidden();
+
+			if ( ! $this->role_can( 'assign' ) )
+				return Services\RestAPI::getErrorForbidden();
+
+			return TRUE;
+		};
+
+		register_rest_route( $namespace, '/sort/(?P<linked>[\d]+)', [ [
+			'methods'             => \WP_REST_Server::CREATABLE,
+			'permission_callback' => $edit_perm,
+			'args'                => $arguments,
+			'callback'            => function ( $request ) {
+
+				$post = get_post( (int) $request['linked'] );
+
+				if ( FALSE === $this->subcontent_update_sort( $request->get_json_params(), $post ) )
+					return Services\RestAPI::getErrorForbidden();
+
+				return rest_ensure_response( $this->subcontent_get_data( $post ) );
+			},
+		] ] );
 	}
 }
