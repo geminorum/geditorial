@@ -132,21 +132,6 @@ class Banking extends gEditorial\Module
 			'columnrow_text'  => _x( 'Bank Accounts', 'Row Text', 'geditorial-banking' ),
 		];
 
-		$strings['js'] = [
-			'subcontent' => [
-				'actions' => _x( 'Actions', 'Javascript String', 'geditorial-banking' ),
-				'info'    => _x( 'Information', 'Javascript String', 'geditorial-banking' ),
-				'insert'  => _x( 'Insert', 'Javascript String', 'geditorial-banking' ),
-				'edit'    => _x( 'Edit', 'Javascript String', 'geditorial-banking' ),
-				'remove'  => _x( 'Remove', 'Javascript String', 'geditorial-banking' ),
-				'loading' => _x( 'Loading', 'Javascript String', 'geditorial-banking' ),
-				'message' => _x( 'Here you can add, edit and manage the bank accounts.', 'Javascript String', 'geditorial-banking' ),
-				'edited'  => _x( 'The account edited successfully.', 'Javascript String', 'geditorial-banking' ),
-				'saved'   => _x( 'New account saved successfully.', 'Javascript String', 'geditorial-banking' ),
-				'invalid' => _x( 'The account data are not valid!', 'Javascript String', 'geditorial-banking' ),
-			],
-		];
-
 		return $strings;
 	}
 
@@ -321,7 +306,7 @@ class Banking extends gEditorial\Module
 			return;
 
 		$this->enqueue_asset_js( [
-			'strings' => $this->get_strings( 'subcontent', 'js' ),
+			'strings' => $this->subcontent_get_strings_for_js(),
 			'fields'  => $this->subcontent_get_fields( 'edit' ),
 			'config'  => [
 				'linked'    => self::req( 'linked', FALSE ),

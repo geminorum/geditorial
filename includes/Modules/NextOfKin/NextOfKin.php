@@ -166,21 +166,6 @@ class NextOfKin extends gEditorial\Module
 			'columnrow_text'  => _x( 'Family', 'Row Text', 'geditorial-next-of-kin' ),
 		];
 
-		$strings['js'] = [
-			'subcontent' => [
-				'actions' => _x( 'Actions', 'Javascript String', 'geditorial-next-of-kin' ),
-				'info'    => _x( 'Information', 'Javascript String', 'geditorial-next-of-kin' ),
-				'insert'  => _x( 'Insert', 'Javascript String', 'geditorial-next-of-kin' ),
-				'edit'    => _x( 'Edit', 'Javascript String', 'geditorial-next-of-kin' ),
-				'remove'  => _x( 'Remove', 'Javascript String', 'geditorial-next-of-kin' ),
-				'loading' => _x( 'Loading', 'Javascript String', 'geditorial-next-of-kin' ),
-				'message' => _x( 'Here you can add, edit and manage the related members of the family.', 'Javascript String', 'geditorial-next-of-kin' ),
-				'edited'  => _x( 'The member edited successfully.', 'Javascript String', 'geditorial-next-of-kin' ),
-				'saved'   => _x( 'New member saved successfully.', 'Javascript String', 'geditorial-next-of-kin' ),
-				'invalid' => _x( 'The member data are not valid!', 'Javascript String', 'geditorial-next-of-kin' ),
-			],
-		];
-
 		return $strings;
 	}
 
@@ -386,7 +371,7 @@ class NextOfKin extends gEditorial\Module
 			return;
 
 		$this->enqueue_asset_js( [
-			'strings' => $this->get_strings( 'subcontent', 'js' ),
+			'strings' => $this->subcontent_get_strings_for_js(),
 			'fields'  => $this->subcontent_get_fields( 'edit' ),
 			'config'  => [
 				'linked'    => self::req( 'linked', FALSE ),

@@ -8,6 +8,31 @@ use geminorum\gEditorial\WordPress;
 
 trait SubContents
 {
+
+	protected function subcontent_get_strings_for_js( $extra = [] )
+	{
+		return array_merge( [
+			'actions'  => _x( 'Actions', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'info'     => _x( 'Information', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'insert'   => _x( 'Insert', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'sort'     => _x( 'Sort', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'edit'     => _x( 'Edit', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'moveup'   => _x( 'Move Up', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'movedown' => _x( 'Move Down', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'remove'   => _x( 'Remove', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'loading'  => _x( 'Loading', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'message'  => _x( 'Here you can add, edit and manage the information.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'edited'   => _x( 'The entry edited successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'saved'    => _x( 'New entry saved successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'sorted'   => _x( 'The Sorting saved successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'invalid'  => _x( 'The entry data are not valid!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+
+			/* translators: %s: count number */
+			'countitems'    => _x( '%s items', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+
+		], $this->get_strings( 'subcontent', 'js' ), $extra );
+	}
+
 	protected function subcontent_get_comment_type()
 	{
 		return $this->constant( 'subcontent_type', $this->key );
