@@ -651,4 +651,31 @@ trait SubContents
 
 		return ShortCode::wrap( $html, $constant, $args );
 	}
+
+	/**
+	 * Appends the table summary of subcontents for current supported.
+	 * @example `$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );`
+	 *
+	 * @param  array  $list
+	 * @param  array  $data
+	 * @param  object $post
+	 * @param  string $context
+	 * @return array  $list
+	 */
+	public function tabloid_post_summaries_subcontent( $list, $data, $post, $context )
+	{
+		if ( $this->in_setting( $post->post_type, 'subcontent_posttypes' ) && $this->role_can( 'reports' ) )
+			$list[] = [
+				'key'     => $this->key,
+				'class'   => '-table-summary',
+				'title'   => $this->get_string( 'supportedbox_title', $post->post_type, 'metabox', '' ),
+				'content' => $this->main_shortcode( [
+					'id'      => $post,
+					'context' => $context,
+					'wrap'    => FALSE,
+				] ),
+			];
+
+		return $list;
+	}
 }

@@ -245,7 +245,7 @@ class NextOfKin extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->filter_module( 'tabloid', 'post_summaries', 4, 100 );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
 	}
 
 	public function current_screen( $screen )
@@ -523,22 +523,5 @@ class NextOfKin extends gEditorial\Module
 		}
 
 		return $data;
-	}
-
-	public function tabloid_post_summaries( $list, $data, $post, $context )
-	{
-		if ( $this->in_setting( $post->post_type, 'subcontent_posttypes' ) && $this->role_can( 'reports' ) )
-			$list[] = [
-				'key'     => $this->key,
-				'class'   => '-table-summary',
-				'title'   => _x( 'Family', 'Title', 'geditorial-next-of-kin' ),   // FIXME
-				'content' => $this->main_shortcode( [
-					'id'      => $post,
-					'context' => $context,
-					'wrap'    => FALSE,
-				] ),
-			];
-
-		return $list;
 	}
 }
