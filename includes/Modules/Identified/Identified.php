@@ -157,7 +157,7 @@ class Identified extends gEditorial\Module
 		parent::init();
 
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
-		$this->filter( 'subcontent_provide_summary', 3, 8, FALSE, $this->base );
+		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 5, 8, FALSE, $this->base );
 		$this->filter( 'searchselect_pre_query_posts', 3, 8, FALSE, $this->base );
 
@@ -354,7 +354,7 @@ class Identified extends gEditorial\Module
 		return $this->filters( 'sanitize_identifier', $sanitized, $value, $type, $post );
 	}
 
-	public function subcontent_provide_summary( $data, $item, $parent )
+	public function subcontent_provide_summary( $data, $item, $parent, $context )
 	{
 		if ( ! is_null( $data ) )
 			return $data;

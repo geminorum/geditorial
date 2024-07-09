@@ -205,7 +205,7 @@ class Banking extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->filter( 'subcontent_provide_summary', 3, 8, FALSE, $this->base );
+		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
 		$this->filter_self( 'subcontent_pre_prep_data', 4, 10 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 		$this->register_shortcode( 'main_shortcode' );
@@ -367,92 +367,6 @@ class Banking extends gEditorial\Module
 	public function setup_restapi()
 	{
 		$this->subcontent_restapi_register_routes();
-
-		$this->restapi_register_route( 'query', [ 'get', 'post', 'delete' ], '(?P<linked>[\d]+)' );
-		$this->restapi_register_route( 'markup', 'get', '(?P<linked>[\d]+)' );
-	}
-
-	public function restapi_query_get_arguments()
-	{
-		return [
-			'linked' => Services\RestAPI::defineArgument_postid( _x( 'The id of the parent post.', 'Rest', 'geditorial-banking' ) ),
-		];
-	}
-
-	public function restapi_markup_get_arguments()
-	{
-		return $this->restapi_query_get_arguments();
-	}
-
-	public function restapi_query_get_permission( $request )
-	{
-		if ( ! current_user_can( 'read_post', (int) $request['linked'] ) )
-			return Services\RestAPI::getErrorForbidden();
-
-		if ( ! $this->role_can( 'reports' ) )
-			return Services\RestAPI::getErrorForbidden();
-
-		return TRUE;
-	}
-
-	public function restapi_markup_get_permission( $request )
-	{
-		return $this->restapi_query_get_permission( $request );
-	}
-
-	public function restapi_query_post_permission( $request )
-	{
-		if ( ! current_user_can( 'edit_post', (int) $request['linked'] ) )
-			return Services\RestAPI::getErrorForbidden();
-
-		if ( ! $this->role_can( 'assign' ) )
-			return Services\RestAPI::getErrorForbidden();
-
-		return TRUE;
-	}
-
-	public function restapi_query_delete_permission( $request )
-	{
-		return $this->restapi_query_post_permission( $request );
-	}
-
-	public function restapi_markup_get_callback( $request )
-	{
-		return rest_ensure_response( [
-			'html' => $this->main_shortcode( [
-				'id'      => (int) $request['linked'],
-				'wrap'    => FALSE,
-				'context' => 'restapi',
-			], $this->subcontent_get_empty_notice( 'restapi' ) )
-		] );
-	}
-
-	public function restapi_query_get_callback( $request )
-	{
-		return rest_ensure_response( $this->subcontent_get_data( (int) $request['linked'] ) );
-	}
-
-	public function restapi_query_post_callback( $request )
-	{
-		$post = get_post( (int) $request['linked'] );
-
-		if ( FALSE === $this->subcontent_insert_data( $request->get_json_params(), $post ) )
-			return Services\RestAPI::getErrorForbidden();
-
-		return rest_ensure_response( $this->subcontent_get_data( $post ) );
-	}
-
-	public function restapi_query_delete_callback( $request )
-	{
-		$post = get_post( (int) $request['linked'] );
-
-		if ( empty( $request['_id'] ) )
-			return Services\RestAPI::getErrorArgNotEmpty( '_id' );
-
-		if ( ! $this->subcontent_delete_data( $request['_id'], $post ) )
-			return Services\RestAPI::getErrorForbidden();
-
-		return rest_ensure_response( $this->subcontent_get_data( $post ) );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -548,7 +462,7 @@ class Banking extends gEditorial\Module
 		return $terms;
 	}
 
-	public function subcontent_provide_summary( $data, $item, $parent )
+	public function subcontent_provide_summary( $data, $item, $parent, $context )
 	{
 		if ( ! is_null( $data ) )
 			return $data;

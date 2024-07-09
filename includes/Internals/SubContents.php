@@ -451,6 +451,7 @@ trait SubContents
 		], $this->get_string( $string_key, $context, 'notices', $default ) );
 	}
 
+	// TODO: `total`: count with html markup
 	protected function subcontent_restapi_register_routes()
 	{
 		$namespace = $this->restapi_get_namespace();
@@ -458,7 +459,18 @@ trait SubContents
 			'linked' => Services\RestAPI::defineArgument_postid( _x( 'The id of the parent post.', 'Internal: SubContent: Rest Argument', 'geditorial-admin' ) ),
 		];
 
-		$edit_perm = function ( $request ) {
+		$read = function ( $request ) {
+
+			if ( ! current_user_can( 'read_post', (int) $request['linked'] ) )
+				return Services\RestAPI::getErrorForbidden();
+
+			if ( ! $this->role_can( 'reports' ) )
+				return Services\RestAPI::getErrorForbidden();
+
+			return TRUE;
+		};
+
+		$edit = function ( $request ) {
 
 			if ( ! current_user_can( 'edit_post', (int) $request['linked'] ) )
 				return Services\RestAPI::getErrorForbidden();
@@ -469,59 +481,118 @@ trait SubContents
 			return TRUE;
 		};
 
-		register_rest_route( $namespace, '/sort/(?P<linked>[\d]+)', [ [
-			'methods'             => \WP_REST_Server::CREATABLE,
-			'permission_callback' => $edit_perm,
-			'args'                => $arguments,
-			'callback'            => function ( $request ) {
+		register_rest_route( $namespace, '/query/(?P<linked>[\d]+)', [
+			[
+				'methods'  => \WP_REST_Server::CREATABLE,
+				'args'     => $arguments,
+				'callback' => function ( $request ) {
+					$post = get_post( (int) $request['linked'] );
 
-				$post = get_post( (int) $request['linked'] );
+					if ( FALSE === $this->subcontent_insert_data( $request->get_json_params(), $post ) )
+						return Services\RestAPI::getErrorForbidden();
 
-				if ( FALSE === $this->subcontent_update_sort( $request->get_json_params(), $post ) )
-					return Services\RestAPI::getErrorForbidden();
-
-				return rest_ensure_response( $this->subcontent_get_data( $post ) );
-			},
-		] ] );
-
-		register_rest_route( $namespace, '/summary/(?P<subcontent>[\d]+)', [ [
-			'methods'             => \WP_REST_Server::READABLE,
-			'permission_callback' => function ( $request ) {
-
-				if ( ! $subcontent = get_comment( (int) $request['subcontent'] ) )
-					return Services\RestAPI::getErrorInvalidData();
-
-				if ( empty( $subcontent->comment_post_ID ) )
-					return Services\RestAPI::getErrorSomethingIsWrong();
-
-				if ( ! current_user_can( 'read_post', (int) $subcontent->comment_post_ID ) )
-					return Services\RestAPI::getErrorForbidden();
-
-				if ( ! $this->role_can( 'reports' ) )
-					return Services\RestAPI::getErrorForbidden();
-
-				return TRUE;
-			},
-			'args' => [
-				'subcontent' => Services\RestAPI::defineArgument_commentid( _x( 'The id of the subcontent comment.', 'Internal: SubContent: Rest Argument', 'geditorial-admin' ) ),
+					return rest_ensure_response( $this->subcontent_get_data( $post ) );
+				},
+				'permission_callback' => $edit,
 			],
-			'callback' => function ( $request ) {
+			[
+				'methods'  => \WP_REST_Server::DELETABLE,
+				'args'     => $arguments,
+				'callback' => function ( $request ) {
+					$post = get_post( (int) $request['linked'] );
 
-				if ( FALSE === ( $data = $this->subcontent_do_provide_summary( (int) $request['subcontent'] ) ) )
-					return Services\RestAPI::getErrorSomethingIsWrong();
+					if ( empty( $request['_id'] ) )
+						return Services\RestAPI::getErrorArgNotEmpty( '_id' );
 
-				return rest_ensure_response( $data );
-			},
-		] ] );
+					if ( ! $this->subcontent_delete_data( $request['_id'], $post ) )
+						return Services\RestAPI::getErrorForbidden();
+
+					return rest_ensure_response( $this->subcontent_get_data( $post ) );
+				},
+
+				'permission_callback' => $edit,
+			],
+			[
+				'methods'  => \WP_REST_Server::READABLE,
+				'args'     => $arguments,
+				'callback' => function ( $request ) {
+					return rest_ensure_response( $this->subcontent_get_data( (int) $request['linked'] ) );
+				},
+				'permission_callback' => $read,
+			],
+		] );
+
+		register_rest_route( $namespace, '/markup/(?P<linked>[\d]+)', [
+			[
+				'methods'  => \WP_REST_Server::READABLE,
+				'args'     => $arguments,
+				'callback' => function ( $request ) {
+					return rest_ensure_response(
+						$this->subcontent_do_provide_markup(
+							WordPress\Post::get( (int) $request['linked'] ),
+							'restapi'
+						)
+					);
+				},
+				'permission_callback' => $read,
+			],
+		] );
+
+		register_rest_route( $namespace, '/sort/(?P<linked>[\d]+)', [
+			[
+				'methods'  => \WP_REST_Server::CREATABLE,
+				'args'     => $arguments,
+				'callback' => function ( $request ) {
+					$post = get_post( (int) $request['linked'] );
+
+					if ( FALSE === $this->subcontent_update_sort( $request->get_json_params(), $post ) )
+						return Services\RestAPI::getErrorForbidden();
+
+					return rest_ensure_response( $this->subcontent_get_data( $post ) );
+				},
+				'permission_callback' => $edit,
+			],
+		] );
+
+		register_rest_route( $namespace, '/summary/(?P<subcontent>[\d]+)', [
+			[
+				'methods' => \WP_REST_Server::READABLE,
+				'args'    => [
+					'subcontent' => Services\RestAPI::defineArgument_commentid( _x( 'The id of the subcontent comment.', 'Internal: SubContent: Rest Argument', 'geditorial-admin' ) ),
+				],
+				'callback' => function ( $request ) {
+
+					if ( FALSE === ( $data = $this->subcontent_do_provide_summary( WordPress\Comment::get( (int) $request['subcontent'] ), 'restapi' ) ) )
+						return Services\RestAPI::getErrorSomethingIsWrong();
+
+					return rest_ensure_response( $data );
+				},
+				'permission_callback' => function ( $request ) {
+
+					if ( ! $subcontent = WordPress\Comment::get( (int) $request['subcontent'] ) )
+						return Services\RestAPI::getErrorInvalidData();
+
+					if ( empty( $subcontent->comment_post_ID ) )
+						return Services\RestAPI::getErrorSomethingIsWrong();
+
+					if ( ! current_user_can( 'read_post', (int) $subcontent->comment_post_ID ) )
+						return Services\RestAPI::getErrorForbidden();
+
+					if ( ! $this->role_can( 'reports' ) )
+						return Services\RestAPI::getErrorForbidden();
+
+					return TRUE;
+				},
+			],
+		] );
 	}
 
-	protected function subcontent_do_provide_summary( $comment_id )
+	protected function subcontent_do_provide_summary( $comment, $context = NULL )
 	{
-		$na         = gEditorial\Plugin::na( FALSE );
-		$subcontent = get_comment( $comment_id );
-		$parent     = get_post( (int) $subcontent->comment_post_ID ) ;
-		$item       = $this->subcontent_prep_data_from_query( $subcontent, $parent );
-		$data       = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent );
+		$na     = gEditorial\Plugin::na( FALSE );
+		$parent = WordPress\Post::get( (int) $comment->comment_post_ID ) ;
+		$item   = $this->subcontent_prep_data_from_query( $comment, $parent );
+		$data   = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent, $context );
 
 		// NOTE: like `WordPress\Post::summary()`
 		$summary = array_merge( [
@@ -531,6 +602,20 @@ trait SubContents
 			'description' => '',
 		], $data ?? [] );
 
-		return $this->filters( 'provide_summary', $summary, $item, $parent, $data );
+		return $this->filters( 'provide_summary', $summary, $parent, $item, $context );
+	}
+
+	protected function subcontent_do_provide_markup( $parent, $context = NULL )
+	{
+		$markup = [];
+
+		if ( method_exists( $this, 'main_shortcode' ) )
+			$markup['html'] = $this->main_shortcode( [
+				'id'      => $parent,
+				'wrap'    => FALSE,
+				'context' => 'restapi',
+			], $this->subcontent_get_empty_notice( $context ) );
+
+		return $this->filters( 'provide_markup', $markup, $parent, $context );
 	}
 }
