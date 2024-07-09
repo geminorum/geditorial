@@ -144,6 +144,7 @@ trait PairedImports
 				'emptydata'    => _x( 'Empty Data!', 'Internal: PairedImports: String', 'geditorial' ),
 				'unsupported'  => _x( 'Unsupported Data!', 'Internal: PairedImports: String', 'geditorial' ),
 				'discovery'    => _x( 'Discovery', 'Internal: PairedImports: String', 'geditorial' ),
+				'clearadded'   => _x( 'Clear Added', 'Internal: PairedImports: String', 'geditorial' ),
 				'insertnew'    => _x( 'Add New on Discovery', 'Internal: PairedImports: String', 'geditorial' ),
 				'add'          => _x( 'Add', 'Internal: PairedImports: String', 'geditorial' ),
 				'addtitle'     => _x( 'Add selected rows', 'Internal: PairedImports: String', 'geditorial' ),

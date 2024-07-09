@@ -89,7 +89,7 @@ trait SubContents
 
 	protected function subcontent_get_hidden_fields( $context = 'display' )
 	{
-		return $this->filters( 'required_fields',
+		return $this->filters( 'hidden_fields',
 			$this->subcontent_define_hidden_fields(), $context );
 	}
 

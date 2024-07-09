@@ -215,7 +215,7 @@ trait CorePostTypes
 									if ( 'edit_comment' !== $cap )
 										return $caps;
 
-									if ( empty( $passed_args[0] ) || ! $comment = get_comment( $passed_args[0] ) )
+									if ( empty( $passed_args[0] ) || ! $comment = get_comment( (int) $passed_args[0] ) )
 										return $caps;
 
 									if ( empty( $comment->comment_post_ID ) || ! $post = get_post( $comment->comment_post_ID ) )

@@ -222,6 +222,8 @@ class Template extends WordPress\Main
 
 	public static function getPostImageSrc( $thumbnail_id = NULL, $size = NULL, $post_id = NULL )
 	{
+		self::_dep( 'WordPress\Post::image()' );
+
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return FALSE;
 
@@ -262,7 +264,8 @@ class Template extends WordPress\Main
 		if ( ! $args['alt'] && 'parent_title' === $args['alt_fallback'] )
 			$args['alt'] = trim( strip_tags( get_the_title( $args['id'] ) ) );
 
-		if ( $src = self::getPostImageSrc( $args['thumbnail'], $args['size'], $args['id'] ) )
+		// if ( $src = self::getPostImageSrc( $args['thumbnail'], $args['size'], $args['id'] ) )
+		if ( $src = WordPress\Post::image( $args['id'], NULL, $args['size'], $args['thumbnail'] ) )
 			$html = Core\HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
 		return $html;

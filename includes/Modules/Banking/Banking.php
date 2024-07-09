@@ -193,7 +193,6 @@ class Banking extends gEditorial\Module
 	{
 		return [
 			'fullname',
-			'bankname',
 		];
 	}
 

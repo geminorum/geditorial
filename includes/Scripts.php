@@ -278,7 +278,7 @@ class Scripts extends WordPress\Main
 	}
 
 	// @REF: https://www.jsdelivr.com/package/npm/vue
-	public static function pkgVueJS3( $enqueue = FALSE, $ver = '3.2.36' )
+	public static function pkgVueJS3( $enqueue = FALSE, $ver = '3.4.31' )
 	{
 		$handle = static::BASE.'-vuejs';
 

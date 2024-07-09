@@ -465,7 +465,8 @@ class Meta extends gEditorial\Module
 		$this->filter( 'pairedrest_prepped_post', 3, 9, FALSE, $this->base );
 		$this->filter( 'pairedimports_import_types', 4, 5, FALSE, $this->base );
 
-		$is_rest = Core\WordPress::isREST();
+		$attribute = $this->constant( 'restapi_attribute' );
+		$is_rest   = Core\WordPress::isREST();
 
 		foreach ( $this->posttypes() as $posttype ) {
 
@@ -473,7 +474,7 @@ class Meta extends gEditorial\Module
 			 * registering general field for all meta data
 			 * mainly for display purposes
 			 */
-			register_rest_field( $posttype, $this->constant( 'restapi_attribute' ), [
+			register_rest_field( $posttype, $attribute, [
 				'get_callback' => [ $this, 'attribute_get_callback' ],
 			] );
 
