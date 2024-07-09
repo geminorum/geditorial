@@ -10,7 +10,6 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Banking extends gEditorial\Module
@@ -371,32 +370,7 @@ class Banking extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		$args = shortcode_atts( [
-			'id'      => get_queried_object_id(),
-			'fields'  => NULL,
-			'context' => NULL,
-			'wrap'    => TRUE,
-			'class'   => '',
-			'before'  => '',
-			'after'   => '',
-		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
-
-		if ( FALSE === $args['context'] )
-			return NULL;
-
-		if ( ! $post = WordPress\Post::get( $args['id'] ) )
-			return $content;
-
-		if ( ! $data = $this->subcontent_get_data( $post ) )
-			return $content;
-
-		if ( is_null( $args['fields'] ) )
-			$args['fields'] = $this->subcontent_get_fields( $args['context'] );
-
-		$data = $this->subcontent_get_prepped_data( $data, $args['context'] );
-		$html = Core\HTML::tableSimple( $data, $args['fields'], FALSE );
-
-		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
 
 	public function audit_get_default_terms( $terms, $taxonomy )

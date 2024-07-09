@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 trait SubContents
@@ -609,13 +610,45 @@ trait SubContents
 	{
 		$markup = [];
 
-		if ( method_exists( $this, 'main_shortcode' ) )
-			$markup['html'] = $this->main_shortcode( [
-				'id'      => $parent,
-				'wrap'    => FALSE,
-				'context' => 'restapi',
-			], $this->subcontent_get_empty_notice( $context ) );
+		$markup['html'] = $this->subcontent_do_main_shortcode( [
+			'id'      => $parent,
+			'wrap'    => FALSE,
+			'context' => 'restapi',
+		], $this->subcontent_get_empty_notice( $context ) );
 
 		return $this->filters( 'provide_markup', $markup, $parent, $context );
+	}
+
+	protected function subcontent_do_main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		// NOTE: fallsback into namespace
+		$constant = $this->constant( 'main_shortcode', $this->constant( 'restapi_namespace' ) );
+
+		$args = shortcode_atts( [
+			'id'      => get_queried_object_id(),
+			'fields'  => NULL,
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'class'   => '',
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $constant );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $content;
+
+		if ( ! $data = $this->subcontent_get_data( $post ) )
+			return $content;
+
+		if ( is_null( $args['fields'] ) )
+			$args['fields'] = $this->subcontent_get_fields( $args['context'] );
+
+		$data = $this->subcontent_get_prepped_data( $data, $args['context'] );
+		$html = Core\HTML::tableSimple( $data, $args['fields'], FALSE );
+
+		return ShortCode::wrap( $html, $constant, $args );
 	}
 }
