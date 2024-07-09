@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class Unavailable extends gEditorial\Module
 {
@@ -213,7 +214,7 @@ class Unavailable extends gEditorial\Module
 
 		// unarchived comments must be moderated
 		$status = $archive ? $this->constant( 'comment_status' ) : '0';
-		$old    = clone get_comment( $comment_id );
+		$old    = clone WordPress\Comment::get( $comment_id );
 
 		$updated = $wpdb->update( $wpdb->comments,
 			[ 'comment_approved' => $status ],
@@ -225,7 +226,7 @@ class Unavailable extends gEditorial\Module
 
 		clean_comment_cache( $old->comment_ID );
 
-		$new = get_comment( $old->comment_ID );
+		$new = WordPress\Comment::get( $old->comment_ID );
 
 		do_action( 'wp_set_comment_status', $new->comment_ID, $status );
 

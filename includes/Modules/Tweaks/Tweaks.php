@@ -725,7 +725,7 @@ class Tweaks extends gEditorial\Module
 		if ( 'user' !== $column_name )
 			return;
 
-		$comment = get_comment( $comment_id );
+		$comment = WordPress\Comment::get( $comment_id );
 
 		if ( $comment->user_id && $user = get_userdata( $comment->user_id ) ) {
 

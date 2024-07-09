@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 class RestAPI extends WordPress\Main
@@ -126,7 +127,7 @@ class RestAPI extends WordPress\Main
 		if ( empty( $param ) || (int) $param <= 0 )
 			return self::getErrorArgNotEmpty( $key );
 
-		if ( ! get_comment( (int) $param ) )
+		if ( ! WordPress\Comment::get( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
 				/* translators: %s: argument key */

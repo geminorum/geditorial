@@ -1,0 +1,87 @@
+<?php namespace geminorum\gEditorial\WordPress;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core;
+
+class Comment extends Core\Base
+{
+
+	/**
+	 * Retrieves comment data given a comment ID or comment object.
+	 *
+	 * simplified `get_comment()`
+	 *
+	 * @param  null|int|object $comment
+	 * @param  string $output
+	 * @return object $comment
+	 */
+	public static function get( $comment = NULL, $output = OBJECT )
+	{
+		if ( FALSE === $comment )
+			return $comment;
+
+		if ( $comment instanceof \WP_Comment )
+			return $comment;
+
+		if ( $_comment = get_comment( $comment, $output ) )
+			return $_comment;
+
+		if ( is_null( $comment ) && is_admin() && ( $query = self::req( 'c' ) ) )
+			return get_comment( $query, $output );
+
+		return NULL;
+	}
+
+	/**
+	 * Retrieves comment type given a comment ID or comment object.
+	 *
+	 * @param  null|int|object $comment
+	 * @return string $commenttype
+	 */
+	public static function type( $comment = NULL )
+	{
+		if ( $comment = self::get( $comment ) )
+			return $comment->comment_type;
+
+		return FALSE;
+	}
+
+	/**
+	 * Retrieves meta-data for a given comment.
+	 *
+	 * @param  object|int $comment
+	 * @param  bool|array $keys `false` for all meta
+	 * @param  bool $single
+	 * @return array $metadata
+	 */
+	public static function getMeta( $comment, $keys = FALSE, $single = TRUE )
+	{
+		if ( ! $comment = self::get( $comment ) )
+			return FALSE;
+
+		$list = [];
+
+		if ( FALSE === $keys ) {
+
+			if ( $single ) {
+
+				foreach ( (array) get_metadata( 'comment', $comment->comment_ID ) as $key => $meta )
+					$list[$key] = maybe_unserialize( $meta[0] );
+
+			} else {
+
+				foreach ( (array) get_metadata( 'comment', $comment->comment_ID ) as $key => $meta )
+					foreach ( $meta as $offset => $value )
+						$list[$key][$offset] = maybe_unserialize( $value );
+			}
+
+		} else {
+
+			foreach ( $keys as $key => $default )
+				$list[$key] = get_metadata( 'comment', $comment->comment_ID, $key, $single ) ?: $default;
+		}
+
+		return $list;
+	}
+}
