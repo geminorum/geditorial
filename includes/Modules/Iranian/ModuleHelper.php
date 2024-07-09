@@ -244,7 +244,7 @@ class ModuleHelper extends gEditorial\Helper
 	 * @param  bool   $check
 	 * @return array  $info
 	 */
-	public static function infoFromCardNumber( $card, $fallback = [], $check = FALSE )
+	public static function infoFromCardNumber( $card, $fallback = [], $check = FALSE, $path = NULL )
 	{
 		if ( self::empty( $card ) )
 			return $fallback;
@@ -261,6 +261,7 @@ class ModuleHelper extends gEditorial\Helper
 			return [
 				'bank'     => static::$cardPrefixes[$prefix],
 				'bankname' => static::$banks[static::$cardPrefixes[$prefix]],
+				'banklogo' => self::getBankLogoPath( static::$cardPrefixes[$prefix], $path ),
 				'country'  => 'IR',
 			];
 
@@ -277,7 +278,7 @@ class ModuleHelper extends gEditorial\Helper
 	 * @param  bool   $check
 	 * @return array  $info
 	 */
-	public static function infoFromIBAN( $iban, $fallback = [], $check = FALSE )
+	public static function infoFromIBAN( $iban, $fallback = [], $check = FALSE, $path = NULL )
 	{
 		if ( self::empty( $iban ) )
 			return $fallback;
@@ -334,6 +335,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'national' => TRUE,
+					'banklogo' => self::getBankLogoPath( 'sepah', $path ),
 				];
 
 			case '017':
@@ -359,6 +361,7 @@ class ModuleHelper extends gEditorial\Helper
 					// 'account'  => substr( $account, -13 ),
 					'account'  => $standard,
 					'national' => TRUE,
+					'banklogo' => self::getBankLogoPath( 'melli', $path ),
 				];
 
 
@@ -388,6 +391,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => 'https://vbank.bpi.ir/public/inquiries/iban-to-deposit',
 					'account'  => '', // FIXME
 					// 'account'  => Core\Text::leftTrim( substr( $account, 1 ), '0' ),
+					'banklogo' => self::getBankLogoPath( 'pasargad', $path ),
 				];
 
 			case '012':
@@ -409,6 +413,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => substr( $account, -10 ),
 					// 'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'mellat', $path ),
 				];
 
 			case '055':
@@ -419,6 +424,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'eghtesad-novin',
 					'lookup'   => 'https://apps.enbank.ir/iban/',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'eghtesad-novin', $path ),
 				];
 
 			case '054':
@@ -441,6 +447,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'parsian',
 					'lookup'   => 'https://www.parsian-bank.ir/web_directory/64030',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'parsian', $path ),
 				];
 
 			case '021':
@@ -451,6 +458,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'post',
 					'lookup'   => 'https://oib.postbank.ir/ib/ibangen.aspx',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'post', $path ),
 				];
 
 			case '018':
@@ -461,6 +469,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'tejarat',
 					'lookup'   => 'https://www.tejaratbank.ir/web_directory/1835-Get-the-sheba-code.html',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'tejarat', $path ),
 				];
 
 			case '020':
@@ -472,6 +481,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => 'https://mbn.edbi.ir/mbackend/#/sheba',
 					'account'  => $standard,
 					'national' => TRUE,
+					'banklogo' => self::getBankLogoPath( 'tosee-saderat', $path ),
 				];
 
 			case '013':
@@ -482,6 +492,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'refah',
 					'lookup'   => 'https://gsh.rb24.ir/sheba_new.aspx',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'refah', $path ),
 				];
 
 			case '056':
@@ -492,6 +503,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'saman',
 					'lookup'   => 'https://www.sb24.ir/e-services/assistant/sheba',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'saman', $path ),
 				];
 
 			case '058':
@@ -502,6 +514,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'sarmayeh',
 					'lookup'   => 'https://www.sbank.ir/services/ibna/add/_sub_menu_/0/_menu_/0/',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'sarmayeh', $path ),
 				];
 
 			case '019':
@@ -512,6 +525,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'saderat',
 					'lookup'   => 'https://www.bsi.ir/Pages/sheba.aspx',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'saderat', $path ),
 				];
 
 			case '011':
@@ -523,6 +537,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => 'https://www.bim.ir/fa-IR/Portal/4971/',
 					'account'  => $standard,
 					'national' => TRUE,
+					'banklogo' => self::getBankLogoPath( 'sanat-o-madan', $path ),
 				];
 
 			case '053':
@@ -539,6 +554,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'karafarin',
 					'lookup'   => 'https://www.karafarinbank.ir/fa/home/depositservices/estelamsheba',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'karafarin', $path ),
 				];
 
 			case '016':
@@ -550,6 +566,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => 'https://ib.bki.ir/pid40.lmx',
 					'account'  => $standard,
 					'national' => TRUE,
+					'banklogo' => self::getBankLogoPath( 'keshavarzi', $path ),
 				];
 
 			case '010':
@@ -560,6 +577,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'central-bank',
 					'lookup'   => FALSE,
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'central-bank', $path ),
 				];
 
 			case '014':
@@ -571,6 +589,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => 'https://ecounter.bank-maskan.ir/other-services/sheba-inquiry',
 					'account'  => $standard,
 					'national' => TRUE,
+					'banklogo' => self::getBankLogoPath( 'maskan', $path ),
 				];
 
 			case '022':
@@ -582,6 +601,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => 'https://ttbank.ir/fa/page/100592',
 					'account'  => $standard,
 					'national' => TRUE,
+					'banklogo' => self::getBankLogoPath( 'toose-taavon', $path ),
 				];
 
 			case '051':
@@ -593,6 +613,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'status'   => 'dissolved',
+					'banklogo' => self::getBankLogoPath( 'tosee', $path ),
 				];
 
 			case '080':
@@ -604,6 +625,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'status'   => 'dissolved',
+					'banklogo' => self::getBankLogoPath( 'noor-bank', $path ),
 				];
 
 			case '059':
@@ -614,6 +636,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'sina',
 					'lookup'   => 'https://www.sinabank.ir/web_directory/416',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'sina', $path ),
 				];
 
 			case '060':
@@ -625,6 +648,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'mehr-iran',
 					'lookup'   => 'https://www.qmb.ir/Index.aspx?page_=form&lang=1&sub=0&tempname=Shaba&PageID=83&isPopUp=False',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'mehr-iran', $path ),
 				];
 
 			case '061':
@@ -649,6 +673,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'shahr',
 					'lookup'   => 'https://www.shahr-bank.ir/web_directory/55265',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'shahr', $path ),
 				];
 
 			case '062':
@@ -659,6 +684,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'ayandeh',
 					'lookup'   => 'https://ba24.ir/services/sheba',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'ayandeh', $path ),
 				];
 
 			case '064':
@@ -669,6 +695,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'gardeshgari',
 					'lookup'   => 'https://www.tourismbank.ir/fa/page/100963',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'gardeshgari', $path ),
 				];
 
 			case '066':
@@ -679,6 +706,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'dey',
 					'lookup'   => 'https://day24.ir/%D8%AF%D8%B1%DB%8C%D8%A7%D9%81%D8%AA-%D8%B4%D8%A8%D8%A7-2',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'dey', $path ),
 				];
 
 			case '069':
@@ -689,6 +717,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'iran-zamin',
 					'lookup'   => 'https://www.izbank.ir/fa/page/100723',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'iran-zamin', $path ),
 				];
 
 			case '070':
@@ -699,6 +728,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'resalat',
 					'lookup'   => 'https://www.rqbank.ir/%D9%85%D8%AD%D8%A7%D8%B3%D8%A8%D9%87-%D8%B4%D8%A8%D8%A7',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'resalat', $path ),
 				];
 
 			case '075':
@@ -709,6 +739,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'melal',
 					'lookup'   => 'https://melalbank.ir/sheba',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'melal', $path ),
 				];
 
 			case '078':
@@ -719,6 +750,7 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'middle-east-bank',
 					'lookup'   => 'https://www.middleeastbank.ir/page/IBAN',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'middle-east-bank', $path ),
 				];
 
 			case '079':
@@ -730,6 +762,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'status'   => 'merged',
+					'banklogo' => self::getBankLogoPath( 'mehr-eqtesad', $path ),
 				];
 
 			case '073':
@@ -741,6 +774,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'status'   => 'merged',
+					'banklogo' => self::getBankLogoPath( 'kosar', $path ),
 				];
 
 			case '065':
@@ -752,6 +786,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'status'   => 'merged',
+					'banklogo' => self::getBankLogoPath( 'hekmat-iranian', $path ),
 				];
 
 			case '063':
@@ -763,6 +798,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'status'   => 'merged',
+					'banklogo' => self::getBankLogoPath( 'ansar', $path ),
 				];
 
 			case '052':
@@ -774,6 +810,7 @@ class ModuleHelper extends gEditorial\Helper
 					'lookup'   => FALSE,
 					'account'  => $standard,
 					'status'   => 'merged',
+					'banklogo' => self::getBankLogoPath( 'ghavamin', $path ),
 				];
 
 			case '095':
@@ -784,9 +821,15 @@ class ModuleHelper extends gEditorial\Helper
 					'bank'     => 'iran-venezuela',
 					'lookup'   => 'https://www.ivbb.ir/fa-IR/DouranPortal/5167',
 					'account'  => $standard,
+					'banklogo' => self::getBankLogoPath( 'iran-venezuela', $path ),
 				];
 		}
 
 		return $fallback;
+	}
+
+	public static function getBankLogoPath( $key, $path = NULL )
+	{
+		return $path ? sprintf( '%s%s%s.%s', Core\URL::fromPath( $path ), 'data/banklogos/', $key, 'svg' ) : FALSE;
 	}
 }

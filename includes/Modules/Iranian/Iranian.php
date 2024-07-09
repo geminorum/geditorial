@@ -530,7 +530,7 @@ class Iranian extends gEditorial\Module
 		if ( empty( $info ) )
 			return $info;
 
-		if ( FALSE !== ( $data = ModuleHelper::infoFromIBAN( $raw, FALSE, FALSE ) ) )
+		if ( FALSE !== ( $data = ModuleHelper::infoFromIBAN( $raw, FALSE, FALSE, $this->path ) ) )
 			return \array_merge( $info, $data );
 
 		return $info;
@@ -541,7 +541,7 @@ class Iranian extends gEditorial\Module
 		if ( empty( $info ) )
 			return $info;
 
-		if ( FALSE !== ( $data = ModuleHelper::infoFromCardNumber( $raw, FALSE, FALSE ) ) )
+		if ( FALSE !== ( $data = ModuleHelper::infoFromCardNumber( $raw, FALSE, FALSE, $this->path ) ) )
 			return \array_merge( $info, $data );
 
 		return $info;
