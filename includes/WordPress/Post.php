@@ -198,6 +198,30 @@ class Post extends Core\Base
 	}
 
 	/**
+	 * Retrieves a contextual summary given a post ID or post object.
+	 *
+	 * @param  null|int|object $post
+	 * @param  null|string     $context
+	 * @return false|array     $summary
+	 */
+	public static function summary( $post, $context = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		return [
+			'_id'         => $post->ID,
+			'_type'       => $post->post_type,
+			'type'        => PostType::object( $post )->label,
+			'viewable'    => PostType::viewable( $post->post_type ),
+			'title'       => self::fullTitle( $post ),
+			'link'        => self::overview( $post, $context ),
+			'image'       => self::image( $post, $context ),
+			'description' => apply_filters( 'html_format_i18n', $post->post_excerpt ),
+		];
+	}
+
+	/**
 	 * Retrieves a post given its title.
 	 *
 	 * @see `get_page_by_title()`
@@ -468,5 +492,33 @@ class Post extends Core\Base
 		clean_post_cache( $post_id );
 
 		return TRUE;
+	}
+
+	public static function image( $post, $context = NULL, $size = NULL, $thumbnail_id = NULL )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		$filtered = apply_filters( 'geditorial_post_image_pre_src', NULL, $post, $context, $size, $thumbnail_id );
+
+		if ( ! is_null( $filtered ) )
+			return $filtered;
+
+		if ( is_null( $thumbnail_id ) )
+			$thumbnail_id = PostType::getThumbnailID( $post->ID );
+
+		if ( ! $thumbnail_id )
+			return FALSE;
+
+		if ( is_null( $size ) )
+			$size = Media::getAttachmentImageDefaultSize( $post->post_type );
+
+		if ( ! $image = image_downsize( $thumbnail_id, $size ) )
+			return FALSE;
+
+		if ( isset( $image[0] ) )
+			return $image[0];
+
+		return FALSE;
 	}
 }

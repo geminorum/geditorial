@@ -628,7 +628,7 @@ class Taxonomy extends Core\Base
 			$types = (array) $object->object_type;
 
 			foreach ( $types as &$type )
-				if ( 0 === strpos( $type, 'attachment:' ) )
+				if ( Core\Text::starts( $type, 'attachment:' ) )
 					list( $type ) = explode( ':', $type );
 
 			if ( array_filter( $types, 'post_type_exists' ) == $types )
