@@ -355,6 +355,12 @@ class Helper extends WordPress\Main
 				case 'isbn':
 					return Info::lookupISBN( $raw ?: $value );
 
+				case 'vin':
+					return Info::lookupVIN( $raw ?: $value );
+
+				case 'year':
+					return Core\Number::localize( $raw ?: $value );
+
 				case 'date':
 					return Datetime::prepForDisplay( $raw ?: $value, 'Y/m/d' );
 

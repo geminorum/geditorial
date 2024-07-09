@@ -356,6 +356,21 @@ class Ortho extends gEditorial\Module
 				'ortho' => 'iban',
 			],
 		] );
+
+		echo '<br />';
+		echo '<br />';
+
+		$this->do_settings_field( [
+			'type'         => 'text',
+			'field'        => 'sandbox-vin',
+			'dir'          => 'rtl',
+			'field_class'  => [ 'large-text', 'code' ],
+			'option_group' => 'tools',
+			'placeholder' => 'IRXXXXXXXXXXXXXXX',
+			'data' => [
+				'ortho' => 'vin',
+			],
+		] );
 	}
 
 	public function reports_settings( $sub )

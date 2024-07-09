@@ -671,10 +671,12 @@ class Meta extends gEditorial\Module
 					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
+				case 'year':
 				case 'date':
 				case 'datetime':
 				case 'identity':
 				case 'isbn':
+				case 'vin':
 				case 'iban':
 				case 'bankcard':
 				case 'code':
@@ -1292,7 +1294,25 @@ class Meta extends gEditorial\Module
 				return Core\Mobile::prep( trim( $raw ), $field_args, $context );
 
 			case 'isbn':
-				return Info::lookupISBN( trim ( $raw ) );
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				return Info::lookupISBN( trim( $raw ) );
+
+			case 'vin':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				return Info::lookupVIN( trim( $raw ) );
+
+			case 'year':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				return Core\Number::localize( trim( $raw ) );
 
 			case 'date':
 
@@ -1369,7 +1389,7 @@ class Meta extends gEditorial\Module
 			'integer', 'number', 'float', 'price',
 			'member', 'person',
 			'day', 'hour', 'gram', 'milimeter', 'kilogram', 'centimeter',
-			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'postcode',
+			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'postcode',
 			'post', 'attachment', 'parent_post', 'posts', 'attachments',
 			'user', 'term',
 		], TRUE ) )
@@ -1377,6 +1397,7 @@ class Meta extends gEditorial\Module
 
 		$tokens = [
 			'today',
+			'thisyear',
 		];
 
 		return Core\Text::replaceTokens( $meta, $tokens, [
@@ -1395,6 +1416,7 @@ class Meta extends gEditorial\Module
 		switch ( strtolower( $token ) ) {
 
 			case 'today': return date_i18n( Datetime::dateFormats( empty( $args['context'] ) ? 'default' : $args['context'] ) );
+			case 'thisyear': return date_i18n( 'Y' );
 		}
 
 		return '';

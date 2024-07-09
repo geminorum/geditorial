@@ -157,7 +157,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'date', 'datetime' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'year', 'date', 'datetime' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -388,6 +388,10 @@ trait PostTypeFields
 				$sanitized = Core\ISBN::sanitize( $data, TRUE );
 				break;
 
+			case 'vin':
+				$sanitized = Core\Validation::sanitizeVIN( $data );
+				break;
+
 			case 'iban':
 				$sanitized = Core\Validation::sanitizeIBAN( $data );
 				break;
@@ -402,6 +406,15 @@ trait PostTypeFields
 
 			case 'mobile':
 			 	$sanitized = Core\Mobile::sanitize( $data );
+				break;
+
+			case 'year':
+
+				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
+
+				if ( strlen( $sanitized ) > 4 )
+					$sanitized = substr( $sanitized, 0, 4 );
+
 				break;
 
 			case 'date':

@@ -84,6 +84,30 @@ class Info extends WordPress\Main
 		return apply_filters( static::BASE.'_lookup_isbn', $url, $isbn );
 	}
 
+	// NOTE: must return link html tag
+	public static function lookupVIN( $vin )
+	{
+		return Core\HTML::tag( 'a', [
+			'href'   => self::lookupURLforVIN( $vin ),
+			'class'  => '-vin-lookup',
+			'target' => '_blank',
+			'rel'    => 'noreferrer',
+		], Core\Validation::sanitizeVIN( $vin ) );
+	}
+
+
+	// `https://en.vindecoder.pl/en/decode/JH2RC3605MM101581`
+	// @SEE: https://vpic.nhtsa.dot.gov/decoder/
+	public static function lookupURLforVIN( $vin )
+	{
+		$url = sprintf(
+			'https://en.vindecoder.pl/en/decode/%s',
+			Core\Validation::sanitizeVIN( $vin )
+		);
+
+		return apply_filters( static::BASE.'_lookup_vin', $url, $vin );
+	}
+
 	public static function fromIBAN( $input, $pre = [] )
 	{
 		$info = $pre;

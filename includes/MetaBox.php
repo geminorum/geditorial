@@ -1065,6 +1065,16 @@ class MetaBox extends WordPress\Main
 
 		switch ( $args['type'] ) {
 
+			case 'year':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'year';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputyear';
+
+				break;
+
 			case 'date':
 
 				$atts['dir'] = 'ltr';
@@ -1156,6 +1166,19 @@ class MetaBox extends WordPress\Main
 
 				if ( is_null( $atts['pattern'] ) )
 					$atts['pattern'] = Core\ISBN::getHTMLPattern();
+
+				break;
+
+			case 'vin':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'vin';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputvin';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\Validation::getVINHTMLPattern();
 
 				break;
 

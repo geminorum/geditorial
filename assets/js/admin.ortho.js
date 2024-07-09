@@ -17,8 +17,10 @@
     identity: '[data-' + module + '=\'identity\']',
     phone: '[data-' + module + '=\'phone\']',
     isbn: '[data-' + module + '=\'isbn\']',
+    vin: '[data-' + module + '=\'vin\']',
     iban: '[data-' + module + '=\'iban\']',
     bankcard: '[data-' + module + '=\'bankcard\']',
+    year: '[data-' + module + '=\'year\']',
     date: '[data-' + module + '=\'date\']',
     datetime: '[data-' + module + '=\'datetime\']'
     // code: '[data-' + module + '=\'code\']',
@@ -192,6 +194,15 @@
     return pattern.test(value);
   }
 
+  function validateVIN (input) {
+    if (!input) return false;
+    // input = toEnglish(input.toUpperCase());
+    if (input.length !== 17) return false;
+    const vinPattern = /[a-zA-Z0-9]{9}[a-zA-Z0-9-]{2}[0-9]{6}/; // https://www.regextester.com/100058
+    if (!vinPattern.test(input)) return false;
+    return true;
+  }
+
   // @REF: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
   function validateISBN (value) {
     if (typeof value === 'undefined' || !value) {
@@ -357,6 +368,22 @@
       });
     },
 
+    vin: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        const val = toEnglish($el.val()).toUpperCase().replace(/[^A-Z\d.-]/g, '').trim();
+        $el.val(val);
+        if (validateVIN(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else {
+          $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
+        }
+      });
+    },
+
     iban: function () {
       const $el = $(this);
       try {
@@ -386,6 +413,17 @@
         } else {
           $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
         }
+      });
+    },
+
+    year: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `year`
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish($el.val()).replace(/[^\d.-//]/g, '').trim());
+        // TODO: check for pattern/validate year in persian
       });
     },
 
