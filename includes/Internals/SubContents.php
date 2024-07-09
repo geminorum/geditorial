@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
@@ -482,5 +483,54 @@ trait SubContents
 				return rest_ensure_response( $this->subcontent_get_data( $post ) );
 			},
 		] ] );
+
+		register_rest_route( $namespace, '/summary/(?P<subcontent>[\d]+)', [ [
+			'methods'             => \WP_REST_Server::READABLE,
+			'permission_callback' => function ( $request ) {
+
+				if ( ! $subcontent = get_comment( (int) $request['subcontent'] ) )
+					return Services\RestAPI::getErrorInvalidData();
+
+				if ( empty( $subcontent->comment_post_ID ) )
+					return Services\RestAPI::getErrorSomethingIsWrong();
+
+				if ( ! current_user_can( 'read_post', (int) $subcontent->comment_post_ID ) )
+					return Services\RestAPI::getErrorForbidden();
+
+				if ( ! $this->role_can( 'reports' ) )
+					return Services\RestAPI::getErrorForbidden();
+
+				return TRUE;
+			},
+			'args' => [
+				'subcontent' => Services\RestAPI::defineArgument_commentid( _x( 'The id of the subcontent comment.', 'Internal: SubContent: Rest Argument', 'geditorial-admin' ) ),
+			],
+			'callback' => function ( $request ) {
+
+				if ( FALSE === ( $data = $this->subcontent_do_provide_summary( (int) $request['subcontent'] ) ) )
+					return Services\RestAPI::getErrorSomethingIsWrong();
+
+				return rest_ensure_response( $data );
+			},
+		] ] );
+	}
+
+	protected function subcontent_do_provide_summary( $comment_id )
+	{
+		$na         = gEditorial\Plugin::na( FALSE );
+		$subcontent = get_comment( $comment_id );
+		$parent     = get_post( (int) $subcontent->comment_post_ID ) ;
+		$item       = $this->subcontent_prep_data_from_query( $subcontent, $parent );
+		$data       = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent );
+
+		// NOTE: like `WordPress\Post::summary()`
+		$summary = array_merge( [
+			'title'       => $na,
+			'link'        => FALSE,
+			'image'       => FALSE,
+			'description' => '',
+		], $data ?? [] );
+
+		return $this->filters( 'provide_summary', $summary, $item, $parent, $data );
 	}
 }

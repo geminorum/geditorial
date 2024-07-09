@@ -435,7 +435,6 @@ class NextOfKin extends gEditorial\Module
 
 		$this->restapi_register_route( 'query', [ 'get', 'post', 'delete' ], '(?P<linked>[\d]+)' );
 		$this->restapi_register_route( 'markup', 'get', '(?P<linked>[\d]+)' );
-		$this->restapi_register_route( 'summary', 'get', '(?P<subcontent>[\d]+)' );
 	}
 
 	public function restapi_query_get_arguments()
@@ -448,13 +447,6 @@ class NextOfKin extends gEditorial\Module
 	public function restapi_markup_get_arguments()
 	{
 		return $this->restapi_query_get_arguments();
-	}
-
-	public function restapi_summary_get_arguments()
-	{
-		return [
-			'subcontent' => Services\RestAPI::defineArgument_commentid( _x( 'The id of the subcontent comment.', 'Rest', 'geditorial-next-of-kin' ) ),
-		];
 	}
 
 	public function restapi_query_get_permission( $request )
@@ -473,18 +465,6 @@ class NextOfKin extends gEditorial\Module
 		return $this->restapi_query_get_permission( $request );
 	}
 
-	public function restapi_summary_get_permission( $request )
-	{
-		// FIXME: get parent from comment object
-		// if ( ! current_user_can( 'read_post', (int) $request['linked'] ) )
-		// 	return Services\RestAPI::getErrorForbidden();
-
-		if ( ! $this->role_can( 'reports' ) )
-			return Services\RestAPI::getErrorForbidden();
-
-		return TRUE;
-	}
-
 	public function restapi_query_post_permission( $request )
 	{
 		if ( ! current_user_can( 'edit_post', (int) $request['linked'] ) )
@@ -499,13 +479,6 @@ class NextOfKin extends gEditorial\Module
 	public function restapi_query_delete_permission( $request )
 	{
 		return $this->restapi_query_post_permission( $request );
-	}
-
-	public function restapi_summary_get_callback( $request )
-	{
-		$data = []; // FIXME!
-
-		return rest_ensure_response( $data );
 	}
 
 	// TODO: return count markup

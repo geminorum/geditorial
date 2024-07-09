@@ -157,6 +157,7 @@ class Identified extends gEditorial\Module
 		parent::init();
 
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
+		$this->filter( 'subcontent_provide_summary', 3, 8, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 5, 8, FALSE, $this->base );
 		$this->filter( 'searchselect_pre_query_posts', 3, 8, FALSE, $this->base );
 
@@ -259,6 +260,17 @@ class Identified extends gEditorial\Module
 		return rest_ensure_response( $response ?? Services\RestAPI::getErrorSomethingIsWrong() );
 	}
 
+	private function _get_supported_by_identifier_type( $type )
+	{
+		$list = [];
+
+		foreach ( $this->posttypes() as $supported )
+			if ( $type === $this->_get_posttype_identifier_type( $supported ) )
+				$list[$supported] = $this->_get_posttype_identifier_metakey( $supported );
+
+		return $list;
+	}
+
 	private function _get_posttype_identifier_type( $posttype )
 	{
 		if ( $setting = $this->get_setting( sprintf( '%s_posttype_type', $posttype ) ) )
@@ -340,6 +352,28 @@ class Identified extends gEditorial\Module
 		}
 
 		return $this->filters( 'sanitize_identifier', $sanitized, $value, $type, $post );
+	}
+
+	public function subcontent_provide_summary( $data, $item, $parent )
+	{
+		if ( ! is_null( $data ) )
+			return $data;
+
+		if ( ! empty( $item['identity'] ) ) {
+
+			if ( ! $identifier = $this->sanitize_identifier( $item['identity'], 'identity' ) )
+				return $data;
+
+			$supported = $this->_get_supported_by_identifier_type( 'identity' );
+
+			foreach ( $supported as $posttype => $metakey )
+				if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $identifier, FALSE ) )
+					foreach ( $matches as $match )
+						if ( array_key_exists( get_post_type( intval( $match ) ), $supported ) )
+							return WordPress\Post::summary( $match );
+		}
+
+		return $data;
 	}
 
 	public function linediscovery_data_for_post( $discovered, $row, $posttypes, $insert, $raw )

@@ -206,6 +206,7 @@ class Banking extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->filter( 'subcontent_provide_summary', 3, 8, FALSE, $this->base );
 		$this->filter_self( 'subcontent_pre_prep_data', 4, 10 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 		$this->register_shortcode( 'main_shortcode' );
@@ -546,6 +547,29 @@ class Banking extends gEditorial\Module
 		}
 
 		return $terms;
+	}
+
+	public function subcontent_provide_summary( $data, $item, $parent )
+	{
+		if ( ! is_null( $data ) )
+			return $data;
+
+		if ( ! empty( $item['iban'] ) ) {
+
+			if ( FALSE === ( $iban = Info::fromIBAN( $item['iban'] ) ) )
+				return $data;
+
+			return ModuleHelper::generateSummary( $iban );
+
+		} else if ( ! empty( $item['card'] ) ) {
+
+			if ( FALSE === ( $card = Info::fromCardNumber( $item['card'] ) ) )
+				return $data;
+
+			return ModuleHelper::generateSummary( $card );
+		}
+
+		return $data;
 	}
 
 	// TODO: force sanitize: `type`/`status`/`relation`
