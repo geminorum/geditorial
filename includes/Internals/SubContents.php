@@ -16,6 +16,8 @@ trait SubContents
 	protected function subcontent_get_strings_for_js( $extra = [] )
 	{
 		return array_merge( [
+			'index'    => _x( '#', 'Internal: Subcontents: Javascript String: `index`', 'geditorial-admin' ),
+			'plus'     => _x( '+', 'Internal: Subcontents: Javascript String: `plus`', 'geditorial-admin' ),
 			'actions'  => _x( 'Actions', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'info'     => _x( 'Information', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'insert'   => _x( 'Insert', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
@@ -636,8 +638,8 @@ trait SubContents
 
 		$markup['html'] = $this->subcontent_do_main_shortcode( [
 			'id'      => $parent,
-			'wrap'    => FALSE,
 			'context' => 'restapi',
+			'wrap'    => FALSE,
 		], $this->subcontent_get_empty_notice( $context ) );
 
 		return $this->filters( 'provide_markup', $markup, $parent, $context );

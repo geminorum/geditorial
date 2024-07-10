@@ -272,27 +272,27 @@ class Personage extends gEditorial\Module
 					'posttype'    => $primary,
 					'order'       => 17,
 				],
-				// TODO: move to `ContactCards`
+				// TODO: move to `Phonebook`
 				'mobile_number' => [
 					'description' => _x( 'Primary Mobile Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'mobile',
 					'quickedit'   => TRUE,
 					'order'       => 21,
 				],
-				// TODO: move to `ContactCards`
+				// TODO: move to `Phonebook`
 				'mobile_secondary' => [
 					'title'       => _x( 'Secondary Mobile', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Secondary Mobile Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'mobile',
 					'order'       => 21,
 				],
-				// TODO: move to `ContactCards`
+				// TODO: move to `Phonebook`
 				'phone_number'  => [
 					'description' => _x( 'Primary Phone Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'phone',
 					'order'       => 22,
 				],
-				// TODO: move to `ContactCards`
+				// TODO: move to `Phonebook`
 				'phone_secondary'  => [
 					'title'       => _x( 'Secondary Phone', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Secondary Phone Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
@@ -333,13 +333,13 @@ class Personage extends gEditorial\Module
 				'postal_code' => [
 					'type' => 'postcode',
 				],
-				// TODO: move to `ContactCards`
+				// TODO: move to `Phonebook`
 				'home_address' => [
 					'title'       => _x( 'Home Address', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Full home address, including city, state etc.', 'Field Description', 'geditorial-personage' ),
 					'type'        => 'address',
 				],
-				// TODO: move to `ContactCards`
+				// TODO: move to `Phonebook`
 				'work_address' => [
 					'title'       => _x( 'Work Address', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-personage' ),
