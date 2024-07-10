@@ -722,4 +722,25 @@ trait SubContents
 
 		Scripts::enqueueApp( $name );
 	}
+
+	protected function subcontent_do_enqueue_asset_js( $screen )
+	{
+		if ( ! $this->role_can( 'assign' ) )
+			return;
+
+		$this->enqueue_asset_js( [], $screen, [
+			'jquery',
+			'wp-api-request',
+			Scripts::enqueueColorBox(),
+		] );
+	}
+
+	protected function subcontent_render_metabox_data_grid( $post, $context = NULL )
+	{
+		echo $this->wrap( $this->subcontent_do_main_shortcode( [
+			'id'      => $post,
+			'context' => $context,
+			'wrap'    => FALSE,
+		], $this->subcontent_get_empty_notice( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
+	}
 }

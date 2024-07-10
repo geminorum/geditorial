@@ -238,8 +238,7 @@ class Banking extends gEditorial\Module
 				if ( $this->role_can( [ 'reports', 'assign' ] ) )
 					$this->_hook_general_supportedbox( $screen, NULL, 'advanced', 'low', '-subcontent-grid-metabox' );
 
-				if ( $this->role_can( 'assign' ) )
-					Scripts::enqueueColorBox();
+				$this->subcontent_do_enqueue_asset_js( $screen );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -284,11 +283,7 @@ class Banking extends gEditorial\Module
 		if ( is_null( $context ) )
 			$context = 'supportedbox';
 
-		echo $this->main_shortcode( [
-			'id'      => $object,
-			'context' => $context,
-			'wrap'    => FALSE,
-		], $this->subcontent_get_empty_notice( $context ) );
+		$this->subcontent_render_metabox_data_grid( $object, $context );
 
 		if ( $this->role_can( 'assign' ) )
 			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $object, [
@@ -312,7 +307,6 @@ class Banking extends gEditorial\Module
 		$this->subcontent_do_enqueue_app( 'bank-grid' );
 	}
 
-	// TODO: on close thickbox must refresh the metabox
 	public function render_framepage_adminpage()
 	{
 		if ( ! $post = self::req( 'linked' ) )
