@@ -208,6 +208,13 @@ class NextOfKin extends gEditorial\Module
 		];
 	}
 
+	protected function subcontent_define_unique_fields()
+	{
+		return [
+			'identity',
+		];
+	}
+
 	protected function subcontent_define_required_fields()
 	{
 		return [

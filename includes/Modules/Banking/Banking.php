@@ -188,6 +188,14 @@ class Banking extends gEditorial\Module
 		];
 	}
 
+	protected function subcontent_define_unique_fields()
+	{
+		return [
+			'iban',
+			'card',
+		];
+	}
+
 	protected function subcontent_define_required_fields()
 	{
 		return [

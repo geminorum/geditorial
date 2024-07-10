@@ -94,6 +94,19 @@ trait SubContents
 			$this->subcontent_define_hidden_fields(), $context );
 	}
 
+	protected function subcontent_define_unique_fields()
+	{
+		return [
+			// 'identity' // <---- EXAMPLE
+		];
+	}
+
+	protected function subcontent_get_unique_fields( $context = 'display' )
+	{
+		return $this->filters( 'unique_fields',
+			$this->subcontent_define_unique_fields(), $context );
+	}
+
 	protected function subcontent_get_meta_mapping()
 	{
 		return [
