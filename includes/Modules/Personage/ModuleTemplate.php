@@ -46,11 +46,53 @@ class ModuleTemplate extends gEditorial\Template
 		if ( $mobile = self::getMetaField( 'mobile_number', $field, FALSE ) )
 			$vcard->addPhoneNumber( $mobile, 'PREF;MOBILE' );
 
+		if ( $mobile2 = self::getMetaField( 'mobile_secondary', $field, FALSE ) )
+			$vcard->addPhoneNumber( $mobile2, 'MOBILE' );
+
 		if ( $phone = self::getMetaField( 'phone_number', $field, FALSE ) )
 			$vcard->addPhoneNumber( $phone, 'HOME' );
 
+		if ( $phone2 = self::getMetaField( 'phone_secondary', $field, FALSE ) )
+			$vcard->addPhoneNumber( $phone2, 'WORK' );
+
 		if ( $home = self::getMetaField( 'home_address', $field, FALSE ) )
-			$vcard->addAddress( $home, NULL, NULL, NULL, NULL, NULL, 'Iran', 'HOME' );
+			/**
+			 * Add address
+			 *
+			 * @param  string [optional] $name
+			 * @param  string [optional] $extended
+			 * @param  string [optional] $street
+			 * @param  string [optional] $city
+			 * @param  string [optional] $region
+			 * @param  string [optional] $zip
+			 * @param  string [optional] $country
+			 * @param  string [optional] $type
+			 *                                     $type may be DOM | INTL | POSTAL | PARCEL | HOME | WORK
+			 *                                     or any combination of these: e.g. "WORK;PARCEL;POSTAL"
+			 * @return $this
+			 */
+			$vcard->addAddress(
+				$home,
+				NULL,
+				NULL,
+				NULL,
+				self::constant( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
+				NULL,
+				self::constat( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
+				'HOME'
+			);
+
+		if ( $work = self::getMetaField( 'work_address', $field, FALSE ) )
+			$vcard->addAddress(
+				$work,
+				NULL,
+				NULL,
+				NULL,
+				self::constant( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
+				NULL,
+				self::constat( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
+				'WORK'
+			);
 
 		// $vcard->addCompany( '' );
 		// $vcard->addEmail( '' );
