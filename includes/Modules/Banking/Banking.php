@@ -568,6 +568,9 @@ class Banking extends gEditorial\Module
 
 	public function personage_editform_meta_summary( $fields, $post )
 	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $fields;
+
 		$fields['iban']             = NULL;
 		$fields['bank_card_number'] = NULL;
 

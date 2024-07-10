@@ -38,7 +38,7 @@ class Pointers extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->filter_module( 'tabloid', 'post_summaries', 4, 8 );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 50 );
 	}
 
 	public function current_screen( $screen )

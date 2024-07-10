@@ -349,7 +349,6 @@ class Info extends WordPress\Main
 				/* translators: %s: items count */
 				return _nx_noop( '%s Member', '%s Members', 'Info: Noop', 'geditorial' );
 
-
 			case 'people':
 			case 'person':
 				/**
@@ -362,6 +361,21 @@ class Info extends WordPress\Main
 				 */
 				/* translators: %s: people count */
 				return _nx_noop( '%s Person', '%s People', 'Info: Noop', 'geditorial' );
+
+			case 'car':
+			case 'cars':
+				/* translators: %s: car count */
+				return _nx_noop( '%s Car', '%s Cars', 'Info: Noop', 'geditorial' );
+
+			case 'vehicle':
+			case 'vehicles':
+				/* translators: %s: vehicle count */
+				return _nx_noop( '%s Vehicle', '%s Vehicles', 'Info: Noop', 'geditorial' );
+
+			case 'entry':
+			case 'entries':
+				/* translators: %s: entry count */
+				return _nx_noop( '%s Entry', '%s Entries', 'Info: Noop', 'geditorial' );
 
 			case 'post':
 			case 'posts':

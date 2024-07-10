@@ -8,7 +8,6 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
@@ -108,8 +107,6 @@ class NextOfKin extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				/* translators: %s: count number */
-				'family_member' => _n_noop( '%s Member', '%s Members', 'geditorial-next-of-kin' ),
 				'main_taxonomy' => _n_noop( 'Marital Status', 'Marital Statuses', 'geditorial-next-of-kin' ),
 			],
 			'labels' => [

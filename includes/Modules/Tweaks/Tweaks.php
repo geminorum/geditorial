@@ -547,7 +547,7 @@ class Tweaks extends gEditorial\Module
 			break;
 			case $this->classs( 'rows' ):
 
-				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul class="-rows">';
+				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul class="-rows -flex-rows">';
 
 					// FIXME: DEPRECATED
 					do_action( $this->hook( 'column_row' ), $post );
