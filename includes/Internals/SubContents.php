@@ -608,12 +608,22 @@ trait SubContents
 		$parent = WordPress\Post::get( (int) $comment->comment_post_ID ) ;
 		$item   = $this->subcontent_prep_data_from_query( $comment, $parent );
 		$data   = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent, $context );
+		$author = FALSE;
+
+		// TODO: override by `Users` module for better profiles
+		if ( ! empty( $item['_user'] ) && ( $user = get_user_by( 'id', $item['_user'] ) ) )
+			$author = sprintf(
+				/* translators: %s: user display-name (user email) */
+				_x( 'By %s', 'Internal: Subcontents: User Row', 'geditorial-admin' ),
+				WordPress\User::getTitleRow( $user )
+			);
 
 		// NOTE: like `WordPress\Post::summary()`
 		$summary = array_merge( [
 			'title'       => $na,
 			'link'        => FALSE,
 			'image'       => FALSE,
+			'author'      => $author,
 			'description' => '',
 		], $data ?? [] );
 
