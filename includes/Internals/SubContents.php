@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -690,5 +691,25 @@ trait SubContents
 			];
 
 		return $list;
+	}
+
+	protected function subcontent_do_enqueue_app( $name )
+	{
+		if ( ! $this->role_can( 'assign' ) )
+			return;
+
+		$this->enqueue_asset_js( [
+			'strings' => $this->subcontent_get_strings_for_js(),
+			'fields'  => $this->subcontent_get_fields( 'edit' ),
+			'config'  => [
+				'linked'    => self::req( 'linked', FALSE ),
+				'required'  => $this->subcontent_get_required_fields( 'edit' ),
+				'hidden'    => $this->subcontent_get_hidden_fields( 'edit' ),
+				'unique'    => $this->subcontent_get_unique_fields( 'edit' ),
+				'posttypes' => $this->get_setting( 'subcontent_posttypes', [] ),
+			],
+		], FALSE );
+
+		Scripts::enqueueApp( $name );
 	}
 }

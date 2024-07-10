@@ -370,22 +370,7 @@ class NextOfKin extends gEditorial\Module
 	public function load_framepage_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );
-
-		if ( ! $this->role_can( 'assign' ) )
-			return;
-
-		$this->enqueue_asset_js( [
-			'strings' => $this->subcontent_get_strings_for_js(),
-			'fields'  => $this->subcontent_get_fields( 'edit' ),
-			'config'  => [
-				'linked'    => self::req( 'linked', FALSE ),
-				'required'  => $this->subcontent_get_required_fields( 'edit' ),
-				'hidden'    => $this->subcontent_get_hidden_fields( 'edit' ),
-				'posttypes' => $this->get_setting( 'subcontent_posttypes', [] ),
-			],
-		], FALSE );
-
-		Scripts::enqueueApp( 'family-grid' );
+		$this->subcontent_do_enqueue_app( 'family-grid' );
 	}
 
 	// TODO: on close thickbox must refresh the metabox
