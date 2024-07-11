@@ -3,9 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Barcode;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Services;
 
 class ModuleHelper extends gEditorial\Helper
 {
@@ -31,7 +31,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function barcodeISBN( $isbn )
 	{
-		return Barcode::getBWIPPjs( 'ean13', $isbn );
+		return Services\Barcodes::getBWIPPjs( 'ean13', $isbn );
 	}
 
 	// usort( $posts, 'bcpt_sort_books' );

@@ -109,6 +109,7 @@ class Plugin
 		$this->init_modules();
 
 		Services\AdvancedQueries::setup();
+		Services\Barcodes::setup();
 		Services\Calendars::setup();
 		Services\LateChores::setup();
 		Services\LineDiscovery::setup();
