@@ -11,6 +11,7 @@ import GridInput from './Components/GridInput.vue';
 import GridHidden from './Components/GridHidden.vue';
 import GridButton from './Components/GridButton.vue';
 import GridPopper from './Components/GridPopper.vue';
+import GridInfo from './Components/GridInfo.vue';
 
 const app = createApp(App);
 
@@ -24,5 +25,6 @@ app.component('GridInput', GridInput);
 app.component('GridHidden', GridHidden);
 app.component('GridButton', GridButton);
 app.component('GridPopper', GridPopper);
+app.component('GridInfo', GridInfo);
 
 app.mount('#geditorial-app-bank-grid');

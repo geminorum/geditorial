@@ -1,5 +1,5 @@
 <template>
-  <p class="description -description grid-message">{{ message }}</p>
+  <p class="description -description grid-message">{{ message }} <span class="-count-items" v-show="count">({{ countItems }})</span></p>
 </template>
 
 <style lang="scss">
@@ -24,10 +24,23 @@ $brand-danger:  #d9534f !default;
     color: $brand-danger;
   }
 }
+
+span.-count-items {
+  font-size: smaller;
+}
 </style>
 
 <script>
+import { sprintf } from '@wordpress/i18n'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
+import { formatNumber } from '../../../js-utils/number.v1';
+
 export default {
-  props: ['message']
+  inject: ['i18n', 'locale'],
+  props: ['message', 'count'],
+  computed: {
+    countItems() {
+      return sprintf(this.i18n.countitems, formatNumber(this.count, this.locale));
+    },
+  }
 }
 </script>

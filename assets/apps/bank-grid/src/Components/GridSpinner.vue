@@ -8,9 +8,11 @@
   margin: 0 !important;
   float: none !important;
 
+  /**
   button + & {
     margin-left: .25rem !important;
   }
+  */
 }
 </style>
 

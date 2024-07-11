@@ -69,6 +69,19 @@ $brand-danger:  #d9534f !default;
       margin-left: .125rem;
     }
 
+    &.index {
+      width: 25px;
+      text-align: center;
+    }
+
+    &.field-year {
+      width: 45px;
+	  }
+
+    &.field-identity {
+      width: 80px;
+	}
+
     &.field-bankname,
     &.field-fullname {
      width: 140px;
@@ -82,11 +95,19 @@ $brand-danger:  #d9534f !default;
      width: 220px;
     }
 
+
+    &.field-platenumber,
+    &.field-contact {
+      width: 110px;
+    }
+
+    &.field-vin,
     &.field-card {
      width: 145px;
     }
 
     &.field-type,
+    &.field-color,
     &.field-status,
     &.field-relation {
      width: 100px;
@@ -96,9 +117,19 @@ $brand-danger:  #d9534f !default;
       width: auto;
     }
 
+    &.field-dob {
+      width: 80px;
+    }
+
     &.actions {
-     width: 80px;
+     width: 125px;
      text-align: center;
+      position: relative;
+
+      span.spinner {
+        position: absolute;
+        right: 2px;
+      }
     }
   }
 
@@ -110,12 +141,21 @@ $brand-danger:  #d9534f !default;
   }
 
   td {
-    &.actions {
-      text-align: right;
-      padding: .25rem;
+    &.plus,
+    &.index {
+      padding: 0.5em 0;
+      font-weight: 700;
+      background-color: #ddd;
+      text-align: center;
+    }
 
-      button + button {
-        margin-left: .25rem !important;
+    &.actions {
+      padding: 0;
+
+      > div {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
       }
     }
 
@@ -135,6 +175,11 @@ $brand-danger:  #d9534f !default;
 
   td,
   input {
+    &.field-vin,
+    &.field-year,
+    &.field-identity,
+    &.field-contact,
+    &.field-dob,
     &.field-account,
     &.field-iban,
     &.field-card {
