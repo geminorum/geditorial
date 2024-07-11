@@ -1,0 +1,182 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Driving\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Driving\n"
+"X-Domain: geditorial-driving\n"
+
+#: Driving.php:83
+msgctxt "Field Label: `platenumber`"
+msgid "Plate Number"
+msgstr ""
+
+#: Driving.php:84
+msgctxt "Field Label: `carmodel`"
+msgid "Car Model"
+msgstr ""
+
+#: Driving.php:85
+msgctxt "Field Label: `color`"
+msgid "Color"
+msgstr ""
+
+#: Driving.php:86
+msgctxt "Field Label: `fullname`"
+msgid "Owner"
+msgstr ""
+
+#: Driving.php:87
+msgctxt "Field Label: `relation`"
+msgid "Relation"
+msgstr ""
+
+#: Driving.php:88
+msgctxt "Field Label: `identity`"
+msgid "Identity"
+msgstr ""
+
+#: Driving.php:89
+msgctxt "Field Label: `contact`"
+msgid "Contact"
+msgstr ""
+
+#: Driving.php:90
+msgctxt "Field Label: `year`"
+msgid "Year"
+msgstr ""
+
+#: Driving.php:91
+msgctxt "Field Label: `vin`"
+msgid "VIN"
+msgstr ""
+
+#: Driving.php:92
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr ""
+
+#: Driving.php:98
+msgctxt "Notice"
+msgid "There is no vehicle information available!"
+msgstr ""
+
+#: Driving.php:99
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the vehicles data."
+msgstr ""
+
+#: Driving.php:106
+msgctxt "MetaBox Title"
+msgid "Vehicles"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Driving.php:110
+msgctxt "Button Title"
+msgid "Vehicles of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Driving.php:112
+msgctxt "Button Text"
+msgid "%1$s Manage the Vehicles of %2$s"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Driving.php:115
+msgctxt "Action Title"
+msgid "Vehicles of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Driving.php:117
+msgctxt "Action Text"
+msgid "Vehicles"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Driving.php:120
+msgctxt "Row Title"
+msgid "Vehicles of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Driving.php:122
+msgctxt "Row Text"
+msgid "Vehicles"
+msgstr ""
+
+#: Driving.php:134
+msgctxt "Field Title"
+msgid "Vehicle Model"
+msgstr ""
+
+#: Driving.php:135
+msgctxt "Field Description"
+msgid "Registered Vehicle Model"
+msgstr ""
+
+#: Driving.php:139
+msgctxt "Field Title"
+msgid "Vehicle Color"
+msgstr ""
+
+#: Driving.php:140
+msgctxt "Field Description"
+msgid "Registered Vehicle Color"
+msgstr ""
+
+#: Driving.php:144
+msgctxt "Field Title"
+msgid "Vehicle Year"
+msgstr ""
+
+#: Driving.php:145
+msgctxt "Field Description"
+msgid "Registered Vehicle Year"
+msgstr ""
+
+#: Driving.php:150
+msgctxt "Field Title"
+msgid "Vehicle Plate"
+msgstr ""
+
+#: Driving.php:151
+msgctxt "Field Description"
+msgid "Registered Vehicle Plate"
+msgstr ""
+
+#: Driving.php:156
+msgctxt "Field Title"
+msgid "VIN"
+msgstr ""
+
+#: Driving.php:157
+msgctxt "Field Description"
+msgid "Vehicle Identification Number"
+msgstr ""
+
+#. translators: %s: post title
+#: Driving.php:326
+msgctxt "Page Title"
+msgid "Vehicle Grid for %s"
+msgstr ""
+
+#. translators: %s: post title
+#: Driving.php:338
+msgctxt "Page Title"
+msgid "Vehicle Overview for %s"
+msgstr ""
+
+#: Driving.php:369
+msgctxt "Default Term: Audit"
+msgid "Empty Vehicle Data"
+msgstr ""
