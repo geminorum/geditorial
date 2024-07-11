@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
@@ -432,6 +433,7 @@ class Personage extends gEditorial\Module
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
+		$this->filter_module( 'tabloid', 'view_data', 3, 60 );
 		$this->filter_module( 'papered', 'view_data', 4 );
 		$this->filter_module( 'papered', 'view_list_item', 7 );
 
@@ -715,6 +717,20 @@ class Personage extends gEditorial\Module
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
+	}
+
+	public function tabloid_view_data( $data, $post, $context )
+	{
+		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
+			return $data;
+
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
+			return $data;
+
+		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
+			$data['___sides']['meta'].= Core\HTML::wrap( Scripts::markupQRCodeSVG( $vcard ), '-qrcode-vcard' );
+
+		return $data;
 	}
 
 	public function papered_view_data( $data, $profile, $source, $context )

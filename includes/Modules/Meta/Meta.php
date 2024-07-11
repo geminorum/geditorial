@@ -1288,9 +1288,17 @@ class Meta extends gEditorial\Module
 				return Core\Email::prep( $raw, $field_args, $context );
 
 			case 'phone':
+
+				if ( 'export' === $context )
+					return Core\Phone::sanitize( $raw ?: $meta ) ?: Core\Number::translate( $raw ?: $meta );
+
 				return Core\Phone::prep( trim( $raw ), $field_args, $context );
 
 			case 'mobile':
+
+				if ( 'export' === $context )
+					return Core\Mobile::sanitize( $raw ?: $meta ) ?: Core\Number::translate( $raw ?: $meta );
+
 				return Core\Mobile::prep( trim( $raw ), $field_args, $context );
 
 			case 'isbn':

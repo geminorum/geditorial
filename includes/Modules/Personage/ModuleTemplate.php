@@ -38,9 +38,13 @@ class ModuleTemplate extends gEditorial\Template
 		];
 
 		// gEditorial()->module( 'personage' )->make_human_title( $post, 'export' )
+
 		$vcard->addName(
 			self::getMetaField( 'last_name', $field, FALSE ),
 			self::getMetaField( 'first_name', $field, FALSE ),
+			'',
+			'',
+			'',
 		);
 
 		if ( $mobile = self::getMetaField( 'mobile_number', $field, FALSE ) )
@@ -54,6 +58,21 @@ class ModuleTemplate extends gEditorial\Template
 
 		if ( $phone2 = self::getMetaField( 'phone_secondary', $field, FALSE ) )
 			$vcard->addPhoneNumber( $phone2, 'WORK' );
+
+		if ( $emergency = self::getMetaField( 'emergency_mobile', $field, FALSE ) )
+			$vcard->addPhoneNumber( $emergency, 'EMERGENCY' );
+
+		if ( $email = self::getMetaField( 'email_address', $field, FALSE ) )
+			$vcard->addEmail( $email );
+
+		if ( $website = self::getMetaField( 'website_url', $field, FALSE ) )
+			$vcard->addURL( $website, 'PREF' );
+
+		if ( $dob = self::getMetaFieldRaw( 'date_of_birth', $post->ID ) ) {
+
+			if ( $date = Core\Date::getObject( $dob, 'Y-m-d' ) )
+				$vcard->addBirthday( $date->format( 'Ymd' ) );
+		}
 
 		if ( $home = self::getMetaField( 'home_address', $field, FALSE ) )
 			/**
@@ -76,9 +95,9 @@ class ModuleTemplate extends gEditorial\Template
 				NULL,
 				NULL,
 				NULL,
-				self::constant( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
+				self::const( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
 				NULL,
-				self::constat( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
+				self::const( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
 				'HOME'
 			);
 
@@ -88,15 +107,11 @@ class ModuleTemplate extends gEditorial\Template
 				NULL,
 				NULL,
 				NULL,
-				self::constant( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
+				self::const( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
 				NULL,
-				self::constat( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
+				self::const( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
 				'WORK'
 			);
-
-		// $vcard->addCompany( '' );
-		// $vcard->addEmail( '' );
-		// $vcard->addURL( '', 'PREF' );
 
 		$html = $vcard->getOutput();
 

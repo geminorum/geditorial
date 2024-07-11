@@ -83,6 +83,10 @@ class Tabloid extends gEditorial\Module
 	{
 		$this->_load_submenu_adminpage( $context );
 		$this->_make_linked_viewable();
+
+		// FIXME: WTF: make the signal first!
+		Scripts::enqueueJSBarcode();
+		Scripts::enqueueQRCodeSVG();
 	}
 
 	public function render_submenu_adminpage()
