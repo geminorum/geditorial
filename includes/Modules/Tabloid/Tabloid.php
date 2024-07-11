@@ -255,6 +255,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'exports' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
+		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'term', 'custom' ], '' );
 		$data['___hooks']     = array_fill_keys( [
 			'after-actions',
 			'after-post',

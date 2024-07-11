@@ -778,8 +778,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $src = $this->_get_posttype_image( $post ) )
 			return $data;
 
-		$data['___hooks']['after-post'].= '<div class="-wrap side-wrap">'.$this->wrap( Core\HTML::img( $src ), '-side-image' ).'<div class="-side-table">';
-		$data['___hooks']['after-meta'].= '</div></div>';
+		$data['___sides']['meta'].= Core\HTML::wrap( Core\HTML::img( $src ), '-static-cover-image' );
 
 		return $data;
 	}
