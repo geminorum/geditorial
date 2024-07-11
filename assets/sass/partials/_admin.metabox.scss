@@ -181,6 +181,7 @@ $spacer: 1rem !default;
     }
 
     &.-inputisbn,
+    &.-inputvin,
     &.-inputiban,
     &.-inputbankcard {
       input {
@@ -191,6 +192,7 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-inputyear,
     &.-inputprice,
     &.-inputtext-half {
       select,

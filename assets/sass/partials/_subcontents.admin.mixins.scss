@@ -53,6 +53,10 @@
       }
     }
 
+    th[data-key="year"] {
+      width: 35px;
+    }
+
     th[data-key="identity"] {
       width: 75px;
     }
@@ -79,10 +83,19 @@
       width: 140px;
     }
 
+    th[data-key="vin"],
+    th[data-key="platenumber"],
     th[data-key="bankname"],
     th[data-key="fullname"],
     th[data-key="relation"] {
       width: 120px;
+    }
+
+    th[data-key="color"],
+    th[data-key="carmodel"],
+    th[data-key="occupation"],
+    th[data-key="education"] {
+      width: 220px;
     }
 
     td[data-key="iban"],
@@ -135,6 +148,7 @@
     margin: 12px;
   }
 
+  > div > .-placeholder-empty,
   > .-placeholder-empty {
     margin-bottom: 12px;
   }
