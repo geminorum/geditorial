@@ -1304,21 +1304,21 @@ class Meta extends gEditorial\Module
 			case 'isbn':
 
 				if ( 'export' === $context )
-					return $raw ?: $meta;
+					return Core\Number::translate( $raw ?: $meta );
 
 				return Info::lookupISBN( trim( $raw ) );
 
 			case 'vin':
 
 				if ( 'export' === $context )
-					return $raw ?: $meta;
+					return Core\Number::translate( $raw ?: $meta );
 
 				return Info::lookupVIN( trim( $raw ) );
 
 			case 'year':
 
 				if ( 'export' === $context )
-					return $raw ?: $meta;
+					return Core\Number::translate( $raw ?: $meta );
 
 				return Core\Number::localize( trim( $raw ) );
 
