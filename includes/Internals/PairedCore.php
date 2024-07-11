@@ -406,7 +406,7 @@ trait PairedCore
 			'key'     => $this->classs( 'paired', 'exports' ),
 			'class'   => '-paired-exports',
 			'title'   => $template,
-			'content' => Core\HTML::wrap( $this->exports_get_export_buttons( $post, $context ), 'field-wrap -buttons' ),
+			'content' => Core\HTML::wrap( $this->exports_get_export_buttons( $post->ID, $context, 'paired' ), 'field-wrap -buttons' ),
 		];
 
 		return $list;

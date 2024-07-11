@@ -12,11 +12,11 @@ use geminorum\gEditorial\WordPress;
 trait BulkExports
 {
 
-	protected function exports_get_export_buttons( $post, $context )
+	protected function exports_get_export_buttons( $reference, $context, $target = NULL )
 	{
 		$html = '';
 
-		foreach ( $this->exports_get_types( $context ) as $type => $type_args ) {
+		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args ) {
 
 			$label = sprintf(
 				/* translators: %1$s: icon markup, %2$s: export type title */
@@ -26,7 +26,7 @@ trait BulkExports
 			);
 
 			$html.= Core\HTML::tag( 'a', [
-				'href'  => $this->exports_get_type_download_link( $post->ID, $type, $context, $type_args['target'], $type_args['format'] ),
+				'href'  => $this->exports_get_type_download_link( $reference, $type, $context, $type_args['target'], $type_args['format'] ),
 				'class' => [ 'button', 'button-small', '-button', '-button-icon', '-exportbutton', '-button-download' ],
 				'title' => _x( 'Click to Download the Generated File', 'Internal: Exports: Button Title', 'geditorial-admin' ),
 			], $label );
@@ -35,29 +35,50 @@ trait BulkExports
 		return $html;
 	}
 
-	protected function exports_get_types( $context )
+	protected function exports_get_types( $context, $target = NULL )
 	{
 		$types = [
-			'simple'   => [
+			'paired_simple'   => [
 				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
 				'format' => 'xlsx',
 			],
 
-			'advanced' => [
+			'paired_advanced' => [
 				'title'  => _x( 'Advanced', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
 				'format' => 'xlsx',
 			],
 
-			'full' => [
+			'paired_full' => [
 				'title'  => _x( 'Full', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
 				'format' => 'csv',
 			],
+
+			'posttype_simple'   => [
+				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
+				'target' => 'posttype',
+				'format' => 'xlsx',
+			],
+
+			'posttype_advanced' => [
+				'title'  => _x( 'Advanced', 'Internal: Export Type Title', 'geditorial-admin' ),
+				'target' => 'posttype',
+				'format' => 'xlsx',
+			],
+
+			'posttype_full' => [
+				'title'  => _x( 'Full', 'Internal: Export Type Title', 'geditorial-admin' ),
+				'target' => 'posttype',
+				'format' => 'csv',
+			],
 		];
 
-		return $this->filters( 'export_types', $types, $context );
+		if ( $target && 'default' !== $target )
+			$types = Core\Arraay::filter( $types, [ 'target' => $target ] );
+
+		return $this->filters( 'export_types', $types, $context, $target );
 	}
 
 	protected function exports_get_type_download_link( $reference, $type, $context, $target = 'default', $format = 'xlsx', $extra = [] )
@@ -92,21 +113,35 @@ trait BulkExports
 
 	protected function exports_get_export_filename( $reference, $target, $type, $context, $format )
 	{
-		if ( ! $post = WordPress\Post::get( $reference ) )
-			return sprintf( '%s-%s', $context, $type );
+		$ext = in_array( $format, [
+			'csv',
+			'xlsx',
+		], TRUE ) ? $format : 'txt';
 
-		return vsprintf( '%s-%s-%s.%s', [
-			$post->post_name ?: $post->post_title,
-			$context,
-			$type,
-			in_array( $format, [
-				'csv',
-				'xlsx',
-			], TRUE ) ? $format : 'txt',
-		] );
+		switch ( $target ) {
+
+			case 'posttype':
+
+				return sprintf( '%s-%s-%s.%s', $reference, $context, $type, $ext );
+
+			case 'paired':
+
+				if ( ! $post = WordPress\Post::get( $reference ) )
+					return sprintf( '%s-%s.%s', $context, $type, $ext );
+
+				return vsprintf( '%s-%s-%s.%s', [
+					$post->post_name ?: $post->post_title,
+					$context,
+					$type,
+					$ext,
+				] );
+
+			default:
+				return sprintf( '%s-%s.%s', $context, $type, $ext );
+		}
 	}
 
-	protected function exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields = [], $units = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )
+	protected function exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields = [], $units = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )
 	{
 		$data = [];
 
@@ -183,7 +218,11 @@ trait BulkExports
 				foreach ( $customs as $custom => $custom_title )
 					$headers[] = $custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ); // FIXME: move-up!
 
-				return Helper::generateXLSX( $data, $headers, WordPress\Post::title( $reference, NULL, FALSE ) );
+				$sheet_title = 'posttype' === $target
+					? Helper::getPostTypeLabel( $reference, 'extended_label', 'name', $this->module->title )
+					: WordPress\Post::title( $reference, NULL, FALSE );
+
+				return Helper::generateXLSX( $data, $headers, $sheet_title );
 		}
 
 		return $data;
@@ -195,6 +234,36 @@ trait BulkExports
 		$data = FALSE;
 
 		switch ( $target ) {
+
+			case 'posttype':
+
+				if ( ! $posttype = WordPress\PostType::object( $reference ) )
+					break;
+
+				$posttypes =  [ $posttype->name ];
+
+				$args = $this->filters( 'export_query_args', [
+					'posts_per_page' => -1,
+					'orderby'        => [ 'menu_order', 'date' ],
+					'order'          => 'ASC',
+					'post_type'      => $posttypes,
+					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
+				], $reference, $target, $type, $context );
+
+				$posts = get_posts( $args );
+
+				if ( empty( $posts ) )
+					break;
+
+				$props   = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
+				$fields  = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
+				$units   = $this->exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format );
+				$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
+				$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
+				$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
+				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
+
+				break;
 
 			case 'paired':
 
@@ -212,7 +281,7 @@ trait BulkExports
 					'orderby'        => [ 'menu_order', 'date' ],
 					'order'          => 'ASC',
 					'post_type'      => $posttypes,
-					'post_status'    => [ 'publish', 'future' ],
+					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
 					'tax_query'      => [ [
 						'taxonomy' => $this->constant( $constants[1] ),
 						'field'    => 'id',
@@ -233,7 +302,7 @@ trait BulkExports
 				$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
 				$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
 				$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
-				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
+				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
 
 				break;
 		}
@@ -258,10 +327,14 @@ trait BulkExports
 		switch ( $type ) {
 
 			case 'simple':
+			case 'paired_simple':
+			case 'posttype_simple':
 
 				break;
 
 			case 'advanced':
+			case 'paired_advanced':
+			case 'posttype_advanced':
 
 				$list = array_merge( $list, [
 					'post_date',
@@ -273,6 +346,8 @@ trait BulkExports
 				break;
 
 			case 'full':
+			case 'paired_full':
+			case 'posttype_full':
 
 				$list = array_merge( $list, [
 					'post_author',
@@ -317,6 +392,8 @@ trait BulkExports
 			switch ( $type ) {
 
 				case 'simple':
+				case 'paired_simple':
+				case 'posttype_simple':
 
 					$keys = [
 						'first_name',
@@ -331,6 +408,8 @@ trait BulkExports
 					break;
 
 				case 'advanced':
+				case 'paired_advanced':
+				case 'posttype_advanced':
 
 					$keys = [
 						'first_name',
@@ -348,6 +427,8 @@ trait BulkExports
 					break;
 
 				case 'full':
+				case 'paired_full':
+				case 'posttype_full':
 
 					$list = array_merge( $list, array_fill_keys( array_keys( $fields ), NULL ) );
 
@@ -383,6 +464,8 @@ trait BulkExports
 			switch ( $type ) {
 
 				case 'simple':
+				case 'paired_simple':
+				case 'posttype_simple':
 
 					// $keys  = [];
 					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
@@ -391,6 +474,8 @@ trait BulkExports
 					break;
 
 				case 'advanced':
+				case 'paired_advanced':
+				case 'posttype_advanced':
 
 					// $keys  = [];
 					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
@@ -399,6 +484,8 @@ trait BulkExports
 					break;
 
 				case 'full':
+				case 'paired_full':
+				case 'posttype_full':
 
 					$list = array_merge( $list, array_fill_keys( array_keys( $fields ), NULL ) );
 
@@ -426,16 +513,22 @@ trait BulkExports
 			switch ( $type ) {
 
 				case 'simple':
+				case 'paired_simple':
+				case 'posttype_simple':
 
 					break;
 
 				case 'advanced':
+				case 'paired_advanced':
+				case 'posttype_advanced':
 
 					$list = array_merge( $list, [] );
 
 					break;
 
 				case 'full':
+				case 'paired_full':
+				case 'posttype_full':
 
 					$list = array_merge( $list, [] );
 
@@ -466,10 +559,14 @@ trait BulkExports
 			switch ( $type ) {
 
 				case 'simple':
+				case 'paired_simple':
+				case 'posttype_simple':
 
 					break;
 
 				case 'advanced':
+				case 'paired_advanced':
+				case 'posttype_advanced':
 
 					$list = array_merge( $list, [
 						'post_tag',
@@ -478,6 +575,8 @@ trait BulkExports
 					break;
 
 				case 'full':
+				case 'paired_full':
+				case 'posttype_full':
 
 					$list = array_merge( $list, get_object_taxonomies( $posttype ) );
 
@@ -505,16 +604,22 @@ trait BulkExports
 			switch ( $type ) {
 
 				case 'simple':
+				case 'paired_simple':
+				case 'posttype_simple':
 
 					break;
 
 				case 'advanced':
+				case 'paired_advanced':
+				case 'posttype_advanced':
 
 					$list = array_merge( $list, [] );
 
 					break;
 
 				case 'full':
+				case 'paired_full':
+				case 'posttype_full':
 
 					$list = array_merge( $list, [] );
 
