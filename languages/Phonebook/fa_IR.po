@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Phonebook\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-07-11 19:57+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/Phonebook\n"
+"X-Domain: geditorial-phonebook\n"
+
+#: Phonebook.php:54
+msgctxt "Setting Description"
+msgid "Roles that can view contact information."
+msgstr ""
+
+#: Phonebook.php:55
+msgctxt "Setting Description"
+msgid "Roles that can assign contact information."
+msgstr ""
+
+#: Phonebook.php:84
+msgctxt "Field Label"
+msgid "Fullname"
+msgstr "نام کامل"
+
+#: Phonebook.php:85
+msgctxt "Field Label"
+msgid "Relation"
+msgstr "نسبت"
+
+#: Phonebook.php:86
+msgctxt "Field Label"
+msgid "Identity"
+msgstr "کد ملی"
+
+#: Phonebook.php:87
+msgctxt "Field Label"
+msgid "Contact"
+msgstr "تماس"
+
+#: Phonebook.php:88
+msgctxt "Field Label"
+msgid "Type"
+msgstr "نوع"
+
+#: Phonebook.php:89
+msgctxt "Field Label"
+msgid "Status"
+msgstr "وضعیت"
+
+#: Phonebook.php:90
+msgctxt "Field Label"
+msgid "Address"
+msgstr "نشانی"
+
+#: Phonebook.php:91
+msgctxt "Field Label"
+msgid "Description"
+msgstr "توضیحات"
+
+#: Phonebook.php:105
+msgctxt "MetaBox Title"
+msgid "Contacts"
+msgstr "تماس‌ها"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Phonebook.php:109
+msgctxt "Button Title"
+msgid "Contacts of %1$s"
+msgstr "تماس‌های %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Phonebook.php:111
+msgctxt "Button Text"
+msgid "%1$s Manage the Contacts of %2$s"
+msgstr "%1$s مدیریت تماس‌های %2$s"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Phonebook.php:114
+msgctxt "Action Title"
+msgid "Contacts of %1$s"
+msgstr "تماس‌های %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Phonebook.php:116
+msgctxt "Action Text"
+msgid "Contacts"
+msgstr "تماس‌ها"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Phonebook.php:119
+msgctxt "Row Title"
+msgid "Contacts of %1$s"
+msgstr "تماس‌های %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Phonebook.php:121
+msgctxt "Row Text"
+msgid "Contacts"
+msgstr "تماس‌ها"
+
+#: Phonebook.php:133
+msgctxt "Field Title"
+msgid "Emergency Contact"
+msgstr "شماره اضطراری"
+
+#: Phonebook.php:134
+msgctxt "Field Description"
+msgid "Mobile Contact Number of the Person Who Will Be Contacted on Emergency"
+msgstr "شماره همراه اضطراری شخصی که در صورت نیاز با او تماس گرفته شود"
+
+#: Phonebook.php:139
+msgctxt "Field Title"
+msgid "Emergency Person"
+msgstr "شخص اضطراری"
+
+#: Phonebook.php:140
+msgctxt "Field Description"
+msgid "Full Name of the Person Who Will Be Contacted on Emergency"
+msgstr "نام کامل شخصی که در صورت نیاز با او تماس گرفته شود"
+
+#: Phonebook.php:145
+msgctxt "Field Title"
+msgid "Emergency Address"
+msgstr "نشانی اضطراری"
+
+#: Phonebook.php:146
+msgctxt "Field Description"
+msgid "Full address to Be reached on Emergency"
+msgstr "نشانی کامل محلی که در صورت نیاز به آن مراجعه شود"
+
+#. translators: %s: post title
+#: Phonebook.php:315
+msgctxt "Page Title"
+msgid "Contact Grid for %s"
+msgstr "جدول تماس‌ها برای %s"
+
+#. translators: %s: post title
+#: Phonebook.php:327
+msgctxt "Page Title"
+msgid "Contacts Overview for %s"
+msgstr "بررسی تماس‌های %s"
+
+#: Phonebook.php:358
+msgctxt "Default Term: Audit"
+msgid "Empty Contact Data"
+msgstr "اطلاعات تماس خالی"
+
+#~ msgid "%s Entry"
+#~ msgid_plural "%s Entries"
+#~ msgstr[0] "%s تماس"
+#~ msgstr[1] "%s تماس"
+
+#~ msgctxt "Javascript String"
+#~ msgid "Actions"
+#~ msgstr "کنش‌ها"
+
+#~ msgctxt "Javascript String"
+#~ msgid "Information"
+#~ msgstr "اطلاعات"
+
+#~ msgctxt "Javascript String"
+#~ msgid "Insert"
+#~ msgstr "درج"
+
+#~ msgctxt "Javascript String"
+#~ msgid "Edit"
+#~ msgstr "ویرایش"
+
+#~ msgctxt "Javascript String"
+#~ msgid "Remove"
+#~ msgstr "حذف"
+
+#~ msgctxt "Javascript String"
+#~ msgid "Loading"
+#~ msgstr "در حال بارگذاری"
+
+#~ msgctxt "Rest"
+#~ msgid "The id of the parent post."
+#~ msgstr "شناسه برای فرسته مادر."
+
+#~ msgctxt "Title"
+#~ msgid "Contacts"
+#~ msgstr "تماس‌ها"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Reports Roles"
+#~ msgstr "نقش‌های بررسی گزارشات"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Assign Roles"
+#~ msgstr "نقش‌های مأمور واگذاری"
+
+#~ msgctxt "Message"
+#~ msgid "There are no posts available!"
+#~ msgstr "هیچ فرسته‌ای در دسترس نیست!"
+
+#~ msgctxt "Action"
+#~ msgid "Contacts"
+#~ msgstr "تماس‌ها"
