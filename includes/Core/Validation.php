@@ -204,7 +204,7 @@ class Validation extends Base
     }
 
 	// @REF https://www.webhostingtalk.ir/showthread.php?t=202847
-	public static function isIranCardNumber( $input = '', $iranian = TRUE )
+	public static function isIranCardNumber( $input, $iranian = TRUE )
 	{
 		$input  = (string) preg_replace( '/\D/','',$input );
 		$strlen = strlen( $input );
@@ -231,5 +231,37 @@ class Validation extends Base
 		}
 
 		return array_sum( $res ) % 10 == 0;
+	}
+
+	public static function sanitizeVIN( $input )
+	{
+		$sanitized = Number::translate( Text::trim( $input ) );
+		$sanitized = strtoupper( str_replace( ' ', '', $sanitized ) );
+
+		if ( ! self::isVIN( $sanitized ) )
+			return '';
+
+		return $sanitized;
+	}
+
+	public static function isVIN( $input )
+	{
+		if ( self::empty( $input ) )
+			return FALSE;
+
+		$input = strtoupper( str_replace( ' ', '', $input ) );
+
+		if ( 17 !== strlen( $input ) )
+			return FALSE;
+
+		if ( ! preg_match( '/^[a-zA-Z0-9]{9}[a-zA-Z0-9-]{2}[0-9]{6}$/', $input ) )
+			return FALSE;
+
+		return TRUE;
+	}
+
+	public static function getVINHTMLPattern()
+	{
+		return FALSE; // FIXME!
 	}
 }

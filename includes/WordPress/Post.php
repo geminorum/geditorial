@@ -214,6 +214,7 @@ class Post extends Core\Base
 			'_type'       => $post->post_type,
 			'type'        => PostType::object( $post )->label,
 			'viewable'    => PostType::viewable( $post->post_type ),
+			'author'      => User::getTitleRow( $post->post_author ),
 			'title'       => self::fullTitle( $post ),
 			'link'        => self::overview( $post, $context ),
 			'image'       => self::image( $post, $context ),

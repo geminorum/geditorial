@@ -28,7 +28,7 @@ class Phone extends Base
 	// TODO: strip prefix: `tel:+98912000000`
 	public static function sanitize( $input )
 	{
-		$sanitized = Number::intval( trim( $input ), FALSE );
+		$sanitized = Number::translate( Text::trim( $input ) );
 
 		if ( ! self::is( $sanitized ) )
 			return '';
@@ -45,8 +45,15 @@ class Phone extends Base
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
 
+			$province_prefix = self::const( 'GCORE_DEFAULT_PROVINCE_PHONE', '21' );
+			$province_length = strlen( $province_prefix );
+
+			// 10 digits and starts with province prefix
+			if ( preg_match( "/^$province_prefix\d{".( 10 - $province_length )."}$/", $sanitized ) )
+				$sanitized = sprintf( '+98%s', $sanitized );
+
 			// 10 digits and starts with `9`
-			if ( preg_match( '/^9\d{9}$/', $sanitized ) )
+			else if ( preg_match( '/^9\d{9}$/', $sanitized ) )
 				$sanitized = sprintf( '+98%s', $sanitized );
 
 			// 11 digits and starts with `09`
@@ -59,7 +66,7 @@ class Phone extends Base
 
 			// 8 digits and starts with non `0`
 			else if ( preg_match( '/^[1-9]{1}\d{7}$/', $sanitized ) )
-				$sanitized = sprintf( '+98%s%s', self::const( 'GCORE_DEFAULT_PROVINCE_PHONE', '21' ), $sanitized );
+				$sanitized = sprintf( '+98%s%s', $province_prefix, $sanitized );
 
 			// NOTE: invalidate likes of `+982530000000`, `+982100000000`
 			if ( 13 === strlen( $sanitized ) && '0000000' === substr( $sanitized, -7 ) )
@@ -79,7 +86,7 @@ class Phone extends Base
 	 */
 	public static function prep( $value, $field = [], $context = 'display' )
 	{
-		if ( empty( $value ) )
+		if ( self::empty( $value ) )
 			return '';
 
 		$raw   = $value;
@@ -126,14 +133,14 @@ class Phone extends Base
 	 */
 	public static function clickable( $text )
 	{
-		$number = trim( preg_replace( '/[^\d|\+]/', '', $text ) );
+		$number = Text::trim( preg_replace( '/[^\d|\+]/', '', $text ) );
 
 		return $number ? '<a href="tel:'.esc_attr( $number ).'">'.esc_html( $text ).'</a>' : '';
 	}
 
 	public static function prepMobileForUsername( $text )
 	{
-		if ( ! ( $text = trim( $text ) ) )
+		if ( ! ( $text = Text::trim( $text ) ) )
 			return '';
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
