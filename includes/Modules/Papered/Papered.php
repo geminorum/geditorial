@@ -492,10 +492,10 @@ class Papered extends gEditorial\Module
 		$taxonomy = $this->constant( 'flag_taxonomy' );
 
 		if ( has_term( 'needs-barcode', $taxonomy, $profile ) )
-			$this->printpage__enqueue_barcode_scripts();
+			Scripts::enqueueJSBarcode();
 
 		if ( has_term( 'needs-qrcode', $taxonomy, $profile ) )
-			$this->printpage__enqueue_qrcode_scripts();
+			Scripts::enqueueQRCodeSVG();
 	}
 
 	public function printpage_render_head( $profile = FALSE )

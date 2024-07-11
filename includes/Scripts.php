@@ -308,6 +308,46 @@ class Scripts extends WordPress\Main
 			: self::registerPackage( 'listjs', 'list.js/list', [], $ver );
 	}
 
+	public static function markupJSBarcode( $data, $atts = [] )
+	{
+		$args = self::atts( [
+			'format'     => 'CODE128',
+			'display'    => FALSE,
+			'width'      => 2,
+			'height'     => 20,
+			'margin'     => 5,
+			'background' => '#fff',
+			'textmargin' => 0,
+		], $atts );
+
+		return Core\HTML::tag( 'svg', [
+			'class'                  => 'do-jsbarcode',
+			'value'                  => $data,
+			'jsbarcode-format'       => $args['format'],
+			'jsbarcode-width'        => $args['width'],
+			'jsbarcode-height'       => $args['height'],
+			'jsbarcode-margin'       => $args['margin'],
+			'jsbarcode-background'   => $args['background'],
+			'jsbarcode-textmargin'   => $args['textmargin'],
+			'jsbarcode-displayValue' => $args['display'] ? 'true' : 'false',
+		], NULL );
+	}
+
+	public static function enqueueJSBarcode()
+	{
+		static $enqueued = FALSE;
+
+		if ( $enqueued )
+			return $enqueued;
+
+		return $enqueued = self::inlineScript( static::BASE.'-jsbarcode',
+			'JsBarcode(".do-jsbarcode").init();',
+			[
+				self::pkgJSBarcode( FALSE, 'all' ),
+			]
+		);
+	}
+
 	/**
 	 * Registers or Enqueues the JsBarcode package.
 	 * @ref https://github.com/lindell/JsBarcode
@@ -334,6 +374,54 @@ class Scripts extends WordPress\Main
 		return $enqueue
 			? self::enqueuePackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $ver )
 			: self::registerPackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $ver );
+	}
+
+	/**
+	 * Generates markup to use with QRcodeSVG script.
+	 * @source https://github.com/papnkukn/qrcode-svg
+	 *
+	 * @param  string $data
+	 * @param  array  $atts
+	 * @return string $markup
+	 */
+	public static function markupQRCodeSVG( $data, $atts = [] )
+	{
+		$args = self::atts( [
+			'padding'    => 4,
+			'width'      => 256,
+			'height'     => 256,
+			'ecl'        => 'M',         // error correction level: L, M, H, Q
+			'color'      => '#000000',
+			'background' => '#ffffff',
+		], $atts );
+
+		return Core\HTML::tag( 'div', [
+			'class'           => 'do-qrcodesvg',
+			'data-code'       => $data,
+			'data-padding'    => $args['padding'],
+			'data-width'      => $args['width'],
+			'data-height'     => $args['height'],
+			'data-ecl'        => $args['ecl'],
+			'data-color'      => $args['color'],
+			'data-background' => $args['background'],
+		], NULL );
+	}
+
+	// TODO: apply all options from data attrs
+	public static function enqueueQRCodeSVG()
+	{
+		static $enqueued = FALSE;
+
+		if ( $enqueued )
+			return $enqueued;
+
+		return $enqueued = self::inlineScript( static::BASE.'-qrcodesvg',
+			'jQuery(".do-qrcodesvg").each(function(i,obj){const qrcode=new QRCode({content:jQuery(this).data("code"),container:"svg-viewbox",join:true});const svg=qrcode.svg();jQuery(this).html(svg);});',
+			[
+				'jquery',
+				self::pkgQRCodeSVG(),
+			]
+		);
 	}
 
 	/**

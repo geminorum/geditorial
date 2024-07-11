@@ -176,35 +176,6 @@ trait PrintPage
 		echo '<script>function '.$func.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
 	}
 
-	protected function printpage__enqueue_barcode_scripts()
-	{
-		$handle = $this->classs( 'barcode' );
-
-		Scripts::inlineScript( $handle,
-			'JsBarcode(".barcode").init();',
-			[
-				Scripts::pkgJSBarcode( FALSE, 'all' ),
-			]
-		);
-
-		return $handle;
-	}
-
-	protected function printpage__enqueue_qrcode_scripts()
-	{
-		$handle = $this->classs( 'qrcode' );
-
-		Scripts::inlineScript( $handle,
-			'jQuery(".qrcode").each(function(i,obj){const qrcode=new QRCode({content:jQuery(this).data("code"),container:"svg-viewbox",join:true});const svg=qrcode.svg();jQuery(this).html(svg);});',
-			[
-				'jquery',
-				Scripts::pkgQRCodeSVG(),
-			]
-		);
-
-		return $handle;
-	}
-
 	protected function printpage_link_bootstrap_5()
 	{
 		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
