@@ -904,4 +904,45 @@ trait PairedCore
 
 		return $single ? reset( $posts ) : $posts;
 	}
+
+	// NOTE: currentry support: `Personage` module only
+	protected function pairedcore__hook_append_identifier_code( $fieldkey, $optionkey = NULL )
+	{
+		if ( ! is_admin() )
+			return FALSE;
+
+		if ( ! $this->get_setting( $optionkey ?? 'append_identifier_code' ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'personage', 'make_human_title' ),
+			function ( $fullname, $context, $post, $names, $fallback, $checks ) use ( $fieldkey ) {
+
+				if ( empty( $fullname ) || 'display' !== $context )
+					return $fullname;
+
+				if ( ! $this->posttype_supported( $post->post_type ) )
+					return $fullname;
+
+				if ( ! $constants = $this->paired_get_constants() )
+					return $fullname;
+
+				if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+					return $fullname;
+
+				$metakey = Services\PostTypeFields::getPostMetaKey( $fieldkey  );
+
+				foreach ( $items as $post_id ) {
+
+					if ( ! $code = get_post_meta( (int) $post_id, $metakey, TRUE ) )
+						continue;
+
+					// TODO: maybe `prepIdentifier()`
+					$fullname.= ' ['.apply_filters( 'string_format_i18n', $code ).']';
+				}
+
+				return $fullname;
+			}, 20, 6 );
+
+		return TRUE;
+	}
 }

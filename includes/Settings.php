@@ -1231,6 +1231,15 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_append_identifier_code( $description = NULL )
+	{
+		return [
+			'field'       => 'append_identifier_code',
+			'title'       => _x( 'Append Identifier', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Appends the identifier code field data to each item supported title.', 'Settings: Setting Description', 'geditorial-admin' ),
+		];
+	}
+
 	public static function getSetting_printpage_enqueue_librefonts( $description = NULL )
 	{
 		return [

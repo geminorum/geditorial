@@ -106,6 +106,7 @@ class Listed extends gEditorial\Module
 				'contents_viewable',
 			],
 			'_reports' => [
+				'append_identifier_code',
 				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
 			],
 		];
@@ -300,6 +301,8 @@ class Listed extends gEditorial\Module
 
 		$this->filter( 'pairedimports_import_types', 4, 20, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
+
+		$this->pairedcore__hook_append_identifier_code( 'listing_code' );
 	}
 
 	public function init()

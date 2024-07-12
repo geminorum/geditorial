@@ -107,6 +107,7 @@ class Organization extends gEditorial\Module
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
 			'_reports' => [
+				'append_identifier_code',
 				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
 			],
 		];
@@ -279,6 +280,8 @@ class Organization extends gEditorial\Module
 
 		$this->filter( 'pairedimports_import_types', 4, 20, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
+
+		$this->pairedcore__hook_append_identifier_code( 'organization_code' );
 	}
 
 	public function importer_init()
