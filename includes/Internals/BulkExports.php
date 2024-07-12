@@ -284,6 +284,9 @@ trait BulkExports
 
 			case 'paired':
 
+				if ( ! $this->_paired || ! method_exists( $this, 'paired_get_constants' ) )
+					break;
+
 				if ( ! $constants = $this->paired_get_constants() )
 					break;
 

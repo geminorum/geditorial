@@ -100,10 +100,10 @@ trait PairedReports
 
 	public function paired_reports_after_overview_table( $columns, $data, $args )
 	{
-		if ( ! $this->role_can( 'exports' ) )
+		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
 			return;
 
-		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
+		if ( ! $this->role_can( 'exports', NULL, TRUE ) )
 			return;
 
 		echo Core\HTML::wrap(

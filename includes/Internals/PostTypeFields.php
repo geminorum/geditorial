@@ -1017,4 +1017,34 @@ trait PostTypeFields
 
 		return $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getPiped( $strings ) );
 	}
+
+	public function posttypefields_import_raw_data_action( $post, $data, $override, $check_access, $module )
+	{
+		if ( empty( $data ) || $module !== $this->key )
+			return;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return;
+
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		if ( ! count( $fields ) )
+			return;
+
+		$user_id = get_current_user_id();
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( ! array_key_exists( $field, $data ) )
+				continue;
+
+			if ( $check_access && ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
+				continue;
+
+			$this->posttypefields_do_import_field( $data[$field], $args, $post, $override );
+		}
+	}
 }

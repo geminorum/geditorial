@@ -12,7 +12,7 @@ class Individuals extends WordPress\Main
 
 	public static function setup()
 	{
-		if ( ! is_admin() )
+		if ( is_admin() )
 			return;
 
 		add_filter( static::BASE.'_prep_individual', [ __CLASS__, 'filter_prep_individual_front' ], 5, 3 );
