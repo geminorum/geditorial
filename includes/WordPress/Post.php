@@ -99,6 +99,13 @@ class Post extends Core\Base
 		if ( '-9999' == $post->ID )
 			return $fallback;
 
+		/**
+		 * The post-type is not registered, so it may not be reliable
+		 * to check the capability against an unregistered post-type.
+		 */
+		if ( ! PostType::exists( $post ) )
+			return $fallback;
+
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
 

@@ -9,29 +9,30 @@ class Taxonomy extends Core\Base
 
 	const TARGET_TAXONOMIES_PROP = 'target_taxonomies';
 
-	public static function object( $taxonomy )
+	public static function object( $taxonomy_or_term )
 	{
-		if ( ! $taxonomy )
-			return $taxonomy;
+		if ( ! $taxonomy_or_term )
+			return FALSE;
 
-		return is_object( $taxonomy ) ? $taxonomy : get_taxonomy( $taxonomy );
+		if ( $taxonomy_or_term instanceof \WP_Term )
+			return get_taxonomy( $taxonomy_or_term->taxonomy );
+
+		if ( $taxonomy_or_term instanceof \WP_Taxonomy )
+			return $taxonomy_or_term;
+
+		return get_taxonomy( $taxonomy_or_term );
 	}
 
 	/**
-	 * Determines whether the taxonomy name exists.
+	 * Determines whether a taxonomy is registered.
 	 * @source: `taxonomy_exists()`
 	 *
-	 * @param  string $taxonomy
-	 * @return bool   $exists
+	 * @param  string|object $taxonomy_or_term
+	 * @return bool          $exists
 	 */
-	public static function exists( $taxonomy )
+	public static function exists( $taxonomy_or_term )
 	{
-		global $wp_taxonomies;
-
-		if ( empty( $taxonomy ) )
-			return FALSE;
-
-		return is_string( $taxonomy ) && isset( $wp_taxonomies[$taxonomy] );
+		return (bool) self::object( $taxonomy_or_term );
 	}
 
 	public static function viewable( $taxonomy )

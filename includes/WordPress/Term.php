@@ -84,6 +84,13 @@ class Term extends Core\Base
 		if ( ! $term = self::get( $term ) )
 			return $fallback;
 
+		/**
+		 * The taxonomy is not registered, so it may not be reliable
+		 * to check the capability against an unregistered taxonomy.
+		 */
+		if ( ! Taxonomy::exists( $term ) )
+			return $fallback;
+
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
 

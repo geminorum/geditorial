@@ -24,7 +24,7 @@ class PostType extends Core\Base
 	}
 
 	/**
-	 * Determines whether a post type is registered.
+	 * Determines whether a post-type is registered.
 	 * @source `post_type_exists()`
 	 *
 	 * @param  string|object $posttype_or_post

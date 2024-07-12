@@ -98,7 +98,7 @@ class Status extends Core\Base
 		];
 
 		return apply_filters( 'geditorial_status_acceptable',
-			array_diff_key( $statuses, (array) $excludes ),
+			array_diff( $statuses, (array) $excludes ),
 			(array) $posttypes,
 			$context,
 			$excludes

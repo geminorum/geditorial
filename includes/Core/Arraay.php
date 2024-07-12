@@ -245,7 +245,7 @@ class Arraay extends Base
 	public static function keepByKeys( $array, $keys )
 	{
 		if ( empty( $array ) || empty( $keys ) )
-			return $array;
+			return [];
 
 		return array_intersect_key( $array, array_flip( $keys ) );
 	}
@@ -253,7 +253,7 @@ class Arraay extends Base
 	public static function keepByValue( $array, $values )
 	{
 		if ( empty( $array ) || empty( $values ) )
-			return $array;
+			return [];
 
 		return array_intersect( $array, $values );
 	}
