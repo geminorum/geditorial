@@ -350,6 +350,13 @@ trait PostTypeFields
 
 			break;
 
+			case 'people':
+
+				$sanitized = Core\Text::trim( Helper::kses( $data, 'none' ) );
+				$sanitized = WordPress\Strings::getPiped( Helper::getSeparated( $sanitized ) );
+
+				break;
+
 			case 'embed':
 			case 'text_source':
 			case 'audio_source':

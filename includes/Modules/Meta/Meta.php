@@ -682,6 +682,7 @@ class Meta extends gEditorial\Module
 				case 'code':
 				case 'postcode':
 				case 'venue':
+				case 'people':
 				case 'contact':
 				case 'mobile':
 				case 'phone':
@@ -1238,6 +1239,16 @@ class Meta extends gEditorial\Module
 		}
 
 		switch ( $field_args['type'] ) {
+
+			case 'people':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				if ( 'print' === $context )
+					return WordPress\Strings::getJoined( Helper::getSeparated( $raw ?: $meta ) );
+
+				return Helper::prepPeople( $raw ?: $meta );
 
 			case 'identity':
 

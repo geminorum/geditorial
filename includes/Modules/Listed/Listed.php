@@ -255,6 +255,7 @@ class Listed extends gEditorial\Module
 				'featured_people' => [
 					'title'       => _x( 'Notaries', 'Field Title', 'geditorial-listed' ),
 					'description' => _x( 'People Who is the Notary of This Listing', 'Field Description', 'geditorial-listed' ),
+					'type'        => 'people',
 					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 					'order'       => 90,

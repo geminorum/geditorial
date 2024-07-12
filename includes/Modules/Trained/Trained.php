@@ -255,6 +255,7 @@ class Trained extends gEditorial\Module
 				'featured_people' => [
 					'title'       => _x( 'Instructors', 'Field Title', 'geditorial-trained' ),
 					'description' => _x( 'People Who Participate as Instructors in This Training Course', 'Field Description', 'geditorial-trained' ),
+					'type'        => 'people',
 					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 					'order'       => 90,

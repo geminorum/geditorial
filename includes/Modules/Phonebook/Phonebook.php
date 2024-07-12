@@ -136,7 +136,8 @@ class Phonebook extends gEditorial\Module
 					'emergency_person' => [
 						'title'       => _x( 'Emergency Person', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Full Name of the Person Who Will Be Contacted on Emergency', 'Field Description', 'geditorial-phonebook' ),
-						// 'type'        => 'person', // FIXME: support the field-type
+						'type'        => 'people',
+						'icon'        => 'groups',
 						'order'       => 700,
 					],
 					'emergency_address' => [

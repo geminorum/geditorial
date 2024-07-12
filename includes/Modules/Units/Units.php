@@ -317,6 +317,7 @@ class Units extends gEditorial\Module
 				case 'code':
 				case 'postcode':
 				case 'venue':
+				case 'people':
 				case 'contact':
 				case 'mobile':
 				case 'phone':

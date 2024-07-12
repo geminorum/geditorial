@@ -418,6 +418,9 @@ class Personage extends gEditorial\Module
 
 		$this->add_posttype_support( $this->constant( 'primary_posttype' ), 'date', FALSE );
 		$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
+
+		if ( is_admin() )
+			$this->filter( 'prep_individual', 3, 8, 'admin', $this->base );
 	}
 
 	public function meta_init()
@@ -600,6 +603,14 @@ class Personage extends gEditorial\Module
 			$this->constant( 'term_empty_identity_number' ) => _x( 'Empty Identity Number', 'Default Term: Audit', 'geditorial-personage' ),
 			$this->constant( 'term_empty_mobile_number' )   => _x( 'Empty Mobile Number', 'Default Term: Audit', 'geditorial-personage' ),
 		] ) : $terms;
+	}
+
+	public function prep_individual_admin( $individual, $raw, $value )
+	{
+		if ( $link = Core\WordPress::getAdminSearchLink( $individual, $this->constant( 'primary_posttype' ) ) )
+			return Core\HTML::link( $individual, $link, TRUE );
+
+		return $individual;
 	}
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )

@@ -248,6 +248,7 @@ class Missioned extends gEditorial\Module
 				'featured_people' => [
 					'title'       => _x( 'Officers', 'Field Title', 'geditorial-missioned' ),
 					'description' => _x( 'People Who Participate as Officers in This Mission', 'Field Description', 'geditorial-missioned' ),
+					'type'        => 'people',
 					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 					'order'       => 90,

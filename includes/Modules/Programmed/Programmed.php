@@ -248,6 +248,7 @@ class Programmed extends gEditorial\Module
 				'featured_people' => [
 					'title'       => _x( 'Organizers', 'Field Title', 'geditorial-programmed' ),
 					'description' => _x( 'People Who Participate as Organizers in This Program', 'Field Description', 'geditorial-programmed' ),
+					'type'        => 'people',
 					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 					'order'       => 90,

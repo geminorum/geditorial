@@ -111,6 +111,7 @@ class Plugin
 		Services\AdvancedQueries::setup();
 		Services\Barcodes::setup();
 		Services\Calendars::setup();
+		Services\Individuals::setup();
 		Services\LateChores::setup();
 		Services\LineDiscovery::setup();
 		Services\ObjectToObject::setup();

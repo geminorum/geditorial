@@ -236,6 +236,20 @@ class Helper extends WordPress\Main
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}
 
+	public static function prepPeople( $value, $empty = '', $separator = NULL )
+	{
+		if ( self::empty( $value ) )
+			return $empty;
+
+		$list = [];
+
+		foreach ( Helper::getSeparated( $value ) as $individual )
+			if ( $prepared = apply_filters( static::BASE.'_prep_individual', $individual, $individual, $value ) )
+				$list[] = $prepared;
+
+		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
+	}
+
 	// TODO: support: `dob`,`date`,`datetime`
 	public static function prepMetaRow( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
@@ -289,6 +303,9 @@ class Helper extends WordPress\Main
 
 			// NOTE: second priority: field type
 			switch ( $field['type'] ) {
+
+				case 'people':
+					return self::prepPeople( $raw ?: $value );
 
 				case 'member':
 				case 'person':
