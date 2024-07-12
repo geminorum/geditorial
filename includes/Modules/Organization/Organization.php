@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
@@ -26,6 +27,7 @@ class Organization extends gEditorial\Module
 	use Internals\PairedFront;
 	use Internals\PairedImports;
 	use Internals\PairedMetaBox;
+	use Internals\PairedReports;
 	use Internals\PairedRest;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
@@ -52,7 +54,8 @@ class Organization extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles = $this->get_settings_default_roles();
+		$roles  = $this->get_settings_default_roles();
+		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'primary_posttype' ), 'meta' );
 
 		return [
 			'_general' => [
@@ -102,6 +105,9 @@ class Organization extends gEditorial\Module
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
+			],
+			'_reports' => [
+				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
 			],
 		];
 	}
@@ -675,7 +681,18 @@ class Organization extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		return $this->paired_imports_render_tablelist( $uri, $sub, NULL,
-			_x( 'Organization Imports', 'Header', 'geditorial-organization' ) );
+		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
+			return Info::renderNoImportsAvailable();
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

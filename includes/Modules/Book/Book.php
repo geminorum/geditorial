@@ -24,6 +24,7 @@ class Book extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedMetaBox;
+	use Internals\PairedReports;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostsToPosts;
@@ -55,6 +56,8 @@ class Book extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'publication_posttype' ), 'meta' );
+
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
@@ -100,6 +103,9 @@ class Book extends gEditorial\Module
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'publication_posttype', TRUE ),
+			],
+			'_reports' => [
+				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
 			],
 		];
 
@@ -1030,8 +1036,19 @@ class Book extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		return $this->paired_imports_render_tablelist( $uri, $sub, NULL,
-			_x( 'Publication Imports', 'Header', 'geditorial-book' ) );
+		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
+			return Info::renderNoImportsAvailable();
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687

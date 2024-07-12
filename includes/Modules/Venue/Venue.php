@@ -4,8 +4,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 
@@ -20,6 +22,7 @@ class Venue extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
+	use Internals\PairedReports;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
@@ -45,6 +48,8 @@ class Venue extends gEditorial\Module
 	// TODO: custom list title for each supported posttypes
 	protected function get_global_settings()
 	{
+		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'place_posttype' ), 'meta' );
+
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -101,6 +106,9 @@ class Venue extends gEditorial\Module
 					'thumbnail',
 					'editorial-roles',
 				] ),
+			],
+			'_reports' => [
+				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
 			],
 		];
 	}
@@ -418,7 +426,18 @@ class Venue extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		return $this->paired_imports_render_tablelist( $uri, $sub, NULL,
-			_x( 'Venue Imports', 'Header', 'geditorial-venue' ) );
+		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
+			return Info::renderNoImportsAvailable();
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

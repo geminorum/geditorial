@@ -301,11 +301,11 @@ trait PairedTools
 
 	protected function paired_imports_render_tablelist( $uri = '', $sub = NULL, $actions = NULL, $title = NULL )
 	{
-		if ( ! $this->_paired || ! $constants = $this->paired_get_constants() ) {
-			if ( $title ) echo Core\HTML::tag( 'h3', $title );
-			Core\HTML::desc( gEditorial()->na(), TRUE, '-empty' );
+		if ( ! $this->_paired )
 			return FALSE;
-		}
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
 
 		$columns = [
 			'_cb'  => 'term_id',
@@ -412,10 +412,17 @@ trait PairedTools
 
 		$pagination['before'][] = Tablelist::filterSearch();
 
+		if ( is_null( $title ) )
+			$title = sprintf(
+				/* translators: %s: posttype label */
+				_x( 'Overview of %s', 'Header', 'geditorial-admin' ),
+				$this->get_posttype_label( $constants[0], 'extended_label', 'name' )
+			);
+
 		$args = [
 			'navigation' => 'before',
 			'search'     => 'before',
-			'title'      => Core\HTML::tag( 'h3', $title ?: _x( 'Paired Terms Tools', 'Internal: PairedTools: Header', 'geditorial-admin' ) ),
+			'title'      => Core\HTML::tag( 'h3', $title ),
 			'empty'      => _x( 'There are no terms available!', 'Internal: PairedTools: Message', 'geditorial-admin' ),
 			'pagination' => $pagination,
 		];

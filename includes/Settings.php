@@ -1218,6 +1218,19 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_overview_fields( $description = NULL, $fields = NULL, $empty = NULL )
+	{
+		return [
+			'field'        => 'overview_fields',
+			'type'         => 'checkbox-panel',
+			'title'        => _x( 'Overview Fields', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
+			'default'      => [],
+			'values'       => $fields ?? [],
+			'string_empty' => $empty ?? _x( 'There are no fields available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+		];
+	}
+
 	public static function getSetting_printpage_enqueue_librefonts( $description = NULL )
 	{
 		return [

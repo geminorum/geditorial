@@ -4,8 +4,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -21,6 +23,7 @@ class Collect extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
+	use Internals\PairedReports;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
@@ -43,6 +46,8 @@ class Collect extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'collection_posttype' ), 'meta' );
+
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -84,6 +89,9 @@ class Collect extends gEditorial\Module
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'collection_posttype', TRUE ),
+			],
+			'_reports' => [
+				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
 			],
 		];
 	}
@@ -421,8 +429,19 @@ class Collect extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		return $this->paired_imports_render_tablelist( $uri, $sub, NULL,
-			_x( 'Collection Imports', 'Header', 'geditorial-collect' ) );
+		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
+			return Info::renderNoImportsAvailable();
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 
 	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )

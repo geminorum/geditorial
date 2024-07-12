@@ -4,9 +4,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -23,6 +25,7 @@ class Addendum extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
+	use Internals\PairedReports;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
@@ -47,6 +50,8 @@ class Addendum extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'primary_posttype' ), 'meta' );
+
 		return [
 			'_general' => [
 				'paired_force_parents',
@@ -98,6 +103,9 @@ class Addendum extends gEditorial\Module
 					'date-picker',
 					'editorial-roles'
 				] ),
+			],
+			'_reports' => [
+				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
 			],
 		];
 	}
@@ -491,7 +499,18 @@ class Addendum extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		return $this->paired_imports_render_tablelist( $uri, $sub, NULL,
-			_x( 'Appendage Imports', 'Header', 'geditorial-addendum' ) );
+		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
+			return Info::renderNoImportsAvailable();
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }
