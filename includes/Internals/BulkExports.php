@@ -257,7 +257,10 @@ trait BulkExports
 				if ( ! $posttype = WordPress\PostType::object( $reference ) )
 					break;
 
-				$posttypes =  [ $posttype->name ];
+				if ( ! WordPress\PostType::can( $posttype, 'read' ) )
+					break;
+
+				$posttypes = [ $posttype->name ];
 
 				$args = $this->filters( 'export_query_args', [
 					'posts_per_page' => -1,
@@ -282,6 +285,9 @@ trait BulkExports
 			case 'paired':
 
 				if ( ! $constants = $this->paired_get_constants() )
+					break;
+
+				if ( ! WordPress\PostType::can( $this->constant( $constants[0] ), 'read' ) )
 					break;
 
 				if ( ! $posttypes = $this->posttypes() )
