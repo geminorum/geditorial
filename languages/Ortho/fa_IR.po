@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Ortho\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-01 23:07+0330\n"
+"PO-Revision-Date: 2024-07-12 04:33+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,16 +11,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/Ortho\n"
 "X-Domain: geditorial-ortho\n"
 
-#: ModuleInfo.php:21
+#: ModuleInfo.php:20
 msgctxt "Help Tab Title"
 msgid "Virastar"
 msgstr "ویراستار"
 
-#: ModuleInfo.php:26
+#: ModuleInfo.php:25
 msgctxt "Help Tab Title"
 msgid "PersianTools"
 msgstr "ابزارهای ایرانی"
@@ -105,22 +105,22 @@ msgctxt "Header"
 msgid "Orthography Sandbox"
 msgstr ""
 
-#: Ortho.php:359
+#: Ortho.php:403
 msgctxt "Button"
 msgid "Cleanup Chars"
 msgstr "پالایش نویسه‌ها"
 
-#: Ortho.php:375
+#: Ortho.php:419
 msgctxt "Char Title"
 msgid "Arabic Yeh U+064A"
 msgstr ""
 
-#: Ortho.php:376
+#: Ortho.php:420
 msgctxt "Char Title"
 msgid "Arabic Kaf U+0643"
 msgstr ""
 
-#: Ortho.php:403
+#: Ortho.php:447
 msgctxt "Header"
 msgid "Overview of Post Orthography"
 msgstr ""

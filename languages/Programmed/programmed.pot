@@ -13,168 +13,163 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Programmed\n"
 "X-Domain: geditorial-programmed\n"
 
-#: Programmed.php:64
+#: Programmed.php:67
 msgctxt "Settings"
 msgid "Program Levels"
 msgstr ""
 
-#: Programmed.php:65
+#: Programmed.php:68
 msgctxt "Settings"
 msgid "Substitute taxonomy for the programs and supported post-types."
 msgstr ""
 
-#: Programmed.php:141
-#: Programmed.php:142
+#: Programmed.php:147
+#: Programmed.php:148
 msgid "Program"
 msgid_plural "Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:143
+#: Programmed.php:149
 msgid "Program Category"
 msgid_plural "Program Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:144
+#: Programmed.php:150
 msgid "Program Level"
 msgid_plural "Program Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:145
+#: Programmed.php:151
 msgid "Program Project"
 msgid_plural "Program Projects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:146
+#: Programmed.php:152
 msgid "Program Span"
 msgid_plural "Program Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:147
+#: Programmed.php:153
 msgid "Program Type"
 msgid_plural "Program Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:148
+#: Programmed.php:154
 msgid "Program Status"
 msgid_plural "Program Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:152
+#: Programmed.php:158
 msgctxt "Label: `menu_name`"
 msgid "Programs"
 msgstr ""
 
-#: Programmed.php:153
+#: Programmed.php:159
 msgctxt "Label: Featured Image"
 msgid "Program Poster"
 msgstr ""
 
-#: Programmed.php:154
+#: Programmed.php:160
 msgctxt "Label: MetaBox Title"
 msgid "The Program"
 msgstr ""
 
-#: Programmed.php:157
+#: Programmed.php:163
 msgctxt "Label: MetaBox Title"
 msgid "In This Program"
 msgstr ""
 
-#: Programmed.php:160
+#: Programmed.php:166
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Programmed.php:163
+#: Programmed.php:169
 msgctxt "Label: Menu Name"
 msgid "Projects"
 msgstr ""
 
-#: Programmed.php:166
+#: Programmed.php:172
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Programmed.php:169
+#: Programmed.php:175
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Programmed.php:172
+#: Programmed.php:178
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: item count
-#: Programmed.php:182
+#: Programmed.php:188
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Program Participants (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Programmed.php:184
+#: Programmed.php:190
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Program Participations (%s)"
 msgstr ""
 
-#: Programmed.php:185
+#: Programmed.php:191
 msgctxt "Misc: `column_icon_title`"
 msgid "Programs"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Programmed.php:190
+#: Programmed.php:196
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Programmed.php:201
+#: Programmed.php:207
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Programmed.php:202
+#: Programmed.php:208
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Programmed.php:243
+#: Programmed.php:249
 msgctxt "Field Title"
 msgid "Organizers"
 msgstr ""
 
-#: Programmed.php:244
+#: Programmed.php:250
 msgctxt "Field Description"
 msgid "People Who Participate as Organizers in This Program"
 msgstr ""
 
-#: Programmed.php:251
+#: Programmed.php:257
 msgctxt "Field Title"
 msgid "Program Code"
 msgstr ""
 
-#: Programmed.php:252
+#: Programmed.php:258
 msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr ""
 
-#: Programmed.php:570
+#: Programmed.php:576
 msgctxt "Header"
 msgid "Program Tools"
 msgstr ""
 
-#: Programmed.php:579
+#: Programmed.php:585
 msgctxt "Card"
 msgid "Program Date from Meta-data"
-msgstr ""
-
-#: Programmed.php:615
-msgctxt "Header"
-msgid "Program Imports"
 msgstr ""

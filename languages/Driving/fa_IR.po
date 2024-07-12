@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Driving\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-11 00:20+0330\n"
+"PO-Revision-Date: 2024-07-12 04:37+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -167,18 +167,18 @@ msgid "Vehicle Identification Number"
 msgstr "شماره شناسایی خودرو"
 
 #. translators: %s: post title
-#: Driving.php:332
+#: Driving.php:326
 msgctxt "Page Title"
 msgid "Vehicle Grid for %s"
 msgstr "شبکه خودرویی برای %s"
 
 #. translators: %s: post title
-#: Driving.php:344
+#: Driving.php:338
 msgctxt "Page Title"
 msgid "Vehicle Overview for %s"
 msgstr "نمای کلی خودرویی برای %s"
 
-#: Driving.php:375
+#: Driving.php:369
 msgctxt "Default Term: Audit"
 msgid "Empty Vehicle Data"
 msgstr "داده‌های خودرو خالی‌ست"

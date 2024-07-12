@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Dossier\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-02 18:59+0330\n"
+"PO-Revision-Date: 2024-07-12 04:37+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,106 +15,105 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Dossier\n"
 "X-Domain: geditorial-dossier\n"
 
-#: Dossier.php:57
+#: Dossier.php:59
 msgctxt "Settings"
 msgid "Dossier Sections"
 msgstr "بخش‌های پرونده"
 
-#: Dossier.php:58
+#: Dossier.php:60
 msgctxt "Settings"
 msgid "Section taxonomy for the dossiers and supported post-types."
 msgstr "رده‌بندی بخش‌ها را برای پرونده‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Dossier.php:74
+#: Dossier.php:76
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Dossier.php:75
+#: Dossier.php:77
 msgctxt "Settings"
 msgid "Redirects dossier archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی پرونده‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی بگذارید."
 
-#: Dossier.php:81
+#: Dossier.php:83
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr "بازگردانی دوره‌ها"
 
-#: Dossier.php:82
+#: Dossier.php:84
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی همه دوره‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌سازی خالی بگذارید."
 
-#: Dossier.php:130 Dossier.php:131
+#: Dossier.php:132 Dossier.php:133
 msgid "Dossier"
 msgid_plural "Dossiers"
 msgstr[0] "پرونده‌ها"
 msgstr[1] "پرونده"
 
-#: Dossier.php:132
+#: Dossier.php:134
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] "دوره‌ها"
 msgstr[1] "دوره"
 
-#: Dossier.php:133
+#: Dossier.php:135
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] "بخش‌ها"
 msgstr[1] "بخش"
 
-#: Dossier.php:137
+#: Dossier.php:139
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr "تصویر روی جلد"
 
-#: Dossier.php:146
+#: Dossier.php:148
 msgctxt "Misc: `column_icon_title`"
 msgid "Dossier"
 msgstr "پرونده‌ها"
 
-#: Dossier.php:151
+#: Dossier.php:153
 msgctxt "MetaBox Title"
 msgid "The Dossier"
 msgstr "پرونده"
 
-#: Dossier.php:174
+#: Dossier.php:176
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr "خط شماره"
 
-#: Dossier.php:175
+#: Dossier.php:177
 msgctxt "Field Description"
 msgid "The dossier number line"
 msgstr "خط شماره پرونده"
 
-#: Dossier.php:193
+#: Dossier.php:195
 msgctxt "Field Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Dossier.php:194
+#: Dossier.php:196
 msgctxt "Field Description"
 msgid "Post order in dossier list"
 msgstr "چینش فرسته در فهرست پرونده"
 
 #. translators: %s: order
-#: Dossier.php:381
+#: Dossier.php:383
 msgctxt "Display"
 msgid "Order in Dossier: %s"
 msgstr "چینش در پرونده: %s"
 
-#: Dossier.php:404
+#: Dossier.php:406
 msgctxt "Header"
 msgid "Dossiers Tools"
 msgstr "ابزارهای پرونده"
 
-#: Dossier.php:433
-msgctxt "Header"
-msgid "Dossiers Imports"
-msgstr "درون‌ریزی‌های پرونده"
+#~ msgctxt "Header"
+#~ msgid "Dossiers Imports"
+#~ msgstr "درون‌ریزی‌های پرونده"
 
 #~ msgctxt "MetaBox Title"
 #~ msgid "In This Dossier"

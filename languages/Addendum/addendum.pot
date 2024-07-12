@@ -13,119 +13,114 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Addendum\n"
 "X-Domain: geditorial-addendum\n"
 
-#: Addendum.php:56
+#: Addendum.php:60
 msgctxt "Settings"
 msgid "Appendage Necessities"
 msgstr ""
 
-#: Addendum.php:57
+#: Addendum.php:61
 msgctxt "Settings"
 msgid "Substitute taxonomy for the appendages and supported post-types."
 msgstr ""
 
-#: Addendum.php:76
+#: Addendum.php:80
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Addendum.php:77
+#: Addendum.php:81
 msgctxt "Settings"
 msgid "Redirects appendage archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Addendum.php:122
-#: Addendum.php:123
+#: Addendum.php:129
+#: Addendum.php:130
 msgid "Appendage"
 msgid_plural "Appendages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:124
+#: Addendum.php:131
 msgid "Appendage Category"
 msgid_plural "Appendage Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:125
+#: Addendum.php:132
 msgid "Appendage Necessity"
 msgid_plural "Appendage Necessities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:126
+#: Addendum.php:133
 msgid "Appendage Type"
 msgid_plural "Appendage Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:127
+#: Addendum.php:134
 msgid "Appendage Status"
 msgid_plural "Appendage Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:131
+#: Addendum.php:138
 msgctxt "Label: Featured Image"
 msgid "Appendage Cover"
 msgstr ""
 
-#: Addendum.php:132
+#: Addendum.php:139
 msgctxt "Label: MetaBox Title"
 msgid "The Appendage"
 msgstr ""
 
-#: Addendum.php:135
+#: Addendum.php:142
 msgctxt "Label: MetaBox Title"
 msgid "To This Appendage"
 msgstr ""
 
-#: Addendum.php:138
+#: Addendum.php:145
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Addendum.php:141
+#: Addendum.php:148
 msgctxt "Label: Menu Name"
 msgid "Necessities"
 msgstr ""
 
-#: Addendum.php:144
+#: Addendum.php:151
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Addendum.php:147
+#: Addendum.php:154
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Addendum.php:156
+#: Addendum.php:163
 msgctxt "Misc: `column_icon_title`"
 msgid "Appendage"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Addendum.php:161
+#: Addendum.php:168
 msgctxt "MetaBox: `listbox_title`"
 msgid "Posts with &ldquo;%1$s&rdquo; %2$s"
 msgstr ""
 
-#: Addendum.php:171
+#: Addendum.php:178
 msgctxt "Necessity Taxonomy: Default Term"
 msgid "Required"
 msgstr ""
 
-#: Addendum.php:172
+#: Addendum.php:179
 msgctxt "Necessity Taxonomy: Default Term"
 msgid "Mandatory"
 msgstr ""
 
-#: Addendum.php:466
+#: Addendum.php:473
 msgctxt "Header"
 msgid "Appendage Tools"
-msgstr ""
-
-#: Addendum.php:495
-msgctxt "Header"
-msgid "Appendage Imports"
 msgstr ""

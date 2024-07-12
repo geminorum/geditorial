@@ -569,70 +569,70 @@ msgctxt "Column Title"
 msgid "Author"
 msgstr ""
 
-#: Meta.php:769
+#: Meta.php:778
 msgctxt "Message"
 msgid "No Meta Fields"
 msgstr ""
 
-#: Meta.php:1496
+#: Meta.php:1533
 msgctxt "Header"
 msgid "Meta Imports"
 msgstr ""
 
-#: Meta.php:1502
+#: Meta.php:1539
 msgctxt "Header"
 msgid "Import Custom Fields"
 msgstr ""
 
-#: Meta.php:1553
+#: Meta.php:1590
 msgctxt "Button"
 msgid "Check"
 msgstr ""
 
-#: Meta.php:1556
+#: Meta.php:1593
 msgctxt "Button"
 msgid "Covert"
 msgstr ""
 
-#: Meta.php:1559
+#: Meta.php:1596
 msgctxt "Button"
 msgid "Delete"
 msgstr ""
 
-#: Meta.php:1561
+#: Meta.php:1598
 msgctxt "Message"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr ""
 
-#: Meta.php:1571
+#: Meta.php:1608
 msgctxt "Table Column"
 msgid "Type"
 msgstr ""
 
-#: Meta.php:1583
+#: Meta.php:1620
 msgctxt "Table Column"
 msgid "Title"
 msgstr ""
 
 #. translators: %s: title
-#: Meta.php:1589
+#: Meta.php:1626
 msgctxt "Table Column"
 msgid "Meta: %s"
 msgstr ""
 
-#: Meta.php:1594
+#: Meta.php:1631
 msgctxt "Table Empty"
 msgid "There are no meta-data available!"
 msgstr ""
 
 #. translators: %s: field title
-#: Meta.php:1751
+#: Meta.php:1789
 msgctxt "Import Field"
 msgid "Meta: %s"
 msgstr ""
 
 #. translators: %s: field title
-#: Meta.php:1753
+#: Meta.php:1791
 msgctxt "Import Field"
 msgid "Ignored: %s"
 msgstr ""

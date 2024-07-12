@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Phonebook\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-11 19:57+0330\n"
+"PO-Revision-Date: 2024-07-12 04:32+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,140 +15,140 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Phonebook\n"
 "X-Domain: geditorial-phonebook\n"
 
-#: Phonebook.php:54
+#: Phonebook.php:52
 msgctxt "Setting Description"
 msgid "Roles that can view contact information."
 msgstr ""
 
-#: Phonebook.php:55
+#: Phonebook.php:53
 msgctxt "Setting Description"
 msgid "Roles that can assign contact information."
 msgstr ""
 
-#: Phonebook.php:84
+#: Phonebook.php:82
 msgctxt "Field Label"
 msgid "Fullname"
 msgstr "نام کامل"
 
-#: Phonebook.php:85
+#: Phonebook.php:83
 msgctxt "Field Label"
 msgid "Relation"
 msgstr "نسبت"
 
-#: Phonebook.php:86
+#: Phonebook.php:84
 msgctxt "Field Label"
 msgid "Identity"
 msgstr "کد ملی"
 
-#: Phonebook.php:87
+#: Phonebook.php:85
 msgctxt "Field Label"
 msgid "Contact"
 msgstr "تماس"
 
-#: Phonebook.php:88
+#: Phonebook.php:86
 msgctxt "Field Label"
 msgid "Type"
 msgstr "نوع"
 
-#: Phonebook.php:89
+#: Phonebook.php:87
 msgctxt "Field Label"
 msgid "Status"
 msgstr "وضعیت"
 
-#: Phonebook.php:90
+#: Phonebook.php:88
 msgctxt "Field Label"
 msgid "Address"
 msgstr "نشانی"
 
-#: Phonebook.php:91
+#: Phonebook.php:89
 msgctxt "Field Label"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Phonebook.php:105
+#: Phonebook.php:103
 msgctxt "MetaBox Title"
 msgid "Contacts"
 msgstr "تماس‌ها"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Phonebook.php:109
+#: Phonebook.php:107
 msgctxt "Button Title"
 msgid "Contacts of %1$s"
 msgstr "تماس‌های %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Phonebook.php:111
+#: Phonebook.php:109
 msgctxt "Button Text"
 msgid "%1$s Manage the Contacts of %2$s"
 msgstr "%1$s مدیریت تماس‌های %2$s"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Phonebook.php:114
+#: Phonebook.php:112
 msgctxt "Action Title"
 msgid "Contacts of %1$s"
 msgstr "تماس‌های %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Phonebook.php:116
+#: Phonebook.php:114
 msgctxt "Action Text"
 msgid "Contacts"
 msgstr "تماس‌ها"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Phonebook.php:119
+#: Phonebook.php:117
 msgctxt "Row Title"
 msgid "Contacts of %1$s"
 msgstr "تماس‌های %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Phonebook.php:121
+#: Phonebook.php:119
 msgctxt "Row Text"
 msgid "Contacts"
 msgstr "تماس‌ها"
 
-#: Phonebook.php:133
+#: Phonebook.php:131
 msgctxt "Field Title"
 msgid "Emergency Contact"
 msgstr "شماره اضطراری"
 
-#: Phonebook.php:134
+#: Phonebook.php:132
 msgctxt "Field Description"
 msgid "Mobile Contact Number of the Person Who Will Be Contacted on Emergency"
 msgstr "شماره همراه اضطراری شخصی که در صورت نیاز با او تماس گرفته شود"
 
-#: Phonebook.php:139
+#: Phonebook.php:137
 msgctxt "Field Title"
 msgid "Emergency Person"
 msgstr "شخص اضطراری"
 
-#: Phonebook.php:140
+#: Phonebook.php:138
 msgctxt "Field Description"
 msgid "Full Name of the Person Who Will Be Contacted on Emergency"
 msgstr "نام کامل شخصی که در صورت نیاز با او تماس گرفته شود"
 
-#: Phonebook.php:145
+#: Phonebook.php:143
 msgctxt "Field Title"
 msgid "Emergency Address"
 msgstr "نشانی اضطراری"
 
-#: Phonebook.php:146
+#: Phonebook.php:144
 msgctxt "Field Description"
 msgid "Full address to Be reached on Emergency"
 msgstr "نشانی کامل محلی که در صورت نیاز به آن مراجعه شود"
 
 #. translators: %s: post title
-#: Phonebook.php:315
+#: Phonebook.php:313
 msgctxt "Page Title"
 msgid "Contact Grid for %s"
 msgstr "جدول تماس‌ها برای %s"
 
 #. translators: %s: post title
-#: Phonebook.php:327
+#: Phonebook.php:325
 msgctxt "Page Title"
 msgid "Contacts Overview for %s"
 msgstr "بررسی تماس‌های %s"
 
-#: Phonebook.php:358
+#: Phonebook.php:356
 msgctxt "Default Term: Audit"
 msgid "Empty Contact Data"
 msgstr "اطلاعات تماس خالی"

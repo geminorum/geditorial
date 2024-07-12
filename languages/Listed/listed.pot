@@ -13,188 +13,183 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Listed\n"
 "X-Domain: geditorial-listed\n"
 
-#: Listed.php:65
+#: Listed.php:67
 msgctxt "Settings"
 msgid "Listing Levels"
 msgstr ""
 
-#: Listed.php:66
+#: Listed.php:68
 msgctxt "Settings"
 msgid "Substitute taxonomy for the listings and supported post-types."
 msgstr ""
 
-#: Listed.php:142
-#: Listed.php:143
+#: Listed.php:144
+#: Listed.php:145
 msgid "Listing"
 msgid_plural "Listings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:144
+#: Listed.php:146
 msgid "Listing Category"
 msgid_plural "Listing Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:145
+#: Listed.php:147
 msgid "Listing Level"
 msgid_plural "Listing Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:146
+#: Listed.php:148
 msgid "Listing Program"
 msgid_plural "Listing Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:147
+#: Listed.php:149
 msgid "Listing Span"
 msgid_plural "Listing Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:148
+#: Listed.php:150
 msgid "Listing Type"
 msgid_plural "Listing Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:149
+#: Listed.php:151
 msgid "Listing Status"
 msgid_plural "Listing Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:153
+#: Listed.php:155
 msgctxt "Label: `menu_name`"
 msgid "Listings"
 msgstr ""
 
-#: Listed.php:154
+#: Listed.php:156
 msgctxt "Label: Featured Image"
 msgid "Listing Poster"
 msgstr ""
 
-#: Listed.php:155
+#: Listed.php:157
 msgctxt "Label: MetaBox Title"
 msgid "The Listings"
 msgstr ""
 
-#: Listed.php:158
+#: Listed.php:160
 msgctxt "Label: MetaBox Title"
 msgid "In This Listing"
 msgstr ""
 
-#: Listed.php:161
+#: Listed.php:163
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Listed.php:164
+#: Listed.php:166
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Listed.php:167
+#: Listed.php:169
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Listed.php:170
+#: Listed.php:172
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Listed.php:173
+#: Listed.php:175
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
 #. translators: %s: item count
-#: Listed.php:183
+#: Listed.php:185
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Listing Attendees (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Listed.php:185
+#: Listed.php:187
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Listings (%s)"
 msgstr ""
 
-#: Listed.php:186
+#: Listed.php:188
 msgctxt "Misc: `column_icon_title`"
 msgid "Listings"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Listed.php:191
+#: Listed.php:193
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Listed.php:201
+#: Listed.php:203
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr ""
 
-#: Listed.php:202
+#: Listed.php:204
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr ""
 
-#: Listed.php:203
+#: Listed.php:205
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr ""
 
-#: Listed.php:204
+#: Listed.php:206
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr ""
 
-#: Listed.php:208
+#: Listed.php:210
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Listed.php:209
+#: Listed.php:211
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Listed.php:250
+#: Listed.php:252
 msgctxt "Field Title"
 msgid "Notaries"
 msgstr ""
 
-#: Listed.php:251
+#: Listed.php:253
 msgctxt "Field Description"
 msgid "People Who is the Notary of This Listing"
 msgstr ""
 
-#: Listed.php:258
+#: Listed.php:260
 msgctxt "Field Title"
 msgid "Listing Code"
 msgstr ""
 
-#: Listed.php:259
+#: Listed.php:261
 msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr ""
 
-#: Listed.php:577
+#: Listed.php:579
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr ""
 
-#: Listed.php:586
+#: Listed.php:588
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
-msgstr ""
-
-#: Listed.php:622
-msgctxt "Header"
-msgid "Listing Imports"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Units\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-02 17:45+0330\n"
+"PO-Revision-Date: 2024-07-11 00:23+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -482,34 +482,32 @@ msgctxt "Column Title"
 msgid "Measurements"
 msgstr "ابعاد"
 
-#: Units.php:613
+#: Units.php:407
 msgctxt "Message"
 msgid "No Measurement Units"
 msgstr "بدون واحد اندازه‌گیری"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:870
+#: Units.php:633
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr "کفش %s"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:879
+#: Units.php:642
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr "پیراهن %s"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:888
+#: Units.php:651
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr "شلوار %s"
 
-#. translators: %s: field title
-#: Units.php:1019
-msgctxt "Import Field"
-msgid "Units: %s"
-msgstr "واحد: %s"
+#~ msgctxt "Import Field"
+#~ msgid "Units: %s"
+#~ msgstr "واحد: %s"
 
 #~ msgctxt "Noop"
 #~ msgid "%s Day"

@@ -31,382 +31,382 @@ msgctxt "Helper: Make Full-name: Display"
 msgid "%2$s, %1$s %3$s"
 msgstr ""
 
-#: Personage.php:96
+#: Personage.php:97
 msgctxt "Setting Title"
 msgid "Check Identity Number"
 msgstr ""
 
-#: Personage.php:97
+#: Personage.php:98
 msgctxt "Setting Description"
 msgid "Validates Identity Number prior to importing data."
 msgstr ""
 
-#: Personage.php:101
+#: Personage.php:102
 msgctxt "Setting Title"
 msgid "Fill Post Title"
 msgstr ""
 
-#: Personage.php:102
+#: Personage.php:103
 msgctxt "Setting Description"
 msgid "Tries to fill the post title with meta-data prior to importing data."
 msgstr ""
 
-#: Personage.php:136
+#: Personage.php:137
 msgid "Human"
 msgid_plural "Humans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Personage.php:137
+#: Personage.php:138
 msgid "Human Group"
 msgid_plural "Humans Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Personage.php:138
+#: Personage.php:139
 msgid "Job Title"
 msgid_plural "Job Titles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Personage.php:139
+#: Personage.php:140
 msgid "Human Status"
 msgid_plural "Human Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Personage.php:143
+#: Personage.php:144
 msgctxt "Label: Featured Image"
 msgid "Profile Picture"
 msgstr ""
 
-#: Personage.php:144
+#: Personage.php:145
 msgctxt "Label: MetaBox Title"
 msgid "Personage"
 msgstr ""
 
-#: Personage.php:145
+#: Personage.php:146
 msgctxt "Label: `excerpt_label`"
 msgid "Biography"
 msgstr ""
 
-#: Personage.php:148
+#: Personage.php:149
 msgctxt "Label: Menu Name"
 msgid "Groups"
 msgstr ""
 
-#: Personage.php:149
+#: Personage.php:150
 msgctxt "Label: Show Option All"
 msgid "Humans Groups"
 msgstr ""
 
-#: Personage.php:150
+#: Personage.php:151
 msgctxt "Label: Show Option No Terms"
 msgid "(Un-Grouped)"
 msgstr ""
 
-#: Personage.php:153
+#: Personage.php:154
 msgctxt "Label: Show Option All"
 msgid "Job Titles"
 msgstr ""
 
-#: Personage.php:154
-#: Personage.php:159
+#: Personage.php:155
+#: Personage.php:160
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Personage.php:157
+#: Personage.php:158
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Personage.php:158
+#: Personage.php:159
 msgctxt "Label: Show Option All"
 msgid "Statuses"
 msgstr ""
 
-#: Personage.php:164
+#: Personage.php:165
 msgctxt "Default Term: Name"
 msgid "[Ungrouped]"
 msgstr ""
 
-#: Personage.php:165
+#: Personage.php:166
 msgctxt "Default Term: Description"
 msgid "Ungrouped Humans"
 msgstr ""
 
-#: Personage.php:175
+#: Personage.php:176
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Human Status Summary"
 msgstr ""
 
-#: Personage.php:176
+#: Personage.php:177
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Human Status Summary"
 msgstr ""
 
-#: Personage.php:186
+#: Personage.php:187
 msgctxt "Default Term: `Status`"
 msgid "Active"
 msgstr ""
 
-#: Personage.php:187
+#: Personage.php:188
 msgctxt "Default Term: `Status`"
 msgid "Inactive"
 msgstr ""
 
-#: Personage.php:188
+#: Personage.php:189
 msgctxt "Default Term: `Status`"
 msgid "Deceased"
 msgstr ""
 
-#: Personage.php:189
+#: Personage.php:190
 msgctxt "Default Term: `Status`"
 msgid "Martyred"
 msgstr ""
 
-#: Personage.php:190
+#: Personage.php:191
 msgctxt "Default Term: `Status`"
 msgid "Expelled"
 msgstr ""
 
-#: Personage.php:191
+#: Personage.php:192
 msgctxt "Default Term: `Status`"
 msgid "Dismissed"
 msgstr ""
 
-#: Personage.php:192
+#: Personage.php:193
 msgctxt "Default Term: `Status`"
 msgid "Hushed"
 msgstr ""
 
-#: Personage.php:193
+#: Personage.php:194
 msgctxt "Default Term: `Status`"
 msgid "Concurrency"
 msgstr ""
 
-#: Personage.php:205
+#: Personage.php:206
 msgctxt "Field Title"
 msgid "First Name"
 msgstr ""
 
-#: Personage.php:206
+#: Personage.php:207
 msgctxt "Field Description"
 msgid "Given Name of the Person"
 msgstr ""
 
-#: Personage.php:212
+#: Personage.php:213
 msgctxt "Field Title"
 msgid "Middle Name"
 msgstr ""
 
-#: Personage.php:213
+#: Personage.php:214
 msgctxt "Field Description"
 msgid "Middle Name of the Person"
 msgstr ""
 
-#: Personage.php:217
+#: Personage.php:218
 msgctxt "Field Title"
 msgid "Last Name"
 msgstr ""
 
-#: Personage.php:218
+#: Personage.php:219
 msgctxt "Field Description"
 msgid "Family Name of the Person"
 msgstr ""
 
-#: Personage.php:224
+#: Personage.php:225
 msgctxt "Field Title"
 msgid "Full Name"
 msgstr ""
 
-#: Personage.php:225
+#: Personage.php:226
 msgctxt "Field Description"
 msgid "Full Name of the Person"
 msgstr ""
 
-#: Personage.php:231
+#: Personage.php:232
 msgctxt "Field Title"
 msgid "Pseudonym"
 msgstr ""
 
-#: Personage.php:232
+#: Personage.php:233
 msgctxt "Field Description"
 msgid "Alias Name of the Person"
 msgstr ""
 
-#: Personage.php:238
+#: Personage.php:239
 msgctxt "Field Title"
 msgid "Father Name"
 msgstr ""
 
-#: Personage.php:239
+#: Personage.php:240
 msgctxt "Field Description"
 msgid "Name of the Father of the Person"
 msgstr ""
 
-#: Personage.php:245
+#: Personage.php:246
 msgctxt "Field Title"
 msgid "Father Profile"
 msgstr ""
 
-#: Personage.php:246
+#: Personage.php:247
 msgctxt "Field Description"
 msgid "Profile of the Father of the Person"
 msgstr ""
 
-#: Personage.php:252
+#: Personage.php:253
 msgctxt "Field Title"
 msgid "Mother Name"
 msgstr ""
 
-#: Personage.php:253
+#: Personage.php:254
 msgctxt "Field Description"
 msgid "Name of the Mother of the Person"
 msgstr ""
 
-#: Personage.php:257
+#: Personage.php:258
 msgctxt "Field Title"
 msgid "Mother Profile"
 msgstr ""
 
-#: Personage.php:258
+#: Personage.php:259
 msgctxt "Field Description"
 msgid "Profile of the Mother of the Person"
 msgstr ""
 
-#: Personage.php:264
+#: Personage.php:265
 msgctxt "Field Title"
 msgid "Spouse Name"
 msgstr ""
 
-#: Personage.php:265
+#: Personage.php:266
 msgctxt "Field Description"
 msgid "Name of the Spouse of the Person"
 msgstr ""
 
-#: Personage.php:269
+#: Personage.php:270
 msgctxt "Field Title"
 msgid "Spouse Profile"
 msgstr ""
 
-#: Personage.php:270
+#: Personage.php:271
 msgctxt "Field Description"
 msgid "Profile of the Spouse of the Person"
 msgstr ""
 
-#: Personage.php:277
+#: Personage.php:278
 msgctxt "Field Description"
 msgid "Primary Mobile Contact Number of the Person"
 msgstr ""
 
-#: Personage.php:284
+#: Personage.php:285
 msgctxt "Field Title"
 msgid "Secondary Mobile"
 msgstr ""
 
-#: Personage.php:285
+#: Personage.php:286
 msgctxt "Field Description"
 msgid "Secondary Mobile Contact Number of the Person"
 msgstr ""
 
-#: Personage.php:291
+#: Personage.php:292
 msgctxt "Field Description"
 msgid "Primary Phone Contact Number of the Person"
 msgstr ""
 
-#: Personage.php:297
+#: Personage.php:298
 msgctxt "Field Title"
 msgid "Secondary Phone"
 msgstr ""
 
-#: Personage.php:298
+#: Personage.php:299
 msgctxt "Field Description"
 msgid "Secondary Phone Contact Number of the Person"
 msgstr ""
 
-#: Personage.php:303
+#: Personage.php:304
 msgctxt "Field Title"
 msgid "Identity Number"
 msgstr ""
 
-#: Personage.php:304
+#: Personage.php:305
 msgctxt "Field Description"
 msgid "Unique National Identity Number"
 msgstr ""
 
-#: Personage.php:310
+#: Personage.php:311
 msgctxt "Field Title"
 msgid "Passport Number"
 msgstr ""
 
-#: Personage.php:311
+#: Personage.php:312
 msgctxt "Field Description"
 msgid "Personagel Passport Number"
 msgstr ""
 
-#: Personage.php:318
+#: Personage.php:319
 msgctxt "Field Title"
 msgid "Date of Birth"
 msgstr ""
 
-#: Personage.php:319
+#: Personage.php:320
 msgctxt "Field Description"
 msgid "Birthday of the Person"
 msgstr ""
 
-#: Personage.php:328
+#: Personage.php:329
 msgctxt "Field Title"
 msgid "Place of Birth"
 msgstr ""
 
-#: Personage.php:329
+#: Personage.php:330
 msgctxt "Field Description"
 msgid "Place Where the Person was Born"
 msgstr ""
 
-#: Personage.php:338
+#: Personage.php:339
 msgctxt "Field Title"
 msgid "Home Address"
 msgstr ""
 
-#: Personage.php:339
+#: Personage.php:340
 msgctxt "Field Description"
 msgid "Full home address, including city, state etc."
 msgstr ""
 
-#: Personage.php:344
+#: Personage.php:345
 msgctxt "Field Title"
 msgid "Work Address"
 msgstr ""
 
-#: Personage.php:345
+#: Personage.php:346
 msgctxt "Field Description"
 msgid "Full work address, including city, state etc."
 msgstr ""
 
-#: Personage.php:598
+#: Personage.php:600
 msgctxt "Default Term: Audit"
 msgid "Empty Identity Number"
 msgstr ""
 
-#: Personage.php:599
+#: Personage.php:601
 msgctxt "Default Term: Audit"
 msgid "Empty Mobile Number"
 msgstr ""
 
-#: Personage.php:701
+#: Personage.php:703
 msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr ""
 
-#: Personage.php:1026
+#: Personage.php:1051
 msgctxt "Header"
 msgid "People Parser"
 msgstr ""
 
-#: Personage.php:1037
+#: Personage.php:1062
 msgctxt "Button"
 msgid "Parse Lines"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Identifier\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 18:53+0330\n"
+"PO-Revision-Date: 2024-07-12 04:36+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -173,32 +173,32 @@ msgctxt "Settings Description"
 msgid "Supports identifiers for the selected post-types."
 msgstr ""
 
-#: Identified.php:176
+#: Identified.php:177
 msgctxt "RestAPI: Arg Description"
 msgid "The identifier type to process."
 msgstr ""
 
-#: Identified.php:182
+#: Identified.php:183
 msgctxt "RestAPI: Arg Description"
 msgid "The identifier code to process."
 msgstr ""
 
-#: Identified.php:316
+#: Identified.php:328
 msgctxt "Possible Identifier Key"
 msgid "Identifier"
 msgstr "شناساگر"
 
-#: Identified.php:463
+#: Identified.php:497
 msgctxt "Default Term: Audit"
 msgid "Empty Identification"
 msgstr "شناسایی خالی"
 
-#: Identified.php:464
+#: Identified.php:498
 msgctxt "Default Term: Audit"
 msgid "Duplicate Identification"
 msgstr "شناسایی تکراری"
 
-#: Identified.php:465
+#: Identified.php:499
 msgctxt "Default Term: Audit"
 msgid "Invalid Identification"
 msgstr "شناسایی نامعتبر"

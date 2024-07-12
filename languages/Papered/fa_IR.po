@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Papered\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-04 18:18+0330\n"
+"PO-Revision-Date: 2024-07-12 04:33+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -179,59 +179,59 @@ msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs QR-Code"
 msgstr "نیازمند کیوآر-کد"
 
-#: Papered.php:531
+#: Papered.php:538
 msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr "هیچ نمایه چاپی در دسترسی نیست!"
 
-#: Papered.php:711
+#: Papered.php:718
 msgctxt "None Title"
 msgid "&ndash; Select Peper Size &ndash;"
 msgstr "&ndash; انتخاب اندازه کاغذ &ndash;"
 
-#: Papered.php:722
+#: Papered.php:729
 msgctxt "None Title"
 msgid "&ndash; Select Sheet Padding &ndash;"
 msgstr "&ndash; انتخاب حاشیه برگه &ndash;"
 
-#: Papered.php:733
+#: Papered.php:740
 msgctxt "Input Title"
 msgid "Row per Sheet"
 msgstr "ردیف در برگه"
 
-#: Papered.php:751
+#: Papered.php:758
 msgctxt "None Title"
 msgid "&ndash; Select Direct Post-Type &ndash;"
 msgstr "&ndash; انتخاب نوع‌فرسته مستقیم &ndash;"
 
-#: Papered.php:809
+#: Papered.php:816
 msgctxt "MetaBox Title"
 msgid "Template for Rows"
 msgstr "الگو برای ردیف"
 
-#: Papered.php:810
+#: Papered.php:817
 msgctxt "MetaBox Title"
 msgid "Template Before"
 msgstr "الگوی پیشینی"
 
-#: Papered.php:811
+#: Papered.php:818
 msgctxt "MetaBox Title"
 msgid "Template After"
 msgstr "الگوی پسینی"
 
-#: Papered.php:812
+#: Papered.php:819
 msgctxt "MetaBox Title"
 msgid "Template Styles"
 msgstr "شیوه‌نامه‌های الگو"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:884 Papered.php:941
+#: Papered.php:891 Papered.php:948
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr "%1$s پیش‌نمایش نمایه"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:897 Papered.php:963
+#: Papered.php:904 Papered.php:970
 msgctxt "Button"
 msgid "%1$s Print Profile"
 msgstr "%1$s چاپ نمایه"
