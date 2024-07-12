@@ -218,7 +218,7 @@ class Helper extends WordPress\Main
 	// FIXME: `Contact` DataType
 	public static function prepContact( $value, $title = NULL, $empty = '' )
 	{
-		if ( empty( $value ) )
+		if ( self::empty( $value ) )
 			return $empty;
 
 		if ( Core\Email::is( $value ) )

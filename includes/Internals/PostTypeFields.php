@@ -350,6 +350,7 @@ trait PostTypeFields
 
 			break;
 
+			case 'venue':
 			case 'people':
 
 				$sanitized = Core\Text::trim( Helper::kses( $data, 'none' ) );
@@ -467,11 +468,10 @@ trait PostTypeFields
 
 			break;
 			case 'text':
-			case 'venue':
 			case 'datestring':
 			case 'title_before':
 			case 'title_after':
-				$sanitized = trim( Helper::kses( $data, 'none' ) );
+				$sanitized = Core\Text::trim( Helper::kses( $data, 'none' ) );
 
 			break;
 			case 'address':
@@ -929,7 +929,11 @@ trait PostTypeFields
 		$rows = WordPress\Database::getPostMetaRows( $metakey, $limit );
 
 		foreach ( $rows as $row )
-			$this->posttypefields_do_migrate_field_raw( WordPress\Strings::getSeparated( $row->meta ), $field, $row->post_id );
+			$this->posttypefields_do_migrate_field_raw(
+				Helper::getSeparated( $row->meta ),
+				$field,
+				$row->post_id
+			);
 
 		return count( $rows );
 	}

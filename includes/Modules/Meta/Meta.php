@@ -1702,7 +1702,7 @@ class Meta extends gEditorial\Module
 		$rows = WordPress\Database::getPostMetaRows( $post_meta_key, $limit );
 
 		foreach ( $rows as $row )
-			$this->import_field_raw( WordPress\Strings::getSeparated( $row->meta ), $field, $row->post_id );
+			$this->import_field_raw( Helper::getSeparated( $row->meta ), $field, $row->post_id );
 
 		return count( $rows );
 	}

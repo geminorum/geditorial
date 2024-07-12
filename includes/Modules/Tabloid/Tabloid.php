@@ -217,6 +217,7 @@ class Tabloid extends gEditorial\Module
 		] );
 	}
 
+	// TODO: support comment list for selected by settings/filtered posttypes
 	private function _get_view_data_for_post( $post, $context )
 	{
 		$data = [];

@@ -695,7 +695,7 @@ trait SubContents
 				'key'     => $this->key,
 				'class'   => '-table-summary',
 				'title'   => $this->get_string( 'supportedbox_title', $post->post_type, 'metabox', '' ),
-				'content' => $this->main_shortcode( [
+				'content' => $this->subcontent_do_main_shortcode( [
 					'id'      => $post,
 					'context' => $context,
 					'wrap'    => FALSE,

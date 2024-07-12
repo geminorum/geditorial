@@ -693,8 +693,14 @@ class Importer extends gEditorial\Module
 							if ( FALSE === $value )
 								continue;
 
-							if ( WordPress\Strings::isEmpty( $value ) && '' !== trim( $value ) )
-								continue;
+							if ( WordPress\Strings::isEmpty( $value ) ) {
+
+								if ( ! $override )
+									continue;
+
+								if ( ! is_array( $value ) )
+									$value = '';
+							}
 
 							if ( $value && $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
 
