@@ -15,6 +15,7 @@ use geminorum\gEditorial\WordPress;
 
 class Addendum extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;

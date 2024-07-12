@@ -525,9 +525,10 @@ class Helper extends WordPress\Main
 			return $title.$after;
 
 		if ( 'posttype' === $title_attr )
-			$title_attr = WordPress\PostType::object( $post->post_type )->label;
+			$title_attr = self::getPostTypeLabel( $post->post_type, 'extended_label' );
 
-		$edit = current_user_can( 'edit_post', $post->ID );
+		// $edit = current_user_can( 'edit_post', $post->ID );
+		$edit = WordPress\Post::can( $post, 'edit_post' );
 
 		if ( 'edit' == $link && ! $edit )
 			$link = 'view';
@@ -575,7 +576,10 @@ class Helper extends WordPress\Main
 		$after = '';
 
 		if ( $taxonomy )
-			$after = ' <small class="-taxonomy" title="'.Core\HTML::escape( $term->taxonomy ).'">('.WordPress\Taxonomy::object( $term->taxonomy )->label.')</small>';
+			$after = ' <small class="-taxonomy" title="'
+				.Core\HTML::escape( $term->taxonomy ).'">('
+				.self::getTaxonomyLabel( $term->taxonomy, 'extended_label' )
+				.')</small>';
 
 		if ( ! $link )
 			return Core\HTML::escape( $title ).$after;

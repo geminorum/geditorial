@@ -13,6 +13,7 @@ use geminorum\gEditorial\ShortCode;
 
 class Venue extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;

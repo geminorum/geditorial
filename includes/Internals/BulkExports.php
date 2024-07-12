@@ -334,13 +334,22 @@ trait BulkExports
 
 			case 'advanced':
 			case 'paired_advanced':
-			case 'posttype_advanced':
 
 				$list = array_merge( $list, [
 					'post_date',
 					'post_content',
 					'post_excerpt',
 					'post_type',
+				] );
+
+				break;
+
+			case 'posttype_advanced':
+
+				$list = array_merge( $list, [
+					'post_date',
+					'post_content',
+					'post_excerpt',
 				] );
 
 				break;
