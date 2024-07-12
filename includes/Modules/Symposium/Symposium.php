@@ -4,13 +4,16 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Symposium extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
 	public static function module()
@@ -44,6 +47,10 @@ class Symposium extends gEditorial\Module
 				'assign_default_term',
 				'thumbnail_support',
 				$this->settings_supports_option( 'session_posttype', TRUE ),
+			],
+			'_reports' => [
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'session_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'session_posttype', 'meta' ) ],
 			],
 		];
 	}
@@ -208,5 +215,16 @@ class Symposium extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->posttype_overview_render_table( 'session_posttype', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

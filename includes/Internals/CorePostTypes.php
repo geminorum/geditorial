@@ -410,6 +410,16 @@ trait CorePostTypes
 		return Helper::getPostTypeLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
 	}
 
+	public function get_posttype_taxonomies_list( $constant )
+	{
+		return WordPress\Taxonomy::get( 0, [ 'show_ui' => TRUE ], $this->constant( $constant ) );
+	}
+
+	public function get_posttype_fields_list( $constant, $module = 'meta' )
+	{
+		return Core\Arraay::pluck( Services\PostTypeFields::getEnabled( $this->constant( $constant ),$module ), 'title', 'name' );
+	}
+
 	// @REF: `post_type_supports()`
 	protected function is_posttype_support( $posttype, $feature, $fallback = TRUE )
 	{

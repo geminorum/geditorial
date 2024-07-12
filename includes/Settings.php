@@ -1231,6 +1231,19 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_overview_taxonomies( $description = NULL, $taxes = NULL, $empty = NULL )
+	{
+		return [
+			'field'        => 'overview_taxonomies',
+			'type'         => 'checkbox-panel',
+			'title'        => _x( 'Overview Taxonomies', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
+			'default'      => [],
+			'values'       => $taxes ?? [],
+			'string_empty' => $empty ?? _x( 'There are no taxonomies available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+		];
+	}
+
 	public static function getSetting_append_identifier_code( $description = NULL )
 	{
 		return [

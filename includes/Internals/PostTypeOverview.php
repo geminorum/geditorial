@@ -9,25 +9,20 @@ use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
-trait PairedReports
+trait PostTypeOverview
 {
-	// NOTE: @SEE: `posttype_overview_render_table()`
-	protected function paired_reports_render_overview_table( $uri = '', $sub = NULL, $title = NULL )
+	// NOTE: @SEE: `paired_reports_render_overview_table()`
+	protected function posttype_overview_render_table( $constant, $uri = '', $sub = NULL, $title = NULL )
 	{
-		if ( ! $this->role_can( 'reports' ) )
-			return FALSE;
-
-		if ( ! $this->_paired )
-			return FALSE;
-
-		if ( ! $constants = $this->paired_get_constants() )
+		if ( ! $this->role_can( 'reports' ) && ! $this->cuc( 'reports' ) )
 			return FALSE;
 
 		$module  = 'meta'; // NOTE: the fields module
 		$query   = $extra = [];
-		$type    = $this->constant( $constants[0] );
+		$type    = $this->constant( $constant );
 		$list    = $this->list_posttypes();
-		$fields  = $this->paired_reports_get_overview_fields( $type, $module );
+		$fields  = $this->posttype_overview_get_available_fields( $type, $module );
+		$taxes   = $this->posttype_overview_get_available_taxonomies( $type );
 		$columns = [ '_cb' => 'ID' ];
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub ) );
@@ -39,6 +34,16 @@ trait PairedReports
 			$columns['date'] = Tablelist::columnPostDate();
 
 		$columns['title'] = Tablelist::columnPostTitle();
+
+		foreach ( $taxes as $taxonomy => $object )
+			$columns['tax__'.$taxonomy] = [
+				'title'    => $object->label,
+				'class'    => sprintf( '-field-%s-%s', $module, $taxonomy ),
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $taxonomy, $object, $module ) {
+					Helper::renderPostTermsEditRow( $row, $object );
+					return '';
+				},
+			];
 
 		foreach ( $fields as $field_key => $field )
 			$columns['meta__'.$field_key] = [
@@ -53,46 +58,34 @@ trait PairedReports
 				},
 			];
 
-		$columns['paired_connected'] = [
-			'title'    => _x( 'Connected', 'Internal: PairedReports: Column Header', 'geditorial-admin' ),
-			'class'    => '-paired-connected-to',
-			'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-
-				if ( FALSE === ( $connected = $this->paired_all_connected_to( $row, 'reports' ) ) )
-					return Helper::htmlEmpty();
-
-				return $this->nooped_count( 'paired_item', count( $connected ) );
-			},
-		];
-
 		if ( is_null( $title ) )
 			$title = sprintf(
 				/* translators: %s: posttype label */
 				_x( 'Overview of %s', 'Header', 'geditorial-admin' ),
-				$this->get_posttype_label( $constants[0], 'extended_label', 'name' )
+				$this->get_posttype_label( $constant, 'extended_label', 'name' )
 			);
 
 		return Core\HTML::tableList( $columns, $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => Core\HTML::tag( 'h3', $title ),
-			'empty'      => $this->get_posttype_label( $constants[0], 'not_found' ),
+			'empty'      => $this->get_posttype_label( $constant, 'not_found' ),
 			'pagination' => $pagination,
-			'after'      => [ $this, 'paired_reports_after_overview_table' ],
+			'after'      => [ $this, 'posttype_overview_after_table' ],
 			'extra'      => [
 				'posttype'     => $type,
-				'constants'    => $constants,
+				'constant'     => $constant,
 				'field_module' => $module,
 			],
 		] );
 	}
 
-	public function paired_reports_after_overview_table( $columns, $data, $args )
+	public function posttype_overview_after_table( $columns, $data, $args )
 	{
-		if ( ! $this->role_can( 'exports' ) )
+		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
 			return;
 
-		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
+		if ( ! $this->role_can( 'exports', NULL, TRUE ) )
 			return;
 
 		echo Core\HTML::wrap(
@@ -103,11 +96,19 @@ trait PairedReports
 			), 'field-wrap -buttons' );
 	}
 
-	protected function paired_reports_get_overview_fields( $posttype, $field_module = 'meta', $option_key = NULL )
+	protected function posttype_overview_get_available_fields( $posttype, $field_module = 'meta', $option_key = NULL )
 	{
 		return Core\Arraay::keepByKeys(
 			Services\PostTypeFields::getEnabled( $posttype, $field_module ),
 			$this->get_setting( $option_key ?? 'overview_fields', [] )
+		);
+	}
+
+	protected function posttype_overview_get_available_taxonomies( $posttype, $option_key = NULL )
+	{
+		return Core\Arraay::keepByKeys(
+			WordPress\Taxonomy::get( 4, [ 'show_ui' => TRUE ], $posttype ),
+			$this->get_setting( $option_key ?? 'overview_taxonomies', [] )
 		);
 	}
 }
