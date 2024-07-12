@@ -28,6 +28,7 @@ trait PairedReports
 		$type    = $this->constant( $constants[0] );
 		$list    = $this->list_posttypes();
 		$fields  = $this->paired_reports_get_overview_fields( $type, $module );
+		$taxes   = $this->posttype_overview_get_available_taxonomies( $type );
 		$columns = [ '_cb' => 'ID' ];
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub ) );
@@ -39,6 +40,16 @@ trait PairedReports
 			$columns['date'] = Tablelist::columnPostDate();
 
 		$columns['title'] = Tablelist::columnPostTitle();
+
+		foreach ( $taxes as $taxonomy => $object )
+			$columns['tax__'.$taxonomy] = [
+				'title'    => $object->label,
+				'class'    => sprintf( '-field-%s-%s', $module, $taxonomy ),
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $taxonomy, $object, $module ) {
+					Helper::renderPostTermsEditRow( $row, $object );
+					return '';
+				},
+			];
 
 		foreach ( $fields as $field_key => $field )
 			$columns['meta__'.$field_key] = [
@@ -108,6 +119,14 @@ trait PairedReports
 		return Core\Arraay::keepByKeys(
 			Services\PostTypeFields::getEnabled( $posttype, $field_module ),
 			$this->get_setting( $option_key ?? 'overview_fields', [] )
+		);
+	}
+
+	protected function paired_reports_get_overview_taxonomies( $posttype, $option_key = NULL )
+	{
+		return Core\Arraay::keepByKeys(
+			WordPress\Taxonomy::get( 4, [ 'show_ui' => TRUE ], $posttype ),
+			$this->get_setting( $option_key ?? 'overview_taxonomies', [] )
 		);
 	}
 }

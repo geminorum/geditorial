@@ -50,8 +50,6 @@ class Dossier extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'primary_posttype' ), 'meta' );
-
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -101,7 +99,8 @@ class Dossier extends gEditorial\Module
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
 			'_reports' => [
-				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
 			],
 		];
 	}

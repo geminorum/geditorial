@@ -49,8 +49,6 @@ class Venue extends gEditorial\Module
 	// TODO: custom list title for each supported posttypes
 	protected function get_global_settings()
 	{
-		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'place_posttype' ), 'meta' );
-
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -109,7 +107,8 @@ class Venue extends gEditorial\Module
 				] ),
 			],
 			'_reports' => [
-				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'place_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'meta' ) ],
 			],
 		];
 	}

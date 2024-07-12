@@ -48,8 +48,6 @@ class Magazine extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'issue_posttype' ), 'meta' );
-
 		return [
 			'_general' => [
 				'multiple_instances',
@@ -100,7 +98,8 @@ class Magazine extends gEditorial\Module
 				$this->settings_supports_option( 'issue_posttype', TRUE ),
 			],
 			'_reports' => [
-				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'issue_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'issue_posttype', 'meta' ) ],
 			],
 		];
 	}

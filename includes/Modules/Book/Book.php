@@ -43,6 +43,7 @@ class Book extends gEditorial\Module
 			'icon'     => 'book-alt',
 			'access'   => 'stable',
 			'keywords' => [
+				'publication',
 				'paired',
 				'cptmodule',
 			],
@@ -56,8 +57,6 @@ class Book extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'publication_posttype' ), 'meta' );
-
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
@@ -105,7 +104,8 @@ class Book extends gEditorial\Module
 				$this->settings_supports_option( 'publication_posttype', TRUE ),
 			],
 			'_reports' => [
-				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'publication_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'publication_posttype', 'meta' ) ],
 			],
 		];
 

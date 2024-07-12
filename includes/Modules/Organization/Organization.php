@@ -54,8 +54,7 @@ class Organization extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles  = $this->get_settings_default_roles();
-		$fields = Services\PostTypeFields::getEnabled( $this->constant( 'primary_posttype' ), 'meta' );
+		$roles = $this->get_settings_default_roles();
 
 		return [
 			'_general' => [
@@ -108,7 +107,8 @@ class Organization extends gEditorial\Module
 			],
 			'_reports' => [
 				'append_identifier_code',
-				'overview_fields' => [ NULL, Core\Arraay::pluck( $fields, 'title', 'name' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
 			],
 		];
 	}
