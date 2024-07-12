@@ -142,7 +142,7 @@ trait SettingsTaxonomies
 
 	protected function _hook_taxonomies_excluded( $constant, $module = NULL )
 	{
-		$hook = sprintf( '%s_%s_taxonomies_excluded', $this->base, is_null( $module ) ? $this->module->name : $module );
+		$hook = $this->hook_base( is_null( $module ) ? $this->module->name : $module, 'taxonomies_excluded' );
 		$this->filter_append( $hook, $this->constant( $constant ) );
 	}
 

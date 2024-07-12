@@ -45,7 +45,7 @@ class Listed extends gEditorial\Module
 			'name'     => 'listed',
 			'title'    => _x( 'Listed', 'Modules: Listed', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial List Management', 'Modules: Listed', 'geditorial-admin' ),
-			'icon'     => 'list-view',
+			'icon'     => [ 'misc-16', 'list-check' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'listing',

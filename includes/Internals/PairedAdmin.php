@@ -41,7 +41,7 @@ trait PairedAdmin
 		add_action( 'restrict_manage_posts',
 			function ( $posttype, $which ) use ( $constants ) {
 
-				$option   = get_user_option( sprintf( '%s_restrict_%s', $this->base, $posttype ) );
+				$option   = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 				$taxonomy = $this->constant( $constants[1] );
 
 				if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )

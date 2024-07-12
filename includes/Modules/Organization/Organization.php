@@ -43,7 +43,7 @@ class Organization extends gEditorial\Module
 			'name'     => 'organization',
 			'title'    => _x( 'Organization', 'Modules: Organization', 'geditorial-admin' ),
 			'desc'     => _x( 'Departments of Editorial', 'Modules: Organization', 'geditorial-admin' ),
-			'icon'     => 'bank',
+			'icon'     => [ 'misc-16', 'building-fill' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'paired',

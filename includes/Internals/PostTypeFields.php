@@ -496,7 +496,7 @@ trait PostTypeFields
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		do_action( sprintf( '%s_posttypefields_import_raw_data', $this->base ), $post, $data, $override, $check_access, $module );
+		do_action( $this->hook_base( 'posttypefields_import_raw_data' ), $post, $data, $override, $check_access, $module );
 	}
 
 	protected function posttypefields_get_post_by( $field_key, $value, $posttype_constant, $sanitize = FALSE, $module = 'meta' )
@@ -797,7 +797,7 @@ trait PostTypeFields
 			];
 
 			if ( $raw )
-				$row['value'] = ModuleTemplate::getMetaFieldRaw( $field, $post->ID, $this->key, FALSE, NULL );
+				$row['value'] = Template::getMetaFieldRaw( $field, $post->ID, $this->key, FALSE, NULL );
 
 			$list[] = $row;
 		}

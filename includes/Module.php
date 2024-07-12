@@ -159,7 +159,7 @@ class Module extends WordPress\Module
 		$this->require_code( $this->partials );
 
 		if ( method_exists( $this, 'plugin_loaded' ) )
-			add_action( sprintf( '%s_loaded', $this->base ), [ $this, 'plugin_loaded' ] );
+			add_action( $this->hook_base( 'loaded' ), [ $this, 'plugin_loaded' ] );
 
 		if ( method_exists( $this, 'o2o_init' ) )
 			$this->action( 'o2o_init' ); // NOTE: runs on `wp_loaded`

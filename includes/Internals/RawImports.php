@@ -23,7 +23,7 @@ trait RawImports
 			return FALSE;
 
 		$data  = NULL;
-		$group = sprintf( '%s_rawimports_data', $this->base );
+		$group = $this->hook_base( 'rawimports_data' );
 
 		if ( FALSE !== ( $cache = wp_cache_get( $this->key, $group ) ) )
 			return $cache;

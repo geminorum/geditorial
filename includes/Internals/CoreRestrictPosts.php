@@ -42,7 +42,7 @@ trait CoreRestrictPosts
 		add_action( 'restrict_manage_posts',
 			function ( $posttype, $which ) use ( $taxonomies ) {
 
-				$option = get_user_option( sprintf( '%s_restrict_%s', $this->base, $posttype ) );
+				$option = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 
 				foreach ( $taxonomies as $taxonomy )
 					if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )

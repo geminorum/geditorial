@@ -35,7 +35,7 @@ class Personage extends gEditorial\Module
 			'name'     => 'personage',
 			'title'    => _x( 'Personage', 'Modules: Personage', 'geditorial-admin' ),
 			'desc'     => _x( 'Human Resource Management for Editorial', 'Modules: Personage', 'geditorial-admin' ),
-			'icon'     => 'id-alt',
+			'icon'     => [ 'misc-16', 'person-bounding-box' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'human',

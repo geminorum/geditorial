@@ -263,7 +263,7 @@ class WasBorn extends gEditorial\Module
 
 	public function restrict_manage_posts_admin_restrict( $posttype, $which )
 	{
-		$option = get_user_option( sprintf( '%s_restrict_%s', $this->base, $posttype ) );
+		$option = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 
 		if ( FALSE === $option || in_array( $this->constant( 'gender_taxonomy' ), (array) $option, TRUE ) )
 			Listtable::restrictByTaxonomy( $this->constant( 'gender_taxonomy' ) );
