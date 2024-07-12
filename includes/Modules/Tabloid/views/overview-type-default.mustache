@@ -57,12 +57,30 @@
 				{{{___sides.custom}}}
 			</div>
 			<div class="-side-main">
-				{{> custom-summary}}
+				<div class="-wrap -custom-summaries">
+					{{#__summaries}}{{#content}}
+						<div class="-wrap -summary -{{key}}-summary {{class}}">
+							<h4 class="-summary-title">{{{title}}}</h4>
+							<div class="-summary-content">{{{content}}}</div>
+						</div>
+					{{/content}}{{/__summaries}}
+				</div>
 			</div>
 		</div>
 	{{/___sides.custom}}
 	{{^___sides.custom}}
-		{{> custom-summary}}
+
+		{{! WTF: the cusrom-summaries partial not working! }}
+
+		<div class="-wrap -custom-summaries">
+			{{#__summaries}}{{#content}}
+				<div class="-wrap -summary -{{key}}-summary {{class}}">
+					<h4 class="-summary-title">{{{title}}}</h4>
+					<div class="-summary-content">{{{content}}}</div>
+				</div>
+			{{/content}}{{/__summaries}}
+		</div>
+
 	{{/___sides.custom}}
 
 	{{{___hooks.after-custom}}}

@@ -1184,7 +1184,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'overview_roles',
 			'type'        => 'checkboxes',
-			'title'       => _x( 'Exports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'title'       => _x( 'Overview Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Roles that can view data overviews.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,

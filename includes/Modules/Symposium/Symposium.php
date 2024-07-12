@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
@@ -15,11 +16,15 @@ class Symposium extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'symposium',
-			'title'  => _x( 'Symposium', 'Modules: Symposium', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Session Management', 'Modules: Symposium', 'geditorial-admin' ),
-			'icon'   => 'welcome-learn-more',
-			'access' => 'beta',
+			'name'     => 'symposium',
+			'title'    => _x( 'Symposium', 'Modules: Symposium', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Session Management', 'Modules: Symposium', 'geditorial-admin' ),
+			'icon'     => 'welcome-learn-more',
+			'access'   => 'beta',
+			'keywords' => [
+				'session',
+				'cptmodule',
+			],
 		];
 	}
 

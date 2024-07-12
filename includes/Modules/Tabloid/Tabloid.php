@@ -280,6 +280,7 @@ class Tabloid extends gEditorial\Module
 
 		unset( $data['_links'] );
 
+		unset( $data['___sides'] );
 		unset( $data['___hooks'] );
 		unset( $data['__summaries'] );
 		unset( $data['__direction'] );

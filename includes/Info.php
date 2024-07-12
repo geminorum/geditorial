@@ -172,101 +172,123 @@ class Info extends WordPress\Main
 
 	public static function renderNoReportsAvailable( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'There are no reports available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-reports'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderNoImportsAvailable( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'There are no imports available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-imports'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderNoToolsAvailable( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'There are no tools available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-tools'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderNoRolesAvailable( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'There are no roles available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-roles'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderNoPostsAvailable( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'There are no posts available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-posts'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderNoTermsAvailable( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'There are no terms available!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -no-terms'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderEmptyMIMEtype( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'The MIME-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-empty-mimetype'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderEmptyPosttype( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'The post-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-empty-posttype'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderEmptyTaxonomy( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'The taxonomy is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-empty-taxonomy'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderNotSupportedPosttype( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'The post-type is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-supported-posttype'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderNotSupportedTaxonomy( $before = '', $after = '' )
 	{
-		return Core\HTML::desc(
+		Core\HTML::desc(
 			$before._x( 'The taxonomy is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-supported-taxonomy'
 		);
+
+		return FALSE;
 	}
 
 	public static function renderRegistered( $datetime_string, $before = '', $after = '' )

@@ -29,8 +29,6 @@ class Contest extends gEditorial\Module
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 
-	// TODO: add span tax
-
 	public static function module()
 	{
 		return [

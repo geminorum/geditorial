@@ -951,6 +951,13 @@ class Personage extends gEditorial\Module
 
 	public function paired_all_connected_to_args_status( $args, $post, $posttypes, $context )
 	{
+		if ( in_array( $context, [
+			'reports',
+			'overview',
+			'counts',
+		], TRUE ) )
+			return $args;
+
 		if ( count( $posttypes ) > 1 && $this->constant( 'primary_posttype' ) !== $posttypes[0] )
 			return $args;
 
