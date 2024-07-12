@@ -228,6 +228,23 @@ trait BulkExports
 		return $data;
 	}
 
+	// TODO: support field meta from paired
+	protected function exports_generate_export_data( $posts, $posttypes, $reference, $target, $type, $context, $format )
+	{
+		if ( empty( $posts ) )
+			return FALSE;
+
+		$props   = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
+		$fields  = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
+		$units   = $this->exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format );
+		$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
+		$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
+		$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
+		$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
+
+		return $data;
+	}
+
 	// TODO: export target: `paired_by_term`
 	protected function exports_get_export_data( $reference, $target, $type, $context, $format )
 	{
@@ -250,18 +267,15 @@ trait BulkExports
 					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
 				], $reference, $target, $type, $context );
 
-				$posts = get_posts( $args );
-
-				if ( empty( $posts ) )
-					break;
-
-				$props   = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
-				$fields  = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
-				$units   = $this->exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format );
-				$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
-				$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
-				$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
-				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
+				$data = $this->exports_generate_export_data(
+					get_posts( $args ),
+					$posttypes,
+					$reference,
+					$target,
+					$type,
+					$context,
+					$format
+				);
 
 				break;
 
@@ -289,20 +303,15 @@ trait BulkExports
 					] ],
 				], $reference, $target, $type, $context );
 
-				$posts = get_posts( $args );
-
-				if ( empty( $posts ) )
-					break;
-
-				// TODO: support field meta from paired
-
-				$props   = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
-				$fields  = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
-				$units   = $this->exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format );
-				$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
-				$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
-				$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
-				$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
+				$data = $this->exports_generate_export_data(
+					get_posts( $args ),
+					$posttypes,
+					$reference,
+					$target,
+					$type,
+					$context,
+					$format
+				);
 
 				break;
 		}
