@@ -27,12 +27,12 @@ class Organization extends gEditorial\Module
 	use Internals\PairedFront;
 	use Internals\PairedImports;
 	use Internals\PairedMetaBox;
-	use Internals\PairedReports;
 	use Internals\PairedRest;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
+	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
 	protected $positions = [ 'primary_posttype' => 3 ];
@@ -109,6 +109,7 @@ class Organization extends gEditorial\Module
 				'append_identifier_code',
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
 		];
 	}
@@ -696,7 +697,7 @@ class Organization extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
 	}
 }

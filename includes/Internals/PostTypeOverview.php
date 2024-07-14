@@ -11,7 +11,6 @@ use geminorum\gEditorial\WordPress;
 
 trait PostTypeOverview
 {
-	// NOTE: @SEE: `paired_reports_render_overview_table()`
 	protected function posttype_overview_render_table( $constant, $uri = '', $sub = NULL, $title = NULL )
 	{
 		if ( ! $this->role_can( 'reports' ) && ! $this->cuc( 'reports' ) )
@@ -71,6 +70,21 @@ trait PostTypeOverview
 					], FALSE, 'unit' ) ?: Helper::htmlEmpty();
 				},
 			];
+
+		if ( $this->_paired && ( $constants = $this->paired_get_constants() ) ) {
+
+			$columns['paired_connected'] = [
+				'title'    => _x( 'Connected', 'Internal: PostTypeOverview: Column Header', 'geditorial-admin' ),
+				'class'    => '-paired-connected-to',
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+
+					if ( FALSE === ( $connected = $this->paired_all_connected_to( $row, 'reports' ) ) )
+						return Helper::htmlEmpty();
+
+					return $this->nooped_count( 'paired_item', count( $connected ) );
+				},
+			];
+		}
 
 		if ( is_null( $title ) )
 			$title = sprintf(

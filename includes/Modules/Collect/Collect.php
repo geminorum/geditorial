@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -23,10 +22,10 @@ class Collect extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
-	use Internals\PairedReports;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
+	use Internals\PostTypeOverview;
 
 	// FIXME: rename to `Collecting`/`Collective`
 
@@ -91,6 +90,7 @@ class Collect extends gEditorial\Module
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'collection_posttype' ) ],
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'collection_posttype', 'meta' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
 		];
 	}
@@ -439,7 +439,7 @@ class Collect extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+		if ( ! $this->posttype_overview_render_table( 'collection_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
 	}
 

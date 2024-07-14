@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 
@@ -23,10 +22,10 @@ class Venue extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
-	use Internals\PairedReports;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
+	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
 	public static function module()
@@ -109,6 +108,7 @@ class Venue extends gEditorial\Module
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'place_posttype' ) ],
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'meta' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
 		];
 	}
@@ -437,7 +437,7 @@ class Venue extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		if ( ! $this->paired_reports_render_overview_table( $uri, $sub ) )
+		if ( ! $this->posttype_overview_render_table( 'place_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
 	}
 }
