@@ -235,27 +235,8 @@ class Tabloid extends gEditorial\Module
 		if ( empty( $data['excerpt']['raw'] ) )
 			$data['excerpt']['rendered'] = '';
 
-		// strip empty meta values
-		if ( ! empty( $data['meta_rendered'] ) ) {
-
-			foreach ( $data['meta_rendered'] as $offset => $meta )
-				if ( empty( $meta['rendered'] ) )
-					unset( $data['meta_rendered'][$offset] );
-
-			if ( ! empty( $data['meta_rendered'] ) )
-				$data['meta_rendered'] = array_values( $data['meta_rendered'] );
-		}
-
-		// strip empty term values
-		if ( ! empty( $data['terms_rendered'] ) ) {
-
-			foreach ( $data['terms_rendered'] as $offset => $meta )
-				if ( empty( $meta['rendered'] ) )
-					unset( $data['terms_rendered'][$offset] );
-
-			if ( ! empty( $data['terms_rendered'] ) )
-				$data['terms_rendered'] = array_values( $data['terms_rendered'] );
-		}
+		$data = ModuleHelper::stripEmptyValues( $data, 'meta_rendered' );
+		$data = ModuleHelper::stripEmptyValues( $data, 'terms_rendered' );
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
 		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
