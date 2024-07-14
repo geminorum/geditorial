@@ -18,6 +18,9 @@ class Execution extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
+	// TODO: add subcontent api for list of executive people: هیئت اجرایی
+	// - for: trained/programmed/meeted/listed
+
 	// NOTE: `Executed` wording is not acceptable in some server environments
 	public static function module()
 	{

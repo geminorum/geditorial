@@ -15,6 +15,7 @@ use geminorum\gEditorial\WordPress;
 class Dossier extends gEditorial\Module
 {
 	use Internals\AdminPage;
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;

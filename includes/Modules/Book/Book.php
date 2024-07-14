@@ -16,6 +16,7 @@ use geminorum\gEditorial\WordPress;
 
 class Book extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
@@ -106,7 +107,7 @@ class Book extends gEditorial\Module
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'publication_posttype' ) ],
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'publication_posttype', 'meta' ) ],
-				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'publication_posttype', 'units' ) ],
 			],
 		];
 

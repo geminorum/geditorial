@@ -180,7 +180,7 @@ trait PostDate
 				_x( 'Date data (%1$s) already is set for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-admin' ),
 				Core\HTML::code( $datetime ),
 				WordPress\Post::title( $post )
-			) ) ) : TRUE ) && FALSE;
+			) ) ) : TRUE ) && TRUE;
 
 		return [
 			'post_date'     => $datetime,

@@ -908,9 +908,6 @@ trait PairedCore
 	// NOTE: currentry support: `Personage` module only
 	protected function pairedcore__hook_append_identifier_code( $fieldkey, $optionkey = NULL )
 	{
-		if ( ! is_admin() )
-			return FALSE;
-
 		if ( ! $this->get_setting( $optionkey ?? 'append_identifier_code' ) )
 			return FALSE;
 

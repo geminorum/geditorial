@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
@@ -25,6 +26,7 @@ class Personage extends gEditorial\Module
 	use Internals\MetaBoxMain;
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
+	use Internals\PostTypeOverview;
 	use Internals\TemplateTaxonomy;
 
 	protected $positions = [ 'primary_posttype' => 2 ];
@@ -90,6 +92,11 @@ class Personage extends gEditorial\Module
 				'insert_content',
 				'insert_cover',
 				'insert_priority',
+			],
+			'_reports' => [
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
 			'_importer' => [
 				[
@@ -883,12 +890,25 @@ class Personage extends gEditorial\Module
 				return $fallback;
 		}
 
+		if ( ! empty( $this->cache['fullnames'][$post->ID] ) )
+			return $this->cache['fullnames'][$post->ID];
+
+		if ( empty( $this->cache['fullnames'] ) )
+			$this->cache['fullnames'] = [];
+
 		if ( is_null( $names ) )
 			$names = $this->_get_human_names( $post );
 
-		$fullname = ModuleHelper::makeFullname( $names, $context, $fallback );
+		$this->cache['fullnames'][$post->ID] = $this->filters( 'make_human_title',
+			ModuleHelper::makeFullname( $names, $context, $fallback ),
+			$context,
+			$post,
+			$names,
+			$fallback,
+			$checks
+		);
 
-		return $this->filters( 'make_human_title', $fullname, $context, $post, $names, $fallback, $checks );
+		return $this->cache['fullnames'][$post->ID];
 	}
 
 	private function _get_human_names( $post = NULL, $checks = FALSE )
@@ -1111,5 +1131,16 @@ class Personage extends gEditorial\Module
 		echo $this->wrap_open_buttons();
 			Settings::submitButton( 'parse_people_pool', _x( 'Parse Lines', 'Button', 'geditorial-personage' ) );
 		echo '</p>';
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

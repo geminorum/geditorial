@@ -258,6 +258,7 @@ trait SubContents
 		return wp_delete_comment( intval( $id ), TRUE );
 	}
 
+	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
 	protected function subcontent_prep_data_for_save( $raw, $post = FALSE, $mapping = NULL, $metas = NULL )
 	{
 		if ( is_null( $mapping ) )
@@ -773,6 +774,7 @@ trait SubContents
 		}
 	}
 
+	// TODO: support for `options`: list of available options for each field
 	protected function subcontent_do_enqueue_app( $name, $args = [] )
 	{
 		$args = self::atts( [
@@ -781,7 +783,10 @@ trait SubContents
 			'assetkey'  => TRUE === $name ? '_subcontent' : NULL,
 			'linked'    => NULL,
 			// 'posttypes' => NULL,
-			'expanding' => NULL, // FIXME: add full support
+			'searchable' => NULL,
+			'required'   => NULL,
+			'readonly'   => NULL,
+			'expanding'  => NULL,   // FIXME: add full support
 		], $args );
 
 		if ( ! $this->role_can( $args['can'] ) )
@@ -793,9 +798,9 @@ trait SubContents
 			'config'  => [
 				'linked'       => $args['linked'] ?? self::req( 'linked', FALSE ),
 				'searchselect' => Services\SearchSelect::namespace(),
-				'searchable'   => $this->subcontent_get_searchable_fields( $args['context'] ),
-				'required'     => $this->subcontent_get_required_fields( $args['context'] ),
-				'readonly'     => $this->subcontent_get_readonly_fields( $args['context'] ),
+				'searchable'   => $args['searchable'] ?? $this->subcontent_get_searchable_fields( $args['context'] ),
+				'required'     => $args['required'] ?? $this->subcontent_get_required_fields( $args['context'] ),
+				'readonly'     => $args['readonly'] ?? $this->subcontent_get_readonly_fields( $args['context'] ),
 				'hidden'       => $this->subcontent_get_hidden_fields( $args['context'] ),
 				'unique'       => $this->subcontent_get_unique_fields( $args['context'] ),
 				// 'posttypes'    => $args['posttypes'] ?? $this->get_setting( 'subcontent_posttypes', [] ),           // NOT USED ON THE APP!

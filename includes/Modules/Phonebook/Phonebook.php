@@ -90,8 +90,8 @@ class Phonebook extends gEditorial\Module
 		];
 
 		$strings['notices'] = [
-			'empty'    => _x( 'There is no contact information available!', 'Notice', 'geditorial-next-of-kin' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the contact data.', 'Notice', 'geditorial-next-of-kin' ),
+			'empty'    => _x( 'There is no contact information available!', 'Notice', 'geditorial-phonebook' ),
+			'noaccess' => _x( 'You have not necessary permission to manage the contact data.', 'Notice', 'geditorial-phonebook' ),
 		];
 
 		if ( ! is_admin() )

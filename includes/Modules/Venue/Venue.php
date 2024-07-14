@@ -108,7 +108,7 @@ class Venue extends gEditorial\Module
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'place_posttype' ) ],
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'meta' ) ],
-				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'units' ) ],
 			],
 		];
 	}
