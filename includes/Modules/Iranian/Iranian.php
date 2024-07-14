@@ -160,7 +160,7 @@ class Iranian extends gEditorial\Module
 	public function get_identity_summary( $identity )
 	{
 		$queried   = $identity  ? Core\Text::stripNonNumeric( trim( $identity ) ) : $identity;
-		$sanitized = $queried   ? Core\Number::zeroise( Core\Number::intval( $queried, FALSE ), 10 ) : '';
+		$sanitized = $queried   ? Core\Number::zeroise( Core\Number::translate( $queried ), 10 ) : '';
 		$validated = $sanitized ? Core\Validation::isIdentityNumber( $sanitized ) : FALSE;
 		$location  = $validated ? $this->get_location_from_identity( $sanitized, [] ) : [];
 
@@ -311,7 +311,7 @@ class Iranian extends gEditorial\Module
 		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
 			return FALSE;
 
-		$sanitized = Core\Number::zeroise( Core\Number::intval( trim( $identity ), FALSE ), 10 );
+		$sanitized = Core\Number::zeroise( Core\Number::translate( trim( $identity ) ), 10 );
 
 		if ( ! $data = $this->get_location_from_identity( $sanitized ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
@@ -505,7 +505,7 @@ class Iranian extends gEditorial\Module
 
 	public function sanitize_birth_certificate_number( $data, $field, $post )
 	{
-		$sanitized = Core\Number::intval( trim( $data ), FALSE );
+		$sanitized = Core\Number::translate( trim( $data ) );
 
 		if ( empty( $sanitized ) )
 			return '';

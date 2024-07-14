@@ -308,6 +308,8 @@ trait PostTypeFields
 
 		$sanitized = $data;
 
+		// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
+
 		switch ( $field['type'] ) {
 
 			case 'post':
@@ -381,11 +383,11 @@ trait PostTypeFields
 
 			break;
 			case 'email':
-				$sanitized = sanitize_email( trim( $data ) );
+				$sanitized = Core\Email::sanitize( trim( $data ) );
 
 			break;
 			case 'contact':
-				$sanitized = Core\Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::translate( trim( $data ) );
 				break;
 
 			case 'identity':
@@ -427,7 +429,7 @@ trait PostTypeFields
 
 			case 'date':
 
-				$sanitized = Core\Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::translate( trim( $data ) );
 
 				// avoid accepting year only
 				if ( strlen( $sanitized ) > 4 )
@@ -439,14 +441,14 @@ trait PostTypeFields
 					break;
 
 			case 'time':
-				$sanitized = Core\Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::translate( trim( $data ) );
 				break;
 
 			case 'datetime':
 
 				// @SEE: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#dates
 
-				$sanitized = Core\Number::intval( trim( $data ), FALSE );
+				$sanitized = Core\Number::translate( trim( $data ) );
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
 				break;
 
@@ -460,11 +462,11 @@ trait PostTypeFields
 			case 'centimeter':
 			case 'price':
 			case 'number':
-				$sanitized = Core\Number::intval( trim( $data ) );
+				$sanitized = Core\Number::intval( $data );
 
 			break;
 			case 'float':
-				$sanitized = Core\Number::floatval( trim( $data ) );
+				$sanitized = Core\Number::floatval( $data );
 
 			break;
 			case 'text':
@@ -510,7 +512,7 @@ trait PostTypeFields
 		if ( $sanitize ) {
 
 			if ( ! $field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $posttype ) )
-				$value = Core\Number::intval( trim( $value ), FALSE );
+				$value = Core\Number::translate( trim( $value ) );
 
 			else
 				$value = gEditorial()->module( $module )->sanitize_posttype_field( $value, $field );

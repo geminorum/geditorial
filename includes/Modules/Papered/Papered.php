@@ -271,6 +271,13 @@ class Papered extends gEditorial\Module
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 
+				// display main pairedbox to connect with selected print profile
+				// display secondary metaboxbox with action hook
+				// - to display print profile for each connected profiles,
+				// - likely also paired to this posts
+
+				// WTF: or print profiles can expand for more than one page: loop with paired items and pagebreak
+
 				// $this->_hook_paired_pairedbox( $screen );
 				// $this->_hook_paired_store_metabox( $screen->post_type );
 			}

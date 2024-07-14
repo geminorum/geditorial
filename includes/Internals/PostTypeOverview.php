@@ -27,6 +27,7 @@ trait PostTypeOverview
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub ) );
 
+		// TODO: filter by fields
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 

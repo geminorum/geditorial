@@ -622,7 +622,7 @@ class Today extends gEditorial\Module
 			if ( 'cal' == $field )
 				$postmeta[$field] = Services\Calendars::sanitize( $value, $this->default_calendar() );
 			else
-				$postmeta[$field] = Core\Number::intval( $value, FALSE );
+				$postmeta[$field] = Core\Number::translate( $value );
 		}
 
 		$this->set_today_meta( $post->ID, $postmeta, $constants );
@@ -1068,7 +1068,7 @@ class Today extends gEditorial\Module
 			case 'today__cal': return Services\Calendars::sanitize( trim( $value ), $this->default_calendar() );
 			case 'today__year':
 			case 'today__month':
-			case 'today__day': return Core\Number::intval( trim( $value ), FALSE );
+			case 'today__day': return Core\Number::translate( trim( $value ) );
 			case 'today__full': return ModuleHelper::parseTheFullDay( trim( $value ), $this->default_calendar() );
 		}
 
@@ -1103,7 +1103,7 @@ class Today extends gEditorial\Module
 				$postmeta[$key] = Services\Calendars::sanitize( $value, $default );
 
 			else
-				$postmeta[$key] = Core\Number::intval( $value, FALSE );
+				$postmeta[$key] = Core\Number::translate( $value );
 		}
 
 		if ( count( $postmeta ) )

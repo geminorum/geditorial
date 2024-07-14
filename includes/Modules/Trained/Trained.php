@@ -45,7 +45,7 @@ class Trained extends gEditorial\Module
 			'name'     => 'trained',
 			'title'    => _x( 'Trained', 'Modules: Trained', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Training Management', 'Modules: Trained', 'geditorial-admin' ),
-			'icon'     => 'universal-access-alt',
+			'icon'     => [ 'misc-32', 'training-running-run' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'training',

@@ -84,7 +84,8 @@ class LineDiscovery extends WordPress\Main
 
 	private static function _get_bulk_posts( $queried )
 	{
-		$data = [];
+		$data   = [];
+		$refkey = $queried['refkey'];
 
 		foreach ( $queried['raw'] as $row ) {
 
@@ -96,10 +97,9 @@ class LineDiscovery extends WordPress\Main
 				$queried['raw']
 			);
 
-			$key = $row[$queried['refkey']];
-
 			if ( is_null( $discovered ) )
-				$data[$key] = [
+				$data[] = [
+					$refkey   => $row[$refkey],
 					'status'  => 'unavailable',
 					'postid'  => 0,
 					'code'    => NULL,
@@ -107,7 +107,8 @@ class LineDiscovery extends WordPress\Main
 				];
 
 			else if ( TRUE === $discovered )
-				$data[$key] = [
+				$data[] = [
+					$refkey   => $row[$refkey],
 					'status'  => 'creatable',
 					'postid'  => 0,
 					'code'    => $queried['posttype'],
@@ -115,7 +116,8 @@ class LineDiscovery extends WordPress\Main
 				];
 
 			else if ( self::isError( $discovered ) )
-				$data[$key] = [
+				$data[] = [
+					$refkey   => $row[$refkey],
 					'status'  => 'error',
 					'postid'  => 0,
 					'code'    => $discovered->get_error_code(),
@@ -123,7 +125,8 @@ class LineDiscovery extends WordPress\Main
 				];
 
 			else if ( $discovered && ( $post = WordPress\Post::get( $discovered ) ) )
-				$data[$key] = [
+				$data[] = [
+					$refkey   => $row[$refkey],
 					'status'  => 'available',
 					'postid'  => $post->ID,
 					'code'    => $post->post_type,
@@ -131,7 +134,8 @@ class LineDiscovery extends WordPress\Main
 				];
 
 			else
-				$data[$key] = [
+				$data[] = [
+					$refkey   => $row[$refkey],
 					'status'  => 'wrong',
 					'postid'  => 0,
 					'code'    => sprintf( '%s', $discovered ),

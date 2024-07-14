@@ -464,8 +464,8 @@ class Datetime extends WordPress\Main
 	public static function getYears( $from = '-10 years' )
 	{
 		$list  = [];
-		$start = Core\Number::intval( wp_date( 'Y', strtotime( $from ) ), FALSE );
-		$end   = Core\Number::intval( wp_date( 'Y', strtotime( 'now' ) ), FALSE );
+		$start = Core\Number::translate( wp_date( 'Y', strtotime( $from ) ) );
+		$end   = Core\Number::translate( wp_date( 'Y', strtotime( 'now' ) ) );
 
 		if ( ! Core\Text::starts( $from, '-' ) ) {
 

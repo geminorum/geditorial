@@ -28,11 +28,12 @@ trait PairedReports
 		$type    = $this->constant( $constants[0] );
 		$list    = $this->list_posttypes();
 		$fields  = $this->paired_reports_get_overview_fields( $type, $module );
-		$taxes   = $this->posttype_overview_get_available_taxonomies( $type );
+		$taxes   = $this->paired_reports_get_overview_taxonomies( $type );
 		$columns = [ '_cb' => 'ID' ];
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub ) );
 
+		// TODO: filter by fields
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 

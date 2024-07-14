@@ -25,7 +25,7 @@ class Conditioned extends gEditorial\Module
 			'title'    => _x( 'Conditioned', 'Modules: Conditioned', 'geditorial-admin' ),
 			'desc'     => _x( 'Expectation Management for Contents', 'Modules: Conditioned', 'geditorial-admin' ),
 			'icon'     => 'warning',
-			'access'   => 'alpha',
+			'access'   => 'beta',
 			'keywords' => [
 				'taxmodule',
 			],

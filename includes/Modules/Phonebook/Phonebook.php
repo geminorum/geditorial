@@ -29,7 +29,7 @@ class Phonebook extends gEditorial\Module
 			'title'    => _x( 'Phonebook', 'Modules: Phonebook', 'geditorial-admin' ),
 			'desc'     => _x( 'Contact Information for Contents', 'Modules: Phonebook', 'geditorial-admin' ),
 			'icon'     => 'id-alt',
-			'access'   => 'alpha',
+			'access'   => 'beta',
 			'keywords' => [
 				'subcontent',
 			],

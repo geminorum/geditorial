@@ -704,7 +704,7 @@ class Personage extends gEditorial\Module
 		return $default;
 	}
 
-	// TODO: move the list into ModuleInfo
+	// TODO: move the list into ModuleHelper
 	public function identified_possible_keys_for_identifier( $keys, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
@@ -1056,7 +1056,7 @@ class Personage extends gEditorial\Module
 
 	public function sanitize_passport_number( $data, $field, $post )
 	{
-		$sanitized = Core\Number::intval( trim( $data ), FALSE );
+		$sanitized = Core\Number::translate( trim( $data ) );
 		$sanitized = Core\Text::stripAllSpaces( strtoupper( $sanitized ) );
 
 		return $sanitized ?: '';

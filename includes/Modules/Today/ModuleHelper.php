@@ -21,7 +21,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( WordPress\Strings::isEmpty( $text ) )
 			return [];
 
-		$text = Core\Number::intval( trim( $text ), FALSE );
+		$text = Core\Number::translate( trim( $text ) );
 		$text = trim( str_ireplace( [
 			' ',
 			'.',
@@ -120,7 +120,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( $the_day['month'] ) {
 
-			$month = Core\Number::intval( $the_day['month'], FALSE );
+			$month = Core\Number::translate( $the_day['month'] );
 			$key   = Core\Number::zeroise( $month, 2 );
 
 			if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )
@@ -176,7 +176,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				if ( $the_day['month'] ) {
 
-					$month = Core\Number::intval( $the_day['month'], FALSE );
+					$month = Core\Number::translate( $the_day['month'] );
 					$key   = Core\Number::zeroise( $month, 2 );
 
 					if ( isset( $gEditorialTodayMonths[$the_day['cal']][$key] ) )

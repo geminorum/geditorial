@@ -21,7 +21,7 @@ class Identified extends gEditorial\Module
 			'name'   => 'identified',
 			'title'  => _x( 'Identified', 'Modules: Identified', 'geditorial-admin' ),
 			'desc'   => _x( 'Content Identification Management', 'Modules: Identified', 'geditorial-admin' ),
-			'icon'   => [ 'misc-32', 'barcode' ],
+			'icon'   => [ 'misc-16', 'fingerprint' ],
 			'access' => 'beta',
 		];
 	}
@@ -348,7 +348,7 @@ class Identified extends gEditorial\Module
 
 			case 'code':
 			default:
-				$sanitized = Core\Number::intval( trim( $value ), FALSE );
+				$sanitized = Core\Number::translate( trim( $value ) );
 		}
 
 		return $this->filters( 'sanitize_identifier', $sanitized, $value, $type, $post );

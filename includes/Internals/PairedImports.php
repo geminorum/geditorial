@@ -143,6 +143,7 @@ trait PairedImports
 				'message'      => _x( 'Import Raw Data into this Post', 'Internal: PairedImports: String', 'geditorial' ),
 				'emptydata'    => _x( 'Empty Data!', 'Internal: PairedImports: String', 'geditorial' ),
 				'unsupported'  => _x( 'Unsupported Data!', 'Internal: PairedImports: String', 'geditorial' ),
+				'novalid'      => _x( 'No Valid Data Available!', 'Internal: PairedImports: String', 'geditorial' ),
 				'discovery'    => _x( 'Discovery', 'Internal: PairedImports: String', 'geditorial' ),
 				'clearadded'   => _x( 'Clear Added', 'Internal: PairedImports: String', 'geditorial' ),
 				'insertnew'    => _x( 'Add New on Discovery', 'Internal: PairedImports: String', 'geditorial' ),

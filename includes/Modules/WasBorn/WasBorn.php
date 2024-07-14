@@ -1048,7 +1048,7 @@ class WasBorn extends gEditorial\Module
 		if ( ! $year = wp_date( 'Y', $date->getTimestamp() ) )
 			return FALSE;
 
-		if ( ! $term = WordPress\Term::get( sprintf( 'year-%s', Core\Number::intval( $year, FALSE ) ), $taxonomy ) )
+		if ( ! $term = WordPress\Term::get( sprintf( 'year-%s', Core\Number::translate( $year ) ), $taxonomy ) )
 			return FALSE;
 
 		$terms  = WordPress\Taxonomy::appendParentTermIDs( $term->term_id, $term->taxonomy );

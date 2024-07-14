@@ -722,7 +722,7 @@ class Importer extends gEditorial\Module
 								case 'importer_menu_order':
 
 									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->menu_order ) )
-										$data['menu_order'] = $prepared[$field] = Core\Number::intval( trim( $value ), FALSE );
+										$data['menu_order'] = $prepared[$field] = Core\Number::translate( trim( $value ) );
 
 									continue 2;
 
@@ -889,6 +889,8 @@ class Importer extends gEditorial\Module
 
 								if ( empty( $comment['user_id'] ) )
 									$comment['user_id'] = $user_id;
+
+								// TODO: maybe add the custom bot title on `comment_author` from settings
 
 								if ( ! wp_insert_comment( $comment ) )
 									$this->log( 'NOTICE', ( $source_id

@@ -1101,20 +1101,20 @@ class Terms extends gEditorial\Module
 
 				} else if ( in_array( $field, [ 'days', 'hours', 'amount', 'unit', 'min', 'max' ] ) ) {
 
-					$meta = Core\Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::translate( trim( $meta ) );
 
 				} else if ( in_array( $field, [ 'viewable' ] ) ) {
 
-					$meta = Core\Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::translate( trim( $meta ) );
 
 				} else if ( in_array( $field, [ 'date' ] ) ) {
 
-					$meta = Core\Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::translate( trim( $meta ) );
 					$meta = Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
 
 				} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
 
-					$meta = Core\Number::intval( trim( $meta ), FALSE );
+					$meta = Core\Number::translate( trim( $meta ) );
 					$meta = Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
 				}
 
