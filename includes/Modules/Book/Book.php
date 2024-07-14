@@ -737,6 +737,14 @@ class Book extends gEditorial\Module
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
 
 		// $this->register_default_terms( 'size_taxonomy' );
+
+		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
+		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
+		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
+		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
+
+		$this->filter( 'pairedimports_define_import_types', 4, 5, FALSE, $this->base );
+		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -1172,6 +1180,82 @@ class Book extends gEditorial\Module
 			return $this->barcode_type;
 
 		return $default;
+	}
+
+	public function identified_default_posttype_identifier_metakey( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
+			return Services\PostTypeFields::getPostMetaKey( 'publication_isbn' );
+
+		return $default;
+	}
+
+	public function identified_default_posttype_identifier_type( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
+			return 'isbn';
+
+		return $default;
+	}
+
+	// TODO: move the list into ModuleHelper
+	public function identified_possible_keys_for_identifier( $keys, $posttype )
+	{
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
+			return array_merge( $keys, [
+				'publication_isbn' => 'isbn',
+				'isbn'             => 'isbn',
+
+				_x( 'ISBN', 'Possible Identifier Key', 'geditorial-book' ) => 'isbn',
+
+				'شابک'       => 'isbn',
+				'شماره شابک' => 'isbn',
+				'شابک کتاب'  => 'isbn',
+			] );
+
+		return $keys;
+	}
+
+	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
+	{
+		if ( $posttype == $this->constant( 'publication_posttype' ) )
+			return Services\PostTypeFields::getPostMetaKey( 'publication_isbn' );
+
+		return $default;
+	}
+
+	// NOTE: late overrides of the fields values and keys
+	public function searchselect_result_extra_for_post( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( $this->constant( 'publication_posttype' ) !== $post->post_type )
+			return $data;
+
+		if ( $isbn = ModuleTemplate::getMetaFieldRaw( 'publication_isbn', $post->ID ) )
+			$data['isbn'] = $isbn;
+
+		return $data;
+	}
+
+	public function pairedimports_define_import_types( $types, $linked, $posttypes, $module_key )
+	{
+		$posttype = $this->constant( 'publication_posttype' );
+
+		if ( ! in_array( $posttype, $posttypes, TURE ) )
+			return $types;
+
+		$fields = gEditorial()->module( 'meta' )->get_posttype_fields( $posttype );
+
+		if ( empty( $fields ) )
+			return $types;
+
+		return array_merge( $types, Core\Arraay::pluck( $fields, 'title', 'name' ) );
 	}
 
 	private function get_importer_fields( $posttype = NULL )
