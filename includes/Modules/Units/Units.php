@@ -59,6 +59,9 @@ class Units extends gEditorial\Module
 				'mass_in_kg'    => _x( 'Mass', 'Titles', 'geditorial-units' ),
 				'stature_in_cm' => _x( 'Stature', 'Titles', 'geditorial-units' ),
 
+				'payload_in_kg'   => _x( 'Payload', 'Titles', 'geditorial-units' ),
+				'maxspeed_in_kmh' => _x( 'Max Speed', 'Titles', 'geditorial-units' ),
+
 				'hair_color' => _x( 'Hair Color', 'Titles', 'geditorial-units' ),
 				'skin_color' => _x( 'Skin Color', 'Titles', 'geditorial-units' ),
 				'eye_color'  => _x( 'Eye Color', 'Titles', 'geditorial-units' ),
@@ -84,6 +87,9 @@ class Units extends gEditorial\Module
 
 				'mass_in_kg'    => _x( 'Mass in Kilogram', 'Descriptions', 'geditorial-units' ),
 				'stature_in_cm' => _x( 'Stature in Centimeter', 'Descriptions', 'geditorial-units' ),
+
+				'payload_in_kg'   => _x( 'Payload in Kilogram', 'Descriptions', 'geditorial-units' ),
+				'maxspeed_in_kmh' => _x( 'Max Speed in Kilometre per Hour', 'Descriptions', 'geditorial-units' ),
 
 				'hair_color' => _x( 'Color of the Hair', 'Descriptions', 'geditorial-units' ),
 				'skin_color' => _x( 'Color of the Skin', 'Descriptions', 'geditorial-units' ),
@@ -151,6 +157,9 @@ class Units extends gEditorial\Module
 
 				'mass_in_kg'    => [ 'type' => 'kilogram',   'icon' => 'image-filter', 'data_unit' => 'kilogram'   ],
 				'stature_in_cm' => [ 'type' => 'centimeter', 'icon' => 'sort'        , 'data_unit' => 'centimeter' ],
+
+				'payload_in_kg'   => [ 'type' => 'kilogram',     'icon' => 'image-filter', 'data_unit' => 'kilogram'    ],
+				'maxspeed_in_kmh' => [ 'type' => 'km_per_hour',  'icon' => 'car'         , 'data_unit' => 'km_per_hour' ],
 
 				'shoe_size_eu'   => [ 'type' => 'european_shoe', 'icon' => 'universal-access-alt'  , 'data_unit' => 'european'      ],
 				'shirt_size_int' => [ 'type' => 'international_shirt', 'icon' => 'universal-access', 'data_unit' => 'international' ],
@@ -344,9 +353,12 @@ class Units extends gEditorial\Module
 				case 'day':
 				case 'hour':
 				case 'gram':
+				case 'km_per_hour':
 				case 'milimeter':
 				case 'kilogram':
 				case 'centimeter':
+				case 'meter':
+				case 'kilometre':
 				case 'price':  // TODO must use custom text input + code + ortho-number + separeator
 				case 'number':
 
@@ -599,8 +611,11 @@ class Units extends gEditorial\Module
 			case 'person':
 			case 'gram':
 			case 'kilogram':
+			case 'km_per_hour':
 			case 'milimeter':
 			case 'centimeter':
+			case 'meter':
+			case 'kilometre':
 
 				if ( 'export' === $context )
 					return trim( $raw );

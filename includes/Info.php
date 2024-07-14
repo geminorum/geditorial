@@ -345,6 +345,7 @@ class Info extends WordPress\Main
 			case 'centimeter'   : return _x( 'Centimeters', 'Info: Unit', 'geditorial' );
 			case 'meter'        : return _x( 'Meters', 'Info: Unit', 'geditorial' );
 			case 'kilometer'    : return _x( 'Kilometers', 'Info: Unit', 'geditorial' );
+			case 'km_per_hour'  : return _x( 'Kilometers per Hour', 'Info: Unit', 'geditorial' );
 			case 'european'     : return _x( 'European', 'Info: Unit', 'geditorial' );
 			case 'international': return _x( 'International', 'Info: Unit', 'geditorial' );
 			case 'person'       : return _x( 'Persons', 'Info: Unit', 'geditorial' );
@@ -490,6 +491,12 @@ class Info extends WordPress\Main
 			case 'kilometer':
 				/* translators: %s: unit amount */
 				return _nx_noop( '%s Kilometer', '%s Kilometers', 'Info: Noop', 'geditorial' );
+
+			case 'kmh':
+			case 'kph':
+			case 'km_per_hour':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Kilometer per Hour', '%s Kilometers per Hour', 'Info: Noop', 'geditorial' );
 		}
 
 		return $fallback;

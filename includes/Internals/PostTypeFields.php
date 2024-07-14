@@ -457,9 +457,12 @@ trait PostTypeFields
 			case 'day':
 			case 'hour':
 			case 'gram':
-			case 'milimeter':
 			case 'kilogram':
+			case 'km_per_hour':
+			case 'milimeter':
 			case 'centimeter':
+			case 'meter':
+			case 'kilometre':
 			case 'price':
 			case 'number':
 				$sanitized = Core\Number::intval( $data );
