@@ -442,6 +442,7 @@ class Personage extends gEditorial\Module
 
 		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
 		$this->filter( 'paired_all_connected_to_args', 4, 18, 'clause', $this->base );
+		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 	}
 
 	public function importer_init()
@@ -1011,6 +1012,46 @@ class Personage extends gEditorial\Module
 		];
 
 		return $args;
+	}
+
+	// NOTE: late overrides of the fields values and keys
+	public function searchselect_result_extra_for_post( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( $this->constant( 'primary_posttype' ) !== $post->post_type )
+			return $data;
+
+		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
+			$data['identity'] = $identity;
+
+		if ( $fullname = $this->make_human_title( $post, 'export' ) )
+			$data['fullname'] = $fullname;
+
+		if ( array_key_exists( 'home_address', $data ) )
+			$data['address'] = ModuleHelper::prepAddress( $data['home_address'], 'export', '' ); // FIXME: move this up!
+
+		if ( empty( $data['contact'] ) ) {
+
+			if ( ! empty( $data['mobile_number'] ) )
+				$data['contact'] = $data['mobile_number'];
+
+			else if ( ! empty( $data['phone_number'] ) )
+				$data['contact'] = $data['phone_number'];
+
+			else if ( ! empty( $data['mobile_secondary'] ) )
+				$data['contact'] = $data['mobile_secondary'];
+
+			else if ( ! empty( $data['phone_secondary'] ) )
+				$data['contact'] = $data['phone_secondary'];
+		}
+
+		return $data;
 	}
 
 	public function sanitize_passport_number( $data, $field, $post )

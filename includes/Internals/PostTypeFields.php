@@ -1047,4 +1047,24 @@ trait PostTypeFields
 			$this->posttypefields_do_import_field( $data[$field], $args, $post, $override );
 		}
 	}
+
+	// `$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );`
+	public function searchselect_result_extra_for_post_filter( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $data;
+
+		return array_merge( $data, array_filter( Core\Arraay::pluck(
+			$this->get_posttype_fields_data( $post, FALSE, 'export' ),
+			'rendered',
+			'name'
+		) ) );
+	}
 }

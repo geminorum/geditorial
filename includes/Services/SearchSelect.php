@@ -169,8 +169,10 @@ class SearchSelect extends WordPress\Main
 
 		foreach ( $posts as $post )
 			$results[] = (object) [
-				'id'   => $post,
-				'text' => WordPress\Post::title( $post ),
+				'id'    => $post,
+				'text'  => WordPress\Post::title( $post ),
+				'extra' => apply_filters( sprintf( '%s_searchselect_result_extra_for_post', static::BASE ), [], $post, $queried ),
+				'image' => apply_filters( sprintf( '%s_searchselect_result_image_for_post', static::BASE ), '', $post, $queried ),
 			];
 
 		return [

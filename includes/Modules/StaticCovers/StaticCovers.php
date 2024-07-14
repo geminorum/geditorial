@@ -217,6 +217,7 @@ class StaticCovers extends gEditorial\Module
 		$this->filter( 'rest_thumbnail_data', 4, 99, FALSE, 'gnetwork' );
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
 		$this->filter( 'post_image_pre_src', 5, 12, FALSE, $this->base );
+		$this->filter( 'searchselect_result_image_for_post', 3, 12, FALSE, $this->base );
 		$this->filter_module( 'tabloid', 'view_data', 3, 20 );
 		$this->filter_module( 'papered', 'view_data', 4 );
 		$this->register_shortcode( 'post_cover_shortcode' );
@@ -765,6 +766,24 @@ class StaticCovers extends gEditorial\Module
 			return $src;
 
 		return $pre;
+	}
+
+	public function searchselect_result_image_for_post( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $data;
+
+		if ( $src = $this->_get_posttype_image( $post ) )
+			return $src;
+
+		return $data;
 	}
 
 	public function tabloid_view_data( $data, $post, $context )

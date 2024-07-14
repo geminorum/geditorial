@@ -179,6 +179,7 @@ class Units extends gEditorial\Module
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, 'action', $this->base );
+		$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );
 	}
 
 	public function importer_init()

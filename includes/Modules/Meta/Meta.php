@@ -302,6 +302,7 @@ class Meta extends gEditorial\Module
 
 		$this->init_meta_fields();
 		$this->register_meta_fields();
+		$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );
 	}
 
 	public function importer_init()

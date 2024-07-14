@@ -11,6 +11,36 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'personage';
 
+	// TODO: move this up!
+	public static function prepAddress( $data, $context = 'display', $fallback = FALSE )
+	{
+		if ( self::empty( $data ) )
+			return $fallback;
+
+		$data = Core\Text::trim( $data );
+		$data = trim( $data, '.-|…' );
+		$data = str_ireplace( [ '_', '|', '–', '—'  ], '-', $data );
+
+		// TODO: یکم -> ۱
+
+		$map = [
+			'پلاک'   => 'پ',
+			'خیابان' => 'خ',
+			'بلوک'   => 'ب',
+			'کوچه'   => 'ک',
+			'فرعی'   => 'فرعی',
+			'بلوار'   => 'بلوار',
+			'بن بست'   => 'بن‌بست',
+		];
+
+		foreach ( $map as $from => $to)
+			$data = preg_replace_callback( '/'.$from.'[\s]?([0-9۰-۹]+)'.'/mu', static function ( $matches ) use ( $to ) {
+				return ' '.$to.Core\Number::localize( trim( $matches[1] ) ).' '; // padded with space
+			}, $data );
+
+		return Core\Text::normalizeWhitespace( $data );
+	}
+
 	// TODO: support more complex naming
 	public static function makeFullname( $data, $context = 'display', $fallback = FALSE )
 	{
