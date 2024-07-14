@@ -217,13 +217,15 @@ class Tabloid extends gEditorial\Module
 		] );
 	}
 
-	// TODO: support comment list for selected by settings/filtered posttypes
 	private function _get_view_data_for_post( $post, $context )
 	{
 		$data = [];
 
 		if ( $response = Services\RestAPI::getPostResponse( $post, 'view' ) )
 			$data = $response;
+
+		if ( $comments = Services\RestAPI::getCommentsResponse( $post, 'view' ) )
+			$data['comments_rendered'] = ModuleHelper::prepCommentsforPost( $comments );
 
 		// fallback if `title` is not supported by the posttype
 		if ( empty( $data['title'] ) )
@@ -260,7 +262,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'exports' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
-		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'term', 'custom' ], '' );
+		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'term', 'custom', 'comments' ], '' );
 		$data['___hooks']     = array_fill_keys( [
 			'after-actions',
 			'after-post',
@@ -268,6 +270,7 @@ class Tabloid extends gEditorial\Module
 			'after-term',
 			'after-custom',
 			'after-content',
+			'after-comments',
 		], '' );
 
 		return $this->filters( 'view_data', $data, $post, $context );
@@ -278,6 +281,7 @@ class Tabloid extends gEditorial\Module
 		unset( $data['meta_rendered'] );
 		unset( $data['units_rendered'] );
 		unset( $data['terms_rendered'] );
+		unset( $data['comments_rendered'] );
 
 		unset( $data['_links'] );
 

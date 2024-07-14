@@ -21,6 +21,20 @@ class RestAPI extends WordPress\Main
 		return apply_filters( static::BASE.'_restapi_post_response', $response, $post, $context, $route );
 	}
 
+	public static function getCommentsResponse( $post, $context = 'view' )
+	{
+		$response = FALSE;
+		$route    = '/wp/v2/comments';
+
+		if ( $post = WordPress\Post::get( $post ) )
+			$response = WordPress\Rest::doInternalRequest( $route, [
+				'context' => $context,
+				'post'    => $post->ID,
+			] );
+
+		return apply_filters( static::BASE.'_restapi_comments_response', $response, $post, $context, $route );
+	}
+
 	public static function getTermResponse( $term, $context = 'view' )
 	{
 		$response = FALSE;
