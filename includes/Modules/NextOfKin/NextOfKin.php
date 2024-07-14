@@ -200,6 +200,14 @@ class NextOfKin extends gEditorial\Module
 		];
 	}
 
+	protected function subcontent_define_searchable_fields()
+	{
+		if ( $human = gEditorial()->constant( 'personage', 'primary_posttype' ) )
+			return [ 'fullname' => [ $human ] ];
+
+		return [];
+	}
+
 	protected function subcontent_define_hidden_fields()
 	{
 		return [
@@ -385,8 +393,7 @@ class NextOfKin extends gEditorial\Module
 
 			Settings::wrapOpen( $this->key, $context, $title );
 
-				Scripts::renderAppMounter( 'family-grid', $this->key );
-				Scripts::noScriptMessage();
+				$this->subcontent_do_render_mount( 'family-grid' );
 
 			Settings::wrapClose();
 

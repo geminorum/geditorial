@@ -184,6 +184,14 @@ class Phonebook extends gEditorial\Module
 		];
 	}
 
+	protected function subcontent_define_searchable_fields()
+	{
+		if ( $human = gEditorial()->constant( 'personage', 'primary_posttype' ) )
+			return [ 'fullname' => [ $human ] ];
+
+		return [];
+	}
+
 	protected function subcontent_define_unique_fields()
 	{
 		return [
@@ -315,8 +323,7 @@ class Phonebook extends gEditorial\Module
 
 			Settings::wrapOpen( $this->key, 'framepage', $title );
 
-				Scripts::renderAppMounter( 'contact-grid', $this->key );
-				Scripts::noScriptMessage();
+				$this->subcontent_do_render_mount( 'contact-grid' );
 
 			Settings::wrapClose();
 

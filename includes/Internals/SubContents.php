@@ -18,6 +18,7 @@ trait SubContents
 		return array_merge( [
 			'index'    => _x( '#', 'Internal: Subcontents: Javascript String: `index`', 'geditorial-admin' ),
 			'plus'     => _x( '+', 'Internal: Subcontents: Javascript String: `plus`', 'geditorial-admin' ),
+			'search'   => _x( 'Search', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'actions'  => _x( 'Actions', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'info'     => _x( 'Information', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'insert'   => _x( 'Insert', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
@@ -32,6 +33,7 @@ trait SubContents
 			'saved'    => _x( 'New entry saved successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'sorted'   => _x( 'The Sorting saved successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'invalid'  => _x( 'The entry data are not valid!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'readonly' => _x( 'The field is in read-only mode!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 
 			/* translators: %s: count number */
 			'countitems'    => _x( '%s items', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
@@ -57,17 +59,33 @@ trait SubContents
 
 	protected function subcontent_get_fields( $context = 'display', $settings_key = 'subcontent_fields' )
 	{
-		$all      = $this->subcontent_define_fields();
-		// $hidden   = $this->subcontent_get_hidden_fields( $context );
-		$required = $this->subcontent_get_required_fields( $context );
-		$enabled  = $this->get_setting( $settings_key, array_keys( $all ) );
-		$fields   = [];
+		$all        = $this->subcontent_define_fields();
+		// $hidden     = $this->subcontent_get_hidden_fields( $context );
+		// $unique     = $this->subcontent_get_unique_fields( $context );
+		// $readonly   = $this->subcontent_get_readonly_fields( $context );
+		// $searchable = $this->subcontent_get_searchable_fields( $context );
+		$required   = $this->subcontent_get_required_fields( $context );
+		$enabled    = $this->get_setting( $settings_key, array_keys( $all ) );
+		$fields     = [];
 
 		foreach ( $all as $field => $label )
 			if ( in_array( $field, $required, TRUE ) || in_array( $field, $enabled, TRUE ) )
 				$fields[$field] = $label;
 
 		return $this->filters( 'fields', $fields, $enabled, $required, $context );
+	}
+
+	protected function subcontent_define_searchable_fields()
+	{
+		return [
+			// 'fullname' => [ 'human', 'department' ], // <---- EXAMPLE
+		];
+	}
+
+	protected function subcontent_get_searchable_fields( $context = 'display' )
+	{
+		return $this->filters( 'searchable_fields',
+			$this->subcontent_define_searchable_fields(), $context );
 	}
 
 	protected function subcontent_define_required_fields()
@@ -81,6 +99,19 @@ trait SubContents
 	{
 		return $this->filters( 'required_fields',
 			$this->subcontent_define_required_fields(), $context );
+	}
+
+	protected function subcontent_define_readonly_fields()
+	{
+		return [
+			// 'name' // <---- EXAMPLE
+		];
+	}
+
+	protected function subcontent_get_readonly_fields( $context = 'display' )
+	{
+		return $this->filters( 'readonly_fields',
+			$this->subcontent_define_readonly_fields(), $context );
 	}
 
 	protected function subcontent_define_hidden_fields()
@@ -705,24 +736,45 @@ trait SubContents
 		return $list;
 	}
 
-	protected function subcontent_do_enqueue_app( $name )
+	protected function subcontent_do_render_mount( $name )
 	{
-		if ( ! $this->role_can( 'assign' ) )
+		Scripts::renderAppMounter( TRUE === $name ? 'subcontent-grid' : $name, $this->key );
+		Scripts::noScriptMessage();
+	}
+
+	protected function subcontent_do_enqueue_app( $name, $args = [] )
+	{
+		$args = self::atts( [
+			'context'   => 'edit',
+			'can'       => 'assign',
+			'assetkey'  => TRUE === $name ? '_subcontent' : NULL,
+			'linked'    => NULL,
+			// 'posttypes' => NULL,
+			'expanding' => NULL, // FIXME: add full support
+		], $args );
+
+		if ( ! $this->role_can( $args['can'] ) )
 			return;
 
-		$this->enqueue_asset_js( [
+		$asset = [
 			'strings' => $this->subcontent_get_strings_for_js(),
-			'fields'  => $this->subcontent_get_fields( 'edit' ),
+			'fields'  => $this->subcontent_get_fields( $args['context'] ),
 			'config'  => [
-				'linked'    => self::req( 'linked', FALSE ),
-				'required'  => $this->subcontent_get_required_fields( 'edit' ),
-				'hidden'    => $this->subcontent_get_hidden_fields( 'edit' ),
-				'unique'    => $this->subcontent_get_unique_fields( 'edit' ),
-				'posttypes' => $this->get_setting( 'subcontent_posttypes', [] ),
+				'linked'       => $args['linked'] ?? self::req( 'linked', FALSE ),
+				'searchselect' => Services\SearchSelect::namespace(),
+				'searchable'   => $this->subcontent_get_searchable_fields( $args['context'] ),
+				'required'     => $this->subcontent_get_required_fields( $args['context'] ),
+				'readonly'     => $this->subcontent_get_readonly_fields( $args['context'] ),
+				'hidden'       => $this->subcontent_get_hidden_fields( $args['context'] ),
+				'unique'       => $this->subcontent_get_unique_fields( $args['context'] ),
+				// 'posttypes'    => $args['posttypes'] ?? $this->get_setting( 'subcontent_posttypes', [] ),           // NOT USED ON THE APP!
+				'expanding'    => $args['expanding'] ?? $this->get_setting( 'subcontent_expanding', TRUE ),
 			],
-		], FALSE );
+		];
 
-		Scripts::enqueueApp( $name );
+		$this->enqueue_asset_js( $asset, FALSE, [
+			Scripts::enqueueApp( TRUE === $name ? 'subcontent-grid' : $name )
+		], $args['assetkey'] );
 	}
 
 	protected function subcontent_do_enqueue_asset_js( $screen )

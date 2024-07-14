@@ -203,6 +203,13 @@ class Banking extends gEditorial\Module
 		];
 	}
 
+	protected function subcontent_define_readonly_fields()
+	{
+		return [
+			'bankname',
+		];
+	}
+
 	public function after_setup_theme()
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
@@ -324,8 +331,7 @@ class Banking extends gEditorial\Module
 
 			Settings::wrapOpen( $this->key, $context, $title );
 
-				Scripts::renderAppMounter( 'bank-grid', $this->key );
-				Scripts::noScriptMessage();
+				$this->subcontent_do_render_mount( 'bank-grid' );
 
 			Settings::wrapClose();
 

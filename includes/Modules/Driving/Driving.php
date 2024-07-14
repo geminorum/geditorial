@@ -186,6 +186,14 @@ class Driving extends gEditorial\Module
 		];
 	}
 
+	protected function subcontent_define_searchable_fields()
+	{
+		if ( $human = gEditorial()->constant( 'personage', 'primary_posttype' ) )
+			return [ 'fullname' => [ $human ] ];
+
+		return [];
+	}
+
 	protected function subcontent_define_hidden_fields()
 	{
 		return [
@@ -327,8 +335,7 @@ class Driving extends gEditorial\Module
 
 			Settings::wrapOpen( $this->key, $context, $title );
 
-				Scripts::renderAppMounter( 'vehicle-grid', $this->key );
-				Scripts::noScriptMessage();
+				$this->subcontent_do_render_mount( 'vehicle-grid' );
 
 			Settings::wrapClose();
 
