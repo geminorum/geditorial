@@ -5,10 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class NextOfKin extends gEditorial\Module
@@ -378,44 +376,14 @@ class NextOfKin extends gEditorial\Module
 
 	public function render_framepage_adminpage()
 	{
-		if ( ! $post = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
-
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return Info::renderNoPostsAvailable();
-
-		$context = 'framepage';
-
-		if ( $this->role_can( 'assign' ) ) {
-
+		$this->subcontent_do_render_iframe_content(
+			'family-grid',
+			'framepage',
 			/* translators: %s: post title */
-			$title = sprintf( _x( 'Family Grid for %s', 'Page Title', 'geditorial-next-of-kin' ), WordPress\Post::title( $post ) );
-
-			Settings::wrapOpen( $this->key, $context, $title );
-
-				$this->subcontent_do_render_mount( 'family-grid' );
-
-			Settings::wrapClose();
-
-		} else if ( $this->role_can( 'reports' ) ) {
-
+			_x( 'Family Grid for %s', 'Page Title', 'geditorial-next-of-kin' ),
 			/* translators: %s: post title */
-			$title = sprintf( _x( 'Family Overview for %s', 'Page Title', 'geditorial-next-of-kin' ), WordPress\Post::title( $post ) );
-
-			Settings::wrapOpen( $this->key, $context, $title );
-
-				echo $this->main_shortcode( [
-					'id'      => $post,
-					'context' => $context,
-					'class'   => '-table-content',
-				], $this->subcontent_get_empty_notice( $context ) );
-
-			Settings::wrapClose();
-
-		} else {
-
-			Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
-		}
+			_x( 'Family Overview for %s', 'Page Title', 'geditorial-next-of-kin' )
+		);
 	}
 
 	public function setup_restapi()

@@ -5,8 +5,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
@@ -736,10 +738,39 @@ trait SubContents
 		return $list;
 	}
 
-	protected function subcontent_do_render_mount( $name )
+	protected function subcontent_do_render_iframe_content( $app_name, $context = NULL, $assign_template = NULL, $reports_template = NULL )
 	{
-		Scripts::renderAppMounter( TRUE === $name ? 'subcontent-grid' : $name, $this->key );
-		Scripts::noScriptMessage();
+		if ( ! $post = self::req( 'linked' ) )
+			return Info::renderNoPostsAvailable();
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return Info::renderNoPostsAvailable();
+
+		if ( $this->role_can( 'assign' ) ) {
+
+			Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
+
+				Scripts::renderAppMounter( TRUE === $app_name ? 'subcontent-grid' : $app_name, $this->key );
+				Scripts::noScriptMessage();
+
+			Settings::wrapClose( FALSE );
+
+		} else if ( $this->role_can( 'reports' ) ) {
+
+			Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
+
+				echo $this->subcontent_do_main_shortcode( [
+					'id'      => $post,
+					'context' => $context,
+					'class'   => '-table-content',
+				], $this->subcontent_get_empty_notice( $context ) );
+
+			Settings::wrapClose( FALSE );
+
+		} else {
+
+			Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
+		}
 	}
 
 	protected function subcontent_do_enqueue_app( $name, $args = [] )

@@ -5,10 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Phonebook extends gEditorial\Module
@@ -310,42 +308,14 @@ class Phonebook extends gEditorial\Module
 
 	public function render_framepage_adminpage()
 	{
-		if ( ! $post = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
-
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return Info::renderNoPostsAvailable();
-
-		if ( $this->role_can( 'assign' ) ) {
-
+		$this->subcontent_do_render_iframe_content(
+			'contact-grid',
+			'framepage',
 			/* translators: %s: post title */
-			$title = sprintf( _x( 'Contact Grid for %s', 'Page Title', 'geditorial-phonebook' ), WordPress\Post::title( $post ) );
-
-			Settings::wrapOpen( $this->key, 'framepage', $title );
-
-				$this->subcontent_do_render_mount( 'contact-grid' );
-
-			Settings::wrapClose();
-
-		} else if ( $this->role_can( 'reports' ) ) {
-
+			_x( 'Contact Grid for %s', 'Page Title', 'geditorial-phonebook' ),
 			/* translators: %s: post title */
-			$title = sprintf( _x( 'Contacts Overview for %s', 'Page Title', 'geditorial-phonebook' ), WordPress\Post::title( $post ) );
-
-			Settings::wrapOpen( $this->key, 'framepage', $title );
-
-				echo $this->main_shortcode( [
-					'id'      => $post,
-					'context' => 'framepage',
-					'class'   => '-table-content',
-				], $this->subcontent_get_empty_notice( 'framepage' ) );
-
-			Settings::wrapClose();
-
-		} else {
-
-			Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
-		}
+			_x( 'Contacts Overview for %s', 'Page Title', 'geditorial-phonebook' )
+		);
 	}
 
 	public function setup_restapi()

@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Driving extends gEditorial\Module
@@ -320,44 +319,14 @@ class Driving extends gEditorial\Module
 
 	public function render_framepage_adminpage()
 	{
-		if ( ! $post = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
-
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return Info::renderNoPostsAvailable();
-
-		$context = 'framepage';
-
-		if ( $this->role_can( 'assign' ) ) {
-
+		$this->subcontent_do_render_iframe_content(
+			'vehicle-grid',
+			'framepage',
 			/* translators: %s: post title */
-			$title = sprintf( _x( 'Vehicle Grid for %s', 'Page Title', 'geditorial-driving' ), WordPress\Post::title( $post ) );
-
-			Settings::wrapOpen( $this->key, $context, $title );
-
-				$this->subcontent_do_render_mount( 'vehicle-grid' );
-
-			Settings::wrapClose();
-
-		} else if ( $this->role_can( 'reports' ) ) {
-
+			_x( 'Vehicle Grid for %s', 'Page Title', 'geditorial-driving' ),
 			/* translators: %s: post title */
-			$title = sprintf( _x( 'Vehicle Overview for %s', 'Page Title', 'geditorial-driving' ), WordPress\Post::title( $post ) );
-
-			Settings::wrapOpen( $this->key, $context, $title );
-
-				echo $this->main_shortcode( [
-					'id'      => $post,
-					'context' => $context,
-					'class'   => '-table-content',
-				], $this->subcontent_get_empty_notice( $context ) );
-
-			Settings::wrapClose();
-
-		} else {
-
-			Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
-		}
+			_x( 'Vehicle Overview for %s', 'Page Title', 'geditorial-driving' )
+		);
 	}
 
 	public function setup_restapi()
