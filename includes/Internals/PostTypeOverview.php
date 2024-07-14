@@ -17,11 +17,11 @@ trait PostTypeOverview
 		if ( ! $this->role_can( 'reports' ) && ! $this->cuc( 'reports' ) )
 			return FALSE;
 
-		$module  = 'meta'; // NOTE: the fields module
 		$query   = $extra = [];
 		$type    = $this->constant( $constant );
 		$list    = $this->list_posttypes();
-		$fields  = $this->posttype_overview_get_available_fields( $type, $module );
+		$fields  = $this->posttype_overview_get_available_fields( $type, 'meta' );
+		$units   = $this->posttype_overview_get_available_fields( $type, 'units' );
 		$taxes   = $this->posttype_overview_get_available_taxonomies( $type );
 		$columns = [ '_cb' => 'ID' ];
 
@@ -39,8 +39,8 @@ trait PostTypeOverview
 		foreach ( $taxes as $taxonomy => $object )
 			$columns['tax__'.$taxonomy] = [
 				'title'    => $object->label,
-				'class'    => sprintf( '-field-%s-%s', $module, $taxonomy ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $taxonomy, $object, $module ) {
+				'class'    => sprintf( '-field-%s-%s', 'tax', $taxonomy ),
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $taxonomy, $object ) {
 					Helper::renderPostTermsEditRow( $row, $object );
 					return '';
 				},
@@ -49,13 +49,26 @@ trait PostTypeOverview
 		foreach ( $fields as $field_key => $field )
 			$columns['meta__'.$field_key] = [
 				'title'    => $field['title'],
-				'class'    => sprintf( '-field-%s-%s', $module, $field_key ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $field_key, $field, $module ) {
+				'class'    => sprintf( '-field-%s-%s', 'meta', $field_key ),
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $field_key, $field ) {
 					return Template::getMetaField( $field_key, [
 						'id'      => $row->ID,
 						'default' => $field['default'],
 						'context' => 'reports',
-					], FALSE, $module ) ?: Helper::htmlEmpty();
+					], FALSE, 'meta' ) ?: Helper::htmlEmpty();
+				},
+			];
+
+		foreach ( $units as $unit_key => $unit )
+			$columns['unit__'.$unit_key] = [
+				'title'    => $unit['title'],
+				'class'    => sprintf( '-field-%s-%s', 'unit', $unit_key ),
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $unit_key, $unit ) {
+					return Template::getMetaField( $unit_key, [
+						'id'      => $row->ID,
+						'default' => $unit['default'],
+						'context' => 'reports',
+					], FALSE, 'unit' ) ?: Helper::htmlEmpty();
 				},
 			];
 
@@ -74,9 +87,8 @@ trait PostTypeOverview
 			'pagination' => $pagination,
 			'after'      => [ $this, 'posttype_overview_after_table' ],
 			'extra'      => [
-				'posttype'     => $type,
-				'constant'     => $constant,
-				'field_module' => $module,
+				'posttype' => $type,
+				'constant' => $constant,
 			],
 		] );
 	}
@@ -101,7 +113,7 @@ trait PostTypeOverview
 	{
 		return Core\Arraay::keepByKeys(
 			Services\PostTypeFields::getEnabled( $posttype, $field_module ),
-			$this->get_setting( $option_key ?? 'overview_fields', [] )
+			$this->get_setting( $option_key ?? ( 'meta' === $field_module ? 'overview_fields' : 'overview_'.$field_module ), [] )
 		);
 	}
 
