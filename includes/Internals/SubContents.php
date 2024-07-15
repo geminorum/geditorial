@@ -59,6 +59,14 @@ trait SubContents
 		return $this->get_strings( 'subcontent', 'fields' );
 	}
 
+	protected function subcontent_get_fields_for_settings()
+	{
+		return Core\Arraay::stripByKeys(
+			$this->subcontent_define_fields(),
+			$this->subcontent_get_required_fields( 'settings' )
+		);
+	}
+
 	protected function subcontent_get_fields( $context = 'display', $settings_key = 'subcontent_fields' )
 	{
 		$all        = $this->subcontent_define_fields();
@@ -778,15 +786,14 @@ trait SubContents
 	protected function subcontent_do_enqueue_app( $name, $args = [] )
 	{
 		$args = self::atts( [
-			'context'   => 'edit',
-			'can'       => 'assign',
-			'assetkey'  => TRUE === $name ? '_subcontent' : NULL,
-			'linked'    => NULL,
-			// 'posttypes' => NULL,
+			'context'    => 'edit',
+			'can'        => 'assign',
+			'assetkey'   => TRUE === $name ? '_subcontent' : NULL,
+			'linked'     => NULL,
 			'searchable' => NULL,
 			'required'   => NULL,
 			'readonly'   => NULL,
-			'expanding'  => NULL,   // FIXME: add full support
+			'frozen'     => NULL, // FIXME: add full support
 		], $args );
 
 		if ( ! $this->role_can( $args['can'] ) )
@@ -803,8 +810,7 @@ trait SubContents
 				'readonly'     => $args['readonly'] ?? $this->subcontent_get_readonly_fields( $args['context'] ),
 				'hidden'       => $this->subcontent_get_hidden_fields( $args['context'] ),
 				'unique'       => $this->subcontent_get_unique_fields( $args['context'] ),
-				// 'posttypes'    => $args['posttypes'] ?? $this->get_setting( 'subcontent_posttypes', [] ),           // NOT USED ON THE APP!
-				'expanding'    => $args['expanding'] ?? $this->get_setting( 'subcontent_expanding', TRUE ),
+				'frozen'       => $args['frozen'] ?? $this->get_setting( 'subcontent_frozen', FALSE ),
 			],
 		];
 

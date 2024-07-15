@@ -1208,6 +1208,7 @@ class Meta extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
+	// TODO: move to `Services\PostTypeFields`
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		switch ( $field ) {
@@ -1244,7 +1245,7 @@ class Meta extends gEditorial\Module
 			case 'people':
 
 				if ( 'export' === $context )
-					return $raw ?: $meta;
+					return WordPress\Strings::getPiped( Helper::getSeparated( $raw ?: $meta ) );
 
 				if ( 'print' === $context )
 					return WordPress\Strings::getJoined( Helper::getSeparated( $raw ?: $meta ) );
@@ -1257,7 +1258,7 @@ class Meta extends gEditorial\Module
 					return Core\Number::localize( Core\Number::zeroise( $raw ?: $meta, 10 ) );
 
 				if ( 'export' === $context )
-					return Core\Number::zeroise( $raw ?: $meta, 10 );
+					return Core\Number::zeroise( Core\Number::translate( $raw ?: $meta ), 10 );
 
 				return sprintf( '<span class="-identity %s">%s</span>',
 					Core\Validation::isIdentityNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
@@ -1281,7 +1282,7 @@ class Meta extends gEditorial\Module
 			case 'iban':
 
 				if ( 'export' === $context )
-					return $raw ?: $meta;
+					return Core\Number::translate( $raw ?: $meta );
 
 				if ( FALSE === ( $iban = Info::fromIBAN( $raw ?: $meta ) ) )
 					return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $meta );
@@ -1290,13 +1291,13 @@ class Meta extends gEditorial\Module
 					return sprintf( '<span class="-iban %s" title="%s">%s</span>',
 						'-is-valid',
 						empty( $iban['bankname'] ) ? gEditorial()->na( FALSE ) : $iban['bankname'],
-						$raw ?: $meta
+						empty( $iban['formatted'] ) ? ( $raw ?: $meta ) : $iban['formatted']
 					);
 
 			case 'bankcard':
 
 				if ( 'export' === $context )
-					return $raw ?: $meta;
+					return Core\Number::translate( $raw ?: $meta );
 
 				if ( FALSE === ( $card = Info::fromCardNumber( $raw ?: $meta ) ) )
 					return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $meta );
@@ -1305,7 +1306,7 @@ class Meta extends gEditorial\Module
 					return sprintf( '<span class="-bankcard %s" title="%s">%s</span>',
 						'-is-valid',
 						empty( $card['bankname'] ) ? gEditorial()->na( FALSE ) : $card['bankname'],
-						$raw ?: $meta
+						empty( $card['formatted'] ) ? ( $raw ?: $meta ) : $card['formatted']
 					);
 
 			case 'contact':

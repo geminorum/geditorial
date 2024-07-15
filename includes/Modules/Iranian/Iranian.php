@@ -483,7 +483,7 @@ class Iranian extends gEditorial\Module
 		if ( $identity !== Core\Validation::sanitizeIdentityNumber( $cleaned ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %1$s: identity code, %2$s: birth certificate number */
-				_x( 'Identiry (%1$s) and Birth Certificate Number (%2$s) are diffrent', 'Notice', 'geditorial-iranian' ) ),
+				_x( 'Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent', 'Notice', 'geditorial-iranian' ) ),
 				Core\HTML::code( $identity ), Core\HTML::code( $certificate ) ) : TRUE ) && FALSE;
 
 		if ( ! delete_post_meta( $post->ID, $certificate_metakey ) )

@@ -512,6 +512,7 @@ class Template extends WordPress\Main
 
 	// TODO: DEPRECATE
 	// TODO: rename to `getPosttypeField()`
+	// TODO: move to `Services\PostTypeFields`
 	public static function getMetaField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
 	{
 		$args = self::atts( [
@@ -573,6 +574,7 @@ class Template extends WordPress\Main
 		return $args['default'];
 	}
 
+	// TODO: move to `Services\PostTypeFields`
 	// NOTE: does not check for `access_view` arg
 	public static function getMetaFieldRaw( $field_key, $post_id, $module = 'meta', $check = FALSE, $default = FALSE )
 	{

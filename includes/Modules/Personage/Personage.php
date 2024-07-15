@@ -16,6 +16,7 @@ use geminorum\gEditorial\WordPress;
 
 class Personage extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
@@ -661,11 +662,15 @@ class Personage extends gEditorial\Module
 			case 'mother_name':
 			case 'spouse_name':
 			case 'place_of_birth':
-			case 'home_address':
-			case 'work_address':
 
 				// in all contexts!
 				return WordPress\Strings::cleanupChars( $meta );
+		}
+
+		switch ( $field_args['type'] ) {
+
+			case 'address':
+				return ModuleHelper::prepAddress( $meta, $context, $meta );
 		}
 
 		return $meta;

@@ -18,7 +18,6 @@ class Banking extends gEditorial\Module
 	use Internals\CoreRowActions;
 	use Internals\FramePage;
 	use Internals\MetaBoxSupported;
-	use Internals\PostMeta;
 	use Internals\RestAPI;
 	use Internals\SubContents;
 
@@ -44,10 +43,7 @@ class Banking extends gEditorial\Module
 		return [
 			'_subcontent' => [
 				'subcontent_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
-				'subcontent_fields'    => [ NULL, Core\Arraay::stripByKeys(
-					$this->subcontent_define_fields(),
-					$this->subcontent_get_required_fields( 'settings' )
-				) ],
+				'subcontent_fields'    => [ NULL, $this->subcontent_get_fields_for_settings() ],
 				'force_sanitize',
 			],
 			'_roles' => [

@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 trait PostMeta
@@ -146,22 +145,5 @@ trait PostMeta
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;
 		}
-	}
-
-	// DEFAULT METHOD
-	public function prep_meta_row( $value, $field_key = NULL, $field = [], $raw = NULL )
-	{
-		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
-			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw ] );
-
-		if ( method_exists( $this, 'prep_meta_row_module' ) ) {
-
-			$prepped = $this->prep_meta_row_module( $value, $field_key, $field, $raw );
-
-			if ( $prepped !== $value )
-				return $prepped; // bail if already prepped
-		}
-
-		return Helper::prepMetaRow( $value, $field_key, $field, $raw );
 	}
 }

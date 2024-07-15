@@ -117,8 +117,9 @@ class Info extends WordPress\Main
 
 			$iban = Misc\IBAN::createFromString( $raw );
 
-			$info['raw']     = $iban->toFormattedString( '' );
-			$info['country'] = $iban->getCountryCode();
+			$info['raw']       = $iban->toFormattedString( '' );
+			$info['country']   = $iban->getCountryCode();
+			$info['formatted'] = $iban->toFormattedString();
 
 		} catch ( \Exception $e ) {
 

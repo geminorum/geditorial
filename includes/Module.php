@@ -1179,6 +1179,24 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
+	// DEFAULT METHOD
+	// NOTE: must be available to all modules
+	public function prep_meta_row( $value, $field_key = NULL, $field = [], $raw = NULL )
+	{
+		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
+			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw ] );
+
+		if ( method_exists( $this, 'prep_meta_row_module' ) ) {
+
+			$prepped = $this->prep_meta_row_module( $value, $field_key, $field, $raw );
+
+			if ( $prepped !== $value )
+				return $prepped; // bail if already prepped
+		}
+
+		return Helper::prepMetaRow( $value, $field_key, $field, $raw );
+	}
+
 	// TODO: customize column position/sorting
 	// NOTE: appends custom meta fields into Terms Module
 	protected function _hook_terms_meta_field( $constant, $field, $args = [] )

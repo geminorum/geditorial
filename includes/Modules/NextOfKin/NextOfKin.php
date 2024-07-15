@@ -21,7 +21,6 @@ class NextOfKin extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\FramePage;
 	use Internals\MetaBoxSupported;
-	use Internals\PostMeta;
 	use Internals\RestAPI;
 	use Internals\SubContents;
 
@@ -49,13 +48,10 @@ class NextOfKin extends gEditorial\Module
 		return [
 			'_subcontent' => [
 				'subcontent_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
-				'subcontent_fields'    => [ NULL, Core\Arraay::stripByKeys(
-					$this->subcontent_define_fields(),
-					$this->subcontent_get_required_fields( 'settings' )
-				) ],
+				'subcontent_fields'    => [ NULL, $this->subcontent_get_fields_for_settings() ],
 				'force_sanitize',
-				'reports_roles' => [ NULL, $roles ],
-				'assign_roles'  => [ NULL, $roles ],
+				'reports_roles'        => [ NULL, $roles ],
+				'assign_roles'         => [ NULL, $roles ],
 			],
 			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_editlist' => [

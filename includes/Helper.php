@@ -251,6 +251,7 @@ class Helper extends WordPress\Main
 	}
 
 	// TODO: support: `dob`,`date`,`datetime`
+	// TODO: move to `Services\PostTypeFields`
 	public static function prepMetaRow( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		$filtered = apply_filters( static::BASE.'_prep_meta_row', $value, $field_key, $field, $raw );
@@ -366,7 +367,7 @@ class Helper extends WordPress\Main
 						return sprintf( '<span class="-iban %s" title="%s">%s</span>',
 							'-is-valid',
 							empty( $iban['bankname'] ) ? gEditorial()->na( FALSE ) : $iban['bankname'],
-							$raw ?: $value
+							empty( $iban['formatted'] ) ? ( $raw ?: $value ) : $iban['formatted']
 						);
 
 				case 'bankcard':
@@ -378,7 +379,7 @@ class Helper extends WordPress\Main
 						return sprintf( '<span class="-bankcard %s" title="%s">%s</span>',
 							'-is-valid',
 							empty( $card['bankname'] ) ? gEditorial()->na( FALSE ) : $card['bankname'],
-							$raw ?: $value
+							empty( $card['formatted'] ) ? ( $raw ?: $value ) : $card['formatted']
 						);
 
 				case 'isbn':
