@@ -64,12 +64,12 @@ class User extends Core\Base
 		return current_user_can( $cap );
 	}
 
-	public static function getTitleRow( $user, $fallback = '' )
+	public static function getTitleRow( $user, $fallback = '', $template = NULL )
 	{
 		if ( ! $object = self::user( $user ) )
 			return $fallback;
 
-		return sprintf( '%s (%s)', $object->display_name, $object->user_email );
+		return sprintf( $template ?? '%s (%s)', $object->display_name, $object->user_email );
 	}
 
 	// alt to `is_super_admin()`

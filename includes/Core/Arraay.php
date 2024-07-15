@@ -11,7 +11,7 @@ class Arraay extends Base
 			return $value ? (array) $value : [];
 		}, func_get_args() );
 
-		return empty( $args ) ? [] : array_values( array_unique( array_filter( array_map( 'trim', array_merge( ...$args ) ) ) ) );
+		return empty( $args ) ? [] : array_values( array_unique( array_filter( array_map( [ __NAMESPACE__.'\\Text', 'trim' ], array_merge( ...$args ) ) ) ) );
 	}
 
 	public static function prepNumeral()
@@ -20,7 +20,7 @@ class Arraay extends Base
 			return $value ? (array) $value : [];
 		}, func_get_args() );
 
-		return empty( $args ) ? [] : array_values( array_unique( array_filter( array_map( 'intval', array_merge( ...$args ) ) ) ) );
+		return empty( $args ) ? [] : array_values( array_unique( array_filter( array_map( [ __NAMESPACE__.'\\Number', 'intval' ], array_merge( ...$args ) ) ) ) );
 	}
 
 	public static function prepSplitters( $text, $default = '|' )
@@ -164,7 +164,7 @@ class Arraay extends Base
 
 	public static function range( $start, $end, $step = 1, $format = TRUE )
 	{
-		$array = array();
+		$array = [];
 
 		foreach ( range( $start, $end, $step ) as $number )
 			$array[$number] = $format ? Number::format( $number ) : $number;

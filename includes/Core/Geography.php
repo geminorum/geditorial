@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Geography extends Base
 {
+	// @SEE: https://github.com/brick/geo
 	// @SEE: https://github.com/jeroendesloovere/distance
 
 	// @REF: https://snippets.ir/1269/calculate-distance-between-two-points-in-php.html

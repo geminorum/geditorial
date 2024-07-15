@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Phone extends Base
 {
 
+	// @SEE: https://github.com/brick/phonenumber
+
 	/**
 	 * Validates a phone number using a regular expression.
 	 *
@@ -92,6 +94,10 @@ class Phone extends Base
 		$raw   = $value;
 		$title = empty( $field['title'] ) ? NULL : $field['title'];
 
+		// tries to sanitize with fallback
+		if ( ! $value = self::sanitize( $value ) )
+			$value = $raw;
+
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
 
 			if ( Text::starts( $value, '+98' ) )
@@ -102,8 +108,8 @@ class Phone extends Base
 
 		switch ( $context ) {
 			case 'edit'  : return $raw;
-			case 'export': return $value;
-			case 'print' : return $value;
+			case 'export': return Number::translate( $value );
+			case 'print' : return Number::localize( $value );
 			     default : return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
 

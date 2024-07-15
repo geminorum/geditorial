@@ -56,6 +56,26 @@ class Number extends Base
 		return $string;
 	}
 
+	// TODO: unified api
+	public static function toPersianOrdinal( $number )
+	{
+		if ( ! class_exists( 'geminorum\\gEditorial\\Misc\\NumbersInPersian' ) )
+			return self::toOrdinal( $number, 'fa_IR' );
+
+		$numbers = new \geminorum\gEditorial\Misc\NumbersInPersian();
+		return $numbers->number_to_ordinal( $number );
+	}
+
+	// TODO: unified api
+	public static function toPersianWords( $number )
+	{
+		if ( ! class_exists( 'geminorum\\gEditorial\\Misc\\NumbersInPersian' ) )
+			return self::toWords( $number, 'fa_IR' );
+
+		$numbers = new \geminorum\gEditorial\Misc\NumbersInPersian();
+		return $numbers->number_to_words( $number );
+	}
+
 	/**
 	 * Converts a number to ordinal based on locale.
 	 *
@@ -198,33 +218,23 @@ class Number extends Base
 	/**
 	 * Converts back number chars into English.
 	 *
-	 * @param  int|string $text
-	 * @param  bool       $force
-	 * @return int|string $number
+	 * @param  int|string $input
+	 * @return int        $number
 	 */
-	public static function intval( $text, $force = TRUE )
+	public static function intval( $input )
 	{
-		// $number = apply_filters( 'string_format_i18n_back', $text );
-		// $number = Orthography::translateNumbersBack( $text );
-		$number = self::translate( $text );
-
-		return $force ? (int) $number : $number;
+		return (int) self::translate( Text::trim( $input ) );
 	}
 
 	/**
 	 * Converts back number chars into English.
 	 *
-	 * @param  int|string $text
-	 * @param  bool       $force
-	 * @return int|string $number
+	 * @param  int|float|string $input
+	 * @return float            $number
 	 */
-	public static function floatval( $text, $force = TRUE )
+	public static function floatval( $input )
 	{
-		// $number = apply_filters( 'string_format_i18n_back', $text );
-		// $number = Orthography::translateNumbersBack( $text );
-		$number = self::translate( $text );
-
-		return $force ? (float) $number : $number;
+		return (float) self::translate( Text::trim( $input ) );
 	}
 
 	/**

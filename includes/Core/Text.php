@@ -17,6 +17,7 @@ class Text extends Base
 		// $text = trim( $text, " \n\t\r\0\x0B," );
 		$text = preg_replace( '/^[\s\x{200C}]/u', '', $text );
 		$text = preg_replace( '/[\s\x{200C}]$/u', '', $text );
+		$text = trim( $text ); // OCD Only
 
 		if ( 0 === strlen( $text ) )
 			return '';

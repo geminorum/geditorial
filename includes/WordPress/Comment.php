@@ -84,4 +84,18 @@ class Comment extends Core\Base
 
 		return $list;
 	}
+
+	/**
+	 * Retrieves comment rest route given a comment ID or comment object.
+	 *
+	 * @param  null|int|object $comment
+	 * @return false|string    $route
+	 */
+	public static function getRestRoute( $comment = NULL )
+	{
+		if ( ! $comment = self::get( $comment ) )
+			return FALSE;
+
+		return sprintf( '/wp/v2/comments/%d', $comment->comment_ID );
+	}
 }

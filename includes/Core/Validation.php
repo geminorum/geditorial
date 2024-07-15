@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Validation extends Base
 {
 
+	// @SEE: http://www.aliarash.com/article/shenasameli/shenasa_meli.htm
+
 	public static function sanitizePostCode( $input )
 	{
 		$sanitized = Number::translate( Text::trim( $input ) );
@@ -76,6 +78,7 @@ class Validation extends Base
 
 	// @REF: https://fandogh.github.io/codemeli/codemeli.html
 	// @REF: https://gist.github.com/ebraminio/5292017#gistcomment-3435493
+	// @SEE: http://www.aliarash.com/article/codemeli/codemeli.htm
 	public static function isIranNationalCode( $input )
 	{
 		if ( self::empty( $input ) )
@@ -203,7 +206,8 @@ class Validation extends Base
         return $sum % 10 == 0;
     }
 
-	// @REF https://www.webhostingtalk.ir/showthread.php?t=202847
+	// @REF: https://www.webhostingtalk.ir/showthread.php?t=202847
+	// @SEE: http://www.aliarash.com/article/creditcart/credit-debit-cart.htm
 	public static function isIranCardNumber( $input, $iranian = TRUE )
 	{
 		$input  = (string) preg_replace( '/\D/','',$input );

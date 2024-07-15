@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\WordPress\PostType;
+
 class WordPress extends Base
 {
 
@@ -314,6 +316,16 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return add_query_arg( array_merge( array(
 			'page' => $page,
 		), $extra ), admin_url( $base ) );
+	}
+
+	public static function getAdminSearchLink( $criteria = FALSE, $posttype = NULL, $extra = [] )
+	{
+		$query = [ 's' => $criteria ];
+
+		if ( PostType::can( $posttype, 'read' ) )
+			$query['post_type'] = $posttype;
+
+		return add_query_arg( array_merge( $query, $extra ), admin_url( 'edit.php' ) );
 	}
 
 	public static function getSearchLink( $query = FALSE, $url = FALSE, $query_id = 's' )

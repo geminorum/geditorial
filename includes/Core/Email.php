@@ -5,10 +5,34 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Email extends Base
 {
 
-	// wrapper for `is_email()`
-	public static function is( $text )
+	/**
+	 * Verifies that an email is valid.
+	 * NOTE: wrapper for WordPress core `is_email()`
+	 *
+	 * @param  string $input
+	 * @return bool   $is
+	 */
+	public static function is( $input )
 	{
-		return is_email( $text );
+		if ( self::empty( $input ) )
+			return FALSE;
+
+		return (bool) is_email( Text::trim( $input ) );
+	}
+
+	/**
+	 * Strips out all characters that are not allowable in an email.
+	 * NOTE: wrapper for WordPress core `sanitize_email()`
+	 *
+	 * @param  string $input
+	 * @return string $sanitized
+	 */
+	public static function sanitize( $input )
+	{
+		if ( self::empty( $input ) )
+			return '';
+
+		return sanitize_email( Text::trim( $input ) );
 	}
 
 	/**
@@ -21,7 +45,7 @@ class Email extends Base
 	 */
 	public static function prep( $value, $field = [], $context = 'display' )
 	{
-		if ( empty( $value ) )
+		if ( self::empty( $value ) )
 			return '';
 
 		$raw   = $value;
