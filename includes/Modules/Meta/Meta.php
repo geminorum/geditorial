@@ -1263,6 +1263,21 @@ class Meta extends gEditorial\Module
 					Core\Validation::isIdentityNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
 					$meta );
 
+			case 'postcode':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $meta );
+
+				if ( FALSE === ( $postcode = Info::fromPostCode( $raw ?: $meta ) ) )
+					return sprintf( '<span class="-postcode %s">%s</span>', '-not-valid', $raw ?: $meta );
+
+				else
+					return sprintf( '<span class="-postcode %s" title="%s">%s</span>',
+						'-is-valid -ltr',
+						empty( $postcode['country'] ) ? gEditorial()->na( FALSE ) : $postcode['country'],
+						Core\HTML::wrapLTR( empty( $postcode['formatted'] ) ? ( $raw ?: $meta ) : $postcode['formatted'] )
+					);
+
 			case 'iban':
 
 				if ( 'export' === $context )

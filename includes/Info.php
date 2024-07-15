@@ -128,6 +128,48 @@ class Info extends WordPress\Main
 		return apply_filters( static::BASE.'_info_from_iban', $info, $raw, $input, $pre );
 	}
 
+	public static function fromPostCode( $input, $pre = [] )
+	{
+		$info = $pre;
+
+		if ( $raw = Core\Validation::sanitizePostCode( $input ) ) {
+
+			// @package `brick/postcode`
+			// @source https://github.com/brick/postcode
+			$formatter = new \Brick\Postcode\PostcodeFormatter;
+			$country   = self::const( 'GCORE_DEFAULT_COUNTRY_CODE', 'IR' );
+
+			if ( ! empty( $info['country'] ) )
+				$country = $info['country'];
+
+			try {
+
+				$info['formatted'] = $formatter->format( $country, $raw );
+				$info['raw']       = $raw;
+				$info['country']   = $country;
+
+			} catch ( \Brick\Postcode\UnknownCountryException $e ) {
+
+				// Exception thrown when an unknown country code is provided
+
+				$info['raw']     = $raw;
+				$info['country'] = $country;
+
+			} catch ( \Brick\Postcode\InvalidPostcodeException $e ) {
+
+				// Exception thrown when trying to format an invalid postcode
+
+				$info = FALSE;
+			}
+
+		} else {
+
+			$info = FALSE;
+		}
+
+		return apply_filters( static::BASE.'_info_from_postcode', $info, $raw, $input, $pre );
+	}
+
 	public static function fromCardNumber( $input, $pre = [] )
 	{
 		$info = $pre;
