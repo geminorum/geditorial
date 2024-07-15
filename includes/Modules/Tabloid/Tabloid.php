@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
@@ -242,6 +243,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'exports' );
+		$data['__today']      = date_i18n( Datetime::dateFormats( 'print' ) );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'term', 'custom', 'comments' ], '' );
 		$data['___hooks']     = array_fill_keys( [
@@ -273,6 +275,7 @@ class Tabloid extends gEditorial\Module
 		unset( $data['__can_debug'] );
 		unset( $data['__can_print'] );
 		unset( $data['__can_export'] );
+		unset( $data['__today'] );
 
 		return $this->filters( 'cleanup_view_data', $data, $post, $context );
 	}
