@@ -1,0 +1,38 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Admin After All ---------------------------------------
+
+@media screen {
+  .-print-only,
+  .-print-only-inline,
+  .-print-only-block {
+    display: none !important;
+  }
+
+  .-print-hide,
+  .-print-hide-block {
+    display: block;
+  }
+
+  .-print-hide-inline {
+    display: inline;
+  }
+}
+
+@media print {
+  .-print-hide,
+  .-print-hide-inline,
+  .-print-hide-block {
+    display: none !important;
+  }
+
+  .-print-only,
+  .-print-only-block {
+    display: block;
+  }
+
+  .-print-only-inline {
+    display: inline !important;
+  }
+}
