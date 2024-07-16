@@ -60,6 +60,7 @@ class Programmed extends gEditorial\Module
 		return [
 			'_general' => [
 				'paired_force_parents',
+				'paired_globalsummary' => [ NULL, TRUE ],
 				'paired_manage_restricted',
 				[
 					'field'       => 'subterms_support',
@@ -370,9 +371,13 @@ class Programmed extends gEditorial\Module
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 
+		if ( $this->get_setting( 'paired_globalsummary', TRUE ) )
+			$this->filter( 'paired_globalsummary_for_post', 3, 12, FALSE, $this->base );
+		else
+			$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_supported' );
+
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );
-		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
 

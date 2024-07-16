@@ -821,6 +821,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_paired_globalsummary( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'paired_globalsummary',
+			'title'       => _x( 'Global Summary', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Includes connected main posts on the global summary for each supported item.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_paired_manage_restricted( $description = NULL )
 	{
 		return [

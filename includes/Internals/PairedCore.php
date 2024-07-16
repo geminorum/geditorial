@@ -531,6 +531,24 @@ trait PairedCore
 		return empty( $posts ) ? [] : $posts;
 	}
 
+	// `$this->filter( 'paired_globalsummary_for_post', 3, 12, FALSE, $this->base );`
+	public function paired_globalsummary_for_post( $list, $post, $context )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $list;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $list;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return $list;
+
+		if ( $items = $this->paired_all_connected_from( $post, $context, 'ids' ) )
+			$list[$this->constant( $constants[0] )] = $items;
+
+		return $list;
+	}
+
 	/**
 	 * Hooks the filter for paired parent terms on imports.
 	 * @SEE: `hook_taxonomy_importer_term_parents()`
