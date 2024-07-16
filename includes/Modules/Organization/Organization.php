@@ -293,6 +293,8 @@ class Organization extends gEditorial\Module
 
 		$this->pairedcore__hook_importer_before_import();
 		$this->pairedcore__hook_importer_term_parents();
+
+		$this->action_module( 'importer', 'posttype_taxonomies_after', 6 );
 	}
 
 	public function init()
@@ -639,6 +641,33 @@ class Organization extends gEditorial\Module
 			return;
 
 		$this->do_force_assign_parents( $post, $this->constant( 'primary_paired' ) );
+	}
+
+	public function importer_posttype_taxonomies_after( $posttype, $taxonomies, $name_template, $before, $after, $after_title )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		$taxonomy = WordPress\Taxonomy::object( $this->constant( 'primary_paired' ) );
+		$dropdown = wp_dropdown_categories( [
+			'taxonomy'          => $taxonomy->name,
+			'name'              => sprintf( $name_template, $taxonomy->name ),
+			'hierarchical'      => $taxonomy->hierarchical,
+			'show_option_none'  => Settings::showOptionNone(),
+			'option_none_value' => '0',
+			'hide_if_empty'     => TRUE,
+			'hide_empty'        => FALSE,
+			'echo'              => FALSE,
+		] );
+
+		if ( empty( $dropdown ) )
+			return;
+
+		echo $before;
+		echo Core\HTML::escape( $taxonomy->labels->menu_name );
+		echo $after_title;
+			echo $dropdown;
+		echo $after;
 	}
 
 	public function tools_settings( $sub )

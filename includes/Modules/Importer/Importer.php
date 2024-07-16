@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -171,18 +172,25 @@ class Importer extends gEditorial\Module
 
 	private function _render_posttype_taxonomies( $posttype )
 	{
-		$taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );
-
-		if ( empty( $taxonomies ) )
-			return FALSE;
+		$template   = 'terms_all[%s]';
+		$taxonomies = $this->get_importer_taxonomies( $posttype );
 
 		echo '<table class="base-table-raw"><tbody>';
+
+			$this->actions( 'posttype_taxonomies_before',
+				$posttype,
+				$taxonomies,
+				$template,
+				'<tr><td>',
+				'</td></tr>',
+				'</td><td>'
+			);
 
 		foreach ( $taxonomies as $taxonomy => $object ) {
 
 			$dropdown = wp_dropdown_categories( [
 				'taxonomy'          => $taxonomy,
-				'name'              => 'terms_all['.$taxonomy.']',
+				'name'              => sprintf( $template, $taxonomy ),
 				'hierarchical'      => $object->hierarchical,
 				'show_option_none'  => Settings::showOptionNone(),
 				'option_none_value' => '0',
@@ -200,6 +208,15 @@ class Importer extends gEditorial\Module
 				echo $dropdown;
 			echo '</td></tr>';
 		}
+
+		$this->actions( 'posttype_taxonomies_after',
+			$posttype,
+			$taxonomies,
+			$template,
+			'<tr><td>',
+			'</td></tr>',
+			'</td><td>'
+		);
 
 		echo '</tbody></table>';
 
@@ -221,7 +238,7 @@ class Importer extends gEditorial\Module
 
 		unset( $items[0] );
 
-		$taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );
+		$taxonomies = $this->get_importer_taxonomies( $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 		$source_key = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_key' ) );
 		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
@@ -399,7 +416,7 @@ class Importer extends gEditorial\Module
 
 	private function _render_data_table( $id, $data, $headers, $map = [], $posttype = 'post', $source_key = 'none' )
 	{
-		$taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );
+		$taxonomies = $this->get_importer_taxonomies( $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 
 		$columns = [
@@ -618,7 +635,7 @@ class Importer extends gEditorial\Module
 
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
-					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );
+					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype ); // NOTE: all and must not be filtered
 					$terms_all      = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
 
 					$this->raise_resources();
@@ -1159,6 +1176,24 @@ class Importer extends gEditorial\Module
 	public function import_memory_limit( $filtered_limit )
 	{
 		return -1;
+	}
+
+	public function get_importer_taxonomies( $posttype = NULL )
+	{
+		$list = [];
+
+		if ( $posttype ) {
+
+			foreach ( get_object_taxonomies( $posttype, 'objects' ) as $taxonomy ) {
+
+				if ( ! empty( $taxonomy->{Services\Paired::PAIRED_POSTTYPE_PROP} ) )
+					continue;
+
+				$list[$taxonomy->name] = $taxonomy;
+			}
+		}
+
+		return $this->filters( 'taxonomies', $list, $posttype );
 	}
 
 	public function get_importer_fields( $posttype = NULL, $taxonomies = [] )
