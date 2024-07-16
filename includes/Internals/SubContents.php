@@ -494,11 +494,9 @@ trait SubContents
 		if ( $this->is_thrift_mode() )
 			return '<div class="-placeholder-empty"></div>';
 
-		$default = _x( 'There is no information available!', 'Internal: SubContents: Empty Notice', 'geditorial' );
-
 		return Core\HTML::tag( 'p', [
 			'class' => [ 'description', '-description', '-empty' ],
-		], $this->get_string( $string_key, $context, 'notices', $default ) );
+		], $this->get_string( $string_key, $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ) );
 	}
 
 	protected function subcontent_get_noaccess_notice( $context = 'display', $string_key = 'noaccess' )

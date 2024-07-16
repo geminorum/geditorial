@@ -755,4 +755,10 @@ class Plugin
 		$message = __( 'Invalid data provided!', 'geditorial' );
 		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-invalid' ] ], $message ) : $message;
 	}
+
+	public static function noinfo( $wrap = 'p' )
+	{
+		$message = __( 'There is no information available!', 'geditorial' );
+		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-noinfo' ] ], $message ) : $message;
+	}
 }

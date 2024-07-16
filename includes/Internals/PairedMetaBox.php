@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
@@ -533,7 +534,7 @@ trait PairedMetaBox
 		add_action( $this->hook( $action ), function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
 
 			if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
-				return;
+				return Core\HTML::desc( $this->get_string( 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ), TRUE, 'field-wrap -empty' );
 
 			echo $this->wrap_open( 'field-wrap -list' ).'<ol>';
 
