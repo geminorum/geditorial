@@ -17,10 +17,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 .geditorial-admin-wrap.-revisions {
-  @include theme-clearfix;
-
   padding: 10px;
   // text-align: left;
+
+  @include theme-clearfix;
 
   .-purge {
     color: #a00;
@@ -55,7 +55,7 @@
     cursor: help;
   }
 
-  img.avatar {}
+  // img.avatar {}
 
   span.-loading.is-active {
     margin: 0;

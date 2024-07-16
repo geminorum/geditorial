@@ -91,6 +91,33 @@ table.base-table-list {
     &.-attachment-meta {
       width: 200px;
     }
+
+    &.-field-meta-program_code,
+    &.-field-meta-listing_code,
+    &.-field-meta-meeting_code,
+    &.-field-meta-mission_code,
+    &.-field-meta-training_code {
+      width: 75px;
+    }
+
+    &.-paired-connected-to {
+      width: 70px;
+    }
+
+    &.-field-meta-datestart,
+    &.-field-meta-dateend {
+      width: 100px;
+    }
+
+    &.-field-meta-days,
+    &.-field-meta-hours {
+      width: 55px;
+    }
+
+    &.-field-meta-featured_people,
+    &.-field-meta-venue_string {
+      width: 245px;
+    }
   }
 
   .-cell {
@@ -101,3 +128,60 @@ table.base-table-list {
     }
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// .base-table-actions {}
+
+.base-table-navigation {
+
+  .field-wrap {
+    margin-bottom: 2px;
+
+    &.-buttons {
+      margin-top: $spacer * .25;
+
+      &:last-of-type {
+        margin-bottom: - $spacer * .25;
+      }
+
+      .-button {
+        margin-bottom: 4px;
+
+        + .-button {
+          margin-left: $spacer * .25;
+        }
+      }
+
+      .-button-icon {
+        padding-left: 5px;
+
+        .dashicons {
+          position: relative;
+          top: 5px;
+
+          width: 22px !important;
+          height: 18px;
+          margin: 0 2px 0 -2px;
+          vertical-align: top;
+
+          &::before {
+            color: $gray-light;
+            font-size: 20px;
+          }
+        }
+
+        .-iconsvg {
+          margin: 0 2px 0 -2px;
+
+          svg {
+            width: 22px;
+            height: 20px;
+            vertical-align: text-top;
+            color: $gray-light;
+          }
+        }
+      }
+    }
+  }
+}
+

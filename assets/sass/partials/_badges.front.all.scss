@@ -13,9 +13,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 .-wrap.geditorial-badges {
-  @include mainwrap();
-  // @include theme-clearfix;
-
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -29,6 +26,8 @@
 
   top: 15px;
   right: 15px;
+
+  @include theme-box-sizing-reset;
 
   > .-badge {
     color: #fff;

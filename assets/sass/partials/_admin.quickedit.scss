@@ -4,8 +4,10 @@
 /// gEditorial Partials: Admin QuickEdit ---------------------------------------
 
 .geditorial-admin-wrap-quickedit {
-  @include mainwrap();
-  padding-top: 0.2em;
+  margin: 0;
+  padding: 0.2em 0 0 0;
+
+  @include theme-box-sizing-reset;
 
   .field-wrap {
     &.-select {

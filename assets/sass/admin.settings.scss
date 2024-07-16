@@ -78,18 +78,6 @@
     width: 100%;
 
     .module {
-      &.-disabled {
-        opacity: 0.5;
-        transition: all 0.3s ease;
-      }
-
-      &:hover,
-      &.-enabled,
-      &.-spinning {
-        opacity: 1;
-        transition: all 0.1s ease;
-      }
-
       box-sizing: border-box;
       position: relative;
 
@@ -104,6 +92,18 @@
       border: 1px solid #e1e1e1;
       border-radius: 1px;
       // cursor: pointer;
+
+      &.-disabled {
+        opacity: 0.5;
+        transition: all 0.3s ease;
+      }
+
+      &:hover,
+      &.-enabled,
+      &.-spinning {
+        opacity: 1;
+        transition: all 0.1s ease;
+      }
 
       > .-title {
         color: $gray-darker;
@@ -192,7 +192,7 @@
         float: right;
       }
 
-      .button-secondary {}
+      // .button-secondary {}
 
       .-wrap.-danger,
       .-button-danger {
@@ -235,3 +235,8 @@
     }
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/* stylelint-disable-next-line no-invalid-position-at-import-rule */
+@import "partials/admin.afterall";

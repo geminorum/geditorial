@@ -14,6 +14,12 @@
   //   margin: 0 10px 0 12px;
   // }
 
+  > form {
+    > .-description.-empty {
+      margin-top: $spacer;
+    }
+  }
+
   p.submit {
     .button-primary:active {
       vertical-align: baseline;
@@ -105,5 +111,25 @@
     position: relative;
     top: -4px;
     left: 40px;
+  }
+}
+
+.geditorial-processing-wrap {
+  margin: $spacer 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border: 2px dashed $gray-500;
+
+    li {
+      padding: ($spacer * .5) ( $spacer * .75 );
+      margin: 0;
+
+      + li {
+        border-top: 2px dashed $gray-500;
+      }
+    }
   }
 }

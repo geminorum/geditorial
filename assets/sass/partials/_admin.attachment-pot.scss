@@ -8,10 +8,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 .geditorial-wrap.-admin-metabox {
   .-attachment-pot {
-    @include mainwrap;
     margin: 0 -6px -4px 0;
     // margin-left: -4px; // negative margin of `li`
     // margin-right: 2px;
+
+    @include theme-box-sizing-reset;
 
     a {
       &:focus {

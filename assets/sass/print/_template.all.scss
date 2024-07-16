@@ -6,8 +6,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 div.-print-template {
-  @include mainwrap;
-
   display: inline-block;
   border: 1px solid $gray-light;
   height: auto;
@@ -15,9 +13,9 @@ div.-print-template {
   padding: 2mm;
   margin: 0 0 1mm 1mm;
 
-  // @include theme-clearfix;
+  @include theme-box-sizing-reset;
 
-  &.-book {}
+  // &.-book {}
 
   &.-stand {
     display: flex;
@@ -56,15 +54,14 @@ div.-print-template {
       padding-top: 2mm;
       // padding-left: 3mm;
       // padding-top: 1mm;
+      border-left: 1px solid $gray-light;
+      background-color: $gray-lighter;
 
       > span {
         display: block;
         margin: 0 auto;
         // text-align: center;
       }
-
-      border-left: 1px solid $gray-light;
-      background-color: $gray-lighter;
 
       .-arrow {
         svg {

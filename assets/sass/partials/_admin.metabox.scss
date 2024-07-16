@@ -43,8 +43,9 @@ $spacer: 1rem !default;
 .geditorial-wrap {
   &.-admin-nobox,
   &.-admin-metabox {
-    @include mainwrap();
-    margin-top: 12px;
+    margin: 12px 0 0 0;
+    padding: 0;
+    @include theme-box-sizing-reset;
   }
 
   .field-wrap {
@@ -126,6 +127,7 @@ $spacer: 1rem !default;
 
     // &.-inputgeneral {}
 
+    &.-inputpeople,
     &.-inputtext {
       input {
         width: 100%;

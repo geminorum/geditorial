@@ -5,11 +5,12 @@
 
 // .geditorial-admin-wrap-metabox.-specs, // FIXME: DEPRECATED
 .geditorial-wrap.-admin-metabox.-specs {
-  @include mainwrap();
-  margin-top: 11px;
+  margin: 11px 0 0 0;
+  padding: 0;
+  @include theme-box-sizing-reset;
 
-  ol.geditorial-specs-list {} // FOR JQUERY SELECTOR
-  ul.geditorial-specs-new {} // FOR JQUERY SELECTOR
+  // ol.geditorial-specs-list {} // FOR JQUERY SELECTOR
+  // ul.geditorial-specs-new {} // FOR JQUERY SELECTOR
 
   ol {
     list-style: none !important;
@@ -54,7 +55,7 @@
       .field-wrap-group {
         margin: 3px 3px 2px;
 
-        .field-wrap {}
+        // .field-wrap {}
 
         .-textarea {
           margin-bottom: 2px;

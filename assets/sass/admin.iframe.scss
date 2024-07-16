@@ -53,7 +53,23 @@
 
   .base-table-simple {
   	font-size: smaller;
-  }
+
+    td,
+    th {
+      padding: 2px 3px;
+      line-height: inherit;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+          color: $gray-dark;
+          text-decoration: underline;
+        }
+      }
+    }
+}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +77,11 @@
   display: inline-block;
   float: right;
   margin-top: - (.25rem);
+
+  span.-today {
+    display: inline-block;
+    margin: 0 ($spacer * .5);
+  }
 
   a {
     padding: 1px 4px 0 !important;
@@ -78,10 +99,17 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+.-wrap.-comments-summary,
+.-wrap.-custom-summaries,
 .-wrap.-term-summary,
 .-wrap.-meta-summary {
-  background: #fff;
   margin: .75rem 0 .5rem;
+}
+
+.-wrap.-term-summary,
+.-wrap.-comments-summary,
+.-wrap.-meta-summary {
+  background: #fff;
 
   table {
     table-layout: fixed;
@@ -114,6 +142,37 @@
 
   .-not-valid {
     color: $brand-danger !important;
+  }
+}
+
+.-wrap.-comments-summary {
+  font-size: smaller;
+
+  td.-comment-date {
+    width: 55px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  td.-comment-author {
+    width: 110px;
+
+    img {
+      max-height: 20px;
+      width: auto;
+      vertical-align: middle;
+    }
+  }
+
+  td.-comment-content {
+    width: auto !important;
+    p {
+      font-size: inherit;
+      margin: 0;
+      + p {
+        margin-top: $spacer * .5;
+      }
+    }
   }
 }
 
@@ -271,9 +330,12 @@
   div.-qrcode-vcard {
     min-width: 165px;
     border: 3px dashed #e9e9e9;
+
+    svg {
+      display: block;
+    }
   }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 .image_card {
@@ -370,3 +432,8 @@
     }
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/* stylelint-disable-next-line no-invalid-position-at-import-rule */
+@import "partials/admin.afterall";

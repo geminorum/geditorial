@@ -16,5 +16,42 @@ $spacer: 1rem !default;
   padding: $spacer * .5;
 
   // &.-overview-type-default {}
+
+  .-wrap.-multipaired-summary {
+    .base-table-simple {
+
+      th[data-key="title"] {
+        width: auto;
+      }
+
+      th[data-key="venue"] {
+        width: 22%;
+      }
+
+      th[data-key="date"] {
+        width: 55px;
+      }
+
+      th[data-key="index"] {
+        width: 22px;
+      }
+
+      th[data-key="totalhours"],
+      th[data-key="totaldays"] {
+        width: 30px;
+      }
+
+      th[data-key="index"],
+      td[data-key="index"],
+      th[data-key="totalhours"],
+      th[data-key="totaldays"],
+      td[data-key="totalhours"],
+      td[data-key="totaldays"],
+      th[data-key="date"],
+      td[data-key="date"] {
+        text-align: center;
+      }
+    }
+  }
 }
 

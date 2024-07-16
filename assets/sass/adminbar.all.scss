@@ -45,9 +45,9 @@
     line-height: 26px;
   }
 
-  .ab-submenu .ab-item {
-    > .geditorial-spinner {}
-  }
+  // .ab-submenu .ab-item {
+  //   > .geditorial-spinner {}
+  // }
 
   li.-danger .ab-item {
     color: $brand-danger !important;
@@ -99,13 +99,13 @@
 
   .geditorial-adminbar-desc-wrap,
   .geditorial-adminbar-image-wrap {
-    .ab-item.ab-empty-item {
-      display: none;
-    }
-
     width: 210px;
     padding: 0 10px;
     margin: 0;
+
+    .ab-item.ab-empty-item {
+      display: none;
+    }
   }
 
   .geditorial-adminbar-desc-wrap {

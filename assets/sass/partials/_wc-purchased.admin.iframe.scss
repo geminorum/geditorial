@@ -5,7 +5,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 .geditorial-admin-wrap.sub-wc_purchased {
-  @include mainwrap();
+  @include theme-gutter-reset;
+  @include theme-box-sizing-reset;
 
   th.-column-order_number {
     width: 45px;

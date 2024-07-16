@@ -165,6 +165,8 @@ $padding-small-horizontal: 8px !default;
       }
 
       &:hover {
+        transition: all 0.1s ease;
+
         .-wrap.-buttons {
           display: block;
           transition: all 0.3s ease;
@@ -179,8 +181,6 @@ $padding-small-horizontal: 8px !default;
           transition: all 0.3s ease;
         }
       }
-
-      transition: all 0.1s ease;
 
       body.dragging & {
         opacity: 0.5;

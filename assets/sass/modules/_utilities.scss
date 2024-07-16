@@ -24,6 +24,16 @@
   border: 0;
 }
 
+@mixin theme-box-sizing-reset() {
+  *,
+  &::after,
+  *::after,
+  &::before,
+  *::before {
+    box-sizing: border-box;
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // DEPRECATED: use @include theme-clearfix;
@@ -44,7 +54,12 @@
   box-sizing: border-box;
 }
 
+// @include theme-box-sizing-reset;
+// @include theme-gutter-reset;
+
 @mixin mainwrap() {
+  @warn "Theme Utilities: mainwrap() DEPRECATED: use `theme-box-sizing-reset` + `theme-gutter-reset`";
+
   box-sizing: border-box;
 
   *,

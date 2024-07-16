@@ -4,12 +4,11 @@
 /// Module: Letter: Admin Post -------------------------------------------------
 
 .geditorial-wrap.-admin-nobox.-letter {
-  @include mainwrap;
-
   background-color: #fff;
   border: 1px solid #ddd;
-
   margin-top: 1em;
+
+  @include theme-box-sizing-reset;
 
   .-halfwrap {
     width: 50%;
@@ -22,12 +21,13 @@
   }
 
   .field-wrap-iframe {
+    margin: 0;
+    padding: 0;
+
     iframe {
       width: 100%;
       min-height: 400px;
     }
-    margin: 0;
-    padding: 0;
   }
 }
 

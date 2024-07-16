@@ -14,9 +14,9 @@ $theme-color-border: $gray-light !default;
   margin: $spacer 0 ($spacer * .25) 0;
 
   > .-tile-row {
-    @include theme-clearfix;
     border-top: 1px dashed $theme-color-border;
     padding-bottom: ($spacer * .5);
+    @include theme-clearfix;
 
     .-title {
       float: left;
@@ -28,6 +28,7 @@ $theme-color-border: $gray-light !default;
 
     ul.-tiles {
       // @include theme-list-reset;
+      margin-left: $spacer * 10;
 
       @include theme-list-flex() {
         margin-top: $spacer * .5;
@@ -43,8 +44,6 @@ $theme-color-border: $gray-light !default;
           border: none;
         }
       }
-
-      margin-left: $spacer * 10;
     }
 
     // li.-item {}

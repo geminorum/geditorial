@@ -20,8 +20,7 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-.hentry.archive-posttype {
-}
+// .hentry.archive-posttype {}
 
 ////////////////////////////////////////////////////////////////////////////////
 .-wrap.geditorial-empty-content,
@@ -37,7 +36,7 @@
   }
 
   p.-actions {
-    @include theme-clearfix;
     text-indent: 0;
+    @include theme-clearfix;
   }
 }

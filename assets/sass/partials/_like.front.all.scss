@@ -4,10 +4,10 @@
 /// gEditorial Partials: Like Front ALL ----------------------------------------
 
 .geditorial-wrap.-like {
-  @include mainwrap();
-  @include theme-clearfix;
-
   line-height: 1; // 30px;
+
+  @include theme-clearfix;
+  @include theme-box-sizing-reset;
 
   > div {
     display: inline-block;
@@ -33,7 +33,7 @@
       text-decoration: none;
     }
 
-    &:focus {}
+    // &:focus {}
 
     &.loading {
       color: $gray-lighter;
@@ -43,7 +43,7 @@
       color: $brand-danger;
     }
 
-    &.dolike {}
+    // &.dolike {}
 
     // span.genericon {
     //   font-size: 30px;
