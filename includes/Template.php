@@ -437,8 +437,8 @@ class Template extends WordPress\Main
 
 		$links = [];
 
-		foreach ( (array) $posts as $post_id )
-			if ( $link = ShortCode::postItem( $post_id, $args ) )
+		foreach ( (array) $posts as $post )
+			if ( $link = ShortCode::postItem( $post, $args ) )
 				$links[] = $link;
 
 		if ( $html = WordPress\Strings::getJoined( $links, $args['before'], $args['after'] ) ) {

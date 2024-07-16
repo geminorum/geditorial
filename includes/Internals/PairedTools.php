@@ -57,6 +57,12 @@ trait PairedTools
 			Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
 		echo '</div>';
 
+		// NO NEED: we use the main post date directly
+		// echo $this->wrap_open( '-wrap-button-row' );
+		// 	Settings::submitButton( 'sync_paired_dates', _x( 'Sync Paired Dates', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
+		// 	Core\HTML::desc( _x( 'Tries to set the paired term date based on main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
+		// echo '</div>';
+
 		echo $this->wrap_open( '-wrap-button-row' );
 			Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
 			Core\HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
@@ -252,7 +258,7 @@ trait PairedTools
 
 			foreach ( $_POST['_cb'] as $term_id ) {
 
-				if ( $this->paired_remove_to_term( NULL, $term_id, $constants[0], $constants[1] ) ) {
+				if ( $this->paired_remove_to_term( FALSE, $term_id, $constants[0], $constants[1] ) ) {
 
 					$deleted = wp_delete_term( $term_id, $taxonomy );
 
@@ -278,6 +284,16 @@ trait PairedTools
 		if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $constants[0], $constants[1] ) ) )
+				Core\WordPress::redirectReferer( 'wrong' );
+
+			Core\WordPress::redirectReferer( [
+				'message' => 'synced',
+				'count'   => $count,
+			] );
+
+		} else if ( Tablelist::isAction( 'sync_paired_dates' ) ) {
+
+			if ( FALSE === ( $count = $this->paired_sync_paired_dates( $constants[0], $constants[1] ) ) )
 				Core\WordPress::redirectReferer( 'wrong' );
 
 			Core\WordPress::redirectReferer( [
@@ -454,6 +470,40 @@ trait PairedTools
 				continue;
 
 			$result = wp_set_object_terms( (int) $post_id, $term_id, $taxonomy, FALSE );
+
+			if ( ! is_wp_error( $result ) )
+				$count++;
+		}
+
+		return $count;
+	}
+
+	// NO NEED
+	protected function paired_sync_paired_dates( $posttype_key, $taxonomy_key )
+	{
+		$count    = 0;
+		$taxonomy = $this->constant( $taxonomy_key );
+		$metakey  = sprintf( '%s_linked', $this->constant( $posttype_key ) );
+		$datetime = $this->constant( 'metakey_term_date', 'datetime' );
+
+		$terms = get_terms( [
+			'taxonomy'   => $taxonomy,
+			'hide_empty' => FALSE,
+			'orderby'    => 'none',
+			'fields'     => 'ids',
+		] );
+
+		if ( ! $terms || is_wp_error( $terms ) )
+			return FALSE;
+
+		$this->raise_resources( count( $terms ) );
+
+		foreach ( $terms as $term_id ) {
+
+			if ( ! $post = WordPress\Post::get( get_term_meta( $term_id, $metakey, TRUE ) ) )
+				continue;
+
+			$result = update_term_meta( $term_id, $datetime, $post->post_date );
 
 			if ( ! is_wp_error( $result ) )
 				$count++;

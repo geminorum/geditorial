@@ -966,8 +966,12 @@ class Module extends WordPress\Module
 	{
 		if ( $this->_paired && method_exists( $this, 'paired_get_constants' ) ) {
 
-			if ( $constants = $this->paired_get_constants() )
-				return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
+			// if ( $constants = $this->paired_get_constants() )
+			// 	return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
+
+			// NOTE: published only on non-admin
+			if ( $linked = $this->paired_all_connected_from( $post, NULL ) )
+				return $single ? reset( $linked ) : $linked;
 		}
 
 		return FALSE;

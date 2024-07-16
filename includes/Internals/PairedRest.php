@@ -79,12 +79,10 @@ trait PairedRest
 
 	public function pairedrest_get_posts( $request )
 	{
-		if ( ! $constants = $this->paired_get_constants() )
+		if ( ! $parent = WordPress\Post::get( (int) $request['parent'] ) )
 			return Services\RestAPI::getErrorSomethingIsWrong();
 
-		$parent = get_post( (int) $request['parent'] );
-
-		if ( ! $posts = $this->paired_get_from_posts( $parent->ID, $constants[0], $constants[1] ) )
+		if ( ! $posts = $this->paired_all_connected_to( $parent, 'restapi' ) )
 			return rest_ensure_response( [] );
 
 		$data = [];

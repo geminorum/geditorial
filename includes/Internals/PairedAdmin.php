@@ -83,7 +83,7 @@ trait PairedAdmin
 
 					// extensive query only for multiple supported
 
-					$posts = $this->paired_get_from_posts( $post->ID, $constants[0], $constants[1] );
+					$posts = $this->paired_all_connected_to( $post, 'columns' );
 
 					if ( ! $count = count( $posts ) )
 						return;
@@ -94,9 +94,7 @@ trait PairedAdmin
 
 					// simple count query for single supported
 
-					$count = $this->paired_get_from_posts( $post->ID, $constants[0], $constants[1], TRUE );
-
-					if ( ! $count )
+					if ( ! $count = $this->paired_count_connected_to( $post, 'columns' ) )
 						return;
 
 					$posttypes = $supported;
@@ -144,19 +142,14 @@ trait PairedAdmin
 		add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
 			function ( $post, $before, $after ) use ( $constants ) {
 
-				if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+				if ( ! $items = $this->paired_all_connected_from( $post, 'columns' ) )
 					return;
 
 				$before = sprintf( $before, '-paired-row '.$this->constant( $constants[1] ) );
 				$before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
 
-				foreach ( $items as $post_id ) {
-
-					if ( ! $post = WordPress\Post::get( $post_id ) )
-						continue;
-
-					echo $before.WordPress\Post::fullTitle( $post, 'overview' ).$after;
-				}
+				foreach ( $items as $item )
+					echo $before.WordPress\Post::fullTitle( $item, 'overview' ).$after;
 
 			}, $priority, 3 );
 	}

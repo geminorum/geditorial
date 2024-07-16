@@ -532,10 +532,8 @@ trait PairedMetaBox
 
 		add_action( $this->hook( $action ), function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
 
-			if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+			if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
 				return;
-
-			// TODO: to control the order must query posts with `include`
 
 			echo $this->wrap_open( 'field-wrap -list' ).'<ol>';
 
@@ -543,13 +541,8 @@ trait PairedMetaBox
 			// $before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
 			$after  = '</li>';
 
-			foreach ( $items as $post_id ) {
-
-				if ( ! $post = WordPress\Post::get( $post_id ) )
-					continue;
-
-				echo $before.WordPress\Post::fullTitle( $post, 'overview' ).$after;
-			}
+			foreach ( $items as $item )
+				echo $before.WordPress\Post::fullTitle( $item, 'overview' ).$after;
 
 			echo '</ol></div>';
 

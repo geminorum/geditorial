@@ -244,26 +244,21 @@ trait PairedCore
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		if ( ! $constants = $this->paired_get_constants() )
-			return;
-
 		if ( ! $this->role_can( 'reports' ) )
 			return;
 
-		if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+		if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
+			return;
+
+		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
 		$canedit  = WordPress\PostType::can( $this->constant( $constants[0] ), 'edit_posts' );
 		$before   = $before.$this->get_column_icon();
 		$template = $this->get_posttype_label( $constants[0], 'paired_connected_to' );
 
-		foreach ( $items as $term_id => $post_id ) {
-
-			if ( ! $item = WordPress\Post::get( $post_id ) )
-				continue;
-
+		foreach ( $items as $item )
 			echo $before.sprintf( $template, WordPress\Post::fullTitle( $item, $canedit ? 'overview' : TRUE ) ).$after;
-		}
 	}
 
 	/**
@@ -306,13 +301,10 @@ trait PairedCore
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $list;
 
-		if ( ! $constants = $this->paired_get_constants() )
-			return $list;
-
 		if ( ! $this->role_can( 'reports' ) )
 			return $list;
 
-		if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
+		if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
 			return $list;
 
 		/* translators: %s: item count */
@@ -412,15 +404,30 @@ trait PairedCore
 		return $list;
 	}
 
-	protected function paired_all_connected_to( $post, $context, $exclude = [], $posttypes = NULL )
+	public function paired_count_connected_to( $post, $context, $exclude = [], $posttypes = NULL )
+	{
+		if ( ! $posts = $this->paired_all_connected_to( $post, $context, 'ids', $exclude, $posttypes ) )
+			return 0;
+
+		return count( $posts );
+	}
+
+	public function paired_all_connected_to( $post, $context, $fields = NULL, $exclude = [], $posttypes = NULL )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		$term = $this->paired_get_to_term( $post->ID, $constants[0], $constants[1] );
-
-		if ( ! $term || is_wp_error( $term ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
+
+		if ( $post->post_type !== $this->constant( $constants[0] ) )
+			return FALSE;
+
+		$paired = $this->constant( $constants[1] );
+		$terms  = WordPress\Taxonomy::getPostTerms( $paired, $post );
+
+		if ( empty( $terms ) )
+			return [];
 
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -430,12 +437,16 @@ trait PairedCore
 			'orderby'        => [ 'menu_order', 'date' ], // TODO: custom order
 			'order'          => 'ASC',
 			'post_type'      => $posttypes,
-			'post_status'    => WordPress\Status::acceptable( $posttypes ),
+			'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', is_admin() ? [ 'pending', 'draft' ] : [] ),
 			'post__not_in'   => $exclude,
+			'fields'         => $fields ?? 'all', // or `ids`
 			'tax_query'      => [ [
-				'taxonomy' => $this->constant( $constants[1] ),
+				'taxonomy' => $paired,
 				'field'    => 'id',
-				'terms'    => [ $term->term_id ],
+				'terms'    => [ $terms[0]->term_id ],
+
+				// @SEE: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
+				'include_children' => FALSE,
 			] ],
 
 			'ignore_sticky_posts'    => TRUE,
@@ -447,6 +458,75 @@ trait PairedCore
 		];
 
 		$posts = get_posts( apply_filters( $this->hook_base( 'paired', 'all_connected_to', 'args' ), $args, $post, (array) $posttypes, $context ) );
+
+		return empty( $posts ) ? [] : $posts;
+	}
+
+	public function paired_count_connected_from( $post, $context, $exclude = [] )
+	{
+		if ( ! $posts = $this->paired_all_connected_from( $post, $context, 'ids', $exclude ) )
+			return 0;
+
+		return count( $posts );
+	}
+
+	public function paired_all_connected_from( $post, $context, $fields = NULL, $exclude = [] )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		$type    = $this->constant( $constants[0] );
+		$paired  = $this->constant( $constants[1] );
+		$forced  = $this->get_setting( 'paired_force_parents', FALSE );
+		$reports = $this->get_setting( 'paired_parent_reports', FALSE ); // TODO: maybe add support!
+		$dates   = $this->get_setting( 'override_dates', FALSE );
+		$parents = WordPress\Taxonomy::getPostTerms( $paired, $post, FALSE, 'parent', 'term_id' );
+
+		if ( empty( $parents ) )
+			return[];
+
+		if ( $reports ) {
+
+			// keeps the parents only
+			$terms = array_diff( array_keys( $parents ), array_keys( array_filter( $parents ) ) );
+
+		} else {
+
+			// strips the parents
+			$terms = $forced
+				? array_diff( array_keys( $parents ), array_unique( array_values( $parents ) ) )
+				: array_keys( $parents );
+		}
+
+		$args = apply_filters( $this->hook_base( 'paired', 'all_connected_from', 'args' ), [
+
+			'posts_per_page' => -1,
+			'orderby'        => $dates ? 'date' : [ 'menu_order', 'date' ],
+			'order'          => 'ASC',
+			'post_type'      => $type,
+			'post_status'    => WordPress\Status::acceptable( $type, 'query', is_admin() ? [ 'pending', 'draft' ] : [] ),
+			'post__not_in'   => $exclude,
+			'fields'         => $fields ?? 'all', // or `ids`
+			'tax_query'      => [ [
+				'taxonomy' => $paired,
+				'field'    => 'id',
+				'terms'    => $terms,
+
+				// @SEE: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
+				'include_children' => FALSE,
+			] ],
+
+			'ignore_sticky_posts'    => TRUE,
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+
+		], $post, (array) $type, $context );
+
+		$query = new \WP_Query();
+		$posts = $query->query( $args );
 
 		return empty( $posts ) ? [] : $posts;
 	}
@@ -586,7 +666,7 @@ trait PairedCore
 		if ( is_wp_error( $the_term ) )
 			return FALSE;
 
-		return $this->paired_set_to_term( $post->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		return $this->paired_set_to_term( $post, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
 	protected function paired_do_save_to_post_update( $after, $before, $posttype_key, $taxonomy_key )
@@ -629,7 +709,7 @@ trait PairedCore
 		if ( is_wp_error( $the_term ) )
 			return FALSE;
 
-		return $this->paired_set_to_term( $after->ID, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		return $this->paired_set_to_term( $after, $the_term['term_id'], $posttype_key, $taxonomy_key );
 	}
 
 	protected function paired_do_trash_to_post( $post_id, $posttype_key, $taxonomy_key )
@@ -755,58 +835,68 @@ trait PairedCore
 	}
 
 	// OLD: `set_linked_term()`
-	public function paired_set_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
+	public function paired_set_to_term( $post, $term_or_id, $posttype_key, $taxonomy_key )
 	{
-		if ( ! $post_id )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $the_term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
+		if ( ! $term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
 			return FALSE;
 
-		update_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id', $the_term->term_id );
-		update_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked', $post_id );
+		update_post_meta( $post->ID, '_'.$this->constant( $posttype_key ).'_term_id', $term->term_id );
+		update_term_meta( $term->term_id, $this->constant( $posttype_key ).'_linked', $post->ID );
 
-		wp_set_object_terms( (int) $post_id, $the_term->term_id, $the_term->taxonomy, FALSE );
+		// NO NEED: we use the main post date directly
+		// update_term_meta( $term->term_id, $this->constant( 'metakey_term_date', 'datetime' ), $post->post_date );
+
+		wp_set_object_terms( $post->ID, $term->term_id, $term->taxonomy, FALSE );
 
 		if ( $this->get_setting( 'thumbnail_support' ) ) {
 
-			$meta_key = $this->constant( 'metakey_term_image', 'image' );
+			$image_metakey = $this->constant( 'metakey_term_image', 'image' );
 
-			if ( $thumbnail = get_post_thumbnail_id( $post_id ) )
-				update_term_meta( $the_term->term_id, $meta_key, $thumbnail );
+			if ( $thumbnail = get_post_thumbnail_id( $post->ID ) )
+				update_term_meta( $term->term_id, $image_metakey, $thumbnail );
 
 			else
-				delete_term_meta( $the_term->term_id, $meta_key );
+				delete_term_meta( $term->term_id, $image_metakey );
 		}
 
 		return TRUE;
 	}
 
 	// OLD: `remove_linked_term()`
-	public function paired_remove_to_term( $post_id, $term_or_id, $posttype_key, $taxonomy_key )
+	public function paired_remove_to_term( $post, $term_or_id, $posttype_key, $taxonomy_key )
 	{
-		if ( ! $the_term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
+		if ( ! $term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
 			return FALSE;
 
-		if ( ! $post_id )
-			$post_id = $this->paired_get_to_post_id( $the_term, $posttype_key, $taxonomy_key );
+		if ( ! $post ) {
 
-		if ( $post_id ) {
-			delete_post_meta( $post_id, '_'.$this->constant( $posttype_key ).'_term_id' );
-			wp_set_object_terms( (int) $post_id, [], $the_term->taxonomy, FALSE );
+			$post_id = $this->paired_get_to_post_id( $term, $posttype_key, $taxonomy_key );
+
+			if ( ! $post = WordPress\Post::get( $post_id ) )
+				return FALSE;
 		}
 
-		delete_term_meta( $the_term->term_id, $this->constant( $posttype_key ).'_linked' );
+		if ( $post ) {
 
-		if ( $this->get_setting( 'thumbnail_support' ) ) {
+			delete_post_meta( $post->ID, '_'.$this->constant( $posttype_key ).'_term_id' );
+			wp_set_object_terms( $post->ID, [], $term->taxonomy, FALSE );
 
-			$meta_key  = $this->constant( 'metakey_term_image', 'image' );
-			$stored    = get_term_meta( $the_term->term_id, $meta_key, TRUE );
-			$thumbnail = get_post_thumbnail_id( $post_id );
+			if ( $this->get_setting( 'thumbnail_support' ) ) {
 
-			if ( $stored && $thumbnail && $thumbnail == $stored )
-				delete_term_meta( $the_term->term_id, $meta_key );
+				$image_metakey = $this->constant( 'metakey_term_image', 'image' );
+				$stored        = get_term_meta( $term->term_id, $image_metakey, TRUE );
+				$thumbnail     = get_post_thumbnail_id( $post->ID );
+
+				if ( $stored && $thumbnail && $thumbnail == $stored )
+					delete_term_meta( $term->term_id, $image_metakey );
+			}
 		}
+
+		delete_term_meta( $term->term_id, $this->constant( $posttype_key ).'_linked' );
+		delete_term_meta( $term->term_id, $this->constant( 'metakey_term_date', 'datetime' ) );
 
 		return TRUE;
 	}
@@ -829,8 +919,11 @@ trait PairedCore
 	}
 
 	// PAIRED API: get (from) posts connected to the pair
+	// FIXME: DEPRECATED: use `paired_all_connected_to()`
 	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
+		self::_dep( 'paired_all_connected_to()' );
+
 		if ( is_null( $term_id ) )
 			$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
 
@@ -863,12 +956,17 @@ trait PairedCore
 	}
 
 	// NOTE: must be public
+	// NOTE: returns sorted results
+	// FIXME: DEPRECATED: use `paired_all_connected_from()`
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		$admin  = is_admin();
-		$posts  = $parents = [];
-		$terms  = WordPress\Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
-		$forced = $this->get_setting( 'paired_force_parents', FALSE );
+		self::_dep( 'paired_all_connected_from()' );
+
+		$admin   = is_admin();
+		$posts   = $dates = $parents = [];
+		$terms   = WordPress\Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
+		$forced  = $this->get_setting( 'paired_force_parents', FALSE );
+		$metakey = $this->constant( 'metakey_term_date', 'datetime' );
 
 		foreach ( $terms as $term ) {
 
@@ -893,16 +991,42 @@ trait PairedCore
 
 			else
 				$posts[$term->term_id] = $to_post_id;
+
+			if ( $to_post = WordPress\Post::get( $to_post_id ) )
+				$dates[$term->term_id] = $to_post->post_date;
+			else
+				$dates[$term->term_id] = get_term_meta( $term->term_id, $metakey, TRUE ) ?: '';
 		}
 
-		// final check if had children in the list
-		if ( $forced && count( $parents ) )
-			$posts = Core\Arraay::stripByKeys( $posts, Core\Arraay::prepNumeral( $parents ) );
+		$parets = Core\Arraay::prepNumeral( $parents );
 
-		if ( ! count( $posts ) )
+		// final check if had children in the list
+		if ( $forced && count( $parents ) ) {
+			$posts  = Core\Arraay::stripByKeys( $posts, $parets );
+			$dates  = Core\Arraay::stripByKeys( $dates, $parets );
+		}
+
+		if ( ! $count = count( $posts ) )
 			return FALSE;
 
-		return $single ? reset( $posts ) : $posts;
+		if ( $count === 1 )
+			return $single ? reset( $posts ) : $posts;
+
+		array_walk( $posts, function ( $post_id, $term_id ) use ( $dates ) {
+			return [
+				'term_id' => $term_id,
+				'post_id' => $post_id,
+				'date'    => array_key_exists( $term_id, $dates ) ? $dates[$term_id] : '0',
+			];
+		} );
+
+		$sorted = Core\Arraay::pluck(
+			Core\Arraay::sortByPriority( $posts, 'date', FALSE ),
+			'post_id',
+			'term_id'
+		);
+
+		return $single ? reset( $sorted ) : $sorted;
 	}
 
 	// NOTE: currentry support: `Personage` module only
@@ -911,8 +1035,10 @@ trait PairedCore
 		if ( ! $this->get_setting( $optionkey ?? 'append_identifier_code' ) )
 			return FALSE;
 
+		$metakey = Services\PostTypeFields::getPostMetaKey( $fieldkey, 'meta' );
+
 		add_filter( $this->hook_base( 'personage', 'make_human_title' ),
-			function ( $fullname, $context, $post, $names, $fallback, $checks ) use ( $fieldkey ) {
+			function ( $fullname, $context, $post, $names, $fallback, $checks ) use ( $metakey ) {
 
 				if ( empty( $fullname ) || 'display' !== $context )
 					return $fullname;
@@ -920,13 +1046,8 @@ trait PairedCore
 				if ( ! $this->posttype_supported( $post->post_type ) )
 					return $fullname;
 
-				if ( ! $constants = $this->paired_get_constants() )
+				if ( ! $items = $this->paired_all_connected_from( $post, $context, 'ids' ) )
 					return $fullname;
-
-				if ( ! $items = $this->paired_do_get_to_posts( $constants[0], $constants[1], $post ) )
-					return $fullname;
-
-				$metakey = Services\PostTypeFields::getPostMetaKey( $fieldkey  );
 
 				foreach ( $items as $post_id ) {
 

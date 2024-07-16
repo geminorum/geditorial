@@ -1005,11 +1005,11 @@ class ShortCode extends WordPress\Main
 				return $content;
 			}
 
-			if ( ! $paired_posts = gEditorial()->module( $args['module'] )->get_linked_to_posts( NULL, FALSE, NULL ) )
+			if ( ! $paired_posts = gEditorial()->module( $args['module'] )->paired_all_connected_from( NULL, 'query', 'ids' ) )
 				return $content;
 
-			$query['post_type'] = $posttype; // override with main posttype
-			$query['post__in'] = $paired_posts;
+			$query['post_type']           = $posttype;      // override with main posttype
+			$query['post__in']            = $paired_posts;
 			$query['ignore_sticky_posts'] = TRUE;
 
 		} else if ( 'paired' === $list || ( 'assigned' === $list && $posttype && is_singular( $posttype ) ) ) {

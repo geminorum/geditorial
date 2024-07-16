@@ -61,11 +61,11 @@ class ModuleTemplate extends gEditorial\Template
 		if ( ! gEditorial()->module( static::MODULE )->posttype_supported( $post->post_type ) )
 			return $atts['default'];
 
-		if ( ! $post_id = gEditorial()->module( static::MODULE )->get_linked_to_posts( $post, TRUE ) )
+		if ( ! $linked = gEditorial()->module( static::MODULE )->get_linked_to_posts( $post, TRUE ) )
 			return $atts['default'];
 
 		return self::metaField( 'map_embed_url', array_merge( $atts, [
-			'id'       => $post_id,
+			'id'       => $linked,
 			'fallback' => 'content_embed_url',
 			// 'filter'   => '__do_embed_shortcode', // NO NEED: filtering the raw meta
 		] ) );

@@ -423,7 +423,7 @@ class Addendum extends gEditorial\Module
 			if ( ! $this->posttype_supported( $post->post_type ) )
 				return $content;
 
-			// TODO: sort the appendages if more than one
+			// NOTE: already sorted
 			if ( ! $appendages = $this->get_linked_to_posts( $post ) )
 				return $content;
 		}
