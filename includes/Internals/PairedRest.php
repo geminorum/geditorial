@@ -108,7 +108,7 @@ trait PairedRest
 			return Services\RestAPI::getErrorSomethingIsWrong();
 
 		$raw    = $request->get_json_params();
-		$parent = get_post( (int) $request['parent'] );
+		$parent = WordPress\Post::get( (int) $request['parent'] );
 		$posts  = Core\Arraay::pluck( $raw, 'id' );
 
 		// TODO: use RelatedMeta API
@@ -138,7 +138,7 @@ trait PairedRest
 			return Services\RestAPI::getErrorSomethingIsWrong();
 
 		$raw    = $request->get_json_params();
-		$parent = get_post( (int) $request['parent'] );
+		$parent = WordPress\Post::get( (int) $request['parent'] );
 		$posts  = Core\Arraay::pluck( $raw, 'id' );
 
 		WordPress\Taxonomy::disableTermCounting();

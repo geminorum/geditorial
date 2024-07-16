@@ -316,7 +316,7 @@ trait PostTypeFields
 			case 'attachment':
 			case 'parent_post':
 
-				if ( ! empty( $data ) && ( $object = get_post( (int) $data ) ) )
+				if ( ! empty( $data ) && ( $object = WordPress\Post::get( (int) $data ) ) )
 					$sanitized = $object->ID;
 
 				else

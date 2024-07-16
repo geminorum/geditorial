@@ -302,7 +302,7 @@ class MetaBox extends WordPress\Main
 			}
 
 			// put checked terms on top
-			$html.= call_user_func_array( [ $walker, 'walk' ] , [ $checked, 0, $atts ] );
+			$html.= call_user_func_array( [ $walker, 'walk' ], [ $checked, 0, $atts ] );
 		}
 
 		if ( ! $atts['selected_only'] )
@@ -466,6 +466,8 @@ class MetaBox extends WordPress\Main
 				'taxonomy' => $taxonomy,
 				'field'    => 'id',
 				'terms'    => [ $term->term_id ],
+
+				'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
 			] ],
 		];
 

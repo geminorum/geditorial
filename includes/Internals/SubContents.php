@@ -193,7 +193,7 @@ trait SubContents
 		return count( $raw );
 	}
 
-	protected function subcontent_insert_data( $raw = [], $post = FALSE, $mapping = NULL )
+	protected function subcontent_insert_data_row( $raw = [], $post = FALSE, $mapping = NULL )
 	{
 		$data = $this->subcontent_sanitize_data( $raw, $post, $mapping );
 		$data = $this->subcontent_prep_data_for_save( $data, $post, $mapping );
@@ -213,7 +213,7 @@ trait SubContents
 		if ( ! array_key_exists( 'comment_approved', $data ) && ( $status = $this->subcontent_get_comment_status() ) )
 			$data['comment_approved'] = $status;
 
-		if ( FALSE === ( $filtered = $this->filters( 'subcontent_insert_data', $data, $post, $mapping, $raw ) ) )
+		if ( FALSE === ( $filtered = $this->filters( 'subcontent_insert_data_row', $data, $post, $mapping, $raw ) ) )
 			return $this->log( 'NOTICE', 'SUBCONTENT INSERT DATA SKIPPED BY FILTER ON POST-ID:'.( $post ? $post->ID : 'UNKNOWN' ) );
 
 		$this->subcontent_insert_data_before( $filtered, $filtered['comment_ID'] );
@@ -261,7 +261,7 @@ trait SubContents
 		unset( $this->cache['subcontent_data'][( $comment_id ?: 'new' )] );
 	}
 
-	protected function subcontent_delete_data( $id, $post = FALSE )
+	protected function subcontent_delete_data_row( $id, $post = FALSE )
 	{
 		return wp_delete_comment( intval( $id ), TRUE );
 	}
@@ -379,7 +379,7 @@ trait SubContents
 		return $this->filters( 'subcontent_data_mapped', $data, $post, $items, $mapping, $metas );
 	}
 
-	protected function subcontent_get_data( $parent = NULL, $extra = [] )
+	protected function subcontent_get_data_all( $parent = NULL, $extra = [], $map = TRUE )
 	{
 		if ( ! $post = WordPress\Post::get( $parent ) )
 			return FALSE;
@@ -416,7 +416,7 @@ trait SubContents
 		$query = new \WP_Comment_Query;
 		$items = $query->query( $args );
 
-		return $this->subcontent_get_data_mapped( $items, $post );
+		return $map ? $this->subcontent_get_data_mapped( $items, $post ) : $items;
 	}
 
 	protected function subcontent_get_data_count( $parent = NULL, $extra = [] )
@@ -545,12 +545,12 @@ trait SubContents
 				'methods'  => \WP_REST_Server::CREATABLE,
 				'args'     => $arguments,
 				'callback' => function ( $request ) {
-					$post = get_post( (int) $request['linked'] );
+					$post = WordPress\Post::get( (int) $request['linked'] );
 
-					if ( FALSE === $this->subcontent_insert_data( $request->get_json_params(), $post ) )
+					if ( FALSE === $this->subcontent_insert_data_row( $request->get_json_params(), $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data( $post ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( $post ) );
 				},
 				'permission_callback' => $edit,
 			],
@@ -558,15 +558,15 @@ trait SubContents
 				'methods'  => \WP_REST_Server::DELETABLE,
 				'args'     => $arguments,
 				'callback' => function ( $request ) {
-					$post = get_post( (int) $request['linked'] );
+					$post = WordPress\Post::get( (int) $request['linked'] );
 
 					if ( empty( $request['_id'] ) )
 						return Services\RestAPI::getErrorArgNotEmpty( '_id' );
 
-					if ( ! $this->subcontent_delete_data( $request['_id'], $post ) )
+					if ( ! $this->subcontent_delete_data_row( $request['_id'], $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data( $post ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( $post ) );
 				},
 
 				'permission_callback' => $edit,
@@ -575,7 +575,7 @@ trait SubContents
 				'methods'  => \WP_REST_Server::READABLE,
 				'args'     => $arguments,
 				'callback' => function ( $request ) {
-					return rest_ensure_response( $this->subcontent_get_data( (int) $request['linked'] ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( (int) $request['linked'] ) );
 				},
 				'permission_callback' => $read,
 			],
@@ -602,12 +602,12 @@ trait SubContents
 				'methods'  => \WP_REST_Server::CREATABLE,
 				'args'     => $arguments,
 				'callback' => function ( $request ) {
-					$post = get_post( (int) $request['linked'] );
+					$post = WordPress\Post::get( (int) $request['linked'] );
 
 					if ( FALSE === $this->subcontent_update_sort( $request->get_json_params(), $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data( $post ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( $post ) );
 				},
 				'permission_callback' => $edit,
 			],
@@ -649,7 +649,7 @@ trait SubContents
 	protected function subcontent_do_provide_summary( $comment, $context = NULL )
 	{
 		$na     = gEditorial\Plugin::na( FALSE );
-		$parent = WordPress\Post::get( (int) $comment->comment_post_ID ) ;
+		$parent = WordPress\Post::get( (int) $comment->comment_post_ID );
 		$item   = $this->subcontent_prep_data_from_query( $comment, $parent );
 		$data   = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent, $context );
 		$author = FALSE;
@@ -708,7 +708,7 @@ trait SubContents
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $content;
 
-		if ( ! $data = $this->subcontent_get_data( $post ) )
+		if ( ! $data = $this->subcontent_get_data_all( $post ) )
 			return $content;
 
 		if ( is_null( $args['fields'] ) )

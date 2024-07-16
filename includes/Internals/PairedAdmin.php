@@ -130,7 +130,7 @@ trait PairedAdmin
 		return TRUE;
 	}
 
-	// TODO: add an advance version with modal for paired summary in `Missioned`/`Trained`/`Programmed`/`Meeted`
+	// TODO: add an advance version with modal for multipaired modules
 	protected function paired__hook_tweaks_column( $posttype, $priority = 10 )
 	{
 		if ( ! $this->_paired )

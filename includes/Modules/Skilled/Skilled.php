@@ -16,6 +16,8 @@ class Skilled extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
+	// TODO: add subcontent api for list of Skilled background: سابقه مهارت‌ها
+
 	/**
 	 * TODO: add level taxonomy for each skill
 	 * WTF: or maybe new module!

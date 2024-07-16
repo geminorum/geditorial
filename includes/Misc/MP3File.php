@@ -85,7 +85,7 @@ class MP3File extends Core\Base
 			}
 
 			if ( $cbr && ! empty( $info ) )
-				return $this->estimateDuration($info['Bitrate'],$offset);
+				return $this->estimateDuration( $info['Bitrate'], $offset );
 		}
 
 		return round( $duration );

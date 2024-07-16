@@ -116,7 +116,7 @@ class RestAPI extends WordPress\Main
 		if ( empty( $param ) || (int) $param <= 0 )
 			return self::getErrorArgNotEmpty( $key );
 
-		if ( ! get_post( (int) $param ) )
+		if ( ! WordPress\Post::get( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
 				/* translators: %s: argument key */

@@ -990,6 +990,8 @@ class Personage extends gEditorial\Module
 	{
 		if ( in_array( $context, [
 			'reports',
+			'columns',
+			'pointers',
 			'overview',
 			'counts',
 		], TRUE ) )

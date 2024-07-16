@@ -417,7 +417,7 @@ trait CorePostTypes
 
 	public function get_posttype_fields_list( $constant, $module = 'meta' )
 	{
-		return Core\Arraay::pluck( Services\PostTypeFields::getEnabled( $this->constant( $constant ),$module ), 'title', 'name' );
+		return Core\Arraay::pluck( Services\PostTypeFields::getEnabled( $this->constant( $constant ), $module ), 'title', 'name' );
 	}
 
 	// @REF: `post_type_supports()`

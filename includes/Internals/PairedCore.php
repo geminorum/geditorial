@@ -199,7 +199,7 @@ trait PairedCore
 		if ( ! $this->role_can( 'reports' ) )
 			return;
 
-		if ( FALSE === ( $connected = $this->paired_all_connected_to( $post, $context ) ) )
+		if ( FALSE === ( $connected = $this->paired_all_connected_to( $post, 'pointers' ) ) )
 			return Info::renderSomethingIsWrong( $before, $after );
 
 		$count = count( $connected );

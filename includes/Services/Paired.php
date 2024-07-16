@@ -2,13 +2,11 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\WordPress\Post;
-use geminorum\gEditorial\WordPress\PostType;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\WordPress;
 
-class Paired extends Main
+class Paired extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -28,7 +26,7 @@ class Paired extends Main
 	// returns the paired taxonomy, otherwise `FALSE`
 	public static function isPostType( $posttype )
 	{
-		if ( ! $posttype = PostType::object( $posttype ) )
+		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return FALSE;
 
 		return empty( $posttype->{self::PAIRED_TAXONOMY_PROP} ) ? FALSE : $posttype->{self::PAIRED_TAXONOMY_PROP};
@@ -37,7 +35,7 @@ class Paired extends Main
 	// returns the paired posttype, otherwise `FALSE`
 	public static function isTaxonomy( $taxonomy )
 	{
-		if ( ! $taxonomy = Taxonomy::object( $taxonomy ) )
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
 		return empty( $taxonomy->{self::PAIRED_POSTTYPE_PROP} ) ? FALSE : $taxonomy->{self::PAIRED_POSTTYPE_PROP};
@@ -57,7 +55,7 @@ class Paired extends Main
 	// OLD: `paired_get_to_term_direct()`
 	public static function getToTerm( $post, $posttype, $taxonomy )
 	{
-		if ( empty( $post ) || ( ! $post = Post::get( $post ) ) )
+		if ( empty( $post ) || ( ! $post = WordPress\Post::get( $post ) ) )
 			return FALSE;
 
 		if ( ! $term_id = get_post_meta( $post->ID, sprintf( '_%s_term_id', $posttype ), TRUE ) )

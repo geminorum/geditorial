@@ -309,6 +309,8 @@ trait BulkExports
 						'taxonomy' => $this->constant( $constants[1] ),
 						'field'    => 'id',
 						'terms'    => [ $paired->term_id ],
+
+						'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
 					] ],
 				], $reference, $target, $type, $context );
 

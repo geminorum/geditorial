@@ -16,6 +16,8 @@ class Regioned extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
+	// TODO: add subcontent api for list of regioned background: سابقه کاری در مناطق
+
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()

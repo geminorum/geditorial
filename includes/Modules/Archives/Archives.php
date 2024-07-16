@@ -138,7 +138,7 @@ class Archives extends gEditorial\Module
 			'public'                              => FALSE,
 			'has_archive'                         => FALSE,   // NOTE: gEditorial prop
 			Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
-			] , 'names', 'or' ) + $extra ) );
+		], 'names', 'or' ) + $extra ) );
 	}
 
 	public function init()
