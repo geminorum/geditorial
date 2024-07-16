@@ -328,7 +328,8 @@ trait PairedMetaBox
 
 			} else {
 
-				if ( ! WordPress\Taxonomy::hasTerms( $this->constant( $constants[1] ) ) )
+				// TODO: check for `assign` roles
+				if ( ! $this->paired_assign_is_available() )
 					MetaBox::fieldEmptyPostType( $this->constant( $constants[0] ) );
 
 				else

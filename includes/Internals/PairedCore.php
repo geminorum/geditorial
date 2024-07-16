@@ -404,6 +404,32 @@ trait PairedCore
 		return $list;
 	}
 
+	protected function paired_assign_is_available( $role_check = NULL )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		if ( $role_check && ! $this->role_can( $role_check ) )
+			return FALSE;
+
+		if ( ! WordPress\Taxonomy::hasTerms( $this->constant( $constants[1] ) ) )
+			return FALSE;
+
+		$type  = $this->constant( $constants[0] );
+		$count = WordPress\PostType::countByStatuses( $type );
+
+		if ( ! empty( $count['publish'] ) )
+			return TRUE;
+
+		if ( ! WordPress\PostType::can( $type, 'edit_posts' ) )
+			return FALSE;
+
+		if ( ! empty( $count['drafts'] ) || ! empty( $count['pending'] ) )
+			return TRUE;
+
+		return FALSE;
+	}
+
 	public function paired_count_connected_to( $post, $context, $exclude = [], $posttypes = NULL )
 	{
 		if ( ! $posts = $this->paired_all_connected_to( $post, $context, 'ids', $exclude, $posttypes ) )

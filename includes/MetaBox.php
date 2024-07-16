@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
@@ -523,11 +524,14 @@ class MetaBox extends WordPress\Main
 	{
 		$object = WordPress\PostType::object( $posttype );
 
-		$html = Core\HTML::tag( 'a', [
-			'href'   => Core\WordPress::getPostNewLink( $posttype ),
-			'title'  => $object->labels->add_new_item,
-			'target' => '_blank',
-		], $object->labels->not_found );
+		if ( WordPress\PostType::can( $posttype, 'create_posts' ) )
+			$html = Core\HTML::tag( 'a', [
+				'href'   => Core\WordPress::getPostNewLink( $posttype ),
+				'title'  => $object->labels->add_new_item,
+				'target' => '_blank',
+			], $object->labels->not_found );
+		else
+			$html = gEditorial\Plugin::noinfo();
 
 		$html = Core\HTML::wrap( $html, 'field-wrap -empty' );
 
