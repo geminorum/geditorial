@@ -214,9 +214,7 @@ class Papered extends gEditorial\Module
 			'rewrite'      => FALSE,
 			'show_in_menu' => FALSE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'primary_posttype', [
-			'custom_captype' => TRUE,
-		] );
+		], 'primary_posttype' );
 
 		$this->paired_register( [
 			'public'       => FALSE,
@@ -651,6 +649,7 @@ class Papered extends gEditorial\Module
 				'rawpost'  => ModuleHelper::getPostProps( $profile ),
 				'rawmeta'  => ModuleHelper::getPostMetas( $profile ),
 				'tokens'   => ModuleHelper::getGeneralTokens( $profile ),
+				'flags'    => WordPress\Taxonomy::getPostTerms( $this->constant( 'flag_taxonomy' ), $profile, FALSE, 'slug' ),
 				'rendered' => [
 					'posttitle' => WordPress\Post::title( $profile ),
 					'fulltitle' => WordPress\Post::fullTitle( $profile ),
