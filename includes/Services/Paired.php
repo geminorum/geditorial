@@ -21,6 +21,9 @@ class Paired extends WordPress\Main
 	{
 		add_filter( static::BASE.'_tabloid_post_summaries',
 			[ __CLASS__, 'tabloid_post_summaries_multipaired' ], 45, 4 );
+
+		add_filter( static::BASE.'_papered_view_data',
+			[ __CLASS__, 'papered_view_data' ], 99, 4 );
 	}
 
 	// returns the paired taxonomy, otherwise `FALSE`
@@ -112,12 +115,20 @@ class Paired extends WordPress\Main
 
 		$posts = [];
 
-		foreach ( $items as $offset => $item )
+		foreach ( $items as $offset => $item ) {
+
+			if ( in_array( $context, [ 'print', 'printpage' ], TRUE ) )
+				$title = WordPress\Post::title( $item, FALSE );
+
+			else
+				$title = WordPress\Post::fullTitle( $item, 'overview' ) ?: '';
+
 			$posts[] = apply_filters( static::BASE.'_paired_globalsummary_for_post_data', [
-				'title' => WordPress\Post::fullTitle( $item, 'overview' ) ?: '',
+				'title' => $title,
 				'date'  => Datetime::prepForDisplay( $item->post_date ),
 				'index' => Core\Number::localize( $offset + 1 ),
 			], $item, $context );
+		}
 
 		return [
 			'context' => $context,
@@ -140,5 +151,22 @@ class Paired extends WordPress\Main
 		];
 
 		return $list;
+	}
+
+	public static function papered_view_data( $data, $profile, $source, $context )
+	{
+		if ( empty( $data['profile']['flags'] ) )
+			return $data;
+
+		if ( ! in_array( 'needs-globalsummary', (array) $data['profile']['flags'], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $source ) )
+			return $data;
+
+		if ( $markup = self::getGlobalSummaryForPostMarkup( $post, $context, 'table table-striped table-bordered' ) )
+			$data['source']['tokens']['globalsummary'] = Core\HTML::wrap( $markup['html'] );
+
+		return $data;
 	}
 }

@@ -177,6 +177,7 @@ class Papered extends gEditorial\Module
 				'needs-titr-fonts'     => _x( 'Needs Titr Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ), // FIXME: add support
 				'needs-barcode'        => _x( 'Needs Barcode', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
 				'needs-qrcode'         => _x( 'Needs QR-Code', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
+				'needs-globalsummary'  => _x( 'Needs Global Summary', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
 			],
 		];
 	}
