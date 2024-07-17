@@ -280,7 +280,6 @@ trait SubContents
 		return wp_delete_comment( intval( $id ), TRUE );
 	}
 
-	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
 	protected function subcontent_prep_data_for_save( $raw, $post = FALSE, $mapping = NULL, $metas = NULL )
 	{
 		if ( is_null( $mapping ) )
@@ -355,7 +354,8 @@ trait SubContents
 	}
 
 	// @SEE: `is_protected_meta()`
-	protected function subcontent_sanitize_data( $raw = [], $post = FALSE, $mapping = NULL, $metas = NULL, $skipped = NULL )
+	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
+	protected function subcontent_sanitize_data( $raw = [], $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
 	{
 		if ( is_null( $mapping ) )
 			$mapping = $this->subcontent_get_data_mapping();
@@ -363,18 +363,40 @@ trait SubContents
 		if ( is_null( $metas ) )
 			$metas = $this->subcontent_get_meta_mapping();
 
-		if ( is_null( $skipped ) )
-			$skipped = [ 'data' ];
+		if ( is_null( $allowed_raw ) )
+			$allowed_raw = [ 'data' ];
 
-		$data = [];
+		$types = $this->subcontent_get_field_types( 'sanitize' );
+		$data  = [];
 
-		foreach ( $raw as $raw_key => $raw_value )
-			if ( in_array( $raw_key, $skipped, TRUE ) || Core\Text::starts( $raw_key, '_' ) )
+		foreach ( $raw as $raw_key => $raw_value ) {
+
+			if ( in_array( $raw_key, $allowed_raw, TRUE )
+				|| Core\Text::starts( $raw_key, '_' ) ) {
+
 				$data[$raw_key] = $raw_value;
-			else
-				$data[$raw_key] = trim( Helper::kses( $raw_value ) );
+				continue;
+			}
 
-		return $this->filters( 'subcontent_sanitize_data', $data, $post, $raw, $mapping, $metas, $skipped );
+			$type = array_key_exists( $raw_key, $types ) ? $types[$raw_key] : $raw_key;
+
+			switch ( $type ) {
+				case 'phone':    $data[$raw_key] = Core\Phone::sanitize( $raw_value ); break;
+				case 'mobile':   $data[$raw_key] = Core\Phone::Mobile( $raw_value ); break;
+				case 'contact':  $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: phone/mobile/email/url
+				case 'dob':      $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: year-only
+				case 'year':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break;
+				case 'vin':      $data[$raw_key] = Core\Validation::sanitizeVIN( $raw_value ); break;
+				case 'iban':     $data[$raw_key] = Core\Validation::sanitizeIBAN( $raw_value ); break;
+				case 'isbn':     $data[$raw_key] = Core\ISBN::sanitize( $raw_value ); break;
+				case 'bankcard': $data[$raw_key] = Core\Validation::sanitizeCardNumber( $raw_value ); break;
+				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
+				case 'html':     $data[$raw_key] = Core\Text::normalizeWhitespace( Helper::kses( $raw_value, 'text' ), TRUE ); break;
+				default:         $data[$raw_key] = Core\Text::trim( Helper::kses( $raw_value, 'none' ) ); break;
+			}
+		}
+
+		return $this->filters( 'subcontent_sanitize_data', $data, $post, $raw, $mapping, $metas, $allowed_raw );
 	}
 
 	protected function subcontent_get_data_mapped( $items, $post = FALSE, $mapping = NULL, $metas = NULL )
