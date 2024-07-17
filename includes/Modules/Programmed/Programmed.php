@@ -186,6 +186,11 @@ class Programmed extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['notices'] = [
+			'empty'    => _x( 'There is no program information available!', 'Notice', 'geditorial-programmed' ),
+			'noaccess' => _x( 'You have not necessary permission to manage the program information.', 'Notice', 'geditorial-programmed' ),
+		];
+
 		$strings['misc'] = [
 			/* translators: %s: item count */
 			'tabloid_paired_posttype'  => _x( 'Program Participants (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-programmed' ),

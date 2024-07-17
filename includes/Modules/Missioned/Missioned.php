@@ -186,6 +186,11 @@ class Missioned extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['notices'] = [
+			'empty'    => _x( 'There is no mission information available!', 'Notice', 'geditorial-missioned' ),
+			'noaccess' => _x( 'You have not necessary permission to manage the mission information.', 'Notice', 'geditorial-missioned' ),
+		];
+
 		$strings['misc'] = [
 			/* translators: %s: item count */
 			'tabloid_paired_posttype'  => _x( 'Mission Participants (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-missioned' ),

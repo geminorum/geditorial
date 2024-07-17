@@ -114,9 +114,9 @@ class Paired extends WordPress\Main
 
 		foreach ( $items as $offset => $item )
 			$posts[] = apply_filters( static::BASE.'_paired_globalsummary_for_post_data', [
-				'title' => WordPress\Post::fullTitle( $item, 'overview' ),
+				'title' => WordPress\Post::fullTitle( $item, 'overview' ) ?: '',
 				'date'  => Datetime::prepForDisplay( $item->post_date ),
-				'index'  => Core\Number::localize( $offset + 1 ),
+				'index' => Core\Number::localize( $offset + 1 ),
 			], $item, $context );
 
 		return [

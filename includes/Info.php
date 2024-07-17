@@ -438,6 +438,11 @@ class Info extends WordPress\Main
 				/* translators: %s: vehicle count */
 				return _nx_noop( '%s Vehicle', '%s Vehicles', 'Info: Noop', 'geditorial' );
 
+			case 'position':
+			case 'positions':
+				/* translators: %s: position count */
+				return _nx_noop( '%s Position', '%s Positions', 'Info: Noop', 'geditorial' );
+
 			case 'entry':
 			case 'entries':
 				/* translators: %s: entry count */

@@ -413,7 +413,7 @@ trait PairedMetaBox
 	protected function paired_do_store_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE )
 	{
 		$posttype = $this->constant( $posttype_constant );
-		$paired   = self::req( $this->classs( $posttype ), FALSE );
+		$paired   = self::req( $this->classs().'-'.$posttype, FALSE ); // NOTE: posttype may contain undeline
 
 		if ( FALSE === $paired )
 			return;

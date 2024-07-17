@@ -692,7 +692,7 @@ trait PairedCore
 			: $post->post_name;
 
 		$term_args = [
-			'slug'        => $slug,
+			'slug'        => $slug, // TODO: maybe like: `{$post->post_type}-{$post->ID}`
 			'parent'      => $parent ? $parent->term_id : 0,
 			'name'        => $post->post_title,
 			'description' => $post->post_excerpt,

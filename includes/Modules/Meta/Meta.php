@@ -1447,7 +1447,7 @@ class Meta extends gEditorial\Module
 	{
 		switch ( strtolower( $token ) ) {
 
-			case 'today': return date_i18n( Datetime::dateFormats( empty( $args['context'] ) ? 'default' : $args['context'] ) );
+			case 'today': return Datetime::dateFormat( 'now', empty( $args['context'] ) ? 'default' : $args['context'] );
 			case 'thisyear': return date_i18n( 'Y' );
 		}
 

@@ -37,7 +37,7 @@ class Listed extends gEditorial\Module
 	use Internals\TemplatePostType;
 
 	protected $deafults  = [ 'multiple_instances' => TRUE ];
-	protected $positions = [ 'primary_posttype' => 3 ];
+	protected $positions = [ 'primary_posttype' => 4 ];
 
 	public static function module()
 	{
@@ -186,6 +186,11 @@ class Listed extends gEditorial\Module
 
 		if ( ! is_admin() )
 			return $strings;
+
+		$strings['notices'] = [
+			'empty'    => _x( 'There is no listing information available!', 'Notice', 'geditorial-listed' ),
+			'noaccess' => _x( 'You have not necessary permission to manage the listing information.', 'Notice', 'geditorial-listed' ),
+		];
 
 		$strings['misc'] = [
 			/* translators: %s: item count */

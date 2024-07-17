@@ -154,8 +154,10 @@ class Organization extends gEditorial\Module
 			],
 			'labels' => [
 				'primary_posttype' => [
-					'featured_image' => _x( 'Department Badge', 'Label: Featured Image', 'geditorial-organization' ),
-					'metabox_title'  => _x( 'The Department', 'Label: MetaBox Title', 'geditorial-organization' ),
+					/* translators: %s: paired item title */
+					'paired_connected_to' => _x( 'Member of %s Department', 'Label: `paired_connected_to`', 'geditorial-organization' ),
+					'featured_image'      => _x( 'Department Badge', 'Label: Featured Image', 'geditorial-organization' ),
+					'metabox_title'       => _x( 'The Department', 'Label: MetaBox Title', 'geditorial-organization' ),
 				],
 				'primary_paired' => [
 					'metabox_title' => _x( 'In This Department', 'Label: MetaBox Title', 'geditorial-organization' ),

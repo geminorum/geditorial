@@ -38,7 +38,9 @@ trait SubContents
 			'readonly' => _x( 'The field is in read-only mode!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 
 			/* translators: %s: count number */
-			'countitems'    => _x( '%s items', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'countitems' => _x( '%s items', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			/* translators: %s: time string */
+			'timeago' => _x( '%s ago', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 
 		], $this->get_strings( 'subcontent', 'js' ), $extra );
 	}
@@ -496,6 +498,13 @@ trait SubContents
 		return $this->filters( 'field_types', $this->subcontent_defaine_field_types(), $context );
 	}
 
+	/**
+	 * Prepares sub-content data for display given the context.
+	 *
+	 * @param  array  $data
+	 * @param  string $context
+	 * @return array  $prepped
+	 */
 	protected function subcontent_get_prepped_data( $data, $context = 'display' )
 	{
 		$list  = [];
@@ -989,5 +998,43 @@ trait SubContents
 			'context' => $context,
 			'wrap'    => FALSE,
 		], $this->subcontent_get_empty_notice( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
+	}
+
+	protected function subcontent_delete_data_all( $post, $force_delete = TRUE )
+	{
+		$data = $this->subcontent_get_data_all( $post, [], FALSE );
+
+		foreach ( $data as $comment )
+			if ( FALSE === wp_delete_comment( $comment, $force_delete ) )
+				return FALSE;
+
+		return count( $data );
+	}
+
+	protected function subcontent_clone_data_all( $from, $to, $fresh = FALSE )
+	{
+		$data = $this->subcontent_get_data_all( $from );
+
+		if ( $fresh && ( FALSE === $this->subcontent_delete_data_all( $to ) ) )
+			return FALSE;
+
+		foreach ( $data as $row )
+			if ( FALSE === $this->subcontent_insert_data_row( $this->subcontent_copy_data_row( $row ), $to ) )
+				return FALSE;
+
+		return count( $data );
+	}
+
+	protected function subcontent_copy_data_row( $data )
+	{
+		return Core\Arraay::stripByKeys( $data, [
+			'_id',
+			'_parent',
+			'_object',
+			'_status',
+			'_date',
+			'_date_gmt',
+			'_user',
+		] );
 	}
 }

@@ -113,7 +113,7 @@ class Datetime extends WordPress\Main
 		.'</span>';
 	}
 
-	public static function humanTimeAgo( $from, $to = '' )
+	public static function humanTimeAgo( $from, $to = 0 )
 	{
 		return sprintf(
 			/* translators: %s: time string */

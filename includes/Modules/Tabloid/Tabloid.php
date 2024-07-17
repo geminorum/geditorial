@@ -248,7 +248,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'exports' );
-		$data['__today']      = date_i18n( Datetime::dateFormats( 'print' ) );
+		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'term', 'custom', 'comments' ], '' );
 		$data['___hooks']     = array_fill_keys( [

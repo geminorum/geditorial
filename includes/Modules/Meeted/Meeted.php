@@ -186,6 +186,11 @@ class Meeted extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['notices'] = [
+			'empty'    => _x( 'There is no meeting information available!', 'Notice', 'geditorial-meeted' ),
+			'noaccess' => _x( 'You have not necessary permission to manage the meeting information.', 'Notice', 'geditorial-meeted' ),
+		];
+
 		$strings['misc'] = [
 			/* translators: %s: item count */
 			'tabloid_paired_posttype'  => _x( 'Meeting Participants (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-meeted' ),

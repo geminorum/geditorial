@@ -395,7 +395,7 @@ trait PostTypeFields
 				break;
 
 			case 'isbn':
-				$sanitized = Core\ISBN::sanitize( $data, TRUE );
+				$sanitized = Core\ISBN::sanitize( $data );
 				break;
 
 			case 'vin':

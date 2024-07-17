@@ -921,6 +921,7 @@ class Importer extends gEditorial\Module
 							'updated'    => ( ! empty( $insert['ID'] ) ),
 							'data'       => $insert,
 							'prepared'   => $prepared,
+							'headers'    => $headers, // NOTE: used for getting the column title
 							'raw'        => $raw,
 							'map'        => array_combine( $headers, $field_map ),
 							'source_id'  => $source_id,

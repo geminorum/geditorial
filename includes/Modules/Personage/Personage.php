@@ -30,7 +30,8 @@ class Personage extends gEditorial\Module
 	use Internals\PostTypeOverview;
 	use Internals\TemplateTaxonomy;
 
-	protected $positions = [ 'primary_posttype' => 2 ];
+	protected $positions     = [ 'primary_posttype' => 2 ];
+	protected $priority_init = 9;
 
 	public static function module()
 	{
@@ -881,7 +882,8 @@ class Personage extends gEditorial\Module
 		return $data;
 	}
 
-	public function make_human_title( $post = NULL, $context = 'display', $fallback = FALSE, $names = NULL, $checks = FALSE )
+	// NOTE: `$post` may not be available!
+	public function make_human_title( $post = NULL, $context = NULL, $fallback = FALSE, $names = NULL, $checks = FALSE )
 	{
 		if ( $checks ) {
 
@@ -895,16 +897,21 @@ class Personage extends gEditorial\Module
 				return $fallback;
 		}
 
-		if ( ! empty( $this->cache['fullnames'][$post->ID] ) )
-			return $this->cache['fullnames'][$post->ID];
+		$context = $context ?? 'display';
+
+		if ( $post && ! empty( $this->cache['fullnames'][$context][$post->ID] ) )
+			return $this->cache['fullnames'][$context][$post->ID];
 
 		if ( empty( $this->cache['fullnames'] ) )
 			$this->cache['fullnames'] = [];
 
+		if ( empty( $this->cache['fullnames'][$context] ) )
+			$this->cache['fullnames'][$context] = [];
+
 		if ( is_null( $names ) )
 			$names = $this->_get_human_names( $post );
 
-		$this->cache['fullnames'][$post->ID] = $this->filters( 'make_human_title',
+		$fullname = $this->filters( 'make_human_title',
 			ModuleHelper::makeFullname( $names, $context, $fallback ),
 			$context,
 			$post,
@@ -913,7 +920,10 @@ class Personage extends gEditorial\Module
 			$checks
 		);
 
-		return $this->cache['fullnames'][$post->ID];
+		if ( ! $post )
+			return $fullname;
+
+		return $this->cache['fullnames'][$context][$post->ID] = $fullname;
 	}
 
 	private function _get_human_names( $post = NULL, $checks = FALSE )

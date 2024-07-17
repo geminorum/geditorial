@@ -45,7 +45,7 @@ trait FramePage
 			$class = array_merge( $class, [
 				'button',
 				'-button',
-				'-button-full',
+				// '-button-full',
 				'-button-icon',
 				'-mainbutton',
 			] );
@@ -53,7 +53,7 @@ trait FramePage
 		return Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'title'  => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
-			'class'  => array_merge( $class, $args['extra'] ),
+			'class'  => array_merge( $class, (array) $args['extra'] ),
 			'target' => '_blank',
 			'data'   => array_merge( [
 				'module'        => $this->key,
@@ -108,7 +108,7 @@ trait FramePage
 		return Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'title'  => $title ? sprintf( $title, WordPress\Term::title( $term, $name ), $name ) : FALSE,
-			'class'  => array_merge( $class, $args['extra'] ),
+			'class'  => array_merge( $class, (array) $args['extra'] ),
 			'target' => '_blank',
 			'data'   => array_merge( [
 				'module'        => $this->key,

@@ -187,6 +187,11 @@ class Trained extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['notices'] = [
+			'empty'    => _x( 'There is no training information available!', 'Notice', 'geditorial-trained' ),
+			'noaccess' => _x( 'You have not necessary permission to manage the training information.', 'Notice', 'geditorial-trained' ),
+		];
+
 		$strings['misc'] = [
 			/* translators: %s: item count */
 			'tabloid_paired_posttype'  => _x( 'Training Attendees (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-trained' ),
