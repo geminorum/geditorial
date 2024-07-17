@@ -752,8 +752,10 @@ class Personage extends gEditorial\Module
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return $data;
 
-		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
+		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) ) {
 			$data['___sides']['meta'].= Core\HTML::wrap( Scripts::markupQRCodeSVG( $vcard ), '-qrcode-vcard' );
+			$data['___flags'][] = 'needs-qrcode';
+		}
 
 		return $data;
 	}

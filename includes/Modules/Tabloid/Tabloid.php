@@ -84,10 +84,6 @@ class Tabloid extends gEditorial\Module
 	{
 		$this->_load_submenu_adminpage( $context );
 		$this->_make_linked_viewable();
-
-		// FIXME: WTF: make the signal first!
-		Scripts::enqueueJSBarcode();
-		Scripts::enqueueQRCodeSVG();
 	}
 
 	public function render_submenu_adminpage()
@@ -125,7 +121,7 @@ class Tabloid extends gEditorial\Module
 
 	public function rowaction_get_mainlink_for_post( $post, $extra = NULL )
 	{
-		if ( ! current_user_can( 'read', $post->ID ) )
+		if ( ! $post || ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
 
 		$custom = $this->get_setting_fallback( sprintf( 'posttype_%s_action_title', $post->post_type ),
@@ -193,6 +189,8 @@ class Tabloid extends gEditorial\Module
 		$part = $this->get_view_part_by_post( $post, $context );
 		$data = $this->_get_view_data_for_post( $post, $context );
 
+		$this->_handle_flags_for_post( $post, $context, $data );
+
 		echo $this->wrap_open( '-view -'.$part );
 			$this->actions( 'render_view_before', $post, $context, $data, $part );
 			$this->render_view( $part, $data );
@@ -206,6 +204,20 @@ class Tabloid extends gEditorial\Module
 		echo $this->wrap_open( '-debug -debug-data', TRUE, $this->classs( 'raw' ), TRUE );
 			Core\HTML::tableSide( $data );
 		echo '</div>';
+	}
+
+	private function _handle_flags_for_post( $post, $context, $data )
+	{
+		if ( empty( $data['___flags'] ) )
+			return;
+
+		$flags = (array) $data['___flags'];
+
+		if ( in_array( 'needs-barcode', $flags, TRUE ) )
+			Scripts::enqueueJSBarcode();
+
+		if ( in_array( 'needs-qrcode', $flags, TRUE ) )
+			Scripts::enqueueQRCodeSVG();
 	}
 
 	private function _print_script_for_post( $post, $context, $data )
@@ -250,6 +262,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_export'] = $this->role_can( 'exports' );
 		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
+		$data['___flags']     = $this->filters( 'post_flags', [], $data, $post, $context );
 		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'term', 'custom', 'comments' ], '' );
 		$data['___hooks']     = array_fill_keys( [
 			'after-actions',
@@ -273,6 +286,7 @@ class Tabloid extends gEditorial\Module
 
 		unset( $data['_links'] );
 
+		unset( $data['___flags'] );
 		unset( $data['___sides'] );
 		unset( $data['___hooks'] );
 		unset( $data['__summaries'] );
