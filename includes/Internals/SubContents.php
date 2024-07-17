@@ -790,7 +790,7 @@ trait SubContents
 		$parent = WordPress\Post::get( (int) $comment->comment_post_ID );
 		$item   = $this->subcontent_prep_data_from_query( $comment, $parent );
 		$data   = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent, $context );
-		$author = FALSE;
+		$author = $datetime = $timeago = '';
 
 		// TODO: override by `Users` module for better profiles
 		if ( ! empty( $item['_user'] ) && ( $user = get_user_by( 'id', $item['_user'] ) ) )
@@ -800,13 +800,26 @@ trait SubContents
 				WordPress\User::getTitleRow( $user )
 			);
 
+		if ( ! empty( $item['_date'] ) ) {
+			$datetime = Datetime::dateFormat( $item['_date'], $context );
+			// $timeago  = human_time_diff( strtotime( $item['_date'] ) );
+			$timeago  = moment( strtotime( $item['_date'] ) );
+		}
+
 		// NOTE: like `WordPress\Post::summary()`
 		$summary = array_merge( [
 			'title'       => $na,
 			'link'        => FALSE,
 			'image'       => FALSE,
 			'author'      => $author,
+			'timeago'     => $timeago,
+			'datetime'    => $datetime,
 			'description' => '',
+
+			// preserve the originals
+			'comment_author'   => $author,
+			'comment_datetime' => $datetime,
+			'comment_timeago'  => $timeago,
 		], $data ?? [] );
 
 		return $this->filters( 'provide_summary', $summary, $parent, $item, $context );
