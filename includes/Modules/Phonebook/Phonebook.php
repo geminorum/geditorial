@@ -189,6 +189,14 @@ class Phonebook extends gEditorial\Module
 		return [];
 	}
 
+	protected function subcontent_define_importable_fields()
+	{
+		return [
+			'contact' => 'type',
+			'address' => 'type',
+		];
+	}
+
 	protected function subcontent_define_unique_fields()
 	{
 		return [
@@ -225,6 +233,11 @@ class Phonebook extends gEditorial\Module
 	{
 		$this->add_posttype_fields_supported();
 		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
+	}
+
+	public function importer_init()
+	{
+		$this->subcontent__hook_importer_init();
 	}
 
 	public function current_screen( $screen )

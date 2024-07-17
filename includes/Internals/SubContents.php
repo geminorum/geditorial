@@ -74,6 +74,7 @@ trait SubContents
 		// $unique     = $this->subcontent_get_unique_fields( $context );
 		// $readonly   = $this->subcontent_get_readonly_fields( $context );
 		// $searchable = $this->subcontent_get_searchable_fields( $context );
+		// $importable = $this->subcontent_get_importable_fields( $context );
 		$required   = $this->subcontent_get_required_fields( $context );
 		$enabled    = $this->get_setting( $settings_key, array_keys( $all ) );
 		$fields     = [];
@@ -102,6 +103,19 @@ trait SubContents
 	{
 		return [
 			// 'name' // <---- EXAMPLE
+		];
+	}
+
+	protected function subcontent_get_importable_fields( $context = 'display' )
+	{
+		return $this->filters( 'importable_fields',
+			$this->subcontent_define_required_fields(), $context );
+	}
+
+	protected function subcontent_define_importable_fields()
+	{
+		return [
+			// 'name' => 'type', // <---- EXAMPLE: 'target_key' => 'target_column'
 		];
 	}
 
@@ -506,6 +520,110 @@ trait SubContents
 		return Core\HTML::tag( 'p', [
 			'class' => [ 'description', '-description', '-noaccess' ],
 		], $this->get_string( $string_key, $context, 'notices', $default ) );
+	}
+
+	protected function subcontent__hook_importer_init()
+	{
+		$this->filter_module( 'importer', 'fields', 2, 10, 'subcontent' );
+		$this->filter_module( 'importer', 'prepare', 7, 10, 'subcontent' );
+		$this->action_module( 'importer', 'saved', 2, 10, 'subcontent' );
+	}
+
+	protected function subcontent_get_importer_fields( $posttype = NULL, $object = FALSE )
+	{
+		$fields     = [];
+		$enabled    = $this->subcontent_get_fields( 'import' );
+		$importable = $this->subcontent_get_importable_fields( 'import' );
+		$template   = $this->get_string( 'field_title', FALSE, 'importer',
+			/* translators: %s: field title */
+			_x( 'SubContent: %s', 'Internal: Subcontents: Import Title', 'geditorial-admin' )
+		);
+
+		foreach ( $enabled as $field => $title )
+			if ( array_key_exists( $field, $importable ) )
+				$fields[sprintf( '%s__%s', $this->key, $field )] = sprintf( $template, $title );
+
+		return $fields;
+	}
+
+	public function importer_fields_subcontent( $fields, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $fields;
+
+		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
+	}
+
+	public function importer_prepare_subcontent( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
+	{
+		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
+			return $value;
+
+		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
+			return $value;
+
+		if ( WordPress\Strings::isEmpty( $value ) )
+			return Helper::htmlEmpty();
+
+		$types   = $this->subcontent_get_field_types( 'import' );
+		$current = Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) );
+
+		return $this->prep_meta_row( $value, $current, [
+			'type' => array_key_exists( $current, $types ) ? $types[$current] : $current,
+		], $raw[$field] );
+	}
+
+	public function importer_saved_subcontent( $post, $atts = [] )
+	{
+		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
+			return;
+
+		$fields = $this->get_importer_fields( $post->post_type );
+		$types  = $this->subcontent_get_field_types( 'import' );
+		$title  = WordPress\Post::title( (int) $atts['attach_id'] );
+
+		foreach ( $atts['map'] as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( WordPress\Strings::isEmpty( $value = $atts['raw'][$offset] ) )
+				continue;
+
+			$column  = empty( $atts['headers'][$offset] ) ? '' : $atts['headers'][$offset];
+			$current = Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) );
+			$prepped = $this->prep_meta_row( $value, $current, [
+				'type' => array_key_exists( $current, $types ) ? $types[$current] : $current,
+			], $atts['raw'][$offset] );
+
+			if ( FALSE === ( $data = $this->subcontent_prep_data_from_import( $prepped, $current, $post, $column, $title ) ) )
+				continue;
+
+			if ( FALSE === $this->subcontent_insert_data_row( $data, $post ) )
+				$this->log( 'NOTICE', 'SUBCONTENT INSERT DATA FAILED ON POST-ID:'.( $post ? $post->ID : 'UNKNOWN' ) );
+		}
+	}
+
+	protected function subcontent_prep_data_from_import( $raw, $field, $post = FALSE, $column_title = '', $source_title = '' )
+	{
+		if ( empty( $raw ) )
+			return FALSE;
+
+		$enabled    = $this->subcontent_get_fields( 'import' );
+		$importable = $this->subcontent_get_importable_fields( 'import' );
+		$data       = [ $field => $raw ];
+
+		if ( $column_title && array_key_exists( $field, $enabled ) )
+			$data[$importable[$field]] = Core\Text::normalizeWhitespace( $column_title );
+
+		if ( $source_title && array_key_exists( 'desc', $enabled ) )
+			$data['desc'] = \sprintf(
+				/* translators: %s: source title */
+				_x( '[Imported]: %s', 'Internal: Subcontents: Import Desc', 'geditorial-admin' ),
+				Core\Text::normalizeWhitespace( $source_title )
+			);
+
+		return $this->filters( 'subcontent_prep_data_from_import', $data, $raw, $field, $post, $column_title, $source_title );
 	}
 
 	// TODO: `total`: count with html markup
