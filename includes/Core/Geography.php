@@ -7,6 +7,8 @@ class Geography extends Base
 	// @SEE: https://github.com/brick/geo
 	// @SEE: https://github.com/jeroendesloovere/distance
 
+	// ---- https://github.com/persian-tools/persian-tools/pull/361
+
 	// @REF: https://snippets.ir/1269/calculate-distance-between-two-points-in-php.html
 	public static function getDistance( $latitude1, $longitude1, $latitude2, $longitude2 )
 	{

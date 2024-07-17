@@ -281,7 +281,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// NOTE: hits cached terms for the post
-	public static function getPostTerms( $taxonomy, $post = NULL, $object = TRUE, $key = FALSE )
+	public static function getPostTerms( $taxonomy, $post = NULL, $object = TRUE, $key = FALSE, $index_key = NULL )
 	{
 		$terms = get_the_terms( $post, $taxonomy );
 
@@ -289,7 +289,7 @@ class Taxonomy extends Core\Base
 			return [];
 
 		if ( ! $object )
-			return Core\Arraay::pluck( $terms, $key ?: 'term_id' );
+			return Core\Arraay::pluck( $terms, $key ?: 'term_id', $index_key );
 
 		if ( $key )
 			return Core\Arraay::reKey( $terms, $key );

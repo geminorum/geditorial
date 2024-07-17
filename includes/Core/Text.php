@@ -816,7 +816,7 @@ class Text extends Base
 	// @SEE: `wp_check_invalid_utf8()`
 	public static function utf8Compliant( $text )
 	{
-		if ( 0 === strlen( $text ) )
+		if ( 0 === strlen( $text ?? '' ) )
 			return TRUE;
 
 		// If even just the first character can be matched, when the /u

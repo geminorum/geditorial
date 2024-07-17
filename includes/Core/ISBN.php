@@ -23,7 +23,7 @@ class ISBN extends Base
 		return $wrap ? '<span class="isbn -not-valid">&#8206;'.$input.'&#8207;<span>' : $input;
 	}
 
-	public static function sanitize( $string, $translate = FALSE )
+	public static function sanitize( $string, $translate = TRUE )
 	{
 		if ( $translate )
 			$string = Number::translate( $string );

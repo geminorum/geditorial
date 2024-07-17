@@ -314,7 +314,7 @@ class PostType extends Core\Base
 	public static function getIDs( $posttype = 'post', $extra = [], $fields = NULL )
 	{
 		$args = array_merge( [
-			'fields'         => is_null( $fields ) ? 'ids' : $fields, // OR: `id=>parent`
+			'fields'         => $fields ?? 'ids', // OR: `id=>parent`
 			'post_type'      => $posttype,
 			'post_status'    => Status::acceptable( $posttype ),
 			'posts_per_page' => -1,
@@ -718,5 +718,23 @@ class PostType extends Core\Base
 			return FALSE;
 
 		return sprintf( '/%s/%s', $object->rest_namespace, $object->rest_base );
+	}
+
+	/**
+	 * Retrieves post-type count of posts by statuses or given status.
+	 * wrapper for `wp_count_posts()` and returns array.
+	 *
+	 * @param  string      $posttype
+	 * @param  bool|string $status
+	 * @return int|array   $count
+	 */
+	public static function countByStatuses( $posttype, $status = FALSE )
+	{
+		$count = wp_count_posts( $posttype );
+
+		if ( $status && isset( $count->{$status} ) )
+			return $count->{$status};
+
+		return get_object_vars( $count );
 	}
 }
