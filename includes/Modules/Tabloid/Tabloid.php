@@ -107,7 +107,12 @@ class Tabloid extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				// TODO
+				if ( $this->role_can( 'overview' )
+					&& ( $link = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action' ) ) ) {
+
+					$this->enqueue_asset_js( [ 'button' => $link ], $screen );
+					Scripts::enqueueColorBox();
+				}
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -118,7 +123,7 @@ class Tabloid extends gEditorial\Module
 		}
 	}
 
-	public function rowaction_get_mainlink_for_post( $post )
+	public function rowaction_get_mainlink_for_post( $post, $extra = NULL )
 	{
 		if ( ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
@@ -135,7 +140,7 @@ class Tabloid extends gEditorial\Module
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',
-			'extra'        => [
+			'extra'        => $extra ?? [
 				'-tabloid-overview',
 			]
 		] );
