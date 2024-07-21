@@ -515,7 +515,8 @@ class Template extends WordPress\Main
 	// TODO: move to `Services\PostTypeFields`
 	public static function getMetaField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
 	{
-		$args = self::atts( [
+		$field = FALSE;
+		$args  = self::atts( [
 			'id'       => NULL,
 			'fallback' => FALSE,
 			'default'  => FALSE,
@@ -531,11 +532,23 @@ class Template extends WordPress\Main
 		if ( is_null( $args['default'] ) )
 			$args['default'] = '';
 
+		if ( empty( $field_key ) )
+			return $args['default'];
+
 		if ( $check && ! gEditorial()->enabled( $module ) )
 			return $args['default'];
 
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
+
+		if ( is_array( $field_key ) ) {
+
+			if ( empty( $field_key['name'] ) )
+				return $args['default'];
+
+			$field     = $field_key;
+			$field_key = $field['name'];
+		}
 
 		$meta = $raw = self::getMetaFieldRaw( $field_key, $post->ID, $module );
 
@@ -545,7 +558,8 @@ class Template extends WordPress\Main
 		if ( FALSE === $meta )
 			return $args['default'];
 
-		$field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );
+		if ( empty( $field ) )
+			$field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );
 
 		// NOTE: field maybe disabled or overrided
 		if ( FALSE === $field )
