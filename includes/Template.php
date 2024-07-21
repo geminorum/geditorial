@@ -555,15 +555,18 @@ class Template extends WordPress\Main
 		if ( FALSE === $meta && $args['fallback'] )
 			return self::getMetaField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
 
-		if ( FALSE === $meta )
-			return $args['default'];
-
 		if ( empty( $field ) )
 			$field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );
 
 		// NOTE: field maybe disabled or overrided
 		if ( FALSE === $field )
 			$field = [ 'name' => $field_key, 'type' => 'text' ];
+
+		if ( FALSE === $meta )
+			$meta = apply_filters( static::BASE.'_meta_field_empty', $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
+
+		if ( FALSE === $meta )
+			return $args['default'];
 
 		if ( FALSE !== $args['context'] ) {
 
