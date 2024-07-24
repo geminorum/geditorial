@@ -173,6 +173,7 @@ trait BulkExports
 				$row[] = ( empty( $saved[$meta][0] ) ? '' : trim( $saved[$meta][0] ) ) ?: '';
 
 			foreach ( $taxes as $tax => $tax_title )
+				// FIXME: check for `auto_set_parent_terms` on tax object then exclude parents, just like paired box
 				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
 
 			foreach ( $customs as $custom => $custom_title )

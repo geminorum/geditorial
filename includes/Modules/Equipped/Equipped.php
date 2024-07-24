@@ -53,6 +53,7 @@ class Equipped extends gEditorial\Module
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
+				'auto_term_parents',
 				'show_in_quickedit',
 			],
 			'_frontend' => [
@@ -109,6 +110,7 @@ class Equipped extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 		], NULL, [
 			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'   => $this->get_setting( 'auto_term_parents', TRUE ),
 			'custom_captype' => TRUE,
 		] );
 

@@ -1032,6 +1032,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_auto_term_parents( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'auto_term_parents',
+			'title'       => _x( 'Auto Term Parents', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Auto-assigns parent terms on supported posts.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '1',
+		];
+	}
+
 	public static function getSetting_override_dates( $description = NULL, $default = 1 )
 	{
 		return [

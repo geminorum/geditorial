@@ -41,6 +41,9 @@ class Genres extends gEditorial\Module
 			'_editpost' => [
 				'metabox_advanced',
 			],
+			'_editlist' => [
+				'auto_term_parents',
+			],
 			'_supports' => [
 				'shortcode_support',
 			],
@@ -126,6 +129,8 @@ class Genres extends gEditorial\Module
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
 			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
+		], NULL, [
+			'auto_parents' => $this->get_setting( 'auto_term_parents', TRUE ),
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );

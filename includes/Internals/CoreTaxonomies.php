@@ -134,6 +134,8 @@ trait CoreTaxonomies
 			'is_viewable'    => NULL,
 			'custom_captype' => FALSE,
 			'admin_managed'  => NULL,    // psudo-setting: manage only for admins
+			'auto_parents'   => FALSE,
+			'auto_children'  => FALSE,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -253,6 +255,9 @@ trait CoreTaxonomies
 					}
 
 					break;
+
+				case 'auto_parents' : $args[Services\TermHierarchy::AUTO_SET_PARENT_TERMS] = $value; break;
+				case 'auto_children': $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
 
 				// TODO: support combination of settings:
 				// -- restrricted terms
