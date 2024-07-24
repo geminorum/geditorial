@@ -161,6 +161,24 @@ trait PostTypeFields
 					$args['ltr'] = TRUE;
 			}
 
+			if ( ! array_key_exists( 'data_length', $args ) ) {
+
+				if ( in_array( $args['type'], [ 'date', 'identity' ], TRUE ) )
+					$args['data_length'] = 10;
+
+				else if ( in_array( $args['type'], [ 'bankcard' ], TRUE ) )
+					$args['data_length'] = 16;
+
+				else if ( in_array( $args['type'], [ 'phone', 'mobile' ], TRUE ) )
+					$args['data_length'] = 13;
+
+				else if ( in_array( $args['type'], [ 'iban' ], TRUE ) )
+					$args['data_length'] = 26;
+
+				else if ( in_array( $args['type'], [ 'gram', 'milimeter', 'kilogram', 'centimeter', 'km_per_hour', 'european_shoe', 'international_shirt', 'international_pants', 'day', 'hour', 'member', 'person' ], TRUE ) )
+					$args['data_length'] = 4;
+			}
+
 			if ( ! array_key_exists( 'exclude', $args ) )
 				$args['exclude'] = in_array( $args['type'], [ 'parent_post' ] ) ? NULL : FALSE;
 
@@ -195,6 +213,7 @@ trait PostTypeFields
 				'import_ignored' => FALSE,   // TRUE to make duplicate one that will ignored on import
 				'export_title'   => NULL,    // the export column title
 				'data_unit'      => NULL,    // the unit which in the data is stored
+				'data_length'    => NULL,    // typical length of the data // FIXME: implement this!
 
 				'values'      => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
 				'none_title'  => $this->get_string( $field, $posttype, 'none', $this->get_string( $args['type'], $posttype, 'none', NULL ) ),

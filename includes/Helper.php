@@ -1434,13 +1434,14 @@ class Helper extends WordPress\Main
 	 * @param  array  $data
 	 * @param  array  $headers
 	 * @param  string $sheet
+	 * @param  array  $widths
 	 * @param  array  $options
 	 * @param  array  $styles
 	 * @param  string $title
 	 * @param  string $desc
 	 * @return string $content
 	 */
-	public static function generateXLSX( $data, $headers = [], $sheet = NULL, $options = NULL, $styles = NULL, $title = NULL, $desc = NULL )
+	public static function generateXLSX( $data, $headers = [], $sheet = NULL, $widths = NULL, $options = NULL, $styles = NULL, $title = NULL, $desc = NULL )
 	{
 		$writer = new \XLSXWriter();
 		$writer->setTempDir( get_temp_dir() );
@@ -1469,6 +1470,10 @@ class Helper extends WordPress\Main
 				'freeze_rows' => TRUE,
 				'widths'      => array_fill( 0, count( $headers ), 20 ),
 			];
+
+		if ( ! is_null( $widths ) )
+			foreach ( $widths as $offset => $width )
+				$options['widths'][$offset] = $width + 2; // override all with padding
 
 		if ( is_null( $styles ) )
 			$styles = [

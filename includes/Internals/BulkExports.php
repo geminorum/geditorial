@@ -202,31 +202,74 @@ trait BulkExports
 				$headers = [];
 
 				foreach ( $props as $prop => $prop_title )
-					$headers[] = $prop_title ?? Info::getPosttypePropTitle( $prop, 'export' ) ?: $prop;
+					$headers[$prop] = $prop_title ?? Info::getPosttypePropTitle( $prop, 'export' ) ?: $prop;
 
 				foreach ( $fields as $field => $field_title )
-					$headers[] = $field_title ?? Services\PostTypeFields::getExportTitle( $field, $posttypes[0], 'meta' );
+					$headers['field__'.$field] = $field_title ?? Services\PostTypeFields::getExportTitle( $field, $posttypes[0], 'meta' );
 
 				foreach ( $units as $unit => $unit_title )
-					$headers[] = $unit_title ?? Services\PostTypeFields::getExportTitle( $unit, $posttypes[0], 'units' );
+					$headers['unit__'.$unit] = $unit_title ?? Services\PostTypeFields::getExportTitle( $unit, $posttypes[0], 'units' );
 
 				foreach ( $metas as $meta => $meta_title )
-					$headers[] = $meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
+					$headers['meta__'.$meta] = $meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
 
 				foreach ( $taxes as $taxonomy => $taxonomy_title )
-					$headers[] = $taxonomy_title ?? Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy );
+					$headers['taxonomy__'.$taxonomy] = $taxonomy_title ?? Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy );
 
 				foreach ( $customs as $custom => $custom_title )
-					$headers[] = $custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ); // FIXME: move-up!
+					$headers['custom__'.$custom] = $custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ); // FIXME: move-up!
 
 				$sheet_title = 'posttype' === $target
 					? Helper::getPostTypeLabel( $reference, 'extended_label', 'name', $this->module->title )
 					: WordPress\Post::title( $reference, NULL, FALSE );
 
-				return Helper::generateXLSX( $data, $headers, $sheet_title );
+				return Helper::generateXLSX(
+					$data,
+					array_values( $headers ),
+					$sheet_title,
+					array_values( $this->exports_generate_column_widths( $headers, $posttypes ) )
+				);
 		}
 
 		return $data;
+	}
+
+	protected function exports_generate_column_widths( $headers, $posttypes, $default = 20 )
+	{
+		$widths = [];
+		$fields = Services\PostTypeFields::getEnabled( $posttypes[0], 'meta' );
+		$units  = Services\PostTypeFields::getEnabled( $posttypes[0], 'units' );
+
+		foreach ( $headers as $header => $title ) {
+
+			$width = NULL;
+
+			if ( Core\Text::starts( $header, 'field__' ) ) {
+
+				$field = Core\Text::stripPrefix( $header, 'field__' );
+
+				if ( array_key_exists( $field, $fields ) )
+					$width = $fields[$field]['data_length'] ?? $width;
+
+			} else if ( Core\Text::starts( $header, 'unit__' ) ) {
+
+				$field = Core\Text::stripPrefix( $header, 'field__' );
+
+				if ( array_key_exists( $field, $units ) )
+					$width = $units[$field]['data_length'] ?? $width;
+
+			} else if ( Core\Text::starts( $header, 'taxonomy__' ) ) {
+
+				$taxonomy = WordPress\Taxonomy::object( Core\Text::stripPrefix( $header, 'taxonomy__' ) );
+
+				if ( ! empty( $taxonomy->data_length ) )
+					$width = $taxonomy->data_length;
+			}
+
+			$widths[$header] = $width ?? $default;
+		}
+
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_column_widths' ), $widths, $headers, $default );
 	}
 
 	// TODO: support field meta from paired

@@ -214,6 +214,7 @@ class Personage extends gEditorial\Module
 				'first_name' => [
 					'title'          => _x( 'First Name', 'Field Title', 'geditorial-personage' ),
 					'description'    => _x( 'Given Name of the Person', 'Field Description', 'geditorial-personage' ),
+					'data_length'    => 25,
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 10,
@@ -226,6 +227,7 @@ class Personage extends gEditorial\Module
 				'last_name' => [
 					'title'          => _x( 'Last Name', 'Field Title', 'geditorial-personage' ),
 					'description'    => _x( 'Family Name of the Person', 'Field Description', 'geditorial-personage' ),
+					'data_length'    => 25,
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 10,
@@ -233,6 +235,7 @@ class Personage extends gEditorial\Module
 				'fullname' => [
 					'title'          => _x( 'Full Name', 'Field Title', 'geditorial-personage' ),
 					'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-personage' ),
+					'data_length'    => 45,
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 11,

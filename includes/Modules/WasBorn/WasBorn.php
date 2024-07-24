@@ -180,6 +180,7 @@ class WasBorn extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
+			'data_length'  => _x( '6', 'Main Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
 			'admin_managed' => TRUE,
 		] );
@@ -187,6 +188,7 @@ class WasBorn extends gEditorial\Module
 		$this->register_taxonomy( 'gender_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
+			'data_length'  => _x( '5', 'Gender Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
 			'admin_managed' => TRUE,
 		] );

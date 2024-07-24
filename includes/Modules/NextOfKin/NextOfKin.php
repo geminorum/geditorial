@@ -238,6 +238,7 @@ class NextOfKin extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_menu'       => FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'data_length'        => _x( '10', 'Main Taxonomy Argument: `data_length`', 'geditorial-next-of-kin' ),
 		], NULL, [
 			'custom_captype' => TRUE,
 		] );
