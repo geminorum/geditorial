@@ -177,7 +177,7 @@ trait BulkExports
 				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
 
 			foreach ( $customs as $custom => $custom_title )
-				$row[] = $this->filters( 'export_prep_custom_for_post', '', $custom, $post, $reference, $posttypes, $format );
+				$row[] = apply_filters( $this->hook_base( 'bulk_exports', 'prep_custom_for_post' ), '', $custom, $post, $reference, $target, $type, $format );
 
 			$data[] = $row;
 		}
@@ -629,6 +629,16 @@ trait BulkExports
 			if ( ! WordPress\PostType::exists( $posttype ) )
 				continue;
 
+			$all = apply_filters( $this->hook_base( 'bulk_exports', 'post_taxonomies' ),
+				get_object_taxonomies( $posttype ),
+				$posttype,
+				$reference,
+				$target,
+				$type,
+				$context,
+				$format
+			);
+
 			switch ( $type ) {
 
 				case 'simple':
@@ -651,7 +661,7 @@ trait BulkExports
 				case 'paired_full':
 				case 'posttype_full':
 
-					$list = array_merge( $list, get_object_taxonomies( $posttype ) );
+					$list = array_merge( $list, $all );
 
 					break;
 			}
