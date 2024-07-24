@@ -16,6 +16,8 @@ class Abo extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
+	// TODO: custom Build meta-box row: A+[] B+[] AB+[] O+[] A-[] B-[] AB-[] O-[]
+
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
@@ -125,6 +127,7 @@ class Abo extends gEditorial\Module
 			'custom_captype' => TRUE,
 		] );
 
+		add_filter( sprintf( '%s_%s', $this->constant( 'main_taxonomy' ), 'name' ), [ $this, 'main_taxonomy_name_field' ], 20, 3 );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'main_taxonomy' ), TRUE );
 	}
@@ -187,5 +190,11 @@ class Abo extends gEditorial\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	// filter for `{$taxonomy}_{$field}` on `sanitize_term_field()`
+	public function main_taxonomy_name_field( $value, $term_id, $context )
+	{
+		return 'display' === $context ? Core\HTML::wrapLTR( $value ) : $value;
 	}
 }

@@ -235,6 +235,7 @@ class Organization extends gEditorial\Module
 					'order'       => 90,
 				],
 
+				// TODO: internal: `PairedCodeField` for all x_code shenanigans!
 				'organization_code' => [
 					'title'       => _x( 'Organization Code', 'Field Title', 'geditorial-organization' ),
 					'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),

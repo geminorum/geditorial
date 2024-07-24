@@ -191,6 +191,7 @@ trait PairedTools
 
 			foreach ( $_POST['_cb'] as $term_id ) {
 
+				// FIXME: use alternative version of `paired_all_connected_to()` with just `term_id`
 				foreach ( $this->paired_get_from_posts( NULL, $constants[0], $constants[1], FALSE, $term_id ) as $post ) {
 
 					if ( $post->menu_order )
@@ -378,6 +379,7 @@ trait PairedTools
 				'title'    => _x( 'Count', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
+					// FIXME: use `paired_count_connected_to()`
 					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
 						return Core\Number::format( $this->paired_get_from_posts( $post_id, $constants[0], $constants[1], TRUE ) );
 

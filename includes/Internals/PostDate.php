@@ -37,7 +37,10 @@ trait PostDate
 		$this->raise_resources( $limit );
 
 		$query = [
-			'meta_query' => [
+			'orderby'     => 'date',
+			'order'       => 'DESC',
+			'post_status' => 'any',
+			'meta_query'  => [
 				'relation' => 'OR',
 			],
 		];

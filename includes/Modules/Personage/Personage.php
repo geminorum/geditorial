@@ -30,6 +30,8 @@ class Personage extends gEditorial\Module
 	use Internals\PostTypeOverview;
 	use Internals\TemplateTaxonomy;
 
+	// https://github.com/washingtonstateuniversity/WSU-People-Directory
+
 	protected $positions     = [ 'primary_posttype' => 2 ];
 	protected $priority_init = 9;
 
@@ -932,7 +934,7 @@ class Personage extends gEditorial\Module
 		return $this->cache['fullnames'][$context][$post->ID] = $fullname;
 	}
 
-	private function _get_human_names( $post = NULL, $checks = FALSE )
+	private function _get_human_names( $post, $checks = FALSE )
 	{
 		static $cache = [];
 
@@ -947,6 +949,9 @@ class Personage extends gEditorial\Module
 			if ( ! $this->is_posttype( 'primary_posttype', $post ) )
 				return FALSE;
 		}
+
+		if ( empty( $post ) )
+			return [];
 
 		if ( ! empty( $cache[$post->ID] ) )
 			return $cache[$post->ID];
@@ -1005,6 +1010,7 @@ class Personage extends gEditorial\Module
 	public function paired_all_connected_to_args_status( $args, $post, $posttypes, $context )
 	{
 		if ( in_array( $context, [
+			'restapi',
 			'reports',
 			'columns',
 			'pointers',

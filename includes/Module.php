@@ -440,10 +440,13 @@ class Module extends WordPress\Module
 		return $links;
 	}
 
-	public function get_module_url( $context = 'reports', $sub = NULL, $extra = [] )
+	public function get_module_url( $context = NULL, $sub = NULL, $extra = [] )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->key;
+
+		if ( is_null( $context ) )
+			$context = 'reports'; // TODO get from module class static: this is the default module link!
 
 		switch ( $context ) {
 			case 'config'    : $url = Settings::settingsURL(); break;

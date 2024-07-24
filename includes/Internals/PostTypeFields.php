@@ -327,7 +327,7 @@ trait PostTypeFields
 
 		$sanitized = $data;
 
-		// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
+		// TODO: support for shorthand chars like `+`/`~`/`?` in date types to fill with today/now
 
 		switch ( $field['type'] ) {
 

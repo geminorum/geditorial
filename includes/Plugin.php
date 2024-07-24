@@ -200,7 +200,7 @@ class Plugin
 	private function load_options()
 	{
 		$frontend = ! is_admin();
-		$options  = get_option( 'geditorial_options' );
+		$options  = get_option( static::BASE.'_options' );
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 

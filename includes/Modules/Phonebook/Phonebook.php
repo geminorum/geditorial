@@ -19,6 +19,7 @@ class Phonebook extends gEditorial\Module
 	use Internals\RestAPI;
 	use Internals\SubContents;
 
+	// TODO: optional fallback on `export` context into available sub-contents via `geditorial_meta_field_empty` filter
 	// TODO: move mobile/phone/address fields here
 	// TODO: remove duplicates @see: `Iranian::_render_tools_card_purge_duplicates()`
 
@@ -31,6 +32,7 @@ class Phonebook extends gEditorial\Module
 			'icon'     => 'id-alt',
 			'access'   => 'beta',
 			'keywords' => [
+				'contact',
 				'subcontent',
 			],
 		];

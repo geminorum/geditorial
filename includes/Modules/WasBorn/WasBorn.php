@@ -130,6 +130,7 @@ class WasBorn extends gEditorial\Module
 					'show_option_no_items' => _x( '(No Birthdays)', 'Label: `show_option_no_items`', 'geditorial-was-born' ),
 				],
 				'gender_taxonomy' => [
+					'extended_label'       => _x( 'Gender', 'Label: `extended_label`', 'geditorial-was-born' ),
 					'show_option_all'      => _x( 'All Genders', 'Label: `show_option_all`', 'geditorial-was-born' ),
 					'show_option_no_items' => _x( '(Undefined Gender)', 'Label: `show_option_no_items`', 'geditorial-was-born' ),
 				],

@@ -24,7 +24,7 @@ class Equipped extends gEditorial\Module
 			'name'     => 'equipped',
 			'title'    => _x( 'Equipped', 'Modules: Equipped', 'geditorial-admin' ),
 			'desc'     => _x( 'Items of Equipment', 'Modules: Equipped', 'geditorial-admin' ),
-			'icon'     => 'editor-unlink',
+			'icon'     => [ 'misc-16', 'tools' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'equipment',

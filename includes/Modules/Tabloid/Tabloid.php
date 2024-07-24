@@ -257,7 +257,7 @@ class Tabloid extends gEditorial\Module
 		$data = ModuleHelper::stripEmptyValues( $data, 'terms_rendered' );
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
-		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
+		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'exports' );
 		$data['__today']      = Datetime::dateFormat( 'now', 'print' );

@@ -122,6 +122,8 @@ trait CoreTaxonomies
 			)
 		);
 
+		// TODO: `after_taxonomy_object_register()`
+
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
@@ -260,7 +262,7 @@ trait CoreTaxonomies
 				case 'auto_children': $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
 
 				// TODO: support combination of settings:
-				// -- restrricted terms
+				// -- restricted terms
 				// -- `metabox_advanced`
 				// -- `selectmultiple_term`
 
