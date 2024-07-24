@@ -88,21 +88,27 @@ trait CorePostTypes
 		if ( ! array_key_exists( 'supports', $args ) )
 			$args['supports'] = $this->get_posttype_supports( $constant );
 
-		$object = register_post_type(
+		$args = $this->apply_posttype_object_settings(
 			$posttype,
-			$this->apply_posttype_object_settings(
-				$posttype,
-				$args,
-				$settings,
-				$taxonomies,
-				$constant
-			)
+			$args,
+			$settings,
+			$taxonomies,
+			$constant
 		);
+
+		$object = register_post_type( $posttype, $args );
 
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
-		return $object;
+		return $this->after_posttype_object_register(
+			$object,
+			$posttype,
+			$args,
+			$settings,
+			$taxonomies,
+			$constant
+		);
 	}
 
 	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
@@ -274,6 +280,38 @@ trait CorePostTypes
 		}
 
 		return $args;
+	}
+
+	protected function after_posttype_object_register( $object, $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
+	{
+		$settings = self::atts( [
+			'no_autosave' => NULL,
+		], $atts );
+
+		foreach ( $settings as $setting => $value ) {
+
+			// NOTE: `NULL` means do not touch!
+			if ( is_null( $value ) )
+				continue;
+
+			switch ( $setting ) {
+
+				case 'no_autosave':
+
+					/**
+					 * For backward compatibility reasons, adding `editor` support
+					 * implies `autosave` support, so one would need to explicitly
+					 * use `remove_post_type_support()` to remove it again.
+					 *
+					 * @REF: https://core.trac.wordpress.org/changeset/58201
+					 */
+					remove_post_type_support( $posttype, 'autosave' );
+
+					break;
+			}
+		}
+
+		return $object;
 	}
 
 	// FIXME: DEPRECATED
