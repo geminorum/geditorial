@@ -443,6 +443,7 @@ class Personage extends gEditorial\Module
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
+		$this->filter( 'meta_field_empty', 7, 9, FALSE, $this->base );
 
 		$this->filter_module( 'was_born', 'default_posttype_dob_metakey', 2 );
 		$this->filter_module( 'iranian', 'default_posttype_identity_metakey', 2 );
@@ -653,6 +654,18 @@ class Personage extends gEditorial\Module
 		}
 
 		return $terms;
+	}
+
+	public function meta_field_empty( $meta, $field, $post, $args, $raw, $field_args, $context )
+	{
+		if ( ! empty( $meta ) )
+			return $meta;
+
+		switch ( $field ) {
+			case 'fullname': return $this->make_human_title( $post, $context, FALSE );
+		}
+
+		return $meta;
 	}
 
 	// @REF: `Template::getMetaField()`
