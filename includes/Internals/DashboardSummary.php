@@ -128,6 +128,7 @@ trait DashboardSummary
 			$terms = WordPress\Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [
 				'hide_empty' => TRUE,
 				'exclude'    => $this->get_setting( 'summary_excludes', '' ),
+				'parent'     => $this->get_setting( 'summary_parents', TRUE ) ? 0 : '',
 			] );
 
 		if ( is_null( $user_id ) )

@@ -43,6 +43,7 @@ class Territory extends gEditorial\Module
 			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_dashboard'       => [
 				'dashboard_widgets',
+				'summary_parents',
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
 				'summary_drafts',

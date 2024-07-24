@@ -788,6 +788,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_summary_parents( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'summary_parents',
+			'title'       => _x( 'Summary Parents', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Displays only parent terms on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '1',
+		];
+	}
+
 	public static function getSetting_public_statuses( $description = NULL, $values = [], $empty = NULL )
 	{
 		return [

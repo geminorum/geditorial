@@ -62,6 +62,7 @@ class Personage extends gEditorial\Module
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
+				'summary_parents',
 				'summary_excludes' => [
 					NULL,
 					WordPress\Taxonomy::listTerms( $this->constant( 'status_taxonomy' ) ),

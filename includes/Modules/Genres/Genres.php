@@ -49,6 +49,7 @@ class Genres extends gEditorial\Module
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
+				'summary_parents',
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
 				'summary_drafts',

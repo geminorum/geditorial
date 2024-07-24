@@ -44,6 +44,7 @@ class Conscripted extends gEditorial\Module
 			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
 			'_dashboard' => [
 				'dashboard_widgets',
+				'summary_parents',
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
 				'summary_drafts',
