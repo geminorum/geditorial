@@ -155,6 +155,22 @@ trait PairedCore
 		return $this->paired_register( $extra, [], [], $supported );
 	}
 
+	public function bulk_exports_post_taxonomies_exclude_paired( $taxonomies, $posttype, $reference, $target, $type, $context, $format )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $taxonomies;
+
+		if ( ! $constants = $this->paired_get_constants() )
+			return $taxonomies;
+
+		$taxonomies = Core\Arraay::stripByValue( $taxonomies, $this->constant( $constants[1] ), TRUE );
+
+		if ( $constants[2] )
+			$taxonomies = Core\Arraay::stripByValue( $taxonomies, $this->constant( $constants[2] ), TRUE );
+
+		return $taxonomies;
+	}
+
 	/**
 	 * Appends List of supported posts to source paired posttype.
 	 * @example `$this->filter_module( 'papered', 'view_list', 5, 10, 'paired_posttype' );`

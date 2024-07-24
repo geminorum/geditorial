@@ -392,6 +392,7 @@ class Trained extends gEditorial\Module
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
+		$this->filter( 'bulk_exports_post_taxonomies', 7, 9, 'exclude_paired', $this->base );
 
 		if ( is_admin() )
 			return;
