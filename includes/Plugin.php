@@ -733,6 +733,17 @@ class Plugin
 		return 0;
 	}
 
+	public function base_country()
+	{
+		if ( FALSE !== ( $country = Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
+			return $country;
+
+		if ( \function_exists( 'WC' ) )
+			return WC()->countries->get_base_country();
+
+		return 'IR';
+	}
+
 	// TODO: move following into Info!
 	public static function na( $wrap = 'code' )
 	{
