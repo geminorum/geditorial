@@ -213,6 +213,7 @@ trait SubContents
 	{
 		$data = $this->subcontent_sanitize_data( $raw, $post, $mapping );
 		$data = $this->subcontent_prep_data_for_save( $data, $post, $mapping );
+		$meta = [];
 
 		if ( $post && ( $post = WordPress\Post::get( $post ) ) )
 			$data['comment_post_ID'] = $post->ID;
@@ -232,6 +233,11 @@ trait SubContents
 		if ( FALSE === ( $filtered = $this->filters( 'subcontent_insert_data_row', $data, $post, $mapping, $raw ) ) )
 			return $this->log( 'NOTICE', 'SUBCONTENT INSERT DATA SKIPPED BY FILTER ON POST-ID:'.( $post ? $post->ID : 'UNKNOWN' ) );
 
+		if ( array_key_exists( 'comment_meta', $data ) ) {
+			$meta = $data['comment_meta'];
+			unset( $data['comment_meta'] );
+		}
+
 		$this->subcontent_insert_data_before( $filtered, $filtered['comment_ID'] );
 
 		$result = $filtered['comment_ID']
@@ -240,7 +246,18 @@ trait SubContents
 
 		$this->subcontent_insert_data_after( $filtered, $filtered['comment_ID'] );
 
-		return $result;
+		if ( empty( $meta ) || FALSE === $result || self::isError( $result ) )
+			return $result;
+
+		$comment_id = $filtered['comment_ID'] ?: $result;
+
+		foreach ( $meta as $meta_key => $meta_value )
+			if ( empty( $meta_value ) )
+				delete_comment_meta( $comment_id, $meta_key );
+			else
+				update_comment_meta( $comment_id, $meta_key, $meta_value );
+
+		return $comment_id;
 	}
 
 	// NOTE: overrides the modifications by core
