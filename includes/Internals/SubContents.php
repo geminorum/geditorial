@@ -177,22 +177,24 @@ trait SubContents
 	protected function subcontent_base_data_mapping()
 	{
 		return [
-			'comment_ID'           => '_id',
-			'comment_parent'       => '_parent',
-			'comment_post_ID'      => '_object',
-			'comment_content'      => 'data',        // `text`
-			'comment_author'       => 'title',       // `tinytext`
-			'comment_author_url'   => 'action',      // `varchar(200)`
-			'comment_author_email' => 'slug',        // `varchar(100)`
-			'comment_author_IP'    => 'ip',          // `varchar(100)`
-			'comment_agent'        => 'agent',       // `varchar(255)`
-			'comment_karma'        => 'karma',       // `int(11)`
-			'comment_type'         => '_type',       // `varchar(20)`
-			'comment_approved'     => '_status',     // `varchar(20)`
-			'comment_meta'         => '_meta',
-			'comment_date'         => '_date',
-			'comment_date_gmt'     => '_date_gmt',
-			'user_id'              => '_user',
+			'comment_content' => 'desc',    // `text`
+			'comment_agent'   => 'label',   // `varchar(255)`
+			'comment_karma'   => 'order',   // `int(11)` // WTF: must be fixed map!
+
+			'comment_author'       => 'fullname',   // `tinytext`
+			'comment_author_url'   => 'phone',      // `varchar(200)`
+			'comment_author_email' => 'email',      // `varchar(100)`
+			'comment_author_IP'    => 'date',       // `varchar(100)`
+
+			'comment_ID'       => '_id',         // `bigint(20)`
+			'comment_parent'   => '_parent',     // `bigint(20)`
+			'comment_post_ID'  => '_object',     // `bigint(20)`
+			'comment_type'     => '_type',       // `varchar(20)`
+			'comment_approved' => '_status',     // `varchar(20)`
+			'comment_date'     => '_date',       // `datetime`
+			'comment_date_gmt' => '_date_gmt',   // `datetime`
+			'user_id'          => '_user',       // `bigint(20)`
+			'comment_meta'     => '_meta',
 		];
 	}
 
@@ -204,7 +206,7 @@ trait SubContents
 	protected function subcontent_update_sort( $raw = [], $post = FALSE, $mapping = NULL )
 	{
 		foreach ( $raw as $offset => $comment_id )
-			update_comment_meta( $comment_id, 'order', $offset + 1 );
+			WordPress\Comment::setKarma( $offset + 1, $comment_id );
 
 		return count( $raw );
 	}
@@ -322,10 +324,10 @@ trait SubContents
 			if ( array_key_exists( $meta_from, $raw ) )
 				$data['comment_meta'][$meta_to] = $raw[$meta_from];
 
-		if ( ! empty( $data['comment_meta']['order'] ) )
+		if ( ! empty( $data['comment_karma'] ) )
 			return $data;
 
-		$data['comment_meta']['order'] = empty( $raw['order'] )
+		$data['comment_karma'] = empty( $raw['order'] )
 			? $this->subcontent_get_data_count( $post ) + 1
 			: $raw['order'];
 
@@ -357,19 +359,10 @@ trait SubContents
 			else
 				$data[$meta_name] = '';
 
-		if ( ! empty( $data['order'] ) )
-			return $data;
+		if ( empty( $data['order'] ) )
+			$data['order'] = $order ?? '1';
 
-		if ( ! empty( $meta['order'] ) )
-			$data['order'] = $meta['order'][0];
-
-		else if ( $order )
-			$data['order'] = $order;
-
-		else
-			$data['order'] = '1';
-
-		return $data;
+		return $this->filters( 'subcontent_after_prep_data', $data, $post, $mapping, $metas );
 	}
 
 	// @SEE: `is_protected_meta()`
@@ -383,7 +376,7 @@ trait SubContents
 			$metas = $this->subcontent_get_meta_mapping();
 
 		if ( is_null( $allowed_raw ) )
-			$allowed_raw = [ 'data' ];
+			$allowed_raw = [ 'data', 'order' ];
 
 		$types = $this->subcontent_get_field_types( 'sanitize' );
 		$data  = [];
@@ -447,22 +440,7 @@ trait SubContents
 			'fields'    => '', // 'ids', // empty for all
 			'number'    => '', // empty for all
 			'order'     => 'ASC',
-
-			'orderby'    => 'order_clause',
-			'meta_query' => [
-				// @REF: https://core.trac.wordpress.org/ticket/34996
-				// @SEE: https://wordpress.stackexchange.com/a/246206
-				// @SEE: https://wordpress.stackexchange.com/a/277755
-				'relation' => 'OR',
-				'order_clause' => [
-					'key'  => 'order',
-					'type' => 'NUMERIC'
-				],
-				[
-					'key'     => 'order',
-					'compare' => 'NOT EXISTS'
-				],
-			],
+			'orderby'   => 'comment_karma', // orders stored as karma!
 
 			'update_comment_meta_cache' => TRUE,
 			'update_comment_post_cache' => FALSE,
@@ -1052,6 +1030,8 @@ trait SubContents
 			'_date',
 			'_date_gmt',
 			'_user',
+			'_type',
+			'_meta',
 		] );
 	}
 }
