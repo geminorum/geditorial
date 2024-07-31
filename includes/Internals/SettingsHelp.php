@@ -20,6 +20,9 @@ trait SettingsHelp
 
 	protected function register_help_tabs( $screen = NULL, $context = 'settings' )
 	{
+		if ( GEDITORIAL_DISABLE_HELP_TABS )
+			return;
+
 		if ( ! Core\WordPress::mustRegisterUI( FALSE ) || self::req( 'noheader' ) )
 			return;
 
