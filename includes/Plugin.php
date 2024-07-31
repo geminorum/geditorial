@@ -69,6 +69,7 @@ class Plugin
 		add_action( 'admin_bar_init', [ $this, 'admin_bar_init' ] );
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
+		add_filter( 'wp_default_autoload_value', [ $this, 'wp_default_autoload_value' ], 20, 4 );
 
 		add_filter( static::BASE.'_markdown_to_html', [ $this, 'markdown_to_html' ] );
 
@@ -551,6 +552,11 @@ class Plugin
 	public function mce_external_languages( $languages )
 	{
 		return array_merge( $languages, [ 'geditorial' => GEDITORIAL_DIR.'includes/Misc/TinyMceStrings.php' ] );
+	}
+
+	public function wp_default_autoload_value( $autoload, $option, $value, $serialized_value )
+	{
+		return $option === static::BASE.'_options' ? TRUE : $autoload;
 	}
 
 	public function template_include( $template )
