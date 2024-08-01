@@ -1,5 +1,6 @@
 <!--
   TODO: SearchResults: separate logic
+  TODO: Button: remove selected from imported list
 -->
 
 <style lang="scss" scoped>
@@ -51,6 +52,7 @@
         <HeadMessage :state="state"><div v-html="message"></div></HeadMessage>
         <div class="side-from-buttons">
           <ImportButton v-show="selectedLines.length" @click="clickDiscovery()" dashicon="database-export" :title="i18n.discovery">{{ $translate('discovery') }}</ImportButton>
+          <ImportButton v-show="discovered.length" @click="clickClearAdded()" dashicon="database-view" :title="i18n.clearadded">{{ $translate('clearadded') }}</ImportButton>
           <ImportButton v-show="selectedLines.length" @click="clickAddSelected()" dashicon="database-add" :title="i18n.addtitle">{{ $translate('add') }}</ImportButton>
           <ImportButton v-show="selectedLines.length" @click="clickDeleteSelected()" dashicon="database-remove" :title="i18n.deletetitle">{{ $translate('delete') }}</ImportButton>
           <ImportButton @click="clickUpload()" dashicon="database-import" :title="i18n.uploadtitle">{{ $translate('upload') }}</ImportButton>
@@ -90,7 +92,7 @@
             <input type="text" v-model="lines[index][rawColumn]" />
           </td>
           <td class="table-actions">
-            <GridButton @click="checkLineClick(index, discovered[index])" :dashicon="checkLineIcon(discovered[index])" />
+            <GridButton @click="checkLineClick(index)" :dashicon="checkLineIcon(index)" />
           </td>
           <!-- <td class="-actions">
             <GridPopper>
@@ -102,7 +104,7 @@
               </template>
             </GridPopper>
           </td> -->
-          <td class="-founded" v-html="renderFounded(discovered[index], index)"></td>
+          <td class="-founded" v-html="renderFounded(index)"></td>
         </tr>
       </tbody></table>
     </div>
@@ -115,7 +117,7 @@ import { toSingleSpace, toMultipleLines } from '../../js-utils/text.v1';
 import { verifyDateString, flipDateString } from '../../js-utils/datetime.v1';
 import { checkMobileByLocale } from '../../js-utils/mobile.v1';
 import { getName } from '../../js-utils/file.v1';
-import { toPersian } from '../../js-utils/number.v1';
+import { formatNumber } from '../../js-utils/number.v1';
 
 import XLSX from 'xlsx'; // https://docs.sheetjs.com/docs/demos/frontend/vue
 import apiFetch from '@wordpress/api-fetch'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
@@ -125,6 +127,7 @@ import { parse } from 'csv-parse/browser/esm/sync'; // https://www.npmjs.com/pac
 
 import {
   debounce,
+  find,
   has,
   omit,
   each,
@@ -136,8 +139,7 @@ import {
   mapKeys,
   mapValues,
   unset,
-  merge,
-  forOwn
+  unionBy
 } from 'lodash-es';
 
 import {
@@ -175,7 +177,7 @@ export default {
       rawColumns: [],
       types: this.config.types,
       columnTypes: {},
-      discovered: {},
+      discovered: [],
 
       addNewOnDiscovery: false,
       supportClipboard: false,
@@ -196,16 +198,13 @@ export default {
       });
     },
     countLines() {
-      return sprintf(this.i18n.countlines, this.formatNumber(this.lines.length));
+      return sprintf(this.i18n.countlines, formatNumber(this.lines.length, this.locale));
     },
     countSelected() {
-      return sprintf(this.i18n.countselected, this.formatNumber(this.selectedLines.length));
+      return sprintf(this.i18n.countselected, formatNumber(this.selectedLines.length, this.locale));
     }
   },
   methods: {
-    formatNumber(number) {
-      return 'fa-IR' === this.locale ? toPersian(number) : number;
-    },
     clickClearAll() {
       this.spinner = true;
       this.state = 'initial';
@@ -219,7 +218,7 @@ export default {
       this.rawColumns = [];
 
       this.columnTypes = {};
-      this.discovered = {};
+      this.discovered = [];
 
       this.message = this.i18n.message;
       this.spinner = false;
@@ -270,36 +269,39 @@ export default {
     //   console.log(offset, discovered);
     // },
 
-    checkLineClick(offset, discovered) {
-      if (discovered===undefined) {
-        this.doSingleDiscovery(this.lines[offset], offset, false);
-      } else if(discovered.postid) {
-        window.open(addQueryArgs(this.config.infolink, { post: discovered.postid }));
-      } else if (discovered.status==='creatable') {
-        this.doSingleDiscovery(this.lines[offset], offset, true);
-      } else if (discovered.status==='unavailable') {
-        this.doSingleDiscovery(this.lines[offset], offset);
+    checkLineClick (index) {
+      const found = find(this.discovered, { _ref: index });
+      if (!found) {
+        this.doSingleDiscovery(this.lines[index], index, false);
+      } else if(found.postid) {
+        window.open(addQueryArgs(this.config.infolink, { post: found.postid }));
+      } else if (found.status==='creatable') {
+        this.doSingleDiscovery(this.lines[index], index, true);
+      } else if (found.status==='unavailable') {
+        this.doSingleDiscovery(this.lines[index], index);
       }
     },
 
-    checkLineIcon(discovered) {
-      if (discovered===undefined) {
+    checkLineIcon (index) {
+      const found = find(this.discovered, { _ref: index });
+      if (!found) {
         return 'marker';
-      } else if(discovered.postid&&this.already.includes(discovered.postid)) {
+      } else if(found.postid&&this.already.includes(found.postid)) {
         return 'admin-post state-success';
-      } else if(discovered.postid) {
+      } else if(found.postid) {
         return 'yes-alt state-success';
-      } else if (discovered.status==='creatable') {
+      } else if (found.status==='creatable') {
         return 'insert';
-      } else if (discovered.status==='unavailable') {
+      } else if (found.status==='unavailable') {
         return 'warning state-warning';
       } else {
         return 'editor-help state-danger';
       }
     },
 
-    renderFounded(discovered, index) {
-      return discovered===undefined ? '' : discovered.message;
+    renderFounded (index) {
+      const found = find(this.discovered, { _ref: index });
+      return found ? found.message : '';
     },
 
     addSearchedItem(item, close) {
@@ -383,17 +385,63 @@ export default {
       this.doDiscovery();
     },
 
-    clickDeleteSelected() {
-      forOwn(this.selectedLines, (selected) => {
-        this.lines.splice(selected, 1);
+    clickClearAdded() {
+      const data = [];
+
+      each(this.discovered, (found) => {
+        if (found.status!=='available') return;
+        if (!this.already.includes(found.postid)) return;
+        data.push(found._ref);
       });
-      this.selectedLines = [];
+
+      if (!data.length) return;
+
+      // https://www.geeksforgeeks.org/how-to-remove-multiple-elements-from-array-in-javascript/
+      for (let i = data.length - 1; i >= 0; i--) {
+        this.lines.splice(data[i], 1);
+      }
+
+      this.selectedLines = []; // refkey messed up!
+      this.discovered = []; // refkey messed up!
+    },
+
+    clickDeleteSelected() {
+      for (let i = this.selectedLines.length - 1; i >= 0; i--) {
+        this.lines.splice(this.selectedLines[i], 1);
+      }
+
+      this.selectedLines = []; // refkey messed up!
+      this.discovered = []; // refkey messed up!
     },
 
     clickAddSelected() {
       const data = [];
 
-      forOwn(this.selectedLines, (selected) => {
+      each(this.selectedLines, (selected) => {
+        const found = find(this.discovered, { _ref: selected });
+        if (!found) return;
+        if (this.already.includes(found.postid)) return;
+
+        data.push({
+          id: found.postid,
+          meta: mapKeys(clone(this.lines[selected]), (value, key, object) => {
+            return has(this.columnTypes,key) && this.columnTypes[key]!=='_undefined' ? this.columnTypes[key] : key;
+          } ),
+        });
+      });
+
+      if(data.length) {
+        this.doAddConnection(data);
+      } else {
+        this.message = this.i18n.novalid;
+        this.state = 'wrong';
+      }
+    },
+
+    clickAddSelected_OLD() {
+      const data = [];
+
+      each(this.selectedLines, (selected) => {
 
         if (!has(this.discovered, selected)) return;
         if (!this.discovered[selected].postid) return;
@@ -410,7 +458,7 @@ export default {
       if(data.length) {
         this.doAddConnection(data);
       } else {
-        this.message = 'No valid Item!';
+        this.message = this.i18n.novalid;
         this.state = 'wrong';
       }
     },
@@ -521,7 +569,7 @@ export default {
       this.spinner = true;
 
       const lines = [];
-      forOwn(this.selectedLines, (selected) => {
+      each(this.selectedLines, (selected) => {
         const line = mapKeys(clone(this.lines[selected]), (value, key, object) => {
           return has(this.columnTypes,key) && this.columnTypes[key]!=='_undefined' ? this.columnTypes[key] : key;
         } );
@@ -556,7 +604,8 @@ export default {
             insert: insert ?? false,
           }
         }).then((data) => {
-          merge(this.discovered, data);
+          console.log(data);
+          this.discovered = unionBy(this.discovered, data, '_ref');
           this.spinner = false;
           this.state = 'saved';
         }).catch((error) => {
@@ -600,6 +649,7 @@ export default {
           this.items = data;
           this.searchSpinner = false;
           this.already = map(data, 'id');
+          this.discovered = []; // refkey messed up!
         }).catch((error) => {
           this.searchSpinner = false;
           this.state = 'wrong';
@@ -668,21 +718,6 @@ export default {
         reader.readAsText(file);
 
       } else if (file.name.includes('.xlsx')) {
-
-        // file.arrayBuffer()
-        //   .then((buffer) => {
-
-        //     const workbook = XLSX.read(buffer);
-        //     const worksheet = workbook.Sheets[workbook.SheetNames[0]]; // first sheet
-        //     return XLSX.utils.sheet_to_json(worksheet, { header: 0 }); // header: 1
-
-        //   }).then((json) => {
-
-        //     this.content = 'dummy';
-        //     this.lines = json;
-        //     this.contentType = 'json';
-        //     this.doCheckData();
-        //   });
 
         const reader = new FileReader();
 
