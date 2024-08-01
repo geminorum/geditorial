@@ -45,7 +45,7 @@ class Missioned extends gEditorial\Module
 			'name'     => 'missioned',
 			'title'    => _x( 'Missioned', 'Modules: Missioned', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Mission Management', 'Modules: Missioned', 'geditorial-admin' ),
-			'icon'     => [ 'misc-32', 'dart-mission-goal-success' ],
+			'icon'     => [ 'misc-16', 'bullseye' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'multipaired',

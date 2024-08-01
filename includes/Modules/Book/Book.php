@@ -1231,7 +1231,7 @@ class Book extends gEditorial\Module
 	public function searchselect_result_extra_for_post( $data, $post, $queried )
 	{
 		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2' ], TRUE ) )
+			|| in_array( $queried['context'], [ 'select2', 'subcontent' ], TRUE ) )
 			return $data;
 
 		if ( ! $post = WordPress\Post::get( $post ) )

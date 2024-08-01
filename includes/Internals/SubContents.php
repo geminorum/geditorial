@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Scripts;
@@ -85,7 +86,7 @@ trait SubContents
 			if ( in_array( $field, $required, TRUE ) || in_array( $field, $enabled, TRUE ) )
 				$fields[$field] = $label;
 
-		return $this->filters( 'fields', $fields, $enabled, $required, $context );
+		return $this->filters( 'subcontent_fields', $fields, $enabled, $required, $context );
 	}
 
 	protected function subcontent_define_searchable_fields()
@@ -305,6 +306,7 @@ trait SubContents
 		return wp_delete_comment( intval( $id ), TRUE );
 	}
 
+	// NOTE: Does final preparations and additions into data before saving.
 	protected function subcontent_prep_data_for_save( $raw, $post = FALSE, $mapping = NULL, $metas = NULL )
 	{
 		if ( is_null( $mapping ) )
@@ -838,7 +840,7 @@ trait SubContents
 		if ( ! empty( $item['_date'] ) ) {
 			$datetime = Datetime::dateFormat( $item['_date'], $context );
 			// $timeago  = human_time_diff( strtotime( $item['_date'] ) );
-			$timeago  = moment( strtotime( $item['_date'] ) );
+			$timeago  = Datetime::moment( strtotime( $item['_date'] ) );
 		}
 
 		// NOTE: like `WordPress\Post::summary()`
@@ -980,16 +982,26 @@ trait SubContents
 			'required'   => NULL,
 			'readonly'   => NULL,
 			'frozen'     => NULL, // FIXME: add full support
+			'strings'    => [],
 		], $args );
 
 		if ( ! $this->role_can( $args['can'] ) )
 			return;
 
-		$asset = [
-			'strings' => $this->subcontent_get_strings_for_js(),
+		if ( ! $linked = $args['linked'] ?? self::req( 'linked', FALSE ) )
+			return;
+
+		$asset  = [
+			'strings' => $this->subcontent_get_strings_for_js( $args['strings'] ),
 			'fields'  => $this->subcontent_get_fields( $args['context'] ),
-			'config'  => [
-				'linked'       => $args['linked'] ?? self::req( 'linked', FALSE ),
+			'linked'  => [
+				'id'    => $linked,
+				'text'  => WordPress\Post::title( $linked ),
+				'extra' => Services\SearchSelect::getExtraForPost( $linked, [ 'context' => 'subcontent' ] ),
+				'image' => Services\SearchSelect::getImageForPost( $linked, [ 'context' => 'subcontent' ] ),
+			],
+			'config' => [
+				'linked'       => $linked,
 				'searchselect' => Services\SearchSelect::namespace(),
 				'searchable'   => $args['searchable'] ?? $this->subcontent_get_searchable_fields( $args['context'] ),
 				'required'     => $args['required'] ?? $this->subcontent_get_required_fields( $args['context'] ),

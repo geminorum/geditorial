@@ -987,6 +987,8 @@ class Importer extends gEditorial\Module
 
 		// TODO: `_render_imports_for_metas()`
 		// - import data by metakey + support types: string/int/comma separated
+
+		// TODO: imports for sub-contents!
 	}
 
 	private function _render_imports_for_posts()

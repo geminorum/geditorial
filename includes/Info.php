@@ -70,6 +70,11 @@ class Info extends WordPress\Main
 	// https://books.google.com/books?vid=isbn9789646799950
 	// https://www.google.com/search?tbm=bks&q=9786005334395
 	// https://www.google.com/search?q=9786229627747
+	// https://fa.wikipedia.org/wiki/%D9%88%DB%8C%DA%98%D9%87:%D9%85%D9%86%D8%A7%D8%A8%D8%B9_%DA%A9%D8%AA%D8%A7%D8%A8?isbn=0-13-981176-1
+	// https://en.wikipedia.org/wiki/Special:BookSources/978-0-618-05676-7
+	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=122334
+	// https://www.goodreads.com/search?q=MAGICNUMBER
+	// https://www.goodreads.com/search?utf8=%E2%9C%93&q=0-13-981176-1&search_type=books
 	public static function lookupURLforISBN( $isbn )
 	{
 		// $url = add_query_arg( [
@@ -408,6 +413,16 @@ class Info extends WordPress\Main
 				/* translators: %s: items count */
 				return _nx_noop( '%s Item', '%s Items', 'Info: Noop', 'geditorial' );
 
+			case 'participant':
+			case 'participants':
+				/* translators: %s: participants count */
+				return _nx_noop( '%s Participant', '%s Participants', 'Info: Noop', 'geditorial' );
+
+			case 'record':
+			case 'records':
+				/* translators: %s: records count */
+				return _nx_noop( '%s Record', '%s Records', 'Info: Noop', 'geditorial' );
+
 			case 'member':
 			case 'members':
 			case 'family_member':
@@ -448,6 +463,11 @@ class Info extends WordPress\Main
 				/* translators: %s: entry count */
 				return _nx_noop( '%s Entry', '%s Entries', 'Info: Noop', 'geditorial' );
 
+			case 'event':
+			case 'events':
+				/* translators: %s: event count */
+				return _nx_noop( '%s Event', '%s Events', 'Info: Noop', 'geditorial' );
+
 			case 'post':
 			case 'posts':
 				/* translators: %s: posts count */
@@ -457,6 +477,16 @@ class Info extends WordPress\Main
 			case 'terms':
 				/* translators: %s: terms count */
 				return _nx_noop( '%s Term', '%s Terms', 'Info: Noop', 'geditorial' );
+
+			case 'color':
+			case 'colors':
+				/* translators: %s: colors count */
+				return _nx_noop( '%s Color', '%s Colors', 'Info: Noop', 'geditorial' );
+
+			case 'size':
+			case 'sizes':
+				/* translators: %s: sizes count */
+				return _nx_noop( '%s Size', '%s Sizes', 'Info: Noop', 'geditorial' );
 
 			case 'connected':
 				/* translators: %s: items count */

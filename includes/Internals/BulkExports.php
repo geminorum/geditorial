@@ -35,6 +35,8 @@ trait BulkExports
 		return $html;
 	}
 
+	// TODO: support `subcontent` target
+	// TODO: support `subcontent_from_paired` target
 	protected function exports_get_types( $context, $target = NULL )
 	{
 		$types = [
