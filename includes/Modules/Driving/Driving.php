@@ -75,13 +75,12 @@ class Driving extends gEditorial\Module
 		$strings = [
 			'fields' => [
 				'subcontent' => [
+					'label'       => _x( 'Model & Color', 'Field Label: `label`', 'geditorial-driving' ),
 					'platenumber' => _x( 'Plate Number', 'Field Label: `platenumber`', 'geditorial-driving' ),
-					'carmodel'    => _x( 'Car Model', 'Field Label: `carmodel`', 'geditorial-driving' ),
-					'color'       => _x( 'Color', 'Field Label: `color`', 'geditorial-driving' ),
 					'fullname'    => _x( 'Owner', 'Field Label: `fullname`', 'geditorial-driving' ),
-					'relation'    => _x( 'Relation', 'Field Label: `relation`', 'geditorial-driving' ),
 					'identity'    => _x( 'Identity', 'Field Label: `identity`', 'geditorial-driving' ),
-					'contact'     => _x( 'Contact', 'Field Label: `contact`', 'geditorial-driving' ),
+					'relation'    => _x( 'Relation', 'Field Label: `relation`', 'geditorial-driving' ),
+					'phone'       => _x( 'Contact', 'Field Label: `phone`', 'geditorial-driving' ),
 					'year'        => _x( 'Year', 'Field Label: `year`', 'geditorial-driving' ),
 					'vin'         => _x( 'VIN', 'Field Label: `vin`', 'geditorial-driving' ),
 					'desc'        => _x( 'Description', 'Field Label: `desc`', 'geditorial-driving' ),
@@ -161,23 +160,24 @@ class Driving extends gEditorial\Module
 	protected function subcontent_get_data_mapping()
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [
-			'comment_content'      => 'desc',         // `text`
-			'comment_author'       => 'fullname',     // `tinytext`
-			'comment_author_url'   => 'platenumber',  // `varchar(200)`
-			'comment_author_email' => 'contact',      // `varchar(100)`
-			'comment_author_IP'    => 'year',         // `varchar(100)`
-			'comment_agent'        => 'vin',          // `varchar(255)`
-			'comment_karma'        => 'ref',          // `int(11)`
+			'comment_content' => 'desc',    // `text`
+			'comment_agent'   => 'label',   // `varchar(255)`
+			'comment_karma'   => 'order',   // `int(11)`
+
+			'comment_author'       => 'fullname',      // `tinytext`
+			'comment_author_url'   => 'phone',         // `varchar(200)`
+			'comment_author_email' => 'identity',      // `varchar(100)`
+			'comment_author_IP'    => 'platenumber',   // `varchar(100)`
 		] );
 	}
 
 	protected function subcontent_get_meta_mapping()
 	{
 		return [
-			'identity' => 'identity',
 			'relation' => 'relation',
-			'carmodel' => 'carmodel',
-			'color'    => 'color',
+			'year'     => 'year',
+			'vin'      => 'vin',
+			'postid'   => '_post_ref',
 		];
 	}
 
@@ -187,13 +187,6 @@ class Driving extends gEditorial\Module
 			return [ 'fullname' => [ $human ] ];
 
 		return [];
-	}
-
-	protected function subcontent_define_hidden_fields()
-	{
-		return [
-			'ref',
-		];
 	}
 
 	protected function subcontent_define_unique_fields()
@@ -206,8 +199,8 @@ class Driving extends gEditorial\Module
 	protected function subcontent_define_required_fields()
 	{
 		return [
-			'carmodel',
-			'color',
+			'label',
+			'fullname',
 		];
 	}
 
@@ -310,13 +303,13 @@ class Driving extends gEditorial\Module
 	public function load_submenu_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );
-		$this->subcontent_do_enqueue_app( 'vehicle-grid' );
+		$this->subcontent_do_enqueue_app( TRUE );
 	}
 
 	public function render_framepage_adminpage()
 	{
 		$this->subcontent_do_render_iframe_content(
-			'vehicle-grid',
+			TRUE,
 			'framepage',
 			/* translators: %s: post title */
 			_x( 'Vehicle Grid for %s', 'Page Title', 'geditorial-driving' ),
