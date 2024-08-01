@@ -171,8 +171,8 @@ class SearchSelect extends WordPress\Main
 			$results[] = (object) [
 				'id'    => $post,
 				'text'  => WordPress\Post::title( $post ),
-				'extra' => apply_filters( sprintf( '%s_searchselect_result_extra_for_post', static::BASE ), [], $post, $queried ),
-				'image' => apply_filters( sprintf( '%s_searchselect_result_image_for_post', static::BASE ), '', $post, $queried ),
+				'extra' => self::getExtraForPost( $post, $queried ),
+				'image' => self::getImageForPost( $post, $queried ),
 			];
 
 		return [
@@ -181,6 +181,18 @@ class SearchSelect extends WordPress\Main
 				'more' => ( $found - $args['posts_per_page'] ) > 0
 			],
 		];
+	}
+
+	// NOTE: also used by others!
+	public static function getExtraForPost( $post, $queried = [], $default = [] )
+	{
+		return apply_filters( sprintf( '%s_searchselect_result_extra_for_post', static::BASE ), $default, $post, $queried );
+	}
+
+	// NOTE: also used by others!
+	public static function getImageForPost( $post, $queried = [], $default = '' )
+	{
+		return apply_filters( sprintf( '%s_searchselect_result_image_for_post', static::BASE ), $default, $post, $queried );
 	}
 
 	private static function _get_select2_terms( $queried )
