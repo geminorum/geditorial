@@ -85,15 +85,13 @@ class Banking extends gEditorial\Module
 			],
 			'fields' => [
 				'subcontent' => [
-					'iban'     => _x( 'IBAN', 'Field Label', 'geditorial-banking' ),
-					'card'     => _x( 'Card Number', 'Field Label', 'geditorial-banking' ),
-					'account'  => _x( 'Account Number', 'Field Label', 'geditorial-banking' ),
-					'bankname' => _x( 'Bank Name', 'Field Label', 'geditorial-banking' ),
-					'fullname' => _x( 'Account Owner', 'Field Label', 'geditorial-banking' ),
-					'relation' => _x( 'Relation', 'Field Label', 'geditorial-banking' ),
-					'type'     => _x( 'Type', 'Field Label', 'geditorial-banking' ),
-					'status'   => _x( 'Status', 'Field Label', 'geditorial-banking' ),
-					'desc'     => _x( 'Description', 'Field Label', 'geditorial-banking' ),
+					'label'    => _x( 'Label', 'Field Label: `label`', 'geditorial-banking' ),
+					'fullname' => _x( 'Account Owner', 'Field Label: `fullname`', 'geditorial-banking' ),
+					'card'     => _x( 'Card Number', 'Field Label: `card`', 'geditorial-banking' ),
+					'iban'     => _x( 'IBAN', 'Field Label: `iban`', 'geditorial-banking' ),
+					'account'  => _x( 'Account Number', 'Field Label: `account`', 'geditorial-banking' ),
+					'bankname' => _x( 'Bank Name', 'Field Label: `bankname`', 'geditorial-banking' ),
+					'desc'     => _x( 'Description', 'Field Label: `desc`', 'geditorial-banking' ),
 				],
 			],
 		];
@@ -152,24 +150,24 @@ class Banking extends gEditorial\Module
 	protected function subcontent_get_data_mapping()
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [
-			'comment_content'      => 'desc',       // `text`
+			'comment_content' => 'desc',    // `text`
+			'comment_agent'   => 'label',   // `varchar(255)`
+			'comment_karma'   => 'order',   // `int(11)`
+
 			'comment_author'       => 'fullname',   // `tinytext`
 			'comment_author_url'   => 'card',       // `varchar(200)`
-			'comment_author_email' => 'country',    // `varchar(100)`
-			'comment_author_IP'    => 'account',    // `varchar(100)`
-			'comment_agent'        => 'iban',       // `varchar(255)`
-			'comment_karma'        => 'ref',        // `int(11)`
+			'comment_author_email' => 'account',    // `varchar(100)`
+			'comment_author_IP'    => 'iban',       // `varchar(100)`
 		] );
 	}
 
 	protected function subcontent_get_meta_mapping()
 	{
 		return [
+			'country'  => 'country',
+			'bankname' => 'bankname',    // TODO: use taxonomy for the `bankname` with `bank` as `slug`
 			'bank'     => 'bank',
-			'bankname' => 'bankname',
-			'type'     => 'type',
-			'status'   => 'status',
-			'relation' => 'relation',
+			'postid'   => '_post_ref',
 		];
 	}
 
@@ -178,8 +176,6 @@ class Banking extends gEditorial\Module
 		return [
 			'bank',
 			'country',
-			'ref',
-			'order',
 		];
 	}
 
@@ -194,6 +190,7 @@ class Banking extends gEditorial\Module
 	protected function subcontent_define_required_fields()
 	{
 		return [
+			'label',
 			'fullname',
 		];
 	}
@@ -306,13 +303,13 @@ class Banking extends gEditorial\Module
 	public function load_framepage_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );
-		$this->subcontent_do_enqueue_app( 'bank-grid' );
+		$this->subcontent_do_enqueue_app( TRUE );
 	}
 
 	public function render_framepage_adminpage()
 	{
 		$this->subcontent_do_render_iframe_content(
-			'bank-grid',
+			TRUE,
 			'framepage',
 			/* translators: %s: post title */
 			_x( 'Bank Grid for %s', 'Page Title', 'geditorial-banking' ),
