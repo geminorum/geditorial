@@ -178,61 +178,66 @@ msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs QR-Code"
 msgstr ""
 
-#: Papered.php:538
+#: Papered.php:180
+msgctxt "Flag Taxonomy: Default Term"
+msgid "Needs Global Summary"
+msgstr ""
+
+#: Papered.php:544
 msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr ""
 
-#: Papered.php:718
+#: Papered.php:725
 msgctxt "None Title"
 msgid "&ndash; Select Peper Size &ndash;"
 msgstr ""
 
-#: Papered.php:729
+#: Papered.php:736
 msgctxt "None Title"
 msgid "&ndash; Select Sheet Padding &ndash;"
 msgstr ""
 
-#: Papered.php:740
+#: Papered.php:747
 msgctxt "Input Title"
 msgid "Row per Sheet"
 msgstr ""
 
-#: Papered.php:758
+#: Papered.php:765
 msgctxt "None Title"
 msgid "&ndash; Select Direct Post-Type &ndash;"
 msgstr ""
 
-#: Papered.php:816
+#: Papered.php:823
 msgctxt "MetaBox Title"
 msgid "Template for Rows"
 msgstr ""
 
-#: Papered.php:817
+#: Papered.php:824
 msgctxt "MetaBox Title"
 msgid "Template Before"
 msgstr ""
 
-#: Papered.php:818
+#: Papered.php:825
 msgctxt "MetaBox Title"
 msgid "Template After"
 msgstr ""
 
-#: Papered.php:819
+#: Papered.php:826
 msgctxt "MetaBox Title"
 msgid "Template Styles"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:891
-#: Papered.php:948
+#: Papered.php:898
+#: Papered.php:955
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:904
-#: Papered.php:970
+#: Papered.php:911
+#: Papered.php:977
 msgctxt "Button"
 msgid "%1$s Print Profile"
 msgstr ""

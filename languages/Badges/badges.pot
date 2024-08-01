@@ -13,38 +13,38 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
-#: Badges.php:85
+#: Badges.php:86
 msgid "Badge"
 msgid_plural "Badges"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Badges.php:89
+#: Badges.php:90
 msgctxt "Label: Menu Name"
 msgid "Content Badges"
 msgstr ""
 
-#: Badges.php:90
+#: Badges.php:91
 msgctxt "Label: Show Option All"
 msgid "Badges"
 msgstr ""
 
-#: Badges.php:91
+#: Badges.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr ""
 
-#: Badges.php:100
+#: Badges.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Badges Summary"
 msgstr ""
 
-#: Badges.php:101
+#: Badges.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr ""
 
-#: Badges.php:268
+#: Badges.php:269
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr ""

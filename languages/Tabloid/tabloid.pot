@@ -14,45 +14,45 @@ msgstr ""
 "X-Domain: geditorial-tabloid\n"
 
 #. translators: %s: supported object label
-#: Tabloid.php:46
+#: Tabloid.php:47
 msgctxt "Setting Title"
 msgid "Action Title for %s"
 msgstr ""
 
-#: Tabloid.php:47
+#: Tabloid.php:48
 msgctxt "Setting Description"
 msgid "Used as title on the actions row."
 msgstr ""
 
-#: Tabloid.php:48
-#: Tabloid.php:57
-#: Tabloid.php:126
+#: Tabloid.php:49
+#: Tabloid.php:58
+#: Tabloid.php:128
 msgctxt "Action"
 msgid "Overview"
 msgstr ""
 
 #. translators: %s: supported object label
-#: Tabloid.php:55
+#: Tabloid.php:56
 msgctxt "Setting Title"
 msgid "Overview Title for %s"
 msgstr ""
 
-#: Tabloid.php:56
+#: Tabloid.php:57
 msgctxt "Setting Description"
 msgid "Used as title on the overview pages."
 msgstr ""
 
-#: Tabloid.php:62
+#: Tabloid.php:63
 msgctxt "Setting Description"
 msgid "Roles that can view posttype overviews."
 msgstr ""
 
-#: Tabloid.php:63
+#: Tabloid.php:64
 msgctxt "Setting Description"
 msgid "Roles that can print posttype overviews."
 msgstr ""
 
-#: Tabloid.php:64
+#: Tabloid.php:65
 msgctxt "Setting Description"
 msgid "Roles that can export posttype overviews."
 msgstr ""

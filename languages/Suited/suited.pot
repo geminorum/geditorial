@@ -13,18 +13,18 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Suited\n"
 "X-Domain: geditorial-suited\n"
 
-#: Suited.php:81
+#: Suited.php:82
 msgid "Suitable Target"
 msgid_plural "Suitable Targets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Suited.php:85
+#: Suited.php:86
 msgctxt "Label: Show Option All"
 msgid "Suitable"
 msgstr ""
 
-#: Suited.php:86
+#: Suited.php:87
 msgctxt "Label: Show Option No Terms"
 msgid "(Unsuitable)"
 msgstr ""

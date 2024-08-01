@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WasBorn\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-02 19:02+0330\n"
+"PO-Revision-Date: 2024-07-31 22:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -92,114 +92,129 @@ msgid "(No Birthdays)"
 msgstr "(بدون تولد)"
 
 #: WasBorn.php:133
+msgctxt "Label: `extended_label`"
+msgid "Gender"
+msgstr "جنسیت"
+
+#: WasBorn.php:134
 msgctxt "Label: `show_option_all`"
 msgid "All Genders"
 msgstr "جنسیت"
 
-#: WasBorn.php:134
+#: WasBorn.php:135
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined Gender)"
 msgstr "(جنسیت نامشخص)"
 
-#: WasBorn.php:137
+#: WasBorn.php:138
 msgctxt "Label: `show_option_all`"
 msgid "Age Groups"
 msgstr "گروه سنی"
 
-#: WasBorn.php:138
+#: WasBorn.php:139
 msgctxt "Label: `show_option_no_items`"
 msgid "(Empty Birthdays)"
 msgstr "(تولد خالی)"
 
-#: WasBorn.php:147
+#: WasBorn.php:148
 msgctxt "Dashboard Widget Title"
 msgid "Your Staff Age Summary"
 msgstr "گزارش سنی کارکنان شما"
 
-#: WasBorn.php:148
+#: WasBorn.php:149
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Staff Age Summary"
 msgstr "گزارش سنی کارکنان تحریریه"
 
-#: WasBorn.php:160
+#: WasBorn.php:161
 msgctxt "Default Term"
 msgid "Male"
 msgstr "مرد"
 
-#: WasBorn.php:161
+#: WasBorn.php:162
 msgctxt "Default Term"
 msgid "Female"
 msgstr "زن"
 
-#: WasBorn.php:423
+#: WasBorn.php:184
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "6"
+msgstr ""
+
+#: WasBorn.php:192
+msgctxt "Gender Taxonomy Argument: `data_length`"
+msgid "5"
+msgstr "5"
+
+#: WasBorn.php:426
 msgctxt "Summary"
 msgid "Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:503
+#: WasBorn.php:506
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr "تاریخ تولد نامعتبر"
 
-#: WasBorn.php:572
+#: WasBorn.php:575
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr "میانگین سنی"
 
-#: WasBorn.php:648
+#: WasBorn.php:651
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr "بدون تاریخ تولد"
 
 #. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:729
+#: WasBorn.php:732
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr "از %1$s تا %2$s"
 
-#: WasBorn.php:731
+#: WasBorn.php:734
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr "آغاز"
 
-#: WasBorn.php:732
+#: WasBorn.php:735
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr "حالا"
 
-#: WasBorn.php:913
+#: WasBorn.php:916
 msgctxt "Pointer Notice"
 msgid "Under-Aged!"
 msgstr "زیر سن قانونی!"
 
-#: WasBorn.php:923
+#: WasBorn.php:926
 msgctxt "Default Term: Audit"
 msgid "Empty Date-of-Birth"
 msgstr "تاریخ تولد خالی"
 
-#: WasBorn.php:924
+#: WasBorn.php:927
 msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:1009
+#: WasBorn.php:1012
 msgctxt "Header"
 msgid "Birthday Tools"
 msgstr "ابزارهای تولد"
 
-#: WasBorn.php:1021
+#: WasBorn.php:1024
 msgctxt "Card Title"
 msgid "Post-Date by Birthday"
 msgstr "تاریخ فرسته بر اساس تاریخ تولد"
 
 #. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1062
+#: WasBorn.php:1065
 msgctxt "Notice"
 msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1068
+#: WasBorn.php:1071
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
 msgstr ""

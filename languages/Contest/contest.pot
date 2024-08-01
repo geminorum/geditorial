@@ -13,139 +13,139 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 "X-Domain: geditorial-contest\n"
 
-#: Contest.php:58
+#: Contest.php:55
 msgctxt "Settings"
 msgid "Contest Sections"
 msgstr ""
 
-#: Contest.php:59
+#: Contest.php:56
 msgctxt "Settings"
 msgid "Section taxonomy for the contests and supported post-types."
 msgstr ""
 
-#: Contest.php:75
+#: Contest.php:72
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Contest.php:76
+#: Contest.php:73
 msgctxt "Settings"
 msgid "Redirects contest and apply archives to this URL. Leave empty to disable."
 msgstr ""
 
+#: Contest.php:132
 #: Contest.php:133
-#: Contest.php:134
 msgid "Contest"
 msgid_plural "Contests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:135
+#: Contest.php:134
 msgid "Contest Category"
 msgid_plural "Contest Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:136
+#: Contest.php:135
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:137
+#: Contest.php:136
 msgid "Apply"
 msgid_plural "Applies"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:138
+#: Contest.php:137
 msgid "Apply Category"
 msgid_plural "Apply Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:139
+#: Contest.php:138
 msgid "Apply Status"
 msgid_plural "Apply Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:143
+#: Contest.php:142
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr ""
 
-#: Contest.php:153
+#: Contest.php:152
 msgctxt "MetaBox Title"
 msgid "The Contest"
 msgstr ""
 
-#: Contest.php:154
+#: Contest.php:153
 msgctxt "MetaBox Title"
 msgid "In This Contest"
 msgstr ""
 
-#: Contest.php:157
+#: Contest.php:156
 msgctxt "MetaBox Title"
 msgid "Contest"
 msgstr ""
 
-#: Contest.php:163
+#: Contest.php:162
 msgctxt "Column Title"
 msgid "Applies"
 msgstr ""
 
-#: Contest.php:166
+#: Contest.php:165
 msgctxt "Misc: `column_icon_title`"
 msgid "Contest"
 msgstr ""
 
-#: Contest.php:177
+#: Contest.php:176
 msgctxt "Default Term"
 msgid "Approved"
 msgstr ""
 
-#: Contest.php:178
+#: Contest.php:177
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Contest.php:179
+#: Contest.php:178
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr ""
 
-#: Contest.php:180
+#: Contest.php:179
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr ""
 
-#: Contest.php:193
+#: Contest.php:192
 msgctxt "Field Title"
 msgid "Deadline Date"
 msgstr ""
 
-#: Contest.php:194
+#: Contest.php:193
 msgctxt "Field Description"
 msgid "The last date for submitting the applications."
 msgstr ""
 
-#: Contest.php:210
+#: Contest.php:209
 msgctxt "Field Title"
 msgid "Submission Date"
 msgstr ""
 
-#: Contest.php:211
+#: Contest.php:210
 msgctxt "Field Description"
 msgid "Verified date for the submitted application."
 msgstr ""
 
-#: Contest.php:432
+#: Contest.php:431
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr ""
 
-#: Contest.php:495
+#: Contest.php:494
 msgctxt "Default Term: Audit"
 msgid "Apply Abandoned"
 msgstr ""

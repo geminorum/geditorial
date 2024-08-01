@@ -13,83 +13,83 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Almanac\n"
 "X-Domain: geditorial-almanac\n"
 
-#: Almanac.php:80
+#: Almanac.php:81
 msgid "Calendar Type"
 msgid_plural "Calendar Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Almanac.php:84
+#: Almanac.php:85
 msgctxt "Label: Menu Name"
 msgid "Calendars"
 msgstr ""
 
-#: Almanac.php:85
+#: Almanac.php:86
 msgctxt "Label: Show Option All"
 msgid "Calendars"
 msgstr ""
 
-#: Almanac.php:86
+#: Almanac.php:87
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
 
-#: Almanac.php:95
+#: Almanac.php:96
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Almanac Summary"
 msgstr ""
 
-#: Almanac.php:96
+#: Almanac.php:97
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Almanac Summary"
 msgstr ""
 
-#: Almanac.php:108
+#: Almanac.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Gregorian"
 msgstr ""
 
-#: Almanac.php:109
+#: Almanac.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Japanese"
 msgstr ""
 
-#: Almanac.php:110
+#: Almanac.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Buddhist"
 msgstr ""
 
-#: Almanac.php:111
+#: Almanac.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Chinese"
 msgstr ""
 
-#: Almanac.php:112
+#: Almanac.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Persian"
 msgstr ""
 
-#: Almanac.php:113
+#: Almanac.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Indian"
 msgstr ""
 
-#: Almanac.php:114
+#: Almanac.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Islamic"
 msgstr ""
 
-#: Almanac.php:115
+#: Almanac.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Islamic-Civil"
 msgstr ""
 
-#: Almanac.php:116
+#: Almanac.php:117
 msgctxt "Main Taxonomy: Default Term"
 msgid "Coptic"
 msgstr ""
 
-#: Almanac.php:117
+#: Almanac.php:118
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ethiopic"
 msgstr ""

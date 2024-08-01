@@ -144,5 +144,5 @@ msgstr ""
 #. translators: %1$s: identity code, %2$s: birth certificate number
 #: Iranian.php:486
 msgctxt "Notice"
-msgid "Identiry (%1$s) and Birth Certificate Number (%2$s) are diffrent"
+msgid "Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent"
 msgstr ""

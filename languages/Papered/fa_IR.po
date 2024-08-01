@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Papered\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-12 04:33+0330\n"
+"PO-Revision-Date: 2024-07-18 05:27+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -179,59 +179,64 @@ msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs QR-Code"
 msgstr "نیازمند کیوآر-کد"
 
-#: Papered.php:538
+#: Papered.php:180
+msgctxt "Flag Taxonomy: Default Term"
+msgid "Needs Global Summary"
+msgstr "نیاز به خلاصه‌وضعیت کلی"
+
+#: Papered.php:544
 msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr "هیچ نمایه چاپی در دسترسی نیست!"
 
-#: Papered.php:718
+#: Papered.php:725
 msgctxt "None Title"
 msgid "&ndash; Select Peper Size &ndash;"
 msgstr "&ndash; انتخاب اندازه کاغذ &ndash;"
 
-#: Papered.php:729
+#: Papered.php:736
 msgctxt "None Title"
 msgid "&ndash; Select Sheet Padding &ndash;"
 msgstr "&ndash; انتخاب حاشیه برگه &ndash;"
 
-#: Papered.php:740
+#: Papered.php:747
 msgctxt "Input Title"
 msgid "Row per Sheet"
 msgstr "ردیف در برگه"
 
-#: Papered.php:758
+#: Papered.php:765
 msgctxt "None Title"
 msgid "&ndash; Select Direct Post-Type &ndash;"
 msgstr "&ndash; انتخاب نوع‌فرسته مستقیم &ndash;"
 
-#: Papered.php:816
+#: Papered.php:823
 msgctxt "MetaBox Title"
 msgid "Template for Rows"
 msgstr "الگو برای ردیف"
 
-#: Papered.php:817
+#: Papered.php:824
 msgctxt "MetaBox Title"
 msgid "Template Before"
 msgstr "الگوی پیشینی"
 
-#: Papered.php:818
+#: Papered.php:825
 msgctxt "MetaBox Title"
 msgid "Template After"
 msgstr "الگوی پسینی"
 
-#: Papered.php:819
+#: Papered.php:826
 msgctxt "MetaBox Title"
 msgid "Template Styles"
 msgstr "شیوه‌نامه‌های الگو"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:891 Papered.php:948
+#: Papered.php:898 Papered.php:955
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr "%1$s پیش‌نمایش نمایه"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:904 Papered.php:970
+#: Papered.php:911 Papered.php:977
 msgctxt "Button"
 msgid "%1$s Print Profile"
 msgstr "%1$s چاپ نمایه"

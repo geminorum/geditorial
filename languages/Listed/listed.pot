@@ -13,183 +13,193 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Listed\n"
 "X-Domain: geditorial-listed\n"
 
-#: Listed.php:67
+#: Listed.php:68
 msgctxt "Settings"
 msgid "Listing Levels"
 msgstr ""
 
-#: Listed.php:68
+#: Listed.php:69
 msgctxt "Settings"
 msgid "Substitute taxonomy for the listings and supported post-types."
 msgstr ""
 
-#: Listed.php:144
-#: Listed.php:145
+#: Listed.php:151
+#: Listed.php:152
 msgid "Listing"
 msgid_plural "Listings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:146
+#: Listed.php:153
 msgid "Listing Category"
 msgid_plural "Listing Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:147
+#: Listed.php:154
 msgid "Listing Level"
 msgid_plural "Listing Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:148
+#: Listed.php:155
 msgid "Listing Program"
 msgid_plural "Listing Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:149
+#: Listed.php:156
 msgid "Listing Span"
 msgid_plural "Listing Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:150
+#: Listed.php:157
 msgid "Listing Type"
 msgid_plural "Listing Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:151
+#: Listed.php:158
 msgid "Listing Status"
 msgid_plural "Listing Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Listed.php:155
+#: Listed.php:162
 msgctxt "Label: `menu_name`"
 msgid "Listings"
 msgstr ""
 
-#: Listed.php:156
+#: Listed.php:163
 msgctxt "Label: Featured Image"
 msgid "Listing Poster"
 msgstr ""
 
-#: Listed.php:157
+#: Listed.php:164
 msgctxt "Label: MetaBox Title"
 msgid "The Listings"
 msgstr ""
 
-#: Listed.php:160
+#: Listed.php:167
 msgctxt "Label: MetaBox Title"
 msgid "In This Listing"
 msgstr ""
 
-#: Listed.php:163
+#: Listed.php:170
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Listed.php:166
+#: Listed.php:173
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Listed.php:169
+#: Listed.php:176
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Listed.php:172
+#: Listed.php:179
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Listed.php:175
+#: Listed.php:182
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
+#: Listed.php:191
+msgctxt "Notice"
+msgid "There is no listing information available!"
+msgstr ""
+
+#: Listed.php:192
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the listing information."
+msgstr ""
+
 #. translators: %s: item count
-#: Listed.php:185
+#: Listed.php:197
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Listing Attendees (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Listed.php:187
+#: Listed.php:199
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Listings (%s)"
 msgstr ""
 
-#: Listed.php:188
+#: Listed.php:200
 msgctxt "Misc: `column_icon_title`"
 msgid "Listings"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Listed.php:193
+#: Listed.php:205
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Listed.php:203
+#: Listed.php:215
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr ""
 
-#: Listed.php:204
+#: Listed.php:216
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr ""
 
-#: Listed.php:205
+#: Listed.php:217
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr ""
 
-#: Listed.php:206
+#: Listed.php:218
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr ""
 
-#: Listed.php:210
+#: Listed.php:222
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Listed.php:211
+#: Listed.php:223
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Listed.php:252
+#: Listed.php:264
 msgctxt "Field Title"
 msgid "Notaries"
 msgstr ""
 
-#: Listed.php:253
+#: Listed.php:265
 msgctxt "Field Description"
 msgid "People Who is the Notary of This Listing"
 msgstr ""
 
-#: Listed.php:260
+#: Listed.php:273
 msgctxt "Field Title"
 msgid "Listing Code"
 msgstr ""
 
-#: Listed.php:261
+#: Listed.php:274
 msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr ""
 
-#: Listed.php:579
+#: Listed.php:599
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr ""
 
-#: Listed.php:588
+#: Listed.php:608
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
 msgstr ""

@@ -23,263 +23,263 @@ msgctxt "Setting Description"
 msgid "Tries to automatically assign empty attributes on supported posts."
 msgstr ""
 
-#: Audit.php:101
+#: Audit.php:102
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Audit.php:105
+#: Audit.php:106
 msgctxt "Label: Menu Name"
 msgid "Content Audit"
 msgstr ""
 
-#: Audit.php:106
+#: Audit.php:107
 msgctxt "Label: Show Option All"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:107
+#: Audit.php:108
 msgctxt "Label: Show Option No Terms"
 msgid "(Unaudited)"
 msgstr ""
 
-#: Audit.php:116
+#: Audit.php:117
 msgctxt "Dashboard Widget Title"
 msgid "Your Audit Summary"
 msgstr ""
 
-#: Audit.php:117
+#: Audit.php:118
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Audit Summary"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Audit.php:122
+#: Audit.php:123
 msgctxt "Action Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Audit.php:124
+#: Audit.php:125
 msgctxt "Action Text"
 msgid "Audit"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Audit.php:127
+#: Audit.php:128
 msgctxt "Row Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Audit.php:129
+#: Audit.php:130
 msgctxt "Row Text"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:139
+#: Audit.php:140
 msgctxt "Default Term"
 msgid "Audited"
 msgstr ""
 
-#: Audit.php:140
+#: Audit.php:141
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr ""
 
-#: Audit.php:141
+#: Audit.php:142
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr ""
 
-#: Audit.php:142
+#: Audit.php:143
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr ""
 
-#: Audit.php:143
+#: Audit.php:144
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr ""
 
-#: Audit.php:144
+#: Audit.php:145
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr ""
 
-#: Audit.php:145
+#: Audit.php:146
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr ""
 
-#: Audit.php:146
+#: Audit.php:147
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr ""
 
-#: Audit.php:147
+#: Audit.php:148
 msgctxt "Default Term"
 msgid "No Title"
 msgstr ""
 
-#: Audit.php:148
+#: Audit.php:149
 msgctxt "Default Term"
 msgid "No Content"
 msgstr ""
 
-#: Audit.php:149
+#: Audit.php:150
 msgctxt "Default Term"
 msgid "No Excerpt"
 msgstr ""
 
-#: Audit.php:150
+#: Audit.php:151
 msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 
-#: Audit.php:315
+#: Audit.php:317
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:362
+#: Audit.php:364
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:380
+#: Audit.php:382
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:469
+#: Audit.php:471
 msgctxt "Action"
 msgid "Force Auto-Audit"
 msgstr ""
 
 #. translators: %s: count
-#: Audit.php:507
+#: Audit.php:509
 msgctxt "Message"
 msgid "%s items(s) Audited!"
 msgstr ""
 
-#: Audit.php:663
+#: Audit.php:665
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr ""
 
-#: Audit.php:708
+#: Audit.php:710
 msgctxt "Card Title"
 msgid "Posts with Empty Title"
 msgstr ""
 
-#: Audit.php:714
-#: Audit.php:733
-#: Audit.php:752
+#: Audit.php:716
+#: Audit.php:735
+#: Audit.php:754
 msgctxt "Card: None-Title"
 msgid "All Supported Post-Types"
 msgstr ""
 
-#: Audit.php:717
-#: Audit.php:736
-#: Audit.php:755
+#: Audit.php:719
+#: Audit.php:738
+#: Audit.php:757
 msgctxt "Card: Button"
 msgid "Mark Posts"
 msgstr ""
 
-#: Audit.php:718
-#: Audit.php:737
-#: Audit.php:756
+#: Audit.php:720
+#: Audit.php:739
+#: Audit.php:758
 msgctxt "Card: Button"
 msgid "Flush Attribute"
 msgstr ""
 
-#: Audit.php:719
+#: Audit.php:721
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no title."
 msgstr ""
 
-#: Audit.php:727
+#: Audit.php:729
 msgctxt "Card Title"
 msgid "Posts with Empty Content"
 msgstr ""
 
-#: Audit.php:738
+#: Audit.php:740
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no content."
 msgstr ""
 
-#: Audit.php:746
+#: Audit.php:748
 msgctxt "Card Title"
 msgid "Posts with Empty Excerpt"
 msgstr ""
 
-#: Audit.php:757
+#: Audit.php:759
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no excerpt."
 msgstr ""
 
-#: Audit.php:765
+#: Audit.php:767
 msgctxt "Card Title"
 msgid "Posts with Empty Fields"
 msgstr ""
 
-#: Audit.php:766
+#: Audit.php:768
 msgctxt "Message"
 msgid "No empty attribute available. Please install the default attributes."
 msgstr ""
 
 #. translators: %s: post title
-#: Audit.php:814
+#: Audit.php:816
 msgctxt "Notice"
 msgid "No Audits applied for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: count terms, %2$s: post title
-#: Audit.php:820
+#: Audit.php:822
 msgctxt "Notice"
 msgid "%1$s attributes set for &ldquo;%2$s&rdquo;"
 msgstr ""
 
-#: Audit.php:830
+#: Audit.php:832
 msgctxt "Card Title"
 msgid "Force Auto Audit"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Audit.php:837
+#: Audit.php:839
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
-#: Audit.php:839
+#: Audit.php:841
 msgctxt "Button Description"
 msgid "Tries to auto-set the attributes on supported posts."
 msgstr ""
 
 #. translators: %1$s: empty post count, %2$s: assigned term count
-#: Audit.php:852
+#: Audit.php:854
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr ""
 
-#: Audit.php:865
+#: Audit.php:867
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:880
+#: Audit.php:882
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr ""
 
-#: Audit.php:885
+#: Audit.php:887
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:892
+#: Audit.php:894
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr ""

@@ -13,32 +13,32 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Collect\n"
 "X-Domain: geditorial-collect\n"
 
-#: Collect.php:57
+#: Collect.php:55
 msgctxt "Settings"
 msgid "Collection Parts"
 msgstr ""
 
-#: Collect.php:58
+#: Collect.php:56
 msgctxt "Settings"
 msgid "Partition taxonomy for the collections and supported post-types."
 msgstr ""
 
-#: Collect.php:73
+#: Collect.php:71
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Collect.php:74
+#: Collect.php:72
 msgctxt "Settings"
 msgid "Redirects collection archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Collect.php:80
+#: Collect.php:78
 msgctxt "Settings"
 msgid "Redirect Groups"
 msgstr ""
 
-#: Collect.php:81
+#: Collect.php:79
 msgctxt "Settings"
 msgid "Redirects all group archives to this URL. Leave empty to disable."
 msgstr ""

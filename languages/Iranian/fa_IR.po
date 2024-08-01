@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Iranian\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-12 04:35+0330\n"
+"PO-Revision-Date: 2024-07-16 22:19+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -143,7 +143,7 @@ msgstr "شماره شناسنامه %1$s برای &rdquo;%2$s&ldquo; حذف شد
 #. translators: %1$s: identity code, %2$s: birth certificate number
 #: Iranian.php:486
 msgctxt "Notice"
-msgid "Identiry (%1$s) and Birth Certificate Number (%2$s) are diffrent"
+msgid "Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent"
 msgstr "هویت (%1$s) با شماره شناسنامه (%2$s) متفاوت است"
 
 #~ msgctxt "Button"

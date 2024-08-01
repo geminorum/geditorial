@@ -13,32 +13,32 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
 "X-Domain: geditorial-magazine\n"
 
-#: Magazine.php:60
+#: Magazine.php:58
 msgctxt "Settings"
 msgid "Issue Sections"
 msgstr ""
 
-#: Magazine.php:61
+#: Magazine.php:59
 msgctxt "Settings"
 msgid "Section taxonomy for the issues and supported post-types."
 msgstr ""
 
-#: Magazine.php:77
+#: Magazine.php:75
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Magazine.php:78
+#: Magazine.php:76
 msgctxt "Settings"
 msgid "Redirects issue archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Magazine.php:84
+#: Magazine.php:82
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Magazine.php:85
+#: Magazine.php:83
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""

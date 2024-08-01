@@ -13,98 +13,98 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Genres\n"
 "X-Domain: geditorial-genres\n"
 
-#: Genres.php:78
+#: Genres.php:82
 msgid "Genre"
 msgid_plural "Genres"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Genres.php:82
+#: Genres.php:86
 msgctxt "Label: `extended_label`"
 msgid "Content Genres"
 msgstr ""
 
-#: Genres.php:83
+#: Genres.php:87
 msgctxt "Label: `menu_name`"
 msgid "Content Genres"
 msgstr ""
 
-#: Genres.php:84
+#: Genres.php:88
 msgctxt "Label: `show_option_all`"
 msgid "Genres"
 msgstr ""
 
-#: Genres.php:85
+#: Genres.php:89
 msgctxt "Label: `show_option_no_items`"
 msgid "(UnGenred)"
 msgstr ""
 
-#: Genres.php:94
+#: Genres.php:98
 msgctxt "Dashboard Widget Title"
 msgid "Your Content Genres Summary"
 msgstr ""
 
-#: Genres.php:95
+#: Genres.php:99
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Genres Summary"
 msgstr ""
 
-#: Genres.php:106
+#: Genres.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Children"
 msgstr ""
 
-#: Genres.php:107
+#: Genres.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Classic"
 msgstr ""
 
-#: Genres.php:108
+#: Genres.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Comedy"
 msgstr ""
 
-#: Genres.php:109
+#: Genres.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Crime"
 msgstr ""
 
-#: Genres.php:110
+#: Genres.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Fantasy"
 msgstr ""
 
-#: Genres.php:111
+#: Genres.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Historical"
 msgstr ""
 
-#: Genres.php:112
+#: Genres.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Horror"
 msgstr ""
 
-#: Genres.php:113
+#: Genres.php:117
 msgctxt "Main Taxonomy: Default Term"
 msgid "Mystery"
 msgstr ""
 
-#: Genres.php:114
+#: Genres.php:118
 msgctxt "Main Taxonomy: Default Term"
 msgid "Romance"
 msgstr ""
 
-#: Genres.php:115
+#: Genres.php:119
 msgctxt "Main Taxonomy: Default Term"
 msgid "Science Fiction"
 msgstr ""
 
-#: Genres.php:116
+#: Genres.php:120
 msgctxt "Main Taxonomy: Default Term"
 msgid "Thriller"
 msgstr ""
 
-#: Genres.php:222
+#: Genres.php:228
 msgctxt "Header"
 msgid "Genre Reports"
 msgstr ""

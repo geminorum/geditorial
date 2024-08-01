@@ -13,83 +13,83 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Diagnosed\n"
 "X-Domain: geditorial-diagnosed\n"
 
-#: Diagnosed.php:86
+#: Diagnosed.php:87
 msgid "Diagnosis"
 msgid_plural "Diagnoses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Diagnosed.php:90
+#: Diagnosed.php:91
 msgctxt "Label: `menu_name`"
 msgid "Diagnosis Definitions"
 msgstr ""
 
-#: Diagnosed.php:91
+#: Diagnosed.php:92
 msgctxt "Label: `extended_label`"
 msgid "Diagnosis Definitions"
 msgstr ""
 
-#: Diagnosed.php:92
+#: Diagnosed.php:93
 msgctxt "Label: `show_option_all`"
 msgid "Diagnoses"
 msgstr ""
 
-#: Diagnosed.php:93
+#: Diagnosed.php:94
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undiagnosed)"
 msgstr ""
 
-#: Diagnosed.php:105
+#: Diagnosed.php:106
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sciatica"
 msgstr ""
 
-#: Diagnosed.php:106
+#: Diagnosed.php:107
 msgctxt "Main Taxonomy: Default Term"
 msgid "Diabetes"
 msgstr ""
 
-#: Diagnosed.php:107
+#: Diagnosed.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "Glasses"
 msgstr ""
 
-#: Diagnosed.php:108
+#: Diagnosed.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Migraine"
 msgstr ""
 
-#: Diagnosed.php:109
+#: Diagnosed.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Epilepsy"
 msgstr ""
 
-#: Diagnosed.php:110
+#: Diagnosed.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Gastro"
 msgstr ""
 
-#: Diagnosed.php:111
+#: Diagnosed.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Kidney"
 msgstr ""
 
-#: Diagnosed.php:112
+#: Diagnosed.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Liver"
 msgstr ""
 
-#: Diagnosed.php:113
+#: Diagnosed.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Heart"
 msgstr ""
 
-#: Diagnosed.php:114
+#: Diagnosed.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Knee"
 msgstr ""
 
-#: Diagnosed.php:115
+#: Diagnosed.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ankle"
 msgstr ""

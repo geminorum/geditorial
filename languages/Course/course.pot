@@ -13,32 +13,32 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Course\n"
 "X-Domain: geditorial-course\n"
 
-#: Course.php:57
+#: Course.php:55
 msgctxt "Settings"
 msgid "Course Topics"
 msgstr ""
 
-#: Course.php:58
+#: Course.php:56
 msgctxt "Settings"
 msgid "Topic taxonomy for the courses and supported post-types."
 msgstr ""
 
-#: Course.php:74
+#: Course.php:72
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Course.php:75
+#: Course.php:73
 msgctxt "Settings"
 msgid "Redirects course and lesson archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Course.php:81
+#: Course.php:79
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Course.php:82
+#: Course.php:80
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""

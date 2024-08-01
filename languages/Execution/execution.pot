@@ -13,28 +13,28 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Execution\n"
 "X-Domain: geditorial-execution\n"
 
-#: Execution.php:87
+#: Execution.php:91
 msgid "Executive"
 msgid_plural "Executives"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Execution.php:91
+#: Execution.php:95
 msgctxt "Label: Show Option All"
 msgid "Executives"
 msgstr ""
 
-#: Execution.php:92
+#: Execution.php:96
 msgctxt "Label: Show Option No Terms"
 msgid "(No-executive)"
 msgstr ""
 
-#: Execution.php:101
+#: Execution.php:105
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Execution Summary"
 msgstr ""
 
-#: Execution.php:102
+#: Execution.php:106
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Execution Summary"
 msgstr ""

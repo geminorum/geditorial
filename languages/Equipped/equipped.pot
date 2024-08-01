@@ -13,28 +13,28 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Equipped\n"
 "X-Domain: geditorial-equipped\n"
 
-#: Equipped.php:85
+#: Equipped.php:87
 msgid "Equipment Item"
 msgid_plural "Equipment Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Equipped.php:89
+#: Equipped.php:91
 msgctxt "Label: `menu_name`"
 msgid "Content Equipments"
 msgstr ""
 
-#: Equipped.php:90
+#: Equipped.php:92
 msgctxt "Label: `extended_label`"
 msgid "Content Equipments"
 msgstr ""
 
-#: Equipped.php:91
+#: Equipped.php:93
 msgctxt "Label: `show_option_all`"
 msgid "Equipments"
 msgstr ""
 
-#: Equipped.php:92
+#: Equipped.php:94
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unequipped)"
 msgstr ""

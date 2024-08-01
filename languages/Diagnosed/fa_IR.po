@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Diagnosed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-22 02:34+0330\n"
+"PO-Revision-Date: 2024-07-21 18:50+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -24,12 +24,12 @@ msgstr[1] "تشخیص"
 #: Diagnosed.php:90
 msgctxt "Label: `menu_name`"
 msgid "Diagnosis Definitions"
-msgstr "تعاریف تشخیص"
+msgstr "تعاریف تشخیصی"
 
 #: Diagnosed.php:91
 msgctxt "Label: `extended_label`"
 msgid "Diagnosis Definitions"
-msgstr "تعاریف تشخیص"
+msgstr "تعاریف تشخیصی"
 
 #: Diagnosed.php:92
 msgctxt "Label: `show_option_all`"
