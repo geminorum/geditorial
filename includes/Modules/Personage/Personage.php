@@ -329,23 +329,6 @@ class Personage extends gEditorial\Module
 					'order'       => 200,
 					'sanitize'    => [ $this, 'sanitize_passport_number' ],
 				],
-				// TODO: move to WasBorn
-				'date_of_birth' => [
-					'title'       => _x( 'Date of Birth', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Birthday of the Person', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'date',
-					'quickedit'   => TRUE,
-					'order'       => 18,
-				],
-				// TODO: move to WasBorn
-				// 'date_of_death' => [],
-				// TODO: move to WasBorn
-				'place_of_birth' => [
-					'title'       => _x( 'Place of Birth', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Place Where the Person was Born', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'venue',
-					'order'       => 18,
-				],
 				'postal_code' => [
 					'type' => 'postcode',
 				],
@@ -445,9 +428,7 @@ class Personage extends gEditorial\Module
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 		$this->filter( 'meta_field_empty', 7, 9, FALSE, $this->base );
 
-		$this->filter_module( 'was_born', 'default_posttype_dob_metakey', 2 );
 		$this->filter_module( 'iranian', 'default_posttype_identity_metakey', 2 );
-		$this->filter_module( 'iranian', 'default_posttype_location_metakey', 2 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
@@ -491,7 +472,6 @@ class Personage extends gEditorial\Module
 					// 'phone_number'    => NULL,
 					'mobile_number'   => NULL,
 					'identity_number' => NULL,
-					'date_of_birth'   => NULL,
 				] );
 
 				$this->_hook_post_updated_messages( 'primary_posttype' );
@@ -681,7 +661,6 @@ class Personage extends gEditorial\Module
 			case 'father_name':
 			case 'mother_name':
 			case 'spouse_name':
-			case 'place_of_birth':
 
 				// in all contexts!
 				return WordPress\Strings::cleanupChars( $meta );
@@ -696,26 +675,10 @@ class Personage extends gEditorial\Module
 		return $meta;
 	}
 
-	public function was_born_default_posttype_dob_metakey( $default, $posttype )
-	{
-		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return Services\PostTypeFields::getPostMetaKey( 'date_of_birth' );
-
-		return $default;
-	}
-
 	public function iranian_default_posttype_identity_metakey( $default, $posttype )
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
-
-		return $default;
-	}
-
-	public function iranian_default_posttype_location_metakey( $default, $posttype )
-	{
-		if ( $posttype == $this->constant( 'primary_posttype' ) )
-			return Services\PostTypeFields::getPostMetaKey( 'place_of_birth' );
 
 		return $default;
 	}

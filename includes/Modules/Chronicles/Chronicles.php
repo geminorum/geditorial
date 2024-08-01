@@ -1,0 +1,410 @@
+<?php namespace geminorum\gEditorial\Modules\Chronicles;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\WordPress;
+
+class Chronicles extends gEditorial\Module
+{
+	use Internals\AdminPage;
+	use Internals\CoreAdmin;
+	use Internals\CoreRowActions;
+	use Internals\FramePage;
+	use Internals\MetaBoxSupported;
+	use Internals\RestAPI;
+	use Internals\SubContents;
+
+	public static function module()
+	{
+		return [
+			'name'     => 'chronicles',
+			'title'    => _x( 'Chronicles', 'Modules: Chronicles', 'geditorial-admin' ),
+			'desc'     => _x( 'Timeline for Contents', 'Modules: Chronicles', 'geditorial-admin' ),
+			'icon'     => [ 'misc-16', 'calendar3' ],
+			'access'   => 'beta',
+			'keywords' => [
+				'timeline',
+				'subcontent',
+			],
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		$roles = $this->get_settings_default_roles();
+
+		return [
+			'_subcontent' => [
+				'subcontent_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
+				'subcontent_fields'    => [ NULL, $this->subcontent_get_fields_for_settings() ],
+			],
+			'_roles' => [
+				'reports_roles' => [ NULL, $roles ],
+				'assign_roles'  => [ NULL, $roles ],
+			],
+			'_editpost' => [
+				'admin_rowactions',
+			],
+			'_supports' => [
+				'shortcode_support',
+			],
+			'posttypes_option' => 'posttypes_option',
+		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'restapi_namespace' => 'content-timelines',
+			'subcontent_type'   => 'content_timeline',
+			'subcontent_status' => 'private',
+			'main_shortcode'    => 'content-timeline',
+
+			'term_empty_subcontent_data' => 'timeline-data-empty',
+		];
+	}
+
+	protected function get_global_strings()
+	{
+		$strings = [
+			'fields' => [
+				'subcontent' => [
+					'label'    => _x( 'Significance', 'Field Label: `label`', 'geditorial-chronicles' ),
+					'date'     => _x( 'Date', 'Field Label: `date`', 'geditorial-chronicles' ),
+					'time'     => _x( 'Time', 'Field Label: `time`', 'geditorial-chronicles' ),
+					'location' => _x( 'Location', 'Field Label: `location`', 'geditorial-chronicles' ),
+					'duration' => _x( 'Duration', 'Field Label: `duration`', 'geditorial-chronicles' ),
+					'desc'     => _x( 'Description', 'Field Label', 'geditorial-chronicles' ),
+				],
+			],
+		];
+
+		$strings['notices'] = [
+			'empty'    => _x( 'There is no timeline information available!', 'Notice', 'geditorial-chronicles' ),
+			'noaccess' => _x( 'You have not necessary permission to manage the timeline data.', 'Notice', 'geditorial-chronicles' ),
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['metabox'] = [
+			'supportedbox_title'  => _x( 'Timeline', 'MetaBox Title', 'geditorial-chronicles' ),
+			// 'metabox_action' => _x( 'Timeline', 'MetaBox Action', 'geditorial-chronicles' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'mainbutton_title' => _x( 'Timeline of %1$s', 'Button Title', 'geditorial-chronicles' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'mainbutton_text'  => _x( '%1$s Manage the Timeline of %2$s', 'Button Text', 'geditorial-chronicles' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'rowaction_title' => _x( 'Timeline of %1$s', 'Action Title', 'geditorial-chronicles' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'rowaction_text'  => _x( 'Timeline', 'Action Text', 'geditorial-chronicles' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'columnrow_title' => _x( 'Timeline of %1$s', 'Row Title', 'geditorial-chronicles' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'columnrow_text'  => _x( 'Timeline', 'Row Text', 'geditorial-chronicles' ),
+		];
+
+		return $strings;
+	}
+
+	// TODO: founded date/dismanteled date/
+	protected function get_global_fields()
+	{
+		return [
+			'meta' => [
+				'_supported' => [
+					'establish_date' => [
+						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/establish.html
+						'title'       => _x( 'Establish Date', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'The Date on Which the Organization Was Established', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'controls-skipback',
+						'type'        => 'date',
+						'quickedit'   => TRUE,
+						'order'       => 40,
+					],
+					'abolish_date' => [
+						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/abolish.html
+						'title'       => _x( 'Abolish Date', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'The Date on Which the Organization Was Terminated, Disbanded, Inactivated, or Superseded', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'controls-skipforward',
+						'type'        => 'date',
+						'quickedit'   => TRUE,
+						'order'       => 45,
+					],
+					'date_of_birth' => [
+						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/birth.html
+						'title'       => _x( 'Date of Birth', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'The Date on Which the Person Was Born', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'controls-skipback',
+						'type'        => 'date',
+						'quickedit'   => TRUE,
+						'order'       => 40,
+					],
+					'date_of_death' => [
+						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/death.html
+						'title'       => _x( 'Date of Death', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'The Date on Which the Person Died', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'controls-skipforward',
+						'type'        => 'date',
+						'quickedit'   => TRUE,
+						'order'       => 45,
+					],
+					'place_of_birth' => [
+						'title'       => _x( 'Place of Birth', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'Place Where the Person was Born', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'location-alt',
+						'type'        => 'venue',
+						'data_length' => 15,
+						'order'       => 50,
+					],
+					'place_of_death' => [
+						'title'       => _x( 'Place of Death', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'Place Where the Person Died', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'location-alt',
+						'type'        => 'venue',
+						'data_length' => 15,
+						'order'       => 55,
+					],
+				],
+			],
+		];
+	}
+
+	protected function subcontent_get_data_mapping()
+	{
+		return array_merge( $this->subcontent_base_data_mapping(), [
+			'comment_content' => 'desc',    // `text`
+			'comment_agent'   => 'label',   // `varchar(255)`
+			'comment_karma'   => 'order',   // `int(11)`
+
+			'comment_author'       => 'location',   // `tinytext`
+			'comment_author_url'   => 'duration',   // `varchar(200)`
+			'comment_author_email' => 'date',       // `varchar(100)`
+			'comment_author_IP'    => 'time',       // `varchar(100)`
+		] );
+	}
+
+	protected function subcontent_define_required_fields()
+	{
+		return [
+			'label',
+			'date',
+		];
+	}
+
+	public function after_setup_theme()
+	{
+		$this->filter_module( 'audit', 'get_default_terms', 2 );
+	}
+
+	public function init()
+	{
+		parent::init();
+
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
+		$this->register_shortcode( 'main_shortcode' );
+
+		if ( ! is_admin() )
+			return;
+
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields_supported();
+
+		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
+		$this->filter_module( 'was_born', 'default_posttype_dob_metakey', 2 );
+		$this->filter_module( 'iranian', 'default_posttype_location_metakey', 2 );
+
+		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
+	}
+
+	public function importer_init()
+	{
+		$this->subcontent__hook_importer_init();
+	}
+
+	public function current_screen( $screen )
+	{
+		if ( $this->in_setting( $screen->post_type, 'subcontent_posttypes' ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+				if ( $this->role_can( [ 'reports', 'assign' ] ) )
+					$this->_hook_general_supportedbox( $screen, NULL, 'advanced', 'low', '-subcontent-grid-metabox' );
+
+				$this->subcontent_do_enqueue_asset_js( $screen );
+
+			} else if ( 'edit' == $screen->base ) {
+
+				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
+
+					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type ) )
+						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18 );
+
+					Scripts::enqueueColorBox();
+				}
+			}
+		}
+	}
+
+	public function tweaks_column_row( $post, $before, $after )
+	{
+		printf( $before, '-timeline-grid' );
+
+			echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
+
+			echo $this->framepage_get_mainlink_for_post( $post, [
+				'context' => 'columnrow',
+			] );
+
+			if ( $count = $this->subcontent_get_data_count( $post ) )
+				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'event', $count ) );
+
+		echo $after;
+	}
+
+	protected function rowaction_get_mainlink_for_post( $post )
+	{
+		return [
+			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
+				'context' => 'rowaction',
+			] ),
+		];
+	}
+
+	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	{
+		if ( is_null( $context ) )
+			$context = 'supportedbox';
+
+		$this->subcontent_render_metabox_data_grid( $object, $context );
+
+		if ( $this->role_can( 'assign' ) )
+			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $object, [
+				'context' => 'mainbutton',
+				'target'  => 'grid',
+			] ), 'field-wrap -buttons' );
+
+		else
+			echo $this->subcontent_get_noaccess_notice();
+	}
+
+	public function admin_menu()
+	{
+		if ( $this->role_can( [ 'assign', 'reports' ] ) )
+			$this->_hook_submenu_adminpage( 'framepage', 'read' );
+	}
+
+	public function load_submenu_adminpage( $context = 'framepage' )
+	{
+		$this->_load_submenu_adminpage( $context );
+		$this->subcontent_do_enqueue_app( TRUE );
+	}
+
+	public function render_framepage_adminpage()
+	{
+		$this->subcontent_do_render_iframe_content(
+			TRUE,
+			'framepage',
+			/* translators: %s: post title */
+			_x( 'Timeline Grid for %s', 'Page Title', 'geditorial-chronicles' ),
+			/* translators: %s: post title */
+			_x( 'Timeline Overview for %s', 'Page Title', 'geditorial-chronicles' )
+		);
+	}
+
+	public function setup_restapi()
+	{
+		$this->subcontent_restapi_register_routes();
+	}
+
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
+	}
+
+	public function audit_get_default_terms( $terms, $taxonomy )
+	{
+		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Timeline Data', 'Default Term: Audit', 'geditorial-chronicles' ),
+		] ) : $terms;
+	}
+
+	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	{
+		if ( ! $this->in_setting( $post->post_type, 'subcontent_posttypes' ) )
+			return $terms;
+
+		if ( $exists = term_exists( $this->constant( 'term_empty_subcontent_data' ), $taxonomy ) ) {
+
+			if ( $this->subcontent_get_data_count( $post ) )
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
+
+			else
+				$terms[] = $exists['term_id'];
+		}
+
+		return $terms;
+	}
+
+	public function personage_editform_meta_summary( $fields, $post )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $fields;
+
+		$fields['date_of_birth']  = NULL;
+		$fields['date_of_death']  = NULL;
+		$fields['place_of_birth'] = NULL;
+
+		return $fields;
+	}
+
+	public function was_born_default_posttype_dob_metakey( $default, $posttype )
+	{
+		if ( $this->posttype_supported( $posttype ) )
+			return Services\PostTypeFields::getPostMetaKey( 'date_of_birth' );
+
+		return $default;
+	}
+
+	public function iranian_default_posttype_location_metakey( $default, $posttype )
+	{
+		if ( $this->posttype_supported( $posttype ) )
+			return Services\PostTypeFields::getPostMetaKey( 'place_of_birth' );
+
+		return $default;
+	}
+
+	// NOTE: late overrides of the fields values and keys
+	public function searchselect_result_extra_for_post( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2', 'subcontent' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $data;
+
+		if ( empty( $data['dob'] ) && ! empty( $data['date_of_birth'] ) )
+			$data['dob'] = $data['date_of_birth'];
+
+		if ( empty( $data['dod'] ) && ! empty( $data['date_of_death'] ) )
+			$data['dod'] = $data['date_of_death'];
+
+		return $data;
+	}
+}
