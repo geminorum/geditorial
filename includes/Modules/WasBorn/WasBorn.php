@@ -207,6 +207,7 @@ class WasBorn extends gEditorial\Module
 
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
 		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'gender_taxonomy' ), TRUE );
+		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
 		$this->filter_self( 'mean_age', 4 );
 		$this->action_module( 'pointers', 'post', 5, 100 );
@@ -1086,5 +1087,39 @@ class WasBorn extends gEditorial\Module
 			return FALSE;
 
 		return $this->postdate__get_post_data_for_latechores( $post, $metakey );
+	}
+
+	// NOTE: late overrides of the fields values and keys
+	public function searchselect_result_extra_for_post( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2', 'subcontent' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( ! $this->in_setting( $post->post_type, 'parent_posttypes' ) )
+			return $data;
+
+		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
+			return $data;
+
+		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
+			return $data;
+
+		$cal = $this->default_calendar();
+
+		if ( empty( $data['age_raw'] ) )
+			$data['age_raw'] = Core\Date::calculateAge( $dob, $cal );
+
+		if ( empty( $data['age'] ) )
+			$data['age'] = Core\Number::localize( $data['age_raw'] );
+
+		// TODO: maybe provide message
+		if ( ! array_key_exists( 'is_under_aged', $data ) )
+			$data['is_under_aged'] = Core\Date::isUnderAged( $dob, $this->get_setting( 'age_of_majority', 18 ), $cal );
+
+		return $data;
 	}
 }
