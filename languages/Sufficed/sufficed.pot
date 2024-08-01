@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Sufficed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Sufficed\n"
+"X-Domain: geditorial-sufficed\n"
+
+#: Sufficed.php:89
+msgid "Deficiency"
+msgid_plural "Deficiencies"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Sufficed.php:93
+msgctxt "Label: Menu Name"
+msgid "Content Deficiencies"
+msgstr ""
+
+#: Sufficed.php:94
+msgctxt "Label: Show Option All"
+msgid "Deficiencies"
+msgstr ""
+
+#: Sufficed.php:95
+msgctxt "Label: Show Option No Terms"
+msgid "(Sufficient)"
+msgstr ""
+
+#: Sufficed.php:104
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Deficiencies Summary"
+msgstr ""
+
+#: Sufficed.php:105
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Deficiencies Summary"
+msgstr ""
