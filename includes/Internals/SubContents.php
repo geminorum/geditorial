@@ -412,6 +412,9 @@ trait SubContents
 				case 'date':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF
 				case 'time':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF
 				case 'contact':  $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: phone/mobile/email/url
+				case 'stature':  $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: phone/mobile/email/url
+				case 'mass':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: phone/mobile/email/url
+				case 'age':      $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: year-only
 				case 'dob':      $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: year-only
 				case 'year':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break;
 				case 'account':  $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break;
@@ -427,7 +430,8 @@ trait SubContents
 				case 'topic':    $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
 				case 'fullname': $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
 				case 'relation': $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
-				case 'location': $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
+				case 'location': $data[$raw_key] = WordPress\Strings::getPiped( Helper::getSeparated( Core\Text::trim( Helper::kses( $raw_value, 'none' ) ) ) ); break;
+				case 'people':   $data[$raw_key] = WordPress\Strings::getPiped( Helper::getSeparated( Core\Text::trim( Helper::kses( $raw_value, 'none' ) ) ) ); break;
 				case 'address':  $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
 				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
 				case 'html':     $data[$raw_key] = Core\Text::normalizeWhitespace( Helper::kses( $raw_value, 'text' ), TRUE ); break;

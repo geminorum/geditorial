@@ -1,0 +1,223 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Athlete\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Athlete\n"
+"X-Domain: geditorial-athlete\n"
+
+#: Athlete.php:111
+msgid "Sports Field"
+msgid_plural "Sports Fields"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Athlete.php:115
+msgctxt "Label: Menu Name"
+msgid "Sports"
+msgstr ""
+
+#: Athlete.php:116
+msgctxt "Label: Show Option All"
+msgid "Sports Field"
+msgstr ""
+
+#: Athlete.php:117
+msgctxt "Label: Show Option No Terms"
+msgid "(Unknown)"
+msgstr ""
+
+#: Athlete.php:122
+msgctxt "Field Label: `label`"
+msgid "Event"
+msgstr ""
+
+#: Athlete.php:123
+msgctxt "Field Label: `grade`"
+msgid "Grade"
+msgstr ""
+
+#: Athlete.php:124
+msgctxt "Field Label: `age`"
+msgid "Age"
+msgstr ""
+
+#: Athlete.php:125
+msgctxt "Field Label: `stature`"
+msgid "Stature"
+msgstr ""
+
+#: Athlete.php:126
+msgctxt "Field Label: `mass`"
+msgid "Mass"
+msgstr ""
+
+#: Athlete.php:127
+msgctxt "Field Label: `date`"
+msgid "Date"
+msgstr ""
+
+#: Athlete.php:128
+msgctxt "Field Label: `location`"
+msgid "Venue"
+msgstr ""
+
+#: Athlete.php:129
+msgctxt "Field Label: `location`"
+msgid "Instructors"
+msgstr ""
+
+#: Athlete.php:130
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr ""
+
+#: Athlete.php:136
+msgctxt "Notice"
+msgid "There is no athletic information available!"
+msgstr ""
+
+#: Athlete.php:137
+msgctxt "Notice"
+msgid "You have not necessary permission to manage this athletic data."
+msgstr ""
+
+#: Athlete.php:144
+msgctxt "Settings Description"
+msgid "Supports sports fields for the selected post-types."
+msgstr ""
+
+#: Athlete.php:148
+msgctxt "MetaBox Title"
+msgid "Athletics"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Athlete.php:152
+msgctxt "Button Title"
+msgid "Athletics of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Athlete.php:154
+msgctxt "Button Text"
+msgid "%1$s Manage the Athletics of %2$s"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Athlete.php:157
+msgctxt "Action Title"
+msgid "Athletics of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Athlete.php:159
+msgctxt "Action Text"
+msgid "Athletics"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Athlete.php:162
+msgctxt "Row Title"
+msgid "Athletics of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Athlete.php:164
+msgctxt "Row Text"
+msgid "Athletics"
+msgstr ""
+
+#: Athlete.php:176
+msgctxt "Default Term: Sports Field"
+msgid "Acrobatic"
+msgstr ""
+
+#: Athlete.php:177
+msgctxt "Default Term: Sports Field"
+msgid "Air"
+msgstr ""
+
+#: Athlete.php:178
+msgctxt "Default Term: Sports Field"
+msgid "Performance"
+msgstr ""
+
+#: Athlete.php:179
+msgctxt "Default Term: Sports Field"
+msgid "Martial Arts"
+msgstr ""
+
+#: Athlete.php:180
+msgctxt "Default Term: Sports Field"
+msgid "Strength"
+msgstr ""
+
+#: Athlete.php:181
+msgctxt "Default Term: Sports Field"
+msgid "Adventure"
+msgstr ""
+
+#: Athlete.php:182
+msgctxt "Default Term: Sports Field"
+msgid "Riding"
+msgstr ""
+
+#: Athlete.php:183
+msgctxt "Default Term: Sports Field"
+msgid "Shooting"
+msgstr ""
+
+#: Athlete.php:184
+msgctxt "Default Term: Sports Field"
+msgid "Group"
+msgstr ""
+
+#: Athlete.php:185
+msgctxt "Default Term: Sports Field"
+msgid "Net and Wall"
+msgstr ""
+
+#: Athlete.php:186
+msgctxt "Default Term: Sports Field"
+msgid "Mind"
+msgstr ""
+
+#: Athlete.php:187
+msgctxt "Default Term: Sports Field"
+msgid "Beach"
+msgstr ""
+
+#: Athlete.php:188
+msgctxt "Default Term: Sports Field"
+msgid "Water"
+msgstr ""
+
+#: Athlete.php:189
+msgctxt "Default Term: Sports Field"
+msgid "Snow"
+msgstr ""
+
+#. translators: %s: post title
+#: Athlete.php:405
+msgctxt "Page Title"
+msgid "Athletics Grid for %s"
+msgstr ""
+
+#. translators: %s: post title
+#: Athlete.php:407
+msgctxt "Page Title"
+msgid "Athletics Overview for %s"
+msgstr ""
+
+#: Athlete.php:431
+msgctxt "Default Term: Audit"
+msgid "Empty Athletics Data"
+msgstr ""

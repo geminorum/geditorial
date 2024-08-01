@@ -1,0 +1,233 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Athlete\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-08-01 22:06+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/Athlete\n"
+"X-Domain: geditorial-athlete\n"
+
+#: Athlete.php:111
+msgid "Sports Field"
+msgid_plural "Sports Fields"
+msgstr[0] "رشته‌های ورزشی"
+msgstr[1] "رشته ورزشی"
+
+#: Athlete.php:115
+msgctxt "Label: Menu Name"
+msgid "Sports"
+msgstr "ورزش"
+
+#: Athlete.php:116
+msgctxt "Label: Show Option All"
+msgid "Sports Field"
+msgstr "رشته ورزشی"
+
+#: Athlete.php:117
+msgctxt "Label: Show Option No Terms"
+msgid "(Unknown)"
+msgstr "(نامعلوم)"
+
+#: Athlete.php:122
+msgctxt "Field Label: `label`"
+msgid "Event"
+msgstr "رویداد"
+
+#: Athlete.php:123
+msgctxt "Field Label: `grade`"
+msgid "Grade"
+msgstr "نمره"
+
+#: Athlete.php:124
+msgctxt "Field Label: `age`"
+msgid "Age"
+msgstr "سن"
+
+#: Athlete.php:125
+msgctxt "Field Label: `stature`"
+msgid "Stature"
+msgstr "قامت"
+
+#: Athlete.php:126
+msgctxt "Field Label: `mass`"
+msgid "Mass"
+msgstr "وزن"
+
+#: Athlete.php:127
+msgctxt "Field Label: `date`"
+msgid "Date"
+msgstr "تاریخ"
+
+#: Athlete.php:128
+msgctxt "Field Label: `location`"
+msgid "Venue"
+msgstr "محل برگزاری"
+
+#: Athlete.php:129
+msgctxt "Field Label: `location`"
+msgid "Instructors"
+msgstr "مربیان"
+
+#: Athlete.php:130
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr "توضیحات"
+
+#: Athlete.php:136
+msgctxt "Notice"
+msgid "There is no athletic information available!"
+msgstr "هیچ اطلاعات ورزشی در دسترس نیست!"
+
+#: Athlete.php:137
+msgctxt "Notice"
+msgid "You have not necessary permission to manage this athletic data."
+msgstr "شما مجوز دسترس لازم برای مدیریت این داده‌های ورزشی را ندارید."
+
+#: Athlete.php:144
+msgctxt "Settings Description"
+msgid "Supports sports fields for the selected post-types."
+msgstr "رشته ورزشی را برای نوع‌فرسته‌های انتخاب‌شده پشتیبانی می‌کند."
+
+#: Athlete.php:148
+msgctxt "MetaBox Title"
+msgid "Athletics"
+msgstr "ورزشکاری"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Athlete.php:152
+msgctxt "Button Title"
+msgid "Athletics of %1$s"
+msgstr "سوابق ورزشی %2$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Athlete.php:154
+msgctxt "Button Text"
+msgid "%1$s Manage the Athletics of %2$s"
+msgstr "%1$s مدیریت سوابق ورزشی %2$s"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Athlete.php:157
+msgctxt "Action Title"
+msgid "Athletics of %1$s"
+msgstr "سوابق ورزشی‌های %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Athlete.php:159
+msgctxt "Action Text"
+msgid "Athletics"
+msgstr "ورزشکاری"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Athlete.php:162
+msgctxt "Row Title"
+msgid "Athletics of %1$s"
+msgstr "سوابق ورزشی برای %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Athlete.php:164
+msgctxt "Row Text"
+msgid "Athletics"
+msgstr "ورزشکاری"
+
+#: Athlete.php:176
+msgctxt "Default Term: Sports Field"
+msgid "Acrobatic"
+msgstr "حرکتی"
+
+#: Athlete.php:177
+msgctxt "Default Term: Sports Field"
+msgid "Air"
+msgstr "هوایی"
+
+#: Athlete.php:178
+msgctxt "Default Term: Sports Field"
+msgid "Performance"
+msgstr "نمایشی"
+
+#: Athlete.php:179
+msgctxt "Default Term: Sports Field"
+msgid "Martial Arts"
+msgstr "رزمی"
+
+#: Athlete.php:180
+msgctxt "Default Term: Sports Field"
+msgid "Strength"
+msgstr "قدرتی"
+
+#: Athlete.php:181
+msgctxt "Default Term: Sports Field"
+msgid "Adventure"
+msgstr "ماجراجویانه"
+
+#: Athlete.php:182
+msgctxt "Default Term: Sports Field"
+msgid "Riding"
+msgstr "سواری"
+
+#: Athlete.php:183
+msgctxt "Default Term: Sports Field"
+msgid "Shooting"
+msgstr "تیراندازی"
+
+#: Athlete.php:184
+msgctxt "Default Term: Sports Field"
+msgid "Group"
+msgstr "گروهی"
+
+#: Athlete.php:185
+msgctxt "Default Term: Sports Field"
+msgid "Net and Wall"
+msgstr "راکتی"
+
+#: Athlete.php:186
+msgctxt "Default Term: Sports Field"
+msgid "Mind"
+msgstr "فکری"
+
+#: Athlete.php:187
+msgctxt "Default Term: Sports Field"
+msgid "Beach"
+msgstr "ساحلی"
+
+#: Athlete.php:188
+msgctxt "Default Term: Sports Field"
+msgid "Water"
+msgstr "آبی"
+
+#: Athlete.php:189
+msgctxt "Default Term: Sports Field"
+msgid "Snow"
+msgstr "برفی"
+
+#. translators: %s: post title
+#: Athlete.php:405
+msgctxt "Page Title"
+msgid "Athletics Grid for %s"
+msgstr "جدول ورزشی برای %s"
+
+#. translators: %s: post title
+#: Athlete.php:407
+msgctxt "Page Title"
+msgid "Athletics Overview for %s"
+msgstr "مرور ورزشی برای %s"
+
+#: Athlete.php:431
+msgctxt "Default Term: Audit"
+msgid "Empty Athletics Data"
+msgstr "داده‌های ورزشی خالی"
+
+#~ msgctxt "Field Label: `stature`"
+#~ msgid "Stature in Cm"
+#~ msgstr "قد به سانتیمتر"
+
+#~ msgctxt "Field Label: `mass`"
+#~ msgid "Mass in Kg"
+#~ msgstr "وزن به کیلوگرم"
