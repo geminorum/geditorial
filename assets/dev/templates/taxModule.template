@@ -42,6 +42,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
 			'_dashboard' => [
 				'dashboard_widgets',
+				'summary_parents',
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
 				'summary_drafts',
@@ -52,6 +53,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
+				'auto_term_parents',
 				'show_in_quickedit',
 			],
 			'_frontend' => [
@@ -124,6 +126,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'show_in_menu'       => FALSE,
 		], NULL, [
 			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'   => $this->get_setting( 'auto_term_parents', TRUE ),
 			'custom_captype' => TRUE,
 		] );
 
