@@ -1,0 +1,187 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Agenda\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-08-01 20:59+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/Agenda\n"
+"X-Domain: geditorial-agenda\n"
+
+#: Agenda.php:80
+msgctxt "Field Label: `label`"
+msgid "Label"
+msgstr "شاخص"
+
+#: Agenda.php:81
+msgctxt "Field Label: `date`"
+msgid "Date"
+msgstr "تاریخ"
+
+#: Agenda.php:82
+msgctxt "Field Label: `time`"
+msgid "Time"
+msgstr "زمان"
+
+#: Agenda.php:83
+msgctxt "Field Label: `datestart`"
+msgid "Date Start"
+msgstr "تاریخ شروع"
+
+#: Agenda.php:84
+msgctxt "Field Label: `dateend`"
+msgid "Date End"
+msgstr "تاریخ پایان"
+
+#: Agenda.php:85
+msgctxt "Field Label: `topic`"
+msgid "Topic"
+msgstr "موضوع"
+
+#: Agenda.php:86
+msgctxt "Field Label: `count`"
+msgid "Participants"
+msgstr "مشارکت‌کنندگان"
+
+#: Agenda.php:87
+msgctxt "Field Label: `location`"
+msgid "Venue"
+msgstr "محل برگزاری"
+
+#: Agenda.php:88
+msgctxt "Field Label: `duration`"
+msgid "Duration"
+msgstr "مدت"
+
+#: Agenda.php:89
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr "توضیحات"
+
+#: Agenda.php:95
+msgctxt "Notice"
+msgid "There is no itinerary information available!"
+msgstr "هیچ اطلاعات گشت‌نامه‌ای در دسترس نیست!"
+
+#: Agenda.php:96
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the itinerary data."
+msgstr "شما دسترسی لازم برای مدیریت گشت‌نامه را ندارید."
+
+#: Agenda.php:103
+msgctxt "MetaBox Title"
+msgid "Itineraries"
+msgstr "گشت‏نامه"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Agenda.php:107
+msgctxt "Button Title"
+msgid "Itineraries of %1$s"
+msgstr "گشت‌نامه %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Agenda.php:109
+msgctxt "Button Text"
+msgid "%1$s Manage the Itineraries of %2$s"
+msgstr "%1$s مدیریت گشت‌نامه برای %2$s"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Agenda.php:112
+msgctxt "Action Title"
+msgid "Itineraries of %1$s"
+msgstr "گشت‌نامه برای %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Agenda.php:114
+msgctxt "Action Text"
+msgid "Itineraries"
+msgstr "گشت‏نامه"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Agenda.php:117
+msgctxt "Row Title"
+msgid "Itineraries of %1$s"
+msgstr "گشت‌نامه %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Agenda.php:119
+msgctxt "Row Text"
+msgid "Itineraries"
+msgstr "گشت‏نامه"
+
+#: Agenda.php:132
+msgctxt "Field Title"
+msgid "Agenda Title"
+msgstr "عنوان دستورجلسه"
+
+#: Agenda.php:133
+msgctxt "Field Description"
+msgid "The Itinerary Table Caption"
+msgstr "برنگاشت جدول گشت‌نامه"
+
+#. translators: %s: post title
+#: Agenda.php:297
+msgctxt "Page Title"
+msgid "Itinerary Grid for %s"
+msgstr "جدول گشت‌نامه برای %s"
+
+#. translators: %s: post title
+#: Agenda.php:299
+msgctxt "Page Title"
+msgid "Itinerary Overview for %s"
+msgstr "نمای‌کلی گشت‌نامه برای %s"
+
+#: Agenda.php:316
+msgctxt "Default Term: Audit"
+msgid "Empty Itinerary Data"
+msgstr "داده‌های گشت‌نامه خالی"
+
+#~ msgctxt "Field Label"
+#~ msgid "Label"
+#~ msgstr "علامت"
+
+#~ msgctxt "Field Label"
+#~ msgid "Type"
+#~ msgstr "نوع"
+
+#~ msgctxt "Field Label"
+#~ msgid "Duration"
+#~ msgstr "مدت"
+
+#~ msgctxt "Field Label"
+#~ msgid "Date"
+#~ msgstr "تاریخ"
+
+#~ msgctxt "Field Label"
+#~ msgid "Time"
+#~ msgstr "زمان"
+
+#~ msgctxt "Field Label"
+#~ msgid "DateTime"
+#~ msgstr "تاریخ‌وزمان"
+
+#~ msgctxt "Field Label"
+#~ msgid "Date Start"
+#~ msgstr "تاریخ شروع"
+
+#~ msgctxt "Field Label"
+#~ msgid "Date End"
+#~ msgstr "تاریخ پایان"
+
+#~ msgctxt "Field Label"
+#~ msgid "Status"
+#~ msgstr "وضعیت"
+
+#~ msgctxt "Field Label"
+#~ msgid "Participants"
+#~ msgstr "مشارکت‌کنندگان"
+
+#~ msgctxt "Field Label"
+#~ msgid "Description"
+#~ msgstr "توضیحات"
