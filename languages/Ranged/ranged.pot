@@ -1,0 +1,205 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Ranged\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Ranged\n"
+"X-Domain: geditorial-ranged\n"
+
+#: Ranged.php:68
+msgctxt "Settings"
+msgid "Shooting Levels"
+msgstr ""
+
+#: Ranged.php:69
+msgctxt "Settings"
+msgid "Substitute taxonomy for the shootings and supported post-types."
+msgstr ""
+
+#: Ranged.php:151
+#: Ranged.php:152
+msgid "Shooting Session"
+msgid_plural "Shooting Sessions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:153
+msgid "Shooting Category"
+msgid_plural "Shooting Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:154
+msgid "Shooting Level"
+msgid_plural "Shooting Levels"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:155
+msgid "Shooting Program"
+msgid_plural "Shooting Programs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:156
+msgid "Shooting Span"
+msgid_plural "Shooting Spans"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:157
+msgid "Shooting Type"
+msgid_plural "Shooting Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:158
+msgid "Shooting Status"
+msgid_plural "Shooting Statuses"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:162
+msgctxt "Label: `menu_name`"
+msgid "Shootings"
+msgstr ""
+
+#: Ranged.php:163
+msgctxt "Label: Featured Image"
+msgid "Shooting Poster"
+msgstr ""
+
+#: Ranged.php:164
+msgctxt "Label: MetaBox Title"
+msgid "The Shootings"
+msgstr ""
+
+#: Ranged.php:167
+msgctxt "Label: MetaBox Title"
+msgid "In This Shooting"
+msgstr ""
+
+#: Ranged.php:170
+msgctxt "Label: Menu Name"
+msgid "Categories"
+msgstr ""
+
+#: Ranged.php:173
+msgctxt "Label: Menu Name"
+msgid "Programs"
+msgstr ""
+
+#: Ranged.php:176
+msgctxt "Label: Menu Name"
+msgid "Spans"
+msgstr ""
+
+#: Ranged.php:179
+msgctxt "Label: Menu Name"
+msgid "Types"
+msgstr ""
+
+#: Ranged.php:182
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr ""
+
+#: Ranged.php:191
+msgctxt "Notice"
+msgid "There is no shooting information available!"
+msgstr ""
+
+#: Ranged.php:192
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the shooting information."
+msgstr ""
+
+#. translators: %s: item count
+#: Ranged.php:197
+msgctxt "Misc: `tabloid_paired_posttype`"
+msgid "Shooting Attendees (%s)"
+msgstr ""
+
+#. translators: %s: item count
+#: Ranged.php:199
+msgctxt "Misc: `tabloid_paired_supported`"
+msgid "Shooting Sessions (%s)"
+msgstr ""
+
+#: Ranged.php:200
+msgctxt "Misc: `column_icon_title`"
+msgid "Shooting Sessions"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Ranged.php:205
+msgctxt "MetaBox: `listbox_title`"
+msgid "Attendees on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: Ranged.php:215
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Preliminary"
+msgstr ""
+
+#: Ranged.php:216
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Intermediate"
+msgstr ""
+
+#: Ranged.php:217
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Advanced"
+msgstr ""
+
+#: Ranged.php:218
+msgctxt "Subterm Taxonomy: Default Term"
+msgid "Special"
+msgstr ""
+
+#: Ranged.php:222
+msgctxt "Status Taxonomy: Default Term"
+msgid "Planned"
+msgstr ""
+
+#: Ranged.php:223
+msgctxt "Status Taxonomy: Default Term"
+msgid "Held"
+msgstr ""
+
+#: Ranged.php:264
+msgctxt "Field Title"
+msgid "Instructors"
+msgstr ""
+
+#: Ranged.php:265
+msgctxt "Field Description"
+msgid "People Who Participate as Instructors in This Shooting Session"
+msgstr ""
+
+#: Ranged.php:273
+msgctxt "Field Title"
+msgid "Shooting Code"
+msgstr ""
+
+#: Ranged.php:274
+msgctxt "Field Description"
+msgid "Unique Shooting Code"
+msgstr ""
+
+#: Ranged.php:599
+msgctxt "Header"
+msgid "Shooting Session Tools"
+msgstr ""
+
+#: Ranged.php:608
+msgctxt "Card"
+msgid "Shooting Session Date from Meta-data"
+msgstr ""
