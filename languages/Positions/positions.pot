@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Positions\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Positions\n"
+"X-Domain: geditorial-positions\n"
+
+#: Positions.php:57
+msgctxt "Setting Description"
+msgid "Roles that can manage position information."
+msgstr ""
+
+#: Positions.php:58
+msgctxt "Setting Description"
+msgid "Roles that can view position information."
+msgstr ""
+
+#: Positions.php:59
+msgctxt "Setting Description"
+msgid "Roles that can assign position information."
+msgstr ""
+
+#: Positions.php:106
+#: Positions.php:107
+msgid "Position Profile"
+msgid_plural "Position Profiles"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Positions.php:108
+msgid "Position Profile Type"
+msgid_plural "Position Profile Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Positions.php:109
+msgid "Position Profile Category"
+msgid_plural "Position Profile Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Positions.php:110
+msgid "Position Profile Flag"
+msgid_plural "Position Profile Flags"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Positions.php:119
+msgctxt "Field Label: `label`"
+msgid "Position Title"
+msgstr ""
+
+#: Positions.php:120
+msgctxt "Field Label: `fullname`"
+msgid "Incumbent"
+msgstr ""
+
+#: Positions.php:121
+msgctxt "Field Label: `identity`"
+msgid "Identity"
+msgstr ""
+
+#: Positions.php:122
+msgctxt "Field Label: `phone`"
+msgid "Contact"
+msgstr ""
+
+#: Positions.php:123
+msgctxt "Field Label: `date`"
+msgid "Date"
+msgstr ""
+
+#: Positions.php:124
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr ""
+
+#: Positions.php:130
+msgctxt "Notice"
+msgid "There is no position information available!"
+msgstr ""
+
+#: Positions.php:131
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the position data."
+msgstr ""
+
+#: Positions.php:138
+msgctxt "MetaBox Title"
+msgid "Positions"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Positions.php:142
+msgctxt "Button Title"
+msgid "Positions of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Positions.php:144
+msgctxt "Button Text"
+msgid "%1$s Manage the Positions of %2$s"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Positions.php:147
+msgctxt "Action Title"
+msgid "Positions of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Positions.php:149
+msgctxt "Action Text"
+msgid "Positions"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Positions.php:152
+msgctxt "Row Title"
+msgid "Positions of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Positions.php:154
+msgctxt "Row Text"
+msgid "Positions"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: profile post title
+#: Positions.php:402
+msgctxt "Button Label"
+msgid "%1$s Mount: %2$s"
+msgstr ""
+
+#: Positions.php:410
+msgctxt "Button Title"
+msgid "Click to Mount the Position Profile"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: profile post title
+#: Positions.php:418
+msgctxt "Button Label"
+msgid "%1$s Clear: %2$s"
+msgstr ""
+
+#: Positions.php:426
+msgctxt "Button Title"
+msgid "Click to Clear the Position Profile"
+msgstr ""
+
+#: Positions.php:434
+msgctxt "Notice"
+msgid "No Position Profile assigned to this content."
+msgstr ""
+
+#: Positions.php:531
+msgctxt "Javascript String"
+msgid "Here you can define the position profile by titles with custom ordering."
+msgstr ""
+
+#. translators: %s: post title
+#: Positions.php:552
+msgctxt "Page Title"
+msgid "Position Grid for %s"
+msgstr ""
+
+#. translators: %s: post title
+#: Positions.php:554
+msgctxt "Page Title"
+msgid "Positions Overview for %s"
+msgstr ""
+
+#: Positions.php:571
+msgctxt "Default Term: Audit"
+msgid "Empty Position Data"
+msgstr ""
