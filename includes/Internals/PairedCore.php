@@ -281,6 +281,8 @@ trait PairedCore
 	 * Strips paired terms rendred for already added data into pointers.
 	 * @example `$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );`
 	 *
+	 * FIXME: DEPRECATED: use `$this->hook_paired_tabloid_exclude_rendered()`
+	 *
 	 * @param  array  $data
 	 * @param  object $post
 	 * @param  string $context
@@ -288,6 +290,8 @@ trait PairedCore
 	 */
 	public function tabloid_view_data_paired_supported( $data, $post, $context )
 	{
+		self::_dep( 'hook_paired_tabloid_exclude_rendered()' );
+
 		if ( ! $this->posttype_supported( $post->post_type ) || empty( $data['terms_rendered'] ) )
 			return $data;
 
@@ -300,6 +304,17 @@ trait PairedCore
 		], 'NOT' ) );
 
 		return $data;
+	}
+
+	protected function hook_paired_tabloid_exclude_rendered()
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		$this->filter_append(
+			$this->hook_base( 'tabloid', 'post_terms_exclude_rendered' ),
+			$this->constant( $constants[1] )
+		);
 	}
 
 	/**

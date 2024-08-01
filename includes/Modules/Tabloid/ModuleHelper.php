@@ -12,6 +12,22 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'tabloid';
 
+	public static function stripByProp( $data, $key, $list, $subkey = 'name' )
+	{
+		if ( ! empty( $data[$key] ) && ! empty( $list ) ) {
+
+			foreach ( $data[$key] as $offset => $meta )
+				if ( in_array( $meta[$subkey], $list, TRUE ) )
+					unset( $data[$key][$offset] );
+
+			// NOTE: js mustache needs not object but array!
+			if ( ! empty( $data[$key] ) )
+				$data[$key] = array_values( $data[$key] );
+		}
+
+		return $data;
+	}
+
 	public static function stripEmptyValues( $data, $key, $subkey = 'rendered' )
 	{
 		if ( ! empty( $data[$key] ) ) {

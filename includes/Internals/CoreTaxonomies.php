@@ -757,4 +757,12 @@ trait CoreTaxonomies
 
 		return TRUE;
 	}
+
+	protected function hook_taxonomy_tabloid_exclude_rendered( $constants )
+	{
+		$this->filter_append(
+			$this->hook_base( 'tabloid', 'post_terms_exclude_rendered' ),
+			$this->constants( $constants )
+		);
+	}
 }

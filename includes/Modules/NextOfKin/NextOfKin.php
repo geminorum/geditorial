@@ -236,6 +236,7 @@ class NextOfKin extends gEditorial\Module
 			'custom_captype' => TRUE,
 		] );
 
+		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );

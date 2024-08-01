@@ -205,6 +205,7 @@ class WasBorn extends gEditorial\Module
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $posttypes );
 
+		$this->hook_taxonomy_tabloid_exclude_rendered( [ 'main_taxonomy', 'gender_taxonomy' ] );
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
 		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'gender_taxonomy' ), TRUE );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
@@ -212,7 +213,6 @@ class WasBorn extends gEditorial\Module
 		$this->filter_self( 'mean_age', 4 );
 		$this->action_module( 'pointers', 'post', 5, 100 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
-		$this->filter_module( 'tabloid', 'view_data', 3, 9 );
 		$this->filter_module( 'papered', 'view_data', 4 );
 	}
 
@@ -958,19 +958,6 @@ class WasBorn extends gEditorial\Module
 		}
 
 		return $terms;
-	}
-
-	public function tabloid_view_data( $data, $post, $context )
-	{
-		if ( ! $this->in_setting( $post->post_type, 'parent_posttypes' ) || empty( $data['terms_rendered'] ) )
-			return $data;
-
-		// NOTE: needs to be non-associative array to render via Mustache
-		$data['terms_rendered'] = array_values( Core\Arraay::filter( $data['terms_rendered'], [
-			'name' => $this->constant( 'gender_taxonomy' ),
-		], 'NOT' ) );
-
-		return $data;
 	}
 
 	public function papered_view_data( $data, $profile, $source, $context )

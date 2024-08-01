@@ -168,7 +168,7 @@ class Audit extends gEditorial\Module
 			'custom_captype' => TRUE,
 		] );
 
-		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'strip_audits' );
+		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->action( 'save_post', 3, 99 );
 
@@ -1037,18 +1037,5 @@ class Audit extends gEditorial\Module
 			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
 
 		return $this->raise_memory_limit( $count, $per, $context ?? 'audit' );
-	}
-
-	public function tabloid_view_data_strip_audits( $data, $post, $context )
-	{
-		if ( ! $this->posttype_supported( $post->post_type ) || empty( $data['terms_rendered'] ) )
-			return $data;
-
-		// NOTE: needs to be non-associative array to render via Mustache
-		$data['terms_rendered'] = array_values( Core\Arraay::filter( $data['terms_rendered'], [
-			'name' => $this->constant( 'main_taxonomy' ),
-		], 'NOT' ) );
-
-		return $data;
 	}
 }

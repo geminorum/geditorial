@@ -349,11 +349,11 @@ class Organization extends gEditorial\Module
 			'custom_captype' => $captype,
 		] );
 
+		$this->hook_paired_tabloid_exclude_rendered();
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
-		$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );
 		$this->filter_module( 'papered', 'view_list', 5, 9, 'paired_posttype' );
 
 		if ( $this->get_setting( 'subterms_support' ) )

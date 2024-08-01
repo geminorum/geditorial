@@ -253,6 +253,9 @@ class Tabloid extends gEditorial\Module
 		if ( empty( $data['excerpt']['raw'] ) )
 			$data['excerpt']['rendered'] = '';
 
+		$data = ModuleHelper::stripByProp( $data, 'meta_rendered', Core\Arraay::prepString( $this->filters( 'post_meta_exclude_rendered', [], $post, $context ) ) );
+		$data = ModuleHelper::stripByProp( $data, 'terms_rendered', Core\Arraay::prepString( $this->filters( 'post_terms_exclude_rendered', [], $post, $context ) ) );
+
 		$data = ModuleHelper::stripEmptyValues( $data, 'meta_rendered' );
 		$data = ModuleHelper::stripEmptyValues( $data, 'terms_rendered' );
 

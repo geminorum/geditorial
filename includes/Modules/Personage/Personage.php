@@ -415,6 +415,7 @@ class Personage extends gEditorial\Module
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
 		$this->add_posttype_support( $this->constant( 'primary_posttype' ), 'date', FALSE );
+		$this->hook_taxonomy_tabloid_exclude_rendered( 'status_taxonomy' );
 		$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 
 		if ( is_admin() )
