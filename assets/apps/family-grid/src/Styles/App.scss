@@ -63,6 +63,8 @@ $brand-danger:  #d9534f !default;
     text-align: left;
     background-color: #ddd;
 
+    // &.readonly { }
+
     &.required::after {
       content: "*";
       color: $brand-danger;
@@ -151,6 +153,7 @@ $brand-danger:  #d9534f !default;
 
     &.actions {
       padding: 0;
+      background-color: #f6f6f6;
 
       > div {
         display: flex;
@@ -159,8 +162,22 @@ $brand-danger:  #d9534f !default;
       }
     }
 
+    &.field-is-readonly {
+      background-color: #f6f6f6;
+    }
+
     &.form {
       padding: 0;
+    }
+
+    &.is-read-only {
+      background-color: #f6f6f6;
+      padding: 0 !important;
+
+      > div {
+        cursor: help;
+        padding: 0.5em;
+      }
     }
 
     &.is-not-valid {
@@ -173,7 +190,10 @@ $brand-danger:  #d9534f !default;
     }
   }
 
+  // span.-field-is-readonly {}
+
   td,
+  span,
   input {
     &.field-vin,
     &.field-year,

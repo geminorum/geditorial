@@ -76,6 +76,7 @@ $brand-danger:  #d9534f !default;
       text-align: center;
     }
 
+    &.field-count,
     &.field-year {
       width: 45px;
 	  }
@@ -84,9 +85,13 @@ $brand-danger:  #d9534f !default;
       width: 80px;
 	  }
 
-    &.field-bankname,
-    &.field-fullname {
+    &.field-bankname {
      width: 140px;
+    }
+
+    &.field-label,
+    &.field-fullname {
+     width: 240px;
     }
 
     &.field-account {
@@ -97,8 +102,11 @@ $brand-danger:  #d9534f !default;
      width: 220px;
     }
 
-
+    &.field-datestart,
+    &.field-dateend,
+    &.field-duration,
     &.field-platenumber,
+    &.field-phone,
     &.field-contact {
       width: 110px;
     }
@@ -111,22 +119,33 @@ $brand-danger:  #d9534f !default;
     &.field-type,
     &.field-color,
     &.field-status,
-    &.field-relation {
-     width: 100px;
+    &.field-topic,
+    &.field-location,
+    &.field-relation,
+    &.field-education,
+    &.field-occupation {
+      width: 125px;
     }
 
     &.field-desc {
       width: auto;
     }
 
+    &.field-time,
+    &.field-date,
     &.field-dob {
       width: 80px;
     }
 
     &.actions {
-     width: 125px;
-     text-align: center;
+      width: 125px;
+      text-align: center;
       position: relative;
+
+      &.is-frozen {
+        width: 75px;
+        text-align: left;
+      }
 
       span.spinner {
         position: absolute;
@@ -170,6 +189,19 @@ $brand-danger:  #d9534f !default;
       padding: 0;
     }
 
+    &.is-searchable {
+      position: relative;
+    }
+
+    .-search-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: .5em .25em;
+      color: #ddd !important;
+    }
+
     &.is-read-only {
       background-color: #f6f6f6;
       padding: 0 !important;
@@ -199,6 +231,7 @@ $brand-danger:  #d9534f !default;
     &.field-year,
     &.field-identity,
     &.field-contact,
+    &.field-phone,
     &.field-dob,
     &.field-account,
     &.field-iban,
@@ -206,6 +239,8 @@ $brand-danger:  #d9534f !default;
       // HACK: `rtl:ignore` not working!
       body.rtl & {
         text-align: right;
+        /*rtl:ignore*/
+        direction: rtl;
       }
     }
 

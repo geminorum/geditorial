@@ -12,7 +12,9 @@
             required: config.required.includes(key),
             readonly: config.readonly.includes(key)
           }]">{{ field }}</th>
-          <th class="actions">
+          <th :class="['actions', {
+            'is-frozen': frozen
+          }]">
             {{ $translate('actions') }}
             <GridSpinner :class="{ 'is-active': spinner }" :title="i18n.loading"></GridSpinner>
           </th>
@@ -27,23 +29,25 @@
             'field-is-readonly': config.readonly.includes(key)
           }]">{{item[key]}}</td>
           <td class="actions"><div>
-            <GridButton @click="removeItem(item._id)" dashicon="remove" :title="i18n.remove" />
+            <GridButton v-show="!frozen" @click="removeItem(item._id)" dashicon="remove" :title="i18n.remove" />
             <GridPopper>
-            <GridButton @click="infoItem(item._id)" dashicon="info" :title="i18n.info" />
+              <GridButton @click="infoItem(item._id)" dashicon="info" :title="i18n.info" />
               <template #content>
                 <GridInfo :info="info" :item="item" />
               </template>
             </GridPopper>
             <GridButton @click="editItem(item._id)" :dashicon="editing == item._id ? 'dismiss' : 'edit'" :title="i18n.edit" :class="{ 'is-editing': editing == item._id }" />
-            <GridButton @click="moveItem(index, true)" dashicon="arrow-up" :title="i18n.moveup" />
-            <GridButton @click="moveItem(index, false)" dashicon="arrow-down" :title="i18n.movedown" />
+            <GridButton v-show="!frozen" @click="moveItem(index, true)" dashicon="arrow-up" :title="i18n.moveup" />
+            <GridButton v-show="!frozen" @click="moveItem(index, false)" dashicon="arrow-down" :title="i18n.movedown" />
           </div></td>
         </tr>
         <template v-if="showForm()"><tr>
           <td class="plus">{{ i18n.plus }}</td>
           <td v-for="(field, key) in fields" :class="['form', {
             'is-not-valid': isNotValidInput(key),
-            'is-read-only': config.readonly.includes(key)
+            'is-required': config.required.includes(key),
+            'is-read-only': config.readonly.includes(key),
+            'is-searchable': isSearchable(key)
             }]">
             <div
               v-if="config.readonly.includes(key)"
@@ -52,7 +56,7 @@
                 'field-'+key,
                 cellClass(form[key], key),
                 '-field-is-readonly'
-              ]">{{ form[key] }}</div>
+              ]" v-html="form[key]"></div>
             <GridInput
               v-else
               :field="key"
@@ -62,12 +66,16 @@
               @change="event => updateInput(key, event.target.value)"
               @keyup.esc="cancelEdit()"
             />
+            <template v-if="isSearchable(key)">
+              <GridButton @click="searchDiscovery(key, config.searchable[key])" dashicon="search" :title="i18n.search" class="-search-button" />
+              <SearchResults @add-searched-item="addSearchedItem" :items="searchDiscovered" />
+            </template>
           </td>
-          <td class="actions"><div v-if="expanding">
-            <GridButton @click="insertItem()" dashicon="insert" :title="i18n.insert" />
-            </div><div v-else>
+          <td class="actions"><div v-if="frozen">
               <GridButton @click="insertItem()" dashicon="saved" :title="i18n.edit" />
-          </div></td>
+            </div><div v-else>
+              <GridButton @click="insertItem()" dashicon="insert" :title="i18n.insert" />
+            </div></td>
         </tr></template>
       </tbody>
     </table>
@@ -76,11 +84,12 @@
 </template>
 
 <script>
-import { debounce } from 'lodash-es';
+import { debounce, has, each } from 'lodash-es';
 import { EnterToTabMixin } from '../../vue-plugins/vue-enter-to-tab.v2'; // https://github.com/ajomuch92/vue-enter-to-tab
 import { formatNumber } from '../../js-utils/number.v1';
 import { isValidField } from '../../js-utils/fields.v1';
 import apiFetch from '@wordpress/api-fetch'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
+import { addQueryArgs } from '@wordpress/url'; // https://github.com/WordPress/gutenberg/tree/trunk/packages/url
 
 export default {
   mixins: [EnterToTabMixin],
@@ -88,18 +97,25 @@ export default {
   data() {
     return {
       spinner: true,
-      expanding: this.config.expanding, // whether the items in this collection can be expanded, i.e. no-new-item
+      // expanding: this.config.expanding || true, // whether the items in this collection can be expanded, i.e. no-new-item
+      frozen: this.config.frozen || false, // whether the items in this collection can be expanded/reordered/deleted
       message: this.i18n.message,
       state: 'initial',
       editing: 0,
+
+      searchDiscovered: [],
+      searchPageMore: false,
+      searchPage: 1,
+
       items: [],
       temp: [], // temporary data in case of edit canceling
+      hidden: [], // // list of hidden fields
+      unique: [], // list of unique fields
+      readonly: [], // list of readonly fields
+      required: [], // list of required fields
+      searchable: {}, // list of searchable fields
       info: {}, // info data fetched
       current: 0, // current comment id for info
-      hidden: {}, // // list of hidden fields
-      unique: {}, // list of unique fields
-      readonly: {}, // list of readonly fields
-      required: {}, // list of required fields
       form: {}
     }
   },
@@ -110,10 +126,11 @@ export default {
       // https://stackoverflow.com/a/71344289
       this.form = Object.fromEntries(Object.keys(this.fields).map(key => [key, '']));
       this.temp = [];
-      this.hidden = this.config.hidden || {};
-      this.unique = this.config.unique || {};
-      this.required = this.config.required || {};
-      this.readonly = this.config.readonly || {};
+      this.hidden = this.config.hidden || [];
+      this.unique = this.config.unique || [];
+      this.searchable = this.config.searchable || {};
+      this.required = this.config.required || [];
+      this.readonly = this.config.readonly || [];
       this.editing = 0;
     },
 
@@ -137,6 +154,37 @@ export default {
       return valid ? '-is-valid' : '-is-not-valid';
     },
 
+    isSearchable (field) {
+      return has(this.config.searchable, field);
+    },
+
+    searchDiscovery (field, targets) {
+      if(!this.form[field]) return; // no criteria
+      this.doSearchDiscovery(this.form[field], targets, this.searchPage);
+    },
+
+    addSearchedItem(item, close) {
+      const temp = JSON.parse(JSON.stringify(item));
+
+      if (has(temp, 'id')&&this.config.hidden.includes('postid')){
+        this.form.postid = temp.id;
+      }
+
+      each( this.fields, ( name, field ) => {
+        if (this.form[field].trim()&&!this.isSearchable(field)) return;
+        if (has(temp, 'extra.'+field)){
+          this.form[field] = temp.extra[field];
+        }
+      });
+
+      console.log(temp);
+
+      // if(close) {
+      //   // @REF: https://codingbeautydev.com/blog/vue-focus-input/
+      //   this.$refs.searchinput.focus();
+      // }
+    },
+
     updateInput(field, value) {
       this.form[field] = value;
     },
@@ -151,7 +199,7 @@ export default {
     hasValidInput() {
 
       for (const required of this.required) {
-        if (!this.form[required].trim()) {
+        if (has(this.fields, required)&&!this.form[required].trim()) {
           return false;
         }
       }
@@ -189,6 +237,31 @@ export default {
         this.state = 'wrong';
         this.message = error.message;
       });
+    },
+
+    doSearchDiscovery(criteria, targets, page) {
+      this.spinner = true;
+
+      apiFetch({
+          path: addQueryArgs( this.config.searchselect + '/query', {
+            search: criteria,
+            target: 'post',
+            context: 'subcontent',
+            // exclude: this.config.linked,
+            // posttype: this.config.targeting,
+            posttype: targets,
+            page: page || 1,
+          } )
+        }).then((data) => {
+          this.searchDiscovered = data.results;
+          this.searchPageMore = data.pagination.more;
+          this.searchPage = page || 1;
+          this.spinner = false;
+        }).catch((error) => {
+          this.spinner = false;
+          this.state = 'wrong';
+          this.message = error.message;
+        });
     },
 
     doSort() {
@@ -261,7 +334,7 @@ export default {
     },
 
     showForm() {
-      if (this.expanding) return true;
+      if (!this.frozen) return true;
       return this.editing ? true : false;
     },
 

@@ -8,7 +8,10 @@
       <thead>
         <tr>
           <th class="index">{{ i18n.index }}</th>
-          <th v-for="(field, key) in fields" :class="['field-'+key, { required: config.required.includes(key) }]">{{ field }}</th>
+          <th v-for="(field, key) in fields" :class="['field-'+key, {
+            required: config.required.includes(key),
+            readonly: config.readonly.includes(key)
+          }]">{{ field }}</th>
           <th class="actions">
             {{ $translate('actions') }}
             <GridSpinner :class="{ 'is-active': spinner }" :title="i18n.loading"></GridSpinner>
@@ -18,7 +21,11 @@
       <tbody>
         <tr v-for="(item, index) in items" :key="item._id" :class="{ 'is-editing': editing == item._id }">
           <td class="index">{{ cellIndex(index) }}</td>
-          <td v-for="(field, key) in fields" :title="field" :class="['field-'+key, cellClass(item[key], key)]">{{item[key]}}</td>
+          <td v-for="(field, key) in fields" :title="field" :class="[
+            'field-'+key,
+            cellClass(item[key], key), {
+            'field-is-readonly': config.readonly.includes(key)
+          }]">{{item[key]}}</td>
           <td class="actions"><div>
             <GridButton @click="removeItem(item._id)" dashicon="remove" :title="i18n.remove" />
             <GridPopper>
@@ -32,21 +39,36 @@
             <GridButton @click="moveItem(index, false)" dashicon="arrow-down" :title="i18n.movedown" />
           </div></td>
         </tr>
-        <tr>
+        <template v-if="showForm()"><tr>
           <td class="plus">{{ i18n.plus }}</td>
-          <td v-for="(field, key) in fields" :class="['form', { 'is-not-valid': isNotValidInput(key) }]">
+          <td v-for="(field, key) in fields" :class="['form', {
+            'is-not-valid': isNotValidInput(key),
+            'is-read-only': config.readonly.includes(key)
+            }]">
+            <div
+              v-if="config.readonly.includes(key)"
+              :title="i18n.readonly"
+              :class="[
+                'field-'+key,
+                cellClass(form[key], key),
+                '-field-is-readonly'
+              ]">{{ form[key] }}</div>
             <GridInput
+              v-else
               :field="key"
               :label="field"
               :value="form[key]"
               :class="['field-'+key, cellClass(form[key], key)]"
               @change="event => updateInput(key, event.target.value)"
+              @keyup.esc="cancelEdit()"
             />
           </td>
-          <td class="actions"><div>
+          <td class="actions"><div v-if="expanding">
             <GridButton @click="insertItem()" dashicon="insert" :title="i18n.insert" />
+            </div><div v-else>
+              <GridButton @click="insertItem()" dashicon="saved" :title="i18n.edit" />
           </div></td>
-        </tr>
+        </tr></template>
       </tbody>
     </table>
     <GridMessage :class="state" :message="message" :count="items.length"></GridMessage>
@@ -66,14 +88,17 @@ export default {
   data() {
     return {
       spinner: true,
+      expanding: this.config.expanding, // whether the items in this collection can be expanded, i.e. no-new-item
       message: this.i18n.message,
       state: 'initial',
       editing: 0,
       items: [],
+      temp: [], // temporary data in case of edit canceling
       info: {}, // info data fetched
       current: 0, // current comment id for info
       hidden: {}, // // list of hidden fields
       unique: {}, // list of unique fields
+      readonly: {}, // list of readonly fields
       required: {}, // list of required fields
       form: {}
     }
@@ -84,9 +109,11 @@ export default {
     formReset() {
       // https://stackoverflow.com/a/71344289
       this.form = Object.fromEntries(Object.keys(this.fields).map(key => [key, '']));
+      this.temp = [];
       this.hidden = this.config.hidden || {};
       this.unique = this.config.unique || {};
       this.required = this.config.required || {};
+      this.readonly = this.config.readonly || {};
       this.editing = 0;
     },
 
@@ -128,6 +155,8 @@ export default {
           return false;
         }
       }
+
+      if (this.editing) return true;
 
       for (const unique of this.unique) {
         const current = this.form[unique].trim();
@@ -231,12 +260,30 @@ export default {
       this.doInfo(id);
     },
 
+    showForm() {
+      if (this.expanding) return true;
+      return this.editing ? true : false;
+    },
+
+    cancelEdit (id) {
+      this.editItem(this.editing);
+    },
+
     editItem (id) {
+      if (!id) return;
+
       this.spinner = true;
+
       if (this.editing === id) {
+
+        this.items = this.temp; // https://stackoverflow.com/a/71642679
         this.formReset();
+
       } else {
+
         this.editing = id;
+        this.temp = JSON.parse(JSON.stringify(this.items));
+
         for (const item of this.items) {
           if ( item._id === id ) {
             this.form = item;
@@ -244,6 +291,7 @@ export default {
           }
         }
       }
+
       this.spinner = false;
     },
 
