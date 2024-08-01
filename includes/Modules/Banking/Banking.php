@@ -417,23 +417,12 @@ class Banking extends gEditorial\Module
 		return $data;
 	}
 
-	// TODO: force sanitize: `type`/`status`/`relation`
 	public function subcontent_pre_prep_data( $raw, $post, $mapping, $metas )
 	{
 		$sanitize = $this->get_setting( 'force_sanitize' );
 		$data     = [];
 
 		foreach ( $raw as $key => $value ) {
-
-			$value = Core\Text::trim( $value );
-
-			if ( WordPress\Strings::isEmpty( $value ) ) {
-
-				if ( empty( $data[$key] ) )
-					$data[$key] = '';
-
-				continue;
-			}
 
 			switch ( $key ) {
 
@@ -450,7 +439,7 @@ class Banking extends gEditorial\Module
 							$data[$key] = $card['raw'];
 
 						if ( ! empty( $card['country'] ) && empty( $data['country'] ) )
-							$data['country'] = $card['country'];
+							$data['country'] = Core\Validation::sanitizeCountry( $card['country'], TRUE );
 
 						if ( ! empty( $card['bank'] ) && empty( $data['bank'] ) )
 							$data['bank'] = $card['bank'];
@@ -477,7 +466,7 @@ class Banking extends gEditorial\Module
 							$data[$key] = $iban['raw'];
 
 						if ( ! empty( $iban['country'] ) && empty( $data['country'] ) )
-							$data['country'] = $iban['country'];
+							$data['country'] = Core\Validation::sanitizeCountry( $iban['country'] );
 
 						if ( ! empty( $iban['bank'] ) && empty( $data['bank'] ) )
 							$data['bank'] = $iban['bank'];
@@ -488,30 +477,6 @@ class Banking extends gEditorial\Module
 						if ( ! empty( $iban['account'] ) && empty( $data['account'] ) )
 							$data['account'] = $iban['account'];
 					}
-
-					break;
-
-				case 'fullname':
-				case 'bankname':
-				case 'relation':
-				case 'status':
-				case 'type':
-
-					$data[$key] = apply_filters( 'string_format_i18n',
-						$sanitize ? WordPress\Strings::cleanupChars( $value ) : $value );
-
-					break;
-
-				case 'desc':
-
-					$data[$key] = apply_filters( 'html_format_i18n',
-						$sanitize ? WordPress\Strings::cleanupChars( $value, TRUE ) : $value );
-
-					break;
-
-				case 'account':
-
-					$data[$key] = Core\Number::translate( $value );
 
 					break;
 

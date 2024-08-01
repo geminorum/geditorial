@@ -1098,19 +1098,19 @@ class Personage extends gEditorial\Module
 		if ( array_key_exists( 'home_address', $data ) )
 			$data['address'] = ModuleHelper::prepAddress( $data['home_address'], 'export', '' ); // FIXME: move this up!
 
-		if ( empty( $data['contact'] ) ) {
+		if ( empty( $data['phone'] ) ) {
 
 			if ( ! empty( $data['mobile_number'] ) )
-				$data['contact'] = $data['mobile_number'];
+				$data['phone'] = $data['mobile_number'];
 
 			else if ( ! empty( $data['phone_number'] ) )
-				$data['contact'] = $data['phone_number'];
+				$data['phone'] = $data['phone_number'];
 
 			else if ( ! empty( $data['mobile_secondary'] ) )
-				$data['contact'] = $data['mobile_secondary'];
+				$data['phone'] = $data['mobile_secondary'];
 
 			else if ( ! empty( $data['phone_secondary'] ) )
-				$data['contact'] = $data['phone_secondary'];
+				$data['phone'] = $data['phone_secondary'];
 		}
 
 		return $data;

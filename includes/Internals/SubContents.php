@@ -369,7 +369,6 @@ trait SubContents
 		return $this->filters( 'subcontent_after_prep_data', $data, $post, $mapping, $metas );
 	}
 
-	// @SEE: `is_protected_meta()`
 	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
 	protected function subcontent_sanitize_data( $raw = [], $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
 	{
@@ -388,6 +387,7 @@ trait SubContents
 		foreach ( $raw as $raw_key => $raw_value ) {
 
 			if ( in_array( $raw_key, $allowed_raw, TRUE )
+				// @SEE: `is_protected_meta()`
 				|| Core\Text::starts( $raw_key, '_' ) ) {
 
 				$data[$raw_key] = $raw_value;
@@ -509,6 +509,12 @@ trait SubContents
 
 		if ( array_key_exists( 'desc', $types ) )
 			$types['desc'] = 'html';
+
+		if ( array_key_exists( 'datestart', $types ) )
+			$types['datestart'] = 'date';
+
+		if ( array_key_exists( 'dateend', $types ) )
+			$types['dateend'] = 'date';
 
 		return $types;
 	}

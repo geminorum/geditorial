@@ -49,7 +49,6 @@ class NextOfKin extends gEditorial\Module
 			'_subcontent' => [
 				'subcontent_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
 				'subcontent_fields'    => [ NULL, $this->subcontent_get_fields_for_settings() ],
-				'force_sanitize',
 				'reports_roles'        => [ NULL, $roles ],
 				'assign_roles'         => [ NULL, $roles ],
 			],
@@ -245,7 +244,6 @@ class NextOfKin extends gEditorial\Module
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 
-		$this->filter_self( 'subcontent_pre_prep_data', 4, 10 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 		$this->register_shortcode( 'main_shortcode' );
 
@@ -415,68 +413,5 @@ class NextOfKin extends gEditorial\Module
 		}
 
 		return $terms;
-	}
-
-	// TODO: force sanitize: `dob`/`contact`/`relation`
-	public function subcontent_pre_prep_data( $raw, $post, $mapping, $metas )
-	{
-		$sanitize = $this->get_setting( 'force_sanitize' );
-		$data     = [];
-
-		foreach ( $raw as $key => $value ) {
-
-			$value = Core\Text::trim( $value );
-
-			if ( WordPress\Strings::isEmpty( $value ) ) {
-
-				if ( empty( $data[$key] ) )
-					$data[$key] = '';
-
-				continue;
-			}
-
-			switch ( $key ) {
-
-				case 'identity':
-
-					$data[$key] = $sanitize
-						? Core\Validation::sanitizeIdentityNumber( $value )
-						: Core\Number::translate( $value );
-
-					break;
-
-				case 'fullname':
-				case 'relation':
-				case 'education':
-				case 'occupation':
-				case 'status':
-				case 'type':
-
-					$data[$key] = apply_filters( 'string_format_i18n',
-						$sanitize ? WordPress\Strings::cleanupChars( $value ) : $value );
-
-					break;
-
-				case 'desc':
-
-					$data[$key] = apply_filters( 'html_format_i18n',
-						$sanitize ? WordPress\Strings::cleanupChars( $value, TRUE ) : $value );
-
-					break;
-
-				case 'dob':
-				case 'contact':
-
-					$data[$key] = Core\Number::translate( $value );
-
-					break;
-
-				default:
-
-					$data[$key] = $value;
-			}
-		}
-
-		return $data;
 	}
 }
