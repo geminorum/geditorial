@@ -78,14 +78,12 @@ class Phonebook extends gEditorial\Module
 		$strings = [
 			'fields' => [
 				'subcontent' => [
-					'fullname' => _x( 'Fullname', 'Field Label', 'geditorial-phonebook' ),
-					'relation' => _x( 'Relation', 'Field Label', 'geditorial-phonebook' ),
-					'identity' => _x( 'Identity', 'Field Label', 'geditorial-phonebook' ),
-					'contact'  => _x( 'Contact', 'Field Label', 'geditorial-phonebook' ),
-					'type'     => _x( 'Type', 'Field Label', 'geditorial-phonebook' ),
-					'status'   => _x( 'Status', 'Field Label', 'geditorial-phonebook' ),
-					'address'  => _x( 'Address', 'Field Label', 'geditorial-phonebook' ),
-					'desc'     => _x( 'Description', 'Field Label', 'geditorial-phonebook' ),
+					'label'    => _x( 'Label', 'Field Label: `label`', 'geditorial-phonebook' ),
+					'phone'    => _x( 'Contact', 'Field Label: `phone`', 'geditorial-phonebook' ),
+					'fullname' => _x( 'Fullname', 'Field Label: `fullname`', 'geditorial-phonebook' ),
+					'relation' => _x( 'Relation', 'Field Label: `relation`', 'geditorial-phonebook' ),
+					'identity' => _x( 'Identity', 'Field Label: `identity`', 'geditorial-phonebook' ),
+					'address'  => _x( 'Address', 'Field Label: `address`', 'geditorial-phonebook' ),
 				],
 			],
 		];
@@ -153,34 +151,15 @@ class Phonebook extends gEditorial\Module
 	protected function subcontent_get_data_mapping()
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [
-			'comment_content'      => 'desc',       // `text`
+			'comment_content' => 'address',   // `text`
+			'comment_agent'   => 'label',     // `varchar(255)`
+			'comment_karma'   => 'order',     // `int(11)`
+
 			'comment_author'       => 'fullname',   // `tinytext`
-			'comment_author_url'   => 'relation',   // `varchar(200)`
-			'comment_author_email' => 'contact',    // `varchar(100)`
-			// 'comment_author_IP'    => '',           // `varchar(100)`
-			'comment_agent'        => 'source',     // `varchar(255)`
-			'comment_karma'        => 'ref',        // `int(11)`
+			'comment_author_url'   => 'phone',      // `varchar(200)`
+			'comment_author_email' => 'identity',   // `varchar(100)`
+			'comment_author_IP'    => 'relation',   // `varchar(100)`
 		] );
-	}
-
-	protected function subcontent_get_meta_mapping()
-	{
-		return [
-			'identity' => 'identity',
-			'type'     => 'type',
-			'source'   => 'source',
-			'status'   => 'status',
-			'address'  => 'address',
-		];
-	}
-
-	protected function subcontent_define_hidden_fields()
-	{
-		return [
-			'type',
-			'ref',
-			'order',
-		];
 	}
 
 	protected function subcontent_define_searchable_fields()
@@ -194,22 +173,22 @@ class Phonebook extends gEditorial\Module
 	protected function subcontent_define_importable_fields()
 	{
 		return [
-			'contact' => 'type',
-			'address' => 'type',
+			'phone'   => 'label',
+			'address' => 'label',
 		];
 	}
 
 	protected function subcontent_define_unique_fields()
 	{
 		return [
-			'identity',
+			'phone',
 		];
 	}
 
 	protected function subcontent_define_required_fields()
 	{
 		return [
-			'contact',
+			'label',
 		];
 	}
 
@@ -317,13 +296,13 @@ class Phonebook extends gEditorial\Module
 	public function load_submenu_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );
-		$this->subcontent_do_enqueue_app( 'contact-grid' );
+		$this->subcontent_do_enqueue_app( TRUE );
 	}
 
 	public function render_framepage_adminpage()
 	{
 		$this->subcontent_do_render_iframe_content(
-			'contact-grid',
+			TRUE,
 			'framepage',
 			/* translators: %s: post title */
 			_x( 'Contact Grid for %s', 'Page Title', 'geditorial-phonebook' ),
