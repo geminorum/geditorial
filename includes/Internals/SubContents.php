@@ -394,18 +394,39 @@ trait SubContents
 				continue;
 			}
 
+			if ( WordPress\Strings::isEmpty( $raw_value ) ) {
+
+				if ( empty( $data[$raw_key] ) )
+					$data[$raw_key] = '';
+
+				continue;
+			}
+
 			$type = array_key_exists( $raw_key, $types ) ? $types[$raw_key] : $raw_key;
 
 			switch ( $type ) {
 				case 'phone':    $data[$raw_key] = Core\Phone::sanitize( $raw_value ); break;
 				case 'mobile':   $data[$raw_key] = Core\Phone::Mobile( $raw_value ); break;
+				case 'date':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF
+				case 'time':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF
 				case 'contact':  $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: phone/mobile/email/url
 				case 'dob':      $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break; // WTF: maybe: year-only
 				case 'year':     $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break;
+				case 'account':  $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break;
+				case 'duration': $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break;
+				case 'count':    $data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) ); break;
+				case 'country':  $data[$raw_key] = Core\Validation::sanitizeCountry( $raw_value, TRUE ); break; // NOTE: skips the base country
 				case 'vin':      $data[$raw_key] = Core\Validation::sanitizeVIN( $raw_value ); break;
 				case 'iban':     $data[$raw_key] = Core\Validation::sanitizeIBAN( $raw_value ); break;
 				case 'isbn':     $data[$raw_key] = Core\ISBN::sanitize( $raw_value ); break;
 				case 'bankcard': $data[$raw_key] = Core\Validation::sanitizeCardNumber( $raw_value ); break;
+				case 'bankname': $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
+				case 'label':    $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
+				case 'topic':    $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
+				case 'fullname': $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
+				case 'relation': $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
+				case 'location': $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
+				case 'address':  $data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE ); break;
 				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
 				case 'html':     $data[$raw_key] = Core\Text::normalizeWhitespace( Helper::kses( $raw_value, 'text' ), TRUE ); break;
 				default:         $data[$raw_key] = Core\Text::trim( Helper::kses( $raw_value, 'none' ) ); break;
