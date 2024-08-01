@@ -559,4 +559,21 @@ class Number extends Base
 
 		return $r - 1;
 	}
+
+	/**
+	 * Checks if number is repeated, e.g. `5555555555` given length.
+	 *
+	 * @param  int  $number
+	 * @param  int  $length
+	 * @return bool $repeated
+	 */
+	public static function repeated( $number, $length = 10 )
+	{
+		if ( FALSE !== array_search( $number, array_map( function ( $i ) use ( $length ) {
+			return str_repeat( $i, $length );
+		}, range( 0, 9 ) ) ) )
+			return TRUE;
+
+		return FALSE;
+	}
 }

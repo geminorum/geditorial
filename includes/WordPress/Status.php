@@ -87,8 +87,15 @@ class Status extends Core\Base
 	 */
 	public static function acceptable( $posttypes = 'any', $context = 'query', $excludes = NULL )
 	{
+		// @SEE: `WordPress\Database::getExcludeStatuses()`
 		if ( is_null( $excludes ) )
-			$excludes = [];
+			$excludes = [
+				// 'draft',
+				'private',
+				'trash',
+				'auto-draft',
+				'inherit',
+			];
 
 		$statuses = [
 			'publish',

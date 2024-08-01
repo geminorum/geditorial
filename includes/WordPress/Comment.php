@@ -98,4 +98,25 @@ class Comment extends Core\Base
 
 		return sprintf( '/wp/v2/comments/%d', $comment->comment_ID );
 	}
+
+	public static function setKarma( $karma, $comment = NULL )
+	{
+		global $wpdb;
+
+		if ( ! $comment = self::get( $comment ) )
+			return FALSE;
+
+		$result = $wpdb->update(
+			$wpdb->comments,
+			[ 'comment_karma' => $karma               ],
+			[ 'comment_ID'    => $comment->comment_ID ]
+		);
+
+		if ( FALSE === $result )
+			return FALSE;
+
+		clean_comment_cache( $comment->comment_ID );
+
+		return $comment->comment_ID;
+	}
 }

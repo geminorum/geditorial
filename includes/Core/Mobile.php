@@ -25,39 +25,9 @@ class Mobile extends Base
 		return TRUE;
 	}
 
-	// TODO: strip prefix: `tel:+98912000000`
 	public static function sanitize( $input )
 	{
-		$sanitized = Number::translate( Text::trim( $input ) );
-
-		if ( ! self::is( $sanitized ) )
-			return '';
-
-		$sanitized = trim( str_ireplace( [
-			' ',
-			'.',
-			'-',
-			'#',
-			'|',
-			'(',
-			')',
-		], '', $sanitized ) );
-
-		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
-
-			if ( in_array( $sanitized, [ '+989000000000', '989000000000', '09000000000' ], TRUE ) )
-				$sanitized = '';
-
-			// 10 digits and starts with `9`
-			else if ( preg_match( '/^9\d{9}$/', $sanitized ) )
-				$sanitized = sprintf( '+98%s', $sanitized );
-
-			// 11 digits and starts with `09`
-			else if ( preg_match( '/^09\d{9}$/', $sanitized ) )
-				$sanitized = sprintf( '+98%s', ltrim( $sanitized, '0' ) );
-		}
-
-		return $sanitized;
+		return Phone::sanitize( $input );
 	}
 
 	/**

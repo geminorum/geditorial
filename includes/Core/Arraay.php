@@ -223,12 +223,12 @@ class Arraay extends Base
 	}
 
 	// @REF: http://stackoverflow.com/a/11026840#comment44080768_11026840
-	public static function stripByValue( $array, $value )
+	public static function stripByValue( $array, $value, $strict = FALSE )
 	{
 		if ( empty( $array ) || empty( $value ) )
 			return $array;
 
-		return array_diff_key( $array, array_flip( array_keys( $array, $value ) ) );
+		return array_diff_key( $array, array_flip( array_keys( $array, $value, $strict ) ) );
 	}
 
 	//@RF: https://stackoverflow.com/a/11026840

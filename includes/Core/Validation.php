@@ -87,9 +87,7 @@ class Validation extends Base
 		if ( ! preg_match( '/^\d{10}$/', $input ) )
 			return FALSE;
 
-		if ( FALSE !== array_search( $input, array_map( function ( $i ) {
-			return str_repeat( $i, 10 );
-		}, range( 0, 9 ) ) ) )
+		if ( Number::repeated( $input, 10 ) )
 			return FALSE;
 
 		$chk = (int) $input[9];
@@ -267,5 +265,24 @@ class Validation extends Base
 	public static function getVINHTMLPattern()
 	{
 		return FALSE; // FIXME!
+	}
+
+	public static function sanitizeCountry( $input, $skip_base = FALSE )
+	{
+		if ( self::empty( $input ) )
+			return '';
+
+		$sanitized = strtoupper( str_replace( ' ', '', $input ) );
+
+		if ( ! $skip_base )
+			return $sanitized;
+
+		if ( FALSE !== ( $country = Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
+			return $sanitized;
+
+		if ( $country === $sanitized )
+			return '';
+
+		return $sanitized;
 	}
 }
