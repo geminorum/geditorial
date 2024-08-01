@@ -67,6 +67,7 @@
       width: 80px;
     }
 
+    th[data-key="phone"],
     th[data-key="contact"],
     th[data-key="dob"] {
       width: 70px;
@@ -88,7 +89,8 @@
     th[data-key="platenumber"],
     th[data-key="bankname"],
     th[data-key="fullname"],
-    th[data-key="relation"] {
+    th[data-key="relation"],
+    th[data-key="label"] {
       width: 120px;
     }
 
@@ -101,6 +103,7 @@
 
     // fixed cells
     td[data-key="iban"],
+    td[data-key="phone"],
     td[data-key="contact"],
     td[data-key="dob"],
     td[data-key="card"], {
