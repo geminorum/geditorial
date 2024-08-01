@@ -111,14 +111,14 @@ class NextOfKin extends gEditorial\Module
 			],
 			'fields' => [
 				'subcontent' => [
-					'fullname'   => _x( 'Fullname', 'Field Label', 'geditorial-next-of-kin' ),
-					'relation'   => _x( 'Relation', 'Field Label', 'geditorial-next-of-kin' ),
-					'identity'   => _x( 'Identity', 'Field Label', 'geditorial-next-of-kin' ),
-					'contact'    => _x( 'Contact', 'Field Label', 'geditorial-next-of-kin' ),
-					'dob'        => _x( 'Date of Birth', 'Field Label', 'geditorial-next-of-kin' ),
-					'education'  => _x( 'Education', 'Field Label', 'geditorial-next-of-kin' ),
-					'occupation' => _x( 'Occupation', 'Field Label', 'geditorial-next-of-kin' ),
-					'desc'       => _x( 'Description', 'Field Label', 'geditorial-next-of-kin' ),
+					'fullname'   => _x( 'Fullname', 'Field Label: `fullname`', 'geditorial-next-of-kin' ),
+					'label'      => _x( 'Relation', 'Field Label: `label`', 'geditorial-next-of-kin' ),
+					'identity'   => _x( 'Identity', 'Field Label: `identity`', 'geditorial-next-of-kin' ),
+					'phone'      => _x( 'Contact', 'Field Label: `phone`', 'geditorial-next-of-kin' ),
+					'dob'        => _x( 'Date of Birth', 'Field Label: `dob`', 'geditorial-next-of-kin' ),
+					'education'  => _x( 'Education', 'Field Label: `education`', 'geditorial-next-of-kin' ),
+					'occupation' => _x( 'Occupation', 'Field Label: `occupation`', 'geditorial-next-of-kin' ),
+					'desc'       => _x( 'Description', 'Field Label: `desc`', 'geditorial-next-of-kin' ),
 				],
 			],
 		];
@@ -175,21 +175,23 @@ class NextOfKin extends gEditorial\Module
 	protected function subcontent_get_data_mapping()
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [
-			'comment_content'      => 'desc',         // `text`
-			'comment_author'       => 'fullname',     // `tinytext`
-			'comment_author_url'   => 'relation',     // `varchar(200)`
-			'comment_author_email' => 'contact',      // `varchar(100)`
-			'comment_author_IP'    => 'dob',          // `varchar(100)`
-			'comment_agent'        => 'occupation',   // `varchar(255)`
-			'comment_karma'        => 'ref',          // `int(11)`
+			'comment_content' => 'desc',    // `text`
+			'comment_agent'   => 'label',   // `varchar(255)`
+			'comment_karma'   => 'order',   // `int(11)`
+
+			'comment_author'       => 'fullname',   // `tinytext`
+			'comment_author_url'   => 'phone',      // `varchar(200)`
+			'comment_author_email' => 'identity',   // `varchar(100)`
+			'comment_author_IP'    => 'dob',        // `varchar(100)`
 		] );
 	}
 
 	protected function subcontent_get_meta_mapping()
 	{
 		return [
-			'identity'  => 'identity',
-			'education' => 'education',
+			'education'  => 'education',
+			'occupation' => 'occupation',
+			'postid'     => '_post_ref',
 		];
 	}
 
@@ -199,14 +201,6 @@ class NextOfKin extends gEditorial\Module
 			return [ 'fullname' => [ $human ] ];
 
 		return [];
-	}
-
-	protected function subcontent_define_hidden_fields()
-	{
-		return [
-			'ref',
-			'order',
-		];
 	}
 
 	protected function subcontent_define_unique_fields()
@@ -220,7 +214,7 @@ class NextOfKin extends gEditorial\Module
 	{
 		return [
 			'fullname',
-			'relation',
+			'label',
 		];
 	}
 
@@ -366,13 +360,13 @@ class NextOfKin extends gEditorial\Module
 	public function load_framepage_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );
-		$this->subcontent_do_enqueue_app( 'family-grid' );
+		$this->subcontent_do_enqueue_app( TRUE );
 	}
 
 	public function render_framepage_adminpage()
 	{
 		$this->subcontent_do_render_iframe_content(
-			'family-grid',
+			TRUE,
 			'framepage',
 			/* translators: %s: post title */
 			_x( 'Family Grid for %s', 'Page Title', 'geditorial-next-of-kin' ),
