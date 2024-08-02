@@ -320,19 +320,35 @@ class Identified extends gEditorial\Module
 		);
 	}
 
-	public function get_identifier_possible_keys( $posttype, $extra = [] )
+	private function _get_posttype_identifier_possible_keys( $posttype, $extra = [] )
 	{
-		return array_change_key_case( array_unique(
-			$this->filters( 'possible_keys_for_identifier', array_merge( [
-				'identifier' => 'code',
-				_x( 'Identifier', 'Possible Identifier Key', 'geditorial-identified' ) => 'code',
-			], $extra ), $posttype
-		) ), CASE_LOWER );
+		$type    = $this->_get_posttype_identifier_type( $posttype );
+		$metakey = $this->_get_posttype_identifier_metakey( $posttype );
+
+		$keys = [
+			Core\Text::stripPrefix( $metakey, '_meta_' )  => $type,
+			Core\Text::stripPrefix( $metakey, '_units_' ) => $type,
+
+			$metakey     => $type,
+			'identifier' => 'code',
+			$posttype    => 'code',
+
+			WordPress\PostType::object( $posttype )->label => 'code',
+
+			_x( 'Identifier', 'Possible Identifier Key', 'geditorial-identified' ) => 'code',
+		];
+
+		$list = $this->filters( 'possible_keys_for_identifier',
+			array_merge( $keys, $extra ),
+			$posttype
+		);
+
+		return array_change_key_case( $list, CASE_LOWER );
 	}
 
 	public function sanitize_identifier( $value, $type = 'code', $post = FALSE )
 	{
-		if ( FALSE === $value )
+		if ( WordPress\Strings::isEmpty( $value ) )
 			return FALSE;
 
 		switch ( $type ) {
@@ -392,9 +408,8 @@ class Identified extends gEditorial\Module
 			if ( ! in_array( $posttype, $supported, TRUE ) )
 				continue;
 
-			$type    = $this->_get_posttype_identifier_type( $posttype );
 			$metakey = $this->_get_posttype_identifier_metakey( $posttype );
-			$keys    = array_merge( [ $metakey => $type ], $this->get_identifier_possible_keys( $posttype ) );
+			$keys    = $this->_get_posttype_identifier_possible_keys( $posttype );
 
 			foreach ( $keys as $key => $key_type ) {
 
@@ -407,7 +422,7 @@ class Identified extends gEditorial\Module
 		}
 
 		if ( ! $identifier )
-			return new \WP_Error( 'invalid_identifier', gEditorial\Plugin::invalid( FALSE ) );
+			return NULL;
 
 		if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $identifier, FALSE ) )
 			foreach ( $matches as $match )
