@@ -29,7 +29,7 @@ trait CoreRowActions
 	// public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids ) {}
 	// public function rowactions_admin_notices() {}
 
-	protected function rowactions__hook_mainlink_for_post( $posttype = NULL, $priority = 10, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
+	protected function rowactions__hook_mainlink_for_post( $posttype = NULL, $priority = 10, $callback_suffix = FALSE, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{
 		if ( FALSE === $setting_key )
 			return FALSE;
@@ -37,10 +37,12 @@ trait CoreRowActions
 		if ( TRUE !== $setting_key && ! $this->get_setting( $setting_key ) )
 			return FALSE;
 
-		if ( ! method_exists( $this, 'rowaction_get_mainlink_for_post' ) )
-			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'rowaction_get_mainlink_for_post()' ) );
+		$method = $callback_suffix ? sprintf( 'rowaction_get_mainlink_for_post_%s', $callback_suffix ) : 'rowaction_get_mainlink_for_post';
 
-		$callback = function ( $actions, $post ) use ( $posttype, $prepend, $action_key ) {
+		if ( ! method_exists( $this, $method ) )
+			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
+
+		$callback = function ( $actions, $post ) use ( $posttype, $prepend, $action_key, $method ) {
 
 			if ( ! is_null( $posttype ) && $post->post_type !== $posttype )
 				return $actions;
@@ -48,7 +50,7 @@ trait CoreRowActions
 			if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
 				return $actions;
 
-			if ( ! $links = $this->rowaction_get_mainlink_for_post( $post ) )
+			if ( ! $links = call_user_func_array( [$this, $method ], [ $post ] ) )
 				return $actions;
 
 			if ( is_array( $links ) )

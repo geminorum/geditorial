@@ -94,7 +94,7 @@ class Tabloid extends gEditorial\Module
 	public function setup_ajax()
 	{
 		if ( $this->role_can( 'overview' ) && ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) )
-			$this->rowactions__hook_mainlink_for_post( $posttype, 8, TRUE, NULL, TRUE );
+			$this->rowactions__hook_mainlink_for_post( $posttype, 8, FALSE, TRUE, NULL, TRUE );
 	}
 
 	public function current_screen( $screen )
@@ -113,7 +113,7 @@ class Tabloid extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $this->role_can( 'overview' )
-					&& $this->rowactions__hook_mainlink_for_post( $screen->post_type, 8, TRUE, NULL, TRUE ) )
+					&& $this->rowactions__hook_mainlink_for_post( $screen->post_type, 8, FALSE, TRUE, NULL, TRUE ) )
 						Scripts::enqueueColorBox();
 			}
 		}
