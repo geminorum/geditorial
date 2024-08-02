@@ -34,7 +34,11 @@ class ModuleSettings extends gEditorial\Settings
 		list( $posts, $pagination ) = Tablelist::getPosts( [], [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			return FALSE;
+			Core\WordPress::redirect( remove_query_arg( [
+				'action',
+				'type',
+				'paged',
+			] ) );
 
 		echo self::processingListOpen();
 
@@ -58,13 +62,18 @@ class ModuleSettings extends gEditorial\Settings
 			return ( $verbose ? print( Core\HTML::row( gEditorial\Plugin::wrong( FALSE ) ) ) : TRUE ) && FALSE;
 
 		if ( ! $meta = WordPress\Post::getMeta( $post, FALSE ) )
-			return ( $verbose ? print( Core\HTML::row( gEditorial\Plugin::na() ) ) : TRUE ) && FALSE;
+			return ( $verbose ? print( Core\HTML::row( sprintf(
+				/* translators: %1$s: post title, %2$s: post id */
+				_x( 'No meta-data available on &ldquo;%1$s&rdquo; (%2$s)', 'Notice', 'geditorial-importer' ),
+				WordPress\Post::title( $post ),
+				Core\HTML::code( $post->ID )
+			) ) ) : TRUE ) && FALSE;
 
 		foreach ( $metakeys as $metakey ) {
 
 			$keys = Core\Arraay::prepString(
 				$metakey, // original key
-				Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', $metakey ) )
+				array_keys( Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', $metakey ) ) )
 			);
 
 			foreach ( $keys as $key )

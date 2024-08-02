@@ -76,7 +76,12 @@ class ModuleSettings extends gEditorial\Settings
 		$results = $wpdb->get_col( $query );
 
 		if ( empty( $results ) )
-			return FALSE;
+			Core\WordPress::redirect( remove_query_arg( [
+				'action',
+				'type',
+				'paged',
+				'mime',
+			] ) );
 
 		echo Settings::processingListOpen();
 
@@ -101,7 +106,12 @@ class ModuleSettings extends gEditorial\Settings
 		], [], 'attachment', $limit );
 
 		if ( empty( $attachments ) )
-			return FALSE;
+			Core\WordPress::redirect( remove_query_arg( [
+				'action',
+				'type',
+				'paged',
+				'mime',
+			] ) );
 
 		echo self::processingListOpen();
 
