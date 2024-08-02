@@ -832,12 +832,12 @@ class Personage extends gEditorial\Module
 
 		if ( ! empty( $prepared['meta__identity_number'] ) ) {
 
-			if ( $existing = $this->get_postid_by_field( $prepared['meta__identity_number'], 'identity_number' ) )
+			if ( $existing = Services\PostTypeFields::getPostByField( 'identity_number', $prepared['meta__identity_number'], $posttype, TRUE ) )
 				$data['ID'] = $existing;
 
 		} else if ( ! empty( $prepared['meta__mobile_number'] ) ) {
 
-			if ( $existing = $this->get_postid_by_field( $prepared['meta__mobile_number'], 'mobile_number' ) )
+			if ( $existing = Services\PostTypeFields::getPostByField( 'mobile_number', $prepared['meta__mobile_number'], $posttype, TRUE ) )
 				$data['ID'] = $existing;
 		}
 

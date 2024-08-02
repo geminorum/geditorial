@@ -583,8 +583,11 @@ trait PostTypeFields
 		return $list;
 	}
 
+	// FIXME: DEPRECATED
 	public function get_postid_by_field( $value, $field, $prefix = NULL )
 	{
+		self::_dep( 'Services\PostTypeFields::getPostByField()' );
+
 		if ( is_null( $prefix ) )
 			$prefix = 'meta'; // the exception!
 
