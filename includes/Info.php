@@ -423,6 +423,16 @@ class Info extends WordPress\Main
 				/* translators: %s: records count */
 				return _nx_noop( '%s Record', '%s Records', 'Info: Noop', 'geditorial' );
 
+			case 'row':
+			case 'rows':
+				/* translators: %s: rows count */
+				return _nx_noop( '%s Row', '%s Rows', 'Info: Noop', 'geditorial' );
+
+			case 'account':
+			case 'accounts':
+				/* translators: %s: accounts count */
+				return _nx_noop( '%s Account', '%s Accounts', 'Info: Noop', 'geditorial' );
+
 			case 'member':
 			case 'members':
 			case 'family_member':

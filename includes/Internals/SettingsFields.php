@@ -225,6 +225,6 @@ trait SettingsFields
 
 	public function has_posttype_fields_support( $constant, $type = 'meta' )
 	{
-		return post_type_supports( $this->constant( $constant ), $type.'_fields' );
+		return post_type_supports( $this->constant( $constant, $constant ), $type.'_fields' );
 	}
 }

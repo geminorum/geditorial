@@ -35,6 +35,7 @@ trait RawImports
 				'json' => 'application/json',
 				'xml'  => 'application/xml',
 				'php'  => 'application/x-httpd-php',
+				'txt'  => 'text/plain',
 			] );
 
 			$type = $filetype['ext'];
@@ -45,6 +46,7 @@ trait RawImports
 			case 'json': $data = Helper::parseJSON( $this->get_imports_datafile() ); break;
 			case 'xml' : $data = Helper::parseXML( $this->get_imports_datafile() ); break;
 			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile(), [] ); break;
+			case 'txt' : $data = Core\Text::splitLines( Core\File::getContents( $this->get_imports_datafile() ) ); break;
 		}
 
 		if ( empty( $data ) )

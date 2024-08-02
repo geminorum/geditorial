@@ -341,6 +341,11 @@ class Positions extends gEditorial\Module
 
 	public function tweaks_column_row( $post, $before, $after )
 	{
+		$count = $this->subcontent_get_data_count( $post ); // FIXME: must calibrate data
+
+		if ( $post->post_type !== $this->constant( 'primary_posttype' ) && ! $count )
+			return;
+
 		printf( $before, '-position-grid' );
 
 			echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
@@ -349,9 +354,8 @@ class Positions extends gEditorial\Module
 				'context' => 'columnrow',
 			] );
 
-			// FIXME: must calibrate data
-			if ( $count = $this->subcontent_get_data_count( $post ) )
-				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'position', $count ) );
+			if ( $count )
+				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
 
 		echo $after;
 	}

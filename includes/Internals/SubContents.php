@@ -614,7 +614,7 @@ trait SubContents
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
 
-		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
+		return array_merge( $fields, $this->subcontent_get_importer_fields( $posttype ) );
 	}
 
 	public function importer_prepare_subcontent( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
@@ -622,7 +622,7 @@ trait SubContents
 		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
 			return $value;
 
-		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
+		if ( ! in_array( $field, array_keys( $this->subcontent_get_importer_fields( $posttype ) ) ) )
 			return $value;
 
 		if ( WordPress\Strings::isEmpty( $value ) )
@@ -641,7 +641,7 @@ trait SubContents
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		$fields = $this->get_importer_fields( $post->post_type );
+		$fields = $this->subcontent_get_importer_fields( $post->post_type );
 		$types  = $this->subcontent_get_field_types( 'import' );
 		$title  = WordPress\Post::title( (int) $atts['attach_id'] );
 

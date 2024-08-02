@@ -240,6 +240,9 @@ class Tweaks extends gEditorial\Module
 			'year_of_birth', // WasBorn Module
 			'gender',  // WasBorn Module
 			'age_group', // WasBorn Module
+			'marital_status', // NextOfKin Module
+			'blood_type', // Abo Module
+			'equipment', // Equipped Module
 		] + $extra ) );
 	}
 
