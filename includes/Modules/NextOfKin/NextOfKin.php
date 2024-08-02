@@ -239,7 +239,7 @@ class NextOfKin extends gEditorial\Module
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 
-		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
 
 		if ( ! is_admin() )
@@ -354,22 +354,5 @@ class NextOfKin extends gEditorial\Module
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Family Data', 'Default Term: Audit', 'geditorial-next-of-kin' ),
 		] ) : $terms;
-	}
-
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
-	{
-		if ( ! $this->in_setting( $post->post_type, 'subcontent_posttypes' ) )
-			return $terms;
-
-		if ( $exists = term_exists( $this->constant( 'term_empty_subcontent_data' ), $taxonomy ) ) {
-
-			if ( $this->subcontent_get_data_count( $post ) )
-				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
-
-			else
-				$terms[] = $exists['term_id'];
-		}
-
-		return $terms;
 	}
 }

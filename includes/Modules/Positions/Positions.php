@@ -242,7 +242,7 @@ class Positions extends gEditorial\Module
 			'show_in_menu' => FALSE, // NOTE: better to be `FALSE`, adding parent-slug will override the `mainpage`
 		] );
 
-		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
 
 		if ( ! is_admin() )
@@ -566,22 +566,5 @@ class Positions extends gEditorial\Module
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Position Data', 'Default Term: Audit', 'geditorial-positions' ),
 		] ) : $terms;
-	}
-
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
-	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
-			return $terms;
-
-		if ( $exists = term_exists( $this->constant( 'term_empty_subcontent_data' ), $taxonomy ) ) {
-
-			if ( $this->subcontent_get_data_count( $post ) )
-				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
-
-			else
-				$terms[] = $exists['term_id'];
-		}
-
-		return $terms;
 	}
 }

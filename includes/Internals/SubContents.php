@@ -1120,4 +1120,25 @@ trait SubContents
 		else
 			echo $this->subcontent_get_noaccess_notice();
 	}
+
+	public function audit_auto_audit_save_post_subcontent( $terms, $post, $taxonomy, $currents, $update )
+	{
+		if ( ! $this->in_setting( $post->post_type, 'subcontent_posttypes' ) )
+			return $terms;
+
+		// avoid confusions!
+		if ( ! $term = $this->constant( 'term_empty_subcontent_data' ) )
+			return $terms;
+
+		if ( $exists = term_exists( $term, $taxonomy ) ) {
+
+			if ( $this->subcontent_get_data_count( $post ) )
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
+
+			else
+				$terms[] = $exists['term_id'];
+		}
+
+		return $terms;
+	}
 }

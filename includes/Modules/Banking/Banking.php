@@ -210,6 +210,7 @@ class Banking extends gEditorial\Module
 		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
 		$this->filter_self( 'subcontent_pre_prep_data', 4, 10 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
 
 		if ( ! is_admin() )
@@ -300,18 +301,6 @@ class Banking extends gEditorial\Module
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
 	{
-		if ( $this->in_setting( $post->post_type, 'subcontent_posttypes' ) ) {
-
-			if ( $exists = term_exists( $this->constant( 'term_empty_subcontent_data' ), $taxonomy ) ) {
-
-				if ( $this->subcontent_get_data_count( $post ) )
-					$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
-
-				else
-					$terms[] = $exists['term_id'];
-			}
-		}
-
 		if ( $this->posttype_supported( $post->post_type ) ) {
 
 			$metakey = Services\PostTypeFields::getPostMetaKey( 'iban' );
