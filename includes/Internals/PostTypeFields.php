@@ -6,6 +6,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
@@ -523,8 +524,11 @@ trait PostTypeFields
 		do_action( $this->hook_base( 'posttypefields_import_raw_data' ), $post, $data, $override, $check_access, $module );
 	}
 
+	// FIXME: DEPRECATED
 	protected function posttypefields_get_post_by( $field_key, $value, $posttype_constant, $sanitize = FALSE, $module = 'meta' )
 	{
+		self::_dep( 'Services\PostTypeFields::getPostByField()' );
+
 		if ( ! $field_key || ! $value || ! $posttype_constant || ! gEditorial()->enabled( $module ) )
 			return FALSE;
 
@@ -559,11 +563,12 @@ trait PostTypeFields
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
+		$type   = $this->constant( $constants[0] );
 		$values = Helper::getSeparated( $data );
 		$list   = [];
 
 		foreach ( $values as $value )
-			if ( $parent = $this->posttypefields_get_post_by( $field_key, $value, $constants[0], TRUE ) )
+			if ( $parent = Services\PostTypeFields::getPostByField( $field_key, $value, $type, TRUE ) )
 				$list[] = $parent;
 
 		if ( count( $list ) )

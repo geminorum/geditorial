@@ -593,11 +593,12 @@ class Organization extends gEditorial\Module
 		if ( 'organization_code' !== Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) )
 			return $value;
 
+		$type   = $this->constant( 'primary_posttype' );
 		$codes = Helper::getSeparated( $value );
 		$list  = [];
 
 		foreach ( $codes as $code )
-			if ( $parent = $this->posttypefields_get_post_by( 'organization_code', $code, 'primary_posttype', TRUE ) )
+			if ( $parent = Services\PostTypeFields::getPostByField( 'organization_code', $code, $type, TRUE ) )
 				$list[] = WordPress\Post::fullTitle( $parent, TRUE );
 
 		return WordPress\Strings::getJoined( $list, '', '', $value );
@@ -618,11 +619,12 @@ class Organization extends gEditorial\Module
 
 			if ( 'organization_code' === Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) ) {
 
+				$type  = $this->constant( 'primary_posttype' );
 				$codes = Helper::getSeparated( $atts['raw'][$offset] );
 				$list  = [];
 
 				foreach ( $codes as $code )
-					if ( $parent = $this->posttypefields_get_post_by( 'organization_code', $code, 'primary_posttype', TRUE ) )
+					if ( $parent = Services\PostTypeFields::getPostByField( 'organization_code', $code, $type, TRUE ) )
 						$list[] = $parent;
 
 				if ( count( $list ) )

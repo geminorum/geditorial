@@ -105,4 +105,46 @@ class PostTypeFields extends WordPress\Main
 
 		return gEditorial()->module( $module )->get_posttype_fields( $posttype, $filter, $operator );
 	}
+
+	/**
+	 * Retrieves the post ID by field-key given a value via certain module.
+	 *
+	 * OLD: `posttypefields_get_post_by()`
+	 *
+	 * @param  string   $field_key
+	 * @param  string   $value
+	 * @param  string   $posttype
+	 * @param  bool     $sanitize
+	 * @param  string   $module
+	 * @return bool|int $post_id
+	 */
+	protected static function getPostByField( $field_key, $value, $posttype, $sanitize = FALSE, $module = 'meta' )
+	{
+		if ( ! $field_key || ! $value || ! $posttype )
+			return FALSE;
+
+		if ( ! gEditorial()->enabled( $module ) )
+			return FALSE;
+
+		$metakey = gEditorial()->module( $module )->get_postmeta_key( $field_key );
+
+		if ( $sanitize ) {
+
+			if ( ! $field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $posttype ) )
+				$value = Core\Number::translate( trim( $value ) );
+
+			else
+				$value = gEditorial()->module( $module )->sanitize_posttype_field( $value, $field );
+
+			if ( ! $value )
+				return FALSE;
+		}
+
+		if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $value, FALSE ) )
+			foreach ( $matches as $match )
+				if ( $posttype === get_post_type( intval( $match ) ) )
+					return intval( $match );
+
+		return FALSE;
+	}
 }

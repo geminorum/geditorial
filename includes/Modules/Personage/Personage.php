@@ -811,7 +811,7 @@ class Personage extends gEditorial\Module
 		if ( $posttype !== $this->constant( 'primary_posttype' ) )
 			return $matched;
 
-		if ( $post_id = $this->posttypefields_get_post_by( 'identity_number', $source_id, 'primary_posttype' ) )
+		if ( $post_id = Services\PostTypeFields::getPostByField( 'identity_number', $source_id, $posttype, TRUE ) )
 			return $post_id;
 
 		return $matched;
