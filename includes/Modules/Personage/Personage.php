@@ -127,7 +127,6 @@ class Personage extends gEditorial\Module
 			'status_taxonomy'    => 'human_status',
 
 			'term_empty_identity_number' => 'identity-number-empty',
-			'term_empty_mobile_number'   => 'mobile-number-empty',
 		];
 	}
 
@@ -288,33 +287,6 @@ class Personage extends gEditorial\Module
 					'posttype'    => $primary,
 					'order'       => 17,
 				],
-				// TODO: move to `Phonebook`
-				'mobile_number' => [
-					'description' => _x( 'Primary Mobile Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'mobile',
-					'quickedit'   => TRUE,
-					'order'       => 21,
-				],
-				// TODO: move to `Phonebook`
-				'mobile_secondary' => [
-					'title'       => _x( 'Secondary Mobile', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Secondary Mobile Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'mobile',
-					'order'       => 21,
-				],
-				// TODO: move to `Phonebook`
-				'phone_number'  => [
-					'description' => _x( 'Primary Phone Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'phone',
-					'order'       => 22,
-				],
-				// TODO: move to `Phonebook`
-				'phone_secondary'  => [
-					'title'       => _x( 'Secondary Phone', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Secondary Phone Contact Number of the Person', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'phone',
-					'order'       => 22,
-				],
 				'identity_number' => [
 					'title'       => _x( 'Identity Number', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Unique National Identity Number', 'Field Description', 'geditorial-personage' ),
@@ -328,21 +300,6 @@ class Personage extends gEditorial\Module
 					'type'        => 'code',
 					'order'       => 200,
 					'sanitize'    => [ $this, 'sanitize_passport_number' ],
-				],
-				'postal_code' => [
-					'type' => 'postcode',
-				],
-				// TODO: move to `Phonebook`
-				'home_address' => [
-					'title'       => _x( 'Home Address', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Full home address, including city, state etc.', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'address',
-				],
-				// TODO: move to `Phonebook`
-				'work_address' => [
-					'title'       => _x( 'Work Address', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-personage' ),
-					'type'        => 'address',
 				],
 
 				'website_url'    => [ 'type' => 'link',    'order' => 610 ],
@@ -470,8 +427,6 @@ class Personage extends gEditorial\Module
 					'first_name'      => NULL,
 					'last_name'       => NULL,
 					'father_name'     => NULL,
-					// 'phone_number'    => NULL,
-					'mobile_number'   => NULL,
 					'identity_number' => NULL,
 				] );
 
@@ -599,7 +554,6 @@ class Personage extends gEditorial\Module
 	{
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_identity_number' ) => _x( 'Empty Identity Number', 'Default Term: Audit', 'geditorial-personage' ),
-			$this->constant( 'term_empty_mobile_number' )   => _x( 'Empty Mobile Number', 'Default Term: Audit', 'geditorial-personage' ),
 		] ) : $terms;
 	}
 
@@ -619,15 +573,6 @@ class Personage extends gEditorial\Module
 		if ( $exists = term_exists( $this->constant( 'term_empty_identity_number' ), $taxonomy ) ) {
 
 			if ( ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
-				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
-
-			else
-				$terms[] = $exists['term_id'];
-		}
-
-		if ( $exists = term_exists( $this->constant( 'term_empty_mobile_number' ), $taxonomy ) ) {
-
-			if ( ModuleTemplate::getMetaFieldRaw( 'mobile_number', $post->ID ) )
 				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else
@@ -833,11 +778,6 @@ class Personage extends gEditorial\Module
 		if ( ! empty( $prepared['meta__identity_number'] ) ) {
 
 			if ( $existing = Services\PostTypeFields::getPostByField( 'identity_number', $prepared['meta__identity_number'], $posttype, TRUE ) )
-				$data['ID'] = $existing;
-
-		} else if ( ! empty( $prepared['meta__mobile_number'] ) ) {
-
-			if ( $existing = Services\PostTypeFields::getPostByField( 'mobile_number', $prepared['meta__mobile_number'], $posttype, TRUE ) )
 				$data['ID'] = $existing;
 		}
 
@@ -1058,24 +998,6 @@ class Personage extends gEditorial\Module
 
 		if ( $fullname = $this->make_human_title( $post, 'export' ) )
 			$data['fullname'] = $fullname;
-
-		if ( array_key_exists( 'home_address', $data ) )
-			$data['address'] = ModuleHelper::prepAddress( $data['home_address'], 'export', '' ); // FIXME: move this up!
-
-		if ( empty( $data['phone'] ) ) {
-
-			if ( ! empty( $data['mobile_number'] ) )
-				$data['phone'] = $data['mobile_number'];
-
-			else if ( ! empty( $data['phone_number'] ) )
-				$data['phone'] = $data['phone_number'];
-
-			else if ( ! empty( $data['mobile_secondary'] ) )
-				$data['phone'] = $data['mobile_secondary'];
-
-			else if ( ! empty( $data['phone_secondary'] ) )
-				$data['phone'] = $data['phone_secondary'];
-		}
 
 		return $data;
 	}

@@ -22,7 +22,6 @@ class Phonebook extends gEditorial\Module
 	use Internals\SubContents;
 
 	// TODO: optional fallback on `export` context into available sub-contents via `geditorial_meta_field_empty` filter
-	// TODO: move mobile/phone/address fields here
 	// TODO: remove duplicates @see: `Iranian::_render_tools_card_purge_duplicates()`
 
 	public static function module()
@@ -72,6 +71,7 @@ class Phonebook extends gEditorial\Module
 			'main_shortcode'    => 'content-contacts',
 
 			'term_empty_subcontent_data' => 'contact-data-empty',
+			'term_empty_mobile_number'   => 'mobile-number-empty',
 		];
 	}
 
@@ -126,6 +126,55 @@ class Phonebook extends gEditorial\Module
 		return [
 			'meta' => [
 				'_supported' => [
+					'mobile_number' => [
+						'title'       => _x( 'Mobile Number', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Primary Mobile Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'mobile',
+						'quickedit'   => TRUE,
+						'order'       => 500,
+					],
+					'mobile_secondary' => [
+						'title'       => _x( 'Secondary Mobile', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Secondary Mobile Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'mobile',
+						'order'       => 500,
+					],
+					'phone_number'  => [
+						'title'       => _x( 'Phone Number', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Primary Phone Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'phone',
+						'order'       => 500,
+					],
+					'phone_secondary'  => [
+						'title'       => _x( 'Secondary Phone', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Secondary Phone Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'phone',
+						'order'       => 500,
+					],
+					'postal_address' => [
+						'title'       => _x( 'Postal Address', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Full Postal Address about the Content, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'address',
+						'order'       => 600,
+					],
+					'postal_code' => [
+						'title'       => _x( 'Postal Code', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Postal Code about the Content.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'postcode',
+						'order'       => 600,
+					],
+					'home_address' => [
+						'title'       => _x( 'Home Address', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Full home address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'address',
+						'order'       => 600,
+					],
+					'work_address' => [
+						'title'       => _x( 'Work Address', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'address',
+						'order'       => 600,
+					],
 					'emergency_mobile' => [
 						'title'       => _x( 'Emergency Contact', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Mobile Contact Number of the Person Who Will Be Contacted on Emergency', 'Field Description', 'geditorial-phonebook' ),
@@ -203,6 +252,7 @@ class Phonebook extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 11 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
 
@@ -217,6 +267,7 @@ class Phonebook extends gEditorial\Module
 		$this->add_posttype_fields_supported();
 		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
 
+		$this->filter( 'searchselect_result_extra_for_post', 3, 32, FALSE, $this->base );
 		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 5, 12, FALSE, $this->base );
 	}
@@ -293,7 +344,28 @@ class Phonebook extends gEditorial\Module
 	{
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Contact Data', 'Default Term: Audit', 'geditorial-phonebook' ),
+			$this->constant( 'term_empty_mobile_number' )   => _x( 'Empty Mobile Number', 'Default Term: Audit', 'geditorial-phonebook' ),
 		] ) : $terms;
+	}
+
+	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $terms;
+
+		if ( ! Services\PostTypeFields::isAvailable( 'mobile_number', $post->post_type ) )
+			return $terms;
+
+		if ( $exists = term_exists( $this->constant( 'term_empty_mobile_number' ), $taxonomy ) ) {
+
+			if ( ModuleTemplate::getMetaFieldRaw( 'mobile_number', $post->ID ) )
+				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
+
+			else
+				$terms[] = $exists['term_id'];
+		}
+
+		return $terms;
 	}
 
 	public function personage_editform_meta_summary( $fields, $post )
@@ -301,11 +373,49 @@ class Phonebook extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;
 
-		$fields['emergency_person']  = NULL;
-		$fields['emergency_mobile']  = NULL;
+		$fields['mobile_number']    = NULL;
+		// $fields['phone_number']     = NULL;
+		$fields['home_address']     = NULL;
+		// $fields['work_address']     = NULL;
+		$fields['emergency_person'] = NULL;
+		$fields['emergency_mobile'] = NULL;
 		// $fields['emergency_address'] = NULL;
 
 		return $fields;
+	}
+
+	// NOTE: late overrides of the fields values and keys
+	public function searchselect_result_extra_for_post( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2', 'subcontent' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $data;
+
+		if ( array_key_exists( 'home_address', $data ) )
+			$data['address'] = ModuleHelper::prepAddress( $data['home_address'], 'export', '' ); // FIXME: move this up!
+
+		if ( empty( $data['phone'] ) ) {
+
+			if ( ! empty( $data['mobile_number'] ) )
+				$data['phone'] = $data['mobile_number'];
+
+			else if ( ! empty( $data['phone_number'] ) )
+				$data['phone'] = $data['phone_number'];
+
+			else if ( ! empty( $data['mobile_secondary'] ) )
+				$data['phone'] = $data['mobile_secondary'];
+
+			else if ( ! empty( $data['phone_secondary'] ) )
+				$data['phone'] = $data['phone_secondary'];
+		}
+
+		return $data;
 	}
 
 	public function searchselect_pre_query_posts( $null, $args, $queried )

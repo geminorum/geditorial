@@ -178,7 +178,9 @@ class Venue extends gEditorial\Module
 					'type'        => 'title_after',
 				],
 				'postal_code' => [
-					'type' => 'postcode',
+					'title'       => _x( 'Postal Code', 'Field Title', 'geditorial-venue' ),
+					'description' => _x( 'Postal code of the location.', 'Field Description', 'geditorial-venue' ),
+					'type'        => 'postcode',
 				],
 				'street_address' => [
 					'title'       => _x( 'Street Address', 'Field Title', 'geditorial-venue' ),

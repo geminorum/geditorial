@@ -217,14 +217,9 @@ class Organization extends gEditorial\Module
 				'image_source_url'  => [ 'type' => 'image_source' ],
 
 				'venue_string'   => [ 'type' => 'venue' ],
-				'contact_string' => [ 'type' => 'contact' ], // url/email/phone
-				'phone_number'   => [ 'type' => 'phone' ],
-				'mobile_number'  => [ 'type' => 'mobile' ],
-
+				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
-				'postal_address' => [ 'type' => 'address' ],
-				'postal_code'    => [ 'type' => 'postcode' ],
 
 				'featured_people' => [
 					'title'       => _x( 'Administrators', 'Field Title', 'geditorial-organization' ),

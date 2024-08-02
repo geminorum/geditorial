@@ -115,14 +115,9 @@ class Meta extends gEditorial\Module
 
 				'venue_string'   => _x( 'Venue', 'Descriptions', 'geditorial-meta' ),
 				'contact_string' => _x( 'Contact', 'Descriptions', 'geditorial-meta' ),
-				'phone_number'   => _x( 'Phone Number', 'Titles', 'geditorial-meta' ),
-				'mobile_number'  => _x( 'Mobile Number', 'Titles', 'geditorial-meta' ),
-
 				'website_url'    => _x( 'Website URL', 'Titles', 'geditorial-meta' ),
 				'wiki_url'       => _x( 'Wiki URL', 'Titles', 'geditorial-meta' ),
 				'email_address'  => _x( 'Email Address', 'Titles', 'geditorial-meta' ),
-				'postal_address' => _x( 'Postal Address', 'Titles', 'geditorial-meta' ),
-				'postal_code'    => _x( 'Postal Code', 'Titles', 'geditorial-meta' ),
 
 				'content_embed_url' => _x( 'Content Embed URL', 'Titles', 'geditorial-meta' ),
 				'text_source_url'   => _x( 'Text Source URL', 'Titles', 'geditorial-meta' ),
@@ -171,14 +166,9 @@ class Meta extends gEditorial\Module
 
 				'venue_string'   => _x( 'Placing Information about the Content', 'Descriptions', 'geditorial-meta' ),
 				'contact_string' => _x( 'A Way to Contact Someone about the Content', 'Descriptions', 'geditorial-meta' ),
-				'phone_number'   => _x( 'Phone Contact Number about the Content', 'Descriptions', 'geditorial-meta' ),
-				'mobile_number'  => _x( 'Mobile Contact Number about the Content', 'Descriptions', 'geditorial-meta' ),
-
 				'website_url'    => _x( 'Public Website URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'wiki_url'       => _x( 'Public Wiki URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'email_address'  => _x( 'Email Address about the Content', 'Descriptions', 'geditorial-meta' ),
-				'postal_address' => _x( 'Postal Address about the Content', 'Descriptions', 'geditorial-meta' ),
-				'postal_code'    => _x( 'Postal Code about the Content', 'Descriptions', 'geditorial-meta' ),
 
 				'content_embed_url' => _x( 'Embeddable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
 				'text_source_url'   => _x( 'Text Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
@@ -245,15 +235,10 @@ class Meta extends gEditorial\Module
 				'content_fee'   => [ 'type' => 'price' ],
 
 				'venue_string'   => [ 'type' => 'venue' ],
-				'contact_string' => [ 'type' => 'contact' ], // url/email/phone
-				'phone_number'   => [ 'type' => 'phone' ],
-				'mobile_number'  => [ 'type' => 'mobile' ],
-
+				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
 				'website_url'    => [ 'type' => 'link' ],
 				'wiki_url'       => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
-				'postal_address' => [ 'type' => 'address' ],
-				'postal_code'    => [ 'type' => 'postcode' ],
 
 				'content_embed_url' => [ 'type' => 'embed' ],
 				'text_source_url'   => [ 'type' => 'text_source' ],
