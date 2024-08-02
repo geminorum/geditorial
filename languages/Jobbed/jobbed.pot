@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Jobbed\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Jobbed\n"
+"X-Domain: geditorial-jobbed\n"
+
+#: Jobbed.php:87
+msgid "Job Title"
+msgid_plural "Job Titles"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Jobbed.php:91
+msgctxt "Label: Menu Name"
+msgid "Job Titles"
+msgstr ""
+
+#: Jobbed.php:92
+msgctxt "Label: Show Option All"
+msgid "Job Titles"
+msgstr ""
+
+#: Jobbed.php:93
+msgctxt "Label: Show Option No Terms"
+msgid "(Unknown)"
+msgstr ""
+
+#: Jobbed.php:102
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Job Title Summary"
+msgstr ""
+
+#: Jobbed.php:103
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Job Title Summary"
+msgstr ""

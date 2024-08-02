@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Employed;
+<?php namespace geminorum\gEditorial\Modules\Jobbed;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -7,7 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
-class Employed extends gEditorial\Module
+class Jobbed extends gEditorial\Module
 {
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
@@ -16,16 +16,14 @@ class Employed extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
-	// TODO: subcontents api for employment records: title/place/city/employer/start/end
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
 	{
 		return [
-			'name'     => 'employed',
-			'title'    => _x( 'Employed', 'Modules: Employed', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Employment Records', 'Modules: Employed', 'geditorial-admin' ),
+			'name'     => 'jobbed',
+			'title'    => _x( 'Jobbed', 'Modules: Jobbed', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Job Titles', 'Modules: Jobbed', 'geditorial-admin' ),
 			'icon'     => 'businessperson',
 			'access'   => 'beta',
 			'keywords' => [
@@ -52,9 +50,11 @@ class Employed extends gEditorial\Module
 				'count_not',
 			],
 			'_editpost' => [
-				'selectmultiple_term',
+				'metabox_advanced',
+				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
+				'auto_term_parents',
 				'show_in_quickedit',
 			],
 			'_frontend' => [
@@ -67,7 +67,7 @@ class Employed extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'main_taxonomy' => 'employment',
+			'main_taxonomy' => 'job_title',
 		];
 	}
 
@@ -84,12 +84,13 @@ class Employed extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'main_taxonomy' => _n_noop( 'Employment', 'Employments', 'geditorial-employed' ),
+				'main_taxonomy' => _n_noop( 'Job Title', 'Job Titles', 'geditorial-jobbed' ),
 			],
 			'labels' => [
 				'main_taxonomy' => [
-					'show_option_all'      => _x( 'Employments', 'Label: Show Option All', 'geditorial-employed' ),
-					'show_option_no_items' => _x( '(UnEmployed)', 'Label: Show Option No Terms', 'geditorial-employed' ),
+					'menu_name'            => _x( 'Job Titles', 'Label: Menu Name', 'geditorial-jobbed' ),
+					'show_option_all'      => _x( 'Job Titles', 'Label: Show Option All', 'geditorial-jobbed' ),
+					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-jobbed' ),
 				],
 			],
 		];
@@ -98,8 +99,8 @@ class Employed extends gEditorial\Module
 			return $strings;
 
 		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Team Employment Summary', 'Dashboard Widget Title', 'geditorial-employed' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Employment Summary', 'Dashboard Widget Title', 'geditorial-employed' ), ],
+			'current' => [ 'widget_title' => _x( 'Your Team Job Title Summary', 'Dashboard Widget Title', 'geditorial-jobbed' ), ],
+			'all'     => [ 'widget_title' => _x( 'Editorial Job Title Summary', 'Dashboard Widget Title', 'geditorial-jobbed' ), ],
 		];
 
 		return $strings;
@@ -108,7 +109,9 @@ class Employed extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'main_taxonomy' => ModuleInfo::getEmploymentDefaultTerms(),
+			'main_taxonomy' => [
+				// '' => _x( '', 'Main Taxonomy: Default Term', 'geditorial-jobbed' ),
+			],
 		];
 	}
 
@@ -118,11 +121,13 @@ class Employed extends gEditorial\Module
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
-			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+			'show_in_menu'       => FALSE,
 		], NULL, [
 			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'   => $this->get_setting( 'auto_term_parents', TRUE ),
 			'custom_captype' => TRUE,
 		] );
 
@@ -144,13 +149,14 @@ class Employed extends gEditorial\Module
 
 			} else if ( 'post' === $screen->base ) {
 
-				$this->hook_taxonomy_metabox_mainbox(
-					'main_taxonomy',
-					$screen->post_type,
-					$this->get_setting( 'selectmultiple_term' )
-						? '__checklist_restricted_terms_callback'
-						: '__singleselect_restricted_terms_callback'
-				);
+				if ( ! $this->get_setting( 'metabox_advanced' ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'main_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term', TRUE )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 			}
 		}
 	}
@@ -165,7 +171,12 @@ class Employed extends gEditorial\Module
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;
 
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
+		// $this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
+		$this->add_dashboard_widget(
+			'term-summary',
+			$this->get_taxonomy_label( 'main_taxonomy', 'extended_label' ),
+			'refresh'
+		);
 	}
 
 	public function render_widget_term_summary( $object, $box )

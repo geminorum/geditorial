@@ -28,7 +28,6 @@ class Personage extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 	use Internals\PostTypeOverview;
-	use Internals\TemplateTaxonomy;
 
 	// https://github.com/washingtonstateuniversity/WSU-People-Directory
 
@@ -121,10 +120,9 @@ class Personage extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype'   => 'human',
-			'primary_taxonomy'   => 'human_group',
-			'job_title_taxonomy' => 'job_title',      // FIXME: move to `Employed` / OR: `Jobbed`
-			'status_taxonomy'    => 'human_status',
+			'primary_posttype' => 'human',
+			'primary_taxonomy' => 'human_group',
+			'status_taxonomy'  => 'human_status',
 
 			'term_empty_identity_number' => 'identity-number-empty',
 		];
@@ -134,9 +132,8 @@ class Personage extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'primary_taxonomy'    => NULL,
-				'job_title_taxonomy'  => 'businessperson',
-				'status_taxonomy'     => 'post-status',
+				'primary_taxonomy' => NULL,
+				'status_taxonomy'  => 'post-status',
 			],
 		];
 	}
@@ -147,7 +144,6 @@ class Personage extends gEditorial\Module
 			'noops' => [
 				'primary_posttype'   => _n_noop( 'Human', 'Humans', 'geditorial-personage' ),
 				'primary_taxonomy'   => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-personage' ),
-				'job_title_taxonomy' => _n_noop( 'Job Title', 'Job Titles', 'geditorial-personage' ),
 				'status_taxonomy'    => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-personage' ),
 			],
 			'labels' => [
@@ -160,10 +156,6 @@ class Personage extends gEditorial\Module
 					'menu_name'            => _x( 'Groups', 'Label: Menu Name', 'geditorial-personage' ),
 					'show_option_all'      => _x( 'Humans Groups', 'Label: Show Option All', 'geditorial-personage' ),
 					'show_option_no_items' => _x( '(Un-Grouped)', 'Label: Show Option No Terms', 'geditorial-personage' ),
-				],
-				'job_title_taxonomy' => [
-					'show_option_all'      => _x( 'Job Titles', 'Label: Show Option All', 'geditorial-personage' ),
-					'show_option_no_items' => _x( '(Unknown)', 'Label: Show Option No Terms', 'geditorial-personage' ),
 				],
 				'status_taxonomy' => [
 					'menu_name'            => _x( 'Statuses', 'Label: Menu Name', 'geditorial-personage' ),
@@ -336,14 +328,6 @@ class Personage extends gEditorial\Module
 			'custom_captype' => $captype,
 		] );
 
-		$this->register_taxonomy( 'job_title_taxonomy', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL,
-		], 'primary_posttype', [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-		] );
-
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
@@ -449,7 +433,6 @@ class Personage extends gEditorial\Module
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'status_taxonomy',
 					'primary_taxonomy',
-					'job_title_taxonomy',
 				] );
 
 				$this->postmeta__hook_meta_column_row( $screen->post_type );
@@ -469,16 +452,6 @@ class Personage extends gEditorial\Module
 
 			$this->hook_insert_content();
 		}
-	}
-
-	public function template_include( $template )
-	{
-		if ( ! $this->get_setting( 'contents_viewable', FALSE ) )
-			return $template;
-
-		return $this->templatetaxonomy__include( $template, [
-			$this->constant( 'job_title_taxonomy' ),
-		] );
 	}
 
 	public function insert_cover( $content )
