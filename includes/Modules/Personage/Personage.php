@@ -612,12 +612,6 @@ class Personage extends gEditorial\Module
 				return WordPress\Strings::cleanupChars( $meta );
 		}
 
-		switch ( $field_args['type'] ) {
-
-			case 'address':
-				return ModuleHelper::prepAddress( $meta, $context, $meta );
-		}
-
 		return $meta;
 	}
 
