@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Phonebook extends gEditorial\Module
@@ -16,6 +17,7 @@ class Phonebook extends gEditorial\Module
 	use Internals\CoreRowActions;
 	use Internals\FramePage;
 	use Internals\MetaBoxSupported;
+	use Internals\PostTypeFields;
 	use Internals\RestAPI;
 	use Internals\SubContents;
 
@@ -214,6 +216,9 @@ class Phonebook extends gEditorial\Module
 	{
 		$this->add_posttype_fields_supported();
 		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
+
+		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
+		$this->filter( 'linediscovery_data_for_post', 5, 12, FALSE, $this->base );
 	}
 
 	public function importer_init()
@@ -318,5 +323,143 @@ class Phonebook extends gEditorial\Module
 		// $fields['emergency_address'] = NULL;
 
 		return $fields;
+	}
+
+	public function searchselect_pre_query_posts( $null, $args, $queried )
+	{
+		if ( ! is_null( $null ) )
+			return $null;
+
+		if ( empty( $queried['posttype'] ) || empty( $args['s'] ) )
+			return $null;
+
+		if ( ! $phone = $this->sanitize_phone( $args['s'] ) )
+			return $null;
+
+		$supported = $this->posttypes();
+
+		if ( ! array_intersect( $supported, (array) $queried['posttype'] ) )
+			return $null;
+
+		foreach ( (array) $queried['posttype'] as $posttype ) {
+
+			if ( ! in_array( $posttype, $supported, TRUE ) )
+				continue;
+
+			// meta fields not supported
+			if ( ! $this->has_posttype_fields_support( $posttype, 'meta' ) )
+				continue;
+
+			foreach ( $this->_get_phone_fields( $posttype ) as $field => $metakey )
+				if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $phone, FALSE ) )
+					foreach ( $matches as $match )
+						if ( $posttype === get_post_type( intval( $match ) ) )
+							return intval( $match );
+		}
+
+		return $null;
+	}
+
+	public function linediscovery_data_for_post( $discovered, $row, $posttypes, $insert, $raw )
+	{
+		if ( ! is_null( $discovered ) )
+			return $discovered;
+
+		$supported = $this->posttypes();
+
+		if ( ! array_intersect( $supported, (array) $posttypes ) )
+			return $discovered;
+
+		// FIXME: move form `Personage` Module
+		$fields = [ 'mobile_number', 'mobile_secondary', 'phone_number', 'phone_secondary' ];
+		$phone  = FALSE;
+
+		foreach ( (array) $posttypes as $posttype ) {
+
+			if ( ! in_array( $posttype, $supported, TRUE ) )
+				continue;
+
+			// meta fields not supported
+			if ( ! $this->has_posttype_fields_support( $posttype, 'meta' ) )
+				continue;
+
+			$keys = $this->_get_posttype_phone_possible_keys( $posttype );
+
+			foreach ( $keys as $key => $key_type ) {
+
+				if ( ! array_key_exists( $key, $row ) )
+					continue;
+
+				if ( $phone = $this->sanitize_phone( $row[$key], $key_type ) )
+					break 2;
+			}
+		}
+
+		if ( ! $phone )
+			return NULL;
+
+		foreach ( $fields as $field )
+			if ( $post_id = Services\PostTypeFields::getPostByField( $field, $phone, $posttype, FALSE ) )
+				return $post_id;
+
+		return NULL;
+	}
+
+	private function _get_posttype_phone_possible_keys( $posttype, $extra = [] )
+	{
+		$keys = [
+			'mobile_number'    => 'mobile',
+			'mobile_secondary' => 'mobile',
+			'phone_number'     => 'phone',
+			'phone_secondary'  => 'phone',
+			'mobile'           => 'mobile',
+			'phone'            => 'phone',
+
+			_x( 'Mobile', 'Possible Phone Key', 'geditorial-phonebook' )       => 'mobile',
+			_x( 'Mobile Phone', 'Possible Phone Key', 'geditorial-phonebook' ) => 'mobile',
+			_x( 'Phone', 'Possible Phone Key', 'geditorial-phonebook' )        => 'phone',
+			_x( 'Phone Number', 'Possible Phone Key', 'geditorial-phonebook' ) => 'phone',
+		];
+
+		$list = $this->filters( 'possible_keys_for_phone',
+			array_merge( $keys, $extra ),
+			$posttype
+		);
+
+		return array_change_key_case( $list, CASE_LOWER );
+	}
+
+	public function sanitize_phone( $value, $type = 'phone', $post = FALSE )
+	{
+		if ( WordPress\Strings::isEmpty( $value ) )
+			return FALSE;
+
+		switch ( $type ) {
+
+			case 'mobile':
+				$sanitized = Core\Mobile::sanitize( $value );
+				break;
+
+			case 'phone':
+			default:
+				$sanitized = Core\Phone::sanitize( $value );
+		}
+
+		return $this->filters( 'sanitize_phone', $sanitized, $value, $type, $post );
+	}
+
+	private function _get_phone_fields( $posttype, $extra = [] )
+	{
+		$list = [
+			'mobile_number'    => Services\PostTypeFields::getPostMetaKey( 'mobile_number' ),
+			'mobile_secondary' => Services\PostTypeFields::getPostMetaKey( 'mobile_secondary' ),
+			'phone_number'     => Services\PostTypeFields::getPostMetaKey( 'phone_number' ),
+			'phone_secondary'  => Services\PostTypeFields::getPostMetaKey( 'phone_secondary' ),
+		];
+
+		return $this->filters( 'get_phone_fields',
+			array_merge( $list, $extra ),
+			$posttype
+		);
 	}
 }
