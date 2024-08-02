@@ -505,8 +505,8 @@ class Importer extends gEditorial\Module
 	// NOTE: combines raw data with header keys and adds source_id and matched
 	public function form_posts_table_row_prep( $row, $index, $args )
 	{
-		// empty rows have one empty cells
-		if ( count( $row ) < 2 )
+		// empty rows have only one empty cell
+		if ( count( $row ) === 1 && empty( $row[0] ) )
 			return FALSE;
 
 		$raw       = Core\Arraay::combine( $args['extra']['headers'], $row );
