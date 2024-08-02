@@ -1081,4 +1081,43 @@ trait SubContents
 			'_meta',
 		] );
 	}
+
+	protected function tweaks_column_row_subcontent( $post, $before, $after )
+	{
+		printf( $before, $this->classs( 'subcontent' ) );
+
+			echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
+
+			echo $this->framepage_get_mainlink_for_post( $post, [
+				'context' => 'columnrow',
+			] );
+
+			if ( $count = $this->subcontent_get_data_count( $post ) )
+				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
+
+		echo $after;
+	}
+
+	protected function rowaction_get_mainlink_for_post_subcontent( $post )
+	{
+		return [
+			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
+				'context' => 'rowaction',
+			] ),
+		];
+	}
+
+	protected function subcontent_do_render_supportedbox_content( $post, $context )
+	{
+		$this->subcontent_render_metabox_data_grid( $post, $context );
+
+		if ( $this->role_can( 'assign' ) )
+			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $post, [
+				'context' => 'mainbutton',
+				'target'  => 'grid',
+			] ), 'field-wrap -buttons' );
+
+		else
+			echo $this->subcontent_get_noaccess_notice();
+	}
 }

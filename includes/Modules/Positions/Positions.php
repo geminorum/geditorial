@@ -290,8 +290,8 @@ class Positions extends gEditorial\Module
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 
-					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type ) )
-						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18 );
+					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
+						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
 					Scripts::enqueueColorBox();
 				}
@@ -330,8 +330,8 @@ class Positions extends gEditorial\Module
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 
-					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type ) )
-						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18 );
+					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
+						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
 					Scripts::enqueueColorBox();
 				}
@@ -339,7 +339,8 @@ class Positions extends gEditorial\Module
 		}
 	}
 
-	public function tweaks_column_row( $post, $before, $after )
+	// NOTE: overrides the default callback
+	public function tweaks_column_row_subcontent( $post, $before, $after )
 	{
 		$count = $this->subcontent_get_data_count( $post ); // FIXME: must calibrate data
 
@@ -358,15 +359,6 @@ class Positions extends gEditorial\Module
 				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
 
 		echo $after;
-	}
-
-	protected function rowaction_get_mainlink_for_post( $post )
-	{
-		return [
-			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
-				'context' => 'rowaction',
-			] ),
-		];
 	}
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )

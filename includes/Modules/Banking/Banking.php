@@ -79,10 +79,6 @@ class Banking extends gEditorial\Module
 	protected function get_global_strings()
 	{
 		$strings = [
-			'noops' => [
-				/* translators: %s: count number */
-				'bank_account' => _n_noop( '%s Account', '%s Accounts', 'geditorial-banking' ),
-			],
 			'fields' => [
 				'subcontent' => [
 					'label'    => _x( 'Label', 'Field Label: `label`', 'geditorial-banking' ),
@@ -243,8 +239,8 @@ class Banking extends gEditorial\Module
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 
-					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type ) )
-						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18 );
+					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
+						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
 					Scripts::enqueueColorBox();
 				}
@@ -252,46 +248,9 @@ class Banking extends gEditorial\Module
 		}
 	}
 
-	public function tweaks_column_row( $post, $before, $after )
-	{
-		printf( $before, '-bank-grid' );
-
-			echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
-
-			echo $this->framepage_get_mainlink_for_post( $post, [
-				'context' => 'columnrow',
-			] );
-
-			if ( $count = $this->subcontent_get_data_count( $post ) )
-				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'bank_account', $count ) );
-
-		echo $after;
-	}
-
-	protected function rowaction_get_mainlink_for_post( $post )
-	{
-		return [
-			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
-				'context' => 'rowaction',
-			] ),
-		];
-	}
-
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
-
-		$this->subcontent_render_metabox_data_grid( $object, $context );
-
-		if ( $this->role_can( 'assign' ) )
-			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $object, [
-				'context' => 'mainbutton',
-				'target'  => 'grid',
-			] ), 'field-wrap -buttons' );
-
-		else
-			echo $this->subcontent_get_noaccess_notice();
+		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
 
 	public function admin_menu()
