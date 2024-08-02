@@ -38,7 +38,7 @@ trait PairedRest
 						'permission_callback' => [ $this, 'pairedrest_disconnect_post_permissions_check' ],
 						// 'args'                => $this->pairedrest_get_endpoint_args_for_item_schema( WP_REST_Server::DELETABLE ),
 					],
-					// 'schema' => array( $this, 'pairedrest_get_public_item_schema' ), // TODO
+					// 'schema' => [ $this, 'pairedrest_get_public_item_schema' ], // TODO
 				]
 			);
 		}, 999 );

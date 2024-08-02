@@ -86,19 +86,19 @@ class Third extends Base
 
 		if ( $thickbox ) {
 
-			$args  = array(
-				'href'    => add_query_arg( array( 'TB_iframe' => '1' ), $url ),
+			$args  = [
+				'href'    => add_query_arg( [ 'TB_iframe' => '1' ], $url ),
 				'title'   => HTML::wrapLTR( $handle ),
 				'class'   => '-twitter thickbox',
 				'onclick' => 'return false;',
-			);
+			];
 
 			if ( function_exists( 'add_thickbox' ) )
 				add_thickbox();
 
 		} else {
 
-			$args = array( 'href' => $url, 'class' => '-twitter' );
+			$args = [ 'href' => $url, 'class' => '-twitter' ];
 		}
 
 		return HTML::tag( 'a', $args, HTML::wrapLTR( $handle ) );
@@ -133,12 +133,12 @@ class Third extends Base
 	// @SOURCE: https://wordpress.org/plugins/gcal-events-list/
 	public static function getGoogleCalendarEvents( $atts )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'calendar_id' => FALSE,
 			'api_key'     => '',
 			'time_min'    => '',
 			'max_results' => 5,
-		), $atts );
+		], $atts );
 
 		if ( ! $args['calendar_id'] )
 			return FALSE;

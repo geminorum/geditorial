@@ -194,7 +194,7 @@ class PostType extends Core\Base
 	{
 		global $wp_post_statuses;
 
-		$statuses = array();
+		$statuses = [];
 
 		foreach ( $wp_post_statuses as $status )
 			$statuses[$status->name] = $status->label;
@@ -449,7 +449,7 @@ class PostType extends Core\Base
 	// TODO: use db query
 	public static function getRandomPostID( $posttype, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
 	{
-		$args = array(
+		$args = [
 			'post_type'      => $posttype,
 			'post_status'    => $status,
 			'posts_per_page' => 1,
@@ -461,16 +461,16 @@ class PostType extends Core\Base
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,
-		);
+		];
 
 		if ( ! $object )
 			$args['fields'] = 'ids';
 
 		if ( $has_thumbnail )
-			$args['meta_query'] = array( array(
+			$args['meta_query'] = [ [
 				'key'     => '_thumbnail_id',
 				'compare' => 'EXISTS'
-			) );
+			] ];
 
 		$query = new \WP_Query();
 		$posts = $query->query( $args );
@@ -605,14 +605,14 @@ class PostType extends Core\Base
 		if ( ! is_object( $term ) && ! is_array( $term ) )
 			$term = get_term( $term, $taxonomy );
 
-		$new_post = array(
+		$new_post = [
 			'post_title'   => $term->name,
 			'post_name'    => $term->slug,
 			'post_content' => $term->description,
 			'post_status'  => 'pending',
 			'post_author'  => $user_id ? $user_id : get_current_user_id(),
 			'post_type'    => $posttype,
-		);
+		];
 
 		return wp_insert_post( $new_post );
 	}

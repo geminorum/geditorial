@@ -103,21 +103,21 @@ class Media extends Core\Base
 
 	// core dup with posttype/taxonomy/title
 	// @REF: `add_image_size()`
-	public static function registerImageSize( $name, $atts = array() )
+	public static function registerImageSize( $name, $atts = [] )
 	{
 		global $_wp_additional_image_sizes;
 
-		$args = self::atts( array(
+		$args = self::atts( [
 			'n' => __( 'Untitled' ),
 			'w' => 0,
 			'h' => 0,
 			'c' => 0,
-			'p' => array( 'post' ), // posttype: TRUE: all/array: posttypes/FALSE: none
-			't' => FALSE, // taxonomy: TRUE: all/array: taxes/FALSE: none
-			'f' => empty( $atts['s'] ) ? FALSE : $atts['s'], // featured
-		), $atts );
+			'p' => [ 'post' ],                                 // posttype: TRUE: all/array: posttypes/FALSE: none
+			't' => FALSE,                                      // taxonomy: TRUE: all/array: taxes/FALSE: none
+			'f' => empty( $atts['s'] ) ? FALSE : $atts['s'],   // featured
+		], $atts );
 
-		$_wp_additional_image_sizes[$name] = array(
+		$_wp_additional_image_sizes[$name] = [
 			'width'     => absint( $args['w'] ),
 			'height'    => absint( $args['h'] ),
 			'crop'      => $args['c'],
@@ -125,7 +125,7 @@ class Media extends Core\Base
 			'taxonomy'  => $args['t'],
 			'title'     => $args['n'],
 			'thumbnail' => $args['f'],
-		);
+		];
 	}
 
 	// this must be core's
@@ -356,7 +356,7 @@ class Media extends Core\Base
 
 	public static function getAttachments( $post_id, $mime_type = 'image' )
 	{
-		return get_children( array(
+		return get_children( [
 			'post_mime_type' => $mime_type,
 			'post_parent'    => $post_id,
 			'post_type'      => 'attachment',
@@ -364,7 +364,7 @@ class Media extends Core\Base
 			'numberposts'    => -1,
 			'orderby'        => 'menu_order',
 			'order'          => 'ASC',
-		) );
+		] );
 	}
 
 	// TODO: get title if html is empty
@@ -406,13 +406,13 @@ class Media extends Core\Base
 	// CSV: 'application/vnd.ms-excel'
 	public static function selectAttachment( $selected = 0, $mime = NULL, $name = 'attach_id', $empty = '' )
 	{
-		$attachments = get_posts( array(
+		$attachments = get_posts( [
 			'post_type'      => 'attachment',
 			'numberposts'    => -1,
 			'post_status'    => NULL,
 			'post_mime_type' => $mime,
 			'post_parent'    => NULL,
-		) );
+		] );
 
 		if ( empty( $attachments ) ) {
 			echo $empty;

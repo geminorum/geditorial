@@ -316,18 +316,14 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		self::redirect( wp_login_url( $location, TRUE ), $status );
 	}
 
-	public static function getAdminPostLink( $action, $extra = array() )
+	public static function getAdminPostLink( $action, $extra = [] )
 	{
-		return add_query_arg( array_merge( array(
-			'action' => $action,
-		), $extra ), admin_url( 'admin-post.php' ) );
+		return add_query_arg( array_merge( [ 'action' => $action ], $extra ), admin_url( 'admin-post.php' ) );
 	}
 
-	public static function getAdminPageLink( $page, $extra = array(), $base = 'admin.php' )
+	public static function getAdminPageLink( $page, $extra = [], $base = 'admin.php' )
 	{
-		return add_query_arg( array_merge( array(
-			'page' => $page,
-		), $extra ), admin_url( $base ) );
+		return add_query_arg( array_merge( [ 'page' => $page ], $extra ), admin_url( $base ) );
 	}
 
 	public static function getAdminSearchLink( $criteria = FALSE, $posttype = NULL, $extra = [] )
@@ -351,34 +347,34 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return get_search_link( $query );
 	}
 
-	// @REF: get_edit_term_link()
-	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = array() )
+	// @REF: `get_edit_term_link()`
+	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = [] )
 	{
 		if ( $term_id ) {
 
 			if ( current_user_can( 'edit_term', $term_id ) )
-				return add_query_arg( array_merge( array(
+				return add_query_arg( array_merge( [
 					'taxonomy' => $taxonomy,
 					'tag_ID'   => $term_id,
-				), $extra ), admin_url( 'term.php' ) );
+				], $extra ), admin_url( 'term.php' ) );
 
 		} else {
 
 			$object = get_taxonomy( $taxonomy );
 
 			if ( current_user_can( $object->cap->manage_terms ) )
-				return add_query_arg( array_merge( array(
+				return add_query_arg( array_merge( [
 					'taxonomy' => $taxonomy,
-				), $extra ), admin_url( 'edit-tags.php' ) );
+				], $extra ), admin_url( 'edit-tags.php' ) );
 		}
 
 		return FALSE;
 	}
 
 	// FIXME: move to `PostType`
-	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = array() )
+	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = [] )
 	{
-		$query = array( 'post_type' => $posttype );
+		$query = [ 'post_type' => $posttype ];
 
 		if ( $user_id )
 			$query['author'] = $user_id;
@@ -388,58 +384,49 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 
 	// FIXME: move to `PostType`
 	// @SEE: `get_edit_post_link()`
-	public static function getPostEditLink( $post_id, $extra = array() )
+	public static function getPostEditLink( $post_id, $extra = [] )
 	{
-		return add_query_arg( array_merge( array(
-			'action' => 'edit',
-			'post'   => $post_id,
-		), $extra ), admin_url( 'post.php' ) );
+		return add_query_arg( array_merge( [ 'action' => 'edit', 'post' => $post_id ], $extra ), admin_url( 'post.php' ) );
 	}
 
-	public static function getPostShortLink( $post_id, $extra = array() )
+	public static function getPostShortLink( $post_id, $extra = [] )
 	{
-		return add_query_arg( array_merge( array(
-			'p' => $post_id,
-		), $extra ), get_bloginfo( 'url' ) );
+		return add_query_arg( array_merge( [ 'p' => $post_id ], $extra ), get_bloginfo( 'url' ) );
 	}
 
-	public static function getTermShortLink( $term_id, $extra = array() )
+	public static function getTermShortLink( $term_id, $extra = [] )
 	{
-		return add_query_arg( array_merge( array(
-			't' => $term_id,
-		), $extra ), get_bloginfo( 'url' ) );
+		return add_query_arg( array_merge( [ 't' => $term_id ], $extra ), get_bloginfo( 'url' ) );
 	}
 
-	public static function getPostNewLink( $posttype, $extra = array() )
+	public static function getPostNewLink( $posttype, $extra = [] )
 	{
-		$args = 'post' == $posttype ? array() : array( 'post_type' => $posttype );
+		$args = 'post' === $posttype ? [] : [ 'post_type' => $posttype ];
 
 		return add_query_arg( array_merge( $args, $extra ), admin_url( 'post-new.php' ) );
 	}
 
-	public static function getPostAttachmentsLink( $post_id, $extra = array() )
+	public static function getPostAttachmentsLink( $post_id, $extra = [] )
 	{
-		return add_query_arg( array_merge( array(
-			'post_parent' => $post_id,
-		), $extra ), admin_url( 'upload.php' ) );
+		return add_query_arg( array_merge( [ 'post_parent' => $post_id ], $extra ), admin_url( 'upload.php' ) );
 	}
 
-	public static function getAuthorEditHTML( $posttype, $author, $extra = array() )
+	public static function getAuthorEditHTML( $posttype, $author, $extra = [] )
 	{
 		if ( $author_data = get_user_by( 'id', $author ) )
-			return HTML::tag( 'a', array(
-				'href' => add_query_arg( array_merge( array(
+			return HTML::tag( 'a', [
+				'href' => add_query_arg( array_merge( [
 					'post_type' => $posttype,
 					'author'    => $author,
-				), $extra ), admin_url( 'edit.php' ) ),
+				], $extra ), admin_url( 'edit.php' ) ),
 				'title' => $author_data->user_login,
 				'class' => '-author',
-			), HTML::escape( $author_data->display_name ) );
+			], HTML::escape( $author_data->display_name ) );
 
 		return FALSE;
 	}
 
-	public static function getUserEditLink( $user_id, $extra = array(), $network = FALSE, $check = TRUE )
+	public static function getUserEditLink( $user_id, $extra = [], $network = FALSE, $check = TRUE )
 	{
 		if ( ! $user_id )
 			return FALSE;
@@ -447,9 +434,9 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		if ( $check && ! current_user_can( 'edit_user', $user_id ) )
 			return FALSE;
 
-		return add_query_arg( array_merge( array(
+		return add_query_arg( array_merge( [
 			'user_id' => $user_id,
-		), $extra ), $network
+		], $extra ), $network
 			? network_admin_url( 'user-edit.php' )
 			: admin_url( 'user-edit.php' ) );
 

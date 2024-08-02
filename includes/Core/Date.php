@@ -108,10 +108,10 @@ class Date extends Base
 		$start = new \DateTime( $year.'-'.$month.'-01 00:00:00' );
 		$end   = $start->modify( '+1 month -1 day -1 minute' );
 
-		return array(
+		return [
 			$start->format( $format ?? static::MYSQL_FORMAT ),
 			$end->format( $format ?? static::MYSQL_FORMAT ),
-		);
+		];
 	}
 
 	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
@@ -270,28 +270,28 @@ class Date extends Base
 
 	public static function htmlDateTime( $time, $gmt = NULL, $format = 'l, F j, Y', $title = FALSE )
 	{
-		return HTML::tag( 'time', array(
+		return HTML::tag( 'time', [
 			'datetime' => date( 'c', ( $gmt ?: $time ) ),
 			'title'    => $title,
 			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
-		), date_i18n( $format, $time ) );
+		], date_i18n( $format, $time ) );
 	}
 
 	// @REF: https://stackoverflow.com/a/43956977
-	public static function htmlFromSeconds( $seconds, $round = 2, $atts = array() )
+	public static function htmlFromSeconds( $seconds, $round = 2, $atts = [] )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'sep' => ', ',
 
 			'noop_seconds' => L10n::getNooped( '%s second', '%s seconds' ),
 			'noop_minutes' => L10n::getNooped( '%s min', '%s mins' ),
 			'noop_hours'   => L10n::getNooped( '%s hour', '%s hours' ),
 			'noop_days'    => L10n::getNooped( '%s day', '%s days' ),
-		), $atts );
+		], $atts );
 
 		$i     = 0;
 		$html  = '';
-		$parts = array();
+		$parts = [];
 
 		$parts['days'] = (int) floor( $seconds / self::DAY_IN_SECONDS );
 
@@ -320,9 +320,9 @@ class Date extends Base
 	}
 
 	// @SOURCE: WP `human_time_diff()`
-	public static function humanTimeDiff( $timestamp, $now = '', $atts = array() )
+	public static function humanTimeDiff( $timestamp, $now = '', $atts = [] )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'now'    => 'Now',
 			'_s_ago' => '%s ago',
 			'in__s'  => 'in %s',
@@ -333,7 +333,7 @@ class Date extends Base
 			'noop_weeks'   => L10n::getNooped( '%s week', '%s weeks' ),
 			'noop_months'  => L10n::getNooped( '%s month', '%s months' ),
 			'noop_years'   => L10n::getNooped( '%s year', '%s years' ),
-		), $atts );
+		], $atts );
 
 		if ( ! self::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
@@ -469,15 +469,15 @@ class Date extends Base
 	public static function momentTest()
 	{
 		$format = static::MYSQL_FORMAT;
-		$result = array();
-		$spans  = array(
+		$result = [];
+		$spans  = [
 			'minute',
 			'hour',
 			'day',
 			'week',
 			'month',
 			'year',
-		);
+		];
 
 		$date = new \DateTime();
 
@@ -499,9 +499,9 @@ class Date extends Base
 	}
 
 	// FIXME: correct last week : http://stackoverflow.com/a/7175802
-	public static function moment( $timestamp, $now = '', $atts = array() )
+	public static function moment( $timestamp, $now = '', $atts = [] )
 	{
-		$args = self::atts( array(
+		$args = self::atts( [
 			'now'            => 'Now',
 			'just_now'       => 'Just now',
 			'one_minute_ago' => 'One minute ago',
@@ -523,7 +523,7 @@ class Date extends Base
 			'next_month'     => 'next month',
 			'format_l'       => 'l',
 			'format_f_y'     => 'F Y',
-		), $atts );
+		], $atts );
 
 		if ( ! self::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
@@ -615,8 +615,8 @@ class Date extends Base
 
 	public static function parts( $i18n = FALSE, $gmt = FALSE )
 	{
-		$now   = array();
-		$parts = array( 'year', 'month', 'day', 'hour', 'minute', 'second' );
+		$now   = [];
+		$parts = [ 'year', 'month', 'day', 'hour', 'minute', 'second' ];
 
 		if ( $i18n )
 			$time = apply_filters( 'string_format_i18n_back', date_i18n( static::MYSQL_FORMAT, FALSE, $gmt ) );

@@ -118,7 +118,7 @@ class Color extends Base
 		//   below), so most applications simply substitute a Hue of zero.
 		// Saturation will always be zero in this case, see below for details.
 		if ( 0 == $chroma )
-			return array( 0, 0, $computedV );
+			return [ 0, 0, $computedV ];
 
 		// Saturation is also simple to compute, and is simply the chroma
 		//   over the Value (or Brightness)
@@ -143,7 +143,7 @@ class Color extends Base
 		//   each sector's arc (60 degrees) to obtain the angle in degrees.
 		$computedH = 60 * $h;
 
-		return array( $computedH, $computedS, $computedV );
+		return [ $computedH, $computedS, $computedV ];
 	}
 
 	/**
@@ -193,11 +193,11 @@ class Color extends Base
 
 		// do this only ONCE per script, for each unique colour.
 		if ( ! isset( $rgb[$foreground] ) ) {
-			$f = array(
+			$f = [
 				'r' => hexdec( $foreground[0].$foreground[1] ),
 				'g' => hexdec( $foreground[2].$foreground[3] ),
 				'b' => hexdec( $foreground[4].$foreground[5] ),
-			);
+			];
 
 			$rgb[$foreground] = $f;
 
@@ -209,11 +209,11 @@ class Color extends Base
 
 		if ( ! isset( $rgb[$background] ) ) {
 
-			$b = array(
+			$b = [
 				'r' => hexdec( $background[0].$background[1] ),
 				'g' => hexdec( $background[2].$background[3] ),
 				'b' => hexdec( $background[4].$background[5] ),
-			);
+			];
 
 			$rgb[$background] = $b;
 
@@ -221,11 +221,11 @@ class Color extends Base
 			$b = $rgb[$background];
 		}
 
-		$add = array(
+		$add = [
 			'r' => ( $b['r'] - $f['r'] ) / 100,
 			'g' => ( $b['g'] - $f['g'] ) / 100,
 			'b' => ( $b['b'] - $f['b'] ) / 100,
-		);
+		];
 
 		$f['r'] += (int) ( $add['r'] * $transparency );
 		$f['g'] += (int) ( $add['g'] * $transparency );
@@ -250,7 +250,7 @@ class Color extends Base
 			$b = hexdec( substr( $hex, 4, 2 ) );
 		}
 
-		return array( $r, $g, $b );
+		return [ $r, $g, $b ];
 	}
 
 	// ff9900 -> 255 153 0

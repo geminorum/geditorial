@@ -299,11 +299,11 @@ class DBTable extends Core\Base
 	private function add_hooks() {
 
 		// Activation hook
-		register_activation_hook( $this->file, array( $this, 'maybe_upgrade' ) );
+		register_activation_hook( $this->file, [ $this, 'maybe_upgrade' ] );
 
 		// Add table to the global database object
-		add_action( 'switch_blog', array( $this, 'switch_blog'   ) );
-		add_action( 'admin_init',  array( $this, 'maybe_upgrade' ) );
+		add_action( 'switch_blog', [ $this, 'switch_blog'   ] );
+		add_action( 'admin_init',  [ $this, 'maybe_upgrade' ] );
 	}
 
 	/**
@@ -344,7 +344,7 @@ class DBTable extends Core\Base
 
 		// Run CREATE TABLE query
 		$query   = "CREATE TABLE {$this->table_name} ( {$this->schema} ) {$this->charset_collation};";
-		$created = dbDelta( array( $query ) );
+		$created = dbDelta( [ $query ] );
 
 		// Was the table created?
 		return ! empty( $created );

@@ -304,7 +304,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// FIXME: rewrite this!
-	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = array(), $post_object = TRUE )
+	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = [], $post_object = TRUE )
 	{
 		if ( FALSE === $object_id ) {
 
@@ -333,7 +333,7 @@ class Taxonomy extends Core\Base
 
 			// FIXME: use WP_Term_Query directly
 
-			$terms = get_terms( array_merge( array(
+			$terms = get_terms( array_merge( [
 				'taxonomy'   => $taxonomy,
 				'hide_empty' => FALSE,
 				// 'order'      => 'ASC',
@@ -357,11 +357,11 @@ class Taxonomy extends Core\Base
 					],
 				],
 				'update_term_meta_cache' => FALSE,
-			), $extra ) );
+			], $extra ) );
 		}
 
 		if ( ! $terms || is_wp_error( $terms ) )
-			return array();
+			return [];
 
 		$list = Core\Arraay::pluck( $terms, $key );
 
@@ -370,9 +370,9 @@ class Taxonomy extends Core\Base
 
 	// FIXME: check and exclude terms with `trashed` meta
 	// @REF: https://developer.wordpress.org/?p=22286
-	public static function listTerms( $taxonomy, $fields = NULL, $extra = array() )
+	public static function listTerms( $taxonomy, $fields = NULL, $extra = [] )
 	{
-		$query = new \WP_Term_Query( array_merge( array(
+		$query = new \WP_Term_Query( array_merge( [
 			'taxonomy'   => (array) $taxonomy,
 			'order'      => 'ASC',
 			'orderby'    => 'meta_value_num,name', // 'name',
@@ -392,10 +392,10 @@ class Taxonomy extends Core\Base
 			],
 			'fields'     => is_null( $fields ) ? 'id=>name' : $fields,
 			'hide_empty' => FALSE,
-		), $extra ) );
+		], $extra ) );
 
 		if ( empty( $query->terms ) )
-			return array();
+			return [];
 
 		return $query->terms;
 	}
@@ -410,18 +410,18 @@ class Taxonomy extends Core\Base
 		}, self::listTerms( $taxonomy, 'all', $extra ) );
 	}
 
-	public static function prepTerms( $taxonomy, $extra = array(), $terms = NULL, $key = 'term_id', $object = TRUE )
+	public static function prepTerms( $taxonomy, $extra = [], $terms = NULL, $key = 'term_id', $object = TRUE )
 	{
-		$new_terms = array();
+		$new_terms = [];
 
 		if ( is_null( $terms ) ) {
-			$terms = get_terms( array_merge( array(
+			$terms = get_terms( array_merge( [
 				'taxonomy'               => $taxonomy,
 				'hide_empty'             => FALSE,
 				'orderby'                => 'name',
 				'order'                  => 'ASC',
 				'update_term_meta_cache' => FALSE,
-			), $extra ) );
+			], $extra ) );
 		}
 
 		if ( is_wp_error( $terms ) || FALSE === $terms )
@@ -444,7 +444,7 @@ class Taxonomy extends Core\Base
 			 *     [filter] =>
 			 * )
 			 */
-			$new = array(
+			$new = [
 				'name'        => $term->name,
 				// 'name'        => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 				'description' => $term->description,
@@ -453,7 +453,7 @@ class Taxonomy extends Core\Base
 				'parent'      => $term->parent,
 				'slug'        => $term->slug,
 				'id'          => $term->term_id,
-			);
+			];
 
 			$new_terms[$term->{$key}] = $object ? (object) $new : $new;
 		}
@@ -537,7 +537,7 @@ class Taxonomy extends Core\Base
 		if ( empty( $string ) || ! $string )
 			return FALSE;
 
-		$taxonomies = array();
+		$taxonomies = [];
 
 		foreach ( explode( '|', $string ) as $taxonomy ) {
 
@@ -1075,7 +1075,7 @@ class Taxonomy extends Core\Base
 		if ( isset( $gEditorialTaxonomyFeatures[$taxonomy] ) )
 			return $gEditorialTaxonomyFeatures[$taxonomy];
 
-		return array();
+		return [];
 	}
 
 	public static function supports( $taxonomy, $feature )
@@ -1085,7 +1085,7 @@ class Taxonomy extends Core\Base
 		if ( isset( $all[$feature][0] ) && is_array( $all[$feature][0] ) )
 			return $all[$feature][0];
 
-		return array();
+		return [];
 	}
 
 	public static function getBySupport( $feature, $operator = 'and' )

@@ -65,7 +65,7 @@ class File extends Base
 	 */
 	public static function basename( $path, $suffix = '' )
 	{
-		return urldecode( basename( str_replace( array( '%2F', '%5C' ), '/', urlencode( $path ) ), $suffix ) );
+		return urldecode( basename( str_replace( [ '%2F', '%5C' ], '/', urlencode( $path ) ), $suffix ) );
 	}
 
 	/**
@@ -166,10 +166,10 @@ class File extends Base
 		$path = strtolower( trim( $path ) );
 
 		// adding - for spaces and union characters
-		$path = str_replace( array( ' ', '&', '\r\n', '\n', '+', ',' ), '-', $path );
+		$path = str_replace( [ ' ', '&', '\r\n', '\n', '+', ',' ], '-', $path );
 
 		// delete and replace rest of special chars
-		$path = preg_replace( array( '/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/' ), array( '', '-', '' ), $path );
+		$path = preg_replace( [ '/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/' ] , [ '', '-', '' ], $path );
 
 		return $path;
 	}

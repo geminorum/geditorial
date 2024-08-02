@@ -55,7 +55,7 @@ class Theme extends Core\Base
 
 	public static function restPost( $data, $setup = FALSE, $network = FALSE )
 	{
-		$dummy = array(
+		$dummy = [
 			'ID'                    => -9999,
 			'post_status'           => $data->status,
 			'post_author'           => $network ? $data->author : 0,
@@ -85,7 +85,7 @@ class Theme extends Core\Base
 			'_permalink' => $data->link,
 			'_metadata'  => isset( $data->meta ) ? $data->meta : [],
 			'_thumbnail' => isset( $data->thumbnail_data ) ? $data->thumbnail_data : [],
-		);
+		];
 
 		$post = new \WP_Post( (object) $dummy );
 
@@ -190,14 +190,14 @@ class Theme extends Core\Base
 	}
 
 	// @SOURCE: `bp_theme_compat_reset_post()`
-	public static function resetQuery( $args = array(), $content_callback = FALSE )
+	public static function resetQuery( $args = [], $content_callback = FALSE )
 	{
 		global $wp_query, $post;
 
 		// switch defaults if post is set.
 		if ( isset( $wp_query->post ) ) {
 
-			$dummy = self::atts( array(
+			$dummy = self::atts( [
 				'ID'                    => $wp_query->post->ID,
 				'post_status'           => $wp_query->post->post_status,
 				'post_author'           => $wp_query->post->post_author,
@@ -230,7 +230,7 @@ class Theme extends Core\Base
 				'is_tax'        => FALSE,
 				'is_home'       => FALSE,
 				'is_front_page' => FALSE,
-			), $args );
+			], $args );
 
 		} else {
 
@@ -239,7 +239,7 @@ class Theme extends Core\Base
 			// @REF: `bbp_get_empty_datetime()`
 			$date = '0000-00-00 00:00:00';
 
-			$dummy = self::atts( array(
+			$dummy = self::atts( [
 				'ID'                    => -9999,
 				'post_status'           => 'publish',
 				'post_author'           => 0,
@@ -272,7 +272,7 @@ class Theme extends Core\Base
 				'is_tax'        => FALSE,
 				'is_home'       => FALSE,
 				'is_front_page' => FALSE,
-			), $args );
+			], $args );
 		}
 
 		// set the $post global.
@@ -280,7 +280,7 @@ class Theme extends Core\Base
 
 		// copy the new post global into the main $wp_query.
 		$wp_query->post  = $post;
-		$wp_query->posts = array( $post );
+		$wp_query->posts = [ $post ];
 
 		$wp_query->queried_object    = $post;
 		$wp_query->queried_object_id = $post->ID;

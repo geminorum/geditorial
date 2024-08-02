@@ -37,7 +37,7 @@ class Term extends Core\Base
 			if ( 'post_tag' == $taxonomy && ! is_tag() )
 				return FALSE;
 
-			if ( ! in_array( $taxonomy, array( 'category', 'post_tag' ) )
+			if ( ! in_array( $taxonomy, [ 'category', 'post_tag' ] )
 				&& ! is_tax( $taxonomy ) )
 					return FALSE;
 
@@ -383,7 +383,7 @@ class Term extends Core\Base
 		else
 			$slug = $sanitize;
 
-		return wp_insert_term( $term, $taxonomy, array( 'slug' => $slug ) );
+		return wp_insert_term( $term, $taxonomy, [ 'slug' => $slug ] );
 	}
 
 	/**

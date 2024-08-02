@@ -21,17 +21,17 @@ class AdvancedQueries extends Main
 
 	// @REF: https://stackoverflow.com/a/64184587
 	// @REF: https://regex101.com/r/drMN1X/2
-	// 'meta_query' => array(
+	// 'meta_query' => [
     //     'relation' => 'AND',
-    //     array(
+    //     [
     //         'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
     //         'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}',
     //         'key' => '{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
-    //         'value' => array( $first_day, $last_day ),
+    //         'value' => [ $first_day, $last_day ],
     //         'type' => 'numeric',
     //         'compare' => 'BETWEEN'
-    //     ),
-    // ),
+    //     ],
+    // ],
 	public static function posts_where_metakey_like( $where )
 	{
 		return preg_replace(

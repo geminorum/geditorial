@@ -284,7 +284,7 @@ class Base
 	public static function atts( $pairs, $atts )
 	{
 		$atts = (array) $atts;
-		$out  = array();
+		$out  = [];
 
 		foreach ( $pairs as $name => $default ) {
 			if ( array_key_exists( $name, $atts ) )
@@ -345,9 +345,9 @@ class Base
 	// @SOURCE: https://github.com/kallookoo/wp_parse_args_recursive
 	public static function recursiveParseArgsALT( $args, $defaults, $preserve_type = TRUE, $preserve_integer_keys = FALSE )
 	{
-		$output = array();
+		$output = [];
 
-		foreach ( array( $defaults, $args ) as $list ) {
+		foreach ( [ $defaults, $args ] as $list ) {
 
 			foreach ( (array) $list as $key => $value ) {
 

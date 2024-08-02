@@ -271,7 +271,7 @@ class Text extends Base
 			return '';
 
 		// standardize newline characters to "\n"
-		$text = str_replace( array( "\r\n", "\r" ), "\n", $text );
+		$text = str_replace( [ "\r\n", "\r" ], "\n", $text );
 
 		// remove more than two contiguous line breaks
 		$text = preg_replace( "/\n\n+/", "\n\n", $text );
@@ -292,33 +292,33 @@ class Text extends Base
 	// @REF: https://github.com/michelf/php-markdown/issues/230#issuecomment-303023862
 	public static function removeP( $text )
 	{
-		return str_replace( array(
+		return str_replace( [
 			"</p>\n\n<p>",
 			'<p>',
 			'</p>',
-		), array(
+		], [
 			"\n\n",
 			"",
-		), $text );
+		], $text );
 	}
 
 	// removes empty paragraph tags, and remove broken paragraph tags from around block level elements
 	// @SOURCE: https://github.com/ninnypants/remove-empty-p
 	public static function noEmptyP( $text )
 	{
-		$text = preg_replace( array(
+		$text = preg_replace( [
 			'#<p>\s*<(div|aside|section|article|header|footer)#',
 			'#</(div|aside|section|article|header|footer)>\s*</p>#',
 			'#</(div|aside|section|article|header|footer)>\s*<br ?/?>#',
 			'#<(div|aside|section|article|header|footer)(.*?)>\s*</p>#',
 			'#<p>\s*</(div|aside|section|article|header|footer)#',
-		), array(
+		], [
 			'<$1',
 			'</$1>',
 			'</$1>',
 			'<$1$2>',
 			'</$1',
-		), $text );
+		], $text );
 
 		return preg_replace( '#<p>(\s|&nbsp;)*+(<br\s*/*>)*(\s|&nbsp;)*</p>#i', '', $text );
 	}
@@ -549,7 +549,7 @@ class Text extends Base
 	public static function minifyCSS( $buffer )
 	{
 		$buffer = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer ); // comments
-		$buffer = str_replace( array( "\r\n", "\r", "\n", "\t", '  ', '    ', '    ' ), '', $buffer ); // remove tabs, spaces, newlines, etc.
+		$buffer = str_replace( [ "\r\n", "\r", "\n", "\t", '  ', '    ', '    ' ], '', $buffer ); // remove tabs, spaces, newlines, etc.
 		$buffer = preg_replace( '/\s+/', ' ', $buffer ); // normalize whitespace
 		$buffer = preg_replace( '/;(?=\s*})/', '', $buffer ); // remove ; before }
 		$buffer = preg_replace( '/(,|:|;|\{|}|\*\/|>) /', '$1', $buffer ); // remove space after , : ; { } */ >
@@ -569,22 +569,22 @@ class Text extends Base
 	// @REF: https://coderwall.com/p/fatjmw/compressing-html-output-with-php
 	public static function minifyHTML( $buffer )
 	{
-		$buffer = str_replace( array( "\n", "\r", "\t" ), '', $buffer );
+		$buffer = str_replace( [ "\n", "\r", "\t" ], '', $buffer );
 
 		$buffer = preg_replace(
 			array( '/<!--(.*)-->/Uis', "/[[:blank:]]+/" ),
 			array( '', ' ' ),
 		$buffer );
 
-		$buffer = preg_replace( array(
+		$buffer = preg_replace( [
 			'/\>[^\S ]+/s', // strip whitespaces after tags, except space
 			'/[^\S ]+\</s', // strip whitespaces before tags, except space
 			'/(\s)+/s' // shorten multiple whitespace sequences
-		), array(
+		], [
 			'>',
 			'<',
 			'\\1'
-		), $buffer );
+		], $buffer );
 
 		return self::trim( $buffer );
 	}
@@ -931,32 +931,32 @@ class Text extends Base
 		if ( ! $html )
 			return $html;
 
-		$html = preg_replace( array(
+		$html = preg_replace( [
 			'@<script[^>]*?>.*?</script>@si',
 			'@<style[^>]*?>.*?</style>@siU',
 			'@<embed[^>]*?.*?</embed>@siu',
 			'@<![\s\S]*?--[ \t\n\r]*>@',
 			'/<blockquote.*?>(.*)?<\/blockquote>/im',
 			'/<figure.*?>(.*)?<\/figure>/im',
-		), '', $html );
+		], '', $html );
 
 		$html = strip_tags( $html );
 
 		// FIXME: convert back html entities
 
-		$html = str_replace( array(
+		$html = str_replace( [
 			"&nbsp;",
 			"&mdash;",
 			"&ndash;",
-		), ' ', $html );
+		], ' ', $html );
 
-		$html = str_replace( array(
+		$html = str_replace( [
 			"&zwnj;",
 			"\xE2\x80\x8C", // Zero Width Non-Joiner U+200C
 			"\xE2\x80\x8F", // Right-To-Left Mark U+200F
 			"\xE2\x80\x8E", // Right-To-Left Mark U+200E
 			"\xEF\xBB\xBF", // UTF8 Bom
-		), '', $html );
+		], '', $html );
 
 		$html = strip_shortcodes( $html );
 
@@ -986,7 +986,7 @@ class Text extends Base
 	// @SEE: [wp_strip_all_tags()](https://developer.wordpress.org/reference/functions/wp_strip_all_tags/)
 	public static function stripHTMLforEmail( $html )
 	{
-		$html = preg_replace( array(
+		$html = preg_replace( [
 			'@<head[^>]*?>.*?</head>@siu',
 			'@<style[^>]*?>.*?</style>@siu',
 			'@<script[^>]*?.*?</script>@siu',
@@ -996,7 +996,7 @@ class Text extends Base
 			'@<noembed[^>]*?.*?</noembed>@siu',
 			'@\t+@siu',
 			'@\n+@siu'
-		), '', $html );
+		], '', $html );
 
 		$html = preg_replace( '@</?((div)|(h[1-9])|(/tr)|(p)|(pre))@iu', "\n\$0", $html );
 		$html = preg_replace( '@</((td)|(th))@iu', " \$0", $html );
@@ -1205,7 +1205,7 @@ class Text extends Base
 			// @SEE: https://github.com/parsecsv/parsecsv-for-php/issues/167
 			// fputcsv( $handle, $fields );
 
-			$row = array();
+			$row = [];
 
 			foreach ( $fields as $field ) {
 

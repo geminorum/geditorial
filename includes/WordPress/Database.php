@@ -28,7 +28,7 @@ class Database extends Core\Base
 		return $cache[$sub];
 	}
 
-	public static function hasPosts( $posttypes = array( 'post' ), $exclude_statuses = NULL )
+	public static function hasPosts( $posttypes = [ 'post' ], $exclude_statuses = NULL )
 	{
 		global $wpdb;
 
@@ -44,13 +44,13 @@ class Database extends Core\Base
 	public static function getExcludeStatuses( $statuses = NULL )
 	{
 		if ( is_null( $statuses ) )
-			return array(
+			return [
 				'draft',
 				'private',
 				'trash',
 				'auto-draft',
 				'inherit',
-			);
+			];
 
 		return (array) $statuses;
 	}
@@ -154,7 +154,7 @@ class Database extends Core\Base
 	}
 
 	// FIXME
-	// public static function getPostsByMultipleTerms( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL ) {}
+	// public static function getPostsByMultipleTerms( $taxonomy, $posttypes = [ 'post' ], $user_id = 0, $exclude_statuses = NULL ) {}
 
 	// @REF: https://core.trac.wordpress.org/ticket/29181
 	public static function countPostsByNotTaxonomy( $taxonomies, $posttypes = [ 'post' ], $user_id = 0, $exclude_statuses = NULL )
@@ -193,7 +193,7 @@ class Database extends Core\Base
 	}
 
 	// @REF: `wp_count_posts()`
-	public static function countPostsByTaxonomy( $taxonomy, $posttypes = array( 'post' ), $user_id = 0, $exclude_statuses = NULL )
+	public static function countPostsByTaxonomy( $taxonomy, $posttypes = [ 'post' ], $user_id = 0, $exclude_statuses = NULL )
 	{
 		$key = md5( serialize( $taxonomy ).'_'.serialize( $posttypes ).'_'.$user_id );
 		$counts = wp_cache_get( $key, 'counts' );
@@ -204,11 +204,11 @@ class Database extends Core\Base
 		$terms = is_array( $taxonomy ) ? $taxonomy : get_terms( [ 'taxonomy' => $taxonomy ] );
 
 		if ( empty( $terms ) )
-			return array();
+			return [];
 
 		global $wpdb;
 
-		$counts = array();
+		$counts = [];
 		$totals = array_fill_keys( $posttypes, 0 );
 
 		$author = $user_id ? $wpdb->prepare( "AND posts.post_author = %d", $user_id ) : '';
@@ -240,7 +240,7 @@ class Database extends Core\Base
 	}
 
 	// @REF: `wp_count_posts()`
-	public static function countPostsByPosttype( $posttype = 'post', $user_id = 0, $period = array() )
+	public static function countPostsByPosttype( $posttype = 'post', $user_id = 0, $period = [] )
 	{
 		global $wpdb;
 
@@ -274,11 +274,11 @@ class Database extends Core\Base
 		return $counts;
 	}
 
-	public static function countPostsByUser( $user_id = NULL, $args = array(), $period = array() )
+	public static function countPostsByUser( $user_id = NULL, $args = [], $period = [] )
 	{
 		global $wpdb;
 
-		$counts = array();
+		$counts = [];
 		$from   = $to = '';
 
 		if ( is_null( $user_id ) )
@@ -317,7 +317,7 @@ class Database extends Core\Base
 		return $counts;
 	}
 
-	public static function getPostTypeMonths( $posttype = 'post', $args = array(), $user_id = 0 )
+	public static function getPostTypeMonths( $posttype = 'post', $args = [], $user_id = 0 )
 	{
 		global $wpdb, $wp_locale;
 
@@ -356,7 +356,7 @@ class Database extends Core\Base
 		if ( ! $count || ( 1 == $count && 0 == $months[0]->month ) )
 			return FALSE;
 
-		$list = array();
+		$list = [];
 
 		foreach ( $months as $row ) {
 
@@ -385,7 +385,7 @@ class Database extends Core\Base
 
 			do_action( 'edit_term_taxonomy', $term, $taxonomy->name );
 
-			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
+			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), [ 'term_taxonomy_id' => $term ] );
 
 			do_action( 'edited_term_taxonomy', $term, $taxonomy->name );
 		}
@@ -405,7 +405,7 @@ class Database extends Core\Base
 
 			do_action( 'edit_term_taxonomy', $term, $taxonomy->name );
 
-			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
+			$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), [ 'term_taxonomy_id' => $term ] );
 
 			do_action( 'edited_term_taxonomy', $term, $taxonomy->name );
 		}

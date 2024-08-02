@@ -297,12 +297,12 @@ class Number extends Base
 		return preg_replace( '/^0+/', '', self::translate( $zeroised ) );
 	}
 
-	public static $readable_suffix = array(
+	public static $readable_suffix = [
 		'trillion' => '%s trillion',
 		'billion'  => '%s billion',
 		'million'  => '%s million',
 		'thousand' => '%s thousand',
-	);
+	];
 
 	// @REF: http://php.net/manual/en/function.number-format.php#89888
 	public static function formatReadable( $number, $suffix = NULL )
