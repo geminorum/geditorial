@@ -339,28 +339,6 @@ class Positions extends gEditorial\Module
 		}
 	}
 
-	// NOTE: overrides the default callback
-	public function tweaks_column_row_subcontent( $post, $before, $after )
-	{
-		$count = $this->subcontent_get_data_count( $post ); // FIXME: must calibrate data
-
-		if ( $post->post_type !== $this->constant( 'primary_posttype' ) && ! $count )
-			return;
-
-		printf( $before, '-position-grid' );
-
-			echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
-
-			echo $this->framepage_get_mainlink_for_post( $post, [
-				'context' => 'columnrow',
-			] );
-
-			if ( $count )
-				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
-
-		echo $after;
-	}
-
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
 		if ( is_null( $context ) )
@@ -566,5 +544,29 @@ class Positions extends gEditorial\Module
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Position Data', 'Default Term: Audit', 'geditorial-positions' ),
 		] ) : $terms;
+	}
+
+	// NOTE: refines count based on subcontent rows that contain `fullname` aka `comment_author`
+	protected function subcontent_get_data_count( $parent = NULL, $context = NULL, $extra = [] )
+	{
+		global $wpdb;
+
+		if ( ! $post = WordPress\Post::get( $parent ) )
+			return FALSE;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $this->subcontent_query_data_count( $post, $extra );
+
+		$query = $wpdb->prepare(
+			"SELECT COUNT(*)
+			FROM {$wpdb->comments}
+			WHERE comment_post_ID = %d
+			AND comment_type IN ('%s')
+			AND comment_author != ''",
+			$post->ID,
+			$this->subcontent_get_comment_type()
+		);
+
+		return $wpdb->get_var( $query );
 	}
 }

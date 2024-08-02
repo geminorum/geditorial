@@ -483,7 +483,12 @@ trait SubContents
 		return $map ? $this->subcontent_get_data_mapped( $items, $post ) : $items;
 	}
 
-	protected function subcontent_get_data_count( $parent = NULL, $extra = [] )
+	protected function subcontent_get_data_count( $parent = NULL, $context = NULL, $extra = [] )
+	{
+		return $this->subcontent_query_data_count( $parent, $extra );
+	}
+
+	protected function subcontent_query_data_count( $parent = NULL, $extra = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $parent ) )
 			return FALSE;
