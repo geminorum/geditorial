@@ -261,7 +261,7 @@ class Specs extends gEditorial\Module
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
 							$postmeta[$offset][$field] = Core\Number::intval( $_POST[$prefix.$field][$offset] );
 
-						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
+						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$offset][$field] );
 
 					break;

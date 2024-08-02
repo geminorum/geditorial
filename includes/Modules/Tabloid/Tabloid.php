@@ -46,7 +46,7 @@ class Tabloid extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Action Title for %s', 'Setting Title', 'geditorial-tabloid' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as title on the actions row.', 'Setting Description', 'geditorial-tabloid' ),
-				'placeholder' => _x( 'Overview', 'Action', 'geditorial-tabloid' ) ,
+				'placeholder' => _x( 'Overview', 'Action', 'geditorial-tabloid' ),
 			];
 
 			$settings['_posttypes'][] = [
@@ -55,7 +55,7 @@ class Tabloid extends gEditorial\Module
 				/* translators: %s: supported object label */
 				'title'       => sprintf( _x( 'Overview Title for %s', 'Setting Title', 'geditorial-tabloid' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as title on the overview pages.', 'Setting Description', 'geditorial-tabloid' ),
-				'placeholder' => _x( 'Overview', 'Action', 'geditorial-tabloid' ) ,
+				'placeholder' => _x( 'Overview', 'Action', 'geditorial-tabloid' ),
 			];
 		}
 

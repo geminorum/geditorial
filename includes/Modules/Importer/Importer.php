@@ -1109,7 +1109,7 @@ class Importer extends gEditorial\Module
 
 		$args = $this->_get_current_form_images();
 
-		if ( isset( $_POST['images_step_two'] )  ) {
+		if ( isset( $_POST['images_step_two'] ) ) {
 
 			if ( empty( $args['metakey'] ) )
 				return Core\HTML::desc( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ) );

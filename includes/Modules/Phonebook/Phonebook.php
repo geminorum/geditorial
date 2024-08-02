@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Phonebook extends gEditorial\Module
@@ -359,7 +360,7 @@ class Phonebook extends gEditorial\Module
 
 		if ( $exists = term_exists( $this->constant( 'term_empty_mobile_number' ), $taxonomy ) ) {
 
-			if ( ModuleTemplate::getMetaFieldRaw( 'mobile_number', $post->ID ) )
+			if ( Template::getMetaFieldRaw( 'mobile_number', $post->ID ) )
 				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else

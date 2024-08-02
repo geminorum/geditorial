@@ -323,11 +323,15 @@ class Meta extends gEditorial\Module
 
 	public function setup_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) {
-			$this->_edit_screen( $posttype );
-			$this->_hook_default_rows( $posttype );
-			$this->_hook_store_metabox( $posttype );
-		}
+		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			return;
+
+		if ( ! $this->get_posttype_fields( $posttype ) )
+			return;
+
+		$this->_edit_screen( $posttype );
+		$this->_hook_default_rows( $posttype );
+		$this->_hook_store_metabox( $posttype );
 	}
 
 	public function current_screen( $screen )

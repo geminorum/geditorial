@@ -188,7 +188,7 @@ class Series extends gEditorial\Module
 						if ( isset( $_POST[$prefix.$field][$offset] ) && '0' != $_POST[$prefix.$field][$offset] )
 							$postmeta[$pre_term][$field] = Core\Number::intval( $_POST[$prefix.$field][$offset] );
 
-						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] )  )
+						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$pre_term][$field] );
 
 					break;

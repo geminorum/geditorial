@@ -143,7 +143,7 @@ class Recount extends gEditorial\Module
 
 	public function custom_taxonomy_column( $string, $column_name, $term_id )
 	{
-		if ( $column_name != $this->classs()  )
+		if ( $column_name != $this->classs() )
 			return $string;
 
 		$count = get_term_meta( (int) $term_id, 'count', TRUE );
