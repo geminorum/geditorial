@@ -887,6 +887,18 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_units_posttypes( $description = NULL, $values = [], $empty = NULL )
+	{
+		return [
+			'field'        => 'units_posttypes',
+			'type'         => 'checkboxes-values',
+			'title'        => _x( 'Units Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Unit Fields Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no unit post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+			'values'       => $values,
+		];
+	}
+
 	public static function getSetting_subcontent_posttypes( $description = NULL, $values = [], $empty = NULL )
 	{
 		return [

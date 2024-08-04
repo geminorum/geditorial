@@ -54,6 +54,9 @@ class Athlete extends gEditorial\Module
 				'reports_roles'        => [ NULL, $roles ],
 				'assign_roles'         => [ NULL, $roles ],
 			],
+			'_units' => [
+				'units_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
+			],
 			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_editlist' => [
 				'auto_term_parents',
@@ -168,6 +171,32 @@ class Athlete extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function get_global_fields()
+	{
+		return [
+			'units' => [
+				'_supported' => [
+					'mass_in_kg' => [
+						'title'       => _x( 'Mass', 'Field Title', 'geditorial-athlete' ),
+						'description' => _x( 'Body Mass in Kilogram', 'Field Description', 'geditorial-athlete' ),
+						'type'        => 'kilogram',
+						'data_unit'   => 'kilogram',
+						'icon'        => 'image-filter',
+						'order'       => 100,
+					],
+					'stature_in_cm' => [
+						'title'       => _x( 'Stature', 'Field Title', 'geditorial-athlete' ),
+						'description' => _x( 'Body Stature in Centimeter', 'Field Description', 'geditorial-athlete' ),
+						'type'        => 'centimeter',
+						'data_unit'   => 'centimeter',
+						'icon'        => 'sort',
+						'order'       => 100,
+					],
+				],
+			]
+		];
+	}
+
 	protected function define_default_terms()
 	{
 		return [
@@ -276,6 +305,11 @@ class Athlete extends gEditorial\Module
 			return;
 
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, 'TRUE', 'units' );
 	}
 
 	public function current_screen( $screen )

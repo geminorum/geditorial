@@ -59,9 +59,6 @@ class Units extends gEditorial\Module
 				'height_in_mm' => _x( 'Height', 'Titles', 'geditorial-units' ),
 				'length_in_mm' => _x( 'Length', 'Titles', 'geditorial-units' ),
 
-				'mass_in_kg'    => _x( 'Mass', 'Titles', 'geditorial-units' ),
-				'stature_in_cm' => _x( 'Stature', 'Titles', 'geditorial-units' ),
-
 				'payload_in_kg'   => _x( 'Payload', 'Titles', 'geditorial-units' ),
 				'maxspeed_in_kmh' => _x( 'Max Speed', 'Titles', 'geditorial-units' ),
 
@@ -87,9 +84,6 @@ class Units extends gEditorial\Module
 				'width_in_mm'  => _x( 'Width in Milimeter', 'Descriptions', 'geditorial-units' ),
 				'height_in_mm' => _x( 'Height in Milimeter', 'Descriptions', 'geditorial-units' ),
 				'length_in_mm' => _x( 'Length in Milimeter', 'Descriptions', 'geditorial-units' ),
-
-				'mass_in_kg'    => _x( 'Mass in Kilogram', 'Descriptions', 'geditorial-units' ),
-				'stature_in_cm' => _x( 'Stature in Centimeter', 'Descriptions', 'geditorial-units' ),
 
 				'payload_in_kg'   => _x( 'Payload in Kilogram', 'Descriptions', 'geditorial-units' ),
 				'maxspeed_in_kmh' => _x( 'Max Speed in Kilometre per Hour', 'Descriptions', 'geditorial-units' ),
@@ -157,9 +151,6 @@ class Units extends gEditorial\Module
 				'width_in_mm'  => [ 'type' => 'milimeter', 'icon' => 'leftright'   , 'data_unit' => 'milimeter' ],
 				'height_in_mm' => [ 'type' => 'milimeter', 'icon' => 'sort'        , 'data_unit' => 'milimeter' ],
 				'length_in_mm' => [ 'type' => 'milimeter', 'icon' => 'editor-break', 'data_unit' => 'milimeter' ],
-
-				'mass_in_kg'    => [ 'type' => 'kilogram',   'icon' => 'image-filter', 'data_unit' => 'kilogram'   ],
-				'stature_in_cm' => [ 'type' => 'centimeter', 'icon' => 'sort'        , 'data_unit' => 'centimeter' ],
 
 				'payload_in_kg'   => [ 'type' => 'kilogram',     'icon' => 'image-filter', 'data_unit' => 'kilogram'    ],
 				'maxspeed_in_kmh' => [ 'type' => 'km_per_hour',  'icon' => 'car'         , 'data_unit' => 'km_per_hour' ],
