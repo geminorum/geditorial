@@ -4,19 +4,26 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
 
 class Diagnosed extends gEditorial\Module
 {
+	use Internals\AdminPage;
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\CoreRowActions;
 	use Internals\DashboardSummary;
+	use Internals\FramePage;
+	use Internals\MetaBoxSupported;
+	use Internals\RestAPI;
+	use Internals\SubContents;
 	use Internals\TemplateTaxonomy;
-
-	// TODO: sub-content for: `Editorial Medical Records`
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -32,6 +39,7 @@ class Diagnosed extends gEditorial\Module
 				'diagnosis',
 				'medical',
 				'taxmodule',
+				'subcontent',
 			],
 		];
 	}
@@ -39,9 +47,16 @@ class Diagnosed extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
+		$roles = $this->get_settings_default_roles();
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
+			'_subcontent' => [
+				'subcontent_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
+				'subcontent_fields'    => [ NULL, $this->subcontent_get_fields_for_settings() ],
+				'reports_roles'        => [ NULL, $roles ],
+				'assign_roles'         => [ NULL, $roles ],
+			],
 			'posttypes_option' => 'posttypes_option',
 			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
 			'_dashboard' => [
@@ -70,6 +85,13 @@ class Diagnosed extends gEditorial\Module
 	{
 		return [
 			'main_taxonomy' => 'diagnosis',
+
+			'restapi_namespace' => 'medical-records',
+			'subcontent_type'   => 'family_record',
+			'subcontent_status' => 'private',
+			'main_shortcode'    => 'medical-records',
+
+			'term_empty_subcontent_data' => 'medical-data-empty',
 		];
 	}
 
@@ -96,6 +118,48 @@ class Diagnosed extends gEditorial\Module
 					'show_option_no_items' => _x( '(Undiagnosed)', 'Label: `show_option_no_items`', 'geditorial-diagnosed' ),
 				],
 			],
+			'fields' => [
+				'subcontent' => [
+					'label'    => _x( 'Subject', 'Field Label: `label`', 'geditorial-diagnosed' ),
+					'age'      => _x( 'Age', 'Field Label: `age`', 'geditorial-diagnosed' ),
+					'date'     => _x( 'Date', 'Field Label: `date`', 'geditorial-diagnosed' ),
+					'location' => _x( 'Location', 'Field Label: `location`', 'geditorial-diagnosed' ),
+					'people'   => _x( 'Doctors', 'Field Label: `location`', 'geditorial-diagnosed' ),
+					'desc'     => _x( 'Description', 'Field Label: `desc`', 'geditorial-diagnosed' ),
+				],
+			],
+		];
+
+		$strings['notices'] = [
+			'empty'    => _x( 'There is no medical information available!', 'Notice', 'geditorial-diagnosed' ),
+			'noaccess' => _x( 'You have not necessary permission to manage this medical data.', 'Notice', 'geditorial-diagnosed' ),
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		$strings['settings'] = [
+			'post_types_after' => _x( 'Supports sports fields for the selected post-types.', 'Settings Description', 'geditorial-diagnosed' ),
+		];
+
+		$strings['metabox'] = [
+			'supportedbox_title'  => _x( 'Medical', 'MetaBox Title', 'geditorial-diagnosed' ),
+			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-diagnosed' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'mainbutton_title' => _x( 'Medical Records of %1$s', 'Button Title', 'geditorial-diagnosed' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'mainbutton_text'  => _x( '%1$s Manage the Medical Records of %2$s', 'Button Text', 'geditorial-diagnosed' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'rowaction_title' => _x( 'Medical Records of %1$s', 'Action Title', 'geditorial-diagnosed' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'rowaction_text'  => _x( 'Medical', 'Action Text', 'geditorial-diagnosed' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'columnrow_title' => _x( 'Medical Records of %1$s', 'Row Title', 'geditorial-diagnosed' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'columnrow_text'  => _x( 'Medical', 'Row Text', 'geditorial-diagnosed' ),
 		];
 
 		return $strings;
@@ -120,6 +184,33 @@ class Diagnosed extends gEditorial\Module
 		];
 	}
 
+	protected function subcontent_get_data_mapping()
+	{
+		return array_merge( $this->subcontent_base_data_mapping(), [
+			'comment_content' => 'desc',    // `text`
+			'comment_agent'   => 'label',   // `varchar(255)`
+			'comment_karma'   => 'order',   // `int(11)`
+
+			'comment_author'       => 'location',   // `tinytext`
+			'comment_author_url'   => 'age',        // `varchar(200)`
+			'comment_author_email' => 'people',     // `varchar(100)`
+			'comment_author_IP'    => 'date',       // `varchar(100)`
+		] );
+	}
+
+	protected function subcontent_define_required_fields()
+	{
+		return [
+			'age',
+			'label',
+		];
+	}
+
+	public function after_setup_theme()
+	{
+		$this->filter_module( 'audit', 'get_default_terms', 2 );
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -136,6 +227,14 @@ class Diagnosed extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+
+		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
+		$this->register_shortcode( 'main_shortcode' );
+
+		if ( ! is_admin() )
+			return;
+
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
 	}
 
 	public function current_screen( $screen )
@@ -144,30 +243,62 @@ class Diagnosed extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 
-		} else if ( $this->posttype_supported( $screen->post_type ) ) {
+		} else if ( in_array( $screen->base, [ 'edit', 'post' ], TRUE ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( $this->posttype_supported( $screen->post_type ) ) {
 
-				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
-					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+				if ( 'edit' == $screen->base ) {
 
-			} else if ( 'post' === $screen->base ) {
+					if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+						$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 
-				if ( ! $this->get_setting( 'metabox_advanced' ) )
-					$this->hook_taxonomy_metabox_mainbox(
-						'main_taxonomy',
-						$screen->post_type,
-						$this->get_setting( 'selectmultiple_term', TRUE )
-							? '__checklist_restricted_terms_callback'
-							: '__singleselect_restricted_terms_callback'
-					);
+				} else if ( 'post' === $screen->base ) {
+
+					if ( ! $this->get_setting( 'metabox_advanced' ) )
+						$this->hook_taxonomy_metabox_mainbox(
+							'main_taxonomy',
+							$screen->post_type,
+							$this->get_setting( 'selectmultiple_term', TRUE )
+								? '__checklist_restricted_terms_callback'
+								: '__singleselect_restricted_terms_callback'
+						);
+				}
+			}
+
+			if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {
+
+				if ( 'post' == $screen->base ) {
+
+					if ( $this->role_can( [ 'reports', 'assign' ] ) )
+						$this->_hook_general_supportedbox( $screen, NULL, 'advanced', 'low', '-subcontent-grid-metabox' );
+
+					$this->subcontent_do_enqueue_asset_js( $screen );
+
+				} else if ( 'edit' == $screen->base ) {
+
+					if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
+
+						if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
+							$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
+
+						Scripts::enqueueColorBox();
+					}
+				}
 			}
 		}
 	}
 
 	public function admin_menu()
 	{
+		if ( $this->role_can( [ 'assign', 'reports' ] ) )
+			$this->_hook_submenu_adminpage( 'framepage', 'read' );
+
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
+	}
+
+	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	{
+		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
 
 	public function dashboard_widgets()
@@ -185,6 +316,41 @@ class Diagnosed extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+	}
+
+	public function load_framepage_adminpage( $context = 'framepage' )
+	{
+		$this->_load_submenu_adminpage( $context );
+		$this->subcontent_do_enqueue_app( TRUE );
+	}
+
+	public function render_framepage_adminpage()
+	{
+		$this->subcontent_do_render_iframe_content(
+			TRUE,
+			'framepage',
+			/* translators: %s: post title */
+			_x( 'Medical Grid for %s', 'Page Title', 'geditorial-diagnosed' ),
+			/* translators: %s: post title */
+			_x( 'Medical Overview for %s', 'Page Title', 'geditorial-diagnosed' )
+		);
+	}
+
+	public function setup_restapi()
+	{
+		$this->subcontent_restapi_register_routes();
+	}
+
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
+	}
+
+	public function audit_get_default_terms( $terms, $taxonomy )
+	{
+		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Medical Data', 'Default Term: Audit', 'geditorial-diagnosed' ),
+		] ) : $terms;
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )
