@@ -61,6 +61,9 @@ class Equipped extends gEditorial\Module
 				'contents_viewable',
 				'show_in_navmenus',
 			],
+			'_units' => [
+				'units_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
+			],
 		];
 	}
 
@@ -99,6 +102,40 @@ class Equipped extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function get_global_fields()
+	{
+		return [
+			'units' => [
+				'_supported' => [
+					'shoe_size_eu' => [
+						'title'       => _x( 'Shoe', 'Field Title', 'geditorial-equipped' ),
+						'description' => _x( 'Size of the Shoe by European standards', 'Field Description', 'geditorial-equipped' ),
+						'type'        => 'european_shoe',
+						'data_unit'   => 'european',
+						'icon'        => 'universal-access-alt',
+						'order'       => 200,
+					],
+					'shirt_size_int' => [
+						'title'       => _x( 'Shirt', 'Field Title', 'geditorial-equipped' ),
+						'description' => _x( 'Size of the Shirt by International standards', 'Field Description', 'geditorial-equipped' ),
+						'type'        => 'international_shirt',
+						'data_unit'   => 'international',
+						'icon'        => 'universal-access',
+						'order'       => 200,
+					],
+					'pants_size_int' => [
+						'title'       => _x( 'Pants', 'Field Title', 'geditorial-equipped' ),
+						'description' => _x( 'Size of the Pants by International standards', 'Field Description', 'geditorial-equipped' ),
+						'type'        => 'international_pants',
+						'data_unit'   => 'international',
+						'icon'        => 'universal-access',
+						'order'       => 200,
+					],
+				],
+			]
+		];
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -117,6 +154,11 @@ class Equipped extends gEditorial\Module
 
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, 'TRUE', 'units' );
 	}
 
 	public function current_screen( $screen )

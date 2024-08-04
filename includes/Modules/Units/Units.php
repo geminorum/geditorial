@@ -66,10 +66,6 @@ class Units extends gEditorial\Module
 				'skin_color' => _x( 'Skin Color', 'Titles', 'geditorial-units' ),
 				'eye_color'  => _x( 'Eye Color', 'Titles', 'geditorial-units' ),
 
-				'shoe_size_eu'   => _x( 'Shoe', 'Titles', 'geditorial-units' ),
-				'shirt_size_int' => _x( 'Shirt', 'Titles', 'geditorial-units' ),
-				'pants_size_int' => _x( 'Pants', 'Titles', 'geditorial-units' ),
-
 				'total_days'  => _x( 'Total Days', 'Titles', 'geditorial-units' ),
 				'total_hours' => _x( 'Total Hours', 'Titles', 'geditorial-units' ),
 
@@ -91,10 +87,6 @@ class Units extends gEditorial\Module
 				'hair_color' => _x( 'Color of the Hair', 'Descriptions', 'geditorial-units' ),
 				'skin_color' => _x( 'Color of the Skin', 'Descriptions', 'geditorial-units' ),
 				'eye_color'  => _x( 'Color of the Eye', 'Descriptions', 'geditorial-units' ),
-
-				'shoe_size_eu'   => _x( 'Size of the Shoe by European standards', 'Descriptions', 'geditorial-units' ),
-				'shirt_size_int' => _x( 'Size of the Shirt by International standards', 'Descriptions', 'geditorial-units' ),
-				'pants_size_int' => _x( 'Size of the Pants by International standards', 'Descriptions', 'geditorial-units' ),
 
 				'total_days'  => _x( 'The Total Number of the Days', 'Descriptions', 'geditorial-units' ),
 				'total_hours' => _x( 'The Total Number of the Hours', 'Descriptions', 'geditorial-units' ),
@@ -154,10 +146,6 @@ class Units extends gEditorial\Module
 
 				'payload_in_kg'   => [ 'type' => 'kilogram',     'icon' => 'image-filter', 'data_unit' => 'kilogram'    ],
 				'maxspeed_in_kmh' => [ 'type' => 'km_per_hour',  'icon' => 'car'         , 'data_unit' => 'km_per_hour' ],
-
-				'shoe_size_eu'   => [ 'type' => 'european_shoe', 'icon' => 'universal-access-alt'  , 'data_unit' => 'european'      ],
-				'shirt_size_int' => [ 'type' => 'international_shirt', 'icon' => 'universal-access', 'data_unit' => 'international' ],
-				'pants_size_int' => [ 'type' => 'international_pants', 'icon' => 'universal-access', 'data_unit' => 'international' ],
 
 				'total_days'  => [ 'type' => 'day' , 'data_unit' => 'day'  ],
 				'total_hours' => [ 'type' => 'hour', 'data_unit' => 'hour' ],
