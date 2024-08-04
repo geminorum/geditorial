@@ -130,22 +130,22 @@ msgctxt "Field Description"
 msgid "The last date for submitting the applications."
 msgstr ""
 
-#: Contest.php:209
+#: Contest.php:205
 msgctxt "Field Title"
 msgid "Submission Date"
 msgstr ""
 
-#: Contest.php:210
+#: Contest.php:206
 msgctxt "Field Description"
 msgid "Verified date for the submitted application."
 msgstr ""
 
-#: Contest.php:431
+#: Contest.php:427
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr ""
 
-#: Contest.php:494
+#: Contest.php:490
 msgctxt "Default Term: Audit"
 msgid "Apply Abandoned"
 msgstr ""

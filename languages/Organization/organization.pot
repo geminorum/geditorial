@@ -33,140 +33,140 @@ msgctxt "Settings"
 msgid "Redirects department archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Organization.php:148
 #: Organization.php:149
+#: Organization.php:150
 msgid "Department"
 msgid_plural "Departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:150
+#: Organization.php:151
 msgid "Department Category"
 msgid_plural "Department Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:151
+#: Organization.php:152
 msgid "Sub-department"
 msgid_plural "Sub-departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:152
+#: Organization.php:153
 msgid "Department Type"
 msgid_plural "Department Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:153
+#: Organization.php:154
 msgid "Department Status"
 msgid_plural "Department Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: paired item title
-#: Organization.php:158
+#: Organization.php:159
 msgctxt "Label: `paired_connected_to`"
 msgid "Member of %s Department"
 msgstr ""
 
-#: Organization.php:159
+#: Organization.php:160
 msgctxt "Label: Featured Image"
 msgid "Department Badge"
 msgstr ""
 
-#: Organization.php:160
+#: Organization.php:161
 msgctxt "Label: MetaBox Title"
 msgid "The Department"
 msgstr ""
 
-#: Organization.php:163
+#: Organization.php:164
 msgctxt "Label: MetaBox Title"
 msgid "In This Department"
 msgstr ""
 
-#: Organization.php:166
+#: Organization.php:167
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Organization.php:169
+#: Organization.php:170
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Organization.php:172
+#: Organization.php:173
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Organization.php:181
+#: Organization.php:182
 msgctxt "Misc: `column_icon_title`"
 msgid "Department"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Organization.php:186
+#: Organization.php:187
 msgctxt "MetaBox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Organization.php:196
+#: Organization.php:197
 msgctxt "Default Term"
 msgid "Working"
 msgstr ""
 
-#: Organization.php:197
+#: Organization.php:198
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr ""
 
-#: Organization.php:198
+#: Organization.php:199
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr ""
 
-#: Organization.php:199
+#: Organization.php:200
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Organization.php:200
+#: Organization.php:201
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Organization.php:230
+#: Organization.php:226
 msgctxt "Field Title"
 msgid "Administrators"
 msgstr ""
 
-#: Organization.php:231
+#: Organization.php:227
 msgctxt "Field Description"
 msgid "People Who Participate as Administrators in This Organization"
 msgstr ""
 
-#: Organization.php:240
+#: Organization.php:236
 msgctxt "Field Title"
 msgid "Organization Code"
 msgstr ""
 
-#: Organization.php:241
+#: Organization.php:237
 msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr ""
 
-#: Organization.php:250
+#: Organization.php:246
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr ""
 
-#: Organization.php:251
+#: Organization.php:247
 msgctxt "Field Description"
 msgid "Unique Organization Number"
 msgstr ""
 
-#: Organization.php:693
+#: Organization.php:691
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr ""

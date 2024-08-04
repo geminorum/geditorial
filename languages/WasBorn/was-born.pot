@@ -193,24 +193,24 @@ msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr ""
 
-#: WasBorn.php:1013
+#: WasBorn.php:1000
 msgctxt "Header"
 msgid "Birthday Tools"
 msgstr ""
 
-#: WasBorn.php:1025
+#: WasBorn.php:1012
 msgctxt "Card Title"
 msgid "Post-Date by Birthday"
 msgstr ""
 
 #. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1066
+#: WasBorn.php:1053
 msgctxt "Notice"
 msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1072
+#: WasBorn.php:1059
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
 msgstr ""

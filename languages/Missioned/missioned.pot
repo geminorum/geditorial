@@ -154,32 +154,32 @@ msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Missioned.php:257
+#: Missioned.php:252
 msgctxt "Field Title"
 msgid "Officers"
 msgstr ""
 
-#: Missioned.php:258
+#: Missioned.php:253
 msgctxt "Field Description"
 msgid "People Who Participate as Officers in This Mission"
 msgstr ""
 
-#: Missioned.php:266
+#: Missioned.php:261
 msgctxt "Field Title"
 msgid "Mission Code"
 msgstr ""
 
-#: Missioned.php:267
+#: Missioned.php:262
 msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr ""
 
-#: Missioned.php:592
+#: Missioned.php:587
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr ""
 
-#: Missioned.php:601
+#: Missioned.php:596
 msgctxt "Card"
 msgid "Mission Date from Meta-data"
 msgstr ""

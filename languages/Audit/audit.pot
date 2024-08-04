@@ -231,55 +231,55 @@ msgid "No empty attribute available. Please install the default attributes."
 msgstr ""
 
 #. translators: %s: post title
-#: Audit.php:816
+#: Audit.php:820
 msgctxt "Notice"
 msgid "No Audits applied for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: count terms, %2$s: post title
-#: Audit.php:822
+#: Audit.php:826
 msgctxt "Notice"
 msgid "%1$s attributes set for &ldquo;%2$s&rdquo;"
 msgstr ""
 
-#: Audit.php:832
+#: Audit.php:836
 msgctxt "Card Title"
 msgid "Force Auto Audit"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Audit.php:839
+#: Audit.php:843
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
-#: Audit.php:841
+#: Audit.php:845
 msgctxt "Button Description"
 msgid "Tries to auto-set the attributes on supported posts."
 msgstr ""
 
 #. translators: %1$s: empty post count, %2$s: assigned term count
-#: Audit.php:854
+#: Audit.php:858
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr ""
 
-#: Audit.php:867
+#: Audit.php:871
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:882
+#: Audit.php:886
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr ""
 
-#: Audit.php:887
+#: Audit.php:891
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:894
+#: Audit.php:898
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Chronicles\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-31 22:23+0330\n"
+"PO-Revision-Date: 2024-08-02 22:07+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -98,7 +98,7 @@ msgstr "گاه‌نمایی"
 #: Chronicles.php:126
 msgctxt "Field Title"
 msgid "Establish Date"
-msgstr "تاریخ برقراری"
+msgstr "تاریخ ایجاد"
 
 #: Chronicles.php:127
 msgctxt "Field Description"
@@ -108,7 +108,7 @@ msgstr "تاریخی که سازمان در آن تأسیس شده است"
 #: Chronicles.php:135
 msgctxt "Field Title"
 msgid "Abolish Date"
-msgstr "تاریخ فروپاشی"
+msgstr "تاریخ انحلال"
 
 #: Chronicles.php:136
 msgctxt "Field Description"
@@ -158,18 +158,18 @@ msgid "Place Where the Person Died"
 msgstr "مکانی که فرد در آن درگذشته است"
 
 #. translators: %s: post title
-#: Chronicles.php:328
+#: Chronicles.php:284
 msgctxt "Page Title"
 msgid "Timeline Grid for %s"
 msgstr "جدول گاه‌نمایی برای %s"
 
 #. translators: %s: post title
-#: Chronicles.php:330
+#: Chronicles.php:286
 msgctxt "Page Title"
 msgid "Timeline Overview for %s"
 msgstr "نمای‌کلی گاه‌نمایی برای %s"
 
-#: Chronicles.php:347
+#: Chronicles.php:303
 msgctxt "Default Term: Audit"
 msgid "Empty Timeline Data"
 msgstr "داده‌های گاه‌نمایی خالی"

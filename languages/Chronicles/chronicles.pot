@@ -155,18 +155,18 @@ msgid "Place Where the Person Died"
 msgstr ""
 
 #. translators: %s: post title
-#: Chronicles.php:321
+#: Chronicles.php:284
 msgctxt "Page Title"
 msgid "Timeline Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Chronicles.php:323
+#: Chronicles.php:286
 msgctxt "Page Title"
 msgid "Timeline Overview for %s"
 msgstr ""
 
-#: Chronicles.php:340
+#: Chronicles.php:303
 msgctxt "Default Term: Audit"
 msgid "Empty Timeline Data"
 msgstr ""

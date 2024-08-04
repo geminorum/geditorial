@@ -284,13 +284,13 @@ msgid "%s posts after-cared!"
 msgstr ""
 
 #. translators: %s: item count
-#: includes/Internals/PairedCore.php:327
-#: includes/Internals/PairedCore.php:369
+#: includes/Internals/PairedCore.php:342
+#: includes/Internals/PairedCore.php:384
 msgctxt "Internal: Paired: Post Summary Title"
 msgid "Connected (%s)"
 msgstr ""
 
-#: includes/Internals/PairedCore.php:410
+#: includes/Internals/PairedCore.php:425
 msgctxt "Internal: Paired: Post Summary Title"
 msgid "Export Options"
 msgstr ""
@@ -341,8 +341,8 @@ msgstr ""
 #. translators: %s: posttype label
 #: includes/Internals/PairedTools.php:45
 #: includes/Internals/PairedTools.php:82
-#: includes/Internals/PostDate.php:121
-#: includes/Internals/PostDate.php:133
+#: includes/Internals/PostDate.php:125
+#: includes/Internals/PostDate.php:137
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
@@ -460,77 +460,77 @@ msgid "There are no terms available!"
 msgstr ""
 
 #. translators: %1$s: post title, %2$s: error message
-#: includes/Internals/PairedTools.php:622
-#: includes/Internals/PairedTools.php:686
+#: includes/Internals/PairedTools.php:627
+#: includes/Internals/PairedTools.php:695
 msgctxt "Internal: PairedTools: Notice"
 msgid "Something is wrong for &ldquo;%1$s&rdquo;: %2$s"
 msgstr ""
 
 #. translators: %1$s: count terms, %2$s: post title
-#: includes/Internals/PairedTools.php:628
-#: includes/Internals/PairedTools.php:692
+#: includes/Internals/PairedTools.php:633
+#: includes/Internals/PairedTools.php:701
 msgctxt "Internal: PairedTools: Notice"
 msgid "%1$s terms set for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %s: post title
-#: includes/Internals/PairedTools.php:680
+#: includes/Internals/PairedTools.php:689
 msgctxt "Internal: PairedTools: Notice"
 msgid "Something is wrong for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: post date, %2$s: post title
-#: includes/Internals/PostDate.php:88
+#: includes/Internals/PostDate.php:92
 msgctxt "Notice"
 msgid "There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: post date, %2$s: post title
-#: includes/Internals/PostDate.php:98
+#: includes/Internals/PostDate.php:102
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;"
 msgstr ""
 
-#: includes/Internals/PostDate.php:108
+#: includes/Internals/PostDate.php:112
 msgctxt "Internal: PostDate: Card Title"
 msgid "Post-date by Meta-fields"
 msgstr ""
 
-#: includes/Internals/PostDate.php:111
+#: includes/Internals/PostDate.php:115
 msgctxt "Internal: PostDate: Button"
 msgid "Sync Dates"
 msgstr ""
 
-#: includes/Internals/PostDate.php:142
+#: includes/Internals/PostDate.php:146
 msgctxt "Button"
 msgid "Set Post-Date"
 msgstr ""
 
-#: includes/Internals/PostDate.php:144
+#: includes/Internals/PostDate.php:148
 msgctxt "Internal: PostDate: Button Description"
 msgid "Tries to set the post-date form meta field data for all the main posts."
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: post title
-#: includes/Internals/PostDate.php:172
+#: includes/Internals/PostDate.php:176
 msgctxt "Notice"
 msgid "Date data (%1$s) is not valid for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: post title
-#: includes/Internals/PostDate.php:183
+#: includes/Internals/PostDate.php:187
 msgctxt "Notice"
 msgid "Date data (%1$s) already is set for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %s: field title
-#: includes/Internals/PostTypeFields.php:845
+#: includes/Internals/PostTypeFields.php:853
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s"
 msgstr ""
 
 #. translators: %s: field title
-#: includes/Internals/PostTypeFields.php:849
+#: includes/Internals/PostTypeFields.php:857
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s [Ignored]"
 msgstr ""
@@ -880,29 +880,29 @@ msgid "%s ago"
 msgstr ""
 
 #. translators: %s: field title
-#: includes/Internals/SubContents.php:602
+#: includes/Internals/SubContents.php:607
 msgctxt "Internal: Subcontents: Import Title"
 msgid "SubContent: %s"
 msgstr ""
 
 #. translators: %s: source title
-#: includes/Internals/SubContents.php:685
+#: includes/Internals/SubContents.php:690
 msgctxt "Internal: Subcontents: Import Desc"
 msgid "[Imported]: %s"
 msgstr ""
 
-#: includes/Internals/SubContents.php:697
+#: includes/Internals/SubContents.php:702
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the parent post."
 msgstr ""
 
-#: includes/Internals/SubContents.php:799
+#: includes/Internals/SubContents.php:804
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the subcontent comment."
 msgstr ""
 
 #. translators: %s: user display-name (user email)
-#: includes/Internals/SubContents.php:840
+#: includes/Internals/SubContents.php:845
 msgctxt "Internal: Subcontents: User Row"
 msgid "By %s"
 msgstr ""
@@ -1089,12 +1089,12 @@ msgctxt "Modules: Assigned"
 msgid "Editorial Assignments"
 msgstr ""
 
-#: includes/Modules/Athlete/Athlete.php:31
+#: includes/Modules/Athlete/Athlete.php:32
 msgctxt "Modules: Athlete"
 msgid "Athlete"
 msgstr ""
 
-#: includes/Modules/Athlete/Athlete.php:32
+#: includes/Modules/Athlete/Athlete.php:33
 msgctxt "Modules: Athlete"
 msgid "Physical Skills Data"
 msgstr ""
@@ -1449,7 +1449,7 @@ msgctxt "Modules: Datacodes"
 msgid "Barcodes for Everything"
 msgstr ""
 
-#: includes/Modules/Descendants/Descendants.php:15
+#: includes/Modules/Descendants/Descendants.php:18
 msgctxt "Modules: Descendants"
 msgid "Descendants"
 msgstr ""
@@ -1609,12 +1609,12 @@ msgctxt "Modules: Educated"
 msgid "Editorial Educations"
 msgstr ""
 
-#: includes/Modules/Employed/Employed.php:29
+#: includes/Modules/Employed/Employed.php:27
 msgctxt "Modules: Employed"
 msgid "Employed"
 msgstr ""
 
-#: includes/Modules/Employed/Employed.php:30
+#: includes/Modules/Employed/Employed.php:28
 msgctxt "Modules: Employed"
 msgid "Editorial Employment Records"
 msgstr ""
@@ -1954,6 +1954,16 @@ msgctxt "Modules: Iranian"
 msgid "Tools for Iranian Editorial"
 msgstr ""
 
+#: includes/Modules/Jobbed/Jobbed.php:25
+msgctxt "Modules: Jobbed"
+msgid "Jobbed"
+msgstr ""
+
+#: includes/Modules/Jobbed/Jobbed.php:26
+msgctxt "Modules: Jobbed"
+msgid "Editorial Job Titles"
+msgstr ""
+
 #: includes/Modules/Kiosk/Kiosk.php:24
 msgctxt "Modules: Kiosk"
 msgid "Kiosk"
@@ -2184,12 +2194,12 @@ msgctxt "Modules: National Library"
 msgid "Tools for National Library and Archives"
 msgstr ""
 
-#: includes/Modules/NextOfKin/NextOfKin.php:31
+#: includes/Modules/NextOfKin/NextOfKin.php:32
 msgctxt "Modules: Next of Kin"
 msgid "Next of Kin"
 msgstr ""
 
-#: includes/Modules/NextOfKin/NextOfKin.php:32
+#: includes/Modules/NextOfKin/NextOfKin.php:33
 msgctxt "Modules: Next of Kin"
 msgid "Familial Relations"
 msgstr ""
@@ -2324,22 +2334,22 @@ msgctxt "Modules: Person"
 msgid "People, the Way Involved in Your Site"
 msgstr ""
 
-#: includes/Modules/Personage/Personage.php:42
+#: includes/Modules/Personage/Personage.php:41
 msgctxt "Modules: Personage"
 msgid "Personage"
 msgstr ""
 
-#: includes/Modules/Personage/Personage.php:43
+#: includes/Modules/Personage/Personage.php:42
 msgctxt "Modules: Personage"
 msgid "Human Resource Management for Editorial"
 msgstr ""
 
-#: includes/Modules/Phonebook/Phonebook.php:30
+#: includes/Modules/Phonebook/Phonebook.php:32
 msgctxt "Modules: Phonebook"
 msgid "Phonebook"
 msgstr ""
 
-#: includes/Modules/Phonebook/Phonebook.php:31
+#: includes/Modules/Phonebook/Phonebook.php:33
 msgctxt "Modules: Phonebook"
 msgid "Contact Information for Contents"
 msgstr ""
@@ -3435,7 +3445,7 @@ msgctxt "Modules: Yearly"
 msgid "Content By Years"
 msgstr ""
 
-#: includes/Plugin.php:311
+#: includes/Plugin.php:312
 msgctxt "Plugin: Main: Screen Settings Title"
 msgid "Restrictions"
 msgstr ""

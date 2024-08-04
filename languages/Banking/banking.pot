@@ -23,147 +23,140 @@ msgctxt "Setting Description"
 msgid "Roles that can assign bank accounts."
 msgstr ""
 
-#. translators: %s: count number
 #: Banking.php:84
-msgid "%s Account"
-msgid_plural "%s Accounts"
-msgstr[0] ""
-msgstr[1] ""
-
-#: Banking.php:88
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr ""
 
-#: Banking.php:89
+#: Banking.php:85
 msgctxt "Field Label: `fullname`"
 msgid "Account Owner"
 msgstr ""
 
-#: Banking.php:90
+#: Banking.php:86
 msgctxt "Field Label: `card`"
 msgid "Card Number"
 msgstr ""
 
-#: Banking.php:91
+#: Banking.php:87
 msgctxt "Field Label: `iban`"
 msgid "IBAN"
 msgstr ""
 
-#: Banking.php:92
+#: Banking.php:88
 msgctxt "Field Label: `account`"
 msgid "Account Number"
 msgstr ""
 
-#: Banking.php:93
+#: Banking.php:89
 msgctxt "Field Label: `bankname`"
 msgid "Bank Name"
 msgstr ""
 
-#: Banking.php:94
+#: Banking.php:90
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Banking.php:100
+#: Banking.php:96
 msgctxt "Notice"
 msgid "There is no account information available!"
 msgstr ""
 
-#: Banking.php:101
+#: Banking.php:97
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the bank accounts."
 msgstr ""
 
-#: Banking.php:108
+#: Banking.php:104
 msgctxt "MetaBox Title"
 msgid "Banking"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:112
+#: Banking.php:108
 msgctxt "Button Title"
 msgid "Bank Accounts of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:114
+#: Banking.php:110
 msgctxt "Button Text"
 msgid "%1$s Manage the Accounts of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:117
+#: Banking.php:113
 msgctxt "Action Title"
 msgid "Bank Accounts of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:119
+#: Banking.php:115
 msgctxt "Action Text"
 msgid "Bank Accounts"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:122
+#: Banking.php:118
 msgctxt "Row Title"
 msgid "Bank Accounts of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:124
+#: Banking.php:120
 msgctxt "Row Text"
 msgid "Bank Accounts"
 msgstr ""
 
-#: Banking.php:135
+#: Banking.php:131
 msgctxt "Field Title"
 msgid "IBAN"
 msgstr ""
 
-#: Banking.php:136
+#: Banking.php:132
 msgctxt "Field Description"
 msgid "International Bank Account Number"
 msgstr ""
 
-#: Banking.php:141
+#: Banking.php:137
 msgctxt "Field Title"
 msgid "Card Number"
 msgstr ""
 
-#: Banking.php:142
+#: Banking.php:138
 msgctxt "Field Description"
 msgid "Bank Card Number"
 msgstr ""
 
 #. translators: %s: post title
-#: Banking.php:315
+#: Banking.php:275
 msgctxt "Page Title"
 msgid "Bank Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Banking.php:317
+#: Banking.php:277
 msgctxt "Page Title"
 msgid "Bank Overview for %s"
 msgstr ""
 
-#: Banking.php:334
+#: Banking.php:294
 msgctxt "Default Term: Audit"
 msgid "Empty Banking Data"
 msgstr ""
 
-#: Banking.php:336
+#: Banking.php:296
 msgctxt "Default Term: Audit"
 msgid "Empty IBAN"
 msgstr ""
 
-#: Banking.php:337
+#: Banking.php:297
 msgctxt "Default Term: Audit"
 msgid "Invalid IBAN"
 msgstr ""
 
-#: Banking.php:338
+#: Banking.php:298
 msgctxt "Default Term: Audit"
 msgid "Duplicate IBAN"
 msgstr ""

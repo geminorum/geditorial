@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Personage\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-31 22:34+0330\n"
+"PO-Revision-Date: 2024-08-02 21:13+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -16,19 +16,19 @@ msgstr ""
 "X-Domain: geditorial-personage\n"
 
 #. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
-#: ModuleHelper.php:88
+#: ModuleHelper.php:44
 msgctxt "Helper: Make Full-name: Edit"
 msgid "%1$s %3$s %2$s"
 msgstr ""
 
 #. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
-#: ModuleHelper.php:105
+#: ModuleHelper.php:61
 msgctxt "Helper: Make Full-name: Print"
 msgid "%1$s %3$s %2$s"
 msgstr ""
 
 #. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
-#: ModuleHelper.php:123
+#: ModuleHelper.php:79
 msgctxt "Helper: Make Full-name: Display"
 msgid "%2$s, %1$s %3$s"
 msgstr "%2$s، %1$s"
@@ -53,344 +53,333 @@ msgctxt "Setting Description"
 msgid "Tries to fill the post title with meta-data prior to importing data."
 msgstr "برای پر کردن عنوان نوشته به کمک متا، پیش از دورن‌ریزی تلاش می‌کند."
 
-#: Personage.php:149
+#: Personage.php:148
 msgid "Human"
 msgid_plural "Humans"
 msgstr[0] "انسان‌ها"
 msgstr[1] "انسان"
 
-#: Personage.php:150
+#: Personage.php:149
 msgid "Human Group"
 msgid_plural "Humans Groups"
 msgstr[0] "گروه‌های انسانی"
 msgstr[1] "گروه انسانی"
 
-#: Personage.php:151
+#: Personage.php:150
 msgid "Job Title"
 msgid_plural "Job Titles"
 msgstr[0] "عناوین شغلی"
 msgstr[1] "عنوان شغل"
 
-#: Personage.php:152
+#: Personage.php:151
 msgid "Human Status"
 msgid_plural "Human Statuses"
 msgstr[0] "وضعیت‌های انسانی"
 msgstr[1] "وضعیت انسانی"
 
-#: Personage.php:156
+#: Personage.php:155
 msgctxt "Label: Featured Image"
 msgid "Profile Picture"
 msgstr "تصویر نمایه"
 
-#: Personage.php:157
+#: Personage.php:156
 msgctxt "Label: MetaBox Title"
 msgid "Personage"
 msgstr "نقاب"
 
-#: Personage.php:158
+#: Personage.php:157
 msgctxt "Label: `excerpt_label`"
 msgid "Biography"
 msgstr "زندگی‌نامه"
 
-#: Personage.php:161
+#: Personage.php:160
 msgctxt "Label: Menu Name"
 msgid "Groups"
 msgstr "گروه‌ها"
 
-#: Personage.php:162
+#: Personage.php:161
 msgctxt "Label: Show Option All"
 msgid "Humans Groups"
 msgstr "گروه انسانی"
 
-#: Personage.php:163
+#: Personage.php:162
 msgctxt "Label: Show Option No Terms"
 msgid "(Un-Grouped)"
 msgstr "(بی‌گروه)"
 
-#: Personage.php:166
+#: Personage.php:165
 msgctxt "Label: Show Option All"
 msgid "Job Titles"
 msgstr "عنوان شغلی"
 
-#: Personage.php:167 Personage.php:172
+#: Personage.php:166 Personage.php:171
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr "(نامعلوم)"
 
-#: Personage.php:170
+#: Personage.php:169
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: Personage.php:171
+#: Personage.php:170
 msgctxt "Label: Show Option All"
 msgid "Statuses"
 msgstr "وضعیت"
 
-#: Personage.php:177
+#: Personage.php:176
 msgctxt "Default Term: Name"
 msgid "[Ungrouped]"
 msgstr "[گروه‌بندی‌نشده‌ها]"
 
-#: Personage.php:178
+#: Personage.php:177
 msgctxt "Default Term: Description"
 msgid "Ungrouped Humans"
 msgstr "افراد بدون گروه"
 
-#: Personage.php:188
+#: Personage.php:187
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Human Status Summary"
 msgstr "گزارش وضعیت انسانی گروهه شما"
 
-#: Personage.php:189
+#: Personage.php:188
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Human Status Summary"
 msgstr "گزارش وضعیت انسانی تحریریه"
 
-#: Personage.php:199
+#: Personage.php:198
 msgctxt "Default Term: `Status`"
 msgid "Active"
 msgstr "فعال"
 
-#: Personage.php:200
+#: Personage.php:199
 msgctxt "Default Term: `Status`"
 msgid "Inactive"
 msgstr "غیرفعال"
 
-#: Personage.php:201
+#: Personage.php:200
 msgctxt "Default Term: `Status`"
 msgid "Deceased"
 msgstr "متوفی"
 
-#: Personage.php:202
+#: Personage.php:201
 msgctxt "Default Term: `Status`"
 msgid "Martyred"
 msgstr "شهید"
 
-#: Personage.php:203
+#: Personage.php:202
 msgctxt "Default Term: `Status`"
 msgid "Expelled"
 msgstr "اخراج"
 
-#: Personage.php:204
+#: Personage.php:203
 msgctxt "Default Term: `Status`"
 msgid "Dismissed"
 msgstr "انفصال"
 
-#: Personage.php:205
+#: Personage.php:204
 msgctxt "Default Term: `Status`"
 msgid "Hushed"
 msgstr "مسکوت"
 
-#: Personage.php:206
+#: Personage.php:205
 msgctxt "Default Term: `Status`"
 msgid "Concurrency"
 msgstr "همزمانی"
 
-#: Personage.php:218
+#: Personage.php:217
 msgctxt "Field Title"
 msgid "First Name"
 msgstr "نام"
 
-#: Personage.php:219
+#: Personage.php:218
 msgctxt "Field Description"
 msgid "Given Name of the Person"
 msgstr "نام کوچک فرد"
 
-#: Personage.php:226
+#: Personage.php:225
 msgctxt "Field Title"
 msgid "Middle Name"
 msgstr "نام میانی"
 
-#: Personage.php:227
+#: Personage.php:226
 msgctxt "Field Description"
 msgid "Middle Name of the Person"
 msgstr "نام میانی فرد"
 
-#: Personage.php:231
+#: Personage.php:230
 msgctxt "Field Title"
 msgid "Last Name"
 msgstr "نام خانوادگی"
 
-#: Personage.php:232
+#: Personage.php:231
 msgctxt "Field Description"
 msgid "Family Name of the Person"
 msgstr "نام خانوادگی فرد"
 
-#: Personage.php:239
+#: Personage.php:238
 msgctxt "Field Title"
 msgid "Full Name"
 msgstr "نام کامل"
 
-#: Personage.php:240
+#: Personage.php:239
 msgctxt "Field Description"
 msgid "Full Name of the Person"
 msgstr "نام کامل فرد"
 
-#: Personage.php:247
+#: Personage.php:246
 msgctxt "Field Title"
 msgid "Pseudonym"
 msgstr "نام مستعار"
 
-#: Personage.php:248
+#: Personage.php:247
 msgctxt "Field Description"
 msgid "Alias Name of the Person"
 msgstr "نام مستعار فرد"
 
-#: Personage.php:254
+#: Personage.php:253
 msgctxt "Field Title"
 msgid "Father Name"
 msgstr "نام پدر"
 
-#: Personage.php:255
+#: Personage.php:254
 msgctxt "Field Description"
 msgid "Name of the Father of the Person"
 msgstr "نام پدر فرد"
 
-#: Personage.php:261
+#: Personage.php:260
 msgctxt "Field Title"
 msgid "Father Profile"
 msgstr "نمایه پدر"
 
-#: Personage.php:262
+#: Personage.php:261
 msgctxt "Field Description"
 msgid "Profile of the Father of the Person"
 msgstr "نمایه پدر فرد"
 
-#: Personage.php:268
+#: Personage.php:267
 msgctxt "Field Title"
 msgid "Mother Name"
 msgstr "نام مادر"
 
-#: Personage.php:269
+#: Personage.php:268
 msgctxt "Field Description"
 msgid "Name of the Mother of the Person"
 msgstr "نام مادر فرد"
 
-#: Personage.php:273
+#: Personage.php:272
 msgctxt "Field Title"
 msgid "Mother Profile"
 msgstr "نمایه مادر"
 
-#: Personage.php:274
+#: Personage.php:273
 msgctxt "Field Description"
 msgid "Profile of the Mother of the Person"
 msgstr "نمایه مادر فرد"
 
-#: Personage.php:280
+#: Personage.php:279
 msgctxt "Field Title"
 msgid "Spouse Name"
 msgstr "نام همسر"
 
-#: Personage.php:281
+#: Personage.php:280
 msgctxt "Field Description"
 msgid "Name of the Spouse of the Person"
 msgstr "نام همسر فرد"
 
-#: Personage.php:285
+#: Personage.php:284
 msgctxt "Field Title"
 msgid "Spouse Profile"
 msgstr "نمایه همسر"
 
-#: Personage.php:286
+#: Personage.php:285
 msgctxt "Field Description"
 msgid "Profile of the Spouse of the Person"
 msgstr "نمایه همسر فرد"
 
-#: Personage.php:293
-msgctxt "Field Description"
-msgid "Primary Mobile Contact Number of the Person"
-msgstr "شماره تماس با همراه اصلی فرد"
-
-#: Personage.php:300
-msgctxt "Field Title"
-msgid "Secondary Mobile"
-msgstr "همراه دوم"
-
-#: Personage.php:301
-msgctxt "Field Description"
-msgid "Secondary Mobile Contact Number of the Person"
-msgstr "شماره تماس با همراه فرعی فرد"
-
-#: Personage.php:307
-msgctxt "Field Description"
-msgid "Primary Phone Contact Number of the Person"
-msgstr "شماره تماس ثابت اصلی فرد"
-
-#: Personage.php:313
-msgctxt "Field Title"
-msgid "Secondary Phone"
-msgstr "تلفن دوم"
-
-#: Personage.php:314
-msgctxt "Field Description"
-msgid "Secondary Phone Contact Number of the Person"
-msgstr "شماره تماس ثابت فرعی فرد"
-
-#: Personage.php:319
+#: Personage.php:291
 msgctxt "Field Title"
 msgid "Identity Number"
 msgstr "کد ملی"
 
-#: Personage.php:320
+#: Personage.php:292
 msgctxt "Field Description"
 msgid "Unique National Identity Number"
 msgstr "شماره ملی شناسایی یکتا"
 
-#: Personage.php:326
+#: Personage.php:298
 msgctxt "Field Title"
 msgid "Passport Number"
 msgstr "شماره گذرنامه"
 
-#: Personage.php:327
+#: Personage.php:299
 msgctxt "Field Description"
 msgid "Personagel Passport Number"
 msgstr "شماره گذرنامه شخصی"
 
-#: Personage.php:337
-msgctxt "Field Title"
-msgid "Home Address"
-msgstr "نشانی خانه"
-
-#: Personage.php:338
-msgctxt "Field Description"
-msgid "Full home address, including city, state etc."
-msgstr "نشانی کامل خانه، شامل شهر و استان و غیره."
-
-#: Personage.php:343
-msgctxt "Field Title"
-msgid "Work Address"
-msgstr "نشانی محل کار"
-
-#: Personage.php:344
-msgctxt "Field Description"
-msgid "Full work address, including city, state etc."
-msgstr "نشانی کامل محل کار، شامل شهر و استان و غیره."
-
-#: Personage.php:600
+#: Personage.php:556
 msgctxt "Default Term: Audit"
 msgid "Empty Identity Number"
 msgstr "شماره شناسایی خالی"
 
-#: Personage.php:601
-msgctxt "Default Term: Audit"
-msgid "Empty Mobile Number"
-msgstr "شماره همراه خالی"
-
-#: Personage.php:710
+#: Personage.php:656
 msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr "شناسایی"
 
-#: Personage.php:1126
+#: Personage.php:1049
 msgctxt "Header"
 msgid "People Parser"
 msgstr "تجزیه‌کننده افراد"
 
-#: Personage.php:1137
+#: Personage.php:1060
 msgctxt "Button"
 msgid "Parse Lines"
 msgstr "تجزیه خطوط"
+
+#~ msgctxt "Field Description"
+#~ msgid "Primary Mobile Contact Number of the Person"
+#~ msgstr "شماره تماس با همراه اصلی فرد"
+
+#~ msgctxt "Field Title"
+#~ msgid "Secondary Mobile"
+#~ msgstr "همراه دوم"
+
+#~ msgctxt "Field Description"
+#~ msgid "Secondary Mobile Contact Number of the Person"
+#~ msgstr "شماره تماس با همراه فرعی فرد"
+
+#~ msgctxt "Field Description"
+#~ msgid "Primary Phone Contact Number of the Person"
+#~ msgstr "شماره تماس ثابت اصلی فرد"
+
+#~ msgctxt "Field Title"
+#~ msgid "Secondary Phone"
+#~ msgstr "تلفن دوم"
+
+#~ msgctxt "Field Description"
+#~ msgid "Secondary Phone Contact Number of the Person"
+#~ msgstr "شماره تماس ثابت فرعی فرد"
+
+#~ msgctxt "Field Title"
+#~ msgid "Home Address"
+#~ msgstr "نشانی خانه"
+
+#~ msgctxt "Field Description"
+#~ msgid "Full home address, including city, state etc."
+#~ msgstr "نشانی کامل خانه، شامل شهر و استان و غیره."
+
+#~ msgctxt "Field Title"
+#~ msgid "Work Address"
+#~ msgstr "نشانی محل کار"
+
+#~ msgctxt "Field Description"
+#~ msgid "Full work address, including city, state etc."
+#~ msgstr "نشانی کامل محل کار، شامل شهر و استان و غیره."
+
+#~ msgctxt "Default Term: Audit"
+#~ msgid "Empty Mobile Number"
+#~ msgstr "شماره همراه خالی"
 
 #~ msgctxt "Field Title"
 #~ msgid "Date of Birth"

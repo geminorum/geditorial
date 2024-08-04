@@ -503,25 +503,25 @@ msgctxt "Column Title"
 msgid "Measurements"
 msgstr ""
 
-#: Units.php:421
+#: Units.php:425
 msgctxt "Message"
 msgid "No Measurement Units"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:650
+#: Units.php:654
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:659
+#: Units.php:663
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:668
+#: Units.php:672
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr ""

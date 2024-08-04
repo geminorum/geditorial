@@ -174,32 +174,32 @@ msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Ranged.php:264
+#: Ranged.php:259
 msgctxt "Field Title"
 msgid "Instructors"
 msgstr ""
 
-#: Ranged.php:265
+#: Ranged.php:260
 msgctxt "Field Description"
 msgid "People Who Participate as Instructors in This Shooting Session"
 msgstr ""
 
-#: Ranged.php:273
+#: Ranged.php:268
 msgctxt "Field Title"
 msgid "Shooting Code"
 msgstr ""
 
-#: Ranged.php:274
+#: Ranged.php:269
 msgctxt "Field Description"
 msgid "Unique Shooting Code"
 msgstr ""
 
-#: Ranged.php:599
+#: Ranged.php:594
 msgctxt "Header"
 msgid "Shooting Session Tools"
 msgstr ""
 
-#: Ranged.php:608
+#: Ranged.php:603
 msgctxt "Card"
 msgid "Shooting Session Date from Meta-data"
 msgstr ""

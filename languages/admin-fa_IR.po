@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-01 20:14+0330\n"
+"PO-Revision-Date: 2024-08-02 21:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -283,12 +283,12 @@ msgid "%s posts after-cared!"
 msgstr "%s فرسته پسانگهداری شد!"
 
 #. translators: %s: item count
-#: includes/Internals/PairedCore.php:327 includes/Internals/PairedCore.php:369
+#: includes/Internals/PairedCore.php:342 includes/Internals/PairedCore.php:384
 msgctxt "Internal: Paired: Post Summary Title"
 msgid "Connected (%s)"
 msgstr "مرتبط (%s)"
 
-#: includes/Internals/PairedCore.php:410
+#: includes/Internals/PairedCore.php:425
 msgctxt "Internal: Paired: Post Summary Title"
 msgid "Export Options"
 msgstr "گزینه‌های برون‌بری"
@@ -519,13 +519,13 @@ msgid "Date data (%1$s) already is set for &ldquo;%2$s&rdquo;"
 msgstr "داده‌ تاریخ (%1$s) ارائه‌شده برای &rdquo;%2$s&ldquo; پیش از این تنظیم شده است"
 
 #. translators: %s: field title
-#: includes/Internals/PostTypeFields.php:845
+#: includes/Internals/PostTypeFields.php:853
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s"
 msgstr "فیلد: %s"
 
 #. translators: %s: field title
-#: includes/Internals/PostTypeFields.php:849
+#: includes/Internals/PostTypeFields.php:857
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s [Ignored]"
 msgstr "فیلد: %s [نادیده]"
@@ -875,29 +875,29 @@ msgid "%s ago"
 msgstr "%s پیش"
 
 #. translators: %s: field title
-#: includes/Internals/SubContents.php:598
+#: includes/Internals/SubContents.php:607
 msgctxt "Internal: Subcontents: Import Title"
 msgid "SubContent: %s"
 msgstr "زیرمحتوا: %s"
 
 #. translators: %s: source title
-#: includes/Internals/SubContents.php:681
+#: includes/Internals/SubContents.php:690
 msgctxt "Internal: Subcontents: Import Desc"
 msgid "[Imported]: %s"
 msgstr "[درون‌ریزی‌شده]: %s"
 
-#: includes/Internals/SubContents.php:693
+#: includes/Internals/SubContents.php:702
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the parent post."
 msgstr "شناسه برای فرسته والد."
 
-#: includes/Internals/SubContents.php:795
+#: includes/Internals/SubContents.php:804
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the subcontent comment."
 msgstr "شناسه برای زیرمحتوای دیدگاهی."
 
 #. translators: %s: user display-name (user email)
-#: includes/Internals/SubContents.php:836
+#: includes/Internals/SubContents.php:845
 msgctxt "Internal: Subcontents: User Row"
 msgid "By %s"
 msgstr "توسط %s"
@@ -1083,12 +1083,12 @@ msgctxt "Modules: Assigned"
 msgid "Editorial Assignments"
 msgstr "تکالیف تحریریه"
 
-#: includes/Modules/Athlete/Athlete.php:35
+#: includes/Modules/Athlete/Athlete.php:31
 msgctxt "Modules: Athlete"
 msgid "Athlete"
 msgstr "ورزش‌کار"
 
-#: includes/Modules/Athlete/Athlete.php:36
+#: includes/Modules/Athlete/Athlete.php:32
 msgctxt "Modules: Athlete"
 msgid "Physical Skills Data"
 msgstr "داده‌های مهارت‌های جسمانی"
@@ -1603,12 +1603,12 @@ msgctxt "Modules: Educated"
 msgid "Editorial Educations"
 msgstr "تحصیلات تحریریه"
 
-#: includes/Modules/Employed/Employed.php:29
+#: includes/Modules/Employed/Employed.php:27
 msgctxt "Modules: Employed"
 msgid "Employed"
 msgstr "کارمند"
 
-#: includes/Modules/Employed/Employed.php:30
+#: includes/Modules/Employed/Employed.php:28
 msgctxt "Modules: Employed"
 msgid "Editorial Employment Records"
 msgstr "سوابق استخدامی تحریریه"
@@ -1947,6 +1947,16 @@ msgstr "ایرانی"
 msgctxt "Modules: Iranian"
 msgid "Tools for Iranian Editorial"
 msgstr "ابزارهایی برای تحریریه ایرانی"
+
+#: includes/Modules/Jobbed/Jobbed.php:25
+msgctxt "Modules: Jobbed"
+msgid "Jobbed"
+msgstr "مشغول"
+
+#: includes/Modules/Jobbed/Jobbed.php:26
+msgctxt "Modules: Jobbed"
+msgid "Editorial Job Titles"
+msgstr "عناوین شغلی تحریریه"
 
 #: includes/Modules/Kiosk/Kiosk.php:24
 msgctxt "Modules: Kiosk"
@@ -2318,22 +2328,22 @@ msgctxt "Modules: Person"
 msgid "People, the Way Involved in Your Site"
 msgstr "افراد، آن‌چنان که در سایت شما مشارکت میکنند"
 
-#: includes/Modules/Personage/Personage.php:42
+#: includes/Modules/Personage/Personage.php:41
 msgctxt "Modules: Personage"
 msgid "Personage"
 msgstr "شخصیت"
 
-#: includes/Modules/Personage/Personage.php:43
+#: includes/Modules/Personage/Personage.php:42
 msgctxt "Modules: Personage"
 msgid "Human Resource Management for Editorial"
 msgstr "مدیریت منابع انسانی برای تحریریه"
 
-#: includes/Modules/Phonebook/Phonebook.php:30
+#: includes/Modules/Phonebook/Phonebook.php:31
 msgctxt "Modules: Phonebook"
 msgid "Phonebook"
 msgstr "دفتر تلفن"
 
-#: includes/Modules/Phonebook/Phonebook.php:31
+#: includes/Modules/Phonebook/Phonebook.php:32
 msgctxt "Modules: Phonebook"
 msgid "Contact Information for Contents"
 msgstr "اطلاعات تماس برای محتوا"
@@ -4097,7 +4107,7 @@ msgstr "بررسی کلی"
 #: includes/Settings.php:839
 msgctxt "Settings: Setting Description"
 msgid "Includes connected main posts on the global summary for each supported item."
-msgstr ""
+msgstr "فرسته‌های مرتبط اصلی در مرور کلی برای هر مورد پشتیبانی‌شده، اضافه شود."
 
 #: includes/Settings.php:848
 msgctxt "Settings: Setting Title"
@@ -4432,7 +4442,7 @@ msgstr "نقش‌های مدیریت"
 #: includes/Settings.php:1231
 msgctxt "Setting Description"
 msgid "Roles that can manage, edit and delete entry defenitions."
-msgstr ""
+msgstr "نقش‌هایی که می‌توانند تعاریف ردیف‌ها را مدیریت، ویرایش و حذف کنند."
 
 #: includes/Settings.php:1243
 msgctxt "Settings: Setting Title"
@@ -4442,7 +4452,7 @@ msgstr "نقش‌های تخصیص"
 #: includes/Settings.php:1244
 msgctxt "Setting Description"
 msgid "Roles that can assign entry defenitions."
-msgstr ""
+msgstr "نقش‌هایی که می‌توانند تعاریف ردیف‌ها را تخصیص دهند."
 
 #: includes/Settings.php:1256
 msgctxt "Settings: Setting Title"

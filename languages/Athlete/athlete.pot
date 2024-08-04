@@ -13,211 +13,211 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Athlete\n"
 "X-Domain: geditorial-athlete\n"
 
-#: Athlete.php:111
+#: Athlete.php:112
 msgid "Sports Field"
 msgid_plural "Sports Fields"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Athlete.php:115
+#: Athlete.php:116
 msgctxt "Label: Menu Name"
 msgid "Sports"
 msgstr ""
 
-#: Athlete.php:116
+#: Athlete.php:117
 msgctxt "Label: Show Option All"
 msgid "Sports Field"
 msgstr ""
 
-#: Athlete.php:117
+#: Athlete.php:118
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Athlete.php:122
+#: Athlete.php:123
 msgctxt "Field Label: `label`"
 msgid "Event"
 msgstr ""
 
-#: Athlete.php:123
+#: Athlete.php:124
 msgctxt "Field Label: `grade`"
 msgid "Grade"
 msgstr ""
 
-#: Athlete.php:124
+#: Athlete.php:125
 msgctxt "Field Label: `age`"
 msgid "Age"
 msgstr ""
 
-#: Athlete.php:125
+#: Athlete.php:126
 msgctxt "Field Label: `stature`"
 msgid "Stature"
 msgstr ""
 
-#: Athlete.php:126
+#: Athlete.php:127
 msgctxt "Field Label: `mass`"
 msgid "Mass"
 msgstr ""
 
-#: Athlete.php:127
+#: Athlete.php:128
 msgctxt "Field Label: `date`"
 msgid "Date"
 msgstr ""
 
-#: Athlete.php:128
+#: Athlete.php:129
 msgctxt "Field Label: `location`"
 msgid "Venue"
 msgstr ""
 
-#: Athlete.php:129
+#: Athlete.php:130
 msgctxt "Field Label: `location`"
 msgid "Instructors"
 msgstr ""
 
-#: Athlete.php:130
+#: Athlete.php:131
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Athlete.php:136
+#: Athlete.php:137
 msgctxt "Notice"
 msgid "There is no athletic information available!"
 msgstr ""
 
-#: Athlete.php:137
+#: Athlete.php:138
 msgctxt "Notice"
 msgid "You have not necessary permission to manage this athletic data."
 msgstr ""
 
-#: Athlete.php:144
+#: Athlete.php:145
 msgctxt "Settings Description"
 msgid "Supports sports fields for the selected post-types."
 msgstr ""
 
-#: Athlete.php:148
+#: Athlete.php:149
 msgctxt "MetaBox Title"
 msgid "Athletics"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Athlete.php:152
+#: Athlete.php:153
 msgctxt "Button Title"
 msgid "Athletics of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Athlete.php:154
+#: Athlete.php:155
 msgctxt "Button Text"
 msgid "%1$s Manage the Athletics of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Athlete.php:157
+#: Athlete.php:158
 msgctxt "Action Title"
 msgid "Athletics of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Athlete.php:159
+#: Athlete.php:160
 msgctxt "Action Text"
 msgid "Athletics"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Athlete.php:162
+#: Athlete.php:163
 msgctxt "Row Title"
 msgid "Athletics of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Athlete.php:164
+#: Athlete.php:165
 msgctxt "Row Text"
 msgid "Athletics"
 msgstr ""
 
-#: Athlete.php:176
+#: Athlete.php:177
 msgctxt "Default Term: Sports Field"
 msgid "Acrobatic"
 msgstr ""
 
-#: Athlete.php:177
+#: Athlete.php:178
 msgctxt "Default Term: Sports Field"
 msgid "Air"
 msgstr ""
 
-#: Athlete.php:178
+#: Athlete.php:179
 msgctxt "Default Term: Sports Field"
 msgid "Performance"
 msgstr ""
 
-#: Athlete.php:179
+#: Athlete.php:180
 msgctxt "Default Term: Sports Field"
 msgid "Martial Arts"
 msgstr ""
 
-#: Athlete.php:180
+#: Athlete.php:181
 msgctxt "Default Term: Sports Field"
 msgid "Strength"
 msgstr ""
 
-#: Athlete.php:181
+#: Athlete.php:182
 msgctxt "Default Term: Sports Field"
 msgid "Adventure"
 msgstr ""
 
-#: Athlete.php:182
+#: Athlete.php:183
 msgctxt "Default Term: Sports Field"
 msgid "Riding"
 msgstr ""
 
-#: Athlete.php:183
+#: Athlete.php:184
 msgctxt "Default Term: Sports Field"
 msgid "Shooting"
 msgstr ""
 
-#: Athlete.php:184
+#: Athlete.php:185
 msgctxt "Default Term: Sports Field"
 msgid "Group"
 msgstr ""
 
-#: Athlete.php:185
+#: Athlete.php:186
 msgctxt "Default Term: Sports Field"
 msgid "Net and Wall"
 msgstr ""
 
-#: Athlete.php:186
+#: Athlete.php:187
 msgctxt "Default Term: Sports Field"
 msgid "Mind"
 msgstr ""
 
-#: Athlete.php:187
+#: Athlete.php:188
 msgctxt "Default Term: Sports Field"
 msgid "Beach"
 msgstr ""
 
-#: Athlete.php:188
+#: Athlete.php:189
 msgctxt "Default Term: Sports Field"
 msgid "Water"
 msgstr ""
 
-#: Athlete.php:189
+#: Athlete.php:190
 msgctxt "Default Term: Sports Field"
 msgid "Snow"
 msgstr ""
 
 #. translators: %s: post title
-#: Athlete.php:405
+#: Athlete.php:369
 msgctxt "Page Title"
 msgid "Athletics Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Athlete.php:407
+#: Athlete.php:371
 msgctxt "Page Title"
 msgid "Athletics Overview for %s"
 msgstr ""
 
-#: Athlete.php:431
+#: Athlete.php:395
 msgctxt "Default Term: Audit"
 msgid "Empty Athletics Data"
 msgstr ""

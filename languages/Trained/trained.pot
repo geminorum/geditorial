@@ -174,32 +174,32 @@ msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Trained.php:264
+#: Trained.php:259
 msgctxt "Field Title"
 msgid "Instructors"
 msgstr ""
 
-#: Trained.php:265
+#: Trained.php:260
 msgctxt "Field Description"
 msgid "People Who Participate as Instructors in This Training Course"
 msgstr ""
 
-#: Trained.php:273
+#: Trained.php:268
 msgctxt "Field Title"
 msgid "Training Code"
 msgstr ""
 
-#: Trained.php:274
+#: Trained.php:269
 msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr ""
 
-#: Trained.php:599
+#: Trained.php:594
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr ""
 
-#: Trained.php:608
+#: Trained.php:603
 msgctxt "Card"
 msgid "Training Course Date from Meta-data"
 msgstr ""

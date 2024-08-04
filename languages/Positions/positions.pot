@@ -135,50 +135,50 @@ msgid "Positions"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:402
+#: Positions.php:376
 msgctxt "Button Label"
 msgid "%1$s Mount: %2$s"
 msgstr ""
 
-#: Positions.php:410
+#: Positions.php:384
 msgctxt "Button Title"
 msgid "Click to Mount the Position Profile"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:418
+#: Positions.php:392
 msgctxt "Button Label"
 msgid "%1$s Clear: %2$s"
 msgstr ""
 
-#: Positions.php:426
+#: Positions.php:400
 msgctxt "Button Title"
 msgid "Click to Clear the Position Profile"
 msgstr ""
 
-#: Positions.php:434
+#: Positions.php:408
 msgctxt "Notice"
 msgid "No Position Profile assigned to this content."
 msgstr ""
 
-#: Positions.php:531
+#: Positions.php:505
 msgctxt "Javascript String"
 msgid "Here you can define the position profile by titles with custom ordering."
 msgstr ""
 
 #. translators: %s: post title
-#: Positions.php:552
+#: Positions.php:526
 msgctxt "Page Title"
 msgid "Position Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Positions.php:554
+#: Positions.php:528
 msgctxt "Page Title"
 msgid "Positions Overview for %s"
 msgstr ""
 
-#: Positions.php:571
+#: Positions.php:545
 msgctxt "Default Term: Audit"
 msgid "Empty Position Data"
 msgstr ""

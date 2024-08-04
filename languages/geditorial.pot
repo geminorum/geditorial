@@ -1111,8 +1111,24 @@ msgid_plural "%s Records"
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: %s: rows count
+#: includes/Info.php:429
+msgctxt "Info: Noop"
+msgid "%s Row"
+msgid_plural "%s Rows"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: accounts count
+#: includes/Info.php:434
+msgctxt "Info: Noop"
+msgid "%s Account"
+msgid_plural "%s Accounts"
+msgstr[0] ""
+msgstr[1] ""
+
 #. translators: %s: items count
-#: includes/Info.php:431
+#: includes/Info.php:441
 msgctxt "Info: Noop"
 msgid "%s Member"
 msgid_plural "%s Members"
@@ -1120,7 +1136,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: people count
-#: includes/Info.php:444
+#: includes/Info.php:454
 msgctxt "Info: Noop"
 msgid "%s Person"
 msgid_plural "%s People"
@@ -1128,7 +1144,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: car count
-#: includes/Info.php:449
+#: includes/Info.php:459
 msgctxt "Info: Noop"
 msgid "%s Car"
 msgid_plural "%s Cars"
@@ -1136,7 +1152,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: vehicle count
-#: includes/Info.php:454
+#: includes/Info.php:464
 msgctxt "Info: Noop"
 msgid "%s Vehicle"
 msgid_plural "%s Vehicles"
@@ -1144,7 +1160,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: position count
-#: includes/Info.php:459
+#: includes/Info.php:469
 msgctxt "Info: Noop"
 msgid "%s Position"
 msgid_plural "%s Positions"
@@ -1152,7 +1168,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: entry count
-#: includes/Info.php:464
+#: includes/Info.php:474
 msgctxt "Info: Noop"
 msgid "%s Entry"
 msgid_plural "%s Entries"
@@ -1160,7 +1176,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: event count
-#: includes/Info.php:469
+#: includes/Info.php:479
 msgctxt "Info: Noop"
 msgid "%s Event"
 msgid_plural "%s Events"
@@ -1168,7 +1184,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: posts count
-#: includes/Info.php:474
+#: includes/Info.php:484
 msgctxt "Info: Noop"
 msgid "%s Post"
 msgid_plural "%s Posts"
@@ -1176,7 +1192,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: terms count
-#: includes/Info.php:479
+#: includes/Info.php:489
 msgctxt "Info: Noop"
 msgid "%s Term"
 msgid_plural "%s Terms"
@@ -1184,7 +1200,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: colors count
-#: includes/Info.php:484
+#: includes/Info.php:494
 msgctxt "Info: Noop"
 msgid "%s Color"
 msgid_plural "%s Colors"
@@ -1192,7 +1208,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: sizes count
-#: includes/Info.php:489
+#: includes/Info.php:499
 msgctxt "Info: Noop"
 msgid "%s Size"
 msgid_plural "%s Sizes"
@@ -1200,7 +1216,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: items count
-#: includes/Info.php:493
+#: includes/Info.php:503
 msgctxt "Info: Noop"
 msgid "%s Item Connected"
 msgid_plural "%s Items Connected"
@@ -1208,7 +1224,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: words count
-#: includes/Info.php:498
+#: includes/Info.php:508
 msgctxt "Info: Noop"
 msgid "%s Word"
 msgid_plural "%s Words"
@@ -1216,7 +1232,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: second count
-#: includes/Info.php:503
+#: includes/Info.php:513
 msgctxt "Info: Noop"
 msgid "%s Second"
 msgid_plural "%s Seconds"
@@ -1224,7 +1240,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: hour count
-#: includes/Info.php:508
+#: includes/Info.php:518
 msgctxt "Info: Noop"
 msgid "%s Hour"
 msgid_plural "%s Hours"
@@ -1232,7 +1248,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: week count
-#: includes/Info.php:513
+#: includes/Info.php:523
 msgctxt "Info: Noop"
 msgid "%s Week"
 msgid_plural "%s Weeks"
@@ -1240,7 +1256,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: day count
-#: includes/Info.php:518
+#: includes/Info.php:528
 msgctxt "Info: Noop"
 msgid "%s Day"
 msgid_plural "%s Days"
@@ -1248,7 +1264,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: month count
-#: includes/Info.php:523
+#: includes/Info.php:533
 msgctxt "Info: Noop"
 msgid "%s Month"
 msgid_plural "%s Months"
@@ -1256,7 +1272,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: year count
-#: includes/Info.php:528
+#: includes/Info.php:538
 msgctxt "Info: Noop"
 msgid "%s Year"
 msgid_plural "%s Years"
@@ -1264,7 +1280,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: page count
-#: includes/Info.php:533
+#: includes/Info.php:543
 msgctxt "Info: Noop"
 msgid "%s Page"
 msgid_plural "%s Pages"
@@ -1272,7 +1288,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: volume count
-#: includes/Info.php:538
+#: includes/Info.php:548
 msgctxt "Info: Noop"
 msgid "%s Volume"
 msgid_plural "%s Volumes"
@@ -1280,7 +1296,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: disc count
-#: includes/Info.php:543
+#: includes/Info.php:553
 msgctxt "Info: Noop"
 msgid "%s Disc"
 msgid_plural "%s Discs"
@@ -1288,7 +1304,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:547
+#: includes/Info.php:557
 msgctxt "Info: Noop"
 msgid "%s Gram"
 msgid_plural "%s Grams"
@@ -1296,7 +1312,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:552
+#: includes/Info.php:562
 msgctxt "Info: Noop"
 msgid "%s Kilogram"
 msgid_plural "%s Kilograms"
@@ -1304,7 +1320,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:557
+#: includes/Info.php:567
 msgctxt "Info: Noop"
 msgid "%s Millimetre"
 msgid_plural "%s Millimetres"
@@ -1312,7 +1328,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:562
+#: includes/Info.php:572
 msgctxt "Info: Noop"
 msgid "%s Centimeter"
 msgid_plural "%s Centimeters"
@@ -1320,7 +1336,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:566
+#: includes/Info.php:576
 msgctxt "Info: Noop"
 msgid "%s Meter"
 msgid_plural "%s Meters"
@@ -1328,7 +1344,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:571
+#: includes/Info.php:581
 msgctxt "Info: Noop"
 msgid "%s Kilometer"
 msgid_plural "%s Kilometers"
@@ -1336,124 +1352,124 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: unit amount
-#: includes/Info.php:577
+#: includes/Info.php:587
 msgctxt "Info: Noop"
 msgid "%s Kilometer per Hour"
 msgid_plural "%s Kilometers per Hour"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Info.php:605
+#: includes/Info.php:615
 msgctxt "Info: Posttype Prop Title"
 msgid "ID"
 msgstr ""
 
-#: includes/Info.php:606
+#: includes/Info.php:616
 msgctxt "Info: Posttype Prop Title"
 msgid "Author"
 msgstr ""
 
-#: includes/Info.php:607
+#: includes/Info.php:617
 msgctxt "Info: Posttype Prop Title"
 msgid "Date"
 msgstr ""
 
-#: includes/Info.php:608
+#: includes/Info.php:618
 msgctxt "Info: Posttype Prop Title"
 msgid "Date (GMT)"
 msgstr ""
 
-#: includes/Info.php:609
+#: includes/Info.php:619
 msgctxt "Info: Posttype Prop Title"
 msgid "Content"
 msgstr ""
 
-#: includes/Info.php:610
+#: includes/Info.php:620
 msgctxt "Info: Posttype Prop Title"
 msgid "Title"
 msgstr ""
 
-#: includes/Info.php:611
+#: includes/Info.php:621
 msgctxt "Info: Posttype Prop Title"
 msgid "Excerpt"
 msgstr ""
 
-#: includes/Info.php:612
+#: includes/Info.php:622
 msgctxt "Info: Posttype Prop Title"
 msgid "Status"
 msgstr ""
 
-#: includes/Info.php:613
+#: includes/Info.php:623
 msgctxt "Info: Posttype Prop Title"
 msgid "Comment Status"
 msgstr ""
 
-#: includes/Info.php:614
+#: includes/Info.php:624
 msgctxt "Info: Posttype Prop Title"
 msgid "Ping Status"
 msgstr ""
 
-#: includes/Info.php:615
+#: includes/Info.php:625
 msgctxt "Info: Posttype Prop Title"
 msgid "Password"
 msgstr ""
 
-#: includes/Info.php:616
+#: includes/Info.php:626
 msgctxt "Info: Posttype Prop Title"
 msgid "Slug"
 msgstr ""
 
-#: includes/Info.php:617
+#: includes/Info.php:627
 msgctxt "Info: Posttype Prop Title"
 msgid "Ping"
 msgstr ""
 
-#: includes/Info.php:618
+#: includes/Info.php:628
 msgctxt "Info: Posttype Prop Title"
 msgid "Pinged"
 msgstr ""
 
-#: includes/Info.php:619
+#: includes/Info.php:629
 msgctxt "Info: Posttype Prop Title"
 msgid "Modified"
 msgstr ""
 
-#: includes/Info.php:620
+#: includes/Info.php:630
 msgctxt "Info: Posttype Prop Title"
 msgid "Modified (GMT)"
 msgstr ""
 
-#: includes/Info.php:621
+#: includes/Info.php:631
 msgctxt "Info: Posttype Prop Title"
 msgid "Content Filtered"
 msgstr ""
 
-#: includes/Info.php:622
+#: includes/Info.php:632
 msgctxt "Info: Posttype Prop Title"
 msgid "Parent ID"
 msgstr ""
 
-#: includes/Info.php:623
+#: includes/Info.php:633
 msgctxt "Info: Posttype Prop Title"
 msgid "GUID"
 msgstr ""
 
-#: includes/Info.php:624
+#: includes/Info.php:634
 msgctxt "Info: Posttype Prop Title"
 msgid "Order"
 msgstr ""
 
-#: includes/Info.php:625
+#: includes/Info.php:635
 msgctxt "Info: Posttype Prop Title"
 msgid "Type"
 msgstr ""
 
-#: includes/Info.php:626
+#: includes/Info.php:636
 msgctxt "Info: Posttype Prop Title"
 msgid "Mime-Type"
 msgstr ""
 
-#: includes/Info.php:627
+#: includes/Info.php:637
 msgctxt "Info: Posttype Prop Title"
 msgid "Comment Count"
 msgstr ""
@@ -1696,7 +1712,7 @@ msgctxt "Internal: PrintPage: Setting Section Title"
 msgid "Printing"
 msgstr ""
 
-#: includes/Internals/RawImports.php:78
+#: includes/Internals/RawImports.php:80
 msgctxt "Module: Importer Button"
 msgid "Go to Imports"
 msgstr ""
@@ -1736,7 +1752,7 @@ msgctxt "Internal: RelatedMeta Title"
 msgid "Size"
 msgstr ""
 
-#: includes/Internals/SubContents.php:581
+#: includes/Internals/SubContents.php:586
 msgctxt "Internal: SubContents: No-Access Notice"
 msgid "You have not necessary permission to manage the information."
 msgstr ""
@@ -1808,37 +1824,37 @@ msgctxt "MetaBox: Title Attr"
 msgid "Unknown User #%s"
 msgstr ""
 
-#: includes/Plugin.php:709
+#: includes/Plugin.php:710
 msgctxt "Plugin: Main: Adminbar Node"
 msgid "Editorial"
 msgstr ""
 
-#: includes/Plugin.php:750
+#: includes/Plugin.php:751
 msgid "N/A"
 msgstr ""
 
-#: includes/Plugin.php:751
+#: includes/Plugin.php:752
 #: includes/Services/RestAPI.php:93
 msgid "Not Available"
 msgstr ""
 
-#: includes/Plugin.php:756
+#: includes/Plugin.php:757
 msgid "You don&#8217;t have permission to do this."
 msgstr ""
 
-#: includes/Plugin.php:762
+#: includes/Plugin.php:763
 msgid "Something&#8217;s wrong!"
 msgstr ""
 
-#: includes/Plugin.php:768
+#: includes/Plugin.php:769
 msgid "Wait for a moment &hellip;"
 msgstr ""
 
-#: includes/Plugin.php:774
+#: includes/Plugin.php:775
 msgid "Invalid data provided!"
 msgstr ""
 
-#: includes/Plugin.php:780
+#: includes/Plugin.php:781
 msgid "There is no information available!"
 msgstr ""
 

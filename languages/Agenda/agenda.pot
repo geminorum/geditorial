@@ -125,18 +125,18 @@ msgid "The Itinerary Table Caption"
 msgstr ""
 
 #. translators: %s: post title
-#: Agenda.php:297
+#: Agenda.php:260
 msgctxt "Page Title"
 msgid "Itinerary Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Agenda.php:299
+#: Agenda.php:262
 msgctxt "Page Title"
 msgid "Itinerary Overview for %s"
 msgstr ""
 
-#: Agenda.php:316
+#: Agenda.php:279
 msgctxt "Default Term: Audit"
 msgid "Empty Itinerary Data"
 msgstr ""

@@ -160,18 +160,18 @@ msgid "Vehicle Identification Number"
 msgstr ""
 
 #. translators: %s: post title
-#: Driving.php:315
+#: Driving.php:278
 msgctxt "Page Title"
 msgid "Vehicle Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Driving.php:317
+#: Driving.php:280
 msgctxt "Page Title"
 msgid "Vehicle Overview for %s"
 msgstr ""
 
-#: Driving.php:334
+#: Driving.php:297
 msgctxt "Default Term: Audit"
 msgid "Empty Vehicle Data"
 msgstr ""
