@@ -156,7 +156,7 @@ class Equipped extends gEditorial\Module
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
 
-	public function meta_init()
+	public function units_init()
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, 'TRUE', 'units' );
 	}

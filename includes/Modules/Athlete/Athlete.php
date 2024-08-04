@@ -309,7 +309,7 @@ class Athlete extends gEditorial\Module
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
 	}
 
-	public function meta_init()
+	public function units_init()
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, 'TRUE', 'units' );
 

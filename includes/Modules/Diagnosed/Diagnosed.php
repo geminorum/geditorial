@@ -16,6 +16,8 @@ class Diagnosed extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
+	// TODO: sub-content for: `Editorial Medical Records`
+
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()

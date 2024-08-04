@@ -207,12 +207,12 @@ class Agenda extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields_supported( $this->get_setting( 'subcontent_posttypes', [] ) );
+		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'subcontent' ) );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $this->in_setting( $screen->post_type, 'subcontent_posttypes' ) ) {
+		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
