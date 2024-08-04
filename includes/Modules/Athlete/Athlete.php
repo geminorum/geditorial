@@ -7,6 +7,8 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Athlete extends gEditorial\Module
@@ -310,6 +312,8 @@ class Athlete extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, 'TRUE', 'units' );
+
+		$this->action_module( 'pointers', 'post', 5, 500 );
 	}
 
 	public function current_screen( $screen )
@@ -428,5 +432,39 @@ class Athlete extends gEditorial\Module
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Athletics Data', 'Default Term: Audit', 'geditorial-athlete' ),
 		] ) : $terms;
+	}
+
+	// TODO: append data to `Papered`
+	public function pointers_post( $post, $before, $after, $context, $screen )
+	{
+		if ( ! $this->in_setting_posttypes( $post->post_type, 'units' ) )
+			return;
+
+		$fields = Services\PostTypeFields::getEnabled( $post->post_type, 'units' );
+
+		if ( ! array_key_exists( 'mass_in_kg', $fields ) || ! array_key_exists( 'stature_in_cm', $fields ) )
+			return;
+
+		if ( ! $mass = Template::getMetaFieldRaw( 'mass_in_kg', $post->ID, 'units' ) )
+			return;
+
+		if ( ! $stature = Template::getMetaFieldRaw( 'stature_in_cm', $post->ID, 'units' ) )
+			return;
+
+		if ( ! $bmi = ModuleHelper::calculateBMI( $mass, $stature ) )
+			return;
+
+		echo $before;
+			// TODO: hint the data!
+			printf( '%s <span class="-bmi -bmi-%s -text-%s" title="%s">%s</span>',
+				$this->get_column_icon(),
+				$bmi['result'],
+				$bmi['state'],
+				$bmi['message'],
+				$bmi['report']
+			);
+		echo $after;
+
+		$this->actions( 'pointers_post_after', $post, $bmi, $mass, $stature, $before, $after );
 	}
 }
