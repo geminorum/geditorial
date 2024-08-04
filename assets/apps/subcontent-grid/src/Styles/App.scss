@@ -76,6 +76,10 @@ $brand-danger:  #d9534f !default;
       text-align: center;
     }
 
+    &.field-age,
+    &.field-mass,
+    &.field-stature,
+    &.field-grade,
     &.field-count,
     &.field-year {
       width: 45px;
@@ -89,6 +93,7 @@ $brand-danger:  #d9534f !default;
      width: 140px;
     }
 
+    &.field-people,
     &.field-label,
     &.field-fullname {
      width: 240px;
@@ -135,6 +140,15 @@ $brand-danger:  #d9534f !default;
     &.field-date,
     &.field-dob {
       width: 80px;
+    }
+
+    // WTF: must came from field options!
+    &.field-pushup_onemin,
+    &.field-situp_onemin,
+    &.field-highbar_onemin,
+    &.field-running_1600m,
+    &.field-sprint_60m {
+      width: 100px;
     }
 
     &.actions {
@@ -227,12 +241,22 @@ $brand-danger:  #d9534f !default;
   td,
   span,
   input {
+    &.field-pushup_onemin,
+    &.field-situp_onemin,
+    &.field-highbar_onemin,
+    &.field-running_1600m,
+    &.field-sprint_60m,
+    &.field-age,
+    &.field-mass,
+    &.field-stature,
+    &.field-grade,
     &.field-vin,
     &.field-year,
     &.field-identity,
     &.field-contact,
     &.field-phone,
     &.field-dob,
+    &.field-date,
     &.field-account,
     &.field-iban,
     &.field-card {
