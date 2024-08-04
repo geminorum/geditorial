@@ -13,6 +13,7 @@ import gulptemplate from 'gulp-template';
 import header from 'gulp-header';
 import uglify from 'gulp-uglify';
 import zip from 'gulp-zip';
+import svgo from 'gulp-svgo'; // https://github.com/corneliusio/gulp-svgo
 import bump from 'gulp-bump';
 import changedInPlace from 'gulp-changed-in-place';
 import log from 'fancy-log';
@@ -240,6 +241,13 @@ task('dev:scripts', function () {
   return src(conf.input.js, { base: '.' })
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
+    .pipe(dest('.'));
+});
+
+gulp.task('banklogos', function () {
+  return src(conf.input.banklogos, { base: '.' })
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(svgo())
     .pipe(dest('.'));
 });
 

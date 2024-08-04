@@ -16,6 +16,7 @@
       "!./assets/js/tinymce/*.min.js",
       "!./assets/js/vendor/*.js"
     ],
+    "banklogos": "./includes/Modules/Iranian/data/banklogos/*.svg",
     "svg": "./assets/images/raw/**/*.svg",
     "images": "./assets/images/raw/**/*.{png,jpg,jpeg}",
     "banner": [
