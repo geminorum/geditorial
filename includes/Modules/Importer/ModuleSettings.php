@@ -31,7 +31,7 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function handleTool_cleanup_raw_data( $posttype, $metakeys, $limit = 25 )
 	{
-		list( $posts, $pagination ) = Tablelist::getPosts( [], [], $posttype, $limit );
+		list( $posts, $pagination ) = Tablelist::getPosts( [ 'orderby' => 'none' ], [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			Core\WordPress::redirect( remove_query_arg( [

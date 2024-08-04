@@ -118,7 +118,7 @@ class PostTypeFields extends WordPress\Main
 	 * @param  string   $module
 	 * @return bool|int $post_id
 	 */
-	protected static function getPostByField( $field_key, $value, $posttype, $sanitize = FALSE, $module = 'meta' )
+	public static function getPostByField( $field_key, $value, $posttype, $sanitize = FALSE, $module = 'meta' )
 	{
 		if ( ! $field_key || ! $value || ! $posttype )
 			return FALSE;

@@ -122,6 +122,7 @@ class Organization extends gEditorial\Module
 			'primary_taxonomy' => 'department_category',
 			'primary_subterm'  => 'subdepartment',
 			'type_taxonomy'    => 'department_type',
+			'school_taxonomy'  => 'department_school', // FIXME: WTF?!
 			'status_taxonomy'  => 'department_status',
 
 			'subterm_shortcode' => 'organization-subdepartment',

@@ -37,6 +37,9 @@ class Units extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
+			'_general' => [
+				// 'insert_content_enabled', // TODO
+			],
 		];
 	}
 

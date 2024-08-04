@@ -830,6 +830,11 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getBankLogoPath( $key, $path = NULL )
 	{
-		return $path ? sprintf( '%s%s%s.%s', Core\URL::fromPath( $path ), 'data/banklogos/', $key, 'svg' ) : FALSE;
+		return $path ? sprintf( '%s%s%s.%s',
+			Core\URL::fromPath( $path ),
+			'data/banklogos/',
+			$key,
+			self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'
+		) : FALSE;
 	}
 }

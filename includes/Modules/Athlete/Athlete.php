@@ -23,6 +23,7 @@ class Athlete extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 	use Internals\RestAPI;
 	use Internals\SubContents;
+	use Internals\TemplateTaxonomy;
 
 	public static function module()
 	{

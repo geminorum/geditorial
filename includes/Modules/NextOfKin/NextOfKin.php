@@ -23,6 +23,7 @@ class NextOfKin extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 	use Internals\RestAPI;
 	use Internals\SubContents;
+	use Internals\TemplateTaxonomy;
 
 	public static function module()
 	{
@@ -342,6 +343,13 @@ class NextOfKin extends gEditorial\Module
 	public function setup_restapi()
 	{
 		$this->subcontent_restapi_register_routes();
+	}
+
+	public function template_include( $template )
+	{
+		return $this->get_setting( 'contents_viewable', TRUE )
+			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
+			: $template;
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
