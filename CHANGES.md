@@ -1,3 +1,91 @@
+### 3.29.0
+* app/import-items: clear already added rows
+* internal/bulk-exports: cap check on each targets
+* internal/bulk-exports: general filters for customs/taxonomies
+* internal/bulk-exports: refactor generating data
+* internal/bulk-exports: support for data length
+* internal/bulk-exports: support for post-type targets
+* internal/core-post-types: auto-save control
+* internal/core-row-actions: callback suffix for main-link
+* internal/dashboard-summary: limit summary to parents
+* internal/paired-core: append identifier code
+* internal/paired-core: main getter from/to revised
+* internal/paired-meta-box: check if assign is available
+* internal/paired-reports: primary post-type overview
+* internal/paired-reports: support taxonomies on overview
+* internal/post-type-fields: moving up common methods
+* internal/post-type-overview: summary table support
+* internal/post-type-overview: support for paired items
+* internal/post-type-overview: support for units columns
+* internal/settings-help: disable help tabs by constant
+* internal/sub-contents: :new: general app
+* internal/sub-contents: better handling meta stores
+* internal/sub-contents: comment author on info
+* internal/sub-contents: ensure hidden fields
+* internal/sub-contents: extensive sanitizations on fields
+* internal/sub-contents: general strings for js
+* internal/sub-contents: preserve the original info on summary
+* internal/sub-contents: refresh the meta-box table on close
+* internal/sub-contents: render iframe content
+* internal/sub-contents: storing order as comment karma
+* internal/sub-contents: support for importer module
+* internal/sub-contents: support for read-only/searchable fields
+* internal/sub-contents: support for sort/order
+* internal/sub-contents: support for summary
+* internal/sub-contents: support more types on sanitization
+* internal/sub-contents: support refining data counts
+* internal/sub-contents: support unique fields
+* internal/sub-contents: unified register routes
+* main/info: data from post-code
+* main/plugin: base country with fallback to woo-commerce
+* main/plugin: enforce default auto-load options
+* main/plugin: no-information notice helper
+* main/scripts: support for jsbarcode/qrcodesvg
+* main/template: accept field object of getting meta field data
+* main/template: filter empty value on getting meta field data
+* module/agenda: :new: module
+* module/athlete: :new: module
+* module/audit: strip from tabloid terms rendered
+* module/banking: migrate to general app
+* module/book: support for isbn as identifier
+* module/chronicles: :new: module
+* module/driving: :new: module
+* module/identified: avoid blocking other filters on line-discovery
+* module/importer: avoid skipping one column data
+* module/importer: better handling the taxonomies
+* module/iranian: optimized bank logo svgs
+* module/iranian: support for bank logos
+* module/jobbed: :new: module
+* module/meta: refactor post-type fields methods
+* module/meta: support for people field type
+* module/meta: support for vin/year field types
+* module/next-of-kin: migrate to general app
+* module/papered: passing profile flags into data filters
+* module/personage: make human title on empty full-name field
+* module/personage: secondary data on v-card
+* module/personage: vcard on tabloid meta summary
+* module/phonebook: :new: module
+* module/positions: :new: module
+* module/ranged: :new: module
+* module/static-covers: support for post summary
+* module/sufficed: :new: module
+* module/tabloid: filters for meta/term rendered
+* module/tabloid: overview on edit post page
+* module/tabloid: refactoring strip empty meta values
+* module/tabloid: signal scripts via flags
+* module/tabloid: support for post comments
+* module/tabloid: support for side summaries
+* module/tabloid: support for today data
+* module/units: support for payload/max-speed
+* module/was-born: filter search-select result for posts
+* service/barcodes: :new: service
+* service/paired: global summary on print profiles via flag
+* service/paired: support for global summary
+* service/post-type-fields: get post by field as service
+* service/search-select: filters available for others
+* service/search-select: support for extra/image on results
+* service/term-hierarchy: :new: service
+
 ### 3.28.1
 * internal/bulk-exports: get enabled fields for full export
 * internal/bulk-exports: support for export title
