@@ -41,8 +41,8 @@ class Licensed extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
-			'_dashboard' => [
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_parents',
 				'summary_excludes' => [ NULL, $terms, $empty ],
@@ -55,6 +55,7 @@ class Licensed extends gEditorial\Module
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
+				'admin_restrict',
 				'show_in_quickedit',
 			],
 			'_frontend' => [

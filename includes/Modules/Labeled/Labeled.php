@@ -41,11 +41,9 @@ class Labeled extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
-			'_editpost' => [
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
+			'_editlist'        => [
 				'admin_restrict',
-			],
-			'_editlist' => [
 				'show_in_quickedit',
 			],
 			'_frontend' => [

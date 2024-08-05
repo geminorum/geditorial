@@ -25,6 +25,7 @@ class Config extends gEditorial\Module
 		'settings' => 'manage_options',
 		'tools'    => 'edit_posts',
 		'roles'    => 'edit_users',
+		'tests'    => 'manage_options', // TODO: add test pages
 		'imports'  => 'import',
 	];
 

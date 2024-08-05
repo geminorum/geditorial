@@ -248,6 +248,9 @@ class Programmed extends gEditorial\Module
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 
+				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
+				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+
 				'featured_people' => [
 					'title'       => _x( 'Organizers', 'Field Title', 'geditorial-programmed' ),
 					'description' => _x( 'People Who Participate as Organizers in This Program', 'Field Description', 'geditorial-programmed' ),

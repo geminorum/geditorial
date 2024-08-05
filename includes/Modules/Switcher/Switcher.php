@@ -12,15 +12,21 @@ class Switcher extends gEditorial\Module
 {
 	use Internals\CoreRowActions;
 
+	protected $deafults  = [ 'admin_bulkactions' => TRUE ];
+
 	public static function module()
 	{
 		return [
 			'name'     => 'switcher',
 			'title'    => _x( 'Switcher', 'Modules: Switcher', 'geditorial-admin' ),
-			'desc'     => _x( 'Bulk Conversion Utility', 'Modules: Switcher', 'geditorial-admin' ),
-			'icon'     => 'randomize',
+			'desc'     => _x( 'Bulk Conversion Utilities', 'Modules: Switcher', 'geditorial-admin' ),
+			'icon'     => [ 'misc-16', 'toggles' ],
 			'access'   => 'beta',
 			'frontend' => FALSE,
+			'keywords' => [
+				'conversion',
+				'adminonly',
+			],
 		];
 	}
 
@@ -31,26 +37,25 @@ class Switcher extends gEditorial\Module
 
 		return [
 			'_bulkactions' => [
-				'admin_bulkactions',
 				[
 					'field'       => 'bulk_roles',
 					'type'        => 'checkboxes-values',
 					'title'       => _x( 'Bulk Action Roles', 'Setting Title', 'geditorial-switcher' ),
-					'description' => _x( 'Roles that can use bulk action to switch post-types.', 'Setting Description', 'geditorial-switcher' ),
+					'description' => _x( 'Roles that can use bulk-actions to switch post-types.', 'Setting Description', 'geditorial-switcher' ),
 					'values'      => $roles,
 				],
 				[
 					'field'       => 'bulk_posttypes_from',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Bulk Action From', 'Setting Title', 'geditorial-switcher' ),
-					'description' => _x( 'Select post-types to be avialable for switch.', 'Setting Description', 'geditorial-switcher' ),
+					'description' => _x( 'Select post-types to be available for the switch.', 'Setting Description', 'geditorial-switcher' ),
 					'values'      => $posttypes,
 				],
 				[
 					'field'       => 'bulk_posttypes_to',
 					'type'        => 'posttypes',
 					'title'       => _x( 'Bulk Action To', 'Setting Title', 'geditorial-switcher' ),
-					'description' => _x( 'Select post-types to be targetted for switch.', 'Setting Description', 'geditorial-switcher' ),
+					'description' => _x( 'Select post-types to be targeted for the switch.', 'Setting Description', 'geditorial-switcher' ),
 					'values'      => $posttypes,
 				],
 			],

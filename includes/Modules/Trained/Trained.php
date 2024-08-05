@@ -255,6 +255,9 @@ class Trained extends gEditorial\Module
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 
+				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
+				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+
 				'featured_people' => [
 					'title'       => _x( 'Instructors', 'Field Title', 'geditorial-trained' ),
 					'description' => _x( 'People Who Participate as Instructors in This Training Course', 'Field Description', 'geditorial-trained' ),

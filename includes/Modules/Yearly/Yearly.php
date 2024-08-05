@@ -53,6 +53,7 @@ class Yearly extends gEditorial\Module
 				'selectmultiple_term',
 			],
 			'_editlist' => [
+				'admin_restrict',
 				'show_in_quickedit',
 			],
 			'_frontend' => [

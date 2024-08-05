@@ -33,7 +33,7 @@ class Diagnosed extends gEditorial\Module
 			'name'     => 'diagnosed',
 			'title'    => _x( 'Diagnosed', 'Modules: Diagnosed', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Diagnosis', 'Modules: Diagnosed', 'geditorial-admin' ),
-			'icon'     => 'color-picker',
+			'icon'     => [ 'misc-16', 'clipboard2-pulse-fill' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'diagnosis',

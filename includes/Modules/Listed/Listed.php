@@ -255,6 +255,9 @@ class Listed extends gEditorial\Module
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 
+				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
+				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+
 				'featured_people' => [
 					'title'       => _x( 'Notaries', 'Field Title', 'geditorial-listed' ),
 					'description' => _x( 'People Who is the Notary of This Listing', 'Field Description', 'geditorial-listed' ),

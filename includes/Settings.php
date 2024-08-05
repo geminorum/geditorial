@@ -893,7 +893,7 @@ class Settings extends WordPress\Main
 			'field'        => 'units_posttypes',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Units Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Unit Fields Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Unit Fields will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no unit post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
@@ -1215,6 +1215,19 @@ class Settings extends WordPress\Main
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Prints Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Roles that can print data entries.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
+	public static function getSetting_uploads_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'uploads_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Uploads Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Roles that can upload data into the site.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1845,7 +1858,7 @@ class Settings extends WordPress\Main
 		echo '</p>';
 
 		echo '<a href="https://geminorum.ir" title="it\'s a geminorum project"><img src="'
-			.GEDITORIAL_URL.'assets/images/itsageminorumproject-lightgrey.svg" alt="" /></a>';
+			.GEDITORIAL_URL.'assets/images/itsageminorumproject-lightgrey.min.svg" alt="" /></a>';
 
 		echo '</div>';
 	}

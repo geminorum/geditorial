@@ -227,7 +227,7 @@ class Banking extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->in_setting( $screen->post_type, 'subcontent_posttypes' ) ) {
+		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -369,6 +369,9 @@ class Banking extends gEditorial\Module
 
 		foreach ( $raw as $key => $value ) {
 
+			if ( empty( $value ) )
+				continue;
+
 			switch ( $key ) {
 
 				case 'card':
@@ -411,7 +414,7 @@ class Banking extends gEditorial\Module
 							$data[$key] = $iban['raw'];
 
 						if ( ! empty( $iban['country'] ) && empty( $data['country'] ) )
-							$data['country'] = Core\Validation::sanitizeCountry( $iban['country'] );
+							$data['country'] = Core\Validation::sanitizeCountry( $iban['country'], TRUE );
 
 						if ( ! empty( $iban['bank'] ) && empty( $data['bank'] ) )
 							$data['bank'] = $iban['bank'];

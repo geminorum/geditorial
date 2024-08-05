@@ -248,6 +248,9 @@ class Missioned extends gEditorial\Module
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 
+				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
+				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+
 				'featured_people' => [
 					'title'       => _x( 'Officers', 'Field Title', 'geditorial-missioned' ),
 					'description' => _x( 'People Who Participate as Officers in This Mission', 'Field Description', 'geditorial-missioned' ),

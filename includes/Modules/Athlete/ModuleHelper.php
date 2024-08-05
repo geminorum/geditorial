@@ -13,6 +13,8 @@ class ModuleHelper extends gEditorial\Helper
 
 	// @REF: https://medium.com/@hermuwyim/a-simple-bmi-calculator-using-javascript-b2365f3206e8
 	// @REF: https://www.w3schools.in/php/examples/php-program-to-calculate-bmi
+	// @SEE: https://www.bahesab.ir/calc/bmi/
+	// TODO: suggest the better range for the height
 	public static function calculateBMI( $weight_in_kg, $height_in_cm, $context = 'display', $fallback = FALSE )
 	{
 		$bmi = round( ( $weight_in_kg * 2.2 ) / ( ( $height_in_cm * 0.393701 ) * ( $height_in_cm * 0.393701 ) ) * 703, 2 );

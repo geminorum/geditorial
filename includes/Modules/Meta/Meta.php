@@ -137,6 +137,9 @@ class Meta extends gEditorial\Module
 				'period'     => _x( 'Period', 'Titles', 'geditorial-meta' ),
 				'amount'     => _x( 'Amount', 'Titles', 'geditorial-meta' ),
 
+				'notes'       => _x( 'Notes', 'Titles', 'geditorial-meta' ),
+				'itineraries' => _x( 'Itineraries', 'Titles', 'geditorial-meta' ),
+
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
 				'action' => _x( 'Action', 'Titles', 'geditorial-meta' ),
@@ -187,6 +190,9 @@ class Meta extends gEditorial\Module
 				'hours'      => _x( 'The total hours number about the post.', 'Descriptions', 'geditorial-meta' ),
 				'period'     => _x( 'The length of time about the post.', 'Descriptions', 'geditorial-meta' ),
 				'amount'     => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
+
+				'notes'       => _x( 'General Notes about the Content', 'Descriptions: `notes`', 'geditorial-meta' ),
+				'itineraries' => _x( 'Brief Itineraries of the Content', 'Descriptions: `itineraries`', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -257,6 +263,9 @@ class Meta extends gEditorial\Module
 				'hours'      => [ 'type' => 'number' ],
 				'period'     => [ 'type' => 'text' ],
 				'amount'     => [ 'type' => 'number' ],
+
+				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
+				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
 			],
 			'page' => [
 				'over_title' => [ 'type' => 'title_before' ],

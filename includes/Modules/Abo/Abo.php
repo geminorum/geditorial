@@ -43,8 +43,8 @@ class Abo extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
-			'_dashboard' => [
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
@@ -52,6 +52,7 @@ class Abo extends gEditorial\Module
 				'count_not',
 			],
 			'_editlist' => [
+				'admin_restrict',
 				'show_in_quickedit',
 			],
 			'_frontend' => [

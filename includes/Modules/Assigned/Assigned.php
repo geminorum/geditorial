@@ -43,7 +43,7 @@ class Assigned extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => [
+			'_general'         => [
 				'parent_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
 			],
 			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
@@ -59,6 +59,7 @@ class Assigned extends gEditorial\Module
 				'selectmultiple_term',
 			],
 			'_editlist' => [
+				'admin_restrict',
 				'show_in_quickedit',
 			],
 		];

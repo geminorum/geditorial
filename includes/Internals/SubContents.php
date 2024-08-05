@@ -929,7 +929,7 @@ trait SubContents
 	 */
 	public function tabloid_post_summaries_subcontent( $list, $data, $post, $context )
 	{
-		if ( $this->in_setting( $post->post_type, 'subcontent_posttypes' ) && $this->role_can( 'reports' ) )
+		if ( $this->in_setting_posttypes( $post->post_type, 'subcontent' ) && $this->role_can( 'reports' ) )
 			$list[] = [
 				'key'     => $this->key,
 				'class'   => '-table-summary',
@@ -1128,7 +1128,7 @@ trait SubContents
 
 	public function audit_auto_audit_save_post_subcontent( $terms, $post, $taxonomy, $currents, $update )
 	{
-		if ( ! $this->in_setting( $post->post_type, 'subcontent_posttypes' ) )
+		if ( ! $this->in_setting_posttypes( $post->post_type, 'subcontent' ) )
 			return $terms;
 
 		// avoid confusions!

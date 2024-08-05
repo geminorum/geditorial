@@ -37,10 +37,11 @@ class Series extends gEditorial\Module
 		return [
 			'_general' => [
 				'multiple_instances',
+				'admin_restrict',
 			],
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
-			'_supports' => [
+			'_supports'        => [
 				'shortcode_support',
 			],
 		];

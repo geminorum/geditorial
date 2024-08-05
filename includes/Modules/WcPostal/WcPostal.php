@@ -124,7 +124,7 @@ class WcPostal extends gEditorial\Module
 
 	private function _service_icon( $default = FALSE )
 	{
-		$icon = $this->filters( 'service_icon', GEDITORIAL_URL.'assets/images/irpost.svg' );
+		$icon = $this->filters( 'service_icon', GEDITORIAL_URL.'assets/images/irpost.min.svg' );
 		return $default ? $icon : $this->get_setting_fallback( 'service_icon', $icon );
 	}
 

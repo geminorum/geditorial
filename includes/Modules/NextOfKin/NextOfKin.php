@@ -273,7 +273,7 @@ class NextOfKin extends gEditorial\Module
 				}
 			}
 
-			if ( $this->in_setting( $screen->post_type, 'subcontent_posttypes' ) ) {
+			if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {
 
 				if ( 'post' == $screen->base ) {
 

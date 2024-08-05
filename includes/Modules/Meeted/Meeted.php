@@ -248,6 +248,9 @@ class Meeted extends gEditorial\Module
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 
+				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
+				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+
 				'featured_people' => [
 					'title'       => _x( 'Coordinators', 'Field Title', 'geditorial-meeted' ),
 					'description' => _x( 'People Who Participate as Coordinators in This Meeting', 'Field Description', 'geditorial-meeted' ),

@@ -54,6 +54,7 @@ class Territory extends gEditorial\Module
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
+				'admin_restrict',
 				'show_in_quickedit',
 			],
 			'_frontend' => [
