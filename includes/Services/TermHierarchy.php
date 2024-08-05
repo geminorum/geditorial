@@ -12,11 +12,13 @@ class TermHierarchy extends WordPress\Main
 
 	const AUTO_SET_PARENT_TERMS = 'auto_set_parent_terms';
 	const AUTO_SET_CHILD_TERMS  = 'auto_set_child_terms';
+	const REVERSE_ORDERED_TERMS = 'reverse_ordered_terms';
 
 	public static function setup()
 	{
 		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms_auto_set_parent_terms' ], 9999, 6 );
 		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms_auto_set_child_terms' ], 9999, 6 );
+		add_filter( 'get_terms_defaults', [ __CLASS__, 'get_terms_defaults' ], 9, 2 );
 	}
 
 	/**
@@ -84,5 +86,29 @@ class TermHierarchy extends WordPress\Main
 			if ( ! empty( $children ) )
 				wp_set_post_terms( $object_id, $children, $taxonomy, TRUE );
 		}
+	}
+
+	/**
+	 * Filters the terms query default arguments.
+	 *
+	 * @param  array $defaults
+	 * @param  array $taxonomies
+	 * @return array $defaults
+	 */
+	public static function get_terms_defaults( $defaults, $taxonomies )
+	{
+		if ( count( $taxonomies ) > 1 )
+			return $defaults;
+
+		if ( ! $object = WordPress\Taxonomy::object( reset( $taxonomies ) ) )
+			return $defaults;
+
+		if ( empty( $object->{self::REVERSE_ORDERED_TERMS} ) )
+			return $defaults;
+
+		$defaults['orderby'] = $object->{self::REVERSE_ORDERED_TERMS};
+		$defaults['order']   = 'DESC';
+
+		return $defaults;
 	}
 }

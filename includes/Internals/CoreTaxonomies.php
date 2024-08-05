@@ -133,11 +133,12 @@ trait CoreTaxonomies
 	protected function apply_taxonomy_object_settings( $taxonomy, $args = [], $atts = [], $posttypes = NULL, $constant = FALSE )
 	{
 		$settings = self::atts( [
-			'is_viewable'    => NULL,
-			'custom_captype' => FALSE,
-			'admin_managed'  => NULL,    // psudo-setting: manage only for admins
-			'auto_parents'   => FALSE,
-			'auto_children'  => FALSE,
+			'is_viewable'     => NULL,
+			'custom_captype'  => FALSE,
+			'admin_managed'   => NULL,    // psudo-setting: manage only for admins
+			'auto_parents'    => FALSE,
+			'auto_children'   => FALSE,
+			'reverse_ordered' => NULL,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -260,6 +261,12 @@ trait CoreTaxonomies
 
 				case 'auto_parents' : $args[Services\TermHierarchy::AUTO_SET_PARENT_TERMS] = $value; break;
 				case 'auto_children': $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
+
+				case 'reverse_ordered':
+
+					$args[Services\TermHierarchy::REVERSE_ORDERED_TERMS] = $value;
+
+					break;
 
 				// TODO: support combination of settings:
 				// -- restricted terms
@@ -451,6 +458,7 @@ trait CoreTaxonomies
 	}
 
 	// DEFAULT CALLBACK for `__checklist_reverse_terms_callback`
+	// TODO: compliance with `reverse_ordered` setting
 	public function taxonomy_meta_box_checklist_reverse_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )

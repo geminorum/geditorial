@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Misc;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Listtable extends WordPress\Main
@@ -117,10 +118,15 @@ SQL;
 				$selected = '';
 		}
 
+		$reversed = empty( $taxonomy->{Services\TermHierarchy::REVERSE_ORDERED_TERMS} )
+			? FALSE
+			: $taxonomy->{Services\TermHierarchy::REVERSE_ORDERED_TERMS};
+
 		$args = [
 			'taxonomy'      => $taxonomy->name,
 			'name'          => $query_var,
-			'orderby'       => 'name',
+			'order'         => $reversed ? 'DESC' : 'ASC',
+			'orderby'       => $reversed ?: 'name',
 			'value_field'   => 'slug',
 			'selected'      => $selected,
 			'hierarchical'  => $taxonomy->hierarchical,

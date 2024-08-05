@@ -60,6 +60,10 @@ class MetaBox extends WordPress\Main
 			'fields' => $taxonomy->hierarchical ? 'ids' : 'slugs'
 		] ) : [];
 
+		$reversed = empty( $taxonomy->{Services\TermHierarchy::REVERSE_ORDERED_TERMS} )
+			? FALSE
+			: $taxonomy->{Services\TermHierarchy::REVERSE_ORDERED_TERMS};
+
 		$dropdown = [
 			'taxonomy'          => $taxonomy->name,
 			'selected'          => count( $selected ) ? $selected[0] : '0',
@@ -67,6 +71,8 @@ class MetaBox extends WordPress\Main
 			'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
 			'name'              => $args['name'] ?? 'tax_input['.$taxonomy->name.'][]',
 			'include'           => $terms ?? [],
+			'order'             => $reversed ? 'DESC' : 'ASC',
+			'orderby'           => $reversed ?: 'id',
 			'show_option_none'  => $args['none'] ?? Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' ),
 			'option_none_value' => '0',
 			'show_count'        => FALSE,
