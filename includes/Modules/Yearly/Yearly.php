@@ -18,7 +18,6 @@ class Yearly extends gEditorial\Module
 	use Internals\TemplateTaxonomy;
 
 	// TODO: extract year from meta fields @see `PostDate` Internal
-	// TODO: optional restrict admin as post state like: mine/published/1397/1398: `apply_filters( "views_{$this->screen->id}", $views )`
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -56,6 +55,7 @@ class Yearly extends gEditorial\Module
 				'selectmultiple_term',
 			],
 			'_editlist' => [
+				'parents_as_views',
 				'admin_restrict',
 				'show_in_quickedit',
 			],
@@ -143,8 +143,11 @@ class Yearly extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
-					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) ) {
+
+					if ( ! $this->hook_taxonomy_parents_as_views( $screen, 'main_taxonomy' ) )
+						$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+				}
 
 			} else if ( 'post' === $screen->base ) {
 

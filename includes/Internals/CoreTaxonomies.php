@@ -715,6 +715,52 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
+	protected function hook_taxonomy_parents_as_views( $screen, $constant, $setting = 'parents_as_views' )
+	{
+		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
+			return FALSE;
+
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $this->constant( $constant ) ) )
+			return FALSE;
+
+		add_filter( "views_{$screen->id}",
+			function ( $views ) use ( $taxonomy, $screen ) {
+
+				$terms = get_terms( [
+					'taxonomy'   => $taxonomy->name,
+					'hide_empty' => TRUE,
+					'parent'     => 0,
+
+					'update_term_meta_cache' => FALSE,
+				] );
+
+				if ( ! $terms || is_wp_error( $terms ) )
+					return $views;
+
+				$query = WordPress\Taxonomy::queryVar( $taxonomy );
+				$label = Helper::getTaxonomyLabel( $taxonomy, 'extended_label' );
+
+				foreach ( $terms as $term )
+					// TODO: prepend counts
+					$views[sprintf( '%s-%s', $taxonomy->name, $term->slug )] = Core\HTML::tag( 'a', [
+						'href'  => Core\WordPress::getPostTypeEditLink( $screen->post_type, 0, [ $query => $term->slug ] ),
+						'title' => sprintf( '%s: %s', $label, $term->name ),
+						'class' => $term->slug === self::req( $query ) ? 'current' : FALSE,
+					], $term->name );
+
+				$views[sprintf( '%s--none', $taxonomy->name )] =  Core\HTML::tag( 'a', [
+					'href'  => Core\WordPress::getPostTypeEditLink( $screen->post_type, 0, [ $query => '-1' ] ),
+					'title' => $label,
+					'class' => '-1' === self::req( $query ) ? 'current' : FALSE,
+				], Helper::getTaxonomyLabel( $taxonomy, 'show_option_no_items' ) );
+
+				return $views;
+			}, 99, 1 );
+
+
+		return TRUE;
+	}
+
 	/**
 	 * Hooks the filter for taxonomy parent terms on imports.
 	 * @SEE: `pairedcore__hook_importer_term_parents()`
