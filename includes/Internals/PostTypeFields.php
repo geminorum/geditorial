@@ -187,7 +187,7 @@ trait PostTypeFields
 				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 
 			if ( ! isset( $args['icon'] ) )
-				$args['icon'] = $this->get_posttype_field_icon( $field, $posttype, $args );
+				$args['icon'] = Services\PostTypeFields::getFieldIcon( $field, $args, $posttype );
 
 			$fields[$field] = self::atts( [
 				'type'        => 'text',

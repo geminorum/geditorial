@@ -1130,37 +1130,6 @@ class Module extends WordPress\Module
 		wp_die();
 	}
 
-	// MAYBE: move to `Visual` Main
-	public function get_posttype_field_icon( $field, $posttype = 'post', $args = [] )
-	{
-		switch ( $field ) {
-			case 'over_title': return 'arrow-up-alt2';
-			case 'sub_title' : return 'arrow-down-alt2';
-			case 'highlight' : return 'pressthis';
-			case 'byline'    : return 'admin-users';
-			case 'published' : return 'calendar-alt';
-			case 'lead'      : return 'editor-paragraph';
-			case 'label'     : return 'megaphone';
-			case 'days'      : return 'backup';
-			case 'hours'     : return 'clock';
-		}
-
-		if ( ! empty( $args['type'] ) ) {
-			switch ( $args['type'] ) {
-				case 'email'    : return 'email';
-				case 'phone'    : return 'phone';
-				case 'mobile'   : return 'smartphone';
-				case 'identity' : return 'id-alt';
-				case 'iban'     : return 'bank';
-				case 'isbn'     : return 'book';
-				case 'date'     : return 'calendar';
-				case 'datetime' : return 'calendar-alt';
-			}
-		}
-
-		return 'admin-post';
-	}
-
 	public function icon( $name, $group = NULL )
 	{
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );

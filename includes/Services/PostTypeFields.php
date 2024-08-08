@@ -147,4 +147,51 @@ class PostTypeFields extends WordPress\Main
 
 		return FALSE;
 	}
+
+	/**
+	 * Retrieves the default icon given a field arguments and post-type.
+	 * @old: `get_posttype_field_icon()`
+	 *
+	 * @param  string       $field_key
+	 * @param  array        $args
+	 * @param  string|null  $posttype
+	 * @return string|array $icon
+	 */
+	public static function getFieldIcon( $field_key, $args = [], $posttype = NULL )
+	{
+		if ( ! empty( $args['icon'] ) )
+			return $args['icon'];
+
+		switch ( $field_key ) {
+			case 'over_title' : return 'arrow-up-alt2';
+			case 'sub_title'  : return 'arrow-down-alt2';
+			case 'highlight'  : return 'pressthis';
+			case 'byline'     : return 'admin-users';
+			case 'published'  : return 'calendar-alt';
+			case 'lead'       : return 'editor-paragraph';
+			case 'label'      : return 'megaphone';
+			case 'days'       : return 'backup';
+			case 'hours'      : return 'clock';
+			case 'notes'      : return 'text-page';
+			case 'itineraries': return 'editor-ul';
+		}
+
+		if ( ! empty( $args['type'] ) ) {
+			switch ( $args['type'] ) {
+				case 'email'   : return 'email';
+				case 'phone'   : return 'phone';
+				case 'mobile'  : return 'smartphone';
+				case 'identity': return 'id-alt';
+				case 'iban'    : return 'bank';
+				case 'isbn'    : return 'book';
+				case 'date'    : return 'calendar';
+				case 'datetime': return 'calendar-alt';
+				case 'people'  : return 'groups';
+				case 'address' : return 'location';
+				case 'venue'   : return 'location-alt';
+			}
+		}
+
+		return 'admin-post';
+	}
 }
