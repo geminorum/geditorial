@@ -30,6 +30,7 @@ class Personage extends gEditorial\Module
 	use Internals\PostTypeOverview;
 
 	// https://github.com/washingtonstateuniversity/WSU-People-Directory
+	// TODO: display status via `display_post_states` filter
 
 	protected $positions     = [ 'primary_posttype' => 2 ];
 	protected $priority_init = 9;

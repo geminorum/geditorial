@@ -1077,6 +1077,22 @@ class MetaBox extends WordPress\Main
 
 		switch ( $args['type'] ) {
 
+			case 'people':
+
+				$atts['data']['ortho'] = 'text';
+
+				$wrap[] = '-inputpeople';
+
+				break;
+
+			case 'venue':
+
+				$atts['data']['ortho'] = 'text';
+
+				$wrap[] = '-inputvenue';
+
+				break;
+
 			case 'year':
 
 				$atts['dir'] = 'ltr';

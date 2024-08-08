@@ -243,19 +243,18 @@ class Meeted extends gEditorial\Module
 				'days'      => [ 'type' => 'number', 'quickedit' => TRUE ],
 				'hours'     => [ 'type' => 'number', 'quickedit' => TRUE ],
 
-				'venue_string'   => [ 'type' => 'venue' ],
+				'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
 				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 
-				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
-				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+				'notes'       => [ 'type' => 'note' ],
+				'itineraries' => [ 'type' => 'note' ],
 
 				'featured_people' => [
 					'title'       => _x( 'Coordinators', 'Field Title', 'geditorial-meeted' ),
 					'description' => _x( 'People Who Participate as Coordinators in This Meeting', 'Field Description', 'geditorial-meeted' ),
 					'type'        => 'people',
-					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 					'order'       => 90,
 				],

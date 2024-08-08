@@ -60,6 +60,7 @@ class Execution extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_restrict',
+				'auto_term_parents',
 				'show_in_quickedit',
 			],
 			'_frontend' => [
@@ -122,6 +123,7 @@ class Execution extends gEditorial\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, [
 			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'   => $this->get_setting( 'auto_term_parents', TRUE ),
 			'custom_captype' => TRUE,
 		] );
 

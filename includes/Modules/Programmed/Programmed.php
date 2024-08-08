@@ -243,19 +243,18 @@ class Programmed extends gEditorial\Module
 				'days'      => [ 'type' => 'number', 'quickedit' => TRUE ],
 				'hours'     => [ 'type' => 'number', 'quickedit' => TRUE ],
 
-				'venue_string'   => [ 'type' => 'venue' ],
+				'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
 				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
 				'website_url'    => [ 'type' => 'link' ],
 				'email_address'  => [ 'type' => 'email' ],
 
-				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
-				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+				'notes'       => [ 'type' => 'note' ],
+				'itineraries' => [ 'type' => 'note' ],
 
 				'featured_people' => [
 					'title'       => _x( 'Organizers', 'Field Title', 'geditorial-programmed' ),
 					'description' => _x( 'People Who Participate as Organizers in This Program', 'Field Description', 'geditorial-programmed' ),
 					'type'        => 'people',
-					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 					'order'       => 90,
 				],

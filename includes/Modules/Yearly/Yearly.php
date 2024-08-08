@@ -17,6 +17,9 @@ class Yearly extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
+	// TODO: extract year from meta fields @see `PostDate` Internal
+	// TODO: optional restrict admin as post state like: mine/published/1397/1398: `apply_filters( "views_{$this->screen->id}", $views )`
+
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()

@@ -226,7 +226,6 @@ class Organization extends gEditorial\Module
 					'title'       => _x( 'Administrators', 'Field Title', 'geditorial-organization' ),
 					'description' => _x( 'People Who Participate as Administrators in This Organization', 'Field Description', 'geditorial-organization' ),
 					'type'        => 'people',
-					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 					'order'       => 90,
 				],

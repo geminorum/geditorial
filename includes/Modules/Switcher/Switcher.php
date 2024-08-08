@@ -80,8 +80,8 @@ class Switcher extends gEditorial\Module
 			'show_ui' => TRUE,
 		], 'edit_others_posts' );
 
-		/* translators: %s: posttype */
-		$template = _x( 'Switch to %s', 'Bulk Action', 'geditorial-switcher' );
+		/* translators: %1$s: module title, %2$s: posttype label */
+		$template = _x( '[%1$s] Switch to %2$s', 'Bulk Action', 'geditorial-switcher' );
 
 		foreach ( $this->get_setting( 'bulk_posttypes_to', [] ) as $posttype ) {
 
@@ -91,7 +91,7 @@ class Switcher extends gEditorial\Module
 			if ( ! array_key_exists( $posttype, $posttypes ) )
 				continue; // no access
 
-			$list['switch-to-'.$posttype] = sprintf( $template, $posttypes[$posttype] );
+			$list['switch-to-'.$posttype] = sprintf( $template, $this->module->title, $posttypes[$posttype] );
 		}
 
 		return array_merge( $actions, $list );

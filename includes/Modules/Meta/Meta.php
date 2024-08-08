@@ -264,8 +264,8 @@ class Meta extends gEditorial\Module
 				'period'     => [ 'type' => 'text' ],
 				'amount'     => [ 'type' => 'number' ],
 
-				'notes'       => [ 'type' => 'note', 'icon' => 'text-page' ],
-				'itineraries' => [ 'type' => 'note', 'icon' => 'editor-ul' ],
+				'notes'       => [ 'type' => 'note' ],
+				'itineraries' => [ 'type' => 'note' ],
 			],
 			'page' => [
 				'over_title' => [ 'type' => 'title_before' ],

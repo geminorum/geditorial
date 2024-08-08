@@ -117,6 +117,10 @@ SQL;
 			if ( $term = get_term_by( 'id', $selected, $taxonomy->name ) )
 				$selected = $term->slug;
 
+			// for numeric slugs!
+			else if ( $term = get_term_by( 'slug', $selected, $taxonomy->name ) )
+				$selected = $term->slug;
+
 			else
 				$selected = '';
 		}

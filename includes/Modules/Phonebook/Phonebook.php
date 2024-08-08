@@ -186,7 +186,6 @@ class Phonebook extends gEditorial\Module
 						'title'       => _x( 'Emergency Person', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Full Name of the Person Who Will Be Contacted on Emergency', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'people',
-						'icon'        => 'groups',
 						'order'       => 700,
 					],
 					'emergency_address' => [

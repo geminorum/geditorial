@@ -97,7 +97,7 @@ class TermHierarchy extends WordPress\Main
 	 */
 	public static function get_terms_defaults( $defaults, $taxonomies )
 	{
-		if ( count( $taxonomies ) > 1 )
+		if ( empty( $taxonomies ) || count( (array) $taxonomies ) > 1 )
 			return $defaults;
 
 		if ( ! $object = WordPress\Taxonomy::object( reset( $taxonomies ) ) )

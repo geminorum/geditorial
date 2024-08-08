@@ -144,7 +144,6 @@ class Tube extends gEditorial\Module
 					'title'       => _x( 'Featured People', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'People Who Featured in This Video', 'Field Description', 'geditorial-tube' ),
 					'type'        => 'people',
-					'icon'        => 'groups',
 					'quickedit'   => TRUE,
 				],
 				'creation_date' => [

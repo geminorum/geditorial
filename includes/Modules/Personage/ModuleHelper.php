@@ -371,6 +371,7 @@ class ModuleHelper extends gEditorial\Helper
 			'تبار',
 			'وند',
 			'منش',
+			'پناه',
 		] );
 	}
 
