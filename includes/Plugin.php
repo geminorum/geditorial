@@ -751,6 +751,12 @@ class Plugin
 		return $wrap ? HTML::tag( $wrap, [ 'class' => '-na', 'title' => __( 'Not Available', 'geditorial' ) ], $message ) : $message;
 	}
 
+	public static function untitled( $wrap = 'span' )
+	{
+		$message = __( '(Untitled)', 'geditorial' );
+		return $wrap ? HTML::tag( $wrap, [ 'class' => '-untitled', 'title' => __( 'No Title Available!', 'geditorial' ) ], $message ) : $message;
+	}
+
 	public static function denied( $wrap = 'p' )
 	{
 		$message = __( 'You don&#8217;t have permission to do this.', 'geditorial' );

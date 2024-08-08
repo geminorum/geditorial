@@ -612,7 +612,7 @@ trait PairedMetaBox
 
 		add_meta_box(
 			$metabox,
-			sprintf( $title, $post_title, $singular_name ),
+			sprintf( $title, $post_title ?: gEditorial\Plugin::untitled( FALSE ), $singular_name ),
 			$callback,
 			$screen,
 			$metabox_context,

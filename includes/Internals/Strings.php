@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
@@ -141,9 +142,9 @@ trait Strings
 
 		$template = $this->get_string( sprintf( '%s_%s', $context, $prop ), $posttype, $group, $default );
 		$singular = Helper::getPostTypeLabel( $posttype, 'singular_name' );
-		$title    = WordPress\Post::title( $post, $singular );
+		$title    = WordPress\Post::title( $post );
 
-		return sprintf( $template, $title, $singular );
+		return sprintf( $template, $title ?: gEditorial\Plugin::untitled( FALSE ), $singular );
 	}
 
 	protected function strings_metabox_title_via_taxonomy( $taxonomy, $context = 'default', $default = NULL, $term = NULL, $prop = 'title', $group = 'metabox' )
