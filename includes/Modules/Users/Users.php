@@ -723,30 +723,16 @@ class Users extends gEditorial\Module
 		echo '<table class="form-table">';
 		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Header', 'geditorial-users' ).'</th><td>';
 
-		$wpupload = WordPress\Media::upload();
-
-		if ( ! empty( $wpupload['error'] ) ) {
-
-			/* translators: %s: error */
-			echo Core\HTML::error( sprintf( _x( 'Before you can upload a file, you will need to fix the following error: %s', 'Message', 'geditorial-users' ), '<b>'.$wpupload['error'].'</b>' ), FALSE );
-
-		} else {
-
-			$this->do_settings_field( [
-				'type'      => 'file',
-				'field'     => 'import_users_file',
-				'name_attr' => 'import',
-				'values'    => [ '.csv' ],
-			] );
-
-			$size = Core\File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
-
-			/* translators: %s: size */
-			Core\HTML::desc( sprintf( _x( 'Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>', 'Message', 'geditorial-users' ), Core\HTML::wrapLTR( $size ) ) );
-
-			echo '<br />';
+		if ( $filesize = $this->settings_render_upload_field( '.csv' ) ) {
 			echo $this->wrap_open_buttons();
 				Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
+
+				Core\HTML::desc( sprintf(
+					/* translators:  %1$s: file ext-type, %2$s: file size */
+					_x( 'Checks for post authors via a %1$s file and re-map them with current registered users. Maximum upload size: %2$s', 'Message', 'geditorial-users' ),
+					Core\HTML::code( 'csv' ),
+					Core\HTML::code( Core\HTML::wrapLTR( $filesize ) )
+				), FALSE );
 			echo '</p>';
 		}
 

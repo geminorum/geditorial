@@ -719,4 +719,39 @@ trait SettingsCore
 
 		$this->scripts_printed = TRUE;
 	}
+
+	/**
+	 * Renders file upload field if upload checks passed.
+	 *
+	 * @ref `wp_import_handle_upload()`
+	 * @ref `WordPress\Media::handleImportUpload()`
+	 *
+	 * @param  string|array $mimes
+	 * @param  string       $name
+	 * @return false|int    $filesize
+	 */
+	protected function settings_render_upload_field( $mimes, $name = 'import' )
+	{
+		$wpupload = WordPress\Media::upload();
+
+		if ( ! empty( $wpupload['error'] ) ) {
+
+			echo Core\HTML::error( sprintf(
+				/* translators: %s: error message */
+				_x( 'Before you can upload a file, you will need to fix the following error: %s', 'Internal: Settings Core: Message', 'geditorial-admin' ),
+				Core\HTML::code( $wpupload['error'] )
+			), FALSE, 'inline' );
+
+			return FALSE;
+		}
+
+		$this->do_settings_field( [
+			'type'      => 'file',
+			'field'     => 'import_users_file',
+			'name_attr' => $name,
+			'values'    => (array) $mimes,
+		] );
+
+		return Core\File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
+	}
 }
