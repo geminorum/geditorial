@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
@@ -724,7 +725,7 @@ trait CoreTaxonomies
 			return FALSE;
 
 		add_filter( "views_{$screen->id}",
-			function ( $views ) use ( $taxonomy, $screen ) {
+			static function ( $views ) use ( $taxonomy, $screen ) {
 
 				$terms = get_terms( [
 					'taxonomy'   => $taxonomy->name,
@@ -757,6 +758,11 @@ trait CoreTaxonomies
 				return $views;
 			}, 99, 1 );
 
+
+		add_action( 'parse_query',
+			static function ( &$query ) use ( $taxonomy ) {
+				Listtable::parseQueryTaxonomy( $query, $taxonomy->name );
+			}, 12, 1 );
 
 		return TRUE;
 	}

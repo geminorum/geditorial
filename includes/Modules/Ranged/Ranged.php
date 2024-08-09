@@ -216,8 +216,9 @@ class Ranged extends gEditorial\Module
 			],
 			'status_taxonomy' => [
 				// TODO: finish the list
-				'planned' => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-ranged' ),
-				'held'    => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-ranged' ),
+				'planned'  => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-ranged' ),
+				'canceled' => _x( 'Canceled', 'Status Taxonomy: Default Term', 'geditorial-ranged' ),
+				'held'     => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-ranged' ),
 			],
 			'span_taxonomy' => Datetime::getYears( '-5 years' ),
 		];

@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 class Paired extends WordPress\Main
@@ -79,7 +80,7 @@ class Paired extends WordPress\Main
 			'posts_per_page' => -1,
 			'orderby'        => 'date',
 			'order'          => 'ASC',
-			'post_type'      => array_keys( $list ), // NOTE: cannot use `any` because then checks for viewable
+			'post_type'      => array_keys( $list ), // NOTE: cannot use `any` because then checks for `viewable`
 			'post_status'    => WordPress\Status::acceptable( array_keys( $list ), 'query', is_admin() ? [ 'pending', 'draft' ] : [] ),
 			'post__in'       => Core\Arraay::prepNumeral( ...array_values( $list ) ),
 			'fields'         => $fields ?? 'all', // or `ids`
@@ -110,12 +111,16 @@ class Paired extends WordPress\Main
 		$columns  = apply_filters( static::BASE.'_paired_globalsummary_for_post_columns', [
 			'index' => _x( '#', 'Service: Paired: Global Summary Title Column', 'geditorial-admin' ),
 			'date'  => _x( 'Date', 'Service: Paired: Global Summary Title Column', 'geditorial-admin' ),
+			'type'  => _x( 'Type', 'Service: Paired: Global Summary Title Column', 'geditorial-admin' ),
 			'title' => _x( 'Title', 'Service: Paired: Global Summary Title Column', 'geditorial-admin' ),
 		], $post, $context );
 
-		$posts = [];
+		$posts = $types = [];
 
 		foreach ( $items as $offset => $item ) {
+
+			if ( empty( $types[$item->post_type] ) )
+				$types[$item->post_type] = Helper::getPostTypeLabel( $item->post_type, 'singular_name' );
 
 			if ( in_array( $context, [ 'print', 'printpage' ], TRUE ) )
 				$title = WordPress\Post::title( $item, FALSE );
@@ -125,6 +130,7 @@ class Paired extends WordPress\Main
 
 			$posts[] = apply_filters( static::BASE.'_paired_globalsummary_for_post_data', [
 				'title' => $title,
+				'type'  => $types[$item->post_type],
 				'date'  => Datetime::prepForDisplay( $item->post_date ),
 				'index' => Core\Number::localize( $offset + 1 ),
 			], $item, $context );

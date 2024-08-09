@@ -82,7 +82,6 @@ class Trained extends gEditorial\Module
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', [
 					'title',
-					// 'editor',
 					'excerpt',
 					'author',
 					'thumbnail',
@@ -217,8 +216,9 @@ class Trained extends gEditorial\Module
 			],
 			'status_taxonomy' => [
 				// TODO: finish the list
-				'planned' => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
-				'held'    => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
+				'planned'  => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
+				'canceled' => _x( 'Canceled', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
+				'held'     => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-trained' ),
 			],
 			'span_taxonomy' => Datetime::getYears( '-5 years' ),
 		];

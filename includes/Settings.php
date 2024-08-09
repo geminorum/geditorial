@@ -855,7 +855,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'parents_as_views',
 			'title'       => _x( 'Parents as Views', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Prepend the terms to views on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Prepends the parent terms to views on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}

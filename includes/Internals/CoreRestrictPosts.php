@@ -51,7 +51,7 @@ trait CoreRestrictPosts
 			}, $priority, 2 );
 
 		add_action( 'parse_query',
-			function ( &$query ) use ( $taxonomies ) {
+			static function ( &$query ) use ( $taxonomies ) {
 
 				foreach ( $taxonomies as $taxonomy )
 					Listtable::parseQueryTaxonomy( $query, $taxonomy );
@@ -81,7 +81,7 @@ trait CoreRestrictPosts
 		// FIXME: WTF: check for `list_users` cap!
 
 		add_action( 'restrict_manage_posts',
-			function ( $posttype, $which ) {
+			static function ( $posttype, $which ) {
 
 				Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0 );
 
@@ -111,7 +111,7 @@ trait CoreRestrictPosts
 			return FALSE;
 
 		add_filter( sprintf( 'manage_edit-%s_sortable_columns', $posttype ),
-			function ( $columns ) use ( $taxonomies ) {
+			static function ( $columns ) use ( $taxonomies ) {
 				return array_merge( $columns,
 					Core\Arraay::sameKey(
 						Core\Arraay::prefixValues( $taxonomies, 'taxonomy-' ) ) );
@@ -119,7 +119,7 @@ trait CoreRestrictPosts
 			}, $priority, 1 );
 
 		add_filter( 'posts_clauses',
-			function ( $pieces, $wp_query ) use ( $taxonomies, $posttype ) {
+			static function ( $pieces, $wp_query ) use ( $taxonomies, $posttype ) {
 
 				if ( ! isset( $wp_query->query['orderby'] ) )
 					return $pieces;
@@ -152,7 +152,7 @@ trait CoreRestrictPosts
 		$this->filter_append( 'query_vars', $query_var );
 
 		add_action( 'parse_query',
-			function ( &$query ) use ( $query_var ) {
+			static function ( &$query ) use ( $query_var ) {
 
 				if ( ! isset( $query->query_vars[$query_var] ) )
 					return;
@@ -237,7 +237,7 @@ trait CoreRestrictPosts
 		$notice = $empty ?? $this->get_string( 'parent_post_empty', $posttype, 'misc', gEditorial()->na() );
 
 		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row', $posttype ),
-			function ( $post, $before, $after ) use ( $posttype, $notice, $can, $edit ) {
+			static function ( $post, $before, $after ) use ( $posttype, $notice, $can, $edit ) {
 
 				if ( ! $post->post_parent && ! $notice )
 					return;

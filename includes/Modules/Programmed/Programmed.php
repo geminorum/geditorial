@@ -81,7 +81,6 @@ class Programmed extends gEditorial\Module
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', [
 					'title',
-					// 'editor',
 					'excerpt',
 					'author',
 					'thumbnail',
