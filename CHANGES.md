@@ -1,3 +1,16 @@
+### 3.29.1
+* internal/core-taxonomies: term parents as views
+* main/plugin: untitled string helper
+* main/scripts: support for plupload v3
+* module/athlete: calculate bmi as pointer
+* module/athlete: move mass/stature units
+* module/diagnosed: support sub-contents for medical records
+* module/equipped: move shoe/shirt/pants units
+* module/remoted: :new: module
+* module/units: total number units revised
+* service/post-type-fields: default field icons
+* service/term-hierarchy: reverse ordered terms
+
 ### 3.29.0
 * app/import-items: clear already added rows
 * internal/bulk-exports: cap check on each targets
