@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Yearly\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-23 17:58+0330\n"
+"PO-Revision-Date: 2024-08-05 05:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,28 +15,28 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Yearly\n"
 "X-Domain: geditorial-yearly\n"
 
-#: Yearly.php:85
+#: Yearly.php:86
 msgid "Year Span"
 msgid_plural "Year Spans"
 msgstr[0] "دوره‌های سالیانه"
 msgstr[1] "دوره سالیانه"
 
-#: Yearly.php:89
+#: Yearly.php:90
 msgctxt "Label: Show Option All"
 msgid "Years"
 msgstr "سال‌ها"
 
-#: Yearly.php:90
+#: Yearly.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Yearly.php:99
+#: Yearly.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Years Summary"
 msgstr "گزارش سالیانه گروهه شما"
 
-#: Yearly.php:100
+#: Yearly.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Years Summary"
 msgstr "گزارش سالیانه تحریریه"

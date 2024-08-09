@@ -13,33 +13,33 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Sufficed\n"
 "X-Domain: geditorial-sufficed\n"
 
-#: Sufficed.php:89
+#: Sufficed.php:90
 msgid "Deficiency"
 msgid_plural "Deficiencies"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Sufficed.php:93
+#: Sufficed.php:94
 msgctxt "Label: Menu Name"
 msgid "Content Deficiencies"
 msgstr ""
 
-#: Sufficed.php:94
+#: Sufficed.php:95
 msgctxt "Label: Show Option All"
 msgid "Deficiencies"
 msgstr ""
 
-#: Sufficed.php:95
+#: Sufficed.php:96
 msgctxt "Label: Show Option No Terms"
 msgid "(Sufficient)"
 msgstr ""
 
-#: Sufficed.php:104
+#: Sufficed.php:105
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Deficiencies Summary"
 msgstr ""
 
-#: Sufficed.php:105
+#: Sufficed.php:106
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Deficiencies Summary"
 msgstr ""

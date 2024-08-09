@@ -13,47 +13,47 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Series\n"
 "X-Domain: geditorial-series\n"
 
-#: Series.php:73
+#: Series.php:74
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr ""
 
-#: Series.php:74
+#: Series.php:75
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr ""
 
-#: Series.php:75
+#: Series.php:76
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr ""
 
-#: Series.php:80
+#: Series.php:81
 msgctxt "Strings: Description"
 msgid "In Serie Title"
 msgstr ""
 
-#: Series.php:81
+#: Series.php:82
 msgctxt "Strings: Description"
 msgid "In Serie Order"
 msgstr ""
 
-#: Series.php:82
+#: Series.php:83
 msgctxt "Strings: Description"
 msgid "In Serie Description"
 msgstr ""
 
-#: Series.php:86
+#: Series.php:87
 msgctxt "Column Title"
 msgid "Series"
 msgstr ""
 
-#: Series.php:87
+#: Series.php:88
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Series &ndash;"
 msgstr ""
 
-#: Series.php:90
+#: Series.php:91
 msgid "Serie"
 msgid_plural "Series"
 msgstr[0] ""

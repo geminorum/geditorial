@@ -23,163 +23,168 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the meetings and supported post-types."
 msgstr ""
 
-#: Meeted.php:150
-#: Meeted.php:151
+#: Meeted.php:147
+#: Meeted.php:148
 msgid "Meeting"
 msgid_plural "Meetings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meeted.php:152
+#: Meeted.php:149
 msgid "Meeting Category"
 msgid_plural "Meeting Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meeted.php:153
+#: Meeted.php:150
 msgid "Meeting Level"
 msgid_plural "Meeting Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meeted.php:154
+#: Meeted.php:151
 msgid "Meeting Program"
 msgid_plural "Meeting Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meeted.php:155
+#: Meeted.php:152
 msgid "Meeting Span"
 msgid_plural "Meeting Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meeted.php:156
+#: Meeted.php:153
 msgid "Meeting Type"
 msgid_plural "Meeting Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meeted.php:157
+#: Meeted.php:154
 msgid "Meeting Status"
 msgid_plural "Meeting Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Meeted.php:161
+#: Meeted.php:158
 msgctxt "Label: `menu_name`"
 msgid "Meetings"
 msgstr ""
 
-#: Meeted.php:162
+#: Meeted.php:159
 msgctxt "Label: Featured Image"
 msgid "Meeting Poster"
 msgstr ""
 
-#: Meeted.php:163
+#: Meeted.php:160
 msgctxt "Label: MetaBox Title"
 msgid "The Meeting"
 msgstr ""
 
-#: Meeted.php:166
+#: Meeted.php:163
 msgctxt "Label: MetaBox Title"
 msgid "In This Meeting"
 msgstr ""
 
-#: Meeted.php:169
+#: Meeted.php:166
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Meeted.php:172
+#: Meeted.php:169
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Meeted.php:175
+#: Meeted.php:172
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Meeted.php:178
+#: Meeted.php:175
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Meeted.php:181
+#: Meeted.php:178
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Meeted.php:190
+#: Meeted.php:187
 msgctxt "Notice"
 msgid "There is no meeting information available!"
 msgstr ""
 
-#: Meeted.php:191
+#: Meeted.php:188
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the meeting information."
 msgstr ""
 
 #. translators: %s: item count
-#: Meeted.php:196
+#: Meeted.php:193
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Meeting Participants (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Meeted.php:198
+#: Meeted.php:195
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Meeting Participations (%s)"
 msgstr ""
 
-#: Meeted.php:199
+#: Meeted.php:196
 msgctxt "Misc: `column_icon_title`"
 msgid "Meetings"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Meeted.php:204
+#: Meeted.php:201
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Meeted.php:215
+#: Meeted.php:212
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Meeted.php:216
+#: Meeted.php:213
+msgctxt "Status Taxonomy: Default Term"
+msgid "Canceled"
+msgstr ""
+
+#: Meeted.php:214
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Meeted.php:252
+#: Meeted.php:254
 msgctxt "Field Title"
 msgid "Coordinators"
 msgstr ""
 
-#: Meeted.php:253
+#: Meeted.php:255
 msgctxt "Field Description"
 msgid "People Who Participate as Coordinators in This Meeting"
 msgstr ""
 
-#: Meeted.php:261
+#: Meeted.php:262
 msgctxt "Field Title"
 msgid "Meeting Code"
 msgstr ""
 
-#: Meeted.php:262
+#: Meeted.php:263
 msgctxt "Field Description"
 msgid "Unique Meeting Code"
 msgstr ""
 
-#: Meeted.php:587
+#: Meeted.php:599
 msgctxt "Header"
 msgid "Meeting Tools"
 msgstr ""
 
-#: Meeted.php:596
+#: Meeted.php:608
 msgctxt "Card"
 msgid "Meeting Date from Meta-data"
 msgstr ""

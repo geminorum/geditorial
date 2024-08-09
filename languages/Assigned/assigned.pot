@@ -13,74 +13,74 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Assigned\n"
 "X-Domain: geditorial-assigned\n"
 
-#: Assigned.php:87
+#: Assigned.php:88
 msgid "Assignment"
 msgid_plural "Assignments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Assigned.php:91
+#: Assigned.php:92
 msgctxt "Label: Menu Name"
 msgid "Content Assignments"
 msgstr ""
 
-#: Assigned.php:92
+#: Assigned.php:93
 msgctxt "Label: Show Option All"
 msgid "Assignment"
 msgstr ""
 
-#: Assigned.php:93
+#: Assigned.php:94
 msgctxt "Label: Show Option No Terms"
 msgid "(Unassigned)"
 msgstr ""
 
-#: Assigned.php:102
+#: Assigned.php:103
 msgctxt "Dashboard Widget Title"
 msgid "Your Assignments Summary"
 msgstr ""
 
-#: Assigned.php:103
+#: Assigned.php:104
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Assignments Summary"
 msgstr ""
 
-#: Assigned.php:113
+#: Assigned.php:114
 msgctxt "Default Term"
 msgid "Research"
 msgstr ""
 
-#: Assigned.php:114
+#: Assigned.php:115
 msgctxt "Default Term"
 msgid "Planning"
 msgstr ""
 
-#: Assigned.php:115
+#: Assigned.php:116
 msgctxt "Default Term"
 msgid "Execution"
 msgstr ""
 
-#: Assigned.php:116
+#: Assigned.php:117
 msgctxt "Default Term"
 msgid "Reporting"
 msgstr ""
 
-#: Assigned.php:126
-#: Assigned.php:131
+#: Assigned.php:127
+#: Assigned.php:132
 msgctxt "Field Title"
 msgid "Assigned To"
 msgstr ""
 
-#: Assigned.php:127
+#: Assigned.php:128
 msgctxt "Field Description"
 msgid "Determines the user responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:132
+#: Assigned.php:133
 msgctxt "Field Description"
 msgid "Determines the individual responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:137
+#: Assigned.php:138
 msgctxt "Field Title"
 msgid "Due Date"
 msgstr ""

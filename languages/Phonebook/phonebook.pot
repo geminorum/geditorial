@@ -204,54 +204,54 @@ msgctxt "Field Description"
 msgid "Full Name of the Person Who Will Be Contacted on Emergency"
 msgstr ""
 
-#: Phonebook.php:193
+#: Phonebook.php:192
 msgctxt "Field Title"
 msgid "Emergency Address"
 msgstr ""
 
-#: Phonebook.php:194
+#: Phonebook.php:193
 msgctxt "Field Description"
 msgid "Full address to Be reached on Emergency"
 msgstr ""
 
 #. translators: %s: post title
-#: Phonebook.php:329
+#: Phonebook.php:328
 msgctxt "Page Title"
 msgid "Contact Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Phonebook.php:331
+#: Phonebook.php:330
 msgctxt "Page Title"
 msgid "Contacts Overview for %s"
 msgstr ""
 
-#: Phonebook.php:348
+#: Phonebook.php:347
 msgctxt "Default Term: Audit"
 msgid "Empty Contact Data"
 msgstr ""
 
-#: Phonebook.php:349
+#: Phonebook.php:348
 msgctxt "Default Term: Audit"
 msgid "Empty Mobile Number"
 msgstr ""
 
-#: Phonebook.php:513
+#: Phonebook.php:512
 msgctxt "Possible Phone Key"
 msgid "Mobile"
 msgstr ""
 
-#: Phonebook.php:514
+#: Phonebook.php:513
 msgctxt "Possible Phone Key"
 msgid "Mobile Phone"
 msgstr ""
 
-#: Phonebook.php:515
+#: Phonebook.php:514
 msgctxt "Possible Phone Key"
 msgid "Phone"
 msgstr ""
 
-#: Phonebook.php:516
+#: Phonebook.php:515
 msgctxt "Possible Phone Key"
 msgid "Phone Number"
 msgstr ""

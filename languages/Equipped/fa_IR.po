@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Equipped\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-22 02:59+0330\n"
+"PO-Revision-Date: 2024-08-04 07:20+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,31 +15,61 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Equipped\n"
 "X-Domain: geditorial-equipped\n"
 
-#: Equipped.php:85
+#: Equipped.php:90
 msgid "Equipment Item"
 msgid_plural "Equipment Items"
 msgstr[0] "موارد تجهیزات"
 msgstr[1] "مورد تجهیزات"
 
-#: Equipped.php:89
+#: Equipped.php:94
 msgctxt "Label: `menu_name`"
 msgid "Content Equipments"
 msgstr "تجهیزات محتوا"
 
-#: Equipped.php:90
+#: Equipped.php:95
 msgctxt "Label: `extended_label`"
 msgid "Content Equipments"
 msgstr "تجهیزات محتوا"
 
-#: Equipped.php:91
+#: Equipped.php:96
 msgctxt "Label: `show_option_all`"
 msgid "Equipments"
 msgstr "تجهیزات"
 
-#: Equipped.php:92
+#: Equipped.php:97
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unequipped)"
 msgstr "(بدون‌تجهیز)"
+
+#: Equipped.php:111
+msgctxt "Field Title"
+msgid "Shoe"
+msgstr "کفش"
+
+#: Equipped.php:112
+msgctxt "Field Description"
+msgid "Size of the Shoe by European standards"
+msgstr "اندازه کفش بر اساس استاندارد اروپایی"
+
+#: Equipped.php:119
+msgctxt "Field Title"
+msgid "Shirt"
+msgstr "پیراهن"
+
+#: Equipped.php:120
+msgctxt "Field Description"
+msgid "Size of the Shirt by International standards"
+msgstr "اندازه لباس بر اساس استاندارد بین‌المللی"
+
+#: Equipped.php:127
+msgctxt "Field Title"
+msgid "Pants"
+msgstr "شلوار"
+
+#: Equipped.php:128
+msgctxt "Field Description"
+msgid "Size of the Pants by International standards"
+msgstr "اندازه شلوار بر اساس استاندارد بین‌المللی"
 
 #~ msgctxt "Label: Show Option All"
 #~ msgid "Equipments"

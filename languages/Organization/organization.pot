@@ -146,27 +146,27 @@ msgctxt "Field Description"
 msgid "People Who Participate as Administrators in This Organization"
 msgstr ""
 
-#: Organization.php:236
+#: Organization.php:235
 msgctxt "Field Title"
 msgid "Organization Code"
 msgstr ""
 
-#: Organization.php:237
+#: Organization.php:236
 msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr ""
 
-#: Organization.php:246
+#: Organization.php:245
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr ""
 
-#: Organization.php:247
+#: Organization.php:246
 msgctxt "Field Description"
 msgid "Unique Organization Number"
 msgstr ""
 
-#: Organization.php:691
+#: Organization.php:690
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr ""

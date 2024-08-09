@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Diagnosed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-21 18:50+0330\n"
+"PO-Revision-Date: 2024-08-04 07:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,83 +15,186 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Diagnosed\n"
 "X-Domain: geditorial-diagnosed\n"
 
-#: Diagnosed.php:86
+#: Diagnosed.php:111
 msgid "Diagnosis"
 msgid_plural "Diagnoses"
 msgstr[0] "تشخیص‌ها"
 msgstr[1] "تشخیص"
 
-#: Diagnosed.php:90
+#: Diagnosed.php:115
 msgctxt "Label: `menu_name`"
 msgid "Diagnosis Definitions"
 msgstr "تعاریف تشخیصی"
 
-#: Diagnosed.php:91
+#: Diagnosed.php:116
 msgctxt "Label: `extended_label`"
 msgid "Diagnosis Definitions"
 msgstr "تعاریف تشخیصی"
 
-#: Diagnosed.php:92
+#: Diagnosed.php:117
 msgctxt "Label: `show_option_all`"
 msgid "Diagnoses"
 msgstr "تشخیص‌ها"
 
-#: Diagnosed.php:93
+#: Diagnosed.php:118
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undiagnosed)"
 msgstr "(بدون‌تشخیص)"
 
-#: Diagnosed.php:105
+#: Diagnosed.php:123
+msgctxt "Field Label: `label`"
+msgid "Subject"
+msgstr "موضوع"
+
+#: Diagnosed.php:124
+msgctxt "Field Label: `age`"
+msgid "Age"
+msgstr "سن"
+
+#: Diagnosed.php:125
+msgctxt "Field Label: `date`"
+msgid "Date"
+msgstr "تاریخ"
+
+#: Diagnosed.php:126
+msgctxt "Field Label: `location`"
+msgid "Location"
+msgstr "مکان"
+
+#: Diagnosed.php:127
+msgctxt "Field Label: `location`"
+msgid "Doctors"
+msgstr "پزشکان"
+
+#: Diagnosed.php:128
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr "توضیحات"
+
+#: Diagnosed.php:134
+msgctxt "Notice"
+msgid "There is no medical information available!"
+msgstr "هیچ اطلاعات پزشکی در دسترس نیست!"
+
+#: Diagnosed.php:135
+msgctxt "Notice"
+msgid "You have not necessary permission to manage this medical data."
+msgstr "شما مجوز لازم برای مدیریت این اطلاعات پزشکی را ندارید."
+
+#: Diagnosed.php:142
+msgctxt "Settings Description"
+msgid "Supports sports fields for the selected post-types."
+msgstr "رشته‌های ورزشی را برای نوع‌نوشته انتخاب شده پشتیبانی می‌کند."
+
+#: Diagnosed.php:146
+msgctxt "MetaBox Title"
+msgid "Medical"
+msgstr "پزشکی"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Diagnosed.php:150
+msgctxt "Button Title"
+msgid "Medical Records of %1$s"
+msgstr "سوابق پزشکی %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Diagnosed.php:152
+msgctxt "Button Text"
+msgid "%1$s Manage the Medical Records of %2$s"
+msgstr "%1$s مدیریت سوابق پزشکی %2$s"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Diagnosed.php:155
+msgctxt "Action Title"
+msgid "Medical Records of %1$s"
+msgstr "سوابق پزشکی %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Diagnosed.php:157
+msgctxt "Action Text"
+msgid "Medical"
+msgstr "پزشکی"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Diagnosed.php:160
+msgctxt "Row Title"
+msgid "Medical Records of %1$s"
+msgstr "سوابق پزشکی %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Diagnosed.php:162
+msgctxt "Row Text"
+msgid "Medical"
+msgstr "پزشکی"
+
+#: Diagnosed.php:172
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sciatica"
 msgstr "سیاتیک"
 
-#: Diagnosed.php:106
+#: Diagnosed.php:173
 msgctxt "Main Taxonomy: Default Term"
 msgid "Diabetes"
 msgstr "دیابت"
 
-#: Diagnosed.php:107
+#: Diagnosed.php:174
 msgctxt "Main Taxonomy: Default Term"
 msgid "Glasses"
 msgstr "عینک"
 
-#: Diagnosed.php:108
+#: Diagnosed.php:175
 msgctxt "Main Taxonomy: Default Term"
 msgid "Migraine"
 msgstr "میگرن"
 
-#: Diagnosed.php:109
+#: Diagnosed.php:176
 msgctxt "Main Taxonomy: Default Term"
 msgid "Epilepsy"
 msgstr "صرع"
 
-#: Diagnosed.php:110
+#: Diagnosed.php:177
 msgctxt "Main Taxonomy: Default Term"
 msgid "Gastro"
 msgstr "معده"
 
-#: Diagnosed.php:111
+#: Diagnosed.php:178
 msgctxt "Main Taxonomy: Default Term"
 msgid "Kidney"
 msgstr "کلیه"
 
-#: Diagnosed.php:112
+#: Diagnosed.php:179
 msgctxt "Main Taxonomy: Default Term"
 msgid "Liver"
 msgstr "کبد"
 
-#: Diagnosed.php:113
+#: Diagnosed.php:180
 msgctxt "Main Taxonomy: Default Term"
 msgid "Heart"
 msgstr "قلب"
 
-#: Diagnosed.php:114
+#: Diagnosed.php:181
 msgctxt "Main Taxonomy: Default Term"
 msgid "Knee"
 msgstr "زانو"
 
-#: Diagnosed.php:115
+#: Diagnosed.php:182
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ankle"
 msgstr "مچ‌پا"
+
+#. translators: %s: post title
+#: Diagnosed.php:333
+msgctxt "Page Title"
+msgid "Medical Grid for %s"
+msgstr "جدول پزشکی برای %s"
+
+#. translators: %s: post title
+#: Diagnosed.php:335
+msgctxt "Page Title"
+msgid "Medical Overview for %s"
+msgstr "مروری بر سوابق پزشکی %s"
+
+#: Diagnosed.php:352
+msgctxt "Default Term: Audit"
+msgid "Empty Medical Data"
+msgstr "داده‌های پزشکی خالی"

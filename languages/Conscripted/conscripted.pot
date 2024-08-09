@@ -13,68 +13,68 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Conscripted\n"
 "X-Domain: geditorial-conscripted\n"
 
-#: Conscripted.php:83
+#: Conscripted.php:86
 msgid "Conscription"
 msgid_plural "Conscriptions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Conscripted.php:87
+#: Conscripted.php:90
 msgctxt "Label: `extended_label`"
 msgid "Conscription"
 msgstr ""
 
-#: Conscripted.php:88
+#: Conscripted.php:91
 msgctxt "Label: Show Option All"
 msgid "Conscription"
 msgstr ""
 
-#: Conscripted.php:89
+#: Conscripted.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Conscripted.php:98
+#: Conscripted.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Conscription Summary"
 msgstr ""
 
-#: Conscripted.php:99
+#: Conscripted.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Conscription Summary"
 msgstr ""
 
-#: Conscripted.php:109
+#: Conscripted.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Underage for Service"
 msgstr ""
 
-#: Conscripted.php:110
+#: Conscripted.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject to Service"
 msgstr ""
 
-#: Conscripted.php:111
+#: Conscripted.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Currently in Service"
 msgstr ""
 
-#: Conscripted.php:112
+#: Conscripted.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "End of Service"
 msgstr ""
 
-#: Conscripted.php:113
+#: Conscripted.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Medical Exemption"
 msgstr ""
 
-#: Conscripted.php:114
+#: Conscripted.php:117
 msgctxt "Main Taxonomy: Default Term"
 msgid "Education Exemption"
 msgstr ""
 
-#: Conscripted.php:115
+#: Conscripted.php:118
 msgctxt "Main Taxonomy: Default Term"
 msgid "Permanent Exemption"
 msgstr ""

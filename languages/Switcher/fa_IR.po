@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Switcher\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:54+0330\n"
+"PO-Revision-Date: 2024-08-05 20:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,48 +11,52 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/Switcher\n"
 "X-Domain: geditorial-switcher\n"
 
-#: Switcher.php:37
+#: Switcher.php:43
 msgctxt "Setting Title"
 msgid "Bulk Action Roles"
 msgstr "نقش‌های کنش انبوه"
 
-#: Switcher.php:38
-msgctxt "Setting Description"
-msgid "Roles that can use bulk action to switch post-types."
-msgstr ""
-
 #: Switcher.php:44
+msgctxt "Setting Description"
+msgid "Roles that can use bulk-actions to switch post-types."
+msgstr "نقش‌هایی که می‌توانند از کنش‌های جمعی برای تبدیل نوع‌فرسته‌ها استفاده کنند."
+
+#: Switcher.php:50
 msgctxt "Setting Title"
 msgid "Bulk Action From"
 msgstr "کنش انبوه از"
 
-#: Switcher.php:45
-msgctxt "Setting Description"
-msgid "Select post-types to be avialable for switch."
-msgstr ""
-
 #: Switcher.php:51
+msgctxt "Setting Description"
+msgid "Select post-types to be available for the switch."
+msgstr "نوع‌فرسته‌های در دسترس برای تبدیل را انتخاب کنید."
+
+#: Switcher.php:57
 msgctxt "Setting Title"
 msgid "Bulk Action To"
 msgstr "کنش انبوه به"
 
-#: Switcher.php:52
+#: Switcher.php:58
 msgctxt "Setting Description"
-msgid "Select post-types to be targetted for switch."
-msgstr ""
+msgid "Select post-types to be targeted for the switch."
+msgstr "نوع‌فرسته‌های هدف برای مقصد تبدیل را انتخاب کنید."
 
-#. translators: %s: posttype
-#: Switcher.php:78
+#. translators: %1$s: module title, %2$s: posttype label
+#: Switcher.php:84
 msgctxt "Bulk Action"
-msgid "Switch to %s"
-msgstr "تبدیل به %s"
+msgid "[%1$s] Switch to %2$s"
+msgstr "[%1$s] تبدیل به %2$s"
 
 #. translators: %1$s: count, %2$s: posttype
-#: Switcher.php:130
+#: Switcher.php:136
 msgctxt "Message"
 msgid "%1$s items(s) switched to %2$s!"
 msgstr "%s مورد تبدیل به %s شد!"
+
+#~ msgctxt "Bulk Action"
+#~ msgid "Switch to %s"
+#~ msgstr "تبدیل به %s"
