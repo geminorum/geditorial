@@ -323,6 +323,29 @@ class Config extends gEditorial\Module
 							'count'   => count( $result ),
 						] );
 
+				} else if ( Tablelist::isAction( 'import_all_options' ) ) {
+
+					if ( ! $file = WordPress\Media::handleImportUpload() )
+						Core\WordPress::redirectReferer( 'wrong' );
+
+					if ( ! $data = Helper::parseJSON( Core\File::normalize( $file['file'] ) ) )
+						Core\WordPress::redirectReferer( 'wrong' );
+
+					if ( ! update_option( 'geditorial_options', $data, TRUE ) )
+						Core\WordPress::redirectReferer( 'wrong' );
+
+					Core\WordPress::redirectReferer( 'updated' );
+
+				} else if ( Tablelist::isAction( 'download_all_options' ) ) {
+
+					if ( FALSE !== ( $data = get_option( 'geditorial_options' ) ) )
+						Core\Text::download(
+							wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ),
+							Core\File::prepName( sprintf( '%s-options.%s', $this->base, 'json' ) )
+						);
+
+					Core\WordPress::redirectReferer( 'wrong' );
+
 				} else if ( Tablelist::isAction( 'delete_all_options' ) ) {
 
 					if ( delete_option( 'geditorial_options' ) )
@@ -424,7 +447,33 @@ class Config extends gEditorial\Module
 
 		echo '<tr><th scope="row">'._x( 'Options', 'Tools', 'geditorial-config' ).'</th><td>';
 
-			echo '<p>';
+			if ( $filesize = $this->settings_render_upload_field( '.json' ) ) {
+				echo $this->wrap_open_buttons( '-import-all-options' );
+					Settings::submitButton( 'import_all_options',
+						_x( 'Imports All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );
+
+					Core\HTML::desc( sprintf(
+						/* translators:  %1$s: file ext-type, %2$s: file size */
+						_x( 'Imports all editorial option data in %1$s file from your computer. Maximum upload size: %2$s', 'Message', 'geditorial-config' ),
+						Core\HTML::code( 'json' ),
+						Core\HTML::code( Core\HTML::wrapLTR( $filesize ) )
+					), FALSE );
+
+				echo '</p>';
+			}
+
+			echo $this->wrap_open_buttons( '-download-all-options' );
+				Settings::submitButton( 'download_all_options',
+					_x( 'Download All Options', 'Button', 'geditorial-config' ) );
+
+				Core\HTML::desc( sprintf(
+					/*translators: %s: file ext-type */
+					_x( 'Exports all editorial option data as %s file for you to download.', 'Message', 'geditorial-config' ),
+					Core\HTML::code( 'json' )
+				), FALSE );
+			echo '</p>';
+
+			echo $this->wrap_open_buttons( '-upgrade-old-options' );
 				Settings::submitButton( 'upgrade_old_options',
 					_x( 'Upgrade Old Options', 'Button', 'geditorial-config' ) );
 
