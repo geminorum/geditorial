@@ -170,8 +170,6 @@ class PostTypeFields extends WordPress\Main
 			case 'published'  : return 'calendar-alt';
 			case 'lead'       : return 'editor-paragraph';
 			case 'label'      : return 'megaphone';
-			case 'days'       : return 'backup';
-			case 'hours'      : return 'clock';
 			case 'notes'      : return 'text-page';
 			case 'itineraries': return 'editor-ul';
 		}
@@ -186,6 +184,8 @@ class PostTypeFields extends WordPress\Main
 				case 'isbn'    : return 'book';
 				case 'date'    : return 'calendar';
 				case 'datetime': return 'calendar-alt';
+				case 'day'     : return 'backup';
+				case 'hour'    : return 'clock';
 				case 'people'  : return 'groups';
 				case 'address' : return 'location';
 				case 'venue'   : return 'location-alt';

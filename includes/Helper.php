@@ -269,16 +269,6 @@ class Helper extends WordPress\Main
 			case 'mobile'   : return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
 			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
 
-			case 'days':
-			case 'total_days':
-				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'day' ) ),
-					Core\Number::format( $raw ?: $value ) );
-
-			case 'hours':
-			case 'total_hours':
-				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'hour' ) ),
-					Core\Number::format( $raw ?: $value ) );
-
 			case 'items':
 			case 'total_items':
 				return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( 'item' ) ),
@@ -308,6 +298,8 @@ class Helper extends WordPress\Main
 				case 'people':
 					return self::prepPeople( $raw ?: $value );
 
+				case 'day':
+				case 'hour':
 				case 'member':
 				case 'person':
 					return sprintf( self::noopedCount( $raw ?: $value, Info::getNoop( $field['type'] ) ),

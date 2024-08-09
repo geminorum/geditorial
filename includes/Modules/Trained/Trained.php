@@ -89,8 +89,6 @@ class Trained extends gEditorial\Module
 					'comments',
 					'custom-fields',
 					'page-attributes',
-					'editorial-geo',
-					'editorial-units',
 				] ),
 			],
 			'_roles' => [
@@ -228,55 +226,63 @@ class Trained extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'primary_posttype' ) => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
-				'lead'       => [ 'type' => 'postbox_html' ],
+		$posttype = $this->constant( 'primary_posttype' );
 
-				'print_title' => [ 'type' => 'text' ],
-				'print_date'  => [ 'type' => 'date' ],
+		return [
+			'meta' => [
+				$posttype => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
+					'print_title' => [ 'type' => 'text' ],
+					'print_date'  => [ 'type' => 'date' ],
 
-				'date'      => [ 'type' => 'date', 'quickedit' => TRUE ],
-				'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-				'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-				'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-				'days'      => [ 'type' => 'number', 'quickedit' => TRUE ],
-				'hours'     => [ 'type' => 'number', 'quickedit' => TRUE ],
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
 
-				'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
-				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
-				'website_url'    => [ 'type' => 'link' ],
-				'email_address'  => [ 'type' => 'email' ],
+					'date'      => [ 'type' => 'date', 'quickedit' => TRUE ],
+					'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 
-				'notes'       => [ 'type' => 'note' ],
-				'itineraries' => [ 'type' => 'note' ],
+					'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
+					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'website_url'    => [ 'type' => 'link' ],
+					'email_address'  => [ 'type' => 'email' ],
 
-				'featured_people' => [
-					'title'       => _x( 'Instructors', 'Field Title', 'geditorial-trained' ),
-					'description' => _x( 'People Who Participate as Instructors in This Training Course', 'Field Description', 'geditorial-trained' ),
-					'type'        => 'people',
-					'quickedit'   => TRUE,
-					'order'       => 90,
-				],
+					'notes'       => [ 'type' => 'note' ],
+					'itineraries' => [ 'type' => 'note' ],
 
-				'training_code' => [
-					'title'       => _x( 'Training Code', 'Field Title', 'geditorial-trained' ),
-					'description' => _x( 'Unique Training Code', 'Field Description', 'geditorial-trained' ),
-					'type'        => 'code',
-					'quickedit'   => TRUE,
-					'icon'        => 'nametag',
-					'order'       => 100,
+					'featured_people' => [
+						'title'       => _x( 'Instructors', 'Field Title', 'geditorial-trained' ),
+						'description' => _x( 'People Who Participate as Instructors in This Training Course', 'Field Description', 'geditorial-trained' ),
+						'type'        => 'people',
+						'quickedit'   => TRUE,
+						'order'       => 90,
+					],
+
+					'training_code' => [
+						'title'       => _x( 'Training Code', 'Field Title', 'geditorial-trained' ),
+						'description' => _x( 'Unique Training Code', 'Field Description', 'geditorial-trained' ),
+						'type'        => 'code',
+						'quickedit'   => TRUE,
+						'icon'        => 'nametag',
+						'order'       => 100,
+					],
 				],
 			],
-			// '_supported' => [],
-		] ];
+			'units' => [
+				$posttype => [
+					'total_days'   => [ 'type' => 'day' ,   'data_unit' => 'day'    ],
+					'total_hours'  => [ 'type' => 'hour',   'data_unit' => 'hour'   ],
+					'total_people' => [ 'type' => 'person', 'data_unit' => 'person' ],
+				],
+			],
+		];
 	}
 
 	protected function paired_get_paired_constants()
@@ -297,7 +303,6 @@ class Trained extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
-		// $this->add_posttype_fields_supported();
 
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
@@ -307,6 +312,11 @@ class Trained extends gEditorial\Module
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
 
 		$this->pairedcore__hook_append_identifier_code( 'training_code' );
+	}
+
+	public function units_init()
+	{
+		$this->add_posttype_fields( $this->constant( 'primary_posttype' ), NULL, TRUE, 'units' );
 	}
 
 	public function init()

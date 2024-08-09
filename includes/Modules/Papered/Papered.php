@@ -144,8 +144,6 @@ class Papered extends gEditorial\Module
 					'datetime'  => [ 'type' => 'datetime' ],
 					'datestart' => [ 'type' => 'datetime' ],
 					'dateend'   => [ 'type' => 'datetime' ],
-					'days'      => [ 'type' => 'number' ],
-					'hours'     => [ 'type' => 'number' ],
 
 					'venue_string'   => [ 'type' => 'venue' ],
 					'contact_string' => [ 'type' => 'contact' ], // url/email/phone

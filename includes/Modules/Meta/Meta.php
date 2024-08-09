@@ -132,8 +132,6 @@ class Meta extends gEditorial\Module
 				'datestart'  => _x( 'Date-Start', 'Titles', 'geditorial-meta' ),
 				'dateend'    => _x( 'Date-End', 'Titles', 'geditorial-meta' ),
 				'dateexpire' => _x( 'Date-Expire', 'Titles', 'geditorial-meta' ),
-				'days'       => _x( 'Days', 'Titles', 'geditorial-meta' ),
-				'hours'      => _x( 'Hours', 'Titles', 'geditorial-meta' ),
 				'period'     => _x( 'Period', 'Titles', 'geditorial-meta' ),
 				'amount'     => _x( 'Amount', 'Titles', 'geditorial-meta' ),
 
@@ -186,8 +184,6 @@ class Meta extends gEditorial\Module
 				'datestart'  => _x( 'Posts can have date-start to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'dateend'    => _x( 'Posts can have date-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'dateexpire' => _x( 'Posts can have date-expire to help organize them.', 'Descriptions', 'geditorial-meta' ),
-				'days'       => _x( 'The total days number about the post.', 'Descriptions', 'geditorial-meta' ),
-				'hours'      => _x( 'The total hours number about the post.', 'Descriptions', 'geditorial-meta' ),
 				'period'     => _x( 'The length of time about the post.', 'Descriptions', 'geditorial-meta' ),
 				'amount'     => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
 
@@ -259,8 +255,6 @@ class Meta extends gEditorial\Module
 				'datestart'  => [ 'type' => 'datetime' ],
 				'dateend'    => [ 'type' => 'datetime' ],
 				'dateexpire' => [ 'type' => 'datetime' ],
-				'days'       => [ 'type' => 'number' ],
-				'hours'      => [ 'type' => 'number' ],
 				'period'     => [ 'type' => 'text' ],
 				'amount'     => [ 'type' => 'number' ],
 
@@ -986,14 +980,6 @@ class Meta extends gEditorial\Module
 					return Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
 
 				return Datetime::prepDateOfBirth( trim( $raw ) );
-
-			case 'days':
-				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'day' ) ),
-					Core\Number::format( trim( $raw ) ) );
-
-			case 'hours':
-				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'hour' ) ),
-					Core\Number::format( trim( $raw ) ) );
 		}
 
 		switch ( $field_args['type'] ) {
@@ -1175,8 +1161,8 @@ class Meta extends gEditorial\Module
 
 		if ( in_array( $field_args['type'], [
 			'integer', 'number', 'float', 'price',
-			'member', 'person',
-			'day', 'hour', 'gram', 'milimeter', 'kilogram', 'centimeter',
+			'member', 'person', 'day', 'hour',
+			'gram', 'milimeter', 'kilogram', 'centimeter',
 			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'postcode',
 			'post', 'attachment', 'parent_post', 'posts', 'attachments',
 			'user', 'term',

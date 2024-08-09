@@ -69,8 +69,8 @@ class Units extends gEditorial\Module
 				'total_days'  => _x( 'Total Days', 'Titles', 'geditorial-units' ),
 				'total_hours' => _x( 'Total Hours', 'Titles', 'geditorial-units' ),
 
-				'total_members'      => _x( 'Total Members', 'Titles', 'geditorial-units' ),
-				'total_participants' => _x( 'Total Participants', 'Titles', 'geditorial-units' ),
+				'total_members' => _x( 'Total Members', 'Titles', 'geditorial-units' ),
+				'total_people'  => _x( 'Total People', 'Titles', 'geditorial-units' ),
 
 				'book_cover' => _x( 'Book Cover', 'Titles', 'geditorial-units' ),
 				'paper_size' => _x( 'Paper Size', 'Titles', 'geditorial-units' ),
@@ -91,8 +91,8 @@ class Units extends gEditorial\Module
 				'total_days'  => _x( 'The Total Number of the Days', 'Descriptions', 'geditorial-units' ),
 				'total_hours' => _x( 'The Total Number of the Hours', 'Descriptions', 'geditorial-units' ),
 
-				'total_members'      => _x( 'The Total Number of the Members', 'Descriptions', 'geditorial-units' ),
-				'total_participants' => _x( 'The Total Number of the Participants', 'Descriptions', 'geditorial-units' ),
+				'total_members' => _x( 'The Total Number of the Members', 'Descriptions', 'geditorial-units' ),
+				'total_people'  => _x( 'The Total Number of the People', 'Descriptions', 'geditorial-units' ),
 
 				'book_cover' => _x( 'The Book Cover Size', 'Descriptions', 'geditorial-units' ),
 				'paper_size' => _x( 'The Standard Paper Size', 'Descriptions', 'geditorial-units' ),
@@ -150,8 +150,8 @@ class Units extends gEditorial\Module
 				'total_days'  => [ 'type' => 'day' , 'data_unit' => 'day'  ],
 				'total_hours' => [ 'type' => 'hour', 'data_unit' => 'hour' ],
 
-				'total_members'      => [ 'type' => 'member', 'data_unit' => 'person' ],
-				'total_participants' => [ 'type' => 'person', 'data_unit' => 'person' ],   // `contributor`/`competitor`/`player`
+				'total_members' => [ 'type' => 'member', 'data_unit' => 'person' ],
+				'total_people'  => [ 'type' => 'person', 'data_unit' => 'person' ],   // `participant`/`contributor`/`competitor`/`player`
 
 				'book_cover' => [ 'type' => 'bookcover' ],
 				'paper_size' => [ 'type' => 'papersize' ],
@@ -572,27 +572,10 @@ class Units extends gEditorial\Module
 	// @REF: `Template::getMetaField()`
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
-		switch ( $field ) {
-
-			case 'total_days':
-
-				if ( 'export' === $context )
-					return trim( $raw );
-
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					Info::getNoop( 'days' ) ),
-					Core\Number::format( trim( $raw ) )
-				);
-
-			case 'total_hours':
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					Info::getNoop( 'hours' ) ),
-					Core\Number::format( trim( $raw ) )
-				);
-		}
-
 		switch ( $field_args['type'] ) {
 
+			case 'day':
+			case 'hour':
 			case 'member':
 			case 'person':
 			case 'gram':
