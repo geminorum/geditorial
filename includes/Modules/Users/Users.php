@@ -671,10 +671,7 @@ class Users extends gEditorial\Module
 
 				if ( Tablelist::isAction( 'remap_post_authors' ) ) {
 
-					// FIXME: use `WordPress\Media::handleImportUpload()`
-					$file = wp_import_handle_upload();
-
-					if ( isset( $file['error'] ) || empty( $file['file'] ) )
+					if ( ! $file = WordPress\Media::handleImportUpload() )
 						Core\WordPress::redirectReferer( 'wrong' );
 
 					$count = 0;

@@ -481,11 +481,11 @@ class Config extends gEditorial\Module
 			echo '</p>';
 
 			if ( WordPress\User::isSuperAdmin() || Core\WordPress::isDev() ) {
-				echo '<br /><p>';
+				echo $this->wrap_open_buttons( '-delete-all-options' );
 					Settings::submitButton( 'delete_all_options',
 						_x( 'Delete All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );
 
-					Core\HTML::desc( _x( 'Deletes all editorial options on current site', 'Message', 'geditorial-config' ), FALSE );
+					Core\HTML::desc( _x( 'Tries to delete all editorial options on the current site.', 'Message', 'geditorial-config' ), FALSE );
 				echo '</p>';
 			}
 
