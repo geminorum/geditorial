@@ -137,27 +137,29 @@ class Units extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'units' => [
-			'_supported' => [
-				'weight_in_g'  => [ 'type' => 'gram',      'icon' => 'image-filter', 'data_unit' => 'gram'      ],
-				'width_in_mm'  => [ 'type' => 'milimeter', 'icon' => 'leftright'   , 'data_unit' => 'milimeter' ],
-				'height_in_mm' => [ 'type' => 'milimeter', 'icon' => 'sort'        , 'data_unit' => 'milimeter' ],
-				'length_in_mm' => [ 'type' => 'milimeter', 'icon' => 'editor-break', 'data_unit' => 'milimeter' ],
+		return [
+			$this->key => [
+				'_supported' => [
+					'weight_in_g'  => [ 'type' => 'gram',      'icon' => 'image-filter', 'data_unit' => 'gram'      ],
+					'width_in_mm'  => [ 'type' => 'milimeter', 'icon' => 'leftright'   , 'data_unit' => 'milimeter' ],
+					'height_in_mm' => [ 'type' => 'milimeter', 'icon' => 'sort'        , 'data_unit' => 'milimeter' ],
+					'length_in_mm' => [ 'type' => 'milimeter', 'icon' => 'editor-break', 'data_unit' => 'milimeter' ],
 
-				'payload_in_kg'   => [ 'type' => 'kilogram',     'icon' => 'image-filter', 'data_unit' => 'kilogram'    ],
-				'maxspeed_in_kmh' => [ 'type' => 'km_per_hour',  'icon' => 'car'         , 'data_unit' => 'km_per_hour' ],
+					'payload_in_kg'   => [ 'type' => 'kilogram',     'icon' => 'image-filter', 'data_unit' => 'kilogram'    ],
+					'maxspeed_in_kmh' => [ 'type' => 'km_per_hour',  'icon' => 'car'         , 'data_unit' => 'km_per_hour' ],
 
-				'total_days'  => [ 'type' => 'day' , 'data_unit' => 'day'  ],
-				'total_hours' => [ 'type' => 'hour', 'data_unit' => 'hour' ],
+					'total_days'  => [ 'type' => 'day' , 'data_unit' => 'day'  ],
+					'total_hours' => [ 'type' => 'hour', 'data_unit' => 'hour' ],
 
-				'total_members' => [ 'type' => 'member', 'data_unit' => 'person' ],
-				'total_people'  => [ 'type' => 'person', 'data_unit' => 'person' ],   // `participant`/`contributor`/`competitor`/`player`
+					'total_members' => [ 'type' => 'member', 'data_unit' => 'person' ],
+					'total_people'  => [ 'type' => 'person', 'data_unit' => 'person' ],   // `participant`/`contributor`/`competitor`/`player`
 
-				'book_cover' => [ 'type' => 'bookcover' ],
-				'paper_size' => [ 'type' => 'papersize' ],
+					'book_cover' => [ 'type' => 'bookcover' ],
+					'paper_size' => [ 'type' => 'papersize' ],
+				],
+				'page' => [],
 			],
-			'page' => [],
-		] ];
+		];
 	}
 
 	public function init()

@@ -729,8 +729,8 @@ trait CoreTaxonomies
 
 				$terms = get_terms( [
 					'taxonomy'   => $taxonomy->name,
-					'hide_empty' => TRUE,
 					'parent'     => 0,
+					'hide_empty' => TRUE,
 
 					'update_term_meta_cache' => FALSE,
 				] );
@@ -742,12 +742,15 @@ trait CoreTaxonomies
 				$label = Helper::getTaxonomyLabel( $taxonomy, 'extended_label' );
 
 				foreach ( $terms as $term )
-					// TODO: prepend counts
+					// TODO: prepend counts from `Recount` module
 					$views[sprintf( '%s-%s', $taxonomy->name, $term->slug )] = Core\HTML::tag( 'a', [
 						'href'  => Core\WordPress::getPostTypeEditLink( $screen->post_type, 0, [ $query => $term->slug ] ),
 						'title' => sprintf( '%s: %s', $label, $term->name ),
 						'class' => $term->slug === self::req( $query ) ? 'current' : FALSE,
 					], $term->name );
+
+				if ( ! WordPress\Taxonomy::countPostsWithoutTerms( $taxonomy->name, $screen->post_type ) )
+					return $views;
 
 				$views[sprintf( '%s--none', $taxonomy->name )] =  Core\HTML::tag( 'a', [
 					'href'  => Core\WordPress::getPostTypeEditLink( $screen->post_type, 0, [ $query => '-1' ] ),
