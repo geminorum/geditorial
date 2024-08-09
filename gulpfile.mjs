@@ -244,8 +244,15 @@ task('dev:scripts', function () {
     .pipe(dest('.'));
 });
 
-gulp.task('banklogos', function () {
+gulp.task('dev:banklogos', function () {
   return src(conf.input.banklogos, { base: '.' })
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(svgo())
+    .pipe(dest('.'));
+});
+
+gulp.task('dev:svg', function () {
+  return src(conf.input.svg, { base: '.' })
     .pipe(rename({ suffix: '.min' }))
     .pipe(svgo())
     .pipe(dest('.'));

@@ -7,6 +7,7 @@
 /assets/bin
 /assets/css/*.css
 /assets/css/maps
+/assets/images/raw
 /assets/components
 /assets/views/cache/*.php
 /assets/vendor
@@ -23,3 +24,5 @@ yarn-error.log
 environment.yml
 .env
 .ftpconfig
+
+*.WinMerge

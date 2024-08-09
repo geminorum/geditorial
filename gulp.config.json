@@ -16,8 +16,14 @@
       "!./assets/js/tinymce/*.min.js",
       "!./assets/js/vendor/*.js"
     ],
-    "banklogos": "./includes/Modules/Iranian/data/banklogos/*.svg",
-    "svg": "./assets/images/raw/**/*.svg",
+    "banklogos": [
+      "./includes/Modules/Iranian/data/banklogos/*.svg",
+      "!./includes/Modules/Iranian/data/banklogos/*.min.svg"
+    ],
+    "svg": [
+      "./assets/images/**/*.svg",
+      "!./assets/images/**/*.min.svg"
+    ],
     "images": "./assets/images/raw/**/*.{png,jpg,jpeg}",
     "banner": [
       "./assets/css/**/*.css",

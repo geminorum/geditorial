@@ -13,11 +13,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	public static function module()
 	{
 		return [
-			'name'   => '<%= moduleUnderline %>',
-			'title'  => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
-			'desc'   => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
-			'icon'   => '<%= moduleDashicon %>',
-			'access' => 'planned',
+			'name'     => '<%= moduleUnderline %>',
+			'title'    => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
+			'desc'     => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
+			'icon'     => '<%= moduleDashicon %>',
+			'access'   => 'planned',
+			'keywords' => [
+				'',
+			],
 		];
 	}
 
