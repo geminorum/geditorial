@@ -59,6 +59,7 @@
               ]" v-html="form[key]"></div>
             <GridInput
               v-else
+              ref="inputs"
               :field="key"
               :label="field"
               :value="form[key]"
@@ -94,7 +95,7 @@ import { addQueryArgs } from '@wordpress/url'; // https://github.com/WordPress/g
 export default {
   mixins: [EnterToTabMixin],
   inject: ['endpoint', 'config', 'fields', 'i18n', 'locale'],
-  data() {
+  data () {
     return {
       spinner: true,
       // expanding: this.config.expanding || true, // whether the items in this collection can be expanded, i.e. no-new-item
@@ -122,7 +123,7 @@ export default {
   // computed: {},
   methods: {
 
-    formReset() {
+    formReset () {
       // https://stackoverflow.com/a/71344289
       this.form = Object.fromEntries(Object.keys(this.fields).map(key => [key, '']));
       this.temp = [];
@@ -134,9 +135,18 @@ export default {
       this.editing = 0;
     },
 
-    messageReset() {
+    messageReset () {
       this.message = this.i18n.message;
       this.state = 'initial';
+    },
+
+    // @REF: https://codingbeautydev.com/blog/vue-focus-input/
+    // https://michaelnthiessen.com/set-focus-on-input-vue
+    // https://stackoverflow.com/questions/73753350/how-to-get-the-ref-which-is-in-a-child-component-in-vue
+    focusInput () {
+      if(this.frozen) return;
+      // this.$refs.email.$el.focus();
+      this.$refs.inputs[0].$refs.gridInput.focus();
     },
 
     cellIndex (index) {
@@ -147,7 +157,7 @@ export default {
     // property in Vue, but if you need parameters there are most likely no
     // benefits of using a computed property function over a method.”
     // @REF: https://beginnersoftwaredeveloper.com/can-i-pass-a-parameter-to-a-computed-property-vue/
-    cellClass(cell, offset) {
+    cellClass (cell, offset) {
       if (!cell) return '-empty';
       const valid = isValidField(cell, offset, this.locale);
       if (valid===null) return '-unknown';
@@ -163,7 +173,7 @@ export default {
       this.doSearchDiscovery(this.form[field], targets, this.searchPage);
     },
 
-    addSearchedItem(item, close) {
+    addSearchedItem (item, close) {
       const temp = JSON.parse(JSON.stringify(item));
 
       if (has(temp, 'id')&&this.config.hidden.includes('postid')){
@@ -185,18 +195,18 @@ export default {
       // }
     },
 
-    updateInput(field, value) {
+    updateInput (field, value) {
       this.form[field] = value;
     },
 
-    isNotValidInput(field) {
+    isNotValidInput (field) {
       if(!field) return false;
       if(!this.form[field]||!this.form[field].trim()) return false;
       const valid = isValidField(this.form[field], field, this.locale);
       return valid===null ? false : ! valid;
     },
 
-    hasValidInput() {
+    hasValidInput () {
 
       for (const required of this.required) {
         if (has(this.fields, required)&&!this.form[required].trim()) {
@@ -220,7 +230,7 @@ export default {
       return true;
     },
 
-    doQuery() {
+    doQuery () {
       this.spinner = true;
 
       // https://github.com/WordPress/gutenberg/tree/trunk/packages/url#addqueryargs
@@ -239,7 +249,7 @@ export default {
       });
     },
 
-    doSearchDiscovery(criteria, targets, page) {
+    doSearchDiscovery (criteria, targets, page) {
       this.spinner = true;
 
       apiFetch({
@@ -264,7 +274,7 @@ export default {
         });
     },
 
-    doSort() {
+    doSort () {
       this.spinner = true;
 
       apiFetch({
@@ -284,7 +294,7 @@ export default {
         });
     },
 
-    doInfo(id) {
+    doInfo (id) {
       if (id === this.current) return;
 
       this.spinner = true;
@@ -316,6 +326,7 @@ export default {
           this.spinner = false;
           this.state = 'saved';
           this.message = this.editing ? this.i18n.edited : this.i18n.saved;
+          this.focusInput();
           this.formReset();
         }).catch((error) => {
           this.spinner = false;
@@ -333,7 +344,7 @@ export default {
       this.doInfo(id);
     },
 
-    showForm() {
+    showForm () {
       if (!this.frozen) return true;
       return this.editing ? true : false;
     },
@@ -391,7 +402,8 @@ export default {
           this.formReset();
           this.items = data;
           this.spinner = false;
-		  this.messageReset();
+          this.focusInput();
+		      this.messageReset();
         }).catch((error) => {
           this.spinner = false;
           this.state = 'wrong';
@@ -399,15 +411,16 @@ export default {
         });
     },
   },
-  created() {
+  created () {
     // NOTE: replace intended method with debounced one
     // @REF: https://stackoverflow.com/a/75374781
     this.doSort = debounce(this.doSort, 1000);
   },
-  unmounted() {
+  unmounted () {
     this.doSort.cancel();
   },
-  mounted() {
+  mounted () {
+    this.focusInput();
     this.formReset();
     this.$nextTick(() => {
       this.doQuery();

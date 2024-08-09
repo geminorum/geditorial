@@ -152,7 +152,7 @@ import {
 export default {
   mixins: [EnterToTabMixin],
   inject: ['endpoint', 'config', 'fields', 'i18n', 'locale'],
-  data() {
+  data () {
     return {
       spinner: true,
       title: this.config.title,
@@ -184,7 +184,7 @@ export default {
     }
   },
   computed: {
-    filteredItems() {
+    filteredItems () {
       return this.items.filter(item => {
         // return true if the item should be visible
 
@@ -197,17 +197,18 @@ export default {
         || (identifier.toLowerCase().indexOf(this.search.toLowerCase()) != -1);
       });
     },
-    countLines() {
+    countLines () {
       return sprintf(this.i18n.countlines, formatNumber(this.lines.length, this.locale));
     },
-    countSelected() {
+    countSelected () {
       return sprintf(this.i18n.countselected, formatNumber(this.selectedLines.length, this.locale));
     }
   },
   methods: {
-    clickClearAll() {
+    clickClearAll () {
       this.spinner = true;
       this.state = 'initial';
+      this.message = this.i18n.message;
 
       this.content = '';
       this.contentType = null;
@@ -224,13 +225,23 @@ export default {
       this.spinner = false;
     },
 
-    messageReset() {
+    messageReset () {
       this.message = this.i18n.message;
       this.state = 'initial';
       this.spinner = false;
     },
 
-    isDateField(field) {
+    // @REF: https://codingbeautydev.com/blog/vue-focus-input/
+    // https://michaelnthiessen.com/set-focus-on-input-vue
+    // https://stackoverflow.com/questions/73753350/how-to-get-the-ref-which-is-in-a-child-component-in-vue
+    focusInput () {
+      // if(this.frozen) return;
+      // this.$refs.email.$el.focus();
+      // this.$refs.inputs[0].$refs.gridInput.focus();
+      this.$refs.searchinput.focus();
+    },
+
+    isDateField (field) {
       return [
         'date',
         'datetime',
@@ -246,7 +257,7 @@ export default {
     // property in Vue, but if you need parameters there are most likely no
     // benefits of using a computed property function over a method.”
     // @REF: https://beginnersoftwaredeveloper.com/can-i-pass-a-parameter-to-a-computed-property-vue/
-    cellClass(cell, offset) {
+    cellClass (cell, offset) {
       if(!cell) {
         return '-empty';
       } else if (this.isDateField(this.columnTypes[offset])) {
@@ -304,38 +315,35 @@ export default {
       return found ? found.message : '';
     },
 
-    addSearchedItem(item, close) {
+    addSearchedItem (item, close) {
       if (item&&item.id) {
         this.search = '';
         this.doAddConnection([{
           id: item.id,
         }]);
       }
-      if(close) {
-        // @REF: https://codingbeautydev.com/blog/vue-focus-input/
-        this.$refs.searchinput.focus();
-      }
+      if(close) this.focusInput();
     },
 
-    searchPageUp(event) {
+    searchPageUp (event) {
       // event.preventDefault();
       if(!this.search||this.searchPage<2) return;
       this.doSearchDiscovery(this.search, this.searchPage-1);
       // return false;
     },
 
-    searchPageDown(event) {
+    searchPageDown (event) {
       // event.preventDefault();
       if(!this.search||!this.searchPageMore) return;
       this.doSearchDiscovery(this.search, this.searchPage+1);
       // return false;
     },
 
-    searchDiscovery() {
+    searchDiscovery () {
       this.doSearchDiscovery(this.search, this.searchPage);
     },
 
-    removeItem(item) {
+    removeItem (item) {
       if (item&&item.id) {
         this.doRemoveConnection([{
           id: item.id,
@@ -343,11 +351,11 @@ export default {
       }
     },
 
-    openItem(item) {
+    openItem (item) {
       window.open(addQueryArgs(this.config.infolink, { post: item.id }));
     },
 
-    columnTypeChanges(index, value) {
+    columnTypeChanges (index, value) {
       if (value=='_deleteme') {
         this.rawColumns = remove(this.rawColumns, (rawColumn) => rawColumn!=index );
         this.lines = map(this.lines, (line) => omit(line, [ index ]) );
@@ -363,7 +371,7 @@ export default {
       }
     },
 
-    selectAll(isSelected) {
+    selectAll (isSelected) {
       if (isSelected) {
         this.lines.map((item, index) => {
           this.selectedLines.push(index);
@@ -373,7 +381,7 @@ export default {
       }
     },
 
-    getDelimiter() {
+    getDelimiter () {
       if('csv'===this.contentType)
         return ',';
       if('xls'===this.contentType)
@@ -381,11 +389,11 @@ export default {
       return ',';
     },
 
-    clickDiscovery() {
+    clickDiscovery () {
       this.doDiscovery();
     },
 
-    clickClearAdded() {
+    clickClearAdded () {
       const data = [];
 
       each(this.discovered, (found) => {
@@ -405,7 +413,7 @@ export default {
       this.discovered = []; // refkey messed up!
     },
 
-    clickDeleteSelected() {
+    clickDeleteSelected () {
       for (let i = this.selectedLines.length - 1; i >= 0; i--) {
         this.lines.splice(this.selectedLines[i], 1);
       }
@@ -414,7 +422,7 @@ export default {
       this.discovered = []; // refkey messed up!
     },
 
-    clickAddSelected() {
+    clickAddSelected () {
       const data = [];
 
       each(this.selectedLines, (selected) => {
@@ -438,7 +446,7 @@ export default {
       }
     },
 
-    clickAddSelected_OLD() {
+    clickAddSelected_OLD () {
       const data = [];
 
       each(this.selectedLines, (selected) => {
@@ -463,7 +471,7 @@ export default {
       }
     },
 
-    doCheckType() {
+    doCheckType () {
       if (this.content) {
         const firstLine = this.content.split(/\n/, 1)[0];
         if (firstLine.split(",").length > 1) {
@@ -476,7 +484,7 @@ export default {
       }
     },
 
-    doCheckData() {
+    doCheckData () {
       if (!this.content) {
 
         this.message = this.i18n.emptydata;
@@ -505,7 +513,7 @@ export default {
       }
     },
 
-    parseCSV() {
+    parseCSV () {
       try {
         this.lines = parse(this.content, {
           columns: true,
@@ -530,7 +538,7 @@ export default {
       this.messageReset();
     },
 
-    extractColumns() {
+    extractColumns () {
       const keys = [];
 
       each( this.lines, ( line, offset ) => {
@@ -542,7 +550,7 @@ export default {
       this.rawColumns = uniq(keys);
     },
 
-    clickPasteSupported() {
+    clickPasteSupported () {
       this.clickClearAll();
       navigator.clipboard.readText()
         .then((clipText) => {
@@ -552,11 +560,11 @@ export default {
         });
     },
 
-    clickUpload() {
+    clickUpload () {
       this.$refs.fileinput.click();
     },
 
-    doSingleDiscovery(line, offset, insert) {
+    doSingleDiscovery (line, offset, insert) {
       const lines = [];
       let selected = clone(line);
       selected._ref = offset; // will passed back!
@@ -565,7 +573,7 @@ export default {
       this.fetchDiscovery(lines, insert ?? this.addNewOnDiscovery);
     },
 
-    doDiscovery() {
+    doDiscovery () {
       this.spinner = true;
 
       const lines = [];
@@ -588,7 +596,7 @@ export default {
       this.fetchDiscovery(lines, this.addNewOnDiscovery);
     },
 
-    fetchDiscovery(lines, insert) {
+    fetchDiscovery (lines, insert) {
       this.spinner = true;
 
       apiFetch({
@@ -615,7 +623,7 @@ export default {
         });
     },
 
-    doSearchDiscovery(criteria, page) {
+    doSearchDiscovery (criteria, page) {
       this.searchSpinner = true;
 
       apiFetch({
@@ -638,7 +646,7 @@ export default {
         });
     },
 
-    doAddConnection(data) {
+    doAddConnection (data) {
       this.searchSpinner = true;
 
       apiFetch({
@@ -649,7 +657,7 @@ export default {
           this.items = data;
           this.searchSpinner = false;
           this.already = map(data, 'id');
-          this.discovered = []; // refkey messed up!
+          // this.discovered = []; // refkey messed up!
         }).catch((error) => {
           this.searchSpinner = false;
           this.state = 'wrong';
@@ -657,7 +665,7 @@ export default {
         });
     },
 
-    doRemoveConnection(data) {
+    doRemoveConnection (data) {
       this.searchSpinner = true;
 
       apiFetch({
@@ -675,7 +683,7 @@ export default {
         });
     },
 
-    doQuery() {
+    doQuery () {
       this.searchSpinner = true;
 
       apiFetch({
@@ -684,6 +692,7 @@ export default {
         this.items = data;
         this.searchSpinner = false;
         this.already = map(data, 'id');
+        this.focusInput();
       }).catch((error) => {
         this.searchSpinner = false;
         this.state = 'wrong';
@@ -691,7 +700,7 @@ export default {
       });
     },
 
-    readFile() {
+    readFile () {
       this.clickClearAll();
       this.spinner = true;
 
@@ -785,13 +794,14 @@ export default {
       }
     }
   },
-  created() {
+
+  created () {
     this.debouncedDoQuery = debounce(this.doQuery, 500);
   },
-  unmounted() {
+  unmounted () {
     this.debouncedDoQuery.cancel();
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.doQuery();
     });

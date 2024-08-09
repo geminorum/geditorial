@@ -1,5 +1,12 @@
 <template>
-  <input class="grid-input" :class="class" type="text" :title="label" :value="value" />
+  <input
+    ref="gridInput"
+    type="text"
+    class="grid-input"
+    :class="class"
+    :title="label"
+    :value="value"
+  />
 </template>
 
 <style lang="scss">
