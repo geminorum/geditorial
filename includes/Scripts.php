@@ -294,6 +294,18 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
+	// NOTE: wp/npm version is behind!
+	// @REF: https://github.com/moxiecode/plupload
+	// @REF: https://www.plupload.com/
+	public static function pkgPlupload( $enqueue = FALSE, $ver = '3.1.5' )
+	{
+		$handle = sprintf( '%s-%s', static::BASE, 'plupload' );
+
+		return $enqueue
+			? self::enqueuePackage( $handle, 'plupload/plupload.full', [], $ver )
+			: self::registerPackage( $handle, 'plupload/plupload.full', [], $ver );
+	}
+
 	public static function pkgSortable( $enqueue = FALSE, $ver = '0.9.13' )
 	{
 		return $enqueue
