@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Remoted\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Remoted\n"
+"X-Domain: geditorial-remoted\n"
+
+#: Remoted.php:39
+msgctxt "Setting Title"
+msgid "Remote Base"
+msgstr ""
+
+#: Remoted.php:40
+#: Remoted.php:46
+msgctxt "Setting Description"
+msgid "Full URL into the remote base for receiving uploads."
+msgstr ""
+
+#: Remoted.php:45
+msgctxt "Setting Title"
+msgid "Remote Hash"
+msgstr ""
+
+#: Remoted.php:63
+msgctxt "Dashboard Widget Title"
+msgid "Remote Uploads"
+msgstr ""
+
+#: Remoted.php:79
+msgctxt "Button"
+msgid "Upload Files"
+msgstr ""
+
+#: Remoted.php:82
+msgctxt "Notice"
+msgid "Your browser does not support HTML5 upload."
+msgstr ""
