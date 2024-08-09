@@ -157,6 +157,7 @@ class Database extends Core\Base
 	// public static function getPostsByMultipleTerms( $taxonomy, $posttypes = [ 'post' ], $user_id = 0, $exclude_statuses = NULL ) {}
 
 	// @REF: https://core.trac.wordpress.org/ticket/29181
+	// @REF: `WordPress\Taxonomy::countPostsWithoutTerms()`
 	public static function countPostsByNotTaxonomy( $taxonomies, $posttypes = [ 'post' ], $user_id = 0, $exclude_statuses = NULL )
 	{
 		global $wpdb;

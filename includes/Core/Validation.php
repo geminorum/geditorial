@@ -277,7 +277,7 @@ class Validation extends Base
 		if ( ! $skip_base )
 			return $sanitized;
 
-		if ( FALSE !== ( $country = Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
+		if ( FALSE === ( $country = Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
 			return $sanitized;
 
 		if ( $country === $sanitized )

@@ -215,6 +215,43 @@ class Taxonomy extends Core\Base
 		return 'default_term_'.$taxonomy;
 	}
 
+	/**
+	 * Counts posts with no terms assigned given taxonomy and posttypes.
+	 *
+	 * @also: `Database::countPostsByNotTaxonomy()`
+	 * @ref: `https://core.trac.wordpress.org/ticket/29181`
+	 *
+	 * @param  string       $taxonomy
+	 * @param  string|array $posttypes
+	 * @return int          $count
+	 */
+	public static function countPostsWithoutTerms( $taxonomy, $posttypes )
+	{
+		$args = [
+			'orderby'        => 'none',
+			'fields'         => 'ids',
+			'post_status'    => Status::acceptable( $posttypes ),
+			'post_type'      => $posttypes,
+			'posts_per_page' => -1,
+
+			'tax_query' => [ [
+				'taxonomy' => $taxonomy,
+				'operator' => 'NOT EXISTS',
+			] ],
+
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		];
+
+		$query = new \WP_Query();
+		$posts = $query->query( $args );
+
+		return $posts ? count( $posts ) : 0;
+	}
+
 	// @REF: `wp_count_terms()`
 	public static function hasTerms( $taxonomy, $object_id = FALSE, $empty = TRUE )
 	{

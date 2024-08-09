@@ -111,7 +111,7 @@ class HTML extends Base
 		echo $wrap ? self::tag( $wrap, $html ) : $html;
 	}
 
-	public static function button( $html, $link = '#', $title = FALSE, $icon = FALSE, $data = [] )
+	public static function button( $html, $link = '#', $title = FALSE, $icon = FALSE, $data = [], $id = FALSE )
 	{
 		$classes = [
 			'btn',
@@ -125,7 +125,8 @@ class HTML extends Base
 			$classes[] = '-button-icon';
 
 		return self::tag( ( $link ? 'a' : 'span' ), [
-			'href'   => $link ? $link : FALSE,
+			'id'     => $id ?: FALSE,
+			'href'   => $link ?: FALSE,
 			'title'  => $title,
 			'class'  => $classes,
 			'data'   => $data,
