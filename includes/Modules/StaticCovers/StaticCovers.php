@@ -214,6 +214,10 @@ class StaticCovers extends gEditorial\Module
 			'mainbutton_text'  => _x( '%1$s Static Covers of the %2$s', 'Button Text', 'geditorial-static-covers' ),
 		];
 
+		$strings['i18n']['post'] = [
+			'viewfullimage' => _x( 'View full image', 'Button Title', 'geditorial-static-covers' ),
+		];
+
 		return $strings;
 	}
 
@@ -382,6 +386,7 @@ class StaticCovers extends gEditorial\Module
 				'headers'  => @get_headers( $image, TRUE ),
 			];
 
+		$data['i18n']        = $this->get_strings( 'post', 'i18n' );
 		$data['__direction'] = Core\HTML::rtl() ? 'rtl' : 'ltr';
 		$data['___hooks']    = array_fill_keys( [
 			'after-actions',
