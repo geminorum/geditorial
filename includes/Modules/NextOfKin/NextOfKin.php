@@ -25,6 +25,9 @@ class NextOfKin extends gEditorial\Module
 	use Internals\SubContents;
 	use Internals\TemplateTaxonomy;
 
+	// FIXME: refresh after close colorbox not working
+	// FIXME: empty div must be added for close colorbox event
+
 	public static function module()
 	{
 		return [

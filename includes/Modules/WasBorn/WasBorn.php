@@ -21,6 +21,8 @@ class WasBorn extends gEditorial\Module
 	use Internals\LateChores;
 	use Internals\PostDate;
 
+	// FIXME: handle roles for gender taxonomy
+
 	public static function module()
 	{
 		return [
@@ -105,8 +107,8 @@ class WasBorn extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'main_taxonomy'   => 'year_of_birth',
-			'gender_taxonomy' => 'gender',
+			'main_taxonomy'   => 'gender',
+			'year_taxonomy'   => 'year_of_birth',
 			'group_taxonomy'  => 'age_group',
 			'group_query_var' => 'agefromto',
 
@@ -120,19 +122,19 @@ class WasBorn extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'main_taxonomy'   => _n_noop( 'Birth Year', 'Birth Years', 'geditorial-was-born' ),
-				'gender_taxonomy' => _n_noop( 'Gender', 'Genders', 'geditorial-was-born' ),
-				'group_taxonomy'  => _n_noop( 'Age Group', 'Age Groups', 'geditorial-was-born' ),
+				'main_taxonomy'  => _n_noop( 'Gender', 'Genders', 'geditorial-was-born' ),
+				'year_taxonomy'  => _n_noop( 'Birth Year', 'Birth Years', 'geditorial-was-born' ),
+				'group_taxonomy' => _n_noop( 'Age Group', 'Age Groups', 'geditorial-was-born' ),
 			],
 			'labels' => [
 				'main_taxonomy' => [
-					'show_option_all'      => _x( 'Birth Years', 'Label: `show_option_all`', 'geditorial-was-born' ),
-					'show_option_no_items' => _x( '(No Birthdays)', 'Label: `show_option_no_items`', 'geditorial-was-born' ),
-				],
-				'gender_taxonomy' => [
 					'extended_label'       => _x( 'Gender', 'Label: `extended_label`', 'geditorial-was-born' ),
 					'show_option_all'      => _x( 'All Genders', 'Label: `show_option_all`', 'geditorial-was-born' ),
 					'show_option_no_items' => _x( '(Undefined Gender)', 'Label: `show_option_no_items`', 'geditorial-was-born' ),
+				],
+				'year_taxonomy' => [
+					'show_option_all'      => _x( 'Birth Years', 'Label: `show_option_all`', 'geditorial-was-born' ),
+					'show_option_no_items' => _x( '(No Birthdays)', 'Label: `show_option_no_items`', 'geditorial-was-born' ),
 				],
 				'group_taxonomy' => [
 					'show_option_all'      => _x( 'Age Groups', 'Label: `show_option_all`', 'geditorial-was-born' ),
@@ -155,9 +157,9 @@ class WasBorn extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'main_taxonomy'   => Datetime::getYearsByDecades( '-100 years', 10, TRUE, 'code' ),
-			'group_taxonomy'  => Datetime::getAgeStructure( TRUE ),
-			'gender_taxonomy' => [
+			'year_taxonomy'  => Datetime::getYearsByDecades( '-100 years', 10, TRUE, 'code' ),
+			'group_taxonomy' => Datetime::getAgeStructure( TRUE ),
+			'main_taxonomy'  => [
 				'male'   => _x( 'Male', 'Default Term', 'geditorial-was-born' ),
 				'female' => _x( 'Female', 'Default Term', 'geditorial-was-born' ),
 			],
@@ -181,15 +183,15 @@ class WasBorn extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-			'data_length'  => _x( '6', 'Main Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
+			'data_length'  => _x( '5', 'Gender Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
 			'admin_managed' => TRUE,
 		] );
 
-		$this->register_taxonomy( 'gender_taxonomy', [
+		$this->register_taxonomy( 'year_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-			'data_length'  => _x( '5', 'Gender Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
+			'data_length'  => _x( '6', 'Main Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
 			'admin_managed' => TRUE,
 		] );
@@ -205,9 +207,9 @@ class WasBorn extends gEditorial\Module
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $posttypes );
 
-		$this->hook_taxonomy_tabloid_exclude_rendered( [ 'main_taxonomy', 'gender_taxonomy' ] );
+		$this->hook_taxonomy_tabloid_exclude_rendered( [ 'main_taxonomy', 'year_taxonomy' ] );
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
-		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'gender_taxonomy' ), TRUE );
+		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'main_taxonomy' ), TRUE );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
 		$this->filter_self( 'mean_age', 4 );
@@ -222,7 +224,7 @@ class WasBorn extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'users.php' );
 
-		} else if ( $this->constant( 'gender_taxonomy' ) == $screen->taxonomy ) {
+		} else if ( $this->constant( 'year_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'users.php' );
 
@@ -235,7 +237,7 @@ class WasBorn extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->hook_taxonomy_metabox_mainbox(
-					'gender_taxonomy',
+					'main_taxonomy',
 					$screen->post_type,
 					'__singleselect_terms_callback',
 				);
@@ -248,7 +250,7 @@ class WasBorn extends gEditorial\Module
 					$this->action( 'restrict_manage_posts', 2, 22, 'admin_restrict' );
 					$this->action( 'parse_query', 1, 22, 'admin_restrict' );
 					$this->filter_append( $this->hook_base( 'screen_restrict_taxonomies' ), [
-						$this->constant( 'gender_taxonomy' ),
+						$this->constant( 'main_taxonomy' ),
 						$this->constant( 'group_taxonomy' ),
 					] );
 				}
@@ -261,7 +263,7 @@ class WasBorn extends gEditorial\Module
 	public function admin_menu()
 	{
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
-		$this->_hook_menu_taxonomy( 'gender_taxonomy', 'users.php' );
+		$this->_hook_menu_taxonomy( 'year_taxonomy', 'users.php' );
 		$this->_hook_menu_taxonomy( 'group_taxonomy', 'users.php' );
 	}
 
@@ -269,8 +271,8 @@ class WasBorn extends gEditorial\Module
 	{
 		$option = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 
-		if ( FALSE === $option || in_array( $this->constant( 'gender_taxonomy' ), (array) $option, TRUE ) )
-			Listtable::restrictByTaxonomy( $this->constant( 'gender_taxonomy' ) );
+		if ( FALSE === $option || in_array( $this->constant( 'main_taxonomy' ), (array) $option, TRUE ) )
+			Listtable::restrictByTaxonomy( $this->constant( 'main_taxonomy' ) );
 
 		if ( FALSE === $option || in_array( $this->constant( 'group_taxonomy' ), (array) $option, TRUE ) )
 			Listtable::restrictByTaxonomy( $this->constant( 'group_taxonomy' ), FALSE, [
@@ -281,7 +283,7 @@ class WasBorn extends gEditorial\Module
 
 	public function parse_query_admin_restrict( &$query )
 	{
-		Listtable::parseQueryTaxonomy( $query, $this->constant( 'gender_taxonomy' ) );
+		Listtable::parseQueryTaxonomy( $query, $this->constant( 'main_taxonomy' ) );
 
 		$object    = WordPress\Taxonomy::object( $this->constant( 'group_taxonomy' ) );
 		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
@@ -358,7 +360,7 @@ class WasBorn extends gEditorial\Module
 			$html.= '</ul></div><div class="sub"><ul class="-pointers">';
 
 		// TODO: mean-age by gender
-		$gender_summary = $this->get_dashboard_term_summary( 'gender_taxonomy',
+		$gender_summary = $this->get_dashboard_term_summary( 'main_taxonomy',
 			$this->get_setting_posttypes( 'parent' ), NULL, $scope, $user_id, $list );
 
 		if ( $gender_summary )
@@ -1033,7 +1035,7 @@ class WasBorn extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$taxonomy = $this->constant( 'main_taxonomy' );
+		$taxonomy = $this->constant( 'year_taxonomy' );
 		$date     = Core\Date::getObject( $datetime );
 
 		if ( ! $year = wp_date( 'Y', $date->getTimestamp() ) )

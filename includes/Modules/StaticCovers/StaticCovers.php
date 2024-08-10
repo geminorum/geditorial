@@ -19,6 +19,8 @@ class StaticCovers extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 	use Internals\ViewEngines;
 
+	// TODO: support users and overwrite avatars
+
 	public static function module()
 	{
 		return [
@@ -170,6 +172,7 @@ class StaticCovers extends gEditorial\Module
 				'min_attr'    => 1,
 			],
 		];
+
 		$settings['_supports'] = [
 			'shortcode_support',
 		];

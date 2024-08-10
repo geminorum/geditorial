@@ -124,6 +124,7 @@ class Yearly extends gEditorial\Module
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+			'data_length'        => _x( '4', 'Main Taxonomy Argument: `data_length`', 'geditorial-yearly' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'custom_captype'  => TRUE,
