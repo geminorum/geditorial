@@ -174,6 +174,10 @@ class StaticCovers extends gEditorial\Module
 			'shortcode_support',
 		];
 
+		$settings['_roles'] = [
+			'reports_roles' => [ _x( 'Roles that can view static cover reports.', 'Setting Description', 'geditorial-static-covers' ), $this->get_settings_default_roles() ],
+		];
+
 		return $settings;
 	}
 
@@ -268,7 +272,8 @@ class StaticCovers extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$this->_hook_submenu_adminpage( 'overview' );
+		if ( $this->role_can( 'reports' ) )
+			$this->_hook_submenu_adminpage( 'overview', 'read' );
 	}
 
 	public function render_submenu_adminpage()
@@ -410,6 +415,7 @@ class StaticCovers extends gEditorial\Module
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
+		$can = $this->role_can( 'reports' );
 		$src = $title = $link = FALSE;
 
 		if ( 'post' === $screen->base ) {
@@ -417,7 +423,7 @@ class StaticCovers extends gEditorial\Module
 			$src   = $this->_get_posttype_image( $object );
 			$title = WordPress\Post::title( $object );
 
-			if ( $this->get_setting( $object->post_type.'_posttype_counter_support' ) )
+			if ( $can && $this->get_setting( $object->post_type.'_posttype_counter_support' ) )
 				$link = $this->framepage_get_mainlink_for_post( $object, [
 					'target'       => 'post',
 					'context'      => 'mainbutton',
@@ -431,7 +437,7 @@ class StaticCovers extends gEditorial\Module
 			$src   = $this->_get_taxonomy_image( $object );
 			$title = WordPress\Term::title( $object );
 
-			if ( $this->get_setting( $object->taxonomy.'_taxonomy_counter_support' ) )
+			if ( $can && $this->get_setting( $object->taxonomy.'_taxonomy_counter_support' ) )
 				$link = $this->framepage_get_mainlink_for_term( $object, [
 					'target'       => 'term',
 					'context'      => 'mainbutton',
