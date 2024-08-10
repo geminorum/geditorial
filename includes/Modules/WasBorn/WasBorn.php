@@ -21,8 +21,6 @@ class WasBorn extends gEditorial\Module
 	use Internals\LateChores;
 	use Internals\PostDate;
 
-	// FIXME: handle roles for gender taxonomy
-
 	public static function module()
 	{
 		return [
@@ -96,10 +94,10 @@ class WasBorn extends gEditorial\Module
 			'count_not',
 		];
 
-		$settings['_roles'] = [
-			'manage_roles'  => [ _x( 'Roles that can manage, edit and delete age groups.', 'Setting Description', 'geditorial-was-born' ), $roles ],
-			'reports_roles' => [ _x( 'Roles that can view age related reports.', 'Setting Description', 'geditorial-was-born' ), $roles ],
-		];
+		$settings['_roles'] = $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' );
+
+		$settings['_roles']['manage_roles']  = [ _x( 'Roles that can manage, edit and delete age groups.', 'Setting Description', 'geditorial-was-born' ), $roles ];
+		$settings['_roles']['reports_roles'] = [ _x( 'Roles that can view age related reports.', 'Setting Description', 'geditorial-was-born' ), $roles ];
 
 		return $settings;
 	}
@@ -185,7 +183,7 @@ class WasBorn extends gEditorial\Module
 			'show_in_menu' => FALSE,
 			'data_length'  => _x( '5', 'Gender Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
-			'admin_managed' => TRUE,
+			'custom_captype' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'year_taxonomy', [
@@ -208,6 +206,7 @@ class WasBorn extends gEditorial\Module
 			$this->latechores__init_post_aftercare( $posttypes );
 
 		$this->hook_taxonomy_tabloid_exclude_rendered( [ 'main_taxonomy', 'year_taxonomy' ] );
+		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
 		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'main_taxonomy' ), TRUE );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
