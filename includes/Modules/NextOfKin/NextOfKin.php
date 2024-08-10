@@ -113,6 +113,7 @@ class NextOfKin extends gEditorial\Module
 			'fields' => [
 				'subcontent' => [
 					'fullname'   => _x( 'Fullname', 'Field Label: `fullname`', 'geditorial-next-of-kin' ),
+					'fathername' => _x( 'Father Name', 'Field Label: `fathername`', 'geditorial-next-of-kin' ),
 					'label'      => _x( 'Relation', 'Field Label: `label`', 'geditorial-next-of-kin' ),
 					'identity'   => _x( 'Identity', 'Field Label: `identity`', 'geditorial-next-of-kin' ),
 					'phone'      => _x( 'Contact', 'Field Label: `phone`', 'geditorial-next-of-kin' ),
@@ -190,6 +191,7 @@ class NextOfKin extends gEditorial\Module
 	protected function subcontent_get_meta_mapping()
 	{
 		return [
+			'fathername' => 'fathername',
 			'education'  => 'education',
 			'occupation' => 'occupation',
 			'postid'     => '_post_ref',
