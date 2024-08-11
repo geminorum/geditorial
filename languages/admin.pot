@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.29.0\n"
+"Project-Id-Version: gEditorial 3.29.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ..\n"
 "X-Domain: geditorial-admin\n"
 
@@ -664,6 +664,12 @@ msgctxt "Module: Setting Section Description"
 msgid "Though Administrators have it all!"
 msgstr ""
 
+#. translators: %s: error message
+#: includes/Internals/SettingsCore.php:741
+msgctxt "Internal: Settings Core: Message"
+msgid "Before you can upload a file, you will need to fix the following error: %s"
+msgstr ""
+
 #. translators: %s: posttype
 #: includes/Internals/SettingsFields.php:16
 msgctxt "Module"
@@ -880,29 +886,29 @@ msgid "%s ago"
 msgstr ""
 
 #. translators: %s: field title
-#: includes/Internals/SubContents.php:607
+#: includes/Internals/SubContents.php:627
 msgctxt "Internal: Subcontents: Import Title"
 msgid "SubContent: %s"
 msgstr ""
 
 #. translators: %s: source title
-#: includes/Internals/SubContents.php:690
+#: includes/Internals/SubContents.php:710
 msgctxt "Internal: Subcontents: Import Desc"
 msgid "[Imported]: %s"
 msgstr ""
 
-#: includes/Internals/SubContents.php:702
+#: includes/Internals/SubContents.php:722
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the parent post."
 msgstr ""
 
-#: includes/Internals/SubContents.php:804
+#: includes/Internals/SubContents.php:824
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the subcontent comment."
 msgstr ""
 
 #. translators: %s: user display-name (user email)
-#: includes/Internals/SubContents.php:845
+#: includes/Internals/SubContents.php:865
 msgctxt "Internal: Subcontents: User Row"
 msgid "By %s"
 msgstr ""
@@ -1249,12 +1255,12 @@ msgctxt "Modules: Chores"
 msgid "Chores"
 msgstr ""
 
-#: includes/Modules/Chronicles/Chronicles.php:26
+#: includes/Modules/Chronicles/Chronicles.php:27
 msgctxt "Modules: Chronicles"
 msgid "Chronicles"
 msgstr ""
 
-#: includes/Modules/Chronicles/Chronicles.php:27
+#: includes/Modules/Chronicles/Chronicles.php:28
 msgctxt "Modules: Chronicles"
 msgid "Timeline for Contents"
 msgstr ""
@@ -1299,12 +1305,12 @@ msgctxt "Modules: Comments"
 msgid "Restricted Editorial Comments"
 msgstr ""
 
-#: includes/Modules/Committee/Committee.php:35
+#: includes/Modules/Committee/Committee.php:37
 msgctxt "Modules: Committee"
 msgid "Committee"
 msgstr ""
 
-#: includes/Modules/Committee/Committee.php:36
+#: includes/Modules/Committee/Committee.php:38
 msgctxt "Modules: Committee"
 msgid "The Assembly of Editorial"
 msgstr ""
@@ -1629,12 +1635,12 @@ msgctxt "Modules: Entry"
 msgid "Wiki-like Posts Entries"
 msgstr ""
 
-#: includes/Modules/Equipped/Equipped.php:25
+#: includes/Modules/Equipped/Equipped.php:27
 msgctxt "Modules: Equipped"
 msgid "Equipped"
 msgstr ""
 
-#: includes/Modules/Equipped/Equipped.php:26
+#: includes/Modules/Equipped/Equipped.php:28
 msgctxt "Modules: Equipped"
 msgid "Items of Equipment"
 msgstr ""
@@ -1669,12 +1675,12 @@ msgctxt "Modules: Excluder"
 msgid "Excluder"
 msgstr ""
 
-#: includes/Modules/Execution/Execution.php:29
+#: includes/Modules/Execution/Execution.php:35
 msgctxt "Modules: Execution"
 msgid "Execution"
 msgstr ""
 
-#: includes/Modules/Execution/Execution.php:30
+#: includes/Modules/Execution/Execution.php:36
 msgctxt "Modules: Execution"
 msgid "Editorial Executives"
 msgstr ""
@@ -2500,12 +2506,12 @@ msgctxt "Modules: Recommended"
 msgid "Editorial Recommendations"
 msgstr ""
 
-#: includes/Modules/Recount/Recount.php:20
+#: includes/Modules/Recount/Recount.php:22
 msgctxt "Modules: Recount"
 msgid "Recount"
 msgstr ""
 
-#: includes/Modules/Recount/Recount.php:21
+#: includes/Modules/Recount/Recount.php:23
 msgctxt "Modules: Recount"
 msgid "Custom Counts Interface"
 msgstr ""
@@ -2800,12 +2806,12 @@ msgctxt "Modules: Staff"
 msgid "Editorial Employments"
 msgstr ""
 
-#: includes/Modules/StaticCovers/StaticCovers.php:26
+#: includes/Modules/StaticCovers/StaticCovers.php:28
 msgctxt "Modules: Static Covers"
 msgid "Static Covers"
 msgstr ""
 
-#: includes/Modules/StaticCovers/StaticCovers.php:27
+#: includes/Modules/StaticCovers/StaticCovers.php:29
 msgctxt "Modules: Static Covers"
 msgid "Alternative Cover Management"
 msgstr ""

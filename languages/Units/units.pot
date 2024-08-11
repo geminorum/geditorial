@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Units\n"
 "X-Domain: geditorial-units\n"
 
@@ -453,25 +453,25 @@ msgctxt "Column Title"
 msgid "Measurements"
 msgstr ""
 
-#: Units.php:404
+#: Units.php:406
 msgctxt "Message"
 msgid "No Measurement Units"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:616
+#: Units.php:618
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:625
+#: Units.php:627
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr ""
 
 #. translators: %s: shoe size placeholder
-#: Units.php:634
+#: Units.php:636
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr ""

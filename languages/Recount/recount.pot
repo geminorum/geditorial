@@ -9,31 +9,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Recount\n"
 "X-Domain: geditorial-recount\n"
 
-#: Recount.php:36
+#: Recount.php:38
 msgctxt "Setting Title"
 msgid "Count on Display"
 msgstr ""
 
-#: Recount.php:37
+#: Recount.php:39
 msgctxt "Setting Description"
 msgid "Tries to re-count posts on empty data display."
 msgstr ""
 
-#: Recount.php:171
+#: Recount.php:173
 msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:206
+#: Recount.php:208
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:212
+#: Recount.php:214
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr ""

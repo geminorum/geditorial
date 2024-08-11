@@ -3,133 +3,143 @@ msgstr ""
 "Project-Id-Version: gEditorial StaticCovers\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-12 06:21+0330\n"
+"PO-Revision-Date: 2024-08-10 22:06+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/StaticCovers\n"
 "X-Domain: geditorial-static-covers\n"
 
 #. translators: %s: supported object label
-#: StaticCovers.php:48 StaticCovers.php:110
+#: StaticCovers.php:51 StaticCovers.php:113
 msgctxt "Setting Title"
 msgid "Reference Meta-key for %s"
 msgstr "کلید متای مرجع برای %s"
 
-#: StaticCovers.php:49
+#: StaticCovers.php:52
 msgctxt "Setting Description"
 msgid "Defines reference meta-key for the post-type."
 msgstr ""
 
 #. translators: %s: supported object label
-#: StaticCovers.php:60 StaticCovers.php:122
+#: StaticCovers.php:63 StaticCovers.php:125
 msgctxt "Setting Title"
 msgid "URL Template for %s"
 msgstr "الگوی نشانی برای %s"
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:62
+#: StaticCovers.php:65
 msgctxt "Setting Description"
 msgid ""
 "Defines default URL template for the post-type. Available tokens are %s."
 msgstr ""
 
 #. translators: %s: supported object label
-#: StaticCovers.php:70 StaticCovers.php:132
+#: StaticCovers.php:73 StaticCovers.php:135
 msgctxt "Setting Title"
 msgid "Path Template for %s"
 msgstr "الگوی مسیر برای %s"
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:72
+#: StaticCovers.php:75
 msgctxt "Setting Description"
 msgid ""
 "Defines default path template for the post-type. Available tokens are %s."
 msgstr ""
 
 #. translators: %s: supported object label
-#: StaticCovers.php:81 StaticCovers.php:143
+#: StaticCovers.php:84 StaticCovers.php:146
 msgctxt "Setting Title"
 msgid "Support Counter for %s"
 msgstr "پشتیبانی از شمارنده برای %s"
 
-#: StaticCovers.php:84
+#: StaticCovers.php:87
 msgctxt "Setting Description"
 msgid "Supports number counter token for the post-type."
 msgstr ""
 
 #. translators: %s: supported object label
-#: StaticCovers.php:92 StaticCovers.php:154
+#: StaticCovers.php:95 StaticCovers.php:157
 msgctxt "Setting Title"
 msgid "Max Counter for %s"
 msgstr "بیشینه شمارنده برای %s"
 
-#: StaticCovers.php:95
+#: StaticCovers.php:98
 msgctxt "Setting Description"
 msgid "Defines maximum number of the counter for the post-type."
 msgstr ""
 
-#: StaticCovers.php:111
+#: StaticCovers.php:114
 msgctxt "Setting Description"
 msgid "Defines reference meta-key for the taxonomy."
 msgstr ""
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:124
+#: StaticCovers.php:127
 msgctxt "Setting Description"
 msgid "Defines default URL template for the taxonomy. Available tokens are %s."
 msgstr ""
 
 #. translators: %s: supported object tokens
-#: StaticCovers.php:134
+#: StaticCovers.php:137
 msgctxt "Setting Description"
 msgid ""
 "Defines default path template for the taxonomy. Available tokens are %s."
 msgstr ""
 
-#: StaticCovers.php:146
+#: StaticCovers.php:149
 msgctxt "Setting Description"
 msgid "Supports number counter token for the taxonomy."
 msgstr ""
 
-#: StaticCovers.php:157
+#: StaticCovers.php:160
 msgctxt "Setting Description"
 msgid "Defines maximum number of the counter for the taxonomy."
 msgstr ""
 
-#: StaticCovers.php:166
+#: StaticCovers.php:169
 msgctxt "Setting Title"
 msgid "Counter Threshold"
 msgstr "آستانه شمارنده"
 
-#: StaticCovers.php:167
+#: StaticCovers.php:170
 msgctxt "Setting Description"
 msgid ""
 "Defines digit places number needs to be to not have zeros added to the "
 "counter token."
 msgstr ""
 
+#: StaticCovers.php:181
+msgctxt "Setting Description"
+msgid "Roles that can view static cover reports."
+msgstr ""
+
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: StaticCovers.php:201
+#: StaticCovers.php:209
 msgctxt "MetaBox Title"
 msgid "Cover for this &ldquo;%2$s&rdquo;"
 msgstr "کاور برای این &rdquo;%2$s&ldquo;"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: StaticCovers.php:204
+#: StaticCovers.php:212
 msgctxt "Button Title"
 msgid "Covers for %1$s"
-msgstr "کاورهای این %1$s"
+msgstr "کاورها برای %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: StaticCovers.php:206
+#: StaticCovers.php:214
 msgctxt "Button Text"
 msgid "%1$s Static Covers of the %2$s"
 msgstr "%1$sکاورهای ایستا برای این %2$s"
+
+#: StaticCovers.php:218
+msgctxt "Button Title"
+msgid "View full image"
+msgstr "نمایش تصویر کامل"
 
 #~ msgctxt "MetaBox Title"
 #~ msgid "Cover"

@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/NextOfKin\n"
 "X-Domain: geditorial-next-of-kin\n"
 
@@ -40,144 +40,149 @@ msgid "Fullname"
 msgstr ""
 
 #: NextOfKin.php:116
+msgctxt "Field Label: `fathername`"
+msgid "Father Name"
+msgstr ""
+
+#: NextOfKin.php:117
 msgctxt "Field Label: `label`"
 msgid "Relation"
 msgstr ""
 
-#: NextOfKin.php:117
+#: NextOfKin.php:118
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr ""
 
-#: NextOfKin.php:118
+#: NextOfKin.php:119
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr ""
 
-#: NextOfKin.php:119
+#: NextOfKin.php:120
 msgctxt "Field Label: `dob`"
 msgid "Date of Birth"
 msgstr ""
 
-#: NextOfKin.php:120
+#: NextOfKin.php:121
 msgctxt "Field Label: `education`"
 msgid "Education"
 msgstr ""
 
-#: NextOfKin.php:121
+#: NextOfKin.php:122
 msgctxt "Field Label: `occupation`"
 msgid "Occupation"
 msgstr ""
 
-#: NextOfKin.php:122
+#: NextOfKin.php:123
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: NextOfKin.php:128
+#: NextOfKin.php:129
 msgctxt "Notice"
 msgid "There is no family information available!"
 msgstr ""
 
-#: NextOfKin.php:129
+#: NextOfKin.php:130
 msgctxt "Notice"
 msgid "You have not necessary permission to manage this family data."
 msgstr ""
 
-#: NextOfKin.php:136
+#: NextOfKin.php:137
 msgctxt "Settings Description"
 msgid "Supports marital statuses for the selected post-types."
 msgstr ""
 
-#: NextOfKin.php:140
+#: NextOfKin.php:141
 msgctxt "MetaBox Title"
 msgid "Family"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:144
+#: NextOfKin.php:145
 msgctxt "Button Title"
 msgid "Family of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:146
+#: NextOfKin.php:147
 msgctxt "Button Text"
 msgid "%1$s Manage the Family of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:149
+#: NextOfKin.php:150
 msgctxt "Action Title"
 msgid "Family of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:151
+#: NextOfKin.php:152
 msgctxt "Action Text"
 msgid "Family"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:154
+#: NextOfKin.php:155
 msgctxt "Row Title"
 msgid "Family of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:156
+#: NextOfKin.php:157
 msgctxt "Row Text"
 msgid "Family"
 msgstr ""
 
-#: NextOfKin.php:166
+#: NextOfKin.php:167
 msgctxt "Default Term: Marital Status"
 msgid "Single"
 msgstr ""
 
-#: NextOfKin.php:167
+#: NextOfKin.php:168
 msgctxt "Default Term: Marital Status"
 msgid "Married"
 msgstr ""
 
-#: NextOfKin.php:168
+#: NextOfKin.php:169
 msgctxt "Default Term: Marital Status"
 msgid "Divorced"
 msgstr ""
 
-#: NextOfKin.php:169
+#: NextOfKin.php:170
 msgctxt "Default Term: Marital Status"
 msgid "Widowed"
 msgstr ""
 
-#: NextOfKin.php:170
+#: NextOfKin.php:171
 msgctxt "Default Term: Marital Status"
 msgid "Separated"
 msgstr ""
 
-#: NextOfKin.php:171
+#: NextOfKin.php:172
 msgctxt "Default Term: Marital Status"
 msgid "Registered"
 msgstr ""
 
-#: NextOfKin.php:235
+#: NextOfKin.php:237
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "10"
 msgstr ""
 
 #. translators: %s: post title
-#: NextOfKin.php:337
+#: NextOfKin.php:340
 msgctxt "Page Title"
 msgid "Family Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: NextOfKin.php:339
+#: NextOfKin.php:342
 msgctxt "Page Title"
 msgid "Family Overview for %s"
 msgstr ""
 
-#: NextOfKin.php:363
+#: NextOfKin.php:366
 msgctxt "Default Term: Audit"
 msgid "Empty Family Data"
 msgstr ""

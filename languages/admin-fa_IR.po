@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-09 22:21+0330\n"
+"PO-Revision-Date: 2024-08-10 02:04+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -658,6 +658,12 @@ msgstr "دسترسی"
 msgctxt "Module: Setting Section Description"
 msgid "Though Administrators have it all!"
 msgstr "هرچند مدیران به همه چیز دسترسی دارند!"
+
+#. translators: %s: error message
+#: includes/Internals/SettingsCore.php:731
+msgctxt "Internal: Settings Core: Message"
+msgid "Before you can upload a file, you will need to fix the following error: %s"
+msgstr "پیش از بارگزاری یک پرونده، شما باید این خطا را برطرف کنید: %s"
 
 #. translators: %s: posttype
 #: includes/Internals/SettingsFields.php:16
@@ -2494,12 +2500,12 @@ msgctxt "Modules: Recommended"
 msgid "Editorial Recommendations"
 msgstr "پیشنهادهای تحریریه"
 
-#: includes/Modules/Recount/Recount.php:20
+#: includes/Modules/Recount/Recount.php:22
 msgctxt "Modules: Recount"
 msgid "Recount"
 msgstr "بازشماری"
 
-#: includes/Modules/Recount/Recount.php:21
+#: includes/Modules/Recount/Recount.php:23
 msgctxt "Modules: Recount"
 msgid "Custom Counts Interface"
 msgstr "رابط شمارش سفارشی"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Execution\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-30 23:40+0330\n"
+"PO-Revision-Date: 2024-08-11 02:21+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,35 +11,152 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../../includes/Modules/Execution\n"
 "X-Domain: geditorial-execution\n"
 
-#: Execution.php:87
+#: Execution.php:118
 msgid "Executive"
 msgid_plural "Executives"
 msgstr[0] "مجریان"
 msgstr[1] "مجری"
 
-#: Execution.php:91
+#: Execution.php:122
 msgctxt "Label: Show Option All"
 msgid "Executives"
 msgstr "مجریان"
 
-#: Execution.php:92
+#: Execution.php:123
 msgctxt "Label: Show Option No Terms"
 msgid "(No-executive)"
 msgstr "(بدون‌مجری)"
 
-#: Execution.php:101
+#: Execution.php:128
+msgctxt "Field Label: `label`"
+msgid "Role"
+msgstr "نقش"
+
+#: Execution.php:129
+msgctxt "Field Label: `fullname`"
+msgid "Fullname"
+msgstr "نام کامل"
+
+#: Execution.php:130
+msgctxt "Field Label: `identity`"
+msgid "Identity"
+msgstr "کد ملی"
+
+#: Execution.php:131
+msgctxt "Field Label: `phone`"
+msgid "Contact"
+msgstr "تماس"
+
+#: Execution.php:132
+msgctxt "Field Label: `evaluation`"
+msgid "Evaluation"
+msgstr "ارزیابی"
+
+#: Execution.php:133
+msgctxt "Field Label: `days`"
+msgid "Days"
+msgstr "روز"
+
+#: Execution.php:134
+msgctxt "Field Label: `hours`"
+msgid "Hours"
+msgstr "ساعت"
+
+#: Execution.php:135
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr "توضیحات"
+
+#: Execution.php:141
+msgctxt "Notice"
+msgid "There is no execution information available!"
+msgstr "هیچ اطلاعات اجرایی در دسترس نیست!"
+
+#: Execution.php:142
+msgctxt "Notice"
+msgid "You have not necessary permission to manage this execution data."
+msgstr "شما مجوز لازم برای دسترسی به این اطلاعات اجرائی را ندارید."
+
+#: Execution.php:149
+msgctxt "Settings Description"
+msgid "Supports executives for the selected post-types."
+msgstr "مجریان را برای نوع‌فرسته‌های انتخاب‌شده، پشتیبانی می‌کند."
+
+#: Execution.php:153
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Execution Summary"
-msgstr "گزارش اجرای شما"
+msgstr "گزارش اجرائی شما"
 
-#: Execution.php:102
+#: Execution.php:154
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Execution Summary"
-msgstr "گزارش اجرای تحریریه"
+msgstr "گزارش اجرائی تحریریه"
+
+#: Execution.php:158
+msgctxt "MetaBox Title"
+msgid "Executives"
+msgstr "مجریان"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Execution.php:162
+msgctxt "Button Title"
+msgid "Executives of %1$s"
+msgstr "مجریان %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Execution.php:164
+msgctxt "Button Text"
+msgid "%1$s Manage the Executives of %2$s"
+msgstr "%1$s مدیریت مجریان %2$s"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Execution.php:167
+msgctxt "Action Title"
+msgid "Executives of %1$s"
+msgstr "مجریان %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Execution.php:169
+msgctxt "Action Text"
+msgid "Executives"
+msgstr "مجریان"
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Execution.php:172
+msgctxt "Row Title"
+msgid "Executives of %1$s"
+msgstr "مجریان %1$s"
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Execution.php:174
+msgctxt "Row Text"
+msgid "Executives"
+msgstr "مجریان"
+
+#. translators: %s: post title
+#: Execution.php:364
+msgctxt "Page Title"
+msgid "Executives Grid for %s"
+msgstr "هیئت اجرائی %s"
+
+#. translators: %s: post title
+#: Execution.php:366
+msgctxt "Page Title"
+msgid "Executives Overview for %s"
+msgstr "مروری بر مجریان %s"
+
+#: Execution.php:395
+msgctxt "Default Term: Audit"
+msgid "Empty Executives Data"
+msgstr "داده‌های اجرائی خالی"
+
+#~ msgctxt "Field Label: `grade`"
+#~ msgid "Grade"
+#~ msgstr "نمره"
 
 #~ msgctxt "Label: Show Option No Terms"
 #~ msgid "(Unexecutived)"

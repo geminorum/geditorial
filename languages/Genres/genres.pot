@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Genres\n"
 "X-Domain: geditorial-genres\n"
 
@@ -104,7 +104,7 @@ msgctxt "Main Taxonomy: Default Term"
 msgid "Thriller"
 msgstr ""
 
-#: Genres.php:228
+#: Genres.php:230
 msgctxt "Header"
 msgid "Genre Reports"
 msgstr ""

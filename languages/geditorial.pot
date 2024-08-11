@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial 3.29.0\n"
+"Project-Id-Version: gEditorial 3.29.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ..\n"
 "X-Domain: geditorial\n"
 
@@ -1752,7 +1752,7 @@ msgctxt "Internal: RelatedMeta Title"
 msgid "Size"
 msgstr ""
 
-#: includes/Internals/SubContents.php:586
+#: includes/Internals/SubContents.php:606
 msgctxt "Internal: SubContents: No-Access Notice"
 msgid "You have not necessary permission to manage the information."
 msgstr ""
@@ -1987,60 +1987,60 @@ msgctxt "Error"
 msgid "The `%s` argument must be a comment."
 msgstr ""
 
-#: includes/Services/SearchSelect.php:352
+#: includes/Services/SearchSelect.php:355
 msgctxt "Service: SearchSelect"
 msgid "Select an item …"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:353
+#: includes/Services/SearchSelect.php:356
 msgctxt "Service: SearchSelect"
 msgid "Loading more results …"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:354
+#: includes/Services/SearchSelect.php:357
 msgctxt "Service: SearchSelect"
 msgid "Searching …"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:355
+#: includes/Services/SearchSelect.php:358
 msgctxt "Service: SearchSelect"
 msgid "No results found"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:356
+#: includes/Services/SearchSelect.php:359
 msgctxt "Service: SearchSelect"
 msgid "Remove all items"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:357
+#: includes/Services/SearchSelect.php:360
 msgctxt "Service: SearchSelect"
 msgid "Remove item"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:358
+#: includes/Services/SearchSelect.php:361
 msgctxt "Service: SearchSelect"
 msgid "Search"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:359
+#: includes/Services/SearchSelect.php:362
 msgctxt "Service: SearchSelect"
 msgid "The results could not be loaded."
 msgstr ""
 
 #. translators: %s: number of characters
-#: includes/Services/SearchSelect.php:361
+#: includes/Services/SearchSelect.php:364
 msgctxt "Service: SearchSelect"
 msgid "Please enter %s or more characters"
 msgstr ""
 
 #. translators: %s: number of characters
-#: includes/Services/SearchSelect.php:363
+#: includes/Services/SearchSelect.php:366
 msgctxt "Service: SearchSelect"
 msgid "Please delete %s character(s)"
 msgstr ""
 
 #. translators: %s: number of items
-#: includes/Services/SearchSelect.php:365
+#: includes/Services/SearchSelect.php:368
 msgctxt "Service: SearchSelect"
 msgid "You can only select %s item(s)"
 msgstr ""

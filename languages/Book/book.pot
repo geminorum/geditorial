@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Book\n"
 "X-Domain: geditorial-book\n"
 
@@ -527,27 +527,27 @@ msgctxt "Header"
 msgid "Overview of Meta Information about Related Publications"
 msgstr ""
 
-#: Book.php:1212
+#: Book.php:1211
 msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr ""
 
-#: Book.php:1271
+#: Book.php:1270
 msgctxt "Import Field"
 msgid "Book: Publication ID"
 msgstr ""
 
-#: Book.php:1272
+#: Book.php:1271
 msgctxt "Import Field"
 msgid "Book: Publication Title"
 msgstr ""
 
-#: Book.php:1273
+#: Book.php:1272
 msgctxt "Import Field"
 msgid "Book: Publication Ref (P2P)"
 msgstr ""
 
-#: Book.php:1274
+#: Book.php:1273
 msgctxt "Import Field"
 msgid "Book: Publication Desc (P2P)"
 msgstr ""

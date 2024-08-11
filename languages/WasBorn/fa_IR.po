@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WasBorn\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-31 22:34+0330\n"
+"PO-Revision-Date: 2024-08-10 03:02+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -146,75 +146,75 @@ msgctxt "Gender Taxonomy Argument: `data_length`"
 msgid "5"
 msgstr "5"
 
-#: WasBorn.php:426
+#: WasBorn.php:427
 msgctxt "Summary"
 msgid "Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:506
+#: WasBorn.php:507
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr "تاریخ تولد نامعتبر"
 
-#: WasBorn.php:575
+#: WasBorn.php:576
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr "میانگین سنی"
 
-#: WasBorn.php:651
+#: WasBorn.php:652
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr "بدون تاریخ تولد"
 
 #. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:732
+#: WasBorn.php:733
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr "از %1$s تا %2$s"
 
-#: WasBorn.php:734
+#: WasBorn.php:735
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr "آغاز"
 
-#: WasBorn.php:735
+#: WasBorn.php:736
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr "حالا"
 
-#: WasBorn.php:916
+#: WasBorn.php:917
 msgctxt "Pointer Notice"
 msgid "Under-Aged!"
 msgstr "زیر سن قانونی!"
 
-#: WasBorn.php:926
+#: WasBorn.php:927
 msgctxt "Default Term: Audit"
 msgid "Empty Date-of-Birth"
 msgstr "تاریخ تولد خالی"
 
-#: WasBorn.php:927
+#: WasBorn.php:928
 msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr "زیر سن قانونی"
 
-#: WasBorn.php:1012
+#: WasBorn.php:1000
 msgctxt "Header"
 msgid "Birthday Tools"
 msgstr "ابزارهای تولد"
 
-#: WasBorn.php:1024
+#: WasBorn.php:1012
 msgctxt "Card Title"
 msgid "Post-Date by Birthday"
 msgstr "تاریخ فرسته بر اساس تاریخ تولد"
 
 #. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1065
+#: WasBorn.php:1053
 msgctxt "Notice"
 msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1071
+#: WasBorn.php:1059
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
 msgstr ""

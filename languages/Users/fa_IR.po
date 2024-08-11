@@ -1,9 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial Users\n"
-"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/"
+"issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-04 20:53+0330\n"
+"PO-Revision-Date: 2024-08-10 06:58+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,237 +12,230 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Domain: geditorial-users\n"
 "X-Poedit-Basepath: ../../includes/Modules/Users\n"
 
-#: Users.php:46
+#: Users.php:45
 msgctxt "Setting Title"
 msgid "Posttype Counts"
 msgstr "شمارش نوع‌نوشته‌ها"
 
-#: Users.php:47
+#: Users.php:46
 msgctxt "Setting Description"
 msgid "Displays posttype count for each user"
 msgstr ""
 
-#: Users.php:51
+#: Users.php:50
 msgctxt "Setting Title"
 msgid "User Groups"
 msgstr "گروه‌بندی کاربران"
 
-#: Users.php:52
+#: Users.php:51
 msgctxt "Setting Description"
 msgid "Taxonomy for organizing users in groups"
 msgstr ""
 
-#: Users.php:56
+#: Users.php:55
 msgctxt "Setting Title"
 msgid "User Types"
 msgstr "نوع‌بندی کاربری"
 
-#: Users.php:57
+#: Users.php:56
 msgctxt "Setting Description"
 msgid "Taxonomy for organizing users in types"
 msgstr ""
 
-#: Users.php:63
+#: Users.php:62
 msgctxt "Setting Title"
 msgid "Author Restrictions"
 msgstr "محدودیت‌های نویسنده"
 
-#: Users.php:64
+#: Users.php:63
 msgctxt "Setting Description"
 msgid "Enhance admin edit page for authors"
 msgstr ""
 
-#: Users.php:68
+#: Users.php:67
 msgctxt "Setting Title"
 msgid "Author Categories"
 msgstr "دسته‌های نویسنده"
 
-#: Users.php:69
+#: Users.php:68
 msgctxt "Setting Description"
 msgid "Limits each author to post just on selected categories."
 msgstr ""
 
-#: Users.php:95
+#: Users.php:94
 msgctxt "Dashboard Widget Title"
 msgid "Your Profile"
 msgstr "نمایه شما"
 
-#: Users.php:96
+#: Users.php:95
 msgctxt "Dashboard Widget Action"
 msgid "Edit your profile"
 msgstr "ویرایش نمایه شما"
 
-#: Users.php:97
+#: Users.php:96
 msgctxt "Dashboard Widget Action"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: Users.php:101
+#: Users.php:100
 msgctxt "Taxonomy Menu"
 msgid "Groups"
 msgstr "گروه‌‌ها"
 
-#: Users.php:102 Users.php:107
+#: Users.php:101 Users.php:106
 msgctxt "Column Title"
 msgid "Users"
 msgstr "کاربران"
 
-#: Users.php:103
+#: Users.php:102
 msgctxt "Show Option All"
 msgid "All user groups"
 msgstr "همهٔ گروه‌های کاربری"
 
-#: Users.php:106
+#: Users.php:105
 msgctxt "Taxonomy Menu"
 msgid "Types"
 msgstr "انواع"
 
-#: Users.php:108
+#: Users.php:107
 msgctxt "Show Option All"
 msgid "All user types"
 msgstr "همهٔ انواع کاربری"
 
-#: Users.php:110
+#: Users.php:109
 msgctxt "Column Title"
 msgid "Summary"
 msgstr "خلاصه"
 
-#: Users.php:113
+#: Users.php:112
 msgid "User Group"
 msgid_plural "User Groups"
 msgstr[0] "گروه‌های کاربری"
 msgstr[1] "گروه کاربری"
 
-#: Users.php:114
+#: Users.php:113
 msgid "User Type"
 msgid_plural "User Types"
 msgstr[0] "انواع کاربری"
 msgstr[1] "نوع کاربری"
 
-#: Users.php:118
+#: Users.php:117
 msgctxt "Label: Not Found"
 msgid "There are no groups available."
 msgstr "هیچ گروه کاربری در دسترس نیست."
 
-#: Users.php:121
+#: Users.php:120
 msgctxt "Label: Not Found"
 msgid "There are no types available."
 msgstr "هیچ نوع کاربری در دسترس نیست."
 
-#: Users.php:332
+#: Users.php:331
 msgctxt "Row Icon Title"
 msgid "Group"
 msgstr "گروه"
 
-#: Users.php:346
+#: Users.php:345
 msgctxt "Row Icon Title"
 msgid "Type"
 msgstr "نوع"
 
-#: Users.php:399
+#: Users.php:412
 msgctxt "Header"
 msgid "Site Categories"
 msgstr "دسته‌های سایت"
 
-#: Users.php:400
+#: Users.php:413
 msgctxt "Message"
 msgid "Restrict non editor users to post in selected categories only."
 msgstr "کاربران غیر ویرایشگر به دسته‌های اختصاصی خود محدود شوند."
 
-#: Users.php:403
+#: Users.php:416
 msgctxt "Header"
 msgid "User Categories"
 msgstr "دسته‌های کاربری"
 
-#: Users.php:431
+#: Users.php:444
 msgctxt "Message"
 msgid "There are no categories available."
 msgstr "دسته‌ای تعریف نشده است."
 
-#: Users.php:527
+#: Users.php:552
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr "نام"
 
-#: Users.php:534
+#: Users.php:559
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr "ایمیل"
 
-#: Users.php:541
+#: Users.php:566
 msgctxt "Row Icon Title"
 msgid "URL"
 msgstr "نشانی"
 
-#: Users.php:559
+#: Users.php:584
 msgctxt "Row Icon Title"
 msgid "Registered"
 msgstr "نام‌نویسی"
 
 #. translators: %s: date
-#: Users.php:561
+#: Users.php:586
 msgctxt "Row"
 msgid "Registered on %s"
 msgstr "نام‌نویسی در %s"
 
-#: Users.php:566
+#: Users.php:591
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr "نقش‌ها"
 
-#: Users.php:588
+#: Users.php:613
 msgctxt "Header"
 msgid "User Reports"
 msgstr "گزارشات کاربران"
 
-#: Users.php:592
+#: Users.php:617
 msgctxt "Header"
 msgid "By PostType"
 msgstr "بر اساس نوع‌نوشته"
 
-#: Users.php:607
+#: Users.php:632
 msgctxt "None Title"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: Users.php:617
+#: Users.php:642
 msgctxt "None Title"
 msgid "All Months"
 msgstr "همهٔ ماه‌ها"
 
-#: Users.php:625
+#: Users.php:650
 msgctxt "Button"
 msgid "Query Stats"
 msgstr "درخواست گزارش"
 
-#: Users.php:699
+#: Users.php:721
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr "اتصال دوباره نویسندگان"
 
-#. translators: %s: error
-#: Users.php:706
-msgctxt "Message"
-msgid ""
-"Before you can upload a file, you will need to fix the following error: %s"
-msgstr ""
-
-#. translators: %s: size
-#: Users.php:720
-msgctxt "Message"
-msgid ""
-"Checks for post authors and re-map them with current registered users. "
-"Maximum upload size: <b>%s</b>"
-msgstr ""
-
-#: Users.php:724
+#: Users.php:725
 msgctxt "Button"
 msgid "Upload and Re-Map"
 msgstr "بارگیری و بازنقش"
+
+#. translators:  %1$s: file ext-type, %2$s: file size
+#: Users.php:729
+msgctxt "Message"
+msgid ""
+"Checks for post authors via a %1$s file and re-map them with current "
+"registered users. Maximum upload size: %2$s"
+msgstr ""
 
 #~ msgctxt "Header"
 #~ msgid "Site Groups"

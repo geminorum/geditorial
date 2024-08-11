@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Users\n"
 "X-Domain: geditorial-users\n"
 
@@ -217,24 +217,18 @@ msgctxt "Button"
 msgid "Query Stats"
 msgstr ""
 
-#: Users.php:724
+#: Users.php:721
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr ""
 
-#. translators: %s: error
-#: Users.php:731
-msgctxt "Message"
-msgid "Before you can upload a file, you will need to fix the following error: %s"
-msgstr ""
-
-#. translators: %s: size
-#: Users.php:745
-msgctxt "Message"
-msgid "Checks for post authors and re-map them with current registered users. Maximum upload size: <b>%s</b>"
-msgstr ""
-
-#: Users.php:749
+#: Users.php:725
 msgctxt "Button"
 msgid "Upload and Re-Map"
+msgstr ""
+
+#. translators:  %1$s: file ext-type, %2$s: file size
+#: Users.php:729
+msgctxt "Message"
+msgid "Checks for post authors via a %1$s file and re-map them with current registered users. Maximum upload size: %2$s"
 msgstr ""

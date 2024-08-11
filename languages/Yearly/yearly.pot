@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Yearly\n"
 "X-Domain: geditorial-yearly\n"
 
@@ -37,4 +37,9 @@ msgstr ""
 #: Yearly.php:104
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Years Summary"
+msgstr ""
+
+#: Yearly.php:127
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "4"
 msgstr ""
