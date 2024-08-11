@@ -1,8 +1,8 @@
 (function ($, plugin, module, section) {
   const s = {
-    // action: plugin._base + '_' + module,
-    // classs: plugin._base + '-' + module,
-    grid: '#' + plugin._base + '-' + module + '-data-grid'
+    // action: plugin._base + '_' + module.replace(/_/g, '-'),
+    // classs: plugin._base + '-' + module.replace(/_/g, '-'),
+    grid: '#' + plugin._base + '-' + module.replace(/_/g, '-') + '-data-grid'
   };
 
   const app = {
