@@ -80,6 +80,8 @@ $brand-danger:  #d9534f !default;
     &.field-mass,
     &.field-stature,
     &.field-grade,
+    &.field-days,
+    &.field-hours,
     &.field-count,
     &.field-year {
       width: 45px;
@@ -89,6 +91,9 @@ $brand-danger:  #d9534f !default;
       width: 80px;
 	  }
 
+    &.field-education,
+    &.field-occupation,
+    &.field-evaluation,
     &.field-bankname {
      width: 140px;
     }
@@ -125,10 +130,9 @@ $brand-danger:  #d9534f !default;
     &.field-color,
     &.field-status,
     &.field-topic,
+    &.field-fathername,
     &.field-location,
-    &.field-relation,
-    &.field-education,
-    &.field-occupation {
+    &.field-relation {
       width: 125px;
     }
 

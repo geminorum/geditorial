@@ -628,6 +628,7 @@ export default {
 
       apiFetch({
           path: addQueryArgs( this.config.searchselect + '/query', {
+            context: 'pairedimports',
             search: criteria,
             target: 'post',
             exclude: this.config.linked,
