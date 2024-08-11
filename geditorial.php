@@ -5,7 +5,7 @@ Plugin Name: gEditorial
 Plugin URI: https://geminorum.ir/wordpress/geditorial
 Update URI: https://github.com/geminorum/geditorial
 Description: Our Editorial in WordPress
-Version: 3.29.1
+Version: 3.29.2
 License: GPLv3+
 Author: geminorum
 Author URI: https://geminorum.ir/
@@ -21,7 +21,7 @@ Requires PHP: 7.4
 Requires Plugins: gpersiandate
 */
 
-define( 'GEDITORIAL_VERSION', '3.29.1' );
+define( 'GEDITORIAL_VERSION', '3.29.2' );
 define( 'GEDITORIAL_MIN_PHP', '7.4' );
 define( 'GEDITORIAL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GEDITORIAL_URL', plugin_dir_url( __FILE__ ) );

@@ -1,3 +1,14 @@
+### 3.29.2
+* internal/settings-core: render upload field
+* module/config: export/import all options
+* module/execution: sub-contents for executive board
+* module/next-of-kin: count for underline on module name
+* module/next-of-kin: father name field
+* module/static-covers: handle roles for reports
+* module/static-covers: i18n support on mustache
+* module/was-born: handle roles for gender taxonomy
+* service/search-select: use of search column arg for title only
+
 ### 3.29.1
 * internal/core-taxonomies: term parents as views
 * main/plugin: untitled string helper
