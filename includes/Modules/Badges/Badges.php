@@ -139,7 +139,8 @@ class Badges extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', 'reports' );
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 
 			} else if ( 'post' === $screen->base ) {
 

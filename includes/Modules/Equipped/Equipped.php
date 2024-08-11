@@ -16,6 +16,8 @@ class Equipped extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
+	// FIXME: proper way of report on tabloid/edit-posts
+
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()

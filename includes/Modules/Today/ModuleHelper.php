@@ -84,7 +84,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		} else {
 
-			$the_day['cal'] = 'gregorian';
+			$the_day['cal']   = 'gregorian';
 			$the_day['day']   = date( 'j', $today );
 			$the_day['month'] = date( 'n', $today );
 			$the_day['year']  = date( 'Y', $today );

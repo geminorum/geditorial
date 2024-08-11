@@ -38,6 +38,7 @@ class Athlete extends gEditorial\Module
 			'keywords' => [
 				'grade',
 				'sport',
+				'taxmodule',
 				'subcontent',
 			],
 		];
@@ -56,11 +57,18 @@ class Athlete extends gEditorial\Module
 				'reports_roles'        => [ NULL, $roles ],
 				'assign_roles'         => [ NULL, $roles ],
 			],
-			'_units' => [
-				'units_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
+			'posttypes_option' => 'posttypes_option',
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
+			'_dashboard'       => [
+				'dashboard_widgets',
+				'summary_parents',
+				'summary_excludes' => [ NULL, $terms, $empty ],
+				'summary_scope',
+				'summary_drafts',
+				'count_not',
 			],
-			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_editlist' => [
+				'admin_restrict',
 				'auto_term_parents',
 				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
@@ -76,13 +84,8 @@ class Athlete extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
-			'posttypes_option' => 'posttypes_option',
-			'_dashboard' => [
-				'dashboard_widgets',
-				'summary_excludes' => [ NULL, $terms, $empty ],
-				'summary_scope',
-				'summary_drafts',
-				'count_not',
+			'_units' => [
+				'units_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
 			],
 		];
 	}
@@ -105,7 +108,7 @@ class Athlete extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'main_taxonomy' => 'smiley',
+				'main_taxonomy' => NULL,
 			],
 		];
 	}
@@ -328,7 +331,8 @@ class Athlete extends gEditorial\Module
 
 				if ( 'edit' === $screen->base ) {
 
-					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 90 );
+					if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+						$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 90 );
 
 				} else if ( 'post' === $screen->base ) {
 
@@ -366,9 +370,12 @@ class Athlete extends gEditorial\Module
 		}
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	public function admin_menu()
 	{
-		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
+		if ( $this->role_can( [ 'assign', 'reports' ] ) )
+			$this->_hook_submenu_adminpage( 'framepage', 'read' );
+
+		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
 	public function dashboard_widgets()
@@ -382,14 +389,6 @@ class Athlete extends gEditorial\Module
 	public function render_widget_term_summary( $object, $box )
 	{
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
-	}
-
-	public function admin_menu()
-	{
-		if ( $this->role_can( [ 'assign', 'reports' ] ) )
-			$this->_hook_submenu_adminpage( 'framepage', 'read' );
-
-		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
 	public function load_framepage_adminpage( $context = 'framepage' )
@@ -420,6 +419,11 @@ class Athlete extends gEditorial\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	{
+		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )

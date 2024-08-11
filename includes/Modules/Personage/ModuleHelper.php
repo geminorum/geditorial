@@ -360,6 +360,7 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		return array_filter( [
 			'آبادی',
+			'آباد',
 			'نژاد',
 			'پور',
 			'کیا',
@@ -372,6 +373,7 @@ class ModuleHelper extends gEditorial\Helper
 			'وند',
 			'منش',
 			'پناه',
+			'بخت',
 		] );
 	}
 

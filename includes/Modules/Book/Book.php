@@ -1139,11 +1139,10 @@ class Book extends gEditorial\Module
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		switch ( $field ) {
-			case 'publication_isbn': return Info::lookupISBN( $raw );
-			// case 'publication_date': return Core\Number::localize( Datetime::stringFormat( $raw ) );
-			case 'publication_edition': return Core\Number::localize( Core\Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
-			case 'publication_print': return Core\Number::localize( Core\Number::toOrdinal( $raw ) ); // NOTE: not always a number/fallback localize
-			case 'collection': return Core\HTML::link( $raw, Core\WordPress::getSearchLink( $raw ) );
+
+			case 'publication_edition': return Core\Number::localize( Core\Number::toOrdinal( $raw ) );         // NOTE: not always a number/fallback localize
+			case 'publication_print'  : return Core\Number::localize( Core\Number::toOrdinal( $raw ) );         // NOTE: not always a number/fallback localize
+			case 'collection'         : return Core\HTML::link( $raw, Core\WordPress::getSearchLink( $raw ) );
 
 			case 'total_pages':
 				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'page' ) ),
@@ -1231,7 +1230,7 @@ class Book extends gEditorial\Module
 	public function searchselect_result_extra_for_post( $data, $post, $queried )
 	{
 		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2', 'subcontent' ], TRUE ) )
+			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
 			return $data;
 
 		if ( ! $post = WordPress\Post::get( $post ) )

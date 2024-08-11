@@ -263,7 +263,8 @@ class NextOfKin extends gEditorial\Module
 
 				if ( 'edit' === $screen->base ) {
 
-					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 90 );
+					if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+						$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 90 );
 
 				} else if ( 'post' === $screen->base ) {
 

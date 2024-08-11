@@ -271,8 +271,6 @@ class Organization extends gEditorial\Module
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 		$this->add_posttype_fields_supported();
 
-		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
-
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		// $this->filter_module( 'identified', 'default_posttype_identifier_type', 2 ); // NOTE: no need: default is `code`
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
@@ -495,16 +493,6 @@ class Organization extends gEditorial\Module
 			$this->constant( 'subterm_shortcode', $tag ),
 			$this->key
 		);
-	}
-
-	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
-	{
-		switch ( $field ) {
-			case 'organization_number': return 'print' === $context ? Core\Number::localize( trim( $raw ) ) : $meta;
-		}
-
-		return $meta;
 	}
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
