@@ -122,6 +122,7 @@ class SearchSelect extends WordPress\Main
 			'update_menu_item_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,
 			'fields'                 => 'ids',
+			'search_columns'         => [ 'post_title' ], // @since WP 6.2.0
 		];
 
 		if ( ! empty( $queried['search'] ) )
@@ -147,12 +148,14 @@ class SearchSelect extends WordPress\Main
 
 		if ( is_null( $pre ) ) {
 
-			if ( ! empty( $args['s'] ) )
+			if ( ! empty( $args['s'] ) && ! Core\WordPress::isWPcompatible( '6.2.0' ) )
 				AdvancedQueries::hookSearchPostTitleOnly();
 
 			$query = new \WP_Query();
 			$posts = $query->query( $args );
 			$found = $query->found_posts;
+
+			AdvancedQueries::hookSearchPostTitleOnly( TRUE );
 
 		} else if ( is_numeric( $pre ) ) {
 

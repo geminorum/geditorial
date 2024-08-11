@@ -42,6 +42,7 @@ class AdvancedQueries extends Main
 	}
 
 	// @SEE: https://core.trac.wordpress.org/ticket/43867
+	// NOTE: @since WP 6.2.3 we can use `'search_columns' => 'post_title'` on query args
 	public static function hookSearchPostTitleOnly( $unhook = FALSE )
 	{
 		if ( $unhook )
