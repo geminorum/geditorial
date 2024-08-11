@@ -54,6 +54,9 @@
       }
     }
 
+    th[data-key="days"],
+    th[data-key="hours"],
+    th[data-key="grade"],
     th[data-key="year"] {
       width: 35px;
     }
@@ -86,6 +89,7 @@
     }
 
     th[data-key="vin"],
+    th[data-key="fathername"],
     th[data-key="platenumber"],
     th[data-key="bankname"],
     th[data-key="fullname"],
@@ -96,6 +100,7 @@
 
     th[data-key="color"],
     th[data-key="carmodel"],
+    th[data-key="evaluation"],
     th[data-key="occupation"],
     th[data-key="education"] {
       width: 220px;
