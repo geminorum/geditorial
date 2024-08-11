@@ -219,7 +219,8 @@ class Media extends Core\Base
 	}
 
 	// @REF: `wp_import_handle_upload()`
-	public static function handleImportUpload( $name = 'import' )
+	// NOTE: for upload see `settings_render_upload_field()`
+	public static function handleImportUpload( $name = 'import', $cleanup = TRUE )
 	{
 		if ( ! isset( $_FILES[$name] ) )
 			return FALSE;
@@ -240,8 +241,12 @@ class Media extends Core\Base
 			'post_status'    => 'private',
 		], $upload['file'] );
 
-		// schedule a cleanup for one day from now in case of failed import or missing `wp_import_cleanup()` call
-		wp_schedule_single_event( time() + DAY_IN_SECONDS, 'importer_scheduled_cleanup', [ $id ] );
+		if ( $cleanup ) {
+
+			// schedule a cleanup for one day from now in case of failed
+			// import or missing `wp_import_cleanup()` call
+			wp_schedule_single_event( time() + DAY_IN_SECONDS, 'importer_scheduled_cleanup', [ $id ] );
+		}
 
 		return [ 'file' => $upload['file'], 'id' => $id ];
 	}
