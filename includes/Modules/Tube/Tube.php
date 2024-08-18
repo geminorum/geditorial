@@ -156,7 +156,7 @@ class Tube extends gEditorial\Module
 				'video_duration' => [
 					'title'       => _x( 'Video Duration', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'Duration of the Video', 'Field Description', 'geditorial-tube' ),
-					'icon'        => 'backup',
+					'type'        => 'duration',
 					'quickedit'   => TRUE,
 				],
 				'video_embed_url' => [

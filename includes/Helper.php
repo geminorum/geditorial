@@ -389,6 +389,9 @@ class Helper extends WordPress\Main
 				case 'datetime':
 					return Datetime::prepForDisplay( $raw ?: $value, Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i' );
 
+				case 'duration':
+					return Core\Duration::prep( $raw ?: $value, $field );
+
 				case 'contact_method':
 					return Core\URL::isValid( $raw ?: $value )
 						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )

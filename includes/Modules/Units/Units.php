@@ -309,6 +309,7 @@ class Units extends gEditorial\Module
 
 				case 'date':
 				case 'datetime':
+				case 'duration':
 				case 'identity':
 				case 'isbn':
 				case 'iban':
@@ -537,6 +538,7 @@ class Units extends gEditorial\Module
 		switch ( $field['type'] ) {
 			// case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' )    : $value;
 			// case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' ): $value;
+			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )             : $value;
 		}
 
 		return $value;
@@ -575,6 +577,9 @@ class Units extends gEditorial\Module
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		switch ( $field_args['type'] ) {
+
+			case 'duration':
+				return Core\Duration::prep( $raw, $field_args, $context );
 
 			case 'day':
 			case 'hour':

@@ -158,7 +158,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'year', 'date', 'datetime' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'year', 'date', 'datetime', 'duration' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -470,6 +470,11 @@ trait PostTypeFields
 
 				$sanitized = Core\Number::translate( trim( $data ) );
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
+				break;
+
+			case 'duration':
+
+				$sanitized = Core\Duration::sanitize( $data );
 				break;
 
 			case 'member':

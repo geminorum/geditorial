@@ -184,6 +184,7 @@ class PostTypeFields extends WordPress\Main
 				case 'isbn'    : return 'book';
 				case 'date'    : return 'calendar';
 				case 'datetime': return 'calendar-alt';
+				case 'duration': return 'clock';
 				case 'day'     : return 'backup';
 				case 'hour'    : return 'clock';
 				case 'people'  : return 'groups';

@@ -247,6 +247,7 @@ class Listed extends gEditorial\Module
 					'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 					'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 					'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'duration'  => [ 'type' => 'duration', 'quickedit' => TRUE ],
 
 					'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
 					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone

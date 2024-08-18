@@ -415,6 +415,7 @@ trait SubContents
 				case 'isbn':     $data[$raw_key] = Core\ISBN::sanitize( $raw_value ); break;
 				case 'bankcard': $data[$raw_key] = Core\Validation::sanitizeCardNumber( $raw_value ); break;
 				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
+				case 'duration': $data[$raw_key] = Core\Duration::sanitize( $raw_value ); break;
 
 				case 'date'    : // WTF
 				case 'time'    : // WTF
@@ -428,7 +429,6 @@ trait SubContents
 				case 'days'    :
 				case 'hours'   :
 				case 'account' :
-				case 'duration':
 				case 'count'   :
 					$data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) );
 					break;

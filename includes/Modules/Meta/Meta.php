@@ -132,6 +132,7 @@ class Meta extends gEditorial\Module
 				'datestart'  => _x( 'Date-Start', 'Titles', 'geditorial-meta' ),
 				'dateend'    => _x( 'Date-End', 'Titles', 'geditorial-meta' ),
 				'dateexpire' => _x( 'Date-Expire', 'Titles', 'geditorial-meta' ),
+				'duration'   => _x( 'Duration', 'Titles', 'geditorial-meta' ),
 				'period'     => _x( 'Period', 'Titles', 'geditorial-meta' ),
 				'amount'     => _x( 'Amount', 'Titles', 'geditorial-meta' ),
 
@@ -184,6 +185,7 @@ class Meta extends gEditorial\Module
 				'datestart'  => _x( 'Posts can have date-start to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'dateend'    => _x( 'Posts can have date-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'dateexpire' => _x( 'Posts can have date-expire to help organize them.', 'Descriptions', 'geditorial-meta' ),
+				'duration'   => _x( 'The formatted length of time about the post.', 'Descriptions', 'geditorial-meta' ),
 				'period'     => _x( 'The length of time about the post.', 'Descriptions', 'geditorial-meta' ),
 				'amount'     => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
 
@@ -255,6 +257,7 @@ class Meta extends gEditorial\Module
 				'datestart'  => [ 'type' => 'datetime' ],
 				'dateend'    => [ 'type' => 'datetime' ],
 				'dateexpire' => [ 'type' => 'datetime' ],
+				'duration'   => [ 'type' => 'duration' ],
 				'period'     => [ 'type' => 'text' ],
 				'amount'     => [ 'type' => 'number' ],
 
@@ -463,6 +466,7 @@ class Meta extends gEditorial\Module
 				case 'year':
 				case 'date':
 				case 'datetime':
+				case 'duration':
 				case 'identity':
 				case 'isbn':
 				case 'vin':
@@ -921,8 +925,9 @@ class Meta extends gEditorial\Module
 			return $value;
 
 		switch ( $field['type'] ) {
-			case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' )    : $value;
-			case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' ): $value;
+			case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' )     : $value;
+			case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' ) : $value;
+			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )             : $value;
 		}
 
 		return $value;
@@ -1113,6 +1118,9 @@ class Meta extends gEditorial\Module
 
 			case 'datestring':
 				return Core\Number::localize( Datetime::stringFormat( $raw ) );
+
+			case 'duration':
+				return Core\Duration::prep( $raw, $field_args, $context );
 
 			case 'embed':
 

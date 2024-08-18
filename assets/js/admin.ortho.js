@@ -22,7 +22,8 @@
     bankcard: '[data-' + module + '=\'bankcard\']',
     year: '[data-' + module + '=\'year\']',
     date: '[data-' + module + '=\'date\']',
-    datetime: '[data-' + module + '=\'datetime\']'
+    datetime: '[data-' + module + '=\'datetime\']',
+    duration: '[data-' + module + '=\'duration\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
     // currency: '[data-' + module + '=\'currency\']'
@@ -446,6 +447,17 @@
       $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-//: ]/g, '').trim());
         // TODO: check for pattern/validate datetime in persian
+      });
+    },
+
+    duration: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `number`
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish($el.val()).replace(/[^\d.-//: ]/g, '').trim());
+        // TODO: check for pattern/validate duration in persian
       });
     }
 
