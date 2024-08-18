@@ -53,7 +53,7 @@ class Event extends gEditorial\Module
 				'comment_status',
 				'widget_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'event_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
 		];
 	}
@@ -61,7 +61,7 @@ class Event extends gEditorial\Module
 	public function get_global_fields()
 	{
 		return [ 'meta' => [
-			$this->constant( 'event_posttype' ) => [
+			$this->constant( 'primary_posttype' ) => [
 				'event_start' => [
 					'title'       => _x( 'Event Start', 'Fields', 'geditorial-event' ),
 					'description' => _x( 'Event Start', 'Fields', 'geditorial-event' ),
@@ -85,7 +85,7 @@ class Event extends gEditorial\Module
 					'description' => _x( 'Event Repeat', 'Fields', 'geditorial-event' ),
 					'icon'        => 'update',
 					'type'        => 'select',
-					'values' => [
+					'values'      => [
 						'0'    => _x( 'Never', 'Fields', 'geditorial-event' ),
 						'10'   => _x( 'Weekly', 'Fields', 'geditorial-event' ),
 						'100'  => _x( 'Monthly', 'Fields', 'geditorial-event' ),
@@ -105,13 +105,12 @@ class Event extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'event_posttype'         => 'event',
-			'category_taxonomy'      => 'event_category',
+			'primary_posttype'       => 'event',
+			'primary_taxonomy'       => 'event_category',
 			'type_taxonomy'          => 'event_type',
 			'calendar_taxonomy'      => 'event_calendar',
-			'calendar_type_taxonomy' => 'event_calendar_type',
+			'calendar_type_taxonomy' => 'event_calendar_type', // FIXME: use `Almanac` Module
 
-			'endpoint_ical'        => 'ics',
 			'metakey_event_start'  => '_event_datetime_start',
 			'metakey_event_end'    => '_event_datetime_end',
 			'metakey_event_allday' => '_event_allday',
@@ -124,9 +123,9 @@ class Event extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'category_taxonomy'  => 'category',
-				'type_taxonomy' => 'tag',
-				'calendar_taxonomy'  => 'calendar',
+				'primary_taxonomy'  => 'category',
+				'type_taxonomy'     => 'tag',
+				'calendar_taxonomy' => 'calendar',
 			],
 		];
 	}
@@ -135,13 +134,13 @@ class Event extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'event_posttype'  => _n_noop( 'Event', 'Events', 'geditorial-event' ),
-				'category_taxonomy'  => _n_noop( 'Event Category', 'Event Categories', 'geditorial-event' ),
-				'type_taxonomy' => _n_noop( 'Event Type', 'Event Types', 'geditorial-event' ),
-				'calendar_taxonomy'  => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-event' ),
+				'primary_posttype'  => _n_noop( 'Event', 'Events', 'geditorial-event' ),
+				'primary_taxonomy'  => _n_noop( 'Event Category', 'Event Categories', 'geditorial-event' ),
+				'type_taxonomy'     => _n_noop( 'Event Type', 'Event Types', 'geditorial-event' ),
+				'calendar_taxonomy' => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-event' ),
 			],
 			'labels' => [
-				'category_taxonomy' => [
+				'primary_taxonomy' => [
 					'menu_name'      => _x( 'Categories', 'Menu Title', 'geditorial-event' ),
 					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-event' ),
 				],
@@ -161,13 +160,13 @@ class Event extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			'event_posttype' => [
+			'primary_posttype' => [
 				'metabox_title' => _x( 'Date & Times', 'MetaBox Title', 'geditorial-event' ),
 			],
 		];
 
 		$strings['misc'] = [
-			'event_posttype' => [
+			'primary_posttype' => [
 				'event_starts_column_title' => _x( 'Starts', 'Column Title', 'geditorial-event' ),
 				'event_ends_column_title'   => _x( 'Ends', 'Column Title', 'geditorial-event' ),
 			],
@@ -192,7 +191,7 @@ class Event extends gEditorial\Module
 	// needed for fields options
 	public function posttypes( $posttypes = NULL )
 	{
-		return [ $this->constant( 'event_posttype' ) ];
+		return [ $this->constant( 'primary_posttype' ) ];
 	}
 
 	// FIXME: WTF: `show_ui` is false so no taxonomy tabs support!
@@ -215,7 +214,7 @@ class Event extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'event_posttype' );
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function widgets_init()
@@ -232,40 +231,38 @@ class Event extends gEditorial\Module
 
 		$metadata = $this->get_setting( 'extra_metadata' );
 
-		$this->register_taxonomy( 'category_taxonomy', [
+		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'event_posttype' );
+		], 'primary_posttype' );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'event_posttype' );
+		], 'primary_posttype' );
 
 		$this->register_taxonomy( 'calendar_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'event_posttype' );
+		], 'primary_posttype' );
 
 		if ( $metadata )
 			$this->register_taxonomy( 'calendar_type_taxonomy', [
 				'show_ui' => FALSE,
-			], 'event_posttype' );
+			], 'primary_posttype' );
 
-		$this->register_posttype( 'event_posttype', [
+		$this->register_posttype( 'primary_posttype', [
 			'hierarchical'     => TRUE,
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'category_taxonomy' ),
+			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
 		] );
 
 		if ( $metadata )
-			$this->add_posttype_fields( $this->constant( 'event_posttype' ), NULL, TRUE, $this->module->name );
-
-		add_rewrite_endpoint( $this->constant( 'endpoint_ical' ), EP_PAGES, 'ical' );
+			$this->add_posttype_fields( $this->constant( 'primary_posttype' ), NULL, TRUE, $this->module->name );
 
 		if ( is_admin() )
 			return;
@@ -275,7 +272,7 @@ class Event extends gEditorial\Module
 
 	public function setup_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'event_posttype' ) )
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) )
 			$this->_edit_screen( $posttype );
 	}
 
@@ -283,7 +280,7 @@ class Event extends gEditorial\Module
 	{
 		$metadata = $this->get_setting( 'extra_metadata' );
 
-		if ( $screen->post_type == $this->constant( 'event_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -293,7 +290,7 @@ class Event extends gEditorial\Module
 
 					$this->class_metabox( $screen, 'mainbox' );
 					add_meta_box( $this->classs( 'mainbox' ),
-						$this->get_meta_box_title( 'event_posttype' ),
+						$this->get_meta_box_title( 'primary_posttype' ),
 						[ $this, 'render_mainbox_metabox' ],
 						$screen,
 						'side',
@@ -304,13 +301,13 @@ class Event extends gEditorial\Module
 					add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 				}
 
-				$this->_hook_post_updated_messages( 'event_posttype' );
+				$this->_hook_post_updated_messages( 'primary_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
 				if ( $metadata ) {
 
-					$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
+					$this->corerestrictposts__hook_screen_taxonomies( 'primary_taxonomy' );
 
 					$this->filter( 'request' );
 
@@ -322,7 +319,7 @@ class Event extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->_edit_screen( $screen->post_type );
-				$this->_hook_bulk_post_updated_messages( 'event_posttype' );
+				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 			}
 		}
 	}
@@ -339,7 +336,7 @@ class Event extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'event_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -348,8 +345,8 @@ class Event extends gEditorial\Module
 	public function manage_posts_columns( $columns )
 	{
 		return Core\Arraay::insert( $columns, [
-			'event_starts' => $this->get_column_title( 'event_starts', 'event_posttype' ),
-			'event_ends'   => $this->get_column_title( 'event_ends', 'event_posttype' ),
+			'event_starts' => $this->get_column_title( 'event_starts', 'primary_posttype' ),
+			'event_ends'   => $this->get_column_title( 'event_ends', 'primary_posttype' ),
 		], 'title', 'before' );
 	}
 
@@ -525,24 +522,10 @@ class Event extends gEditorial\Module
 	// Use archive-event.php for all events and 'event-category' taxonomy archives.
 	public function template_include( $template )
 	{
-		if ( is_tax( $this->constant( 'category_taxonomy' ) )
+		if ( is_tax( $this->constant( 'primary_taxonomy' ) )
 			|| is_tax( $this->constant( 'calendar_taxonomy' ) ) )
-				$template = get_query_template( 'archive-'.$this->constant( 'event_posttype' ) );
+				$template = get_query_template( 'archive-'.$this->constant( 'primary_posttype' ) );
 
 		return $template;
-	}
-
-	// https://make.wordpress.org/plugins/2012/06/07/rewrite-endpoints-api/
-	// https://gist.github.com/joncave/2891111
-	public function template_redirect()
-	{
-		global $wp_query;
-
-		if ( ! isset( $wp_query->query_vars['ical'] ) || ! is_singular() )
-			return;
-
-		// output some JSON (normally you might include a template file here)
-		// makeplugins_endpoints_do_json(); // FIXME
-		exit;
 	}
 }

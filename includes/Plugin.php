@@ -111,7 +111,7 @@ class Plugin
 
 		Services\AdvancedQueries::setup();
 		Services\Barcodes::setup();
-		Services\Calendars::setup();
+		// Services\Calendars::setup();
 		Services\Individuals::setup();
 		Services\LateChores::setup();
 		Services\LineDiscovery::setup();
@@ -431,10 +431,11 @@ class Plugin
 
 	public function update_module_option( $name, $key, $value )
 	{
-		$options = get_option( 'geditorial_options' );
+		if  ( ! $options = get_option( 'geditorial_options' ) )
+			$options = [];
 
 		if ( isset( $options[$name] ) )
-			$module_options = $options[$name];
+			$module_options = (object) $options[$name]; // NOTE: upon import will convert into arrays
 		else
 			$module_options = new \stdClass();
 

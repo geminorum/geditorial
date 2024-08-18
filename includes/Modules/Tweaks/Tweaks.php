@@ -445,8 +445,10 @@ class Tweaks extends gEditorial\Module
 
 		global $wpdb;
 
-		return preg_replace( "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-			"({$wpdb->posts}.post_title LIKE $1) OR (searchmeta.meta_value LIKE $1)", $where );
+		return preg_replace(
+			"/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+			"({$wpdb->posts}.post_title LIKE $1) OR (searchmeta.meta_value LIKE $1)",
+		$where );
 	}
 
 	// prevent duplicates

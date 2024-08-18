@@ -8,6 +8,36 @@ class Calendars extends Main
 {
 	const BASE = 'geditorial';
 
+	const ENDPOINT_ICAL = 'ics';
+
+	public static function setup()
+	{
+		if ( is_admin() )
+			return;
+
+		add_action( 'init', [ __CLASS__, 'init' ] );
+		add_action( 'template_redirect', [ __CLASS__, 'template_redirect' ] );
+	}
+
+	public static function init()
+	{
+		add_rewrite_endpoint( static::ENDPOINT_ICAL, EP_PAGES, 'ical' );
+	}
+
+	// https://make.wordpress.org/plugins/2012/06/07/rewrite-endpoints-api/
+	// https://gist.github.com/joncave/2891111
+	public static function template_redirect()
+	{
+		global $wp_query;
+
+		if ( ! isset( $wp_query->query_vars['ical'] ) || ! is_singular() )
+			return;
+
+		// output some JSON (normally you might include a template file here)
+		// makeplugins_endpoints_do_json(); // FIXME
+		exit;
+	}
+
 	/**
 	 * Retrieves the list of supported calendars.
 	 * @SEE `Almanac` Module
