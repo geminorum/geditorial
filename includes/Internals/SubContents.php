@@ -1107,7 +1107,7 @@ trait SubContents
 		] );
 	}
 
-	protected function tweaks_column_row_subcontent( $post, $before, $after )
+	protected function tweaks_column_row_subcontent( $post, $before, $after, $module )
 	{
 		printf( $before, $this->classs( 'subcontent' ) );
 

@@ -430,9 +430,9 @@ class Meta extends gEditorial\Module
 	// early and late actions to make room for other modules
 	private function _hook_default_rows( $posttype )
 	{
-		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 5 );
-		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 5 );
-		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 5 );
+		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 6 );
+		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 6 );
+		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 6 );
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
@@ -822,6 +822,7 @@ class Meta extends gEditorial\Module
 					'%s', // to use by caller
 				] ),
 				'</li>',
+				$this->module->name,
 				$fields,
 				$excludes
 			);
@@ -839,42 +840,42 @@ class Meta extends gEditorial\Module
 	}
 
 	// NOTE: only renders `quickedit` enabled fields
-	public function column_row_default( $post, $before, $after, $fields, $excludes )
+	public function column_row_default( $post, $before, $after, $module, $fields, $excludes )
 	{
 		foreach ( $fields as $field_key => $field ) {
 
 			if ( ! $field['quickedit'] )
 				continue;
 
-			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key, FALSE, $module ) )
 				continue;
 
-			printf( $before, '-meta-'.$field_key );
+			printf( $before, sprintf( '-%s-%s', $module, $field_key ) );
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;
 		}
 	}
 
-	public function column_row_extra( $post, $before, $after, $fields, $exclude )
+	public function column_row_extra( $post, $before, $after, $module, $fields, $excludes )
 	{
 		if ( array_key_exists( 'source_title', $fields ) || array_key_exists( 'source_url', $fields ) )
 			ModuleTemplate::metaSource( [
-				'before' => sprintf( $before, '-meta-source' )
+				'before' => sprintf( $before, '-'.$module.'-source' )
 					.$this->get_column_icon( FALSE, 'external', $this->get_string( 'source', $post->post_type, 'titles', 'source' ) ),
 				'after'  => $after,
 			] );
 
 		if ( array_key_exists( 'action_title', $fields ) || array_key_exists( 'action_url', $fields ) )
 			ModuleTemplate::metaAction( [
-				'before' => sprintf( $before, '-meta-action' )
+				'before' => sprintf( $before, '-'.$module.'-action' )
 					.$this->get_column_icon( FALSE, 'cart', $this->get_string( 'action', $post->post_type, 'titles', 'action' ) ),
 				'after'  => $after,
 			] );
 	}
 
 	// NOTE: only on excerpt mode
-	public function column_row_excerpt( $post, $before, $after, $fields, $exclude )
+	public function column_row_excerpt( $post, $before, $after, $module, $fields, $excludes )
 	{
 		if ( 'excerpt' !== $GLOBALS['mode'] )
 			return;
@@ -891,7 +892,7 @@ class Meta extends gEditorial\Module
 			$icon = $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
 
 			ModuleTemplate::metaFieldHTML( $field, [
-				'before' => sprintf( $before, '-meta-'.$field ).$icon,
+				'before' => sprintf( $before, '-'.$module.'-'.$field ).$icon,
 				'after'  => $after,
 				'filter' => FALSE,
 				'trim'   => 450,

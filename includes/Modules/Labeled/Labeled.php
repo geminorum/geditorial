@@ -167,7 +167,7 @@ class Labeled extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				$this->postmeta__hook_meta_column_row( $screen->post_type );
+				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
@@ -188,7 +188,7 @@ class Labeled extends gEditorial\Module
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
 	}
 
-	public function meta_column_row( $post, $before, $after, $fields, $excludes )
+	public function general_column_row( $post, $before, $after, $fields, $excludes )
 	{
 		if ( empty( $fields ) )
 			return;

@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PostMeta
@@ -115,32 +116,55 @@ trait PostMeta
 		return $data ?: $default;
 	}
 
-	protected function postmeta__hook_meta_column_row( $posttype, $priority = 20, $callback_suffix = FALSE )
+	protected function postmeta__hook_meta_column_row( $posttype, $fields, $priority = 20, $callback_suffix = FALSE, $module = NULL )
 	{
-		$method = $callback_suffix ? sprintf( 'meta_column_row_%s', $callback_suffix ) : 'meta_column_row';
+		if ( ! $posttype || empty( $fields ) )
+			return FALSE;
+
+		if ( is_null( $module ) )
+			$module = 'meta';
+
+		if ( ! gEditorial()->enabled( $module ) )
+			return FALSE;
+
+		$method = $callback_suffix
+			? sprintf( '%s_column_row_%s', $module, $callback_suffix )
+			: 'general_column_row'; // sprintf( '%s_column_row', $module );
 
 		if ( ! method_exists( $this, $method ) )
 			return FALSE;
 
-		add_action( $this->hook_base( 'meta', 'column_row', $posttype ),
-			function ( $post, $before, $after, $fields, $excludes ) use ( $method ) {
-				call_user_func_array( [ $this, $method ], [ $post, $before, $after, $fields, $excludes ] );
-			}, $priority, 5 );
+		$target = TRUE !== $fields
+			? Core\Arraay::keepByKeys( Services\PostTypeFields::getEnabled( $posttype, $module ), $fields )
+			: TRUE;
+
+		if ( empty( $target ) )
+			return TRUE;
+
+		add_action( $this->hook_base( $module, 'column_row', $posttype ),
+			function ( $post, $before, $after, $module, $fields, $excludes ) use ( $method, $target ) {
+				call_user_func_array(
+					[ $this, $method ],
+					[ $post, $before, $after, $module, ( $target === TRUE ? $fields : $target ), $excludes ]
+				);
+			}, $priority, 6 );
+
+		return TRUE;
 	}
 
 	// DEFAULT FILTER
 	// NOTE: used when module defines `_supported` meta fields
-	public function meta_column_row( $post, $before, $after, $fields, $excludes )
+	public function general_column_row( $post, $before, $after, $module, $fields, $excludes )
 	{
 		foreach ( $fields as $field_key => $field ) {
 
 			if ( in_array( $field_key, $excludes ) )
 				continue;
 
-			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key, FALSE, $module ) )
 				continue;
 
-			printf( $before, '-'.$this->module->name.' -meta-'.$field_key );
+			printf( $before, sprintf( '-%s -%s-%s', $this->module->name, $module, $field_key ) );
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;

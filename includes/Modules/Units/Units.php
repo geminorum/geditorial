@@ -269,9 +269,9 @@ class Units extends gEditorial\Module
 	// early and late actions to make room for other modules
 	private function _hook_default_rows( $posttype )
 	{
-		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 5 );
-		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 5 );
-		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 5 );
+		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 6 );
+		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 6 );
+		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 6 );
 	}
 
 	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
@@ -495,6 +495,7 @@ class Units extends gEditorial\Module
 					'%s', // to use by caller
 				] ),
 				'</li>',
+				$this->module->name,
 				$fields,
 				$excludes
 			);
@@ -512,7 +513,7 @@ class Units extends gEditorial\Module
 	}
 
 	// NOTE: only renders `quickedit` enabled fields
-	public function column_row_default( $post, $before, $after, $fields, $excludes )
+	public function column_row_default( $post, $before, $after, $module, $fields, $excludes )
 	{
 		foreach ( $fields as $field_key => $field ) {
 
@@ -522,7 +523,7 @@ class Units extends gEditorial\Module
 			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
 				continue;
 
-			printf( $before, '-units-'.$field_key );
+			printf( $before, sprintf( '-%s-%s', $module, $field_key ) );
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;

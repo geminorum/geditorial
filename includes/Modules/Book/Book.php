@@ -662,7 +662,7 @@ class Book extends gEditorial\Module
 				if ( $this->_p2p )
 					$this->coreadmin__hook_tweaks_column_row( $screen->post_type, -25, 'p2p_to' );
 
-				$this->postmeta__hook_meta_column_row( $screen->post_type );
+				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 
 				$this->_hook_bulk_post_updated_messages( 'publication_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
@@ -708,12 +708,12 @@ class Book extends gEditorial\Module
 		$this->do_dashboard_term_summary( 'status_taxonomy', $box, [ $this->constant( 'publication_posttype' ) ] );
 	}
 
-	public function tweaks_column_row_p2p_to( $post, $before, $after )
+	public function tweaks_column_row_p2p_to( $post, $before, $after, $module )
 	{
 		$this->column_row_p2p_to_posttype( 'publication_posttype', $post, $before, $after );
 	}
 
-	public function tweaks_column_row_p2p_from( $post, $before, $after )
+	public function tweaks_column_row_p2p_from( $post, $before, $after, $module )
 	{
 		$this->column_row_p2p_from_posttype( 'publication_posttype', $post, $before, $after );
 	}

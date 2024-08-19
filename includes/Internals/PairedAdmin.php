@@ -140,7 +140,7 @@ trait PairedAdmin
 			return FALSE;
 
 		add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
-			function ( $post, $before, $after ) use ( $constants ) {
+			function ( $post, $before, $after, $module ) use ( $constants ) {
 
 				if ( ! $items = $this->paired_all_connected_from( $post, 'columns' ) )
 					return;
@@ -151,6 +151,6 @@ trait PairedAdmin
 				foreach ( $items as $item )
 					echo $before.WordPress\Post::fullTitle( $item, 'overview' ).$after;
 
-			}, $priority, 3 );
+			}, $priority, 4 );
 	}
 }

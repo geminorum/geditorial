@@ -360,7 +360,7 @@ class Tweaks extends gEditorial\Module
 
 		// INTERNAL HOOKS
 		if ( $this->in_setting( $posttype, 'group_taxonomies' ) )
-			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_taxonomies' ], 10, 3 );
+			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_taxonomies' ], 10, 4 );
 
 		if ( $this->in_setting( $posttype, 'author_attribute' ) && $this->is_posttype_support( $posttype, 'author' ) )
 			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_author' ], 1, 3 );
@@ -564,7 +564,8 @@ class Tweaks extends gEditorial\Module
 							'-type-'.$post->post_type,
 							'%s',
 						] ),
-						'</li>'
+						'</li>',
+						$this->module->name
 					);
 
 				echo '</ul></div>';
@@ -743,7 +744,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_taxonomies( $post, $before, $after )
+	public function column_row_taxonomies( $post, $before, $after, $module )
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 

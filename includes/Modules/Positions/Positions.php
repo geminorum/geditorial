@@ -326,7 +326,6 @@ class Positions extends gEditorial\Module
 				// $this->pairedrowactions__hook_for_supported_posttypes( $screen );
 				// $this->paired__hook_tweaks_column( $screen->post_type, 8 );
 				// $this->paired__hook_screen_restrictposts( FALSE, 9 );
-				// $this->postmeta__hook_meta_column_row( $screen->post_type );
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 

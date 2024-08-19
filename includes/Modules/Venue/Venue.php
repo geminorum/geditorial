@@ -281,7 +281,7 @@ class Venue extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->postmeta__hook_meta_column_row( $screen->post_type );
+				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'menu_order', 'ASC' );
 				$this->_hook_bulk_post_updated_messages( 'place_posttype' );
 				$this->pairedcore__hook_sync_paired();
@@ -309,7 +309,6 @@ class Venue extends gEditorial\Module
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
 				$this->paired__hook_screen_restrictposts();
-				// $this->postmeta__hook_meta_column_row( $screen->post_type );
 			}
 		}
 

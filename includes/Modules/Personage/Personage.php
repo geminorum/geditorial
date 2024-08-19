@@ -437,7 +437,7 @@ class Personage extends gEditorial\Module
 					'primary_taxonomy',
 				] );
 
-				$this->postmeta__hook_meta_column_row( $screen->post_type );
+				// $this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 			}
 		}
 	}

@@ -94,9 +94,9 @@ trait CoreAdmin
 			return FALSE;
 
 		add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
-			function ( $post, $before, $after ) use ( $method ) {
-				call_user_func_array( [ $this, $method ], [ $post, $before, $after ] );
-			}, $priority, 3 );
+			function ( $post, $before, $after, $module ) use ( $method ) {
+				call_user_func_array( [ $this, $method ], [ $post, $before, $after, $module ] );
+			}, $priority, 4 );
 	}
 
 	protected function coreadmin__hook_tweaks_column_attr( $posttype, $priority = 20, $callback_suffix = FALSE )
