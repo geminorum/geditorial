@@ -136,7 +136,7 @@ class Assigned extends gEditorial\Module
 				],
 				'assigned_due_date' => [
 					'title'       => _x( 'Due Date', 'Field Title', 'geditorial-assigned' ),
-					'description' => _x( '', 'Field Description', 'geditorial-assigned' ),
+					'description' => _x( 'Determines the planned date that this assignment is required to be completed.', 'Field Description', 'geditorial-assigned' ),
 					'type'        => 'datetime',
 				],
 			],

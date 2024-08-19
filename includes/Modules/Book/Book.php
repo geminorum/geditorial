@@ -350,7 +350,7 @@ class Book extends gEditorial\Module
 				'publish_location' => [
 					'title'       => _x( 'Publish Location', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Location Published', 'Field Description', 'geditorial-book' ),
-					'icon'        => 'location-alt',
+					'type'        => 'venue',
 				],
 				'publication_date' => [
 					'title'       => _x( 'Publication Date', 'Field Title', 'geditorial-book' ),

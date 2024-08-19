@@ -885,10 +885,6 @@ class Meta extends gEditorial\Module
 			if ( ! in_array( $args['type'], [ 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
 				continue;
 
-			// skip if empty
-			if ( ! $value = $this->get_postmeta_field( $post->ID, $field ) )
-				continue;
-
 			$icon = $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
 
 			ModuleTemplate::metaFieldHTML( $field, [
@@ -973,9 +969,6 @@ class Meta extends gEditorial\Module
 			case 'content_fee':
 				// TODO: format numbers
 				return Core\Number::localize( sprintf( $this->get_setting( 'price_format', '%s' ), $raw ) );
-
-			case 'website_url':
-				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 
 			case 'date_of_birth':
 
@@ -1157,6 +1150,26 @@ class Meta extends gEditorial\Module
 					return $raw ?: $meta;
 
 				return Template::doMediaShortCode( trim( $raw ), 'image', $post, $context );
+
+			case 'embed':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				if ( 'print' === $context )
+					return Core\URL::prepTitle( trim( $raw ) );
+
+				return Core\HTML::link( Core\URL::getDomain( trim( $raw ) ), trim( $raw ), TRUE );
+
+			case 'link':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				if ( 'print' === $context )
+					return Core\URL::prepTitle( trim( $raw ) );
+
+				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 		}
 
 		return $meta;

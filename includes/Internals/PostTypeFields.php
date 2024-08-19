@@ -403,11 +403,11 @@ trait PostTypeFields
 
 			break;
 			case 'email':
-				$sanitized = Core\Email::sanitize( trim( $data ) );
+				$sanitized = Core\Email::sanitize( Core\Text::trim( $data ) );
 
 			break;
 			case 'contact':
-				$sanitized = Core\Number::translate( trim( $data ) );
+				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 				break;
 
 			case 'identity':
@@ -449,7 +449,7 @@ trait PostTypeFields
 
 			case 'date':
 
-				$sanitized = Core\Number::translate( trim( $data ) );
+				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 
 				// avoid accepting year only
 				if ( strlen( $sanitized ) > 4 )
@@ -461,14 +461,14 @@ trait PostTypeFields
 					break;
 
 			case 'time':
-				$sanitized = Core\Number::translate( trim( $data ) );
+				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 				break;
 
 			case 'datetime':
 
 				// @SEE: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#dates
 
-				$sanitized = Core\Number::translate( trim( $data ) );
+				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
 				break;
 

@@ -405,6 +405,12 @@ class Helper extends WordPress\Main
 
 				case 'mobile':
 					return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
+
+				case 'embed':
+					return Core\HTML::link( Core\URL::getDomain( $raw ?: $value ), $raw ?: $value, TRUE );
+
+				case 'link':
+					return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
 			}
 		}
 

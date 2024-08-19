@@ -190,6 +190,8 @@ class PostTypeFields extends WordPress\Main
 				case 'people'  : return 'groups';
 				case 'address' : return 'location';
 				case 'venue'   : return 'location-alt';
+				case 'embed'   : return 'embed-generic';
+				case 'link'    : return 'admin-links';
 			}
 		}
 

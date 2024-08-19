@@ -305,6 +305,9 @@ class Programmed extends gEditorial\Module
 		$this->action( 'posttypefields_import_raw_data', 5, 9, FALSE, $this->base );
 
 		$this->pairedcore__hook_append_identifier_code( 'program_code' );
+
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 	}
 
 	public function units_init()
@@ -379,9 +382,6 @@ class Programmed extends gEditorial\Module
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
 		] );
-
-		if ( $this->get_setting( 'override_dates', TRUE ) )
-			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 
 		if ( $this->get_setting( 'paired_globalsummary', TRUE ) )
 			$this->filter( 'paired_globalsummary_for_post', 3, 12, FALSE, $this->base );

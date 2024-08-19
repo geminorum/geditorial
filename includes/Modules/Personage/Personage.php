@@ -359,7 +359,6 @@ class Personage extends gEditorial\Module
 
 		$this->add_posttype_support( $this->constant( 'primary_posttype' ), 'date', FALSE );
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'status_taxonomy' );
-		$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 
 		if ( is_admin() )
 			$this->filter( 'prep_individual', 3, 8, 'admin', $this->base );
@@ -384,6 +383,8 @@ class Personage extends gEditorial\Module
 		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
 		$this->filter( 'paired_all_connected_to_args', 4, 18, 'clause', $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
+
+		$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 	}
 
 	public function importer_init()

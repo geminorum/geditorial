@@ -20,11 +20,15 @@ class Event extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'event',
-			'title'  => _x( 'Event', 'Modules: Event', 'geditorial-admin' ),
-			'desc'   => _x( 'Integrated Events', 'Modules: Event', 'geditorial-admin' ),
-			'icon'   => 'calendar-alt',
-			'access' => 'beta',
+			'name'     => 'event',
+			'title'    => _x( 'Event', 'Modules: Event', 'geditorial-admin' ),
+			'desc'     => _x( 'Integrated Events', 'Modules: Event', 'geditorial-admin' ),
+			'icon'     => 'calendar-alt',
+			'access'   => 'beta',
+			'keywords' => [
+				'calendar',
+				'cptmodule',
+			],
 		];
 	}
 
@@ -64,19 +68,19 @@ class Event extends gEditorial\Module
 			$this->constant( 'primary_posttype' ) => [
 				'event_start' => [
 					'title'       => _x( 'Event Start', 'Fields', 'geditorial-event' ),
-					'description' => _x( 'Event Start', 'Fields', 'geditorial-event' ),
+					'description' => _x( 'Determines the date and time in which the Event is scheduled to commence.', 'Fields', 'geditorial-event' ),
 					'icon'        => 'calendar',
 					'type'        => 'datetime',
 				],
 				'event_end' => [
 					'title'       => _x( 'Event End', 'Fields', 'geditorial-event' ),
-					'description' => _x( 'Event End', 'Fields', 'geditorial-event' ),
+					'description' => _x( 'Determines the date and time in which the Event is scheduled to conclude.', 'Fields', 'geditorial-event' ),
 					'icon'        => 'calendar',
 					'type'        => 'datetime',
 				],
 				'event_allday' => [
 					'title'       => _x( 'Event All-Day', 'Fields', 'geditorial-event' ),
-					'description' => _x( 'All-day event', 'Fields', 'geditorial-event' ),
+					'description' => _x( 'Determines that is an all-day event.', 'Fields', 'geditorial-event' ),
 					'icon'        => 'calendar-alt',
 					'type'        => 'checkbox',
 				],
@@ -244,7 +248,9 @@ class Event extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'auto_parents' => TRUE,
+		] );
 
 		$this->register_taxonomy( 'calendar_taxonomy', [
 			'hierarchical' => TRUE,
@@ -421,12 +427,12 @@ class Event extends gEditorial\Module
 			$this->actions( 'render_metabox', $post, $box, $fields, 'mainbox' );
 
 			// old way metas
-			// $this->render_box( $post ); // FIXME: add to module actions
+			// $this->render_metabox( $post ); // FIXME: add to module actions
 
 		echo '</div>';
 	}
 
-	public function render_box( $post, $atts = [] )
+	public function render_metabox( $post, $atts = [] )
 	{
 		$args = self::atts( [
 			'cal-type'   => self::req( 'cal-type', $this->default_calendar() ),

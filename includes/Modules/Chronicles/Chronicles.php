@@ -161,7 +161,6 @@ class Chronicles extends gEditorial\Module
 					'place_of_birth' => [
 						'title'       => _x( 'Place of Birth', 'Field Title', 'geditorial-chronicles' ),
 						'description' => _x( 'Place Where the Person was Born', 'Field Description', 'geditorial-chronicles' ),
-						'icon'        => 'location-alt',
 						'type'        => 'venue',
 						'data_length' => 15,
 						'order'       => 50,
@@ -169,7 +168,6 @@ class Chronicles extends gEditorial\Module
 					'place_of_death' => [
 						'title'       => _x( 'Place of Death', 'Field Title', 'geditorial-chronicles' ),
 						'description' => _x( 'Place Where the Person Died', 'Field Description', 'geditorial-chronicles' ),
-						'icon'        => 'location-alt',
 						'type'        => 'venue',
 						'data_length' => 15,
 						'order'       => 55,
