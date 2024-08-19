@@ -669,7 +669,37 @@ class Users extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( 'remap_post_authors' ) ) {
+				if ( Tablelist::isAction( 'duplicate_role' ) ) {
+
+					if ( ! $from = self::req( 'role_from' ) )
+						Core\WordPress::redirectReferer( 'huh' );
+
+					if ( ! $caps = WordPress\Role::capabilities( $from, FALSE ) )
+						Core\WordPress::redirectReferer( 'wrong' );
+
+					$name  = self::req( 'role_name' ) ?: sprintf( '%s_duplicated', $from );
+					$title = self::req( 'role_title' ) ?: Core\Text::readableKey( $name );
+
+					if ( ! add_role( WordPress\Role::sanitize( $name ), $title, $caps ) )
+						Core\WordPress::redirectReferer( 'wrong' );
+
+					Core\WordPress::redirectReferer( 'added' );
+
+				} else if ( Tablelist::isAction( 'delete_role' ) ) {
+
+					if ( ! $delete = self::req( 'role_delete' ) )
+						Core\WordPress::redirectReferer( 'huh' );
+
+					if ( in_array( $delete, [ 'administrator', 'subscriber' ], TRUE ) )
+						Core\WordPress::redirectReferer( 'noaccess' );
+
+					if ( ! WordPress\Role::object( $delete ) )
+						Core\WordPress::redirectReferer( 'wrong' );
+
+					remove_role( $delete );
+					Core\WordPress::redirectReferer( 'removed' );
+
+				} else if ( Tablelist::isAction( 'remap_post_authors' ) ) {
 
 					if ( ! $file = WordPress\Media::handleImportUpload() )
 						Core\WordPress::redirectReferer( 'wrong' );
@@ -717,7 +747,65 @@ class Users extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
+		$roles = WordPress\Role::get();
+		$none  = Settings::showOptionNone();
+
 		echo '<table class="form-table">';
+		echo '<tr><th scope="row">'._x( 'Duplicate Current Roles', 'Header', 'geditorial-users' ).'</th><td>';
+
+		$this->do_settings_field( [
+			'type'      => 'select',
+			'field'     => 'role_from',
+			'name_attr' => 'role_from',
+			'values'    => $roles,
+			'none_value' => '0',
+			'none_title' => $none,
+		] );
+
+		Settings::fieldSeparate( 'to' );
+
+		$this->do_settings_field( [
+			'type'        => 'text',
+			'field'       => 'role_name',
+			'name_attr'   => 'role_name',
+			'field_class' => 'medium-text',
+			'title_attr'  => _x( 'The new role name in lowercase alphanumeric with underlines.', 'TitleAttr', 'geditorial-users' ),
+			'placeholder' => 'role_name',
+			'dir'         => 'ltr',
+		] );
+
+		Settings::fieldSeparate( 'as' );
+
+		$this->do_settings_field( [
+			'type'        => 'text',
+			'field'       => 'role_title',
+			'name_attr'   => 'role_title',
+			'field_class' => 'regular-text',
+			'placeholder' => _x( 'Role Title', 'PlaceHolder', 'geditorial-users' ),
+			'title_attr'  => _x( 'The new role title in the localized term.', 'TitleAttr', 'geditorial-users' ),
+		] );
+
+		echo $this->wrap_open_buttons();
+			Settings::submitButton( 'duplicate_role', _x( 'Duplicate Role', 'Button', 'geditorial-users' ), FALSE );
+			Core\HTML::desc( _x( 'Tries to make a duplicate from existing roles with given name and title.', 'Message', 'geditorial-users' ), FALSE );
+
+		echo '</p></td></tr>';
+		echo '<tr><th scope="row">'._x( 'Delete Current Roles', 'Header', 'geditorial-users' ).'</th><td>';
+
+		$this->do_settings_field( [
+			'type'       => 'select',
+			'field'      => 'role_delete',
+			'name_attr'  => 'role_delete',
+			'values'     => Core\Arraay::stripByKeys( $roles, [ 'administrator', 'subscriber' ] ),
+			'none_value' => '0',
+			'none_title' => $none,
+		] );
+
+		echo $this->wrap_open_buttons();
+		Settings::submitButton( 'delete_role', _x( 'Delete Role', 'Button', 'geditorial-users' ), 'danger', TRUE );
+		Core\HTML::desc( _x( 'Tries to wipe the selected existing role.', 'Message', 'geditorial-users' ), FALSE );
+
+		echo '</p></td></tr>';
 		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Header', 'geditorial-users' ).'</th><td>';
 
 		if ( $filesize = $this->settings_render_upload_field( '.csv' ) ) {
@@ -735,6 +823,15 @@ class Users extends gEditorial\Module
 
 		echo '</td></tr>';
 		echo '</table>';
+	}
+
+	public function tools_sidebox( $sub, $uri, $context )
+	{
+		echo Core\HTML::tableCode(
+			WordPress\Role::get(),
+			TRUE,
+			_x( 'Available Roles', 'Caption', 'geditorial-users' )
+		);
 	}
 
 	// FIXME: DRAFT : need styling / register the shortcode!!
