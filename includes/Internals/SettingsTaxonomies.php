@@ -107,6 +107,14 @@ trait SettingsTaxonomies
 		return $taxonomy && in_array( $taxonomy, $this->taxonomies(), TRUE );
 	}
 
+	public function screen_taxonomy_supported( $screen, $base = [ 'edit-tags', 'term' ] )
+	{
+		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )
+			return FALSE;
+
+		return $this->taxonomy_supported( $screen->taxonomy );
+	}
+
 	public function list_taxonomies( $pre = NULL, $taxonomies = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
 	{
 		if ( is_null( $pre ) )

@@ -188,7 +188,7 @@ class Labeled extends gEditorial\Module
 		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
 	}
 
-	public function general_column_row( $post, $before, $after, $fields, $excludes )
+	public function general_column_row( $post, $before, $after, $module, $fields, $excludes )
 	{
 		if ( empty( $fields ) )
 			return;

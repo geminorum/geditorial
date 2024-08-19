@@ -110,6 +110,14 @@ trait SettingsPostTypes
 		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
+	public function screen_posttype_supported( $screen, $base = [ 'edit', 'post' ] )
+	{
+		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )
+			return FALSE;
+
+		return $this->posttype_supported( $screen->post_type );
+	}
+
 	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
 	{
 		if ( is_null( $pre ) )

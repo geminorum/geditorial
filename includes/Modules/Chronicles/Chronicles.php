@@ -17,6 +17,7 @@ class Chronicles extends gEditorial\Module
 	use Internals\CoreRowActions;
 	use Internals\FramePage;
 	use Internals\MetaBoxSupported;
+	use Internals\PostMeta;
 	use Internals\RestAPI;
 	use Internals\SubContents;
 
@@ -254,6 +255,14 @@ class Chronicles extends gEditorial\Module
 					Scripts::enqueueColorBox();
 				}
 			}
+		}
+
+		if ( $this->screen_posttype_supported( $screen, 'edit' ) ) {
+
+			$this->postmeta__hook_meta_column_row( $screen->post_type, [
+				'place_of_birth',
+				'place_of_death',
+			] );
 		}
 	}
 

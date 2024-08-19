@@ -230,8 +230,9 @@ class SearchSelect extends WordPress\Main
 		if ( is_null( $pre ) ) {
 
 			$query   = new \WP_Term_Query();
-			$results = Core\Arraay::toObjectForJS( $query->query( $args ), 'id', 'text' );
-			$found   = $query->found_posts;
+			$terms = $query->query( $args );
+			$results = Core\Arraay::toObjectForJS( $terms, 'id', 'text' );
+			$found   = count( $terms );
 
 		} else if ( is_numeric( $pre ) ) {
 

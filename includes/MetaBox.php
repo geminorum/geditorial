@@ -924,13 +924,16 @@ class MetaBox extends WordPress\Main
 		return $result;
 	}
 
-	public static function getFieldDefaults( $field )
+	public static function getFieldDefaults( $field, $module = NULL )
 	{
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
 		return [
 			'name'        => $field,
 			'rest'        => $field,      // FALSE to disable
-			'title'       => NULL,        // self::getString( $field, $posttype, 'titles', $field ),
-			'description' => NULL,        // self::getString( $field, $posttype, 'descriptions' ),
+			'title'       => NULL,        // self::getString( $field, $posttype, 'titles', $field, $module ),
+			'description' => NULL,        // self::getString( $field, $posttype, 'descriptions', FALSE, $module ),
 			'access_view' => NULL,        // @SEE: `$this->access_posttype_field()`
 			'access_edit' => NULL,        // @SEE: `$this->access_posttype_field()`
 			'sanitize'    => NULL,
@@ -978,15 +981,15 @@ class MetaBox extends WordPress\Main
 		if ( is_null( $module ) )
 			$module = static::MODULE;
 
-		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap  = [ 'field-wrap', '-textarea' ];
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
 			// 'rows'        => '1',
@@ -1045,15 +1048,15 @@ class MetaBox extends WordPress\Main
 		if ( is_null( $module ) )
 			$module = static::MODULE;
 
-		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap  = [ 'field-wrap', '-inputgeneral' ];
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
 			'type'        => 'text',
@@ -1293,16 +1296,16 @@ class MetaBox extends WordPress\Main
 		if ( is_null( $module ) )
 			$module = static::MODULE;
 
-		$args  = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap  = [ 'field-wrap', '-inputnumber' ];
 		$label = FALSE;
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
 			'type'        => 'number',
@@ -1359,19 +1362,19 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$html     = '';
-		$args     = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args     = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 		$selected = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap     = [ 'field-wrap', '-select' ];
 		$label    = FALSE;
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		if ( is_null( $args['none_title'] ) )
-			$args['none_title'] = self::getString( $args['name'], $post->post_type, 'none', Settings::showOptionNone( $args['title'] ) );
+			$args['none_title'] = self::getString( $args['name'], $post->post_type, 'none', Settings::showOptionNone( $args['title'] ), $module );
 
 		if ( $args['none_title'] )
 			$html.= Core\HTML::tag( 'option', [
@@ -1379,11 +1382,11 @@ class MetaBox extends WordPress\Main
 				'value'    => $args['none_value'],
 			], $args['none_title'] );
 
-		foreach ( $args['values'] as $value => $label )
+		foreach ( $args['values'] as $value_key => $value_label )
 			$html.= Core\HTML::tag( 'option', [
-				'selected' => $selected == $value,
-				'value'    => $value,
-			], $label );
+				'selected' => $selected == $value_key,
+				'value'    => $value_key,
+			], $value_label );
 
 		$atts = [
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
@@ -1439,16 +1442,16 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		if ( ! $args['posttype'] )
 			$args['posttype'] = $post->post_type;
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		if ( $post->post_parent && ( $parent = WordPress\Post::get( $post->post_parent ) ) )
 			$html.= Core\HTML::tag( 'option', [
@@ -1497,15 +1500,15 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
-		if ( $value = self::getPostMeta( $post->ID, $args['name'], '' ) )
+		if ( $value = self::getPostMeta( $post->ID, $args['name'], '', NULL, $module ) )
 			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
@@ -1552,15 +1555,15 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
-		if ( $value = self::getPostMeta( $post->ID, $args['name'], '' ) )
+		if ( $value = self::getPostMeta( $post->ID, $args['name'], '', NULL, $module ) )
 			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
@@ -1607,15 +1610,15 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'] ), $field );
+		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		if ( is_null( $args['title'] ) )
-			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'] );
+			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 
 		if ( is_null( $field['description'] ) )
-			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions' );
+			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
-		if ( $value = self::getPostMeta( $post->ID, $args['name'], '' ) )
+		if ( $value = self::getPostMeta( $post->ID, $args['name'], '', NULL, $module ) )
 			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $value,
