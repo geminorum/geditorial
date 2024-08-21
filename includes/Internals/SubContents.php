@@ -52,6 +52,22 @@ trait SubContents
 		return $this->constant( 'subcontent_type', $this->key );
 	}
 
+	protected function subcontent_is_comment_type( $data_or_comment, $type = NULL )
+	{
+		if ( is_null( $type ) )
+			$type = $this->subcontent_get_comment_type();
+
+		if ( is_object( $data_or_comment ) )
+			return property_exists( $data_or_comment, 'comment_type' )
+				&& $type === $data_or_comment->comment_type;
+
+		else if ( is_array( $data_or_comment ) )
+			return array_key_exists( '_type', $data_or_comment )
+				&& $type === $data_or_comment['_type'];
+
+		return FALSE;
+	}
+
 	protected function subcontent_get_comment_status()
 	{
 		return $this->constant( 'subcontent_status', 'private' );
