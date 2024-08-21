@@ -934,6 +934,19 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_subcontent_types( $description = NULL, $values = [], $empty = NULL, $default = TRUE )
+	{
+		return [
+			'field'        => 'subcontent_types',
+			'type'         => 'checkboxes-values',
+			'title'        => _x( 'Supported Types', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?: _x( 'Determines the optional types for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: _x( 'There are no supported types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+			'values'       => $values,
+			'default'      => $default,
+		];
+	}
+
 	public static function getSetting_parent_posttypes( $description = NULL, $values = [], $empty = NULL )
 	{
 		return [

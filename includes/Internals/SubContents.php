@@ -87,6 +87,60 @@ trait SubContents
 		);
 	}
 
+	protected function subcontent_get_types_for_settings()
+	{
+		return Core\Arraay::stripByKeys( Core\Arraay::pluck(
+			$this->subcontent_define_type_options( 'settings' ),
+			'title',
+			'name'
+		), [
+			'default', // NOTE: always keep the default type option enabled
+		] );
+	}
+
+	protected function subcontent_define_type_options( $context, $posttype = NULL )
+	{
+		return [
+			// EXAMPLE
+			// [
+			// 	'name'     => 'default',
+			// 	'title'    => _x( 'Default', 'Type Option', 'geditorial-admin' ),
+			// 	'icon'     => 'external',
+			//  'logo'     => '',
+			// ],
+		];
+	}
+
+	protected function subcontent_get_type_options( $context = 'display', $posttype = NULL )
+	{
+		return $this->filters( 'type_options',
+			$this->subcontent_define_type_options( $context, $posttype ),
+			$context,
+			$posttype
+		);
+	}
+
+	protected function subcontent_available_type_options( $context = 'display', $posttype = NULL )
+	{
+		// trying not to fire the filter hook twice!
+		$defined = Core\Arraay::pluck( $this->subcontent_define_type_options( $context, $posttype ), 'name' );
+		$enabled = \array_merge( [ 'default' ], $this->get_setting( 'subcontent_types', [] ) );
+
+		return Core\Arraay::stripByKeys(
+			Core\Arraay::reKey( $this->subcontent_get_type_options( $context, $posttype ), 'name' ),
+			array_diff( $defined, $enabled ),
+		);
+	}
+
+	protected function subcontent_list_type_options( $context = 'display', $posttype = NULL )
+	{
+		return Core\Arraay::pluck(
+			$this->subcontent_available_type_options( $context, $posttype ),
+			'title',
+			'name'
+		);
+	}
+
 	protected function subcontent_get_fields( $context = 'display', $settings_key = 'subcontent_fields' )
 	{
 		$all        = $this->subcontent_define_fields();
