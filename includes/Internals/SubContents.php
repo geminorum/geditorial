@@ -37,6 +37,7 @@ trait SubContents
 			'sorted'   => _x( 'The Sorting saved successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'invalid'  => _x( 'The entry data are not valid!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'readonly' => _x( 'The field is in read-only mode!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'select'   => _x( 'Select', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 
 			/* translators: %s: count number */
 			'countitems' => _x( '%s items', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
@@ -77,6 +78,7 @@ trait SubContents
 		// $unique     = $this->subcontent_get_unique_fields( $context );
 		// $readonly   = $this->subcontent_get_readonly_fields( $context );
 		// $searchable = $this->subcontent_get_searchable_fields( $context );
+		// $selectable = $this->subcontent_get_selectable_fields( $context );
 		// $importable = $this->subcontent_get_importable_fields( $context );
 		$required   = $this->subcontent_get_required_fields( $context );
 		$enabled    = $this->get_setting( $settings_key, array_keys( $all ) );
@@ -139,6 +141,22 @@ trait SubContents
 	{
 		return $this->filters( 'readonly_fields',
 			$this->subcontent_define_readonly_fields(), $context );
+	}
+
+	protected function subcontent_define_selectable_fields( $context, $posttype = NULL )
+	{
+		return [
+			// 'field_key': { option1: 'Option 1', option2: 'Option 2' }  <---- EXAMPLE
+		];
+	}
+
+	protected function subcontent_get_selectable_fields( $context = 'display', $posttype = NULL )
+	{
+		return $this->filters( 'selectable_fields',
+			$this->subcontent_define_selectable_fields( $context, $posttype ),
+			$context,
+			$posttype
+		);
 	}
 
 	protected function subcontent_define_hidden_fields()
@@ -564,8 +582,9 @@ trait SubContents
 	 */
 	protected function subcontent_get_prepped_data( $data, $context = 'display' )
 	{
-		$list  = [];
-		$types = $this->subcontent_get_field_types( $context );
+		$list       = [];
+		$types      = $this->subcontent_get_field_types( $context );
+		$selectable = $this->subcontent_get_selectable_fields( $context );
 
 		foreach ( $data as $offset => $row ) {
 
@@ -579,9 +598,14 @@ trait SubContents
 
 				} else {
 
+					$raw = $value;
+
+					if ( ! empty( $selectable[$key][$value] ) )
+						$value = $selectable[$key][$value];
+
 					$prepped[$key] = $this->prep_meta_row( $value, $key, [
 						'type' => array_key_exists( $key, $types ) ? $types[$key] : $key,
-					], $value );
+					], $raw );
 				}
 			}
 
@@ -999,7 +1023,6 @@ trait SubContents
 		}
 	}
 
-	// TODO: support for `options`: list of available options for each field
 	protected function subcontent_do_enqueue_app( $name, $args = [] )
 	{
 		$args = self::atts( [
@@ -1008,6 +1031,7 @@ trait SubContents
 			'assetkey'   => TRUE === $name ? '_subcontent' : NULL,
 			'linked'     => NULL,
 			'searchable' => NULL,
+			'selectable' => NULL,
 			'required'   => NULL,
 			'readonly'   => NULL,
 			'frozen'     => NULL, // FIXME: add full support
@@ -1033,6 +1057,7 @@ trait SubContents
 				'linked'       => $linked,
 				'searchselect' => Services\SearchSelect::namespace(),
 				'searchable'   => $args['searchable'] ?? $this->subcontent_get_searchable_fields( $args['context'] ),
+				'selectable'   => $args['selectable'] ?? $this->subcontent_get_selectable_fields( $args['context'] ),
 				'required'     => $args['required'] ?? $this->subcontent_get_required_fields( $args['context'] ),
 				'readonly'     => $args['readonly'] ?? $this->subcontent_get_readonly_fields( $args['context'] ),
 				'hidden'       => $this->subcontent_get_hidden_fields( $args['context'] ),
