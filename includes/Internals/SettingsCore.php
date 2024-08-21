@@ -68,7 +68,7 @@ trait SettingsCore
 			echo '</p>';
 	}
 
-	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
+	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = FALSE )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->module->name;
@@ -80,7 +80,7 @@ trait SettingsCore
 			'-sub-'.$sub,
 		];
 
-		if ( $check && $sidebox = method_exists( $this, 'settings_sidebox' ) )
+		if ( $check && $sidebox = method_exists( $this, $context.'_sidebox' ) )
 			$class[] = 'has-sidebox';
 
 		echo '<form enctype="multipart/form-data" class="'.Core\HTML::prepClass( $class ).'" method="post" action="">';
@@ -90,12 +90,12 @@ trait SettingsCore
 
 			if ( $check && $sidebox ) {
 				echo '<div class="'.Core\HTML::prepClass( '-sidebox', '-'.$this->module->name, '-sidebox-'.$sub ).'">';
-					$this->settings_sidebox( $sub, $uri, $context );
+					call_user_func_array( [ $this, $context.'_sidebox' ], [ $sub, $uri, $context ] );
 				echo '</div>';
 			}
 	}
 
-	protected function render_form_end( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = TRUE )
+	protected function render_form_end( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = FALSE )
 	{
 		echo '</form>';
 	}
@@ -103,7 +103,7 @@ trait SettingsCore
 	// DEFAULT METHOD: tools sub html
 	public function tools_sub( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'tools', TRUE );
 
 			if ( FALSE === $this->render_tools_html_before( $uri, $sub ) )
 				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
@@ -124,7 +124,7 @@ trait SettingsCore
 	// DEFAULT METHOD: roles sub html
 	public function roles_sub( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'roles', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'roles', TRUE );
 
 			if ( FALSE === $this->render_roles_html_before( $uri, $sub ) )
 				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
@@ -145,7 +145,7 @@ trait SettingsCore
 	// DEFAULT METHOD: reports sub html
 	public function reports_sub( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'reports', TRUE );
 
 			if ( FALSE === $this->render_reports_html_before( $uri, $sub ) )
 				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
@@ -166,7 +166,7 @@ trait SettingsCore
 	// DEFAULT METHOD: imports sub html
 	public function imports_sub( $uri, $sub )
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'imports', FALSE );
+		$this->render_form_start( $uri, $sub, 'bulk', 'imports', TRUE );
 
 			if ( FALSE === $this->render_imports_html_before( $uri, $sub ) )
 				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE

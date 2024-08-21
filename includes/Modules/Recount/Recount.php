@@ -207,7 +207,7 @@ class Recount extends gEditorial\Module
 	{
 		echo Settings::toolboxCardOpen( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), FALSE );
 
-			$this->render_form_start( NULL, 'recount-items', 'maintenance', 'tabs', FALSE );
+			$this->render_form_start( NULL, 'recount-items', 'maintenance', 'tabs' );
 				$this->nonce_field( 'do-recount-items' );
 
 				echo $this->wrap_open_buttons( '-toolbox-buttons' );
