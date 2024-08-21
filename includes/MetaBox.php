@@ -1080,6 +1080,29 @@ class MetaBox extends WordPress\Main
 
 		switch ( $args['type'] ) {
 
+			case 'text':
+			case 'datestring':
+
+				$atts['data']['ortho'] = 'text';
+
+				$wrap[] = '-inputtext';
+
+				break;
+
+			case 'embed':
+			case 'text_source':
+			case 'audio_source':
+			case 'video_source':
+			case 'image_source':
+			case 'downloadable':
+			case 'link':
+
+				$atts['dir'] = 'ltr';
+
+				$wrap[] = '-inputlink';
+
+				break;
+
 			case 'people':
 
 				$atts['data']['ortho'] = 'text';
@@ -1330,6 +1353,7 @@ class MetaBox extends WordPress\Main
 
 		switch ( $args['type'] ) {
 
+			case 'float':
 			case 'number':
 			default:
 				$label = sprintf( '<span class="%s" title="%s">%s</span>', '-label', $args['description'], $args['title'] );
@@ -1366,6 +1390,9 @@ class MetaBox extends WordPress\Main
 		$selected = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
 		$wrap     = [ 'field-wrap', '-select' ];
 		$label    = FALSE;
+
+		if ( empty( $args['values'] ) && in_array( $args['type'], [ 'term' ], TRUE ) && ! empty( $args['taxonomy'] ) )
+			$args['values'] = WordPress\Taxonomy::listTerms( $args['taxonomy'] );
 
 		if ( is_null( $args['title'] ) )
 			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );

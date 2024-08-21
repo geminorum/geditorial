@@ -124,8 +124,13 @@ class Units extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			'metabox_title'  => _x( 'Measurements', 'MetaBox Title', 'geditorial-units' ),
-			'metabox_action' => _x( 'Configure', 'MetaBox Action', 'geditorial-units' ),
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'mainbox_title'  => _x( 'Measurements', 'MetaBox: `mainbox_title`', 'geditorial-units' ),
+			'mainbox_action' => _x( 'Configure', 'MetaBox: `mainbox_action`', 'geditorial-units' ),
+		];
+
+		$strings['notices'] = [
+			'no_fields' => _x( 'There are no measurement units available!', 'Notice: `no_fields`', 'geditorial-units' ),
 		];
 
 		$strings['misc'] = [
@@ -190,7 +195,7 @@ class Units extends gEditorial\Module
 
 		$this->_edit_screen( $posttype );
 		$this->_hook_default_rows( $posttype );
-		$this->_hook_store_metabox( $posttype );
+		$this->_hook_store_metabox( $posttype, 'posttypefields' );
 	}
 
 	public function current_screen( $screen )
@@ -208,35 +213,7 @@ class Units extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$contexts   = Core\Arraay::column( $fields, 'context' );
-				$metabox_id = $this->classs( $screen->post_type );
-
-				$mainbox = $this->filters( 'mainbox_callback', in_array( 'mainbox', $contexts, TRUE ), $screen->post_type );
-
-				if ( TRUE === $mainbox )
-					$mainbox = [ $this, 'render_mainbox_metabox' ];
-
-				if ( $mainbox && is_callable( $mainbox ) )
-					add_meta_box( $metabox_id,
-						$this->get_meta_box_title(),
-						$mainbox,
-						$screen,
-						'side',
-						'low',
-						[
-							'posttype'   => $screen->post_type,
-							'metabox_id' => $metabox_id,
-						]
-					);
-
-				add_action( 'geditorial_units_render_metabox', [ $this, 'render_posttype_fields' ], 10, 4 );
-
-				$asset = [
-					// 'fields' => $fields, // not used yet!
-				];
-
-				// $this->enqueue_asset_js( $asset, $screen );
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->posttypefields__hook_metabox( $screen, $fields );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -249,7 +226,7 @@ class Units extends gEditorial\Module
 				];
 
 				$this->enqueue_asset_js( $asset, $screen );
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_store_metabox( $screen->post_type, 'posttypefields' );
 			}
 		}
 	}
@@ -272,178 +249,6 @@ class Units extends gEditorial\Module
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 6 );
 		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 6 );
 		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 6 );
-	}
-
-	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
-	{
-		$user_id = get_current_user_id();
-
-		if ( is_null( $fields ) )
-			$fields = $this->get_posttype_fields( $post->post_type );
-
-		foreach ( $fields as $field => $args ) {
-
-			if ( $context != $args['context'] )
-				continue;
-
-			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
-				continue;
-
-			switch ( $args['type'] ) {
-
-				case 'european_shoe':
-				case 'international_shirt':
-				case 'international_pants':
-				case 'bookcover':
-				case 'papersize':
-				case 'select':
-
-					ModuleMetaBox::renderFieldSelect( $args, $post );
-					break;
-
-				case 'text':
-				case 'datestring':
-
-					// ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-					break;
-
-				case 'date':
-				case 'datetime':
-				case 'duration':
-				case 'identity':
-				case 'isbn':
-				case 'iban':
-				case 'code':
-				case 'postcode':
-				case 'venue':
-				case 'people':
-				case 'contact':
-				case 'mobile':
-				case 'phone':
-				case 'email':
-
-					ModuleMetaBox::renderFieldInput( $args, $post );
-					break;
-
-				case 'float':
-				case 'embed':
-				case 'text_source':
-				case 'audio_source':
-				case 'video_source':
-				case 'image_source':
-				case 'downloadable':
-				case 'link':
-
-					// ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
-					break;
-
-				case 'member':
-				case 'person':
-				case 'day':
-				case 'hour':
-				case 'gram':
-				case 'km_per_hour':
-				case 'milimeter':
-				case 'kilogram':
-				case 'centimeter':
-				case 'meter':
-				case 'kilometre':
-				case 'price':  // TODO must use custom text input + code + ortho-number + separeator
-				case 'number':
-
-					ModuleMetaBox::renderFieldNumber( $args, $post );
-					break;
-
-				case 'address':
-				case 'note':
-				case 'textarea':
-
-					ModuleMetaBox::renderFieldTextarea( $args, $post );
-					break;
-
-				case 'parent_post':
-
-					ModuleMetaBox::renderFieldPostParent( $args, $post );
-					break;
-
-				case 'user':
-
-					ModuleMetaBox::renderFieldUser( $args, $post );
-					break;
-
-				case 'post':
-
-					ModuleMetaBox::renderFieldPost( $args, $post );
-					break;
-
-				case 'term':
-
-					// TODO: migrate to: `ModuleMetaBox::renderFieldTerm( $args, $post )`
-
-					// if ( $args['taxonomy'] && WordPress\Taxonomy::can( $args['taxonomy'], 'assign_terms' ) )
-					// 	ModuleMetaBox::legacy_fieldTerm( $field, [ $field ], $post, $args['taxonomy'], $args['ltr'], $args['title'] );
-
-					// else if ( ! $args['taxonomy'] )
-					// 	ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-			}
-		}
-
-		$this->nonce_field( 'mainbox' );
-	}
-
-	public function render_mainbox_metabox( $post, $box )
-	{
-		if ( ! empty( $box['args']['metabox_id'] ) && MetaBox::checkHidden( $box['args']['metabox_id'], $post->post_type ) )
-			return;
-
-		$fields = $this->get_posttype_fields( $post->post_type );
-
-		echo $this->wrap_open( '-admin-metabox' );
-
-			if ( count( $fields ) )
-				$this->actions( 'render_metabox', $post, $box, $fields, 'mainbox' );
-
-			else
-				echo Core\HTML::wrap( _x( 'No Measurement Units', 'Message', 'geditorial-units' ), 'field-wrap -empty' );
-
-			$this->actions( 'render_metabox_after', $post, $box, $fields, 'mainbox' );
-		echo '</div>';
-	}
-
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		if ( ! $this->nonce_verify( 'mainbox' )
-			&& ! $this->nonce_verify( 'nobox' ) )
-				return;
-
-		// here only check for cap to edit this post
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
-			return;
-
-		$fields = $this->get_posttype_fields( $post->post_type );
-
-		if ( ! count( $fields ) )
-			return;
-
-		$user_id = get_current_user_id();
-
-		foreach ( $fields as $field => $args ) {
-
-			// skip for fields that are auto-saved on admin edit-post page
-			if ( in_array( $field, [ 'parent_post' ], TRUE ) )
-				continue;
-
-			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
-				continue;
-
-			$request = sprintf( '%s-%s-%s', $this->base, $this->module->name, $field );
-
-			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
-				$this->posttypefields_do_import_field( $data, $args, $post );
-		}
 	}
 
 	public function manage_pages_columns( $columns )

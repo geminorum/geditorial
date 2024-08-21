@@ -201,8 +201,13 @@ class Meta extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			'metabox_title'  => _x( 'Metadata', 'MetaBox Title', 'geditorial-meta' ),
-			'metabox_action' => _x( 'Configure', 'MetaBox Action', 'geditorial-meta' ),
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'mainbox_title'  => _x( 'Metadata', 'MetaBox: `mainbox_title`', 'geditorial-meta' ),
+			'mainbox_action' => _x( 'Configure', 'MetaBox: `mainbox_action`', 'geditorial-meta' ),
+		];
+
+		$strings['notices'] = [
+			'no_fields' => _x( 'There are no meta fields available!', 'Notice: `no_fields`', 'geditorial-meta' ),
 		];
 
 		$strings['misc'] = [
@@ -337,7 +342,7 @@ class Meta extends gEditorial\Module
 
 		$this->_edit_screen( $posttype );
 		$this->_hook_default_rows( $posttype );
-		$this->_hook_store_metabox( $posttype );
+		$this->_hook_store_metabox( $posttype, 'posttypefields' );
 	}
 
 	public function current_screen( $screen )
@@ -355,28 +360,8 @@ class Meta extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$contexts   = Core\Arraay::column( $fields, 'context' );
-				$metabox_id = $this->classs( $screen->post_type );
-
-				$mainbox = $this->filters( 'mainbox_callback', in_array( 'mainbox', $contexts, TRUE ), $screen->post_type );
-
-				if ( TRUE === $mainbox )
-					$mainbox = [ $this, 'render_mainbox_metabox' ];
-
-				if ( $mainbox && is_callable( $mainbox ) )
-					add_meta_box( $metabox_id,
-						$this->get_meta_box_title(),
-						$mainbox,
-						$screen,
-						'side',
-						'high',
-						[
-							'posttype'   => $screen->post_type,
-							'metabox_id' => $metabox_id,
-						]
-					);
-
-				$nobox = $this->filters( 'nobox_callback', in_array( 'nobox', $contexts, TRUE ), $screen->post_type );
+				$contexts = Core\Arraay::column( $fields, 'context' );
+				$nobox    = $this->filters( 'nobox_callback', in_array( 'nobox', $contexts, TRUE ), $screen->post_type );
 
 				if ( TRUE === $nobox )
 					add_action( 'dbx_post_sidebar', [ $this, 'render_nobox_fields' ], 10, 1 );
@@ -392,14 +377,12 @@ class Meta extends gEditorial\Module
 				else if ( $lonebox && is_callable( $lonebox ) )
 					call_user_func_array( $lonebox, [ $screen ] );
 
-				add_action( 'geditorial_meta_render_metabox', [ $this, 'render_posttype_fields' ], 10, 4 );
-
 				$asset = [
 					// 'fields' => $fields, // not used yet!
 				];
 
 				$this->enqueue_asset_js( $asset, $screen );
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->posttypefields__hook_metabox( $screen, $fields );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -412,7 +395,7 @@ class Meta extends gEditorial\Module
 				];
 
 				$this->enqueue_asset_js( $asset, $screen );
-				$this->_hook_store_metabox( $screen->post_type );
+				$this->_hook_store_metabox( $screen->post_type, 'posttypefields' );
 			}
 		}
 	}
@@ -435,140 +418,6 @@ class Meta extends gEditorial\Module
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 6 );
 	}
 
-	public function render_posttype_fields( $post, $box, $fields = NULL, $context = 'mainbox' )
-	{
-		$user_id = get_current_user_id();
-
-		if ( is_null( $fields ) )
-			$fields = $this->get_posttype_fields( $post->post_type );
-
-		foreach ( $fields as $field => $args ) {
-
-			if ( $context != $args['context'] )
-				continue;
-
-			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
-				continue;
-
-			switch ( $args['type'] ) {
-
-				case 'select':
-
-					ModuleMetaBox::renderFieldSelect( $args, $post );
-					break;
-
-				case 'text':
-				case 'datestring':
-
-					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-					break;
-
-				case 'year':
-				case 'date':
-				case 'datetime':
-				case 'duration':
-				case 'identity':
-				case 'isbn':
-				case 'vin':
-				case 'iban':
-				case 'bankcard':
-				case 'code':
-				case 'postcode':
-				case 'venue':
-				case 'people':
-				case 'contact':
-				case 'mobile':
-				case 'phone':
-				case 'email':
-
-					ModuleMetaBox::renderFieldInput( $args, $post, NULL );
-					break;
-
-				case 'float':
-				case 'embed':
-				case 'text_source':
-				case 'audio_source':
-				case 'video_source':
-				case 'image_source':
-				case 'downloadable':
-				case 'link':
-
-					ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, TRUE, $args['title'], FALSE, $args['type'] );
-
-				break;
-				case 'price': // TODO must use custom text input + code + ortho-number + separeator
-				case 'number':
-
-					ModuleMetaBox::renderFieldNumber( $args, $post );
-
-				break;
-				case 'widget':
-
-					ModuleMetaBox::legacy_fieldTextarea( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-					break;
-
-				case 'address':
-				case 'note':
-				case 'textarea':
-					ModuleMetaBox::renderFieldTextarea( $args, $post, NULL );
-					break;
-
-				case 'parent_post':
-
-					ModuleMetaBox::renderFieldPostParent( $args, $post );
-					break;
-
-				case 'user':
-
-					ModuleMetaBox::renderFieldUser( $args, $post );
-					break;
-
-				case 'attachment':
-
-					// FIXME
-					// ModuleMetaBox::renderFieldAttachment( $args, $post );
-					ModuleMetaBox::renderFieldNumber( $args, $post );
-					break;
-
-				case 'post':
-
-					ModuleMetaBox::renderFieldPost( $args, $post );
-
-				break;
-				case 'term':
-
-					// TODO: migrate to: `ModuleMetaBox::renderFieldTerm( $args, $post )`
-
-					if ( $args['taxonomy'] && WordPress\Taxonomy::can( $args['taxonomy'], 'assign_terms' ) )
-						ModuleMetaBox::legacy_fieldTerm( $field, [ $field ], $post, $args['taxonomy'], $args['ltr'], $args['title'] );
-
-					else if ( ! $args['taxonomy'] )
-						ModuleMetaBox::legacy_fieldString( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
-			}
-		}
-
-		$this->nonce_field( 'mainbox' );
-	}
-
-	public function render_mainbox_metabox( $post, $box )
-	{
-		if ( ! empty( $box['args']['metabox_id'] ) && MetaBox::checkHidden( $box['args']['metabox_id'], $post->post_type ) )
-			return;
-
-		$fields = $this->get_posttype_fields( $post->post_type );
-
-		echo $this->wrap_open( '-admin-metabox' );
-
-			if ( count( $fields ) )
-				$this->actions( 'render_metabox', $post, $box, $fields, 'mainbox' );
-
-			else
-				echo Core\HTML::wrap( _x( 'No Meta Fields', 'Message', 'geditorial-meta' ), 'field-wrap -empty' );
-
-			$this->actions( 'render_metabox_after', $post, $box, $fields, 'mainbox' );
-		echo '</div>';
-	}
-
 	public function render_nobox_fields( $post )
 	{
 		$fields = $this->get_posttype_fields( $post->post_type );
@@ -583,10 +432,12 @@ class Meta extends gEditorial\Module
 
 					case 'title_before':
 					case 'title_after':
+						// FIXME
 						ModuleMetaBox::legacy_fieldTitle( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
 
 					case 'postbox_legacy':
+						// FIXME
 						ModuleMetaBox::legacy_fieldBox( $field, [ $field ], $post, $args['ltr'], $args['title'] );
 					break;
 				}
@@ -645,6 +496,7 @@ class Meta extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
+		// FIXME
 		ModuleMetaBox::legacy_fieldEditorBox(
 			$box['args']['field_name'],
 			$post,
@@ -725,49 +577,6 @@ class Meta extends gEditorial\Module
 			return $fields[$field_key];
 
 		return [ $field_key ];
-	}
-
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
-	{
-		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-			return;
-
-		if ( ! $this->nonce_verify( 'mainbox' )
-			&& ! $this->nonce_verify( 'nobox' ) )
-				return;
-
-		// here only check for cap to edit this post
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
-			return;
-
-		$fields = $this->get_posttype_fields( $post->post_type );
-
-		if ( ! count( $fields ) )
-			return;
-
-		$user_id = get_current_user_id();
-		$legacy  = $this->get_postmeta_legacy( $post->ID );
-
-		foreach ( $fields as $field => $args ) {
-
-			// skip for fields that are auto-saved on admin edit-post page
-			if ( in_array( $field, [ 'parent_post' ], TRUE ) )
-				continue;
-
-			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
-				continue;
-
-			$request = sprintf( '%s-%s-%s', $this->base, $this->module->name, $field );
-
-			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
-				$this->posttypefields_do_import_field( $data, $args, $post );
-
-			// passing not enabled legacy data
-			else if ( array_key_exists( $field, $legacy ) )
-				$this->set_postmeta_field( $post->ID, $field, $this->sanitize_posttype_field( $legacy[$field], $args, $post ) );
-		}
-
-		$this->clean_postmeta_legacy( $post->ID, $fields, $legacy );
 	}
 
 	public function manage_pages_columns( $columns )

@@ -2,10 +2,12 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
@@ -518,6 +520,235 @@ trait PostTypeFields
 		}
 
 		return $this->filters( 'sanitize_posttype_field', $sanitized, $field, $post, $data );
+	}
+
+	protected function posttypefields__hook_metabox( $screen, $fields = NULL, $context = NULL )
+	{
+		if ( is_null( $context ) )
+			$context = 'mainbox';
+
+		if ( is_null( $context ) )
+			$fields = $this->get_posttype_fields( $screen->post_type );
+
+		// bail if no fields enabled for this posttype
+		if ( ! count( $fields ) )
+			return FALSE;
+
+		$callback = $this->filters( sprintf( '%s_callback', $context ),
+			in_array( $context, Core\Arraay::column( $fields, 'context' ), TRUE ),
+			$screen->post_type
+		);
+
+		if ( TRUE === $callback )
+			$callback = [ $this, 'render_metabox_posttypefields' ];
+
+		if ( $callback && is_callable( $callback ) )
+			add_meta_box(
+				$this->classs( $screen->post_type ),
+				$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
+				$callback,
+				$screen,
+				'side',
+				'high',
+				[
+					'module'     => $this->module->name,
+					'context'    => $context,
+					'fields'     => $fields,
+					'posttype'   => $screen->post_type,
+				]
+			);
+
+		// NOTE: WARNING: also we have: `$this->_hook_store_metabox( $posttype, 'posttypefields' );`
+		add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_metabox_posttypefields' ], 20, 3 );
+		add_action( $this->hook( 'render_metabox' ), [ $this, 'render_posttype_fields' ], 10, 4 );
+	}
+
+	public function render_metabox_posttypefields( $post, $box )
+	{
+		echo $this->wrap_open( '-admin-metabox' );
+
+		if ( $this->check_hidden_metabox( $box, $post->post_type, '</div>' ) )
+			return;
+
+		$fields  = $box['args']['fields'];
+		$context = $box['args']['context'];
+
+		if ( count( $fields ) )
+			$this->actions( 'render_metabox', $post, $box, $fields, $context );
+
+		else
+			echo Core\HTML::wrap(
+				$this->get_string( 'no_fields', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ),
+				'field-wrap -empty'
+			);
+
+		$this->actions( 'render_metabox_after', $post, $box, $fields, $context );
+
+		echo '</div>';
+	}
+
+	public function render_posttype_fields( $post, $box, $fields = NULL, $context = NULL )
+	{
+		$user_id = get_current_user_id();
+
+		if ( is_null( $context ) )
+			$context = 'mainbox';
+
+		if ( is_null( $fields ) )
+			$fields = $this->get_posttype_fields( $post->post_type );
+
+		foreach ( $fields as $field => $args ) {
+
+			if ( $context != $args['context'] )
+				continue;
+
+			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
+				continue;
+
+			switch ( $args['type'] ) {
+
+				case 'select':
+
+					MetaBox::renderFieldSelect( $args, $post, $this->module->name );
+					break;
+
+				case 'text':
+				case 'datestring':
+				case 'year':
+				case 'date':
+				case 'datetime':
+				case 'duration':
+				case 'identity':
+				case 'isbn':
+				case 'vin':
+				case 'iban':
+				case 'bankcard':
+				case 'code':
+				case 'postcode':
+				case 'venue':
+				case 'people':
+				case 'contact':
+				case 'mobile':
+				case 'phone':
+				case 'email':
+				case 'embed':
+				case 'text_source':
+				case 'audio_source':
+				case 'video_source':
+				case 'image_source':
+				case 'downloadable':
+				case 'link':
+
+					MetaBox::renderFieldInput( $args, $post, $this->module->name );
+					break;
+
+				case 'price': // TODO must use custom text input + code + ortho-number + separeator
+				case 'number':
+				case 'float':
+
+					MetaBox::renderFieldNumber( $args, $post, $this->module->name );
+					break;
+
+				case 'widget': // WTF?!
+				case 'address':
+				case 'note':
+				case 'textarea':
+
+					MetaBox::renderFieldTextarea( $args, $post, $this->module->name );
+					break;
+
+				case 'parent_post':
+
+					MetaBox::renderFieldPostParent( $args, $post, $this->module->name );
+					break;
+
+				case 'user':
+
+					MetaBox::renderFieldUser( $args, $post, $this->module->name );
+					break;
+
+				case 'attachment':
+
+					// MetaBox::renderFieldAttachment( $args, $post, $this->module->name ); // FIXME
+					MetaBox::renderFieldNumber( $args, $post, $this->module->name );
+					break;
+
+				case 'post':
+
+					MetaBox::renderFieldPost( $args, $post, $this->module->name );
+					break;
+
+				case 'term':
+
+					if ( ! $args['taxonomy'] )
+						break;
+
+					if ( ! WordPress\Taxonomy::can( $args['taxonomy'], 'assign_terms' ) )
+						break;
+
+					if ( ! $count = WordPress\Taxonomy::hasTerms( $args['taxonomy'] ) )
+						break;
+
+					if ( $count > 15 ) // WTF: customize this!
+						MetaBox::renderFieldTerm( $args, $post, $this->module->name );
+
+					else
+						MetaBox::renderFieldSelect( $args, $post, $this->module->name );
+			}
+		}
+
+		$this->nonce_field( 'mainbox' );
+	}
+
+	// OLD: `store_metabox()`
+	public function store_metabox_posttypefields( $post_id, $post, $update )
+	{
+		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+			return;
+
+		if ( ! $this->nonce_verify( 'mainbox' )
+			&& ! $this->nonce_verify( 'nobox' ) )
+				return;
+
+		// here only check for cap to edit this post
+		if ( ! current_user_can( 'edit_post', $post->ID ) )
+			return;
+
+		$this->store_posttype_fields( $post );
+	}
+
+	protected function store_posttype_fields( $post )
+	{
+		$fields = $this->get_posttype_fields( $post->post_type );
+
+		if ( ! count( $fields ) )
+			return;
+
+		$user_id  = get_current_user_id();
+		$legacy   = in_array( $this->module->name, [ 'meta' ], TRUE );
+		$legacies = $legacy ? $this->get_postmeta_legacy( $post->ID ) : [];
+
+		foreach ( $fields as $field => $args ) {
+
+			// skip for fields that are auto-saved on admin edit-post page
+			if ( in_array( $field, [ 'parent_post' ], TRUE ) )
+				continue;
+
+			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
+				continue;
+
+			$request = sprintf( '%s-%s-%s', $this->base, $this->module->name, $field );
+
+			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
+				$this->posttypefields_do_import_field( $data, $args, $post );
+
+			// passing not enabled legacy data
+			else if ( $legacy && array_key_exists( $field, $legacies ) )
+				$this->set_postmeta_field( $post->ID, $field, $this->sanitize_posttype_field( $legacies[$field], $args, $post ) );
+		}
+
+		if ( $legacy )
+			$this->clean_postmeta_legacy( $post->ID, $fields, $legacies );
 	}
 
 	// NOTE: `$data` maybe empty
