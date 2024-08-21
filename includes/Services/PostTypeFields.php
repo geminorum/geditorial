@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class PostTypeFields extends WordPress\Main
@@ -196,5 +197,104 @@ class PostTypeFields extends WordPress\Main
 		}
 
 		return 'admin-post';
+	}
+
+	// OLD: `Template::getMetaField()`
+	public static function getField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
+	{
+		$field = FALSE;
+		$args  = self::atts( [
+			'id'       => NULL,
+			'fallback' => FALSE,
+			'default'  => FALSE,
+			'noaccess' => NULL, // returns upon no access, `NULL` for `default` arg
+			'context'  => 'view', // for access checks // `FALSE` to disable checks
+			'filter'   => FALSE, // or `__do_embed_shortcode`
+			'trim'     => FALSE, // or number of chars
+			'before'   => '',
+			'after'    => '',
+		], $atts );
+
+		// NOTE: may come from posttype field args
+		if ( is_null( $args['default'] ) )
+			$args['default'] = '';
+
+		if ( empty( $field_key ) )
+			return $args['default'];
+
+		if ( $check && ! gEditorial()->enabled( $module ) )
+			return $args['default'];
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $args['default'];
+
+		if ( is_array( $field_key ) ) {
+
+			if ( empty( $field_key['name'] ) )
+				return $args['default'];
+
+			$field     = $field_key;
+			$field_key = $field['name'];
+		}
+
+		$meta = $raw = self::getFieldRaw( $field_key, $post->ID, $module );
+
+		if ( FALSE === $meta && $args['fallback'] )
+			return self::getField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
+
+		if ( empty( $field ) )
+			$field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );
+
+		// NOTE: field maybe disabled or overrided
+		if ( FALSE === $field )
+			$field = [ 'name' => $field_key, 'type' => 'text' ];
+
+		if ( FALSE === $meta )
+			$meta = apply_filters( static::BASE.'_meta_field_empty', $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
+
+		if ( FALSE === $meta )
+			return $args['default'];
+
+		if ( FALSE !== $args['context'] ) {
+
+			$access = gEditorial()->module( $module )->access_posttype_field( $field, $post, $args['context'] );
+
+			if ( ! $access )
+				return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
+		}
+
+		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
+		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
+
+		if ( '__do_embed_shortcode' === $args['filter'] )
+			$args['filter'] = [ Template::class, 'doEmbedShortCode' ];
+
+		if ( $args['filter'] && is_callable( $args['filter'] ) )
+			$meta = call_user_func( $args['filter'], $meta );
+
+		if ( $meta )
+			return $args['before'].( $args['trim'] ? WordPress\Strings::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];
+
+		return $args['default'];
+	}
+
+	// OLD: `Template::getMetaFieldRaw()`
+	// NOTE: does not check for `access_view` arg
+	public static function getFieldRaw( $field_key, $post_id, $module = 'meta', $check = FALSE, $default = FALSE )
+	{
+		if ( $check ) {
+
+			if ( ! gEditorial()->enabled( $module ) )
+				return FALSE;
+
+			if ( ! $post = WordPress\Post::get( $post_id ) )
+				return FALSE;
+
+			$post_id = $post->ID;
+		}
+
+		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default );
+
+		return apply_filters( static::BASE.'_get_meta_field', $meta, $field_key, $post_id, $module, $default );
 	}
 }
