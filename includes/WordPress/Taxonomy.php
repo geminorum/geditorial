@@ -412,7 +412,7 @@ class Taxonomy extends Core\Base
 		$query = new \WP_Term_Query( array_merge( [
 			'taxonomy'   => (array) $taxonomy,
 			'order'      => 'ASC',
-			'orderby'    => 'meta_value_num,name', // 'name',
+			'orderby'    => 'meta_value_num, name', // 'name',
 			'meta_query' => [
 				// @REF: https://core.trac.wordpress.org/ticket/34996
 				// FIXME: drop order here: see Terms: `apply_ordering`

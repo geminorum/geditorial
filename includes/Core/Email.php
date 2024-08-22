@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Email extends Base
 {
 
+	// TODO: must convert to `DataType`
+
 	/**
 	 * Verifies that an email is valid.
 	 * NOTE: wrapper for WordPress core `is_email()`

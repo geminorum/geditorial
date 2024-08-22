@@ -360,7 +360,8 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 
 		} else {
 
-			$object = get_taxonomy( $taxonomy );
+			if ( ! $object = get_taxonomy( $taxonomy ) )
+				return FALSE;
 
 			if ( current_user_can( $object->cap->manage_terms ) )
 				return add_query_arg( array_merge( [

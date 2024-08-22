@@ -23,6 +23,7 @@ class HTML extends Base
 		], $html );
 	}
 
+	// @SEE: https://github.com/zxing/zxing/wiki/Barcode-Contents#e-mail-address
 	public static function mailto( $email, $content = NULL, $class = '' )
 	{
 		$content = $content ?: self::wrapLTR( trim( $email ) );
@@ -414,11 +415,13 @@ class HTML extends Base
 
 	// @REF: https://www.billerickson.net/code/phone-number-url/
 	// @SEE: https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
+	// @SEE: https://github.com/zxing/zxing/wiki/Barcode-Contents#telephone-numbers
 	public static function sanitizePhoneNumber( $number )
 	{
 		return self::escapeURL( 'tel:'.str_replace( [ '(', ')', '-', '.', '|', ' ' ], '', $number ) );
 	}
 
+	// @SEE: https://github.com/zxing/zxing/wiki/Barcode-Contents#smsmmsfacetime
 	public static function sanitizeSMSNumber( $number )
 	{
 		return self::escapeURL( 'sms:'.str_replace( [ '(', ')', '-', '.', '|', ' ' ], '', $number ) );

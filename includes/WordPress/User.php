@@ -161,6 +161,7 @@ class User extends Core\Base
 	}
 
 	// @REF: `get_role_list()`
+	// FIXME: move to `WordPress\Role`
 	public static function getRoleList( $user_id = FALSE )
 	{
 		if ( ! $user_id )
@@ -183,6 +184,7 @@ class User extends Core\Base
 
 	/**
 	 * Retrieves roles for given user.
+	 * FIXME: move to `WordPress\Role`
 	 *
 	 * @param  null|int $user_id
 	 * @return array    $roles
@@ -195,6 +197,7 @@ class User extends Core\Base
 
 	/**
 	 * Checks if the user has given role.
+	 * FIXME: move to `WordPress\Role`
 	 *
 	 * @param  string|array $role
 	 * @param  null|int     $user_id
@@ -214,12 +217,14 @@ class User extends Core\Base
 	}
 
 	// current user role
+	// FIXME: move to `WordPress\Role`
 	public static function cur( $role = FALSE )
 	{
 		$roles = self::getRoles();
 		return $role ? in_array( $role, $roles, TRUE ) : $roles;
 	}
 
+	// FIXME: move to `WordPress\Role`
 	public static function getAllRoleList( $filtered = TRUE, $object = FALSE )
 	{
 		$roles = $filtered ? get_editable_roles() : wp_roles()->roles;

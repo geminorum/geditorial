@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Phone extends Base
 {
 
+	// TODO: must convert to `DataType`
 	// @SEE: https://github.com/brick/phonenumber
 
 	/**
@@ -121,9 +122,11 @@ class Phone extends Base
 		}
 
 		switch ( $context ) {
+			case 'raw'   : return $raw;
 			case 'edit'  : return $raw;
+			case 'print' : return $value;
+			case 'input' : return Number::translate( $value );
 			case 'export': return Number::translate( $value );
-			case 'print' : return Number::localize( $value );
 			     default : return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
 

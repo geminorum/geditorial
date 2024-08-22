@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Mobile extends Base
 {
 
+	// TODO: must convert to `DataType`
+
 	/**
 	 * Validates a phone number using a regular expression.
 	 *
@@ -54,13 +56,17 @@ class Mobile extends Base
 
 			if ( Text::starts( $value, '+98' ) )
 				$value = '0'.Text::stripPrefix( $value, '+98' );
+
+			$value = Number::localize( $value );
 		}
 
 		switch ( $context ) {
+			case 'raw'   : return $raw;
 			case 'edit'  : return $raw;
+			case 'print' : return $value;
+			case 'input' : return Number::translate( $value );
 			case 'export': return Number::translate( $value );
-			case 'print' : return Number::localize( $value );
-			     default : return HTML::tel( $raw, $title ?: FALSE, Number::localize( $value ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+			     default : return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
 
 		return $value;

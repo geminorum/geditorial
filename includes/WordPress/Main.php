@@ -52,28 +52,40 @@ class Main extends Core\Base
 		return md5( $string );
 	}
 
-	protected static function constant( $key, $default = FALSE )
+	protected static function constant( $key, $default = FALSE, $module = NULL )
 	{
-		return self::factory()->constant( static::MODULE, $key, $default );
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		return self::factory()->constant( $module, $key, $default );
 	}
 
-	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE )
+	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE, $module = NULL )
 	{
-		return self::factory()->{static::MODULE}->get_string( $string, $posttype, $group, $fallback );
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
+		return self::factory()->module( $module )->get_string( $string, $posttype, $group, $fallback );
 	}
 
-	protected static function getPostMeta( $post_id, $field = FALSE, $default = [], $metakey = NULL )
+	protected static function getPostMeta( $post_id, $field = FALSE, $default = [], $metakey = NULL, $module = NULL )
 	{
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
 		return FALSE === $field
-			? self::factory()->{static::MODULE}->get_postmeta_legacy( $post_id, $default )
-			: self::factory()->{static::MODULE}->get_postmeta_field( $post_id, $field, $default, $metakey );
+			? self::factory()->module( $module )->get_postmeta_legacy( $post_id, $default )
+			: self::factory()->module( $module )->get_postmeta_field( $post_id, $field, $default, $metakey );
 	}
 
 	// FIXME: WTF?!
-	protected static function post_types( $posttypes = NULL )
+	protected static function post_types( $posttypes = NULL, $module = NULL )
 	{
+		if ( is_null( $module ) )
+			$module = static::MODULE;
+
 		// if ( static::MODULE && self::factory()->enabled( static::MODULE ) )
-			return self::factory()->{static::MODULE}->posttypes( $posttypes );
+			return self::factory()->module( $module )->posttypes( $posttypes );
 
 		return [];
 	}

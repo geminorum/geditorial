@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class ISBN extends Base
 {
 
+	// TODO: must convert to `DataType`
+
 	public static function getHTMLPattern()
 	{
 		return FALSE; // FIXME!

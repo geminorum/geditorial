@@ -175,9 +175,9 @@ class URL extends Base
 	// @REF: https://d-mueller.de/blog/why-url-validation-with-filter_var-might-not-be-a-good-idea/
 	public static function isValid( $url )
 	{
-		$url = trim( $url );
+		$url = Text::trim( $url );
 
-		if ( empty( $url ) )
+		if ( self::empty( $url ) )
 			return FALSE;
 
 		if ( 0 !== strpos( $url, 'http://' ) && 0 !== strpos( $url, 'https://' ) )

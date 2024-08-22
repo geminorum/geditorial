@@ -95,7 +95,7 @@ class Date extends Base
 	}
 
 	// @REF: https://stackoverflow.com/a/19680778
-	public static function secondsToTime( $seconds )
+	public static function secondsToTimeString( $seconds )
 	{
 		$from = new \DateTime( '@0' );
 		$to   = new \DateTime( "@$seconds" );
@@ -687,6 +687,7 @@ class Date extends Base
 			$dow = (int) $day->format( 'w' );
 			$dom = (int) $day->format( 'j' );
 
+			// FIXME: use mode for diffrent weekends
 			if ( 1 <= $dow && $dow <= 5 ) { // Mon - Fri
 
 				$workdays[] = $day;
