@@ -329,13 +329,29 @@ class Positions extends gEditorial\Module
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 
-					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
-						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
+					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'checkprofile' ) )
+						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'checkprofile' );
 
 					Scripts::enqueueColorBox();
 				}
 			}
 		}
+	}
+
+	protected function rowaction_get_mainlink_for_post_checkprofile( $post )
+	{
+		if ( ! $this->get_linked_to_posts( $post, TRUE ) )
+			return FALSE;
+
+		return $this->rowaction_get_mainlink_for_post_subcontent( $post );
+	}
+
+	protected function tweaks_column_row_checkprofile( $post, $before, $after, $module )
+	{
+		if ( ! $this->get_linked_to_posts( $post, TRUE ) )
+			return FALSE;
+
+		return $this->tweaks_column_row_subcontent( $post, $before, $after, $module );
 	}
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
