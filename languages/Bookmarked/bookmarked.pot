@@ -1,0 +1,202 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Bookmarked\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Bookmarked\n"
+"X-Domain: geditorial-bookmarked\n"
+
+#: Bookmarked.php:78
+msgctxt "Field Label: `label`"
+msgid "Label"
+msgstr ""
+
+#: Bookmarked.php:79
+msgctxt "Field Label: `link`"
+msgid "Bookmark"
+msgstr ""
+
+#: Bookmarked.php:80
+msgctxt "Field Label: `type`"
+msgid "Type"
+msgstr ""
+
+#: Bookmarked.php:81
+msgctxt "Field Label: `code`"
+msgid "Code"
+msgstr ""
+
+#: Bookmarked.php:84
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr ""
+
+#: Bookmarked.php:90
+msgctxt "Notice"
+msgid "There is no bookmarks information available!"
+msgstr ""
+
+#: Bookmarked.php:91
+msgctxt "Notice"
+msgid "You have not necessary permission to manage the bookmarks data."
+msgstr ""
+
+#: Bookmarked.php:98
+msgctxt "MetaBox Title"
+msgid "Bookmarks"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Bookmarked.php:102
+msgctxt "Button Title"
+msgid "Bookmarks of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Bookmarked.php:104
+msgctxt "Button Text"
+msgid "%1$s Manage the Bookmarks of %2$s"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Bookmarked.php:107
+msgctxt "Action Title"
+msgid "Bookmarks of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Bookmarked.php:109
+msgctxt "Action Text"
+msgid "Bookmarks"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Bookmarked.php:112
+msgctxt "Row Title"
+msgid "Bookmarks of %1$s"
+msgstr ""
+
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: Bookmarked.php:114
+msgctxt "Row Text"
+msgid "Bookmarks"
+msgstr ""
+
+#: Bookmarked.php:126
+msgctxt "Field Title"
+msgid "Bookmarks Title"
+msgstr ""
+
+#: Bookmarked.php:127
+msgctxt "Field Description"
+msgid "The Bookmarks Table Caption"
+msgstr ""
+
+#: Bookmarked.php:178
+msgctxt "Type Option"
+msgid "Custom Link"
+msgstr ""
+
+#: Bookmarked.php:186
+msgctxt "Type Option"
+msgid "Site Post"
+msgstr ""
+
+#: Bookmarked.php:194
+msgctxt "Type Option"
+msgid "Site Attachment"
+msgstr ""
+
+#: Bookmarked.php:202
+msgctxt "Type Option"
+msgid "Site Term"
+msgstr ""
+
+#: Bookmarked.php:211
+msgctxt "Type Option"
+msgid "National Library"
+msgstr ""
+
+#: Bookmarked.php:219
+msgctxt "Type Option"
+msgid "Goodreads Book"
+msgstr ""
+
+#: Bookmarked.php:227
+msgctxt "Type Option"
+msgid "Fidibo Book"
+msgstr ""
+
+#: Bookmarked.php:235
+msgctxt "Type Option"
+msgid "Taaghche Book"
+msgstr ""
+
+#: Bookmarked.php:243
+msgctxt "Type Option"
+msgid "Neshan Map"
+msgstr ""
+
+#: Bookmarked.php:251
+msgctxt "Type Option"
+msgid "Balad Map"
+msgstr ""
+
+#: Bookmarked.php:259
+msgctxt "Type Option"
+msgid "Aparat Video"
+msgstr ""
+
+#: Bookmarked.php:267
+msgctxt "Type Option"
+msgid "Youtube Video"
+msgstr ""
+
+#: Bookmarked.php:275
+msgctxt "Type Option"
+msgid "Email Address"
+msgstr ""
+
+#: Bookmarked.php:283
+msgctxt "Type Option"
+msgid "Phone Number"
+msgstr ""
+
+#: Bookmarked.php:291
+msgctxt "Type Option"
+msgid "Mobile Number"
+msgstr ""
+
+#: Bookmarked.php:299
+msgctxt "Type Option"
+msgid "SMS Number"
+msgstr ""
+
+#: Bookmarked.php:307
+msgctxt "Type Option"
+msgid "PDF Document"
+msgstr ""
+
+#. translators: %s: post title
+#: Bookmarked.php:387
+msgctxt "Page Title"
+msgid "Bookmarks Grid for %s"
+msgstr ""
+
+#. translators: %s: post title
+#: Bookmarked.php:389
+msgctxt "Page Title"
+msgid "Bookmarks Overview for %s"
+msgstr ""
+
+#: Bookmarked.php:425
+msgctxt "Default Term: Audit"
+msgid "Empty Bookmarks Data"
+msgstr ""
