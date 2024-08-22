@@ -28,11 +28,17 @@ class Users extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'users',
-			'title'  => _x( 'Users', 'Modules: Users', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Users', 'Modules: Users', 'geditorial-admin' ),
-			'icon'   => 'admin-users',
-			'access' => 'beta',
+			'name'     => 'users',
+			'title'    => _x( 'Users', 'Modules: Users', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Users', 'Modules: Users', 'geditorial-admin' ),
+			'icon'     => 'admin-users',
+			'access'   => 'beta',
+			'keywords' => [
+				'role',
+				'capability',
+				'profile',
+				'sysmodule',
+			],
 		];
 	}
 
@@ -745,6 +751,7 @@ class Users extends gEditorial\Module
 		}
 	}
 
+	// FIXME: move to `Config`: `render_roles_html()`
 	protected function render_tools_html( $uri, $sub )
 	{
 		$roles = WordPress\Role::get();
@@ -825,6 +832,7 @@ class Users extends gEditorial\Module
 		echo '</table>';
 	}
 
+	// FIXME: move to `Config`: `roles_overview()` and display list of caps for each
 	public function tools_sidebox( $sub, $uri, $context )
 	{
 		echo Core\HTML::tableCode(

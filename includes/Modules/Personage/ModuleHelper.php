@@ -53,6 +53,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				break;
 
+			case 'rest':
 			case 'export':
 			case 'print':
 

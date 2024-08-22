@@ -231,6 +231,7 @@ class Settings extends WordPress\Main
 			'human',
 			'team_member',
 			'department',
+			'publication',
 		];
 
 		return apply_filters( static::BASE.'_posttypes_parents', array_merge( $list, (array) $extra ), $context );
@@ -1505,6 +1506,8 @@ class Settings extends WordPress\Main
 			'purged'    => self::success( _x( 'Data purged.', 'Settings: Message', 'geditorial-admin' ) ),
 			'maked'     => self::success( _x( 'File/Folder created.', 'Settings: Message', 'geditorial-admin' ) ),
 			'mailed'    => self::success( _x( 'Mail sent successfully.', 'Settings: Message', 'geditorial-admin' ) ),
+			'added'     => self::success( _x( 'Item added successfully.', 'Settings: Message', 'geditorial-admin' ) ),
+			'removed'   => self::success( _x( 'Item removed successfully.', 'Settings: Message', 'geditorial-admin' ) ),
 			'error'     => self::error( _x( 'Error occurred!', 'Settings: Message', 'geditorial-admin' ) ),
 			'wrong'     => self::error( _x( 'Something&#8217;s wrong!', 'Settings: Message', 'geditorial-admin' ) ),
 			'nochange'  => self::error( _x( 'No item changed!', 'Settings: Message', 'geditorial-admin' ) ),
@@ -1542,7 +1545,7 @@ class Settings extends WordPress\Main
 
 		if ( isset( $_REQUEST['count'] ) )
 			/* translators: %s: count */
-			$extra[] = sprintf( _x( '%s Counted!', 'Settings: Message', 'geditorial-admin' ),
+			$extra[] = sprintf( _x( '%s item(s) counted!', 'Settings: Message', 'geditorial-admin' ),
 				Core\Number::format( $_REQUEST['count'] ) );
 
 		return count( $extra ) ? ' ('.implode( WordPress\Strings::separator(), $extra ).')' : '';
@@ -1966,6 +1969,8 @@ class Settings extends WordPress\Main
 		] );
 	}
 
+	// TODO: support HTML `pattern`
+	// TODO: support HTML `title_attr`
 	public static function fieldType( $atts, &$scripts )
 	{
 		$args = self::atts( [

@@ -283,7 +283,7 @@ class Socialite extends gEditorial\Module
 			case 'facebook' : return [ 'social-logos', 'facebook' ];
 			case 'youtube'  : return [ 'social-logos', 'youtube' ];
 			case 'aparat'   : return [ 'gorbeh', 'aparat' ];
-			case 'eitaa'    : return [ 'misc-512', 'eitaa' ];
+			case 'eitaa'    : return [ 'misc-256', 'eitaa' ];
 		}
 
 		return Core\Icon::guess( $field, $default );

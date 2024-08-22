@@ -20,7 +20,7 @@ class Remoted extends gEditorial\Module
 			'name'     => 'remoted',
 			'title'    => _x( 'Remoted', 'Modules: Remoted', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Remote Uploads', 'Modules: Remoted', 'geditorial-admin' ),
-			'icon'     => 'external',
+			'icon'     => [ 'misc-16', 'cloud-upload-fill' ],
 			'access'   => 'beta',
 			'frontend' => FALSE,
 			'keywords' => [

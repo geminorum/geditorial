@@ -640,6 +640,16 @@ class Book extends gEditorial\Module
 
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->_hook_editform_meta_summary( [
+					'publication_byline'  => NULL,
+					'publication_edition' => NULL,
+					'publication_print'   => NULL,
+					'publish_location'    => NULL,
+					'publication_date'    => NULL,
+					'publication_isbn'    => NULL,
+					'publication_size'    => NULL,
+				] );
+
 				$this->_hook_general_mainbox( $screen, 'publication_posttype' );
 
 				if ( post_type_supports( $screen->post_type, 'author' ) )

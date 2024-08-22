@@ -304,6 +304,7 @@ trait SubContents
 		return count( $raw );
 	}
 
+	// FIXME: always update the `comment_date` to current time/treat comment date as modified
 	protected function subcontent_insert_data_row( $raw = [], $post = FALSE, $mapping = NULL )
 	{
 		$data = $this->subcontent_sanitize_data( $raw, $post, $mapping );
@@ -460,6 +461,7 @@ trait SubContents
 	}
 
 	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
+	// TODO: support for autofill fields with tokens: `date: '{{now}}'`
 	protected function subcontent_sanitize_data( $raw = [], $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
 	{
 		if ( is_null( $mapping ) )
