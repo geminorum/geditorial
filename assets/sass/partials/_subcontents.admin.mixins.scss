@@ -10,6 +10,16 @@
   > .inside {
     margin-top: 0 !important;
     padding: 0 !important;
+
+    // differs in side margins
+    p.-description.-empty {
+      background: #f7f7f7;
+      border: 1px solid #e5e5e5;
+      color: #555;
+      font-size: .9em;
+      margin: 0.5 * $spacer .75 * $spacer;
+      padding: 4px 6px;
+    }
   }
 }
 

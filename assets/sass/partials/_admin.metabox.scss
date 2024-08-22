@@ -98,10 +98,7 @@ $spacer: 1rem !default;
       }
     }
 
-    &.-needs-refresh {
-      // TODO: add styles!
-    }
-
+    &.-needs-refresh,
     &.-empty {
       margin-bottom: 0;
       padding: 4px 6px;
@@ -134,6 +131,7 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-inputlink,
     &.-inputcode {
       input {
         width: 100%;
@@ -152,6 +150,7 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-inputduration
     &.-inputdate {
       input {
         width: 100%;
