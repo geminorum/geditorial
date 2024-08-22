@@ -27,7 +27,7 @@
             'field-'+key,
             cellClass(item[key], key), {
             'field-is-readonly': config.readonly.includes(key)
-          }]">{{item[key]}}</td>
+          }]">{{ cellValue(item[key], key) }}</td>
           <td class="actions"><div>
             <GridButton v-show="!frozen" @click="removeItem(item._id)" dashicon="remove" :title="i18n.remove" />
             <GridPopper>
@@ -47,7 +47,8 @@
             'is-not-valid': isNotValidInput(key),
             'is-required': config.required.includes(key),
             'is-read-only': config.readonly.includes(key),
-            'is-searchable': isSearchable(key)
+            'is-searchable': isSearchable(key),
+            'is-selectable': isSelectable(key)
             }]">
             <div
               v-if="config.readonly.includes(key)"
@@ -62,8 +63,9 @@
               ref="inputs"
               :field="key"
               :label="field"
-              :value="form[key]"
+              :data="form[key]"
               :class="['field-'+key, cellClass(form[key], key)]"
+              :options="isSelectable(key) ? selectable[key] : false"
               @change="event => updateInput(key, event.target.value)"
               @keyup.esc="cancelEdit()"
             />
@@ -115,6 +117,7 @@ export default {
       readonly: [], // list of readonly fields
       required: [], // list of required fields
       searchable: {}, // list of searchable fields
+      selectable: {}, // list of selectable fields
       info: {}, // info data fetched
       current: 0, // current comment id for info
       form: {}
@@ -130,6 +133,7 @@ export default {
       this.hidden = this.config.hidden || [];
       this.unique = this.config.unique || [];
       this.searchable = this.config.searchable || {};
+      this.selectable = this.config.selectable || {};
       this.required = this.config.required || [];
       this.readonly = this.config.readonly || [];
       this.editing = 0;
@@ -144,7 +148,7 @@ export default {
     // https://michaelnthiessen.com/set-focus-on-input-vue
     // https://stackoverflow.com/questions/73753350/how-to-get-the-ref-which-is-in-a-child-component-in-vue
     focusInput () {
-      if(this.frozen) return;
+      if (this.frozen) return;
       // this.$refs.email.$el.focus();
       this.$refs.inputs[0].$refs.gridInput.focus();
     },
@@ -164,12 +168,22 @@ export default {
       return valid ? '-is-valid' : '-is-not-valid';
     },
 
+    cellValue (value, key) {
+      if (!this.isSelectable(key)) return value;
+      if (!has(this.config.selectable[key], value)) return value;
+      return this.config.selectable[key][value];
+    },
+
     isSearchable (field) {
       return has(this.config.searchable, field);
     },
 
+    isSelectable (field) {
+      return has(this.config.selectable, field);
+    },
+
     searchDiscovery (field, targets) {
-      if(!this.form[field]) return; // no criteria
+      if (!this.form[field]) return; // no criteria
       this.doSearchDiscovery(this.form[field], targets, this.searchPage);
     },
 
@@ -189,7 +203,7 @@ export default {
 
       console.log(temp);
 
-      // if(close) {
+      // if (close) {
       //   // @REF: https://codingbeautydev.com/blog/vue-focus-input/
       //   this.$refs.searchinput.focus();
       // }
@@ -200,8 +214,8 @@ export default {
     },
 
     isNotValidInput (field) {
-      if(!field) return false;
-      if(!this.form[field]||!this.form[field].trim()) return false;
+      if (!field) return false;
+      if (!this.form[field]||!this.form[field].trim()) return false;
       const valid = isValidField(this.form[field], field, this.locale);
       return valid===null ? false : ! valid;
     },
@@ -220,7 +234,7 @@ export default {
         const current = this.form[unique].trim();
         if (current) {
           for (const item of this.items) {
-            if(current===item[unique]) {
+            if (current===item[unique]) {
               return false;
             }
           }

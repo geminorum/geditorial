@@ -87,10 +87,12 @@ $brand-danger:  #d9534f !default;
       width: 45px;
 	  }
 
+    &.field-code,
     &.field-identity {
       width: 80px;
 	  }
 
+    &.field-cssclass,
     &.field-education,
     &.field-occupation,
     &.field-evaluation,
@@ -136,6 +138,7 @@ $brand-danger:  #d9534f !default;
       width: 125px;
     }
 
+    &.field-link,
     &.field-desc {
       width: auto;
     }
@@ -263,7 +266,10 @@ $brand-danger:  #d9534f !default;
     &.field-date,
     &.field-account,
     &.field-iban,
-    &.field-card {
+    &.field-card,
+    &.field-cssclass,
+    &.field-code,
+    &.field-link {
       // HACK: `rtl:ignore` not working!
       body.rtl & {
         text-align: right;

@@ -8,7 +8,7 @@
 <template>
   <div class="grid-info">
     <div class="grid-info-image" v-show="info.image"><img :src="info.image" alt="" /></div>
-    <h4 class="grid-info-head">{{ info.title }}</h4>
+    <h4 class="grid-info-head">{{ info.title }}<a v-show="info.link" :href="info.link" target="_blank" class="grid-info-link"><span class="dashicons dashicons-external"></span></a></h4>
     <div class="grid-info-desc" v-show="info.description" v-html="info.description"></div>
     <div class="grid-info-author" v-show="info.author" v-html="info.author"></div>
   </div>
@@ -37,6 +37,21 @@ $brand-danger:  #d9534f !default;
 
 .grid-info-head {
   margin: 0.5rem 0;
+}
+
+.grid-info-link {
+  margin: 0 0.25rem;
+  font-size: smaller;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: #333;
+  }
+
+  span {
+    font-size: 14px;
+  }
 }
 
 .grid-info-desc {
