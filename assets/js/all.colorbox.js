@@ -67,4 +67,4 @@
     $(document).on('gEditorial:ColorBox:Hook', function () { app.hook(); });
     $(document).trigger('gEditorial:Module:Loaded', [module, app]);
   });
-}(jQuery, gEditorial, 'colorbox', 'all'));
+}(jQuery, typeof gEditorial === 'undefined' ? {} : gEditorial, 'colorbox', 'all'));
