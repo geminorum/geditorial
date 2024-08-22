@@ -141,6 +141,22 @@ class Chronicles extends gEditorial\Module
 						'quickedit'   => TRUE,
 						'order'       => 45,
 					],
+					'release_date' => [
+						'title'       => _x( 'Release Date', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'The Date on Which the Product will Released', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'controls-skipback',
+						'type'        => 'date',
+						'quickedit'   => TRUE,
+						'order'       => 45,
+					],
+					'expire_date' => [
+						'title'       => _x( 'Expire Date', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'The Date on Which the Product will Expired', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'controls-skipforward',
+						'type'        => 'date',
+						'quickedit'   => TRUE,
+						'order'       => 45,
+					],
 					'date_of_birth' => [
 						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/birth.html
 						'title'       => _x( 'Date of Birth', 'Field Title', 'geditorial-chronicles' ),
@@ -223,6 +239,7 @@ class Chronicles extends gEditorial\Module
 		$this->add_posttype_fields_supported();
 
 		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
+		$this->filter_module( 'book', 'editform_meta_summary', 2, 20 );
 		$this->filter_module( 'was_born', 'default_posttype_dob_metakey', 2 );
 		$this->filter_module( 'iranian', 'default_posttype_location_metakey', 2 );
 
@@ -320,6 +337,16 @@ class Chronicles extends gEditorial\Module
 		$fields['date_of_birth']  = NULL;
 		$fields['date_of_death']  = NULL;
 		$fields['place_of_birth'] = NULL;
+
+		return $fields;
+	}
+
+	public function book_editform_meta_summary( $fields, $post )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $fields;
+
+		$fields['release_date'] = NULL;
 
 		return $fields;
 	}
