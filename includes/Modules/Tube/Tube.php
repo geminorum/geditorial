@@ -372,7 +372,7 @@ class Tube extends gEditorial\Module
 				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
 				'title'  => _x( 'View this video on Aparat', 'Button', 'geditorial-tube' ),
 				'target' => '_blank',
-			], $this->icon( 'aparat', 'gorbeh' ).' '._x( 'Aparat', 'Button', 'geditorial-tube' ) );
+			], $this->icon( 'gorbeh-aparat', 'misc-512' ).' '._x( 'Aparat', 'Button', 'geditorial-tube' ) );
 
 		$link = empty( $attr['shortlink'] ) ? Core\WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
 

@@ -282,7 +282,7 @@ class Socialite extends gEditorial\Module
 			case 'telegram' : return [ 'social-logos', 'telegram' ];
 			case 'facebook' : return [ 'social-logos', 'facebook' ];
 			case 'youtube'  : return [ 'social-logos', 'youtube' ];
-			case 'aparat'   : return [ 'gorbeh', 'aparat' ];
+			case 'aparat'   : return [ 'misc-24', 'aparat' ];
 			case 'eitaa'    : return [ 'misc-256', 'eitaa' ];
 		}
 
