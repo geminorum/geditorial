@@ -30,7 +30,6 @@ class Personage extends gEditorial\Module
 	use Internals\PostTypeOverview;
 
 	// https://github.com/washingtonstateuniversity/WSU-People-Directory
-	// TODO: display status via `display_post_states` filter
 
 	protected $positions     = [ 'primary_posttype' => 2 ];
 	protected $priority_init = 9;
@@ -90,6 +89,7 @@ class Personage extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_bulkactions',
+				'admin_displaystates',
 				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
 			],
 			'_frontend' => [
@@ -433,6 +433,7 @@ class Personage extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
+				$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'status_taxonomy',

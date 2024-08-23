@@ -436,6 +436,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_admin_displaystates( $description = NULL, $default = 0 )
+	{
+		return [
+			'field'       => 'admin_displaystates',
+			'title'       => _x( 'Display States', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Appends assigned data as post state on post edit screen.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'default'     => $default,
+		];
+	}
+
 	public static function getSetting_widget_support( $description = NULL )
 	{
 		return [

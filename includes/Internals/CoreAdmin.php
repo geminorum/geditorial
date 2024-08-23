@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 trait CoreAdmin
@@ -110,5 +111,45 @@ trait CoreAdmin
 			function ( $post, $before, $after ) use ( $method ) {
 				call_user_func_array( [ $this, $method ], [ $post, $before, $after ] );
 			}, $priority, 3 );
+	}
+
+	// NOTE: on target posttype screen only
+	protected function coreadmin__hook_taxonomy_display_states( $constants, $setting = 'admin_displaystates', $default_setting = FALSE, $priority = 20 )
+	{
+		if ( TRUE !== $setting && ! $this->get_setting( $setting, $default_setting ) )
+			return FALSE;
+
+		add_filter( 'display_post_states',
+			function ( $states, $post ) use ( $constants ) {
+
+				foreach ( $this->constants( $constants ) as $taxonomy ) {
+
+					if ( ! $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
+						continue;
+
+					$label   = Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name' );
+					$default = WordPress\Taxonomy::getDefaultTermID( $taxonomy );
+					$metakey = 'color';
+
+					foreach ( $terms as $term ) {
+
+						if ( $term->term_id == $default )
+							continue;
+
+						$states[$this->classs( $term->slug )] = sprintf(
+							'<span class="%s" title="%s" style="background-color:%s">%s</span>',
+							'-custom-post-state',
+							Core\HTML::escapeAttr( $label ),
+							Core\HTML::escapeAttr( get_term_meta( $term->term_id, $metakey, TRUE ) ?: 'none' ),
+							Core\HTML::escapeAttr( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) )
+						);
+					}
+				}
+
+				return $states;
+
+			}, $priority, 2 );
+
+		return TRUE;
 	}
 }
