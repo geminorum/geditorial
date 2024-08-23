@@ -133,7 +133,6 @@ class Abo extends gEditorial\Module
 
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
-		$this->hook_taxonomy_importer_term_singleselect( $this->constant( 'main_taxonomy' ), TRUE );
 	}
 
 	public function current_screen( $screen )

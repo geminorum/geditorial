@@ -1296,10 +1296,6 @@ class Importer extends gEditorial\Module
 			if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 				continue;
 
-			// FIXME: apply this option
-			// @SEE: `hook_taxonomy_importer_term_singleselect()`
-			// $singleterm = empty( $object->{Services\TermHierarchy::SINGLE_TERM_SELECT} );
-
 			$currents = $oldpost
 				? WordPress\Taxonomy::getPostTerms( $taxonomy, $oldpost, FALSE )
 				: [];
@@ -1319,6 +1315,16 @@ class Importer extends gEditorial\Module
 
 			if ( FALSE === $filtered )
 				continue;
+
+			if ( ! empty( $object->{Services\TermHierarchy::SINGLE_TERM_SELECT} ) ) {
+
+				if ( $override && count( $filtered ) )
+					$filtered = $filtered[Core\Arraay::keyFirst( $filtered )];
+
+				// NO NEED
+				// else if ( count( $currents ) )
+				// 	continue;
+			}
 
 			if ( is_null( $filtered ) )
 				$result = wp_set_object_terms( $post_id, NULL, $taxonomy );

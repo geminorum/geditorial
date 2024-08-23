@@ -797,27 +797,6 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
-	protected function hook_taxonomy_importer_term_singleselect( $taxonomy, $setting = 'selectmultiple_term', $default_setting = FALSE )
-	{
-		if ( TRUE !== $setting && ! $this->get_setting( $setting, $default_setting ) )
-			return FALSE;
-
-		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
-			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append ) use ( $taxonomy ) {
-
-				if ( $override && count( $terms ) )
-					return $terms[Core\Arraay::keyFirst( $terms )];
-
-				if ( count( $currents ) )
-					return FALSE;
-
-				return $terms;
-
-			}, 22, 7 );
-
-		return TRUE;
-	}
-
 	protected function hook_taxonomy_tabloid_exclude_rendered( $constants )
 	{
 		$this->filter_append(
