@@ -118,6 +118,7 @@ trait CorePostTypes
 			'is_viewable'      => NULL,
 			'custom_captype'   => FALSE,
 			'primary_taxonomy' => NULL,
+			'status_taxonomy'  => NULL,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -277,7 +278,8 @@ trait CorePostTypes
 
 					break;
 
-				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP] = TRUE === $value ? $this->constant( $setting ) : $value; break;
+				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP]   = TRUE === $value ? $this->constant( $setting ) : $value; break;
+				case 'status_taxonomy' : $args[Services\PrimaryTaxonomy::STATUS_TAX_PROP] = TRUE === $value ? $this->constant( $setting ) : $value; break;
 			}
 		}
 

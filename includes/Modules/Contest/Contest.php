@@ -244,7 +244,9 @@ class Contest extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'apply_posttype' );
 
-		$this->paired_register();
+		$this->paired_register( [], [
+			'status_taxonomy' => TRUE,
+		] );
 
 		$this->register_posttype( 'apply_posttype' );
 

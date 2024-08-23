@@ -628,7 +628,7 @@ trait BulkExports
 
 		foreach ( $posttypes as $posttype ) {
 
-			if ( ! WordPress\PostType::exists( $posttype ) )
+			if ( ! $object = WordPress\PostType::object( $posttype ) )
 				continue;
 
 			$all = apply_filters( $this->hook_base( 'bulk_exports', 'post_taxonomies' ),
@@ -641,11 +641,19 @@ trait BulkExports
 				$format
 			);
 
+			$status = empty( $object->{Services\PrimaryTaxonomy::STATUS_TAX_PROP} )
+				? FALSE
+				: $object->{Services\PrimaryTaxonomy::STATUS_TAX_PROP};
+
 			switch ( $type ) {
 
 				case 'simple':
 				case 'paired_simple':
 				case 'posttype_simple':
+
+					$list = array_merge( $list, [
+						$status,
+					] );
 
 					break;
 
@@ -655,6 +663,7 @@ trait BulkExports
 
 					$list = array_merge( $list, [
 						'post_tag',
+						$status,
 					] );
 
 					break;

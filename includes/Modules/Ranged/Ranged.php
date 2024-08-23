@@ -389,8 +389,9 @@ class Ranged extends gEditorial\Module
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
 		], [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
+			'is_viewable'     => $viewable,
+			'custom_captype'  => $captype,
+			'status_taxonomy' => TRUE,
 		] );
 
 		if ( $this->get_setting( 'paired_globalsummary', TRUE ) )

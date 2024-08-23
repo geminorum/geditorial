@@ -146,7 +146,8 @@ class Inquire extends gEditorial\Module
 		] );
 
 		$this->register_posttype( 'inquiry_posttype', [], [
-			'is_viewable' => $viewable,
+			'is_viewable'     => $viewable,
+			'status_taxonomy' => TRUE,
 		] );
 	}
 

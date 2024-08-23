@@ -535,6 +535,7 @@ class Book extends gEditorial\Module
 			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
 			'primary_taxonomy' => TRUE,
+			'status_taxonomy'  => TRUE,
 		] );
 
 		$this->register_shortcode( 'publication_shortcode' );

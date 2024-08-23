@@ -9,7 +9,8 @@ class PrimaryTaxonomy extends WordPress\Main
 {
 	const BASE = 'geditorial';
 
-	const POSTTYPE_PROP = 'primary_taxonomy';
+	const POSTTYPE_PROP   = 'primary_taxonomy';
+	const STATUS_TAX_PROP = 'status_taxonomy';
 
 	/**
 	 * Retrieves the primary taxonomy for given posttype.

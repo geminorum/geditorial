@@ -292,7 +292,9 @@ class Course extends gEditorial\Module
 		], 'lesson_posttype' );
 
 		$this->paired_register();
-		$this->register_posttype( 'lesson_posttype' );
+		$this->register_posttype( 'lesson_posttype', [], [
+			'status_taxonomy' => TRUE,
+		] );
 
 		$this->register_shortcode( 'course_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );

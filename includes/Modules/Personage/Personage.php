@@ -349,6 +349,7 @@ class Personage extends gEditorial\Module
 			'is_viewable'      => $viewable,
 			'custom_captype'   => $captype,
 			'primary_taxonomy' => TRUE,
+			'status_taxonomy'  => TRUE,
 		] );
 
 		$this->filter( 'the_title', 2, 8 );
