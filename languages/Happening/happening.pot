@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Happening\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Happening\n"
+"X-Domain: geditorial-happening\n"
+
+#: Happening.php:57
+msgctxt "Fields"
+msgid "Event Start"
+msgstr ""
+
+#: Happening.php:58
+msgctxt "Fields"
+msgid "Determines the date and time in which the Event is scheduled to commence."
+msgstr ""
+
+#: Happening.php:63
+msgctxt "Fields"
+msgid "Event End"
+msgstr ""
+
+#: Happening.php:64
+msgctxt "Fields"
+msgid "Determines the date and time in which the Event is scheduled to conclude."
+msgstr ""
+
+#: Happening.php:70
+msgctxt "Fields"
+msgid "Event All-Day"
+msgstr ""
+
+#: Happening.php:71
+msgctxt "Fields"
+msgid "Determines that is an all-day event."
+msgstr ""
+
+#: Happening.php:77
+#: Happening.php:78
+msgctxt "Fields"
+msgid "Event Repeat"
+msgstr ""
+
+#: Happening.php:82
+msgctxt "Fields"
+msgid "Never"
+msgstr ""
+
+#: Happening.php:83
+msgctxt "Fields"
+msgid "Weekly"
+msgstr ""
+
+#: Happening.php:84
+msgctxt "Fields"
+msgid "Monthly"
+msgstr ""
+
+#: Happening.php:85
+msgctxt "Fields"
+msgid "Yearly"
+msgstr ""
+
+#: Happening.php:89
+#: Happening.php:90
+msgctxt "Fields"
+msgid "Event Expire"
+msgstr ""
+
+#: Happening.php:124
+msgid "Event"
+msgid_plural "Events"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Happening.php:125
+msgid "Event Category"
+msgid_plural "Event Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Happening.php:126
+msgid "Event Type"
+msgid_plural "Event Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Happening.php:127
+msgid "Event Calendar"
+msgid_plural "Event Calendars"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Happening.php:131
+msgctxt "Menu Title"
+msgid "Categories"
+msgstr ""
+
+#: Happening.php:132
+msgctxt "Label: Featured Image"
+msgid "Poster Image"
+msgstr ""
+
+#: Happening.php:135
+msgctxt "Menu Title"
+msgid "Types"
+msgstr ""
+
+#: Happening.php:138
+msgctxt "Menu Title"
+msgid "Calendars"
+msgstr ""
+
+#: Happening.php:153
+msgctxt "Default Term"
+msgid "Holiday"
+msgstr ""
+
+#: Happening.php:154
+msgctxt "Default Term"
+msgid "Birth"
+msgstr ""
+
+#: Happening.php:155
+msgctxt "Default Term"
+msgid "Death"
+msgstr ""
+
+#: Happening.php:156
+msgctxt "Default Term"
+msgid "Start"
+msgstr ""
+
+#: Happening.php:157
+msgctxt "Default Term"
+msgid "End"
+msgstr ""
+
+#: Widgets/EventPoster.php:18
+msgctxt "Widget Title"
+msgid "Editorial: Event Poster"
+msgstr ""
+
+#: Widgets/EventPoster.php:19
+msgctxt "Widget Description"
+msgid "Displays selected, connected or current event poster."
+msgstr ""
+
+#: Widgets/EventPoster.php:93
+msgctxt "Widget: Event Poster"
+msgid "The Event:"
+msgstr ""
+
+#: Widgets/EventPoster.php:96
+msgctxt "Widget: Event Poster"
+msgid "Always the latest event"
+msgstr ""
+
+#: Widgets/EventPoster.php:97
+msgctxt "Widget: Event Poster"
+msgid "Link to the event"
+msgstr ""
