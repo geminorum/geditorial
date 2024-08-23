@@ -1,0 +1,172 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Directorate\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Directorate\n"
+"X-Domain: geditorial-directorate\n"
+
+#: Directorate.php:67
+msgctxt "Settings"
+msgid "Sub-committee Support"
+msgstr ""
+
+#: Directorate.php:68
+msgctxt "Settings"
+msgid "Substitute taxonomy for the committees and supported post-types."
+msgstr ""
+
+#: Directorate.php:91
+msgctxt "Settings"
+msgid "Redirect Archives"
+msgstr ""
+
+#: Directorate.php:92
+msgctxt "Settings"
+msgid "Redirects committee archives to this URL. Leave empty to disable."
+msgstr ""
+
+#: Directorate.php:149
+#: Directorate.php:150
+msgid "Committee"
+msgid_plural "Committees"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Directorate.php:151
+msgid "Committee Category"
+msgid_plural "Committee Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Directorate.php:152
+msgid "Subcommittee"
+msgid_plural "Subcommittees"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Directorate.php:153
+msgid "Committee Type"
+msgid_plural "Committee Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Directorate.php:154
+msgid "Committee Status"
+msgid_plural "Committee Statuses"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: paired item title
+#: Directorate.php:159
+msgctxt "Label: `paired_connected_to`"
+msgid "Member of %s Committee"
+msgstr ""
+
+#: Directorate.php:160
+msgctxt "Label: Featured Image"
+msgid "Committee Badge"
+msgstr ""
+
+#: Directorate.php:161
+msgctxt "Label: `metabox_title`"
+msgid "The Committee"
+msgstr ""
+
+#: Directorate.php:164
+msgctxt "Label: `metabox_title`"
+msgid "In This Committee"
+msgstr ""
+
+#: Directorate.php:167
+msgctxt "Label: `menu_name`"
+msgid "Categories"
+msgstr ""
+
+#: Directorate.php:170
+msgctxt "Label: Menu Name"
+msgid "Types"
+msgstr ""
+
+#: Directorate.php:173
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr ""
+
+#: Directorate.php:182
+msgctxt "Misc: `column_icon_title`"
+msgid "Committee"
+msgstr ""
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Directorate.php:187
+msgctxt "MetaBox: `listbox_title`"
+msgid "%2$s Members of &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: Directorate.php:197
+msgctxt "Default Term"
+msgid "Working"
+msgstr ""
+
+#: Directorate.php:198
+msgctxt "Default Term"
+msgid "Inactive"
+msgstr ""
+
+#: Directorate.php:199
+msgctxt "Default Term"
+msgid "Resolved"
+msgstr ""
+
+#: Directorate.php:200
+msgctxt "Default Term"
+msgid "Planned"
+msgstr ""
+
+#: Directorate.php:201
+msgctxt "Default Term"
+msgid "Pending"
+msgstr ""
+
+#: Directorate.php:227
+msgctxt "Field Title"
+msgid "Directors"
+msgstr ""
+
+#: Directorate.php:228
+msgctxt "Field Description"
+msgid "People Who are Board Members of This Committee"
+msgstr ""
+
+#: Directorate.php:235
+msgctxt "Field Title"
+msgid "Committee Code"
+msgstr ""
+
+#: Directorate.php:236
+msgctxt "Field Description"
+msgid "Unique Committee Code"
+msgstr ""
+
+#: Directorate.php:245
+msgctxt "Field Title"
+msgid "Membership Number"
+msgstr ""
+
+#: Directorate.php:246
+msgctxt "Field Description"
+msgid "Unique Committee Membership Number"
+msgstr ""
+
+#: Directorate.php:690
+msgctxt "Header"
+msgid "Directorate Tools"
+msgstr ""
