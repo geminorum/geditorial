@@ -68,9 +68,6 @@ class Venue extends gEditorial\Module
 			'_editlist' => [
 				'admin_ordering',
 			],
-			'_editpost' => [
-				'extra_metadata' => _x( 'Specifies location based on the actual latitude and longitude.', 'Settings', 'geditorial-venue' ),
-			],
 			'_frontend' => [
 				'insert_cover',
 				'insert_priority',
@@ -202,7 +199,6 @@ class Venue extends gEditorial\Module
 					'description' => _x( 'Embeddable map URL of the location.', 'Field Description', 'geditorial-venue' ),
 					'type'        => 'embed',
 				],
-				// FIXME: move to `extra_metadata`
 				// FIXME: see `Geo` Module
 				'geo_latitude' => [
 					'title'       => _x( 'Latitude', 'Field Title', 'geditorial-venue' ),

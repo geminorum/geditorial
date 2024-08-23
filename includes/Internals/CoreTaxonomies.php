@@ -799,7 +799,7 @@ trait CoreTaxonomies
 
 	protected function hook_taxonomy_importer_term_singleselect( $taxonomy, $setting = 'selectmultiple_term', $default_setting = FALSE )
 	{
-		if ( TRUE !== $setting && $this->get_setting( $setting, $default_setting ) )
+		if ( TRUE !== $setting && ! $this->get_setting( $setting, $default_setting ) )
 			return FALSE;
 
 		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),

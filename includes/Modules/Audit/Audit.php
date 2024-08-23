@@ -1026,7 +1026,7 @@ class Audit extends gEditorial\Module
 		}
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
-		$data['__can_debug']  = Core\WordPress::isDev() || Core\User::isSuperAdmin();
+		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
 		// $data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 
 		return $this->filters( 'view_data', $data, $post, $context );

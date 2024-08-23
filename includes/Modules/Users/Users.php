@@ -752,6 +752,7 @@ class Users extends gEditorial\Module
 	}
 
 	// FIXME: move to `Config`: `render_roles_html()`
+	// TODO: export/import/overrite roles via json list of caps // MAYBE: new Module
 	protected function render_tools_html( $uri, $sub )
 	{
 		$roles = WordPress\Role::get();

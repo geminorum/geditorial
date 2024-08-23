@@ -80,6 +80,7 @@ class Dashboard extends gEditorial\Module
 
 		if ( is_admin() ) {
 
+			// FIXME: move to current_screen for pages
 			$this->filter( 'display_post_states', 2, 12 );
 
 		} else {

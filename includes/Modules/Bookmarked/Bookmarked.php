@@ -453,7 +453,7 @@ class Bookmarked extends gEditorial\Module
 
 	private function _get_link_logo( $key, $path = NULL )
 	{
-		return printf( '%s%s%s.%s',
+		return sprintf( '%s%s%s.%s',
 			Core\URL::fromPath( $path ?? $this->path ),
 			'data/logos/',
 			$key,

@@ -17,6 +17,7 @@ use geminorum\gEditorial\WordPress;
 class Book extends gEditorial\Module
 {
 	use Internals\BulkExports;
+	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;

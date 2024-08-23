@@ -78,13 +78,13 @@ class Personage extends gEditorial\Module
 				'assign_default_term',
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype', [
-					// 'title',
 					'excerpt',
 					'thumbnail',
-					// 'author',
 					'comments',
 					'date-picker',
-					'editorial-units',
+				], [
+					'title',
+					'author',
 				] ),
 			],
 			'_editlist' => [

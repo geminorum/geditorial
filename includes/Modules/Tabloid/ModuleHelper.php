@@ -51,12 +51,12 @@ class ModuleHelper extends gEditorial\Helper
 
 		foreach ( $comments as &$comment ) {
 
-			$avatar = Core\HTML::img( $comment['author_avatar_urls']['24'] );
+			$avatar = empty( $comment['author_avatar_urls']['24'] ) ? '' : Core\HTML::img( $comment['author_avatar_urls']['24'] );
 			$author = WordPress\User::getTitleRow( $comment['author'], $comment['author_name'], '<span title="%2$s">%1$s</span>' );
 
 			$comment['content_rendered'] = $comment['content']['rendered'];
-			$comment['author_rendered'] = $avatar.' '.$author;
-			$comment['date_rendered']   = Datetime::prepForDisplay( $comment['date'], 'Y/n/j' );
+			$comment['author_rendered']  = Core\Text::trim( $avatar.' '.$author );
+			$comment['date_rendered']    = Datetime::prepForDisplay( $comment['date'], 'Y/n/j' );
 
 			unset( $comment['author_avatar_urls'] );
 			unset( $comment['date_gmt'] );

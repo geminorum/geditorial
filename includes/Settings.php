@@ -481,7 +481,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'thumbnail_fallback',
 			'title'       => _x( 'Thumbnail Fallback', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Sets the parent post thumbnail image as fallback for the child post.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Sets the parent post thumbnail image as fallback for the child post.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '0',
 		];
 	}
@@ -491,7 +491,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'legacy_migration',
 			'title'       => _x( 'Legacy Migration', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Imports metadata from legacy plugin system.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Imports metadata from legacy plugin system.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '0',
 		];
 	}
@@ -501,7 +501,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'metabox_advanced',
 			'title'       => _x( 'Advanced Meta-Box', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Select to use advanced meta-box UI on edit post screen.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Select to use advanced meta-box UI on edit post screen.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -511,7 +511,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'show_in_quickedit',
 			'title'       => _x( 'Show in Quick-Edit', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Whether to show the taxonomy in the quick/bulk edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Whether to show the taxonomy in the quick/bulk edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -521,7 +521,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'show_in_navmenus',
 			'title'       => _x( 'Show in Navigation', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Makes available for selection in navigation menus.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Makes available for selection in navigation menus.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -531,7 +531,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'selectmultiple_term',
 			'title'       => _x( 'Multiple Terms', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Whether to assign multiple terms in edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Whether to assign multiple terms in edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -541,7 +541,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'assign_default_term',
 			'title'       => _x( 'Assign Default Term', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Applies the fallback default term from primary taxonomy.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Applies the fallback default term from primary taxonomy.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '0',
 		];
 	}
@@ -562,7 +562,7 @@ class Settings extends WordPress\Main
 			'field'       => 'comment_status',
 			'type'        => 'select',
 			'title'       => _x( 'Comment Status', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Determines the default status of the new post comments.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Determines the default status of the new post comments.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 'closed',
 			'values'      => [
 				'open'   => _x( 'Open', 'Settings: Setting Option', 'geditorial-admin' ),
@@ -607,7 +607,7 @@ class Settings extends WordPress\Main
 			'field'       => 'insert_content',
 			'type'        => 'select',
 			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Outputs automatically in the content.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Outputs automatically in the content.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 'none',
 			'values'      => [
 				'none'   => _x( 'No', 'Settings: Setting Option', 'geditorial-admin' ),
@@ -674,7 +674,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'admin_ordering',
 			'title'       => _x( 'Ordering', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Enhances item ordering on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Enhances item ordering on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => '1',
 		];
 	}
@@ -684,7 +684,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'admin_restrict',
 			'title'       => _x( 'List Restrictions', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Enhances restrictions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Enhances restrictions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -693,7 +693,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'admin_columns',
 			'title'       => _x( 'List Columns', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Enhances columns on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Enhances columns on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -702,7 +702,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'admin_bulkactions',
 			'title'       => _x( 'Bulk Actions', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Enhances bulk actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Enhances bulk actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -711,7 +711,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'admin_rowactions',
 			'title'       => _x( 'Row Actions', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Enhances row actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Enhances row actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -720,7 +720,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'adminbar_summary',
 			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Summary for the current item as a node in admin-bar.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Summary for the current item as a node in admin-bar.', 'Setting: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -729,7 +729,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'dashboard_widgets',
 			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Enhances admin dashboard with customized widgets.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Enhances admin dashboard with customized widgets.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -738,7 +738,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'dashboard_authors',
 			'title'       => _x( 'Dashboard Authors', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Displays author column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Displays author column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -747,7 +747,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'dashboard_statuses',
 			'title'       => _x( 'Dashboard Statuses', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Displays status column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Displays status column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -757,7 +757,7 @@ class Settings extends WordPress\Main
 			'field'       => 'dashboard_count',
 			'type'        => 'number',
 			'title'       => _x( 'Dashboard Count', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Limits displaying rows of items on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Limits displaying rows of items on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 10,
 		];
 	}
@@ -768,7 +768,7 @@ class Settings extends WordPress\Main
 			'field'       => 'summary_scope',
 			'type'        => 'select',
 			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'User scope for the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'User scope for the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 'all',
 			'values'      => [
 				'all'     => _x( 'All Users', 'Settings: Setting Option', 'geditorial-admin' ),
@@ -783,7 +783,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'summary_drafts',
 			'title'       => _x( 'Include Drafts', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Include drafted items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Include drafted items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -793,7 +793,7 @@ class Settings extends WordPress\Main
 			'field'        => 'summary_excludes',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Summary Excludes', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
@@ -804,7 +804,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'summary_parents',
 			'title'       => _x( 'Summary Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Displays only parent terms on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Displays only parent terms on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '1',
 		];
 	}
@@ -815,7 +815,7 @@ class Settings extends WordPress\Main
 			'field'        => 'public_statuses',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Public Statuses', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Selected terms will be acceptable on the public content queries.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Selected terms will be acceptable on the public content queries.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
@@ -827,7 +827,7 @@ class Settings extends WordPress\Main
 			'field'        => 'paired_exclude_terms',
 			'type'         => 'checkbox-panel',
 			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Items with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Items with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => WordPress\Taxonomy::listTerms( $taxonomy ),
 		];
@@ -838,7 +838,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'paired_force_parents',
 			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Includes parents on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Includes parents on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -847,7 +847,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'paired_globalsummary',
 			'title'       => _x( 'Global Summary', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Includes connected main posts on the global summary for each supported item.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Includes connected main posts on the global summary for each supported item.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -857,7 +857,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'paired_manage_restricted',
 			'title'       => _x( 'Management Restricted', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Limits creation and deletion of the main posts to administrators.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Limits creation and deletion of the main posts to administrators.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -866,7 +866,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'parents_as_views',
 			'title'       => _x( 'Parents as Views', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Prepends the parent terms to views on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Prepends the parent terms to views on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -876,7 +876,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'force_parents',
 			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Includes parents when selecting the main contents.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Includes parents when selecting the main contents.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -886,7 +886,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'count_not',
 			'title'       => _x( 'Count Not', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Counts not affected items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Counts not affected items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -895,7 +895,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'posttype_feeds',
 			'title'       => _x( 'Feeds', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Supports feeds for the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Supports feeds for the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -904,7 +904,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'posttype_pages',
 			'title'       => _x( 'Pages', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Supports pagination on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Supports pagination on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -914,7 +914,7 @@ class Settings extends WordPress\Main
 			'field'        => 'units_posttypes',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Units Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Unit Fields will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Unit Fields will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no unit post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
@@ -926,7 +926,7 @@ class Settings extends WordPress\Main
 			'field'        => 'subcontent_posttypes',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Supported Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no supported post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
@@ -938,7 +938,7 @@ class Settings extends WordPress\Main
 			'field'        => 'subcontent_fields',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Supported Fields', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Determines the optional fields for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Determines the optional fields for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no supported fields available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 			'default'      => $default,
@@ -951,7 +951,7 @@ class Settings extends WordPress\Main
 			'field'        => 'subcontent_types',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Supported Types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Determines the optional types for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Determines the optional types for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no supported types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 			'default'      => $default,
@@ -964,7 +964,7 @@ class Settings extends WordPress\Main
 			'field'        => 'parent_posttypes',
 			'type'         => 'checkboxes-values',
 			'title'        => _x( 'Parent Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no parents available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
 			'values'       => $values,
 		];
@@ -976,7 +976,7 @@ class Settings extends WordPress\Main
 			'field'       => 'empty_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Empty Content', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Displays as empty content placeholder.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Displays as empty content placeholder.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'default'     => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial-admin' ),
 		];
 	}
@@ -986,7 +986,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'archive_override',
 			'title'       => _x( 'Archive Override', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Overrides default template hierarchy for archive.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Overrides default template hierarchy for archive.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'default'     => '1',
 		];
 	}
@@ -1020,7 +1020,7 @@ class Settings extends WordPress\Main
 			'field'       => 'archive_template',
 			'type'        => 'select',
 			'title'       => _x( 'Archive Template', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'none_title'  => self::showOptionNone(),
 			'values'      => wp_get_theme()->get_page_templates(),
 		];
@@ -1031,7 +1031,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'display_searchform',
 			'title'       => _x( 'Display Search Form', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -1041,7 +1041,7 @@ class Settings extends WordPress\Main
 			'field'       => 'display_threshold',
 			'type'        => 'number',
 			'title'       => _x( 'Display Threshold', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Maximum number of items to consider as a long list.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Maximum number of items to consider as a long list.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'default'     => '5',
 		];
 	}
@@ -1052,7 +1052,7 @@ class Settings extends WordPress\Main
 			'field'       => 'display_perpage',
 			'type'        => 'number',
 			'title'       => _x( 'Display Per-Page', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Total rows of items per each page of the list.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Total rows of items per each page of the list.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => 15,
 		];
 	}
@@ -1063,7 +1063,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'posttype_viewable',
 			'title'       => _x( 'Viewable Post-Type', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Determines the visibility of the main post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Determines the visibility of the main post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default,
 		];
 	}
@@ -1073,7 +1073,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'contents_viewable',
 			'title'       => _x( 'Viewable Contents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Determines whether the contents are publicly viewable.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Determines whether the contents are publicly viewable.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default,
 		];
 	}
@@ -1083,7 +1083,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'custom_captype',
 			'title'       => _x( 'Custom Capabilities', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Registers custom capability-type for the contents.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Registers custom capability-type for the contents.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}
@@ -1093,7 +1093,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'auto_term_parents',
 			'title'       => _x( 'Auto Term Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Auto-assigns parent terms on supported posts.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Auto-assigns parent terms on supported posts.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '1',
 		];
 	}
@@ -1103,7 +1103,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'        => 'override_dates',
 			'title'        => _x( 'Override Dates', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Tries to override post-date with provided date data on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Tries to override post-date with provided date data on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default,
 		];
 	}
@@ -1129,15 +1129,6 @@ class Settings extends WordPress\Main
 			'type'        => 'checkboxes',
 			'default'     => [ 'gregorian' ],
 			'values'      => Services\Calendars::getDefualts( TRUE ),
-		];
-	}
-
-	public static function getSetting_extra_metadata( $description = NULL )
-	{
-		return [
-			'field'       => 'extra_metadata',
-			'title'       => _x( 'Metadata Support', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
 		];
 	}
 
@@ -1222,7 +1213,7 @@ class Settings extends WordPress\Main
 			'field'       => 'reports_roles',
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Reports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1235,7 +1226,7 @@ class Settings extends WordPress\Main
 			'field'       => 'exports_roles',
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Exports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Roles that can export data entries.', 'Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can export data entries.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1248,7 +1239,7 @@ class Settings extends WordPress\Main
 			'field'       => 'prints_roles',
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Prints Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Roles that can print data entries.', 'Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can print data entries.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1261,7 +1252,7 @@ class Settings extends WordPress\Main
 			'field'       => 'uploads_roles',
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Uploads Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Roles that can upload data into the site.', 'Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can upload data into the site.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1274,7 +1265,7 @@ class Settings extends WordPress\Main
 			'field'       => 'overview_roles',
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Overview Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Roles that can view data overviews.', 'Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can view data overviews.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1287,7 +1278,7 @@ class Settings extends WordPress\Main
 			'field'       => 'manage_roles',
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Manage Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Roles that can manage, edit and delete entry defenitions.', 'Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can manage, edit and delete entry defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1300,7 +1291,7 @@ class Settings extends WordPress\Main
 			'field'       => 'assign_roles',
 			'type'        => 'checkboxes',
 			'title'       => _x( 'Assign Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
@@ -1313,7 +1304,7 @@ class Settings extends WordPress\Main
 			'field'        => 'overview_fields',
 			'type'         => 'checkbox-panel',
 			'title'        => _x( 'Overview Fields', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
 			'default'      => [],
 			'values'       => $fields ?? [],
 			'string_empty' => $empty ?? _x( 'There are no fields available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
@@ -1326,7 +1317,7 @@ class Settings extends WordPress\Main
 			'field'        => 'overview_units',
 			'type'         => 'checkbox-panel',
 			'title'        => _x( 'Overview Units', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
 			'default'      => [],
 			'values'       => $fields ?? [],
 			'string_empty' => $empty ?? _x( 'There are no units available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
@@ -1339,7 +1330,7 @@ class Settings extends WordPress\Main
 			'field'        => 'overview_taxonomies',
 			'type'         => 'checkbox-panel',
 			'title'        => _x( 'Overview Taxonomies', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
 			'default'      => [],
 			'values'       => $taxes ?? [],
 			'string_empty' => $empty ?? _x( 'There are no taxonomies available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
@@ -1351,7 +1342,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'append_identifier_code',
 			'title'       => _x( 'Append Identifier', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Appends the identifier code field data to each item supported title.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Appends the identifier code field data to each item supported title.', 'Settings: Setting Description', 'geditorial-admin' ),
 		];
 	}
 
@@ -1360,7 +1351,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'printpage_enqueue_librefonts',
 			'title'       => _x( 'Enqueue Libre Fonts', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Loads Libre Barcode fonts on print page html head.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Loads Libre Barcode fonts on print page html head.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'after'       => self::fieldAfterIcon( 'https://graphicore.github.io/librebarcode/' ),
 		];
 	}
@@ -1368,9 +1359,9 @@ class Settings extends WordPress\Main
 	public static function getSetting_force_sanitize( $description = NULL, $default = 0 )
 	{
 		return [
-			'field'        => 'force_sanitize',
-			'title'        => _x( 'Force Sanitize', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?: _x( 'Tries to force the sanitization upon storing data.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'field'       => 'force_sanitize',
+			'title'       => _x( 'Force Sanitize', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Tries to force the sanitization upon storing data.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default,
 		];
 	}

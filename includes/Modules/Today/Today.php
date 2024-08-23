@@ -112,6 +112,7 @@ class Today extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
+			'meta_box_title'      => _x( 'The Day', 'Column Title', 'geditorial-today' ), // MUST BE DEP
 			'theday_column_title' => _x( 'Day', 'Column Title', 'geditorial-today' ),
 		];
 

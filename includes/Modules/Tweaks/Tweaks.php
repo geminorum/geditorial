@@ -235,14 +235,16 @@ class Tweaks extends gEditorial\Module
 			'follow_users',
 			'follow_groups',
 			'status',
-			'audit_attribute', // has it's own overview
-			'checklist_item', // has it's own overview
-			'year_of_birth', // WasBorn Module
-			'gender',  // WasBorn Module
-			'age_group', // WasBorn Module
-			'marital_status', // NextOfKin Module
-			'blood_type', // Abo Module
-			'equipment', // Equipped Module
+
+			'checklist_item' ,  // has it's own overview
+			'audit_attribute',  // `Audit` Module: has it's own overview
+			'year_of_birth'  ,  // `WasBorn` Module
+			'gender'         ,  // `WasBorn` Module
+			'age_group'      ,  // `WasBorn` Module
+			'marital_status' ,  // `NextOfKin` Module
+			'blood_type'     ,  // `Abo` Module
+			'equipment'      ,  // `Equipped` Module
+			'human_status'   ,  // `Personage` Module
 		] + $extra ) );
 	}
 
