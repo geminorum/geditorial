@@ -360,9 +360,10 @@ class Programmed extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-			'admin_managed'  => TRUE,
+			'is_viewable'     => $viewable,
+			'custom_captype'  => $captype,
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
@@ -370,9 +371,10 @@ class Programmed extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype', [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-			'admin_managed'  => TRUE,
+			'is_viewable'     => $viewable,
+			'custom_captype'  => $captype,
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->paired_register( [], [

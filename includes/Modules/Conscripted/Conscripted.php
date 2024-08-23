@@ -130,8 +130,9 @@ class Conscripted extends gEditorial\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 			'show_in_menu'       => FALSE,
 		], NULL, [
-			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_captype' => TRUE,
+			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'custom_captype'  => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

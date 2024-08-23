@@ -315,23 +315,23 @@ class Organization extends gEditorial\Module
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
-			// 'meta_box_cb'        => '__singleselect_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
+			'single_selected' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
-			'meta_box_cb'        => '__singleselect_terms_callback',
 		], 'primary_posttype', [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-			'admin_managed'  => TRUE,
+			'is_viewable'     => $viewable,
+			'custom_captype'  => $captype,
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->paired_register( [], [
@@ -480,6 +480,12 @@ class Organization extends gEditorial\Module
 
 		MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
+			'posttype'   => $object->post_type,
+			'empty_link' => FALSE,
+		] );
+
+		MetaBox::singleselectTerms( $object->ID, [
+			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );

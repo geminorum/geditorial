@@ -183,7 +183,9 @@ class WasBorn extends gEditorial\Module
 			'show_in_menu' => FALSE,
 			'data_length'  => _x( '5', 'Gender Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
-			'custom_captype' => TRUE,
+			'custom_captype'  => TRUE,
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'year_taxonomy', [

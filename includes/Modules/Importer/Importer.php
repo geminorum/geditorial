@@ -1293,8 +1293,12 @@ class Importer extends gEditorial\Module
 	{
 		foreach ( $taxonomies as $taxonomy => $terms ) {
 
-			if ( ! WordPress\Taxonomy::exists( $taxonomy ) )
+			if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 				continue;
+
+			// FIXME: apply this option
+			// @SEE: `hook_taxonomy_importer_term_singleselect()`
+			// $singleterm = empty( $object->{Services\TermHierarchy::SINGLE_TERM_SELECT} );
 
 			$currents = $oldpost
 				? WordPress\Taxonomy::getPostTerms( $taxonomy, $oldpost, FALSE )

@@ -13,6 +13,7 @@ class TermHierarchy extends WordPress\Main
 	const AUTO_SET_PARENT_TERMS = 'auto_set_parent_terms';
 	const AUTO_SET_CHILD_TERMS  = 'auto_set_child_terms';
 	const REVERSE_ORDERED_TERMS = 'reverse_ordered_terms';
+	const SINGLE_TERM_SELECT    = 'single_term_select'; // TODO: restrict via aftercare with info from `added_term_relationship`
 
 	public static function setup()
 	{

@@ -124,8 +124,9 @@ class Abo extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'data_length'        => _x( '3', 'Main Taxonomy Argument: `data_length`', 'geditorial-abo' ),
 		], NULL, [
-			'is_viewable'    => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_captype' => TRUE,
+			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'custom_captype'  => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		add_filter( sprintf( '%s_%s', $this->constant( 'main_taxonomy' ), 'name' ), [ $this, 'main_taxonomy_name_field' ], 20, 3 );

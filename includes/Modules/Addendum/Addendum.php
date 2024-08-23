@@ -240,14 +240,18 @@ class Addendum extends gEditorial\Module
 			// 'meta_box_cb'        => '__singleselect_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			// 'single_selected' => TRUE,
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__singleselect_terms_callback',
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'single_selected' => TRUE,
+		] );
 
 		$this->paired_register();
 

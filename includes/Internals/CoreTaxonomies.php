@@ -139,6 +139,7 @@ trait CoreTaxonomies
 			'admin_managed'   => NULL,    // psudo-setting: manage only for admins
 			'auto_parents'    => FALSE,
 			'auto_children'   => FALSE,
+			'single_selected' => FALSE,
 			'reverse_ordered' => NULL,
 		], $atts );
 
@@ -260,14 +261,10 @@ trait CoreTaxonomies
 
 					break;
 
-				case 'auto_parents' : $args[Services\TermHierarchy::AUTO_SET_PARENT_TERMS] = $value; break;
-				case 'auto_children': $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
-
-				case 'reverse_ordered':
-
-					$args[Services\TermHierarchy::REVERSE_ORDERED_TERMS] = $value;
-
-					break;
+				case 'auto_parents'    : $args[Services\TermHierarchy::AUTO_SET_PARENT_TERMS] = $value; break;
+				case 'auto_children'   : $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
+				case 'single_selected ': $args[Services\TermHierarchy::SINGLE_TERM_SELECT]    = $value; break;
+				case 'reverse_ordered' : $args[Services\TermHierarchy::REVERSE_ORDERED_TERMS] = $value; break;
 
 				// TODO: support combination of settings:
 				// -- restricted terms
