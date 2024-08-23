@@ -344,11 +344,11 @@ class Personage extends gEditorial\Module
 		$this->register_posttype( 'primary_posttype', [
 			'hierarchical' => FALSE,
 
-			MetaBox::POSTTYPE_MAINBOX_PROP            => TRUE,
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
+			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
+			'is_viewable'      => $viewable,
+			'custom_captype'   => $captype,
+			'primary_taxonomy' => TRUE,
 		] );
 
 		$this->filter( 'the_title', 2, 8 );

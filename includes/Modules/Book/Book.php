@@ -532,8 +532,9 @@ class Book extends gEditorial\Module
 
 		// FIXME: WTF: use `$this->paired_register()`
 		$this->register_posttype( 'publication_posttype', [
-			MetaBox::POSTTYPE_MAINBOX_PROP            => TRUE,
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'publication_category' ),
+			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
+		], [
+			'primary_taxonomy' => TRUE,
 		] );
 
 		$this->register_shortcode( 'publication_shortcode' );

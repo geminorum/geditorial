@@ -52,9 +52,8 @@ trait CorePostTypes
 			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
 
 			/// gEditorial Props
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => NULL,   // @SEE: `PostType::getPrimaryTaxonomy()`
-			Services\Paired::PAIRED_TAXONOMY_PROP     => FALSE,  // @SEE: `Paired::isPostType()`
-			MetaBox::POSTTYPE_MAINBOX_PROP            => FALSE,  // @SEE: `hook_taxonomy_metabox_mainbox()`
+			Services\Paired::PAIRED_TAXONOMY_PROP => FALSE,  // @SEE: `Paired::isPostType()`
+			MetaBox::POSTTYPE_MAINBOX_PROP        => FALSE,  // @SEE: `hook_taxonomy_metabox_mainbox()`
 
 			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
@@ -114,10 +113,11 @@ trait CorePostTypes
 	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
 	{
 		$settings = self::atts( [
-			'block_editor'   => FALSE,
-			'quick_edit'     => NULL,
-			'is_viewable'    => NULL,
-			'custom_captype' => FALSE,
+			'block_editor'     => FALSE,
+			'quick_edit'       => NULL,
+			'is_viewable'      => NULL,
+			'custom_captype'   => FALSE,
+			'primary_taxonomy' => NULL,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -276,6 +276,8 @@ trait CorePostTypes
 					}
 
 					break;
+
+				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP] = TRUE === $value ? $this->constant( $setting ) : $value; break;
 			}
 		}
 

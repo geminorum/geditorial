@@ -175,8 +175,8 @@ class Symposium extends gEditorial\Module
 			'meta_box_cb'  => '__checklist_terms_callback',
 		], 'session_posttype' );
 
-		$this->register_posttype( 'session_posttype', [
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'category_taxonomy' ),
+		$this->register_posttype( 'session_posttype', [], [
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}
 

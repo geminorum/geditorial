@@ -237,8 +237,8 @@ class Tube extends gEditorial\Module
 			'default_term'       => NULL,
 		], 'video_posttype' );
 
-		$this->register_posttype( 'video_posttype', [
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'category_video' ),
+		$this->register_posttype( 'video_posttype', [], [
+			'primary_taxonomy' => $this->constant( 'category_video' ),
 		] );
 
 		$this->register_shortcode( 'category_video_shortcode' );

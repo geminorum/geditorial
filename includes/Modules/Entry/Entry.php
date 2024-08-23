@@ -128,8 +128,8 @@ class Entry extends gEditorial\Module
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], 'primary_posttype' );
 
-		$this->register_posttype( 'primary_posttype', [
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'primary_taxonomy' ),
+		$this->register_posttype( 'primary_posttype', [], [
+			'primary_taxonomy' => TRUE,
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );

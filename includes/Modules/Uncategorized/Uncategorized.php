@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -550,7 +551,7 @@ class Uncategorized extends gEditorial\Module
 
 	private function _get_posttype_view( $posttype )
 	{
-		if ( ! $taxonomy = WordPress\PostType::getPrimaryTaxonomy( $posttype ) )
+		if ( ! $taxonomy = Services\PrimaryTaxonomy::get( $posttype ) )
 			return [];
 
 		if ( ! $default = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
