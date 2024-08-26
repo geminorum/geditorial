@@ -1318,12 +1318,8 @@ class Importer extends gEditorial\Module
 
 			if ( ! empty( $object->{Services\TermHierarchy::SINGLE_TERM_SELECT} ) ) {
 
-				if ( $override && count( $filtered ) )
-					$filtered = $filtered[Core\Arraay::keyFirst( $filtered )];
-
-				// NO NEED
-				// else if ( count( $currents ) )
-				// 	continue;
+				if ( $override && ( $single = Services\TermHierarchy::getSingleSelectTerm( $object, $filtered, $post_id ) ) )
+					$filtered = $single->term_id;
 			}
 
 			if ( is_null( $filtered ) )
