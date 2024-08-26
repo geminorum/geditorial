@@ -149,7 +149,7 @@ class Taxonomy extends Core\Base
 		if ( FALSE === $object || 'any' == $object )
 			$objects = get_taxonomies( $args, 'objects' );
 		else
-			$objects = get_object_taxonomies( $object, 'objects' );
+			$objects = Core\Arraay::filter( get_object_taxonomies( $object, 'objects' ), $args );
 
 		foreach ( $objects as $taxonomy => $taxonomy_obj ) {
 
@@ -317,7 +317,17 @@ class Taxonomy extends Core\Base
 		return $query->query( $args );
 	}
 
-	// NOTE: hits cached terms for the post
+	/**
+	 * Retrieves the terms of the taxonomy that are attached to the post.
+	 * NOTE: hits cached terms for the post
+	 *
+	 * @param  string $taxonomy
+	 * @param  object $post
+	 * @param  bool   $object
+	 * @param  bool   $key
+	 * @param  string $index_key
+	 * @return array  $terms
+	 */
 	public static function getPostTerms( $taxonomy, $post = NULL, $object = TRUE, $key = FALSE, $index_key = NULL )
 	{
 		$terms = get_the_terms( $post, $taxonomy );

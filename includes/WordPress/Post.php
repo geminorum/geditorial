@@ -178,6 +178,8 @@ class Post extends Core\Base
 		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
 	}
 
+	// public static function shortlink( $post ) {}
+
 	/**
 	 * Retrieves a contextual link given a post ID or post object.
 	 *

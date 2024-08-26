@@ -7,7 +7,7 @@ use geminorum\gEditorial\Core;
 class PostType extends Core\Base
 {
 
-	const PRIMARY_TAXONOMY_PROP = 'primary_taxonomy';
+	const PRIMARY_TAXONOMY_PROP = 'primary_taxonomy'; // FIXME: DEPRECATED
 
 	public static function object( $posttype_or_post )
 	{
@@ -680,8 +680,11 @@ class PostType extends Core\Base
 		return Post::getParentTitles( $post, $suffix, $linked, $separator );
 	}
 
+	// FIXME: DEPRECATED: use `Services\PrimaryTaxonomy::get()`
 	public static function getPrimaryTaxonomy( $posttype, $fallback = FALSE )
 	{
+		self::_dep( 'Services\PrimaryTaxonomy::get()' );
+
 		$taxonomy = $fallback;
 
 		if ( 'post' === $posttype )

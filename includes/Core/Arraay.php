@@ -408,8 +408,11 @@ class Arraay extends Base
 	 */
 	public static function filter( $input, $args = [], $operator = 'and', $field = FALSE )
 	{
-		if ( empty( $input ) || ( empty( $args ) && empty( $field ) ) )
+		if ( empty( $input ) )
 			return [];
+
+		if ( empty( $args ) && empty( $field ) )
+			return $input;
 
 		return wp_filter_object_list( $input, $args, $operator, $field );
 	}

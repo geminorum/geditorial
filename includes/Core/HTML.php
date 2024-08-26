@@ -146,14 +146,14 @@ class HTML extends Base
 			.'</'.( $tag ?: 'div' ).'>';
 	}
 
-	public static function wrap( $html, $class = '', $block = TRUE, $data = [] )
+	public static function wrap( $html, $class = '', $block = TRUE, $data = [], $id = FALSE )
 	{
 		if ( ! $html )
 			return '';
 
 		return $block
-			? '<div class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</div>'
-			: '<span class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</span>';
+			? '<div'.( $id ? ' id='.$id.'" ' : ' ' ).' class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</div>'
+			: '<span'.( $id ? ' id='.$id.'" ' : ' ' ).' class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</span>';
 	}
 
 	public static function wrapLTR( $content )
@@ -1483,5 +1483,14 @@ class HTML extends Base
 	public static function renderList( $items, $keys = FALSE, $list = 'ul' )
 	{
 		return $items ? self::tag( $list, '<li>'.implode( '</li><li>', $keys ? array_keys( $items ) : array_filter( $items ) ).'</li>' ) : '';
+	}
+
+	public static function inputForCopy( $text, $class = 'large-text', $code = TRUE, $readonly = TRUE )
+	{
+		return '<input type="text" value="'
+			.self::escapeAttr( $text )
+			.'" class="'.self::prepClass( '-input-for-copy', $class, $code ? 'code' : '' )
+			.'" onclick="this.focus();this.select()" '
+			.( $readonly ? 'readonly' : '' ).' />';
 	}
 }

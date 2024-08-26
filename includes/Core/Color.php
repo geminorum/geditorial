@@ -5,6 +5,13 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Color extends Base
 {
 
+	// TODO: must convert to `DataType`
+
+	public static function is( $text )
+	{
+		return self::validHex( $text );
+	}
+
 	// @REF: `rest_parse_hex_color()`
 	public static function validHex( $color )
 	{

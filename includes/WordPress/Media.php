@@ -359,17 +359,11 @@ class Media extends Core\Base
 		return $sub ? $base.'/'.$sub : $base;
 	}
 
+	// FIXME: DEPRECATED
+	// USE: `Attachment::get()`
 	public static function getAttachments( $post_id, $mime_type = 'image' )
 	{
-		return get_children( [
-			'post_mime_type' => $mime_type,
-			'post_parent'    => $post_id,
-			'post_type'      => 'attachment',
-			'post_status'    => 'inherit',
-			'numberposts'    => -1,
-			'orderby'        => 'menu_order',
-			'order'          => 'ASC',
-		] );
+		return Attachment::get( $post_id, $mime_type );
 	}
 
 	// TODO: get title if html is empty
