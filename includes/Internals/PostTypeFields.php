@@ -161,7 +161,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'year', 'date', 'datetime', 'duration' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'year', 'date', 'datetime', 'distance', 'duration' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -475,6 +475,11 @@ trait PostTypeFields
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
 				break;
 
+			case 'distance':
+
+				$sanitized = Core\Distance::sanitize( $data, '', $field );
+				break;
+
 			case 'duration':
 
 				$sanitized = Core\Duration::sanitize( $data );
@@ -618,6 +623,7 @@ trait PostTypeFields
 				case 'year':
 				case 'date':
 				case 'datetime':
+				case 'distance':
 				case 'duration':
 				case 'identity':
 				case 'isbn':

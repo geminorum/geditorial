@@ -23,6 +23,7 @@
     year: '[data-' + module + '=\'year\']',
     date: '[data-' + module + '=\'date\']',
     datetime: '[data-' + module + '=\'datetime\']',
+    distance: '[data-' + module + '=\'distance\']',
     duration: '[data-' + module + '=\'duration\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
@@ -447,6 +448,20 @@
       $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-//: ]/g, '').trim());
         // TODO: check for pattern/validate datetime in persian
+      });
+    },
+
+    // TODO: convert to the target unit
+    // @SEE https://github.com/lvivier/meters/blob/master/index.js
+    distance: function () {
+      const $el = $(this);
+      // TODO: get data before change type not to lose the unit
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `number`
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish($el.val()).replace(/[^\d.-// ]/g, '').trim());
+        // TODO: check for pattern/validate distance in persian
       });
     },
 

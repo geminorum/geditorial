@@ -1161,6 +1161,19 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'distance':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'distance';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputdistance';
+
+				if ( $value )
+					$atts['value'] = Core\Distance::prep( $value, [], 'input' );
+
+				break;
+
 			case 'duration':
 
 				$atts['dir'] = 'ltr';

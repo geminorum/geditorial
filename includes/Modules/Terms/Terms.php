@@ -44,6 +44,7 @@ class Terms extends gEditorial\Module
 		'datetime',
 		'datestart',
 		'dateend',
+		// 'distance', // TODO
 		// 'duration', // TODO
 		'days',
 		'hours',

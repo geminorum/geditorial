@@ -505,6 +505,7 @@ trait SubContents
 				case 'isbn':     $data[$raw_key] = Core\ISBN::sanitize( $raw_value ); break;
 				case 'bankcard': $data[$raw_key] = Core\Validation::sanitizeCardNumber( $raw_value ); break;
 				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
+				case 'distance': $data[$raw_key] = Core\Distance::sanitize( $raw_value ); break;
 				case 'duration': $data[$raw_key] = Core\Duration::sanitize( $raw_value ); break;
 
 				case 'date'    : // WTF
