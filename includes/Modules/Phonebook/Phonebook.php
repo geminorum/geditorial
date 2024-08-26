@@ -22,8 +22,10 @@ class Phonebook extends gEditorial\Module
 	use Internals\RestAPI;
 	use Internals\SubContents;
 
+	// @SEE `ContactCards` module
+
 	// TODO: optional fallback on `export` context into available sub-contents via `geditorial_meta_field_empty` filter
-	// TODO: remove duplicates @see: `Iranian::_render_tools_card_purge_duplicates()`
+	// TODO: remove duplicates via tools/aftercare/bulk-actions @see: `Iranian::_render_tools_card_purge_duplicates()`
 
 	public static function module()
 	{

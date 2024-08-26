@@ -286,7 +286,7 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: %s: shoe size placeholder */
+					/* translators: %s: shirt size placeholder */
 					return sprintf( _x( 'Size %s Shirt', 'Display', 'geditorial-units' ), $meta );
 
 				case 'international_pants':
@@ -295,8 +295,26 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: %s: shoe size placeholder */
+					/* translators: %s: pants size placeholder */
 					return sprintf( _x( 'Size %s Pants', 'Display', 'geditorial-units' ), $meta );
+
+				case 'bookcover':
+
+					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
+						? $this->strings['values'][$field['type']][( $raw ?: $value )]
+						: ( $raw ?: $value );
+
+					/* translators: %s: book cover placeholder */
+					return sprintf( _x( '%s Book-Cover', 'Display', 'geditorial-units' ), $meta );
+
+				case 'papersize':
+
+					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
+						? $this->strings['values'][$field['type']][( $raw ?: $value )]
+						: ( $raw ?: $value );
+
+					/* translators: %s: paper size cover placeholder */
+					return sprintf( _x( 'Size %s Paper', 'Display', 'geditorial-units' ), $meta );
 			}
 		}
 

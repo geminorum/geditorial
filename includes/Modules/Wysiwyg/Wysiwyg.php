@@ -168,7 +168,7 @@ class Wysiwyg extends gEditorial\Module
 
 			// FIXME: WTF: `geditorial_wysiwyg_add_term`
 
-			$ready = <<<'JS'
+			$ready = <<<JS
 $("#addtag").on("mousedown","#submit",function () {
 	tinyMCE.triggerSave();
 	$(document).on("ajaxSuccess.geditorial_wysiwyg_add_term", function () {

@@ -384,6 +384,13 @@ class PostTypeFields extends WordPress\Main
 						Core\Number::format( $raw ?: $value )
 					);
 
+				case 'km_per_hour':
+					return sprintf(
+						/* translators: %s: number as kilometer per hour */
+						_x( '%s kpm', 'Helper: Number as Kilometer per Hour', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
 				case 'identity':
 					return sprintf( '<span class="-identity %s">%s</span>',
 						Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
