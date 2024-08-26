@@ -99,6 +99,7 @@ class Attachments extends gEditorial\Module
 			$this->filter( 'attachment_link', 2, 20 );
 		}
 
+		$this->action_module( 'pointers', 'post', 5, 999 );
 		$this->register_shortcode( 'attachments_shortcode' );
 
 		if ( is_admin() )
@@ -225,6 +226,19 @@ class Attachments extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post->ID ) )
 			return;
 
+		$this->_render_summary_row( $post, $before, $after );
+	}
+
+	public function pointers_post( $post, $before, $after, $context, $screen )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return;
+
+		$this->_render_summary_row( $post, $before, $after );
+	}
+
+	private function _render_summary_row( $post, $before, $after )
+	{
 		$attachments = WordPress\Media::getAttachments( $post->ID, '' );
 
 		if ( ! $count = count( $attachments ) )
