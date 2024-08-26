@@ -1,0 +1,51 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial DeadDrops\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-08-26 23:47+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ../../includes/Modules/DeadDrops\n"
+"X-Domain: geditorial-dead-drops\n"
+
+#: DeadDrops.php:44
+msgctxt "Setting Title"
+msgid "Signal Instructions"
+msgstr "راهنمای سیگنال"
+
+#: DeadDrops.php:45
+msgctxt "Setting Description"
+msgid ""
+"Displays beside the qr-code on the signalling pop-up. Leave blank for "
+"default."
+msgstr ""
+"در کنار کد کی‌آر در صفحه سیگنال نمایش داده خواهد شد. برای پیش‌فرض خالی "
+"بگذارید."
+
+#: DeadDrops.php:46 DeadDrops.php:130
+msgctxt "Message"
+msgid "Scan this with your phone and open it to upload files anonymously."
+msgstr ""
+"برای بارگذاری به صورت ناشناس، شکل کناری را اسکن و در مرورگر گوشی باز "
+"کنید."
+
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: DeadDrops.php:71
+msgctxt "Label: Extended Label"
+msgid "Dead Drop for %1$s"
+msgstr "سقوط آزاد برای %1$s"
+
+#: DeadDrops.php:219
+msgctxt "Header Button"
+msgid "Dead Drop"
+msgstr "سقوط آزاد"
+
+#~ msgctxt "Dropzone: `dictDefaultMessage`"
+#~ msgid "Drop files here to upload"
+#~ msgstr "پرونده‌ها را برای بارگذاری در اینجا رها کنید"

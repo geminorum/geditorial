@@ -647,4 +647,48 @@ class Info extends WordPress\Main
 
 		return apply_filters( static::BASE.'_posttype_prop_title', $title, $prop, $context );
 	}
+
+	public static function getDropzoneStrings()
+	{
+		return apply_filters( static::BASE.'_strings_dropzone', [
+				/* translators: The text used before any files are dropped. */
+				'dictDefaultMessage' => _x( 'Drop files here to upload', 'Info: Dropzone: `dictDefaultMessage`', 'geditorial' ),
+
+				/* translators: The text that replaces the default message text it the browser is not supported. */
+				'dictFallbackMessage' => _x( 'Your browser does not support drag\'n\'drop file uploads.', 'Info: Dropzone: `dictFallbackMessage`', 'geditorial' ),
+
+				/* translators: The text that will be added before the fallback form. If you provide a  fallback element yourself, or if this option is `null` this will be ignored. */
+				'dictFallbackText' => _x( 'Please use the fallback form below to upload your files like in the olden days.', 'Info: Dropzone: `dictFallbackText`', 'geditorial' ),
+
+				/* translators: If the filesize is too big. `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values. */
+				'dictFileTooBig' => _x( 'File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.', 'Info: Dropzone: `dictFileTooBig`', 'geditorial' ),
+
+				/* translators: If the file doesn't match the file type. */
+				'dictInvalidFileType' => _x( 'You can\'t upload files of this type.', 'Info: Dropzone: `dictInvalidFileType`', 'geditorial' ),
+
+				/* translators: If the server response was invalid. `{{statusCode}}` will be replaced with the servers status code. */
+				'dictResponseError' => _x( 'Server responded with {{statusCode}} code.', 'Info: Dropzone: `dictResponseError`', 'geditorial' ),
+
+				/* translators: If `addRemoveLinks` is true, the text to be used for the cancel upload link. */
+				'dictCancelUpload' => _x( 'Cancel upload', 'Info: Dropzone: `dictCancelUpload`', 'geditorial' ),
+
+				/* translators: The text that is displayed if an upload was manually canceled. */
+				'dictUploadCanceled' => _x( 'Upload canceled.', 'Info: Dropzone: `dictUploadCanceled`', 'geditorial' ),
+
+				/* translators: If `addRemoveLinks` is true, the text to be used for confirmation when cancelling upload. */
+				'dictCancelUploadConfirmation' => _x( 'Are you sure you want to cancel this upload?', 'Info: Dropzone: `dictCancelUploadConfirmation`', 'geditorial' ),
+
+				/* translators: If `addRemoveLinks` is true, the text to be used to remove a file. */
+				'dictRemoveFile' => _x( 'Remove file', 'Info: Dropzone: `dictRemoveFile`', 'geditorial' ),
+
+				/* translators: Displayed if `maxFiles` is st and exceeded. The string `{{maxFiles}}` will be replaced by the configuration value. */
+				'dictMaxFilesExceeded' => _x( 'You can not upload any more files.', 'Info: Dropzone: `dictMaxFilesExceeded`', 'geditorial' ),
+
+				/* translators: Allows you to translate the different units. Starting with `tb` for terabytes and going down to `b` for bytes. */
+				// 'dictFileSizeUnits' => '', // { tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b" }
+
+				/* translators: If this is not null, then the user will be prompted before removing a file. */
+				// 'dictRemoveFileConfirmation => '', // NULL
+		] );
+	}
 }
