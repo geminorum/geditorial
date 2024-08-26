@@ -392,6 +392,7 @@ class Organization extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
+				$this->posttype_overview_register_headerbutton( 'reports' );
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__unset_columns( $screen->post_type );
 				$this->coreadmin__unset_views( $screen->post_type );

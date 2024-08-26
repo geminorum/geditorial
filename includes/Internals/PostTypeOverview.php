@@ -11,6 +11,18 @@ use geminorum\gEditorial\WordPress;
 
 trait PostTypeOverview
 {
+	protected function posttype_overview_register_headerbutton( $context, $link = NULL )
+	{
+		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
+			return FALSE;
+
+		return Services\HeaderButtons::register( 'posttype_overview', [
+			'text'     => _x( 'Overview', 'Internal: PostTypeOverview: Header Button', 'geditorial-admin' ),
+			'link'     => $link ?? $this->get_module_url( $context ),
+			'priority' => 8,
+		] );
+	}
+
 	protected function posttype_overview_render_table( $constant, $uri = '', $sub = NULL, $title = NULL )
 	{
 		if ( ! $this->role_can( 'reports' ) && ! $this->cuc( 'reports' ) )

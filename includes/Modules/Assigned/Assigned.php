@@ -170,6 +170,7 @@ class Assigned extends gEditorial\Module
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->modulelinks__register_headerbuttons();
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 

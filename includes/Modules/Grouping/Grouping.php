@@ -148,6 +148,7 @@ class Grouping extends gEditorial\Module
 		} else if ( array_key_exists( $screen->taxonomy, $customs ) ) {
 
 			$this->filter_string( 'parent_file', 'users.php' );
+			$this->modulelinks__register_headerbuttons();
 
 			if ( 'edit-tags' == $screen->base )
 				$this->_edit_tags_screen( $screen->taxonomy );

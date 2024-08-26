@@ -419,6 +419,7 @@ class Personage extends gEditorial\Module
 					'identity_number' => NULL,
 				] );
 
+				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_general_mainbox( $screen, 'primary_posttype' );
 

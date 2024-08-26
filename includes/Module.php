@@ -13,6 +13,7 @@ class Module extends WordPress\Module
 	use Internals\CorePostTypes;
 	use Internals\CoreTaxonomies;
 	use Internals\DefaultTerms;
+	use Internals\ModuleLinks;
 	use Internals\SettingsCore;
 	use Internals\SettingsFields;
 	use Internals\SettingsHelp;
@@ -362,6 +363,7 @@ class Module extends WordPress\Module
 	protected function get_module_icons() { return []; }
 
 	// FIXME: get dashboard menu for the module
+	// TODO: move to `ModuleLinks` Internal
 	protected function get_module_links()
 	{
 		$links  = [];
@@ -443,6 +445,7 @@ class Module extends WordPress\Module
 		return $links;
 	}
 
+	// TODO: move to `ModuleLinks` Internal
 	public function get_module_url( $context = NULL, $sub = NULL, $extra = [] )
 	{
 		if ( is_null( $sub ) )
@@ -471,6 +474,7 @@ class Module extends WordPress\Module
 		], $extra ), $url );
 	}
 
+	// TODO: move to `ModuleLinks` Internal
 	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage', $admin_base = NULL )
 	{
 		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )

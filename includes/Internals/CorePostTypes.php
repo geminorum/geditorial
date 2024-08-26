@@ -572,4 +572,28 @@ trait CorePostTypes
 		foreach ( $this->get_image_sizes_for_posttype( $posttype ) as $name => $size )
 			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
+
+	// @REF: https://stackoverflow.com/questions/15283026/attaching-media-to-post-type-without-editor-support
+	public function posttype__media_register_headerbutton( $constant, $post = NULL )
+	{
+		if ( ! post_type_supports( $this->constant( $constant, $constant ), 'thumbnail' ) )
+			return FALSE;
+
+		if ( ! $this->cuc( 'uploads', 'upload_files' ) )
+			return FALSE;
+
+		$args = [];
+
+		if ( $post = WordPress\Post::get( $post ) )
+			$args['post'] = $post;
+
+		wp_enqueue_media( $args );
+
+		return Services\HeaderButtons::register( 'posttype_overview', [
+			'text'     => _x( 'Uploads', 'Internal: CorePostTypes: Header Button', 'geditorial-admin' ),
+			'icon'     => 'admin-media',
+			'class'    => 'insert-media add_media', // needed for media library evoc
+			'priority' => 5,
+		] );
+	}
 }

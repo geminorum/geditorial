@@ -275,6 +275,7 @@ class Execution extends gEditorial\Module
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->modulelinks__register_headerbuttons();
 
 		} else if ( in_array( $screen->base, [ 'edit', 'post' ], TRUE ) ) {
 
