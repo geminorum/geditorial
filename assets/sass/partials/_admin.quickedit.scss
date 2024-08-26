@@ -4,30 +4,50 @@
 /// gEditorial Partials: Admin QuickEdit ---------------------------------------
 
 .geditorial-admin-wrap-quickedit {
-  margin: 0;
-  padding: 0.2em 0 0 0;
-
   @include theme-box-sizing-reset;
 
   .field-wrap {
+    + .field-wrap {
+      margin-top: .25 * $spacer;
+    }
+
     &.-select {
       select {
         width: 100%;
+        margin: 0;
       }
     }
 
     &.-inputtext-half {
       select,
       input {
-        width: 49%;
+        width: 49.5%;
       }
     }
 
     &.-inputtext-date {
+      display: flex;
+      justify-content: space-between;
+
       input {
-        width: 32.5%;
         text-align: center;
+        width: 32.3%;
+        margin: 0;
       }
+    }
+  }
+
+  .geditorial-admin-dropbown {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 0 ( .25 * $spacer );
+
+    // &.-quickedit-custombox {}
+
+    &.dropbown-ltr {
+
+      /*rtl:ignore*/
+      direction: ltr;
     }
   }
 }
