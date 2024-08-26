@@ -133,14 +133,19 @@ trait CoreAdmin
 
 					foreach ( $terms as $term ) {
 
+						// TODO: custom list of excludes or default
 						if ( $term->term_id == $default )
 							continue;
 
+						$color = get_term_meta( $term->term_id, $metakey, TRUE );
+
+						// TODO: cache each state by tax/id
 						$states[$this->classs( $term->slug )] = sprintf(
-							'<span class="%s" title="%s" style="background-color:%s">%s</span>',
+							'<span class="%s" title="%s" style="color:%s;background-color:%s">%s</span>',
 							'-custom-post-state',
 							Core\HTML::escapeAttr( $label ),
-							Core\HTML::escapeAttr( get_term_meta( $term->term_id, $metakey, TRUE ) ?: 'none' ),
+							Core\HTML::escapeAttr( $color ?: 'inherit' ),
+							Core\HTML::escapeAttr( $color ? Core\Color::lightOrDark( $color ) : 'none' ),
 							Core\HTML::escapeAttr( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) )
 						);
 					}
