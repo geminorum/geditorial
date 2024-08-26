@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class ProfileSummary extends gEditorial\Widget
@@ -64,7 +64,7 @@ class ProfileSummary extends gEditorial\Widget
 
 				echo '<li class="-row -contact -contact-'.$method.' list-group-item">';
 					Info::renderIcon( $method, $title );
-					echo Helper::prepMetaRow( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
+					echo Services\PostTypeFields::prepFieldRow( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
 				echo '</li>';
 			}
 

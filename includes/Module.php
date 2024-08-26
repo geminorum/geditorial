@@ -1177,7 +1177,7 @@ class Module extends WordPress\Module
 				return $prepped; // bail if already prepped
 		}
 
-		return Helper::prepMetaRow( $value, $field_key, $field, $raw );
+		return Services\PostTypeFields::prepFieldRow( $value, $field_key, $field, $raw );
 	}
 
 	// TODO: customize column position/sorting

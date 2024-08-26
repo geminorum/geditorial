@@ -3,6 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
@@ -296,5 +298,187 @@ class PostTypeFields extends WordPress\Main
 		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default );
 
 		return apply_filters( static::BASE.'_get_meta_field', $meta, $field_key, $post_id, $module, $default );
+	}
+
+	// OLD: `Helper::prepMetaRow()`
+	// TODO: support: `dob`,`date`,`datetime`
+	public static function prepFieldRow( $value, $field_key = NULL, $field = [], $raw = NULL )
+	{
+		$filtered = apply_filters( static::BASE.'_prep_meta_row', $value, $field_key, $field, $raw );
+
+		if ( $filtered !== $value )
+			return $filtered; // bail if already filtered
+
+		// NOTE: first priority: field key
+		switch ( $field_key ) {
+			case 'twitter'  : return Core\Third::htmlTwitterIntent( $raw ?: $value, TRUE );
+			case 'facebook' : return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
+			case 'instagram': return Core\Third::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
+			case 'telegram' : return Core\Third::htmlHandle( $value, 'https://t.me/' );
+			case 'phone'    : return Core\Email::prep( $raw ?: $value, $field, 'admin' );
+			case 'mobile'   : return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
+			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
+
+			case 'items':
+			case 'total_items':
+				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'item' ) ),
+					Core\Number::format( $raw ?: $value ) );
+
+			case 'pages':
+			case 'total_pages':
+				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'page' ) ),
+					Core\Number::format( $raw ?: $value ) );
+
+			case 'volumes':
+			case 'total_volumes':
+				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'volume' ) ),
+					Core\Number::format( $raw ?: $value ) );
+
+			case 'discs':
+			case 'total_discs':
+				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'disc' ) ),
+					Core\Number::format( $raw ?: $value ) );
+		}
+
+		if ( ! empty( $field['type'] ) ) {
+
+			// NOTE: second priority: field type
+			switch ( $field['type'] ) {
+
+				case 'people':
+					return Helper::prepPeople( $raw ?: $value );
+
+				case 'day':
+				case 'hour':
+				case 'member':
+				case 'person':
+					return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( $field['type'] ) ),
+						Core\Number::format( $raw ?: $value ) );
+
+				case 'gram':
+					return sprintf(
+						/* translators: %s: number as gram */
+						_x( '%s g', 'Helper: Number as Gram', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
+				case 'kilogram':
+					return sprintf(
+						/* translators: %s: number as kilogram */
+						_x( '%s kg', 'Helper: Number as Kilogram', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
+				case 'milimeter':
+					return sprintf(
+						/* translators: %s: number as milimeter */
+						_x( '%s mm', 'Helper: Number as Milimeter', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
+				case 'centimeter':
+					return sprintf(
+						/* translators: %s: number as centimeter */
+						_x( '%s cm', 'Helper: Number as Centimeter', 'geditorial' ),
+						Core\Number::format( $raw ?: $value )
+					);
+
+				case 'identity':
+					return sprintf( '<span class="-identity %s">%s</span>',
+						Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+						$raw ?: $value );
+
+				case 'postcode':
+
+					if ( FALSE === ( $postcode = Info::fromPostCode( $raw ?: $value ) ) )
+						return sprintf( '<span class="-postcode %s">%s</span>', '-not-valid', $raw ?: $value );
+
+					else
+						return sprintf( '<span class="-postcode %s" title="%s">%s</span>',
+							'-is-valid',
+							empty( $postcode['country'] ) ? gEditorial()->na( FALSE ) : $postcode['country'],
+							Core\HTML::wrapLTR( empty( $postcode['formatted'] ) ? ( $raw ?: $value ) : $postcode['formatted'] )
+						);
+
+				case 'iban':
+
+					if ( FALSE === ( $iban = Info::fromIBAN( $raw ?: $value ) ) )
+						return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $value );
+
+					else
+						return sprintf( '<span class="-iban %s" title="%s">%s</span>',
+							'-is-valid',
+							empty( $iban['bankname'] ) ? gEditorial()->na( FALSE ) : $iban['bankname'],
+							empty( $iban['formatted'] ) ? ( $raw ?: $value ) : $iban['formatted']
+						);
+
+				case 'bankcard':
+
+					if ( FALSE === ( $card = Info::fromCardNumber( $raw ?: $value ) ) )
+						return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $value );
+
+					else
+						return sprintf( '<span class="-bankcard %s" title="%s">%s</span>',
+							'-is-valid',
+							empty( $card['bankname'] ) ? gEditorial()->na( FALSE ) : $card['bankname'],
+							empty( $card['formatted'] ) ? ( $raw ?: $value ) : $card['formatted']
+						);
+
+				case 'isbn':
+					return Info::lookupISBN( $raw ?: $value );
+
+				case 'vin':
+					return Info::lookupVIN( $raw ?: $value );
+
+				case 'year':
+					return Core\Number::localize( $raw ?: $value );
+
+				case 'date':
+					return Datetime::prepForDisplay( $raw ?: $value, 'Y/m/d' );
+
+				case 'datetime':
+					return Datetime::prepForDisplay( $raw ?: $value, Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i' );
+
+				case 'distance':
+					return Core\Distance::prep( $raw ?: $value, $field );
+
+				case 'duration':
+					return Core\Duration::prep( $raw ?: $value, $field );
+
+				case 'contact_method':
+					return Core\URL::isValid( $raw ?: $value )
+						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
+						: sprintf( '<span title="%s">@%s</span>', empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ), $raw ?: $value );
+
+				case 'email':
+					return Core\Email::prep( $raw ?: $value, $field, 'admin' );
+
+				case 'phone':
+					return Core\Phone::prep( $raw ?: $value, $field, 'admin' );
+
+				case 'mobile':
+					return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
+
+				case 'embed':
+					return Core\HTML::link( Core\URL::getDomain( $raw ?: $value ), $raw ?: $value, TRUE );
+
+				case 'link':
+					return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
+			}
+		}
+
+		// NOTE: third priority: general field
+		switch ( $field_key ) {
+			case 'title'      : return Helper::prepTitle( $raw ?: $value );
+			case 'desc'       : return Helper::prepDescription( $raw ?: $value );
+			case 'description': return Helper::prepDescription( $raw ?: $value );
+			case 'contact'    : return Helper::prepContact( $raw ?: $value );
+		}
+
+		// NOTE: forth priority: last resort
+		if ( array_key_exists( 'ltr', $field ) && $field['ltr'] )
+			return sprintf( '<span dir="ltr">%s</span>', Core\HTML::escape( trim( $value ) ) );
+
+		return Core\HTML::escape( trim( $value ) );
 	}
 }
