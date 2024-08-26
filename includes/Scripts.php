@@ -480,6 +480,45 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
+	/**
+	 * Provides `Dropzone` package for register or enqueue.
+	 *
+	 * @homepage https://www.dropzone.dev/
+	 * @github   https://github.com/dropzone/dropzone
+	 *
+	 * @param  bool   $enqueue
+	 * @param  string $ver
+	 * @return string $handle
+	 */
+	public static function pkgDropzone( $enqueue = FALSE, $ver = '6.0.0-beta.2' )
+	{
+		$handle = 'dropzone';
+
+		if ( $enqueue ) {
+
+			// wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $ver, 'screen' );
+			wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $ver, 'screen' );
+			wp_enqueue_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $ver, TRUE );
+
+		} else {
+
+			// wp_register_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $ver, 'screen' );
+			wp_register_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $ver, 'screen' );
+			wp_register_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $ver, TRUE );
+		}
+
+		// wp_script_add_data( $handle, 'strategy', 'defer' );
+
+		return $handle;
+	}
+
+	public static function linkDropzone( $ver = '6.0.0-beta.2' )
+	{
+		// Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/basic.css', $ver, 'screen' );
+		Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/dropzone.css', $ver, 'screen' );
+		printf( '<script src="%s"></script>', add_query_arg( 'ver', $ver, static::URL.'assets/packages/dropzone/dropzone-min.js' ) );
+	}
+
 	// @REF: https://github.com/axenox/onscan.js
 	// @REF: https://a.kabachnik.info/onscan-js.html
 	public static function pkgOnScanJS( $enqueue = FALSE, $ver = '1.5.2' )
