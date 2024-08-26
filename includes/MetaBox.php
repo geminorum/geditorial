@@ -942,6 +942,8 @@ class MetaBox extends WordPress\Main
 			'pattern'     => NULL,        // HTML5 input pattern
 			'default'     => NULL,        // currently only on rest
 			'datatype'    => NULL,        // DataType Class
+			'data_unit'   => NULL,        // the unit which in the data is stored
+			'data_length' => NULL,        // typical length of the data
 			'icon'        => 'smiley',
 			'type'        => 'text',
 			'context'     => NULL,        // default is `mainbox`
@@ -1004,10 +1006,12 @@ class MetaBox extends WordPress\Main
 				'textarea-autosize',
 			],
 			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'] ?: $args['name'],
-				'meta-desc'  => $args['description'] ?: '',
+				'meta-field'  => $args['name'],
+				'meta-type'   => $args['type'],
+				'meta-title'  => $args['title'] ?: $args['name'],
+				'meta-desc'   => $args['description'] ?: '',
+				'meta-unit'   => $args['data_unit'] ?: '',
+				'meta-length' => $args['data_length'] ?: '',
 			],
 		];
 
@@ -1071,10 +1075,12 @@ class MetaBox extends WordPress\Main
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
 			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'] ?: $args['name'],
-				'meta-desc'  => $args['description'] ?: '',
+				'meta-field'  => $args['name'],
+				'meta-type'   => $args['type'],
+				'meta-title'  => $args['title'] ?: $args['name'],
+				'meta-desc'   => $args['description'] ?: '',
+				'meta-unit'   => $args['data_unit'] ?: '',
+				'meta-length' => $args['data_length'] ?: '',
 			],
 		];
 
@@ -1344,10 +1350,12 @@ class MetaBox extends WordPress\Main
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
 			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'] ?: $args['name'],
-				'meta-desc'  => $args['description'] ?: '',
+				'meta-field'  => $args['name'],
+				'meta-type'   => $args['type'],
+				'meta-title'  => $args['title'] ?: $args['name'],
+				'meta-desc'   => $args['description'] ?: '',
+				'meta-unit'   => $args['data_unit'] ?: '',
+				'meta-length' => $args['data_length'] ?: '',
 			],
 		];
 
@@ -1424,10 +1432,12 @@ class MetaBox extends WordPress\Main
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
 			],
 			'data' => [
-				'meta-field' => $args['name'],
-				'meta-type'  => $args['type'],
-				'meta-title' => $args['title'],
-				'meta-desc'  => $args['description'],
+				'meta-field'  => $args['name'],
+				'meta-type'   => $args['type'],
+				'meta-title'  => $args['title'],
+				'meta-desc'   => $args['description'] ?: '',
+				'meta-unit'   => $args['data_unit'] ?: '',
+				'meta-length' => $args['data_length'] ?: '',
 			],
 		];
 
