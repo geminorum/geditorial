@@ -52,7 +52,8 @@ trait PostTypeFields
 
 		} else if ( ! empty( $field['data_unit'] ) ) {
 
-			$export_title = Core\Text::trim( sprintf( '%s (%s)', $field['title'], Info::getUnit( $field['data_unit'], '' ) ) );
+			$unit_info    = Info::getUnit( $field['data_unit'], '' );
+			$export_title = Core\Text::trim( sprintf( '%s (%s)', $field['title'], $unit_info[0] ) );
 
 		} else if ( ! empty( $field['title'] ) ) {
 

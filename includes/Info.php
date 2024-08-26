@@ -380,26 +380,33 @@ class Info extends WordPress\Main
 		return $html ? TRUE : FALSE;
 	}
 
+	/**
+	 * Retrieves unit full/abbreviation titles given the identifier key.
+	 *
+	 * @param  string $key
+	 * @param  string $fallback
+	 * @return array  $info
+	 */
 	public static function getUnit( $key, $fallback = NULL )
 	{
 		switch ( $key ) {
 
-			case 'day'          : return _x( 'Days', 'Info: Unit', 'geditorial' );
-			case 'hour'         : return _x( 'Hours', 'Info: Unit', 'geditorial' );
-			case 'week'         : return _x( 'Weeks', 'Info: Unit', 'geditorial' );
-			case 'gram'         : return _x( 'Grams', 'Info: Unit', 'geditorial' );
-			case 'kilogram'     : return _x( 'Kilograms', 'Info: Unit', 'geditorial' );
-			case 'milimeter'    : return _x( 'Milimeters', 'Info: Unit', 'geditorial' );
-			case 'centimeter'   : return _x( 'Centimeters', 'Info: Unit', 'geditorial' );
-			case 'meter'        : return _x( 'Meters', 'Info: Unit', 'geditorial' );
-			case 'kilometer'    : return _x( 'Kilometers', 'Info: Unit', 'geditorial' );
-			case 'km_per_hour'  : return _x( 'Kilometers per Hour', 'Info: Unit', 'geditorial' );
-			case 'european'     : return _x( 'European', 'Info: Unit', 'geditorial' );
-			case 'international': return _x( 'International', 'Info: Unit', 'geditorial' );
-			case 'person'       : return _x( 'Persons', 'Info: Unit', 'geditorial' );
+			case 'day'          : return [ _x( 'Days', 'Info: Unit', 'geditorial' ), _x( 'days', 'Info: Unit', 'geditorial' ) ];
+			case 'hour'         : return [ _x( 'Hours', 'Info: Unit', 'geditorial' ), _x( 'hours', 'Info: Unit', 'geditorial' ) ];
+			case 'week'         : return [ _x( 'Weeks', 'Info: Unit', 'geditorial' ), _x( 'weeks', 'Info: Unit', 'geditorial' ) ];
+			case 'gram'         : return [ _x( 'Grams', 'Info: Unit', 'geditorial' ), _x( 'g', 'Info: Unit', 'geditorial' ) ];
+			case 'kilogram'     : return [ _x( 'Kilograms', 'Info: Unit', 'geditorial' ), _x( 'kg', 'Info: Unit', 'geditorial' ) ];
+			case 'milimeter'    : return [ _x( 'Milimeters', 'Info: Unit', 'geditorial' ), _x( 'mm', 'Info: Unit', 'geditorial' ) ];
+			case 'centimeter'   : return [ _x( 'Centimeters', 'Info: Unit', 'geditorial' ), _x( 'cm', 'Info: Unit', 'geditorial' ) ];
+			case 'meter'        : return [ _x( 'Meters', 'Info: Unit', 'geditorial' ), _x( 'm', 'Info: Unit', 'geditorial' ) ];
+			case 'kilometer'    : return [ _x( 'Kilometers', 'Info: Unit', 'geditorial' ), _x( 'km', 'Info: Unit', 'geditorial' ) ];
+			case 'km_per_hour'  : return [ _x( 'Kilometers per Hour', 'Info: Unit', 'geditorial' ), _x( 'kmph', 'Info: Unit', 'geditorial' ) ];
+			case 'european'     : return [ _x( 'European', 'Info: Unit', 'geditorial' ), _x( 'eu', 'Info: Unit', 'geditorial' ) ];
+			case 'international': return [ _x( 'International', 'Info: Unit', 'geditorial' ), _x( 'int', 'Info: Unit', 'geditorial' ) ];
+			case 'person'       : return [ _x( 'Persons', 'Info: Unit', 'geditorial' ), _x( 'persons', 'Info: Unit', 'geditorial' ) ];
 		}
 
-		return $fallback;
+		return [ $fallback, $fallback, $fallback ];
 	}
 
 	public static function getNoop( $key, $fallback = NULL )
