@@ -163,16 +163,18 @@ class DeadDrops extends gEditorial\Module
 	{
 		require_once ABSPATH . WPINC . '/class-phpass.php';
 		$wp_hasher = new \PasswordHash( 16, FALSE, FALSE );
+		$wp_salt   = wp_salt();
 
-		return $wp_hasher->HashPassword( trim( sprintf( '%s|%s|%s', $secret, $user_id, $post_id ) ) );
+		return $wp_hasher->HashPassword( trim( sprintf( '%s|%s|%s|%s', $secret, $user_id, $post_id, $wp_salt ) ) );
 	}
 
 	private function _check_hash( $hash, $secret, $user_id, $post_id )
 	{
 		require_once ABSPATH . WPINC . '/class-phpass.php';
 		$wp_hasher = new \PasswordHash( 16, FALSE, FALSE );
+		$wp_salt   = wp_salt();
 
-		$plain = trim( sprintf( '%s|%s|%s', $secret, $user_id, $post_id ) );
+		$plain = trim( sprintf( '%s|%s|%s|%s', $secret, $user_id, $post_id, $wp_salt ) );
 		// self::_log( [ $plain, $hash ] );
 
 		return $wp_hasher->CheckPassword( $plain, $hash );
