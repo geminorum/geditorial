@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
@@ -58,10 +59,16 @@ class Remoted extends gEditorial\Module
 		if ( ! $this->role_can( 'uploads' ) )
 			return;
 
+		$remote = $this->_get_remote_upload_url();
+
 		$this->add_dashboard_widget(
 			'remote-uploads',
 			_x( 'Remote Uploads', 'Dashboard Widget Title', 'geditorial-remoted' ),
-			'refresh'
+			Core\HTTP::htmlStatus(
+				Core\HTTP::getStatus( $remote, ! Core\WordPress::isDev() ),
+				NULL,
+				'<code class="postbox-title-action -status" title="%s" style="color:%s">%s</code>'
+			)
 		);
 	}
 
@@ -69,6 +76,9 @@ class Remoted extends gEditorial\Module
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
+
+		if ( ! $remote = $this->_get_remote_upload_url() )
+			return Info::renderSomethingIsWrong();
 
 		echo $this->wrap_open( [ '-admin-widget', '-remote-uploads' ], TRUE, $this->classs( 'container' ) );
 
@@ -95,7 +105,7 @@ class Remoted extends gEditorial\Module
 				'chunk'   => '200kb',   // '1mb' // TODO: setting
 				'maxsize' => '150mb',   // TODO: setting
 
-				'remote'    => $this->_get_remote_upload_url(),
+				'remote'    => $remote,
 				'mimetypes' => [
 					// NOTE: must be js compatible array
 					[
