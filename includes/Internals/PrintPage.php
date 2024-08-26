@@ -61,9 +61,9 @@ trait PrintPage
 		// https://github.com/graphicore/librebarcode
 		// https://graphicore.github.io/librebarcode/
 		if ( $this->get_setting( 'printpage_enqueue_librefonts' ) ) {
-			Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-ean13-text/index.css', GEDITORIAL_VERSION, 'all' );
-			Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128-text/index.css', GEDITORIAL_VERSION, 'all' );
-			Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128/index.css', GEDITORIAL_VERSION, 'all' );
+			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-ean13-text/index.css', GEDITORIAL_VERSION, 'all' );
+			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128-text/index.css', GEDITORIAL_VERSION, 'all' );
+			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128/index.css', GEDITORIAL_VERSION, 'all' );
 		}
 
 		$this->actions( 'printpage_render_head', $profile );
@@ -174,19 +174,6 @@ trait PrintPage
 
 		// @REF: https://hdtuto.com/article/print-iframe-content-using-jquery-example
 		echo '<script>function '.$func.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
-	}
-
-	protected function printpage_link_bootstrap_5()
-	{
-		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
-		$dir = Core\HTML::rtl() ? '.rtl' : '';
-
-		return Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/bootstrap/bootstrap'.$dir.$var.'.css', '5.3.3', 'all' );
-	}
-
-	protected function printpage_link_vazir_fonts()
-	{
-		return Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/vazirmatn/Vazirmatn-font-face.css', '33.0.3', 'all' );
 	}
 
 	public function settings_section_printpage()

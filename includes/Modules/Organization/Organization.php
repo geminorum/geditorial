@@ -33,9 +33,10 @@ class Organization extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 	use Internals\PostTypeOverview;
+	use Internals\QuickPosts;
 	use Internals\TemplatePostType;
 
-	protected $positions = [ 'primary_posttype' => 3 ];
+	protected $positions = [ 'primary_posttype' => 2 ];
 
 	public static function module()
 	{
@@ -58,12 +59,13 @@ class Organization extends gEditorial\Module
 
 		return [
 			'_general' => [
+				'quick_newpost',
 				'multiple_instances',
 				'paired_force_parents',
 				'paired_manage_restricted',
 				[
 					'field'       => 'subterms_support',
-					'title'       => _x( 'Sub-departments', 'Settings', 'geditorial-organization' ),
+					'title'       => _x( 'Sub-department Support', 'Settings', 'geditorial-organization' ),
 					'description' => _x( 'Substitute taxonomy for the departments and supported post-types.', 'Settings', 'geditorial-organization' ),
 				],
 				'paired_exclude_terms' => [
@@ -205,50 +207,52 @@ class Organization extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'primary_posttype' ) => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
-				'lead'       => [ 'type' => 'postbox_html' ],
+		return [
+			'meta' => [
+				$this->constant( 'primary_posttype' ) => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
 
-				'venue_string'   => [ 'type' => 'venue' ],
-				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
-				'website_url'    => [ 'type' => 'link' ],
-				'email_address'  => [ 'type' => 'email' ],
+					'venue_string'   => [ 'type' => 'venue' ],
+					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'website_url'    => [ 'type' => 'link' ],
+					'email_address'  => [ 'type' => 'email' ],
 
-				'featured_people' => [
-					'title'       => _x( 'Administrators', 'Field Title', 'geditorial-organization' ),
-					'description' => _x( 'People Who Participate as Administrators in This Organization', 'Field Description', 'geditorial-organization' ),
-					'type'        => 'people',
-					'quickedit'   => TRUE,
-					'order'       => 90,
+					'featured_people' => [
+						'title'       => _x( 'Administrators', 'Field Title', 'geditorial-organization' ),
+						'description' => _x( 'People Who Participate as Administrators in This Organization', 'Field Description', 'geditorial-organization' ),
+						'type'        => 'people',
+						'quickedit'   => TRUE,
+						'order'       => 90,
+					],
+
+					// TODO: internal: `PairedCodeField` for all x_code shenanigans!
+					'organization_code' => [
+						'title'       => _x( 'Organization Code', 'Field Title', 'geditorial-organization' ),
+						'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),
+						'type'        => 'code',
+						'quickedit'   => TRUE,
+						'icon'        => 'nametag',
+						'order'       => 100,
+					],
 				],
-
-				// TODO: internal: `PairedCodeField` for all x_code shenanigans!
-				'organization_code' => [
-					'title'       => _x( 'Organization Code', 'Field Title', 'geditorial-organization' ),
-					'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),
-					'type'        => 'code',
-					'quickedit'   => TRUE,
-					'icon'        => 'nametag',
-					'order'       => 100,
+				'_supported' => [
+					'organization_number' => [
+						'title'       => _x( 'Organization Number', 'Field Title', 'geditorial-organization' ),
+						'description' => _x( 'Unique Organization Membership Number', 'Field Description', 'geditorial-organization' ),
+						'type'        => 'code',
+						'order'       => 100,
+					],
 				],
 			],
-			'_supported' => [
-				'organization_number' => [
-					'title'       => _x( 'Organization Number', 'Field Title', 'geditorial-organization' ),
-					'description' => _x( 'Unique Organization Number', 'Field Description', 'geditorial-organization' ),
-					'type'        => 'code',
-					'order'       => 100,
-				],
-			],
-		] ];
+		];
 	}
 
 	protected function paired_get_paired_constants()
@@ -257,7 +261,7 @@ class Organization extends gEditorial\Module
 			'primary_posttype',
 			'primary_paired',
 			'primary_subterm',
-			'primary_taxonomy'
+			'primary_taxonomy',
 		];
 	}
 
@@ -318,19 +322,16 @@ class Organization extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
+			'is_viewable'     => $viewable,
+			'custom_captype'  => $captype,
 			'single_selected' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
-			'public'             => FALSE,
 			'hierarchical'       => TRUE,
+			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
-			'is_viewable'     => $viewable,
-			'custom_captype'  => $captype,
-			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );
 
@@ -429,7 +430,7 @@ class Organization extends gEditorial\Module
 				$this->pairedimports__hook_append_import_button( $screen->post_type );
 				$this->pairedrowactions__hook_for_supported_posttypes( $screen );
 				$this->paired__hook_tweaks_column( $screen->post_type, 8 );
-				$this->paired__hook_screen_restrictposts( FALSE, 9 );
+				$this->paired__hook_screen_restrictposts( 'reports', 9 );
 				$this->postmeta__hook_meta_column_row( $screen->post_type, [
 					'organization_number',
 				] );
@@ -446,6 +447,11 @@ class Organization extends gEditorial\Module
 	public function admin_menu()
 	{
 		$this->_hook_submenu_adminpage( 'importitems', 'read' );
+
+		if ( $this->get_setting( 'quick_newpost' ) ) {
+			$this->_hook_submenu_adminpage( 'newpost' );
+			$this->action_self( 'newpost_content', 4, 10, 'menu_order' );
+		}
 	}
 
 	public function dashboard_glance_items( $items )

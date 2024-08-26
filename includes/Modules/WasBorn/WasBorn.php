@@ -65,7 +65,7 @@ class WasBorn extends gEditorial\Module
 		$settings['_defaults'] = [
 			'override_dates' => [ _x( 'Tries to override post-date with provided date-of-birth on supported post-types.', 'Setting Description', 'geditorial-was-born' ), ],
 			'calendar_type',
-			'calendar_list',
+			// 'calendar_list',
 			[
 				'field'       => 'age_of_majority',
 				'type'        => 'number',
@@ -912,7 +912,7 @@ class WasBorn extends gEditorial\Module
 		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
 			return FALSE;
 
-		echo $before;
+		printf( $before, '-date-of-birth' );
 		echo $this->get_column_icon();
 
 		echo Datetime::prepDateOfBirth( $dob, NULL, TRUE, $cal );
@@ -1002,7 +1002,7 @@ class WasBorn extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Birthday Tools', 'Header', 'geditorial-was-born' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Birthday Imports', 'Header', 'geditorial-was-born' ) );
 
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 

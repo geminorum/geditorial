@@ -35,8 +35,8 @@ class Schedule extends gEditorial\Module
 	{
 		return [
 			'_dashboard' => [
-				'calendar_type',
-				'calendar_list',
+				// 'calendar_type',
+				// 'calendar_list',
 				'admin_rowactions',
 				'adminmenu_roles' => [ NULL, $this->get_settings_default_roles() ],
 				[

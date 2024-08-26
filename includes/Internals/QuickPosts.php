@@ -152,6 +152,7 @@ trait QuickPosts
 
 	// LEGACY: do not use thickbox anymore!
 	// NOTE: must `add_thickbox()` on load
+	// FIXME: use color box api
 	public function do_render_thickbox_newpostbutton( $post, $constant, $context = 'newpost', $extra = [], $inline = FALSE, $width = '600' )
 	{
 		$posttype = $this->constant( $constant );

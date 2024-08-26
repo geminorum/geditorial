@@ -13,13 +13,18 @@ class Scripts extends WordPress\Main
 	const URL     = GEDITORIAL_URL;
 	const VERSION = GEDITORIAL_VERSION;
 
-	public static function noScriptMessage()
+	public static function noScriptMessage( $verbose = TRUE )
 	{
-		echo Core\HTML::tag( 'noscript',
+		$html = Core\HTML::tag( 'noscript',
 			'<strong>'.
 				_x( 'We\'re sorry but this application doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'Scripts: No Script Message', 'geditorial' )
 			.'</strong>'
 		);
+
+		if ( ! $verbose )
+			return $html;
+
+		echo $html;
 	}
 
 	public static function renderAppMounter( $name, $module = FALSE, $html = NULL )
@@ -562,6 +567,27 @@ class Scripts extends WordPress\Main
 		return $enqueue
 			? self::enqueuePackage( 'select2', 'select2/select2', [ 'jquery' ], $ver )
 			: self::registerPackage( 'select2', 'select2/select2', [ 'jquery' ], $ver );
+	}
+
+	public static function linkBootstrap5( $ver = '5.3.3', $screen = 'all' )
+	{
+		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
+		$dir = Core\HTML::rtl() ? '.rtl' : '';
+
+		return Core\HTML::linkStyleSheet(
+			GEDITORIAL_URL.'assets/packages/bootstrap/bootstrap'.$dir.$var.'.css',
+			$ver,
+			$screen
+		);
+	}
+
+	public static function linkVazirMatn( $ver = '33.0.3', $screen = 'all' )
+	{
+		return Core\HTML::linkStyleSheet(
+			GEDITORIAL_URL.'assets/packages/vazirmatn/Vazirmatn-font-face.css',
+			$ver,
+			$screen
+		);
 	}
 
 	public static function getTinyMceStrings( $locale )

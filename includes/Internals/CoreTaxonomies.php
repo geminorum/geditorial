@@ -131,6 +131,7 @@ trait CoreTaxonomies
 		return $object;
 	}
 
+	// TODO: support for taxonomy icon: @SEE: `$args['menu_icon']`
 	protected function apply_taxonomy_object_settings( $taxonomy, $args = [], $atts = [], $posttypes = NULL, $constant = FALSE )
 	{
 		$settings = self::atts( [
@@ -139,7 +140,7 @@ trait CoreTaxonomies
 			'admin_managed'   => NULL,    // psudo-setting: manage only for admins
 			'auto_parents'    => FALSE,
 			'auto_children'   => FALSE,
-			'single_selected' => FALSE,
+			'single_selected' => FALSE,   // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
 			'reverse_ordered' => NULL,
 		], $atts );
 
@@ -263,7 +264,7 @@ trait CoreTaxonomies
 
 				case 'auto_parents'    : $args[Services\TermHierarchy::AUTO_SET_PARENT_TERMS] = $value; break;
 				case 'auto_children'   : $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
-				case 'single_selected ': $args[Services\TermHierarchy::SINGLE_TERM_SELECT]    = $value; break;
+				case 'single_selected' : $args[Services\TermHierarchy::SINGLE_TERM_SELECT]    = $value; break;
 				case 'reverse_ordered' : $args[Services\TermHierarchy::REVERSE_ORDERED_TERMS] = $value; break;
 
 				// TODO: support combination of settings:

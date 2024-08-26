@@ -459,7 +459,7 @@ class Athlete extends gEditorial\Module
 		if ( ! $bmi = ModuleHelper::calculateBMI( $mass, $stature ) )
 			return;
 
-		echo $before;
+		printf( $before, '-bmi-suammry' );
 			// TODO: hint the data!
 			printf( '%s <span class="-bmi -bmi-%s -text-%s" title="%s">%s</span>',
 				$this->get_column_icon(),

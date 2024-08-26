@@ -613,6 +613,11 @@ trait PostTypeFields
 
 			switch ( $args['type'] ) {
 
+				case 'european_shoe':
+				case 'international_shirt':
+				case 'international_pants':
+				case 'bookcover':
+				case 'papersize':
 				case 'select':
 
 					MetaBox::renderFieldSelect( $args, $post, $this->module->name );
@@ -649,9 +654,20 @@ trait PostTypeFields
 					MetaBox::renderFieldInput( $args, $post, $this->module->name );
 					break;
 
+				case 'float':
 				case 'price': // TODO must use custom text input + code + ortho-number + separeator
 				case 'number':
-				case 'float':
+				case 'member':
+				case 'person':
+				case 'day':
+				case 'hour':
+				case 'gram':
+				case 'km_per_hour':
+				case 'milimeter':
+				case 'kilogram':
+				case 'centimeter':
+				case 'meter':
+				case 'kilometre':
 
 					MetaBox::renderFieldNumber( $args, $post, $this->module->name );
 					break;

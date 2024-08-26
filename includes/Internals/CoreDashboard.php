@@ -78,6 +78,9 @@ trait CoreDashboard
 						$title.= MetaBox::titleActionInfo( call_user_func( [ $this, 'get_widget_'.$hook.'_info' ] ) );
 
 					break;
+
+				default:
+					$title.= $action;
 			}
 		}
 

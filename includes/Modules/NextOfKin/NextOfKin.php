@@ -92,7 +92,7 @@ class NextOfKin extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'main_taxonomy' => 'smiley',
+				'main_taxonomy' => 'buddicons-tracking',
 			],
 		];
 	}
@@ -236,7 +236,8 @@ class NextOfKin extends gEditorial\Module
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'data_length'        => _x( '10', 'Main Taxonomy Argument: `data_length`', 'geditorial-next-of-kin' ),
 		], NULL, [
-			'custom_captype' => TRUE,
+			'custom_captype'  => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );

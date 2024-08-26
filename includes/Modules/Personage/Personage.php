@@ -195,6 +195,7 @@ class Personage extends gEditorial\Module
 				'expelled'    => _x( 'Expelled', 'Default Term: `Status`', 'geditorial-personage' ),
 				'dismissed'   => _x( 'Dismissed', 'Default Term: `Status`', 'geditorial-personage' ),
 				'hushed'      => _x( 'Hushed', 'Default Term: `Status`', 'geditorial-personage' ),
+				'recruit'     => _x( 'Recruit', 'Default Term: `Status`', 'geditorial-personage' ),
 				'concurrency' => _x( 'Concurrency', 'Default Term: `Status`', 'geditorial-personage' ),
 			],
 		];
@@ -400,6 +401,7 @@ class Personage extends gEditorial\Module
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
+			$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 		}
 	}
 
@@ -435,6 +437,7 @@ class Personage extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
+				$this->posttype_overview_register_headerbutton( 'reports' );
 				$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->corerestrictposts__hook_screen_taxonomies( [

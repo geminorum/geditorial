@@ -2,10 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\WordPress;
-
 class Module extends WordPress\Module
 {
 	use Internals\Assets;
@@ -74,6 +70,7 @@ class Module extends WordPress\Module
 		'roles'     => 'edit_users',
 		'adminbar'  => 'edit_others_posts',
 		'dashboard' => 'edit_others_posts',
+		'uploads'   => 'upload_files',
 
 		// 'paired_create' => 'manage_options', // to restrict main post
 		// 'paired_delete' => 'manage_options', // to restrict main post
@@ -423,6 +420,9 @@ class Module extends WordPress\Module
 				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ), $this->module->title ),
 			];
 
+		if ( GEDITORIAL_DISABLE_HELP_TABS )
+			return $links;
+
 		if ( $docs = $this->get_module_url( 'docs' ) )
 			$links[] = [
 				'context' => 'docs',
@@ -682,7 +682,7 @@ class Module extends WordPress\Module
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
 	}
 
-	// TODO: move to internals
+	// TODO: move to `Strings` Internal
 	protected function _hook_post_updated_messages( $constant )
 	{
 		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {
@@ -694,7 +694,7 @@ class Module extends WordPress\Module
 		} );
 	}
 
-	// TODO: move to internals
+	// TODO: move to `Strings` Internal
 	protected function _hook_bulk_post_updated_messages( $constant )
 	{
 		add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $constant ) {
@@ -1089,6 +1089,7 @@ class Module extends WordPress\Module
 		return $this->get_setting( 'comment_status', $status );
 	}
 
+	// FIXME: MUST DEPRECATE
 	// DEFAULT FILTER
 	// increases last menu_order for new posts
 	// USAGE: `$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );`

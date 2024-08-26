@@ -33,6 +33,7 @@ class Directorate extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 	use Internals\PostTypeOverview;
+	use Internals\QuickPosts;
 	use Internals\TemplatePostType;
 
 	protected $positions = [ 'primary_posttype' => 3 ];

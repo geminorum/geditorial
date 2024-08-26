@@ -1326,7 +1326,7 @@ class Importer extends gEditorial\Module
 				$result = wp_set_object_terms( $post_id, NULL, $taxonomy );
 
 			else if ( ! empty( $filtered ) )
-				$result = wp_set_object_terms( $post_id, $terms, $taxonomy, $append );
+				$result = wp_set_object_terms( $post_id, $filtered, $taxonomy, $append );
 
 			else
 				continue;

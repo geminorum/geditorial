@@ -480,7 +480,7 @@ class Config extends gEditorial\Module
 				Core\HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Message', 'geditorial-config' ), FALSE );
 			echo '</p>';
 
-			if ( WordPress\User::isSuperAdmin() || Core\WordPress::isDev() ) {
+			if ( Core\WordPress::isDev() || WordPress\User::isSuperAdmin() ) {
 				echo $this->wrap_open_buttons( '-delete-all-options' );
 					Settings::submitButton( 'delete_all_options',
 						_x( 'Delete All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );

@@ -143,9 +143,9 @@ class Helper extends WordPress\Main
 		return Core\HTML::linkStyleSheet( $url, $version, $media, $verbose );
 	}
 
-	public static function linkStyleSheetAdmin( $page, $verbose = TRUE )
+	public static function linkStyleSheetAdmin( $page, $verbose = TRUE, $prefix = 'admin' )
 	{
-		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/admin.'.$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
+		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
 	}
 
 	// TODO: move to `WordPress\Strings`

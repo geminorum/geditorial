@@ -505,17 +505,17 @@ class Papered extends gEditorial\Module
 
 	public function printpage_render_head( $profile = FALSE )
 	{
-		Helper::linkStyleSheet( GEDITORIAL_URL.'assets/packages/paper-css/paper-0.4.1.css', GEDITORIAL_VERSION, 'all' );
+		Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/paper-css/paper-0.4.1.css', GEDITORIAL_VERSION, 'all' );
 
 		if ( $post = WordPress\Post::get( $profile ) ) {
 
 			$taxonomy = $this->constant( 'flag_taxonomy' );
 
 			if ( has_term( 'needs-vazir-fonts', $taxonomy, $post ) )
-				$this->printpage_link_vazir_fonts();
+				Scripts::linkVazirMatn();
 
 			if ( has_term( 'needs-bootstrap-5', $taxonomy, $post ) )
-				$this->printpage_link_bootstrap_5();
+				Scripts::linkBootstrap5();
 
 			if ( $styles = $this->_get_template_styles( $post, 'display' ) )
 				printf( '<style>%s</style>', $styles );
