@@ -3,6 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
 
 class TermHierarchy extends WordPress\Main
@@ -20,6 +22,154 @@ class TermHierarchy extends WordPress\Main
 		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms_auto_set_parent_terms' ], 9999, 6 );
 		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms_auto_set_child_terms' ], 9999, 6 );
 		add_filter( 'get_terms_defaults', [ __CLASS__, 'get_terms_defaults' ], 9, 2 );
+
+		if ( ! is_admin() )
+			return;
+
+		add_action( 'current_screen', [ __CLASS__, 'current_screen' ], 999 );
+	}
+
+	public static function current_screen( $screen )
+	{
+		if ( 'edit' == $screen->base && ! empty ( $screen->post_type ) )
+			self::_hook_edit_screen_single_term_select( $screen->post_type );
+	}
+
+	private static function _hook_edit_screen_single_term_select( $posttype )
+	{
+		// NOTE: this is wp-core hook
+		if ( ! apply_filters( 'quick_edit_enabled_for_post_type', TRUE, $posttype ) )
+			return FALSE;
+
+		$taxonomies = WordPress\Taxonomy::get( 4, [
+			'show_in_quick_edit'     => TRUE,
+			self::SINGLE_TERM_SELECT => TRUE,
+		], $posttype, 'assign_terms' );
+
+		if ( empty( $taxonomies ) )
+			return FALSE;
+
+		add_filter( 'quick_edit_show_taxonomy',
+			static function ( $show, $taxonomy, $current ) use ( $posttype, $taxonomies ) {
+
+				if ( ! $show || $current !== $posttype )
+					return $show;
+
+				return array_key_exists( $taxonomy, $taxonomies )
+					? FALSE
+					: $show;
+
+			}, 12, 3 );
+
+		add_action( 'add_inline_data',
+			static function ( $post, $object ) use ( $posttype, $taxonomies ) {
+
+				if ( $object->name !== $posttype )
+					return;
+
+				$prefix = static::BASE.'-singleselect';
+
+				foreach ( $taxonomies as $taxonomy ) {
+					echo '<div class="hidden '.static::BASE.'-singleselect-value-'.$taxonomy->name.'">';
+
+					if ( $term = self::getSingleSelectTerm( $taxonomy, get_the_terms( $post, $taxonomy->name ) ) )
+						echo $taxonomy->hierarchical ? $term->term_id : $term->slug;
+
+					echo '</div>';
+				}
+			}, 1, 2 );
+
+
+		add_action( 'quick_edit_custom_box',
+			static function ( $column, $current ) use ( $posttype, $taxonomies ) {
+
+				static $added = FALSE;
+
+				if ( $added || $current !== $posttype )
+					return;
+
+				$html = '';
+
+				foreach ( $taxonomies as $taxonomy ) {
+
+					$args = [
+						'taxonomy'          => $taxonomy->name,
+						'hierarchical'      => $taxonomy->hierarchical,
+						'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
+						'value_field'       => $taxonomy->hierarchical ? 'term_id' : 'slug',
+						'name'              => 'tax_input['.$taxonomy->name.'][]',
+						'id'                => static::BASE.'-singleselect-select-'.$taxonomy->name,
+						'option_none_value' => '0',
+						'show_option_none'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' ),
+						'class'             => static::BASE.'-admin-dropbown -quickedit-custombox',
+						'show_count'        => FALSE,
+						'hide_empty'        => FALSE,
+						'hide_if_empty'     => TRUE,
+						'echo'              => FALSE,
+					];
+
+					if ( ! $dropdown = wp_dropdown_categories( $args ) )
+						continue;
+
+					$html.= sprintf( '<div title="%s">%s</div>',
+						Core\HTML::escapeAttr( Helper::getTaxonomyLabel( $taxonomy, 'extended_label' ) ), $dropdown );
+				}
+
+				if ( $html ) {
+					vprintf( '<div class="%s-admin-wrap-quickedit" id="%s-%s-wrap" data-taxonomies=\'%s\'>', [
+						static::BASE,
+						static::BASE,
+						'singleselect',
+						wp_json_encode( array_keys( Core\Arraay::pluck( $taxonomies, 'name' ) ) ),
+					] );
+
+					echo $html.'</div>';
+				}
+
+				$added = $column;
+
+			}, 1, 2 );
+
+		Scripts::enqueue( 'admin.singleselect.edit' );
+	}
+
+	/**
+	 * Retrieves a single targeted term form a taxonomy with select-single prop.
+	 *
+	 * @param  string|object $taxonomy
+	 * @param  array         $terms
+	 * @param  bool|object   $post
+	 * @return false|object  $term
+	 */
+	public static function getSingleSelectTerm( $taxonomy, $terms, $post = FALSE )
+	{
+		// if ( is_null( $terms ) )
+		// 	return NULL; // maybe in the process of clearing!
+
+		if ( ! $taxonomy || empty( $terms ) )
+			return FALSE;
+
+		if ( 1 === count( $terms ) )
+			return WordPress\Term::get( reset( $terms ) );
+
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
+			return WordPress\Term::get( reset( $terms ) );
+
+		if ( empty( $object->self::SINGLE_TERM_SELECT ) )
+			return WordPress\Term::get( reset( $terms ) );
+
+		if ( TRUE === $object->self::SINGLE_TERM_SELECT )
+			return apply_filters( sprintf( '%s_singleselect_term_%s', static::BASE, $object->name ),
+				WordPress\Term::get( reset( $terms ) ),
+				$terms,
+				$taxonomy,
+				$post
+			);
+
+		if ( is_callable( $object->self::SINGLE_TERM_SELECT ) )
+			return call_user_func_array( $object->self::SINGLE_TERM_SELECT, [ $terms, $taxonomy, $post ] );
+
+		return WordPress\Term::get( reset( $terms ) );
 	}
 
 	/**
