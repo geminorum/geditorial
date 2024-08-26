@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -193,8 +192,7 @@ class Units extends gEditorial\Module
 		if ( ! $this->get_posttype_fields( $posttype ) )
 			return;
 
-		$this->_edit_screen( $posttype );
-		$this->_hook_default_rows( $posttype );
+		$this->posttypefields__hook_edit_screen( $posttype );
 		$this->_hook_store_metabox( $posttype, 'posttypefields' );
 	}
 
@@ -218,8 +216,7 @@ class Units extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_admin_enabled();
-				$this->_edit_screen( $screen->post_type );
-				$this->_hook_default_rows( $screen->post_type );
+				$this->posttypefields__hook_edit_screen( $screen->post_type );
 
 				$asset = [
 					'fields' => array_filter( Core\Arraay::column( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
@@ -229,154 +226,6 @@ class Units extends gEditorial\Module
 				$this->_hook_store_metabox( $screen->post_type, 'posttypefields' );
 			}
 		}
-	}
-
-	// TODO: optional display of column for each supported: `column_posttypes`
-	// -- with fallback to tweaks column
-	private function _edit_screen( $posttype )
-	{
-		$this->filter( 'manage_posts_columns', 2, 15 );
-		$this->filter( 'manage_pages_columns', 1, 15 );
-
-		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
-
-		$this->action( 'quick_edit_custom_box', 2 );
-	}
-
-	// early and late actions to make room for other modules
-	private function _hook_default_rows( $posttype )
-	{
-		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_default' ], 5, 6 );
-		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 6 );
-		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 6 );
-	}
-
-	public function manage_pages_columns( $columns )
-	{
-		return $this->manage_posts_columns( $columns, 'page' );
-	}
-
-	public function manage_posts_columns( $columns, $posttype )
-	{
-		return Core\Arraay::insert( $columns, [
-			$this->classs() => $this->get_column_title( 'units', $posttype ),
-		], 'comments', 'before' );
-	}
-
-	public function posts_custom_column( $column_name, $post_id )
-	{
-		if ( $this->classs() != $column_name )
-			return;
-
-		if ( ! $post = WordPress\Post::get( $post_id ) )
-			return;
-
-		$prefix   = $this->classs().'-';
-		$fields   = $this->get_posttype_fields( $post->post_type );
-		$excludes = []; // excludes are for other modules
-
-		foreach ( $fields as $field => $args ) {
-
-			if ( $args['quickedit'] )
-				$excludes[] = $field;
-
-			else if ( in_array( $args['name'], [ 'source_title', 'source_url', 'action_title', 'action_url' ] ) )
-				$excludes[] = $field;
-
-			else if ( in_array( $args['type'], [ 'term', 'postbox_html', 'postbox_tiny', 'postbox_legacy' ] ) )
-				$excludes[] = $field;
-		}
-
-		echo '<div class="geditorial-admin-wrap-column -units"><ul class="-rows">';
-
-			// FIXME: DEPRECATED
-			$this->actions( 'column_row', $post, $fields, $excludes );
-
-			do_action( $this->hook( 'column_row', $post->post_type ),
-				$post,
-				$this->wrap_open_row( 'attr', [
-					'-column-attr',
-					'-type-'.$post->post_type,
-					'%s', // to use by caller
-				] ),
-				'</li>',
-				$this->module->name,
-				$fields,
-				$excludes
-			);
-
-		echo '</ul></div>';
-
-		// NOTE: for `quickedit` enabled fields
-		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
-			echo '<div class="hidden '.$prefix.$field.'-value">'.
-				$this->_prep_posttype_field_for_input(
-					$this->get_postmeta_field( $post->ID, $field ),
-					$field,
-					$args
-				).'</div>';
-	}
-
-	// NOTE: only renders `quickedit` enabled fields
-	public function column_row_default( $post, $before, $after, $module, $fields, $excludes )
-	{
-		foreach ( $fields as $field_key => $field ) {
-
-			// if ( ! $field['quickedit'] )
-			// 	continue;
-
-			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
-				continue;
-
-			printf( $before, sprintf( '-%s-%s', $module, $field_key ) );
-				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
-				echo $this->prep_meta_row( $value, $field_key, $field, $value );
-			echo $after;
-		}
-	}
-
-	// NOTE: for more `MetaBox::renderFieldInput()`
-	private function _prep_posttype_field_for_input( $value, $field_key, $field )
-	{
-		if ( empty( $field['type'] ) )
-			return $value;
-
-		switch ( $field['type'] ) {
-			// case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' )    : $value;
-			// case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' ): $value;
-			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )             : $value;
-		}
-
-		return $value;
-	}
-
-	public function quick_edit_custom_box( $column_name, $posttype )
-	{
-		if ( $this->classs() != $column_name )
-			return FALSE;
-
-		$fields = $this->get_posttype_fields( $posttype );
-
-		foreach ( $fields as $field => $args ) {
-
-			if ( ! $args['quickedit'] )
-				continue;
-
-			$name  = $this->classs().'-'.$field; // to protect key underlines
-			$class = Core\HTML::prepClass( $name );
-
-			echo '<label class="hidden '.$class.'">';
-				echo '<span class="title">'.$args['title'].'</span>';
-				echo '<span class="input-text-wrap">';
-				echo '<input name="'.$name.'" class="'.$class.'" value=""';
-				echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
-				echo $args['ltr'] ? ' dir="ltr"' : '';
-				echo $args['type'] === 'number' ? ' type="number" ' : ' type="text" ';
-				echo '></span>';
-			echo '</label>';
-		}
-
-		$this->nonce_field( 'nobox' );
 	}
 
 	// @REF: `Template::getMetaField()`
