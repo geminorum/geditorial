@@ -638,6 +638,12 @@ trait SubContents
 		if ( array_key_exists( 'dateend', $types ) )
 			$types['dateend'] = 'date';
 
+		if ( array_key_exists( 'timestart', $types ) )
+			$types['timestart'] = 'time';
+
+		if ( array_key_exists( 'timeend', $types ) )
+			$types['timeend'] = 'time';
+
 		return $types;
 	}
 

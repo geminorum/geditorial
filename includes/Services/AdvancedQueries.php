@@ -116,4 +116,95 @@ class AdvancedQueries extends Main
 			}
 		}
 	}
+
+	/**
+	 * Complex WordPress meta query by start and end date (custom meta fields)
+	 * Intended for use on the `pre_get_posts` hook.
+	 * Caution; this makes the query very slow - several seconds - so should be
+	 * implemented with some form of caching.
+	 *
+	 * `add_action( 'pre_get_posts', [ __CLASS__, 'onlyFutureEntries' ] );`
+	 *
+	 * @author mark@sayhello.ch 22.10.2019, based on code from 201 onwards
+	 * @source https://gist.github.com/markhowellsmead/2bb4abdc8b718ee3e20c7cc4cf58be6b
+	 */
+	public static function onlyFutureEntries( $query )
+	{
+		if ( is_admin() )
+			return;
+
+		if ( isset( $query->query['post_type'] ) && $query->query['post_type'] === 'event' ) {
+
+			$query->set( 'orderby', 'meta_value' );
+			$query->set( 'order', 'ASC' );
+			$query->set( 'meta_key', 'start_date' );
+
+			$meta_query = (array) $query->get( 'meta_query' );
+
+			$meta_query[] = [
+				'relation' => 'OR',
+				[
+					// Start date and end date are empty
+					'relation' => 'AND',
+					[
+						'relation' => 'OR',
+						[
+							'key'     => 'start_date',
+							'value'   => '',
+							'compare' => '='
+						],
+						[
+							'key'     => 'start_date',
+							'compare' => 'NOT EXISTS'
+						]
+					],
+					[
+						'relation' => 'OR',
+						[
+							'key'     => 'end_date',
+							'value'   => '',
+							'compare' => '='
+						],
+						[
+							'key'     => 'end_date',
+							'compare' => 'NOT EXISTS',
+						]
+					]
+				],
+				[
+					// Start date >= today and end date empty
+					'relation' => 'AND',
+					[
+						'key'     => 'start_date',
+						'value'   => date( 'Y-m-d' ),
+						'compare' => '>=',
+						'type'    => 'DATE'
+					],
+					[
+						'key'     => 'end_date',
+						'value'   => '',
+						'compare' => '='
+					]
+				],
+				[
+					// Start date <= today and end date >= today
+					'relation' => 'AND',
+					[
+						'key'     => 'start_date',
+						'value'   => date( 'Y-m-d' ),
+						'compare' => '<=',
+						'type'    => 'DATE'
+					],
+					[
+						'key'     => 'end_date',
+						'value'   => date( 'Y-m-d' ),
+						'compare' => '>=',
+						'type'    => 'DATE'
+					]
+				]
+			];
+
+			$query->set( 'meta_query', $meta_query );
+		}
+	}
 }

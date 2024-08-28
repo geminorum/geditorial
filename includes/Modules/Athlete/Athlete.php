@@ -456,6 +456,7 @@ class Athlete extends gEditorial\Module
 		if ( ! $stature = Template::getMetaFieldRaw( 'stature_in_cm', $post->ID, 'units' ) )
 			return;
 
+		// FIXME: passing age/gender
 		if ( ! $bmi = ModuleHelper::calculateBMI( $mass, $stature ) )
 			return;
 

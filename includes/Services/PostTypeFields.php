@@ -187,6 +187,7 @@ class PostTypeFields extends WordPress\Main
 				case 'iban'    : return 'bank';
 				case 'isbn'    : return 'book';
 				case 'date'    : return 'calendar';
+				case 'time'    : return 'clock';
 				case 'datetime': return 'calendar-alt';
 				case 'distance': return 'image-crop';
 				case 'duration': return 'clock';

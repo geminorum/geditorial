@@ -14,6 +14,8 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
+// TODO: selected departments as `views` on supported @SEE: `Yearly` Module
+
 class Organization extends gEditorial\Module
 {
 	use Internals\AdminPage;
@@ -81,6 +83,7 @@ class Organization extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_bulkactions',
+				'admin_displaystates',
 				'admin_ordering',
 				'assign_default_term',
 			],
@@ -368,6 +371,7 @@ class Organization extends gEditorial\Module
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
+			$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
 		}
 	}
@@ -397,6 +401,7 @@ class Organization extends gEditorial\Module
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__unset_columns( $screen->post_type );
 				$this->coreadmin__unset_views( $screen->post_type );
+				$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'menu_order', 'ASC' );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );

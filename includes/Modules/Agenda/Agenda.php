@@ -77,16 +77,16 @@ class Agenda extends gEditorial\Module
 		$strings = [
 			'fields' => [
 				'subcontent' => [
-					'label'     => _x( 'Label', 'Field Label: `label`', 'geditorial-agenda' ),
-					'date'      => _x( 'Date', 'Field Label: `date`', 'geditorial-agenda' ),
-					'time'      => _x( 'Time', 'Field Label: `time`', 'geditorial-agenda' ),
-					'datestart' => _x( 'Date Start', 'Field Label: `datestart`', 'geditorial-agenda' ),
-					'dateend'   => _x( 'Date End', 'Field Label: `dateend`', 'geditorial-agenda' ),
-					'topic'     => _x( 'Topic', 'Field Label: `topic`', 'geditorial-agenda' ),
-					'count'     => _x( 'Participants', 'Field Label: `count`', 'geditorial-agenda' ),
-					'location'  => _x( 'Venue', 'Field Label: `location`', 'geditorial-agenda' ),
-					'duration'  => _x( 'Duration', 'Field Label: `duration`', 'geditorial-agenda' ),
-					'desc'      => _x( 'Description', 'Field Label: `desc`', 'geditorial-agenda' ),
+					'label'      => _x( 'Label', 'Field Label: `label`', 'geditorial-agenda' ),
+					'datestring' => _x( 'Date', 'Field Label: `datestring`', 'geditorial-agenda' ),
+					'timestart'  => _x( 'Time Start', 'Field Label: `timestart`', 'geditorial-agenda' ),
+					'timeend'    => _x( 'Time End', 'Field Label: `timeend`', 'geditorial-agenda' ),
+					'people'     => _x( 'Coordinator', 'Field Label: `people`', 'geditorial-agenda' ),
+					'topic'      => _x( 'Topic', 'Field Label: `topic`', 'geditorial-agenda' ),
+					'count'      => _x( 'Participants', 'Field Label: `count`', 'geditorial-agenda' ),
+					'location'   => _x( 'Venue', 'Field Label: `location`', 'geditorial-agenda' ),
+					'duration'   => _x( 'Duration', 'Field Label: `duration`', 'geditorial-agenda' ),
+					'desc'       => _x( 'Description', 'Field Label: `desc`', 'geditorial-agenda' ),
 				],
 			],
 		];
@@ -145,18 +145,18 @@ class Agenda extends gEditorial\Module
 			'comment_agent'   => 'label',   // `varchar(255)`
 			'comment_karma'   => 'order',   // `int(11)`
 
-			'comment_author'       => 'location',   // `tinytext`
-			'comment_author_url'   => 'duration',   // `varchar(200)`
-			'comment_author_email' => 'date',       // `varchar(100)`
-			'comment_author_IP'    => 'time',       // `varchar(100)`
+			'comment_author'       => 'location',     // `tinytext`
+			'comment_author_url'   => 'people',       // `varchar(200)`
+			'comment_author_email' => 'datestring',   // `varchar(100)`
+			'comment_author_IP'    => 'duration',     // `varchar(100)`
 		] );
 	}
 
 	protected function subcontent_get_meta_mapping()
 	{
 		return [
-			'datestart' => 'datestart',
-			'dateend'   => 'dateend',
+			'timestart' => 'timestart',
+			'timeend'   => 'timeend',
 			'topic'     => 'topic',
 			'count'     => 'count',
 			'postid'    => '_post_ref',
@@ -167,8 +167,7 @@ class Agenda extends gEditorial\Module
 	{
 		return [
 			'label',
-			'date',
-			'datestart',
+			'datestring',
 		];
 	}
 

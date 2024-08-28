@@ -274,7 +274,7 @@ trait CoreTaxonomies
 				// -- `metabox_advanced`
 				// -- `selectmultiple_term`
 
-				// TODO: select-single as arg prop
+				// TODO: support taxonomy for taxonomies
 			}
 		}
 

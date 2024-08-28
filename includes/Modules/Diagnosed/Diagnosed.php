@@ -120,12 +120,12 @@ class Diagnosed extends gEditorial\Module
 			],
 			'fields' => [
 				'subcontent' => [
-					'label'    => _x( 'Subject', 'Field Label: `label`', 'geditorial-diagnosed' ),
-					'age'      => _x( 'Age', 'Field Label: `age`', 'geditorial-diagnosed' ),
-					'date'     => _x( 'Date', 'Field Label: `date`', 'geditorial-diagnosed' ),
-					'location' => _x( 'Location', 'Field Label: `location`', 'geditorial-diagnosed' ),
-					'people'   => _x( 'Doctors', 'Field Label: `location`', 'geditorial-diagnosed' ),
-					'desc'     => _x( 'Description', 'Field Label: `desc`', 'geditorial-diagnosed' ),
+					'label'      => _x( 'Subject', 'Field Label: `label`', 'geditorial-diagnosed' ),
+					'age'        => _x( 'Age', 'Field Label: `age`', 'geditorial-diagnosed' ),
+					'datestring' => _x( 'Date', 'Field Label: `datestring`', 'geditorial-diagnosed' ),
+					'location'   => _x( 'Location', 'Field Label: `location`', 'geditorial-diagnosed' ),
+					'people'     => _x( 'Doctors', 'Field Label: `location`', 'geditorial-diagnosed' ),
+					'desc'       => _x( 'Description', 'Field Label: `desc`', 'geditorial-diagnosed' ),
 				],
 			],
 		];
@@ -191,10 +191,10 @@ class Diagnosed extends gEditorial\Module
 			'comment_agent'   => 'label',   // `varchar(255)`
 			'comment_karma'   => 'order',   // `int(11)`
 
-			'comment_author'       => 'location',   // `tinytext`
-			'comment_author_url'   => 'age',        // `varchar(200)`
-			'comment_author_email' => 'people',     // `varchar(100)`
-			'comment_author_IP'    => 'date',       // `varchar(100)`
+			'comment_author'       => 'location',     // `tinytext`
+			'comment_author_url'   => 'age',          // `varchar(200)`
+			'comment_author_email' => 'people',       // `varchar(100)`
+			'comment_author_IP'    => 'datestring',   // `varchar(100)`
 		] );
 	}
 

@@ -116,12 +116,12 @@ class Positions extends gEditorial\Module
 			],
 			'fields' => [
 				'subcontent' => [
-					'label'    => _x( 'Position Title', 'Field Label: `label`', 'geditorial-positions' ),
-					'fullname' => _x( 'Incumbent', 'Field Label: `fullname`', 'geditorial-positions' ),
-					'identity' => _x( 'Identity', 'Field Label: `identity`', 'geditorial-positions' ),
-					'phone'    => _x( 'Contact', 'Field Label: `phone`', 'geditorial-positions' ),
-					'date'     => _x( 'Date', 'Field Label: `date`', 'geditorial-positions' ),
-					'desc'     => _x( 'Description', 'Field Label: `desc`', 'geditorial-positions' ),
+					'label'      => _x( 'Position Title', 'Field Label: `label`', 'geditorial-positions' ),
+					'fullname'   => _x( 'Incumbent', 'Field Label: `fullname`', 'geditorial-positions' ),
+					'identity'   => _x( 'Identity', 'Field Label: `identity`', 'geditorial-positions' ),
+					'phone'      => _x( 'Contact', 'Field Label: `phone`', 'geditorial-positions' ),
+					'datestring' => _x( 'Date', 'Field Label: `datestring`', 'geditorial-positions' ),
+					'desc'       => _x( 'Description', 'Field Label: `desc`', 'geditorial-positions' ),
 				],
 			],
 		];
@@ -164,10 +164,10 @@ class Positions extends gEditorial\Module
 			'comment_agent'   => 'label',   // `varchar(255)`
 			'comment_karma'   => 'order',   // `int(11)`
 
-			'comment_author'       => 'fullname',   // `tinytext`
-			'comment_author_url'   => 'phone',      // `varchar(200)`
-			'comment_author_email' => 'identity',   // `varchar(100)`
-			'comment_author_IP'    => 'date',       // `varchar(100)`
+			'comment_author'       => 'fullname',     // `tinytext`
+			'comment_author_url'   => 'phone',        // `varchar(200)`
+			'comment_author_email' => 'identity',     // `varchar(100)`
+			'comment_author_IP'    => 'datestring',   // `varchar(100)`
 		] );
 	}
 
