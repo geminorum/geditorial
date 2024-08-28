@@ -393,6 +393,7 @@ class StaticCovers extends gEditorial\Module
 
 		$data['i18n']        = $this->get_strings( 'post', 'i18n' );
 		$data['__direction'] = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__summaries'] = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___hooks']    = array_fill_keys( [
 			'after-actions',
 			'after-post',

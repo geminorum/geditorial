@@ -39,6 +39,7 @@ class Pointers extends gEditorial\Module
 			return;
 
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 50 );
+		$this->filter_module( 'static_covers', 'post_summaries', 4, 50 );
 	}
 
 	public function current_screen( $screen )
@@ -142,5 +143,10 @@ class Pointers extends gEditorial\Module
 			];
 
 		return $list;
+	}
+
+	public function static_covers_post_summaries( $list, $data, $post, $context )
+	{
+		return $this->tabloid_post_summaries( $list, $data, $post, $context );
 	}
 }
