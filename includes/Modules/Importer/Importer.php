@@ -1192,6 +1192,9 @@ class Importer extends gEditorial\Module
 				if ( ! empty( $taxonomy->{Services\Paired::PAIRED_POSTTYPE_PROP} ) )
 					continue;
 
+				if ( ! empty( $taxonomy->{Services\TermHierarchy::AUTO_ASSIGNED_TERMS} ) )
+					continue;
+
 				$list[$taxonomy->name] = $taxonomy;
 			}
 		}

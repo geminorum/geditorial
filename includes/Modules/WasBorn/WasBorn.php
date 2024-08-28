@@ -194,6 +194,7 @@ class WasBorn extends gEditorial\Module
 			'data_length'  => _x( '6', 'Main Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
 			'admin_managed' => TRUE,
+			'auto_assigned' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'group_taxonomy', [

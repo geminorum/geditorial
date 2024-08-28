@@ -142,6 +142,7 @@ trait CoreTaxonomies
 			'auto_children'   => FALSE,
 			'single_selected' => FALSE,   // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
 			'reverse_ordered' => NULL,
+			'auto_assigned'   => NULL,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -266,6 +267,7 @@ trait CoreTaxonomies
 				case 'auto_children'   : $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
 				case 'single_selected' : $args[Services\TermHierarchy::SINGLE_TERM_SELECT]    = $value; break;
 				case 'reverse_ordered' : $args[Services\TermHierarchy::REVERSE_ORDERED_TERMS] = $value; break;
+				case 'auto_assigned'   : $args[Services\TermHierarchy::AUTO_ASSIGNED_TERMS]   = $value; break;
 
 				// TODO: support combination of settings:
 				// -- restricted terms
