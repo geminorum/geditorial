@@ -347,6 +347,9 @@ class Module extends Core\Base
 		if ( ! empty( $this->caps[$context] ) )
 			return current_user_can( $this->caps[$context] );
 
+		if ( current_user_can( sprintf( 'editorial_%s', $context ) ) )
+			return TRUE;
+
 		if ( ! empty( $this->caps['default'] ) )
 			return current_user_can( $this->caps['default'] );
 
