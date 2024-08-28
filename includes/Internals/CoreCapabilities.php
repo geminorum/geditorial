@@ -83,7 +83,7 @@ trait CoreCapabilities
 				case 'delete_'.$taxonomy[1]:
 
 					return $this->corecaps_taxonomy_role_can( $constant, 'manage', $user_id )
-						? [ 'read' ]
+						? [ 'exist' ]
 						: [ 'do_not_allow' ];
 
 					break;
@@ -92,7 +92,7 @@ trait CoreCapabilities
 				case 'assign_'.$taxonomy[1]:
 
 					return $this->corecaps_taxonomy_role_can( $constant, 'assign', $user_id )
-						? [ 'read' ]
+						? [ 'exist' ]
 						: [ 'do_not_allow' ];
 
 					break;
@@ -147,7 +147,7 @@ trait CoreCapabilities
 				case 'assign_'.$taxonomy[1]:
 
 					return $this->role_can( 'manage', $user_id )
-						? [ 'read' ]
+						? [ 'exist' ]
 						: [ 'do_not_allow' ];
 
 				case 'assign_term':

@@ -374,7 +374,7 @@ class Athlete extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
-			$this->_hook_submenu_adminpage( 'framepage', 'read' );
+			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
 
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}

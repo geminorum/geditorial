@@ -2,15 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\Arraay;
-use geminorum\gEditorial\Core\Base;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Icon;
-use geminorum\gEditorial\Core\L10n;
-use geminorum\gEditorial\Core\Text;
-use geminorum\gEditorial\Core\WordPress;
-use geminorum\gEditorial\WordPress\User;
-
 #[\AllowDynamicProperties] // TODO: implement the magic methods `__get()` and `__set()`
 class Plugin
 {
@@ -136,7 +127,7 @@ class Plugin
 		if ( ! is_admin() )
 			return;
 
-		$locale = apply_filters( 'plugin_locale', L10n::locale(), static::BASE );
+		$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), static::BASE );
 		load_textdomain( static::BASE.'-admin', $path."languages/admin-{$locale}.mo", $locale );
 	}
 
@@ -186,7 +177,7 @@ class Plugin
 			'folder'     => $folder,
 			'class'      => $class ?: Helper::moduleClass( $args['name'], FALSE ),
 			'icon'       => 'screenoptions', // dashicon class / svg icon array
-			'textdomain' => sprintf( '%s-%s', static::BASE, Text::sanitizeBase( $args['name'] ) ), // or `NULL` for plugin base
+			'textdomain' => sprintf( '%s-%s', static::BASE, Core\Text::sanitizeBase( $args['name'] ) ), // or `NULL` for plugin base
 			'configure'  => TRUE,  // or `settings`, `tools`, `reports`, `imports`, `FALSE` to disable
 			'i18n'       => TRUE,  // or `FALSE`, `adminonly`, `frontonly`, `restonly`
 			'frontend'   => TRUE,  // whether or not the module should be loaded on the frontend
@@ -221,7 +212,7 @@ class Plugin
 
 	private function init_modules()
 	{
-		$locale = apply_filters( 'plugin_locale', L10n::locale(), static::BASE );
+		$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), static::BASE );
 		$stage  = Helper::const( 'WP_STAGE', 'production' ); // 'development'
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
@@ -286,7 +277,7 @@ class Plugin
 		add_filter( 'screen_settings', [ $this, 'screen_settings' ], 12, 2 );
 		add_filter( 'set-screen-option', [ $this, 'set_screen_option' ], 12, 3 );
 
-		if ( ! $posttype = Base::req( 'post_type', 'post' ) )
+		if ( ! $posttype = Core\Base::req( 'post_type', 'post' ) )
 			return FALSE;
 
 		$name = sprintf( '%s-restrict-%s', static::BASE, $posttype );
@@ -312,7 +303,7 @@ class Plugin
 
 		$html = '<fieldset><legend>'._x( 'Restrictions', 'Plugin: Main: Screen Settings Title', 'geditorial-admin' ).'</legend>';
 
-		$html.= HTML::multiSelect( array_map( 'get_taxonomy', $taxonomies ), [
+		$html.= Core\HTML::multiSelect( array_map( 'get_taxonomy', $taxonomies ), [
 			'item_tag' => FALSE, // 'span',
 			'prop'     => 'label',
 			'value'    => 'name',
@@ -333,7 +324,7 @@ class Plugin
 	// @REF: https://core.trac.wordpress.org/changeset/47951
 	public function set_screen_option( $false, $option, $value )
 	{
-		return Text::starts( $option, static::BASE ) ? $value : $false;
+		return Core\Text::starts( $option, static::BASE ) ? $value : $false;
 	}
 
 	// HELPER
@@ -388,11 +379,11 @@ class Plugin
 		if ( empty( $this->_modules ) )
 			return [];
 
-		if ( FALSE === $orderby || Base::const( 'GEDITORIAL_THRIFT_MODE' ) )
+		if ( FALSE === $orderby || Core\Base::const( 'GEDITORIAL_THRIFT_MODE' ) )
 			return (array) $this->_modules;
 
-		if ( in_array( L10n::locale(), [ 'fa', 'fa_IR', 'fa_AF' ] ) )
-			return L10n::sortAlphabet( (array) $this->_modules, $orderby );
+		if ( in_array( Core\L10n::locale(), [ 'fa', 'fa_IR', 'fa_AF' ] ) )
+			return Core\L10n::sortAlphabet( (array) $this->_modules, $orderby );
 
 		return wp_list_sort( (array) $this->_modules, $orderby );
 	}
@@ -520,7 +511,7 @@ class Plugin
 		if ( ! defined( 'GNETWORK_VERSION' ) )
 			Helper::linkStyleSheetAdmin( 'gnetwork' );
 
-		if ( WordPress::isIFrame() )
+		if ( Core\WordPress::isIFrame() )
 			Helper::linkStyleSheetAdmin( 'iframe' );
 
 		else if ( in_array( $screen->base, [
@@ -651,12 +642,12 @@ class Plugin
 		if ( $this->asset_config )
 			Scripts::printJSConfig( $this->asset_jsargs );
 
-		Icon::printSprites( $this->asset_icons );
+		Core\Icon::printSprites( $this->asset_icons );
 	}
 
 	public function icon( $name, $group, $enqueue = TRUE )
 	{
-		if ( $icon = Icon::get( $name, $group ) ) {
+		if ( $icon = Core\Icon::get( $name, $group ) ) {
 
 			if ( ! $enqueue )
 				return $icon;
@@ -690,15 +681,15 @@ class Plugin
 		if ( empty( $this->adminbar_nodes ) )
 			return;
 
-		if ( in_array( static::BASE, Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
+		if ( in_array( static::BASE, Core\Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
 
 			if ( ! is_user_logged_in() )
 				$link = FALSE;
 
-			else if ( User::cuc( 'manage_options' ) )
+			else if ( WordPress\User::cuc( 'manage_options' ) )
 				$link = Settings::settingsURL();
 
-			else if ( User::cuc( 'edit_others_posts' ) )
+			else if ( WordPress\User::cuc( 'edit_others_posts' ) )
 				$link = Settings::reportsURL();
 
 			else
@@ -717,7 +708,7 @@ class Plugin
 			$wp_admin_bar->add_node( $node );
 	}
 
-	// @OLD: `WordPress::getEditorialUserID()`
+	// @OLD: `Core\WordPress::getEditorialUserID()`
 	public function user( $fallback = FALSE )
 	{
 		if ( function_exists( 'gNetwork' ) )
@@ -738,7 +729,7 @@ class Plugin
 
 	public function base_country()
 	{
-		if ( FALSE !== ( $country = Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
+		if ( FALSE !== ( $country = Core\Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
 			return $country;
 
 		if ( \function_exists( 'WC' ) )
@@ -751,42 +742,42 @@ class Plugin
 	public static function na( $wrap = 'code' )
 	{
 		$message = __( 'N/A', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => '-na', 'title' => __( 'Not Available', 'geditorial' ) ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-na', 'title' => __( 'Not Available', 'geditorial' ) ], $message ) : $message;
 	}
 
 	public static function untitled( $wrap = 'span' )
 	{
 		$message = __( '(Untitled)', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => '-untitled', 'title' => __( 'No Title Available!', 'geditorial' ) ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-untitled', 'title' => __( 'No Title Available!', 'geditorial' ) ], $message ) : $message;
 	}
 
 	public static function denied( $wrap = 'p' )
 	{
 		$message = __( 'You don&#8217;t have permission to do this.', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-denied' ] ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-denied' ] ], $message ) : $message;
 	}
 
 	public static function wrong( $wrap = 'p' )
 	{
 		$message = __( 'Something&#8217;s wrong!', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-wrong' ] ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-wrong' ] ], $message ) : $message;
 	}
 
 	public static function moment( $wrap = 'p' )
 	{
 		$message = __( 'Wait for a moment &hellip;', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-moment' ] ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-moment' ] ], $message ) : $message;
 	}
 
 	public static function invalid( $wrap = 'p' )
 	{
 		$message = __( 'Invalid data provided!', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-invalid' ] ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-invalid' ] ], $message ) : $message;
 	}
 
 	public static function noinfo( $wrap = 'p' )
 	{
 		$message = __( 'There is no information available!', 'geditorial' );
-		return $wrap ? HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-noinfo' ] ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-noinfo' ] ], $message ) : $message;
 	}
 }

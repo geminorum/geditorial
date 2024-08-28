@@ -232,7 +232,7 @@ trait CorePostTypes
 										return $caps;
 
 									if ( user_can( $user_id, sprintf( 'manage_%s', $args['capability_type'][1] ) ) )
-										return [ 'read' ];
+										return [ 'exist' ];
 
 									return [ 'do_not_allow' ];
 								}, 12, 4 );
@@ -241,16 +241,16 @@ trait CorePostTypes
 							add_filter( 'map_meta_cap',
 								function ( $caps, $cap, $user_id ) use ( $args ) {
 
-									if ( [ 'read' ] === $caps )
+									if ( [ 'read' ] === $caps || [ 'exist' ] === $caps )
 										return $caps; // already cleared!
 
 									if ( 'assign_post_tags' === $cap
 										&& user_can( $user_id, sprintf( 'edit_%s', $args['capability_type'][1] ) ) )
-											return [ 'read' ];
+											return [ 'exist' ];
 
 									if ( in_array( $cap, [ 'manage_post_tags', 'edit_post_tags', 'delete_post_tags' ], TRUE )
 										&& user_can( $user_id, sprintf( 'manage_%s', $args['capability_type'][1] ) ) )
-											return [ 'read' ];
+											return [ 'exist' ];
 
 									return $caps;
 								}, 12, 3 );

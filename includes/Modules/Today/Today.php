@@ -206,13 +206,14 @@ class Today extends gEditorial\Module
 		}
 	}
 
+	// TODO: use `$this->_hook_wp_submenu_page()`
 	public function admin_menu()
 	{
 		$hook = add_submenu_page(
 			'index.php',
 			_x( 'Editorial Today', 'Page Title', 'geditorial-today' ),
 			_x( 'My Today', 'Menu Title', 'geditorial-today' ),
-			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
+			$this->role_can( 'adminmenu' ) ? 'exist' : 'do_not_allow',
 			$this->get_adminpage_url( FALSE ),
 			[ $this, 'admin_today_page' ]
 		);

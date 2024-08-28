@@ -28,9 +28,9 @@ class Audit extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	protected $caps = [
-		'default' => 'edit_others_posts',
-	];
+	// protected $caps = [
+	// 	'default' => 'edit_others_posts',
+	// ];
 
 	public static function module()
 	{
@@ -72,6 +72,10 @@ class Audit extends gEditorial\Module
 			'_editpost' => [
 				'admin_rowactions',
 				'admin_bulkactions',
+			],
+			'_editlist' => [
+				'admin_restrict',
+				'show_in_quickedit',
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -161,7 +165,7 @@ class Audit extends gEditorial\Module
 			'public'             => FALSE,
 			'rewrite'            => FALSE,
 			'hierarchical'       => TRUE,
-			'show_in_quick_edit' => TRUE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => '__checklist_restricted_terms_callback',
 		], NULL, [

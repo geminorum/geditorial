@@ -121,13 +121,14 @@ class Schedule extends gEditorial\Module
 		Ajax::errorWhat();
 	}
 
+	// TODO: use `$this->_hook_wp_submenu_page()`
 	public function admin_menu()
 	{
 		$hook = add_submenu_page(
 			'index.php',
 			_x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ),
 			_x( 'My Calendar', 'Menu Title', 'geditorial-schedule' ),
-			$this->role_can( 'adminmenu' ) ? 'read' : 'do_not_allow',
+			$this->role_can( 'adminmenu' ) ? 'exist' : 'do_not_allow',
 			$this->get_adminpage_url( FALSE ),
 			[ $this, 'admin_calendar_page' ]
 		);

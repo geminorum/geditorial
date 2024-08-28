@@ -181,7 +181,7 @@ class Widgets extends gEditorial\Module
 			case 'edit_theme_options':
 
 				return $this->role_can( 'manage', $user_id )
-					? [ 'read' ]
+					? [ 'exist' ]
 					: [ 'do_not_allow' ];
 
 				break;

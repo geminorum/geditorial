@@ -282,7 +282,6 @@ class Config extends gEditorial\Module
 			Core\HTML::desc( gEditorial\Plugin::na() );
 	}
 
-
 	public function admin_roles_page()
 	{
 		$can = $this->cuc( 'roles' );
@@ -445,7 +444,6 @@ class Config extends gEditorial\Module
 		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
 		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
 	}
-
 
 	public function admin_roles_load()
 	{
@@ -636,6 +634,8 @@ class Config extends gEditorial\Module
 		return TRUE;
 	}
 
+	// TODO: add buttons to append `{$this->base}_{$context}` to current role
+	// FIXME: move here `render_tools_html` from `Users` Module
 	protected function render_roles_html( $uri, $sub )
 	{
 		if ( ! $this->cuc( 'roles' ) )

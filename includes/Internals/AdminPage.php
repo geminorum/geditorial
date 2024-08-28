@@ -15,7 +15,7 @@ trait AdminPage
 		$subs = $this->get_string( 'subs', $context, 'adminpage', [] );
 
 		// FIXME: check capabilities
-		// $can  = $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		// $can  = $this->role_can( $context ) ? 'exist' : 'do_not_allow';
 
 		return $this->filters( $context.'_subs', $subs );
 	}
@@ -33,7 +33,7 @@ trait AdminPage
 		$slug    = $this->get_adminpage_url( FALSE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
-		$cap     = $capability ?? $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		$cap     = $capability ?? $this->role_can( $context ) ? 'exist' : 'do_not_allow';
 		$menu    = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
 
 		if ( is_null( $position ) )
@@ -124,7 +124,7 @@ trait AdminPage
 	protected function _hook_submenu_adminpage( $context = 'subpage', $capability = NULL, $parent_slug = '' )
 	{
 		$slug = $this->get_adminpage_url( FALSE, [], $context );
-		$cap  = $capability ?? $this->role_can( $context ) ? 'read' : 'do_not_allow';
+		$cap  = $capability ?? $this->role_can( $context ) ? 'exist' : 'do_not_allow';
 		$cb   = [ $this, 'render_submenu_adminpage' ];
 		$load = [ $this, 'load_submenu_adminpage' ];
 

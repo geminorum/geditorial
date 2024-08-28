@@ -233,6 +233,11 @@ class StaticCovers extends gEditorial\Module
 		$this->filter_module( 'papered', 'view_data', 4 );
 		$this->register_shortcode( 'post_cover_shortcode' );
 		$this->register_shortcode( 'term_cover_shortcode' );
+
+		// 'GNETWORK_USER_IDENTITY_NUMBER' => 'identity_number',
+		// get_avatar( $user_id );
+		// $this->filter( 'user_profile_picture_description', 2, 99 );
+		// public function user_profile_picture_description ( $description, $profile_user ) {}
 	}
 
 	public function setup_restapi()
@@ -280,7 +285,7 @@ class StaticCovers extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->role_can( 'reports' ) )
-			$this->_hook_submenu_adminpage( 'overview', 'read' );
+			$this->_hook_submenu_adminpage( 'overview', 'exist' );
 	}
 
 	public function render_submenu_adminpage()

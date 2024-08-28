@@ -749,6 +749,7 @@ trait SettingsCore
 			'type'      => 'file',
 			'field'     => 'import_users_file',
 			'name_attr' => $name,
+			'cap'       => 'upload_files',
 			'values'    => (array) $mimes,
 		] );
 

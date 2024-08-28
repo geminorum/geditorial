@@ -26,9 +26,9 @@ class Meta extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	protected $caps = [
-		'imports' => 'import',
-	];
+	// protected $caps = [
+	// 	'imports' => 'import',
+	// ];
 
 	public static function module()
 	{

@@ -260,7 +260,7 @@ class Driving extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
-			$this->_hook_submenu_adminpage( 'framepage', 'read' );
+			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
 	}
 
 	public function load_submenu_adminpage( $context = 'framepage' )

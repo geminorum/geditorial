@@ -45,7 +45,7 @@ class Directorate extends gEditorial\Module
 			'title'    => _x( 'Directorate', 'Modules: Directorate', 'geditorial-admin' ),
 			'desc'     => _x( 'The Assembly of Editorial', 'Modules: Directorate', 'geditorial-admin' ),
 			'icon'     => 'groups',
-			'access'   => 'alpha',
+			'access'   => 'beta',
 			'keywords' => [
 				'paired',
 				'committee',
@@ -443,7 +443,7 @@ class Directorate extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$this->_hook_submenu_adminpage( 'importitems', 'read' );
+		$this->_hook_submenu_adminpage( 'importitems', 'exist' );
 
 		if ( $this->get_setting( 'quick_newpost' ) ) {
 			$this->_hook_submenu_adminpage( 'newpost' );

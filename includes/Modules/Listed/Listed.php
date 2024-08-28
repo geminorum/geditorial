@@ -489,7 +489,7 @@ class Listed extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$this->_hook_submenu_adminpage( 'importitems', 'read' );
+		$this->_hook_submenu_adminpage( 'importitems', 'exist' );
 	}
 
 	public function dashboard_glance_items( $items )

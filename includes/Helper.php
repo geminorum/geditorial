@@ -2,10 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core;
-use geminorum\gEditorial\WordPress;
-use geminorum\gEditorial\Services;
-
 class Helper extends WordPress\Main
 {
 
@@ -948,8 +944,9 @@ class Helper extends WordPress\Main
 			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', 'geditorial' ), $strings );
 
 		// NOTE: this is plugin custom
-		if ( ! array_key_exists( 'extended_label', $pre ) )
-			$pre['extended_label'] = $pre['name'];
+		// WTF: better to be dynamic
+		// if ( ! array_key_exists( 'extended_label', $pre ) )
+		// 	$pre['extended_label'] = $pre['name'];
 
 		// NOTE: this is plugin custom
 		if ( ! array_key_exists( 'column_title', $pre ) )
@@ -995,6 +992,10 @@ class Helper extends WordPress\Main
 				return $name;
 
 			case 'extended_label':
+
+				if ( ! empty( $object->{Services\TermHierarchy::SINGLE_TERM_SELECT} ) )
+					return $object->labels->singular_name;
+
 				return $object->labels->name;
 
 			case 'show_option_no_items':

@@ -95,7 +95,7 @@ trait PairedCore
 			&& empty( $settings['custom_captype'] ) ) {
 
 			/**
-			 * NOTE: WTF: cant use `edit_posts` without `create_posts`
+			 * NOTE: WTF: cannot use `edit_posts` without `create_posts`
 			 * @SEE: https://core.trac.wordpress.org/ticket/22895
 			 */
 

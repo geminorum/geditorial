@@ -987,6 +987,13 @@ class Personage extends gEditorial\Module
 		return $sanitized ?: '';
 	}
 
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' === $context
+			? $this->role_can( $context )
+			: parent::cuc( $context, $fallback );
+	}
+
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {

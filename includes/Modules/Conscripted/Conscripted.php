@@ -54,6 +54,7 @@ class Conscripted extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_restrict',
+				'auto_term_parents',
 				'show_in_quickedit',
 			],
 			'_frontend' => [
@@ -126,11 +127,12 @@ class Conscripted extends gEditorial\Module
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
-			'show_in_menu'       => FALSE,
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'custom_captype'  => TRUE,
 			'single_selected' => TRUE,
 		] );

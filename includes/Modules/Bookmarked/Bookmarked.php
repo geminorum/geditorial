@@ -227,7 +227,7 @@ class Bookmarked extends gEditorial\Module
 				'title'    => _x( 'Fidibo Book', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://fidibo.com/book/{{code}}',
 				'cssclass' => '-fidibo-book',
-				'icon'     => 'book-alt', // FIXME
+				'icon'     => [ 'misc-512', 'fidibo' ], // 'location-alt',
 				'logo'     => $this->_get_link_logo( 'fidibo' ),
 			],
 			[
@@ -235,7 +235,7 @@ class Bookmarked extends gEditorial\Module
 				'title'    => _x( 'Taaghche Book', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://taaghche.com/book/{{code}}',
 				'cssclass' => '-taaghche-book',
-				'icon'     => 'book-alt', // FIXME
+				'icon'     => [ 'misc-512', 'taaghche' ], // 'book-alt',
 				'logo'     => $this->_get_link_logo( 'taaghche' ),
 			],
 			[
@@ -243,7 +243,7 @@ class Bookmarked extends gEditorial\Module
 				'title'    => _x( 'Neshan Map', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://nshn.ir/{{code}}',
 				'cssclass' => '-neshan-map',
-				'icon'     => 'location-alt',  // FIXME
+				'icon'     => [ 'misc-512', 'neshan' ], // 'location-alt',
 				'logo'     => $this->_get_link_logo( 'neshan' ),
 			],
 			[
@@ -251,7 +251,7 @@ class Bookmarked extends gEditorial\Module
 				'title'    => _x( 'Balad Map', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://balad.ir/p/{{code}}',
 				'cssclass' => '-balad-map',
-				'icon'     => 'location-alt',  // FIXME
+				'icon'     => [ 'misc-512', 'balad' ], // 'location-alt',
 				'logo'     => $this->_get_link_logo( 'balad' ),
 			],
 			[
@@ -369,7 +369,7 @@ class Bookmarked extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
-			$this->_hook_submenu_adminpage( 'framepage', 'read' );
+			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
 	}
 
 	public function load_submenu_adminpage( $context = 'framepage' )

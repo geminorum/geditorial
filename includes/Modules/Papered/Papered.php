@@ -234,7 +234,7 @@ class Papered extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'flag_taxonomy', 'options-general.php' );
 
 		if ( $this->role_can( 'prints' ) )
-			$this->_hook_submenu_adminpage( 'printpage', 'read' );
+			$this->_hook_submenu_adminpage( 'printpage', 'exist' );
 	}
 
 	public function current_screen( $screen )

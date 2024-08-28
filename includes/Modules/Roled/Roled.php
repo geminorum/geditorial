@@ -159,7 +159,6 @@ class Roled extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
-
 		$this->filter( 'map_meta_cap', 4 );
 	}
 

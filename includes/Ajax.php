@@ -2,8 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core;
-
 class Ajax extends Core\Base
 {
 

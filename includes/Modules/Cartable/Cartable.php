@@ -294,7 +294,7 @@ class Cartable extends gEditorial\Module
 
 				if ( $this->support_users )
 					return $this->role_can( 'assign_user', $user_id )
-						? [ 'read' ]
+						? [ 'exist' ]
 						: [ 'do_not_allow' ];
 
 			break;
@@ -302,7 +302,7 @@ class Cartable extends gEditorial\Module
 
 				if ( $this->support_groups )
 					return $this->role_can( 'assign_group', $user_id )
-						? [ 'read' ]
+						? [ 'exist' ]
 						: [ 'do_not_allow' ];
 
 			break;
@@ -310,7 +310,7 @@ class Cartable extends gEditorial\Module
 
 				if ( $this->support_types )
 					return $this->role_can( 'assign_type', $user_id )
-						? [ 'read' ]
+						? [ 'exist' ]
 						: [ 'do_not_allow' ];
 
 			break;
@@ -336,14 +336,14 @@ class Cartable extends gEditorial\Module
 					$user = get_user_by( 'id', $user_id )->user_login;
 
 					if ( in_array( $user, $this->get_users( $post->ID ) ) )
-						return [ 'read' ];
+						return [ 'exist' ];
 				}
 
 				if ( $this->support_groups && $this->get_setting( 'map_cap_group' ) ) {
 
 					foreach ( $this->get_groups( $post->ID ) as $group )
 						if ( is_object_in_term( $user_id, $this->constant( 'group_ref' ), $group ) )
-							return [ 'read' ];
+							return [ 'exist' ];
 				}
 		}
 
