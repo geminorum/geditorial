@@ -20,7 +20,8 @@ class Config extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\ViewEngines;
 
-	protected $caps = [
+	protected $caps     = [];  // reset the default caps!
+	protected $caps_map = [
 		'reports'  => 'publish_posts',
 		'settings' => 'manage_options',
 		'tools'    => 'edit_posts',
@@ -46,6 +47,51 @@ class Config extends gEditorial\Module
 		];
 	}
 
+	public function init()
+	{
+		parent::init();
+		$this->filter( 'map_meta_cap', 4 );
+	}
+
+	// @REF: http://justintadlock.com/?p=2462
+	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	{
+		switch ( $cap ) {
+
+			/**
+			 * - Meta caps need to be defined with the `map_meta_cap` filter.
+			 * - Primitive caps are assigned to user roles.
+			 * - Meta caps *never* should be assigned to a role.
+			 * - Primitive caps are generally plural, meta caps are singular.
+			 *
+			 * @source https://wpmayor.com/roles-capabilities-wordpress/
+			 */
+
+			case 'editorial_reports':
+			case 'editorial_settings':
+			case 'editorial_tools':
+			case 'editorial_roles':
+			case 'editorial_tests':
+			case 'editorial_imports':
+
+				if ( WordPress\User::isSuperAdmin() )
+					return [ 'exist' ];
+
+				$context = Core\Text::stripPrefix( $cap, 'editorial_' );
+
+				if ( user_can( $user_id, $this->hook_base( $context ) ) )
+					return [ 'exist' ];
+
+				if ( array_key_exists( $context, $this->caps_map ) )
+					return (array) $this->caps_map[$context];
+
+				// fallback
+				return (array) $this->caps_map['settings'];
+		}
+
+		return $caps;
+	}
+
 	public function admin_menu()
 	{
 		$can = $this->cuc( 'settings' );
@@ -54,7 +100,7 @@ class Config extends gEditorial\Module
 			'index.php',
 			_x( 'Editorial Reports', 'Menu Title', 'geditorial-config' ),
 			_x( 'My Reports', 'Menu Title', 'geditorial-config' ),
-			$this->caps['reports'],
+			'editorial_reports',
 			$this->base.'-reports',
 			[ $this, 'admin_reports_page' ]
 		);
@@ -62,7 +108,7 @@ class Config extends gEditorial\Module
 		$hook_settings = add_menu_page(
 			$this->module->title,
 			$this->module->title,
-			$this->caps['settings'],
+			'editorial_settings',
 			$this->base.'-settings',
 			[ $this, 'admin_settings_page' ],
 			$this->get_posttype_icon()
@@ -75,16 +121,18 @@ class Config extends gEditorial\Module
 				? _x( 'Tools', 'Menu Title', 'geditorial-config' )
 				: _x( 'Editorial Tools', 'Menu Title', 'geditorial-config' )
 			),
-			$this->caps['tools'],
+			'editorial_tools',
 			$this->base.'-tools',
 			[ $this, 'admin_tools_page' ]
 		);
 
 		$this->_hook_wp_submenu_page( 'roles', 'users.php',
-			_x( 'Editorial Roles', 'Menu Title', 'geditorial-config' ) );
+			_x( 'Editorial Roles', 'Menu Title', 'geditorial-config' ),
+			NULL, 'editorial_roles' );
 
 		$this->_hook_wp_submenu_page( 'imports', 'tools.php',
-			_x( 'Editorial Imports', 'Menu Title', 'geditorial-config' ) );
+			_x( 'Editorial Imports', 'Menu Title', 'geditorial-config' ),
+			NULL, 'editorial_imports' );
 
 		add_action( 'load-'.$hook_reports, [ $this, 'admin_reports_load' ] );
 		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
@@ -111,7 +159,7 @@ class Config extends gEditorial\Module
 				$this->base.'-settings',
 				$module->title,
 				$module->title,
-				$this->caps['settings'],
+				'editorial_settings',
 				$this->base.'-settings&module='.$module->name,
 				[ $this, 'admin_settings_page' ]
 			);
@@ -122,7 +170,7 @@ class Config extends gEditorial\Module
 	{
 		$can = $this->cuc( 'reports' );
 		$uri = Settings::reportsURL( FALSE, ! $can );
-		$sub = Settings::sub();
+		$sub = Settings::sub( $can ? 'general' : 'overview' );
 
 		$subs = [ 'overview' => _x( 'Overview', 'Reports Sub', 'geditorial-config' ) ];
 
@@ -443,8 +491,31 @@ class Config extends gEditorial\Module
 			'empty_module' => 'meta',
 		], 'tools' );
 
-		echo '<table class="form-table">';
+		$empty = TRUE;
 
+		if ( current_user_can( 'manage_options' ) ) {
+
+
+			if ( $this->_render_tools_html_options( $post ) )
+				$empty = FALSE;
+		}
+
+		if ( current_user_can( 'edit_others_posts' ) ) {
+
+			if ( $this->_render_tools_html_maintenance( $post ) )
+				$empty = FALSE;
+
+			if ( $this->_render_tools_html_o2o( $post ) )
+				$empty = FALSE;
+		}
+
+		if ( $empty )
+			Info::renderNoToolsAvailable();
+	}
+
+	private function _render_tools_html_options( $post )
+	{
+		echo '<table class="form-table">';
 		echo '<tr><th scope="row">'._x( 'Options', 'Tools', 'geditorial-config' ).'</th><td>';
 
 			if ( $filesize = $this->settings_render_upload_field( '.json' ) ) {
@@ -491,6 +562,11 @@ class Config extends gEditorial\Module
 
 		echo '</td></tr></table>';
 
+		return TRUE;
+	}
+
+	private function _render_tools_html_maintenance( $post )
+	{
 		Core\HTML::h3( _x( 'Maintenance Tasks', 'Header', 'geditorial-config' ) );
 
 		echo '<table class="form-table">';
@@ -502,14 +578,21 @@ class Config extends gEditorial\Module
 				'field'        => 'empty_module',
 				'values'       => gEditorial()->list_modules(),
 				'default'      => $post['empty_module'],
+				'cap'          => 'edit_others_posts',
 				'option_group' => 'tools',
 			] );
 
 			Settings::submitButton( 'custom_fields_empty', _x( 'Empty', 'Button', 'geditorial-config' ), 'danger', TRUE );
 			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Message', 'geditorial-config' ) );
 
-		echo '</td></tr>';
+		echo '</td></tr></table>';
 
+		return TRUE;
+	}
+
+	private function _render_tools_html_o2o( $post )
+	{
+		echo '<table class="form-table">';
 		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Tools', 'geditorial-config' ).'</th><td>';
 
 		// $counts = Services\O2O\API::getConnectionCounts();
@@ -549,6 +632,8 @@ class Config extends gEditorial\Module
 		}
 
 		echo '</td></tr></table>';
+
+		return TRUE;
 	}
 
 	protected function render_roles_html( $uri, $sub )
@@ -585,7 +670,7 @@ class Config extends gEditorial\Module
 	{
 		$can = $this->cuc( 'imports' );
 		$uri = Settings::importsURL( FALSE );
-		$sub = Settings::sub();
+		$sub = Settings::sub( $can ? 'general' : 'overview' );
 
 		$subs = [ 'overview' => _x( 'Overview', 'Imports Sub', 'geditorial-config' ) ];
 
