@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Mobilized\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Mobilized\n"
+"X-Domain: geditorial-mobilized\n"
+
+#: Mobilized.php:83
+msgid "Mobilization"
+msgid_plural "Mobilizations"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Mobilized.php:87
+msgctxt "Label: Menu Name"
+msgid "Content Mobilizations"
+msgstr ""
+
+#: Mobilized.php:88
+msgctxt "Label: Show Option All"
+msgid "Mobilizations"
+msgstr ""
+
+#: Mobilized.php:89
+msgctxt "Label: Show Option No Terms"
+msgid "(Undefined)"
+msgstr ""
+
+#: Mobilized.php:98
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Mobilization Summary"
+msgstr ""
+
+#: Mobilized.php:99
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Mobilization Summary"
+msgstr ""
