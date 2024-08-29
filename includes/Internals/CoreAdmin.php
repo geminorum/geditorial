@@ -157,4 +157,54 @@ trait CoreAdmin
 
 		return TRUE;
 	}
+
+	protected function coreadmin__hook_taxonomy_multiple_supported_column( $screen, $supported = NULL )
+	{
+		if ( 'edit-tags' !== $screen->base )
+			return FALSE;
+
+		if ( ! $object = WordPress\Taxonomy::object( $screen->taxonomy ) )
+			return FALSE;
+
+		if ( ! $object->query_var )
+			return FALSE; // If false, a taxonomy cannot be loaded at `?{query_var}={term_slug}`
+
+		if ( is_null( $supported ) )
+			$supported = $this->posttypes();
+
+		$posttypes = WordPress\PostType::get( 4, [], 'read' );
+
+		add_filter( 'manage_edit-'.$object->name.'_columns',
+			function ( $columns ) {
+				return Core\Arraay::insert( $columns, [
+					// NOTE: globalized: bc no-way to pass class for the column header!
+					$this->hook_base( 'multiplesupported' )
+						=> _x( 'Connected', 'Internal: CoreAdmin: Column', 'geditorial-admin' ),
+				], 'posts', 'before' );
+			} );
+
+		add_filter( 'manage_'.$object->name.'_custom_column',
+			function ( $display, $column, $term_id ) use ( $object, $supported, $posttypes ) {
+
+				if ( $this->hook_base( 'multiplesupported' ) !== $column )
+					return;
+
+				if ( ! $term = WordPress\Term::get( $term_id, $object->name ) )
+					return;
+
+				foreach ( $supported as $posttype ) {
+
+					if ( ! array_key_exists( $posttype, $posttypes ) )
+						continue; // no cap
+
+					$html = Helper::getPostTypeLabel( $posttypes[$posttype], 'extended_label' );
+
+					if ( $link = Core\WordPress::getPostTypeEditLink( $posttype, 0, [ $object->query_var => $term->slug ] ) )
+						$html = Core\HTML::link( $html, $link, TRUE );
+
+					echo Core\HTML::wrap( $html, '-supported-posttype' );
+				}
+
+			}, 10, 3 );
+	}
 }
