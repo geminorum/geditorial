@@ -1592,6 +1592,12 @@ class Settings extends WordPress\Main
 		echo $after;
 	}
 
+	// same as `submitButton()` but wraps in action array
+	public static function actionButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [], $after = '' )
+	{
+		return self::submitButton( sprintf( '%s[%s]', 'action', $name ), $text, $primary, $atts, $after );
+	}
+
 	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [], $after = '' )
 	{
 		$link    = FALSE;
@@ -2073,6 +2079,10 @@ class Settings extends WordPress\Main
 
 			if ( in_array( $args['type'], [ 'role', 'cap', 'user' ] ) )
 				$args['cap'] = 'promote_users';
+
+			else if ( in_array( $args['type'], [ 'file' ] ) )
+				$args['cap'] = 'upload_files';
+
 			else
 				$args['cap'] = 'manage_options';
 		}

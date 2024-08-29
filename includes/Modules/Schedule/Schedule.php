@@ -105,9 +105,7 @@ class Schedule extends gEditorial\Module
 
 				parse_str( $post['data'], $data );
 
-				$object = WordPress\PostType::object( $data['post_type'] );
-
-				if ( ! current_user_can( $object->cap->create_posts ) )
+				if ( ! WordPress\PostType::can( $data['post_type'], 'create_posts' ) )
 					Ajax::errorUserCant();
 
 				// Ajax::success( '<li>'.$data['post_title'].'</li>' ); // FOR TEST!

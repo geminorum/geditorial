@@ -215,6 +215,10 @@ trait CorePostTypes
 						else if ( ! array_key_exists( 'create_posts', $args['capabilities'] ) )
 							$args['capabilities']['create_posts'] = sprintf( 'create_%s', $args['capability_type'][1] );
 
+						// same as `edit_others_posts`
+						if ( ! array_key_exists( 'import_posts', $args['capabilities'] ) )
+							$args['capabilities']['import_posts'] = sprintf( 'edit_others_%s', $args['capability_type'][1] );
+
 						if ( in_array( 'comments', $args['supports'], TRUE ) )
 							add_filter( 'map_meta_cap',
 								function ( $caps, $cap, $user_id, $passed_args ) use ( $posttype, $args ) {
@@ -267,8 +271,12 @@ trait CorePostTypes
 									'create_posts' => sprintf( 'create_%s',
 										is_array( $args['capability_type'] )
 											? $args['capability_type'][1]
+											: Core\L10n::pluralize( $args['capability_type'] ) ),
+									'import_posts' => sprintf( 'edit_others_%s',
+										is_array( $args['capability_type'] )
+											? $args['capability_type'][1]
 											: Core\L10n::pluralize( $args['capability_type'] ) )
-									];
+								];
 						}
 
 					} else {

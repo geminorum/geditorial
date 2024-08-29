@@ -175,10 +175,7 @@ class Workflow extends gEditorial\Module
 
 			foreach ( $this->posttypes() as $posttype ) {
 
-				$object = WordPress\PostType::object( $posttype );
-
-				if ( ! current_user_can( $object->cap->edit_others_posts ) )
-				// if ( ! current_user_can( $object->cap->edit_posts ) )
+				if ( ! WordPress\PostType::can( $posttype, 'edit_others_posts' ) )
 					continue;
 
 				$counts = wp_count_posts( $posttype );

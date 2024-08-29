@@ -27,7 +27,7 @@ class Importer extends gEditorial\Module
 			'name'     => 'importer',
 			'title'    => _x( 'Importer', 'Modules: Importer', 'geditorial-admin' ),
 			'desc'     => _x( 'Data Import Tools', 'Modules: Importer', 'geditorial-admin' ),
-			'icon'     => 'upload',
+			'icon'     => 'cloud-upload',
 			'access'   => 'stable',
 			'frontend' => FALSE,
 		];
@@ -122,7 +122,7 @@ class Importer extends gEditorial\Module
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			Services\HeaderButtons::register( $this->key, [
-				'text'      => _x( 'Import', 'Header Button', 'geditorial-importer' ),
+				'text'      => Helper::getPostTypeLabel( $screen->post_type, 'import_items', FALSE, _x( 'Import', 'Button', 'geditorial-importer' ) ),
 				'link'      => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ),
 				'icon'      => $this->module->icon,
 				'cap_check' => WordPress\PostType::cap( $screen->post_type, 'import_posts' ),
@@ -135,11 +135,14 @@ class Importer extends gEditorial\Module
 	{
 		global $submenu;
 
+		if ( $this->is_thrift_mode() )
+			return;
+
 		foreach ( $this->posttypes() as $posttype )
-			if ( WordPress\PostType::can( $posttype, 'edit_others_posts' ) )
+			if ( WordPress\PostType::can( $posttype, 'import_posts' ) )
 				$submenu[('post' == $posttype ? 'edit.php' : 'edit.php?post_type='.$posttype)][] = [
-					Helper::getPostTypeLabel( $posttype, 'import_items', FALSE, _x( 'Import', 'Sub-Menu Menu Title', 'geditorial-importer' ) ),
-					'read', // already checked
+					Helper::getPostTypeLabel( $posttype, 'import_items', FALSE, _x( 'Import', 'Menu', 'geditorial-importer' ) ),
+					'exist', // already checked
 					$this->get_imports_page_url( NULL, [ 'posttype' => $posttype ] ),
 				];
 	}

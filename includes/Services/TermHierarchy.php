@@ -43,8 +43,8 @@ class TermHierarchy extends WordPress\Main
 			return FALSE;
 
 		$taxonomies = WordPress\Taxonomy::get( 4, [
-			'show_in_quick_edit'     => TRUE,
-			self::SINGLE_TERM_SELECT => TRUE,
+			'show_in_quick_edit'       => TRUE,
+			static::SINGLE_TERM_SELECT => TRUE,
 		], $posttype, 'assign_terms' );
 
 		if ( empty( $taxonomies ) )
@@ -156,10 +156,10 @@ class TermHierarchy extends WordPress\Main
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return WordPress\Term::get( reset( $terms ) );
 
-		if ( empty( $object->self::SINGLE_TERM_SELECT ) )
+		if ( empty( $object->{static::SINGLE_TERM_SELECT} ) )
 			return WordPress\Term::get( reset( $terms ) );
 
-		if ( TRUE === $object->self::SINGLE_TERM_SELECT )
+		if ( TRUE === $object->{static::SINGLE_TERM_SELECT} )
 			return apply_filters( sprintf( '%s_singleselect_term_%s', static::BASE, $object->name ),
 				WordPress\Term::get( reset( $terms ) ),
 				$terms,
@@ -167,8 +167,8 @@ class TermHierarchy extends WordPress\Main
 				$post
 			);
 
-		if ( is_callable( $object->self::SINGLE_TERM_SELECT ) )
-			return call_user_func_array( $object->self::SINGLE_TERM_SELECT, [ $terms, $taxonomy, $post ] );
+		if ( is_callable( $object->{static::SINGLE_TERM_SELECT} ) )
+			return call_user_func_array( $object->{static::SINGLE_TERM_SELECT}, [ $terms, $taxonomy, $post ] );
 
 		return WordPress\Term::get( reset( $terms ) );
 	}
@@ -196,7 +196,7 @@ class TermHierarchy extends WordPress\Main
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
-		if ( empty( $object->{self::AUTO_SET_PARENT_TERMS} ) || ! $object->hierarchical )
+		if ( empty( $object->{static::AUTO_SET_PARENT_TERMS} ) || ! $object->hierarchical )
 			return;
 
 		foreach ( $tt_ids as $tt_id )
@@ -228,7 +228,7 @@ class TermHierarchy extends WordPress\Main
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
-		if ( empty( $object->{self::AUTO_SET_CHILD_TERMS} ) || ! $object->hierarchical )
+		if ( empty( $object->{static::AUTO_SET_CHILD_TERMS} ) || ! $object->hierarchical )
 			return;
 
 		foreach ( $tt_ids as $tt_id ) {
@@ -255,10 +255,10 @@ class TermHierarchy extends WordPress\Main
 		if ( ! $object = WordPress\Taxonomy::object( reset( $taxonomies ) ) )
 			return $defaults;
 
-		if ( empty( $object->{self::REVERSE_ORDERED_TERMS} ) )
+		if ( empty( $object->{static::REVERSE_ORDERED_TERMS} ) )
 			return $defaults;
 
-		$defaults['orderby'] = $object->{self::REVERSE_ORDERED_TERMS};
+		$defaults['orderby'] = $object->{static::REVERSE_ORDERED_TERMS};
 		$defaults['order']   = 'DESC';
 
 		return $defaults;
