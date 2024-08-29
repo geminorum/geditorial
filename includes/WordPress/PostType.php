@@ -8,6 +8,7 @@ class PostType extends Core\Base
 {
 
 	const PRIMARY_TAXONOMY_PROP = 'primary_taxonomy'; // FIXME: DEPRECATED
+	const MAP_CAP_IMPORT_POSTS  = 'edit_others_posts';
 
 	public static function object( $posttype_or_post )
 	{
@@ -89,6 +90,10 @@ class PostType extends Core\Base
 		if ( ! $object = self::object( $posttype ) )
 			return $fallback;
 
+		// fallbacks if it was custom cap
+		if ( ! isset( $object->cap->{$capability} ) && 'import_posts' === $capability )
+			$capability = static::MAP_CAP_IMPORT_POSTS;
+
 		if ( ! isset( $object->cap->{$capability} ) )
 			return $fallback;
 
@@ -111,6 +116,35 @@ class PostType extends Core\Base
 		// 	$can = user_can( $user_id, 'manage_network' );
 
 		return $cache[$user_id][$object->name][$capability] = $can;
+	}
+
+	/**
+	 * Retrieves the capability assigned to the posttype.
+	 *
+	 * @param  string|object $posttype
+	 * @param  string        $capability
+	 * @param  string        $fallback
+	 * @return string        $cap
+	 */
+	public static function cap( $posttype, $capability = 'edit_posts', $fallback = NULL )
+	{
+		if ( is_null( $capability ) )
+			return TRUE;
+
+		else if ( ! $capability )
+			return $fallback;
+
+		if ( ! $object = self::object( $posttype ) )
+			return $fallback;
+
+		// fallbacks if it was custom cap
+		if ( ! isset( $object->cap->{$capability} ) && 'import_posts' === $capability )
+			$capability = static::MAP_CAP_IMPORT_POSTS;
+
+		if ( isset( $object->cap->{$capability} ) )
+			return $object->cap->{$capability};
+
+		return $object->cap->edit_posts; // WTF?!
 	}
 
 	/**

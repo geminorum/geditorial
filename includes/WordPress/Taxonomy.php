@@ -113,6 +113,31 @@ class Taxonomy extends Core\Base
 	}
 
 	/**
+	 * Retrieves the capability assigned to the taxonomy.
+	 *
+	 * @param  string|object $taxonomy
+	 * @param  string        $capability
+	 * @param  string        $fallback
+	 * @return string        $cap
+	 */
+	public static function cap( $taxonomy, $capability = 'manage_terms', $fallback = NULL )
+	{
+		if ( is_null( $capability ) )
+			return TRUE;
+
+		else if ( ! $capability )
+			return $fallback;
+
+		if ( ! $object = self::object( $taxonomy ) )
+			return $fallback;
+
+		if ( isset( $object->cap->{$capability} ) )
+			return $object->cap->{$capability};
+
+		return $object->cap->edit_posts; // WTF?!
+	}
+
+	/**
 	 * Retrieves the list of taxonomies.
 	 *
 	 * Parameter $args is an array of key -> value arguments to match against

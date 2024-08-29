@@ -62,6 +62,16 @@ class Base
 		return isset( $_REQUEST[$key] ) && $value == $_REQUEST[$key] ? TRUE : $default;
 	}
 
+	public static function step( $value = NULL, $key = 'action', $default = '' )
+	{
+		$action = Arraay::keyFirst( self::req( $key, [] ) );
+
+		if ( empty( $action ) && ! is_null( $value ) )
+			return $default;
+
+		return is_null( $value ) ? $action : ( (string) $action === (string) $value );
+	}
+
 	public static function limit( $default = 25, $key = 'limit' )
 	{
 		return (int) self::req( $key, $default );
