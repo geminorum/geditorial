@@ -438,49 +438,7 @@ class Importer extends gEditorial\Module
 			'_cb'           => '_index',
 			'_check_column' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-
-					$checks = [];
-
-					if ( $row['___source_id'] )
-						/* translators: %s: source id */
-						$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), Core\HTML::code( $row['___source_id'] ) );
-
-					else if ( FALSE === $row['___source_id'] )
-						$checks[] = _x( 'Skipped: Filtered', 'Checks', 'geditorial-importer' );
-
-					else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_offset'] )
-						$checks[] = _x( 'Skipped: No SourceID', 'Checks', 'geditorial-importer' );
-
-					if ( $row['___matched'] )
-						/* translators: %s: post title */
-						$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
-							Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] ) );
-
-					if ( FALSE !== ( $title_key = array_search( 'importer_post_title', $args['extra']['mapped'] ) ) ) {
-						$title = $this->filters( 'prepare',
-							Core\Text::trim( $row[$title_key] ),
-							$args['extra']['post_type'],
-							'importer_post_title',
-							$title_key,
-							$row,
-							$row['___source_id'],
-							$args['extra']['taxonomies']
-						);
-
-						if ( ( ! $title = trim( $title ) ) && ( $posts = WordPress\Post::getByTitle( $title, $args['extra']['post_type'] ) ) ) {
-
-							$html = '<div class="-danger">'._x( 'Similar:', 'Checks', 'geditorial-importer' ).' ';
-
-							foreach ( $posts as $post_id )
-								$html.= Helper::getPostTitleRow( $post_id, 'edit', FALSE, $post_id ).', ';
-
-							$checks[] = trim( $html, ', ' ).'</div>';
-						}
-					}
-
-					return WordPress\Strings::getJoined( $checks, '', '', Helper::htmlEmpty(), '<br />' );
-				},
+				'callback' => [ $this, 'form_posts_table_checks' ],
 			],
 		];
 
@@ -515,6 +473,53 @@ class Importer extends gEditorial\Module
 				'source_offset' => $source_offset,
 			],
 		] );
+	}
+
+	public function form_posts_table_checks( $value, $row, $column, $index, $key, $args )
+	{
+		$checks = [];
+
+		if ( $row['___source_id'] )
+			/* translators: %s: source id */
+			$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), Core\HTML::code( $row['___source_id'] ) );
+
+		else if ( FALSE === $row['___source_id'] )
+			$checks[] = _x( 'Skipped: Filtered', 'Checks', 'geditorial-importer' );
+
+		else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_offset'] )
+			$checks[] = _x( 'Skipped: No SourceID', 'Checks', 'geditorial-importer' );
+
+		if ( $row['___matched'] )
+			/* translators: %s: post title */
+			$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
+				Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] ) );
+
+		if ( ! empty( $args['extra']['mapped'] ) ) {
+
+			if ( FALSE !== ( $title_key = array_search( 'importer_post_title', $args['extra']['mapped'] ) ) ) {
+				$title = $this->filters( 'prepare',
+					Core\Text::trim( $row[$title_key] ),
+					$args['extra']['post_type'],
+					'importer_post_title',
+					$title_key,
+					$row,
+					$row['___source_id'],
+					$args['extra']['taxonomies']
+				);
+
+				if ( ( ! $title = trim( $title ) ) && ( $posts = WordPress\Post::getByTitle( $title, $args['extra']['post_type'] ) ) ) {
+
+					$html = '<div class="-danger">'._x( 'Similar:', 'Checks', 'geditorial-importer' ).' ';
+
+					foreach ( $posts as $post_id )
+						$html.= Helper::getPostTitleRow( $post_id, 'edit', FALSE, $post_id ).', ';
+
+					$checks[] = trim( $html, ', ' ).'</div>';
+				}
+			}
+		}
+
+		return WordPress\Strings::getJoined( $checks, '', '', Helper::htmlEmpty(), '<br />' );
 	}
 
 	// NOTE: combines raw data with header keys and adds source_id and matched
