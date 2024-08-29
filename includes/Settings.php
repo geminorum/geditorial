@@ -341,13 +341,14 @@ class Settings extends WordPress\Main
 		return _x( '&ndash; All &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' );
 	}
 
-	public static function fieldSeparate( $string = 'from' )
+	public static function fieldSeparate( $string = 'from', $before = '', $after = '' )
 	{
 		switch ( $string ) {
 			case 'count': $string = _x( 'count', 'Settings: Field Separate', 'geditorial-admin' ); break;
 			case 'from' : $string = _x( 'from', 'Settings: Field Separate', 'geditorial-admin' );  break;
 			case 'into' : $string = _x( 'into', 'Settings: Field Separate', 'geditorial-admin' );  break;
 			case 'like' : $string = _x( 'like', 'Settings: Field Separate', 'geditorial-admin' );  break;
+			case 'via' : $string  = _x( 'via', 'Settings: Field Separate', 'geditorial-admin' );  break;
 			case 'ex'   : $string = _x( 'ex', 'Settings: Field Separate', 'geditorial-admin' );    break;
 			case 'in'   : $string = _x( 'in', 'Settings: Field Separate', 'geditorial-admin' );    break;
 			case 'to'   : $string = _x( 'to', 'Settings: Field Separate', 'geditorial-admin' );    break;
@@ -356,7 +357,7 @@ class Settings extends WordPress\Main
 			case 'on'   : $string = _x( 'on', 'Settings: Field Separate', 'geditorial-admin' );    break;
 		}
 
-		printf( '<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>', $string );
+		printf( '%s<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>%s', $before, $string, $after );
 	}
 
 	public static function fieldSection( $title, $description = FALSE, $tag = 'h2' )

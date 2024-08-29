@@ -123,7 +123,7 @@ class Importer extends gEditorial\Module
 
 			Services\HeaderButtons::register( $this->key, [
 				'text'      => Helper::getPostTypeLabel( $screen->post_type, 'import_items', FALSE, _x( 'Import', 'Button', 'geditorial-importer' ) ),
-				'link'      => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ),
+				'link'      => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ), // also `'attachment' => 12`
 				'icon'      => $this->module->icon,
 				'cap_check' => WordPress\PostType::cap( $screen->post_type, 'import_posts' ),
 			] );
@@ -448,8 +448,11 @@ class Importer extends gEditorial\Module
 				continue;
 
 			if ( 'importer_custom_meta' == $field )
-				/* translators: %s: custom metakey */
-				$columns[$headers[$key]] = sprintf( _x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ), Core\HTML::code( $headers[$key] ) );
+				$columns[$headers[$key]] = sprintf(
+					/* translators: %s: custom metakey */
+					_x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ),
+					Core\HTML::code( $headers[$key] )
+				);
 
 			else
 				$columns[$headers[$key]] = $fields[$field];
@@ -465,11 +468,11 @@ class Importer extends gEditorial\Module
 			'callback' => [ $this, 'form_posts_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'    => [
-				'na'         => gEditorial()->na(),
-				'mapped'     => array_combine( $headers, $map ),
-				'headers'    => $headers,
-				'post_type'  => $posttype,
-				'taxonomies' => $taxonomies,
+				'na'            => gEditorial()->na(),
+				'mapped'        => array_combine( $headers, $map ),
+				'headers'       => $headers,
+				'post_type'     => $posttype,
+				'taxonomies'    => $taxonomies,
 				'source_offset' => $source_offset,
 			],
 		] );
@@ -533,8 +536,8 @@ class Importer extends gEditorial\Module
 		$source_id = NULL;
 
 		if ( 'none' !== $args['extra']['source_offset']
-			&& \array_key_exists( $args['extra']['source_offset'], $row ) )
-				$source_id = $row[$args['extra']['source_offset']];
+			&& \array_key_exists( $args['extra']['source_key'], $row ) )
+				$source_id = $row[$args['extra']['source_key']];
 
 		$raw['___source_id'] = $this->filters( 'source_id',
 			$source_id,
@@ -1121,7 +1124,7 @@ class Importer extends gEditorial\Module
 
 		} else {
 
-			$this->_form_posts_attached( 0, $posttype );
+			$this->_form_posts_attached( self::req( 'attachment', 0 ), $posttype );
 
 			echo $this->wrap_open_buttons();
 			Settings::actionButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
