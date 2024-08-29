@@ -641,6 +641,21 @@ class Importer extends gEditorial\Module
 						'count'   => $count,
 					] );
 
+				} else if ( Tablelist::isAction( [
+					'terms_import_newonly',
+					'terms_import_append',
+					'terms_import_override',
+				], TRUE ) ) {
+
+					if ( FALSE === ( $count = $this->_handle_terms_import() ) )
+						Core\WordPress::redirectReferer( 'wrong' );
+
+					else
+						Core\WordPress::redirectReferer( [
+							'message' => 'imported',
+							'count'   => $count,
+						] );
+
 				} else if ( Tablelist::isAction( 'posts_import_newonly', TRUE )
 					|| Tablelist::isAction( 'posts_import_override', TRUE ) ) {
 
@@ -994,6 +1009,14 @@ class Importer extends gEditorial\Module
 
 				break;
 
+			case 'terms_step_two':
+			case 'terms_step_three':
+			case 'terms_step_four':
+
+				$this->_render_imports_for_terms( $uri, $sub );
+
+				break;
+
 			case 'images_step_two':
 
 				$this->_render_imports_for_images( $uri, $sub );
@@ -1024,6 +1047,10 @@ class Importer extends gEditorial\Module
 
 		echo Settings::toolboxCardOpen( _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
 			$this->_render_imports_for_posts( $uri, $sub );
+		echo '</div>';
+
+		echo Settings::toolboxCardOpen( _x( 'Import Terms and Assign them to Posts', 'Header', 'geditorial-importer' ), FALSE );
+			$this->_render_imports_for_terms( $uri, $sub );
 		echo '</div>';
 
 		echo Settings::toolboxCardOpen( _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ), FALSE );
@@ -1132,6 +1159,102 @@ class Importer extends gEditorial\Module
 		}
 
 		echo '</p>';
+	}
+
+	private function _render_imports_for_terms( $uri, $sub )
+	{
+		// $field_map  = self::req( 'field_map', [] );
+		$terms_all     = self::req( 'terms_all', [] );
+		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+		$upload_id     = self::req( $this->classs( 'terms', 'attachment', 'uploaded' ) );
+		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ) );
+		$source_offset = self::req( 'source_offset', 'none' );
+
+		if ( $upload_id )
+			$attach_id = $upload_id;
+
+		if ( self::step( 'terms_step_four' ) ) {
+
+			if ( ! $attach_id )
+				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+
+			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
+			Core\HTML::inputHiddenArray( array_filter( $terms_all ), 'terms_all' );
+			Core\HTML::inputHidden( 'posttype', $posttype );
+			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
+			Core\HTML::inputHidden( 'source_offset', $source_offset );
+
+			$this->_form_terms_table( $attach_id, $field_map ?? [], $posttype, $terms_all, $source_offset );
+
+			echo $this->wrap_open_buttons();
+			Settings::submitButton( 'terms_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::submitButton( 'terms_import_append', _x( 'Import and Append', 'Button', 'geditorial-importer' ) );
+			Settings::submitButton( 'terms_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
+			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+
+		} else if ( self::step( 'terms_step_three' ) ) {
+
+			if ( ! $attach_id )
+				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( 'none' === $source_offset )
+				return Core\HTML::desc( _x( 'Import source column is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+
+			Core\HTML::h3( sprintf(
+				/* translators: %s: attachment title */
+				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
+				get_the_title( $attach_id )
+			) );
+
+			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
+				return Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
+
+			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
+			Core\HTML::inputHidden( 'posttype', $posttype );
+			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
+			Core\HTML::inputHidden( 'source_offset', $source_offset );
+
+			echo $this->wrap_open_buttons();
+			Settings::actionButton( 'terms_step_four', _x( 'Step 3: Taxonomies', 'Button', 'geditorial-importer' ), TRUE );
+			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
+
+		} else if ( self::step( 'terms_step_two' ) ) {
+
+			if ( ! $attach_id )
+				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+
+			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+
+			Core\HTML::h3( sprintf(
+				/* translators: %s: attachment title */
+				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
+				get_the_title( $attach_id )
+			) );
+
+			$this->_form_terms_map( $attach_id, $posttype );
+
+			Core\HTML::inputHidden( 'posttype', $posttype );
+			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
+
+			echo $this->wrap_open_buttons();
+			Settings::actionButton( 'terms_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
+
+		} else {
+
+			$this->_form_terms_attached( self::req( 'attachment', 0 ), $posttype );
+
+			echo $this->wrap_open_buttons();
+			Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+			Core\HTML::desc( _x( 'Upload or select a CSV file with post-type to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+		}
 	}
 
 	private function _get_current_form_images()
@@ -1483,5 +1606,230 @@ class Importer extends gEditorial\Module
 	public function imports_general_summary( $uri )
 	{
 		// TODO: report on available imports
+	}
+
+	private function _form_terms_attached( $id = 0, $posttype = 'post' )
+	{
+		$target = $this->classs( 'terms', 'attachment', 'uploaded' );
+		$select = $this->classs( 'terms', 'attachment', 'selected' );
+
+		echo '<hr class="-silent" />';
+		Settings::fieldSeparate( 'from' );
+
+		Core\HTML::inputHidden( $target );
+
+		echo Core\HTML::tag( 'input', [
+			'type'  => 'button',
+			'value' => _x( 'Upload', 'Button', 'geditorial-importer' ),
+			'data'  => [ 'target' => $target ],
+			'class' => [
+				'button',
+				'-button',
+				$this->classs( 'uploadbutton' ),
+			],
+		] );
+
+		Settings::fieldSeparate( 'or' );
+
+		WordPress\Media::selectAttachment( $id, $this->_get_source_mimetypes(), $select, gEditorial\Plugin::na() );
+
+		echo '<hr class="-silent" />';
+
+		Settings::fieldSeparate( 'into' );
+
+		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, 'edit_posts' ), [
+			'selected' => $posttype,
+			'name'     => 'posttype',
+		] );
+	}
+
+	private function _form_terms_map( $id, $posttype = 'post' )
+	{
+		if ( ! $file = get_attached_file( $id ) )
+			return FALSE;
+
+		$this->raise_resources();
+
+		$headers       = Helper::parseCSV( $file, 'headers' );
+		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
+
+		if ( $dups = Core\Arraay::duplicates( $headers ) )
+			/* translators: %s: joined duplicate keys */
+			echo Core\HTML::warning( sprintf( _x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ), WordPress\Strings::getJoined( $dups ) ), FALSE, 'inline' );
+
+		echo '<table class="base-table-raw"><tbody>';
+
+		echo '<tr><td><strong>'._x( 'Source ID', 'Dropdown Label', 'geditorial-importer' );
+		echo '</strong></td><td class="-sep">';
+
+			Settings::fieldSeparate( 'from' );
+
+		echo '</td><td>';
+
+			echo Core\HTML::dropdown( $headers, [
+				'selected'   => $source_offset,
+				'name'       => 'source_offset',
+				'class'      => '-dropdown-source-key',
+				'none_title' => Settings::showOptionNone(),
+				'none_value' => 'none', // `0` is offset!
+			] );
+
+		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td>';
+
+			Core\HTML::desc( _x( 'Used as Identifider of each item.', 'Description', 'geditorial-importer' ) );
+
+		echo '</td></tr>';
+		echo '</table>';
+	}
+
+	private function _form_terms_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )
+	{
+		if ( ! $file = get_attached_file( $id ) )
+			return FALSE;
+
+		$this->raise_resources();
+
+		list( $headers, $items ) = Helper::parseCSV( $file, 'full' );
+
+		$this->store_postmeta( $id, ( 'none' === $source_offset ? FALSE : $source_offset ), $this->constant( 'metakey_source_offset' ) );
+
+		$this->_render_data_table_for_terms( $id, $items, $headers, $map, $posttype, $terms_all, $source_offset );
+	}
+
+	private function _render_data_table_for_terms( $id, $data, $headers, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )
+	{
+		$taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );  // NOTE: all and must not be filtered
+		$columns    = [
+			'_cb'           => '_index',
+			'_check_column' => [
+				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
+				'callback' => [ $this, 'form_posts_table_checks' ],
+			],
+		];
+
+		foreach ( $terms_all as $taxonomy => $term_id ) {
+
+			if ( empty( $term_id ) )
+				continue;
+
+			if ( ! array_key_exists( $taxonomy, $taxonomies ) )
+				continue;
+
+			if ( ! $term = WordPress\Term::get( $term_id, $taxonomy ) )
+				continue;
+
+			$columns[sprintf( '%s_%s', $taxonomy, $term_id )] = [
+				'title' => sprintf( '%s: %s', $taxonomies[$taxonomy]->label, Core\HTML::code( $term->name ) ),
+				'args'  => [
+					'taxonomy' => $taxonomy,
+					'term_id'  => $term_id,
+					'term'     => $term,
+				],
+			];
+		}
+
+		Core\HTML::tableList( $columns, $data, [
+			'title' => Core\HTML::tag( 'h3', sprintf(
+				/* translators: %1$s: count placeholder, %2$s: attachment title */
+				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
+				Core\Number::format( count( $data ) ),
+				get_the_title( $id )
+			) ),
+			'callback' => [ $this, 'form_terms_table_callback' ],
+			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
+			'extra'    => [
+				'na'            => gEditorial()->na(),
+				// 'mapped'        => array_combine( $headers, $map ),
+				'headers'       => $headers,
+				'post_type'     => $posttype,
+				'taxonomies'    => $taxonomies,
+				'source_offset' => $source_offset,
+				'source_key'    => $headers[$source_offset],
+			],
+		] );
+	}
+
+	// NOTE: only applies on columns with no `callback`
+	public function form_terms_table_callback( $value, $row, $column, $index, $key, $args )
+	{
+		if ( empty( $row['___matched'] ) )
+			return Helper::htmlEmpty();
+
+		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $column['args']['taxonomy'], $row['___matched'] ) )
+			return Helper::htmlEmpty();
+
+		echo '<ul class="-rows">';
+
+		foreach ( $terms as $term )
+			echo Core\HTML::wrap( $term->name, '-row' );
+
+		echo '</ul>';
+	}
+
+	private function _handle_terms_import()
+	{
+		$count         = 0;
+		$terms_all     = self::req( 'terms_all', [] );
+		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ), FALSE );
+		$source_offset = self::req( 'source_offset', 'none' );
+		$append        = isset( $_POST['terms_import_append'] );
+		$override      = isset( $_POST['terms_import_override'] );
+
+		if ( 'none' === $source_offset )
+			return FALSE;
+
+		if ( ! $file = get_attached_file( $attach_id ) )
+			return FALSE;
+
+		$this->raise_resources();
+		list( $headers, $items ) = Helper::parseCSV( $file, 'full' );
+
+		$taxonomies = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
+		$source_key = $headers[$source_offset];
+
+		$this->actions( 'terms_before', $posttype );
+
+		foreach ( $_POST['_cb'] as $offset ) {
+
+			$row = $raw = $items[$offset]; // this parser combines header data
+
+			$this->actions( 'terms_before_each', $posttype );
+
+			$source_id = $this->filters( 'source_id',
+				( 'none' !== $source_offset && array_key_exists( $source_key, $row )
+					? $row[$source_key]
+					: NULL
+				),
+				$posttype,
+				$raw
+			);
+
+			if ( ! $source_id )
+				continue;
+
+			if ( ! $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
+				continue;
+
+			if ( ! $post = WordPress\Post::get( intval( $matched ) ) )
+				continue;
+
+			if ( $append )
+				$this->_set_terms_for_post( $post->ID, $taxonomies, $source_id, $post, TRUE, TRUE );
+
+			else if ( $override )
+				$this->_set_terms_for_post( $post->ID, $taxonomies, $source_id, $post, TRUE, FALSE );
+
+			else
+				$this->_set_terms_for_post( $post->ID, $taxonomies, $source_id, $post, FALSE, FALSE );
+
+			$this->actions( 'terms_after_each', $posttype );
+
+			$count++;
+		}
+
+		$this->actions( 'terms_after', $posttype );
+
+		return $count;
 	}
 }
