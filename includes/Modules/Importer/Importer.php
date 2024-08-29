@@ -311,8 +311,18 @@ class Importer extends gEditorial\Module
 		echo '<hr class="-silent" />';
 		Settings::fieldSeparate( 'from' );
 
-		echo '<input id="upload_csv_button" class="button" value="'._x( 'Upload', 'Button', 'geditorial-importer' ).'" type="button" />';
-		echo '<input id="upload_attach_id" type="hidden" name="upload_id" value="" />';
+		Core\HTML::inputHidden( 'upload_id' );
+
+		echo Core\HTML::tag( 'input', [
+			'type'  => 'button',
+			'value' => _x( 'Upload', 'Button', 'geditorial-importer' ),
+			'data'  => [ 'target' => 'upload_id' ],
+			'class' => [
+				'button',
+				'-button',
+				$this->classs( 'uploadbutton' ),
+			],
+		] );
 
 		Settings::fieldSeparate( 'or' );
 
