@@ -308,12 +308,17 @@ class Importer extends gEditorial\Module
 
 	private function _form_posts_attached( $id = 0, $posttype = 'post', $user_id = NULL )
 	{
+		echo '<hr class="-silent" />';
+		Settings::fieldSeparate( 'from' );
+
 		echo '<input id="upload_csv_button" class="button" value="'._x( 'Upload', 'Button', 'geditorial-importer' ).'" type="button" />';
 		echo '<input id="upload_attach_id" type="hidden" name="upload_id" value="" />';
 
 		Settings::fieldSeparate( 'or' );
 
 		WordPress\Media::selectAttachment( $id, [ 'application/vnd.ms-excel', 'text/csv' ], 'attach_id', gEditorial\Plugin::na() );
+
+		echo '<hr class="-silent" />';
 
 		Settings::fieldSeparate( 'into' );
 
@@ -991,17 +996,20 @@ class Importer extends gEditorial\Module
 
 	private function _render_imports_firstpage( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
 
 		if ( ! count( $this->posttypes() ) )
-			return Core\HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Message', 'geditorial-importer' ) );
+			return Info::renderNoImportsAvailable();
 
-		echo Core\HTML::tag( 'h4', _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
-		$this->_render_imports_for_posts( $uri, $sub );
+		echo Settings::toolboxCardOpen( _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
+			$this->_render_imports_for_posts( $uri, $sub );
+		echo '</div>';
 
-		echo '<br /><hr />'.Core\HTML::tag( 'h4', _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
+		echo Settings::toolboxCardOpen( _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ), FALSE );
+			$this->_render_imports_for_images( $uri, $sub );
+		echo '</div>';
 
-		$this->_render_imports_for_images( $uri, $sub );
+		echo '</div>';
 	}
 
 	private function _render_imports_for_posts( $uri, $sub )
@@ -1031,7 +1039,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_key', $source_key );
-			Core\HTML::inputHidden( 'imports_for', 'posts' );
+			// Core\HTML::inputHidden( 'imports_for', 'posts' );
 
 			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_key );
 
@@ -1059,7 +1067,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_key', $source_key );
-			Core\HTML::inputHidden( 'imports_for', 'posts' );
+			// Core\HTML::inputHidden( 'imports_for', 'posts' );
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
@@ -1084,7 +1092,7 @@ class Importer extends gEditorial\Module
 
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
-			Core\HTML::inputHidden( 'imports_for', 'posts' );
+			// Core\HTML::inputHidden( 'imports_for', 'posts' );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 
 			$this->_form_posts_map( $attach_id, $posttype );
@@ -1130,7 +1138,7 @@ class Importer extends gEditorial\Module
 			if ( ! WordPress\PostType::can( $args['posttype'], 'edit_posts' ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
-			Core\HTML::inputHidden( 'imports_for', 'images' );
+			// Core\HTML::inputHidden( 'imports_for', 'images' );
 
 			$this->fields_current_form( $args, 'forimages' );
 			$this->_form_images_table( $args );
@@ -1142,6 +1150,9 @@ class Importer extends gEditorial\Module
 
 		} else {
 
+			echo '<hr class="-silent" />';
+			Settings::fieldSeparate( 'from' );
+
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'metakey',
@@ -1151,7 +1162,9 @@ class Importer extends gEditorial\Module
 				'option_group' => 'forimages',
 			] );
 
-			Settings::fieldSeparate( 'from' );
+			echo '<hr class="-silent" />';
+
+			Settings::fieldSeparate( 'in' );
 
 			$this->do_settings_field( [
 				'type'         => 'text',
@@ -1162,7 +1175,9 @@ class Importer extends gEditorial\Module
 				'option_group' => 'forimages',
 			] );
 
-			Settings::fieldSeparate( 'in' );
+			echo '<hr class="-silent" />';
+
+			Settings::fieldSeparate( 'into' );
 
 			$this->do_settings_field( [
 				'type'         => 'select',
