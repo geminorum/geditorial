@@ -240,6 +240,12 @@ class StaticCovers extends gEditorial\Module
 		// public function user_profile_picture_description ( $description, $profile_user ) {}
 	}
 
+	public function importer_init()
+	{
+		$this->filter_module( 'importer', 'metakeys_for_image', 2, 9 );
+		$this->filter_module( 'importer', 'template_for_image', 2, 9 );
+	}
+
 	public function setup_restapi()
 	{
 		register_rest_field( $this->posttypes(), $this->constant( 'restapi_attribute' ), [
@@ -835,6 +841,36 @@ class StaticCovers extends gEditorial\Module
 		$data['source']['rendered']['coverimg'] = isset( $data['source']['covers'][0] ) ? Core\HTML::img( $data['source']['covers'][0] ) : '';
 
 		return $data;
+	}
+
+	public function importer_metakeys_for_image( $metakeys, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $metakeys;
+
+		if ( ! $metakey = $this->_get_posttype_metakey( $posttype ) )
+			return $metakeys;
+
+		$metakeys[$metakey] = _x( 'Static Cover', 'MetaKey Option Title', 'geditorial-static-covers' );
+
+		return $metakeys;
+	}
+
+	public function importer_template_for_image( $template, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $template;
+
+		if ( ! $url_template = $this->get_setting( $posttype.'_posttype_url_template' ) )
+			return $template;
+
+		return str_ireplace( [
+			'{{reference}}',
+			'{{counter}}',
+		], [
+			'%s',
+			$this->_get_counter(),
+		], $url_template );
 	}
 
 	public function post_cover_shortcode( $atts = [], $content = NULL, $tag = '' )

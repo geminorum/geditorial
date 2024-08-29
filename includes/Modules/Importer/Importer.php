@@ -1095,7 +1095,7 @@ class Importer extends gEditorial\Module
 			'user_id'  => gEditorial()->user( TRUE ),
 			'posttype' => $this->get_setting( 'post_type', 'post' ),
 			'metakey'  => $this->constant( 'metakey_source_id' ),
-			'template' => $this->filters( 'images_default_template', '' ), // FIXME: get default from settings
+			'template' => $this->_get_default_template_for_image(),
 		], 'forimages' );
 	}
 
@@ -1129,7 +1129,7 @@ class Importer extends gEditorial\Module
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'metakey',
-				'values'       => WordPress\Database::getPostMetaKeys( TRUE ),
+				'values'       => $this->_get_metakeys_for_image( $args['posttype'] ),
 				'none_title'   => Settings::showOptionNone(),
 				'default'      => $args['metakey'],
 				'option_group' => 'forimages',
@@ -1141,7 +1141,7 @@ class Importer extends gEditorial\Module
 				'type'         => 'text',
 				'field'        => 'template',
 				'default'      => $args['template'],
-				'placeholder'  => Core\URL::home( 'repo/%s.jpg' ),
+				'placeholder'  => $this->_get_default_template_for_image( $args['posttype'] ),
 				'dir'          => 'ltr',
 				'option_group' => 'forimages',
 			] );
@@ -1273,6 +1273,22 @@ class Importer extends gEditorial\Module
 		}
 
 		return $this->filters( 'matched', $matched, $source_id, $posttype, $raw );
+	}
+
+	private function _get_metakeys_for_image( $posttype = NULL )
+	{
+		return $this->filters( 'metakeys_for_image',
+			WordPress\Database::getPostMetaKeys( TRUE ),
+			$posttype ?? $this->get_setting( 'post_type', 'post' ),
+		);
+	}
+
+	private function _get_default_template_for_image( $posttype = NULL )
+	{
+		return $this->filters( 'template_for_image',
+			Core\URL::home( 'repo/%s.jpg' ), // FIXME: get default from settings
+			$posttype ?? $this->get_setting( 'post_type', 'post' ),
+		);
 	}
 
 	/**
