@@ -316,7 +316,7 @@ class Importer extends gEditorial\Module
 
 		Settings::fieldSeparate( 'or' );
 
-		WordPress\Media::selectAttachment( $id, [ 'application/vnd.ms-excel', 'text/csv' ], 'attach_id', gEditorial\Plugin::na() );
+		WordPress\Media::selectAttachment( $id, $this->_get_source_mimetypes(), 'attach_id', gEditorial\Plugin::na() );
 
 		echo '<hr class="-silent" />';
 
@@ -957,6 +957,9 @@ class Importer extends gEditorial\Module
 
 			$this->enqueue_asset_js( [
 				'strings' => $this->get_strings( 'media', 'js' ),
+				'config'  => [
+					'mimetypes' => $this->_get_source_mimetypes(),
+				],
 			], $this->dotted( 'media' ), [ 'jquery', 'media-upload' ] );
 		}
 	}
@@ -1448,6 +1451,15 @@ class Importer extends gEditorial\Module
 			'_importer_source_data',
 			'_importer_attachment_id',
 		] );
+	}
+
+	// TODO: support for excel source!
+	private function _get_source_mimetypes()
+	{
+		return [
+			'text/csv',
+			// 'application/vnd.ms-excel',
+		];
 	}
 
 	public function imports_general_summary( $uri )
