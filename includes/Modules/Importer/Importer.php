@@ -83,7 +83,7 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'metakey_source_map'    => '_importer_source_map',
-			'metakey_source_key'    => '_importer_source_id_key',
+			'metakey_source_offset'    => '_importer_source_id_key',
 			'metakey_source_data'   => '_import_source_data',
 			'metakey_prepared_data' => '_import_prepared_data',
 			'metakey_attach_id'     => '_import_attachment_id',
@@ -240,7 +240,7 @@ class Importer extends gEditorial\Module
 
 		$taxonomies = $this->get_importer_taxonomies( $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
-		$source_key = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_key' ) );
+		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
 		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
 		if ( empty( $map ) )
@@ -260,8 +260,8 @@ class Importer extends gEditorial\Module
 		echo '</td><td>';
 
 			echo Core\HTML::dropdown( $headers, [
-				'selected'   => $source_key,
-				'name'       => 'source_key',
+				'selected'   => $source_offset,
+				'name'       => 'source_offset',
 				'class'      => '-dropdown-source-key',
 				'none_title' => Settings::showOptionNone(),
 				'none_value' => 'none', // `0` is offset!
@@ -406,7 +406,7 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	private function _form_posts_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_key = 'none' )
+	private function _form_posts_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )
 	{
 		if ( ! $file = get_attached_file( $id ) )
 			return FALSE;
@@ -423,13 +423,13 @@ class Importer extends gEditorial\Module
 		unset( $iterator, $parser, $items[0] );
 
 		$this->store_postmeta( $id, array_combine( $headers, $map ), $this->constant( 'metakey_source_map' ) );
-		$this->store_postmeta( $id, ( 'none' === $source_key ? FALSE : $source_key ), $this->constant( 'metakey_source_key' ) );
+		$this->store_postmeta( $id, ( 'none' === $source_offset ? FALSE : $source_offset ), $this->constant( 'metakey_source_offset' ) );
 		$this->_record_fields_map( array_combine( $headers, $map ) );
 
-		$this->_render_data_table( $id, $items, $headers, $map, $posttype, $source_key );
+		$this->_render_data_table_for_posts( $id, $items, $headers, $map, $posttype, $terms_all, $source_offset );
 	}
 
-	private function _render_data_table( $id, $data, $headers, $map = [], $posttype = 'post', $source_key = 'none' )
+	private function _render_data_table_for_posts( $id, $data, $headers, $map = [], $posttype = 'post', $term_all = [], $source_offset = 'none' )
 	{
 		$taxonomies = $this->get_importer_taxonomies( $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
@@ -449,7 +449,7 @@ class Importer extends gEditorial\Module
 					else if ( FALSE === $row['___source_id'] )
 						$checks[] = _x( 'Skipped: Filtered', 'Checks', 'geditorial-importer' );
 
-					else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_key'] )
+					else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_offset'] )
 						$checks[] = _x( 'Skipped: No SourceID', 'Checks', 'geditorial-importer' );
 
 					if ( $row['___matched'] )
@@ -512,7 +512,7 @@ class Importer extends gEditorial\Module
 				'headers'    => $headers,
 				'post_type'  => $posttype,
 				'taxonomies' => $taxonomies,
-				'source_key' => $source_key,
+				'source_offset' => $source_offset,
 			],
 		] );
 	}
@@ -527,9 +527,9 @@ class Importer extends gEditorial\Module
 		$raw       = Core\Arraay::combine( $args['extra']['headers'], $row );
 		$source_id = NULL;
 
-		if ( 'none' !== $args['extra']['source_key']
-			&& \array_key_exists( $args['extra']['source_key'], $row ) )
-				$source_id = $row[$args['extra']['source_key']];
+		if ( 'none' !== $args['extra']['source_offset']
+			&& \array_key_exists( $args['extra']['source_offset'], $row ) )
+				$source_id = $row[$args['extra']['source_offset']];
 
 		$raw['___source_id'] = $this->filters( 'source_id',
 			$source_id,
@@ -542,7 +542,7 @@ class Importer extends gEditorial\Module
 			$raw['___matched'] = 0;
 
 		// no source id provided in the row
-		else if ( ! $raw['___source_id'] && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_key'] )
+		else if ( ! $raw['___source_id'] && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_offset'] )
 			$raw['___matched'] = 0;
 
 		else if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $raw ) )
@@ -642,7 +642,7 @@ class Importer extends gEditorial\Module
 					$posttype   = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id  = self::req( 'attach_id', FALSE );
 					$user_id    = self::req( 'user_id', gEditorial()->user( TRUE ) );
-					$source_key = self::req( 'source_key', 'none' );
+					$source_offset = self::req( 'source_offset', 'none' );
 					$override   = isset( $_POST['posts_import_override'] );
 
 					if ( ! $file = get_attached_file( $attach_id ) )
@@ -687,8 +687,8 @@ class Importer extends gEditorial\Module
 
 						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
-							( 'none' !== $source_key && array_key_exists( $source_key, $row )
-								? $row[$source_key]
+							( 'none' !== $source_offset && array_key_exists( $source_offset, $row )
+								? $row[$source_offset]
 								: NULL
 							),
 							$posttype,
@@ -699,7 +699,7 @@ class Importer extends gEditorial\Module
 						if ( FALSE === $source_id )
 							continue;
 
-						if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $source_key )
+						if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $source_offset )
 							continue;
 
 						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
@@ -1033,7 +1033,7 @@ class Importer extends gEditorial\Module
 		$upload_id  = self::req( 'upload_id', FALSE );
 		$attach_id  = self::req( 'attach_id', FALSE );
 		$user_id    = self::req( 'user_id', gEditorial()->user( TRUE ) );
-		$source_key = self::req( 'source_key', 'none' );
+		$source_offset = self::req( 'source_offset', 'none' );
 
 		if ( $upload_id )
 			$attach_id = $upload_id;
@@ -1051,10 +1051,10 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
-			Core\HTML::inputHidden( 'source_key', $source_key );
+			Core\HTML::inputHidden( 'source_offset', $source_offset );
 			// Core\HTML::inputHidden( 'imports_for', 'posts' );
 
-			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_key );
+			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_offset );
 
 			echo $this->wrap_open_buttons();
 			Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
@@ -1079,7 +1079,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
-			Core\HTML::inputHidden( 'source_key', $source_key );
+			Core\HTML::inputHidden( 'source_offset', $source_offset );
 			// Core\HTML::inputHidden( 'imports_for', 'posts' );
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
