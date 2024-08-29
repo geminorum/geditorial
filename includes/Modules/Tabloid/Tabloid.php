@@ -104,9 +104,13 @@ class Tabloid extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				if ( $this->role_can( 'overview' )
-					&& ( $link = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action' ) ) ) {
+					&& ( $html = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action' ) ) ) {
 
-					$this->enqueue_asset_js( [ 'button' => $link ], $screen );
+					Services\HeaderButtons::register( $this->key, [
+						'html'     => $html,
+						'priority' => -9,
+					] );
+
 					Scripts::enqueueColorBox();
 				}
 

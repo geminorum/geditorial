@@ -96,10 +96,6 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'js' => [
-				'edit' => [
-					'button_title' => _x( 'Import Items', 'Javascript String', 'geditorial-importer' ),
-					'button_text'  => _x( 'Import', 'Javascript String', 'geditorial-importer' ),
-				],
 				'media' => [
 					'modal_title'  => _x( 'Choose a Datasheet', 'Javascript String', 'geditorial-importer' ),
 					'modal_button' => _x( 'Select as Source', 'Javascript String', 'geditorial-importer' ),
@@ -125,11 +121,12 @@ class Importer extends gEditorial\Module
 		if ( 'edit' == $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( ! self::req( 's' ) && WordPress\PostType::can( $screen->post_type, 'edit_others_posts' ) )
-				$this->enqueue_asset_js( [
-					'strings' => $this->get_strings( $screen->base, 'js' ),
-					'link'    => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ),
-				], $screen );
+			Services\HeaderButtons::register( $this->key, [
+				'text'      => _x( 'Import', 'Header Button', 'geditorial-importer' ),
+				'link'      => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ),
+				'icon'      => $this->module->icon,
+				'cap_check' => WordPress\PostType::cap( $screen->post_type, 'import_posts' ),
+			] );
 		}
 	}
 

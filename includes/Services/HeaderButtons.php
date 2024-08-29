@@ -31,6 +31,7 @@ class HeaderButtons extends WordPress\Main
 			return FALSE;
 
 		$gEditorialHeaderButtons[$name] = self::atts( [
+			'html'  => FALSE, // will override the whole link!
 			'name'  => $name,
 			'text'  => $name,
 			'title' => NULL,
@@ -74,20 +75,24 @@ class HeaderButtons extends WordPress\Main
 			if ( ! empty( $button['icon'] ) )
 				$button['text'] = sprintf( '%s %s', Helper::getIcon( $button['icon'] ), $button['text'] );
 
-			$args['buttons'][] = Core\HTML::tag( 'a', [
-				'id'     => $button['id'],
-				'data'   => $button['data'],
-				'href'   => $button['link'] ?: '#',
-				'title'  => $button['title'] ?: FALSE,
-				'target' => $button['newtab'] ? '_blank': FALSE,
-				'class'  => Core\HTML::attrClass(
-					'page-title-action',
-					'-button',
-					'-header-button',
-					empty( $button['icon'] ) ? '' : '-button-icon',
-					$button['class']
-				),
-			], $button['text'] );
+			if ( ! empty( $button['html'] ) )
+				$args['buttons'][] = $button['html'];
+
+			else
+				$args['buttons'][] = Core\HTML::tag( 'a', [
+					'id'     => $button['id'],
+					'data'   => $button['data'],
+					'href'   => $button['link'] ?: '#',
+					'title'  => $button['title'] ?: FALSE,
+					'target' => $button['newtab'] ? '_blank': FALSE,
+					'class'  => Core\HTML::attrClass(
+						'page-title-action',
+						'-button',
+						'-header-button',
+						empty( $button['icon'] ) ? '' : '-button-icon',
+						$button['class']
+					),
+				], $button['text'] );
 		}
 
 		Scripts::enqueue( 'admin.headerbuttons.all' );
