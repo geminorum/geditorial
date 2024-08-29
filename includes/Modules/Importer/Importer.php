@@ -955,40 +955,53 @@ class Importer extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		$for    = self::req( 'imports_for' );
-		$images = 'images' == $for || self::req( 'images_step_two' );
-		$posts  = 'posts' == $for || self::req( 'posts_step_two' );
-		$first  = ! $for && ! $images && ! $posts;
+		switch ( self::step() ) {
 
-		if ( $first )
-			Core\HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+			case 'posts_step_two':
+			case 'posts_step_three':
+			case 'posts_step_four':
+
+				$this->_render_imports_for_posts( $uri, $sub );
+
+				break;
+
+			case 'images_step_two':
+
+				$this->_render_imports_for_images( $uri, $sub );
+
+				break;
+
+			// TODO: `_render_imports_for_files()`
+			// --- import data from directory of files into fields: like excerpt
+			// - attach file from directory of files into posts with field data to rename
+
+			// TODO: `_render_imports_for_metas()`
+			// - import data by metakey + support types: string/int/comma separated
+
+			// TODO: imports for sub-contents!
+
+			default:
+
+				$this->_render_imports_firstpage( $uri, $sub );
+		}
+	}
+
+	private function _render_imports_firstpage( $uri, $sub )
+	{
+		Core\HTML::h3( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
 
 		if ( ! count( $this->posttypes() ) )
 			return Core\HTML::desc( _x( 'Imports are not supported for any of the post-types!', 'Message', 'geditorial-importer' ) );
 
-		if ( $first )
-			echo Core\HTML::tag( 'h4', _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
+		echo Core\HTML::tag( 'h4', _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ) );
+		$this->_render_imports_for_posts( $uri, $sub );
 
-		if ( $first || $posts )
-			$this->_render_imports_for_posts();
+		echo '<br /><hr />'.Core\HTML::tag( 'h4', _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
 
-		if ( $first )
-			echo '<br /><hr />'.Core\HTML::tag( 'h4', _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ) );
-
-		if ( $first || $images )
-			$this->_render_imports_for_images();
-
-		// TODO: `_render_imports_for_files()`
-		// --- import data from directory of files into fields: like excerpt
-		// - attach file from directory of files into posts with field data to rename
-
-		// TODO: `_render_imports_for_metas()`
-		// - import data by metakey + support types: string/int/comma separated
-
-		// TODO: imports for sub-contents!
+		$this->_render_imports_for_images( $uri, $sub );
 	}
 
-	private function _render_imports_for_posts()
+	private function _render_imports_for_posts( $uri, $sub )
 	{
 		$field_map  = self::req( 'field_map', [] );
 		$terms_all  = self::req( 'terms_all', [] );
@@ -1001,7 +1014,7 @@ class Importer extends gEditorial\Module
 		if ( $upload_id )
 			$attach_id = $upload_id;
 
-		if ( isset( $_POST['posts_step_four'] ) ) {
+		if ( self::step( 'posts_step_four' ) ) {
 
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
@@ -1024,7 +1037,7 @@ class Importer extends gEditorial\Module
 			Settings::submitButton( 'posts_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 
-		} else if ( isset( $_POST['posts_step_three'] ) ) {
+		} else if ( self::step( 'posts_step_three' ) ) {
 
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
@@ -1049,10 +1062,10 @@ class Importer extends gEditorial\Module
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'posts_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::actionButton( 'posts_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 
-		} else if ( isset( $_POST['posts_step_two'] ) ) {
+		} else if ( self::step( 'posts_step_two' ) ) {
 
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
@@ -1074,7 +1087,7 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_map( $attach_id, $posttype );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'posts_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::actionButton( 'posts_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else {
@@ -1082,7 +1095,7 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_attached( 0, $posttype );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::actionButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 		}
 
@@ -1099,14 +1112,14 @@ class Importer extends gEditorial\Module
 		], 'forimages' );
 	}
 
-	private function _render_imports_for_images()
+	private function _render_imports_for_images( $uri, $sub )
 	{
 		if ( ! current_user_can( 'upload_files' ) )
 			return Core\HTML::desc( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ) );
 
 		$args = $this->_get_current_form_images();
 
-		if ( isset( $_POST['images_step_two'] ) ) {
+		if ( self::step( 'images_step_two' ) ) {
 
 			if ( empty( $args['metakey'] ) )
 				return Core\HTML::desc( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ) );
@@ -1166,7 +1179,7 @@ class Importer extends gEditorial\Module
 			] );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'images_step_two', _x( 'Step 1: Meta-key', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::actionButton( 'images_step_two', _x( 'Step 1: Meta-key', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a meta-key for refrence on importing the attachments.', 'Message', 'geditorial-importer' ), FALSE );
 		}
 
