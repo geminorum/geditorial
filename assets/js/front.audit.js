@@ -1,3 +1,5 @@
+/* global jQuery, gEditorial */
+
 (function ($, plugin, module) {
   const s = {
     action: plugin._base + '_' + module,
@@ -16,7 +18,7 @@
     },
 
     store: function () {
-      const data = $(':input', s.wrap).serialize();
+      const form = $(':input', s.wrap).serialize();
       const spinner = $(s.button).find(s.spinner);
 
       $.ajax({
@@ -27,7 +29,7 @@
           what: 'store',
           post_id: plugin[module].post_id,
           nonce: plugin[module]._nonce,
-          data: data
+          data: form
         },
         beforeSend: function (xhr) {
           spinner.addClass('is-active');

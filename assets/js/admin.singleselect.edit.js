@@ -31,7 +31,8 @@
         el.trigger('change');
       });
 
-      wrap.appendTo(editColCenter[0]);
+      // wrap.appendTo(editColCenter[0]);
+      wrap.prependTo(editColCenter[0]);
     }
   };
 
