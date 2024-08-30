@@ -3,8 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Plugin;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Parser;
+use geminorum\gEditorial\Plugin;
 
 trait RawImports
 {
@@ -42,11 +43,11 @@ trait RawImports
 		}
 
 		switch ( $type ) {
-			case 'csv' : $data = Helper::parseCSV( $this->get_imports_datafile() ); break;
-			case 'json': $data = Helper::parseJSON( $this->get_imports_datafile() ); break;
-			case 'xml' : $data = Helper::parseXML( $this->get_imports_datafile() ); break;
+			case 'csv' : $data = Parser::fromCSV_Legacy( $this->get_imports_datafile() ); break;
+			case 'json': $data = Parser::fromJSON_Legacy( $this->get_imports_datafile() ); break;
+			case 'xml' : $data = Parser::fromXML_Legacy( $this->get_imports_datafile() ); break;
+			case 'txt' : $data = Parser::fromTXT_Legacy( $this->get_imports_datafile() ); break;
 			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile(), [] ); break;
-			case 'txt' : $data = Core\Text::splitLines( Core\File::getContents( $this->get_imports_datafile() ) ); break;
 		}
 
 		if ( empty( $data ) )

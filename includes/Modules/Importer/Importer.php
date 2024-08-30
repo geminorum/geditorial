@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Parser;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
@@ -1650,10 +1651,10 @@ class Importer extends gEditorial\Module
 
 		$this->raise_resources();
 
-		$headers       = Helper::parseCSV( $file, 'headers' );
+		$parsed        = Parser::fromCSV( $file, [ 'headers' => TRUE ] );
 		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
 
-		if ( $dups = Core\Arraay::duplicates( $headers ) )
+		if ( $dups = Core\Arraay::duplicates( $parsed['headers'] ) )
 			/* translators: %s: joined duplicate keys */
 			echo Core\HTML::warning( sprintf( _x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ), WordPress\Strings::getJoined( $dups ) ), FALSE, 'inline' );
 
@@ -1666,7 +1667,7 @@ class Importer extends gEditorial\Module
 
 		echo '</td><td>';
 
-			echo Core\HTML::dropdown( $headers, [
+			echo Core\HTML::dropdown( $parsed['headers'], [
 				'selected'   => $source_offset,
 				'name'       => 'source_offset',
 				'class'      => '-dropdown-source-key',
@@ -1689,11 +1690,11 @@ class Importer extends gEditorial\Module
 
 		$this->raise_resources();
 
-		list( $headers, $items ) = Helper::parseCSV( $file, 'full' );
+		$parsed = Parser::fromCSV( $file );
 
 		$this->store_postmeta( $id, ( 'none' === $source_offset ? FALSE : $source_offset ), $this->constant( 'metakey_source_offset' ) );
 
-		$this->_render_data_table_for_terms( $id, $items, $headers, $map, $posttype, $terms_all, $source_offset );
+		$this->_render_data_table_for_terms( $id, $parsed['items'], $parsed['headers'], $map, $posttype, $terms_all, $source_offset );
 	}
 
 	private function _render_data_table_for_terms( $id, $data, $headers, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )
@@ -1783,16 +1784,16 @@ class Importer extends gEditorial\Module
 			return FALSE;
 
 		$this->raise_resources();
-		list( $headers, $items ) = Helper::parseCSV( $file, 'full' );
 
+		$parsed     = Parser::fromCSV( $file );
 		$taxonomies = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
-		$source_key = $headers[$source_offset];
+		$source_key = $parsed['headers'][$source_offset];
 
 		$this->actions( 'terms_before', $posttype );
 
 		foreach ( $_POST['_cb'] as $offset ) {
 
-			$row = $raw = $items[$offset]; // this parser combines header data
+			$row = $raw = $parsed['items'][$offset]; // this parser combines header data
 
 			$this->actions( 'terms_before_each', $posttype );
 

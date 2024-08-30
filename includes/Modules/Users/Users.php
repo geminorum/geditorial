@@ -718,7 +718,7 @@ class Users extends gEditorial\Module
 					$users    = WordPress\User::get( TRUE, TRUE, [], 'user_email' );
 					$currents = $wpdb->get_results( "SELECT post_author as user, GROUP_CONCAT( ID ) as posts FROM {$wpdb->posts} GROUP BY post_author", ARRAY_A );
 
-					// FIXME: use `Helper::parseCSV()`
+					// FIXME: use `Parser::fromCSV_Legacy()`
 					$iterator = new \SplFileObject( Core\File::normalize( $file['file'] ) );
 					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
 					$header   = $parser->parse();

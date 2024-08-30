@@ -9,6 +9,7 @@ use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Parser;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
@@ -375,7 +376,7 @@ class Config extends gEditorial\Module
 					if ( ! $file = WordPress\Media::handleImportUpload() )
 						Core\WordPress::redirectReferer( 'wrong' );
 
-					if ( ! $data = Helper::parseJSON( Core\File::normalize( $file['file'] ) ) )
+					if ( ! $data = Parser::fromJSON_Legacy( Core\File::normalize( $file['file'] ) ) )
 						Core\WordPress::redirectReferer( 'wrong' );
 
 					if ( ! update_option( 'geditorial_options', $data, TRUE ) )
