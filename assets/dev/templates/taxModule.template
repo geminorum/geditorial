@@ -9,6 +9,7 @@ use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
@@ -39,8 +40,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles'     => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
-			'_dashboard' => [
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_parents',
 				'summary_excludes' => [ NULL, $terms, $empty ],
@@ -67,7 +68,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	protected function get_global_constants()
 	{
 		return [
-			'main_taxonomy' => '',
+			'main_taxonomy' => '', // FIXME <---
 		];
 	}
 
@@ -84,7 +85,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		$strings = [
 			'noops' => [
-				'main_taxonomy' => _n_noop( '', '', '<%= moduleTextdomain %>' ),
+				'main_taxonomy' => _n_noop( '', '', '<%= moduleTextdomain %>' ), // FIXME <---
 			],
 			'labels' => [
 				'main_taxonomy' => [
@@ -110,7 +111,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		return [
 			'main_taxonomy' => [
-				'' => _x( '', 'Main Taxonomy: Default Term', '<%= moduleTextdomain %>' ),
+				'' => _x( '', 'Main Taxonomy: Default Term', '<%= moduleTextdomain %>' ), // FIXME <---
 			],
 		];
 	}
@@ -140,6 +141,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->modulelinks__register_headerbuttons();
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -187,8 +190,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context
-			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
+		return 'reports' === $context
+			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', $context, NULL, $fallback )
 			: parent::cuc( $context, $fallback );
 	}
 

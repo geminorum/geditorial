@@ -108,10 +108,9 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
 		] );
 
-		$this->register_posttype( 'main_posttype', [
-			WordPress\PostType::PRIMARY_TAXONOMY_PROP => $this->constant( 'category_taxonomy' ),
-		], [
-			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+		$this->register_posttype( 'main_posttype', [], [
+			'is_viewable'      => $this->get_setting( 'contents_viewable', TRUE ),
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}
 
