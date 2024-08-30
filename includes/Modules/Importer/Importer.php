@@ -341,9 +341,10 @@ class Importer extends gEditorial\Module
 		Settings::fieldSeparate( 'as' );
 
 		echo Core\HTML::dropdown( WordPress\User::get(), [
-			'selected' => is_null( $user_id ) ? gEditorial()->user( TRUE ) : $user_id,
+			'selected' => is_null( $user_id ) ? $this->_get_user_id() : $user_id,
 			'name'     => 'user_id',
 			'prop'     => 'display_name',
+			'disabled' => ! $this->_can_change_user(),
 		] );
 
 		// TODO: checkbox to only import if import_id found, e.g: not creating new posts!
@@ -668,7 +669,7 @@ class Importer extends gEditorial\Module
 					$terms_all     = self::req( 'terms_all', [] );
 					$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id     = self::req( 'attach_id', FALSE );
-					$user_id       = self::req( 'user_id', gEditorial()->user( TRUE ) );
+					$user_id       = self::req( 'user_id', $this->_get_user_id() );
 					$source_offset = self::req( 'source_offset', 'none' );
 					$override      = isset( $_POST['posts_import_override'] );
 
@@ -1071,7 +1072,7 @@ class Importer extends gEditorial\Module
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id     = self::req( 'upload_id', FALSE );
 		$attach_id     = self::req( 'attach_id', FALSE );
-		$user_id       = self::req( 'user_id', gEditorial()->user( TRUE ) );
+		$user_id       = self::req( 'user_id', $this->_get_user_id() );
 		$source_offset = self::req( 'source_offset', 'none' );
 
 		if ( $upload_id )
@@ -1155,7 +1156,7 @@ class Importer extends gEditorial\Module
 
 		} else {
 
-			$this->_form_posts_attached( self::req( 'attachment', 0 ), $posttype );
+			$this->_form_posts_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
 			echo $this->wrap_open_buttons();
 			Settings::actionButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
@@ -1172,6 +1173,7 @@ class Importer extends gEditorial\Module
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id     = self::req( $this->classs( 'terms', 'attachment', 'uploaded' ) );
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ) );
+		$user_id       = self::req( 'user_id', $this->_get_user_id() );
 		$source_offset = self::req( 'source_offset', 'none' );
 
 		if ( $upload_id )
@@ -1189,6 +1191,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHiddenArray( array_filter( $terms_all ), 'terms_all' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
+			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_offset', $source_offset );
 
 			$this->_form_terms_table( $attach_id, $field_map ?? [], $posttype, $terms_all, $source_offset );
@@ -1222,6 +1225,7 @@ class Importer extends gEditorial\Module
 			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
+			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_offset', $source_offset );
 
 			echo $this->wrap_open_buttons();
@@ -1246,6 +1250,7 @@ class Importer extends gEditorial\Module
 
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
+			Core\HTML::inputHidden( 'user_id', $user_id );
 
 			echo $this->wrap_open_buttons();
 			Settings::actionButton( 'terms_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
@@ -1253,7 +1258,7 @@ class Importer extends gEditorial\Module
 
 		} else {
 
-			$this->_form_terms_attached( self::req( 'attachment', 0 ), $posttype );
+			$this->_form_terms_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
 			echo $this->wrap_open_buttons();
 			Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
@@ -1264,7 +1269,7 @@ class Importer extends gEditorial\Module
 	private function _get_current_form_images()
 	{
 		return $this->get_current_form( [
-			'user_id'  => gEditorial()->user( TRUE ),
+			'user_id'  => $this->_get_user_id(),
 			'posttype' => $this->get_setting( 'post_type', 'post' ),
 			'metakey'  => $this->constant( 'metakey_source_id' ),
 			'template' => $this->_get_default_template_for_image(),
@@ -1308,6 +1313,7 @@ class Importer extends gEditorial\Module
 				'none_title'   => Settings::showOptionNone(),
 				'default'      => $args['metakey'],
 				'option_group' => 'forimages',
+				'cap'          => TRUE, // already checked
 			] );
 
 			echo '<hr class="-silent" />';
@@ -1321,6 +1327,7 @@ class Importer extends gEditorial\Module
 				'placeholder'  => $this->_get_default_template_for_image( $args['posttype'] ),
 				'dir'          => 'ltr',
 				'option_group' => 'forimages',
+				'cap'          => TRUE, // already checked
 			] );
 
 			echo '<hr class="-silent" />';
@@ -1333,6 +1340,7 @@ class Importer extends gEditorial\Module
 				'values'       => $this->list_posttypes( NULL, NULL, 'edit_posts' ),
 				'default'      => $args['posttype'],
 				'option_group' => 'forimages',
+				'cap'          => TRUE, // already checked
 			] );
 
 			Settings::fieldSeparate( 'as' );
@@ -1341,7 +1349,9 @@ class Importer extends gEditorial\Module
 				'type'         => 'user',
 				'field'        => 'user_id',
 				'default'      => $args['user_id'],
+				'disabled'     => ! $this->_can_change_user(),
 				'option_group' => 'forimages',
+				'cap'          => TRUE, // already checked
 			] );
 
 			echo $this->wrap_open_buttons();
@@ -1607,12 +1617,25 @@ class Importer extends gEditorial\Module
 		];
 	}
 
+	private function _can_change_user()
+	{
+		// return current_user_can( 'manage_option' );
+		return WordPress\User::isSuperAdmin();
+	}
+
+	private function _get_user_id()
+	{
+		return $this->_can_change_user()
+			? gEditorial()->user( TRUE )
+			: get_current_user_id();
+	}
+
 	public function imports_general_summary( $uri )
 	{
 		// TODO: report on available imports
 	}
 
-	private function _form_terms_attached( $id = 0, $posttype = 'post' )
+	private function _form_terms_attached( $id = 0, $posttype = 'post', $user_id = NULL )
 	{
 		$target = $this->classs( 'terms', 'attachment', 'uploaded' );
 		$select = $this->classs( 'terms', 'attachment', 'selected' );
@@ -1644,6 +1667,15 @@ class Importer extends gEditorial\Module
 		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, 'edit_posts' ), [
 			'selected' => $posttype,
 			'name'     => 'posttype',
+		] );
+
+		Settings::fieldSeparate( 'as' );
+
+		echo Core\HTML::dropdown( WordPress\User::get(), [
+			'selected' => is_null( $user_id ) ? $this->_get_user_id() : $user_id,
+			'name'     => 'user_id',
+			'prop'     => 'display_name',
+			'disabled' => ! $this->_can_change_user(),
 		] );
 	}
 
@@ -1776,6 +1808,7 @@ class Importer extends gEditorial\Module
 		$terms_all     = self::req( 'terms_all', [] );
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ), FALSE );
+		$user_id       = self::req( 'user_id', $this->_get_user_id() );
 		$source_offset = self::req( 'source_offset', 'none' );
 		$append        = isset( $_POST['terms_import_append'] );
 		$override      = isset( $_POST['terms_import_override'] );
@@ -1826,6 +1859,8 @@ class Importer extends gEditorial\Module
 
 			else
 				$this->_set_terms_for_post( $post->ID, $taxonomies, $source_id, $post, FALSE, FALSE );
+
+			// TODO: log the changes with user id
 
 			$this->actions( 'terms_after_each', $posttype );
 
