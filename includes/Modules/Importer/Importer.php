@@ -84,7 +84,7 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'metakey_source_map'    => '_importer_source_map',
-			'metakey_source_offset'    => '_importer_source_id_key',
+			'metakey_source_offset' => '_importer_source_id_key',
 			'metakey_source_data'   => '_import_source_data',
 			'metakey_prepared_data' => '_import_prepared_data',
 			'metakey_attach_id'     => '_import_attachment_id',
@@ -239,10 +239,10 @@ class Importer extends gEditorial\Module
 
 		unset( $items[0] );
 
-		$taxonomies = $this->get_importer_taxonomies( $posttype );
-		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
+		$taxonomies    = $this->get_importer_taxonomies( $posttype );
+		$fields        = $this->get_importer_fields( $posttype, $taxonomies );
 		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
-		$map        = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
+		$map           = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
 
 		if ( empty( $map ) )
 			$map = $this->_guess_fields_map( $headers, $id );
@@ -475,10 +475,12 @@ class Importer extends gEditorial\Module
 				'post_type'     => $posttype,
 				'taxonomies'    => $taxonomies,
 				'source_offset' => $source_offset,
+				'source_key'    => $source_offset, // is the same for this CSV-Parser
 			],
 		] );
 	}
 
+	// CAUTION: used more than once!
 	public function form_posts_table_checks( $value, $row, $column, $index, $key, $args )
 	{
 		$checks = [];
@@ -527,6 +529,7 @@ class Importer extends gEditorial\Module
 	}
 
 	// NOTE: combines raw data with header keys and adds source_id and matched
+	// CAUTION: used more than once!
 	public function form_posts_table_row_prep( $row, $index, $args )
 	{
 		// empty rows have only one empty cell
@@ -660,14 +663,14 @@ class Importer extends gEditorial\Module
 				} else if ( Tablelist::isAction( 'posts_import_newonly', TRUE )
 					|| Tablelist::isAction( 'posts_import_override', TRUE ) ) {
 
-					$count      = 0;
-					$field_map  = self::req( 'field_map', [] );
-					$terms_all  = self::req( 'terms_all', [] );
-					$posttype   = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
-					$attach_id  = self::req( 'attach_id', FALSE );
-					$user_id    = self::req( 'user_id', gEditorial()->user( TRUE ) );
+					$count         = 0;
+					$field_map     = self::req( 'field_map', [] );
+					$terms_all     = self::req( 'terms_all', [] );
+					$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+					$attach_id     = self::req( 'attach_id', FALSE );
+					$user_id       = self::req( 'user_id', gEditorial()->user( TRUE ) );
 					$source_offset = self::req( 'source_offset', 'none' );
-					$override   = isset( $_POST['posts_import_override'] );
+					$override      = isset( $_POST['posts_import_override'] );
 
 					if ( ! $file = get_attached_file( $attach_id ) )
 						Core\WordPress::redirectReferer( 'wrong' );
@@ -690,7 +693,7 @@ class Importer extends gEditorial\Module
 					// NOTE: to avoid `Content, title, and excerpt are empty.` Error on `wp_insert_post()`
 					add_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
 
-					$this->actions( 'before', $posttype );
+					$this->actions( 'posts_before', $posttype );
 
 					foreach ( $_POST['_cb'] as $offset ) {
 
@@ -974,7 +977,7 @@ class Importer extends gEditorial\Module
 						$count++;
 					}
 
-					$this->actions( 'after', $posttype );
+					$this->actions( 'posts_after', $posttype );
 
 					remove_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
 					unset( $iterator );
@@ -1063,12 +1066,12 @@ class Importer extends gEditorial\Module
 
 	private function _render_imports_for_posts( $uri, $sub )
 	{
-		$field_map  = self::req( 'field_map', [] );
-		$terms_all  = self::req( 'terms_all', [] );
-		$posttype   = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
-		$upload_id  = self::req( 'upload_id', FALSE );
-		$attach_id  = self::req( 'attach_id', FALSE );
-		$user_id    = self::req( 'user_id', gEditorial()->user( TRUE ) );
+		$field_map     = self::req( 'field_map', [] );
+		$terms_all     = self::req( 'terms_all', [] );
+		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+		$upload_id     = self::req( 'upload_id', FALSE );
+		$attach_id     = self::req( 'attach_id', FALSE );
+		$user_id       = self::req( 'user_id', gEditorial()->user( TRUE ) );
 		$source_offset = self::req( 'source_offset', 'none' );
 
 		if ( $upload_id )
@@ -1222,7 +1225,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'source_offset', $source_offset );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'terms_step_four', _x( 'Step 3: Taxonomies', 'Button', 'geditorial-importer' ), TRUE );
+			Settings::actionButton( 'terms_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( self::step( 'terms_step_two' ) ) {

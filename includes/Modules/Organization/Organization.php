@@ -14,6 +14,7 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
+// TODO: reports: table for each department paired with selected taxonomy term count
 // TODO: selected departments as `views` on supported @SEE: `Yearly` Module
 
 class Organization extends gEditorial\Module

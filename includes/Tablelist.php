@@ -7,10 +7,11 @@ class Tablelist extends WordPress\Main
 
 	const BASE = 'geditorial';
 
-	public static function isAction( $action, $check_cb = FALSE )
+	public static function isAction( $actions, $check_cb = FALSE )
 	{
-		if ( $action == self::req( 'table_action' ) || isset( $_POST[$action] ) )
-			return $check_cb ? (bool) count( self::req( '_cb', [] ) ) : TRUE;
+		foreach( (array) $actions as $action )
+			if ( $action == self::req( 'table_action' ) || isset( $_POST[$action] ) )
+				return $check_cb ? (bool) count( self::req( '_cb', [] ) ) : TRUE;
 
 		return FALSE;
 	}

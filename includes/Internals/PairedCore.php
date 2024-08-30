@@ -651,7 +651,7 @@ trait PairedCore
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( $this->hook_base( 'importer', 'before' ),
+		add_action( $this->hook_base( 'importer', 'posts_before' ),
 			function ( $posttype ) use ( $constants ) {
 
 				if ( $posttype === $this->constant( $constants[0] ) )

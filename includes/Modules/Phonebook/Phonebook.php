@@ -178,6 +178,12 @@ class Phonebook extends gEditorial\Module
 						'type'        => 'address',
 						'order'       => 600,
 					],
+					'family_address' => [
+						'title'       => _x( 'Family Address', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Full family address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'address',
+						'order'       => 600,
+					],
 					'emergency_mobile' => [
 						'title'       => _x( 'Emergency Contact', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Mobile Contact Number of the Person Who Will Be Contacted on Emergency', 'Field Description', 'geditorial-phonebook' ),
