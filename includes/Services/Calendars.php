@@ -8,21 +8,26 @@ class Calendars extends Main
 {
 	const BASE = 'geditorial';
 
-	const ENDPOINT_ICAL_NAME  = 'ics';
-	const ENDPOINT_ICAL_QUERY = 'ical';
+	const REWRITE_ENDPOINT_NAME  = 'ics';
+	const REWRITE_ENDPOINT_QUERY = 'ical';
 
 	public static function setup()
 	{
+		add_action( 'init', [ __CLASS__, 'init' ] );
+
 		if ( is_admin() )
 			return;
 
-		add_action( 'init', [ __CLASS__, 'init' ] );
 		add_action( 'template_redirect', [ __CLASS__, 'template_redirect' ] );
 	}
 
 	public static function init()
 	{
-		add_rewrite_endpoint( static::ENDPOINT_ICAL_NAME, EP_PERMALINK | EP_PAGES, static::ENDPOINT_ICAL_QUERY );
+		add_rewrite_endpoint(
+			static::REWRITE_ENDPOINT_NAME,
+			EP_PERMALINK | EP_PAGES,
+			static::REWRITE_ENDPOINT_QUERY
+		);
 	}
 
 	// https://make.wordpress.org/plugins/2012/06/07/rewrite-endpoints-api/
@@ -31,7 +36,7 @@ class Calendars extends Main
 	{
 		global $wp_query;
 
-		if ( ! array_key_exists( static::ENDPOINT_ICAL_QUERY, $wp_query->query_vars ) || ! is_singular() )
+		if ( ! array_key_exists( static::REWRITE_ENDPOINT_QUERY, $wp_query->query_vars ) || ! is_singular() )
 			return;
 
 		// output some JSON (normally you might include a template file here)

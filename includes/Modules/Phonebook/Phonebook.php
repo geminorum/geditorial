@@ -179,7 +179,7 @@ class Phonebook extends gEditorial\Module
 						'order'       => 600,
 					],
 					'family_address' => [
-						'title'       => _x( 'Family Address', 'Field Title', 'geditorial-phonebook' ),
+						'title'       => _x( 'Parent\'s Address', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Full family address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'address',
 						'order'       => 600,

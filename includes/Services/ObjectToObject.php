@@ -203,11 +203,23 @@ class ObjectToObject extends Main
 		delete_option( 'o2o_storage' );
 	}
 
+	const REST_ENDPOINT_SUFFIX  = 'o2o';
+	const REST_ENDPOINT_VERSION = 'v1';
+
+	public static function namespace()
+	{
+		return sprintf( '%s-%s/%s',
+			static::BASE,
+			static::REST_ENDPOINT_SUFFIX,
+			static::REST_ENDPOINT_VERSION
+		);
+	}
+
 	// @REF: https://github.com/JiveDig/restful-p2p
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 	public static function rest_api_init()
 	{
-		register_rest_route( static::BASE.'-o2o/v1', '/connect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
+		register_rest_route( self::namespace(), '/connect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
 			'methods'  => 'POST',
 			'callback' => [ __CLASS__, 'rest_connect' ],
 			'args'     => [
@@ -232,7 +244,7 @@ class ObjectToObject extends Main
 			},
 		] );
 
-		register_rest_route( static::BASE.'-o2o/v1', '/disconnect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
+		register_rest_route( self::namespace(), '/disconnect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
 			'methods'  => 'POST',
 			'callback' => [ __CLASS__, 'rest_disconnect' ],
 			'args'     => [

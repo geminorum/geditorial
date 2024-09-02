@@ -151,6 +151,7 @@ class Parser extends WordPress\Main
 			$data['file_size'] = Core\File::getSize( $data['file_path'] );
 
 		// @REF: https://github.com/openspout/openspout/blob/3.x/docs/index.md
+		// @REF: https://opensource.box.com/spout/docs/
 		// @package `openspout/openspout`
 		$reader = \OpenSpout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
 		$reader->open( $data['file_path'] );

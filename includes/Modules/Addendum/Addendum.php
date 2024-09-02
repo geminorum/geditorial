@@ -268,6 +268,13 @@ class Addendum extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
+			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
+		}
+	}
+
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )

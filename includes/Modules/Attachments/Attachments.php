@@ -113,6 +113,12 @@ class Attachments extends gEditorial\Module
 	{
 		if ( $this->get_setting( 'restrict_library' ) )
 			$this->filter( 'ajax_query_attachments_args' );
+
+		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			return;
+
+		if ( $this->get_setting( 'attachment_count', FALSE ) )
+			$this->coreadmin__hook_tweaks_column_attr( $posttype, 20 );
 	}
 
 	public function current_screen( $screen )

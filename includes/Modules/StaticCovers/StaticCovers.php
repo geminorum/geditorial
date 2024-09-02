@@ -413,6 +413,7 @@ class StaticCovers extends gEditorial\Module
 		return $this->filters( 'view_data_for_post', $data, $post, $context );
 	}
 
+	// TODO: link to framepage
 	public function tweaks_column_thumb( $html, $post_id, $size )
 	{
 		if ( $html )

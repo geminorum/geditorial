@@ -421,7 +421,6 @@ class Scripts extends WordPress\Main
 		], NULL );
 	}
 
-	// TODO: apply all options from data attrs
 	public static function enqueueQRCodeSVG()
 	{
 		static $enqueued = FALSE;
@@ -429,13 +428,27 @@ class Scripts extends WordPress\Main
 		if ( $enqueued )
 			return $enqueued;
 
-		return $enqueued = self::inlineScript( static::BASE.'-qrcodesvg',
-			'jQuery(".do-qrcodesvg").each(function(i,obj){const qrcode=new QRCode({content:jQuery(this).data("code"),container:"svg-viewbox",join:true});const svg=qrcode.svg();jQuery(this).html(svg);});',
-			[
-				'jquery',
-				self::pkgQRCodeSVG(),
-			]
-		);
+		$script = <<<JS
+(function($) {
+	$(".do-qrcodesvg").each(function (i,obj) {
+
+		const qrcode = new QRCode({
+			padding: $(this).data("padding") || 4,
+			width: $(this).data("width") || 256,
+			height: $(this).data("height") || 256,
+			color: $(this).data("color") || "#000000",
+			background: $(this).data("background") || "#ffffff",
+			ecl: $(this).data("ecl") || "M",
+			content: $(this).data("code"),
+			container: "svg-viewbox",
+			join: true
+		});
+
+		$(this).html(qrcode.svg());
+	});
+})(jQuery);
+JS;
+		return $enqueued = self::inlineScript( static::BASE.'-qrcodesvg', $script,[ 'jquery', self::pkgQRCodeSVG() ] );
 	}
 
 	/**

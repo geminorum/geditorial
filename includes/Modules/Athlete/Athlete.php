@@ -58,7 +58,7 @@ class Athlete extends gEditorial\Module
 				'assign_roles'         => [ NULL, $roles ],
 			],
 			'posttypes_option' => 'posttypes_option',
-			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
 			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_parents',
@@ -381,10 +381,14 @@ class Athlete extends gEditorial\Module
 
 	public function dashboard_widgets()
 	{
-		if ( ! $this->role_can( 'reports' ) )
+		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 			return;
 
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
+		$this->add_dashboard_widget(
+			'term-summary',
+			$this->get_taxonomy_label( 'main_taxonomy', 'extended_label' ),
+			'refresh'
+		);
 	}
 
 	public function render_widget_term_summary( $object, $box )
@@ -413,6 +417,13 @@ class Athlete extends gEditorial\Module
 	public function setup_restapi()
 	{
 		$this->subcontent_restapi_register_routes();
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return 'reports' == $context
+			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
+			: parent::cuc( $context, $fallback );
 	}
 
 	public function template_include( $template )

@@ -375,6 +375,8 @@ class ModuleHelper extends gEditorial\Helper
 			'منش',
 			'پناه',
 			'بخت',
+			'بیگی',
+			'مقدم',
 		] );
 	}
 

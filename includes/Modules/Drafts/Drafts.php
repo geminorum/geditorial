@@ -95,6 +95,14 @@ class Drafts extends gEditorial\Module
 			$this->filter( 'the_posts', 2 );
 	}
 
+	public function setup_ajax()
+	{
+		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			return;
+
+		$this->coreadmin__hook_tweaks_column_attr( $posttype, 90 );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( ! $this->get_setting( 'public_preview', FALSE ) )

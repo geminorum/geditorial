@@ -12,6 +12,10 @@ class SearchSelect extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	const REST_ENDPOINT_SUFFIX     = 'searchselect';
+	const REST_ENDPOINT_VERSION    = 'v1';
+	const REST_ENDPOINT_MAIN_ROUTE = 'query';
+
 	public static function setup()
 	{
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
@@ -19,25 +23,24 @@ class SearchSelect extends WordPress\Main
 
 	public static function namespace()
 	{
-		return sprintf( '%s-searchselect/v1', static::BASE );
+		return sprintf( '%s-%s/%s',
+			static::BASE,
+			static::REST_ENDPOINT_SUFFIX,
+			static::REST_ENDPOINT_VERSION
+		);
 	}
 
 	public static function rest_api_init()
 	{
-		register_rest_route( self::namespace(), '/query', [
+		register_rest_route( self::namespace(), '/'.static::REST_ENDPOINT_MAIN_ROUTE, [
 			'methods'             => \WP_REST_Server::READABLE,
-			'callback'            => [ __CLASS__, 'query_callback' ],
-			'permission_callback' => [ __CLASS__, 'permission_callback' ],
+			'callback'            => [ __CLASS__, 'main_route_callback' ],
+			'permission_callback' => '__return_true', // NOTE: later we check for access
 		] );
 	}
 
-	public static function permission_callback( $request )
-	{
-		return TRUE; // NOTE: later we check for access
-	}
-
 	// @REF: https://select2.org/data-sources/formats
-	public static function query_callback( $request )
+	public static function main_route_callback( $request )
 	{
 		$queried = self::atts( [
 			'context'  => NULL,   // TODO / default is `select2` compatible

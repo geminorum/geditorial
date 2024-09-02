@@ -266,6 +266,13 @@ class Collect extends gEditorial\Module
 		}
 	}
 
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( 'collection_posttype' ) ) {
+			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
+		}
+	}
+
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )

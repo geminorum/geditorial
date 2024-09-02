@@ -21,6 +21,7 @@ class Lingo extends gEditorial\Module
 
 	// FIXME: WTF: must not be hierarchical?!
 	// TODO: dashboard summary support
+	// TODO: add css body-class/post-class based on language/direction
 
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafile   = 'languages-20230325.json';
@@ -117,6 +118,7 @@ class Lingo extends gEditorial\Module
 		return [
 			'language_taxonomy' => [
 				// @SEE: https://en.wikipedia.org/wiki/ISO_639
+				// https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
 				'arabic'  => _x( 'Arabic', 'Default Term: Language', 'geditorial-lingo' ),
 				'persian' => _x( 'Farsi', 'Default Term: Language', 'geditorial-lingo' ),
 				'english' => _x( 'English', 'Default Term: Language', 'geditorial-lingo' ),

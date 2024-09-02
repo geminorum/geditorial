@@ -658,7 +658,8 @@ class Personage extends gEditorial\Module
 			return $data;
 
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) ) {
-			$data['___sides']['meta'].= Core\HTML::wrap( Scripts::markupQRCodeSVG( $vcard ), '-qrcode-vcard' );
+			$data['___sides']['meta'].= Core\HTML::wrap( Scripts::markupQRCodeSVG( $vcard, [ 'width' => 128, 'height' => 128, 'ecl' => 'H' ] ), '-qrcode-vcard' );
+			// TODO: download VCard button after the qr-code
 			$data['___flags'][] = 'needs-qrcode';
 		}
 

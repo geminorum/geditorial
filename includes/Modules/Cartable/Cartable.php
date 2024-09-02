@@ -350,6 +350,14 @@ class Cartable extends gEditorial\Module
 		return $caps;
 	}
 
+	public function setup_ajax()
+	{
+		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			return;
+
+		$this->_hook_tweaks_column_attr( $posttype );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( $this->constant( 'type_taxonomy' ) == $screen->taxonomy ) {
@@ -360,14 +368,7 @@ class Cartable extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->support_users && $this->role_can( 'view_user' ) )
-					$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20, 'users' );
-
-				if ( $this->support_groups && $this->role_can( 'view_group' ) )
-					$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20, 'groups' );
-
-				if ( $this->support_types && $this->role_can( 'view_type' ) )
-					$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20, 'types' );
+				$this->_hook_tweaks_column_attr( $screen->post_type );
 
 			} else if ( 'post' == $screen->base ) {
 
@@ -507,6 +508,18 @@ class Cartable extends gEditorial\Module
 
 			$this->settings_signature( 'listtable' );
 		Settings::wrapClose();
+	}
+
+	private function _hook_tweaks_column_attr( $posttype )
+	{
+		if ( $this->support_users && $this->role_can( 'view_user' ) )
+		$this->coreadmin__hook_tweaks_column_attr( $posttype, 20, 'users' );
+
+		if ( $this->support_groups && $this->role_can( 'view_group' ) )
+			$this->coreadmin__hook_tweaks_column_attr( $posttype, 20, 'groups' );
+
+		if ( $this->support_types && $this->role_can( 'view_type' ) )
+			$this->coreadmin__hook_tweaks_column_attr( $posttype, 20, 'types' );
 	}
 
 	public function tweaks_column_attr_users( $post, $before, $after )

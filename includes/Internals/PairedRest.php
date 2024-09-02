@@ -8,6 +8,9 @@ use geminorum\gEditorial\WordPress;
 
 trait PairedRest
 {
+	// TODO: endpoints for adding paired by identifier
+
+
 	protected function pairedrest_register_rest_route( $object )
 	{
 		if ( empty( $object ) || empty( $object->show_in_rest ) )

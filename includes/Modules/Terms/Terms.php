@@ -252,8 +252,12 @@ class Terms extends gEditorial\Module
 			$name = $this->get_supported_field_title( $field, FALSE );
 			$desc = $this->get_supported_field_desc( $field, FALSE );
 
-			/* translators: %s: field name */
-			$title = sprintf( _x( 'Term %s', 'Setting Title', 'geditorial-terms' ), $name );
+			$title = sprintf(
+				/* translators: %1$s: field name, %2$s field key */
+				_x( 'Term %1$s %2$s', 'Setting Title', 'geditorial-terms' ),
+				$name,
+				Core\HTML::code( $field, '-field-key' )
+			);
 
 			$list[] = [
 				'field'       => 'term_'.$field,

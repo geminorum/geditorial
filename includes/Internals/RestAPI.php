@@ -10,7 +10,10 @@ trait RestAPI
 
 	protected function restapi_get_namespace()
 	{
-		return $this->constant( 'restapi_namespace', $this->classs() ).'/'.$this->rest_api_version;
+		return sprintf( '%s/%s',
+			$this->constant( 'restapi_namespace', $this->classs() ),
+			$this->rest_api_version
+		);
 	}
 
 	// FIXME: add extra args

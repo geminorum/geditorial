@@ -78,6 +78,15 @@ class Revisions extends gEditorial\Module
 		$this->filter( 'wp_revisions_to_keep', 2, 12 );
 	}
 
+	public function setup_ajax()
+	{
+		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			return;
+
+		if ( $this->get_setting( 'revision_summary', FALSE ) )
+			$this->coreadmin__hook_tweaks_column_attr( $posttype, 100 );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {

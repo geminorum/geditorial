@@ -635,6 +635,13 @@ class Book extends gEditorial\Module
 		}
 	}
 
+	public function setup_ajax()
+	{
+		if ( $posttype = $this->is_inline_save_posttype( 'publication_posttype' ) ) {
+			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
+		}
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( $screen->post_type == $this->constant( 'publication_posttype' ) ) {

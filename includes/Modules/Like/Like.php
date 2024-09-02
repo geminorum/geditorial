@@ -94,6 +94,12 @@ class Like extends gEditorial\Module
 	public function setup_ajax()
 	{
 		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
+
+		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			return;
+
+		if ( $this->get_setting( 'like_count' ) )
+			$this->coreadmin__hook_tweaks_column_attr( $posttype, 50 );
 	}
 
 	public function current_screen( $screen )

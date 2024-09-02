@@ -193,6 +193,7 @@ trait CorePostTypes
 				case 'custom_captype':
 
 					// @SEE: `get_post_type_capabilities()`
+					// @REF: https://learn.wordpress.org/tutorial/custom-post-types-and-capabilities/
 
 					if ( self::bool( $value ) ) {
 

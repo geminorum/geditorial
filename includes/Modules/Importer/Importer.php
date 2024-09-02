@@ -233,7 +233,7 @@ class Importer extends gEditorial\Module
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( Core\File::normalize( $file ) );
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
+		$parser   = @new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
 		$items    = $parser->parse();
 		$headers  = $items[0];
 
@@ -417,7 +417,7 @@ class Importer extends gEditorial\Module
 
 		// https://github.com/kzykhys/PHPCsvParser
 		$iterator = new \SplFileObject( Core\File::normalize( $file ) );
-		$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
+		$parser   = @new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
 
 		$items   = $parser->parse();
 		$headers = $items[0];
@@ -685,7 +685,7 @@ class Importer extends gEditorial\Module
 
 					$iterator = new \SplFileObject( Core\File::normalize( $file ) );
 					$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
-					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
+					$parser   =@new \KzykHys\CsvParser\CsvParser( $iterator, $options );
 					$items    = $parser->parse();
 					$headers  = array_pop( $items ); // used on maping cutom meta
 
@@ -700,7 +700,7 @@ class Importer extends gEditorial\Module
 
 						$options['offset'] = $offset;
 
-						$parser = new \KzykHys\CsvParser\CsvParser( $iterator, $options );
+						$parser = @new \KzykHys\CsvParser\CsvParser( $iterator, $options );
 						$items  = $parser->parse();
 						$row    = array_pop( $items );
 

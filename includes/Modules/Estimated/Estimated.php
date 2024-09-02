@@ -81,6 +81,14 @@ class Estimated extends gEditorial\Module
 			$this->enqueue_styles(); // widget must add this itself!
 	}
 
+	public function setup_ajax()
+	{
+		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			return;
+
+		$this->coreadmin__hook_tweaks_column_attr( $posttype, 40 );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {

@@ -11,6 +11,10 @@ class LineDiscovery extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	const REST_ENDPOINT_SUFFIX     = 'line-discovery';
+	const REST_ENDPOINT_VERSION    = 'v1';
+	const REST_ENDPOINT_MAIN_ROUTE = 'bulk';
+
 	public static function setup()
 	{
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
@@ -18,26 +22,25 @@ class LineDiscovery extends WordPress\Main
 
 	public static function namespace()
 	{
-		return sprintf( '%s-line-discovery/v1', static::BASE );
+		return sprintf( '%s-%s/%s',
+			static::BASE,
+			static::REST_ENDPOINT_SUFFIX,
+			static::REST_ENDPOINT_VERSION
+		);
 	}
 
 	public static function rest_api_init()
 	{
-		register_rest_route( self::namespace(), '/bulk', [
+		register_rest_route( self::namespace(), '/'.static::REST_ENDPOINT_MAIN_ROUTE, [
 			'methods'             => \WP_REST_Server::CREATABLE,
-			'callback'            => [ __CLASS__, 'bulk_callback' ],
-			'permission_callback' => [ __CLASS__, 'permission_callback' ],
+			'callback'            => [ __CLASS__, 'main_route_callback' ],
+			'permission_callback' => '__return_true', // NOTE: later we check for access
 		] );
-	}
-
-	public static function permission_callback( $request )
-	{
-		return TRUE; // later we check for access
 	}
 
 	// TODO: support terms
 	// TODO: support users
-	public static function bulk_callback( $request )
+	public static function main_route_callback( $request )
 	{
 		$queried = self::atts( [
 			'raw'      => [],
