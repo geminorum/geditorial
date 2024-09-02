@@ -136,6 +136,7 @@ class Meta extends gEditorial\Module
 				'timeend'   => _x( 'Time-End', 'Titles', 'geditorial-meta' ),
 				'distance'  => _x( 'Distance', 'Titles', 'geditorial-meta' ),
 				'duration'  => _x( 'Duration', 'Titles', 'geditorial-meta' ),
+				'area'      => _x( 'Area', 'Titles', 'geditorial-meta' ),
 				'period'    => _x( 'Period', 'Titles', 'geditorial-meta' ),
 				'amount'    => _x( 'Amount', 'Titles', 'geditorial-meta' ),
 
@@ -192,6 +193,7 @@ class Meta extends gEditorial\Module
 				'timeend'   => _x( 'Posts can have time-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'distance'  => _x( 'The formatted length of space about the post.', 'Descriptions', 'geditorial-meta' ),
 				'duration'  => _x( 'The formatted length of time about the post.', 'Descriptions', 'geditorial-meta' ),
+				'area'      => _x( 'The formatted area, measured in square meters.', 'Descriptions', 'geditorial-meta' ),
 				'period'    => _x( 'The length of time about the post.', 'Descriptions', 'geditorial-meta' ),
 				'amount'    => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
 
@@ -272,6 +274,7 @@ class Meta extends gEditorial\Module
 				'timeend'   => [ 'type' => 'time' ],
 				'distance'  => [ 'type' => 'distance' ],
 				'duration'  => [ 'type' => 'duration' ],
+				'area'      => [ 'type' => 'area' ],
 				'period'    => [ 'type' => 'text' ],
 				'amount'    => [ 'type' => 'number' ],
 
@@ -812,8 +815,8 @@ class Meta extends gEditorial\Module
 			case 'datestring':
 				return Core\Number::localize( Datetime::stringFormat( $raw ) );
 
-			case 'duration':
-				return Core\Duration::prep( $raw, $field_args, $context );
+			case 'area':
+				return Core\Area::prep( $raw, $field_args, $context );
 
 			case 'embed':
 

@@ -1181,6 +1181,19 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'area':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'area';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputarea';
+
+				if ( $value )
+					$atts['value'] = Core\Area::prep( $value, [], 'input' );
+
+				break;
+
 			case 'postcode':
 				$atts['dir'] = 'ltr';
 				$atts['data']['ortho'] = 'postcode';

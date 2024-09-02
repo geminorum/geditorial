@@ -191,6 +191,7 @@ class PostTypeFields extends WordPress\Main
 				case 'datetime': return 'calendar-alt';
 				case 'distance': return 'image-crop';
 				case 'duration': return 'clock';
+				case 'area'    : return 'fullscreen-alt';
 				case 'day'     : return 'backup';
 				case 'hour'    : return 'clock';
 				case 'people'  : return 'groups';
@@ -454,6 +455,9 @@ class PostTypeFields extends WordPress\Main
 
 				case 'duration':
 					return Core\Duration::prep( $raw ?: $value, $field );
+
+				case 'area':
+					return Core\Area::prep( $raw ?: $value, $field );
 
 				case 'contact_method':
 					return Core\URL::isValid( $raw ?: $value )

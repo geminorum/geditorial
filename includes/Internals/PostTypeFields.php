@@ -161,7 +161,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'year', 'date', 'datetime', 'distance', 'duration' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'year', 'date', 'datetime', 'distance', 'duration', 'area' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -485,6 +485,11 @@ trait PostTypeFields
 				$sanitized = Core\Duration::sanitize( $data );
 				break;
 
+			case 'area':
+
+				$sanitized = Core\Area::sanitize( $data );
+				break;
+
 			case 'member':
 			case 'person':
 			case 'day':
@@ -630,6 +635,7 @@ trait PostTypeFields
 				case 'datetime':
 				case 'distance':
 				case 'duration':
+				case 'area':
 				case 'identity':
 				case 'isbn':
 				case 'vin':
@@ -884,6 +890,7 @@ trait PostTypeFields
 			case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' ) : $value;
 			case 'distance': return $value ? Core\Distance::prep( $value, $field, 'input' )             : $value;
 			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )             : $value;
+			case 'area'    : return $value ? Core\Area::prep( $value, $field, 'input' )                 : $value;
 		}
 
 		return $value;

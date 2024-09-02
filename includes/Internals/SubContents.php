@@ -507,6 +507,7 @@ trait SubContents
 				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
 				case 'distance': $data[$raw_key] = Core\Distance::sanitize( $raw_value ); break;
 				case 'duration': $data[$raw_key] = Core\Duration::sanitize( $raw_value ); break;
+				case 'area':     $data[$raw_key] = Core\Area::sanitize( $raw_value ); break;
 
 				case 'date'    : // WTF
 				case 'time'    : // WTF

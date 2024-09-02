@@ -24,7 +24,8 @@
     date: '[data-' + module + '=\'date\']',
     datetime: '[data-' + module + '=\'datetime\']',
     distance: '[data-' + module + '=\'distance\']',
-    duration: '[data-' + module + '=\'duration\']'
+    duration: '[data-' + module + '=\'duration\']',
+    area: '[data-' + module + '=\'area\']'
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
     // currency: '[data-' + module + '=\'currency\']'
@@ -472,6 +473,17 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish($el.val()).replace(/[^\d.-//: ]/g, '').trim());
+        // TODO: check for pattern/validate duration in persian
+      });
+    },
+
+    area: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text'); // NOTE: possible type: `number`
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish($el.val()).replace(/[^\d.-// ]/g, '').trim());
         // TODO: check for pattern/validate duration in persian
       });
     }
