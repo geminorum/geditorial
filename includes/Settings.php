@@ -1879,6 +1879,9 @@ class Settings extends WordPress\Main
 
 	public static function settingsCredits()
 	{
+		if ( GEDITORIAL_DISABLE_CREDITS )
+			return;
+
 		echo '<div class="credits">';
 
 		echo '<p>';
@@ -1895,6 +1898,9 @@ class Settings extends WordPress\Main
 
 	public static function settingsSignature()
 	{
+		if ( GEDITORIAL_DISABLE_CREDITS )
+			return;
+
 		echo '<div class="signature clear"><p>';
 			/* translators: %1$s: plugin url, %2$s: author url */
 			printf( _x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', 'geditorial-admin' ),
