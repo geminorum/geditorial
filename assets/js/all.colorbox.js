@@ -1,13 +1,16 @@
 (function ($, plugin, module, section) {
   const s = {
-    // action: plugin._base + '_' + module,
-    // classs: plugin._base + '-' + module,
+    overlay: '#cboxOverlay', // colorbox.js selector
     before: 'do-' + module + '-iframe',
     after: 'hooked-' + module + '-iframe'
   };
 
   const app = {
-    hook: function () {
+    mobile: function () {
+      return ($(window).width() <= 782); // wp-core media query
+    },
+
+    hook: function (mobile) {
       $('a.' + s.before).each(function () {
         const $instance = $(this);
 
@@ -16,16 +19,16 @@
 
           const options = {
             href: $instance.attr('href'),
-            title: $instance.attr('title'),
+            title: mobile ? false : $instance.attr('title'),
             iframe: true,
             fastIframe: false,
             // closeButton: false,
             // preloading: false,
             transition: 'none',
-            width: '95%',
-            height: '85%',
-            maxWidth: $instance.data('max-width') || '980',
-            maxHeight: $instance.data('max-height') || '640',
+            width: mobile ? '100%' : ($instance.data('width') || '95%'),
+            height: mobile ? '100%' : ($instance.data('width') || '85%'),
+            maxWidth: mobile ? '100%' : ($instance.data('max-width') || '980'),
+            maxHeight: mobile ? '100%' : ($instance.data('max-height') || '640'),
             onClosed: function () {
               // @REF: https://www.sitepoint.com/jquery-custom-events/
               $.event.trigger({
@@ -41,6 +44,7 @@
 
           $.colorbox(options);
 
+          // @REF: https://github.com/jackmoore/colorbox/issues/183#issuecomment-41087237
           $(window).on('resize', function () {
             $.colorbox.resize({
               width: window.innerWidth > parseInt(options.maxWidth) ? options.maxWidth : options.width,
@@ -51,18 +55,12 @@
 
         $instance.removeClass(s.before);
         $instance.addClass(s.after);
-
-        // $(document).bind('cbox_closed', function () {
-        //   console.log($.colorbox.title);
-        // });
-
-        // $.colorbox.close();
       });
     }
   };
 
   $(window).load(function () {
-    app.hook();
+    app.hook(app.mobile());
 
     $(document).on('gEditorial:ColorBox:Hook', function () { app.hook(); });
     $(document).trigger('gEditorial:Module:Loaded', [module, app]);
