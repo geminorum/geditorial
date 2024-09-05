@@ -145,6 +145,11 @@ body.geditorial-terms-enabled {
       }
     }
 
+    td.column-geditorial-terms-color {
+      padding: ($spacer * .35) ($spacer * .5);
+      text-align: center;
+    }
+
     .inline-edit-row img.-img {
       max-height: 55px;
       max-width: 55px;

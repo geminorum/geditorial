@@ -51,6 +51,10 @@ $spacer: 1rem !default;
   .field-wrap {
     margin-bottom: 2px;
 
+    + .field-wrap {
+      margin-top: $spacer * .25;
+    }
+
     input[dir="ltr"]::placeholder {
       direction: ltr;
       text-align: left; // for firefox
@@ -106,19 +110,16 @@ $spacer: 1rem !default;
       color: #555;
       background: #f7f7f7;
       border: 1px solid #e5e5e5;
-      // border-radius: 1px;
+      border-radius: 4px;
 
       a {
         text-decoration: none;
+        color: inherit;
 
         &:hover {
           text-decoration: underline;
+          color: #222;
         }
-      }
-
-      + .field-wrap {
-        margin-top: $spacer * .5;
-        margin-bottom: - ( $spacer * .25 );
       }
     }
 
@@ -150,8 +151,9 @@ $spacer: 1rem !default;
       }
     }
 
-    &.-inputdistance
-    &.-inputduration
+    &.-inputdistance,
+    &.-inputduration,
+    &.-inputarea,
     &.-inputdate {
       input {
         width: 100%;
@@ -417,7 +419,7 @@ $spacer: 1rem !default;
   .field-wrap.-radio,
   .field-wrap.-listjs,
   .field-wrap.-list {
-    margin-bottom: 12px;
+    margin-bottom: $spacer * .25;
 
     &:last-of-type {
       margin-bottom: 0;

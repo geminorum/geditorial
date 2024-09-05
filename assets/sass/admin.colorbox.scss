@@ -39,3 +39,23 @@
 #cboxNext {
   background: url(../packages/jquery-colorbox/controls.png) no-repeat top right;
 }
+
+/***
+// https://github.com/jackmoore/colorbox/issues/158#issuecomment-487230910
+
+#cboxLoadedContent{margin-bottom:28px; width: 95vw; height: 90vh;}
+#cboxPhoto{height: 90vh; max-height:100vh; width: auto; max-width: 100vw; margin: auto; border: 0; display: block;}
+
+@media screen and (max-width: 800px) {
+  #cboxTopLeft{width:5px; height:1px; background:url(images/controls.png) -100px 0 no-repeat;}
+  #cboxTopRight{width:5px; height:1px; background:url(images/controls.png) -129px 0 no-repeat;}
+  #cboxBottomLeft{width:5px; height:10px; background:url(images/controls.png) -100px -29px no-repeat;}
+  #cboxBottomRight{width:5px; height:10px; background:url(images/controls.png) -129px -29px no-repeat;}
+  #cboxMiddleLeft{width:1px; background:url(images/controls.png) left top repeat-y;}
+  #cboxMiddleRight{width:1px; background:url(images/controls.png) right top repeat-y;}
+  #cboxTopCenter{height:1px; background:url(images/border.png) 0 0 repeat-x;}
+  #cboxBottomCenter{height:10px; background:url(images/border.png) 0 -29px repeat-x;}
+  #cboxLoadedContent{margin-top:5px; width: 100vw; height: 90vh;}
+  #cboxPhoto{height: 95vh; max-height:100vh; width: 100vw; max-width: 100vw; margin: auto; border: 0; display: block;}
+}
+***/

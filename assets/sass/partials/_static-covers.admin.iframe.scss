@@ -15,5 +15,13 @@
   }
 
   // &.-overview-type-default {}
+
+  .-wrap.-comments-summary,
+  .-wrap.-custom-summaries,
+  .-wrap.-meta-summary,
+  .-wrap.-term-summary {
+    margin-left: $spacer;
+    margin-right: $spacer;
+  }
 }
 

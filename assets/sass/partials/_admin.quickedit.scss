@@ -4,6 +4,7 @@
 /// gEditorial Partials: Admin QuickEdit ---------------------------------------
 
 .geditorial-admin-wrap-quickedit {
+  margin-top: .5 * $spacer;
   @include theme-box-sizing-reset;
 
   .field-wrap {
