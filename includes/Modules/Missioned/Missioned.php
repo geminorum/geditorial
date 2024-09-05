@@ -395,7 +395,7 @@ class Missioned extends gEditorial\Module
 		$this->hook_paired_tabloid_exclude_rendered();
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );
-		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 220, 'paired_posttype' );
 		$this->filter( 'bulk_exports_post_taxonomies', 7, 9, 'exclude_paired', $this->base );
 
 		if ( is_admin() )

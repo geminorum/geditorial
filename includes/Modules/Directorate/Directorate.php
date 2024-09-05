@@ -15,6 +15,7 @@ use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 // TODO: selected committees as `views` on supported @SEE: `Yearly` Module
+// TODO: dashboard summary for status taxonomy
 
 class Directorate extends gEditorial\Module
 {
@@ -350,7 +351,7 @@ class Directorate extends gEditorial\Module
 		$this->action_module( 'pointers', 'post', 5, 301, 'paired_posttype' );
 		$this->action_module( 'pointers', 'post', 5, 302, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );
-		$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );
+		$this->filter_module( 'tabloid', 'post_summaries', 4, 220, 'paired_posttype' );
 		$this->filter_module( 'papered', 'view_list', 5, 9, 'paired_posttype' );
 
 		if ( $this->get_setting( 'subterms_support' ) )

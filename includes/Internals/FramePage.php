@@ -20,7 +20,8 @@ trait FramePage
 			'refkey'       => 'linked',
 			'posttype'     => $post->post_type,
 			'target'       => 'none',
-			'maxwidth'     => '95%', // '1100px',
+			'maxwidth'     => '95%',
+			'maxheight'    => '640',
 			'link'         => NULL,
 			'name'         => NULL,
 			'title'        => NULL,
@@ -60,6 +61,7 @@ trait FramePage
 				$args['refkey'] => $post->ID,
 				'target'        => $args['target'] ?? 'none',
 				'max-width'     => $args['maxwidth'],
+				'max-height'    => $args['maxheight'],
 			], $args['data'] ),
 		], sprintf( $text, Helper::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );
 	}
@@ -75,7 +77,8 @@ trait FramePage
 			'refkey'       => 'linked',
 			'taxonomy'     => $term->taxonomy,
 			'target'       => 'none',
-			'maxwidth'     => '95%', // '1100px',
+			'maxwidth'     => '95%',
+			'maxheight'    => '640',
 			'link'         => NULL,
 			'name'         => NULL,
 			'title'        => NULL,
@@ -115,6 +118,7 @@ trait FramePage
 				$args['refkey'] => $term->term_id,
 				'target'        => $args['target'] ?? 'none',
 				'max-width'     => $args['maxwidth'],
+				'max-height'    => $args['maxheight'],
 			], $args['data'] ),
 		], sprintf( $text, Helper::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );
 	}

@@ -637,6 +637,7 @@ class Papered extends gEditorial\Module
 		return $data;
 	}
 
+	// TODO: token for page-break
 	private function _get_view_data_for_post( $profile, $source, $context, $config )
 	{
 		$data  = [];

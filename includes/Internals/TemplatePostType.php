@@ -29,6 +29,7 @@ trait TemplatePostType
 		if ( ! in_array( $posttype, (array) $posttypes, TRUE ) )
 			return $template;
 
+		// TODO: support singulars
 		if ( ! $wp_query->is_404() && ! $wp_query->is_post_type_archive( $posttype ) )
 			return $template;
 

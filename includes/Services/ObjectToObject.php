@@ -3,11 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\WordPress\Database;
-use geminorum\gEditorial\WordPress\Main;
-use geminorum\gEditorial\Services\O2O;
+use geminorum\gEditorial\WordPress;
+// use geminorum\gEditorial\Services\O2O;
 
-class ObjectToObject extends Main
+class ObjectToObject extends WordPress\Main
 {
 
 	const BASE = 'geditorial';
@@ -18,8 +17,8 @@ class ObjectToObject extends Main
 		if ( defined( 'P2P_PLUGIN_VERSION' ) )
 			return;
 
-		Database::registerTable( 'o2o' );
-		Database::registerTable( 'o2ometa' );
+		WordPress\Database::registerTable( 'o2o' );
+		WordPress\Database::registerTable( 'o2ometa' );
 
 		add_action( 'wp_loaded', [ __CLASS__, 'wp_loaded' ] );
 
@@ -173,7 +172,7 @@ class ObjectToObject extends Main
 
 	public static function installStorage()
 	{
-		Database::installTable( 'o2o', "
+		WordPress\Database::installTable( 'o2o', "
 			o2o_id bigint(20) unsigned NOT NULL auto_increment,
 			o2o_from bigint(20) unsigned NOT NULL,
 			o2o_to bigint(20) unsigned NOT NULL,
@@ -184,7 +183,7 @@ class ObjectToObject extends Main
 			KEY o2o_type (o2o_type)
 		" );
 
-		Database::installTable( 'o2ometa', "
+		WordPress\Database::installTable( 'o2ometa', "
 			meta_id bigint(20) unsigned NOT NULL auto_increment,
 			o2o_id bigint(20) unsigned NOT NULL default '0',
 			meta_key varchar(255) default NULL,
@@ -197,8 +196,8 @@ class ObjectToObject extends Main
 
 	public static function uninstallStorage()
 	{
-		Database::uninstallTable( 'o2o' );
-		Database::uninstallTable( 'o2ometa' );
+		WordPress\Database::uninstallTable( 'o2o' );
+		WordPress\Database::uninstallTable( 'o2ometa' );
 
 		delete_option( 'o2o_storage' );
 	}
@@ -219,23 +218,23 @@ class ObjectToObject extends Main
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 	public static function rest_api_init()
 	{
-		register_rest_route( self::namespace(), '/connect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
-			'methods'  => 'POST',
+		register_rest_route( self::namespace(), '/connect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>[\d]+)/(?P<to>[\d]+)', [
+			'methods'  => \WP_REST_Server::CREATABLE,
 			'callback' => [ __CLASS__, 'rest_connect' ],
 			'args'     => [
 				'name' => [
 					'validate_callback' => static function ( $param, $request, $key ) {
-						return TRUE; // FIXME
+						return (bool) O2O\API::type( $param );
 					}
 				],
 				'from' => [
 					'validate_callback' => static function ( $param, $request, $key ) {
-						return is_numeric( $param );
+						return (bool) WordPress\Post::get( (int) $param );
 					}
 				],
 				'to' => [
 					'validate_callback' => static function ( $param, $request, $key ) {
-						return is_numeric( $param );
+						return (bool) WordPress\Post::get( (int) $param );
 					}
 				],
 			],
@@ -244,23 +243,23 @@ class ObjectToObject extends Main
 			},
 		] );
 
-		register_rest_route( self::namespace(), '/disconnect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>\d+)/(?P<to>\d+)', [
-			'methods'  => 'POST',
+		register_rest_route( self::namespace(), '/disconnect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>[\d]+)/(?P<to>[\d]+)', [
+			'methods'  => \WP_REST_Server::CREATABLE,
 			'callback' => [ __CLASS__, 'rest_disconnect' ],
 			'args'     => [
 				'name' => [
 					'validate_callback' => static function ( $param, $request, $key ) {
-						return TRUE; // FIXME
+						return (bool) O2O\API::type( $param );
 					}
 				],
 				'from' => [
 					'validate_callback' => static function ( $param, $request, $key ) {
-						return is_numeric( $param );
+						return (bool) WordPress\Post::get( (int) $param );
 					}
 				],
 				'to' => [
 					'validate_callback' => static function ( $param, $request, $key ) {
-						return is_numeric( $param );
+						return (bool) WordPress\Post::get( (int) $param );
 					}
 				],
 			],

@@ -98,7 +98,8 @@ class DeadDrops extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$this->_hook_submenu_adminpage( 'signal' );
+		if ( $this->role_can( 'uploads' ) )
+			$this->_hook_submenu_adminpage( 'signal', 'exist' );
 	}
 
 	public function render_submenu_adminpage()
@@ -159,6 +160,8 @@ class DeadDrops extends gEditorial\Module
 		return $user_id;
 	}
 
+	// TODO: maybe use `base64_encode()`/`base64_decode()`
+	// @SEE: https://en.wikipedia.org/wiki/Cryptographic_hash_function
 	private function _get_hash( $secret, $user_id, $post_id )
 	{
 		require_once ABSPATH . WPINC . '/class-phpass.php';
@@ -214,7 +217,11 @@ class DeadDrops extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $link = $this->_get_signal_link( $post ) )
+		$link = ( $mobile = WordPress\IsIt::mobile() )
+			? $this->_get_deaddrop_link( $post )
+			: $this->_get_signal_link( $post );
+
+		if ( ! $link )
 			return FALSE;
 
 		$button = Services\HeaderButtons::register( $this->key, [
@@ -229,8 +236,8 @@ class DeadDrops extends gEditorial\Module
 				'module'     => $this->key,
 				'linked'     => $post->ID,
 				'target'     => 'none',
-				'max-width'  => '420px',
-				'max-height' => '310px',
+				'max-width'  => '420',
+				'max-height' => '310',
 			],
 		] );
 
@@ -287,7 +294,6 @@ class DeadDrops extends gEditorial\Module
 		return $this->filters( 'deaddrop_link', $deaddrop, $post, $endpoint, $secret );
 	}
 
-	//
 	private function _render_page_dropzone( $atts = [] )
 	{
 		$args = self::atts( [

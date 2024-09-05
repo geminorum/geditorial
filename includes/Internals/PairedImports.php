@@ -67,7 +67,7 @@ trait PairedImports
 			'noheader' => 1
 		], 'importitems' );
 
-		$title = _x( 'Import Items CSV File', 'Internal: PairedImports: Button Title', 'geditorial' );
+		$title = _x( 'Import Items via File or Paste', 'Internal: PairedImports: Button Title', 'geditorial' );
 		$label = $label ?? sprintf(
 			/* translators: %s: icon markup */
 			_x( '%s Upload', 'Internal: PairedImports: Button Label', 'geditorial' ),
@@ -78,11 +78,10 @@ trait PairedImports
 			'href'  => $link,
 			'class' => Core\HTML::attrClass( $button_class ?? [ 'button', 'button-small', '-button', '-button-icon' ], [ '-importbutton', 'do-colorbox-iframe' ] ),
 			'title' => $title,
-			'data'   => [
+			'data'  => [
 				'target'    => $target ?? 'paired',
 				'module'    => $this->key,
 				'linked'    => $post->ID,
-				// 'max-width' => '1100px',
 				'max-width' => '95%',
 			],
 		], $label );

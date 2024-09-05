@@ -377,6 +377,8 @@ class ModuleHelper extends gEditorial\Helper
 			'بخت',
 			'بیگی',
 			'مقدم',
+			'راد',
+			'گل',
 		] );
 	}
 

@@ -87,6 +87,7 @@ class HeaderButtons extends WordPress\Main
 					'target' => $button['newtab'] ? '_blank': FALSE,
 					'class'  => Core\HTML::attrClass(
 						'page-title-action',
+						'button',
 						'-button',
 						'-header-button',
 						empty( $button['icon'] ) ? '' : '-button-icon',

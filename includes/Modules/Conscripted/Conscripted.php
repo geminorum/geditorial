@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 class Conscripted extends gEditorial\Module
 {
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
@@ -147,6 +148,7 @@ class Conscripted extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
