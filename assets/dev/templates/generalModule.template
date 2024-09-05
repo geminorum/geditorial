@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module

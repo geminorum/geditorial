@@ -224,6 +224,24 @@
     ""
   ],
   "templates": {
+    "rawModule" : {
+      "src": "./assets/dev/templates/rawModule.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-raw-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "Raw Module",
+        "moduleCamelCase": "RawModule",
+        "moduleUnderline": "raw_module",
+        "moduleTagline": "[CHANGE ME]",
+        "moduleDashicon": "smiley"
+      }
+    },
     "generalModule" : {
       "src": "./assets/dev/templates/generalModule.template",
       "dest": "./includes/Modules/",

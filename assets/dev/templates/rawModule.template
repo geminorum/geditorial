@@ -1,0 +1,71 @@
+<?php namespace <%= namespaceAuthor %>\<%= namespaceBase %>\Modules\<%= moduleCamelCase %>;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use <%= namespaceAuthor %>\<%= namespaceBase %>;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
+
+class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
+{
+
+	public static function module()
+	{
+		return [
+			'name'     => '<%= moduleUnderline %>',
+			'title'    => _x( '<%= moduleTitle %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
+			'desc'     => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
+			'icon'     => '<%= moduleDashicon %>',
+			'access'   => 'planned',
+			'keywords' => [
+				'',
+			],
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		$roles = $this->get_settings_default_roles();
+
+		return [
+			'posttypes_option'  => 'posttypes_option',
+			'taxonomies_option' => 'taxonomies_option',
+			'_general' => [
+				[
+					'field'       => 'field',
+					'type'        => 'text',
+					'title'       => _x( 'Title', 'Setting Title', '<%= moduleTextdomain %>' ),
+					'description' => _x( 'Description.', 'Setting Description', '<%= moduleTextdomain %>' ),
+				],
+			],
+			'_supports' => [],
+			'_editlist' => [],
+			'_frontend' => [],
+			'_roles' => [
+				'reports_roles' => [ NULL, $roles ],
+				'assign_roles'  => [ NULL, $roles ],
+			],
+		];
+	}
+
+	protected function get_global_constants() {}
+
+	protected function get_global_strings()
+	{
+		$strings = [];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		// $strings['misc'] = [];
+
+		return $strings;
+	}
+
+	public function init()
+	{
+		parent::init();
+	}
+}
