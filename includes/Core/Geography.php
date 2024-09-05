@@ -112,7 +112,7 @@ class Geography extends Base
      * @return array   The item which is the closest + 'distance' to it.
      * @param  float   $latitude1
      * @param  float   $longitude1
-     * @param  array   $items = array(array('latitude' => 'x', 'longitude' => 'x'), array(xxx))
+     * @param  array   $items = array(array( 'latitude' => 'x', 'longitude' => 'x' ), array(xxx))
      * @param  int     $decimals[optional] The amount of decimals
      * @param  string  $unit[optional]
      */

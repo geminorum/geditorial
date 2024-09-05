@@ -215,6 +215,13 @@ class Base
 			echo '<script>console.'.$func.'('.$data.');</script>';
 	}
 
+	public static function _log_trace()
+	{
+		// http://stackoverflow.com/a/7039409
+		$e = new \Exception();
+		self::_log( $e->getTraceAsString() );
+	}
+
 	public static function trace( $old = TRUE )
 	{
 		// https://gist.github.com/eddieajau/2651181
@@ -225,7 +232,7 @@ class Base
 		}
 
 		// http://stackoverflow.com/a/7039409
-		$e = new Exception();
+		$e = new \Exception();
 		self::dump( $e->getTraceAsString() );
 		die();
 	}

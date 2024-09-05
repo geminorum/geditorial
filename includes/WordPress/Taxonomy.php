@@ -246,12 +246,17 @@ class Taxonomy extends Core\Base
 	 * @also: `Database::countPostsByNotTaxonomy()`
 	 * @ref: `https://core.trac.wordpress.org/ticket/29181`
 	 *
-	 * @param  string       $taxonomy
-	 * @param  string|array $posttypes
-	 * @return int          $count
+	 * @param  string           $taxonomy
+	 * @param  string|array     $posttypes
+	 * @param  string|object    $extra_term
+	 * @param  null|false|array $exclude_statuses
+	 * @return int              $count
 	 */
-	public static function countPostsWithoutTerms( $taxonomy, $posttypes )
+	public static function countPostsWithoutTerms( $taxonomy, $posttypes, $extra_term = FALSE, $exclude_statuses = FALSE )
 	{
+		if ( ! $taxonomy || empty( $posttypes ) )
+			return 0;
+
 		$args = [
 			'orderby'        => 'none',
 			'fields'         => 'ids',
@@ -271,10 +276,80 @@ class Taxonomy extends Core\Base
 			'lazy_load_term_meta'    => FALSE,
 		];
 
+		if ( is_null( $exclude_statuses ) || $exclude_statuses )
+			$args['post_status'] = Status::acceptable( $posttypes, 'counts', Database::getExcludeStatuses( $exclude_statuses ) );
+
+		if ( $term = Term::get( $extra_term ) ) {
+			$args['tax_query']['relation'] = 'AND';
+			$args['tax_query'][] = [
+				'taxonomy' => $term->taxonomy,
+				'terms'    => $term->term_id,
+				'field'    => 'id',
+			];
+		}
+
 		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
 		return $posts ? count( $posts ) : 0;
+	}
+
+	// NOTE: results are compatible with `WordPress\Database::countPostsByTaxonomy()`
+	// -> $counts[$term_slug][$posttype] = $term_count;
+	public static function countPostsDoubleTerms( $the_term, $second_taxonomy, $posttypes, $exclude_statuses = NULL )
+	{
+		$counts = [];
+		$totals = array_fill_keys( $posttypes, 0 );
+
+		if ( ! $the_term = Term::get( $the_term ) )
+			return $counts;
+
+		$terms = is_array( $second_taxonomy )
+			? $second_taxonomy
+			: get_terms( [ 'taxonomy' => $second_taxonomy ] );
+
+		foreach ( $terms as $term ) {
+
+			$counts[$term->slug] = $totals;
+
+			foreach ( $posttypes as $posttype ) {
+
+				$args = [
+					'orderby'        => 'none',
+					'fields'         => 'ids',
+					'post_status'    => Status::acceptable( $posttype, 'counts', Database::getExcludeStatuses( $exclude_statuses ) ),
+					'post_type'      => $posttype,
+					'posts_per_page' => -1,
+
+					'tax_query' => [
+						'relation' => 'AND',
+						[
+							'taxonomy' => $the_term->taxonomy,
+							'terms'    => $the_term->term_id,
+							'field'    => 'id',
+						],
+						[
+							'taxonomy' => $term->taxonomy,
+							'terms'    => $term->term_id,
+							'field'    => 'id',
+						]
+					],
+
+					'no_found_rows'          => TRUE,
+					'suppress_filters'       => TRUE,
+					'update_post_meta_cache' => FALSE,
+					'update_post_term_cache' => FALSE,
+					'lazy_load_term_meta'    => FALSE,
+				];
+
+				$query = new \WP_Query();
+				$posts = $query->query( $args );
+
+				$counts[$term->slug][$posttype] = $posts ? count( $posts ) : 0;
+			}
+		}
+
+		return $counts;
 	}
 
 	// @REF: `wp_count_terms()`

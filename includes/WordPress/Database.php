@@ -194,9 +194,10 @@ class Database extends Core\Base
 	}
 
 	// @REF: `wp_count_posts()`
+	// FIXME: probably wrong count if multiple posttypes requested
 	public static function countPostsByTaxonomy( $taxonomy, $posttypes = [ 'post' ], $user_id = 0, $exclude_statuses = NULL )
 	{
-		$key = md5( serialize( $taxonomy ).'_'.serialize( $posttypes ).'_'.$user_id );
+		$key    = md5( serialize( $taxonomy ).'_'.serialize( $posttypes ).'_'.$user_id );
 		$counts = wp_cache_get( $key, 'counts' );
 
 		if ( FALSE !== $counts )
