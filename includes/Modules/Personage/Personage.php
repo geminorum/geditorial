@@ -362,6 +362,7 @@ class Personage extends gEditorial\Module
 
 		$this->add_posttype_support( $this->constant( 'primary_posttype' ), 'date', FALSE );
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'status_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'status_taxonomy', 'primary_posttype', TRUE );
 
 		if ( is_admin() )
 			$this->filter( 'prep_individual', 3, 8, 'admin', $this->base );

@@ -346,6 +346,7 @@ class Directorate extends gEditorial\Module
 		] );
 
 		$this->hook_paired_tabloid_exclude_rendered();
+		$this->hook_paired_tabloid_post_summaries_by_paired();
 		$this->action_module( 'pointers', 'post', 5, 301, 'paired_posttype' );
 		$this->action_module( 'pointers', 'post', 5, 302, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );

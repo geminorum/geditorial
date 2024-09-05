@@ -145,6 +145,7 @@ class WasBorn extends gEditorial\Module
 			return $strings;
 
 		$strings['dashboard'] = [
+			'paired'  => [ 'widget_title' => _x( 'The Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
 			'current' => [ 'widget_title' => _x( 'Your Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
 			'all'     => [ 'widget_title' => _x( 'Editorial Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
 		];
@@ -212,6 +213,7 @@ class WasBorn extends gEditorial\Module
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_forced( 'group_taxonomy' );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
+		$this->filter( 'paired_post_summaries', 7, 90, FALSE, $this->base );
 
 		$this->filter_self( 'mean_age', 4 );
 		$this->action_module( 'pointers', 'post', 5, 100 );
@@ -346,37 +348,40 @@ class WasBorn extends gEditorial\Module
 		$this->add_dashboard_widget( 'dashboard-summary', NULL, 'refresh' );
 	}
 
-	protected function get_dashboard_summary_content( $scope = 'all', $user_id = NULL, $list = 'li' )
+	protected function get_dashboard_summary_content( $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' )
 	{
 		$html      = '';
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 
-		foreach ( $this->_summary_age_groups( $posttypes ) as $group_summary )
+		foreach ( $this->_summary_age_groups( $posttypes, $paired ) as $group_summary )
 			$html.= Core\HTML::tag( $list, [ 'class' => '-age-group' ], $group_summary );
 
-		foreach ( $this->_summary_age_empty_dob( $posttypes ) as $empty_dob )
+		foreach ( $this->_summary_age_empty_dob( $posttypes, $paired ) as $empty_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -empty-dob' ], $empty_dob );
 
 		foreach ( $this->filters( 'dashboard_summary_main', [], $posttypes, $scope, $user_id ) as $class => $filtered )
 			$html.= Core\HTML::tag( $list, [ 'class' => $class ], $filtered );
 
-		if ( $html )
+		if ( $html && ! $paired )
 			$html.= '</ul></div><div class="sub"><ul class="-pointers">';
 
 		// TODO: mean-age by gender
 		$gender_summary = $this->get_dashboard_term_summary( 'main_taxonomy',
-			$this->get_setting_posttypes( 'parent' ), NULL, $scope, $user_id, $list );
+			$this->get_setting_posttypes( 'parent' ), NULL, $scope, $user_id, $paired, $list );
 
 		if ( $gender_summary )
 			$html.= $gender_summary;
 
-		foreach ( $this->_summary_mean_age( $posttypes ) as $mean_age )
-			$html.= Core\HTML::tag( $list, [ 'class' => '-mean-age' ], $mean_age );
+		if ( ! $paired ) {
+			// NOTE: current method is not using the wp_query
+			foreach ( $this->_summary_mean_age( $posttypes ) as $mean_age )
+				$html.= Core\HTML::tag( $list, [ 'class' => '-mean-age' ], $mean_age );
+		}
 
-		foreach ( $this->_summary_under_aged( $posttypes ) as $under_aged )
+		foreach ( $this->_summary_under_aged( $posttypes, $paired ) as $under_aged )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -under-aged' ], $under_aged );
 
-		foreach ( $this->_summary_age_invalid_dob( $posttypes ) as $invalid_dob )
+		foreach ( $this->_summary_age_invalid_dob( $posttypes, $paired ) as $invalid_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -invalid-dob' ], $invalid_dob );
 
 		foreach ( $this->filters( 'dashboard_summary_sub', [], $posttypes, $scope, $user_id ) as $class => $filtered )
@@ -387,7 +392,8 @@ class WasBorn extends gEditorial\Module
 
 	// TODO: make link for restricted under aged posts
 	// @REF: https://stackoverflow.com/a/71815721
-	private function _summary_under_aged( $posttypes )
+	// TODO: move to `ModuleHelper`
+	private function _summary_under_aged( $posttypes, $paired = NULL )
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$legal     = $this->get_setting( 'age_of_majority', 18 );
@@ -423,6 +429,13 @@ class WasBorn extends gEditorial\Module
 				'update_post_term_cache' => FALSE,
 				'lazy_load_term_meta'    => FALSE,
 			];
+
+			if ( $paired )
+				$args['tax_query'] = [ [
+					'taxonomy' => $paired->taxonomy,
+					'terms'    => $paired->term_id,
+					'field'    => 'id',
+				] ];
 
 			$query = new \WP_Query();
 			$posts = $query->query( $args );
@@ -469,7 +482,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @SEE: https://stackoverflow.com/a/35733405
-	private function _summary_age_invalid_dob( $posttypes )
+	private function _summary_age_invalid_dob( $posttypes, $paired = NULL )
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$query_var = 'invaliddob';
@@ -503,6 +516,13 @@ class WasBorn extends gEditorial\Module
 				'update_post_term_cache' => FALSE,
 				'lazy_load_term_meta'    => FALSE,
 			];
+
+			if ( $paired )
+				$args['tax_query'] = [ [
+					'taxonomy' => $paired->taxonomy,
+					'terms'    => $paired->term_id,
+					'field'    => 'id',
+				] ];
 
 			$query = new \WP_Query();
 			$posts = $query->query( $args );
@@ -607,7 +627,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_empty_dob( $posttypes )
+	private function _summary_age_empty_dob( $posttypes, $paired = NULL )
 	{
 		$taxonomy = $this->constant( 'group_taxonomy' );
 		$object    = WordPress\Taxonomy::object( $taxonomy );
@@ -648,6 +668,13 @@ class WasBorn extends gEditorial\Module
 				'update_post_term_cache' => FALSE,
 				'lazy_load_term_meta'    => FALSE,
 			];
+
+			if ( $paired )
+				$args['tax_query'] = [ [
+					'taxonomy' => $paired->taxonomy,
+					'terms'    => $paired->term_id,
+					'field'    => 'id',
+				] ];
 
 			$query = new \WP_Query();
 			$posts = $query->query( $args );
@@ -693,7 +720,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_groups( $posttypes )
+	private function _summary_age_groups( $posttypes, $paired = NULL )
 	{
 		$taxonomy = $this->constant( 'group_taxonomy' );
 		$extra    = []; // TODO: make sure the terms are in order
@@ -728,6 +755,13 @@ class WasBorn extends gEditorial\Module
 					'update_post_term_cache' => FALSE,
 					'lazy_load_term_meta'    => FALSE,
 				];
+
+				if ( $paired )
+					$args['tax_query'] = [ [
+						'taxonomy' => $paired->taxonomy,
+						'terms'    => $paired->term_id,
+						'field'    => 'id',
+					] ];
 
 				$query = new \WP_Query();
 				$posts = $query->query( $args );
@@ -1114,5 +1148,28 @@ class WasBorn extends gEditorial\Module
 			$data['is_under_aged'] = Core\Date::isUnderAged( $dob, $this->get_setting( 'age_of_majority', 18 ), $cal );
 
 		return $data;
+	}
+
+	// @REF: `hook_dashboardsummary_paired_post_summaries()`
+	public function paired_post_summaries( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context )
+	{
+		$supported = $this->get_setting_posttypes( 'parent' );
+
+		if ( ! array_intersect( $posttypes, $supported ) )
+			return $summaries;
+
+		if ( ! $html = $this->get_dashboard_summary_content( 'paired', NULL, $paired, 'li' ) )
+			return $summaries;
+
+		$target = $this->constant( 'main_taxonomy' );
+
+		$summaries[] = [
+			'key'     => $this->classs( 'summary', $target ),
+			'class'   => '-paired-summary',
+			'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', '' ),
+			'content' => Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), 'list-columns -term-columns' ),
+		];
+
+		return $summaries;
 	}
 }

@@ -1138,4 +1138,63 @@ trait PairedCore
 
 		return TRUE;
 	}
+
+	protected function hook_paired_tabloid_post_summaries_by_paired()
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'tabloid', 'post_summaries' ),
+			function ( $list, $data, $post, $context ) use ( $constants ) {
+
+				if ( ! $this->is_posttype( $constants[0], $post ) )
+					return $list;
+
+				if ( ! $this->role_can( 'reports' ) )
+					return $list;
+
+				// if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
+				// 	return $list;
+
+				$paired = WordPress\Taxonomy::getPostTerms( $this->constant( $constants[1] ), $post );
+
+				if ( empty( $paired ) )
+					return $list;
+
+				$summaries = apply_filters(
+					$this->hook_base( 'paired', 'post_summaries' ),
+					[],
+					reset( $paired ),
+					$this->constant( $constants[0] ),
+					$this->constant( $constants[1] ),
+					$this->posttypes(),
+					$post,
+					$context
+					// $items,
+				);
+
+				if ( empty( $summaries ) )
+					return $list;
+
+				foreach ( $summaries as $offset => $summary ) {
+
+					if ( empty( $summary ) )
+						continue;
+
+					if ( is_array( $summary ) )
+						$list[] = $summary;
+
+					else
+						$list[] = [
+							'key'     => $this->classs( 'summary', $offset ),
+							'class'   => '-paired-summary',
+							'title'   => '',
+							'content' => Core\HTML::wrap( $summary ),
+						];
+				}
+
+				return $list;
+
+			}, 120, 4 );
+	}
 }

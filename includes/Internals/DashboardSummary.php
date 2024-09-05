@@ -26,13 +26,10 @@ trait DashboardSummary
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
-			if ( $this->check_hidden_metabox( $box, FALSE, '</div>' ) )
-				return;
-
 			if ( ! method_exists( $this, 'get_dashboard_summary_content' ) )
 				return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'get_dashboard_summary_content()' ) );
 
-			if ( $summary = $this->get_dashboard_summary_content( $scope, NULL, 'li' ) ) {
+			if ( $summary = $this->get_dashboard_summary_content( $scope, NULL, NULL, 'li' ) ) {
 
 				$html = Core\Text::minifyHTML( $summary );
 				set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
@@ -87,9 +84,6 @@ trait DashboardSummary
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
-			if ( $this->check_hidden_metabox( $box, FALSE, '</div>' ) )
-				return;
-
 			if ( $summary = $this->get_dashboard_term_summary( $constant, $posttypes, NULL, $scope ) ) {
 
 				$html = Core\Text::minifyHTML( $summary );
@@ -108,7 +102,7 @@ trait DashboardSummary
 	}
 
 	// TODO: support nooped term title via term meta from Terms module
-	protected function get_dashboard_term_summary( $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $list = 'li' )
+	protected function get_dashboard_term_summary( $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' )
 	{
 		$html     = '';
 		$check    = FALSE;
@@ -142,10 +136,15 @@ trait DashboardSummary
 
 		if ( count( $terms ) ) {
 
-			$counts  = WordPress\Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 			$objects = [];
+			$counts  = $paired
+				? WordPress\Taxonomy::countPostsDoubleTerms( $paired, $taxonomy, $posttypes, $exclude )
+				: WordPress\Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 
 			foreach ( $counts as $term => $posts ) {
+
+				if ( empty( $posts ) )
+					continue;
 
 				if ( $check && ( $roles = get_term_meta( $terms[$term]->term_id, 'roles', TRUE ) ) ) {
 
@@ -153,7 +152,23 @@ trait DashboardSummary
 						continue;
 				}
 
-				$name = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
+				// TODO: support term meta icon
+				$style = '';
+
+				// NOTE: we use custom color as background
+				if ( $color = get_term_meta( $terms[$term]->term_id, 'color', TRUE ) )
+					$style.= sprintf(
+						// @REF: https://css-tricks.com/css-attr-function-got-nothin-custom-properties/
+						'--custom-link-color:%s;--custom-link-background:%s;',
+						Core\Color::lightOrDark( $color ),
+						$color
+					);
+
+				$name  = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
+				$query = [ $query_var => $term ];
+
+				if ( $paired )
+					$query[WordPress\Taxonomy::queryVar( $paired->taxonomy )] = $paired->slug;
 
 				foreach ( $posts as $type => $count ) {
 
@@ -187,8 +202,9 @@ trait DashboardSummary
 
 					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 						$text = Core\HTML::tag( 'a', [
-							'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $query_var => $term ] ),
+							'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), $query ),
 							'class' => $classes,
+							'style' => $style ?: FALSE,
 						], $text );
 
 					else
@@ -202,7 +218,22 @@ trait DashboardSummary
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
 			$none = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
-			$not  = WordPress\Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
+
+			if ( $paired ) {
+
+				foreach ( $posttypes as $posttype )
+					$not[$posttype] = WordPress\Taxonomy::countPostsWithoutTerms( $taxonomy, $posttype, $paired, $exclude );
+
+				$query = [
+					$query_var => -1,
+					WordPress\Taxonomy::queryVar( $paired->taxonomy ) => $paired->slug,
+				];
+
+			} else {
+
+				$not   = WordPress\Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
+				$query = [ $query_var => -1 ];
+			}
 
 			foreach ( $not as $type => $count ) {
 
@@ -235,7 +266,7 @@ trait DashboardSummary
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 					$text = Core\HTML::tag( 'a', [
-						'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), [ $query_var => '-1' ] ),
+						'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), $query ),
 						'class' => $classes,
 					], $text );
 
@@ -247,5 +278,52 @@ trait DashboardSummary
 		}
 
 		return $html;
+	}
+
+	protected function hook_dashboardsummary_paired_post_summaries( $constant, $supported = NULL, $setting = NULL, $priority = NULL )
+	{
+		if ( $setting !== TRUE && ! $this->get_setting(  $setting ?? 'dashboard_widgets', FALSE ) )
+			return FALSE;
+
+		if ( $supported && is_string( $supported ) )
+			$supported = (array) $this->constant( $supported );
+
+		else if ( is_null( $supported ) )
+			$supported = $this->posttypes();
+
+		if ( empty( $supported ) || ! $constant )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'paired', 'post_summaries' ),
+			function ( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context ) use ( $constant, $supported ) {
+
+				if ( ! array_intersect( $posttypes, $supported ) )
+					return $summaries;
+
+				$html = $this->get_dashboard_term_summary(
+					$constant,
+					$posttypes,
+					NULL,
+					'paired',
+					NULL,
+					$paired,
+					'li'
+				);
+
+				if ( ! $html )
+					return $summaries;
+
+				$target = $this->constant( $constant );
+
+				$summaries[] = [
+					'key'     => $this->classs( 'summary', $target ),
+					'class'   => '-paired-summary',
+					'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', Helper::getTaxonomyLabel( $target, 'extended_label' ) ),
+					'content' => Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), 'list-columns -term-columns' ),
+				];
+
+				return $summaries;
+
+			}, 7, $priority ?? 90 );
 	}
 }
