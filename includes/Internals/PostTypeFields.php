@@ -260,7 +260,7 @@ trait PostTypeFields
 			return FALSE; // no field, no access!
 
 		$context = in_array( $context, [ 'view', 'edit', 'export' ], TRUE ) ? $context : 'view';
-		$access  = array_key_exists( 'access_'.$context, $field )
+		$access  = $original = array_key_exists( 'access_'.$context, $field )
 			? $field['access_'.$context] : NULL;
 
 		if ( TRUE !== $access && FALSE !== $access ) {
@@ -270,7 +270,22 @@ trait PostTypeFields
 
 			if ( ! is_null( $access ) ) {
 
-				$access = user_can( $user_id, $access );
+				if ( in_array( $access, [ 'edit_post', 'read_post', 'delete_post' ], TRUE ) ) {
+
+					if ( $post = WordPress\Post::get( $post ) ) {
+
+						$access = user_can( $user_id, $access, $post->ID );
+
+					} else {
+
+						// no post, no access!
+						$access = FALSE;
+					}
+
+				} else {
+
+					$access = user_can( $user_id, $access );
+				}
 
 			} else if ( $post = WordPress\Post::get( $post ) ) {
 
@@ -311,7 +326,7 @@ trait PostTypeFields
 			}
 		}
 
-		return $this->filters( 'access_posttype_field', $access, $field, $post, $context, $user_id );
+		return $this->filters( 'access_posttype_field', $access, $field, $post, $context, $user_id, $original );
 	}
 
 	/**

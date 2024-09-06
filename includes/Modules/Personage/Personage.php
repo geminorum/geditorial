@@ -288,6 +288,7 @@ class Personage extends gEditorial\Module
 					'type'        => 'identity',
 					'quickedit'   => TRUE,
 					'order'       => 1,
+					'access_edit' => 'delete_post', // only deleters can edit!
 				],
 				'passport_number' => [
 					'title'       => _x( 'Passport Number', 'Field Title', 'geditorial-personage' ),

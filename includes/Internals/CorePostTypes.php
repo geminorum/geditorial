@@ -167,14 +167,16 @@ trait CorePostTypes
 						}, 2, 9 );
 
 					add_filter( $this->hook_base( 'meta', 'access_posttype_field' ),
-						static function ( $access, $field, $post, $context, $user_id ) use ( $posttype ) {
+						static function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
+							if ( 'edit' === $context ) return $access;
 							return $post->post_type === $posttype ? TRUE : $access;
-						}, 12, 5 );
+						}, 12, 6 );
 
 					add_filter( $this->hook_base( 'units', 'access_posttype_field' ),
-						static function ( $access, $field, $post, $context, $user_id ) use ( $posttype ) {
+						static function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
+							if ( 'edit' === $context ) return $access;
 							return $post->post_type === $posttype ? TRUE : $access;
-						}, 12, 5 );
+						}, 12, 6 );
 
 					// makes `Tabloid` links visible for non-viewable post-types
 					add_filter( $this->hook_base( 'tabloid', 'is_post_viewable' ),
@@ -522,14 +524,16 @@ trait CorePostTypes
 			}, 2, 9 );
 
 		add_filter( $this->hook_base( 'meta', 'access_posttype_field' ),
-			function ( $access, $field, $post, $context, $user_id ) use ( $posttype ) {
+			function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
+				if ( 'edit' === $context ) return $access;
 				return $post->post_type === $posttype ? TRUE : $access;
-			}, 12, 5 );
+			}, 12, 6 );
 
 		add_filter( $this->hook_base( 'units', 'access_posttype_field' ),
-			function ( $access, $field, $post, $context, $user_id ) use ( $posttype ) {
+			function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
+				if ( 'edit' === $context ) return $access;
 				return $post->post_type === $posttype ? TRUE : $access;
-			}, 12, 5 );
+			}, 12, 6 );
 
 		// NOTE: makes Tabloid links visible for non-viewable post-types
 		add_filter( $this->hook_base( 'tabloid', 'is_post_viewable' ),
