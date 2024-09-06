@@ -14,15 +14,17 @@
     // const postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
     const postEditDate = $(':input[name="jj"]', '.inline-edit-row').parents('fieldset.inline-edit-date');
 
-    for (var field in p[module].fields) { // eslint-disable-line no-var
+    for (const field in p[module].fields) {
+      const hidden = $('#' + tagID).find('div.' + prefix + field + '-value');
+      const disabled = hidden.data('disabled') === true;
+
       switch (p[module].fields[field]) {
         case 'title_before':
 
           $('.inline-edit-row')
             .find('input.' + prefix + field)
-            .val($('#' + tagID)
-              .find('div.' + prefix + field + '-value')
-              .text())
+            .val(hidden.text())
+            .prop('disabled', disabled)
             .parents('label')
             .insertBefore(postTitleLabel);
 
@@ -31,9 +33,8 @@
 
           $('.inline-edit-row')
             .find('input.' + prefix + field)
-            .val($('#' + tagID)
-              .find('div.' + prefix + field + '-value')
-              .text())
+            .val(hidden.text())
+            .prop('disabled', disabled)
             .parents('label')
             .insertAfter(postTitleLabel);
 
@@ -42,9 +43,8 @@
 
           $('.inline-edit-row')
             .find('input.' + prefix + field)
-            .val($('#' + tagID)
-              .find('div.' + prefix + field + '-value')
-              .text())
+            .val(hidden.text())
+            .prop('disabled', disabled)
             .parents('label')
             // .insertAfter(postNameLabel); // post_title maybe disabled for this posttype!
             .insertBefore(postEditDate);

@@ -628,6 +628,7 @@ trait PostTypeFields
 			if ( $context != $args['context'] )
 				continue;
 
+			// TODO: maybe display disabled input
 			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
 
@@ -817,6 +818,8 @@ trait PostTypeFields
 			if ( ! $args['quickedit'] )
 				continue;
 
+			// NOTE: no need for access checks: just input/not value
+
 			$name  = $this->classs().'-'.$field; // to protect key underlines
 			$class = Core\HTML::prepClass( $name );
 
@@ -861,6 +864,7 @@ trait PostTypeFields
 			return;
 
 		$prefix   = $this->classs().'-';
+		$user_id  = get_current_user_id();
 		$fields   = $this->get_posttype_fields( $post->post_type );
 		$excludes = $this->posttypefields_custom_column_excludes( $fields );
 
@@ -886,7 +890,8 @@ trait PostTypeFields
 
 		// NOTE: for `quickedit` enabled fields
 		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
-			echo '<div class="hidden '.$prefix.$field.'-value">'.
+			echo '<div data-disabled="'.( $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true' )
+				.'" class="hidden '.$prefix.$field.'-value">'.
 				$this->posttypefields_prep_posttype_field_for_input(
 					$this->get_postmeta_field( $post->ID, $field ),
 					$field,
