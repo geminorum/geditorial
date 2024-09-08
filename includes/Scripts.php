@@ -160,6 +160,34 @@ class Scripts extends WordPress\Main
 		);
 	}
 
+	// @REF: https://clipboardjs.com/
+	public static function enqueueClickToClip()
+	{
+		static $enqueued = FALSE;
+
+		if ( $enqueued )
+			return $enqueued;
+
+		$selector = '.do-clicktoclip';
+		$script   = <<<JS
+(function () {
+	const clipboard = new ClipboardJS('{$selector}');
+
+	clipboard.on('success', function(e) {
+		console.info(e.action + ':', e.text);
+		e.clearSelection();
+	});
+
+	clipboard.on('error', function(e) {
+		console.error('Action:', e.action);
+		console.error('Trigger:', e.trigger);
+	});
+})();
+JS;
+
+		return $enqueued = self::inlineScript( static::BASE.'-clicktoclip', $script, [ 'clipboard' ] );
+	}
+
 	public static function enqueueWordCount()
 	{
 		return self::enqueue( 'all.wordcount', [

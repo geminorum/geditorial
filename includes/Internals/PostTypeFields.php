@@ -8,6 +8,7 @@ use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
@@ -810,6 +811,8 @@ trait PostTypeFields
 		$this->enqueue_asset_js( [
 			'fields' => Core\Arraay::pluck( $quickedits, 'type', 'name' ),
 		], $this->dotted( 'edit' ) );
+
+		Scripts::enqueueClickToClip();
 	}
 
 	protected function posttypefields__hook_edit_screen( $posttype )
