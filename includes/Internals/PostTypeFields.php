@@ -796,6 +796,22 @@ trait PostTypeFields
 			$this->clean_postmeta_legacy( $post->ID, $fields, $legacies );
 	}
 
+	protected function posttypefields__enqueue_edit_screen( $posttype, $fields = NULL )
+	{
+		if ( is_null( $fields ) )
+			$fields = $this->get_posttype_fields( $posttype );
+
+		// $quickedit = array_filter( Core\Arraay::column( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) );
+		$quickedits = Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] );
+
+		if ( ! count( $quickedits ) )
+			return FALSE;
+
+		$this->enqueue_asset_js( [
+			'fields' => Core\Arraay::pluck( $quickedits, 'type', 'name' ),
+		], $this->dotted( 'edit' ) );
+	}
+
 	protected function posttypefields__hook_edit_screen( $posttype )
 	{
 		$this->action( 'quick_edit_custom_box', 2, 12, 'posttypefields' );

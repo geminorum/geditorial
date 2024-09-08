@@ -399,12 +399,7 @@ class Meta extends gEditorial\Module
 
 				$this->_admin_enabled();
 				$this->posttypefields__hook_edit_screen( $screen->post_type );
-
-				$asset = [
-					'fields' => array_filter( Core\Arraay::column( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) ),
-				];
-
-				$this->enqueue_asset_js( $asset, $screen );
+				$this->posttypefields__enqueue_edit_screen( $screen->post_type, $fields );
 				$this->_hook_store_metabox( $screen->post_type, 'posttypefields' );
 			}
 		}
