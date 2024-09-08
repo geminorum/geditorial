@@ -10,16 +10,17 @@
     rtl: $('html').attr('dir') === 'rtl',
 
     appendButton: function (to) {
+      if (!to.length) return false;
       const list = plugin[module].buttons || [];
       if (!list) return false;
 
       list.forEach((button) => {
-        console.log(button);
         $(' ' + button).insertBefore(to);
       });
     },
 
     prependButton: function (to) {
+      if (!to.length) return false;
       const list = plugin[module].buttons || [];
       if (!list) return false;
 
@@ -33,7 +34,6 @@
       }
 
       list.forEach((button) => {
-        console.log(button);
         $(' ' + button).insertAfter(to);
       });
     }

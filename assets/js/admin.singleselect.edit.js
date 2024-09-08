@@ -25,9 +25,10 @@
       list.forEach((tax) => {
         const val = $('#' + tagID).find(s.value + tax).text();
         const el = $(s.select + tax, wrap);
+        // console.log(val);
         el.val(val);
-        el.find(':selected').attr('selected', false);
-        el.find('option[value="' + val + '"]').attr('selected', true);
+        el.find('option').attr('selected', false);
+        el.find('option[value="' + (val || '0') + '"]').attr('selected', true);
         el.trigger('change');
       });
 

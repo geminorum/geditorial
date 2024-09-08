@@ -21,7 +21,7 @@
 
     if (cal) {
       $(':input[name=geditorial-today-date-cal]', daySelect).val(cal);
-      $(':input[name=geditorial-today-date-cal]', daySelect).find(':selected').attr('selected', false);
+      $(':input[name=geditorial-today-date-cal]', daySelect).find('option:selected').attr('selected', false);
       $(':input[name=geditorial-today-date-cal]', daySelect).find('option[value="' + cal + '"]').attr('selected', true);
     }
 
