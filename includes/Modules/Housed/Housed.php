@@ -57,6 +57,9 @@ class Housed extends gEditorial\Module
 				'contents_viewable',
 				'show_in_navmenus',
 			],
+			'_units' => [
+				'units_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
+			],
 		];
 	}
 
@@ -95,6 +98,23 @@ class Housed extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function get_global_fields()
+	{
+		return [
+			'units' => [
+				'_supported' => [
+					'area_in_meter_squared' => [
+						'title'       => _x( 'Housing Area', 'Field Title', 'geditorial-housed' ),
+						'description' => _x( 'Housing area in meter squared', 'Field Description', 'geditorial-housed' ),
+						'type'        => 'area',
+						'data_unit'   => 'meter_squared',
+						'order'       => 100,
+					],
+				],
+			]
+		];
+	}
+
 	protected function define_default_terms()
 	{
 		return [
@@ -124,6 +144,11 @@ class Housed extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+	}
+
+	public function units_init()
+	{
+		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, 'TRUE', 'units' );
 	}
 
 	public function current_screen( $screen )
