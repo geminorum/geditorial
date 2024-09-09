@@ -75,6 +75,7 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
+	// NOTE: for inline scripts without deps
 	public static function inlineScript( $asset, $script, $dep = [ 'jquery' ] )
 	{
 		if ( empty( $script ) )

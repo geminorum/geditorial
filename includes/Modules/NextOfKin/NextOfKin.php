@@ -242,6 +242,7 @@ class NextOfKin extends gEditorial\Module
 
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );

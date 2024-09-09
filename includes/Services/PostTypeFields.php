@@ -395,9 +395,9 @@ class PostTypeFields extends WordPress\Main
 					);
 
 				case 'identity':
-					return sprintf( '<span class="-identity %s">%s</span>',
+					return sprintf( '<span class="-identity %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
-						$raw ?: $value );
+						$raw ?: $value, $raw ?: $value );
 
 				case 'postcode':
 

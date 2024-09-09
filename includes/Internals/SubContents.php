@@ -178,6 +178,7 @@ trait SubContents
 	{
 		return [
 			// 'name' // <---- EXAMPLE
+			'label',
 		];
 	}
 

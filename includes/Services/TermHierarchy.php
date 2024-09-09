@@ -68,13 +68,13 @@ class TermHierarchy extends WordPress\Main
 				if ( $object->name !== $posttype )
 					return;
 
-				$prefix = static::BASE.'-singleselect';
-
 				foreach ( $taxonomies as $taxonomy ) {
 					echo '<div class="hidden '.static::BASE.'-singleselect-value-'.$taxonomy->name.'">';
 
 					if ( $term = self::getSingleSelectTerm( $taxonomy, get_the_terms( $post, $taxonomy->name ) ) )
 						echo $taxonomy->hierarchical ? $term->term_id : $term->slug;
+					else
+						echo '0';
 
 					echo '</div>';
 				}

@@ -379,6 +379,7 @@ class ModuleHelper extends gEditorial\Helper
 			'مقدم',
 			'راد',
 			'گل',
+			'خواه',
 		] );
 	}
 

@@ -244,13 +244,6 @@ class Phonebook extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_required_fields()
-	{
-		return [
-			'label',
-		];
-	}
-
 	public function after_setup_theme()
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );

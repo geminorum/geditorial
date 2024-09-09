@@ -303,6 +303,7 @@ class Iranian extends gEditorial\Module
 		return TRUE;
 	}
 
+	// TODO: display current location data from post
 	private function _post_set_location_from_identity( $post, $identity_metakey, $location_metakey, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
