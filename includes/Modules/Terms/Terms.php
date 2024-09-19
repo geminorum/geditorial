@@ -301,6 +301,8 @@ class Terms extends gEditorial\Module
 		if ( $this->get_setting( 'auto_term_overwrite' ) )
 			$this->_hook_overwrite_titles( $this->get_setting( 'term_overwrite', [] ) );
 
+		$this->filter( 'searchselect_result_image_for_term', 3, 12, FALSE, $this->base );
+
 		if ( ! is_admin() )
 			return;
 
@@ -2185,5 +2187,26 @@ class Terms extends gEditorial\Module
 		$meta    = get_term_meta( $term->term_id, $metakey, TRUE );
 
 		return $meta ?: $name; // TODO: pass through filters
+	}
+
+	public function searchselect_result_image_for_term( $data, $term, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
+			return $data;
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return $data;
+
+		if ( ! in_array( 'image', $this->get_supported( $term->taxonomy ), TRUE ) )
+			return $data;
+
+		$metakey    = $this->get_supported_metakey( 'image', $term->taxonomy );
+		$attachment = WordPress\Taxonomy::getThumbnailID( $term->term_id, $metakey );
+
+		if ( $src = WordPress\Media::htmlAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )
+			return $src;
+
+		return $data;
 	}
 }

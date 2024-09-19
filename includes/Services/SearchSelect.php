@@ -208,7 +208,7 @@ class SearchSelect extends WordPress\Main
 			'number'   => $queried['per'],
 			'offset'   => ( $queried['page'] - 1 ) * $queried['per'],
 			'orderby'  => 'name',
-			'fields'   => 'id=>name',
+			'fields'   => 'all', // 'id=>name',
 
 			'hide_empty'             => FALSE,
 			'update_term_meta_cache' => FALSE,
@@ -232,17 +232,26 @@ class SearchSelect extends WordPress\Main
 
 		if ( is_null( $pre ) ) {
 
-			$query   = new \WP_Term_Query();
+			$query = new \WP_Term_Query();
 			$terms = $query->query( $args );
-			$results = Core\Arraay::toObjectForJS( $terms, 'id', 'text' );
-			$found   = count( $terms );
+			$found = count( $terms );
+
+			foreach ( $terms as $term )
+				$results[] = (object) [
+					'id'    => $term->term_id,
+					'text'  => WordPress\Term::title( $term ),
+					'extra' => self::getExtraForTerm( $term, $queried ),
+					'image' => self::getImageForTerm( $term, $queried ),
+				];
 
 		} else if ( is_numeric( $pre ) ) {
 
 			$found   = 1;
 			$results = [ (object) [
-				'id'   => $pre,
-				'text' => WordPress\Term::title( $pre ),
+				'id'    => $pre,
+				'text'  => WordPress\Term::title( $pre ),
+				'extra' => self::getExtraForTerm( $pre, $queried ),
+				'image' => self::getImageForTerm( $pre, $queried ),
 			] ];
 
 		} else if ( is_array( $pre ) ) {
@@ -252,8 +261,10 @@ class SearchSelect extends WordPress\Main
 
 			foreach ( $pre as $term )
 				$results[] = (object) [
-					'id'   => $term,
-					'text' => WordPress\Term::title( $term ),
+					'id'    => $term,
+					'text'  => WordPress\Term::title( $term ),
+					'extra' => self::getExtraForTerm( $term, $queried ),
+					'image' => self::getImageForTerm( $term, $queried ),
 				];
 		}
 
@@ -263,6 +274,18 @@ class SearchSelect extends WordPress\Main
 				'more' => ( $found - $args['number'] ) > 0
 			],
 		];
+	}
+
+	// NOTE: also used by others!
+	public static function getExtraForTerm( $term, $queried = [], $default = [] )
+	{
+		return apply_filters( sprintf( '%s_searchselect_result_extra_for_term', static::BASE ), $default, $term, $queried );
+	}
+
+	// NOTE: also used by others!
+	public static function getImageForTerm( $term, $queried = [], $default = '' )
+	{
+		return apply_filters( sprintf( '%s_searchselect_result_image_for_term', static::BASE ), $default, $term, $queried );
 	}
 
 	private static function _get_select2_users( $queried )
