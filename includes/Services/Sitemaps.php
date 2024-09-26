@@ -10,8 +10,8 @@ class Sitemaps extends WordPress\Main
 
 	const BASE = 'geditorial';
 
-	const VIEWABLE_TAXONOMY_PROP  = 'sitemaps_viewable';
 	const VIEWABLE_POSTTYPE_PROP  = 'sitemaps_viewable'; // TODO
+	const VIEWABLE_TAXONOMY_PROP  = 'sitemaps_viewable'; // TODO: register via taxonomy settings
 
 	public static function setup()
 	{

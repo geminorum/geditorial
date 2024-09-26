@@ -160,6 +160,9 @@ trait AdminPage
 
 		$this->register_help_tabs( NULL, $context );
 		$this->actions( 'load_adminpage', $page, $sub, $context );
+
+		if ( self::req( 'noheader' ) )
+			self::define( 'QM_DISABLED', TRUE );
 	}
 
 	public function render_submenu_adminpage()

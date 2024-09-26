@@ -46,6 +46,7 @@ class SearchSelect extends WordPress\Main
 			'context'  => NULL,   // TODO / default is `select2` compatible
 			'search'   => '',
 			'target'   => '',
+			'include'  => '',
 			'exclude'  => '',
 			'posttype' => '',
 			'taxonomy' => '',
@@ -130,6 +131,9 @@ class SearchSelect extends WordPress\Main
 
 		if ( ! empty( $queried['search'] ) )
 			$args['s'] = trim( $queried['search'] );
+
+		if ( ! empty( $queried['include'] ) )
+			$args['post__in'] = wp_parse_id_list( $queried['include'] );
 
 		if ( ! empty( $queried['exclude'] ) )
 			$args['post__not_in'] = wp_parse_id_list( $queried['exclude'] );
@@ -218,6 +222,9 @@ class SearchSelect extends WordPress\Main
 		if ( ! empty( $queried['search'] ) )
 			$args['name__like'] = trim( $queried['search'] );
 
+		if ( ! empty( $queried['include'] ) )
+			$args['include'] = wp_parse_id_list( $queried['include'] );
+
 		if ( ! empty( $queried['exclude'] ) )
 			$args['exclude'] = wp_parse_id_list( $queried['exclude'] );
 
@@ -256,6 +263,9 @@ class SearchSelect extends WordPress\Main
 
 		} else if ( is_array( $pre ) ) {
 
+			// TODO: slice results
+			// TODO: apply `page` on results
+
 			$results = [];
 			$found   = count( $pre );
 
@@ -266,12 +276,18 @@ class SearchSelect extends WordPress\Main
 					'extra' => self::getExtraForTerm( $term, $queried ),
 					'image' => self::getImageForTerm( $term, $queried ),
 				];
+
+		} else {
+
+			$results = [];
+			$found   = 0;
 		}
 
 		return [
 			'results'    => $results,
 			'pagination' => [
-				'more' => ( $found - $args['number'] ) > 0
+				// 'more' => ( $found - $args['number'] ) > 0
+				'more' => $found >= $args['number']
 			],
 		];
 	}

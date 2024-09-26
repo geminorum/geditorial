@@ -36,7 +36,7 @@ class PrimaryTaxonomy extends WordPress\Main
 		if ( ! $taxonomy && ( $object = WordPress\PostType::object( $posttype ) ) ) {
 
 			if ( ! empty( $object->{self::POSTTYPE_PROP} )
-				&& Taxonomy::exists( $object->{self::POSTTYPE_PROP} ) )
+				&& WordPress\Taxonomy::exists( $object->{self::POSTTYPE_PROP} ) )
 					$taxonomy = $object->{self::POSTTYPE_PROP};
 		}
 

@@ -498,8 +498,9 @@ class Tweaks extends gEditorial\Module
 				$new[$this->classs( 'order' )] = $this->get_column_title_icon( 'order', $posttype );
 		}
 
-		if ( $this->in_setting( $posttype, 'group_attributes' ) )
-			unset( $new['date'] );
+		if ( $this->in_setting( $posttype, 'group_attributes' )
+			|| ! $this->is_posttype_support( $posttype, 'date' ) )
+				unset( $new['date'] );
 
 		if ( ! $added ) {
 

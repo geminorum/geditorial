@@ -501,7 +501,7 @@ class Book extends gEditorial\Module
 
 		$this->register_taxonomy( 'publisher_taxonomy', [
 			'meta_box_cb'                             => NULL,   // default meta box
-			Services\Sitemaps::VIEWABLE_TAXONOMY_PROP => TRUE,   // even empty shows on sitemaps
+			Services\Sitemaps::VIEWABLE_TAXONOMY_PROP => TRUE,   // even empty shows on sitemaps // TODO: register via taxonomy settings
 		], 'publication_posttype' );
 
 		$this->register_taxonomy( 'type_taxonomy', [
@@ -1081,7 +1081,7 @@ class Book extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		$this->check_settings( $sub, 'reports' );
+		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
 	protected function render_reports_html( $uri, $sub )

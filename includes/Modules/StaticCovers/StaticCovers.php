@@ -248,9 +248,13 @@ class StaticCovers extends gEditorial\Module
 
 	public function setup_restapi()
 	{
-		register_rest_field( $this->posttypes(), $this->constant( 'restapi_attribute' ), [
-			'get_callback' => [ $this, 'rest_field_callback' ],
-		] );
+		register_rest_field(
+			$this->posttypes(),
+			$this->constant( 'restapi_attribute' ),
+			[
+				'get_callback' => [ $this, 'rest_field_callback' ],
+			]
+		);
 	}
 
 	public function setup_ajax()

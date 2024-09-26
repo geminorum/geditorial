@@ -1104,12 +1104,12 @@ trait SubContents
 		}
 	}
 
-	protected function subcontent_do_enqueue_app( $name, $args = [] )
+	protected function subcontent_do_enqueue_app( $name, $atts = [] )
 	{
 		$args = self::atts( [
 			'context'    => 'edit',
 			'can'        => 'assign',
-			'assetkey'   => TRUE === $name ? '_subcontent' : NULL,
+			'asset'      => TRUE === $name ? '_subcontent' : NULL,
 			'linked'     => NULL,
 			'searchable' => NULL,
 			'selectable' => NULL,
@@ -1117,7 +1117,7 @@ trait SubContents
 			'readonly'   => NULL,
 			'frozen'     => NULL, // FIXME: add full support
 			'strings'    => [],
-		], $args );
+		], $atts );
 
 		if ( ! $this->role_can( $args['can'] ) )
 			return;
@@ -1125,7 +1125,7 @@ trait SubContents
 		if ( ! $linked = $args['linked'] ?? self::req( 'linked', FALSE ) )
 			return;
 
-		$asset  = [
+		$asset = [
 			'strings' => $this->subcontent_get_strings_for_js( $args['strings'] ),
 			'fields'  => $this->subcontent_get_fields( $args['context'] ),
 			'linked'  => [
@@ -1149,7 +1149,7 @@ trait SubContents
 
 		$this->enqueue_asset_js( $asset, FALSE, [
 			Scripts::enqueueApp( TRUE === $name ? 'subcontent-grid' : $name )
-		], $args['assetkey'] );
+		], $args['asset'] );
 	}
 
 	protected function subcontent_do_enqueue_asset_js( $screen )

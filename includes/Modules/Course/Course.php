@@ -535,7 +535,7 @@ class Course extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		$this->check_settings( $sub, 'reports' );
+		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
 	protected function render_reports_html( $uri, $sub )

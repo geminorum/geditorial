@@ -1183,6 +1183,7 @@ class Module extends WordPress\Module
 
 	// TODO: customize column position/sorting
 	// NOTE: appends custom meta fields into Terms Module
+	// @SEE: `Socialite` Module
 	protected function _hook_terms_meta_field( $constant, $field, $args = [] )
 	{
 		if ( ! gEditorial()->enabled( 'terms' ) )

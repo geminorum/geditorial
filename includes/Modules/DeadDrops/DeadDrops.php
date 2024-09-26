@@ -16,6 +16,8 @@ class DeadDrops extends gEditorial\Module
 	use Internals\AdminPage;
 	use Internals\RewriteEndpoint;
 
+	protected $priority_template_redirect = 5;
+
 	public static function module()
 	{
 		return [
@@ -47,7 +49,7 @@ class DeadDrops extends gEditorial\Module
 				],
 			],
 			'_roles' => [
-				'uploads_roles' => [ NULL, $roles ],
+				'public_roles' => [ NULL, $roles ],
 			],
 		];
 	}
@@ -91,14 +93,15 @@ class DeadDrops extends gEditorial\Module
 
 			} else if ( 'post' === $screen->base ) {
 
-				$this->_register_header_button();
+				if ( $this->role_can( 'public' ) )
+					$this->_register_header_button();
 			}
 		}
 	}
 
 	public function admin_menu()
 	{
-		if ( $this->role_can( 'uploads' ) )
+		if ( $this->role_can( 'public' ) )
 			$this->_hook_submenu_adminpage( 'signal', 'exist' );
 	}
 
@@ -139,6 +142,7 @@ class DeadDrops extends gEditorial\Module
 		echo '</div>';
 	}
 
+	// NOTE: the author must have upload cap to use the core endpoint.
 	public function determine_current_user( $user_id )
 	{
 		if ( $user_id || ! Core\WordPress::isREST() )
@@ -365,7 +369,7 @@ class DeadDrops extends gEditorial\Module
 		// https://stackoverflow.com/questions/1036941/setup-http-expires-headers-using-php-and-apache
 		header( 'Expires: '.gmdate( 'D, d M Y H:i:s \G\M\T', time() + HOUR_IN_SECONDS ) ); // 1 hour
 
-		echo '<!doctype html><html><head>';
+		echo '<!doctype html><html '.get_language_attributes( 'html' ).'><head>';
 
 		// @SEE: https://make.wordpress.org/core/2020/02/19/enhancements-to-favicon-handling-in-wordpress-5-4/
 		if ( file_exists( ABSPATH.'favicon.ico' ) )
@@ -373,11 +377,11 @@ class DeadDrops extends gEditorial\Module
 
 		echo '<meta charset="UTF-8">';
 		echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-		echo '<meta name=”robots” content="noindex, nofollow">';
+		echo '<meta name="robots" content="noindex, nofollow">';
 
 		printf( '<title>%s</title>', WordPress\Post::title( $args['post'] ) );
 
-		Scripts::linkVazirMatn();
+		if ( Core\HTML::rtl() ) Scripts::linkVazirMatn();
 		Scripts::linkDropzone();
 		Helper::linkStyleSheetAdmin( 'dead-drops', TRUE, 'dropzone' );
 
