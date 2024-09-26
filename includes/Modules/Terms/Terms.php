@@ -25,7 +25,7 @@ class Terms extends gEditorial\Module
 		'plural',
 		// 'singular', // TODO
 		'overwrite',
-		// 'fullname', // TODO
+		'fullname',
 		'tagline',
 		'contact',
 		'image',
@@ -116,6 +116,7 @@ class Terms extends gEditorial\Module
 				'order'     => _x( 'Order', 'Titles', 'geditorial-terms' ),
 				'plural'    => _x( 'Plural', 'Titles', 'geditorial-terms' ),
 				'overwrite' => _x( 'Overwrite', 'Titles', 'geditorial-terms' ),
+				'fullname'  => _x( 'Fullname', 'Titles', 'geditorial-terms' ),
 				'tagline'   => _x( 'Tagline', 'Titles', 'geditorial-terms' ),
 				'contact'   => _x( 'Contact', 'Titles', 'geditorial-terms' ),
 				'image'     => _x( 'Image', 'Titles', 'geditorial-terms' ),
@@ -148,6 +149,7 @@ class Terms extends gEditorial\Module
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
 				'plural'    => _x( 'Defines the plural form of the term.', 'Descriptions', 'geditorial-terms' ),
 				'overwrite' => _x( 'Replaces the term name on front-page display.', 'Descriptions', 'geditorial-terms' ),
+				'fullname'  => _x( 'Defines the full-name form of the term.', 'Descriptions', 'geditorial-terms' ),
 				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Descriptions', 'geditorial-terms' ),
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
 				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
@@ -230,11 +232,12 @@ class Terms extends gEditorial\Module
 		$excluded  = $this->taxonomies_excluded();
 
 		switch ( $field ) {
-			case 'role': $excluded[] = 'audit_attribute'; break;
-			case 'plural': $excluded[] = 'post_tag'; break;
+			case 'role'     : $excluded[] = 'audit_attribute'; break;
+			case 'plural'   : $excluded[] = 'post_tag'; break;
 			case 'overwrite': $excluded[] = 'post_tag'; break;
-			case 'tagline': $excluded[] = 'post_tag'; break;
-			case 'arrow': return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break; // override!
+			case 'fullname' : $excluded[] = 'post_tag'; break;
+			case 'tagline'  : $excluded[] = 'post_tag'; break;
+			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break;  // override!
 		}
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
@@ -686,6 +689,7 @@ class Terms extends gEditorial\Module
 		$sortables = [
 			'plural',
 			'overwrite',
+			'fullname',
 			'tagline',
 			'contact',
 			'image',
@@ -873,6 +877,7 @@ class Terms extends gEditorial\Module
 			case 'label':
 			case 'plural':
 			case 'overwrite':
+			case 'fullname':
 			case 'tagline':
 			case 'period':
 
@@ -1353,6 +1358,7 @@ class Terms extends gEditorial\Module
 			break;
 			case 'plural':
 			case 'overwrite':
+			case 'fullname':
 			case 'tagline':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -1583,6 +1589,7 @@ class Terms extends gEditorial\Module
 			case 'label':
 			case 'plural':
 			case 'overwrite':
+			case 'fullname':
 			case 'tagline':
 			case 'period':
 			default:
@@ -1725,6 +1732,7 @@ class Terms extends gEditorial\Module
 					break;
 					case 'plural':
 					case 'overwrite':
+					case 'fullname':
 					case 'tagline':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
@@ -1913,6 +1921,7 @@ class Terms extends gEditorial\Module
 	{
 		$actions = [
 			'sync_image_titles',
+			// 'move_desc_to_fullname', // TODO
 			'move_tagline_to_desc',
 		];
 
