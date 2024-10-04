@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 trait CoreRowActions
@@ -104,4 +105,76 @@ trait CoreRowActions
 
 	// EXAMPLE CALLBACK
 	// protected function rowaction_get_mainlink_for_term( $term ) { return ''; }
+
+	// NOTE: appears only on empty posts!
+	protected function rowactions__hook_force_default_term( $screen, $constant, $cap_check = NULL )
+	{
+		// if ( ! $this->get_setting( 'admin_bulkactions' ) )
+		// 	return FALSE;
+
+		if ( FALSE === $cap_check || ! $constant )
+			return FALSE;
+
+		if ( TRUE !== $cap_check && ! $this->corecaps_taxonomy_role_can( $constant, $cap_check ?? 'assign' ) )
+			return FALSE;
+
+		$taxonomy = $this->constant( $constant );
+		$action   = $this->hook( 'forcedefault', $taxonomy );
+		$message  = $this->hook( 'forcedefault', 'msg', $taxonomy );
+
+		if ( ! $default = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
+			return FALSE;
+
+		add_filter( 'bulk_actions-'.$screen->id,
+			function ( $actions ) use ( $taxonomy, $action ) {
+
+				if ( '-1' !== self::req( WordPress\Taxonomy::queryVar( $taxonomy ) ) )
+					return $actions;
+
+				return array_merge( $actions, [
+					$action => sprintf(
+						/* translators: %s: taxonomy label */
+						_x( 'Force Default %s', 'Internal: CoreRowActions: Action', 'geditorial-admin' ),
+						Helper::getTaxonomyLabel( $taxonomy, 'extended_label' )
+					),
+				] );
+			} );
+
+		add_filter( 'handle_bulk_actions-'.$screen->id,
+			function ( $redirect_to, $doaction, $post_ids ) use ( $taxonomy, $action, $message, $default ) {
+
+				if ( $action !== $doaction )
+					return $redirect_to;
+
+				$saved = 0;
+
+				foreach ( $post_ids as $post_id ) {
+
+					$result = wp_set_object_terms( (int) $post_id, (int) $default, $taxonomy, FALSE );
+
+					if ( ! is_wp_error( $result ) )
+						$saved++;
+				}
+
+				return add_query_arg( $message, $saved, $redirect_to );
+
+			}, 10, 3 );
+
+		add_action( 'admin_notices',
+			function () use ( $message ) {
+
+				if ( ! $saved = self::req( $message ) )
+					return;
+
+				$_SERVER['REQUEST_URI'] = remove_query_arg( $message, $_SERVER['REQUEST_URI'] );
+
+				echo Core\HTML::success( sprintf(
+					/* translators: %s: post count */
+					_x( 'Default Term applied to %s post(s)!', 'Internal: CoreRowActions: Message', 'geditorial-admin' ),
+					Core\Number::format( $saved )
+				) );
+			} );
+
+		return $action;
+	}
 }

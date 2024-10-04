@@ -17,6 +17,7 @@ class WasBorn extends gEditorial\Module
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\CoreRowActions;
 	use Internals\DashboardSummary;
 	use Internals\LateChores;
 	use Internals\PostDate;
@@ -262,6 +263,7 @@ class WasBorn extends gEditorial\Module
 				}
 
 				$this->latechores__hook_admin_bulkactions( $screen );
+				$this->rowactions__hook_force_default_term( $screen, 'main_taxonomy' );
 			}
 		}
 	}
