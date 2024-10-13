@@ -68,110 +68,110 @@ msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr ""
 
-#: Attachments.php:190
+#: Attachments.php:197
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr ""
 
-#: Attachments.php:238
+#: Attachments.php:258
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachments count
-#: Attachments.php:241
+#: Attachments.php:261
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Attachments.php:246
+#: Attachments.php:266
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr ""
 
-#: Attachments.php:281
+#: Attachments.php:301
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr ""
 
 #. translators: %s: attachment parent title
-#: Attachments.php:283
+#: Attachments.php:303
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr ""
 
-#: Attachments.php:376
+#: Attachments.php:396
 msgctxt "Table Action"
 msgid "Delete Permanently"
 msgstr ""
 
-#: Attachments.php:377
+#: Attachments.php:397
 msgctxt "Table Action"
 msgid "Empty Meta-data"
 msgstr ""
 
-#: Attachments.php:378
+#: Attachments.php:398
 msgctxt "Table Action"
 msgid "Remove Thumbnails"
 msgstr ""
 
-#: Attachments.php:395
+#: Attachments.php:415
 msgctxt "Table Column"
 msgid "Custom"
 msgstr ""
 
-#: Attachments.php:407
+#: Attachments.php:427
 msgctxt "Table Column"
 msgid "Search"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:414
+#: Attachments.php:434
 msgctxt "Search Result Prefix"
 msgid "[Parent]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:419
+#: Attachments.php:439
 msgctxt "Search Result Prefix"
 msgid "[Thumb]: %s"
 msgstr ""
 
 #. translators: %s: linked term title
-#: Attachments.php:424
+#: Attachments.php:444
 msgctxt "Search Result Prefix"
 msgid "[Term]: %s"
 msgstr ""
 
 #. translators: %s: linked post title
-#: Attachments.php:429
+#: Attachments.php:449
 msgctxt "Search Result Prefix"
 msgid "[Content]: %s"
 msgstr ""
 
-#: Attachments.php:436
+#: Attachments.php:456
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr ""
 
-#: Attachments.php:459
+#: Attachments.php:479
 msgctxt "Table Column"
 msgid "Meta"
 msgstr ""
 
-#: Attachments.php:480
+#: Attachments.php:500
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr ""
 
-#: Attachments.php:481
+#: Attachments.php:501
 msgctxt "Message"
 msgid "No attachments found."
 msgstr ""
 
-#: Attachments.php:494
+#: Attachments.php:514
 msgctxt "Header"
 msgid "Attachment Tools"
 msgstr ""

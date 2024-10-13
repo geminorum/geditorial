@@ -14,203 +14,208 @@ msgstr ""
 "X-Domain: geditorial-was-born\n"
 
 #. translators: %s: supported object label
-#: WasBorn.php:56
+#: WasBorn.php:57
 msgctxt "Setting Title"
 msgid "Date of Birth Meta-key for %s"
 msgstr ""
 
-#: WasBorn.php:57
+#: WasBorn.php:58
 msgctxt "Setting Description"
 msgid "Defines date-of-birth meta-key for the post-type."
 msgstr ""
 
-#: WasBorn.php:66
+#: WasBorn.php:67
 msgctxt "Setting Description"
 msgid "Tries to override post-date with provided date-of-birth on supported post-types."
 msgstr ""
 
-#: WasBorn.php:72
+#: WasBorn.php:73
 msgctxt "Setting Title"
 msgid "Age of Majority"
 msgstr ""
 
-#: WasBorn.php:73
+#: WasBorn.php:74
 msgctxt "Setting Description"
 msgid "The threshold of legal adulthood as recognized or declared in law."
 msgstr ""
 
-#: WasBorn.php:79
+#: WasBorn.php:80
 msgctxt "Setting Title"
 msgid "Round-up Average"
 msgstr ""
 
-#: WasBorn.php:80
+#: WasBorn.php:81
 msgctxt "Setting Description"
 msgid "Tries to calculate average numbers rounded."
 msgstr ""
 
-#: WasBorn.php:99
+#: WasBorn.php:100
 msgctxt "Setting Description"
 msgid "Roles that can manage, edit and delete age groups."
 msgstr ""
 
-#: WasBorn.php:100
+#: WasBorn.php:101
 msgctxt "Setting Description"
 msgid "Roles that can view age related reports."
 msgstr ""
 
-#: WasBorn.php:123
+#: WasBorn.php:124
 msgid "Gender"
 msgid_plural "Genders"
 msgstr[0] ""
 msgstr[1] ""
 
-#: WasBorn.php:124
+#: WasBorn.php:125
 msgid "Birth Year"
 msgid_plural "Birth Years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: WasBorn.php:125
+#: WasBorn.php:126
 msgid "Age Group"
 msgid_plural "Age Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: WasBorn.php:129
+#: WasBorn.php:130
 msgctxt "Label: `extended_label`"
 msgid "Gender"
 msgstr ""
 
-#: WasBorn.php:130
+#: WasBorn.php:131
 msgctxt "Label: `show_option_all`"
 msgid "All Genders"
 msgstr ""
 
-#: WasBorn.php:131
+#: WasBorn.php:132
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined Gender)"
 msgstr ""
 
-#: WasBorn.php:134
+#: WasBorn.php:135
 msgctxt "Label: `show_option_all`"
 msgid "Birth Years"
 msgstr ""
 
-#: WasBorn.php:135
+#: WasBorn.php:136
 msgctxt "Label: `show_option_no_items`"
 msgid "(No Birthdays)"
 msgstr ""
 
-#: WasBorn.php:138
+#: WasBorn.php:139
 msgctxt "Label: `show_option_all`"
 msgid "Age Groups"
 msgstr ""
 
-#: WasBorn.php:139
+#: WasBorn.php:140
 msgctxt "Label: `show_option_no_items`"
 msgid "(Empty Birthdays)"
 msgstr ""
 
-#: WasBorn.php:148
+#: WasBorn.php:149
+msgctxt "Dashboard Widget Title"
+msgid "The Staff Age Summary"
+msgstr ""
+
+#: WasBorn.php:150
 msgctxt "Dashboard Widget Title"
 msgid "Your Staff Age Summary"
 msgstr ""
 
-#: WasBorn.php:149
+#: WasBorn.php:151
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Staff Age Summary"
 msgstr ""
 
-#: WasBorn.php:161
+#: WasBorn.php:163
 msgctxt "Default Term"
 msgid "Male"
 msgstr ""
 
-#: WasBorn.php:162
+#: WasBorn.php:164
 msgctxt "Default Term"
 msgid "Female"
 msgstr ""
 
-#: WasBorn.php:184
+#: WasBorn.php:186
 msgctxt "Gender Taxonomy Argument: `data_length`"
 msgid "5"
 msgstr ""
 
-#: WasBorn.php:192
+#: WasBorn.php:196
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "6"
 msgstr ""
 
-#: WasBorn.php:428
+#: WasBorn.php:448
 msgctxt "Summary"
 msgid "Under-Aged"
 msgstr ""
 
-#: WasBorn.php:508
+#: WasBorn.php:535
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr ""
 
-#: WasBorn.php:577
+#: WasBorn.php:604
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr ""
 
-#: WasBorn.php:653
+#: WasBorn.php:687
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr ""
 
 #. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:734
+#: WasBorn.php:775
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr ""
 
-#: WasBorn.php:736
+#: WasBorn.php:777
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr ""
 
-#: WasBorn.php:737
+#: WasBorn.php:778
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr ""
 
-#: WasBorn.php:918
+#: WasBorn.php:959
 msgctxt "Pointer Notice"
 msgid "Under-Aged!"
 msgstr ""
 
-#: WasBorn.php:928
+#: WasBorn.php:969
 msgctxt "Default Term: Audit"
 msgid "Empty Date-of-Birth"
 msgstr ""
 
-#: WasBorn.php:929
+#: WasBorn.php:970
 msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr ""
 
-#: WasBorn.php:1001
+#: WasBorn.php:1042
 msgctxt "Header"
-msgid "Birthday Tools"
+msgid "Birthday Imports"
 msgstr ""
 
-#: WasBorn.php:1013
+#: WasBorn.php:1054
 msgctxt "Card Title"
 msgid "Post-Date by Birthday"
 msgstr ""
 
 #. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1054
+#: WasBorn.php:1095
 msgctxt "Notice"
 msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1060
+#: WasBorn.php:1101
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
 msgstr ""

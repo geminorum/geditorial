@@ -13,79 +13,79 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Uncategorized\n"
 "X-Domain: geditorial-uncategorized\n"
 
-#: Uncategorized.php:44
+#: Uncategorized.php:45
 msgctxt "Setting Description"
 msgid "Roles that can see Uncategorized Reports."
-msgstr ""
-
-#: Uncategorized.php:103
-#: Uncategorized.php:270
-msgctxt "Action"
-msgid "Clean Uncategorized"
 msgstr ""
 
 #: Uncategorized.php:104
 #: Uncategorized.php:271
 msgctxt "Action"
-msgid "Clean Unregistered"
+msgid "Clean Uncategorized"
 msgstr ""
 
 #: Uncategorized.php:105
 #: Uncategorized.php:272
 msgctxt "Action"
+msgid "Clean Unregistered"
+msgstr ""
+
+#: Uncategorized.php:106
+#: Uncategorized.php:273
+msgctxt "Action"
 msgid "Clean Unattached"
 msgstr ""
 
 #. translators: %s: count
-#: Uncategorized.php:160
+#: Uncategorized.php:161
 msgctxt "Message"
 msgid "%s items(s) cleaned!"
 msgstr ""
 
 #. translators: %s: posts count
-#: Uncategorized.php:171
+#: Uncategorized.php:172
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Uncategorized.php:176
+#: Uncategorized.php:177
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr ""
 
-#: Uncategorized.php:286
+#: Uncategorized.php:287
 msgctxt "Table Column"
 msgid "Raw"
 msgstr ""
 
-#: Uncategorized.php:313
+#: Uncategorized.php:314
 msgctxt "Header"
 msgid "Overview of Posts in Uncategorized Terms"
 msgstr ""
 
-#: Uncategorized.php:364
+#: Uncategorized.php:365
 msgctxt "Header"
 msgid "Uncategorized Tools"
 msgstr ""
 
-#: Uncategorized.php:370
+#: Uncategorized.php:371
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr ""
 
-#: Uncategorized.php:390
+#: Uncategorized.php:391
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Uncategorized.php:392
+#: Uncategorized.php:393
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr ""
 
-#: Uncategorized.php:573
+#: Uncategorized.php:574
 msgctxt "Default Label"
 msgid "Uncategorized"
 msgstr ""

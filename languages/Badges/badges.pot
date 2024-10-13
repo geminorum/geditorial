@@ -44,7 +44,7 @@ msgctxt "Dashboard Widget Title"
 msgid "Editorial Badges Summary"
 msgstr ""
 
-#: Badges.php:270
+#: Badges.php:271
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr ""

@@ -226,58 +226,70 @@ msgid "Snow"
 msgstr ""
 
 #. translators: %s: post title
-#: Athlete.php:406
+#: Athlete.php:411
 msgctxt "Page Title"
 msgid "Athletics Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Athlete.php:408
+#: Athlete.php:413
 msgctxt "Page Title"
 msgid "Athletics Overview for %s"
 msgstr ""
 
-#: Athlete.php:437
+#: Athlete.php:449
 msgctxt "Default Term: Audit"
 msgid "Empty Athletics Data"
 msgstr ""
 
-#: ModuleHelper.php:27
+#: ModuleHelper.php:46
 msgctxt "BMI: Message"
 msgid "Your BMI falls within the underweight range."
 msgstr ""
 
-#: ModuleHelper.php:28
+#: ModuleHelper.php:47
 msgctxt "BMI: Report"
 msgid "The Person is underweight."
 msgstr ""
 
-#: ModuleHelper.php:36
+#: ModuleHelper.php:53
 msgctxt "BMI: Message"
 msgid "Your BMI falls within the normal or healthy weight range."
 msgstr ""
 
-#: ModuleHelper.php:37
+#: ModuleHelper.php:54
 msgctxt "BMI: Report"
 msgid "The Person has healthy weight."
 msgstr ""
 
-#: ModuleHelper.php:45
+#: ModuleHelper.php:60
 msgctxt "BMI Message"
 msgid "Your BMI falls within the overweight range."
 msgstr ""
 
-#: ModuleHelper.php:46
+#: ModuleHelper.php:61
 msgctxt "BMI: Report"
 msgid "The Person is overweight."
 msgstr ""
 
-#: ModuleHelper.php:54
+#: ModuleHelper.php:67
 msgctxt "BMI Message"
-msgid "Your BMI falls within the obese range."
+msgid "Your BMI falls within the obese (class one) range."
 msgstr ""
 
-#: ModuleHelper.php:55
+#: ModuleHelper.php:68
+#: ModuleHelper.php:75
+#: ModuleHelper.php:82
 msgctxt "BMI: Report"
 msgid "The Person is obese."
+msgstr ""
+
+#: ModuleHelper.php:74
+msgctxt "BMI Message"
+msgid "Your BMI falls within the obese (class two) range."
+msgstr ""
+
+#: ModuleHelper.php:81
+msgctxt "BMI Message"
+msgid "Your BMI falls within the obese (class three) range."
 msgstr ""

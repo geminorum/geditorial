@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Diagnosed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-04 07:52+0330\n"
+"PO-Revision-Date: 2024-08-28 23:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -52,7 +52,7 @@ msgid "Age"
 msgstr "سن"
 
 #: Diagnosed.php:125
-msgctxt "Field Label: `date`"
+msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr "تاریخ"
 
@@ -183,18 +183,22 @@ msgid "Ankle"
 msgstr "مچ‌پا"
 
 #. translators: %s: post title
-#: Diagnosed.php:333
+#: Diagnosed.php:334
 msgctxt "Page Title"
 msgid "Medical Grid for %s"
 msgstr "جدول پزشکی برای %s"
 
 #. translators: %s: post title
-#: Diagnosed.php:335
+#: Diagnosed.php:336
 msgctxt "Page Title"
 msgid "Medical Overview for %s"
 msgstr "مروری بر سوابق پزشکی %s"
 
-#: Diagnosed.php:352
+#: Diagnosed.php:353
 msgctxt "Default Term: Audit"
 msgid "Empty Medical Data"
 msgstr "داده‌های پزشکی خالی"
+
+#~ msgctxt "Field Label: `date`"
+#~ msgid "Date"
+#~ msgstr "تاریخ"

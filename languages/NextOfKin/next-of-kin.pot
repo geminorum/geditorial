@@ -170,19 +170,24 @@ msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "10"
 msgstr ""
 
+#: NextOfKin.php:319
+msgctxt "Dashboard Widget Title"
+msgid "Marital Status Summary"
+msgstr ""
+
 #. translators: %s: post title
-#: NextOfKin.php:340
+#: NextOfKin.php:349
 msgctxt "Page Title"
 msgid "Family Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: NextOfKin.php:342
+#: NextOfKin.php:351
 msgctxt "Page Title"
 msgid "Family Overview for %s"
 msgstr ""
 
-#: NextOfKin.php:366
+#: NextOfKin.php:375
 msgctxt "Default Term: Audit"
 msgid "Empty Family Data"
 msgstr ""

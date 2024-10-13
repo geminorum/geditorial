@@ -174,32 +174,32 @@ msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Listed.php:260
+#: Listed.php:262
 msgctxt "Field Title"
 msgid "Notaries"
 msgstr ""
 
-#: Listed.php:261
+#: Listed.php:263
 msgctxt "Field Description"
 msgid "People Who is the Notary of This Listing"
 msgstr ""
 
-#: Listed.php:268
+#: Listed.php:270
 msgctxt "Field Title"
 msgid "Listing Code"
 msgstr ""
 
-#: Listed.php:269
+#: Listed.php:271
 msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr ""
 
-#: Listed.php:605
+#: Listed.php:610
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr ""
 
-#: Listed.php:614
+#: Listed.php:619
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Agenda\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-01 20:59+0330\n"
+"PO-Revision-Date: 2024-08-28 23:21+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -20,24 +20,24 @@ msgid "Label"
 msgstr "شاخص"
 
 #: Agenda.php:81
-msgctxt "Field Label: `date`"
+msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr "تاریخ"
 
 #: Agenda.php:82
-msgctxt "Field Label: `time`"
-msgid "Time"
-msgstr "زمان"
+msgctxt "Field Label: `timestart`"
+msgid "Time Start"
+msgstr "پایان"
 
 #: Agenda.php:83
-msgctxt "Field Label: `datestart`"
-msgid "Date Start"
-msgstr "تاریخ شروع"
+msgctxt "Field Label: `timeend`"
+msgid "Time End"
+msgstr "شروع"
 
 #: Agenda.php:84
-msgctxt "Field Label: `dateend`"
-msgid "Date End"
-msgstr "تاریخ پایان"
+msgctxt "Field Label: `people`"
+msgid "Coordinator"
+msgstr "مسئول"
 
 #: Agenda.php:85
 msgctxt "Field Label: `topic`"
@@ -126,21 +126,37 @@ msgid "The Itinerary Table Caption"
 msgstr "برنگاشت جدول گشت‌نامه"
 
 #. translators: %s: post title
-#: Agenda.php:297
+#: Agenda.php:259
 msgctxt "Page Title"
 msgid "Itinerary Grid for %s"
 msgstr "جدول گشت‌نامه برای %s"
 
 #. translators: %s: post title
-#: Agenda.php:299
+#: Agenda.php:261
 msgctxt "Page Title"
 msgid "Itinerary Overview for %s"
 msgstr "نمای‌کلی گشت‌نامه برای %s"
 
-#: Agenda.php:316
+#: Agenda.php:278
 msgctxt "Default Term: Audit"
 msgid "Empty Itinerary Data"
 msgstr "داده‌های گشت‌نامه خالی"
+
+#~ msgctxt "Field Label: `date`"
+#~ msgid "Date"
+#~ msgstr "تاریخ"
+
+#~ msgctxt "Field Label: `time`"
+#~ msgid "Time"
+#~ msgstr "زمان"
+
+#~ msgctxt "Field Label: `datestart`"
+#~ msgid "Date Start"
+#~ msgstr "تاریخ شروع"
+
+#~ msgctxt "Field Label: `dateend`"
+#~ msgid "Date End"
+#~ msgstr "تاریخ پایان"
 
 #~ msgctxt "Field Label"
 #~ msgid "Label"

@@ -20,13 +20,13 @@ msgid "%1$s %3$s %2$s"
 msgstr ""
 
 #. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
-#: ModuleHelper.php:61
+#: ModuleHelper.php:62
 msgctxt "Helper: Make Full-name: Print"
 msgid "%1$s %3$s %2$s"
 msgstr ""
 
 #. translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name
-#: ModuleHelper.php:79
+#: ModuleHelper.php:80
 msgctxt "Helper: Make Full-name: Display"
 msgid "%2$s, %1$s %3$s"
 msgstr ""
@@ -171,155 +171,160 @@ msgstr ""
 
 #: Personage.php:198
 msgctxt "Default Term: `Status`"
+msgid "Recruit"
+msgstr ""
+
+#: Personage.php:199
+msgctxt "Default Term: `Status`"
 msgid "Concurrency"
 msgstr ""
 
-#: Personage.php:210
+#: Personage.php:211
 msgctxt "Field Title"
 msgid "First Name"
 msgstr ""
 
-#: Personage.php:211
+#: Personage.php:212
 msgctxt "Field Description"
 msgid "Given Name of the Person"
 msgstr ""
 
-#: Personage.php:218
+#: Personage.php:219
 msgctxt "Field Title"
 msgid "Middle Name"
 msgstr ""
 
-#: Personage.php:219
+#: Personage.php:220
 msgctxt "Field Description"
 msgid "Middle Name of the Person"
 msgstr ""
 
-#: Personage.php:223
+#: Personage.php:224
 msgctxt "Field Title"
 msgid "Last Name"
 msgstr ""
 
-#: Personage.php:224
+#: Personage.php:225
 msgctxt "Field Description"
 msgid "Family Name of the Person"
 msgstr ""
 
-#: Personage.php:231
+#: Personage.php:232
 msgctxt "Field Title"
 msgid "Full Name"
 msgstr ""
 
-#: Personage.php:232
+#: Personage.php:233
 msgctxt "Field Description"
 msgid "Full Name of the Person"
 msgstr ""
 
-#: Personage.php:239
+#: Personage.php:240
 msgctxt "Field Title"
 msgid "Pseudonym"
 msgstr ""
 
-#: Personage.php:240
+#: Personage.php:241
 msgctxt "Field Description"
 msgid "Alias Name of the Person"
 msgstr ""
 
-#: Personage.php:246
+#: Personage.php:247
 msgctxt "Field Title"
 msgid "Father Name"
 msgstr ""
 
-#: Personage.php:247
+#: Personage.php:248
 msgctxt "Field Description"
 msgid "Name of the Father of the Person"
 msgstr ""
 
-#: Personage.php:253
+#: Personage.php:254
 msgctxt "Field Title"
 msgid "Father Profile"
 msgstr ""
 
-#: Personage.php:254
+#: Personage.php:255
 msgctxt "Field Description"
 msgid "Profile of the Father of the Person"
 msgstr ""
 
-#: Personage.php:260
+#: Personage.php:261
 msgctxt "Field Title"
 msgid "Mother Name"
 msgstr ""
 
-#: Personage.php:261
+#: Personage.php:262
 msgctxt "Field Description"
 msgid "Name of the Mother of the Person"
 msgstr ""
 
-#: Personage.php:265
+#: Personage.php:266
 msgctxt "Field Title"
 msgid "Mother Profile"
 msgstr ""
 
-#: Personage.php:266
+#: Personage.php:267
 msgctxt "Field Description"
 msgid "Profile of the Mother of the Person"
 msgstr ""
 
-#: Personage.php:272
+#: Personage.php:273
 msgctxt "Field Title"
 msgid "Spouse Name"
 msgstr ""
 
-#: Personage.php:273
+#: Personage.php:274
 msgctxt "Field Description"
 msgid "Name of the Spouse of the Person"
 msgstr ""
 
-#: Personage.php:277
+#: Personage.php:278
 msgctxt "Field Title"
 msgid "Spouse Profile"
 msgstr ""
 
-#: Personage.php:278
+#: Personage.php:279
 msgctxt "Field Description"
 msgid "Profile of the Spouse of the Person"
 msgstr ""
 
-#: Personage.php:284
+#: Personage.php:285
 msgctxt "Field Title"
 msgid "Identity Number"
 msgstr ""
 
-#: Personage.php:285
+#: Personage.php:286
 msgctxt "Field Description"
 msgid "Unique National Identity Number"
 msgstr ""
 
-#: Personage.php:292
+#: Personage.php:294
 msgctxt "Field Title"
 msgid "Passport Number"
 msgstr ""
 
-#: Personage.php:293
+#: Personage.php:295
 msgctxt "Field Description"
 msgid "Personagel Passport Number"
 msgstr ""
 
-#: Personage.php:531
+#: Personage.php:547
 msgctxt "Default Term: Audit"
 msgid "Empty Identity Number"
 msgstr ""
 
-#: Personage.php:625
+#: Personage.php:641
 msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr ""
 
-#: Personage.php:1018
+#: Personage.php:1043
 msgctxt "Header"
 msgid "People Parser"
 msgstr ""
 
-#: Personage.php:1029
+#: Personage.php:1054
 msgctxt "Button"
 msgid "Parse Lines"
 msgstr ""

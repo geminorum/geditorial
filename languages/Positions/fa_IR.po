@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Positions\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-01 21:04+0330\n"
+"PO-Revision-Date: 2024-08-28 23:25+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -75,7 +75,7 @@ msgid "Contact"
 msgstr "تماس"
 
 #: Positions.php:123
-msgctxt "Field Label: `date`"
+msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr "تاریخ"
 
@@ -136,53 +136,57 @@ msgid "Positions"
 msgstr "جایگاه‌ها"
 
 #. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:402
+#: Positions.php:391
 msgctxt "Button Label"
 msgid "%1$s Mount: %2$s"
 msgstr "%1$s نصب: %2$s"
 
-#: Positions.php:410
+#: Positions.php:399
 msgctxt "Button Title"
 msgid "Click to Mount the Position Profile"
 msgstr "برای نصب نمایه جایگاهی کلیک کنید"
 
 #. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:418
+#: Positions.php:407
 msgctxt "Button Label"
 msgid "%1$s Clear: %2$s"
 msgstr "%1$s پاک‌سازی: %2$s"
 
-#: Positions.php:426
+#: Positions.php:415
 msgctxt "Button Title"
 msgid "Click to Clear the Position Profile"
 msgstr "برای پاک‌سازی نمایه جایگاهی کلیک کنید"
 
-#: Positions.php:434
+#: Positions.php:423
 msgctxt "Notice"
 msgid "No Position Profile assigned to this content."
 msgstr "هیچ نمایه جایگاهی برای این محتوا تنظیم نشده است."
 
-#: Positions.php:531
+#: Positions.php:520
 msgctxt "Javascript String"
 msgid "Here you can define the position profile by titles with custom ordering."
 msgstr "در اینجا می‌توانید نمایه جایگاهی را با عناوین و چینش سفارش تعریف کنید."
 
 #. translators: %s: post title
-#: Positions.php:552
+#: Positions.php:541
 msgctxt "Page Title"
 msgid "Position Grid for %s"
 msgstr "جدول جایگاهی برای %s"
 
 #. translators: %s: post title
-#: Positions.php:554
+#: Positions.php:543
 msgctxt "Page Title"
 msgid "Positions Overview for %s"
 msgstr "مروری بر جایگاه‌های %s"
 
-#: Positions.php:571
+#: Positions.php:560
 msgctxt "Default Term: Audit"
 msgid "Empty Position Data"
 msgstr "نمایه جایگاهی خالی"
+
+#~ msgctxt "Field Label: `date`"
+#~ msgid "Date"
+#~ msgstr "تاریخ"
 
 #~ msgctxt "Button Title"
 #~ msgid "Click to Mount the Profile Position"

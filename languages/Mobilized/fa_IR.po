@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Mobilized\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-28 18:08+0330\n"
+"PO-Revision-Date: 2024-09-09 03:37+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,37 +11,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Mobilized\n"
 "X-Domain: geditorial-mobilized\n"
 
-#: Mobilized.php:83
+#: Mobilized.php:84
 msgid "Mobilization"
 msgid_plural "Mobilizations"
 msgstr[0] "پیش‌اقدام‌ها"
 msgstr[1] "پیش‌اقدام"
 
-#: Mobilized.php:87
+#: Mobilized.php:88
 msgctxt "Label: Menu Name"
 msgid "Content Mobilizations"
 msgstr "پیش‌قدم‌های محتوا"
 
-#: Mobilized.php:88
+#: Mobilized.php:89
 msgctxt "Label: Show Option All"
 msgid "Mobilizations"
 msgstr "پیش‌اقدام"
 
-#: Mobilized.php:89
+#: Mobilized.php:90
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Mobilized.php:98
+#: Mobilized.php:99
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Mobilization Summary"
 msgstr "گزارش پیش‌اقدام‌های گروهه شما"
 
-#: Mobilized.php:99
+#: Mobilized.php:100
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Mobilization Summary"
 msgstr "گزارش پیش‌اقدام‌های تحریریه"

@@ -13,33 +13,33 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Yearly\n"
 "X-Domain: geditorial-yearly\n"
 
-#: Yearly.php:89
+#: Yearly.php:91
 msgid "Year Span"
 msgid_plural "Year Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Yearly.php:93
+#: Yearly.php:95
 msgctxt "Label: Show Option All"
 msgid "Years"
 msgstr ""
 
-#: Yearly.php:94
+#: Yearly.php:96
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
 
-#: Yearly.php:103
+#: Yearly.php:105
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Years Summary"
 msgstr ""
 
-#: Yearly.php:104
+#: Yearly.php:106
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Years Summary"
 msgstr ""
 
-#: Yearly.php:127
+#: Yearly.php:129
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "4"
 msgstr ""

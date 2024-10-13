@@ -33,43 +33,43 @@ msgctxt "Message"
 msgid "Updating the post date dynamically doesn't work for published content."
 msgstr ""
 
-#: Schedule.php:128
-#: Schedule.php:210
+#: Schedule.php:127
+#: Schedule.php:209
 msgctxt "Page Title"
 msgid "Editorial Calendar"
 msgstr ""
 
-#: Schedule.php:129
+#: Schedule.php:128
 msgctxt "Menu Title"
 msgid "My Calendar"
 msgstr ""
 
-#: Schedule.php:165
+#: Schedule.php:164
 msgctxt "Title Attr"
 msgid "View on Calendar"
 msgstr ""
 
-#: Schedule.php:168
+#: Schedule.php:167
 msgctxt "Action"
 msgid "Calendar"
 msgstr ""
 
-#: Schedule.php:233
+#: Schedule.php:232
 msgctxt "Title Attr"
 msgid "Save"
 msgstr ""
 
-#: Schedule.php:234
+#: Schedule.php:233
 msgctxt "Title Attr"
 msgid "Cancel"
 msgstr ""
 
-#: Schedule.php:258
+#: Schedule.php:257
 msgctxt "Indicator"
 msgid "Today"
 msgstr ""
 
-#: Schedule.php:287
+#: Schedule.php:286
 msgctxt "Sortable"
 msgid "Drag me!"
 msgstr ""

@@ -34,7 +34,7 @@ msgid "Custom string before the estimated time on the content."
 msgstr ""
 
 #: Estimated.php:47
-#: Estimated.php:201
+#: Estimated.php:209
 msgctxt "Setting Default"
 msgid "Estimated read time:"
 msgstr ""
@@ -69,29 +69,29 @@ msgctxt "Setting Description"
 msgid "And above this number of words will show the notice"
 msgstr ""
 
-#: Estimated.php:105
+#: Estimated.php:113
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr ""
 
-#: Estimated.php:108
+#: Estimated.php:116
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr ""
 
 #. translators: %s: words count
-#: Estimated.php:141
-#: Estimated.php:222
+#: Estimated.php:149
+#: Estimated.php:230
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute"
 msgstr ""
 
-#: Estimated.php:214
+#: Estimated.php:222
 msgid "less than 1 minute"
 msgstr ""
 
 #. translators: %s: number of minutes
-#: Estimated.php:217
+#: Estimated.php:225
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""

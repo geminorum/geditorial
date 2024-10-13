@@ -13,160 +13,160 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Directorate\n"
 "X-Domain: geditorial-directorate\n"
 
-#: Directorate.php:67
+#: Directorate.php:71
 msgctxt "Settings"
 msgid "Sub-committee Support"
 msgstr ""
 
-#: Directorate.php:68
+#: Directorate.php:72
 msgctxt "Settings"
 msgid "Substitute taxonomy for the committees and supported post-types."
 msgstr ""
 
-#: Directorate.php:91
+#: Directorate.php:96
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Directorate.php:92
+#: Directorate.php:97
 msgctxt "Settings"
 msgid "Redirects committee archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Directorate.php:149
-#: Directorate.php:150
+#: Directorate.php:154
+#: Directorate.php:155
 msgid "Committee"
 msgid_plural "Committees"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:151
+#: Directorate.php:156
 msgid "Committee Category"
 msgid_plural "Committee Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:152
+#: Directorate.php:157
 msgid "Subcommittee"
 msgid_plural "Subcommittees"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:153
+#: Directorate.php:158
 msgid "Committee Type"
 msgid_plural "Committee Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:154
+#: Directorate.php:159
 msgid "Committee Status"
 msgid_plural "Committee Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: paired item title
-#: Directorate.php:159
+#: Directorate.php:164
 msgctxt "Label: `paired_connected_to`"
 msgid "Member of %s Committee"
 msgstr ""
 
-#: Directorate.php:160
+#: Directorate.php:165
 msgctxt "Label: Featured Image"
 msgid "Committee Badge"
 msgstr ""
 
-#: Directorate.php:161
+#: Directorate.php:166
 msgctxt "Label: `metabox_title`"
 msgid "The Committee"
 msgstr ""
 
-#: Directorate.php:164
+#: Directorate.php:169
 msgctxt "Label: `metabox_title`"
 msgid "In This Committee"
 msgstr ""
 
-#: Directorate.php:167
+#: Directorate.php:172
 msgctxt "Label: `menu_name`"
 msgid "Categories"
 msgstr ""
 
-#: Directorate.php:170
+#: Directorate.php:175
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Directorate.php:173
+#: Directorate.php:178
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Directorate.php:182
+#: Directorate.php:187
 msgctxt "Misc: `column_icon_title`"
 msgid "Committee"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Directorate.php:187
+#: Directorate.php:192
 msgctxt "MetaBox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Directorate.php:197
+#: Directorate.php:202
 msgctxt "Default Term"
 msgid "Working"
 msgstr ""
 
-#: Directorate.php:198
+#: Directorate.php:203
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr ""
 
-#: Directorate.php:199
+#: Directorate.php:204
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr ""
 
-#: Directorate.php:200
+#: Directorate.php:205
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Directorate.php:201
+#: Directorate.php:206
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Directorate.php:227
+#: Directorate.php:232
 msgctxt "Field Title"
 msgid "Directors"
 msgstr ""
 
-#: Directorate.php:228
+#: Directorate.php:233
 msgctxt "Field Description"
 msgid "People Who are Board Members of This Committee"
 msgstr ""
 
-#: Directorate.php:235
+#: Directorate.php:240
 msgctxt "Field Title"
 msgid "Committee Code"
 msgstr ""
 
-#: Directorate.php:236
+#: Directorate.php:241
 msgctxt "Field Description"
 msgid "Unique Committee Code"
 msgstr ""
 
-#: Directorate.php:245
+#: Directorate.php:250
 msgctxt "Field Title"
 msgid "Membership Number"
 msgstr ""
 
-#: Directorate.php:246
+#: Directorate.php:251
 msgctxt "Field Description"
 msgid "Unique Committee Membership Number"
 msgstr ""
 
-#: Directorate.php:690
+#: Directorate.php:699
 msgctxt "Header"
 msgid "Directorate Tools"
 msgstr ""

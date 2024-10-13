@@ -84,3 +84,8 @@ msgstr ""
 msgctxt "Field Title"
 msgid "Due Date"
 msgstr ""
+
+#: Assigned.php:139
+msgctxt "Field Description"
+msgid "Determines the planned date that this assignment is required to be completed."
+msgstr ""

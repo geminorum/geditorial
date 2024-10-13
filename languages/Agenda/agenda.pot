@@ -19,23 +19,23 @@ msgid "Label"
 msgstr ""
 
 #: Agenda.php:81
-msgctxt "Field Label: `date`"
+msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr ""
 
 #: Agenda.php:82
-msgctxt "Field Label: `time`"
-msgid "Time"
+msgctxt "Field Label: `timestart`"
+msgid "Time Start"
 msgstr ""
 
 #: Agenda.php:83
-msgctxt "Field Label: `datestart`"
-msgid "Date Start"
+msgctxt "Field Label: `timeend`"
+msgid "Time End"
 msgstr ""
 
 #: Agenda.php:84
-msgctxt "Field Label: `dateend`"
-msgid "Date End"
+msgctxt "Field Label: `people`"
+msgid "Coordinator"
 msgstr ""
 
 #: Agenda.php:85
@@ -125,18 +125,18 @@ msgid "The Itinerary Table Caption"
 msgstr ""
 
 #. translators: %s: post title
-#: Agenda.php:260
+#: Agenda.php:259
 msgctxt "Page Title"
 msgid "Itinerary Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Agenda.php:262
+#: Agenda.php:261
 msgctxt "Page Title"
 msgid "Itinerary Overview for %s"
 msgstr ""
 
-#: Agenda.php:279
+#: Agenda.php:278
 msgctxt "Default Term: Audit"
 msgid "Empty Itinerary Data"
 msgstr ""

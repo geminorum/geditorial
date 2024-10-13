@@ -77,72 +77,72 @@ msgid "Tries to set the location based on identity data."
 msgstr ""
 
 #. translators: %s: identity code
-#: Iranian.php:323
+#: Iranian.php:324
 msgctxt "Notice"
 msgid "No location data available for %s"
 msgstr ""
 
 #. translators: %s: identity code
-#: Iranian.php:329
+#: Iranian.php:330
 msgctxt "Notice"
 msgid "No city data available for %s"
 msgstr ""
 
 #. translators: %1$s: city data, %2$s: identity code
-#: Iranian.php:335
+#: Iranian.php:336
 msgctxt "Notice"
 msgid "City data is empty for %1$s: %2$s"
 msgstr ""
 
 #. translators: %s: post title
-#: Iranian.php:341
+#: Iranian.php:342
 msgctxt "Notice"
 msgid "There is problem updating location for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: city data, %2$s: identity code, %3$s: post title
-#: Iranian.php:347
+#: Iranian.php:348
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;"
 msgstr ""
 
-#: Iranian.php:363
+#: Iranian.php:364
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr ""
 
-#: Iranian.php:390
+#: Iranian.php:391
 msgctxt "Card Title"
 msgid "Compare Identity to Birth Certificate"
 msgstr ""
 
 #. translators: %s: posttype label
-#: Iranian.php:400
+#: Iranian.php:401
 msgctxt "Button"
 msgid "Compare Identity for %s"
 msgstr ""
 
-#: Iranian.php:402
+#: Iranian.php:403
 msgctxt "Button Description"
 msgid "Tries to un-set the certificate duplicated from identity data."
 msgstr ""
 
 #. translators: %s: post title
-#: Iranian.php:474
-#: Iranian.php:500
+#: Iranian.php:475
+#: Iranian.php:501
 msgctxt "Notice"
 msgid "There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: birth certificate number, %2$s: post title
-#: Iranian.php:480
-#: Iranian.php:506
+#: Iranian.php:481
+#: Iranian.php:507
 msgctxt "Notice"
 msgid "Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: identity code, %2$s: birth certificate number
-#: Iranian.php:494
+#: Iranian.php:495
 msgctxt "Notice"
 msgid "Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent"
 msgstr ""

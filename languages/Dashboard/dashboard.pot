@@ -50,17 +50,17 @@ msgctxt "Setting Button"
 msgid "Dashboard Page"
 msgstr ""
 
-#: Dashboard.php:106
+#: Dashboard.php:107
 msgctxt "Widget Area"
 msgid "Editorial: Dashboard"
 msgstr ""
 
-#: Dashboard.php:107
+#: Dashboard.php:108
 msgctxt "Widget Area"
 msgid "Widgets appear on Front-end Dashboard"
 msgstr ""
 
-#: Dashboard.php:170
+#: Dashboard.php:171
 msgctxt "Page-State"
 msgid "Dashboard"
 msgstr ""

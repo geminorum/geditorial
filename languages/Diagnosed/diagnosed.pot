@@ -50,7 +50,7 @@ msgid "Age"
 msgstr ""
 
 #: Diagnosed.php:125
-msgctxt "Field Label: `date`"
+msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr ""
 
@@ -181,18 +181,18 @@ msgid "Ankle"
 msgstr ""
 
 #. translators: %s: post title
-#: Diagnosed.php:333
+#: Diagnosed.php:334
 msgctxt "Page Title"
 msgid "Medical Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Diagnosed.php:335
+#: Diagnosed.php:336
 msgctxt "Page Title"
 msgid "Medical Overview for %s"
 msgstr ""
 
-#: Diagnosed.php:352
+#: Diagnosed.php:353
 msgctxt "Default Term: Audit"
 msgid "Empty Medical Data"
 msgstr ""

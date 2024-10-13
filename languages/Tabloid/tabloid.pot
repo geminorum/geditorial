@@ -26,7 +26,7 @@ msgstr ""
 
 #: Tabloid.php:49
 #: Tabloid.php:58
-#: Tabloid.php:128
+#: Tabloid.php:132
 msgctxt "Action"
 msgid "Overview"
 msgstr ""

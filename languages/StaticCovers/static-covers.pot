@@ -125,6 +125,7 @@ msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
 #: StaticCovers.php:212
+#: StaticCovers.php:217
 msgctxt "Button Title"
 msgid "Covers for %1$s"
 msgstr ""
@@ -135,7 +136,18 @@ msgctxt "Button Text"
 msgid "%1$s Static Covers of the %2$s"
 msgstr ""
 
-#: StaticCovers.php:218
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: StaticCovers.php:219
+msgctxt "Button Text"
+msgid "%1$s Static Covers"
+msgstr ""
+
+#: StaticCovers.php:223
 msgctxt "Button Title"
 msgid "View full image"
+msgstr ""
+
+#: StaticCovers.php:897
+msgctxt "MetaKey Option Title"
+msgid "Static Cover"
 msgstr ""

@@ -159,32 +159,32 @@ msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Meeted.php:254
+#: Meeted.php:256
 msgctxt "Field Title"
 msgid "Coordinators"
 msgstr ""
 
-#: Meeted.php:255
+#: Meeted.php:257
 msgctxt "Field Description"
 msgid "People Who Participate as Coordinators in This Meeting"
 msgstr ""
 
-#: Meeted.php:262
+#: Meeted.php:264
 msgctxt "Field Title"
 msgid "Meeting Code"
 msgstr ""
 
-#: Meeted.php:263
+#: Meeted.php:265
 msgctxt "Field Description"
 msgid "Unique Meeting Code"
 msgstr ""
 
-#: Meeted.php:599
+#: Meeted.php:604
 msgctxt "Header"
 msgid "Meeting Tools"
 msgstr ""
 
-#: Meeted.php:608
+#: Meeted.php:613
 msgctxt "Card"
 msgid "Meeting Date from Meta-data"
 msgstr ""

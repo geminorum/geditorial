@@ -13,245 +13,255 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Phonebook\n"
 "X-Domain: geditorial-phonebook\n"
 
-#: Phonebook.php:53
+#: Phonebook.php:55
 msgctxt "Setting Description"
 msgid "Roles that can view contact information."
 msgstr ""
 
-#: Phonebook.php:54
+#: Phonebook.php:56
 msgctxt "Setting Description"
 msgid "Roles that can assign contact information."
 msgstr ""
 
-#: Phonebook.php:84
+#: Phonebook.php:86
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr ""
 
-#: Phonebook.php:85
+#: Phonebook.php:87
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr ""
 
-#: Phonebook.php:86
+#: Phonebook.php:88
 msgctxt "Field Label: `fullname`"
 msgid "Fullname"
 msgstr ""
 
-#: Phonebook.php:87
+#: Phonebook.php:89
 msgctxt "Field Label: `relation`"
 msgid "Relation"
 msgstr ""
 
-#: Phonebook.php:88
+#: Phonebook.php:90
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr ""
 
-#: Phonebook.php:89
+#: Phonebook.php:91
 msgctxt "Field Label: `address`"
 msgid "Address"
 msgstr ""
 
-#: Phonebook.php:95
+#: Phonebook.php:97
 msgctxt "Notice"
 msgid "There is no contact information available!"
 msgstr ""
 
-#: Phonebook.php:96
+#: Phonebook.php:98
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the contact data."
 msgstr ""
 
-#: Phonebook.php:103
+#: Phonebook.php:105
 msgctxt "MetaBox Title"
 msgid "Contacts"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Phonebook.php:107
+#: Phonebook.php:109
 msgctxt "Button Title"
 msgid "Contacts of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Phonebook.php:109
+#: Phonebook.php:111
 msgctxt "Button Text"
 msgid "%1$s Manage the Contacts of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Phonebook.php:112
+#: Phonebook.php:114
 msgctxt "Action Title"
 msgid "Contacts of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Phonebook.php:114
+#: Phonebook.php:116
 msgctxt "Action Text"
 msgid "Contacts"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Phonebook.php:117
+#: Phonebook.php:119
 msgctxt "Row Title"
 msgid "Contacts of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Phonebook.php:119
+#: Phonebook.php:121
 msgctxt "Row Text"
 msgid "Contacts"
 msgstr ""
 
-#: Phonebook.php:131
+#: Phonebook.php:133
 msgctxt "Field Title"
 msgid "Mobile Number"
 msgstr ""
 
-#: Phonebook.php:132
+#: Phonebook.php:134
 msgctxt "Field Description"
 msgid "Primary Mobile Contact Number of the Person"
 msgstr ""
 
-#: Phonebook.php:138
+#: Phonebook.php:140
 msgctxt "Field Title"
 msgid "Secondary Mobile"
 msgstr ""
 
-#: Phonebook.php:139
+#: Phonebook.php:141
 msgctxt "Field Description"
 msgid "Secondary Mobile Contact Number of the Person"
 msgstr ""
 
-#: Phonebook.php:144
+#: Phonebook.php:146
 msgctxt "Field Title"
 msgid "Phone Number"
 msgstr ""
 
-#: Phonebook.php:145
+#: Phonebook.php:147
 msgctxt "Field Description"
 msgid "Primary Phone Contact Number of the Person"
 msgstr ""
 
-#: Phonebook.php:150
+#: Phonebook.php:152
 msgctxt "Field Title"
 msgid "Secondary Phone"
 msgstr ""
 
-#: Phonebook.php:151
+#: Phonebook.php:153
 msgctxt "Field Description"
 msgid "Secondary Phone Contact Number of the Person"
 msgstr ""
 
-#: Phonebook.php:156
+#: Phonebook.php:158
 msgctxt "Field Title"
 msgid "Postal Address"
 msgstr ""
 
-#: Phonebook.php:157
+#: Phonebook.php:159
 msgctxt "Field Description"
 msgid "Full Postal Address about the Content, including city, state etc."
 msgstr ""
 
-#: Phonebook.php:162
+#: Phonebook.php:164
 msgctxt "Field Title"
 msgid "Postal Code"
 msgstr ""
 
-#: Phonebook.php:163
+#: Phonebook.php:165
 msgctxt "Field Description"
 msgid "Postal Code about the Content."
 msgstr ""
 
-#: Phonebook.php:168
+#: Phonebook.php:170
 msgctxt "Field Title"
 msgid "Home Address"
 msgstr ""
 
-#: Phonebook.php:169
+#: Phonebook.php:171
 msgctxt "Field Description"
 msgid "Full home address, including city, state etc."
 msgstr ""
 
-#: Phonebook.php:174
+#: Phonebook.php:176
 msgctxt "Field Title"
 msgid "Work Address"
 msgstr ""
 
-#: Phonebook.php:175
+#: Phonebook.php:177
 msgctxt "Field Description"
 msgid "Full work address, including city, state etc."
 msgstr ""
 
-#: Phonebook.php:180
+#: Phonebook.php:182
+msgctxt "Field Title"
+msgid "Parent's Address"
+msgstr ""
+
+#: Phonebook.php:183
+msgctxt "Field Description"
+msgid "Full family address, including city, state etc."
+msgstr ""
+
+#: Phonebook.php:188
 msgctxt "Field Title"
 msgid "Emergency Contact"
 msgstr ""
 
-#: Phonebook.php:181
+#: Phonebook.php:189
 msgctxt "Field Description"
 msgid "Mobile Contact Number of the Person Who Will Be Contacted on Emergency"
 msgstr ""
 
-#: Phonebook.php:186
+#: Phonebook.php:194
 msgctxt "Field Title"
 msgid "Emergency Person"
 msgstr ""
 
-#: Phonebook.php:187
+#: Phonebook.php:195
 msgctxt "Field Description"
 msgid "Full Name of the Person Who Will Be Contacted on Emergency"
 msgstr ""
 
-#: Phonebook.php:192
+#: Phonebook.php:200
 msgctxt "Field Title"
 msgid "Emergency Address"
 msgstr ""
 
-#: Phonebook.php:193
+#: Phonebook.php:201
 msgctxt "Field Description"
 msgid "Full address to Be reached on Emergency"
 msgstr ""
 
 #. translators: %s: post title
-#: Phonebook.php:328
+#: Phonebook.php:329
 msgctxt "Page Title"
 msgid "Contact Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Phonebook.php:330
+#: Phonebook.php:331
 msgctxt "Page Title"
 msgid "Contacts Overview for %s"
 msgstr ""
 
-#: Phonebook.php:347
+#: Phonebook.php:348
 msgctxt "Default Term: Audit"
 msgid "Empty Contact Data"
 msgstr ""
 
-#: Phonebook.php:348
+#: Phonebook.php:349
 msgctxt "Default Term: Audit"
 msgid "Empty Mobile Number"
 msgstr ""
 
-#: Phonebook.php:512
+#: Phonebook.php:513
 msgctxt "Possible Phone Key"
 msgid "Mobile"
 msgstr ""
 
-#: Phonebook.php:513
+#: Phonebook.php:514
 msgctxt "Possible Phone Key"
 msgid "Mobile Phone"
 msgstr ""
 
-#: Phonebook.php:514
+#: Phonebook.php:515
 msgctxt "Possible Phone Key"
 msgid "Phone"
 msgstr ""
 
-#: Phonebook.php:515
+#: Phonebook.php:516
 msgctxt "Possible Phone Key"
 msgid "Phone Number"
 msgstr ""

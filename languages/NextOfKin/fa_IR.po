@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial NextOfKin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-10 05:36+0330\n"
+"PO-Revision-Date: 2024-09-09 03:36+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/NextOfKin\n"
 "X-Domain: geditorial-next-of-kin\n"
 
@@ -172,19 +172,24 @@ msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "10"
 msgstr "5"
 
+#: NextOfKin.php:317
+msgctxt "Dashboard Widget Title"
+msgid "Marital Status Summary"
+msgstr "گزارش وضعیت تأهل"
+
 #. translators: %s: post title
-#: NextOfKin.php:339
+#: NextOfKin.php:347
 msgctxt "Page Title"
 msgid "Family Grid for %s"
 msgstr "شبکه خانوادگی برای %s"
 
 #. translators: %s: post title
-#: NextOfKin.php:341
+#: NextOfKin.php:349
 msgctxt "Page Title"
 msgid "Family Overview for %s"
 msgstr "بررسی خانواده %s"
 
-#: NextOfKin.php:365
+#: NextOfKin.php:373
 msgctxt "Default Term: Audit"
 msgid "Empty Family Data"
 msgstr "داده‌های خانواده خالی"

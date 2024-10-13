@@ -13,33 +13,33 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Remoted\n"
 "X-Domain: geditorial-remoted\n"
 
-#: Remoted.php:39
+#: Remoted.php:40
 msgctxt "Setting Title"
 msgid "Remote Base"
 msgstr ""
 
-#: Remoted.php:40
-#: Remoted.php:46
+#: Remoted.php:41
+#: Remoted.php:47
 msgctxt "Setting Description"
 msgid "Full URL into the remote base for receiving uploads."
 msgstr ""
 
-#: Remoted.php:45
+#: Remoted.php:46
 msgctxt "Setting Title"
 msgid "Remote Hash"
 msgstr ""
 
-#: Remoted.php:63
+#: Remoted.php:66
 msgctxt "Dashboard Widget Title"
 msgid "Remote Uploads"
 msgstr ""
 
-#: Remoted.php:79
+#: Remoted.php:89
 msgctxt "Button"
 msgid "Upload Files"
 msgstr ""
 
-#: Remoted.php:82
+#: Remoted.php:92
 msgctxt "Notice"
 msgid "Your browser does not support HTML5 upload."
 msgstr ""

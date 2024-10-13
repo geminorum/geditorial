@@ -154,32 +154,32 @@ msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Programmed.php:253
+#: Programmed.php:255
 msgctxt "Field Title"
 msgid "Organizers"
 msgstr ""
 
-#: Programmed.php:254
+#: Programmed.php:256
 msgctxt "Field Description"
 msgid "People Who Participate as Organizers in This Program"
 msgstr ""
 
-#: Programmed.php:261
+#: Programmed.php:263
 msgctxt "Field Title"
 msgid "Program Code"
 msgstr ""
 
-#: Programmed.php:262
+#: Programmed.php:264
 msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr ""
 
-#: Programmed.php:598
+#: Programmed.php:603
 msgctxt "Header"
 msgid "Program Tools"
 msgstr ""
 
-#: Programmed.php:607
+#: Programmed.php:612
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr ""

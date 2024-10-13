@@ -74,7 +74,7 @@ msgid "Selected statuses will lock editing the post to their assigned roles."
 msgstr ""
 
 #: Workflow.php:70
-#: Workflow.php:532
+#: Workflow.php:529
 msgctxt "Message"
 msgid "There are no statuses available!"
 msgstr ""
