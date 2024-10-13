@@ -116,6 +116,7 @@ $brand-danger:  #d9534f !default;
 
     &.field-datestart,
     &.field-dateend,
+    &.field-distance,
     &.field-duration,
     &.field-platenumber,
     &.field-phone,
@@ -144,6 +145,8 @@ $brand-danger:  #d9534f !default;
     }
 
     &.field-time,
+    &.field-timestart,
+    &.field-timeend,
     &.field-date,
     &.field-dob {
       width: 80px;

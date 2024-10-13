@@ -3,7 +3,6 @@
 </template>
 
 <style lang="scss">
-
 $brand-success: #5cb85c !default;
 $brand-info:    #5bc0de !default;
 $brand-warning: #f0ad4e !default;

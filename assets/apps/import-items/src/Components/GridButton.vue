@@ -1,7 +1,5 @@
 <template>
-  <button class="grid-button" v-prevent-enter-tab>
-    <span class="dashicons" :class="classObject"></span>
-  </button>
+  <button class="grid-button" :class="class" v-prevent-enter-tab><span class="dashicons" :class="classObject"></span></button>
 </template>
 
 <style lang="scss">
@@ -38,7 +36,7 @@ $brand-danger: #d9534f !default;
 
 <script>
 export default {
-  props: ['dashicon'],
+  props: ['dashicon', 'class'],
   computed: {
     classObject() {
       // return 'dashicons-' + this.$attrs.dashicon;

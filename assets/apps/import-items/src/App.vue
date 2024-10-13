@@ -151,7 +151,7 @@ import {
 
 export default {
   mixins: [EnterToTabMixin],
-  inject: ['endpoint', 'config', 'fields', 'i18n', 'locale'],
+  inject: ['endpoint', 'linked', 'config', 'fields', 'i18n', 'locale'],
   data () {
     return {
       spinner: true,
@@ -657,6 +657,8 @@ export default {
         }).then((data) => {
           this.items = data;
           this.searchSpinner = false;
+          this.state = 'initial';
+          this.message = '';
           this.already = map(data, 'id');
           // this.discovered = []; // refkey messed up!
         }).catch((error) => {
