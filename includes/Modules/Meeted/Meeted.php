@@ -393,6 +393,7 @@ class Meeted extends gEditorial\Module
 		else
 			$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_supported' );
 
+		$this->hook_paired_static_covers_secondaries();
 		$this->hook_paired_tabloid_exclude_rendered();
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );

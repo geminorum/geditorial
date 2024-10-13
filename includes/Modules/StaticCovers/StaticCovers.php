@@ -212,6 +212,11 @@ class StaticCovers extends gEditorial\Module
 			'mainbutton_title' => _x( 'Covers for %1$s', 'Button Title', 'geditorial-static-covers' ),
 			/* translators: %1$s: icon markup, %2$s: posttype singular name */
 			'mainbutton_text'  => _x( '%1$s Static Covers of the %2$s', 'Button Text', 'geditorial-static-covers' ),
+
+			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			'headerbutton_title' => _x( 'Covers for %1$s', 'Button Title', 'geditorial-static-covers' ),
+			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			'headerbutton_text'  => _x( '%1$s Static Covers', 'Button Text', 'geditorial-static-covers' ),
 		];
 
 		$strings['i18n']['post'] = [
@@ -271,6 +276,7 @@ class StaticCovers extends gEditorial\Module
 
 				if ( 'post' == $screen->base ) {
 
+					$this->_register_headerbuttons_for_post( $screen->post_type );
 					$this->_hook_general_supportedbox( $screen, NULL, 'side', 'high' );
 					Scripts::enqueueThickBox();
 					Scripts::enqueueColorBox();
@@ -279,13 +285,22 @@ class StaticCovers extends gEditorial\Module
 
 					$this->filter_module( 'tweaks', 'column_thumb', 3, 9 );
 				}
+
+			} else if ( 'post' == $screen->base
+				&& $this->filters( 'post_supported_secondary', NULL, WordPress\Post::get() ) ) {
+
+				$this->_register_headerbuttons_for_post_secondary( $screen->post_type );
 			}
 
 		} else if ( in_array( $screen->base, [ 'edit-tags', 'term' ], TRUE ) ) {
 
+			// TODO: `$this->_register_headerbuttons_for_term_secondary( $screen->taxonomy );`
+
 			if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
 				if ( 'term' == $screen->base ) {
+
+					$this->_register_headerbuttons_for_term( $screen->taxonomy );
 					$this->_hook_term_supportedbox( $screen, NULL, 'side', 'high' );
 				}
 			}
@@ -294,16 +309,23 @@ class StaticCovers extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		if ( $this->role_can( 'reports' ) )
+		if ( $this->role_can( 'reports' ) ) {
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
+			$this->_hook_submenu_adminpage( 'secondary', 'exist' );
+		}
 	}
 
-	public function render_submenu_adminpage()
+	public function render_overview_adminpage()
 	{
 		$this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	protected function render_overview_content()
+	public function render_secondary_adminpage()
+	{
+		$this->render_default_mainpage( 'secondary', 'update' );
+	}
+
+	protected function render_mainpage_content( $sub, $uri, $context, $subs )
 	{
 		if ( 'term' == self::req( 'target', 'post' ) ) {
 
@@ -313,7 +335,7 @@ class StaticCovers extends gEditorial\Module
 			if ( ! $term = WordPress\Term::get( $linked ) )
 				return Info::renderNoTermsAvailable();
 
-			$this->_render_view_for_term( $term, 'overview' );
+			$this->_render_view_for_term( $term, $context );
 
 		} else {
 
@@ -323,7 +345,7 @@ class StaticCovers extends gEditorial\Module
 			if ( ! $post = WordPress\Post::get( $linked ) )
 				return Info::renderNoPostsAvailable();
 
-			$this->_render_view_for_post( $post, 'overview' );
+			$this->_render_view_for_post( $post, $context );
 		}
 	}
 
@@ -394,12 +416,30 @@ class StaticCovers extends gEditorial\Module
 		if ( empty( $data['excerpt']['raw'] ) )
 			$data['excerpt']['rendered'] = '';
 
-		foreach ( (array) $this->_get_posttype_images( $post ) as $image )
-			$data['covers'][] = [
-				'url'      => $image,
-				'filename' => Core\File::filename( $image ),
-				'headers'  => @get_headers( $image, TRUE ),
-			];
+		switch ( $context ) {
+
+			case 'secondary':
+
+				foreach ( $this->filters( 'post_supported_secondary_posts', [], $post ) as $secondary )
+					if ( $src = $this->_get_posttype_image( $secondary ) )
+						$data['covers'][] = [
+							'url'       => $src,
+							'posttitle' => WordPress\Post::title( $secondary ),
+							'postlink'  => WordPress\Post::overview( $secondary ),
+						];
+
+				break;
+
+			case 'overview':
+			default:
+
+				foreach ( (array) $this->_get_posttype_images( $post ) as $image )
+					$data['covers'][] = [
+						'url'      => $image,
+						'filename' => Core\File::filename( $image ),
+						'headers'  => @get_headers( $image, TRUE ),
+					];
+		}
 
 		$data['i18n']        = $this->get_strings( 'post', 'i18n' );
 		$data['__direction'] = Core\HTML::rtl() ? 'rtl' : 'ltr';
@@ -440,41 +480,22 @@ class StaticCovers extends gEditorial\Module
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		$can = $this->role_can( 'reports' );
-		$src = $title = $link = FALSE;
+		$src = $title = FALSE;
 
 		if ( 'post' === $screen->base ) {
 
 			$src   = $this->_get_posttype_image( $object );
 			$title = WordPress\Post::title( $object );
 
-			if ( $can && $this->get_setting( $object->post_type.'_posttype_counter_support' ) )
-				$link = $this->framepage_get_mainlink_for_post( $object, [
-					'target'       => 'post',
-					'context'      => 'mainbutton',
-					'link_context' => 'overview',
-					'maxwidth'     => '920px',
-				] );
-
-
 		} else if ( 'term' === $screen->base ) {
 
 			$src   = $this->_get_taxonomy_image( $object );
 			$title = WordPress\Term::title( $object );
-
-			if ( $can && $this->get_setting( $object->taxonomy.'_taxonomy_counter_support' ) )
-				$link = $this->framepage_get_mainlink_for_term( $object, [
-					'target'       => 'term',
-					'context'      => 'mainbutton',
-					'link_context' => 'overview',
-					'maxwidth'     => '920px',
-				] );
 		}
 
 		if ( $src ) {
 
 			echo Core\HTML::wrap( $this->_get_html_image( $src, $title ), 'field-wrap -image' );
-			echo Core\HTML::wrap( $link, 'field-wrap -buttons' );
 
 		} else {
 
@@ -1028,5 +1049,81 @@ class StaticCovers extends gEditorial\Module
 		}
 
 		return ShortCode::wrap( $html, $this->constant( 'term_cover_shortcode' ), $args );
+	}
+
+	private function _register_headerbuttons_for_post_secondary( $posttype, $post = NULL, $handle = NULL )
+	{
+
+		if ( ! $this->role_can( 'reports' ) )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		$link = $this->framepage_get_mainlink_for_post( $post, [
+			'target'       => 'post',
+			'context'      => 'headerbutton',
+			'link_context' => 'secondary',
+			'maxwidth'     => '920px',
+			'extra'        => 'page-title-action button -button -header-button -button-icon',
+		] );
+
+		if ( ! $link )
+			return FALSE;
+
+		return Services\HeaderButtons::register( $handle ?? $this->key, [
+			'html'     => $link,
+			'priority' => -9,
+		] );
+	}
+
+	private function _register_headerbuttons_for_post( $posttype, $post = NULL, $handle = NULL )
+	{
+		if ( ! $this->get_setting( $posttype.'_posttype_counter_support' ) )
+			return FALSE;
+
+		if ( ! $this->role_can( 'reports' ) )
+			return FALSE;
+
+		$link = $this->framepage_get_mainlink_for_post( $post, [
+			'target'       => 'post',
+			'context'      => 'headerbutton',
+			'link_context' => 'overview',
+			'maxwidth'     => '920px',
+			'extra'        => 'page-title-action button -button -header-button -button-icon',
+		] );
+
+		if ( ! $link )
+			return FALSE;
+
+		return Services\HeaderButtons::register( $handle ?? $this->key, [
+			'html'     => $link,
+			'priority' => -9,
+		] );
+	}
+
+	private function _register_headerbuttons_for_term( $taxonomy, $term = NULL, $handle = NULL )
+	{
+		if ( ! $this->get_setting( $taxonomy.'_taxonomy_counter_support' ) )
+			return FALSE;
+
+		if ( ! $this->role_can( 'reports' ) )
+			return FALSE;
+
+		$link = $this->framepage_get_mainlink_for_term( $term, [
+			'target'       => 'term',
+			'context'      => 'headerbutton',
+			'link_context' => 'overview',
+			'maxwidth'     => '920px',
+			'extra'        => 'page-title-action button -button -header-button -button-icon',
+		] );
+
+		if ( ! $link )
+			return FALSE;
+
+		return Services\HeaderButtons::register( $handle ?? $this->key, [
+			'html'     => $link,
+			'priority' => -9,
+		] );
 	}
 }

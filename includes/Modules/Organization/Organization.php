@@ -349,6 +349,7 @@ class Organization extends gEditorial\Module
 			'status_taxonomy' => TRUE,
 		] );
 
+		$this->hook_paired_static_covers_secondaries();
 		$this->hook_paired_tabloid_exclude_rendered();
 		$this->hook_paired_tabloid_post_summaries_by_paired();
 		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );

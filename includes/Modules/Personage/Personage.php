@@ -912,6 +912,7 @@ class Personage extends gEditorial\Module
 			'columns',
 			'pointers',
 			'overview',
+			'staticcovers',
 			'counts',
 		], TRUE ) )
 			return $args;

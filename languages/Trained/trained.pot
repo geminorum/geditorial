@@ -199,12 +199,12 @@ msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr ""
 
-#: Trained.php:610
+#: Trained.php:611
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr ""
 
-#: Trained.php:619
+#: Trained.php:620
 msgctxt "Card"
 msgid "Training Course Date from Meta-data"
 msgstr ""
