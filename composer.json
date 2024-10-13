@@ -22,7 +22,7 @@
   },
   "require": {
     "php": ">=7.4",
-    "composer/installers": "^1.12",
+    "composer/installers": "^1.0 || ^2.0",
     "mustache/mustache": "^2.14.2",
     "kzykhys/php-csv-parser": "^1.4.1",
     "michelf/php-markdown": "^2.0.0",

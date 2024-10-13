@@ -82,6 +82,9 @@
     "tinypng": ""
   },
   "sass": {
+    "silenceDeprecations": [
+      "legacy-js-api"
+    ],
     "sourceComments": true,
     "errLogToConsole": true,
     "includePaths": [
@@ -292,6 +295,24 @@
         "moduleTitle": "Tax Module",
         "moduleCamelCase": "TaxModule",
         "moduleUnderline": "tax_module",
+        "moduleTagline": "[CHANGE ME]",
+        "moduleDashicon": "smiley"
+      }
+    },
+    "scModule" : {
+      "src": "./assets/dev/templates/scModule.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-sc-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "SubContent Module",
+        "moduleCamelCase": "SubContentModule",
+        "moduleUnderline": "sc_module",
         "moduleTagline": "[CHANGE ME]",
         "moduleDashicon": "smiley"
       }
