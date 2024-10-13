@@ -23,11 +23,11 @@ html {
 
 body {
   // min-height: calc( 100% !important;
-  min-height: calc( 100% - ( #{$spacer} * 2 ) ) !important;
+  min-height: calc( 100% - #{($spacer * 2)} ) !important;
   margin: $spacer;
   // @include theme-box-sizing-reset;
 
-  font-family: "Vazirmatn", "Tahoma", "Iranian Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  /*rtl:raw:
+  font-family: Vazirmatn,Tahoma,Iranian Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  */
 }
-
-

@@ -1,15 +1,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// Module: Dead Drops: Admin iFrame
+/// gEditorial Partials: SignalFrame: Mixins: Admin
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-body.admin_page_geditorial-dead-drops-signal {
+
+@mixin plugin-signalframe-body() {
   background-color: #fff; // to match the qr-code background;
 }
 
-.wrap.geditorial-signal-dead_drops {
+@mixin plugin-signalframe-wrap() {
   padding-top: $spacer;
 
   .-view.-signal {
@@ -21,8 +22,6 @@ body.admin_page_geditorial-dead-drops-signal {
       > div {
         width: 50%;
       }
-
-
     }
 
     .-second-row {
@@ -44,9 +43,9 @@ body.admin_page_geditorial-dead-drops-signal {
   .-qrcode-deaddrop {
     text-align: center;
 
-    svg {
-      // max-height: 55vh;
-    }
+    // svg {
+    //   // max-height: 55vh;
+    // }
   }
 
   .-input-deaddrop {

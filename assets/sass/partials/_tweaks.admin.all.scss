@@ -83,17 +83,25 @@
 }
 
 @media screen and ( max-width: 782px ) {
-  .wp-list-table tr {
+  .wp-list-table {
 
-    // columns before primary column must be hidden
-    .column-geditorial-tweaks-order,
-    .column-geditorial-tweaks-thumb {
-      display: none !important;
+    tr {
+      // columns before primary column must be hidden
+      .column-geditorial-tweaks-order,
+      .column-geditorial-tweaks-thumb {
+        display: none !important;
+      }
+
+      .column-geditorial-tweaks-id,
+      .column-geditorial-tweaks-thumb {
+        text-align: inherit !important;
+      }
     }
 
-    .column-geditorial-tweaks-id,
-    .column-geditorial-tweaks-thumb {
-      text-align: inherit !important;
+    tr:not(.inline-edit-row):not(.no-items) {
+      td.column-primary ~ td:not(.check-column) {
+        padding: 3px 8px 3px 20% !important;
+      }
     }
   }
 }
