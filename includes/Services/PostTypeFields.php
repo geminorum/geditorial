@@ -172,6 +172,7 @@ class PostTypeFields extends WordPress\Main
 			case 'highlight'  : return 'pressthis';
 			case 'byline'     : return 'admin-users';
 			case 'published'  : return 'calendar-alt';
+			case 'released'   : return 'calendar-alt';
 			case 'lead'       : return 'editor-paragraph';
 			case 'label'      : return 'megaphone';
 			case 'notes'      : return 'text-page';

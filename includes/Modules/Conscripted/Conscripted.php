@@ -14,6 +14,7 @@ class Conscripted extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\CoreRowActions;
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
@@ -146,7 +147,7 @@ class Conscripted extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->filter_string( 'parent_file', 'users.php' );
 			$this->modulelinks__register_headerbuttons();
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
@@ -154,8 +155,10 @@ class Conscripted extends gEditorial\Module
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) ) {
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+					$this->rowactions__hook_force_default_term( $screen, 'main_taxonomy', TRUE );
+				}
 
 			} else if ( 'post' === $screen->base ) {
 
@@ -170,7 +173,7 @@ class Conscripted extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
+		$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
 	}
 
 	public function dashboard_widgets()

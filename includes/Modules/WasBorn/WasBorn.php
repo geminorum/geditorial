@@ -728,7 +728,7 @@ class WasBorn extends gEditorial\Module
 		$extra    = []; // TODO: make sure the terms are in order
 
 		if ( ! $terms = WordPress\Taxonomy::listTerms( $taxonomy, 'all', $extra ) )
-			return [];
+			return []; // FIXME: return notice of empty age groups
 
 		$object    = WordPress\Taxonomy::object( $taxonomy );
 		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;

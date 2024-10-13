@@ -104,7 +104,7 @@ class Tabloid extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				if ( $this->role_can( 'overview' )
-					&& ( $html = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action' ) ) ) {
+					&& ( $html = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action button -button -header-button' ) ) ) {
 
 					Services\HeaderButtons::register( $this->key, [
 						'html'     => $html,

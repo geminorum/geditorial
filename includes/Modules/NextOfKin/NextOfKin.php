@@ -257,7 +257,7 @@ class NextOfKin extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->filter_string( 'parent_file', 'users.php' );
 			$this->modulelinks__register_headerbuttons();
 
 		} else if ( in_array( $screen->base, [ 'edit', 'post' ], TRUE ) ) {
@@ -266,8 +266,10 @@ class NextOfKin extends gEditorial\Module
 
 				if ( 'edit' === $screen->base ) {
 
-					if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+					if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) ) {
 						$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 90 );
+						$this->rowactions__hook_force_default_term( $screen, 'main_taxonomy', TRUE );
+					}
 
 				} else if ( 'post' === $screen->base ) {
 
@@ -329,7 +331,7 @@ class NextOfKin extends gEditorial\Module
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
 			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
 
-		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
+		$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
 	}
 
 	public function load_framepage_adminpage( $context = 'framepage' )

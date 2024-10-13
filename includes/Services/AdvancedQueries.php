@@ -2,9 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
-class AdvancedQueries extends Main
+class AdvancedQueries extends WordPress\Main
 {
 
 	// TODO: support pipe (|) as `or` operator in search criteria in admin/front
