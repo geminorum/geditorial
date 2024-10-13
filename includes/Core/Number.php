@@ -85,6 +85,7 @@ class Number extends Base
 	 *
 	 * @link https://en.wikipedia.org/wiki/Ordinal_numeral
 	 * @link https://en.wikipedia.org/wiki/Numeral_prefix
+	 * @link https://en.wiktionary.org/wiki/Appendix:English_numerals
 	 *
 	 * @param  int|string  $number
 	 * @param  null|string $locale

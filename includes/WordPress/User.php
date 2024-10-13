@@ -20,6 +20,9 @@ class User extends Core\Base
 
 	public static function user( $field, $key = FALSE )
 	{
+		if ( ! $field )
+			return FALSE;
+
 		if ( $field instanceof \WP_User )
 			$user = $field;
 

@@ -255,6 +255,39 @@ class Term extends Core\Base
 	}
 
 	/**
+	 * Retrieves a contextual summary given a term ID or term object.
+	 *
+	 * @param  null|int|object $term
+	 * @param  null|string     $context
+	 * @return false|array     $summary
+	 */
+	public static function summary( $term, $context = NULL )
+	{
+		if ( ! $term = self::get( $term ) )
+			return FALSE;
+
+		$taxonomy  = Taxonomy::object( $term );
+		$timestamp = strtotime( get_term_meta( $term->term_id, 'datetime', TRUE ) );
+
+		return [
+			'_id'         => $term->term_id,
+			'_type'       => $term->taxonomy,
+			'_rest'       => Taxonomy::getRestRoute( $taxonomy ),
+			'_base'       => $taxonomy->rest_base,
+			'type'        => $taxonomy->label,
+			'viewable'    => Taxonomy::viewable( $term->taxonomy ),
+			'author'      => User::getTitleRow( get_term_meta( $term->term_id, 'author', TRUE ) ),
+			'title'       => self::title( $term ),
+			'link'        => self::link( $term, FALSE ),
+			'date'        => wp_date( get_option( 'date_format' ), $timestamp ),
+			'time'        => wp_date( get_option( 'time_format' ), $timestamp ),
+			'ago'         => $timestamp ? human_time_diff( $timestamp ) : FALSE,
+			'image'       => self::image( $term, $context ),
+			'description' => wpautop( apply_filters( 'html_format_i18n', $term->description ) ),
+		];
+	}
+
+	/**
 	 * Checks if a term exists and return term id only.
 	 *
 	 * @source `term_exists()`
@@ -426,5 +459,33 @@ class Term extends Core\Base
 			return FALSE;
 
 		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $term->_term_id );
+	}
+
+	public static function image( $term, $context = NULL, $size = NULL, $thumbnail_id = NULL )
+	{
+		if ( ! $term = self::get( $term ) )
+			return FALSE;
+
+		$filtered = apply_filters( 'geditorial_term_image_pre_src', NULL, $term, $context, $size, $thumbnail_id );
+
+		if ( ! is_null( $filtered ) )
+			return $filtered;
+
+		if ( is_null( $thumbnail_id ) )
+			$thumbnail_id = Taxonomy::getThumbnailID( $term->term_id );
+
+		if ( ! $thumbnail_id )
+			return FALSE;
+
+		if ( is_null( $size ) )
+			$size = Media::getAttachmentImageDefaultSize( NULL, $term->taxonomy );
+
+		if ( ! $image = image_downsize( $thumbnail_id, $size ) )
+			return FALSE;
+
+		if ( isset( $image[0] ) )
+			return $image[0];
+
+		return FALSE;
 	}
 }

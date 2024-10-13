@@ -14,23 +14,22 @@ class ISBN extends Base
 
 	public static function prep( $input, $wrap = FALSE )
 	{
-		$string = Number::translate( $input );
-
-		if ( self::validate( $string ) ) {
-			$string = self::sanitize( $string, FALSE );
-			return $wrap ? '<span class="isbn -valid">&#8206;'.$string.'&#8207;<span>' : $string;
-		}
-
 		// NOTE: returns the original if not valid
-		return $wrap ? '<span class="isbn -not-valid">&#8206;'.$input.'&#8207;<span>' : $input;
+		if ( ! self::validate( $input ) )
+			return $wrap
+				? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-not-valid' ] ], HTML::wrapLTR( $input ) )
+				: $input;
+
+		return $wrap
+			? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-valid' ] ], HTML::wrapLTR( self::sanitize( $input ) ) )
+			: self::sanitize( $input );
 	}
 
-	public static function sanitize( $string, $translate = TRUE )
+	public static function sanitize( $input )
 	{
-		if ( $translate )
-			$string = Number::translate( $string );
+		$sanitized = Number::translate( Text::trim( $input ) );
 
-		return trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $string ) );
+		return Text::trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $sanitized ) );
 	}
 
 	// Finding ISBNs
@@ -46,11 +45,12 @@ class ISBN extends Base
 		ISBN::validate( '9791090636071' ) );          // return 2
 		ISBN::validate( 'ISBN:97811' ) );             // return FALSE
 	*/
-	public static function validate( $string )
+	public static function validate( $input )
 	{
+		$data    = Number::translate( $input );
 		$pattern = '/\b(?:ISBN(?:: ?| ))?((?:97[89])?\d{9}[\dx])\b/i';
 
-		if ( preg_match( $pattern, str_replace( '-', '', $string ), $matches ) )
+		if ( preg_match( $pattern, str_replace( '-', '', $data ), $matches ) )
 			return ( 10 === strlen( $matches[1] ) )
 				? self::isValidISBN10( $matches[1] )  // ISBN-10
 				: self::isValidISBN13( $matches[1] ); // ISBN-13

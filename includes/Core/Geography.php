@@ -41,23 +41,36 @@ class Geography extends Base
 
 	public static function prepLatLng( $input, $wrap = FALSE )
 	{
-		$string = Number::translate( $input );
-
-		if ( self::validateLatLng( $string ) ) {
-			$string = self::sanitizeLatLng( $string );
-			return $wrap ? '<span class="latlng -valid">&#8206;'.$string.'&#8207;<span>' : $string;
-		}
-
 		// NOTE: returns the original if not valid
-		return $wrap ? '<span class="latlng -not-valid">&#8206;'.$input.'&#8207;<span>' : $input;
+		if ( ! self::validateLatLng( $input ) )
+			return $wrap
+				? HTML::tag( 'span', [ 'class' => [ 'latlng', '-is-not-valid' ] ], HTML::wrapLTR( $input ) )
+				: $input;
+
+		return $wrap
+			? HTML::tag( 'span', [ 'class' => [ 'latlng', '-is-valid' ] ], HTML::wrapLTR( self::sanitizeLatLng( $input ) ) )
+			: self::sanitizeLatLng( $input );
 	}
 
-	public static function sanitizeLatLng( $string, $translate = FALSE )
+	public static function sanitizeLatLng( $input )
 	{
-		if ( $translate )
-			$string = Number::translate( $string );
+		$sanitized = Number::translate( Text::trim( $input ) );
 
-		return trim( str_ireplace( [ '-', ':', ' ' ], '', $string ) );
+		// extracts latlng from google map url
+		if ( URL::isValid( $sanitized ) ) {
+
+			$url = URL::parseDeep( $sanitized );
+
+			if ( isset( $url['query']['q'] ) )
+				return $url['query']['q'];
+
+			if ( isset( $url['query']['ll'] ) )
+				return $url['query']['ll'];
+
+			return '';
+		}
+
+		return Text::trim( str_ireplace( [ '-', ':', ' ' ], '', $sanitized ) );
 	}
 
 	public static function validateLatLng( $string )
@@ -142,25 +155,22 @@ class Geography extends Base
     }
 
 	// @REF: https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
-	public static function haversine($lat1, $lon1, $lat2, $lon2)
+	// @REF: https://stackoverflow.com/a/46218890
+	// @REF: http://www.hackingwithphp.com/4/6/6/mathematical-constants
+	public static function haversine( $lat1, $lon1, $lat2, $lon2 )
 	{
-		// distance between latitudes
-		// and longitudes
-		$dLat = ($lat2 - $lat1) *
-					M_PI / 180.0;
-		$dLon = ($lon2 - $lon1) *
-					M_PI / 180.0;
+		// distance between latitudes and longitudes
+		$dLat = ($lat2 - $lat1) * M_PI / 180.0;
+		$dLon = ($lon2 - $lon1) * M_PI / 180.0;
 
 		// convert to radians
 		$lat1 = ($lat1) * M_PI / 180.0;
 		$lat2 = ($lat2) * M_PI / 180.0;
 
 		// apply formulae
-		$a = pow(sin($dLat / 2), 2) +
-			pow(sin($dLon / 2), 2) *
-				cos($lat1) * cos($lat2);
+		$a   = pow( sin( $dLat / 2 ), 2 ) + pow( sin( $dLon / 2 ), 2 ) * cos( $lat1 ) * cos( $lat2 );
 		$rad = 6371;
-		$c = 2 * asin(sqrt($a));
+		$c   = 2 * asin( sqrt( $a ) );
 
 		return $rad * $c;
 	}

@@ -419,14 +419,27 @@ class Module extends Core\Base
 		if ( is_null( $sub ) )
 			$sub = $this->key;
 
-		if ( is_null( $default ) )
-			$default = 'per_page' == $option ? 25 : 2;
+		$args = [
+			'option' => $this->hook_base( $sub, $option ),
+			'label'  => $label,
+		];
 
-		add_screen_option( $option, [
-			'default' => $default,
-			'option'  => $this->hook_base( $sub, $option ),
-			'label'   => $label,
-		] );
+		switch ( $option ) {
+
+			case 'layout_columns':
+
+				add_filter( 'screen_options_show_submit', '__return_true' );
+
+				$args['default'] = $default ?? 2;
+				$args['max']     = 2;
+				break;
+
+			case 'per_page':
+			default:
+				$args['default'] = $default ?? 25;
+		}
+
+		add_screen_option( $option, $args );
 	}
 
 	protected function wrap( $html, $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )

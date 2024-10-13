@@ -218,19 +218,24 @@ class Post extends Core\Base
 		if ( ! $post = self::get( $post ) )
 			return FALSE;
 
+		$posttype  = PostType::object( $post );
+		$timestamp = get_post_timestamp( $post );
+
 		return [
 			'_id'         => $post->ID,
 			'_type'       => $post->post_type,
-			'type'        => PostType::object( $post )->label,
+			'_rest'       => PostType::getRestRoute( $posttype ),
+			'_base'       => $posttype->rest_base,
+			'type'        => $posttype->label,
 			'viewable'    => PostType::viewable( $post->post_type ),
 			'author'      => User::getTitleRow( $post->post_author ),
 			'title'       => self::fullTitle( $post ),
 			'link'        => self::overview( $post, $context ),
-			'date'        => date_i18n( get_option( 'date_format' ) ),
-			'time'        => date_i18n( get_option( 'time_format' ) ),
-			'ago'         => human_time_diff( strtotime( $post->post_date ) ),
+			'date'        => wp_date( get_option( 'date_format' ), $timestamp ),
+			'time'        => wp_date( get_option( 'time_format' ), $timestamp ),
+			'ago'         => $timestamp ? human_time_diff( $timestamp ) : FALSE,
 			'image'       => self::image( $post, $context ),
-			'description' => apply_filters( 'html_format_i18n', $post->post_excerpt ),
+			'description' => wpautop( apply_filters( 'html_format_i18n', $post->post_excerpt ) ),
 		];
 	}
 
