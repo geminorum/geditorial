@@ -837,4 +837,50 @@ class ModuleHelper extends gEditorial\Helper
 			self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'
 		) : FALSE;
 	}
+
+	public static function getCountrySummary( $posttypes, $metakey, $data )
+	{
+		$statuses = WordPress\Status::acceptable( $posttypes, 'reports' );
+		$summary  = array_fill_keys( array_unique( Core\Arraay::pluck( $data, 'province' ) ), 0 );
+
+		foreach ( $data as $code => $details ) {
+
+			if ( empty( $details['province'] ) )
+				continue;
+
+			if ( WordPress\Strings::isEmpty( $details['province'] ) )
+				continue;
+
+			$args = [
+				'post_type'   => $posttypes,
+				'post_status' => $statuses,
+				'meta_query'  => [ [
+					'key'     => $metakey,
+					'value'   => sprintf( '^%s', $code ),
+					'compare' => 'REGEXP', // @REF: https://wordpress.stackexchange.com/a/159433
+				] ],
+
+				'fields'         => 'ids',
+				'orderby'        => 'none',
+				'posts_per_page' => -1,
+
+				'no_found_rows'          => TRUE,
+				'suppress_filters'       => TRUE,
+				'update_post_meta_cache' => FALSE,
+				'update_post_term_cache' => FALSE,
+				'lazy_load_term_meta'    => FALSE,
+			];
+
+			$query = new \WP_Query();
+			$posts = $query->query( $args );
+
+			// $summary[$code] += count( $posts );
+			$summary[$details['province']] += count( $posts );
+		}
+
+		unset( $summary['-'] );
+		uksort( $summary, 'strnatcasecmp' );
+
+		return $summary;
+	}
 }

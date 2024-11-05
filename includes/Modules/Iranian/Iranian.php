@@ -216,6 +216,7 @@ class Iranian extends gEditorial\Module
 		$this->check_settings( $sub, 'imports', 'per_page' );
 	}
 
+	// TODO: migrate to `ModuleSettings`
 	protected function render_imports_html( $uri, $sub )
 	{
 		echo Settings::toolboxColumnOpen( _x( 'Iranian Imports', 'Header', 'geditorial-iranian' ) );
@@ -359,6 +360,7 @@ class Iranian extends gEditorial\Module
 		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
+	// TODO: migrate to `ModuleSettings`
 	protected function render_tools_html( $uri, $sub )
 	{
 		echo Settings::toolboxColumnOpen( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
@@ -440,6 +442,8 @@ class Iranian extends gEditorial\Module
 				'type',
 				'paged',
 			] ) );
+
+		$this->raise_resources();
 
 		echo Settings::processingListOpen();
 
@@ -563,5 +567,82 @@ class Iranian extends gEditorial\Module
 		$data['bankname'] = ModuleHelper::sanitizeBankName( $raw['bankname'] ?? '', $raw['bank'] ?? '' );
 
 		return $data;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		echo Settings::toolboxColumnOpen( _x( 'Iranian Reports', 'Header', 'geditorial-iranian' ) );
+
+		$available = FALSE;
+		$posttypes = $this->list_posttypes();
+
+		if ( count( $posttypes ) ) {
+
+			ModuleSettings::renderCard_country_summary( $posttypes );
+			ModuleSettings::renderCard_city_summary( $posttypes );
+
+			$available = TRUE;
+		}
+
+		if ( ! $available )
+			Info::renderNoReportsAvailable();
+
+		echo '</div>';
+	}
+
+	protected function render_reports_html_before( $uri, $sub )
+	{
+		if ( $this->do_report_country_summary( $sub ) )
+			return FALSE; // avoid further UI
+
+		else if ( $this->do_report_city_summary( $sub ) )
+			return FALSE; // avoid further UI
+	}
+
+	private function do_report_country_summary( $sub )
+	{
+		if ( ! self::do( ModuleSettings::ACTION_COUNTRY_SUMMARY ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return Info::renderEmptyPosttype();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		$this->raise_resources();
+
+		return ModuleSettings::handleReport_country_summary(
+			$posttype,
+			$this->_get_posttype_identity_metakey( $posttype ),
+			$this->_get_posttype_location_metakey( $posttype ),
+			$this->get_imports_raw_data( 'json' )
+		);
+	}
+
+	private function do_report_city_summary( $sub )
+	{
+		if ( ! self::do( ModuleSettings::ACTION_CITY_SUMMARY ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return Info::renderEmptyPosttype();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return Info::renderNotSupportedPosttype();
+
+		$this->raise_resources();
+
+		return ModuleSettings::handleReport_city_summary(
+			$posttype,
+			$this->_get_posttype_identity_metakey( $posttype ),
+			$this->_get_posttype_location_metakey( $posttype ),
+			$this->get_imports_raw_data( 'json' )
+		);
 	}
 }
