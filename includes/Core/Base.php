@@ -132,22 +132,27 @@ class Base
 
 	public static function _log_req()
 	{
-		self::_log( $_REQUEST );
+		return self::_log( $_REQUEST );
 	}
 
 	// INTERNAL
 	public static function _log()
 	{
 		if ( defined( 'WP_DEBUG_LOG' ) && ! WP_DEBUG_LOG )
-			return;
+			return FALSE; // help the caller
 
 		foreach ( func_get_args() as $data )
 
-			if ( is_array( $data ) || is_object( $data ) )
+			if ( self::isError( $data ) )
+				error_log( $data->get_error_message() );
+
+			else if ( is_array( $data ) || is_object( $data ) )
 				error_log( print_r( $data, TRUE ) );
 
 			else
 				error_log( $data );
+
+		return FALSE; // help the caller
 	}
 
 	// INTERNAL: used on anything deprecated

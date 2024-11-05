@@ -5,9 +5,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class HTML extends Base
 {
 
+	// FIXME: DEPRECATED: use `Core\L10n::rtl()`
 	public static function rtl()
 	{
-		return function_exists( 'is_rtl' ) ? is_rtl() : FALSE;
+		return Core\L10n::rtl();
 	}
 
 	public static function link( $html, $link = '#', $target_blank = FALSE )
@@ -625,8 +626,7 @@ class HTML extends Base
 
 				} else if ( ! empty( $val ) ) {
 
-					// echo '<td class="-val -not-table"><code>'.$val.'</code>';
-					echo '<td class="-val -not-table"><code>'.nl2br( self::escape( $val ) ).'</code>';
+					echo '<td class="-val -not-table"><code>'.( $type ? self::escape( $val ) : nl2br( $val ) ).'</code>';
 
 				} else {
 

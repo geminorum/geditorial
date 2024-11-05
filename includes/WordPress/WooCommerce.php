@@ -9,6 +9,8 @@ class WooCommerce extends Core\Base
 
 	const PLUGIN = 'woocommerce/woocommerce.php';
 
+	const ORDER_POSTTYPE = 'shop_order';
+
 	public static function isActive()
 	{
 		return Core\WordPress::isPluginActive( static::PLUGIN );

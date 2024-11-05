@@ -198,7 +198,7 @@ class Post extends Core\Base
 			return $filtered;
 
 		if ( is_admin() && self::can( $post, 'edit_post' ) )
-			return get_edit_post_link( $post, $context );
+			return get_edit_post_link( $post, $context ?? 'display' );
 
 		if ( PostType::viewable( $post->post_type ) )
 			return self::link( $post, FALSE );
