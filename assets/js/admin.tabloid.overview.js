@@ -5,6 +5,7 @@
     wrap: 'div#' + plugin._base + '-' + module + '-wrap',
     raw: 'div#' + plugin._base + '-' + module + '-raw',
     data: plugin._base + '_' + module + '_data',
+    edit: 'a[data-action=edit]',
     debug: 'a[data-action=debug]',
     export: 'a[data-action=export]',
     print: 'a[data-action=print]'
@@ -26,6 +27,11 @@
   };
 
   $(function () {
+    $(s.edit).on('click', function (e) {
+      e.preventDefault();
+      window.open($(this).attr('href'), '_blank');
+    });
+
     $(s.export).on('click', function (e) {
       // e.preventDefault();
       app.export(this, window[s.data], 'post');
