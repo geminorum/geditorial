@@ -599,6 +599,93 @@ JS;
 			: self::registerPackage( 'spinjs', 'spin.js/spin.umd', [], $ver );
 	}
 
+	// @REF: https://github.com/chartjs/Chart.js
+	// @REF: https://www.chartjs.org/
+	public static function pkgChartJS( $enqueue = FALSE, $ver = '4.4.6' )
+	{
+		return $enqueue
+			? self::enqueuePackage( 'chartjs', 'chart.js/chart.umd', [], $ver )
+			: self::registerPackage( 'chartjs', 'chart.js/chart.umd', [], $ver );
+	}
+
+	public static function markupChartJS( $name, $module = FALSE )
+	{
+		return Core\HTML::wrap( Core\HTML::tag( 'canvas', [
+			'id' => sprintf( '%s-chart-%s', static::BASE, $name ),
+		] ), [
+			static::BASE.'-wrap',
+			( $module ? ( '-'.$module ) : '' ),
+			'editorial-chart',
+			'hide-if-no-js',
+		] );
+	}
+
+	// @REF: https://clipboardjs.com/
+	public static function enqueueChartJS_Bar( $name, $data, $atts = [] )
+	{
+		$args = self::atts( [
+			'type'   => 'bar',
+			'label'  => '',
+			'labels' => array_keys( $data ),
+			'values' => array_values( $data ),
+
+			'rtl'    => Core\L10n::rtl(),
+			'locale' => Core\L10n::getISO639(),   // 'fa-IR',
+
+			// 'color'      => '#000000',
+			// 'background' => '#ffffff',
+		], $atts );
+
+		$rtl      = $args['rtl'] ? 'true' : 'false';
+		$labels   = wp_json_encode( $args['labels'] );
+		$values   = wp_json_encode( $args['values'] );
+		$selector = sprintf( '%s-chart-%s', static::BASE, $name );
+
+		$script   = <<<JS
+(function () {
+	const ctx = document.getElementById('{$selector}');
+
+	Chart.defaults.font.family = getComputedStyle(document.body).getPropertyValue('font-family');
+
+	const myChart = new Chart(ctx, {
+		type: '{$args['type']}',
+		data: {
+			labels: {$labels},
+			datasets: [{
+				label: '{$args['label']}',
+				data: {$values},
+				borderWidth: 1
+			}]
+		},
+		options: {
+			locale: '{$args['locale']}',
+			layout: {
+            	padding: 0
+        	},
+			plugins: {
+				legend: {
+					rtl: {$rtl},
+					// textDirection: 'rtl',
+					labels: {
+						font: {
+							// size: 9
+						}
+					}
+				}
+        	},
+			scales: {
+				y: {
+					beginAtZero: true
+				}
+			}
+		}
+	});
+})();
+JS;
+
+		return self::inlineScript( sprintf( '%s-chartjs-%s', static::BASE, $name ), $script, [ self::pkgChartJS( TRUE ) ] );
+	}
+
 	// @REF: https://github.com/select2/select2/
 	// @REF: https://select2.org/
 	public static function pkgSelect2( $enqueue = FALSE, $ver = '4.1.0-rc.0' )
