@@ -264,6 +264,7 @@ class Tabloid extends gEditorial\Module
 		$data = ModuleHelper::stripEmptyValues( $data, 'terms_rendered' );
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__can_edit']   = WordPress\Post::can( $post, 'edit_post' ) ? get_edit_post_link( $post ) : FALSE;
 		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'exports' );
@@ -298,6 +299,7 @@ class Tabloid extends gEditorial\Module
 		unset( $data['___hooks'] );
 		unset( $data['__summaries'] );
 		unset( $data['__direction'] );
+		unset( $data['__can_edit'] );
 		unset( $data['__can_debug'] );
 		unset( $data['__can_print'] );
 		unset( $data['__can_export'] );

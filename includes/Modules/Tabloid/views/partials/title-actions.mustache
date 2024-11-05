@@ -2,6 +2,9 @@
 	{{#__today}}
 		<span class="-today xx-print-only-inline">{{{__today}}}</span>
 	{{/__today}}
+	{{#__can_edit}}
+		<a class="button button-small -print-hide-inline" data-action="edit" href="{{{__can_edit}}}"><span class="dashicons dashicons-edit-large"></span></a>
+	{{/__can_edit}}
 	{{#__can_print}}
 		<a class="button button-small -print-hide-inline" data-action="print" href="#"><span class="dashicons dashicons-printer"></span></a>
 	{{/__can_print}}
