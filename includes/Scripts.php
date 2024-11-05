@@ -574,7 +574,7 @@ JS;
 
 	// @REF: https://github.com/mbraak/jqTree
 	// @REF: http://mbraak.github.io/jqTree/
-	public static function pkgJqTree( $enqueue = FALSE, $ver = '1.8.6' )
+	public static function pkgJqTree( $enqueue = FALSE, $ver = '1.8.7' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'jqtree', 'jqtree/tree.jquery', [ 'jquery' ], $ver )
