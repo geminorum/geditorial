@@ -125,6 +125,7 @@ function i18nExtra (i18n) {
   return '--exclude="' + i18n.exclude.toString() + '"' +
         ' --file-comment="' + i18n.comment.toString() + '"' +
         ' --skip-plugins --skip-themes --skip-packages' +
+        // ' --quiet' +
         (debug ? ' --debug' : '');
 }
 
@@ -180,6 +181,29 @@ task('i18n:modules', function () {
         ' --package-name="' + pkg.productName + ' ' + folder + '" ' + // no version for fewer commits!
         ' --headers=\'' + template(JSON.stringify(conf.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder, domain, module }) + '\' ' +
         extra;
+    }), {
+      continueOnError: false,
+      pipeStdout: false
+    })
+    .pipe(gulpexec.reporter({
+      err: true,
+      stderr: true,
+      stdout: true
+    }));
+});
+
+task('i18n:php', function () {
+  // const extra = i18nExtra(conf.i18n.langs);
+
+  return src(conf.input.langs)
+    .pipe(gulpexec(function (file) {
+      const folder = file.path.split(path.sep).slice(-2, -1).pop();
+      log.info('Make pot for Module: ' + folder);
+
+      // https://developer.wordpress.org/cli/commands/i18n/make-php/
+      return 'wp i18n make-php ' + file.path +
+      ' --skip-plugins --skip-themes --skip-packages';
+      // extra;
     }), {
       continueOnError: false,
       pipeStdout: false
