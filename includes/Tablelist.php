@@ -16,17 +16,36 @@ class Tablelist extends WordPress\Main
 		return FALSE;
 	}
 
-	// @REF: `Taxonomy::getTerms()`
+	/**
+	 * Retrieves a list of terms and pagination info given query arguments
+	 * and current request.
+	 * @REF: `Taxonomy::getTerms()`
+	 * NOTE: false `$perpage` will result in list of terms only.
+	 *
+	 * @param  array        $atts
+	 * @param  array        $extra
+	 * @param  string|array $taxonomy
+	 * @param  int|false    $perpage
+	 * @return array        $data
+	 */
 	public static function getTerms( $atts = [], $extra = [], $taxonomy = '', $perpage = 25 )
 	{
-		$limit  = self::limit( $perpage );
-		$paged  = self::paged();
-		$offset = ( $paged - 1 ) * $limit;
+		if ( $perpage ) {
 
-		$args = array_merge( [
+			$limit = self::limit( $perpage );
+			$paged = self::paged();
+			$pre   = [
+				'number'   => $limit,
+				'offset'   => ( $paged - 1 ) * $limit,
+			];
+
+		} else {
+
+			$pre = [ 'number' => '' ];
+		}
+
+		$args = array_merge( $pre, [
 			'taxonomy' => $taxonomy,
-			'number'   => $limit,
-			'offset'   => $offset,
 			'orderby'  => self::orderby( 'term_id' ),
 			'order'    => self::order( 'DESC' ),
 
@@ -40,7 +59,9 @@ class Tablelist extends WordPress\Main
 		$query = new \WP_Term_Query();
 		$terms = $query->query( $args );
 
-		// $pagination = Core\HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
+		if ( ! $perpage )
+			return $terms;
+
 		$pagination = Core\HTML::tablePagination( count( $terms ), FALSE, $limit, $paged, $extra );
 
 		$pagination['orderby'] = $args['orderby'];
@@ -56,15 +77,35 @@ class Tablelist extends WordPress\Main
 		return self::getPosts( $atts, $extra, $posttypes, $perpage );
 	}
 
+	/**
+	 * Retrieves a list of posts and pagination info given query arguments
+	 * and current request.
+	 *
+	 * NOTE: false `$perpage` will result in list of posts only.
+	 *
+	 * @param  array        $atts
+	 * @param  array        $extra
+	 * @param  string|array $posttypes
+	 * @param  int|false    $perpage
+	 * @return array        $data
+	 */
 	public static function getPosts( $atts = [], $extra = [], $posttypes = 'any', $perpage = 25 )
 	{
-		$limit  = self::limit( $perpage );
-		$paged  = self::paged();
-		$offset = ( $paged - 1 ) * $limit;
+		if ( $perpage ) {
 
-		$args = array_merge( [
-			'posts_per_page'   => $limit,
-			'offset'           => $offset,
+			$limit = self::limit( $perpage );
+			$paged = self::paged();
+			$pre   = [
+				'posts_per_page' => $limit,
+				'offset'         => ( $paged - 1 ) * $limit,
+			];
+
+		} else {
+
+			$pre = [ 'posts_per_page' => -1 ];
+		}
+
+		$args = array_merge( $pre, [
 			'orderby'          => self::orderby( 'ID' ),
 			'order'            => self::order( 'DESC' ),
 			'post_type'        => $posttypes, // 'any',
@@ -95,6 +136,9 @@ class Tablelist extends WordPress\Main
 
 		$query = new \WP_Query();
 		$posts = $query->query( $args );
+
+		if ( ! $perpage )
+			return $posts;
 
 		$pagination = Core\HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
 
