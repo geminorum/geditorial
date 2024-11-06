@@ -313,7 +313,7 @@ class Color extends Base
 
 	// @REF: https://github.com/colorjs/color-name
 	// @REF: http://dev.w3.org/csswg/css-color/#named-colors
-	// v1.1.2 - 2017-07-11
+	// v2.0.0 - 2024-11-05
 	public static function named()
 	{
 		return [
@@ -464,7 +464,7 @@ class Color extends Base
 			'white'                => [ 255, 255, 255 ],
 			'whitesmoke'           => [ 245, 245, 245 ],
 			'yellow'               => [ 255, 255,   0 ],
-			'yellowgreen'          => [ 154, 205,  50 ]
+			'yellowgreen'          => [ 154, 205,  50 ],
 		];
 	}
 

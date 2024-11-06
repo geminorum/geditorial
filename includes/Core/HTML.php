@@ -8,7 +8,7 @@ class HTML extends Base
 	// FIXME: DEPRECATED: use `Core\L10n::rtl()`
 	public static function rtl()
 	{
-		return Core\L10n::rtl();
+		return L10n::rtl();
 	}
 
 	public static function link( $html, $link = '#', $target_blank = FALSE )
