@@ -1215,15 +1215,19 @@ trait SubContents
 
 	protected function tweaks_column_row_subcontent( $post, $before, $after, $module )
 	{
+		$thrift = $this->is_thrift_mode();
+
 		printf( $before, $this->classs( 'subcontent' ) );
 
-			echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
+			if ( ! $thrift )
+				echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
 
 			echo $this->framepage_get_mainlink_for_post( $post, [
 				'context' => 'columnrow',
+				'text'    => $thrift ? '%1$s' : NULL,
 			] );
 
-			if ( $count = $this->subcontent_get_data_count( $post ) )
+			if ( ! $thrift && ( $count = $this->subcontent_get_data_count( $post ) ) )
 				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
 
 		echo $after;
