@@ -183,6 +183,10 @@ class Scripts extends WordPress\Main
 		console.error('Action:', e.action);
 		console.error('Trigger:', e.trigger);
 	});
+
+	document
+		.querySelectorAll('{$selector}')
+		.forEach(e => e.style.cursor = 'grab');
 })();
 JS;
 
@@ -468,7 +472,7 @@ JS;
 			color: $(this).data("color") || "#000000",
 			background: $(this).data("background") || "#ffffff",
 			ecl: $(this).data("ecl") || "M",
-			content: $(this).data("code"),
+			content: $(this).data("code").padEnd(220), // @REF: https://stackoverflow.com/a/73544657
 			container: "svg-viewbox",
 			join: true
 		});

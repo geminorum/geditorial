@@ -3231,8 +3231,15 @@ class Settings extends WordPress\Main
 
 	public static function toolboxCardOpen( $title = '', $buttons = TRUE )
 	{
-		return '<div class="-wrap '.static::BASE.'-wrap -tab-extras card -toolbox-card">'
+		return '<div class="-wrap '.static::BASE.'-wrap card -toolbox-card">'
 			.( $title ? sprintf( '<h4 class="title -title">%s</h4>', $title ) : '' )
+			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
+	}
+
+	public static function toolboxAfterOpen( $desc = '', $buttons = FALSE )
+	{
+		return '<div class="-wrap '.static::BASE.'-wrap -toolbox-after">'
+			.( $desc ? sprintf( '<p class="-description">%s</p>', nl2br( $desc ) ) : '' )
 			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
 	}
 
