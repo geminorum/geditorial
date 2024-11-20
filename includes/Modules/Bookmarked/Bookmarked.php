@@ -451,13 +451,13 @@ class Bookmarked extends gEditorial\Module
 		return $this->filters( 'generate_link', $link, $data, $post, $context );
 	}
 
-	private function _get_link_logo( $key, $path = NULL )
+	private function _get_link_logo( $key, $ext = NULL, $path = NULL )
 	{
 		return sprintf( '%s%s%s.%s',
 			Core\URL::fromPath( $path ?? $this->path ),
 			'data/logos/',
 			$key,
-			self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'
+			$ext ?? self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'
 		);
 	}
 }
