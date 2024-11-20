@@ -16,6 +16,7 @@ class Socialite extends gEditorial\Module
 		'facebook',
 		'youtube',
 		'aparat',
+		'behkhaan',
 		'eitaa',
 	];
 
@@ -130,6 +131,7 @@ class Socialite extends gEditorial\Module
 				'facebook'  => _x( 'Facebook', 'Title', 'geditorial-socialite' ),
 				'youtube'   => _x( 'YouTube', 'Title', 'geditorial-socialite' ),
 				'aparat'    => _x( 'Aparat', 'Title', 'geditorial-socialite' ),
+				'behkhaan'  => _x( 'Behkhaan', 'Title', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Eitaa', 'Title', 'geditorial-socialite' ),
 			],
 			'descriptions' => [
@@ -139,6 +141,7 @@ class Socialite extends gEditorial\Module
 				'facebook'  => _x( 'Handle or URL to a Facebook profile or page.', 'Description', 'geditorial-socialite' ),
 				'youtube'   => _x( 'Handle or URL to a YouTube channel.', 'Description', 'geditorial-socialite' ),
 				'aparat'    => _x( 'Handle or URL to an Aparat channel.', 'Description', 'geditorial-socialite' ),
+				'behkhaan'  => _x( 'Handle or URL to an Behkhaan profile.', 'Description', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Handle or URL to a Eitaa user or channel.', 'Description', 'geditorial-socialite' ),
 			],
 			'misc' => [
@@ -283,6 +286,7 @@ class Socialite extends gEditorial\Module
 			case 'facebook' : return [ 'social-logos', 'facebook' ];
 			case 'youtube'  : return [ 'social-logos', 'youtube' ];
 			case 'aparat'   : return [ 'misc-24', 'aparat' ];
+			case 'behkhaan' : return [ 'misc-32', 'behkhaan' ];
 			case 'eitaa'    : return [ 'misc-48', 'eitaa' ];
 		}
 
