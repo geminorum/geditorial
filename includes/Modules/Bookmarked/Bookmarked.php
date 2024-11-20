@@ -239,6 +239,14 @@ class Bookmarked extends gEditorial\Module
 				'logo'     => $this->_get_link_logo( 'taaghche' ),
 			],
 			[
+				'name'     => 'behkhaan',
+				'title'    => _x( 'Behkhaan Profile', 'Type Option', 'geditorial-bookmarked' ),
+				'template' => 'https://behkhaan.ir/profile/{{code}}',
+				'cssclass' => '-behkhaan-profile',
+				'icon'     => [ 'misc-32', 'behkhaan' ], // 'book-alt',
+				'logo'     => $this->_get_link_logo( 'behkhaan', 'png' ),
+			],
+			[
 				'name'     => 'neshan',
 				'title'    => _x( 'Neshan Map', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://nshn.ir/{{code}}',
