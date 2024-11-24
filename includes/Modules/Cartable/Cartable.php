@@ -16,7 +16,7 @@ class Cartable extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
-	use Internals\CoreRoles;
+	use Internals\CoreUsers;
 
 	// TODO: dynamic cartables based on external taxonomies
 
