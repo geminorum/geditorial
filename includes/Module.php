@@ -15,6 +15,7 @@ class Module extends WordPress\Module
 	use Internals\SettingsFields;
 	use Internals\SettingsHelp;
 	use Internals\SettingsPostTypes;
+	use Internals\SettingsRoles;
 	use Internals\SettingsTaxonomies;
 	use Internals\Strings;
 
@@ -765,21 +766,6 @@ class Module extends WordPress\Module
 			$form.= '<input type="hidden" name="'.Core\HTML::escape( $name ).'" value="'.Core\HTML::escape( $value ).'" />';
 
 		return $form.'</form>';
-	}
-
-	/**
-	 * Gets default roles for use in settings.
-	 *
-	 * @param  array $extra_excludes
-	 * @param  bool  $filtered
-	 * @return array $rols
-	 */
-	protected function get_settings_default_roles( $extra_excludes = [], $force_include = [], $filtered = TRUE )
-	{
-		$supported = WordPress\User::getAllRoleList( $filtered );
-		$excluded  = Settings::rolesExcluded( $extra_excludes );
-
-		return array_merge( array_diff_key( $supported, array_flip( $excluded ), (array) $force_include ) );
 	}
 
 	protected function _metabox_remove_subterm( $screen, $subterms = FALSE )
