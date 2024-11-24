@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Parser;
 use geminorum\gEditorial\Plugin;
 
@@ -31,7 +30,7 @@ trait RawImports
 
 		if ( is_null( $type ) ) {
 
-			$filetype = wp_check_filetype( $this->imports_datafile, [
+			$filetype = Core\File::type( $this->imports_datafile, [
 				'csv'  => 'text/csv',
 				'json' => 'application/json',
 				'xml'  => 'application/xml',

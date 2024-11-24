@@ -118,6 +118,7 @@ class Chronicles extends gEditorial\Module
 	}
 
 	// TODO: founded date/dismanteled date/
+	// TODO: incorporation/dissolution dates
 	protected function get_global_fields()
 	{
 		return [

@@ -547,7 +547,7 @@ class Template extends WordPress\Main
 
 		if ( $html && is_null( $type ) ) {
 
-			$file = wp_check_filetype( $html );
+			$file = Core\File::type( $html );
 			$type = $file['type'] ?: 'embed'; // fallback if no type by url
 		}
 

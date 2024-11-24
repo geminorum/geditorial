@@ -18,6 +18,8 @@ class Schedule extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
+	// TODO: rename to `Scheduled`
+
 	public static function module()
 	{
 		return [
