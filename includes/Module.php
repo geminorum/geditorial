@@ -7,6 +7,7 @@ class Module extends WordPress\Module
 	use Internals\Assets;
 	use Internals\CoreIncludes;
 	use Internals\CorePostTypes;
+	use Internals\CoreRoles;
 	use Internals\CoreTaxonomies;
 	use Internals\DefaultTerms;
 	use Internals\ModuleLinks;
@@ -779,44 +780,6 @@ class Module extends WordPress\Module
 		$excluded  = Settings::rolesExcluded( $extra_excludes );
 
 		return array_merge( array_diff_key( $supported, array_flip( $excluded ), (array) $force_include ) );
-	}
-
-	// NOTE: accepts array and performs `OR` check
-	protected function role_can( $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
-	{
-		if ( is_null( $whats ) )
-			return TRUE;
-
-		if ( FALSE === $whats )
-			return FALSE;
-
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
-
-		if ( ! $user_id )
-			return $fallback;
-
-		if ( $admins && WordPress\User::isSuperAdmin( $user_id ) )
-			return TRUE;
-
-		foreach ( (array) $whats as $what ) {
-
-			$setting = $this->get_setting( $what.$prefix, [] );
-
-			if ( TRUE === $setting )
-				return $setting;
-
-			if ( FALSE === $setting || ( empty( $setting ) && ! $admins ) )
-				continue; // check others
-
-			if ( $admins )
-				$setting = array_merge( $setting, [ 'administrator' ] );
-
-			if ( WordPress\User::hasRole( $setting, $user_id ) )
-				return TRUE;
-		}
-
-		return $fallback;
 	}
 
 	protected function _metabox_remove_subterm( $screen, $subterms = FALSE )

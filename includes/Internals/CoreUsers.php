@@ -8,6 +8,9 @@ use geminorum\gEditorial\WordPress;
 trait CoreUsers
 {
 
+	// TODO: SEE: `CoreRoles::role_can()`
+	// protected function user_can( $context, $user_id = NULL, $fallback = FALSE ) {}
+
 	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )
 	{
 		if ( is_null( $fields ) )
