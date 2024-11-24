@@ -325,6 +325,24 @@
         "moduleTagline": "[CHANGE ME]",
         "moduleDashicon": "smiley"
       }
+    },
+    "wcModule" : {
+      "src": "./assets/dev/templates/wcModule.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-wc-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "WC Module",
+        "moduleCamelCase": "WcModule",
+        "moduleUnderline": "wc_module",
+        "moduleTagline": "[CHANGE ME]",
+        "moduleDashicon": "store"
+      }
     }
   }
 }

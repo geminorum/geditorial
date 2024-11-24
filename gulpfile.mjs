@@ -347,7 +347,12 @@ task('build:zip', function () {
 });
 
 task('build', series(
-  parallel('build:styles', 'build:rtl', 'build:scripts'),
+  parallel(
+    'build:styles',
+    'build:rtl',
+    'build:scripts',
+    'i18n:php' // just in case forgotten!
+  ),
   'build:banner',
   'build:clean',
   'build:copy',

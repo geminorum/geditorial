@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Helper;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\ShortCode;
@@ -20,8 +21,10 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'desc'     => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
 			'icon'     => '<%= moduleDashicon %>',
 			'access'   => 'planned',
+			'disabled' => Helper::moduleCheckWooCommerce(),
 			'keywords' => [
 				'',
+				'woocommerce',
 			],
 		];
 	}
@@ -91,7 +94,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+		// if ( ! $post = WordPress\Post::get( $args['id'] ) )
+		if ( ! $product = wc_get_product( $args['id'] ) )
 			return $content;
 
 		$html = '';
