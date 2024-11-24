@@ -13,177 +13,187 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Socialite\n"
 "X-Domain: geditorial-socialite\n"
 
-#: Socialite.php:41
+#: Socialite.php:42
 msgctxt "Setting Title"
 msgid "Supported Fields"
 msgstr ""
 
-#: Socialite.php:42
+#: Socialite.php:43
 msgctxt "Setting Description"
 msgid "Appends custom meta fields for social services to taxonomies. Terms module needs to be enabled."
 msgstr ""
 
-#: Socialite.php:43
+#: Socialite.php:44
 msgctxt "Setting String Empty"
 msgid "The Terms module is not available!"
 msgstr ""
 
-#: Socialite.php:51
+#: Socialite.php:52
 msgctxt "Setting Title"
 msgid "Social Icons"
 msgstr ""
 
-#: Socialite.php:56
+#: Socialite.php:57
 msgctxt "Setting Title"
 msgid "URL"
 msgstr ""
 
-#: Socialite.php:57
+#: Socialite.php:58
 msgctxt "Setting Description"
 msgid "Sets as URL of the social icon."
 msgstr ""
 
-#: Socialite.php:64
+#: Socialite.php:65
 msgctxt "Setting Title"
 msgid "Icon"
 msgstr ""
 
-#: Socialite.php:65
+#: Socialite.php:66
 msgctxt "Setting Description"
 msgid "Sets the icon image of the social icon."
 msgstr ""
 
-#: Socialite.php:72
+#: Socialite.php:73
 msgctxt "Setting Title"
 msgid "Priority"
 msgstr ""
 
-#: Socialite.php:73
+#: Socialite.php:74
 msgctxt "Setting Description"
 msgid "Sets as the priority where the social icon display on the list."
 msgstr ""
 
-#: Socialite.php:79
+#: Socialite.php:80
 msgctxt "Setting Title"
 msgid "Name"
 msgstr ""
 
-#: Socialite.php:80
+#: Socialite.php:81
 msgctxt "Setting Description"
 msgid "Sets as title attribute of the social icon."
 msgstr ""
 
-#: Socialite.php:85
+#: Socialite.php:86
 msgctxt "Setting Title"
 msgid "Before Link"
 msgstr ""
 
-#: Socialite.php:86
+#: Socialite.php:87
 msgctxt "Setting Description"
 msgid "HTML opening before each social icon link."
 msgstr ""
 
-#: Socialite.php:93
+#: Socialite.php:94
 msgctxt "Setting Title"
 msgid "After Link"
 msgstr ""
 
-#: Socialite.php:94
+#: Socialite.php:95
 msgctxt "Setting Description"
 msgid "HTML closing after each social icon link."
 msgstr ""
 
-#: Socialite.php:101
+#: Socialite.php:102
 msgctxt "Setting Title"
 msgid "Before Image"
 msgstr ""
 
-#: Socialite.php:102
+#: Socialite.php:103
 msgctxt "Setting Description"
 msgid "HTML opening before each social icon image."
 msgstr ""
 
-#: Socialite.php:109
+#: Socialite.php:110
 msgctxt "Setting Title"
 msgid "After Image"
 msgstr ""
 
-#: Socialite.php:110
+#: Socialite.php:111
 msgctxt "Setting Description"
 msgid "HTML closing after each social icon image."
 msgstr ""
 
-#: Socialite.php:127
+#: Socialite.php:128
 msgctxt "Title"
 msgid "Twitter"
 msgstr ""
 
-#: Socialite.php:128
+#: Socialite.php:129
 msgctxt "Title"
 msgid "Instagram"
 msgstr ""
 
-#: Socialite.php:129
+#: Socialite.php:130
 msgctxt "Title"
 msgid "Telegram"
 msgstr ""
 
-#: Socialite.php:130
+#: Socialite.php:131
 msgctxt "Title"
 msgid "Facebook"
 msgstr ""
 
-#: Socialite.php:131
+#: Socialite.php:132
 msgctxt "Title"
 msgid "YouTube"
 msgstr ""
 
-#: Socialite.php:132
+#: Socialite.php:133
 msgctxt "Title"
 msgid "Aparat"
 msgstr ""
 
-#: Socialite.php:133
+#: Socialite.php:134
+msgctxt "Title"
+msgid "Behkhaan"
+msgstr ""
+
+#: Socialite.php:135
 msgctxt "Title"
 msgid "Eitaa"
 msgstr ""
 
-#: Socialite.php:136
+#: Socialite.php:138
 msgctxt "Description"
 msgid "Handle or URL to an Twitter account."
 msgstr ""
 
-#: Socialite.php:137
+#: Socialite.php:139
 msgctxt "Description"
 msgid "Handle or URL to an Instagram account."
 msgstr ""
 
-#: Socialite.php:138
+#: Socialite.php:140
 msgctxt "Description"
 msgid "Handle or URL to a Telegram user or channel."
 msgstr ""
 
-#: Socialite.php:139
+#: Socialite.php:141
 msgctxt "Description"
 msgid "Handle or URL to a Facebook profile or page."
 msgstr ""
 
-#: Socialite.php:140
+#: Socialite.php:142
 msgctxt "Description"
 msgid "Handle or URL to a YouTube channel."
 msgstr ""
 
-#: Socialite.php:141
+#: Socialite.php:143
 msgctxt "Description"
 msgid "Handle or URL to an Aparat channel."
 msgstr ""
 
-#: Socialite.php:142
+#: Socialite.php:144
+msgctxt "Description"
+msgid "Handle or URL to an Behkhaan profile."
+msgstr ""
+
+#: Socialite.php:145
 msgctxt "Description"
 msgid "Handle or URL to a Eitaa user or channel."
 msgstr ""
 
-#: Socialite.php:145
+#: Socialite.php:148
 msgctxt "Column Title"
 msgid "Social"
 msgstr ""

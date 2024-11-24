@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Personage\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-23 19:45+0330\n"
+"PO-Revision-Date: 2024-11-24 12:22+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Personage\n"
 "X-Domain: geditorial-personage\n"
 
@@ -301,32 +301,32 @@ msgctxt "Field Description"
 msgid "Unique National Identity Number"
 msgstr "شماره ملی شناسایی یکتا"
 
-#: Personage.php:293
+#: Personage.php:294
 msgctxt "Field Title"
 msgid "Passport Number"
 msgstr "شماره گذرنامه"
 
-#: Personage.php:294
+#: Personage.php:295
 msgctxt "Field Description"
 msgid "Personagel Passport Number"
 msgstr "شماره گذرنامه شخصی"
 
-#: Personage.php:537
+#: Personage.php:547
 msgctxt "Default Term: Audit"
 msgid "Empty Identity Number"
 msgstr "شماره شناسایی خالی"
 
-#: Personage.php:631
+#: Personage.php:641
 msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr "شناسایی"
 
-#: Personage.php:1024
+#: Personage.php:1043
 msgctxt "Header"
 msgid "People Parser"
 msgstr "تجزیه‌کننده افراد"
 
-#: Personage.php:1035
+#: Personage.php:1054
 msgctxt "Button"
 msgid "Parse Lines"
 msgstr "تجزیه خطوط"

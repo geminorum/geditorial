@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Symposium\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-12 04:29+0330\n"
+"PO-Revision-Date: 2024-11-24 12:20+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,71 +11,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Symposium\n"
 "X-Domain: geditorial-symposium\n"
 
-#: Symposium.php:61
+#: Symposium.php:74
 msgid "Session"
 msgid_plural "Sessions"
 msgstr[0] "نشست‌ها"
 msgstr[1] "نشست"
 
-#: Symposium.php:62
+#: Symposium.php:75
 msgid "Session Category"
 msgid_plural "Session Categories"
 msgstr[0] "دسته‌های نشست"
 msgstr[1] "دسته نشست"
 
-#: Symposium.php:63
+#: Symposium.php:76
 msgid "Session Type"
 msgid_plural "Session Types"
 msgstr[0] "انواع نشست"
 msgstr[1] "نوع نشست"
 
-#: Symposium.php:64
+#: Symposium.php:77
 msgid "Session Audience"
 msgid_plural "Session Audiences"
 msgstr[0] "مخاطبین نشست"
 msgstr[1] "مخاطب نشست"
 
-#: Symposium.php:65
+#: Symposium.php:78
 msgid "Session Subject"
 msgid_plural "Session Subjects"
 msgstr[0] "موضوعات نشست"
 msgstr[1] "موضوع نشست"
 
-#: Symposium.php:74
+#: Symposium.php:87
 msgctxt "Session: Featured"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Symposium.php:85
+#: Symposium.php:98
 msgctxt "Session Type: Default Term"
 msgid "Lecture"
 msgstr "سخنرانی"
 
-#: Symposium.php:86
+#: Symposium.php:99
 msgctxt "Session Type: Default Term"
 msgid "Conference"
 msgstr "همایش"
 
-#: Symposium.php:87
+#: Symposium.php:100
 msgctxt "Session Type: Default Term"
 msgid "Colloquium"
 msgstr "مکالمه"
 
-#: Symposium.php:88
+#: Symposium.php:101
 msgctxt "Session Type: Default Term"
 msgid "Book Review"
 msgstr "نقد کتاب"
 
-#: Symposium.php:102
+#: Symposium.php:115
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr "افراد برجسته"
 
-#: Symposium.php:103
+#: Symposium.php:116
 msgctxt "Field Description"
 msgid "People Who Featured in This Session"
 msgstr "افرادی که به صورت برجسته در این نشست حضور داشته‌اند"

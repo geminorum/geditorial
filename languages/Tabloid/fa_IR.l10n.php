@@ -1,0 +1,2 @@
+<?php
+return ['domain'=>'geditorial-tabloid','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Tabloid','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2024-11-24 12:20+0330','x-generator'=>'Poedit 3.5','messages'=>['Setting TitleAction Title for %s'=>'عنوان کنش برای %s','ActionOverview'=>'در یک نگاه','Setting TitleOverview Title for %s'=>'عنوان نمای‌کلی برای %s']];

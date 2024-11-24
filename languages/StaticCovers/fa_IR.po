@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial StaticCovers\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-09-09 03:35+0330\n"
+"PO-Revision-Date: 2024-11-24 12:21+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -125,7 +125,7 @@ msgid "Cover for this &ldquo;%2$s&rdquo;"
 msgstr "کاور برای این &rdquo;%2$s&ldquo;"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: StaticCovers.php:212
+#: StaticCovers.php:212 StaticCovers.php:217
 msgctxt "Button Title"
 msgid "Covers for %1$s"
 msgstr "کاورها برای %1$s"
@@ -134,14 +134,20 @@ msgstr "کاورها برای %1$s"
 #: StaticCovers.php:214
 msgctxt "Button Text"
 msgid "%1$s Static Covers of the %2$s"
-msgstr "%1$sکاورهای ایستا برای این %2$s"
+msgstr "%1$s کاورهای ایستا برای این %2$s"
 
-#: StaticCovers.php:218
+#. translators: %1$s: icon markup, %2$s: posttype singular name
+#: StaticCovers.php:219
+msgctxt "Button Text"
+msgid "%1$s Static Covers"
+msgstr "%1$s کاورهای ایستا"
+
+#: StaticCovers.php:223
 msgctxt "Button Title"
 msgid "View full image"
 msgstr "نمایش تصویر کامل"
 
-#: StaticCovers.php:855
+#: StaticCovers.php:880
 msgctxt "MetaKey Option Title"
 msgid "Static Cover"
 msgstr "کاور ایستا"

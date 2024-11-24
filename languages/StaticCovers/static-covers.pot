@@ -147,7 +147,7 @@ msgctxt "Button Title"
 msgid "View full image"
 msgstr ""
 
-#: StaticCovers.php:897
+#: StaticCovers.php:880
 msgctxt "MetaKey Option Title"
 msgid "Static Cover"
 msgstr ""

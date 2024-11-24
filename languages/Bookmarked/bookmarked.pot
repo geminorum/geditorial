@@ -141,62 +141,67 @@ msgstr ""
 
 #: Bookmarked.php:243
 msgctxt "Type Option"
-msgid "Neshan Map"
+msgid "Behkhaan Profile"
 msgstr ""
 
 #: Bookmarked.php:251
 msgctxt "Type Option"
-msgid "Balad Map"
+msgid "Neshan Map"
 msgstr ""
 
 #: Bookmarked.php:259
 msgctxt "Type Option"
-msgid "Aparat Video"
+msgid "Balad Map"
 msgstr ""
 
 #: Bookmarked.php:267
 msgctxt "Type Option"
-msgid "Youtube Video"
+msgid "Aparat Video"
 msgstr ""
 
 #: Bookmarked.php:275
 msgctxt "Type Option"
-msgid "Email Address"
+msgid "Youtube Video"
 msgstr ""
 
 #: Bookmarked.php:283
 msgctxt "Type Option"
-msgid "Phone Number"
+msgid "Email Address"
 msgstr ""
 
 #: Bookmarked.php:291
 msgctxt "Type Option"
-msgid "Mobile Number"
+msgid "Phone Number"
 msgstr ""
 
 #: Bookmarked.php:299
 msgctxt "Type Option"
-msgid "SMS Number"
+msgid "Mobile Number"
 msgstr ""
 
 #: Bookmarked.php:307
+msgctxt "Type Option"
+msgid "SMS Number"
+msgstr ""
+
+#: Bookmarked.php:315
 msgctxt "Type Option"
 msgid "PDF Document"
 msgstr ""
 
 #. translators: %s: post title
-#: Bookmarked.php:387
+#: Bookmarked.php:395
 msgctxt "Page Title"
 msgid "Bookmarks Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Bookmarked.php:389
+#: Bookmarked.php:397
 msgctxt "Page Title"
 msgid "Bookmarks Overview for %s"
 msgstr ""
 
-#: Bookmarked.php:425
+#: Bookmarked.php:433
 msgctxt "Default Term: Audit"
 msgid "Empty Bookmarks Data"
 msgstr ""

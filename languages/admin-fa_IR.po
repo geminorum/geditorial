@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-10-13 23:53+0330\n"
+"PO-Revision-Date: 2024-11-24 12:13+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -1254,11 +1254,6 @@ msgctxt "Modules: Byline"
 msgid "Byline"
 msgstr "خط تألیف"
 
-#: includes/Modules/Byline/Byline.php:25
-msgctxt "Modules: Byline"
-msgid "[CHANGE ME]"
-msgstr ""
-
 #: includes/Modules/Calendar/Calendar.php:24
 msgctxt "Modules: Calendar"
 msgid "Calendar"
@@ -1823,6 +1818,11 @@ msgstr "پی‌گیری"
 msgctxt "Modules: Follow"
 msgid "Notifications for Users and Groups"
 msgstr "آگاه‌سازی گروه‌ها و کاربران"
+
+#: includes/Modules/Footnotes/Footnotes.php:21
+msgctxt "Modules: Footnotes"
+msgid "Footnotes"
+msgstr "پانویس‌ها"
 
 #: includes/Modules/Gallery/Gallery.php:18
 msgctxt "Modules: Gallery"
@@ -2735,17 +2735,17 @@ msgctxt "Modules: Rulesets"
 msgid "Content Protections"
 msgstr "حفاظت از محتوا"
 
-#: includes/Modules/Schedule/Schedule.php:25
+#: includes/Modules/Schedule/Schedule.php:27
 msgctxt "Modules: Schedule"
 msgid "Schedule"
 msgstr "زمان‌بندی"
 
-#: includes/Modules/Schedule/Schedule.php:26
+#: includes/Modules/Schedule/Schedule.php:28
 msgctxt "Modules: Schedule"
 msgid "Viewing and Schedule Content in a Customizable Calendar"
 msgstr "نمایش و زمان‌بندی محتوا در روی تقویم"
 
-#: includes/Modules/Schedule/Schedule.php:30
+#: includes/Modules/Schedule/Schedule.php:32
 msgctxt "Modules: Schedule"
 msgid "Needs gPersianDate"
 msgstr "افزونه تاریخ ایرانی پیدا نشد"
@@ -2865,12 +2865,12 @@ msgctxt "Modules: Skilled"
 msgid "Editorial Expertise"
 msgstr "تخصص در تحریریه"
 
-#: includes/Modules/Socialite/Socialite.php:26
+#: includes/Modules/Socialite/Socialite.php:27
 msgctxt "Modules: Socialite"
 msgid "Socialite"
 msgstr "معاشر"
 
-#: includes/Modules/Socialite/Socialite.php:27
+#: includes/Modules/Socialite/Socialite.php:28
 msgctxt "Modules: Socialite"
 msgid "Editorial Social Card"
 msgstr "کارت اجتماعی تحریریه"
@@ -3465,12 +3465,12 @@ msgctxt "Modules: WC Tabs"
 msgid "Product Tab Enhancements for WooCommerce"
 msgstr "بهینه‌سازی زبانه‌های کالا برای ووکامرس"
 
-#: includes/Modules/WcTweaks/WcTweaks.php:20
+#: includes/Modules/WcTweaks/WcTweaks.php:24
 msgctxt "Modules: WC Tweaks"
 msgid "WC Tweaks"
 msgstr "وکـ ظرافت‌ها"
 
-#: includes/Modules/WcTweaks/WcTweaks.php:21
+#: includes/Modules/WcTweaks/WcTweaks.php:25
 msgctxt "Modules: WC Tweaks"
 msgid "Tweaks for WooCommerce"
 msgstr "ظرافت‌هایی برای ووکامرس"
@@ -8206,10 +8206,6 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgctxt "Modules: Ortho: Javascript String"
 #~ msgid "Swap Not-Correct Quotes"
 #~ msgstr "جابه‌جایی علامت‌های نقل قول"
-
-#~ msgctxt "Modules: Ortho: Javascript String"
-#~ msgid "Word Footnotes"
-#~ msgstr "پانویس‌های ورد"
 
 #~ msgctxt "Modules: Ortho: Javascript String"
 #~ msgid "MS Word Footnotes to WordPress [ref]"

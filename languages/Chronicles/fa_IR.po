@@ -3,173 +3,193 @@ msgstr ""
 "Project-Id-Version: gEditorial Chronicles\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-10 03:02+0330\n"
+"PO-Revision-Date: 2024-11-24 12:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Chronicles\n"
 "X-Domain: geditorial-chronicles\n"
 
-#: Chronicles.php:77
+#: Chronicles.php:79
 msgctxt "Field Label: `label`"
 msgid "Significance"
 msgstr "عنوان"
 
-#: Chronicles.php:78
+#: Chronicles.php:80
 msgctxt "Field Label: `date`"
 msgid "Date"
 msgstr "تاریخ"
 
-#: Chronicles.php:79
+#: Chronicles.php:81
 msgctxt "Field Label: `time`"
 msgid "Time"
 msgstr "زمان"
 
-#: Chronicles.php:80
+#: Chronicles.php:82
 msgctxt "Field Label: `location`"
 msgid "Location"
 msgstr "مکان"
 
-#: Chronicles.php:81
+#: Chronicles.php:83
 msgctxt "Field Label: `duration`"
 msgid "Duration"
 msgstr "مدت"
 
-#: Chronicles.php:82
+#: Chronicles.php:84
 msgctxt "Field Label"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Chronicles.php:88
+#: Chronicles.php:90
 msgctxt "Notice"
 msgid "There is no timeline information available!"
 msgstr "هیچ اطلاعات گاه‌نمایی در دسترس نیست!"
 
-#: Chronicles.php:89
+#: Chronicles.php:91
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the timeline data."
 msgstr "شما دسترسی لازم برای مدیریت داده‌های گاه‌نمایی را ندارید."
 
-#: Chronicles.php:96
+#: Chronicles.php:98
 msgctxt "MetaBox Title"
 msgid "Timeline"
 msgstr "گاه‌نمایی"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Chronicles.php:100
+#: Chronicles.php:102
 msgctxt "Button Title"
 msgid "Timeline of %1$s"
 msgstr "گاه‌نمایی برای %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Chronicles.php:102
+#: Chronicles.php:104
 msgctxt "Button Text"
 msgid "%1$s Manage the Timeline of %2$s"
 msgstr "%1$s مدیریت گاه‌نمایی برای %2$s"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Chronicles.php:105
+#: Chronicles.php:107
 msgctxt "Action Title"
 msgid "Timeline of %1$s"
 msgstr "گاه‌نمایی برای %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Chronicles.php:107
+#: Chronicles.php:109
 msgctxt "Action Text"
 msgid "Timeline"
 msgstr "گاه‌نمایی"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Chronicles.php:110
+#: Chronicles.php:112
 msgctxt "Row Title"
 msgid "Timeline of %1$s"
 msgstr "گاه‌نمایی برای %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Chronicles.php:112
+#: Chronicles.php:114
 msgctxt "Row Text"
 msgid "Timeline"
 msgstr "گاه‌نمایی"
 
-#: Chronicles.php:126
+#: Chronicles.php:129
 msgctxt "Field Title"
 msgid "Establish Date"
 msgstr "تاریخ ایجاد"
 
-#: Chronicles.php:127
+#: Chronicles.php:130
 msgctxt "Field Description"
 msgid "The Date on Which the Organization Was Established"
 msgstr "تاریخی که سازمان در آن تأسیس شده است"
 
-#: Chronicles.php:135
+#: Chronicles.php:138
 msgctxt "Field Title"
 msgid "Abolish Date"
 msgstr "تاریخ انحلال"
 
-#: Chronicles.php:136
+#: Chronicles.php:139
 msgctxt "Field Description"
 msgid ""
 "The Date on Which the Organization Was Terminated, Disbanded, Inactivated, "
 "or Superseded"
 msgstr "تاریخی که سازمان در آن منحل، غیرفعال شدن یا ادغام شده است"
 
-#: Chronicles.php:144
+#: Chronicles.php:146
+msgctxt "Field Title"
+msgid "Release Date"
+msgstr "تاریخ عرضه"
+
+#: Chronicles.php:147
+msgctxt "Field Description"
+msgid "The Date on Which the Product will Released"
+msgstr "تاریخی که در آن کالا عرضه خواهد شد"
+
+#: Chronicles.php:154
+msgctxt "Field Title"
+msgid "Expire Date"
+msgstr "تاریخ انقضا"
+
+#: Chronicles.php:155
+msgctxt "Field Description"
+msgid "The Date on Which the Product will Expired"
+msgstr "تاریخی که در آن کالا منقضی می‌شود"
+
+#: Chronicles.php:163
 msgctxt "Field Title"
 msgid "Date of Birth"
 msgstr "تاریخ تولد"
 
-#: Chronicles.php:145
+#: Chronicles.php:164
 msgctxt "Field Description"
 msgid "The Date on Which the Person Was Born"
 msgstr "تاریخی که در آن شخص متولد شده است"
 
-#: Chronicles.php:153
+#: Chronicles.php:172
 msgctxt "Field Title"
 msgid "Date of Death"
 msgstr "تاریخ درگذشت"
 
-#: Chronicles.php:154
+#: Chronicles.php:173
 msgctxt "Field Description"
 msgid "The Date on Which the Person Died"
 msgstr "تاریخی که در آن شخص درگذشته است"
 
-#: Chronicles.php:161
+#: Chronicles.php:180
 msgctxt "Field Title"
 msgid "Place of Birth"
 msgstr "مکان تولد"
 
-#: Chronicles.php:162
+#: Chronicles.php:181
 msgctxt "Field Description"
 msgid "Place Where the Person was Born"
 msgstr "مکانی که فرد در آن متولد شده است"
 
-#: Chronicles.php:169
+#: Chronicles.php:187
 msgctxt "Field Title"
 msgid "Place of Death"
 msgstr "مکان درگذشت"
 
-#: Chronicles.php:170
+#: Chronicles.php:188
 msgctxt "Field Description"
 msgid "Place Where the Person Died"
 msgstr "مکانی که فرد در آن درگذشته است"
 
 #. translators: %s: post title
-#: Chronicles.php:284
+#: Chronicles.php:310
 msgctxt "Page Title"
 msgid "Timeline Grid for %s"
 msgstr "جدول گاه‌نمایی برای %s"
 
 #. translators: %s: post title
-#: Chronicles.php:286
+#: Chronicles.php:312
 msgctxt "Page Title"
 msgid "Timeline Overview for %s"
 msgstr "نمای‌کلی گاه‌نمایی برای %s"
 
-#: Chronicles.php:303
+#: Chronicles.php:329
 msgctxt "Default Term: Audit"
 msgid "Empty Timeline Data"
 msgstr "داده‌های گاه‌نمایی خالی"

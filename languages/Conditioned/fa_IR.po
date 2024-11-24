@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Conditioned\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 14:36+0330\n"
+"PO-Revision-Date: 2024-11-06 00:31+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,37 +11,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Conditioned\n"
 "X-Domain: geditorial-conditioned\n"
 
-#: Conditioned.php:84
+#: Conditioned.php:86
 msgid "Condition"
 msgid_plural "Conditions"
 msgstr[0] "شرایط"
 msgstr[1] "شرط"
 
-#: Conditioned.php:88
+#: Conditioned.php:90
 msgctxt "Label: Menu Name"
 msgid "Condition Ranks"
 msgstr "رتبه‌های شرایط"
 
-#: Conditioned.php:89
+#: Conditioned.php:91
 msgctxt "Label: Show Option All"
 msgid "Condition Ranks"
 msgstr "رتبه‌های شرایط"
 
-#: Conditioned.php:90
+#: Conditioned.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Unranked)"
 msgstr "(بی‌رتبه)"
 
-#: Conditioned.php:99
+#: Conditioned.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Definition Summary"
 msgstr ""
 
-#: Conditioned.php:100
+#: Conditioned.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Definition Summary"
 msgstr ""

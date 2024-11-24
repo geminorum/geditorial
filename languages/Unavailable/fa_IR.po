@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Unavailable\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-09-04 20:54+0330\n"
+"PO-Revision-Date: 2024-11-24 12:18+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,71 +11,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Unavailable\n"
 "X-Domain: geditorial-unavailable\n"
 
-#: Unavailable.php:32
+#: Unavailable.php:36
 msgctxt "Settings"
 msgid "Archived Comments"
 msgstr "بایگانی برای دیدگاه‌ها"
 
-#: Unavailable.php:33
+#: Unavailable.php:37
 msgctxt "Settings"
 msgid "Activates archived status for comments and hides them from the counts."
 msgstr "وضعیت بایگانی‌شده برای دیدگاه‌ها را فعال کرده و آن‌ها را از شمارش پنهان می‌کند."
 
-#: Unavailable.php:89
+#: Unavailable.php:93
 msgctxt "Message"
 msgid "Restored"
 msgstr "بازنشانی‌شده"
 
-#: Unavailable.php:103
+#: Unavailable.php:107
 msgctxt "Message"
 msgid "Archived"
 msgstr "بایگانی"
 
-#: Unavailable.php:140
+#: Unavailable.php:144
 msgctxt "Status Link"
 msgid "Archived"
 msgstr "بایگانی"
 
-#: Unavailable.php:157
+#: Unavailable.php:161
 msgctxt "Action"
 msgid "Loading"
 msgstr "بارگیری"
 
-#: Unavailable.php:158
+#: Unavailable.php:162
 msgctxt "Action"
 msgid "Error!"
 msgstr "خطا!"
 
-#: Unavailable.php:166
+#: Unavailable.php:170
 msgctxt "Action"
 msgid "Restore this comment from the Archived"
 msgstr "بازیابی این دیدگاه از بایگانی"
 
-#: Unavailable.php:167
+#: Unavailable.php:171
 msgctxt "Action"
 msgid "Restore"
 msgstr "بازیابی"
 
-#: Unavailable.php:176
+#: Unavailable.php:180
 msgctxt "Action"
 msgid "Send this comment to the Archived"
 msgstr "ارسال این دیدگاه به بایگانی"
 
-#: Unavailable.php:177
+#: Unavailable.php:181
 msgctxt "Action"
 msgid "Archive"
 msgstr "بایگانی"
 
-#: Unavailable.php:184
+#: Unavailable.php:188
 msgctxt "Action"
 msgid "Restore from Archived"
 msgstr "بازیابی از بایگانی"
 
-#: Unavailable.php:187
+#: Unavailable.php:191
 msgctxt "Action"
 msgid "Move to Archived"
 msgstr "انتقال به بایگانی"

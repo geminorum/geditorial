@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Papered\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-18 05:27+0330\n"
+"PO-Revision-Date: 2024-11-24 12:22+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Papered\n"
 "X-Domain: geditorial-papered\n"
 
@@ -134,57 +134,57 @@ msgctxt "Sheet Padding"
 msgid "25mm Sheet Padding"
 msgstr "حاشیه ۲۵ م‌م برگه"
 
-#: Papered.php:169
+#: Papered.php:167
 msgctxt "Primary Taxonomy: Default Term"
 msgid "Featured"
 msgstr "برگزیده"
 
-#: Papered.php:170
+#: Papered.php:168
 msgctxt "Primary Taxonomy: Default Term"
 msgid "Deprecated"
 msgstr "منسوخ"
 
-#: Papered.php:173
+#: Papered.php:171
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Libre Fonts"
 msgstr "نیازمند قلم‌های لیبره"
 
-#: Papered.php:174
+#: Papered.php:172
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Vazir Fonts"
 msgstr "نیازمند قلم‌های وزیر"
 
-#: Papered.php:175
+#: Papered.php:173
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Nastaliq Fonts"
 msgstr "نیازمند قلم‌های نستعلیق"
 
-#: Papered.php:176
+#: Papered.php:174
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Bootstrap 5"
 msgstr "نیازمند بوتس‌ترپ ۵"
 
-#: Papered.php:177
+#: Papered.php:175
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Titr Fonts"
 msgstr "نیازمند قلم‌های تیتر"
 
-#: Papered.php:178
+#: Papered.php:176
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Barcode"
 msgstr "نیازمند بارکد"
 
-#: Papered.php:179
+#: Papered.php:177
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs QR-Code"
 msgstr "نیازمند کیوآر-کد"
 
-#: Papered.php:180
+#: Papered.php:178
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Global Summary"
 msgstr "نیاز به خلاصه‌وضعیت کلی"
 
-#: Papered.php:544
+#: Papered.php:543
 msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr "هیچ نمایه چاپی در دسترسی نیست!"

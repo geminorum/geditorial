@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Certificated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 14:35+0330\n"
+"PO-Revision-Date: 2024-11-24 12:25+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,32 +11,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Certificated\n"
 "X-Domain: geditorial-certificated\n"
 
-#: Certificated.php:85
+#: Certificated.php:87
 msgid "Certification"
 msgid_plural "Certifications"
 msgstr[0] "گواهی‌ها"
 msgstr[1] "گواهی"
 
-#: Certificated.php:89
+#: Certificated.php:91
 msgctxt "Label: Show Option All"
 msgid "Certifications"
 msgstr "گواهی"
 
-#: Certificated.php:90
+#: Certificated.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Un-certificated)"
 msgstr "(بی‌گواهی)"
 
-#: Certificated.php:99
+#: Certificated.php:101
 msgctxt "Dashboard Widget Title"
 msgid "Your Team Certification Summary"
 msgstr "گزارش گواهی‌های گروهه شما"
 
-#: Certificated.php:100
+#: Certificated.php:102
 msgctxt "Dashboard Widget Title"
 msgid "Editorial Certification Summary"
 msgstr "گزارش گواهی‌های تحریریه"

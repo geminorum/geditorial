@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-10-13 23:53+0330\n"
+"PO-Revision-Date: 2024-11-24 12:10+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -1819,7 +1819,7 @@ msgctxt "Internal: PrintPage: Setting Section Title"
 msgid "Printing"
 msgstr "چاپ"
 
-#: includes/Internals/RawImports.php:81
+#: includes/Internals/RawImports.php:80
 msgctxt "Module: Importer Button"
 msgid "Go to Imports"
 msgstr "صفحه درون‌ریزی"
@@ -2189,127 +2189,127 @@ msgctxt "ShortCode: Title Attr"
 msgid "Permanent link"
 msgstr "پیوند پایدار"
 
-#: includes/Tablelist.php:117
+#: includes/Tablelist.php:161
 msgctxt "Tablelist: Filter"
 msgid "All PostTypes"
 msgstr "همهٔ نوع‌نوشته‌ها"
 
-#: includes/Tablelist.php:133
+#: includes/Tablelist.php:177
 msgctxt "Tablelist: Filter"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: includes/Tablelist.php:157
+#: includes/Tablelist.php:201
 msgctxt "Tablelist: Row Action: Post"
 msgid "Attached"
 msgstr "پیوست"
 
-#: includes/Tablelist.php:170
+#: includes/Tablelist.php:214
 msgctxt "Tablelist: Row Action: Post"
 msgid "Revisions"
 msgstr "رونوشت‌ها"
 
-#: includes/Tablelist.php:183
+#: includes/Tablelist.php:227
 msgctxt "Tablelist: Row Action: Post"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: includes/Tablelist.php:193
+#: includes/Tablelist.php:237
 msgctxt "Tablelist: Row Action: Post"
 msgid "View"
 msgstr "نمایش"
 
-#: includes/Tablelist.php:230
+#: includes/Tablelist.php:274
 msgctxt "Tablelist: Row Action"
 msgid "View"
 msgstr "نمایش"
 
-#: includes/Tablelist.php:242
+#: includes/Tablelist.php:286
 msgctxt "Tablelist: Column: Post ID"
 msgid "ID"
 msgstr "شناسه"
 
-#: includes/Tablelist.php:249
+#: includes/Tablelist.php:293
 msgctxt "Tablelist: Column: Post Date"
 msgid "Date"
 msgstr "تاریخ"
 
-#: includes/Tablelist.php:259
+#: includes/Tablelist.php:303
 msgctxt "Tablelist: Column: Post Date Modified"
 msgid "On"
 msgstr "تاریخ"
 
-#: includes/Tablelist.php:269
+#: includes/Tablelist.php:313
 msgctxt "Tablelist: Column: Post Type"
 msgid "Type"
 msgstr "نوع"
 
-#: includes/Tablelist.php:282
+#: includes/Tablelist.php:326
 msgctxt "Tablelist: Column: Post Mime"
 msgid "Mime"
 msgstr "مایم"
 
-#: includes/Tablelist.php:296 includes/Tablelist.php:351
+#: includes/Tablelist.php:340 includes/Tablelist.php:395
 msgctxt "Tablelist: Column: Post Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: includes/Tablelist.php:339
+#: includes/Tablelist.php:383
 msgctxt "Tablelist: Column: Post Excerpt"
 msgid "Excerpt"
 msgstr "چکیده"
 
-#: includes/Tablelist.php:361
+#: includes/Tablelist.php:405
 msgctxt "Tablelist: Column: Post Title"
 msgid "Status"
 msgstr "وضعیت"
 
-#: includes/Tablelist.php:379
+#: includes/Tablelist.php:423
 msgctxt "Tablelist: Column: Post Author"
 msgid "Author"
 msgstr "مؤلف"
 
-#: includes/Tablelist.php:399
+#: includes/Tablelist.php:443
 msgctxt "Tablelist: Column: Post Terms"
 msgid "Terms"
 msgstr "رده‌ها"
 
-#: includes/Tablelist.php:414
+#: includes/Tablelist.php:458
 msgctxt "Tablelist: Column: Term ID"
 msgid "ID"
 msgstr "شناسه"
 
-#: includes/Tablelist.php:420
+#: includes/Tablelist.php:464
 msgctxt "Tablelist: Column: Term Name"
 msgid "Name"
 msgstr "نام"
 
-#: includes/Tablelist.php:464
+#: includes/Tablelist.php:508
 msgctxt "Tablelist: Row Action: Term"
 msgid "Edit"
 msgstr "ویرایش"
 
-#: includes/Tablelist.php:473
+#: includes/Tablelist.php:517
 msgctxt "Tablelist: Row Action: Term"
 msgid "View"
 msgstr "نمایش"
 
-#: includes/Tablelist.php:483
+#: includes/Tablelist.php:527
 msgctxt "Tablelist: Column: Term Slug"
 msgid "Slug"
 msgstr "نامک"
 
-#: includes/Tablelist.php:489
+#: includes/Tablelist.php:533
 msgctxt "Tablelist: Column: Term Desc"
 msgid "Description"
 msgstr "توضیحات"
 
-#: includes/Tablelist.php:501
+#: includes/Tablelist.php:545
 msgctxt "Tablelist: Column: Term Meta Date-Start"
 msgid "Date-Start"
 msgstr "تاریخ شروع"
 
-#: includes/Tablelist.php:520
+#: includes/Tablelist.php:564
 msgctxt "Tablelist: Column: Term Meta Date-Start"
 msgid "Date-End"
 msgstr "تاریخ پایان"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Phonebook\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-09-02 13:39+0330\n"
+"PO-Revision-Date: 2024-11-24 12:22+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Phonebook\n"
 "X-Domain: geditorial-phonebook\n"
 
@@ -164,7 +164,7 @@ msgstr "کد پستی"
 #: Phonebook.php:165
 msgctxt "Field Description"
 msgid "Postal Code about the Content."
-msgstr "کدپستی مربوط محتوا"
+msgstr "اطلاعات کدپستی مربوط محتوا."
 
 #: Phonebook.php:170
 msgctxt "Field Title"
@@ -227,43 +227,43 @@ msgid "Full address to Be reached on Emergency"
 msgstr "نشانی کامل محلی که در مواقع اضطراری به آن مراجعه شود"
 
 #. translators: %s: post title
-#: Phonebook.php:336
+#: Phonebook.php:329
 msgctxt "Page Title"
 msgid "Contact Grid for %s"
 msgstr "جدول تماس‌ها برای %s"
 
 #. translators: %s: post title
-#: Phonebook.php:338
+#: Phonebook.php:331
 msgctxt "Page Title"
 msgid "Contacts Overview for %s"
 msgstr "بررسی تماس‌های %s"
 
-#: Phonebook.php:355
+#: Phonebook.php:348
 msgctxt "Default Term: Audit"
 msgid "Empty Contact Data"
 msgstr "اطلاعات تماس خالی"
 
-#: Phonebook.php:356
+#: Phonebook.php:349
 msgctxt "Default Term: Audit"
 msgid "Empty Mobile Number"
 msgstr "شماره همراه خالی"
 
-#: Phonebook.php:520
+#: Phonebook.php:513
 msgctxt "Possible Phone Key"
 msgid "Mobile"
 msgstr "همراه"
 
-#: Phonebook.php:521
+#: Phonebook.php:514
 msgctxt "Possible Phone Key"
 msgid "Mobile Phone"
 msgstr "تلفن همراه"
 
-#: Phonebook.php:522
+#: Phonebook.php:515
 msgctxt "Possible Phone Key"
 msgid "Phone"
 msgstr "تلفن"
 
-#: Phonebook.php:523
+#: Phonebook.php:516
 msgctxt "Possible Phone Key"
 msgid "Phone Number"
 msgstr "شماره تلفن"

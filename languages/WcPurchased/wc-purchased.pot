@@ -23,48 +23,48 @@ msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WcPurchased.php:92
+#: WcPurchased.php:104
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr ""
 
-#: WcPurchased.php:95
+#: WcPurchased.php:107
 msgctxt "Action"
 msgid "Purchases"
 msgstr ""
 
-#: WcPurchased.php:104
-#: WcPurchased.php:107
+#: WcPurchased.php:116
+#: WcPurchased.php:119
 msgctxt "Message"
 msgid "No Product!"
 msgstr ""
 
-#: WcPurchased.php:110
+#: WcPurchased.php:122
 msgctxt "Message"
 msgid "No Orders!"
 msgstr ""
 
-#: WcPurchased.php:123
+#: WcPurchased.php:135
 msgctxt "Button"
 msgid "Export CSV"
 msgstr ""
 
-#: WcPurchased.php:134
+#: WcPurchased.php:146
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WcPurchased.php:140
+#: WcPurchased.php:152
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr ""
 
-#: WcPurchased.php:147
+#: WcPurchased.php:159
 msgctxt "Column Title"
 msgid "Address"
 msgstr ""
 
-#: WcPurchased.php:153
+#: WcPurchased.php:165
 msgctxt "Column Title"
 msgid "Total"
 msgstr ""

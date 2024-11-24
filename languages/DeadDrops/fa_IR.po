@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial DeadDrops\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-09-06 01:43+0330\n"
+"PO-Revision-Date: 2024-11-03 03:57+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -14,19 +14,19 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/DeadDrops\n"
 "X-Domain: geditorial-dead-drops\n"
 
-#: DeadDrops.php:44
+#: DeadDrops.php:46
 msgctxt "Setting Title"
 msgid "Signal Instructions"
 msgstr "راهنمای سیگنال"
 
-#: DeadDrops.php:45
+#: DeadDrops.php:47
 msgctxt "Setting Description"
 msgid ""
 "Displays beside the qr-code on the signalling pop-up. Leave blank for default."
 msgstr ""
 "در کنار کد کی‌آر در صفحه سیگنال نمایش داده خواهد شد. برای پیش‌فرض خالی بگذارید."
 
-#: DeadDrops.php:46 DeadDrops.php:131
+#: DeadDrops.php:48 DeadDrops.php:134
 msgctxt "Message"
 msgid "Scan this with your phone and open it to upload files anonymously."
 msgstr ""
@@ -34,12 +34,12 @@ msgstr ""
 "مرورگر باز کنید."
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: DeadDrops.php:71
+#: DeadDrops.php:73
 msgctxt "Label: Extended Label"
 msgid "Dead Drop for %1$s"
 msgstr "سقوط آزاد برای %1$s"
 
-#: DeadDrops.php:228
+#: DeadDrops.php:232
 msgctxt "Header Button"
 msgid "Dead Drop"
 msgstr "سقوط آزاد"

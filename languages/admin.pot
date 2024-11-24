@@ -1257,11 +1257,6 @@ msgctxt "Modules: Byline"
 msgid "Byline"
 msgstr ""
 
-#: includes/Modules/Byline/Byline.php:25
-msgctxt "Modules: Byline"
-msgid "[CHANGE ME]"
-msgstr ""
-
 #: includes/Modules/Calendar/Calendar.php:24
 msgctxt "Modules: Calendar"
 msgid "Calendar"
@@ -1825,6 +1820,11 @@ msgstr ""
 #: includes/Modules/Follow/Follow.php:46
 msgctxt "Modules: Follow"
 msgid "Notifications for Users and Groups"
+msgstr ""
+
+#: includes/Modules/Footnotes/Footnotes.php:21
+msgctxt "Modules: Footnotes"
+msgid "Footnotes"
 msgstr ""
 
 #: includes/Modules/Gallery/Gallery.php:18
@@ -2738,17 +2738,17 @@ msgctxt "Modules: Rulesets"
 msgid "Content Protections"
 msgstr ""
 
-#: includes/Modules/Schedule/Schedule.php:25
+#: includes/Modules/Schedule/Schedule.php:27
 msgctxt "Modules: Schedule"
 msgid "Schedule"
 msgstr ""
 
-#: includes/Modules/Schedule/Schedule.php:26
+#: includes/Modules/Schedule/Schedule.php:28
 msgctxt "Modules: Schedule"
 msgid "Viewing and Schedule Content in a Customizable Calendar"
 msgstr ""
 
-#: includes/Modules/Schedule/Schedule.php:30
+#: includes/Modules/Schedule/Schedule.php:32
 msgctxt "Modules: Schedule"
 msgid "Needs gPersianDate"
 msgstr ""
@@ -2868,12 +2868,12 @@ msgctxt "Modules: Skilled"
 msgid "Editorial Expertise"
 msgstr ""
 
-#: includes/Modules/Socialite/Socialite.php:26
+#: includes/Modules/Socialite/Socialite.php:27
 msgctxt "Modules: Socialite"
 msgid "Socialite"
 msgstr ""
 
-#: includes/Modules/Socialite/Socialite.php:27
+#: includes/Modules/Socialite/Socialite.php:28
 msgctxt "Modules: Socialite"
 msgid "Editorial Social Card"
 msgstr ""
@@ -3468,12 +3468,12 @@ msgctxt "Modules: WC Tabs"
 msgid "Product Tab Enhancements for WooCommerce"
 msgstr ""
 
-#: includes/Modules/WcTweaks/WcTweaks.php:20
+#: includes/Modules/WcTweaks/WcTweaks.php:24
 msgctxt "Modules: WC Tweaks"
 msgid "WC Tweaks"
 msgstr ""
 
-#: includes/Modules/WcTweaks/WcTweaks.php:21
+#: includes/Modules/WcTweaks/WcTweaks.php:25
 msgctxt "Modules: WC Tweaks"
 msgid "Tweaks for WooCommerce"
 msgstr ""
