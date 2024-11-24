@@ -44,4 +44,19 @@ trait CoreRoles
 
 		return $fallback;
 	}
+
+	/**
+	 * Overrides the current-user-check for customized contexts.
+	 *
+	 * @param  string $context
+	 * @param  string $fallback
+	 * @param  array  $customized
+	 * @return mixed  $overrided
+	 */
+	protected function _override_module_cuc( $context = 'settings', $fallback = '', $customized = NULL )
+	{
+		return in_array( $context, $customized ?? [ 'reports' ], TRUE )
+			? $this->role_can( $context, NULL, $fallback )
+			: parent::cuc( $context, $fallback );
+	}
 }

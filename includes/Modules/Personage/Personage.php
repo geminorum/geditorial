@@ -60,6 +60,7 @@ class Personage extends gEditorial\Module
 			'_roles' => [
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
+				'tools_roles'   => [ NULL, $roles ],
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
@@ -993,9 +994,7 @@ class Personage extends gEditorial\Module
 
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' === $context
-			? $this->role_can( $context )
-			: parent::cuc( $context, $fallback );
+		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'tools' ] );
 	}
 
 	public function tools_settings( $sub )
@@ -1040,6 +1039,7 @@ class Personage extends gEditorial\Module
 			'type'         => 'textarea',
 			'field'        => 'pool',
 			'dir'          => 'rtl',
+			'cap'          => TRUE,
 			'field_class'  => 'textarea-autosize',
 			'option_group' => 'tools',
 		] );
