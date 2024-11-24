@@ -271,7 +271,7 @@ JS;
 	 * @param  string $ver
 	 * @return string $handle
 	 */
-	public static function pkgSheetJS( $enqueue = FALSE, $ver = '0.20.0' )
+	public static function pkgSheetJS( $enqueue = FALSE, $ver = '0.20.3' )
 	{
 		$handle = 'xlsx'; // NOTE: no prefix to use as dep for apps.
 
