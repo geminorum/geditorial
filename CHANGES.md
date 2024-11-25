@@ -1,3 +1,82 @@
+### 3.30.0
+* internal/core-admin: display taxonomy states
+* internal/core-admin: multiple supported column for taxonomies
+* internal/core-admin: state background color based on the term color
+* internal/core-post-type: support for status taxonomy prop
+* internal/core-roles: moved from module main
+* internal/core-roles: override module cuc
+* internal/core-row-actions: force default term
+* internal/core-users: renamed from core-roles
+* internal/dashboard-summary: support summary by paired
+* internal/post-meta: hook column row revised
+* internal/post-type-fields: enqueue for edit screens
+* internal/post-type-fields: hook edit screen
+* internal/post-type-fields: initial support for distance type fields
+* internal/post-type-fields: moving up render/store meta-box
+* internal/post-type-fields: support access checks on quick-edit
+* internal/post-type-fields: support for area type
+* internal/post-type-fields: support meta caps on access checks
+* internal/settings-core: support side-box for all main contexts
+* internal/settings-roles: mover from module main
+* internal/sub-contents: check for supported comment type
+* internal/sub-contents: support for selectable fields
+* internal/sub-contents: support for type options
+* internal/sub-contents: thrift mode on column rows
+* main/info: abbreviation for units
+* main/meta-box: passing data unit/length to html tags
+* main/parser: :new: main
+* main/scripts: click to clip api
+* main/scripts: color-box support full width on mobile
+* main/scripts: initial support for chart.js
+* main/scripts: support for dropzone.js
+* main/settings: constant for hiding credits
+* main/tablelist: support query for all posts/terms
+* main/template: move field methods to post-type-fields service
+* module/attachments: support summary pointer
+* module/bookmarked: :new: module
+* module/bookmarked: support for Behkhaan
+* module/bookmarked: support for logo extension
+* module/chronicles: support for release/expire fields
+* module/config: primitive and meta caps for editorial pages
+* module/dead-drops: :new: module
+* module/dead-drops: additional salt
+* module/directorate: :new: module
+* module/happening: :warning: renamed from `event`
+* module/housed: support for units
+* module/housed: support sub-content data for visiting
+* module/importer: :new: wizard for new/append/override terms
+* module/importer: apply single term prop on taxonomy assignments
+* module/importer: better user data handling
+* module/importer: extract callback for row checks
+* module/importer: handling steps revised
+* module/importer: select single term via service
+* module/importer: source mime-types unified
+* module/importer: static cover image import for posts
+* module/importer: support more than one upload button
+* module/importer: toolbox card for first steps
+* module/iranian: city/country summary reports
+* module/iranian: data updated
+* module/meta: support for duration field type
+* module/mobilized: :new: module
+* module/overwrite: exclude paired taxonomies
+* module/phonebook: prep address revised
+* module/pointers: render on static-covers summaries
+* module/positions: check for profile before action/column
+* module/remoted: check for upload url
+* module/socialite: support for Behkhaan
+* module/static-covers: support for secondary post covers
+* module/tabloid: edit action button
+* module/terms: support for `fullname` field
+* module/users: tools for duplicate/remove current roles
+* service/header-buttons: :new: service
+* service/header-buttons: migrate old buttons
+* service/post-type-fields: prep meta row moved
+* service/primary-taxonomy: :new: service
+* service/search-select: result extra for terms
+* service/term-hierarchy: quick-edit support for single select taxonomies
+* service/term-hierarchy: single term select prop
+* service/term-hierarchy: support for auto assigned taxonomies
+
 ### 3.29.2
 * internal/settings-core: render upload field
 * module/config: export/import all options
