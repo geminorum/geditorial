@@ -23,7 +23,7 @@
     "build": "md .build && cd .build && git clone https://github.com/geminorum/geditorial . && composer install --no-dev --optimize-autoloader --prefer-dist -v && yarn install && gulp build",
     "ready:old": "gulp ready",
     "ready": "gulp dev:scripts ready",
-    "refresh": "gulp dev:styles dev:scripts --stack-size=1000",
+    "refresh": "gulp dev:styles dev:scripts i18n:php --stack-size=1000",
     "i18n:gulp": "gulp pot",
     "i18n:php:old": "wp i18n make-php ./languages",
     "i18n:php": "gulp i18n:php",
