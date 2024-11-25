@@ -971,68 +971,68 @@ msgid "By %s"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:380
+#: includes/Module.php:382
 msgctxt "Module: Extra Link: Reports"
 msgid "%s Reports"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:391
+#: includes/Module.php:393
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Tools"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:402
+#: includes/Module.php:404
 msgctxt "Module: Extra Link: Roles"
 msgid "%s Roles"
 msgstr ""
 
 #. translators: %s: sub title
-#: includes/Module.php:413
+#: includes/Module.php:415
 msgctxt "Module: Extra Link: Tools"
 msgid "%s Imports"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Module.php:423
+#: includes/Module.php:425
 msgctxt "Module: Extra Link: Settings"
 msgid "%s Settings"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Module.php:436
+#: includes/Module.php:438
 msgctxt "Module: Extra Link: Documentation"
 msgid "%s Documentation"
 msgstr ""
 
-#: includes/Module.php:443
 #: includes/Module.php:445
+#: includes/Module.php:447
 msgctxt "Module: Extra Link: Documentation"
 msgid "Editorial Documentation"
 msgstr ""
 
-#: includes/Module.php:563
+#: includes/Module.php:565
 msgctxt "Module: Setting Title"
 msgid "Insert Priority"
 msgstr ""
 
-#: includes/Module.php:858
+#: includes/Module.php:802
 msgctxt "Module: MetaBox Default Title"
 msgid "Settings"
 msgstr ""
 
-#: includes/Module.php:877
+#: includes/Module.php:821
 msgctxt "Module: MetaBox Default Action"
 msgid "Configure"
 msgstr ""
 
-#: includes/Module.php:1003
+#: includes/Module.php:947
 msgctxt "Module: ReadOnly Title Info"
 msgid "This Title is Auto-Generated"
 msgstr ""
 
-#: includes/Module.php:1167
+#: includes/Module.php:1111
 msgctxt "Module: Draft MetaBox"
 msgid "You can see the contents once you've saved this post for the first time."
 msgstr ""
@@ -3438,6 +3438,16 @@ msgctxt "Modules: WC Shipping"
 msgid "WC Shipping"
 msgstr ""
 
+#: includes/Modules/WcShortcodes/WcShortcodes.php:20
+msgctxt "Modules: WC Shortcodes"
+msgid "WC Shortcodes"
+msgstr ""
+
+#: includes/Modules/WcShortcodes/WcShortcodes.php:21
+msgctxt "Modules: WC Shortcodes"
+msgid "Shortcodes for WooCommerce"
+msgstr ""
+
 #: includes/Modules/WcStatuses/WcStatuses.php:21
 msgctxt "Modules: WC Statuses"
 msgid "WC Statuses"
@@ -3448,12 +3458,12 @@ msgctxt "Modules: WC Statuses"
 msgid "Managing Statuses for WooCommerce"
 msgstr ""
 
-#: includes/Modules/WcStocks/WcStocks.php:19
+#: includes/Modules/WcStocks/WcStocks.php:22
 msgctxt "Modules: WC Stocks"
 msgid "WC Stocks"
 msgstr ""
 
-#: includes/Modules/WcStocks/WcStocks.php:20
+#: includes/Modules/WcStocks/WcStocks.php:23
 msgctxt "Modules: WC Stocks"
 msgid "Stock Enhancements for WooCommerce"
 msgstr ""
@@ -3468,12 +3478,12 @@ msgctxt "Modules: WC Tabs"
 msgid "Product Tab Enhancements for WooCommerce"
 msgstr ""
 
-#: includes/Modules/WcTweaks/WcTweaks.php:24
+#: includes/Modules/WcTweaks/WcTweaks.php:22
 msgctxt "Modules: WC Tweaks"
 msgid "WC Tweaks"
 msgstr ""
 
-#: includes/Modules/WcTweaks/WcTweaks.php:25
+#: includes/Modules/WcTweaks/WcTweaks.php:23
 msgctxt "Modules: WC Tweaks"
 msgid "Tweaks for WooCommerce"
 msgstr ""
@@ -3548,7 +3558,7 @@ msgctxt "Modules: Yearly"
 msgid "Content By Years"
 msgstr ""
 
-#: includes/Plugin.php:313
+#: includes/Plugin.php:307
 msgctxt "Plugin: Main: Screen Settings Title"
 msgid "Restrictions"
 msgstr ""
@@ -4561,436 +4571,446 @@ msgstr ""
 
 #: includes/Settings.php:1225
 msgctxt "Settings: Setting Title"
-msgid "Exports Roles"
+msgid "Tools Roles"
 msgstr ""
 
 #: includes/Settings.php:1226
 msgctxt "Setting Description"
-msgid "Roles that can export data entries."
+msgid "Roles that can access data tools."
 msgstr ""
 
 #: includes/Settings.php:1238
 msgctxt "Settings: Setting Title"
-msgid "Prints Roles"
+msgid "Exports Roles"
 msgstr ""
 
 #: includes/Settings.php:1239
 msgctxt "Setting Description"
-msgid "Roles that can print data entries."
+msgid "Roles that can export data entries."
 msgstr ""
 
 #: includes/Settings.php:1251
 msgctxt "Settings: Setting Title"
-msgid "Uploads Roles"
+msgid "Prints Roles"
 msgstr ""
 
 #: includes/Settings.php:1252
 msgctxt "Setting Description"
-msgid "Roles that can upload data into the site."
+msgid "Roles that can print data entries."
 msgstr ""
 
 #: includes/Settings.php:1264
 msgctxt "Settings: Setting Title"
-msgid "Public Roles"
+msgid "Uploads Roles"
 msgstr ""
 
 #: includes/Settings.php:1265
 msgctxt "Setting Description"
-msgid "Roles that can access the links to public endpoints in the site."
+msgid "Roles that can upload data into the site."
 msgstr ""
 
 #: includes/Settings.php:1277
 msgctxt "Settings: Setting Title"
-msgid "Overview Roles"
+msgid "Public Roles"
 msgstr ""
 
 #: includes/Settings.php:1278
 msgctxt "Setting Description"
-msgid "Roles that can view data overviews."
+msgid "Roles that can access the links to public endpoints in the site."
 msgstr ""
 
 #: includes/Settings.php:1290
 msgctxt "Settings: Setting Title"
-msgid "Manage Roles"
+msgid "Overview Roles"
 msgstr ""
 
 #: includes/Settings.php:1291
 msgctxt "Setting Description"
-msgid "Roles that can manage, edit and delete entry defenitions."
+msgid "Roles that can view data overviews."
 msgstr ""
 
 #: includes/Settings.php:1303
 msgctxt "Settings: Setting Title"
-msgid "Assign Roles"
+msgid "Manage Roles"
 msgstr ""
 
 #: includes/Settings.php:1304
 msgctxt "Setting Description"
-msgid "Roles that can assign entry defenitions."
+msgid "Roles that can manage, edit and delete entry defenitions."
 msgstr ""
 
 #: includes/Settings.php:1316
 msgctxt "Settings: Setting Title"
-msgid "Overview Fields"
+msgid "Assign Roles"
 msgstr ""
 
 #: includes/Settings.php:1317
-#: includes/Settings.php:1330
-#: includes/Settings.php:1343
 msgctxt "Setting Description"
-msgid "Whether to appear as columns on the overview."
-msgstr ""
-
-#: includes/Settings.php:1320
-msgctxt "Settings: Setting Empty String"
-msgid "There are no fields available!"
+msgid "Roles that can assign entry defenitions."
 msgstr ""
 
 #: includes/Settings.php:1329
 msgctxt "Settings: Setting Title"
-msgid "Overview Units"
+msgid "Overview Fields"
+msgstr ""
+
+#: includes/Settings.php:1330
+#: includes/Settings.php:1343
+#: includes/Settings.php:1356
+msgctxt "Setting Description"
+msgid "Whether to appear as columns on the overview."
 msgstr ""
 
 #: includes/Settings.php:1333
 msgctxt "Settings: Setting Empty String"
-msgid "There are no units available!"
+msgid "There are no fields available!"
 msgstr ""
 
 #: includes/Settings.php:1342
 msgctxt "Settings: Setting Title"
-msgid "Overview Taxonomies"
+msgid "Overview Units"
 msgstr ""
 
 #: includes/Settings.php:1346
 msgctxt "Settings: Setting Empty String"
+msgid "There are no units available!"
+msgstr ""
+
+#: includes/Settings.php:1355
+msgctxt "Settings: Setting Title"
+msgid "Overview Taxonomies"
+msgstr ""
+
+#: includes/Settings.php:1359
+msgctxt "Settings: Setting Empty String"
 msgid "There are no taxonomies available!"
 msgstr ""
 
-#: includes/Settings.php:1354
+#: includes/Settings.php:1367
 msgctxt "Settings: Setting Title"
 msgid "Append Identifier"
 msgstr ""
 
-#: includes/Settings.php:1355
+#: includes/Settings.php:1368
 msgctxt "Settings: Setting Description"
 msgid "Appends the identifier code field data to each item supported title."
 msgstr ""
 
-#: includes/Settings.php:1363
+#: includes/Settings.php:1376
 msgctxt "Settings: Setting Title"
 msgid "Enqueue Libre Fonts"
 msgstr ""
 
-#: includes/Settings.php:1364
+#: includes/Settings.php:1377
 msgctxt "Settings: Setting Description"
 msgid "Loads Libre Barcode fonts on print page html head."
 msgstr ""
 
-#: includes/Settings.php:1373
+#: includes/Settings.php:1386
 msgctxt "Settings: Setting Title"
 msgid "Force Sanitize"
 msgstr ""
 
-#: includes/Settings.php:1374
+#: includes/Settings.php:1387
 msgctxt "Settings: Setting Description"
 msgid "Tries to force the sanitization upon storing data."
 msgstr ""
 
-#: includes/Settings.php:1429
+#: includes/Settings.php:1442
 msgctxt "Settings"
 msgid "Editorial"
 msgstr ""
 
-#: includes/Settings.php:1436
+#: includes/Settings.php:1449
 msgctxt "Settings"
 msgid "Back to Editorial"
 msgstr ""
 
-#: includes/Settings.php:1466
+#: includes/Settings.php:1479
 msgctxt "Settings: Search Placeholder"
 msgid "Search …"
 msgstr ""
 
-#: includes/Settings.php:1472
+#: includes/Settings.php:1485
 msgctxt "Settings"
 msgid "All"
 msgstr ""
 
-#: includes/Settings.php:1475
-#: includes/Settings.php:2038
+#: includes/Settings.php:1488
+#: includes/Settings.php:2051
 msgctxt "Settings"
 msgid "Enabled"
 msgstr ""
 
-#: includes/Settings.php:1478
-#: includes/Settings.php:2037
+#: includes/Settings.php:1491
+#: includes/Settings.php:2050
 msgctxt "Settings"
 msgid "Disabled"
 msgstr ""
 
-#: includes/Settings.php:1513
+#: includes/Settings.php:1526
 msgctxt "Settings: Message"
 msgid "Settings reset."
 msgstr ""
 
-#: includes/Settings.php:1514
+#: includes/Settings.php:1527
 msgctxt "Settings: Message"
 msgid "Settings updated."
 msgstr ""
 
-#: includes/Settings.php:1515
+#: includes/Settings.php:1528
 msgctxt "Settings: Message"
 msgid "Module disabled."
 msgstr ""
 
-#: includes/Settings.php:1516
+#: includes/Settings.php:1529
 msgctxt "Settings: Message"
 msgid "Tables optimized."
 msgstr ""
 
-#: includes/Settings.php:1517
+#: includes/Settings.php:1530
 msgctxt "Settings: Message"
 msgid "Data purged."
 msgstr ""
 
-#: includes/Settings.php:1518
+#: includes/Settings.php:1531
 msgctxt "Settings: Message"
 msgid "File/Folder created."
 msgstr ""
 
-#: includes/Settings.php:1519
+#: includes/Settings.php:1532
 msgctxt "Settings: Message"
 msgid "Mail sent successfully."
 msgstr ""
 
-#: includes/Settings.php:1520
+#: includes/Settings.php:1533
 msgctxt "Settings: Message"
 msgid "Item added successfully."
 msgstr ""
 
-#: includes/Settings.php:1521
+#: includes/Settings.php:1534
 msgctxt "Settings: Message"
 msgid "Item removed successfully."
 msgstr ""
 
-#: includes/Settings.php:1522
+#: includes/Settings.php:1535
 msgctxt "Settings: Message"
 msgid "Error occurred!"
 msgstr ""
 
-#: includes/Settings.php:1523
+#: includes/Settings.php:1536
 msgctxt "Settings: Message"
 msgid "Something&#8217;s wrong!"
 msgstr ""
 
-#: includes/Settings.php:1524
+#: includes/Settings.php:1537
 msgctxt "Settings: Message"
 msgid "No item changed!"
 msgstr ""
 
-#: includes/Settings.php:1525
+#: includes/Settings.php:1538
 msgctxt "Settings: Message"
 msgid "No item added!"
 msgstr ""
 
-#: includes/Settings.php:1526
+#: includes/Settings.php:1539
 msgctxt "Settings: Message"
 msgid "You do not have the access!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1528
+#: includes/Settings.php:1541
 msgctxt "Settings: Message"
 msgid "%s items(s) converted!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1530
+#: includes/Settings.php:1543
 msgctxt "Settings: Message"
 msgid "%s items(s) imported!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1532
+#: includes/Settings.php:1545
 msgctxt "Settings: Message"
 msgid "%s items(s) created!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1534
+#: includes/Settings.php:1547
 msgctxt "Settings: Message"
 msgid "%s items(s) deleted!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1536
+#: includes/Settings.php:1549
 msgctxt "Settings: Message"
 msgid "%s items(s) cleaned!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1538
+#: includes/Settings.php:1551
 msgctxt "Settings: Message"
 msgid "%s items(s) changed!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1540
+#: includes/Settings.php:1553
 msgctxt "Settings: Message"
 msgid "%s items(s) emptied!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1542
+#: includes/Settings.php:1555
 msgctxt "Settings: Message"
 msgid "%s items(s) closed!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1544
+#: includes/Settings.php:1557
 msgctxt "Settings: Message"
 msgid "%s items(s) re-ordered!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1546
+#: includes/Settings.php:1559
 msgctxt "Settings: Message"
 msgid "%s items(s) re-scheduled!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1548
+#: includes/Settings.php:1561
 msgctxt "Settings: Message"
 msgid "%s items(s) synced!"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1559
+#: includes/Settings.php:1572
 msgctxt "Settings: Message"
 msgid "%s item(s) counted!"
 msgstr ""
 
-#: includes/Settings.php:1588
+#: includes/Settings.php:1601
 msgctxt "Settings: Confirm"
 msgid "Are you sure? This operation can not be undone."
 msgstr ""
 
-#: includes/Settings.php:1622
+#: includes/Settings.php:1635
 msgctxt "Settings: Button"
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/Settings.php:1623
+#: includes/Settings.php:1636
 msgctxt "Settings: Button"
 msgid "Save Changes"
 msgstr ""
 
 #. translators: %s: count
-#: includes/Settings.php:1669
+#: includes/Settings.php:1682
 msgctxt "Settings: Message"
 msgid "%s Counted!"
 msgstr ""
 
-#: includes/Settings.php:1679
+#: includes/Settings.php:1692
 msgctxt "Settings: Message"
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
 #. translators: %s: message
-#: includes/Settings.php:1686
+#: includes/Settings.php:1699
 msgctxt "Settings: Message"
 msgid "huh? %s"
 msgstr ""
 
-#: includes/Settings.php:1688
+#: includes/Settings.php:1701
 msgctxt "Settings: Message"
 msgid "huh?"
 msgstr ""
 
-#: includes/Settings.php:1781
+#: includes/Settings.php:1794
 msgctxt "Settings: Notice"
 msgid "Auto-loaded!"
 msgstr ""
 
-#: includes/Settings.php:1787
+#: includes/Settings.php:1800
 msgctxt "Settings: Button"
 msgid "Enable"
 msgstr ""
 
-#: includes/Settings.php:1798
+#: includes/Settings.php:1811
 msgctxt "Settings: Button"
 msgid "Disable"
 msgstr ""
 
-#: includes/Settings.php:1809
+#: includes/Settings.php:1822
 msgctxt "Settings: Notice"
 msgid "You have to enable Javascript!"
 msgstr ""
 
-#: includes/Settings.php:1827
+#: includes/Settings.php:1840
 msgctxt "Settings: Button"
 msgid "Tools"
 msgstr ""
 
-#: includes/Settings.php:1839
+#: includes/Settings.php:1852
 msgctxt "Settings: Button"
 msgid "Reports"
 msgstr ""
 
-#: includes/Settings.php:1850
+#: includes/Settings.php:1863
 msgctxt "Settings: Button"
 msgid "Configure"
 msgstr ""
 
-#: includes/Settings.php:1859
+#: includes/Settings.php:1872
 msgctxt "Settings: Title Attr"
 msgid "Access Code"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Settings.php:1865
+#: includes/Settings.php:1878
 msgctxt "Settings"
 msgid "%s Documentation"
 msgstr ""
 
 #. translators: %1$s: plugin url, %2$s: author url
-#: includes/Settings.php:1919
+#: includes/Settings.php:1932
 msgctxt "Settings: Signature"
 msgid "<a href=\"%1$s\">gEditorial</a> is a <a href=\"%2$s\">geminorum</a> project."
 msgstr ""
 
-#: includes/Settings.php:1951
+#: includes/Settings.php:1964
 msgctxt "Settings: Help Content Title"
 msgid "Editorial Wiki"
 msgstr ""
 
 #. translators: %s: module title
-#: includes/Settings.php:1962
+#: includes/Settings.php:1975
 msgctxt "Settings: Help Content Title"
 msgid "%s Wiki"
 msgstr ""
 
-#: includes/Settings.php:2040
+#: includes/Settings.php:2053
 msgctxt "Settings"
 msgid "No options!"
 msgstr ""
 
-#: includes/Settings.php:2041
+#: includes/Settings.php:2054
 msgctxt "Settings"
 msgid "You do not have access to change this option."
 msgstr ""
 
-#: includes/Settings.php:3186
+#: includes/Settings.php:3199
 msgctxt "Settings: Switch On-Off"
 msgid "On"
 msgstr ""
 
-#: includes/Settings.php:3187
+#: includes/Settings.php:3200
 msgctxt "Settings: Switch On-Off"
 msgid "Off"
 msgstr ""
 
-#: includes/Settings.php:3224
+#: includes/Settings.php:3237
 msgctxt "Settings: Tab Panel"
 msgid "Select All"
 msgstr ""

@@ -1932,45 +1932,45 @@ msgctxt "MetaBox: Title Attr"
 msgid "Unknown User #%s"
 msgstr ""
 
-#: includes/Plugin.php:712
+#: includes/Plugin.php:706
 msgctxt "Plugin: Main: Adminbar Node"
 msgid "Editorial"
 msgstr ""
 
-#: includes/Plugin.php:753
+#: includes/Plugin.php:747
 msgid "N/A"
 msgstr ""
 
-#: includes/Plugin.php:754
+#: includes/Plugin.php:748
 #: includes/Services/RestAPI.php:93
 msgid "Not Available"
 msgstr ""
 
-#: includes/Plugin.php:759
+#: includes/Plugin.php:753
 msgid "(Untitled)"
 msgstr ""
 
-#: includes/Plugin.php:760
+#: includes/Plugin.php:754
 msgid "No Title Available!"
 msgstr ""
 
-#: includes/Plugin.php:765
+#: includes/Plugin.php:759
 msgid "You don&#8217;t have permission to do this."
 msgstr ""
 
-#: includes/Plugin.php:771
+#: includes/Plugin.php:765
 msgid "Something&#8217;s wrong!"
 msgstr ""
 
-#: includes/Plugin.php:777
+#: includes/Plugin.php:771
 msgid "Wait for a moment &hellip;"
 msgstr ""
 
-#: includes/Plugin.php:783
+#: includes/Plugin.php:777
 msgid "Invalid data provided!"
 msgstr ""
 
-#: includes/Plugin.php:789
+#: includes/Plugin.php:783
 msgid "There is no information available!"
 msgstr ""
 
@@ -2125,60 +2125,60 @@ msgctxt "Error"
 msgid "The `%s` argument must be a comment."
 msgstr ""
 
-#: includes/Services/SearchSelect.php:399
+#: includes/Services/SearchSelect.php:398
 msgctxt "Service: SearchSelect"
 msgid "Select an item …"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:400
+#: includes/Services/SearchSelect.php:399
 msgctxt "Service: SearchSelect"
 msgid "Loading more results …"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:401
+#: includes/Services/SearchSelect.php:400
 msgctxt "Service: SearchSelect"
 msgid "Searching …"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:402
+#: includes/Services/SearchSelect.php:401
 msgctxt "Service: SearchSelect"
 msgid "No results found"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:403
+#: includes/Services/SearchSelect.php:402
 msgctxt "Service: SearchSelect"
 msgid "Remove all items"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:404
+#: includes/Services/SearchSelect.php:403
 msgctxt "Service: SearchSelect"
 msgid "Remove item"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:405
+#: includes/Services/SearchSelect.php:404
 msgctxt "Service: SearchSelect"
 msgid "Search"
 msgstr ""
 
-#: includes/Services/SearchSelect.php:406
+#: includes/Services/SearchSelect.php:405
 msgctxt "Service: SearchSelect"
 msgid "The results could not be loaded."
 msgstr ""
 
 #. translators: %s: number of characters
-#: includes/Services/SearchSelect.php:408
+#: includes/Services/SearchSelect.php:407
 msgctxt "Service: SearchSelect"
 msgid "Please enter %s or more characters"
 msgstr ""
 
 #. translators: %s: number of characters
-#: includes/Services/SearchSelect.php:410
+#: includes/Services/SearchSelect.php:409
 msgctxt "Service: SearchSelect"
 msgid "Please delete %s character(s)"
 msgstr ""
 
 #. translators: %s: number of items
-#: includes/Services/SearchSelect.php:412
+#: includes/Services/SearchSelect.php:411
 msgctxt "Service: SearchSelect"
 msgid "You can only select %s item(s)"
 msgstr ""

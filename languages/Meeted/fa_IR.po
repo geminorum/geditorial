@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Meeted\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-16 22:17+0330\n"
+"PO-Revision-Date: 2024-11-24 18:49+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Meeted\n"
 "X-Domain: geditorial-meeted\n"
 
@@ -25,162 +25,167 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the meetings and supported post-types."
 msgstr ""
 
-#: Meeted.php:150 Meeted.php:151
+#: Meeted.php:147 Meeted.php:148
 msgid "Meeting"
 msgid_plural "Meetings"
 msgstr[0] "جلسات"
 msgstr[1] "جلسه"
 
-#: Meeted.php:152
+#: Meeted.php:149
 msgid "Meeting Category"
 msgid_plural "Meeting Categories"
 msgstr[0] "دسته‌های جلسه"
 msgstr[1] "دسته جلسه"
 
-#: Meeted.php:153
+#: Meeted.php:150
 msgid "Meeting Level"
 msgid_plural "Meeting Levels"
 msgstr[0] "سطوح جلسه"
 msgstr[1] "سطح جلسه"
 
-#: Meeted.php:154
+#: Meeted.php:151
 msgid "Meeting Program"
 msgid_plural "Meeting Programs"
 msgstr[0] "برنامه‌های جلسه"
 msgstr[1] "برنامه جلسه"
 
-#: Meeted.php:155
+#: Meeted.php:152
 msgid "Meeting Span"
 msgid_plural "Meeting Spans"
 msgstr[0] "دوره‌های جلسه"
 msgstr[1] "دوره جلسه"
 
-#: Meeted.php:156
+#: Meeted.php:153
 msgid "Meeting Type"
 msgid_plural "Meeting Types"
 msgstr[0] "انواع جلسه"
 msgstr[1] "نوع جلسه"
 
-#: Meeted.php:157
+#: Meeted.php:154
 msgid "Meeting Status"
 msgid_plural "Meeting Statuses"
 msgstr[0] "وضعیت‌های جلسه"
 msgstr[1] "وضعیت جلسه"
 
-#: Meeted.php:161
+#: Meeted.php:158
 msgctxt "Label: `menu_name`"
 msgid "Meetings"
 msgstr "جلسات"
 
-#: Meeted.php:162
+#: Meeted.php:159
 msgctxt "Label: Featured Image"
 msgid "Meeting Poster"
 msgstr "نشان جلسه"
 
-#: Meeted.php:163
+#: Meeted.php:160
 msgctxt "Label: MetaBox Title"
 msgid "The Meeting"
 msgstr "این جلسه"
 
-#: Meeted.php:166
+#: Meeted.php:163
 msgctxt "Label: MetaBox Title"
 msgid "In This Meeting"
 msgstr "در این جلسه"
 
-#: Meeted.php:169
+#: Meeted.php:166
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Meeted.php:172
+#: Meeted.php:169
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr "برنامه‌ها"
 
-#: Meeted.php:175
+#: Meeted.php:172
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr "دوره‌ها"
 
-#: Meeted.php:178
+#: Meeted.php:175
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Meeted.php:181
+#: Meeted.php:178
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: Meeted.php:190
+#: Meeted.php:187
 msgctxt "Notice"
 msgid "There is no meeting information available!"
 msgstr "هیچ اطلاعات جلسه‌ای در دسترس نیست!"
 
-#: Meeted.php:191
+#: Meeted.php:188
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the meeting information."
 msgstr "شما دسترسی لازم برای مدیریت اطلاعات جلسات را ندارید."
 
 #. translators: %s: item count
-#: Meeted.php:196
+#: Meeted.php:193
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Meeting Participants (%s)"
 msgstr "مشارکت‌کنندگان در جلسه (%s)"
 
 #. translators: %s: item count
-#: Meeted.php:198
+#: Meeted.php:195
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Meeting Participations (%s)"
 msgstr "مشارکت‌های در جلسه (%s)"
 
-#: Meeted.php:199
+#: Meeted.php:196
 msgctxt "Misc: `column_icon_title`"
 msgid "Meetings"
 msgstr "جلسات"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Meeted.php:204
+#: Meeted.php:201
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr "مشارکت‌کنندگان در &rdquo;%1$s&ldquo;"
 
-#: Meeted.php:215
+#: Meeted.php:212
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Meeted.php:216
+#: Meeted.php:213
+msgctxt "Status Taxonomy: Default Term"
+msgid "Canceled"
+msgstr "لغوشده"
+
+#: Meeted.php:214
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr "برگزار شده"
 
-#: Meeted.php:257
+#: Meeted.php:256
 msgctxt "Field Title"
 msgid "Coordinators"
 msgstr "هماهنگ‌کنندگان"
 
-#: Meeted.php:258
+#: Meeted.php:257
 msgctxt "Field Description"
 msgid "People Who Participate as Coordinators in This Meeting"
 msgstr "افرادی که به عنوان هماهنگ‌کننده در این جلسه شرکت کرده‌اند"
 
-#: Meeted.php:266
+#: Meeted.php:264
 msgctxt "Field Title"
 msgid "Meeting Code"
 msgstr "کد جلسه"
 
-#: Meeted.php:267
+#: Meeted.php:265
 msgctxt "Field Description"
 msgid "Unique Meeting Code"
 msgstr "کد یکتا برای جلسه"
 
-#: Meeted.php:591
+#: Meeted.php:604
 msgctxt "Header"
 msgid "Meeting Tools"
 msgstr "ابزارهای جلسه"
 
-#: Meeted.php:600
+#: Meeted.php:613
 msgctxt "Card"
 msgid "Meeting Date from Meta-data"
 msgstr ""

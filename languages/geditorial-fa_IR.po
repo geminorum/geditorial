@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-24 12:10+0330\n"
+"PO-Revision-Date: 2024-11-24 16:50+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: geminorum <contact@geminorum.ir>\n"
 "Language: fa\n"
@@ -1931,44 +1931,44 @@ msgctxt "MetaBox: Title Attr"
 msgid "Unknown User #%s"
 msgstr "کاربر ناشناس #%s"
 
-#: includes/Plugin.php:712
+#: includes/Plugin.php:706
 msgctxt "Plugin: Main: Adminbar Node"
 msgid "Editorial"
 msgstr "تحریریه"
 
-#: includes/Plugin.php:753
+#: includes/Plugin.php:747
 msgid "N/A"
 msgstr "خ/د"
 
-#: includes/Plugin.php:754 includes/Services/RestAPI.php:93
+#: includes/Plugin.php:748 includes/Services/RestAPI.php:93
 msgid "Not Available"
 msgstr "خارج از دسترس"
 
-#: includes/Plugin.php:759
+#: includes/Plugin.php:753
 msgid "(Untitled)"
 msgstr "(بی‌عنوان)"
 
-#: includes/Plugin.php:760
+#: includes/Plugin.php:754
 msgid "No Title Available!"
 msgstr "عنوانی در دسترس نیست!"
 
-#: includes/Plugin.php:765
+#: includes/Plugin.php:759
 msgid "You don&#8217;t have permission to do this."
 msgstr "شما اجازه انجام این کار را ندارید."
 
-#: includes/Plugin.php:771
+#: includes/Plugin.php:765
 msgid "Something&#8217;s wrong!"
 msgstr "چیزی اشتباه است!"
 
-#: includes/Plugin.php:777
+#: includes/Plugin.php:771
 msgid "Wait for a moment &hellip;"
 msgstr "چند لحظه صبر کنید &hellip;"
 
-#: includes/Plugin.php:783
+#: includes/Plugin.php:777
 msgid "Invalid data provided!"
 msgstr "داده نامعتبر است!"
 
-#: includes/Plugin.php:789
+#: includes/Plugin.php:783
 msgid "There is no information available!"
 msgstr "هیچ اطلاعاتی در دسترس نیست!"
 
@@ -2126,60 +2126,60 @@ msgctxt "Error"
 msgid "The `%s` argument must be a comment."
 msgstr "نشانوند `%s` باید یک دیدگاه باشد."
 
-#: includes/Services/SearchSelect.php:399
+#: includes/Services/SearchSelect.php:398
 msgctxt "Service: SearchSelect"
 msgid "Select an item …"
 msgstr "یک مورد را انتخاب کنید …"
 
-#: includes/Services/SearchSelect.php:400
+#: includes/Services/SearchSelect.php:399
 msgctxt "Service: SearchSelect"
 msgid "Loading more results …"
 msgstr "بارگیری نتایج بیشتر …"
 
-#: includes/Services/SearchSelect.php:401
+#: includes/Services/SearchSelect.php:400
 msgctxt "Service: SearchSelect"
 msgid "Searching …"
 msgstr "در حال جست‌وجو …"
 
-#: includes/Services/SearchSelect.php:402
+#: includes/Services/SearchSelect.php:401
 msgctxt "Service: SearchSelect"
 msgid "No results found"
 msgstr "نتیجه‌ای پیدا نشد"
 
-#: includes/Services/SearchSelect.php:403
+#: includes/Services/SearchSelect.php:402
 msgctxt "Service: SearchSelect"
 msgid "Remove all items"
 msgstr "حذف همه موارد"
 
-#: includes/Services/SearchSelect.php:404
+#: includes/Services/SearchSelect.php:403
 msgctxt "Service: SearchSelect"
 msgid "Remove item"
 msgstr "حذف مورد"
 
-#: includes/Services/SearchSelect.php:405
+#: includes/Services/SearchSelect.php:404
 msgctxt "Service: SearchSelect"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: includes/Services/SearchSelect.php:406
+#: includes/Services/SearchSelect.php:405
 msgctxt "Service: SearchSelect"
 msgid "The results could not be loaded."
 msgstr "امکان بارگیری نتایج وجود ندارد."
 
 #. translators: %s: number of characters
-#: includes/Services/SearchSelect.php:408
+#: includes/Services/SearchSelect.php:407
 msgctxt "Service: SearchSelect"
 msgid "Please enter %s or more characters"
 msgstr "%s نویسه یا بیشتر وارد کنید"
 
 #. translators: %s: number of characters
-#: includes/Services/SearchSelect.php:410
+#: includes/Services/SearchSelect.php:409
 msgctxt "Service: SearchSelect"
 msgid "Please delete %s character(s)"
 msgstr "%s نویسه را حذف کنید"
 
 #. translators: %s: number of items
-#: includes/Services/SearchSelect.php:412
+#: includes/Services/SearchSelect.php:411
 msgctxt "Service: SearchSelect"
 msgid "You can only select %s item(s)"
 msgstr "تنها می‌توانید %s مورد را انتخاب کنید"

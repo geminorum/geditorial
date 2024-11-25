@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Organization\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-09-09 03:36+0330\n"
+"PO-Revision-Date: 2024-11-24 18:50+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -170,7 +170,7 @@ msgctxt "Field Description"
 msgid "Unique Organization Membership Number"
 msgstr "شماره یکتای عضویت سازمان"
 
-#: Organization.php:702
+#: Organization.php:703
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr "ابزارهای سازمان"
