@@ -174,12 +174,9 @@ class Badges extends gEditorial\Module
 		$this->enqueue_styles();
 	}
 
-	// override
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context
-			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' )
-			: parent::cuc( $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
 	}
 
 	public function dashboard_widgets()

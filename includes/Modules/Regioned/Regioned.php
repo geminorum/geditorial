@@ -170,9 +170,7 @@ class Regioned extends gEditorial\Module
 
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context
-			? $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports', NULL, $fallback )
-			: parent::cuc( $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
 	}
 
 	public function template_include( $template )

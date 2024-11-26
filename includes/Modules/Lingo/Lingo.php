@@ -220,12 +220,9 @@ class Lingo extends gEditorial\Module
 		return $data;
 	}
 
-	// override
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context
-			? $this->corecaps_taxonomy_role_can( 'language_taxonomy', 'reports' )
-			: parent::cuc( $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'language_taxonomy', $context, $fallback );
 	}
 
 	public function imports_settings( $sub )

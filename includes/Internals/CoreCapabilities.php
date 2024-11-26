@@ -215,6 +215,14 @@ trait CoreCapabilities
 				'description' => sprintf( _x( 'Roles that can see %s Reports.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
 				'values'      => $roles,
 			],
+			[
+				'field'       => sprintf( 'taxonomy_%s_tools_roles', $taxonomy ),
+				'type'        => 'checkboxes',
+				'title'       => _x( 'Tools Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
+				/* translators: %s: taxonomy extended label */
+				'description' => sprintf( _x( 'Roles that can use %s Tools.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
+				'values'      => $roles,
+			],
 		];
 
 		if ( $restricted ) {

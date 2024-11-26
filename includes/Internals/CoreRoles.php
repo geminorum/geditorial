@@ -59,4 +59,20 @@ trait CoreRoles
 			? $this->role_can( $context, NULL, $fallback )
 			: parent::cuc( $context, $fallback );
 	}
+
+	/**
+	 * Overrides the current-user-check for customized contexts by taxonomy.
+	 *
+	 * @param  string $constant
+	 * @param  string $context
+	 * @param  string $fallback
+	 * @param  array  $customized
+	 * @return mixed  $overrided
+	 */
+	protected function _override_module_cuc_by_taxonomy( $constant, $context = 'settings', $fallback = '', $customized = NULL )
+	{
+		return in_array( $context, $customized ?? [ 'reports', 'tools' ], TRUE )
+			? $this->corecaps_taxonomy_role_can( $constant, $context, NULL, $fallback )
+			: parent::cuc( $context, $fallback );
+	}
 }

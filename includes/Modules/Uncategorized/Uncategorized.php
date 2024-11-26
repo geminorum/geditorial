@@ -43,6 +43,7 @@ class Uncategorized extends gEditorial\Module
 			],
 			'_roles' => [
 				'reports_roles' => [ _x( 'Roles that can see Uncategorized Reports.', 'Setting Description', 'geditorial-uncategorized' ), $roles ],
+				'tools_roles'   => [ _x( 'Roles that can use Uncategorized Tools.', 'Setting Description', 'geditorial-uncategorized' ), $roles ],
 			],
 		];
 	}
@@ -88,12 +89,9 @@ class Uncategorized extends gEditorial\Module
 		}
 	}
 
-	// override
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return 'reports' == $context
-			? $this->role_can( 'reports', NULL, $fallback )
-			: parent::cuc( $context, $fallback );
+		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'tools' ] );
 	}
 
 	public function rowactions_bulk_actions( $actions )
