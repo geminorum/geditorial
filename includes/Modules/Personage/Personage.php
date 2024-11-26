@@ -174,14 +174,6 @@ class Personage extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
-
-		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Team Human Status Summary', 'Dashboard Widget Title', 'geditorial-personage' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Human Status Summary', 'Dashboard Widget Title', 'geditorial-personage' ), ],
-		];
-
 		return $strings;
 	}
 
@@ -497,12 +489,7 @@ class Personage extends gEditorial\Module
 	public function dashboard_widgets()
 	{
 		if ( $this->role_can( [ 'reports' ] ) )
-			$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
-	}
-
-	public function render_widget_term_summary( $object, $box )
-	{
-		$this->do_dashboard_term_summary( 'status_taxonomy', $box, [ $this->constant( 'primary_posttype' ) ] );
+			$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'primary_posttype' ) ], FALSE );
 	}
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )

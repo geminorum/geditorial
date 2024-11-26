@@ -95,14 +95,6 @@ class Employed extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
-
-		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Team Employment Summary', 'Dashboard Widget Title', 'geditorial-employed' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Employment Summary', 'Dashboard Widget Title', 'geditorial-employed' ), ],
-		];
-
 		return $strings;
 	}
 
@@ -164,15 +156,7 @@ class Employed extends gEditorial\Module
 
 	public function dashboard_widgets()
 	{
-		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
-			return;
-
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
-	}
-
-	public function render_widget_term_summary( $object, $box )
-	{
-		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )

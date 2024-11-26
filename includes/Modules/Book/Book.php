@@ -254,11 +254,6 @@ class Book extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Publications Summary', 'Dashboard Widget Title', 'geditorial-book' ), ],
-		];
-
 		$strings['p2p']['publication_posttype']['title'] = [
 			'from' => _x( 'Connected Publications', 'P2P', 'geditorial-book' ),
 			'to'   => _x( 'Connected Posts', 'P2P', 'geditorial-book' ),
@@ -720,12 +715,7 @@ class Book extends gEditorial\Module
 
 	public function dashboard_widgets()
 	{
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
-	}
-
-	public function render_widget_term_summary( $object, $box )
-	{
-		$this->do_dashboard_term_summary( 'status_taxonomy', $box, [ $this->constant( 'publication_posttype' ) ] );
+		$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'publication_posttype' ) ], FALSE );
 	}
 
 	public function tweaks_column_row_p2p_to( $post, $before, $after, $module )

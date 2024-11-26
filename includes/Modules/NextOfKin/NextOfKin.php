@@ -312,18 +312,7 @@ class NextOfKin extends gEditorial\Module
 	public function dashboard_widgets()
 	{
 		if ( ! $this->role_can( 'reports' ) )
-			return;
-
-		$this->add_dashboard_widget(
-			'term-summary',
-			_x( 'Marital Status Summary', 'Dashboard Widget Title', 'geditorial-next-of-kin' ),
-			'refresh'
-		);
-	}
-
-	public function render_widget_term_summary( $object, $box )
-	{
-		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+			$this->add_dashboard_term_summary( 'main_taxonomy', NULL, FALSE );
 	}
 
 	public function admin_menu()

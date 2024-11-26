@@ -117,11 +117,6 @@ class Audit extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Audit Summary', 'Dashboard Widget Title', 'geditorial-audit' ), ],
-		];
-
 		$strings['metabox'] = [
 			/* translators: %1$s: current post title, %2$s: posttype singular name */
 			'rowaction_title' => _x( 'Audit Attributes of %1$s', 'Action Title', 'geditorial-audit' ),
@@ -432,15 +427,7 @@ class Audit extends gEditorial\Module
 
 	public function dashboard_widgets()
 	{
-		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
-			return;
-
-		$this->add_dashboard_widget( 'term-summary', NULL, 'refresh' );
-	}
-
-	public function render_widget_term_summary( $object, $box )
-	{
-		$this->do_dashboard_term_summary( 'main_taxonomy', $box );
+		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
 	protected function rowaction_get_mainlink_for_post( $post )

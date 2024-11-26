@@ -46,6 +46,24 @@ trait DashboardSummary
 		echo '</div>';
 	}
 
+	protected function add_dashboard_term_summary( $constant, $posttypes = NULL, $role_check = TRUE, $title = NULL, $context = 'reports' )
+	{
+		if ( $role_check && ! $this->corecaps_taxonomy_role_can( $constant, $context ) )
+			return FALSE;
+
+		if ( is_null( $title ) )
+			$title = sprintf(
+				/* translators: %s: taxonomy extended label */
+				_x( '%s Summary', 'Internal: Dashboard Summary: Widget Title', 'geditorial-admin' ),
+				$this->get_taxonomy_label( $constant, 'extended_label' ),
+			);
+
+		$this->add_dashboard_widget( 'term-summary', $title, 'refresh', [],
+			function ( $object, $box ) use ( $constant, $posttypes ) {
+				$this->do_dashboard_term_summary( $constant, $box, $posttypes );
+			} );
+	}
+
 	protected function do_dashboard_term_summary( $constant, $box, $posttypes = NULL, $edit = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
