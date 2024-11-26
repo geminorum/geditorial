@@ -727,11 +727,18 @@ class Template extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
-		$url = $args['url_field'] ? self::getMetaField( $args['url_field'], [
-			'id'      => $post->ID,
-			'filter'  => $args['url_filter'],
-			'default' => $args['url_default'],
-		], FALSE ) : $args['url_default'];
+		if ( $args['url_field'] ) {
+
+			if ( $url = self::getMetaFieldRaw( $args['url_field'], $post->ID ) ) {
+
+				if ( $args['url_filter'] && is_callable( $args['url_filter'] ) )
+					$url = call_user_func( $args['url_filter'], $url );
+			}
+
+		} else {
+
+			$url = $args['url_default'];
+		}
 
 		$prepared = $url ? Core\URL::prepTitle( $url ) : '';
 
