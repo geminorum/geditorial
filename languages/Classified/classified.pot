@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Classified\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Classified\n"
+"X-Domain: geditorial-classified\n"
+
+#: Classified.php:86
+msgid "Classification"
+msgid_plural "Classifications"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Classified.php:90
+msgctxt "Label: Menu Name"
+msgid "Content Classifications"
+msgstr ""
+
+#: Classified.php:91
+msgctxt "Label: Show Option All"
+msgid "Classifications"
+msgstr ""
+
+#: Classified.php:92
+msgctxt "Label: Show Option No Terms"
+msgid "(Unclassified)"
+msgstr ""
+
+#: Classified.php:101
+msgctxt "Dashboard Widget Title"
+msgid "Your Team Classification Summary"
+msgstr ""
+
+#: Classified.php:102
+msgctxt "Dashboard Widget Title"
+msgid "Editorial Classification Summary"
+msgstr ""
+
+#: Classified.php:124
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr ""
