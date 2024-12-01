@@ -156,6 +156,7 @@ class Base
 	}
 
 	// INTERNAL: used on anything deprecated
+	// TODO: new syntax on php 8.4: `#[\Deprecated(message)]`
 	protected static function _dep( $note = '', $prefix = 'DEP: ', $offset = 1 )
 	{
 		if ( defined( 'WP_DEBUG_LOG' ) && ! WP_DEBUG_LOG )

@@ -228,4 +228,69 @@ class Strings extends Core\Base
 
 		return \geminorum\gNetwork\Core\Orthography::cleanupPersianChars( $string );
 	}
+
+	public static function kses( $text, $context = 'none', $allowed = NULL )
+	{
+		if ( '' === $text )
+			return $text;
+
+		if ( is_null( $allowed ) ) {
+
+			if ( 'text' == $context )
+				$allowed = [
+					'a'       => [ 'class' => TRUE, 'title' => TRUE, 'href' => TRUE ],
+					'abbr'    => [ 'class' => TRUE, 'title' => TRUE ],
+					'acronym' => [ 'class' => TRUE, 'title' => TRUE ],
+					'code'    => [ 'class' => TRUE ],
+					'em'      => [ 'class' => TRUE ],
+					'strong'  => [ 'class' => TRUE ],
+					'i'       => [ 'class' => TRUE ],
+					'b'       => [ 'class' => TRUE ],
+					'span'    => [ 'class' => TRUE ],
+					'br'      => [],
+				];
+
+			else if ( 'html' == $context )
+				$allowed = wp_kses_allowed_html();
+
+			else if ( 'none' == $context )
+				$allowed = [];
+		}
+
+		return Core\Text::trim( wp_kses( $text, $allowed ) );
+	}
+
+	public static function ksesArray( $array, $context = 'none', $allowed = NULL )
+	{
+		foreach ( $array as $key => $value )
+			$array[$key] = self::kses( $value, $context, $allowed );
+
+		return $array;
+	}
+
+	public static function prepTitle( $text, $post_id = 0 )
+	{
+		if ( ! $text )
+			return '';
+
+		$text = apply_filters( 'the_title', $text, $post_id );
+		$text = apply_filters( 'string_format_i18n', $text );
+		$text = apply_filters( 'gnetwork_typography', $text );
+
+		return Core\Text::trim( $text );
+	}
+
+	public static function prepDescription( $text, $shortcode = TRUE, $autop = TRUE )
+	{
+		if ( ! $text )
+			return '';
+
+		if ( $shortcode )
+			$text = ShortCode::apply( $text, TRUE );
+
+		$text = apply_filters( 'html_format_i18n', $text );
+		$text = apply_filters( 'gnetwork_typography', $text );
+
+		return $autop ? wpautop( $text ) : $text;
+	}
 }
