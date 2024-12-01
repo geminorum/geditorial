@@ -978,7 +978,7 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
+		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-textarea' ];
 
 		if ( is_null( $args['title'] ) )
@@ -1047,7 +1047,7 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
+		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-inputgeneral' ];
 
 		if ( is_null( $args['title'] ) )
@@ -1346,7 +1346,7 @@ class MetaBox extends WordPress\Main
 			$module = static::MODULE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
-		$value = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
+		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-inputnumber' ];
 		$label = FALSE;
 
@@ -1415,7 +1415,7 @@ class MetaBox extends WordPress\Main
 
 		$html     = '';
 		$args     = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
-		$selected = Template::getMetaFieldRaw( $args['name'], $post->ID, $module, FALSE, '' );
+		$selected = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap     = [ 'field-wrap', '-select' ];
 		$label    = FALSE;
 
@@ -1710,5 +1710,16 @@ class MetaBox extends WordPress\Main
 		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
 
 		return Services\SearchSelect::enqueueSelect2();
+	}
+
+	private static function _getMetaFieldRaw( $field, $post, $module )
+	{
+		$meta = Template::getMetaFieldRaw( $field['name'], $post->ID, $module, FALSE, '' );
+
+		// fills the meta by query data only on new posts
+		if ( '' === $meta && 'auto-draft' === $post->post_status )
+			$meta = Helper::kses( self::req( Services\PostTypeFields::getPostMetaKey( $field['name'], $module ), '' ) );
+
+		return $meta;
 	}
 }
