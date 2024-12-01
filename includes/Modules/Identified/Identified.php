@@ -164,6 +164,16 @@ class Identified extends gEditorial\Module
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 	}
 
+	public function current_screen( $screen )
+	{
+		if ( 'edit' == $screen->base
+			// TODO: add separate list of posttypes on settings for this
+			&& $this->posttype_supported( $screen->post_type ) ) {
+
+			$this->_hook_not_found_posts( $screen->post_type );
+		}
+	}
+
 	public function setup_restapi()
 	{
 		$this->restapi_register_route( 'query', 'get', '(?P<type>.+)/(?P<code>[a-z0-9 .\-]+)' );
@@ -575,5 +585,48 @@ class Identified extends gEditorial\Module
 		}
 
 		return FALSE;
+	}
+
+	private function _hook_not_found_posts( $posttype )
+	{
+		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
+			return FALSE;
+
+		if ( ! $criteria = self::req( 's' ) )
+			return FALSE;
+
+		add_filter( 'the_posts',
+			function ( $posts, $query ) use ( $posttype, $criteria ) {
+
+				if ( ! $query->is_main_query() )
+					return $posts;
+
+				// already founded!
+				if ( count( $posts ) )
+					return $posts;
+
+				if ( ! $type = $this->_get_posttype_identifier_type( $posttype ) )
+					return $posts;
+
+				if ( ! $sanitized = $this->sanitize_identifier( $criteria, $type ) )
+					return $posts;
+
+				if ( ! $metakey = $this->_get_posttype_identifier_metakey( $posttype ) )
+					return $posts;
+
+				Services\HeaderButtons::register( $this->key, [
+					'link' => Core\WordPress::getPostNewLink( $posttype, [ $metakey => $sanitized ] ),
+					'text' => sprintf(
+						/* translators: %1$s: add new label, %2$s: identifier code */
+						_x( '%1$s with %2$s', 'Header Button', 'geditorial-identified' ),
+						Helper::getPostTypeLabel( $posttype, 'add_new' ),
+						Core\HTML::code( $sanitized )
+					),
+
+					'hide_in_search' => FALSE,
+				] );
+
+				return $posts;
+			}, 999, 2 );
 	}
 }
