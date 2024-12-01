@@ -367,7 +367,7 @@ class Tablelist extends WordPress\Main
 					], get_post_meta( $row->ID, '_wp_attached_file', TRUE ) );
 
 				if ( $excerpt && $row->post_excerpt )
-					$title.= wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE );
+					$title.= wpautop( WordPress\Strings::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE );
 
 				return $title;
 			},
@@ -383,7 +383,7 @@ class Tablelist extends WordPress\Main
 			'title'    => _x( 'Excerpt', 'Tablelist: Column: Post Excerpt', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return $row->post_excerpt
-					? wpautop( Helper::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
+					? wpautop( WordPress\Strings::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
 					: Helper::htmlEmpty();
 			},
 		];
@@ -470,7 +470,7 @@ class Tablelist extends WordPress\Main
 				$html = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
 
 				if ( $description && $term->description )
-					$html.= wpautop( Helper::prepDescription( $term->description, FALSE, FALSE ), FALSE );
+					$html.= wpautop( WordPress\Strings::prepDescription( $term->description, FALSE, FALSE ), FALSE );
 
 				return $html;
 			},

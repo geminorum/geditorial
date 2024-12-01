@@ -884,7 +884,7 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
-						.Helper::prepTitle( $meta ).'</span>';
+						.WordPress\Strings::prepTitle( $meta ).'</span>';
 
 				} else {
 
@@ -1072,7 +1072,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
-						.Helper::prepTitle( $meta ).'</span>';
+						.WordPress\Strings::prepTitle( $meta ).'</span>';
 
 				else
 					$html = $this->field_empty( $field, '', $column );
@@ -1642,7 +1642,7 @@ class Terms extends gEditorial\Module
 					'parent' => $this->classs( 'desc' ),
 					'href'   => FALSE,
 					'meta'   => [
-						'html'  => Helper::prepDescription( $term->description ),
+						'html'  => WordPress\Strings::prepDescription( $term->description ),
 						'class' => 'geditorial-adminbar-desc-wrap -wrap '.$this->classs(),
 					],
 				];
@@ -1736,7 +1736,7 @@ class Terms extends gEditorial\Module
 					case 'tagline':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Helper::prepTitle( $meta );
+							$node['title'].= ': '.WordPress\Strings::prepTitle( $meta );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 

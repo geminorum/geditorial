@@ -356,7 +356,7 @@ trait PairedTools
 					if ( empty( $row->description ) )
 						$html = Helper::htmlEmpty();
 					else
-						$html = Helper::prepDescription( $row->description );
+						$html = WordPress\Strings::prepDescription( $row->description );
 
 					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) ) {
 
@@ -368,7 +368,7 @@ trait PairedTools
 						if ( empty( $post->post_excerpt ) )
 							$html.= Helper::htmlEmpty();
 						else
-							$html.= Helper::prepDescription( $post->post_excerpt );
+							$html.= WordPress\Strings::prepDescription( $post->post_excerpt );
 					}
 
 					return $html;

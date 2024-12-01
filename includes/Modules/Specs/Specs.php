@@ -179,7 +179,7 @@ class Specs extends gEditorial\Module
 
 				if ( is_wp_error( $new_term ) ) {
 
-					$row['spec_title'] = Helper::kses( $spec['name'] );
+					$row['spec_title'] = WordPress\Strings::kses( $spec['name'] );
 
 				} else {
 
@@ -193,11 +193,11 @@ class Specs extends gEditorial\Module
 
 			} else {
 
-				$row['spec_title'] = Helper::kses( $spec['name'] );
+				$row['spec_title'] = WordPress\Strings::kses( $spec['name'] );
 			}
 
 			if ( isset( $spec['val'] ) && ! empty( $spec['val'] ) )
-				$row['spec_value'] = Helper::kses( $spec['val'], 'text' );
+				$row['spec_value'] = WordPress\Strings::kses( $spec['val'], 'text' );
 
 			if ( isset( $spec['order'] ) && ! empty( $spec['order'] ) )
 				$row['spec_order'] = Core\Number::intval( $spec['order'] ) + 100;
@@ -271,7 +271,7 @@ class Specs extends gEditorial\Module
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $posttype ) !== $_POST[$prefix.$field][$offset] )
-								$postmeta[$offset][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
+								$postmeta[$offset][$field] = WordPress\Strings::kses( $_POST[$prefix.$field][$offset], 'text' );
 
 						else if ( isset( $postmeta[$offset][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$offset][$field] );

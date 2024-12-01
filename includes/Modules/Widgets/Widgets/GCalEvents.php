@@ -56,7 +56,7 @@ class GCalEvents extends gEditorial\Widget
 					echo '<div class="event-date" itemprop="startDate" content="'.date( 'c', $timestamp ).'">'
 						.date_i18n( $formats['dateonly'], $timestamp ).'</div>';
 
-					echo '<div class="event-title" itemprop="name">'.Helper::prepTitle( $item->summary ).'</div>';
+					echo '<div class="event-title" itemprop="name">'.WordPress\Strings::prepTitle( $item->summary ).'</div>';
 
 					if ( ! empty( $instance['display_time'] ) )
 						echo '<div class="event-time">'.date_i18n( $formats['timeampm'], $timestamp ).'</div>';

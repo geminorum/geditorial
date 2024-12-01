@@ -37,7 +37,7 @@ class Helper extends WordPress\Main
 		if ( 'beta' === $module->access && ! GEDITORIAL_BETA_FEATURES )
 			return FALSE;
 
-		$stage = $stage ?? self::const( 'WP_STAGE', 'production' );  // 'development'
+		$stage = $stage ?? self::const( 'WP_STAGE', 'production' ); // 'development'
 
 		if ( 'production' !== $stage )
 			return TRUE;
@@ -144,73 +144,6 @@ class Helper extends WordPress\Main
 		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
 	}
 
-	// TODO: move to `WordPress\Strings`
-	public static function kses( $text, $context = 'none', $allowed = NULL )
-	{
-		if ( is_null( $allowed ) ) {
-
-			if ( 'text' == $context )
-				$allowed = [
-					'a'       => [ 'class' => TRUE, 'title' => TRUE, 'href' => TRUE ],
-					'abbr'    => [ 'class' => TRUE, 'title' => TRUE ],
-					'acronym' => [ 'class' => TRUE, 'title' => TRUE ],
-					'code'    => [ 'class' => TRUE ],
-					'em'      => [ 'class' => TRUE ],
-					'strong'  => [ 'class' => TRUE ],
-					'i'       => [ 'class' => TRUE ],
-					'b'       => [ 'class' => TRUE ],
-					'span'    => [ 'class' => TRUE ],
-					'br'      => [],
-				];
-
-			else if ( 'html' == $context )
-				$allowed = wp_kses_allowed_html();
-
-			else if ( 'none' == $context )
-				$allowed = [];
-		}
-
-		// TODO: drop filters
-		return apply_filters( static::BASE.'_kses', wp_kses( $text, $allowed ), $allowed, $context );
-	}
-
-	// TODO: move to `WordPress\Strings`
-	public static function ksesArray( $array, $context = 'none', $allowed = NULL )
-	{
-		foreach ( $array as $key => $value )
-			$array[$key] = self::kses( $value, $context, $allowed );
-
-		return $array;
-	}
-
-	// TODO: move to `WordPress\Strings`
-	public static function prepTitle( $text, $post_id = 0 )
-	{
-		if ( ! $text )
-			return '';
-
-		$text = apply_filters( 'the_title', $text, $post_id );
-		$text = apply_filters( 'string_format_i18n', $text );
-		$text = apply_filters( 'gnetwork_typography', $text );
-
-		return trim( $text );
-	}
-
-	// TODO: move to `WordPress\Strings`
-	public static function prepDescription( $text, $shortcode = TRUE, $autop = TRUE )
-	{
-		if ( ! $text )
-			return '';
-
-		if ( $shortcode )
-			$text = WordPress\ShortCode::apply( $text, TRUE );
-
-		$text = apply_filters( 'html_format_i18n', $text );
-		$text = apply_filters( 'gnetwork_typography', $text );
-
-		return $autop ? wpautop( $text ) : $text;
-	}
-
 	// FIXME: `Contact` DataType
 	public static function prepContact( $value, $title = NULL, $empty = '' )
 	{
@@ -239,7 +172,7 @@ class Helper extends WordPress\Main
 
 		$list = [];
 
-		foreach ( Helper::getSeparated( $value ) as $individual )
+		foreach ( self::getSeparated( $value ) as $individual )
 			if ( $prepared = apply_filters( static::BASE.'_prep_individual', $individual, $individual, $value ) )
 				$list[] = $prepared;
 

@@ -528,7 +528,7 @@ trait SubContents
 
 				case 'location':
 				case 'people'  :
-					$data[$raw_key] = WordPress\Strings::getPiped( Helper::getSeparated( Core\Text::trim( Helper::kses( $raw_value, 'none' ) ) ) );
+					$data[$raw_key] = WordPress\Strings::getPiped( Helper::getSeparated( WordPress\Strings::kses( $raw_value, 'none' ) ) );
 					break;
 
 				case 'bankname'  :
@@ -540,15 +540,15 @@ trait SubContents
 				case 'occupation':
 				case 'education' :
 				case 'address'   :
-					$data[$raw_key] = WordPress\Strings::cleanupChars( Helper::kses( $raw_value, 'none' ), TRUE );
+					$data[$raw_key] = WordPress\Strings::cleanupChars( WordPress\Strings::kses( $raw_value, 'none' ), TRUE );
 					break;
 
 				case 'html':
-					$data[$raw_key] = Core\Text::normalizeWhitespace( Helper::kses( $raw_value, 'text' ), TRUE );
+					$data[$raw_key] = Core\Text::normalizeWhitespace( WordPress\Strings::kses( $raw_value, 'text' ), TRUE );
 					break;
 
 				default:
-					$data[$raw_key] = Core\Text::trim( Helper::kses( $raw_value, 'none' ) );
+					$data[$raw_key] = WordPress\Strings::kses( $raw_value, 'none' );
 			}
 		}
 

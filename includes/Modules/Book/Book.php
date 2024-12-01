@@ -1306,7 +1306,7 @@ class Book extends gEditorial\Module
 		if ( ! in_array( $field, $fields ) )
 			return $value;
 
-		return Helper::kses( $value, 'none' );
+		return WordPress\Strings::kses( $value, 'none' );
 	}
 
 	// FIXME: use `$atts['prepared'][$field]`
@@ -1322,7 +1322,7 @@ class Book extends gEditorial\Module
 			if ( ! in_array( $field, $fields ) )
 				continue;
 
-			if ( $value = trim( Helper::kses( $atts['raw'][$offset], 'none' ) ) )
+			if ( $value = WordPress\Strings::kses( $atts['raw'][$offset], 'none' ) )
 				$this->store_postmeta( $post->ID, $value, $field );
 		}
 	}

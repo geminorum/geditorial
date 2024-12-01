@@ -100,7 +100,7 @@ class ShortCode extends WordPress\Main
 				$args['title_after'] = sprintf( $args['title_after'],
 					$text,
 					$link,
-					Helper::prepDescription( $term->description )
+					WordPress\Strings::prepDescription( $term->description )
 				);
 
 			return $args['title'].$args['title_after'];
@@ -175,7 +175,7 @@ class ShortCode extends WordPress\Main
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
 					Core\HTML::escapeURL( $link ),
-					Helper::prepDescription( $term->description ),
+					WordPress\Strings::prepDescription( $term->description ),
 					Core\Text::trimChars( $term->description )
 				);
 
@@ -280,7 +280,7 @@ class ShortCode extends WordPress\Main
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
 					Core\HTML::escapeURL( $link ),
-					Helper::prepDescription( $term->description ),
+					WordPress\Strings::prepDescription( $term->description ),
 					Core\Text::trimChars( $term->description )
 				);
 
@@ -629,7 +629,7 @@ class ShortCode extends WordPress\Main
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
 					Core\HTML::escapeURL( $link ),
-					Helper::prepDescription( $post->post_excerpt ),
+					WordPress\Strings::prepDescription( $post->post_excerpt ),
 					Core\Text::trimChars( $post->post_excerpt )
 					// FIXME: add post_content
 				);
@@ -736,7 +736,7 @@ class ShortCode extends WordPress\Main
 				$args['item_after'] = sprintf( $args['item_after'],
 					$text,
 					Core\HTML::escapeURL( $link ),
-					Helper::prepDescription( $post->post_excerpt ),
+					WordPress\Strings::prepDescription( $post->post_excerpt ),
 					Core\Text::trimChars( $post->post_excerpt )
 				);
 

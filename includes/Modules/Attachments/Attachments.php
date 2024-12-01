@@ -318,11 +318,11 @@ class Attachments extends gEditorial\Module
 
 		// TODO: default enabled on settings
 		if ( $caption = wp_get_attachment_caption( $post->ID ) )
-			$html.= sprintf( '<div class="-caption">%s</div>', Helper::prepDescription( $caption ) );
+			$html.= sprintf( '<div class="-caption">%s</div>', WordPress\Strings::prepDescription( $caption ) );
 
 		// TODO: default enabled on settings
 		if ( ! empty( $post->post_content ) )
-			$html.= sprintf( '<div class="-description">%s</div>', Helper::prepDescription( $post->post_content ) );
+			$html.= sprintf( '<div class="-description">%s</div>', WordPress\Strings::prepDescription( $post->post_content ) );
 
 		return $html;
 	}

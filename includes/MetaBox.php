@@ -1718,7 +1718,7 @@ class MetaBox extends WordPress\Main
 
 		// fills the meta by query data only on new posts
 		if ( '' === $meta && 'auto-draft' === $post->post_status )
-			$meta = Helper::kses( self::req( Services\PostTypeFields::getPostMetaKey( $field['name'], $module ), '' ) );
+			$meta = WordPress\Strings::kses( self::req( Services\PostTypeFields::getPostMetaKey( $field['name'], $module ), '' ), 'none' );
 
 		return $meta;
 	}

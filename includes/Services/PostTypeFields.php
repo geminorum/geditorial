@@ -484,9 +484,9 @@ class PostTypeFields extends WordPress\Main
 
 		// NOTE: third priority: general field
 		switch ( $field_key ) {
-			case 'title'      : return Helper::prepTitle( $raw ?: $value );
-			case 'desc'       : return Helper::prepDescription( $raw ?: $value );
-			case 'description': return Helper::prepDescription( $raw ?: $value );
+			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
+			case 'desc'       : return WordPress\Strings::prepDescription( $raw ?: $value );
+			case 'description': return WordPress\Strings::prepDescription( $raw ?: $value );
 			case 'contact'    : return Helper::prepContact( $raw ?: $value );
 		}
 

@@ -186,7 +186,7 @@ class WcDashboard extends gEditorial\Module
 
 		} else {
 
-			echo Helper::prepDescription( $this->get_setting_fallback( 'purchased_empty_message',
+			echo WordPress\Strings::prepDescription( $this->get_setting_fallback( 'purchased_empty_message',
 				_x( 'Nothing purchased yet.', 'Default', 'geditorial-wc-dashboard' ) ) );
 
 			$this->actions( 'account_purchased_empty', $user_id ); // LIKE: first purchase coupon

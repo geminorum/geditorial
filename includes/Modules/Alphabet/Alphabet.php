@@ -180,7 +180,7 @@ class Alphabet extends gEditorial\Module
 
 					if ( $args['excerpt'] && $post->post_excerpt )
 						$html.= '<'.$args['desc_tag'].' class="-excerpt">'
-							.wpautop( Helper::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE )
+							.wpautop( WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE )
 							.'</'.$args['desc_tag'].'>';
 
 					else if ( 'dd' == $args['desc_tag'] && $args['excerpt'] )
@@ -315,7 +315,7 @@ class Alphabet extends gEditorial\Module
 
 					if ( $args['description'] && $term->description )
 						$html.= '<'.$args['desc_tag'].' class="-description">'
-							.wpautop( Helper::prepDescription( $term->description, TRUE, FALSE ), FALSE )
+							.wpautop( WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ), FALSE )
 							.'</'.$args['desc_tag'].'>';
 
 					else if ( 'dd' == $args['desc_tag'] && $args['description'] )

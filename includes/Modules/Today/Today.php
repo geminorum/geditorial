@@ -735,7 +735,7 @@ class Today extends gEditorial\Module
 
 			// has excerpt
 			if ( $this->the_post[0]->post_excerpt ) {
-				$html = wpautop( Helper::prepDescription( $this->the_post[0]->post_excerpt, TRUE, FALSE ), FALSE );
+				$html = wpautop( WordPress\Strings::prepDescription( $this->the_post[0]->post_excerpt, TRUE, FALSE ), FALSE );
 				echo Core\HTML::wrap( $html, $this->classs( 'theday-excerpt' ) );
 			}
 		}

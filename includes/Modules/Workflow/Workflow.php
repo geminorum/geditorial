@@ -522,7 +522,7 @@ class Workflow extends gEditorial\Module
 				$class.= ' hidden';
 
 			// TODO: changes via js and `status-` class
-			$info.= Core\HTML::wrap( Helper::prepDescription( $desc, FALSE ), $class );
+			$info.= Core\HTML::wrap( WordPress\Strings::prepDescription( $desc, FALSE ), $class );
 		}
 
 		if ( empty( $html ) )

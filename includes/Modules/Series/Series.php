@@ -199,7 +199,7 @@ class Series extends gEditorial\Module
 						if ( isset( $_POST[$prefix.$field][$offset] )
 							&& strlen( $_POST[$prefix.$field][$offset] ) > 0
 							&& $this->get_string( $field, $posttype ) !== $_POST[$prefix.$field][$offset] )
-								$postmeta[$pre_term][$field] = Helper::kses( $_POST[$prefix.$field][$offset], 'text' );
+								$postmeta[$pre_term][$field] = WordPress\Strings::kses( $_POST[$prefix.$field][$offset], 'text' );
 
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$pre_term][$field] );
@@ -428,11 +428,11 @@ class Series extends gEditorial\Module
 
 			$title = empty( $post->series_meta['in_series_title'] )
 				? '' // no need to duplicate title
-				: Helper::prepTitle( $post->series_meta['in_series_title'], $post->ID );
+				: WordPress\Strings::prepTitle( $post->series_meta['in_series_title'], $post->ID );
 
 			$desc = empty( $post->series_meta['in_series_desc'] )
 				? '' // no need to use excerpt as desc
-				: Helper::prepDescription( $post->series_meta['in_series_desc'] );
+				: WordPress\Strings::prepDescription( $post->series_meta['in_series_desc'] );
 
 			$args['item_after'] = sprintf( $args['item_after'], $title, '%2$s', $desc, '%4$s' );
 

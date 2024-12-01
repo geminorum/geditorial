@@ -28,6 +28,7 @@ class Info extends WordPress\Main
 
 	// @SEE: https://www.latlong.net/countries.html
 	// @REF: https://stackoverflow.com/a/52943975
+	// `maps.google.com/?q=35.6928,50.82565`
 	public static function lookupURLforLatLng( $latlng )
 	{
 		if ( ! $latlng )

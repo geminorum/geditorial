@@ -1411,16 +1411,16 @@ class Importer extends gEditorial\Module
 		switch ( $field ) {
 
 			case 'importer_menu_order'     : return Core\Number::intval( $value );
-			case 'importer_post_title'     : return Helper::kses( $value, 'none' );
-			case 'importer_post_content'   : return Helper::kses( $value, 'html' );
-			case 'importer_post_excerpt'   : return Helper::kses( $value, 'text' );
-			case 'importer_custom_meta'    : return Helper::kses( $value, 'text' );
-			case 'importer_comment_content': return Helper::kses( $value, 'html' );
+			case 'importer_post_title'     : return WordPress\Strings::kses( $value, 'none' );
+			case 'importer_post_content'   : return WordPress\Strings::kses( $value, 'html' );
+			case 'importer_post_excerpt'   : return WordPress\Strings::kses( $value, 'text' );
+			case 'importer_custom_meta'    : return WordPress\Strings::kses( $value, 'text' );
+			case 'importer_comment_content': return WordPress\Strings::kses( $value, 'html' );
 		}
 
 		foreach ( array_keys( $all_taxonomies ) as $taxonomy )
 			if ( $field == 'importer_tax_'.$taxonomy )
-				return array_filter( Helper::ksesArray( Helper::getSeparated( $value ) ) );
+				return array_filter( WordPress\Strings::ksesArray( Helper::getSeparated( $value ) ) );
 
 		return $value;
 	}

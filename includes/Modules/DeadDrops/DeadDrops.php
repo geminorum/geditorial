@@ -414,7 +414,8 @@ class DeadDrops extends gEditorial\Module
 			});
 
 JS;
-		echo '<script>'.$script.'</script>';
+		// echo '<script>'.$script.'</script>';
+		wp_print_inline_script_tag( $script );
 		echo '</body></html>';
 	}
 }

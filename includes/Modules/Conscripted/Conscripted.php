@@ -124,6 +124,7 @@ class Conscripted extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+			'data_length'        => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-conscripted' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),

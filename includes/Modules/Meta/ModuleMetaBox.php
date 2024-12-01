@@ -16,7 +16,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 	public static function setPostMetaField_String( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = trim( Helper::kses( $_POST[$prefix.$field] ) );
+			$postmeta[$field] = WordPress\Strings::kses( $_POST[$prefix.$field] );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -25,7 +25,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 	public static function setPostMetaField_Text( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = trim( Helper::kses( $_POST[$prefix.$field], 'text' ) );
+			$postmeta[$field] = WordPress\Strings::kses( $_POST[$prefix.$field], 'text' );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );
@@ -34,7 +34,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 	public static function setPostMetaField_HTML( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = trim( Helper::kses( $_POST[$prefix.$field], 'html' ) );
+			$postmeta[$field] = WordPress\Strings::kses( $_POST[$prefix.$field], 'html' );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );

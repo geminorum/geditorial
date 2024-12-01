@@ -729,7 +729,7 @@ class Config extends gEditorial\Module
 			], $row );
 
 			$data['updated']     = Datetime::htmlHumanTime( $data['updated'] );
-			$data['description'] = Helper::prepDescription( $data['description'] );
+			$data['description'] = WordPress\Strings::prepDescription( $data['description'] );
 			$data['links']       = count( (array) $data['sources'] );
 
 			echo $this->wrap_open( '-view -imports-data-summary' );

@@ -394,7 +394,7 @@ trait PostTypeFields
 			case 'venue':
 			case 'people':
 
-				$sanitized = Core\Text::trim( Helper::kses( $data, 'none' ) );
+				$sanitized = WordPress\Strings::kses( $data, 'none' ) ;
 				$sanitized = WordPress\Strings::getPiped( Helper::getSeparated( $sanitized ) );
 
 				break;
@@ -530,20 +530,20 @@ trait PostTypeFields
 			case 'datestring':
 			case 'title_before':
 			case 'title_after':
-				$sanitized = Core\Text::trim( Helper::kses( $data, 'none' ) );
+				$sanitized = WordPress\Strings::kses( $data, 'none' );
 
 			break;
 			case 'address':
 			case 'note':
 			case 'textarea':
 			case 'widget': // FIXME: maybe general note fields displayed by a meta widget: `primary`/`side notes`
-				$sanitized = trim( Helper::kses( $data, 'text' ) );
+				$sanitized = WordPress\Strings::kses( $data, 'text' );
 
 			break;
 			case 'postbox_legacy':
 			case 'postbox_tiny':
 			case 'postbox_html':
-				$sanitized = trim( Helper::kses( $data, 'html' ) );
+				$sanitized = WordPress\Strings::kses( $data, 'html' );
 		}
 
 		return $this->filters( 'sanitize_posttype_field', $sanitized, $field, $post, $data );
@@ -1480,7 +1480,7 @@ trait PostTypeFields
 
 		foreach ( (array) $data as $name ) {
 
-			$sanitized = trim( Helper::kses( $name, 'none' ) );
+			$sanitized = WordPress\Strings::kses( $name, 'none' );
 
 			if ( empty( $sanitized ) )
 				continue;

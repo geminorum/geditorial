@@ -99,15 +99,6 @@ class Jobbed extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
-	{
-		return [
-			'main_taxonomy' => [
-				// '' => _x( '', 'Main Taxonomy: Default Term', 'geditorial-jobbed' ),
-			],
-		];
-	}
-
 	public function init()
 	{
 		parent::init();
