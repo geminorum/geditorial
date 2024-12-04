@@ -992,23 +992,10 @@ class Personage extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( 'parse_people_pool' ) ) {
+				if ( Tablelist::isAction( ModuleSettings::ACTION_PARSE_POOL ) ) {
 
-					if ( ! $pool = $_REQUEST[$this->hook()]['tools']['pool'] )
+					if ( ! ModuleSettings::handleTool_parse_pool() )
 						Core\WordPress::redirectReferer( 'huh' );
-
-					$parsed = [];
-
-					foreach ( Core\Text::splitLines( $pool ) as $row )
-						$parsed[] = ModuleHelper::parseFullname( $row );
-
-					if ( ! $parsed = array_values( array_filter( $parsed ) ) )
-						Core\WordPress::redirectReferer( 'huh' );
-
-					$headers = array_keys( $parsed[0] );
-
-					if ( FALSE !== ( $data = Core\Text::toCSV( array_merge( [ $headers ], $parsed ) ) ) )
-						Core\Text::download( $data, Core\File::prepName( 'parsed-pool.csv' ) );
 
 				} else {
 
@@ -1020,20 +1007,11 @@ class Personage extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'People Parser', 'Header', 'geditorial-personage' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Personage Tools', 'Header', 'geditorial-personage' ) );
 
-		$this->do_settings_field( [
-			'type'         => 'textarea',
-			'field'        => 'pool',
-			'dir'          => 'rtl',
-			'cap'          => TRUE,
-			'field_class'  => 'textarea-autosize',
-			'option_group' => 'tools',
-		] );
+			ModuleSettings::renderCard_parse_pool();
 
-		echo $this->wrap_open_buttons();
-			Settings::submitButton( 'parse_people_pool', _x( 'Parse Lines', 'Button', 'geditorial-personage' ) );
-		echo '</p>';
+		echo '</div>';
 	}
 
 	public function reports_settings( $sub )
