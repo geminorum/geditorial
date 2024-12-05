@@ -36,6 +36,7 @@ class Iranian extends gEditorial\Module
 	{
 		$settings  = [];
 		$posttypes = $this->get_settings_posttypes_parents();
+		$roles     = $this->get_settings_default_roles();
 
 		$settings['_general']['parent_posttypes'] = [ NULL, $posttypes ];
 
@@ -70,6 +71,9 @@ class Iranian extends gEditorial\Module
 		}
 
 		$settings['posttypes_option'] = 'posttypes_option';
+
+		$settings['_roles']['reports_roles'] = [ NULL, $roles ];
+		$settings['_roles']['tools_roles']   = [ NULL, $roles ];
 
 		return $settings;
 	}
@@ -209,6 +213,11 @@ class Iranian extends gEditorial\Module
 			return $default;
 
 		return $this->constant( 'metakey_location_posttype' );
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'tools' ] );
 	}
 
 	public function imports_settings( $sub )
