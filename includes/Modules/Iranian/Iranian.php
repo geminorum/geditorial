@@ -163,10 +163,11 @@ class Iranian extends gEditorial\Module
 	// @REF: `Core\Validation::sanitizeIdentityNumber()`
 	public function get_identity_summary( $identity )
 	{
+		$data      = $this->get_imports_raw_data( 'json' );
 		$queried   = $identity  ? Core\Text::stripNonNumeric( trim( $identity ) ) : $identity;
 		$sanitized = $queried   ? Core\Number::zeroise( Core\Number::translate( $queried ), 10 ) : '';
 		$validated = $sanitized ? Core\Validation::isIdentityNumber( $sanitized ) : FALSE;
-		$location  = $validated ? $this->get_location_from_identity( $sanitized, [] ) : [];
+		$location  = $validated ? ModuleHelper::getLocationFromIdentity( $sanitized, $data, [] ) : [];
 
 		return compact( [
 			'queried',
@@ -174,23 +175,6 @@ class Iranian extends gEditorial\Module
 			'validated',
 			'location',
 		] );
-	}
-
-	// NOTE: assumes the identity is “sanitized”!
-	public function get_location_from_identity( $identity, $fallback = FALSE )
-	{
-		if ( empty( $identity ) )
-			return $fallback;
-
-		if ( ! $data = $this->get_imports_raw_data( 'json' ) )
-			return $fallback;
-
-		$prefix = substr( $identity, 0, 3 );
-
-		if ( ! array_key_exists( $prefix, $data ) )
-			return $fallback;
-
-		return $data[$prefix];
 	}
 
 	private function _get_posttype_identity_metakey( $posttype )
@@ -225,45 +209,37 @@ class Iranian extends gEditorial\Module
 		$this->check_settings( $sub, 'imports', 'per_page' );
 	}
 
-	// TODO: migrate to `ModuleSettings`
 	protected function render_imports_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Iranian Imports', 'Header', 'geditorial-iranian' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Iranian Imports', 'Header', 'geditorial-iranian' ) );
 
-		if ( $this->_do_import_location_from_identity( $sub ) )
-			return;
+		$available = FALSE;
+		$parents   = $this->get_setting_posttypes( 'parent' );
+		$all       = $this->get_settings_posttypes_parents();
+		$posttypes = Core\Arraay::keepByKeys( $all, $parents );
 
-		$posttypes = $this->get_setting_posttypes( 'parent' );
+		if ( count( $posttypes ) ) {
 
-		if ( ! count( $posttypes ) )
-			return Info::renderNoImportsAvailable();
+			ModuleSettings::renderCard_location_by_identity( $posttypes );
 
-		$this->_render_imports_card_sync_locations( $posttypes );
+			$available = TRUE;
+		}
+
+		if ( ! $available )
+			Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}
 
-	private function _render_imports_card_sync_locations( $posttypes = NULL )
+	protected function render_imports_html_before( $uri, $sub )
 	{
-		echo Settings::toolboxCardOpen( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ) );
-
-			$all = $this->get_settings_posttypes_parents();
-
-			// TODO: display empty count for each posttype
-			foreach ( $posttypes as $posttype )
-				Settings::submitButton( add_query_arg( [
-					'action' => 'do_import_location_from_identity',
-					'type'   => $posttype,
-				/* translators: %s: posttype label */
-				] ), sprintf( _x( 'On %s', 'Button', 'geditorial-iranian' ), $all[$posttype] ), 'link-small' );
-
-			Core\HTML::desc( _x( 'Tries to set the location based on identity data.', 'Button Description', 'geditorial-iranian' ) );
-		echo '</div></div>';
+		if ( $this->_do_import_location_by_identity( $sub ) )
+			return FALSE; // avoid further UI
 	}
 
-	private function _do_import_location_from_identity( $sub )
+	private function _do_import_location_by_identity( $sub )
 	{
-		if ( 'do_import_location_from_identity' !== self::req( 'action' ) )
+		if ( ! self::do( ModuleSettings::ACTION_LOCATION_BY_IDENTITY ) )
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
@@ -272,96 +248,18 @@ class Iranian extends gEditorial\Module
 		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
 			return Info::renderNotSupportedPosttype();
 
-		$identity_metakey = $this->_get_posttype_identity_metakey( $posttype );
-		$location_metakey = $this->_get_posttype_location_metakey( $posttype );
+		if ( ! $data = $this->get_imports_raw_data( 'json' ) )
+			return Info::renderNoDataAvailable();
 
-		$query = [
-			'meta_query' => [
-				[
-					'key'     => $location_metakey,
-					'compare' => 'NOT EXISTS',
-				],
-				[
-					'key'     => $identity_metakey,
-					'compare' => 'EXISTS',
-				],
-			],
-		];
+		$this->raise_resources();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $this->get_sub_limit_option( $sub ) );
-
-		if ( empty( $posts ) )
-			Core\WordPress::redirect( remove_query_arg( [
-				'action',
-				'type',
-				'paged',
-			] ) );
-
-		echo Settings::processingListOpen();
-
-		foreach ( $posts as $post )
-			$this->_post_set_location_from_identity( $post, $identity_metakey, $location_metakey, TRUE );
-
-		echo '</ul></div>';
-
-		Core\WordPress::redirectJS( add_query_arg( [
-			'action' => 'do_import_location_from_identity',
-			'type'   => $posttype,
-			'paged'  => self::paged() + 1,
-		] ) );
-
-		return TRUE;
-	}
-
-	// TODO: display current location data from post
-	private function _post_set_location_from_identity( $post, $identity_metakey, $location_metakey, $verbose = FALSE )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		// TODO: add setting for override
-		if ( $location = get_post_meta( $post->ID, $location_metakey, TRUE ) )
-			return FALSE;
-
-		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
-			return FALSE;
-
-		$sanitized = Core\Number::zeroise( Core\Number::translate( trim( $identity ) ), 10 );
-
-		if ( ! $data = $this->get_location_from_identity( $sanitized ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: identity code */
-				_x( 'No location data available for %s', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $sanitized ) ) : TRUE ) && FALSE;
-
-		if ( ! isset( $data['city'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: identity code */
-				_x( 'No city data available for %s', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $sanitized ) ) : TRUE ) && FALSE;
-
-		if ( WordPress\Strings::isEmpty( $data['city'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %1$s: city data, %2$s: identity code */
-				_x( 'City data is empty for %1$s: %2$s', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $sanitized ), Core\HTML::code( $data['city'] ) ) : TRUE ) && FALSE;
-
-		if ( ! update_post_meta( $post->ID, $location_metakey, $data['city'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: post title */
-				_x( 'There is problem updating location for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
-				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
-
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: city data, %2$s: identity code, %3$s: post title */
-				sprintf( _x( '&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-iranian' ),
-				Core\HTML::escape( $data['city'] ),
-				Core\HTML::code( $identity ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+		return ModuleSettings::handleImport_location_by_identity(
+			$posttype,
+			$data,
+			$this->_get_posttype_identity_metakey( $posttype ),
+			$this->_get_posttype_location_metakey( $posttype ),
+			$this->get_sub_limit_option( $sub )
+		);
 	}
 
 	public function tools_settings( $sub )

@@ -838,6 +838,20 @@ class ModuleHelper extends gEditorial\Helper
 		) : FALSE;
 	}
 
+	// NOTE: assumes the identity is “sanitized”!
+	public static function getLocationFromIdentity( $identity, $data, $fallback = FALSE )
+	{
+		if ( empty( $identity ) || empty( $data ) )
+			return $fallback;
+
+		$prefix = substr( $identity, 0, 3 );
+
+		if ( ! array_key_exists( $prefix, $data ) )
+			return $fallback;
+
+		return $data[$prefix];
+	}
+
 	public static function getCountrySummary( $posttypes, $metakey, $data )
 	{
 		$statuses = WordPress\Status::acceptable( $posttypes, 'reports' );
