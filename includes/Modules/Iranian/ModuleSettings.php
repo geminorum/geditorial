@@ -14,8 +14,118 @@ class ModuleSettings extends gEditorial\Settings
 
 	const MODULE = 'iranian';
 
-	const ACTION_COUNTRY_SUMMARY = 'do_report_country_summary';
-	const ACTION_CITY_SUMMARY    = 'do_report_city_summary';
+	const ACTION_LOCATION_BY_IDENTITY = 'do_import_location_by_identity';
+	const ACTION_COUNTRY_SUMMARY      = 'do_report_country_summary';
+	const ACTION_CITY_SUMMARY         = 'do_report_city_summary';
+
+	public static function renderCard_location_by_identity( $posttypes )
+	{
+		echo self::toolboxCardOpen( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ) );
+
+			// TODO: display empty count for each posttype
+			foreach ( $posttypes as $posttype => $label )
+				self::submitButton( add_query_arg( [
+					'action' => static::ACTION_LOCATION_BY_IDENTITY,
+					'type'   => $posttype,
+				] ), sprintf(
+					/* translators: %s: posttype label */
+					_x( 'On %s', 'Button', 'geditorial-iranian' ),
+				$label ), 'link-small' );
+
+			Core\HTML::desc( _x( 'Tries to set the location based on identity data.', 'Button Description', 'geditorial-iranian' ) );
+		echo '</div></div>';
+	}
+
+	public static function handleImport_location_by_identity( $posttype, $data, $identity_metakey, $location_metakey, $limit = 25 )
+	{
+		$query = [
+			'meta_query' => [
+				[
+					'key'     => $location_metakey,
+					'compare' => 'NOT EXISTS',
+				],
+				[
+					'key'     => $identity_metakey,
+					'compare' => 'EXISTS',
+				],
+			],
+		];
+
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+
+		if ( empty( $posts ) )
+			Core\WordPress::redirect( remove_query_arg( [
+				'action',
+				'type',
+				'paged',
+			] ) );
+
+		echo self::processingListOpen();
+
+		foreach ( $posts as $post )
+			self::post_set_location_from_identity( $post, $data, $identity_metakey, $location_metakey, TRUE );
+
+		echo '</ul></div>';
+
+		Core\WordPress::redirectJS( add_query_arg( [
+			'action' => static::ACTION_LOCATION_BY_IDENTITY,
+			'type'   => $posttype,
+			'paged'  => self::paged() + 1,
+		] ) );
+
+		return TRUE;
+	}
+
+	// TODO: display current location data from post
+	public static function post_set_location_from_identity( $post, $data, $identity_metakey, $location_metakey, $verbose = FALSE )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		// TODO: add setting for override
+		if ( $location = get_post_meta( $post->ID, $location_metakey, TRUE ) )
+			return FALSE;
+
+		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
+			return FALSE;
+
+		$sanitized = Core\Number::zeroise( Core\Number::translate( trim( $identity ) ), 10 );
+
+		if ( ! $location = ModuleHelper::getLocationFromIdentity( $sanitized, $data ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %s: identity code */
+				_x( 'No location data available for %s', 'Notice', 'geditorial-iranian' ) ),
+				Core\HTML::code( $sanitized ) ) : TRUE ) && FALSE;
+
+		if ( ! isset( $location['city'] ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %s: identity code */
+				_x( 'No city data available for %s', 'Notice', 'geditorial-iranian' ) ),
+				Core\HTML::code( $sanitized ) ) : TRUE ) && FALSE;
+
+		if ( WordPress\Strings::isEmpty( $location['city'] ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %1$s: city data, %2$s: identity code */
+				_x( 'City data is empty for %1$s: %2$s', 'Notice', 'geditorial-iranian' ) ),
+				Core\HTML::code( $sanitized ), Core\HTML::code( $location['city'] ) ) : TRUE ) && FALSE;
+
+		if ( ! update_post_meta( $post->ID, $location_metakey, $location['city'] ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %s: post title */
+				_x( 'There is problem updating location for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
+				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+
+		if ( $verbose )
+			echo Core\HTML::tag( 'li', sprintf(
+				/* translators: %1$s: city data, %2$s: identity code, %3$s: post title */
+				_x( '&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-iranian' ),
+				Core\HTML::escape( $location['city'] ),
+				Core\HTML::code( $identity ),
+				WordPress\Post::title( $post )
+			) );
+
+		return TRUE;
+	}
 
 	public static function renderCard_country_summary( $posttypes )
 	{
