@@ -552,7 +552,7 @@ class Attachments extends gEditorial\Module
 
 	private function _do_tool_deletion_by_mime( $sub )
 	{
-		if ( 'do_tool_deletion_by_mime' !== self::req( 'action' ) )
+		if ( ! self::do( ModuleSettings::ACTION_DELETION_BY_MIME ) )
 			return FALSE;
 
 		if ( ! $mimetype = self::req( 'mime' ) )
@@ -561,7 +561,6 @@ class Attachments extends gEditorial\Module
 		$this->raise_resources();
 
 		return ModuleSettings::handleTool_deletion_by_mime(
-			'do_tool_deletion_by_mime',
 			$mimetype,
 			$this->get_sub_limit_option( $sub )
 		);
@@ -569,7 +568,7 @@ class Attachments extends gEditorial\Module
 
 	private function _do_tool_empty_raw_metadata( $sub )
 	{
-		if ( 'do_tool_empty_raw_metadata' !== self::req( 'action' ) )
+		if ( ! self::do( ModuleSettings::ACTION_EMPTY_RAW_METADATA ) )
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
@@ -581,7 +580,6 @@ class Attachments extends gEditorial\Module
 		$this->raise_resources();
 
 		return ModuleSettings::handleTool_empty_raw_metadata(
-			'do_tool_empty_raw_metadata',
 			$posttype,
 			$this->get_sub_limit_option( $sub )
 		);
@@ -589,7 +587,7 @@ class Attachments extends gEditorial\Module
 
 	private function _do_tool_reattach_thumbnails( $sub )
 	{
-		if ( 'do_tool_reattach_thumbnails' !== self::req( 'action' ) )
+		if ( ! self::do( ModuleSettings::ACTION_REATTACH_THUMBNAILS ) )
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
@@ -601,7 +599,6 @@ class Attachments extends gEditorial\Module
 		$this->raise_resources();
 
 		return ModuleSettings::handleTool_reattach_thumbnails(
-			'do_tool_reattach_thumbnails',
 			$posttype,
 			$this->get_sub_limit_option( $sub )
 		);

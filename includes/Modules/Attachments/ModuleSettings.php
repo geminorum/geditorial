@@ -12,13 +12,17 @@ class ModuleSettings extends gEditorial\Settings
 
 	const MODULE = 'attachments';
 
+	const ACTION_REATTACH_THUMBNAILS = 'do_tool_reattach_thumbnails';
+	const ACTION_EMPTY_RAW_METADATA  = 'do_tool_empty_raw_metadata';
+	const ACTION_DELETION_BY_MIME    = 'do_tool_deletion_by_mime';
+
 	public static function renderCard_reattach_thumbnails( $posttypes )
 	{
 		echo self::toolboxCardOpen( _x( 'Re-attach Un-Parented', 'Card Title', 'geditorial-attachments' ) );
 
 		foreach ( $posttypes as $posttype => $label )
 			self::submitButton( add_query_arg( [
-				'action' => 'do_tool_reattach_thumbnails',
+				'action' => static::ACTION_REATTACH_THUMBNAILS,
 				'type'   => $posttype,
 			/* translators: %s: posttype label */
 			] ), sprintf( _x( 'On %s', 'Button', 'geditorial-attachments' ), $label ), 'link-small' );
@@ -33,7 +37,7 @@ class ModuleSettings extends gEditorial\Settings
 
 			foreach ( $posttypes as $posttype => $label )
 				self::submitButton( add_query_arg( [
-					'action' => 'do_tool_empty_raw_metadata',
+					'action' => static::ACTION_EMPTY_RAW_METADATA,
 					'type'   => $posttype,
 				/* translators: %s: posttype label */
 				] ), sprintf( _x( 'On %s', 'Button', 'geditorial-attachments' ), $label ), 'link-small' );
@@ -48,7 +52,7 @@ class ModuleSettings extends gEditorial\Settings
 
 			foreach ( $mimetypes as $mimetype )
 				self::submitButton( add_query_arg( [
-					'action' => 'do_tool_deletion_by_mime',
+					'action' => static::ACTION_DELETION_BY_MIME,
 					'mime'   => $mimetype,
 				] ), WordPress\Media::getExtension( $mimetype, $extensions ), 'link-small', TRUE );
 
@@ -56,7 +60,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo '</div></div>';
 	}
 
-	public static function handleTool_empty_raw_metadata( $action, $posttype, $limit = 25 )
+	public static function handleTool_empty_raw_metadata( $posttype, $limit = 25 )
 	{
 		global $wpdb;
 
@@ -91,7 +95,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
-			'action' => $action,
+			'action' => static::ACTION_EMPTY_RAW_METADATA,
 			'type'   => $posttype,
 			'paged'  => $paged + 1,
 		] ) );
@@ -99,7 +103,7 @@ class ModuleSettings extends gEditorial\Settings
 		return TRUE;
 	}
 
-	public static function handleTool_deletion_by_mime( $action, $mimetype, $limit = 25 )
+	public static function handleTool_deletion_by_mime( $mimetype, $limit = 25 )
 	{
 		list( $attachments, $pagination ) = Tablelist::getAttachments( [
 			'post_mime_type' => $mimetype,
@@ -121,7 +125,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
-			'action' => $action,
+			'action' => static::ACTION_DELETION_BY_MIME,
 			'mime'   => $mimetype,
 		] ) );
 
@@ -178,7 +182,7 @@ class ModuleSettings extends gEditorial\Settings
 		return TRUE;
 	}
 
-	public static function handleTool_reattach_thumbnails( $action, $posttype, $limit = 25 )
+	public static function handleTool_reattach_thumbnails( $posttype, $limit = 25 )
 	{
 		global $wpdb;
 
@@ -208,7 +212,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo '</ul></div>';
 
 		Core\WordPress::redirectJS( add_query_arg( [
-			'action' => $action,
+			'action' => static::ACTION_REATTACH_THUMBNAILS,
 			'type'   => $posttype,
 		] ) );
 
