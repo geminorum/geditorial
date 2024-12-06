@@ -780,11 +780,7 @@ class Audit extends gEditorial\Module
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $this->get_sub_limit_option( $sub ) );
 
 		if ( empty( $posts ) )
-			Core\WordPress::redirect( remove_query_arg( [
-				'action',
-				'type',
-				'paged',
-			] ) );
+			return Settings::processingAllDone();
 
 		echo Settings::processingListOpen();
 

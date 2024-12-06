@@ -3242,6 +3242,23 @@ class Settings extends WordPress\Main
 		return '<div class="'.static::BASE.'-processing-wrap"><ul>';
 	}
 
+	public static function processingAllDone( $remove = NULL )
+	{
+		echo self::toolboxColumnOpen( Plugin::done( FALSE ) );
+		echo self::toolboxAfterOpen();
+
+			self::submitButton( remove_query_arg( $remove ?? [
+				'action',
+				'type',
+				'mime',
+				'paged',
+			] ), _x( 'Go-back &larr;', 'Settings: Button', 'geditorial-admin' ), 'link' );
+
+		echo '</div></div>';
+
+		return TRUE;
+	}
+
 	public static function toolboxCardOpen( $title = '', $buttons = TRUE )
 	{
 		return '<div class="-wrap '.static::BASE.'-wrap card -toolbox-card">'

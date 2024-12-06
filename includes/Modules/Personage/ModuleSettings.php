@@ -108,7 +108,7 @@ class ModuleSettings extends gEditorial\Settings
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			return FALSE;
+			return self::processingAllDone();
 
 		echo self::processingListOpen();
 

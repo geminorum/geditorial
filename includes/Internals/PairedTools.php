@@ -581,12 +581,12 @@ trait PairedTools
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			Core\WordPress::redirect( remove_query_arg( [
+			return Settings::processingAllDone( [
 				self::$pairedtools__action_move_from_to,
 				'movefrom',
 				'moveto',
 				'paged',
-			] ) );
+			] );
 
 		if ( $this->get_setting( 'paired_force_parents' ) ) {
 			$movefrom = WordPress\Taxonomy::appendParentTermIDs( $movefrom, $taxonomy );
@@ -659,11 +659,7 @@ trait PairedTools
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			Core\WordPress::redirect( remove_query_arg( [
-				'action',
-				'type',
-				'paged',
-			] ) );
+			return Settings::processingAllDone();
 
 		echo Settings::processingListOpen();
 

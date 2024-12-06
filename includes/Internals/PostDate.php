@@ -54,11 +54,7 @@ trait PostDate
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			Core\WordPress::redirect( remove_query_arg( [
-				'action',
-				'type',
-				'paged',
-			] ) );
+			return Settings::processingAllDone();
 
 		echo Settings::processingListOpen();
 
