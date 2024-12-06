@@ -1035,4 +1035,61 @@ class Personage extends gEditorial\Module
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
 	}
+
+	public function imports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'imports', 'per_page' );
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Personage Imports', 'Header', 'geditorial-personage' ) );
+
+		$available = FALSE;
+		$fullname  = Services\PostTypeFields::isAvailable( 'fullname', $this->constant( 'primary_posttype' ), 'meta' );
+
+		if ( $fullname ) {
+
+			ModuleSettings::renderCard_from_fullname( $fullname );
+
+			$available = TRUE;
+		}
+
+		if ( ! $available )
+			Info::renderNoImportsAvailable();
+
+		echo '</div>';
+	}
+
+	protected function render_imports_html_before( $uri, $sub )
+	{
+		if ( $this->_do_import_from_fullname( $sub ) )
+			return FALSE; // avoid further UI
+	}
+
+	private function _do_import_from_fullname( $sub )
+	{
+		if ( ! self::do( [
+			ModuleSettings::ACTION_PARSE_FULLNAME,
+			ModuleSettings::ACTION_DELETE_FULLNAME,
+			ModuleSettings::ACTION_FROM_FULLNAME,
+		] ) )
+			return FALSE;
+
+		$posttype = $this->constant( 'primary_posttype' );
+
+		if ( ! $fullname = Services\PostTypeFields::isAvailable( 'fullname', $posttype, 'meta' ) )
+			return Info::renderNotSupportedField();
+
+		$this->raise_resources();
+
+		return ModuleSettings::handleImport_from_fullname(
+			$posttype,
+			$fullname,
+			Services\PostTypeFields::isAvailable( 'first_name', $posttype, 'meta' ),
+			Services\PostTypeFields::isAvailable( 'middle_name', $posttype, 'meta' ),
+			Services\PostTypeFields::isAvailable( 'last_name', $posttype, 'meta' ),
+			$this->get_sub_limit_option( $sub )
+		);
+	}
 }
