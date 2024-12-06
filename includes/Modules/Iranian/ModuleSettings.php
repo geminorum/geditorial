@@ -14,9 +14,120 @@ class ModuleSettings extends gEditorial\Settings
 
 	const MODULE = 'iranian';
 
+	const ACTION_IDENTITY_CERTIFICATE = 'do_tool_identity_certificate';
 	const ACTION_LOCATION_BY_IDENTITY = 'do_import_location_by_identity';
 	const ACTION_COUNTRY_SUMMARY      = 'do_report_country_summary';
 	const ACTION_CITY_SUMMARY         = 'do_report_city_summary';
+
+	public static function renderCard_identity_certificate( $posttypes )
+	{
+		echo self::toolboxCardOpen( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ) );
+
+			// TODO: display empty count for each posttype
+			foreach ( $posttypes as $posttype => $label )
+				self::submitButton( add_query_arg( [
+					'action' => static::ACTION_IDENTITY_CERTIFICATE,
+					'type'   => $posttype,
+				] ), sprintf(
+					/* translators: %s: posttype label */
+					_x( 'Compare Identity for %s', 'Button', 'geditorial-iranian' ),
+					$label
+				), 'link-small' );
+
+			Core\HTML::desc( _x( 'Tries to un-set the certificate duplicated from identity data.', 'Button Description', 'geditorial-iranian' ) );
+		echo '</div></div>';
+	}
+
+	public static function handleTool_identity_certificate( $posttype, $identity_metakey, $certificate, $limit = 25 )
+	{
+		$query = [
+			'meta_query' => [
+				[
+					'key'     => $identity_metakey,
+					'compare' => 'EXISTS',
+				],
+				[
+					'key'     => $certificate['metakey'],
+					'compare' => 'EXISTS',
+				],
+			],
+		];
+
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+
+		if ( empty( $posts ) )
+			return FALSE;
+
+		echo self::processingListOpen();
+
+		foreach ( $posts as $post )
+			self::post_compare_identity_certificate( $post, $identity_metakey, $certificate, TRUE );
+
+		echo '</ul></div>';
+
+		Core\WordPress::redirectJS( add_query_arg( [
+			'action' => static::ACTION_IDENTITY_CERTIFICATE,
+			'type'   => $posttype,
+			'paged'  => self::paged() + 1,
+		] ) );
+
+		return TRUE;
+	}
+
+	public static function post_compare_identity_certificate( $post, $identity_metakey, $certificate_field, $verbose = FALSE )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $certificate = get_post_meta( $post->ID, $certificate_field['metakey'], TRUE ) )
+			return FALSE;
+
+		$cleaned = Core\Text::stripNonNumeric( Core\Text::trim( $certificate ) );
+
+		if ( WordPress\Strings::isEmpty( $cleaned ) ) {
+
+			if ( ! delete_post_meta( $post->ID, $certificate_field['metakey'] ) )
+				return ( $verbose ? printf( Core\HTML::tag( 'li',
+					/* translators: %s: post title */
+					_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
+					WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+
+			if ( $verbose )
+				echo Core\HTML::tag( 'li',
+					/* translators: %1$s: birth certificate number, %2$s: post title */
+					sprintf( _x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-iranian' ),
+					Core\HTML::code( $certificate ),
+					WordPress\Post::title( $post )
+				) );
+
+			return TRUE;
+		}
+
+		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
+			return FALSE;
+
+		if ( $identity !== Core\Validation::sanitizeIdentityNumber( $cleaned ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %1$s: identity code, %2$s: birth certificate number */
+				_x( 'Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent', 'Notice', 'geditorial-iranian' ) ),
+				Core\HTML::code( $identity ), Core\HTML::code( $certificate ) ) : TRUE ) && FALSE;
+
+		if ( ! delete_post_meta( $post->ID, $certificate_field['metakey'] ) )
+			return ( $verbose ? printf( Core\HTML::tag( 'li',
+				/* translators: %s: post title */
+				_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
+				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+
+		if ( $verbose )
+			echo Core\HTML::tag( 'li',
+				/* translators: %1$s: birth certificate number, %2$s: post title */
+				sprintf( _x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-iranian' ),
+				Core\HTML::code( $certificate ),
+				WordPress\Post::title( $post )
+			) );
+
+		return TRUE;
+	}
 
 	public static function renderCard_location_by_identity( $posttypes )
 	{

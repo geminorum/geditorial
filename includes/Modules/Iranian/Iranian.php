@@ -267,55 +267,39 @@ class Iranian extends gEditorial\Module
 		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
-	// TODO: migrate to `ModuleSettings`
 	protected function render_tools_html( $uri, $sub )
 	{
 		echo Settings::toolboxColumnOpen( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
 
-		if ( $this->_do_tool_compare_identity_certificate( $sub ) )
-			return;
-
-		$posttypes = $this->get_setting_posttypes( 'parent' );
-
-		if ( ! count( $posttypes ) )
-			return Info::renderNoToolsAvailable();
-
+		$available = FALSE;
+		$parents   = $this->get_setting_posttypes( 'parent' );
 		$supported = Services\PostTypeFields::getSupported( 'birth_certificate_number' );
+		$intersect = array_intersect( $parents, $supported );
+		$all       = $this->get_settings_posttypes_parents();
+		$posttypes = Core\Arraay::keepByKeys( $all, $intersect );
 
-		if ( ! count( $supported ) )
-			return Info::renderNoToolsAvailable();
+		if ( count( $posttypes ) ) {
 
-		$intersect = array_intersect( $posttypes, $supported );
+			ModuleSettings::renderCard_identity_certificate( $posttypes );
 
-		if ( ! count( $intersect ) )
-			return Info::renderNoToolsAvailable();
+			$available = TRUE;
+		}
 
-		$this->_render_tools_card_purge_duplicates( $intersect );
+		if ( ! $available )
+			Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}
 
-	private function _render_tools_card_purge_duplicates( $posttypes = NULL )
+	protected function render_tools_html_before( $uri, $sub )
 	{
-		echo Settings::toolboxCardOpen( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ) );
-
-			$all = $this->get_settings_posttypes_parents();
-
-			// TODO: display empty count for each posttype
-			foreach ( $posttypes as $posttype )
-				Settings::submitButton( add_query_arg( [
-					'action' => 'do_tool_compare_identity_certificate',
-					'type'   => $posttype,
-				/* translators: %s: posttype label */
-				] ), sprintf( _x( 'Compare Identity for %s', 'Button', 'geditorial-iranian' ), $all[$posttype] ), 'link-small' );
-
-			Core\HTML::desc( _x( 'Tries to un-set the certificate duplicated from identity data.', 'Button Description', 'geditorial-iranian' ) );
-		echo '</div></div>';
+		if ( $this->_do_tool_identity_certificate( $sub ) )
+			return FALSE; // avoid further UI
 	}
 
-	private function _do_tool_compare_identity_certificate( $sub )
+	private function _do_tool_identity_certificate( $sub )
 	{
-		if ( 'do_tool_compare_identity_certificate' !== self::req( 'action' ) )
+		if ( ! self::do( ModuleSettings::ACTION_IDENTITY_CERTIFICATE ) )
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
@@ -324,103 +308,14 @@ class Iranian extends gEditorial\Module
 		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
 			return Info::renderNotSupportedPosttype();
 
-		$identity_metakey    = $this->_get_posttype_identity_metakey( $posttype );
-		$certificate_metakey = Services\PostTypeFields::getPostMetaKey( 'birth_certificate_number' );
-
-		$query = [
-			'meta_query' => [
-				'relation' => 'AND',
-				[
-					'key'     => $identity_metakey,
-					'compare' => 'EXISTS',
-				],
-				[
-					'key'     => $certificate_metakey,
-					'compare' => 'EXISTS',
-				],
-			],
-		];
-
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $this->get_sub_limit_option( $sub ) );
-
-		if ( empty( $posts ) )
-			Core\WordPress::redirect( remove_query_arg( [
-				'action',
-				'type',
-				'paged',
-			] ) );
-
 		$this->raise_resources();
 
-		echo Settings::processingListOpen();
-
-		foreach ( $posts as $post )
-			$this->_post_compare_identity_certificate( $post, $identity_metakey, $certificate_metakey, TRUE );
-
-		echo '</ul></div>';
-
-		Core\WordPress::redirectJS( add_query_arg( [
-			'action' => 'do_tool_compare_identity_certificate',
-			'type'   => $posttype,
-			'paged'  => self::paged() + 1,
-		] ) );
-
-		return TRUE;
-	}
-
-	private function _post_compare_identity_certificate( $post, $identity_metakey, $certificate_metakey, $verbose = FALSE )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		if ( ! $certificate = get_post_meta( $post->ID, $certificate_metakey, TRUE ) )
-			return FALSE;
-
-		$cleaned = Core\Text::stripNonNumeric( Core\Text::trim( $certificate ) );
-
-		if ( WordPress\Strings::isEmpty( $cleaned ) ) {
-
-			if ( ! delete_post_meta( $post->ID, $certificate_metakey ) )
-				return ( $verbose ? printf( Core\HTML::tag( 'li',
-					/* translators: %s: post title */
-					_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
-					WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
-
-			if ( $verbose )
-				echo Core\HTML::tag( 'li',
-					/* translators: %1$s: birth certificate number, %2$s: post title */
-					sprintf( _x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-iranian' ),
-					Core\HTML::code( $certificate ),
-					WordPress\Post::title( $post )
-				) );
-
-			return TRUE;
-		}
-
-		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
-			return FALSE;
-
-		if ( $identity !== Core\Validation::sanitizeIdentityNumber( $cleaned ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %1$s: identity code, %2$s: birth certificate number */
-				_x( 'Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $identity ), Core\HTML::code( $certificate ) ) : TRUE ) && FALSE;
-
-		if ( ! delete_post_meta( $post->ID, $certificate_metakey ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: post title */
-				_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
-				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
-
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: birth certificate number, %2$s: post title */
-				sprintf( _x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-iranian' ),
-				Core\HTML::code( $certificate ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+		return ModuleSettings::handleTool_identity_certificate(
+			$posttype,
+			$this->_get_posttype_identity_metakey( $posttype ),
+			Services\PostTypeFields::isAvailable( 'birth_certificate_number', $posttype, 'meta' ),
+			$this->get_sub_limit_option( $sub )
+		);
 	}
 
 	public function sanitize_birth_certificate_number( $data, $field, $post )
