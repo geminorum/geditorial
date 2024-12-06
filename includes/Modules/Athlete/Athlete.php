@@ -150,7 +150,7 @@ class Athlete extends gEditorial\Module
 			return $strings;
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Supports sports fields for the selected post-types.', 'Settings Description', 'geditorial-athlete' ),
+			'post_types_after' => _x( 'Supports sports fields for the selected post-types.', 'Setting Description', 'geditorial-athlete' ),
 		];
 
 		$strings['metabox'] = [

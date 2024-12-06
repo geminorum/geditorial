@@ -11,7 +11,6 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'personage';
 
-	// TODO: support more complex naming
 	public static function makeFullname( $data, $context = 'display', $fallback = FALSE )
 	{
 		if ( ! $data )
@@ -193,7 +192,8 @@ class ModuleHelper extends gEditorial\Helper
 
 					} else if ( in_array( $parts[$i], $second_names, TRUE ) ) {
 
-						if ( isset( $parts[$i-1] ) ) {
+						// if ( isset( $parts[$i-1] ) ) {
+						if ( isset( $parts[$i-1] ) && isset( $parts[$i+1] ) ) {
 
 							$parts[$i] = $parts[$i-1].'‌'.$parts[$i];
 							unset( $parts[$i-1] );
@@ -402,6 +402,14 @@ class ModuleHelper extends gEditorial\Helper
 			'نقی',
 			'تقی',
 			'هادی',
+			'مجتبی',
+			'یحیی',
+			'عباس',
+			'ناصر',
+			'یاسر',
+			'باقر',
+			'سعید',
+			'عرفان',
 		] );
 	}
 }

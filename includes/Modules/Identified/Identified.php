@@ -141,7 +141,7 @@ class Identified extends gEditorial\Module
 			return $strings;
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Supports identifiers for the selected post-types.', 'Settings Description', 'geditorial-identified' ),
+			'post_types_after' => _x( 'Supports identifiers for the selected post-types.', 'Setting Description', 'geditorial-identified' ),
 		];
 
 		return $strings;

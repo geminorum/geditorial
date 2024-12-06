@@ -203,6 +203,7 @@ class Personage extends gEditorial\Module
 				'first_name' => [
 					'title'          => _x( 'First Name', 'Field Title', 'geditorial-personage' ),
 					'description'    => _x( 'Given Name of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'           => 'id',
 					'data_length'    => 25,
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
@@ -211,11 +212,13 @@ class Personage extends gEditorial\Module
 				'middle_name' => [
 					'title'       => _x( 'Middle Name', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Middle Name of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'        => 'id',
 					'order'       => 10,
 				],
 				'last_name' => [
 					'title'          => _x( 'Last Name', 'Field Title', 'geditorial-personage' ),
 					'description'    => _x( 'Family Name of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'           => 'id',
 					'data_length'    => 25,
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
@@ -224,6 +227,7 @@ class Personage extends gEditorial\Module
 				'fullname' => [
 					'title'          => _x( 'Full Name', 'Field Title', 'geditorial-personage' ),
 					'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'           => 'nametag',
 					'data_length'    => 45,
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
@@ -239,6 +243,7 @@ class Personage extends gEditorial\Module
 				'father_name' => [
 					'title'          => _x( 'Father Name', 'Field Title', 'geditorial-personage' ),
 					'description'    => _x( 'Name of the Father of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'           => 'businessperson',
 					'quickedit'      => TRUE,
 					'import_ignored' => TRUE,
 					'order'          => 12,
@@ -246,6 +251,7 @@ class Personage extends gEditorial\Module
 				'father_postid' => [
 					'title'       => _x( 'Father Profile', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Profile of the Father of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'        => 'businessperson',
 					'type'        => 'post',
 					'posttype'    => $primary,
 					'order'       => 13,
@@ -253,11 +259,13 @@ class Personage extends gEditorial\Module
 				'mother_name' => [
 					'title'       => _x( 'Mother Name', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Name of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'        => 'businesswoman',
 					'order'       => 14,
 				],
 				'mother_postid' => [
 					'title'       => _x( 'Mother Profile', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Profile of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'        => 'businesswoman',
 					'type'        => 'post',
 					'posttype'    => $primary,
 					'order'       => 15,
@@ -265,11 +273,13 @@ class Personage extends gEditorial\Module
 				'spouse_name' => [
 					'title'       => _x( 'Spouse Name', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Name of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'        => 'admin-users',
 					'order'       => 16,
 				],
 				'spouse_postid' => [
 					'title'       => _x( 'Spouse Profile', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Profile of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
+					'icon'        => 'admin-users',
 					'type'        => 'post',
 					'posttype'    => $primary,
 					'order'       => 17,
@@ -286,6 +296,7 @@ class Personage extends gEditorial\Module
 				'passport_number' => [
 					'title'       => _x( 'Passport Number', 'Field Title', 'geditorial-personage' ),
 					'description' => _x( 'Personagel Passport Number', 'Field Description', 'geditorial-personage' ),
+					'icon'        => 'id-alt',
 					'type'        => 'code',
 					'order'       => 200,
 					'sanitize'    => [ $this, 'sanitize_passport_number' ],

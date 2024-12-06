@@ -95,7 +95,7 @@ class Iranian extends gEditorial\Module
 			return $strings;
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Supports meta fields for the selected post-types.', 'Settings Description', 'geditorial-iranian' ),
+			'post_types_after' => _x( 'Supports meta fields for the selected post-types.', 'Setting Description', 'geditorial-iranian' ),
 		];
 
 		return $strings;

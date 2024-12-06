@@ -139,7 +139,7 @@ class Diagnosed extends gEditorial\Module
 			return $strings;
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Supports sports fields for the selected post-types.', 'Settings Description', 'geditorial-diagnosed' ),
+			'post_types_after' => _x( 'Supports medical fields for the selected post-types.', 'Setting Description', 'geditorial-diagnosed' ),
 		];
 
 		$strings['metabox'] = [

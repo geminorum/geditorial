@@ -281,6 +281,17 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
+	public static function renderNoDataAvailable( $before = '', $after = '' )
+	{
+		Core\HTML::desc(
+			$before._x( 'There are no data available!', 'Info: Message', 'geditorial-admin' ).$after,
+			FALSE,
+			'-empty -no-data'
+		);
+
+		return FALSE;
+	}
+
 	public static function renderEmptyMIMEtype( $before = '', $after = '' )
 	{
 		Core\HTML::desc(
@@ -331,6 +342,17 @@ class Info extends WordPress\Main
 			$before._x( 'The taxonomy is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
 			FALSE,
 			'-empty -not-supported-taxonomy'
+		);
+
+		return FALSE;
+	}
+
+	public static function renderNotSupportedField( $before = '', $after = '' )
+	{
+		Core\HTML::desc(
+			$before._x( 'The field is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
+			FALSE,
+			'-empty -not-supported-field'
 		);
 
 		return FALSE;

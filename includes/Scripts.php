@@ -426,6 +426,7 @@ JS;
 	/**
 	 * Generates markup to use with QRcodeSVG script.
 	 * @source https://github.com/papnkukn/qrcode-svg
+	 * TODO: move to `Services\Barcodes`
 	 *
 	 * @param  string $data
 	 * @param  array  $atts
@@ -454,6 +455,7 @@ JS;
 		], NULL );
 	}
 
+	// TODO: move to `Services\Barcodes`
 	public static function enqueueQRCodeSVG()
 	{
 		static $enqueued = FALSE;

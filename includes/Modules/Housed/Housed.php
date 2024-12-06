@@ -142,7 +142,7 @@ class Housed extends gEditorial\Module
 			return $strings;
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Supports &ldquo;Housing Conditions&rdquo; for the selected post-types.', 'Settings Description', 'geditorial-housed' ),
+			'post_types_after' => _x( 'Supports &ldquo;Housing Conditions&rdquo; for the selected post-types.', 'Setting Description', 'geditorial-housed' ),
 		];
 
 		$strings['metabox'] = [

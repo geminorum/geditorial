@@ -134,7 +134,7 @@ class NextOfKin extends gEditorial\Module
 			return $strings;
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Supports marital statuses for the selected post-types.', 'Settings Description', 'geditorial-next-of-kin' ),
+			'post_types_after' => _x( 'Supports marital statuses for the selected post-types.', 'Setting Description', 'geditorial-next-of-kin' ),
 		];
 
 		$strings['metabox'] = [

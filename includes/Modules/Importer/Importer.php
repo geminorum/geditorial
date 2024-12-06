@@ -603,8 +603,10 @@ class Importer extends gEditorial\Module
 
 				$this->nonce_check( 'imports', $sub );
 
-				if ( Tablelist::isAction( 'images_import', TRUE )
-					|| Tablelist::isAction( 'images_import_as_thumbnail', TRUE ) ) {
+				if ( Tablelist::isAction( [
+					'images_import',
+					'images_import_as_thumbnail',
+				], TRUE ) ) {
 
 					$count = 0;
 					$args  = $this->_get_current_form_images();
@@ -661,8 +663,10 @@ class Importer extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( Tablelist::isAction( 'posts_import_newonly', TRUE )
-					|| Tablelist::isAction( 'posts_import_override', TRUE ) ) {
+				} else if ( Tablelist::isAction( [
+					'posts_import_newonly',
+					'posts_import_override',
+				], TRUE ) ) {
 
 					$count         = 0;
 					$field_map     = self::req( 'field_map', [] );

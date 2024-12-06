@@ -141,12 +141,14 @@ class ModuleSettings extends gEditorial\Settings
 				] ), sprintf(
 					/* translators: %s: posttype label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
-				$label ), 'link-small' );
+					$label
+				), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to set the location based on identity data.', 'Button Description', 'geditorial-iranian' ) );
 		echo '</div></div>';
 	}
 
+	// NOTE: untill the json city *data* is not compelete, the query must be `paged`
 	public static function handleImport_location_by_identity( $posttype, $data, $identity_metakey, $location_metakey, $limit = 25 )
 	{
 		$query = [
@@ -316,7 +318,7 @@ class ModuleSettings extends gEditorial\Settings
 				);
 			}
 
-			echo self::toolboxAfterOpen();
+			echo self::toolboxAfterOpen( '', TRUE );
 
 				self::submitButton( add_query_arg( [
 					'action' => static::ACTION_CITY_SUMMARY,

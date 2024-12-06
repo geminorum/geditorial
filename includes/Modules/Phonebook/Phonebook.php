@@ -142,6 +142,12 @@ class Phonebook extends gEditorial\Module
 						'type'        => 'mobile',
 						'order'       => 500,
 					],
+					'mobile_parent' => [
+						'title'       => _x( 'Parent\'s Mobile', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Parent Mobile Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'mobile',
+						'order'       => 500,
+					],
 					'phone_number'  => [
 						'title'       => _x( 'Phone Number', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Primary Phone Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
@@ -151,6 +157,12 @@ class Phonebook extends gEditorial\Module
 					'phone_secondary'  => [
 						'title'       => _x( 'Secondary Phone', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Secondary Phone Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'phone',
+						'order'       => 500,
+					],
+					'phone_parent'  => [
+						'title'       => _x( 'Parent\'s Phone', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Parent Phone Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'phone',
 						'order'       => 500,
 					],

@@ -472,7 +472,7 @@ trait PostTypeFields
 
 				// avoid accepting year only
 				if ( strlen( $sanitized ) > 4 )
-					$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, $sanitized );
+					$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, FALSE );
 
 				else
 					$sanitized = FALSE;
@@ -488,7 +488,7 @@ trait PostTypeFields
 				// @SEE: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#dates
 
 				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
-				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, $sanitized );
+				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, FALSE );
 				break;
 
 			case 'distance':

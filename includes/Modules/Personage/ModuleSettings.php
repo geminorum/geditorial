@@ -51,6 +51,12 @@ class ModuleSettings extends gEditorial\Settings
 		echo '<div class="-wrap -wrap-button-row">';
 			self::submitButton( static::ACTION_PARSE_POOL,
 				_x( 'Parse Lines', 'Button', 'geditorial-personage' ) );
+
+			Core\HTML::desc( sprintf(
+				/* translators: %s: file ext placeholder */
+				_x( 'Generates a %s file with parsed parts of each name.', 'Message', 'geditorial-personage' ),
+				Core\HTML::code( 'csv' )
+			), FALSE );
 		echo '</div></div>';
 	}
 }

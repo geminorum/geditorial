@@ -146,7 +146,7 @@ class Execution extends gEditorial\Module
 			return $strings;
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Supports executives for the selected post-types.', 'Settings Description', 'geditorial-execution' ),
+			'post_types_after' => _x( 'Supports executives for the selected post-types.', 'Setting Description', 'geditorial-execution' ),
 		];
 
 		$strings['metabox'] = [
