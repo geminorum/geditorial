@@ -63,13 +63,11 @@ trait PostDate
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => self::$postdate__action_override_dates,
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	public function postdate__post_override_date( $post, $metakeys, $verbose = FALSE )

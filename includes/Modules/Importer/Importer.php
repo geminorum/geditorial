@@ -1049,7 +1049,7 @@ class Importer extends gEditorial\Module
 
 	private function _render_imports_firstpage( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+		echo Settings::toolboxColumnOpen( _x( 'Content Imports', 'Header', 'geditorial-importer' ) );
 
 		if ( ! count( $this->posttypes() ) )
 			return Info::renderNoImportsAvailable();

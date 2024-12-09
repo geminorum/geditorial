@@ -23,16 +23,16 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Full-name Operations', 'Card Title', 'geditorial-personage' ) );
 
 			self::submitButton( add_query_arg( [
+					'action' => static::ACTION_FROM_FULLNAME,
+				] ), _x( 'From Full-name', 'Button', 'geditorial-personage' ), 'link' );
+
+			self::submitButton( add_query_arg( [
 					'action' => static::ACTION_PARSE_FULLNAME,
 				] ), _x( 'Parse Full-name', 'Button', 'geditorial-personage' ), 'link' );
 
 			self::submitButton( add_query_arg( [
 					'action' => static::ACTION_DELETE_FULLNAME,
 				] ), _x( 'Delete Full-name', 'Button', 'geditorial-personage' ), 'link' );
-
-			self::submitButton( add_query_arg( [
-					'action' => static::ACTION_FROM_FULLNAME,
-				] ), _x( 'From Full-name', 'Button', 'geditorial-personage' ), 'link' );
 
 			Core\HTML::desc( sprintf(
 				/* translators: %s: field key placeholder */
@@ -156,12 +156,10 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => $action,
 			'paged'  => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	public static function post_set_parse_fullname( $post, $fullname, $first_name, $middle_name, $last_name, $verbose = FALSE )
@@ -215,14 +213,14 @@ class ModuleSettings extends gEditorial\Settings
 				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
 
 		// bail if cannot store first name meta
-		if ( ! update_post_meta( $post->ID, $first_name['metakey'], $parsed['first_name'] ) )
+		if ( $parsed['first_name'] !== $_first_name && ! update_post_meta( $post->ID, $first_name['metakey'], $parsed['first_name'] ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %s: fullname string */
 				_x( 'There is problem updating first-name for &ldquo;%s&rdquo;', 'Notice', 'geditorial-personage' ) ),
 				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
 
 		// bail if cannot store last name meta
-		if ( ! update_post_meta( $post->ID, $last_name['metakey'], $parsed['last_name'] ) )
+		if ( $parsed['last_name'] !== $_last_name && ! update_post_meta( $post->ID, $last_name['metakey'], $parsed['last_name'] ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %s: fullname string */
 				_x( 'There is problem updating last-name for &ldquo;%s&rdquo;', 'Notice', 'geditorial-personage' ) ),

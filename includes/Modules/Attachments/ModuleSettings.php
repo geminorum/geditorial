@@ -82,20 +82,18 @@ class ModuleSettings extends gEditorial\Settings
 		if ( empty( $results ) )
 			return self::processingAllDone();
 
-		echo Settings::processingListOpen();
+		echo self::processingListOpen();
 
 		foreach ( $results as $attachment )
 			self::attachment_empty_raw_metadata( (int) $attachment, TRUE );
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => static::ACTION_EMPTY_RAW_METADATA,
 			'type'   => $posttype,
 			'paged'  => $paged + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	public static function handleTool_deletion_by_mime( $mimetype, $limit = 25 )
@@ -114,12 +112,10 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => static::ACTION_DELETION_BY_MIME,
 			'mime'   => $mimetype,
 		] ) );
-
-		return TRUE;
 	}
 
 	public static function attachment_empty_raw_metadata( $attachment, $verbose = FALSE )
@@ -201,12 +197,10 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => static::ACTION_REATTACH_THUMBNAILS,
 			'type'   => $posttype,
 		] ) );
-
-		return TRUE;
 	}
 
 	public static function attachment_set_parent_data( $attachment, $parent, $verbose = FALSE )

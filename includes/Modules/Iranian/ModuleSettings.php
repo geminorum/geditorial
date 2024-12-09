@@ -65,13 +65,11 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => static::ACTION_IDENTITY_CERTIFICATE,
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	public static function post_compare_identity_certificate( $post, $identity_metakey, $certificate_field, $verbose = FALSE )
@@ -176,13 +174,11 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => static::ACTION_LOCATION_BY_IDENTITY,
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	// TODO: display current location data from post

@@ -43,13 +43,11 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => static::ACTION_CLEANUP_RAW_DATA,
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	public static function post_cleanup_raw_data( $post, $metakeys, $verbose = FALSE )

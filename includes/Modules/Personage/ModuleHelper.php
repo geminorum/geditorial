@@ -245,7 +245,33 @@ class ModuleHelper extends gEditorial\Helper
 		unset( $parts[0] );
 		$names['last_name'] = implode( ' ', $parts );
 
+		array_walk( $names, [ __CLASS__, 'normalizeName' ] );
+
 		return $names;
+	}
+
+	public static function normalizeName( &$value, $key )
+	{
+		if ( is_array( $value ) )
+			return;
+
+		if ( in_array( $key, [
+			'raw',
+			'honorific',
+			'gender',
+		], TRUE ) )
+			return;
+
+		if ( WordPress\Strings::isEmpty( $value ) ) {
+			$value = '';
+			return;
+		}
+
+		// already cleaned!
+		// $value = WordPress\Strings::cleanupChars( $value );
+
+		$value = Core\Text::normalizeZWNJ( $value );
+		$value = Core\Text::trim( $value );
 	}
 
 	// NOT USED
@@ -273,10 +299,11 @@ class ModuleHelper extends gEditorial\Helper
 			// TODO: normalize zwnj
 
 			$value = Core\Text::trim( $part );
-		}
 
-		else if ( is_string( $value ) )
+		} else if ( is_string( $value ) ) {
+
 			$value = Core\Text::trim( $value );
+		}
 	}
 
 	public static function replaceSplits( $raw )
@@ -285,12 +312,17 @@ class ModuleHelper extends gEditorial\Helper
 			return '';
 
 		$parts  = is_array( $raw ) ? $raw : Core\Text::splitNormalSpaces( $raw );
+		$bases  = self::getBaseReplaces();
 		$splits = self::getCommonSplits();
 
 		foreach ( $parts as &$part ) {
-			foreach ( $splits as $before => $after ) {
-				if ( $before === $part ) {
-					$part = $after;
+
+			foreach ( $bases as $before_base => $after_base )
+				$part = str_ireplace( $before_base, $after_base, $part );
+
+			foreach ( $splits as $before_split => $after_split ) {
+				if ( $before_split === $part ) {
+					$part = $after_split;
 					break;
 				}
 			}
@@ -299,23 +331,34 @@ class ModuleHelper extends gEditorial\Helper
 		return is_array( $parts ) ? implode( ' ', $parts ) : $parts;
 	}
 
+	public static function getBaseReplaces()
+	{
+		return [
+			'ا...' => 'الله',
+			'ا…'   => 'الله',
+		];
+	}
+
 	public static function getCommonSplits()
 	{
-		return array_filter( [
+		return [
 			'علیرضا'   => 'علی‌رضا',
 			'غلامرضا'  => 'غلام‌رضا',
 			'غلامعلی'  => 'غلام‌علی',
 			'غلامحسین' => 'غلام‌حسین',
 			'روح‌الله' => 'روح‌اله',
 			'عبدالله'  => 'عبداله',
+			'امرالله'  => 'امراله',
+			'فضل‌الله'  => 'فضل‌اله',
+			'شمس‌الله'  => 'شمس‌اله	',
 			'حسینعلی'  => 'حسین‌علی',
 			'حسنعلی'   => 'حسن‌علی',
-		] );
+		];
 	}
 
 	public static function getBlacklistStrings()
 	{
-		return array_filter( [
+		return [
 			'نامونامخانوادگی',
 			'خالی',
 			'دکتر',
@@ -344,22 +387,22 @@ class ModuleHelper extends gEditorial\Helper
 			'fullname',
 			'namefamily',
 			'familyname',
-		] );
+		];
 	}
 
 	// NOT USED
 	public static function getCommonFamilies()
 	{
-		return array_filter( [
+		return [
 			'موسوی',
 			'موسویان',
 			'اسکندری',
-		] );
+		];
 	}
 
 	public static function getSecondPartFamilies()
 	{
-		return array_filter( [
+		return [
 			'آبادی',
 			'آباد',
 			'نژاد',
@@ -372,6 +415,7 @@ class ModuleHelper extends gEditorial\Helper
 			'لو',
 			'تبار',
 			'وند',
+			'مند',
 			'منش',
 			'پناه',
 			'بخت',
@@ -380,12 +424,14 @@ class ModuleHelper extends gEditorial\Helper
 			'راد',
 			'گل',
 			'خواه',
-		] );
+			'الدین',
+			'الدینی',
+		];
 	}
 
 	public static function getSecondPartNames()
 	{
-		return array_filter( [
+		return [
 			'اله',
 			'الله',
 			'الدین',
@@ -410,6 +456,8 @@ class ModuleHelper extends gEditorial\Helper
 			'باقر',
 			'سعید',
 			'عرفان',
-		] );
+			'امین',
+			'حسام',
+		];
 	}
 }

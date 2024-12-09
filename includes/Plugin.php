@@ -781,4 +781,10 @@ class Plugin
 		$message = __( 'There is no information available!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-noinfo' ] ], $message ) : $message;
 	}
+
+	public static function done( $wrap = 'p' )
+	{
+		$message = __( 'All Done!', 'geditorial' );
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-done' ] ], $message ) : $message;
+	}
 }

@@ -600,15 +600,13 @@ trait PairedTools
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			self::$pairedtools__action_move_from_to => $posttype,
 
 			'movefrom' => implode( ',', $movefrom ),
 			'moveto'   => implode( ',', $moveto ),
 			'paged'    => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	protected function paired__do_post_move_from_to( $post, $taxonomy, $movefrom, $moveto, $verbose = FALSE )
@@ -668,13 +666,11 @@ trait PairedTools
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => 'force_assign_parents',
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	protected function paired__do_force_assign_parents( $post, $taxonomy, $verbose = FALSE )

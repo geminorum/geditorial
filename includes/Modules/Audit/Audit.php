@@ -53,7 +53,7 @@ class Audit extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => [
+			'_general'         => [
 				[
 					'field'       => 'auto_audit_empty',
 					'title'       => _x( 'Auto-Audit for Empties', 'Setting Title', 'geditorial-audit' ),
@@ -654,13 +654,16 @@ class Audit extends gEditorial\Module
 	{
 		echo Settings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 
-		if ( $this->_do_tools_force_auto_audit( $sub ) )
-			return;
-
 		$this->_render_tools_empty_fields();
 		$this->_render_tools_force_auto_audit();
 
 		echo '</div>';
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		if ( $this->_do_tools_force_auto_audit( $sub ) )
+			return FALSE; // avoid further UI
 	}
 
 	public function taxonomy_empty_terms( $terms, $taxonomy )
@@ -789,32 +792,28 @@ class Audit extends gEditorial\Module
 
 		echo '</ul></div>';
 
-		Core\WordPress::redirectJS( add_query_arg( [
+		return Core\WordPress::redirectJS( add_query_arg( [
 			'action' => 'do_tools_force_auto_audit',
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,
 		] ) );
-
-		return TRUE;
 	}
 
 	private function _post_force_auto_audit( $post, $taxonomy = NULL, $verbose = FALSE )
 	{
 		if ( ! $result = $this->_do_auto_audit_post( $post, TRUE, $taxonomy ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return Settings::processingListItem( $verbose,
 				/* translators: %s: post title */
-				_x( 'No Audits applied for &ldquo;%s&rdquo;', 'Notice', 'geditorial-audit' ) ),
-				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+				_x( 'No Audits applied for &ldquo;%s&rdquo;', 'Notice', 'geditorial-audit' ), [
+					WordPress\Post::title( $post ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: count terms, %2$s: post title */
-				sprintf( _x( '%1$s attributes set for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-audit' ),
+		return Settings::processingListItem( $verbose,
+			/* translators: %1$s: count terms, %2$s: post title */
+			_x( '%1$s attributes set for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-audit' ), [
 				Core\HTML::code( count( $result ) ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 
 	private function _render_tools_force_auto_audit()

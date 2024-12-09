@@ -3242,6 +3242,18 @@ class Settings extends WordPress\Main
 		return '<div class="'.static::BASE.'-processing-wrap"><ul>';
 	}
 
+	public static function processingListItem( $verbose, $message, $args = [], $returns = FALSE )
+	{
+		if ( $verbose )
+			echo Core\HTML::row(
+				count( $args )
+					? $message
+					: vsprintf( $message, $args )
+				);
+
+		return $returns;
+	}
+
 	public static function processingAllDone( $remove = NULL )
 	{
 		echo self::toolboxColumnOpen( Plugin::done( FALSE ) );
