@@ -75,6 +75,14 @@ class Identified extends gEditorial\Module
 			'comment_status',
 		];
 
+		$settings['_frontend'] = [
+			[
+				'field'       => 'front_search',
+				'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-identified' ),
+				'description' => _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ),
+			],
+		];
+
 		return $settings;
 	}
 
@@ -155,6 +163,9 @@ class Identified extends gEditorial\Module
 	public function init()
 	{
 		parent::init();
+
+		if ( $this->get_setting( 'front_search' ) && ( ! is_admin() || Core\WordPress::isAJAX() ) )
+			$this->filter( 'posts_search', 2, 8, 'front' );
 
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
 		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
@@ -628,5 +639,85 @@ class Identified extends gEditorial\Module
 
 				return $posts;
 			}, 999, 2 );
+	}
+
+	private function _search_criteria_discovery( $search, $type )
+	{
+		switch ( $type ) {
+			case 'isbn'    : return Core\ISBN::discovery( $search );
+			case 'mobile'  : return Core\Mobile::sanitize( $search );
+			case 'identity': return Core\Validation::sanitizeIdentityNumber( $search );
+			case 'vin'     : return Core\Validation::sanitizeVIN( $search );
+			case 'code'    : return Core\Number::translate( Core\Text::trim( $search ) );
+		}
+
+		return $search;
+	}
+
+	public function posts_search_front( $search, $wp_query )
+	{
+		global $wpdb;
+
+		if ( ! $wp_query->is_main_query() )
+			return $search;
+
+		if ( ! $wp_query->is_search() || empty( $wp_query->query_vars['s'] ) )
+			return $search;
+
+		$meta = $this->_prep_meta_query_for_search( $wp_query->query_vars['post_type'], $wp_query->query_vars['s'] );
+
+		if ( ! count( $meta ) )
+			return $search;
+
+		$query = "SELECT post_id FROM {$wpdb->postmeta} WHERE ";
+		$where = [];
+
+		foreach ( $meta as $metakey => $criteria )
+			$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $metakey, $criteria );
+
+		$posts = Core\Arraay::prepNumeral( $wpdb->get_col( $query.implode( ' OR ', $where ) ) );
+
+		if ( ! empty( $posts ) )
+			$search = str_replace( ')))', ") OR ({$wpdb->posts}.ID IN (" . implode( ',', $posts ) . "))))", $search );
+
+		return $search;
+	}
+
+	private function _prep_meta_query_for_search( $queried, $search )
+	{
+		$meta = [];
+
+		if ( 'any' === $queried )
+			$posttypes = $this->posttypes();
+
+		else if ( is_array( $queried ) )
+			$posttypes = $queried;
+
+		else if ( ! self::empty( $queried ) )
+			$posttypes = WordPress\Strings::getSeparated( $queried );
+
+		else
+			return $meta;
+
+		foreach ( $posttypes as $posttype ) {
+
+			if ( ! $this->posttype_supported( $posttype ) )
+				continue;
+
+			if ( ! WordPress\PostType::viewable( $posttype ) )
+				continue;
+
+			if ( ! $metakey = $this->_get_posttype_identifier_metakey( $posttype ) )
+				continue;
+
+			$type = $this->_get_posttype_identifier_type( $posttype );
+
+			if ( ! $criteria = $this->_search_criteria_discovery( $search, $type ) )
+				continue;
+
+			$meta[$metakey] = $criteria;
+		}
+
+		return $meta;
 	}
 }
