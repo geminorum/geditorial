@@ -61,7 +61,7 @@ class Book extends gEditorial\Module
 	{
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => [
+			'_general'         => [
 				'paired_force_parents',
 				'paired_manage_restricted',
 				'comment_status',
@@ -588,7 +588,10 @@ class Book extends gEditorial\Module
 		if ( empty( $isbn ) )
 			return;
 
-		$query->set( 'meta_key', '_meta_publication_isbn' );
+		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
+			return;
+
+		$query->set( 'meta_key', $metakey );
 		$query->set( 'meta_value', $isbn );
 		$query->set( 'meta_compare', 'LIKE' );
 	}
@@ -597,7 +600,10 @@ class Book extends gEditorial\Module
 	{
 		if ( ( is_home() || is_404() ) && ( $isbn = get_query_var( $this->constant( 'isbn_query' ) ) ) ) {
 
-			if ( ! $post_id = WordPress\PostType::getIDbyMeta( '_meta_publication_isbn', $isbn ) )
+			if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
+				return;
+
+			if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $isbn ) )
 				return;
 
 			if ( ! $post = WordPress\Post::get( $post_id ) )
@@ -731,12 +737,22 @@ class Book extends gEditorial\Module
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		switch ( $field_key ) {
-			// FIXME: MUST BE DEPRECATED: use type: `isbn`
-			case 'publication_isbn'   : return Info::lookupISBN( $raw ?: $value );
-			/* translators: %s: edition placeholder */
-			case 'publication_edition': return sprintf( _x( '%s Edition', 'Display', 'geditorial-book' ), Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) ) );
-			/* translators: %s: print placeholder */
-			case 'publication_print'  : return sprintf( _x( '%s Print', 'Display', 'geditorial-book' ), Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) ) );
+
+			case 'publication_edition':
+
+				return sprintf(
+					/* translators: %s: edition placeholder */
+					_x( '%s Edition', 'Display', 'geditorial-book' ),
+					Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) )
+				);
+
+			case 'publication_print':
+
+				return sprintf(
+					/* translators: %s: print placeholder */
+					_x( '%s Print', 'Display', 'geditorial-book' ),
+					Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) )
+				);
 		}
 
 		return $value;
@@ -1180,16 +1196,22 @@ class Book extends gEditorial\Module
 
 	public function national_library_default_posttype_isbn_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'publication_posttype' ) )
-			return '_meta_publication_isbn';
+		if ( $posttype !== $this->constant( 'publication_posttype' ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
+			return $metakey;
 
 		return $default;
 	}
 
 	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'publication_posttype' ) )
-			return '_meta_publication_isbn';
+		if ( $posttype !== $this->constant( 'publication_posttype' ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
+			return $metakey;
 
 		return $default;
 	}
@@ -1204,8 +1226,11 @@ class Book extends gEditorial\Module
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'publication_posttype' ) )
-			return Services\PostTypeFields::getPostMetaKey( 'publication_isbn' );
+		if ( $posttype !== $this->constant( 'publication_posttype' ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
+			return $metakey;
 
 		return $default;
 	}
@@ -1238,8 +1263,11 @@ class Book extends gEditorial\Module
 
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'publication_posttype' ) )
-			return Services\PostTypeFields::getPostMetaKey( 'publication_isbn' );
+		if ( $posttype !== $this->constant( 'publication_posttype' ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
+			return $metakey;
 
 		return $default;
 	}

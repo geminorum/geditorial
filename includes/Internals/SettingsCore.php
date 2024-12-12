@@ -644,6 +644,13 @@ trait SettingsCore
 		);
 	}
 
+	public function settings_section_import()
+	{
+		Settings::fieldSection(
+			_x( 'Import Preferences', 'Module: Setting Section Title', 'geditorial-admin' )
+		);
+	}
+
 	public function settings_section_strings()
 	{
 		Settings::fieldSection(

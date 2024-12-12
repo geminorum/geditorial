@@ -62,24 +62,21 @@ class Identified extends gEditorial\Module
 			];
 		}
 
-		$settings['_general'] = [
-			'add_audit_attribute' => [
-				/* translators: %s: audit attribute placeholder */
-				sprintf( _x( 'Appends %s audit attribute to each created item via identifier.', 'Setting Description', 'geditorial-identified' ),
-					Core\HTML::code( $this->constant( 'term_newpost_by_identifier' ) ) ),
-			],
-		];
-
-		$settings['_defaults'] = [
-			'post_status',
-			'comment_status',
-		];
-
 		$settings['_frontend'] = [
 			[
 				'field'       => 'front_search',
 				'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-identified' ),
 				'description' => _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ),
+			],
+		];
+
+		$settings['_import'] = [
+			'post_status',
+			'comment_status',
+			'add_audit_attribute' => [
+				/* translators: %s: audit attribute placeholder */
+				sprintf( _x( 'Appends %s audit attribute to each created item via identifier.', 'Setting Description', 'geditorial-identified' ),
+					Core\HTML::code( $this->constant( 'term_newpost_by_identifier' ) ) ),
 			],
 		];
 
