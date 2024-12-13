@@ -34,8 +34,6 @@ class Book extends gEditorial\Module
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
 
-	protected $barcode_type = 'ean13';
-
 	public static function module()
 	{
 		return [
@@ -349,13 +347,6 @@ class Book extends gEditorial\Module
 					'type'        => 'datestring',
 					'icon'        => 'calendar-alt',
 				],
-				'publication_isbn' => [
-					'title'       => _x( 'ISBN', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-book' ),
-					'type'        => 'isbn',
-					'icon'        => 'menu',
-					'quickedit'   => TRUE,
-				],
 				'publication_bib' => [
 					// @REF: `https://opac.nlai.ir/opac-prod/bibliographic/{$publication_bib}`
 					'title'       => _x( 'Bibliographic', 'Field Title', 'geditorial-book' ),
@@ -583,7 +574,6 @@ class Book extends gEditorial\Module
 					'publication_print'   => NULL,
 					'publish_location'    => NULL,
 					'publication_date'    => NULL,
-					'publication_isbn'    => NULL,
 					'publication_size'    => NULL,
 				] );
 
@@ -692,19 +682,7 @@ class Book extends gEditorial\Module
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 
-		$this->filter_module( 'national_library', 'default_posttype_isbn_metakey', 2 );
-		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
-		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
-
-		// $this->register_default_terms( 'size_taxonomy' );
-
-		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
-		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
-		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
-		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
-
 		$this->filter( 'pairedimports_define_import_types', 4, 5, FALSE, $this->base );
-		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -1094,103 +1072,6 @@ class Book extends gEditorial\Module
 		}
 
 		return $meta;
-	}
-
-	public function national_library_default_posttype_isbn_metakey( $default, $posttype )
-	{
-		if ( $posttype !== $this->constant( 'publication_posttype' ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
-	}
-
-	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )
-	{
-		if ( $posttype !== $this->constant( 'publication_posttype' ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
-	}
-
-	public function datacodes_default_posttype_barcode_type( $default, $posttype, $types )
-	{
-		if ( $posttype == $this->constant( 'publication_posttype' ) )
-			return $this->barcode_type;
-
-		return $default;
-	}
-
-	public function identified_default_posttype_identifier_metakey( $default, $posttype )
-	{
-		if ( $posttype !== $this->constant( 'publication_posttype' ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
-	}
-
-	public function identified_default_posttype_identifier_type( $default, $posttype )
-	{
-		if ( $posttype == $this->constant( 'publication_posttype' ) )
-			return 'isbn';
-
-		return $default;
-	}
-
-	// TODO: move the list into ModuleHelper
-	public function identified_possible_keys_for_identifier( $keys, $posttype )
-	{
-		if ( $posttype == $this->constant( 'publication_posttype' ) )
-			return array_merge( $keys, [
-				'publication_isbn' => 'isbn',
-				'isbn'             => 'isbn',
-
-				_x( 'ISBN', 'Possible Identifier Key', 'geditorial-book' ) => 'isbn',
-
-				'شابک'       => 'isbn',
-				'شماره شابک' => 'isbn',
-				'شابک کتاب'  => 'isbn',
-			] );
-
-		return $keys;
-	}
-
-	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
-	{
-		if ( $posttype !== $this->constant( 'publication_posttype' ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
-	}
-
-	// NOTE: late overrides of the fields values and keys
-	public function searchselect_result_extra_for_post( $data, $post, $queried )
-	{
-		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
-			return $data;
-
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return $data;
-
-		if ( $this->constant( 'publication_posttype' ) !== $post->post_type )
-			return $data;
-
-		if ( $isbn = ModuleTemplate::getMetaFieldRaw( 'publication_isbn', $post->ID ) )
-			$data['isbn'] = $isbn;
-
-		return $data;
 	}
 
 	public function pairedimports_define_import_types( $types, $linked, $posttypes, $module_key )

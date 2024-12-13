@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Isbn\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Isbn\n"
+"X-Domain: geditorial-isbn\n"
+
+#: Isbn.php:54
+msgctxt "Field Title"
+msgid "ISBN"
+msgstr ""
+
+#: Isbn.php:55
+#: Isbn.php:62
+#: Isbn.php:74
+#: Isbn.php:86
+#: Isbn.php:98
+msgctxt "Field Description"
+msgid "International Standard Book Number"
+msgstr ""
+
+#: Isbn.php:61
+msgctxt "Field Title"
+msgid "ISBN #2"
+msgstr ""
+
+#: Isbn.php:68
+msgctxt "Field Title"
+msgid "ISBN #2 Label"
+msgstr ""
+
+#: Isbn.php:69
+msgctxt "Field Description"
+msgid "Label to use on ISBN #2"
+msgstr ""
+
+#: Isbn.php:73
+msgctxt "Field Title"
+msgid "ISBN #3"
+msgstr ""
+
+#: Isbn.php:80
+msgctxt "Field Title"
+msgid "ISBN #3 Label"
+msgstr ""
+
+#: Isbn.php:81
+msgctxt "Field Description"
+msgid "Label to use on ISBN #3"
+msgstr ""
+
+#: Isbn.php:85
+msgctxt "Field Title"
+msgid "ISBN #4"
+msgstr ""
+
+#: Isbn.php:92
+msgctxt "Field Title"
+msgid "ISBN #4 Label"
+msgstr ""
+
+#: Isbn.php:93
+msgctxt "Field Description"
+msgid "Label to use on ISBN #4"
+msgstr ""
+
+#: Isbn.php:97
+msgctxt "Field Title"
+msgid "ISBN #5"
+msgstr ""
+
+#: Isbn.php:104
+msgctxt "Field Title"
+msgid "ISBN #5 Label"
+msgstr ""
+
+#: Isbn.php:105
+msgctxt "Field Description"
+msgid "Label to use on ISBN #5"
+msgstr ""
+
+#: Isbn.php:225
+msgctxt "Possible Identifier Key"
+msgid "ISBN"
+msgstr ""

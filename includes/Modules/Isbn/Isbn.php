@@ -1,0 +1,265 @@
+<?php namespace geminorum\gEditorial\Modules\Isbn;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\WordPress;
+
+class Isbn extends gEditorial\Module
+{
+
+	protected $barcode_type = 'ean13';
+
+	public static function module()
+	{
+		return [
+			'name'     => 'isbn',
+			'title'    => _x( 'ISBN', 'Modules: ISBN', 'geditorial-admin' ),
+			'desc'     => _x( 'Standard Book Numbers', 'Modules: ISBN', 'geditorial-admin' ),
+			'icon'     => 'smiley',
+			'access'   => 'planned',
+			'keywords' => [
+				'identifier',
+			],
+		];
+	}
+
+	protected function get_global_settings()
+	{
+		return [
+			'posttypes_option' => 'posttypes_option',
+			'_supports'        => [
+				'shortcode_support',
+			],
+		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'main_shortcode' => 'isbn',
+		];
+	}
+
+	protected function get_global_fields()
+	{
+		return [
+			'meta' => [
+				'_supported' => [
+					'isbn' => [
+						'title'       => _x( 'ISBN', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
+						'type'        => 'isbn',
+						'quickedit'   => TRUE,
+						'order'       => 1810,
+					],
+					'isbn2' => [
+						'title'       => _x( 'ISBN #2', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
+						'type'        => 'isbn',
+						'quickedit'   => TRUE,
+						'order'       => 1820,
+					],
+					'isbn2_label' => [
+						'title'       => _x( 'ISBN #2 Label', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'Label to use on ISBN #2', 'Field Description', 'geditorial-isbn' ),
+						'order'       => 1825,
+					],
+					'isbn3' => [
+						'title'       => _x( 'ISBN #3', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
+						'type'        => 'isbn',
+						'quickedit'   => TRUE,
+						'order'       => 1830,
+					],
+					'isbn3_label' => [
+						'title'       => _x( 'ISBN #3 Label', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'Label to use on ISBN #3', 'Field Description', 'geditorial-isbn' ),
+						'order'       => 1835,
+					],
+					'isbn4' => [
+						'title'       => _x( 'ISBN #4', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
+						'type'        => 'isbn',
+						'quickedit'   => TRUE,
+						'order'       => 1840,
+					],
+					'isbn4_label' => [
+						'title'       => _x( 'ISBN #4 Label', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'Label to use on ISBN #4', 'Field Description', 'geditorial-isbn' ),
+						'order'       => 1845,
+					],
+					'isbn5' => [
+						'title'       => _x( 'ISBN #5', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
+						'type'        => 'isbn',
+						'quickedit'   => TRUE,
+						'order'       => 1850,
+					],
+					'isbn5_label' => [
+						'title'       => _x( 'ISBN #5 Label', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'Label to use on ISBN #5', 'Field Description', 'geditorial-isbn' ),
+						'order'       => 1855,
+					],
+				],
+			],
+		];
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields_supported();
+		$this->filter_module( 'book', 'editform_meta_summary', 2, 20 );
+
+		$this->filter_module( 'national_library', 'default_posttype_isbn_metakey', 2 );
+		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
+		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
+
+		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
+		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
+		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
+		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
+
+		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
+
+		$this->register_shortcode( 'main_shortcode' );
+	}
+
+	// TODO: support raw data via shortcode attribute
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'id'      => get_queried_object_id(),
+			'field'   => NULL,
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'class'   => '',
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $content;
+
+		$html = Services\PostTypeFields::getField( $args['field'] ?? 'isbn' );
+
+		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+	}
+
+	public function book_editform_meta_summary( $fields, $post )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $fields;
+
+		$fields['isbn']  = NULL;
+		$fields['isbn2'] = Services\PostTypeFields::getFieldRaw( 'isbn2_label', $post->ID, 'meta', FALSE, NULL );
+		$fields['isbn3'] = Services\PostTypeFields::getFieldRaw( 'isbn3_label', $post->ID, 'meta', FALSE, NULL );
+		$fields['isbn4'] = Services\PostTypeFields::getFieldRaw( 'isbn4_label', $post->ID, 'meta', FALSE, NULL );
+		$fields['isbn5'] = Services\PostTypeFields::getFieldRaw( 'isbn5_label', $post->ID, 'meta', FALSE, NULL );
+
+		return $fields;
+	}
+
+	public function national_library_default_posttype_isbn_metakey( $default, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
+			return $metakey;
+
+		return $default;
+	}
+
+	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
+			return $metakey;
+
+		return $default;
+	}
+
+	public function datacodes_default_posttype_barcode_type( $default, $posttype, $types )
+	{
+		if ( $this->posttype_supported( $posttype ) )
+			return ModuleHelper::BARCODE;
+
+		return $default;
+	}
+
+	public function identified_default_posttype_identifier_metakey( $default, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
+			return $metakey;
+
+		return $default;
+	}
+
+	public function identified_default_posttype_identifier_type( $default, $posttype )
+	{
+		if ( $this->posttype_supported( $posttype ) )
+			return 'isbn';
+
+		return $default;
+	}
+
+	public function identified_possible_keys_for_identifier( $keys, $posttype )
+	{
+		if ( $this->posttype_supported( $posttype ) )
+			return array_merge( $keys, [
+				'publication_isbn' => 'isbn',
+				'isbn'             => 'isbn',
+
+				_x( 'ISBN', 'Possible Identifier Key', 'geditorial-isbn' ) => 'isbn',
+
+				'شابک'       => 'isbn',
+				'شماره شابک' => 'isbn',
+				'شابک کتاب'  => 'isbn',
+			] );
+
+		return $keys;
+	}
+
+	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
+			return $metakey;
+
+		return $default;
+	}
+
+	// NOTE: late overrides of the fields values and keys
+	public function searchselect_result_extra_for_post( $data, $post, $queried )
+	{
+		if ( empty( $queried['context'] )
+			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
+			return $data;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $data;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $data;
+
+		if ( $isbn = Services\PostTypeFields::getFieldRaw( 'isbn', $post->ID ) )
+			$data['isbn'] = $isbn;
+
+		return $data;
+	}
+}
