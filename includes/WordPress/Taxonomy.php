@@ -1350,4 +1350,17 @@ class Taxonomy extends Core\Base
 		// WooCommerce
 		add_filter( 'woocommerce_product_recount_terms', '__return_false' );
 	}
+
+	public static function sortByName( $terms )
+	{
+		usort( $terms, function ( $a, $b ) {
+
+			$aLast = end( explode( ' ', $a->name ) );
+			$bLast = end( explode( ' ', $b->name ) );
+
+			return strcasecmp( $aLast, $bLast );
+		} );
+
+		return $terms;
+	}
 }

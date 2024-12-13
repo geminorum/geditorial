@@ -774,4 +774,20 @@ class PostType extends Core\Base
 
 		return get_object_vars( $count );
 	}
+
+	public static function sortByTitle( $posts )
+	{
+		usort( $posts, function ( $a, $b ) {
+
+			$title_a = mb_strtolower( preg_replace( '~\P{Xan}++~u', '', $a->post_title ) );
+			$title_b = mb_strtolower( preg_replace( '~\P{Xan}++~u', '', $b->post_title ) );
+
+			if ( $title_a == $title_b )
+				return 0 ;
+
+			return ( $title_a < $title_b ) ? -1 : 1;
+		} );
+
+		return $posts;
+	}
 }

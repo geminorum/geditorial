@@ -281,6 +281,8 @@ function nextpage() {
 }
 setTimeout( "nextpage()", <?php echo $timeout; ?> );
 </script><?php
+
+		return TRUE; // to help the caller
 	}
 
 	public static function redirect( $location = NULL, $status = 302 )

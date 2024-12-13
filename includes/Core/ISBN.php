@@ -25,9 +25,27 @@ class ISBN extends Base
 			: self::sanitize( $input );
 	}
 
+	// NOTE: avoids validation to support fake isbn numbers
+	public static function discovery( $criteria )
+	{
+		if ( ! $sanitized = self::sanitize( $criteria ) )
+			return FALSE;
+
+		// only numbers
+		// @REF: https://stackoverflow.com/a/4878242
+		if ( ! preg_match( '/^[0-9]+$/', $sanitized ) )
+			return FALSE;
+
+		// only between 10-13 digits
+		if ( ! preg_match( '/^\d{10,13}$/', $sanitized ) )
+			return FALSE;
+
+		return $sanitized;
+	}
+
 	public static function sanitize( $input )
 	{
-		$sanitized = Number::translate( Text::trim( $input ) );
+		$sanitized = Number::translate( Text::stripAllSpaces( $input ) );
 
 		return Text::trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $sanitized ) );
 	}

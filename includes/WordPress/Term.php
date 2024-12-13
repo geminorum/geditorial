@@ -488,4 +488,19 @@ class Term extends Core\Base
 
 		return FALSE;
 	}
+
+	/**
+	 * Performs term count update immediately.
+	 *
+	 * @param  int|string $term_or_id
+	 * @param  string     $taxonomy
+	 * @return bool       $updated
+	 */
+	public static function updateCount( $term_or_id, $taxonomy )
+	{
+		if ( ! $term = self::get( $term_or_id, $taxonomy ) )
+			return FALSE;
+
+		return wp_update_term_count_now( [ $term->term_id ], $taxonomy );
+	}
 }
