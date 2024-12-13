@@ -83,9 +83,6 @@ class Book extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
-			'_editlist' => [
-				'admin_rowactions',
-			],
 			'_frontend' => [
 				'insert_content',
 				'insert_cover',
@@ -165,8 +162,6 @@ class Book extends gEditorial\Module
 			'metakey_import_title' => 'book_publication_title',
 			'metakey_import_ref'   => 'book_publication_ref',
 			'metakey_import_desc'  => 'book_publication_desc',
-
-			'isbn_query' => 'isbn',
 		];
 	}
 
@@ -537,10 +532,6 @@ class Book extends gEditorial\Module
 		$this->register_shortcode( 'subject_shortcode' );
 		$this->register_shortcode( 'serie_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
-
-		$this->_do_add_custom_queries();
-		$this->action( 'pre_get_posts' );
-
 	}
 
 	public function importer_init()
@@ -550,74 +541,9 @@ class Book extends gEditorial\Module
 		$this->action_module( 'importer', 'saved', 2 );
 	}
 
-	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
-	private function _do_add_custom_queries()
-	{
-		$query    = $this->constant( 'isbn_query' );
-		$posttype = $this->constant( 'publication_posttype' );
-
-		$this->filter_append( 'query_vars', $query );
-
-		add_rewrite_tag( '%'.$query.'%', '([^&]+)' );
-		add_rewrite_rule( '^'.$query.'/([^/]*)/?', 'index.php?'.$query.'=$matches[1]', 'top' );
-		add_rewrite_rule( '^'.$posttype.'/'.$query.'/([^/]*)/?', 'index.php?post_type='.$posttype.'&'.$query.'=$matches[1]', 'top' );
-	}
-
-	public function get_isbn_link( $isbn, $extra = [] )
-	{
-		return get_option( 'permalink_structure' )
-			? add_query_arg( $extra, sprintf( '%s/%s/%s', Core\URL::untrail( get_bloginfo( 'url' ) ), $this->constant( 'isbn_query' ), Core\ISBN::prep( $isbn ) ) )
-			: add_query_arg( array_merge( [ $this->constant( 'isbn_query' ) => Core\ISBN::prep( $isbn ) ], $extra ), get_bloginfo( 'url' ) );
-	}
-
-	public function get_isbn( $post = NULL )
-	{
-		return ModuleTemplate::getMetaFieldRaw( 'publication_isbn', $post, 'meta', TRUE );
-	}
-
-	public function pre_get_posts( &$query )
-	{
-		if ( is_admin() || ! $query->is_main_query() )
-			return;
-
-		if ( ! is_post_type_archive( $this->constant( 'publication_posttype' ) ) )
-			return;
-
-		$isbn = get_query_var( $this->constant( 'isbn_query' ) );
-
-		if ( empty( $isbn ) )
-			return;
-
-		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
-			return;
-
-		$query->set( 'meta_key', $metakey );
-		$query->set( 'meta_value', $isbn );
-		$query->set( 'meta_compare', 'LIKE' );
-	}
-
 	public function template_redirect()
 	{
-		if ( ( is_home() || is_404() ) && ( $isbn = get_query_var( $this->constant( 'isbn_query' ) ) ) ) {
-
-			if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'publication_isbn', 'meta' ) )
-				return;
-
-			if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $isbn ) )
-				return;
-
-			if ( ! $post = WordPress\Post::get( $post_id ) )
-				return;
-
-			if ( $post->post_type != $this->constant( 'publication_posttype' ) )
-				return;
-
-			if ( ! $this->is_post_viewable( $post ) )
-				return;
-
-			Core\WordPress::redirect( get_page_link( $post->ID ), 302 );
-
-		} else if ( $this->_paired && is_tax( $this->constant( 'publication_paired' ) ) ) {
+		if ( $this->_paired && is_tax( $this->constant( 'publication_paired' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'publication_posttype', 'publication_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
@@ -676,9 +602,6 @@ class Book extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
-
-				if ( $this->get_setting( 'admin_rowactions' ) )
-					$this->filter( 'post_row_actions', 2 );
 
 				if ( $this->_p2p )
 					$this->coreadmin__hook_tweaks_column_row( $screen->post_type, -25, 'p2p_to' );
@@ -790,27 +713,6 @@ class Book extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function post_row_actions( $actions, $post )
-	{
-		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
-			return $actions;
-
-		if ( ! $isbn = $this->get_isbn( $post ) )
-			return $actions;
-
-		if ( ! $link = $this->get_isbn_link( $isbn ) )
-			return $actions;
-
-		return Core\Arraay::insert( $actions, [
-			$this->classs() => Core\HTML::tag( 'a', [
-				'href'   => $link,
-				'title'  => _x( 'ISBN Link to this publication', 'Title Attr', 'geditorial-book' ),
-				'class'  => '-isbn-link',
-				'target' => '_blank',
-			], _x( 'ISBN', 'Action', 'geditorial-book' ) ),
-		], 'view', 'after' );
 	}
 
 	public function template_include( $template )

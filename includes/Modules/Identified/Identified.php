@@ -68,6 +68,14 @@ class Identified extends gEditorial\Module
 				'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-identified' ),
 				'description' => _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ),
 			],
+			[
+				'field'       => 'queryable_types',
+				'type'        => 'checkboxes-values',
+				'title'       => _x( 'Queryable Types', 'Setting Title', 'geditorial-identified' ),
+				'description' => _x( 'Appends end-points for Identifier types on front-end.', 'Setting Description', 'geditorial-identified' ),
+				'values'      => $types ?: FALSE,
+			],
+			'admin_rowactions',
 		];
 
 		$settings['_import'] = [
@@ -161,6 +169,8 @@ class Identified extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->_init_queryable_types();
+
 		if ( $this->get_setting( 'front_search' ) && ( ! is_admin() || Core\WordPress::isAJAX() ) )
 			$this->filter( 'posts_search', 2, 8, 'front' );
 
@@ -175,10 +185,12 @@ class Identified extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		if ( 'edit' == $screen->base
-			// TODO: add separate list of posttypes on settings for this
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			$this->_hook_not_found_posts( $screen->post_type );
+
+			if ( $this->get_setting( 'admin_rowactions' ) )
+				$this->filter( 'post_row_actions', 2 );
 		}
 	}
 
@@ -336,6 +348,13 @@ class Identified extends gEditorial\Module
 			$post,
 			$metakey
 		);
+	}
+
+	public function get_identifier_link( $data, $type = 'code', $extra = [] )
+	{
+		return get_option( 'permalink_structure' )
+			? add_query_arg( $extra, sprintf( '%s/%s/%s', Core\URL::untrail( get_bloginfo( 'url' ) ), $type, $data ) )
+			: add_query_arg( array_merge( [ $type => $data ], $extra ), get_bloginfo( 'url' ) );
 	}
 
 	private function _get_posttype_identifier_possible_keys( $posttype, $extra = [] )
@@ -716,5 +735,138 @@ class Identified extends gEditorial\Module
 		}
 
 		return $meta;
+	}
+
+	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
+	private function _init_queryable_types()
+	{
+		$queryable = FALSE;
+
+		foreach ( $this->get_setting( 'queryable_types', [] ) as $type ) {
+
+			$supported = $this->_get_supported_by_identifier_type( $type );
+
+			if ( ! count( $supported ) )
+				continue;
+
+			$this->filter_append( 'query_vars', $type );
+
+			add_rewrite_tag( '%'.$type.'%', '([^&]+)' );
+			add_rewrite_rule( '^'.$type.'/([^/]*)/?', 'index.php?'.$type.'=$matches[1]', 'top' );
+
+			foreach ( $supported as $posttype => $metakey )
+				add_rewrite_rule( '^'.$posttype.'/'.$type.'/([^/]*)/?', 'index.php?post_type='.$posttype.'&'.$type.'=$matches[1]', 'top' );
+
+			$queryable = TRUE;
+		}
+
+		if ( ! $queryable || is_admin() )
+			return;
+
+		$this->action( 'pre_get_posts', 1, 10, 'queryable_types' );
+		$this->action( 'template_redirect', 0, 9, 'queryable_types' );
+	}
+
+	public function pre_get_posts_queryable_types( &$query )
+	{
+		if ( $query->is_main_query() || ! $query->is_post_type_archive() )
+			return;
+
+		if ( ! $types = $this->get_setting( 'queryable_types', [] ) )
+			return;
+
+		foreach ( $this->posttypes() as $posttype ) {
+
+			if ( ! $query->is_post_type_archive( $posttype ) )
+				continue;
+
+			if ( ! $type = $this->_get_posttype_identifier_type( $posttype ) )
+				continue;
+
+			if ( ! in_array( $type, $types, TRUE ) )
+				continue;
+
+			if ( ! $criteria = $query->get( $type, FALSE ) )
+				continue;
+
+			if ( ! $sanitized = $this->sanitize_identifier( $criteria, $type ) )
+				continue;
+
+			if ( ! $metakey = $this->_get_posttype_identifier_metakey( $posttype ) )
+				continue;
+
+			$query->set( 'meta_key', $metakey );
+			$query->set( 'meta_value', $sanitized );
+			// $query->set( 'meta_compare', 'LIKE' );
+
+			break;
+		}
+	}
+
+	public function template_redirect_queryable_types()
+	{
+		if ( is_home() || is_404() ) {
+
+			foreach ( $this->get_setting( 'queryable_types', [] ) as $type ) {
+
+				if ( ! $criteria = get_query_var( $type ) )
+					continue;
+
+				$supported = $this->_get_supported_by_identifier_type( $type );
+
+				if ( ! count( $supported ) )
+					continue;
+
+				foreach ( $supported as $posttype => $metakey ) {
+
+					if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $criteria ) )
+						continue;
+
+					if ( ! $post = WordPress\Post::get( $post_id ) )
+						continue;
+
+					if ( $post->post_type !== $posttype )
+						continue;
+
+					if ( ! $this->is_post_viewable( $post ) )
+						continue;
+
+					Core\WordPress::redirect( get_page_link( $post->ID ), 302 );
+				}
+			}
+		}
+	}
+
+	public function post_row_actions( $actions, $post )
+	{
+		if ( ! $this->is_post_viewable( $post ) )
+			return $actions;
+
+		$type = $this->_get_posttype_identifier_type( $post->post_type );
+
+		if ( ! $this->in_setting( $type, 'queryable_types' ) )
+			return $actions;
+
+		if ( ! $identifier = $this->get_identifier( $post ) )
+			return $actions;
+
+		if ( ! $link = $this->get_identifier_link( $identifier, $type ) )
+			return $actions;
+
+		$label = $this->get_string( $type, 'types', 'fields', $type );
+
+		return Core\Arraay::insert( $actions, [
+			$this->classs() => Core\HTML::tag( 'a', [
+				'href'   => $link,
+				'class'  => '-identifier-link',
+				'target' => '_blank',
+				'title'  => sprintf(
+					/* translators: %1$s: identifier type label, %2$s: posttype singular label */
+					_x( '%1$s Link to this %2$s', 'Title Attr', 'geditorial-identified' ),
+					$label,
+					Helper::getPostTypeLabel( $post->post_type, 'singular_name' )
+				),
+			], $label ),
+		], 'view', 'after' );
 	}
 }
