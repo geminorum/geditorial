@@ -24,6 +24,7 @@ class Isbn extends gEditorial\Module
 			'icon'     => 'smiley',
 			'access'   => 'planned',
 			'keywords' => [
+				'woocommerce',
 				'identifier',
 			],
 		];
@@ -35,6 +36,9 @@ class Isbn extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_supports'        => [
 				'shortcode_support',
+				'woocommerce_support' => [
+					_x( 'Select to display data on product attributes.', 'Setting Description', 'geditorial-isbn' ),
+				],
 			],
 		];
 	}
@@ -128,6 +132,11 @@ class Isbn extends gEditorial\Module
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
 		$this->register_shortcode( 'main_shortcode' );
+
+		if ( ! $this->get_setting( 'woocommerce_support' ) )
+			return;
+
+		$this->filter( 'display_product_attributes', 2, 99, FALSE, 'woocommerce' );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -268,5 +277,42 @@ class Isbn extends gEditorial\Module
 			$data['isbn'] = $isbn;
 
 		return $data;
+	}
+
+	public function display_product_attributes( $attributes, $product )
+	{
+		$post_id = $product->get_id();
+
+		if ( $isbn = Services\PostTypeFields::getField( 'isbn', [ 'id' => $post_id ] ) )
+			$attributes[$this->classs( 'primary' )] = [
+				'label' => _x( 'ISBN', 'Field Title', 'geditorial-isbn' ),
+				'value' => $isbn,
+			];
+
+		if ( $isbn2 = Services\PostTypeFields::getField( 'isbn2', [ 'id' => $post_id ] ) )
+			$attributes[$this->classs( 'second' )] = [
+				'label' => Services\PostTypeFields::getFieldRaw( 'isbn2_label', $post_id, 'meta', FALSE, _x( 'ISBN #2', 'Field Title', 'geditorial-isbn' ) ),
+				'value' => $isbn2,
+			];
+
+		if ( $isbn3 = Services\PostTypeFields::getField( 'isbn3', [ 'id' => $post_id ] ) )
+			$attributes[$this->classs( 'third' )] = [
+				'label' => Services\PostTypeFields::getFieldRaw( 'isbn3_label', $post_id, 'meta', FALSE, _x( 'ISBN #3', 'Field Title', 'geditorial-isbn' ) ),
+				'value' => $isbn3,
+			];
+
+		if ( $isbn4 = Services\PostTypeFields::getField( 'isbn4', [ 'id' => $post_id ] ) )
+			$attributes[$this->classs( 'fourth' )] = [
+				'label' => Services\PostTypeFields::getFieldRaw( 'isbn4_label', $post_id, 'meta', FALSE, _x( 'ISBN #4', 'Field Title', 'geditorial-isbn' ) ),
+				'value' => $isbn4,
+			];
+
+		if ( $isbn5 = Services\PostTypeFields::getField( 'isbn5', [ 'id' => $post_id ] ) )
+			$attributes[$this->classs( 'fifth' )] = [
+				'label' => Services\PostTypeFields::getFieldRaw( 'isbn5_label', $post_id, 'meta', FALSE, _x( 'ISBN #5', 'Field Title', 'geditorial-isbn' ) ),
+				'value' => $isbn5,
+			];
+
+		return $attributes;
 	}
 }
