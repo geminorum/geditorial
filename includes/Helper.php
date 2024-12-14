@@ -144,23 +144,31 @@ class Helper extends WordPress\Main
 		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
 	}
 
-	// FIXME: `Contact` DataType
-	public static function prepContact( $value, $title = NULL, $empty = '' )
+	/**
+	 * Prepares data for display as a contact.
+	 *
+	 * @param  string $value
+	 * @param  string $title
+	 * @param  string $empty
+	 * @param  bool   $icon
+	 * @return string $contact
+	 */
+	public static function prepContact( $value, $title = NULL, $empty = '', $icon = FALSE )
 	{
 		if ( self::empty( $value ) )
 			return $empty;
 
 		if ( Core\Email::is( $value ) )
-			$prepared = Core\Email::prep( $value, [ 'title' => $title ], 'display' );
+			$prepared = Core\Email::prep( $value, [ 'title' => $title ?? $value ], $icon ? 'icon' : 'display' );
 
 		else if ( Core\URL::isValid( $value ) )
-			$prepared = Core\HTML::link( $title, Core\URL::prepTitle( $value ) );
+			$prepared = Core\HTML::link( $icon ? Core\HTML::getDashicon( 'admin-links' ) : Core\URL::prepTitle( $value ), $value, TRUE );
 
-		else if ( is_numeric( str_ireplace( [ '+', '-', '.' ], '', $value ) ) )
-			$prepared = Core\Phone::prep( $value, [ 'title' => $title ], 'display' );
+		else if ( Core\Phone::is( $value ) )
+			$prepared = Core\Phone::prep( $value, [ 'title' => $title ], $icon ? 'icon' : 'display' );
 
 		else
-			$prepared = Core\HTML::escape( $value );
+			$prepared = $icon ? Core\HTML::getDashicon( 'editor-help', $value ) : Core\HTML::escape( $value );
 
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}

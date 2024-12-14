@@ -905,7 +905,7 @@ class Terms extends gEditorial\Module
 
 					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
 						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'">'
-						.Helper::prepContact( $meta, Core\HTML::getDashicon( 'phone' ) ).'</span>';
+						.Helper::prepContact( $meta, NULL, '', TRUE ).'</span>';
 
 				} else {
 
