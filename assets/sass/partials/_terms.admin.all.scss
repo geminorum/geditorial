@@ -24,6 +24,7 @@ body.geditorial-terms-enabled {
   @include plugin-listtable-column-icon("arrow", "\f545", "column-geditorial-terms");
   @include plugin-listtable-column-icon("barcode", "\f212", "column-geditorial-terms");
   @include plugin-listtable-column-icon("contact", "\f525", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("venue", "\f231", "column-geditorial-terms");
   @include plugin-listtable-column-icon("label", "\f323", "column-geditorial-terms");
   @include plugin-listtable-column-icon("color", "\f131", "column-geditorial-terms");
   @include plugin-listtable-column-icon("author", "\f110", "column-geditorial-terms");

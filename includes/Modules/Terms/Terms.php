@@ -28,6 +28,7 @@ class Terms extends gEditorial\Module
 		'fullname',
 		'tagline',
 		'contact',
+		'venue',
 		'image',
 		'author',
 		'color',
@@ -119,6 +120,7 @@ class Terms extends gEditorial\Module
 				'fullname'  => _x( 'Fullname', 'Titles', 'geditorial-terms' ),
 				'tagline'   => _x( 'Tagline', 'Titles', 'geditorial-terms' ),
 				'contact'   => _x( 'Contact', 'Titles', 'geditorial-terms' ),
+				'venue'     => _x( 'Venue', 'Titles', 'geditorial-terms' ),
 				'image'     => _x( 'Image', 'Titles', 'geditorial-terms' ),
 				'author'    => _x( 'Author', 'Titles', 'geditorial-terms' ),
 				'color'     => _x( 'Color', 'Titles', 'geditorial-terms' ),
@@ -152,6 +154,7 @@ class Terms extends gEditorial\Module
 				'fullname'  => _x( 'Defines the full-name form of the term.', 'Descriptions', 'geditorial-terms' ),
 				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Descriptions', 'geditorial-terms' ),
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
+				'venue'     => _x( 'Defines a string as venue for the term.', 'Descriptions', 'geditorial-terms' ),
 				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
 				'author'    => _x( 'Sets a user as term author to help identify who created or owns each term.', 'Descriptions', 'geditorial-terms' ),
 				'color'     => _x( 'Assigns a custom color to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
@@ -632,6 +635,7 @@ class Terms extends gEditorial\Module
 		$icons     = [
 			'order',
 			'contact',
+			'venue',
 			'image',
 			'author',
 			'color',
@@ -692,6 +696,7 @@ class Terms extends gEditorial\Module
 			'fullname',
 			'tagline',
 			'contact',
+			'venue',
 			'image',
 			'roles',
 			'posttypes',
@@ -880,6 +885,7 @@ class Terms extends gEditorial\Module
 			case 'fullname':
 			case 'tagline':
 			case 'period':
+			case 'venue':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1360,6 +1366,7 @@ class Terms extends gEditorial\Module
 			case 'overwrite':
 			case 'fullname':
 			case 'tagline':
+			case 'venue':
 
 				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
@@ -1592,6 +1599,7 @@ class Terms extends gEditorial\Module
 			case 'fullname':
 			case 'tagline':
 			case 'period':
+			case 'venue':
 			default:
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
 		}
@@ -1734,6 +1742,7 @@ class Terms extends gEditorial\Module
 					case 'overwrite':
 					case 'fullname':
 					case 'tagline':
+					case 'venue':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 							$node['title'].= ': '.WordPress\Strings::prepTitle( $meta );

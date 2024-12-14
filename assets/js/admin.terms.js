@@ -135,6 +135,8 @@
       app.inlineText('overwrite', tag, event);
       app.inlineText('tagline', tag, event);
       app.inlineText('contact', tag, event);
+      app.inlineText('venue', tag, event);
+      app.inlineText('period', tag, event);
       app.inlineSelect('author', tag, event);
       app.inlineSelect('role', tag, event);
       app.inlineSelect('posttype', tag, event);
