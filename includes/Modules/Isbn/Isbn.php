@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
@@ -129,11 +130,11 @@ class Isbn extends gEditorial\Module
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
-	// TODO: support raw data via shortcode attribute
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
 			'id'      => get_queried_object_id(),
+			'raw'     => NULL,
 			'field'   => NULL,
 			'context' => NULL,
 			'wrap'    => TRUE,
@@ -145,10 +146,16 @@ class Isbn extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( ! $post = WordPress\Post::get( $args['id'] ) )
-			return $content;
+		$html = '';
 
-		$html = Services\PostTypeFields::getField( $args['field'] ?? 'isbn' );
+		if ( $args['raw'] && $data = Core\ISBN::sanitize( $args['raw'] ) )
+			$html = Info::lookupISBN( $data );
+
+		else if ( $post = WordPress\Post::get( $args['id'] ) )
+			$html = Services\PostTypeFields::getField( $args['field'] ?? 'isbn', [ 'id' => $post ] );
+
+		if ( ! $html )
+			return $content;
 
 		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
