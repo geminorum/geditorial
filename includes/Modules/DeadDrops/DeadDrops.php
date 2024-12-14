@@ -14,7 +14,7 @@ use geminorum\gEditorial\WordPress;
 class DeadDrops extends gEditorial\Module
 {
 	use Internals\AdminPage;
-	use Internals\RewriteEndpoint;
+	use Internals\Rewrites;
 
 	protected $priority_template_redirect = 5;
 
@@ -82,7 +82,7 @@ class DeadDrops extends gEditorial\Module
 		parent::init();
 
 		$this->filter( 'determine_current_user' );
-		$this->rewriteendpoint__add( 'main' );
+		$this->rewrites__add_endpoint( 'main' );
 	}
 
 	public function current_screen( $screen )
