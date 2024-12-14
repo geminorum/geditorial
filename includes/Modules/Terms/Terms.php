@@ -803,7 +803,7 @@ class Terms extends gEditorial\Module
 					else
 						$icon = Core\HTML::getDashicon( 'hidden', $visibility[$meta], '-icon-warning' );
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
 
@@ -825,7 +825,7 @@ class Terms extends gEditorial\Module
 					else
 						$icon = Core\HTML::getDashicon( 'warning', $meta, '-icon-warning' );
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
 
@@ -841,7 +841,7 @@ class Terms extends gEditorial\Module
 				if ( $meta ) {
 
 					$icon = Core\HTML::getDashicon( 'tagcloud', $meta, 'icon-barcode' );
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
 
 				} else {
 
@@ -856,7 +856,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta ) {
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
 					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, 'icon-latlng' ), Info::lookupURLforLatLng( $meta ), TRUE ).'</span>';
 
 				} else {
@@ -870,7 +870,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$html = '<code class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$meta.'</code>';
+					$html = '<code class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$meta.'</code>';
 
 				} else {
 
@@ -889,7 +889,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.WordPress\Strings::prepTitle( $meta ).'</span>';
 
 				} else {
@@ -903,7 +903,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
 						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'">'
 						.Helper::prepContact( $meta, NULL, '', TRUE ).'</span>';
 
@@ -926,7 +926,7 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$parent = get_term( (int) $meta ); // allows for empty taxonomy
-					$html   = '<span class="field-'.$field.'" data-'.$field.'="'.$meta.'">'.WordPress\Term::title( $parent ).'</span>';
+					$html   = '<span class="-field field-'.$field.'" data-'.$field.'="'.$meta.'">'.WordPress\Term::title( $parent ).'</span>';
 
 				} else {
 
@@ -940,7 +940,7 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$user = get_user_by( 'id', $meta );
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
 
 				} else {
 
@@ -952,7 +952,7 @@ class Terms extends gEditorial\Module
 			case 'color':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<i class="field-color" data-'.$field.'="'.Core\HTML::escape( $meta )
+					$html = '<i class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
 						.'" style="background-color:'.Core\HTML::escape( $meta )
 						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'"></i>';
 
@@ -964,7 +964,7 @@ class Terms extends gEditorial\Module
 					$this->_roles = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.( empty( $this->_roles[$meta] )
 							? Core\HTML::escape( $meta )
 							: $this->_roles[$meta] )
@@ -985,7 +985,7 @@ class Terms extends gEditorial\Module
 					$list = [];
 
 					foreach ( (array) $meta as $role )
-						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $role ).'">'
+						$list[] = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $role ).'">'
 							.( empty( $this->_roles[$role] )
 								? Core\HTML::escape( $role )
 								: $this->_roles[$role] )
@@ -1006,7 +1006,7 @@ class Terms extends gEditorial\Module
 					$this->cache['posttypes'] = WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] );
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.( empty( $this->cache['posttypes'][$meta] )
 							? Core\HTML::escape( $meta )
 							: $this->cache['posttypes'][$meta] )
@@ -1027,7 +1027,7 @@ class Terms extends gEditorial\Module
 					$list = [];
 
 					foreach ( (array) $meta as $posttype )
-						$list[] = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $posttype ).'">'
+						$list[] = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $posttype ).'">'
 							.( empty( $this->cache['posttypes'][$posttype] )
 								? Core\HTML::escape( $posttype )
 								: $this->cache['posttypes'][$posttype] )
@@ -1048,7 +1048,7 @@ class Terms extends gEditorial\Module
 
 					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d' );
 					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d', 'gregorian' );
-					$html  = '<span class="field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
+					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
 
@@ -1065,7 +1065,7 @@ class Terms extends gEditorial\Module
 
 					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
 					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d H:i', 'gregorian' );
-					$html  = '<span class="field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
+					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
 
@@ -1077,7 +1077,7 @@ class Terms extends gEditorial\Module
 			default:
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<span class="field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
 						.WordPress\Strings::prepTitle( $meta ).'</span>';
 
 				else
@@ -1092,7 +1092,7 @@ class Terms extends gEditorial\Module
 	{
 		if ( $column )
 			return '<span class="column-'.$field.'-empty -empty">&mdash;</span>'
-				.'<span class="field-'.$field.'" data-'.$field.'="'.$value.'"></span>';
+				.'<span class="-field field-'.$field.'" data-'.$field.'="'.$value.'"></span>';
 
 		return gEditorial()->na();
 	}

@@ -70,9 +70,13 @@ class Helper extends WordPress\Main
 
 	public static function moduleCheckLocale( $locale, $message = NULL )
 	{
-		return $locale === Core\L10n::locale( TRUE )
-			? FALSE
-			: ( is_null( $message ) ? _x( 'Not Available on Current Locale', 'Helper', 'geditorial-admin' ) : $message );
+		$current = Core\L10n::locale( TRUE );
+
+		foreach ( (array) $locale as $code )
+			if ( $current === $code )
+				return FALSE;
+
+		return $message ?? _x( 'Not Available on Current Locale', 'Helper', 'geditorial-admin' );
 	}
 
 	public static function isTaxonomyGenre( $taxonomy, $fallback = 'genre' )

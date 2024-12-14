@@ -277,6 +277,13 @@ class Venue extends gEditorial\Module
 
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->_hook_editform_meta_summary( [
+					'street_address' => NULL,
+					'postal_code'    => NULL,
+					'phone_number'   => NULL,
+					'website_url'    => NULL,
+				] );
+
 				$this->_hook_post_updated_messages( 'place_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );

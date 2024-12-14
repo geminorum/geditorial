@@ -371,24 +371,28 @@ class Book extends gEditorial\Module
 					'icon'        => 'shortcode',
 					'quickedit'   => TRUE,
 				],
+				// TODO: convert to unit via `Units` Module
 				'total_pages' => [
 					'title'       => _x( 'Pages', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Total Pages of the Publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'number',
 					'icon'        => 'admin-page',
 				],
+				// TODO: convert to unit via `Units` Module
 				'total_volumes' => [
 					'title'       => _x( 'Volumes', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Total Volumes of the Publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'number',
 					'icon'        => 'book-alt',
 				],
+				// TODO: convert to unit via `Units` Module
 				'total_discs' => [
 					'title'       => _x( 'Discs', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Total Discs of the Publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'number',
 					'icon'        => 'album',
 				],
+				// TODO: convert to unit via `Units` Module
 				'publication_size' => [
 					'title'       => _x( 'Size', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'The Size of the Publication, Mainly Books', 'Field Description', 'geditorial-book' ),
@@ -650,6 +654,8 @@ class Book extends gEditorial\Module
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		switch ( $field_key ) {
+
+			case 'publication_date': return Core\Number::localize( $raw ?: $value );
 
 			case 'publication_edition':
 

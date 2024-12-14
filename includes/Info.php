@@ -64,6 +64,8 @@ class Info extends WordPress\Main
 		], Core\ISBN::prep( $isbn, TRUE ) );
 	}
 
+	// https://ketab.ir/search/9786005334548
+	// https://openlibrary.org/search?isbn=9786227260267
 	// https://books.google.com/books?vid=isbn9789646799950
 	// https://www.google.com/search?tbm=bks&q=9786005334395
 	// https://www.google.com/search?q=9786229627747

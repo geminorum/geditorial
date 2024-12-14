@@ -490,7 +490,7 @@ class PostTypeFields extends WordPress\Main
 			case 'contact'    : return Helper::prepContact( $raw ?: $value );
 		}
 
-		// NOTE: forth priority: last resort
+		// NOTE: fourth priority: last resort
 		if ( array_key_exists( 'ltr', $field ) && $field['ltr'] )
 			return sprintf( '<span dir="ltr">%s</span>', Core\HTML::escape( trim( $value ) ) );
 

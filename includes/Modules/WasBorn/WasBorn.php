@@ -1087,8 +1087,6 @@ class WasBorn extends gEditorial\Module
 		$terms  = WordPress\Taxonomy::appendParentTermIDs( $term->term_id, $term->taxonomy );
 		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
 
-		return self::isError( $result ) ? FALSE : $year;
-
 		if ( self::isError( $result ) )
 			return ( $verbose ? print( Core\HTML::row( sprintf(
 				/* translators: %1$s: year taxonomy, %2$s: post title */

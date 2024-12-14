@@ -463,6 +463,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_woocommerce_support( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'woocommerce_support',
+			'title'       => _x( 'WooCommerce Support', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? '',
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_thumbnail_support( $description = NULL )
 	{
 		return [

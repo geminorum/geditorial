@@ -424,8 +424,11 @@ class ModuleHelper extends gEditorial\Helper
 			'راد',
 			'گل',
 			'خواه',
+			'خانی',
 			'الدین',
 			'الدینی',
+			'لو',
+			'فر',
 		];
 	}
 

@@ -39,10 +39,13 @@ class Identified extends gEditorial\Module
 			$default_metakey = $this->filters( 'default_posttype_identifier_metakey', '', $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field'       => $posttype_name.'_posttype_metakey',
-				'type'        => 'text',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Identifier Meta-key for %s', 'Setting Title', 'geditorial-identified' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => $posttype_name.'_posttype_metakey',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Identifier Meta-key for %s', 'Setting Title', 'geditorial-identified' ),
+					'<i>'.$posttype_label.'</i>'
+				),
 				'description' => _x( 'Defines identifier meta-key for the post-type.', 'Setting Description', 'geditorial-identified' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( $default_metakey, 'code' ),
@@ -51,10 +54,13 @@ class Identified extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field'        => $posttype_name.'_posttype_type',
-				'type'         => 'select',
-				/* translators: %s: supported object label */
-				'title'        => sprintf( _x( 'Identifier Type for %s', 'Setting Title', 'geditorial-identified' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => $posttype_name.'_posttype_type',
+				'type'  => 'select',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Identifier Type for %s', 'Setting Title', 'geditorial-identified' ),
+					'<i>'.$posttype_label.'</i>'
+				),
 				'description'  => _x( 'Defines available identifier type for the post-type.', 'Setting Description', 'geditorial-identified' ),
 				'string_empty' => _x( 'There are no identifier types available!', 'Setting', 'geditorial-identified' ),
 				'default'      => $this->filters( 'default_posttype_identifier_type', 'code', $posttype_name, $types ),
@@ -82,9 +88,11 @@ class Identified extends gEditorial\Module
 			'post_status',
 			'comment_status',
 			'add_audit_attribute' => [
-				/* translators: %s: audit attribute placeholder */
-				sprintf( _x( 'Appends %s audit attribute to each created item via identifier.', 'Setting Description', 'geditorial-identified' ),
-					Core\HTML::code( $this->constant( 'term_newpost_by_identifier' ) ) ),
+				sprintf(
+					/* translators: %s: audit attribute placeholder */
+					_x( 'Appends %s audit attribute to each created item via identifier.', 'Setting Description', 'geditorial-identified' ),
+					Core\HTML::code( $this->constant( 'term_newpost_by_identifier' ) )
+				),
 			],
 		];
 

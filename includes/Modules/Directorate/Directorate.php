@@ -389,6 +389,11 @@ class Directorate extends gEditorial\Module
 
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->_hook_editform_meta_summary( [
+					'featured_people' => NULL,
+					'committee_code'  => NULL,
+				] );
+
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
