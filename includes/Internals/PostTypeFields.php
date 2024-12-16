@@ -816,6 +816,15 @@ trait PostTypeFields
 		Scripts::enqueueClickToClip();
 	}
 
+	protected function posttypefields__hook_setup_ajax( $posttype )
+	{
+		if ( ! $this->get_posttype_fields( $posttype ) )
+			return;
+
+		$this->posttypefields__hook_edit_screen( $posttype );
+		$this->_hook_store_metabox( $posttype, 'posttypefields' );
+	}
+
 	protected function posttypefields__hook_edit_screen( $posttype )
 	{
 		$this->action( 'quick_edit_custom_box', 2, 12, 'posttypefields' );

@@ -349,11 +349,7 @@ class Meta extends gEditorial\Module
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			return;
 
-		if ( ! $this->get_posttype_fields( $posttype ) )
-			return;
-
-		$this->posttypefields__hook_edit_screen( $posttype );
-		$this->_hook_store_metabox( $posttype, 'posttypefields' );
+		$this->posttypefields__hook_setup_ajax( $posttype );
 	}
 
 	public function current_screen( $screen )
