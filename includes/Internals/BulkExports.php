@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Parser;
@@ -157,6 +158,14 @@ trait BulkExports
 				if ( 'post_name' === $prop )
 					$row[] = urldecode( $post->{$prop} );
 
+				else if ( in_array( $prop, [
+					'post_date',
+					'post_date_gmt',
+					'post_modified',
+					'post_modified_gmt',
+				], TRUE ) )
+					$row[] = $this->exports_generate_date_value( $post->{$prop}, $prop );
+
 				else if ( property_exists( $post, $prop ) )
 					$row[] = trim( $post->{$prop} );
 
@@ -241,6 +250,14 @@ trait BulkExports
 		}
 
 		return $data;
+	}
+
+	protected function exports_generate_date_value( $data, $prop )
+	{
+		return Datetime::prepForInput( $data,
+			Datetime::isDateOnly( $data ) ? 'Y/n/j' : 'Y/n/j H:i',
+			'gregorian'
+		);
 	}
 
 	// prevents the duplicate headers to avoid messing up the excel exports
