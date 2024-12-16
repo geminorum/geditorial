@@ -659,8 +659,13 @@ trait BulkExports
 			if ( ! $object = WordPress\PostType::object( $posttype ) )
 				continue;
 
+			$taxonomies = WordPress\Taxonomy::get( -1, [
+				'show_ui'                             => TRUE,
+				Services\Paired::PAIRED_POSTTYPE_PROP => FALSE,
+			], $posttype );
+
 			$all = apply_filters( $this->hook_base( 'bulk_exports', 'post_taxonomies' ),
-				get_object_taxonomies( $posttype ),
+				$taxonomies,
 				$posttype,
 				$reference,
 				$target,
