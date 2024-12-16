@@ -26,6 +26,7 @@ class Isbn extends gEditorial\Module
 			'keywords' => [
 				'barcode',
 				'woocommerce',
+				'bibliographic',
 				'identifier',
 			],
 		];
@@ -56,6 +57,15 @@ class Isbn extends gEditorial\Module
 		return [
 			'meta' => [
 				'_supported' => [
+					'bibliographic' => [
+						// @REF: `https://opac.nlai.ir/opac-prod/bibliographic/{$publication_bib}`
+						'title'       => _x( 'Bibliographic', 'Field Title', 'geditorial-isbn' ),
+						'description' => _x( 'National Bibliographic Number', 'Field Description', 'geditorial-isbn' ),
+						'type'        => 'code',
+						'icon'        => 'shortcode',
+						'quickedit'   => TRUE,
+						'order'       => 1810,
+					],
 					'isbn' => [
 						'title'       => _x( 'ISBN', 'Field Title', 'geditorial-isbn' ),
 						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
@@ -122,6 +132,7 @@ class Isbn extends gEditorial\Module
 		$this->add_posttype_fields_supported();
 		$this->filter_module( 'book', 'editform_meta_summary', 2, 20 );
 
+		$this->filter_module( 'national_library', 'default_posttype_bib_metakey', 2 );
 		$this->filter_module( 'national_library', 'default_posttype_isbn_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
@@ -183,6 +194,17 @@ class Isbn extends gEditorial\Module
 		$fields['isbn5'] = Services\PostTypeFields::getFieldRaw( 'isbn5_label', $post->ID, 'meta', FALSE, NULL );
 
 		return $fields;
+	}
+
+	public function national_library_default_posttype_bib_metakey( $default, $posttype )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $default;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'bibliographic', 'meta' ) )
+			return $metakey;
+
+		return $default;
 	}
 
 	public function national_library_default_posttype_isbn_metakey( $default, $posttype )

@@ -347,14 +347,6 @@ class Book extends gEditorial\Module
 					'type'        => 'datestring',
 					'icon'        => 'calendar-alt',
 				],
-				'publication_bib' => [
-					// @REF: `https://opac.nlai.ir/opac-prod/bibliographic/{$publication_bib}`
-					'title'       => _x( 'Bibliographic', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'National Bibliographic Number', 'Field Description', 'geditorial-book' ),
-					'type'        => 'code',
-					'icon'        => 'shortcode',
-					'quickedit'   => TRUE,
-				],
 				'publication_ddc' => [
 					// @REF: https://en.wikipedia.org/wiki/Dewey_Decimal_Classification
 					'title'       => _x( 'DDC', 'Field Title', 'geditorial-book' ),

@@ -559,7 +559,8 @@ class Meta extends gEditorial\Module
 			'publication_isbn' => [ 'isbn' ],
 
 			// `ISBN` Module
-			'isbn' => [ 'isbn', 'publication_isbn' ],
+			'isbn'          => [ 'isbn', 'publication_isbn' ],
+			'bibliographic' => [ 'bibliographic', 'publication_bib' ],
 
 			// other oldies
 			'issue_number_line'    => [ 'number_line', 'issue_number_line' ],
