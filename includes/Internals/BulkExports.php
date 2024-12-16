@@ -274,7 +274,14 @@ trait BulkExports
 
 			$width = NULL;
 
-			if ( Core\Text::starts( $header, 'field__' ) ) {
+			if ( in_array( $header, [
+					'post_title',
+					'post_excerpt',
+				], TRUE ) ) {
+
+					$width = $default * 3;
+
+			} else if ( Core\Text::starts( $header, 'field__' ) ) {
 
 				$field = Core\Text::stripPrefix( $header, 'field__' );
 
