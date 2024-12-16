@@ -669,6 +669,10 @@ trait BulkExports
 				$format
 			);
 
+			$primary = empty( $object->{Services\PrimaryTaxonomy::POSTTYPE_PROP} )
+				? FALSE
+				: $object->{Services\PrimaryTaxonomy::POSTTYPE_PROP};
+
 			$status = empty( $object->{Services\PrimaryTaxonomy::STATUS_TAX_PROP} )
 				? FALSE
 				: $object->{Services\PrimaryTaxonomy::STATUS_TAX_PROP};
@@ -680,6 +684,7 @@ trait BulkExports
 				case 'posttype_simple':
 
 					$list = array_merge( $list, [
+						$primary,
 						$status,
 					] );
 
@@ -690,8 +695,9 @@ trait BulkExports
 				case 'posttype_advanced':
 
 					$list = array_merge( $list, [
-						'post_tag',
+						$primary,
 						$status,
+						'post_tag',
 					] );
 
 					break;
