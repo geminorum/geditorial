@@ -956,7 +956,7 @@ class Module extends WordPress\Module
 		}, 1, 1 );
 	}
 
-	protected function _hook_editform_meta_summary( $fields = NULL )
+	protected function _hook_editform_meta_summary( $fields = NULL, $priority = NULL )
 	{
 		add_action( 'edit_form_after_title', function ( $post ) use ( $fields ) {
 			echo $this->wrap( Template::metaSummary( [
@@ -964,8 +964,36 @@ class Module extends WordPress\Module
 				'id'     => $post->ID,
 				'type'   => $post->post_type,
 				'fields' => $this->filters( 'editform_meta_summary', $fields, $post ),
-			] ), '-meta-summary' );
-		}, 1, 9 );
+			] ), '-meta-summary -double-column-table' );
+		}, 1, $priority ?? 9 );
+	}
+
+	protected function _hook_editform_globalsummary( $option_key = NULL, $priority = NULL )
+	{
+		if ( $option_key !== TRUE && ! $this->get_setting( $option_key ?? 'display_globalsummary' ) )
+			return FALSE;
+
+		add_action( 'edit_form_after_title', function ( $post ) {
+
+			if ( ! $markup = Services\Paired::getGlobalSummaryForPostMarkup( $post, 'editpost', 'table' ) )
+				return;
+
+			Core\HTML::h4( $markup['title'], '-table-header' );
+			echo $this->wrap( $markup['html'], '-global-summary -multiple-column-table' );
+
+			$html = '';
+
+			// TODO: import buttons
+
+			if ( $this->role_can( 'exports' ) && method_exists( $this, 'exports_get_export_buttons' ) )
+				$html.= $this->exports_get_export_buttons( $post->ID, 'editpost', 'globalsummary' );
+
+			if ( ! $html )
+				return;
+
+			echo $this->wrap_open_buttons().$html.'</p>';
+
+		}, 1, $priority ?? 80 );
 	}
 
 	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post', $extra = [] )

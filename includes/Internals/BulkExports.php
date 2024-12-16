@@ -77,6 +77,12 @@ trait BulkExports
 				'target' => 'posttype',
 				'format' => 'csv',
 			],
+
+			'globalsummary_simple' => [
+				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
+				'target' => 'globalsummary',
+				'format' => 'xlsx',
+			],
 		];
 
 		if ( $target && 'default' !== $target )
@@ -128,6 +134,7 @@ trait BulkExports
 
 				return sprintf( '%s-%s-%s.%s', $reference, $context, $type, $ext );
 
+			case 'globalsummary':
 			case 'paired':
 
 				if ( ! $post = WordPress\Post::get( $reference ) )
@@ -392,6 +399,25 @@ trait BulkExports
 
 				break;
 
+			case 'globalsummary':
+
+				if ( ! $post = WordPress\Post::get( $reference ) )
+					break;
+
+				$posts = Services\Paired::getGlobalSummaryForPost( $post, $context );
+
+				$data = $this->exports_generate_export_data(
+					$posts,
+					Core\Arraay::pluck( $posts, 'post_type' ),
+					$reference,
+					$target,
+					$type,
+					$context,
+					$format
+				);
+
+				break;
+
 			case 'paired':
 
 				if ( ! $this->_paired || ! method_exists( $this, 'paired_get_constants' ) )
@@ -459,6 +485,14 @@ trait BulkExports
 			case 'simple':
 			case 'paired_simple':
 			case 'posttype_simple':
+
+				break;
+
+			case 'globalsummary_simple':
+
+				$list = array_merge( $list, [
+					'post_date',
+				] );
 
 				break;
 

@@ -61,6 +61,7 @@ class Personage extends gEditorial\Module
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
 				'tools_roles'   => [ NULL, $roles ],
+				'exports_roles' => [ NULL, $roles ],
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
@@ -92,6 +93,9 @@ class Personage extends gEditorial\Module
 				'admin_bulkactions',
 				'admin_displaystates',
 				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
+			],
+			'_editpost' => [
+				'display_globalsummary',
 			],
 			'_frontend' => [
 				'contents_viewable' => [ NULL, FALSE ],
@@ -426,6 +430,8 @@ class Personage extends gEditorial\Module
 					'father_name'     => NULL,
 					'identity_number' => NULL,
 				] );
+
+				$this->_hook_editform_globalsummary();
 
 				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
