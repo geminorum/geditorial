@@ -777,7 +777,12 @@ class Module extends WordPress\Module
 	protected function _hook_store_metabox( $posttype, $prefix = FALSE )
 	{
 		if ( $posttype )
-			add_action( sprintf( 'save_post_%s', $posttype ), [ $this, 'store_metabox'.( $prefix ? '_'.$prefix : '' ) ], 20, 3 );
+			add_action(
+				sprintf( 'save_post_%s', $posttype ),
+				[ $this, 'store_metabox'.( $prefix ? '_'.$prefix : '' ) ],
+				20,
+				3
+			);
 	}
 
 	protected function class_metabox( $screen, $context = 'mainbox' )

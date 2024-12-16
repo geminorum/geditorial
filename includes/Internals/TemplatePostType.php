@@ -30,6 +30,7 @@ trait TemplatePostType
 			return $template;
 
 		// TODO: support singulars
+		// FIXME: support new posts
 		if ( ! $wp_query->is_404() && ! $wp_query->is_post_type_archive( $posttype ) )
 			return $template;
 
@@ -179,8 +180,16 @@ trait TemplatePostType
 
 		// FIXME: must check if post is unpublished
 
+		$extra = apply_filters(
+			$this->hook_base( 'templateposttype', 'addnew_extra' ),
+			[
+				'post_title' => $title,
+			],
+			$object->name
+		);
+
 		return Core\HTML::tag( 'a', [
-			'href'          => Core\WordPress::getPostNewLink( $object->name, [ 'post_title' => $title ] ),
+			'href'          => Core\WordPress::getPostNewLink( $object->name, $extra ),
 			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$object->name ],
 			'target'        => '_blank',
 			'data-posttype' => $object->name,

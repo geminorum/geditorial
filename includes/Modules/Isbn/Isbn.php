@@ -13,8 +13,6 @@ use geminorum\gEditorial\WordPress;
 class Isbn extends gEditorial\Module
 {
 
-	protected $barcode_type = 'ean13';
-
 	public static function module()
 	{
 		return [

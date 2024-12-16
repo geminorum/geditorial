@@ -70,6 +70,7 @@ class Info extends WordPress\Main
 	// https://www.google.com/search?tbm=bks&q=9786005334395
 	// https://www.google.com/search?q=9786229627747
 	// https://fa.wikipedia.org/wiki/%D9%88%DB%8C%DA%98%D9%87:%D9%85%D9%86%D8%A7%D8%A8%D8%B9_%DA%A9%D8%AA%D8%A7%D8%A8?isbn=0-13-981176-1
+	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=9786227260267
 	// https://en.wikipedia.org/wiki/Special:BookSources/978-0-618-05676-7
 	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=122334
 	// https://www.goodreads.com/search?q=MAGICNUMBER

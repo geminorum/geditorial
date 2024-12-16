@@ -28,11 +28,11 @@ class Conscripted extends gEditorial\Module
 			'name'     => 'conscripted',
 			'title'    => _x( 'Conscripted', 'Modules: Conscripted', 'geditorial-admin' ),
 			'desc'     => _x( 'State-mandated National Service', 'Modules: Conscripted', 'geditorial-admin' ),
-			'icon'     => 'superhero-alt',
+			'icon'     => [ 'misc-512', 'person-military-rifle' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'conscription',
-				'compulsorily',
+				'compulsory',
 				'taxmodule',
 			],
 		];

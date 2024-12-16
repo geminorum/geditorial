@@ -138,12 +138,12 @@ class Book extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'publication_posttype'     => 'publication',
+			'publication_posttype'     => 'publication',             // FIXME: rename to `primary_posttype`
 			'publication_posttype_p2p' => 'related_publications',
 			'publication_paired'       => 'related_publication',
-			'publication_category'     => 'publication_category',
+			'publication_category'     => 'publication_category',    // FIXME: rename to `primary_taxonomy`
 			'subject_taxonomy'         => 'publication_subject',
-			'serie_taxonomy'           => 'publication_serie',       // TODO: move to new TaxModule
+			'serie_taxonomy'           => 'publication_serie',       // TODO: move to new TaxModule: فروست
 			'library_taxonomy'         => 'publication_library',
 			'publisher_taxonomy'       => 'publication_publisher',
 			'type_taxonomy'            => 'publication_type',
@@ -151,7 +151,7 @@ class Book extends gEditorial\Module
 			'size_taxonomy'            => 'publication_size',        // TODO: move to `Units` Module: `book_cover`
 			'audience_taxonomy'        => 'publication_audience',
 
-			'publication_shortcode' => 'publication',
+			'publication_shortcode' => 'publication',           // FIXME: rename to `main_shortcode`
 			'subject_shortcode'     => 'publication-subject',
 			'serie_shortcode'       => 'publication-serie',
 			'cover_shortcode'       => 'publication-cover',
@@ -490,7 +490,10 @@ class Book extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'publication_posttype' );
+		], 'publication_posttype', [
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
+		]  );
 
 		$this->register_taxonomy( 'audience_taxonomy', [
 			'hierarchical' => TRUE,
@@ -511,7 +514,7 @@ class Book extends gEditorial\Module
 		$this->register_posttype( 'publication_posttype', [
 			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
-			'primary_taxonomy' => TRUE,
+			'primary_taxonomy' => $this->constant( 'publication_category' ),
 			'status_taxonomy'  => TRUE,
 		] );
 

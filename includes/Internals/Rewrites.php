@@ -12,13 +12,16 @@ trait Rewrites
 	// $constant_prefix.'_queryvar' => 'endpoint',
 	protected function rewrites__add_endpoint( $constant_prefix = 'main' )
 	{
+		if ( ! $query = $this->constant( $constant_prefix.'_queryvar' ) )
+			return FALSE;
+
 		add_rewrite_endpoint(
-			$this->constant( $constant_prefix.'_endpoint' ),
+			$this->constant( $constant_prefix.'_endpoint', $query ),
 			EP_PERMALINK | EP_PAGES,
-			$this->constant( $constant_prefix.'_queryvar' )
+			$query
 		);
 
-		$this->filter_append( 'query_vars', $this->constant( $constant_prefix.'_queryvar' ) );
+		$this->filter_append( 'query_vars', $query );
 	}
 
 	protected function rewrites__add_tag( $constant_prefix = 'main', $posttypes = NULL )

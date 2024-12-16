@@ -764,7 +764,7 @@ trait PostTypeFields
 		$this->store_posttype_fields( $post );
 	}
 
-	protected function store_posttype_fields( $post )
+	protected function store_posttype_fields( $post, $override = TRUE )
 	{
 		$fields = $this->get_posttype_fields( $post->post_type );
 
@@ -787,7 +787,7 @@ trait PostTypeFields
 			$request = sprintf( '%s-%s-%s', $this->base, $this->module->name, $field );
 
 			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
-				$this->posttypefields_do_import_field( $data, $args, $post );
+				$this->posttypefields_do_import_field( $data, $args, $post, $override );
 
 			// passing not enabled legacy data
 			else if ( $legacy && array_key_exists( $field, $legacies ) )
@@ -917,6 +917,7 @@ trait PostTypeFields
 
 		echo '</ul></div>';
 
+		// TODO: move this to `add_inline_data` action hook
 		// NOTE: for `quickedit` enabled fields
 		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
 			echo '<div data-disabled="'.( $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true' )
