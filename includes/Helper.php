@@ -745,7 +745,7 @@ class Helper extends WordPress\Main
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return $fallback ?? Plugin::na();
 
-		if ( isset( $object->labels->{$label} ) )
+		if ( ! empty( $object->labels->{$label} ) )
 			return $object->labels->{$label};
 
 		$name = [
@@ -923,7 +923,7 @@ class Helper extends WordPress\Main
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return $fallback ?? Plugin::na();
 
-		if ( isset( $object->labels->{$label} ) )
+		if ( ! empty( $object->labels->{$label} ) )
 			return $object->labels->{$label};
 
 		$name = [

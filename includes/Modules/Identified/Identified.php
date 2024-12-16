@@ -525,7 +525,15 @@ class Identified extends gEditorial\Module
 			],
 		];
 
-		$post_id = wp_insert_post( $this->filters( 'insert_target_post', $data, $identifier, $raw ) );
+		$post_id = wp_insert_post(
+			$this->filters( 'insert_target_post',
+				$data,
+				$identifier,
+				$raw
+			),
+			FALSE,
+			FALSE
+		);
 
 		if ( self::isError( $post_id ) )
 			return $post_id;
@@ -538,6 +546,9 @@ class Identified extends gEditorial\Module
 
 		// NOTE: `$override` is false because it's new post
 		$this->posttypefields__do_action_import_data( $post_id, $raw, FALSE, FALSE, 'meta' );
+
+		// @REF: https://make.wordpress.org/core/2020/11/20/new-action-wp_after_insert_post-in-wordpress-5-6/
+		wp_after_insert_post( $post_id, FALSE, NULL );
 
 		return $post_id;
 	}

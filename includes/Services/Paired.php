@@ -98,7 +98,7 @@ class Paired extends WordPress\Main
 		return empty( $posts ) ? [] : $posts;
 	}
 
-	public static function getGlobalSummaryForPostMarkup( $post, $context, $wrap_class = '' )
+	public static function getGlobalSummaryForPostMarkup( $post, $context, $table_class = '' )
 	{
 		$items = self::getGlobalSummaryForPost( $post, $context );
 
@@ -140,7 +140,7 @@ class Paired extends WordPress\Main
 			'context' => $context,
 			'count'   => count( $items ),
 			'title'   => sprintf( $template, WordPress\Strings::getCounted( count( $items ) ) ),
-			'html'    => Core\HTML::tableSimple( $posts, $columns, FALSE, $wrap_class ),
+			'html'    => Core\HTML::tableSimple( $posts, $columns, FALSE, $table_class ),
 		];
 	}
 

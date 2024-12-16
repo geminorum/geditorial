@@ -636,18 +636,18 @@ class Info extends WordPress\Main
 		] );
 	}
 
-	public static function getPosttypePropTitle( $prop, $context = NULL )
+	public static function getPosttypePropTitle( $prop, $posttype = NULL, $context = NULL )
 	{
 		$title = '';
 
 		switch ( $prop ) {
 			case 'ID'                   : $title = _x( 'ID', 'Info: Posttype Prop Title', 'geditorial' ); break;
-			case 'post_author'          : $title = _x( 'Author', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_author'          : $title = Helper::getPostTypeLabel( $posttype, 'author_label', FALSE, _x( 'Author', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
 			case 'post_date'            : $title = _x( 'Date', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'post_date_gmt'        : $title = _x( 'Date (GMT)', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'post_content'         : $title = _x( 'Content', 'Info: Posttype Prop Title', 'geditorial' ); break;
-			case 'post_title'           : $title = _x( 'Title', 'Info: Posttype Prop Title', 'geditorial' ); break;
-			case 'post_excerpt'         : $title = _x( 'Excerpt', 'Info: Posttype Prop Title', 'geditorial' ); break;
+			case 'post_title'           : $title = Helper::getPostTypeLabel( $posttype, 'column_title', FALSE, _x( 'Title', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
+			case 'post_excerpt'         : $title = Helper::getPostTypeLabel( $posttype, 'excerpt_label', FALSE, _x( 'Excerpt', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
 			case 'post_status'          : $title = _x( 'Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'comment_status'       : $title = _x( 'Comment Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'ping_status'          : $title = _x( 'Ping Status', 'Info: Posttype Prop Title', 'geditorial' ); break;

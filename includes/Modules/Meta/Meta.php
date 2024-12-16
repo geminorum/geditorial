@@ -793,7 +793,10 @@ class Meta extends gEditorial\Module
 			case 'datetime':
 
 				if ( 'export' === $context )
-					return Datetime::prepForInput( trim( $raw ), 'Y/m/d H:i', 'gregorian' );
+					return Datetime::prepForInput( trim( $raw ),
+						Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i',
+						'gregorian'
+					);
 
 				if ( 'print' === $context )
 					return Datetime::prepForDisplay(

@@ -893,7 +893,7 @@ class Importer extends gEditorial\Module
 							if ( $source_id )
 								$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
 
-							$post_id = wp_insert_post( $insert, TRUE );
+							$post_id = wp_insert_post( $insert, TRUE, FALSE );
 
 						} else if ( $this->_check_insert_is_empty( $insert, $insert['ID'] ) ) {
 
@@ -915,7 +915,7 @@ class Importer extends gEditorial\Module
 
 						} else {
 
-							$post_id = wp_insert_post( $insert, TRUE );
+							$post_id = wp_insert_post( $insert, TRUE, FALSE );
 						}
 
 						if ( ! $post_id ) {
@@ -978,6 +978,9 @@ class Importer extends gEditorial\Module
 							'override'   => $override,
 							'oldpost'    => $oldpost,
 						] );
+
+						// @REF: https://make.wordpress.org/core/2020/11/20/new-action-wp_after_insert_post-in-wordpress-5-6/
+						wp_after_insert_post( $post_id, $oldpost ? TRUE : FALSE, $oldpost ?: NULL );
 
 						$count++;
 					}

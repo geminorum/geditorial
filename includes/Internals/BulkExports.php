@@ -138,7 +138,7 @@ trait BulkExports
 			case 'paired':
 
 				if ( ! $post = WordPress\Post::get( $reference ) )
-					return sprintf( '%s-%s.%s', $context, $type, $ext );
+					break;
 
 				return vsprintf( '%s-%s-%s.%s', [
 					$post->post_name ?: $post->post_title,
@@ -146,10 +146,9 @@ trait BulkExports
 					$type,
 					$ext,
 				] );
-
-			default:
-				return sprintf( '%s-%s.%s', $context, $type, $ext );
 		}
+
+		return sprintf( '%s-%s.%s', $context, $type, $ext );
 	}
 
 	protected function exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields = [], $units = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )
@@ -191,9 +190,9 @@ trait BulkExports
 			foreach ( $metas as $meta => $meta_title )
 				$row[] = ( empty( $saved[$meta][0] ) ? '' : trim( $saved[$meta][0] ) ) ?: '';
 
-			foreach ( $taxes as $tax => $tax_title )
+			foreach ( $taxes as $taxonomy => $taxonomy_title )
 				// FIXME: check for `auto_set_parent_terms` on tax object then exclude parents, just like paired box
-				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $tax, $post, FALSE, 'name' ) );
+				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $taxonomy, $post, FALSE, 'name' ) );
 
 			foreach ( $customs as $custom => $custom_title )
 				$row[] = apply_filters( $this->hook_base( 'bulk_exports', 'prep_custom_for_post' ), '', $custom, $post, $reference, $target, $type, $format );
@@ -303,7 +302,7 @@ trait BulkExports
 					'post_excerpt',
 				], TRUE ) ) {
 
-					$width = $default * 3;
+				$width = $default * 3;
 
 			} else if ( Core\Text::starts( $header, 'field__' ) ) {
 

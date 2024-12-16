@@ -79,7 +79,7 @@ trait PostTypeOverview
 						'id'      => $row->ID,
 						'default' => $unit['default'],
 						'context' => 'reports',
-					], FALSE, 'unit' ) ?: Helper::htmlEmpty();
+					], FALSE, 'units' ) ?: Helper::htmlEmpty();
 				},
 			];
 
