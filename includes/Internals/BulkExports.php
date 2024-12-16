@@ -303,19 +303,20 @@ trait BulkExports
 				$field = Core\Text::stripPrefix( $header, 'field__' );
 
 				if ( array_key_exists( $field, $fields ) )
-					$width = $fields[$field]['data_length'] ?? $width;
+					$width = $fields[$field]['data_length'] ?? $this->exports_generate_column_widths_for_fields( $field, $width, 'meta' );
 
 			} else if ( Core\Text::starts( $header, 'unit__' ) ) {
 
 				$field = Core\Text::stripPrefix( $header, 'field__' );
 
 				if ( array_key_exists( $field, $units ) )
-					$width = $units[$field]['data_length'] ?? $width;
+					$width = $units[$field]['data_length'] ?? $this->exports_generate_column_widths_for_fields( $field, $width, 'units' );
 
 			} else if ( Core\Text::starts( $header, 'taxonomy__' ) ) {
 
 				$taxonomy = WordPress\Taxonomy::object( Core\Text::stripPrefix( $header, 'taxonomy__' ) );
 
+				// TODO: calculate average taxonomy term name length from db for fallback
 				if ( ! empty( $taxonomy->data_length ) )
 					$width = $taxonomy->data_length;
 			}
@@ -324,6 +325,17 @@ trait BulkExports
 		}
 
 		return apply_filters( $this->hook_base( 'bulk_exports', 'post_column_widths' ), $widths, $headers, $default );
+	}
+
+	protected function exports_generate_column_widths_for_fields( $field, $default = 20, $module = 'meta', $padding = 4 )
+	{
+		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( $field, $module ) )
+			return $default;
+
+		if ( ! $average = WordPress\PostType::getMetaAverageDataLength( $metakey ) )
+			return $default;
+
+		return Core\Number::round( $average + $padding ) ?: $default;
 	}
 
 	// TODO: support field meta from paired
