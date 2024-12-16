@@ -81,8 +81,33 @@ class Identified extends gEditorial\Module
 				'description' => _x( 'Appends end-points for Identifier types on front-end.', 'Setting Description', 'geditorial-identified' ),
 				'values'      => $types ?: FALSE,
 			],
-			'admin_rowactions',
 		];
+
+		foreach ( $this->get_setting( 'queryable_types', [] ) as $queryable ) {
+
+			$default_template = $this->filters( 'default_type_notfound_template', '', $queryable );
+
+			$settings['_frontend'][] = [
+				'field' => $queryable.'_type_notfound_template',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: %s: supported type label */
+					_x( 'URL Template for %s', 'Setting Title', 'geditorial-identified' ),
+					'<i>'.$types[$queryable].'</i>'
+				),
+				'description' => sprintf(
+					/* translators: %s: token list placeholder */
+					_x( 'Defines a not-found url template for the identifier type. Available tokens are %s.', 'Setting Description', 'geditorial-identified' ),
+					WordPress\Strings::getJoined( [ Core\HTML::code( 'type' ), Core\HTML::code( 'data' ) ] )
+				),
+				'field_class' => [ 'regular-text', 'code-text' ],
+				'after'       => Settings::fieldAfterText( $default_template, 'code' ),
+				'placeholder' => $default_template,
+				'default'     => $default_template,
+			];
+		}
+
+		$settings['_frontend'][] = 'admin_rowactions';
 
 		$settings['_import'] = [
 			'post_status',
@@ -820,14 +845,14 @@ class Identified extends gEditorial\Module
 				if ( ! $criteria = get_query_var( $type ) )
 					continue;
 
-				$supported = $this->_get_supported_by_identifier_type( $type );
-
-				if ( ! count( $supported ) )
+				if ( ! $sanitized = $this->sanitize_identifier( $criteria, $type ) )
 					continue;
+
+				$supported = $this->_get_supported_by_identifier_type( $type );
 
 				foreach ( $supported as $posttype => $metakey ) {
 
-					if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $criteria ) )
+					if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $sanitized ) )
 						continue;
 
 					if ( ! $post = WordPress\Post::get( $post_id ) )
@@ -841,8 +866,31 @@ class Identified extends gEditorial\Module
 
 					Core\WordPress::redirect( get_page_link( $post->ID ), 302 );
 				}
+
+				if ( $tokenized = $this->_get_url_for_identifier_notfound( $type, $sanitized, $supported ) )
+					Core\WordPress::redirect( $tokenized, 307 );
+
+				$this->actions( 'identifier_notfound', $type, $sanitized, $supported );
 			}
 		}
+	}
+
+	private function _get_url_for_identifier_notfound( $type, $data, $supported = [] )
+	{
+		if ( ! $template = $this->get_setting( sprintf( '%s_type_notfound_template', $type ) ) )
+			return FALSE;
+
+		$tokens = [
+			'type' => $type,
+			'data' => $data,
+		];
+
+		return $this->filters( 'identifier_notfound_template',
+			Core\Text::replaceTokens( $template, $tokens ),
+			$type,
+			$data,
+			$supported
+		);
 	}
 
 	public function post_row_actions( $actions, $post )
