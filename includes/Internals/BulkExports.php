@@ -205,22 +205,28 @@ trait BulkExports
 				$headers = [];
 
 				foreach ( $props as $prop => $prop_title )
-					$headers[$prop] = $prop_title ?? Info::getPosttypePropTitle( $prop, 'export' ) ?: $prop;
+					$headers[$prop] = $this->exports_generate_column_header( $headers,
+						$prop_title ?? Info::getPosttypePropTitle( $prop, $posttypes[0], 'export' ) ?: $prop );
 
 				foreach ( $fields as $field => $field_title )
-					$headers['field__'.$field] = $field_title ?? Services\PostTypeFields::getExportTitle( $field, $posttypes[0], 'meta' );
+					$headers['field__'.$field] = $this->exports_generate_column_header( $headers,
+						$field_title ?? Services\PostTypeFields::getExportTitle( $field, $posttypes[0], 'meta' ) );
 
 				foreach ( $units as $unit => $unit_title )
-					$headers['unit__'.$unit] = $unit_title ?? Services\PostTypeFields::getExportTitle( $unit, $posttypes[0], 'units' );
+					$headers['unit__'.$unit] = $this->exports_generate_column_header( $headers,
+						$unit_title ?? Services\PostTypeFields::getExportTitle( $unit, $posttypes[0], 'units' ) );
 
 				foreach ( $metas as $meta => $meta_title )
-					$headers['meta__'.$meta] = $meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ); // FIXME: move-up!
+					$headers['meta__'.$meta] = $this->exports_generate_column_header( $headers,
+						$meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ) ); // FIXME: move-up the filter!
 
 				foreach ( $taxes as $taxonomy => $taxonomy_title )
-					$headers['taxonomy__'.$taxonomy] = $taxonomy_title ?? Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy );
+					$headers['taxonomy__'.$taxonomy] = $this->exports_generate_column_header( $headers,
+						$taxonomy_title ?? Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy ) );
 
 				foreach ( $customs as $custom => $custom_title )
-					$headers['custom__'.$custom] = $custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ); // FIXME: move-up!
+					$headers['custom__'.$custom] = $this->exports_generate_column_header( $headers,
+						$custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ) ); // FIXME: move-up the filter!
 
 				$sheet_title = 'posttype' === $target
 					? Helper::getPostTypeLabel( $reference, 'extended_label', 'name', $this->module->title )
@@ -235,6 +241,27 @@ trait BulkExports
 		}
 
 		return $data;
+	}
+
+	// prevents the duplicate headers to avoid messing up the excel exports
+	protected function exports_generate_column_header( $headers, $header )
+	{
+		static $counter = [];
+
+		if ( ! Core\Arraay::has( $header, $headers ) )
+			return $header;
+
+		if ( empty( $counter[$header] ) )
+			$counter[$header] = 2;
+		else
+			$counter[$header]++;
+
+		return sprintf(
+			/* translators: %1$s: header title, %2$s: hedaer counter */
+			_x( '%1$s (%2$s)', 'Internal: Exports: Button Label', 'geditorial-admin' ),
+			$header,
+			Core\Number::localize( $counter[$header] )
+		);
 	}
 
 	protected function exports_generate_column_widths( $headers, $posttypes, $default = 20 )
