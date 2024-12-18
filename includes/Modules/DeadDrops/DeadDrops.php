@@ -85,6 +85,11 @@ class DeadDrops extends gEditorial\Module
 		$this->rewrites__add_endpoint( 'main' );
 	}
 
+	public function setup_restapi()
+	{
+		$this->filter( 'wp_handle_sideload_prefilter', 1, 8 );
+	}
+
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -140,6 +145,16 @@ class DeadDrops extends gEditorial\Module
 				echo Core\HTML::wrap( Core\HTML::inputForCopy( $drop ), '-input-deaddrop' );
 			echo '</div>';
 		echo '</div>';
+	}
+
+	// decodes the unicode filename encoded with `encodeURI`/`encodeURIComponent`
+	public function wp_handle_sideload_prefilter( $file )
+	{
+		if ( ! empty( $file['name'] )
+			&& $file['name'] !== ( $decoded = rawurldecode( $file['name'] ) ) )
+			$file['name'] = $decoded;
+
+		return $file;
 	}
 
 	// NOTE: the author must have upload cap to use the core endpoint.
@@ -336,7 +351,7 @@ class DeadDrops extends gEditorial\Module
 			 * It's an error to set this to `true` along with `uploadMultiple` since
 			 * multiple files cannot be in a single binary body.
 			 */
-			'binaryBody' => TRUE,
+			// 'binaryBody' => TRUE, // NOTE: wont work with filename as title/caption on formData
 
 			// TODO: settings for this
 			// 'acceptedFiles' => 'image/*,application/pdf,.psd',
@@ -395,7 +410,8 @@ class DeadDrops extends gEditorial\Module
 		echo Core\HTML::wrap( Scripts::noScriptMessage( FALSE ), 'dropzone-previews', TRUE, [], 'previews' );
 		// echo '<button id="clickable">Click me to select files</button>';
 
-		// TODO: append `content_md5` data
+		// FIXME: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#encoding_for_content-disposition_and_link_headers
+		// TODO: append `content_md5` data: see: `WP_REST_Attachments_Controller::upload_from_data()`
 
 		$encoded = wp_json_encode( $options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
 		$script  = <<<JS
@@ -405,12 +421,21 @@ class DeadDrops extends gEditorial\Module
 				{$encoded}
 			);
 
-			// add headers with xhr.setRequestHeader() or
-			// form data with formData.append(name, value);
+			// add headers with `xhr.setRequestHeader()` or
+			// form data with `formData.append(name, value);`
 			// https://stackoverflow.com/a/17548081
 			DDDZ.on('sending', function (file, xhr, formData) {
 				// xhr.setRequestHeader( 'Authorization', 'BEARER ' + access_token );
-				xhr.setRequestHeader('Content-Disposition', 'attachment; filename="' + file.name + '"');
+				xhr.setRequestHeader('Content-Disposition', 'attachment; filename="' + encodeURIComponent(file.name) + '"');
+
+				const name = file.name.replace(/\.[^/.]+$/, '');
+
+				if (formData === undefined) {
+					formData = new FormData();
+				}
+
+				formData.append('title', name);
+				formData.append('caption', name);
 			});
 
 JS;
