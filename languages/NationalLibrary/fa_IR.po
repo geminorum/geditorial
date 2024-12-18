@@ -1,0 +1,104 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial NationalLibrary\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-12-18 05:56+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ../../includes/Modules/NationalLibrary\n"
+"X-Domain: geditorial-national-library\n"
+
+#: ModuleHelper.php:24
+msgctxt "Helper: Title Attr"
+msgid "Book Page on Nali.ir"
+msgstr "صفحه کتاب در سایت کتابخانه ملی"
+
+#: ModuleHelper.php:54
+msgctxt "Helper: Title Attr"
+msgid "Search ISBN on Nali.ir"
+msgstr "جست‌وجوی شابک در سایت کتابخانه ملی"
+
+#. translators: %s: supported object label
+#: NationalLibrary.php:54
+msgctxt "Setting Title"
+msgid "Bib Meta-key for %s"
+msgstr "متاکلید کتابشناسی برای %s"
+
+#: NationalLibrary.php:57
+msgctxt "Setting Description"
+msgid "Defines Bib meta-key for the post-type."
+msgstr ""
+
+#. translators: %s: supported object label
+#: NationalLibrary.php:69
+msgctxt "Setting Title"
+msgid "ISBN Meta-key for %s"
+msgstr "متاکلید شابک برای %s"
+
+#: NationalLibrary.php:72
+msgctxt "Setting Description"
+msgid "Defines ISBN meta-key for the post-type."
+msgstr ""
+
+#. translators: %s: supported object label
+#: NationalLibrary.php:87
+msgctxt "Setting Title"
+msgid "Support Tab for %s"
+msgstr "پشتیبانی زبانه برای %s"
+
+#: NationalLibrary.php:90
+msgctxt "Setting Description"
+msgid "Select to display data as tab for the post-type."
+msgstr ""
+
+#: NationalLibrary.php:100
+msgctxt "Setting Description"
+msgid "Select to display data as tab for the products."
+msgstr ""
+
+#: NationalLibrary.php:106
+msgctxt "Setting Title"
+msgid "New-Post Hints"
+msgstr "اشارات برای فرسته تازه"
+
+#: NationalLibrary.php:107
+msgctxt "Setting Description"
+msgid "Displays Bibliographic information on new post edit screen."
+msgstr ""
+
+#: NationalLibrary.php:114
+msgctxt "Setting Title"
+msgid "Front-end Search"
+msgstr "جست‌وجو روی سایت"
+
+#: NationalLibrary.php:115
+msgctxt "Setting Description"
+msgid "Adds results by Bibliographic information on front-end search."
+msgstr ""
+
+#: NationalLibrary.php:119
+msgctxt "Setting Title"
+msgid "Custom Queries"
+msgstr ""
+
+#: NationalLibrary.php:120
+msgctxt "Setting Description"
+msgid "Appends end-points for Bib/Fipa numbers on front-end."
+msgstr ""
+
+#: NationalLibrary.php:414 NationalLibrary.php:430
+msgctxt "Tab Title"
+msgid "Fipa"
+msgstr "فیپا"
+
+#: NationalLibrary.php:431
+msgctxt "Tab Description"
+msgid "Exact Fipa data from The National Library."
+msgstr "اطلاعات کامل فیپا از کتابخانه ملی را نمایش می‌دهد."
