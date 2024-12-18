@@ -4,6 +4,9 @@
 /// gEditorial Partials: Admin After All ---------------------------------------
 
 @media screen {
+  .-mobile-only,
+  .-mobile-only-inline,
+  .-mobile-only-inline-block,
   .-print-only,
   .-print-only-inline,
   .-print-only-block {
@@ -34,5 +37,20 @@
 
   .-print-only-inline {
     display: inline !important;
+  }
+}
+
+@media screen and ( max-width: 782px ) {
+
+  .-mobile-only {
+    display: block !important;
+  }
+
+  .-mobile-only-inline {
+    display: inline !important;
+  }
+
+  .-mobile-only-inline-block {
+    display: inline-block !important;
   }
 }

@@ -89,7 +89,7 @@ body.geditorial-terms-enabled {
     .column-geditorial-terms-max,
     .column-geditorial-terms-order,
     .column-geditorial-terms-color {
-      width: 50px;
+      width: 54px;
     }
 
     .column-geditorial-terms-latlng,
@@ -108,8 +108,10 @@ body.geditorial-terms-enabled {
     td.column-geditorial-terms-arrow,
     td.column-geditorial-terms-barcode,
     td.column-geditorial-terms-contact {
-      > span.field-contact,
-      > span.field-contact a {
+      // > span.field-contact,
+      // > span.field-contact a {
+      > span.-field,
+      > span.-field a {
         color: $gray;
         cursor: help;
 

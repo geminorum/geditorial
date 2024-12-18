@@ -252,13 +252,9 @@ body.admin_page_geditorial-dead-drops-signal {
           padding-left: 5px;
 
           .dashicons {
-            vertical-align: middle;
-            // position: relative;
-            // top: 5px;
-
-            width: 22px !important;
-            height: 18px;
-            margin: 0 2px 0 -2px;
+            position: relative;
+            top: 3px;
+            right: 3px;
 
             &::before {
               color: $gray-light;
