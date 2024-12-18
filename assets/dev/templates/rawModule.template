@@ -41,7 +41,9 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 					'description' => _x( 'Description.', 'Setting Description', '<%= moduleTextdomain %>' ),
 				],
 			],
-			'_supports' => [],
+			'_supports' => [
+				'shortcode_support',
+			],
 			'_editlist' => [],
 			'_frontend' => [],
 			'_roles' => [

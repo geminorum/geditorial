@@ -1,6 +1,8 @@
 /* global jQuery, gEditorial, inlineEditPost */
 
 (function ($, plugin, module, section) {
+  if (plugin === 'undefined') return;
+
   const s = {
     // action: plugin._base + '_' + module,
     // classs: plugin._base + '-' + module
@@ -43,4 +45,4 @@
     // $(document).trigger('gEditorialReady', [module, app]);
     $(document).trigger('gEditorial:Module:Loaded', [module, app]);
   });
-}(jQuery, typeof gEditorial === 'undefined' ? {} : gEditorial, 'singleselect', 'edit'));
+}(jQuery, gEditorial, 'singleselect', 'edit'));

@@ -1,4 +1,6 @@
 (function ($, plugin, module, section) {
+  if (plugin === 'undefined') return;
+
   const s = {
     overlay: '#cboxOverlay', // colorbox.js selector
     before: 'do-' + module + '-iframe',
@@ -65,4 +67,4 @@
     $(document).on('gEditorial:ColorBox:Hook', function () { app.hook(); });
     $(document).trigger('gEditorial:Module:Loaded', [module, app]);
   });
-}(jQuery, typeof gEditorial === 'undefined' ? {} : gEditorial, 'colorbox', 'all'));
+}(jQuery, gEditorial, 'colorbox', 'all'));

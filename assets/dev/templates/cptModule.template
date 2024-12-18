@@ -66,12 +66,12 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		$strings = [
 			'noops' => [
 				'main_posttype'     => _n_noop( '', '', '<%= moduleTextdomain %>' ),
-				'category_taxonomy' => _n_noop( '', '', '<%= moduleTextdomain %>' ),
+				'category_taxonomy' => _n_noop( 'Category', 'Categories', '<%= moduleTextdomain %>' ),
 			],
 			'labels' => [
 				'category_taxonomy' => [
-					'show_option_all'      => _x( 'Definitions', 'Label: Show Option All', '<%= moduleTextdomain %>' ),
-					'show_option_no_items' => _x( '(Undefined)', 'Label: Show Option No Terms', '<%= moduleTextdomain %>' ),
+					'show_option_all'      => _x( 'Categories', 'Label: Show Option All', '<%= moduleTextdomain %>' ),
+					'show_option_no_items' => _x( '(Uncategorized)', 'Label: Show Option No Terms', '<%= moduleTextdomain %>' ),
 				],
 			],
 		];
@@ -79,10 +79,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		if ( ! is_admin() )
 			return $strings;
 
-		$strings['dashboard'] = [
-			'current' => [ 'widget_title' => _x( 'Your Team Definition Summary', 'Dashboard Widget Title', '<%= moduleTextdomain %>' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Definition Summary', 'Dashboard Widget Title', '<%= moduleTextdomain %>' ), ],
-		];
+		// $strings[''] = [];
 
 		return $strings;
 	}
