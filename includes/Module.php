@@ -878,8 +878,8 @@ class Module extends WordPress\Module
 		if ( is_null( $request ) )
 			$request = $_REQUEST;
 
-		if ( empty( $request['action'] )
-			|| 'inline-save' != $request['action'] )
+		if ( empty( $request['bulk_edit'] )
+			&& ( empty( $request['action'] ) || 'inline-save' != $request['action'] ) )
 				return FALSE;
 
 		if ( empty( $request[$key] ) )

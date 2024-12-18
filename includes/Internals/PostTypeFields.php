@@ -190,6 +190,12 @@ trait PostTypeFields
 			if ( ! array_key_exists( 'quickedit', $args ) )
 				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
 
+			if ( ! array_key_exists( 'bulkedit', $args ) ) {
+
+				if ( in_array( $args['type'], [ 'title_before', 'title_after', 'isbn', 'iban', 'bankcard', 'identity', 'postcode', 'email', 'contact', 'phone', 'mobile' ], TRUE ) )
+					$args['bulkedit'] = FALSE;
+			}
+
 			if ( ! isset( $args['icon'] ) )
 				$args['icon'] = Services\PostTypeFields::getFieldIcon( $field, $args, $posttype );
 
@@ -213,6 +219,7 @@ trait PostTypeFields
 				'icon'        => 'smiley',
 				'context'     => 'mainbox', // OLD: 'main'
 				'quickedit'   => FALSE,
+				'bulkedit'    => NULL, // NULL to fallback to `quickedit`
 
 				'import'         => TRUE,    // FALSE to hide on imports
 				'import_ignored' => FALSE,   // TRUE to make duplicate one that will ignored on import
@@ -764,6 +771,12 @@ trait PostTypeFields
 		$this->store_posttype_fields( $post );
 	}
 
+	public function bulk_edit_posts_posttypefields( $updated, $shared_post_data )
+	{
+		foreach ( $updated as $post_id )
+			$this->store_posttype_fields( WordPress\Post::get( $post_id ), FALSE );
+	}
+
 	protected function store_posttype_fields( $post, $override = TRUE )
 	{
 		$fields = $this->get_posttype_fields( $post->post_type );
@@ -827,6 +840,11 @@ trait PostTypeFields
 
 	protected function posttypefields__hook_edit_screen( $posttype )
 	{
+		if ( Core\WordPress::isWPcompatible( '6.3.0' ) ) {
+			$this->action( 'bulk_edit_posts', 2, 12, 'posttypefields' );
+			$this->action( 'bulk_edit_custom_box', 2, 12, 'posttypefields' );
+		}
+
 		$this->action( 'quick_edit_custom_box', 2, 12, 'posttypefields' );
 		$this->filter( 'manage_posts_columns', 2, 15, 'posttypefields' );
 		$this->filter( 'manage_pages_columns', 1, 15, 'posttypefields' );
@@ -835,35 +853,53 @@ trait PostTypeFields
 		$this->posttypefields__hook_default_rows( $posttype );
 	}
 
-	public function quick_edit_custom_box_posttypefields( $column_name, $posttype )
+	public function bulk_edit_custom_box_posttypefields( $column_name, $posttype )
+	{
+		$this->quick_edit_custom_box_posttypefields( $column_name, $posttype, TRUE );
+	}
+
+	public function quick_edit_custom_box_posttypefields( $column_name, $posttype, $bulkedit = FALSE )
 	{
 		if ( $this->classs() != $column_name )
 			return FALSE;
 
 		$fields = $this->get_posttype_fields( $posttype );
+		$prefix = $this->classs(); // to protect key underlines
 
 		foreach ( $fields as $field => $args ) {
 
-			if ( ! $args['quickedit'] )
+			$render = $args['quickedit'];
+
+			if ( $bulkedit && ! is_null( $args['bulkedit'] ) )
+				$render = $args['bulkedit'];
+
+			if ( ! $render )
 				continue;
 
 			// NOTE: no need for access checks: just input/not value
 
-			$name  = $this->classs().'-'.$field; // to protect key underlines
-			$class = Core\HTML::prepClass( $name );
+			$hint  = sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' );
+			$class = $prefix.'-'.( $bulkedit ? 'bulkedit' : 'quickedit' ).'-'.$field;
+			$name  = $prefix.'-'.$field;
 
-			echo '<label class="hidden '.$class.'">';
-				echo '<span class="title">'.$args['title'].'</span>';
-				echo '<span class="input-text-wrap">';
-				echo '<input name="'.$name.'" class="'.$class.'" value=""';
-				echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
-				echo $args['ltr'] ? ' dir="ltr"' : '';
-				echo $args['type'] === 'number' ? ' type="number" ' : ' type="text" ';
-				echo '></span>';
-			echo '</label>';
+			switch ( $args['type'] ) {
+
+				default:
+
+					echo '<label title="'.Core\HTML::escape( $hint ).'">';
+						echo '<span class="title">'.$args['title'].'</span>';
+						echo '<span class="input-text-wrap">';
+						echo '<input name="'.Core\HTML::escape( $name ).'" value=""';
+						echo 'class="'.Core\HTML::prepClass( $class ).'"';
+						echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
+						echo $args['ltr'] ? ' dir="ltr"' : '';
+						echo $args['type'] === 'number' ? ' type="number" ' : ' type="text" ';
+						echo '></span>';
+					echo '</label>';
+			}
 		}
 
-		$this->nonce_field( 'nobox' );
+		$this->nonce_field( $bulkedit ? 'bulkbox' : 'nobox' );
 	}
 
 	public function manage_pages_columns_posttypefields( $columns )
@@ -892,7 +928,7 @@ trait PostTypeFields
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return;
 
-		$prefix   = $this->classs().'-';
+		$prefix   = $this->classs().'-value-';
 		$user_id  = get_current_user_id();
 		$fields   = $this->get_posttype_fields( $post->post_type );
 		$excludes = $this->posttypefields_custom_column_excludes( $fields );
@@ -921,7 +957,7 @@ trait PostTypeFields
 		// NOTE: for `quickedit` enabled fields
 		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
 			echo '<div data-disabled="'.( $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true' )
-				.'" class="hidden '.$prefix.$field.'-value">'.
+				.'" class="hidden '.$prefix.$field.'">'.
 				$this->posttypefields_prep_posttype_field_for_input(
 					$this->get_postmeta_field( $post->ID, $field ),
 					$field,

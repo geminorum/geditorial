@@ -1,54 +1,94 @@
 /* global inlineEditPost */
 
-(function ($, p, module) {
-  // bail if no fields with quickedit support
-  if (!Object.keys(p[module].fields).length) return;
+(function ($, plugin, module, section) {
+  if (plugin === 'undefined') return;
+  if (!Object.keys(plugin[module].fields).length) return;
 
-  const prefix = p._base + '-' + module + '-';
+  const s = {
+    // action: plugin._base + '_' + module,
+    classs: plugin._base + '-' + module,
+    table: '#the-list',
+    bulkedit: 'input.' + plugin._base + '-' + module + '-bulkedit-',
+    quickedit: 'input.' + plugin._base + '-' + module + '-quickedit-',
+    value: 'div.' + plugin._base + '-' + module + '-value-'
+  };
 
-  $('#the-list').on('click', '.editinline', function () {
-    inlineEditPost.revert(); // revert Quick Edit menu so that it refreshes properly
+  const app = {
 
-    const tagID = $(this).parents('tr').attr('id');
-    const postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label');
-    // const postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
-    const postEditDate = $(':input[name="jj"]', '.inline-edit-row').parents('fieldset.inline-edit-date');
+    // @REF: https://rudrastyh.com/wordpress/quick-edit-tutorial.html
+    initBulk: function () {
+      const inlineEditPostSetBulk = inlineEditPost.setBulk;
 
-    for (const field in p[module].fields) {
-      const hidden = $('#' + tagID).find('div.' + prefix + field + '-value');
-      const disabled = hidden.data('disabled') === true;
+      // we overwrite the it with our own
+      inlineEditPost.setBulk = function () {
+        inlineEditPostSetBulk.apply(this); // let's merge arguments of the original function
 
-      switch (p[module].fields[field]) {
-        case 'title_before':
+        const editColLeft = $('fieldset.inline-edit-col-left', 'div.inline-edit-wrapper');
+        // const editColCenter = $('fieldset.inline-edit-col-center', '.inline-edit-col');
 
-          $('.inline-edit-row')
-            .find('input.' + prefix + field)
-            .val(hidden.text())
-            .prop('disabled', disabled)
+        for (const field in plugin[module].fields) {
+          $('div.inline-edit-wrapper')
+            .find(s.bulkedit + field)
+            .val('') // must be empty
+            // .prop('disabled', disabled) // access checks on save
             .parents('label')
-            .insertBefore(postTitleLabel);
+            .appendTo(editColLeft[0]);
+        }
+      };
+    },
 
-          break;
-        case 'title_after':
+    clicked: function () {
+      inlineEditPost.revert(); // revert Quick Edit menu so that it refreshes properly
 
-          $('.inline-edit-row')
-            .find('input.' + prefix + field)
-            .val(hidden.text())
-            .prop('disabled', disabled)
-            .parents('label')
-            .insertAfter(postTitleLabel);
+      const tagID = $(this).parents('tr').attr('id');
+      const postTitleLabel = $(':input[name="post_title"]', '.inline-edit-row').parents('label');
+      // const postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
+      const postEditDate = $(':input[name="jj"]', '.inline-edit-row').parents('fieldset.inline-edit-date');
 
-          break;
-        default:
+      for (const field in plugin[module].fields) {
+        const hidden = $('#' + tagID).find(s.value + field);
+        const disabled = hidden.data('disabled') === true;
 
-          $('.inline-edit-row')
-            .find('input.' + prefix + field)
-            .val(hidden.text())
-            .prop('disabled', disabled)
-            .parents('label')
-            // .insertAfter(postNameLabel); // post_title maybe disabled for this posttype!
-            .insertBefore(postEditDate);
+        switch (plugin[module].fields[field]) {
+          case 'title_before':
+
+            $('.inline-edit-row')
+              .find(s.quickedit + field)
+              .val(hidden.text())
+              .prop('disabled', disabled)
+              .parents('label')
+              .insertBefore(postTitleLabel);
+
+            break;
+          case 'title_after':
+
+            $('.inline-edit-row')
+              .find(s.quickedit + field)
+              .val(hidden.text())
+              .prop('disabled', disabled)
+              .parents('label')
+              .insertAfter(postTitleLabel);
+
+            break;
+          default:
+
+            $('.inline-edit-row')
+              .find(s.quickedit + field)
+              .val(hidden.text())
+              .prop('disabled', disabled)
+              .parents('label')
+              // .insertAfter(postNameLabel); // post_title maybe disabled for this posttype!
+              .insertBefore(postEditDate);
+        }
       }
     }
+  };
+
+  $(function () {
+    app.initBulk();
+    $(s.table).on('click', '.editinline', app.clicked);
+
+    // $(document).trigger('gEditorialReady', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
   });
-}(jQuery, gEditorial, 'meta'));
+}(jQuery, gEditorial, 'meta', 'edit'));
