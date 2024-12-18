@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Tabs\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Tabs\n"
+"X-Domain: geditorial-tabs\n"
+
+#. translators: %s: supported object label
+#: Tabs.php:46
+msgctxt "Setting Title"
+msgid "Built-in Tabs for %s"
+msgstr ""
+
+#: Tabs.php:49
+msgctxt "Setting Description"
+msgid "Select to add pre-configured tabs for posts."
+msgstr ""
+
+#: Tabs.php:62
+msgctxt "Setting Title"
+msgid "Attachment Mime-types"
+msgstr ""
+
+#: Tabs.php:63
+msgctxt "Setting Description"
+msgid "Defines the mime-types on attachment summary tab on front-end."
+msgstr ""
+
+#: Tabs.php:76
+msgctxt "Mime-Type"
+msgid "PDF"
+msgstr ""
+
+#: Tabs.php:77
+msgctxt "Mime-Type"
+msgid "CSV"
+msgstr ""
+
+#: Tabs.php:78
+msgctxt "Mime-Type"
+msgid "Microsoft Word"
+msgstr ""
+
+#: Tabs.php:79
+msgctxt "Mime-Type"
+msgid "ePub"
+msgstr ""
+
+#: Tabs.php:98
+msgctxt "Tab Title"
+msgid "Meta"
+msgstr ""
+
+#: Tabs.php:99
+msgctxt "Tab Description"
+msgid "Meta Summary of the post."
+msgstr ""
+
+#: Tabs.php:108
+msgctxt "Tab Title"
+msgid "Attachments"
+msgstr ""
+
+#: Tabs.php:109
+msgctxt "Tab Description"
+msgid "Attachment Summary of the post."
+msgstr ""
