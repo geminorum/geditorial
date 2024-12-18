@@ -154,10 +154,16 @@ class Base
 		foreach ( func_get_args() as $data )
 
 			if ( self::isError( $data ) )
-				error_log( $data->get_error_message() );
+				error_log( sprintf( 'WPError: %s', strip_tags( $data->get_error_message() ) ) );
 
 			else if ( is_array( $data ) || is_object( $data ) )
 				error_log( print_r( $data, TRUE ) );
+
+			else if ( is_bool( $data ) )
+				error_log( $data ? 'TRUE' : 'FALSE' );
+
+			else if ( is_null( $data ) )
+				error_log( 'NULL' );
 
 			else
 				error_log( $data );

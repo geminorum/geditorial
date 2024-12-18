@@ -15,8 +15,8 @@ class Text extends Base
 	{
 		$text = (string) $text;
 		// $text = trim( $text, " \n\t\r\0\x0B," );
-		$text = preg_replace( '/^[\s\x{200C}]/u', '', $text );
-		$text = preg_replace( '/[\s\x{200C}]$/u', '', $text );
+		$text = preg_replace( '/^[\s\x{200C}\x{200E}\x{200F}]/u', '', $text );
+		$text = preg_replace( '/[\s\x{200C}\x{200E}\x{200F}]$/u', '', $text );
 		$text = trim( $text ); // OCD Only
 
 		if ( 0 === strlen( $text ) )
@@ -99,7 +99,7 @@ class Text extends Base
 		if ( empty( $text ) )
 			return '';
 
-		return self::trim( preg_replace( "/[\s\x{200C}]/u", '', $text ) );
+		return self::trim( preg_replace( "/[\s\x{200C}\x{200E}\x{200F}]/u", '', $text ) );
 	}
 
 	public static function splitAllSpaces( $text )
@@ -107,7 +107,7 @@ class Text extends Base
 		if ( empty( $text ) )
 			return [];
 
-		return array_filter( (array) preg_split( '/[\s\x{200C}]/u', $text ), 'strlen' );
+		return array_filter( (array) preg_split( '/[\s\x{200C}\x{200E}\x{200F}]/u', $text ), 'strlen' );
 	}
 
 	public static function splitNormalSpaces( $text )
@@ -129,7 +129,7 @@ class Text extends Base
 		if ( empty( $text ) )
 			return [];
 
-		$text = self::normalizeWhitespace( self::trim( $text ), TRUE );
+		$text = self::normalizeWhitespace( $text, TRUE );
 
 		return array_filter( array_map( [ __CLASS__, 'trim' ], preg_split( "/\r\n|\n|\r/", $text ) ) );
 	}

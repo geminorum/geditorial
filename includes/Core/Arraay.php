@@ -502,6 +502,11 @@ class Arraay extends Base
 		return TRUE;
 	}
 
+	public static function has( $needle, $haystack, $strict = TRUE )
+	{
+		return FALSE !== array_search( $needle, (array) $haystack, $strict );
+	}
+
 	// @REF: http://stackoverflow.com/a/11320508
 	public static function find( $needle, &$haystack, $default = NULL )
 	{

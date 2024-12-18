@@ -248,6 +248,25 @@ class PostType extends Core\Base
 		return array_diff_key( get_available_post_statuses( $posttype ), (array) $excludes );
 	}
 
+	// @REF: https://stackoverflow.com/questions/4829199/sql-is-there-a-way-to-get-the-average-number-of-characters-for-a-field
+	// `SELECT AVG(CHAR_LENGTH(<column>)) AS avgLength FROM <table>`
+	// `select sum(len(theTextColumn)) / count(*) from theTable;`
+	public static function getMetaAverageDataLength( $metakey, $fallback = FALSE )
+	{
+		global $wpdb;
+
+		if ( empty( $metakey ) )
+			return $fallback;
+
+		$query = $wpdb->prepare( "
+			SELECT AVG(CHAR_LENGTH(meta_value))
+			FROM {$wpdb->postmeta}
+			WHERE meta_key = %s
+		", $metakey );
+
+		return $wpdb->get_var( $query ) ?: $fallback;
+	}
+
 	// TODO: support regex on meta-keys
 	// @SEE: https://tommcfarlin.com/get-post-id-by-meta-value/
 	public static function getIDbyMeta( $meta, $value, $single = TRUE )

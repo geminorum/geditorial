@@ -66,6 +66,7 @@ class Mobile extends Base
 			case 'print' : return $value;
 			case 'input' : return Number::translate( $value );
 			case 'export': return Number::translate( $value );
+			case 'icon'  : return HTML::tel( $raw, $title ?: $value, HTML::getDashicon( 'smartphone' ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 			case 'admin' :
 			     default : return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
