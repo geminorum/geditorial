@@ -152,7 +152,7 @@ class Units extends gEditorial\Module
 					'payload_in_kg'   => [ 'type' => 'kilogram',     'icon' => 'image-filter', 'data_unit' => 'kilogram'    ],
 					'maxspeed_in_kmh' => [ 'type' => 'km_per_hour',  'icon' => 'car'         , 'data_unit' => 'km_per_hour' ],
 
-					'total_days'  => [ 'type' => 'day' , 'data_unit' => 'day'  ],
+					'total_days'  => [ 'type' => 'day',  'data_unit' => 'day'  ],
 					'total_hours' => [ 'type' => 'hour', 'data_unit' => 'hour' ],
 
 					'total_members' => [ 'type' => 'member', 'data_unit' => 'person' ],

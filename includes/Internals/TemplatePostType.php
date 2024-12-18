@@ -65,6 +65,10 @@ trait TemplatePostType
 
 		} else {
 
+			// if new posttype disabled
+			if ( FALSE === $archive_callback )
+				return $template;
+
 			if ( is_null( $archive_callback ) )
 				$archive_callback = [ $this, 'templateposttype_archive_content' ];
 

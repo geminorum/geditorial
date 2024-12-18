@@ -164,6 +164,9 @@ trait BulkExports
 				if ( 'post_name' === $prop )
 					$row[] = urldecode( $post->{$prop} );
 
+				if ( 'post_type' === $prop )
+					$row[] = Helper::getPostTypeLabel( $post->post_type, 'extended_label', 'singular', $post->post_type );
+
 				else if ( in_array( $prop, [
 					'post_date',
 					'post_date_gmt',
@@ -313,7 +316,7 @@ trait BulkExports
 
 			} else if ( Core\Text::starts( $header, 'unit__' ) ) {
 
-				$field = Core\Text::stripPrefix( $header, 'field__' );
+				$field = Core\Text::stripPrefix( $header, 'unit__' );
 
 				if ( array_key_exists( $field, $units ) )
 					$width = $units[$field]['data_length'] ?? $this->exports_generate_column_widths_for_fields( $field, $width, 'units' );

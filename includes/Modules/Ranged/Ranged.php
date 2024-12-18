@@ -45,7 +45,7 @@ class Ranged extends gEditorial\Module
 			'name'     => 'ranged',
 			'title'    => _x( 'Ranged', 'Modules: Ranged', 'geditorial-admin' ),
 			'desc'     => _x( 'Editorial Shooting Management', 'Modules: Ranged', 'geditorial-admin' ),
-			'icon'     => [ 'misc-32', 'dart-mission-goal-success' ],
+			'icon'     => [ 'misc-16', 'crosshair' ],
 			'access'   => 'beta',
 			'keywords' => [
 				'shooting',

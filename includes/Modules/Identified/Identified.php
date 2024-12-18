@@ -165,6 +165,7 @@ class Identified extends gEditorial\Module
 					'ein'      => _x( 'EIN', 'Identifier Type', 'geditorial-identified' ),
 					'mobile'   => _x( 'Mobile', 'Identifier Type', 'geditorial-identified' ),
 					'identity' => _x( 'Identity', 'Identifier Type', 'geditorial-identified' ),
+					'latlng'   => _x( 'Lat/Lng', 'Identifier Type', 'geditorial-identified' ),
 				],
 			],
 			'descriptions' => [
@@ -180,6 +181,7 @@ class Identified extends gEditorial\Module
 				'ein'      => _x( 'Employer Identification Number', 'Identifier Type Description', 'geditorial-identified' ),
 				'mobile'   => _x( 'Mobile Phone Number', 'Identifier Type Description', 'geditorial-identified' ),
 				'identity' => _x( 'National Identity Number', 'Identifier Type Description', 'geditorial-identified' ),
+				'latlng'   => _x( 'Latitude and Longitude', 'Identifier Type Description', 'geditorial-identified' ),
 			],
 		];
 

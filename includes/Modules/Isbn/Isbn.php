@@ -73,6 +73,7 @@ class Isbn extends gEditorial\Module
 						'type'        => 'code',
 						'icon'        => 'shortcode',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 1810,
 					],
 					'isbn' => [
@@ -81,13 +82,13 @@ class Isbn extends gEditorial\Module
 						'type'        => 'isbn',
 						'icon'        => [ 'misc-16', 'upc' ],
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 1810,
 					],
 					'isbn2' => [
 						'title'       => _x( 'ISBN #2', 'Field Title', 'geditorial-isbn' ),
 						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
 						'type'        => 'isbn',
-						'quickedit'   => TRUE,
 						'order'       => 1820,
 					],
 					'isbn2_label' => [
@@ -99,7 +100,6 @@ class Isbn extends gEditorial\Module
 						'title'       => _x( 'ISBN #3', 'Field Title', 'geditorial-isbn' ),
 						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
 						'type'        => 'isbn',
-						'quickedit'   => TRUE,
 						'order'       => 1830,
 					],
 					'isbn3_label' => [
@@ -122,7 +122,6 @@ class Isbn extends gEditorial\Module
 						'title'       => _x( 'ISBN #5', 'Field Title', 'geditorial-isbn' ),
 						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
 						'type'        => 'isbn',
-						'quickedit'   => TRUE,
 						'order'       => 1850,
 					],
 					'isbn5_label' => [

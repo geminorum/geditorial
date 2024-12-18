@@ -353,7 +353,6 @@ class Book extends gEditorial\Module
 					'description' => _x( 'Dewey Decimal Classification', 'Field Description', 'geditorial-book' ),
 					'type'        => 'code',
 					'icon'        => 'shortcode',
-					'quickedit'   => TRUE,
 				],
 				'publication_lcc' => [
 					// @REF: https://en.wikipedia.org/wiki/Library_of_Congress_Classification
@@ -361,7 +360,6 @@ class Book extends gEditorial\Module
 					'description' => _x( 'Library of Congress Classification', 'Field Description', 'geditorial-book' ),
 					'type'        => 'code',
 					'icon'        => 'shortcode',
-					'quickedit'   => TRUE,
 				],
 				// TODO: convert to unit via `Units` Module
 				'total_pages' => [

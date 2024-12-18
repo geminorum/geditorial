@@ -409,6 +409,7 @@ class ModuleHelper extends gEditorial\Helper
 			'پور',
 			'کیا',
 			'زاده',
+			'زاد',
 			'نیا',
 			'نیان',
 			'نسب',
@@ -429,6 +430,7 @@ class ModuleHelper extends gEditorial\Helper
 			'الدینی',
 			'لو',
 			'فر',
+			'فرد',
 		];
 	}
 

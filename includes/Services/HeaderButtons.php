@@ -20,7 +20,7 @@ class HeaderButtons extends WordPress\Main
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ], 9, 1 );
 	}
 
-	public static function register( $name, $atts = [] )
+	public static function register( $name, $atts = [], $override = FALSE )
 	{
 		global $gEditorialHeaderButtons;
 
@@ -29,6 +29,9 @@ class HeaderButtons extends WordPress\Main
 
 		if ( empty( $name ) )
 			return FALSE;
+
+		if ( ! $override && array_key_exists( $name, $gEditorialHeaderButtons ) )
+			return $name;
 
 		$gEditorialHeaderButtons[$name] = self::atts( [
 			'html'  => FALSE, // will override the whole link!
@@ -64,7 +67,7 @@ class HeaderButtons extends WordPress\Main
 		if ( count( $buttons ) > 1 )
 			$buttons = Core\Arraay::sortByPriority( $buttons, 'priority' );
 
-		foreach ( $gEditorialHeaderButtons as $name => $button ) {
+		foreach ( $buttons as $name => $button ) {
 
 			if ( $search && ! empty( $button['hide_in_search'] ) )
 				continue;
