@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -38,6 +39,16 @@ class Isbn extends gEditorial\Module
 				'shortcode_support',
 				'woocommerce_support' => [
 					_x( 'Select to display data on product attributes.', 'Setting Description', 'geditorial-isbn' ),
+				],
+			],
+			'_content' => [
+				[
+					'field'       => 'default_posttype',
+					'type'        => 'select',
+					'title'       => _x( 'Default Post-Type', 'Setting Title', 'geditorial-isbn' ),
+					'description' => _x( 'Defines the default post-type to create new posts with queried data on front-end.', 'Setting Description', 'geditorial-isbn' ),
+					'none_title'  => Settings::showOptionNone(),
+					'values'      => $this->list_posttypes(),
 				],
 			],
 		];
@@ -100,7 +111,6 @@ class Isbn extends gEditorial\Module
 						'title'       => _x( 'ISBN #4', 'Field Title', 'geditorial-isbn' ),
 						'description' => _x( 'International Standard Book Number', 'Field Description', 'geditorial-isbn' ),
 						'type'        => 'isbn',
-						'quickedit'   => TRUE,
 						'order'       => 1840,
 					],
 					'isbn4_label' => [
@@ -135,11 +145,13 @@ class Isbn extends gEditorial\Module
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_metakey', 2 );
 		$this->filter_module( 'datacodes', 'default_posttype_barcode_type', 3 );
 
+		$this->action_module( 'identified', 'identifier_notfound', 3 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 
+		$this->filter( 'templateposttype_addnew_extra', 2, 10, FALSE, $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
 		$this->register_shortcode( 'main_shortcode' );
@@ -233,6 +245,39 @@ class Isbn extends gEditorial\Module
 			return ModuleHelper::BARCODE;
 
 		return $default;
+	}
+
+	public function identified_identifier_notfound( $type, $sanitized, $supported )
+	{
+		if ( 'isbn' !== $type )
+			return;
+
+		if ( ! $posttype = $this->get_setting( 'default_posttype' ) )
+			return;
+
+		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
+			return;
+
+		if ( ! $archive = WordPress\PostType::getArchiveLink( $posttype ) )
+			return;
+
+		Core\WordPress::redirect( add_query_arg( [
+			'newpost' => '',
+			'isbn'    => $sanitized,
+		], $archive ), 307 );
+	}
+
+	public function templateposttype_addnew_extra( $extra, $posttype )
+	{
+		if ( ! $isbn = self::req( 'isbn' ) )
+			return $extra;
+
+		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
+			return $extra;
+
+		$extra[$metakey] = $isbn;
+
+		return $extra;
 	}
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
