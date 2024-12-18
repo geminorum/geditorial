@@ -328,6 +328,8 @@ class DeadDrops extends gEditorial\Module
 			'dropzone' => $args['hash'],
 		], rest_url( 'wp/v2/media' ) );
 
+		$title = WordPress\Post::title( $args['post'] );
+
 		// @REF: https://github.com/dropzone/dropzone/blob/main/src/options.js
 		$options = array_merge( Info::getDropzoneStrings(), [
 
@@ -394,7 +396,7 @@ class DeadDrops extends gEditorial\Module
 		echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 		echo '<meta name="robots" content="noindex, nofollow">';
 
-		printf( '<title>%s</title>', WordPress\Post::title( $args['post'] ) );
+		printf( '<title>%s</title>', $title );
 
 		if ( Core\HTML::rtl() ) Scripts::linkVazirMatn();
 		Scripts::linkDropzone();
@@ -402,6 +404,18 @@ class DeadDrops extends gEditorial\Module
 
 		// @REF: https://gitlab.com/meno/dropzone/-/wikis/make-the-whole-body-a-dropzone
 		echo '</head><body class="dropzone">';
+
+		// FIXME: `Scripts may close only the windows that were opened by them.`
+		echo Core\HTML::wrap( Core\HTML::tag( 'button', [
+			'type' => 'button',
+			// 'onclick' => 'window.close();',
+			// 'onclick' => 'window.top.close();',
+			'onclick' => 'window.open("", "_self", ""); window.close();',
+			// 'onclick' => 'window.open("","_self").close();',
+			'title'   => _x( 'Discard', 'Button', 'geditorial-dead-drops' ),
+		], '&times;' ), '-close-button' );
+
+		Core\HTML::h2( $title, '-title' );
 
 		// Core\HTML::inputHidden( 'secret', $args['secret'] );
 		// Core\HTML::inputHidden( 'post', $args['post']->ID );
