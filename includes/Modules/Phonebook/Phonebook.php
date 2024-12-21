@@ -134,6 +134,7 @@ class Phonebook extends gEditorial\Module
 						'description' => _x( 'Primary Mobile Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'mobile',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 500,
 					],
 					'mobile_secondary' => [

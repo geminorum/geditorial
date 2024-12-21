@@ -283,8 +283,8 @@ trait BulkExports
 			$counter[$header]++;
 
 		return sprintf(
-			/* translators: %1$s: header title, %2$s: hedaer counter */
-			_x( '%1$s (%2$s)', 'Internal: Exports: Button Label', 'geditorial-admin' ),
+			/* translators: %1$s: column title, %2$s: column counter */
+			_x( '%1$s (%2$s)', 'Internal: Exports: Column Header', 'geditorial-admin' ),
 			$header,
 			Core\Number::localize( $counter[$header] )
 		);

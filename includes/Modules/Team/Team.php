@@ -165,6 +165,7 @@ class Team extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
+				$this->posttype__media_register_headerbutton( 'member_posttype' );
 				$this->_hook_post_updated_messages( 'member_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {

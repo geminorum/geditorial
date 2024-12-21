@@ -131,6 +131,7 @@ class Chronicles extends gEditorial\Module
 						'icon'        => 'controls-skipback',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 40,
 					],
 					'abolish_date' => [
@@ -140,6 +141,7 @@ class Chronicles extends gEditorial\Module
 						'icon'        => 'controls-skipforward',
 						'type'        => 'date',
 						// 'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 45,
 					],
 					'release_date' => [
@@ -148,6 +150,7 @@ class Chronicles extends gEditorial\Module
 						'icon'        => 'controls-skipback',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 45,
 					],
 					'expire_date' => [
@@ -156,6 +159,7 @@ class Chronicles extends gEditorial\Module
 						'icon'        => 'controls-skipforward',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 45,
 					],
 					'date_of_birth' => [
@@ -165,6 +169,7 @@ class Chronicles extends gEditorial\Module
 						'icon'        => 'controls-skipback',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 40,
 					],
 					'date_of_death' => [
@@ -174,6 +179,7 @@ class Chronicles extends gEditorial\Module
 						'icon'        => 'controls-skipforward',
 						'type'        => 'date',
 						// 'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'order'       => 45,
 					],
 					'place_of_birth' => [

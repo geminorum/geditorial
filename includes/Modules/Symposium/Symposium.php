@@ -187,6 +187,8 @@ class Symposium extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'get_default_comment_status', 3 );
+
+				$this->posttype__media_register_headerbutton( 'session_posttype' );
 				$this->_hook_post_updated_messages( 'session_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {

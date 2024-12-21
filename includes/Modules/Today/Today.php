@@ -305,6 +305,7 @@ class Today extends gEditorial\Module
 					);
 				}
 
+				$this->posttype__media_register_headerbutton( 'day_posttype' );
 				$this->_hook_post_updated_messages( 'day_posttype' );
 
 			} else if ( $this->posttype_supported( $screen->post_type ) ) {

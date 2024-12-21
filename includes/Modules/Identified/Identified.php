@@ -886,6 +886,8 @@ class Identified extends gEditorial\Module
 					Core\WordPress::redirect( $tokenized, 307 );
 
 				$this->actions( 'identifier_notfound', $type, $sanitized, $supported );
+
+				// TODO: must redirect to not found if on `is_home()`
 			}
 		}
 	}

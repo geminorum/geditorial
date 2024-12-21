@@ -864,7 +864,7 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'display_globalsummary',
 			'title'       => _x( 'Global Summary', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Displayes connected posts on the global summary on the main post edit screen.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Displays connected posts on the global summary on the main post edit screen.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'default'     => $default ?? '0',
 		];
 	}

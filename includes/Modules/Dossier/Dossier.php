@@ -267,6 +267,7 @@ class Dossier extends gEditorial\Module
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );

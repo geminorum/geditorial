@@ -18,6 +18,11 @@ class HeaderButtons extends WordPress\Main
 			return;
 
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ], 9, 1 );
+
+		// TODO: move to Barcodes Service
+		add_filter( 'kses_allowed_protocols', function ( $protocols ) {
+			return array_merge( $protocols, [ 'binaryeye' ] );
+		} );
 	}
 
 	public static function register( $name, $atts = [], $override = FALSE )
@@ -96,13 +101,14 @@ class HeaderButtons extends WordPress\Main
 						empty( $button['icon'] ) ? '' : '-button-icon',
 						$button['class']
 					),
-				], $button['text'] );
+				], trim( $button['text'] ) );
 		}
 
 		Scripts::enqueue( 'admin.headerbuttons.all' );
 		gEditorial()->enqueue_asset_config( $args, 'headerbuttons' );
 	}
 
+	// TODO: move to Barcodes Service
 	public static function registerSearchWithBarcode()
 	{
 		/**

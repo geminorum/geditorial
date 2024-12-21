@@ -586,9 +586,14 @@ trait CorePostTypes
 			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
+	// TODO: must add metabox to list the attachments: maybe on `Attachments` Module
 	// @REF: https://stackoverflow.com/questions/15283026/attaching-media-to-post-type-without-editor-support
-	public function posttype__media_register_headerbutton( $constant, $post = NULL )
+	public function posttype__media_register_headerbutton( $constant, $post = NULL, $editor_chack = TRUE )
 	{
+		// already handled!
+		if ( $editor_chack && post_type_supports( $this->constant( $constant, $constant ), 'editor' ) )
+			return FALSE;
+
 		if ( ! post_type_supports( $this->constant( $constant, $constant ), 'thumbnail' ) )
 			return FALSE;
 

@@ -184,6 +184,7 @@ class Venue extends gEditorial\Module
 					'description' => _x( 'Full street address, including city, state etc.', 'Field Description', 'geditorial-venue' ),
 					'type'        => 'address',
 					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'phone_number' => [
 					'title'       => _x( 'Phone Number', 'Field Title', 'geditorial-venue' ),
@@ -285,6 +286,7 @@ class Venue extends gEditorial\Module
 					'website_url'    => NULL,
 				] );
 
+				$this->posttype__media_register_headerbutton( 'place_posttype' );
 				$this->_hook_post_updated_messages( 'place_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );

@@ -265,6 +265,7 @@ class Programmed extends gEditorial\Module
 						'description' => _x( 'Unique Program Code', 'Field Description', 'geditorial-programmed' ),
 						'type'        => 'code',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'icon'        => 'nametag',
 						'order'       => 100,
 					],

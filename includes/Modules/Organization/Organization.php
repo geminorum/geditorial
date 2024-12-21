@@ -244,6 +244,7 @@ class Organization extends gEditorial\Module
 						'description' => _x( 'Unique Organization Code', 'Field Description', 'geditorial-organization' ),
 						'type'        => 'code',
 						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
 						'icon'        => 'nametag',
 						'order'       => 100,
 					],
@@ -397,6 +398,7 @@ class Organization extends gEditorial\Module
 					'organization_code' => NULL,
 				] );
 
+				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );

@@ -152,12 +152,14 @@ class Tube extends gEditorial\Module
 					'type'        => 'datestring',
 					'icon'        => 'calendar-alt',
 					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'video_duration' => [
 					'title'       => _x( 'Video Duration', 'Field Title', 'geditorial-tube' ),
 					'description' => _x( 'Duration of the Video', 'Field Description', 'geditorial-tube' ),
 					'type'        => 'duration',
 					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'video_embed_url' => [
 					'title'       => _x( 'Video Embed URL', 'Field Title', 'geditorial-tube' ),
@@ -273,9 +275,10 @@ class Tube extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->_hook_post_updated_messages( 'video_posttype' );
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->posttype__media_register_headerbutton( 'video_posttype' );
+				$this->_hook_post_updated_messages( 'video_posttype' );
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'video_posttype' );
@@ -287,9 +290,10 @@ class Tube extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->_hook_post_updated_messages( 'channel_posttype' );
 				$this->filter( 'get_default_comment_status', 3 );
 
+				$this->posttype__media_register_headerbutton( 'channel_posttype' );
+				$this->_hook_post_updated_messages( 'channel_posttype' );
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'channel_posttype' );

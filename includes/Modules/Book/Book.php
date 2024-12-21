@@ -325,7 +325,8 @@ class Book extends gEditorial\Module
 					'description' => _x( 'Text to override the publication author', 'Field Description', 'geditorial-book' ),
 					'type'        => 'note',
 					'icon'        => 'businessperson',
-					// 'quickedit'   => TRUE, // will lose the line breaks on quick edit
+					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'publication_edition' => [
 					'title'       => _x( 'Edition', 'Field Title', 'geditorial-book' ),
@@ -394,7 +395,8 @@ class Book extends gEditorial\Module
 					'description' => _x( 'Full reference to this publication', 'Field Description', 'geditorial-book' ),
 					'type'        => 'note',
 					'icon'        => 'editor-break',
-					// 'quickedit'   => TRUE, // will lose the line breaks on quick edit
+					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'highlight'    => [ 'type' => 'note' ],
 				'source_title' => [ 'type' => 'text' ],
@@ -582,6 +584,7 @@ class Book extends gEditorial\Module
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
 					$this->metaboxcustom_add_metabox_excerpt( 'publication_posttype' );
 
+				$this->posttype__media_register_headerbutton( 'publication_posttype' );
 				$this->_hook_post_updated_messages( 'publication_posttype' );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
@@ -976,7 +979,7 @@ class Book extends gEditorial\Module
 	}
 
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687
-	// NOTE: UNFINISHED: just displayes the imported connected data (not handling)
+	// NOTE: UNFINISHED: just displays the imported connected data (not handling)
 	protected function render_tools_html_OLD( $uri, $sub )
 	{
 		$list  = Core\Arraay::keepByKeys( WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ), $this->get_setting( 'p2p_posttypes', [] ) );

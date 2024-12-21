@@ -108,6 +108,7 @@ class Quotation extends gEditorial\Module
 					'type'        => 'text',
 					'icon'        => 'admin-page',
 					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'quotation_pagestart' => [
 					'title'       => _x( 'Page Start', 'Field Title', 'geditorial-quotation' ),
@@ -115,6 +116,7 @@ class Quotation extends gEditorial\Module
 					'type'        => 'number',
 					'icon'        => $rtl ? 'controls-skipforward' : 'controls-skipback',
 					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'quotation_pageend' => [
 					'title'       => _x( 'Page End', 'Field Title', 'geditorial-quotation' ),
@@ -122,6 +124,7 @@ class Quotation extends gEditorial\Module
 					'type'        => 'number',
 					'icon'        => $rtl ? 'controls-skipback' : 'controls-skipforward',
 					'quickedit'   => TRUE,
+					'bulkedit'    => FALSE,
 				],
 				'quotation_section' => [
 					'title'       => _x( 'Section', 'Field Title', 'geditorial-quotation' ),
@@ -196,6 +199,7 @@ class Quotation extends gEditorial\Module
 				$this->filter_false_module( 'tweaks', 'metabox_parent' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 
+				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
