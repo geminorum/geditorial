@@ -884,6 +884,22 @@ trait PostTypeFields
 
 			switch ( $args['type'] ) {
 
+				case 'address':
+				case 'note':
+				case 'textarea':
+
+					echo '<label title="'.Core\HTML::escape( $hint ).'">';
+						echo '<span class="title">'.$args['title'].'</span>';
+						echo '<span class="input-text-wrap">';
+						echo '<textarea name="'.Core\HTML::escape( $name ).'" value=""';
+						echo 'class="'.Core\HTML::prepClass( $class ).'"';
+						echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
+						echo $args['ltr'] ? ' dir="ltr"' : '';
+						echo ' rows="1" /></textarea></span>';
+					echo '</label>';
+
+					break;
+
 				default:
 
 					echo '<label title="'.Core\HTML::escape( $hint ).'">';

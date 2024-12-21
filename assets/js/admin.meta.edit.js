@@ -8,8 +8,8 @@
     // action: plugin._base + '_' + module,
     classs: plugin._base + '-' + module,
     table: '#the-list',
-    bulkedit: 'input.' + plugin._base + '-' + module + '-bulkedit-',
-    quickedit: 'input.' + plugin._base + '-' + module + '-quickedit-',
+    bulkedit: '.' + plugin._base + '-' + module + '-bulkedit-',
+    quickedit: '.' + plugin._base + '-' + module + '-quickedit-',
     value: 'div.' + plugin._base + '-' + module + '-value-'
   };
 
@@ -30,7 +30,7 @@
           $('div.inline-edit-wrapper')
             .find(s.bulkedit + field)
             .val('') // must be empty
-            // .prop('disabled', disabled) // access checks on save
+            // .prop('disabled', disabled) // access checks applied on save
             .parents('label')
             .appendTo(editColLeft[0]);
         }
@@ -70,6 +70,20 @@
               .insertAfter(postTitleLabel);
 
             break;
+
+          case 'address':
+          case 'note':
+          case 'textarea':
+
+            $('.inline-edit-row')
+              .find(s.quickedit + field)
+              .html(hidden.text())
+              .prop('disabled', disabled)
+              .parents('label')
+              .insertBefore(postEditDate);
+
+            break;
+
           default:
 
             $('.inline-edit-row')
