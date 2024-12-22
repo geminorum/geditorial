@@ -122,16 +122,10 @@ class Paired extends WordPress\Main
 			if ( empty( $types[$item->post_type] ) )
 				$types[$item->post_type] = Helper::getPostTypeLabel( $item->post_type, 'singular_name' );
 
-			if ( in_array( $context, [ 'print', 'printpage' ], TRUE ) )
-				$title = WordPress\Post::title( $item, FALSE );
-
-			else
-				$title = WordPress\Post::fullTitle( $item, 'overview' ) ?: '';
-
 			$posts[] = apply_filters( static::BASE.'_paired_globalsummary_for_post_data', [
-				'title' => $title,
+				'title' => self::_get_item_title( $item, $context ),
 				'type'  => $types[$item->post_type],
-				'date'  => Datetime::prepForDisplay( $item->post_date ),
+				'date'  => self::_get_item_date( $item, $context ),
 				'index' => Core\Number::localize( $offset + 1 ),
 			], $item, $context );
 		}
@@ -142,6 +136,25 @@ class Paired extends WordPress\Main
 			'title'   => sprintf( $template, WordPress\Strings::getCounted( count( $items ) ) ),
 			'html'    => Core\HTML::tableSimple( $posts, $columns, FALSE, $table_class ),
 		];
+	}
+
+	private static function _get_item_title( $post, $context = NULL )
+	{
+		if ( ! in_array( $context, [ 'print', 'printpage', 'editpost' ], TRUE ) )
+			return WordPress\Post::fullTitle( $post, 'overview' ) ?: '';
+
+		if ( $custom = PostTypeFields::getFieldRaw( 'print_title', $post->ID ) )
+			return $custom;
+
+		return WordPress\Post::title( $post, FALSE );
+	}
+
+	private static function _get_item_date( $post, $context = NULL )
+	{
+		if ( $custom = PostTypeFields::getFieldRaw( 'print_date', $post->ID ) )
+			return Datetime::prepForDisplay( $custom );
+
+		return Datetime::prepForDisplay( $post->post_date );
 	}
 
 	public static function tabloid_post_summaries_multipaired( $list, $data, $post, $context )
