@@ -556,7 +556,7 @@ class Papered extends gEditorial\Module
 		$rows   = $this->_get_view_part_for_rows( $profile, $context );
 		$sheet  = $this->_get_view_part_for_sheet( $profile, $context );
 		$data   = $this->_get_view_data_for_post( $profile, $source, $context, $config );
-		$list   = $this->_get_view_list_for_post( $profile, $source, $context, $config );
+		$list   = $this->_get_view_list_for_post( $profile, $source, $context, $config, empty( $data['profile']['flags'] ) ? [] : $data['profile']['flags'] );
 
 		if ( ! empty( $config['row_per_sheet'] ) && ! empty( $list ) ) {
 
@@ -603,7 +603,7 @@ class Papered extends gEditorial\Module
 		}
 	}
 
-	private function _get_view_list_for_post( $profile, $source, $context, $config )
+	private function _get_view_list_for_post( $profile, $source, $context, $config, $flags = [] )
 	{
 		$data  = [];
 		$meta  = gEditorial()->enabled( 'meta' );
@@ -617,6 +617,7 @@ class Papered extends gEditorial\Module
 				'rawpost'  => ModuleHelper::getPostProps( $item ),
 				'rawmeta'  => ModuleHelper::getPostMetas( $item ),
 				'tokens'   => ModuleHelper::getGeneralTokens( $item ),
+				'flags'    => $flags,
 				'rendered' => [
 					'index'     => Core\Number::format( $index ),
 					'posttitle' => WordPress\Post::title( $item ),
