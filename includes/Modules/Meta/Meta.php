@@ -9,6 +9,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Template;
@@ -876,45 +877,7 @@ class Meta extends gEditorial\Module
 
 	public function meta_field_tokens( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
-		// bail early if it has not have tokens!
-		if ( ! Core\Text::has( $meta, '{{' ) )
-			return $meta;
-
-		if ( in_array( $field_args['type'], [
-			'integer', 'number', 'float', 'price',
-			'member', 'person', 'day', 'hour',
-			'gram', 'milimeter', 'kilogram', 'centimeter',
-			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'postcode',
-			'post', 'attachment', 'parent_post', 'posts', 'attachments',
-			'user', 'term',
-		], TRUE ) )
-			return $meta;
-
-		$tokens = [
-			'today',
-			'thisyear',
-		];
-
-		return Core\Text::replaceTokens( $meta, $tokens, [
-			'meta'       => $meta,
-			'field'      => $field,
-			'post'       => $post,
-			'args'       => $args,
-			'raw'        => $raw,
-			'field_args' => $field_args,
-			'context'    => $context,
-		], [ $this, '_meta_field_replace_token' ] );
-	}
-
-	private function _meta_field_replace_token( $token, $args )
-	{
-		switch ( strtolower( $token ) ) {
-
-			case 'today': return Datetime::dateFormat( 'now', empty( $args['context'] ) ? 'default' : $args['context'] );
-			case 'thisyear': return date_i18n( 'Y' );
-		}
-
-		return '';
+		return Services\PostTypeFields::replaceTokens( $meta, $field_args, $post, $context );
 	}
 
 	public function content_before( $content )

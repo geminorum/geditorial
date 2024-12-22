@@ -496,4 +496,44 @@ class PostTypeFields extends WordPress\Main
 
 		return Core\HTML::escape( trim( $value ) );
 	}
+
+	public static function replaceTokens( $meta, $field, $post, $context = NULL )
+	{
+		// bail early if it has not have tokens!
+		if ( ! Core\Text::has( $meta, '{{' ) )
+			return $meta;
+
+		if ( in_array( $field['type'], [
+			'integer', 'number', 'float', 'price',
+			'member', 'person', 'day', 'hour',
+			'gram', 'milimeter', 'kilogram', 'centimeter',
+			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'postcode',
+			'post', 'attachment', 'parent_post', 'posts', 'attachments',
+			'user', 'term',
+		], TRUE ) )
+			return $meta;
+
+		$tokens = [
+			'today',
+			'thisyear',
+		];
+
+		return Core\Text::replaceTokens( $meta, $tokens, [
+			'meta'       => $meta,
+			'field'      => $field['name'],
+			'post'       => $post,
+			'context'    => $context,
+		], [ __CLASS__, '_meta_field_replace_token' ] );
+	}
+
+	private static function _meta_field_replace_token( $token, $args )
+	{
+		switch ( strtolower( $token ) ) {
+
+			case 'today'   : return Datetime::dateFormat( 'now', empty( $args['context'] ) ? 'default' : $args['context'] );
+			case 'thisyear': return Core\Date::get( 'Y' );
+		}
+
+		return '';
+	}
 }

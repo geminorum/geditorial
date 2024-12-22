@@ -1722,6 +1722,7 @@ class MetaBox extends WordPress\Main
 
 			// fills the meta by query data only on new posts
 			$meta = WordPress\Strings::kses( self::req( $metakey, '' ), 'none' );
+			$meta = Services\PostTypeFields::replaceTokens( $meta, $field, $post, 'raw' );
 		}
 
 		return $meta;
