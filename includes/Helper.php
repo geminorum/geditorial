@@ -525,11 +525,11 @@ class Helper extends WordPress\Main
 
 		$formats = Datetime::dateFormats( FALSE );
 
-		$html = '<span class="-date-date" title="'.Core\HTML::escape( date_i18n( $formats['timeonly'], $timestamp ) );
-		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.date_i18n( $formats['default'], $timestamp ).'</span>';
+		$html = '<span class="-date-date" title="'.Core\HTML::escape( Core\Date::get( $formats['timeonly'], $timestamp ) );
+		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.Core\Date::get( $formats['default'], $timestamp ).'</span>';
 
 		$html.= '&nbsp;(<span class="-date-diff" title="';
-		$html.= Core\HTML::escape( date_i18n( $formats['fulltime'], $timestamp ) ).'">';
+		$html.= Core\HTML::escape( Core\Date::get( $formats['fulltime'], $timestamp ) ).'">';
 		$html.= Datetime::humanTimeDiff( $timestamp ).'</span>)';
 
 		return $class ? Core\HTML::wrap( $html, $class, FALSE ) : $html;
@@ -540,7 +540,7 @@ class Helper extends WordPress\Main
 		$timestamp = strtotime( $post->post_modified );
 		$formats   = Datetime::dateFormats( FALSE );
 
-		$html = '<span class="-date-modified" title="'.Core\HTML::escape( date_i18n( $formats['default'], $timestamp ) );
+		$html = '<span class="-date-modified" title="'.Core\HTML::escape( Core\Date::get( $formats['default'], $timestamp ) );
 		$html.='" data-time="'.date( 'c', $timestamp ).'">'.Datetime::humanTimeDiff( $timestamp ).'</span>';
 
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );

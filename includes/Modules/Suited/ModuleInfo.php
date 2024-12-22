@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 
 class ModuleInfo extends gEditorial\Info
 {
@@ -48,7 +47,7 @@ class ModuleInfo extends gEditorial\Info
 
 			default:
 
-				return Datetime::getAgeStructure( TRUE );
+				return self::getAgeStructure( TRUE );
 		}
 	}
 }

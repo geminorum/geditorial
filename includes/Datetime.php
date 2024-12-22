@@ -39,7 +39,7 @@ class Datetime extends WordPress\Main
 		if ( ! Core\Date::isTimestamp( $timestamp ) )
 			$timestamp = strtotime( $timestamp );
 
-		return date_i18n( self::dateFormats( $context ), $timestamp );
+		return Core\Date::get( self::dateFormats( $context ), $timestamp );
 	}
 
 	// @SEE: http://www.phpformatdate.com/
@@ -84,7 +84,7 @@ class Datetime extends WordPress\Main
 		$title  = _x( 'Last Modified on %s', 'Datetime: Post Modified', 'geditorial' );
 
 		return $attr
-			? sprintf( $title, date_i18n( $format, $local ) )
+			? sprintf( $title, Core\Date::get( $format, $local ) )
 			: Core\Date::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
 	}
 
@@ -138,7 +138,7 @@ class Datetime extends WordPress\Main
 		if ( is_null( $format ) )
 			$format = self::dateFormats( 'default' );
 
-		return date_i18n( $format, $local, FALSE );
+		return Core\Date::get( $format, $local, FALSE );
 	}
 
 	public static function humanTimeDiff( $timestamp, $now = '' )
@@ -316,88 +316,6 @@ class Datetime extends WordPress\Main
 		return $reversed
 			? sprintf( $template, $html, 'date-of-birth', $title )
 			: sprintf( $template, $title, 'date-of-birth', $html );
-	}
-
-	/**
-	 * Provides the distribution of the population according to age.
-	 * @source: https://en.wikipedia.org/wiki/Demographic_profile
-	 *
-	 * @param  bool  $extended
-	 * @return array $data
-	 */
-	public static function getAgeStructure( $extended = FALSE )
-	{
-		$data = [
-			'00to14' => [
-				'slug' => '00to14',
-				'name' => _x( '0–14 years', 'Datetime: Age Structure', 'geditorial' ),
-				'meta' => [
-					'max' => 14,
-				],
-			],
-			'15to24' => [
-				'slug' => '15to24',
-				'name' => _x( '15–24 years', 'Datetime: Age Structure', 'geditorial' ),
-				'meta' => [
-					'min' => 15,
-					'max' => 24,
-				],
-			],
-			'25to54' => [
-				'slug' => '25to54',
-				'name' => _x( '25–54 years', 'Datetime: Age Structure', 'geditorial' ),
-				'meta' => [
-					'min' => 25,
-					'max' => 54,
-				],
-			],
-			'55to64' => [
-				'slug' => '55to64',
-				'name' => _x( '55–64 years', 'Datetime: Age Structure', 'geditorial' ),
-				'meta' => [
-					'min' => 55,
-					'max' => 64,
-				],
-			],
-			'65over' => [
-				'slug' => '65over',
-				'name' => _x( '65 years and over', 'Datetime: Age Structure', 'geditorial' ),
-				'meta' => [
-					'min' => 65,
-				],
-			],
-		];
-
-		return $extended ? $data : Core\Arraay::pluck( $data, 'name', 'slug' );
-	}
-
-	/**
-	 * The American Medical Association's age designations.
-	 * @source https://www.nih.gov/nih-style-guide/age
-	 * NOTE: `min`/`max` meta values are based on months
-	 *
-	 * - Neonates or newborns (birth to 1 month)
-	 * - Infants (1 month to 1 year)
-	 * - Children (1 year through 12 years)
-	 * - Adolescents (13 years through 17 years. They may also be referred to as teenagers depending on the context.)
-	 * - Adults (18 years or older)
-	 * - Older adults (65 and older)
-	 *
-	 * @param  bool $extended
-	 * @return array $data
-	 */
-	public static function getMedicalAge( $extended = FALSE )
-	{
-		$data = [
-			'newborns'     => [ 'slug' => 'newborns',     'name' => _x( 'Newborns', 'Datetime: Medical Age', 'geditorial' ),     'meta' => [               'max' => 1   ] ],
-			'infants'      => [ 'slug' => 'infants',      'name' => _x( 'Infants', 'Datetime: Medical Age', 'geditorial' ),      'meta' => [ 'min' => 1,   'max' => 12  ] ],
-			'children'     => [ 'slug' => 'children',     'name' => _x( 'Children', 'Datetime: Medical Age', 'geditorial' ),     'meta' => [ 'min' => 13,  'max' => 144 ] ],
-			'adolescents'  => [ 'slug' => 'adolescents',  'name' => _x( 'Adolescents', 'Datetime: Medical Age', 'geditorial' ),  'meta' => [ 'min' => 145, 'max' => 204 ] ],
-			'adults'       => [ 'slug' => 'adults',       'name' => _x( 'Adults', 'Datetime: Medical Age', 'geditorial' ),       'meta' => [ 'min' => 205, 'max' => 781 ] ],
-			'older-adults' => [ 'slug' => 'older-adults', 'name' => _x( 'Older Adults', 'Datetime: Medical Age', 'geditorial' ), 'meta' => [ 'min' => 781,              ] ],
-		];
-
-		return $extended ? $data : Core\Arraay::pluck( $data, 'name', 'slug' );
 	}
 
 	public static function getDecades( $from = '-100 years', $count = 10, $prefixed = FALSE, $metakey = NULL )

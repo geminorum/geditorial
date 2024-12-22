@@ -3,11 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\Date;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\Third;
 
 class GCalEvents extends gEditorial\Widget
 {
@@ -25,7 +22,7 @@ class GCalEvents extends gEditorial\Widget
 
 	public function widget_html( $args, $instance )
 	{
-		if ( ! $data = Third::getGoogleCalendarEvents( $instance ) )
+		if ( ! $data = Core\Third::getGoogleCalendarEvents( $instance ) )
 			return FALSE;
 
 		$empty = empty( $instance['empty'] ) ? FALSE : $instance['empty'];
@@ -38,7 +35,7 @@ class GCalEvents extends gEditorial\Widget
 
 		if ( empty( $data->items ) ) {
 
-			HTML::desc( $empty, TRUE, '-empty' );
+			Core\HTML::desc( $empty, TRUE, '-empty' );
 
 		} else {
 
@@ -54,12 +51,12 @@ class GCalEvents extends gEditorial\Widget
 					echo '<div class="event-wrapper" itemscope itemtype="http://schema.org/Event">';
 
 					echo '<div class="event-date" itemprop="startDate" content="'.date( 'c', $timestamp ).'">'
-						.date_i18n( $formats['dateonly'], $timestamp ).'</div>';
+						.Core\Date::get( $formats['dateonly'], $timestamp ).'</div>';
 
 					echo '<div class="event-title" itemprop="name">'.WordPress\Strings::prepTitle( $item->summary ).'</div>';
 
 					if ( ! empty( $instance['display_time'] ) )
-						echo '<div class="event-time">'.date_i18n( $formats['timeampm'], $timestamp ).'</div>';
+						echo '<div class="event-time">'.Core\Date::get( $formats['timeampm'], $timestamp ).'</div>';
 
 					echo '</div>';
 				echo '</li>';
@@ -85,7 +82,7 @@ class GCalEvents extends gEditorial\Widget
 		$this->form_custom_code( $instance, '', 'api_key', _x( 'Your API key:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 
 		/* translators: %s: documents url */
-		HTML::desc( sprintf( _x( 'Get your API key <a href="%s" target="_blank">here</a>.', 'Widget: Google Calendar', 'geditorial-widgets' ), 'https://console.developers.google.com/' ) );
+		Core\HTML::desc( sprintf( _x( 'Get your API key <a href="%s" target="_blank">here</a>.', 'Widget: Google Calendar', 'geditorial-widgets' ), 'https://console.developers.google.com/' ) );
 
 		$this->form_custom_code( $instance, '', 'time_min', _x( 'Start from (YYYY-MM-DD):', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 		$this->form_number( $instance, 5, 'max_results', _x( 'Max results:', 'Widget: Google Calendar', 'geditorial-widgets' ) );

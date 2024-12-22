@@ -257,7 +257,7 @@ class PostTypeFields extends WordPress\Main
 			$field = [ 'name' => $field_key, 'type' => 'text' ];
 
 		if ( FALSE === $meta )
-			$meta = apply_filters( static::BASE.'_meta_field_empty', $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
+			$meta = apply_filters( static::BASE.'_meta_field_empty', $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
 
 		if ( FALSE === $meta )
 			return $args['default'];
@@ -270,8 +270,8 @@ class PostTypeFields extends WordPress\Main
 				return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
 		}
 
-		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
-		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field, $args['context'] );
+		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
+		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
 			$args['filter'] = [ Template::class, 'doEmbedShortCode' ];
