@@ -700,6 +700,9 @@ class Personage extends gEditorial\Module
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
 			$data['source']['rendered']['vcarddata'] = $vcard;
 
+		if ( in_array( 'needs-securitytoken', $data['flags'], TRUE ) )
+			$data['tokens'][] = Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
+
 		return $data;
 	}
 
@@ -723,6 +726,9 @@ class Personage extends gEditorial\Module
 
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
 			$row['rendered']['vcarddata'] = $vcard;
+
+		if ( in_array( 'needs-securitytoken', $row['flags'], TRUE ) )
+			$row['tokens'][] = Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
 
 		return $row;
 	}
