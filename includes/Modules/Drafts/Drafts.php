@@ -135,6 +135,8 @@ class Drafts extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->filter( 'display_post_states', 2 );
+
 				if ( $this->get_setting( 'admin_rowactions' ) ) {
 
 					$this->filter( 'page_row_actions', 2 );
@@ -378,6 +380,31 @@ class Drafts extends gEditorial\Module
 		}
 
 		return $posts;
+	}
+
+	public function display_post_states( $states, $post )
+	{
+		$query = $this->constant( 'preview_query' );
+
+		if ( self::req( $query ) )
+			return $states; // avoid on the view
+
+		if ( ! $this->_is_preview_status( $post ) )
+			return $states;
+
+		if ( ! $this->is_public( $post->ID ) )
+			return $states;
+
+		$states[$query] = sprintf( '<span title="%2$s">%1$s</span>',
+			_x( 'Public Preview', 'State', 'geditorial-drafts' ),
+			sprintf(
+				/* translators: %s: post title */
+				_x( 'Open public preview of &#8220;%s&#8221;', 'State Title', 'geditorial-drafts' ),
+				_draft_or_post_title( $post )
+			)
+		);
+
+		return $states;
 	}
 
 	public function page_row_actions( $actions, $post )
