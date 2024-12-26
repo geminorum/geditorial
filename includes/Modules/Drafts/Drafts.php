@@ -63,8 +63,9 @@ class Drafts extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'preview_query' => 'public-preview',
-			'meta_secret'   => '_preview_secret',
+			'preview_query'   => 'public-preview',    // rename to `admin_query`
+			'public_queryvar' => 'secret',
+			'meta_secret'     => '_preview_secret',
 		];
 	}
 
@@ -345,7 +346,7 @@ class Drafts extends gEditorial\Module
 		if ( is_null( $key ) )
 			$key = get_post_meta( $post_id, $this->constant( 'meta_secret' ), TRUE );
 
-		return $key ? add_query_arg( 'secret', $key, $url ) : $url;
+		return $key ? add_query_arg( $this->constant( 'public_queryvar' ), $key, $url ) : $url;
 	}
 
 	public function make_private( $post_id )
@@ -366,20 +367,28 @@ class Drafts extends gEditorial\Module
 		return strlen( get_post_meta( $post_id, $this->constant( 'meta_secret' ), TRUE ) ) > 0;
 	}
 
-	public function the_posts( $posts, $wp_query )
+	public function the_posts( $posts, $query )
 	{
 		global $wpdb;
 
-		if ( isset( $_GET['secret'] )
-			&& $wp_query->is_main_query()
-			&& ( $wp_query->is_single || $wp_query->is_page )
-			&& ! empty( $wp_query->query_vars['p'] ) ) {
+		if ( ! empty( $posts ) || ! $query->is_main_query() )
+			return $posts;
 
-			if ( $_GET['secret'] === get_post_meta( $wp_query->query_vars['p'], $this->constant( 'meta_secret' ), TRUE ) )
-				$posts = $wpdb->get_results( $wp_query->request );
-		}
+		if ( empty( $query->query_vars['p'] ) || ! ( $query->is_single || $query->is_page ) )
+			return $posts;
 
-		return $posts;
+		if ( ! $arg = self::req( $this->constant( 'public_queryvar' ) ) )
+			return $posts;
+
+		if ( ! $secret = get_post_meta( $query->query_vars['p'], $this->constant( 'meta_secret' ), TRUE ) )
+			return $posts;
+
+		if ( $secret !== $arg )
+			return $posts;
+
+		add_filter( 'wp_robots', 'wp_robots_no_robots' );
+
+		return $wpdb->get_results( $query->request );
 	}
 
 	public function display_post_states( $states, $post )
