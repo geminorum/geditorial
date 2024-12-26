@@ -813,6 +813,10 @@ trait PostTypeFields
 
 	protected function posttypefields__enqueue_edit_screen( $posttype, $fields = NULL )
 	{
+		// NOTE: this is wp-core hook
+		if ( ! apply_filters( 'quick_edit_enabled_for_post_type', TRUE, $posttype ) )
+			return FALSE;
+
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $posttype );
 
