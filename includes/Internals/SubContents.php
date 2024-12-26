@@ -1228,7 +1228,7 @@ trait SubContents
 			] );
 
 			if ( ! $thrift && ( $count = $this->subcontent_get_data_count( $post ) ) )
-				printf( ' <span class="-counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
+				printf( ' <span class="count -counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
 
 		echo $after;
 	}

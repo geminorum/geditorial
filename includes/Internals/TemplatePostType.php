@@ -47,6 +47,7 @@ trait TemplatePostType
 			if ( is_null( $empty_callback ) )
 				$empty_callback = [ $this, 'templateposttype_empty_content' ];
 
+			add_filter( 'wp_robots', 'wp_robots_no_robots' );
 			nocache_headers();
 			// Core\WordPress::doNotCache();
 
@@ -59,6 +60,8 @@ trait TemplatePostType
 			], $empty_callback );
 
 			$this->filter_append( 'post_class', [ 'empty-posttype', 'empty-'.$posttype ] );
+			remove_filter( 'the_content', 'wpautop' );
+			remove_filter( 'the_content', 'wptexturize' );
 
 			// $template = get_singular_template();
 			$template = get_single_template();

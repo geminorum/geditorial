@@ -77,7 +77,10 @@ trait Strings
 
 	public function nooped_count( $constant, $count )
 	{
-		return sprintf( Helper::noopedCount( $count, $this->get_noop( $constant ) ), Core\Number::format( $count ) );
+		return sprintf(
+			Helper::noopedCount( $count, $this->get_noop( $constant ) ),
+			Core\Number::format( $count )
+		);
 	}
 
 	protected function strings_metabox_noitems_via_posttype( $posttype, $context = 'default', $default = NULL, $post = NULL, $prop = 'empty', $group = 'metabox' )

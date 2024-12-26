@@ -63,9 +63,9 @@ class Drafts extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'preview_query'   => 'public-preview',    // rename to `admin_query`
 			'public_queryvar' => 'secret',
-			'meta_secret'     => '_preview_secret',
+			'admin_queryvar'  => 'public-preview',
+			'metakey_secret'  => '_public_preview_secret',
 		];
 	}
 
@@ -344,27 +344,27 @@ class Drafts extends gEditorial\Module
 		$url = get_permalink( $post_id );
 
 		if ( is_null( $key ) )
-			$key = get_post_meta( $post_id, $this->constant( 'meta_secret' ), TRUE );
+			$key = get_post_meta( $post_id, $this->constant( 'metakey_secret' ), TRUE );
 
 		return $key ? add_query_arg( $this->constant( 'public_queryvar' ), $key, $url ) : $url;
 	}
 
 	public function make_private( $post_id )
 	{
-		return delete_post_meta( $post_id, $this->constant( 'meta_secret' ) );
+		return delete_post_meta( $post_id, $this->constant( 'metakey_secret' ) );
 	}
 
 	public function make_public( $post_id )
 	{
 		$key   = wp_generate_password( 6, FALSE, FALSE );
-		$added = add_post_meta( $post_id, $this->constant( 'meta_secret' ), $key, TRUE );
+		$added = add_post_meta( $post_id, $this->constant( 'metakey_secret' ), $key, TRUE );
 
 		return $added ? $this->get_preview_url( $post_id, $key ) : FALSE;
 	}
 
 	public function is_public( $post_id )
 	{
-		return strlen( get_post_meta( $post_id, $this->constant( 'meta_secret' ), TRUE ) ) > 0;
+		return strlen( get_post_meta( $post_id, $this->constant( 'metakey_secret' ), TRUE ) ) > 0;
 	}
 
 	public function the_posts( $posts, $query )
@@ -380,7 +380,7 @@ class Drafts extends gEditorial\Module
 		if ( ! $arg = self::req( $this->constant( 'public_queryvar' ) ) )
 			return $posts;
 
-		if ( ! $secret = get_post_meta( $query->query_vars['p'], $this->constant( 'meta_secret' ), TRUE ) )
+		if ( ! $secret = get_post_meta( $query->query_vars['p'], $this->constant( 'metakey_secret' ), TRUE ) )
 			return $posts;
 
 		if ( $secret !== $arg )
@@ -393,7 +393,7 @@ class Drafts extends gEditorial\Module
 
 	public function display_post_states( $states, $post )
 	{
-		$query = $this->constant( 'preview_query' );
+		$query = $this->constant( 'admin_queryvar' );
 
 		if ( self::req( $query ) )
 			return $states; // avoid on the view
@@ -463,14 +463,14 @@ class Drafts extends gEditorial\Module
 			function ( $views ) use ( $posttype ) {
 
 				$ids = WordPress\PostType::getIDListByMetakey(
-					$this->constant( 'meta_secret' ), $posttype, [
+					$this->constant( 'metakey_secret' ), $posttype, [
 						'post_status' => 'draft',
 					] );
 
 				if ( ! $count = count( $ids ) )
 					return $views;
 
-				$query = $this->constant( 'preview_query' );
+				$query = $this->constant( 'admin_queryvar' );
 
 				$views[$query] = sprintf(
 					'<a href="%s"%s>%s</a>',
@@ -488,14 +488,14 @@ class Drafts extends gEditorial\Module
 				if ( ! $query->is_admin || ! $query->is_main_query() )
 					return;
 
-				if ( '1' === self::req( $this->constant( 'preview_query' ) ) ) {
+				if ( '1' === self::req( $this->constant( 'admin_queryvar' ) ) ) {
 
 					$meta_query = isset( $query->query_vars['meta_query'] )
 						? $query->query_vars['meta_query']
 						: [];
 
 					$meta_query[] = [
-						'key'     => $this->constant( 'meta_secret' ),
+						'key'     => $this->constant( 'metakey_secret' ),
 						'compare' => 'EXISTS'
 					];
 

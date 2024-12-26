@@ -13,7 +13,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function linkBib( $bib, $link = TRUE )
 	{
-		$url = sprintf( 'http://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) ;
+		$url = sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) ;
 
 		if ( ! $link )
 			return $url;
@@ -29,7 +29,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function linkISBN( $isbn, $link = TRUE )
 	{
-		$base = 'http://opac.nlai.ir';
+		$base = 'https://opac.nlai.ir';
 		$url  = add_query_arg( [
 			'simpleSearch.value'                           => $isbn,
 			'bibliographicLimitQueryBuilder.biblioDocType' => 'BF',
@@ -62,7 +62,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $isbn )
 			return FALSE;
 
-		$base = 'http://opac.nlai.ir';
+		$base = 'https://opac.nlai.ir';
 		$search = add_query_arg( [
 			'simpleSearch.value'                           => $isbn,
 			'bibliographicLimitQueryBuilder.biblioDocType' => 'BF',
@@ -78,7 +78,7 @@ class ModuleHelper extends gEditorial\Helper
 			'attributes.locale'                            => 'fa',
 		], $base.'/opac-prod/search/bibliographicSimpleSearchProcess.do' );
 
-		if ( ! $body = Core\HTTP::getHTML( $search ) )
+		if ( ! $body = Core\HTTP::getHTML( $search, [ 'timeout' => 30 ] ) )
 			return FALSE;
 
 		$dom = new \Rct567\DomQuery\DomQuery( trim( $body ) );
@@ -94,7 +94,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $url )
 			return FALSE;
 
-		if ( ! $body = Core\HTTP::getHTML( $url ) )
+		if ( ! $body = Core\HTTP::getHTML( $url, [ 'timeout' => 30 ] ) )
 			return FALSE;
 
 		$data = [];
@@ -136,7 +136,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( WordPress\Strings::isEmpty( $bib ) )
 			return FALSE;
 
-		return self::scrapeFipaFromURL( sprintf( 'http://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) );
+		return self::scrapeFipaFromURL( sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) );
 	}
 
 	public static function getFibaByISBN( $isbn )

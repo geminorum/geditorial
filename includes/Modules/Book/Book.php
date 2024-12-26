@@ -349,6 +349,7 @@ class Book extends gEditorial\Module
 					'icon'        => 'calendar-alt',
 				],
 				'publication_ddc' => [
+					// FIXME: move to `DeweyDecimal` Module
 					// @REF: https://en.wikipedia.org/wiki/Dewey_Decimal_Classification
 					'title'       => _x( 'DDC', 'Field Title', 'geditorial-book' ),
 					'description' => _x( 'Dewey Decimal Classification', 'Field Description', 'geditorial-book' ),

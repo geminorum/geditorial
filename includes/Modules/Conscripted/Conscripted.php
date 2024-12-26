@@ -104,13 +104,16 @@ class Conscripted extends gEditorial\Module
 	{
 		return [
 			'main_taxonomy' => [
-				'underage-for-service' => _x( 'Underage for Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),
-				'subject-to-service'   => _x( 'Subject to Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),
-				'currently-in-service' => _x( 'Currently in Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),
-				'end-of-service'       => _x( 'End of Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),
-				'medical-exemption'    => _x( 'Medical Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),
-				'education-exemption'  => _x( 'Education Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),
-				'permanent-exemption'  => _x( 'Permanent Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),
+				'underage-for-service' => _x( 'Underage for Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),   // قبل از سن مشمولیت
+				'subject-to-service'   => _x( 'Subject to Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),     // مشمول خدمت
+				'currently-in-service' => _x( 'Currently in Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),   // در حال خدمت
+				'end-of-service'       => _x( 'End of Service', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),         // پایان خدمت
+				'medical-exemption'    => _x( 'Medical Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),      // معافیت پزشکی
+				'education-exemption'  => _x( 'Education Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),    // معافیت تحصیلی
+				'veteran-exemption'    => _x( 'Veteran Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),      // معافیت ایثارگری
+				'permanent-exemption'  => _x( 'Permanent Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),    // معافیت دائم
+				'sponsor-exemption'    => _x( 'Sponsor Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),      // معافیت کفالت
+				'paid-exemption'       => _x( 'Paid Exemption', 'Main Taxonomy: Default Term', 'geditorial-conscripted' ),         // خرید خدمت
 			],
 		];
 	}

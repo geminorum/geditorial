@@ -209,13 +209,8 @@ class NationalLibrary extends gEditorial\Module
 			else if ( $isbn = self::req( $this->_get_posttype_isbn_metakey( $posttype ) ) )
 				$data = ModuleHelper::getFibaByISBN( $isbn );
 
-			if ( ! $data )
-				return;
+			$this->_render_fipa_data( $data );
 
-			echo $this->wrap(
-				Core\HTML::tableSimple( $data, [], FALSE, 'base-table-double table table-bordered' ),
-				'-fipa-summary'
-			);
 		}, 1, 9 );
 	}
 
@@ -453,6 +448,15 @@ class NationalLibrary extends gEditorial\Module
 	{
 		if ( $html = $this->get_fipa( $post ) )
 			echo $this->wrap( $html, '-fipa-summary' );
+	}
+
+
+	private function _render_fipa_data( $data )
+	{
+		echo $this->wrap(
+			Core\HTML::tableSimple( $data, [], FALSE, 'base-table-double table table-bordered' ),
+			'-fipa-summary'
+		);
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )

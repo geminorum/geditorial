@@ -420,7 +420,7 @@ class DeadDrops extends gEditorial\Module
 		// Core\HTML::inputHidden( 'secret', $args['secret'] );
 		// Core\HTML::inputHidden( 'post', $args['post']->ID );
 
-		// Don't forget to give this container the dropzone-previews class so the previews are formatted correctly.
+		// Don't forget to give this container the `dropzone-previews` class so the previews are formatted correctly.
 		echo Core\HTML::wrap( Scripts::noScriptMessage( FALSE ), 'dropzone-previews', TRUE, [], 'previews' );
 		// echo '<button id="clickable">Click me to select files</button>';
 
