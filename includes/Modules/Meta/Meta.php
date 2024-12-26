@@ -312,6 +312,7 @@ class Meta extends gEditorial\Module
 
 		$this->posttypefields_init_meta_fields();
 		$this->posttypefields_register_meta_fields();
+		$this->posttypefields__hook_template_newpost();
 
 		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );
 		$this->filter( 'meta_field', 7, 15, 'tokens', $this->base );

@@ -1624,6 +1624,49 @@ trait PostTypeFields
 		}
 	}
 
+	protected function posttypefields__hook_template_newpost()
+	{
+		if ( is_admin() )
+			return;
+
+		$this->action( 'template_newpost_beforetitle', 6, 20, 'posttypefields_title_before', $this->base );
+		$this->action( 'template_newpost_aftertitle', 6, 1, 'posttypefields_title_after', $this->base );
+		$this->action( 'template_newpost_aftertitle', 6, 20, 'posttypefields_quickedit', $this->base );
+	}
+
+	public function template_newpost_beforetitle_posttypefields_title_before( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'type' => 'title_before' ] ) )
+			return;
+
+		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', '<div class="-form-group">', '</div>' );
+	}
+
+	public function template_newpost_aftertitle_posttypefields_title_after( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'type' => 'title_after' ] ) )
+			return;
+
+		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', '<div class="-form-group">', '</div>' );
+	}
+
+	public function template_newpost_aftertitle_posttypefields_quickedit( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'quickedit' => TRUE ] ) )
+			return;
+
+		$this->render_posttype_fields( $post, FALSE, $fields, NULL, '<div class="-form-group">', '</div>' );
+	}
+
 	// `$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );`
 	public function searchselect_result_extra_for_post_filter( $data, $post, $queried )
 	{
