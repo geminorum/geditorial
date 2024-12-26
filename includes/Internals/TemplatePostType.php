@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\ShortCode;
@@ -10,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 trait TemplatePostType
 {
 
-	protected function templateposttype__include( $template, $posttypes, $empty_callback = NULL, $archive_callback = NULL )
+	protected function templateposttype__include( $template, $posttypes, $empty_callback = NULL, $archive_callback = NULL, $newpost_callback = NULL )
 	{
 		global $wp_query;
 
@@ -30,7 +31,6 @@ trait TemplatePostType
 			return $template;
 
 		// TODO: support singulars
-		// FIXME: support new posts
 		if ( ! $wp_query->is_404() && ! $wp_query->is_post_type_archive( $posttype ) )
 			return $template;
 
@@ -65,6 +65,36 @@ trait TemplatePostType
 
 			// $template = get_singular_template();
 			$template = get_single_template();
+
+		} else if ( isset( $_GET['newpost'] ) ) {
+
+			// if new posttype disabled
+			if ( FALSE === $newpost_callback )
+				return $template;
+
+			if ( is_null( $newpost_callback ) )
+				$newpost_callback = [ $this, 'templateposttype_newpost_content' ];
+
+			add_filter( 'wp_robots', 'wp_robots_no_robots' );
+			nocache_headers();
+			// Core\WordPress::doNotCache();
+
+			WordPress\Theme::resetQuery( [
+				'ID'         => 0,
+				'post_title' => $this->templateposttype_get_newpost_title( $posttype ),
+				'post_type'  => $posttype,
+				'is_page'    => TRUE,
+				'is_archive' => TRUE,
+			], $newpost_callback );
+
+			$this->filter_append( 'post_class', [ 'newpost-posttype', 'newpost-'.$posttype ] );
+			$this->filter( 'post_type_archive_title', 2, 0, 'templateposttype_newpost' );
+			// $this->filter( 'gtheme_navigation_crumb_archive', 2, 10, 'templateposttype_newpost' );
+			$this->filter_false( 'gtheme_navigation_crumb_archive' );
+			remove_filter( 'the_content', 'wpautop' );
+			remove_filter( 'the_content', 'wptexturize' );
+
+			$template = WordPress\Theme::getTemplate( $this->get_setting( 'newpost_template' ) );
 
 		} else {
 
@@ -135,10 +165,22 @@ trait TemplatePostType
 		return $this->get_setting_fallback( 'archive_title', $crumb );
 	}
 
+	public function gtheme_navigation_crumb_archive_templateposttype_newpost( $crumb, $args )
+	{
+		return $this->get_setting_fallback( 'newpost_title', $crumb );
+	}
+
 	// no need to check for posttype
 	public function post_type_archive_title( $name, $posttype )
 	{
 		return $this->get_setting_fallback( 'archive_title', $name );
+	}
+
+	// no need to check for posttype
+	public function post_type_archive_title_templateposttype_newpost( $name, $posttype )
+	{
+		return $this->get_setting_fallback( 'newpost_title',
+			Helper::getPostTypeLabel( $posttype, 'add_new_item', NULL, $name ) );
 	}
 
 	// DEFAULT METHOD: content for overrided archive page
@@ -228,5 +270,164 @@ trait TemplatePostType
 			$this->templateposttype_get_archive_content( get_query_var( 'post_type' ) ),
 			$this->base.'-archive-content'
 		);
+	}
+
+	// will hook to `the_content` filter on newpost
+	public function templateposttype_newpost_content( $content )
+	{
+		if ( ! $post = WordPress\Post::get() )
+			return $content;
+
+		$html = $this->templateposttype_newpost_form( $post->post_type );
+
+		return Core\HTML::wrap( $html, $this->base.'-newpost-content' );
+	}
+
+	protected function templateposttype_newpost_form( $posttype )
+	{
+		$status   = $this->get_setting( 'post_status', 'pending' ); // `draft`
+		$target   = 'none'; // self::req( 'target', 'none' );
+		$linked   = NULL; // self::req( 'linked', FALSE );
+		$meta     = []; // self::req( 'meta', [] );
+		$object   = WordPress\PostType::object( $posttype );
+		$post     = WordPress\Post::defaultToEdit( $posttype );
+
+		if ( ! current_user_can( $object->cap->create_posts ) )
+			return ''; // Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
+
+		ob_start();
+
+		$meta = $this->filters( 'newpost_content_meta', $meta, $posttype, $target, $linked, $status );
+
+		echo $this->wrap_open( '-newpost-layout' );
+		echo '<div class="row"><div class="col-6"><form>';
+
+		do_action( $this->hook_base( 'template', 'newpost', 'beforetitle' ),
+			$posttype,
+			$post,
+			$target,
+			$linked,
+			$status,
+			$meta
+		);
+
+		if ( $this->is_posttype_support( $posttype, 'title' ) ) {
+
+			$field = $this->classs( $posttype, 'title' );
+			$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
+
+			$html = Core\HTML::tag( 'input', [
+				'type'        => 'text',
+				'class'       => [ 'large-text', 'form-control' ],
+				'id'          => $field,
+				'name'        => 'title',
+				'placeholder' => apply_filters( 'enter_title_here', $label, $post ),
+			] );
+
+			echo '<div class="-form-group">';
+				Core\HTML::label( $html, $field, FALSE );
+			echo '</div>';
+		}
+
+		do_action( $this->hook_base( 'template', 'newpost', 'aftertitle' ),
+			$posttype,
+			$post,
+			$target,
+			$linked,
+			$status,
+			$meta
+		);
+
+		if ( $this->is_posttype_support( $posttype, 'excerpt' ) ) {
+
+			$field = $this->classs( $posttype, 'excerpt' );
+			$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
+
+			$html = Core\HTML::tag( 'textarea', [
+				'id'           => $field,
+				'name'         => 'excerpt',
+				'placeholder'  => $label,
+				'class'        => [ 'mceEditor', 'large-text', 'form-control' ],
+				'rows'         => 2,
+				// 'cols'         => 15,
+				'autocomplete' => 'off',
+			], '' );
+
+			echo '<div class="-form-group">';
+				Core\HTML::label( $html, $field, FALSE );
+			echo '</div>';
+		}
+
+		if ( $this->is_posttype_support( $posttype, 'editor' ) ) {
+
+			$field = $this->classs( $posttype, 'content' );
+			$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'Content' ) );
+
+			$html = Core\HTML::tag( 'textarea', [
+				'id'           => $field,
+				'name'         => 'content',
+				'placeholder'  => $label,
+				'class'        => [ 'mceEditor', 'large-text', 'form-control' ],
+				'rows'         => 6,
+				// 'cols'         => 15,
+				'autocomplete' => 'off',
+			], '' );
+
+			echo '<div class="-form-group">';
+				Core\HTML::label( $html, $field, FALSE );
+			echo '</div>';
+		}
+
+		if ( $object->hierarchical )
+			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
+
+		do_action( $this->hook_base( 'template', 'newpost', 'content' ),
+			$posttype,
+			$post,
+			$target,
+			$linked,
+			$status,
+			$meta
+		);
+
+		Core\HTML::inputHidden( 'type', $posttype );
+		// Core\HTML::inputHidden( 'status', $status === 'publish' ? 'publish' : 'draft' ); // only publish/draft
+		Core\HTML::inputHidden( 'status', $status );
+		Core\HTML::inputHiddenArray( $meta, 'meta' );
+
+		echo $this->wrap_open_buttons();
+
+		echo Core\HTML::tag( 'a', [
+			'href'  => '#',
+			'class' => [ 'btn', 'btn-primary', 'button', '-save-draft', 'd1isabled' ],
+			'data'  => [
+				'target'   => $target,
+				'type'     => $posttype,
+				'linked'   => $linked,
+				'endpoint' => rest_url( WordPress\PostType::getRestRoute( $object ) ),
+			],
+		], _x( 'Save Draft', 'Module', 'geditorial-admin' ) );
+
+		echo '</p></form></div><div class="col-6">';
+
+			do_action( $this->hook_base( 'template', 'newpost', 'side' ),
+				$posttype,
+				$post,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
+
+		echo '</div></div>';
+
+		return ob_get_clean();
+	}
+
+	// DEFAULT METHOD: title for overrided newpost page
+	public function templateposttype_get_newpost_title( $posttype )
+	{
+		return $this->get_setting_fallback( 'newpost_title',
+			Helper::getPostTypeLabel( $posttype, 'add_new_item', NULL, $posttype ) );
 	}
 }

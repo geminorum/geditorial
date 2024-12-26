@@ -90,6 +90,8 @@ class Book extends gEditorial\Module
 				'archive_override',
 				'display_searchform',
 				'empty_content',
+				'newpost_title',
+				'newpost_template',
 				'archive_title' => [ NULL, $this->get_posttype_label( 'publication_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',

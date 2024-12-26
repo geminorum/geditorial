@@ -1020,6 +1020,21 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_newpost_title( $description = NULL, $placeholder = FALSE )
+	{
+		return [
+			'field'       => 'newpost_title',
+			'type'        => 'text',
+			'title'       => _x( 'New-post Title', 'Setting: Setting Title', 'geditorial-admin' ),
+			'placeholder' => $placeholder,
+			'description' => $description ?: sprintf(
+				/* translators: %s: zero placeholder */
+				_x( 'Displays as new-post title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
+				Core\HTML::code( '0' )
+			),
+		];
+	}
+
 	public static function getSetting_archive_content( $description = NULL )
 	{
 		return [
@@ -1038,6 +1053,18 @@ class Settings extends WordPress\Main
 			'type'        => 'select',
 			'title'       => _x( 'Archive Template', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'none_title'  => self::showOptionNone(),
+			'values'      => wp_get_theme()->get_page_templates(),
+		];
+	}
+
+	public static function getSetting_newpost_template( $description = NULL )
+	{
+		return [
+			'field'       => 'newpost_template',
+			'type'        => 'select',
+			'title'       => _x( 'New-post Template', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Used as page template on the new-post page.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'none_title'  => self::showOptionNone(),
 			'values'      => wp_get_theme()->get_page_templates(),
 		];
