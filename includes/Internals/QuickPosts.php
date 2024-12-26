@@ -39,50 +39,59 @@ trait QuickPosts
 
 		$this->actions( 'newpost_content_before_title', $posttype, $post, $target, $linked, $status, $meta );
 
-		$field = $this->classs( $posttype, 'title' );
-		$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
+		if ( $this->is_posttype_support( $posttype, 'title' ) ) {
 
-		$html = Core\HTML::tag( 'input', [
-			'type'        => 'text',
-			'class'       => 'large-text',
-			'id'          => $field,
-			'name'        => 'title',
-			'placeholder' => apply_filters( 'enter_title_here', $label, $post ),
-		] );
+			$field = $this->classs( $posttype, 'title' );
+			$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
 
-		Core\HTML::label( $html, $field );
+			$html = Core\HTML::tag( 'input', [
+				'type'        => 'text',
+				'class'       => 'large-text',
+				'id'          => $field,
+				'name'        => 'title',
+				'placeholder' => apply_filters( 'enter_title_here', $label, $post ),
+			] );
+
+			Core\HTML::label( $html, $field );
+		}
 
 		$this->actions( 'newpost_content_after_title', $posttype, $post, $target, $linked, $status, $meta );
 
-		$field = $this->classs( $posttype, 'excerpt' );
-		$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
+		if ( $this->is_posttype_support( $posttype, 'excerpt' ) ) {
 
-		$html = Core\HTML::tag( 'textarea', [
-			'id'           => $field,
-			'name'         => 'excerpt',
-			'placeholder'  => $label,
-			'class'        => [ 'mceEditor', 'large-text' ],
-			'rows'         => 2,
-			'cols'         => 15,
-			'autocomplete' => 'off',
-		], '' );
+			$field = $this->classs( $posttype, 'excerpt' );
+			$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
 
-		Core\HTML::label( $html, $field );
+			$html = Core\HTML::tag( 'textarea', [
+				'id'           => $field,
+				'name'         => 'excerpt',
+				'placeholder'  => $label,
+				'class'        => [ 'mceEditor', 'large-text' ],
+				'rows'         => 2,
+				'cols'         => 15,
+				'autocomplete' => 'off',
+			], '' );
 
-		$field = $this->classs( $posttype, 'content' );
-		$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'What&#8217;s on your mind?' ) );
+			Core\HTML::label( $html, $field );
+		}
 
-		$html = Core\HTML::tag( 'textarea', [
-			'id'           => $field,
-			'name'         => 'content',
-			'placeholder'  => $label,
-			'class'        => [ 'mceEditor', 'large-text' ],
-			'rows'         => 6,
-			'cols'         => 15,
-			'autocomplete' => 'off',
-		], '' );
+		if ( $this->is_posttype_support( $posttype, 'editor' ) ) {
 
-		Core\HTML::label( $html, $field );
+			$field = $this->classs( $posttype, 'content' );
+			$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'What&#8217;s on your mind?' ) );
+
+			$html = Core\HTML::tag( 'textarea', [
+				'id'           => $field,
+				'name'         => 'content',
+				'placeholder'  => $label,
+				'class'        => [ 'mceEditor', 'large-text' ],
+				'rows'         => 6,
+				'cols'         => 15,
+				'autocomplete' => 'off',
+			], '' );
+
+			Core\HTML::label( $html, $field );
+		}
 
 		if ( $object->hierarchical )
 			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
