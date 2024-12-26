@@ -173,6 +173,9 @@ class NationalLibrary extends gEditorial\Module
 		if ( $this->get_setting( 'wc_tabs' ) && ! is_admin() )
 			$this->filter( 'product_tabs', 1, 99, FALSE, 'woocommerce' );
 
+		$this->action( 'template_newpost_side', 6, 8, FALSE, $this->base );
+		$this->filter( 'meta_initial_bibliographic', 4, 8, FALSE, $this->base );
+		$this->filter( 'meta_initial_isbn', 4, 8, FALSE, $this->base );
 		$this->filter( 'lookup_isbn', 2, 20, FALSE, $this->base );
 		$this->filter_module( 'tabs', 'builtins_tabs', 2 );
 
@@ -456,6 +459,92 @@ class NationalLibrary extends gEditorial\Module
 			Core\HTML::tableSimple( $data, [], FALSE, 'base-table-double table table-bordered' ),
 			'-fipa-summary'
 		);
+	}
+
+	private function _render_primed_cache( $posttype )
+	{
+		if ( ! $this->_prime_current_request( $posttype ) )
+			return;
+
+		if ( ! empty( $this->cache[$posttype]['raw'] ) )
+			$this->_render_fipa_data( $this->cache[$posttype]['raw'] );
+
+		if ( ! Core\WordPress::isDev() )
+			return;
+
+		if ( empty( $this->cache[$posttype]['parsed'] ) )
+			return;
+
+		self::dump( $this->cache[$posttype]['parsed'] );
+
+		if ( ! empty( $this->cache[$posttype]['parsed']['bibliographic'] ) )
+			echo ModuleHelper::linkBib( $this->cache[$posttype]['parsed']['bibliographic'] );
+
+		echo '<br />';
+
+		if ( ! empty( $this->cache[$posttype]['parsed']['isbn'] ) )
+			echo ModuleHelper::linkISBN( $this->cache[$posttype]['parsed']['isbn'] );
+	}
+
+	private function _prime_current_request( $posttype )
+	{
+		if ( ! empty( $this->cache[$posttype]['raw'] ) )
+			return TRUE;
+
+		if ( $data = ModuleHelper::getFibaByBib( self::req( $this->_get_posttype_bib_metakey( $posttype ) ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else if ( $data = ModuleHelper::getFibaByISBN( self::req( $this->_get_posttype_isbn_metakey( $posttype ) ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else
+			return FALSE;
+
+		$this->cache[$posttype]['parsed'] = ModuleHelper::parseFipa( $this->cache[$posttype]['raw'] );
+
+		return TRUE;
+	}
+
+	public function template_newpost_side( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		$this->_render_primed_cache( $posttype );
+	}
+
+	public function meta_initial_bibliographic( $meta, $field, $post, $module )
+	{
+		if ( $meta )
+			return $meta;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $meta;
+
+		if ( ! $this->_prime_current_request( $post->post_type ) )
+			return $meta;
+
+		if ( ! empty( $this->cache[$post->post_type]['parsed']['bibliographic'] ) )
+			return $this->cache[$post->post_type]['parsed']['bibliographic'];
+
+		return $meta;
+	}
+
+	public function meta_initial_isbn( $meta, $field, $post, $module )
+	{
+		if ( $meta )
+			return $meta;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $meta;
+
+		if ( ! $this->_prime_current_request( $post->post_type ) )
+			return $meta;
+
+		if ( ! empty( $this->cache[$post->post_type]['parsed']['isbn'] ) )
+			return $this->cache[$post->post_type]['parsed']['isbn'];
+
+		return $meta;
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )

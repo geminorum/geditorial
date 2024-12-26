@@ -117,6 +117,8 @@ class ModuleHelper extends gEditorial\Helper
 				if ( ':' == $text )
 					continue;
 
+				$text = trim( $text, '.;:' );
+
 				if ( Core\Text::has( $text, "\n" ) ) {
 					// $row = array_merge( $row, explode( "\n", $text ) );
 					$row[] = nl2br( Core\Text::normalizeWhitespace( $text, TRUE ) );
@@ -145,5 +147,61 @@ class ModuleHelper extends gEditorial\Helper
 			return FALSE;
 
 		return self::scrapeFipaFromURL( self::scrapeURLFromISBN( $isbn ) );
+	}
+
+	public static function parseFipa( $raw )
+	{
+		$data = [];
+
+		foreach ( $raw as $row ) {
+
+			if ( empty( $row[1] ) )
+				continue;
+
+			$text = trim( $row[1], '.;:' );
+
+			switch ( $row[0] ) {
+
+				case 'عنوان قراردادی':
+
+					$data['title'] = $text;
+					break;
+
+				case 'رده بندی کنگره':
+
+					$data['llc'] = Core\Number::translate( $text );
+					break;
+
+				case 'رده بندی دیویی':
+
+					$data['ddc'] = Core\Number::translate( $text );
+					break;
+
+				case 'شابک':
+
+					$data['isbn'] = Core\Number::translate( str_ireplace( '-', '', $text ) );
+					// $data['isbn'] = Core\ISBN::sanitize( $text );
+					break;
+
+				case 'شماره کتابشناسی ملی':
+
+					$data['bibliographic'] = Core\Number::translate( $row[1] );
+					break;
+
+				case 'موضوع':
+
+					$text = str_ireplace( [ '--', '<br>', '<br/>', '<br />' ], '|', $text );
+					$text = str_ireplace( [ '*' ], '', $text );
+					$data['subject'] = WordPress\Strings::getSeparated( $text, '|' );
+					break;
+
+				case 'فروست':
+
+					$data['serie'] = $text;
+					break;
+			}
+		}
+
+		return $data;
 	}
 }
