@@ -63,8 +63,25 @@ class Drafts extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'meta_secret' => '_preview_secret',
+			'preview_query' => 'public-preview',
+			'meta_secret'   => '_preview_secret',
 		];
+	}
+
+	protected function get_global_strings()
+	{
+		$strings = [
+			'noops' => [
+				/* translators: %s: count */
+				'public_preview' => _n_noop(
+					'Public Preview <span class="count -counted">(%s)</span>',
+					'Public Previews <span class="count -counted">(%s)</span>',
+					'geditorial-drafts'
+				),
+			],
+		];
+
+		return $strings;
 	}
 
 	// @REF: https://core.trac.wordpress.org/ticket/43739
@@ -124,6 +141,7 @@ class Drafts extends gEditorial\Module
 					$this->filter( 'post_row_actions', 2 );
 				}
 
+				$this->_hook_posttype_views( $screen->post_type );
 				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 90 );
 			}
 		}
@@ -401,5 +419,52 @@ class Drafts extends gEditorial\Module
 			], _x( 'Has public preview link', 'Row', 'geditorial-drafts' ) );
 
 		echo $after;
+	}
+
+	private function _hook_posttype_views( $posttype )
+	{
+		add_filter( sprintf( 'views_edit-%s', $posttype ),
+			function ( $views ) use ( $posttype ) {
+
+				$ids = WordPress\PostType::getIDListByMetakey(
+					$this->constant( 'meta_secret' ), $posttype, [
+						'post_status' => 'draft',
+					] );
+
+				if ( ! $count = count( $ids ) )
+					return $views;
+
+				$query = $this->constant( 'preview_query' );
+
+				$views[$query] = sprintf(
+					'<a href="%s"%s>%s</a>',
+					Core\HTML::escapeURL( add_query_arg( [ 'post_type' => $posttype, $query => 1 ], 'edit.php' ) ),
+					'1' === self::req( $query ) ? ' class="current"  aria-current="page"' : '',
+					$this->nooped_count( 'public_preview', $count )
+				);
+
+				return $views;
+			} );
+
+		add_action( 'pre_get_posts',
+			function ( &$query ) {
+
+				if ( ! $query->is_admin || ! $query->is_main_query() )
+					return;
+
+				if ( '1' === self::req( $this->constant( 'preview_query' ) ) ) {
+
+					$meta_query = isset( $query->query_vars['meta_query'] )
+						? $query->query_vars['meta_query']
+						: [];
+
+					$meta_query[] = [
+						'key'     => $this->constant( 'meta_secret' ),
+						'compare' => 'EXISTS'
+					];
+
+					$query->set( 'meta_query', $meta_query );
+				}
+			} );
 	}
 }
