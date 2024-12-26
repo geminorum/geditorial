@@ -622,7 +622,7 @@ trait PostTypeFields
 		echo '</div>';
 	}
 
-	public function render_posttype_fields( $post, $box, $fields = NULL, $context = NULL )
+	public function render_posttype_fields( $post, $box = FALSE, $fields = NULL, $context = NULL, $before = '', $after = '' )
 	{
 		$user_id = get_current_user_id();
 
@@ -641,6 +641,8 @@ trait PostTypeFields
 			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
 
+			echo $before;
+
 			switch ( $args['type'] ) {
 
 				case 'european_shoe':
@@ -653,6 +655,8 @@ trait PostTypeFields
 					MetaBox::renderFieldSelect( $args, $post, $this->module->name );
 					break;
 
+				case 'title_before':
+				case 'title_after':
 				case 'text':
 				case 'datestring':
 				case 'year':
@@ -749,9 +753,14 @@ trait PostTypeFields
 					else
 						MetaBox::renderFieldSelect( $args, $post, $this->module->name );
 			}
+
+			echo $after;
 		}
 
-		$this->nonce_field( 'mainbox' );
+		if ( 'mainbox' !== $context )
+			return;
+
+		$this->nonce_field( $context );
 	}
 
 	// OLD: `store_metabox()`
@@ -820,17 +829,12 @@ trait PostTypeFields
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $posttype );
 
-		// $quickedit = array_filter( Core\Arraay::column( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ), 'type', 'name' ) );
-		$quickedits = Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] );
-
-		if ( ! count( $quickedits ) )
+		if ( ! $quickedits = Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) )
 			return FALSE;
 
 		$this->enqueue_asset_js( [
 			'fields' => Core\Arraay::pluck( $quickedits, 'type', 'name' ),
 		], $this->dotted( 'edit' ) );
-
-		Scripts::enqueueClickToClip();
 	}
 
 	protected function posttypefields__hook_setup_ajax( $posttype )

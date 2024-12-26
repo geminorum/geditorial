@@ -139,7 +139,7 @@ class NationalLibrary extends gEditorial\Module
 		];
 	}
 
-	private function _get_posttype_bib_metakey( $posttype )
+	private function _get_posttype_bib_metakey( $posttype, $fallback = NULL )
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_bib_metakey' ) )
 			return $setting;
@@ -147,10 +147,10 @@ class NationalLibrary extends gEditorial\Module
 		if ( $default = $this->filters( 'default_posttype_bib_metakey', '', $posttype ) )
 			return $default;
 
-		return $this->constant( 'metakey_bib_posttype' );
+		return $fallback ?? $this->constant( 'metakey_bib_posttype' );
 	}
 
-	private function _get_posttype_isbn_metakey( $posttype )
+	private function _get_posttype_isbn_metakey( $posttype, $fallback = NULL )
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_isbn_metakey' ) )
 			return $setting;
@@ -158,7 +158,7 @@ class NationalLibrary extends gEditorial\Module
 		if ( $default = $this->filters( 'default_posttype_isbn_metakey', '', $posttype ) )
 			return $default;
 
-		return $this->constant( 'metakey_isbn_posttype' );
+		return $fallback ?? $this->constant( 'metakey_isbn_posttype' );
 	}
 
 	public function init()
@@ -449,7 +449,6 @@ class NationalLibrary extends gEditorial\Module
 		if ( $html = $this->get_fipa( $post ) )
 			echo $this->wrap( $html, '-fipa-summary' );
 	}
-
 
 	private function _render_fipa_data( $data )
 	{

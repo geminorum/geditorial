@@ -994,6 +994,7 @@ class MetaBox extends WordPress\Main
 			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'placeholder' => $args['title'],
 			'class'       => [
+				'form-control',
 				sprintf( '%s-textarea', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
@@ -1064,6 +1065,7 @@ class MetaBox extends WordPress\Main
 			'pattern'     => $args['pattern'],
 			'placeholder' => $args['title'],
 			'class'       => [
+				'form-control',
 				sprintf( '%s-inputgeneral', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
@@ -1365,6 +1367,7 @@ class MetaBox extends WordPress\Main
 			'pattern'     => $args['pattern'],
 			// 'placeholder' => $args['title'],
 			'class'       => [
+				'form-control',
 				sprintf( '%s-inputnumber', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
@@ -1447,6 +1450,7 @@ class MetaBox extends WordPress\Main
 			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
+				'form-control',
 				sprintf( '%s-select', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
 				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
@@ -1717,12 +1721,13 @@ class MetaBox extends WordPress\Main
 		$meta = Template::getMetaFieldRaw( $field['name'], $post->ID, $module, FALSE, '' );
 
 		if ( '' === $meta
-			&& 'auto-draft' === $post->post_status
+			&& in_array( $post->post_status, [ 'draft', 'auto-draft' ], TRUE )
 			&& ( $metakey = Services\PostTypeFields::getPostMetaKey( $field['name'], $module ) ) ) {
 
 			// fills the meta by query data only on new posts
 			$meta = WordPress\Strings::kses( self::req( $metakey, '' ), 'none' );
 			$meta = Services\PostTypeFields::replaceTokens( $meta, $field, $post, 'raw' );
+			$meta = apply_filters( sprintf( '%s_%s_%s_%s', static::BASE, $module, 'initial', $field['name'] ), $meta, $field, $post, $module );
 		}
 
 		return $meta;

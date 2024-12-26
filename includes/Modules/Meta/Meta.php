@@ -9,6 +9,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
@@ -398,6 +399,8 @@ class Meta extends gEditorial\Module
 				$this->posttypefields__hook_edit_screen( $screen->post_type );
 				$this->posttypefields__enqueue_edit_screen( $screen->post_type, $fields );
 				$this->_hook_store_metabox( $screen->post_type, 'posttypefields' );
+
+				Scripts::enqueueClickToClip();
 			}
 		}
 	}

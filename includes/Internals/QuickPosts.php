@@ -114,7 +114,7 @@ trait QuickPosts
 				'target'   => $target,
 				'type'     => $posttype,
 				'linked'   => $linked,
-				'endpoint' => rest_url( sprintf( '/wp/v2/%s', $object->rest_base ) ), // TODO: use `rest_get_route_for_post_type_items()`
+				'endpoint' => rest_url( WordPress\PostType::getRestRoute( $object ) ),
 			],
 		], _x( 'Save Draft & Close', 'Module', 'geditorial-admin' ) );
 
