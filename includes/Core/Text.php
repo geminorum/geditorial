@@ -8,6 +8,9 @@ class Text extends Base
 	/**
 	 * Advanced version of `trim()`.
 	 *
+	 * - \u202e is the RIGHT-TO-LEFT OVERRIDE (RLO) character.
+	 * - \u202c is the POP DIRECTIONAL FORMATTING (PDF) character.
+	 *
 	 * @param  string $text
 	 * @return string $text
 	 */
@@ -15,8 +18,8 @@ class Text extends Base
 	{
 		$text = (string) $text;
 		// $text = trim( $text, " \n\t\r\0\x0B," );
-		$text = preg_replace( '/^[\s\x{200C}\x{200E}\x{200F}]/u', '', $text );
-		$text = preg_replace( '/[\s\x{200C}\x{200E}\x{200F}]$/u', '', $text );
+		$text = preg_replace( '/^[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u', '', $text );
+		$text = preg_replace( '/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]$/u', '', $text );
 		$text = trim( $text ); // OCD Only
 
 		if ( 0 === strlen( $text ) )
@@ -99,7 +102,7 @@ class Text extends Base
 		if ( empty( $text ) )
 			return '';
 
-		return self::trim( preg_replace( "/[\s\x{200C}\x{200E}\x{200F}]/u", '', $text ) );
+		return self::trim( preg_replace( "/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u", '', $text ) );
 	}
 
 	public static function splitAllSpaces( $text )
@@ -107,7 +110,7 @@ class Text extends Base
 		if ( empty( $text ) )
 			return [];
 
-		return array_filter( (array) preg_split( '/[\s\x{200C}\x{200E}\x{200F}]/u', $text ), 'strlen' );
+		return array_filter( (array) preg_split( '/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u', $text ), 'strlen' );
 	}
 
 	public static function splitNormalSpaces( $text )
@@ -1136,6 +1139,70 @@ class Text extends Base
 			$key.= $chr[( rand( 0, ( strlen( $chr ) - 1 ) ) )];
 
 		return md5( $salt.$key );
+	}
+
+	/**
+	 * Generates limited Hash string.
+	 * @author Kyle Coots
+	 * @source https://stackoverflow.com/a/15193543
+	 *
+	 * Allow you to create a unique hash with a maximum value of 32.
+	 * Hash Gen uses phps substr, md5, uniqid, and rand to generate a unique
+	 * id or hash and allow you to have some added functionality.
+	 *
+	 * You can also supply a hash to be prefixed or appened
+	 * to the hash. hash[optional] is by default appened to the hash
+	 * unless the param prefix[optional] is set to prefix[true].
+	 *
+	 * @param  int    $start
+	 * @param  int    $end
+	 * @param  bool   $hash
+	 * @param  bool   $prefix
+	 * @return string $hashed
+	 */
+	public static function hashLimited( $start = NULL, $end = 0, $hash = FALSE, $prefix = FALSE )
+	{
+		if ( isset( $start, $end ) && FALSE === $hash ) {
+
+			// start IS set NO hash
+
+			$md_hash  = substr( md5( uniqid (rand(), TRUE ) ), $start, $end );
+			$new_hash = $md_hash;
+
+		} else if ( isset( $start, $end ) && FALSE !== $hash && FALSE === $prefix ) {
+
+			// start IS set WITH hash NOT prefixing
+
+			$md_hash  = substr( md5( uniqid( rand(), TRUE ) ), $start, $end );
+			$new_hash = $md_hash.$hash;
+
+		} else if ( ! isset( $start, $end ) && FALSE !== $hash && FALSE === $prefix ) {
+
+			// start NOT set WITH hash NOT prefixing
+
+			$md_hash  = md5( uniqid( rand(), TRUE ) );
+			$new_hash = $md_hash.$hash;
+
+		} else if ( isset( $start, $end ) && FALSE !== $hash && TRUE === $prefix ) {
+
+			// start IS set WITH hash IS prefixing
+
+			$md_hash  = substr( md5( uniqid( rand(), TRUE ) ), $start, $end );
+			$new_hash = $hash.$md_hash;
+
+		} else if ( ! isset( $start, $end ) && FALSE !== $hash && TRUE === $prefix ) {
+
+			// start NOT set WITH hash IS prefixing
+
+			$md_hash  = md5( uniqid( rand(), TRUE ) );
+			$new_hash = $hash.$md_hash;
+
+		} else {
+
+			$new_hash = md5( uniqid( rand(), TRUE ) );
+		}
+
+		return $new_hash;
 	}
 
 	// @SOURCE: `_deep_replace()`

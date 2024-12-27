@@ -109,7 +109,7 @@ class HTML extends Base
 
 	public static function label( $input, $for = FALSE, $wrap = 'p' )
 	{
-		$html = self::tag( 'label', [ 'for' => $for ], $input );
+		$html = self::tag( 'label', [ 'for' => $for, 'class' => 'form-label' ], $input );
 		echo $wrap ? self::tag( $wrap, $html ) : $html;
 	}
 
@@ -539,6 +539,9 @@ class HTML extends Base
 
 	public static function tableSimple( $data, $columns = [], $verbose = TRUE, $class = '' )
 	{
+		if ( empty( $data ) )
+			return $verbose ? FALSE : '';
+
 		$html = '<div class="wrap-base-table-simple"><table class="'.self::prepClass( 'base-table-simple', $class ).'">';
 
 		if ( $columns && count( $columns ) ) {

@@ -539,4 +539,40 @@ class Post extends Core\Base
 
 		return FALSE;
 	}
+
+	/**
+	 * Returns default post information to use when populating the “Write Post” form.
+	 * @source `get_default_post_to_edit()`
+	 *
+	 * @param  string $posttype
+	 * @return object $post
+	 */
+	public static function defaultToEdit( $posttype )
+	{
+		$post                 = new \stdClass();
+		$post->ID             = 0;
+		$post->post_author    = '';
+		$post->post_date      = '';
+		$post->post_date_gmt  = '';
+		$post->post_password  = '';
+		$post->post_name      = '';
+		$post->post_type      = $posttype;
+		$post->post_status    = 'draft';
+		$post->to_ping        = '';
+		$post->pinged         = '';
+		$post->comment_status = get_default_comment_status( $posttype );
+		$post->ping_status    = get_default_comment_status( $posttype, 'pingback' );
+		$post->post_pingback  = get_option( 'default_pingback_flag' );
+		$post->post_category  = 0; // get_option( 'default_category' );
+		$post->page_template  = 'default';
+		$post->post_parent    = 0;
+		$post->menu_order     = 0;
+		$post                 = new \WP_Post( $post );
+
+		$post->post_title   = (string) apply_filters( 'default_title', esc_html( self::unslash( self::req( 'post_title' ) ) ), $post );
+		$post->post_content = (string) apply_filters( 'default_content', esc_html( self::unslash( self::req( 'content' ) ) ), $post );
+		$post->post_excerpt = (string) apply_filters( 'default_excerpt', esc_html( self::unslash( self::req( 'excerpt' ) ) ), $post );
+
+		return $post;
+	}
 }

@@ -364,7 +364,7 @@ class PostType extends Core\Base
 	}
 
 	// WTF: `WP_Query` does not support `id=>name` as fields
-	public static function getIDs( $posttype = 'post', $extra = [], $fields = NULL )
+	public static function getIDs( $posttype = 'any', $extra = [], $fields = NULL )
 	{
 		$args = array_merge( [
 			'fields'         => $fields ?? 'ids', // OR: `id=>parent`
@@ -384,14 +384,52 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
-	public static function getIDsBySearch( $string, $atts = [] )
+	/**
+	 * Retrieves lists of posts that have particular meta-key.
+	 *
+	 * @param  string       $metakey
+	 * @param  string|array $posttype
+	 * @param  array        $extra
+	 * @param  string       $fields
+	 * @return array        $posts
+	 */
+	public static function getIDListByMetakey( $metakey, $posttype = 'any', $extra = [], $fields = NULL )
+	{
+		if ( ! $metakey )
+			return [];
+
+		$args = array_merge( [
+			'fields'         => $fields ?? 'ids', // OR: `id=>parent`
+			'post_type'      => $posttype,
+			'post_status'    => Status::acceptable( $posttype ),
+			'posts_per_page' => -1,
+
+			'meta_query' => [ [
+				'key'     => $metakey,
+				'compare' => 'EXISTS'
+			] ],
+
+			'no_found_rows'          => TRUE,
+			'suppress_filters'       => TRUE,
+			'update_post_meta_cache' => FALSE,
+			'update_post_term_cache' => FALSE,
+			'lazy_load_term_meta'    => FALSE,
+		], $extra );
+
+		$query = new \WP_Query();
+
+		return (array) $query->query( $args );
+	}
+
+	public static function getIDsBySearch( $string, $atts = [], $columns = NULL, $fields = NULL )
 	{
 		$args = array_merge( [
 			's'              => $string,
-			'fields'         => 'ids',
+			'fields'         => $fields ?? 'ids', // OR: `id=>parent`
 			'post_type'      => 'any',
-			'post_status'    => 'any',
+			'post_status'    => Status::acceptable( 'any' ), // 'any',
 			'posts_per_page' => -1,
+			'search_columns' => $columns ?? '', // [ 'post_title', 'post_excerpt', 'post_content' ]
 
 			'no_found_rows'          => TRUE,
 			'suppress_filters'       => TRUE,
@@ -761,6 +799,7 @@ class PostType extends Core\Base
 
 	/**
 	 * Retrieves post-type rest route given post-type name or object.
+	 * @ref `rest_get_route_for_post_type_items()`
 	 *
 	 * @param  string       $posttype
 	 * @return false|string $route
@@ -773,7 +812,10 @@ class PostType extends Core\Base
 		if ( ! $object->show_in_rest )
 			return FALSE;
 
-		return sprintf( '/%s/%s', $object->rest_namespace, $object->rest_base );
+		$route = sprintf( '/%s/%s', $object->rest_namespace, $object->rest_base );
+
+		// NOTE: core filter
+		return apply_filters( 'rest_route_for_post_type_items', $route, $object );
 	}
 
 	/**

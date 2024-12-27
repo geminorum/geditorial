@@ -21,6 +21,22 @@ class Date extends Base
 	const MYSQL_EMPTY  = '0000-00-00 00:00:00';
 
 	/**
+	 * Retrieves the date in localized format, based on a sum of Unix
+	 * timestamp and timezone offset in seconds.
+	 *
+	 * NOTE: wrapper for `date_i18n()`
+	 *
+	 * @param  string   $format
+	 * @param  int|bool $timestamp_with_offset
+	 * @param  bool     $gmt
+	 * @return string   $date
+	 */
+	public static function get( $format, $timestamp_with_offset = FALSE, $gmt = FALSE )
+	{
+		return \date_i18n( $format, $timestamp_with_offset, $gmt );
+	}
+
+	/**
 	 * Parses a time string according to a specified format.
 	 * @ref https://www.php.net/manual/en/datetimeimmutable.createfromformat.php
 	 *
@@ -274,7 +290,7 @@ class Date extends Base
 			'datetime' => date( 'c', ( $gmt ?: $time ) ),
 			'title'    => $title,
 			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
-		], date_i18n( $format, $time ) );
+		], self::get( $format, $time ) );
 	}
 
 	// @REF: https://stackoverflow.com/a/43956977
@@ -598,7 +614,7 @@ class Date extends Base
 				return $args['tomorrow'];
 
 			if ( $day_diff < 4 )
-				return date_i18n( $args['format_l'], $timestamp );
+				return self::get( $args['format_l'], $timestamp );
 
 			if ( $day_diff < 7 + ( 7 - date( 'w' ) ) )
 				return $args['next_week'];
@@ -610,7 +626,7 @@ class Date extends Base
 				return $args['next_month'];
 		}
 
-		return date_i18n( $args['format_f_y'], $timestamp );
+		return self::get( $args['format_f_y'], $timestamp );
 	}
 
 	public static function parts( $i18n = FALSE, $gmt = FALSE )
@@ -619,7 +635,7 @@ class Date extends Base
 		$parts = [ 'year', 'month', 'day', 'hour', 'minute', 'second' ];
 
 		if ( $i18n )
-			$time = apply_filters( 'string_format_i18n_back', date_i18n( static::MYSQL_FORMAT, FALSE, $gmt ) );
+			$time = apply_filters( 'string_format_i18n_back', self::get( static::MYSQL_FORMAT, FALSE, $gmt ) );
 		else
 			$time = current_time( 'mysql', $gmt );
 
