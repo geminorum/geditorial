@@ -96,6 +96,19 @@ trait TemplatePostType
 
 			$template = WordPress\Theme::getTemplate( $this->get_setting( 'newpost_template' ) );
 
+			$this->enqueue_asset_js( [
+				'strings' => $this->get_strings( 'newpost_template', 'js_strings', [
+					'notarget' => _x( 'Cannot handle the target window!', 'Internal: Template Post-Type', 'geditorial-admin' ),
+					'willgo'   => _x( 'Your Draft save successfully. will redirect you in moments &hellip;', 'Internal: Template Post-Type', 'geditorial-admin' ),
+				] ),
+				'config' => [
+					'posttype' => $posttype,
+				],
+			], 'template.newpost', [
+				'jquery',
+				'wp-api-request',
+			], '_template' );
+
 		} else {
 
 			// if new posttype disabled
@@ -300,7 +313,7 @@ trait TemplatePostType
 		$meta = $this->filters( 'newpost_content_meta', $meta, $posttype, $target, $linked, $status );
 
 		echo $this->wrap_open( '-newpost-layout' );
-		echo '<div class="row"><div class="col-6"><form>';
+		echo '<div class="row"><div class="col-6"><form class="-form-form">';
 
 		do_action( $this->hook_base( 'template', 'newpost', 'beforetitle' ),
 			$posttype,
@@ -397,9 +410,12 @@ trait TemplatePostType
 
 		echo $this->wrap_open_buttons();
 
+		echo '<span class="-message"></span>';
+		echo gEditorial\Ajax::spinner();
+
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => [ 'btn', 'btn-primary', 'button', '-save-draft', 'd1isabled' ],
+			'class' => [ 'btn', 'btn-primary', 'button', '-form-save-draft', 'disabled' ],
 			'data'  => [
 				'target'   => $target,
 				'type'     => $posttype,
