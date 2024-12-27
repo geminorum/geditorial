@@ -920,8 +920,8 @@ class MetaBox extends WordPress\Main
 
 	public static function getFieldDefaults( $field, $module = NULL )
 	{
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		// if ( ! $module = $module ?? static::MODULE )
+		// 	return FALSE;
 
 		return [
 			'name'        => $field,
@@ -974,8 +974,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
@@ -1044,8 +1044,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
@@ -1344,8 +1344,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
@@ -1413,8 +1413,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$html     = '';
 		$args     = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
@@ -1499,8 +1499,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$html = '';
 		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
@@ -1557,8 +1557,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$html = '';
 		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
@@ -1612,8 +1612,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$html = '';
 		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
@@ -1667,8 +1667,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
 
 		$html = '';
 		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
