@@ -856,7 +856,9 @@ trait PostTypeFields
 		$this->action( 'quick_edit_custom_box', 2, 12, 'posttypefields' );
 		$this->filter( 'manage_posts_columns', 2, 15, 'posttypefields' );
 		$this->filter( 'manage_pages_columns', 1, 15, 'posttypefields' );
-		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column_posttypefields' ], 10, 2 );
+
+		add_action( 'manage_'.$posttype.'_posts_custom_column',
+			[ $this, 'posts_custom_column_posttypefields' ], 10, 2 );
 
 		$this->posttypefields__hook_default_rows( $posttype );
 	}

@@ -81,7 +81,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $body = Core\HTTP::getHTML( $search, [ 'timeout' => 30 ] ) )
 			return FALSE;
 
-		$dom = new \Rct567\DomQuery\DomQuery( trim( $body ) );
+		$dom = @new \Rct567\DomQuery\DomQuery( trim( $body ) );
 
 		if ( ! $brief = $dom->find( '[href^="/opac-prod/search/briefListSearch.do"]' )->attr( 'href' ) )
 			return FALSE;
@@ -98,7 +98,7 @@ class ModuleHelper extends gEditorial\Helper
 			return FALSE;
 
 		$data = [];
-		$dom  = new \Rct567\DomQuery\DomQuery( trim( $body ) );
+		$dom  = @new \Rct567\DomQuery\DomQuery( trim( $body ) );
 
 		foreach ( $dom->find( '.formcontent table table table' )->children('tr') as $tr ) {
 
@@ -151,7 +151,10 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function parseFipa( $raw )
 	{
-		$data = [];
+		$data = [
+			'note'    => [],
+			'subject' => [],
+		];
 
 		foreach ( $raw as $row ) {
 
@@ -161,6 +164,11 @@ class ModuleHelper extends gEditorial\Helper
 			$text = trim( $row[1], '.;:' );
 
 			switch ( $row[0] ) {
+
+				case 'يادداشت':
+
+					$data['note'][] = $text;
+					break;
 
 				case 'عنوان قراردادی':
 
@@ -192,7 +200,7 @@ class ModuleHelper extends gEditorial\Helper
 
 					$text = str_ireplace( [ '--', '<br>', '<br/>', '<br />' ], '|', $text );
 					$text = str_ireplace( [ '*' ], '', $text );
-					$data['subject'] = WordPress\Strings::getSeparated( $text, '|' );
+					$data['subject'] = Core\Arraay::prepString( $data['subject'], WordPress\Strings::getSeparated( $text, '|' ) );
 					break;
 
 				case 'فروست':

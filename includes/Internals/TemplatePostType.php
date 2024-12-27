@@ -306,11 +306,17 @@ trait TemplatePostType
 		$post     = WordPress\Post::defaultToEdit( $posttype );
 
 		if ( ! current_user_can( $object->cap->create_posts ) )
-			return ''; // Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
+			return Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
 
 		ob_start();
 
-		$meta = $this->filters( 'newpost_content_meta', $meta, $posttype, $target, $linked, $status );
+		$meta = $this->filters( $this->hook_base( 'template', 'newpost', 'meta' ),
+			$meta,
+			$posttype,
+			$target,
+			$linked,
+			$status
+		);
 
 		echo $this->wrap_open( '-newpost-layout' );
 		echo '<div class="row"><div class="col-6"><form class="-form-form">';
@@ -422,7 +428,7 @@ trait TemplatePostType
 				'linked'   => $linked,
 				'endpoint' => rest_url( WordPress\PostType::getRestRoute( $object ) ),
 			],
-		], _x( 'Save Draft', 'Module', 'geditorial-admin' ) );
+		], _x( 'Save Draft', 'Internal: Template Post-Type', 'geditorial-admin' ) );
 
 		echo '</p></form></div><div class="col-6">';
 

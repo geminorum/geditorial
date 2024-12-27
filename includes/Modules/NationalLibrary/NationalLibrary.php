@@ -424,7 +424,7 @@ class NationalLibrary extends gEditorial\Module
 	{
 		if ( $this->posttype_supported( $posttype ) )
 			$tabs[] = [
-				'name'        => $this->classs( 'fipa' ),
+				'name'        => $this->hook( 'fipa' ),
 				'title'       => _x( 'Fipa', 'Tab Title', 'geditorial-national-library' ),
 				'description' => _x( 'Exact Fipa data from The National Library.', 'Tab Description', 'geditorial-national-library' ),
 				'callback'    => [ $this, 'tab_callback_fipa_summary' ],
@@ -443,7 +443,7 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $this->get_bib( $post ) && ! $this->get_isbn( $post ) )
 			return FALSE;
 
-		return FALSE;
+		return TRUE;
 	}
 
 	// TODO: report error button on front-end

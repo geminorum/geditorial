@@ -915,7 +915,8 @@ class Template extends WordPress\Main
 			array_values( $rows ),
 			array_keys( $rows ),
 			TRUE,
-			'table table-bordered',
+			// 'table table-bordered',
+			'table',
 		];
 
 		if ( ! $html = self::buffer( $args['render'], $callback_args ) )

@@ -92,6 +92,7 @@ class Book extends gEditorial\Module
 				'empty_content',
 				'newpost_title',
 				'newpost_template',
+				'post_status',
 				'archive_title' => [ NULL, $this->get_posttype_label( 'publication_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
