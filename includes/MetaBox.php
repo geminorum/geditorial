@@ -990,7 +990,7 @@ class MetaBox extends WordPress\Main
 		$atts = [
 			// 'rows'        => '1',
 			// 'cols'        => '40',
-			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'        => self::_getNameAttr( $args, $module ),
 			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'placeholder' => $args['title'],
 			'class'       => [
@@ -1060,7 +1060,7 @@ class MetaBox extends WordPress\Main
 		$atts = [
 			'type'        => 'text',
 			'value'       => $value ?: '',
-			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'        => self::_getNameAttr( $args, $module ),
 			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'pattern'     => $args['pattern'],
 			'placeholder' => $args['title'],
@@ -1362,7 +1362,7 @@ class MetaBox extends WordPress\Main
 			'type'        => 'number',
 			'dir'         => 'ltr',
 			'value'       => $value ?: '',
-			'name'        => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'        => self::_getNameAttr( $args, $module ),
 			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'pattern'     => $args['pattern'],
 			// 'placeholder' => $args['title'],
@@ -1447,7 +1447,7 @@ class MetaBox extends WordPress\Main
 			], $value_label );
 
 		$atts = [
-			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				'form-control',
@@ -1576,7 +1576,7 @@ class MetaBox extends WordPress\Main
 			], WordPress\Post::title( $value ) );
 
 		$atts = [
-			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-searchselect-select2', static::BASE ),
@@ -1631,7 +1631,7 @@ class MetaBox extends WordPress\Main
 			], WordPress\Term::title( $value ) );
 
 		$atts = [
-			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-searchselect-select2', static::BASE ),
@@ -1688,7 +1688,7 @@ class MetaBox extends WordPress\Main
 				sprintf( _x( 'Unknown User #%s', 'MetaBox: Title Attr', 'geditorial' ), $value ) ) );
 
 		$atts = [
-			'name'  => sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				sprintf( '%s-searchselect-select2', static::BASE ),
@@ -1731,5 +1731,11 @@ class MetaBox extends WordPress\Main
 		}
 
 		return $meta;
+	}
+
+	private static function _getNameAttr( $field, $module )
+	{
+		$template = is_admin() ? '%1$s-%2$s-%3$s' : 'meta[_%2$s_%3$s]';
+		return sprintf( $template, static::BASE, $module, $field['name'] );
 	}
 }
