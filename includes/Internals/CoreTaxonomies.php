@@ -74,7 +74,7 @@ trait CoreTaxonomies
 		else if ( is_array( $args['rewrite'] ) )
 			$args['rewrite'] = array_merge( $rewrite, $args['rewrite'] );
 
-		$args['meta_box_cb'] = $this->determine_taxonomy_meta_box_cb( $constant, $args['meta_box_cb'] );
+		$args['meta_box_cb'] = $this->determine_taxonomy_meta_box_cb( $constant, $args['meta_box_cb'], $args['hierarchical'] );
 
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_taxonomy_labels( $constant );
@@ -452,7 +452,19 @@ trait CoreTaxonomies
 		if ( FALSE !== $box )
 			echo $this->wrap_open( '-admin-metabox' );
 
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
+
 			MetaBox::checklistTerms( $post->ID, $args );
+
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
 
 		if ( FALSE !== $box )
 			echo '</div>';
@@ -478,7 +490,19 @@ trait CoreTaxonomies
 		if ( FALSE !== $box )
 			echo $this->wrap_open( '-admin-metabox' );
 
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
+
 			MetaBox::checklistTerms( $post->ID, $args, $terms );
+
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
 
 		if ( FALSE !== $box )
 			echo '</div>';
@@ -503,7 +527,19 @@ trait CoreTaxonomies
 		if ( FALSE !== $box )
 			echo $this->wrap_open( '-admin-metabox' );
 
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
+
 			MetaBox::checklistTerms( $post->ID, $args );
+
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
 
 		if ( FALSE !== $box )
 			echo '</div>';
@@ -531,7 +567,19 @@ trait CoreTaxonomies
 		if ( FALSE !== $box )
 			echo $this->wrap_open( '-admin-metabox' );
 
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
+
 			MetaBox::singleselectTerms( $post->ID, $args );
+
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
 
 		if ( FALSE !== $box )
 			echo '</div>';
@@ -562,7 +610,19 @@ trait CoreTaxonomies
 		if ( FALSE !== $box )
 			echo $this->wrap_open( '-admin-metabox' );
 
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
+
 			MetaBox::singleselectTerms( $post->ID, $args );
+
+			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
+				$args['taxonomy'],
+				$post,
+				$box
+			);
 
 		if ( FALSE !== $box )
 			echo '</div>';
@@ -630,10 +690,15 @@ trait CoreTaxonomies
 	}
 
 	// TODO: integrate to `apply_taxonomy_object_settings()`
-	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL )
+	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL, $hierarchical = FALSE )
 	{
 		if ( ! $arg && method_exists( $this, 'meta_box_cb_'.$constant ) )
 			return [ $this, 'meta_box_cb_'.$constant ];
+
+		if ( is_null( $arg ) )
+			return $hierarchical
+				? [ $this, 'coretax__core_categories_metabox' ]
+				: [ $this, 'coretax__core_tags_metabox' ];
 
 		if ( ! $arg || is_array( $arg ) )
 			return $arg;
@@ -664,7 +729,7 @@ trait CoreTaxonomies
 		add_meta_box(
 			sprintf( $taxonomy->hierarchical ? '%sdiv' : 'tagsdiv-%s', $taxonomy->name ),
 			$taxonomy->labels->name,
-			$this->determine_taxonomy_meta_box_cb( $constant, $callback ?: FALSE ),
+			$this->determine_taxonomy_meta_box_cb( $constant, $callback ?: FALSE, $taxonomy->hierarchical ),
 			NULL,
 			'side',
 			'core',
@@ -701,12 +766,8 @@ trait CoreTaxonomies
 		}
 
 		$taxonomy = $this->constant( $constant );
-		$callback = $this->determine_taxonomy_meta_box_cb( $constant, $callback );
-
-		if ( is_null( $callback ) )
-			$callback = is_taxonomy_hierarchical( $taxonomy )
-				? 'post_categories_meta_box'
-				: 'post_tags_meta_box';
+		$callback = $this->determine_taxonomy_meta_box_cb(
+			$constant, $callback, is_taxonomy_hierarchical( $taxonomy ) );
 
 		add_action( $this->hook_base( 'metabox', $context ?? 'mainbox', $posttype ),
 			function ( $post, $box, $context, $screen ) use ( $taxonomy, $callback ) {
@@ -714,6 +775,57 @@ trait CoreTaxonomies
 			}, $priority, 4 );
 
 		return TRUE;
+	}
+
+	// TODO: apply hook on our own callbacks!
+	public function coretax__core_categories_metabox( $post, $box )
+	{
+		$taxonomy = empty( $box['args']['taxonomy'] ) ? 'category' : $box['args']['taxonomy'];
+
+		if ( FALSE !== $box )
+			echo $this->wrap_open( '-admin-metabox' );
+
+		do_action( $this->hook_base( $taxonomy, 'metabox', 'before' ),
+			$taxonomy,
+			$post,
+			$box
+		);
+
+		\post_categories_meta_box( $post, $box );
+
+		do_action( $this->hook_base( $taxonomy, 'metabox', 'after' ),
+			$taxonomy,
+			$post,
+			$box
+		);
+
+		if ( FALSE !== $box )
+			echo '</div>';
+	}
+
+	public function coretax__core_tags_metabox( $post, $box )
+	{
+		$taxonomy = empty( $box['args']['taxonomy'] ) ? 'post_tag' : $box['args']['taxonomy'];
+
+		if ( FALSE !== $box )
+			echo $this->wrap_open( '-admin-metabox' );
+
+		do_action( $this->hook_base( $taxonomy, 'metabox', 'before' ),
+			$taxonomy,
+			$post,
+			$box
+		);
+
+		\post_tags_meta_box( $post, $box );
+
+		do_action( $this->hook_base( $taxonomy, 'metabox', 'after' ),
+			$taxonomy,
+			$post,
+			$box
+		);
+
+		if ( FALSE !== $box )
+			echo '</div>';
 	}
 
 	protected function hook_taxonomy_parents_as_views( $screen, $constant, $setting = 'parents_as_views' )
