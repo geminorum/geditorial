@@ -3,6 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 trait PairedFront
@@ -56,5 +58,63 @@ trait PairedFront
 			return $link;
 
 		}, 9, 3 );
+	}
+
+	protected function pairedfront_hook__post_tabs( $priority = NULL )
+	{
+		if ( ! $constants = $this->paired_get_constants() )
+			return FALSE;
+
+		if ( ! gEditorial()->enabled( 'tabs' ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
+			function ( $tabs, $posttype ) use ( $constants, $priority ) {
+
+				if ( $posttype !== $this->constant( $constants[0] ) )
+					return $tabs;
+
+				foreach ( $this->posttypes() as $supported )
+					$tabs[] = [
+						'name' => $this->hook( 'supported', $supported ),
+
+						'title' => sprintf( is_admin() ? '%1$s: %2$s' : '%2$s',
+							$this->module->title,
+							Helper::getPostTypeLabel( $supported, 'extended_label' )
+						),
+
+						'description' => sprintf(
+							/* translators: %1$s: supported object label, %2$s: main post singular label */
+							_x( '%1$s items connected to this %2$s.', 'Internal: PairedFront: Tab Description', 'geditorial' ),
+							Helper::getPostTypeLabel( $supported, 'name' ),
+							Helper::getPostTypeLabel( $posttype, 'singular_name' ),
+						),
+
+						'viewable' => function ( $post ) use ( $supported, $constants ) {
+							return (bool) $this->paired_count_connected_to( $post, 'tabs', [], (array) $supported );
+						},
+
+						'callback' => function ( $post ) use ( $supported, $constants ) {
+
+							echo ShortCode::listPosts( 'paired',
+								$this->constant( $constants[0] ),
+								$this->constant( $constants[1] ),
+								[
+									// 'id'        => $post, // FIXME: uncomment after full checks on `ShortCode::listPosts()` changes on `id` arguments
+									'posttypes' => (array) $supported,
+									'context'   => 'tabs',
+									'wrap'      => FALSE,
+								],
+								NULL,
+								'',
+								$this->module->name
+							);
+						},
+
+						'priority' => $priority ?? 40,
+					];
+
+				return $tabs;
+			}, 10, 2 );
 	}
 }

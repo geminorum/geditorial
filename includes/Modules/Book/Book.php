@@ -25,6 +25,7 @@ class Book extends gEditorial\Module
 	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
+	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
@@ -512,6 +513,8 @@ class Book extends gEditorial\Module
 			] );
 
 			$this->_paired = $this->constant( 'publication_paired' );
+
+			$this->pairedfront_hook__post_tabs();
 		}
 
 		// FIXME: WTF: use `$this->paired_register()`
