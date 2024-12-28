@@ -175,7 +175,7 @@ class Tabs extends gEditorial\Module
 			return FALSE;
 
 		echo $this->wrap_open( 'post-tabs' );
-			ModuleTemplate::bootstrap5Tabs( $items, [ $post ], TRUE );
+			ModuleTemplate::bootstrap5Tabs( $items, $post );
 		echo '</div>';
 	}
 

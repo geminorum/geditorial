@@ -20,7 +20,7 @@ class ModuleTemplate extends gEditorial\Template
 	 * @param  bool   $verbose
 	 * @return string|true $html
 	 */
-	public static function bootstrap5Tabs( $items, $callback_args = [], $verbose = TRUE )
+	public static function bootstrap5Tabs( $items, $post = NULL, $callback_args = [], $verbose = TRUE )
 	{
 		if ( empty( $items ) )
 			return '';
@@ -70,7 +70,7 @@ class ModuleTemplate extends gEditorial\Template
 
 			else if ( isset( $item_args['callback'] ) )
 				$content = self::buffer( $item_args['callback'],
-					array_merge( (array) $callback_args, [ $item_name, $item_args ] ) );
+					array_merge( [ $post, $item_name, $item_args ], (array) $callback_args ) );
 
 			else
 				$content = '';
