@@ -34,9 +34,17 @@ class ModuleTemplate extends gEditorial\Template
 
 		foreach ( $items as $item_name => $item_args ) {
 
+			$title = apply_filters( sprintf( '%s_%s_%s', static::BASE, static::MODULE, 'item_title' ),
+				empty( $item_args['title'] ) ? $item_name : $item_args['title'],
+				$item_name,
+				$item_args,
+				$post
+			);
+
 			$html.= '<li class="nav-item" role="presentation">';
 
 			$html.= Core\HTML::tag( 'button', [
+				'title' => empty( $item_args['description'] ) ? FALSE : $item_args['description'],
 				'id'    => $item_name,
 				'type'  => 'button',
 				'role'  => 'tab',
@@ -50,7 +58,7 @@ class ModuleTemplate extends gEditorial\Template
 				],
 				'aria-controls' => $item_name.'-tab-pane',
 				'aria-selected' => 'true',
-			], empty( $item_args['title'] ) ? $item_name : $item_args['title'] );
+			], $title );
 
 			$html.= '</li>';
 		}
