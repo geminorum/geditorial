@@ -1,5 +1,3 @@
-/* global jQuery, gEditorial */
-
 (function ($, plugin, module, section) {
   const s = {
     headerEnd: '#wpbody-content div.wrap hr.wp-header-end',

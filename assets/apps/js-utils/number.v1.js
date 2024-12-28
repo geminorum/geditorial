@@ -1,5 +1,29 @@
 
 /**
+ * String to integer
+ * `'12345'`    => `12345`
+ * `'12345.67'` => `12345`
+ *
+ * @param {String} input
+ * @returns {Int}
+ */
+const toInt = (input) => {
+  return parseInt(input, 10);
+};
+
+/**
+ * String to decimal
+ * `'12345.67'` => `12345.67`
+ * `'12345'`    => `12345`
+ *
+ * @param {String} input
+ * @returns {Int}
+ */
+const toDecimal = (input) => {
+  return Number(input);
+};
+
+/**
  * Determine whether the given `input` is a number.
  * @source https://futurestud.io/tutorials/javascript-check-if-a-string-is-a-number
  * @SEE https://bobbyhadz.com/blog/javascript-check-if-character-in-string-is-number
@@ -85,6 +109,8 @@ const parseArabic = (input) => {
 };
 
 export {
+  toInt,
+  toDecimal,
   isArabic,
   parseArabic,
   formatNumber,

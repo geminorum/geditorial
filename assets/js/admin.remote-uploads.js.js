@@ -1,4 +1,4 @@
-/* global jQuery, gEditorial, plupload */
+/* global plupload */
 
 (function ($, plugin, module, section) {
   const s = {

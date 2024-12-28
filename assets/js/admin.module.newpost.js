@@ -37,7 +37,7 @@
             that.doSaveDraft($(this).data('endpoint'), $(this).data('target'));
           });
 
-        $(s.form).submit(function (event) {
+        $(s.form).on('submit', function (event) {
           event.preventDefault();
           if (that.request && that.request.state() === 'pending') return;
           $(s.save, s.wrap).trigger('click');
