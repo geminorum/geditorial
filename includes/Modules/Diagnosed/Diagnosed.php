@@ -77,6 +77,7 @@ class Diagnosed extends gEditorial\Module
 			'_frontend' => [
 				'contents_viewable',
 				'show_in_navmenus',
+				'tabs_support',
 			],
 		];
 	}
@@ -128,6 +129,10 @@ class Diagnosed extends gEditorial\Module
 					'desc'       => _x( 'Description', 'Field Label: `desc`', 'geditorial-diagnosed' ),
 				],
 			],
+		];
+
+		$strings['frontend'] = [
+			'tab_title' => _x( 'Medical', 'Tab Title', 'geditorial-diagnosed' ),
 		];
 
 		$strings['notices'] = [
@@ -231,6 +236,7 @@ class Diagnosed extends gEditorial\Module
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
+		$this->subcontent_hook__post_tabs();
 
 		if ( ! is_admin() )
 			return;

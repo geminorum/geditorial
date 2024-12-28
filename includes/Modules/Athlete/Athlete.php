@@ -80,6 +80,7 @@ class Athlete extends gEditorial\Module
 			'_frontend' => [
 				'contents_viewable',
 				'show_in_navmenus',
+				'tabs_support',
 			],
 			'_supports' => [
 				'shortcode_support',
@@ -139,6 +140,10 @@ class Athlete extends gEditorial\Module
 					'desc'     => _x( 'Description', 'Field Label: `desc`', 'geditorial-athlete' ),
 				],
 			],
+		];
+
+		$strings['frontend'] = [
+			'tab_title' => _x( 'Athletics', 'Tab Title', 'geditorial-athlete' ),
 		];
 
 		$strings['notices'] = [
@@ -306,6 +311,7 @@ class Athlete extends gEditorial\Module
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
+		$this->subcontent_hook__post_tabs();
 
 		if ( ! is_admin() )
 			return;

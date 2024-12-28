@@ -54,6 +54,9 @@ class Agenda extends gEditorial\Module
 			'_editpost' => [
 				'admin_rowactions',
 			],
+			'_frontend' => [
+				'tabs_support',
+			],
 			'_supports' => [
 				'shortcode_support',
 			],
@@ -89,6 +92,10 @@ class Agenda extends gEditorial\Module
 					'desc'       => _x( 'Description', 'Field Label: `desc`', 'geditorial-agenda' ),
 				],
 			],
+		];
+
+		$strings['frontend'] = [
+			'tab_title' => _x( 'Itineraries', 'Tab Title', 'geditorial-agenda' ),
 		];
 
 		$strings['notices'] = [
@@ -197,6 +204,7 @@ class Agenda extends gEditorial\Module
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
+		$this->subcontent_hook__post_tabs();
 
 		if ( ! is_admin() )
 			return;

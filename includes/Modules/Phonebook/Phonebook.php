@@ -58,6 +58,9 @@ class Phonebook extends gEditorial\Module
 			'_editpost' => [
 				'admin_rowactions',
 			],
+			'_frontend' => [
+				'tabs_support',
+			],
 			'_supports' => [
 				'shortcode_support',
 			],
@@ -91,6 +94,10 @@ class Phonebook extends gEditorial\Module
 					'address'  => _x( 'Address', 'Field Label: `address`', 'geditorial-phonebook' ),
 				],
 			],
+		];
+
+		$strings['frontend'] = [
+			'tab_title' => _x( 'Contacts', 'Tab Title', 'geditorial-phonebook' ),
 		];
 
 		$strings['notices'] = [
@@ -269,6 +276,7 @@ class Phonebook extends gEditorial\Module
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 11 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
+		$this->subcontent_hook__post_tabs();
 
 		if ( ! is_admin() )
 			return;

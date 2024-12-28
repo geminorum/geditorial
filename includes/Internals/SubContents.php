@@ -1042,6 +1042,43 @@ trait SubContents
 		return ShortCode::wrap( $html, $constant, $args );
 	}
 
+	protected function subcontent_hook__post_tabs( $priority = NULL )
+	{
+		if ( ! $this->get_setting( 'tabs_support', TRUE ) )
+			return FALSE;
+
+		if ( ! gEditorial()->enabled( 'tabs' ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
+			function ( $tabs, $posttype ) use ( $priority ) {
+
+				if ( $this->in_setting_posttypes( $posttype, 'subcontent' ) )
+					$tabs[] = [
+
+						'name'  => $this->hook( 'subcontent', $posttype ),
+						'title' => $this->get_string( 'tab_title', $posttype, 'frontend', $this->module->title ),
+
+						'viewable' => function ( $post ) {
+							return (bool) $this->subcontent_get_data_count( $post, 'tabs' );
+						},
+
+						'callback' => function ( $post ) {
+							echo $this->main_shortcode( [ // NOTE: allows for module override
+								'id'      => $post,
+								'context' => 'tabs',
+								'wrap'    => FALSE,
+								'title'   => FALSE,
+							], $this->subcontent_get_empty_notice( 'tabs' ) );
+						},
+
+						'priority' => $priority ?? 80,
+					];
+
+				return $tabs;
+			}, 10, 2 );
+	}
+
 	/**
 	 * Appends the table summary of subcontents for current supported.
 	 * @example `$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );`
