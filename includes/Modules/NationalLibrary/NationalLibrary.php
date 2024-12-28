@@ -304,9 +304,9 @@ class NationalLibrary extends gEditorial\Module
 		return $isbn;
 	}
 
-	public function get_fipa( $post = NULL, $fallback = FALSE )
+	public function get_fipa( $post = NULL, $fallback = FALSE, $raw = FALSE )
 	{
-		$key = $this->hash( $post->ID );
+		$key = $this->hash( 'fipa', $post->ID );
 
 		if ( Core\WordPress::isFlush() )
 			delete_transient( $key );
@@ -326,9 +326,20 @@ class NationalLibrary extends gEditorial\Module
 				set_transient( $key, $data, WEEK_IN_SECONDS );
 		}
 
+		if ( $raw )
+			return $data ?: $fallback;
+
 		return $data
 			? Core\HTML::tableSimple( $data, [], FALSE, 'table' )
 			: $fallback;
+	}
+
+	public function get_fipa_parsed( $post = NULL, $fallback = FALSE )
+	{
+		if ( ! $data = $this->get_fipa( $post, FALSE, TRUE ) )
+			return $fallback;
+
+		return ModuleHelper::parseFipa( $data );
 	}
 
 	public function posts_search_front( $search, $wp_query )
