@@ -708,9 +708,16 @@ class Book extends gEditorial\Module
 	{
 		$html = $this->get_search_form( 'publication_posttype' );
 
-		if ( gEditorial()->enabled( 'alphabet' ) )
+		// checks for taxonomy from `Yearly` Module
+		if ( in_array( 'year_span', get_object_taxonomies( $posttype ) ) )
+			$html.= ModuleTemplate::getSpanTiles( [
+				'taxonomy' => 'year_span',
+				'posttype' => $posttype,
+			] );
+
+		else if ( gEditorial()->enabled( 'alphabet' ) )
 			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
-				'post_type' => $posttype, // $this->constant( 'publication_posttype' )
+				'post_type' => $posttype,
 			] );
 
 		else
