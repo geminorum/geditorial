@@ -31,3 +31,18 @@ body {
   font-family: Vazirmatn,Tahoma,Iranian Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
   */
 }
+
+body.dropzone {
+  > .-title {
+    margin: 0;
+    font-size: large;
+    color: $gray-light;
+  }
+
+  > .-wrap.-close-button {
+    display: inline-block;
+    float: right;
+
+    // button {}
+  }
+}
