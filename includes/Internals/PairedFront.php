@@ -74,6 +74,47 @@ trait PairedFront
 		add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
 			function ( $tabs, $posttype ) use ( $constants, $priority ) {
 
+				if ( in_array( $posttype, $this->posttypes(), TRUE ) )
+					$tabs[] = [
+						'name' => $this->hook( 'paired', $posttype ),
+
+						'title' => sprintf( is_admin() ? '%1$s: %2$s' : '%2$s',
+							$this->module->title,
+							Helper::getPostTypeLabel( $this->constant( $constants[0] ), 'extended_label' )
+						),
+
+						'description' => sprintf(
+							/* translators: %1$s: supported object label, %2$s: main post singular label */
+							_x( '%1$s items connected to this %2$s.', 'Internal: PairedFront: Tab Description', 'geditorial' ),
+							Helper::getPostTypeLabel( $this->constant( $constants[0] ), 'name' ),
+							Helper::getPostTypeLabel( $posttype, 'singular_name' ),
+						),
+
+						'viewable' => function ( $post ) use ( $posttype, $constants ) {
+							return (bool) $this->paired_all_connected_from( $post, 'tabs' );
+						},
+
+						'callback' => function ( $post ) use ( $posttype, $constants ) {
+
+							echo ShortCode::listPosts( 'paired',
+								$this->constant( $constants[0] ),
+								$this->constant( $constants[1] ),
+								[
+									'id'        => $post,
+									'posttypes' => (array) $posttype,
+									'context'   => 'tabs',
+									'wrap'      => FALSE,
+									'title'     => FALSE,
+								],
+								NULL,
+								'',
+								$this->module->name
+							);
+						},
+
+						'priority' => $priority ?? 40,
+					];
+
 				if ( $posttype !== $this->constant( $constants[0] ) )
 					return $tabs;
 
@@ -103,10 +144,11 @@ trait PairedFront
 								$this->constant( $constants[0] ),
 								$this->constant( $constants[1] ),
 								[
-									// 'id'        => $post, // FIXME: uncomment after full checks on `ShortCode::listPosts()` changes on `id` arguments
+									'id'        => $post, // FIXME: uncomment after full checks on `ShortCode::listPosts()` changes on `id` arguments
 									'posttypes' => (array) $supported,
 									'context'   => 'tabs',
 									'wrap'      => FALSE,
+									'title'     => FALSE,
 								],
 								NULL,
 								'',
