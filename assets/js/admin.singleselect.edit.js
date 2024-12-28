@@ -1,4 +1,4 @@
-/* global jQuery, gEditorial, inlineEditPost */
+/* global inlineEditPost */
 
 (function ($, plugin, module, section) {
   if (plugin === 'undefined') return;
@@ -7,19 +7,40 @@
     // action: plugin._base + '_' + module,
     // classs: plugin._base + '-' + module
     table: '#the-list',
-    wrap: '#' + plugin._base + '-' + module + '-wrap',
+    quickedit: '#' + plugin._base + '-' + module + '-quickedit-wrap',
+    bulkedit: '#' + plugin._base + '-' + module + '-bulkedit-wrap',
     select: 'select#' + plugin._base + '-' + module + '-select-',
     value: 'div.' + plugin._base + '-' + module + '-value-'
   };
 
   const app = {
 
+    // @REF: https://rudrastyh.com/wordpress/quick-edit-tutorial.html
+    initBulk: function () {
+      const inlineEditPostSetBulk = inlineEditPost.setBulk;
+
+      // we overwrite the it with our own
+      inlineEditPost.setBulk = function () {
+        inlineEditPostSetBulk.apply(this); // let's merge arguments of the original function
+
+        // const editColLeft = $('fieldset.inline-edit-col-left', 'div.inline-edit-wrapper');
+        const editColCenter = $('fieldset.inline-edit-col-center', 'div.inline-edit-wrapper');
+        const wrap = $(s.bulkedit, '.inline-edit-row');
+        const list = wrap.data('taxonomies');
+
+        if (!list) return;
+
+        // wrap.appendTo(editColCenter[0]);
+        wrap.prependTo(editColCenter[0]);
+      };
+    },
+
     clicked: function () {
       inlineEditPost.revert(); // revert Quick Edit menu so that it refreshes properly
 
       const tagID = $(this).parents('tr').attr('id');
       const editColCenter = $('fieldset.inline-edit-categories', '.inline-edit-row');
-      const wrap = $(s.wrap, '.inline-edit-row');
+      const wrap = $(s.quickedit, '.inline-edit-row');
       const list = wrap.data('taxonomies');
 
       if (!list) return;
@@ -40,6 +61,7 @@
   };
 
   $(function () {
+    app.initBulk();
     $(s.table).on('click', '.editinline', app.clicked);
 
     // $(document).trigger('gEditorialReady', [module, app]);

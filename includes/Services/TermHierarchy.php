@@ -80,7 +80,6 @@ class TermHierarchy extends WordPress\Main
 				}
 			}, 1, 2 );
 
-
 		add_action( 'quick_edit_custom_box',
 			static function ( $column, $current ) use ( $posttype, $taxonomies ) {
 
@@ -89,49 +88,101 @@ class TermHierarchy extends WordPress\Main
 				if ( $added || $current !== $posttype )
 					return;
 
-				$html = '';
-
-				foreach ( $taxonomies as $taxonomy ) {
-
-					$args = [
-						'taxonomy'          => $taxonomy->name,
-						'hierarchical'      => $taxonomy->hierarchical,
-						'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
-						'value_field'       => $taxonomy->hierarchical ? 'term_id' : 'slug',
-						'name'              => 'tax_input['.$taxonomy->name.'][]',
-						'id'                => static::BASE.'-singleselect-select-'.$taxonomy->name,
-						'option_none_value' => '0',
-						'show_option_none'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' ),
-						'class'             => static::BASE.'-admin-dropbown -quickedit-custombox',
-						'show_count'        => FALSE,
-						'hide_empty'        => FALSE,
-						'hide_if_empty'     => TRUE,
-						'echo'              => FALSE,
-					];
-
-					if ( ! $dropdown = wp_dropdown_categories( $args ) )
-						continue;
-
-					$html.= sprintf( '<div title="%s">%s</div>',
-						Core\HTML::escapeAttr( Helper::getTaxonomyLabel( $taxonomy, 'extended_label' ) ), $dropdown );
-				}
-
-				if ( $html ) {
-					vprintf( '<div class="%s-admin-wrap-quickedit" id="%s-%s-wrap" data-taxonomies=\'%s\'>', [
-						static::BASE,
-						static::BASE,
-						'singleselect',
-						wp_json_encode( array_keys( Core\Arraay::pluck( $taxonomies, 'name' ) ) ),
-					] );
-
-					echo $html.'</div>';
-				}
+				self::_renderCustomBoxDropdowns( $taxonomies, FALSE );
 
 				$added = $column;
 
 			}, 1, 2 );
 
 		Scripts::enqueue( 'admin.singleselect.edit' );
+
+		if ( ! Core\WordPress::isWPcompatible( '6.3.0' ) )
+			return;
+
+		add_action( 'bulk_edit_posts',
+			static function ( $updated, $data ) use ( $posttype, $taxonomies ) {
+
+				if ( empty( $data[static::SINGLE_TERM_SELECT] ) || empty( $updated ) )
+					return;
+
+				$list = Core\Arraay::pluck( $taxonomies, 'name' );
+
+				foreach ( $data[static::SINGLE_TERM_SELECT] as $taxonomy => $terms ) {
+
+					if ( ! in_array( $taxonomy, $list, TRUE ) )
+						continue;
+
+					// skip `0`
+					if ( ! $single = reset( array_filter( $terms ) ) )
+						continue;
+
+					if ( $taxonomies[$taxonomy]->hierarchical )
+						$single = \intval( $single );
+
+					foreach ( $updated as $object_id )
+						wp_set_object_terms( (int) $object_id, $single, $taxonomy, FALSE );
+				}
+
+			}, 12, 2 );
+
+		add_action( 'bulk_edit_custom_box',
+			static function ( $column, $current ) use ( $posttype, $taxonomies ) {
+
+				static $added = FALSE;
+
+				if ( $added || $current !== $posttype )
+					return;
+
+				// NOTE: diffrent context
+				self::_renderCustomBoxDropdowns( $taxonomies, TRUE );
+
+				$added = $column;
+
+			}, 1, 2 );
+	}
+
+	private static function _renderCustomBoxDropdowns( $taxonomies, $bulkedit = FALSE )
+	{
+		$html = '';
+
+		foreach ( $taxonomies as $taxonomy ) {
+
+			$args = [
+				'taxonomy'          => $taxonomy->name,
+				'hierarchical'      => $taxonomy->hierarchical,
+				'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
+				'value_field'       => $taxonomy->hierarchical ? 'term_id' : 'slug',
+				// 'name'              => 'tax_input['.$taxonomy->name.'][]',
+				'name'              => sprintf( '%s[%s][]', $bulkedit ? static::SINGLE_TERM_SELECT : 'tax_input', $taxonomy->name ),
+				'id'                => static::BASE.'-singleselect-select-'.$taxonomy->name,
+				'option_none_value' => '0',
+				'show_option_none'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' ),
+				'class'             => static::BASE.'-admin-dropbown '.( $bulkedit ? '-bulkedit-custombox' : '-quickedit-custombox' ),
+				'show_count'        => FALSE,
+				'hide_empty'        => FALSE,
+				'hide_if_empty'     => TRUE,
+				'echo'              => FALSE,
+			];
+
+			if ( ! $dropdown = wp_dropdown_categories( $args ) )
+				continue;
+
+			$html.= sprintf( '<div title="%s">%s</div>',
+				Core\HTML::escapeAttr( Helper::getTaxonomyLabel( $taxonomy, 'extended_label' ) ), $dropdown );
+		}
+
+		if ( $html ) {
+			vprintf( '<div class="%s-admin-wrap-%s" id="%s-%s-%s-wrap" data-taxonomies=\'%s\'>', [
+				static::BASE,
+				$bulkedit ? 'bulkedit' : 'quickedit',
+				static::BASE,
+				'singleselect',
+				$bulkedit ? 'bulkedit' : 'quickedit',
+				wp_json_encode( array_keys( Core\Arraay::pluck( $taxonomies, 'name' ) ) ),
+			] );
+
+			echo $html.'</div>';
+		}
 	}
 
 	/**
