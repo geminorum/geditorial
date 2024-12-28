@@ -119,6 +119,11 @@ trait CorePostTypes
 			'custom_captype'   => FALSE,
 			'primary_taxonomy' => NULL,
 			'status_taxonomy'  => NULL,
+
+			'slug_disabled'     => NULL, // TODO hide on quickedit/remove metabox
+			'date_disabled'     => NULL, // TODO hide on quickedit
+			'author_disabled'   => NULL, // TODO hide on quickedit
+			'password_disabled' => TRUE, // TODO: hide on quickedit
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {

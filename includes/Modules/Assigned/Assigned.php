@@ -151,7 +151,8 @@ class Assigned extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 		], NULL, [
-			'custom_captype' => TRUE,
+			'custom_captype'  => TRUE,
+			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

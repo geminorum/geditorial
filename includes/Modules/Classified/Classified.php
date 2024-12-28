@@ -51,6 +51,10 @@ class Classified extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
+			'_editpost' => [
+				'metabox_advanced',
+				'selectmultiple_term' => [ NULL, TRUE ],
+			],
 			'_editlist' => [
 				'admin_restrict',
 				'auto_term_parents',
@@ -117,6 +121,7 @@ class Classified extends gEditorial\Module
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
+			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,
 			'single_selected' => TRUE,
 		] );

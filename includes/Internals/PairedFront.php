@@ -62,6 +62,9 @@ trait PairedFront
 
 	protected function pairedfront_hook__post_tabs( $priority = NULL )
 	{
+		if ( ! $this->get_setting( 'tabs_support', TRUE ) )
+			return FALSE;
+
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 

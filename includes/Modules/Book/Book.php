@@ -83,6 +83,7 @@ class Book extends gEditorial\Module
 				'count_not',
 			],
 			'_frontend' => [
+				'tabs_support',
 				'insert_content',
 				'insert_cover',
 				'insert_priority',

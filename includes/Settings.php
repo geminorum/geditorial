@@ -463,6 +463,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_tabs_support( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'tabs_support',
+			'title'       => _x( 'Tabs Support', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: '',
+			'default'     => $default ?? '1',
+		];
+	}
+
 	public static function getSetting_woocommerce_support( $description = NULL, $default = NULL )
 	{
 		return [

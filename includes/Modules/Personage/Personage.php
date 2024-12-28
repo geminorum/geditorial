@@ -366,6 +366,11 @@ class Personage extends gEditorial\Module
 			'custom_captype'   => $captype,
 			'primary_taxonomy' => TRUE,
 			'status_taxonomy'  => TRUE,
+
+			'slug_disabled'     => TRUE,
+			'date_disabled'     => TRUE,
+			'author_disabled'   => TRUE,
+			'password_disabled' => TRUE,
 		] );
 
 		$this->filter( 'the_title', 2, 8 );

@@ -75,20 +75,6 @@ class NationalLibrary extends gEditorial\Module
 				'placeholder' => $isbn_metakey,
 				'default'     => $isbn_metakey,
 			];
-
-			// avoid tabs on WooCommerce Products
-			if ( $woocommerce && in_array( $posttype_name, (array) $products, TRUE ) )
-				continue;
-
-			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_support_tab',
-				'title' => sprintf(
-					/* translators: %s: supported object label */
-					_x( 'Support Tab for %s', 'Setting Title', 'geditorial-national-library' ),
-					'<i>'.$posttype_label.'</i>'
-				),
-				'description' => _x( 'Select to display data as tab for the post-type.', 'Setting Description', 'geditorial-national-library' ),
-			];
 		}
 
 		$settings['_supports'] = [
@@ -109,6 +95,7 @@ class NationalLibrary extends gEditorial\Module
 		];
 
 		$settings['_frontend'] = [
+			'tabs_support',
 			[
 				'field'       => 'front_search',
 				'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-national-library' ),
@@ -170,14 +157,16 @@ class NationalLibrary extends gEditorial\Module
 		if ( $this->get_setting( 'front_search' ) && ( ! is_admin() || Core\WordPress::isAJAX() ) )
 			$this->filter( 'posts_search', 2, 8, 'front' );
 
-		if ( $this->get_setting( 'wc_tabs' ) && ! is_admin() )
+		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )
 			$this->filter( 'product_tabs', 1, 99, FALSE, 'woocommerce' );
 
 		$this->action( 'template_newpost_side', 6, 8, FALSE, $this->base );
 		$this->filter( 'meta_initial_bibliographic', 4, 8, FALSE, $this->base );
 		$this->filter( 'meta_initial_isbn', 4, 8, FALSE, $this->base );
 		$this->filter( 'lookup_isbn', 2, 20, FALSE, $this->base );
-		$this->filter_module( 'tabs', 'builtins_tabs', 2 );
+
+		if ( $this->get_setting( 'tabs_support', TRUE ) )
+			$this->filter_module( 'tabs', 'builtins_tabs', 2 );
 
 		$this->register_shortcode( 'main_shortcode' );
 	}

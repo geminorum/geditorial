@@ -121,6 +121,7 @@ class Yearly extends gEditorial\Module
 			'data_length'        => _x( '4', 'Main Taxonomy Argument: `data_length`', 'geditorial-yearly' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
 			'custom_captype'  => TRUE,
 			'reverse_ordered' => 'name',
 		] );

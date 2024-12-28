@@ -780,7 +780,7 @@ trait PostTypeFields
 		$this->store_posttype_fields( $post );
 	}
 
-	public function bulk_edit_posts_posttypefields( $updated, $shared_post_data )
+	public function bulk_edit_posts_posttypefields( $updated, $data )
 	{
 		foreach ( $updated as $post_id )
 			$this->store_posttype_fields( WordPress\Post::get( $post_id ), FALSE );
