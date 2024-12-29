@@ -115,14 +115,15 @@ class Ranged extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype' => 'shooting_session',
-			'primary_taxonomy' => 'shooting_category',
-			'primary_paired'   => 'shootings',
-			'primary_subterm'  => 'shooting_level',
-			'program_taxonomy' => 'shooting_program',
-			'span_taxonomy'    => 'shooting_span',
-			'type_taxonomy'    => 'shooting_type',
-			'status_taxonomy'  => 'shooting_status',
+			'primary_posttype'  => 'shooting_session',
+			'primary_taxonomy'  => 'shooting_category',
+			'primary_paired'    => 'shootings',
+			'primary_subterm'   => 'shooting_level',
+			'program_taxonomy'  => 'shooting_program',
+			'position_taxonomy' => 'shooting_position',
+			'span_taxonomy'     => 'shooting_span',
+			'type_taxonomy'     => 'shooting_type',
+			'status_taxonomy'   => 'shooting_status',
 		];
 	}
 
@@ -146,14 +147,15 @@ class Ranged extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype' => _n_noop( 'Shooting Session', 'Shooting Sessions', 'geditorial-ranged' ),
-				'primary_paired'   => _n_noop( 'Shooting Session', 'Shooting Sessions', 'geditorial-ranged' ),
-				'primary_taxonomy' => _n_noop( 'Shooting Category', 'Shooting Categories', 'geditorial-ranged' ),
-				'primary_subterm'  => _n_noop( 'Shooting Level', 'Shooting Levels', 'geditorial-ranged' ),
-				'program_taxonomy' => _n_noop( 'Shooting Program', 'Shooting Programs', 'geditorial-ranged' ),
-				'span_taxonomy'    => _n_noop( 'Shooting Span', 'Shooting Spans', 'geditorial-ranged' ),
-				'type_taxonomy'    => _n_noop( 'Shooting Type', 'Shooting Types', 'geditorial-ranged' ),
-				'status_taxonomy'  => _n_noop( 'Shooting Status', 'Shooting Statuses', 'geditorial-ranged' ),
+				'primary_posttype'  => _n_noop( 'Shooting Session', 'Shooting Sessions', 'geditorial-ranged' ),
+				'primary_paired'    => _n_noop( 'Shooting Session', 'Shooting Sessions', 'geditorial-ranged' ),
+				'primary_taxonomy'  => _n_noop( 'Shooting Category', 'Shooting Categories', 'geditorial-ranged' ),
+				'primary_subterm'   => _n_noop( 'Shooting Level', 'Shooting Levels', 'geditorial-ranged' ),
+				'program_taxonomy'  => _n_noop( 'Shooting Program', 'Shooting Programs', 'geditorial-ranged' ),
+				'position_taxonomy' => _n_noop( 'Shooting Position', 'Shooting Positions', 'geditorial-ranged' ),
+				'span_taxonomy'     => _n_noop( 'Shooting Span', 'Shooting Spans', 'geditorial-ranged' ),
+				'type_taxonomy'     => _n_noop( 'Shooting Type', 'Shooting Types', 'geditorial-ranged' ),
+				'status_taxonomy'   => _n_noop( 'Shooting Status', 'Shooting Statuses', 'geditorial-ranged' ),
 			],
 			'labels' => [
 				'primary_posttype' => [
@@ -169,6 +171,9 @@ class Ranged extends gEditorial\Module
 				],
 				'program_taxonomy' => [
 					'menu_name' => _x( 'Programs', 'Label: Menu Name', 'geditorial-ranged' ),
+				],
+				'position_taxonomy' => [
+					'menu_name' => _x( 'Positions', 'Label: Menu Name', 'geditorial-ranged' ),
 				],
 				'span_taxonomy' => [
 					'menu_name' => _x( 'Spans', 'Label: Menu Name', 'geditorial-ranged' ),
@@ -214,6 +219,14 @@ class Ranged extends gEditorial\Module
 				'intermediate' => _x( 'Intermediate', 'Subterm Taxonomy: Default Term', 'geditorial-ranged' ),
 				'advanced'     => _x( 'Advanced', 'Subterm Taxonomy: Default Term', 'geditorial-ranged' ),
 				'special'      => _x( 'Special', 'Subterm Taxonomy: Default Term', 'geditorial-ranged' ),
+			],
+			'position_taxonomy' => [
+				// @REF: https://www.mossyoak.com/our-obsession/blogs/how-to/4-shooting-positions-every-hunter-should-know-and-master
+				'prone'     => _x( 'Prone', 'Position Taxonomy: Default Term', 'geditorial-ranged' ),
+				'sitting'   => _x( 'Sitting', 'Position Taxonomy: Default Term', 'geditorial-ranged' ),
+				'kneeling'  => _x( 'Kneeling', 'Position Taxonomy: Default Term', 'geditorial-ranged' ),
+				'standing'  => _x( 'Standing', 'Position Taxonomy: Default Term', 'geditorial-ranged' ),
+				'freestyle' => _x( 'Free-style', 'Position Taxonomy: Default Term', 'geditorial-ranged' ),
 			],
 			'status_taxonomy' => [
 				// TODO: finish the list
@@ -397,6 +410,15 @@ class Ranged extends gEditorial\Module
 			'custom_captype' => $captype,
 		] );
 
+		$this->register_taxonomy( 'position_taxonomy', [
+			'hierarchical'      => TRUE,
+			'meta_box_cb'       => '__checklist_terms_callback',
+			'show_admin_column' => TRUE,
+		], 'primary_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+		] );
+
 		$this->register_taxonomy( 'span_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
@@ -500,6 +522,7 @@ class Ranged extends gEditorial\Module
 					'primary_taxonomy',
 					'primary_subterm',
 					'program_taxonomy',
+					'position_taxonomy',
 					'span_taxonomy',
 					'type_taxonomy',
 					'status_taxonomy',
