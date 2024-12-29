@@ -740,7 +740,9 @@ class Book extends gEditorial\Module
 		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'publication_posttype' ),
 			$this->constant( 'subject_taxonomy' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'subject_shortcode', $tag ),
 			$this->key
@@ -752,7 +754,9 @@ class Book extends gEditorial\Module
 		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'publication_posttype' ),
 			$this->constant( 'serie_taxonomy' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'serie_shortcode', $tag ),
 			$this->key
@@ -768,6 +772,7 @@ class Book extends gEditorial\Module
 			$this->constant( 'publication_posttype' ),
 			'',
 			array_merge( [
+				'post_id'       => NULL,
 				'connection'    => $this->_p2p,
 				'posttypes'     => $this->get_setting( 'p2p_posttypes', [] ),
 				'title_cb'      => [ $this, 'shortcode_title_cb' ],

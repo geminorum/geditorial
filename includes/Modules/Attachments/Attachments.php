@@ -297,7 +297,7 @@ class Attachments extends gEditorial\Module
 			'attachment',
 			'',
 			array_merge( [
-				'id'            => NULL,
+				'post_id'       => NULL,
 				'title'         => _x( 'Attachments', 'Shortcode', 'geditorial-attachments' ),
 				/* translators: %s: attachment parent title */
 				'title_title'   => _x( 'Attachments of %s', 'Shortcode', 'geditorial-attachments' ),

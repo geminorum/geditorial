@@ -462,10 +462,11 @@ class Collect extends gEditorial\Module
 			$this->constant( 'collection_posttype' ),
 			$this->constant( 'collection_paired' ),
 			array_merge( [
+				'post_id'     => NULL,
 				'posttypes'   => $this->posttypes(),
-				'order_cb'    => NULL, // NULL for default ordering by meta
-				'orderby'     => 'order', // order by meta
-				'order_order' => 'in_collection_order', // meta field for ordering
+				'order_cb'    => NULL,                    // NULL for default ordering by meta
+				'orderby'     => 'order',                 // order by meta
+				'order_order' => 'in_collection_order',   // meta field for ordering
 			], (array) $atts ),
 			$content,
 			$this->constant( 'collection_shortcode', $tag ),
@@ -478,7 +479,9 @@ class Collect extends gEditorial\Module
 		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'collection_posttype' ),
 			$this->constant( 'group_taxonomy' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'group_shortcode' )
 		);

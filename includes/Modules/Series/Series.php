@@ -367,6 +367,7 @@ class Series extends gEditorial\Module
 			'post',
 			$this->constant( 'main_taxonomy' ),
 			array_merge( [
+				'post_id'     => NULL,
 				'title_after' => '<div class="-desc">%3$s</div>',
 				'item_wrap'   => 'h4',
 				'item_after'  => TRUE, // see the callback

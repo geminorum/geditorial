@@ -100,7 +100,7 @@ trait PairedFront
 								$this->constant( $constants[0] ),
 								$this->constant( $constants[1] ),
 								[
-									'id'        => $post,
+									'post_id'   => $post,
 									'posttypes' => (array) $posttype,
 									'context'   => 'tabs',
 									'wrap'      => FALSE,
@@ -144,7 +144,7 @@ trait PairedFront
 								$this->constant( $constants[0] ),
 								$this->constant( $constants[1] ),
 								[
-									'id'        => $post, // FIXME: uncomment after full checks on `ShortCode::listPosts()` changes on `id` arguments
+									'post_id'   => $post,
 									'posttypes' => (array) $supported,
 									'context'   => 'tabs',
 									'wrap'      => FALSE,

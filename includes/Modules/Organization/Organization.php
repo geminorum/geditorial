@@ -520,7 +520,9 @@ class Organization extends gEditorial\Module
 		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'primary_subterm' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'subterm_shortcode', $tag ),
 			$this->key

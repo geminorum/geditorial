@@ -277,7 +277,9 @@ class Quotation extends gEditorial\Module
 		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'primary_taxonomy' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'main_shortcode', $tag ),
 			$this->key

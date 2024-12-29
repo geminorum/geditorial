@@ -148,6 +148,7 @@ class Suited extends gEditorial\Module
 			'post',
 			$this->constant( 'main_taxonomy' ),
 			array_merge( [
+				'post_id'   => NULL,
 				'posttypes' => $this->posttypes(),
 			], (array) $atts ),
 			$content,

@@ -388,6 +388,7 @@ class Contest extends gEditorial\Module
 			$this->constant( 'contest_posttype' ),
 			$this->constant( 'contest_paired' ),
 			array_merge( [
+				'post_id'   => NULL,
 				'posttypes' => $this->posttypes(),
 				'orderby'   => 'menu_order',
 			], (array) $atts ),

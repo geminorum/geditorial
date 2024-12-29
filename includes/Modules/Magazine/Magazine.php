@@ -442,11 +442,12 @@ class Magazine extends gEditorial\Module
 			$this->constant( 'issue_posttype' ),
 			$this->constant( 'issue_paired' ),
 			array_merge( [
+				'post_id'     => NULL,
 				'posttypes'   => $this->posttypes(),
-				'order_cb'    => NULL, // NULL for default ordering by meta
-				'orderby'     => 'order', // order by meta
-				'order_start' => 'in_issue_page_start', // meta field for ordering
-				'order_order' => 'in_issue_order', // meta field for ordering
+				'order_cb'    => NULL,                    // NULL for default ordering by meta
+				'orderby'     => 'order',                 // order by meta
+				'order_start' => 'in_issue_page_start',   // meta field for ordering
+				'order_order' => 'in_issue_order',        // meta field for ordering
 			], (array) $atts ),
 			$content,
 			$this->constant( 'issue_shortcode', $tag ),
@@ -459,7 +460,9 @@ class Magazine extends gEditorial\Module
 		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'issue_posttype' ),
 			$this->constant( 'span_taxonomy' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'span_shortcode' )
 		);

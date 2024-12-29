@@ -416,7 +416,9 @@ class Tube extends gEditorial\Module
 		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'video_posttype' ),
 			$this->constant( 'category_video' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'category_video_shortcode', $tag ),
 			$this->key
@@ -428,7 +430,9 @@ class Tube extends gEditorial\Module
 		return ShortCode::listPosts( 'assigned',
 			$this->constant( 'channel_posttype' ),
 			$this->constant( 'category_channel' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'category_channel_shortcode', $tag ),
 			$this->key

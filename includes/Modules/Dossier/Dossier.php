@@ -468,11 +468,12 @@ class Dossier extends gEditorial\Module
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'primary_paired' ),
 			array_merge( [
+				'post_id'     => NULL,
 				'posttypes'   => $this->posttypes(),
-				'order_cb'    => NULL, // NULL for default ordering by meta
-				'orderby'     => 'order', // order by meta
-				// 'order_start' => 'in_dossier_page_start', // meta field for ordering
-				'order_order' => 'in_dossier_order', // meta field for ordering
+				'order_cb'    => NULL,                      // NULL for default ordering by meta
+				'orderby'     => 'order',                   // order by meta
+				// 'order_start' => 'in_dossier_page_start',   // meta field for ordering
+				'order_order' => 'in_dossier_order',        // meta field for ordering
 			], (array) $atts ),
 			$content,
 			$this->constant( 'dossier_shortcode', $tag ),
@@ -485,7 +486,9 @@ class Dossier extends gEditorial\Module
 		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'span_taxonomy' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'span_shortcode' )
 		);

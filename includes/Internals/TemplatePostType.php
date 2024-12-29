@@ -216,8 +216,8 @@ trait TemplatePostType
 				'',
 				[
 					'context' => 'template_posttype',
-					'orderby' => 'menu_order', // WTF: must apply to `assigned`
-					'id'      => 'all',
+					'orderby' => 'menu_order',          // WTF: must apply to `assigned`
+					'term_id' => 'all',
 					'future'  => 'off',
 					'title'   => FALSE,
 					'wrap'    => FALSE,

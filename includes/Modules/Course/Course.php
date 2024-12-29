@@ -442,6 +442,7 @@ class Course extends gEditorial\Module
 			$this->constant( 'course_posttype' ),
 			$this->constant( 'course_paired' ),
 			array_merge( [
+				'post_id'   => NULL,
 				'posttypes' => $this->posttypes(),
 				'orderby'   => 'menu_order',
 			], (array) $atts ),
@@ -456,7 +457,9 @@ class Course extends gEditorial\Module
 		return Shortcode::listPosts( 'assigned',
 			$this->constant( 'course_posttype' ),
 			$this->constant( 'span_taxonomy' ),
-			$atts,
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
 			$content,
 			$this->constant( 'span_shortcode' )
 		);

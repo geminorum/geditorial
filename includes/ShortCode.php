@@ -760,7 +760,9 @@ class ShortCode extends WordPress\Main
 			'taxonomies'          => $taxonomies,
 			'posttype'            => $posttype,
 			'posttypes'           => $posttypes,
-			'id'                  => '',
+			'post_id'             => '',
+			'term_id'             => '',
+			'id'                  => '', // DEPRECATED
 			'slug'                => '',
 			'title'               => NULL,                                                            // FALSE to disable
 			'title_cb'            => FALSE,
@@ -880,7 +882,7 @@ class ShortCode extends WordPress\Main
 			$query['post_type'] = 'attachment';
 			$query['post_status'] = [ 'inherit' ];
 
-			if ( $parent = WordPress\Post::get( $args['id'] ) )
+			if ( $parent = WordPress\Post::get( $args['post_id'] ) )
 				$query['post_parent'] = $parent->ID;
 
 			if ( $args['mime_type'] )
@@ -895,7 +897,7 @@ class ShortCode extends WordPress\Main
 
 				$query['post_type'] = $posttype;
 
-			} else if ( $post = WordPress\Post::get( $args['id'] ) ) {
+			} else if ( $post = WordPress\Post::get( $args['post_id'] ) ) {
 
 				$query['connected_type']  = $args['connection'];
 				$query['connected_items'] = $post;
@@ -905,17 +907,17 @@ class ShortCode extends WordPress\Main
 				return $content;
 			}
 
-		} else if ( 'all' == $args['id'] ) {
+		} else if ( 'all' === $args['id'] || 'all' === $args['term_id'] ) {
 
 			if ( $posttype && empty( $query['post_type'] ) )
 				$query['post_type'] = $posttype;
 
-		} else if ( $args['id'] ) {
+		} else if ( $args['id'] || $args['term_id'] ) {
 
 			if ( ! $taxonomy )
 				return $content;
 
-			if ( ! $term = get_term_by( 'id', $args['id'], $taxonomy ) )
+			if ( ! $term = get_term_by( 'id', $args['term_id'] ?: $args['id'], $taxonomy ) )
 				return $content;
 
 			$query['tax_query'] = [ [
@@ -954,7 +956,7 @@ class ShortCode extends WordPress\Main
 
 			// gets the list of supported posts paired to this post
 
-			if ( ! $post = WordPress\Post::get() )
+			if ( ! $post = WordPress\Post::get( $args['post_id'] ?: NULL ) )
 				return $content;
 
 			if ( $args['module'] ) {
@@ -1002,7 +1004,7 @@ class ShortCode extends WordPress\Main
 				return $content;
 			}
 
-			if ( ! $paired_posts = gEditorial()->module( $args['module'] )->paired_all_connected_from( NULL, 'query', 'ids' ) )
+			if ( ! $paired_posts = gEditorial()->module( $args['module'] )->paired_all_connected_from( $args['post_id'] ?: NULL, 'query', 'ids' ) )
 				return $content;
 
 			$query['post_type']           = $posttype;      // override with main posttype
@@ -1013,7 +1015,7 @@ class ShortCode extends WordPress\Main
 
 			// gets the list of posts by the taxonomy
 
-			if ( ! $post = WordPress\Post::get() )
+			if ( ! $post = WordPress\Post::get( $args['post_id'] ?: NULL ) )
 				return $content;
 
 			// NOTE: also used later!
@@ -1051,7 +1053,7 @@ class ShortCode extends WordPress\Main
 		if ( 'assigned' == $list ) {
 
 			if ( is_null( $args['title'] ) )
-				$args['title'] = 'all' === $args['id']
+				$args['title'] = ( 'all' === $args['id'] || 'all' === $args['term_id'] )
 					? self::posttypeTitle( $posttype, $args )
 					: self::termTitle( $term, $taxonomy, $args );
 

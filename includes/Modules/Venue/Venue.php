@@ -388,6 +388,7 @@ class Venue extends gEditorial\Module
 			$this->constant( 'place_posttype' ),
 			$this->constant( 'place_paired' ),
 			array_merge( [
+				'post_id'   => NULL,
 				'posttypes' => $this->posttypes(),
 				'orderby'   => 'menu_order',
 			], (array) $atts ),

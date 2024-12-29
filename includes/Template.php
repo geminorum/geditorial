@@ -1043,7 +1043,7 @@ class Template extends WordPress\Main
 				$args['posttype'],
 				$args['taxonomy'],
 				[
-					'id'              => $term_id,
+					'term_id'         => $term_id,
 					'wrap'            => FALSE,
 					'future'          => 'off',
 					'list_class'      => '-tiles',
