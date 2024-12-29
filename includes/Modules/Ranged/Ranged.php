@@ -284,6 +284,48 @@ class Ranged extends gEditorial\Module
 					'total_days'   => [ 'type' => 'day' ,   'data_unit' => 'day'    ],
 					'total_hours'  => [ 'type' => 'hour',   'data_unit' => 'hour'   ],
 					'total_people' => [ 'type' => 'person', 'data_unit' => 'person' ],
+
+					'total_targets' => [
+						'title'       => _x( 'Total Targets', 'Field Title', 'geditorial-ranged' ),
+						'description' => _x( 'Total Number of Target Cards', 'Field Description', 'geditorial-ranged' ),
+						'type'        => 'number',
+						'data_unit'   => 'card',
+					],
+
+					'total_lines' => [
+						'title'       => _x( 'Total Lines', 'Field Title', 'geditorial-ranged' ),
+						'description' => _x( 'Total Number of Firing Lines', 'Field Description', 'geditorial-ranged' ),
+						'type'        => 'number',
+						'data_unit'   => 'line',
+					],
+
+					'distance_in_meter' => [
+						'title'       => _x( 'Firing Distance', 'Field Title', 'geditorial-ranged' ),
+						'description' => _x( 'Firing Distance in Meters', 'Field Description', 'geditorial-ranged' ),
+						'type'        => 'number', // NOTE: better not `distance` type
+						'data_unit'   => 'meter',
+					],
+
+					'free_shots' => [
+						'title'       => _x( 'Free Shots', 'Field Title', 'geditorial-ranged' ),
+						'description' => _x( 'Number of shots attempts for adjusting.', 'Field Description', 'geditorial-ranged' ),
+						'type'        => 'number',
+						'data_unit'   => 'shot',
+					],
+
+					'sighting_shots' => [
+						'title'       => _x( 'Sighting Shots', 'Field Title', 'geditorial-ranged' ),
+						'description' => _x( 'Number of shots attempts for adjusting on the target.', 'Field Description', 'geditorial-ranged' ),
+						'type'        => 'number',
+						'data_unit'   => 'shot',
+					],
+
+					'grading_shots' => [
+						'title'       => _x( 'Grading Shots', 'Field Title', 'geditorial-ranged' ),
+						'description' => _x( 'Number of shots attempts for grading.', 'Field Description', 'geditorial-ranged' ),
+						'type'        => 'number',
+						'data_unit'   => 'shot',
+					],
 				],
 			],
 		];

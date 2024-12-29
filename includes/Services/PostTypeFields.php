@@ -190,7 +190,7 @@ class PostTypeFields extends WordPress\Main
 				case 'date'    : return 'calendar';
 				case 'time'    : return 'clock';
 				case 'datetime': return 'calendar-alt';
-				case 'distance': return 'image-crop';
+				case 'distance': return 'image-flip-vertical';
 				case 'duration': return 'clock';
 				case 'area'    : return 'fullscreen-alt';
 				case 'day'     : return 'backup';
@@ -482,7 +482,24 @@ class PostTypeFields extends WordPress\Main
 			}
 		}
 
-		// NOTE: third priority: general field
+		// NOTE: third priority: data unit
+		if ( ! empty( $field['data_unit']  ) ) {
+
+			switch ( $field['data_unit'] ) {
+
+				case 'shot':
+				case 'line':
+				case 'card':
+				case 'meter':
+
+					return sprintf( Helper::noopedCount( $raw ?: $value,
+						Info::getNoop( $field['data_unit'] ) ),
+						Core\Number::format( $raw ?: $value )
+					);
+			}
+		}
+
+		// NOTE: fourth priority: general field
 		switch ( $field_key ) {
 			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
 			case 'desc'       : return WordPress\Strings::prepDescription( $raw ?: $value );
@@ -490,7 +507,7 @@ class PostTypeFields extends WordPress\Main
 			case 'contact'    : return Helper::prepContact( $raw ?: $value );
 		}
 
-		// NOTE: fourth priority: last resort
+		// NOTE: fifth priority: last resorts
 		if ( array_key_exists( 'ltr', $field ) && $field['ltr'] )
 			return sprintf( '<span dir="ltr">%s</span>', Core\HTML::escape( trim( $value ) ) );
 

@@ -251,6 +251,22 @@ class Units extends gEditorial\Module
 				);
 		}
 
+		switch ( $field_args['data_unit'] ) {
+
+			case 'shot':
+			case 'line':
+			case 'card':
+			case 'meter':
+
+				if ( 'export' === $context )
+					return trim( $raw );
+
+				return sprintf( Helper::noopedCount( trim( $raw ),
+					Info::getNoop( $field_args['data_unit'] ) ),
+					Core\Number::format( trim( $raw ) )
+				);
+		}
+
 		return $meta;
 	}
 

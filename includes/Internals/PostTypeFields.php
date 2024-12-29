@@ -662,7 +662,7 @@ trait PostTypeFields
 				case 'year':
 				case 'date':
 				case 'datetime':
-				case 'distance':
+				case 'distance': // @SEE https://github.com/lvivier/meters/blob/master/index.js
 				case 'duration':
 				case 'area':
 				case 'identity':

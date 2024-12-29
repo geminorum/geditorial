@@ -416,6 +416,7 @@ class Info extends WordPress\Main
 			case 'day'          : return [ _x( 'Days', 'Info: Unit', 'geditorial' ), _x( 'days', 'Info: Unit', 'geditorial' ) ];
 			case 'hour'         : return [ _x( 'Hours', 'Info: Unit', 'geditorial' ), _x( 'hours', 'Info: Unit', 'geditorial' ) ];
 			case 'week'         : return [ _x( 'Weeks', 'Info: Unit', 'geditorial' ), _x( 'weeks', 'Info: Unit', 'geditorial' ) ];
+			case 'year'         : return [ _x( 'Years', 'Info: Unit', 'geditorial' ), _x( 'years', 'Info: Unit', 'geditorial' ) ];
 			case 'gram'         : return [ _x( 'Grams', 'Info: Unit', 'geditorial' ), _x( 'g', 'Info: Unit', 'geditorial' ) ];
 			case 'kilogram'     : return [ _x( 'Kilograms', 'Info: Unit', 'geditorial' ), _x( 'kg', 'Info: Unit', 'geditorial' ) ];
 			case 'milimeter'    : return [ _x( 'Milimeters', 'Info: Unit', 'geditorial' ), _x( 'mm', 'Info: Unit', 'geditorial' ) ];
@@ -426,6 +427,9 @@ class Info extends WordPress\Main
 			case 'european'     : return [ _x( 'European', 'Info: Unit', 'geditorial' ), _x( 'eu', 'Info: Unit', 'geditorial' ) ];
 			case 'international': return [ _x( 'International', 'Info: Unit', 'geditorial' ), _x( 'int', 'Info: Unit', 'geditorial' ) ];
 			case 'person'       : return [ _x( 'Persons', 'Info: Unit', 'geditorial' ), _x( 'persons', 'Info: Unit', 'geditorial' ) ];
+			case 'card'         : return [ _x( 'Cards', 'Info: Unit', 'geditorial' ), _x( 'cards', 'Info: Unit', 'geditorial' ) ];
+			case 'line'         : return [ _x( 'Lines', 'Info: Unit', 'geditorial' ), _x( 'lines', 'Info: Unit', 'geditorial' ) ];
+			case 'shot'         : return [ _x( 'Shots', 'Info: Unit', 'geditorial' ), _x( 'shots', 'Info: Unit', 'geditorial' ) ];
 		}
 
 		return [ $fallback, $fallback, $fallback ];
@@ -614,6 +618,21 @@ class Info extends WordPress\Main
 			case 'km_per_hour':
 				/* translators: %s: unit amount */
 				return _nx_noop( '%s Kilometer per Hour', '%s Kilometers per Hour', 'Info: Noop', 'geditorial' );
+
+			case 'card':
+			case 'cards':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Card', '%s Cards', 'Info: Noop', 'geditorial' );
+
+			case 'line':
+			case 'lines':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Line', '%s Lines', 'Info: Noop', 'geditorial' );
+
+			case 'shot':
+			case 'shots':
+				/* translators: %s: unit amount */
+				return _nx_noop( '%s Shot', '%s Shots', 'Info: Noop', 'geditorial' );
 		}
 
 		return $fallback;
