@@ -37,18 +37,17 @@ class Isbn extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_supports'        => [
 				'shortcode_support',
-				'woocommerce_support' => [
-					_x( 'Select to display data on product attributes.', 'Setting Description', 'geditorial-isbn' ),
-				],
+				'woocommerce_support',
 			],
 			'_content' => [
 				[
-					'field'       => 'default_posttype',
-					'type'        => 'select',
-					'title'       => _x( 'Default Post-Type', 'Setting Title', 'geditorial-isbn' ),
-					'description' => _x( 'Defines the default post-type to create new posts with queried data on front-end.', 'Setting Description', 'geditorial-isbn' ),
-					'none_title'  => Settings::showOptionNone(),
-					'values'      => $this->list_posttypes(),
+					'field'        => 'default_posttype',
+					'type'         => 'select',
+					'title'        => _x( 'Default Post-Type', 'Setting Title', 'geditorial-isbn' ),
+					'description'  => _x( 'Defines the default post-type to create new posts with queried data on front-end.', 'Setting Description', 'geditorial-isbn' ),
+					'string_empty' => _x( 'Define supported post-types first!', 'Setting Description', 'geditorial-isbn' ),
+					'none_title'   => Settings::showOptionNone(),
+					'values'       => $this->list_posttypes() ?: FALSE,
 				],
 			],
 		];
@@ -134,6 +133,12 @@ class Isbn extends gEditorial\Module
 		];
 	}
 
+	protected function posttypes_excluded( $extra = [] )
+	{
+		return $this->filters( 'posttypes_excluded',
+			Settings::posttypesExcluded( $extra + (array) WordPress\WooCommerce::getProductPosttype() ) );
+	}
+
 	public function meta_init()
 	{
 		$this->add_posttype_fields_supported();
@@ -158,7 +163,17 @@ class Isbn extends gEditorial\Module
 		if ( ! $this->get_setting( 'woocommerce_support' ) )
 			return;
 
+		$this->_add_posttype_fields_woocommerce();
 		$this->filter( 'display_product_attributes', 2, 99, FALSE, 'woocommerce' );
+	}
+
+	private function _add_posttype_fields_woocommerce()
+	{
+		$fields = $this->fields['meta']['_supported'];
+		unset( $fields['isbn'] ); // default on wc is `_global_unique_id`
+
+		foreach ( (array) WordPress\WooCommerce::getProductPosttype() as $posttype )
+			$this->add_posttype_fields( $posttype, $fields );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -182,6 +197,8 @@ class Isbn extends gEditorial\Module
 		if ( $args['raw'] && $data = Core\ISBN::sanitize( $args['raw'] ) )
 			$html = Info::lookupISBN( $data );
 
+		// TODO: support WooCommerce
+
 		else if ( $post = WordPress\Post::get( $args['id'] ) )
 			$html = Services\PostTypeFields::getField( $args['field'] ?? 'isbn', [ 'id' => $post ] );
 
@@ -189,6 +206,20 @@ class Isbn extends gEditorial\Module
 			return $content;
 
 		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+	}
+
+	private function _get_main_isbn_metakey( $posttype, $fallback = FALSE )
+	{
+		if ( $this->posttype_woocommerce( $posttype ) )
+			return WordPress\WooCommerce::getGTINMetakey();
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $fallback;
+
+		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
+			return $metakey;
+
+		return $fallback;
 	}
 
 	public function book_editform_meta_summary( $fields, $post )
@@ -207,40 +238,25 @@ class Isbn extends gEditorial\Module
 
 	public function national_library_default_posttype_bib_metakey( $default, $posttype )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'bibliographic', 'meta' ) )
-			return $metakey;
+		if ( $this->posttype_supported( $posttype ) || $this->posttype_woocommerce( $posttype ) )
+			return Services\PostTypeFields::getPostMetaKey( 'bibliographic', 'meta' ) ?: $default;
 
 		return $default;
 	}
 
 	public function national_library_default_posttype_isbn_metakey( $default, $posttype )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
+		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
 
 	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
+		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
 
 	public function datacodes_default_posttype_barcode_type( $default, $posttype, $types )
 	{
-		if ( $this->posttype_supported( $posttype ) )
+		if ( $this->posttype_supported( $posttype ) || $this->posttype_woocommerce( $posttype ) )
 			return ModuleHelper::BARCODE;
 
 		return $default;
@@ -283,13 +299,7 @@ class Isbn extends gEditorial\Module
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
+		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
 
 	public function identified_default_posttype_identifier_type( $default, $posttype )
@@ -319,13 +329,7 @@ class Isbn extends gEditorial\Module
 
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
-			return $default;
-
-		if ( $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
-			return $metakey;
-
-		return $default;
+		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
 
 	// NOTE: late overrides of the fields values and keys
@@ -350,6 +354,12 @@ class Isbn extends gEditorial\Module
 	public function display_product_attributes( $attributes, $product )
 	{
 		$post_id = $product->get_id();
+
+		if ( $gtin = $product->get_global_unique_id() )
+			$attributes[$this->classs( 'gtin' )] = [
+				'label' => _x( 'GTIN', 'Field Title', 'geditorial-isbn' ),
+				'value' => Info::lookupISBN( $gtin ),
+			];
 
 		if ( $isbn = Services\PostTypeFields::getField( 'isbn', [ 'id' => $post_id ] ) )
 			$attributes[$this->classs( 'primary' )] = [
