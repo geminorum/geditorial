@@ -307,6 +307,9 @@ class Isbn extends gEditorial\Module
 		if ( $this->posttype_supported( $posttype ) )
 			return 'isbn';
 
+		if ( $this->posttype_woocommerce( $posttype ) )
+			return 'gtin';
+
 		return $default;
 	}
 

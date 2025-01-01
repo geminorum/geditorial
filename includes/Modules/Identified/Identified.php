@@ -708,6 +708,7 @@ class Identified extends gEditorial\Module
 	private function _search_criteria_discovery( $search, $type )
 	{
 		switch ( $type ) {
+			case 'gtin'    : return Core\ISBN::discovery( $search );
 			case 'isbn'    : return Core\ISBN::discovery( $search );
 			case 'mobile'  : return Core\Mobile::sanitize( $search );
 			case 'identity': return Core\Validation::sanitizeIdentityNumber( $search );
@@ -803,7 +804,11 @@ class Identified extends gEditorial\Module
 			add_rewrite_rule( '^'.$type.'/([^/]*)/?', 'index.php?'.$type.'=$matches[1]', 'top' );
 
 			foreach ( $supported as $posttype => $metakey )
-				add_rewrite_rule( '^'.$posttype.'/'.$type.'/([^/]*)/?', 'index.php?post_type='.$posttype.'&'.$type.'=$matches[1]', 'top' );
+				add_rewrite_rule(
+					sprintf( '^%s/%s/([^/]*)/?', $posttype, $type ),
+					sprintf( 'index.php?%s=$matches[1]&post_type=%s', $type, $posttype ),
+					'top'
+				);
 
 			$queryable = TRUE;
 		}
