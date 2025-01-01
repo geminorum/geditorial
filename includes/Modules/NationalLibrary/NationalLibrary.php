@@ -37,7 +37,6 @@ class NationalLibrary extends gEditorial\Module
 		$settings    = [];
 		$posttypes   = $this->list_posttypes();
 		$woocommerce = WordPress\WooCommerce::isActive();
-		$products    = WordPress\WooCommerce::getProductPosttype();
 
 		$settings['posttypes_option'] = 'posttypes_option';
 
@@ -398,6 +397,7 @@ class NationalLibrary extends gEditorial\Module
 		return $meta;
 	}
 
+	// NOTE: `priority` does not applied on this filter!
 	public function product_tabs( $tabs )
 	{
 		global $product;
@@ -405,19 +405,79 @@ class NationalLibrary extends gEditorial\Module
 		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
 			return $tabs;
 
-		if ( ! $this->tab_viewable_fipa_summary( $product ) )
+		if ( ! $html = $this->get_product_fipa( $product ) )
 			return $tabs;
 
-		$tabs[$this->classs( 'fipa' )] = [
-			'title'    => _x( 'Fipa', 'Tab Title', 'geditorial-national-library' ),
-			'priority' => 60,
-			'callback' => function () use ( $product ) {
-				if ( $html = $this->get_fipa( $product ) )
-					echo $this->wrap( $html, '-fipa-summary' );
-			},
-		];
+		return Core\Arraay::insert( $tabs, [
+			$this->classs( 'fipa' ) => [
+				'title'    => _x( 'Fipa', 'Tab Title', 'geditorial-national-library' ),
+				// 'priority' => 18,
+				'callback' => function () use ( $html ) {
+					echo $html;
+				},
+			],
+		], 'additional_information', 'after' );
+	}
 
-		return $tabs;
+	public function get_product_fipa( $product, $fallback = FALSE, $raw = FALSE )
+	{
+		$key = $this->hash( 'fipa', 'product', $product->get_id() );
+
+		if ( Core\WordPress::isFlush() )
+			delete_transient( $key );
+
+		if ( FALSE === ( $data = get_transient( $key ) ) ) {
+
+			$type = WordPress\WooCommerce::getProductPosttype();
+
+			if ( $bib = $this->get_product_bib( $product, $type ) )
+				$data = ModuleHelper::getFibaByBib( $bib );
+
+			else if ( $isbn = $this->get_product_isbn( $product, $type ) )
+				$data = ModuleHelper::getFibaByISBN( $isbn );
+
+			else
+				$data = NULL; // avoid repeatable requests
+
+			if ( FALSE !== $data )
+				set_transient( $key, $data, WEEK_IN_SECONDS );
+		}
+
+		if ( $raw )
+			return $data ?: $fallback;
+
+		return $data
+			? Core\HTML::tableSimple( $data, [], FALSE, 'table' )
+			: $fallback;
+	}
+
+	public function get_product_bib( $product = NULL, $type = NULL )
+	{
+		if ( ! $product = wc_get_product( $product ) )
+			return FALSE;
+
+		if ( ! $metakey = $this->_get_posttype_bib_metakey( $type ?? WordPress\WooCommerce::getProductPosttype() ) )
+			return FALSE;
+
+		if ( ! $bib = $product->get_meta( $metakey, TRUE, 'edit' ) )
+			return FALSE;
+
+		return $bib;
+	}
+
+	// NOTE: falls back to product GTIN
+	public function get_product_isbn( $product = NULL, $type = NULL )
+	{
+		if ( ! $product = wc_get_product( $product ) )
+			return FALSE;
+
+		if ( ! $metakey = $this->_get_posttype_isbn_metakey( $type ?? WordPress\WooCommerce::getProductPosttype() ) )
+			return $product->get_global_unique_id() ?: FALSE;
+
+		if ( ! $isbn = $product->get_meta( $metakey, TRUE, 'edit' ) )
+			return FALSE;
+
+		return $isbn;
 	}
 
 	public function tabs_builtins_tabs( $tabs, $posttype )
