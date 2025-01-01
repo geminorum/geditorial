@@ -195,7 +195,7 @@ trait SettingsFields
 		if ( empty( $fields ) )
 			return;
 
-		foreach ( $posttypes as $posttype )
+		foreach ( (array) $posttypes as $posttype )
 			$this->add_posttype_fields( $posttype, $fields, $append, $type );
 	}
 

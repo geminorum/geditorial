@@ -510,6 +510,7 @@ trait SubContents
 				case 'duration': $data[$raw_key] = Core\Duration::sanitize( $raw_value ); break;
 				case 'area':     $data[$raw_key] = Core\Area::sanitize( $raw_value ); break;
 
+				case 'code'    : // WTF
 				case 'date'    : // WTF
 				case 'time'    : // WTF
 				case 'contact' : // WTF: maybe: phone/mobile/email/url
@@ -741,7 +742,7 @@ trait SubContents
 
 	public function importer_fields_subcontent( $fields, $posttype )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
+		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) )
 			return $fields;
 
 		return array_merge( $fields, $this->subcontent_get_importer_fields( $posttype ) );
@@ -749,7 +750,7 @@ trait SubContents
 
 	public function importer_prepare_subcontent( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
 	{
-		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
+		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) || empty( $value ) )
 			return $value;
 
 		if ( ! in_array( $field, array_keys( $this->subcontent_get_importer_fields( $posttype ) ) ) )
@@ -768,7 +769,7 @@ trait SubContents
 
 	public function importer_saved_subcontent( $post, $atts = [] )
 	{
-		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
+		if ( ! $post || ! $this->in_setting_posttypes( $post->post_type, 'subcontent' ) )
 			return;
 
 		$fields = $this->subcontent_get_importer_fields( $post->post_type );

@@ -292,7 +292,7 @@ class NationalLibrary extends gEditorial\Module
 		return $isbn;
 	}
 
-	public function get_fipa( $post = NULL, $fallback = FALSE, $raw = FALSE )
+	public function get_fipa( $post, $fallback = FALSE, $raw = FALSE )
 	{
 		$key = $this->hash( 'fipa', $post->ID );
 
@@ -310,7 +310,7 @@ class NationalLibrary extends gEditorial\Module
 			else
 				$data = NULL; // avoid repeatable requests
 
-			if ( FALSE === $data )
+			if ( FALSE !== $data )
 				set_transient( $key, $data, WEEK_IN_SECONDS );
 		}
 

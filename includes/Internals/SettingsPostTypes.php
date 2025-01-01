@@ -110,6 +110,13 @@ trait SettingsPostTypes
 		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
+	public function posttype_woocommerce( $posttype, $supported_default = TRUE )
+	{
+		return $posttype
+			&& $this->get_setting( 'woocommerce_support', $supported_default )
+			&& in_array( $posttype, (array) WordPress\WooCommerce::getProductPosttype(), TRUE );
+	}
+
 	public function screen_posttype_supported( $screen, $base = [ 'edit', 'post' ] )
 	{
 		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )

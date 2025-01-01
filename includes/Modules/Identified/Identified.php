@@ -147,10 +147,10 @@ class Identified extends gEditorial\Module
 				'types' => [
 
 					/**
-					 * - UPC: this is the primary GTIN in North America.
-					 * - EAN/UCC: the major GTIN used outside of North America
+					 * - UPC: Universal Product Code: this is the primary GTIN in North America.
+					 * - EAN/UCC: European Article Number: the major GTIN used outside of North America
 					 * - JAN: the Japanese GTIN
-					 * - ISBN: a GTIN for books
+					 * - ISBN: International Standard Book Number: a GTIN for books
 					 */
 
 					'code'     => _x( 'Code', 'Identifier Type', 'geditorial-identified' ),
