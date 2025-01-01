@@ -153,6 +153,7 @@ class Isbn extends gEditorial\Module
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
+		$this->filter_module( 'identified', 'meta_query_for_search', 3 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 
 		$this->filter( 'templateposttype_addnew_extra', 2, 10, FALSE, $this->base );
@@ -328,6 +329,36 @@ class Isbn extends gEditorial\Module
 			] );
 
 		return $keys;
+	}
+
+	public function identified_meta_query_for_search( $meta, $search, $posttypes )
+	{
+		if ( ! $discovery = Core\ISBN::discovery( $search ) )
+			return $meta; // criteria is not ISBN
+
+		if ( ! gEditorial()->enabled( 'meta' ) )
+			return $meta;
+
+		$fields = [
+			'isbn',
+			'isbn2',
+			'isbn3',
+			'isbn4',
+			'isbn5',
+		];
+
+		foreach ( $posttypes as $posttype ) {
+
+			if ( ! $this->posttype_woocommerce( $posttype )
+				&& ! $this->posttype_supported( $posttype ) )
+				continue;
+
+			foreach ( $fields as $field )
+				if ( $metakey = Services\PostTypeFields::getPostMetaKey( $field, 'meta', FALSE ) )
+					$meta[$metakey] = $discovery;
+		}
+
+		return $meta;
 	}
 
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )

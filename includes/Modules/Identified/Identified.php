@@ -783,7 +783,7 @@ class Identified extends gEditorial\Module
 			$meta[$metakey] = $criteria;
 		}
 
-		return $meta;
+		return $this->filters( 'meta_query_for_search', $meta, $search, $posttypes );
 	}
 
 	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
