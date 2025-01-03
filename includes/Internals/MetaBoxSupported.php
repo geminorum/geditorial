@@ -120,12 +120,24 @@ trait MetaBoxSupported
 		if ( is_null( $context ) )
 			$context = 'supportedbox';
 
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( 'post' === $screen->base )
+			$action_context = sprintf( '%s_%s', $context, $object->post_type );
+
+		else if ( 'term' === $screen->base )
+			$action_context = sprintf( '%s_%s', $context, $object->taxonomy );
+
+		else
+			$action_context = sprintf( '%s_%s', $context, 'uknown' );
+
 		$this->actions(
 			sprintf( 'render_%s_metabox', $context ),
 			$object,
 			$box,
-			NULL,
-			sprintf( '%s_%s', $context, $object->post_type )
+			$screen,
+			$action_context
 		);
 	}
 }
