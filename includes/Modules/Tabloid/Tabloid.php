@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
@@ -30,42 +31,18 @@ class Tabloid extends gEditorial\Module
 		];
 	}
 
-	// TODO: roles for each supported posttypes
 	protected function get_global_settings()
 	{
-		$settings = [];
-		$roles    = $this->get_settings_default_roles();
+		$roles = $this->get_settings_default_roles();
 
-		$settings['posttypes_option'] = 'posttypes_option';
-
-		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label ) {
-
-			$settings['_posttypes'][] = [
-				'field'       => sprintf( 'posttype_%s_action_title', $posttype_name ),
-				'type'        => 'text',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Action Title for %s', 'Setting Title', 'geditorial-tabloid' ), '<i>'.$posttype_label.'</i>' ),
-				'description' => _x( 'Used as title on the actions row.', 'Setting Description', 'geditorial-tabloid' ),
-				'placeholder' => _x( 'Overview', 'Action', 'geditorial-tabloid' ),
-			];
-
-			$settings['_posttypes'][] = [
-				'field'       => sprintf( 'posttype_%s_overview_title', $posttype_name ),
-				'type'        => 'text',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Overview Title for %s', 'Setting Title', 'geditorial-tabloid' ), '<i>'.$posttype_label.'</i>' ),
-				'description' => _x( 'Used as title on the overview pages.', 'Setting Description', 'geditorial-tabloid' ),
-				'placeholder' => _x( 'Overview', 'Action', 'geditorial-tabloid' ),
-			];
-		}
-
-		$settings['_roles'] = [
-			'overview_roles' => [ _x( 'Roles that can view posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
-			'prints_roles'   => [ _x( 'Roles that can print posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
-			'exports_roles'  => [ _x( 'Roles that can export posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
+		return [
+			'posttypes_option' => 'posttypes_option',
+			'_roles' => [
+				'overview_roles' => [ _x( 'Roles that can view posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
+				'prints_roles'   => [ _x( 'Roles that can print posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
+				'exports_roles'  => [ _x( 'Roles that can export posttype overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
+			],
 		];
-
-		return $settings;
 	}
 
 	public function init()
@@ -128,15 +105,17 @@ class Tabloid extends gEditorial\Module
 		if ( ! $post || ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
 
-		$custom = $this->get_setting_fallback( sprintf( 'posttype_%s_action_title', $post->post_type ),
-			_x( 'Overview', 'Action', 'geditorial-tabloid' ) );
-
-		if ( ! $filtered = $this->filters( 'action', $this->is_post_viewable( $post ) ? $custom : FALSE, $post ) )
+		if ( ! $text = $this->filters( 'action', $this->is_post_viewable( $post ) ? _x( 'Overview', 'Action', 'geditorial-tabloid' ) : FALSE, $post ) )
 			return FALSE;
 
 		return $this->framepage_get_mainlink_for_post( $post, [
-			'title'        => $this->get_setting( sprintf( 'posttype_%s_overview_title', $post->post_type ), $filtered ),
-			'text'         => $filtered,
+			'title' => sprintf(
+				/* translators: %1$s: current post title, %2$s: posttype singular name */
+				_x( 'Overview of this %2$s', 'Row Action Title Attr', 'geditorial-tabloid' ),
+				WordPress\Post::title( $post ),
+				Helper::getPostTypeLabel( $post, 'singular_name' )
+			),
+			'text'         => $text,
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',
