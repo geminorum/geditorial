@@ -622,6 +622,7 @@ class Helper extends WordPress\Main
 	 * @REF: `_get_custom_object_labels()`
 	 * @REF: `_nx_noop()`
 	 * @REF: `translate_nooped_plural()`
+	 * @REF: `WP_Post_Type::get_default_labels()`
 	 */
 	public static function generatePostTypeLabels( $name, $featured = FALSE, $pre = [], $posttype = NULL )
 	{
@@ -816,6 +817,7 @@ class Helper extends WordPress\Main
 	 *
 	 * @REF: `_nx_noop()`
 	 * @REF: `translate_nooped_plural()`
+	 * @REF: `WP_Taxonomy::get_default_labels()`
 	 */
 	public static function generateTaxonomyLabels( $name, $pre = [], $taxonomy = NULL )
 	{

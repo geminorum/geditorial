@@ -908,9 +908,9 @@ class Audit extends gEditorial\Module
 		$data = $this->_get_view_data_for_post( $post, $context );
 
 		echo $this->wrap_open( '-view -'.$part );
-			$this->actions( 'render_view_before', $post, $context, $data, $part );
+			$this->actions( 'render_view_post_before', $post, $context, $data, $part );
 			$this->render_view( $part, $data );
-			$this->actions( 'render_view_after', $post, $context, $data, $part );
+			$this->actions( 'render_view_post_after', $post, $context, $data, $part );
 		echo '</div>';
 
 		// $this->_print_script( $post, $context, $data );
@@ -942,7 +942,7 @@ class Audit extends gEditorial\Module
 		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
 		// $data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 
-		return $this->filters( 'view_data', $data, $post, $context );
+		return $this->filters( 'view_data_for_post', $data, $post, $context );
 	}
 
 	protected function raise_resources( $count = 1, $per = 60, $context = NULL )

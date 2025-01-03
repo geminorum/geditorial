@@ -685,7 +685,7 @@ class Papered extends gEditorial\Module
 				$data['source']['unitsdata'] = ModuleHelper::getPosttypeFieldsData( $source, 'units' );
 		}
 
-		return $this->filters( 'view_data', $data, $profile, $source, $context );
+		return $this->filters( 'view_data_for_post', $data, $profile, $source, $context );
 	}
 
 	private function _get_view_part_for_sheet( $profile, $context )

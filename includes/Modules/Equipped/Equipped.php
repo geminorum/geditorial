@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 class Equipped extends gEditorial\Module
 {
 	use Internals\BulkExports;
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
@@ -174,6 +175,7 @@ class Equipped extends gEditorial\Module
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
 			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 

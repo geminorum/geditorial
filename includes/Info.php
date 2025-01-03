@@ -240,6 +240,17 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
+	public static function renderNoExportsAvailable( $before = '', $after = '' )
+	{
+		Core\HTML::desc(
+			$before._x( 'There are no exports available!', 'Info: Message', 'geditorial-admin' ).$after,
+			FALSE,
+			'-empty -no-exports'
+		);
+
+		return FALSE;
+	}
+
 	public static function renderNoToolsAvailable( $before = '', $after = '' )
 	{
 		Core\HTML::desc(

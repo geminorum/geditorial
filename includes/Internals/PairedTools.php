@@ -573,7 +573,7 @@ trait PairedTools
 		$query = [
 			'tax_query' => [ [
 				'taxonomy' => $taxonomy,
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => $movefrom,
 			] ],
 		];

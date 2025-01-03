@@ -400,8 +400,8 @@ class Personage extends gEditorial\Module
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
-		$this->filter_module( 'tabloid', 'view_data', 3, 60 );
-		$this->filter_module( 'papered', 'view_data', 4 );
+		$this->filter_module( 'tabloid', 'view_data_for_post', 3, 60 );
+		$this->filter_module( 'papered', 'view_data_for_post', 4 );
 		$this->filter_module( 'papered', 'view_list_item', 7 );
 
 		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
@@ -667,7 +667,7 @@ class Personage extends gEditorial\Module
 		return $default;
 	}
 
-	public function tabloid_view_data( $data, $post, $context )
+	public function tabloid_view_data_for_post( $data, $post, $context )
 	{
 		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
 			return $data;
@@ -684,7 +684,7 @@ class Personage extends gEditorial\Module
 		return $data;
 	}
 
-	public function papered_view_data( $data, $profile, $source, $context )
+	public function papered_view_data_for_post( $data, $profile, $source, $context )
 	{
 		if ( ! $post = WordPress\Post::get( $source ) )
 			return $data;
@@ -949,7 +949,7 @@ class Personage extends gEditorial\Module
 		$args['tax_query'][] = [
 			'taxonomy' => $this->constant( 'status_taxonomy' ),
 			'terms'    => $this->get_setting( 'public_statuses', [] ),
-			'field'    => 'id',
+			'field'    => 'term_id',
 		];
 
 		return $args;

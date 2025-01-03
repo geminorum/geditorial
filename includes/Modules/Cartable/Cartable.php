@@ -893,7 +893,7 @@ class Cartable extends gEditorial\Module
 		$query = [
 			'tax_query' => [ [
 				'taxonomy' => $this->constant( $context.'_taxonomy' ),
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => [ $term->term_id ],
 			] ],
 		];
@@ -929,9 +929,9 @@ class Cartable extends gEditorial\Module
 	{
 		$args = [
 
-			'tax_query'      => [ [
+			'tax_query' => [ [
 				'taxonomy' => $this->constant( $context.'_taxonomy' ),
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => [ $term->term_id ],
 			] ],
 

@@ -234,8 +234,8 @@ class StaticCovers extends gEditorial\Module
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
 		$this->filter( 'post_image_pre_src', 5, 12, FALSE, $this->base );
 		$this->filter( 'searchselect_result_image_for_post', 3, 12, FALSE, $this->base );
-		$this->filter_module( 'tabloid', 'view_data', 3, 20 );
-		$this->filter_module( 'papered', 'view_data', 4 );
+		$this->filter_module( 'tabloid', 'view_data_for_post', 3, 20 );
+		$this->filter_module( 'papered', 'view_data_for_post', 4 );
 		$this->register_shortcode( 'post_cover_shortcode' );
 		$this->register_shortcode( 'term_cover_shortcode' );
 
@@ -355,9 +355,9 @@ class StaticCovers extends gEditorial\Module
 		$data = $this->_get_view_data_for_term( $term, $context );
 
 		echo $this->wrap_open( '-view -'.$part );
-			$this->actions( 'render_view_before', $term, $context, $data, $part );
+			$this->actions( 'render_view_term_before', $term, $context, $data, $part );
 			$this->render_view( $part, $data );
-			$this->actions( 'render_view_after', $term, $context, $data, $part );
+			$this->actions( 'render_view_term_after', $term, $context, $data, $part );
 		echo '</div>';
 	}
 
@@ -395,9 +395,9 @@ class StaticCovers extends gEditorial\Module
 		$data = $this->_get_view_data_for_post( $post, $context );
 
 		echo $this->wrap_open( '-view -'.$part );
-			$this->actions( 'render_view_before', $post, $context, $data, $part );
+			$this->actions( 'render_view_post_before', $post, $context, $data, $part );
 			$this->render_view( $part, $data );
-			$this->actions( 'render_view_after', $post, $context, $data, $part );
+			$this->actions( 'render_view_post_after', $post, $context, $data, $part );
 		echo '</div>';
 	}
 
@@ -838,7 +838,7 @@ class StaticCovers extends gEditorial\Module
 		return $data;
 	}
 
-	public function tabloid_view_data( $data, $post, $context )
+	public function tabloid_view_data_for_post( $data, $post, $context )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $data;
@@ -854,7 +854,7 @@ class StaticCovers extends gEditorial\Module
 		return $data;
 	}
 
-	public function papered_view_data( $data, $profile, $source, $context )
+	public function papered_view_data_for_post( $data, $profile, $source, $context )
 	{
 		if ( ! $post = WordPress\Post::get( $source ) )
 			return $data;

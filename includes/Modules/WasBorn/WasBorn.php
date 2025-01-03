@@ -219,7 +219,7 @@ class WasBorn extends gEditorial\Module
 		$this->filter_self( 'mean_age', 4 );
 		$this->action_module( 'pointers', 'post', 5, 100 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
-		$this->filter_module( 'papered', 'view_data', 4 );
+		$this->filter_module( 'papered', 'view_data_for_post', 4 );
 	}
 
 	public function current_screen( $screen )
@@ -435,8 +435,8 @@ class WasBorn extends gEditorial\Module
 			if ( $paired )
 				$args['tax_query'] = [ [
 					'taxonomy' => $paired->taxonomy,
-					'terms'    => $paired->term_id,
-					'field'    => 'id',
+					'terms'    => [ $paired->term_id ],
+					'field'    => 'term_id',
 				] ];
 
 			$query = new \WP_Query();
@@ -522,8 +522,8 @@ class WasBorn extends gEditorial\Module
 			if ( $paired )
 				$args['tax_query'] = [ [
 					'taxonomy' => $paired->taxonomy,
-					'terms'    => $paired->term_id,
-					'field'    => 'id',
+					'terms'    => [ $paired->term_id ],
+					'field'    => 'term_id',
 				] ];
 
 			$query = new \WP_Query();
@@ -674,8 +674,8 @@ class WasBorn extends gEditorial\Module
 			if ( $paired )
 				$args['tax_query'] = [ [
 					'taxonomy' => $paired->taxonomy,
-					'terms'    => $paired->term_id,
-					'field'    => 'id',
+					'terms'    => [ $paired->term_id ],
+					'field'    => 'term_id',
 				] ];
 
 			$query = new \WP_Query();
@@ -761,8 +761,8 @@ class WasBorn extends gEditorial\Module
 				if ( $paired )
 					$args['tax_query'] = [ [
 						'taxonomy' => $paired->taxonomy,
-						'terms'    => $paired->term_id,
-						'field'    => 'id',
+						'terms'    => [ $paired->term_id ],
+						'field'    => 'term_id',
 					] ];
 
 				$query = new \WP_Query();
@@ -1002,7 +1002,7 @@ class WasBorn extends gEditorial\Module
 		return $terms;
 	}
 
-	public function papered_view_data( $data, $profile, $source, $context )
+	public function papered_view_data_for_post( $data, $profile, $source, $context )
 	{
 		if ( ! $post = WordPress\Post::get( $source ) )
 			return $data;

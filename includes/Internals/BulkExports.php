@@ -139,6 +139,7 @@ trait BulkExports
 		Core\WordPress::redirectReferer( 'wrong' );
 	}
 
+	// TODO: apply general filter with token support and override `Core\File::prepName()`
 	protected function exports_get_export_filename( $reference, $target, $type, $context, $format )
 	{
 		$ext = in_array( $format, [
@@ -524,7 +525,7 @@ trait BulkExports
 					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
 					'tax_query'      => [ [
 						'taxonomy' => $this->constant( $constants[1] ),
-						'field'    => 'id',
+						'field'    => 'term_id',
 						'terms'    => [ $paired->term_id ],
 
 						'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/

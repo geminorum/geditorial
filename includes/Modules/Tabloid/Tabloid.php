@@ -194,9 +194,9 @@ class Tabloid extends gEditorial\Module
 		$this->_handle_flags_for_post( $post, $context, $data );
 
 		echo $this->wrap_open( '-view -'.$part );
-			$this->actions( 'render_view_before', $post, $context, $data, $part );
+			$this->actions( 'render_view_post_before', $post, $context, $data, $part );
 			$this->render_view( $part, $data );
-			$this->actions( 'render_view_after', $post, $context, $data, $part );
+			$this->actions( 'render_view_post_after', $post, $context, $data, $part );
 		echo '</div>';
 
 		$data = $this->_cleanup_view_data_for_post( $post, $context, $data );
@@ -224,7 +224,10 @@ class Tabloid extends gEditorial\Module
 
 	private function _print_script_for_post( $post, $context, $data )
 	{
-		Core\HTML::wrapScript( sprintf( 'window.%s = %s;', $this->hook( 'data' ), wp_json_encode( $data, JSON_UNESCAPED_UNICODE ) ) );
+		Core\HTML::wrapScript( sprintf( 'window.%s = %s;',
+			$this->hook( 'data' ),
+			wp_json_encode( $data, JSON_UNESCAPED_UNICODE ) )
+		);
 
 		$this->enqueue_asset_js( [
 			'config' => [
@@ -280,7 +283,7 @@ class Tabloid extends gEditorial\Module
 			'after-comments',
 		], '' );
 
-		return $this->filters( 'view_data', $data, $post, $context );
+		return $this->filters( 'view_data_for_post', $data, $post, $context );
 	}
 
 	private function _cleanup_view_data_for_post( $post, $context, $data )
@@ -303,6 +306,6 @@ class Tabloid extends gEditorial\Module
 		unset( $data['__can_export'] );
 		unset( $data['__today'] );
 
-		return $this->filters( 'cleanup_view_data', $data, $post, $context );
+		return $this->filters( 'cleanup_view_data_for_post', $data, $post, $context );
 	}
 }

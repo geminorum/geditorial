@@ -279,7 +279,7 @@ trait PairedCore
 
 	/**
 	 * Strips paired terms rendred for already added data into pointers.
-	 * @example `$this->filter_module( 'tabloid', 'view_data', 3, 9, 'paired_supported' );`
+	 * @example `$this->filter_module( 'tabloid', 'view_data_for_post', 3, 9, 'paired_supported' );`
 	 *
 	 * FIXME: DEPRECATED: use `$this->hook_paired_tabloid_exclude_rendered()`
 	 *
@@ -288,7 +288,7 @@ trait PairedCore
 	 * @param  string $context
 	 * @return array  $data
 	 */
-	public function tabloid_view_data_paired_supported( $data, $post, $context )
+	public function tabloid_view_data_for_post_paired_supported( $data, $post, $context )
 	{
 		self::_dep( 'hook_paired_tabloid_exclude_rendered()' );
 
@@ -499,7 +499,7 @@ trait PairedCore
 			'fields'         => $fields ?? 'all', // or `ids`
 			'tax_query'      => [ [
 				'taxonomy' => $paired,
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => [ $terms[0]->term_id ],
 
 				// @SEE: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
@@ -566,7 +566,7 @@ trait PairedCore
 			'fields'         => $fields ?? 'all', // or `ids`
 			'tax_query'      => [ [
 				'taxonomy' => $paired,
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => $terms,
 
 				// @SEE: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
@@ -1005,7 +1005,7 @@ trait PairedCore
 		$args = [
 			'tax_query' => [ [
 				'taxonomy' => $this->constant( $tax_constant_key ),
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => [ $term_id ]
 			] ],
 			'post_type'   => $this->posttypes(),

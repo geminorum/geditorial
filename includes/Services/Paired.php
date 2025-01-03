@@ -23,8 +23,8 @@ class Paired extends WordPress\Main
 		add_filter( static::BASE.'_tabloid_post_summaries',
 			[ __CLASS__, 'tabloid_post_summaries_multipaired' ], 45, 4 );
 
-		add_filter( static::BASE.'_papered_view_data',
-			[ __CLASS__, 'papered_view_data' ], 99, 4 );
+		add_filter( static::BASE.'_papered_view_data_for_post',
+			[ __CLASS__, 'papered_view_data_for_post' ], 99, 4 );
 	}
 
 	// returns the paired taxonomy, otherwise `FALSE`
@@ -172,7 +172,7 @@ class Paired extends WordPress\Main
 		return $list;
 	}
 
-	public static function papered_view_data( $data, $profile, $source, $context )
+	public static function papered_view_data_for_post( $data, $profile, $source, $context )
 	{
 		if ( empty( $data['profile']['flags'] ) )
 			return $data;

@@ -465,7 +465,7 @@ class MetaBox extends WordPress\Main
 			'post__not_in'   => $exclude,
 			'tax_query'      => [ [
 				'taxonomy' => $taxonomy,
-				'field'    => 'id',
+				'field'    => 'term_id',
 				'terms'    => [ $term->term_id ],
 
 				'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
