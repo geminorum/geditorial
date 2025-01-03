@@ -9,11 +9,13 @@ use geminorum\gEditorial\WordPress;
 
 class Regioned extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\MetaBoxSupported;
 	use Internals\TemplateTaxonomy;
 
 	// TODO: add subcontent api for list of regioned background: سابقه کاری در مناطق
@@ -122,6 +124,7 @@ class Regioned extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 

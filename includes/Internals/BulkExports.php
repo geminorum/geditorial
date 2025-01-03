@@ -78,6 +78,24 @@ trait BulkExports
 				'format' => 'csv',
 			],
 
+			'assigned_simple'   => [
+				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
+				'target' => 'assigned',
+				'format' => 'xlsx',
+			],
+
+			'assigned_advanced' => [
+				'title'  => _x( 'Advanced', 'Internal: Export Type Title', 'geditorial-admin' ),
+				'target' => 'assigned',
+				'format' => 'xlsx',
+			],
+
+			'assigned_full' => [
+				'title'  => _x( 'Full', 'Internal: Export Type Title', 'geditorial-admin' ),
+				'target' => 'assigned',
+				'format' => 'csv',
+			],
+
 			'globalsummary_simple' => [
 				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'globalsummary',
@@ -133,6 +151,19 @@ trait BulkExports
 			case 'posttype':
 
 				return sprintf( '%s-%s-%s.%s', $reference, $context, $type, $ext );
+
+			case 'assigned':
+
+				if ( ! $term = WordPress\Term::get( (int) $reference ) )
+					break;
+
+				return vsprintf( '%s-%s-%s-%s.%s', [
+					$term->taxonomy,
+					$term->slug ?: $term->name,
+					$context,
+					$type,
+					$ext,
+				] );
 
 			case 'globalsummary':
 			case 'paired':
@@ -246,9 +277,17 @@ trait BulkExports
 					$headers['custom__'.$custom] = $this->exports_generate_column_header( $headers,
 						$custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ) ); // FIXME: move-up the filter!
 
-				$sheet_title = 'posttype' === $target
-					? Helper::getPostTypeLabel( $reference, 'extended_label', 'name', $this->module->title )
-					: WordPress\Post::title( $reference, NULL, FALSE );
+				if ( 'assigned' === $target )
+					$sheet_title = sprintf( '%s — %s',
+						Helper::getTaxonomyLabel( WordPress\Term::get( (int) $reference ), 'extended_label' ),
+						WordPress\Term::title( (int) $reference, NULL, FALSE ),
+					);
+
+				else if ( 'posttype' === $target )
+					$sheet_title = Helper::getPostTypeLabel( $reference, 'extended_label', 'name', $this->module->title );
+
+				else
+					$sheet_title = WordPress\Post::title( $reference, NULL, FALSE );
 
 				return Parser::toXLSX_Legacy(
 					$data,
@@ -371,6 +410,46 @@ trait BulkExports
 
 		switch ( $target ) {
 
+			case 'assigned':
+
+				if ( ! $term = WordPress\Term::get( (int) $reference ) )
+					break;
+
+				if ( ! $object = WordPress\Taxonomy::object( $term ) )
+					break;
+
+				if ( ! WordPress\Term::can( $term, 'assign_term' ) )
+					break;
+
+				$posttypes = (array) $object->object_type;
+
+				$args = $this->filters( 'export_query_args', [
+					'posts_per_page' => -1,
+					'orderby'        => [ 'menu_order', 'date' ],
+					'order'          => 'ASC',
+					'post_type'      => $posttypes,
+					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
+					'tax_query'      => [ [
+						'taxonomy' => $object->name,
+						'field'    => 'term_id',
+						'terms'    => [ $term->term_id ],
+
+						'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
+					] ],
+				], $reference, $target, $type, $context );
+
+				$data = $this->exports_generate_export_data(
+					get_posts( $args ),
+					$posttypes,
+					$reference,
+					$target,
+					$type,
+					$context,
+					$format
+				);
+
+				break;
+
 			case 'posttype':
 
 				if ( ! $posttype = WordPress\PostType::object( $reference ) )
@@ -487,6 +566,7 @@ trait BulkExports
 			case 'simple':
 			case 'paired_simple':
 			case 'posttype_simple':
+			case 'assigned_simple':
 
 				break;
 
@@ -500,6 +580,7 @@ trait BulkExports
 
 			case 'advanced':
 			case 'paired_advanced':
+			case 'assigned_advanced':
 
 				$list = array_merge( $list, [
 					'post_date',
@@ -523,6 +604,7 @@ trait BulkExports
 			case 'full':
 			case 'paired_full':
 			case 'posttype_full':
+			case 'assigned_full':
 
 				$list = array_merge( $list, [
 					'post_author',
@@ -569,6 +651,7 @@ trait BulkExports
 				case 'simple':
 				case 'paired_simple':
 				case 'posttype_simple':
+				case 'assigned_simple':
 
 					$keys = [
 						'first_name',
@@ -585,6 +668,7 @@ trait BulkExports
 				case 'advanced':
 				case 'paired_advanced':
 				case 'posttype_advanced':
+				case 'assigned_advanced':
 
 					$keys = [
 						'first_name',
@@ -604,6 +688,7 @@ trait BulkExports
 				case 'full':
 				case 'paired_full':
 				case 'posttype_full':
+				case 'assigned_full':
 
 					$list = array_merge( $list, array_fill_keys( array_keys( $fields ), NULL ) );
 
@@ -641,6 +726,7 @@ trait BulkExports
 				case 'simple':
 				case 'paired_simple':
 				case 'posttype_simple':
+				case 'assigned_simple':
 
 					// $keys  = [];
 					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
@@ -651,6 +737,7 @@ trait BulkExports
 				case 'advanced':
 				case 'paired_advanced':
 				case 'posttype_advanced':
+				case 'assigned_advanced':
 
 					// $keys  = [];
 					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
@@ -661,6 +748,7 @@ trait BulkExports
 				case 'full':
 				case 'paired_full':
 				case 'posttype_full':
+				case 'assigned_full':
 
 					$list = array_merge( $list, array_fill_keys( array_keys( $fields ), NULL ) );
 
@@ -690,12 +778,14 @@ trait BulkExports
 				case 'simple':
 				case 'paired_simple':
 				case 'posttype_simple':
+				case 'assigned_simple':
 
 					break;
 
 				case 'advanced':
 				case 'paired_advanced':
 				case 'posttype_advanced':
+				case 'assigned_advanced':
 
 					$list = array_merge( $list, [] );
 
@@ -704,6 +794,7 @@ trait BulkExports
 				case 'full':
 				case 'paired_full':
 				case 'posttype_full':
+				case 'assigned_full':
 
 					$list = array_merge( $list, [] );
 
@@ -759,6 +850,7 @@ trait BulkExports
 				case 'simple':
 				case 'paired_simple':
 				case 'posttype_simple':
+				case 'assigned_simple':
 
 					$list = array_merge( $list, [
 						$primary,
@@ -770,6 +862,7 @@ trait BulkExports
 				case 'advanced':
 				case 'paired_advanced':
 				case 'posttype_advanced':
+				case 'assigned_advanced':
 
 					$list = array_merge( $list, [
 						$primary,
@@ -782,6 +875,7 @@ trait BulkExports
 				case 'full':
 				case 'paired_full':
 				case 'posttype_full':
+				case 'assigned_full':
 
 					$list = array_merge( $list, $all );
 
@@ -811,12 +905,14 @@ trait BulkExports
 				case 'simple':
 				case 'paired_simple':
 				case 'posttype_simple':
+				case 'assigned_simple':
 
 					break;
 
 				case 'advanced':
 				case 'paired_advanced':
 				case 'posttype_advanced':
+				case 'assigned_advanced':
 
 					$list = array_merge( $list, [] );
 
@@ -825,6 +921,7 @@ trait BulkExports
 				case 'full':
 				case 'paired_full':
 				case 'posttype_full':
+				case 'assigned_full':
 
 					$list = array_merge( $list, [] );
 
@@ -841,5 +938,31 @@ trait BulkExports
 			$context,
 			$format
 		);
+	}
+
+	protected function bulkexports__hook_supportedbox_for_term( $constant, $screen, $role_context = NULL )
+	{
+		if ( 'term' !== $screen->base )
+			return FALSE;
+
+		if ( ! method_exists( $this, '_hook_term_supportedbox' ) )
+			return FALSE;
+
+		if ( FALSE !== $role_context && ! $this->corecaps_taxonomy_role_can( $constant, $role_context ?? 'reports' ) )
+			return FALSE;
+
+		$this->_hook_term_supportedbox( $screen, NULL, 'side', 'high' );
+
+		add_action( $this->hook( 'render_supportedbox_metabox' ),
+			function ( $object, $box, $screen, $action_context ) use ( $constant ) {
+				echo $this->wrap(
+					$this->exports_get_export_buttons(
+						$object->term_id,
+						$action_context,
+						'assigned'
+					), 'field-wrap -buttons' );
+			}, 20, 4 );
+
+		return TRUE;
 	}
 }
