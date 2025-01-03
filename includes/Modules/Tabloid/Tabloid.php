@@ -179,13 +179,11 @@ class Tabloid extends gEditorial\Module
 
 	protected function render_overview_content()
 	{
-		if ( ! $linked = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
+		if ( $post = WordPress\Post::get( self::req( 'linked', FALSE ) ) )
+			$this->_render_view_for_post( $post, 'overview' );
 
-		if ( ! $post = WordPress\Post::get( $linked ) )
-			return Info::renderNoPostsAvailable();
-
-		$this->_render_view_for_post( $post, 'overview' );
+		else
+			Info::renderNoDataAvailable();
 	}
 
 	private function _render_view_for_post( $post, $context )
@@ -201,7 +199,7 @@ class Tabloid extends gEditorial\Module
 			$this->actions( 'render_view_after', $post, $context, $data, $part );
 		echo '</div>';
 
-		$data = $this->_cleanup_view_data( $post, $context, $data );
+		$data = $this->_cleanup_view_data_for_post( $post, $context, $data );
 
 		$this->_print_script_for_post( $post, $context, $data );
 
@@ -285,7 +283,7 @@ class Tabloid extends gEditorial\Module
 		return $this->filters( 'view_data', $data, $post, $context );
 	}
 
-	private function _cleanup_view_data( $post, $context, $data )
+	private function _cleanup_view_data_for_post( $post, $context, $data )
 	{
 		unset( $data['meta_rendered'] );
 		unset( $data['units_rendered'] );

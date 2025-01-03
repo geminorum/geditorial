@@ -405,15 +405,15 @@ class NationalLibrary extends gEditorial\Module
 		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
 			return $tabs;
 
-		if ( ! $html = $this->get_product_fipa( $product ) )
+		if ( ! $data = $this->get_product_fipa( $product, FALSE, TRUE ) )
 			return $tabs;
 
 		return Core\Arraay::insert( $tabs, [
 			$this->classs( 'fipa' ) => [
 				'title'    => _x( 'Fipa', 'Tab Title', 'geditorial-national-library' ),
 				// 'priority' => 18,
-				'callback' => function () use ( $html ) {
-					echo $html;
+				'callback' => function () use ( $data ) {
+					$this->_render_fipa_data( $data );
 				},
 			],
 		], 'additional_information', 'after' );
