@@ -12,6 +12,8 @@ class Pitches extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 
+	// @EXAMPLE: http://useridea.idea.informer.com/
+
 	public static function module()
 	{
 		return [

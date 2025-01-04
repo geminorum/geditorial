@@ -51,7 +51,7 @@ trait CoreRowActions
 			if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
 				return $actions;
 
-			if ( ! $links = call_user_func_array( [$this, $method ], [ $post ] ) )
+			if ( ! $links = call_user_func_array( [ $this, $method ], [ $post ] ) )
 				return $actions;
 
 			if ( is_array( $links ) )
@@ -71,7 +71,7 @@ trait CoreRowActions
 	// EXAMPLE CALLBACK
 	// protected function rowaction_get_mainlink_for_post( $post ) { return ''; }
 
-	protected function rowactions__hook_mainlink_for_term( $taxonomy = NULL, $priority = 10, $action_key = NULL, $setting_key = 'admin_rowactions' )
+	protected function rowactions__hook_mainlink_for_term( $taxonomy = NULL, $priority = 10, $callback_suffix = FALSE, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{
 		if ( FALSE === $setting_key )
 			return FALSE;
@@ -79,23 +79,25 @@ trait CoreRowActions
 		if ( TRUE !== $setting_key && ! $this->get_setting( $setting_key ) )
 			return FALSE;
 
-		if ( ! method_exists( $this, 'rowaction_get_mainlink_for_term' ) )
-			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'rowaction_get_mainlink_for_term()' ) );
+		$method = $callback_suffix ? sprintf( 'rowaction_get_mainlink_for_term_%s', $callback_suffix ) : 'rowaction_get_mainlink_for_term';
 
-		$callback = function ( $actions, $term ) use ( $taxonomy, $action_key ) {
+		if ( ! method_exists( $this, $method ) )
+			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
+
+		$callback = function ( $actions, $term ) use ( $taxonomy, $prepend, $action_key, $method ) {
 
 			if ( ! is_null( $taxonomy ) && $term->taxonomy !== $taxonomy )
 				return $actions;
 
-			if ( ! $links = $this->rowaction_get_mainlink_for_term( $term ) )
+			if ( ! $links = call_user_func_array( [ $this, $method ], [ $term ] ) )
 				return $actions;
 
 			if ( is_array( $links ) )
-				return array_merge( $actions, $links );
+				return $prepend ? array_merge( $links, $actions ) : array_merge( $actions, $links );
 
-			return array_merge( $actions, [
-				$action_key ?? $this->classs() => $links,
-			] );
+			return $prepend
+				? array_merge( [ $action_key ?? $this->classs() => $links ], $actions )
+				: array_merge( $actions, [ $action_key ?? $this->classs() => $links ] );
 		};
 
 		add_filter( 'tag_row_actions', $callback, $priority, 2 );

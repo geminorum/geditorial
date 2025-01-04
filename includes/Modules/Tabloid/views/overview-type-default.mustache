@@ -39,19 +39,19 @@
 
 	<div class="clear"></div>
 
-	{{#___sides.term}}
+	{{#___sides.terms}}
 		<div class="-wrap side-wrap">
 			<div class="-side-side">
-				{{{___sides.term}}}
+				{{{___sides.terms}}}
 			</div>
 			<div class="-side-main">
-				{{> term-summary}}
+				{{> terms-summary}}
 			</div>
 		</div>
-	{{/___sides.term}}
-	{{^___sides.term}}
-		{{> term-summary}}
-	{{/___sides.term}}
+	{{/___sides.terms}}
+	{{^___sides.terms}}
+		{{> terms-summary}}
+	{{/___sides.terms}}
 
 	{{{___hooks.after-term}}}
 

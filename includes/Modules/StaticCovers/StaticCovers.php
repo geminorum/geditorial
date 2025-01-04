@@ -329,20 +329,14 @@ class StaticCovers extends gEditorial\Module
 	{
 		if ( 'term' == self::req( 'target', 'post' ) ) {
 
-			if ( ! $linked = self::req( 'linked' ) )
-				return Info::renderNoTermsAvailable();
-
-			if ( ! $term = WordPress\Term::get( $linked ) )
+			if ( ! $term = WordPress\Term::get( self::req( 'linked', FALSE ) ) )
 				return Info::renderNoTermsAvailable();
 
 			$this->_render_view_for_term( $term, $context );
 
 		} else {
 
-			if ( ! $linked = self::req( 'linked' ) )
-				return Info::renderNoPostsAvailable();
-
-			if ( ! $post = WordPress\Post::get( $linked ) )
+			if ( ! $post = WordPress\Post::get( self::req( 'linked', FALSE ) ) )
 				return Info::renderNoPostsAvailable();
 
 			$this->_render_view_for_post( $post, $context );

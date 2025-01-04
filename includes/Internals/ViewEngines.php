@@ -68,7 +68,7 @@ trait ViewEngines
 			$args['partials_loader'] = new \Mustache_Loader_FilesystemLoader( $path.'/partials' );
 		}
 
-		return new \Mustache_Engine( $args );
+		return @new \Mustache_Engine( $args );
 	}
 
 	protected function get_view_part_by_post( $post, $context, $default = 'default' )

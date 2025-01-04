@@ -743,9 +743,9 @@ class Helper extends WordPress\Main
 		return $pre;
 	}
 
-	public static function getPostTypeLabel( $posttype, $label, $fallback_key = NULL, $fallback = '' )
+	public static function getPostTypeLabel( $post_or_posttype, $label, $fallback_key = NULL, $fallback = '' )
 	{
-		if ( ! $object = WordPress\PostType::object( $posttype ) )
+		if ( ! $object = WordPress\PostType::object( $post_or_posttype ) )
 			return $fallback ?? Plugin::na();
 
 		if ( ! empty( $object->labels->{$label} ) )
@@ -924,9 +924,9 @@ class Helper extends WordPress\Main
 		return $pre;
 	}
 
-	public static function getTaxonomyLabel( $taxonomy, $label, $fallback_key = NULL, $fallback = '' )
+	public static function getTaxonomyLabel( $term_or_taxonomy, $label, $fallback_key = NULL, $fallback = '' )
 	{
-		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
+		if ( ! $object = WordPress\Taxonomy::object( $term_or_taxonomy ) )
 			return $fallback ?? Plugin::na();
 
 		if ( ! empty( $object->labels->{$label} ) )
@@ -1153,7 +1153,7 @@ class Helper extends WordPress\Main
 		if ( ! empty( $gEditorialMustache ) )
 			return $gEditorialMustache;
 
-		$gEditorialMustache = new \Mustache_Engine( [
+		$gEditorialMustache = @new \Mustache_Engine( [
 			'template_class_prefix' => '__'.static::BASE.'_',
 			'cache_file_mode'       => FS_CHMOD_FILE,
 			// 'cache'                 => $base.'assets/views/cache',

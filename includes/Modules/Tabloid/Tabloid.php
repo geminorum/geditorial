@@ -105,13 +105,13 @@ class Tabloid extends gEditorial\Module
 		if ( ! $post || ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
 
-		if ( ! $text = $this->filters( 'action', $this->is_post_viewable( $post ) ? _x( 'Overview', 'Action', 'geditorial-tabloid' ) : FALSE, $post ) )
+		if ( ! $text = $this->filters( 'post_action', $this->is_post_viewable( $post ) ? _x( 'Overview', 'Action', 'geditorial-tabloid' ) : FALSE, $post ) )
 			return FALSE;
 
 		return $this->framepage_get_mainlink_for_post( $post, [
 			'title' => sprintf(
 				/* translators: %1$s: current post title, %2$s: posttype singular name */
-				_x( 'Overview of this %2$s', 'Row Action Title Attr', 'geditorial-tabloid' ),
+				_x( 'Overview of this %2$s', 'Post Row Action Title Attr', 'geditorial-tabloid' ),
 				WordPress\Post::title( $post ),
 				Helper::getPostTypeLabel( $post, 'singular_name' )
 			),
@@ -251,7 +251,7 @@ class Tabloid extends gEditorial\Module
 		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___flags']     = $this->filters( 'post_flags', [], $data, $post, $context );
-		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'term', 'custom', 'comments' ], '' );
+		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'terms', 'custom', 'comments' ], '' );
 		$data['___hooks']     = array_fill_keys( [
 			'after-actions',
 			'after-post',
