@@ -155,15 +155,28 @@ trait CoreTaxonomies
 
 				case 'is_viewable':
 
+					// NOTE: only applies if the setting is `disabled`
 					if ( $value )
 						break;
 
 					$args = array_merge( $args, [
 						'public'             => FALSE,
-						'publicly_queryable' => FALSE,
+						'publicly_queryable' => FALSE, // @REF: `is_taxonomy_viewable()`
 						'show_in_nav_menus'  => FALSE,
 						'rewrite'            => FALSE,   // WTF?!
 					] );
+
+					// makes `Tabloid` links visible for non-viewable taxonomies
+					add_filter( $this->hook_base( 'tabloid', 'is_term_viewable' ),
+						static function ( $viewable, $term ) use ( $taxonomy ) {
+							return $term->taxonomy === $taxonomy ? TRUE : $viewable;
+						}, 12, 2 );
+
+					// makes available on current module
+					add_filter( $this->hook_base( $this->key, 'is_term_viewable' ),
+						static function ( $viewable, $term ) use ( $taxonomy ) {
+							return $term->taxonomy === $taxonomy ? TRUE : $viewable;
+						}, 12, 2 );
 
 					break;
 
@@ -648,6 +661,14 @@ trait CoreTaxonomies
 			$fallback_key,
 			$fallback
 		);
+	}
+
+	public function is_term_viewable( $term = NULL )
+	{
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		return $this->filters( 'is_term_viewable', WordPress\Term::viewable( $term ), $term );
 	}
 
 	protected function do_force_assign_parents( $post, $taxonomy )
