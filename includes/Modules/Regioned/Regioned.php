@@ -117,6 +117,7 @@ class Regioned extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
 	public function current_screen( $screen )

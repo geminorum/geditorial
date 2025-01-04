@@ -1,0 +1,99 @@
+<div class="-wrap" id="geditorial-tabloid-wrap" dir="{{__direction}}">
+	{{> title-actions}}
+
+	{{{___hooks.after-actions}}}
+
+	{{#___sides.term}}
+		<div class="-wrap side-wrap">
+			<div class="-side-side">
+				{{{___sides.term}}}
+			</div>
+			<div class="-side-main">
+				{{> term-summary}}
+			</div>
+		</div>
+	{{/___sides.term}}
+	{{^___sides.term}}
+		{{> term-summary}}
+	{{/___sides.term}}
+
+	{{{___hooks.after-post}}}
+
+	<div class="clear"></div>
+
+	{{#___sides.meta}}
+		<div class="-wrap side-wrap">
+			<div class="-side-side">
+				{{{___sides.meta}}}
+			</div>
+			<div class="-side-main">
+				{{> meta-summary}}
+			</div>
+		</div>
+	{{/___sides.meta}}
+	{{^___sides.meta}}
+		{{> meta-summary}}
+	{{/___sides.meta}}
+
+	{{{___hooks.after-meta}}}
+
+	<div class="clear"></div>
+
+	{{#___sides.terms}}
+		<div class="-wrap side-wrap">
+			<div class="-side-side">
+				{{{___sides.terms}}}
+			</div>
+			<div class="-side-main">
+				{{> terms-summary}}
+			</div>
+		</div>
+	{{/___sides.terms}}
+	{{^___sides.terms}}
+		{{> terms-summary}}
+	{{/___sides.terms}}
+
+	{{{___hooks.after-term}}}
+
+	<div class="clear"></div>
+
+	{{#___sides.custom}}
+		<div class="-wrap side-wrap">
+			<div class="-side-side">
+				{{{___sides.custom}}}
+			</div>
+			<div class="-side-main">
+				<div class="-wrap -custom-summaries">
+					{{#__summaries}}{{#content}}
+						<div class="-wrap -summary -{{key}}-summary {{class}}">
+							<h4 class="-summary-title">{{{title}}}</h4>
+							<div class="-summary-content">{{{content}}}</div>
+						</div>
+					{{/content}}{{/__summaries}}
+				</div>
+			</div>
+		</div>
+	{{/___sides.custom}}
+	{{^___sides.custom}}
+
+		{{! WTF: the cusrom-summaries partial not working! }}
+
+		<div class="-wrap -custom-summaries">
+			{{#__summaries}}{{#content}}
+				<div class="-wrap -summary -{{key}}-summary {{class}}">
+					<h4 class="-summary-title">{{{title}}}</h4>
+					<div class="-summary-content">{{{content}}}</div>
+				</div>
+			{{/content}}{{/__summaries}}
+		</div>
+
+	{{/___sides.custom}}
+
+	{{{___hooks.after-custom}}}
+
+	<div class="clear"></div>
+
+	<div class="wrap-content">{{{description}}}</div>
+
+	{{{___hooks.after-content}}}
+</div>

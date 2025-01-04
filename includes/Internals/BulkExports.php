@@ -966,4 +966,32 @@ trait BulkExports
 
 		return TRUE;
 	}
+
+	protected function bulkexports__hook_tabloid_term_assigned( $constant, $role_context = NULL )
+	{
+		if ( FALSE !== $role_context && ! $this->corecaps_taxonomy_role_can( $constant, $role_context ?? 'reports' ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'tabloid', 'term_summaries' ),
+			function ( $list, $data, $term, $context ) use ( $constant ) {
+
+				if ( $term->taxonomy !== $this->constant( $constant ) )
+					return $list;
+
+				$default  = _x( 'Export Options', 'Internal: Bulk Export: Term Summary Title', 'geditorial-admin' );
+				$template = $this->get_string( 'tabloid_export_buttons', $term->taxonomy, 'misc', $default );
+
+				$list[] = [
+					'key'     => $this->classs( 'assigned', 'exports' ),
+					'class'   => '-assigned-exports',
+					'title'   => $template,
+					'content' => Core\HTML::wrap( $this->exports_get_export_buttons( $term->term_id, $context, 'assigned' ), 'field-wrap -buttons' ),
+				];
+
+				return $list;
+
+			}, 20, 4 );
+
+		return TRUE;
+	}
 }
