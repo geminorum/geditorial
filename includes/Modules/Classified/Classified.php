@@ -5,17 +5,18 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Classified extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\MetaBoxSupported;
 	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
@@ -58,7 +59,7 @@ class Classified extends gEditorial\Module
 			'_editlist' => [
 				'admin_restrict',
 				'auto_term_parents',
-				'show_in_quickedit',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
 			'_frontend' => [
 				'contents_viewable',
@@ -115,6 +116,7 @@ class Classified extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 			'data_length'        => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-classified' ),
@@ -128,6 +130,7 @@ class Classified extends gEditorial\Module
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
 	public function current_screen( $screen )
@@ -136,6 +139,7 @@ class Classified extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {

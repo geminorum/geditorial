@@ -59,7 +59,8 @@ class Regioned extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_restrict',
-				'show_in_quickedit',
+				'auto_term_parents',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
 			'_frontend' => [
 				'contents_viewable',
@@ -112,6 +113,7 @@ class Regioned extends gEditorial\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
 			'custom_captype'  => TRUE,
 		] );

@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 class Conscripted extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
@@ -16,6 +17,7 @@ class Conscripted extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\CoreRowActions;
 	use Internals\DashboardSummary;
+	use Internals\MetaBoxSupported;
 	use Internals\TemplateTaxonomy;
 
 	// TODO: calculate underage/subject to service based on given dob metakey
@@ -57,7 +59,7 @@ class Conscripted extends gEditorial\Module
 			'_editlist' => [
 				'admin_restrict',
 				'auto_term_parents',
-				'show_in_quickedit',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
 			'_frontend' => [
 				'contents_viewable',
@@ -131,12 +133,13 @@ class Conscripted extends gEditorial\Module
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
-			'custom_captype'  => TRUE,
 			'single_selected' => TRUE,
+			'custom_captype'  => TRUE,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
 	public function current_screen( $screen )
@@ -145,6 +148,7 @@ class Conscripted extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'users.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {

@@ -148,10 +148,10 @@ class Equipped extends gEditorial\Module
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
-			'show_in_menu'       => FALSE,
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
@@ -159,8 +159,9 @@ class Equipped extends gEditorial\Module
 			'custom_captype'  => TRUE,
 		] );
 
-		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
+		// $this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' ); // FIXME!
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 

@@ -209,9 +209,11 @@ class Helper extends WordPress\Main
 				$query['post_type'] = $post->post_type;
 
 			if ( $object->query_var ) {
+
 				$query[$object->query_var] = $term->slug;
 
 			} else {
+
 				$query['taxonomy'] = $object->name;
 				$query['term']     = $term->slug;
 			}

@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 class Execution extends gEditorial\Module
 {
 	use Internals\AdminPage;
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
@@ -26,6 +27,8 @@ class Execution extends gEditorial\Module
 	use Internals\RestAPI;
 	use Internals\SubContents;
 	use Internals\TemplateTaxonomy;
+
+	protected $disable_no_posttypes = TRUE;
 
 	// NOTE: `Executed` wording is not acceptable in some server environments
 	public static function module()
@@ -68,15 +71,15 @@ class Execution extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
-			'_editlist' => [
-				'admin_restrict',
-				'auto_term_parents',
-				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
-			],
 			'_editpost' => [
-				'admin_rowactions',
 				'metabox_advanced',
 				'selectmultiple_term' => [ NULL, TRUE ],
+			],
+			'_editlist' => [
+				'admin_restrict',
+				'admin_rowactions',
+				'auto_term_parents',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
 			'_frontend' => [
 				'contents_viewable',
@@ -261,6 +264,7 @@ class Execution extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
@@ -278,6 +282,8 @@ class Execution extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( in_array( $screen->base, [ 'edit', 'post' ], TRUE ) ) {
 

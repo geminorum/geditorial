@@ -855,7 +855,7 @@ class ModuleHelper extends gEditorial\Helper
 	public static function getCountrySummary( $posttypes, $metakey, $data )
 	{
 		$statuses = WordPress\Status::acceptable( $posttypes, 'reports' );
-		$summary  = array_fill_keys( array_unique( Core\Arraay::pluck( $data, 'province' ) ), 0 );
+		$summary  = array_fill_keys( Core\Arraay::prepString( @Core\Arraay::pluck( $data, 'province' ) ), 0 );
 
 		foreach ( $data as $code => $details ) {
 

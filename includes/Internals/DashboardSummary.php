@@ -131,7 +131,7 @@ trait DashboardSummary
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
-		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$query_var = WordPress\Taxonomy::queryVar( $object );
 
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -159,12 +159,17 @@ trait DashboardSummary
 				? WordPress\Taxonomy::countPostsDoubleTerms( $paired, $taxonomy, $posttypes, $exclude )
 				: WordPress\Database::countPostsByTaxonomy( $terms, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 
-			foreach ( $counts as $term => $posts ) {
+			foreach ( $counts as $term_slug => $posts ) {
 
+				// empty count
 				if ( empty( $posts ) )
 					continue;
 
-				if ( $check && ( $roles = get_term_meta( $terms[$term]->term_id, 'roles', TRUE ) ) ) {
+				// term not available for display (usually child terms)
+				if ( ! array_key_exists( $term_slug, $terms ) )
+					continue;
+
+				if ( $check && ( $roles = get_term_meta( $terms[$term_slug]->term_id, 'roles', TRUE ) ) ) {
 
 					if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 						continue;
@@ -174,7 +179,7 @@ trait DashboardSummary
 				$style = '';
 
 				// NOTE: we use custom color as background
-				if ( $color = get_term_meta( $terms[$term]->term_id, 'color', TRUE ) )
+				if ( $color = get_term_meta( $terms[$term_slug]->term_id, 'color', TRUE ) )
 					$style.= sprintf(
 						// @REF: https://css-tricks.com/css-attr-function-got-nothin-custom-properties/
 						'--custom-link-color:%s;--custom-link-background:%s;',
@@ -182,8 +187,13 @@ trait DashboardSummary
 						$color
 					);
 
-				$name  = sanitize_term_field( 'name', $terms[$term]->name, $terms[$term]->term_id, $terms[$term]->taxonomy, 'display' );
-				$query = [ $query_var => $term ];
+				$query = [ $query_var => $term_slug ];
+				$name  = sanitize_term_field( 'name',
+					$terms[$term_slug]->name,
+					$terms[$term_slug]->term_id,
+					$terms[$term_slug]->taxonomy,
+					'display'
+				);
 
 				if ( $paired )
 					$query[WordPress\Taxonomy::queryVar( $paired->taxonomy )] = $paired->slug;
@@ -215,7 +225,7 @@ trait DashboardSummary
 						'-'.$this->key,
 						'-term',
 						'-taxonomy-'.$taxonomy,
-						'-term-'.$term.'-'.$type.'-count',
+						'-term-'.$term_slug.'-'.$type.'-count',
 					];
 
 					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )

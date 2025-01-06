@@ -103,7 +103,7 @@ SQL;
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
-		$query_var = empty( $taxonomy->query_var ) ? $taxonomy->name : $taxonomy->query_var;
+		$query_var = WordPress\Taxonomy::queryVar( $taxonomy );
 		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
 
 		// if selected is term_id instead of term slug
@@ -159,7 +159,7 @@ SQL;
 		if ( ! $object = get_taxonomy( $taxonomy ) )
 			return;
 
-		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$query_var = WordPress\Taxonomy::queryVar( $object );
 		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
 
 		// if selected is term_id instead of term slug

@@ -174,7 +174,7 @@ trait CoreAdmin
 
 		$posttypes = WordPress\PostType::get( 4, [], 'read' );
 
-		add_filter( 'manage_edit-'.$object->name.'_columns',
+		add_filter( sprintf( 'manage_edit-%s_columns', $object->name ),
 			function ( $columns ) {
 				return Core\Arraay::insert( $columns, [
 					// NOTE: globalized: bc no-way to pass class for the column header!
@@ -183,7 +183,7 @@ trait CoreAdmin
 				], 'posts', 'before' );
 			} );
 
-		add_filter( 'manage_'.$object->name.'_custom_column',
+		add_filter( sprintf( 'manage_%s_custom_column', $object->name ),
 			function ( $display, $column, $term_id ) use ( $object, $supported, $posttypes ) {
 
 				if ( $this->hook_base( 'multiplesupported' ) !== $column )

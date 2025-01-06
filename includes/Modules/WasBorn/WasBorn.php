@@ -294,7 +294,7 @@ class WasBorn extends gEditorial\Module
 		Listtable::parseQueryTaxonomy( $query, $this->constant( 'main_taxonomy' ) );
 
 		$object    = WordPress\Taxonomy::object( $this->constant( 'group_taxonomy' ) );
-		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$query_var = WordPress\Taxonomy::queryVar( $object );
 
 		if ( ! isset( $query->query_vars[$query_var] ) )
 			return;
@@ -470,14 +470,22 @@ class WasBorn extends gEditorial\Module
 				'-under-aged-'.$posttype.'-count',
 			];
 
-			if ( $access[$posttype] )
+			if ( $access[$posttype] ) {
+
+				$url_args = [ $query_var => $legal ];
+
+				if ( $paired_query = WordPress\Taxonomy::queryVar( $paired ?: FALSE ) )
+					$url_args[$paired_query] = $paired->slug;
+
 				$list[] = Core\HTML::tag( 'a', [
-					'href'  => Core\WordPress::getPostTypeEditLink( $posttype, 0, [ $query_var => $legal ] ),
+					'href'  => Core\WordPress::getPostTypeEditLink( $posttype, 0, $url_args ),
 					'class' => $classes,
 				], $text );
 
-			else
+			} else {
+
 				$list[] = Core\HTML::wrap( $text, $classes, FALSE );
+			}
 		}
 
 		return $list;
@@ -631,9 +639,7 @@ class WasBorn extends gEditorial\Module
 
 	private function _summary_age_empty_dob( $posttypes, $paired = NULL )
 	{
-		$taxonomy = $this->constant( 'group_taxonomy' );
-		$object    = WordPress\Taxonomy::object( $taxonomy );
-		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$query_var = WordPress\Taxonomy::queryVar( $this->constant( 'group_taxonomy' ) );
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$list      = $access = $metakey = [];
 
@@ -730,8 +736,7 @@ class WasBorn extends gEditorial\Module
 		if ( ! $terms = WordPress\Taxonomy::listTerms( $taxonomy, 'all', $extra ) )
 			return []; // FIXME: return notice of empty age groups
 
-		$object    = WordPress\Taxonomy::object( $taxonomy );
-		$query_var = empty( $object->query_var ) ? $object->name : $object->query_var;
+		$query_var = WordPress\Taxonomy::queryVar( $taxonomy );
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$list      = $access = $metakey = [];
 

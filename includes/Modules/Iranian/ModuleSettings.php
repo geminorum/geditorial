@@ -361,11 +361,15 @@ class ModuleSettings extends gEditorial\Settings
 			], $identity );
 		}
 
-		$caption = sprintf( '%s: ', Core\HTML::code( $zeroise ) );
+		$caption = sprintf( '%s ', Core\HTML::code( $zeroise ) );
 
 		if ( array_key_exists( $zeroise, $data ) ) {
 
-			$caption.= sprintf( '[%s][%s]', $data[$zeroise]['province'], $data[$zeroise]['city'] );
+			if ( isset( $data[$zeroise]['province'] ) )
+				$caption.= sprintf( '[%s]', $data[$zeroise]['province'] );
+
+			if ( isset( $data[$zeroise]['city'] ) )
+				$caption.= sprintf( '[%s]', $data[$zeroise]['city'] );
 
 			if ( isset( $data[$zeroise]['maybe'] ) )
 				$caption.= sprintf( '[%s]', $data[$zeroise]['maybe'] );
@@ -374,7 +378,7 @@ class ModuleSettings extends gEditorial\Settings
 		foreach ( $list as $city => $codes )
 			$table[$city] = implode( ' | ', $codes );
 
-		echo self::toolboxCardOpen( $caption, FALSE );
+		echo self::toolboxCardOpen( trim( $caption ), FALSE );
 
 			Core\HTML::tableSide( $table, FALSE );
 
