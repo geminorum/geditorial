@@ -28,6 +28,8 @@ class WooCommerce extends Core\Base
 		return FALSE;
 	}
 
+	// NOTE: it's always `product` then all sub-types are registered as a taxonomy `$product->get_type()`
+	// @REF https://rudrastyh.com/woocommerce/product-types.html
 	public static function getProductPosttype()
 	{
 		return 'product';
@@ -36,6 +38,11 @@ class WooCommerce extends Core\Base
 	public static function getProductCategoryTaxonomy()
 	{
 		return 'product_cat';
+	}
+
+	public static function getGTINMetakey()
+	{
+		return '_global_unique_id';
 	}
 
 	public static function getOrderStatuses()

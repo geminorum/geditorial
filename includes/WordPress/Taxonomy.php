@@ -72,6 +72,7 @@ class Taxonomy extends Core\Base
 
 	/**
 	 * Checks for taxonomy capability.
+	 * NOTE: caches the results
 	 *
 	 * @param  string|object   $taxonomy
 	 * @param  null|string     $capability
@@ -284,7 +285,7 @@ class Taxonomy extends Core\Base
 			$args['tax_query'][] = [
 				'taxonomy' => $term->taxonomy,
 				'terms'    => $term->term_id,
-				'field'    => 'id',
+				'field'    => 'term_id',
 			];
 		}
 
@@ -326,12 +327,12 @@ class Taxonomy extends Core\Base
 						[
 							'taxonomy' => $the_term->taxonomy,
 							'terms'    => $the_term->term_id,
-							'field'    => 'id',
+							'field'    => 'term_id',
 						],
 						[
 							'taxonomy' => $term->taxonomy,
 							'terms'    => $term->term_id,
-							'field'    => 'id',
+							'field'    => 'term_id',
 						]
 					],
 

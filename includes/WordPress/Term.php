@@ -16,8 +16,11 @@ class Term extends Core\Base
 	 * @param  string $taxonomy
 	 * @return false|object $term
 	 */
-	public static function get( $term_or_id, $taxonomy = '' )
+	public static function get( $term_or_id = NULL, $taxonomy = '' )
 	{
+		if ( FALSE === $term_or_id )
+			return $term_or_id;
+
 		if ( $term_or_id instanceof \WP_Term )
 			return $term_or_id;
 
@@ -63,7 +66,7 @@ class Term extends Core\Base
 
 	/**
 	 * Retrieves the user capability for a given term.
-	 * NOTE: caches the result
+	 * NOTE: caches the results
 	 *
 	 * @param  int|object      $term
 	 * @param  null|string     $capability
@@ -220,6 +223,32 @@ class Term extends Core\Base
 	}
 
 	/**
+	 * Retrieves a contextual link given a term id or term object.
+	 *
+	 * @param  null|int|object $term
+	 * @param  null|string     $context
+	 * @return false|string    $link
+	 */
+	public static function overview( $term, $context = NULL )
+	{
+		if ( ! $term = self::get( $term ) )
+			return FALSE;
+
+		$filtered = apply_filters( 'geditorial_term_overview_pre_link', NULL, $term, $context );
+
+		if ( ! is_null( $filtered ) )
+			return $filtered;
+
+		if ( is_admin() && self::can( $term, 'edit_term' ) )
+			return get_edit_term_link( $term );
+
+		if ( Taxonomy::viewable( $term->taxonomy ) )
+			return self::link( $term, FALSE );
+
+		return FALSE;
+	}
+
+	/**
 	 * Generates HTML link for given term
 	 *
 	 * @param  null|int|string|object $term
@@ -319,9 +348,7 @@ class Term extends Core\Base
 	 */
 	public static function viewable( $term )
 	{
-		$term = get_term( $term );
-
-		if ( ! $term || is_wp_error( $term ) )
+		if ( ! $term = self::get( $term ) )
 			return FALSE;
 
 		return Taxonomy::viewable( $term->taxonomy );
@@ -458,7 +485,7 @@ class Term extends Core\Base
 		if ( ! $object->show_in_rest )
 			return FALSE;
 
-		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $term->_term_id );
+		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $term->term_id );
 	}
 
 	public static function image( $term, $context = NULL, $size = NULL, $thumbnail_id = NULL )
