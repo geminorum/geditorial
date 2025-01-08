@@ -248,12 +248,21 @@ $spacer: 1rem !default;
         margin-bottom: - $spacer * .25;
       }
 
-      .button, // DEPRECATED
+      // .button, // DEPRECATED
+      // .-button {
+      //   margin-bottom: 4px;
+
+      //   + .-button {
+      //     margin-left: $spacer * .25;
+      //   }
+      // }
+
       .-button {
         margin-bottom: 4px;
+        margin-right: $spacer * .25;
 
-        + .-button {
-          margin-left: $spacer * .25;
+        &:last-of-type {
+          margin-right: 0;
         }
       }
 
@@ -277,10 +286,10 @@ $spacer: 1rem !default;
 
       #side-sortables & .-mainbutton,
       .-button-full {
+        margin: 0;
         width: 100%;
         padding-right: 7px;
         padding-left: 7px;
-        margin-bottom: 0;
       }
 
       .-button-icon {
