@@ -35,7 +35,8 @@
     "adbario/php-dot-notation": "^3.3",
     "maksimovic/php-xlsx-writer": "^1.0",
     "openspout/openspout": "^3.7",
-    "brick/postcode": "^0.3.1"
+    "brick/postcode": "^0.3.1",
+    "adhocore/jwt": "^1.1"
   },
   "require-dev": {
     "sabre/vobject": "^4.5.5",
