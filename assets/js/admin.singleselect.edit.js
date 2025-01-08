@@ -1,7 +1,7 @@
 /* global inlineEditPost */
 
 (function ($, plugin, module, section) {
-  if (plugin === 'undefined') return;
+  if (typeof plugin === 'undefined') return;
 
   const s = {
     // action: plugin._base + '_' + module,

@@ -1,6 +1,8 @@
 /* global QTags, persianTools */
 
 (function ($, p, module, s) {
+  if (typeof p === 'undefined') return;
+
   const o = {};
 
   o.s = $.extend({}, {

@@ -1,4 +1,6 @@
 (function ($, plugin, module, section) {
+  if (typeof plugin === 'undefined') return;
+
   const s = {
     headerEnd: '#wpbody-content div.wrap hr.wp-header-end',
     headerLegacy: 'body.term-php #wpbody-content .wrap > h1' // currently on: `term.php`

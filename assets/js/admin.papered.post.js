@@ -1,9 +1,11 @@
 (function ($, plugin, module, section) {
+  if (typeof plugin === 'undefined') return;
+
   const s = {
     // action: plugin._base + '_' + module,
     // classs: plugin._base + '-' + module,
     wrap: '.' + plugin._base + '-wrap.-' + module + '.-admin-metabox',
-    profile: '#' + plugin._base + '-' + module + '-printprofile',
+    dropdown: '#' + plugin._base + '-' + module + '-printprofile',
     iframe: plugin._base + '-' + module + '-printiframe',
     preview: plugin._base + '-' + module + '-printpreview',
     print: plugin._base + '-' + module + '-printprint'
@@ -16,12 +18,12 @@
     //   button_text: 'Import'
     // }, plugin[module].strings || {}),
 
-    init: function (dropdown) {
+    init: function () {
       const $preview = $('#' + s.preview, s.wrap);
       const $print = $('#' + s.print, s.wrap);
       const $iframe = $('#' + s.iframe, s.wrap);
 
-      $(dropdown, s.wrap).on('change', function () {
+      $(s.dropdown, s.wrap).on('change', function () {
         const profile = $(this).val();
         if (profile !== '0') {
           $preview.attr('disabled', false);
@@ -39,16 +41,18 @@
       // @REF: https://hdtuto.com/article/print-iframe-content-using-jquery-example
       $print.on('click', function () {
         const frame = document.getElementById(s.iframe).contentWindow;
+        const temp = frame.parent.document.title;
         frame.parent.document.title = frame.document.title; // copy iframe title into current window
         frame.focus();
         frame.print();
+        frame.parent.document.title = temp;
         return false;
       });
     }
   };
 
   $(function () {
-    app.init(s.profile);
+    app.init();
 
     $(document).trigger('gEditorialReady', [module, app]);
   });

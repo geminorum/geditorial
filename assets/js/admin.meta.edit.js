@@ -1,7 +1,7 @@
 /* global inlineEditPost */
 
 (function ($, plugin, module, section) {
-  if (plugin === 'undefined') return;
+  if (typeof plugin === 'undefined') return;
   if (!Object.keys(plugin[module].fields).length) return;
 
   const s = {

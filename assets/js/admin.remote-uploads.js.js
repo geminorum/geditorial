@@ -1,6 +1,8 @@
 /* global plupload */
 
 (function ($, plugin, module, section) {
+  if (typeof plugin === 'undefined') return;
+
   const s = {
     action: plugin._base + '_' + module,
     classs: plugin._base + '-' + module,

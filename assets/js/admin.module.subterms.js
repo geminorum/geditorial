@@ -1,4 +1,6 @@
 (function ($, plugin) {
+  if (typeof plugin === 'undefined') return;
+
   $('select.' + plugin._base + '-paired-to-post-dropdown').on('change', function () {
     const paired = $(this).data('paired');
     const target = $('select.' + plugin._base + '-paired-subterms[data-paired=' + paired + ']');

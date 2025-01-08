@@ -1,6 +1,8 @@
 /* global QTags, Virastar */
 
 (function ($, p, module) {
+  if (typeof p === 'undefined') return;
+
   const settings = $.extend({}, {
     virastar_on_paste: false
   }, p[module].settings);
@@ -11,6 +13,8 @@
     html: 'textarea#excerpt:not(.wp-editor-area), textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + module + '=\'html\']'
   };
 
+  // TODO: extract validations into a Service
+  // TODO: couple with: https://github.com/validatorjs/validator.js
   const inputs = {
     number: '[data-' + module + '=\'number\']',
     alphabet: '[data-' + module + '=\'alphabet\']', // example: warehouse partials
@@ -425,7 +429,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `year`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.-//]/g, '').trim());
+        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\]/g, '').trim());
         // TODO: check for pattern/validate year in persian
       });
     },
@@ -436,7 +440,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `date`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.-//]/g, '').trim());
+        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\]/g, '').trim());
         // TODO: check for pattern/validate date in persian
       });
     },
@@ -447,7 +451,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `date`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.-//: ]/g, '').trim());
+        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\: ]/g, '').trim());
         // TODO: check for pattern/validate datetime in persian
       });
     },
@@ -461,7 +465,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.-// ]/g, '').trim());
+        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\ ]/g, '').trim());
         // TODO: check for pattern/validate distance in persian
       });
     },
@@ -472,7 +476,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.-//: ]/g, '').trim());
+        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\: ]/g, '').trim());
         // TODO: check for pattern/validate duration in persian
       });
     },
@@ -483,7 +487,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.-// ]/g, '').trim());
+        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\ ]/g, '').trim());
         // TODO: check for pattern/validate duration in persian
       });
     }

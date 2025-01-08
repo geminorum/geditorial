@@ -1,5 +1,5 @@
 (function ($, plugin, module, section) {
-  if (plugin === 'undefined') return;
+  if (typeof plugin === 'undefined') return;
 
   const s = {
     overlay: '#cboxOverlay', // colorbox.js selector

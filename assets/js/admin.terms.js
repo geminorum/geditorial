@@ -1,4 +1,6 @@
 (function ($, plugin, module) {
+  if (typeof plugin === 'undefined') return;
+
   let modal;
 
   const s = {

@@ -1,4 +1,6 @@
 (function ($, plugin, module) {
+  if (typeof plugin === 'undefined') return;
+
   const s = {
     action: plugin._base + '_' + module
   };

@@ -1,7 +1,7 @@
 /* global inlineEditPost */
 
 (function ($, p, module) {
-  // bail if no fields with quickedit support
+  if (typeof p === 'undefined') return;
   if (!Object.keys(p[module].fields).length) return;
 
   const prefix = p._base + '-' + module + '-';
