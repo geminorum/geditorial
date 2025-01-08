@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Tube\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-05-27 04:12+0330\n"
+"PO-Revision-Date: 2025-01-06 19:25+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Domain: geditorial-tube\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tube\n"
 
@@ -109,77 +109,77 @@ msgctxt "Field Description"
 msgid "Creation Date of the Video"
 msgstr "تاریخ ساخت این ویدئو"
 
-#: Tube.php:167
+#: Tube.php:168
 msgctxt "Field Title"
 msgid "Video Duration"
 msgstr "مدت‌زمان ویدئو"
 
-#: Tube.php:168
+#: Tube.php:169
 msgctxt "Field Description"
 msgid "Duration of the Video"
 msgstr "مدت زمان این ویدئو"
 
-#: Tube.php:173
+#: Tube.php:175
 msgctxt "Field Title"
 msgid "Video Embed URL"
 msgstr "نشانی جاساز ویدئو"
 
-#: Tube.php:174
+#: Tube.php:176
 msgctxt "Field Description"
 msgid "Embeddable URL of the External Video"
 msgstr "نشانی قابل جاسازی برای ویدئوی بیرونی"
 
-#: Tube.php:388
+#: Tube.php:394
 msgctxt "Button"
 msgid "The date of this video"
 msgstr "تاریخ این ویدئو"
 
-#: Tube.php:394
+#: Tube.php:400
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr "مجموع مدت زمان این ویدئو"
 
-#: Tube.php:401
+#: Tube.php:407
 msgctxt "Button"
 msgid "Download this video"
 msgstr "دریافت این ویدئو"
 
-#: Tube.php:402
+#: Tube.php:408
 msgctxt "Button"
 msgid "Download"
 msgstr "دریافت"
 
-#: Tube.php:408
+#: Tube.php:414
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr "نمایش این ویدئو در یوتوب"
 
-#: Tube.php:410
+#: Tube.php:416
 msgctxt "Button"
 msgid "YouTube"
 msgstr "یوتوب"
 
-#: Tube.php:416
+#: Tube.php:422
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr "نمایش این ویدئو در آپارات"
 
-#: Tube.php:418
+#: Tube.php:424
 msgctxt "Button"
 msgid "Aparat"
 msgstr "آپارات"
 
-#: Tube.php:425
+#: Tube.php:431
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr "پیوند کوتاه به این ویدئو"
 
-#: Tube.php:427
+#: Tube.php:433
 msgctxt "Button"
 msgid "Shortlink"
 msgstr "پیوند کوتاه"
 
-#: Tube.php:432 Tube.php:439 Tube.php:446
+#: Tube.php:438 Tube.php:445 Tube.php:452
 msgctxt "Button"
 msgid "Share this video"
 msgstr "همخوان کنید"

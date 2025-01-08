@@ -33,13 +33,3 @@ msgstr ""
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
-
-#: Mobilized.php:99
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Mobilization Summary"
-msgstr ""
-
-#: Mobilized.php:100
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Mobilization Summary"
-msgstr ""

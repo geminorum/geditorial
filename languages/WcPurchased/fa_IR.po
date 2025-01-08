@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gEditorial WC-Purchased\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
-"POT-Creation-Date: 2022-07-26T11:14:34+00:00\n"
-"PO-Revision-Date: 2022-07-26 17:35+0430\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-01-06 19:06+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,84 +11,72 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/WC-Purchased\n"
 "X-Domain: geditorial-wc-purchased\n"
 
-#: WcPurchased.php:40
+#: WcPurchased.php:41
 msgctxt "Setting Title"
 msgid "Order Statuses"
 msgstr "وضعیت‌های سفارش"
 
-#: WcPurchased.php:41
+#: WcPurchased.php:42
 msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WcPurchased.php:50
-msgctxt "Setting Title"
-msgid "Reports Roles"
-msgstr "نقش‌های گزارشات"
-
-#: WcPurchased.php:51
-msgctxt "Setting Description"
-msgid "Roles that can view product purchase reports."
-msgstr ""
-
-#: WcPurchased.php:57
-msgctxt "Setting Title"
-msgid "Export Roles"
-msgstr "نقش‌های برون‌بری"
-
-#: WcPurchased.php:58
-msgctxt "Setting Description"
-msgid "Roles that can export product purchase reports."
-msgstr ""
-
-#: WcPurchased.php:108
+#: WcPurchased.php:92
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr "گزارش خرید کالا"
 
-#: WcPurchased.php:111
+#: WcPurchased.php:95
 msgctxt "Action"
 msgid "Purchases"
 msgstr "خریدها"
 
-#: WcPurchased.php:120 WcPurchased.php:123
+#: WcPurchased.php:104 WcPurchased.php:107
 msgctxt "Message"
 msgid "No Product!"
 msgstr "بدون کالا!"
 
-#: WcPurchased.php:126
+#: WcPurchased.php:110
 msgctxt "Message"
 msgid "No Orders!"
 msgstr "بدون سفارش!"
 
-#: WcPurchased.php:139
+#: WcPurchased.php:123
 msgctxt "Button"
 msgid "Export CSV"
 msgstr "برون‌بری CSV"
 
-#: WcPurchased.php:150
+#: WcPurchased.php:134
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WcPurchased.php:156
+#: WcPurchased.php:140
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr "پرداخت"
 
-#: WcPurchased.php:163
+#: WcPurchased.php:147
 msgctxt "Column Title"
 msgid "Address"
 msgstr "نشانی"
 
-#: WcPurchased.php:169
+#: WcPurchased.php:153
 msgctxt "Column Title"
 msgid "Total"
 msgstr "مبلغ"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Reports Roles"
+#~ msgstr "نقش‌های گزارشات"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Export Roles"
+#~ msgstr "نقش‌های برون‌بری"
 
 #~ msgctxt "Action"
 #~ msgid "Reports"

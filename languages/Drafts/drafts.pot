@@ -43,51 +43,69 @@ msgctxt "Setting Description"
 msgid "Maximum number of posts for each post-type."
 msgstr ""
 
-#: Drafts.php:143
+#. translators: %s: count
+#: Drafts.php:77
+msgid "Public Preview <span class=\"count -counted\">(%s)</span>"
+msgid_plural "Public Previews <span class=\"count -counted\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Drafts.php:164
 msgctxt "Adminbar"
 msgid "Drafts"
 msgstr ""
 
-#: Drafts.php:170
+#: Drafts.php:191
 msgid "Unable to make preview private. Please try again."
 msgstr ""
 
-#: Drafts.php:187
+#: Drafts.php:208
 msgid "Unable to make preview public. Please try again."
 msgstr ""
 
 #. translators: %s: drafts count
-#: Drafts.php:209
+#: Drafts.php:230
 msgctxt "Header"
 msgid "View all %s drafts"
 msgstr ""
 
-#: Drafts.php:240
+#: Drafts.php:261
 msgctxt "Empty"
 msgid "(none)"
 msgstr ""
 
-#: Drafts.php:305
+#: Drafts.php:326
 msgctxt "Button"
 msgid "Make Preview Public"
 msgstr ""
 
-#: Drafts.php:316
+#: Drafts.php:337
 msgctxt "Button"
 msgid "Make Preview Private"
 msgstr ""
 
-#: Drafts.php:377
+#: Drafts.php:408
+msgctxt "State"
+msgid "Public Preview"
+msgstr ""
+
+#. translators: %s: post title
+#: Drafts.php:411
+msgctxt "State Title"
+msgid "Open public preview of &#8220;%s&#8221;"
+msgstr ""
+
+#: Drafts.php:431
 msgctxt "Action"
 msgid "Public Preview"
 msgstr ""
 
-#: Drafts.php:395
+#: Drafts.php:449
 msgctxt "Row Icon Title"
 msgid "Preview"
 msgstr ""
 
-#: Drafts.php:401
+#: Drafts.php:455
 msgctxt "Row"
 msgid "Has public preview link"
 msgstr ""

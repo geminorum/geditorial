@@ -29,47 +29,37 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
 
-#: Honored.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Honors Summary"
-msgstr ""
-
-#: Honored.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Honors Summary"
-msgstr ""
-
-#: Honored.php:117
+#: Honored.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Clergy"
 msgstr ""
 
-#: Honored.php:118
+#: Honored.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Doctor"
 msgstr ""
 
-#: Honored.php:119
+#: Honored.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sadat"
 msgstr ""
 
-#: Honored.php:120
+#: Honored.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sayyid"
 msgstr ""
 
-#: Honored.php:121
+#: Honored.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sayyidah"
 msgstr ""
 
-#: Honored.php:122
+#: Honored.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Engineer"
 msgstr ""
 
-#: Honored.php:123
+#: Honored.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Lawyer"
 msgstr ""

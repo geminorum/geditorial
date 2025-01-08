@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Diagnosed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-28 23:24+0330\n"
+"PO-Revision-Date: 2024-12-04 20:58+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Diagnosed\n"
 "X-Domain: geditorial-diagnosed\n"
 
@@ -183,18 +183,18 @@ msgid "Ankle"
 msgstr "مچ‌پا"
 
 #. translators: %s: post title
-#: Diagnosed.php:334
+#: Diagnosed.php:322
 msgctxt "Page Title"
 msgid "Medical Grid for %s"
 msgstr "جدول پزشکی برای %s"
 
 #. translators: %s: post title
-#: Diagnosed.php:336
+#: Diagnosed.php:324
 msgctxt "Page Title"
 msgid "Medical Overview for %s"
 msgstr "مروری بر سوابق پزشکی %s"
 
-#: Diagnosed.php:353
+#: Diagnosed.php:341
 msgctxt "Default Term: Audit"
 msgid "Empty Medical Data"
 msgstr "داده‌های پزشکی خالی"

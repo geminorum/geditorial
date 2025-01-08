@@ -156,17 +156,17 @@ msgctxt "Field Description"
 msgid "Unique Committee Code"
 msgstr ""
 
-#: Directorate.php:250
+#: Directorate.php:251
 msgctxt "Field Title"
 msgid "Membership Number"
 msgstr ""
 
-#: Directorate.php:251
+#: Directorate.php:252
 msgctxt "Field Description"
 msgid "Unique Committee Membership Number"
 msgstr ""
 
-#: Directorate.php:699
+#: Directorate.php:708
 msgctxt "Header"
 msgid "Directorate Tools"
 msgstr ""

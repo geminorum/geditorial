@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Iranian\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-05 19:53+0330\n"
+"PO-Revision-Date: 2024-12-14 07:28+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,163 +15,163 @@ msgstr ""
 "X-Domain: geditorial-iranian\n"
 
 #. translators: %s: supported object label
-#: Iranian.php:51
+#: Iranian.php:52
 msgctxt "Setting Title"
 msgid "Identity Meta-key for %s"
 msgstr "کلید متای هویت برای %s"
 
-#: Iranian.php:52
+#: Iranian.php:53
 msgctxt "Setting Description"
 msgid "Defines identity meta-key for the post-type."
 msgstr "کلید متا هویت نوع‌فرسته را تعریف می‌کند."
 
 #. translators: %s: supported object label
-#: Iranian.php:63
+#: Iranian.php:64
 msgctxt "Setting Title"
 msgid "Location Meta-key for %s"
 msgstr "کلید متای مکان برای %s"
 
-#: Iranian.php:64
+#: Iranian.php:65
 msgctxt "Setting Description"
 msgid "Defines location meta-key for the post-type."
 msgstr "کلید متا مکان نوع‌فرسته را تعریف می‌کند."
 
-#: Iranian.php:94
-msgctxt "Settings Description"
+#: Iranian.php:98
+msgctxt "Setting Description"
 msgid "Supports meta fields for the selected post-types."
 msgstr "متافیلدها را برای نوع‌فرسته‌های منتخب پشتیبانی می‌کند."
 
-#: Iranian.php:105
+#: Iranian.php:109
 msgctxt "Field Title"
 msgid "Birth Certificate"
 msgstr "شماره شناسنامه"
 
-#: Iranian.php:106
+#: Iranian.php:110
 msgctxt "Field Description"
 msgid "Iranian Birth Certificate Number"
 msgstr "شماره شناسنامه ایرانی"
 
-#: Iranian.php:139
+#: Iranian.php:143
 msgctxt "RestAPI: Arg Description"
 msgid "The National Code to process."
 msgstr "کد ملی که برای پردازش استفاده شود."
 
-#: Iranian.php:222
+#: Iranian.php:214
 msgctxt "Header"
 msgid "Iranian Imports"
 msgstr "درون‌ریزی‌های ایرانی"
 
-#: Iranian.php:239
-msgctxt "Card Title"
-msgid "Location by Identity"
-msgstr "مکان به کمک هویت"
-
-#. translators: %s: posttype label
-#: Iranian.php:249 ModuleSettings.php:30 ModuleSettings.php:49
-msgctxt "Button"
-msgid "On %s"
-msgstr "در %s"
-
-#: Iranian.php:251
-msgctxt "Button Description"
-msgid "Tries to set the location based on identity data."
-msgstr "برای تنظیم مکان بر اساس داده‌های هویتی تلاش می‌کند."
-
-#. translators: %s: identity code
-#: Iranian.php:325
-msgctxt "Notice"
-msgid "No location data available for %s"
-msgstr "داده‌های مکانی برای %s در دسترس نیست"
-
-#. translators: %s: identity code
-#: Iranian.php:331
-msgctxt "Notice"
-msgid "No city data available for %s"
-msgstr "داده‌های شهر برای %s در دسترس نیست"
-
-#. translators: %1$s: city data, %2$s: identity code
-#: Iranian.php:337
-msgctxt "Notice"
-msgid "City data is empty for %1$s: %2$s"
-msgstr "داده‌های شهر برای %1$s خالی است (%2$s)"
-
-#. translators: %s: post title
-#: Iranian.php:343
-msgctxt "Notice"
-msgid "There is problem updating location for &ldquo;%s&rdquo;"
-msgstr "در به‌روزرسانی مکان برای &rdquo;%s&ldquo; مشکلی پیش آمده است"
-
-#. translators: %1$s: city data, %2$s: identity code, %3$s: post title
-#: Iranian.php:349
-msgctxt "Notice"
-msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;"
-msgstr "شهر &rdquo;%1$s&ldquo; به کمک %2$s برای &rdquo;%3$s&ldquo; تنظیم شد"
-
-#: Iranian.php:366
+#: Iranian.php:272
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr "ابزارهای ایرانی"
 
-#: Iranian.php:393
+#: Iranian.php:381 ModuleSettings.php:278
+msgctxt "Header"
+msgid "Iranian Reports"
+msgstr "گزارش‌های ایرانی"
+
+#: ModuleSettings.php:24
 msgctxt "Card Title"
 msgid "Compare Identity to Birth Certificate"
 msgstr "مقایسه هویت با شماره شناسنامه"
 
 #. translators: %s: posttype label
-#: Iranian.php:403
+#: ModuleSettings.php:33
 msgctxt "Button"
 msgid "Compare Identity for %s"
 msgstr "مقایسه هویت برای %s"
 
-#: Iranian.php:405
+#: ModuleSettings.php:37
 msgctxt "Button Description"
 msgid "Tries to un-set the certificate duplicated from identity data."
 msgstr "برای حذف شماره شناسنامه یکسان با اطلاعات هویتی تلاش می‌کند."
 
 #. translators: %s: post title
-#: Iranian.php:479 Iranian.php:505
+#: ModuleSettings.php:90 ModuleSettings.php:116
 msgctxt "Notice"
 msgid "There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;"
 msgstr "در حذف شماره شناسنامه برای &rdquo;%s&ldquo; مشکلی پیش آمده است."
 
 #. translators: %1$s: birth certificate number, %2$s: post title
-#: Iranian.php:485 Iranian.php:511
+#: ModuleSettings.php:96 ModuleSettings.php:122
 msgctxt "Notice"
 msgid "Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;"
 msgstr "شماره شناسنامه %1$s برای &rdquo;%2$s&ldquo; حذف شد"
 
 #. translators: %1$s: identity code, %2$s: birth certificate number
-#: Iranian.php:499
+#: ModuleSettings.php:110
 msgctxt "Notice"
 msgid "Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent"
 msgstr "هویت (%1$s) با شماره شناسنامه (%2$s) متفاوت است"
 
-#: Iranian.php:579 ModuleSettings.php:63
-msgctxt "Header"
-msgid "Iranian Reports"
-msgstr "گزارش‌های ایرانی"
+#: ModuleSettings.php:132
+msgctxt "Card Title"
+msgid "Location by Identity"
+msgstr "مکان به کمک هویت"
 
-#: ModuleSettings.php:22 ModuleSettings.php:64
+#. translators: %s: posttype label
+#: ModuleSettings.php:141 ModuleSettings.php:245 ModuleSettings.php:264
+msgctxt "Button"
+msgid "On %s"
+msgstr "در %s"
+
+#: ModuleSettings.php:145
+msgctxt "Button Description"
+msgid "Tries to set the location based on identity data."
+msgstr "برای تنظیم مکان بر اساس داده‌های هویتی تلاش می‌کند."
+
+#. translators: %s: identity code
+#: ModuleSettings.php:202
+msgctxt "Notice"
+msgid "No location data available for %s"
+msgstr "داده‌های مکانی برای %s در دسترس نیست"
+
+#. translators: %s: identity code
+#: ModuleSettings.php:208
+msgctxt "Notice"
+msgid "No city data available for %s"
+msgstr "داده‌های شهر برای %s در دسترس نیست"
+
+#. translators: %1$s: city data, %2$s: identity code
+#: ModuleSettings.php:214
+msgctxt "Notice"
+msgid "City data is empty for %1$s: %2$s"
+msgstr "داده‌های شهر برای %1$s خالی است (%2$s)"
+
+#. translators: %s: post title
+#: ModuleSettings.php:220
+msgctxt "Notice"
+msgid "There is problem updating location for &ldquo;%s&rdquo;"
+msgstr "در به‌روزرسانی مکان برای &rdquo;%s&ldquo; مشکلی پیش آمده است"
+
+#. translators: %1$s: city data, %2$s: identity code, %3$s: post title
+#: ModuleSettings.php:226
+msgctxt "Notice"
+msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;"
+msgstr "شهر &rdquo;%1$s&ldquo; به کمک %2$s برای &rdquo;%3$s&ldquo; تنظیم شد"
+
+#: ModuleSettings.php:237 ModuleSettings.php:279
 msgctxt "Card Title"
 msgid "Country Summary"
 msgstr "گزارش کشوری"
 
-#: ModuleSettings.php:34
+#: ModuleSettings.php:249
 msgctxt "Button Description"
 msgid "Tries to summarize the country info based on the raw meta-data."
 msgstr "برای گزارش اطلاعات کشوری بر اساس داده‌های خام تلاش می‌کند."
 
-#: ModuleSettings.php:41
+#: ModuleSettings.php:256
 msgctxt "Card Title"
 msgid "City Summary"
 msgstr "گزارش شهری"
 
-#: ModuleSettings.php:53
+#: ModuleSettings.php:268
 msgctxt "Button Description"
 msgid "Tries to summarize the city info based on the raw meta-data."
 msgstr "برای گزارش اطلاعات شهری بر اساس داده‌های خام تلاش می‌کند."
 
-#: ModuleSettings.php:104
+#: ModuleSettings.php:319
 msgctxt "Button"
 msgid "Next Batch"
 msgstr "مجموعه بعدی"

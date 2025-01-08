@@ -23,188 +23,284 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the shootings and supported post-types."
 msgstr ""
 
-#: Ranged.php:148
-#: Ranged.php:149
+#: Ranged.php:150
+#: Ranged.php:151
 msgid "Shooting Session"
 msgid_plural "Shooting Sessions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranged.php:150
+#: Ranged.php:152
 msgid "Shooting Category"
 msgid_plural "Shooting Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranged.php:151
+#: Ranged.php:153
 msgid "Shooting Level"
 msgid_plural "Shooting Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranged.php:152
+#: Ranged.php:154
 msgid "Shooting Program"
 msgid_plural "Shooting Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranged.php:153
+#: Ranged.php:155
+msgid "Shooting Position"
+msgid_plural "Shooting Positions"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Ranged.php:156
 msgid "Shooting Span"
 msgid_plural "Shooting Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranged.php:154
+#: Ranged.php:157
 msgid "Shooting Type"
 msgid_plural "Shooting Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranged.php:155
+#: Ranged.php:158
 msgid "Shooting Status"
 msgid_plural "Shooting Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranged.php:159
+#: Ranged.php:162
 msgctxt "Label: `menu_name`"
 msgid "Shootings"
 msgstr ""
 
-#: Ranged.php:160
+#: Ranged.php:163
 msgctxt "Label: Featured Image"
 msgid "Shooting Poster"
 msgstr ""
 
-#: Ranged.php:161
+#: Ranged.php:164
 msgctxt "Label: MetaBox Title"
 msgid "The Shootings"
 msgstr ""
 
-#: Ranged.php:164
+#: Ranged.php:167
 msgctxt "Label: MetaBox Title"
 msgid "In This Shooting"
 msgstr ""
 
-#: Ranged.php:167
+#: Ranged.php:170
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Ranged.php:170
+#: Ranged.php:173
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Ranged.php:173
-msgctxt "Label: Menu Name"
-msgid "Spans"
-msgstr ""
-
 #: Ranged.php:176
 msgctxt "Label: Menu Name"
-msgid "Types"
+msgid "Positions"
 msgstr ""
 
 #: Ranged.php:179
 msgctxt "Label: Menu Name"
+msgid "Spans"
+msgstr ""
+
+#: Ranged.php:182
+msgctxt "Label: Menu Name"
+msgid "Types"
+msgstr ""
+
+#: Ranged.php:185
+msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Ranged.php:188
+#: Ranged.php:194
 msgctxt "Notice"
 msgid "There is no shooting information available!"
 msgstr ""
 
-#: Ranged.php:189
+#: Ranged.php:195
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the shooting information."
 msgstr ""
 
 #. translators: %s: item count
-#: Ranged.php:194
+#: Ranged.php:200
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Shooting Attendees (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Ranged.php:196
+#: Ranged.php:202
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Shooting Sessions (%s)"
 msgstr ""
 
-#: Ranged.php:197
+#: Ranged.php:203
 msgctxt "Misc: `column_icon_title`"
 msgid "Shooting Sessions"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Ranged.php:202
+#: Ranged.php:208
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Ranged.php:212
+#: Ranged.php:218
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr ""
 
-#: Ranged.php:213
+#: Ranged.php:219
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr ""
 
-#: Ranged.php:214
+#: Ranged.php:220
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr ""
 
-#: Ranged.php:215
+#: Ranged.php:221
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr ""
 
-#: Ranged.php:219
+#: Ranged.php:225
+msgctxt "Position Taxonomy: Default Term"
+msgid "Prone"
+msgstr ""
+
+#: Ranged.php:226
+msgctxt "Position Taxonomy: Default Term"
+msgid "Sitting"
+msgstr ""
+
+#: Ranged.php:227
+msgctxt "Position Taxonomy: Default Term"
+msgid "Kneeling"
+msgstr ""
+
+#: Ranged.php:228
+msgctxt "Position Taxonomy: Default Term"
+msgid "Standing"
+msgstr ""
+
+#: Ranged.php:229
+msgctxt "Position Taxonomy: Default Term"
+msgid "Free-style"
+msgstr ""
+
+#: Ranged.php:233
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Ranged.php:220
+#: Ranged.php:234
 msgctxt "Status Taxonomy: Default Term"
 msgid "Canceled"
 msgstr ""
 
-#: Ranged.php:221
+#: Ranged.php:235
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Ranged.php:263
+#: Ranged.php:277
 msgctxt "Field Title"
 msgid "Instructors"
 msgstr ""
 
-#: Ranged.php:264
+#: Ranged.php:278
 msgctxt "Field Description"
 msgid "People Who Participate as Instructors in This Shooting Session"
 msgstr ""
 
-#: Ranged.php:271
+#: Ranged.php:285
 msgctxt "Field Title"
 msgid "Shooting Code"
 msgstr ""
 
-#: Ranged.php:272
+#: Ranged.php:286
 msgctxt "Field Description"
 msgid "Unique Shooting Code"
 msgstr ""
 
-#: Ranged.php:611
+#: Ranged.php:302
+msgctxt "Field Title"
+msgid "Total Targets"
+msgstr ""
+
+#: Ranged.php:303
+msgctxt "Field Description"
+msgid "Total Number of Target Cards"
+msgstr ""
+
+#: Ranged.php:309
+msgctxt "Field Title"
+msgid "Total Lines"
+msgstr ""
+
+#: Ranged.php:310
+msgctxt "Field Description"
+msgid "Total Number of Firing Lines"
+msgstr ""
+
+#: Ranged.php:316
+msgctxt "Field Title"
+msgid "Firing Distance"
+msgstr ""
+
+#: Ranged.php:317
+msgctxt "Field Description"
+msgid "Firing Distance in Meters"
+msgstr ""
+
+#: Ranged.php:323
+msgctxt "Field Title"
+msgid "Free Shots"
+msgstr ""
+
+#: Ranged.php:324
+msgctxt "Field Description"
+msgid "Number of shots attempts for adjusting."
+msgstr ""
+
+#: Ranged.php:330
+msgctxt "Field Title"
+msgid "Sighting Shots"
+msgstr ""
+
+#: Ranged.php:331
+msgctxt "Field Description"
+msgid "Number of shots attempts for adjusting on the target."
+msgstr ""
+
+#: Ranged.php:337
+msgctxt "Field Title"
+msgid "Grading Shots"
+msgstr ""
+
+#: Ranged.php:338
+msgctxt "Field Description"
+msgid "Number of shots attempts for grading."
+msgstr ""
+
+#: Ranged.php:686
 msgctxt "Header"
 msgid "Shooting Session Tools"
 msgstr ""
 
-#: Ranged.php:620
+#: Ranged.php:695
 msgctxt "Card"
 msgid "Shooting Session Date from Meta-data"
 msgstr ""

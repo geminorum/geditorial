@@ -13,166 +13,171 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Housed\n"
 "X-Domain: geditorial-housed\n"
 
-#: Housed.php:114
+#: Housed.php:115
 msgid "Housing Condition"
 msgid_plural "Housing Conditions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Housed.php:118
+#: Housed.php:119
 msgctxt "Label: `menu_name`"
 msgid "Housing Conditions"
 msgstr ""
 
-#: Housed.php:119
+#: Housed.php:120
 msgctxt "Label: `extended_label`"
 msgid "Housing Conditions"
 msgstr ""
 
-#: Housed.php:120
+#: Housed.php:121
 msgctxt "Label: `show_option_all`"
 msgid "Housings"
 msgstr ""
 
-#: Housed.php:121
+#: Housed.php:122
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined)"
 msgstr ""
 
-#: Housed.php:126
+#: Housed.php:127
 msgctxt "Field Label: `label`"
 msgid "Event"
 msgstr ""
 
-#: Housed.php:127
+#: Housed.php:128
 msgctxt "Field Label: `date`"
 msgid "Date"
 msgstr ""
 
-#: Housed.php:128
+#: Housed.php:129
 msgctxt "Field Label: `location`"
 msgid "Attendees"
 msgstr ""
 
-#: Housed.php:129
+#: Housed.php:130
 msgctxt "Field Label: `address`"
 msgid "Address"
 msgstr ""
 
-#: Housed.php:130
+#: Housed.php:131
 msgctxt "Field Label: `location`"
 msgid "Venue"
 msgstr ""
 
-#: Housed.php:131
+#: Housed.php:132
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Housed.php:137
+#: Housed.php:138
+msgctxt "Tab Title"
+msgid "Visiting"
+msgstr ""
+
+#: Housed.php:142
 msgctxt "Notice"
 msgid "There is no visiting information available!"
 msgstr ""
 
-#: Housed.php:138
+#: Housed.php:143
 msgctxt "Notice"
 msgid "You have not necessary permission to manage this visiting data."
 msgstr ""
 
-#: Housed.php:145
-msgctxt "Settings Description"
+#: Housed.php:150
+msgctxt "Setting Description"
 msgid "Supports &ldquo;Housing Conditions&rdquo; for the selected post-types."
 msgstr ""
 
-#: Housed.php:149
+#: Housed.php:154
 msgctxt "MetaBox Title"
 msgid "Visiting"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Housed.php:153
+#: Housed.php:158
 msgctxt "Button Title"
 msgid "Visiting of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Housed.php:155
+#: Housed.php:160
 msgctxt "Button Text"
 msgid "%1$s Manage the Visiting of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Housed.php:158
+#: Housed.php:163
 msgctxt "Action Title"
 msgid "Visiting of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Housed.php:160
+#: Housed.php:165
 msgctxt "Action Text"
 msgid "Visiting"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Housed.php:163
+#: Housed.php:168
 msgctxt "Row Title"
 msgid "Visiting of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Housed.php:165
+#: Housed.php:170
 msgctxt "Row Text"
 msgid "Visiting"
 msgstr ""
 
-#: Housed.php:177
+#: Housed.php:182
 msgctxt "Field Title"
 msgid "Housing Area"
 msgstr ""
 
-#: Housed.php:178
+#: Housed.php:183
 msgctxt "Field Description"
 msgid "Housing area in meter squared"
 msgstr ""
 
-#: Housed.php:192
+#: Housed.php:197
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ownership"
 msgstr ""
 
-#: Housed.php:193
+#: Housed.php:198
 msgctxt "Main Taxonomy: Default Term"
 msgid "Rental"
 msgstr ""
 
-#: Housed.php:194
+#: Housed.php:199
 msgctxt "Main Taxonomy: Default Term"
 msgid "Parental"
 msgstr ""
 
-#: Housed.php:195
+#: Housed.php:200
 msgctxt "Main Taxonomy: Default Term"
 msgid "Dormitory"
 msgstr ""
 
-#: Housed.php:196
+#: Housed.php:201
 msgctxt "Main Taxonomy: Default Term"
 msgid "Homeless"
 msgstr ""
 
 #. translators: %s: post title
-#: Housed.php:361
+#: Housed.php:355
 msgctxt "Page Title"
 msgid "Visiting Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Housed.php:363
+#: Housed.php:357
 msgctxt "Page Title"
 msgid "Visiting Overview for %s"
 msgstr ""
 
-#: Housed.php:399
+#: Housed.php:391
 msgctxt "Default Term: Audit"
 msgid "Empty Visiting Data"
 msgstr ""

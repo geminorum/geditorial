@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Badges\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-03 03:59+0330\n"
+"PO-Revision-Date: 2024-12-04 20:49+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -36,20 +36,18 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr "(بی‌نشان)"
 
-#: Badges.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Your Content Badges Summary"
-msgstr "گزارش نشان‌های محتوای شما"
-
-#: Badges.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Badges Summary"
-msgstr "گزارش نشان‌های تحریریه"
-
-#: Badges.php:271
+#: Badges.php:252
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr "گزارش نشان‌ها"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Content Badges Summary"
+#~ msgstr "گزارش نشان‌های محتوای شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Badges Summary"
+#~ msgstr "گزارش نشان‌های تحریریه"
 
 #~ msgctxt "Setting"
 #~ msgid "There are no badges available!"

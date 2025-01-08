@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Images\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:58+0330\n"
+"PO-Revision-Date: 2025-01-06 19:13+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,31 +11,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcImages\n"
 "X-Domain: geditorial-wc-images\n"
 
-#: WcImages.php:109
+#: WcImages.php:106
 msgctxt "Table Action"
 msgid "Shift Thumbnail from Gallery"
 msgstr "شیفت بندانگشتی از گالری"
 
-#: WcImages.php:120
+#: WcImages.php:117
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr "بند‌انگشتی"
 
-#: WcImages.php:130
+#: WcImages.php:127
 msgctxt "Table Column"
 msgid "Gallery"
 msgstr "گالری"
 
-#: WcImages.php:145
+#: WcImages.php:142
 msgctxt "Header"
 msgid "Overview of WooCommerce Products"
 msgstr "بررسی کالاهای ووکامرس"
 
-#: WcImages.php:146
+#: WcImages.php:143
 msgctxt "Message"
 msgid "No product found."
 msgstr "کالایی پیدا نشد."

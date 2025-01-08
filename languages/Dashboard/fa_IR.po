@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Dashboard\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-01 23:10+0330\n"
+"PO-Revision-Date: 2024-11-27 02:19+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Dashboard\n"
 "X-Domain: geditorial-dashboard\n"
 
@@ -52,17 +52,17 @@ msgctxt "Setting Button"
 msgid "Dashboard Page"
 msgstr "برگه پیشخوان"
 
-#: Dashboard.php:106
+#: Dashboard.php:107
 msgctxt "Widget Area"
 msgid "Editorial: Dashboard"
 msgstr "تحریریه: پیشخوان"
 
-#: Dashboard.php:107
+#: Dashboard.php:108
 msgctxt "Widget Area"
 msgid "Widgets appear on Front-end Dashboard"
 msgstr ""
 
-#: Dashboard.php:170
+#: Dashboard.php:171
 msgctxt "Page-State"
 msgid "Dashboard"
 msgstr "پیشخوان"

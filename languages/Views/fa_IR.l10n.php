@@ -1,2 +1,2 @@
 <?php
-return ['domain'=>'geditorial-views','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Views','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2023-06-26 17:57+0330','x-generator'=>'Poedit 3.3.1','messages'=>['Event NameEntry Views'=>'بازدید‌های نوشته','Title AttrView Summary'=>'گزارش بازدید‌ها']];
+return ['domain'=>'geditorial-views','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Views','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2025-01-06 19:14+0330','x-generator'=>'Poedit 3.5','messages'=>['Event NameEntry Views'=>'بازدید‌های نوشته','Title AttrView Summary'=>'گزارش بازدید‌ها']];

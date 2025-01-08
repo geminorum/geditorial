@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Suited\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-08-01 23:11+0330\n"
+"PO-Revision-Date: 2024-11-27 02:28+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,22 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Suited\n"
 "X-Domain: geditorial-suited\n"
 
-#: Suited.php:74
+#: Suited.php:83
 msgid "Suitable Target"
 msgid_plural "Suitable Targets"
 msgstr[0] "مخاطبین شایسته"
 msgstr[1] "مخاطب شایسته"
 
-#: Suited.php:78
+#: Suited.php:87
 msgctxt "Label: Show Option All"
 msgid "Suitable"
 msgstr "شایسته‌گان"
 
-#: Suited.php:79
+#: Suited.php:88
 msgctxt "Label: Show Option No Terms"
 msgid "(Unsuitable)"
 msgstr "(ناشایسته)"

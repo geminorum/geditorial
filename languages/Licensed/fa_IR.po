@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Licensed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-13 08:52+0330\n"
+"PO-Revision-Date: 2024-11-27 02:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,70 +11,68 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Vehicle\n"
 "X-Domain: geditorial-vehicle\n"
 
-#: Licensed.php:86
+#: Licensed.php:88
 msgid "Driving Licence"
 msgid_plural "Driving Licences"
 msgstr[0] "گواهینامه‌های رانندگی"
 msgstr[1] "گواهینامه رانندگی"
 
-#: Licensed.php:90
+#: Licensed.php:92
 msgctxt "Label: Show Option All"
 msgid "Licences"
 msgstr "گواهینامه‌ها"
 
-#: Licensed.php:91
+#: Licensed.php:93
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr "(بدون گواهینامه)"
 
-#: Licensed.php:100
-msgctxt "Dashboard Widget Title"
-msgid "Your Driving Licence Summary"
-msgstr "گزارش گواهینامه رانندگی شما"
-
-#: Licensed.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Driving Licence Summary"
-msgstr "گزارش گواهینامه رانندگی تحریریه"
-
-#: Licensed.php:111
+#: Licensed.php:105
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr "موتورسیکلت"
 
-#: Licensed.php:112
+#: Licensed.php:106
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr "پایه سه"
 
-#: Licensed.php:113
+#: Licensed.php:107
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr "پایه دو"
 
-#: Licensed.php:114
+#: Licensed.php:108
 msgctxt "Default Term"
 msgid "Category One"
 msgstr "پایه یک"
 
-#: Licensed.php:115
+#: Licensed.php:109
 msgctxt "Default Term"
 msgid "Loader"
 msgstr "لودر"
 
-#: Licensed.php:116
+#: Licensed.php:110
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr "هلیکوپتر"
 
-#: Licensed.php:117
+#: Licensed.php:111
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr "هواپیما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Driving Licence Summary"
+#~ msgstr "گزارش گواهینامه رانندگی شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Driving Licence Summary"
+#~ msgstr "گزارش گواهینامه رانندگی تحریریه"
 
 #~ msgctxt "Setting"
 #~ msgid "There are no driving licences available!"

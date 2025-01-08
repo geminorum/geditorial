@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Grouping\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2023-06-26 17:44+0330\n"
+"PO-Revision-Date: 2025-01-06 19:12+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,46 +11,46 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Grouping\n"
 "X-Domain: geditorial-grouping\n"
 
-#: Grouping.php:34
+#: Grouping.php:33
 msgctxt "Setting Title"
 msgid "Custom Taxonomies"
 msgstr "رده‌بندی‌های سفارشی"
 
-#: Grouping.php:39
+#: Grouping.php:38
 msgctxt "Setting Title"
 msgid "Taxonomy Name"
 msgstr "نام رده‌بندی"
 
-#: Grouping.php:47
+#: Grouping.php:46
 msgctxt "Setting Title"
 msgid "Taxonomy Slug"
 msgstr "نامک رده‌بندی"
 
-#: Grouping.php:55
+#: Grouping.php:54
 msgctxt "Setting Title"
 msgid "Singular Label"
 msgstr "عنوان مفرد"
 
-#: Grouping.php:61
+#: Grouping.php:60
 msgctxt "Setting Title"
 msgid "Plural Label"
 msgstr "عنوان جمع"
 
-#: Grouping.php:67
+#: Grouping.php:66
 msgctxt "Setting Title"
 msgid "Menu Label"
 msgstr "عنوان منو"
 
-#: Grouping.php:73
+#: Grouping.php:72
 msgctxt "Setting Title"
 msgid "Icon"
 msgstr "آیکون"
 
-#: Grouping.php:163
+#: Grouping.php:164
 msgctxt "Column Title"
 msgid "Users"
 msgstr "کاربران"

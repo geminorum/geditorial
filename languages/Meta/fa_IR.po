@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Meta\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-02 20:08+0330\n"
+"PO-Revision-Date: 2024-12-29 21:12+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -40,600 +40,600 @@ msgctxt "Elementor: Control Title"
 msgid "Spacing"
 msgstr "فاصله‌گذاری"
 
-#: Meta.php:53
+#: Meta.php:55
 msgctxt "Setting Title"
 msgid "Overwrite Author"
 msgstr "رونویسی مؤلف"
 
-#: Meta.php:54
+#: Meta.php:56
 msgctxt "Setting Description"
 msgid "Replaces user display name with author meta field data."
 msgstr "متای مؤلف را با نام نمایشی کاربر جای‌گزین می‌کند."
 
-#: Meta.php:59
+#: Meta.php:61
 msgctxt "Setting Title"
 msgid "Before Source"
 msgstr "قبل از منبع"
 
-#: Meta.php:60
+#: Meta.php:62
 msgctxt "Setting Description"
 msgid "Used as default text before the source links."
 msgstr "به عنوان متن پیش‌فرض پیش از پیوند منبع استفاده می‌شود."
 
-#: Meta.php:61
+#: Meta.php:63
 msgctxt "Setting Default"
 msgid "Source:"
 msgstr "منبع:"
 
-#: Meta.php:66
+#: Meta.php:68
 msgctxt "Setting Title"
 msgid "Before Action"
 msgstr "قبل از کنش"
 
-#: Meta.php:67
+#: Meta.php:69
 msgctxt "Setting Description"
 msgid "Used as default text before the action buttons."
 msgstr "به عنوان متن پیش‌فرض پیش از دکمه‌های کنش استفاده می‌شود."
 
-#: Meta.php:72
+#: Meta.php:74
 msgctxt "Setting Title"
 msgid "Price Format"
 msgstr "الگوی قیمت"
 
-#: Meta.php:73
+#: Meta.php:75
 msgctxt "Setting Description"
 msgid "Used as default format on rendering prices."
 msgstr "به عنوان الگوی پیش‌فرض برای نمایش قیمت‌ها استفاده می‌شود."
 
 #. translators: %s: price number
-#: Meta.php:75
+#: Meta.php:77
 msgctxt "Setting Default"
 msgid "%s Toman"
 msgstr "%s تومان"
 
-#: Meta.php:94
+#: Meta.php:96
 msgctxt "Titles"
 msgid "OverTitle"
 msgstr "روتیتر"
 
-#: Meta.php:95
+#: Meta.php:97
 msgctxt "Titles"
 msgid "SubTitle"
 msgstr "زیرتیتر"
 
-#: Meta.php:96
+#: Meta.php:98
 msgctxt "Titles"
 msgid "Byline"
 msgstr "مؤلف"
 
-#: Meta.php:97
+#: Meta.php:99
 msgctxt "Titles"
 msgid "Lead"
 msgstr "لید"
 
-#: Meta.php:99
+#: Meta.php:101
 msgctxt "Titles"
 msgid "Print Title"
 msgstr "عنوان چاپی"
 
-#: Meta.php:100
+#: Meta.php:102
 msgctxt "Titles"
 msgid "Print Date"
 msgstr "تاریخ چاپی"
 
-#: Meta.php:102
+#: Meta.php:104
 msgctxt "Titles"
 msgid "Published"
 msgstr "تاریخ انتشار"
 
-#: Meta.php:103
+#: Meta.php:105
 msgctxt "Titles"
 msgid "Status"
 msgstr "وضعیت"
 
-#: Meta.php:104
+#: Meta.php:106
 msgctxt "Titles"
 msgid "Source Title"
 msgstr "عنوان منبع"
 
-#: Meta.php:105
+#: Meta.php:107
 msgctxt "Titles"
 msgid "Source URL"
 msgstr "نشانی منبع"
 
-#: Meta.php:106
+#: Meta.php:108
 msgctxt "Titles"
 msgid "Action Title"
 msgstr "عنوان کنش"
 
-#: Meta.php:107
+#: Meta.php:109
 msgctxt "Titles"
 msgid "Action URL"
 msgstr "نشانی کنش"
 
-#: Meta.php:108
+#: Meta.php:110
 msgctxt "Titles"
 msgid "Highlight"
 msgstr "نکات برجسته"
 
-#: Meta.php:109
+#: Meta.php:111
 msgctxt "Titles"
 msgid "Dashboard"
 msgstr "پیشخوان"
 
-#: Meta.php:110
+#: Meta.php:112
 msgctxt "Titles"
 msgid "Abstract"
 msgstr "خلاصه"
 
-#: Meta.php:111
+#: Meta.php:113
 msgctxt "Titles"
 msgid "Foreword"
 msgstr "دیباچه"
 
-#: Meta.php:112
+#: Meta.php:114
 msgctxt "Titles"
 msgid "Cover Blurb"
 msgstr "متن پشت جلد"
 
-#: Meta.php:113
+#: Meta.php:115
 msgctxt "Titles"
 msgid "Cover Price"
 msgstr "قیمت روی جلد"
 
-#: Meta.php:114
+#: Meta.php:116
 msgctxt "Titles"
 msgid "Content Fee"
 msgstr "هزینه محتوا"
 
-#: Meta.php:116
+#: Meta.php:118
 msgctxt "Descriptions"
 msgid "Venue"
 msgstr "محل برگزاری"
 
-#: Meta.php:117
+#: Meta.php:119
 msgctxt "Descriptions"
 msgid "Contact"
 msgstr "تماس"
 
-#: Meta.php:118
+#: Meta.php:120
 msgctxt "Titles"
 msgid "Website URL"
 msgstr "نشانی وبسایت"
 
-#: Meta.php:119
+#: Meta.php:121
 msgctxt "Titles"
 msgid "Wiki URL"
 msgstr "نشانی ویکی"
 
-#: Meta.php:120
+#: Meta.php:122
 msgctxt "Titles"
 msgid "Email Address"
 msgstr "نشانی ایمیل"
 
-#: Meta.php:122
+#: Meta.php:124
 msgctxt "Titles"
 msgid "Content Embed URL"
 msgstr "نشانی جاساز محتوا"
 
-#: Meta.php:123
+#: Meta.php:125
 msgctxt "Titles"
 msgid "Text Source URL"
 msgstr "نشانی منبع متنی"
 
-#: Meta.php:124
+#: Meta.php:126
 msgctxt "Titles"
 msgid "Audio Source URL"
 msgstr "نشانی منبع صوتی"
 
-#: Meta.php:125
+#: Meta.php:127
 msgctxt "Titles"
 msgid "Video Source URL"
 msgstr "نشانی منبع ویدئویی"
 
-#: Meta.php:126
+#: Meta.php:128
 msgctxt "Titles"
 msgid "Image Source URL"
 msgstr "نشانی منبع تصویر"
 
-#: Meta.php:127
+#: Meta.php:129
 msgctxt "Titles"
 msgid "Main Download URL"
 msgstr "نشانی اصلی دریافت"
 
-#: Meta.php:128
+#: Meta.php:130
 msgctxt "Titles"
 msgid "Main Download Attachment"
 msgstr "پیوست اصلی دریافت"
 
-#: Meta.php:130
+#: Meta.php:132
 msgctxt "Titles"
 msgid "Date"
 msgstr "تاریخ"
 
-#: Meta.php:131
+#: Meta.php:133
 msgctxt "Titles"
 msgid "Date-Time"
 msgstr "تاریخ/زمان"
 
-#: Meta.php:132
+#: Meta.php:134
 msgctxt "Titles"
 msgid "Date-Start"
 msgstr "تاریخ شروع"
 
-#: Meta.php:133
+#: Meta.php:135
 msgctxt "Titles"
 msgid "Date-End"
 msgstr "تاریخ پایان"
 
-#: Meta.php:134
+#: Meta.php:136
 msgctxt "Titles"
 msgid "Time"
 msgstr "زمان"
 
-#: Meta.php:135
+#: Meta.php:137
 msgctxt "Titles"
 msgid "Time-Start"
 msgstr "زمان شروع"
 
-#: Meta.php:136
+#: Meta.php:138
 msgctxt "Titles"
 msgid "Time-End"
 msgstr "زمان پایان"
 
-#: Meta.php:137
+#: Meta.php:139
 msgctxt "Titles"
 msgid "Distance"
 msgstr "فاصله"
 
-#: Meta.php:138
+#: Meta.php:140
 msgctxt "Titles"
 msgid "Duration"
 msgstr "مدت"
 
-#: Meta.php:139
+#: Meta.php:141
 msgctxt "Titles"
 msgid "Area"
 msgstr "مساحت"
 
-#: Meta.php:140
+#: Meta.php:142
 msgctxt "Titles"
 msgid "Period"
 msgstr "مدت"
 
-#: Meta.php:141
+#: Meta.php:143
 msgctxt "Titles"
 msgid "Amount"
 msgstr "تعداد"
 
-#: Meta.php:143
+#: Meta.php:145
 msgctxt "Titles"
 msgid "Notes"
 msgstr "ملاحظات"
 
-#: Meta.php:144
+#: Meta.php:146
 msgctxt "Titles"
 msgid "Itineraries"
 msgstr "شرح برنامه"
 
-#: Meta.php:147
+#: Meta.php:149
 msgctxt "Titles"
 msgid "Source"
 msgstr "منبع"
 
-#: Meta.php:148
+#: Meta.php:150
 msgctxt "Titles"
 msgid "Action"
 msgstr "کنش"
 
-#: Meta.php:151
+#: Meta.php:153
 msgctxt "Descriptions"
 msgid "Text to place over the content title"
 msgstr "متنی برای جای‌گذاری روی عنوان محتوا"
 
-#: Meta.php:152
+#: Meta.php:154
 msgctxt "Descriptions"
 msgid "Text to place under the content title"
 msgstr "متنی برای جای‌گذاری زیر عنوان محتوا"
 
-#: Meta.php:153
+#: Meta.php:155
 msgctxt "Descriptions"
 msgid "Text to override the content author"
 msgstr "متنی برای جای‌گزینی مؤلف محتوا"
 
-#: Meta.php:154
+#: Meta.php:156
 msgctxt "Descriptions"
 msgid "Notes to place before the content text"
 msgstr "توضیحاتی برای جای‌گذاری پیش از متن محتوا"
 
-#: Meta.php:156
+#: Meta.php:158
 msgctxt "Descriptions"
 msgid "Text to Overwrite the Original Title on Printing"
 msgstr "متنی برای رونویسی عنوان اصلی در هنگام چاپ"
 
-#: Meta.php:157
+#: Meta.php:159
 msgctxt "Descriptions"
 msgid "Date to Overwrite the Original Date on Printing"
 msgstr "تاریخی برای رونویسی تاریخ اصلی در هنگام چاپ"
 
-#: Meta.php:159
+#: Meta.php:161
 msgctxt "Descriptions"
 msgid "Text to indicate the original date of the content"
 msgstr "متنی برای اشاره به تاریخ اصلی محتوا"
 
-#: Meta.php:160
+#: Meta.php:162
 msgctxt "Descriptions"
 msgid "Text to indicate the current status of the content"
 msgstr ""
 
-#: Meta.php:161
+#: Meta.php:163
 msgctxt "Descriptions"
 msgid "Custom title for the source of the content"
 msgstr "عنوان سفارشی برای منبع محتوا"
 
-#: Meta.php:162
+#: Meta.php:164
 msgctxt "Descriptions"
 msgid "Custom URL to the source of the content"
 msgstr "نشانی سفارشی به منبع محتوا"
 
-#: Meta.php:163
+#: Meta.php:165
 msgctxt "Descriptions"
 msgid "Custom title for the action of the content"
 msgstr "عنوان سفارشی برای کنش محتوا"
 
-#: Meta.php:164
+#: Meta.php:166
 msgctxt "Descriptions"
 msgid "Custom URL to the action of the content"
 msgstr "نشانی سفارشی به کنش محتوا"
 
-#: Meta.php:165
+#: Meta.php:167
 msgctxt "Descriptions"
 msgid "Notes highlighted about the content"
 msgstr "توضیحاتی منتخب درباره محتوا"
 
-#: Meta.php:166
+#: Meta.php:168
 msgctxt "Descriptions"
 msgid "Custom HTML content on the dashboard"
 msgstr "کد سفارشی محتوا روی پیشخوان"
 
-#: Meta.php:167
+#: Meta.php:169
 msgctxt "Descriptions"
 msgid "Brief summary of the content"
 msgstr "خلاصه مختصر از محتوا"
 
-#: Meta.php:168
+#: Meta.php:170
 msgctxt "Descriptions"
 msgid "Introduction to the Content"
 msgstr "مقدمه ای به محتوا"
 
-#: Meta.php:169
+#: Meta.php:171
 msgctxt "Descriptions"
 msgid "Description included on the inside cover or on the back"
 msgstr "توضیحات مندرج در پشت و یا داخل جلد"
 
-#: Meta.php:170
+#: Meta.php:172
 msgctxt "Descriptions"
 msgid "Cover Price of the content"
 msgstr "قیمت روی جلد محتوا"
 
-#: Meta.php:171
+#: Meta.php:173
 msgctxt "Descriptions"
 msgid "Fee of the content"
 msgstr ""
 
-#: Meta.php:173
+#: Meta.php:175
 msgctxt "Descriptions"
 msgid "Placing Information about the Content"
 msgstr "اطلاعات مکانی برای محتوا"
 
-#: Meta.php:174
+#: Meta.php:176
 msgctxt "Descriptions"
 msgid "A Way to Contact Someone about the Content"
 msgstr "راهی برای تماس با کسی درباره محتوا"
 
-#: Meta.php:175
+#: Meta.php:177
 msgctxt "Descriptions"
 msgid "Public Website URL of the Content"
 msgstr "نشانی وبسایت عمومی درباره محتوا"
 
-#: Meta.php:176
+#: Meta.php:178
 msgctxt "Descriptions"
 msgid "Public Wiki URL of the Content"
 msgstr "نشانی ویکی عمومی درباره محتوا"
 
-#: Meta.php:177
+#: Meta.php:179
 msgctxt "Descriptions"
 msgid "Email Address about the Content"
 msgstr "نشانی ایمیل درباره محتوا"
 
-#: Meta.php:179
+#: Meta.php:181
 msgctxt "Descriptions"
 msgid "Embeddable URL of the External Content"
 msgstr "نشانی جاساز از محتوای بیرونی"
 
-#: Meta.php:180
+#: Meta.php:182
 msgctxt "Descriptions"
 msgid "Text Source URL of the Content"
 msgstr "نشانی منبع متنی از محتوا"
 
-#: Meta.php:181
+#: Meta.php:183
 msgctxt "Descriptions"
 msgid "Audio Source URL of the Content"
 msgstr "نشانی منبع صوتی از محتوا"
 
-#: Meta.php:182
+#: Meta.php:184
 msgctxt "Descriptions"
 msgid "Video Source URL of the Content"
 msgstr "نشانی منبع ویدئویی از محتوا"
 
-#: Meta.php:183
+#: Meta.php:185
 msgctxt "Descriptions"
 msgid "Image Source URL of the Content"
 msgstr "نشانی منبع تصویر از محتوا"
 
-#: Meta.php:184
+#: Meta.php:186
 msgctxt "Descriptions"
 msgid "Downloadable URL of the External Content"
 msgstr "نشانی قابل دریافت از محتوای بیرونی"
 
-#: Meta.php:185
+#: Meta.php:187
 msgctxt "Descriptions"
 msgid "Downloadable Attachment of the External Content"
 msgstr "پیوست قابل دریافت از محتوای بیرونی"
 
-#: Meta.php:187
+#: Meta.php:189
 msgctxt "Descriptions"
 msgid "Posts can have date to help organize them."
 msgstr ""
 
-#: Meta.php:188
+#: Meta.php:190
 msgctxt "Descriptions"
 msgid "Posts can have date-time to help organize them."
 msgstr ""
 
-#: Meta.php:189
+#: Meta.php:191
 msgctxt "Descriptions"
 msgid "Posts can have date-start to help organize them."
 msgstr ""
 
-#: Meta.php:190
+#: Meta.php:192
 msgctxt "Descriptions"
 msgid "Posts can have date-end to help organize them."
 msgstr ""
 
-#: Meta.php:191
+#: Meta.php:193
 msgctxt "Descriptions"
 msgid "Posts can have time to help organize them."
 msgstr ""
 
-#: Meta.php:192
+#: Meta.php:194
 msgctxt "Descriptions"
 msgid "Posts can have time-start to help organize them."
 msgstr ""
 
-#: Meta.php:193
+#: Meta.php:195
 msgctxt "Descriptions"
 msgid "Posts can have time-end to help organize them."
 msgstr ""
 
-#: Meta.php:194
+#: Meta.php:196
 msgctxt "Descriptions"
 msgid "The formatted length of space about the post."
 msgstr ""
 
-#: Meta.php:195
+#: Meta.php:197
 msgctxt "Descriptions"
 msgid "The formatted length of time about the post."
 msgstr ""
 
-#: Meta.php:196
+#: Meta.php:198
 msgctxt "Descriptions"
 msgid "The formatted area, measured in square meters."
 msgstr ""
 
-#: Meta.php:197
+#: Meta.php:199
 msgctxt "Descriptions"
 msgid "The length of time about the post."
 msgstr ""
 
-#: Meta.php:198
+#: Meta.php:200
 msgctxt "Descriptions"
 msgid "The quantity number about the post."
 msgstr "تعداد کمیت در مورد پست."
 
-#: Meta.php:200
+#: Meta.php:202
 msgctxt "Descriptions: `notes`"
 msgid "General Notes about the Content"
 msgstr "نکات کلی درباره محتوا"
 
-#: Meta.php:201
+#: Meta.php:203
 msgctxt "Descriptions: `itineraries`"
 msgid "Brief Itineraries of the Content"
 msgstr "شرح مختصر برنامه‌های محتوا"
 
-#: Meta.php:203
+#: Meta.php:205
 msgctxt "Descriptions"
 msgid "Source of the content"
 msgstr "منبع محتوا"
 
-#: Meta.php:204
+#: Meta.php:206
 msgctxt "Descriptions"
 msgid "Action of the content"
 msgstr "کنش محتوا"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Meta.php:213
+#: Meta.php:215
 msgctxt "MetaBox: `mainbox_title`"
 msgid "Metadata"
 msgstr "فراداده"
 
-#: Meta.php:214
+#: Meta.php:216
 msgctxt "MetaBox: `mainbox_action`"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: Meta.php:218
+#: Meta.php:220
 msgctxt "Notice: `no_fields`"
 msgid "There are no meta fields available!"
 msgstr "هیچ فیلد متایی در دسترس نیست!"
 
-#: Meta.php:222
+#: Meta.php:224
 msgctxt "Column Title"
 msgid "Metadata"
 msgstr "متا"
 
-#: Meta.php:223
+#: Meta.php:225
 msgctxt "Column Title"
 msgid "Author"
 msgstr "مؤلف"
 
-#: Meta.php:982
+#: Meta.php:951
 msgctxt "Header"
 msgid "Meta Imports"
 msgstr "درون‌ریزی‌های متا"
 
-#: Meta.php:988
+#: Meta.php:957
 msgctxt "Header"
 msgid "Import Custom Fields"
 msgstr "درون‌ریزی از زمینه‌های سفارشی"
 
-#: Meta.php:1039
+#: Meta.php:1008
 msgctxt "Button"
 msgid "Check"
 msgstr "بررسی"
 
-#: Meta.php:1042
+#: Meta.php:1011
 msgctxt "Button"
 msgid "Covert"
 msgstr "تبدیل"
 
-#: Meta.php:1045
+#: Meta.php:1014
 msgctxt "Button"
 msgid "Delete"
 msgstr "حذف"
 
-#: Meta.php:1047
+#: Meta.php:1016
 msgctxt "Message"
 msgid "Check for Custom Fields and import them into Meta"
 msgstr "بررسی زمینه‌های سفارشی و درون‌ریزی به عنوان متا"
 
-#: Meta.php:1057
+#: Meta.php:1026
 msgctxt "Table Column"
 msgid "Type"
 msgstr "نوع"
 
-#: Meta.php:1069
+#: Meta.php:1038
 msgctxt "Table Column"
 msgid "Title"
 msgstr "عنوان"
 
 #. translators: %s: title
-#: Meta.php:1075
+#: Meta.php:1044
 msgctxt "Table Column"
 msgid "Meta: %s"
 msgstr "متا: %s"
 
-#: Meta.php:1080
+#: Meta.php:1049
 msgctxt "Table Empty"
 msgid "There are no meta-data available!"
 msgstr "متا-داده‌ای در دسترس نیست!"

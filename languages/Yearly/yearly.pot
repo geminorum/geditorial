@@ -29,17 +29,7 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
 
-#: Yearly.php:105
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Years Summary"
-msgstr ""
-
-#: Yearly.php:106
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Years Summary"
-msgstr ""
-
-#: Yearly.php:129
+#: Yearly.php:121
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "4"
 msgstr ""

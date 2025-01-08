@@ -82,98 +82,98 @@ msgctxt "Field Description"
 msgid "Source Pages of the Quote"
 msgstr ""
 
-#: Quotation.php:113
+#: Quotation.php:114
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr ""
 
-#: Quotation.php:114
+#: Quotation.php:115
 msgctxt "Field Description"
 msgid "Source Start Page of the Quote"
 msgstr ""
 
-#: Quotation.php:120
+#: Quotation.php:122
 msgctxt "Field Title"
 msgid "Page End"
 msgstr ""
 
-#: Quotation.php:121
+#: Quotation.php:123
 msgctxt "Field Description"
 msgid "Source End Page of the Quote"
 msgstr ""
 
-#: Quotation.php:127
+#: Quotation.php:130
 msgctxt "Field Title"
 msgid "Section"
 msgstr ""
 
-#: Quotation.php:128
+#: Quotation.php:131
 msgctxt "Field Description"
 msgid "Source Section of the Quote"
 msgstr ""
 
-#: Quotation.php:133
+#: Quotation.php:136
 msgctxt "Field Title"
 msgid "Volume"
 msgstr ""
 
-#: Quotation.php:134
+#: Quotation.php:137
 msgctxt "Field Description"
 msgid "Source Volume of the Quote"
 msgstr ""
 
-#: Quotation.php:140
+#: Quotation.php:143
 msgctxt "Field Title"
 msgid "Reference"
 msgstr ""
 
-#: Quotation.php:141
+#: Quotation.php:144
 msgctxt "Field Description"
 msgid "Reference to the Quote Source"
 msgstr ""
 
-#: Quotation.php:145
+#: Quotation.php:148
 msgctxt "Field Title"
 msgid "Description"
 msgstr ""
 
-#: Quotation.php:146
+#: Quotation.php:149
 msgctxt "Field Description"
 msgid "Description of the Quote"
 msgstr ""
 
-#: Quotation.php:243
-#: Quotation.php:246
+#: Quotation.php:247
+#: Quotation.php:250
 msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr ""
 
 #. translators: %1$s: post parent, %2$s: menu order
-#: Quotation.php:263
+#: Quotation.php:267
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
 msgstr ""
 
 #. translators: %s: page start placeholder
-#: Quotation.php:290
+#: Quotation.php:296
 msgctxt "Display"
 msgid "Starts on Page %s"
 msgstr ""
 
 #. translators: %s: page end placeholder
-#: Quotation.php:297
+#: Quotation.php:303
 msgctxt "Display"
 msgid "Ends in Page %s"
 msgstr ""
 
 #. translators: %s: section placeholder
-#: Quotation.php:304
+#: Quotation.php:310
 msgctxt "Display"
 msgid "Section %s"
 msgstr ""
 
 #. translators: %s: volume placeholder
-#: Quotation.php:311
+#: Quotation.php:317
 msgctxt "Display"
 msgid "Volume %s"
 msgstr ""

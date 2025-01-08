@@ -13,181 +13,181 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/NextOfKin\n"
 "X-Domain: geditorial-next-of-kin\n"
 
-#: NextOfKin.php:104
+#: NextOfKin.php:107
 msgid "Marital Status"
 msgid_plural "Marital Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: NextOfKin.php:108
+#: NextOfKin.php:111
 msgctxt "Label: Menu Name"
 msgid "Marital"
 msgstr ""
 
-#: NextOfKin.php:109
+#: NextOfKin.php:112
 msgctxt "Label: Show Option All"
 msgid "Marital Status"
 msgstr ""
 
-#: NextOfKin.php:110
+#: NextOfKin.php:113
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: NextOfKin.php:115
+#: NextOfKin.php:118
 msgctxt "Field Label: `fullname`"
 msgid "Fullname"
 msgstr ""
 
-#: NextOfKin.php:116
+#: NextOfKin.php:119
 msgctxt "Field Label: `fathername`"
 msgid "Father Name"
 msgstr ""
 
-#: NextOfKin.php:117
+#: NextOfKin.php:120
 msgctxt "Field Label: `label`"
 msgid "Relation"
 msgstr ""
 
-#: NextOfKin.php:118
+#: NextOfKin.php:121
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr ""
 
-#: NextOfKin.php:119
+#: NextOfKin.php:122
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr ""
 
-#: NextOfKin.php:120
+#: NextOfKin.php:123
 msgctxt "Field Label: `dob`"
 msgid "Date of Birth"
 msgstr ""
 
-#: NextOfKin.php:121
+#: NextOfKin.php:124
 msgctxt "Field Label: `education`"
 msgid "Education"
 msgstr ""
 
-#: NextOfKin.php:122
+#: NextOfKin.php:125
 msgctxt "Field Label: `occupation`"
 msgid "Occupation"
 msgstr ""
 
-#: NextOfKin.php:123
+#: NextOfKin.php:126
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: NextOfKin.php:129
+#: NextOfKin.php:132
+msgctxt "Tab Title"
+msgid "Family"
+msgstr ""
+
+#: NextOfKin.php:136
 msgctxt "Notice"
 msgid "There is no family information available!"
 msgstr ""
 
-#: NextOfKin.php:130
+#: NextOfKin.php:137
 msgctxt "Notice"
 msgid "You have not necessary permission to manage this family data."
 msgstr ""
 
-#: NextOfKin.php:137
-msgctxt "Settings Description"
+#: NextOfKin.php:144
+msgctxt "Setting Description"
 msgid "Supports marital statuses for the selected post-types."
 msgstr ""
 
-#: NextOfKin.php:141
+#: NextOfKin.php:148
 msgctxt "MetaBox Title"
 msgid "Family"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:145
+#: NextOfKin.php:152
 msgctxt "Button Title"
 msgid "Family of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:147
+#: NextOfKin.php:154
 msgctxt "Button Text"
 msgid "%1$s Manage the Family of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:150
+#: NextOfKin.php:157
 msgctxt "Action Title"
 msgid "Family of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:152
+#: NextOfKin.php:159
 msgctxt "Action Text"
 msgid "Family"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:155
+#: NextOfKin.php:162
 msgctxt "Row Title"
 msgid "Family of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:157
+#: NextOfKin.php:164
 msgctxt "Row Text"
 msgid "Family"
 msgstr ""
 
-#: NextOfKin.php:167
+#: NextOfKin.php:174
 msgctxt "Default Term: Marital Status"
 msgid "Single"
 msgstr ""
 
-#: NextOfKin.php:168
+#: NextOfKin.php:175
 msgctxt "Default Term: Marital Status"
 msgid "Married"
 msgstr ""
 
-#: NextOfKin.php:169
+#: NextOfKin.php:176
 msgctxt "Default Term: Marital Status"
 msgid "Divorced"
 msgstr ""
 
-#: NextOfKin.php:170
+#: NextOfKin.php:177
 msgctxt "Default Term: Marital Status"
 msgid "Widowed"
 msgstr ""
 
-#: NextOfKin.php:171
+#: NextOfKin.php:178
 msgctxt "Default Term: Marital Status"
 msgid "Separated"
 msgstr ""
 
-#: NextOfKin.php:172
+#: NextOfKin.php:179
 msgctxt "Default Term: Marital Status"
 msgid "Registered"
 msgstr ""
 
-#: NextOfKin.php:237
+#: NextOfKin.php:244
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "10"
 msgstr ""
 
-#: NextOfKin.php:319
-msgctxt "Dashboard Widget Title"
-msgid "Marital Status Summary"
-msgstr ""
-
 #. translators: %s: post title
-#: NextOfKin.php:349
+#: NextOfKin.php:346
 msgctxt "Page Title"
 msgid "Family Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: NextOfKin.php:351
+#: NextOfKin.php:348
 msgctxt "Page Title"
 msgid "Family Overview for %s"
 msgstr ""
 
-#: NextOfKin.php:375
+#: NextOfKin.php:372
 msgctxt "Default Term: Audit"
 msgid "Empty Family Data"
 msgstr ""

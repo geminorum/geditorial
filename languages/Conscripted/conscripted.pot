@@ -13,68 +13,78 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Conscripted\n"
 "X-Domain: geditorial-conscripted\n"
 
-#: Conscripted.php:89
+#: Conscripted.php:91
 msgid "Conscription"
 msgid_plural "Conscriptions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Conscripted.php:93
+#: Conscripted.php:95
 msgctxt "Label: `extended_label`"
 msgid "Conscription"
 msgstr ""
 
-#: Conscripted.php:94
+#: Conscripted.php:96
 msgctxt "Label: Show Option All"
 msgid "Conscription"
 msgstr ""
 
-#: Conscripted.php:95
+#: Conscripted.php:97
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Conscripted.php:104
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Conscription Summary"
-msgstr ""
-
-#: Conscripted.php:105
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Conscription Summary"
-msgstr ""
-
-#: Conscripted.php:115
+#: Conscripted.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Underage for Service"
 msgstr ""
 
-#: Conscripted.php:116
+#: Conscripted.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject to Service"
 msgstr ""
 
-#: Conscripted.php:117
+#: Conscripted.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Currently in Service"
 msgstr ""
 
-#: Conscripted.php:118
+#: Conscripted.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "End of Service"
 msgstr ""
 
-#: Conscripted.php:119
+#: Conscripted.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Medical Exemption"
 msgstr ""
 
-#: Conscripted.php:120
+#: Conscripted.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Education Exemption"
 msgstr ""
 
-#: Conscripted.php:121
+#: Conscripted.php:115
+msgctxt "Main Taxonomy: Default Term"
+msgid "Veteran Exemption"
+msgstr ""
+
+#: Conscripted.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Permanent Exemption"
+msgstr ""
+
+#: Conscripted.php:117
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sponsor Exemption"
+msgstr ""
+
+#: Conscripted.php:118
+msgctxt "Main Taxonomy: Default Term"
+msgid "Paid Exemption"
+msgstr ""
+
+#: Conscripted.php:132
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
 msgstr ""

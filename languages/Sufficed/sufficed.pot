@@ -33,13 +33,3 @@ msgstr ""
 msgctxt "Label: Show Option No Terms"
 msgid "(Sufficient)"
 msgstr ""
-
-#: Sufficed.php:105
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Deficiencies Summary"
-msgstr ""
-
-#: Sufficed.php:106
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Deficiencies Summary"
-msgstr ""

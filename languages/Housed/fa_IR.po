@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Housed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-09-09 03:25+0330\n"
+"PO-Revision-Date: 2024-11-27 02:22+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -83,7 +83,7 @@ msgstr "شما مجوز لازم برای دسترسی به مدیریت اطل�
 
 #: Housed.php:145
 msgctxt "Settings Description"
-msgid "Supports sports fields for the selected post-types."
+msgid "Supports &ldquo;Housing Conditions&rdquo; for the selected post-types."
 msgstr ""
 
 #: Housed.php:149
@@ -163,18 +163,18 @@ msgid "Homeless"
 msgstr "بی‌خانه"
 
 #. translators: %s: post title
-#: Housed.php:361
+#: Housed.php:349
 msgctxt "Page Title"
 msgid "Visiting Grid for %s"
 msgstr "جدول بازدیدها از %s"
 
 #. translators: %s: post title
-#: Housed.php:363
+#: Housed.php:351
 msgctxt "Page Title"
 msgid "Visiting Overview for %s"
 msgstr "جدول بازدیدها از %s"
 
-#: Housed.php:399
+#: Housed.php:385
 msgctxt "Default Term: Audit"
 msgid "Empty Visiting Data"
 msgstr "اطلاعات بازدید خالی"

@@ -33,13 +33,3 @@ msgstr ""
 msgctxt "Label: Show Option No Terms"
 msgid "(No-Territory)"
 msgstr ""
-
-#: Territory.php:104
-msgctxt "Dashboard Widget Title"
-msgid "Your Territory Arrangements Summary"
-msgstr ""
-
-#: Territory.php:105
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Territory Arrangements Summary"
-msgstr ""

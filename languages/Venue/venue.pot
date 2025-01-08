@@ -107,57 +107,57 @@ msgctxt "Field Description"
 msgid "Full street address, including city, state etc."
 msgstr ""
 
-#: Venue.php:188
+#: Venue.php:190
 msgctxt "Field Title"
 msgid "Phone Number"
 msgstr ""
 
-#: Venue.php:189
+#: Venue.php:191
 msgctxt "Field Description"
 msgid "Full contact number for the location."
 msgstr ""
 
-#: Venue.php:193
+#: Venue.php:195
 msgctxt "Field Title"
 msgid "Website URL"
 msgstr ""
 
-#: Venue.php:194
+#: Venue.php:196
 msgctxt "Field Description"
 msgid "Official website URL of the location."
 msgstr ""
 
-#: Venue.php:198
+#: Venue.php:200
 msgctxt "Field Title"
 msgid "Map Embed URL"
 msgstr ""
 
-#: Venue.php:199
+#: Venue.php:201
 msgctxt "Field Description"
 msgid "Embeddable map URL of the location."
 msgstr ""
 
-#: Venue.php:204
+#: Venue.php:206
 msgctxt "Field Title"
 msgid "Latitude"
 msgstr ""
 
-#: Venue.php:205
+#: Venue.php:207
 msgctxt "Field Description"
 msgid "The latitude (in decimal notation) for this location."
 msgstr ""
 
-#: Venue.php:210
+#: Venue.php:212
 msgctxt "Field Title"
 msgid "Longitude"
 msgstr ""
 
-#: Venue.php:211
+#: Venue.php:213
 msgctxt "Field Description"
 msgid "The longitude (in decimal notation) for this location."
 msgstr ""
 
-#: Venue.php:407
+#: Venue.php:418
 msgctxt "Header"
 msgid "Venue Tools"
 msgstr ""

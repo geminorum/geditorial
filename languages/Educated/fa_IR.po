@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Educated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-01-08 17:59+0330\n"
+"PO-Revision-Date: 2024-12-13 17:49+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,35 +11,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Educated\n"
 "X-Domain: geditorial-educated\n"
 
-#: Educated.php:83
+#: Educated.php:87
 msgid "Education Definition"
 msgid_plural "Education Definitions"
 msgstr[0] "سطوح تحصیلی"
 msgstr[1] "سطح تحصیلی"
 
-#: Educated.php:87
+#: Educated.php:91
 msgctxt "Label: Show Option All"
 msgid "Educations"
 msgstr "تحصیلات"
 
-#: Educated.php:88
+#: Educated.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Uneducated)"
 msgstr "(تحصیلات نامعلوم)"
-
-#: Educated.php:97
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Education Summary"
-msgstr "گزارش تحصیلات گروهه شما"
-
-#: Educated.php:98
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Education Summary"
-msgstr "گزارش تحصیلات تحریریه"
 
 #: ModuleInfo.php:66
 msgctxt "Default Term"
@@ -70,6 +60,14 @@ msgstr "کارشناسی ارشد"
 msgctxt "Default Term"
 msgid "Doctorate"
 msgstr "دکترا"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Team Education Summary"
+#~ msgstr "گزارش تحصیلات گروهه شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Education Summary"
+#~ msgstr "گزارش تحصیلات تحریریه"
 
 #~ msgctxt "Setting"
 #~ msgid "There are no education definitions available!"

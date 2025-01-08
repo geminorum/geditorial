@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Bookmarked\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-24 12:15+0330\n"
+"PO-Revision-Date: 2024-12-28 23:22+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -14,195 +14,200 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Bookmarked\n"
 "X-Domain: geditorial-bookmarked\n"
 
-#: Bookmarked.php:78
+#: Bookmarked.php:81
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr "شاخص"
 
-#: Bookmarked.php:79
+#: Bookmarked.php:82
 msgctxt "Field Label: `link`"
 msgid "Bookmark"
 msgstr "نشانک"
 
-#: Bookmarked.php:80
+#: Bookmarked.php:83
 msgctxt "Field Label: `type`"
 msgid "Type"
 msgstr "نوع"
 
-#: Bookmarked.php:81
+#: Bookmarked.php:84
 msgctxt "Field Label: `code`"
 msgid "Code"
 msgstr "کد"
 
-#: Bookmarked.php:84
+#: Bookmarked.php:87
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Bookmarked.php:90
+#: Bookmarked.php:93
+msgctxt "Tab Title"
+msgid "Bookmarks"
+msgstr "نشانک‌ها"
+
+#: Bookmarked.php:97
 msgctxt "Notice"
 msgid "There is no bookmarks information available!"
 msgstr "هیچ اطلاعات نشانک‌گذاری در دسترس نیست!"
 
-#: Bookmarked.php:91
+#: Bookmarked.php:98
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the bookmarks data."
 msgstr "شما مجوز لازم برای دسترسی به اطلاعات نشانک‌گذاری را ندارید."
 
-#: Bookmarked.php:98
+#: Bookmarked.php:105
 msgctxt "MetaBox Title"
 msgid "Bookmarks"
 msgstr "نشانک‌گذاری"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Bookmarked.php:102
+#: Bookmarked.php:109
 msgctxt "Button Title"
 msgid "Bookmarks of %1$s"
 msgstr "نشانک‌گذاری‌های %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Bookmarked.php:104
+#: Bookmarked.php:111
 msgctxt "Button Text"
 msgid "%1$s Manage the Bookmarks of %2$s"
 msgstr "%1$s مدیریت نشانک‌گذاری‌های %2$s"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Bookmarked.php:107
+#: Bookmarked.php:114
 msgctxt "Action Title"
 msgid "Bookmarks of %1$s"
 msgstr "نشانک‌گذاری‌های %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Bookmarked.php:109
+#: Bookmarked.php:116
 msgctxt "Action Text"
 msgid "Bookmarks"
 msgstr "نشانک‌گذاری"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Bookmarked.php:112
+#: Bookmarked.php:119
 msgctxt "Row Title"
 msgid "Bookmarks of %1$s"
 msgstr "نشانک‌گذاری‌ها برای %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Bookmarked.php:114
+#: Bookmarked.php:121
 msgctxt "Row Text"
 msgid "Bookmarks"
 msgstr "نشانک‌گذاری"
 
-#: Bookmarked.php:126
+#: Bookmarked.php:133
 msgctxt "Field Title"
 msgid "Bookmarks Title"
 msgstr "عنوان نشانک‌گذاری‌ها"
 
-#: Bookmarked.php:127
+#: Bookmarked.php:134
 msgctxt "Field Description"
 msgid "The Bookmarks Table Caption"
 msgstr "برنگاشت جدول نشانک‌گذاری‌ها"
 
-#: Bookmarked.php:178
+#: Bookmarked.php:185
 msgctxt "Type Option"
 msgid "Custom Link"
 msgstr "پیوند سفارشی"
 
-#: Bookmarked.php:186
+#: Bookmarked.php:193
 msgctxt "Type Option"
 msgid "Site Post"
 msgstr "فرسته سایت"
 
-#: Bookmarked.php:194
+#: Bookmarked.php:201
 msgctxt "Type Option"
 msgid "Site Attachment"
 msgstr "پیوست سایت"
 
-#: Bookmarked.php:202
+#: Bookmarked.php:209
 msgctxt "Type Option"
 msgid "Site Term"
 msgstr "رده سایت"
 
-#: Bookmarked.php:211
+#: Bookmarked.php:218
 msgctxt "Type Option"
 msgid "National Library"
 msgstr "کتابخانه ملی"
 
-#: Bookmarked.php:219
+#: Bookmarked.php:226
 msgctxt "Type Option"
 msgid "Goodreads Book"
 msgstr "کتاب Goodreads"
 
-#: Bookmarked.php:227
+#: Bookmarked.php:234
 msgctxt "Type Option"
 msgid "Fidibo Book"
 msgstr "کتاب فیدیبو"
 
-#: Bookmarked.php:235
+#: Bookmarked.php:242
 msgctxt "Type Option"
 msgid "Taaghche Book"
 msgstr "کتاب طاقچه"
 
-#: Bookmarked.php:243
+#: Bookmarked.php:250
 msgctxt "Type Option"
 msgid "Behkhaan Profile"
 msgstr "نمایه بهخوان"
 
-#: Bookmarked.php:251
+#: Bookmarked.php:258
 msgctxt "Type Option"
 msgid "Neshan Map"
 msgstr "نقشه نشان"
 
-#: Bookmarked.php:259
+#: Bookmarked.php:266
 msgctxt "Type Option"
 msgid "Balad Map"
 msgstr "نقشه بلد"
 
-#: Bookmarked.php:267
+#: Bookmarked.php:274
 msgctxt "Type Option"
 msgid "Aparat Video"
 msgstr "ویدئوی آپارات"
 
-#: Bookmarked.php:275
+#: Bookmarked.php:282
 msgctxt "Type Option"
 msgid "Youtube Video"
 msgstr "ویدئوی یوتوب"
 
-#: Bookmarked.php:283
+#: Bookmarked.php:290
 msgctxt "Type Option"
 msgid "Email Address"
 msgstr "نشانی ایمیل"
 
-#: Bookmarked.php:291
+#: Bookmarked.php:298
 msgctxt "Type Option"
 msgid "Phone Number"
 msgstr "شماره تلفن"
 
-#: Bookmarked.php:299
+#: Bookmarked.php:306
 msgctxt "Type Option"
 msgid "Mobile Number"
 msgstr "شماره همراه"
 
-#: Bookmarked.php:307
+#: Bookmarked.php:314
 msgctxt "Type Option"
 msgid "SMS Number"
 msgstr "شماره SMS"
 
-#: Bookmarked.php:315
+#: Bookmarked.php:322
 msgctxt "Type Option"
 msgid "PDF Document"
 msgstr "سند PDF"
 
 #. translators: %s: post title
-#: Bookmarked.php:395
+#: Bookmarked.php:404
 msgctxt "Page Title"
 msgid "Bookmarks Grid for %s"
 msgstr "جدول نشانک‌گذاری‌ها برای %s"
 
 #. translators: %s: post title
-#: Bookmarked.php:397
+#: Bookmarked.php:406
 msgctxt "Page Title"
 msgid "Bookmarks Overview for %s"
 msgstr "مروری بر نشانک‌گذاری‌ها برای %s"
 
-#: Bookmarked.php:433
+#: Bookmarked.php:442
 msgctxt "Default Term: Audit"
 msgid "Empty Bookmarks Data"
 msgstr "داده‌های نشانک‌گذاری خالی"

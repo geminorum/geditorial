@@ -154,48 +154,48 @@ msgctxt "Widget: Custom HTML"
 msgid "Bypass Caching"
 msgstr ""
 
-#: Widgets/GCalEvents.php:21
+#: Widgets/GCalEvents.php:18
 msgctxt "Widget Title"
 msgid "Editorial: Google Calendar"
 msgstr ""
 
-#: Widgets/GCalEvents.php:22
+#: Widgets/GCalEvents.php:19
 msgctxt "Widget Description"
 msgid "Displays list of events from a public Google Calendar."
 msgstr ""
 
-#: Widgets/GCalEvents.php:84
+#: Widgets/GCalEvents.php:81
 msgctxt "Widget: Google Calendar"
 msgid "Calendar ID:"
 msgstr ""
 
-#: Widgets/GCalEvents.php:85
+#: Widgets/GCalEvents.php:82
 msgctxt "Widget: Google Calendar"
 msgid "Your API key:"
 msgstr ""
 
 #. translators: %s: documents url
-#: Widgets/GCalEvents.php:88
+#: Widgets/GCalEvents.php:85
 msgctxt "Widget: Google Calendar"
 msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."
 msgstr ""
 
-#: Widgets/GCalEvents.php:90
+#: Widgets/GCalEvents.php:87
 msgctxt "Widget: Google Calendar"
 msgid "Start from (YYYY-MM-DD):"
 msgstr ""
 
-#: Widgets/GCalEvents.php:91
+#: Widgets/GCalEvents.php:88
 msgctxt "Widget: Google Calendar"
 msgid "Max results:"
 msgstr ""
 
-#: Widgets/GCalEvents.php:92
+#: Widgets/GCalEvents.php:89
 msgctxt "Widget: Google Calendar"
 msgid "Display Time"
 msgstr ""
 
-#: Widgets/GCalEvents.php:94
+#: Widgets/GCalEvents.php:91
 msgctxt "Widget: Google Calendar"
 msgid "No events scheduled."
 msgstr ""

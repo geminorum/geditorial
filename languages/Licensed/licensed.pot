@@ -29,47 +29,37 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr ""
 
-#: Licensed.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Your Driving Licence Summary"
-msgstr ""
-
-#: Licensed.php:103
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Driving Licence Summary"
-msgstr ""
-
-#: Licensed.php:113
+#: Licensed.php:105
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr ""
 
-#: Licensed.php:114
+#: Licensed.php:106
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr ""
 
-#: Licensed.php:115
+#: Licensed.php:107
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr ""
 
-#: Licensed.php:116
+#: Licensed.php:108
 msgctxt "Default Term"
 msgid "Category One"
 msgstr ""
 
-#: Licensed.php:117
+#: Licensed.php:109
 msgctxt "Default Term"
 msgid "Loader"
 msgstr ""
 
-#: Licensed.php:118
+#: Licensed.php:110
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr ""
 
-#: Licensed.php:119
+#: Licensed.php:111
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr ""

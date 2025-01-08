@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Execution\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-11 02:21+0330\n"
+"PO-Revision-Date: 2024-11-27 02:21+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Execution\n"
 "X-Domain: geditorial-execution\n"
 
@@ -87,72 +87,70 @@ msgid "Supports executives for the selected post-types."
 msgstr "مجریان را برای نوع‌فرسته‌های انتخاب‌شده، پشتیبانی می‌کند."
 
 #: Execution.php:153
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Execution Summary"
-msgstr "گزارش اجرائی شما"
-
-#: Execution.php:154
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Execution Summary"
-msgstr "گزارش اجرائی تحریریه"
-
-#: Execution.php:158
 msgctxt "MetaBox Title"
 msgid "Executives"
 msgstr "مجریان"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Execution.php:162
+#: Execution.php:157
 msgctxt "Button Title"
 msgid "Executives of %1$s"
 msgstr "مجریان %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Execution.php:164
+#: Execution.php:159
 msgctxt "Button Text"
 msgid "%1$s Manage the Executives of %2$s"
 msgstr "%1$s مدیریت مجریان %2$s"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Execution.php:167
+#: Execution.php:162
 msgctxt "Action Title"
 msgid "Executives of %1$s"
 msgstr "مجریان %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Execution.php:169
+#: Execution.php:164
 msgctxt "Action Text"
 msgid "Executives"
 msgstr "مجریان"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Execution.php:172
+#: Execution.php:167
 msgctxt "Row Title"
 msgid "Executives of %1$s"
 msgstr "مجریان %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Execution.php:174
+#: Execution.php:169
 msgctxt "Row Text"
 msgid "Executives"
 msgstr "مجریان"
 
 #. translators: %s: post title
-#: Execution.php:364
+#: Execution.php:350
 msgctxt "Page Title"
 msgid "Executives Grid for %s"
 msgstr "هیئت اجرائی %s"
 
 #. translators: %s: post title
-#: Execution.php:366
+#: Execution.php:352
 msgctxt "Page Title"
 msgid "Executives Overview for %s"
 msgstr "مروری بر مجریان %s"
 
-#: Execution.php:395
+#: Execution.php:381
 msgctxt "Default Term: Audit"
 msgid "Empty Executives Data"
 msgstr "داده‌های اجرائی خالی"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Team Execution Summary"
+#~ msgstr "گزارش اجرائی شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Execution Summary"
+#~ msgstr "گزارش اجرائی تحریریه"
 
 #~ msgctxt "Field Label: `grade`"
 #~ msgid "Grade"

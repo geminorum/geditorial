@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Yearly\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-10-11 23:56+0330\n"
+"PO-Revision-Date: 2024-12-13 17:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -31,17 +31,15 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Yearly.php:105
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Years Summary"
-msgstr "گزارش سالیانه گروهه شما"
-
-#: Yearly.php:106
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Years Summary"
-msgstr "گزارش سالیانه تحریریه"
-
-#: Yearly.php:129
+#: Yearly.php:121
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "4"
-msgstr "4"
+msgstr ""
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Team Years Summary"
+#~ msgstr "گزارش سالیانه گروهه شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Years Summary"
+#~ msgstr "گزارش سالیانه تحریریه"

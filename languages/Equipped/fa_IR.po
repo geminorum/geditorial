@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Equipped\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-04 07:20+0330\n"
+"PO-Revision-Date: 2024-11-27 02:20+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,62 +11,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Equipped\n"
 "X-Domain: geditorial-equipped\n"
 
-#: Equipped.php:90
+#: Equipped.php:93
 msgid "Equipment Item"
 msgid_plural "Equipment Items"
 msgstr[0] "موارد تجهیزات"
 msgstr[1] "مورد تجهیزات"
 
-#: Equipped.php:94
+#: Equipped.php:97
 msgctxt "Label: `menu_name`"
 msgid "Content Equipments"
 msgstr "تجهیزات محتوا"
 
-#: Equipped.php:95
+#: Equipped.php:98
 msgctxt "Label: `extended_label`"
 msgid "Content Equipments"
 msgstr "تجهیزات محتوا"
 
-#: Equipped.php:96
+#: Equipped.php:99
 msgctxt "Label: `show_option_all`"
 msgid "Equipments"
 msgstr "تجهیزات"
 
-#: Equipped.php:97
+#: Equipped.php:100
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unequipped)"
 msgstr "(بدون‌تجهیز)"
 
-#: Equipped.php:111
+#: Equipped.php:114
 msgctxt "Field Title"
 msgid "Shoe"
 msgstr "کفش"
 
-#: Equipped.php:112
+#: Equipped.php:115
 msgctxt "Field Description"
 msgid "Size of the Shoe by European standards"
 msgstr "اندازه کفش بر اساس استاندارد اروپایی"
 
-#: Equipped.php:119
+#: Equipped.php:122
 msgctxt "Field Title"
 msgid "Shirt"
 msgstr "پیراهن"
 
-#: Equipped.php:120
+#: Equipped.php:123
 msgctxt "Field Description"
 msgid "Size of the Shirt by International standards"
 msgstr "اندازه لباس بر اساس استاندارد بین‌المللی"
 
-#: Equipped.php:127
+#: Equipped.php:130
 msgctxt "Field Title"
 msgid "Pants"
 msgstr "شلوار"
 
-#: Equipped.php:128
+#: Equipped.php:131
 msgctxt "Field Description"
 msgid "Size of the Pants by International standards"
 msgstr "اندازه شلوار بر اساس استاندارد بین‌المللی"

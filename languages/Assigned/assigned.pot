@@ -34,58 +34,48 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Unassigned)"
 msgstr ""
 
-#: Assigned.php:103
-msgctxt "Dashboard Widget Title"
-msgid "Your Assignments Summary"
-msgstr ""
-
-#: Assigned.php:104
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Assignments Summary"
-msgstr ""
-
-#: Assigned.php:114
+#: Assigned.php:106
 msgctxt "Default Term"
 msgid "Research"
 msgstr ""
 
-#: Assigned.php:115
+#: Assigned.php:107
 msgctxt "Default Term"
 msgid "Planning"
 msgstr ""
 
-#: Assigned.php:116
+#: Assigned.php:108
 msgctxt "Default Term"
 msgid "Execution"
 msgstr ""
 
-#: Assigned.php:117
+#: Assigned.php:109
 msgctxt "Default Term"
 msgid "Reporting"
 msgstr ""
 
-#: Assigned.php:127
-#: Assigned.php:132
+#: Assigned.php:119
+#: Assigned.php:124
 msgctxt "Field Title"
 msgid "Assigned To"
 msgstr ""
 
-#: Assigned.php:128
+#: Assigned.php:120
 msgctxt "Field Description"
 msgid "Determines the user responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:133
+#: Assigned.php:125
 msgctxt "Field Description"
 msgid "Determines the individual responsible for this assignment."
 msgstr ""
 
-#: Assigned.php:138
+#: Assigned.php:130
 msgctxt "Field Title"
 msgid "Due Date"
 msgstr ""
 
-#: Assigned.php:139
+#: Assigned.php:131
 msgctxt "Field Description"
 msgid "Determines the planned date that this assignment is required to be completed."
 msgstr ""

@@ -14,189 +14,243 @@ msgstr ""
 "X-Domain: geditorial-identified\n"
 
 #. translators: %s: supported object label
-#: Identified.php:45
+#: Identified.php:46
 msgctxt "Setting Title"
 msgid "Identifier Meta-key for %s"
 msgstr ""
 
-#: Identified.php:46
+#: Identified.php:49
 msgctxt "Setting Description"
 msgid "Defines identifier meta-key for the post-type."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Identified.php:57
+#: Identified.php:61
 msgctxt "Setting Title"
 msgid "Identifier Type for %s"
 msgstr ""
 
-#: Identified.php:58
+#: Identified.php:64
 msgctxt "Setting Description"
 msgid "Defines available identifier type for the post-type."
 msgstr ""
 
-#: Identified.php:59
+#: Identified.php:65
 msgctxt "Setting"
 msgid "There are no identifier types available!"
 msgstr ""
 
+#: Identified.php:74
+msgctxt "Setting Title"
+msgid "Front-end Search"
+msgstr ""
+
+#: Identified.php:75
+msgctxt "Setting Description"
+msgid "Adds results by Identifier information on front-end search."
+msgstr ""
+
+#: Identified.php:80
+msgctxt "Setting Title"
+msgid "Queryable Types"
+msgstr ""
+
+#: Identified.php:81
+msgctxt "Setting Description"
+msgid "Appends end-points for Identifier types on front-end."
+msgstr ""
+
+#. translators: %s: supported type label
+#: Identified.php:95
+msgctxt "Setting Title"
+msgid "URL Template for %s"
+msgstr ""
+
+#. translators: %s: token list placeholder
+#: Identified.php:100
+msgctxt "Setting Description"
+msgid "Defines a not-found url template for the identifier type. Available tokens are %s."
+msgstr ""
+
 #. translators: %s: audit attribute placeholder
-#: Identified.php:68
+#: Identified.php:118
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each created item via identifier."
 msgstr ""
 
-#: Identified.php:110
+#: Identified.php:156
 msgctxt "Identifier Type"
 msgid "Code"
 msgstr ""
 
-#: Identified.php:111
+#: Identified.php:157
 msgctxt "Identifier Type"
 msgid "GTIN"
 msgstr ""
 
-#: Identified.php:112
+#: Identified.php:158
 msgctxt "Identifier Type"
 msgid "ISBN"
 msgstr ""
 
-#: Identified.php:113
+#: Identified.php:159
 msgctxt "Identifier Type"
 msgid "ISSN"
 msgstr ""
 
-#: Identified.php:114
+#: Identified.php:160
 msgctxt "Identifier Type"
 msgid "SKU"
 msgstr ""
 
-#: Identified.php:115
+#: Identified.php:161
 msgctxt "Identifier Type"
 msgid "DDC"
 msgstr ""
 
-#: Identified.php:116
+#: Identified.php:162
 msgctxt "Identifier Type"
 msgid "VIN"
 msgstr ""
 
-#: Identified.php:117
+#: Identified.php:163
 msgctxt "Identifier Type"
 msgid "Plate"
 msgstr ""
 
-#: Identified.php:118
+#: Identified.php:164
 msgctxt "Identifier Type"
 msgid "TIN"
 msgstr ""
 
-#: Identified.php:119
+#: Identified.php:165
 msgctxt "Identifier Type"
 msgid "EIN"
 msgstr ""
 
-#: Identified.php:120
+#: Identified.php:166
 msgctxt "Identifier Type"
 msgid "Mobile"
 msgstr ""
 
-#: Identified.php:121
+#: Identified.php:167
 msgctxt "Identifier Type"
 msgid "Identity"
 msgstr ""
 
-#: Identified.php:125
+#: Identified.php:168
+msgctxt "Identifier Type"
+msgid "Lat/Lng"
+msgstr ""
+
+#: Identified.php:172
 msgctxt "Identifier Type Description"
 msgid "Arbitrary Identifier Code"
 msgstr ""
 
-#: Identified.php:126
+#: Identified.php:173
 msgctxt "Identifier Type Description"
 msgid "Global Trade Item Number"
 msgstr ""
 
-#: Identified.php:127
+#: Identified.php:174
 msgctxt "Identifier Type Description"
 msgid "International Standard Book Number"
 msgstr ""
 
-#: Identified.php:128
+#: Identified.php:175
 msgctxt "Identifier Type Description"
 msgid "International Standard Serial Number"
 msgstr ""
 
-#: Identified.php:129
+#: Identified.php:176
 msgctxt "Identifier Type Description"
 msgid "Stock Keeping Unit"
 msgstr ""
 
-#: Identified.php:130
+#: Identified.php:177
 msgctxt "Identifier Type Description"
 msgid "Dewey Decimal Classification"
 msgstr ""
 
-#: Identified.php:131
+#: Identified.php:178
 msgctxt "Identifier Type Description"
 msgid "Vehicle Identification Number"
 msgstr ""
 
-#: Identified.php:132
+#: Identified.php:179
 msgctxt "Identifier Type Description"
 msgid "Vehicle Registration Plate"
 msgstr ""
 
-#: Identified.php:133
+#: Identified.php:180
 msgctxt "Identifier Type Description"
 msgid "Taxpayer Identification Number"
 msgstr ""
 
-#: Identified.php:134
+#: Identified.php:181
 msgctxt "Identifier Type Description"
 msgid "Employer Identification Number"
 msgstr ""
 
-#: Identified.php:135
+#: Identified.php:182
 msgctxt "Identifier Type Description"
 msgid "Mobile Phone Number"
 msgstr ""
 
-#: Identified.php:136
+#: Identified.php:183
 msgctxt "Identifier Type Description"
 msgid "National Identity Number"
 msgstr ""
 
-#: Identified.php:144
-msgctxt "Settings Description"
+#: Identified.php:184
+msgctxt "Identifier Type Description"
+msgid "Latitude and Longitude"
+msgstr ""
+
+#: Identified.php:192
+msgctxt "Setting Description"
 msgid "Supports identifiers for the selected post-types."
 msgstr ""
 
-#: Identified.php:177
+#: Identified.php:244
 msgctxt "RestAPI: Arg Description"
 msgid "The identifier type to process."
 msgstr ""
 
-#: Identified.php:183
+#: Identified.php:250
 msgctxt "RestAPI: Arg Description"
 msgid "The identifier code to process."
 msgstr ""
 
-#: Identified.php:338
+#: Identified.php:412
 msgctxt "Possible Identifier Key"
 msgid "Identifier"
 msgstr ""
 
-#: Identified.php:512
+#: Identified.php:597
 msgctxt "Default Term: Audit"
 msgid "Empty Identification"
 msgstr ""
 
-#: Identified.php:513
+#: Identified.php:598
 msgctxt "Default Term: Audit"
 msgid "Duplicate Identification"
 msgstr ""
 
-#: Identified.php:514
+#: Identified.php:599
 msgctxt "Default Term: Audit"
 msgid "Invalid Identification"
+msgstr ""
+
+#. translators: %1$s: add new label, %2$s: identifier code
+#: Identified.php:696
+msgctxt "Header Button"
+msgid "%1$s with %2$s"
+msgstr ""
+
+#. translators: %1$s: identifier type label, %2$s: posttype singular label
+#: Identified.php:943
+msgctxt "Title Attr"
+msgid "%1$s Link to this %2$s"
 msgstr ""

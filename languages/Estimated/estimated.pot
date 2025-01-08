@@ -81,7 +81,7 @@ msgstr ""
 
 #. translators: %s: words count
 #: Estimated.php:149
-#: Estimated.php:230
+#: Estimated.php:233
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute"
 msgstr ""
@@ -91,7 +91,7 @@ msgid "less than 1 minute"
 msgstr ""
 
 #. translators: %s: number of minutes
-#: Estimated.php:225
+#: Estimated.php:226
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""

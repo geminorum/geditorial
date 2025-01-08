@@ -34,62 +34,52 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
 
-#: Almanac.php:97
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Almanac Summary"
-msgstr ""
-
-#: Almanac.php:98
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Almanac Summary"
-msgstr ""
-
-#: Almanac.php:110
+#: Almanac.php:102
 msgctxt "Main Taxonomy: Default Term"
 msgid "Gregorian"
 msgstr ""
 
-#: Almanac.php:111
+#: Almanac.php:103
 msgctxt "Main Taxonomy: Default Term"
 msgid "Japanese"
 msgstr ""
 
-#: Almanac.php:112
+#: Almanac.php:104
 msgctxt "Main Taxonomy: Default Term"
 msgid "Buddhist"
 msgstr ""
 
-#: Almanac.php:113
+#: Almanac.php:105
 msgctxt "Main Taxonomy: Default Term"
 msgid "Chinese"
 msgstr ""
 
-#: Almanac.php:114
+#: Almanac.php:106
 msgctxt "Main Taxonomy: Default Term"
 msgid "Persian"
 msgstr ""
 
-#: Almanac.php:115
+#: Almanac.php:107
 msgctxt "Main Taxonomy: Default Term"
 msgid "Indian"
 msgstr ""
 
-#: Almanac.php:116
+#: Almanac.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "Islamic"
 msgstr ""
 
-#: Almanac.php:117
+#: Almanac.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Islamic-Civil"
 msgstr ""
 
-#: Almanac.php:118
+#: Almanac.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Coptic"
 msgstr ""
 
-#: Almanac.php:119
+#: Almanac.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ethiopic"
 msgstr ""

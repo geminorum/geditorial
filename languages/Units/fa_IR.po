@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Units\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-27 01:10+0330\n"
+"PO-Revision-Date: 2024-12-29 21:12+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Units\n"
 "X-Domain: geditorial-units\n"
 
@@ -265,225 +265,225 @@ msgctxt "Pant Size"
 msgid "56"
 msgstr "۵۶"
 
-#: Units.php:56
+#: Units.php:58
 msgctxt "Titles"
 msgid "Weight"
 msgstr "وزن"
 
-#: Units.php:57
+#: Units.php:59
 msgctxt "Titles"
 msgid "Width"
 msgstr "عرض"
 
-#: Units.php:58
+#: Units.php:60
 msgctxt "Titles"
 msgid "Height"
 msgstr "ارتفاع"
 
-#: Units.php:59
+#: Units.php:61
 msgctxt "Titles"
 msgid "Length"
 msgstr "طول"
 
-#: Units.php:61
+#: Units.php:63
 msgctxt "Titles"
 msgid "Payload"
 msgstr "وزن محموله"
 
-#: Units.php:62
+#: Units.php:64
 msgctxt "Titles"
 msgid "Max Speed"
 msgstr "بیشینه سرعت"
 
-#: Units.php:64
+#: Units.php:66
 msgctxt "Titles"
 msgid "Hair Color"
 msgstr "رنگ مو"
 
-#: Units.php:65
+#: Units.php:67
 msgctxt "Titles"
 msgid "Skin Color"
 msgstr "رنگ پوست"
 
-#: Units.php:66
+#: Units.php:68
 msgctxt "Titles"
 msgid "Eye Color"
 msgstr "رنگ چشم"
 
-#: Units.php:68
+#: Units.php:70
 msgctxt "Titles"
 msgid "Total Days"
 msgstr "مجموع روزها"
 
-#: Units.php:69
+#: Units.php:71
 msgctxt "Titles"
 msgid "Total Hours"
 msgstr "مجموع ساعات"
 
-#: Units.php:71
+#: Units.php:73
 msgctxt "Titles"
 msgid "Total Members"
 msgstr "مجموع اعضا"
 
-#: Units.php:72
+#: Units.php:74
 msgctxt "Titles"
 msgid "Total People"
 msgstr "مجموع افراد"
 
-#: Units.php:74
+#: Units.php:76
 msgctxt "Titles"
 msgid "Book Cover"
 msgstr "نوع جلد"
 
-#: Units.php:75
+#: Units.php:77
 msgctxt "Titles"
 msgid "Paper Size"
 msgstr "اندازه کاغذ"
 
-#: Units.php:78
+#: Units.php:80
 msgctxt "Descriptions"
 msgid "Weight in Gram"
 msgstr "وزن به گرم"
 
-#: Units.php:79
+#: Units.php:81
 msgctxt "Descriptions"
 msgid "Width in Milimeter"
 msgstr "عرض به میلی‌متر"
 
-#: Units.php:80
+#: Units.php:82
 msgctxt "Descriptions"
 msgid "Height in Milimeter"
 msgstr "ارتفاع به میلی‌متر"
 
-#: Units.php:81
+#: Units.php:83
 msgctxt "Descriptions"
 msgid "Length in Milimeter"
 msgstr "طول به میلی‌متر"
 
-#: Units.php:83
+#: Units.php:85
 msgctxt "Descriptions"
 msgid "Payload in Kilogram"
 msgstr "قابلیت حمل وزن به کیلوگرم"
 
-#: Units.php:84
+#: Units.php:86
 msgctxt "Descriptions"
 msgid "Max Speed in Kilometre per Hour"
 msgstr "بیشینه سرعت به کیلومتر در ساعت"
 
-#: Units.php:86
+#: Units.php:88
 msgctxt "Descriptions"
 msgid "Color of the Hair"
 msgstr "رنگ مو"
 
-#: Units.php:87
+#: Units.php:89
 msgctxt "Descriptions"
 msgid "Color of the Skin"
 msgstr "رنگ پوست"
 
-#: Units.php:88
+#: Units.php:90
 msgctxt "Descriptions"
 msgid "Color of the Eye"
 msgstr "رنگ چشم"
 
-#: Units.php:90
+#: Units.php:92
 msgctxt "Descriptions"
 msgid "The Total Number of the Days"
 msgstr "عدد مجموع روزها"
 
-#: Units.php:91
+#: Units.php:93
 msgctxt "Descriptions"
 msgid "The Total Number of the Hours"
 msgstr "عدد مجموع ساعت‌ها"
 
-#: Units.php:93
+#: Units.php:95
 msgctxt "Descriptions"
 msgid "The Total Number of the Members"
 msgstr "عدد مجموع اعضا"
 
-#: Units.php:94
+#: Units.php:96
 msgctxt "Descriptions"
 msgid "The Total Number of the People"
 msgstr "شمار مجموع کل افراد"
 
-#: Units.php:96
+#: Units.php:98
 msgctxt "Descriptions"
 msgid "The Book Cover Size"
 msgstr "اندازه جلد کتاب"
 
-#: Units.php:97
+#: Units.php:99
 msgctxt "Descriptions"
 msgid "The Standard Paper Size"
 msgstr "اندازه استاندارد کاغذ"
 
-#: Units.php:107 Units.php:108 Units.php:109 Units.php:111
+#: Units.php:109 Units.php:110 Units.php:111 Units.php:113
 msgctxt "None"
 msgid "&ndash; Select Size &ndash;"
 msgstr "&ndash; انتخاب اندازه &ndash;"
 
-#: Units.php:110
+#: Units.php:112
 msgctxt "None"
 msgid "&ndash; Select Cover &ndash;"
 msgstr "&ndash; انتخاب قطع &ndash;"
 
 #. translators: %s: field title
-#: Units.php:120
+#: Units.php:122
 msgctxt "Import Field Title"
 msgid "Units: %s"
 msgstr "واحد: %s"
 
 #. translators: %s: field title
-#: Units.php:122
+#: Units.php:124
 msgctxt "Import Field Title"
 msgid "Units: %s [Ignored]"
 msgstr "واحد: %s [نادیده]"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Units.php:127
+#: Units.php:129
 msgctxt "MetaBox: `mainbox_title`"
 msgid "Measurements"
 msgstr "ابعاد"
 
-#: Units.php:128
+#: Units.php:130
 msgctxt "MetaBox: `mainbox_action`"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: Units.php:132
+#: Units.php:134
 msgctxt "Notice: `no_fields`"
 msgid "There are no measurement units available!"
 msgstr "هیچ واحد اندازه‌گیری در دسترس نیست!"
 
-#: Units.php:136
+#: Units.php:138
 msgctxt "Column Title"
 msgid "Measurements"
 msgstr "ابعاد"
 
 #. translators: %s: shoe size placeholder
-#: Units.php:281
+#: Units.php:290
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr "کفش %s"
 
 #. translators: %s: shirt size placeholder
-#: Units.php:290
+#: Units.php:299
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr "پیراهن %s"
 
 #. translators: %s: pants size placeholder
-#: Units.php:299
+#: Units.php:308
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr "شلوار %s"
 
 #. translators: %s: book cover placeholder
-#: Units.php:308
+#: Units.php:317
 msgctxt "Display"
 msgid "%s Book-Cover"
 msgstr "قطع %s"
 
 #. translators: %s: paper size cover placeholder
-#: Units.php:317
+#: Units.php:326
 msgctxt "Display"
 msgid "Size %s Paper"
 msgstr "کاغذ %s"

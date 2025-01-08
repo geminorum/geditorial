@@ -13,30 +13,20 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Educated\n"
 "X-Domain: geditorial-educated\n"
 
-#: Educated.php:87
+#: Educated.php:91
 msgid "Education Definition"
 msgid_plural "Education Definitions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Educated.php:91
+#: Educated.php:95
 msgctxt "Label: Show Option All"
 msgid "Educations"
 msgstr ""
 
-#: Educated.php:92
+#: Educated.php:96
 msgctxt "Label: Show Option No Terms"
 msgid "(Uneducated)"
-msgstr ""
-
-#: Educated.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Education Summary"
-msgstr ""
-
-#: Educated.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Education Summary"
 msgstr ""
 
 #: ModuleInfo.php:66

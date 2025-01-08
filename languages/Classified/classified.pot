@@ -13,38 +13,28 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Classified\n"
 "X-Domain: geditorial-classified\n"
 
-#: Classified.php:86
+#: Classified.php:91
 msgid "Classification"
 msgid_plural "Classifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Classified.php:90
+#: Classified.php:95
 msgctxt "Label: Menu Name"
 msgid "Content Classifications"
 msgstr ""
 
-#: Classified.php:91
+#: Classified.php:96
 msgctxt "Label: Show Option All"
 msgid "Classifications"
 msgstr ""
 
-#: Classified.php:92
+#: Classified.php:97
 msgctxt "Label: Show Option No Terms"
 msgid "(Unclassified)"
 msgstr ""
 
-#: Classified.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Classification Summary"
-msgstr ""
-
-#: Classified.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Classification Summary"
-msgstr ""
-
-#: Classified.php:124
+#: Classified.php:122
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
 msgstr ""

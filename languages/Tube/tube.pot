@@ -108,79 +108,79 @@ msgctxt "Field Description"
 msgid "Creation Date of the Video"
 msgstr ""
 
-#: Tube.php:167
+#: Tube.php:168
 msgctxt "Field Title"
 msgid "Video Duration"
 msgstr ""
 
-#: Tube.php:168
+#: Tube.php:169
 msgctxt "Field Description"
 msgid "Duration of the Video"
 msgstr ""
 
-#: Tube.php:173
+#: Tube.php:175
 msgctxt "Field Title"
 msgid "Video Embed URL"
 msgstr ""
 
-#: Tube.php:174
+#: Tube.php:176
 msgctxt "Field Description"
 msgid "Embeddable URL of the External Video"
 msgstr ""
 
-#: Tube.php:388
+#: Tube.php:394
 msgctxt "Button"
 msgid "The date of this video"
 msgstr ""
 
-#: Tube.php:394
+#: Tube.php:400
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr ""
 
-#: Tube.php:401
+#: Tube.php:407
 msgctxt "Button"
 msgid "Download this video"
 msgstr ""
 
-#: Tube.php:402
+#: Tube.php:408
 msgctxt "Button"
 msgid "Download"
 msgstr ""
 
-#: Tube.php:408
+#: Tube.php:414
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr ""
 
-#: Tube.php:410
+#: Tube.php:416
 msgctxt "Button"
 msgid "YouTube"
 msgstr ""
 
-#: Tube.php:416
+#: Tube.php:422
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr ""
 
-#: Tube.php:418
+#: Tube.php:424
 msgctxt "Button"
 msgid "Aparat"
 msgstr ""
 
-#: Tube.php:425
+#: Tube.php:431
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr ""
 
-#: Tube.php:427
+#: Tube.php:433
 msgctxt "Button"
 msgid "Shortlink"
 msgstr ""
 
-#: Tube.php:432
-#: Tube.php:439
-#: Tube.php:446
+#: Tube.php:438
+#: Tube.php:445
+#: Tube.php:452
 msgctxt "Button"
 msgid "Share this video"
 msgstr ""

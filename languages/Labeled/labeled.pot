@@ -39,52 +39,42 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Unlabeled)"
 msgstr ""
 
-#: Labeled.php:90
-msgctxt "Dashboard Widget Title"
-msgid "Your Content Labels Summary"
-msgstr ""
-
-#: Labeled.php:91
-msgctxt "Dashboard Widget Title"
-msgid "Content Labels Summary"
-msgstr ""
-
-#: Labeled.php:101
+#: Labeled.php:93
 msgctxt "Main Taxonomy: Default Term"
 msgid "Introduction"
 msgstr ""
 
-#: Labeled.php:102
+#: Labeled.php:94
 msgctxt "Main Taxonomy: Default Term"
 msgid "Interview"
 msgstr ""
 
-#: Labeled.php:103
+#: Labeled.php:95
 msgctxt "Main Taxonomy: Default Term"
 msgid "Review"
 msgstr ""
 
-#: Labeled.php:104
+#: Labeled.php:96
 msgctxt "Main Taxonomy: Default Term"
 msgid "Report"
 msgstr ""
 
-#: Labeled.php:114
+#: Labeled.php:106
 msgctxt "Field Title"
 msgid "Label"
 msgstr ""
 
-#: Labeled.php:115
+#: Labeled.php:107
 msgctxt "Field Description"
 msgid "Text to indicate that the content is part of an editorial column."
 msgstr ""
 
-#: Labeled.php:118
+#: Labeled.php:110
 msgctxt "Field Title"
 msgid "Label Taxonomy"
 msgstr ""
 
-#: Labeled.php:119
+#: Labeled.php:111
 msgctxt "Field Description"
 msgid "Taxonomy for better categorizing editorial columns."
 msgstr ""

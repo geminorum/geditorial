@@ -33,13 +33,3 @@ msgstr ""
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
-
-#: Jobbed.php:103
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Job Title Summary"
-msgstr ""
-
-#: Jobbed.php:104
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Job Title Summary"
-msgstr ""

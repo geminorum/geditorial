@@ -181,94 +181,94 @@ msgctxt "Help Tab Title"
 msgid "Shortcodes"
 msgstr ""
 
-#: ModuleSettings.php:17
+#: ModuleSettings.php:21
 msgctxt "Card Title"
 msgid "Re-attach Un-Parented"
 msgstr ""
 
 #. translators: %s: posttype label
-#: ModuleSettings.php:24
-#: ModuleSettings.php:39
+#: ModuleSettings.php:28
+#: ModuleSettings.php:43
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
-#: ModuleSettings.php:26
+#: ModuleSettings.php:30
 msgctxt "Button Description"
 msgid "Tries to re-attach un-parented via thumbnail meta-data."
 msgstr ""
 
-#: ModuleSettings.php:32
+#: ModuleSettings.php:36
 msgctxt "Card Title"
 msgid "Empty Meta-data"
 msgstr ""
 
-#: ModuleSettings.php:41
+#: ModuleSettings.php:45
 msgctxt "Button Description"
 msgid "Tries to clean attachemnt raw meta-data."
 msgstr ""
 
-#: ModuleSettings.php:47
+#: ModuleSettings.php:51
 msgctxt "Card Title"
 msgid "Deletion by MIME"
 msgstr ""
 
-#: ModuleSettings.php:55
+#: ModuleSettings.php:59
 msgctxt "Button Description"
 msgid "Tries to delete attachemnts by MIME types."
 msgstr ""
 
 #. translators: %s: attachment id
-#: ModuleSettings.php:136
-#: ModuleSettings.php:223
+#: ModuleSettings.php:126
+#: ModuleSettings.php:211
 msgctxt "Notice"
 msgid "Attachment ID (%s) is not valid!"
 msgstr ""
 
 #. translators: %1$s: attachment title, %2$s: attachment id
-#: ModuleSettings.php:142
+#: ModuleSettings.php:132
 msgctxt "Notice"
 msgid "There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s)"
 msgstr ""
 
 #. translators: %1$s: attachment title, %2$s: attachment id
-#: ModuleSettings.php:148
+#: ModuleSettings.php:138
 msgctxt "Notice"
 msgid "Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)"
 msgstr ""
 
 #. translators: %s: attachment
-#: ModuleSettings.php:161
+#: ModuleSettings.php:151
 msgctxt "Notice"
 msgid "Attachment (%s) is not valid!"
 msgstr ""
 
 #. translators: %1$s: attachment title, %2$s: attachment id
-#: ModuleSettings.php:167
+#: ModuleSettings.php:157
 msgctxt "Notice"
 msgid "There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s)"
 msgstr ""
 
 #. translators: %1$s: attachment title, %2$s: attachment id
-#: ModuleSettings.php:173
+#: ModuleSettings.php:163
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted."
 msgstr ""
 
 #. translators: %s: parent id
-#: ModuleSettings.php:229
+#: ModuleSettings.php:217
 msgctxt "Notice"
 msgid "Parent ID (%s) is not valid!"
 msgstr ""
 
 #. translators: %1$s: attachment id, %2$s: parent title
-#: ModuleSettings.php:235
+#: ModuleSettings.php:223
 msgctxt "Notice"
 msgid "There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: attachment title, %2$s: attachment id, %3$s: parent title
-#: ModuleSettings.php:241
+#: ModuleSettings.php:229
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;"
 msgstr ""

@@ -18,74 +18,79 @@ msgctxt "Setting Description"
 msgid "Roles that can see Uncategorized Reports."
 msgstr ""
 
-#: Uncategorized.php:104
-#: Uncategorized.php:271
+#: Uncategorized.php:46
+msgctxt "Setting Description"
+msgid "Roles that can use Uncategorized Tools."
+msgstr ""
+
+#: Uncategorized.php:102
+#: Uncategorized.php:269
 msgctxt "Action"
 msgid "Clean Uncategorized"
 msgstr ""
 
-#: Uncategorized.php:105
-#: Uncategorized.php:272
+#: Uncategorized.php:103
+#: Uncategorized.php:270
 msgctxt "Action"
 msgid "Clean Unregistered"
 msgstr ""
 
-#: Uncategorized.php:106
-#: Uncategorized.php:273
+#: Uncategorized.php:104
+#: Uncategorized.php:271
 msgctxt "Action"
 msgid "Clean Unattached"
 msgstr ""
 
 #. translators: %s: count
-#: Uncategorized.php:161
+#: Uncategorized.php:159
 msgctxt "Message"
 msgid "%s items(s) cleaned!"
 msgstr ""
 
 #. translators: %s: posts count
-#: Uncategorized.php:172
+#: Uncategorized.php:170
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Uncategorized.php:177
+#: Uncategorized.php:175
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr ""
 
-#: Uncategorized.php:287
+#: Uncategorized.php:285
 msgctxt "Table Column"
 msgid "Raw"
 msgstr ""
 
-#: Uncategorized.php:314
+#: Uncategorized.php:312
 msgctxt "Header"
 msgid "Overview of Posts in Uncategorized Terms"
 msgstr ""
 
-#: Uncategorized.php:365
+#: Uncategorized.php:363
 msgctxt "Header"
 msgid "Uncategorized Tools"
 msgstr ""
 
-#: Uncategorized.php:371
+#: Uncategorized.php:369
 msgctxt "Tools"
 msgid "Orphaned Terms"
 msgstr ""
 
-#: Uncategorized.php:391
+#: Uncategorized.php:389
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Uncategorized.php:393
+#: Uncategorized.php:391
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr ""
 
-#: Uncategorized.php:574
+#: Uncategorized.php:572
 msgctxt "Default Label"
 msgid "Uncategorized"
 msgstr ""

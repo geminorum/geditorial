@@ -148,12 +148,12 @@ msgid "Post collaborator in the collection"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:379
+#: Collect.php:380
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr ""
 
-#: Collect.php:415
+#: Collect.php:416
 msgctxt "Header"
 msgid "Collection Tools"
 msgstr ""

@@ -152,70 +152,70 @@ msgctxt "Summary"
 msgid "Under-Aged"
 msgstr ""
 
-#: WasBorn.php:535
+#: WasBorn.php:543
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr ""
 
-#: WasBorn.php:604
+#: WasBorn.php:612
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr ""
 
-#: WasBorn.php:687
+#: WasBorn.php:693
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr ""
 
 #. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:775
+#: WasBorn.php:780
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr ""
 
-#: WasBorn.php:777
+#: WasBorn.php:782
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr ""
 
-#: WasBorn.php:778
+#: WasBorn.php:783
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr ""
 
-#: WasBorn.php:959
+#: WasBorn.php:964
 msgctxt "Pointer Notice"
 msgid "Under-Aged!"
 msgstr ""
 
-#: WasBorn.php:969
+#: WasBorn.php:974
 msgctxt "Default Term: Audit"
 msgid "Empty Date-of-Birth"
 msgstr ""
 
-#: WasBorn.php:970
+#: WasBorn.php:975
 msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr ""
 
-#: WasBorn.php:1042
+#: WasBorn.php:1047
 msgctxt "Header"
 msgid "Birthday Imports"
 msgstr ""
 
-#: WasBorn.php:1054
+#: WasBorn.php:1059
 msgctxt "Card Title"
 msgid "Post-Date by Birthday"
 msgstr ""
 
 #. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1095
+#: WasBorn.php:1098
 msgctxt "Notice"
 msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1101
+#: WasBorn.php:1104
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
 msgstr ""

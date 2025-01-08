@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Ranged\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-01 20:17+0330\n"
+"PO-Revision-Date: 2024-12-29 20:09+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Ranged\n"
 "X-Domain: geditorial-ranged\n"
 
@@ -25,29 +25,35 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the shootings and supported post-types."
 msgstr ""
 
-#: Ranged.php:151 Ranged.php:152
+#: Ranged.php:150 Ranged.php:151
 msgid "Shooting Session"
 msgid_plural "Shooting Sessions"
 msgstr[0] "جلسات تیراندازی"
 msgstr[1] "جلسه تیراندازی"
 
-#: Ranged.php:153
+#: Ranged.php:152
 msgid "Shooting Category"
 msgid_plural "Shooting Categories"
 msgstr[0] "دسته‌های تیراندازی"
 msgstr[1] "دسته تیراندازی"
 
-#: Ranged.php:154
+#: Ranged.php:153
 msgid "Shooting Level"
 msgid_plural "Shooting Levels"
 msgstr[0] "سطوح تیراندازی"
 msgstr[1] "سطح تیراندازی"
 
-#: Ranged.php:155
+#: Ranged.php:154
 msgid "Shooting Program"
 msgid_plural "Shooting Programs"
 msgstr[0] "برنامه‌های تیراندازی"
 msgstr[1] "برنامه تیراندازی"
+
+#: Ranged.php:155
+msgid "Shooting Position"
+msgid_plural "Shooting Positions"
+msgstr[0] "حالت‌های تیراندازی"
+msgstr[1] "حالت تیراندازی"
 
 #: Ranged.php:156
 msgid "Shooting Span"
@@ -99,108 +105,203 @@ msgstr "برنامه"
 
 #: Ranged.php:176
 msgctxt "Label: Menu Name"
+msgid "Positions"
+msgstr "حالت‌ها"
+
+#: Ranged.php:179
+msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr "دوره"
 
-#: Ranged.php:179
+#: Ranged.php:182
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Ranged.php:182
+#: Ranged.php:185
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت"
 
-#: Ranged.php:191
+#: Ranged.php:194
 msgctxt "Notice"
 msgid "There is no shooting information available!"
 msgstr "هیچ داده تیراندازی در دسترس نیست!"
 
-#: Ranged.php:192
+#: Ranged.php:195
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the shooting information."
 msgstr "شما سطح دسترسی لازم برای مدیریت داده‌های تیراندازی را ندارید."
 
 #. translators: %s: item count
-#: Ranged.php:197
+#: Ranged.php:200
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Shooting Attendees (%s)"
 msgstr "شرکت‌کنندگان در این تیراندازی (%s)"
 
 #. translators: %s: item count
-#: Ranged.php:199
+#: Ranged.php:202
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Shooting Sessions (%s)"
 msgstr "جلسات تیراندازی (%s)"
 
-#: Ranged.php:200
+#: Ranged.php:203
 msgctxt "Misc: `column_icon_title`"
 msgid "Shooting Sessions"
 msgstr "جلسات تیراندازی"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Ranged.php:205
+#: Ranged.php:208
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr "حاضرین در &rdquo;%1$s&ldquo;"
 
-#: Ranged.php:215
+#: Ranged.php:218
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr "مقدماتی"
 
-#: Ranged.php:216
+#: Ranged.php:219
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr "متوسطه"
 
-#: Ranged.php:217
+#: Ranged.php:220
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr "پیشرفته"
 
-#: Ranged.php:218
+#: Ranged.php:221
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr "ویژه"
 
-#: Ranged.php:222
+#: Ranged.php:225
+msgctxt "Position Taxonomy: Default Term"
+msgid "Prone"
+msgstr "درازکش"
+
+#: Ranged.php:226
+msgctxt "Position Taxonomy: Default Term"
+msgid "Sitting"
+msgstr "نشسته"
+
+#: Ranged.php:227
+msgctxt "Position Taxonomy: Default Term"
+msgid "Kneeling"
+msgstr "به‌زانو"
+
+#: Ranged.php:228
+msgctxt "Position Taxonomy: Default Term"
+msgid "Standing"
+msgstr "ایستاده"
+
+#: Ranged.php:229
+msgctxt "Position Taxonomy: Default Term"
+msgid "Free-style"
+msgstr "آزاد"
+
+#: Ranged.php:233
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Ranged.php:223
+#: Ranged.php:234
+msgctxt "Status Taxonomy: Default Term"
+msgid "Canceled"
+msgstr "لغوشده"
+
+#: Ranged.php:235
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr "برگزار شده"
 
-#: Ranged.php:264
+#: Ranged.php:277
 msgctxt "Field Title"
 msgid "Instructors"
 msgstr "مربیان"
 
-#: Ranged.php:265
+#: Ranged.php:278
 msgctxt "Field Description"
 msgid "People Who Participate as Instructors in This Shooting Session"
 msgstr "افرادی که به عنوان مربی در این جلسه تیراندازی مشارکت کرده‌اند"
 
-#: Ranged.php:273
+#: Ranged.php:285
 msgctxt "Field Title"
 msgid "Shooting Code"
 msgstr "کد تیراندازی"
 
-#: Ranged.php:274
+#: Ranged.php:286
 msgctxt "Field Description"
 msgid "Unique Shooting Code"
 msgstr "کد تیراندازی یکتا"
 
-#: Ranged.php:599
+#: Ranged.php:302
+msgctxt "Field Title"
+msgid "Total Targets"
+msgstr "مجموع اهداف"
+
+#: Ranged.php:303
+msgctxt "Field Description"
+msgid "Total Number of Target Cards"
+msgstr "عدد مجموع برگه‌های هدف"
+
+#: Ranged.php:309
+msgctxt "Field Title"
+msgid "Total Lines"
+msgstr "مجموع خطوط"
+
+#: Ranged.php:310
+msgctxt "Field Description"
+msgid "Total Number of Firing Lines"
+msgstr "عدد مجموع خط‌های آتش"
+
+#: Ranged.php:316
+msgctxt "Field Title"
+msgid "Firing Distance"
+msgstr "فاصله تیراندازی"
+
+#: Ranged.php:317
+msgctxt "Field Description"
+msgid "Firing Distance in Meters"
+msgstr "فاصله تیراندازی به متر"
+
+#: Ranged.php:323
+msgctxt "Field Title"
+msgid "Free Shots"
+msgstr "تیر آزاد"
+
+#: Ranged.php:324
+msgctxt "Field Description"
+msgid "Number of shots attempts for adjusting."
+msgstr ""
+
+#: Ranged.php:330
+msgctxt "Field Title"
+msgid "Sighting Shots"
+msgstr "تیر قلق"
+
+#: Ranged.php:331
+msgctxt "Field Description"
+msgid "Number of shots attempts for adjusting on the target."
+msgstr ""
+
+#: Ranged.php:337
+msgctxt "Field Title"
+msgid "Grading Shots"
+msgstr "تیر نمره"
+
+#: Ranged.php:338
+msgctxt "Field Description"
+msgid "Number of shots attempts for grading."
+msgstr ""
+
+#: Ranged.php:685
 msgctxt "Header"
 msgid "Shooting Session Tools"
 msgstr "ابزارهای جلسه تیراندازی"
 
-#: Ranged.php:608
+#: Ranged.php:694
 msgctxt "Card"
 msgid "Shooting Session Date from Meta-data"
 msgstr "تاریخ جلسه تیراندازی از داده‌های متای تاریخ"

@@ -13,30 +13,20 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Employed\n"
 "X-Domain: geditorial-employed\n"
 
-#: Employed.php:88
+#: Employed.php:92
 msgid "Employment"
 msgid_plural "Employments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Employed.php:92
+#: Employed.php:96
 msgctxt "Label: Show Option All"
 msgid "Employments"
 msgstr ""
 
-#: Employed.php:93
+#: Employed.php:97
 msgctxt "Label: Show Option No Terms"
 msgid "(UnEmployed)"
-msgstr ""
-
-#: Employed.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Employment Summary"
-msgstr ""
-
-#: Employed.php:103
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Employment Summary"
 msgstr ""
 
 #: ModuleInfo.php:93

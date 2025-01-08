@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Ranked\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 18:52+0330\n"
+"PO-Revision-Date: 2024-11-27 02:26+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,82 +11,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Ranked\n"
 "X-Domain: geditorial-ranked\n"
 
-#: Ranked.php:85
+#: Ranked.php:87
 msgid "Ranking Definition"
 msgid_plural "Ranking Definitions"
 msgstr[0] "تعاریف رتبه"
 msgstr[1] "تعریف رتبه"
 
-#: Ranked.php:89
+#: Ranked.php:91
 msgctxt "Label: Menu Name"
 msgid "Content Rankings"
 msgstr "رتبه‌بندی محتوا"
 
-#: Ranked.php:90
+#: Ranked.php:92
 msgctxt "Label: Show Option All"
 msgid "Rankings"
 msgstr "رتبه‌بندی"
 
-#: Ranked.php:91
+#: Ranked.php:93
 msgctxt "Label: Show Option No Terms"
 msgid "(Unranked)"
 msgstr "(بی‌رتبه)"
 
-#: Ranked.php:100
-msgctxt "Dashboard Widget Title"
-msgid "Your Ranking Summary"
-msgstr "گزارش رتبه‌بندی‌های شما"
-
-#: Ranked.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Ranking Summary"
-msgstr "گزارش رتبه‌بندی‌های تحریریه"
-
-#: Ranked.php:111
+#: Ranked.php:105
 msgctxt "Default Term"
 msgid "Publisher"
 msgstr "ناشر"
 
-#: Ranked.php:112
+#: Ranked.php:106
 msgctxt "Default Term"
 msgid "Editor in Chief"
 msgstr "سردبیر"
 
-#: Ranked.php:113
+#: Ranked.php:107
 msgctxt "Default Term"
 msgid "Editorial Director"
 msgstr "مدیر تحریریه"
 
-#: Ranked.php:114
+#: Ranked.php:108
 msgctxt "Default Term"
 msgid "Managing Editor"
 msgstr "دبیر اجرایی"
 
-#: Ranked.php:115
+#: Ranked.php:109
 msgctxt "Default Term"
 msgid "Senior Editor"
 msgstr "دبیر ارشد"
 
-#: Ranked.php:116
+#: Ranked.php:110
 msgctxt "Default Term"
 msgid "Digital Producer"
 msgstr "تولیدکننده دیجیتال"
 
-#: Ranked.php:117
+#: Ranked.php:111
 msgctxt "Default Term"
 msgid "Copy Editor"
 msgstr "دبیر رونوشت"
 
-#: Ranked.php:118
+#: Ranked.php:112
 msgctxt "Default Term"
 msgid "Proofreader"
 msgstr "نمونه‌خوان"
 
-#: Ranked.php:119
+#: Ranked.php:113
 msgctxt "Default Term"
 msgid "Executive"
 msgstr "مدیر اجرایی"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Ranking Summary"
+#~ msgstr "گزارش رتبه‌بندی‌های شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Ranking Summary"
+#~ msgstr "گزارش رتبه‌بندی‌های تحریریه"

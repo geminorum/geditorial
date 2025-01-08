@@ -13,141 +13,136 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Execution\n"
 "X-Domain: geditorial-execution\n"
 
-#: Execution.php:118
+#: Execution.php:122
 msgid "Executive"
 msgid_plural "Executives"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Execution.php:122
+#: Execution.php:126
 msgctxt "Label: Show Option All"
 msgid "Executives"
 msgstr ""
 
-#: Execution.php:123
+#: Execution.php:127
 msgctxt "Label: Show Option No Terms"
 msgid "(No-executive)"
 msgstr ""
 
-#: Execution.php:128
+#: Execution.php:132
 msgctxt "Field Label: `label`"
 msgid "Role"
 msgstr ""
 
-#: Execution.php:129
+#: Execution.php:133
 msgctxt "Field Label: `fullname`"
 msgid "Fullname"
 msgstr ""
 
-#: Execution.php:130
+#: Execution.php:134
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr ""
 
-#: Execution.php:131
+#: Execution.php:135
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr ""
 
-#: Execution.php:132
+#: Execution.php:136
 msgctxt "Field Label: `evaluation`"
 msgid "Evaluation"
 msgstr ""
 
-#: Execution.php:133
+#: Execution.php:137
 msgctxt "Field Label: `days`"
 msgid "Days"
 msgstr ""
 
-#: Execution.php:134
+#: Execution.php:138
 msgctxt "Field Label: `hours`"
 msgid "Hours"
 msgstr ""
 
-#: Execution.php:135
+#: Execution.php:139
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Execution.php:141
+#: Execution.php:145
+msgctxt "Tab Title"
+msgid "Executives"
+msgstr ""
+
+#: Execution.php:149
 msgctxt "Notice"
 msgid "There is no execution information available!"
 msgstr ""
 
-#: Execution.php:142
+#: Execution.php:150
 msgctxt "Notice"
 msgid "You have not necessary permission to manage this execution data."
 msgstr ""
 
-#: Execution.php:149
-msgctxt "Settings Description"
+#: Execution.php:157
+msgctxt "Setting Description"
 msgid "Supports executives for the selected post-types."
 msgstr ""
 
-#: Execution.php:153
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Execution Summary"
-msgstr ""
-
-#: Execution.php:154
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Execution Summary"
-msgstr ""
-
-#: Execution.php:158
+#: Execution.php:161
 msgctxt "MetaBox Title"
 msgid "Executives"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Execution.php:162
+#: Execution.php:165
 msgctxt "Button Title"
 msgid "Executives of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Execution.php:164
+#: Execution.php:167
 msgctxt "Button Text"
 msgid "%1$s Manage the Executives of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Execution.php:167
+#: Execution.php:170
 msgctxt "Action Title"
 msgid "Executives of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Execution.php:169
+#: Execution.php:172
 msgctxt "Action Text"
 msgid "Executives"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Execution.php:172
+#: Execution.php:175
 msgctxt "Row Title"
 msgid "Executives of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Execution.php:174
+#: Execution.php:177
 msgctxt "Row Text"
 msgid "Executives"
 msgstr ""
 
 #. translators: %s: post title
-#: Execution.php:365
+#: Execution.php:363
 msgctxt "Page Title"
 msgid "Executives Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Execution.php:367
+#: Execution.php:365
 msgctxt "Page Title"
 msgid "Executives Overview for %s"
 msgstr ""
 
-#: Execution.php:396
+#: Execution.php:394
 msgctxt "Default Term: Audit"
 msgid "Empty Executives Data"
 msgstr ""

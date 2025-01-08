@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-02 19:01+0330\n"
+"PO-Revision-Date: 2025-01-06 19:25+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Domain: geditorial-widgets\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
 
@@ -156,49 +156,49 @@ msgctxt "Widget: Custom HTML"
 msgid "Bypass Caching"
 msgstr "نادیده‌گرفتن انباشت"
 
-#: Widgets/GCalEvents.php:21
+#: Widgets/GCalEvents.php:18
 msgctxt "Widget Title"
 msgid "Editorial: Google Calendar"
 msgstr "تحریریه: تقویم گوگل"
 
-#: Widgets/GCalEvents.php:22
+#: Widgets/GCalEvents.php:19
 msgctxt "Widget Description"
 msgid "Displays list of events from a public Google Calendar."
 msgstr "نمایش فهرست رویدادها از یک تقویم گوگل عمومی."
 
-#: Widgets/GCalEvents.php:84
+#: Widgets/GCalEvents.php:81
 msgctxt "Widget: Google Calendar"
 msgid "Calendar ID:"
 msgstr "شناسه تقویم:"
 
-#: Widgets/GCalEvents.php:85
+#: Widgets/GCalEvents.php:82
 msgctxt "Widget: Google Calendar"
 msgid "Your API key:"
 msgstr "کلید API شما:"
 
 #. translators: %s: documents url
-#: Widgets/GCalEvents.php:88
+#: Widgets/GCalEvents.php:85
 msgctxt "Widget: Google Calendar"
 msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."
 msgstr ""
 "کلید API خود را از <a href=\"%s\" target=\"_blank\">اینجا</a> دریافت کنید."
 
-#: Widgets/GCalEvents.php:90
+#: Widgets/GCalEvents.php:87
 msgctxt "Widget: Google Calendar"
 msgid "Start from (YYYY-MM-DD):"
 msgstr "شروع از (YYYY-MM-DD):"
 
-#: Widgets/GCalEvents.php:91
+#: Widgets/GCalEvents.php:88
 msgctxt "Widget: Google Calendar"
 msgid "Max results:"
 msgstr "حداکثر رویدادها:"
 
-#: Widgets/GCalEvents.php:92
+#: Widgets/GCalEvents.php:89
 msgctxt "Widget: Google Calendar"
 msgid "Display Time"
 msgstr "نمایش زمان"
 
-#: Widgets/GCalEvents.php:94
+#: Widgets/GCalEvents.php:91
 msgctxt "Widget: Google Calendar"
 msgid "No events scheduled."
 msgstr "رویدادی زمان‌بندی نشده است."

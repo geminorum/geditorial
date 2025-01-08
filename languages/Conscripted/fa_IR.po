@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Conscripted\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-06-30 14:36+0330\n"
+"PO-Revision-Date: 2024-12-26 00:22+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,72 +11,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Conscripted\n"
 "X-Domain: geditorial-conscripted\n"
 
-#: Conscripted.php:82
+#: Conscripted.php:89
 msgid "Conscription"
 msgid_plural "Conscriptions"
 msgstr[0] "نظام‌وظیفه"
 msgstr[1] "نظام‌وظیفه"
 
-#: Conscripted.php:86
+#: Conscripted.php:93
 msgctxt "Label: `extended_label`"
 msgid "Conscription"
 msgstr "نظام‌وظیفه"
 
-#: Conscripted.php:87
+#: Conscripted.php:94
 msgctxt "Label: Show Option All"
 msgid "Conscription"
 msgstr "نظام‌وظیفه"
 
-#: Conscripted.php:88
+#: Conscripted.php:95
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr "(نامعلوم)"
 
-#: Conscripted.php:97
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Conscription Summary"
-msgstr "گزارش وضعیت خدمت تیم شما"
-
-#: Conscripted.php:98
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Conscription Summary"
-msgstr "گزارش وضعیت خدمت تحریریه"
-
-#: Conscripted.php:108
+#: Conscripted.php:107
 msgctxt "Main Taxonomy: Default Term"
 msgid "Underage for Service"
 msgstr "زیر سن قانونی"
 
-#: Conscripted.php:109
+#: Conscripted.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject to Service"
 msgstr "مشمول خدمت"
 
-#: Conscripted.php:110
+#: Conscripted.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Currently in Service"
 msgstr "در حال خدمت"
 
-#: Conscripted.php:111
+#: Conscripted.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "End of Service"
 msgstr "پایان خدمت"
 
-#: Conscripted.php:112
+#: Conscripted.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Medical Exemption"
 msgstr "معافیت پزشکی"
 
-#: Conscripted.php:113
+#: Conscripted.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Education Exemption"
 msgstr "معافیت تحصیلی"
+
+#: Conscripted.php:113
+msgctxt "Main Taxonomy: Default Term"
+msgid "Veteran Exemption"
+msgstr "معافیت ایثارگری"
 
 #: Conscripted.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Permanent Exemption"
 msgstr "معافیت دائم"
+
+#: Conscripted.php:115
+msgctxt "Main Taxonomy: Default Term"
+msgid "Sponsor Exemption"
+msgstr "معافیت کفالت"
+
+#: Conscripted.php:116
+msgctxt "Main Taxonomy: Default Term"
+msgid "Paid Exemption"
+msgstr "خرید خدمت"
+
+#: Conscripted.php:130
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr ""
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Team Conscription Summary"
+#~ msgstr "گزارش وضعیت خدمت تیم شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Conscription Summary"
+#~ msgstr "گزارش وضعیت خدمت تحریریه"

@@ -34,17 +34,7 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr ""
 
-#: Badges.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Your Content Badges Summary"
-msgstr ""
-
-#: Badges.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Badges Summary"
-msgstr ""
-
-#: Badges.php:271
+#: Badges.php:253
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr ""

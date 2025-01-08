@@ -13,180 +13,185 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Chronicles\n"
 "X-Domain: geditorial-chronicles\n"
 
-#: Chronicles.php:79
+#: Chronicles.php:82
 msgctxt "Field Label: `label`"
 msgid "Significance"
 msgstr ""
 
-#: Chronicles.php:80
+#: Chronicles.php:83
 msgctxt "Field Label: `date`"
 msgid "Date"
 msgstr ""
 
-#: Chronicles.php:81
+#: Chronicles.php:84
 msgctxt "Field Label: `time`"
 msgid "Time"
 msgstr ""
 
-#: Chronicles.php:82
+#: Chronicles.php:85
 msgctxt "Field Label: `location`"
 msgid "Location"
 msgstr ""
 
-#: Chronicles.php:83
+#: Chronicles.php:86
 msgctxt "Field Label: `duration`"
 msgid "Duration"
 msgstr ""
 
-#: Chronicles.php:84
+#: Chronicles.php:87
 msgctxt "Field Label"
 msgid "Description"
 msgstr ""
 
-#: Chronicles.php:90
+#: Chronicles.php:93
+msgctxt "Tab Title"
+msgid "Timeline"
+msgstr ""
+
+#: Chronicles.php:97
 msgctxt "Notice"
 msgid "There is no timeline information available!"
 msgstr ""
 
-#: Chronicles.php:91
+#: Chronicles.php:98
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the timeline data."
 msgstr ""
 
-#: Chronicles.php:98
+#: Chronicles.php:105
 msgctxt "MetaBox Title"
 msgid "Timeline"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Chronicles.php:102
+#: Chronicles.php:109
 msgctxt "Button Title"
 msgid "Timeline of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Chronicles.php:104
+#: Chronicles.php:111
 msgctxt "Button Text"
 msgid "%1$s Manage the Timeline of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Chronicles.php:107
+#: Chronicles.php:114
 msgctxt "Action Title"
 msgid "Timeline of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Chronicles.php:109
+#: Chronicles.php:116
 msgctxt "Action Text"
 msgid "Timeline"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Chronicles.php:112
+#: Chronicles.php:119
 msgctxt "Row Title"
 msgid "Timeline of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Chronicles.php:114
+#: Chronicles.php:121
 msgctxt "Row Text"
 msgid "Timeline"
 msgstr ""
 
-#: Chronicles.php:129
+#: Chronicles.php:136
 msgctxt "Field Title"
 msgid "Establish Date"
 msgstr ""
 
-#: Chronicles.php:130
+#: Chronicles.php:137
 msgctxt "Field Description"
 msgid "The Date on Which the Organization Was Established"
 msgstr ""
 
-#: Chronicles.php:138
+#: Chronicles.php:146
 msgctxt "Field Title"
 msgid "Abolish Date"
 msgstr ""
 
-#: Chronicles.php:139
+#: Chronicles.php:147
 msgctxt "Field Description"
 msgid "The Date on Which the Organization Was Terminated, Disbanded, Inactivated, or Superseded"
 msgstr ""
 
-#: Chronicles.php:146
+#: Chronicles.php:155
 msgctxt "Field Title"
 msgid "Release Date"
 msgstr ""
 
-#: Chronicles.php:147
+#: Chronicles.php:156
 msgctxt "Field Description"
 msgid "The Date on Which the Product will Released"
 msgstr ""
 
-#: Chronicles.php:154
+#: Chronicles.php:164
 msgctxt "Field Title"
 msgid "Expire Date"
 msgstr ""
 
-#: Chronicles.php:155
+#: Chronicles.php:165
 msgctxt "Field Description"
 msgid "The Date on Which the Product will Expired"
 msgstr ""
 
-#: Chronicles.php:163
+#: Chronicles.php:174
 msgctxt "Field Title"
 msgid "Date of Birth"
 msgstr ""
 
-#: Chronicles.php:164
+#: Chronicles.php:175
 msgctxt "Field Description"
 msgid "The Date on Which the Person Was Born"
 msgstr ""
 
-#: Chronicles.php:172
+#: Chronicles.php:184
 msgctxt "Field Title"
 msgid "Date of Death"
 msgstr ""
 
-#: Chronicles.php:173
+#: Chronicles.php:185
 msgctxt "Field Description"
 msgid "The Date on Which the Person Died"
 msgstr ""
 
-#: Chronicles.php:180
+#: Chronicles.php:193
 msgctxt "Field Title"
 msgid "Place of Birth"
 msgstr ""
 
-#: Chronicles.php:181
+#: Chronicles.php:194
 msgctxt "Field Description"
 msgid "Place Where the Person was Born"
 msgstr ""
 
-#: Chronicles.php:187
+#: Chronicles.php:200
 msgctxt "Field Title"
 msgid "Place of Death"
 msgstr ""
 
-#: Chronicles.php:188
+#: Chronicles.php:201
 msgctxt "Field Description"
 msgid "Place Where the Person Died"
 msgstr ""
 
 #. translators: %s: post title
-#: Chronicles.php:310
+#: Chronicles.php:324
 msgctxt "Page Title"
 msgid "Timeline Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Chronicles.php:312
+#: Chronicles.php:326
 msgctxt "Page Title"
 msgid "Timeline Overview for %s"
 msgstr ""
 
-#: Chronicles.php:329
+#: Chronicles.php:343
 msgctxt "Default Term: Audit"
 msgid "Empty Timeline Data"
 msgstr ""

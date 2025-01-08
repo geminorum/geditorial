@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Conditioned\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-06 00:31+0330\n"
+"PO-Revision-Date: 2024-11-27 02:17+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -35,16 +35,6 @@ msgstr "رتبه‌های شرایط"
 msgctxt "Label: Show Option No Terms"
 msgid "(Unranked)"
 msgstr "(بی‌رتبه)"
-
-#: Conditioned.php:101
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Definition Summary"
-msgstr ""
-
-#: Conditioned.php:102
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Definition Summary"
-msgstr ""
 
 #: ModuleInfo.php:19
 msgctxt "Condition Rank: Name"

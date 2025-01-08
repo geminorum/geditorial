@@ -23,163 +23,163 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the programs and supported post-types."
 msgstr ""
 
-#: Programmed.php:147
 #: Programmed.php:148
+#: Programmed.php:149
 msgid "Program"
 msgid_plural "Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:149
+#: Programmed.php:150
 msgid "Program Category"
 msgid_plural "Program Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:150
+#: Programmed.php:151
 msgid "Program Level"
 msgid_plural "Program Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:151
+#: Programmed.php:152
 msgid "Program Project"
 msgid_plural "Program Projects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:152
+#: Programmed.php:153
 msgid "Program Span"
 msgid_plural "Program Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:153
+#: Programmed.php:154
 msgid "Program Type"
 msgid_plural "Program Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:154
+#: Programmed.php:155
 msgid "Program Status"
 msgid_plural "Program Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Programmed.php:158
+#: Programmed.php:159
 msgctxt "Label: `menu_name`"
 msgid "Programs"
 msgstr ""
 
-#: Programmed.php:159
+#: Programmed.php:160
 msgctxt "Label: Featured Image"
 msgid "Program Poster"
 msgstr ""
 
-#: Programmed.php:160
+#: Programmed.php:161
 msgctxt "Label: MetaBox Title"
 msgid "The Program"
 msgstr ""
 
-#: Programmed.php:163
+#: Programmed.php:164
 msgctxt "Label: MetaBox Title"
 msgid "In This Program"
 msgstr ""
 
-#: Programmed.php:166
+#: Programmed.php:167
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Programmed.php:169
+#: Programmed.php:170
 msgctxt "Label: Menu Name"
 msgid "Projects"
 msgstr ""
 
-#: Programmed.php:172
+#: Programmed.php:173
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Programmed.php:175
+#: Programmed.php:176
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Programmed.php:178
+#: Programmed.php:179
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Programmed.php:187
+#: Programmed.php:188
 msgctxt "Notice"
 msgid "There is no program information available!"
 msgstr ""
 
-#: Programmed.php:188
+#: Programmed.php:189
 msgctxt "Notice"
 msgid "You have not necessary permission to manage the program information."
 msgstr ""
 
 #. translators: %s: item count
-#: Programmed.php:193
+#: Programmed.php:194
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Program Participants (%s)"
 msgstr ""
 
 #. translators: %s: item count
-#: Programmed.php:195
+#: Programmed.php:196
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Program Participations (%s)"
 msgstr ""
 
-#: Programmed.php:196
+#: Programmed.php:197
 msgctxt "Misc: `column_icon_title`"
 msgid "Programs"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Programmed.php:201
+#: Programmed.php:202
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Programmed.php:212
+#: Programmed.php:213
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Programmed.php:213
+#: Programmed.php:214
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Programmed.php:255
+#: Programmed.php:256
 msgctxt "Field Title"
 msgid "Organizers"
 msgstr ""
 
-#: Programmed.php:256
+#: Programmed.php:257
 msgctxt "Field Description"
 msgid "People Who Participate as Organizers in This Program"
 msgstr ""
 
-#: Programmed.php:263
+#: Programmed.php:264
 msgctxt "Field Title"
 msgid "Program Code"
 msgstr ""
 
-#: Programmed.php:264
+#: Programmed.php:265
 msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr ""
 
-#: Programmed.php:603
+#: Programmed.php:612
 msgctxt "Header"
 msgid "Program Tools"
 msgstr ""
 
-#: Programmed.php:612
+#: Programmed.php:621
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr ""

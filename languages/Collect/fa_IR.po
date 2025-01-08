@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Collect\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-12 04:38+0330\n"
+"PO-Revision-Date: 2025-01-06 19:19+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,38 +11,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Domain: geditorial-collect\n"
 "X-Poedit-Basepath: ../../includes/Modules/Collect\n"
 
-#: Collect.php:57
+#: Collect.php:55
 msgctxt "Settings"
 msgid "Collection Parts"
 msgstr "پاره‌های گردآورده"
 
-#: Collect.php:58
+#: Collect.php:56
 msgctxt "Settings"
 msgid "Partition taxonomy for the collections and supported post-types."
 msgstr "رده‌بندی پاره‌ها را برای گردآورده‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Collect.php:73
+#: Collect.php:71
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Collect.php:74
+#: Collect.php:72
 msgctxt "Settings"
 msgid "Redirects collection archives to this URL. Leave empty to disable."
 msgstr ""
 "بایگانی گردآورده‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی "
 "بگذارید."
 
-#: Collect.php:80
+#: Collect.php:78
 msgctxt "Settings"
 msgid "Redirect Groups"
 msgstr "بازگردانی گروه‌ها"
 
-#: Collect.php:81
+#: Collect.php:79
 msgctxt "Settings"
 msgid "Redirects all group archives to this URL. Leave empty to disable."
 msgstr ""
@@ -153,12 +153,12 @@ msgid "Post collaborator in the collection"
 msgstr ""
 
 #. translators: %s: count placeholder
-#: Collect.php:367
+#: Collect.php:380
 msgctxt "Display"
 msgid "Order in Collection: %s"
 msgstr "چینش در گردآورده: %s"
 
-#: Collect.php:403
+#: Collect.php:416
 msgctxt "Header"
 msgid "Collection Tools"
 msgstr "ابزارهای گرد‌آورده"

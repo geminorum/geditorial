@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Skilled\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-13 08:43+0330\n"
+"PO-Revision-Date: 2024-11-27 02:27+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,32 +11,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Skilled\n"
 "X-Domain: geditorial-skilled\n"
 
-#: Skilled.php:100
+#: Skilled.php:104
 msgid "Skill"
 msgid_plural "Skills"
 msgstr[0] "مهارت‌ها"
 msgstr[1] "مهارت"
 
-#: Skilled.php:104
+#: Skilled.php:108
 msgctxt "Label: Show Option All"
 msgid "Skills"
 msgstr "مهارت‌ها"
 
-#: Skilled.php:105
+#: Skilled.php:109
 msgctxt "Label: Show Option No Terms"
 msgid "(No Skill)"
 msgstr "(بی‌مهارت)"
 
-#: Skilled.php:114
-msgctxt "Dashboard Widget Title"
-msgid "Your Team Skill Summary"
-msgstr "گزارش مهارت‌های گروهه شما"
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Team Skill Summary"
+#~ msgstr "گزارش مهارت‌های گروهه شما"
 
-#: Skilled.php:115
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Skill Summary"
-msgstr "گزارش مهارت‌های تحریریه"
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Skill Summary"
+#~ msgstr "گزارش مهارت‌های تحریریه"

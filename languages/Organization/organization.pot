@@ -156,17 +156,17 @@ msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr ""
 
-#: Organization.php:253
+#: Organization.php:254
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr ""
 
-#: Organization.php:254
+#: Organization.php:255
 msgctxt "Field Description"
 msgid "Unique Organization Membership Number"
 msgstr ""
 
-#: Organization.php:703
+#: Organization.php:712
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr ""

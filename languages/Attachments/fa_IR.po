@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Attachments\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-07-12 04:39+0330\n"
+"PO-Revision-Date: 2024-12-15 00:19+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Domain: geditorial-attachments\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 
@@ -73,110 +73,110 @@ msgid "Restricts Media Library access to user's own uploads."
 msgstr ""
 "در نمای فهرست کتابخانه رسانه‌ای، هر کاربر را محدود به پرونده‌های خودش می‌کند."
 
-#: Attachments.php:190
+#: Attachments.php:197
 msgctxt "Adminbar"
 msgid "Attachment Summary"
 msgstr "گزارش پیوست‌ها"
 
-#: Attachments.php:238
+#: Attachments.php:258
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: %s: attachments count
-#: Attachments.php:241
+#: Attachments.php:261
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] "%s پیوست"
 msgstr[1] "%s پیوست"
 
-#: Attachments.php:246
+#: Attachments.php:266
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr "نمایش فهرست پیوست‌ها"
 
-#: Attachments.php:281
+#: Attachments.php:301
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: %s: attachment parent title
-#: Attachments.php:283
+#: Attachments.php:303
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr "پیوست‌ها برای %s"
 
-#: Attachments.php:376
+#: Attachments.php:396
 msgctxt "Table Action"
 msgid "Delete Permanently"
 msgstr "پاک‌کردن برای همیشه"
 
-#: Attachments.php:377
+#: Attachments.php:397
 msgctxt "Table Action"
 msgid "Empty Meta-data"
-msgstr ""
+msgstr "خالی‌کردن فراداده‌ها"
 
-#: Attachments.php:378
+#: Attachments.php:398
 msgctxt "Table Action"
 msgid "Remove Thumbnails"
-msgstr ""
+msgstr "حذف بندانگشتی‌ها"
 
-#: Attachments.php:395
+#: Attachments.php:415
 msgctxt "Table Column"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: Attachments.php:407
+#: Attachments.php:427
 msgctxt "Table Column"
 msgid "Search"
 msgstr "جست‌وجو"
 
 #. translators: %s: linked post title
-#: Attachments.php:414
+#: Attachments.php:434
 msgctxt "Search Result Prefix"
 msgid "[Parent]: %s"
 msgstr "[والد]: %s"
 
 #. translators: %s: linked post title
-#: Attachments.php:419
+#: Attachments.php:439
 msgctxt "Search Result Prefix"
 msgid "[Thumb]: %s"
 msgstr "[برگزیده]: %s"
 
 #. translators: %s: linked term title
-#: Attachments.php:424
+#: Attachments.php:444
 msgctxt "Search Result Prefix"
 msgid "[Term]: %s"
 msgstr "[رده]: %s"
 
 #. translators: %s: linked post title
-#: Attachments.php:429
+#: Attachments.php:449
 msgctxt "Search Result Prefix"
 msgid "[Content]: %s"
 msgstr "[محتوا]: %s"
 
-#: Attachments.php:436
+#: Attachments.php:456
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr "اندازه‌ها"
 
-#: Attachments.php:459
+#: Attachments.php:479
 msgctxt "Table Column"
 msgid "Meta"
 msgstr "متا"
 
-#: Attachments.php:480
+#: Attachments.php:500
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr "مروری بر پیوست‌ها"
 
-#: Attachments.php:481
+#: Attachments.php:501
 msgctxt "Message"
 msgid "No attachments found."
 msgstr "پیوستی پیدا نشد."
 
-#: Attachments.php:494
+#: Attachments.php:514
 msgctxt "Header"
 msgid "Attachment Tools"
 msgstr "ابزارهایی برای پیوست‌ها"
@@ -186,44 +186,44 @@ msgctxt "Help Tab Title"
 msgid "Shortcodes"
 msgstr "شورت‌کد‌ها"
 
-#: ModuleSettings.php:17
+#: ModuleSettings.php:21
 msgctxt "Card Title"
 msgid "Re-attach Un-Parented"
-msgstr ""
+msgstr "پیوست دوباره بدون والدها"
 
 #. translators: %s: posttype label
-#: ModuleSettings.php:24 ModuleSettings.php:39
+#: ModuleSettings.php:28 ModuleSettings.php:43
 msgctxt "Button"
 msgid "On %s"
 msgstr "در %s"
 
-#: ModuleSettings.php:26
+#: ModuleSettings.php:30
 msgctxt "Button Description"
 msgid "Tries to re-attach un-parented via thumbnail meta-data."
 msgstr ""
 
-#: ModuleSettings.php:32
+#: ModuleSettings.php:36
 msgctxt "Card Title"
 msgid "Empty Meta-data"
-msgstr ""
+msgstr "خالی‌کردن فراداده‌ها"
 
-#: ModuleSettings.php:41
+#: ModuleSettings.php:45
 msgctxt "Button Description"
 msgid "Tries to clean attachemnt raw meta-data."
 msgstr ""
 
-#: ModuleSettings.php:47
+#: ModuleSettings.php:51
 msgctxt "Card Title"
 msgid "Deletion by MIME"
-msgstr ""
+msgstr "حذف بر اساس میم"
 
-#: ModuleSettings.php:55
+#: ModuleSettings.php:59
 msgctxt "Button Description"
 msgid "Tries to delete attachemnts by MIME types."
 msgstr ""
 
 #. translators: %s: attachment id
-#: ModuleSettings.php:126 ModuleSettings.php:213
+#: ModuleSettings.php:126 ModuleSettings.php:211
 msgctxt "Notice"
 msgid "Attachment ID (%s) is not valid!"
 msgstr ""
@@ -259,19 +259,19 @@ msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted."
 msgstr ""
 
 #. translators: %s: parent id
-#: ModuleSettings.php:219
+#: ModuleSettings.php:217
 msgctxt "Notice"
 msgid "Parent ID (%s) is not valid!"
 msgstr ""
 
 #. translators: %1$s: attachment id, %2$s: parent title
-#: ModuleSettings.php:225
+#: ModuleSettings.php:223
 msgctxt "Notice"
 msgid "There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: %1$s: attachment title, %2$s: attachment id, %3$s: parent title
-#: ModuleSettings.php:231
+#: ModuleSettings.php:229
 msgctxt "Notice"
 msgid ""
 "&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;"

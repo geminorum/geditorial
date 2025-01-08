@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Tabloid\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-24 12:20+0330\n"
+"PO-Revision-Date: 2025-01-04 02:11+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,47 +15,41 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Tabloid\n"
 "X-Domain: geditorial-tabloid\n"
 
-#. translators: %s: supported object label
-#: Tabloid.php:47
-msgctxt "Setting Title"
-msgid "Action Title for %s"
-msgstr "عنوان کنش برای %s"
-
-#: Tabloid.php:48
+#: Tabloid.php:42
 msgctxt "Setting Description"
-msgid "Used as title on the actions row."
+msgid "Roles that can view overviews."
 msgstr ""
 
-#: Tabloid.php:49 Tabloid.php:58 Tabloid.php:132
+#: Tabloid.php:43
+msgctxt "Setting Description"
+msgid "Roles that can print overviews."
+msgstr ""
+
+#: Tabloid.php:44
+msgctxt "Setting Description"
+msgid "Roles that can export overviews."
+msgstr ""
+
+#: Tabloid.php:138 Tabloid.php:164
 msgctxt "Action"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#. translators: %s: supported object label
-#: Tabloid.php:56
-msgctxt "Setting Title"
-msgid "Overview Title for %s"
-msgstr "عنوان نمای‌کلی برای %s"
+#. translators: %1$s: current post title, %2$s: posttype singular name
+#: Tabloid.php:144
+msgctxt "Post Row Action Title Attr"
+msgid "Overview of this %2$s"
+msgstr "نمای‌کلی برای %s"
 
-#: Tabloid.php:57
-msgctxt "Setting Description"
-msgid "Used as title on the overview pages."
-msgstr ""
+#. translators: %1$s: current term name, %2$s: taxonomy singular name
+#: Tabloid.php:170
+msgctxt "Term Row Action Title Attr"
+msgid "Overview of this %2$s"
+msgstr "نمای‌کلی برای %s"
 
-#: Tabloid.php:63
-msgctxt "Setting Description"
-msgid "Roles that can view posttype overviews."
-msgstr ""
-
-#: Tabloid.php:64
-msgctxt "Setting Description"
-msgid "Roles that can print posttype overviews."
-msgstr ""
-
-#: Tabloid.php:65
-msgctxt "Setting Description"
-msgid "Roles that can export posttype overviews."
-msgstr ""
+#~ msgctxt "Setting Title"
+#~ msgid "Action Title for %s"
+#~ msgstr "عنوان کنش برای %s"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Reports Roles"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Athlete\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-08-30 01:37+0330\n"
+"PO-Revision-Date: 2024-12-04 20:47+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Athlete\n"
 "X-Domain: geditorial-athlete\n"
 
@@ -92,7 +92,7 @@ msgid "You have not necessary permission to manage this athletic data."
 msgstr "شما مجوز دسترس لازم برای مدیریت این داده‌های ورزشی را ندارید."
 
 #: Athlete.php:153
-msgctxt "Settings Description"
+msgctxt "Setting Description"
 msgid "Supports sports fields for the selected post-types."
 msgstr "رشته ورزشی را برای نوع‌فرسته‌های انتخاب‌شده پشتیبانی می‌کند."
 
@@ -228,18 +228,18 @@ msgid "Snow"
 msgstr "برفی"
 
 #. translators: %s: post title
-#: Athlete.php:407
+#: Athlete.php:399
 msgctxt "Page Title"
 msgid "Athletics Grid for %s"
 msgstr "آمادگی جسمانی برای %s"
 
 #. translators: %s: post title
-#: Athlete.php:409
+#: Athlete.php:401
 msgctxt "Page Title"
 msgid "Athletics Overview for %s"
 msgstr "نمای کلی آمادگی جسمانی برای %s"
 
-#: Athlete.php:438
+#: Athlete.php:435
 msgctxt "Default Term: Audit"
 msgid "Empty Athletics Data"
 msgstr "داده‌های ورزشی خالی"

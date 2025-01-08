@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Roled\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-03-30 00:15+0330\n"
+"PO-Revision-Date: 2025-01-06 19:23+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../../includes/Modules/Roled\n"
 "X-Domain: geditorial-roled\n"
 
@@ -69,7 +69,7 @@ msgid "Custom name for the duplicated role."
 msgstr "عنوان سفارشی برای نقش‌های تحریریه تکرارشده."
 
 #. translators: %s: role name
-#: Roled.php:78 Roled.php:334
+#: Roled.php:78 Roled.php:333
 msgctxt "Setting Default"
 msgid "Editorial: %s"
 msgstr "تحریریه: %s"
@@ -94,37 +94,37 @@ msgctxt "Button"
 msgid "Add Theme Caps to Editor Role"
 msgstr "افزودن دسترسی‌های پوسته به نقش ویرایشگر"
 
-#: Roled.php:437
+#: Roled.php:436
 msgctxt "Header"
 msgid "Editorial Roles"
 msgstr "نقش‌های تحریریه"
 
-#: Roled.php:441
+#: Roled.php:440
 msgctxt "Header"
 msgid "Current Roles"
 msgstr "نقش‌های کنونی"
 
-#: Roled.php:443
+#: Roled.php:442
 msgctxt "Button"
 msgid "Check Roles"
 msgstr "بررسی نقش‌ها"
 
-#: Roled.php:444
+#: Roled.php:443
 msgctxt "Button"
 msgid "Check Capabilities"
 msgstr "بررسی دسترسی‌ها"
 
-#: Roled.php:445
+#: Roled.php:444
 msgctxt "Button"
 msgid "Duplicate Defaults"
 msgstr "تکرار پیش‌فرض‌ها"
 
-#: Roled.php:446
+#: Roled.php:445
 msgctxt "Button"
 msgid "Add Default Caps to Editors"
 msgstr "افزودن دسترسی‌های پیش‌فرض به ویرایشگران"
 
-#: Roled.php:447
+#: Roled.php:446
 msgctxt "Button"
 msgid "Remove Duplicates"
 msgstr "حذف تکرارشده‌ها"

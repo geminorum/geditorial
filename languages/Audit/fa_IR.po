@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Audit\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-05 20:48+0330\n"
+"PO-Revision-Date: 2024-12-14 07:28+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -48,127 +48,117 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Unaudited)"
 msgstr "(بازبینی‌نشده)"
 
-#: Audit.php:121
-msgctxt "Dashboard Widget Title"
-msgid "Your Audit Summary"
-msgstr "گزارش بازبینی شما"
-
-#: Audit.php:122
-msgctxt "Dashboard Widget Title"
-msgid "Editorial Audit Summary"
-msgstr "گزارش بازبینی تحریریه"
-
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Audit.php:127
+#: Audit.php:122
 msgctxt "Action Title"
 msgid "Audit Attributes of %1$s"
 msgstr "برچسب‌های بازبینی %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Audit.php:129
+#: Audit.php:124
 msgctxt "Action Text"
 msgid "Audit"
 msgstr "بازبینی"
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Audit.php:132
+#: Audit.php:127
 msgctxt "Row Title"
 msgid "Audit Attributes of %1$s"
 msgstr "برچسب‌های بازبینی برای %1$s"
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Audit.php:134
+#: Audit.php:129
 msgctxt "Row Text"
 msgid "Audit"
 msgstr "بازبینی"
 
-#: Audit.php:144
+#: Audit.php:139
 msgctxt "Default Term"
 msgid "Audited"
 msgstr "تکمیل"
 
-#: Audit.php:145
+#: Audit.php:140
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr "منسوخ"
 
-#: Audit.php:146
+#: Audit.php:141
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr "نالازم"
 
-#: Audit.php:147
+#: Audit.php:142
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr "سئو بازبینی شود"
 
-#: Audit.php:148
+#: Audit.php:143
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr "چینش بازبینی شود"
 
-#: Audit.php:149
+#: Audit.php:144
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr "کم‌اهمیت"
 
-#: Audit.php:150
+#: Audit.php:145
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr "کپی اولیه"
 
-#: Audit.php:151
+#: Audit.php:146
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr "ناتمام"
 
-#: Audit.php:152
+#: Audit.php:147
 msgctxt "Default Term"
 msgid "No Title"
 msgstr "بدون عنوان"
 
-#: Audit.php:153
+#: Audit.php:148
 msgctxt "Default Term"
 msgid "No Content"
 msgstr "بدون محتوا"
 
-#: Audit.php:154
+#: Audit.php:149
 msgctxt "Default Term"
 msgid "No Excerpt"
 msgstr "بدون چکیده"
 
-#: Audit.php:155
+#: Audit.php:150
 msgctxt "Default Term"
 msgid "Imported"
 msgstr "درون‌ریزی‌شده"
 
-#: Audit.php:321
+#: Audit.php:314
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr "برچسب‌های بازبینی"
 
-#: Audit.php:368
+#: Audit.php:361
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr "بازبینی"
 
-#: Audit.php:386
+#: Audit.php:379
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr "برای بارگیری برچسب‌های بازبینی کلیک کنید &hellip;"
 
-#: Audit.php:476
+#: Audit.php:461
 msgctxt "Action"
 msgid "Force Auto-Audit"
 msgstr "اجبار به بازبینی خودکار"
 
 #. translators: %s: count
-#: Audit.php:514
+#: Audit.php:499
 msgctxt "Message"
 msgid "%s items(s) Audited!"
 msgstr "%s مورد بازبینی شد!"
 
-#: Audit.php:670
+#: Audit.php:655
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr "ابزارهای بازبینی محتوا"
@@ -178,109 +168,117 @@ msgctxt "Card Title"
 msgid "Posts with Empty Title"
 msgstr "فرسته‌ها با عنوان خالی"
 
-#: Audit.php:721 Audit.php:740 Audit.php:759
+#: Audit.php:721 Audit.php:741 Audit.php:760
 msgctxt "Card: None-Title"
 msgid "All Supported Post-Types"
 msgstr "همه نوع‌فرسته‌های پشتیبانی‌شده"
 
-#: Audit.php:724 Audit.php:743 Audit.php:762
+#: Audit.php:725 Audit.php:744 Audit.php:763
 msgctxt "Card: Button"
 msgid "Mark Posts"
 msgstr "نشان‌گذاری فرسته‌ها"
 
-#: Audit.php:725 Audit.php:744 Audit.php:763
+#: Audit.php:726 Audit.php:745 Audit.php:764
 msgctxt "Card: Button"
 msgid "Flush Attribute"
 msgstr "تخلیه برچسب"
 
-#: Audit.php:726
+#: Audit.php:727
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no title."
 msgstr "برای تنظیم برچسب بازبینی روی فرسته‌های پشتیبانی‌شده بدون عنوان، تلاش می‌کند."
 
-#: Audit.php:734
+#: Audit.php:735
 msgctxt "Card Title"
 msgid "Posts with Empty Content"
 msgstr "فرسته‌ها با محتوای خالی"
 
-#: Audit.php:745
+#: Audit.php:746
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no content."
 msgstr "برای تنظیم برچسب بازبینی روی فرسته‌های پشتیبانی‌شده بدون محتوا، تلاش می‌کند."
 
-#: Audit.php:753
+#: Audit.php:754
 msgctxt "Card Title"
 msgid "Posts with Empty Excerpt"
 msgstr "فرسته‌ها با چکیده خالی"
 
-#: Audit.php:764
+#: Audit.php:765
 msgctxt "Card: Description"
 msgid "Tries to set the attribute on supported posts with no excerpt."
 msgstr "برای تنظیم برچسب بازبینی روی فرسته‌های پشتیبانی‌شده بدون چکیده، تلاش می‌کند."
 
-#: Audit.php:772
+#: Audit.php:773
 msgctxt "Card Title"
 msgid "Posts with Empty Fields"
 msgstr "فرسته‌ها با زمینه‌های خالی"
 
-#: Audit.php:773
+#: Audit.php:774
 msgctxt "Message"
 msgid "No empty attribute available. Please install the default attributes."
 msgstr "برچسب‌های بازبینی خالی در دسترس نیست. لطفاً برچسب‌های پیش‌فرض را نصب کنید."
 
 #. translators: %s: post title
-#: Audit.php:825
+#: Audit.php:820
 msgctxt "Notice"
 msgid "No Audits applied for &ldquo;%s&rdquo;"
 msgstr "هیچ برچسب بازبینی برای &rdquo;%s&ldquo; اعمال نشد"
 
 #. translators: %1$s: count terms, %2$s: post title
-#: Audit.php:831
+#: Audit.php:826
 msgctxt "Notice"
 msgid "%1$s attributes set for &ldquo;%2$s&rdquo;"
 msgstr "%1$s برچسب برای &rdquo;%2$s&ldquo; تنظیم شد"
 
-#: Audit.php:841
+#: Audit.php:834
 msgctxt "Card Title"
 msgid "Force Auto Audit"
 msgstr "بازبینی خودکار اجباری"
 
 #. translators: %s: posttype label
-#: Audit.php:848
+#: Audit.php:841
 msgctxt "Button"
 msgid "On %s"
 msgstr "در %s"
 
-#: Audit.php:850
+#: Audit.php:843
 msgctxt "Button Description"
 msgid "Tries to auto-set the attributes on supported posts."
 msgstr "برای تنظیم خودکار برچسب‌ها در فرسته‌های پشتیبانی‌شده تلاش می‌کند."
 
 #. translators: %1$s: empty post count, %2$s: assigned term count
-#: Audit.php:863
+#: Audit.php:856
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr "هم‌اکنون %1$s فرسته خالی و %2$s مورد به برچسب بازبینی مرتبط شده است."
 
-#: Audit.php:876
+#: Audit.php:869
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr "گزارش‌های بازبینی"
 
-#: Audit.php:891
+#: Audit.php:884
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr "گزارش کاربری"
 
-#: Audit.php:896
+#: Audit.php:889
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr "همهٔ کاربران"
 
-#: Audit.php:903
+#: Audit.php:896
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr "اعمال پالایه"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Your Audit Summary"
+#~ msgstr "گزارش بازبینی شما"
+
+#~ msgctxt "Dashboard Widget Title"
+#~ msgid "Editorial Audit Summary"
+#~ msgstr "گزارش بازبینی تحریریه"
 
 #~ msgctxt "Button"
 #~ msgid "Auto Audit for %s"

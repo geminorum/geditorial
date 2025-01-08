@@ -24,80 +24,69 @@ msgid "Search ISBN on Nali.ir"
 msgstr ""
 
 #. translators: %s: supported object label
-#: NationalLibrary.php:54
+#: NationalLibrary.php:53
 msgctxt "Setting Title"
 msgid "Bib Meta-key for %s"
 msgstr ""
 
-#: NationalLibrary.php:57
+#: NationalLibrary.php:56
 msgctxt "Setting Description"
 msgid "Defines Bib meta-key for the post-type."
 msgstr ""
 
 #. translators: %s: supported object label
-#: NationalLibrary.php:69
+#: NationalLibrary.php:68
 msgctxt "Setting Title"
 msgid "ISBN Meta-key for %s"
 msgstr ""
 
-#: NationalLibrary.php:72
+#: NationalLibrary.php:71
 msgctxt "Setting Description"
 msgid "Defines ISBN meta-key for the post-type."
 msgstr ""
 
-#. translators: %s: supported object label
-#: NationalLibrary.php:87
-msgctxt "Setting Title"
-msgid "Support Tab for %s"
-msgstr ""
-
-#: NationalLibrary.php:90
-msgctxt "Setting Description"
-msgid "Select to display data as tab for the post-type."
-msgstr ""
-
-#: NationalLibrary.php:100
+#: NationalLibrary.php:85
 msgctxt "Setting Description"
 msgid "Select to display data as tab for the products."
 msgstr ""
 
-#: NationalLibrary.php:106
+#: NationalLibrary.php:91
 msgctxt "Setting Title"
 msgid "New-Post Hints"
 msgstr ""
 
-#: NationalLibrary.php:107
+#: NationalLibrary.php:92
 msgctxt "Setting Description"
 msgid "Displays Bibliographic information on new post edit screen."
 msgstr ""
 
-#: NationalLibrary.php:114
+#: NationalLibrary.php:100
 msgctxt "Setting Title"
 msgid "Front-end Search"
 msgstr ""
 
-#: NationalLibrary.php:115
+#: NationalLibrary.php:101
 msgctxt "Setting Description"
 msgid "Adds results by Bibliographic information on front-end search."
 msgstr ""
 
-#: NationalLibrary.php:119
+#: NationalLibrary.php:105
 msgctxt "Setting Title"
 msgid "Custom Queries"
 msgstr ""
 
-#: NationalLibrary.php:120
+#: NationalLibrary.php:106
 msgctxt "Setting Description"
 msgid "Appends end-points for Bib/Fipa numbers on front-end."
 msgstr ""
 
-#: NationalLibrary.php:414
-#: NationalLibrary.php:430
+#: NationalLibrary.php:413
+#: NationalLibrary.php:488
 msgctxt "Tab Title"
 msgid "Fipa"
 msgstr ""
 
-#: NationalLibrary.php:431
+#: NationalLibrary.php:489
 msgctxt "Tab Description"
 msgid "Exact Fipa data from The National Library."
 msgstr ""

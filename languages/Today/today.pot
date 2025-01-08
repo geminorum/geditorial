@@ -151,88 +151,88 @@ msgctxt "Menu Title"
 msgid "My Today"
 msgstr ""
 
-#: Today.php:392
+#: Today.php:393
 msgctxt "Title Attr"
 msgid "View on Today"
 msgstr ""
 
-#: Today.php:395
+#: Today.php:396
 msgctxt "Action"
 msgid "Today"
 msgstr ""
 
-#: Today.php:532
+#: Today.php:533
 msgctxt "Message"
 msgid "You can connect posts to this day once you've saved it for the first time."
 msgstr ""
 
-#: Today.php:558
-#: Today.php:949
+#: Today.php:559
+#: Today.php:950
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr ""
 
-#: Today.php:760
+#: Today.php:761
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr ""
 
-#: Today.php:931
+#: Today.php:932
 msgctxt "Table Column"
 msgid "The Day"
 msgstr ""
 
-#: Today.php:948
+#: Today.php:949
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr ""
 
-#: Today.php:994
+#: Today.php:995
 msgctxt "Header"
 msgid "Today Tools"
 msgstr ""
 
-#: Today.php:997
+#: Today.php:998
 msgctxt "Header"
 msgid "Re-schedule by Day"
 msgstr ""
 
-#: Today.php:1003
+#: Today.php:1004
 msgctxt "Setting"
 msgid "Schedule"
 msgstr ""
 
-#: Today.php:1005
+#: Today.php:1006
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1037
+#: Today.php:1038
 msgctxt "Default Term: Audit"
 msgid "No day"
 msgstr ""
 
-#: Today.php:1044
+#: Today.php:1045
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr ""
 
-#: Today.php:1045
+#: Today.php:1046
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr ""
 
-#: Today.php:1046
+#: Today.php:1047
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr ""
 
-#: Today.php:1047
+#: Today.php:1048
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr ""
 
-#: Today.php:1048
+#: Today.php:1049
 msgctxt "Import Field"
 msgid "Today: Full"
 msgstr ""

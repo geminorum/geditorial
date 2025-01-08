@@ -98,12 +98,12 @@ msgid "Post order in dossier list"
 msgstr ""
 
 #. translators: %s: order
-#: Dossier.php:398
+#: Dossier.php:399
 msgctxt "Display"
 msgid "Order in Dossier: %s"
 msgstr ""
 
-#: Dossier.php:421
+#: Dossier.php:422
 msgctxt "Header"
 msgid "Dossiers Tools"
 msgstr ""
