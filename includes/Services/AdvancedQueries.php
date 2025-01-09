@@ -8,16 +8,57 @@ use geminorum\gEditorial\WordPress;
 class AdvancedQueries extends WordPress\Main
 {
 
-	// TODO: support pipe (|) as `or` operator in search criteria in admin/front
-
 	const BASE = 'geditorial';
 
 	public static function setup()
 	{
+		add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts' ], 1, 1 );
+		add_filter( 'posts_search', [ __CLASS__, 'posts_search' ], 8, 2 );
+
 		// WORKING BUT DISABLED
 		// add_filter( 'posts_where', [ __CLASS__, 'posts_where_metakey_like' ] );
 
 		// add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts_empty_compare' ] );
+	}
+
+	public static function pre_get_posts( $query )
+	{
+		if ( $query->is_search && ( $search = $query->get( 's' ) ) )
+			$query->set( 's', Core\Text::trim( $search ) );
+	}
+
+	public static function posts_search( $search, $wp_query )
+	{
+		global $wpdb;
+
+		if ( ! $wp_query->is_main_query() )
+			return $search;
+
+		if ( ! $wp_query->is_search() || WordPress\Strings::isEmpty( $wp_query->query_vars['s'] ) )
+			return $search;
+
+		$meta   = [];
+		$filter = sprintf( '%s_posts_search_append_meta_%s', static::BASE, is_admin() ? 'backend' : 'frontend' );
+
+		foreach ( WordPress\Strings::getSeparated( $wp_query->query_vars['s'], '|' ) as $criteria )
+			if ( ! WordPress\Strings::isEmpty( $criteria ) )
+				$meta = apply_filters( $filter, $meta, $criteria, $wp_query->query_vars['post_type'] );
+
+		if ( ! count( $meta ) )
+			return $search;
+
+		$query = "SELECT post_id FROM {$wpdb->postmeta} WHERE ";
+		$where = [];
+
+		foreach ( $meta as $pair )
+			$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $pair[0], $pair[1] );
+
+		$posts = Core\Arraay::prepNumeral( $wpdb->get_col( $query.implode( ' OR ', $where ) ) );
+
+		if ( ! empty( $posts ) )
+			$search = str_replace( ')))', ") OR ({$wpdb->posts}.ID IN (" . implode( ',', $posts ) . "))))", $search );
+
+		return $search;
 	}
 
 	// @REF: https://stackoverflow.com/a/64184587

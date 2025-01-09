@@ -154,7 +154,7 @@ class NationalLibrary extends gEditorial\Module
 		$this->_init_custom_queries();
 
 		if ( $this->get_setting( 'front_search' ) && ( ! is_admin() || Core\WordPress::isAJAX() ) )
-			$this->filter( 'posts_search', 2, 8, 'front' );
+			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )
 			$this->filter( 'product_tabs', 1, 99, FALSE, 'woocommerce' );
@@ -330,38 +330,16 @@ class NationalLibrary extends gEditorial\Module
 		return ModuleHelper::parseFipa( $data );
 	}
 
-	public function posts_search_front( $search, $wp_query )
+	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
 	{
-		global $wpdb;
-
-		if ( ! $wp_query->is_main_query() )
-			return $search;
-
-		if ( ! $wp_query->is_search() || empty( $wp_query->query_vars['s'] ) )
-			return $search;
-
-		$meta = $this->_prep_meta_query_for_search( $wp_query->query_vars['post_type'], $wp_query->query_vars['s'] );
-
-		if ( ! count( $meta ) )
-			return $search;
-
-		$query = "SELECT post_id FROM {$wpdb->postmeta} WHERE ";
-		$where = [];
-
-		foreach ( $meta as $metakey => $criteria )
-			$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $metakey, $criteria );
-
-		$posts = Core\Arraay::prepNumeral( $wpdb->get_col( $query.implode( ' OR ', $where ) ) );
-
-		if ( ! empty( $posts ) )
-			$search = str_replace( ')))', ") OR ({$wpdb->posts}.ID IN (" . implode( ',', $posts ) . "))))", $search );
-
-		return $search;
+		return array_merge( $meta,
+			$this->_prep_meta_query_for_search( $posttypes, $search ) );
 	}
 
 	private function _prep_meta_query_for_search( $queried, $search )
 	{
-		$meta     = [];
+		$meta = [];
+
 		$criteria = Core\Number::translate( Core\Text::trim( $search ) );
 
 		// only numbers
@@ -391,10 +369,10 @@ class NationalLibrary extends gEditorial\Module
 			if ( ! $metakey = $this->_get_posttype_bib_metakey( $posttype ) )
 				continue;
 
-			$meta[$metakey] = $criteria;
+			$meta[] = [ $metakey, $criteria ];
 		}
 
-		return $meta;
+		return $this->filters( 'meta_query_for_search', $meta, $search, $posttypes );
 	}
 
 	// NOTE: `priority` does not applied on this filter!

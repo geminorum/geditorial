@@ -355,7 +355,7 @@ class Isbn extends gEditorial\Module
 
 			foreach ( $fields as $field )
 				if ( $metakey = Services\PostTypeFields::getPostMetaKey( $field, 'meta', FALSE ) )
-					$meta[$metakey] = $discovery;
+					$meta[] = [ $metakey, $discovery ];
 		}
 
 		return $meta;
