@@ -206,7 +206,7 @@ class Identified extends gEditorial\Module
 
 		$this->_init_queryable_types();
 
-		if ( $this->get_setting( 'front_search' ) && ( ! is_admin() || Core\WordPress::isAJAX() ) )
+		if ( $this->get_setting( 'front_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
@@ -719,16 +719,8 @@ class Identified extends gEditorial\Module
 		return $search;
 	}
 
-	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
+	public function posts_search_append_meta_frontend( $meta, $search, $queried )
 	{
-		return array_merge( $meta,
-			$this->_prep_meta_query_for_search( $posttypes, $search ) );
-	}
-
-	private function _prep_meta_query_for_search( $queried, $search )
-	{
-		$meta = [];
-
 		if ( 'any' === $queried )
 			$posttypes = $this->posttypes();
 
@@ -760,7 +752,7 @@ class Identified extends gEditorial\Module
 			$meta[] = [ $metakey, $criteria ];
 		}
 
-		return $this->filters( 'meta_query_for_search', $meta, $search, $posttypes );
+		return $meta;
 	}
 
 	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057

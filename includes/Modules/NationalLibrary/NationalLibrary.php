@@ -153,7 +153,7 @@ class NationalLibrary extends gEditorial\Module
 
 		$this->_init_custom_queries();
 
-		if ( $this->get_setting( 'front_search' ) && ( ! is_admin() || Core\WordPress::isAJAX() ) )
+		if ( $this->get_setting( 'front_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )
@@ -330,17 +330,9 @@ class NationalLibrary extends gEditorial\Module
 		return ModuleHelper::parseFipa( $data );
 	}
 
-	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
+	public function posts_search_append_meta_frontend( $meta, $search, $queried )
 	{
-		return array_merge( $meta,
-			$this->_prep_meta_query_for_search( $posttypes, $search ) );
-	}
-
-	private function _prep_meta_query_for_search( $queried, $search )
-	{
-		$meta = [];
-
-		$criteria = Core\Number::translate( Core\Text::trim( $search ) );
+		$criteria = Core\Number::translate( $search );
 
 		// only numbers
 		if ( ! preg_match( '/^[0-9]+$/', $criteria ) )
@@ -372,7 +364,7 @@ class NationalLibrary extends gEditorial\Module
 			$meta[] = [ $metakey, $criteria ];
 		}
 
-		return $this->filters( 'meta_query_for_search', $meta, $search, $posttypes );
+		return $meta;
 	}
 
 	// NOTE: `priority` does not applied on this filter!

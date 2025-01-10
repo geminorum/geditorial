@@ -60,6 +60,11 @@ class Phonebook extends gEditorial\Module
 			],
 			'_frontend' => [
 				'tabs_support',
+				[
+					'field'       => 'front_search',
+					'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-phonebook' ),
+					'description' => _x( 'Adds results by Phone and Mobile information on front-end search.', 'Setting Description', 'geditorial-phonebook' ),
+				],
 			],
 			'_supports' => [
 				'shortcode_support',
@@ -293,6 +298,9 @@ class Phonebook extends gEditorial\Module
 		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 5, 12, FALSE, $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
+
+		if ( $this->get_setting( 'front_search' ) )
+			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 	}
 
 	public function importer_init()
@@ -405,6 +413,43 @@ class Phonebook extends gEditorial\Module
 		// $fields['emergency_address'] = NULL;
 
 		return $fields;
+	}
+
+	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
+	{
+		if ( ! $discovery = Core\Phone::discovery( $search ) )
+			return $meta; // criteria is not Phone Number
+
+		$input  = Core\Number::translate( Core\Text::trim( $search ) );
+		$fields = [
+			'mobile_number',
+			'mobile_secondary',
+			'phone_number',
+			'phone_secondary',
+		];
+
+		foreach ( $posttypes as $posttype ) {
+
+			if ( ! $this->posttype_supported( $posttype ) )
+				continue;
+
+			if ( ! WordPress\PostType::viewable( $posttype ) )
+				continue;
+
+			foreach ( $fields as $field ) {
+
+				if ( $metakey = Services\PostTypeFields::getPostMetaKey( $field, 'meta', FALSE ) ) {
+
+					$meta[] = [ $metakey, $discovery ];
+
+					// also search for raw input
+					if ( $input !== $discovery )
+						$meta[] = [ $metakey, $input ];
+				}
+			}
+		}
+
+		return $meta;
 	}
 
 	// NOTE: late overrides of the fields values and keys

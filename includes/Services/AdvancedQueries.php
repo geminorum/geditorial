@@ -27,6 +27,7 @@ class AdvancedQueries extends WordPress\Main
 			$query->set( 's', Core\Text::trim( $search ) );
 	}
 
+	// TODO: filter for search on sub-contents (comments)
 	public static function posts_search( $search, $wp_query )
 	{
 		global $wpdb;

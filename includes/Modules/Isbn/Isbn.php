@@ -50,6 +50,13 @@ class Isbn extends gEditorial\Module
 					'values'       => $this->list_posttypes() ?: FALSE,
 				],
 			],
+			'_frontend' => [
+				[
+					'field'       => 'front_search',
+					'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-isbn' ),
+					'description' => _x( 'Adds results by ISBN information on front-end search.', 'Setting Description', 'geditorial-isbn' ),
+				],
+			],
 		];
 	}
 
@@ -153,11 +160,13 @@ class Isbn extends gEditorial\Module
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
-		$this->filter_module( 'identified', 'meta_query_for_search', 3 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 
 		$this->filter( 'templateposttype_addnew_extra', 2, 10, FALSE, $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
+
+		if ( $this->get_setting( 'front_search' ) )
+			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		$this->register_shortcode( 'main_shortcode' );
 
@@ -331,13 +340,10 @@ class Isbn extends gEditorial\Module
 		return $keys;
 	}
 
-	public function identified_meta_query_for_search( $meta, $search, $posttypes )
+	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
 	{
 		if ( ! $discovery = Core\ISBN::discovery( $search ) )
 			return $meta; // criteria is not ISBN
-
-		if ( ! gEditorial()->enabled( 'meta' ) )
-			return $meta;
 
 		$fields = [
 			'isbn',
@@ -351,6 +357,9 @@ class Isbn extends gEditorial\Module
 
 			if ( ! $this->posttype_woocommerce( $posttype )
 				&& ! $this->posttype_supported( $posttype ) )
+				continue;
+
+			if ( ! WordPress\PostType::viewable( $posttype ) )
 				continue;
 
 			foreach ( $fields as $field )
