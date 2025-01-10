@@ -18,6 +18,11 @@ class WcDashboard extends gEditorial\Module
 			'icon'     => 'dashboard',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
+			'keywords' => [
+				'frontend',
+				'dashboard',
+				'woocommerce',
+			],
 		];
 	}
 

@@ -438,7 +438,10 @@ class PostTypeFields extends WordPress\Main
 						);
 
 				case 'isbn':
-					return Info::lookupISBN( $raw ?: $value );
+					// return Info::lookupISBN( $raw ?: $value );
+					return sprintf( '<span class="-isbn %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
+						Core\ISBN::validate( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+						$raw ?: $value, $raw ?: $value );
 
 				case 'vin':
 					return Info::lookupVIN( $raw ?: $value );

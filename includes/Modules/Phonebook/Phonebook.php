@@ -531,9 +531,13 @@ class Phonebook extends gEditorial\Module
 		if ( ! array_intersect( $supported, (array) $posttypes ) )
 			return $discovered;
 
-		// FIXME: move form `Personage` Module
-		$fields = [ 'mobile_number', 'mobile_secondary', 'phone_number', 'phone_secondary' ];
 		$phone  = FALSE;
+		$fields = [
+			'mobile_number',
+			'mobile_secondary',
+			'phone_number',
+			'phone_secondary',
+		];
 
 		foreach ( (array) $posttypes as $posttype ) {
 

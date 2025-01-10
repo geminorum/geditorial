@@ -705,7 +705,7 @@ class Personage extends gEditorial\Module
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) )
 			$data['source']['rendered']['vcarddata'] = $vcard;
 
-		if ( in_array( 'needs-securitytoken', $data['flags'], TRUE ) )
+		if ( in_array( 'needs-securitytoken', $data['profile']['flags'], TRUE ) )
 			$data['tokens'][] = Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
 
 		return $data;
