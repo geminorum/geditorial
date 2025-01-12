@@ -446,6 +446,9 @@ class PostTypeFields extends WordPress\Main
 				case 'vin':
 					return Info::lookupVIN( $raw ?: $value );
 
+				case 'address':
+					return WordPress\Strings::prepAddress( $raw ?: $value, 'display', $raw ?: $value );
+
 				case 'year':
 					return Core\Number::localize( $raw ?: $value );
 
