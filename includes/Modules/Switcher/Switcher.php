@@ -12,6 +12,8 @@ class Switcher extends gEditorial\Module
 {
 	use Internals\CoreRowActions;
 
+	// TODO: tools: switch meta-fields
+
 	protected $deafults  = [ 'admin_bulkactions' => TRUE ];
 
 	public static function module()

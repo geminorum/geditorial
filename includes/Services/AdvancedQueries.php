@@ -10,6 +10,9 @@ class AdvancedQueries extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	const SEARCH_OPERATOR_OR  = '|';
+	const SEARCH_OPERATOR_NOT = '!';
+
 	public static function setup()
 	{
 		add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts' ], 1, 1 );
@@ -23,27 +26,30 @@ class AdvancedQueries extends WordPress\Main
 
 	public static function pre_get_posts( $query )
 	{
+		if ( ! $query->is_main_query() )
+			return;
+
 		if ( $query->is_search && ( $search = $query->get( 's' ) ) )
 			$query->set( 's', Core\Text::trim( $search ) );
 	}
 
 	// TODO: filter for search on sub-contents (comments)
-	public static function posts_search( $search, $wp_query )
+	public static function posts_search( $search, $query )
 	{
 		global $wpdb;
 
-		if ( ! $wp_query->is_main_query() )
+		if ( ! $query->is_main_query() )
 			return $search;
 
-		if ( ! $wp_query->is_search() || WordPress\Strings::isEmpty( $wp_query->query_vars['s'] ) )
+		if ( ! $query->is_search() || WordPress\Strings::isEmpty( $query->query_vars['s'] ) )
 			return $search;
 
 		$meta   = [];
 		$filter = sprintf( '%s_posts_search_append_meta_%s', static::BASE, is_admin() ? 'backend' : 'frontend' );
 
-		foreach ( WordPress\Strings::getSeparated( $wp_query->query_vars['s'], '|' ) as $criteria )
+		foreach ( WordPress\Strings::getSeparated( $query->query_vars['s'], static::SEARCH_OPERATOR_OR ) as $criteria )
 			if ( ! WordPress\Strings::isEmpty( $criteria ) )
-				$meta = apply_filters( $filter, $meta, $criteria, $wp_query->query_vars['post_type'] );
+				$meta = apply_filters( $filter, $meta, $criteria, $query->query_vars['post_type'] );
 
 		if ( ! count( $meta ) )
 			return $search;

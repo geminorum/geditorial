@@ -19,7 +19,7 @@ class Yearly extends gEditorial\Module
 	use Internals\TemplateTaxonomy;
 
 	// TODO: reports: display posttype counts on a table for each year
-	// TODO: extract year from meta fields @see `PostDate` Internal
+	// TODO: imports: extract year from meta fields @see `PostDate` Internal
 
 	protected $disable_no_posttypes = TRUE;
 

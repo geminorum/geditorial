@@ -414,6 +414,9 @@ class Phonebook extends gEditorial\Module
 		] ) : $terms;
 	}
 
+	// TODO: auto audit: `term_content_has_phone_number`
+	// https://wordpress.org/plugins/search-clickable-phone-number-for-mobile-device/
+	// preg_match_all( '/\+{0,1}[0-9]{0,2}[ .-]*\(*[0-9]{3}\)*[ .-]*[0-9]{3}[ .-]*[0-9]{4}/', $content, $matches ) ) {
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )

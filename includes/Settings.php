@@ -1455,6 +1455,10 @@ class Settings extends WordPress\Main
 	{
 		if ( self::req( 'noheader' ) ) {
 
+			add_filter( 'show_admin_bar', '__return_false', 9999 );
+			wp_dequeue_script( 'admin-bar' );
+			wp_dequeue_style( 'admin-bar' );
+
 			self::define( 'IFRAME_REQUEST', TRUE );
 			iframe_header( $iframe_title );
 		}

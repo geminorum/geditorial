@@ -71,7 +71,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( $dob = self::getMetaFieldRaw( 'date_of_birth', $post->ID ) ) {
 
 			if ( $date = Core\Date::getObject( $dob, 'Y-m-d' ) )
-				$vcard->addBirthday( $date->format( 'Ymd' ) );
+				$vcard->addBirthday( $date->format( 'Y-m-d' ) ); // Format is `YYYY-MM-DD`
 		}
 
 		if ( $home = self::getMetaField( 'home_address', $field, FALSE ) )
@@ -91,7 +91,7 @@ class ModuleTemplate extends gEditorial\Template
 			 * @return $this
 			 */
 			$vcard->addAddress(
-				$home,
+				Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $home ) ),
 				NULL,
 				NULL,
 				NULL,
@@ -103,7 +103,7 @@ class ModuleTemplate extends gEditorial\Template
 
 		if ( $work = self::getMetaField( 'work_address', $field, FALSE ) )
 			$vcard->addAddress(
-				$work,
+				Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $work ) ),
 				NULL,
 				NULL,
 				NULL,

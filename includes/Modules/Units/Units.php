@@ -15,6 +15,8 @@ class Units extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 
+	// FIXME: rename columns based on posttype
+
 	protected $priority_init           = 12;
 	protected $priority_current_screen = 12;
 
