@@ -297,7 +297,6 @@ class Phonebook extends gEditorial\Module
 		$this->filter( 'searchselect_result_extra_for_post', 3, 32, FALSE, $this->base );
 		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 5, 12, FALSE, $this->base );
-		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 
 		if ( $this->get_setting( 'front_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
@@ -504,7 +503,7 @@ class Phonebook extends gEditorial\Module
 			return $data;
 
 		if ( array_key_exists( 'home_address', $data ) )
-			$data['address'] = ModuleHelper::prepAddress( $data['home_address'], 'export', '' ); // FIXME: move this up!
+			$data['address'] = WordPress\Strings::prepAddress( $data['home_address'], 'export', '' );
 
 		if ( empty( $data['phone'] ) ) {
 
@@ -664,17 +663,5 @@ class Phonebook extends gEditorial\Module
 			array_merge( $list, $extra ),
 			$posttype
 		);
-	}
-
-	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
-	{
-		switch ( $field_args['type'] ) {
-
-			case 'address':
-				return ModuleHelper::prepAddress( $meta, $context, $meta );
-		}
-
-		return $meta;
 	}
 }

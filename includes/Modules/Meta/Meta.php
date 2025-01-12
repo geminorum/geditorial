@@ -781,6 +781,13 @@ class Meta extends gEditorial\Module
 
 				return Info::lookupVIN( trim( $raw ) );
 
+			case 'address':
+
+				if ( 'export' === $context )
+					return Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $raw ?: $meta ) );
+
+				return WordPress\Strings::prepAddress( $raw ?: $meta, $context, $raw ?: $meta );
+
 			case 'year':
 
 				if ( 'export' === $context )

@@ -91,7 +91,7 @@ class ModuleTemplate extends gEditorial\Template
 			 * @return $this
 			 */
 			$vcard->addAddress(
-				Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $home ) ),
+				WordPress\Strings::prepAddress( $home, 'vcard', $home ),
 				NULL,
 				NULL,
 				NULL,
@@ -103,7 +103,7 @@ class ModuleTemplate extends gEditorial\Template
 
 		if ( $work = self::getMetaField( 'work_address', $field, FALSE ) )
 			$vcard->addAddress(
-				Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $work ) ),
+				WordPress\Strings::prepAddress( $work, 'vcard', $work ),
 				NULL,
 				NULL,
 				NULL,
