@@ -301,6 +301,11 @@ class Phonebook extends gEditorial\Module
 
 		if ( $this->get_setting( 'front_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
+
+		if ( ! is_admin() )
+			return;
+
+		$this->action( 'pre_get_posts', 1, 5, 'sanitized' );
 	}
 
 	public function importer_init()
@@ -364,6 +369,36 @@ class Phonebook extends gEditorial\Module
 	public function setup_restapi()
 	{
 		$this->subcontent_restapi_register_routes();
+	}
+
+	// NOTE: admin-only
+	public function pre_get_posts_sanitized( $query )
+	{
+		if ( ! $query->is_main_query() || ! $query->is_search )
+			return;
+
+		if ( ! $search = $query->get( 's' ) )
+			return;
+
+		if ( Core\Text::has( $search, Services\AdvancedQueries::SEARCH_OPERATOR_OR ) )
+			return;
+
+		$search = Core\Number::translate( Core\Text::stripAllSpaces( $search ) );
+
+		// only numbers
+		// @REF: https://stackoverflow.com/a/4878242
+		if ( ! preg_match( '/^[0-9]+$/', $search ) )
+			return;
+
+		if ( ! $sanitized = Core\Phone::sanitize( $search ) )
+			return;
+
+		if ( $search === $sanitized )
+			return;
+
+		// TODO: make wp-query support `OR` operator on search-terms
+		// $query->set( 's', sprintf( '%s|%s', $sanitized, $search ) );
+		$query->set( 's', $sanitized );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
