@@ -1111,6 +1111,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_frontend_search( $description = NULL, $default = 0 )
+	{
+		return [
+			'field'       => 'frontend_search',
+			'title'       => _x( 'Front-end Search', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Adds results by the information on front-end search.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default,
+		];
+	}
+
 	// FIXME: DEPRECATED
 	public static function getSetting_posttype_viewable( $description = NULL, $default = 1 )
 	{

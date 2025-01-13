@@ -60,11 +60,7 @@ class Phonebook extends gEditorial\Module
 			],
 			'_frontend' => [
 				'tabs_support',
-				[
-					'field'       => 'front_search',
-					'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-phonebook' ),
-					'description' => _x( 'Adds results by Phone and Mobile information on front-end search.', 'Setting Description', 'geditorial-phonebook' ),
-				],
+				'frontend_search' => [ _x( 'Adds results by Phone and Mobile information on front-end search.', 'Setting Description', 'geditorial-phonebook' ) ],
 			],
 			'_supports' => [
 				'shortcode_support',
@@ -298,7 +294,7 @@ class Phonebook extends gEditorial\Module
 		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 5, 12, FALSE, $this->base );
 
-		if ( $this->get_setting( 'front_search' ) )
+		if ( $this->get_setting( 'frontend_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		if ( ! is_admin() )

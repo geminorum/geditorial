@@ -69,11 +69,7 @@ class Identified extends gEditorial\Module
 		}
 
 		$settings['_frontend'] = [
-			[
-				'field'       => 'front_search',
-				'title'       => _x( 'Front-end Search', 'Setting Title', 'geditorial-identified' ),
-				'description' => _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ),
-			],
+			'frontend_search' => [ _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ) ],
 			[
 				'field'       => 'queryable_types',
 				'type'        => 'checkboxes-values',
@@ -206,7 +202,7 @@ class Identified extends gEditorial\Module
 
 		$this->_init_queryable_types();
 
-		if ( $this->get_setting( 'front_search' ) )
+		if ( $this->get_setting( 'frontend_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
