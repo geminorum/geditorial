@@ -264,6 +264,8 @@ class WasBorn extends gEditorial\Module
 
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->rowactions__hook_force_default_term( $screen, 'main_taxonomy' );
+
+				// TODO: table-list view for under-aged with count. see Yearly Module
 			}
 		}
 	}

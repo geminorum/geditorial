@@ -3187,7 +3187,7 @@ class Settings extends WordPress\Main
 	}
 
 	// FIXME: support more types!
-	// WTF: not possible to pass fields with arrays (checknoxes/multiple select)
+	// WTF: not possible to pass fields with arrays (check-boxes/multiple-select)
 	private static function fieldType_getObjectForm( $args, $fields, $name_prefix = '', $options = [] )
 	{
 		$group = '';

@@ -506,16 +506,17 @@ class Tablelist extends WordPress\Main
 							'class'  => '-link -row-link -row-link-edit',
 							'target' => '_blank',
 						], _x( 'Edit', 'Tablelist: Row Action: Term', 'geditorial' ) );
+
 					break;
 
 				case 'view':
+
 					$list['view'] = Core\HTML::tag( 'a', [
 						'href'   => get_term_link( $term->term_id, $term->taxonomy ),
 						'title'  => urldecode( $term->slug ),
 						'class'  => '-link -row-link -row-link-view',
 						'target' => '_blank',
 					], _x( 'View', 'Tablelist: Row Action: Term', 'geditorial' ) );
-					break;
 			}
 		}
 
@@ -531,8 +532,12 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => _x( 'Description', 'Tablelist: Column: Term Desc', 'geditorial' ),
-			'callback' => 'wpautop',
-			'class'    => 'description',
+			'class'    => [ 'description', '-description' ],
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				return empty( $row->description )
+					? Helper::htmlEmpty()
+					: WordPress\Strings::prepDescription( $row->description );
+			},
 		];
 	}
 

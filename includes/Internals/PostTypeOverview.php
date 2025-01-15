@@ -23,9 +23,9 @@ trait PostTypeOverview
 		] );
 	}
 
-	protected function posttype_overview_render_table( $constant, $uri = '', $sub = NULL, $title = NULL )
+	protected function posttype_overview_render_table( $constant, $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
 	{
-		if ( ! $this->role_can( 'reports' ) && ! $this->cuc( 'reports' ) )
+		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
 			return FALSE;
 
 		$query   = $extra = [];
@@ -61,11 +61,11 @@ trait PostTypeOverview
 			$columns['meta__'.$field_key] = [
 				'title'    => $field['title'],
 				'class'    => sprintf( '-field-%s-%s', 'meta', $field_key ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $field_key, $field ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $field_key, $field, $context ) {
 					return Template::getMetaField( $field_key, [
 						'id'      => $row->ID,
 						'default' => $field['default'],
-						'context' => 'reports',
+						'context' => $context,
 					], FALSE, 'meta' ) ?: Helper::htmlEmpty();
 				},
 			];
@@ -74,11 +74,11 @@ trait PostTypeOverview
 			$columns['unit__'.$unit_key] = [
 				'title'    => $unit['title'],
 				'class'    => sprintf( '-field-%s-%s', 'unit', $unit_key ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $unit_key, $unit ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $unit_key, $unit, $context ) {
 					return Template::getMetaField( $unit_key, [
 						'id'      => $row->ID,
 						'default' => $unit['default'],
-						'context' => 'reports',
+						'context' => $context,
 					], FALSE, 'units' ) ?: Helper::htmlEmpty();
 				},
 			];
@@ -88,9 +88,9 @@ trait PostTypeOverview
 			$columns['paired_connected'] = [
 				'title'    => _x( 'Connected', 'Internal: PostTypeOverview: Column Header', 'geditorial-admin' ),
 				'class'    => '-paired-connected-to',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $context ) {
 
-					if ( FALSE === ( $connected = $this->paired_all_connected_to( $row, 'reports' ) ) )
+					if ( FALSE === ( $connected = $this->paired_all_connected_to( $row, $context ) ) )
 						return Helper::htmlEmpty();
 
 					return $this->nooped_count( 'paired_item', count( $connected ) );
@@ -115,6 +115,7 @@ trait PostTypeOverview
 			'extra'      => [
 				'posttype' => $type,
 				'constant' => $constant,
+				'context'  => $context,
 			],
 		] );
 	}
@@ -130,7 +131,7 @@ trait PostTypeOverview
 		echo Core\HTML::wrap(
 			$this->exports_get_export_buttons(
 				$args['extra']['posttype'],
-				'reports',
+				$args['extra']['context'],
 				'posttype'
 			), 'field-wrap -buttons' );
 	}

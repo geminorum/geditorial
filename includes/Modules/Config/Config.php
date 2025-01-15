@@ -432,7 +432,7 @@ class Config extends gEditorial\Module
 					else
 						Core\WordPress::redirectReferer( [
 							'message' => 'converted',
-							'count'   => count( $result ),
+							'count'   => $result,
 						] );
 
 				} else {

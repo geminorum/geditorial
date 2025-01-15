@@ -22,10 +22,8 @@ trait TaxonomyOverview
 	}
 
 	// TODO: display taxonmy meta-data
-	protected function taxonomy_overview_render_table( $constant, $uri = '', $sub = NULL, $title = NULL )
+	protected function taxonomy_overview_render_table( $constant, $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
 	{
-		$context = 'reports'; // WTF?!
-
 		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
 			return FALSE;
 
