@@ -134,6 +134,23 @@ class Phone extends Base
 		return $value;
 	}
 
+	public static function discovery( $criteria )
+	{
+		if ( ! $sanitized = self::sanitize( $criteria ) )
+			return FALSE;
+
+		// // only numbers
+		// // @REF: https://stackoverflow.com/a/4878242
+		// if ( ! preg_match( '/^[0-9+]+$/', $sanitized ) )
+		// 	return FALSE;
+
+		// // only between 10-13 digits
+		// if ( ! preg_match( '/^\d{10,13}$/', $sanitized ) )
+		// 	return FALSE;
+
+		return $sanitized;
+	}
+
 	// @REF: https://www.abstractapi.com/guides/validate-phone-number-javascript
 	// @SEE: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel
 	public static function getHTMLPattern()

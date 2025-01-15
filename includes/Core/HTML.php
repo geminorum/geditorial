@@ -852,14 +852,17 @@ class HTML extends Base
 					continue;
 
 				$tag   = 'th';
-				$class = [];
+				$class = [
+					'-column',
+					'-column-'.$key,
+				];
 
 				if ( is_array( $column ) ) {
 
 					$title = empty( $column['title'] ) ? $key : $column['title'];
 
 					if ( ! empty( $column['class'] ) )
-						$class[] = $column['class'];
+						$class = array_merge( $class, (array) $column['class'] );
 
 				} else if ( '_cb' === $key ) {
 
@@ -872,7 +875,7 @@ class HTML extends Base
 					$title = $column;
 				}
 
-				echo '<'.$tag.' class="'.HTML::prepClass( '-column', '-column-'.$key, $class ).'">'.$title.'</'.$tag.'>';
+				echo '<'.$tag.' class="'.self::prepClass( $class ).'">'.$title.'</'.$tag.'>';
 			}
 
 		echo '</tr></thead><tbody class="-list">';
@@ -920,7 +923,7 @@ class HTML extends Base
 					if ( is_array( $column ) ) {
 
 						if ( ! empty( $column['class'] ) )
-							$class[] = $column['class'];
+							$class = array_merge( $class, (array) $column['class'] );
 
 						if ( ! empty( $column['callback'] ) )
 							$callback = $column['callback'];
