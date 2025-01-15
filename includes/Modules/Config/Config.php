@@ -183,8 +183,9 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'reports' );
 
-			Settings::headerTitle( _x( 'Editorial Reports', 'Page Title', 'geditorial-config' ) );
-			Core\HTML::headerNav( $uri, $sub, $subs );
+			// Settings::headerTitle( _x( 'Editorial Reports', 'Page Title', 'geditorial-config' ) );
+			// Core\HTML::headerNav( $uri, $sub, $subs );
+			Settings::sideOpen( _x( 'Reports', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -201,6 +202,7 @@ class Config extends gEditorial\Module
 
 			$this->settings_signature( 'reports' );
 
+			Settings::sideClose();
 		Settings::wrapClose();
 	}
 
@@ -230,8 +232,9 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'tools' );
 
-			Settings::headerTitle( _x( 'Editorial Tools', 'Page Title', 'geditorial-config' ) );
-			Core\HTML::headerNav( $uri, $sub, $subs );
+			// Settings::headerTitle( _x( 'Editorial Tools', 'Page Title', 'geditorial-config' ) );
+			// Core\HTML::headerNav( $uri, $sub, $subs );
+			Settings::sideOpen( _x( 'Tools', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -251,6 +254,7 @@ class Config extends gEditorial\Module
 
 			$this->settings_signature( 'tools' );
 
+			Settings::sideClose();
 		Settings::wrapClose();
 	}
 
@@ -303,8 +307,9 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'roles' );
 
-			Settings::headerTitle( _x( 'Editorial Roles', 'Page Title', 'geditorial-config' ) );
-			Core\HTML::headerNav( $uri, $sub, $subs );
+			// Settings::headerTitle( _x( 'Editorial Roles', 'Page Title', 'geditorial-config' ) );
+			// Core\HTML::headerNav( $uri, $sub, $subs );
+			Settings::sideOpen( _x( 'Roles', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -321,6 +326,7 @@ class Config extends gEditorial\Module
 
 			$this->settings_signature( 'roles' );
 
+			Settings::sideClose();
 		Settings::wrapClose();
 	}
 
@@ -686,8 +692,9 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'imports' );
 
-			Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-config' ) );
-			Core\HTML::headerNav( $uri, $sub, $subs );
+			// Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-config' ) );
+			// Core\HTML::headerNav( $uri, $sub, $subs );
+			Settings::sideOpen( _x( 'Imports', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -707,6 +714,7 @@ class Config extends gEditorial\Module
 
 			$this->settings_signature( 'imports' );
 
+			Settings::sideClose();
 		Settings::wrapClose();
 	}
 

@@ -1571,6 +1571,43 @@ class Settings extends WordPress\Main
 		echo '<hr class="wp-header-end">';
 	}
 
+	public static function sideOpen( $title = NULL, $uri = '', $active = '', $subs = [], $heading = NULL )
+	{
+		echo '<div class="side-nav-wrap">';
+
+		Core\HTML::h2( $title ?? _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ), '-title' );
+		Core\HTML::headerNav( $uri, $active, $subs, 'side-nav', 'ul', 'li' );
+
+		echo '<div class="side-nav-content">';
+
+		if ( 'overview' == $active )
+			return;
+
+		if ( FALSE === $heading )
+			return;
+
+		if ( $heading )
+			$subtitle = $heading;
+
+		else if ( ! empty( $subs[$active]['title'] ) )
+			$subtitle = $subs[$active]['title'];
+
+		else if ( ! empty( $subs[$active] ) )
+			$subtitle = $subs[$active];
+
+		else
+			return;
+
+		Core\HTML::h2( $subtitle, 'wp-heading-inline settings-title' );
+		echo '<hr class="wp-header-end">';
+	}
+
+	public static function sideClose()
+	{
+		// echo '</div><div class="clear"></div></div>';
+		echo '</div></div>';
+	}
+
 	// @SEE: `wp_admin_notice()` @since WP 6.4.0
 	// @SEE: https://core.trac.wordpress.org/ticket/57791
 	public static function message( $messages = NULL )
