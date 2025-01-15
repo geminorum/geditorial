@@ -1,0 +1,112 @@
+<?php namespace geminorum\gEditorial\Internals;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\WordPress;
+
+trait TaxonomyOverview
+{
+	protected function taxonomy_overview_register_headerbutton( $context, $link = NULL )
+	{
+		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
+			return FALSE;
+
+		return Services\HeaderButtons::register( 'taxonomy_overview', [
+			'text'     => _x( 'Overview', 'Internal: TaxonomyOverview: Header Button', 'geditorial-admin' ),
+			'link'     => $link ?? $this->get_module_url( $context ),
+			'priority' => 8,
+		] );
+	}
+
+	// TODO: display taxonmy meta-data
+	protected function taxonomy_overview_render_table( $constant, $uri = '', $sub = NULL, $title = NULL )
+	{
+		$context = 'reports'; // WTF?!
+
+		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
+			return FALSE;
+
+		$query       = $extra = $exports = [];
+		$taxonomy    = $this->constant( $constant );
+		$list        = $this->list_posttypes();
+		$description = TRUE;
+		$exports     = method_exists( $this, 'exports_get_export_links' );
+
+		list( $terms, $pagination ) = Tablelist::getTerms( $query, $extra, $taxonomy, $this->get_sub_limit_option( $sub ) );
+
+		$pagination['before'][] = Tablelist::filterSearch( $list );
+
+		$columns = [
+			'_cb'  => 'term_id',
+			'name' => [
+				'title' => _x( 'Name', 'Internal: Taxonomy Overview: Column', 'geditorial-admin' ),
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $description ) {
+
+					if ( ! $term = WordPress\Term::get( $row ) )
+						return Plugin::na( FALSE );
+
+					$html = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+
+					if ( $description && $term->description )
+						$html.= wpautop( WordPress\Strings::prepDescription( $term->description, FALSE, FALSE ), FALSE );
+
+					return $html;
+				},
+				'actions' => function ( $value, $row, $column, $index, $key, $args ) use ( $exports, $context ) {
+
+					if ( ! $term = WordPress\Term::get( $row ) )
+						return [];
+
+					if ( $exports )
+						return array_merge(
+							Tablelist::getTermRowActions( $term ),
+							$this->exports_get_export_links( $term->term_id, $context, 'assigned' )
+						);
+
+					return Tablelist::getTermRowActions( $term );
+				},
+			],
+			'desc' => Tablelist::columnTermDesc(),
+		];
+
+		if ( is_null( $title ) )
+			$title = sprintf(
+				/* translators: %s: taxonomy label */
+				_x( 'Overview of %s', 'Header', 'geditorial-admin' ),
+				$this->get_taxonomy_label( $constant, 'extended_label', 'name' )
+			);
+
+		return Core\HTML::tableList( $columns, $terms, [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => Core\HTML::tag( 'h3', $title ),
+			'empty'      => $this->get_taxonomy_label( $constant, 'not_found' ),
+			'pagination' => $pagination,
+			'after'      => [ $this, 'taxonomy_overview_after_table' ],
+			'extra'      => [
+				'taxonomy' => $taxonomy,
+				'constant' => $constant,
+				'context'  => $context,
+			],
+		] );
+	}
+
+	public function taxonomy_overview_after_table( $columns, $data, $args )
+	{
+		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
+			return;
+
+		if ( ! $this->role_can( 'exports', NULL, TRUE ) )
+			return;
+
+		echo Core\HTML::wrap(
+			$this->exports_get_export_buttons(
+				$args['extra']['taxonomy'],
+				$args['extra']['context'],
+				'taxonomy'
+			), 'field-wrap -buttons' );
+	}
+}

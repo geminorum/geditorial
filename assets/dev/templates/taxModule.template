@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Info;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
@@ -18,6 +19,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxSupported;
+	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
@@ -147,6 +149,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			$this->modulelinks__register_headerbuttons();
 			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
+			$this->taxonomy_overview_register_headerbutton( 'reports' );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -189,5 +192,16 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

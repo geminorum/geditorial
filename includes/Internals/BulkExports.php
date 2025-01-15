@@ -37,6 +37,30 @@ trait BulkExports
 		return $html;
 	}
 
+	protected function exports_get_export_links( $reference, $context, $target = NULL )
+	{
+		$links = [];
+
+		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args ) {
+
+			$name  = sprintf( 'export_%s', $type );
+			$label = sprintf(
+				/* translators: %s: export type title */
+				_x( 'Export: %s', 'Internal: Exports: Link Label', 'geditorial-admin' ),
+				$type_args['title']
+			);
+
+			$links[$name] = Core\HTML::tag( 'a', [
+				'href'  => $this->exports_get_type_download_link( $reference, $type, $context, $type_args['target'], $type_args['format'] ),
+				'class' => [ '-exportlink' ],
+				'title' => _x( 'Click to Download the Generated File', 'Internal: Exports: Link Title', 'geditorial-admin' ),
+			], $label );
+		}
+
+		return $links;
+	}
+
+	// TODO: support `taxonomy` target
 	// TODO: support `subcontent` target
 	// TODO: support `subcontent_from_paired` target
 	protected function exports_get_types( $context, $target = NULL )
