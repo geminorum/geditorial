@@ -5,10 +5,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Execution extends gEditorial\Module
@@ -26,6 +25,7 @@ class Execution extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 	use Internals\RestAPI;
 	use Internals\SubContents;
+	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
@@ -393,5 +393,16 @@ class Execution extends gEditorial\Module
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Executives Data', 'Default Term: Audit', 'geditorial-execution' ),
 		] ) : $terms;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

@@ -4,17 +4,22 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Genres extends gEditorial\Module
 {
+	use Internals\BulkExports;
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\MetaBoxSupported;
+	use Internals\TaxonomyOverview;
+	use Internals\TemplateTaxonomy;
 
 	public static function module()
 	{
@@ -129,11 +134,8 @@ class Genres extends gEditorial\Module
 		$this->register_shortcode( 'main_shortcode' );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
-
-		if ( is_admin() )
-			return;
-
-		$this->filter( 'post_class', 3, 12 );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
 	public function current_screen( $screen )
@@ -142,6 +144,8 @@ class Genres extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -158,17 +162,9 @@ class Genres extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	public function template_redirect()
+	public function dashboard_widgets()
 	{
-		if ( is_embed() )
-			return;
-
-		if ( ! is_singular( $this->posttypes() ) )
-			return;
-
-		$this->current_queried = get_queried_object_id();
-
-		$this->enqueue_styles();
+		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )
@@ -176,17 +172,11 @@ class Genres extends gEditorial\Module
 		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
 	}
 
-	public function dashboard_widgets()
+	public function template_include( $template )
 	{
-		$this->add_dashboard_term_summary( 'main_taxonomy' );
-	}
-
-	public function post_class( $classes, $css_class, $post_id )
-	{
-		if ( $this->posttype_supported( WordPress\Post::type( $post_id ) ) )
-			$classes[] = $this->classs( 'supported' );
-
-		return $classes;
+		return $this->get_setting( 'contents_viewable', TRUE )
+			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
+			: $template;
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -205,21 +195,12 @@ class Genres extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		$this->check_settings( $sub, 'reports' );
+		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Genre Reports', 'Header', 'geditorial-genres' ) );
-
-		$taxonomy = $this->constant( 'main_taxonomy' );
-
-		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
-			return Core\HTML::desc( $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' ), TRUE, '-empty' );
-
-		echo Template::getSpanTiles( [
-			'taxonomy' => $taxonomy,
-			'posttype' => $this->posttypes(),
-		], $this->key );
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

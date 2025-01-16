@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait TaxonomyOverview
 {
+	// DEPRECATED: use `modulelinks__register_headerbuttons()`
 	protected function taxonomy_overview_register_headerbutton( $context, $link = NULL )
 	{
 		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )

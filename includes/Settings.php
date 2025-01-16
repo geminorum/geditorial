@@ -1297,6 +1297,19 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_imports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'imports_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Imports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can access data imports.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
 	public static function getSetting_exports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [

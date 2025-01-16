@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
@@ -17,6 +18,7 @@ class Educated extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxSupported;
+	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
@@ -30,8 +32,8 @@ class Educated extends gEditorial\Module
 			'icon'     => 'welcome-learn-more',
 			'access'   => 'beta',
 			'keywords' => [
-				'taxmodule',
 				'education',
+				'taxmodule',
 			],
 		];
 	}
@@ -59,7 +61,7 @@ class Educated extends gEditorial\Module
 			'_editlist' => [
 				'admin_restrict',
 				'auto_term_parents',
-				'show_in_quickedit',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
 			'_frontend' => [
 				'contents_viewable',
@@ -180,5 +182,16 @@ class Educated extends gEditorial\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

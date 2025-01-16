@@ -93,8 +93,9 @@ class Ranged extends gEditorial\Module
 			'_roles' => [
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
-				'tools_roles'   => [ NULL, $roles ],
 				'exports_roles' => [ NULL, $roles ],
+				'imports_roles' => [ NULL, $roles ],
+				'tools_roles'   => [ NULL, $roles ],
 			],
 			'_editlist' => [
 				'admin_bulkactions',
@@ -510,7 +511,7 @@ class Ranged extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->posttype_overview_register_headerbutton( 'reports' );
+				$this->modulelinks__register_headerbuttons();
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__unset_columns( $screen->post_type );
@@ -663,7 +664,12 @@ class Ranged extends gEditorial\Module
 
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'tools' ] );
+		return $this->_override_module_cuc( $context, $fallback, [
+			'reports',
+			'exports',
+			'tools',
+			'imports',
+		] );
 	}
 
 	public function tools_settings( $sub )

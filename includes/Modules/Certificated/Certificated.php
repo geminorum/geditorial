@@ -133,7 +133,6 @@ class Certificated extends gEditorial\Module
 			$this->modulelinks__register_headerbuttons();
 			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
-			$this->taxonomy_overview_register_headerbutton( 'reports' );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 

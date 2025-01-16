@@ -4,18 +4,24 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Labeled extends gEditorial\Module
 {
+	use Internals\BulkExports;
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\MetaBoxSupported;
 	use Internals\PostMeta;
+	use Internals\TaxonomyOverview;
+	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -28,8 +34,8 @@ class Labeled extends gEditorial\Module
 			'icon'     => 'tag',
 			'access'   => 'beta',
 			'keywords' => [
-				'taxmodule',
 				'metafield',
+				'taxmodule',
 			],
 		];
 	}
@@ -64,6 +70,15 @@ class Labeled extends gEditorial\Module
 	{
 		return [
 			'main_taxonomy' => 'label',
+		];
+	}
+
+	protected function get_module_icons()
+	{
+		return [
+			'taxonomies' => [
+				'main_taxonomy' => NULL,
+			],
 		];
 	}
 
@@ -130,6 +145,8 @@ class Labeled extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
 	public function meta_init()
@@ -155,6 +172,8 @@ class Labeled extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -185,5 +204,16 @@ class Labeled extends gEditorial\Module
 				'before'   => $this->wrap_open_row().$this->get_column_icon( FALSE, $fields['label_string']['icon'], $fields['label_string']['title'] ),
 				'after'    => '</li>',
 			] );
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

@@ -4,16 +4,21 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
 class Honored extends gEditorial\Module
 {
+	use Internals\BulkExports;
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\MetaBoxSupported;
+	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
@@ -24,11 +29,11 @@ class Honored extends gEditorial\Module
 			'name'     => 'honored',
 			'title'    => _x( 'Honored', 'Modules: Honored', 'geditorial-admin' ),
 			'desc'     => _x( 'With Great Respect', 'Modules: Honored', 'geditorial-admin' ),
-			'icon'     => 'smiley',
+			'icon'     => [ 'misc-16', 'person-wheelchair' ],
 			'access'   => 'beta',
 			'keywords' => [
-				'taxmodule',
 				'honorific',
+				'taxmodule',
 			],
 		];
 	}
@@ -47,7 +52,7 @@ class Honored extends gEditorial\Module
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
 				'summary_drafts',
-				'count_not',
+				// 'count_not', // no need about honorifics
 			],
 			'_editpost' => [
 				'metabox_advanced',
@@ -55,7 +60,8 @@ class Honored extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_restrict',
-				'show_in_quickedit',
+				'auto_term_parents',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
 			],
 			'_frontend' => [
 				'contents_viewable',
@@ -129,11 +135,14 @@ class Honored extends gEditorial\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
 	public function current_screen( $screen )
@@ -142,6 +151,8 @@ class Honored extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -184,5 +195,16 @@ class Honored extends gEditorial\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

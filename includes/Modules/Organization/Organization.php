@@ -82,6 +82,8 @@ class Organization extends gEditorial\Module
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
 				'exports_roles' => [ NULL, $roles ],
+				'imports_roles' => [ NULL, $roles ],
+				'tools_roles'   => [ NULL, $roles ],
 			],
 			'_editlist' => [
 				'admin_bulkactions',
@@ -408,7 +410,7 @@ class Organization extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->posttype_overview_register_headerbutton( 'reports' );
+				$this->modulelinks__register_headerbuttons();
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__unset_columns( $screen->post_type );
 				$this->coreadmin__unset_views( $screen->post_type );
@@ -690,6 +692,16 @@ class Organization extends gEditorial\Module
 		echo $after_title;
 			echo $dropdown;
 		echo $after;
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback, [
+			'reports',
+			'exports',
+			'tools',
+			'imports',
+		] );
 	}
 
 	public function tools_settings( $sub )

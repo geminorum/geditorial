@@ -81,6 +81,8 @@ class Directorate extends gEditorial\Module
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
 				'exports_roles' => [ NULL, $roles ],
+				'imports_roles' => [ NULL, $roles ],
+				'tools_roles'   => [ NULL, $roles ],
 			],
 			'_editlist' => [
 				'admin_bulkactions',
@@ -686,6 +688,16 @@ class Directorate extends gEditorial\Module
 		echo $after_title;
 			echo $dropdown;
 		echo $after;
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback, [
+			'reports',
+			'exports',
+			'tools',
+			'imports',
+		] );
 	}
 
 	public function tools_settings( $sub )

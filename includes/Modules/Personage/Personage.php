@@ -60,8 +60,9 @@ class Personage extends gEditorial\Module
 			'_roles' => [
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
-				'tools_roles'   => [ NULL, $roles ],
 				'exports_roles' => [ NULL, $roles ],
+				'imports_roles' => [ NULL, $roles ],
+				'tools_roles'   => [ NULL, $roles ],
 			],
 			'_dashboard' => [
 				'dashboard_widgets',
@@ -460,7 +461,7 @@ class Personage extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->posttype_overview_register_headerbutton( 'reports' );
+				$this->modulelinks__register_headerbuttons();
 				$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->corerestrictposts__hook_screen_taxonomies( [
@@ -1015,7 +1016,12 @@ class Personage extends gEditorial\Module
 
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
-		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'tools' ] );
+		return $this->_override_module_cuc( $context, $fallback, [
+			'reports',
+			'exports',
+			'tools',
+			'imports',
+		] );
 	}
 
 	public function tools_settings( $sub )

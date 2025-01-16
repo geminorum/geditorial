@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\WordPress;
 
@@ -17,6 +18,7 @@ class Regioned extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxSupported;
+	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
 	// TODO: add subcontent api for list of regioned background: سابقه کاری در مناطق
@@ -32,8 +34,8 @@ class Regioned extends gEditorial\Module
 			'icon'     => 'admin-site-alt3',
 			'access'   => 'beta',
 			'keywords' => [
-				'taxmodule',
 				'regional',
+				'taxmodule',
 			],
 		];
 	}
@@ -55,7 +57,8 @@ class Regioned extends gEditorial\Module
 				'count_not',
 			],
 			'_editpost' => [
-				'selectmultiple_term',
+				'metabox_advanced',
+				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
 				'admin_restrict',
@@ -109,6 +112,7 @@ class Regioned extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, [
@@ -119,6 +123,7 @@ class Regioned extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
@@ -140,13 +145,14 @@ class Regioned extends gEditorial\Module
 
 			} else if ( 'post' === $screen->base ) {
 
-				$this->hook_taxonomy_metabox_mainbox(
-					'main_taxonomy',
-					$screen->post_type,
-					$this->get_setting( 'selectmultiple_term' )
-						? '__checklist_restricted_terms_callback'
-						: '__singleselect_restricted_terms_callback'
-				);
+				if ( ! $this->get_setting( 'metabox_advanced' ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'main_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term' )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 			}
 		}
 	}
@@ -171,5 +177,16 @@ class Regioned extends gEditorial\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }
