@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
@@ -64,5 +65,27 @@ trait ModuleLinks
 		}
 
 		return $fallback ?? 'screenoptions';
+	}
+
+	protected function modulelinks__register_posttype_export_headerbuttons( $constant_or_posttype, $context = 'reports', $check = TRUE )
+	{
+		if ( ! method_exists( $this, 'exports_get_export_links' ) )
+			return FALSE;
+
+		if ( $check && ! $this->cuc( $context ) )
+			return FALSE;
+
+		$posttype = $this->constant( $constant_or_posttype, $constant_or_posttype );
+		$links    = $this->exports_get_export_links( $posttype, $context, 'posttype' );
+		$icon     = Helper::getIcon( 'download' );
+
+		foreach ( $links as $name => $url )
+			Services\HeaderButtons::register( $name, [
+				'html'     => $url,
+				'icon'     => $icon,
+				'priority' => 800,
+			] );
+
+		return $posttype;
 	}
 }

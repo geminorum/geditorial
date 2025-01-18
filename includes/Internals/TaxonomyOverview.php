@@ -25,7 +25,7 @@ trait TaxonomyOverview
 	// TODO: display taxonmy meta-data
 	protected function taxonomy_overview_render_table( $constant, $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
 	{
-		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
+		if ( ! $this->cuc( $context ) )
 			return FALSE;
 
 		$query       = $extra = $exports = [];
@@ -98,8 +98,9 @@ trait TaxonomyOverview
 		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
 			return;
 
-		if ( ! $this->role_can( 'exports', NULL, TRUE ) )
-			return;
+		// already checked
+		// if ( ! $this->role_can( $args['extra']['context'], NULL, TRUE ) )
+		// 	return;
 
 		echo Core\HTML::wrap(
 			$this->exports_get_export_buttons(

@@ -60,7 +60,6 @@ class Personage extends gEditorial\Module
 			'_roles' => [
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
-				'exports_roles' => [ NULL, $roles ],
 				'imports_roles' => [ NULL, $roles ],
 				'tools_roles'   => [ NULL, $roles ],
 			],
@@ -1018,7 +1017,6 @@ class Personage extends gEditorial\Module
 	{
 		return $this->_override_module_cuc( $context, $fallback, [
 			'reports',
-			'exports',
 			'tools',
 			'imports',
 		] );
@@ -1056,7 +1054,8 @@ class Personage extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		$this->check_settings( $sub, 'reports', 'per_page' );
+		if ( $this->check_settings( $sub, 'reports', 'per_page' ) )
+			$this->modulelinks__register_posttype_export_headerbuttons( 'primary_posttype', 'reports', FALSE );
 	}
 
 	protected function render_reports_html( $uri, $sub )

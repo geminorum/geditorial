@@ -419,7 +419,7 @@ trait PairedCore
 		if ( $post->post_type !== $this->constant( $constants[0] ) )
 			return $list;
 
-		if ( ! $this->role_can( 'exports' ) )
+		if ( ! $this->role_can( 'reports' ) )
 			return $list;
 
 		$default  = _x( 'Export Options', 'Internal: Paired: Post Summary Title', 'geditorial-admin' );

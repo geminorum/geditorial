@@ -67,7 +67,7 @@ class Module extends WordPress\Module
 		'default'   => 'manage_options',
 		'settings'  => 'manage_options',
 		'imports'   => 'import',
-		'reports'   => 'edit_others_posts',
+		'reports'   => 'edit_others_posts', // also used for `exports`
 		'tools'     => 'edit_others_posts',
 		'roles'     => 'edit_users',
 		'adminbar'  => 'edit_others_posts',
@@ -985,7 +985,7 @@ class Module extends WordPress\Module
 
 			// TODO: import buttons
 
-			if ( $this->role_can( 'exports' ) && method_exists( $this, 'exports_get_export_buttons' ) )
+			if ( $this->role_can( 'reports' ) && method_exists( $this, 'exports_get_export_buttons' ) )
 				$html.= $this->exports_get_export_buttons( $post->ID, 'editpost', 'globalsummary' );
 
 			if ( ! $html )

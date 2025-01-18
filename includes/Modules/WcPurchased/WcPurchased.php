@@ -46,7 +46,6 @@ class WcPurchased extends gEditorial\Module
 			],
 			'_roles' => [
 				'reports_roles' => [ NULL, $roles ],
-				'exports_roles' => [ NULL, $roles ],
 			],
 		];
 	}
@@ -109,18 +108,15 @@ class WcPurchased extends gEditorial\Module
 		if ( ! $orders = $this->get_product_purchased_orders( $product->get_id() ) )
 			return Core\HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
 
-		$export = $this->role_can( 'exports' );
-
-		if ( isset( $_GET['export'] ) && $export )
+		if ( isset( $_GET['export'] ) )
 			Core\Text::download( $this->get_product_purchased( $orders ), Core\File::prepName( sprintf( 'product-%s.csv', $product->get_sku() ) ) );
 
 		echo $this->wrap_open( '-header' );
 
-			if ( $export )
-				echo Core\HTML::tag( 'a', [
-					'href'    => $this->get_adminpage_url( TRUE, [ 'post' => $product_id, 'noheader' => 1, 'export' => '' ], 'reports' ),
-					'class'   => [ 'button', 'button-small' ],
-				], _x( 'Export CSV', 'Button', 'geditorial-wc-purchased' ) );
+			echo Core\HTML::tag( 'a', [
+				'href'    => $this->get_adminpage_url( TRUE, [ 'post' => $product_id, 'noheader' => 1, 'export' => '' ], 'reports' ),
+				'class'   => [ 'button', 'button-small' ],
+			], _x( 'Export CSV', 'Button', 'geditorial-wc-purchased' ) );
 
 			$sku   = $product->get_sku();
 			$title = $product->get_title();

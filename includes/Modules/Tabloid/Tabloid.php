@@ -41,7 +41,7 @@ class Tabloid extends gEditorial\Module
 			'_roles'            => [
 				'overview_roles' => [ _x( 'Roles that can view overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
 				'prints_roles'   => [ _x( 'Roles that can print overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
-				'exports_roles'  => [ _x( 'Roles that can export overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
+				'reports_roles'  => [ _x( 'Roles that can export overviews.', 'Setting Description', 'geditorial-tabloid' ), $roles ],
 			],
 		];
 	}
@@ -387,7 +387,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_edit']   = WordPress\Post::can( $post, 'edit_post' ) ? get_edit_post_link( $post ) : FALSE;
 		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
-		$data['__can_export'] = $this->role_can( 'exports' );
+		$data['__can_export'] = $this->role_can( 'reports' );
 		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___flags']     = $this->filters( 'post_flags', [], $data, $post, $context );
@@ -448,7 +448,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_edit']   = WordPress\Term::can( $term, 'edit_term' ) ? get_edit_term_link( $term ) : FALSE;
 		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
-		$data['__can_export'] = $this->role_can( 'exports' );
+		$data['__can_export'] = $this->role_can( 'reports' );
 		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
 		$data['__summaries']  = $this->filters( 'term_summaries', [], $data, $term, $context );
 		$data['___flags']     = $this->filters( 'term_flags', [], $data, $term, $context );

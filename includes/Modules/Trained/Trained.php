@@ -93,7 +93,6 @@ class Trained extends gEditorial\Module
 			'_roles' => [
 				'custom_captype',
 				'reports_roles' => [ NULL, $roles ],
-				'exports_roles' => [ NULL, $roles ],
 				'imports_roles' => [ NULL, $roles ],
 				'tools_roles'   => [ NULL, $roles ],
 			],
@@ -601,7 +600,6 @@ class Trained extends gEditorial\Module
 	{
 		return $this->_override_module_cuc( $context, $fallback, [
 			'reports',
-			'exports',
 			'tools',
 			'imports',
 		] );

@@ -288,7 +288,7 @@ trait PairedMetaBox
 		if ( $this->_paired && $this->role_can( 'import', NULL, TRUE ) && method_exists( $this, 'pairedimports_get_import_buttons' ) )
 			$html.= $this->pairedimports_get_import_buttons( $post, $context );
 
-		if ( $this->role_can( 'exports' ) && method_exists( $this, 'exports_get_export_buttons' ) )
+		if ( $this->role_can( 'reports' ) && method_exists( $this, 'exports_get_export_buttons' ) )
 			$html.= $this->exports_get_export_buttons( $post->ID, $context, 'paired' );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
