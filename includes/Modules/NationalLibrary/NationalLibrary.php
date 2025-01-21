@@ -244,10 +244,10 @@ class NationalLibrary extends gEditorial\Module
 			} else if ( $fipa = get_query_var( $this->constant( 'fipa_queryvar' ) ) ) {
 
 				// NOTE: `$fipa` is `ISBN`
-				if ( ! $isbn = Core\ISBN::sanitize( $fipa ) )
+				if ( ! Core\ISBN::validate( $fipa ) )
 					return; // TODO: maybe redirect to error page
 
-				if ( ! $url = ModuleHelper::scrapeURLFromISBN( $isbn ) )
+				if ( ! $url = ModuleHelper::scrapeURLFromISBN( Core\ISBN::sanitize( $fipa ) ) )
 					return; // TODO: maybe redirect to error page
 
 				Core\WordPress::redirect( $url, 302 );
@@ -466,10 +466,13 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $this->get_bib( $post ) && ! $this->get_isbn( $post ) )
+		if ( ! ( $bib = $this->get_bib( $post ) ) && ! ( $isbn = $this->get_isbn( $post ) ) )
 			return FALSE;
 
-		return TRUE;
+		if ( $bib )
+			return (bool) Core\Validation::isBibliographic( $bib );
+
+		return (bool) Core\ISBN::validate( $isbn );
 	}
 
 	// TODO: report error button on front-end
