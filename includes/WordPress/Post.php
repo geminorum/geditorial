@@ -178,6 +178,32 @@ class Post extends Core\Base
 		return apply_filters( 'the_permalink', get_permalink( $post ), $post );
 	}
 
+	/**
+	 * Retrieves the URL for editing a given post.
+	 * @ref `get_edit_post_link()`
+	 * @old `WordPress::getPostEditLink()`
+	 *
+	 * @param  int|object $post
+	 * @param  array      $extra
+	 * @param  mixed      $fallback
+	 * @return string     $link
+	 */
+	public static function edit( $post, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $post = self::get( $post ) )
+			return $fallback;
+
+		if ( ! self::can( $post, 'edit_post' ) )
+			return $fallback;
+
+		$link = add_query_arg( array_merge( [
+			'action' => 'edit',
+			'post'   => $post->ID,
+		], $extra ), admin_url( 'post.php' ) );
+
+		return apply_filters( 'get_edit_post_link', $link, $post->ID, 'display' );
+	}
+
 	// public static function shortlink( $post ) {}
 
 	/**
@@ -197,8 +223,8 @@ class Post extends Core\Base
 		if ( ! is_null( $filtered ) )
 			return $filtered;
 
-		if ( is_admin() && self::can( $post, 'edit_post' ) )
-			return get_edit_post_link( $post, $context ?? 'display' );
+		if ( is_admin() && ( $edit = self::edit( $post ) ) )
+			return $edit;
 
 		if ( PostType::viewable( $post->post_type ) )
 			return self::link( $post, FALSE );

@@ -170,7 +170,8 @@ class Term extends Core\Base
 		while ( $parent ) {
 
 			$object = self::get( (int) $current );
-			$link   = 'edit' === $linked ? get_edit_term_link( $object, 'edit' ) : self::link( $object );
+			$edit   = self::edit( $object );
+			$link   = ( $edit && 'edit' === $linked ) ? $edit : self::link( $object );
 
 			if ( $object && $object->parent )
 				$parents[] = $linked && $link
@@ -223,6 +224,32 @@ class Term extends Core\Base
 	}
 
 	/**
+	 * Retrieves the URL for editing a given term.
+	 * @ref `get_edit_term_link()`
+	 * @old `WordPress::getEditTaxLink()`
+	 *
+	 * @param  int|object $term
+	 * @param  array      $extra
+	 * @param  mixed      $fallback
+	 * @return string     $link
+	 */
+	public static function edit( $term, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $term = self::get( $term ) )
+			return $fallback;
+
+		if ( ! self::can( $term, 'edit_term' ) )
+			return $fallback;
+
+		$link = add_query_arg( array_merge( [
+			'taxonomy' => $term->taxonomy,
+			'tag_ID'   => $term->term_id,
+		], $extra ), admin_url( 'term.php' ) );
+
+		return apply_filters( 'get_edit_term_link', $link, $term->term_id, $term->taxonomy, '' );
+	}
+
+	/**
 	 * Retrieves a contextual link given a term id or term object.
 	 *
 	 * @param  null|int|object $term
@@ -239,8 +266,8 @@ class Term extends Core\Base
 		if ( ! is_null( $filtered ) )
 			return $filtered;
 
-		if ( is_admin() && self::can( $term, 'edit_term' ) )
-			return get_edit_term_link( $term );
+		if ( is_admin() && ( $edit = self::edit( $term ) ) )
+			return $edit;
 
 		if ( Taxonomy::viewable( $term->taxonomy ) )
 			return self::link( $term, FALSE );

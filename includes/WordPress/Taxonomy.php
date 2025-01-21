@@ -225,6 +225,43 @@ class Taxonomy extends Core\Base
 		return $list;
 	}
 
+	/**
+	 * Retrieves taxonomy archive link.
+	 *
+	 * @param  string|object $taxonomy
+	 * @param  mixed         $fallback
+	 * @return string        $link
+	 */
+	public static function link( $taxonomy, $fallback = NULL )
+	{
+		if ( ! $object = self::object( $taxonomy ) )
+			return $fallback;
+
+		return apply_filters( 'geditorial_taxonomy_archive_link', $fallback, $object->name );
+	}
+
+	/**
+	 * Retrieves the URL for editing a given taxonomy.
+	 * @old `WordPress::getEditTaxLink()`
+	 *
+	 * @param  string|object $taxonomy
+	 * @param  array         $extra
+	 * @param  mixed         $fallback
+	 * @return string        $link
+	 */
+	public static function edit( $taxonomy, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $object = self::object( $taxonomy ) )
+			return $fallback;
+
+		if ( ! self::can( $object, 'manage_terms' ) )
+			return $fallback;
+
+		return add_query_arg( array_merge( [
+			'taxonomy' => $object->name,
+		], $extra ), admin_url( 'edit-tags.php' ) );
+	}
+
 	public static function getDefaultTermID( $taxonomy, $fallback = FALSE )
 	{
 		return get_option( self::getDefaultTermOptionKey( $taxonomy ), $fallback );
@@ -1295,9 +1332,11 @@ class Taxonomy extends Core\Base
 		return apply_filters( 'geditorial_get_term_thumbnail_id', $thumbnail_id, $term_id, $metakey );
 	}
 
+	// FIXME: DEPRECATED
 	public static function getArchiveLink( $taxonomy )
 	{
-		return apply_filters( 'geditorial_taxonomy_archive_link', FALSE, $taxonomy );
+		self::_dep();
+		return self::link( $taxonomy );
 	}
 
 	// DEPRECATED: use `Term::title()`

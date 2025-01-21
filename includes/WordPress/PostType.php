@@ -215,6 +215,46 @@ class PostType extends Core\Base
 		return $list;
 	}
 
+	/**
+	 * Retrieves post-type archive link.
+	 *
+	 * @param  string|object $posttype
+	 * @param  mixed         $fallback
+	 * @return string        $link
+	 */
+	public static function link( $posttype, $fallback = NULL )
+	{
+		if ( ! $object = self::object( $posttype ) )
+			return $fallback;
+
+		if ( ! $link = get_post_type_archive_link( $object->name ) )
+			$link = $fallback;
+
+		return apply_filters( 'geditorial_posttype_archive_link', $link, $object->name );
+	}
+
+	/**
+	 * Retrieves the URL for editing a given posttype.
+	 * @old `WordPress::getPostTypeEditLink()`
+	 *
+	 * @param  string|object $posttype
+	 * @param  array         $extra
+	 * @param  mixed         $fallback
+	 * @return string        $link
+	 */
+	public static function edit( $posttype, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $object = self::object( $posttype ) )
+			return $fallback;
+
+		if ( ! self::can( $posttype, 'read' ) )
+			return $fallback;
+
+		return add_query_arg( array_merge( [
+			'post_type' => $object->name,
+		], $extra ), admin_url( 'edit.php' ) );
+	}
+
 	// * 'publish' - a published post or page
 	// * 'pending' - post is pending review
 	// * 'draft' - a post in draft status
@@ -670,9 +710,11 @@ class PostType extends Core\Base
 		return apply_filters( 'geditorial_get_post_thumbnail_id', $thumbnail_id, $post_id, $metakey );
 	}
 
+	// FIXME: DEPRECATED
 	public static function getArchiveLink( $posttype )
 	{
-		return apply_filters( 'geditorial_posttype_archive_link', get_post_type_archive_link( $posttype ), $posttype );
+		self::_dep();
+		return self::link( $posttype );
 	}
 
 	public static function supportBlocksByPost( $post )

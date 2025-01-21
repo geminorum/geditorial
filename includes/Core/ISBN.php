@@ -32,8 +32,7 @@ class ISBN extends Base
 			return FALSE;
 
 		// only numbers
-		// @REF: https://stackoverflow.com/a/4878242
-		if ( ! preg_match( '/^[0-9]+$/', $sanitized ) )
+		if ( ! Number::is( $sanitized ) )
 			return FALSE;
 
 		// only between 10-13 digits

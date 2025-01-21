@@ -349,9 +349,12 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return get_search_link( $query );
 	}
 
+	// FIXME: DEPRECATED
 	// @REF: `get_edit_term_link()`
 	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = [] )
 	{
+		self::_dep();
+
 		if ( $term_id ) {
 
 			if ( current_user_can( 'edit_term', $term_id ) )
@@ -374,9 +377,11 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return FALSE;
 	}
 
-	// FIXME: move to `PostType`
+	// FIXME: DEPRECATED
 	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = [] )
 	{
+		self::_dep();
+
 		$query = [ 'post_type' => $posttype ];
 
 		if ( $user_id )

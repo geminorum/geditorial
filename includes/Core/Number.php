@@ -31,6 +31,18 @@ class Number extends Base
 		'9' => "\xD9\xA9",
 	];
 
+	/**
+	 * Determines whether a string contains only of digits.
+	 * @source https://stackoverflow.com/a/4878242
+	 *
+	 * @param  string $string
+	 * @return bool   $is
+	 */
+	public static function is( $string )
+	{
+		return (bool) preg_match( '/^[0-9]+$/', self::translate( Text::trim( $string ) ) );
+	}
+
 	// converts back into numbers
 	public static function translate( $string )
 	{
