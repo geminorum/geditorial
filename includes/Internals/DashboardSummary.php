@@ -188,12 +188,7 @@ trait DashboardSummary
 					);
 
 				$query = [ $query_var => $term_slug ];
-				$name  = sanitize_term_field( 'name',
-					$terms[$term_slug]->name,
-					$terms[$term_slug]->term_id,
-					$terms[$term_slug]->taxonomy,
-					'display'
-				);
+				$name  = WordPress\Term::title( $terms[$term_slug] );
 
 				if ( $paired )
 					$query[WordPress\Taxonomy::queryVar( $paired->taxonomy )] = $paired->slug;

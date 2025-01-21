@@ -1800,12 +1800,13 @@ class Terms extends gEditorial\Module
 			return;
 
 		$post_id = get_queried_object_id();
+		$node_id = $this->classs();
 
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
 		$nodes[] = [
-			'id'     => $this->classs(),
+			'id'     => $node_id,
 			'title'  => _x( 'Summary of Terms', 'Adminbar', 'geditorial-terms' ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url( 'reports' ),
@@ -1822,18 +1823,18 @@ class Terms extends gEditorial\Module
 				continue;
 
 			$nodes[] = [
+				'parent' => $node_id,
 				'id'     => $this->classs( 'tax', $taxonomy ),
 				'title'  => $object->labels->name.':',
-				'parent' => $this->classs(),
 				'href'   => Core\WordPress::getEditTaxLink( $taxonomy ),
 			];
 
 			foreach ( $terms as $term )
 				$nodes[] = [
+					'parent' => $node_id,
 					'id'     => $this->classs( 'term', $term->term_id ),
-					'title'  => '&ndash; '.sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-					'parent' => $this->classs(),
-					'href'   => get_term_link( $term ),
+					'title'  => '&ndash; '.WordPress\Term::title( $term ),
+					'href'   => WordPress\Term::link( $term ),
 				];
 		}
 	}

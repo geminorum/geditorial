@@ -321,8 +321,8 @@ class Audit extends gEditorial\Module
 					$nodes[] = [
 						'id'     => $this->classs( 'attribute', $term->term_id ),
 						'parent' => $classs,
-						'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
-						'href'   => get_term_link( $term ),
+						'title'  => WordPress\Term::title( $term ),
+						'href'   => WordPress\Term::link( $term ),
 					];
 
 			else

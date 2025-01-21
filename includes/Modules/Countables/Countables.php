@@ -99,7 +99,7 @@ class Countables extends gEditorial\Module
 				'countable' => '-posttype-'.$posttype,
 				'count'     => $count,
 				'formatted' => $args['counter'] ? '' : Core\Number::format( $count ),
-				'link'      => $args['link'] ?: WordPress\PostType::getArchiveLink( $posttype ),
+				'link'      => $args['link'] ?: WordPress\PostType::link( $posttype ),
 				'title'     => is_null( $args['title'] ) ? Helper::getPostTypeLabel( $posttype, 'name' ) : trim( $args['title'] ),
 				'text'      => $content ? trim( $content ) : Helper::getPostTypeLabel( $posttype, 'description' ),
 			], $posttype, $count, $args );

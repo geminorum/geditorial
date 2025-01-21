@@ -302,9 +302,9 @@ class Alphabet extends gEditorial\Module
 
 				} else {
 
-					$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+					$title = WordPress\Term::title( $term );
 					// $title = Core\Text::nameFamilyLast( $title ); // no need on front
-					$link  = get_term_link( $term->term_id, $term->taxonomy );
+					$link  = WordPress\Term::link( $term );
 
 					$html.= '<'.$args['term_tag'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
 

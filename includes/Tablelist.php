@@ -243,12 +243,10 @@ class Tablelist extends WordPress\Main
 
 	public static function getTermTitleRow( $term, $link = 'edit' )
 	{
-		$term = get_term( $term );
-
-		if ( ! $term || is_wp_error( $term ) )
+		if ( ! $term = WordPress\Term::get( $term ) )
 			return Plugin::na( FALSE );
 
-		$title = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+		$title = WordPress\Term::title( $term );
 
 		if ( ! $link )
 			return Core\HTML::escape( $title );
@@ -268,7 +266,7 @@ class Tablelist extends WordPress\Main
 
 		if ( 'view' == $link )
 			return Core\HTML::tag( 'a', [
-				'href'   => get_term_link( $term->term_id, $term->taxonomy ),
+				'href'   => WordPress\Term::link( $term ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => _x( 'View', 'Tablelist: Row Action', 'geditorial' ),
@@ -467,7 +465,7 @@ class Tablelist extends WordPress\Main
 				if ( ! $term = WordPress\Term::get( $row ) )
 					return Plugin::na( FALSE );
 
-				$html = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+				$html = WordPress\Term::title( $term );
 
 				if ( $description && $term->description )
 					$html.= wpautop( WordPress\Strings::prepDescription( $term->description, FALSE, FALSE ), FALSE );
@@ -512,7 +510,7 @@ class Tablelist extends WordPress\Main
 				case 'view':
 
 					$list['view'] = Core\HTML::tag( 'a', [
-						'href'   => get_term_link( $term->term_id, $term->taxonomy ),
+						'href'   => WordPress\Term::link( $term ),
 						'title'  => urldecode( $term->slug ),
 						'class'  => '-link -row-link -row-link-view',
 						'target' => '_blank',

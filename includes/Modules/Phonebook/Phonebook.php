@@ -378,11 +378,10 @@ class Phonebook extends gEditorial\Module
 		if ( Core\Text::has( $search, Services\AdvancedQueries::SEARCH_OPERATOR_OR ) )
 			return;
 
-		$search = Core\Number::translate( Core\Text::stripAllSpaces( $search ) );
+		$search = Core\Text::stripAllSpaces( $search );
 
 		// only numbers
-		// @REF: https://stackoverflow.com/a/4878242
-		if ( ! preg_match( '/^[0-9]+$/', $search ) )
+		if ( ! Core\Number::is( $search ) )
 			return;
 
 		if ( ! $sanitized = Core\Phone::sanitize( $search ) )

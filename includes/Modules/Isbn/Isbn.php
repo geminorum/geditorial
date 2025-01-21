@@ -279,7 +279,7 @@ class Isbn extends gEditorial\Module
 		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
 			return;
 
-		if ( ! $archive = WordPress\PostType::getArchiveLink( $posttype ) )
+		if ( ! $archive = WordPress\PostType::link( $posttype ) )
 			return;
 
 		$metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) ?: 'isbn';

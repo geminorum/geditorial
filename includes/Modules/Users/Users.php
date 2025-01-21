@@ -337,7 +337,7 @@ class Users extends gEditorial\Module
 
 					printf( $before, '-user-group' );
 						echo $this->get_column_icon( FALSE, 'networking', _x( 'Group', 'Row Icon Title', 'geditorial-users' ) );
-						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+						echo WordPress\Term::title( $term );
 					echo $after;
 				}
 			}
@@ -351,7 +351,7 @@ class Users extends gEditorial\Module
 
 					printf( $before, '-user-type' );
 						echo $this->get_column_icon( FALSE, 'networking', _x( 'Type', 'Row Icon Title', 'geditorial-users' ) );
-						echo sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+						echo WordPress\Term::title( $term );
 					echo $after;
 				}
 			}

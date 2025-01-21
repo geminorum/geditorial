@@ -226,7 +226,7 @@ class Badges extends gEditorial\Module
 				'term_name'    => $name,
 				'term_name_br' => str_replace( ' ', '<br>', $name ),
 				'term_slug'    => $slug,
-				'term_link'    => get_term_link( $badge ),
+				'term_link'    => WordPress\Term::link( $badge ),
 				'term_image'   => $image,
 				'term_class'   => sprintf( '-badge-%s', $slug ),
 				'main_class'   => '-badge',

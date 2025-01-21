@@ -146,7 +146,7 @@ trait CoreAdmin
 							Core\HTML::escapeAttr( $label ),
 							Core\HTML::escapeAttr( $color ?: 'inherit' ),
 							Core\HTML::escapeAttr( $color ? Core\Color::lightOrDark( $color ) : 'none' ),
-							Core\HTML::escapeAttr( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) )
+							Core\HTML::escapeAttr( WordPress\Term::title( $term ) )
 						);
 					}
 				}

@@ -35,8 +35,8 @@ class ShortCode extends WordPress\Main
 			'title_after'    => '', // '<div class="-desc">%3$s</div>',
 		], $atts );
 
-		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-		$link = get_term_link( $term, $term->taxonomy );
+		$text = WordPress\Term::title( $term );
+		$link = WordPress\Term::link( $term );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $term, $atts, $text, $link ] );
@@ -129,8 +129,8 @@ class ShortCode extends WordPress\Main
 			'item_after_cb' => FALSE,
 		], $atts );
 
-		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-		$link = get_term_link( $term );
+		$text = WordPress\Term::title( $term );
+		$link = WordPress\Term::link( $term );
 
 		if ( is_null( $args['item_text'] ) )
 			$title = $text;
@@ -227,8 +227,8 @@ class ShortCode extends WordPress\Main
 		if ( ! $thumbnail_img = WordPress\Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
 
-		$text = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-		$link = get_term_link( $term );
+		$text = WordPress\Term::title( $term );
+		$link = WordPress\Term::link( $term );
 
 		if ( is_null( $args['item_text'] ) )
 			$title = $text;
@@ -320,7 +320,7 @@ class ShortCode extends WordPress\Main
 			$args['title'] = NULL; // reset
 
 		$text = Helper::getPostTypeLabel( $posttype, $args['title_label'] );
-		$link = WordPress\PostType::getArchiveLink( $posttype->name );
+		$link = WordPress\PostType::link( $posttype->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $posttype, $atts, $text, $link ] );
@@ -393,7 +393,7 @@ class ShortCode extends WordPress\Main
 			$args['title'] = NULL; // reset
 
 		$text = Helper::getTaxonomyLabel( $taxonomy, $args['title_label'] );
-		$link = WordPress\Taxonomy::getArchiveLink( $taxonomy->name );
+		$link = WordPress\Taxonomy::link( $taxonomy->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
 			$args['title'] = call_user_func_array( $args['title_cb'], [ $taxonomy, $atts, $text, $link ] );

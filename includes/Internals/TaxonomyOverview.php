@@ -47,7 +47,7 @@ trait TaxonomyOverview
 					if ( ! $term = WordPress\Term::get( $row ) )
 						return Plugin::na( FALSE );
 
-					$html = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+					$html = WordPress\Term::title( $term );
 
 					if ( $description && $term->description )
 						$html.= wpautop( WordPress\Strings::prepDescription( $term->description, FALSE, FALSE ), FALSE );

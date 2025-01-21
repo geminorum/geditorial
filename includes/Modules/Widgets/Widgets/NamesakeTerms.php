@@ -3,8 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\Taxonomy;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class NamesakeTerms extends gEditorial\Widget
 {
@@ -35,7 +35,7 @@ class NamesakeTerms extends gEditorial\Widget
 		if ( ! in_array( $term->taxonomy, $taxonomies, TRUE ) )
 			return;
 
-		$criteria = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
+		$criteria = WordPress\Term::title( $term );
 		$criteria = self::filters( 'criteria', $criteria, $instance, $args, $term );
 
 		if ( ! $criteria )
@@ -46,7 +46,7 @@ class NamesakeTerms extends gEditorial\Widget
 
 		if ( ! empty( $instance['exclude_defaults'] ) )
 			foreach ( $taxonomies as $taxonomy )
-				$exclude[] = (int) Taxonomy::getDefaultTermID( $taxonomy );
+				$exclude[] = (int) WordPress\Taxonomy::getDefaultTermID( $taxonomy );
 
 		$query = new \WP_Term_Query( [
 			$search      => $criteria,
@@ -75,11 +75,11 @@ class NamesakeTerms extends gEditorial\Widget
 			if ( ! empty( $instance['prefix_with_name'] ) )
 				printf( '%s:&nbsp;', $names[$term->taxonomy] );
 
-			echo HTML::tag( 'a', [
-				'href'  => get_term_link( $term->term_id, $term->taxonomy ),
+			echo Core\HTML::tag( 'a', [
+				'href'  => WordPress\Term::link( $term ),
 				'title' => $title && empty( $instance['prefix_with_name'] ) ? $names[$term->taxonomy] : FALSE,
 				'class' => [ '-term', '-taxonomy-'.$term->taxonomy ],
-			], sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) );
+			], WordPress\Term::title( $term ) );
 
 			if ( ! empty( $instance['tax_name_hint'] ) )
 				printf( '&nbsp;(%s)', $names[$term->taxonomy] );

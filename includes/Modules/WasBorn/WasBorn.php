@@ -776,14 +776,12 @@ class WasBorn extends gEditorial\Module
 				$posts = $query->query( $args );
 				$count = count( $posts );
 
-				$name = sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' );
-				$span = vsprintf(
+				$name = WordPress\Term::title( $term );
+				$span = sprintf(
 					/* translators: %1$s: date start, %2$s: date end */
 					_x( 'From %1$s till %2$s', 'Age Span Exact Dates', 'geditorial-was-born' ),
-					[
-						$group['from'] ? wp_date( 'Y/n/j', Core\Date::getObject( $group['from'] )->getTimestamp() ) : _x( 'Begin', 'Age Span Exact Dates', 'geditorial-was-born' ),
-						$group['to'] ? wp_date( 'Y/n/j', Core\Date::getObject( $group['to'] )->getTimestamp() ) : _x( 'Now', 'Age Span Exact Dates', 'geditorial-was-born' ),
-					]
+					$group['from'] ? wp_date( 'Y/n/j', Core\Date::getObject( $group['from'] )->getTimestamp() ) : _x( 'Begin', 'Age Span Exact Dates', 'geditorial-was-born' ),
+					$group['to'] ? wp_date( 'Y/n/j', Core\Date::getObject( $group['to'] )->getTimestamp() ) : _x( 'Now', 'Age Span Exact Dates', 'geditorial-was-born' )
 				);
 
 				if ( count( $posttypes ) > 1 )

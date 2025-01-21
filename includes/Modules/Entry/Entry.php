@@ -189,15 +189,15 @@ class Entry extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Entry Sections', 'Adminbar', 'geditorial-entry' ),
 			'parent' => $parent,
-			'href'   => WordPress\PostType::getArchiveLink( $this->constant( 'primary_posttype' ) ),
+			'href'   => WordPress\PostType::link( $this->constant( 'primary_posttype' ) ),
 		];
 
 		foreach ( $terms as $term )
 			$nodes[] = [
 				'id'     => $this->classs( 'section', $term->term_id ),
-				'title'  => sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ),
 				'parent' => $this->classs(),
-				'href'   => get_term_link( $term ), // FIXME: link to the admin list of other posts in this posttype
+				'title'  => WordPress\Term::title( $term ),
+				'href'   => WordPress\Term::link( $term ), // FIXME: link to the admin list of other posts in this posttype
 			];
 	}
 
@@ -233,7 +233,6 @@ class Entry extends gEditorial\Module
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
-
 
 				$this->_edit_screen( $screen->post_type );
 

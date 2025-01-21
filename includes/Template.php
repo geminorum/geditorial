@@ -117,13 +117,13 @@ class Template extends WordPress\Main
 
 		if ( $args['link'] ) {
 
-			if ( 'archive' == $args['link'] )
-				$args['link'] = $viewable ? get_term_link( $args['id'], $args['taxonomy'] ) : FALSE;
+			if ( 'archive' === $args['link'] )
+				$args['link'] = $viewable ? WordPress\Term::link( (int) $args['id'], FALSE ) : FALSE;
 
-			else if ( 'attachment' == $args['link'] )
+			else if ( 'attachment' === $args['link'] )
 				$args['link'] = ( $meta && $viewable ) ? get_attachment_link( $meta ) : FALSE;
 
-			else if ( 'url' == $args['link'] )
+			else if ( 'url' === $args['link'] )
 				$args['link'] = ( $meta && $viewable ) ? wp_get_attachment_url( $meta ) : FALSE;
 		}
 
@@ -148,10 +148,10 @@ class Template extends WordPress\Main
 		} else if ( $args['fallback'] && $viewable ) {
 
 			$html = Core\HTML::tag( 'a', [
-				'href'  => get_term_link( $args['id'], $args['taxonomy'] ),
+				'href'  => WordPress\Term::link( (int) $args['id'] ),
 				'title' => $title,
 				'data'  => $args['data'],
-			], sanitize_term_field( 'name', $term->name, $args['id'], $args['taxonomy'], 'display' ) );
+			], WordPress\Term::title( $term ) );
 		}
 
 		if ( $html ) {
@@ -646,10 +646,10 @@ class Template extends WordPress\Main
 		if ( $args['taxonomy'] && ( $term = WordPress\Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) ) {
 
 			if ( ! $meta )
-				$meta = sanitize_term_field( 'name', $term->name, $term->term_id, $args['taxonomy'], 'display' );
+				$meta = WordPress\Term::title( $term );
 
 			if ( is_null( $args['link'] ) )
-				$args['link'] = get_term_link( $term, $args['taxonomy'] );
+				$args['link'] = WordPress\Term::link( $term );
 
 			if ( is_null( $args['description'] ) )
 				$args['description'] = trim( strip_tags( $term->description ) );

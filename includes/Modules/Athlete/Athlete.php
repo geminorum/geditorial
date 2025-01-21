@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
@@ -14,6 +15,7 @@ use geminorum\gEditorial\WordPress;
 class Athlete extends gEditorial\Module
 {
 	use Internals\AdminPage;
+	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
@@ -25,6 +27,7 @@ class Athlete extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 	use Internals\RestAPI;
 	use Internals\SubContents;
+	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
 	public static function module()
@@ -308,6 +311,8 @@ class Athlete extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
@@ -332,6 +337,8 @@ class Athlete extends gEditorial\Module
 
 			$this->filter_string( 'parent_file', 'options-general.php' );
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 		} else if ( in_array( $screen->base, [ 'edit', 'post' ], TRUE ) ) {
 
@@ -476,5 +483,16 @@ class Athlete extends gEditorial\Module
 		echo $after;
 
 		$this->actions( 'pointers_post_after', $post, $bmi, $mass, $stature, $before, $after );
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

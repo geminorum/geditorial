@@ -392,7 +392,7 @@ class Archives extends gEditorial\Module
 		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return FALSE;
 
-		$link = WordPress\PostType::getArchiveLink( $posttype );
+		$link = WordPress\PostType::link( $posttype );
 		$slug = WordPress\PostType::object( $posttype )->has_archive;
 
 		return $this->filters( 'posttype_archive_link', $link, $posttype, $slug );

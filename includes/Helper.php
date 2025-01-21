@@ -222,7 +222,7 @@ class Helper extends WordPress\Main
 				'href'  => add_query_arg( $query, 'edit.php' ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term',
-			], sanitize_term_field( 'name', $term->name, $term->term_id, $object->name, 'display' ) );
+			], WordPress\Term::title( $term ) );
 		}
 
 		echo WordPress\Strings::getJoined( $list, $before, $after );
@@ -248,7 +248,7 @@ class Helper extends WordPress\Main
 				'href'  => add_query_arg( [ $term->taxonomy => $term->term_id ], $link ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term -taxonomy-term',
-			], Core\HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+			], WordPress\Term::title( $term ) );
 
 		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
@@ -269,7 +269,7 @@ class Helper extends WordPress\Main
 				'href'  => sprintf( $link, $taxonomy->name, $term->slug ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term -user-term',
-			], Core\HTML::escape( sanitize_term_field( 'name', $term->name, $term->term_id, $term->taxonomy, 'display' ) ) );
+			], WordPress\Term::title( $term ) );
 
 		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
