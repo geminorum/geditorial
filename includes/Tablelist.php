@@ -251,10 +251,10 @@ class Tablelist extends WordPress\Main
 		if ( ! $link )
 			return Core\HTML::escape( $title );
 
-		if ( 'edit' == $link ) {
-			if ( ! $edit = Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ) )
-				$link = 'view';
-		}
+		$edit = WordPress\Term::edit( $term );
+
+		if ( 'edit' == $link && ! $edit )
+			$link = 'view';
 
 		if ( 'edit' == $link )
 			return Core\HTML::tag( 'a', [
@@ -489,7 +489,7 @@ class Tablelist extends WordPress\Main
 			$actions = [ 'edit', 'view' ];
 
 		$list = [];
-		$edit = Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id );
+		$edit = WordPress\Term::edit( $term );
 
 		foreach ( $actions as $action ) {
 

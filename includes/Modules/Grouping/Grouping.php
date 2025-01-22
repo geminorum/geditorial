@@ -175,7 +175,7 @@ class Grouping extends gEditorial\Module
 	public function tweaks_column_user( $user, $before, $after )
 	{
 		foreach ( $this->get_custom_taxonomies() as $custom ) {
-			$icon = $this->get_column_icon( Core\WordPress::getEditTaxLink( $custom['name'] ), $custom['icon'] ?: NULL, $custom['menu'] );
+			$icon = $this->get_column_icon( WordPress\Taxonomy::edit( $custom['name'] ), $custom['icon'] ?: NULL, $custom['menu'] );
 			Helper::renderUserTermsEditRow( $user->ID, $custom['name'], sprintf( $before, '-taxonomy-'.$custom ).$icon, $after );
 		}
 	}

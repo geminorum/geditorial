@@ -22,7 +22,9 @@ trait TaxonomyOverview
 		] );
 	}
 
-	// TODO: display taxonmy meta-data
+	// TODO: display term count
+	// TODO: display term meta-data
+	// TODO: link to support posttype: `coreadmin__hook_taxonomy_multiple_supported_column`
 	protected function taxonomy_overview_render_table( $constant, $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
 	{
 		if ( ! $this->cuc( $context ) )

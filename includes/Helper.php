@@ -379,14 +379,14 @@ class Helper extends WordPress\Main
 		if ( ! $link )
 			return Core\HTML::escape( $title ).$after;
 
-		$edit = current_user_can( 'edit_term', $term->term_id );
+		$edit = WordPress\Term::edit( $term );
 
 		if ( 'edit' == $link && ! $edit )
 			$link = 'view';
 
 		if ( 'edit' == $link )
 			return Core\HTML::tag( 'a', [
-				'href'   => Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+				'href'   => $edit,
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,

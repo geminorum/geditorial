@@ -480,7 +480,7 @@ class WasBorn extends gEditorial\Module
 					$url_args[$paired_query] = $paired->slug;
 
 				$list[] = Core\HTML::tag( 'a', [
-					'href'  => Core\WordPress::getPostTypeEditLink( $posttype, 0, $url_args ),
+					'href'  => WordPress\PostType::edit( $posttype, $url_args ),
 					'class' => $classes,
 				], $text );
 
@@ -569,7 +569,7 @@ class WasBorn extends gEditorial\Module
 
 			if ( $access[$posttype] )
 				$list[] = Core\HTML::tag( 'a', [
-					'href'  => Core\WordPress::getPostTypeEditLink( $posttype, 0, [ $query_var => 1 ] ),
+					'href'  => WordPress\PostType::edit( $posttype, [ $query_var => 1 ] ),
 					'class' => $classes,
 				], $text );
 
@@ -719,7 +719,7 @@ class WasBorn extends gEditorial\Module
 
 			if ( $access[$posttype] )
 				$list[] = Core\HTML::tag( 'a', [
-					'href'  => Core\WordPress::getPostTypeEditLink( $posttype, 0, [ $query_var => '-1' ] ),
+					'href'  => WordPress\PostType::edit( $posttype, [ $query_var => '-1' ] ),
 					'class' => $classes,
 				], $text );
 
@@ -813,7 +813,7 @@ class WasBorn extends gEditorial\Module
 
 				if ( $access[$posttype] )
 					$list[$term->slug] = Core\HTML::tag( 'a', [
-						'href'  => Core\WordPress::getPostTypeEditLink( $posttype, 0, [ $query_var => $term->slug ] ),
+						'href'  => WordPress\PostType::edit( $posttype, [ $query_var => $term->slug ] ),
 						'class' => $classes,
 					], $text );
 

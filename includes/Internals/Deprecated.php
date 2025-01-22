@@ -44,7 +44,7 @@ trait Deprecated
 
 		$taxonomy = $this->constant( $constant );
 		$metabox  = $this->classs( $taxonomy );
-		$edit     = WordPress::getEditTaxLink( $taxonomy );
+		$edit     = WordPress\Taxonomy::edit( $taxonomy );
 
 		if ( $type )
 			$this->remove_meta_box( $constant, $posttype, $type );
@@ -296,7 +296,7 @@ trait Deprecated
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
 			if ( is_null( $url ) )
-				$url = Core\WordPress::getPostTypeEditLink( $object->name );
+				$url = WordPress\PostType::edit( $object );
 
 			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial-admin' ) );
 			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
@@ -327,7 +327,7 @@ trait Deprecated
 			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
 
 		if ( is_null( $url ) )
-			$url = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $posttype ] );
+			$url = WordPress\Taxonomy::edit( $object, [ 'post_type' => $posttype ] );
 
 		if ( $url ) {
 			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Manage', 'Module: MetaBox Default Action', 'geditorial-admin' ) );

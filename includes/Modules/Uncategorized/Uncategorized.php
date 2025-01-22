@@ -560,7 +560,7 @@ class Uncategorized extends gEditorial\Module
 
 		return [ $this->key => vsprintf( '<a href="%1$s"%2$s>%3$s <span class="count">(%4$s)</span></a>', [
 
-			Core\WordPress::getPostTypeEditLink( $posttype, 0, [
+			WordPress\PostType::edit( $posttype, [
 				$object->query_var => $term->slug,
 				'post_status'      => 'all',
 			] ),

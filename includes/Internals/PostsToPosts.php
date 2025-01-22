@@ -142,7 +142,7 @@ trait PostsToPosts
 
 			foreach ( array_unique( Core\Arraay::pluck( $p2p->items, 'post_type' ) ) as $posttype )
 				$list[] = Core\HTML::tag( 'a', [
-					'href'   => Core\WordPress::getPostTypeEditLink( $posttype, 0, $args ),
+					'href'   => WordPress\PostType::edit( $posttype, $args ),
 					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
 				], $this->cache['posttypes'][$posttype] );
@@ -187,7 +187,7 @@ trait PostsToPosts
 				];
 
 				echo Core\HTML::tag( 'a', [
-					'href'   => Core\WordPress::getPostTypeEditLink( $post->post_type, 0, $args ),
+					'href'   => WordPress\PostType::edit( $post->post_type, $args ),
 					'title'  => _x( 'View all connected', 'Module: P2P', 'geditorial' ),
 					'target' => '_blank',
 				], WordPress\Strings::trimChars( $item->get_title(), 85 ) );

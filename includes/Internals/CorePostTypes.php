@@ -593,10 +593,10 @@ trait CorePostTypes
 
 	// TODO: must add metabox to list the attachments: maybe on `Attachments` Module
 	// @REF: https://stackoverflow.com/questions/15283026/attaching-media-to-post-type-without-editor-support
-	public function posttype__media_register_headerbutton( $constant, $post = NULL, $editor_chack = TRUE )
+	public function posttype__media_register_headerbutton( $constant, $post = NULL, $editor_check = TRUE )
 	{
 		// already handled!
-		if ( $editor_chack && post_type_supports( $this->constant( $constant, $constant ), 'editor' ) )
+		if ( $editor_check && post_type_supports( $this->constant( $constant, $constant ), 'editor' ) )
 			return FALSE;
 
 		if ( ! post_type_supports( $this->constant( $constant, $constant ), 'thumbnail' ) )

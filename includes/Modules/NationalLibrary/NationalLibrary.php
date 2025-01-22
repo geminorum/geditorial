@@ -437,13 +437,16 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $product = wc_get_product( $product ) )
 			return FALSE;
 
-		if ( ! $metakey = $this->_get_posttype_isbn_metakey( $type ?? WordPress\WooCommerce::getProductPosttype() ) )
+		$metakey = $this->_get_posttype_isbn_metakey( $type ?? WordPress\WooCommerce::getProductPosttype() );
+
+		// wc nags about direct use of it's internal meta-keys
+		if ( $metakey && $metakey === WordPress\WooCommerce::getGTINMetakey() )
 			return $product->get_global_unique_id() ?: FALSE;
 
-		if ( ! $isbn = $product->get_meta( $metakey, TRUE, 'edit' ) )
-			return FALSE;
+		if ( $metakey && ( $isbn = $product->get_meta( $metakey, TRUE, 'edit' ) ) )
+			return $isbn;
 
-		return $isbn;
+		return $product->get_global_unique_id() ?: FALSE;
 	}
 
 	public function tabs_builtins_tabs( $tabs, $posttype )

@@ -55,7 +55,7 @@ trait SettingsHelp
 		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
 		/* translators: %s: taxonomy object label */
 		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
-		$link   = Core\WordPress::getEditTaxLink( $object->name );
+		$link   = WordPress\Taxonomy::edit( $object );
 		$before = Core\HTML::tag( 'p', $title );
 		$after  = Core\HTML::tag( 'p', Core\HTML::link( $edit, $link, TRUE ) );
 		$args   = [ 'title' => $object->label, 'id' => $this->classs( 'help-default-terms', '-'.$object->name ) ];

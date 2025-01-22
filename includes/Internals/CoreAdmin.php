@@ -199,7 +199,7 @@ trait CoreAdmin
 
 					$html = Helper::getPostTypeLabel( $posttypes[$posttype], 'extended_label' );
 
-					if ( $link = Core\WordPress::getPostTypeEditLink( $posttype, 0, [ $object->query_var => $term->slug ] ) )
+					if ( $link = WordPress\PostType::edit( $posttype, [ $object->query_var => $term->slug ] ) )
 						$html = Core\HTML::link( $html, $link, TRUE );
 
 					echo Core\HTML::wrap( $html, '-supported-posttype' );

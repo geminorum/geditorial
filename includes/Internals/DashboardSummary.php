@@ -77,7 +77,7 @@ trait DashboardSummary
 		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy->name ) ) {
 
 			if ( is_null( $edit ) )
-				$edit = Core\WordPress::getEditTaxLink( $taxonomy->name );
+				$edit = WordPress\Taxonomy::edit( $taxonomy );
 
 			if ( $edit )
 				$empty = Core\HTML::tag( 'a', [
@@ -190,6 +190,9 @@ trait DashboardSummary
 				$query = [ $query_var => $term_slug ];
 				$name  = WordPress\Term::title( $terms[$term_slug] );
 
+				if ( 'current' === $scope )
+					$query['author'] = $user_id;
+
 				if ( $paired )
 					$query[WordPress\Taxonomy::queryVar( $paired->taxonomy )] = $paired->slug;
 
@@ -225,7 +228,7 @@ trait DashboardSummary
 
 					if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 						$text = Core\HTML::tag( 'a', [
-							'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), $query ),
+							'href'  => WordPress\PostType::edit( $type, $query ),
 							'class' => $classes,
 							'style' => $style ?: FALSE,
 						], $text );
@@ -240,22 +243,22 @@ trait DashboardSummary
 
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
-			$none = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
+			$none  = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
+			$query = [ $query_var => -1 ];
+
+			if ( 'current' === $scope )
+				$query['author'] = $user_id;
 
 			if ( $paired ) {
 
 				foreach ( $posttypes as $posttype )
 					$not[$posttype] = WordPress\Taxonomy::countPostsWithoutTerms( $taxonomy, $posttype, $paired, $exclude );
 
-				$query = [
-					$query_var => -1,
-					WordPress\Taxonomy::queryVar( $paired->taxonomy ) => $paired->slug,
-				];
+				$query[WordPress\Taxonomy::queryVar( $paired->taxonomy )] = $paired->slug;
 
 			} else {
 
-				$not   = WordPress\Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
-				$query = [ $query_var => -1 ];
+				$not = WordPress\Database::countPostsByNotTaxonomy( $taxonomy, $posttypes, ( 'current' == $scope ? $user_id : 0 ), $exclude );
 			}
 
 			foreach ( $not as $type => $count ) {
@@ -289,7 +292,7 @@ trait DashboardSummary
 
 				if ( $objects[$type] && current_user_can( $objects[$type]->cap->edit_posts ) )
 					$text = Core\HTML::tag( 'a', [
-						'href'  => Core\WordPress::getPostTypeEditLink( $type, ( 'current' == $scope ? $user_id : 0 ), $query ),
+						'href'  => WordPress\PostType::edit( $type, $query ),
 						'class' => $classes,
 					], $text );
 

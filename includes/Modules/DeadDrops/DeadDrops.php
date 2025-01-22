@@ -207,7 +207,7 @@ class DeadDrops extends gEditorial\Module
 		if ( ! $secret = get_query_var( $this->constant( 'main_queryvar' ) ) )
 			return;
 
-		// NOTE: chacks for `p` with fallbacks to wp queried!
+		// NOTE: checks for `p` with fallbacks to wp queried!
 		if ( ! $post = WordPress\Post::get( get_query_var( 'p', get_queried_object_id() ) ) )
 			return;
 

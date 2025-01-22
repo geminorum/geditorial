@@ -179,14 +179,13 @@ trait TemplateTaxonomy
 	// DEFAULT METHOD: button for overrided empty/archive page
 	public function templatetaxonomy_get_add_new( $taxonomy, $title = FALSE, $label = NULL )
 	{
-		$object = WordPress\Taxonomy::object( $taxonomy );
-
-		if ( ! current_user_can( $object->cap->manage_terms ) )
+		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy, [ 'name' => $title ] ) )
 			return '';
 
-		// FIXME: name not passing into input
+		$object = WordPress\Taxonomy::object( $taxonomy );
+
 		return Core\HTML::tag( 'a', [
-			'href'          => Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'name' => $title ] ),
+			'href'          => $edit, // FIXME: `name` not passing into input
 			'class'         => [ 'button', '-add-term', '-add-term-'.$object->name ],
 			'target'        => '_blank',
 			'data-taxonomy' => $object->name,

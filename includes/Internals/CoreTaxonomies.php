@@ -877,7 +877,7 @@ trait CoreTaxonomies
 				foreach ( $terms as $term )
 					// TODO: prepend counts from `Recount` module
 					$views[sprintf( '%s-%s', $taxonomy->name, $term->slug )] = Core\HTML::tag( 'a', [
-						'href'  => Core\WordPress::getPostTypeEditLink( $screen->post_type, 0, [ $query => $term->slug ] ),
+						'href'  => WordPress\PostType::edit( $screen->post_type, [ $query => $term->slug ] ),
 						'title' => sprintf( '%s: %s', $label, $term->name ),
 						'class' => $term->slug === self::req( $query ) ? 'current' : FALSE,
 					], $term->name );
@@ -886,7 +886,7 @@ trait CoreTaxonomies
 					return $views;
 
 				$views[sprintf( '%s--none', $taxonomy->name )] =  Core\HTML::tag( 'a', [
-					'href'  => Core\WordPress::getPostTypeEditLink( $screen->post_type, 0, [ $query => '-1' ] ),
+					'href'  => WordPress\PostType::edit( $screen->post_type, [ $query => '-1' ] ),
 					'title' => $label,
 					'class' => '-1' === self::req( $query ) ? 'current' : FALSE,
 				], Helper::getTaxonomyLabel( $taxonomy, 'show_option_no_items' ) );

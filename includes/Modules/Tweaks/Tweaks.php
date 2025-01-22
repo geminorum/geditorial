@@ -762,7 +762,7 @@ class Tweaks extends gEditorial\Module
 			if ( ! empty( $object->{Services\Paired::PAIRED_POSTTYPE_PROP} ) )
 				continue;
 
-			$edit  = Core\WordPress::getEditTaxLink( $object->name, FALSE, [ 'post_type' => $post->post_type ] );
+			$edit  = WordPress\Taxonomy::edit( $object, [ 'post_type' => $post->post_type ] );
 			$icon  = $object->menu_icon ?? ( $object->hierarchical ? 'category' : 'tag' );
 			$title = Helper::getTaxonomyLabel( $object, 'extended_label' );
 

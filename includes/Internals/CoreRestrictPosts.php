@@ -180,7 +180,7 @@ trait CoreRestrictPosts
 	{
 		$posttype = $this->constant( $constant, $constant );
 		$can      = WordPress\PostType::can( $posttype, 'edit_posts' );
-		$link     = $can ? Core\WordPress::getPostTypeEditLink( $posttype ) : FALSE;
+		$link     = $can ? WordPress\PostType::edit( $posttype ) : FALSE;
 		$edit     = $this->get_column_icon( $link, $icon, NULL, $posttype );
 		$notice   = $empty ?? $this->get_string( 'post_children_empty', $constant, 'misc', gEditorial()->na() );
 		$status   = WordPress\Status::available( $posttype );
@@ -202,7 +202,7 @@ trait CoreRestrictPosts
 
 				if ( $count = count( $children ) )
 					echo $edit.Core\HTML::tag( $can ? 'a' : 'span', [
-						'href'  => $can ? Core\WordPress::getPostTypeEditLink( $posttype, 0, [
+						'href'  => $can ? WordPress\PostType::edit( $posttype, [
 							sprintf( '%s_parent', $posttype ) => $post->ID,
 						] ) : FALSE,
 						'class' => '-counted',
@@ -232,7 +232,7 @@ trait CoreRestrictPosts
 	protected function corerestrictposts__hook_columnrow_for_parent_post( $posttype, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{
 		$can    = WordPress\PostType::can( $posttype, 'edit_posts' );
-		$link   = $can ? Core\WordPress::getPostTypeEditLink( $posttype ) : FALSE;
+		$link   = $can ? WordPress\PostType::edit( $posttype ) : FALSE;
 		$edit   = $this->get_column_icon( $link, $icon, NULL, $posttype );
 		$notice = $empty ?? $this->get_string( 'parent_post_empty', $posttype, 'misc', gEditorial()->na() );
 

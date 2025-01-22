@@ -1642,7 +1642,7 @@ class Terms extends gEditorial\Module
 					'id'     => $this->classs( 'desc' ),
 					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ),
 					'parent' => $this->classs(),
-					'href'   => Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+					'href'   => WordPress\Term::edit( $term ),
 				];
 
 				$nodes[] = [
@@ -1661,7 +1661,7 @@ class Terms extends gEditorial\Module
 					'id'     => $this->classs( 'desc', 'empty' ),
 					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ).': '.gEditorial\Plugin::na(),
 					'parent' => $this->classs(),
-					'href'   => Core\WordPress::getEditTaxLink( $term->taxonomy, $term->term_id ),
+					'href'   => WordPress\Term::edit( $term ),
 				];
 			}
 
@@ -1826,7 +1826,7 @@ class Terms extends gEditorial\Module
 				'parent' => $node_id,
 				'id'     => $this->classs( 'tax', $taxonomy ),
 				'title'  => $object->labels->name.':',
-				'href'   => Core\WordPress::getEditTaxLink( $taxonomy ),
+				'href'   => WordPress\Taxonomy::edit( $taxonomy ),
 			];
 
 			foreach ( $terms as $term )

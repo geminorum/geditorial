@@ -312,7 +312,7 @@ class Users extends gEditorial\Module
 		foreach ( $this->cache['posttypes'] as $posttype => $label )
 			if ( ! empty( $counts[$posttype] ) )
 				$list[$label] = Core\HTML::tag( 'a', [
-					'href'   => Core\WordPress::getPostTypeEditLink( $posttype, $user_id ),
+					'href'   => WordPress\PostType::edit( $posttype, [ 'author' => $user_id ] ),
 					'target' => '_blank',
 				], Core\Number::format( $counts[$posttype] ) );
 

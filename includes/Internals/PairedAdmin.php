@@ -117,7 +117,7 @@ trait PairedAdmin
 
 					foreach ( $posttypes as $posttype )
 						$list[] = Core\HTML::tag( 'a', [
-							'href'   => Core\WordPress::getPostTypeEditLink( $posttype, 0, $args ),
+							'href'   => WordPress\PostType::edit( $posttype, $args ),
 							'title'  => _x( 'View the connected list', 'Module: Paired: Title Attr', 'geditorial' ),
 							'target' => '_blank',
 						], $this->cache['posttypes'][$posttype] );

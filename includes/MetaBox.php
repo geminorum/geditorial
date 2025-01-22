@@ -500,7 +500,7 @@ class MetaBox extends WordPress\Main
 			return FALSE;
 
 		if ( is_null( $edit ) )
-			$edit = Core\WordPress::getEditTaxLink( $taxonomy, FALSE, $posttype ? [ 'post_type' => $posttype ] : [] );
+			$edit = WordPress\Taxonomy::edit( $taxonomy, $posttype ? [ 'post_type' => $posttype ] : [] );
 
 		if ( $edit )
 			$html = Core\HTML::tag( 'a', [
