@@ -105,6 +105,9 @@ class WcPostal extends gEditorial\Module
 			'tracking_id' => _x( 'Tracking', 'Export Column', 'geditorial-wc-postal' ),
 		] );
 
+		$this->filter( 'pwoosms_shortcodes_list' );
+		$this->filter( 'pwoosms_order_sms_body_before_replace', 7, 9 );
+
 		if ( is_admin() )
 			return;
 
@@ -230,5 +233,17 @@ class WcPostal extends gEditorial\Module
 			$new_data = array_merge( $order_data, $tracking );
 
 		return $new_data;
+	}
+
+	public function pwoosms_shortcodes_list( $list )
+	{
+		return $list.' <code>{{tracking_id}}</code>';
+	}
+
+	public function pwoosms_order_sms_body_before_replace( $content, $keys, $values, $order_id, $order, $all_product_ids, $vendor_product_ids )
+	{
+		return Core\Text::replaceTokens( $content, [
+			'tracking_id' => $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) ?: '',
+		] );
 	}
 }
