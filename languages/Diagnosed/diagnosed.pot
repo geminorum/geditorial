@@ -13,191 +13,191 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Diagnosed\n"
 "X-Domain: geditorial-diagnosed\n"
 
-#: Diagnosed.php:115
+#: Diagnosed.php:117
 msgid "Diagnosis"
 msgid_plural "Diagnoses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Diagnosed.php:119
+#: Diagnosed.php:121
 msgctxt "Label: `menu_name`"
 msgid "Diagnosis Definitions"
 msgstr ""
 
-#: Diagnosed.php:120
+#: Diagnosed.php:122
 msgctxt "Label: `extended_label`"
 msgid "Diagnosis Definitions"
 msgstr ""
 
-#: Diagnosed.php:121
+#: Diagnosed.php:123
 msgctxt "Label: `show_option_all`"
 msgid "Diagnoses"
 msgstr ""
 
-#: Diagnosed.php:122
+#: Diagnosed.php:124
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undiagnosed)"
 msgstr ""
 
-#: Diagnosed.php:127
+#: Diagnosed.php:129
 msgctxt "Field Label: `label`"
 msgid "Subject"
 msgstr ""
 
-#: Diagnosed.php:128
+#: Diagnosed.php:130
 msgctxt "Field Label: `age`"
 msgid "Age"
 msgstr ""
 
-#: Diagnosed.php:129
+#: Diagnosed.php:131
 msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr ""
 
-#: Diagnosed.php:130
+#: Diagnosed.php:132
 msgctxt "Field Label: `location`"
 msgid "Location"
 msgstr ""
 
-#: Diagnosed.php:131
+#: Diagnosed.php:133
 msgctxt "Field Label: `location`"
 msgid "Doctors"
 msgstr ""
 
-#: Diagnosed.php:132
+#: Diagnosed.php:134
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Diagnosed.php:138
+#: Diagnosed.php:140
 msgctxt "Tab Title"
 msgid "Medical"
 msgstr ""
 
-#: Diagnosed.php:142
+#: Diagnosed.php:144
 msgctxt "Notice"
 msgid "There is no medical information available!"
 msgstr ""
 
-#: Diagnosed.php:143
+#: Diagnosed.php:145
 msgctxt "Notice"
 msgid "You have not necessary permission to manage this medical data."
 msgstr ""
 
-#: Diagnosed.php:150
+#: Diagnosed.php:152
 msgctxt "Setting Description"
 msgid "Supports medical fields for the selected post-types."
 msgstr ""
 
-#: Diagnosed.php:154
+#: Diagnosed.php:156
 msgctxt "MetaBox Title"
 msgid "Medical"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Diagnosed.php:158
+#: Diagnosed.php:160
 msgctxt "Button Title"
 msgid "Medical Records of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Diagnosed.php:160
+#: Diagnosed.php:162
 msgctxt "Button Text"
 msgid "%1$s Manage the Medical Records of %2$s"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Diagnosed.php:163
+#: Diagnosed.php:165
 msgctxt "Action Title"
 msgid "Medical Records of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Diagnosed.php:165
+#: Diagnosed.php:167
 msgctxt "Action Text"
 msgid "Medical"
 msgstr ""
 
 #. translators: %1$s: current post title, %2$s: posttype singular name
-#: Diagnosed.php:168
+#: Diagnosed.php:170
 msgctxt "Row Title"
 msgid "Medical Records of %1$s"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Diagnosed.php:170
+#: Diagnosed.php:172
 msgctxt "Row Text"
 msgid "Medical"
 msgstr ""
 
-#: Diagnosed.php:180
+#: Diagnosed.php:182
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sciatica"
 msgstr ""
 
-#: Diagnosed.php:181
+#: Diagnosed.php:183
 msgctxt "Main Taxonomy: Default Term"
 msgid "Diabetes"
 msgstr ""
 
-#: Diagnosed.php:182
+#: Diagnosed.php:184
 msgctxt "Main Taxonomy: Default Term"
 msgid "Glasses"
 msgstr ""
 
-#: Diagnosed.php:183
+#: Diagnosed.php:185
 msgctxt "Main Taxonomy: Default Term"
 msgid "Migraine"
 msgstr ""
 
-#: Diagnosed.php:184
+#: Diagnosed.php:186
 msgctxt "Main Taxonomy: Default Term"
 msgid "Epilepsy"
 msgstr ""
 
-#: Diagnosed.php:185
+#: Diagnosed.php:187
 msgctxt "Main Taxonomy: Default Term"
 msgid "Gastro"
 msgstr ""
 
-#: Diagnosed.php:186
+#: Diagnosed.php:188
 msgctxt "Main Taxonomy: Default Term"
 msgid "Kidney"
 msgstr ""
 
-#: Diagnosed.php:187
+#: Diagnosed.php:189
 msgctxt "Main Taxonomy: Default Term"
 msgid "Liver"
 msgstr ""
 
-#: Diagnosed.php:188
+#: Diagnosed.php:190
 msgctxt "Main Taxonomy: Default Term"
 msgid "Heart"
 msgstr ""
 
-#: Diagnosed.php:189
+#: Diagnosed.php:191
 msgctxt "Main Taxonomy: Default Term"
 msgid "Knee"
 msgstr ""
 
-#: Diagnosed.php:190
+#: Diagnosed.php:192
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ankle"
 msgstr ""
 
 #. translators: %s: post title
-#: Diagnosed.php:337
+#: Diagnosed.php:339
 msgctxt "Page Title"
 msgid "Medical Grid for %s"
 msgstr ""
 
 #. translators: %s: post title
-#: Diagnosed.php:339
+#: Diagnosed.php:341
 msgctxt "Page Title"
 msgid "Medical Overview for %s"
 msgstr ""
 
-#: Diagnosed.php:356
+#: Diagnosed.php:358
 msgctxt "Default Term: Audit"
 msgid "Empty Medical Data"
 msgstr ""

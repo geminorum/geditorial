@@ -174,12 +174,12 @@ msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr ""
 
-#: Programmed.php:612
+#: Programmed.php:616
 msgctxt "Header"
 msgid "Program Tools"
 msgstr ""
 
-#: Programmed.php:621
+#: Programmed.php:625
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr ""

@@ -147,38 +147,38 @@ msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "6"
 msgstr ""
 
-#: WasBorn.php:448
+#: WasBorn.php:450
 msgctxt "Summary"
 msgid "Under-Aged"
 msgstr ""
 
-#: WasBorn.php:543
+#: WasBorn.php:545
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr ""
 
-#: WasBorn.php:612
+#: WasBorn.php:614
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr ""
 
-#: WasBorn.php:693
+#: WasBorn.php:695
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr ""
 
 #. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:780
+#: WasBorn.php:782
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr ""
 
-#: WasBorn.php:782
+#: WasBorn.php:783
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr ""
 
-#: WasBorn.php:783
+#: WasBorn.php:784
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr ""

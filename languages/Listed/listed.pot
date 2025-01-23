@@ -194,12 +194,12 @@ msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr ""
 
-#: Listed.php:620
+#: Listed.php:624
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr ""
 
-#: Listed.php:629
+#: Listed.php:633
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
 msgstr ""

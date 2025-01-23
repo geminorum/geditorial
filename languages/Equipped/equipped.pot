@@ -13,58 +13,58 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Equipped\n"
 "X-Domain: geditorial-equipped\n"
 
-#: Equipped.php:96
+#: Equipped.php:98
 msgid "Equipment Item"
 msgid_plural "Equipment Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Equipped.php:100
+#: Equipped.php:102
 msgctxt "Label: `menu_name`"
 msgid "Content Equipments"
 msgstr ""
 
-#: Equipped.php:101
+#: Equipped.php:103
 msgctxt "Label: `extended_label`"
 msgid "Content Equipments"
 msgstr ""
 
-#: Equipped.php:102
+#: Equipped.php:104
 msgctxt "Label: `show_option_all`"
 msgid "Equipments"
 msgstr ""
 
-#: Equipped.php:103
+#: Equipped.php:105
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unequipped)"
 msgstr ""
 
-#: Equipped.php:117
+#: Equipped.php:119
 msgctxt "Field Title"
 msgid "Shoe"
 msgstr ""
 
-#: Equipped.php:118
+#: Equipped.php:120
 msgctxt "Field Description"
 msgid "Size of the Shoe by European standards"
 msgstr ""
 
-#: Equipped.php:125
+#: Equipped.php:127
 msgctxt "Field Title"
 msgid "Shirt"
 msgstr ""
 
-#: Equipped.php:126
+#: Equipped.php:128
 msgctxt "Field Description"
 msgid "Size of the Shirt by International standards"
 msgstr ""
 
-#: Equipped.php:133
+#: Equipped.php:135
 msgctxt "Field Title"
 msgid "Pants"
 msgstr ""
 
-#: Equipped.php:134
+#: Equipped.php:136
 msgctxt "Field Description"
 msgid "Size of the Pants by International standards"
 msgstr ""

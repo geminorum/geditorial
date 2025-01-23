@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Config\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:17+0330\n"
+"PO-Revision-Date: 2025-01-18 18:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -54,73 +54,73 @@ msgctxt "Reports Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:186
+#: Config.php:188
 msgctxt "Page Title"
-msgid "Editorial Reports"
-msgstr "گزارش‌های تحریریه"
+msgid "Reports"
+msgstr "گزارش‌ها"
 
-#: Config.php:244
+#: Config.php:246
 msgctxt "Tools Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: Config.php:247
+#: Config.php:249
 msgctxt "Tools Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:253
+#: Config.php:255
 msgctxt "Tools Sub"
 msgid "Options"
 msgstr "گزینه‌ها"
 
-#: Config.php:254
+#: Config.php:256
 msgctxt "Tools Sub"
 msgid "Console"
 msgstr "پیشانه"
 
-#: Config.php:259
+#: Config.php:263
 msgctxt "Page Title"
-msgid "Editorial Tools"
-msgstr "ابزارهای تحریریه"
+msgid "Tools"
+msgstr "ابزارها"
 
-#: Config.php:318
+#: Config.php:322
 msgctxt "Roles Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: Config.php:321
+#: Config.php:325
 msgctxt "Roles Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:327
+#: Config.php:331
 msgctxt "Roles Sub"
 msgid "Console"
 msgstr "پیشانه"
 
-#: Config.php:332
+#: Config.php:338
 msgctxt "Page Title"
-msgid "Editorial Roles"
-msgstr "نقش‌های تحریریه"
+msgid "Roles"
+msgstr "نقش‌ها"
 
-#: Config.php:511
+#: Config.php:517
 msgctxt "Header"
 msgid "General Editorial Reports"
 msgstr "گزارش‌های همگانی تحریریه"
 
-#: Config.php:557
+#: Config.php:563
 msgctxt "Tools"
 msgid "Options"
 msgstr "گزینه‌ها"
 
-#: Config.php:562
+#: Config.php:568
 msgctxt "Button"
 msgid "Imports All Options"
 msgstr "درون‌ریزی همه تنظیمات"
 
 #. translators:  %1$s: file ext-type, %2$s: file size
-#: Config.php:566
+#: Config.php:572
 msgctxt "Message"
 msgid ""
 "Imports all editorial option data in %1$s file from your computer. Maximum "
@@ -129,154 +129,170 @@ msgstr ""
 "همه تنظیمات تحریریه را به صورت داده‌ها در پرونده %1$s از روی سیستم شما درون‌ریزی "
 "می‌کند. بیشینه حجم بارگزاری: %2$s"
 
-#: Config.php:576
+#: Config.php:582
 msgctxt "Button"
 msgid "Download All Options"
 msgstr "دریافت همه تنظیمات"
 
 #. translators: %s: file ext-type
-#: Config.php:580
+#: Config.php:586
 msgctxt "Message"
 msgid "Exports all editorial option data as %s file for you to download."
 msgstr "همه تنظیمات تحریریه را به شکل یک پرونده %s برای دریافت شما برون‌بری می‌کند."
 
-#: Config.php:587
+#: Config.php:593
 msgctxt "Button"
 msgid "Upgrade Old Options"
 msgstr "ارتقاء تنظیمات قدیمی"
 
-#: Config.php:589
+#: Config.php:595
 msgctxt "Message"
 msgid "Checks for old options and upgrade them. Also deletes the old options."
 msgstr "گزینه‌های قدیمی را بررسی، ارتقاء و حذف می‌کند."
 
-#: Config.php:595
+#: Config.php:601
 msgctxt "Button"
 msgid "Delete All Options"
 msgstr "پاک‌کردن همه تنظیمات"
 
-#: Config.php:597
+#: Config.php:603
 msgctxt "Message"
 msgid "Tries to delete all editorial options on the current site."
 msgstr "برای حذف کردن همه تنظیمات تحریریه در روی این سایت تلاش می‌کند."
 
-#: Config.php:608
+#: Config.php:614
 msgctxt "Header"
 msgid "Maintenance Tasks"
 msgstr "ابزارهای نگه‌داری"
 
-#: Config.php:612
+#: Config.php:618
 msgctxt "Tools"
 msgid "Empty Meta Fields"
 msgstr "تخلیه متا"
 
-#: Config.php:623
+#: Config.php:629
 msgctxt "Button"
 msgid "Empty"
 msgstr "خالی کردن"
 
-#: Config.php:624
+#: Config.php:630
 msgctxt "Message"
 msgid "Deletes empty meta values. This solves common problems with imported posts."
 msgstr ""
 "مقادیر متای خالی را حذف می‌کند. این فرآیند، مشکلات مرسوم فرسته‌های درون‌ریزی‌شده را "
 "برطرف خواهد کرد."
 
-#: Config.php:634
+#: Config.php:640
 msgctxt "Tools"
 msgid "Orphan Connections"
 msgstr "ارتباطات بی‌صاحب"
 
-#: Config.php:640
+#: Config.php:646
 msgctxt "Message"
 msgid "No connection types found."
 msgstr "هیچ نوع اتصالی پیدا نشد."
 
-#: Config.php:665
+#: Config.php:671
 msgctxt "Button"
 msgid "Convert"
 msgstr "تبدیل"
 
-#: Config.php:669
+#: Config.php:675
 msgctxt "Message"
 msgid "No orphaned connection types found in the database."
 msgstr "هیچ نوع اتصال یتیم‌شده‌ای در پایگاه‌داده پیدا نشد."
 
-#: Config.php:684
+#: Config.php:690
 msgctxt "Header"
 msgid "General Editorial Roles"
 msgstr "نقش‌های همگانی تحریریه"
 
-#: Config.php:715
+#: Config.php:721
 msgctxt "Imports Sub"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#: Config.php:718
+#: Config.php:724
 msgctxt "Imports Sub"
 msgid "General"
 msgstr "همگانی"
 
-#: Config.php:724
+#: Config.php:730
 msgctxt "Imports Sub"
 msgid "Data"
 msgstr "داده‌ها"
 
-#: Config.php:728
+#: Config.php:736
 msgctxt "Page Title"
-msgid "Editorial Imports"
-msgstr "درون‌ریزی‌های تحریریه"
+msgid "Imports"
+msgstr "درون‌ریزی"
 
-#: Config.php:763
+#: Config.php:771
 msgctxt "Imports: Data Summary"
 msgid "Untitled"
 msgstr "بی‌عنوان"
 
-#: Config.php:787
+#: Config.php:795
 msgctxt "Header"
 msgid "General Editorial Imports"
 msgstr "درون‌ریزی‌های همگانی تحریریه"
 
 #. translators: %s: user link placeholder
-#: Config.php:806
+#: Config.php:814
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User Is %s"
 msgstr "حساب کاربری سایت در شبکه: %s"
 
-#: Config.php:811
+#: Config.php:819
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User is not available!"
 msgstr "حساب کاربری سایت در شبکه تعریف نشده است!"
 
-#: Config.php:830
+#: Config.php:838
 msgctxt "Ajax Notice"
 msgid "No action or name!"
 msgstr "نام یا کنش ناشناخته!"
 
-#: Config.php:833
+#: Config.php:841
 msgctxt "Ajax Notice"
 msgid "Cannot find the module!"
 msgstr "پودمان مورد نظر پیدا نشد!"
 
-#: Config.php:838
+#: Config.php:846
 msgctxt "Ajax Notice"
 msgid "Module state successfully changed."
 msgstr "وضعیت پودمان با موفقیت تغییر کرد."
 
-#: Config.php:840
+#: Config.php:848
 msgctxt "Ajax Notice"
 msgid "Cannot change module state!"
 msgstr "وضعیت پودمان غیرقابل تغییر است!"
 
-#: Config.php:852
+#: Config.php:860
 msgctxt "Page Notice"
 msgid "Not a registered Editorial module."
 msgstr "پودمان تحریریه‌ای با این نام ثبت نشده است."
 
-#: Config.php:855
+#: Config.php:863
 msgctxt "Page Notice"
 msgid "Module not enabled. Please enable it from the Editorial settings page."
 msgstr "پودمان غیرفعال است. لطفاً آن را از صفحه تنظیمات تحریریه فعال کنید."
+
+#~ msgctxt "Page Title"
+#~ msgid "Editorial Reports"
+#~ msgstr "گزارش‌های تحریریه"
+
+#~ msgctxt "Page Title"
+#~ msgid "Editorial Tools"
+#~ msgstr "ابزارهای تحریریه"
+
+#~ msgctxt "Page Title"
+#~ msgid "Editorial Roles"
+#~ msgstr "نقش‌های تحریریه"
+
+#~ msgctxt "Page Title"
+#~ msgid "Editorial Imports"
+#~ msgstr "درون‌ریزی‌های تحریریه"
 
 #~ msgctxt "Message"
 #~ msgid "Deletes all editorial options on current site"

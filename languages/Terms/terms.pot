@@ -489,23 +489,23 @@ msgctxt "Adminbar"
 msgid "Meta: Uknonwn"
 msgstr ""
 
-#: Terms.php:1809
+#: Terms.php:1810
 msgctxt "Adminbar"
 msgid "Summary of Terms"
 msgstr ""
 
 #. translators: %s: term name
-#: Terms.php:1857
+#: Terms.php:1858
 msgctxt "Media State"
 msgid "Term Image for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Terms.php:1921
+#: Terms.php:1922
 msgctxt "Bulk Actions"
 msgid "Sync Image Titles"
 msgstr ""
 
-#: Terms.php:1924
+#: Terms.php:1925
 msgctxt "Bulk Actions"
 msgid "Move Tagline to Description"
 msgstr ""

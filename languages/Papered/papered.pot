@@ -235,14 +235,14 @@ msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
 #: Papered.php:900
-#: Papered.php:958
+#: Papered.php:957
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr ""
 
 #. translators: %1$s: icon markup, %2$s: posttype singular name
 #: Papered.php:913
-#: Papered.php:980
+#: Papered.php:979
 msgctxt "Button"
 msgid "%1$s Print Profile"
 msgstr ""

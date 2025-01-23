@@ -13,23 +13,23 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Mobilized\n"
 "X-Domain: geditorial-mobilized\n"
 
-#: Mobilized.php:84
+#: Mobilized.php:92
 msgid "Mobilization"
 msgid_plural "Mobilizations"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Mobilized.php:88
+#: Mobilized.php:96
 msgctxt "Label: Menu Name"
 msgid "Content Mobilizations"
 msgstr ""
 
-#: Mobilized.php:89
+#: Mobilized.php:97
 msgctxt "Label: Show Option All"
 msgid "Mobilizations"
 msgstr ""
 
-#: Mobilized.php:90
+#: Mobilized.php:98
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""

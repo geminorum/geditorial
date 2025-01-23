@@ -59,7 +59,7 @@ msgid "String to use before tracking info button on email template of the order 
 msgstr ""
 
 #: WcPostal.php:65
-#: WcPostal.php:142
+#: WcPostal.php:145
 msgctxt "Setting Default"
 msgid "You can view the status of package at any time by visiting this page:"
 msgstr ""
@@ -75,7 +75,7 @@ msgid "String to use as prefix to tracking info button on email template of the 
 msgstr ""
 
 #: WcPostal.php:72
-#: WcPostal.php:146
+#: WcPostal.php:149
 msgctxt "Setting Default"
 msgid "Tracking Postal Package"
 msgstr ""
@@ -91,7 +91,7 @@ msgid "String to use as title of order action button on admin area. Leave empty 
 msgstr ""
 
 #: WcPostal.php:79
-#: WcPostal.php:202
+#: WcPostal.php:205
 msgctxt "Setting Default"
 msgid "Tracking Package"
 msgstr ""
@@ -106,12 +106,12 @@ msgctxt "Export Column"
 msgid "Tracking"
 msgstr ""
 
-#: WcPostal.php:181
+#: WcPostal.php:184
 msgctxt "Action Title"
 msgid "Tracking Package ID:"
 msgstr ""
 
-#: WcPostal.php:191
+#: WcPostal.php:194
 msgctxt "Action"
 msgid "Tracking"
 msgstr ""

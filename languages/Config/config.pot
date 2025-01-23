@@ -54,220 +54,220 @@ msgctxt "Reports Sub"
 msgid "General"
 msgstr ""
 
-#: Config.php:186
+#: Config.php:188
 msgctxt "Page Title"
-msgid "Editorial Reports"
-msgstr ""
-
-#: Config.php:244
-msgctxt "Tools Sub"
-msgid "Overview"
+msgid "Reports"
 msgstr ""
 
 #: Config.php:247
 msgctxt "Tools Sub"
+msgid "Overview"
+msgstr ""
+
+#: Config.php:250
+msgctxt "Tools Sub"
 msgid "General"
 msgstr ""
 
-#: Config.php:253
+#: Config.php:256
 msgctxt "Tools Sub"
 msgid "Options"
 msgstr ""
 
-#: Config.php:254
+#: Config.php:257
 msgctxt "Tools Sub"
 msgid "Console"
 msgstr ""
 
-#: Config.php:259
+#: Config.php:264
 msgctxt "Page Title"
-msgid "Editorial Tools"
+msgid "Tools"
 msgstr ""
 
-#: Config.php:318
+#: Config.php:323
 msgctxt "Roles Sub"
 msgid "Overview"
 msgstr ""
 
-#: Config.php:321
+#: Config.php:326
 msgctxt "Roles Sub"
 msgid "General"
 msgstr ""
 
-#: Config.php:327
+#: Config.php:332
 msgctxt "Roles Sub"
 msgid "Console"
 msgstr ""
 
-#: Config.php:332
+#: Config.php:339
 msgctxt "Page Title"
-msgid "Editorial Roles"
+msgid "Roles"
 msgstr ""
 
-#: Config.php:511
+#: Config.php:519
 msgctxt "Header"
 msgid "General Editorial Reports"
 msgstr ""
 
-#: Config.php:557
+#: Config.php:565
 msgctxt "Tools"
 msgid "Options"
 msgstr ""
 
-#: Config.php:562
+#: Config.php:570
 msgctxt "Button"
 msgid "Imports All Options"
 msgstr ""
 
 #. translators:  %1$s: file ext-type, %2$s: file size
-#: Config.php:566
+#: Config.php:574
 msgctxt "Message"
 msgid "Imports all editorial option data in %1$s file from your computer. Maximum upload size: %2$s"
 msgstr ""
 
-#: Config.php:576
+#: Config.php:584
 msgctxt "Button"
 msgid "Download All Options"
 msgstr ""
 
 #. translators: %s: file ext-type
-#: Config.php:580
+#: Config.php:588
 msgctxt "Message"
 msgid "Exports all editorial option data as %s file for you to download."
 msgstr ""
 
-#: Config.php:587
+#: Config.php:595
 msgctxt "Button"
 msgid "Upgrade Old Options"
 msgstr ""
 
-#: Config.php:589
+#: Config.php:597
 msgctxt "Message"
 msgid "Checks for old options and upgrade them. Also deletes the old options."
 msgstr ""
 
-#: Config.php:595
+#: Config.php:603
 msgctxt "Button"
 msgid "Delete All Options"
 msgstr ""
 
-#: Config.php:597
+#: Config.php:605
 msgctxt "Message"
 msgid "Tries to delete all editorial options on the current site."
 msgstr ""
 
-#: Config.php:608
+#: Config.php:616
 msgctxt "Header"
 msgid "Maintenance Tasks"
 msgstr ""
 
-#: Config.php:612
+#: Config.php:620
 msgctxt "Tools"
 msgid "Empty Meta Fields"
 msgstr ""
 
-#: Config.php:623
+#: Config.php:631
 msgctxt "Button"
 msgid "Empty"
 msgstr ""
 
-#: Config.php:624
+#: Config.php:632
 msgctxt "Message"
 msgid "Deletes empty meta values. This solves common problems with imported posts."
 msgstr ""
 
-#: Config.php:634
+#: Config.php:642
 msgctxt "Tools"
 msgid "Orphan Connections"
 msgstr ""
 
-#: Config.php:640
+#: Config.php:648
 msgctxt "Message"
 msgid "No connection types found."
 msgstr ""
 
-#: Config.php:665
+#: Config.php:673
 msgctxt "Button"
 msgid "Convert"
 msgstr ""
 
-#: Config.php:669
+#: Config.php:677
 msgctxt "Message"
 msgid "No orphaned connection types found in the database."
 msgstr ""
 
-#: Config.php:684
+#: Config.php:692
 msgctxt "Header"
 msgid "General Editorial Roles"
 msgstr ""
 
-#: Config.php:715
+#: Config.php:723
 msgctxt "Imports Sub"
 msgid "Overview"
 msgstr ""
 
-#: Config.php:718
+#: Config.php:726
 msgctxt "Imports Sub"
 msgid "General"
 msgstr ""
 
-#: Config.php:724
+#: Config.php:732
 msgctxt "Imports Sub"
 msgid "Data"
 msgstr ""
 
-#: Config.php:728
+#: Config.php:738
 msgctxt "Page Title"
-msgid "Editorial Imports"
+msgid "Imports"
 msgstr ""
 
-#: Config.php:763
+#: Config.php:773
 msgctxt "Imports: Data Summary"
 msgid "Untitled"
 msgstr ""
 
-#: Config.php:787
+#: Config.php:797
 msgctxt "Header"
 msgid "General Editorial Imports"
 msgstr ""
 
 #. translators: %s: user link placeholder
-#: Config.php:806
+#: Config.php:816
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User Is %s"
 msgstr ""
 
-#: Config.php:811
+#: Config.php:821
 msgctxt "Sidebox: Message"
 msgid "Editorial Site User is not available!"
 msgstr ""
 
-#: Config.php:830
+#: Config.php:840
 msgctxt "Ajax Notice"
 msgid "No action or name!"
 msgstr ""
 
-#: Config.php:833
+#: Config.php:843
 msgctxt "Ajax Notice"
 msgid "Cannot find the module!"
 msgstr ""
 
-#: Config.php:838
+#: Config.php:848
 msgctxt "Ajax Notice"
 msgid "Module state successfully changed."
 msgstr ""
 
-#: Config.php:840
+#: Config.php:850
 msgctxt "Ajax Notice"
 msgid "Cannot change module state!"
 msgstr ""
 
-#: Config.php:852
+#: Config.php:862
 msgctxt "Page Notice"
 msgid "Not a registered Editorial module."
 msgstr ""
 
-#: Config.php:855
+#: Config.php:865
 msgctxt "Page Notice"
 msgid "Module not enabled. Please enable it from the Editorial settings page."
 msgstr ""

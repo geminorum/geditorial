@@ -14,58 +14,58 @@ msgstr ""
 "X-Domain: geditorial-iranian\n"
 
 #. translators: %s: supported object label
-#: Iranian.php:52
+#: Iranian.php:51
 msgctxt "Setting Title"
 msgid "Identity Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:53
+#: Iranian.php:52
 msgctxt "Setting Description"
 msgid "Defines identity meta-key for the post-type."
 msgstr ""
 
 #. translators: %s: supported object label
-#: Iranian.php:64
+#: Iranian.php:63
 msgctxt "Setting Title"
 msgid "Location Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:65
+#: Iranian.php:64
 msgctxt "Setting Description"
 msgid "Defines location meta-key for the post-type."
 msgstr ""
 
-#: Iranian.php:98
+#: Iranian.php:97
 msgctxt "Setting Description"
 msgid "Supports meta fields for the selected post-types."
 msgstr ""
 
-#: Iranian.php:109
+#: Iranian.php:108
 msgctxt "Field Title"
 msgid "Birth Certificate"
 msgstr ""
 
-#: Iranian.php:110
+#: Iranian.php:109
 msgctxt "Field Description"
 msgid "Iranian Birth Certificate Number"
 msgstr ""
 
-#: Iranian.php:143
+#: Iranian.php:142
 msgctxt "RestAPI: Arg Description"
 msgid "The National Code to process."
 msgstr ""
 
-#: Iranian.php:214
+#: Iranian.php:213
 msgctxt "Header"
 msgid "Iranian Imports"
 msgstr ""
 
-#: Iranian.php:272
+#: Iranian.php:271
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr ""
 
-#: Iranian.php:381
+#: Iranian.php:380
 #: ModuleSettings.php:278
 msgctxt "Header"
 msgid "Iranian Reports"

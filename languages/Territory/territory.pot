@@ -13,23 +13,23 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Territory\n"
 "X-Domain: geditorial-territory\n"
 
-#: Territory.php:89
+#: Territory.php:93
 msgid "Territorial Arrangement"
 msgid_plural "Territorial Arrangements"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Territory.php:93
+#: Territory.php:97
 msgctxt "Label: Menu Name"
 msgid "Content Territory"
 msgstr ""
 
-#: Territory.php:94
+#: Territory.php:98
 msgctxt "Label: Show Option All"
 msgid "Territory"
 msgstr ""
 
-#: Territory.php:95
+#: Territory.php:99
 msgctxt "Label: Show Option No Terms"
 msgid "(No-Territory)"
 msgstr ""

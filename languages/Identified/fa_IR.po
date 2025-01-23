@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Identifier\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-16 06:45+0330\n"
+"PO-Revision-Date: 2025-01-13 19:46+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -42,34 +42,29 @@ msgctxt "Setting"
 msgid "There are no identifier types available!"
 msgstr "هیچ نوع شناساگری در دسترس نیست!"
 
-#: Identified.php:74
-msgctxt "Setting Title"
-msgid "Front-end Search"
-msgstr "جست‌وجو روی سایت"
-
-#: Identified.php:75
+#: Identified.php:72
 msgctxt "Setting Description"
 msgid "Adds results by Identifier information on front-end search."
 msgstr ""
 
-#: Identified.php:80
+#: Identified.php:76
 msgctxt "Setting Title"
 msgid "Queryable Types"
 msgstr "انواع قابل استعلام"
 
-#: Identified.php:81
+#: Identified.php:77
 msgctxt "Setting Description"
 msgid "Appends end-points for Identifier types on front-end."
 msgstr ""
 
 #. translators: %s: supported type label
-#: Identified.php:95
+#: Identified.php:91
 msgctxt "Setting Title"
 msgid "URL Template for %s"
 msgstr "الگوی نشانی برای %s"
 
 #. translators: %s: token list placeholder
-#: Identified.php:100
+#: Identified.php:96
 msgctxt "Setting Description"
 msgid ""
 "Defines a not-found url template for the identifier type. Available tokens "
@@ -77,132 +72,142 @@ msgid ""
 msgstr ""
 
 #. translators: %s: audit attribute placeholder
-#: Identified.php:118
+#: Identified.php:114
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each created item via identifier."
 msgstr ""
 
-#: Identified.php:156
+#: Identified.php:152
 msgctxt "Identifier Type"
 msgid "Code"
 msgstr "کد"
 
-#: Identified.php:157
+#: Identified.php:153
 msgctxt "Identifier Type"
 msgid "GTIN"
 msgstr "شبنم"
 
-#: Identified.php:158
+#: Identified.php:154
 msgctxt "Identifier Type"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Identified.php:159
+#: Identified.php:155
 msgctxt "Identifier Type"
 msgid "ISSN"
 msgstr "شاپا"
 
-#: Identified.php:160
+#: Identified.php:156
 msgctxt "Identifier Type"
 msgid "SKU"
 msgstr "شناسه محصول"
 
-#: Identified.php:161
+#: Identified.php:157
 msgctxt "Identifier Type"
 msgid "DDC"
 msgstr "دیوئی"
 
-#: Identified.php:162
+#: Identified.php:158
 msgctxt "Identifier Type"
 msgid "VIN"
 msgstr "وین"
 
-#: Identified.php:163
+#: Identified.php:159
 msgctxt "Identifier Type"
 msgid "Plate"
 msgstr "پلاک"
 
-#: Identified.php:164
+#: Identified.php:160
 msgctxt "Identifier Type"
 msgid "TIN"
 msgstr "کد اقتصادی"
 
-#: Identified.php:165
+#: Identified.php:161
 msgctxt "Identifier Type"
 msgid "EIN"
 msgstr "کد استخدامی"
 
-#: Identified.php:166
+#: Identified.php:162
 msgctxt "Identifier Type"
 msgid "Mobile"
 msgstr "موبایل"
 
-#: Identified.php:167
+#: Identified.php:163
 msgctxt "Identifier Type"
 msgid "Identity"
 msgstr "شناسایی"
 
-#: Identified.php:171
+#: Identified.php:164
+msgctxt "Identifier Type"
+msgid "Lat/Lng"
+msgstr "طول/عرض"
+
+#: Identified.php:168
 msgctxt "Identifier Type Description"
 msgid "Arbitrary Identifier Code"
 msgstr "کد شناسایی قراردادی"
 
-#: Identified.php:172
+#: Identified.php:169
 msgctxt "Identifier Type Description"
 msgid "Global Trade Item Number"
 msgstr "شماره جهانی کالای تجاری"
 
-#: Identified.php:173
+#: Identified.php:170
 msgctxt "Identifier Type Description"
 msgid "International Standard Book Number"
 msgstr "شماره استاندارد بین‌المللی کتاب"
 
-#: Identified.php:174
+#: Identified.php:171
 msgctxt "Identifier Type Description"
 msgid "International Standard Serial Number"
 msgstr "شماره استاندارد بین‌المللی پیایند"
 
-#: Identified.php:175
+#: Identified.php:172
 msgctxt "Identifier Type Description"
 msgid "Stock Keeping Unit"
 msgstr "کد اختصاصی کالا"
 
-#: Identified.php:176
+#: Identified.php:173
 msgctxt "Identifier Type Description"
 msgid "Dewey Decimal Classification"
 msgstr "رده‌بندی ده‌دهی دیوئی"
 
-#: Identified.php:177
+#: Identified.php:174
 msgctxt "Identifier Type Description"
 msgid "Vehicle Identification Number"
 msgstr "شماره شناسایی خودرو"
 
-#: Identified.php:178
+#: Identified.php:175
 msgctxt "Identifier Type Description"
 msgid "Vehicle Registration Plate"
 msgstr "پلاک شناسایی خودرو"
 
-#: Identified.php:179
+#: Identified.php:176
 msgctxt "Identifier Type Description"
 msgid "Taxpayer Identification Number"
 msgstr "شماره شناسایی مالیاتی"
 
-#: Identified.php:180
+#: Identified.php:177
 msgctxt "Identifier Type Description"
 msgid "Employer Identification Number"
 msgstr "شماره شناسایی استخدامی"
 
-#: Identified.php:181
+#: Identified.php:178
 msgctxt "Identifier Type Description"
 msgid "Mobile Phone Number"
 msgstr "شماره تلفن همراه"
 
-#: Identified.php:182
+#: Identified.php:179
 msgctxt "Identifier Type Description"
 msgid "National Identity Number"
 msgstr "کد ملی"
 
-#: Identified.php:190
+#: Identified.php:180
+msgctxt "Identifier Type Description"
+msgid "Latitude and Longitude"
+msgstr "طول و عرض جغرافیایی"
+
+#: Identified.php:188
 msgctxt "Setting Description"
 msgid "Supports identifiers for the selected post-types."
 msgstr ""
@@ -222,32 +227,36 @@ msgctxt "Possible Identifier Key"
 msgid "Identifier"
 msgstr "شناساگر"
 
-#: Identified.php:582
+#: Identified.php:593
 msgctxt "Default Term: Audit"
 msgid "Empty Identification"
 msgstr "شناسایی خالی"
 
-#: Identified.php:583
+#: Identified.php:594
 msgctxt "Default Term: Audit"
 msgid "Duplicate Identification"
 msgstr "شناسایی تکراری"
 
-#: Identified.php:584
+#: Identified.php:595
 msgctxt "Default Term: Audit"
 msgid "Invalid Identification"
 msgstr "شناسایی نامعتبر"
 
 #. translators: %1$s: add new label, %2$s: identifier code
-#: Identified.php:681
+#: Identified.php:692
 msgctxt "Header Button"
 msgid "%1$s with %2$s"
 msgstr "%1$s با %2$s"
 
 #. translators: %1$s: identifier type label, %2$s: posttype singular label
-#: Identified.php:921
+#: Identified.php:908
 msgctxt "Title Attr"
 msgid "%1$s Link to this %2$s"
 msgstr "پیوند %1$s به این %2$s"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Front-end Search"
+#~ msgstr "جست‌وجو روی سایت"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Identifier Types for %s"

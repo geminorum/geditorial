@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial NationalLibrary\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-01 21:17+0330\n"
+"PO-Revision-Date: 2025-01-24 01:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -62,35 +62,34 @@ msgctxt "Setting Description"
 msgid "Displays Bibliographic information on new post edit screen."
 msgstr ""
 
-#: NationalLibrary.php:100
-msgctxt "Setting Title"
-msgid "Front-end Search"
-msgstr "جست‌وجو روی سایت"
-
-#: NationalLibrary.php:101
+#: NationalLibrary.php:98
 msgctxt "Setting Description"
 msgid "Adds results by Bibliographic information on front-end search."
 msgstr ""
 
-#: NationalLibrary.php:105
+#: NationalLibrary.php:101
 msgctxt "Setting Title"
 msgid "Custom Queries"
 msgstr ""
 
-#: NationalLibrary.php:106
+#: NationalLibrary.php:102
 msgctxt "Setting Description"
 msgid "Appends end-points for Bib/Fipa numbers on front-end."
 msgstr ""
 
-#: NationalLibrary.php:413 NationalLibrary.php:488
+#: NationalLibrary.php:379 NationalLibrary.php:457
 msgctxt "Tab Title"
 msgid "Fipa"
 msgstr "فیپا"
 
-#: NationalLibrary.php:489
+#: NationalLibrary.php:458
 msgctxt "Tab Description"
 msgid "Exact Fipa data from The National Library."
 msgstr "اطلاعات کامل فیپا از کتابخانه ملی را نمایش می‌دهد."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Front-end Search"
+#~ msgstr "جست‌وجو روی سایت"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Support Tab for %s"

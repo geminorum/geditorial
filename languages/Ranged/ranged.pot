@@ -295,12 +295,12 @@ msgctxt "Field Description"
 msgid "Number of shots attempts for grading."
 msgstr ""
 
-#: Ranged.php:686
+#: Ranged.php:690
 msgctxt "Header"
 msgid "Shooting Session Tools"
 msgstr ""
 
-#: Ranged.php:695
+#: Ranged.php:699
 msgctxt "Card"
 msgid "Shooting Session Date from Meta-data"
 msgstr ""

@@ -413,12 +413,12 @@ msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr ""
 
-#: Personage.php:1050
+#: Personage.php:1054
 msgctxt "Header"
 msgid "Personage Tools"
 msgstr ""
 
-#: Personage.php:1075
+#: Personage.php:1080
 msgctxt "Header"
 msgid "Personage Imports"
 msgstr ""

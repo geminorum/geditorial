@@ -13,18 +13,18 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Skilled\n"
 "X-Domain: geditorial-skilled\n"
 
-#: Skilled.php:108
+#: Skilled.php:110
 msgid "Skill"
 msgid_plural "Skills"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Skilled.php:112
+#: Skilled.php:114
 msgctxt "Label: Show Option All"
 msgid "Skills"
 msgstr ""
 
-#: Skilled.php:113
+#: Skilled.php:115
 msgctxt "Label: Show Option No Terms"
 msgid "(No Skill)"
 msgstr ""
