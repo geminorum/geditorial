@@ -441,12 +441,12 @@ class NationalLibrary extends gEditorial\Module
 
 		// wc nags about direct use of it's internal meta-keys
 		if ( $metakey && $metakey === WordPress\WooCommerce::getGTINMetakey() )
-			return $product->get_global_unique_id() ?: FALSE;
+			return $product->get_global_unique_id( 'edit' ) ?: FALSE;
 
 		if ( $metakey && ( $isbn = $product->get_meta( $metakey, TRUE, 'edit' ) ) )
 			return $isbn;
 
-		return $product->get_global_unique_id() ?: FALSE;
+		return $product->get_global_unique_id( 'edit' ) ?: FALSE;
 	}
 
 	public function tabs_builtins_tabs( $tabs, $posttype )

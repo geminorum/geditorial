@@ -35,6 +35,7 @@ class ModuleTemplate extends gEditorial\Template
 		return parent::postImage( $atts, static::MODULE );
 	}
 
+	// FIXME
 	// @REF: https://code.tutsplus.com/tutorials/building-a-simple-announcements-plugin-for-wordpress--wp-27661
 	public static function currents()
 	{
@@ -48,18 +49,19 @@ class ModuleTemplate extends gEditorial\Template
 			'order'          => 'ASC',
 			'meta_query'     => [
 				[
-					'key' => 'sap_start_date',
-					'value' => $today,
+					'key'     => 'sap_start_date',
+					'value'   => $today,
 					'compare' => '<=',
 				],
 				[
-					'key' => 'sap_end_date',
-					'value' => $today,
+					'key'     => 'sap_end_date',
+					'value'   => $today,
 					'compare' => '>=',
 				]
 			]
 		];
 
-		$query = new \WP_Query( $args );
+		$query = new \WP_Query();
+		return $query->query( $args );
 	}
 }

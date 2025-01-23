@@ -274,8 +274,8 @@ class Drafts extends gEditorial\Module
 		if ( $user )
 			$args['author'] = $user;
 
-		$query = new \WP_Query( $args );
-		return $query->posts;
+		$query = new \WP_Query();
+		return $query->query( $args );
 	}
 
 	// @SEE: `is_post_status_viewable()`
