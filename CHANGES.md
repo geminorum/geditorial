@@ -1,3 +1,89 @@
+### 3.31.0
+* internal/bulk-exports: avoid column header duplicates
+* internal/bulk-exports: column width for post props
+* internal/bulk-exports: default taxonomy by primary prop
+* internal/bulk-exports: field average data length
+* internal/bulk-exports: initial filter for all taxonomies
+* internal/bulk-exports: prep date props
+* internal/bulk-exports: support for assigned posts to a term
+* internal/core-roles: override module cuc by taxonomy
+* internal/core-taxonomies: before/after action hooks on meta-boxes
+* internal/core-taxonomies: is viewable support for terms
+* internal/dashboard-summary: helper for hooking term widget
+* internal/meta-box-supported: action context based on current screen
+* internal/paired-front: support paired list on post-tabs
+* internal/post-type-fields: apply core filter for quick edit enabled
+* internal/post-type-fields: support for bulk-edit posts
+* internal/post-type-fields: support for multiline on quick/bulk edit
+* internal/post-type-fields: support template new-post
+* internal/post-type-fields: unified hook setup ajax
+* internal/quick-posts: check for post-type supports
+* internal/rewrites: renamed from rewrite-endpoints
+* internal/sub-contents: support data on post-tabs
+* internal/taxonomy-overview: reports sub for overview and exports
+* internal/template-post-type: support for new-post on front-end
+* main/helper: generate security token
+* main/helper: prep contact support for icon
+* main/meta-box: bail if no parent module
+* main/meta-box: fills the meta by query data only on new posts
+* main/meta-box: support name attr on front
+* main/module: global summary on edit-form with exports
+* main/module: using reports roles for exports
+* main/settings: frontend search option
+* main/settings: processing all done
+* main/short-code: clear id type passed in
+* main/template: getting raw field on source url
+* module/attachments: use static tool action names
+* module/audit: factoring helpers
+* module/book: span tile on archives if year-span taxonomy enabled
+* module/classified: 🆕 module
+* module/config: side navigation on main contexts
+* module/dead-drops: post-title and close button on drop-zone
+* module/dead-drops: support for unicode filenames
+* module/drafts: disable robots on public previews
+* module/drafts: post state for public previews
+* module/drafts: table view of public previews for supported post-types
+* module/identified: add new post button with identifier code
+* module/identified: better support for gtin
+* module/identified: not-found identifiers on queries
+* module/identified: search with barcode scanner button on supported
+* module/identified: support for front-end search by identifier
+* module/identified: support for queryable identifier types
+* module/iranian: custom roles settings
+* module/iranian: imports on module settings
+* module/iranian: tools on module settings
+* module/iranian: update location data
+* module/isbn: 🆕 module
+* module/isbn: handle isbn data on not-found queries
+* module/isbn: handling bibliographic data
+* module/isbn: support for search on all fields
+* module/isbn: support raw data on short-code
+* module/isbn: support woo-commerce products attributes
+* module/isbn: wc support revised
+* module/national-library: 🆕 module
+* module/national-library: parsed fipa from cached
+* module/national-library: support template new-post
+* module/national-library: validate data before external request
+* module/national-library: wc support revised
+* module/papered: passing flags into item data
+* module/personage: :new: import from full-name
+* module/personage: tools on module settings
+* module/phonebook: moving up prep address
+* module/phonebook: search for sanitized numbers
+* module/ranged: support more from units module
+* module/ranged: support positions
+* module/tabloid: drop support for custom title/attr
+* module/tabloid: support for term overviews
+* module/tabs: 🆕 module
+* module/tabs: filter tab title
+* module/tabs: preserve argument order on callback
+* module/terms: support for venue field
+* module/wc-postal: support for tracking id on pwoosms shortcodes
+* service/advanced-queries: append meta to posts search
+* service/paired: precedence of the print title/date fields
+* service/post-type-fields: replace token support
+* service/term-hierarchy: support bulk-edit for single select term
+
 ### 3.30.0
 * internal/core-admin: display taxonomy states
 * internal/core-admin: multiple supported column for taxonomies
