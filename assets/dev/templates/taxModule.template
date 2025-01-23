@@ -7,6 +7,7 @@ use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Info;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Shortcode;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
@@ -67,13 +68,17 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'contents_viewable',
 				'show_in_navmenus',
 			],
+			'_supports' => [
+				'shortcode_support',
+			],
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'main_taxonomy' => '', // FIXME <---
+			'main_taxonomy'  => '',   // FIXME <---
+			'main_shortcode' => '',   // FIXME <---
 		];
 	}
 
@@ -139,6 +144,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
+
+		$this->register_shortcode( 'main_shortcode' );
 	}
 
 	public function current_screen( $screen )
@@ -149,7 +156,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			$this->modulelinks__register_headerbuttons();
 			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
-			$this->taxonomy_overview_register_headerbutton( 'reports' );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -192,6 +198,20 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return Shortcode::listPosts( 'assigned',
+			'post',
+			$this->constant( 'main_taxonomy' ),
+			array_merge( [
+				'post_id'   => NULL,
+				'posttypes' => $this->posttypes(),
+			], (array) $atts ),
+			$content,
+			$this->constant( 'main_shortcode' )
+		);
 	}
 
 	public function reports_settings( $sub )
