@@ -353,9 +353,9 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 	// @REF: `get_edit_term_link()`
 	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = [] )
 	{
-		self::_dep();
-
 		if ( $term_id ) {
+
+			self::_dep( 'WordPress\Term::edit()' );
 
 			if ( current_user_can( 'edit_term', $term_id ) )
 				return add_query_arg( array_merge( [
@@ -364,6 +364,8 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 				], $extra ), admin_url( 'term.php' ) );
 
 		} else {
+
+			self::_dep( 'WordPress\Taxonomy::edit()' );
 
 			if ( ! $object = get_taxonomy( $taxonomy ) )
 				return FALSE;
@@ -380,7 +382,7 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 	// FIXME: DEPRECATED
 	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = [] )
 	{
-		self::_dep();
+		self::_dep( 'WordPress\PostType::edit()' );
 
 		$query = [ 'post_type' => $posttype ];
 
