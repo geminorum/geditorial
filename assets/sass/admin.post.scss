@@ -49,6 +49,16 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// body.disable-posttype-slug {}
+// body.disable-posttype-author {}
+// body.disable-posttype-password {}
+
+body.disable-posttype-tinymce #content-tmce.wp-switch-editor.switch-tmce,
+body.disable-posttype-date div.misc-pub-section.curtime.misc-pub-curtime {
+  display: none;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 #geditorial-readonlytitle {
   @include theme-fonts-core-native;
   font-size: large;
