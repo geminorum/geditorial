@@ -32,6 +32,7 @@ class AdminScreen extends WordPress\Main
 			$extra[] = 'disable-posttype-tinymce';
 
 		if ( ! empty( $posttype->slug_disabled ) ) {
+			remove_meta_box( 'slugdiv', $screen, 'normal' );
 			$extra[] = 'disable-posttype-slug';
 		}
 
@@ -39,6 +40,7 @@ class AdminScreen extends WordPress\Main
 			$extra[] = 'disable-posttype-date';
 
 		if ( ! empty( $posttype->author_disabled ) ) {
+			remove_meta_box( 'authordiv', $screen, 'normal' );
 			$extra[] = 'disable-posttype-author';
 		}
 

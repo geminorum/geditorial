@@ -298,7 +298,7 @@ trait CorePostTypes
 				case 'status_taxonomy' : $args[Services\PrimaryTaxonomy::STATUS_TAX_PROP] = TRUE === $value ? $this->constant( $setting ) : $value; break;
 
 				case 'tinymce_disabled':
-				case 'slug_disabled':  // TODO remove metabox
+				case 'slug_disabled':
 				case 'date_disabled':
 				case 'author_disabled':
 				case 'password_disabled':

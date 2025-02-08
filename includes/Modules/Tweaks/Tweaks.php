@@ -981,7 +981,7 @@ class Tweaks extends gEditorial\Module
 
 	private function do_mainbox_slug( $post, $posttype )
 	{
-		if ( ! $this->filters( 'metabox_slug', TRUE, $posttype->name, $post ) )
+		if ( ! $this->filters( 'metabox_slug', empty( $posttype->slug_disabled ), $posttype->name, $post ) )
 			return;
 
 		MetaBox::fieldPostSlug( $post );
@@ -989,7 +989,7 @@ class Tweaks extends gEditorial\Module
 
 	private function do_mainbox_author( $post, $posttype )
 	{
-		if ( ! $this->filters( 'metabox_author', TRUE, $posttype->name, $post ) )
+		if ( ! $this->filters( 'metabox_author', empty( $posttype->author_disabled ), $posttype->name, $post ) )
 			return;
 
 		MetaBox::fieldPostAuthor( $post );
