@@ -857,7 +857,7 @@ class Identified extends gEditorial\Module
 
 				$this->actions( 'identifier_notfound', $type, $sanitized, $supported );
 
-				// TODO: must redirect to not found if on `is_home()`
+				WordPress\Theme::set404();
 			}
 		}
 	}
