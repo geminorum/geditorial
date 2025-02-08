@@ -14,6 +14,35 @@ class PostTypeFields extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function setup()
+	{
+		if ( 'fa_IR' === Core\L10n::locale( TRUE ) ) {
+			add_filter( static::BASE.'_posts_search_append_meta_frontend', [ __CLASS__, 'posts_search_append_meta' ], 12, 3 );
+			add_filter( static::BASE.'_posts_search_append_meta_backend', [ __CLASS__, 'posts_search_append_meta' ], 12, 3 );
+		}
+	}
+
+	// NOTE: runs only on `fa_IR` locale
+	public static function posts_search_append_meta( $meta, $criteria, $posttype )
+	{
+		if ( 'any' === $posttype )
+			return $meta;
+
+		$sanitized = Core\Number::translate( $criteria );
+
+		if ( $date = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', 'persian' ) )
+			foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'date' ] ) as $field )
+				if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
+					$meta[$field['metakey']] = $date;
+
+		if ( $datetime = Datetime::makeMySQLFromInput( $sanitized, NULL, 'persian' ) )
+			foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'datetime' ] ) as $field )
+				if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
+					$meta[$field['metakey']] = $datetime;
+
+		return $meta;
+	}
+
 	/**
 	 * Retrieves the post meta-key for given field.
 	 *

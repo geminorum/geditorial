@@ -110,6 +110,7 @@ class Plugin
 		Services\LineDiscovery::setup();
 		Services\ObjectToObject::setup();
 		Services\Paired::setup();
+		Services\PostTypeFields::setup();
 		Services\PrimaryTaxonomy::setup();
 		Services\RestAPI::setup();
 		Services\SearchSelect::setup();
