@@ -235,15 +235,29 @@ class WcPostal extends gEditorial\Module
 		return $new_data;
 	}
 
+	private function _get_tracking_tokens( $order )
+	{
+		$tracking = Core\Number::translate( $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) );
+
+		return [
+			'tracking_id'  => $tracking ?: '',
+			'tracking_url' => $tracking ? $this->_service_url( $tracking ) : '',
+		];
+	}
+
 	public function pwoosms_shortcodes_list( $list )
 	{
-		return $list.' <code>{{tracking_id}}</code>';
+		$html = Core\HTML::tag( 'h4', _x( 'Tracking Information', 'Shortcode List', 'geditorial-wc-postal' ) );
+		$html.= WordPress\Strings::getPiped( [
+			'tracking_id',
+			'tracking_url',
+		], ' <code>{{', '}}</code> ' );
+
+		return $list.Core\HTML::wrap( $html );
 	}
 
 	public function pwoosms_order_sms_body_before_replace( $content, $keys, $values, $order_id, $order, $all_product_ids, $vendor_product_ids )
 	{
-		return Core\Text::replaceTokens( $content, [
-			'tracking_id' => $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) ?: '',
-		] );
+		return Core\Text::replaceTokens( $content, $this->_get_tracking_tokens( $order ) );
 	}
 }
