@@ -28,14 +28,19 @@ class AdminScreen extends WordPress\Main
 
 		$extra = [];
 
-		if ( ! empty( $posttype->slug_disabled ) )
+		if ( ! empty( $posttype->tinymce_disabled ) )
+			$extra[] = 'disable-posttype-tinymce';
+
+		if ( ! empty( $posttype->slug_disabled ) ) {
 			$extra[] = 'disable-posttype-slug';
+		}
 
 		if ( ! empty( $posttype->date_disabled ) )
 			$extra[] = 'disable-posttype-date';
 
-		if ( ! empty( $posttype->author_disabled ) )
+		if ( ! empty( $posttype->author_disabled ) ) {
 			$extra[] = 'disable-posttype-author';
+		}
 
 		if ( ! empty( $posttype->password_disabled ) )
 			$extra[] = 'disable-posttype-password';

@@ -220,6 +220,8 @@ class Papered extends gEditorial\Module
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
 			'show_in_menu' => FALSE, // NOTE: better to be `FALSE`, adding parent-slug will override the `mainpage`
+		], [
+			'tinymce_disabled' => TRUE,
 		] );
 	}
 
@@ -256,7 +258,6 @@ class Papered extends gEditorial\Module
 				$this->filter_string( 'parent_file', 'themes.php' );
 				$this->filter_string( 'wp_default_editor', 'html' );
 
-				$this->_admin_enabled( 'disable-tinymce-editor' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->_register_lonebox_fields( $screen );
