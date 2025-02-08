@@ -36,8 +36,10 @@ class AdminScreen extends WordPress\Main
 			$extra[] = 'disable-posttype-slug';
 		}
 
-		if ( ! empty( $posttype->date_disabled ) )
+		if ( ! empty( $posttype->date_disabled ) ) {
+			add_filter( 'disable_months_dropdown', '__return_true' );
 			$extra[] = 'disable-posttype-date';
+		}
 
 		if ( ! empty( $posttype->author_disabled ) ) {
 			remove_meta_box( 'authordiv', $screen, 'normal' );
