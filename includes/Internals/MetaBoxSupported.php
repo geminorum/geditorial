@@ -130,7 +130,7 @@ trait MetaBoxSupported
 			$action_context = sprintf( '%s_%s', $context, $object->taxonomy );
 
 		else
-			$action_context = sprintf( '%s_%s', $context, 'uknown' );
+			$action_context = sprintf( '%s_%s', $context, 'unknown' );
 
 		$this->actions(
 			sprintf( 'render_%s_metabox', $context ),

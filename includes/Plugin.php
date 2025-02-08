@@ -404,7 +404,7 @@ class Plugin
 		return $default;
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public function get_constant( $module, $key, $default = NULL )
 	{
 		return $this->{$module}->constant( $key, $default );

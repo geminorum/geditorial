@@ -44,9 +44,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 		return \geminorum\gEditorial\Plugin::instance();
 	}
 
-	// FIXME: back-compat
-	// global $gEditorial;
-
+	// NOTE: `$gEditorial` is on global context
 	$gEditorial = gEditorial();
 
 } else if ( is_admin() ) {

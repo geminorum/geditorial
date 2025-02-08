@@ -71,7 +71,7 @@ class Widget extends \WP_Widget
 				'switch_theme',
 			],
 
-			// FIXME: help tab data for the admin widget screen
+			// TODO: help tab data for the admin widget screen
 		];
 	}
 
@@ -115,34 +115,6 @@ class Widget extends \WP_Widget
 			return ob_end_flush();
 
 		set_transient( $key, $cache, 12 * HOUR_IN_SECONDS );
-	}
-
-	// FIXME: DROP THIS
-	public function widget_cache_OLD( $args, $instance, $prefix = '' )
-	{
-		$key   = $this->widget_cache_key( $instance );
-		$cache = $this->is_preview() ? [] : wp_cache_get( $key, 'widget' );
-
-		if ( ! isset( $args['widget_id'] ) )
-			$args['widget_id'] = $this->id;
-
-		if ( is_array( $cache ) && isset( $cache[$args['widget_id'].$prefix] ) ) {
-			echo $cache[$args['widget_id'].$prefix];
-			return;
-		}
-
-		ob_start();
-
-		if ( $this->widget_html( $args, $instance ) ) {
-			if ( ! $this->is_preview() ) {
-				$cache[$args['widget_id'].$prefix] = ob_get_flush();
-				wp_cache_set( $key, $cache, 'widget' );
-			} else {
-				ob_end_flush();
-			}
-		} else {
-			ob_end_flush();
-		}
 	}
 
 	public function widget_html( $args, $instance )

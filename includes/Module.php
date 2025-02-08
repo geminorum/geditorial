@@ -1015,9 +1015,10 @@ class Module extends WordPress\Module
 	// NOTE: adds the `{$module_key}-enabled` class to body in admin
 	public function _admin_enabled( $extra = [] )
 	{
-		add_action( 'admin_body_class', function ( $classes ) use ( $extra ) {
-			return trim( $classes ).' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
-		} );
+		add_filter( 'admin_body_class',
+			function ( $classes ) use ( $extra ) {
+				return trim( $classes ).' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
+			} );
 	}
 
 	// should we insert content?

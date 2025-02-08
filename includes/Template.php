@@ -399,7 +399,7 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function assocLink( $atts = [], $module = NULL )
 	{
 		self::_dep( 'Template::pairedLink()' );
@@ -558,7 +558,7 @@ class Template extends WordPress\Main
 				$html = self::doEmbedShortCode( $meta, $post, $context );
 				break;
 
-			// case 'application': // TODO
+			// case 'application': // TODO: support `application` media link
 
 			case 'text':
 
@@ -603,7 +603,7 @@ class Template extends WordPress\Main
 		return apply_filters( static::BASE.'_media_shortcode', $html, $meta, $type, $context );
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function metaLabel( $atts = [] )
 	{
 		self::_dep( 'Must extend in sub template!' );
@@ -931,7 +931,7 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function sanitizeField( $field )
 	{
 		self::_dep( 'NO NEED!' );

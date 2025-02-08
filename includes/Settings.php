@@ -1121,7 +1121,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function getSetting_posttype_viewable( $description = NULL, $default = 1 )
 	{
 		return [
@@ -1310,7 +1310,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function getSetting_exports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
 	{
 		return [

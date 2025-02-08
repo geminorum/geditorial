@@ -307,7 +307,7 @@ class NationalLibrary extends gEditorial\Module
 				$data = NULL; // avoid repeatable requests
 
 			if ( FALSE !== $data )
-				set_transient( $key, $data, WEEK_IN_SECONDS );
+				set_transient( $key, $data, Core\Date::WEEK_IN_SECONDS );
 		}
 
 		if ( $raw )
@@ -406,7 +406,7 @@ class NationalLibrary extends gEditorial\Module
 				$data = NULL; // avoid repeatable requests
 
 			if ( FALSE !== $data )
-				set_transient( $key, $data, WEEK_IN_SECONDS );
+				set_transient( $key, $data, Core\Date::WEEK_IN_SECONDS );
 		}
 
 		if ( $raw )
