@@ -100,6 +100,7 @@ class Plugin
 		$this->load_options();
 		$this->init_modules();
 
+		Services\AdminScreen::setup();
 		Services\AdvancedQueries::setup();
 		Services\Barcodes::setup();
 		// Services\Calendars::setup();

@@ -113,17 +113,16 @@ trait CorePostTypes
 	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
 	{
 		$settings = self::atts( [
-			'block_editor'     => FALSE,
-			'quick_edit'       => NULL,
-			'is_viewable'      => NULL,
-			'custom_captype'   => FALSE,
-			'primary_taxonomy' => NULL,
-			'status_taxonomy'  => NULL,
-
-			'slug_disabled'     => NULL, // TODO hide on quickedit/remove metabox
-			'date_disabled'     => NULL, // TODO hide on quickedit
-			'author_disabled'   => NULL, // TODO hide on quickedit
-			'password_disabled' => TRUE, // TODO: hide on quickedit
+			'block_editor'      => FALSE,
+			'quick_edit'        => NULL,
+			'is_viewable'       => NULL,
+			'custom_captype'    => FALSE,
+			'primary_taxonomy'  => NULL,
+			'status_taxonomy'   => NULL,
+			'slug_disabled'     => NULL,
+			'date_disabled'     => NULL,
+			'author_disabled'   => NULL,
+			'password_disabled' => TRUE,
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -296,6 +295,13 @@ trait CorePostTypes
 
 				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP]   = TRUE === $value ? $this->constant( $setting ) : $value; break;
 				case 'status_taxonomy' : $args[Services\PrimaryTaxonomy::STATUS_TAX_PROP] = TRUE === $value ? $this->constant( $setting ) : $value; break;
+
+				case 'slug_disabled':  // TODO remove metabox
+				case 'date_disabled':
+				case 'author_disabled':
+				case 'password_disabled':
+					$args[$setting] = TRUE;
+					break;
 			}
 		}
 
