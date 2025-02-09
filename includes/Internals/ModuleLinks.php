@@ -11,6 +11,136 @@ use geminorum\gEditorial\WordPress;
 trait ModuleLinks
 {
 
+	// FIXME: get dashboard menu for the module
+	protected function get_module_links()
+	{
+		$links  = [];
+		$screen = get_current_screen();
+
+		if ( method_exists( $this, 'reports_settings' ) && ! Settings::isReports( $screen ) )
+			foreach ( $this->append_sub( [], 'reports' ) as $sub => $title )
+				$links[] = [
+					'context' => 'reports',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => $this->get_module_url( 'reports', $sub ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ), $title ),
+				];
+
+		if ( method_exists( $this, 'tools_settings' ) && ! Settings::isTools( $screen ) )
+			foreach ( $this->append_sub( [], 'tools' ) as $sub => $title )
+				$links[] = [
+					'context' => 'tools',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => $this->get_module_url( 'tools', $sub ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
+				];
+
+		if ( method_exists( $this, 'roles_settings' ) && ! Settings::isRoles( $screen ) )
+			foreach ( $this->append_sub( [], 'roles' ) as $sub => $title )
+				$links[] = [
+					'context' => 'roles',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => $this->get_module_url( 'roles', $sub ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ), $title ),
+				];
+
+		if ( method_exists( $this, 'imports_settings' ) && ! Settings::isImports( $screen ) )
+			foreach ( $this->append_sub( [], 'imports' ) as $sub => $title )
+				$links[] = [
+					'context' => 'imports',
+					'sub'     => $sub,
+					'text'    => $title,
+					'url'     => $this->get_module_url( 'imports', $sub ),
+					/* translators: %s: sub title */
+					'title'   => sprintf( _x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
+				];
+
+		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( 'settings' ) )
+			$links[] = [
+				'context' => 'settings',
+				'sub'     => $this->key,
+				'text'    => $this->module->title,
+				'url'     => $this->get_module_url( 'settings' ),
+				/* translators: %s: module title */
+				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ), $this->module->title ),
+			];
+
+		if ( GEDITORIAL_DISABLE_HELP_TABS )
+			return $links;
+
+		if ( $docs = $this->get_module_url( 'docs' ) )
+			$links[] = [
+				'context' => 'docs',
+				'sub'     => $this->key,
+				'text'    => $this->module->title,
+				'url'     => $docs,
+				/* translators: %s: module title */
+				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ), $this->module->title ),
+			];
+
+		if ( 'config' != $this->module->name )
+			$links[] = [
+				'context' => 'docs',
+				'sub'     => FALSE,
+				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+				'url'     => Settings::getModuleDocsURL( FALSE ),
+				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+			];
+
+		return $links;
+	}
+
+	public function get_module_url( $context = NULL, $sub = NULL, $extra = [] )
+	{
+		if ( is_null( $sub ) )
+			$sub = $this->key;
+
+		if ( is_null( $context ) )
+			$context = 'reports'; // TODO get from module class static: this is the default module link!
+
+		switch ( $context ) {
+			case 'config'    : $url = Settings::settingsURL(); break;
+			case 'reports'   : $url = Settings::reportsURL(); break;
+			case 'tools'     : $url = Settings::toolsURL(); break;
+			case 'rols'      : $url = Settings::rolesURL(); break;
+			case 'imports'   : $url = Settings::importsURL(); break;
+			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
+			case 'settings'  : $url = add_query_arg( 'module', $this->module->name, Settings::settingsURL() ); $sub = FALSE; break;
+			case 'listtable' : $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
+			default          : $url = Core\URL::current();
+		}
+
+		if ( FALSE === $url )
+			return FALSE;
+
+		return add_query_arg( array_merge( [
+			'sub' => $sub,
+		], $extra ), $url );
+	}
+
+	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage', $admin_base = NULL )
+	{
+		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )
+			? $this->classs()
+			: $this->classs( $context );
+
+		if ( ! $full )
+			return $page;
+
+		if ( is_null( $admin_base ) )
+			$admin_base = in_array( $context, [ 'adminmenu', 'printpage', 'framepage', 'newpost', 'importitems' ], TRUE )
+				? get_admin_url( NULL, 'index.php' )
+				: get_admin_url( NULL, 'admin.php' );
+
+		return add_query_arg( array_merge( [ 'page' => $page ], $extra ), $admin_base );
+	}
+
 	protected function modulelinks__register_headerbuttons( $contexts = NULL )
 	{
 		if ( is_null( $contexts ) ) {

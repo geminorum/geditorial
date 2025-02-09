@@ -307,7 +307,7 @@ class ModuleHelper extends gEditorial\Helper
 			$constants = self::getTheDayConstants();
 
 		$args = [
-			'post_type'        => self::constant( 'day_posttype', 'day' ),
+			'post_type'        => self::constant( 'main_posttype', 'day' ),
 			'post_status'      => 'any',
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,
@@ -499,7 +499,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( FALSE !== $the_post ) {
 
-			$object = WordPress\PostType::object( self::constant( 'day_posttype', 'day' ) );
+			$object = WordPress\PostType::object( self::constant( 'main_posttype', 'day' ) );
 
 			if ( TRUE === $the_post ) {
 

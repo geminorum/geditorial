@@ -388,14 +388,14 @@ class Iranian extends gEditorial\Module
 
 	protected function render_reports_html_before( $uri, $sub )
 	{
-		if ( $this->do_report_country_summary( $sub ) )
+		if ( $this->_do_report_country_summary( $sub ) )
 			return FALSE; // avoid further UI
 
-		else if ( $this->do_report_city_summary( $sub ) )
+		else if ( $this->_do_report_city_summary( $sub ) )
 			return FALSE; // avoid further UI
 	}
 
-	private function do_report_country_summary( $sub )
+	private function _do_report_country_summary( $sub )
 	{
 		if ( ! self::do( ModuleSettings::ACTION_COUNTRY_SUMMARY ) )
 			return FALSE;
@@ -416,7 +416,7 @@ class Iranian extends gEditorial\Module
 		);
 	}
 
-	private function do_report_city_summary( $sub )
+	private function _do_report_city_summary( $sub )
 	{
 		if ( ! self::do( ModuleSettings::ACTION_CITY_SUMMARY ) )
 			return FALSE;

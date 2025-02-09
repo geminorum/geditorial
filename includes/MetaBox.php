@@ -90,74 +90,6 @@ class MetaBox extends WordPress\Main
 		echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
-	// FIXME: DROP THIS
-	public static function singleselectTerms_OLD( $object_id = 0, $atts = [], $terms = NULL )
-	{
-		$args = self::args( $atts, [
-			'taxonomy' => NULL,
-			'posttype' => FALSE,
-			'echo'     => TRUE,
-			'none'     => NULL,    // `NULL` for label check, `FALSE` for disable
-			'empty'    => FALSE,   // `NULL` for empty box, `FALSE` for disable
-		] );
-
-		if ( ! $args['taxonomy'] || ( ! $taxonomy = WordPress\Taxonomy::object( $args['taxonomy'] ) ) )
-			return FALSE;
-
-		if ( ! is_null( $terms ) ) {
-
-			// FIXME: make sure it's a list of objects
-
-		} else {
-
-			// TODO: if `hierarchical` the title must have parent prefixes
-			// @SEE: `PostType::getParentTitles()`
-			// - e.g. tree list select
-
-			// $terms = WordPress\Taxonomy::getTerms( $taxonomy->name, FALSE, TRUE );
-			$terms = WordPress\Taxonomy::listTerms( $taxonomy->name, 'all' );
-		}
-
-		if ( empty( $terms ) ) {
-
-			if ( is_null( $args['empty'] ) )
-				return self::fieldEmptyTaxonomy( $taxonomy->name, NULL, $args['posttype'], $args['echo'] );
-
-			if ( $args['empty'] && ! $args['echo'] )
-				return $args['empty'];
-
-			if ( $args['empty'] )
-				echo $args['empty'];
-
-			return FALSE;
-		}
-
-		if ( is_null( $args['none'] ) )
-			$args['none'] = Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' );
-
-		$selected = wp_get_object_terms( $object_id, $taxonomy->name, [ 'fields' => $taxonomy->hierarchical ? 'ids' : 'slugs' ] );
-
-		$dropdown = [
-			'selected'   => count( $selected ) ? $selected[0] : '0',
-			'prop'       => 'name',
-			'value'      => $taxonomy->hierarchical ? 'term_id' : 'slug',
-			'name'       => 'tax_input['.$taxonomy->name.'][]',
-			'none_title' => $args['none'],
-			'none_value' => 0,
-			'class'      => static::BASE.'-admin-dropbown',
-		];
-
-		$html = Core\HTML::dropdown( $terms, $dropdown );
-
-		if ( $html )
-			$html = Core\HTML::wrap( $html, 'field-wrap -select' );
-
-		if ( ! $args['echo'] )
-			return $html;
-
-		echo Core\HTML::wrap( $html, 'field-wrap -select' );
-	}
-
 	// TODO: radio list box using custom walker
 	// CAUTION: tax must be cat (hierarchical)
 	// hierarchical taxonomies save by IDs,
@@ -1737,5 +1669,19 @@ class MetaBox extends WordPress\Main
 	{
 		$template = is_admin() ? '%1$s-%2$s-%3$s' : 'meta[_%2$s_%3$s]';
 		return sprintf( $template, static::BASE, $module, $field['name'] );
+	}
+
+	// OLD: `check_draft_metabox()`
+	protected function checkDraftMetaBox( $box, $post, $message = NULL )
+	{
+		if ( ! in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
+			return FALSE;
+
+		if ( is_null( $message ) )
+			$message = _x( 'You can see the contents once you\'ve saved this post for the first time.', 'MetaBox: Draft MetaBox', 'geditorial-admin' );
+
+		Core\HTML::desc( $message, TRUE, 'field-wrap -empty' );
+
+		return TRUE;
 	}
 }

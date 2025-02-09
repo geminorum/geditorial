@@ -61,6 +61,7 @@ class Helper extends WordPress\Main
 		return $enabled;
 	}
 
+	// TODO: must check for min version of wc
 	public static function moduleCheckWooCommerce( $message = NULL )
 	{
 		return WordPress\WooCommerce::isActive()

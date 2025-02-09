@@ -33,7 +33,7 @@ class WcAttributes extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_frontend' => [
+			'_general' => [
 				[
 					'field'       => 'localize_join_attributes',
 					'title'       => _x( 'Localize Join', 'Setting Title', 'geditorial-wc-attributes' ),

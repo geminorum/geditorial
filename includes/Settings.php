@@ -3582,8 +3582,8 @@ class Settings extends WordPress\Main
 		if ( $verbose )
 			echo Core\HTML::row(
 				count( $args )
-					? $message
-					: vsprintf( $message, $args )
+					? vsprintf( $message, $args )
+					: $message
 				);
 
 		return $returns;

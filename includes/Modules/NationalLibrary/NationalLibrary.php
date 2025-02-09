@@ -439,7 +439,7 @@ class NationalLibrary extends gEditorial\Module
 
 		$metakey = $this->_get_posttype_isbn_metakey( $type ?? WordPress\WooCommerce::getProductPosttype() );
 
-		// wc nags about direct use of it's internal meta-keys
+		// Woo-Commerce nags about direct use of it's internal meta-keys
 		if ( $metakey && $metakey === WordPress\WooCommerce::getGTINMetakey() )
 			return $product->get_global_unique_id( 'edit' ) ?: FALSE;
 

@@ -18,14 +18,21 @@ class ModuleHelper extends gEditorial\Helper
 			return FALSE;
 
 		$name = Core\Text::trim( $attribute->get_name() );
+		$name = WordPress\Strings::cleanupChars( $name );
 
 		if ( WordPress\Strings::isEmpty( $name ) )
 			return FALSE;
 
 		$keys = [
-			'شابک',
-			'isbn',
 			'gtin',
+			'isbn',
+			'کد',
+			'کد کتاب',
+			'کد شابک',
+			'شناسه',
+			'شابک',
+			'شماره شابک',
+			'شابک کتاب',
 		];
 
 		if ( ! in_array( strtolower( trim( $name, ':' ) ), $keys, TRUE ) )

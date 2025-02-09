@@ -225,7 +225,7 @@ trait PairedMetaBox
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
 
-			if ( $this->check_draft_metabox( $box, $object ) )
+			if ( MetaBox::checkDraftMetaBox( $box, $object ) )
 				return;
 
 			echo $this->wrap_open( '-admin-metabox' );
@@ -576,7 +576,7 @@ trait PairedMetaBox
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
 
-			if ( $this->check_draft_metabox( $box, $object ) )
+			if ( MetaBox::checkDraftMetaBox( $box, $object ) )
 				return;
 
 			echo $this->wrap_open( '-admin-metabox' );

@@ -204,7 +204,7 @@ class Isbn extends gEditorial\Module
 		if ( $args['raw'] && $data = Core\ISBN::sanitize( $args['raw'] ) )
 			$html = Info::lookupISBN( $data );
 
-		// TODO: support WooCommerce
+		// TODO: support Woo Commerce
 
 		else if ( $post = WordPress\Post::get( $args['id'] ) )
 			$html = Services\PostTypeFields::getField( $args['field'] ?? 'isbn', [ 'id' => $post ] );
