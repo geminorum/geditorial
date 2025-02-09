@@ -102,6 +102,11 @@ class Magazine extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'issue_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'issue_posttype', 'units' ) ],
 			],
+			'_constants' => [
+				'main_shortcode_constant'  => [ NULL, 'issue' ],
+				'span_shortcode_constant'  => [ NULL, 'issue-span' ],
+				'cover_shortcode_constant' => [ NULL, 'issue-cover' ],
+			],
 		];
 	}
 
@@ -113,7 +118,7 @@ class Magazine extends gEditorial\Module
 			'span_taxonomy'    => 'issue_span',
 			'section_taxonomy' => 'issue_section',
 
-			'issue_shortcode' => 'issue',
+			'main_shortcode'  => 'issue',
 			'span_shortcode'  => 'issue-span',
 			'cover_shortcode' => 'issue-cover',
 
@@ -261,7 +266,7 @@ class Magazine extends gEditorial\Module
 
 		$this->paired_register();
 
-		$this->register_shortcode( 'issue_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
@@ -425,18 +430,30 @@ class Magazine extends gEditorial\Module
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		switch ( $field_key ) {
-			/* translators: %s: order */
-			case 'in_issue_order'      : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' ) );
-			/* translators: %s: page */
-			case 'in_issue_page_start' : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) );
-			/* translators: %s: total count */
-			case 'in_issue_pages'      : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) );
+
+			case 'in_issue_order':
+				return WordPress\Strings::getCounted( $raw ?: $value,
+					/* translators: %s: order */
+					_x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' )
+				);
+
+			case 'in_issue_page_start': 
+				return WordPress\Strings::getCounted( $raw ?: $value, 
+					/* translators: %s: page */
+					_x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' ) 
+				);
+
+			case 'in_issue_pages': 
+				return WordPress\Strings::getCounted( $raw ?: $value, 
+					/* translators: %s: total count */
+					_x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ) 
+				);
 		}
 
 		return $value;
 	}
 
-	public function issue_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
 			$this->constant( 'issue_posttype' ),
@@ -450,7 +467,7 @@ class Magazine extends gEditorial\Module
 				'order_order' => 'in_issue_order',        // meta field for ordering
 			], (array) $atts ),
 			$content,
-			$this->constant( 'issue_shortcode', $tag ),
+			$this->constant( 'main_shortcode', $tag ),
 			$this->key
 		);
 	}

@@ -118,6 +118,9 @@ class Socialite extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'socialite' ],
+			],
 		];
 	}
 
@@ -156,7 +159,7 @@ class Socialite extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'socialite_shortcode' => 'socialite',
+			'main_shortcode' => 'socialite',
 		];
 	}
 
@@ -164,7 +167,7 @@ class Socialite extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_shortcode( 'socialite_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 	}
 
 	public function terms_init()
@@ -309,7 +312,7 @@ class Socialite extends gEditorial\Module
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
-	public function socialite_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
 			'context' => NULL,
@@ -317,7 +320,7 @@ class Socialite extends gEditorial\Module
 			'before'  => '', // html after wrap
 			'after'   => '', // html before wrap
 			'class'   => '', // wrap css class
-		], $atts, $this->constant( 'socialite_shortcode' ) );
+		], $atts, $this->constant( 'main_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;

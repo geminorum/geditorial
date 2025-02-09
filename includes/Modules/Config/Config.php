@@ -39,12 +39,13 @@ class Config extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'     => 'config',
-			'title'    => _x( 'Editorial', 'Modules: Config', 'geditorial-admin' ),
-			'desc'     => _x( 'WordPress in Magazine Style', 'Modules: Config', 'geditorial-admin' ),
-			'frontend' => FALSE, // move all strings to `geditorial-admin` text-domain
-			'autoload' => TRUE,
-			'access'   => 'stable',
+			'name'       => 'config',
+			'title'      => _x( 'Editorial', 'Modules: Config', 'geditorial-admin' ),
+			'desc'       => _x( 'WordPress in Magazine Style', 'Modules: Config', 'geditorial-admin' ),
+			'textdomain' => FALSE, // strings in this module are loaded via plugin
+			'frontend'   => FALSE, // move all strings to `geditorial-admin` text-domain
+			'autoload'   => TRUE,
+			'access'     => 'stable',
 		];
 	}
 
@@ -99,8 +100,8 @@ class Config extends gEditorial\Module
 
 		$hook_reports = add_submenu_page(
 			'index.php',
-			_x( 'Editorial Reports', 'Menu Title', 'geditorial-config' ),
-			_x( 'My Reports', 'Menu Title', 'geditorial-config' ),
+			_x( 'Editorial Reports', 'Menu Title', 'geditorial-admin' ),
+			_x( 'My Reports', 'Menu Title', 'geditorial-admin' ),
 			'editorial_reports',
 			$this->base.'-reports',
 			[ $this, 'admin_reports_page' ]
@@ -117,10 +118,10 @@ class Config extends gEditorial\Module
 
 		$hook_tools = add_submenu_page(
 			( $can ? $this->base.'-settings' : 'tools.php' ),
-			_x( 'Editorial Tools', 'Menu Title', 'geditorial-config' ),
+			_x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' ),
 			( $can
-				? _x( 'Tools', 'Menu Title', 'geditorial-config' )
-				: _x( 'Editorial Tools', 'Menu Title', 'geditorial-config' )
+				? _x( 'Tools', 'Menu Title', 'geditorial-admin' )
+				: _x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' )
 			),
 			'editorial_tools',
 			$this->base.'-tools',
@@ -128,11 +129,11 @@ class Config extends gEditorial\Module
 		);
 
 		$this->_hook_wp_submenu_page( 'roles', 'users.php',
-			_x( 'Editorial Roles', 'Menu Title', 'geditorial-config' ),
+			_x( 'Editorial Roles', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_roles' );
 
 		$this->_hook_wp_submenu_page( 'imports', 'tools.php',
-			_x( 'Editorial Imports', 'Menu Title', 'geditorial-config' ),
+			_x( 'Editorial Imports', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_imports' );
 
 		add_action( 'load-'.$hook_reports, [ $this, 'admin_reports_load' ] );
@@ -173,19 +174,19 @@ class Config extends gEditorial\Module
 		$uri = Settings::reportsURL( FALSE, ! $can );
 		$sub = Settings::sub( $can ? 'general' : 'overview' );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Reports Sub', 'geditorial-config' ) ];
+		$subs = [ 'overview' => _x( 'Overview', 'Reports Sub', 'geditorial-admin' ) ];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Reports Sub', 'geditorial-config' );
+			$subs['general'] = _x( 'General', 'Reports Sub', 'geditorial-admin' );
 
 		$subs     = apply_filters( $this->hook_base( 'reports', 'subs' ), $subs, 'reports', $can );
 		$messages = apply_filters( $this->hook_base( 'reports', 'messages' ), Settings::messages(), $sub. $can );
 
 		Settings::wrapOpen( $sub, 'reports' );
 
-			// Settings::headerTitle( _x( 'Editorial Reports', 'Page Title', 'geditorial-config' ) );
+			// Settings::headerTitle( _x( 'Editorial Reports', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
-			Settings::sideOpen( _x( 'Reports', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
+			Settings::sideOpen( _x( 'Reports', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -218,24 +219,24 @@ class Config extends gEditorial\Module
 		$uri = Settings::toolsURL( FALSE, ! $can );
 		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Tools Sub', 'geditorial-config' ) ];
+		$subs = [ 'overview' => _x( 'Overview', 'Tools Sub', 'geditorial-admin' ) ];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Tools Sub', 'geditorial-config' );
+			$subs['general'] = _x( 'General', 'Tools Sub', 'geditorial-admin' );
 
 		$subs     = apply_filters( $this->hook_base( 'tools', 'subs' ), $subs, 'tools', $can );
 		$messages = apply_filters( $this->hook_base( 'tools', 'messages' ), Settings::messages(), $sub, $can );
 
 		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-config' );
-			$subs['console'] = _x( 'Console', 'Tools Sub', 'geditorial-config' );
+			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-admin' );
+			$subs['console'] = _x( 'Console', 'Tools Sub', 'geditorial-admin' );
 		}
 
 		Settings::wrapOpen( $sub, 'tools' );
 
-			// Settings::headerTitle( _x( 'Editorial Tools', 'Page Title', 'geditorial-config' ) );
+			// Settings::headerTitle( _x( 'Editorial Tools', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
-			Settings::sideOpen( _x( 'Tools', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
+			Settings::sideOpen( _x( 'Tools', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -294,23 +295,23 @@ class Config extends gEditorial\Module
 		$uri = Settings::rolesURL( FALSE, ! $can );
 		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Roles Sub', 'geditorial-config' ) ];
+		$subs = [ 'overview' => _x( 'Overview', 'Roles Sub', 'geditorial-admin' ) ];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Roles Sub', 'geditorial-config' );
+			$subs['general'] = _x( 'General', 'Roles Sub', 'geditorial-admin' );
 
 		$subs     = apply_filters( $this->hook_base( 'roles', 'subs' ), $subs, 'roles', $can );
 		$messages = apply_filters( $this->hook_base( 'roles', 'messages' ), Settings::messages(), $sub, $can );
 
 		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['console'] = _x( 'Console', 'Roles Sub', 'geditorial-config' );
+			$subs['console'] = _x( 'Console', 'Roles Sub', 'geditorial-admin' );
 		}
 
 		Settings::wrapOpen( $sub, 'roles' );
 
-			// Settings::headerTitle( _x( 'Editorial Roles', 'Page Title', 'geditorial-config' ) );
+			// Settings::headerTitle( _x( 'Editorial Roles', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
-			Settings::sideOpen( _x( 'Roles', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
+			Settings::sideOpen( _x( 'Roles', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -477,7 +478,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-config' ) );
+		Core\HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-admin' ) );
 
 		$action = $this->hook_base( 'reports' , 'general_summary' );
 
@@ -522,16 +523,16 @@ class Config extends gEditorial\Module
 	private function _render_tools_html_options( $post )
 	{
 		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'Options', 'Tools', 'geditorial-config' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Options', 'Tools', 'geditorial-admin' ).'</th><td>';
 
 			if ( $filesize = $this->settings_render_upload_field( '.json' ) ) {
 				echo $this->wrap_open_buttons( '-import-all-options' );
 					Settings::submitButton( 'import_all_options',
-						_x( 'Imports All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );
+						_x( 'Imports All Options', 'Button', 'geditorial-admin' ), 'danger', TRUE );
 
 					Core\HTML::desc( sprintf(
 						/* translators:  %1$s: file ext-type, %2$s: file size */
-						_x( 'Imports all editorial option data in %1$s file from your computer. Maximum upload size: %2$s', 'Message', 'geditorial-config' ),
+						_x( 'Imports all editorial option data in %1$s file from your computer. Maximum upload size: %2$s', 'Message', 'geditorial-admin' ),
 						Core\HTML::code( 'json' ),
 						Core\HTML::code( Core\HTML::wrapLTR( $filesize ) )
 					), FALSE );
@@ -541,28 +542,28 @@ class Config extends gEditorial\Module
 
 			echo $this->wrap_open_buttons( '-download-all-options' );
 				Settings::submitButton( 'download_all_options',
-					_x( 'Download All Options', 'Button', 'geditorial-config' ) );
+					_x( 'Download All Options', 'Button', 'geditorial-admin' ) );
 
 				Core\HTML::desc( sprintf(
 					/*translators: %s: file ext-type */
-					_x( 'Exports all editorial option data as %s file for you to download.', 'Message', 'geditorial-config' ),
+					_x( 'Exports all editorial option data as %s file for you to download.', 'Message', 'geditorial-admin' ),
 					Core\HTML::code( 'json' )
 				), FALSE );
 			echo '</p>';
 
 			echo $this->wrap_open_buttons( '-upgrade-old-options' );
 				Settings::submitButton( 'upgrade_old_options',
-					_x( 'Upgrade Old Options', 'Button', 'geditorial-config' ) );
+					_x( 'Upgrade Old Options', 'Button', 'geditorial-admin' ) );
 
-				Core\HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Message', 'geditorial-config' ), FALSE );
+				Core\HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Message', 'geditorial-admin' ), FALSE );
 			echo '</p>';
 
 			if ( Core\WordPress::isDev() || WordPress\User::isSuperAdmin() ) {
 				echo $this->wrap_open_buttons( '-delete-all-options' );
 					Settings::submitButton( 'delete_all_options',
-						_x( 'Delete All Options', 'Button', 'geditorial-config' ), 'danger', TRUE );
+						_x( 'Delete All Options', 'Button', 'geditorial-admin' ), 'danger', TRUE );
 
-					Core\HTML::desc( _x( 'Tries to delete all editorial options on the current site.', 'Message', 'geditorial-config' ), FALSE );
+					Core\HTML::desc( _x( 'Tries to delete all editorial options on the current site.', 'Message', 'geditorial-admin' ), FALSE );
 				echo '</p>';
 			}
 
@@ -573,11 +574,11 @@ class Config extends gEditorial\Module
 
 	private function _render_tools_html_maintenance( $post )
 	{
-		Core\HTML::h3( _x( 'Maintenance Tasks', 'Header', 'geditorial-config' ) );
+		Core\HTML::h3( _x( 'Maintenance Tasks', 'Header', 'geditorial-admin' ) );
 
 		echo '<table class="form-table">';
 
-		echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Tools', 'geditorial-config' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Tools', 'geditorial-admin' ).'</th><td>';
 
 			$this->do_settings_field( [
 				'type'         => 'select',
@@ -588,8 +589,8 @@ class Config extends gEditorial\Module
 				'option_group' => 'tools',
 			] );
 
-			Settings::submitButton( 'custom_fields_empty', _x( 'Empty', 'Button', 'geditorial-config' ), 'danger', TRUE );
-			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Message', 'geditorial-config' ) );
+			Settings::submitButton( 'custom_fields_empty', _x( 'Empty', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Message', 'geditorial-admin' ) );
 
 		echo '</td></tr></table>';
 
@@ -599,13 +600,13 @@ class Config extends gEditorial\Module
 	private function _render_tools_html_o2o( $post )
 	{
 		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Tools', 'geditorial-config' ).'</th><td>';
+		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Tools', 'geditorial-admin' ).'</th><td>';
 
 		// $counts = Services\O2O\API::getConnectionCounts();
 
 		if ( empty( $counts ) ) {
 
-			Core\HTML::desc( _x( 'No connection types found.', 'Message', 'geditorial-config' ), TRUE, '-empty' );
+			Core\HTML::desc( _x( 'No connection types found.', 'Message', 'geditorial-admin' ), TRUE, '-empty' );
 
 		} else {
 
@@ -630,11 +631,11 @@ class Config extends gEditorial\Module
 					'option_group' => 'tools',
 				] );
 
-				Settings::submitButton( 'convert_connection_type', _x( 'Convert', 'Button', 'geditorial-config' ), 'danger', TRUE );
+				Settings::submitButton( 'convert_connection_type', _x( 'Convert', 'Button', 'geditorial-admin' ), 'danger', TRUE );
 			}
 
 			if ( $empty )
-				Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Message', 'geditorial-config' ), TRUE, '-empty' );
+				Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Message', 'geditorial-admin' ), TRUE, '-empty' );
 		}
 
 		echo '</td></tr></table>';
@@ -649,7 +650,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'roles' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Roles', 'Header', 'geditorial-config' ) );
+		Core\HTML::h3( _x( 'General Editorial Roles', 'Header', 'geditorial-admin' ) );
 
 		$action = $this->hook_base( 'roles' , 'general_summary' );
 
@@ -680,22 +681,22 @@ class Config extends gEditorial\Module
 		$uri = Settings::importsURL( FALSE );
 		$sub = Settings::sub( $can ? 'general' : 'overview' );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Imports Sub', 'geditorial-config' ) ];
+		$subs = [ 'overview' => _x( 'Overview', 'Imports Sub', 'geditorial-admin' ) ];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Imports Sub', 'geditorial-config' );
+			$subs['general'] = _x( 'General', 'Imports Sub', 'geditorial-admin' );
 
 		$subs     = apply_filters( $this->hook_base( 'imports', 'subs' ), $subs, 'imports', $can );
 		$messages = apply_filters( $this->hook_base( 'imports', 'messages' ), Settings::messages(), $sub, $can );
 
 		if ( $can )
-			$subs['data'] = _x( 'Data', 'Imports Sub', 'geditorial-config' );
+			$subs['data'] = _x( 'Data', 'Imports Sub', 'geditorial-admin' );
 
 		Settings::wrapOpen( $sub, 'imports' );
 
-			// Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-config' ) );
+			// Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
-			Settings::sideOpen( _x( 'Imports', 'Page Title', 'geditorial-config' ), $uri, $sub, $subs, FALSE );
+			Settings::sideOpen( _x( 'Imports', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
 
 			if ( 'overview' == $sub )
@@ -730,7 +731,7 @@ class Config extends gEditorial\Module
 		foreach ( apply_filters( $this->hook_base( 'imports' , 'data_summary' ), [] ) as $row ) {
 
 			$data = self::atts( [
-				'title'       => _x( 'Untitled', 'Imports: Data Summary', 'geditorial-config' ),
+				'title'       => _x( 'Untitled', 'Imports: Data Summary', 'geditorial-admin' ),
 				'description' => '',
 				'path'        => '',
 				'updated'     => '',
@@ -754,7 +755,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'imports' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-config' ) );
+		Core\HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-admin' ) );
 
 		$action = $this->hook_base( 'imports' , 'general_summary' );
 
@@ -773,12 +774,12 @@ class Config extends gEditorial\Module
 			$edit = Core\WordPress::getUserEditLink( $user );
 
 			/* translators: %s: user link placeholder */
-			Core\HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-config' ),
+			Core\HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-admin' ),
 				$edit ? Core\HTML::link( $name, $edit, TRUE ) : $name ) );
 
 		} else {
 
-			Core\HTML::desc( _x( 'Editorial Site User is not available!', 'Sidebox: Message', 'geditorial-config' ), TRUE, '-empty' );
+			Core\HTML::desc( _x( 'Editorial Site User is not available!', 'Sidebox: Message', 'geditorial-admin' ), TRUE, '-empty' );
 		}
 	}
 
@@ -797,17 +798,17 @@ class Config extends gEditorial\Module
 				Ajax::checkReferer( $this->hook() );
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
-					Ajax::errorMessage( _x( 'No action or name!', 'Ajax Notice', 'geditorial-config' ) );
+					Ajax::errorMessage( _x( 'No action or name!', 'Ajax Notice', 'geditorial-admin' ) );
 
 				if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
-					Ajax::errorMessage( _x( 'Cannot find the module!', 'Ajax Notice', 'geditorial-config' ) );
+					Ajax::errorMessage( _x( 'Cannot find the module!', 'Ajax Notice', 'geditorial-admin' ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( gEditorial()->update_module_option( $module->name, 'enabled', $enabled ) )
-					Ajax::successMessage( _x( 'Module state successfully changed.', 'Ajax Notice', 'geditorial-config' ) );
+					Ajax::successMessage( _x( 'Module state successfully changed.', 'Ajax Notice', 'geditorial-admin' ) );
 				else
-					Ajax::errorMessage( _x( 'Cannot change module state!', 'Ajax Notice', 'geditorial-config' ) );
+					Ajax::errorMessage( _x( 'Cannot change module state!', 'Ajax Notice', 'geditorial-admin' ) );
 		}
 
 		Ajax::errorWhat();
@@ -819,10 +820,10 @@ class Config extends gEditorial\Module
 			$module = $this->module;
 
 		else if ( ! $module = gEditorial()->get_module_by( 'name', $key ) )
-			return Settings::wrapError( Core\HTML::warning( _x( 'Not a registered Editorial module.', 'Page Notice', 'geditorial-config' ), FALSE ) );
+			return Settings::wrapError( Core\HTML::warning( _x( 'Not a registered Editorial module.', 'Page Notice', 'geditorial-admin' ), FALSE ) );
 
 		if ( ! gEditorial()->enabled( $module->name, FALSE ) )
-			return Settings::wrapError( Core\HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Page Notice', 'geditorial-config' ), FALSE ) );
+			return Settings::wrapError( Core\HTML::warning( _x( 'Module not enabled. Please enable it from the Editorial settings page.', 'Page Notice', 'geditorial-admin' ), FALSE ) );
 
 		gEditorial()->module( $module->name )->settings_header();
 		gEditorial()->module( $module->name )->settings_from();

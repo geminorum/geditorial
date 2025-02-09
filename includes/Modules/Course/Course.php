@@ -38,7 +38,7 @@ class Course extends gEditorial\Module
 			'icon'     => 'welcome-learn-more',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
+				'doublepaired',
 			],
 		];
 	}
@@ -101,6 +101,11 @@ class Course extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'course_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'course_posttype', 'units' ) ],
 			],
+			'_constants' => [
+				'main_shortcode_constant'  => [ NULL, 'course' ],
+				'span_shortcode_constant'  => [ NULL, 'course-span' ],
+				'cover_shortcode_constant' => [ NULL, 'course-cover' ],
+			],
 		];
 	}
 
@@ -116,9 +121,9 @@ class Course extends gEditorial\Module
 			'format_taxonomy'   => 'lesson_format',
 			'status_taxonomy'   => 'lesson_status',
 
-			'course_shortcode' => 'course',
-			'span_shortcode'   => 'course-span',
-			'cover_shortcode'  => 'course-cover',
+			'main_shortcode'  => 'course',
+			'span_shortcode'  => 'course-span',
+			'cover_shortcode' => 'course-cover',
 
 			'term_abandoned_lesson' => 'lesson-abandoned',
 		];
@@ -296,7 +301,7 @@ class Course extends gEditorial\Module
 			'status_taxonomy' => TRUE,
 		] );
 
-		$this->register_shortcode( 'course_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
@@ -436,7 +441,7 @@ class Course extends gEditorial\Module
 		return ModuleTemplate::spanTiles();
 	}
 
-	public function course_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
 			$this->constant( 'course_posttype' ),
@@ -447,7 +452,7 @@ class Course extends gEditorial\Module
 				'orderby'   => 'menu_order',
 			], (array) $atts ),
 			$content,
-			$this->constant( 'course_shortcode', $tag ),
+			$this->constant( 'main_shortcode', $tag ),
 			$this->key
 		);
 	}

@@ -92,6 +92,9 @@ class Collect extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'collection_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'collection_posttype', 'units' ) ],
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'collection' ],
+			],
 		];
 	}
 
@@ -103,9 +106,9 @@ class Collect extends gEditorial\Module
 			'group_taxonomy'      => 'collection_group',
 			'part_taxonomy'       => 'collection_part',
 
-			'collection_shortcode' => 'collection',
-			'group_shortcode'      => 'collection-group',
-			'poster_shortcode'     => 'collection-poster',
+			'main_shortcode'   => 'collection',
+			'group_shortcode'  => 'collection-group',
+			'poster_shortcode' => 'collection-poster',
 		];
 	}
 
@@ -228,7 +231,7 @@ class Collect extends gEditorial\Module
 
 		$this->paired_register();
 
-		$this->register_shortcode( 'collection_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'group_shortcode' );
 		$this->register_shortcode( 'poster_shortcode' );
 
@@ -456,7 +459,7 @@ class Collect extends gEditorial\Module
 			return Info::renderNoReportsAvailable();
 	}
 
-	public function collection_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
 			$this->constant( 'collection_posttype' ),
@@ -469,7 +472,7 @@ class Collect extends gEditorial\Module
 				'order_order' => 'in_collection_order',   // meta field for ordering
 			], (array) $atts ),
 			$content,
-			$this->constant( 'collection_shortcode', $tag ),
+			$this->constant( 'main_shortcode', $tag ),
 			$this->key
 		);
 	}

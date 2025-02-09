@@ -80,13 +80,16 @@ class Attachments extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'attachments' ],
+			],
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'attachments_shortcode' => 'attachments',
+			'main_shortcode' => 'attachments',
 		];
 	}
 
@@ -100,7 +103,7 @@ class Attachments extends gEditorial\Module
 		}
 
 		$this->action_module( 'pointers', 'post', 5, 999 );
-		$this->register_shortcode( 'attachments_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 
 		if ( is_admin() )
 			return;
@@ -291,7 +294,7 @@ class Attachments extends gEditorial\Module
 		return $attr;
 	}
 
-	public function attachments_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'attached',
 			'attachment',
@@ -303,16 +306,16 @@ class Attachments extends gEditorial\Module
 				'title_title'   => _x( 'Attachments of %s', 'Shortcode', 'geditorial-attachments' ),
 				'title_anchor'  => 'attachments',
 				'title_link'    => FALSE,
-				'item_after_cb' => [ $this, 'attachments_shortcode_item_after_cb' ],
+				'item_after_cb' => [ $this, 'main_shortcode_item_after_cb' ],
 			], (array) $atts ),
 			$content,
-			$this->constant( 'attachments_shortcode', $tag ),
+			$this->constant( 'main_shortcode', $tag ),
 			$this->key
 		);
 	}
 
 	// @SEE: `wp_prepare_attachment_for_js()`
-	public function attachments_shortcode_item_after_cb( $post, $args, $item )
+	public function main_shortcode_item_after_cb( $post, $args, $item )
 	{
 		$html = '';
 

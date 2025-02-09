@@ -953,7 +953,8 @@ class Settings extends WordPress\Main
 			'field'       => 'main_posttype_constant',
 			'type'        => 'text',
 			'title'       => _x( 'Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main post-type key. Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -965,7 +966,8 @@ class Settings extends WordPress\Main
 			'field'       => 'category_taxonomy_constant',
 			'type'        => 'text',
 			'title'       => _x( 'Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main taxonomy key. Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -977,7 +979,34 @@ class Settings extends WordPress\Main
 			'field'       => 'main_shortcode_constant',
 			'type'        => 'text',
 			'title'       => _x( 'Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main short-code tag. Do not use spaces or reserved characters. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_span_shortcode_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'span_shortcode_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Span Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the span short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_cover_shortcode_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'cover_shortcode_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Cover Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the cover short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -989,7 +1018,8 @@ class Settings extends WordPress\Main
 			'field'       => 'primary_posttype_constant',
 			'type'        => 'text',
 			'title'       => _x( 'Primary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the primary post-type key. Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the primary post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1001,7 +1031,8 @@ class Settings extends WordPress\Main
 			'field'       => 'primary_taxonomy_constant',
 			'type'        => 'text',
 			'title'       => _x( 'Primary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the primary taxonomy key. Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the primary taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1013,7 +1044,8 @@ class Settings extends WordPress\Main
 			'field'       => 'secondary_posttype_constant',
 			'type'        => 'text',
 			'title'       => _x( 'Secondary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the secondary post-type key. Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the secondary post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1025,7 +1057,8 @@ class Settings extends WordPress\Main
 			'field'       => 'secondary_taxonomy_constant',
 			'type'        => 'text',
 			'title'       => _x( 'Secondary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the secondary taxonomy key. Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the secondary taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1913,26 +1946,33 @@ class Settings extends WordPress\Main
 	public static function getModuleSectionTitle( $suffix )
 	{
 		switch ( $suffix ) {
-			case '_general'  : return [ _x( 'General', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_defaults' : return [ _x( 'Defaults', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_misc'     : return [ _x( 'Miscellaneous', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_frontend' : return [ _x( 'Front-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_backend'  : return [ _x( 'Back-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_content'  : return [ _x( 'Generated Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_featured' : return [ _x( 'Featured Content', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_dashboard': return [ _x( 'Admin Dashboard', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_editlist' : return [ _x( 'Admin Edit List', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_comments' : return [ _x( 'Admin Comment List', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_editpost' : return [ _x( 'Admin Edit Post', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_edittags' : return [ _x( 'Admin Edit Terms', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_columns'  : return [ _x( 'Admin List Columns', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_import'   : return [ _x( 'Import Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_printpage': return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_strings'  : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_constants': return [ _x( 'Custom Constants', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_roles'    : return [ _x( 'Availability', 'Settings: Section Title', 'geditorial-admin' ), _x( 'Though Administrators have it all!', 'Settings: Section Description', 'geditorial-admin' ) ];
-			case '_p2p'      : return [ _x( 'Posts-to-Posts', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
-			case '_o2o'      : return [ _x( 'Objects-to-Objects', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_general'    : return [ _x( 'General', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_defaults'   : return [ _x( 'Defaults', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_misc'       : return [ _x( 'Miscellaneous', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_frontend'   : return [ _x( 'Front-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_backend'    : return [ _x( 'Back-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_content'    : return [ _x( 'Generated Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_featured'   : return [ _x( 'Featured Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_connected'  : return [ _x( 'Connected Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_supports'   : return [ _x( 'Feature Support', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_dashboard'  : return [ _x( 'Admin Dashboard', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_editlist'   : return [ _x( 'Admin Edit List', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_comments'   : return [ _x( 'Admin Comment List', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_editpost'   : return [ _x( 'Admin Edit Post', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_edittags'   : return [ _x( 'Admin Edit Terms', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_columns'    : return [ _x( 'Admin List Columns', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_import'     : return [ _x( 'Import Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_reports'    : return [ _x( 'Report Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_printpage'  : return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_strings'    : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_constants'  : return [ _x( 'Custom Constants', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_posttypes'  : return [ _x( 'Post-Types', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_taxonomies' : return [ _x( 'Taxonomies', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_subcontent' : return [ _x( 'Sub-Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_bulkactions': return [ _x( 'Bulk Actions', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_roles'      : return [ _x( 'Availability', 'Settings: Section Title', 'geditorial-admin' ), _x( 'Though Administrators have it all!', 'Settings: Section Description', 'geditorial-admin' ) ];
+			case '_p2p'        : return [ _x( 'Posts-to-Posts', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_o2o'        : return [ _x( 'Objects-to-Objects', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 		}
 
 		return FALSE;

@@ -107,6 +107,9 @@ class Venue extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'units' ) ],
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'place' ],
+			],
 		];
 	}
 
@@ -117,7 +120,7 @@ class Venue extends gEditorial\Module
 			'place_paired'      => 'places',
 			'category_taxonomy' => 'place_category',
 			'facility_taxonomy' => 'place_facility',
-			'place_shortcode'   => 'place',
+			'main_shortcode'    => 'place',
 		];
 	}
 
@@ -237,7 +240,7 @@ class Venue extends gEditorial\Module
 
 		$this->paired_register();
 
-		$this->register_shortcode( 'place_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 
 		if ( is_admin() )
 			return;
@@ -373,7 +376,7 @@ class Venue extends gEditorial\Module
 			] );
 
 		else
-			$html.= $this->place_shortcode( [
+			$html.= $this->main_shortcode( [
 				'future' => 'off',
 				'title'  => FALSE,
 				'wrap'   => FALSE,
@@ -382,7 +385,7 @@ class Venue extends gEditorial\Module
 		return $html;
 	}
 
-	public function place_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
 			$this->constant( 'place_posttype' ),
@@ -393,7 +396,7 @@ class Venue extends gEditorial\Module
 				'orderby'   => 'menu_order',
 			], (array) $atts ),
 			$content,
-			$this->constant( 'place_shortcode', $tag ),
+			$this->constant( 'main_shortcode', $tag ),
 			$this->key
 		);
 	}

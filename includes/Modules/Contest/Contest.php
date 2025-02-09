@@ -37,8 +37,8 @@ class Contest extends gEditorial\Module
 			'icon'     => 'megaphone',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
 				'apply',
+				'doublepaired',
 			],
 		];
 	}

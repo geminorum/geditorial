@@ -83,7 +83,7 @@ class Terms extends gEditorial\Module
 					'default'     => TRUE,
 				],
 			],
-			'general' => [
+			'_general' => [
 				[
 					'field'       => 'apply_ordering',
 					'title'       => _x( 'Apply Ordering', 'Setting Title', 'geditorial-terms' ),

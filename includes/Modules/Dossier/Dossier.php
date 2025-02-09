@@ -103,6 +103,11 @@ class Dossier extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
+			'_constants' => [
+				'main_shortcode_constant'  => [ NULL, 'dossier' ],
+				'span_shortcode_constant'  => [ NULL, 'dossier-span' ],
+				'cover_shortcode_constant' => [ NULL, 'dossier-cover' ],
+			],
 		];
 	}
 
@@ -114,9 +119,9 @@ class Dossier extends gEditorial\Module
 			'span_taxonomy'    => 'dossier_span',
 			'primary_subterm' => 'dossier_section',
 
-			'dossier_shortcode' => 'dossier',
-			'span_shortcode'    => 'dossier-span',
-			'cover_shortcode'   => 'dossier-cover',
+			'main_shortcode'  => 'dossier',
+			'span_shortcode'  => 'dossier-span',
+			'cover_shortcode' => 'dossier-cover',
 		];
 	}
 
@@ -236,7 +241,7 @@ class Dossier extends gEditorial\Module
 
 		$this->paired_register();
 
-		$this->register_shortcode( 'dossier_shortcode' );
+		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 
@@ -462,7 +467,7 @@ class Dossier extends gEditorial\Module
 			return Info::renderNoReportsAvailable();
 	}
 
-	public function dossier_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
 			$this->constant( 'primary_posttype' ),
@@ -476,7 +481,7 @@ class Dossier extends gEditorial\Module
 				'order_order' => 'in_dossier_order',        // meta field for ordering
 			], (array) $atts ),
 			$content,
-			$this->constant( 'dossier_shortcode', $tag ),
+			$this->constant( 'main_shortcode', $tag ),
 			$this->key
 		);
 	}

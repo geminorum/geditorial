@@ -12,7 +12,7 @@ trait SettingsFields
 	public function register_settings_fields_option( $section_title = NULL )
 	{
 		if ( is_null( $section_title ) )
-			/* translators: %s: posttype */
+			/* translators: %s: post-type label */
 			$section_title = _x( 'Fields for %s', 'Module', 'geditorial-admin' );
 
 		$all = $this->all_posttypes();
