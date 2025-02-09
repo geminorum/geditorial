@@ -129,7 +129,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = NULL;
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'primary_posttype', 'human' );
+			$atts['type'] = self::constant( 'main_posttype', 'human' );
 
 		return self::metaSummary( $atts );
 	}
@@ -148,7 +148,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'primary_posttype', 'human' );
+			$atts['type'] = self::constant( 'main_posttype', 'human' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}

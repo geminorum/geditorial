@@ -43,7 +43,74 @@ class Happening extends gEditorial\Module
 				'comment_status',
 				'widget_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', TRUE ),
+				$this->settings_supports_option( 'main_posttype', TRUE ),
+			],
+			'_constants' => [
+				'main_posttype_constant'     => [ NULL, 'event' ],
+				'category_taxonomy_constant' => [ NULL, 'event_category' ],
+			],
+		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'main_posttype'     => 'event',
+			'category_taxonomy' => 'event_category',
+			'type_taxonomy'     => 'event_type',
+			'calendar_taxonomy' => 'event_calendar',
+		];
+	}
+
+	protected function get_module_icons()
+	{
+		return [
+			'taxonomies' => [
+				'category_taxonomy' => 'category',
+				'type_taxonomy'     => 'tag',
+				'calendar_taxonomy' => 'calendar',
+			],
+		];
+	}
+
+	protected function get_global_strings()
+	{
+		$strings = [
+			'noops' => [
+				'main_posttype'     => _n_noop( 'Event', 'Events', 'geditorial-happening' ),
+				'category_taxonomy' => _n_noop( 'Event Category', 'Event Categories', 'geditorial-happening' ),
+				'type_taxonomy'     => _n_noop( 'Event Type', 'Event Types', 'geditorial-happening' ),
+				'calendar_taxonomy' => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-happening' ),
+			],
+			'labels' => [
+				'category_taxonomy' => [
+					'menu_name'      => _x( 'Categories', 'Menu Title', 'geditorial-happening' ),
+					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-happening' ),
+				],
+				'type_taxonomy' => [
+					'menu_name' => _x( 'Types', 'Menu Title', 'geditorial-happening' ),
+				],
+				'calendar_taxonomy' => [
+					'menu_name' => _x( 'Calendars', 'Menu Title', 'geditorial-happening' ),
+				],
+			],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
+			'type_taxonomy' => [
+				'holiday' => _x( 'Holiday', 'Default Term', 'geditorial-happening' ),
+				'birth'   => _x( 'Birth', 'Default Term', 'geditorial-happening' ),
+				'death'   => _x( 'Death', 'Default Term', 'geditorial-happening' ),
+				'start'   => _x( 'Start', 'Default Term', 'geditorial-happening' ),
+				'end'     => _x( 'End', 'Default Term', 'geditorial-happening' ),
 			],
 		];
 	}
@@ -52,7 +119,7 @@ class Happening extends gEditorial\Module
 	{
 		return [
 			'meta' => [
-				$this->constant( 'primary_posttype' ) => [
+				$this->constant( 'main_posttype' ) => [
 					'datestart' => [
 						'title'       => _x( 'Event Start', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date and time in which the Event is scheduled to commence.', 'Fields', 'geditorial-happening' ),
@@ -96,78 +163,15 @@ class Happening extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
-	{
-		return [
-			'primary_posttype'  => 'event',
-			'primary_taxonomy'  => 'event_category',
-			'type_taxonomy'     => 'event_type',
-			'calendar_taxonomy' => 'event_calendar',
-		];
-	}
-
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'primary_taxonomy'  => 'category',
-				'type_taxonomy'     => 'tag',
-				'calendar_taxonomy' => 'calendar',
-			],
-		];
-	}
-
-	protected function get_global_strings()
-	{
-		$strings = [
-			'noops' => [
-				'primary_posttype'  => _n_noop( 'Event', 'Events', 'geditorial-happening' ),
-				'primary_taxonomy'  => _n_noop( 'Event Category', 'Event Categories', 'geditorial-happening' ),
-				'type_taxonomy'     => _n_noop( 'Event Type', 'Event Types', 'geditorial-happening' ),
-				'calendar_taxonomy' => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-happening' ),
-			],
-			'labels' => [
-				'primary_taxonomy' => [
-					'menu_name'      => _x( 'Categories', 'Menu Title', 'geditorial-happening' ),
-					'featured_image' => _x( 'Poster Image', 'Label: Featured Image', 'geditorial-happening' ),
-				],
-				'type_taxonomy' => [
-					'menu_name' => _x( 'Types', 'Menu Title', 'geditorial-happening' ),
-				],
-				'calendar_taxonomy' => [
-					'menu_name' => _x( 'Calendars', 'Menu Title', 'geditorial-happening' ),
-				],
-			],
-		];
-
-		if ( ! is_admin() )
-			return $strings;
-
-		return $strings;
-	}
-
-	protected function define_default_terms()
-	{
-		return [
-			'type_taxonomy' => [
-				'holiday' => _x( 'Holiday', 'Default Term', 'geditorial-happening' ),
-				'birth'   => _x( 'Birth', 'Default Term', 'geditorial-happening' ),
-				'death'   => _x( 'Death', 'Default Term', 'geditorial-happening' ),
-				'start'   => _x( 'Start', 'Default Term', 'geditorial-happening' ),
-				'end'     => _x( 'End', 'Default Term', 'geditorial-happening' ),
-			],
-		];
-	}
-
 	// needed for fields options
 	public function posttypes( $posttypes = NULL )
 	{
-		return [ $this->constant( 'primary_posttype' ) ];
+		return [ $this->constant( 'main_posttype' ) ];
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'primary_posttype' );
+		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
 	public function widgets_init()
@@ -177,64 +181,64 @@ class Happening extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->add_posttype_fields( $this->constant( 'main_posttype' ) );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'primary_taxonomy', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'main_posttype' );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'primary_posttype', [
+		], 'main_posttype', [
 			'auto_parents' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'calendar_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'primary_posttype' );
+		], 'main_posttype' );
 
-		$this->register_posttype( 'primary_posttype', [
+		$this->register_posttype( 'main_posttype', [
 			'hierarchical' => TRUE,
 		], [
-			'primary_taxonomy' => TRUE,
+			'category_taxonomy' => TRUE,
 		] );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'get_default_comment_status', 3 );
-				$this->posttype__media_register_headerbutton( 'primary_posttype' );
-				$this->_hook_post_updated_messages( 'primary_posttype' );
+				$this->posttype__media_register_headerbutton( 'main_posttype' );
+				$this->_hook_post_updated_messages( 'main_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
-				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 			}
 		}
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
 
 		return $items;

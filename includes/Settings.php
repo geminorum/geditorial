@@ -29,7 +29,7 @@ class Settings extends WordPress\Main
 		], $extra ), $url );
 	}
 
-	// FIXME: MUST DEPRICATE
+	// TODO: MUST DEPRECATE
 	public static function reportsURL( $full = TRUE, $dashboard = FALSE )
 	{
 		$relative = 'index.php?page='.self::REPORTS;
@@ -40,7 +40,7 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// FIXME: MUST DEPRICATE
+	// TODO: MUST DEPRECATE
 	public static function settingsURL( $full = TRUE )
 	{
 		$relative = 'admin.php?page='.self::SETTINGS;
@@ -51,7 +51,7 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// FIXME: MUST DEPRICATE: problem with dashboard
+	// TODO: MUST DEPRECATE: problem with dashboard
 	public static function toolsURL( $full = TRUE, $tools_menu = FALSE )
 	{
 		$relative = $tools_menu ? 'tools.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
@@ -62,7 +62,7 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// FIXME: MUST DEPRICATE: problem with dashboard
+	// TODO: MUST DEPRECATE: problem with dashboard
 	public static function rolesURL( $full = TRUE, $tools_menu = FALSE )
 	{
 		$relative = $tools_menu ? 'tools.php?page='.self::ROLES : 'admin.php?page='.self::ROLES;
@@ -73,7 +73,7 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// FIXME: MUST DEPRICATE
+	// TODO: MUST DEPRECATE
 	public static function importsURL( $full = TRUE )
 	{
 		// NOTE: `tools.php` hard-coded for users with `edit_posts` cap!
@@ -959,6 +959,30 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_category_taxonomy_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'category_taxonomy_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main taxonomy key. Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_main_shortcode_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'main_shortcode_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main short-code tag. Do not use spaces or reserved characters. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
 	public static function getSetting_primary_posttype_constant( $description = NULL, $default = '' )
 	{
 		return [
@@ -966,6 +990,42 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Primary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the primary post-type key. Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_primary_taxonomy_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'primary_taxonomy_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Primary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the primary taxonomy key. Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_secondary_posttype_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'secondary_posttype_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Secondary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the secondary post-type key. Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_secondary_taxonomy_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'secondary_taxonomy_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Secondary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the secondary taxonomy key. Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];

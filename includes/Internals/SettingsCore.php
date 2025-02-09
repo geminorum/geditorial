@@ -666,6 +666,13 @@ trait SettingsCore
 		);
 	}
 
+	public function settings_section_constants()
+	{
+		Settings::fieldSection(
+			_x( 'Constants', 'Module: Setting Section Title', 'geditorial-admin' )
+		);
+	}
+
 	public function add_settings_field( $r = [] )
 	{
 		$args = array_merge( [

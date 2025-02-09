@@ -30,7 +30,7 @@ trait Strings
 
 	// NOTE: fallback will merge if is an array
 	// NOTE: merge numeric keys will rearrange them!
-	// NOTE: moveup is FALSE by default
+	// NOTE: `moveup` is FALSE by default
 	public function get_strings( $subgroup, $group = 'titles', $fallback = [], $moveup = FALSE )
 	{
 		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
@@ -46,7 +46,7 @@ trait Strings
 		return $fallback;
 	}
 
-	// NOTE: for posttype/taxonomy use:
+	// NOTE: for post-type/taxonomy use:
 	// - `Helper::getPostTypeLabel( $posttype, 'noop' );`
 	// - `Helper::getTaxonomyLabel( $taxonomy, 'noop' );`
 	public function get_noop( $constant )
@@ -91,7 +91,7 @@ trait Strings
 				case 'listbox':
 				case 'default':
 				default:
-					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					/* translators: %1$s: current post title, %2$s: post-type singular name */
 					$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Module: MetaBox Empty: `listbox_empty`', 'geditorial-admin' );
 			}
 		}
@@ -110,35 +110,35 @@ trait Strings
 			switch ( $context ) {
 
 				case 'supportedbox':
-					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					/* translators: %1$s: current post title, %2$s: post-type singular name */
 					$default = _x( 'For this &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `supportedbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'printingbox':
-					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					/* translators: %1$s: current post title, %2$s: post-type singular name */
 					$default = _x( 'Prints for this &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `printingbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'mainbox':
-					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					/* translators: %1$s: current post title, %2$s: post-type singular name */
 					$default = _x( 'The %2$s', 'Internal: Strings: MetaBox via Posttype: `mainbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'overviewbox':
 				case 'pairedbox':
-					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					/* translators: %1$s: current post title, %2$s: post-type singular name */
 					$default = _x( 'Connected &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `pairedbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'megabox':
 				case 'listbox':
-					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					/* translators: %1$s: current post title, %2$s: post-type singular name */
 					$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: Strings: MetaBox via Posttype: `listbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'default':
 				default:
-					/* translators: %1$s: current post title, %2$s: posttype singular name */
+					/* translators: %1$s: current post title, %2$s: post-type singular name */
 					$default = _x( 'About &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `default_title`', 'geditorial-admin' );
 			}
 		}
@@ -172,5 +172,27 @@ trait Strings
 		$title    = WordPress\Term::title( $term, $singular );
 
 		return sprintf( $template, $title, $singular );
+	}
+
+	protected function _hook_post_updated_messages( $constant )
+	{
+		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {
+
+			$posttype  = $this->constant( $constant, $constant );
+			$generated = Helper::generatePostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $posttype );
+
+			return array_merge( $messages, [ $posttype => $generated ] );
+		} );
+	}
+
+	protected function _hook_bulk_post_updated_messages( $constant )
+	{
+		add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $constant ) {
+
+			$posttype  = $this->constant( $constant, $constant );
+			$generated = Helper::generateBulkPostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $counts, $posttype );
+
+			return array_merge( $messages, [ $posttype => $generated ] );
+		}, 10, 2 );
 	}
 }

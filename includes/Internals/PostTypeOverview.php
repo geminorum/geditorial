@@ -101,8 +101,8 @@ trait PostTypeOverview
 
 		if ( is_null( $title ) )
 			$title = sprintf(
-				/* translators: %s: posttype label */
-				_x( 'Overview of %s', 'Header', 'geditorial-admin' ),
+				/* translators: %s: post-type label */
+				_x( 'Overview of %s', 'Internal: PostTypeOverview: Header', 'geditorial-admin' ),
 				$this->get_posttype_label( $constant, 'extended_label', 'name' )
 			);
 

@@ -42,7 +42,7 @@ class EventPoster extends gEditorial\Widget
 	public function widget_html( $args, $instance )
 	{
 		$link = 'parent';
-		$type = self::constant( 'primary_posttype', 'event' );
+		$type = self::constant( 'main_posttype', 'event' );
 
 		if ( ! empty( $instance['custom_link'] ) )
 			$link = $instance['custom_link'];
@@ -82,7 +82,7 @@ class EventPoster extends gEditorial\Widget
 
 	public function form( $instance )
 	{
-		$type = self::constant( 'primary_posttype', 'happening' );
+		$type = self::constant( 'main_posttype', 'happening' );
 
 		$this->before_form( $instance );
 

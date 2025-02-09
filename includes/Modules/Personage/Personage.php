@@ -10,7 +10,6 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
@@ -31,7 +30,7 @@ class Personage extends gEditorial\Module
 
 	// https://github.com/washingtonstateuniversity/WSU-People-Directory
 
-	protected $positions     = [ 'primary_posttype' => 2 ];
+	protected $positions     = [ 'main_posttype' => 2 ];
 	protected $priority_init = 9;
 
 	public static function module()
@@ -79,7 +78,7 @@ class Personage extends gEditorial\Module
 				'public_statuses' => [ NULL, $terms, $empty ],
 				'assign_default_term',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', [
+				$this->settings_supports_option( 'main_posttype', [
 					'excerpt',
 					'thumbnail',
 					'comments',
@@ -104,9 +103,9 @@ class Personage extends gEditorial\Module
 				'insert_priority',
 			],
 			'_reports' => [
-				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],
-				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
-				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'main_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'meta' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'units' ) ],
 			],
 			'_importer' => [
 				[
@@ -120,15 +119,19 @@ class Personage extends gEditorial\Module
 					'description' => _x( 'Tries to fill the post title with meta-data prior to importing data.', 'Setting Description', 'geditorial-personage' ),
 				],
 			],
+			'_constants' => [
+				'main_posttype_constant'     => [ NULL, 'human' ],
+				'category_taxonomy_constant' => [ NULL, 'human_group' ],
+			],
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype' => 'human',
-			'primary_taxonomy' => 'human_group',
-			'status_taxonomy'  => 'human_status',
+			'main_posttype'     => 'human',
+			'category_taxonomy' => 'human_group',
+			'status_taxonomy'   => 'human_status',
 
 			'term_empty_identity_number' => 'identity-number-empty',
 		];
@@ -138,8 +141,8 @@ class Personage extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'primary_taxonomy' => NULL,
-				'status_taxonomy'  => 'post-status',
+				'category_taxonomy' => NULL,
+				'status_taxonomy'   => 'post-status',
 			],
 		];
 	}
@@ -148,17 +151,17 @@ class Personage extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype'   => _n_noop( 'Human', 'Humans', 'geditorial-personage' ),
-				'primary_taxonomy'   => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-personage' ),
-				'status_taxonomy'    => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-personage' ),
+				'main_posttype'     => _n_noop( 'Human', 'Humans', 'geditorial-personage' ),
+				'category_taxonomy' => _n_noop( 'Human Group', 'Humans Groups', 'geditorial-personage' ),
+				'status_taxonomy'   => _n_noop( 'Human Status', 'Human Statuses', 'geditorial-personage' ),
 			],
 			'labels' => [
-				'primary_posttype' => [
+				'main_posttype' => [
 					'featured_image' => _x( 'Profile Picture', 'Label: Featured Image', 'geditorial-personage' ),
 					'metabox_title'  => _x( 'Personage', 'Label: MetaBox Title', 'geditorial-personage' ),
 					'excerpt_label'  => _x( 'Biography', 'Label: `excerpt_label`', 'geditorial-personage' ),
 				],
-				'primary_taxonomy' => [
+				'category_taxonomy' => [
 					'menu_name'            => _x( 'Groups', 'Label: Menu Name', 'geditorial-personage' ),
 					'show_option_all'      => _x( 'Humans Groups', 'Label: Show Option All', 'geditorial-personage' ),
 					'show_option_no_items' => _x( '(Un-Grouped)', 'Label: Show Option No Terms', 'geditorial-personage' ),
@@ -170,7 +173,7 @@ class Personage extends gEditorial\Module
 				],
 			],
 			'defaults' => [
-				'primary_taxonomy' => [
+				'category_taxonomy' => [
 					'name'        => _x( '[Ungrouped]', 'Default Term: Name', 'geditorial-personage' ),
 					'description' => _x( 'Ungrouped Humans', 'Default Term: Description', 'geditorial-personage' ),
 					'slug'        => 'ungrouped',
@@ -200,129 +203,131 @@ class Personage extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		$primary = $this->constant( 'primary_posttype' );
+		$posttype = $this->constant( 'main_posttype' );
 
-		return [ 'meta' => [
-			$primary => [
-				'first_name' => [
-					'title'          => _x( 'First Name', 'Field Title', 'geditorial-personage' ),
-					'description'    => _x( 'Given Name of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'           => 'id',
-					'data_length'    => 25,
-					'quickedit'      => TRUE,
-					'bulkedit'       => FALSE,
-					'import_ignored' => TRUE,
-					'order'          => 10,
-				],
-				'middle_name' => [
-					'title'       => _x( 'Middle Name', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Middle Name of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'        => 'id',
-					'order'       => 10,
-				],
-				'last_name' => [
-					'title'          => _x( 'Last Name', 'Field Title', 'geditorial-personage' ),
-					'description'    => _x( 'Family Name of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'           => 'id',
-					'data_length'    => 25,
-					'quickedit'      => TRUE,
-					'bulkedit'       => FALSE,
-					'import_ignored' => TRUE,
-					'order'          => 10,
-				],
-				'fullname' => [
-					'title'          => _x( 'Full Name', 'Field Title', 'geditorial-personage' ),
-					'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'           => 'nametag',
-					'data_length'    => 45,
-					'quickedit'      => TRUE,
-					'bulkedit'       => FALSE,
-					'import_ignored' => TRUE,
-					'order'          => 11,
-				],
-				'pseudonym' => [
-					'title'          => _x( 'Pseudonym', 'Field Title', 'geditorial-personage' ),
-					'description'    => _x( 'Alias Name of the Person', 'Field Description', 'geditorial-personage' ),
-					'quickedit'      => TRUE,
-					'bulkedit'       => FALSE,
-					'import_ignored' => TRUE,
-					'order'          => 11,
-				],
-				'father_name' => [
-					'title'          => _x( 'Father Name', 'Field Title', 'geditorial-personage' ),
-					'description'    => _x( 'Name of the Father of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'           => 'businessperson',
-					'quickedit'      => TRUE,
-					'bulkedit'       => FALSE,
-					'import_ignored' => TRUE,
-					'order'          => 12,
-				],
-				'father_postid' => [
-					'title'       => _x( 'Father Profile', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Profile of the Father of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'        => 'businessperson',
-					'type'        => 'post',
-					'posttype'    => $primary,
-					'order'       => 13,
-				],
-				'mother_name' => [
-					'title'       => _x( 'Mother Name', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Name of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'        => 'businesswoman',
-					'order'       => 14,
-				],
-				'mother_postid' => [
-					'title'       => _x( 'Mother Profile', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Profile of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'        => 'businesswoman',
-					'type'        => 'post',
-					'posttype'    => $primary,
-					'order'       => 15,
-				],
-				'spouse_name' => [
-					'title'       => _x( 'Spouse Name', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Name of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'        => 'admin-users',
-					'order'       => 16,
-				],
-				'spouse_postid' => [
-					'title'       => _x( 'Spouse Profile', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Profile of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
-					'icon'        => 'admin-users',
-					'type'        => 'post',
-					'posttype'    => $primary,
-					'order'       => 17,
-				],
-				'identity_number' => [
-					'title'       => _x( 'Identity Number', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Unique National Identity Number', 'Field Description', 'geditorial-personage' ),
-					'icon'        => [ 'misc-512', 'gorbeh-fingerprint' ],
-					'type'        => 'identity',
-					'quickedit'   => TRUE,
-					'bulkedit'    => FALSE,
-					'order'       => 1,
-					'access_edit' => 'delete_post', // only deleters can edit!
-				],
-				'passport_number' => [
-					'title'       => _x( 'Passport Number', 'Field Title', 'geditorial-personage' ),
-					'description' => _x( 'Personagel Passport Number', 'Field Description', 'geditorial-personage' ),
-					'icon'        => 'id-alt',
-					'type'        => 'code',
-					'order'       => 200,
-					'sanitize'    => [ $this, 'sanitize_passport_number' ],
-				],
+		return [
+			'meta' => [
+				$posttype => [
+					'first_name' => [
+						'title'          => _x( 'First Name', 'Field Title', 'geditorial-personage' ),
+						'description'    => _x( 'Given Name of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'           => 'id',
+						'data_length'    => 25,
+						'quickedit'      => TRUE,
+						'bulkedit'       => FALSE,
+						'import_ignored' => TRUE,
+						'order'          => 10,
+					],
+					'middle_name' => [
+						'title'       => _x( 'Middle Name', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Middle Name of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'        => 'id',
+						'order'       => 10,
+					],
+					'last_name' => [
+						'title'          => _x( 'Last Name', 'Field Title', 'geditorial-personage' ),
+						'description'    => _x( 'Family Name of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'           => 'id',
+						'data_length'    => 25,
+						'quickedit'      => TRUE,
+						'bulkedit'       => FALSE,
+						'import_ignored' => TRUE,
+						'order'          => 10,
+					],
+					'fullname' => [
+						'title'          => _x( 'Full Name', 'Field Title', 'geditorial-personage' ),
+						'description'    => _x( 'Full Name of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'           => 'nametag',
+						'data_length'    => 45,
+						'quickedit'      => TRUE,
+						'bulkedit'       => FALSE,
+						'import_ignored' => TRUE,
+						'order'          => 11,
+					],
+					'pseudonym' => [
+						'title'          => _x( 'Pseudonym', 'Field Title', 'geditorial-personage' ),
+						'description'    => _x( 'Alias Name of the Person', 'Field Description', 'geditorial-personage' ),
+						'quickedit'      => TRUE,
+						'bulkedit'       => FALSE,
+						'import_ignored' => TRUE,
+						'order'          => 11,
+					],
+					'father_name' => [
+						'title'          => _x( 'Father Name', 'Field Title', 'geditorial-personage' ),
+						'description'    => _x( 'Name of the Father of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'           => 'businessperson',
+						'quickedit'      => TRUE,
+						'bulkedit'       => FALSE,
+						'import_ignored' => TRUE,
+						'order'          => 12,
+					],
+					'father_postid' => [
+						'title'       => _x( 'Father Profile', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Profile of the Father of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'        => 'businessperson',
+						'type'        => 'post',
+						'posttype'    => $posttype,
+						'order'       => 13,
+					],
+					'mother_name' => [
+						'title'       => _x( 'Mother Name', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Name of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'        => 'businesswoman',
+						'order'       => 14,
+					],
+					'mother_postid' => [
+						'title'       => _x( 'Mother Profile', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Profile of the Mother of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'        => 'businesswoman',
+						'type'        => 'post',
+						'posttype'    => $posttype,
+						'order'       => 15,
+					],
+					'spouse_name' => [
+						'title'       => _x( 'Spouse Name', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Name of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'        => 'admin-users',
+						'order'       => 16,
+					],
+					'spouse_postid' => [
+						'title'       => _x( 'Spouse Profile', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Profile of the Spouse of the Person', 'Field Description', 'geditorial-personage' ),
+						'icon'        => 'admin-users',
+						'type'        => 'post',
+						'posttype'    => $posttype,
+						'order'       => 17,
+					],
+					'identity_number' => [
+						'title'       => _x( 'Identity Number', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Unique National Identity Number', 'Field Description', 'geditorial-personage' ),
+						'icon'        => [ 'misc-512', 'gorbeh-fingerprint' ],
+						'type'        => 'identity',
+						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
+						'order'       => 1,
+						'access_edit' => 'delete_post', // only deleters can edit!
+					],
+					'passport_number' => [
+						'title'       => _x( 'Passport Number', 'Field Title', 'geditorial-personage' ),
+						'description' => _x( 'Personagel Passport Number', 'Field Description', 'geditorial-personage' ),
+						'icon'        => 'id-alt',
+						'type'        => 'code',
+						'order'       => 200,
+						'sanitize'    => [ $this, 'sanitize_passport_number' ],
+					],
 
-				'website_url'    => [ 'type' => 'link',    'order' => 610 ],
-				'wiki_url'       => [ 'type' => 'link',    'order' => 620 ],
-				'email_address'  => [ 'type' => 'email',   'order' => 630 ],
-				'contact_string' => [ 'type' => 'contact', 'order' => 640 ],   // url/email/phone
+					'website_url'    => [ 'type' => 'link',    'order' => 610 ],
+					'wiki_url'       => [ 'type' => 'link',    'order' => 620 ],
+					'email_address'  => [ 'type' => 'email',   'order' => 630 ],
+					'contact_string' => [ 'type' => 'contact', 'order' => 640 ],   // url/email/phone
+				],
 			],
-		] ];
+		];
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'primary_posttype' );
+		$this->register_posttype_thumbnail( 'main_posttype' );
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
@@ -332,16 +337,16 @@ class Personage extends gEditorial\Module
 
 		$viewable = $this->get_setting( 'contents_viewable', FALSE );
 		$captype  = $this->get_setting( 'custom_captype', FALSE )
-			? $this->constant_plural( 'primary_posttype' )
+			? $this->constant_plural( 'main_posttype' )
 			: FALSE;
 
-		$this->register_taxonomy( 'primary_taxonomy', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype', [
+		], 'main_posttype', [
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
 		] );
@@ -350,22 +355,22 @@ class Personage extends gEditorial\Module
 			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
-		], 'primary_posttype', [
+		], 'main_posttype', [
 			'is_viewable'     => $viewable,
 			'custom_captype'  => $captype,
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );
 
-		$this->register_posttype( 'primary_posttype', [
+		$this->register_posttype( 'main_posttype', [
 			'hierarchical' => FALSE,
 
 			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
-			'is_viewable'      => $viewable,
-			'custom_captype'   => $captype,
-			'primary_taxonomy' => TRUE,
-			'status_taxonomy'  => TRUE,
+			'is_viewable'       => $viewable,
+			'custom_captype'    => $captype,
+			'category_taxonomy' => TRUE,
+			'status_taxonomy'   => TRUE,
 
 			'slug_disabled'     => TRUE,
 			'date_disabled'     => TRUE,
@@ -380,9 +385,9 @@ class Personage extends gEditorial\Module
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
-		$this->add_posttype_support( $this->constant( 'primary_posttype' ), 'date', FALSE );
+		$this->add_posttype_support( $this->constant( 'main_posttype' ), 'date', FALSE );
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'status_taxonomy' );
-		$this->hook_dashboardsummary_paired_post_summaries( 'status_taxonomy', 'primary_posttype', TRUE );
+		$this->hook_dashboardsummary_paired_post_summaries( 'status_taxonomy', 'main_posttype', TRUE );
 
 		if ( is_admin() )
 			$this->filter( 'prep_individual', 3, 8, 'admin', $this->base );
@@ -390,7 +395,7 @@ class Personage extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->add_posttype_fields( $this->constant( 'main_posttype' ) );
 
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 		$this->filter( 'meta_field_empty', 7, 9, FALSE, $this->base );
@@ -408,7 +413,7 @@ class Personage extends gEditorial\Module
 		$this->filter( 'paired_all_connected_to_args', 4, 18, 'clause', $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
-		$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
+		$this->latechores__init_post_aftercare( $this->constant( 'main_posttype' ) );
 	}
 
 	public function importer_init()
@@ -420,7 +425,7 @@ class Personage extends gEditorial\Module
 
 	public function setup_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
 			$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 		}
@@ -428,7 +433,7 @@ class Personage extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -444,12 +449,12 @@ class Personage extends gEditorial\Module
 
 				$this->_hook_editform_globalsummary();
 
-				$this->posttype__media_register_headerbutton( 'primary_posttype' );
-				$this->_hook_post_updated_messages( 'primary_posttype' );
-				$this->_hook_general_mainbox( $screen, 'primary_posttype' );
+				$this->posttype__media_register_headerbutton( 'main_posttype' );
+				$this->_hook_post_updated_messages( 'main_posttype' );
+				$this->_hook_general_mainbox( $screen, 'main_posttype' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->metaboxcustom_add_metabox_excerpt( 'primary_posttype' );
+					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype' );
 
 				// FIXME: WTF: disable the meta-box
 				$this->filter_false_module( 'tweaks', 'metabox_author' );
@@ -459,13 +464,13 @@ class Personage extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 				$this->modulelinks__register_headerbuttons();
 				$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'status_taxonomy',
-					'primary_taxonomy',
+					'category_taxonomy',
 				] );
 
 				// $this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
@@ -475,7 +480,7 @@ class Personage extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_singular( $this->constant( 'primary_posttype' ) ) ) {
+		if ( is_singular( $this->constant( 'main_posttype' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )
 				add_action( $this->hook_base( 'content', 'before' ),
@@ -493,7 +498,7 @@ class Personage extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'primary_posttype' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'main_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -508,7 +513,7 @@ class Personage extends gEditorial\Module
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'primary_posttype', [ 'reports' ] ) )
+		if ( $glance = $this->dashboard_glance_post( 'main_posttype', [ 'reports' ] ) )
 			$items[] = $glance;
 
 		return $items;
@@ -517,7 +522,7 @@ class Personage extends gEditorial\Module
 	public function dashboard_widgets()
 	{
 		if ( $this->role_can( [ 'reports' ] ) )
-			$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'primary_posttype' ) ], FALSE );
+			$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'main_posttype' ) ], FALSE );
 	}
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
@@ -560,7 +565,7 @@ class Personage extends gEditorial\Module
 
 	public function prep_individual_admin( $individual, $raw, $value )
 	{
-		if ( $link = Core\WordPress::getAdminSearchLink( $individual, $this->constant( 'primary_posttype' ) ) )
+		if ( $link = Core\WordPress::getAdminSearchLink( $individual, $this->constant( 'main_posttype' ) ) )
 			return Core\HTML::link( $individual, $link, TRUE );
 
 		return $individual;
@@ -568,7 +573,7 @@ class Personage extends gEditorial\Module
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
 	{
-		if ( ! $this->is_posttype( 'primary_posttype', $post ) )
+		if ( ! $this->is_posttype( 'main_posttype', $post ) )
 			return $terms;
 
 		if ( $exists = term_exists( $this->constant( 'term_empty_identity_number' ), $taxonomy ) ) {
@@ -618,7 +623,7 @@ class Personage extends gEditorial\Module
 
 	public function iranian_default_posttype_identity_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'primary_posttype' ) )
+		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
@@ -626,7 +631,7 @@ class Personage extends gEditorial\Module
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'primary_posttype' ) )
+		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
@@ -634,7 +639,7 @@ class Personage extends gEditorial\Module
 
 	public function identified_default_posttype_identifier_type( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'primary_posttype' ) )
+		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return 'identity';
 
 		return $default;
@@ -643,7 +648,7 @@ class Personage extends gEditorial\Module
 	// TODO: move the list into ModuleHelper
 	public function identified_possible_keys_for_identifier( $keys, $posttype )
 	{
-		if ( $posttype == $this->constant( 'primary_posttype' ) )
+		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return array_merge( $keys, [
 				'identity_number' => 'identity',
 				'identity'        => 'identity',
@@ -661,7 +666,7 @@ class Personage extends gEditorial\Module
 
 	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
 	{
-		if ( $posttype == $this->constant( 'primary_posttype' ) )
+		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 
 		return $default;
@@ -669,7 +674,7 @@ class Personage extends gEditorial\Module
 
 	public function tabloid_view_data_for_post( $data, $post, $context )
 	{
-		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
+		if ( $post->post_type !== $this->constant( 'main_posttype' ) )
 			return $data;
 
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
@@ -689,7 +694,7 @@ class Personage extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $source ) )
 			return $data;
 
-		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
+		if ( $post->post_type !== $this->constant( 'main_posttype' ) )
 			return $data;
 
 		if ( $fullname = $this->make_human_title( $post, 'print' ) )
@@ -716,7 +721,7 @@ class Personage extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $item ) )
 			return $row;
 
-		if ( $post->post_type !== $this->constant( 'primary_posttype' ) )
+		if ( $post->post_type !== $this->constant( 'main_posttype' ) )
 			return $row;
 
 		if ( $fullname = $this->make_human_title( $post, 'print' ) )
@@ -744,7 +749,7 @@ class Personage extends gEditorial\Module
 		if ( empty( $source_id ) )
 			return NULL;
 
-		if ( $posttype !== $this->constant( 'primary_posttype' ) )
+		if ( $posttype !== $this->constant( 'main_posttype' ) )
 			return $source_id;
 
 		return Core\Validation::sanitizeIdentityNumber( $source_id );
@@ -755,7 +760,7 @@ class Personage extends gEditorial\Module
 		if ( ! empty( $matched ) )
 			return $matched;
 
-		if ( $posttype !== $this->constant( 'primary_posttype' ) )
+		if ( $posttype !== $this->constant( 'main_posttype' ) )
 			return $matched;
 
 		if ( $post_id = Services\PostTypeFields::getPostByField( 'identity_number', $source_id, $posttype, TRUE ) )
@@ -770,11 +775,11 @@ class Personage extends gEditorial\Module
 		if ( ! empty( $data['ID'] ) )
 			return $data;
 
-		if ( $posttype !== $this->constant( 'primary_posttype' ) )
+		if ( $posttype !== $this->constant( 'main_posttype' ) )
 			return $data;
 
 		// meta fields not supported
-		if ( ! $this->has_posttype_fields_support( 'primary_posttype', 'meta' ) )
+		if ( ! $this->has_posttype_fields_support( 'main_posttype', 'meta' ) )
 			return $data;
 
 		if ( ! empty( $prepared['meta__identity_number'] ) ) {
@@ -820,7 +825,7 @@ class Personage extends gEditorial\Module
 			if ( ! $post = WordPress\Post::get( $post ) )
 				return $fallback;
 
-			if ( ! $this->is_posttype( 'primary_posttype', $post ) )
+			if ( ! $this->is_posttype( 'main_posttype', $post ) )
 				return $fallback;
 		}
 
@@ -865,7 +870,7 @@ class Personage extends gEditorial\Module
 			if ( ! $post = WordPress\Post::get( $post ) )
 				return FALSE;
 
-			if ( ! $this->is_posttype( 'primary_posttype', $post ) )
+			if ( ! $this->is_posttype( 'main_posttype', $post ) )
 				return FALSE;
 		}
 
@@ -904,7 +909,7 @@ class Personage extends gEditorial\Module
 		if ( ! is_null( $discovered ) )
 			return $discovered;
 
-		if ( ! $this->constant_in( 'primary_posttype', $posttypes ) )
+		if ( ! $this->constant_in( 'main_posttype', $posttypes ) )
 			return $discovered;
 
 		$key = 'title'; // NOTE: only support titles
@@ -912,7 +917,7 @@ class Personage extends gEditorial\Module
 		if ( ! array_key_exists( $key, $row ) )
 			return $discovered;
 
-		$type   = $this->constant( 'primary_posttype' );
+		$type   = $this->constant( 'main_posttype' );
 		$search = WordPress\Post::getByTitle(
 			Core\Text::trim( $row[$key] ),   // FIXME: sanaitze!
 			$type,
@@ -939,7 +944,7 @@ class Personage extends gEditorial\Module
 		], TRUE ) )
 			return $args;
 
-		if ( count( $posttypes ) > 1 && $this->constant( 'primary_posttype' ) !== $posttypes[0] )
+		if ( count( $posttypes ) > 1 && $this->constant( 'main_posttype' ) !== $posttypes[0] )
 			return $args;
 
 		if ( empty( $args['tax_query'] ) )
@@ -957,7 +962,7 @@ class Personage extends gEditorial\Module
 
 	public function paired_all_connected_to_args_clause( $args, $post, $posttypes, $context )
 	{
-		if ( count( $posttypes ) > 1 && $this->constant( 'primary_posttype' ) !== $posttypes[0] )
+		if ( count( $posttypes ) > 1 && $this->constant( 'main_posttype' ) !== $posttypes[0] )
 			return $args;
 
 		if ( empty( $args['meta_query'] ) )
@@ -993,7 +998,7 @@ class Personage extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $data;
 
-		if ( $this->constant( 'primary_posttype' ) !== $post->post_type )
+		if ( $this->constant( 'main_posttype' ) !== $post->post_type )
 			return $data;
 
 		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
@@ -1055,12 +1060,12 @@ class Personage extends gEditorial\Module
 	public function reports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) )
-			$this->modulelinks__register_posttype_export_headerbuttons( 'primary_posttype', 'reports', FALSE );
+			$this->modulelinks__register_posttype_export_headerbuttons( 'main_posttype', 'reports', FALSE );
 	}
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
+		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
 	}
 
@@ -1074,7 +1079,7 @@ class Personage extends gEditorial\Module
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Personage Imports', 'Header', 'geditorial-personage' ) );
 
 		$available = FALSE;
-		$fullname  = Services\PostTypeFields::isAvailable( 'fullname', $this->constant( 'primary_posttype' ), 'meta' );
+		$fullname  = Services\PostTypeFields::isAvailable( 'fullname', $this->constant( 'main_posttype' ), 'meta' );
 
 		if ( $fullname ) {
 
@@ -1104,7 +1109,7 @@ class Personage extends gEditorial\Module
 		] ) )
 			return FALSE;
 
-		$posttype = $this->constant( 'primary_posttype' );
+		$posttype = $this->constant( 'main_posttype' );
 
 		if ( ! $fullname = Services\PostTypeFields::isAvailable( 'fullname', $posttype, 'meta' ) )
 			return Info::renderNotSupportedField();

@@ -38,7 +38,7 @@ class Quotation extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', [
+				$this->settings_supports_option( 'main_posttype', [
 					'title',
 					'editor',
 					'excerpt',
@@ -48,15 +48,20 @@ class Quotation extends gEditorial\Module
 					'editorial-roles',
 				] ),
 			],
+			'_constants' => [
+				'main_posttype_constant'     => [ NULL, 'quote' ],
+				'category_taxonomy_constant' => [ NULL, 'quote_topic' ],
+				'main_shortcode_constant'    => [ NULL, 'quote-topic' ],
+			],
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype' => 'quote',
-			'primary_taxonomy' => 'quote_topic',
-			'main_shortcode'   => 'quote-topic',
+			'main_posttype'     => 'quote',
+			'category_taxonomy' => 'quote_topic',
+			'main_shortcode'    => 'quote-topic',
 		];
 	}
 
@@ -64,11 +69,11 @@ class Quotation extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype' => _n_noop( 'Quote', 'Quotes', 'geditorial-quotation' ),
-				'primary_taxonomy' => _n_noop( 'Topic', 'Topics', 'geditorial-quotation' ),
+				'main_posttype'     => _n_noop( 'Quote', 'Quotes', 'geditorial-quotation' ),
+				'category_taxonomy' => _n_noop( 'Topic', 'Topics', 'geditorial-quotation' ),
 
 				/* translators: %s: count number */
-				'primary_posttype_count' => _n_noop( '%s Quotation', '%s Quotations', 'geditorial-quotation' ),
+				'main_posttype_count' => _n_noop( '%s Quotation', '%s Quotations', 'geditorial-quotation' ),
 			],
 		];
 
@@ -76,7 +81,7 @@ class Quotation extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
-			'primary_posttype' => [
+			'main_posttype' => [
 				'menu_name'      => _x( 'Quotation', 'Posttype Menu', 'geditorial-quotation' ),
 				'meta_box_title' => _x( 'Quotation', 'MetaBox Title', 'geditorial-quotation' ),
 			],
@@ -93,102 +98,104 @@ class Quotation extends gEditorial\Module
 	{
 		$rtl = Core\HTML::rtl();
 
-		return [ 'meta' => [
-			$this->constant( 'primary_posttype' ) => [
-				'parent_post_id' => [
-					'title'       => _x( 'Parent', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Parent post of the Quote', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'parent_post',
-					'posttype'    => $this->posttypes(),
-				],
-				// FIXME: DEPRECATED
-				'quotation_pages' => [
-					'title'       => _x( 'Pages', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Source Pages of the Quote', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'text',
-					'icon'        => 'admin-page',
-					'quickedit'   => TRUE,
-					'bulkedit'    => FALSE,
-				],
-				'quotation_pagestart' => [
-					'title'       => _x( 'Page Start', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Source Start Page of the Quote', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'number',
-					'icon'        => $rtl ? 'controls-skipforward' : 'controls-skipback',
-					'quickedit'   => TRUE,
-					'bulkedit'    => FALSE,
-				],
-				'quotation_pageend' => [
-					'title'       => _x( 'Page End', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Source End Page of the Quote', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'number',
-					'icon'        => $rtl ? 'controls-skipback' : 'controls-skipforward',
-					'quickedit'   => TRUE,
-					'bulkedit'    => FALSE,
-				],
-				'quotation_section' => [
-					'title'       => _x( 'Section', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Source Section of the Quote', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'number',
-					'quickedit'   => TRUE,
-				],
-				'quotation_volume' => [
-					'title'       => _x( 'Volume', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Source Volume of the Quote', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'number',
-					'icon'        => 'book-alt',
-					'quickedit'   => TRUE,
-				],
-				'quotation_reference' => [
-					'title'       => _x( 'Reference', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Reference to the Quote Source', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'note',
-				],
-				'quotation_desc' => [
-					'title'       => _x( 'Description', 'Field Title', 'geditorial-quotation' ),
-					'description' => _x( 'Description of the Quote', 'Field Description', 'geditorial-quotation' ),
-					'type'        => 'note',
+		return [
+			'meta' => [
+				$this->constant( 'main_posttype' ) => [
+					'parent_post_id' => [
+						'title'       => _x( 'Parent', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Parent post of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'parent_post',
+						'posttype'    => $this->posttypes(),
+					],
+					// FIXME: DEPRECATED
+					'quotation_pages' => [
+						'title'       => _x( 'Pages', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Source Pages of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'text',
+						'icon'        => 'admin-page',
+						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
+					],
+					'quotation_pagestart' => [
+						'title'       => _x( 'Page Start', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Source Start Page of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'number',
+						'icon'        => $rtl ? 'controls-skipforward' : 'controls-skipback',
+						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
+					],
+					'quotation_pageend' => [
+						'title'       => _x( 'Page End', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Source End Page of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'number',
+						'icon'        => $rtl ? 'controls-skipback' : 'controls-skipforward',
+						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
+					],
+					'quotation_section' => [
+						'title'       => _x( 'Section', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Source Section of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'number',
+						'quickedit'   => TRUE,
+					],
+					'quotation_volume' => [
+						'title'       => _x( 'Volume', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Source Volume of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'number',
+						'icon'        => 'book-alt',
+						'quickedit'   => TRUE,
+					],
+					'quotation_reference' => [
+						'title'       => _x( 'Reference', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Reference to the Quote Source', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'note',
+					],
+					'quotation_desc' => [
+						'title'       => _x( 'Description', 'Field Title', 'geditorial-quotation' ),
+						'description' => _x( 'Description of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'type'        => 'note',
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'primary_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'main_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'primary_posttype' );
+		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'primary_taxonomy', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'meta_box_cb'        => NULL,
-		], 'primary_posttype' );
+		], 'main_posttype' );
 
-		$this->register_posttype( 'primary_posttype' );
+		$this->register_posttype( 'main_posttype' );
 
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->add_posttype_fields( $this->constant( 'main_posttype' ) );
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 	}
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -199,8 +206,8 @@ class Quotation extends gEditorial\Module
 				$this->filter_false_module( 'tweaks', 'metabox_parent' );
 				remove_meta_box( 'pageparentdiv', $screen, 'side' );
 
-				$this->posttype__media_register_headerbutton( 'primary_posttype' );
-				$this->_hook_post_updated_messages( 'primary_posttype' );
+				$this->posttype__media_register_headerbutton( 'main_posttype' );
+				$this->_hook_post_updated_messages( 'main_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -208,28 +215,28 @@ class Quotation extends gEditorial\Module
 
 				// TODO: MAYBE: restrict quotations by parents
 
-				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) ) {
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) ) {
 					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'book-alt', 'meta', NULL, -10 );
-					$this->corerestrictposts__hook_parsequery_for_post_parent( 'primary_posttype' );
+					$this->corerestrictposts__hook_parsequery_for_post_parent( 'main_posttype' );
 				}
 
-				$this->corerestrictposts__hook_screen_taxonomies( 'primary_taxonomy' );
-				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'edit' == $screen->base ) {
 
-				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
-					$this->corerestrictposts__hook_columnrow_for_post_children( $screen->post_type, 'primary_posttype', NULL, NULL, NULL, -10 );
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) )
+					$this->corerestrictposts__hook_columnrow_for_post_children( $screen->post_type, 'main_posttype', NULL, NULL, NULL, -10 );
 			}
 		}
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -262,7 +269,7 @@ class Quotation extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $title;
 
-		if ( $post->post_parent && $this->is_posttype( 'primary_posttype', $post ) )
+		if ( $post->post_parent && $this->is_posttype( 'main_posttype', $post ) )
 			/* translators: %1$s: post parent, %2$s: menu order */
 			return vsprintf( _x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ), [
 				WordPress\Post::title( $post->post_parent, NULL, FALSE ),
@@ -275,8 +282,8 @@ class Quotation extends gEditorial\Module
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'assigned',
-			$this->constant( 'primary_posttype' ),
-			$this->constant( 'primary_taxonomy' ),
+			$this->constant( 'main_posttype' ),
+			$this->constant( 'category_taxonomy' ),
 			array_merge( [
 				'post_id' => NULL,
 			], (array) $atts ),

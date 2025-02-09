@@ -43,7 +43,7 @@ trait TaxonomyOverview
 		$columns = [
 			'_cb'  => 'term_id',
 			'name' => [
-				'title' => _x( 'Name', 'Internal: Taxonomy Overview: Column', 'geditorial-admin' ),
+				'title' => _x( 'Name', 'Internal: TaxonomyOverview: Column', 'geditorial-admin' ),
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $description ) {
 
 					if ( ! $term = WordPress\Term::get( $row ) )
@@ -76,7 +76,7 @@ trait TaxonomyOverview
 		if ( is_null( $title ) )
 			$title = sprintf(
 				/* translators: %s: taxonomy label */
-				_x( 'Overview of %s', 'Header', 'geditorial-admin' ),
+				_x( 'Overview of %s', 'Internal: TaxonomyOverview: Header', 'geditorial-admin' ),
 				$this->get_taxonomy_label( $constant, 'extended_label', 'name' )
 			);
 

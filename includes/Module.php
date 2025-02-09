@@ -631,30 +631,6 @@ class Module extends WordPress\Module
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
 	}
 
-	// TODO: move to `Strings` Internal
-	protected function _hook_post_updated_messages( $constant )
-	{
-		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {
-
-			$posttype  = $this->constant( $constant );
-			$generated = Helper::generatePostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $posttype );
-
-			return array_merge( $messages, [ $posttype => $generated ] );
-		} );
-	}
-
-	// TODO: move to `Strings` Internal
-	protected function _hook_bulk_post_updated_messages( $constant )
-	{
-		add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $constant ) {
-
-			$posttype  = $this->constant( $constant );
-			$generated = Helper::generateBulkPostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $counts, $posttype );
-
-			return array_merge( $messages, [ $posttype => $generated ] );
-		}, 10, 2 );
-	}
-
 	protected function register_shortcode( $constant, $callback = NULL, $force = FALSE )
 	{
 		if ( ! $force && ! $this->get_setting( 'shortcode_support', FALSE ) )

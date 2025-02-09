@@ -20,20 +20,22 @@ class Entry extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'entry',
-			'title'  => _x( 'Entry', 'Modules: Entry', 'geditorial-admin' ),
-			'desc'   => _x( 'Wiki-like Posts Entries', 'Modules: Entry', 'geditorial-admin' ),
-			'icon'   => 'media-document',
-			'access' => 'stable',
+			'name'     => 'entry',
+			'title'    => _x( 'Entry', 'Modules: Entry', 'geditorial-admin' ),
+			'desc'     => _x( 'Wiki-like Posts Entries', 'Modules: Entry', 'geditorial-admin' ),
+			'icon'     => 'media-document',
+			'access'   => 'stable',
+			'keywords' => [
+				'post',
+				'wiki',
+				'cptmodule',
+			],
 		];
 	}
 
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
-				'main_posttype_constant' => [ NULL, 'entry' ],
-			],
 			'_editpost' => [
 				'assign_default_term',
 				'metabox_advanced',
@@ -44,7 +46,7 @@ class Entry extends gEditorial\Module
 			],
 			'_frontend' => [
 				'show_in_navmenus' => [ sprintf(
-					/* translators: %s: primary taxonomy name */
+					/* translators: %s: category taxonomy name */
 					_x( 'Makes <strong>%s</strong> available for selection in navigation menus.', 'Settings', 'geditorial-entry' ),
 					$this->get_taxonomy_label( 'category_taxonomy' )
 				), '1' ],
@@ -70,6 +72,11 @@ class Entry extends gEditorial\Module
 				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'main_posttype', TRUE ),
+			],
+			'_constants' => [
+				'main_posttype_constant'     => [ NULL, 'entry' ],
+				'category_taxonomy_constant' => [ NULL, 'entry_section' ],
+				'main_shortcode_constant'    => [ NULL, 'entry-section' ],
 			],
 		];
 	}

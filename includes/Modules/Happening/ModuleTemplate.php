@@ -13,7 +13,7 @@ class ModuleTemplate extends gEditorial\Template
 	// FIXME: must get latest from meta date
 	public static function getLatestEventID()
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'happening' ), '', 'ID', 'publish' );
+		return WordPress\PostType::getLastMenuOrder( self::constant( 'main_posttype', 'happening' ), '', 'ID', 'publish' );
 	}
 
 	public static function theCover( $atts = [] )
@@ -30,7 +30,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'primary_posttype', 'happening' );
+			$atts['type'] = self::constant( 'main_posttype', 'happening' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}
@@ -42,9 +42,9 @@ class ModuleTemplate extends gEditorial\Template
 		$today = date( 'Y-m-d' );
 
 		$args = [
-			'post_type'      => 'announcements',
+			'post_type'      => self::constant( 'main_posttype', 'happening' ),
 			'posts_per_page' => 0,
-			'meta_key'       => 'sap_end_date',
+			'meta_key'       => 'sap_end_date', // FIXME
 			'orderby'        => 'meta_value_num',
 			'order'          => 'ASC',
 			'meta_query'     => [
