@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Module extends WordPress\Module
 {
 	use Internals\Assets;
+	use Internals\CoreConstants;
 	use Internals\CoreIncludes;
 	use Internals\CorePostTypes;
 	use Internals\CoreRoles;
@@ -278,7 +279,7 @@ class Module extends WordPress\Module
 	// NOTE: ALWAYS HOOKED
 	public function _after_setup_theme()
 	{
-		$this->constants = $this->filters( 'constants', $this->get_global_constants(), $this->module );
+		$this->constants = $this->filters( 'constants', $this->_get_global_constants(), $this->module );
 		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
@@ -543,17 +544,6 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	public function constant_in( $constant, $array )
-	{
-		if ( ! $constant )
-			return FALSE;
-
-		if ( ! $key = $this->constant( $constant ) )
-			return FALSE;
-
-		return in_array( $key, $array, TRUE );
-	}
-
 	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
 	{
 		return [
@@ -562,49 +552,6 @@ class Module extends WordPress\Module
 			'title'   => _x( 'Insert Priority', 'Module: Setting Title', 'geditorial-admin' ),
 			'default' => $default,
 		];
-	}
-
-	public function constant( $key, $default = FALSE )
-	{
-		if ( ! $key )
-			return $default;
-
-		if ( isset( $this->constants[$key] ) )
-			return $this->constants[$key];
-
-		if ( 'post_cpt' === $key || 'post_posttype' === $key )
-			return 'post';
-
-		if ( 'page_cpt' === $key || 'page_posttype' === $key )
-			return 'page';
-
-		return $default;
-	}
-
-	public function constants( $keys, $pre = [] )
-	{
-		foreach ( (array) $keys as $key )
-			if ( $constant = $this->constant( $key ) )
-				$pre[] = $constant;
-
-		return Core\Arraay::prepString( $pre );
-	}
-
-	public function constant_plural( $key, $default = FALSE )
-	{
-		if ( ! $key )
-			return $default;
-
-		if ( ! $singular = $this->constant( $key ) )
-			return $default;
-
-		if ( is_array( $singular ) )
-			return $singular; // already defined
-
-		if ( ! $plural = $this->constant( sprintf( '%s_plural', $key ) ) )
-			return [ $singular, Core\L10n::pluralize( $singular ) ];
-
-		return [ $singular, $plural ];
 	}
 
 	public function slug()

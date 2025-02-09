@@ -947,6 +947,30 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_main_posttype_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'main_posttype_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main post-type key. Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_primary_posttype_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'primary_posttype_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Primary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the primary post-type key. Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
 	public static function getSetting_subcontent_posttypes( $description = NULL, $values = [], $empty = NULL )
 	{
 		return [

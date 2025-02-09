@@ -31,6 +31,9 @@ class Entry extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
+			'_general' => [
+				'main_posttype_constant' => [ NULL, 'entry' ],
+			],
 			'_editpost' => [
 				'assign_default_term',
 				'metabox_advanced',
