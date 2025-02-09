@@ -395,12 +395,6 @@ class Isbn extends gEditorial\Module
 	{
 		$post_id = $product->get_id();
 
-		if ( $gtin = $product->get_global_unique_id() )
-			$attributes[$this->classs( 'gtin' )] = [
-				'label' => _x( 'GTIN', 'Field Title', 'geditorial-isbn' ),
-				'value' => Info::lookupISBN( $gtin ),
-			];
-
 		if ( $isbn = Services\PostTypeFields::getField( 'isbn', [ 'id' => $post_id ] ) )
 			$attributes[$this->classs( 'primary' )] = [
 				'label' => _x( 'ISBN', 'Field Title', 'geditorial-isbn' ),

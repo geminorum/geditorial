@@ -23,6 +23,7 @@ class WcAttributes extends gEditorial\Module
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
 			'keywords' => [
+				'gtin',
 				'attribute',
 				'woocommerce',
 			],
@@ -39,15 +40,63 @@ class WcAttributes extends gEditorial\Module
 					'description' => _x( 'Tries to join attributes with a localized separator.', 'Setting Description', 'geditorial-wc-attributes' ),
 				],
 			],
+			'_gtin' => [
+				[
+					'field'       => 'gtin_display',
+					'title'       => _x( 'Display GTIN', 'Setting Title', 'geditorial-wc-attributes' ),
+					'description' => _x( 'Prepends the global unique id on product attributes table.', 'Setting Description', 'geditorial-wc-attributes' ),
+				],
+				[
+					'field'       => 'gtin_lookup',
+					'title'       => _x( 'GTIN lookup', 'Setting Title', 'geditorial-wc-attributes' ),
+					'description' => _x( 'Links the default label for the global unique id on product attributes table.', 'Setting Description', 'geditorial-wc-attributes' ),
+				],
+				[
+					'field'       => 'gtin_label',
+					'type'        => 'text',
+					'title'       => _x( 'GTIN Label', 'Setting Title', 'geditorial-wc-attributes' ),
+					'description' => _x( 'Overrides the default label for the global unique id on product attributes table.', 'Setting Description', 'geditorial-wc-attributes' ),
+					'placeholder' => _x( 'GTIN', 'Field Title', 'geditorial-wc-attributes' ),
+				],
+			],
 		];
+	}
+
+	protected function settings_section_titles( $suffix )
+	{
+		switch ( $suffix ) {
+
+			case '_gtin': return [ _x( 'Global Unique ID', 'Setting Section Title', 'geditorial-wc-attributes' ),
+				_x( 'Preferences about the Global Trade Item Number.', 'Setting Section Description', 'geditorial-wc-attributes' ) ];
+		}
+
+		return FALSE;
 	}
 
 	public function init()
 	{
 		parent::init();
 
+		$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
+
 		if ( $this->get_setting( 'localize_join_attributes' ) )
 			$this->filter( 'attribute', 3, 20, FALSE, 'woocommerce' );
+	}
+
+	public function display_product_attributes( $attributes, $product )
+	{
+		$before = $after = [];
+
+		if ( $this->get_setting( 'gtin_display' ) ) {
+
+			if ( $gtin = $product->get_global_unique_id() )
+				$before[$this->classs( 'gtin' )] = [
+					'label' => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Field Title', 'geditorial-wc-attributes' ) ),
+					'value' => $this->get_setting( 'gtin_lookup' ) ? Info::lookupISBN( $gtin ) : Core\ISBN::prep( $gtin, TRUE ),
+				];
+		}
+
+		return $before + $attributes + $after;
 	}
 
 	public function attribute( $filtered, $attribute, $values )
