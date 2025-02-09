@@ -9,6 +9,7 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Isbn extends gEditorial\Module
@@ -431,5 +432,33 @@ class Isbn extends gEditorial\Module
 			];
 
 		return $attributes;
+	}
+
+	public function imports_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'imports', $sub );
+
+				if ( ! ModuleSettings::handleImport_from_book_module() )
+					Core\WordPress::redirectReferer( 'huh' );
+			}
+		}
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		echo ModuleSettings::toolboxColumnOpen( _x( 'ISBN Imports', 'Header', 'geditorial-isbn' ) );
+		$available = FALSE;
+
+		if ( ModuleSettings::renderCard_import_from_book_module() )
+			$available = TRUE;
+
+		if ( ! $available )
+			Info::renderNoImportsAvailable();
+
+		echo '</div>';
 	}
 }
