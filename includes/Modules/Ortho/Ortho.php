@@ -129,11 +129,15 @@ class Ortho extends gEditorial\Module
 		];
 	}
 
-	public function settings_section_virastar()
+	protected function settings_section_titles( $suffix )
 	{
-		Settings::fieldSection(
-			_x( 'Virastar!', 'Setting Section Title', 'geditorial-ortho' )
-		);
+		switch ( $suffix ) {
+
+			case '_virastar': return [ _x( 'Virastar!', 'Setting Section Title', 'geditorial-ortho' ),
+				_x( 'Customize the behavior of Virastar library.', 'Setting Section Description', 'geditorial-ortho' ) ];
+		}
+
+		return FALSE;
 	}
 
 	protected function get_global_strings()

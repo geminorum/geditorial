@@ -1910,6 +1910,44 @@ class Settings extends WordPress\Main
 		return _x( 'huh?', 'Settings: Message', 'geditorial-admin' );
 	}
 
+	public static function getModuleSectionTitle( $suffix )
+	{
+		switch ( $suffix ) {
+			case '_general'  : return [ _x( 'General', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_defaults' : return [ _x( 'Defaults', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_misc'     : return [ _x( 'Miscellaneous', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_frontend' : return [ _x( 'Front-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_backend'  : return [ _x( 'Back-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_content'  : return [ _x( 'Generated Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_featured' : return [ _x( 'Featured Content', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_dashboard': return [ _x( 'Admin Dashboard', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_editlist' : return [ _x( 'Admin Edit List', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_comments' : return [ _x( 'Admin Comment List', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_editpost' : return [ _x( 'Admin Edit Post', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_edittags' : return [ _x( 'Admin Edit Terms', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_columns'  : return [ _x( 'Admin List Columns', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_import'   : return [ _x( 'Import Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_printpage': return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_strings'  : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_constants': return [ _x( 'Custom Constants', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_roles'    : return [ _x( 'Availability', 'Settings: Section Title', 'geditorial-admin' ), _x( 'Though Administrators have it all!', 'Settings: Section Description', 'geditorial-admin' ) ];
+			case '_p2p'      : return [ _x( 'Posts-to-Posts', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_o2o'      : return [ _x( 'Objects-to-Objects', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+		}
+
+		return FALSE;
+	}
+
+	public static function makeModuleSectionTitle( $suffix )
+	{
+		$title = '';
+
+		foreach ( explode( '_', str_replace( ' ', '_', $suffix ) ) as $word )
+			$title.= ucfirst( $word ).' ';
+
+		return $title;
+	}
+
 	// @SOURCE: `add_settings_section()`
 	public static function addModuleSection( $page, $atts = [] )
 	{
@@ -1918,6 +1956,7 @@ class Settings extends WordPress\Main
 		$args = self::atts( [
 			'id'            => FALSE,
 			'title'         => FALSE,
+			'description'   => FALSE,
 			'callback'      => '__return_false',
 			'section_class' => '',
 		], $atts );
@@ -1925,11 +1964,58 @@ class Settings extends WordPress\Main
 		if ( ! $args['id'] )
 			return FALSE;
 
+		if ( ! $args['title'] )
+			$args['title'] = self::makeModuleSectionTitle( $args['id'] );
+
 		return $wp_settings_sections[$page][$args['id']] = $args;
 	}
 
 	// @SOURCE: `do_settings_sections()`
 	public static function moduleSections( $page )
+	{
+		global $wp_settings_sections, $wp_settings_fields;
+
+		if ( empty( $wp_settings_sections[$page] ) )
+			return;
+
+		$tabs   = Core\Arraay::pluck( $wp_settings_sections[$page], 'title', 'id' );
+		$active = Core\Arraay::keyFirst( $tabs );
+
+		echo '<div class="base-tabs-list -base nav-tab-base">';
+
+			Core\HTML::tabNav( $active, $tabs );
+
+			foreach ( (array) $wp_settings_sections[$page] as $section ) {
+
+				echo '<div class="nav-tab-content -content'.( $active === $section['id'] ? ' nav-tab-active -active' : '' ).'" data-tab="'.$section['id'].'">';
+
+				if ( $section['callback'] && '__return_false' !== $section['callback'] )
+					call_user_func( $section['callback'], $section );
+
+				else
+					self::fieldSection( $section['title'], $section['description'] );
+
+				if ( ! isset( $wp_settings_fields )
+					|| ! isset( $wp_settings_fields[$page] )
+					|| ! isset( $wp_settings_fields[$page][$section['id']] ) ) {
+
+					echo '</div>';
+					continue;
+				}
+
+				echo '<table class="form-table -section-table"><tbody class="-section-body -list">';
+					// do_settings_fields( $page, $section['id'] );
+					self::moduleSectionFields( $page, $section['id'] );
+				echo '</tbody></table>';
+
+				echo '</div>';
+			}
+
+		echo '</div>';
+	}
+
+	// FIXME: DROP THIS
+	public static function moduleSections_OLD( $page )
 	{
 		global $wp_settings_sections, $wp_settings_fields;
 

@@ -198,20 +198,18 @@ class WcUnits extends gEditorial\Module
 		];
 	}
 
-	public function settings_section_weight()
+	protected function settings_section_titles( $suffix )
 	{
-		Settings::fieldSection(
-			_x( 'Weight', 'Setting Section Title', 'geditorial-wc-units' ),
-			_x( 'Format a weight for display.', 'Setting Section Description', 'geditorial-wc-units' )
-		);
-	}
+		switch ( $suffix ) {
 
-	public function settings_section_dimensions()
-	{
-		Settings::fieldSection(
-			_x( 'Dimensions', 'Setting Section Title', 'geditorial-wc-units' ),
-			_x( 'Format dimensions for display.', 'Setting Section Description', 'geditorial-wc-units' )
-		);
+			case '_weight': return [ _x( 'Weight', 'Setting Section Title', 'geditorial-wc-units' ),
+				_x( 'Format a weight for display.', 'Setting Section Description', 'geditorial-wc-units' ) ];
+
+			case '_dimensions': return [ _x( 'Dimensions', 'Setting Section Title', 'geditorial-wc-units' ),
+				_x( 'Format dimensions for display.', 'Setting Section Description', 'geditorial-wc-units' ) ];
+		}
+
+		return FALSE;
 	}
 
 	public function init()

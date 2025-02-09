@@ -9,13 +9,6 @@ use geminorum\gEditorial\WordPress;
 trait PostsToPosts
 {
 
-	public function settings_section_p2p()
-	{
-		Settings::fieldSection(
-			_x( 'Posts-to-Posts', 'Internal: PostsToPosts: Setting Section Title', 'geditorial' )
-		);
-	}
-
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
 	public function p2p_register( $constant, $posttypes = NULL )
 	{

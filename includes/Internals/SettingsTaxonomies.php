@@ -37,12 +37,13 @@ trait SettingsTaxonomies
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
-				_x( 'Enable for Taxonomies', 'Module', 'geditorial-admin' ) );
+				_x( 'Supported Taxonomies', 'Internal: SettingsTaxonomies: Field Title', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );
 
 		Settings::addModuleSection( $option, [
 			'id'            => $option.'_taxonomies',
+			'title'         => _x( 'Taxonomies', 'Internal: SettingsTaxonomies: Section Title', 'geditorial-admin' ),
 			'section_class' => 'taxonomies_option_section',
 		] );
 

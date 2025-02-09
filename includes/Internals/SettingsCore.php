@@ -470,6 +470,10 @@ trait SettingsCore
 			if ( is_array( $fields ) ) {
 
 				$section = $this->hook_base( $this->module->name ).$section_suffix;
+				$title   = Settings::getModuleSectionTitle( $section_suffix );
+
+				if ( ! $title && method_exists( $this, 'settings_section_titles' ) )
+					$title = call_user_func_array( [ $this, 'settings_section_titles' ], [ $section_suffix ] );
 
 				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
 					$callback = [ $this, 'settings_section'.$section_suffix ];
@@ -481,6 +485,8 @@ trait SettingsCore
 				Settings::addModuleSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'callback'      => $callback,
+					'title'         => empty( $title[0] ) ? Settings::makeModuleSectionTitle( $section_suffix ) : $title[0],
+					'description'   => empty( $title[1] ) ? FALSE : $title[1],
 					'section_class' => 'settings_section',
 				] );
 
@@ -565,112 +571,6 @@ trait SettingsCore
 	protected function settings_signature( $context = 'settings' )
 	{
 		Settings::settingsSignature();
-	}
-
-	public function settings_section_defaults()
-	{
-		Settings::fieldSection(
-			_x( 'Defaults', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_misc()
-	{
-		Settings::fieldSection(
-			_x( 'Miscellaneous', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_frontend()
-	{
-		Settings::fieldSection(
-			_x( 'Front-end', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_backend()
-	{
-		Settings::fieldSection(
-			_x( 'Back-end', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_content()
-	{
-		Settings::fieldSection(
-			_x( 'Generated Contents', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_dashboard()
-	{
-		Settings::fieldSection(
-			_x( 'Admin Dashboard', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_editlist()
-	{
-		Settings::fieldSection(
-			_x( 'Admin Edit List', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_columns()
-	{
-		Settings::fieldSection(
-			_x( 'Admin List Columns', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_editpost()
-	{
-		Settings::fieldSection(
-			_x( 'Admin Edit Post', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_edittags()
-	{
-		Settings::fieldSection(
-			_x( 'Admin Edit Terms', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_comments()
-	{
-		Settings::fieldSection(
-			_x( 'Admin Comment List', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_import()
-	{
-		Settings::fieldSection(
-			_x( 'Import Preferences', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_strings()
-	{
-		Settings::fieldSection(
-			_x( 'Custom Strings', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_roles()
-	{
-		Settings::fieldSection(
-			_x( 'Availability', 'Module: Setting Section Title', 'geditorial-admin' ),
-			_x( 'Though Administrators have it all!', 'Module: Setting Section Description', 'geditorial-admin' )
-		);
-	}
-
-	public function settings_section_constants()
-	{
-		Settings::fieldSection(
-			_x( 'Constants', 'Module: Setting Section Title', 'geditorial-admin' )
-		);
 	}
 
 	public function add_settings_field( $r = [] )

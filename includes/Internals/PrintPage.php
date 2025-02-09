@@ -175,11 +175,4 @@ trait PrintPage
 		// @REF: https://hdtuto.com/article/print-iframe-content-using-jquery-example
 		echo '<script>function '.$func.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
 	}
-
-	public function settings_section_printpage()
-	{
-		Settings::fieldSection(
-			_x( 'Printing', 'Internal: PrintPage: Setting Section Title', 'geditorial' )
-		);
-	}
 }

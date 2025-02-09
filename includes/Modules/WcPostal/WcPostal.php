@@ -82,11 +82,14 @@ class WcPostal extends gEditorial\Module
 		];
 	}
 
-	public function settings_section_tracking()
+	protected function settings_section_titles( $suffix )
 	{
-		Settings::fieldSection(
-			_x( 'Tracking', 'Setting Section Title', 'geditorial-wc-postal' )
-		);
+		switch ( $suffix ) {
+
+			case '_tracking': return [ _x( 'Tracking', 'Setting Section Title', 'geditorial-wc-postal' ), NULL ];
+		}
+
+		return FALSE;
 	}
 
 	public function init()

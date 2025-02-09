@@ -39,13 +39,6 @@ class Home extends gEditorial\Module
 			echo Core\HTML::warning( _x( 'Current theme does not support Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
 	}
 
-	public function settings_section_featured()
-	{
-		Settings::fieldSection(
-			_x( 'Featured Content', 'Setting Section Title', 'geditorial-home' )
-		);
-	}
-
 	protected function get_global_settings()
 	{
 		return [

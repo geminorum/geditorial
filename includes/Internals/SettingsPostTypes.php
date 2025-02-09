@@ -40,12 +40,13 @@ trait SettingsPostTypes
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'post_types_title', 'post', 'settings',
-				_x( 'Enable for Post Types', 'Module', 'geditorial-admin' ) );
+				_x( 'Supported Post-types', 'Internal: SettingsPostTypes: Field Title', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );
 
 		Settings::addModuleSection( $option, [
 			'id'            => $option.'_posttypes',
+			'title'         => _x( 'Post-types', 'Internal: SettingsPostTypes: Section Title', 'geditorial-admin' ),
 			'section_class' => 'posttypes_option_section',
 		] );
 
