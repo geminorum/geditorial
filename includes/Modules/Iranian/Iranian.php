@@ -217,12 +217,8 @@ class Iranian extends gEditorial\Module
 		$all       = $this->get_settings_posttypes_parents();
 		$posttypes = Core\Arraay::keepByKeys( $all, $parents );
 
-		if ( count( $posttypes ) ) {
-
-			ModuleSettings::renderCard_location_by_identity( $posttypes );
-
+		if ( ModuleSettings::renderCard_location_by_identity( $posttypes ) )
 			$available = TRUE;
-		}
 
 		if ( ! $available )
 			Info::renderNoToolsAvailable();
@@ -277,12 +273,8 @@ class Iranian extends gEditorial\Module
 		$all       = $this->get_settings_posttypes_parents();
 		$posttypes = Core\Arraay::keepByKeys( $all, $intersect );
 
-		if ( count( $posttypes ) ) {
-
-			ModuleSettings::renderCard_identity_certificate( $posttypes );
-
+		if ( ModuleSettings::renderCard_identity_certificate( $posttypes ) )
 			$available = TRUE;
-		}
 
 		if ( ! $available )
 			Info::renderNoToolsAvailable();
@@ -382,13 +374,11 @@ class Iranian extends gEditorial\Module
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();
 
-		if ( count( $posttypes ) ) {
-
-			ModuleSettings::renderCard_country_summary( $posttypes );
-			ModuleSettings::renderCard_city_summary( $posttypes );
-
+		if ( ModuleSettings::renderCard_country_summary( $posttypes ) )
 			$available = TRUE;
-		}
+
+		if ( ModuleSettings::renderCard_city_summary( $posttypes ) )
+			$available = TRUE;
 
 		if ( ! $available )
 			Info::renderNoReportsAvailable();

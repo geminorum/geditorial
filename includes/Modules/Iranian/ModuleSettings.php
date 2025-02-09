@@ -21,21 +21,25 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function renderCard_identity_certificate( $posttypes )
 	{
+		if ( empty( $posttypes ) )
+			return FALSE;
+
 		echo self::toolboxCardOpen( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ) );
 
-			// TODO: display empty count for each posttype
 			foreach ( $posttypes as $posttype => $label )
 				self::submitButton( add_query_arg( [
 					'action' => static::ACTION_IDENTITY_CERTIFICATE,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: posttype label */
+					/* translators: %s: post-type label */
 					_x( 'Compare Identity for %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to un-set the certificate duplicated from identity data.', 'Button Description', 'geditorial-iranian' ) );
 		echo '</div></div>';
+
+		return TRUE;
 	}
 
 	public static function handleTool_identity_certificate( $posttype, $identity_metakey, $certificate, $limit = 25 )
@@ -129,24 +133,28 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function renderCard_location_by_identity( $posttypes )
 	{
+		if ( empty( $posttypes ) )
+			return FALSE;
+
 		echo self::toolboxCardOpen( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ) );
 
-			// TODO: display empty count for each posttype
 			foreach ( $posttypes as $posttype => $label )
 				self::submitButton( add_query_arg( [
 					'action' => static::ACTION_LOCATION_BY_IDENTITY,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: posttype label */
+					/* translators: %s: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to set the location based on identity data.', 'Button Description', 'geditorial-iranian' ) );
 		echo '</div></div>';
+
+		return TRUE;
 	}
 
-	// NOTE: untill the json city *data* is not compelete, the query must be `paged`
+	// NOTE: until the JSON city *data* is not complete, the query must be `paged`
 	public static function handleImport_location_by_identity( $posttype, $data, $identity_metakey, $location_metakey, $limit = 25 )
 	{
 		$query = [
@@ -234,6 +242,9 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function renderCard_country_summary( $posttypes )
 	{
+		if ( empty( $posttypes ) )
+			return FALSE;
+
 		echo self::toolboxCardOpen( _x( 'Country Summary', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
@@ -241,7 +252,7 @@ class ModuleSettings extends gEditorial\Settings
 					'action' => static::ACTION_COUNTRY_SUMMARY,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: posttype label */
+					/* translators: %s: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
@@ -249,10 +260,15 @@ class ModuleSettings extends gEditorial\Settings
 			Core\HTML::desc( _x( 'Tries to summarize the country info based on the raw meta-data.', 'Button Description', 'geditorial-iranian' ) );
 
 		echo '</div></div>'; // buttons + wrap closed
+
+		return TRUE;
 	}
 
 	public static function renderCard_city_summary( $posttypes )
 	{
+		if ( empty( $posttypes ) )
+			return FALSE;
+
 		echo self::toolboxCardOpen( _x( 'City Summary', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
@@ -260,7 +276,7 @@ class ModuleSettings extends gEditorial\Settings
 					'action' => static::ACTION_CITY_SUMMARY,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: posttype label */
+					/* translators: %s: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
@@ -268,6 +284,8 @@ class ModuleSettings extends gEditorial\Settings
 			Core\HTML::desc( _x( 'Tries to summarize the city info based on the raw meta-data.', 'Button Description', 'geditorial-iranian' ) );
 
 		echo '</div></div>'; // buttons + wrap closed
+
+		return TRUE;
 	}
 
 	public static function handleReport_country_summary( $posttype, $identity_metakey, $location_metakey, $data = [] )

@@ -2,9 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\WordPress\Main;
+use geminorum\gEditorial\WordPress;
 
-class Calendars extends Main
+class Calendars extends WordPress\Main
 {
 	const BASE = 'geditorial';
 

@@ -206,6 +206,7 @@ class Config extends gEditorial\Module
 		Settings::wrapClose();
 	}
 
+	// TODO: display wp_dashboard on overview
 	protected function reports_overview( $uri )
 	{
 		do_action( $this->hook_base( 'reports', 'overview' ), $uri );
@@ -470,6 +471,7 @@ class Config extends gEditorial\Module
 		do_action( $this->hook_base( 'roles', 'settings' ), $sub );
 	}
 
+	// TODO: display download reports box for each module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->cuc( 'reports' ) )
@@ -499,7 +501,6 @@ class Config extends gEditorial\Module
 		$empty = TRUE;
 
 		if ( current_user_can( 'manage_options' ) ) {
-
 
 			if ( $this->_render_tools_html_options( $post ) )
 				$empty = FALSE;

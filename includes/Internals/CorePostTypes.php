@@ -294,8 +294,8 @@ trait CorePostTypes
 
 					break;
 
-				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP]   = TRUE === $value ? $this->constant( $setting ) : $value; break;
-				case 'status_taxonomy' : $args[Services\PrimaryTaxonomy::STATUS_TAX_PROP] = TRUE === $value ? $this->constant( $setting ) : $value; break;
+				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP]   = TRUE === $value ? $this->constant( $setting, $setting ) : $value; break;
+				case 'status_taxonomy' : $args[Services\PrimaryTaxonomy::STATUS_TAX_PROP] = TRUE === $value ? $this->constant( $setting, $setting ) : $value; break;
 
 				case 'tinymce_disabled':
 				case 'slug_disabled':

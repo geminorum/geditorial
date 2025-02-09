@@ -24,7 +24,7 @@ class Module extends WordPress\Module
 	public $settings;
 
 	public $enabled  = FALSE;
-	public $meta_key = '_ge'; // FIXME: DEPRECATED
+	public $meta_key = '_ge'; // TODO: DEPRECATE
 
 	protected $icon_group = 'genericons-neue';
 

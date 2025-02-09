@@ -1051,8 +1051,11 @@ class Settings extends WordPress\Main
 			'field'       => 'archive_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Archive Content', 'Setting: Setting Title', 'geditorial-admin' ),
-			/* translators: %s: zero placeholder */
-			'description' => $description ?: sprintf( _x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ), Core\HTML::code( '0' ) ),
+			'description' => $description ?: sprintf(
+				/* translators: %s: zero placeholder */
+				_x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
+				Core\HTML::code( '0' )
+			),
 		];
 	}
 
