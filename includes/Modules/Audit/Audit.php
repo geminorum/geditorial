@@ -241,27 +241,8 @@ class Audit extends gEditorial\Module
 		if ( ! in_array( $post->post_status, WordPress\Status::acceptable( $post->post_type, 'audit' ), TRUE ) )
 			return;
 
-		if ( FALSE !== $this->_do_auto_audit_post( $post, $update ) )
+		if ( FALSE !== ModuleHelper::doAutoAuditPost( $post, $update ) )
 			clean_object_term_cache( $post->ID, $this->constant( 'main_taxonomy' ) );
-	}
-
-	private function _do_auto_audit_post( $post, $update = FALSE, $taxonomy = NULL )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		$taxonomy = $taxonomy ?? $this->constant( 'main_taxonomy' );
-		$currents = WordPress\Taxonomy::getObjectTerms( $taxonomy, $post->ID );
-
-		$terms = $this->filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
-		$terms = Core\Arraay::prepNumeral( $terms );
-
-		if ( Core\Arraay::equalNoneAssoc( $terms, $currents ) )
-			return NULL;
-
-		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy );
-
-		return self::isError( $result ) ? FALSE : $result;
 	}
 
 	public function auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
@@ -478,7 +459,7 @@ class Audit extends gEditorial\Module
 			if ( ! current_user_can( 'edit_post', $post_id ) )
 				continue;
 
-			if ( $this->_do_auto_audit_post( $post_id, TRUE, $taxonomy ) )
+			if ( ModuleHelper::doAutoAuditPost( $post_id, TRUE, $taxonomy ) )
 				$count++;
 		}
 
@@ -509,145 +490,29 @@ class Audit extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( $action = self::req( $this->classs( 'empty-fields' ) ) )
-					$this->_handle_action_empty_fields( $action );
+				if ( $action = self::req( ModuleSettings::ACTION_EMPTY_FIELDS_AUDIT ) ) {
 
-				Core\WordPress::redirectReferer( 'huh' );
+					$this->raise_resources();
+
+					ModuleSettings::handleToolsEmptyFields( $action, $this->constant( 'main_taxonomy' ) );
+
+				} else {
+
+					Core\WordPress::redirectReferer( 'huh' );
+				}
 			}
 		}
 	}
 
 	public function taxonomy_handle_tab_content_actions( $taxonomy )
 	{
-		if ( ! $action = self::req( $this->classs( 'empty-fields' ) ) )
+		if ( ! $action = self::req( ModuleSettings::ACTION_EMPTY_FIELDS_AUDIT ) )
 			return;
 
 		$this->nonce_check( 'do-empty-fields' );
-		$this->_handle_action_empty_fields( $action );
-	}
-
-	// NOTE: must check nonce before
-	private function _handle_action_empty_fields( $action )
-	{
-		$taxonomy = $this->constant( 'main_taxonomy' );
-
 		$this->raise_resources();
 
-		switch ( Core\Arraay::keyFirst( $action ) ) {
-
-			case 'flush_empty_title':
-
-				$attribute = ModuleHelper::getAttributeSlug( 'empty_title' );
-
-				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				WordPress\Term::updateCount( $attribute, $taxonomy );
-
-				Core\WordPress::redirectReferer( [
-					'message' => 'emptied',
-					'count'   => $count,
-				] );
-				break;
-
-			case 'flush_empty_content':
-
-				$attribute = ModuleHelper::getAttributeSlug( 'empty_content' );
-
-				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				WordPress\Term::updateCount( $attribute, $taxonomy );
-
-				Core\WordPress::redirectReferer( [
-					'message' => 'emptied',
-					'count'   => $count,
-				] );
-				break;
-
-			case 'flush_empty_excerpt':
-
-				$attribute = ModuleHelper::getAttributeSlug( 'empty_excerpt' );
-
-				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				WordPress\Term::updateCount( $attribute, $taxonomy );
-
-				Core\WordPress::redirectReferer( [
-					'message' => 'emptied',
-					'count'   => $count,
-				] );
-				break;
-
-			case 'mark_empty_title':
-
-				$posttypes = self::req( 'posttype-empty-title' ) ?: NULL;
-				$attribute = ModuleHelper::getAttributeSlug( 'empty_title' );
-
-				if ( FALSE === ( $posts = ModuleHelper::getPostsEmpty( 'title', $attribute, $posttypes ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				if ( empty( $posts ) )
-					Core\WordPress::redirectReferer( 'nochange' );
-
-				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				WordPress\Term::updateCount( $attribute, $taxonomy );
-
-				Core\WordPress::redirectReferer( [
-					'message' => 'synced',
-					'count'   => $count,
-				] );
-				break;
-
-			case 'mark_empty_content':
-
-				$posttypes = self::req( 'posttype-empty-content' ) ?: NULL;
-				$attribute = ModuleHelper::getAttributeSlug( 'empty_content' );
-
-				if ( FALSE === ( $posts = ModuleHelper::getPostsEmpty( 'content', $attribute, $posttypes ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				if ( empty( $posts ) )
-					Core\WordPress::redirectReferer( 'nochange' );
-
-				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				WordPress\Term::updateCount( $attribute, $taxonomy );
-
-				Core\WordPress::redirectReferer( [
-					'message' => 'synced',
-					'count'   => $count,
-				] );
-				break;
-
-			case 'mark_empty_excerpt':
-
-				$posttypes = self::req( 'posttype-empty-excerpt' ) ?: NULL;
-				$attribute = ModuleHelper::getAttributeSlug( 'empty_excerpt' );
-
-				if ( FALSE === ( $posts = ModuleHelper::getPostsEmpty( 'excerpt', $attribute, $posttypes ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				if ( empty( $posts ) )
-					Core\WordPress::redirectReferer( 'nochange' );
-
-				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
-
-				WordPress\Term::updateCount( $attribute, $taxonomy );
-
-				Core\WordPress::redirectReferer( [
-					'message' => 'synced',
-					'count'   => $count,
-				] );
-				break;
-		}
-
-		Core\WordPress::redirectReferer( 'huh' );
+		ModuleSettings::handleToolsEmptyFields( $action, $this->constant( 'main_taxonomy' ) );
 	}
 
 	protected function render_tools_html( $uri, $sub )
@@ -655,15 +520,14 @@ class Audit extends gEditorial\Module
 		echo Settings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 
 		$available = FALSE;
+		$taxonomy  = $this->constant( 'main_taxonomy' );
 		$posttypes = $this->list_posttypes();
 
-		if ( count( $posttypes ) ) {
-
-			$this->_render_tools_empty_fields( $posttypes );
-			$this->_render_tools_force_auto_audit( $posttypes );
-
+		if ( ModuleSettings::renderToolsEmptyFields( $posttypes, $taxonomy ) )
 			$available = TRUE;
-		}
+
+		if ( ModuleSettings::renderCard_force_auto_audit( $posttypes, $taxonomy ) )
+			$available = TRUE;
 
 		if ( ! $available )
 			Info::renderNoToolsAvailable();
@@ -696,90 +560,13 @@ class Audit extends gEditorial\Module
 	{
 		$this->render_form_start( NULL, 'empty-fields', 'extra', 'tabs' );
 			$this->nonce_field( 'do-empty-fields' );
-			$this->_render_tools_empty_fields( $this->list_posttypes(), TRUE );
+			ModuleSettings::renderToolsEmptyFields( $this->list_posttypes(), $this->constant( 'main_taxonomy' ), TRUE );
 		$this->render_form_end( NULL, 'empty-fields', 'extra', 'tabs' );
-	}
-
-	// TODO: auto-audit: mark no thumbnail with selected attribiute
-	private function _render_tools_empty_fields( $list, $lite = FALSE )
-	{
-		$posttypes = array_keys( $list );
-		$taxonomy  = $this->constant( 'main_taxonomy' );
-		$action    = $this->classs( 'empty-fields' );
-		$empty     = TRUE;
-
-		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
-
-		if ( term_exists( ModuleHelper::getAttributeSlug( 'empty_title' ), $taxonomy ) ) {
-
-			Core\HTML::h4( _x( 'Posts with Empty Title', 'Card Title', 'geditorial-audit' ), 'title' );
-			if ( ! $lite ) $this->_render_tools_empty_fields_summary( $posttypes, 'empty_title' );
-
-			echo $this->wrap_open( '-wrap-button-row' );
-			echo Core\HTML::dropdown( $list, [
-				'name'       => 'posttype-empty-title',
-				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
-			] );
-
-			// FIXME: use `Settings::actionButton()`
-			Settings::submitButton( $action.'[mark_empty_title]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
-			Settings::submitButton( $action.'[flush_empty_title]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
-			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no title.', 'Card: Description', 'geditorial-audit' ) );
-
-			echo '</div>';
-			$empty = FALSE;
-		}
-
-		if ( term_exists( ModuleHelper::getAttributeSlug( 'empty_content' ), $taxonomy ) ) {
-
-			Core\HTML::h4( _x( 'Posts with Empty Content', 'Card Title', 'geditorial-audit' ), 'title' );
-			if ( ! $lite ) $this->_render_tools_empty_fields_summary( $posttypes, 'empty_content' );
-
-			echo $this->wrap_open( '-wrap-button-row' );
-			echo Core\HTML::dropdown( $list, [
-				'name'       => 'posttype-empty-content',
-				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
-			] );
-
-			Settings::submitButton( $action.'[mark_empty_content]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
-			Settings::submitButton( $action.'[flush_empty_content]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
-			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no content.', 'Card: Description', 'geditorial-audit' ) );
-
-			echo '</div>';
-			$empty = FALSE;
-		}
-
-		if ( term_exists( ModuleHelper::getAttributeSlug( 'empty_excerpt' ), $taxonomy ) ) {
-
-			Core\HTML::h4( _x( 'Posts with Empty Excerpt', 'Card Title', 'geditorial-audit' ), 'title' );
-			if ( ! $lite ) $this->_render_tools_empty_fields_summary( $posttypes, 'empty_excerpt' );
-
-			echo $this->wrap_open( '-wrap-button-row' );
-			echo Core\HTML::dropdown( $list, [
-				'name'       => 'posttype-empty-excerpt',
-				'none_title' => _x( 'All Supported Post-Types', 'Card: None-Title', 'geditorial-audit' ),
-			] );
-
-			Settings::submitButton( $action.'[mark_empty_excerpt]', _x( 'Mark Posts', 'Card: Button', 'geditorial-audit' ) );
-			Settings::submitButton( $action.'[flush_empty_excerpt]', _x( 'Flush Attribute', 'Card: Button', 'geditorial-audit' ), 'danger', TRUE, '' );
-			Core\HTML::desc( _x( 'Tries to set the attribute on supported posts with no excerpt.', 'Card: Description', 'geditorial-audit' ) );
-
-			echo '</div>';
-			$empty = FALSE;
-		}
-
-		if ( $empty ) {
-
-			Core\HTML::h4( _x( 'Posts with Empty Fields', 'Card Title', 'geditorial-audit' ), 'title' );
-			Core\HTML::desc( _x( 'No empty attribute available. Please install the default attributes.', 'Message', 'geditorial-audit' ), TRUE, '-empty' );
-		}
-
-		echo '</div>';
 	}
 
 	private function _do_tools_force_auto_audit( $sub )
 	{
-		if ( 'do_tools_force_auto_audit' !== self::req( 'action' ) )
+		if ( ! self::do( ModuleSettings::ACTION_FORCE_AUTO_AUDIT ) )
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
@@ -790,73 +577,11 @@ class Audit extends gEditorial\Module
 
 		$this->raise_resources();
 
-		$taxonomy = $this->constant( 'main_taxonomy' );
-		$query    = [];
-
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $this->get_sub_limit_option( $sub ) );
-
-		if ( empty( $posts ) )
-			return Settings::processingAllDone();
-
-		echo Settings::processingListOpen();
-
-		foreach ( $posts as $post )
-			$this->_post_force_auto_audit( $post, $taxonomy, TRUE );
-
-		echo '</ul></div>';
-
-		return Core\WordPress::redirectJS( add_query_arg( [
-			'action' => 'do_tools_force_auto_audit',
-			'type'   => $posttype,
-			'paged'  => self::paged() + 1,
-		] ) );
-	}
-
-	private function _post_force_auto_audit( $post, $taxonomy = NULL, $verbose = FALSE )
-	{
-		if ( ! $result = $this->_do_auto_audit_post( $post, TRUE, $taxonomy ) )
-			return Settings::processingListItem( $verbose,
-				/* translators: %s: post title */
-				_x( 'No Audits applied for &ldquo;%s&rdquo;', 'Notice', 'geditorial-audit' ), [
-					WordPress\Post::title( $post ),
-				] );
-
-		return Settings::processingListItem( $verbose,
-			/* translators: %1$s: count terms, %2$s: post title */
-			_x( '%1$s attributes set for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-audit' ), [
-				Core\HTML::code( count( $result ) ),
-				WordPress\Post::title( $post ),
-			], TRUE );
-	}
-
-	private function _render_tools_force_auto_audit()
-	{
-		echo Settings::toolboxCardOpen( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ) );
-
-			foreach ( $this->list_posttypes() as $posttype => $label )
-				Settings::submitButton( add_query_arg( [
-					'action' => 'do_tools_force_auto_audit',
-					'type'   => $posttype,
-				/* translators: %s: posttype label */
-				] ), sprintf( _x( 'On %s', 'Button', 'geditorial-audit' ), $label ), 'link-small' );
-
-			Core\HTML::desc( _x( 'Tries to auto-set the attributes on supported posts.', 'Button Description', 'geditorial-audit' ) );
-		echo '</div></div>';
-	}
-
-	private function _render_tools_empty_fields_summary( $posttypes, $for )
-	{
-		if ( ! $attribute = ModuleHelper::getAttributeSlug( $for ) )
-			return;
-
-		$posts = ModuleHelper::getPostsEmpty( $for, $attribute, $posttypes, FALSE );
-		$count = WordPress\Taxonomy::countTermObjects( $attribute, $this->constant( 'main_taxonomy' ) );
-
-		/* translators: %1$s: empty post count, %2$s: assigned term count */
-		Core\HTML::desc( vsprintf( _x( 'Currently found %1$s empty posts and %2$s assigned to the attribute.', 'Card: Description', 'geditorial-audit' ), [
-			FALSE === $posts ? gEditorial()->na() : Core\Number::format( count( $posts ) ),
-			FALSE === $count ? gEditorial()->na() : Core\Number::format( $count ),
-		] ) );
+		return ModuleSettings::handleTool_force_auto_audit(
+			$posttype,
+			$this->constant( 'main_taxonomy' ),
+			$this->get_sub_limit_option( $sub )
+		);
 	}
 
 	public function reports_settings( $sub )
@@ -875,6 +600,7 @@ class Audit extends gEditorial\Module
 	}
 
 	// TODO: export option
+	// TODO: move to `ModuleSettings`
 	private function _render_reports_by_user_summary()
 	{
 		$args = $this->get_current_form( [
@@ -951,7 +677,7 @@ class Audit extends gEditorial\Module
 		Services\LateChores::termCountCollect();
 
 		if ( ! Core\WordPress::isDev() )
-			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+			do_action( 'qm/cease' ); // Query Monitor: Cease data collections
 
 		return $this->raise_memory_limit( $count, $per, $context ?? 'audit' );
 	}

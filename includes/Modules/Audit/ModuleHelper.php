@@ -11,6 +11,26 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'audit';
 
+	// OLD: `_do_auto_audit_post()`
+	public static function doAutoAuditPost( $post, $update = FALSE, $taxonomy = NULL )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		$taxonomy = $taxonomy ?? self::constant( 'main_taxonomy', 'audit_attribute' );
+		$currents = WordPress\Taxonomy::getObjectTerms( $taxonomy, $post->ID );
+
+		$terms = self::filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
+		$terms = Core\Arraay::prepNumeral( $terms );
+
+		if ( Core\Arraay::equalNoneAssoc( $terms, $currents ) )
+			return NULL;
+
+		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy );
+
+		return self::isError( $result ) ? FALSE : $result;
+	}
+
 	// TODO: add setting/filter for this
 	public static function getAttributeSlug( $for, $default = FALSE )
 	{
