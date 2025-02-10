@@ -9,6 +9,8 @@ use geminorum\gEditorial\WordPress;
 class Actions extends gEditorial\Module
 {
 
+	// TODO: Migrate into Services
+
 	public static function module()
 	{
 		return [

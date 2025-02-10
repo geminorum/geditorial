@@ -46,7 +46,8 @@ class WcIdentify extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'GTIN Label', 'Setting Title', 'geditorial-wc-identify' ),
 					'description' => _x( 'Overrides the default label for the global unique id on product attributes table.', 'Setting Description', 'geditorial-wc-identify' ),
-					'placeholder' => _x( 'GTIN', 'Field Title', 'geditorial-wc-identify' ),
+					'placeholder' => _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ),
+					'field_class' => [ 'medium-text' ],
 				],
 			],
 		];

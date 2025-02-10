@@ -65,20 +65,19 @@ class ModuleSettings extends gEditorial\Settings
 		if ( ! $result = ModuleHelper::doAutoAuditPost( $post, TRUE, $taxonomy ) )
 			return self::processingListItem( $verbose,
 				/* translators: %s: post title */
-				_x( 'No Audits applied for &ldquo;%s&rdquo;', 'Notice', 'geditorial-audit' ), [
+				_x( 'No Audits applied for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-audit' ), [
 					WordPress\Post::title( $post ),
 				] );
 
 		return self::processingListItem( $verbose,
 			/* translators: %1$s: count terms, %2$s: post title */
-			_x( '%1$s attributes set for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-audit' ), [
+			_x( '%1$s attributes set for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-audit' ), [
 				Core\HTML::code( count( $result ) ),
 				WordPress\Post::title( $post ),
 			], TRUE );
 	}
 
 	// TODO: auto-audit: mark no thumbnail with selected attribute
-	// OLD: `_render_tools_empty_fields()`
 	public static function renderToolsEmptyFields( $list, $taxonomy, $lite = FALSE )
 	{
 		$posttypes = array_keys( $list );
@@ -168,7 +167,6 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	// OLD: `_handle_action_empty_fields()`
 	public static function handleToolsEmptyFields( $action, $taxonomy )
 	{
 		switch ( Core\Arraay::keyFirst( $action ) ) {

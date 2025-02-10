@@ -48,7 +48,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'primary_posttype', 'department' );
+			$atts['type'] = self::constant( 'primary_posttype', 'committee' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}

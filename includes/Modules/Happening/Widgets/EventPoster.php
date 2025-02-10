@@ -82,7 +82,7 @@ class EventPoster extends gEditorial\Widget
 
 	public function form( $instance )
 	{
-		$type = self::constant( 'main_posttype', 'happening' );
+		$type = self::constant( 'main_posttype', 'event' );
 
 		$this->before_form( $instance );
 
