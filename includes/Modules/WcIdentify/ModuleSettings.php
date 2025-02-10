@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\WcAttributes;
+<?php namespace geminorum\gEditorial\Modules\WcIdentify;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -11,19 +11,19 @@ use geminorum\gEditorial\WordPress;
 class ModuleSettings extends gEditorial\Settings
 {
 
-	const MODULE = 'wc_attributes';
+	const MODULE = 'wc_identify';
 
 	const ACTION_MIGRATE_GTIN = 'do_tool_migrate_gtin';
 
 	public static function renderCard_tool_migrate_gtin()
 	{
-		echo self::toolboxCardOpen( _x( 'Attribute to GTIN', 'Card Title', 'geditorial-wc-attributes' ) );
+		echo self::toolboxCardOpen( _x( 'Attribute to GTIN', 'Card Title', 'geditorial-wc-identify' ) );
 
 			self::submitButton( add_query_arg( [
 					'action' => static::ACTION_MIGRATE_GTIN,
-				] ), _x( 'Migrate Data', 'Button', 'geditorial-wc-attributes' ), 'link' );
+				] ), _x( 'Migrate Data', 'Button', 'geditorial-wc-identify' ), 'link' );
 
-			Core\HTML::desc( _x( 'Imports GTIN product attributes into built-in global unique ID fields.', 'Message', 'geditorial-wc-attributes' ), FALSE );
+			Core\HTML::desc( _x( 'Imports GTIN product attributes into built-in global unique ID fields.', 'Message', 'geditorial-wc-identify' ), FALSE );
 
 		echo '</div></div>';
 
@@ -62,7 +62,7 @@ class ModuleSettings extends gEditorial\Settings
 		if ( $saved = $product->get_global_unique_id( 'edit' ) )
 			return self::processingListItem( $verbose,
 				/* translators: %1$s: gtin placeholder, %2$s: product title */
-				_x( '%1$s GTIN already saved for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-wc-attributes' ), [
+				_x( '%1$s GTIN already saved for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-wc-identify' ), [
 					Core\HTML::code( $saved ),
 					$product->get_name(),
 				] );
@@ -80,7 +80,7 @@ class ModuleSettings extends gEditorial\Settings
 
 				return self::processingListItem( $verbose,
 					/* translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title */
-					_x( '%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!', 'Notice', 'geditorial-wc-attributes' ), [
+					_x( '%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!', 'Notice', 'geditorial-wc-identify' ), [
 						Core\HTML::code( $gtin ),
 						$attribute->get_name(),
 						$product->get_name(),
@@ -94,7 +94,7 @@ class ModuleSettings extends gEditorial\Settings
 
 			return self::processingListItem( $verbose,
 				/* translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title */
-				_x( '%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!', 'Notice', 'geditorial-wc-attributes' ), [
+				_x( '%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!', 'Notice', 'geditorial-wc-identify' ), [
 					Core\HTML::code( $gtin ),
 					$attribute->get_name(),
 					$product->get_name(),
@@ -103,7 +103,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		return self::processingListItem( $verbose,
 			/* translators: %s: product title */
-			_x( 'No releavent GTIN attribute found for &ldquo;%s&rdquo;', 'Notice', 'geditorial-wc-attributes' ), [
+			_x( 'No relevant GTIN attribute found for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-wc-identify' ), [
 				$product->get_name(),
 			] );
 	}

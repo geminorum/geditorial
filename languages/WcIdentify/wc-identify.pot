@@ -1,0 +1,98 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcIdentify\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcIdentify\n"
+"X-Domain: geditorial-wc-identify\n"
+
+#: ModuleSettings.php:20
+msgctxt "Card Title"
+msgid "Attribute to GTIN"
+msgstr ""
+
+#: ModuleSettings.php:24
+msgctxt "Button"
+msgid "Migrate Data"
+msgstr ""
+
+#: ModuleSettings.php:26
+msgctxt "Message"
+msgid "Imports GTIN product attributes into built-in global unique ID fields."
+msgstr ""
+
+#. translators: %1$s: gtin placeholder, %2$s: product title
+#: ModuleSettings.php:65
+msgctxt "Notice"
+msgid "%1$s GTIN already saved for &ldquo;%2$s&rdquo;."
+msgstr ""
+
+#. translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title
+#: ModuleSettings.php:83
+msgctxt "Notice"
+msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!"
+msgstr ""
+
+#. translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title
+#: ModuleSettings.php:97
+msgctxt "Notice"
+msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!"
+msgstr ""
+
+#. translators: %s: product title
+#: ModuleSettings.php:106
+msgctxt "Notice"
+msgid "No relevant GTIN attribute found for &ldquo;%s&rdquo;."
+msgstr ""
+
+#: WcIdentify.php:36
+msgctxt "Setting Title"
+msgid "Display GTIN"
+msgstr ""
+
+#: WcIdentify.php:37
+msgctxt "Setting Description"
+msgid "Prepends the global unique id on product attributes table."
+msgstr ""
+
+#: WcIdentify.php:41
+msgctxt "Setting Title"
+msgid "GTIN lookup"
+msgstr ""
+
+#: WcIdentify.php:42
+msgctxt "Setting Description"
+msgid "Makes the value for the global unique id clickable on product attributes table."
+msgstr ""
+
+#: WcIdentify.php:47
+msgctxt "Setting Title"
+msgid "GTIN Label"
+msgstr ""
+
+#: WcIdentify.php:48
+msgctxt "Setting Description"
+msgid "Overrides the default label for the global unique id on product attributes table."
+msgstr ""
+
+#: WcIdentify.php:49
+msgctxt "Field Title"
+msgid "GTIN"
+msgstr ""
+
+#: WcIdentify.php:70
+msgctxt "Attribute Label"
+msgid "GTIN"
+msgstr ""
+
+#: WcIdentify.php:85
+msgctxt "Header"
+msgid "Product Identification Tools"
+msgstr ""

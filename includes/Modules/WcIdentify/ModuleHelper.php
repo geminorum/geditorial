@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\WcAttributes;
+<?php namespace geminorum\gEditorial\Modules\WcIdentify;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 class ModuleHelper extends gEditorial\Helper
 {
 
-	const MODULE = 'wc_attributes';
+	const MODULE = 'wc_identify';
 
 	public static function possibleAttributeForGTIN( $attribute )
 	{
