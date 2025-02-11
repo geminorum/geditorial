@@ -26,9 +26,9 @@ class Almanac extends gEditorial\Module
 			'icon'     => 'calendar',
 			'access'   => 'beta',
 			'keywords' => [
-				'taxmodule',
-				'calendar',
 				'date',
+				'calendar',
+				'taxmodule',
 			],
 		];
 	}
@@ -55,6 +55,9 @@ class Almanac extends gEditorial\Module
 			'_editlist' => [
 				'admin_restrict',
 				'show_in_quickedit',
+			],
+			'_constants' => [
+				'main_taxonomy_constant' => [ NULL, 'calendar_type' ],
 			],
 		];
 	}

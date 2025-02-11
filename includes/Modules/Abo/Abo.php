@@ -59,6 +59,9 @@ class Abo extends gEditorial\Module
 				'contents_viewable',
 				'show_in_navmenus',
 			],
+			'_constants' => [
+				'main_taxonomy_constant' => [ NULL, 'blood_type' ],
+			],
 		];
 	}
 

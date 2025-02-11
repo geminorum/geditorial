@@ -107,6 +107,9 @@ class Addendum extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'appendages' ],
+			],
 		];
 	}
 
@@ -165,7 +168,7 @@ class Addendum extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'listbox_title' => _x( 'Posts with &ldquo;%1$s&rdquo; %2$s', 'MetaBox: `listbox_title`', 'geditorial-addendum' ),
 		];
 
@@ -297,6 +300,7 @@ class Addendum extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
+				$this->modulelinks__register_headerbuttons();
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
@@ -335,7 +339,7 @@ class Addendum extends gEditorial\Module
 			}
 		}
 
-		// only for supporte8d posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )

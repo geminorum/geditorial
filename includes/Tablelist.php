@@ -106,10 +106,14 @@ class Tablelist extends WordPress\Main
 		}
 
 		$args = array_merge( $pre, [
-			'orderby'          => self::orderby( 'ID' ),
-			'order'            => self::order( 'DESC' ),
-			'post_type'        => $posttypes, // 'any',
-			'post_status'      => 'any', // WordPress\Status::acceptable( $posttypes ),
+
+			// @SEE: https://make.wordpress.org/core/2014/08/29/a-more-powerful-order-by-in-wordpress-4-0/
+			'orderby' => self::orderby( 'ID' ),
+			'order'   => self::order( 'DESC' ),
+
+			'post_type'   => $posttypes,   // 'any',
+			'post_status' => 'any',        // WordPress\Status::acceptable( $posttypes ),
+
 			'suppress_filters' => TRUE,
 		], $atts );
 

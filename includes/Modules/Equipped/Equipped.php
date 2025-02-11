@@ -72,6 +72,9 @@ class Equipped extends gEditorial\Module
 			'_units' => [
 				'units_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],
 			],
+			'_constants' => [
+				'main_taxonomy_constant' => [ NULL, 'equipment' ],
+			],
 		];
 	}
 

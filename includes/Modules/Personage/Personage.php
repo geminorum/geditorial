@@ -460,8 +460,8 @@ class Personage extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
-				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 				$this->modulelinks__register_headerbuttons();
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 				$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->corerestrictposts__hook_screen_taxonomies( [

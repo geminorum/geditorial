@@ -24,7 +24,7 @@ class ModuleSettings extends gEditorial\Settings
 			self::submitButton( add_query_arg( [
 				'action' => static::ACTION_REATTACH_THUMBNAILS,
 				'type'   => $posttype,
-			/* translators: %s: posttype label */
+			/* translators: %s: post-type label */
 			] ), sprintf( _x( 'On %s', 'Button', 'geditorial-attachments' ), $label ), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to re-attach un-parented via thumbnail meta-data.', 'Button Description', 'geditorial-attachments' ) );
@@ -39,7 +39,7 @@ class ModuleSettings extends gEditorial\Settings
 				self::submitButton( add_query_arg( [
 					'action' => static::ACTION_EMPTY_RAW_METADATA,
 					'type'   => $posttype,
-				/* translators: %s: posttype label */
+				/* translators: %s: post-type label */
 				] ), sprintf( _x( 'On %s', 'Button', 'geditorial-attachments' ), $label ), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to clean attachemnt raw meta-data.', 'Button Description', 'geditorial-attachments' ) );
@@ -129,13 +129,13 @@ class ModuleSettings extends gEditorial\Settings
 		if ( ! WordPress\Media::emptyAttachmentImageMeta( $attachment ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %1$s: attachment title, %2$s: attachment id */
-				_x( 'There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s)', 'Notice', 'geditorial-attachments' ) ),
+				_x( 'There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s).', 'Notice', 'geditorial-attachments' ) ),
 				WordPress\Post::title( $attachment ), Core\HTML::code( $attachment ) ) : TRUE ) && FALSE;
 
 		if ( $verbose )
 			echo Core\HTML::tag( 'li',
 				/* translators: %1$s: attachment title, %2$s: attachment id */
-				sprintf( _x( 'Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)', 'Notice', 'geditorial-attachments' ),
+				sprintf( _x( 'Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-attachments' ),
 				WordPress\Post::title( $attachment ),
 				Core\HTML::code( $attachment )
 			) );
@@ -154,13 +154,13 @@ class ModuleSettings extends gEditorial\Settings
 		if ( ! wp_delete_attachment( $attachment->ID, TRUE ) )
 			return ( $verbose ? printf( Core\HTML::tag( 'li',
 				/* translators: %1$s: attachment title, %2$s: attachment id */
-				_x( 'There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s)', 'Notice', 'geditorial-attachments' ) ),
+				_x( 'There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-attachments' ) ),
 				WordPress\Post::title( $attachment->ID ), Core\HTML::code( $attachment->ID ) ) : TRUE ) && FALSE;
 
 		if ( $verbose )
 			echo Core\HTML::tag( 'li',
 				/* translators: %1$s: attachment title, %2$s: attachment id */
-				sprintf( _x( '&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted.', 'Notice', 'geditorial-attachments' ),
+				sprintf( _x( '&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted!', 'Notice', 'geditorial-attachments' ),
 				WordPress\Post::title( $attachment ),
 				Core\HTML::code( $attachment->ID )
 			) );

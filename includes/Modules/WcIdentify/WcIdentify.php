@@ -12,6 +12,19 @@ use geminorum\gEditorial\WordPress;
 class WcIdentify extends gEditorial\Module
 {
 
+	/**
+	 * The most common product identifiers are GTINs and MPN:
+	 *
+	 * - GTIN8 / EAN-8 – a code used for items that are too small to fit the usual 12-14 digits.
+	 * - GTIN12 / UPC  and GTIN13 / EAN – the most common codes used in North America (UPC) and outside of North America  (EAN).
+	 * - GTIN14 / ITF-14: a code used for packaged products that contain multiple individual items, such as a pack of canned sodas.
+	 * - ISBN: stands for “International Standard Book Number” and it is used, of course, for books.
+	 * - MPN: stands for “Manufacturer part number”. These numbers are typically found on machines and hardware that contain different parts.
+	 *
+	 * @source https://yoast.com/help/how-to-add-product-identifiers-with-woocommerce-seo/
+	 * @see https://support.google.com/merchants/answer/160161?hl=en
+	 */
+
 	public static function module()
 	{
 		return [
@@ -127,6 +140,7 @@ class WcIdentify extends gEditorial\Module
 			return FALSE; // avoid further UI
 	}
 
+	// https://woocommerce.com/document/google-for-woocommerce/attribute-mapping/gtin/
 	private function _do_tool_migrate_gtin( $sub )
 	{
 		if ( ! self::do( ModuleSettings::ACTION_MIGRATE_GTIN ) )

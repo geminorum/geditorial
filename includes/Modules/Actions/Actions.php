@@ -14,13 +14,13 @@ class Actions extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'       => 'actions',
-			'title'      => _x( 'Actions', 'Modules: Actions', 'geditorial-admin' ),
-			'desc'       => _x( 'Editorial Content Actions', 'Modules: Actions', 'geditorial-admin' ),
-			'textdomain' => FALSE, // strings in this module are loaded via plugin
-			'configure'  => FALSE,
-			'autoload'   => TRUE,
-			'access'     => 'stable',
+			'name'      => 'actions',
+			'title'     => _x( 'Actions', 'Modules: Actions', 'geditorial-admin' ),
+			'desc'      => _x( 'Editorial Content Actions', 'Modules: Actions', 'geditorial-admin' ),
+			'i18n'      => FALSE, // strings in this module are loaded via plugin
+			'configure' => FALSE,
+			'autoload'  => TRUE,
+			'access'    => 'stable',
 		];
 	}
 

@@ -59,6 +59,9 @@ class Banking extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'bank-accounts' ],
+			],
 			'posttypes_option' => 'posttypes_option',
 		];
 	}

@@ -11,6 +11,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'personage';
 
+	// TODO: move-up to `Misc\FullName`
 	public static function makeFullname( $data, $context = 'display', $fallback = FALSE )
 	{
 		if ( ! $data )
@@ -90,6 +91,7 @@ class ModuleHelper extends gEditorial\Helper
 		return Core\Text::normalizeWhitespace( $fullname, FALSE );
 	}
 
+	// TODO: move-up to `Misc\FullName`
 	public static function isValidFullname( $text )
 	{
 		if ( WordPress\Strings::isEmpty( $text ) )
@@ -107,7 +109,7 @@ class ModuleHelper extends gEditorial\Helper
 		return TRUE;
 	}
 
-	// FIXME: maybe moving to `Naming` Module
+	// TODO: move-up to `Misc\FullName`
 	// TODO: bulk tool to process name fields
 	public static function parseFullname( $raw, $fallback = FALSE )
 	{
@@ -271,7 +273,6 @@ class ModuleHelper extends gEditorial\Helper
 		// $value = WordPress\Strings::cleanupChars( $value );
 
 		$value = Core\Text::normalizeZWNJ( $value );
-		$value = Core\Text::trim( $value );
 	}
 
 	// NOT USED
@@ -295,10 +296,7 @@ class ModuleHelper extends gEditorial\Helper
 
 			$part  = implode( ' ', array_reverse( $part ) );
 			$part  = trim( str_ireplace( [ ' ZWNJ ', 'ZWNJ', ' ZWNJ', 'ZWNJ ' ], '‌', $part ), '‌' );
-
-			// TODO: normalize zwnj
-
-			$value = Core\Text::trim( $part );
+			$value = Core\Text::normalizeZWNJ( $part );
 
 		} else if ( is_string( $value ) ) {
 

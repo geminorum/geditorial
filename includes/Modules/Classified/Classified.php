@@ -67,6 +67,9 @@ class Classified extends gEditorial\Module
 				'contents_viewable',
 				'show_in_navmenus',
 			],
+			'_constants' => [
+				'main_taxonomy_constant' => [ NULL, 'classification' ],
+			],
 		];
 	}
 

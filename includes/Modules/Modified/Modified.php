@@ -22,11 +22,15 @@ class Modified extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'modified',
-			'title'  => _x( 'Modified', 'Modules: Modified', 'geditorial-admin' ),
-			'desc'   => _x( 'Last Modifications', 'Modules: Modified', 'geditorial-admin' ),
-			'icon'   => 'update',
-			'access' => 'beta',
+			'name'     => 'modified',
+			'title'    => _x( 'Modified', 'Modules: Modified', 'geditorial-admin' ),
+			'desc'     => _x( 'Last Modification of Contents', 'Modules: Modified', 'geditorial-admin' ),
+			'icon'     => 'update',
+			'i18n'     => 'adminonly',
+			'access'   => 'beta',
+			'keywords' => [
+				'shortcodemodule',
+			],
 		];
 	}
 
@@ -73,6 +77,28 @@ class Modified extends gEditorial\Module
 			],
 			'_supports' => [
 				'shortcode_support',
+			],
+			'_constants' => [
+				[
+					'field'       => 'post_modified_shortcode_constant',
+					'type'        => 'text',
+					'title'       => _x( 'Post Shortcode Tag', 'Setting: Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Customizes the post modified short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-modified' ),
+					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+					'field_class' => [ 'medium-text', 'code-text' ],
+					'placeholder' => 'post-modified',
+				],
+				[
+					'field'       => 'site_modified_shortcode_constant',
+					'type'        => 'text',
+					'title'       => _x( 'Site Shortcode Tag', 'Setting: Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Customizes the site modified short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-modified' ),
+					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+					'field_class' => [ 'medium-text', 'code-text' ],
+					'placeholder' => 'site-modified',
+				],
 			],
 		];
 	}

@@ -393,6 +393,27 @@ class Settings extends WordPress\Main
 		return '<span class="-field-after -icon-wrap">'.$html.'</span>';
 	}
 
+	// NOTE: @see `WordPress\PostType::NAME_INPUT_PATTERN`
+	public static function fieldAfterPostTypeConstant()
+	{
+		return self::fieldAfterIcon( '#',
+			_x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) );
+	}
+
+	// NOTE: @see `WordPress\Taxonomy::NAME_INPUT_PATTERN`
+	public static function fieldAfterTaxonomyConstant()
+	{
+		return self::fieldAfterIcon( '#',
+			_x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) );
+	}
+
+	// NOTE: @see `WordPress\ShortCode::NAME_INPUT_PATTERN`
+	public static function fieldAfterShortCodeConstant()
+	{
+		return self::fieldAfterIcon( '#',
+			_x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) );
+	}
+
 	public static function getSetting_thrift_mode( $description = NULL )
 	{
 		return [
@@ -954,7 +975,22 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the main post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterPostTypeConstant(),
+			'pattern'     => WordPress\PostType::NAME_INPUT_PATTERN,
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_main_taxonomy_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'main_taxonomy_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterTaxonomyConstant(),
+			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -967,7 +1003,8 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the main taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterTaxonomyConstant(),
+			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -980,7 +1017,8 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the main short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterShortCodeConstant(),
+			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -993,7 +1031,8 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Span Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the span short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterShortCodeConstant(),
+			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1006,7 +1045,22 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Cover Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the cover short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterShortCodeConstant(),
+			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_subterm_shortcode_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'subterm_shortcode_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Sub-Term Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the sub-term short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterShortCodeConstant(),
+			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1019,7 +1073,8 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Primary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the primary post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterPostTypeConstant(),
+			'pattern'     => WordPress\PostType::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1032,7 +1087,8 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Primary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the primary taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterTaxonomyConstant(),
+			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1045,7 +1101,8 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Secondary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the secondary post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterPostTypeConstant(),
+			'pattern'     => WordPress\PostType::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -1058,7 +1115,8 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Secondary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the secondary taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( '#', _x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) ),
+			'after'       => self::fieldAfterTaxonomyConstant(),
+			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],
 			'placeholder' => $default,
 		];
@@ -2340,7 +2398,7 @@ class Settings extends WordPress\Main
 		] );
 	}
 
-	// TODO: support HTML `pattern`
+	// TODO: support HTML `pattern`: https://input-pattern.com/en/tutorial.php
 	// TODO: support HTML `title_attr`
 	public static function fieldType( $atts, &$scripts )
 	{

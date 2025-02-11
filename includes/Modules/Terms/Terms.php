@@ -181,8 +181,8 @@ class Terms extends gEditorial\Module
 				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
-				// NOTE: Only the diffrents from titles
-				// - filters are abale to customize by `{$field}_column_title` key
+				// NOTE: Only the difference from titles
+				// - filters are able to customize by `{$field}_column_title` key
 				'order_column_title'    => _x( 'Ordering', 'Column Title: Order', 'geditorial-terms' ),
 				'arrow_column_title'    => _x( 'Arrow Directions', 'Column Title: Arrow', 'geditorial-terms' ),
 				'viewable_column_title' => _x( 'Visibility', 'Column Title: Date-End', 'geditorial-terms' ),
@@ -465,14 +465,14 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'list_supported_fields', $list, $taxonomy );
 	}
 
-	// by default the metakey is the same as the field
-	// TODO: handle `$taxonomy` is an array
+	// TODO: handle `$taxonomy` if is an array
+	// NOTE: by default the meta-key is the same as the field
 	private function get_supported_metakey( $field, $taxonomy = FALSE )
 	{
 		return $this->filters( 'supported_field_metakey', $field, $field, $taxonomy );
 	}
 
-	// by default the metatype is the same as the field
+	// NOTE: by default the meta-type is the same as the field
 	private function get_supported_field_metatype( $field, $taxonomy )
 	{
 		return $this->filters( 'supported_field_metatype', $field, $field, $taxonomy );

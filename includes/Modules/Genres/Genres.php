@@ -60,6 +60,10 @@ class Genres extends gEditorial\Module
 				'summary_drafts',
 				'count_not',
 			],
+			'_constants' => [
+				'main_taxonomy_constant'  => [ NULL, 'genre' ],
+				'main_shortcode_constant' => [ NULL, 'genres' ],
+			],
 		];
 	}
 

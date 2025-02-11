@@ -84,6 +84,10 @@ class Diagnosed extends gEditorial\Module
 				'show_in_navmenus',
 				'tabs_support',
 			],
+			'_constants' => [
+				'main_taxonomy_constant'  => [ NULL, 'diagnosis' ],
+				'main_shortcode_constant' => [ NULL, 'medical-records' ],
+			],
 		];
 	}
 

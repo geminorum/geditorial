@@ -58,6 +58,9 @@ class Chronicles extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'content-timeline' ],
+			],
 			'posttypes_option' => 'posttypes_option',
 		];
 	}

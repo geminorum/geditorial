@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -15,12 +14,15 @@ class Alphabet extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'alphabet',
-			'title'  => _x( 'Alphabet', 'Modules: Alphabet', 'geditorial-admin' ),
-			'desc'   => _x( 'A to Z Lists for Post Types, Taxonomies and Users', 'Modules: Alphabet', 'geditorial-admin' ),
-			'icon'   => 'editor-textcolor',
-			'i18n'   => FALSE,
-			'access' => 'stable',
+			'name'     => 'alphabet',
+			'title'    => _x( 'Alphabet', 'Modules: Alphabet', 'geditorial-admin' ),
+			'desc'     => _x( 'A to Z Lists for Post-types, Taxonomies and Users', 'Modules: Alphabet', 'geditorial-admin' ),
+			'icon'     => 'editor-textcolor',
+			'i18n'     => 'adminonly',
+			'access'   => 'stable',
+			'keywords' => [
+				'shortcodemodule',
+			],
 		];
 	}
 
@@ -29,6 +31,28 @@ class Alphabet extends gEditorial\Module
 		return [
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
+			'_constants'        => [
+				[
+					'field'       => 'shortcode_posts_constant',
+					'type'        => 'text',
+					'title'       => _x( 'Posts Shortcode Tag', 'Setting: Setting Title', 'geditorial-alphabet' ),
+					'description' => _x( 'Customizes the alphabet list of posts short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-alphabet' ),
+					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+					'field_class' => [ 'medium-text', 'code-text' ],
+					'placeholder' => 'alphabet-posts',
+				],
+				[
+					'field'       => 'shortcode_terms_constant',
+					'type'        => 'text',
+					'title'       => _x( 'Terms Shortcode Tag', 'Setting: Setting Title', 'geditorial-alphabet' ),
+					'description' => _x( 'Customizes the alphabet list of terms short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-alphabet' ),
+					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+					'field_class' => [ 'medium-text', 'code-text' ],
+					'placeholder' => 'alphabet-terms',
+				],
+			],
 		];
 	}
 

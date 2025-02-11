@@ -119,6 +119,9 @@ class Organization extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
+			'_constants' => [
+				'subterm_shortcode_constant' => [ NULL, 'organization-subdepartment' ],
+			],
 		];
 	}
 
