@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class WcIdentify extends gEditorial\Module
@@ -49,6 +50,12 @@ class WcIdentify extends gEditorial\Module
 					'placeholder' => _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ),
 					'field_class' => [ 'medium-text' ],
 				],
+				[
+					'field'       => 'gtin_exemptions',
+					'title'       => _x( 'GTIN Exemptions', 'Setting Title', 'geditorial-wc-identify' ),
+					'description' => _x( 'Instructs output structured data that a valid identifier for the product doesn\'t exist.', 'Setting Description', 'geditorial-wc-identify' ),
+					'after'       => Settings::fieldAfterIcon( 'https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/' ),
+				],
 			],
 		];
 	}
@@ -58,6 +65,9 @@ class WcIdentify extends gEditorial\Module
 		parent::init();
 
 		$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
+
+		if ( $this->get_setting( 'gtin_exemptions' ) )
+			$this->filter( 'structured_data_product', 2, 20, 'exemptions', 'woocommerce' );
 	}
 
 	public function display_product_attributes( $attributes, $product )
@@ -74,6 +84,22 @@ class WcIdentify extends gEditorial\Module
 		}
 
 		return $before + $attributes + $after;
+	}
+
+	// @REF: https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/
+	public function structured_data_product_exemptions( $markup, $product )
+	{
+		if ( ! $gtin = $product->get_global_unique_id() )
+			return $markup;
+
+		if ( ! Core\ISBN::validate( $gtin ) )
+			/**
+			 * Instructs Woo Commerce to output structured data that indicates
+			 * to Google that an identifier for the product doesn’t exist and isn’t necessary.
+			 */
+			$markup['identifier_exists'] = 'no';
+
+		return $markup;
 	}
 
 	public function tools_settings( $sub )
