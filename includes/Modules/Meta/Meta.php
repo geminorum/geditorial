@@ -1026,21 +1026,9 @@ class Meta extends gEditorial\Module
 			&& $args['custom_field'] ) {
 
 			echo '<br />';
-			// FIXME: use table list helpers
 			Core\HTML::tableList( [
 				'post_id' => Tablelist::columnPostID(),
-				'type'   => [
-					'title'    => _x( 'Type', 'Table Column', 'geditorial-meta' ),
-					'args'     => [ 'types' => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ) ],
-					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
-
-						$post = WordPress\Post::get( $row->post_id );
-
-						return isset( $column['args']['types'][$post->post_type] )
-							? $column['args']['types'][$post->post_type]
-							: $post->post_type;
-					},
-				],
+				'type'    => Tablelist::columnPostType( 'post_id' ),
 				'title'   => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
 					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {

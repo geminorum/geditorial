@@ -309,15 +309,19 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostType()
+	public static function columnPostType( $post_id_prop = NULL )
 	{
 		return [
 			'title'    => _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
 			'args'     => [ 'types' => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ) ],
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
-				return isset( $column['args']['types'][$row->post_type] )
-					? $column['args']['types'][$row->post_type]
-					: $row->post_type;
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $post_id_prop ) {
+
+				if ( ! $post = WordPress\Post::get( $post_id_prop ? $row->{$post_id_prop} : $row ) )
+					return Helper::htmlEmpty();
+
+				return isset( $column['args']['types'][$post->post_type] )
+					? $column['args']['types'][$post->post_type]
+					: $post->post_type;
 			},
 		];
 	}
