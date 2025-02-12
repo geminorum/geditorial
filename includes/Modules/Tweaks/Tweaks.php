@@ -264,8 +264,12 @@ class Tweaks extends gEditorial\Module
 	// internal helper
 	private function _get_posttypes_support_exclude( $extra_excludes = [] )
 	{
+		$excludes = [
+			'product', // Woo-Commerce
+		];
+
 		$supported = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = Settings::posttypesExcluded( $extra_excludes );
+		$excluded  = Settings::posttypesExcluded( $excludes + $extra_excludes );
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}

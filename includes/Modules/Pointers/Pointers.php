@@ -101,7 +101,10 @@ class Pointers extends gEditorial\Module
 		);
 
 		if ( ! $fired )
-			echo Core\HTML::row( _x( 'There are no pointers available!', 'Message', 'geditorial-admin' ), '-empty -no-pointers' );
+			echo Core\HTML::row(
+				_x( 'There are no pointers available!', 'Message', 'geditorial-admin' ),
+				'-empty -no-pointers'
+			);
 
 		echo '</ul></div>';
 	}
@@ -128,7 +131,10 @@ class Pointers extends gEditorial\Module
 		);
 
 		if ( ! $fired )
-			echo Core\HTML::row( _x( 'There are no pointers available!', 'Message', 'geditorial-admin' ), '-empty -no-pointers' );
+			echo Core\HTML::row(
+				_x( 'There are no pointers available!', 'Message', 'geditorial-admin' ),
+				'-empty -no-pointers'
+			);
 
 		echo '</ul></div>';
 	}

@@ -84,8 +84,8 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo self::processingListOpen();
 
-		foreach ( $results as $attachment )
-			self::attachment_empty_raw_metadata( (int) $attachment, TRUE );
+		foreach ( $results as $attachment_id )
+			self::attachment_empty_raw_metadata( (int) $attachment_id, TRUE );
 
 		echo '</ul></div>';
 
@@ -118,54 +118,50 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function attachment_empty_raw_metadata( $attachment, $verbose = FALSE )
+	public static function attachment_empty_raw_metadata( $attachment_id, $verbose = FALSE )
 	{
-		if ( empty( $attachment ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+		if ( ! $attachment = WordPress\Post::get( $attachment_id ) )
+			return self::processingListItem( $verbose,
 				/* translators: %s: attachment id */
-				_x( 'Attachment ID (%s) is not valid!', 'Notice', 'geditorial-attachments' ) ),
-				Core\HTML::code( $attachment ) ) : TRUE ) && FALSE;
+				_x( 'Attachment ID (%s) is not valid!', 'Notice', 'geditorial-attachments' ), [
+					Core\HTML::code( $attachment_id ),
+				] );
 
-		if ( ! WordPress\Media::emptyAttachmentImageMeta( $attachment ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+		if ( ! WordPress\Media::emptyAttachmentImageMeta( $attachment->ID ) )
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: attachment title, %2$s: attachment id */
-				_x( 'There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s).', 'Notice', 'geditorial-attachments' ) ),
-				WordPress\Post::title( $attachment ), Core\HTML::code( $attachment ) ) : TRUE ) && FALSE;
+				_x( 'There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s).', 'Notice', 'geditorial-attachments' ), [
+					WordPress\Post::title( $attachment ),
+					Core\HTML::code( $attachment->ID ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: attachment title, %2$s: attachment id */
-				sprintf( _x( 'Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-attachments' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: attachment title, %2$s: attachment id */
+			_x( 'Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-attachments' ), [
 				WordPress\Post::title( $attachment ),
-				Core\HTML::code( $attachment )
-			) );
-
-		return TRUE;
+				Core\HTML::code( $attachment->ID ),
+			], TRUE );
 	}
 
 	public static function attachment_delete_by_mime( $attachment, $verbose = FALSE )
 	{
-		if ( empty( $attachment ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: attachment */
-				_x( 'Attachment (%s) is not valid!', 'Notice', 'geditorial-attachments' ) ),
-				Core\HTML::code( $attachment ) ) : TRUE ) && FALSE;
+		if ( ! $attachment = WordPress\Post::get( $attachment ) )
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		if ( ! wp_delete_attachment( $attachment->ID, TRUE ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: attachment title, %2$s: attachment id */
-				_x( 'There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-attachments' ) ),
-				WordPress\Post::title( $attachment->ID ), Core\HTML::code( $attachment->ID ) ) : TRUE ) && FALSE;
+				_x( 'There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-attachments' ), [
+					WordPress\Post::title( $attachment ),
+					Core\HTML::code( $attachment->ID ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: attachment title, %2$s: attachment id */
-				sprintf( _x( '&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted!', 'Notice', 'geditorial-attachments' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: attachment title, %2$s: attachment id */
+			_x( '&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted!', 'Notice', 'geditorial-attachments' ), [
 				WordPress\Post::title( $attachment ),
-				Core\HTML::code( $attachment->ID )
-			) );
-
-		return TRUE;
+				Core\HTML::code( $attachment->ID ),
+			], TRUE );
 	}
 
 	public static function handleTool_reattach_thumbnails( $posttype, $limit = 25 )
@@ -203,35 +199,36 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function attachment_set_parent_data( $attachment, $parent, $verbose = FALSE )
+	public static function attachment_set_parent_data( $attachment_id, $parent_id, $verbose = FALSE )
 	{
-		if ( empty( $attachment ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+		if ( ! $attachment = WordPress\Post::get( $attachment_id ) )
+			return self::processingListItem( $verbose,
 				/* translators: %s: attachment id */
-				_x( 'Attachment ID (%s) is not valid!', 'Notice', 'geditorial-attachments' ) ),
-				Core\HTML::code( $attachment ) ) : TRUE ) && FALSE;
+				_x( 'Attachment ID (%s) is not valid!', 'Notice', 'geditorial-attachments' ), [
+					Core\HTML::code( $attachment_id ),
+				] );
 
-		if ( empty( $parent ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+		if ( ! $parent = WordPress\Post::get( $parent_id ) )
+			return self::processingListItem( $verbose,
 				/* translators: %s: parent id */
-				_x( 'Parent ID (%s) is not valid!', 'Notice', 'geditorial-attachments' ) ),
-				Core\HTML::code( $parent ) ) : TRUE ) && FALSE;
+				_x( 'Parent ID (%s) is not valid!', 'Notice', 'geditorial-attachments' ), [
+					Core\HTML::code( $parent_id ),
+				] );
 
-		if ( ! WordPress\Post::setParent( $attachment, $parent, FALSE ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+		if ( ! WordPress\Post::setParent( $attachment->ID, $parent->ID, FALSE ) )
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: attachment id, %2$s: parent title */
-				_x( 'There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-attachments' ) ),
-				Core\HTML::code( $attachment ), WordPress\Post::title( $parent ) ) : TRUE ) && FALSE;
+				_x( 'There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-attachments' ), [
+					Core\HTML::code( $attachment->ID ),
+					WordPress\Post::title( $parent ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: attachment title, %2$s: attachment id, %3$s: parent title */
-				sprintf( _x( '&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-attachments' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: attachment title, %2$s: attachment id, %3$s: parent title */
+			_x( '&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-attachments' ), [
 				WordPress\Post::title( $attachment ),
-				Core\HTML::code( $attachment ),
-				WordPress\Post::title( $parent )
-			) );
-
-		return TRUE;
+				Core\HTML::code( $attachment->ID ),
+				WordPress\Post::title( $parent ),
+			], TRUE );
 	}
 }

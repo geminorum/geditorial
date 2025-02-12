@@ -168,7 +168,7 @@ class Settings extends WordPress\Main
 		if ( ! in_array( 'privacy', $include, TRUE ) )
 			$pages[] = get_option( 'wp_page_for_privacy_policy' );
 
-		return array_filter( apply_filters( static::BASE.'_page_excludes', $pages, $context ) );
+		return Core\Arraay::prepNumeral( apply_filters( static::BASE.'_page_excludes', $pages, $context ) );
 	}
 
 	public static function priorityOptions( $format = TRUE )
@@ -230,7 +230,7 @@ class Settings extends WordPress\Main
 			'publication',
 		];
 
-		return apply_filters( static::BASE.'_posttypes_parents', array_merge( $list, (array) $extra ), $context );
+		return Core\Arraay::prepString( apply_filters( static::BASE.'_posttypes_parents', array_merge( $list, (array) $extra ), $context ) );
 	}
 
 	/**
@@ -257,6 +257,7 @@ class Settings extends WordPress\Main
 			'oembed_cache',        // WP Core
 
 			'bp-email',          // BuddyPress
+			// 'product',           // WooCommerce
 			'shop_order',        // WooCommerce
 			'shop_coupon',       // WooCommerce
 			'guest-author',      // Co-Authors Plus
@@ -271,7 +272,7 @@ class Settings extends WordPress\Main
 				'reply',
 			] );
 
-		return apply_filters( static::BASE.'_posttypes_excluded', array_merge( $list, (array) $extra ), $context );
+		return Core\Arraay::prepString( apply_filters( static::BASE.'_posttypes_excluded', array_merge( $list, (array) $extra ), $context ) );
 	}
 
 	public static function taxonomiesExcluded( $extra = [], $context = 'settings' )
@@ -297,7 +298,7 @@ class Settings extends WordPress\Main
 				'topic-tag',
 			] );
 
-		return apply_filters( static::BASE.'_taxonomies_excluded', array_merge( $list, (array) $extra ), $context );
+		return Core\Arraay::prepString( apply_filters( static::BASE.'_taxonomies_excluded', array_merge( $list, (array) $extra ), $context ) );
 	}
 
 	public static function rolesExcluded( $extra = [], $context = 'settings' )
@@ -311,7 +312,7 @@ class Settings extends WordPress\Main
 			'backwpup_helper',
 		];
 
-		return apply_filters( static::BASE.'_roles_excluded', array_merge( $list, (array) $extra ), $context );
+		return Core\Arraay::prepString( apply_filters( static::BASE.'_roles_excluded', array_merge( $list, (array) $extra ), $context ) );
 	}
 
 	public static function showOptionNone( $string = NULL )

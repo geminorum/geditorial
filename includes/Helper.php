@@ -62,6 +62,7 @@ class Helper extends WordPress\Main
 	}
 
 	// TODO: must check for min version of wc
+	// TODO: move to `Info`
 	public static function moduleCheckWooCommerce( $message = NULL )
 	{
 		return WordPress\WooCommerce::isActive()
@@ -69,6 +70,7 @@ class Helper extends WordPress\Main
 			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Helper', 'geditorial-admin' ) : $message );
 	}
 
+	// TODO: move to `Info`
 	public static function moduleCheckLocale( $locale, $message = NULL )
 	{
 		$current = Core\L10n::locale( TRUE );

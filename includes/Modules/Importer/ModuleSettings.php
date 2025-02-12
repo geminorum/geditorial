@@ -22,7 +22,7 @@ class ModuleSettings extends gEditorial\Settings
 			self::submitButton( add_query_arg( [
 				'action' => static::ACTION_CLEANUP_RAW_DATA,
 				'type'   => $posttype,
-			/* translators: %s: posttype label */
+			/* translators: %s: post-type label */
 			] ), sprintf( _x( 'On %s', 'Button', 'geditorial-importer' ), $label ), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to clean imported raw meta-data.', 'Button Description', 'geditorial-importer' ) );
@@ -53,15 +53,15 @@ class ModuleSettings extends gEditorial\Settings
 	public static function post_cleanup_raw_data( $post, $metakeys, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return ( $verbose ? print( Core\HTML::row( gEditorial\Plugin::wrong( FALSE ) ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		if ( ! $meta = WordPress\Post::getMeta( $post, FALSE ) )
-			return ( $verbose ? print( Core\HTML::row( sprintf(
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: post title, %2$s: post id */
-				_x( 'No meta-data available on &ldquo;%1$s&rdquo; (%2$s)', 'Notice', 'geditorial-importer' ),
-				WordPress\Post::title( $post ),
-				Core\HTML::code( $post->ID )
-			) ) ) : TRUE ) && FALSE;
+				_x( 'No meta-data available on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-importer' ), [
+					WordPress\Post::title( $post ),
+					Core\HTML::code( $post->ID ),
+				] );
 
 		foreach ( $metakeys as $metakey ) {
 
@@ -74,14 +74,11 @@ class ModuleSettings extends gEditorial\Settings
 				delete_post_meta( $post->ID, $key );
 		}
 
-		if ( $verbose )
-			echo Core\HTML::row( sprintf(
-				/* translators: %1$s: post title, %2$s: post id */
-				_x( 'Imported raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)', 'Notice', 'geditorial-importer' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: post title, %2$s: post id */
+			_x( 'Imported raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-importer' ), [
 				WordPress\Post::title( $post ),
-				Core\HTML::code( $post->ID )
-			) );
-
-		return TRUE;
+				Core\HTML::code( $post->ID ),
+			], TRUE );
 	}
 }

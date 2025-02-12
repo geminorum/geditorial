@@ -620,20 +620,19 @@ trait PairedTools
 		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
 
 		if ( self::isError( $result ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return Settings::processingListItem( $verbose,
 				/* translators: %1$s: post title, %2$s: error message */
-				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ) ),
-				WordPress\Post::title( $post ), $result->get_error_message() ) : TRUE ) && FALSE;
+				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
+					WordPress\Post::title( $post ),
+					$result->get_error_message(),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: count terms, %2$s: post title */
-				sprintf( _x( '%1$s terms set for &ldquo;%2$s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial-admin' ),
+		return Settings::processingListItem( $verbose,
+			/* translators: %1$s: count terms, %2$s: post title */
+			_x( '%1$s terms set for &ldquo;%2$s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 				Core\HTML::code( count( $result ) ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 
 	protected function paired_force_assign_parents( $posttype_key, $taxonomy_key, $limit )
@@ -676,25 +675,25 @@ trait PairedTools
 	protected function paired__do_force_assign_parents( $post, $taxonomy, $verbose = FALSE )
 	{
 		if ( FALSE === ( $result = $this->do_force_assign_parents( $post, $taxonomy ) ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return Settings::processingListItem( $verbose,
 				/* translators: %s: post title */
-				_x( 'Something is wrong for &ldquo;%s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial-admin' ) ),
-				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+				_x( 'Something is wrong for &ldquo;%s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
+					WordPress\Post::title( $post ),
+				] );
 
 		if ( self::isError( $result ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return Settings::processingListItem( $verbose,
 				/* translators: %1$s: post title, %2$s: error message */
-				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ) ),
-				WordPress\Post::title( $post ), $result->get_error_message() ) : TRUE ) && FALSE;
+				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
+					WordPress\Post::title( $post ),
+					$result->get_error_message(),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: count terms, %2$s: post title */
-				sprintf( _x( '%1$s terms set for &ldquo;%2$s&rdquo;', 'Internal: PairedTools: Notice', 'geditorial-admin' ),
+		return Settings::processingListItem( $verbose,
+			/* translators: %1$s: count terms, %2$s: post title */
+			_x( '%1$s terms set for &ldquo;%2$s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 				Core\HTML::code( count( $result ) ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 }

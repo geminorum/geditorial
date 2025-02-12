@@ -165,23 +165,27 @@ class ModuleSettings extends gEditorial\Settings
 	public static function post_set_parse_fullname( $post, $fullname, $first_name, $middle_name, $last_name, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		$_first_name  = $first_name  ? get_post_meta( $post->ID, $first_name['metakey'],  TRUE ) : FALSE;
 		$_middle_name = $middle_name ? get_post_meta( $post->ID, $middle_name['metakey'], TRUE ) : FALSE;
 		$_last_name   = $last_name   ? get_post_meta( $post->ID, $last_name['metakey'],   TRUE ) : FALSE;
 
 		if ( $first_name && WordPress\Strings::isEmpty( $_first_name ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: first_name string */
-				_x( 'Can not parse first-name data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_first_name ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: post title %2$s: first_name string */
+				_x( 'First-name data is empty on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-personage' ), [
+					WordPress\Post::title( $post ),
+					Core\HTML::code( $_first_name ),
+				] );
 
 		if ( $last_name && WordPress\Strings::isEmpty( $_last_name ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: last_name string */
-				_x( 'Can not parse last-name data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_last_name ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: post title %2$s: last_name string */
+				_x( 'Last-name data is empty on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-personage' ), [
+					WordPress\Post::title( $post ),
+					Core\HTML::code( $_last_name ),
+				] );
 
 		$_fullname = Core\Text::normalizeWhitespace(
 			sprintf( '%s %s %s',
@@ -191,149 +195,164 @@ class ModuleSettings extends gEditorial\Settings
 			)
 		);
 
-		// bail if cannot parese the data
+		// bail if cannot parse the data
 		if ( ! $parsed = ModuleHelper::parseFullname( $_fullname ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: fullname string */
-				_x( 'Can not parse fullname data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: post title %2$s: full-name string */
+				_x( 'Can not parse fullname data available for &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-personage' ), [
+					WordPress\Post::title( $post ),
+					Core\HTML::code( $_fullname ),
+				] );
 
-		// bail if no first name
+		// bail if no first name exists
 		if ( $first_name && WordPress\Strings::isEmpty( $parsed['first_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: first_name string */
-				_x( 'Can not parse first-name data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'First-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
-		// bail if no last name
+		// bail if no last name exists
 		if ( $last_name && WordPress\Strings::isEmpty( $parsed['last_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: last_name string */
-				_x( 'Can not parse last-name data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'Last-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
 		// bail if cannot store first name meta
 		if ( $parsed['first_name'] !== $_first_name && ! update_post_meta( $post->ID, $first_name['metakey'], $parsed['first_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: fullname string */
-				_x( 'There is problem updating first-name for &ldquo;%s&rdquo;', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'There is problem updating first-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
 		// bail if cannot store last name meta
 		if ( $parsed['last_name'] !== $_last_name && ! update_post_meta( $post->ID, $last_name['metakey'], $parsed['last_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: fullname string */
-				_x( 'There is problem updating last-name for &ldquo;%s&rdquo;', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'There is problem updating last-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
 		// override middle name only if not exists
 		if ( $middle_name && ! WordPress\Strings::isEmpty( $parsed['middle_name'] )
 			&& ! get_post_meta( $post->ID, $middle_name['metakey'], TRUE ) )
 				update_post_meta( $post->ID, $middle_name['metakey'], $parsed['middle_name'] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li', sprintf(
-				/* translators: %1$s: parsed fullname, %2$s: fullname string, %3$s: post title */
-				_x( '&ldquo;%1$s&rdquo; names are set by %2$s on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-personage' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: parsed fullname, %2$s: full-name string, %3$s: post title */
+			_x( '&ldquo;%1$s&rdquo; names are set by %2$s on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-personage' ), [
 				Core\HTML::escape( $parsed['fullname'] ),
 				Core\HTML::code( $_fullname ),
 				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+			], TRUE );
 	}
 
 	public static function post_set_delete_fullname( $post, $fullname, $first_name, $middle_name, $last_name, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		if ( ! $_fullname = get_post_meta( $post->ID, $fullname['metakey'], TRUE ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
-		// bail if problem removing the original fullname meta
+		// bail if problem removing the original full-name meta
 		if ( ! delete_post_meta( $post->ID, $fullname['metakey'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: fullname string, %2$s: post title */
-				_x( 'There is problem removing full-name data (%1$s) for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ), WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+				_x( 'There is problem removing full-name data (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li', sprintf(
-				/* translators: %1$s: fullname string, %2$s: post title */
-				_x( '&ldquo;%1$s&rdquo; full-name data deleted on &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-personage' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: fullname string, %2$s: post title */
+			_x( '&ldquo;%1$s&rdquo; full-name data deleted on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
 				Core\HTML::escape( $_fullname ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 
 	public static function post_set_from_fullname( $post, $fullname, $first_name, $middle_name, $last_name, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		if ( ! $_fullname = get_post_meta( $post->ID, $fullname['metakey'], TRUE ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
-		// bail if cannot parese the data
+		// bail if cannot parse the data
 		if ( ! $parsed = ModuleHelper::parseFullname( $_fullname ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: fullname string */
-				_x( 'Can not parse fullname data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'Can not parse full-name data available (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
-		// bail if no first name
+		// bail if no first name exists
 		if ( $first_name && WordPress\Strings::isEmpty( $parsed['first_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: first_name string */
-				_x( 'Can not parse first-name data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'First-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
-		// bail if no last name
+		// bail if no last name exists
 		if ( $last_name && WordPress\Strings::isEmpty( $parsed['last_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: last_name string */
-				_x( 'Can not parse last-name data available for %s', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'Last-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
 		// bail if cannot store first name meta
 		if ( ! update_post_meta( $post->ID, $first_name['metakey'], $parsed['first_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: fullname string */
-				_x( 'There is problem updating first-name for &ldquo;%s&rdquo;', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'There is problem updating first-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
 		// bail if cannot store last name meta
 		if ( ! update_post_meta( $post->ID, $last_name['metakey'], $parsed['last_name'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
-				/* translators: %s: fullname string */
-				_x( 'There is problem updating last-name for &ldquo;%s&rdquo;', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ) ) : TRUE ) && FALSE;
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'There is problem updating last-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
 		// override middle name only if not exists
 		if ( $middle_name && ! WordPress\Strings::isEmpty( $parsed['middle_name'] )
 			&& ! get_post_meta( $post->ID, $middle_name['metakey'], TRUE ) )
 				update_post_meta( $post->ID, $middle_name['metakey'], $parsed['middle_name'] );
 
-		// bail if problem removing the original fullname meta
+		// bail if problem removing the original full-name meta
 		if ( ! delete_post_meta( $post->ID, $fullname['metakey'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: fullname string, %2$s: post title */
-				_x( 'There is problem removing full-name data (%1$s) for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-personage' ) ),
-				Core\HTML::code( $_fullname ), WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+				_x( 'There is problem removing full-name data (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li', sprintf(
-				/* translators: %1$s: parsed fullname, %2$s: fullname string, %3$s: post title */
-				_x( '&ldquo;%1$s&rdquo; names are set by %2$s on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-personage' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: parsed fullname, %2$s: full-name string, %3$s: post title */
+			_x( '&ldquo;%1$s&rdquo; names are set by %2$s on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-personage' ), [
 				Core\HTML::escape( $parsed['fullname'] ),
 				Core\HTML::code( $_fullname ),
 				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+			], TRUE );
 	}
 
 	public static function handleTool_parse_pool()

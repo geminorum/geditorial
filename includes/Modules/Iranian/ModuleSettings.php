@@ -79,56 +79,54 @@ class ModuleSettings extends gEditorial\Settings
 	public static function post_compare_identity_certificate( $post, $identity_metakey, $certificate_field, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		if ( ! $certificate = get_post_meta( $post->ID, $certificate_field['metakey'], TRUE ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		$cleaned = Core\Text::stripNonNumeric( Core\Text::trim( $certificate ) );
 
 		if ( WordPress\Strings::isEmpty( $cleaned ) ) {
 
 			if ( ! delete_post_meta( $post->ID, $certificate_field['metakey'] ) )
-				return ( $verbose ? printf( Core\HTML::tag( 'li',
+				return self::processingListItem( $verbose,
 					/* translators: %s: post title */
-					_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
-					WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+					_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
+						WordPress\Post::title( $post ),
+					] );
 
-			if ( $verbose )
-				echo Core\HTML::tag( 'li',
-					/* translators: %1$s: birth certificate number, %2$s: post title */
-					sprintf( _x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-iranian' ),
+			return self::processingListItem( $verbose,
+				/* translators: %1$s: birth certificate number, %2$s: post title */
+				_x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 					Core\HTML::code( $certificate ),
-					WordPress\Post::title( $post )
-				) );
-
-			return TRUE;
+					WordPress\Post::title( $post ),
+				], TRUE );
 		}
 
 		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		if ( $identity !== Core\Validation::sanitizeIdentityNumber( $cleaned ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: identity code, %2$s: birth certificate number */
-				_x( 'Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $identity ), Core\HTML::code( $certificate ) ) : TRUE ) && FALSE;
+				_x( 'Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent!', 'Notice', 'geditorial-iranian' ), [
+					Core\HTML::code( $identity ),
+					Core\HTML::code( $certificate ),
+				] );
 
 		if ( ! delete_post_meta( $post->ID, $certificate_field['metakey'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %s: post title */
-				_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
-				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+				_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
+					WordPress\Post::title( $post ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li',
-				/* translators: %1$s: birth certificate number, %2$s: post title */
-				sprintf( _x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-iranian' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: birth certificate number, %2$s: post title */
+			_x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 				Core\HTML::code( $certificate ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 
 	public static function renderCard_location_by_identity( $posttypes )
@@ -193,51 +191,53 @@ class ModuleSettings extends gEditorial\Settings
 	public static function post_set_location_from_identity( $post, $data, $identity_metakey, $location_metakey, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		// TODO: add setting for override
 		if ( $location = get_post_meta( $post->ID, $location_metakey, TRUE ) )
 			return FALSE;
 
 		if ( ! $identity = get_post_meta( $post->ID, $identity_metakey, TRUE ) )
-			return FALSE;
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		$sanitized = Core\Number::zeroise( Core\Number::translate( trim( $identity ) ), 10 );
 
 		if ( ! $location = ModuleHelper::getLocationFromIdentity( $sanitized, $data ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %s: identity code */
-				_x( 'No location data available for %s', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $sanitized ) ) : TRUE ) && FALSE;
+				_x( 'No location data available for &ldquo;%s&rdquo;!', 'Notice', 'geditorial-iranian' ), [
+					Core\HTML::code( $sanitized ),
+				] );
 
 		if ( ! isset( $location['city'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %s: identity code */
-				_x( 'No city data available for %s', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $sanitized ) ) : TRUE ) && FALSE;
+				_x( 'No city data available for &ldquo;%s&rdquo;!', 'Notice', 'geditorial-iranian' ), [
+					Core\HTML::code( $sanitized ),
+				] );
 
 		if ( WordPress\Strings::isEmpty( $location['city'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %1$s: city data, %2$s: identity code */
-				_x( 'City data is empty for %1$s: %2$s', 'Notice', 'geditorial-iranian' ) ),
-				Core\HTML::code( $sanitized ), Core\HTML::code( $location['city'] ) ) : TRUE ) && FALSE;
+				_x( 'City data is empty for %1$s: %2$s!', 'Notice', 'geditorial-iranian' ), [
+					Core\HTML::code( $sanitized ),
+					Core\HTML::code( $location['city'] ),
+				] );
 
 		if ( ! update_post_meta( $post->ID, $location_metakey, $location['city'] ) )
-			return ( $verbose ? printf( Core\HTML::tag( 'li',
+			return self::processingListItem( $verbose,
 				/* translators: %s: post title */
-				_x( 'There is problem updating location for &ldquo;%s&rdquo;', 'Notice', 'geditorial-iranian' ) ),
-				WordPress\Post::title( $post ) ) : TRUE ) && FALSE;
+				_x( 'There is problem updating location for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
+					WordPress\Post::title( $post ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::tag( 'li', sprintf(
-				/* translators: %1$s: city data, %2$s: identity code, %3$s: post title */
-				_x( '&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-iranian' ),
+		return self::processingListItem( $verbose,
+			/* translators: %1$s: city data, %2$s: identity code, %3$s: post title */
+			_x( '&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 				Core\HTML::escape( $location['city'] ),
 				Core\HTML::code( $identity ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 
 	public static function renderCard_country_summary( $posttypes )

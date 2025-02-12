@@ -1093,21 +1093,20 @@ class WasBorn extends gEditorial\Module
 		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
 
 		if ( self::isError( $result ) )
-			return ( $verbose ? print( Core\HTML::row( sprintf(
+			return Settings::processingListItem( $verbose,
 				/* translators: %1$s: year taxonomy, %2$s: post title */
-				_x( 'There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-was-born' ) ),
-				Core\HTML::code( $year ), WordPress\Post::title( $post ) ) ) : TRUE ) && FALSE;
+				_x( 'There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-was-born' ), [
+					Core\HTML::code( $year ),
+					WordPress\Post::title( $post ),
+				] );
 
-		if ( $verbose )
-			echo Core\HTML::row( sprintf(
-				/* translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title */
-				_x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;', 'Notice', 'geditorial-was-born' ),
+		return Settings::processingListItem( $verbose,
+			/* translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title */
+			_x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-was-born' ), [
 				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ) ) ),
 				Core\HTML::code( $year ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 
 	protected function latechores_post_aftercare( $post )

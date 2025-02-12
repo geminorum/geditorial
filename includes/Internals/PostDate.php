@@ -76,29 +76,26 @@ trait PostDate
 			return TRUE;
 
 		if ( empty( $data ) || ! is_array( $data ) )
-			return ( $verbose ? print( Core\HTML::row( gEditorial\Plugin::wrong( FALSE ) ) ) : TRUE ) && FALSE;
+			return Settings::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		$updated = wp_update_post( array_merge( $data, [ 'ID' => $post->ID ] ) );
 
 		if ( ! $updated || self::isError( $updated ) )
-			return ( $verbose ? print( Core\HTML::row( sprintf(
+			return Settings::processingListItem( $verbose,
 				/* translators: %1$s: post date, %2$s: post title */
-				_x( 'There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-admin' ),
-				Core\HTML::code( $data['post_date'] ),
-				WordPress\Post::title( $post )
-			) ) ) : TRUE ) && FALSE;
+				_x( 'There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
+					Core\HTML::code( $data['post_date'] ),
+					WordPress\Post::title( $post ),
+				] );
 
 		$this->actions( 'postdate_after_post_override_date', $updated, $data['post_date'], $metakeys, $verbose );
 
-		if ( $verbose )
-			echo Core\HTML::row( sprintf(
-				/* translators: %1$s: post date, %2$s: post title */
-				_x( '&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-admin' ),
+		return Settings::processingListItem( $verbose,
+			/* translators: %1$s: post date, %2$s: post title */
+			_x( '&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 				Core\HTML::code( Datetime::prepForDisplay( $data['post_date'] ) ),
-				WordPress\Post::title( $post )
-			) );
-
-		return TRUE;
+				WordPress\Post::title( $post ),
+			], TRUE );
 	}
 
 	public function postdate__render_card_override_dates( $uri = '', $sub = NULL, $supported_list = NULL, $card_title = NULL )
@@ -106,7 +103,8 @@ trait PostDate
 		echo Settings::toolboxCardOpen( $card_title ?? _x( 'Post-date by Meta-fields', 'Internal: PostDate: Card Title', 'geditorial-admin' ) );
 
 			if ( is_null( $supported_list ) )
-				Settings::submitButton( self::$postdate__action_override_dates, _x( 'Sync Dates', 'Internal: PostDate: Button', 'geditorial-admin' ), 'small' );
+				Settings::submitButton( self::$postdate__action_override_dates,
+					_x( 'Sync Dates', 'Internal: PostDate: Button', 'geditorial-admin' ), 'small' );
 
 			else if ( is_array( $supported_list ) && Core\Arraay::isAssoc( $supported_list ) )
 				foreach ( $supported_list as $posttype => $label )
@@ -115,7 +113,7 @@ trait PostDate
 						'action' => self::$postdate__action_override_dates,
 						'type'   => $posttype,
 					] ), sprintf(
-						/* translators: %s: posttype label */
+						/* translators: %s: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						$label
 					), 'link-small' );
@@ -127,7 +125,7 @@ trait PostDate
 						'action' => self::$postdate__action_override_dates,
 						'type'   => $posttype,
 					] ), sprintf(
-						/* translators: %s: posttype label */
+						/* translators: %s: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						Helper::getPostTypeLabel( $posttype, 'name' )
 					), 'link-small' );
@@ -143,11 +141,11 @@ trait PostDate
 		echo '</div></div>';
 	}
 
-	// CAUTION: used in multiple logics
+	// CAUTION: used in multiple callbacks
 	public function postdate__get_post_data_for_latechores( $post, $metakeys, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return ( $verbose ? print( Core\HTML::row( gEditorial\Plugin::wrong( FALSE ) ) ) : TRUE ) && FALSE;
+			return Settings::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		$date = FALSE;
 
@@ -156,7 +154,7 @@ trait PostDate
 				break;
 
 		if ( ! $date )
-			return ( $verbose ? print( Core\HTML::row( gEditorial\Plugin::na() ) ) : TRUE ) && FALSE;
+			return Settings::processingListItem( $verbose, gEditorial\Plugin::na() );
 
 		if ( Core\Date::isInFormat( $date, 'Y-m-d' ) )
 			$datetime = sprintf( '%s 23:59:59', $date );
@@ -165,23 +163,23 @@ trait PostDate
 			$datetime = $date;
 
 		else if ( $verbose )
-			return ( $verbose ? print( Core\HTML::row( sprintf(
+			return Settings::processingListItem( $verbose,
 				/* translators: %1$s: date-time, %2$s: post title */
-				_x( 'Date data (%1$s) is not valid for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-admin' ),
-				Core\HTML::code( $date ),
-				WordPress\Post::title( $post )
-			) ) ) : TRUE ) && FALSE;
+				_x( 'Date data (%1$s) is not valid for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-admin' ), [
+					Core\HTML::code( $date ),
+					WordPress\Post::title( $post ),
+				] );
 
 		else
 			return $this->log( 'FAILED', sprintf( 'after-care process of #%s: date is not valid: %s', $post->ID, $date ), [ $post->ID, $date ] );
 
 		if ( $datetime === $post->post_date )
-			return ( $verbose ? print( Core\HTML::row( sprintf(
+			return Settings::processingListItem( $verbose,
 				/* translators: %1$s: date-time, %2$s: post title */
-				_x( 'Date data (%1$s) already is set for &ldquo;%2$s&rdquo;', 'Notice', 'geditorial-admin' ),
-				Core\HTML::code( $datetime ),
-				WordPress\Post::title( $post )
-			) ) ) : TRUE ) && TRUE;
+				_x( 'Date data (%1$s) already is set for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
+					Core\HTML::code( $datetime ),
+					WordPress\Post::title( $post ),
+				] );
 
 		return [
 			'post_date'     => $datetime,
