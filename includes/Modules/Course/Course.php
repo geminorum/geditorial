@@ -206,42 +206,44 @@ class Course extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'course_posttype' ) => [
-				'sub_title' => [
-					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-course' ),
-					'description' => _x( 'Subtitle of the Course', 'Field Description', 'geditorial-course' ),
-					'type'        => 'title_after',
+		return [
+			'meta' => [
+				$this->constant( 'course_posttype' ) => [
+					'sub_title' => [
+						'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-course' ),
+						'description' => _x( 'Subtitle of the Course', 'Field Description', 'geditorial-course' ),
+						'type'        => 'title_after',
+					],
+					'lead'              => [ 'type' => 'postbox_html' ],
+					'content_fee'       => [ 'type' => 'price' ],
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
 				],
-				'lead'              => [ 'type' => 'postbox_html' ],
-				'content_fee'       => [ 'type' => 'price' ],
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
-			],
-			$this->constant( 'lesson_posttype' ) => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [
-					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-course' ),
-					'description' => _x( 'Subtitle of the Lesson', 'Field Description', 'geditorial-course' ),
-					'type'        => 'title_after',
-				],
-				'lead'         => [ 'type' => 'postbox_html' ],
-				'byline'       => [ 'type' => 'text', 'quickedit' => TRUE ],
-				'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
-				'source_title' => [ 'type' => 'text' ],
-				'source_url'   => [ 'type' => 'link' ],
-				'highlight'    => [ 'type' => 'note' ],
+				$this->constant( 'lesson_posttype' ) => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [
+						'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-course' ),
+						'description' => _x( 'Subtitle of the Lesson', 'Field Description', 'geditorial-course' ),
+						'type'        => 'title_after',
+					],
+					'lead'         => [ 'type' => 'postbox_html' ],
+					'byline'       => [ 'type' => 'text', 'quickedit' => TRUE ],
+					'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
+					'source_title' => [ 'type' => 'text' ],
+					'source_url'   => [ 'type' => 'link' ],
+					'highlight'    => [ 'type' => 'note' ],
 
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
+				],
 			],
-		] ];
+		];
 	}
 
 	protected function paired_get_paired_constants()

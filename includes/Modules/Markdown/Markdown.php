@@ -237,7 +237,7 @@ class Markdown extends gEditorial\Module
 		}, $content );
 	}
 
-	// TODO: namespase with `:` for taxonomies
+	// TODO: name-space with `:` for taxonomies
 	public function make_link( $text, $post, $content )
 	{
 		$slug = $text;

@@ -179,64 +179,66 @@ class Magazine extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'issue_posttype' ) => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
-				'lead'       => [ 'type' => 'postbox_html' ],
+		return [
+			'meta' => [
+				$this->constant( 'issue_posttype' ) => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
-				'number_line' => [
-					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-magazine' ),
-					'description' => _x( 'The issue number line', 'Field Description', 'geditorial-magazine' ),
-					'icon'        => 'menu',
+					'number_line' => [
+						'title'       => _x( 'Number Line', 'Field Title', 'geditorial-magazine' ),
+						'description' => _x( 'The issue number line', 'Field Description', 'geditorial-magazine' ),
+						'icon'        => 'menu',
+					],
+					'total_pages' => [
+						'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
+						'description' => _x( 'The issue total pages', 'Field Description', 'geditorial-magazine' ),
+						'icon'        => 'admin-page',
+					],
+
+					'highlight'    => [ 'type' => 'note' ],
+					'source_title' => [ 'type' => 'text' ],
+					'source_url'   => [ 'type' => 'link' ],
+					'action_title' => [ 'type' => 'text' ],
+					'action_url'   => [ 'type' => 'link' ],
+					'cover_blurb'  => [ 'type' => 'note' ],
+					'cover_price'  => [ 'type' => 'price' ],
+					'content_fee'  => [ 'type' => 'price' ],
+
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
 				],
-				'total_pages' => [
-					'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
-					'description' => _x( 'The issue total pages', 'Field Description', 'geditorial-magazine' ),
-					'icon'        => 'admin-page',
+				'_supported' => [
+					'in_issue_order' => [
+						'title'       => _x( 'Order', 'Field Title', 'geditorial-magazine' ),
+						'description' => _x( 'Post order in issue list', 'Field Description', 'geditorial-magazine' ),
+						'type'        => 'number',
+						'context'     => 'pairedbox_issue',
+						'icon'        => 'sort',
+						'order'       => 400,
+					],
+					'in_issue_page_start' => [
+						'title'       => _x( 'Page Start', 'Field Title', 'geditorial-magazine' ),
+						'description' => _x( 'Post start page on issue (printed)', 'Field Description', 'geditorial-magazine' ),
+						'type'        => 'number',
+						'context'     => 'pairedbox_issue',
+						'icon'        => 'media-default',
+						'order'       => 410,
+					],
+					'in_issue_pages' => [
+						'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
+						'description' => _x( 'Post total pages on issue (printed)', 'Field Description', 'geditorial-magazine' ),
+						'context'     => 'pairedbox_issue',
+						'icon'        => 'admin-page',
+						'order'       => 420,
+					],
 				],
-
-				'highlight'    => [ 'type' => 'note' ],
-				'source_title' => [ 'type' => 'text' ],
-				'source_url'   => [ 'type' => 'link' ],
-				'action_title' => [ 'type' => 'text' ],
-				'action_url'   => [ 'type' => 'link' ],
-				'cover_blurb'  => [ 'type' => 'note' ],
-				'cover_price'  => [ 'type' => 'price' ],
-				'content_fee'  => [ 'type' => 'price' ],
-
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
 			],
-			'_supported' => [
-				'in_issue_order' => [
-					'title'       => _x( 'Order', 'Field Title', 'geditorial-magazine' ),
-					'description' => _x( 'Post order in issue list', 'Field Description', 'geditorial-magazine' ),
-					'type'        => 'number',
-					'context'     => 'pairedbox_issue',
-					'icon'        => 'sort',
-					'order'       => 400,
-				],
-				'in_issue_page_start' => [
-					'title'       => _x( 'Page Start', 'Field Title', 'geditorial-magazine' ),
-					'description' => _x( 'Post start page on issue (printed)', 'Field Description', 'geditorial-magazine' ),
-					'type'        => 'number',
-					'context'     => 'pairedbox_issue',
-					'icon'        => 'media-default',
-					'order'       => 410,
-				],
-				'in_issue_pages' => [
-					'title'       => _x( 'Total Pages', 'Field Title', 'geditorial-magazine' ),
-					'description' => _x( 'Post total pages on issue (printed)', 'Field Description', 'geditorial-magazine' ),
-					'context'     => 'pairedbox_issue',
-					'icon'        => 'admin-page',
-					'order'       => 420,
-				],
-			],
-		] ];
+		];
 	}
 
 	protected function paired_get_paired_constants()

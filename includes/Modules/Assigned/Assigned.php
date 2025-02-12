@@ -113,26 +113,28 @@ class Assigned extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [ 'meta' => [
-			'_supported' => [
-				'assigned_to_userid' => [
-					'title'       => _x( 'Assigned To', 'Field Title', 'geditorial-assigned' ),
-					'description' => _x( 'Determines the user responsible for this assignment.', 'Field Description', 'geditorial-assigned' ),
-					'type'        => 'user',
-				],
-				'assigned_to_postid' => [
-					'title'       => _x( 'Assigned To', 'Field Title', 'geditorial-assigned' ),
-					'description' => _x( 'Determines the individual responsible for this assignment.', 'Field Description', 'geditorial-assigned' ),
-					'type'        => 'post',
-					'posttype'    => $this->get_setting_posttypes( 'parent' ),
-				],
-				'assigned_due_date' => [
-					'title'       => _x( 'Due Date', 'Field Title', 'geditorial-assigned' ),
-					'description' => _x( 'Determines the planned date that this assignment is required to be completed.', 'Field Description', 'geditorial-assigned' ),
-					'type'        => 'datetime',
+		return [
+			'meta' => [
+				'_supported' => [
+					'assigned_to_userid' => [
+						'title'       => _x( 'Assigned To', 'Field Title', 'geditorial-assigned' ),
+						'description' => _x( 'Determines the user responsible for this assignment.', 'Field Description', 'geditorial-assigned' ),
+						'type'        => 'user',
+					],
+					'assigned_to_postid' => [
+						'title'       => _x( 'Assigned To', 'Field Title', 'geditorial-assigned' ),
+						'description' => _x( 'Determines the individual responsible for this assignment.', 'Field Description', 'geditorial-assigned' ),
+						'type'        => 'post',
+						'posttype'    => $this->get_setting_posttypes( 'parent' ),
+					],
+					'assigned_due_date' => [
+						'title'       => _x( 'Due Date', 'Field Title', 'geditorial-assigned' ),
+						'description' => _x( 'Determines the planned date that this assignment is required to be completed.', 'Field Description', 'geditorial-assigned' ),
+						'type'        => 'datetime',
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	public function meta_init()

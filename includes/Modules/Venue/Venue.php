@@ -165,60 +165,62 @@ class Venue extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'place_posttype' ) => [
-				'parent_complex' => [
-					'title'       => _x( 'Parent Complex', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'Parent complex title of the location', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'title_before',
-				],
-				'full_title' => [
-					'title'       => _x( 'Full Title', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'Full title of the location', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'title_after',
-				],
-				'postal_code' => [
-					'title'       => _x( 'Postal Code', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'Postal code of the location.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'postcode',
-				],
-				'street_address' => [
-					'title'       => _x( 'Street Address', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'Full street address, including city, state etc.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'address',
-					'quickedit'   => TRUE,
-					'bulkedit'    => FALSE,
-				],
-				'phone_number' => [
-					'title'       => _x( 'Phone Number', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'Full contact number for the location.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'phone',
-				],
-				'website_url' => [
-					'title'       => _x( 'Website URL', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'Official website URL of the location.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'link',
-				],
-				'map_embed_url' => [
-					'title'       => _x( 'Map Embed URL', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'Embeddable map URL of the location.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'embed',
-				],
-				// FIXME: see `Geo` Module
-				'geo_latitude' => [
-					'title'       => _x( 'Latitude', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'The latitude (in decimal notation) for this location.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'code',
-					'icon'        => 'location',
-				],
-				'geo_longitude' => [
-					'title'       => _x( 'Longitude', 'Field Title', 'geditorial-venue' ),
-					'description' => _x( 'The longitude (in decimal notation) for this location.', 'Field Description', 'geditorial-venue' ),
-					'type'        => 'code',
-					'icon'        => 'location',
+		return [
+			'meta' => [
+				$this->constant( 'place_posttype' ) => [
+					'parent_complex' => [
+						'title'       => _x( 'Parent Complex', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'Parent complex title of the location', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'title_before',
+					],
+					'full_title' => [
+						'title'       => _x( 'Full Title', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'Full title of the location', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'title_after',
+					],
+					'postal_code' => [
+						'title'       => _x( 'Postal Code', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'Postal code of the location.', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'postcode',
+					],
+					'street_address' => [
+						'title'       => _x( 'Street Address', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'Full street address, including city, state etc.', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'address',
+						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
+					],
+					'phone_number' => [
+						'title'       => _x( 'Phone Number', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'Full contact number for the location.', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'phone',
+					],
+					'website_url' => [
+						'title'       => _x( 'Website URL', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'Official website URL of the location.', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'link',
+					],
+					'map_embed_url' => [
+						'title'       => _x( 'Map Embed URL', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'Embeddable map URL of the location.', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'embed',
+					],
+					// FIXME: see `Geo` Module
+					'geo_latitude' => [
+						'title'       => _x( 'Latitude', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'The latitude (in decimal notation) for this location.', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'code',
+						'icon'        => 'location',
+					],
+					'geo_longitude' => [
+						'title'       => _x( 'Longitude', 'Field Title', 'geditorial-venue' ),
+						'description' => _x( 'The longitude (in decimal notation) for this location.', 'Field Description', 'geditorial-venue' ),
+						'type'        => 'code',
+						'icon'        => 'location',
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	public function after_setup_theme()

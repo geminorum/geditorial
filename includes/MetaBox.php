@@ -1672,7 +1672,7 @@ class MetaBox extends WordPress\Main
 	}
 
 	// OLD: `check_draft_metabox()`
-	protected function checkDraftMetaBox( $box, $post, $message = NULL )
+	public static function checkDraftMetaBox( $box, $post, $message = NULL )
 	{
 		if ( ! in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
 			return FALSE;

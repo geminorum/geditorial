@@ -230,66 +230,68 @@ class Meta extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			'_supported' => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
-				'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
-				'lead'       => [ 'type' => 'postbox_html' ], // OLD: 'postbox_legacy'
+		return [
+			'meta' => [
+				'_supported' => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
+					'lead'       => [ 'type' => 'postbox_html' ],                // OLD: 'postbox_legacy'
 
-				'print_title'   => [ 'type' => 'text' ],
-				'print_date'    => [ 'type' => 'date' ],
-				'published'     => [ 'type' => 'datestring', 'quickedit' => TRUE ],
-				'status_string' => [ 'type' => 'text', 'quickedit' => TRUE ],
-				'source_title'  => [ 'type' => 'text' ],
-				'source_url'    => [ 'type' => 'link' ],
-				'action_title'  => [ 'type' => 'text' ],
-				'action_url'    => [ 'type' => 'link' ],
-				'highlight'     => [ 'type' => 'note' ],
-				'dashboard'     => [ 'type' => 'postbox_html' ],                      // or 'postbox_tiny'
-				'abstract'      => [ 'type' => 'postbox_html' ],                      // or 'postbox_tiny'
-				'foreword'      => [ 'type' => 'postbox_html' ],                      // or 'postbox_tiny'
-				'cover_blurb'   => [ 'type' => 'note' ],
-				'cover_price'   => [ 'type' => 'price' ],
-				'content_fee'   => [ 'type' => 'price' ],
+					'print_title'   => [ 'type' => 'text' ],
+					'print_date'    => [ 'type' => 'date' ],
+					'published'     => [ 'type' => 'datestring', 'quickedit' => TRUE ],
+					'status_string' => [ 'type' => 'text', 'quickedit' => TRUE ],
+					'source_title'  => [ 'type' => 'text' ],
+					'source_url'    => [ 'type' => 'link' ],
+					'action_title'  => [ 'type' => 'text' ],
+					'action_url'    => [ 'type' => 'link' ],
+					'highlight'     => [ 'type' => 'note' ],
+					'dashboard'     => [ 'type' => 'postbox_html' ],                      // or 'postbox_tiny'
+					'abstract'      => [ 'type' => 'postbox_html' ],                      // or 'postbox_tiny'
+					'foreword'      => [ 'type' => 'postbox_html' ],                      // or 'postbox_tiny'
+					'cover_blurb'   => [ 'type' => 'note' ],
+					'cover_price'   => [ 'type' => 'price' ],
+					'content_fee'   => [ 'type' => 'price' ],
 
-				'venue_string'   => [ 'type' => 'venue' ],
-				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
-				'website_url'    => [ 'type' => 'link' ],
-				'wiki_url'       => [ 'type' => 'link' ],
-				'email_address'  => [ 'type' => 'email' ],
+					'venue_string'   => [ 'type' => 'venue' ],
+					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'website_url'    => [ 'type' => 'link' ],
+					'wiki_url'       => [ 'type' => 'link' ],
+					'email_address'  => [ 'type' => 'email' ],
 
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
-				'main_download_url' => [ 'type' => 'downloadable' ],
-				'main_download_id'  => [ 'type' => 'attachment' ],
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
+					'main_download_url' => [ 'type' => 'downloadable' ],
+					'main_download_id'  => [ 'type' => 'attachment' ],
 
-				'date'      => [ 'type' => 'date' ],
-				'datetime'  => [ 'type' => 'datetime' ],
-				'datestart' => [ 'type' => 'datetime' ],
-				'dateend'   => [ 'type' => 'datetime' ],
-				'time'      => [ 'type' => 'time' ],
-				'timestart' => [ 'type' => 'time' ],
-				'timeend'   => [ 'type' => 'time' ],
-				'distance'  => [ 'type' => 'distance' ],
-				'duration'  => [ 'type' => 'duration' ],
-				'area'      => [ 'type' => 'area' ],
-				'period'    => [ 'type' => 'text' ],
-				'amount'    => [ 'type' => 'number' ],
+					'date'      => [ 'type' => 'date' ],
+					'datetime'  => [ 'type' => 'datetime' ],
+					'datestart' => [ 'type' => 'datetime' ],
+					'dateend'   => [ 'type' => 'datetime' ],
+					'time'      => [ 'type' => 'time' ],
+					'timestart' => [ 'type' => 'time' ],
+					'timeend'   => [ 'type' => 'time' ],
+					'distance'  => [ 'type' => 'distance' ],
+					'duration'  => [ 'type' => 'duration' ],
+					'area'      => [ 'type' => 'area' ],
+					'period'    => [ 'type' => 'text' ],
+					'amount'    => [ 'type' => 'number' ],
 
-				'notes'       => [ 'type' => 'note' ],
-				'itineraries' => [ 'type' => 'note' ],
+					'notes'       => [ 'type' => 'note' ],
+					'itineraries' => [ 'type' => 'note' ],
+				],
+				'page' => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+
+					'content_embed_url' => [ 'type' => 'embed' ],
+				],
 			],
-			'page' => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
-
-				'content_embed_url' => [ 'type' => 'embed' ],
-			],
-		] ];
+		];
 	}
 
 	private function get_posttypes_support_meta()
@@ -943,8 +945,8 @@ class Meta extends gEditorial\Module
 	// TODO: imports: bulk migrate data to another field with filters for processing
 	// TODO: tools: bulk check fields for empty strings and remove
 	// - @SEE: `WordPress\Strings::isEmpty()`
-	// - Special version for email/phone/postalcodes
-	// - or just rename metakey directly on database!
+	// - Special version for email/phone/postal-codes
+	// - or just rename meta-key directly on database!
 	protected function render_imports_html( $uri, $sub )
 	{
 		$na   = TRUE;

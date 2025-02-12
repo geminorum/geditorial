@@ -102,17 +102,19 @@ class Iranian extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			'_supported' => [
-				'birth_certificate_number' => [
-					'title'       => _x( 'Birth Certificate', 'Field Title', 'geditorial-iranian' ),
-					'description' => _x( 'Iranian Birth Certificate Number', 'Field Description', 'geditorial-iranian' ),
-					'type'        => 'code',
-					'order'       => 100,
-					'sanitize'    => [ $this, 'sanitize_birth_certificate_number' ],
+		return [
+			'meta' => [
+				'_supported' => [
+					'birth_certificate_number' => [
+						'title'       => _x( 'Birth Certificate', 'Field Title', 'geditorial-iranian' ),
+						'description' => _x( 'Iranian Birth Certificate Number', 'Field Description', 'geditorial-iranian' ),
+						'type'        => 'code',
+						'order'       => 100,
+						'sanitize'    => [ $this, 'sanitize_birth_certificate_number' ],
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	public function init()

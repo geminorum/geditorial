@@ -115,20 +115,22 @@ class Labeled extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			'_supported' => [
-				'label_string' => [
-					'title'       => _x( 'Label', 'Field Title', 'geditorial-labeled' ),
-					'description' => _x( 'Text to indicate that the content is part of an editorial column.', 'Field Description', 'geditorial-labeled' ),
-				],
-				'label_taxonomy' => [
-					'title'       => _x( 'Label Taxonomy', 'Field Title', 'geditorial-labeled' ),
-					'description' => _x( 'Taxonomy for better categorizing editorial columns.', 'Field Description', 'geditorial-labeled' ),
-					'taxonomy'    => $this->constant( 'main_taxonomy' ),
-					'type'        => 'term',
+		return [
+			'meta' => [
+				'_supported' => [
+					'label_string' => [
+						'title'       => _x( 'Label', 'Field Title', 'geditorial-labeled' ),
+						'description' => _x( 'Text to indicate that the content is part of an editorial column.', 'Field Description', 'geditorial-labeled' ),
+					],
+					'label_taxonomy' => [
+						'title'       => _x( 'Label Taxonomy', 'Field Title', 'geditorial-labeled' ),
+						'description' => _x( 'Taxonomy for better categorizing editorial columns.', 'Field Description', 'geditorial-labeled' ),
+						'taxonomy'    => $this->constant( 'main_taxonomy' ),
+						'type'        => 'term',
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	public function init()

@@ -285,18 +285,18 @@ class Book extends gEditorial\Module
 	{
 		return [
 			'type_taxonomy' => [
-				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ), // shomiz
-				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ), // gallingor
+				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ),   // shomiz
+				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ),   // gallingor
 				'ebook'     => _x( 'E-Book', 'Publication Type: Default Term', 'geditorial-book' ),
 				'disc'      => _x( 'Disc', 'Publication Type: Default Term', 'geditorial-book' ),
 			],
 			'size_taxonomy' => [
-				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // vaziri
-				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ), // soltani
-				'medium'      => _x( 'Medium Octavo', 'Publication Size: Default Term', 'geditorial-book' ), // roghee
-				'quatro'      => _x( 'Quatro', 'Publication Size: Default Term', 'geditorial-book' ), // rahli
-				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // paltoyee
-				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ), // jibi
+				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ),          // vaziri
+				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ),           // soltani
+				'medium'      => _x( 'Medium Octavo', 'Publication Size: Default Term', 'geditorial-book' ),   // roghee
+				'quatro'      => _x( 'Quatro', 'Publication Size: Default Term', 'geditorial-book' ),          // rahli
+				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ),       // paltoyee
+				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ),     // jibi
 			],
 			'status_taxonomy' => [
 				'not-available-in-print' => _x( 'Not Available in Print', 'Publication Status: Default Term', 'geditorial-book' ),
@@ -310,115 +310,117 @@ class Book extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'main_posttype' ) => [
-				'publication_tagline' => [
-					'title'       => _x( 'Cover Tagline', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Promotional Text on the Cover of this Publication', 'Field Description', 'geditorial-book' ),
-					'type'        => 'title_before',
+		return [
+			'meta' => [
+				$this->constant( 'main_posttype' ) => [
+					'publication_tagline' => [
+						'title'       => _x( 'Cover Tagline', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Promotional Text on the Cover of this Publication', 'Field Description', 'geditorial-book' ),
+						'type'        => 'title_before',
+					],
+					'sub_title' => [
+						'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Subtitle of the Publication', 'Field Description', 'geditorial-book' ),
+						'type'        => 'title_after',
+					],
+					'alt_title' => [
+						'title'       => _x( 'Alternative Title', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'The Original Title or Title in Another Language', 'Field Description', 'geditorial-book' ),
+					],
+					'collection' => [
+						'title'       => _x( 'Collection Title', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'This Publication Is Part of a Collection', 'Field Description', 'geditorial-book' ),
+					],
+					'publication_byline' => [
+						'title'       => _x( 'Publication By-Line', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Text to override the publication author', 'Field Description', 'geditorial-book' ),
+						'type'        => 'note',
+						'icon'        => 'businessperson',
+						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
+					],
+					'publication_edition' => [
+						'title'       => _x( 'Edition', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Edition of the Publication', 'Field Description', 'geditorial-book' ),
+					],
+					'publication_print' => [
+						'title'       => _x( 'Print', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Specefic Print of the Publication', 'Field Description', 'geditorial-book' ),
+						'icon'        => 'book',
+					],
+					'publish_location' => [
+						'title'       => _x( 'Publish Location', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Location Published', 'Field Description', 'geditorial-book' ),
+						'type'        => 'venue',
+					],
+					'publication_date' => [
+						'title'       => _x( 'Publication Date', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Date Published', 'Field Description', 'geditorial-book' ),
+						'type'        => 'datestring',
+						'icon'        => 'calendar-alt',
+					],
+					'publication_ddc' => [
+						// FIXME: move to `DeweyDecimal` Module
+						// @REF: https://en.wikipedia.org/wiki/Dewey_Decimal_Classification
+						'title'       => _x( 'DDC', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Dewey Decimal Classification', 'Field Description', 'geditorial-book' ),
+						'type'        => 'code',
+						'icon'        => 'shortcode',
+					],
+					'publication_lcc' => [
+						// @REF: https://en.wikipedia.org/wiki/Library_of_Congress_Classification
+						'title'       => _x( 'LCC', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Library of Congress Classification', 'Field Description', 'geditorial-book' ),
+						'type'        => 'code',
+						'icon'        => 'shortcode',
+					],
+					// TODO: convert to unit via `Units` Module
+					'total_pages' => [
+						'title'       => _x( 'Pages', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Total Pages of the Publication', 'Field Description', 'geditorial-book' ),
+						'type'        => 'number',
+						'icon'        => 'admin-page',
+					],
+					// TODO: convert to unit via `Units` Module
+					'total_volumes' => [
+						'title'       => _x( 'Volumes', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Total Volumes of the Publication', 'Field Description', 'geditorial-book' ),
+						'type'        => 'number',
+						'icon'        => 'book-alt',
+					],
+					// TODO: convert to unit via `Units` Module
+					'total_discs' => [
+						'title'       => _x( 'Discs', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Total Discs of the Publication', 'Field Description', 'geditorial-book' ),
+						'type'        => 'number',
+						'icon'        => 'album',
+					],
+					// TODO: convert to unit via `Units` Module
+					'publication_size' => [
+						'title'       => _x( 'Size', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'The Size of the Publication, Mainly Books', 'Field Description', 'geditorial-book' ),
+						'type'        => 'term',
+						'taxonomy'    => $this->constant( 'size_taxonomy' ),
+					],
+					'publication_reference' => [
+						'title'       => _x( 'Reference', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'Full reference to this publication', 'Field Description', 'geditorial-book' ),
+						'type'        => 'note',
+						'icon'        => 'editor-break',
+						'quickedit'   => TRUE,
+						'bulkedit'    => FALSE,
+					],
+					'highlight'    => [ 'type' => 'note' ],
+					'source_title' => [ 'type' => 'text' ],
+					'source_url'   => [ 'type' => 'link' ],
+					'action_title' => [ 'type' => 'text' ],
+					'action_url'   => [ 'type' => 'link' ],
+					'cover_blurb'  => [ 'type' => 'note' ],
+					'cover_price'  => [ 'type' => 'price' ],
+					'content_fee'  => [ 'type' => 'price' ],
 				],
-				'sub_title' => [
-					'title'       => _x( 'Subtitle', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Subtitle of the Publication', 'Field Description', 'geditorial-book' ),
-					'type'        => 'title_after',
-				],
-				'alt_title' => [
-					'title'       => _x( 'Alternative Title', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'The Original Title or Title in Another Language', 'Field Description', 'geditorial-book' ),
-				],
-				'collection' => [
-					'title'       => _x( 'Collection Title', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'This Publication Is Part of a Collection', 'Field Description', 'geditorial-book' ),
-				],
-				'publication_byline' => [
-					'title'       => _x( 'Publication By-Line', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Text to override the publication author', 'Field Description', 'geditorial-book' ),
-					'type'        => 'note',
-					'icon'        => 'businessperson',
-					'quickedit'   => TRUE,
-					'bulkedit'    => FALSE,
-				],
-				'publication_edition' => [
-					'title'       => _x( 'Edition', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Edition of the Publication', 'Field Description', 'geditorial-book' ),
-				],
-				'publication_print' => [
-					'title'       => _x( 'Print', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Specefic Print of the Publication', 'Field Description', 'geditorial-book' ),
-					'icon'        => 'book',
-				],
-				'publish_location' => [
-					'title'       => _x( 'Publish Location', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Location Published', 'Field Description', 'geditorial-book' ),
-					'type'        => 'venue',
-				],
-				'publication_date' => [
-					'title'       => _x( 'Publication Date', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Date Published', 'Field Description', 'geditorial-book' ),
-					'type'        => 'datestring',
-					'icon'        => 'calendar-alt',
-				],
-				'publication_ddc' => [
-					// FIXME: move to `DeweyDecimal` Module
-					// @REF: https://en.wikipedia.org/wiki/Dewey_Decimal_Classification
-					'title'       => _x( 'DDC', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Dewey Decimal Classification', 'Field Description', 'geditorial-book' ),
-					'type'        => 'code',
-					'icon'        => 'shortcode',
-				],
-				'publication_lcc' => [
-					// @REF: https://en.wikipedia.org/wiki/Library_of_Congress_Classification
-					'title'       => _x( 'LCC', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Library of Congress Classification', 'Field Description', 'geditorial-book' ),
-					'type'        => 'code',
-					'icon'        => 'shortcode',
-				],
-				// TODO: convert to unit via `Units` Module
-				'total_pages' => [
-					'title'       => _x( 'Pages', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Total Pages of the Publication', 'Field Description', 'geditorial-book' ),
-					'type'        => 'number',
-					'icon'        => 'admin-page',
-				],
-				// TODO: convert to unit via `Units` Module
-				'total_volumes' => [
-					'title'       => _x( 'Volumes', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Total Volumes of the Publication', 'Field Description', 'geditorial-book' ),
-					'type'        => 'number',
-					'icon'        => 'book-alt',
-				],
-				// TODO: convert to unit via `Units` Module
-				'total_discs' => [
-					'title'       => _x( 'Discs', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Total Discs of the Publication', 'Field Description', 'geditorial-book' ),
-					'type'        => 'number',
-					'icon'        => 'album',
-				],
-				// TODO: convert to unit via `Units` Module
-				'publication_size' => [
-					'title'       => _x( 'Size', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'The Size of the Publication, Mainly Books', 'Field Description', 'geditorial-book' ),
-					'type'        => 'term',
-					'taxonomy'    => $this->constant( 'size_taxonomy' ),
-				],
-				'publication_reference' => [
-					'title'       => _x( 'Reference', 'Field Title', 'geditorial-book' ),
-					'description' => _x( 'Full reference to this publication', 'Field Description', 'geditorial-book' ),
-					'type'        => 'note',
-					'icon'        => 'editor-break',
-					'quickedit'   => TRUE,
-					'bulkedit'    => FALSE,
-				],
-				'highlight'    => [ 'type' => 'note' ],
-				'source_title' => [ 'type' => 'text' ],
-				'source_url'   => [ 'type' => 'link' ],
-				'action_title' => [ 'type' => 'text' ],
-				'action_url'   => [ 'type' => 'link' ],
-				'cover_blurb'  => [ 'type' => 'note' ],
-				'cover_price'  => [ 'type' => 'price' ],
-				'content_fee'  => [ 'type' => 'price' ],
 			],
-		] ];
+		];
 	}
 
 	protected function paired_get_paired_constants()

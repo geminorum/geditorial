@@ -113,19 +113,19 @@ class Agenda extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Itineraries', 'MetaBox Title', 'geditorial-agenda' ),
 			// 'metabox_action' => _x( 'Itineraries', 'MetaBox Action', 'geditorial-agenda' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'mainbutton_title' => _x( 'Itineraries of %1$s', 'Button Title', 'geditorial-agenda' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Itineraries of %2$s', 'Button Text', 'geditorial-agenda' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'rowaction_title' => _x( 'Itineraries of %1$s', 'Action Title', 'geditorial-agenda' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'rowaction_text'  => _x( 'Itineraries', 'Action Text', 'geditorial-agenda' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'columnrow_title' => _x( 'Itineraries of %1$s', 'Row Title', 'geditorial-agenda' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'columnrow_text'  => _x( 'Itineraries', 'Row Text', 'geditorial-agenda' ),
 		];
 

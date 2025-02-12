@@ -71,52 +71,54 @@ class Team extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'member_posttype' ) => [
-				'team_role' => [
-					'title'       => _x( 'Role', 'Field Title', 'geditorial-team' ),
-					'description' => _x( 'Enter a byline for the team member (for example: "Director of Production").', 'Field Description', 'geditorial-team' ),
-					'type'        => 'title_after',
-					'icon'        => 'businessman',
-				],
-				'email_gravatar' => [
-					'title'       => _x( 'Gravatar E-mail Address', 'Field Title', 'geditorial-team' ),
-					'description' => _x( 'Enter an e-mail address, to use a Gravatar, instead of using the "Featured Image".', 'Field Description', 'geditorial-team' ),
-					'type'        => 'code',
-					'icon'        => 'admin-users',
-				],
-				'personal_site' => [
-					'title'       => _x( 'Personal Site', 'Field Title', 'geditorial-team' ),
-					'description' => _x( 'Enter this team member\'s URL (for example: https://geminorum.ir/).', 'Field Description', 'geditorial-team' ),
-					'type'        => 'link',
-					'icon'        => 'admin-links',
-				],
-				'email_contact' => [
-					'title'       => _x( 'Contact E-mail Address', 'Field Title', 'geditorial-team' ),
-					'description' => _x( 'Enter a contact email address for this team member to be displayed as a link on the frontend.', 'Field Description', 'geditorial-team' ),
-					'type'        => 'code',
-					'icon'        => 'email',
-				],
-				'phone' => [
-					'title'       => _x( 'Telephone Number', 'Field Title', 'geditorial-team' ),
-					'description' => _x( 'Enter a telephone number for this team member to be displayed as a link on the frontend.', 'Field Description', 'geditorial-team' ),
-					'type'        => 'code',
-					'icon'        => 'phone',
-				],
-				'twitter' => [
-					'title'       => _x( 'Twitter Username', 'Field Title', 'geditorial-team' ),
-					'description' => _x( 'Enter this team member\'s Twitter username without the @ (for example: geminorumir).', 'Field Description', 'geditorial-team' ),
-					'type'        => 'code',
-					'icon'        => 'twitter',
-				],
-				'username' => [
-					'title'       => _x( 'Network Username', 'Field Title', 'geditorial-team' ),
-					'description' => _x( 'Map this team member to a user on this site.', 'Field Description', 'geditorial-team' ),
-					'type'        => 'code',
-					'icon'        => 'nametag',
+		return [
+			'meta' => [
+				$this->constant( 'member_posttype' ) => [
+					'team_role' => [
+						'title'       => _x( 'Role', 'Field Title', 'geditorial-team' ),
+						'description' => _x( 'Enter a byline for the team member (for example: "Director of Production").', 'Field Description', 'geditorial-team' ),
+						'type'        => 'title_after',
+						'icon'        => 'businessman',
+					],
+					'email_gravatar' => [
+						'title'       => _x( 'Gravatar E-mail Address', 'Field Title', 'geditorial-team' ),
+						'description' => _x( 'Enter an e-mail address, to use a Gravatar, instead of using the "Featured Image".', 'Field Description', 'geditorial-team' ),
+						'type'        => 'code',
+						'icon'        => 'admin-users',
+					],
+					'personal_site' => [
+						'title'       => _x( 'Personal Site', 'Field Title', 'geditorial-team' ),
+						'description' => _x( 'Enter this team member\'s URL (for example: https://geminorum.ir/).', 'Field Description', 'geditorial-team' ),
+						'type'        => 'link',
+						'icon'        => 'admin-links',
+					],
+					'email_contact' => [
+						'title'       => _x( 'Contact E-mail Address', 'Field Title', 'geditorial-team' ),
+						'description' => _x( 'Enter a contact email address for this team member to be displayed as a link on the frontend.', 'Field Description', 'geditorial-team' ),
+						'type'        => 'code',
+						'icon'        => 'email',
+					],
+					'phone' => [
+						'title'       => _x( 'Telephone Number', 'Field Title', 'geditorial-team' ),
+						'description' => _x( 'Enter a telephone number for this team member to be displayed as a link on the frontend.', 'Field Description', 'geditorial-team' ),
+						'type'        => 'code',
+						'icon'        => 'phone',
+					],
+					'twitter' => [
+						'title'       => _x( 'Twitter Username', 'Field Title', 'geditorial-team' ),
+						'description' => _x( 'Enter this team member\'s Twitter username without the @ (for example: geminorumir).', 'Field Description', 'geditorial-team' ),
+						'type'        => 'code',
+						'icon'        => 'twitter',
+					],
+					'username' => [
+						'title'       => _x( 'Network Username', 'Field Title', 'geditorial-team' ),
+						'description' => _x( 'Map this team member to a user on this site.', 'Field Description', 'geditorial-team' ),
+						'type'        => 'code',
+						'icon'        => 'nametag',
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	protected function posttypes_excluded( $extra = [] )

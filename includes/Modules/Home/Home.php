@@ -156,7 +156,7 @@ class Home extends gEditorial\Module
 		if ( ! $support = get_theme_support( 'featured-content' ) )
 			return FALSE;
 
-		// an array of args must be passed as the second parameter of add_theme_support()
+		// NOTE: an array of arguments must be passed as the second parameter of `add_theme_support()`
 		if ( ! isset( $support[0] ) )
 			return FALSE;
 

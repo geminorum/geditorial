@@ -183,33 +183,35 @@ class Contest extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'contest_posttype' ) => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
+		return [
+			'meta' => [
+				$this->constant( 'contest_posttype' ) => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
 
-				'deadline_datetime' => [
-					'title'       => _x( 'Deadline Date', 'Field Title', 'geditorial-contest' ),
-					'description' => _x( 'The last date for submitting the applications.', 'Field Description', 'geditorial-contest' ),
-					'icon'        => 'calendar-alt',
-					'type'        => 'date'
-				],
+					'deadline_datetime' => [
+						'title'       => _x( 'Deadline Date', 'Field Title', 'geditorial-contest' ),
+						'description' => _x( 'The last date for submitting the applications.', 'Field Description', 'geditorial-contest' ),
+						'icon'        => 'calendar-alt',
+						'type'        => 'date'
+					],
 
-				'venue_string'   => [ 'type' => 'venue' ],
-				'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
-				'website_url'    => [ 'type' => 'link' ],
-				'email_address'  => [ 'type' => 'email' ],
-			],
-			'_supported' => [
-				'submission_datetime' => [
-					'title'       => _x( 'Submission Date', 'Field Title', 'geditorial-contest' ),
-					'description' => _x( 'Verified date for the submitted application.', 'Field Description', 'geditorial-contest' ),
-					'context'     => 'pairedbox_contest',
-					'icon'        => 'calendar-alt',
-					'type'        => 'date'
+					'venue_string'   => [ 'type' => 'venue' ],
+					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'website_url'    => [ 'type' => 'link' ],
+					'email_address'  => [ 'type' => 'email' ],
+				],
+				'_supported' => [
+					'submission_datetime' => [
+						'title'       => _x( 'Submission Date', 'Field Title', 'geditorial-contest' ),
+						'description' => _x( 'Verified date for the submitted application.', 'Field Description', 'geditorial-contest' ),
+						'context'     => 'pairedbox_contest',
+						'icon'        => 'calendar-alt',
+						'type'        => 'date'
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	public function after_setup_theme()

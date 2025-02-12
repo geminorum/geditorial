@@ -187,22 +187,24 @@ class Addendum extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'primary_posttype' ) => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
-				'lead'       => [ 'type' => 'postbox_html' ],
+		return [
+			'meta' => [
+				$this->constant( 'primary_posttype' ) => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
-				'main_download_url' => [ 'type' => 'downloadable' ],
-				'main_download_id'  => [ 'type' => 'attachment' ],
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
+					'main_download_url' => [ 'type' => 'downloadable' ],
+					'main_download_id'  => [ 'type' => 'attachment' ],
+				],
+				// '_supported' => [],
 			],
-			// '_supported' => [],
-		] ];
+		];
 	}
 
 	protected function paired_get_paired_constants()

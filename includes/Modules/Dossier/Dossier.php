@@ -177,41 +177,43 @@ class Dossier extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			$this->constant( 'primary_posttype' ) => [
-				'over_title' => [ 'type' => 'title_before' ],
-				'sub_title'  => [ 'type' => 'title_after' ],
-				'lead'       => [ 'type' => 'postbox_html' ],
+		return [
+			'meta' => [
+				$this->constant( 'primary_posttype' ) => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
-				'number_line' => [
-					'title'       => _x( 'Number Line', 'Field Title', 'geditorial-dossier' ),
-					'description' => _x( 'The dossier number line', 'Field Description', 'geditorial-dossier' ),
-					'icon'        => 'menu',
+					'number_line' => [
+						'title'       => _x( 'Number Line', 'Field Title', 'geditorial-dossier' ),
+						'description' => _x( 'The dossier number line', 'Field Description', 'geditorial-dossier' ),
+						'icon'        => 'menu',
+					],
+
+					'highlight'    => [ 'type' => 'note' ],
+					'source_title' => [ 'type' => 'text' ],
+					'source_url'   => [ 'type' => 'link' ],
+					'action_title' => [ 'type' => 'text' ],
+					'action_url'   => [ 'type' => 'link' ],
+
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
 				],
-
-				'highlight'    => [ 'type' => 'note' ],
-				'source_title' => [ 'type' => 'text' ],
-				'source_url'   => [ 'type' => 'link' ],
-				'action_title' => [ 'type' => 'text' ],
-				'action_url'   => [ 'type' => 'link' ],
-
-				'content_embed_url' => [ 'type' => 'embed' ],
-				'text_source_url'   => [ 'type' => 'text_source' ],
-				'audio_source_url'  => [ 'type' => 'audio_source' ],
-				'video_source_url'  => [ 'type' => 'video_source' ],
-				'image_source_url'  => [ 'type' => 'image_source' ],
-			],
-			'_supported' => [
-				'in_dossier_order' => [
-					'title'       => _x( 'Order', 'Field Title', 'geditorial-dossier' ),
-					'description' => _x( 'Post order in dossier list', 'Field Description', 'geditorial-dossier' ),
-					'type'        => 'number',
-					'context'     => 'pairedbox_dossier',
-					'icon'        => 'sort',
-					'order'       => 400,
+				'_supported' => [
+					'in_dossier_order' => [
+						'title'       => _x( 'Order', 'Field Title', 'geditorial-dossier' ),
+						'description' => _x( 'Post order in dossier list', 'Field Description', 'geditorial-dossier' ),
+						'type'        => 'number',
+						'context'     => 'pairedbox_dossier',
+						'icon'        => 'sort',
+						'order'       => 400,
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	protected function paired_get_paired_constants()

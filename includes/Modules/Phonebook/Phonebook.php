@@ -113,19 +113,19 @@ class Phonebook extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Contacts', 'MetaBox Title', 'geditorial-phonebook' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-phonebook' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'mainbutton_title' => _x( 'Contacts of %1$s', 'Button Title', 'geditorial-phonebook' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Contacts of %2$s', 'Button Text', 'geditorial-phonebook' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'rowaction_title' => _x( 'Contacts of %1$s', 'Action Title', 'geditorial-phonebook' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'rowaction_text'  => _x( 'Contacts', 'Action Text', 'geditorial-phonebook' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'columnrow_title' => _x( 'Contacts of %1$s', 'Row Title', 'geditorial-phonebook' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'columnrow_text'  => _x( 'Contacts', 'Row Text', 'geditorial-phonebook' ),
 		];
 

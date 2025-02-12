@@ -114,19 +114,19 @@ class Banking extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Banking', 'MetaBox Title', 'geditorial-banking' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-banking' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'mainbutton_title' => _x( 'Bank Accounts of %1$s', 'Button Title', 'geditorial-banking' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Accounts of %2$s', 'Button Text', 'geditorial-banking' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'rowaction_title' => _x( 'Bank Accounts of %1$s', 'Action Title', 'geditorial-banking' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'rowaction_text'  => _x( 'Bank Accounts', 'Action Text', 'geditorial-banking' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'columnrow_title' => _x( 'Bank Accounts of %1$s', 'Row Title', 'geditorial-banking' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'columnrow_text'  => _x( 'Bank Accounts', 'Row Text', 'geditorial-banking' ),
 		];
 
@@ -135,22 +135,24 @@ class Banking extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'meta' => [
-			'_supported' => [
-				'iban' => [
-					'title'       => _x( 'IBAN', 'Field Title', 'geditorial-banking' ),
-					'description' => _x( 'International Bank Account Number', 'Field Description', 'geditorial-banking' ),
-					'type'        => 'iban',
-					'order'       => 200,
-				],
-				'bank_card_number' => [
-					'title'       => _x( 'Card Number', 'Field Title', 'geditorial-banking' ),
-					'description' => _x( 'Bank Card Number', 'Field Description', 'geditorial-banking' ),
-					'type'        => 'bankcard',
-					'order'       => 200,
+		return [
+			'meta' => [
+				'_supported' => [
+					'iban' => [
+						'title'       => _x( 'IBAN', 'Field Title', 'geditorial-banking' ),
+						'description' => _x( 'International Bank Account Number', 'Field Description', 'geditorial-banking' ),
+						'type'        => 'iban',
+						'order'       => 200,
+					],
+					'bank_card_number' => [
+						'title'       => _x( 'Card Number', 'Field Title', 'geditorial-banking' ),
+						'description' => _x( 'Bank Card Number', 'Field Description', 'geditorial-banking' ),
+						'type'        => 'bankcard',
+						'order'       => 200,
+					],
 				],
 			],
-		] ];
+		];
 	}
 
 	protected function subcontent_get_data_mapping()

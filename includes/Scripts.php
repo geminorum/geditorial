@@ -626,7 +626,6 @@ JS;
 		] );
 	}
 
-	// @REF: https://clipboardjs.com/
 	public static function enqueueChartJS_Bar( $name, $data, $atts = [] )
 	{
 		$args = self::atts( [

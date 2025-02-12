@@ -173,18 +173,18 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( $first_name && WordPress\Strings::isEmpty( $_first_name ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: post title %2$s: first_name string */
-				_x( 'First-name data is empty on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-personage' ), [
-					WordPress\Post::title( $post ),
+				/* translators: %1$s: first_name string %2$s: post title */
+				_x( 'First-name is empty (%1$s) on &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-personage' ), [
 					Core\HTML::code( $_first_name ),
+					WordPress\Post::title( $post ),
 				] );
 
 		if ( $last_name && WordPress\Strings::isEmpty( $_last_name ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: post title %2$s: last_name string */
-				_x( 'Last-name data is empty on &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-personage' ), [
-					WordPress\Post::title( $post ),
+				/* translators: %1$s: last_name string %2$s: post title */
+				_x( 'Last-name is empty (%1$s) on &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-personage' ), [
 					Core\HTML::code( $_last_name ),
+					WordPress\Post::title( $post ),
 				] );
 
 		$_fullname = Core\Text::normalizeWhitespace(
@@ -198,17 +198,18 @@ class ModuleSettings extends gEditorial\Settings
 		// bail if cannot parse the data
 		if ( ! $parsed = ModuleHelper::parseFullname( $_fullname ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: post title %2$s: full-name string */
-				_x( 'Can not parse fullname data available for &ldquo;%1$s&rdquo; (%2$s).', 'Notice', 'geditorial-personage' ), [
-					WordPress\Post::title( $post ),
+				/* translators: %1$s: full-name string, %2$s: post title */
+				_x( 'Can not parse full-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
 					Core\HTML::code( $_fullname ),
+					WordPress\Post::title( $post ),
 				] );
 
 		// bail if no first name exists
 		if ( $first_name && WordPress\Strings::isEmpty( $parsed['first_name'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: full-name string, %2$s: post title */
-				_x( 'First-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+				/* translators: %1$s: first-name string, %2$s: full-name string, %3$s: post title */
+				_x( 'First-name is empty (%1$s) via &ldquo;%2$s&rdquo; on &ldquo;%3$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $parsed['first_name'] ),
 					Core\HTML::code( $_fullname ),
 					WordPress\Post::title( $post ),
 				] );
@@ -216,8 +217,9 @@ class ModuleSettings extends gEditorial\Settings
 		// bail if no last name exists
 		if ( $last_name && WordPress\Strings::isEmpty( $parsed['last_name'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: full-name string, %2$s: post title */
-				_x( 'Last-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+				/* translators: %1$s: last-name string, %2$s: full-name string, %3$s: post title */
+				_x( 'Last-name is empty (%1$s) via &ldquo;%2$s&rdquo; on &ldquo;%3$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $parsed['last_name'] ),
 					Core\HTML::code( $_fullname ),
 					WordPress\Post::title( $post ),
 				] );
@@ -291,7 +293,7 @@ class ModuleSettings extends gEditorial\Settings
 		if ( ! $parsed = ModuleHelper::parseFullname( $_fullname ) )
 			return self::processingListItem( $verbose,
 				/* translators: %1$s: full-name string, %2$s: post title */
-				_x( 'Can not parse full-name data available (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+				_x( 'Can not parse full-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
 					Core\HTML::code( $_fullname ),
 					WordPress\Post::title( $post ),
 				] );
@@ -299,8 +301,9 @@ class ModuleSettings extends gEditorial\Settings
 		// bail if no first name exists
 		if ( $first_name && WordPress\Strings::isEmpty( $parsed['first_name'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: full-name string, %2$s: post title */
-				_x( 'First-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+				/* translators: %1$s: first-name string, %2$s: full-name string, %3$s: post title */
+				_x( 'First-name is empty (%1$s) via &ldquo;%2$s&rdquo; on &ldquo;%3$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $parsed['first_name'] ),
 					Core\HTML::code( $_fullname ),
 					WordPress\Post::title( $post ),
 				] );
@@ -308,8 +311,9 @@ class ModuleSettings extends gEditorial\Settings
 		// bail if no last name exists
 		if ( $last_name && WordPress\Strings::isEmpty( $parsed['last_name'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: full-name string, %2$s: post title */
-				_x( 'Last-name is empty (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+				/* translators: %1$s: last-name string, %2$s: full-name string, %3$s: post title */
+				_x( 'Last-name is empty (%1$s) via &ldquo;%2$s&rdquo; on &ldquo;%3$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
+					Core\HTML::code( $parsed['last_name'] ),
 					Core\HTML::code( $_fullname ),
 					WordPress\Post::title( $post ),
 				] );
