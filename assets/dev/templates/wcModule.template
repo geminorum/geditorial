@@ -34,8 +34,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		$roles = $this->get_settings_default_roles();
 
 		return [
-			'posttypes_option'  => 'posttypes_option',
-			'taxonomies_option' => 'taxonomies_option',
 			'_general' => [
 				[
 					'field'       => 'field',
@@ -53,13 +51,16 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'reports_roles' => [ NULL, $roles ],
 				'assign_roles'  => [ NULL, $roles ],
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, '' ], // FIXME <---
+			],
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'main_shortcode' => '',
+			'main_shortcode' => '', // FIXME <---
 		];
 	}
 

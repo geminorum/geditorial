@@ -8,7 +8,8 @@
  * @returns {String}
  */
 const toSingleSpace = (input) => {
-  return input.trim().split(/[\s,\t,\n]+/).join(' ');
+  // return input.trim().split(/[\s,\t,\n]+/).join(' ');
+  return input.trim().split(/[\s\t\n]+/).join(' ');
 };
 
 /**

@@ -80,7 +80,6 @@ function githubCommand (command, callback) {
   });
 }
 
-// TODO: support multiple template
 task('dev:newmodule', function (done) {
   if (!('name' in args)) {
     log.error('Error: missing required name for the module: `--name NewModule`');
@@ -149,7 +148,7 @@ task('i18n:admin', function (cb) {
   const command = 'wp i18n make-pot . ' +
     ' ./languages/admin.pot' +
     ' --domain=' + pkg.name + '-admin' +
-    // ' --subtract=./languages/' + pkg.name + '.pot' + // FIXME: temporarly disabled for migration
+    // ' --subtract=./languages/' + pkg.name + '.pot' + // FIXME: temporary disabled for migration
     ' --headers=\'' + template(JSON.stringify(conf.i18n.admin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\' ' +
     i18nExtra(conf.i18n.admin);
 
@@ -198,7 +197,7 @@ task('i18n:php', function () {
   return src(conf.input.langs)
     .pipe(gulpexec(function (file) {
       const folder = file.path.split(path.sep).slice(-2, -1).pop();
-      log.info('Make pot for Module: ' + folder);
+      log.info('Make php for Module: ' + folder);
 
       // https://developer.wordpress.org/cli/commands/i18n/make-php/
       return 'wp i18n make-php ' + file.path +
@@ -215,7 +214,7 @@ task('i18n:php', function () {
     }));
 });
 
-task('i18n', series('i18n:plugin', 'i18n:admin', 'i18n:modules'));
+task('i18n', series('i18n:admin', 'i18n:plugin', 'i18n:modules'));
 
 task('dev:sass', function () {
   return src(conf.input.sass)
@@ -350,8 +349,8 @@ task('build', series(
   parallel(
     'build:styles',
     'build:rtl',
-    'build:scripts',
-    'i18n:php' // just in case forgotten!
+    'build:scripts'
+    // 'i18n:php' // just in case forgotten!
   ),
   'build:banner',
   'build:clean',

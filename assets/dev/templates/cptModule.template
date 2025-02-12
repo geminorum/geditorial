@@ -41,6 +41,10 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'contents_viewable',
 				'show_in_navmenus',
 			],
+			'_constants' => [
+				'main_posttype_constant'     => [ NULL, 'xxx' ],
+				'category_taxonomy_constant' => [ NULL, 'xxx_category' ],
+			],
 		];
 	}
 

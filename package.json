@@ -45,8 +45,8 @@
     "git:gc": "git gc --prune=now"
   },
   "devDependencies": {
-    "@wordpress/babel-preset-default": "^8.16.0",
-    "@wordpress/browserslist-config": "^6.16.0",
+    "@wordpress/babel-preset-default": "^8.18.0",
+    "@wordpress/browserslist-config": "^6.18.0",
     "autoprefixer": "^10.4.20",
     "browserslist": "^4.24.4",
     "cssnano": "^7.0.6",
@@ -72,10 +72,10 @@
     "js-yaml": "^4.1.0",
     "lodash.template": "^4.5.0",
     "parse-changelog": "^1.0.2",
-    "postcss": "^8.5.1",
+    "postcss": "^8.5.2",
     "rtlcss": "^4.3.0",
     "semistandard": "^17.0.0",
-    "stylelint": "^16.13.2",
+    "stylelint": "^16.14.1",
     "stylelint-config-recommended-scss": "^14.1.0",
     "xtend": "^4.0.2"
   },
@@ -131,5 +131,6 @@
     ]
   },
   "readme": "ERROR: No README data found!",
-  "private": true
+  "private": true,
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
