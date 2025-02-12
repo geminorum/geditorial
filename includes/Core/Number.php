@@ -43,25 +43,51 @@ class Number extends Base
 		return (bool) preg_match( '/^[0-9]+$/', self::translate( Text::trim( $string ) ) );
 	}
 
-	// converts back into numbers
+	/**
+	 * Converts digits into English numbers.
+	 *
+	 * @param  string $string
+	 * @return string $translated
+	 */
 	public static function translate( $string )
 	{
+		if ( ! is_string( $string ) )
+			return $string;
+
 		$string = strtr( $string, array_flip( static::ARABIC ) );   // arabic to english
 		$string = strtr( $string, array_flip( static::PERSIAN ) );  // persian to english
 
 		return $string;
 	}
 
+	/**
+	 * Converts digits into Persian numbers.
+	 *
+	 * @param  string $string
+	 * @return string $translated
+	 */
 	public static function translatePersian( $string )
 	{
+		if ( ! is_string( $string ) )
+			return $string;
+
 		$string = strtr( $string, array_flip( static::ARABIC ) );  // arabic to english
 		$string = strtr( $string, static::PERSIAN );               // english to persian
 
 		return $string;
 	}
 
+	/**
+	 * Converts digits into Arabic numbers.
+	 *
+	 * @param  string $string
+	 * @return string $translated
+	 */
 	public static function translateArabic( $string )
 	{
+		if ( ! is_string( $string ) )
+			return $string;
+
 		$string = strtr( $string, array_flip( static::PERSIAN ) );  // persian to english
 		$string = strtr( $string, static::ARABIC );                 // english to arabic
 

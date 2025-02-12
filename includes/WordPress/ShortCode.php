@@ -7,6 +7,8 @@ use geminorum\gEditorial\Core;
 class ShortCode extends Core\Base
 {
 
+	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,}';
+
 	// @SEE: https://konstantin.blog/2013/dont-do_shortcode/
 	public static function apply( $text, $ignore_html = FALSE )
 	{

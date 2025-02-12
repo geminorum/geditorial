@@ -7,7 +7,8 @@ use geminorum\gEditorial\Core;
 class PostType extends Core\Base
 {
 
-	const PRIMARY_TAXONOMY_PROP = 'primary_taxonomy'; // FIXME: DEPRECATED
+	const NAME_INPUT_PATTERN    = '[-a-zA-Z0-9_]{3,20}';
+	const PRIMARY_TAXONOMY_PROP = 'primary_taxonomy';   // FIXME: DEPRECATED
 	const MAP_CAP_IMPORT_POSTS  = 'edit_others_posts';
 
 	public static function object( $posttype_or_post )

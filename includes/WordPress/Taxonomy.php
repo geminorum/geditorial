@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 class Taxonomy extends Core\Base
 {
 
+	const NAME_INPUT_PATTERN     = '[-a-zA-Z0-9_]{3,32}';
 	const TARGET_TAXONOMIES_PROP = 'target_taxonomies';
 
 	public static function object( $taxonomy_or_term )

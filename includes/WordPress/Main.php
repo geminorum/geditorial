@@ -60,6 +60,15 @@ class Main extends Core\Base
 		return self::factory()->constant( $module, $key, $default );
 	}
 
+	protected static function filters( $hook, ...$args )
+	{
+		return apply_filters( sprintf( '%s_%s_%s',
+			static::BASE,
+			static::MODULE,
+			$hook
+		), ...$args );
+	}
+
 	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE, $module = NULL )
 	{
 		if ( is_null( $module ) )

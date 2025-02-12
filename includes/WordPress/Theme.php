@@ -308,10 +308,20 @@ class Theme extends Core\Base
 		if ( $content_callback && is_callable( $content_callback ) )
 			add_filter( 'the_content', $content_callback );
 
-		// if we are in theme compat, we don't need the 'Edit' post link.
+		// if we are in theme-compat, we don't need the 'Edit' post link.
 		add_filter( 'get_edit_post_link', static function ( $edit_link = '', $post_id = 0 ) {
 			return 0 === $post_id ? FALSE : $edit_link;
 		}, 10, 2 );
+	}
+
+	public static function set404()
+	{
+		global $wp_query;
+
+		if ( empty( $wp_query ) || ! \is_object( $wp_query ) )
+			return FALSE;
+
+		return $wp_query->is_404 = TRUE;
 	}
 
 	public static function render_template( $template, $post, $args = [] )

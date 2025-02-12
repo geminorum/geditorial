@@ -79,6 +79,7 @@ class Validation extends Base
 	// @REF: https://fandogh.github.io/codemeli/codemeli.html
 	// @REF: https://gist.github.com/ebraminio/5292017#gistcomment-3435493
 	// @SEE: http://www.aliarash.com/article/codemeli/codemeli.htm
+	// FIXME: Check for the first 3 digits @see persiantools.js
 	public static function isIranNationalCode( $input )
 	{
 		if ( self::empty( $input ) )

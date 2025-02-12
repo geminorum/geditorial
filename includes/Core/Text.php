@@ -419,7 +419,7 @@ class Text extends Base
 		// cleans zwnj after characters that don't conncet to the next
 		$text = preg_replace( '/([إأةؤورزژاآدذ،؛,:«»\\/@#$٪×*()ـ\-=|])x{200C}/u', '$1', $text );
 
-		return $text;
+		return self::trim( $text );
 	}
 
 	// @REF: `normalize_whitespace()`

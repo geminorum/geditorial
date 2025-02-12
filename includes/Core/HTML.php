@@ -83,6 +83,9 @@ class HTML extends Base
 
 	public static function desc( $string, $block = TRUE, $class = '', $nl2br = TRUE )
 	{
+		if ( ! $string )
+			return;
+
 		if ( is_array( $string ) ) {
 
 			$assoc = Arraay::isAssoc( $string );
@@ -115,6 +118,9 @@ class HTML extends Base
 
 	public static function button( $html, $link = '#', $title = FALSE, $icon = FALSE, $data = [], $id = FALSE )
 	{
+		if ( ! $html )
+			return '';
+
 		$classes = [
 			'btn',
 			'btn-default',
@@ -704,6 +710,9 @@ class HTML extends Base
 	{
 		if ( empty( $tabs ) )
 			return;
+
+		if ( empty( $active ) )
+			$active = Arraay::keyFirst( $tabs );
 
 		$html = '';
 

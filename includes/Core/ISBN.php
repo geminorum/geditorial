@@ -9,7 +9,8 @@ class ISBN extends Base
 
 	public static function getHTMLPattern()
 	{
-		return FALSE; // FIXME!
+		// @source https://input-pattern.com/en/training.php#isbn
+		return '(97[89])?\d{10}|(97[89]-)?(?=.{13}$)(\d+-){3}\d';
 	}
 
 	public static function prep( $input, $wrap = FALSE )

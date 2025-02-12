@@ -476,7 +476,7 @@ class Database extends Core\Base
 	{
 		global $wpdb;
 
-		$wpdb->query( "DROP TABLE IF EXISTS ".$wpdb->$key );
+		$wpdb->query( "DROP TABLE IF EXISTS ".$wpdb->{$key} );
 	}
 
 	// prepare an array for an IN statement
@@ -496,5 +496,25 @@ class Database extends Core\Base
 		$query = "SELECT distinct {$wpdb->usermeta}.meta_key FROM {$wpdb->usermeta}";
 
 		return array_column( $wpdb->get_results( $query, ARRAY_A ), 'meta_key' );
+	}
+
+	public static function countPostMetaByKey( $metakey )
+	{
+		global $wpdb;
+
+		if ( ! $metakey )
+			return FALSE;
+
+		return $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = %s", $metakey ) );
+	}
+
+	public static function changePostMetaKey( $from, $to )
+	{
+		global $wpdb;
+
+		if ( ! $from || ! $to || $from === $to )
+			return FALSE;
+
+		return $wpdb->update( $wpdb->postmeta, [ 'meta_key' => $to ], [ 'meta_key' => $from ], [ '%s' ], [ '%s' ] );
 	}
 }
