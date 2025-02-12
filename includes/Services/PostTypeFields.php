@@ -23,22 +23,24 @@ class PostTypeFields extends WordPress\Main
 	}
 
 	// NOTE: runs only on `fa_IR` locale
-	public static function posts_search_append_meta( $meta, $criteria, $posttype )
+	public static function posts_search_append_meta( $meta, $criteria, $posttypes )
 	{
-		if ( 'any' === $posttype )
+		if ( 'any' === $posttypes || empty( $posttypes ) )
 			return $meta;
 
 		$sanitized = Core\Number::translate( $criteria );
 
 		if ( $date = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', 'persian' ) )
-			foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'date' ] ) as $field )
-				if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
-					$meta[$field['metakey']] = $date;
+			foreach ( (array) $posttypes as $posttype )
+				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'date' ] ) as $field )
+					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
+						$meta[$field['metakey']] = $date;
 
 		if ( $datetime = Datetime::makeMySQLFromInput( $sanitized, NULL, 'persian' ) )
-			foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'datetime' ] ) as $field )
-				if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
-					$meta[$field['metakey']] = $datetime;
+			foreach ( (array) $posttypes as $posttype )
+				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'datetime' ] ) as $field )
+					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
+						$meta[$field['metakey']] = $datetime;
 
 		return $meta;
 	}

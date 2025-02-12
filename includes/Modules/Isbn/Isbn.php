@@ -339,8 +339,14 @@ class Isbn extends gEditorial\Module
 
 	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
 	{
+		if ( empty( $posttypes ) )
+			return $meta;
+
 		if ( ! $discovery = Core\ISBN::discovery( $search ) )
 			return $meta; // criteria is not ISBN
+
+		if ( 'any' === $posttypes )
+			$posttypes = $this->posttypes();
 
 		$fields = [
 			'isbn',
@@ -350,7 +356,7 @@ class Isbn extends gEditorial\Module
 			'isbn5',
 		];
 
-		foreach ( $posttypes as $posttype ) {
+		foreach ( (array) $posttypes as $posttype ) {
 
 			if ( ! $this->posttype_woocommerce( $posttype )
 				&& ! $this->posttype_supported( $posttype ) )

@@ -449,8 +449,14 @@ class Phonebook extends gEditorial\Module
 
 	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
 	{
+		if ( empty( $posttypes ) )
+			return $meta;
+
 		if ( ! $discovery = Core\Phone::discovery( $search ) )
 			return $meta; // criteria is not Phone Number
+
+		if ( 'any' === $posttypes )
+			$posttypes = $this->posttypes();
 
 		$input  = Core\Number::translate( Core\Text::trim( $search ) );
 		$fields = [
@@ -460,7 +466,7 @@ class Phonebook extends gEditorial\Module
 			'phone_secondary',
 		];
 
-		foreach ( $posttypes as $posttype ) {
+		foreach ( (array) $posttypes as $posttype ) {
 
 			if ( ! $this->posttype_supported( $posttype ) )
 				continue;
