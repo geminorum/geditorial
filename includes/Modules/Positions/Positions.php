@@ -524,12 +524,12 @@ class Positions extends gEditorial\Module
 			} else {
 
 				$args = [
-					'frozen' => TRUE,  // expanding only for primary posttypes
+					'frozen' => TRUE,  // expanding only for primary post-types
 				];
 			}
 		}
 
-		$this->subcontent_do_enqueue_app( TRUE, $args );
+		$this->subcontent_do_enqueue_app( $args );
 	}
 
 	public function render_framepage_adminpage()

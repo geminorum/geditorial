@@ -315,13 +315,12 @@ class Chronicles extends gEditorial\Module
 	public function load_submenu_adminpage( $context = 'framepage' )
 	{
 		$this->_load_submenu_adminpage( $context );
-		$this->subcontent_do_enqueue_app( TRUE );
+		$this->subcontent_do_enqueue_app();
 	}
 
 	public function render_framepage_adminpage()
 	{
 		$this->subcontent_do_render_iframe_content(
-			TRUE,
 			'framepage',
 			/* translators: %s: post title */
 			_x( 'Timeline Grid for %s', 'Page Title', 'geditorial-chronicles' ),

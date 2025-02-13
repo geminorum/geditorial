@@ -1107,7 +1107,7 @@ trait SubContents
 		return $list;
 	}
 
-	protected function subcontent_do_render_iframe_content( $app_name, $context = NULL, $assign_template = NULL, $reports_template = NULL )
+	protected function subcontent_do_render_iframe_content( $context = NULL, $assign_template = NULL, $reports_template = NULL, $custom_app = NULL )
 	{
 		if ( ! $post = self::req( 'linked' ) )
 			return Info::renderNoPostsAvailable();
@@ -1119,7 +1119,7 @@ trait SubContents
 
 			Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
-				Scripts::renderAppMounter( TRUE === $app_name ? 'subcontent-grid' : $app_name, $this->key );
+				Scripts::renderAppMounter( $custom_app ?? 'subcontent-grid', $this->key );
 				Scripts::noScriptMessage();
 
 			Settings::wrapClose( FALSE );
@@ -1142,18 +1142,19 @@ trait SubContents
 		}
 	}
 
-	protected function subcontent_do_enqueue_app( $name, $atts = [] )
+	protected function subcontent_do_enqueue_app( $atts = [], $custom_app = NULL )
 	{
 		$args = self::atts( [
-			'context'    => 'edit',
+			'app'        => $custom_app ?? 'subcontent-grid',
+			'asset'      => is_null( $custom_app ) ? '_subcontent' : NULL,
 			'can'        => 'assign',
-			'asset'      => TRUE === $name ? '_subcontent' : NULL,
 			'linked'     => NULL,
 			'searchable' => NULL,
 			'selectable' => NULL,
 			'required'   => NULL,
 			'readonly'   => NULL,
 			'frozen'     => NULL, // FIXME: add full support
+			'context'    => 'edit',
 			'strings'    => [],
 		], $atts );
 
@@ -1186,7 +1187,7 @@ trait SubContents
 		];
 
 		$this->enqueue_asset_js( $asset, FALSE, [
-			Scripts::enqueueApp( TRUE === $name ? 'subcontent-grid' : $name )
+			Scripts::enqueueApp( $args['app'] )
 		], $args['asset'] );
 	}
 
