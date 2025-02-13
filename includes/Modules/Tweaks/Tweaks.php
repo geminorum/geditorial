@@ -261,15 +261,23 @@ class Tweaks extends gEditorial\Module
 		return $posttypes;
 	}
 
+	protected function posttypes_excluded( $extra = [] )
+	{
+		$excludes = [
+			'product', // NOTE: maybe all `Woo-Commerce` related must use `WC Tweaks`
+		];
+
+		return Core\Arraay::prepString(
+			$this->filters( 'posttypes_excluded',
+				Settings::posttypesExcluded( $excludes + (array) $extra ) ) );
+	}
+
 	// internal helper
 	private function _get_posttypes_support_exclude( $extra_excludes = [] )
 	{
-		$excludes = [
-			'product', // Woo-Commerce
-		];
-
+		$excludes  = [];
 		$supported = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = Settings::posttypesExcluded( $excludes + $extra_excludes );
+		$excluded  = $this->posttypes_excluded( $excludes + (array) $extra_excludes );
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
