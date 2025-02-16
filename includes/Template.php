@@ -909,14 +909,13 @@ class Template extends WordPress\Main
 			return $args['default'];
 
 		if ( is_null( $args['render'] ) )
-			$args['render'] = [ '\geminorum\gEditorial\Core\HTML', 'tableDouble' ];
+			$args['render'] = [ __CLASS__, 'metaSummary__render_callback' ];
 
 		$callback_args = [
-			array_values( $rows ),
-			array_keys( $rows ),
-			TRUE,
-			// 'table table-bordered',
-			'table',
+			$rows,
+			$args,
+			$post,
+			$module,
 		];
 
 		if ( ! $html = self::buffer( $args['render'], $callback_args ) )
@@ -929,6 +928,17 @@ class Template extends WordPress\Main
 
 		echo $html;
 		return TRUE;
+	}
+
+	public static function metaSummary__render_callback( $data, $args, $post = NULL, $module = NULL )
+	{
+		Core\HTML::tableDouble( [
+			array_values( $data ),
+			array_keys( $data ),
+			TRUE,
+			// 'table table-bordered',
+			'table',
+		] );
 	}
 
 	// NOTE: DEPRECATED
