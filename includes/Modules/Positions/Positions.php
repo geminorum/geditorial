@@ -138,19 +138,19 @@ class Positions extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Positions', 'MetaBox Title', 'geditorial-positions' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-positions' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'mainbutton_title' => _x( 'Positions of %1$s', 'Button Title', 'geditorial-positions' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Positions of %2$s', 'Button Text', 'geditorial-positions' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'rowaction_title' => _x( 'Positions of %1$s', 'Action Title', 'geditorial-positions' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'rowaction_text'  => _x( 'Positions', 'Action Text', 'geditorial-positions' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'columnrow_title' => _x( 'Positions of %1$s', 'Row Title', 'geditorial-positions' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'columnrow_text'  => _x( 'Positions', 'Row Text', 'geditorial-positions' ),
 		];
 

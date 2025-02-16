@@ -3,10 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Core\Number;
-use geminorum\gEditorial\Core\Validation;
-use geminorum\gEditorial\WordPress\User;
+use geminorum\gEditorial\WordPress;
 
 class WcIdentity extends gEditorial\Module
 {
@@ -81,7 +80,7 @@ class WcIdentity extends gEditorial\Module
 
 	private function sanitize_identity_number_field( $input )
 	{
-		return preg_replace( '/[^\d]/', '', Number::translate( $input ) );
+		return preg_replace( '/[^\d]/', '', Core\Number::translate( $input ) );
 	}
 
 	// @REF: https://docs.woocommerce.com/document/add-a-custom-field-in-an-order-to-the-emails/
@@ -92,7 +91,7 @@ class WcIdentity extends gEditorial\Module
 		if ( $meta = get_post_meta( $order->get_id(), $this->constant( 'metakey_order_identity_number' ), TRUE ) )
 			$fields[] = [
 				'label' => _x( 'Identity Number', 'Email Field Label', 'geditorial-wc-identity' ),
-				'value' => Number::localize( $meta ),
+				'value' => Core\Number::localize( $meta ),
 			];
 
 		return $fields;
@@ -120,7 +119,7 @@ class WcIdentity extends gEditorial\Module
 		if ( $this->get_setting( 'number_validation' ) ) {
 			$fields['billing']['customer_identity_number']['class'][] = 'validate-required';
 			$fields['billing']['customer_identity_number']['maxlength'] = 10;
-			$fields['billing']['customer_identity_number']['custom_attributes']['pattern'] = Validation::getIdentityNumberHTMLPattern();
+			$fields['billing']['customer_identity_number']['custom_attributes']['pattern'] = Core\Validation::getIdentityNumberHTMLPattern();
 		}
 
 		return $fields;
@@ -141,11 +140,11 @@ class WcIdentity extends gEditorial\Module
 			$errors->add( 'identity_number_empty',
 				_x( 'Identity Number cannot be empty.', 'Checkout Error Message', 'geditorial-wc-identity' ) );
 
-		else if ( $this->get_setting( 'number_validation' ) && ! Validation::isIdentityNumber( $data['customer_identity_number'] ) )
+		else if ( $this->get_setting( 'number_validation' ) && ! Core\Validation::isIdentityNumber( $data['customer_identity_number'] ) )
 			$errors->add( 'identity_number_invalid',
 				_x( 'Identity Number is not valid.', 'Checkout Error Message', 'geditorial-wc-identity' ) );
 
-		else if ( ! is_user_logged_in() && User::getIDbyMeta( $this->constant( 'metakey_user_identity_number' ), $data['customer_identity_number'] ) )
+		else if ( ! is_user_logged_in() && WordPress\User::getIDbyMeta( $this->constant( 'metakey_user_identity_number' ), $data['customer_identity_number'] ) )
 			$errors->add( 'identity_number_registered',
 				_x( 'Identity Number is already registered.', 'Checkout Error Message', 'geditorial-wc-identity' ) );
 	}
@@ -176,7 +175,7 @@ class WcIdentity extends gEditorial\Module
 		if ( $this->get_setting( 'number_validation' ) ) {
 			$identity_number['class'][] = 'validate-required';
 			$identity_number['maxlength'] = 10;
-			$identity_number['custom_attributes']['pattern'] = Validation::getIdentityNumberHTMLPattern();
+			$identity_number['custom_attributes']['pattern'] = Core\Validation::getIdentityNumberHTMLPattern();
 		}
 
 		woocommerce_form_field( 'account_identity_number', $identity_number,
@@ -204,12 +203,12 @@ class WcIdentity extends gEditorial\Module
 				_x( 'The Identity Number cannot be empty.', 'Account Error Message', 'geditorial-wc-identity' ) );
 
 		} else if ( $this->get_setting( 'number_validation' )
-			&& ! Validation::isIdentityNumber( $identity_number ) ) {
+			&& ! Core\Validation::isIdentityNumber( $identity_number ) ) {
 
 			$errors->add( 'identity_number_invalid',
 				_x( 'The Identity Number is not valid.', 'Account Error Message', 'geditorial-wc-identity' ) );
 
-		} else if ( $already = User::getIDbyMeta( $this->constant( 'metakey_user_identity_number' ), $identity_number ) ) {
+		} else if ( $already = WordPress\User::getIDbyMeta( $this->constant( 'metakey_user_identity_number' ), $identity_number ) ) {
 
 			if ( $already != get_current_user_id() )
 				$errors->add( 'identity_number_registered',
@@ -238,7 +237,7 @@ class WcIdentity extends gEditorial\Module
 
 		if ( $this->get_setting( 'number_validation' ) ) {
 			$identity_number['maxlength'] = 10;
-			$identity_number['custom_attributes']['pattern'] = Validation::getIdentityNumberHTMLPattern();
+			$identity_number['custom_attributes']['pattern'] = Core\Validation::getIdentityNumberHTMLPattern();
 		}
 
 		woocommerce_form_field( 'account_identity_number', $identity_number );

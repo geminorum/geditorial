@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\WordPress;
 
 class WcDashboard extends gEditorial\Module
 {
@@ -107,7 +108,7 @@ class WcDashboard extends gEditorial\Module
 
 		if ( $this->get_setting( 'purchased_dashboard' ) ) {
 
-			// FIXME: WTF: must only append to my-account page, @SEE: WooCommerce approach
+			// FIXME: WTF: must only append to my-account page, @SEE: Woo Commerce approach
 			add_rewrite_endpoint( $this->constant( 'endpoint_purchased' ), EP_PAGES );
 			$this->action( 'account_purchased-products_endpoint', 0, 10, FALSE, 'woocommerce' );
 		}

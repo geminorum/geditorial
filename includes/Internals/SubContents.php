@@ -107,6 +107,7 @@ trait SubContents
 			// 	'title'    => _x( 'Default', 'Type Option', 'geditorial-admin' ),
 			// 	'icon'     => 'external',
 			//  'logo'     => '',
+			//  'desc'     => '',
 			// ],
 		];
 	}
@@ -477,7 +478,7 @@ trait SubContents
 	}
 
 	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
-	// TODO: support for autofill fields with tokens: `date: '{{now}}'`
+	// TODO: support for auto-fill fields with tokens: `date: '{{now}}'`
 	protected function subcontent_sanitize_data( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
 	{
 		if ( is_null( $mapping ) )
@@ -835,7 +836,7 @@ trait SubContents
 		return $this->filters( 'subcontent_prep_data_from_import', $data, $raw, $field, $post, $column_title, $source_title );
 	}
 
-	// TODO: `total`: count with html markup
+	// TODO: `total`: count with HTML markup
 	protected function subcontent_restapi_register_routes()
 	{
 		$namespace = $this->restapi_get_namespace();
@@ -1027,7 +1028,7 @@ trait SubContents
 
 	protected function subcontent_do_main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		// NOTE: fallsback into namespace
+		// NOTE: falls back into name-space
 		$constant = $this->constant( 'main_shortcode', $this->constant( 'restapi_namespace' ) );
 
 		$args = shortcode_atts( [

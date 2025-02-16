@@ -859,7 +859,7 @@ class Template extends WordPress\Main
 
 			if ( ! array_key_exists( $key, $fields ) ) {
 
-				// fallback to taxonomy, only on custom set of fields
+				// falls back to taxonomy, only on custom set of fields
 				if ( is_null( $args['fields'] ) )
 					continue;
 

@@ -109,19 +109,19 @@ class Bookmarked extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Bookmarks', 'MetaBox Title', 'geditorial-bookmarked' ),
 			// 'metabox_action' => _x( 'Bookmarks', 'MetaBox Action', 'geditorial-bookmarked' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'mainbutton_title' => _x( 'Bookmarks of %1$s', 'Button Title', 'geditorial-bookmarked' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Bookmarks of %2$s', 'Button Text', 'geditorial-bookmarked' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'rowaction_title' => _x( 'Bookmarks of %1$s', 'Action Title', 'geditorial-bookmarked' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'rowaction_text'  => _x( 'Bookmarks', 'Action Text', 'geditorial-bookmarked' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'columnrow_title' => _x( 'Bookmarks of %1$s', 'Row Title', 'geditorial-bookmarked' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'columnrow_text'  => _x( 'Bookmarks', 'Row Text', 'geditorial-bookmarked' ),
 		];
 
@@ -224,6 +224,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-national-library',
 				'icon'     => [ 'misc-88', 'nlai.ir' ],
 				'logo'     => '',
+				'desc'     => _x( 'See the page about this on National Library website.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'goodreads',
@@ -232,6 +233,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-goodreads-book',
 				'icon'     => [ 'misc-24', 'goodreads' ], // 'amazon',
 				'logo'     => $this->_get_link_logo( 'goodreads' ),
+				'desc'     => _x( 'More about this on Goodreads network.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'fidibo',
@@ -240,6 +242,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-fidibo-book',
 				'icon'     => [ 'misc-16', 'fidibo' ], // 'location-alt',
 				'logo'     => $this->_get_link_logo( 'fidibo' ),
+				'desc'     => _x( 'Read this on Fidibo e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'taaghche',
@@ -248,6 +251,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-taaghche-book',
 				'icon'     => [ 'misc-512', 'taaghche' ], // 'book-alt',
 				'logo'     => $this->_get_link_logo( 'taaghche' ),
+				'desc'     => _x( 'Read this on Taaghche e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'behkhaan',
@@ -256,6 +260,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-behkhaan-profile',
 				'icon'     => [ 'misc-32', 'behkhaan' ], // 'book-alt',
 				'logo'     => $this->_get_link_logo( 'behkhaan', 'png' ),
+				'desc'     => _x( 'More about this on Behkhaan network.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'neshan',
@@ -264,6 +269,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-neshan-map',
 				'icon'     => [ 'misc-512', 'neshan' ], // 'location-alt',
 				'logo'     => $this->_get_link_logo( 'neshan' ),
+				'desc'     => _x( 'More about this on Neshan maps.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'balad',
@@ -272,6 +278,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-balad-map',
 				'icon'     => [ 'misc-512', 'balad' ], // 'location-alt',
 				'logo'     => $this->_get_link_logo( 'balad' ),
+				'desc'     => _x( 'More about this on Balad maps.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'aparat',
@@ -280,6 +287,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-aparat-video',
 				'icon'     => [ 'misc-24', 'aparat' ], // 'video-alt3',
 				'logo'     => $this->_get_link_logo( 'aparat' ),
+				'desc'     => _x( 'More about this on Aparat video platform.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'youtube',
@@ -288,6 +296,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-youtube-video',
 				'icon'     => 'youtube',
 				'logo'     => $this->_get_link_logo( 'youtube' ),
+				'desc'     => _x( 'More about this on Youtube video platform.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'email',
@@ -296,6 +305,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-email-address',
 				'icon'     => 'email',
 				'logo'     => '',
+				'desc'     => _x( 'Contact someone about this via email.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'phone',
@@ -304,6 +314,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-phone-number',
 				'icon'     => 'phone',
 				'logo'     => '',
+				'desc'     => _x( 'Contact someone about this via phone.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'mobile',
@@ -312,6 +323,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-mobile-number',
 				'icon'     => 'smartphone',
 				'logo'     => '',
+				'desc'     => _x( 'Contact someone about this via mobile phone.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'sms',
@@ -320,6 +332,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-sms-number',
 				'icon'     => 'text',
 				'logo'     => '',
+				'desc'     => _x( 'Contact someone about this via short message.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
 				'name'     => 'pdf',
@@ -328,6 +341,7 @@ class Bookmarked extends gEditorial\Module
 				'cssclass' => '-pdf-document',
 				'icon'     => 'pdf',
 				'logo'     => '',
+				'desc'     => _x( 'Read more about this as PDF format.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 		];
 	}

@@ -8,7 +8,6 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
@@ -22,11 +21,15 @@ class Attachments extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'attachments',
-			'title'  => _x( 'Attachments', 'Modules: Attachments', 'geditorial-admin' ),
-			'desc'   => _x( 'Attachment Management', 'Modules: Attachments', 'geditorial-admin' ),
-			'icon'   => 'paperclip',
-			'access' => 'stable',
+			'name'     => 'attachments',
+			'title'    => _x( 'Attachments', 'Modules: Attachments', 'geditorial-admin' ),
+			'desc'     => _x( 'Media Enhancements', 'Modules: Attachments', 'geditorial-admin' ),
+			'icon'     => 'paperclip',
+			'access'   => 'stable',
+			'keywords' => [
+				'attachment',
+				'hasshortcode',
+			],
 		];
 	}
 

@@ -165,7 +165,9 @@ trait SettingsPostTypes
 				$extra[] = $this->constant( $paired[0] );
 		}
 
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra ) );
+		return Core\Arraay::prepString(
+			$this->filters( 'posttypes_excluded',
+				Settings::posttypesExcluded( $extra ) ) );
 	}
 
 	// DEFAULT METHOD

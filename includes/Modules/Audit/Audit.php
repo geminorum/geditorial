@@ -26,6 +26,10 @@ class Audit extends gEditorial\Module
 	use Internals\FramePage;
 	use Internals\ViewEngines;
 
+	// TODO: module rename to `audited`
+	// TODO: taxonomy rename to `audition`
+
+
 	protected $disable_no_posttypes = TRUE;
 
 	// protected $caps = [

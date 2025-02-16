@@ -107,19 +107,19 @@ class Driving extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Vehicles', 'MetaBox Title', 'geditorial-driving' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-driving' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'mainbutton_title' => _x( 'Vehicles of %1$s', 'Button Title', 'geditorial-driving' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Vehicles of %2$s', 'Button Text', 'geditorial-driving' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'rowaction_title' => _x( 'Vehicles of %1$s', 'Action Title', 'geditorial-driving' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'rowaction_text'  => _x( 'Vehicles', 'Action Text', 'geditorial-driving' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: %1$s: current post title, %2$s: post-type singular name */
 			'columnrow_title' => _x( 'Vehicles of %1$s', 'Row Title', 'geditorial-driving' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: %1$s: icon markup, %2$s: post-type singular name */
 			'columnrow_text'  => _x( 'Vehicles', 'Row Text', 'geditorial-driving' ),
 		];
 

@@ -10,6 +10,8 @@ use geminorum\gEditorial\WordPress;
 class SearchSelect extends WordPress\Main
 {
 
+	// @SEE: https://johnbeales.com/2018/changing-the-auto-suggest-behaviour-in-woocommerce/
+
 	const BASE = 'geditorial';
 
 	const REST_ENDPOINT_SUFFIX     = 'searchselect';

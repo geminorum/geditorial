@@ -146,7 +146,9 @@ trait SettingsTaxonomies
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( $extra ) );
+		return Core\Arraay::prepString(
+			$this->filters( 'taxonomies_excluded',
+				Settings::taxonomiesExcluded( $extra ) ) );
 	}
 
 	protected function _hook_taxonomies_excluded( $constant, $module = NULL )
