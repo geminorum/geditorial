@@ -238,7 +238,7 @@ class Bookmarked extends gEditorial\Module
 				'title'    => _x( 'Fidibo Book', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://fidibo.com/book/{{code}}',
 				'cssclass' => '-fidibo-book',
-				'icon'     => [ 'misc-512', 'fidibo' ], // 'location-alt',
+				'icon'     => [ 'misc-16', 'fidibo' ], // 'location-alt',
 				'logo'     => $this->_get_link_logo( 'fidibo' ),
 			],
 			[
