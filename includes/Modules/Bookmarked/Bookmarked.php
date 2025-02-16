@@ -57,6 +57,7 @@ class Bookmarked extends gEditorial\Module
 			],
 			'_supports' => [
 				'shortcode_support',
+				'woocommerce_support',
 			],
 			'_constants' => [
 				'main_shortcode_constant' => [ NULL, 'content-bookmarks' ],
@@ -340,16 +341,28 @@ class Bookmarked extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->filter_self( 'prepped_data', 6, 8 );
 		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
 
 		$this->subcontent_hook__post_tabs( 10 );
 
+		if ( $this->get_setting( 'woocommerce_support' ) )
+			$this->_init_woocommerce();
+
 		if ( ! is_admin() )
 			return;
 
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
+	}
+
+	private function _init_woocommerce()
+	{
+		if ( is_admin() )
+			return;
+
+		$this->action( 'single_product_summary', 2, 35, FALSE, 'woocommerce' );
 	}
 
 	public function meta_init()
@@ -435,7 +448,19 @@ class Bookmarked extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
+		return $this->subcontent_data_summary( array_merge( [
+			'default' => '',
+			'echo'    => FALSE,
+		], (array) $atts ) );
+	}
+
+	public function single_product_summary( $before = '', $after = '' )
+	{
+		return $this->main_shortcode( [
+			'before' => $before,
+			'after'  => $after,
+			'echo'   => TRUE,
+		] );
 	}
 
 	public function audit_get_default_terms( $terms, $taxonomy )
@@ -478,5 +503,36 @@ class Bookmarked extends gEditorial\Module
 			$key,
 			$ext ?? self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'
 		);
+	}
+
+	public function prepped_data( $list, $context, $post, $data, $types, $selectable )
+	{
+		$posttype = WordPress\Post::type( $post );
+		$options  = Core\Arraay::reKey( $this->subcontent_define_type_options( $context, $posttype ), 'name' );
+
+		foreach ( $data as $key => $row ) {
+
+			$type = empty( $row['type'] ) ? 'default' : $row['type'];
+
+			if ( empty( $row['link'] ) && ! empty( $options[$type]['template'] ) )
+				$list[$key]['link'] = Core\Text::replaceTokens( $options[$type]['template'], $list[$key] );
+			else
+				$list[$key]['link'] = $row['link'];
+
+			if ( empty( $row['desc'] ) && ! empty( $options[$type]['desc'] ) )
+				$list[$key]['desc'] = Core\Text::replaceTokens( $options[$type]['desc'], $list[$key] );
+			else
+				$list[$key]['desc'] = $row['desc'];
+
+			if ( empty( $list[$key]['_icon'] ) && ! empty( $options[$type]['icon'] ) )
+				$list[$key]['_icon'] = Helper::getIcon( $options[$type]['icon'] );
+
+			if ( empty( $list[$key]['_logo'] ) && ! empty( $options[$type]['logo'] ) )
+				$list[$key]['_logo'] = $options[$type]['logo'];
+
+			$list[$key]['_type_options'] = $options[$type];
+		}
+
+		return $list;
 	}
 }
