@@ -161,17 +161,17 @@ trait SubContents
 		return $this->filters( 'subcontent_fields', $fields, $enabled, $required, $context );
 	}
 
-	protected function subcontent_define_searchable_fields()
+	protected function subcontent_define_searchable_fields( $context = 'display', $posttype = NULL )
 	{
 		return [
 			// 'fullname' => [ 'human', 'department' ], // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_searchable_fields( $context = 'display' )
+	protected function subcontent_get_searchable_fields( $context = 'display', $posttype = NULL )
 	{
 		return $this->filters( 'searchable_fields',
-			$this->subcontent_define_searchable_fields(), $context );
+			$this->subcontent_define_searchable_fields(), $context, $posttype );
 	}
 
 	protected function subcontent_define_required_fields()
@@ -182,36 +182,45 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_get_importable_fields( $context = 'display' )
+	protected function subcontent_get_importable_fields( $context = 'display', $posttype = NULL )
 	{
 		return $this->filters( 'importable_fields',
-			$this->subcontent_define_required_fields(), $context );
+			$this->subcontent_define_required_fields(),
+			$context,
+			$posttype
+		);
 	}
 
-	protected function subcontent_define_importable_fields()
+	protected function subcontent_define_importable_fields( $context = 'display', $posttype = NULL )
 	{
 		return [
 			// 'name' => 'type', // <---- EXAMPLE: 'target_key' => 'target_column'
 		];
 	}
 
-	protected function subcontent_get_required_fields( $context = 'display' )
+	protected function subcontent_get_required_fields( $context = 'display', $posttype = NULL )
 	{
 		return $this->filters( 'required_fields',
-			$this->subcontent_define_required_fields(), $context );
+			$this->subcontent_define_required_fields(),
+			$context,
+			$posttype
+		);
 	}
 
-	protected function subcontent_define_readonly_fields()
+	protected function subcontent_define_readonly_fields( $context = 'display', $posttype = NULL )
 	{
 		return [
 			// 'name' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_readonly_fields( $context = 'display' )
+	protected function subcontent_get_readonly_fields( $context = 'display', $posttype = NULL )
 	{
 		return $this->filters( 'readonly_fields',
-			$this->subcontent_define_readonly_fields(), $context );
+			$this->subcontent_define_readonly_fields(),
+			$context,
+			$posttype
+		);
 	}
 
 	protected function subcontent_define_selectable_fields( $context, $posttype = NULL )
@@ -230,37 +239,43 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_hidden_fields()
+	protected function subcontent_define_hidden_fields( $context = 'display', $posttype = NULL )
 	{
 		return [
 			// 'name' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_hidden_fields( $context = 'display' )
+	protected function subcontent_get_hidden_fields( $context = 'display', $posttype = NULL )
 	{
 		return $this->filters( 'hidden_fields',
 			Core\Arraay::prepString(
-				$this->subcontent_define_hidden_fields(), [
+				$this->subcontent_define_hidden_fields( $context, $posttype ), [
 				'postid',
 				'order',
-			] ), $context );
+			] ),
+			$context,
+			$posttype
+		);
 	}
 
-	protected function subcontent_define_unique_fields()
+	protected function subcontent_define_unique_fields( $context = 'display', $posttype = NULL )
 	{
 		return [
 			// 'identity' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_unique_fields( $context = 'display' )
+	protected function subcontent_get_unique_fields( $context = 'display', $posttype = NULL )
 	{
 		return $this->filters( 'unique_fields',
-			$this->subcontent_define_unique_fields(), $context );
+			$this->subcontent_define_unique_fields(),
+			$context,
+			$posttype
+		);
 	}
 
-	protected function subcontent_get_meta_mapping()
+	protected function subcontent_get_meta_mapping( $context = NULL, $posttype = NULL )
 	{
 		return [
 			// 'name' => '_metakey', // <---- EXAMPLE
@@ -268,7 +283,7 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_base_data_mapping()
+	protected function subcontent_base_data_mapping( $context = 'display', $posttype = NULL )
 	{
 		return [
 			'comment_content' => 'desc',    // `text`
@@ -292,9 +307,9 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_get_data_mapping()
+	protected function subcontent_get_data_mapping( $context = NULL, $posttype = NULL )
 	{
-		return $this->subcontent_base_data_mapping();
+		return $this->subcontent_base_data_mapping( $context, $posttype );
 	}
 
 	protected function subcontent_update_sort( $raw = [], $post = FALSE, $mapping = NULL )
@@ -306,10 +321,10 @@ trait SubContents
 	}
 
 	// FIXME: always update the `comment_date` to current time/treat comment date as modified
-	protected function subcontent_insert_data_row( $raw = [], $post = FALSE, $mapping = NULL )
+	protected function subcontent_insert_data_row( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL )
 	{
-		$data = $this->subcontent_sanitize_data( $raw, $post, $mapping );
-		$data = $this->subcontent_prep_data_for_save( $data, $post, $mapping );
+		$data = $this->subcontent_sanitize_data( $raw, $context, $post, $mapping );
+		$data = $this->subcontent_prep_data_for_save( $data, $context, $post, $mapping );
 		$meta = [];
 
 		if ( $post && ( $post = WordPress\Post::get( $post ) ) )
@@ -327,7 +342,7 @@ trait SubContents
 		if ( ! array_key_exists( 'comment_approved', $data ) && ( $status = $this->subcontent_get_comment_status() ) )
 			$data['comment_approved'] = $status;
 
-		if ( FALSE === ( $filtered = $this->filters( 'subcontent_insert_data_row', $data, $post, $mapping, $raw ) ) )
+		if ( FALSE === ( $filtered = $this->filters( 'subcontent_insert_data_row', $data, $context, $post, $mapping, $raw ) ) )
 			return $this->log( 'NOTICE', 'SUBCONTENT INSERT DATA SKIPPED BY FILTER ON POST-ID:'.( $post ? $post->ID : 'UNKNOWN' ) );
 
 		if ( array_key_exists( 'comment_meta', $data ) ) {
@@ -397,18 +412,18 @@ trait SubContents
 	}
 
 	// NOTE: Does final preparations and additions into data before saving.
-	protected function subcontent_prep_data_for_save( $raw, $post = FALSE, $mapping = NULL, $metas = NULL )
+	protected function subcontent_prep_data_for_save( $raw, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL )
 	{
 		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping();
+			$mapping = $this->subcontent_get_data_mapping( $context, $post );
 
 		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping();
+			$metas = $this->subcontent_get_meta_mapping( $context, $post );
 
 		if ( is_object( $raw ) )
 			$raw = Core\Arraay::fromObject( $raw );
 
-		$raw  = $this->filters( 'subcontent_pre_prep_data', $raw, $post, $mapping, $metas );
+		$raw  = $this->filters( 'subcontent_pre_prep_data', $raw, $context, $post, $mapping, $metas );
 		$data = [ 'comment_meta' => array_key_exists( '_meta', $raw ) ? $raw['_meta'] : [] ];
 		unset( $raw['_meta'] );
 
@@ -430,13 +445,13 @@ trait SubContents
 		return $data;
 	}
 
-	protected function subcontent_prep_data_from_query( $raw, $post = FALSE, $mapping = NULL, $metas = NULL, $order = NULL )
+	protected function subcontent_prep_data_from_query( $raw, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL, $order = NULL )
 	{
 		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping();
+			$mapping = $this->subcontent_get_data_mapping( $context, $post );
 
 		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping();
+			$metas = $this->subcontent_get_meta_mapping( $context, $post );
 
 		if ( is_object( $raw ) )
 			$raw = Core\Arraay::fromObject( $raw );
@@ -458,23 +473,23 @@ trait SubContents
 		if ( empty( $data['order'] ) )
 			$data['order'] = $order ?? '1';
 
-		return $this->filters( 'subcontent_after_prep_data', $data, $post, $mapping, $metas );
+		return $this->filters( 'subcontent_after_prep_data', $data, $context, $post, $mapping, $metas );
 	}
 
 	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
 	// TODO: support for autofill fields with tokens: `date: '{{now}}'`
-	protected function subcontent_sanitize_data( $raw = [], $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
+	protected function subcontent_sanitize_data( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
 	{
 		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping();
+			$mapping = $this->subcontent_get_data_mapping( $context, $post );
 
 		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping();
+			$metas = $this->subcontent_get_meta_mapping( $context, $post );
 
 		if ( is_null( $allowed_raw ) )
 			$allowed_raw = [ 'data', 'order' ];
 
-		$types = $this->subcontent_get_field_types( 'sanitize' );
+		$types = $this->subcontent_get_field_types( $context );
 		$data  = [];
 
 		foreach ( $raw as $raw_key => $raw_value ) {
@@ -553,26 +568,26 @@ trait SubContents
 			}
 		}
 
-		return $this->filters( 'subcontent_sanitize_data', $data, $post, $raw, $mapping, $metas, $allowed_raw );
+		return $this->filters( 'subcontent_sanitize_data', $data, $context, $post, $raw, $mapping, $metas, $allowed_raw );
 	}
 
-	protected function subcontent_get_data_mapped( $items, $post = FALSE, $mapping = NULL, $metas = NULL )
+	protected function subcontent_get_data_mapped( $items, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL )
 	{
 		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping();
+			$mapping = $this->subcontent_get_data_mapping( $context, $post );
 
 		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping();
+			$metas = $this->subcontent_get_meta_mapping( $context, $post );
 
 		$data = [];
 
 		foreach ( $items as $offset => $item )
-			$data[] = $this->subcontent_prep_data_from_query( $item, $post, $mapping, $metas, $offset + 1 );
+			$data[] = $this->subcontent_prep_data_from_query( $item, $context, $post, $mapping, $metas, $offset + 1 );
 
-		return $this->filters( 'subcontent_data_mapped', $data, $post, $items, $mapping, $metas );
+		return $this->filters( 'subcontent_data_mapped', $data, $context, $post, $items, $mapping, $metas );
 	}
 
-	protected function subcontent_get_data_all( $parent = NULL, $extra = [], $map = TRUE )
+	protected function subcontent_get_data_all( $parent = NULL, $context = NULL, $map = TRUE, $extra = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $parent ) )
 			return FALSE;
@@ -592,9 +607,9 @@ trait SubContents
 		], $extra );
 
 		$query = new \WP_Comment_Query;
-		$items = $query->query( $args );
+		$items = $this->filters( 'pre_data_all', $query->query( $args ), $context, $post, $args );
 
-		return $map ? $this->subcontent_get_data_mapped( $items, $post ) : $items;
+		return $map ? $this->subcontent_get_data_mapped( $items, $context, $post ) : $items;
 	}
 
 	protected function subcontent_get_data_count( $parent = NULL, $context = NULL, $extra = [] )
@@ -662,7 +677,7 @@ trait SubContents
 	 * @param  string $context
 	 * @return array  $prepped
 	 */
-	protected function subcontent_get_prepped_data( $data, $context = 'display' )
+	protected function subcontent_get_prepped_data( $data, $context = 'display', $post = NULL )
 	{
 		$list       = [];
 		$types      = $this->subcontent_get_field_types( $context );
@@ -676,7 +691,7 @@ trait SubContents
 
 				if ( empty( $value ) || ! trim( $value ) ) {
 
-					$prepped[$key] = Helper::htmlEmpty();
+					$prepped[$key] = 'display' === $context ? Helper::htmlEmpty() : '';
 
 				} else {
 
@@ -694,7 +709,7 @@ trait SubContents
 			$list[$offset] = $prepped;
 		}
 
-		return $this->filters( 'prepped_data', $list, $context, $data );
+		return $this->filters( 'prepped_data', $list, $context, $post, $data, $types, $selectable );
 	}
 
 	protected function subcontent_get_empty_notice( $context = 'display', $string_key = 'empty' )
@@ -793,7 +808,7 @@ trait SubContents
 			if ( FALSE === ( $data = $this->subcontent_prep_data_from_import( $prepped, $current, $post, $column, $title ) ) )
 				continue;
 
-			if ( FALSE === $this->subcontent_insert_data_row( $data, $post ) )
+			if ( FALSE === $this->subcontent_insert_data_row( $data, 'import', $post ) )
 				$this->log( 'NOTICE', 'SUBCONTENT INSERT DATA FAILED ON POST-ID:'.( $post ? $post->ID : 'UNKNOWN' ) );
 		}
 	}
@@ -857,10 +872,10 @@ trait SubContents
 				'callback' => function ( $request ) {
 					$post = WordPress\Post::get( (int) $request['linked'] );
 
-					if ( FALSE === $this->subcontent_insert_data_row( $request->get_json_params(), $post ) )
+					if ( FALSE === $this->subcontent_insert_data_row( $request->get_json_params(), 'rest', $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data_all( $post ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( $post, 'rest' ) );
 				},
 				'permission_callback' => $edit,
 			],
@@ -876,7 +891,7 @@ trait SubContents
 					if ( ! $this->subcontent_delete_data_row( $request['_id'], $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data_all( $post ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( $post, 'rest' ) );
 				},
 
 				'permission_callback' => $edit,
@@ -885,7 +900,7 @@ trait SubContents
 				'methods'  => \WP_REST_Server::READABLE,
 				'args'     => $arguments,
 				'callback' => function ( $request ) {
-					return rest_ensure_response( $this->subcontent_get_data_all( (int) $request['linked'] ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( (int) $request['linked'], 'rest' ) );
 				},
 				'permission_callback' => $read,
 			],
@@ -917,7 +932,7 @@ trait SubContents
 					if ( FALSE === $this->subcontent_update_sort( $request->get_json_params(), $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data_all( $post ) );
+					return rest_ensure_response( $this->subcontent_get_data_all( $post, 'rest' ) );
 				},
 				'permission_callback' => $edit,
 			],
@@ -960,7 +975,7 @@ trait SubContents
 	{
 		$na     = gEditorial\Plugin::na( FALSE );
 		$parent = WordPress\Post::get( (int) $comment->comment_post_ID );
-		$item   = $this->subcontent_prep_data_from_query( $comment, $parent );
+		$item   = $this->subcontent_prep_data_from_query( $comment, $context, $parent );
 		$data   = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent, $context );
 		$author = $datetime = $timeago = '';
 
@@ -1031,13 +1046,13 @@ trait SubContents
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $content;
 
-		if ( ! $data = $this->subcontent_get_data_all( $post ) )
+		if ( ! $data = $this->subcontent_get_data_all( $post, $args['context'] ?? 'display' ) )
 			return $content;
 
 		if ( is_null( $args['fields'] ) )
 			$args['fields'] = $this->subcontent_get_fields( $args['context'] );
 
-		$data = $this->subcontent_get_prepped_data( $data, $args['context'] );
+		$data = $this->subcontent_get_prepped_data( $data, $args['context'], $post );
 		$html = Core\HTML::tableSimple( $data, $args['fields'], FALSE );
 
 		return ShortCode::wrap( $html, $constant, $args );
@@ -1214,7 +1229,7 @@ trait SubContents
 
 	protected function subcontent_delete_data_all( $post, $force_delete = TRUE )
 	{
-		$data = $this->subcontent_get_data_all( $post, [], FALSE );
+		$data = $this->subcontent_get_data_all( $post, 'delete', FALSE );
 
 		foreach ( $data as $comment )
 			if ( FALSE === wp_delete_comment( $comment, $force_delete ) )
@@ -1225,13 +1240,13 @@ trait SubContents
 
 	protected function subcontent_clone_data_all( $from, $to, $fresh = FALSE )
 	{
-		$data = $this->subcontent_get_data_all( $from );
+		$data = $this->subcontent_get_data_all( $from, 'clone' );
 
 		if ( $fresh && ( FALSE === $this->subcontent_delete_data_all( $to ) ) )
 			return FALSE;
 
 		foreach ( $data as $row )
-			if ( FALSE === $this->subcontent_insert_data_row( $this->subcontent_copy_data_row( $row ), $to ) )
+			if ( FALSE === $this->subcontent_insert_data_row( $this->subcontent_copy_data_row( $row ), 'clone', $to ) )
 				return FALSE;
 
 		return count( $data );

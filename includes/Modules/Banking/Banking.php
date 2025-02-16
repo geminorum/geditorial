@@ -219,7 +219,7 @@ class Banking extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
+		$this->filter( 'subcontent_provide_summary', 5, 8, FALSE, $this->base );
 		$this->filter_self( 'subcontent_pre_prep_data', 4, 10 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
@@ -374,7 +374,7 @@ class Banking extends gEditorial\Module
 		return $data;
 	}
 
-	public function subcontent_pre_prep_data( $raw, $post, $mapping, $metas )
+	public function subcontent_pre_prep_data( $raw, $context, $post, $mapping, $metas )
 	{
 		$sanitize = $this->get_setting( 'force_sanitize' );
 		$data     = [];

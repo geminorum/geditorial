@@ -123,7 +123,7 @@ class Iranian extends gEditorial\Module
 
 		$this->filter( 'info_from_iban', 4, 8, FALSE, $this->base );
 		$this->filter( 'info_from_card_number', 4, 8, FALSE, $this->base );
-		$this->filter_module( 'banking', 'subcontent_pre_prep_data', 4, 8 );
+		$this->filter_module( 'banking', 'subcontent_pre_prep_data', 5, 8 );
 	}
 
 	public function meta_init()
@@ -355,7 +355,7 @@ class Iranian extends gEditorial\Module
 		return $info;
 	}
 
-	public function banking_subcontent_pre_prep_data( $raw, $post, $mapping, $metas )
+	public function banking_subcontent_pre_prep_data( $raw, $context, $post, $mapping, $metas )
 	{
 		$data             = $raw;
 		$data['bank']     = ModuleHelper::sanitizeBank( $raw['bank'] ?? '', $raw['bankname'] ?? '' );
