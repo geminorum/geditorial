@@ -39,6 +39,19 @@ class WcIdentity extends gEditorial\Module
 					'title'       => _x( 'Identity Number Validation', 'Setting Title', 'geditorial-wc-identity' ),
 					'description' => _x( 'Adds extra checks for national identity number.', 'Setting Description', 'geditorial-wc-identity' ),
 				],
+				[
+					'field'       => 'form_row_cssclass',
+					'type'        => 'select',
+					'title'       => _x( 'Form Row', 'Setting Title', 'geditorial-wc-identity' ),
+					'description' => _x( 'Defines the positioning of the identity field.', 'Setting Description', 'geditorial-wc-identity' ),
+					'default'     => 'form-row-default',
+					'values'      => [
+						'form-row-default' => _x( 'Default', 'Setting Option', 'geditorial-wc-identity' ),
+						'form-row-wide'    => _x( 'Wide', 'Setting Option', 'geditorial-wc-identity' ),
+						'form-row-first'   => _x( 'First', 'Setting Option', 'geditorial-wc-identity' ),
+						'form-row-lase'    => _x( 'Last', 'Setting Option', 'geditorial-wc-identity' ),
+					],
+				],
 			],
 		];
 	}
@@ -107,8 +120,8 @@ class WcIdentity extends gEditorial\Module
 
 		$fields['billing']['customer_identity_number'] = [
 			'type'        => 'text',
-			'class'       => [ 'form-row-wide', 'identity_number' ],
-			'input_class' => [ 'ltr', 'rtl-placeholder' ],
+			'class'       => [ 'identity_number', $this->get_setting( 'form_row_cssclass', 'form-row-default' ) ],
+			'input_class' => Core\L10n::rtl() ? [ 'ltr', 'rtl-placeholder' ] : [],
 			'label'       => _x( 'Identity Number', 'Checkout Field Label', 'geditorial-wc-identity' ),
 			// 'placeholder' => _x( 'National Identity Number', 'Checkout Field Placeholder', 'geditorial-wc-identity' ),
 			'priority'    => 25, // before the `company` with priority `30`
@@ -164,8 +177,8 @@ class WcIdentity extends gEditorial\Module
 	{
 		$identity_number = [
 			'type'        => 'text',
-			'class'       => [ 'form-row-wide', 'identity_number' ],
-			'input_class' => [ 'ltr', 'rtl-placeholder' ],
+			'class'       => [ 'identity_number', $this->get_setting( 'form_row_cssclass', 'form-row-default' ) ],
+			'input_class' => Core\L10n::rtl() ? [ 'ltr', 'rtl-placeholder' ] : [],
 			'label'       => _x( 'Identity Number', 'Account Field Label', 'geditorial-wc-identity' ),
 			// 'placeholder' => _x( 'National Identity Number', 'Account Field Placeholder', 'geditorial-wc-identity' ),
 			'required'    => TRUE,
@@ -227,8 +240,8 @@ class WcIdentity extends gEditorial\Module
 	{
 		$identity_number = [
 			'type'        => 'text',
-			'class'       => [ 'form-row-wide', 'identity_number' ],
-			'input_class' => [ 'ltr', 'rtl-placeholder' ],
+			'class'       => [ 'identity_number', $this->get_setting( 'form_row_cssclass', 'form-row-default' ) ],
+			'input_class' => Core\L10n::rtl() ? [ 'ltr', 'rtl-placeholder' ] : [],
 			'label'       => _x( 'Identity Number', 'Register Field Label', 'geditorial-wc-identity' ),
 			'placeholder' => _x( 'National Identity Number', 'Register Field Placeholder', 'geditorial-wc-identity' ),
 			'required'    => TRUE,
