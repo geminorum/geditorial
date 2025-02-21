@@ -80,22 +80,13 @@ class Attachment extends Core\Base
 	}
 
 	/**
-	 * Retrieves post rest route given a post ID or post object.
+	 * Retrieves attachment rest route given an attachment ID or attachment object.
 	 *
 	 * @param  null|int|object $post
 	 * @return false|string $route
 	 */
 	public static function getRestRoute( $post = NULL )
 	{
-		if ( ! $post = Post::get( $post ) )
-			return FALSE;
-
-		if ( ! $object = PostType::object( $post ) )
-			return FALSE;
-
-		if ( ! $object->show_in_rest )
-			return FALSE;
-
-		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $post->ID );
+		return Post::getRestRoute( $post );
 	}
 }

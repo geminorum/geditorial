@@ -30,6 +30,7 @@ class WooCommerce extends Core\Base
 	}
 
 	// NOTE: it's always `product` then all sub-types are registered as a taxonomy `$product->get_type()`
+	// @SEE: https://woocommerce.com/document/installed-taxonomies-post-types/#section-2
 	// @REF https://rudrastyh.com/woocommerce/product-types.html
 	public static function getProductPosttype()
 	{

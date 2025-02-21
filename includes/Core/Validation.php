@@ -63,6 +63,7 @@ class Validation extends Base
 		return TRUE;
 	}
 
+	// @SEE: https://en.wikipedia.org/wiki/National_identification_number
 	public static function sanitizeIdentityNumber( $input )
 	{
 		$sanitized = Number::translate( Text::trim( $input ) );
@@ -79,6 +80,7 @@ class Validation extends Base
 	// @REF: https://fandogh.github.io/codemeli/codemeli.html
 	// @REF: https://gist.github.com/ebraminio/5292017#gistcomment-3435493
 	// @SEE: http://www.aliarash.com/article/codemeli/codemeli.htm
+	// @SEE: https://en.wikipedia.org/wiki/Luhn_algorithm
 	// FIXME: Check for the first 3 digits @see persiantools.js
 	public static function isIranNationalCode( $input )
 	{

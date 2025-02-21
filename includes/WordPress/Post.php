@@ -386,7 +386,11 @@ class Post extends Core\Base
 		if ( ! $object->show_in_rest )
 			return FALSE;
 
-		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $post->ID );
+		return sprintf( '/%s/%s/%d',
+			$object->rest_namespace,
+			$object->rest_base ?: $object->name,
+			$post->ID
+		);
 	}
 
 	/**

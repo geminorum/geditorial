@@ -512,7 +512,11 @@ class Term extends Core\Base
 		if ( ! $object->show_in_rest )
 			return FALSE;
 
-		return sprintf( '/%s/%s/%d', $object->rest_namespace, $object->rest_base, $term->term_id );
+		return sprintf( '/%s/%s/%d',
+			$object->rest_namespace,
+			$object->rest_base ?: $object->name,
+			$term->term_id
+		);
 	}
 
 	public static function image( $term, $context = NULL, $size = NULL, $thumbnail_id = NULL )
