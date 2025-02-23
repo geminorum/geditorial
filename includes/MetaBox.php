@@ -856,35 +856,36 @@ class MetaBox extends WordPress\Main
 		// 	return FALSE;
 
 		return [
-			'name'        => $field,
-			'rest'        => $field,      // FALSE to disable
-			'title'       => NULL,        // self::getString( $field, $posttype, 'titles', $field, $module ),
-			'description' => NULL,        // self::getString( $field, $posttype, 'descriptions', FALSE, $module ),
-			'access_view' => NULL,        // @SEE: `$this->access_posttype_field()`
-			'access_edit' => NULL,        // @SEE: `$this->access_posttype_field()`
-			'sanitize'    => NULL,
-			'sanitize'    => NULL,        // callback
-			'prep'        => NULL,        // callback
-			'pattern'     => NULL,        // HTML5 input pattern
-			'default'     => NULL,        // currently only on rest
-			'datatype'    => NULL,        // DataType Class
-			'data_unit'   => NULL,        // the unit which in the data is stored
-			'data_length' => NULL,        // typical length of the data
-			'icon'        => 'smiley',
-			'type'        => 'text',
-			'context'     => NULL,        // default is `mainbox`
-			'quickedit'   => FALSE,
-			'values'      => [],
-			'none_title'  => NULL,
-			'none_value'  => '',
-			'repeat'      => FALSE,
-			'ltr'         => FALSE,
-			'taxonomy'    => FALSE,
-			'posttype'    => FALSE,
-			'exclude'     => FALSE,       // `NULL` means parent post
-			'role'        => FALSE,
-			'group'       => 'general',
-			'order'       => 1000,
+			'name'         => $field,
+			'rest'         => $field,      // FALSE to disable
+			'title'        => NULL,        // self::getString( $field, $posttype, 'titles', $field, $module ),
+			'description'  => NULL,        // self::getString( $field, $posttype, 'descriptions', FALSE, $module ),
+			'access_view'  => NULL,        // @SEE: `$this->access_posttype_field()`
+			'access_edit'  => NULL,        // @SEE: `$this->access_posttype_field()`
+			'sanitize'     => NULL,
+			'sanitize'     => NULL,        // callback
+			'prep'         => NULL,        // callback
+			'pattern'      => NULL,        // HTML5 input pattern
+			'default'      => NULL,        // currently only on rest
+			'datatype'     => NULL,        // DataType Class
+			'data_unit'    => NULL,        // the unit which in the data is stored
+			'data_length'  => NULL,        // typical length of the data
+			'icon'         => 'smiley',
+			'type'         => 'text',
+			'context'      => NULL,        // default is `mainbox`
+			'quickedit'    => FALSE,
+			'autocomplete' => 'off',       // NULL to drop the attribute,
+			'values'       => [],
+			'none_title'   => NULL,
+			'none_value'   => '',
+			'repeat'       => FALSE,
+			'ltr'          => FALSE,
+			'taxonomy'     => FALSE,
+			'posttype'     => FALSE,
+			'exclude'      => FALSE,       // `NULL` means parent post
+			'role'         => FALSE,
+			'group'        => 'general',
+			'order'        => 1000,
 		];
 	}
 
@@ -990,13 +991,14 @@ class MetaBox extends WordPress\Main
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
-			'type'        => 'text',
-			'value'       => $value ?: '',
-			'name'        => self::_getNameAttr( $args, $module ),
-			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
-			'pattern'     => $args['pattern'],
-			'placeholder' => $args['title'],
-			'class'       => [
+			'type'         => 'text',
+			'value'        => $value ?: '',
+			'name'         => self::_getNameAttr( $args, $module ),
+			'title'        => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'pattern'      => $args['pattern'],
+			'autocomplete' => $args['autocomplete'],
+			'placeholder'  => $args['title'],
+			'class'        => [
 				'form-control',
 				sprintf( '%s-inputgeneral', static::BASE ),
 				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
@@ -1240,6 +1242,9 @@ class MetaBox extends WordPress\Main
 				$atts['dir'] = 'ltr';
 				$atts['data']['ortho'] = 'identity';
 
+				// @REF: https://community.bitwarden.com/t/never-autofill-social-security-number/17900
+				$atts['autocomplete'] = 'off';
+
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputidentity';
 
@@ -1291,12 +1296,13 @@ class MetaBox extends WordPress\Main
 			$args['description'] = self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
-			'type'        => 'number',
-			'dir'         => 'ltr',
-			'value'       => $value ?: '',
-			'name'        => self::_getNameAttr( $args, $module ),
-			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
-			'pattern'     => $args['pattern'],
+			'type'         => 'number',
+			'dir'          => 'ltr',
+			'value'        => $value ?: '',
+			'name'         => self::_getNameAttr( $args, $module ),
+			'title'        => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'pattern'      => $args['pattern'],
+			'autocomplete' => $args['autocomplete'],
 			// 'placeholder' => $args['title'],
 			'class'       => [
 				'form-control',

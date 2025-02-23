@@ -199,6 +199,9 @@ trait PostTypeFields
 			if ( ! isset( $args['icon'] ) )
 				$args['icon'] = Services\PostTypeFields::getFieldIcon( $field, $args, $posttype );
 
+			if ( array_key_exists( 'autocomplete', $args ) && FALSE === $args['autocomplete'] )
+				$args['autocomplete'] = 'off';
+
 			$fields[$field] = self::atts( [
 				'type'        => 'text',
 				'name'        => $field,
@@ -226,6 +229,7 @@ trait PostTypeFields
 				'export_title'   => NULL,    // the export column title
 				'data_unit'      => NULL,    // the unit which in the data is stored
 				'data_length'    => NULL,    // typical length of the data // FIXME: implement this!
+				'autocomplete'   => 'off',   // NULL to drop the attr // FIXME: implement this!
 				// 'discovery'      => FALSE,   // REGEX string or callback array
 
 				'values'      => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
@@ -902,7 +906,8 @@ trait PostTypeFields
 						echo '<span class="title">'.$args['title'].'</span>';
 						echo '<span class="input-text-wrap">';
 						echo '<textarea name="'.Core\HTML::escape( $name ).'" value=""';
-						echo 'class="'.Core\HTML::prepClass( $class ).'"';
+						echo ' class="'.Core\HTML::prepClass( $class ).'"';
+						echo $args['autocomplete'] ? ( ' autocomplete="'.$args['autocomplete'].'"') : '';
 						echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
 						echo $args['ltr'] ? ' dir="ltr"' : '';
 						echo ' rows="1" /></textarea></span>';
@@ -916,7 +921,8 @@ trait PostTypeFields
 						echo '<span class="title">'.$args['title'].'</span>';
 						echo '<span class="input-text-wrap">';
 						echo '<input name="'.Core\HTML::escape( $name ).'" value=""';
-						echo 'class="'.Core\HTML::prepClass( $class ).'"';
+						echo ' class="'.Core\HTML::prepClass( $class ).'"';
+						echo $args['autocomplete'] ? ( ' autocomplete="'.$args['autocomplete'].'"') : '';
 						echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
 						echo $args['ltr'] ? ' dir="ltr"' : '';
 						echo $args['type'] === 'number' ? ' type="number" ' : ' type="text" ';
