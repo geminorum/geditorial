@@ -126,9 +126,10 @@ body.disable-posttype-date div.misc-pub-section.curtime.misc-pub-curtime {
   }
 }
 
-.-wrap.-multiple-double-table {
-  table td:last-of-type {
-    width: 75%;
+.-wrap.-double-column-table {
+  table td:first-of-type {
+    width: 35%;
+    text-align: right;
   }
 }
 

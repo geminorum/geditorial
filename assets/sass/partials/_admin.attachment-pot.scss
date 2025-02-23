@@ -118,6 +118,7 @@
         //   // cursor: grab;
         // }
 
+        /* stylelint-disable-next-line no-duplicate-selectors */
         .-delete {
           position: absolute;
           top: -$spacer * 0.5;
