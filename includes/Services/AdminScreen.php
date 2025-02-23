@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class AdminScreen extends WordPress\Main
@@ -27,6 +28,11 @@ class AdminScreen extends WordPress\Main
 			return;
 
 		$extra = [];
+
+		if ( ! empty( $posttype->readonly_title ) ) {
+			$extra[] = 'readonly-posttype-title';
+			self::_hook_editform_readonly_title( $screen );
+		}
 
 		if ( ! empty( $posttype->tinymce_disabled ) )
 			$extra[] = 'disable-posttype-tinymce';
@@ -56,5 +62,23 @@ class AdminScreen extends WordPress\Main
 			static function ( $classes ) use ( $extra ) {
 				return trim( $classes ).' '.Core\HTML::prepClass( $extra );
 			} );
+	}
+
+	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
+	private static function _hook_editform_readonly_title( $screen = NULL )
+	{
+		add_action( 'edit_form_after_title', static function ( $post ) {
+
+			$title = WordPress\Post::title( $post );
+			$after = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated.', 'Service: AdminScreen: ReadOnly Title Info', 'geditorial-admin' ) );
+
+			echo Core\HTML::wrap(
+				$title.' '.$after,
+				'-readonly-title',
+				TRUE,
+				[],
+				sprintf( '%s-readonlytitle', static::BASE )
+			);
+		}, 1, 1 );
 	}
 }

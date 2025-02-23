@@ -119,6 +119,7 @@ trait CorePostTypes
 			'custom_captype'    => FALSE,
 			'primary_taxonomy'  => NULL,
 			'status_taxonomy'   => NULL,
+			'readonly_title'    => NULL,
 			'tinymce_disabled'  => NULL,
 			'slug_disabled'     => NULL,
 			'date_disabled'     => NULL,
@@ -297,6 +298,7 @@ trait CorePostTypes
 				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP]   = TRUE === $value ? $this->constant( $setting, $setting ) : $value; break;
 				case 'status_taxonomy' : $args[Services\PrimaryTaxonomy::STATUS_TAX_PROP] = TRUE === $value ? $this->constant( $setting, $setting ) : $value; break;
 
+				case 'readonly_title':
 				case 'tinymce_disabled':
 				case 'slug_disabled':
 				case 'date_disabled':

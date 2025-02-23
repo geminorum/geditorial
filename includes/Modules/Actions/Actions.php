@@ -117,6 +117,7 @@ class Actions extends gEditorial\Module
 		$this->action( 'edit_form_after_title' );
 	}
 
+	// TODO: move to `AdminScreen` service
 	public function edit_form_after_title( $post )
 	{
 		echo '<div id="postbox-container-after-title" class="postbox-container">';

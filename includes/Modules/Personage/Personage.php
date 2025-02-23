@@ -372,6 +372,7 @@ class Personage extends gEditorial\Module
 			'category_taxonomy' => TRUE,
 			'status_taxonomy'   => TRUE,
 
+			'readonly_title'    => TRUE,
 			'slug_disabled'     => TRUE,
 			'date_disabled'     => TRUE,
 			'author_disabled'   => TRUE,
@@ -439,7 +440,6 @@ class Personage extends gEditorial\Module
 
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->_hook_editform_readonly_title();
 				$this->_hook_editform_meta_summary( [
 					'first_name'      => NULL,
 					'last_name'       => NULL,

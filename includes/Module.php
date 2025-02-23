@@ -735,21 +735,7 @@ class Module extends WordPress\Module
 		return FALSE;
 	}
 
-	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
-	protected function _hook_editform_readonly_title()
-	{
-		add_action( 'edit_form_after_title', function ( $post ) {
-			$html = WordPress\Post::title( $post );
-			$info = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated', 'Module: ReadOnly Title Info', 'geditorial-admin' ) );
-			echo $this->wrap(
-				$html.' '.$info,
-				'-readonly-title',
-				TRUE,
-				sprintf( '%s-readonlytitle', $this->base )
-			);
-		}, 1, 1 );
-	}
-
+	// TODO: move to `AdminScreen` service
 	protected function _hook_editform_meta_summary( $fields = NULL, $priority = NULL )
 	{
 		add_action( 'edit_form_after_title', function ( $post ) use ( $fields ) {
