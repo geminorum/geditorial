@@ -7,12 +7,12 @@ class Template extends WordPress\Main
 
 	const BASE = 'geditorial';
 
-	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '' )
+	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '', $metakey = NULL )
 	{
 		if ( ! $term = WordPress\Term::get( $term_id, $taxonomy ) )
 			return FALSE;
 
-		if ( ! $term_image_id = get_term_meta( $term->term_id, 'image', TRUE ) )
+		if ( ! $term_image_id = get_term_meta( $term->term_id, $metakey ?? 'image', TRUE ) )
 			return FALSE;
 
 		if ( is_null( $size ) )
@@ -32,12 +32,13 @@ class Template extends WordPress\Main
 		$args = self::atts( [
 			'id'       => NULL,
 			'taxonomy' => '',
+			'field'    => NULL,
 			'size'     => NULL,
 			'alt'      => FALSE,
-			'class'    => '-term-image',
+			'class'    => '-term-image img-fluid',
 		], $atts );
 
-		if ( $src = self::getTermImageSrc( $args['size'], $args['id'], $args['taxonomy'] ) )
+		if ( $src = self::getTermImageSrc( $args['size'], $args['id'], $args['taxonomy'], $args['field'] ) )
 			return Core\HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
 		return FALSE;
@@ -86,7 +87,7 @@ class Template extends WordPress\Main
 			'id'           => NULL,
 			'size'         => NULL,
 			'alt'          => NULL, // null for $args['title']
-			'class'        => '-term-image',
+			'class'        => '-term-image img-fluid',
 			'taxonomy'     => '',
 			'link'         => 'archive',
 			'title'        => 'name',
@@ -932,13 +933,13 @@ class Template extends WordPress\Main
 
 	public static function metaSummary__render_callback( $data, $args, $post = NULL, $module = NULL )
 	{
-		Core\HTML::tableDouble( [
+		Core\HTML::tableDouble(
 			array_values( $data ),
 			array_keys( $data ),
 			TRUE,
 			// 'table table-bordered',
 			'table',
-		] );
+		);
 	}
 
 	// NOTE: DEPRECATED

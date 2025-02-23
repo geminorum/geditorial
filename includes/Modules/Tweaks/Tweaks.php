@@ -29,10 +29,14 @@ class Tweaks extends gEditorial\Module
 		return [
 			'name'     => 'tweaks',
 			'title'    => _x( 'Tweaks', 'Modules: Tweaks', 'geditorial-admin' ),
-			'desc'     => _x( 'Admin UI Enhancement', 'Modules: Tweaks', 'geditorial-admin' ),
+			'desc'     => _x( 'Admin UI Enhancements', 'Modules: Tweaks', 'geditorial-admin' ),
 			'icon'     => 'admin-tools',
 			'frontend' => FALSE,
 			'access'   => 'stable',
+			'keywords' => [
+				'admin',
+				'tweaks',
+			],
 		];
 	}
 
@@ -398,7 +402,7 @@ class Tweaks extends gEditorial\Module
 	// we use this hook to early control `current_screen` on other modules
 	public function add_meta_boxes( $posttype, $post )
 	{
-		if ( WordPress\PostType::supportBlocksByPost( $post ) )
+		if ( WordPress\Post::supportBlocks( $post ) )
 			return;
 
 		$screen = get_current_screen();

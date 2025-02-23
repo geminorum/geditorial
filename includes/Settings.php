@@ -2008,6 +2008,7 @@ class Settings extends WordPress\Main
 			case '_general'    : return [ _x( 'General', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_defaults'   : return [ _x( 'Defaults', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_misc'       : return [ _x( 'Miscellaneous', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_archives'   : return [ _x( 'Archives', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_frontend'   : return [ _x( 'Front-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_backend'    : return [ _x( 'Back-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_content'    : return [ _x( 'Generated Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
@@ -2024,6 +2025,7 @@ class Settings extends WordPress\Main
 			case '_reports'    : return [ _x( 'Report Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_printpage'  : return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_strings'    : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_fields'     : return [ _x( 'Data Fields', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_constants'  : return [ _x( 'Custom Constants', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_posttypes'  : return [ _x( 'Post-Types', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_taxonomies' : return [ _x( 'Taxonomies', 'Settings: Section Title', 'geditorial-admin' ), NULL ];

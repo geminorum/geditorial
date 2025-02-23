@@ -111,7 +111,7 @@ class Actions extends gEditorial\Module
 	// @REF: https://core.trac.wordpress.org/ticket/45283
 	public function add_meta_boxes( $posttype, $post )
 	{
-		if ( WordPress\PostType::supportBlocksByPost( $post ) )
+		if ( WordPress\Post::supportBlocks( $post ) )
 			return;
 
 		$this->action( 'edit_form_after_title' );

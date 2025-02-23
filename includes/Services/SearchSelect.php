@@ -135,10 +135,10 @@ class SearchSelect extends WordPress\Main
 			$args['s'] = trim( $queried['search'] );
 
 		if ( ! empty( $queried['include'] ) )
-			$args['post__in'] = wp_parse_id_list( $queried['include'] );
+			$args['post__in'] = self::ids( $queried['include'] );
 
 		if ( ! empty( $queried['exclude'] ) )
-			$args['post__not_in'] = wp_parse_id_list( $queried['exclude'] );
+			$args['post__not_in'] = self::ids( $queried['exclude'] );
 
 		if ( ! empty( $queried['status'] ) )
 			$args['post_status'] = trim( $queried['status'] );
@@ -225,10 +225,10 @@ class SearchSelect extends WordPress\Main
 			$args['name__like'] = trim( $queried['search'] );
 
 		if ( ! empty( $queried['include'] ) )
-			$args['include'] = wp_parse_id_list( $queried['include'] );
+			$args['include'] = self::ids( $queried['include'] );
 
 		if ( ! empty( $queried['exclude'] ) )
-			$args['exclude'] = wp_parse_id_list( $queried['exclude'] );
+			$args['exclude'] = self::ids( $queried['exclude'] );
 
 		// NOTE: must return single or array of term ids
 		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_terms', static::BASE ), NULL, $args, $queried );
@@ -328,7 +328,7 @@ class SearchSelect extends WordPress\Main
 		];
 
 		if ( ! empty( $queried['exclude'] ) )
-			$args['exclude'] = wp_parse_id_list( $queried['exclude'] );
+			$args['exclude'] = self::ids( $queried['exclude'] );
 
 		if ( ! empty( $queried['role'] ) && 'all' !== trim( $queried['role'] ) )
 			$args['role__in'] = array_diff( explode( ',', $queried['role'] ), $args['role__not_in'] );

@@ -27,6 +27,9 @@ class AdminScreen extends WordPress\Main
 		if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
 			return;
 
+		if ( WordPress\PostType::supportBlocks( $posttype ) )
+			return;
+
 		$extra = [];
 
 		if ( ! empty( $posttype->readonly_title ) ) {
