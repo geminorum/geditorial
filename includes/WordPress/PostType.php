@@ -711,15 +711,18 @@ class PostType extends Core\Base
 		return apply_filters( 'geditorial_get_post_thumbnail_id', $thumbnail_id, $post_id, $metakey );
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function getArchiveLink( $posttype )
 	{
 		self::_dep();
 		return self::link( $posttype );
 	}
 
+	// NOTE: DEPRECATED
 	public static function supportBlocksByPost( $post )
 	{
+		self::_dep( 'WordPress\Post::supportBlocks()' );
+
 		if ( ! function_exists( 'use_block_editor_for_post' ) )
 			return FALSE;
 
@@ -731,7 +734,10 @@ class PostType extends Core\Base
 		if ( ! function_exists( 'use_block_editor_for_post_type' ) )
 			return FALSE;
 
-		return use_block_editor_for_post_type( $posttype );
+		if ( ! $object = self::object( $posttype ) )
+			return FALSE;
+
+		return use_block_editor_for_post_type( $object->name );
 	}
 
 	public static function newPostFromTerm( $term, $taxonomy = 'category', $posttype = 'post', $user_id = 0 )

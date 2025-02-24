@@ -56,6 +56,12 @@ class Third extends Base
 				$base = 'https://eitaa.com/';
 				$url  = self::getHandle( $string, TRUE, $base, $prefix );
 				break;
+
+			case 'wikipedia':
+
+				$base = 'https://en.wikipedia.org/wiki/';
+				$url  = self::getHandle( $string, TRUE, $base, $prefix );
+				break;
 		}
 
 		return $url ? URL::untrail( $url ) : $url;

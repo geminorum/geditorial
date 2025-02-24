@@ -40,6 +40,7 @@ class Validation extends Base
 			trim( str_ireplace( [ '-', ' ' ], '', Number::translate( Text::trim( $input ) ) ) ) );
 	}
 
+	// @SEE: https://github.com/whatwg/html/issues/5740
 	public static function getIdentityNumberHTMLPattern()
 	{
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
@@ -48,6 +49,8 @@ class Validation extends Base
 		return '[0-9]{10}';
 	}
 
+	// TODO: must rename to `NIN`: National identification number
+	// @SEE: https://en.wikipedia.org/wiki/National_identification_number
 	public static function isIdentityNumber( $input )
 	{
 		if ( self::empty( $input ) )
@@ -63,7 +66,6 @@ class Validation extends Base
 		return TRUE;
 	}
 
-	// @SEE: https://en.wikipedia.org/wiki/National_identification_number
 	public static function sanitizeIdentityNumber( $input )
 	{
 		$sanitized = Number::translate( Text::trim( $input ) );

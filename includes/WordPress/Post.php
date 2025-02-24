@@ -605,4 +605,16 @@ class Post extends Core\Base
 
 		return $post;
 	}
+
+	// OLD: `WordPress\PostType::supportBlocksByPost()`
+	public static function supportBlocks( $post )
+	{
+		if ( ! function_exists( 'use_block_editor_for_post' ) )
+			return FALSE;
+
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		return use_block_editor_for_post( $post );
+	}
 }

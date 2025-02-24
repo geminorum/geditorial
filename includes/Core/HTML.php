@@ -56,6 +56,11 @@ class HTML extends Base
 		return $src ? '<img src="'.$src.'" class="'.self::prepClass( $class ).'" alt="'.self::escape( $alt ).'" decoding="async" loading="lazy" />' : '';
 	}
 
+	public static function heading( $level, $html, $class = FALSE, $link = FALSE )
+	{
+		if ( $level && $html ) echo self::tag( sprintf( 'h%s', $level ), [ 'class' => $class ], ( $link ? self::link( $html, $link ) : $html ) );
+	}
+
 	public static function h1( $html, $class = FALSE, $link = FALSE )
 	{
 		if ( $html ) echo self::tag( 'h1', [ 'class' => $class ], ( $link ? self::link( $html, $link ) : $html ) );
@@ -159,8 +164,8 @@ class HTML extends Base
 			return '';
 
 		return $block
-			? '<div'.( $id ? ' id='.$id.'" ' : ' ' ).' class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</div>'
-			: '<span'.( $id ? ' id='.$id.'" ' : ' ' ).' class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</span>';
+			? '<div'.( $id ? ' id="'.$id.'" ' : ' ' ).' class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</div>'
+			: '<span'.( $id ? ' id="'.$id.'" ' : ' ' ).' class="'.self::prepClass( '-wrap', $class ).'"'.self::propData( $data ).'>'.$html.'</span>';
 	}
 
 	public static function wrapLTR( $content )
@@ -345,6 +350,9 @@ class HTML extends Base
 
 			if ( in_array( $key, [ 'selected', 'checked', 'readonly', 'disabled', 'default', 'required', 'multiple' ], TRUE ) )
 				$att = $att ? $key : FALSE;
+
+			else if ( in_array( $key, [ 'autocomplete' ], TRUE ) )
+				$att = $att ?: 'off';
 
 			else if ( in_array( $key, [ 'spellcheck' ], TRUE ) )
 				$att = $att ? 'true' : 'false';
