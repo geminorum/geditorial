@@ -85,7 +85,7 @@ class Tabloid extends gEditorial\Module
 				if ( 'post' == $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
-						&& ( $html = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action button -button -header-button' ) ) ) {
+						&& ( $html = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action' ) ) ) {
 
 						Services\HeaderButtons::register( $this->key, [
 							'html'     => $html,
@@ -110,7 +110,7 @@ class Tabloid extends gEditorial\Module
 				if ( 'term' == $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
-						&& ( $html = $this->rowaction_get_mainlink_for_term( WordPress\Term::get(), 'page-title-action button -button -header-button' ) ) ) {
+						&& ( $html = $this->rowaction_get_mainlink_for_term( WordPress\Term::get(), 'page-title-action' ) ) ) {
 
 						Services\HeaderButtons::register( $this->key, [
 							'html'     => $html,

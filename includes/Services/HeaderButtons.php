@@ -94,11 +94,8 @@ class HeaderButtons extends WordPress\Main
 					'title'  => $button['title'] ?: FALSE,
 					'target' => $button['newtab'] ? '_blank': FALSE,
 					'class'  => Core\HTML::attrClass(
-						'page-title-action',
-						'button',
-						'-button',
-						'-header-button',
-						empty( $button['icon'] ) ? '' : '-button-icon',
+						'page-title-action', // NOTE: should not use `.button`!
+						empty( $button['icon'] ) ? '' : '-has-icon',
 						$button['class']
 					),
 				], trim( $button['text'] ) );
@@ -141,7 +138,7 @@ class HeaderButtons extends WordPress\Main
 			'title' => _x( 'Scan to Search using BinaryEye', 'Service: HeaderButtons: Title Attr', 'geditorial-admin' ),
 			'link'  => sprintf( 'binaryeye://scan?ret=%s', rawurlencode( $url ) ),
 			'class' => [
-				'-full-button-icon',
+				'-only-icon',
 				'-mobile-only-inline-block',
 			],
 			'hide_in_search' => FALSE,

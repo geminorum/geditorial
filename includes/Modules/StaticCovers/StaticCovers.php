@@ -1059,7 +1059,7 @@ class StaticCovers extends gEditorial\Module
 			'context'      => 'headerbutton',
 			'link_context' => 'secondary',
 			'maxwidth'     => '920px',
-			'extra'        => 'page-title-action button -button -header-button -button-icon',
+			'extra'        => 'page-title-action -has-icon',
 		] );
 
 		if ( ! $link )
@@ -1084,7 +1084,7 @@ class StaticCovers extends gEditorial\Module
 			'context'      => 'headerbutton',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',
-			'extra'        => 'page-title-action button -button -header-button -button-icon',
+			'extra'        => 'page-title-action -has-icon',
 		] );
 
 		if ( ! $link )
@@ -1109,7 +1109,7 @@ class StaticCovers extends gEditorial\Module
 			'context'      => 'headerbutton',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',
-			'extra'        => 'page-title-action button -button -header-button -button-icon',
+			'extra'        => 'page-title-action -has-icon',
 		] );
 
 		if ( ! $link )
