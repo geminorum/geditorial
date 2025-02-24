@@ -28,6 +28,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
+// body.readonly-posttype-title {}
 // body.disable-posttype-tinymce {}
 // body.disable-posttype-slug {}
 // body.disable-posttype-author {}
@@ -42,7 +43,7 @@ body.disable-posttype-password .inline-edit-row fieldset.inline-edit-date + br.c
 
   // Module: Units
   th.column-geditorial-units {
-    width: 145px;
+    width: 95px;
   }
 
   // Module: Entry
@@ -70,25 +71,25 @@ body.disable-posttype-password .inline-edit-row fieldset.inline-edit-date + br.c
 @media screen and ( max-width: 782px ) {
   .wp-list-table tr {
 
-    // columns before primary column must be hidden
-    td.column-event_starts,
-    th.column-event_starts,
-    td.column-event_ends,
-    th.column-event_ends,
-    td.column-taxonomy-entry_section,
-    th.column-taxonomy-entry_section {
+    // NOTE: columns `before` primary column must be hidden
+    .column-taxonomy-entry_section,
+    .column-geditorial-tweaks-order,
+    .column-geditorial-tweaks-thumb {
       display: none !important;
     }
 
-    &.is-expanded {
-      td.column-theday,
-      td.column-event_starts,
-      td.column-event_ends,
-      td.column-taxonomy-entry_section,
-      td.column-geditorial-tweaks-order,
-      td.column-geditorial-tweaks-thumb {
+    .column-geditorial-tweaks-id,
+    .column-geditorial-tweaks-thumb {
+      text-align: inherit !important;
+    }
 
-        padding: 3px 8px 3px 35%;
+    &:not(.inline-edit-row):not(.no-items) {
+      td:not(.column-primary):not(.check-column) {
+        padding: .25rem .5rem .25rem 7rem !important;
+
+        &::before {
+          font-weight: 700;
+        }
       }
     }
   }

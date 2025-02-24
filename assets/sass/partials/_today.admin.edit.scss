@@ -18,16 +18,14 @@ body.geditorial-today-enabled {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-admin-wrap.-today {}
+// .geditorial-admin-wrap.-today {}
 
 ////////////////////////////////////////////////////////////////////////////////
 @media screen and ( max-width: 782px ) {
   .wp-list-table tr {
 
-    // columns before primary column must be hidden
-    // must be both
-    th.column-theday,
-    td.column-theday {
+    // NOTE: columns `before` primary column must be hidden
+    .column-theday {
       display: none !important;
     }
 
@@ -38,10 +36,17 @@ body.geditorial-today-enabled {
           width: 100%;
 
           > span {
-            display: inline-block !important;
-            padding: 4px !important;
+            display: inline !important;
+            padding: 0 !important;
+            margin-right: .5rem;
             border: none !important;
+
             font-size: inherit !important;
+            font-family: inherit !important;
+
+            > a {
+              display: inline !important;
+            }
           }
         }
       }

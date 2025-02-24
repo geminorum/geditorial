@@ -49,10 +49,11 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// body.readonly-posttype-title {}
 // body.disable-posttype-slug {}
 // body.disable-posttype-author {}
-// body.disable-posttype-password {}
 
+body.disable-posttype-password .postbox .inside .misc-pub-section.misc-pub-visibility,
 body.disable-posttype-tinymce #content-tmce.wp-switch-editor.switch-tmce,
 body.disable-posttype-date div.misc-pub-section.curtime.misc-pub-curtime {
   display: none;
