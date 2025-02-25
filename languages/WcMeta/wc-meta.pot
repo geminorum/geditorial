@@ -1,0 +1,84 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcMeta\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcMeta\n"
+"X-Domain: geditorial-wc-meta\n"
+
+#: WcMeta.php:44
+msgctxt "Field Title"
+msgid "Tagline"
+msgstr ""
+
+#: WcMeta.php:45
+msgctxt "Field Description"
+msgid "Promotional Text on the Cover of the Product"
+msgstr ""
+
+#: WcMeta.php:49
+msgctxt "Field Title"
+msgid "Subtitle"
+msgstr ""
+
+#: WcMeta.php:50
+msgctxt "Field Description"
+msgid "Subtitle of the Product"
+msgstr ""
+
+#: WcMeta.php:54
+msgctxt "Field Title"
+msgid "Alternative Title"
+msgstr ""
+
+#: WcMeta.php:55
+msgctxt "Field Description"
+msgid "The Original Title or Title in Another Language"
+msgstr ""
+
+#: WcMeta.php:58
+msgctxt "Field Title"
+msgid "Collection Title"
+msgstr ""
+
+#: WcMeta.php:59
+msgctxt "Field Description"
+msgid "The Product Is Part of a Collection"
+msgstr ""
+
+#: WcMeta.php:62
+msgctxt "Field Title"
+msgid "By-Line"
+msgstr ""
+
+#: WcMeta.php:63
+msgctxt "Field Description"
+msgid "Text To Override the Product Author"
+msgstr ""
+
+#: WcMeta.php:70
+msgctxt "Field Title"
+msgid "Production Location"
+msgstr ""
+
+#: WcMeta.php:71
+msgctxt "Field Description"
+msgid "The Space Where Goods Roll Out"
+msgstr ""
+
+#: WcMeta.php:76
+msgctxt "Field Title"
+msgid "Production Date"
+msgstr ""
+
+#: WcMeta.php:77
+msgctxt "Field Description"
+msgid "The Date Determined by the Manufacturer"
+msgstr ""

@@ -1,0 +1,85 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WC Meta\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-02-25 19:52+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcMeta\n"
+"X-Domain: geditorial-wc-meta\n"
+
+#: WcMeta.php:44
+msgctxt "Field Title"
+msgid "Tagline"
+msgstr "معرفی کوتاه"
+
+#: WcMeta.php:45
+msgctxt "Field Description"
+msgid "Promotional Text on the Cover of the Product"
+msgstr "متن تبلیغاتی روی جلد کالا"
+
+#: WcMeta.php:49
+msgctxt "Field Title"
+msgid "Subtitle"
+msgstr "عنوان فرعی"
+
+#: WcMeta.php:50
+msgctxt "Field Description"
+msgid "Subtitle of the Product"
+msgstr "زیرعنوان برای کالا"
+
+#: WcMeta.php:54
+msgctxt "Field Title"
+msgid "Alternative Title"
+msgstr "عنوان دیگر"
+
+#: WcMeta.php:55
+msgctxt "Field Description"
+msgid "The Original Title or Title in Another Language"
+msgstr "عنوان اصلی یا عنوان در زبان دیگر"
+
+#: WcMeta.php:58
+msgctxt "Field Title"
+msgid "Collection Title"
+msgstr "عنوان مجموعه"
+
+#: WcMeta.php:59
+msgctxt "Field Description"
+msgid "The Product Is Part of a Collection"
+msgstr "کالا بخشی از یک مجموعه است"
+
+#: WcMeta.php:62
+msgctxt "Field Title"
+msgid "By-Line"
+msgstr "خط تألیف"
+
+#: WcMeta.php:63
+msgctxt "Field Description"
+msgid "Text To Override the Product Author"
+msgstr "متن برای رونویسی مؤلف کالا"
+
+#: WcMeta.php:70
+msgctxt "Field Title"
+msgid "Production Location"
+msgstr "مکان تولید"
+
+#: WcMeta.php:71
+msgctxt "Field Description"
+msgid "The Space Where Goods Roll Out"
+msgstr "فضایی که کالاها در آن عرضه می‌شوند"
+
+#: WcMeta.php:76
+msgctxt "Field Title"
+msgid "Production Date"
+msgstr "تاریخ تولید"
+
+#: WcMeta.php:77
+msgctxt "Field Description"
+msgid "The Date Determined by the Manufacturer"
+msgstr "تاریخ تعیین‌شده توسط سازنده"
