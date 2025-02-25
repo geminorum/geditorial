@@ -11,6 +11,7 @@ class Socialite extends gEditorial\Module
 
 	protected $supported = [
 		'twitter',
+		'tiktok',
 		'instagram',
 		'telegram',
 		'facebook',
@@ -130,6 +131,7 @@ class Socialite extends gEditorial\Module
 		return [
 			'titles' => [
 				'twitter'   => _x( 'Twitter', 'Title', 'geditorial-socialite' ),
+				'tiktok'    => _x( 'TikTok', 'Title', 'geditorial-socialite' ),
 				'instagram' => _x( 'Instagram', 'Title', 'geditorial-socialite' ),
 				'telegram'  => _x( 'Telegram', 'Title', 'geditorial-socialite' ),
 				'facebook'  => _x( 'Facebook', 'Title', 'geditorial-socialite' ),
@@ -141,6 +143,7 @@ class Socialite extends gEditorial\Module
 			],
 			'descriptions' => [
 				'twitter'   => _x( 'Handle or URL to an Twitter account.', 'Description', 'geditorial-socialite' ),
+				'tiktok'    => _x( 'Handle or URL to an TikTok account.', 'Description', 'geditorial-socialite' ),
 				'instagram' => _x( 'Handle or URL to an Instagram account.', 'Description', 'geditorial-socialite' ),
 				'telegram'  => _x( 'Handle or URL to a Telegram user or channel.', 'Description', 'geditorial-socialite' ),
 				'facebook'  => _x( 'Handle or URL to a Facebook profile or page.', 'Description', 'geditorial-socialite' ),
@@ -266,6 +269,7 @@ class Socialite extends gEditorial\Module
 	{
 		switch ( $key ) {
 			case 'twitter'  :
+			case 'tiktok'   :
 			case 'facebook' :
 			case 'instagram':
 			case 'telegram' :
@@ -288,6 +292,7 @@ class Socialite extends gEditorial\Module
 
 		switch ( $field ) {
 			case 'twitter'  : return [ 'social-logos', 'twitter' ];
+			case 'tiktok'   : return [ 'social-logos', 'tiktok' ];
 			case 'instagram': return [ 'social-logos', 'instagram' ];
 			case 'telegram' : return [ 'social-logos', 'telegram' ];
 			case 'facebook' : return [ 'social-logos', 'facebook' ];
