@@ -538,6 +538,9 @@ class Bookmarked extends gEditorial\Module
 			else
 				$list[$key]['desc'] = $row['desc'];
 
+			if ( empty( $list[$key]['_icon'] ) && 'attachment' === $type && ! empty( $row['code'] ) )
+				$list[$key]['_icon'] = Helper::getIcon( Core\Icon::guessByMIME( WordPress\Attachment::type( (int) $row['code'] ), $options[$type]['icon'] ) );
+
 			if ( empty( $list[$key]['_icon'] ) && ! empty( $options[$type]['icon'] ) )
 				$list[$key]['_icon'] = Helper::getIcon( $options[$type]['icon'] );
 
