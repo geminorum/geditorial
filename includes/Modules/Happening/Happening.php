@@ -230,6 +230,8 @@ class Happening extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
+
+				$this->modulelinks__register_headerbuttons();
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 			}

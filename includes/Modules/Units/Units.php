@@ -15,7 +15,7 @@ class Units extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 
-	// FIXME: rename columns based on posttype
+	// FIXME: rename columns based on post-type
 
 	protected $priority_init           = 12;
 	protected $priority_current_screen = 12;
@@ -25,11 +25,14 @@ class Units extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'units',
-			'title'  => _x( 'Units', 'Modules: Units', 'geditorial-admin' ),
-			'desc'   => _x( 'Measurement Units for Contents', 'Modules: Units', 'geditorial-admin' ),
-			'icon'   => 'image-crop',
-			'access' => 'beta',
+			'name'     => 'units',
+			'title'    => _x( 'Units', 'Modules: Units', 'geditorial-admin' ),
+			'desc'     => _x( 'Measurement Units for Contents', 'Modules: Units', 'geditorial-admin' ),
+			'icon'     => 'image-crop',
+			'access'   => 'beta',
+			'keywords' => [
+				'metafields',
+			],
 		];
 	}
 
@@ -76,6 +79,8 @@ class Units extends gEditorial\Module
 				'book_cover' => _x( 'Book Cover', 'Titles', 'geditorial-units' ),
 				'paper_size' => _x( 'Paper Size', 'Titles', 'geditorial-units' ),
 			],
+
+			// NOTE: descriptions appears as tooltip so must be Title-Cased
 			'descriptions' => [
 				'weight_in_g'  => _x( 'Weight in Gram', 'Descriptions', 'geditorial-units' ),
 				'width_in_mm'  => _x( 'Width in Milimeter', 'Descriptions', 'geditorial-units' ),

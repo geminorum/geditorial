@@ -28,18 +28,17 @@ class Meta extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	// protected $caps = [
-	// 	'imports' => 'import',
-	// ];
-
 	public static function module()
 	{
 		return [
-			'name'   => 'meta',
-			'title'  => _x( 'Meta', 'Modules: Meta', 'geditorial-admin' ),
-			'desc'   => _x( 'Curated Meta-data', 'Modules: Meta', 'geditorial-admin' ),
-			'icon'   => 'tag',
-			'access' => 'stable',
+			'name'     => 'meta',
+			'title'    => _x( 'Meta', 'Modules: Meta', 'geditorial-admin' ),
+			'desc'     => _x( 'Curated Meta-data', 'Modules: Meta', 'geditorial-admin' ),
+			'icon'     => 'tag',
+			'access'   => 'stable',
+			'keywords' => [
+				'metafields',
+			],
 		];
 	}
 
@@ -149,6 +148,8 @@ class Meta extends gEditorial\Module
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
 				'action' => _x( 'Action', 'Titles', 'geditorial-meta' ),
 			],
+
+			// NOTE: descriptions appears as tooltip so must be Title-Cased
 			'descriptions' => [
 				'over_title' => _x( 'Text to place over the content title', 'Descriptions', 'geditorial-meta' ),
 				'sub_title'  => _x( 'Text to place under the content title', 'Descriptions', 'geditorial-meta' ),

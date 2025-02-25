@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Bookmarked extends gEditorial\Module
@@ -136,7 +136,7 @@ class Bookmarked extends gEditorial\Module
 					'bookmarked_title' => [
 						'title'       => _x( 'Bookmarks Title', 'Field Title', 'geditorial-bookmarked' ),
 						'description' => _x( 'The Bookmarks Table Caption', 'Field Description', 'geditorial-bookmarked' ),
-						'order'       => 400,
+						'order'       => 1400,
 					],
 				],
 			]
@@ -402,7 +402,7 @@ class Bookmarked extends gEditorial\Module
 					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
 						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 		}

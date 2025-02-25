@@ -213,25 +213,26 @@ class PostTypeFields extends WordPress\Main
 
 		if ( ! empty( $args['type'] ) ) {
 			switch ( $args['type'] ) {
-				case 'email'   : return 'email';
-				case 'phone'   : return 'phone';
-				case 'mobile'  : return 'smartphone';
-				case 'identity': return 'id-alt';
-				case 'iban'    : return 'bank';
-				case 'isbn'    : return 'book'; // 'menu'
-				case 'date'    : return 'calendar';
-				case 'time'    : return 'clock';
-				case 'datetime': return 'calendar-alt';
-				case 'distance': return 'image-flip-vertical';
-				case 'duration': return 'clock';
-				case 'area'    : return 'fullscreen-alt';
-				case 'day'     : return 'backup';
-				case 'hour'    : return 'clock';
-				case 'people'  : return 'groups';
-				case 'address' : return 'location';
-				case 'venue'   : return 'location-alt';
-				case 'embed'   : return 'embed-generic';
-				case 'link'    : return 'admin-links';
+				case 'email'     : return 'email';
+				case 'phone'     : return 'phone';
+				case 'mobile'    : return 'smartphone';
+				case 'identity'  : return 'id-alt';
+				case 'iban'      : return 'bank';
+				case 'isbn'      : return 'book';                 // 'menu'
+				case 'date'      : return 'calendar';
+				case 'time'      : return 'clock';
+				case 'datetime'  : return 'calendar-alt';
+				case 'datestring': return 'calendar-alt';
+				case 'distance'  : return 'image-flip-vertical';
+				case 'duration'  : return 'clock';
+				case 'area'      : return 'fullscreen-alt';
+				case 'day'       : return 'backup';
+				case 'hour'      : return 'clock';
+				case 'people'    : return 'groups';
+				case 'address'   : return 'location';
+				case 'venue'     : return 'location-alt';
+				case 'embed'     : return 'embed-generic';
+				case 'link'      : return 'admin-links';
 			}
 		}
 
@@ -284,7 +285,7 @@ class PostTypeFields extends WordPress\Main
 		if ( empty( $field ) )
 			$field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );
 
-		// NOTE: field maybe disabled or overrided
+		// NOTE: field may be disabled or overridden
 		if ( FALSE === $field )
 			$field = [ 'name' => $field_key, 'type' => 'text' ];
 

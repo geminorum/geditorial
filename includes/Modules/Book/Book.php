@@ -357,7 +357,6 @@ class Book extends gEditorial\Module
 						'title'       => _x( 'Publication Date', 'Field Title', 'geditorial-book' ),
 						'description' => _x( 'Date Published', 'Field Description', 'geditorial-book' ),
 						'type'        => 'datestring',
-						'icon'        => 'calendar-alt',
 					],
 					'publication_ddc' => [
 						// FIXME: move to `DeweyDecimal` Module

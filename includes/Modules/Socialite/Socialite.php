@@ -4,8 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\WordPress;
 
 class Socialite extends gEditorial\Module
 {
@@ -29,7 +30,7 @@ class Socialite extends gEditorial\Module
 			'name'   => 'socialite',
 			'title'  => _x( 'Socialite', 'Modules: Socialite', 'geditorial-admin' ),
 			'desc'   => _x( 'Editorial Social Card', 'Modules: Socialite', 'geditorial-admin' ),
-			'icon'   => 'share',
+			'icon'   => 'money',
 			'access' => 'beta',
 		];
 	}
@@ -285,6 +286,7 @@ class Socialite extends gEditorial\Module
 			case 'telegram' :
 			case 'youtube'  :
 			case 'aparat'   :
+			case 'behkhaan' :
 			case 'eitaa'    :
 			case 'wikipedia':
 
@@ -304,7 +306,7 @@ class Socialite extends gEditorial\Module
 		$default = [ 'gridicons', 'share' ];
 
 		switch ( $field ) {
-			case 'twitter'  : return [ 'social-logos', 'twitter' ];
+			case 'twitter'  : return [ 'social-logos', 'x' ];
 			case 'tiktok'   : return [ 'social-logos', 'tiktok' ];
 			case 'instagram': return [ 'social-logos', 'instagram' ];
 			case 'telegram' : return [ 'social-logos', 'telegram' ];
@@ -325,7 +327,7 @@ class Socialite extends gEditorial\Module
 
 			// Extra support for front-end only.
 			case 'contact':
-				return Helper::prepContact( $url, NULL, '', TRUE );
+				return gEditorial\Helper::prepContact( $url, NULL, '', TRUE );
 
 			default:
 				return $this->get_column_icon( $url,
@@ -391,6 +393,6 @@ class Socialite extends gEditorial\Module
 		if ( empty( $list ) )
 			return $content;
 
-		return ShortCode::wrap( Core\HTML::renderList( $list ), $tag, $args );
+		return gEditorial\ShortCode::wrap( Core\HTML::renderList( $list ), $tag, $args );
 	}
 }

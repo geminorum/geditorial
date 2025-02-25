@@ -44,7 +44,7 @@ trait PairedImports
 			function () use ( $post ) {
 				/* translators: %s: post title */
 				$label  = sprintf( _x( 'Upload into %s', 'Internal: PairedImports: Button Label', 'geditorial' ), WordPress\Post::title( $post ) );
-				$button = $this->pairedimports_get_import_buttons( $post, 'importitems', 'NULL', $label, 'page-title-action button -button -header-button' );
+				$button = $this->pairedimports_get_import_buttons( $post, 'importitems', 'NULL', $label, 'page-title-action' );
 				$id     = $this->classs( 'hidden-importbutton' );
 				echo $this->wrap( $button, 'hidden', TRUE, $id, TRUE );
 				Core\HTML::wrapjQueryReady( '$($("#'.$id.'").html()).insertBefore($("#wpbody-content div.wrap hr.wp-header-end"));' );

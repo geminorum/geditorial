@@ -415,6 +415,7 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
+	// TODO: move to `SettingsCore` Internal
 	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
 	{
 		return [
@@ -430,6 +431,7 @@ class Module extends WordPress\Module
 		return str_replace( '_', '-', $this->module->name );
 	}
 
+	// TODO: move to `SettingsCore` Internal
 	// NOTE: features are `TRUE` by default
 	public function get_feature( $field, $fallback = TRUE )
 	{
@@ -444,6 +446,7 @@ class Module extends WordPress\Module
 		return $fallback;
 	}
 
+	// TODO: move to `SettingsCore` Internal
 	public function get_setting( $field, $fallback = NULL )
 	{
 		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
@@ -457,6 +460,7 @@ class Module extends WordPress\Module
 		return $fallback;
 	}
 
+	// TODO: move to `SettingsCore` Internal
 	public function get_setting_fallback( $field, $fallback, $empty = '' )
 	{
 		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
@@ -476,7 +480,8 @@ class Module extends WordPress\Module
 		return $fallback;
 	}
 
-	// check arrays with support of old settings
+	// TODO: move to `SettingsCore` Internal
+	// checks arrays with support of old settings
 	public function in_setting( $item, $field, $default = [] )
 	{
 		$setting = $this->get_setting( $field );
@@ -502,6 +507,7 @@ class Module extends WordPress\Module
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
 	}
 
+	// TODO: move to `ShortCodes` Internal
 	protected function register_shortcode( $constant, $callback = NULL, $force = FALSE )
 	{
 		if ( ! $force && ! $this->get_setting( 'shortcode_support', FALSE ) )

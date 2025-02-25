@@ -105,7 +105,7 @@ class HeaderButtons extends WordPress\Main
 		gEditorial()->enqueue_asset_config( $args, 'headerbuttons' );
 	}
 
-	// TODO: move to Barcodes Service
+	// TODO: move to `Barcodes` Service
 	public static function registerSearchWithBarcode()
 	{
 		/**

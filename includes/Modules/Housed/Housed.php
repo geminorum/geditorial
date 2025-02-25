@@ -280,7 +280,7 @@ class Housed extends gEditorial\Module
 
 	public function units_init()
 	{
-		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, 'TRUE', 'units' );
+		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, TRUE, 'units' );
 	}
 
 	public function current_screen( $screen )

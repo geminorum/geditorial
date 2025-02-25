@@ -154,7 +154,6 @@ class Tube extends gEditorial\Module
 						'title'       => _x( 'Creation Date', 'Field Title', 'geditorial-tube' ),
 						'description' => _x( 'Creation Date of the Video', 'Field Description', 'geditorial-tube' ),
 						'type'        => 'datestring',
-						'icon'        => 'calendar-alt',
 						'quickedit'   => TRUE,
 						'bulkedit'    => FALSE,
 					],
