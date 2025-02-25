@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WC Terms\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-02-25 17:19+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcTerms\n"
+"X-Domain: geditorial-wc-terms\n"
+
+#: WcTerms.php:36
+msgctxt "Setting Title"
+msgid "Archive Title"
+msgstr "عنوان بایگانی"
+
+#: WcTerms.php:37
+msgctxt "Setting Description"
+msgid "Enhance the term archive titles."
+msgstr ""
+
+#: WcTerms.php:40
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr "غیرفعال"
+
+#: WcTerms.php:41
+msgctxt "Setting Option"
+msgid "Heading Level 1"
+msgstr "سربرگ سطح ۱"
+
+#: WcTerms.php:42
+msgctxt "Setting Option"
+msgid "Heading Level 2"
+msgstr "سربرگ سطح ۲"
+
+#: WcTerms.php:43
+msgctxt "Setting Option"
+msgid "Heading Level 3"
+msgstr "سربرگ سطح ۳"
+
+#: WcTerms.php:44
+msgctxt "Setting Option"
+msgid "Heading Level 4"
+msgstr "سربرگ سطح ۴"
+
+#: WcTerms.php:45
+msgctxt "Setting Option"
+msgid "Heading Level 5"
+msgstr "سربرگ سطح ۵"
+
+#: WcTerms.php:46
+msgctxt "Setting Option"
+msgid "Heading Level 6"
+msgstr "سربرگ سطح ۶"
+
+#: WcTerms.php:51
+msgctxt "Setting Title"
+msgid "Archive Descriptions"
+msgstr "توضیحات بایگانی"
+
+#: WcTerms.php:52
+msgctxt "Setting Description"
+msgid "Enhance the term archive descriptions with assigned image."
+msgstr ""

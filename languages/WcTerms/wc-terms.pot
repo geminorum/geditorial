@@ -1,0 +1,69 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcTerms\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcTerms\n"
+"X-Domain: geditorial-wc-terms\n"
+
+#: WcTerms.php:37
+msgctxt "Setting Title"
+msgid "Archive Title"
+msgstr ""
+
+#: WcTerms.php:38
+msgctxt "Setting Description"
+msgid "Enhance the term archive titles."
+msgstr ""
+
+#: WcTerms.php:41
+msgctxt "Setting Option"
+msgid "Disabled"
+msgstr ""
+
+#: WcTerms.php:42
+msgctxt "Setting Option"
+msgid "Heading Level 1"
+msgstr ""
+
+#: WcTerms.php:43
+msgctxt "Setting Option"
+msgid "Heading Level 2"
+msgstr ""
+
+#: WcTerms.php:44
+msgctxt "Setting Option"
+msgid "Heading Level 3"
+msgstr ""
+
+#: WcTerms.php:45
+msgctxt "Setting Option"
+msgid "Heading Level 4"
+msgstr ""
+
+#: WcTerms.php:46
+msgctxt "Setting Option"
+msgid "Heading Level 5"
+msgstr ""
+
+#: WcTerms.php:47
+msgctxt "Setting Option"
+msgid "Heading Level 6"
+msgstr ""
+
+#: WcTerms.php:52
+msgctxt "Setting Title"
+msgid "Archive Descriptions"
+msgstr ""
+
+#: WcTerms.php:53
+msgctxt "Setting Description"
+msgid "Enhance the term archive descriptions with assigned image."
+msgstr ""
