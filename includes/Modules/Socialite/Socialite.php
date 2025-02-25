@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\ShortCode;
 
 class Socialite extends gEditorial\Module
@@ -29,7 +30,6 @@ class Socialite extends gEditorial\Module
 			'title'  => _x( 'Socialite', 'Modules: Socialite', 'geditorial-admin' ),
 			'desc'   => _x( 'Editorial Social Card', 'Modules: Socialite', 'geditorial-admin' ),
 			'icon'   => 'share',
-			'i18n'   => 'adminonly',
 			'access' => 'beta',
 		];
 	}
@@ -252,17 +252,27 @@ class Socialite extends gEditorial\Module
 		if ( $column_name !== $this->classs() )
 			return;
 
-		$list = [];
-
-		foreach ( $this->supported as $field )
-			if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
-				$list[$field] = $this->_get_field_link( $field,
-					$this->_get_field_url( $meta, $field, $taxonomy ), $taxonomy );
-
-		echo Core\HTML::wrap( Core\HTML::renderList( $list ), [
+		echo $this->_get_term_icons( $term, $this->supported, [
 			'-icon-list',
 			'-social-links',
 		] );
+	}
+
+	private function _get_term_icons( $term, $fields = NULL, $extra = [] )
+	{
+		$list = [];
+
+		if ( is_null( $fields ) )
+			$fields = array_merge( [
+				'contact', // adds before the list
+			], $this->supported );
+
+		foreach ( $fields as $field )
+			if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+				$list[$field] = $this->_get_field_link( $field,
+					$this->_get_field_url( $meta, $field, $term->taxonomy ), $term->taxonomy );
+
+		return Core\HTML::wrap( Core\HTML::renderList( $list ), $extra );
 	}
 
 	private function _get_field_url( $value, $key, $taxonomy = FALSE )
@@ -279,7 +289,10 @@ class Socialite extends gEditorial\Module
 			case 'wikipedia':
 
 				return Core\Third::getHandleURL( $value, $key );
-				break;
+
+			// Extra support for front-end only.
+			case 'contact':
+				return Core\Text::trim( $value );
 		}
 
 		return Core\HTML::escapeURL( $value );
@@ -308,17 +321,25 @@ class Socialite extends gEditorial\Module
 
 	private function _get_field_link( $field, $url, $taxonomy = FALSE )
 	{
-		return $this->get_column_icon( $url,
-			$this->_get_field_icon( $field, $taxonomy ),
-			$this->get_string( $field, $taxonomy, 'titles', $field ),
-			$taxonomy,
-			[
-				$this->classs( 'field' ),
-				sprintf( '-field-%s', $field ),
-				$taxonomy ? sprintf( '-taxonomy-%s', $taxonomy ) : '',
-				Core\URL::isValid( $url ) ? '-valid-url' : '-invalid-url',
-			]
-		);
+		switch ( $field ) {
+
+			// Extra support for front-end only.
+			case 'contact':
+				return Helper::prepContact( $url, NULL, '', TRUE );
+
+			default:
+				return $this->get_column_icon( $url,
+					$this->_get_field_icon( $field, $taxonomy ),
+					$this->get_string( $field, $taxonomy, 'titles', $field ),
+					$taxonomy,
+					[
+						$this->classs( 'field' ),
+						sprintf( '-field-%s', $field ),
+						$taxonomy ? sprintf( '-taxonomy-%s', $taxonomy ) : '',
+						Core\URL::isValid( $url ) ? '-valid-url' : '-invalid-url',
+					]
+				);
+		}
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
