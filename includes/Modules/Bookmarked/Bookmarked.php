@@ -299,6 +299,15 @@ class Bookmarked extends gEditorial\Module
 				'desc'     => _x( 'More about this on Youtube video platform.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
+				'name'     => 'wikipedia',
+				'title'    => _x( 'Wikipedia Page', 'Type Option', 'geditorial-bookmarked' ),
+				'template' => 'https://{{_iso639}}.wikipedia.org/wiki/{{code}}',
+				'cssclass' => '-wikipedia-page',
+				'icon'     => [ 'misc-16', 'wikipedia' ],
+				'logo'     => $this->_get_link_logo( 'wikipedia' ),
+				'desc'     => _x( 'More about this on an Wikipedia page.', 'Type Description', 'geditorial-bookmarked' ),
+			],
+			[
 				'name'     => 'email',
 				'title'    => _x( 'Email Address', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'mailto::{{code}}', // @SEE: `Core\HTML::mailto()`
@@ -490,6 +499,9 @@ class Bookmarked extends gEditorial\Module
 		$data = self::atts( array_fill_keys( array_keys( $this->subcontent_define_fields() ), NULL ), $atts );
 		$post = WordPress\Post::get( $parent );
 		$link = FALSE;
+
+		// NOTE: extra tokens
+		$data['_iso639'] = Core\L10n::getISO639();
 
 		if ( ! empty( $data['link'] ) ) {
 
