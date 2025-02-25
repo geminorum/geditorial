@@ -56,9 +56,9 @@ class HTML extends Base
 		return $src ? '<img src="'.$src.'" class="'.self::prepClass( $class ).'" alt="'.self::escape( $alt ).'" decoding="async" loading="lazy" />' : '';
 	}
 
-	public static function heading( $level, $html, $class = FALSE, $link = FALSE )
+	public static function heading( $level, $html, $class = NULL, $link = FALSE )
 	{
-		if ( $level && $html ) echo self::tag( sprintf( 'h%s', $level ), [ 'class' => $class ], ( $link ? self::link( $html, $link ) : $html ) );
+		if ( $level && $html ) echo self::tag( sprintf( 'h%s', $level ), [ 'class' => $class ?? '-title' ], ( $link ? self::link( $html, $link ) : $html ) );
 	}
 
 	public static function h1( $html, $class = FALSE, $link = FALSE )
@@ -1503,6 +1503,7 @@ class HTML extends Base
 		return self::wrap( $html, '-multiselect-wrap'.( $args['panel'] ? ' wp-tab-panel' : '' ) );
 	}
 
+	// TODO: must rename to `prepList()`
 	public static function renderList( $items, $keys = FALSE, $list = 'ul' )
 	{
 		return $items ? self::tag( $list, '<li>'.implode( '</li><li>', $keys ? array_keys( $items ) : array_filter( $items ) ).'</li>' ) : '';

@@ -157,6 +157,10 @@ class Phone extends Base
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
 			return '[0-9۰-۹]{3}-[0-9۰-۹]{3}-[0-9۰-۹]{4}';
 
+		// @REF: https://www.material-tailwind.com/docs/html/input-phone
+		// maxlength="16"
+		// return '^\+\d{1,3}\s\d{1,4}-\d{1,4}-\d{4}$';
+
 		return '[0-9]{3}-[0-9]{3}-[0-9]{4}';
 	}
 

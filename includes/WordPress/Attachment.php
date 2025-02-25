@@ -42,14 +42,15 @@ class Attachment extends Core\Base
 	 * Retrieves mime type given a attachment ID or attachment object.
 	 *
 	 * @param  null|int|object $attachment
+	 * @param  mixed $fallback
 	 * @return string $mime
 	 */
-	public static function type( $attachment = NULL )
+	public static function type( $attachment = NULL, $fallback = FALSE )
 	{
 		if ( $post = Post::get( $attachment ) )
 			return $post->post_mime_type;
 
-		return FALSE;
+		return $fallback;
 	}
 
 	/**
@@ -62,19 +63,13 @@ class Attachment extends Core\Base
 	 */
 	public static function title( $attachment = NULL, $fallback = NULL, $filter = TRUE )
 	{
-		if ( ! $post = Post::get( $attachment ) )
-			return '';
+		return Post::title( $attachment, $fallback, $filter );
+	}
 
-		$title = $filter ? apply_filters( 'the_title', $post->post_title, $post->ID ) : $post->post_title;
-
-		if ( ! empty( $title ) )
-			return $title;
-
-		if ( FALSE === $fallback )
-			return '';
-
-		if ( is_null( $fallback ) )
-			return __( '(Untitled)' );
+	public static function caption( $attachment = NULL, $fallback = FALSE )
+	{
+		if ( $post = Post::get( $attachment ) )
+			return wp_get_attachment_caption( $post->ID );
 
 		return $fallback;
 	}
