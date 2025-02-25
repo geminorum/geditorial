@@ -545,7 +545,10 @@ class Bookmarked extends gEditorial\Module
 			else
 				$list[$key]['link'] = $row['link'];
 
-			if ( empty( $row['desc'] ) && ! empty( $options[$type]['desc'] ) )
+			if ( empty( $row['desc'] ) && 'attachment' === $type && ! empty( $row['code'] ) )
+				$list[$key]['desc'] = WordPress\Attachment::caption( (int) $row['code'], '' );
+
+			else if ( empty( $row['desc'] ) && ! empty( $options[$type]['desc'] ) )
 				$list[$key]['desc'] = Core\Text::replaceTokens( $options[$type]['desc'], $list[$key] );
 			else
 				$list[$key]['desc'] = $row['desc'];
