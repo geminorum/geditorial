@@ -90,7 +90,7 @@ class WcTerms extends gEditorial\Module
 		if ( ! $term = get_queried_object() )
 			return;
 
-		$wrap  = $this->wrap_open( 'row align-items-center mb-3 -term-archive-intro' );
+		$wrap  = $this->wrap_open( 'row -term-archive-intro' );
 		$title = $this->get_setting( 'term_archive_title' );
 
 		/**
@@ -118,7 +118,7 @@ class WcTerms extends gEditorial\Module
 		if ( ! $image && $desc )
 			echo $wrap;
 
-		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).'">';
+		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
 
 			$this->actions( 'archive_title_before', $term, $title );
 

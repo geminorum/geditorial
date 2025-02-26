@@ -180,179 +180,9 @@ class Bookmarked extends gEditorial\Module
 		];
 	}
 
-	// TODO: support: `Core\Third::getHandleURL()`
 	protected function subcontent_define_type_options( $context, $posttype = NULL )
 	{
-		return [
-			[
-				'name'     => 'default',
-				'title'    => _x( 'Custom Link', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => '{{link}}',
-				'cssclass' => '-custom-link',
-				'icon'     => 'external',
-				'logo'     => '',
-			],
-			[
-				'name'     => 'post',
-				'title'    => _x( 'Site Post', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => Core\WordPress::getPostShortLink( '{{code}}' ),
-				'cssclass' => '-internal-post',
-				'icon'     => 'admin-post',
-				'logo'     => '',
-			],
-			[
-				'name'     => 'attachment',
-				'title'    => _x( 'Site Attachment', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => Core\WordPress::getPostShortLink( '{{code}}' ),
-				'cssclass' => '-internal-attachment',
-				'icon'     => 'media-default',
-				'logo'     => '',
-			],
-			[
-				'name'     => 'term',
-				'title'    => _x( 'Site Term', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => Core\WordPress::getTermShortLink( '{{code}}' ),
-				'cssclass' => '-internal-term',
-				'icon'     => 'tag',
-				'logo'     => '',
-			],
-			[
-				// TODO: move to `NationalLibrary` module
-				'name'     => 'nlai',
-				'title'    => _x( 'National Library', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://opac.nlai.ir/opac-prod/bibliographic/{{code}}',
-				'cssclass' => '-national-library',
-				'icon'     => [ 'misc-88', 'nlai.ir' ],
-				'logo'     => '',
-				'desc'     => _x( 'See the page about this on National Library website.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'goodreads',
-				'title'    => _x( 'Goodreads Book', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://www.goodreads.com/book/show/{{code}}',
-				'cssclass' => '-goodreads-book',
-				'icon'     => [ 'misc-24', 'goodreads' ], // 'amazon',
-				'logo'     => $this->_get_link_logo( 'goodreads' ),
-				'desc'     => _x( 'More about this on Goodreads network.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'fidibo',
-				'title'    => _x( 'Fidibo Book', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://fidibo.com/book/{{code}}',
-				'cssclass' => '-fidibo-book',
-				'icon'     => [ 'misc-16', 'fidibo' ], // 'location-alt',
-				'logo'     => $this->_get_link_logo( 'fidibo' ),
-				'desc'     => _x( 'Read this on Fidibo e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'taaghche',
-				'title'    => _x( 'Taaghche Book', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://taaghche.com/book/{{code}}',
-				'cssclass' => '-taaghche-book',
-				'icon'     => [ 'misc-512', 'taaghche' ], // 'book-alt',
-				'logo'     => $this->_get_link_logo( 'taaghche' ),
-				'desc'     => _x( 'Read this on Taaghche e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'behkhaan',
-				'title'    => _x( 'Behkhaan Profile', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://behkhaan.ir/profile/{{code}}',
-				'cssclass' => '-behkhaan-profile',
-				'icon'     => [ 'misc-32', 'behkhaan' ], // 'book-alt',
-				'logo'     => $this->_get_link_logo( 'behkhaan', 'png' ),
-				'desc'     => _x( 'More about this on Behkhaan network.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'neshan',
-				'title'    => _x( 'Neshan Map', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://nshn.ir/{{code}}',
-				'cssclass' => '-neshan-map',
-				'icon'     => [ 'misc-512', 'neshan' ], // 'location-alt',
-				'logo'     => $this->_get_link_logo( 'neshan' ),
-				'desc'     => _x( 'More about this on Neshan maps.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'balad',
-				'title'    => _x( 'Balad Map', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://balad.ir/p/{{code}}',
-				'cssclass' => '-balad-map',
-				'icon'     => [ 'misc-512', 'balad' ], // 'location-alt',
-				'logo'     => $this->_get_link_logo( 'balad' ),
-				'desc'     => _x( 'More about this on Balad maps.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'aparat',
-				'title'    => _x( 'Aparat Video', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://www.aparat.com/v/{{code}}',
-				'cssclass' => '-aparat-video',
-				'icon'     => [ 'misc-24', 'aparat' ], // 'video-alt3',
-				'logo'     => $this->_get_link_logo( 'aparat' ),
-				'desc'     => _x( 'More about this on Aparat video platform.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'youtube',
-				'title'    => _x( 'Youtube Video', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://www.youtube.com/watch?v={{code}}',
-				'cssclass' => '-youtube-video',
-				'icon'     => 'youtube',
-				'logo'     => $this->_get_link_logo( 'youtube' ),
-				'desc'     => _x( 'More about this on Youtube video platform.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'wikipedia',
-				'title'    => _x( 'Wikipedia Page', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'https://{{_iso639}}.wikipedia.org/wiki/{{code}}',
-				'cssclass' => '-wikipedia-page',
-				'icon'     => [ 'misc-16', 'wikipedia' ],
-				'logo'     => $this->_get_link_logo( 'wikipedia' ),
-				'desc'     => _x( 'More about this on an Wikipedia page.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'email',
-				'title'    => _x( 'Email Address', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'mailto::{{code}}', // @SEE: `Core\HTML::mailto()`
-				'cssclass' => '-email-address',
-				'icon'     => 'email',
-				'logo'     => '',
-				'desc'     => _x( 'Contact someone about this via email.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'phone',
-				'title'    => _x( 'Phone Number', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'tel::{{code}}', // @SEE: `Core\HTML::tel()`
-				'cssclass' => '-phone-number',
-				'icon'     => 'phone',
-				'logo'     => '',
-				'desc'     => _x( 'Contact someone about this via phone.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'mobile',
-				'title'    => _x( 'Mobile Number', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'tel::{{code}}', // @SEE: `Core\HTML::tel()`
-				'cssclass' => '-mobile-number',
-				'icon'     => 'smartphone',
-				'logo'     => '',
-				'desc'     => _x( 'Contact someone about this via mobile phone.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'sms',
-				'title'    => _x( 'SMS Number', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'sms::{{code}}', // @SEE: `Core\HTML::sanitizeSMSNumber()`
-				'cssclass' => '-sms-number',
-				'icon'     => 'text',
-				'logo'     => '',
-				'desc'     => _x( 'Contact someone about this via short message.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-			[
-				'name'     => 'pdf',
-				'title'    => _x( 'PDF Document', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => '{{link}}',
-				'cssclass' => '-pdf-document',
-				'icon'     => 'pdf',
-				'logo'     => '',
-				'desc'     => _x( 'Read more about this as PDF format.', 'Type Description', 'geditorial-bookmarked' ),
-			],
-		];
+		return ModuleHelper::getTypeOptions( $context, $this->path );
 	}
 
 	public function after_setup_theme()
@@ -493,6 +323,7 @@ class Bookmarked extends gEditorial\Module
 		] ) : $terms;
 	}
 
+	// TODO: support: `Core\Third::getHandleURL()`
 	private function _generate_link( $atts, $parent = NULL, $context = NULL )
 	{
 		// TODO: maybe cache the arrays
@@ -521,16 +352,7 @@ class Bookmarked extends gEditorial\Module
 		return $this->filters( 'generate_link', $link, $data, $post, $context );
 	}
 
-	private function _get_link_logo( $key, $ext = NULL, $path = NULL )
-	{
-		return sprintf( '%s%s%s.%s',
-			Core\URL::fromPath( $path ?? $this->path ),
-			'data/logos/',
-			$key,
-			$ext ?? self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'
-		);
-	}
-
+	// TODO: move to process to `ModuleHelper`
 	public function prepped_data( $list, $context, $post, $data, $types, $selectable )
 	{
 		$posttype = WordPress\Post::type( $post );

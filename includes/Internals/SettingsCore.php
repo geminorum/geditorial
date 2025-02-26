@@ -293,7 +293,8 @@ trait SettingsCore
 
 			foreach ( (array) $options['settings'] as $setting => $option ) {
 
-				$args = $this->get_settings_field( $setting );
+				if ( FALSE === ( $args = $this->get_settings_field( $setting ) ) )
+					continue; // bailing!
 
 				// skip disabled settings
 				if ( array_key_exists( 'values', $args ) && FALSE === $args['values'] )
@@ -506,6 +507,9 @@ trait SettingsCore
 
 					else
 						continue;
+
+					if ( FALSE === $args )
+						continue; // bailing!
 
 					$this->add_settings_field( array_merge( $args, [ 'section' => $section ] ) );
 				}

@@ -102,6 +102,7 @@ class Tabs extends gEditorial\Module
 				'priority'    => 10,
 			];
 
+		// TODO: move to `Attachments` Module
 		if ( gEditorial()->enabled( 'attachments' ) )
 			$tabs[] = [
 				'name'        => 'attachment_summary',
