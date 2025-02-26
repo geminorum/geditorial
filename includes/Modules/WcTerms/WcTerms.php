@@ -87,11 +87,16 @@ class WcTerms extends gEditorial\Module
 		if ( absint( get_query_var( 'paged' ) ) )
 			return;
 
-		if ( ! $term = get_queried_object() )
+		if ( $term = get_queried_object() )
+			$this->_render_term_introduction( $term, $this->get_setting( 'term_archive_title' ) );
+	}
+
+	private function _render_term_introduction( $term, $title = FALSE )
+	{
+		if ( ! $term = WordPress\Term::get( $term ) )
 			return;
 
-		$wrap  = $this->wrap_open( 'row -term-archive-intro' );
-		$title = $this->get_setting( 'term_archive_title' );
+		$wrap = $this->wrap_open( 'row -term-introduction' );
 
 		/**
 		 * Filters the archive's raw description on taxonomy archives.
@@ -120,17 +125,17 @@ class WcTerms extends gEditorial\Module
 
 		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
 
-			$this->actions( 'archive_title_before', $term, $title );
+			$this->actions( 'introduction_title_before', $term, $title );
 
 			if ( $title && ( $image || $desc ) )
 				Core\HTML::heading( $title, WordPress\Term::title( $term, FALSE ) );
 
-			$this->actions( 'archive_description_before', $term, $desc );
+			$this->actions( 'introduction_description_before', $term, $desc );
 
 			if ( ! WordPress\Strings::isEmpty( $desc ) )
 				echo Core\HTML::wrap( wc_format_content( WordPress\Strings::kses( $desc, 'html' ) ), 'term-description -term-description' );
 
-			$this->actions( 'archive_description_after', $term, $desc );
+			$this->actions( 'introduction_description_after', $term, $desc );
 
 		echo '</div>';
 
