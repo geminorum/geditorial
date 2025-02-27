@@ -39,10 +39,13 @@ class Archives extends gEditorial\Module
 		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label ) {
 
 			$settings['_posttypes'][] = [
-				'field'       => 'posttype_'.$posttype_name.'_title',
-				'type'        => 'text',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => 'posttype_'.$posttype_name.'_title',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ),
+					'<i>'.$posttype_label.'</i>'
+				),
 				'description' => _x( 'Used as title on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'placeholder' => $this->_get_posttype_archive_title( $posttype_name, FALSE ),
 				'after'       => Settings::fieldAfterIcon( $this->get_posttype_archive_link( $posttype_name ),
@@ -50,19 +53,25 @@ class Archives extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field'       => 'posttype_'.$posttype_name.'_content',
-				'type'        => 'textarea-quicktags',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => 'posttype_'.$posttype_name.'_content',
+				'type'  => 'textarea-quicktags',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ),
+					'<i>'.$posttype_label.'</i>'
+				),
 				'description' => _x( 'Used as content on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'default'     => $this->_get_default_posttype_content( $posttype_name ),
 			];
 
 			$settings['_posttypes'][] = [
-				'field'       => 'posttype_'.$posttype_name.'_template',
-				'type'        => 'select',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => 'posttype_'.$posttype_name.'_template',
+				'type'  => 'select',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ),
+					'<i>'.$posttype_label.'</i>'
+				),
 				'description' => _x( 'Used as page template on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'values'      => $templates,
 			];
@@ -73,28 +82,37 @@ class Archives extends gEditorial\Module
 		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label ) {
 
 			$settings['_taxonomies'][] = [
-				'field'       => 'taxonomy_'.$taxonomy_name.'_title',
-				'type'        => 'text',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => 'taxonomy_'.$taxonomy_name.'_title',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ),
+					'<i>'.$taxonomy_label.'</i>'
+				),
 				'description' => _x( 'Used as title on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'placeholder' => $this->_get_taxonomy_archive_title( $taxonomy_name, FALSE ),
 			];
 
 			$settings['_taxonomies'][] = [
-				'field'       => 'taxonomy_'.$taxonomy_name.'_content',
-				'type'        => 'textarea-quicktags',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => 'taxonomy_'.$taxonomy_name.'_content',
+				'type'  => 'textarea-quicktags',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ),
+					'<i>'.$taxonomy_label.'</i>'
+				),
 				'description' => _x( 'Used as content on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'default'     => $this->_get_default_taxonomy_content( $taxonomy_name ),
 			];
 
 			$settings['_taxonomies'][] = [
-				'field'       => 'taxonomy_'.$taxonomy_name.'_slug',
-				'type'        => 'text',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Archives Slug for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => 'taxonomy_'.$taxonomy_name.'_slug',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Archives Slug for %s', 'Setting Title', 'geditorial-archives' ),
+					'<i>'.$taxonomy_label.'</i>'
+				),
 				'description' => _x( 'Used as slug on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ),
 					_x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
@@ -103,10 +121,13 @@ class Archives extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field'       => 'taxonomy_'.$taxonomy_name.'_template',
-				'type'        => 'select',
-				/* translators: %s: supported object label */
-				'title'       => sprintf( _x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => 'taxonomy_'.$taxonomy_name.'_template',
+				'type'  => 'select',
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ),
+					'<i>'.$taxonomy_label.'</i>'
+				),
 				'description' => _x( 'Used as page template on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'values'      => $templates,
 			];
@@ -160,11 +181,12 @@ class Archives extends gEditorial\Module
 		if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
 			$screen->set_help_sidebar( Settings::helpSidebar( [ [
-				/* translators: %s: supported object label */
-				'title' => sprintf( _x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
-					WordPress\Taxonomy::object( $screen->taxonomy )->label ),
 				'url'   => $this->get_taxonomy_archive_link( $screen->taxonomy ),
-			] ] ) );
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
+					WordPress\Taxonomy::object( $screen->taxonomy )->label
+				) ] ] ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 
@@ -174,11 +196,12 @@ class Archives extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			$screen->set_help_sidebar( Settings::helpSidebar( [ [
-				/* translators: %s: supported object label */
-				'title' => sprintf( _x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
-					WordPress\PostType::object( $screen->post_type )->label ),
 				'url'   => $this->get_posttype_archive_link( $screen->post_type ),
-			] ] ) );
+				'title' => sprintf(
+					/* translators: %s: supported object label */
+					_x( '%s Archives', 'Help Sidebar', 'geditorial-archives' ),
+					WordPress\PostType::object( $screen->post_type )->label ),
+				] ] ) );
 		}
 	}
 
@@ -243,7 +266,7 @@ class Archives extends gEditorial\Module
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
 
-		// NOTE: it's gEditorial Prop
+		// NOTE: it's `gEditorial` Prop
 		if ( ! empty( $object->has_archive ) )
 			return $object->has_archive;
 
@@ -258,7 +281,7 @@ class Archives extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		// no need to check for supported taxonomies, since we using `query_vars` filter
+		// No need to check for supported taxonomies, since we using `query_vars` filter.
 		if ( $taxonomy = get_query_var( $this->constant( 'taxonomy_query' ) ) ) {
 
 			$this->current_queried = $taxonomy;
@@ -441,7 +464,7 @@ class Archives extends gEditorial\Module
 			$items[] = [
 				/* translators: %s: supported object label */
 				'name' => sprintf( _x( '%s Archives', 'Navigation MetaBox', 'geditorial-archives' ), $posttype_label ),
-				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
+				// NOTE: must have `custom-` prefix to whitelist in `gNetwork` Navigation
 				'slug' => sprintf( 'custom-%s_archives', $posttype_name ),
 				'link' => $this->get_posttype_archive_link( $posttype_name ),
 			];
@@ -450,7 +473,7 @@ class Archives extends gEditorial\Module
 			$items[] = [
 				/* translators: %s: supported object label */
 				'name' => sprintf( _x( '%s Archives', 'Navigation MetaBox', 'geditorial-archives' ), $taxonomy_label ),
-				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
+				// NOTE: must have `custom-` prefix to whitelist in `gNetwork` Navigation
 				'slug' => sprintf( 'custom-%s_archives', $taxonomy_name ),
 				'link' => $this->get_taxonomy_archive_link( $taxonomy_name ),
 			];
@@ -467,8 +490,11 @@ class Archives extends gEditorial\Module
 
 			$icon = $link ? Settings::fieldAfterIcon( $link, _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ) : '';
 
-			/* translators: %s: taxonomy object label */
-			Core\HTML::h4( sprintf( _x( 'Custom Archives Page for &ldquo;%s&rdquo;', 'Card Title', 'geditorial-archives' ), $object->label ).$icon, 'title' );
+			Core\HTML::h4( sprintf(
+				/* translators: %s: taxonomy object label */
+				_x( 'Custom Archives Page for &ldquo;%s&rdquo;', 'Card Title', 'geditorial-archives' ),
+				$object->label
+			).$icon, 'title' );
 
 			if ( $link ) {
 

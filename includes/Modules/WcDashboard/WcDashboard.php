@@ -4,7 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class WcDashboard extends gEditorial\Module
@@ -18,7 +19,7 @@ class WcDashboard extends gEditorial\Module
 			'desc'     => _x( 'Customer Dashboard Enhancements for WooCommerce', 'Modules: WC Dashboard', 'geditorial-admin' ),
 			'icon'     => 'dashboard',
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
 			'keywords' => [
 				'frontend',
 				'dashboard',
@@ -75,7 +76,7 @@ class WcDashboard extends gEditorial\Module
 						'dashboard'       => __( 'Dashboard', 'woocommerce' ),
 						'orders'          => __( 'Orders', 'woocommerce' ),
 						'downloads'       => __( 'Downloads', 'woocommerce' ),
-						'edit-address'    => _n( 'Addresses', 'Address', (int) wc_shipping_enabled(), 'woocommerce' ),
+						'edit-address'    => _n( 'Address', 'Addresses', ( 1 + (int) wc_shipping_enabled() ), 'woocommerce' ),
 						'payment-methods' => __( 'Payment methods', 'woocommerce' ),
 						'edit-account'    => __( 'Account details', 'woocommerce' ),
 						'customer-logout' => __( 'Logout', 'woocommerce' ),
@@ -94,8 +95,12 @@ class WcDashboard extends gEditorial\Module
 
 	private function _default_main_message()
 	{
-		/* translators: %1$s: user display name, %2$s: logout url */
-		return sprintf( _x( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'Setting Default', 'geditorial-wc-dashboard' ), '{{display_name}}', '{{logout_url}}' );
+		return sprintf(
+			/* translators: %1$s: user display name, %2$s: logout url */
+			_x( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'Setting Default', 'geditorial-wc-dashboard' ),
+			'{{display_name}}',
+			'{{logout_url}}'
+		);
 	}
 
 	public function init()
@@ -146,9 +151,9 @@ class WcDashboard extends gEditorial\Module
 
 		$user_id = get_current_user_id();
 
-		// this SQL query allows to get all the products purchased by the
+		// This SQL query allows to get all the products purchased by the
 		// current user in this example we sort products by date but you
-		// can reorder them another way
+		// can reorder them another way.
 		$ids = $wpdb->get_col( $wpdb->prepare( "
 			SELECT      itemmeta.meta_value
 			FROM        {$wpdb->prefix}woocommerce_order_itemmeta itemmeta
@@ -164,8 +169,8 @@ class WcDashboard extends gEditorial\Module
 			ORDER BY    orders.post_date DESC
 		", $user_id ) );
 
-		// some orders may contain the same product,
-		// but we do not need it twice
+		// Some orders may contain the same product,
+		// but we do not need it twice.
 		$ids = array_unique( $ids );
 
 		if ( ! empty( $ids ) ) {
@@ -192,8 +197,12 @@ class WcDashboard extends gEditorial\Module
 
 		} else {
 
-			echo WordPress\Strings::prepDescription( $this->get_setting_fallback( 'purchased_empty_message',
-				_x( 'Nothing purchased yet.', 'Default', 'geditorial-wc-dashboard' ) ) );
+			$message = WordPress\Strings::prepDescription(
+				$this->get_setting_fallback( 'purchased_empty_message',
+					_x( 'Nothing purchased yet.', 'Default', 'geditorial-wc-dashboard' )
+			), TRUE, FALSE );
+
+			Core\HTML::desc( $message, TRUE, '-empty woocommerce-info' );
 
 			$this->actions( 'account_purchased_empty', $user_id ); // LIKE: first purchase coupon
 		}

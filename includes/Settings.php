@@ -2025,6 +2025,7 @@ class Settings extends WordPress\Main
 			case '_reports'    : return [ _x( 'Report Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_printpage'  : return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_strings'    : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_tabs'       : return [ _x( 'Content Tabs', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_fields'     : return [ _x( 'Data Fields', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_constants'  : return [ _x( 'Custom Constants', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_posttypes'  : return [ _x( 'Post-Types', 'Settings: Section Title', 'geditorial-admin' ), NULL ];

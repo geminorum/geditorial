@@ -108,6 +108,8 @@ class WcPostal extends gEditorial\Module
 			'tracking_id' => _x( 'Tracking', 'Export Column', 'geditorial-wc-postal' ),
 		] );
 
+		$this->action( 'order_details_before_order_table', 1, 8, FALSE, 'woocommerce' );
+
 		$this->filter( 'pwoosms_shortcodes_list' );
 		$this->filter( 'pwoosms_order_sms_body_before_replace', 7, 9 );
 
@@ -134,6 +136,12 @@ class WcPostal extends gEditorial\Module
 		return $default ? $icon : $this->get_setting_fallback( 'service_icon', $icon );
 	}
 
+	// TODO: read-only input with copy button of tracking id
+	public function order_details_before_order_table( $order )
+	{
+		$this->email_after_order_table( $order, '', '', '' );
+	}
+
 	public function email_after_order_table( $order, $sent_to_admin, $plain_text, $email )
 	{
 		if ( ! ( $order instanceof \WC_Order ) )
@@ -147,7 +155,7 @@ class WcPostal extends gEditorial\Module
 			echo $this->get_setting_fallback( 'email_before_text',
 				_x( 'You can view the status of package at any time by visiting this page:', 'Setting Default', 'geditorial-wc-postal' ) );
 
-			vprintf( '<a class="button tracking" href="%s">%s (<small>%s</small>)</a>', [
+			vprintf( ' <a class="button tracking" href="%s">%s (<small>%s</small>)</a>', [
 				$this->_service_url( $tracking ),
 				$this->get_setting_fallback( 'email_button_text', _x( 'Tracking Postal Package', 'Setting Default', 'geditorial-wc-postal' ) ),
 				$tracking,

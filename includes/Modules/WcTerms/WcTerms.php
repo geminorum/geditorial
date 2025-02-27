@@ -17,7 +17,7 @@ class WcTerms extends gEditorial\Module
 			'name'     => 'wc_terms',
 			'title'    => _x( 'WC Terms', 'Modules: WC Terms', 'geditorial-admin' ),
 			'desc'     => _x( 'Term Enhancements for WooCommerce', 'Modules: WC Terms', 'geditorial-admin' ),
-			'icon'     => 'store',
+			'icon'     => 'image-filter',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
 			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
@@ -122,6 +122,7 @@ class WcTerms extends gEditorial\Module
 
 		if ( $this->get_setting( 'term_archive_desc' ) ) {
 			remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
+			remove_action( 'woocommerce_archive_description', 'storefront_woocommerce_brands_archive', 5 );
 			$this->action( 'archive_description', 10, 0, FALSE, 'woocommerce' );
 		}
 
@@ -266,7 +267,7 @@ class WcTerms extends gEditorial\Module
 		if ( ! $image && ! $desc && ! $title )
 			return;
 
-		if ( ! $image && $desc )
+		if ( ! $image )
 			echo $wrap;
 
 		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
@@ -283,9 +284,7 @@ class WcTerms extends gEditorial\Module
 
 			$this->actions( 'introduction_description_after', $term, $desc );
 
-		echo '</div>';
-
-		if ( ! $image && $desc )
-			echo '</div>'; // `.row`
+		echo '</div>'; // `.col`
+		echo '</div>'; // `.row`
 	}
 }

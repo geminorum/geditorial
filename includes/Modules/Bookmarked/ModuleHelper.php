@@ -51,7 +51,6 @@ class ModuleHelper extends gEditorial\Helper
 				'logo'     => '',
 			],
 			[
-				// TODO: move to `NationalLibrary` module
 				'name'     => 'nlai',
 				'title'    => _x( 'National Library', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://opac.nlai.ir/opac-prod/bibliographic/{{code}}',
@@ -204,7 +203,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getLinkLogo( $key, $ext = NULL, $path = NULL )
 	{
-		self::_log(__FILE__);
+		// self::_log(__FILE__);
 
 		return sprintf( '%s%s%s.%s',
 			// Core\URL::fromPath( $path ?? $this->path ),

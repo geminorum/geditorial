@@ -1377,6 +1377,7 @@ trait SubContents
 	}
 
 	// TODO: make non-bootstrap compatible
+	// TODO: move to `Bookmarked` Module-Template
 	public function subcontent_data_summary__render_callback( $data, $args, $post = NULL, $module = NULL )
 	{
 		echo $this->wrap_open( [ '-subcontent-data-summary', 'mt-5' ] );
@@ -1400,8 +1401,11 @@ trait SubContents
 			echo 'href="'.Core\HTML::escapeURL( $row['link'] ).'" ';
 			echo 'class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true" target="_blank">';
 
-				// echo Core\HTML::img( $row['_logo'], 'flex-shrink-0' );
-				echo '<span class="-icon flex-shrink-0">'.$row['_icon'].'</span>';
+				// if ( ! empty( $row['_logo'] ) )
+				// 	echo Core\HTML::img( $row['_logo'], '-main-logo flex-shrink-0' );
+
+				if ( ! empty( $row['_icon'] ) )
+					echo '<span class="-main-icon flex-shrink-0">'.$row['_icon'].'</span>';
 
 				echo '<div class="d-flex gap-2 w-100 justify-content-between"><div>';
 
@@ -1411,7 +1415,7 @@ trait SubContents
 
 					echo '</div>';
 
-				echo '<small class="opacity-50 text-nowrap" title="'.Core\HTML::escapeAttr( $row['type'] ).'">';
+				echo '<small class="opacity-50 text-nowrap -side-icon" title="'.Core\HTML::escapeAttr( $row['type'] ).'">';
 					echo Helper::getIcon( 'external' );
 				echo '</small>';
 
