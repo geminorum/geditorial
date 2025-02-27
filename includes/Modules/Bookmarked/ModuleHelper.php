@@ -189,6 +189,16 @@ class ModuleHelper extends gEditorial\Helper
 				'logo'     => '',
 				'desc'     => _x( 'Read more about this as PDF format.', 'Type Description', 'geditorial-bookmarked' ),
 			],
+			[
+				'name'     => 'epub',
+				'title'    => _x( 'ePub Book', 'Type Option', 'geditorial-bookmarked' ),
+				'template' => '{{link}}',
+				'cssclass' => '-epub-book',
+				'icon'     => [ 'misc-32', 'epub' ],
+				'logo'     => self::getLinkLogo( 'epub', NULL, $path ),
+				'desc'     => _x( 'Read more about this as ePub book.', 'Type Description', 'geditorial-bookmarked' ),
+				'color'    => '#86b918',
+			],
 		];
 	}
 
