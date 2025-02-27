@@ -59,6 +59,7 @@ class ModuleHelper extends gEditorial\Helper
 				'icon'     => [ 'misc-88', 'nlai.ir' ],
 				'logo'     => '',
 				'desc'     => _x( 'See the page about this on National Library website.', 'Type Description', 'geditorial-bookmarked' ),
+				'color'    => '#c8b131',
 			],
 			[
 				'name'     => 'goodreads',
@@ -68,6 +69,7 @@ class ModuleHelper extends gEditorial\Helper
 				'icon'     => [ 'misc-24', 'goodreads' ], // 'amazon',
 				'logo'     => self::getLinkLogo( 'goodreads', NULL, $path ),
 				'desc'     => _x( 'More about this on Goodreads network.', 'Type Description', 'geditorial-bookmarked' ),
+				'color'    => '#59461b',
 			],
 			[
 				'name'     => 'fidibo',
@@ -77,6 +79,7 @@ class ModuleHelper extends gEditorial\Helper
 				'icon'     => [ 'misc-16', 'fidibo' ], // 'location-alt',
 				'logo'     => self::getLinkLogo( 'fidibo', NULL, $path ),
 				'desc'     => _x( 'Read this on Fidibo e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
+				'color'    => '#322e2a',
 			],
 			[
 				'name'     => 'taaghche',

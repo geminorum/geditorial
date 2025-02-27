@@ -1384,9 +1384,19 @@ trait SubContents
 
 		foreach ( $data as $key => $row ) {
 
-			$type = empty( $row['_type_option']['name'] ) ? 'default' : $row['_type_option']['name'];
+			$type  = empty( $row['_type_options']['name'] ) ? 'default' : $row['_type_options']['name'];
+			$style = '';
+
+			if ( ! empty( $row['_type_options']['color'] ) && Core\Color::is( $row['_type_options']['color'] ) )
+				$style.= sprintf(
+					// @REF: https://css-tricks.com/css-attr-function-got-nothin-custom-properties/
+					'--custom-link-color:%s;--custom-link-background:%s;',
+					Core\Color::lightOrDark( $row['_type_options']['color'] ),
+					$row['_type_options']['color']
+				);
 
 			echo '<a data-type="'.Core\HTML::escapeAttr( $type ).'" ';
+			echo $style ? ( 'style="'.Core\HTML::escapeAttr( $style ).'" ' ) : ' ';
 			echo 'href="'.Core\HTML::escapeURL( $row['link'] ).'" ';
 			echo 'class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true" target="_blank">';
 
