@@ -1,0 +1,46 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Socialite: Front All
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+.geditorial-wrap.-socialite {
+  margin: $spacer 0;
+
+  // &.-social-links {}
+
+  &.-icon-list {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      margin: 0 0 $spacer * .5;
+      padding: 0;
+
+      > li {
+        background-color: $gray-lighter;
+        border-radius: 49.5%;
+        font-size: larger;
+        margin-bottom: $spacer * .5;
+        margin-right: $spacer * .5;
+        margin-top: 0;
+        padding: ($spacer * .25) ($spacer * .65);
+
+        a {
+          text-decoration: none;
+        }
+
+        a:not(:hover) {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    }
+
+    span.dashicons,
+    span.-iconsvg svg {
+      vertical-align: middle;
+    }
+  }
+}
