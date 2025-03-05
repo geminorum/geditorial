@@ -160,6 +160,7 @@ class Identified extends gEditorial\Module
 					'tin'      => _x( 'TIN', 'Identifier Type', 'geditorial-identified' ),
 					'ein'      => _x( 'EIN', 'Identifier Type', 'geditorial-identified' ),
 					'mobile'   => _x( 'Mobile', 'Identifier Type', 'geditorial-identified' ),
+					'email'    => _x( 'Email', 'Identifier Type', 'geditorial-identified' ),
 					'identity' => _x( 'Identity', 'Identifier Type', 'geditorial-identified' ),
 					'latlng'   => _x( 'Lat/Lng', 'Identifier Type', 'geditorial-identified' ),
 				],
@@ -176,6 +177,7 @@ class Identified extends gEditorial\Module
 				'tin'      => _x( 'Taxpayer Identification Number', 'Identifier Type Description', 'geditorial-identified' ),
 				'ein'      => _x( 'Employer Identification Number', 'Identifier Type Description', 'geditorial-identified' ),
 				'mobile'   => _x( 'Mobile Phone Number', 'Identifier Type Description', 'geditorial-identified' ),
+				'email'    => _x( 'Electronic Mail', 'Identifier Type Description', 'geditorial-identified' ),
 				'identity' => _x( 'National Identity Number', 'Identifier Type Description', 'geditorial-identified' ),
 				'latlng'   => _x( 'Latitude and Longitude', 'Identifier Type Description', 'geditorial-identified' ),
 			],
@@ -707,6 +709,7 @@ class Identified extends gEditorial\Module
 			case 'gtin'    : return Core\ISBN::discovery( $search );
 			case 'isbn'    : return Core\ISBN::discovery( $search );
 			case 'mobile'  : return Core\Mobile::sanitize( $search );
+			case 'email'   : return Core\Email::sanitize( $search );
 			case 'identity': return Core\Validation::sanitizeIdentityNumber( $search );
 			case 'vin'     : return Core\Validation::sanitizeVIN( $search );
 			case 'code'    : return Core\Number::translate( Core\Text::trim( $search ) );
