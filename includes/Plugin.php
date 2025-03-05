@@ -613,6 +613,11 @@ class Plugin
 		wp_enqueue_style( static::BASE.'-front', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
 		wp_style_add_data( static::BASE.'-front', 'rtl', 'replace' );
 
+		if ( WordPress\WooCommerce::isActive() ) {
+			wp_enqueue_style( static::BASE.'-woocommerce-front', GEDITORIAL_URL.'assets/css/front.woocommerce.css', [], GEDITORIAL_VERSION );
+			wp_style_add_data( static::BASE.'-woocommerce-front', 'rtl', 'replace' );
+		}
+
 		if ( defined( 'GNETWORK_VERSION' ) )
 			return;
 
