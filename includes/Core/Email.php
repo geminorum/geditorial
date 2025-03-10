@@ -55,7 +55,7 @@ class Email extends Base
 
 		switch ( $context ) {
 			case 'edit' : return $raw;
-			case 'print': return Core\HTML::wrapLTR( trim( $raw ) );
+			case 'print': return HTML::wrapLTR( trim( $raw ) );
 			case 'icon' : return HTML::mailto( $raw, HTML::getDashicon( 'email-alt' ), self::is( $value ) ? '-is-valid' : '-is-not-valid' );
 			     default: return HTML::mailto( $raw, NULL, self::is( $value ) ? '-is-valid' : '-is-not-valid' );
 		}

@@ -232,21 +232,17 @@ class WordPress extends Base
 		return FALSE;
 	}
 
-	public static function doNotCache()
+	public static function isExport()
 	{
-		defined( 'DONOTCACHEPAGE' ) || define( 'DONOTCACHEPAGE', TRUE );
+		if ( defined( 'GNETWORK_IS_WP_EXPORT' ) && GNETWORK_IS_WP_EXPORT )
+			return TRUE;
+
+		return FALSE;
 	}
 
-	// FIXME: DEPRECATED: use `PostType::htmlFeaturedImage()`
-	public static function getFeaturedImage( $post_id, $size = 'thumbnail', $default = FALSE )
+	public static function doNotCache()
 	{
-		self::_dep( 'PostType::htmlFeaturedImage()' );
-
-		if ( ! $post_thumbnail_id = get_post_thumbnail_id( $post_id ) )
-			return $default;
-
-		$post_thumbnail_img = wp_get_attachment_image_src( $post_thumbnail_id, $size );
-		return $post_thumbnail_img[0];
+		self::define( 'DONOTCACHEPAGE', TRUE );
 	}
 
 	// @REF: `wp_referer_field()`
