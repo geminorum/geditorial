@@ -144,6 +144,16 @@ class ModuleHelper extends gEditorial\Helper
 				'desc'     => _x( 'More about this on an Wikipedia page.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
+				'name'     => 'navaar',
+				'title'    => _x( 'Navaar Audio', 'Type Option', 'geditorial-bookmarked' ),
+				'template' => 'https://www.navaar.ir/audiobook/{{code}}',
+				'cssclass' => '-navaar-audio',
+				'icon'     => [ 'misc-32', 'navaar' ],
+				'logo'     => self::getLinkLogo( 'navaar', NULL, $path ),
+				'desc'     => _x( 'More about this on an Navaar audio.', 'Type Description', 'geditorial-bookmarked' ),
+				'color'    => '#567dbf',
+			],
+			[
 				'name'     => 'email',
 				'title'    => _x( 'Email Address', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'mailto::{{code}}', // @SEE: `Core\HTML::mailto()`
