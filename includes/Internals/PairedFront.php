@@ -47,6 +47,9 @@ trait PairedFront
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
+		if ( $constants[5] )
+			return FALSE; // it's private
+
 		add_filter( 'term_link', function ( $link, $term, $taxonomy ) use ( $constants ) {
 
 			if ( $taxonomy !== $this->constant( $constants[1] ) )

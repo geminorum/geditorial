@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
@@ -26,6 +25,8 @@ class Magazine extends gEditorial\Module
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
 	use Internals\PairedRowActions;
+	use Internals\PairedImports;
+	use Internals\PairedRest;
 	use Internals\PairedTools;
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
@@ -41,7 +42,7 @@ class Magazine extends gEditorial\Module
 			'icon'     => 'book',
 			'access'   => 'stable',
 			'keywords' => [
-				'paired',
+				'pairedmodule',
 			],
 		];
 	}
@@ -86,7 +87,7 @@ class Magazine extends gEditorial\Module
 			],
 			'_content' => [
 				'archive_override',
-				'archive_title',
+				'archive_title' => [ NULL, $this->get_posttype_label( 'primary_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
 			],
@@ -95,12 +96,12 @@ class Magazine extends gEditorial\Module
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'issue_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
 			'_reports' => [
-				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'issue_posttype' ) ],
-				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'issue_posttype', 'meta' ) ],
-				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'issue_posttype', 'units' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
 			'_constants' => [
 				'main_shortcode_constant'  => [ NULL, 'issue' ],
@@ -113,10 +114,10 @@ class Magazine extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'issue_posttype'   => 'issue',
-			'issue_paired'     => 'issues',
+			'primary_posttype' => 'issue',
+			'primary_paired'   => 'issues',
 			'span_taxonomy'    => 'issue_span',
-			'section_taxonomy' => 'issue_section',
+			'primary_subterm'  => 'issue_section',
 
 			'main_shortcode'  => 'issue',
 			'span_shortcode'  => 'issue-span',
@@ -130,9 +131,9 @@ class Magazine extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'issue_paired'     => NULL,
-				'span_taxonomy'    => 'backup',
-				'section_taxonomy' => 'category',
+				'primary_paired'  => NULL,
+				'span_taxonomy'   => 'backup',
+				'primary_subterm' => 'category',
 			],
 		];
 	}
@@ -141,13 +142,13 @@ class Magazine extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'issue_posttype'   => _n_noop( 'Issue', 'Issues', 'geditorial-magazine' ),
-				'issue_paired'     => _n_noop( 'Issue', 'Issues', 'geditorial-magazine' ),
+				'primary_posttype' => _n_noop( 'Issue', 'Issues', 'geditorial-magazine' ),
+				'primary_paired'   => _n_noop( 'Issue', 'Issues', 'geditorial-magazine' ),
 				'span_taxonomy'    => _n_noop( 'Span', 'Spans', 'geditorial-magazine' ),
-				'section_taxonomy' => _n_noop( 'Section', 'Sections', 'geditorial-magazine' ),
+				'primary_subterm'  => _n_noop( 'Section', 'Sections', 'geditorial-magazine' ),
 			],
 			'labels' => [
-				'issue_posttype' => [
+				'primary_posttype' => [
 					'featured_image' => _x( 'Cover Image', 'Label: Featured Image', 'geditorial-magazine' ),
 				],
 			],
@@ -161,7 +162,7 @@ class Magazine extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			'issue_posttype' => [
+			'primary_posttype' => [
 				'metabox_title' => _x( 'The Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
 				'listbox_title' => _x( 'In This Issue', 'Label: MetaBox Title', 'geditorial-magazine' ),
 			],
@@ -173,7 +174,7 @@ class Magazine extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'span_taxonomy' => Datetime::getYears( '-5 years' ),
+			'span_taxonomy' => gEditorial\Datetime::getYears( '-5 years' ),
 		];
 	}
 
@@ -181,7 +182,7 @@ class Magazine extends gEditorial\Module
 	{
 		return [
 			'meta' => [
-				$this->constant( 'issue_posttype' ) => [
+				$this->constant( 'primary_posttype' ) => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
 					'lead'       => [ 'type' => 'postbox_html' ],
@@ -244,15 +245,15 @@ class Magazine extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [
-			'issue_posttype',
-			'issue_paired',
-			'section_taxonomy',
+			'primary_posttype',
+			'primary_paired',
+			'primary_subterm',
 		];
 	}
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'issue_posttype' );
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function init()
@@ -264,7 +265,7 @@ class Magazine extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'issue_posttype' );
+		], 'primary_posttype' );
 
 		$this->paired_register();
 
@@ -279,46 +280,9 @@ class Magazine extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function template_redirect()
-	{
-		if ( $this->_paired && is_tax( $this->constant( 'issue_paired' ) ) ) {
-
-			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'issue_posttype', 'issue_paired' ) )
-				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
-
-		} else if ( is_tax( $this->constant( 'span_taxonomy' ) ) ) {
-
-			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				Core\WordPress::redirect( $redirect, 301 );
-
-		} else if ( is_post_type_archive( $this->constant( 'issue_posttype' ) ) ) {
-
-			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				Core\WordPress::redirect( $redirect, 301 );
-
-		} else if ( is_singular( $this->constant( 'issue_posttype' ) ) ) {
-
-			if ( $this->get_setting( 'insert_cover' ) )
-				add_action( $this->hook_base( 'content', 'before' ),
-					[ $this, 'insert_cover' ],
-					$this->get_setting( 'insert_priority', -50 )
-				);
-		}
-	}
-
-	public function template_include( $template )
-	{
-		return $this->templateposttype__include( $template, $this->constant( 'issue_posttype' ), FALSE );
-	}
-
-	public function templateposttype_get_archive_content_default( $posttype )
-	{
-		return ModuleTemplate::spanTiles();
-	}
-
 	public function setup_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'issue_posttype' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
 		}
 	}
@@ -326,18 +290,18 @@ class Magazine extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
-			? $this->constant( 'section_taxonomy' )
+			? $this->constant( 'primary_subterm' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'issue_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
 				$this->filter( 'get_default_comment_status', 3 );
 
-				$this->posttype__media_register_headerbutton( 'issue_posttype' );
-				$this->_hook_post_updated_messages( 'issue_posttype' );
+				$this->posttype__media_register_headerbutton( 'primary_posttype' );
+				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
@@ -348,7 +312,7 @@ class Magazine extends gEditorial\Module
 
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
-				$this->_hook_bulk_post_updated_messages( 'issue_posttype' );
+				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->pairedcore__hook_sync_paired();
 				$this->corerestrictposts__hook_screen_taxonomies( 'span_taxonomy' );
@@ -357,7 +321,7 @@ class Magazine extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $subterms && $subterms === $screen->taxonomy )
-				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'issue_posttype' ) ) );
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'primary_posttype' ) ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 
@@ -382,7 +346,7 @@ class Magazine extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )
@@ -396,7 +360,7 @@ class Magazine extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'issue_posttype' ) );
+		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 		$this->add_posttype_fields_supported();
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
@@ -408,11 +372,50 @@ class Magazine extends gEditorial\Module
 			$this->_hook_submenu_adminpage( 'newpost' );
 			$this->action_self( 'newpost_content', 4, 10, 'menu_order' );
 		}
+
+		$this->_hook_submenu_adminpage( 'importitems', 'exist' );
+	}
+
+	public function template_redirect()
+	{
+		if ( $this->_paired && is_tax( $this->constant( 'primary_paired' ) ) ) {
+
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'primary_posttype', 'primary_paired' ) )
+				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
+
+		} else if ( is_tax( $this->constant( 'span_taxonomy' ) ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
+				Core\WordPress::redirect( $redirect, 301 );
+
+		} else if ( is_post_type_archive( $this->constant( 'primary_posttype' ) ) ) {
+
+			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
+				Core\WordPress::redirect( $redirect, 301 );
+
+		} else if ( is_singular( $this->constant( 'primary_posttype' ) ) ) {
+
+			if ( $this->get_setting( 'insert_cover' ) )
+				add_action( $this->hook_base( 'content', 'before' ),
+					[ $this, 'insert_cover' ],
+					$this->get_setting( 'insert_priority', -50 )
+				);
+		}
+	}
+
+	public function template_include( $template )
+	{
+		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ), FALSE );
+	}
+
+	public function templateposttype_get_archive_content_default( $posttype )
+	{
+		return ModuleTemplate::spanTiles();
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'issue_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -424,7 +427,7 @@ class Magazine extends gEditorial\Module
 			return;
 
 		ModuleTemplate::postImage( [
-			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'issue_posttype' ), NULL, 'medium' ),
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $this->constant( 'primary_posttype' ), NULL, 'medium' ),
 			'link' => 'attachment',
 		] );
 	}
@@ -458,8 +461,8 @@ class Magazine extends gEditorial\Module
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
-			$this->constant( 'issue_posttype' ),
-			$this->constant( 'issue_paired' ),
+			$this->constant( 'primary_posttype' ),
+			$this->constant( 'primary_paired' ),
 			array_merge( [
 				'post_id'     => NULL,
 				'posttypes'   => $this->posttypes(),
@@ -477,7 +480,7 @@ class Magazine extends gEditorial\Module
 	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return Shortcode::listPosts( 'assigned',
-			$this->constant( 'issue_posttype' ),
+			$this->constant( 'primary_posttype' ),
 			$this->constant( 'span_taxonomy' ),
 			array_merge( [
 				'post_id' => NULL,
@@ -489,7 +492,7 @@ class Magazine extends gEditorial\Module
 
 	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		$type = $this->constant( 'issue_posttype' );
+		$type = $this->constant( 'primary_posttype' );
 		$args = [
 			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
 			'type' => $type,
@@ -567,7 +570,7 @@ class Magazine extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		if ( ! $this->posttype_overview_render_table( 'issue_posttype', $uri, $sub ) )
+		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
 	}
 }

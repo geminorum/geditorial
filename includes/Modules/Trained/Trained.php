@@ -159,7 +159,7 @@ class Trained extends gEditorial\Module
 				'primary_posttype' => [
 					'menu_name'      => _x( 'Trainings', 'Label: `menu_name`', 'geditorial-trained' ),
 					'featured_image' => _x( 'Training Poster', 'Label: Featured Image', 'geditorial-trained' ),
-					'metabox_title'  => _x( 'The Trainings', 'Label: MetaBox Title', 'geditorial-trained' ),
+					'metabox_title'  => _x( 'The Training', 'Label: MetaBox Title', 'geditorial-trained' ),
 				],
 				'primary_paired' => [
 					'metabox_title' => _x( 'In This Training', 'Label: MetaBox Title', 'geditorial-trained' ),

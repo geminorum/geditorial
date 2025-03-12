@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Socialite extends gEditorial\Module
 {
+	// NOTE: see `Addressed` Module
 
 	protected $supported = [
 		'twitter',
@@ -27,11 +28,15 @@ class Socialite extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'socialite',
-			'title'  => _x( 'Socialite', 'Modules: Socialite', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Social Card', 'Modules: Socialite', 'geditorial-admin' ),
-			'icon'   => 'money',
-			'access' => 'beta',
+			'name'     => 'socialite',
+			'title'    => _x( 'Socialite', 'Modules: Socialite', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Social Card', 'Modules: Socialite', 'geditorial-admin' ),
+			'icon'     => 'money',
+			'access'   => 'beta',
+			'keywords' => [
+				'social',
+				'termmeta',
+			],
 		];
 	}
 
@@ -282,7 +287,7 @@ class Socialite extends gEditorial\Module
 				$list[$field] = $this->_get_field_link( $field,
 					$this->_get_field_url( $meta, $field, $term->taxonomy ), $term->taxonomy );
 
-		return Core\HTML::wrap( Core\HTML::renderList( $list ), $extra );
+		return $this->wrap( Core\HTML::renderList( $list ), $extra );
 	}
 
 	private function _get_field_url( $value, $key, $taxonomy = FALSE )

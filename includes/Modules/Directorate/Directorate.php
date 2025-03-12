@@ -50,8 +50,8 @@ class Directorate extends gEditorial\Module
 			'icon'     => 'groups',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
 				'committee',
+				'pairedmodule',
 			],
 		];
 	}

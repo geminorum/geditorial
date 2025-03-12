@@ -38,7 +38,7 @@ class Collect extends gEditorial\Module
 			'icon'     => 'star-filled',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
+				'pairedmodule',
 			],
 		];
 	}

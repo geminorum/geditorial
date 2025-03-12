@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
@@ -41,9 +40,9 @@ class Dossier extends gEditorial\Module
 			'title'    => _x( 'Dossier', 'Modules: Dossier', 'geditorial-admin' ),
 			'desc'     => _x( 'Collection of Contents', 'Modules: Dossier', 'geditorial-admin' ),
 			'icon'     => 'portfolio',
-			'access'   => 'beta',
+			'access'   => 'stable',
 			'keywords' => [
-				'paired',
+				'pairedmodule',
 			],
 		];
 	}
@@ -117,7 +116,7 @@ class Dossier extends gEditorial\Module
 			'primary_posttype' => 'dossier',
 			'primary_paired'   => 'dossiers',
 			'span_taxonomy'    => 'dossier_span',
-			'primary_subterm' => 'dossier_section',
+			'primary_subterm'  => 'dossier_section',
 
 			'main_shortcode'  => 'dossier',
 			'span_shortcode'  => 'dossier-span',
@@ -129,8 +128,8 @@ class Dossier extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'primary_paired'   => NULL,
-				'span_taxonomy'    => 'backup',
+				'primary_paired'  => NULL,
+				'span_taxonomy'   => 'backup',
 				'primary_subterm' => 'category',
 			],
 		];
@@ -162,6 +161,7 @@ class Dossier extends gEditorial\Module
 		$strings['metabox'] = [
 			'primary_posttype' => [
 				'metabox_title' => _x( 'The Dossier', 'MetaBox Title', 'geditorial-dossier' ),
+				'listbox_title' => _x( 'In This Dossier', 'Label: MetaBox Title', 'geditorial-dossier' ),
 			],
 		];
 
@@ -171,7 +171,7 @@ class Dossier extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'span_taxonomy' => Datetime::getYears( '-5 years' ),
+			'span_taxonomy' => gEditorial\Datetime::getYears( '-5 years' ),
 		];
 	}
 
@@ -318,7 +318,7 @@ class Dossier extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )
@@ -409,6 +409,62 @@ class Dossier extends gEditorial\Module
 		return $value;
 	}
 
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'paired',
+			$this->constant( 'primary_posttype' ),
+			$this->constant( 'primary_paired' ),
+			array_merge( [
+				'post_id'     => NULL,
+				'posttypes'   => $this->posttypes(),
+				'order_cb'    => NULL,                      // NULL for default ordering by meta
+				'orderby'     => 'order',                   // order by meta
+				// 'order_start' => 'in_dossier_page_start',   // meta field for ordering
+				'order_order' => 'in_dossier_order',        // meta field for ordering
+			], (array) $atts ),
+			$content,
+			$this->constant( 'main_shortcode', $tag ),
+			$this->key
+		);
+	}
+
+	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return Shortcode::listPosts( 'assigned',
+			$this->constant( 'primary_posttype' ),
+			$this->constant( 'span_taxonomy' ),
+			array_merge( [
+				'post_id' => NULL,
+			], (array) $atts ),
+			$content,
+			$this->constant( 'span_shortcode' )
+		);
+	}
+
+	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$type = $this->constant( 'primary_posttype' );
+		$args = [
+			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
+			'type' => $type,
+			'echo' => FALSE,
+		];
+
+		if ( is_singular( $args['type'] ) )
+			$args['id'] = NULL;
+
+		else if ( is_singular() )
+			$args['id'] = 'paired';
+
+		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
+			return $content;
+
+		return ShortCode::wrap( $html,
+			$this->constant( 'cover_shortcode' ),
+			array_merge( [ 'wrap' => TRUE ], (array) $atts )
+		);
+	}
+
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -467,61 +523,5 @@ class Dossier extends gEditorial\Module
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
-	}
-
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
-	{
-		return ShortCode::listPosts( 'paired',
-			$this->constant( 'primary_posttype' ),
-			$this->constant( 'primary_paired' ),
-			array_merge( [
-				'post_id'     => NULL,
-				'posttypes'   => $this->posttypes(),
-				'order_cb'    => NULL,                      // NULL for default ordering by meta
-				'orderby'     => 'order',                   // order by meta
-				// 'order_start' => 'in_dossier_page_start',   // meta field for ordering
-				'order_order' => 'in_dossier_order',        // meta field for ordering
-			], (array) $atts ),
-			$content,
-			$this->constant( 'main_shortcode', $tag ),
-			$this->key
-		);
-	}
-
-	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
-	{
-		return Shortcode::listPosts( 'assigned',
-			$this->constant( 'primary_posttype' ),
-			$this->constant( 'span_taxonomy' ),
-			array_merge( [
-				'post_id' => NULL,
-			], (array) $atts ),
-			$content,
-			$this->constant( 'span_shortcode' )
-		);
-	}
-
-	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
-	{
-		$type = $this->constant( 'primary_posttype' );
-		$args = [
-			'size' => WordPress\Media::getAttachmentImageDefaultSize( $type, NULL, 'medium' ),
-			'type' => $type,
-			'echo' => FALSE,
-		];
-
-		if ( is_singular( $args['type'] ) )
-			$args['id'] = NULL;
-
-		else if ( is_singular() )
-			$args['id'] = 'paired';
-
-		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
-			return $content;
-
-		return ShortCode::wrap( $html,
-			$this->constant( 'cover_shortcode' ),
-			array_merge( [ 'wrap' => TRUE ], (array) $atts )
-		);
 	}
 }

@@ -12,7 +12,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function getLatestIssueID()
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'issue_posttype', 'issue' ), '', 'ID', 'publish' );
+		return WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'issue' ), '', 'ID', 'publish' );
 	}
 
 	public static function theIssue( $atts = [] )
@@ -62,7 +62,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'issue_posttype', 'issue' );
+			$atts['type'] = self::constant( 'primary_posttype', 'issue' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}
@@ -87,7 +87,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'issue_posttype', 'issue' );
+			$atts['type'] = self::constant( 'primary_posttype', 'issue' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}
@@ -121,7 +121,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['taxonomy'] = self::constant( 'span_taxonomy', 'issue_span' );
 
 		if ( ! array_key_exists( 'posttype', $atts ) )
-			$atts['posttype'] = self::constant( 'issue_posttype', 'issue' );
+			$atts['posttype'] = self::constant( 'primary_posttype', 'issue' );
 
 		return parent::getSpanTiles( $atts, static::MODULE );
 	}

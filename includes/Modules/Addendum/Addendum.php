@@ -6,7 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
@@ -14,6 +13,7 @@ use geminorum\gEditorial\WordPress;
 
 class Addendum extends gEditorial\Module
 {
+	use Internals\AdminPage;
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
@@ -43,7 +43,7 @@ class Addendum extends gEditorial\Module
 			'icon'     => 'carrot',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
+				'pairedmodule',
 			],
 		];
 	}
@@ -92,7 +92,7 @@ class Addendum extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype',  [
+				$this->settings_supports_option( 'primary_posttype', [
 					'title',
 					'excerpt',
 					'thumbnail',
@@ -377,10 +377,10 @@ class Addendum extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		MetaBox::fieldPostMenuOrder( $object );
-		MetaBox::fieldPostParent( $object );
+		gEditorial\MetaBox::fieldPostMenuOrder( $object );
+		gEditorial\MetaBox::fieldPostParent( $object );
 
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,

@@ -63,11 +63,14 @@ class Terms extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'terms',
-			'title'  => _x( 'Terms', 'Modules: Terms', 'geditorial-admin' ),
-			'desc'   => _x( 'Taxonomy & Term Tools', 'Modules: Terms', 'geditorial-admin' ),
-			'icon'   => 'image-filter',
-			'access' => 'stable',
+			'name'     => 'terms',
+			'title'    => _x( 'Terms', 'Modules: Terms', 'geditorial-admin' ),
+			'desc'     => _x( 'Taxonomy & Term Tools', 'Modules: Terms', 'geditorial-admin' ),
+			'icon'     => 'image-filter',
+			'access'   => 'stable',
+			'keywords' => [
+				'termmeta',
+			],
 		];
 	}
 

@@ -1380,7 +1380,7 @@ trait SubContents
 	// TODO: move to `Bookmarked` Module-Template
 	public function subcontent_data_summary__render_callback( $data, $args, $post = NULL, $module = NULL )
 	{
-		echo $this->wrap_open( [ '-subcontent-data-summary', 'mt-5' ] );
+		echo $this->wrap_open( [ '-subcontent-data-summary' ] );
 		echo '<div class="list-group list-group-flush">';
 
 		foreach ( $data as $key => $row ) {

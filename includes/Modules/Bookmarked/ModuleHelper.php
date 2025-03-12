@@ -164,7 +164,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'mobile',
 				'title'    => _x( 'Mobile Number', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'tel::{{code}}', // @SEE: `Core\HTML::tel()`
+				'template' => 'tel::{{code}}', // @SEE: `Core\HTML::prepURLforTel()`
 				'cssclass' => '-mobile-number',
 				'icon'     => 'smartphone',
 				'logo'     => '',
@@ -173,7 +173,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'sms',
 				'title'    => _x( 'SMS Number', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'sms::{{code}}', // @SEE: `Core\HTML::sanitizeSMSNumber()`
+				'template' => 'sms::{{code}}', // @SEE: `Core\HTML::prepURLforSMS()`
 				'cssclass' => '-sms-number',
 				'icon'     => 'text',
 				'logo'     => '',

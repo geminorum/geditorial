@@ -51,8 +51,8 @@ class Organization extends gEditorial\Module
 			'icon'     => [ 'misc-16', 'building-fill' ],
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
 				'department',
+				'pairedmodule',
 			],
 		];
 	}

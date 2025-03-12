@@ -368,12 +368,13 @@ class Bookmarked extends gEditorial\Module
 				$list[$key]['link'] = $row['link'];
 
 			if ( empty( $row['desc'] ) && 'attachment' === $type && ! empty( $row['code'] ) )
-				$list[$key]['desc'] = WordPress\Attachment::caption( (int) $row['code'], '' );
+				$list[$key]['desc'] = Core\Text::wordWrap( WordPress\Attachment::caption( (int) $row['code'], '' ) );
 
 			else if ( empty( $row['desc'] ) && ! empty( $options[$type]['desc'] ) )
-				$list[$key]['desc'] = Core\Text::replaceTokens( $options[$type]['desc'], $list[$key] );
+				$list[$key]['desc'] = Core\Text::wordWrap( Core\Text::replaceTokens( $options[$type]['desc'], $list[$key] ) );
+
 			else
-				$list[$key]['desc'] = $row['desc'];
+				$list[$key]['desc'] = Core\Text::wordWrap( $row['desc'] );
 
 			if ( empty( $list[$key]['_icon'] ) && 'attachment' === $type && ! empty( $row['code'] ) )
 				$list[$key]['_icon'] = Helper::getIcon( Core\Icon::guessByMIME( WordPress\Attachment::type( (int) $row['code'] ), $options[$type]['icon'] ) );

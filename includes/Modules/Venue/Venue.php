@@ -37,10 +37,10 @@ class Venue extends gEditorial\Module
 			'icon'     => 'location-alt',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
-				'location',
-				'place',
 				'geo',
+				'place',
+				'location',
+				'pairedmodule',
 			],
 		];
 	}

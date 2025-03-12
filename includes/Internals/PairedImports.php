@@ -14,8 +14,8 @@ trait PairedImports
 {
 
 	/**
-	 * appends import button on edit posts page,
-	 * while restricted by the paired via js.
+	 * Appends import button on edit posts page,
+	 * while restricted by the paired via java-script.
 	 *
 	 * NOTE: uses paired slug!
 	 * TODO: migrate to `Services\HeaderButtons::register()`
@@ -52,7 +52,7 @@ trait PairedImports
 
 		Scripts::enqueueColorBox();
 
-		// TODO: add row action to remove from paired via ajax
+		// TODO: add row action to remove from paired via AJAX
 		// TODO: add bulk action to remove from paired
 		$this->current_queried = $post->ID;
 
@@ -200,8 +200,11 @@ trait PairedImports
 
 		if ( current_user_can( 'edit_post', $post->ID ) ) {
 
-			/* translators: %s: post title */
-			$title = sprintf( _x( 'Import Items for %s', 'Internal: PairedImports: Page Title', 'geditorial' ), WordPress\Post::title( $post ) );
+			$title = sprintf(
+				/* translators: %s: post title */
+				_x( 'Import Items for %s', 'Internal: PairedImports: Page Title', 'geditorial' ),
+				WordPress\Post::title( $post )
+			);
 
 			Settings::wrapOpen( $this->key, $context, $title );
 

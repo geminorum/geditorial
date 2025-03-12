@@ -129,6 +129,14 @@ class WcTerms extends gEditorial\Module
 		$this->_init_tab_from_taxonomy();
 	}
 
+	public function template_redirect()
+	{
+		if ( is_embed() )
+			return;
+
+		$this->enqueue_styles();
+	}
+
 	public function show_page_title( $display )
 	{
 		if ( ! $display )

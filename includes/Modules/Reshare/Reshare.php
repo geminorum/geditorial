@@ -34,18 +34,7 @@ class Reshare extends gEditorial\Module
 			'_supports' => [
 				'assign_default_term',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', [
-					'title',
-					'editor',
-					'excerpt',
-					'author',
-					'thumbnail',
-					'comments',
-					'revisions',
-					'date-picker',
-					'editorial-meta',
-					'editorial-roles',
-				] ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 		];
 	}

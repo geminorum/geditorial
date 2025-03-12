@@ -213,7 +213,8 @@ class SearchSelect extends WordPress\Main
 			'taxonomy' => $queried['taxonomy'],
 			'number'   => $queried['per'],
 			'offset'   => ( $queried['page'] - 1 ) * $queried['per'],
-			'orderby'  => 'name',
+			'orderby'  => 'term_id', // NOTE: latest created first
+			'order'    => 'DESC',
 			'fields'   => 'all', // 'id=>name',
 
 			'hide_empty'             => FALSE,

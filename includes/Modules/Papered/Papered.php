@@ -37,8 +37,8 @@ class Papered extends gEditorial\Module
 			'icon'     => 'printer',
 			'access'   => 'beta',
 			'keywords' => [
-				'paired',
 				'print',
+				'pairedmodule',
 			],
 		];
 	}
