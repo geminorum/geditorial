@@ -42,7 +42,7 @@
     "sabre/vobject": "^4.5.5",
     "sinasalek/multi-calendar-date-time": "dev-master",
     "php-coord/php-coord": "4.7.1",
-    "10up/wp-content-connect": "^1.5.0",
+    "10up/wp-content-connect": "^1.6.0",
     "nicmart/string-template": "^0.1.3",
     "eluceo/ical": "^2.13.0",
     "johngrogg/ics-parser": "^3.4.0",

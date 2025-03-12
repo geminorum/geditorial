@@ -4,10 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\Helper;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\ShortCode;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
@@ -21,7 +19,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'desc'     => _x( '<%= moduleTagline %>', 'Modules: <%= moduleTitle %>', '<%= adminTexdomain %>' ),
 			'icon'     => '<%= moduleDashicon %>',
 			'access'   => 'planned',
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
 			'keywords' => [
 				'',
 				'woocommerce',
@@ -103,6 +101,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		$html = '';
 
-		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
 }
