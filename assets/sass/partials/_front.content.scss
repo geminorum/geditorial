@@ -1,0 +1,81 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: Front: Content
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+@use "sass:color";
+
+////////////////////////////////////////////////////////////////////////////////
+.hentry.empty-posttype {
+  .entry-title,
+  .entry-title > a {
+    color: $brand-danger;
+
+    &:hover {
+      color: color.adjust($brand-danger, $lightness: -20%);
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// .hentry.archive-posttype {}
+
+////////////////////////////////////////////////////////////////////////////////
+// .-wrap.geditorial-newpost-content {}
+
+////////////////////////////////////////////////////////////////////////////////
+.-wrap.geditorial-empty-content,
+.-wrap.geditorial-newpost-content,
+.-wrap.geditorial-archive-content {
+  color: $gray-light;
+
+  .-form-group {
+    margin-bottom: $spacer;
+  }
+
+  // .form-input {} // BS Class
+  // .form-label {} // BS Class
+
+  .-wrap-buttons {
+    margin: $spacer 0;
+    text-align: right;
+
+    .-loading {
+      float: none;
+      margin: 0 ($spacer * .5) 4px;
+    }
+
+    .-message {
+      display: inline-block;
+      float: left;
+      margin-top: 4px;
+
+      &.-error {
+        color: #a00;
+      }
+
+      &.-success {
+        color: #79ba49;
+      }
+    }
+  }
+
+  > p + form {
+    margin-top: 1rem;
+  }
+
+  form {
+    margin-bottom: 1rem;
+
+    label {
+      display: unset;
+    }
+  }
+
+  p.-actions {
+    text-indent: 0;
+    @include theme-clearfix;
+  }
+}

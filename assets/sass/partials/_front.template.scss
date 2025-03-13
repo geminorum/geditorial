@@ -5,77 +5,58 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@use "sass:color";
+// NOTE: only on non-bootstrap
+body:not(.theme-based-bootstrap-v5) {
 
-////////////////////////////////////////////////////////////////////////////////
-.hentry.empty-posttype {
-  .entry-title,
-  .entry-title > a {
-    color: $brand-danger;
+  .-wrap.row.-term-introduction {
 
-    &:hover {
-      color: color.adjust($brand-danger, $lightness: -20%);
+    .-term-details {
+      text-align: left;
     }
+
+    .-term-description {
+      p:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .-term-thumbnail {
+      float: left;
+      width: 35%;
+      margin: 0 $spacer $spacer 0;
+      text-align: center;
+
+      img {
+        display: inline-block;
+      }
+    }
+
+    .-term-has-image {
+      padding-left: $spacer;
+      width: calc( 65% - #{$spacer} );
+      float: right;
+      clear: right;
+    }
+
+    @include theme-clearfix;
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// .hentry.archive-posttype {}
+@media screen and ( max-width: 782px ) {
+  body:not(.theme-based-bootstrap-v5) {
+    .-wrap.row.-term-introduction {
 
-////////////////////////////////////////////////////////////////////////////////
-// .-wrap.geditorial-newpost-content {}
-
-////////////////////////////////////////////////////////////////////////////////
-.-wrap.geditorial-empty-content,
-.-wrap.geditorial-newpost-content,
-.-wrap.geditorial-archive-content {
-  color: $gray-light;
-
-  .-form-group {
-    margin-bottom: $spacer;
-  }
-
-  // .form-input {} // BS Class
-  // .form-label {} // BS Class
-
-  .-wrap-buttons {
-    margin: $spacer 0;
-    text-align: right;
-
-    .-loading {
-      float: none;
-      margin: 0 ($spacer * .5) 4px;
-    }
-
-    .-message {
-      display: inline-block;
-      float: left;
-      margin-top: 4px;
-
-      &.-error {
-        color: #a00;
+      .-term-image {
+        max-height: $spacer * 12.5;
       }
 
-      &.-success {
-        color: #79ba49;
+      .-term-thumbnail,
+      .-term-has-image {
+        float: none;
+        width: 100%;
+        margin: 0 0 $spacer 0;
+        padding: 0;
       }
     }
-  }
-
-  > p + form {
-    margin-top: 1rem;
-  }
-
-  form {
-    margin-bottom: 1rem;
-
-    label {
-      display: unset;
-    }
-  }
-
-  p.-actions {
-    text-indent: 0;
-    @include theme-clearfix;
   }
 }
