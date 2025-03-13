@@ -712,6 +712,7 @@ class Template extends WordPress\Main
 			'before'        => '',
 			'after'         => '',
 			'echo'          => TRUE,
+			'title_swap'    => FALSE,
 			'title_default' => '',
 			'title_attr'    => '',
 			'title_field'   => 'source_title',
@@ -750,6 +751,11 @@ class Template extends WordPress\Main
 		], FALSE ) : ( $args['title_default'] ?: $prepared );
 
 		if ( $title && $url || ! $url && $title != $args['title_default'] ) {
+
+			if ( $args['title_swap'] && $args['title_default'] ) {
+				$args['title_attr'] = $title;
+				$title = $args['title_default'];
+			}
 
 			$html = $args['before'].Core\HTML::tag( ( $url ? 'a' : 'span' ), [
 				'href'  => $url,
