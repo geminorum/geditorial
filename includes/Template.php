@@ -83,7 +83,7 @@ class Template extends WordPress\Main
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'field'        => 'image',
+			'field'        => NULL, // null for `image`
 			'id'           => NULL,
 			'size'         => NULL,
 			'alt'          => NULL, // null for $args['title']
@@ -114,7 +114,7 @@ class Template extends WordPress\Main
 
 		$title    = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
 		$viewable = WordPress\Taxonomy::viewable( $args['taxonomy'] );
-		$meta     = get_term_meta( $args['id'], $args['field'], TRUE );
+		$meta     = get_term_meta( $args['id'], $args['field'] ?? 'image', TRUE );
 
 		if ( $args['link'] ) {
 
@@ -122,10 +122,10 @@ class Template extends WordPress\Main
 				$args['link'] = $viewable ? WordPress\Term::link( (int) $args['id'], FALSE ) : FALSE;
 
 			else if ( 'attachment' === $args['link'] )
-				$args['link'] = ( $meta && $viewable ) ? get_attachment_link( $meta ) : FALSE;
+				$args['link'] = ( $meta && $viewable ) ? get_attachment_link( (int) $meta ) : FALSE;
 
 			else if ( 'url' === $args['link'] )
-				$args['link'] = ( $meta && $viewable ) ? wp_get_attachment_url( $meta ) : FALSE;
+				$args['link'] = ( $meta && $viewable ) ? wp_get_attachment_url( (int) $meta ) : FALSE;
 		}
 
 		if ( is_null( $args['alt'] ) )
@@ -1095,6 +1095,7 @@ class Template extends WordPress\Main
 
 		$args = self::atts( [
 			'heading'     => 'h3',
+			'image_link'  => 'url',
 			'image_field' => NULL,
 			'before'      => '',
 			'after'       => '',
@@ -1107,8 +1108,8 @@ class Template extends WordPress\Main
 		$image = self::termImage( [
 			'id'       => $term,
 			'taxonomy' => $term->taxonomy,
+			'link'     => $args['image_link'],
 			'field'    => $args['image_field'],
-			'link'     => 'attachment',
 			'before'   => $wrap.'<div class="col-sm-4 text-center -term-thumbnail">',
 			'after'    => '</div>',
 		], $module );

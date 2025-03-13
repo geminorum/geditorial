@@ -223,6 +223,7 @@ class WcTerms extends gEditorial\Module
 						gEditorial\Template::renderTermIntro( $term, [
 							'heading'     => $heading,
 							'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+							'image_link'  => 'attachment',
 						], $this->module->name );
 				},
 			];
@@ -247,6 +248,7 @@ class WcTerms extends gEditorial\Module
 					gEditorial\Template::renderTermIntro( $term, [
 						'heading'     => $heading,
 						'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+						'image_link'  => 'attachment',
 					], $this->module->name );
 				},
 			];
