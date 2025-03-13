@@ -1078,4 +1078,59 @@ class Template extends WordPress\Main
 
 		return $args['wrap'] ? Core\HTML::wrap( $html, static::BASE.'-span-tiles' ) : $html;
 	}
+
+	public static function renderTermIntro( $term, $atts = [], $module = NULL )
+	{
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return;
+
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
+
+		$args = self::atts( [
+			'heading'     => 'h3',
+			'image_field' => NULL,
+			'before'      => '',
+			'after'       => '',
+			'wrap'        => TRUE,
+		], $atts );
+
+		$wrap = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction">';
+		$desc = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
+
+		$image = self::termImage( [
+			'id'       => $term,
+			'taxonomy' => $term->taxonomy,
+			'field'    => $args['image_field'],
+			'link'     => 'attachment',
+			'before'   => $wrap.'<div class="col-sm-4 text-center -term-thumbnail">',
+			'after'    => '</div>',
+		], $module );
+
+		if ( ! $image && ! $desc && ! $args['heading'] )
+			return;
+
+		if ( ! $image )
+			echo $wrap;
+
+		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
+
+			do_action( sprintf( '%s_term_intro_title_before', static::BASE ), $term, $args['heading'] );
+
+			if ( $args['heading'] && ( $image || $desc ) )
+				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ) );
+
+			do_action( sprintf( '%s_term_intro_description_before', static::BASE ), $term, $desc );
+
+			echo Core\HTML::wrap(
+				WordPress\Strings::prepDescription(
+					WordPress\Strings::kses( $desc, 'html' )
+				), 'term-description -term-description' );
+
+			do_action( sprintf( '%s_term_intro_description_after', static::BASE ), $term, $desc );
+
+		echo '</div>'; // `.col`
+		echo '</div>'; // `.row`
+		echo $args['after'];
+	}
 }

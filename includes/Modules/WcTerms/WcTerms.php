@@ -154,7 +154,10 @@ class WcTerms extends gEditorial\Module
 			return;
 
 		if ( $term = get_queried_object() )
-			$this->_render_term_introduction( $term, $this->get_setting( 'term_archive_title' ) );
+			gEditorial\Template::renderTermIntro( $term, [
+				'heading'     => $this->get_setting( 'term_archive_title' ),
+				'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+			], $this->module->name );
 	}
 
 	private function _init_tab_from_taxonomy()
@@ -188,7 +191,7 @@ class WcTerms extends gEditorial\Module
 		if ( ! $terms || is_wp_error( $terms ) )
 			return $tabs;
 
-		$title = $this->get_setting( 'term_archive_title' );
+		$heading  = $this->get_setting( 'term_archive_title' );
 		$terms    = Core\Arraay::reKey( $terms, 'term_id' );
 		$excludes = [];
 
@@ -215,9 +218,12 @@ class WcTerms extends gEditorial\Module
 			$tabs[$key] = [
 				'title'    => trim( sprintf( $row['heading'] ?: '%s', $name ) ),
 				'priority' => $row['priority'],
-				'callback' => function () use ( $terms, $row, $title ) {
+				'callback' => function () use ( $terms, $heading ) {
 					foreach ( $terms as $term )
-						$this->_render_term_introduction( $term, $title, $row );
+						gEditorial\Template::renderTermIntro( $term, [
+							'heading'     => $heading,
+							'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+						], $this->module->name );
 				},
 			];
 
@@ -237,62 +243,15 @@ class WcTerms extends gEditorial\Module
 			$tabs[$key] = [
 				'title'    => trim( sprintf( $row['heading'] ?: '%s', $term->name, $name ) ),
 				'priority' => $row['priority'],
-				'callback' => function () use ( $term, $row, $title ) {
-					$this->_render_term_introduction( $term, $title, $row );
+				'callback' => function () use ( $term, $heading ) {
+					gEditorial\Template::renderTermIntro( $term, [
+						'heading'     => $heading,
+						'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+					], $this->module->name );
 				},
 			];
 		}
 
 		return $tabs;
-	}
-
-	private function _render_term_introduction( $term, $title = FALSE, $args = [] )
-	{
-		if ( ! $term = WordPress\Term::get( $term ) )
-			return;
-
-		$wrap = $this->wrap_open( 'row -term-introduction' );
-
-		/**
-		 * Filters the archive's raw description on taxonomy archives.
-		 *
-		 * @since WC 6.7.0
-		 *
-		 * @param string $desc Raw description text.
-		 * @param WP_Term $term Term object for this taxonomy archive.
-		 */
-		$desc = apply_filters( 'woocommerce_taxonomy_archive_description_raw', $term->description, $term );
-
-		$image = gEditorial\Template::termImage( [
-			'id'       => $term,
-			'taxonomy' => $term->taxonomy,
-			'field'    => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
-			'link'     => 'attachment',
-			'before'   => $wrap.'<div class="col-sm-4 text-center -term-thumbnail">',
-			'after'    => '</div>',
-		], $this->module->name );
-
-		if ( ! $image && ! $desc && ! $title )
-			return;
-
-		if ( ! $image )
-			echo $wrap;
-
-		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
-
-			$this->actions( 'introduction_title_before', $term, $title );
-
-			if ( $title && ( $image || $desc ) )
-				Core\HTML::heading( $title, WordPress\Term::title( $term, FALSE ) );
-
-			$this->actions( 'introduction_description_before', $term, $desc );
-
-			if ( ! WordPress\Strings::isEmpty( $desc ) )
-				echo Core\HTML::wrap( wc_format_content( WordPress\Strings::kses( $desc, 'html' ) ), 'term-description -term-description' );
-
-			$this->actions( 'introduction_description_after', $term, $desc );
-
-		echo '</div>'; // `.col`
-		echo '</div>'; // `.row`
 	}
 }
