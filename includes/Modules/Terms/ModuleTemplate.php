@@ -3,7 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core\HTML;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
 {
@@ -18,5 +19,10 @@ class ModuleTemplate extends gEditorial\Template
 	public static function termContact( $atts = [], $module = NULL )
 	{
 		return parent::termContact( $atts, static::MODULE );
+	}
+
+	public static function renderTermIntro( $term, $atts = [], $module = NULL )
+	{
+		return parent::renderTermIntro( $term, $atts, static::MODULE );
 	}
 }
