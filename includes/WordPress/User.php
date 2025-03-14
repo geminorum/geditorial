@@ -220,18 +220,18 @@ class User extends Core\Base
 	}
 
 	// current user role
-	// FIXME: move to `WordPress\Role`
+	// TODO: move to `WordPress\Role`
 	public static function cur( $role = FALSE )
 	{
 		$roles = self::getRoles();
 		return $role ? in_array( $role, $roles, TRUE ) : $roles;
 	}
 
-	// FIXME: move to `WordPress\Role`
+	// TODO: move to `WordPress\Role`
 	public static function getAllRoleList( $filtered = TRUE, $object = FALSE )
 	{
 		$roles = $filtered ? get_editable_roles() : wp_roles()->roles;
-		$list  = $object ? new stdClass : [];
+		$list  = $object ? new \stdClass : [];
 
 		foreach ( $roles as $role_name => $role )
 

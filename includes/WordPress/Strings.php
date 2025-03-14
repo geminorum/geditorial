@@ -16,6 +16,38 @@ class Strings extends Core\Base
 		return __( ', ' ); // _x( ', ', 'Strings: Item Seperator', 'geditorial' );
 	}
 
+	// NOTE: OLD: `Helper::getStringsFromName()`
+	private static function getNameForms( $name )
+	{
+		if ( ! $name )
+			return FALSE;
+
+		if ( ! is_array( $name ) )
+			$name = [
+				'singular' => $name,
+				'plural'   => Core\L10n::pluralize( $name ),
+			];
+
+		if ( array_key_exists( 'domain', $name ) )
+			$strings = [
+				_nx( $name['singular'], $name['plural'], 2, $name['context'], $name['domain'] ),
+				_nx( $name['singular'], $name['plural'], 1, $name['context'], $name['domain'] ),
+			];
+
+		else
+			$strings = [
+				$name['plural'],
+				$name['singular'],
+			];
+
+		$strings[2] = Core\Text::strToLower( $strings[0] );
+		$strings[3] = Core\Text::strToLower( $strings[1] );
+
+		$strings[4] = '%s';
+
+		return $strings;
+	}
+
 	public static function isEmpty( $string, $empties = NULL )
 	{
 		if ( self::empty( $string ) )
@@ -288,6 +320,7 @@ class Strings extends Core\Base
 		if ( $shortcode )
 			$text = ShortCode::apply( $text, TRUE );
 
+		$text = apply_filters( 'geditorial_markdown_to_html', $text );
 		$text = apply_filters( 'html_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
 
