@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Switcher extends gEditorial\Module
@@ -112,7 +112,7 @@ class Switcher extends gEditorial\Module
 			$switched = 0;
 
 			foreach ( $post_ids as $post_id )
-				if ( Helper::switchPostType( $post_id, $posttype ) )
+				if ( Services\CustomPostTypes::switchType( $post_id, $posttype ) )
 					$switched++;
 
 			return add_query_arg( [
