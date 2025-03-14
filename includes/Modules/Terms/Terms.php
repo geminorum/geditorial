@@ -45,6 +45,8 @@ class Terms extends gEditorial\Module
 		'datetime',
 		'datestart',
 		'dateend',
+		'born',
+		'dead',
 		// 'distance', // TODO
 		// 'duration', // TODO
 		// 'area',     // TODO
@@ -141,6 +143,8 @@ class Terms extends gEditorial\Module
 				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-terms' ),
 				'dateend'   => _x( 'Date-End', 'Titles', 'geditorial-terms' ),
 				'days'      => _x( 'Days', 'Titles', 'geditorial-terms' ),
+				'born'      => _x( 'Born', 'Titles', 'geditorial-terms' ),
+				'dead'      => _x( 'Dead', 'Titles', 'geditorial-terms' ),
 				'hours'     => _x( 'Hours', 'Titles', 'geditorial-terms' ),
 				'period'    => _x( 'Period', 'Titles', 'geditorial-terms' ),
 				'amount'    => _x( 'Amount', 'Titles', 'geditorial-terms' ),
@@ -174,6 +178,8 @@ class Terms extends gEditorial\Module
 				'datetime'  => _x( 'Terms can have date-time to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'datestart' => _x( 'Terms can have date-start to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'dateend'   => _x( 'Terms can have date-end to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'born'      => _x( 'Terms can have born-date to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'dead'      => _x( 'Terms can have dead-date to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'days'      => _x( 'Terms can have days number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'hours'     => _x( 'Terms can have hours number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'period'    => _x( 'The length of time about the term.', 'Descriptions', 'geditorial-terms' ),
@@ -522,6 +528,10 @@ class Terms extends gEditorial\Module
 				$position = [ $this->classs( 'datestart' ), 'after' ];
 				break;
 
+			case 'dead':
+				$position = [ $this->classs( 'born' ), 'after' ];
+				break;
+
 			default:
 				$position = [ 'name', 'after' ];
 		}
@@ -549,7 +559,7 @@ class Terms extends gEditorial\Module
 				$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
 
 			// NOTE: WordPress not yet support for `date` type
-			else if ( in_array( $field, [ 'date', 'datetime', 'datestart', 'dateend' ] ) )
+			else if ( in_array( $field, [ 'date', 'datetime', 'datestart', 'dateend', 'born', 'dead' ] ) )
 				$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => '' ];
 
 			else
@@ -655,6 +665,8 @@ class Terms extends gEditorial\Module
 			'datetime',
 			'datestart',
 			'dateend',
+			'born',
+			'dead',
 			'days',
 			'hours',
 			'period',
@@ -712,6 +724,8 @@ class Terms extends gEditorial\Module
 			'datetime',
 			'datestart',
 			'dateend',
+			'born',
+			'dead',
 			'days',
 			'hours',
 			'period',
@@ -1046,6 +1060,8 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'date':
+			case 'born':
+			case 'dead':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1130,7 +1146,7 @@ class Terms extends gEditorial\Module
 
 					$meta = Core\Number::translate( trim( $meta ) );
 
-				} else if ( in_array( $field, [ 'date' ] ) ) {
+				} else if ( in_array( $field, [ 'date', 'born', 'dead' ] ) ) {
 
 					$meta = Core\Number::translate( trim( $meta ) );
 					$meta = Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
@@ -1418,6 +1434,8 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'date':
+			case 'born':
+			case 'dead':
 
 				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
@@ -1585,6 +1603,8 @@ class Terms extends gEditorial\Module
 			case 'datetime':
 			case 'datestart':
 			case 'dateend':
+			case 'born':
+			case 'dead':
 
 				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
@@ -1763,6 +1783,8 @@ class Terms extends gEditorial\Module
 						break;
 
 					case 'date':
+					case 'born':
+					case 'dead':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d' );
