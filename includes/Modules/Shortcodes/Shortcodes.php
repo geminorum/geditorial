@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -177,7 +177,7 @@ class Shortcodes extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post Shortcodes', 'Header', 'geditorial-shortcodes' ) ),
-			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
+			'empty'      => Services\CustomPostType::getLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait FramePage
@@ -37,7 +38,7 @@ trait FramePage
 			'noheader'      => 1,
 		], $args['link_context'] ?? 'framepage' );
 
-		$name  = Helper::getPostTypeLabel( $args['posttype'], 'singular_name' );
+		$name  = Services\CustomPostType::getLabel( $args['posttype'], 'singular_name' );
 		$title = $args['title'] ?? $this->get_string( $args['context'].'_title', $args['posttype'], 'metabox', NULL );
 		$text  = $args['text'] ?? $this->get_string( $args['context'].'_text', $args['posttype'], 'metabox', $args['name'] ?? $name );
 		$class = [ 'do-colorbox-iframe' ];
@@ -94,7 +95,7 @@ trait FramePage
 			'noheader'      => 1,
 		], $args['link_context'] ?? 'framepage' );
 
-		$name  = Helper::getTaxonomyLabel( $args['taxonomy'], 'singular_name' );
+		$name  = Services\CustomTaxonomy::getLabel( $args['taxonomy'], 'singular_name' );
 		$title = $args['title'] ?? $this->get_string( $args['context'].'_title', $args['taxonomy'], 'metabox', NULL );
 		$text  = $args['text'] ?? $this->get_string( $args['context'].'_text', $args['taxonomy'], 'metabox', $args['name'] ?? $name );
 		$class = [ 'do-colorbox-iframe' ];

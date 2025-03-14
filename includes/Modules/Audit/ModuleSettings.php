@@ -27,7 +27,7 @@ class ModuleSettings extends gEditorial\Settings
 					'action' => static::ACTION_FORCE_AUTO_AUDIT,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: post-type label */
+					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-audit' ), $label ),
 				'link-small' );
 
@@ -64,13 +64,13 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		if ( ! $result = ModuleHelper::doAutoAuditPost( $post, TRUE, $taxonomy ) )
 			return self::processingListItem( $verbose,
-				/* translators: %s: post title */
+				/* translators: `%s`: post title */
 				_x( 'No Audits applied for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-audit' ), [
 					WordPress\Post::title( $post ),
 				] );
 
 		return self::processingListItem( $verbose,
-			/* translators: %1$s: count terms, %2$s: post title */
+			/* translators: `%1$s`: count terms, `%2$s`: post title */
 			_x( '%1$s attributes set for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-audit' ), [
 				Core\HTML::code( count( $result ) ),
 				WordPress\Post::title( $post ),
@@ -160,7 +160,7 @@ class ModuleSettings extends gEditorial\Settings
 		$posts = ModuleHelper::getPostsEmpty( $for, $attribute, $posttypes, FALSE );
 		$count = WordPress\Taxonomy::countTermObjects( $attribute, $taxonomy );
 
-		/* translators: %1$s: empty post count, %2$s: assigned term count */
+		/* translators: `%1$s`: empty post count, `%2$s`: assigned term count */
 		Core\HTML::desc( vsprintf( _x( 'Currently found %1$s empty posts and %2$s assigned to the attribute.', 'Card: Description', 'geditorial-audit' ), [
 			FALSE === $posts ? gEditorial()->na() : Core\Number::format( count( $posts ) ),
 			FALSE === $count ? gEditorial()->na() : Core\Number::format( $count ),

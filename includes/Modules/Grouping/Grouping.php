@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Grouping extends gEditorial\Module
@@ -251,7 +252,7 @@ class Grouping extends gEditorial\Module
 			if ( WordPress\Taxonomy::exists( $name ) )
 				continue;
 
-			$labels = Helper::generateTaxonomyLabels( [
+			$labels = Services\CustomTaxonomy::generateLabels( [
 				'singular' => $custom['singular'],
 				'plural'   => $custom['plural'],
 			], [

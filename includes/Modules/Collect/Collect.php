@@ -381,7 +381,7 @@ class Collect extends gEditorial\Module
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		switch ( $field_key ) {
-			/* translators: %s: count placeholder */
+			/* translators: `%s`: count placeholder */
 			case 'in_collection_order': return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Order in Collection: %s', 'Display', 'geditorial-collect' ) );
 		}
 

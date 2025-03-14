@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait Strings
@@ -47,8 +48,8 @@ trait Strings
 	}
 
 	// NOTE: for post-type/taxonomy use:
-	// - `Helper::getPostTypeLabel( $posttype, 'noop' );`
-	// - `Helper::getTaxonomyLabel( $taxonomy, 'noop' );`
+	// - `Services\CustomPostType::getLabel( $posttype, 'noop' );`
+	// - `Services\CustomTaxonomy::getLabel( $taxonomy, 'noop' );`
 	public function get_noop( $constant )
 	{
 		if ( ! empty( $this->strings['noops'][$constant] ) )
@@ -91,13 +92,13 @@ trait Strings
 				case 'listbox':
 				case 'default':
 				default:
-					/* translators: %1$s: current post title, %2$s: post-type singular name */
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 					$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Module: MetaBox Empty: `listbox_empty`', 'geditorial-admin' );
 			}
 		}
 
 		$template = $this->get_string( sprintf( '%s_%s', $context, $prop ), $posttype, 'metabox', $default );
-		$singular = Helper::getPostTypeLabel( $posttype, 'singular_name' );
+		$singular = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
 		$title    = WordPress\Post::title( $post, $singular );
 
 		return sprintf( $template, $title, $singular );
@@ -110,41 +111,41 @@ trait Strings
 			switch ( $context ) {
 
 				case 'supportedbox':
-					/* translators: %1$s: current post title, %2$s: post-type singular name */
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 					$default = _x( 'For this &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `supportedbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'printingbox':
-					/* translators: %1$s: current post title, %2$s: post-type singular name */
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 					$default = _x( 'Prints for this &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `printingbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'mainbox':
-					/* translators: %1$s: current post title, %2$s: post-type singular name */
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 					$default = _x( 'The %2$s', 'Internal: Strings: MetaBox via Posttype: `mainbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'overviewbox':
 				case 'pairedbox':
-					/* translators: %1$s: current post title, %2$s: post-type singular name */
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 					$default = _x( 'Connected &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `pairedbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'megabox':
 				case 'listbox':
-					/* translators: %1$s: current post title, %2$s: post-type singular name */
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 					$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: Strings: MetaBox via Posttype: `listbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'default':
 				default:
-					/* translators: %1$s: current post title, %2$s: post-type singular name */
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 					$default = _x( 'About &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Posttype: `default_title`', 'geditorial-admin' );
 			}
 		}
 
 		$template = $this->get_string( sprintf( '%s_%s', $context, $prop ), $posttype, $group, $default );
-		$singular = Helper::getPostTypeLabel( $posttype, 'singular_name' );
+		$singular = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
 		$title    = WordPress\Post::title( $post );
 
 		return sprintf( $template, $title ?: gEditorial\Plugin::untitled( FALSE ), $singular );
@@ -156,19 +157,19 @@ trait Strings
 			switch ( $context ) {
 
 				case 'supportedbox':
-					/* translators: %1$s: current term title, %2$s: taxonomy singular name */
+					/* translators: `%1$s`: current term title, `%2$s`: taxonomy singular name */
 					$default = _x( 'For this &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Taxonomy: `supportedbox_title`', 'geditorial-admin' );
 					break;
 
 				case 'default':
 				default:
-					/* translators: %1$s: current term title, %2$s: taxonomy singular name */
+					/* translators: `%1$s`: current term title, `%2$s`: taxonomy singular name */
 					$default = _x( 'About &ldquo;%2$s&rdquo;', 'Internal: Strings: MetaBox via Taxonomy: `default_title`', 'geditorial-admin' );
 			}
 		}
 
 		$template = $this->get_string( sprintf( '%s_%s', $context, $prop ), $taxonomy, $group, $default );
-		$singular = Helper::getTaxonomyLabel( $taxonomy, 'singular_name' );
+		$singular = Services\CustomTaxonomy::getLabel( $taxonomy, 'singular_name' );
 		$title    = WordPress\Term::title( $term, $singular );
 
 		return sprintf( $template, $title, $singular );
@@ -179,7 +180,7 @@ trait Strings
 		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {
 
 			$posttype  = $this->constant( $constant, $constant );
-			$generated = Helper::generatePostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $posttype );
+			$generated = Services\CustomPostType::generateMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $posttype );
 
 			return array_merge( $messages, [ $posttype => $generated ] );
 		} );
@@ -190,7 +191,7 @@ trait Strings
 		add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $constant ) {
 
 			$posttype  = $this->constant( $constant, $constant );
-			$generated = Helper::generateBulkPostTypeMessages( Helper::getPostTypeLabel( $posttype, 'noop' ), $counts, $posttype );
+			$generated = Services\CustomPostType::generateBulkMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $counts, $posttype );
 
 			return array_merge( $messages, [ $posttype => $generated ] );
 		}, 10, 2 );

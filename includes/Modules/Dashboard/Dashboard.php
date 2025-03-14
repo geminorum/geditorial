@@ -44,9 +44,9 @@ class Dashboard extends gEditorial\Module
 				'widget_support',
 			],
 			'_frontend' => [
-				/* translators: %s: HTML word */
+				/* translators: `%s`: HTML word */
 				'before_content' => sprintf( _x( 'Adds %s before contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ), '<code>HTML</code>' ),
-				/* translators: %s: HTML word */
+				/* translators: `%s`: HTML word */
 				'after_content'  => sprintf( _x( 'Adds %s after contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ), '<code>HTML</code>' ),
 			],
 		];

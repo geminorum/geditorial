@@ -45,7 +45,7 @@ trait PairedRowActions
 
 	public function paired_bulk_input_add_new_item( $taxonomy, $action )
 	{
-		/* translators: %s: clone into input */
+		/* translators: `%s`: clone into input */
 		printf( _x( 'as: %s', 'Module: Taxonomy Bulk Input Label', 'geditorial-admin' ),
 			'<input name="'.$this->classs( 'paired-add-new-item-target' ).'" type="text" placeholder="'
 			._x( 'New Item Title', 'Module: Taxonomy Bulk Input PlaceHolder', 'geditorial-admin' ).'" /> ' );
@@ -264,7 +264,7 @@ trait PairedRowActions
 
 					// bulk action to strip all paired terms fro selected supported posts
 					$this->classs( 'do_abandon' ) => sprintf(
-						/* translators: %s: posttype plural label  */
+						/* translators: `%s`: posttype plural label  */
 						_x( 'Abandon All %s', 'Internal: PairedRowAction: Action', 'geditorial-admin' ),
 						$this->get_posttype_label( $constants[0] )
 					)
@@ -304,7 +304,7 @@ trait PairedRowActions
 
 				$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
 
-				/* translators: %s: count */
+				/* translators: `%s`: count */
 				echo Core\HTML::success( sprintf( _x( '%s items(s) processed!', 'Message', 'geditorial-admin' ), Core\Number::format( $count ) ) );
 			} );
 	}

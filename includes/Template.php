@@ -660,7 +660,7 @@ class Template extends WordPress\Main
 			$args['link'] = Core\WordPress::getSearchLink( $meta );
 
 			if ( is_null( $args['description'] ) )
-				/* translators: %s: search query */
+				/* translators: `%s`: search query */
 				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ), $meta );
 		}
 
@@ -879,7 +879,7 @@ class Template extends WordPress\Main
 						continue;
 
 					if ( is_null( $title ) )
-						$title = Helper::getTaxonomyLabel( $key, 'singular_name' );
+						$title = Services\CustomTaxonomy::getLabel( $key, 'singular_name' );
 
 					$rows[$title] = WordPress\Strings::getJoined( $terms );
 				}
@@ -1016,13 +1016,13 @@ class Template extends WordPress\Main
 			foreach ( $posts as $post )
 				$list[] = Helper::getPostTitleRow( $post, $link, FALSE, $title_attr );
 
-			/* translators: %s: posttype name */
+			/* translators: `%s`: post-type name */
 			Core\HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
 			echo Core\HTML::renderList( $list );
 
 		} else if ( is_null( $empty ) ) {
 
-			/* translators: %s: posttype name */
+			/* translators: `%s`: post-type name */
 			Core\HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
 			Core\HTML::desc( $object->labels->not_found, TRUE, '-empty -empty-posttype-'.$object->name );
 
@@ -1094,7 +1094,7 @@ class Template extends WordPress\Main
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'heading'     => '3',
+			'heading'     => '3',     // heading level or `FALSE` to disable
 			'secondary'   => NULL,    // `NULL` for filter: `geditorial_term_intro_title_suffix`
 			'image_link'  => 'url',
 			'image_field' => NULL,

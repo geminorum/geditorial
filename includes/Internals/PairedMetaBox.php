@@ -4,9 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PairedMetaBox
@@ -57,13 +57,13 @@ trait PairedMetaBox
 		$posttype  = $this->constant( $posttype_constant );
 		$paired    = $this->constant( $paired_constant );
 		$terms     = WordPress\Taxonomy::getPostTerms( $paired, $post );
-		$none_main = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
+		$none_main = Services\CustomPostType::getLabel( $posttype, 'show_option_select' );
 		$prefix    = $this->classs();
 
 		if ( $subterm_constant && $this->get_setting( 'subterms_support' ) ) {
 
 			$subterm  = $this->constant( $subterm_constant );
-			$none_sub = Helper::getTaxonomyLabel( $subterm, 'show_option_select' );
+			$none_sub = Services\CustomTaxonomy::getLabel( $subterm, 'show_option_select' );
 			$subterms = WordPress\Taxonomy::getPostTerms( $subterm, $post, FALSE );
 		}
 
@@ -564,9 +564,9 @@ trait PairedMetaBox
 			$context = 'megabox';
 
 		$post_title    = WordPress\Post::title(); // NOTE: gets post from query-args in admin
-		$singular_name = Helper::getPostTypeLabel( $screen->post_type, 'singular_name' );
+		$singular_name = Services\CustomPostType::getLabel( $screen->post_type, 'singular_name' );
 
-		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 		$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Internal: PairedMetaBox: MetaBox Empty: `megabox_empty`', 'geditorial' );
 		$empty   = $this->get_string( sprintf( '%s_empty', $context ), $constants[0], 'metabox', $default );
 		$noitems = sprintf( $empty, $post_title, $singular_name );
@@ -605,7 +605,7 @@ trait PairedMetaBox
 			$this->nonce_field( $context );
 		};
 
-		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: PairedMetaBox: MetaBox Title: `megabox_title`', 'geditorial' );
 		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
 		$metabox = $this->classs( $context );

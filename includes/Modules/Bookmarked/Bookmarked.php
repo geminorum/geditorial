@@ -109,19 +109,19 @@ class Bookmarked extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Bookmarks', 'MetaBox Title', 'geditorial-bookmarked' ),
 			// 'metabox_action' => _x( 'Bookmarks', 'MetaBox Action', 'geditorial-bookmarked' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Bookmarks of %1$s', 'Button Title', 'geditorial-bookmarked' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Bookmarks of %2$s', 'Button Text', 'geditorial-bookmarked' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'rowaction_title' => _x( 'Bookmarks of %1$s', 'Action Title', 'geditorial-bookmarked' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'rowaction_text'  => _x( 'Bookmarks', 'Action Text', 'geditorial-bookmarked' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'columnrow_title' => _x( 'Bookmarks of %1$s', 'Row Title', 'geditorial-bookmarked' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'columnrow_text'  => _x( 'Bookmarks', 'Row Text', 'geditorial-bookmarked' ),
 		];
 
@@ -268,9 +268,9 @@ class Bookmarked extends gEditorial\Module
 	{
 		$this->subcontent_do_render_iframe_content(
 			'framepage',
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Bookmarks Grid for %s', 'Page Title', 'geditorial-bookmarked' ),
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Bookmarks Overview for %s', 'Page Title', 'geditorial-bookmarked' )
 		);
 	}

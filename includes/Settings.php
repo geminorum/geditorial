@@ -318,7 +318,7 @@ class Settings extends WordPress\Main
 	public static function showOptionNone( $string = NULL )
 	{
 		if ( $string )
-			/* translators: %s: options */
+			/* translators: `%s`: options */
 			return sprintf( _x( '&ndash; Select %s &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' ), $string );
 
 		return _x( '&ndash; Select &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' );
@@ -327,7 +327,7 @@ class Settings extends WordPress\Main
 	public static function showRadioNone( $string = NULL )
 	{
 		if ( $string )
-			/* translators: %s: options */
+			/* translators: `%s`: options */
 			return sprintf( _x( 'None %s', 'Settings: Radio Select Option None', 'geditorial-admin' ), $string );
 
 		return _x( 'None', 'Settings: Radio Select Option None', 'geditorial-admin' );
@@ -336,7 +336,7 @@ class Settings extends WordPress\Main
 	public static function showOptionAll( $string = NULL )
 	{
 		if ( $string )
-			/* translators: %s: options */
+			/* translators: `%s`: options */
 			return sprintf( _x( '&ndash; All %s &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' ), $string );
 
 		return _x( '&ndash; All &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' );
@@ -692,7 +692,7 @@ class Settings extends WordPress\Main
 			'field'       => 'before_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			/* translators: %s: code placeholder */
+			/* translators: `%s`: code placeholder */
 			'description' => $description ?: sprintf( _x( 'Adds %s before start of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ), '<code>HTML</code>' ),
 		];
 	}
@@ -703,7 +703,7 @@ class Settings extends WordPress\Main
 			'field'       => 'after_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			/* translators: %s: code placeholder */
+			/* translators: `%s`: code placeholder */
 			'description' => $description ?: sprintf( _x( 'Adds %s after end of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ), '<code>HTML</code>' ),
 		];
 	}
@@ -1200,7 +1200,7 @@ class Settings extends WordPress\Main
 			'field'       => 'archive_title',
 			'type'        => 'text',
 			'title'       => _x( 'Archive Title', 'Setting: Setting Title', 'geditorial-admin' ),
-			/* translators: %s: zero placeholder */
+			/* translators: `%s`: zero placeholder */
 			'description' => $description ?: sprintf( _x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ), Core\HTML::code( '0' ) ),
 			'placeholder' => $placeholder,
 		];
@@ -1214,7 +1214,7 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'New-post Title', 'Setting: Setting Title', 'geditorial-admin' ),
 			'placeholder' => $placeholder,
 			'description' => $description ?: sprintf(
-				/* translators: %s: zero placeholder */
+				/* translators: `%s`: zero placeholder */
 				_x( 'Displays as new-post title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
 				Core\HTML::code( '0' )
 			),
@@ -1228,7 +1228,7 @@ class Settings extends WordPress\Main
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Archive Content', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: sprintf(
-				/* translators: %s: zero placeholder */
+				/* translators: `%s`: zero placeholder */
 				_x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
 				Core\HTML::code( '0' )
 			),
@@ -1838,27 +1838,27 @@ class Settings extends WordPress\Main
 			'nochange'  => self::error( _x( 'No item changed!', 'Settings: Message', 'geditorial-admin' ) ),
 			'noadded'   => self::error( _x( 'No item added!', 'Settings: Message', 'geditorial-admin' ) ),
 			'noaccess'  => self::error( _x( 'You do not have the access!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'converted' => self::counted( _x( '%s items(s) converted!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'imported'  => self::counted( _x( '%s items(s) imported!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'created'   => self::counted( _x( '%s items(s) created!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'deleted'   => self::counted( _x( '%s items(s) deleted!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'cleaned'   => self::counted( _x( '%s items(s) cleaned!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'changed'   => self::counted( _x( '%s items(s) changed!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'emptied'   => self::counted( _x( '%s items(s) emptied!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'closed'    => self::counted( _x( '%s items(s) closed!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'ordered'   => self::counted( _x( '%s items(s) re-ordered!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'scheduled' => self::counted( _x( '%s items(s) re-scheduled!', 'Settings: Message', 'geditorial-admin' ) ),
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			'synced'    => self::counted( _x( '%s items(s) synced!', 'Settings: Message', 'geditorial-admin' ) ),
 			'huh'       => Core\HTML::error( self::huh( self::req( 'huh', NULL ) ) ),
 		];
@@ -1869,7 +1869,7 @@ class Settings extends WordPress\Main
 		$extra = [];
 
 		if ( isset( $_REQUEST['count'] ) )
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			$extra[] = sprintf( _x( '%s item(s) counted!', 'Settings: Message', 'geditorial-admin' ),
 				Core\Number::format( $_REQUEST['count'] ) );
 
@@ -1979,7 +1979,7 @@ class Settings extends WordPress\Main
 	public static function counted( $message = NULL, $count = NULL, $class = 'notice-success' )
 	{
 		if ( is_null( $message ) )
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			$message = _x( '%s Counted!', 'Settings: Message', 'geditorial-admin' );
 
 		if ( is_null( $count ) )
@@ -1996,7 +1996,7 @@ class Settings extends WordPress\Main
 	public static function huh( $message = NULL )
 	{
 		if ( $message )
-			/* translators: %s: message */
+			/* translators: `%s`: message */
 			return sprintf( _x( 'huh? %s', 'Settings: Message', 'geditorial-admin' ), $message );
 
 		return _x( 'huh?', 'Settings: Message', 'geditorial-admin' );
@@ -2271,7 +2271,7 @@ class Settings extends WordPress\Main
 
 		Core\HTML::h3( Core\HTML::tag( 'a', [
 			'href'   => self::getModuleDocsURL( $module ),
-			/* translators: %s: module title */
+			/* translators: `%s`: module title */
 			'title'  => sprintf( _x( '%s Documentation', 'Settings', 'geditorial-admin' ), $module->title ),
 			'target' => '_blank',
 		], $module->title ).$access, '-title' );
@@ -2325,7 +2325,7 @@ class Settings extends WordPress\Main
 			return;
 
 		echo '<div class="signature clear"><p>';
-			/* translators: %1$s: plugin url, %2$s: author url */
+			/* translators: `%1$s`: plugin url, `%2$s`: author url */
 			printf( _x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', 'geditorial-admin' ),
 				'https://github.com/geminorum/geditorial',
 				'https://geminorum.ir/' );
@@ -2368,7 +2368,7 @@ class Settings extends WordPress\Main
 
 		$wikimodule = [
 			'id'       => 'geditorial-'.$module->name.'-wikihome',
-			/* translators: %s: module title */
+			/* translators: `%s`: module title */
 			'title'    => sprintf( _x( '%s Wiki', 'Settings: Help Content Title', 'geditorial-admin' ), $module->title ),
 			'callback' => [ __CLASS__, 'add_help_tab_module_callback' ],
 			'module'   => $module,

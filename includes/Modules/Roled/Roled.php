@@ -71,10 +71,10 @@ class Roled extends gEditorial\Module
 			$settings['_general'][] = [
 				'field'       => 'role_name_'.$role,
 				'type'        => 'text',
-				/* translators: %s: role name */
+				/* translators: `%s`: role name */
 				'title'       => sprintf( _x( 'Role Name for %s', 'Setting Title', 'geditorial-roled' ), $roles[$role] ),
 				'description' => _x( 'Custom name for the duplicated role.', 'Setting Description', 'geditorial-roled' ),
-				/* translators: %s: role name */
+				/* translators: `%s`: role name */
 				'default'     => sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ), $roles[$role] ),
 			];
 
@@ -329,7 +329,7 @@ class Roled extends gEditorial\Module
 				continue;
 
 			if ( ! $name = $this->get_setting( 'role_name_'.$core, FALSE ) )
-				/* translators: %s: role name */
+				/* translators: `%s`: role name */
 				$name = sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ), translate_user_role( $roles[$core] ) );
 
 			$role = add_role( $prefix.$core, $name );

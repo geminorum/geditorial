@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait DashboardSummary
@@ -53,7 +54,7 @@ trait DashboardSummary
 
 		if ( is_null( $title ) )
 			$title = sprintf(
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				_x( '%s Summary', 'Internal: Dashboard Summary: Widget Title', 'geditorial-admin' ),
 				$this->get_taxonomy_label( $constant, 'extended_label' ),
 			);
@@ -243,7 +244,7 @@ trait DashboardSummary
 
 		if ( $this->get_setting( 'count_not', FALSE ) ) {
 
-			$none  = Helper::getTaxonomyLabel( $object, 'show_option_no_items' );
+			$none  = Services\CustomTaxonomy::getLabel( $object, 'show_option_no_items' );
 			$query = [ $query_var => -1 ];
 
 			if ( 'current' === $scope )
@@ -344,7 +345,7 @@ trait DashboardSummary
 				$summaries[] = [
 					'key'     => $this->classs( 'summary', $target ),
 					'class'   => '-paired-summary',
-					'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', Helper::getTaxonomyLabel( $target, 'extended_label' ) ),
+					'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', Services\CustomTaxonomy::getLabel( $target, 'extended_label' ) ),
 					'content' => Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), 'list-columns -term-columns' ),
 				];
 

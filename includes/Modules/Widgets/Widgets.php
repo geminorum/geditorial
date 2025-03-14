@@ -168,7 +168,7 @@ class Widgets extends gEditorial\Module
 
 			register_sidebar( array_merge( Core\Arraay::stripByKeys( $area, [ 'action', 'priority', 'name' ] ), [
 				'id'   => $id,
-				/* translators: %s: widget area name */
+				/* translators: `%s`: widget area name */
 				'name' => sprintf( _x( 'Editorial: %s', 'Widget Area Prefix', 'geditorial-widgets' ), $name ),
 			] ) );
 		}

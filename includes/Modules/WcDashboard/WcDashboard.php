@@ -11,6 +11,8 @@ use geminorum\gEditorial\WordPress;
 class WcDashboard extends gEditorial\Module
 {
 
+	// TODO: override tab titles: https://woocommerce.com/document/editing-product-data-tabs/
+
 	public static function module()
 	{
 		return [
@@ -96,7 +98,7 @@ class WcDashboard extends gEditorial\Module
 	private function _default_main_message()
 	{
 		return sprintf(
-			/* translators: %1$s: user display name, %2$s: logout url */
+			/* translators: `%1$s`: user display name, `%2$s`: logout url */
 			_x( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'Setting Default', 'geditorial-wc-dashboard' ),
 			'{{display_name}}',
 			'{{logout_url}}'

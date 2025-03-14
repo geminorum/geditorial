@@ -395,36 +395,36 @@ class PostTypeFields extends WordPress\Main
 
 				case 'gram':
 					return sprintf(
-						/* translators: %s: number as gram */
+						/* translators: `%s`: number as gram */
 						_x( '%s g', 'Helper: Number as Gram', 'geditorial' ),
 						Core\Number::format( $raw ?: $value )
 					);
 
 				case 'kilogram':
 					return sprintf(
-						/* translators: %s: number as kilogram */
+						/* translators: `%s`: number as kilogram */
 						_x( '%s kg', 'Helper: Number as Kilogram', 'geditorial' ),
 						Core\Number::format( $raw ?: $value )
 					);
 
-				case 'milimeter':
+				case 'millimetre':
 					return sprintf(
-						/* translators: %s: number as milimeter */
-						_x( '%s mm', 'Helper: Number as Milimeter', 'geditorial' ),
+						/* translators: `%s`: number as millimetre */
+						_x( '%s mm', 'Helper: Number as Millimetre', 'geditorial' ),
 						Core\Number::format( $raw ?: $value )
 					);
 
-				case 'centimeter':
+				case 'centimetre':
 					return sprintf(
-						/* translators: %s: number as centimeter */
-						_x( '%s cm', 'Helper: Number as Centimeter', 'geditorial' ),
+						/* translators: `%s`: number as centimetre */
+						_x( '%s cm', 'Helper: Number as Centimetre', 'geditorial' ),
 						Core\Number::format( $raw ?: $value )
 					);
 
 				case 'km_per_hour':
 					return sprintf(
-						/* translators: %s: number as kilometer per hour */
-						_x( '%s kpm', 'Helper: Number as Kilometer per Hour', 'geditorial' ),
+						/* translators: `%s`: number as kilometres per hour */
+						_x( '%s kpm', 'Helper: Number as Kilometres per Hour', 'geditorial' ),
 						Core\Number::format( $raw ?: $value )
 					);
 
@@ -529,7 +529,7 @@ class PostTypeFields extends WordPress\Main
 				case 'shot':
 				case 'line':
 				case 'card':
-				case 'meter':
+				case 'metre':
 
 					return sprintf( Helper::noopedCount( $raw ?: $value,
 						Info::getNoop( $field['data_unit'] ) ),
@@ -562,7 +562,7 @@ class PostTypeFields extends WordPress\Main
 		if ( in_array( $field['type'], [
 			'integer', 'number', 'float', 'price',
 			'member', 'person', 'day', 'hour',
-			'gram', 'milimeter', 'kilogram', 'centimeter',
+			'gram', 'millimetre', 'kilogram', 'centimetre', 'metre',
 			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'postcode',
 			'post', 'attachment', 'parent_post', 'posts', 'attachments',
 			'user', 'term',

@@ -75,7 +75,7 @@ trait TaxonomyOverview
 
 		if ( is_null( $title ) )
 			$title = sprintf(
-				/* translators: %s: taxonomy label */
+				/* translators: `%s`: taxonomy label */
 				_x( 'Overview of %s', 'Internal: TaxonomyOverview: Header', 'geditorial-admin' ),
 				$this->get_taxonomy_label( $constant, 'extended_label', 'name' )
 			);

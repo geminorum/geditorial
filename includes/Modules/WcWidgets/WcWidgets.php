@@ -155,9 +155,9 @@ class WcWidgets extends gEditorial\Module
 
 			register_sidebar( [
 				'id'            => $sidebar,
-				/* translators: %s: widget area name */
+				/* translators: `%s`: widget area name */
 				'name'          => sprintf( _x( 'WooCommerce: %s', 'Widget Area Prefix', 'geditorial-wc-widgets' ), $name ),
-				/* translators: %s: widget action hook */
+				/* translators: `%s`: widget action hook */
 				'description'   => sprintf( _x( 'Widgets in this area will appear on %s action hook.', 'Widget Area Description', 'geditorial-wc-widgets' ), Core\HTML::code( $hook ) ),
 				'before_widget' => array_key_exists( 'before_widget', $areas[$hook] ) ? $areas[$hook]['before_widget'] : '', // empty to overrride defaults
 				'after_widget'  => array_key_exists( 'after_widget', $areas[$hook] )  ? $areas[$hook]['after_widget']  : '', // empty to overrride defaults

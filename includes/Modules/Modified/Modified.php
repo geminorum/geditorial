@@ -5,9 +5,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
@@ -174,7 +174,7 @@ class Modified extends gEditorial\Module
 		$columns['modified'] = Tablelist::columnPostDateModified();
 
 		Core\HTML::tableList( $columns, $query->query( $args ), [
-			'empty' => Helper::getPostTypeLabel( 'post', 'not_found' ),
+			'empty' => Services\CustomPostType::getLabel( 'post', 'not_found' ),
 		] );
 	}
 

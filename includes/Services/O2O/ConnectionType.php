@@ -118,7 +118,7 @@ class ConnectionType extends Core\Base
 
 		$other_key = 'from' == $key ? 'to' : 'from';
 
-		/* translators: %s: title */
+		/* translators: `%s`: title */
 		return sprintf( _x( 'Connected %s', 'O2O', 'geditorial' ),
 			$this->side[ $other_key ]->get_title() );
 	}

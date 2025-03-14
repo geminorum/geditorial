@@ -263,7 +263,7 @@ class Attachments extends gEditorial\Module
 
 			echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Row Icon Title', 'geditorial-attachments' ) );
 
-			/* translators: %s: attachments count */
+			/* translators: `%s`: attachments count */
 			$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Noop', 'geditorial-attachments' ), Core\Number::format( $count ) );
 
 			if ( current_user_can( 'upload_files' ) )
@@ -305,7 +305,7 @@ class Attachments extends gEditorial\Module
 			array_merge( [
 				'post_id'       => NULL,
 				'title'         => _x( 'Attachments', 'Shortcode', 'geditorial-attachments' ),
-				/* translators: %s: attachment parent title */
+				/* translators: `%s`: attachment parent title */
 				'title_title'   => _x( 'Attachments of %s', 'Shortcode', 'geditorial-attachments' ),
 				'title_anchor'  => 'attachments',
 				'title_link'    => FALSE,
@@ -436,22 +436,22 @@ class Attachments extends gEditorial\Module
 					$list = [];
 
 					if ( $row->post_parent )
-						/* translators: %s: linked post title */
+						/* translators: `%s`: linked post title */
 						$list[] = sprintf( _x( '[Parent]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $row->post_parent, 'view', TRUE, 'posttype' ) );
 
 					foreach ( WordPress\PostType::isThumbnail( $row->ID ) as $post_id )
-						/* translators: %s: linked post title */
+						/* translators: `%s`: linked post title */
 						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
 
 					foreach ( WordPress\Taxonomy::isThumbnail( $row->ID ) as $term_id )
-						/* translators: %s: linked term title */
+						/* translators: `%s`: linked term title */
 						$list[] = sprintf( _x( '[Term]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getTermTitleRow( $term_id, 'view', TRUE ) );
 
 					foreach ( WordPress\Media::searchAttachment( $row->ID ) as $post_id )
-						/* translators: %s: linked post title */
+						/* translators: `%s`: linked post title */
 						$list[] = sprintf( _x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
 

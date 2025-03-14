@@ -35,7 +35,7 @@ trait CoreToolBox
 	protected function tool_box_title()
 	{
 		Core\HTML::h2( sprintf(
-			/* translators: %s: module title */
+			/* translators: `%s`: module title */
 			_x( 'Editorial: %s', 'Internal: CoreToolBox', 'geditorial-admin' ),
 			$this->module->title
 		), 'title' );

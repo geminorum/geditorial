@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
@@ -140,10 +139,10 @@ class Tabloid extends gEditorial\Module
 
 		return $this->framepage_get_mainlink_for_post( $post, [
 			'title' => sprintf(
-				/* translators: %1$s: current post title, %2$s: posttype singular name */
+				/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 				_x( 'Overview of this %2$s', 'Post Row Action Title Attr', 'geditorial-tabloid' ),
 				WordPress\Post::title( $post ),
-				Helper::getPostTypeLabel( $post, 'singular_name' )
+				Services\CustomPostType::getLabel( $post, 'singular_name' )
 			),
 			'text'         => $text,
 			'target'       => 'post',
@@ -166,10 +165,10 @@ class Tabloid extends gEditorial\Module
 
 		return $this->framepage_get_mainlink_for_term( $term, [
 			'title' => sprintf(
-				/* translators: %1$s: current term name, %2$s: taxonomy singular name */
+				/* translators: `%1$s`: current term name, `%2$s`: taxonomy singular name */
 				_x( 'Overview of this %2$s', 'Term Row Action Title Attr', 'geditorial-tabloid' ),
 				WordPress\Term::title( $term ),
-				Helper::getTaxonomyLabel( $term, 'singular_name' )
+				Services\CustomTaxonomy::getLabel( $term, 'singular_name' )
 			),
 			'text'         => $text,
 			'target'       => 'term',

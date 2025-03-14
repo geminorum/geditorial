@@ -531,7 +531,7 @@ class Config extends gEditorial\Module
 						_x( 'Imports All Options', 'Button', 'geditorial-admin' ), 'danger', TRUE );
 
 					Core\HTML::desc( sprintf(
-						/* translators:  %1$s: file ext-type, %2$s: file size */
+						/* translators: `%1$s`: file ext-type, `%2$s`: file size */
 						_x( 'Imports all editorial option data in %1$s file from your computer. Maximum upload size: %2$s', 'Message', 'geditorial-admin' ),
 						Core\HTML::code( 'json' ),
 						Core\HTML::code( Core\HTML::wrapLTR( $filesize ) )
@@ -773,7 +773,7 @@ class Config extends gEditorial\Module
 			$name = get_userdata( $user )->display_name;
 			$edit = Core\WordPress::getUserEditLink( $user );
 
-			/* translators: %s: user link placeholder */
+			/* translators: `%s`: user link placeholder */
 			Core\HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-admin' ),
 				$edit ? Core\HTML::link( $name, $edit, TRUE ) : $name ) );
 

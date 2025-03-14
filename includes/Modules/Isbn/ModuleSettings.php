@@ -30,7 +30,7 @@ class ModuleSettings extends gEditorial\Settings
 				_x( 'Migrate Data', 'Button', 'geditorial-isbn' ) );
 
 			Core\HTML::desc( sprintf(
-				/* translators: %s: number of rows found */
+				/* translators: `%s`: number of rows found */
 				_x( 'Converts meta-keys of found %s rows into current module keys.', 'Message', 'geditorial-isbn' ),
 				Core\Number::format( $count )
 			), FALSE );

@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
@@ -100,8 +101,8 @@ class Countables extends gEditorial\Module
 				'count'     => $count,
 				'formatted' => $args['counter'] ? '' : Core\Number::format( $count ),
 				'link'      => $args['link'] ?: WordPress\PostType::link( $posttype ),
-				'title'     => is_null( $args['title'] ) ? Helper::getPostTypeLabel( $posttype, 'name' ) : trim( $args['title'] ),
-				'text'      => $content ? trim( $content ) : Helper::getPostTypeLabel( $posttype, 'description' ),
+				'title'     => is_null( $args['title'] ) ? Services\CustomPostType::getLabel( $posttype, 'name' ) : trim( $args['title'] ),
+				'text'      => $content ? trim( $content ) : Services\CustomPostType::getLabel( $posttype, 'description' ),
 			], $posttype, $count, $args );
 
 			$box  = Core\Text::replaceTokens( $args['template'], $tokens );

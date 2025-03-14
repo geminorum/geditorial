@@ -230,13 +230,13 @@ class Book extends gEditorial\Module
 						'page' => [
 							'title'    => _x( 'Pages', 'P2P', 'geditorial-book' ),
 							'type'     => 'text',
-							/* translators: %s: pages placeholder */
+							/* translators: `%s`: pages placeholder */
 							'template' => _x( 'P. %s', 'P2P', 'geditorial-book' ),
 						],
 						'vol' => [
 							'title'    => _x( 'Volume', 'P2P', 'geditorial-book' ),
 							'type'     => 'text',
-							/* translators: %s: volumes placeholder */
+							/* translators: `%s`: volumes placeholder */
 							'template' => _x( 'Vol. %s', 'P2P', 'geditorial-book' ),
 						],
 						'ref' => [
@@ -670,7 +670,7 @@ class Book extends gEditorial\Module
 			case 'publication_edition':
 
 				return sprintf(
-					/* translators: %s: edition placeholder */
+					/* translators: `%s`: edition placeholder */
 					_x( '%s Edition', 'Display', 'geditorial-book' ),
 					Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) )
 				);
@@ -678,7 +678,7 @@ class Book extends gEditorial\Module
 			case 'publication_print':
 
 				return sprintf(
-					/* translators: %s: print placeholder */
+					/* translators: `%s`: print placeholder */
 					_x( '%s Print', 'Display', 'geditorial-book' ),
 					Core\Number::localize( Core\Number::toOrdinal( $raw ?: $value ) )
 				);

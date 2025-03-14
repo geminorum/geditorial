@@ -190,15 +190,15 @@ class Meeted extends gEditorial\Module
 		];
 
 		$strings['misc'] = [
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_posttype'  => _x( 'Meeting Participants (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-meeted' ),
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_supported' => _x( 'Meeting Participations (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-meeted' ),
 			'column_icon_title'        => _x( 'Meetings', 'Misc: `column_icon_title`', 'geditorial-meeted' ),
 		];
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'listbox_title' => _x( 'Participants on &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-meeted' ),
 		];
 

@@ -42,7 +42,7 @@ class Tabs extends gEditorial\Module
 				'field' => 'posttype_'.$posttype_name.'_builtins',
 				'type'  => 'checkbox-panel',
 				'title' => sprintf(
-					/* translators: %s: supported object label */
+					/* translators: `%s`: supported object label */
 					_x( 'Built-in Tabs for %s', 'Setting Title', 'geditorial-tabs' ),
 					'<i>'.$posttype_label.'</i>'
 				),

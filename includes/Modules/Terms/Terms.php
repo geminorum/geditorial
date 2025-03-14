@@ -15,8 +15,9 @@ use geminorum\gEditorial\WordPress;
 class Terms extends gEditorial\Module
 {
 
+	// FIXME: quick edit not working on: `dead`/`born`
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `url`, `mapurl` `subtitle`, `phonetic`, `time`, `pseudonym`
+	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `url`, `embed` `subtitle`, `phonetic`, `time`, `pseudonym`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
@@ -268,7 +269,7 @@ class Terms extends gEditorial\Module
 			$desc = $this->get_supported_field_desc( $field, FALSE );
 
 			$title = sprintf(
-				/* translators: %1$s: field name, %2$s field key */
+				/* translators: `%1$s`: field name, `%2$s`: field key */
 				_x( 'Term %1$s %2$s', 'Setting Title', 'geditorial-terms' ),
 				$name,
 				Core\HTML::code( $field, '-field-key' )
@@ -278,7 +279,7 @@ class Terms extends gEditorial\Module
 				'field'       => 'term_'.$field,
 				'type'        => 'taxonomies',
 				'title'       => $title,
-				/* translators: %s: field name */
+				/* translators: `%s`: field name */
 				'description' => $desc ?: sprintf( _x( 'Supports %s for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ), $name ),
 				'values'      => $this->get_taxonomies_support( $field ),
 			];
@@ -1141,11 +1142,11 @@ class Terms extends gEditorial\Module
 
 				} else if ( in_array( $field, [ 'days', 'hours', 'amount', 'unit', 'min', 'max' ] ) ) {
 
-					$meta = Core\Number::translate( trim( $meta ) );
+					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
 
 				} else if ( in_array( $field, [ 'viewable' ] ) ) {
 
-					$meta = Core\Number::translate( trim( $meta ) );
+					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
 
 				} else if ( in_array( $field, [ 'date', 'born', 'dead' ] ) ) {
 
@@ -1157,7 +1158,7 @@ class Terms extends gEditorial\Module
 
 				} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
 
-					$meta = Core\Number::translate( trim( $meta ) );
+					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
 					$meta = Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
 				}
 
@@ -1697,7 +1698,7 @@ class Terms extends gEditorial\Module
 				$node = [
 					'id'     => $this->classs( $field ),
 					'parent' => $this->classs(),
-					/* translators: %s: meta title */
+					/* translators: `%s`: meta title */
 					'title'  => sprintf( _x( 'Meta: %s', 'Adminbar', 'geditorial-terms' ),
 						$this->get_string( $field, $term->taxonomy, 'titles', $field ) ),
 				];
@@ -1883,7 +1884,7 @@ class Terms extends gEditorial\Module
 	public function display_media_states( $media_states, $post )
 	{
 		if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $post->ID, 'image' ) )
-			/* translators: %s: term name */
+			/* translators: `%s`: term name */
 			$media_states[] = sprintf( _x( 'Term Image for &ldquo;%s&rdquo;', 'Media State', 'geditorial-terms' ), get_term( $term_id )->name );
 
 		return $media_states;

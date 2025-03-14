@@ -161,19 +161,19 @@ class Execution extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Executives', 'MetaBox Title', 'geditorial-execution' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-execution' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Executives of %1$s', 'Button Title', 'geditorial-execution' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Executives of %2$s', 'Button Text', 'geditorial-execution' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'rowaction_title' => _x( 'Executives of %1$s', 'Action Title', 'geditorial-execution' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'rowaction_text'  => _x( 'Executives', 'Action Text', 'geditorial-execution' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'columnrow_title' => _x( 'Executives of %1$s', 'Row Title', 'geditorial-execution' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'columnrow_text'  => _x( 'Executives', 'Row Text', 'geditorial-execution' ),
 		];
 
@@ -358,9 +358,9 @@ class Execution extends gEditorial\Module
 	{
 		$this->subcontent_do_render_iframe_content(
 			'framepage',
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Executives Grid for %s', 'Page Title', 'geditorial-execution' ),
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Executives Overview for %s', 'Page Title', 'geditorial-execution' )
 		);
 	}

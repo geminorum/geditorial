@@ -195,7 +195,7 @@ trait CoreCapabilities
 				'field'       => sprintf( 'taxonomy_%s_manage_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Manage Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				'description' => sprintf( _x( 'Roles that can Manage, Edit and Delete %s.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
 				'values'      => $roles,
 			],
@@ -203,7 +203,7 @@ trait CoreCapabilities
 				'field'       => sprintf( 'taxonomy_%s_assign_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				'description' => sprintf( _x( 'Roles that can Assign %s.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
 				'values'      => $roles,
 			],
@@ -211,7 +211,7 @@ trait CoreCapabilities
 				'field'       => sprintf( 'taxonomy_%s_reports_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Reports Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				'description' => sprintf( _x( 'Roles that can see %s Reports.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
 				'values'      => $roles,
 			],
@@ -219,7 +219,7 @@ trait CoreCapabilities
 				'field'       => sprintf( 'taxonomy_%s_tools_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Tools Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				'description' => sprintf( _x( 'Roles that can use %s Tools.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
 				'values'      => $roles,
 			],
@@ -231,7 +231,7 @@ trait CoreCapabilities
 				'field'       => sprintf( 'taxonomy_%s_restricted_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Restricted Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				'description' => sprintf( _x( 'Roles that check for %s visibility.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
 				'values'      => $roles,
 			];
@@ -239,7 +239,7 @@ trait CoreCapabilities
 			$settings[] = [
 				'field'       => sprintf( 'taxonomy_%s_restricted_visibility', $taxonomy ),
 				'type'        => 'select',
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				'title'       => sprintf( _x( 'Restricted %s', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ), $label ),
 				'description' => _x( 'Handles visibility of each item based on meta values.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
 				'default'     => 'disabled',
@@ -255,7 +255,7 @@ trait CoreCapabilities
 				'field'        => 'locking_terms',
 				'type'         => 'checkbox-panel',
 				'title'        => _x( 'Locking Terms', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: %s: taxonomy extended label */
+				/* translators: `%s`: taxonomy extended label */
 				'description'  => sprintf( _x( 'Selected items will lock editing the post to %s managers.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
 				'string_empty' => $empty ?? $this->get_taxonomy_label( $constant, 'no_items_available', NULL, 'no_terms' ),
 				'values'       => $terms ?? WordPress\Taxonomy::listTerms( $taxonomy ),

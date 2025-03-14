@@ -166,7 +166,7 @@ class Organization extends gEditorial\Module
 			],
 			'labels' => [
 				'primary_posttype' => [
-					/* translators: %s: paired item title */
+					/* translators: `%s`: paired item title */
 					'paired_connected_to' => _x( 'Member of %s Department', 'Label: `paired_connected_to`', 'geditorial-organization' ),
 					'featured_image'      => _x( 'Department Badge', 'Label: Featured Image', 'geditorial-organization' ),
 					'metabox_title'       => _x( 'The Department', 'Label: MetaBox Title', 'geditorial-organization' ),
@@ -194,7 +194,7 @@ class Organization extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'listbox_title' => _x( '%2$s Members of &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-organization' ),
 		];
 

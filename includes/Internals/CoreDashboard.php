@@ -3,8 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreDashboard
@@ -19,7 +19,7 @@ trait CoreDashboard
 
 		return MetaBox::glancePosttype(
 			$posttype,
-			Helper::getPostTypeLabel( $posttype, 'noop' ),
+			Services\CustomPostType::getLabel( $posttype, 'noop' ),
 			'-'.$this->slug()
 		);
 	}
@@ -33,7 +33,7 @@ trait CoreDashboard
 
 		return MetaBox::glanceTaxonomy(
 			$taxonomy,
-			Helper::getTaxonomyLabel( $taxonomy, 'noop' ),
+			Services\CustomTaxonomy::getLabel( $taxonomy, 'noop' ),
 			'-'.$this->slug()
 		);
 	}

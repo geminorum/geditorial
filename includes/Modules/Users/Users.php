@@ -590,7 +590,7 @@ class Users extends gEditorial\Module
 		if ( $user->user_registered ) {
 			printf( $before, '-registered' );
 				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Row Icon Title', 'geditorial-users' ) );
-				/* translators: %s: date */
+				/* translators: `%s`: date */
 				printf( _x( 'Registered on %s', 'Row', 'geditorial-users' ),
 					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
 			echo $after;
@@ -823,7 +823,7 @@ class Users extends gEditorial\Module
 				Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
 
 				Core\HTML::desc( sprintf(
-					/* translators:  %1$s: file ext-type, %2$s: file size */
+					/* translators: `%1$s`: file ext-type, `%2$s`: file size */
 					_x( 'Checks for post authors via a %1$s file and re-map them with current registered users. Maximum upload size: %2$s', 'Message', 'geditorial-users' ),
 					Core\HTML::code( 'csv' ),
 					Core\HTML::code( Core\HTML::wrapLTR( $filesize ) )

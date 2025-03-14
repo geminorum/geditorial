@@ -319,7 +319,7 @@ class ShortCode extends WordPress\Main
 		if ( 'posttype' === $args['title'] )
 			$args['title'] = NULL; // reset
 
-		$text = Helper::getPostTypeLabel( $posttype, $args['title_label'] );
+		$text = Services\CustomPostType::getLabel( $posttype, $args['title_label'] );
 		$link = WordPress\PostType::link( $posttype->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
@@ -392,7 +392,7 @@ class ShortCode extends WordPress\Main
 		if ( 'taxonomy' === $args['title'] )
 			$args['title'] = NULL; // reset
 
-		$text = Helper::getTaxonomyLabel( $taxonomy, $args['title_label'] );
+		$text = Services\CustomTaxonomy::getLabel( $taxonomy, $args['title_label'] );
 		$link = WordPress\Taxonomy::link( $taxonomy->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )

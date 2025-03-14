@@ -53,7 +53,7 @@ class WasBorn extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => $posttype_name.'_posttype_dob_metakey',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Date of Birth Meta-key for %s', 'Setting Title', 'geditorial-was-born' ), '<i>'.$posttypes[$posttype_name].'</i>' ),
 				'description' => _x( 'Defines date-of-birth meta-key for the post-type.', 'Setting Description', 'geditorial-was-born' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -778,7 +778,7 @@ class WasBorn extends gEditorial\Module
 
 				$name = WordPress\Term::title( $term );
 				$span = sprintf(
-					/* translators: %1$s: date start, %2$s: date end */
+					/* translators: `%1$s`: date start, `%2$s`: date end */
 					_x( 'From %1$s till %2$s', 'Age Span Exact Dates', 'geditorial-was-born' ),
 					$group['from'] ? wp_date( 'Y/n/j', Core\Date::getObject( $group['from'] )->getTimestamp() ) : _x( 'Begin', 'Age Span Exact Dates', 'geditorial-was-born' ),
 					$group['to'] ? wp_date( 'Y/n/j', Core\Date::getObject( $group['to'] )->getTimestamp() ) : _x( 'Now', 'Age Span Exact Dates', 'geditorial-was-born' )
@@ -1094,14 +1094,14 @@ class WasBorn extends gEditorial\Module
 
 		if ( self::isError( $result ) )
 			return Settings::processingListItem( $verbose,
-				/* translators: %1$s: year taxonomy, %2$s: post title */
+				/* translators: `%1$s`: year taxonomy, `%2$s`: post title */
 				_x( 'There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-was-born' ), [
 					Core\HTML::code( $year ),
 					WordPress\Post::title( $post ),
 				] );
 
 		return Settings::processingListItem( $verbose,
-			/* translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title */
+			/* translators: `%1$s`: date-time, `%2$s`: year taxonomy, `%3$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-was-born' ), [
 				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ) ) ),
 				Core\HTML::code( $year ),

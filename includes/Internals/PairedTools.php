@@ -29,7 +29,7 @@ trait PairedTools
 				'taxonomy'    => $this->constant( $constants[1] ),
 				'name'        => 'movefrom',
 				'show_count'  => TRUE,
-				'minus_count' => 1, // the main posttype also get assigned
+				'minus_count' => 1, // the main post-type also get assigned
 			] );
 
 			MetaBox::singleselectTerms( 0, [
@@ -41,7 +41,7 @@ trait PairedTools
 
 			foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
 				Settings::submitButton( self::$pairedtools__action_move_from_to.'['.$posttype.']', sprintf(
-					/* translators: %s: posttype label */
+					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-admin' ),
 					$label
 				), 'small' );
@@ -78,8 +78,13 @@ trait PairedTools
 					Settings::submitButton( add_query_arg( [
 						'action' => 'force_assign_parents',
 						'type'   => $posttype,
-					/* translators: %s: posttype label */
-					] ), sprintf( _x( 'On %s', 'Button', 'geditorial-admin' ), $label ), 'link-small' );
+						] ), sprintf(
+							/* translators: `%s`: post-type label */
+							_x( 'On %s', 'Button', 'geditorial-admin' ),
+							$label
+						),
+						'link-small'
+					);
 
 				Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
 			echo '</div></div>';
@@ -432,7 +437,7 @@ trait PairedTools
 
 		if ( is_null( $title ) )
 			$title = sprintf(
-				/* translators: %s: posttype label */
+				/* translators: `%s`: post-type label */
 				_x( 'Overview of %s', 'Header', 'geditorial-admin' ),
 				$this->get_posttype_label( $constants[0], 'extended_label', 'name' )
 			);
@@ -621,14 +626,14 @@ trait PairedTools
 
 		if ( self::isError( $result ) )
 			return Settings::processingListItem( $verbose,
-				/* translators: %1$s: post title, %2$s: error message */
+				/* translators: `%1$s`: post title, `%2$s`: error message */
 				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 					WordPress\Post::title( $post ),
 					$result->get_error_message(),
 				] );
 
 		return Settings::processingListItem( $verbose,
-			/* translators: %1$s: count terms, %2$s: post title */
+			/* translators: `%1$s`: count terms, `%2$s`: post title */
 			_x( '%1$s terms set for &ldquo;%2$s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 				Core\HTML::code( count( $result ) ),
 				WordPress\Post::title( $post ),
@@ -676,21 +681,21 @@ trait PairedTools
 	{
 		if ( FALSE === ( $result = $this->do_force_assign_parents( $post, $taxonomy ) ) )
 			return Settings::processingListItem( $verbose,
-				/* translators: %s: post title */
+				/* translators: `%s`: post title */
 				_x( 'Something is wrong for &ldquo;%s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 					WordPress\Post::title( $post ),
 				] );
 
 		if ( self::isError( $result ) )
 			return Settings::processingListItem( $verbose,
-				/* translators: %1$s: post title, %2$s: error message */
+				/* translators: `%1$s`: post title, `%2$s`: error message */
 				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 					WordPress\Post::title( $post ),
 					$result->get_error_message(),
 				] );
 
 		return Settings::processingListItem( $verbose,
-			/* translators: %1$s: count terms, %2$s: post title */
+			/* translators: `%1$s`: count terms, `%2$s`: post title */
 			_x( '%1$s terms set for &ldquo;%2$s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 				Core\HTML::code( count( $result ) ),
 				WordPress\Post::title( $post ),

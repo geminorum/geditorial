@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreRowActions
@@ -135,9 +135,9 @@ trait CoreRowActions
 
 				return array_merge( $actions, [
 					$action => sprintf(
-						/* translators: %s: taxonomy label */
+						/* translators: `%s`: taxonomy label */
 						_x( 'Force Default %s', 'Internal: CoreRowActions: Action', 'geditorial-admin' ),
-						Helper::getTaxonomyLabel( $taxonomy, 'extended_label' )
+						Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' )
 					),
 				] );
 			} );
@@ -171,7 +171,7 @@ trait CoreRowActions
 				$_SERVER['REQUEST_URI'] = remove_query_arg( $message, $_SERVER['REQUEST_URI'] );
 
 				echo Core\HTML::success( sprintf(
-					/* translators: %s: post count */
+					/* translators: `%s`: post count */
 					_x( 'Default Term applied to %s post(s)!', 'Internal: CoreRowActions: Message', 'geditorial-admin' ),
 					Core\Number::format( $saved )
 				) );

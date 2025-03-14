@@ -24,7 +24,7 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'reports', $sub ),
-					/* translators: %s: sub title */
+					/* translators: `%s`: sub title */
 					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ), $title ),
 				];
 
@@ -35,7 +35,7 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'tools', $sub ),
-					/* translators: %s: sub title */
+					/* translators: `%s`: sub title */
 					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
 				];
 
@@ -46,7 +46,7 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'roles', $sub ),
-					/* translators: %s: sub title */
+					/* translators: `%s`: sub title */
 					'title'   => sprintf( _x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ), $title ),
 				];
 
@@ -57,7 +57,7 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'imports', $sub ),
-					/* translators: %s: sub title */
+					/* translators: `%s`: sub title */
 					'title'   => sprintf( _x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
 				];
 
@@ -67,7 +67,7 @@ trait ModuleLinks
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $this->get_module_url( 'settings' ),
-				/* translators: %s: module title */
+				/* translators: `%s`: module title */
 				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ), $this->module->title ),
 			];
 
@@ -80,7 +80,7 @@ trait ModuleLinks
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $docs,
-				/* translators: %s: module title */
+				/* translators: `%s`: module title */
 				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ), $this->module->title ),
 			];
 

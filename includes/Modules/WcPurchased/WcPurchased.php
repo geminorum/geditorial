@@ -8,6 +8,7 @@ use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class WcPurchased extends gEditorial\Module
@@ -153,7 +154,7 @@ class WcPurchased extends gEditorial\Module
 			],
 
 		], array_filter( array_map( [ $this, 'prep_product_data' ], $orders ) ), [
-			'empty' => Helper::getPostTypeLabel( 'shop_order', 'not_found' ),
+			'empty' => Services\CustomPostType::getLabel( 'shop_order', 'not_found' ),
 		] );
 	}
 

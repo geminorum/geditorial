@@ -539,7 +539,7 @@ trait SettingsCore
 			$flush   = Core\WordPress::maybeFlushRules();
 			$filters = TRUE;
 		} else {
-			/* translators: %s: module title */
+			/* translators: `%s`: module title */
 			$title = sprintf( _x( 'Editorial: %s', 'Module', 'geditorial-admin' ), $this->module->title );
 			$back  = Settings::settingsURL();
 		}
@@ -655,7 +655,7 @@ trait SettingsCore
 		if ( ! empty( $wpupload['error'] ) ) {
 
 			echo Core\HTML::error( sprintf(
-				/* translators: %s: error message */
+				/* translators: `%s`: error message */
 				_x( 'Before you can upload a file, you will need to fix the following error: %s', 'Internal: Settings Core: Message', 'geditorial-admin' ),
 				Core\HTML::code( $wpupload['error'] )
 			), FALSE, 'inline' );

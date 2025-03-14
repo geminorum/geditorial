@@ -67,7 +67,7 @@ class MetaBox extends WordPress\Main
 			'include'           => $terms ?? [],
 			'order'             => $reversed ? 'DESC' : 'ASC',
 			'orderby'           => $reversed ?: 'id',
-			'show_option_none'  => $args['none'] ?? Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' ),
+			'show_option_none'  => $args['none'] ?? Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_all' ),
 			'option_none_value' => '0',
 			'show_count'        => FALSE,
 			'hide_empty'        => FALSE,
@@ -168,7 +168,7 @@ class MetaBox extends WordPress\Main
 			$args['header'] = '%s';
 
 		if ( $args['header'] )
-			$header = sprintf( $args['header'], Helper::getTaxonomyLabel( $tax, 'metabox_title', 'name' ) );
+			$header = sprintf( $args['header'], Services\CustomTaxonomy::getLabel( $tax, 'metabox_title', 'name' ) );
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
 
@@ -437,12 +437,12 @@ class MetaBox extends WordPress\Main
 		if ( $edit )
 			$html = Core\HTML::tag( 'a', [
 				'href'   => $edit,
-				'title'  => Helper::getTaxonomyLabel( $taxonomy, 'add_new_item' ),
+				'title'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'add_new_item' ),
 				'target' => '_blank',
-			], Helper::getTaxonomyLabel( $taxonomy, 'no_items_available', 'not_found' ) );
+			], Services\CustomTaxonomy::getLabel( $taxonomy, 'no_items_available', 'not_found' ) );
 
 		else
-			$html = '<span>'.Helper::getTaxonomyLabel( $taxonomy, 'no_items_available', 'not_found' ).'</span>';
+			$html = '<span>'.Services\CustomTaxonomy::getLabel( $taxonomy, 'no_items_available', 'not_found' ).'</span>';
 
 		$html = Core\HTML::wrap( $html, 'field-wrap -empty' );
 
@@ -559,7 +559,7 @@ class MetaBox extends WordPress\Main
 			return '';
 
 		if ( is_null( $none ) )
-			$none = Helper::getPostTypeLabel( $posttype, 'show_option_select' );
+			$none = Services\CustomPostType::getLabel( $posttype, 'show_option_select' );
 
 		$html = $none ? Core\HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
 		$html.= walk_page_dropdown_tree( $posts, 0, [
@@ -589,7 +589,7 @@ class MetaBox extends WordPress\Main
 			'name'             => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
 			'id'               => ( $prefix ? $prefix.'-' : '' ).$posttype.'-'.( $selected ? $selected : '0' ),
 			'class'            => static::BASE.'-admin-dropbown',
-			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_select' ),
+			'show_option_none' => Services\CustomPostType::getLabel( $posttype, 'show_option_select' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => WordPress\Status::acceptable( $posttype, 'dropdown' ),
@@ -675,7 +675,7 @@ class MetaBox extends WordPress\Main
 			'selected'          => $post->post_parent,
 			'name'              => is_null( $name ) ? 'parent_id' : $name,
 			'class'             => static::BASE.'-admin-dropbown',
-			'show_option_none'  => Helper::getPostTypeLabel( $object, 'show_option_parent' ),
+			'show_option_none'  => Services\CustomPostType::getLabel( $object, 'show_option_parent' ),
 			'sort_column'       => 'menu_order, post_title',
 			'sort_order'        => 'desc',
 			'post_status'       => $statuses ?? WordPress\Status::acceptable( $posttype, 'dropdown', [ 'pending' ] ),
@@ -744,7 +744,7 @@ class MetaBox extends WordPress\Main
 		$terms = wp_dropdown_categories( [
 			'taxonomy'          => $taxonomy,
 			'selected'          => $selected,
-			'show_option_none'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' ),
+			'show_option_none'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
 			'option_none_value' => '0',
 			'class'             => static::BASE.'-admin-dropbown',
 			'name'              => 'tax_input['.$taxonomy.'][]',
@@ -1622,7 +1622,7 @@ class MetaBox extends WordPress\Main
 				'selected' => TRUE,
 				'value'    => $value,
 			], WordPress\User::getTitleRow( (int) $value,
-				/* translators: %s: user id number */
+				/* translators: `%s`: user id number */
 				sprintf( _x( 'Unknown User #%s', 'MetaBox: Title Attr', 'geditorial' ), $value ) ) );
 
 		$atts = [

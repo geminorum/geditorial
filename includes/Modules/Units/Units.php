@@ -82,13 +82,13 @@ class Units extends gEditorial\Module
 
 			// NOTE: descriptions appears as tooltip so must be Title-Cased
 			'descriptions' => [
-				'weight_in_g'  => _x( 'Weight in Gram', 'Descriptions', 'geditorial-units' ),
-				'width_in_mm'  => _x( 'Width in Milimeter', 'Descriptions', 'geditorial-units' ),
-				'height_in_mm' => _x( 'Height in Milimeter', 'Descriptions', 'geditorial-units' ),
-				'length_in_mm' => _x( 'Length in Milimeter', 'Descriptions', 'geditorial-units' ),
+				'weight_in_g'  => _x( 'Weight in Grams', 'Descriptions', 'geditorial-units' ),
+				'width_in_mm'  => _x( 'Width in Millimetres', 'Descriptions', 'geditorial-units' ),
+				'height_in_mm' => _x( 'Height in Millimetres', 'Descriptions', 'geditorial-units' ),
+				'length_in_mm' => _x( 'Length in Millimetres', 'Descriptions', 'geditorial-units' ),
 
-				'payload_in_kg'   => _x( 'Payload in Kilogram', 'Descriptions', 'geditorial-units' ),
-				'maxspeed_in_kmh' => _x( 'Max Speed in Kilometre per Hour', 'Descriptions', 'geditorial-units' ),
+				'payload_in_kg'   => _x( 'Payload in Kilograms', 'Descriptions', 'geditorial-units' ),
+				'maxspeed_in_kmh' => _x( 'Max Speed in Kilometres per Hour', 'Descriptions', 'geditorial-units' ),
 
 				'hair_color' => _x( 'Color of the Hair', 'Descriptions', 'geditorial-units' ),
 				'skin_color' => _x( 'Color of the Skin', 'Descriptions', 'geditorial-units' ),
@@ -123,14 +123,14 @@ class Units extends gEditorial\Module
 			return $strings;
 
 		$strings['importer'] = [
-			/* translators: %s: field title */
+			/* translators: `%s`: field title */
 			'field_title' => _x( 'Units: %s', 'Import Field Title', 'geditorial-units' ),
-			/* translators: %s: field title */
+			/* translators: `%s`: field title */
 			'ignored_title' => _x( 'Units: %s [Ignored]', 'Import Field Title', 'geditorial-units' ),
 		];
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'mainbox_title'  => _x( 'Measurements', 'MetaBox: `mainbox_title`', 'geditorial-units' ),
 			'mainbox_action' => _x( 'Configure', 'MetaBox: `mainbox_action`', 'geditorial-units' ),
 		];
@@ -151,10 +151,10 @@ class Units extends gEditorial\Module
 		return [
 			$this->key => [
 				'_supported' => [
-					'weight_in_g'  => [ 'type' => 'gram',      'icon' => 'image-filter', 'data_unit' => 'gram'      ],
-					'width_in_mm'  => [ 'type' => 'milimeter', 'icon' => 'leftright'   , 'data_unit' => 'milimeter' ],
-					'height_in_mm' => [ 'type' => 'milimeter', 'icon' => 'sort'        , 'data_unit' => 'milimeter' ],
-					'length_in_mm' => [ 'type' => 'milimeter', 'icon' => 'editor-break', 'data_unit' => 'milimeter' ],
+					'weight_in_g'  => [ 'type' => 'gram',       'icon' => 'image-filter', 'data_unit' => 'gram'       ],
+					'width_in_mm'  => [ 'type' => 'millimetre', 'icon' => 'leftright'   , 'data_unit' => 'millimetre' ],
+					'height_in_mm' => [ 'type' => 'millimetre', 'icon' => 'sort'        , 'data_unit' => 'millimetre' ],
+					'length_in_mm' => [ 'type' => 'millimetre', 'icon' => 'editor-break', 'data_unit' => 'millimetre' ],
 
 					'payload_in_kg'   => [ 'type' => 'kilogram',     'icon' => 'image-filter', 'data_unit' => 'kilogram'    ],
 					'maxspeed_in_kmh' => [ 'type' => 'km_per_hour',  'icon' => 'car'         , 'data_unit' => 'km_per_hour' ],
@@ -244,9 +244,9 @@ class Units extends gEditorial\Module
 			case 'gram':
 			case 'kilogram':
 			case 'km_per_hour':
-			case 'milimeter':
-			case 'centimeter':
-			case 'meter':
+			case 'millimetre':
+			case 'centimetre':
+			case 'metre':
 			case 'kilometre':
 
 				if ( 'export' === $context )
@@ -263,7 +263,7 @@ class Units extends gEditorial\Module
 			case 'shot':
 			case 'line':
 			case 'card':
-			case 'meter':
+			case 'metre':
 
 				if ( 'export' === $context )
 					return trim( $raw );
@@ -291,7 +291,7 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: %s: shoe size placeholder */
+					/* translators: `%s`: shoe size placeholder */
 					return sprintf( _x( 'Size %s Shoe', 'Display', 'geditorial-units' ), $meta );
 
 				case 'international_shirt':
@@ -300,7 +300,7 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: %s: shirt size placeholder */
+					/* translators: `%s`: shirt size placeholder */
 					return sprintf( _x( 'Size %s Shirt', 'Display', 'geditorial-units' ), $meta );
 
 				case 'international_pants':
@@ -309,7 +309,7 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: %s: pants size placeholder */
+					/* translators: `%s`: pants size placeholder */
 					return sprintf( _x( 'Size %s Pants', 'Display', 'geditorial-units' ), $meta );
 
 				case 'bookcover':
@@ -318,7 +318,7 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: ( $raw ?: $value );
 
-					/* translators: %s: book cover placeholder */
+					/* translators: `%s`: book cover placeholder */
 					return sprintf( _x( '%s Book-Cover', 'Display', 'geditorial-units' ), $meta );
 
 				case 'papersize':
@@ -327,7 +327,7 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: ( $raw ?: $value );
 
-					/* translators: %s: paper size cover placeholder */
+					/* translators: `%s`: paper size cover placeholder */
 					return sprintf( _x( 'Size %s Paper', 'Display', 'geditorial-units' ), $meta );
 			}
 		}

@@ -40,7 +40,7 @@ class ModuleHelper extends gEditorial\Helper
 			case 'edit':
 
 				$fullname = vsprintf(
-					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
+					/* translators: `%1$s`: first name, `%2$s`: last name, `%3$s`: middle name, `%4$s`: father name, `%5$s`: mother name */
 					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Edit', 'geditorial-personage' ),
 					[
 						$parts['first_name'],
@@ -58,7 +58,7 @@ class ModuleHelper extends gEditorial\Helper
 			case 'print':
 
 				$fullname = vsprintf(
-					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
+					/* translators: `%1$s`: first name, `%2$s`: last name, `%3$s`: middle name, `%4$s`: father name, `%5$s`: mother name */
 					_x( '%1$s %3$s %2$s', 'Helper: Make Full-name: Print', 'geditorial-personage' ),
 					[
 						$parts['first_name'],
@@ -76,7 +76,7 @@ class ModuleHelper extends gEditorial\Helper
 			default:
 
 				$fullname = vsprintf(
-					/* translators: %1$s: first name, %2$s: last name, %3$s: middle name, %4$s: father name, %5$s: mother name */
+					/* translators: `%1$s`: first name, `%2$s`: last name, `%3$s`: middle name, `%4$s`: father name, `%5$s`: mother name */
 					_x( '%2$s, %1$s %3$s', 'Helper: Make Full-name: Display', 'geditorial-personage' ),
 					[
 						$parts['first_name'],

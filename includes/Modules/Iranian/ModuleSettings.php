@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
@@ -31,7 +31,7 @@ class ModuleSettings extends gEditorial\Settings
 					'action' => static::ACTION_IDENTITY_CERTIFICATE,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: post-type label */
+					/* translators: `%s`: post-type label */
 					_x( 'Compare Identity for %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
@@ -90,13 +90,13 @@ class ModuleSettings extends gEditorial\Settings
 
 			if ( ! delete_post_meta( $post->ID, $certificate_field['metakey'] ) )
 				return self::processingListItem( $verbose,
-					/* translators: %s: post title */
+					/* translators: `%s`: post title */
 					_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 						WordPress\Post::title( $post ),
 					] );
 
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: birth certificate number, %2$s: post title */
+				/* translators: `%1$s`: birth certificate number, `%2$s`: post title */
 				_x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 					Core\HTML::code( $certificate ),
 					WordPress\Post::title( $post ),
@@ -108,7 +108,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( $identity !== Core\Validation::sanitizeIdentityNumber( $cleaned ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: identity code, %2$s: birth certificate number */
+				/* translators: `%1$s`: identity code, `%2$s`: birth certificate number */
 				_x( 'Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent!', 'Notice', 'geditorial-iranian' ), [
 					Core\HTML::code( $identity ),
 					Core\HTML::code( $certificate ),
@@ -116,13 +116,13 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( ! delete_post_meta( $post->ID, $certificate_field['metakey'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %s: post title */
+				/* translators: `%s`: post title */
 				_x( 'There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 					WordPress\Post::title( $post ),
 				] );
 
 		return self::processingListItem( $verbose,
-			/* translators: %1$s: birth certificate number, %2$s: post title */
+			/* translators: `%1$s`: birth certificate number, `%2$s`: post title */
 			_x( 'Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 				Core\HTML::code( $certificate ),
 				WordPress\Post::title( $post ),
@@ -141,7 +141,7 @@ class ModuleSettings extends gEditorial\Settings
 					'action' => static::ACTION_LOCATION_BY_IDENTITY,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: post-type label */
+					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
@@ -204,21 +204,21 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( ! $location = ModuleHelper::getLocationFromIdentity( $sanitized, $data ) )
 			return self::processingListItem( $verbose,
-				/* translators: %s: identity code */
+				/* translators: `%s`: identity code */
 				_x( 'No location data available for &ldquo;%s&rdquo;!', 'Notice', 'geditorial-iranian' ), [
 					Core\HTML::code( $sanitized ),
 				] );
 
 		if ( ! isset( $location['city'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %s: identity code */
+				/* translators: `%s`: identity code */
 				_x( 'No city data available for &ldquo;%s&rdquo;!', 'Notice', 'geditorial-iranian' ), [
 					Core\HTML::code( $sanitized ),
 				] );
 
 		if ( WordPress\Strings::isEmpty( $location['city'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: city data, %2$s: identity code */
+				/* translators: `%1$s`: city data, `%2$s`: identity code */
 				_x( 'City data is empty for %1$s: %2$s!', 'Notice', 'geditorial-iranian' ), [
 					Core\HTML::code( $sanitized ),
 					Core\HTML::code( $location['city'] ),
@@ -226,13 +226,13 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( ! update_post_meta( $post->ID, $location_metakey, $location['city'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: %s: post title */
+				/* translators: `%s`: post title */
 				_x( 'There is problem updating location for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 					WordPress\Post::title( $post ),
 				] );
 
 		return self::processingListItem( $verbose,
-			/* translators: %1$s: city data, %2$s: identity code, %3$s: post title */
+			/* translators: `%1$s`: city data, `%2$s`: identity code, `%3$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-iranian' ), [
 				Core\HTML::escape( $location['city'] ),
 				Core\HTML::code( $identity ),
@@ -252,7 +252,7 @@ class ModuleSettings extends gEditorial\Settings
 					'action' => static::ACTION_COUNTRY_SUMMARY,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: post-type label */
+					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
@@ -276,7 +276,7 @@ class ModuleSettings extends gEditorial\Settings
 					'action' => static::ACTION_CITY_SUMMARY,
 					'type'   => $posttype,
 				] ), sprintf(
-					/* translators: %s: post-type label */
+					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
 				), 'link-small' );
@@ -300,7 +300,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo '</div>';
 
 		Scripts::enqueueChartJS_Bar( $chartname, $summary, [
-			'label' => Helper::getPostTypeLabel( $posttype, 'extended_label' ),
+			'label' => Services\CustomPostType::getLabel( $posttype, 'extended_label' ),
 		] );
 
 		return TRUE;

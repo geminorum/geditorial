@@ -82,7 +82,7 @@ class Switcher extends gEditorial\Module
 			'show_ui' => TRUE,
 		], 'edit_others_posts' );
 
-		/* translators: %1$s: module title, %2$s: posttype label */
+		/* translators: `%1$s`: module title, `%2$s`: posttype label */
 		$template = _x( '[%1$s] Switch to %2$s', 'Bulk Action', 'geditorial-switcher' );
 
 		foreach ( $this->get_setting( 'bulk_posttypes_to', [] ) as $posttype ) {
@@ -112,7 +112,7 @@ class Switcher extends gEditorial\Module
 			$switched = 0;
 
 			foreach ( $post_ids as $post_id )
-				if ( Services\CustomPostTypes::switchType( $post_id, $posttype ) )
+				if ( Services\CustomPostType::switchType( $post_id, $posttype ) )
 					$switched++;
 
 			return add_query_arg( [
@@ -134,7 +134,7 @@ class Switcher extends gEditorial\Module
 
 		$_SERVER['REQUEST_URI'] = remove_query_arg( [ $this->hook( 'count' ), $this->hook( 'to' ) ], $_SERVER['REQUEST_URI'] );
 
-		/* translators: %1$s: count, %2$s: posttype */
+		/* translators: `%1$s`: count, `%2$s`: posttype */
 		$message = _x( '%1$s items(s) switched to %2$s!', 'Message', 'geditorial-switcher' );
 		echo Core\HTML::success( sprintf( $message, Core\Number::format( $switched ), $all[$to] ) );
 	}

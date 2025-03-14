@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
@@ -310,8 +310,8 @@ trait CoreTaxonomies
 			$labels['menu_name'] = $menu_name;
 
 		if ( ! empty( $this->strings['noops'][$constant] ) )
-			return Helper::generateTaxonomyLabels(
-				$this->strings['noops'][$constant],
+			return Services\CustomTaxonomy::generateLabels(
+				Info::getNoop( $this->strings['noops'][$constant] ) ?: $this->strings['noops'][$constant],
 				$labels,
 				$this->constant( $constant )
 			);
@@ -655,7 +655,7 @@ trait CoreTaxonomies
 	// NOTE: reversed fallback/fallback-key
 	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '', $fallback_key = NULL )
 	{
-		return Helper::getTaxonomyLabel(
+		return Services\CustomTaxonomy::getLabel(
 			$this->constant( $constant, $constant ),
 			$label,
 			$fallback_key,
@@ -872,7 +872,7 @@ trait CoreTaxonomies
 					return $views;
 
 				$query = WordPress\Taxonomy::queryVar( $taxonomy );
-				$label = Helper::getTaxonomyLabel( $taxonomy, 'extended_label' );
+				$label = Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' );
 
 				foreach ( $terms as $term )
 					// TODO: prepend counts from `Recount` module
@@ -889,7 +889,7 @@ trait CoreTaxonomies
 					'href'  => WordPress\PostType::edit( $screen->post_type, [ $query => '-1' ] ),
 					'title' => $label,
 					'class' => '-1' === self::req( $query ) ? 'current' : FALSE,
-				], Helper::getTaxonomyLabel( $taxonomy, 'show_option_no_items' ) );
+				], Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_no_items' ) );
 
 				return $views;
 			}, 99, 1 );

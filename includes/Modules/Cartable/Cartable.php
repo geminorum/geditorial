@@ -605,7 +605,7 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $this->get_user_groups( $user_id ) as $term ) {
 
-				/* translators: %s: term name placeholder */
+				/* translators: `%s`: term name placeholder */
 				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
 				$title.= MetaBox::getTitleAction( [
 					'url'   => $this->get_adminpage_url( TRUE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ], 'adminmenu' ),
@@ -627,7 +627,7 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $this->get_types( FALSE, TRUE ) as $term ) {
 
-				/* translators: %s: term name placeholder */
+				/* translators: `%s`: term name placeholder */
 				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
 				$title.= MetaBox::getTitleAction( [
 					'url'   => $this->get_adminpage_url( TRUE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ], 'adminmenu' ),
@@ -884,7 +884,7 @@ class Cartable extends gEditorial\Module
 		if ( 'user' == $context )
 			$title = _x( 'Your Cartable', 'Page Title', 'geditorial-cartable' );
 		else
-		/* translators: %s: term name placeholder */
+		/* translators: `%s`: term name placeholder */
 			$title = sprintf( _x( 'Cartable: %s', 'Menu Title', 'geditorial-cartable' ), $term->name );
 
 		Core\HTML::h3( $title );

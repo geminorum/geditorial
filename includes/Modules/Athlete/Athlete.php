@@ -165,19 +165,19 @@ class Athlete extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Athletics', 'MetaBox Title', 'geditorial-athlete' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-athlete' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Athletics of %1$s', 'Button Title', 'geditorial-athlete' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Athletics of %2$s', 'Button Text', 'geditorial-athlete' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'rowaction_title' => _x( 'Athletics of %1$s', 'Action Title', 'geditorial-athlete' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'rowaction_text'  => _x( 'Athletics', 'Action Text', 'geditorial-athlete' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'columnrow_title' => _x( 'Athletics of %1$s', 'Row Title', 'geditorial-athlete' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'columnrow_text'  => _x( 'Athletics', 'Row Text', 'geditorial-athlete' ),
 		];
 
@@ -191,7 +191,7 @@ class Athlete extends gEditorial\Module
 				'_supported' => [
 					'mass_in_kg' => [
 						'title'       => _x( 'Mass', 'Field Title', 'geditorial-athlete' ),
-						'description' => _x( 'Body Mass in Kilogram', 'Field Description', 'geditorial-athlete' ),
+						'description' => _x( 'Body Mass in Kilograms', 'Field Description', 'geditorial-athlete' ),
 						'type'        => 'kilogram',
 						'data_unit'   => 'kilogram',
 						'icon'        => 'image-filter',
@@ -199,9 +199,9 @@ class Athlete extends gEditorial\Module
 					],
 					'stature_in_cm' => [
 						'title'       => _x( 'Stature', 'Field Title', 'geditorial-athlete' ),
-						'description' => _x( 'Body Stature in Centimeter', 'Field Description', 'geditorial-athlete' ),
-						'type'        => 'centimeter',
-						'data_unit'   => 'centimeter',
+						'description' => _x( 'Body Stature in Centimetres', 'Field Description', 'geditorial-athlete' ),
+						'type'        => 'centimetre',
+						'data_unit'   => 'centimetre',
 						'icon'        => 'sort',
 						'order'       => 100,
 					],
@@ -408,9 +408,9 @@ class Athlete extends gEditorial\Module
 	{
 		$this->subcontent_do_render_iframe_content(
 			'framepage',
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Athletics Grid for %s', 'Page Title', 'geditorial-athlete' ),
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Athletics Overview for %s', 'Page Title', 'geditorial-athlete' )
 		);
 	}

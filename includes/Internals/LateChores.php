@@ -153,7 +153,7 @@ trait LateChores
 	{
 		return array_merge( $actions, [
 			$this->hook( 'aftercare' ) => sprintf(
-				/* translators: %s: module title */
+				/* translators: `%s`: module title */
 				_x( '[%s] Force After-Care', 'Late Chores: Bulk Action', 'geditorial-admin' ),
 				$this->module->title
 			),
@@ -182,7 +182,7 @@ trait LateChores
 
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'aftercaremsg' ), $_SERVER['REQUEST_URI'] );
 
-		/* translators: %s: post count */
+		/* translators: `%s`: post count */
 		$message = _x( '%s posts after-cared!', 'Late Chores: Message', 'geditorial-admin' );
 		echo Core\HTML::success( sprintf( $message, Core\Number::format( $saved ) ) );
 	}

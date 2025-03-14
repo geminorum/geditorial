@@ -757,7 +757,7 @@ class Widget extends \WP_Widget
 			'name'             => $this->get_field_name( $field ),
 			'id'               => $this->get_field_id( $field ),
 			'class'            => 'widefat',
-			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_select' ),
+			'show_option_none' => Services\CustomPostType::getLabel( $posttype, 'show_option_select' ),
 			'sort_column'      => 'menu_order, post_title',
 			'echo'             => FALSE,
 		] );

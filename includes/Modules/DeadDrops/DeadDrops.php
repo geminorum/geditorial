@@ -69,7 +69,7 @@ class DeadDrops extends gEditorial\Module
 	{
 		$strings = [
 			'metabox' => [
-				/* translators: %1$s: current post title, %2$s: posttype singular name */
+				/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 				'heading_title' => _x( 'Dead Drop for %1$s', 'Label: Extended Label', 'geditorial-dead-drops' ),
 			],
 		];

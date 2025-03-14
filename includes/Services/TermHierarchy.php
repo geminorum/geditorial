@@ -3,8 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class TermHierarchy extends WordPress\Main
@@ -156,7 +156,7 @@ class TermHierarchy extends WordPress\Main
 				'name'              => sprintf( '%s[%s][]', $bulkedit ? static::SINGLE_TERM_SELECT : 'tax_input', $taxonomy->name ),
 				'id'                => static::BASE.'-singleselect-select-'.$taxonomy->name,
 				'option_none_value' => '0',
-				'show_option_none'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_select' ),
+				'show_option_none'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
 				'class'             => static::BASE.'-admin-dropbown '.( $bulkedit ? '-bulkedit-custombox' : '-quickedit-custombox' ),
 				'show_count'        => FALSE,
 				'hide_empty'        => FALSE,
@@ -168,7 +168,7 @@ class TermHierarchy extends WordPress\Main
 				continue;
 
 			$html.= sprintf( '<div title="%s">%s</div>',
-				Core\HTML::escapeAttr( Helper::getTaxonomyLabel( $taxonomy, 'extended_label' ) ), $dropdown );
+				Core\HTML::escapeAttr( Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ) ), $dropdown );
 		}
 
 		if ( $html ) {

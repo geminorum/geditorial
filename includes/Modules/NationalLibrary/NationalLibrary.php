@@ -49,7 +49,7 @@ class NationalLibrary extends gEditorial\Module
 				'field' => $posttype_name.'_posttype_bib_metakey',
 				'type'  => 'text',
 				'title' => sprintf(
-					/* translators: %s: supported object label */
+					/* translators: `%s`: supported object label */
 					_x( 'Bib Meta-key for %s', 'Setting Title', 'geditorial-national-library' ),
 					'<i>'.$posttype_label.'</i>'
 				),
@@ -64,7 +64,7 @@ class NationalLibrary extends gEditorial\Module
 				'field' => $posttype_name.'_posttype_isbn_metakey',
 				'type'  => 'text',
 				'title' => sprintf(
-					/* translators: %s: supported object label */
+					/* translators: `%s`: supported object label */
 					_x( 'ISBN Meta-key for %s', 'Setting Title', 'geditorial-national-library' ),
 					'<i>'.$posttype_label.'</i>'
 				),

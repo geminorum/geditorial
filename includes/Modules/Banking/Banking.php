@@ -114,19 +114,19 @@ class Banking extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Banking', 'MetaBox Title', 'geditorial-banking' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-banking' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Bank Accounts of %1$s', 'Button Title', 'geditorial-banking' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Accounts of %2$s', 'Button Text', 'geditorial-banking' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'rowaction_title' => _x( 'Bank Accounts of %1$s', 'Action Title', 'geditorial-banking' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'rowaction_text'  => _x( 'Bank Accounts', 'Action Text', 'geditorial-banking' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'columnrow_title' => _x( 'Bank Accounts of %1$s', 'Row Title', 'geditorial-banking' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'columnrow_text'  => _x( 'Bank Accounts', 'Row Text', 'geditorial-banking' ),
 		];
 
@@ -283,9 +283,9 @@ class Banking extends gEditorial\Module
 	{
 		$this->subcontent_do_render_iframe_content(
 			'framepage',
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Bank Grid for %s', 'Page Title', 'geditorial-banking' ),
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Bank Overview for %s', 'Page Title', 'geditorial-banking' )
 		);
 	}

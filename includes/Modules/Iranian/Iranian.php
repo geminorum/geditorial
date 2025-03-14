@@ -47,7 +47,7 @@ class Iranian extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => $posttype_name.'_posttype_identity_metakey',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Identity Meta-key for %s', 'Setting Title', 'geditorial-iranian' ), '<i>'.$posttypes[$posttype_name].'</i>' ),
 				'description' => _x( 'Defines identity meta-key for the post-type.', 'Setting Description', 'geditorial-iranian' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -59,7 +59,7 @@ class Iranian extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => $posttype_name.'_posttype_location_metakey',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Location Meta-key for %s', 'Setting Title', 'geditorial-iranian' ), '<i>'.$posttypes[$posttype_name].'</i>' ),
 				'description' => _x( 'Defines location meta-key for the post-type.', 'Setting Description', 'geditorial-iranian' ),
 				'field_class' => [ 'regular-text', 'code-text' ],

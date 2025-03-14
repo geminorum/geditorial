@@ -21,7 +21,7 @@ trait BulkExports
 		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args ) {
 
 			$label = sprintf(
-				/* translators: %1$s: icon markup, %2$s: export type title */
+				/* translators: `%1$s`: icon markup, `%2$s`: export type title */
 				_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial-admin' ),
 				Helper::getIcon( 'download' ),
 				$type_args['title']
@@ -45,7 +45,7 @@ trait BulkExports
 
 			$name  = sprintf( 'export_%s', $type );
 			$label = sprintf(
-				/* translators: %s: export type title */
+				/* translators: `%s`: export type title */
 				_x( 'Export: %s', 'Internal: Exports: Link Label', 'geditorial-admin' ),
 				$type_args['title']
 			);
@@ -221,7 +221,7 @@ trait BulkExports
 					$row[] = urldecode( $post->{$prop} );
 
 				if ( 'post_type' === $prop )
-					$row[] = Helper::getPostTypeLabel( $post->post_type, 'extended_label', 'singular', $post->post_type );
+					$row[] = Services\CustomPostType::getLabel( $post->post_type, 'extended_label', 'singular', $post->post_type );
 
 				else if ( in_array( $prop, [
 					'post_date',
@@ -296,7 +296,7 @@ trait BulkExports
 
 				foreach ( $taxes as $taxonomy => $taxonomy_title )
 					$headers['taxonomy__'.$taxonomy] = $this->exports_generate_column_header( $headers,
-						$taxonomy_title ?? Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name', $taxonomy ) );
+						$taxonomy_title ?? Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label', 'name', $taxonomy ) );
 
 				foreach ( $customs as $custom => $custom_title )
 					$headers['custom__'.$custom] = $this->exports_generate_column_header( $headers,
@@ -304,12 +304,12 @@ trait BulkExports
 
 				if ( 'assigned' === $target )
 					$sheet_title = sprintf( '%s — %s',
-						Helper::getTaxonomyLabel( WordPress\Term::get( (int) $reference ), 'extended_label' ),
+						Services\CustomTaxonomy::getLabel( WordPress\Term::get( (int) $reference ), 'extended_label' ),
 						WordPress\Term::title( (int) $reference, NULL, FALSE ),
 					);
 
 				else if ( 'posttype' === $target )
-					$sheet_title = Helper::getPostTypeLabel( $reference, 'extended_label', 'name', $this->module->title );
+					$sheet_title = Services\CustomPostType::getLabel( $reference, 'extended_label', 'name', $this->module->title );
 
 				else
 					$sheet_title = WordPress\Post::title( $reference, NULL, FALSE );
@@ -347,7 +347,7 @@ trait BulkExports
 			$counter[$header]++;
 
 		return sprintf(
-			/* translators: %1$s: column title, %2$s: column counter */
+			/* translators: `%1$s`: column title, `%2$s`: column counter */
 			_x( '%1$s (%2$s)', 'Internal: Exports: Column Header', 'geditorial-admin' ),
 			$header,
 			Core\Number::localize( $counter[$header] )

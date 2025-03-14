@@ -46,7 +46,7 @@ class Entry extends gEditorial\Module
 			],
 			'_frontend' => [
 				'show_in_navmenus' => [ sprintf(
-					/* translators: %s: category taxonomy name */
+					/* translators: `%s`: category taxonomy name */
 					_x( 'Makes <strong>%s</strong> available for selection in navigation menus.', 'Settings', 'geditorial-entry' ),
 					$this->get_taxonomy_label( 'category_taxonomy' )
 				), '1' ],

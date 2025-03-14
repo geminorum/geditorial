@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -449,7 +450,7 @@ class Ortho extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post Orthography', 'Header', 'geditorial-ortho' ) ),
-			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
+			'empty'      => Services\CustomPostType::getLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

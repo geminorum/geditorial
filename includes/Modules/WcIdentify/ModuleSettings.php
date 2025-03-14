@@ -61,7 +61,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( $saved = $product->get_global_unique_id( 'edit' ) )
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: gtin placeholder, %2$s: product title */
+				/* translators: `%1$s`: gtin placeholder, `%2$s`: product title */
 				_x( '%1$s GTIN already saved for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-wc-identify' ), [
 					Core\HTML::code( $saved ),
 					$product->get_name(),
@@ -79,7 +79,7 @@ class ModuleSettings extends gEditorial\Settings
 				$product->save();
 
 				return self::processingListItem( $verbose,
-					/* translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title */
+					/* translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title */
 					_x( '%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!', 'Notice', 'geditorial-wc-identify' ), [
 						Core\HTML::code( $gtin ),
 						$attribute->get_name(),
@@ -93,7 +93,7 @@ class ModuleSettings extends gEditorial\Settings
 			$product->save();
 
 			return self::processingListItem( $verbose,
-				/* translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title */
+				/* translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title */
 				_x( '%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!', 'Notice', 'geditorial-wc-identify' ), [
 					Core\HTML::code( $gtin ),
 					$attribute->get_name(),
@@ -102,7 +102,7 @@ class ModuleSettings extends gEditorial\Settings
 		}
 
 		return self::processingListItem( $verbose,
-			/* translators: %s: product title */
+			/* translators: `%s`: product title */
 			_x( 'No relevant GTIN attribute found for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-wc-identify' ), [
 				$product->get_name(),
 			] );

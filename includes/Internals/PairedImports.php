@@ -42,7 +42,7 @@ trait PairedImports
 
 		add_action( 'admin_footer',
 			function () use ( $post ) {
-				/* translators: %s: post title */
+				/* translators: `%s`: post title */
 				$label  = sprintf( _x( 'Upload into %s', 'Internal: PairedImports: Button Label', 'geditorial' ), WordPress\Post::title( $post ) );
 				$button = $this->pairedimports_get_import_buttons( $post, 'importitems', 'NULL', $label, 'page-title-action' );
 				$id     = $this->classs( 'hidden-importbutton' );
@@ -70,7 +70,7 @@ trait PairedImports
 
 		$title = _x( 'Import Items via File or Paste', 'Internal: PairedImports: Button Title', 'geditorial' );
 		$label = $label ?? sprintf(
-			/* translators: %s: icon markup */
+			/* translators: `%s`: icon markup */
 			_x( '%s Upload', 'Internal: PairedImports: Button Label', 'geditorial' ),
 			Helper::getIcon( 'upload' )
 		);
@@ -166,9 +166,9 @@ trait PairedImports
 				'openitem'     => _x( 'Open Item', 'Internal: PairedImports: String', 'geditorial' ),
 				'searchholder' => _x( 'Search …', 'Internal: PairedImports: String', 'geditorial' ),
 
-				/* translators: %s: count number */
+				/* translators: `%s`: count number */
 				'countlines'    => _x( '%s lines', 'Internal: PairedImports: String', 'geditorial' ),
-				/* translators: %s: count number */
+				/* translators: `%s`: count number */
 				'countselected' => _x( '%s selected', 'Internal: PairedImports: String', 'geditorial' ),
 			] ),
 			'fields'  => $this->pairedimports_get_fields( 'edit' ),
@@ -201,7 +201,7 @@ trait PairedImports
 		if ( current_user_can( 'edit_post', $post->ID ) ) {
 
 			$title = sprintf(
-				/* translators: %s: post title */
+				/* translators: `%s`: post title */
 				_x( 'Import Items for %s', 'Internal: PairedImports: Page Title', 'geditorial' ),
 				WordPress\Post::title( $post )
 			);

@@ -222,14 +222,14 @@ class Estimated extends gEditorial\Module
 			$estimated = __( 'less than 1 minute', 'geditorial-estimated' );
 		else
 			$estimated = sprintf(
-				/* translators: %s: number of minutes */
+				/* translators: `%s`: number of minutes */
 				_n( '%s minute', '%s minutes', $minutes, 'geditorial-estimated' ),
 				Core\Number::localize( $minutes )
 			);
 
 		if ( $info )
 			return '<span data-toggle="tooltip" title="'.Core\HTML::escape( sprintf(
-				/* translators: %s: words count */
+				/* translators: `%s`: words count */
 				_x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ),
 				Core\Number::format( $avgtime )
 			) ).'">'.$estimated.'</span>';

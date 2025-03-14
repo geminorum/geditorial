@@ -39,9 +39,9 @@ trait SubContents
 			'readonly' => _x( 'The field is in read-only mode!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 			'select'   => _x( 'Select', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 
-			/* translators: %s: count number */
+			/* translators: `%s`: count number */
 			'countitems' => _x( '%s items', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			/* translators: %s: time string */
+			/* translators: `%s`: time string */
 			'timeago' => _x( '%s ago', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
 
 		], $this->get_strings( 'subcontent', 'js' ), $extra );
@@ -745,7 +745,7 @@ trait SubContents
 		$enabled    = $this->subcontent_get_fields( 'import' );
 		$importable = $this->subcontent_get_importable_fields( 'import' );
 		$template   = $this->get_string( 'field_title', FALSE, 'importer',
-			/* translators: %s: field title */
+			/* translators: `%s`: field title */
 			_x( 'SubContent: %s', 'Internal: Subcontents: Import Title', 'geditorial-admin' )
 		);
 
@@ -828,7 +828,7 @@ trait SubContents
 
 		if ( $source_title && array_key_exists( 'desc', $enabled ) )
 			$data['desc'] = \sprintf(
-				/* translators: %s: source title */
+				/* translators: `%s`: source title */
 				_x( '[Imported]: %s', 'Internal: Subcontents: Import Desc', 'geditorial-admin' ),
 				Core\Text::normalizeWhitespace( $source_title )
 			);
@@ -983,7 +983,7 @@ trait SubContents
 		// TODO: override by `Users` module for better profiles
 		if ( ! empty( $item['_user'] ) && ( $user = get_user_by( 'id', $item['_user'] ) ) )
 			$author = sprintf(
-				/* translators: %s: user display-name (user email) */
+				/* translators: `%s`: user display-name (user email) */
 				_x( 'By %s', 'Internal: Subcontents: User Row', 'geditorial-admin' ),
 				WordPress\User::getTitleRow( $user )
 			);

@@ -438,19 +438,19 @@ class Magazine extends gEditorial\Module
 
 			case 'in_issue_order':
 				return WordPress\Strings::getCounted( $raw ?: $value,
-					/* translators: %s: order */
+					/* translators: `%s`: order */
 					_x( 'Order in Issue: %s', 'Display', 'geditorial-magazine' )
 				);
 
 			case 'in_issue_page_start':
 				return WordPress\Strings::getCounted( $raw ?: $value,
-					/* translators: %s: page */
+					/* translators: `%s`: page */
 					_x( 'Page in Issue: %s', 'Display', 'geditorial-magazine' )
 				);
 
 			case 'in_issue_pages':
 				return WordPress\Strings::getCounted( $raw ?: $value,
-					/* translators: %s: total count */
+					/* translators: `%s`: total count */
 					_x( 'Total Pages: %s', 'Display', 'geditorial-magazine' )
 				);
 		}

@@ -8,6 +8,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
@@ -181,7 +182,7 @@ class Like extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'users' ),
-				/* translators: %s: count placeholder */
+				/* translators: `%s`: count placeholder */
 				'title'  => WordPress\Strings::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
@@ -201,7 +202,7 @@ class Like extends gEditorial\Module
 
 			$nodes[] = [
 				'id'     => $this->classs( 'guests' ),
-				/* translators: %s: count placeholder */
+				/* translators: `%s`: count placeholder */
 				'title'  => WordPress\Strings::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
@@ -467,7 +468,7 @@ class Like extends gEditorial\Module
 
 			echo $this->get_column_icon( FALSE, 'heart', _x( 'Likes', 'Row Icon Title', 'geditorial-like' ) );
 
-			/* translators: %s: likes count */
+			/* translators: `%s`: likes count */
 			printf( _nx( '%s Like', '%s Likes', $total, 'Noop', 'geditorial-like' ), Core\Number::format( $total ) );
 
 			$list   = [];
@@ -475,11 +476,11 @@ class Like extends gEditorial\Module
 			$guests = $this->get_liked_guests( $post->ID );
 
 			if ( ! empty( $users ) )
-				/* translators: %s: users count */
+				/* translators: `%s`: users count */
 				$list[] = sprintf( _nx( '%s User', '%s Users', count( $users ), 'Noop', 'geditorial-like' ), Core\Number::format( count( $users ) ) );
 
 			if ( ! empty( $guests ) )
-				/* translators: %s: guests count */
+				/* translators: `%s`: guests count */
 				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Noop', 'geditorial-like' ), Core\Number::format( count( $guests ) ) );
 
 			echo WordPress\Strings::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
@@ -593,7 +594,7 @@ class Like extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Post Likes', 'Header', 'geditorial-like' ) ),
-			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
+			'empty'      => Services\CustomPostType::getLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

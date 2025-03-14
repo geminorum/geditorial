@@ -73,7 +73,7 @@ class Drafts extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				/* translators: %s: count */
+				/* translators: `%s`: count */
 				'public_preview' => _n_noop(
 					'Public Preview <span class="count -counted">(%s)</span>',
 					'Public Previews <span class="count -counted">(%s)</span>',
@@ -226,7 +226,7 @@ class Drafts extends gEditorial\Module
 	private function drafts_list()
 	{
 		$html = '';
-		/* translators: %s: drafts count */
+		/* translators: `%s`: drafts count */
 		$all  = _x( 'View all %s drafts', 'Header', 'geditorial-drafts' );
 		$user = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
 
@@ -407,7 +407,7 @@ class Drafts extends gEditorial\Module
 		$states[$query] = sprintf( '<span title="%2$s">%1$s</span>',
 			_x( 'Public Preview', 'State', 'geditorial-drafts' ),
 			sprintf(
-				/* translators: %s: post title */
+				/* translators: `%s`: post title */
 				_x( 'Open public preview of &#8220;%s&#8221;', 'State Title', 'geditorial-drafts' ),
 				_draft_or_post_title( $post )
 			)

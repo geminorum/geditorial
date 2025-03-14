@@ -160,7 +160,7 @@ trait SettingsTaxonomies
 	protected function get_taxonomy_show_in_quickedit_desc( $constant )
 	{
 		return sprintf(
-			/* translators: %s: taxonomy name */
+			/* translators: `%s`: taxonomy name */
 			_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings: Taxonomies', 'geditorial-admin' ),
 			$this->get_taxonomy_label( $constant )
 		);

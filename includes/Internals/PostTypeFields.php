@@ -180,7 +180,7 @@ trait PostTypeFields
 				else if ( in_array( $args['type'], [ 'iban' ], TRUE ) )
 					$args['data_length'] = 26;
 
-				else if ( in_array( $args['type'], [ 'gram', 'milimeter', 'kilogram', 'centimeter', 'km_per_hour', 'european_shoe', 'international_shirt', 'international_pants', 'day', 'hour', 'member', 'person' ], TRUE ) )
+				else if ( in_array( $args['type'], [ 'gram', 'millimetre', 'kilogram', 'centimetre', 'km_per_hour', 'european_shoe', 'international_shirt', 'international_pants', 'day', 'hour', 'member', 'person' ], TRUE ) )
 					$args['data_length'] = 4;
 			}
 
@@ -522,9 +522,9 @@ trait PostTypeFields
 			case 'gram':
 			case 'kilogram':
 			case 'km_per_hour':
-			case 'milimeter':
-			case 'centimeter':
-			case 'meter':
+			case 'millimetre':
+			case 'centimetre':
+			case 'metre':
 			case 'kilometre':
 			case 'price':
 			case 'number':
@@ -691,7 +691,7 @@ trait PostTypeFields
 					break;
 
 				case 'float':
-				case 'price': // TODO must use custom text input + code + ortho-number + separeator
+				case 'price': // TODO must use custom text input + code + ortho-number + separator
 				case 'number':
 				case 'member':
 				case 'person':
@@ -699,10 +699,10 @@ trait PostTypeFields
 				case 'hour':
 				case 'gram':
 				case 'km_per_hour':
-				case 'milimeter':
+				case 'millimetre':
 				case 'kilogram':
-				case 'centimeter':
-				case 'meter':
+				case 'centimetre':
+				case 'metre':
 				case 'kilometre':
 
 					MetaBox::renderFieldNumber( $args, $post, $this->module->name );
@@ -1398,11 +1398,11 @@ trait PostTypeFields
 		$fields = [];
 
 		$template = $this->get_string( 'field_title', FALSE, 'importer',
-			/* translators: %s: field title */
+			/* translators: `%s`: field title */
 			_x( 'Field: %s', 'Internal: PostTypeFields: Import Title', 'geditorial-admin' ) );
 
 		$ignored = $this->get_string( 'ignored_title', FALSE, 'importer',
-			/* translators: %s: field title */
+			/* translators: `%s`: field title */
 			_x( 'Field: %s [Ignored]', 'Internal: PostTypeFields: Import Title', 'geditorial-admin' ) );
 
 		foreach ( $this->get_posttype_fields( $posttype, [ 'import' => TRUE ] ) as $field => $args ) {

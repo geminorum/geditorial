@@ -37,7 +37,7 @@ class Overwrite extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => 'posttype_'.$posttype_name.'_plural',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Plural Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as plural name on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->name,
@@ -46,7 +46,7 @@ class Overwrite extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => 'posttype_'.$posttype_name.'_singular',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Singular Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as singular name on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->singular_name,
@@ -55,7 +55,7 @@ class Overwrite extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => 'posttype_'.$posttype_name.'_featured',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Featured Image Title for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as featured image title on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->featured_image,
@@ -64,7 +64,7 @@ class Overwrite extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => 'posttype_'.$posttype_name.'_menuname',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Menu Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
 				'description' => _x( 'Used as menu name title on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->menu_name,
@@ -80,7 +80,7 @@ class Overwrite extends gEditorial\Module
 			$settings['_taxonomies'][] = [
 				'field'       => 'taxonomy_'.$taxonomy_name.'_plural',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Plural Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as plural name on the taxonomy labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $taxonomy_object->labels->name,
@@ -89,7 +89,7 @@ class Overwrite extends gEditorial\Module
 			$settings['_taxonomies'][] = [
 				'field'       => 'taxonomy_'.$taxonomy_name.'_singular',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Singular Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as singular name on the taxonomy labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $taxonomy_object->labels->singular_name,
@@ -98,7 +98,7 @@ class Overwrite extends gEditorial\Module
 			$settings['_taxonomies'][] = [
 				'field'       => 'taxonomy_'.$taxonomy_name.'_menuname',
 				'type'        => 'text',
-				/* translators: %s: supported object label */
+				/* translators: `%s`: supported object label */
 				'title'       => sprintf( _x( 'Menu Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$taxonomy_label.'</i>' ),
 				'description' => _x( 'Used as menu name title on the taxonomy labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $taxonomy_object->labels->menu_name,
@@ -277,7 +277,7 @@ class Overwrite extends gEditorial\Module
 						return $messages;
 
 					return array_merge( $messages, [
-						$posttype->name => Helper::generatePostTypeMessages( [
+						$posttype->name => Services\CustomPostType::generateMessages( [
 							'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_plural', $posttype->labels->name ),
 							'singular' => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_singular', $posttype->labels->singular_name ),
 						], $posttype->name ),
@@ -292,7 +292,7 @@ class Overwrite extends gEditorial\Module
 						return $messages;
 
 					return array_merge( $messages, [
-						$posttype->name => Helper::generateBulkPostTypeMessages( [
+						$posttype->name => Services\CustomPostType::generateBulkMessages( [
 							'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_plural', $posttype->labels->name ),
 							'singular' => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_singular', $posttype->labels->singular_name ),
 						], $counts, $posttype->name ),
@@ -318,7 +318,7 @@ class Overwrite extends gEditorial\Module
 				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
 				$customs['menu_name'] = $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name );
 
-				return (object) Helper::generatePostTypeLabels( [
+				return (object) Services\CustomPostType::generateLabels( [
 					'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype.'_plural', $labels->name ),
 					'singular' => $this->get_setting_fallback( 'posttype_'.$posttype.'_singular', $labels->singular_name ),
 				], $this->get_setting_fallback( 'posttype_'.$posttype.'_featured', $labels->featured_image ), $customs, $posttype );
@@ -343,7 +343,7 @@ class Overwrite extends gEditorial\Module
 				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
 				$customs['menu_name'] = $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_menuname', $labels->menu_name );
 
-				return (object) Helper::generateTaxonomyLabels( [
+				return (object) Services\CustomTaxonomy::generateLabels( [
 					'plural'   => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_plural', $labels->name ),
 					'singular' => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_singular', $labels->singular_name ),
 				], $customs, $taxonomy );
@@ -372,7 +372,7 @@ class Overwrite extends gEditorial\Module
 		$customs = Core\Arraay::keepByKeys( (array) $wp_taxonomies[$taxonomy]->labels, $keeps );
 		$customs['menu_name'] = $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name );
 
-		$wp_taxonomies[$taxonomy]->labels = (object) Helper::generateTaxonomyLabels( [
+		$wp_taxonomies[$taxonomy]->labels = (object) Services\CustomTaxonomy::generateLabels( [
 			'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype.'_plural', $labels->name ),
 			'singular' => $this->get_setting_fallback( 'posttype_'.$posttype.'_singular', $labels->singular_name ),
 		], $customs, $taxonomy );

@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
@@ -399,8 +399,8 @@ trait CorePostTypes
 			$labels['excerpt_label'] = $excerpt_metabox;
 
 		if ( ! empty( $this->strings['noops'][$constant] ) )
-			return Helper::generatePostTypeLabels(
-				$this->strings['noops'][$constant],
+			return Services\CustomPostType::generateLabels(
+				Info::getNoop( $this->strings['noops'][$constant] ) ?: $this->strings['noops'][$constant],
 				// DEPRECATED: back-comp: use `labels->featured_image`
 				$this->get_string( 'featured', $constant, 'misc', NULL ),
 				$labels,
@@ -453,9 +453,9 @@ trait CorePostTypes
 		return [
 			'field'       => $constant.'_supports',
 			'type'        => 'checkboxes-values',
-			/* translators: %s: singular posttype name */
+			/* translators: `%s`: singular posttype name */
 			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', 'geditorial-admin' ), $singular ),
-			/* translators: %s: singular posttype name */
+			/* translators: `%s`: singular posttype name */
 			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial-admin' ), $singular ),
 			'default'     => $defaults,
 			'values'      => $supports,
@@ -475,7 +475,7 @@ trait CorePostTypes
 
 	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )
 	{
-		return Helper::getPostTypeLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
+		return Services\CustomPostType::getLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
 	}
 
 	public function get_posttype_taxonomies_list( $constant )

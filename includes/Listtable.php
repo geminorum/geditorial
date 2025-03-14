@@ -140,13 +140,13 @@ SQL;
 
 		if ( $posttype = WordPress\PostType::object( $paired_posttype ) ) {
 
-			$args['show_option_all']  = Helper::getPostTypeLabel( $posttype, 'show_option_all' );
-			$args['show_option_none'] = Helper::getPostTypeLabel( $posttype, 'show_option_no_items' );
+			$args['show_option_all']  = Services\CustomPostType::getLabel( $posttype, 'show_option_all' );
+			$args['show_option_none'] = Services\CustomPostType::getLabel( $posttype, 'show_option_no_items' );
 
 		} else {
 
-			$args['show_option_all']  = Helper::getTaxonomyLabel( $taxonomy, 'show_option_all' );
-			$args['show_option_none'] = Helper::getTaxonomyLabel( $taxonomy, 'show_option_no_items' );
+			$args['show_option_all']  = Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_all' );
+			$args['show_option_none'] = Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_no_items' );
 		}
 
 		wp_dropdown_categories( array_merge( $args, $extra ) );
@@ -177,7 +177,7 @@ SQL;
 			'selected'         => $selected,
 			'name'             => $query_var,
 			'class'            => static::BASE.'-admin-dropbown',
-			'show_option_none' => Helper::getPostTypeLabel( $posttype, 'show_option_all' ),
+			'show_option_none' => Services\CustomPostType::getLabel( $posttype, 'show_option_all' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
 			'post_status'      => WordPress\Status::acceptable( $posttype, 'dropdown' ),

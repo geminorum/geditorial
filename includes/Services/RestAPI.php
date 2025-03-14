@@ -60,7 +60,7 @@ class RestAPI extends WordPress\Main
 	{
 		$message = is_null( $key )
 			? _x( 'The argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' )
-			/* translators: %s: argument key */
+			/* translators: `%s`: argument key */
 			: sprintf( _x( 'The `%s` argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' ), $key );
 
 		if ( ! is_null( $status ) )
@@ -119,7 +119,7 @@ class RestAPI extends WordPress\Main
 		if ( ! WordPress\Post::get( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
-				/* translators: %s: argument key */
+				/* translators: `%s`: argument key */
 				sprintf( _x( 'The `%s` argument must be a post.', 'Error', 'geditorial' ), $key )
 			);
 
@@ -144,7 +144,7 @@ class RestAPI extends WordPress\Main
 		if ( ! WordPress\Comment::get( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
-				/* translators: %s: argument key */
+				/* translators: `%s`: argument key */
 				sprintf( _x( 'The `%s` argument must be a comment.', 'Error', 'geditorial' ), $key )
 			);
 

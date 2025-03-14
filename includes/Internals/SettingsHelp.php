@@ -51,9 +51,9 @@ trait SettingsHelp
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
-		/* translators: %s: taxonomy object label */
+		/* translators: `%s`: taxonomy object label */
 		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
-		/* translators: %s: taxonomy object label */
+		/* translators: `%s`: taxonomy object label */
 		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
 		$link   = WordPress\Taxonomy::edit( $object );
 		$before = Core\HTML::tag( 'p', $title );

@@ -72,7 +72,7 @@ class Meta extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Price Format', 'Setting Title', 'geditorial-meta' ),
 					'description' => _x( 'Used as default format on rendering prices.', 'Setting Description', 'geditorial-meta' ),
-					/* translators: %s: price number */
+					/* translators: `%s`: price number */
 					'default'     => _x( '%s Toman', 'Setting Default', 'geditorial-meta' ),
 				],
 				'calendar_type',
@@ -196,7 +196,7 @@ class Meta extends gEditorial\Module
 				'timeend'   => _x( 'Posts can have time-end to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'distance'  => _x( 'The formatted length of space about the post.', 'Descriptions', 'geditorial-meta' ),
 				'duration'  => _x( 'The formatted length of time about the post.', 'Descriptions', 'geditorial-meta' ),
-				'area'      => _x( 'The formatted area, measured in square meters.', 'Descriptions', 'geditorial-meta' ),
+				'area'      => _x( 'The formatted area, measured in square metres.', 'Descriptions', 'geditorial-meta' ),
 				'period'    => _x( 'The length of time about the post.', 'Descriptions', 'geditorial-meta' ),
 				'amount'    => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
 
@@ -212,7 +212,7 @@ class Meta extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'mainbox_title'  => _x( 'Metadata', 'MetaBox: `mainbox_title`', 'geditorial-meta' ),
 			'mainbox_action' => _x( 'Configure', 'MetaBox: `mainbox_action`', 'geditorial-meta' ),
 		];
@@ -1038,7 +1038,7 @@ class Meta extends gEditorial\Module
 						return WordPress\Post::title( $row->post_id );
 					},
 				],
-				/* translators: %s: title */
+				/* translators: `%s`: title */
 				'meta' => sprintf( _x( 'Meta: %s', 'Table Column', 'geditorial-meta' ), Core\HTML::code( $args['custom_field'] ) ),
 			], WordPress\Database::getPostMetaRows(
 				stripslashes( $args['custom_field'] ),

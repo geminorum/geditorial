@@ -370,7 +370,7 @@ class Module extends WordPress\Module
 		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
 			$this->action( 'admin_footer', 0, 20, $context );
 
-		$name  = Helper::getPostTypeLabel( $post->post_type, 'singular_name' );
+		$name  = Services\CustomPostType::getLabel( $post->post_type, 'singular_name' );
 		$title = $this->get_string( 'mainbutton_title', $context ?: $post->post_type, 'metabox', NULL );
 		$text  = $this->get_string( 'mainbutton_text', $context ?: $post->post_type, 'metabox', $name );
 
@@ -635,13 +635,13 @@ class Module extends WordPress\Module
 
 	public function get_column_title_posttype( $constant, $taxonomy = FALSE, $fallback = NULL )
 	{
-		$title = Helper::getPostTypeLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
+		$title = Services\CustomPostType::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
 		return $this->filters( 'column_title', $title, $taxonomy, $constant, $fallback );
 	}
 
 	public function get_column_title_taxonomy( $constant, $posttype = FALSE, $fallback = NULL )
 	{
-		$title = Helper::getTaxonomyLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
+		$title = Services\CustomTaxonomy::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
 		return $this->filters( 'column_title', $title, $posttype, $constant, $fallback );
 	}
 

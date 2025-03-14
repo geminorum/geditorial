@@ -160,19 +160,19 @@ class Diagnosed extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Medical', 'MetaBox Title', 'geditorial-diagnosed' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-diagnosed' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Medical Records of %1$s', 'Button Title', 'geditorial-diagnosed' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Medical Records of %2$s', 'Button Text', 'geditorial-diagnosed' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'rowaction_title' => _x( 'Medical Records of %1$s', 'Action Title', 'geditorial-diagnosed' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'rowaction_text'  => _x( 'Medical', 'Action Text', 'geditorial-diagnosed' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'columnrow_title' => _x( 'Medical Records of %1$s', 'Row Title', 'geditorial-diagnosed' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'columnrow_text'  => _x( 'Medical', 'Row Text', 'geditorial-diagnosed' ),
 		];
 
@@ -338,9 +338,9 @@ class Diagnosed extends gEditorial\Module
 	{
 		$this->subcontent_do_render_iframe_content(
 			'framepage',
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Medical Grid for %s', 'Page Title', 'geditorial-diagnosed' ),
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Medical Overview for %s', 'Page Title', 'geditorial-diagnosed' )
 		);
 	}

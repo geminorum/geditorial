@@ -22,21 +22,21 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( ! empty( $info['account'] ) )
 			$summary['title'] = sprintf(
-				/* translators: %s: account */
+				/* translators: `%s`: account */
 				_x( 'Number: %s', 'Helper', 'geditorial-banking' ),
 				Core\Number::localize( $info['account'] )
 			);
 
 		if ( ! empty( $info['bankname'] ) )
 			$description[] = sprintf(
-				/* translators: %s: bank-name */
+				/* translators: `%s`: bank-name */
 				_x( 'Account with %s', 'Helper', 'geditorial-banking' ),
 				$info['bankname']
 			);
 
 		if ( ! empty( $info['country'] ) )
 			$description[] = sprintf(
-				/* translators: %s: country */
+				/* translators: `%s`: country */
 				_x( 'From %s', 'Helper', 'geditorial-banking' ),
 				$info['country']
 			);

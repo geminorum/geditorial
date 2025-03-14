@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
@@ -83,14 +83,14 @@ trait PairedFront
 
 						'title' => sprintf( is_admin() ? '%1$s: %2$s' : '%2$s',
 							$this->module->title,
-							Helper::getPostTypeLabel( $this->constant( $constants[0] ), 'extended_label' )
+							Services\CustomPostType::getLabel( $this->constant( $constants[0] ), 'extended_label' )
 						),
 
 						'description' => sprintf(
-							/* translators: %1$s: supported object label, %2$s: main post singular label */
+							/* translators: `%1$s`: supported object label, `%2$s`: main post singular label */
 							_x( '%1$s items connected to this %2$s.', 'Internal: PairedFront: Tab Description', 'geditorial' ),
-							Helper::getPostTypeLabel( $this->constant( $constants[0] ), 'name' ),
-							Helper::getPostTypeLabel( $posttype, 'singular_name' ),
+							Services\CustomPostType::getLabel( $this->constant( $constants[0] ), 'name' ),
+							Services\CustomPostType::getLabel( $posttype, 'singular_name' ),
 						),
 
 						'viewable' => function ( $post ) use ( $posttype, $constants ) {
@@ -127,14 +127,14 @@ trait PairedFront
 
 						'title' => sprintf( is_admin() ? '%1$s: %2$s' : '%2$s',
 							$this->module->title,
-							Helper::getPostTypeLabel( $supported, 'extended_label' )
+							Services\CustomPostType::getLabel( $supported, 'extended_label' )
 						),
 
 						'description' => sprintf(
-							/* translators: %1$s: supported object label, %2$s: main post singular label */
+							/* translators: `%1$s`: supported object label, `%2$s`: main post singular label */
 							_x( '%1$s items connected to this %2$s.', 'Internal: PairedFront: Tab Description', 'geditorial' ),
-							Helper::getPostTypeLabel( $supported, 'name' ),
-							Helper::getPostTypeLabel( $posttype, 'singular_name' ),
+							Services\CustomPostType::getLabel( $supported, 'name' ),
+							Services\CustomPostType::getLabel( $posttype, 'singular_name' ),
 						),
 
 						'viewable' => function ( $post ) use ( $supported, $constants ) {

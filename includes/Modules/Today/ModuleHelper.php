@@ -491,7 +491,7 @@ class ModuleHelper extends gEditorial\Helper
 
 			$html.= Core\HTML::button( $title,
 				Core\WordPress::getPostNewLink( $object->name, $the_day ),
-				/* translators: %s: singular name */
+				/* translators: `%s`: singular name */
 				sprintf( _x( 'New %s connected to this day', 'Title Attr', 'geditorial-today' ), $object->labels->singular_name ),
 				is_admin()
 			).' ';

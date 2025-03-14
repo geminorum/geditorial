@@ -406,11 +406,11 @@ class SearchSelect extends WordPress\Main
 				'removeitem'      => _x( 'Remove item', 'Service: SearchSelect', 'geditorial' ),
 				'search'          => _x( 'Search', 'Service: SearchSelect', 'geditorial' ),
 				'errorloading'    => _x( 'The results could not be loaded.', 'Service: SearchSelect', 'geditorial' ),
-				/* translators: %s: number of characters */
+				/* translators: `%s`: number of characters */
 				'inputtooshort'   => _x( 'Please enter %s or more characters', 'Service: SearchSelect', 'geditorial' ),
-				/* translators: %s: number of characters */
+				/* translators: `%s`: number of characters */
 				'inputtoolong'    => _x( 'Please delete %s character(s)', 'Service: SearchSelect', 'geditorial' ),
-				/* translators: %s: number of items */
+				/* translators: `%s`: number of items */
 				'maximumselected' => _x( 'You can only select %s item(s)', 'Service: SearchSelect', 'geditorial' ),
 			],
 		] );

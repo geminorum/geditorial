@@ -70,7 +70,7 @@ class Lingo extends gEditorial\Module
 
 	protected function tool_box_content()
 	{
-		/* translators: %s: iso code */
+		/* translators: `%s`: iso code */
 		Core\HTML::desc( sprintf( _x( 'Helps with Importing Language Identifiers from %s into WordPress.', 'Tool Box', 'geditorial-lingo' ), Core\HTML::code( 'ISO 639-1' ) ) );
 	}
 
@@ -103,9 +103,9 @@ class Lingo extends gEditorial\Module
 		$strings['misc'] = [
 			'wp_importer' => [
 				'title'       => _x( 'Import Language Identifiers', 'Importer: Title', 'geditorial-lingo' ),
-				/* translators: %s: iso code */
+				/* translators: `%s`: iso code */
 				'description' => sprintf( _x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ), Core\HTML::code( 'ISO 639-1' ) ),
-				/* translators: %s: redirect url */
+				/* translators: `%s`: redirect url */
 				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-lingo' ),
 			],
 		];

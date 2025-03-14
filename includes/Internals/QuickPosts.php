@@ -126,7 +126,7 @@ trait QuickPosts
 			// FIXME: correct the selectors
 			// TODO: hook action from Book module: suggestd the book by passed meta
 
-			/* translators: %s: posttype singular name */
+			/* translators: `%s`: posttype singular name */
 			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ), $object->labels->singular_name );
 
 			Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
@@ -135,7 +135,7 @@ trait QuickPosts
 
 		echo '</div>';
 
-			/* translators: %s: posttype name */
+			/* translators: `%s`: posttype name */
 			Core\HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial-admin' ), $object->labels->name ) );
 
 		echo '</div></div>';
@@ -175,7 +175,7 @@ trait QuickPosts
 		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
 			$this->action( 'admin_footer', 0, 20, $context );
 
-		/* translators: %1$s: current post title, %2$s: posttype singular name */
+		/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %2$s', 'Module: Button Title', 'geditorial-admin' ) );
 		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', sprintf( '%s %s', '%1$s', $object->labels->add_new_item ) );
 		$name  = $object->labels->singular_name;

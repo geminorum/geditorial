@@ -108,19 +108,19 @@ class Chronicles extends gEditorial\Module
 			'supportedbox_title'  => _x( 'Timeline', 'MetaBox Title', 'geditorial-chronicles' ),
 			// 'metabox_action' => _x( 'Timeline', 'MetaBox Action', 'geditorial-chronicles' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Timeline of %1$s', 'Button Title', 'geditorial-chronicles' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Timeline of %2$s', 'Button Text', 'geditorial-chronicles' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'rowaction_title' => _x( 'Timeline of %1$s', 'Action Title', 'geditorial-chronicles' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'rowaction_text'  => _x( 'Timeline', 'Action Text', 'geditorial-chronicles' ),
 
-			/* translators: %1$s: current post title, %2$s: post-type singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'columnrow_title' => _x( 'Timeline of %1$s', 'Row Title', 'geditorial-chronicles' ),
-			/* translators: %1$s: icon markup, %2$s: post-type singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'columnrow_text'  => _x( 'Timeline', 'Row Text', 'geditorial-chronicles' ),
 		];
 
@@ -322,9 +322,9 @@ class Chronicles extends gEditorial\Module
 	{
 		$this->subcontent_do_render_iframe_content(
 			'framepage',
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Timeline Grid for %s', 'Page Title', 'geditorial-chronicles' ),
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Timeline Overview for %s', 'Page Title', 'geditorial-chronicles' )
 		);
 	}

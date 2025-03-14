@@ -5,13 +5,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Audit extends gEditorial\Module
@@ -29,12 +27,7 @@ class Audit extends gEditorial\Module
 	// TODO: module rename to `audited`
 	// TODO: taxonomy rename to `audition`
 
-
 	protected $disable_no_posttypes = TRUE;
-
-	// protected $caps = [
-	// 	'default' => 'edit_others_posts',
-	// ];
 
 	public static function module()
 	{
@@ -122,14 +115,14 @@ class Audit extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'rowaction_title' => _x( 'Audit Attributes of %1$s', 'Action Title', 'geditorial-audit' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 			'rowaction_text'  => _x( 'Audit', 'Action Text', 'geditorial-audit' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'columnrow_title' => _x( 'Audit Attributes of %1$s', 'Row Title', 'geditorial-audit' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 			'columnrow_text'  => _x( 'Audit', 'Row Text', 'geditorial-audit' ),
 		];
 
@@ -314,7 +307,7 @@ class Audit extends gEditorial\Module
 				$nodes[] = [
 					'id'     => $this->classs( 'attribute', 0 ),
 					'parent' => $classs,
-					'title'  => Helper::getTaxonomyLabel( $taxonomy, 'show_option_no_items' ),
+					'title'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_no_items' ),
 					'href'   => FALSE,
 					'meta'   => [ 'class' => '-danger '.$classs ],
 				];
@@ -480,7 +473,7 @@ class Audit extends gEditorial\Module
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
 
 		echo Core\HTML::success( sprintf(
-			/* translators: %s: count */
+			/* translators: `%s`: count */
 			_x( '%s items(s) Audited!', 'Message', 'geditorial-audit' ),
 			Core\Number::format( $count )
 		) );

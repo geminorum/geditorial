@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 class Paired extends WordPress\Main
@@ -105,7 +104,7 @@ class Paired extends WordPress\Main
 		if ( empty( $items ) )
 			return FALSE;
 
-		/* translators: %s: item count */
+		/* translators: `%s`: item count */
 		$default  = _x( 'Connected (%s)', 'Service: Paired: Global Summary Title', 'geditorial-admin' );
 		$template = apply_filters( static::BASE.'_paired_globalsummary_for_post_title', $default, $post );
 		$columns  = apply_filters( static::BASE.'_paired_globalsummary_for_post_columns', [
@@ -120,7 +119,7 @@ class Paired extends WordPress\Main
 		foreach ( $items as $offset => $item ) {
 
 			if ( empty( $types[$item->post_type] ) )
-				$types[$item->post_type] = Helper::getPostTypeLabel( $item->post_type, 'singular_name' );
+				$types[$item->post_type] = CustomPostType::getLabel( $item->post_type, 'singular_name' );
 
 			$posts[] = apply_filters( static::BASE.'_paired_globalsummary_for_post_data', [
 				'title' => self::_get_item_title( $item, $context ),

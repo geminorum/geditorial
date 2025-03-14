@@ -72,7 +72,7 @@ class Quotation extends gEditorial\Module
 				'main_posttype'     => _n_noop( 'Quote', 'Quotes', 'geditorial-quotation' ),
 				'category_taxonomy' => _n_noop( 'Topic', 'Topics', 'geditorial-quotation' ),
 
-				/* translators: %s: count number */
+				/* translators: `%s`: count number */
 				'main_posttype_count' => _n_noop( '%s Quotation', '%s Quotations', 'geditorial-quotation' ),
 			],
 		];
@@ -270,7 +270,7 @@ class Quotation extends gEditorial\Module
 			return $title;
 
 		if ( $post->post_parent && $this->is_posttype( 'main_posttype', $post ) )
-			/* translators: %1$s: post parent, %2$s: menu order */
+			/* translators: `%1$s`: post parent, `%2$s`: menu order */
 			return vsprintf( _x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ), [
 				WordPress\Post::title( $post->post_parent, NULL, FALSE ),
 				Core\Number::format( $post->menu_order ),
@@ -299,28 +299,28 @@ class Quotation extends gEditorial\Module
 
 			case 'quotation_pagestart':
 				return sprintf(
-					/* translators: %s: page start placeholder */
+					/* translators: `%s`: page start placeholder */
 					_x( 'Starts on Page %s', 'Display', 'geditorial-quotation' ),
 					Core\Number::localize( $raw ?: $value )
 				);
 
 			case 'quotation_pageend':
 				return sprintf(
-					/* translators: %s: page end placeholder */
+					/* translators: `%s`: page end placeholder */
 					_x( 'Ends in Page %s', 'Display', 'geditorial-quotation' ),
 					Core\Number::localize( $raw ?: $value )
 				);
 
 			case 'quotation_section':
 				return sprintf(
-					/* translators: %s: section placeholder */
+					/* translators: `%s`: section placeholder */
 					_x( 'Section %s', 'Display', 'geditorial-quotation' ),
 					Core\Number::localize( $raw ?: $value )
 				);
 
 			case 'quotation_volume':
 				return sprintf(
-					/* translators: %s: volume placeholder */
+					/* translators: `%s`: volume placeholder */
 					_x( 'Volume %s', 'Display', 'geditorial-quotation' ),
 					Core\Number::localize( $raw ?: $value )
 				);

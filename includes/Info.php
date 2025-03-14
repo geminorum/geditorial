@@ -193,7 +193,7 @@ class Info extends WordPress\Main
 		if ( defined( 'P2P_PLUGIN_VERSION' ) )
 			return;
 
-		/* translators: %1$s: plugin url, %2$s: plugin url */
+		/* translators: `%1$s`: plugin url, `%2$s`: plugin url */
 		Core\HTML::desc( sprintf( _x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Info: P2P', 'geditorial-admin' ),
 			'https://github.com/scribu/wp-posts-to-posts/', 'https://github.com/voceconnect/objects-to-objects' ) );
 	}
@@ -202,7 +202,7 @@ class Info extends WordPress\Main
 	public static function renderConnectedP2P()
 	{
 		return sprintf(
-			/* translators: %s: code placeholder */
+			/* translators: `%s`: code placeholder */
 			_x( 'Connected via %s', 'Info: P2P', 'geditorial-admin' ),
 			'<code>P2P</code>'
 		);
@@ -375,7 +375,7 @@ class Info extends WordPress\Main
 	public static function renderRegistered( $datetime_string, $before = '', $after = '' )
 	{
 		echo $before.sprintf(
-			/* translators: %s: datetime string */
+			/* translators: `%s`: datetime string */
 			_x( 'Registered on %s', 'Info: Message', 'geditorial-admin' ),
 			Helper::getDateEditRow( $datetime_string, '-registered' )
 		).$after;
@@ -430,11 +430,12 @@ class Info extends WordPress\Main
 			case 'year'         : return [ _x( 'Years', 'Info: Unit', 'geditorial' ), _x( 'years', 'Info: Unit', 'geditorial' ) ];
 			case 'gram'         : return [ _x( 'Grams', 'Info: Unit', 'geditorial' ), _x( 'g', 'Info: Unit', 'geditorial' ) ];
 			case 'kilogram'     : return [ _x( 'Kilograms', 'Info: Unit', 'geditorial' ), _x( 'kg', 'Info: Unit', 'geditorial' ) ];
-			case 'milimeter'    : return [ _x( 'Milimeters', 'Info: Unit', 'geditorial' ), _x( 'mm', 'Info: Unit', 'geditorial' ) ];
-			case 'centimeter'   : return [ _x( 'Centimeters', 'Info: Unit', 'geditorial' ), _x( 'cm', 'Info: Unit', 'geditorial' ) ];
-			case 'meter'        : return [ _x( 'Meters', 'Info: Unit', 'geditorial' ), _x( 'm', 'Info: Unit', 'geditorial' ) ];
-			case 'kilometer'    : return [ _x( 'Kilometers', 'Info: Unit', 'geditorial' ), _x( 'km', 'Info: Unit', 'geditorial' ) ];
-			case 'km_per_hour'  : return [ _x( 'Kilometers per Hour', 'Info: Unit', 'geditorial' ), _x( 'kmph', 'Info: Unit', 'geditorial' ) ];
+			case 'millimetre'   : return [ _x( 'Millimetres', 'Info: Unit', 'geditorial' ), _x( 'mm', 'Info: Unit', 'geditorial' ) ];
+			case 'centimetre'   : return [ _x( 'Centimetres', 'Info: Unit', 'geditorial' ), _x( 'cm', 'Info: Unit', 'geditorial' ) ];
+			case 'meter'        :
+			case 'metre'        : return [ _x( 'Metres', 'Info: Unit', 'geditorial' ), _x( 'm', 'Info: Unit', 'geditorial' ) ];
+			case 'kilometre'    : return [ _x( 'Kilometres', 'Info: Unit', 'geditorial' ), _x( 'km', 'Info: Unit', 'geditorial' ) ];
+			case 'km_per_hour'  : return [ _x( 'Kilometres per Hour', 'Info: Unit', 'geditorial' ), _x( 'kmph', 'Info: Unit', 'geditorial' ) ];
 			case 'european'     : return [ _x( 'European', 'Info: Unit', 'geditorial' ), _x( 'eu', 'Info: Unit', 'geditorial' ) ];
 			case 'international': return [ _x( 'International', 'Info: Unit', 'geditorial' ), _x( 'int', 'Info: Unit', 'geditorial' ) ];
 			case 'person'       : return [ _x( 'Persons', 'Info: Unit', 'geditorial' ), _x( 'persons', 'Info: Unit', 'geditorial' ) ];
@@ -454,34 +455,34 @@ class Info extends WordPress\Main
 			case 'items':
 			case 'paired_item':
 			case 'paired_items':
-				/* translators: %s: items count */
+				/* translators: `%s`: items count */
 				return _nx_noop( '%s Item', '%s Items', 'Info: Noop', 'geditorial' );
 
 			case 'participant':
 			case 'participants':
-				/* translators: %s: participants count */
+				/* translators: `%s`: participants count */
 				return _nx_noop( '%s Participant', '%s Participants', 'Info: Noop', 'geditorial' );
 
 			case 'record':
 			case 'records':
-				/* translators: %s: records count */
+				/* translators: `%s`: records count */
 				return _nx_noop( '%s Record', '%s Records', 'Info: Noop', 'geditorial' );
 
 			case 'row':
 			case 'rows':
-				/* translators: %s: rows count */
+				/* translators: `%s`: rows count */
 				return _nx_noop( '%s Row', '%s Rows', 'Info: Noop', 'geditorial' );
 
 			case 'account':
 			case 'accounts':
-				/* translators: %s: accounts count */
+				/* translators: `%s`: accounts count */
 				return _nx_noop( '%s Account', '%s Accounts', 'Info: Noop', 'geditorial' );
 
 			case 'member':
 			case 'members':
 			case 'family_member':
 			case 'family_members':
-				/* translators: %s: items count */
+				/* translators: `%s`: items count */
 				return _nx_noop( '%s Member', '%s Members', 'Info: Noop', 'geditorial' );
 
 			case 'people':
@@ -494,155 +495,169 @@ class Info extends WordPress\Main
 				 * `Peoples` is only necessary when you refer to distinct ethnic groups.
 				 * @source https://www.grammarly.com/blog/persons-people-peoples/
 				 */
-				/* translators: %s: people count */
+				/* translators: `%s`: people count */
 				return _nx_noop( '%s Person', '%s People', 'Info: Noop', 'geditorial' );
 
 			case 'car':
 			case 'cars':
-				/* translators: %s: car count */
+				/* translators: `%s`: car count */
 				return _nx_noop( '%s Car', '%s Cars', 'Info: Noop', 'geditorial' );
 
 			case 'vehicle':
 			case 'vehicles':
-				/* translators: %s: vehicle count */
+				/* translators: `%s`: vehicle count */
 				return _nx_noop( '%s Vehicle', '%s Vehicles', 'Info: Noop', 'geditorial' );
 
 			case 'position':
 			case 'positions':
-				/* translators: %s: position count */
+				/* translators: `%s`: position count */
 				return _nx_noop( '%s Position', '%s Positions', 'Info: Noop', 'geditorial' );
 
 			case 'entry':
 			case 'entries':
-				/* translators: %s: entry count */
+				/* translators: `%s`: entry count */
 				return _nx_noop( '%s Entry', '%s Entries', 'Info: Noop', 'geditorial' );
 
 			case 'event':
 			case 'events':
-				/* translators: %s: event count */
+				/* translators: `%s`: event count */
 				return _nx_noop( '%s Event', '%s Events', 'Info: Noop', 'geditorial' );
 
 			case 'post':
 			case 'posts':
-				/* translators: %s: posts count */
+				/* translators: `%s`: posts count */
 				return _nx_noop( '%s Post', '%s Posts', 'Info: Noop', 'geditorial' );
 
 			case 'term':
 			case 'terms':
-				/* translators: %s: terms count */
+				/* translators: `%s`: terms count */
 				return _nx_noop( '%s Term', '%s Terms', 'Info: Noop', 'geditorial' );
 
 			case 'color':
 			case 'colors':
-				/* translators: %s: colors count */
+				/* translators: `%s`: colors count */
 				return _nx_noop( '%s Color', '%s Colors', 'Info: Noop', 'geditorial' );
 
 			case 'size':
 			case 'sizes':
-				/* translators: %s: sizes count */
+				/* translators: `%s`: sizes count */
 				return _nx_noop( '%s Size', '%s Sizes', 'Info: Noop', 'geditorial' );
 
 			case 'connected':
-				/* translators: %s: items count */
+				/* translators: `%s`: items count */
 				return _nx_noop( '%s Item Connected', '%s Items Connected', 'Info: Noop', 'geditorial' );
 
 			case 'word':
 			case 'words':
-				/* translators: %s: words count */
+				/* translators: `%s`: words count */
 				return _nx_noop( '%s Word', '%s Words', 'Info: Noop', 'geditorial' );
 
 			case 'second':
 			case 'seconds':
-				/* translators: %s: second count */
+				/* translators: `%s`: second count */
 				return _nx_noop( '%s Second', '%s Seconds', 'Info: Noop', 'geditorial' );
 
 			case 'hour':
 			case 'hours':
-				/* translators: %s: hour count */
+				/* translators: `%s`: hour count */
 				return _nx_noop( '%s Hour', '%s Hours', 'Info: Noop', 'geditorial' );
 
 			case 'week':
 			case 'weeks':
-				/* translators: %s: week count */
+				/* translators: `%s`: week count */
 				return _nx_noop( '%s Week', '%s Weeks', 'Info: Noop', 'geditorial' );
 
 			case 'day':
 			case 'days':
-				/* translators: %s: day count */
+				/* translators: `%s`: day count */
 				return _nx_noop( '%s Day', '%s Days', 'Info: Noop', 'geditorial' );
 
 			case 'month':
 			case 'months':
-				/* translators: %s: month count */
+				/* translators: `%s`: month count */
 				return _nx_noop( '%s Month', '%s Months', 'Info: Noop', 'geditorial' );
 
 			case 'year':
 			case 'years':
-				/* translators: %s: year count */
+				/* translators: `%s`: year count */
 				return _nx_noop( '%s Year', '%s Years', 'Info: Noop', 'geditorial' );
 
 			case 'page':
 			case 'pages':
-				/* translators: %s: page count */
+				/* translators: `%s`: page count */
 				return _nx_noop( '%s Page', '%s Pages', 'Info: Noop', 'geditorial' );
 
 			case 'volume':
 			case 'volumes':
-				/* translators: %s: volume count */
+				/* translators: `%s`: volume count */
 				return _nx_noop( '%s Volume', '%s Volumes', 'Info: Noop', 'geditorial' );
 
 			case 'disc':
 			case 'discs':
-				/* translators: %s: disc count */
+				/* translators: `%s`: disc count */
 				return _nx_noop( '%s Disc', '%s Discs', 'Info: Noop', 'geditorial' );
 
 			case 'gram':
-				/* translators: %s: unit amount */
+				/* translators: `%s`: unit amount */
 				return _nx_noop( '%s Gram', '%s Grams', 'Info: Noop', 'geditorial' );
 
 			case 'kg':
 			case 'kilogram':
-				/* translators: %s: unit amount */
+				/* translators: `%s`: unit amount */
 				return _nx_noop( '%s Kilogram', '%s Kilograms', 'Info: Noop', 'geditorial' );
 
 			case 'mm':
-			case 'milimeter':
-				/* translators: %s: unit amount */
+			case 'millimetre':
+			case 'millimeter':
+				/* translators: `%s`: unit amount */
 				return _nx_noop( '%s Millimetre', '%s Millimetres', 'Info: Noop', 'geditorial' );
 
 			case 'cm':
+			case 'centimetre':
 			case 'centimeter':
-				/* translators: %s: unit amount */
-				return _nx_noop( '%s Centimeter', '%s Centimeters', 'Info: Noop', 'geditorial' );
+				/* translators: `%s`: unit amount */
+				return _nx_noop( '%s Centimetre', '%s Centimetres', 'Info: Noop', 'geditorial' );
 
+			case 'metre':
 			case 'meter':
-				/* translators: %s: unit amount */
-				return _nx_noop( '%s Meter', '%s Meters', 'Info: Noop', 'geditorial' );
+				/**
+				 * `Metre` is the standard spelling of the metric unit for length
+				 * in nearly all English-speaking nations, the exceptions being
+				 * the United States and the Philippines which use `meter`.
+				 * Measuring devices (such as ammeter, speedometer) are spelled
+				 * "-meter" in all variants of English.
+				 *
+				 * @ref https://en.wikipedia.org/wiki/Metre
+				 * @see https://www.grammarly.com/commonly-confused-words/meter-vs-metre
+				 */
+				/* translators: `%s`: unit amount */
+				return _nx_noop( '%s Metre', '%s Metres', 'Info: Noop', 'geditorial' );
 
 			case 'km':
+			case 'kilometre':
 			case 'kilometer':
-				/* translators: %s: unit amount */
-				return _nx_noop( '%s Kilometer', '%s Kilometers', 'Info: Noop', 'geditorial' );
+				/* translators: `%s`: unit amount */
+				return _nx_noop( '%s Kilometre', '%s Kilometres', 'Info: Noop', 'geditorial' );
 
 			case 'kmh':
 			case 'kph':
 			case 'km_per_hour':
-				/* translators: %s: unit amount */
-				return _nx_noop( '%s Kilometer per Hour', '%s Kilometers per Hour', 'Info: Noop', 'geditorial' );
+				/* translators: `%s`: unit amount */
+				return _nx_noop( '%s Kilometer per Hour', '%s Kilometres per Hour', 'Info: Noop', 'geditorial' );
 
 			case 'card':
 			case 'cards':
-				/* translators: %s: unit amount */
+				/* translators: `%s`: unit amount */
 				return _nx_noop( '%s Card', '%s Cards', 'Info: Noop', 'geditorial' );
 
 			case 'line':
 			case 'lines':
-				/* translators: %s: unit amount */
+				/* translators: `%s`: unit amount */
 				return _nx_noop( '%s Line', '%s Lines', 'Info: Noop', 'geditorial' );
 
 			case 'shot':
 			case 'shots':
-				/* translators: %s: unit amount */
+				/* translators: `%s`: unit amount */
 				return _nx_noop( '%s Shot', '%s Shots', 'Info: Noop', 'geditorial' );
 		}
 
@@ -672,12 +687,12 @@ class Info extends WordPress\Main
 
 		switch ( $prop ) {
 			case 'ID'                   : $title = _x( 'ID', 'Info: Posttype Prop Title', 'geditorial' ); break;
-			case 'post_author'          : $title = Helper::getPostTypeLabel( $posttype, 'author_label', FALSE, _x( 'Author', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
+			case 'post_author'          : $title = Services\CustomPostType::getLabel( $posttype, 'author_label', FALSE, _x( 'Author', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
 			case 'post_date'            : $title = _x( 'Date', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'post_date_gmt'        : $title = _x( 'Date (GMT)', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'post_content'         : $title = _x( 'Content', 'Info: Posttype Prop Title', 'geditorial' ); break;
-			case 'post_title'           : $title = Helper::getPostTypeLabel( $posttype, 'column_title', FALSE, _x( 'Title', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
-			case 'post_excerpt'         : $title = Helper::getPostTypeLabel( $posttype, 'excerpt_label', FALSE, _x( 'Excerpt', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
+			case 'post_title'           : $title = Services\CustomPostType::getLabel( $posttype, 'column_title', FALSE, _x( 'Title', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
+			case 'post_excerpt'         : $title = Services\CustomPostType::getLabel( $posttype, 'excerpt_label', FALSE, _x( 'Excerpt', 'Info: Posttype Prop Title', 'geditorial' ) ); break;
 			case 'post_status'          : $title = _x( 'Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'comment_status'       : $title = _x( 'Comment Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'ping_status'          : $title = _x( 'Ping Status', 'Info: Posttype Prop Title', 'geditorial' ); break;
@@ -712,10 +727,10 @@ class Info extends WordPress\Main
 				/* translators: The text that will be added before the fallback form. If you provide a  fallback element yourself, or if this option is `null` this will be ignored. */
 				'dictFallbackText' => _x( 'Please use the fallback form below to upload your files like in the olden days.', 'Info: Dropzone: `dictFallbackText`', 'geditorial' ),
 
-				/* translators: If the filesize is too big. `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values. */
+				/* translators: If the file-size is too big. `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values. */
 				'dictFileTooBig' => _x( 'File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.', 'Info: Dropzone: `dictFileTooBig`', 'geditorial' ),
 
-				/* translators: If the file doesn't match the file type. */
+				/* translators: If the file doesn't match the file-type. */
 				'dictInvalidFileType' => _x( 'You can\'t upload files of this type.', 'Info: Dropzone: `dictInvalidFileType`', 'geditorial' ),
 
 				/* translators: If the server response was invalid. `{{statusCode}}` will be replaced with the servers status code. */
@@ -802,7 +817,6 @@ class Info extends WordPress\Main
 	 * The American Medical Association's age designations.
 	 * @source https://www.nih.gov/nih-style-guide/age
 	 * NOTE: `min`/`max` meta values are based on months
-	 * FIXME: move to `Info` Main
 	 *
 	 * - Neonates or newborns (birth to 1 month)
 	 * - Infants (1 month to 1 year)

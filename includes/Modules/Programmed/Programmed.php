@@ -190,15 +190,15 @@ class Programmed extends gEditorial\Module
 		];
 
 		$strings['misc'] = [
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_posttype'  => _x( 'Program Participants (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-programmed' ),
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_supported' => _x( 'Program Participations (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-programmed' ),
 			'column_icon_title'        => _x( 'Programs', 'Misc: `column_icon_title`', 'geditorial-programmed' ),
 		];
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'listbox_title' => _x( 'Participants on &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-programmed' ),
 		];
 

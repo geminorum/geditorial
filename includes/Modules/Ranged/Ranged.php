@@ -196,15 +196,15 @@ class Ranged extends gEditorial\Module
 		];
 
 		$strings['misc'] = [
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_posttype'  => _x( 'Shooting Attendees (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-ranged' ),
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_supported' => _x( 'Shooting Sessions (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-ranged' ),
 			'column_icon_title'        => _x( 'Shooting Sessions', 'Misc: `column_icon_title`', 'geditorial-ranged' ),
 		];
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'listbox_title' => _x( 'Attendees on &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-ranged' ),
 		];
 
@@ -314,9 +314,9 @@ class Ranged extends gEditorial\Module
 
 					'distance_in_meter' => [
 						'title'       => _x( 'Firing Distance', 'Field Title', 'geditorial-ranged' ),
-						'description' => _x( 'Firing Distance in Meters', 'Field Description', 'geditorial-ranged' ),
+						'description' => _x( 'Firing Distance in Metres', 'Field Description', 'geditorial-ranged' ),
 						'type'        => 'number', // NOTE: better not `distance` type
-						'data_unit'   => 'meter',
+						'data_unit'   => 'metre',
 					],
 
 					'free_shots' => [

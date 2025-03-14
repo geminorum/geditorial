@@ -5,8 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -82,7 +82,7 @@ trait PostDate
 
 		if ( ! $updated || self::isError( $updated ) )
 			return Settings::processingListItem( $verbose,
-				/* translators: %1$s: post date, %2$s: post title */
+				/* translators: `%1$s`: post date, `%2$s`: post title */
 				_x( 'There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 					Core\HTML::code( $data['post_date'] ),
 					WordPress\Post::title( $post ),
@@ -91,7 +91,7 @@ trait PostDate
 		$this->actions( 'postdate_after_post_override_date', $updated, $data['post_date'], $metakeys, $verbose );
 
 		return Settings::processingListItem( $verbose,
-			/* translators: %1$s: post date, %2$s: post title */
+			/* translators: `%1$s`: post date, `%2$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 				Core\HTML::code( Datetime::prepForDisplay( $data['post_date'] ) ),
 				WordPress\Post::title( $post ),
@@ -113,7 +113,7 @@ trait PostDate
 						'action' => self::$postdate__action_override_dates,
 						'type'   => $posttype,
 					] ), sprintf(
-						/* translators: %s: post-type label */
+						/* translators: `%s`: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						$label
 					), 'link-small' );
@@ -125,9 +125,9 @@ trait PostDate
 						'action' => self::$postdate__action_override_dates,
 						'type'   => $posttype,
 					] ), sprintf(
-						/* translators: %s: post-type label */
+						/* translators: `%s`: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
-						Helper::getPostTypeLabel( $posttype, 'name' )
+						Services\CustomPostType::getLabel( $posttype, 'name' )
 					), 'link-small' );
 
 			else if ( is_string( $supported_list ) )
@@ -164,7 +164,7 @@ trait PostDate
 
 		else if ( $verbose )
 			return Settings::processingListItem( $verbose,
-				/* translators: %1$s: date-time, %2$s: post title */
+				/* translators: `%1$s`: date-time, `%2$s`: post title */
 				_x( 'Date data (%1$s) is not valid for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-admin' ), [
 					Core\HTML::code( $date ),
 					WordPress\Post::title( $post ),
@@ -175,7 +175,7 @@ trait PostDate
 
 		if ( $datetime === $post->post_date )
 			return Settings::processingListItem( $verbose,
-				/* translators: %1$s: date-time, %2$s: post title */
+				/* translators: `%1$s`: date-time, `%2$s`: post title */
 				_x( 'Date data (%1$s) already is set for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 					Core\HTML::code( $datetime ),
 					WordPress\Post::title( $post ),

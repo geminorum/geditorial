@@ -155,7 +155,7 @@ class Uncategorized extends gEditorial\Module
 
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
 
-		/* translators: %s: count */
+		/* translators: `%s`: count */
 		echo Core\HTML::success( sprintf( _x( '%s items(s) cleaned!', 'Message', 'geditorial-uncategorized' ), Core\Number::format( $count ) ) );
 	}
 
@@ -166,7 +166,7 @@ class Uncategorized extends gEditorial\Module
 		if ( ! $count = $this->_get_post_count() )
 			return $items;
 
-		/* translators: %s: posts count */
+		/* translators: `%s`: posts count */
 		$noopd = _nx_noop( '%s Uncategorized Post', '%s Uncategorized Posts', 'Noop', 'geditorial-uncategorized' );
 		$can   = $this->role_can( 'reports' );
 
@@ -310,7 +310,7 @@ class Uncategorized extends gEditorial\Module
 			'navigation' => 'before',
 			'search'     => 'before',
 			'title'      => Core\HTML::tag( 'h3', _x( 'Overview of Posts in Uncategorized Terms', 'Header', 'geditorial-uncategorized' ) ),
-			'empty'      => Helper::getPostTypeLabel( 'post', 'not_found' ),
+			'empty'      => Services\CustomPostType::getLabel( 'post', 'not_found' ),
 			'pagination' => $pagination,
 		] );
 	}

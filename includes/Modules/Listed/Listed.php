@@ -191,15 +191,15 @@ class Listed extends gEditorial\Module
 		];
 
 		$strings['misc'] = [
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_posttype'  => _x( 'Listing Attendees (%s)', 'Misc: `tabloid_paired_posttype`', 'geditorial-listed' ),
-			/* translators: %s: item count */
+			/* translators: `%s`: item count */
 			'tabloid_paired_supported' => _x( 'Listings (%s)', 'Misc: `tabloid_paired_supported`', 'geditorial-listed' ),
 			'column_icon_title'        => _x( 'Listings', 'Misc: `column_icon_title`', 'geditorial-listed' ),
 		];
 
 		$strings['metabox'] = [
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'listbox_title' => _x( 'Attendees on &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-listed' ),
 		];
 

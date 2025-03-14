@@ -67,7 +67,7 @@ class Importer extends gEditorial\Module
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
 				],
 				'add_audit_attribute' => [
-					/* translators: %s: audit attribute placeholder */
+					/* translators: `%s`: audit attribute placeholder */
 					sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ),
 						Core\HTML::code( $this->constant( 'term_newpost_imported' ) ) ),
 				],
@@ -123,7 +123,7 @@ class Importer extends gEditorial\Module
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			Services\HeaderButtons::register( $this->key, [
-				'text'      => Helper::getPostTypeLabel( $screen->post_type, 'import_items', FALSE, _x( 'Import', 'Button', 'geditorial-importer' ) ),
+				'text'      => Services\CustomPostType::getLabel( $screen->post_type, 'import_items', FALSE, _x( 'Import', 'Button', 'geditorial-importer' ) ),
 				'link'      => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ), // also `'attachment' => 12`
 				'icon'      => $this->module->icon,
 				'cap_check' => WordPress\PostType::cap( $screen->post_type, 'import_posts' ),
@@ -142,7 +142,7 @@ class Importer extends gEditorial\Module
 		foreach ( $this->posttypes() as $posttype )
 			if ( WordPress\PostType::can( $posttype, 'import_posts' ) )
 				$submenu[('post' == $posttype ? 'edit.php' : 'edit.php?post_type='.$posttype)][] = [
-					Helper::getPostTypeLabel( $posttype, 'import_items', FALSE, _x( 'Import', 'Menu', 'geditorial-importer' ) ),
+					Services\CustomPostType::getLabel( $posttype, 'import_items', FALSE, _x( 'Import', 'Menu', 'geditorial-importer' ) ),
 					'exist', // already checked
 					$this->get_imports_page_url( NULL, [ 'posttype' => $posttype ] ),
 				];
@@ -248,7 +248,7 @@ class Importer extends gEditorial\Module
 			$map = $this->_guess_fields_map( $headers, $id );
 
 		if ( $dups = Core\Arraay::duplicates( $headers ) )
-			/* translators: %s: joined duplicate keys */
+			/* translators: `%s`: joined duplicate keys */
 			echo Core\HTML::warning( sprintf( _x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ), WordPress\Strings::getJoined( $dups ) ), FALSE, 'inline' );
 
 		echo '<table class="base-table-raw"><tbody>';
@@ -402,9 +402,9 @@ class Importer extends gEditorial\Module
 				},
 			],
 		], $posts, [
-			/* translators: %s: count placeholder */
+			/* translators: `%s`: count placeholder */
 			'title' => Core\HTML::tag( 'h3', WordPress\Strings::getCounted( count( $posts ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
-			'empty' => Helper::getPostTypeLabel( $args['posttype'], 'not_found' ),
+			'empty' => Services\CustomPostType::getLabel( $args['posttype'], 'not_found' ),
 		] );
 	}
 
@@ -451,7 +451,7 @@ class Importer extends gEditorial\Module
 
 			if ( 'importer_custom_meta' == $field )
 				$columns[$headers[$key]] = sprintf(
-					/* translators: %s: custom metakey */
+					/* translators: `%s`: custom metakey */
 					_x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ),
 					Core\HTML::code( $headers[$key] )
 				);
@@ -462,7 +462,7 @@ class Importer extends gEditorial\Module
 
 		Core\HTML::tableList( $columns, $data, [
 			'title' => Core\HTML::tag( 'h3', sprintf(
-				/* translators: %1$s: count placeholder, %2$s: attachment title */
+				/* translators: `%1$s`: count placeholder, `%2$s`: attachment title */
 				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
 				Core\Number::format( count( $data ) ),
 				get_the_title( $id )
@@ -487,7 +487,7 @@ class Importer extends gEditorial\Module
 		$checks = [];
 
 		if ( $row['___source_id'] )
-			/* translators: %s: source id */
+			/* translators: `%s`: source id */
 			$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), Core\HTML::code( $row['___source_id'] ) );
 
 		else if ( FALSE === $row['___source_id'] )
@@ -497,7 +497,7 @@ class Importer extends gEditorial\Module
 			$checks[] = _x( 'Skipped: No SourceID', 'Checks', 'geditorial-importer' );
 
 		if ( $row['___matched'] )
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
 				Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] ) );
 
@@ -1117,7 +1117,7 @@ class Importer extends gEditorial\Module
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			Core\HTML::h3( sprintf(
-				/* translators: %s: attachment title */
+				/* translators: `%s`: attachment title */
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
 				get_the_title( $attach_id )
 			) );
@@ -1145,7 +1145,7 @@ class Importer extends gEditorial\Module
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			Core\HTML::h3( sprintf(
-				/* translators: %s: attachment title */
+				/* translators: `%s`: attachment title */
 				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
 				get_the_title( $attach_id )
 			) );
@@ -1221,7 +1221,7 @@ class Importer extends gEditorial\Module
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			Core\HTML::h3( sprintf(
-				/* translators: %s: attachment title */
+				/* translators: `%s`: attachment title */
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
 				get_the_title( $attach_id )
 			) );
@@ -1248,7 +1248,7 @@ class Importer extends gEditorial\Module
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			Core\HTML::h3( sprintf(
-				/* translators: %s: attachment title */
+				/* translators: `%s`: attachment title */
 				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
 				get_the_title( $attach_id )
 			) );
@@ -1407,7 +1407,7 @@ class Importer extends gEditorial\Module
 		];
 
 		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
-			/* translators: %s: taxonomy name placeholder */
+			/* translators: `%s`: taxonomy name placeholder */
 			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ), $taxonomy_object->labels->singular_name );
 
 		return $this->filters( 'fields', $fields, $posttype );
@@ -1697,7 +1697,7 @@ class Importer extends gEditorial\Module
 		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
 
 		if ( $dups = Core\Arraay::duplicates( $parsed['headers'] ) )
-			/* translators: %s: joined duplicate keys */
+			/* translators: `%s`: joined duplicate keys */
 			echo Core\HTML::warning( sprintf( _x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ), WordPress\Strings::getJoined( $dups ) ), FALSE, 'inline' );
 
 		echo '<table class="base-table-raw"><tbody>';
@@ -1773,7 +1773,7 @@ class Importer extends gEditorial\Module
 
 		Core\HTML::tableList( $columns, $data, [
 			'title' => Core\HTML::tag( 'h3', sprintf(
-				/* translators: %1$s: count placeholder, %2$s: attachment title */
+				/* translators: `%1$s`: count placeholder, `%2$s`: attachment title */
 				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
 				Core\Number::format( count( $data ) ),
 				get_the_title( $id )

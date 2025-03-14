@@ -63,7 +63,7 @@ class Revisions extends gEditorial\Module
 					'field'       => 'revision_maxcount',
 					'type'        => 'number',
 					'title'       => _x( 'Revision Max Count', 'Setting Title', 'geditorial-revisions' ),
-					/* translators: %s: code placeholder */
+					/* translators: `%s`: code placeholder */
 					'description' => sprintf( _x( 'The maximum number of revisions to save for each post. %s for every revision.', 'Setting Description', 'geditorial-revisions' ), '<code>-1</code>' ),
 					'default'     => '-1',
 					'min_attr'    => '-1',
@@ -143,7 +143,7 @@ class Revisions extends gEditorial\Module
 
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $this->hook( 'purged' ), $_SERVER['REQUEST_URI'] );
 
-		/* translators: %s: revisions count */
+		/* translators: `%s`: revisions count */
 		$message = _x( '%s items(s) revisions purged!', 'Message', 'geditorial-revisions' );
 		echo Core\HTML::success( sprintf( $message, Core\Number::format( $purged ) ) );
 	}
@@ -163,7 +163,7 @@ class Revisions extends gEditorial\Module
 
 					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Row Icon Title', 'geditorial-revisions' ) );
 
-					/* translators: %s: revisions count */
+					/* translators: `%s`: revisions count */
 					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Row', 'geditorial-revisions' ), Core\Number::format( $count ) );
 
 					if ( current_user_can( 'edit_post', $last ) )
@@ -282,7 +282,7 @@ class Revisions extends gEditorial\Module
 				'class' => 'button button-small -browse hide-if-no-js',
 				'title' => _x( 'Browse all revisions', 'Title Attr', 'geditorial-revisions' ),
 				'href'  => get_edit_post_link( $last ),
-			/* translators: %s: revisions count */
+			/* translators: `%s`: revisions count */
 		], sprintf( _x( 'Browse %s Revisions', 'Button', 'geditorial-revisions' ),
 				'<b>'.Core\Number::format( $count ).'</b>' ) );
 

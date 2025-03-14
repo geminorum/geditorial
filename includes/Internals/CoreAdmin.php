@@ -3,12 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreAdmin
 {
-
 	/**
 	 * Hooks action for custom default admin ordering.
 	 * NOTE: default settings here is `TRUE`
@@ -127,7 +126,7 @@ trait CoreAdmin
 					if ( ! $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
 						continue;
 
-					$label   = Helper::getTaxonomyLabel( $taxonomy, 'extended_label', 'name' );
+					$label   = Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label', 'name' );
 					$default = WordPress\Taxonomy::getDefaultTermID( $taxonomy );
 					$metakey = 'color';
 
@@ -197,7 +196,7 @@ trait CoreAdmin
 					if ( ! array_key_exists( $posttype, $posttypes ) )
 						continue; // no cap
 
-					$html = Helper::getPostTypeLabel( $posttypes[$posttype], 'extended_label' );
+					$html = Services\CustomPostType::getLabel( $posttypes[$posttype], 'extended_label' );
 
 					if ( $link = WordPress\PostType::edit( $posttype, [ $object->query_var => $term->slug ] ) )
 						$html = Core\HTML::link( $html, $link, TRUE );

@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
@@ -170,7 +170,7 @@ trait TemplatePostType
 	public function templateposttype_get_archive_title( $posttype )
 	{
 		return $this->get_setting_fallback( 'archive_title',
-			Helper::getPostTypeLabel( $posttype, 'all_items' ) );
+			Services\CustomPostType::getLabel( $posttype, 'all_items' ) );
 	}
 
 	public function gtheme_navigation_crumb_archive( $crumb, $args )
@@ -193,7 +193,7 @@ trait TemplatePostType
 	public function post_type_archive_title_templateposttype_newpost( $name, $posttype )
 	{
 		return $this->get_setting_fallback( 'newpost_title',
-			Helper::getPostTypeLabel( $posttype, 'add_new_item', NULL, $name ) );
+			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $name ) );
 	}
 
 	// DEFAULT METHOD: content for overrided archive page
@@ -450,6 +450,6 @@ trait TemplatePostType
 	public function templateposttype_get_newpost_title( $posttype )
 	{
 		return $this->get_setting_fallback( 'newpost_title',
-			Helper::getPostTypeLabel( $posttype, 'add_new_item', NULL, $posttype ) );
+			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $posttype ) );
 	}
 }

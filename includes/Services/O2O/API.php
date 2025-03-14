@@ -334,7 +334,7 @@ class API extends Core\Base
 	{
 		$labels = $type->get_field( 'labels', $direction );
 
-		/* translators: %1$s: camel case / plural posttype, %2$s: camel case / singular posttype, %3$s: lower case / plural posttype, %4$s: lower case / singular posttype, %5$s: `%s` placeholder */
+		/* translators: `%1$s`: camel case / plural posttype, `%2$s`: camel case / singular posttype, `%3$s`: lower case / plural posttype, `%4$s`: lower case / singular posttype, `%5$s`: `%s` placeholder */
 		$template = _x( 'Connected %1$s', 'O2O: MetaBox Title', 'geditorial' );
 
 		return vsprintf( $template, [

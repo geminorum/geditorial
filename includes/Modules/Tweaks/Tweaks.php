@@ -780,7 +780,7 @@ class Tweaks extends gEditorial\Module
 
 			$edit  = WordPress\Taxonomy::edit( $object, [ 'post_type' => $post->post_type ] );
 			$icon  = $object->menu_icon ?? ( $object->hierarchical ? 'category' : 'tag' );
-			$title = Helper::getTaxonomyLabel( $object, 'extended_label' );
+			$title = Services\CustomTaxonomy::getLabel( $object, 'extended_label' );
 
 			Helper::renderPostTermsEditRow(
 				$post,
@@ -839,7 +839,7 @@ class Tweaks extends gEditorial\Module
 			else
 				$status = $post->comment_status;
 
-			/* translators: %s: status */
+			/* translators: `%s`: status */
 			printf( _x( 'Comments are %s', 'Comment Status', 'geditorial-tweaks' ), $status );
 
 		echo $after;
@@ -1030,7 +1030,7 @@ class Tweaks extends gEditorial\Module
 		checked( $post->ping_status, 'open' );
 		echo ' /> ';
 		printf(
-			/* translators: %s: codex url */
+			/* translators: `%s`: codex url */
 			_x( 'Allow <a href="%s">trackbacks and pingbacks</a>', 'MainBox', 'geditorial-tweaks' ),
 			__( 'https://wordpress.org/support/article/introduction-to-blogging/#managing-comments' )
 		);

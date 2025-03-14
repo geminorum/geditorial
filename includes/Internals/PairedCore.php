@@ -338,7 +338,7 @@ trait PairedCore
 		if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
 			return $list;
 
-		/* translators: %s: item count */
+		/* translators: `%s`: item count */
 		$default  = _x( 'Connected (%s)', 'Internal: Paired: Post Summary Title', 'geditorial-admin' );
 		$template = $this->get_string( 'tabloid_paired_supported', $post->post_type, 'misc', $default );
 		$posts    = [];
@@ -380,7 +380,7 @@ trait PairedCore
 		if ( ! $items = $this->paired_all_connected_to( $post, $context ) )
 			return $list;
 
-		/* translators: %s: item count */
+		/* translators: `%s`: item count */
 		$default  = _x( 'Connected (%s)', 'Internal: Paired: Post Summary Title', 'geditorial-admin' );
 		$template = $this->get_string( 'tabloid_paired_posttype', $constants[0], 'misc', $default );
 		$posts    = [];

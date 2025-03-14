@@ -42,7 +42,7 @@ class Identified extends gEditorial\Module
 				'field' => $posttype_name.'_posttype_metakey',
 				'type'  => 'text',
 				'title' => sprintf(
-					/* translators: %s: supported object label */
+					/* translators: `%s`: supported object label */
 					_x( 'Identifier Meta-key for %s', 'Setting Title', 'geditorial-identified' ),
 					'<i>'.$posttype_label.'</i>'
 				),
@@ -57,7 +57,7 @@ class Identified extends gEditorial\Module
 				'field' => $posttype_name.'_posttype_type',
 				'type'  => 'select',
 				'title' => sprintf(
-					/* translators: %s: supported object label */
+					/* translators: `%s`: supported object label */
 					_x( 'Identifier Type for %s', 'Setting Title', 'geditorial-identified' ),
 					'<i>'.$posttype_label.'</i>'
 				),
@@ -87,12 +87,12 @@ class Identified extends gEditorial\Module
 				'field' => $queryable.'_type_notfound_template',
 				'type'  => 'text',
 				'title' => sprintf(
-					/* translators: %s: supported type label */
+					/* translators: `%s`: supported type label */
 					_x( 'URL Template for %s', 'Setting Title', 'geditorial-identified' ),
 					'<i>'.$types[$queryable].'</i>'
 				),
 				'description' => sprintf(
-					/* translators: %s: token list placeholder */
+					/* translators: `%s`: token list placeholder */
 					_x( 'Defines a not-found url template for the identifier type. Available tokens are %s.', 'Setting Description', 'geditorial-identified' ),
 					WordPress\Strings::getJoined( [ Core\HTML::code( 'type' ), Core\HTML::code( 'data' ) ] )
 				),
@@ -110,7 +110,7 @@ class Identified extends gEditorial\Module
 			'comment_status',
 			'add_audit_attribute' => [
 				sprintf(
-					/* translators: %s: audit attribute placeholder */
+					/* translators: `%s`: audit attribute placeholder */
 					_x( 'Appends %s audit attribute to each created item via identifier.', 'Setting Description', 'geditorial-identified' ),
 					Core\HTML::code( $this->constant( 'term_newpost_by_identifier' ) )
 				),
@@ -690,9 +690,9 @@ class Identified extends gEditorial\Module
 				Services\HeaderButtons::register( $this->key, [
 					'link' => Core\WordPress::getPostNewLink( $posttype, [ $metakey => $sanitized ] ),
 					'text' => sprintf(
-						/* translators: %1$s: add new label, %2$s: identifier code */
+						/* translators: `%1$s`: add new label, `%2$s`: identifier code */
 						_x( '%1$s with %2$s', 'Header Button', 'geditorial-identified' ),
-						Helper::getPostTypeLabel( $posttype, 'add_new' ),
+						Services\CustomPostType::getLabel( $posttype, 'add_new' ),
 						Core\HTML::code( $sanitized )
 					),
 
@@ -907,10 +907,10 @@ class Identified extends gEditorial\Module
 				'class'  => '-identifier-link',
 				'target' => '_blank',
 				'title'  => sprintf(
-					/* translators: %1$s: identifier type label, %2$s: posttype singular label */
+					/* translators: `%1$s`: identifier type label, `%2$s`: posttype singular label */
 					_x( '%1$s Link to this %2$s', 'Title Attr', 'geditorial-identified' ),
 					$label,
-					Helper::getPostTypeLabel( $post->post_type, 'singular_name' )
+					Services\CustomPostType::getLabel( $post->post_type, 'singular_name' )
 				),
 			], $label ),
 		], 'view', 'after' );

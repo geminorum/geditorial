@@ -51,6 +51,7 @@ class Datetime extends WordPress\Main
 			$formats = apply_filters( static::BASE.'_custom_date_formats', [
 				'age'      => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
 				'birthday' => _x( 'm/d/Y', 'Date Format: `birthdate`', 'geditorial' ),
+				'yearonly' => _x( 'Y', 'Date Format: `yearonly`', 'geditorial' ),
 				'dateonly' => _x( 'l, F j, Y', 'Date Format: `dateonly`', 'geditorial' ),
 				'datetime' => _x( 'M j, Y @ G:i', 'Date Format: `datetime`', 'geditorial' ),
 				'default'  => _x( 'm/d/Y', 'Date Format: `default`', 'geditorial' ),
@@ -81,7 +82,7 @@ class Datetime extends WordPress\Main
 		$local = strtotime( $post->post_modified );
 
 		$format = self::dateFormats( 'dateonly' );
-		/* translators: %s: date string */
+		/* translators: `%s`: date string */
 		$title  = _x( 'Last Modified on %s', 'Datetime: Post Modified', 'geditorial' );
 
 		return $attr
@@ -114,7 +115,7 @@ class Datetime extends WordPress\Main
 	public static function humanTimeAgo( $from, $to = 0 )
 	{
 		return sprintf(
-			/* translators: %s: time string */
+			/* translators: `%s`: time string */
 			_x( '%s ago', 'Datetime: Human Time Ago', 'geditorial' ),
 			human_time_diff( $from, $to )
 		);
@@ -149,22 +150,22 @@ class Datetime extends WordPress\Main
 		if ( is_null( $strings ) )
 			$strings = [
 				'now'    => _x( 'Now', 'Datetime: Human Time Diff', 'geditorial' ),
-				/* translators: %s: time string */
+				/* translators: `%s`: time string */
 				'_s_ago' => _x( '%s ago', 'Datetime: Human Time Diff', 'geditorial' ),
-				/* translators: %s: time string */
+				/* translators: `%s`: time string */
 				'in__s'  => _x( 'in %s', 'Datetime: Human Time Diff', 'geditorial' ),
 
-				/* translators: %s: number of minutes */
+				/* translators: `%s`: number of minutes */
 				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
-				/* translators: %s: number of hours */
+				/* translators: `%s`: number of hours */
 				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
-				/* translators: %s: number of days */
+				/* translators: `%s`: number of days */
 				'noop_days'    => _nx_noop( '%s day', '%s days', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
-				/* translators: %s: number of weeks */
+				/* translators: `%s`: number of weeks */
 				'noop_weeks'   => _nx_noop( '%s week', '%s weeks', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
-				/* translators: %s: number of months */
+				/* translators: `%s`: number of months */
 				'noop_months'  => _nx_noop( '%s month', '%s months', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
-				/* translators: %s: number of years */
+				/* translators: `%s`: number of years */
 				'noop_years'   => _nx_noop( '%s year', '%s years', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
 			];
 
@@ -182,13 +183,13 @@ class Datetime extends WordPress\Main
 			$strings = [
 				'sep' => Strings::separator(),
 
-				/* translators: %s: number of seconds */
+				/* translators: `%s`: number of seconds */
 				'noop_seconds' => _nx_noop( '%s second', '%s seconds', 'Datetime: From Seconds: Noop', 'geditorial' ),
-				/* translators: %s: number of minutes */
+				/* translators: `%s`: number of minutes */
 				'noop_minutes' => _nx_noop( '%s min', '%s mins', 'Datetime: From Seconds: Noop', 'geditorial' ),
-				/* translators: %s: number of hours */
+				/* translators: `%s`: number of hours */
 				'noop_hours'   => _nx_noop( '%s hour', '%s hours', 'Datetime: From Seconds: Noop', 'geditorial' ),
-				/* translators: %s: number of days */
+				/* translators: `%s`: number of days */
 				'noop_days'    => _nx_noop( '%s day', '%s days', 'Datetime: From Seconds: Noop', 'geditorial' ),
 			];
 
@@ -205,27 +206,27 @@ class Datetime extends WordPress\Main
 				'now'            => _x( 'Now', 'Datetime: Date: Moment', 'geditorial' ),
 				'just_now'       => _x( 'Just now', 'Datetime: Date: Moment', 'geditorial' ),
 				'one_minute_ago' => _x( 'One minute ago', 'Datetime: Date: Moment', 'geditorial' ),
-				/* translators: %s: number of minutes */
+				/* translators: `%s`: number of minutes */
 				'_s_minutes_ago' => _x( '%s minutes ago', 'Datetime: Date: Moment', 'geditorial' ),
 				'one_hour_ago'   => _x( 'One hour ago', 'Datetime: Date: Moment', 'geditorial' ),
-				/* translators: %s: number of hours */
+				/* translators: `%s`: number of hours */
 				'_s_hours_ago'   => _x( '%s hours ago', 'Datetime: Date: Moment', 'geditorial' ),
 				'yesterday'      => _x( 'Yesterday', 'Datetime: Date: Moment', 'geditorial' ),
-				/* translators: %s: number of days */
+				/* translators: `%s`: number of days */
 				'_s_days_ago'    => _x( '%s days ago', 'Datetime: Date: Moment', 'geditorial' ),
-				/* translators: %s: number of weeks */
+				/* translators: `%s`: number of weeks */
 				'_s_weeks_ago'   => _x( '%s weeks ago', 'Datetime: Date: Moment', 'geditorial' ),
 				'last_month'     => _x( 'Last month', 'Datetime: Date: Moment', 'geditorial' ),
 				'last_year'      => _x( 'Last year', 'Datetime: Date: Moment', 'geditorial' ),
 				'in_a_minute'    => _x( 'in a minute', 'Datetime: Date: Moment', 'geditorial' ),
-				/* translators: %s: number of minutes */
+				/* translators: `%s`: number of minutes */
 				'in__s_minutes'  => _x( 'in %s minutes', 'Datetime: Date: Moment', 'geditorial' ),
 				'in_an_hour'     => _x( 'in an hour', 'Datetime: Date: Moment', 'geditorial' ),
-				/* translators: %s: number of hours */
+				/* translators: `%s`: number of hours */
 				'in__s_hours'    => _x( 'in %s hours', 'Datetime: Date: Moment', 'geditorial' ),
 				'tomorrow'       => _x( 'Tomorrow', 'Datetime: Date: Moment', 'geditorial' ),
 				'next_week'      => _x( 'next week', 'Datetime: Date: Moment', 'geditorial' ),
-				/* translators: %s: number of weeks */
+				/* translators: `%s`: number of weeks */
 				'in__s_weeks'    => _x( 'in %s weeks', 'Datetime: Date: Moment', 'geditorial' ),
 				'next_month'     => _x( 'next month', 'Datetime: Date: Moment', 'geditorial' ),
 				'format_l'       => _x( 'l', 'Datetime: Date: Moment', 'geditorial' ),
@@ -266,10 +267,6 @@ class Datetime extends WordPress\Main
 		if ( is_callable( [ 'gPersianDateDate', 'makeFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeFromInput' ];
 
-		// must be here, we can not pass NULL to gPersianDate
-		// if ( is_null( $timezone ) )
-		// 	$timezone = Core\Date::currentTimeZone();
-
 		return call_user_func_array( $callback, [ $input, $calendar, $timezone, $fallback ] );
 	}
 
@@ -279,10 +276,6 @@ class Datetime extends WordPress\Main
 
 		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeMySQLFromInput' ];
-
-		// must be here, we can not pass NULL to gPersianDate
-		// if ( is_null( $timezone ) )
-		// 	$timezone = Core\Date::currentTimeZone();
 
 		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone, $fallback ] );
 	}
@@ -324,12 +317,18 @@ class Datetime extends WordPress\Main
 	// TODO: utilize `htmlDateTime()`
 	public static function prepDateOfBirth( $date, $format = NULL, $reversed = FALSE, $calendar_type = 'gregorian', $timezone = NULL )
 	{
+		if ( ! $date )
+			return '';
+
 		$age = Core\Date::calculateAge( $date, $calendar_type, $timezone );
 
-		/* translators: %s: year number */
-		$title = sprintf( _nx( '%s year old', '%s years old', $age['year'], 'Datetime: Age Title Attr', 'geditorial' ), Core\Number::format( $age['year'] ) );
+		$title = sprintf(
+			/* translators: `%s`: year number */
+			_nx( '%s year old', '%s years old', $age['year'], 'Datetime: Age Title Attr', 'geditorial' ),
+			Core\Number::format( $age['year'] )
+		);
 
-		$html     = apply_filters( 'date_format_i18n', $date, $format ?? self::dateFormats( 'age' ), $calendar_type, $timezone );
+		$html     = apply_filters( 'date_format_i18n', $date, $format ?? self::dateFormats( 'birthday' ), $calendar_type, $timezone );
 		$template = '<span title="%s" class="%s">%s</span>';
 
 		return $reversed
@@ -338,7 +337,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// NOTE: falls back on raw data: like `1362`
-	public static function prepBornDeadForDisplay( $born = '', $dead = '', $calendar_type = 'gregorian', $timezone = NULL )
+	public static function prepBornDeadForDisplay( $born = '', $dead = '', $context = 'yearonly', $calendar_type = 'gregorian', $timezone = NULL )
 	{
 		if ( ! $born && ! $dead )
 			return '';
@@ -348,17 +347,17 @@ class Datetime extends WordPress\Main
 			: '(<span class="-birth" title="%3$s">%1$s</span><span class="sep">%5$s</span><span class="-birth" title="%4$s">%2$s</span>)';
 
 		return Core\Text::trim( vsprintf( $template, [
-			self::prepForDisplay( $born, self::dateFormats( 'birthday' ), $calendar_type, $timezone ),
-			self::prepForDisplay( $dead, self::dateFormats( 'birthday' ), $calendar_type, $timezone ),
-			_x( 'Birthed', 'Datetime: Title Attribute', 'gtheme' ),
-			_x( 'Deceased', 'Datetime: Title Attribute', 'gtheme' ),
+			self::prepForDisplay( $born, self::dateFormats( $context ), $calendar_type, $timezone ),
+			self::prepForDisplay( $dead, self::dateFormats( $context ), $calendar_type, $timezone ),
+			_x( 'Birthed', 'Datetime: Title Attribute', 'geditorial' ),
+			_x( 'Deceased', 'Datetime: Title Attribute', 'geditorial' ),
 			'&ndash;', // WordPress\Strings::separator(),
 		] ) );
 	}
 
 	public static function getDecades( $from = '-100 years', $count = 10, $prefixed = FALSE, $metakey = NULL )
 	{
-		/* translators: %s: decade number */
+		/* translators: `%s`: decade number */
 		$name  = $prefixed ? _x( 'Decade %s', 'Datetime: Decade Prefix', 'geditorial' ) : '%s';
 		$slug  = $prefixed ? 'decade-%s' : '%s';
 		$meta  = $metakey ?? 'decade';
@@ -382,7 +381,7 @@ class Datetime extends WordPress\Main
 
 	public static function getYearsByDecades( $from = '-100 years', $count = 10, $prefixed = TRUE, $metakey = NULL )
 	{
-		/* translators: %s: year number */
+		/* translators: `%s`: year number */
 		$name    = $prefixed ? _x( 'Year %s', 'Datetime: Year Prefix', 'geditorial' ) : '%s';
 		$slug    = $prefixed ? 'year-%s' : '%s';
 		$meta    = $metakey ?? 'decade';

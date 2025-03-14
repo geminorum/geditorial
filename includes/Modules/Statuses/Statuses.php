@@ -67,9 +67,9 @@ class Statuses extends gEditorial\Module
 			$settings['_roles'][] = [
 				'field'       => 'status_roles_'.$status->term_id,
 				'type'        => 'checkboxes',
-				/* translators: %s: status name */
+				/* translators: `%s`: status name */
 				'title'       => sprintf( _x( 'Roles for %s', 'Setting Title', 'geditorial-statuses' ), $status->name ),
-				/* translators: %s: status name */
+				/* translators: `%s`: status name */
 				'description' => sprintf( _x( 'The <b>%s</b> status will be visibile to the selected roles.', 'Setting Description', 'geditorial-statuses' ), $status->name ),
 				'values'      => $roles,
 			];
@@ -145,19 +145,19 @@ class Statuses extends gEditorial\Module
 					'metabox_dropdown' => $status->name,
 					'inline_dropdown'  => $status->name,
 
-					/* translators: %s: status name */
+					/* translators: `%s`: status name */
 					'metabox_submit'     => sprintf( _x( 'Submit: %s', 'MetaBox Submit', 'geditorial-statuses' ), $status->name ),
-					/* translators: %s: status name */
+					/* translators: `%s`: status name */
 					'metabox_save_on'    => sprintf( _x( 'Save as %s on:', 'MetaBox Save On', 'geditorial-statuses' ), $status->name ),
-					/* translators: %1$s: status name, %2$s: time placeholder */
+					/* translators: `%1$s`: status name, `%2$s`: time placeholder */
 					'metabox_save_date'  => sprintf( _x( 'Save as %1$s on: %2$s', 'MetaBox Save Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
-					/* translators: %s: status name */
+					/* translators: `%s`: status name */
 					'metabox_saved_on'   => sprintf( _x( 'Saved as %s on:', 'MetaBox Saved On', 'geditorial-statuses' ), $status->name ),
-					/* translators: %1$s: status name, %2$s: time placeholder */
+					/* translators: `%1$s`: status name, `%2$s`: time placeholder */
 					'metabox_saved_date' => sprintf( _x( 'Saved as %1$s on: %2$s', 'MetaBox Saved Date', 'geditorial-statuses' ), $status->name, '<b>%1$s</b>' ),
-					/* translators: %s: status name */
+					/* translators: `%s`: status name */
 					'metabox_save_now'   => sprintf( _x( 'Save as %s <b>now</b>', 'MetaBox Saved On', 'geditorial-statuses' ), $status->name ),
-					/* translators: %s: time placeholder */
+					/* translators: `%s`: time placeholder */
 					// 'metabox_save_later' => sprintf( _x( 'Schedule for: %s', 'MetaBox Saved On', 'geditorial-statuses' ), '<b>%1$s</b>' ),
 				],
 			];

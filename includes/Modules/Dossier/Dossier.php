@@ -402,7 +402,7 @@ class Dossier extends gEditorial\Module
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		switch ( $field_key ) {
-			/* translators: %s: order */
+			/* translators: `%s`: order */
 			case 'in_dossier_order' : return WordPress\Strings::getCounted( $raw ?: $value, _x( 'Order in Dossier: %s', 'Display', 'geditorial-dossier' ) );
 		}
 

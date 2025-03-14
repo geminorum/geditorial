@@ -8,6 +8,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Papered extends gEditorial\Module
@@ -887,17 +888,17 @@ class Papered extends gEditorial\Module
 
 		$posttype = $this->constant( 'primary_posttype' );
 		$link     = $this->get_printpage_url();
-		$name     = Helper::getPostTypeLabel( $posttype, 'singular_name' );
+		$name     = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
 		$post     = WordPress\Post::title( $object, '' );
 
 		echo Core\HTML::wrap( Core\HTML::dropdown( $this->_get_profiles_for_posttype( $object ), [
 			'id'         => $this->classs( 'printprofile' ),
 			'prop'       => 'post_title',
 			'value'      => 'ID',
-			'none_title' => Helper::getPostTypeLabel( $posttype, 'show_option_select' ),
+			'none_title' => Services\CustomPostType::getLabel( $posttype, 'show_option_select' ),
 		] ), 'field-wrap -select' );
 
-		/* translators: %1$s: icon markup, %2$s: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 		$default = _x( '%1$s Preview Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_preview_title', $object->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_preview_text', $object->post_type, 'metabox', $default );
@@ -910,7 +911,7 @@ class Papered extends gEditorial\Module
 			'disabled' => TRUE,
 		], sprintf( $text, Helper::getIcon( 'welcome-view-site' ), $name ) );
 
-		/* translators: %1$s: icon markup, %2$s: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 		$default = _x( '%1$s Print Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_print_title', $object->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_print_text', $object->post_type, 'metabox', $default );
@@ -951,10 +952,10 @@ class Papered extends gEditorial\Module
 			$args['source'] = $source->ID;
 
 		$link = $this->get_adminpage_url( TRUE, $args, 'printpage' );
-		$name = Helper::getPostTypeLabel( $source ? $source->post_type : $profile->post_type, 'singular_name' );
+		$name = Services\CustomPostType::getLabel( $source ? $source->post_type : $profile->post_type, 'singular_name' );
 		$post = WordPress\Post::title( $source, '' );
 
-		/* translators: %1$s: icon markup, %2$s: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 		$default = _x( '%1$s Preview Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_preview_title', $source ? $source->post_type : $profile->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_preview_text', $source ? $source->post_type : $profile->post_type, 'metabox', $default );
@@ -976,7 +977,7 @@ class Papered extends gEditorial\Module
 			],
 		] );
 
-		/* translators: %1$s: icon markup, %2$s: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 		$default = _x( '%1$s Print Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_print_title', $source ? $source->post_type : $profile->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_print_text', $source ? $source->post_type : $profile->post_type, 'metabox', $default );
