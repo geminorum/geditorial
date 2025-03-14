@@ -1094,7 +1094,7 @@ class Template extends WordPress\Main
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'heading'     => 'h3',
+			'heading'     => '3',
 			'image_link'  => 'url',
 			'image_field' => NULL,
 			'before'      => '',
@@ -1122,19 +1122,20 @@ class Template extends WordPress\Main
 
 		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
 
-			do_action( sprintf( '%s_term_intro_title_before', static::BASE ), $term, $args['heading'] );
+			do_action( sprintf( '%s_term_intro_title_before', static::BASE ), $term, $desc, (bool) $image, $args, $module );
 
-			if ( $args['heading'] && ( $image || $desc ) )
+			// if ( $args['heading'] && ( $image || $desc ) )
+			if ( $args['heading'] )
 				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ) );
 
-			do_action( sprintf( '%s_term_intro_description_before', static::BASE ), $term, $desc );
+			do_action( sprintf( '%s_term_intro_description_before', static::BASE ), $term, $desc, (bool) $image, $args, $module );
 
 			echo Core\HTML::wrap(
 				WordPress\Strings::prepDescription(
 					WordPress\Strings::kses( $desc, 'html' )
 				), 'term-description -term-description' );
 
-			do_action( sprintf( '%s_term_intro_description_after', static::BASE ), $term, $desc );
+			do_action( sprintf( '%s_term_intro_description_after', static::BASE ), $term, $desc, (bool) $image, $args, $module );
 
 		echo '</div>'; // `.col`
 		echo '</div>'; // `.row`

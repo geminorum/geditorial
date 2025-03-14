@@ -190,7 +190,7 @@ class Socialite extends gEditorial\Module
 		if ( empty( $this->get_setting( 'extra_meta_fields' ) ) )
 			return;
 
-		$this->action( 'term_intro_description_after', 2, 8, FALSE, $this->base );
+		$this->action( 'term_intro_description_after', 5, 8, FALSE, $this->base );
 		$this->filter_module( 'terms', 'supported_fields_raw', 1 );
 		$this->filter_module( 'terms', 'supported_field_metatype', 3 );
 		$this->filter_module( 'terms', 'supported_field_position', 3 );
@@ -217,8 +217,11 @@ class Socialite extends gEditorial\Module
 		return $this->filters( 'supported_fields', $supported );
 	}
 
-	public function term_intro_description_after( $term, $desc )
+	public function term_intro_description_after( $term, $desc, $image, $args, $module )
 	{
+		if ( ! $desc && ! $image && empty( $args['heading'] ) )
+			return;
+
 		echo $this->_get_term_icons( $term, NULL, [
 			'-icon-list',
 			'-social-links',
