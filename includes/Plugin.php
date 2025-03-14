@@ -105,6 +105,7 @@ class Plugin
 		Services\Barcodes::setup();
 		// Services\Calendars::setup();
 		Services\CustomPostTypes::setup();
+		Services\CustomTaxonomy::setup();
 		Services\HeaderButtons::setup();
 		Services\Individuals::setup();
 		Services\LateChores::setup();
