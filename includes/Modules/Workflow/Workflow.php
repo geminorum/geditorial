@@ -5,8 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Workflow extends gEditorial\Module
@@ -239,7 +239,8 @@ class Workflow extends gEditorial\Module
 			} else if ( 'edit' == $screen->base ) {
 
 				// FIXME: Temporarily hiding inline/bulk edit action
-				Helper::disableQuickEdit( $screen );
+				Services\AdminScreen::disableQuickEdit( $screen );
+				$this->filter_false( 'quick_edit_enabled_for_post_type' );
 
 				if ( $this->get_setting( 'display_states' ) )
 					$this->filter( 'display_post_states', 2 );

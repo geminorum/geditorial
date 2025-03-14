@@ -84,4 +84,35 @@ class AdminScreen extends WordPress\Main
 			);
 		}, 1, 1 );
 	}
+
+	/**
+	 * Hides inline/bulk edit row action.
+	 * @source https://core.trac.wordpress.org/ticket/19343
+	 * @see: `quick_edit_enabled_for_post_type`
+	 *
+	 * @param  null|object $screen
+	 * @return void
+	 */
+	public static function disableQuickEdit( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		add_filter( 'page_row_actions', static function ( $actions, $post) use ( $screen ) {
+			if ( $post->post_type === $screen->post_type )
+				unset( $actions['inline hide-if-no-js'] );
+			return $actions;
+		}, 12, 2 );
+
+		add_filter( 'post_row_actions', static function ( $actions, $post ) use ( $screen ) {
+			if ( $post->post_type === $screen->post_type )
+				unset( $actions['inline hide-if-no-js'] );
+			return $actions;
+		}, 12, 2 );
+
+		add_filter( 'bulk_actions-'.$screen->id, static function ( $actions ) {
+			unset( $actions['edit'] );
+			return $actions;
+		} );
+	}
 }
