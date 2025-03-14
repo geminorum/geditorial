@@ -50,6 +50,7 @@ class Datetime extends WordPress\Main
 		if ( empty( $formats ) )
 			$formats = apply_filters( static::BASE.'_custom_date_formats', [
 				'age'      => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
+				'birthday' => _x( 'm/d/Y', 'Date Format: `birthdate`', 'geditorial' ),
 				'dateonly' => _x( 'l, F j, Y', 'Date Format: `dateonly`', 'geditorial' ),
 				'datetime' => _x( 'M j, Y @ G:i', 'Date Format: `datetime`', 'geditorial' ),
 				'default'  => _x( 'm/d/Y', 'Date Format: `default`', 'geditorial' ),
@@ -334,6 +335,25 @@ class Datetime extends WordPress\Main
 		return $reversed
 			? sprintf( $template, $html, 'date-of-birth', $title )
 			: sprintf( $template, $title, 'date-of-birth', $html );
+	}
+
+	// NOTE: falls back on raw data: like `1362`
+	public static function prepBornDeadForDisplay( $born = '', $dead = '', $calendar_type = 'gregorian', $timezone = NULL )
+	{
+		if ( ! $born && ! $dead )
+			return '';
+
+		$template = Core\HTML::rtl()
+			? '(<span class="-birth" title="%4$s">%2$s</span><span class="-sep">%5$s</span><span class="-birth" title="%3$s">%1$s</span>)'
+			: '(<span class="-birth" title="%3$s">%1$s</span><span class="sep">%5$s</span><span class="-birth" title="%4$s">%2$s</span>)';
+
+		return Core\Text::trim( vsprintf( $template, [
+			self::prepForDisplay( $born, self::dateFormats( 'birthday' ), $calendar_type, $timezone ),
+			self::prepForDisplay( $dead, self::dateFormats( 'birthday' ), $calendar_type, $timezone ),
+			_x( 'Birthed', 'Datetime: Title Attribute', 'gtheme' ),
+			_x( 'Deceased', 'Datetime: Title Attribute', 'gtheme' ),
+			'&ndash;', // WordPress\Strings::separator(),
+		] ) );
 	}
 
 	public static function getDecades( $from = '-100 years', $count = 10, $prefixed = FALSE, $metakey = NULL )

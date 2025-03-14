@@ -1095,6 +1095,7 @@ class Template extends WordPress\Main
 
 		$args = self::atts( [
 			'heading'     => '3',
+			'secondary'   => NULL,    // `NULL` for filter: `geditorial_term_intro_title_suffix`
 			'image_link'  => 'url',
 			'image_field' => NULL,
 			'before'      => '',
@@ -1102,8 +1103,9 @@ class Template extends WordPress\Main
 			'wrap'        => TRUE,
 		], $atts );
 
-		$wrap = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction">';
-		$desc = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
+		$wrap   = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction">';
+		$desc   = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
+		$suffix = $args['secondary'] ?? apply_filters( sprintf( '%s_term_intro_title_suffix', static::BASE ), '', $term, $desc, $args, $module );
 
 		$image = self::termImage( [
 			'id'       => $term,
@@ -1126,7 +1128,7 @@ class Template extends WordPress\Main
 
 			// if ( $args['heading'] && ( $image || $desc ) )
 			if ( $args['heading'] )
-				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ) );
+				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ).Core\HTML::small( $suffix, '-secondary', TRUE ) );
 
 			do_action( sprintf( '%s_term_intro_description_before', static::BASE ), $term, $desc, (bool) $image, $args, $module );
 

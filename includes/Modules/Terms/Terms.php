@@ -317,6 +317,7 @@ class Terms extends gEditorial\Module
 			$this->_hook_overwrite_titles( $this->get_setting( 'term_overwrite', [] ) );
 
 		$this->filter( 'searchselect_result_image_for_term', 3, 12, FALSE, $this->base );
+		$this->filter( 'term_intro_title_suffix', 5, 8, FALSE, $this->base );
 
 		if ( ! is_admin() )
 			return;
@@ -2255,5 +2256,24 @@ class Terms extends gEditorial\Module
 			return $src;
 
 		return $data;
+	}
+
+	public function term_intro_title_suffix( $suffix, $term, $desc, $args, $module )
+	{
+		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
+			return $suffix;
+
+		$supported = $this->get_supported( $taxonomy );
+
+		if ( ! in_array( 'born', $supported, TRUE )
+			&& ! in_array( 'dead', $supported, TRUE ) )
+			return $suffix;
+
+		$html = Datetime::prepBornDeadForDisplay(
+			get_term_meta( $term->term_id, $this->get_supported_metakey( 'born', $taxonomy ), TRUE ),
+			get_term_meta( $term->term_id, $this->get_supported_metakey( 'dead', $taxonomy ), TRUE )
+		);
+
+		return $html ? sprintf( '%s %s', $suffix, $html ) : $suffix;
 	}
 }
