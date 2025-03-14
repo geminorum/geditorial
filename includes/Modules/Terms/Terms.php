@@ -1148,8 +1148,11 @@ class Terms extends gEditorial\Module
 
 				} else if ( in_array( $field, [ 'date', 'born', 'dead' ] ) ) {
 
-					$meta = Core\Number::translate( trim( $meta ) );
-					$meta = Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
+					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
+
+					// accepts year only
+					if ( strlen( $meta ) > 4 )
+						$meta = Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
 
 				} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
 
@@ -1441,7 +1444,7 @@ class Terms extends gEditorial\Module
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
-					'value' => empty( $meta ) ? '' : Datetime::prepForInput( $meta, 'Y/m/d', 'gregorian' ),
+					'value' => empty( $meta ) ? '' : ( strlen( $meta ) > 4 ? Datetime::prepForInput( $meta, 'Y/m/d', 'gregorian' ) : $meta ),
 					'class' => [ 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );

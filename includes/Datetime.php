@@ -291,15 +291,33 @@ class Datetime extends WordPress\Main
 		return apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone, FALSE );
 	}
 
-	public static function prepForDisplay( $date, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	public static function prepYearOnly( $data, $fallback = '' )
 	{
-		if ( is_null( $format ) )
-			$format = self::dateFormats( 'default' );
+		if ( ! $data )
+			return $fallback;
 
-		$timestamp = strtotime( $date );
-		$timeage   = self::humanTimeDiffRound( $timestamp, FALSE );
+		$sanitized = Core\Text::trim( Core\Number::translate( $data ) );
 
-		return Core\Date::htmlDateTime( $timestamp, NULL, $format, $timeage );
+		if ( strlen( $sanitized ) > 4 )
+			return $fallback;
+
+		return Core\Number::localize( $sanitized );
+	}
+
+	public static function prepForDisplay( $data, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	{
+		if ( $year = self::prepYearOnly( $data ) )
+			return $year;
+
+		if ( $data && ( $timestamp = strtotime( $data ) ) )
+			return Core\Date::htmlDateTime(
+				$timestamp,
+				NULL,
+				$format ?? self::dateFormats( 'default' ),
+				self::humanTimeDiffRound( $timestamp, FALSE )
+			);
+
+		return $data ?: '';
 	}
 
 	// TODO: utilize `htmlDateTime()`
