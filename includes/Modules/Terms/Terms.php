@@ -16,7 +16,6 @@ use geminorum\gEditorial\WordPress;
 class Terms extends gEditorial\Module
 {
 
-	// FIXME: quick edit not working on: `dead`/`born`
 	// TODO: like `tableColumnPostMeta()` for term meta
 	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `phonetic`, `time`, `pseudonym`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
@@ -84,16 +83,8 @@ class Terms extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		return [
-			'_fields'   => $this->prep_fields_for_settings(),
-			'_edittags' => [
-				[
-					'field'       => 'prevent_deletion',
-					'title'       => _x( 'Prevent Deletion', 'Setting Title', 'geditorial-terms' ),
-					'description' => _x( 'Exempts the terms with meta-data from bulk empty deletions.', 'Setting Description', 'geditorial-terms' ),
-					'default'     => TRUE,
-				],
-			],
+		$fields   = $this->_get_supported_raw();
+		$settings = [
 			'_general' => [
 				[
 					'field'       => 'apply_ordering',
@@ -124,11 +115,44 @@ class Terms extends gEditorial\Module
 				'calendar_type',
 				// 'calendar_list',
 			],
-			'_frontend' => [
-				'adminbar_summary',
-			],
-			'taxonomies_option' => 'taxonomies_option',
 		];
+
+		foreach ( $fields as $field )
+			$settings[sprintf( '_field_%s', $field )] = [
+				[
+					'field'  => 'term_'.$field,
+					'type'   => 'checkboxes-values',
+					'title'  => _x( 'Supported Taxonomies', 'Setting Title', 'geditorial-terms' ),
+					'values' => $this->get_taxonomies_support( $field ),
+				]
+			];
+
+		$settings['_misc'] = [
+			[
+				'field'       => 'prevent_deletion',
+				'title'       => _x( 'Prevent Deletion', 'Setting Title', 'geditorial-terms' ),
+				'description' => _x( 'Exempts the terms with meta-data from bulk empty deletions.', 'Setting Description', 'geditorial-terms' ),
+				'default'     => TRUE,
+			],
+			'adminbar_summary',
+		];
+
+		$settings['taxonomies_option'] = 'taxonomies_option';
+
+		return $settings;
+	}
+
+	protected function settings_section_titles( $suffix )
+	{
+		$field = Core\Text::stripPrefix( $suffix, '_field_' );
+
+		if ( in_array( $field, $this->_get_supported_raw(), TRUE ) )
+			return [
+				$this->get_supported_field_title( $field, FALSE ),
+				Core\HTML::code( $field, '-field-key' )."\n\n".$this->get_supported_field_desc( $field, FALSE ),
+			];
+
+		return FALSE;
 	}
 
 	protected function get_global_strings()
@@ -281,38 +305,6 @@ class Terms extends gEditorial\Module
 		}
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
-	}
-
-	protected function prep_fields_for_settings( $fields = NULL )
-	{
-		if ( is_null( $fields ) )
-			$fields = $this->_get_supported_raw();
-
-		$list = [];
-
-		foreach ( $fields as $field ) {
-
-			$name = $this->get_supported_field_title( $field, FALSE );
-			$desc = $this->get_supported_field_desc( $field, FALSE );
-
-			$title = sprintf(
-				/* translators: `%1$s`: field name, `%2$s`: field key */
-				_x( 'Term %1$s %2$s', 'Setting Title', 'geditorial-terms' ),
-				$name,
-				Core\HTML::code( $field, '-field-key' )
-			);
-
-			$list[] = [
-				'field'       => 'term_'.$field,
-				'type'        => 'taxonomies',
-				'title'       => $title,
-				/* translators: `%s`: field name */
-				'description' => $desc ?: sprintf( _x( 'Supports %s for terms in the selected taxonomies.', 'Setting Description', 'geditorial-terms' ), $name ),
-				'values'      => $this->get_taxonomies_support( $field ),
-			];
-		}
-
-		return $list;
 	}
 
 	public function init()
