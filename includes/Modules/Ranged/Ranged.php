@@ -312,7 +312,7 @@ class Ranged extends gEditorial\Module
 						'data_unit'   => 'line',
 					],
 
-					'distance_in_meter' => [
+					'distance_in_metres' => [
 						'title'       => _x( 'Firing Distance', 'Field Title', 'geditorial-ranged' ),
 						'description' => _x( 'Firing Distance in Metres', 'Field Description', 'geditorial-ranged' ),
 						'type'        => 'number', // NOTE: better not `distance` type

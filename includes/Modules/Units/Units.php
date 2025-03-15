@@ -334,4 +334,20 @@ class Units extends gEditorial\Module
 
 		return $value;
 	}
+
+	// FIXME: Move to ModuleHelper
+	public function sanitize_postmeta_field_key( $field_key )
+	{
+		if ( is_array( $field_key ) )
+			return $field_key;
+
+		$fields = [
+			'distance_in_metres' => [ 'distance_in_metres', 'distance_in_meter' ],
+		];
+
+		if ( isset( $fields[$field_key] ) )
+			return $fields[$field_key];
+
+		return [ $field_key ];
+	}
 }
