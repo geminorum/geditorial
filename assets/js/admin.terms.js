@@ -109,6 +109,11 @@
       $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
     },
 
+    inlineURL: function (field, tag, event) {
+      const value = $('td.' + s.classs + '-' + field + ' span.field-' + field, '#' + tag).attr('data-' + field);
+      $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
+    },
+
     inlineSelect: function (field, tag, event) {
       const value = $('td.' + s.classs + '-' + field + ' span.field-' + field, '#' + tag).attr('data-' + field);
       const $el = $(':input[name="term-' + field + '"]', '.inline-edit-row');
@@ -158,6 +163,9 @@
       app.inlineNumber('unit', tag, event);
       app.inlineNumber('min', tag, event);
       app.inlineNumber('max', tag, event);
+      app.inlineURL('source', tag, event);
+      app.inlineURL('embed', tag, event);
+      app.inlineURL('url', tag, event);
 
       // FIXME: WTF: data attr cannot contain underscores!
       // @SEE: https://www.sitepoint.com/how-why-use-html5-custom-data-attributes/

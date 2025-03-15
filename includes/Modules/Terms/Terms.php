@@ -17,7 +17,7 @@ class Terms extends gEditorial\Module
 
 	// FIXME: quick edit not working on: `dead`/`born`
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `url`, `embed` `subtitle`, `phonetic`, `time`, `pseudonym`
+	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `subtitle`, `phonetic`, `time`, `pseudonym`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
@@ -59,6 +59,9 @@ class Terms extends gEditorial\Module
 		'max',
 		'min',
 		'viewable',
+		'source',
+		'embed',
+		'url',
 	];
 
 	private $_roles = [];
@@ -153,6 +156,9 @@ class Terms extends gEditorial\Module
 				'min'       => _x( 'Minimum', 'Titles', 'geditorial-terms' ),
 				'max'       => _x( 'Maximum', 'Titles', 'geditorial-terms' ),
 				'viewable'  => _x( 'Viewable', 'Titles', 'geditorial-terms' ),
+				'source'    => _x( 'Source', 'Titles', 'geditorial-terms' ),
+				'embed'     => _x( 'Embed', 'Titles', 'geditorial-terms' ),
+				'url'       => _x( 'URL', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
 				'parent'    => _x( 'Terms can have parents from another taxonomies.', 'Descriptions', 'geditorial-terms' ),
@@ -189,6 +195,9 @@ class Terms extends gEditorial\Module
 				'min'       => _x( 'Defines the minimum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
 				'max'       => _x( 'Defines the maximum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
 				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
+				'source'    => _x( 'Defines a source URL for the term.', 'Descriptions', 'geditorial-terms' ),
+				'embed'     => _x( 'Defines a embed-able URL for the term.', 'Descriptions', 'geditorial-terms' ),
+				'url'       => _x( 'Defines a custom URL for the term.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
 				// NOTE: Only the difference from titles
@@ -677,6 +686,9 @@ class Terms extends gEditorial\Module
 			'min',
 			'max',
 			'viewable',
+			'source',
+			'embed',
+			'url',
 		];
 
 		foreach ( $supported as $field ) {
@@ -736,6 +748,9 @@ class Terms extends gEditorial\Module
 			'min',
 			'max',
 			'viewable',
+			'source',
+			'embed',
+			'url',
 		];
 
 		foreach ( $supported as $field )
@@ -1095,6 +1110,37 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'source':
+			case 'embed':
+			case 'url':
+
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
+
+					$icons = [
+						'source' => 'external',
+						'embed'  => 'embed-generic',
+						'url'    => 'admin-links',
+					];
+
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
+						$html.= Core\HTML::link(
+							Core\HTML::getDashicon(
+								$icons[$field],
+								Core\URL::prepTitle( $meta ),
+								'-icon-'.$field
+							),
+							$meta,
+							TRUE
+						);
+					$html.= '</span>';
+
+				} else {
+
+					$html = $this->field_empty( $field, '', $column );
+				}
+
+				break;
+
 			default:
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
@@ -1160,6 +1206,10 @@ class Terms extends gEditorial\Module
 
 					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
 					$meta = Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
+
+				} else if ( in_array( $field, [ 'source', 'embed', 'url' ] ) ) {
+
+					$meta = Core\URL::sanitize( $meta );
 				}
 
 				update_term_meta( $term_id, $metakey, $meta );
@@ -1468,6 +1518,20 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'source':
+			case 'embed':
+			case 'url':
+
+				$html.= Core\HTML::tag( 'input', [
+					'id'    => $this->classs( $field, 'id' ),
+					'name'  => 'term-'.$field,
+					'type'  => 'url',
+					'value' => empty( $meta ) ? '' : $meta,
+					'class' => [ 'code' ],
+				] );
+
+				break;
+
 			case 'label':
 			case 'period':
 			default:
@@ -1617,6 +1681,19 @@ class Terms extends gEditorial\Module
 					'value' => '',
 					'class' => [ 'ptitle', 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
+				] );
+
+				break;
+
+			case 'source':
+			case 'embed':
+			case 'url':
+
+				$html.= Core\HTML::tag( 'input', [
+					'name'  => 'term-'.$field,
+					'type'  => 'url',
+					'value' => '',
+					'class' => [ 'ptitle', 'code' ],
 				] );
 
 				break;
@@ -1806,6 +1883,22 @@ class Terms extends gEditorial\Module
 							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
+
+						break;
+
+					case 'source':
+					case 'embed':
+					case 'url':
+
+						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
+
+							$node['title'].= ': '.Core\URL::prepTitle( $meta );
+							$node['href'] = $meta;
+
+						} else {
+
+							$node['title'].= ': '.gEditorial\Plugin::na();
+						}
 
 						break;
 
