@@ -18,7 +18,7 @@ class Terms extends gEditorial\Module
 
 	// FIXME: quick edit not working on: `dead`/`born`
 	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `subtitle`, `phonetic`, `time`, `pseudonym`
+	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `phonetic`, `time`, `pseudonym`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
 
 	protected $supported = [
@@ -29,6 +29,7 @@ class Terms extends gEditorial\Module
 		'overwrite',
 		'fullname',
 		'tagline',
+		'subtitle',
 		'contact',
 		'venue',
 		'image',
@@ -140,6 +141,7 @@ class Terms extends gEditorial\Module
 				'overwrite' => _x( 'Overwrite', 'Titles', 'geditorial-terms' ),
 				'fullname'  => _x( 'Fullname', 'Titles', 'geditorial-terms' ),
 				'tagline'   => _x( 'Tagline', 'Titles', 'geditorial-terms' ),
+				'subtitle'  => _x( 'Subtitle', 'Titles', 'geditorial-terms' ),
 				'contact'   => _x( 'Contact', 'Titles', 'geditorial-terms' ),
 				'venue'     => _x( 'Venue', 'Titles', 'geditorial-terms' ),
 				'image'     => _x( 'Image', 'Titles', 'geditorial-terms' ),
@@ -179,6 +181,7 @@ class Terms extends gEditorial\Module
 				'overwrite' => _x( 'Replaces the term name on front-page display.', 'Descriptions', 'geditorial-terms' ),
 				'fullname'  => _x( 'Defines the full-name form of the term.', 'Descriptions', 'geditorial-terms' ),
 				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Descriptions', 'geditorial-terms' ),
+				'subtitle'  => _x( 'Gives more information about the term in a sub-title.', 'Descriptions', 'geditorial-terms' ),
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
 				'venue'     => _x( 'Defines a string as venue for the term.', 'Descriptions', 'geditorial-terms' ),
 				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
@@ -271,6 +274,7 @@ class Terms extends gEditorial\Module
 			case 'overwrite': $excluded[] = 'post_tag'; break;
 			case 'fullname' : $excluded[] = 'post_tag'; break;
 			case 'tagline'  : $excluded[] = 'post_tag'; break;
+			case 'subtitle' : $excluded[] = 'post_tag'; break;
 			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );  // override!
 			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!
 			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!
@@ -342,6 +346,7 @@ class Terms extends gEditorial\Module
 
 		$this->filter( 'searchselect_result_image_for_term', 3, 12, FALSE, $this->base );
 		$this->filter( 'term_intro_title_suffix', 5, 8, FALSE, $this->base );
+		$this->action( 'term_intro_description_before', 5, 2, FALSE, $this->base );
 		$this->action( 'term_intro_description_after', 5, 5, FALSE, $this->base );
 
 		if ( ! is_admin() )
@@ -739,6 +744,7 @@ class Terms extends gEditorial\Module
 			'overwrite',
 			'fullname',
 			'tagline',
+			'subtitle',
 			'contact',
 			'venue',
 			'image',
@@ -929,6 +935,7 @@ class Terms extends gEditorial\Module
 			case 'overwrite':
 			case 'fullname':
 			case 'tagline':
+			case 'subtitle':
 			case 'period':
 			case 'venue':
 
@@ -1456,6 +1463,7 @@ class Terms extends gEditorial\Module
 			case 'overwrite':
 			case 'fullname':
 			case 'tagline':
+			case 'subtitle':
 			case 'venue':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -1718,6 +1726,7 @@ class Terms extends gEditorial\Module
 			case 'overwrite':
 			case 'fullname':
 			case 'tagline':
+			case 'subtitle':
 			case 'period':
 			case 'venue':
 			default:
@@ -1863,6 +1872,7 @@ class Terms extends gEditorial\Module
 					case 'overwrite':
 					case 'fullname':
 					case 'tagline':
+					case 'subtitle':
 					case 'venue':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
@@ -2385,6 +2395,20 @@ class Terms extends gEditorial\Module
 		);
 
 		return $html ? sprintf( '%s %s', $suffix, $html ) : $suffix;
+	}
+
+	public function term_intro_description_before( $term, $desc, $image, $args, $module )
+	{
+		if ( ! $desc && ! $image && empty( $args['heading'] ) )
+			return;
+
+		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
+			return;
+
+		$supported = $this->get_supported( $taxonomy );
+
+		if ( in_array( 'subtitle', $supported, TRUE ) )
+			echo Core\HTML::wrap( get_term_meta( $term->term_id, $this->get_supported_metakey( 'subtitle', $taxonomy ), TRUE ) ?: '', '-term-subtitle' );
 	}
 
 	public function term_intro_description_after( $term, $desc, $image, $args, $module )
