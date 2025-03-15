@@ -7,7 +7,12 @@ use geminorum\gEditorial\Core;
 class Strings extends Core\Base
 {
 
-	// wrapper for `wp_get_list_item_separator()` @since WP 6.0.0
+	/**
+	 * Retrieves the list item separator based on the locale.
+	 * wrapper for `wp_get_list_item_separator()` @since WP 6.0.0
+	 *
+	 * @return string $separator
+	 */
 	public static function separator()
 	{
 		if ( function_exists( 'wp_get_list_item_separator' ) )
@@ -17,7 +22,7 @@ class Strings extends Core\Base
 	}
 
 	// NOTE: OLD: `Helper::getStringsFromName()`
-	private static function getNameForms( $name )
+	public static function getNameForms( $name )
 	{
 		if ( ! $name )
 			return FALSE;
@@ -261,6 +266,15 @@ class Strings extends Core\Base
 		return \geminorum\gNetwork\Core\Orthography::cleanupPersianChars( $string );
 	}
 
+	/**
+	 * Filters text content and strips out disallowed HTML.
+	 * wrapper for `wp_kses()`
+	 *
+	 * @param  string $text
+	 * @param  string $context
+	 * @param  array $allowed
+	 * @return string $filtered
+	 */
 	public static function kses( $text, $context = 'none', $allowed = NULL )
 	{
 		if ( '' === $text )
@@ -269,21 +283,18 @@ class Strings extends Core\Base
 		if ( is_null( $allowed ) ) {
 
 			if ( 'text' == $context )
-				$allowed = [
-					'a'       => [ 'class' => TRUE, 'title' => TRUE, 'href' => TRUE ],
-					'abbr'    => [ 'class' => TRUE, 'title' => TRUE ],
-					'acronym' => [ 'class' => TRUE, 'title' => TRUE ],
-					'code'    => [ 'class' => TRUE ],
-					'em'      => [ 'class' => TRUE ],
-					'strong'  => [ 'class' => TRUE ],
-					'i'       => [ 'class' => TRUE ],
-					'b'       => [ 'class' => TRUE ],
-					'span'    => [ 'class' => TRUE ],
-					'br'      => [],
-				];
+				/**
+				 * allows all most inline elements and strips all
+				 * block level elements except blockquote
+				 */
+				$allowed = wp_kses_allowed_html( 'data' );
 
 			else if ( 'html' == $context )
-				$allowed = wp_kses_allowed_html();
+				/**
+				 * very permissive: allows pretty much all HTML to pass.
+				 * same as what's normally applied to the_content by default.
+				 */
+				$allowed = wp_kses_allowed_html( 'post' );
 
 			else if ( 'none' == $context )
 				$allowed = [];
