@@ -10,6 +10,7 @@ use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Terms extends gEditorial\Module
@@ -107,6 +108,17 @@ class Terms extends gEditorial\Module
 					'field'       => 'auto_term_overwrite',
 					'title'       => _x( 'Term Overwrite', 'Setting Title', 'geditorial-terms' ),
 					'description' => _x( 'Automatically overwrites term name with custom field if set for supported taxonomies.', 'Setting Description', 'geditorial-terms' ),
+				],
+				[
+					'field'       => 'source_link_title',
+					'type'        => 'text',
+					'title'       => _x( 'Source Title', 'Setting Title', 'geditorial-terms' ),
+					'placeholder' => _x( 'Source', 'Setting Default', 'geditorial-terms' ),
+					'description' => sprintf(
+						/* translators: `%s`: zero placeholder */
+						_x( 'Defines the title string on source link for supported taxonomies. Leave blank for default or %s to disable.', 'Setting Description', 'geditorial-terms' ),
+						Core\HTML::code( '0' )
+					),
 				],
 				'calendar_type',
 				// 'calendar_list',
@@ -328,6 +340,7 @@ class Terms extends gEditorial\Module
 
 		$this->filter( 'searchselect_result_image_for_term', 3, 12, FALSE, $this->base );
 		$this->filter( 'term_intro_title_suffix', 5, 8, FALSE, $this->base );
+		$this->action( 'term_intro_description_after', 5, 5, FALSE, $this->base );
 
 		if ( ! is_admin() )
 			return;
@@ -2369,5 +2382,31 @@ class Terms extends gEditorial\Module
 		);
 
 		return $html ? sprintf( '%s %s', $suffix, $html ) : $suffix;
+	}
+
+	public function term_intro_description_after( $term, $desc, $image, $args, $module )
+	{
+		if ( ! $desc && ! $image && empty( $args['heading'] ) )
+			return;
+
+		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
+			return;
+
+		$supported = $this->get_supported( $taxonomy );
+
+		if ( in_array( 'source', $supported, TRUE ) )
+			$this->_render_source_link( $term, 'source' );
+
+		if ( in_array( 'embed', $supported, TRUE ) )
+			echo Template::doMediaShortCode( get_term_meta( $term->term_id, $this->get_supported_metakey( 'embed', $taxonomy ), TRUE ) ?: '' );
+	}
+
+	private function _render_source_link( $term, $field = 'source' )
+	{
+		if ( ! $title = $this->get_setting_fallback( $field.'_link_title', _x( 'Source', 'Setting Default', 'geditorial-terms' ) ) )
+			return;
+
+		if ( $meta = get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $term->taxonomy ), TRUE ) )
+			echo Core\HTML::wrap( Core\HTML::link( $title, $meta, TRUE ), '-term-'.$field );
 	}
 }
