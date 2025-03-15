@@ -271,7 +271,9 @@ class Terms extends gEditorial\Module
 			case 'overwrite': $excluded[] = 'post_tag'; break;
 			case 'fullname' : $excluded[] = 'post_tag'; break;
 			case 'tagline'  : $excluded[] = 'post_tag'; break;
-			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] ); break;  // override!
+			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );  // override!
+			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!
+			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!
 		}
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
@@ -624,8 +626,8 @@ class Terms extends gEditorial\Module
 					register_meta( 'term', $field, $filtered );
 			}
 
-			// register general field for prepared meta data
-			// mainly for display purposes
+			// registers general field for prepared meta-data
+			// mainly for display purposes only
 			if ( in_array( $field, [ 'image' ] ) )
 				register_rest_field( $taxonomies, $field, [
 					'get_callback'  => [ $this, 'attribute_get_callback' ],
@@ -883,9 +885,7 @@ class Terms extends gEditorial\Module
 
 			case 'barcode':
 
-				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
-
-				if ( $meta ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$icon = Core\HTML::getDashicon( 'tagcloud', $meta, 'icon-barcode' );
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'.$icon.'</span>';
@@ -899,12 +899,10 @@ class Terms extends gEditorial\Module
 
 			case 'latlng':
 
-				$meta = get_term_meta( $term->term_id, $metakey, TRUE );
-
-				if ( $meta ) {
+				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
-					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, 'icon-latlng' ), Info::lookupURLforLatLng( $meta ), TRUE ).'</span>';
+					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, '-icon-'.$field ), Info::lookupURLforLatLng( $meta ), TRUE ).'</span>';
 
 				} else {
 
@@ -963,7 +961,7 @@ class Terms extends gEditorial\Module
 
 			case 'image':
 
-				$size = NULL; // maybe filter fo this module?!
+				$size = NULL; // TODO: maybe filter for this module?!
 				$html = $this->filters( 'column_image', WordPress\Taxonomy::htmlFeaturedImage( $term->term_id, $size, TRUE, $metakey ), $term->term_id, $size );
 
 				break;
@@ -1162,7 +1160,6 @@ class Terms extends gEditorial\Module
 
 				else
 					$html = $this->field_empty( $field, '', $column );
-
 		}
 
 		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta, $metakey, $metatype );
@@ -1243,7 +1240,13 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	// delete all attachment images for any term.
+	/**
+	 * Deletes all attachment images for any term.
+	 *
+	 * @param int $post_id
+	 * @param mixed $post
+	 * @return void
+	 */
 	public function delete_attachment( $post_id, $post )
 	{
 		delete_metadata( 'term', NULL, $this->get_supported_metakey( 'image' ), $post_id, TRUE );
@@ -1297,7 +1300,7 @@ class Terms extends gEditorial\Module
 	}
 
 	/**
-	 * Renders form html mark-up for the given field.
+	 * Renders form HTML mark-up for the given field.
 	 *
 	 * @param string $field
 	 * @param string $taxonomy
@@ -1343,7 +1346,7 @@ class Terms extends gEditorial\Module
 
 			break;
 
-			case 'parent': //  must input the term_id, due to diffrent parent taxonomy support!
+			case 'parent': // Must input the `term_id`, due to different parent taxonomy support!
 			case 'days':
 			case 'hours':
 			case 'amount':
@@ -1658,7 +1661,6 @@ class Terms extends gEditorial\Module
 					'type'  => 'text',
 					'value' => '',
 					'class' => [ 'ptitle', 'code' ],
-					'data'  => [ 'ortho' => 'code' ],
 				] );
 
 				break;
@@ -1802,6 +1804,7 @@ class Terms extends gEditorial\Module
 				$metatype = $this->get_supported_field_metatype( $field, $term->taxonomy );
 
 				switch ( $metatype ) {
+
 					case 'order':
 
 						$node['title'].= ': '.Helper::htmlOrder( get_term_meta( $term->term_id, $metakey, TRUE ) );

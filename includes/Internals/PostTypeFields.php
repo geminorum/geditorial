@@ -400,15 +400,13 @@ trait PostTypeFields
 
 				// TODO: use `WordPress\Term::get( $data, $field['taxonomy'] )`
 				$sanitized = empty( $data ) ? FALSE : (int) $data;
-
-			break;
+				break;
 
 			case 'venue':
 			case 'people':
 
 				$sanitized = WordPress\Strings::kses( $data, 'none' ) ;
 				$sanitized = WordPress\Strings::getPiped( Helper::getSeparated( $sanitized ) );
-
 				break;
 
 			case 'embed':
@@ -418,54 +416,62 @@ trait PostTypeFields
 			case 'image_source':
 			case 'downloadable':
 			case 'link':
-				$sanitized = trim( $data );
 
- 				// @SEE: `esc_url()`
-				if ( $sanitized && ! preg_match( '/^http(s)?:\/\//', $sanitized ) )
-					$sanitized = 'http://'.$sanitized;
+				$sanitized = Core\URL::sanitize( $data );
 				break;
 
 			case 'postcode':
+
 				$sanitized = Core\Validation::sanitizePostCode( $data );
 				break;
 
 			case 'code':
+
 				$sanitized = trim( $data );
+				break;
 
-			break;
 			case 'email':
-				$sanitized = Core\Email::sanitize( Core\Text::trim( $data ) );
 
-			break;
+				$sanitized = Core\Email::sanitize( Core\Text::trim( $data ) );
+				break;
+
 			case 'contact':
+
 				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 				break;
 
 			case 'identity':
+
 				$sanitized = Core\Validation::sanitizeIdentityNumber( $data );
 				break;
 
 			case 'isbn':
+
 				$sanitized = Core\ISBN::sanitize( $data );
 				break;
 
 			case 'vin':
+
 				$sanitized = Core\Validation::sanitizeVIN( $data );
 				break;
 
 			case 'iban':
+
 				$sanitized = Core\Validation::sanitizeIBAN( $data );
 				break;
 
 			case 'bankcard':
+
 				$sanitized = Core\Validation::sanitizeCardNumber( $data );
 				break;
 
 			case 'phone':
+
 				$sanitized = Core\Phone::sanitize( $data );
 				break;
 
 			case 'mobile':
+
 			 	$sanitized = Core\Mobile::sanitize( $data );
 				break;
 
@@ -489,6 +495,7 @@ trait PostTypeFields
 				break;
 
 			case 'time':
+
 				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 				break;
 
@@ -528,30 +535,35 @@ trait PostTypeFields
 			case 'kilometre':
 			case 'price':
 			case 'number':
+
 				$sanitized = Core\Number::intval( $data );
+				break;
 
-			break;
 			case 'float':
-				$sanitized = Core\Number::floatval( $data );
 
-			break;
+				$sanitized = Core\Number::floatval( $data );
+				break;
+
 			case 'text':
 			case 'datestring':
 			case 'title_before':
 			case 'title_after':
-				$sanitized = WordPress\Strings::kses( $data, 'none' );
 
-			break;
+				$sanitized = WordPress\Strings::kses( $data, 'none' );
+				break;
+
 			case 'address':
 			case 'note':
 			case 'textarea':
 			case 'widget': // FIXME: maybe general note fields displayed by a meta widget: `primary`/`side notes`
-				$sanitized = WordPress\Strings::kses( $data, 'text' );
 
-			break;
+				$sanitized = WordPress\Strings::kses( $data, 'text' );
+				break;
+
 			case 'postbox_legacy':
 			case 'postbox_tiny':
 			case 'postbox_html':
+
 				$sanitized = WordPress\Strings::kses( $data, 'html' );
 		}
 

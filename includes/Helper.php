@@ -558,8 +558,7 @@ class Helper extends WordPress\Main
 		return $class ? Core\HTML::wrap( $html, $class, FALSE ) : $html;
 	}
 
-	// @SOURCE: `translate_nooped_plural()`
-	// TODO: move to `WordPress\Strings`
+	// @source: `translate_nooped_plural()`
 	public static function nooped( $count, $nooped )
 	{
 		if ( ! array_key_exists( 'domain', $nooped ) )
@@ -575,7 +574,6 @@ class Helper extends WordPress\Main
 			return _nx( $nooped['singular'], $nooped['plural'], $count, $nooped['context'], $nooped['domain'] );
 	}
 
-	// TODO: move to `WordPress\Strings`
 	public static function noopedCount( $count, $nooped )
 	{
 		/* translators: singular/plural */

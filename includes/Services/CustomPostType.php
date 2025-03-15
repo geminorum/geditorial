@@ -4,6 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 class CustomPostType extends WordPress\Main
@@ -320,7 +322,7 @@ class CustomPostType extends WordPress\Main
 
 		foreach ( $templates as $key => $template )
 			// needs to apply the role so we use noopedCount()
-			$messages[$key] = vsprintf( self::noopedCount( $counts[$key], $template ), $strings );
+			$messages[$key] = vsprintf( Helper::noopedCount( $counts[$key], $template ), $strings );
 
 		return $messages;
 	}

@@ -523,7 +523,7 @@ class Template extends WordPress\Main
 	}
 
 	/**
-	 * Applies WordPress embed mechanisem on given url.
+	 * Applies WordPress embed mechanism on given URL.
 	 *
 	 * @source https://wordpress.stackexchange.com/a/23213/
 	 *
@@ -549,7 +549,7 @@ class Template extends WordPress\Main
 		if ( $html && is_null( $type ) ) {
 
 			$file = Core\File::type( $html );
-			$type = $file['type'] ?: 'embed'; // fallback if no type by url
+			$type = $file['type'] ?: 'embed'; // Fall-back if no type by URL
 		}
 
 		switch ( $type ) {
