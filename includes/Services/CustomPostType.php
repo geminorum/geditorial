@@ -14,8 +14,8 @@ class CustomPostType extends WordPress\Main
 	const BASE = 'geditorial';
 
 	/**
-	 * Generates lables for given post-type.
-	 * 
+	 * Generates labels for given post-type.
+	 *
 	 * @REF: `get_post_type_labels()`
 	 * @REF: `_get_custom_object_labels()`
 	 * @REF: `_nx_noop()`
@@ -23,7 +23,7 @@ class CustomPostType extends WordPress\Main
 	 * @REF: `WP_Post_Type::get_default_labels()`
 	 * TODO: add raw name strings on the object
 	 * NOTE: OLD: `Helper::generatePostTypeLabels()`
-	 * 
+	 *
 	 * %1$s => Camel Case / Plural  : `Posts`
 	 * %2$s => Camel Case / Singular: `Post`
 	 * %3$s => Lower Case / Plural  : `posts`
@@ -155,7 +155,7 @@ class CustomPostType extends WordPress\Main
 		return $pre;
 	}
 
-	
+
 	// NOTE: OLD: `Helper::getPostTypeLabel()`
 	public static function getLabel( $post_or_posttype, $label, $fallback_key = NULL, $fallback = '' )
 	{

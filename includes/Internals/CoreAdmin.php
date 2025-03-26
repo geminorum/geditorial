@@ -157,6 +157,8 @@ trait CoreAdmin
 		return TRUE;
 	}
 
+	// TODO: support ajax edit
+	// TODO: compact mode: using post-type icon
 	protected function coreadmin__hook_taxonomy_multiple_supported_column( $screen, $supported = NULL )
 	{
 		if ( 'edit-tags' !== $screen->base )

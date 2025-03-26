@@ -734,7 +734,7 @@ JS;
 			'_base' => static::BASE,
 			'_url'  => sanitize_url( admin_url( 'admin-ajax.php' ) ),
 
-			'_restBase'  => rest_url(),
+			'_restBase'  => Core\URL::untrail( rest_url() ),
 			'_restNonce' => wp_create_nonce( 'wp_rest' ),
 		] );
 

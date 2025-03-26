@@ -32,13 +32,13 @@ class TermHierarchy extends WordPress\Main
 
 	public static function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base && ! empty ( $screen->post_type ) )
+		if ( 'edit' === $screen->base && ! empty( $screen->post_type ) )
 			self::_hook_edit_screen_single_term_select( $screen->post_type );
 	}
 
 	private static function _hook_edit_screen_single_term_select( $posttype )
 	{
-		// NOTE: this is wp-core hook
+		// NOTE: this is WordPress's core hook
 		if ( ! apply_filters( 'quick_edit_enabled_for_post_type', TRUE, $posttype ) )
 			return FALSE;
 

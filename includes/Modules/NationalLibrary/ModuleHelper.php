@@ -22,7 +22,7 @@ class ModuleHelper extends gEditorial\Helper
 			'href'     => $url,
 			'data-bib' => $bib,
 			'title'    => _x( 'Book Page on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
-			'rel'      => 'noopener',
+			'rel'      => 'noreferrer',
 			'target'   => '_blank',
 		], $bib );
 	}
@@ -52,7 +52,7 @@ class ModuleHelper extends gEditorial\Helper
 			'href'      => $url,
 			'data-isbn' => $isbn,
 			'title'     => _x( 'Search ISBN on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
-			'rel'       => 'noopener',
+			'rel'       => 'noreferrer',
 			'target'    => '_blank',
 		], Core\ISBN::prep( $isbn, TRUE ) );
 	}

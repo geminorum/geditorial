@@ -72,7 +72,7 @@ trait Assets
 		}
 
 		if ( ! array_key_exists( '_rest', $args ) && method_exists( $this, 'restapi_get_namespace' ) )
-			$args['_rest'] = $this->restapi_get_namespace();
+			$args['_rest'] = sprintf( '/%s', $this->restapi_get_namespace() );
 
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
 			$args['_nonce'] = wp_create_nonce( $this->hook() );

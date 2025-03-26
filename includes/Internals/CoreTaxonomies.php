@@ -137,7 +137,7 @@ trait CoreTaxonomies
 		$settings = self::atts( [
 			'is_viewable'     => NULL,
 			'custom_captype'  => FALSE,
-			'admin_managed'   => NULL,    // psudo-setting: manage only for admins
+			'admin_managed'   => NULL,    // pseudo-setting: manage only for admins
 			'auto_parents'    => FALSE,
 			'auto_children'   => FALSE,
 			'single_selected' => FALSE,   // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
@@ -253,7 +253,7 @@ trait CoreTaxonomies
 
 					} else if ( $settings['admin_managed'] ) {
 
-						// TODO: suppport custom cap instead of `manage_options`
+						// TODO: support custom cap instead of `manage_options`
 
 						if ( ! array_key_exists( 'capabilities', $args ) )
 							$args['capabilities'] = [
@@ -690,7 +690,7 @@ trait CoreTaxonomies
 	}
 
 	/**
-	 * Makes available empty terms on sitempas.
+	 * Makes available empty terms on sitemaps.
 	 *
 	 * @param  string $constant
 	 * @return bool   $hooked
@@ -762,7 +762,7 @@ trait CoreTaxonomies
 	}
 
 	/**
-	 * Sets actions/filters for given taxonomy metabox.
+	 * Sets actions/filters for given taxonomy meta-box.
 	 *
 	 * @param  string        $constant
 	 * @param  string        $posttype

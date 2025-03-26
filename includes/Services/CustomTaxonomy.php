@@ -12,19 +12,19 @@ class CustomTaxonomy extends WordPress\Main
 	const BASE = 'geditorial';
 
 	/**
-	 * Generates lables for given taxonomy.
-	 * 
+	 * Generates labels for given taxonomy.
+	 *
 	 * @REF: `_nx_noop()`
 	 * @REF: `translate_nooped_plural()`
 	 * @REF: `WP_Taxonomy::get_default_labels()`
 	 * NOTE: OLD: `Helper::generateTaxonomyLabels()`
-	 * 
+	 *
 	 * %1$s => Camel Case / Plural  : `Tags`
 	 * %2$s => Camel Case / Singular: `Tag`
 	 * %3$s => Lower Case / Plural  : `tags`
 	 * %4$s => Lower Case / Singular: `tag`
 	 * %5$s => %s
-	 * 
+	 *
 	 * @param  mixed $name
 	 * @param  array $pre
 	 * @param  string $taxonomy

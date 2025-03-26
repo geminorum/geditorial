@@ -36,7 +36,7 @@ class Markdown extends gEditorial\Module
 				[
 					'field'       => 'wiki_linking',
 					'title'       => _x( 'Wiki Linking', 'Setting Title', 'geditorial-markdown' ),
-					'description' => _x( 'Converts wiki like markup to internal links.', 'Setting Description', 'geditorial-markdown' ),
+					'description' => _x( 'Converts wiki like markup into internal links.', 'Setting Description', 'geditorial-markdown' ),
 				],
 			],
 			'_frontend' => [
@@ -95,7 +95,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'convert' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Convert', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown: Convert', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'convert', 'class' => '-action '.$classs ],
 			];
@@ -105,7 +105,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'process' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Process', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown: Process', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'process', 'class' => '-action '.$classs ],
 			];
@@ -113,7 +113,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'cleanup' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Cleanup', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown: Cleanup', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'cleanup', 'class' => '-action '.$classs ],
 			];
@@ -121,7 +121,7 @@ class Markdown extends gEditorial\Module
 			$nodes[] = [
 				'id'     => $this->classs( 'discard' ),
 				'parent' => $classs,
-				'title'  => _x( 'Markdown Discard', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
+				'title'  => _x( 'Markdown: Discard', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
 				'meta'   => [ 'rel' => 'discard', 'class' => '-action -danger '.$classs ],
 			];
@@ -151,7 +151,7 @@ class Markdown extends gEditorial\Module
 			case 'process':
 
 				if ( ! $this->process_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable process Makrdown content into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 
@@ -159,7 +159,7 @@ class Markdown extends gEditorial\Module
 			case 'convert':
 
 				if ( ! $this->convert_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable convert content into Makrdown. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to convert content into Markdown. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 
@@ -168,7 +168,7 @@ class Markdown extends gEditorial\Module
 
 
 				if ( ! $this->cleanup_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable cleanup Makrdown content. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to cleanup Markdown content. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 
@@ -176,7 +176,7 @@ class Markdown extends gEditorial\Module
 			case 'discard':
 
 				if ( ! $this->discard_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable discard Makrdown content back into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to discard Markdown content back into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
 		}

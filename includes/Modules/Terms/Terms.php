@@ -1708,6 +1708,7 @@ class Terms extends gEditorial\Module
 					'name'  => 'term-'.$field,
 					'type'  => 'url',
 					'value' => '',
+					'style' => 'width:100%;',
 					'class' => [ 'ptitle', 'code' ],
 				] );
 

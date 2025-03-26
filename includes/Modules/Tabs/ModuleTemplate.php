@@ -68,7 +68,7 @@ class ModuleTemplate extends gEditorial\Template
 			'role'  => 'tablist',
 		], $html );
 
-		$html = Core\HTML::tag( 'nav', $html );
+		$html = '<div class="clearfix"></div>'.Core\HTML::tag( 'nav', $html );
 		$html.= '<div class="tab-content">';
 
 		foreach ( $items as $item_name => $item_args ) {

@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Recount extends gEditorial\Module
 {
 
-	// TODO: count by posttypes
+	// TODO: count by post-types
 
 	protected $disable_no_taxonomies = TRUE;
 

@@ -15,7 +15,7 @@ class Info extends WordPress\Main
 		return $ip;
 	}
 
-	// NOTE: must return link html tag
+	// NOTE: must return HTML link tag
 	public static function lookupLatLng( $latlng )
 	{
 		return Core\HTML::tag( 'a', [
@@ -53,7 +53,7 @@ class Info extends WordPress\Main
 		return $code;
 	}
 
-	// NOTE: must return link html tag
+	// NOTE: must return HTML link tag
 	public static function lookupISBN( $isbn )
 	{
 		return Core\HTML::tag( 'a', [
@@ -75,6 +75,7 @@ class Info extends WordPress\Main
 	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=122334
 	// https://www.goodreads.com/search?q=MAGICNUMBER
 	// https://www.goodreads.com/search?utf8=%E2%9C%93&q=0-13-981176-1&search_type=books
+	// NOTE: must return HTML link tag
 	public static function lookupURLforISBN( $isbn )
 	{
 		// $url = add_query_arg( [
@@ -89,7 +90,7 @@ class Info extends WordPress\Main
 		return apply_filters( static::BASE.'_lookup_isbn', $url, $isbn );
 	}
 
-	// NOTE: must return link html tag
+	// NOTE: must return HTML link tag
 	public static function lookupVIN( $vin )
 	{
 		return Core\HTML::tag( 'a', [
@@ -381,7 +382,7 @@ class Info extends WordPress\Main
 		).$after;
 	}
 
-	// NOTE: for front-end only, `$icon` must be array
+	// NOTE: front-end only. `$icon` must be an array
 	public static function getIcon( $icon, $title = FALSE, $link = FALSE )
 	{
 		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
@@ -416,9 +417,9 @@ class Info extends WordPress\Main
 	/**
 	 * Retrieves unit full/abbreviation titles given the identifier key.
 	 *
-	 * @param  string $key
-	 * @param  string $fallback
-	 * @return array  $info
+	 * @param string $key
+	 * @param string $fallback
+	 * @return array $info
 	 */
 	public static function getUnit( $key, $fallback = NULL )
 	{
@@ -762,9 +763,8 @@ class Info extends WordPress\Main
 	/**
 	 * Provides the distribution of the population according to age.
 	 * @source: https://en.wikipedia.org/wiki/Demographic_profile
-	 * FIXME: move to `Info` Main
 	 *
-	 * @param  bool  $extended
+	 * @param bool $extended
 	 * @return array $data
 	 */
 	public static function getAgeStructure( $extended = FALSE )
@@ -825,7 +825,7 @@ class Info extends WordPress\Main
 	 * - Adults (18 years or older)
 	 * - Older adults (65 and older)
 	 *
-	 * @param  bool $extended
+	 * @param bool $extended
 	 * @return array $data
 	 */
 	public static function getMedicalAge( $extended = FALSE )

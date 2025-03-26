@@ -74,6 +74,7 @@ class Tabs extends gEditorial\Module
 			'fields' => [
 				'mimetypes' => [
 					'application/pdf'      => _x( 'PDF', 'Mime-Type', 'geditorial-tabs' ),
+					'text/markdown'        => _x( 'Markdown', 'Mime-Type', 'geditorial-tabs' ),
 					'text/csv'             => _x( 'CSV', 'Mime-Type', 'geditorial-tabs' ),
 					'application/msword'   => _x( 'Microsoft Word', 'Mime-Type', 'geditorial-tabs' ),
 					'application/epub+zip' => _x( 'ePub', 'Mime-Type', 'geditorial-tabs' ),
@@ -178,6 +179,8 @@ class Tabs extends gEditorial\Module
 		echo $this->wrap_open( 'post-tabs' );
 			ModuleTemplate::bootstrap5Tabs( $items, $post );
 		echo '</div>';
+
+		return TRUE;
 	}
 
 	public function get_post_tabs( $post = NULL )
@@ -252,7 +255,7 @@ class Tabs extends gEditorial\Module
 
 	public function callback_post_attachment_summary( $post = NULL, $item_name = '', $item_args = [] )
 	{
-		echo $this->wrap( gEditorial()->attachments->attachments_shortcode( [
+		echo $this->wrap( gEditorial()->attachments->main_shortcode( [
 			'id'        => $post,
 			'mime_type' => $this->mimetype_post_attachment_summary( $post ),
 			'title'     => FALSE,
@@ -265,6 +268,7 @@ class Tabs extends gEditorial\Module
 	{
 		$defaults = [
 			'application/pdf',
+			'text/markdown',
 		];
 
 		return $this->filters( 'attachment_summary_mimetypes',

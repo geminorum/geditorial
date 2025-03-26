@@ -16,11 +16,6 @@ class Parser extends WordPress\Main
 	 * @source https://www.bureauworks.com/blog/what-is-data-parsing
 	 */
 
-	public static function setup()
-	{
-		// add_filter( '', [ __CLASS__, '' ] );
-	}
-
 	// public static function attachment( $post, $mimetype = NULL ) {}
 	// public static function file( $path, $mimetype = NULL ) {}
 
@@ -207,10 +202,10 @@ class Parser extends WordPress\Main
 	}
 
 	// FIXME: migrate!
-	public static function fromTXT( $path, $atts = [] )
+	public static function fromTXT( $file_path, $atts = [] )
 	{
 		$data = [
-			'items' => self::fromTXT_Legacy( $path ),
+			'items' => self::fromTXT_Legacy( $file_path ),
 		];
 
 		return $data;
@@ -222,16 +217,16 @@ class Parser extends WordPress\Main
 	}
 
 	// FIXME: migrate!
-	public static function fromJSON( $path, $atts = [] )
+	public static function fromJSON( $file_path, $atts = [] )
 	{
 		$data = [
-			'items' => self::fromJSON_Legacy( $path ),
+			'items' => self::fromJSON_Legacy( $file_path ),
 		];
 
 		return $data;
 	}
 
-	// OLD:: `Helper::parseJSON()`
+	// OLD: `Helper::parseJSON()`
 	public static function fromJSON_Legacy( $file_path )
 	{
 		if ( empty( $file_path ) )
@@ -241,16 +236,16 @@ class Parser extends WordPress\Main
 	}
 
 	// FIXME: migrate!
-	public static function fromXML( $path, $atts = [] )
+	public static function fromXML( $file_path, $atts = [] )
 	{
 		$data = [
-			'items' => self::fromXML_Legacy( $path ),
+			'items' => self::fromXML_Legacy( $file_path ),
 		];
 
 		return $data;
 	}
 
-	// OLD:: `Helper::parseXML()`
+	// OLD: `Helper::parseXML()`
 	public static function fromXML_Legacy( $file_path )
 	{
 		if ( empty( $file_path ) || ! function_exists( 'xml_parser_create' ) )
@@ -268,23 +263,23 @@ class Parser extends WordPress\Main
 	}
 
 	/**
-	 * Generates simple XLSX data string from given data.
+	 * Generates simple `XLSX` data string from given data.
 	 * @package `maksimovic/php-xlsx-writer`
 	 * @REF: https://github.com/maksimovic/PHP_XLSXWriter
 	 *
 	 * OLD: `Helper::generateXLSX()`
 	 *
-	 * @param  array  $data
-	 * @param  array  $headers
-	 * @param  string $sheet
-	 * @param  array  $widths
-	 * @param  array  $options
-	 * @param  array  $styles
-	 * @param  string $title
-	 * @param  string $desc
+	 * @param array $data
+	 * @param array $headers
+	 * @param string $sheet
+	 * @param array $widths
+	 * @param array $options
+	 * @param array $styles
+	 * @param string $title
+	 * @param string $description
 	 * @return string $content
 	 */
-	public static function toXLSX_Legacy( $data, $headers = [], $sheet = NULL, $widths = NULL, $options = NULL, $styles = NULL, $title = NULL, $desc = NULL )
+	public static function toXLSX_Legacy( $data, $headers = [], $sheet = NULL, $widths = NULL, $options = NULL, $styles = NULL, $title = NULL, $description = NULL )
 	{
 		$writer = new \XLSXWriter();
 		$writer->setTempDir( get_temp_dir() );
@@ -295,8 +290,8 @@ class Parser extends WordPress\Main
 		if ( ! is_null( $title ) )
 			$writer->setTitle( $title );
 
-		if ( ! is_null( $desc ) )
-			$writer->setDescription( $desc );
+		if ( ! is_null( $description ) )
+			$writer->setDescription( $description );
 
 		if ( $user = gEditorial()->user() )
 			$writer->setAuthor( get_userdata( $user )->display_name );
