@@ -49,6 +49,20 @@
   .column-users {
     width: 74px; // column posts
   }
+
+  // Module: Socialite
+  th.column-geditorial-socialite {
+    span.-column-icon::before {
+      content: "\f526"; // `dashicons-money`
+    }
+  }
+
+  th.column-geditorial_multiplesupported {
+    span.-column-icon::before {
+      // content: "\f109"; // `dashicons-admin-post`
+      content: "\f17e"; // `dashicons-database`
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

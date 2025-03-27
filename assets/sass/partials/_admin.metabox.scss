@@ -593,7 +593,7 @@ $spacer: 1rem !default;
   }
 
   .field-wrap.-text-preview {
-    padding: $spacer * .25;
+    padding: ($spacer * .25) ($spacer * .5);
     border: 1px dashed $gray-light;
     background-color: $gray-100;
     border-radius: $spacer * .25;
@@ -618,6 +618,10 @@ $spacer: 1rem !default;
     }
 
     &.-byline {
+      font-size: smaller;
+      min-height: 30px; // same as .button
+      line-height: 2.15384615; // same as .button
+
       a {
         color: #82878c; // #b4b9be;
         transition: all 0.3s ease;

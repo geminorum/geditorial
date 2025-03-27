@@ -18,8 +18,8 @@ body.geditorial-terms-enabled {
   @include plugin-listtable-column-icon("posts", "\f157");
   @include plugin-listtable-column-icon("order", "\f156", "column-geditorial-terms"); // `dashicons-sort`
   @include plugin-listtable-column-icon("code", "\f475", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("min", "\f347", "column-geditorial-terms"); // `dashicons-arrow-down-alt2`
-  @include plugin-listtable-column-icon("max", "\f343", "column-geditorial-terms"); // `dashicons-arrow-up-alt2`
+  @include plugin-listtable-column-icon("min", "\f347", "column-geditorial-terms");  // `dashicons-arrow-down-alt2`
+  @include plugin-listtable-column-icon("max", "\f343", "column-geditorial-terms");  // `dashicons-arrow-up-alt2`
   @include plugin-listtable-column-icon("viewable", "\f177", "column-geditorial-terms");
   @include plugin-listtable-column-icon("arrow", "\f545", "column-geditorial-terms");
   @include plugin-listtable-column-icon("barcode", "\f212", "column-geditorial-terms");
@@ -28,7 +28,12 @@ body.geditorial-terms-enabled {
   @include plugin-listtable-column-icon("label", "\f323", "column-geditorial-terms");
   @include plugin-listtable-column-icon("color", "\f131", "column-geditorial-terms");
   @include plugin-listtable-column-icon("author", "\f110", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("latlng", "\f11f", "column-geditorial-terms"); // `dashicons-admin-site-alt3`
+  @include plugin-listtable-column-icon("latlng", "\f11f", "column-geditorial-terms");  // `dashicons-admin-site-alt3`
+  @include plugin-listtable-column-icon("source", "\f504", "column-geditorial-terms");  // `dashicons-external`
+  @include plugin-listtable-column-icon("embed", "\f13f", "column-geditorial-terms");   // `dashicons-embed-generic`
+  @include plugin-listtable-column-icon("url", "\f103", "column-geditorial-terms");     // `dashicons-admin-links`
+  @include plugin-listtable-column-icon("born", "\f517", "column-geditorial-terms");     // `dashicons-controls-skipforward`
+  @include plugin-listtable-column-icon("dead", "\f516", "column-geditorial-terms");     // `dashicons-controls-skipback`
 
   .wp-list-table.tags {
     .column-slug {
