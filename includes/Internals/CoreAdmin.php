@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -157,8 +158,7 @@ trait CoreAdmin
 		return TRUE;
 	}
 
-	// TODO: support ajax edit
-	// TODO: compact mode: using post-type icon
+	// TODO: support Ajax edit
 	protected function coreadmin__hook_taxonomy_multiple_supported_column( $screen, $supported = NULL )
 	{
 		if ( 'edit-tags' !== $screen->base )
@@ -176,11 +176,11 @@ trait CoreAdmin
 		$posttypes = WordPress\PostType::get( 4, [], 'read' );
 
 		add_filter( sprintf( 'manage_edit-%s_columns', $object->name ),
-			function ( $columns ) {
+			function ( $columns ) use ( $object ) {
 				return Core\Arraay::insert( $columns, [
-					// NOTE: globalized: bc no-way to pass class for the column header!
+					// NOTE: globalized: since no-way to pass CSS class for the column header!
 					$this->hook_base( 'multiplesupported' )
-						=> _x( 'Connected', 'Internal: CoreAdmin: Column', 'geditorial-admin' ),
+						=> $this->get_column_title_icon( 'posts', $object->name, _x( 'Connected', 'Internal: CoreAdmin: Column', 'geditorial-admin' ) ),
 				], 'posts', 'before' );
 			} );
 
@@ -193,18 +193,24 @@ trait CoreAdmin
 				if ( ! $term = WordPress\Term::get( $term_id, $object->name ) )
 					return;
 
+				$list = [];
+
 				foreach ( $supported as $posttype ) {
 
 					if ( ! array_key_exists( $posttype, $posttypes ) )
 						continue; // no cap
 
-					$html = Services\CustomPostType::getLabel( $posttypes[$posttype], 'extended_label' );
+					$edit = WordPress\PostType::edit( $posttype, [ $object->query_var => $term->slug ] );
 
-					if ( $link = WordPress\PostType::edit( $posttype, [ $object->query_var => $term->slug ] ) )
-						$html = Core\HTML::link( $html, $link, TRUE );
-
-					echo Core\HTML::wrap( $html, '-supported-posttype' );
+					$list[] = Core\HTML::tag( $edit ? 'a' : 'span', [
+						'href'   => $edit,
+						'title'  => Services\CustomPostType::getLabel( $posttypes[$posttype], 'extended_label' ),
+						'target' => $edit ? '_blank' : FALSE,
+						'class'  => $edit ? '-icon -link' : '-icon',
+					], Helper::getIcon( $posttypes[$posttype]->menu_icon, 'admin-post' ) );
 				}
+
+				echo Core\HTML::wrap( Core\HTML::renderList( $list ), '-icon-list -supported-posttype' );
 
 			}, 10, 3 );
 	}
