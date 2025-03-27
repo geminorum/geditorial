@@ -138,7 +138,9 @@ class Users extends gEditorial\Module
 			$this->register_taxonomy( 'group_taxonomy', [
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
-			], 'user' );
+			], 'user', [
+				'custom_objects' => 'user',
+			] );
 
 			// no need, we use slash in slug
 			// add_filter( 'sanitize_user', [ $this, 'sanitize_user' ] );
@@ -148,7 +150,9 @@ class Users extends gEditorial\Module
 			$this->register_taxonomy( 'type_taxonomy', [
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
-			], 'user' );
+			], 'user', [
+				'custom_objects' => 'user',
+			] );
 
 		if ( $this->get_setting( 'author_categories' ) )
 			$this->filter( 'pre_option_default_category', 3 );

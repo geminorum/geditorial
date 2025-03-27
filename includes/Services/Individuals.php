@@ -10,6 +10,9 @@ class Individuals extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	// TODO: support: `Byline` Module
+	// TODO: support: `byline` field from meta-data
+
 	public static function setup()
 	{
 		if ( is_admin() )

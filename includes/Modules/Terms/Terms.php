@@ -367,16 +367,18 @@ class Terms extends gEditorial\Module
 				if ( $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy ) )
 					continue;
 
-				add_action( $screen->taxonomy.'_add_form_fields', function ( $taxonomy ) use ( $field ) {
-					$this->add_form_field( $field, $taxonomy );
-				}, 8, 1 );
+				add_action( $screen->taxonomy.'_add_form_fields',
+					function ( $taxonomy ) use ( $field ) {
+						$this->add_form_field( $field, $taxonomy );
+					}, 8, 1 );
 
 				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) ) {
 
-					add_action( 'quick_edit_custom_box', function ( $column, $screen, $taxonomy ) use ( $field ) {
-						if ( $this->classs( $field ) == $column )
-							$this->quick_form_field( $field, $taxonomy );
-					}, 10, 3 );
+					add_action( 'quick_edit_custom_box',
+						function ( $column, $screen, $taxonomy ) use ( $field ) {
+							if ( $this->classs( $field ) == $column )
+								$this->quick_form_field( $field, $taxonomy );
+						}, 10, 3 );
 
 					$enqueue = TRUE;
 				}
@@ -429,9 +431,10 @@ class Terms extends gEditorial\Module
 
 				$disabled = $this->filters( 'disable_field_edit', FALSE, $field, $screen->taxonomy );
 
-				add_action( $screen->taxonomy.'_edit_form_fields', function ( $term, $taxonomy ) use ( $field, $disabled ) {
-					$this->edit_form_field( $field, $taxonomy, $term, $disabled );
-				}, 8, 2 );
+				add_action( $screen->taxonomy.'_edit_form_fields',
+					function ( $term, $taxonomy ) use ( $field, $disabled ) {
+						$this->edit_form_field( $field, $taxonomy, $term, $disabled );
+					}, 8, 2 );
 
 				if ( $disabled )
 					continue;

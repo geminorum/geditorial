@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class CustomTaxonomy extends WordPress\Main
@@ -160,6 +161,34 @@ class CustomTaxonomy extends WordPress\Main
 					return $object->labels->singular_name;
 
 				return $object->labels->name;
+
+			case 'extended_no_items':
+
+				if ( ! empty( $object->labels->no_items_available ) )
+					$html = $object->labels->no_items_available;
+
+				else
+					$html = vsprintf(
+						/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+						_x( 'There are no %3$s available!', 'CustomTaxonomy: Label for `no_items_available`', 'geditorial' ),
+						WordPress\Strings::getNameForms( $name )
+					);
+
+				if ( ! $edit = WordPress\Taxonomy::edit( $object ) )
+					return $html;
+
+				return Core\HTML::link( $html, $edit, TRUE );
+
+			case 'desc':
+			case 'description':
+
+				if ( ! empty( $object->description ) )
+					return $object->description;
+
+				break; // go to fall-backs
+
+			// case 'assign_description': // TODO: display on meta-box after hook
+			// case 'extended_description': // TODO
 
 			case 'show_option_no_items':
 				return sprintf( '(%s)', $object->labels->no_terms );

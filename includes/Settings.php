@@ -2406,6 +2406,9 @@ class Settings extends WordPress\Main
 	// TODO: support HTML `title_attr`
 	public static function fieldType( $atts, &$scripts )
 	{
+		if ( FALSE === $atts )
+			return;
+
 		$args = self::atts( [
 			'title'        => '&nbsp;',
 			'label_for'    => '',
@@ -2441,6 +2444,7 @@ class Settings extends WordPress\Main
 			'constant'     => FALSE, // override value if constant defined & disabling
 			'data'         => [], // data attr
 			'extra'        => [], // extra args to pass to deeper generator
+			'hidden'       => [], // extra hidden values
 			'wrap'         => FALSE,
 			'cap'          => NULL,
 
@@ -2466,7 +2470,10 @@ class Settings extends WordPress\Main
 
 		} else if ( $args['wrap'] ) {
 
-			echo '<'.$args['wrap'].' class="'.Core\HTML::prepClass( '-wrap', '-settings-field', '-'.$args['type'] ).'">';
+			echo '<'.$args['wrap'].' class="'.Core\HTML::prepClass( '-wrap', '-settings-field', '-'.$args['type'], $args['class'] ).'">';
+
+			if ( ! empty( $args['label_for'] ) && '&nbsp;' !== $args['title'] )
+				echo Core\HTML::tag( 'label', [ 'for' => $args['label_for'] ], $args['title'] );
 		}
 
 		if ( ! $args['field'] )
@@ -3462,11 +3469,13 @@ class Settings extends WordPress\Main
 				echo 'Error: setting type not defind!';
 		}
 
+		Core\HTML::inputHiddenArray( $args['hidden'] );
+
 		if ( $args['after'] )
 			echo '&nbsp;'.$args['after'];
 
 		if ( FALSE !== $args['values'] )
-		Core\HTML::desc( $args['description'] );
+			Core\HTML::desc( $args['description'] );
 
 		if ( 'tr' == $args['wrap'] )
 			echo '</td></tr>';

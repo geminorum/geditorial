@@ -114,7 +114,7 @@ trait PairedRest
 		$parent = WordPress\Post::get( (int) $request['parent'] );
 		$posts  = Core\Arraay::pluck( $raw, 'id' );
 
-		// TODO: use RelatedMeta API
+		// TODO: use `TermRelations` API
 		// $metas = Core\Arraay::pluck( $raw, 'meta', 'post_id' );
 
 		WordPress\Taxonomy::disableTermCounting();

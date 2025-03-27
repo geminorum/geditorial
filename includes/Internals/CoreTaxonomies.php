@@ -76,6 +76,7 @@ trait CoreTaxonomies
 
 		$args['meta_box_cb'] = $this->determine_taxonomy_meta_box_cb( $constant, $args['meta_box_cb'], $args['hierarchical'] );
 
+		// TODO: get `$args['description']` from module strings api
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_taxonomy_labels( $constant );
 
@@ -136,6 +137,7 @@ trait CoreTaxonomies
 	{
 		$settings = self::atts( [
 			'is_viewable'     => NULL,
+			'custom_objects'  => NULL,    // NULL for default. `user`/`comment`/`taxonomy` // TODO: WTF?!
 			'custom_captype'  => FALSE,
 			'admin_managed'   => NULL,    // pseudo-setting: manage only for admins
 			'auto_parents'    => FALSE,

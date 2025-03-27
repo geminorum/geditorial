@@ -137,6 +137,9 @@ class Helper extends WordPress\Main
 		if ( Core\Text::starts( $icon, 'data:image/' ) )
 			return Core\HTML::img( $icon, [ '-icon', '-encoded' ] );
 
+		if ( Core\Text::starts( $icon, 'dashicons-' ) )
+			$icon = Core\Text::stripPrefix( $icon, 'dashicons-' );
+
 		return Core\HTML::getDashicon( $icon );
 	}
 

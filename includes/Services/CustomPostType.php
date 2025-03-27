@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class CustomPostType extends WordPress\Main
@@ -177,6 +178,16 @@ class CustomPostType extends WordPress\Main
 
 			case 'extended_label':
 				return $object->labels->name;
+
+			// case 'extended_no_items': // TODO
+
+			case 'desc':
+			case 'description':
+
+				if ( ! empty( $object->description ) )
+					return $object->description;
+
+				break; // go to fall-backs
 
 			case 'paired_no_items':
 				/* translators: `%1$s`: camel case / plural posttype, `%2$s`: camel case / singular posttype, `%3$s`: lower case / plural posttype, `%4$s`: lower case / singular posttype, `%5$s`: `%s` placeholder */

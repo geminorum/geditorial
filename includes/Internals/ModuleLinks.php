@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 trait ModuleLinks
 {
 
-	// FIXME: get dashboard menu for the module
+	// TODO: get dashboard menu for the module
 	protected function get_module_links()
 	{
 		$links  = [];

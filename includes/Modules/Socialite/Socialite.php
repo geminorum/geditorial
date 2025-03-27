@@ -259,7 +259,8 @@ class Socialite extends gEditorial\Module
 			return $columns;
 
 		return Core\Arraay::insert( $columns, [
-			$this->classs() => $this->get_column_title( 'social', $taxonomy ),
+			// $this->classs() => $this->get_column_title( 'social', $taxonomy ),
+			$this->classs() => $this->get_column_title_icon( 'social', $taxonomy ),
 		], 'posts', 'before' );
 	}
 
