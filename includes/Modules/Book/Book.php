@@ -20,6 +20,7 @@ class Book extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\CoreThumbnails;
 	use Internals\DashboardSummary;
 	use Internals\MetaBoxCustom;
 	use Internals\MetaBoxMain;
@@ -531,6 +532,8 @@ class Book extends gEditorial\Module
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 			'status_taxonomy'  => TRUE,
 		] );
+
+		$this->corethumbnails__hook_tabloid_side_image( 'main_posttype' );
 
 		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'subject_shortcode' );
