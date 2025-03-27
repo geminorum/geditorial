@@ -425,7 +425,7 @@ class Post extends Core\Base
 
 	/**
 	 * Retrieves post parent titles given a post ID or post object.
-	 * NOTE: parent post type can be diffrenet
+	 * NOTE: parent post type can be different
 	 *
 	 * @param  null|int|object $post
 	 * @param  string          $suffix
@@ -510,7 +510,7 @@ class Post extends Core\Base
 	}
 
 	/**
-	 * Updates the parnt for the given post.
+	 * Updates the parent for the given post.
 	 * NOTE: directly updates db to avoid `wp_update_post()`
 	 *
 	 * @param  int  $post_id

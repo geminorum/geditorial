@@ -54,6 +54,14 @@ class Taxonomy extends Core\Base
 			: $object->query_var;
 	}
 
+	public static function types( $taxonomy )
+	{
+		if ( ! $object = self::object( $taxonomy ) )
+			return [];
+
+		return (array) $object->object_type;
+	}
+
 	/**
 	 * Determines whether the taxonomy object is hierarchical.
 	 * Also accepts taxonomy object.
@@ -216,11 +224,15 @@ class Taxonomy extends Core\Base
 
 			// with object_type
 			else if ( 5 === $mod )
-				$list[$taxonomy] = $taxonomy_obj->labels->name.Core\HTML::joined( $taxonomy_obj->object_type, ' [', ']' );
+				$list[$taxonomy] = $taxonomy_obj->labels->name.Core\HTML::joined( (array) $taxonomy_obj->object_type, ' [', ']' );
 
 			// with name
 			else if ( 6 === $mod )
 				$list[$taxonomy] = $taxonomy_obj->labels->menu_name.' ('.$taxonomy_obj->name.')';
+
+			// list of object types
+			else if ( 7 === $mod )
+				$list[$taxonomy] = (array) $taxonomy_obj->object_type;
 		}
 
 		return $list;
@@ -891,7 +903,7 @@ class Taxonomy extends Core\Base
 		return $data[$taxonomy][$term_id] = $parents;
 	}
 
-	// TODO: must suport different parents
+	// TODO: must support different parents
 	public static function getTargetTerm( $target, $taxonomy, $args = [], $meta = [] )
 	{
 		$target = trim( $target );

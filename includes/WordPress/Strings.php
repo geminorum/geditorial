@@ -87,6 +87,7 @@ class Strings extends Core\Base
 				'null', 'NULL', 'Null',
 				'false', 'FALSE', 'False',
 				'zero', 'ZERO', 'Zero',
+				'none', 'NONE', 'None',
 				'ندارد', 'نامعلوم', 'هيچكدام', '؟',
 			];
 
@@ -169,6 +170,11 @@ class Strings extends Core\Base
 			return $before.implode( $separator, $items ).$after;
 
 		return $empty;
+	}
+
+	public static function joinWithLast( $parts, $between, $last )
+	{
+		return implode( $last, array_filter( array_merge( [ implode( $between, array_slice( $parts, 0, -1 ) ) ], array_slice( $parts, -1 ) ) ) );
 	}
 
 	public static function getPiped( $items, $before = '', $after = '', $empty = '', $separator = NULL )

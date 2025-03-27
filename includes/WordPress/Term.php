@@ -335,11 +335,13 @@ class Term extends Core\Base
 			'author'      => User::getTitleRow( get_term_meta( $term->term_id, 'author', TRUE ) ),
 			'title'       => self::title( $term ),
 			'link'        => self::link( $term, FALSE ),
+			'edit'        => self::edit( $term ),
 			'date'        => wp_date( get_option( 'date_format' ), $timestamp ),
 			'time'        => wp_date( get_option( 'time_format' ), $timestamp ),
 			'ago'         => $timestamp ? human_time_diff( $timestamp ) : FALSE,
 			'image'       => self::image( $term, $context ),
 			'description' => wpautop( apply_filters( 'html_format_i18n', $term->description ) ),
+			'subtitle'    => get_term_meta( $term->term_id, 'subtitle', TRUE ) ?: get_term_meta( $term->term_id, 'tagline', TRUE ),
 		];
 	}
 
