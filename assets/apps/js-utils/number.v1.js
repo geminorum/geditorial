@@ -85,10 +85,18 @@ const toEnglish = (input) => {
 };
 
 /**
+ * @source https://gist.github.com/sajaddp/cfde6e99a26b6177fa353d4a597f7230
+ * @source https://stackoverflow.com/a/63133882
+ * @param {String} input
+ * @returns {String}
+ */
+const toEnglishALT = (input) => input.replace(/[٠-٩۰-۹]/g, a => a.charCodeAt(0) & 15);
+
+/**
  * @source https://www.npmjs.com/package/iran-basic
  *
  * @param {String} input
- * @returns
+ * @returns {Bool}
  */
 const isArabic = (input) => {
   return /[\u0600-\u06FF\u0750-\u077F]/.test(input);
@@ -147,6 +155,7 @@ export {
   inRange,
   between,
   toEnglish,
+  toEnglishALT,
   toPersian,
   factorial
 };

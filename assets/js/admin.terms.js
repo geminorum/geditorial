@@ -154,6 +154,8 @@
       app.inlineCode('code', tag, event);
       app.inlineText('barcode', tag, event);
       app.inlineDate('date', tag, event);
+      app.inlineDate('born', tag, event);
+      app.inlineDate('dead', tag, event);
       app.inlineDate('datetime', tag, event);
       app.inlineDate('datestart', tag, event);
       app.inlineDate('dateend', tag, event);

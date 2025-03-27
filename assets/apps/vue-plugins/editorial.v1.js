@@ -19,6 +19,6 @@ export default {
     app.provide('fields', options.fields || {});
     app.provide('linked', options.linked || {});
     app.provide('config', options.config || {});
-    app.provide('endpoint', options._rest ? ('/' + options._rest) : '/wp/v2/posts'); // `this.endpoint`
+    app.provide('endpoint', options._rest ? options._rest : '/wp/v2/posts'); // `this.endpoint`
   }
 };

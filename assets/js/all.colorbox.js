@@ -22,6 +22,7 @@
           const options = {
             href: $instance.attr('href'),
             title: mobile ? false : $instance.attr('title'),
+            escKey: true,
             iframe: true,
             fastIframe: false,
             // closeButton: false,
