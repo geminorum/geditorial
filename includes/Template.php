@@ -83,19 +83,19 @@ class Template extends WordPress\Main
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'field'        => NULL, // null for `image`
+			'field'        => NULL,                                 // null for `image`
 			'id'           => NULL,
 			'size'         => NULL,
-			'alt'          => NULL, // null for $args['title']
+			'alt'          => NULL,                                 // null for `$args['title']`
 			'class'        => '-term-image img-fluid',
 			'taxonomy'     => '',
 			'link'         => 'archive',
 			'title'        => 'name',
 			'data'         => [ 'toggle' => 'tooltip' ],
 			'callback'     => [ __CLASS__, 'termImageCallback' ],
-			'figure'       => FALSE, // or class of the figure
-			'caption_text' => FALSE, // custom figcaption text
-			'caption_link' => FALSE, // custom figcaption link / TRUE for default
+			'figure'       => FALSE,                                // or class of the figure
+			'caption_text' => FALSE,                                // custom `figcaption` text
+			'caption_link' => FALSE,                                // custom `figcaption` link / TRUE for default
 			'fallback'     => FALSE,
 			'default'      => FALSE,
 			'before'       => '',
@@ -182,7 +182,7 @@ class Template extends WordPress\Main
 			'id'       => NULL,
 			'class'    => '-term-contact',
 			'taxonomy' => '',
-			'title'    => _x( 'Contact', 'Template: Term Contact Title', 'geditorial' ), // or term core/meta field
+			'title'    => _x( 'Contact', 'Template: Term Contact Title', 'geditorial' ),   // or term core/meta field
 			'default'  => FALSE,
 			'before'   => '',
 			'after'    => '',
@@ -262,7 +262,6 @@ class Template extends WordPress\Main
 		if ( ! $args['alt'] && 'parent_title' === $args['alt_fallback'] )
 			$args['alt'] = trim( strip_tags( get_the_title( $args['id'] ) ) );
 
-		// if ( $src = self::getPostImageSrc( $args['thumbnail'], $args['size'], $args['id'] ) )
 		if ( $src = WordPress\Post::image( $args['id'], NULL, $args['size'], $args['thumbnail'] ) )
 			$html = Core\HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
 
@@ -277,7 +276,7 @@ class Template extends WordPress\Main
 		$html = $image;
 
 		if ( $link )
-			$html = '<a title="'.Core\HTML::escape( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'" href="'.$link.'">'.$html.'</a>';
+			$html = '<a title="'.Core\HTML::escape( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'"'.( $args['newtab'] ? ' target="_blank"' : ' ' ).'href="'.$link.'">'.$html.'</a>';
 
 		if ( $title && $args['figure'] ) {
 
@@ -310,16 +309,17 @@ class Template extends WordPress\Main
 			'id'           => NULL,
 			'thumbnail'    => NULL,
 			'size'         => NULL,
-			'alt'          => NULL, // `FALSE` to disable
-			'alt_fallback' => 'parent_title', // `FALSE` to disable
+			'alt'          => NULL,                                 // `FALSE` to disable
+			'alt_fallback' => 'parent_title',                       // `FALSE` to disable
 			'class'        => '-post-image',
 			'type'         => 'post',
 			'link'         => 'parent',
+			'newtab'       => FALSE,
 			'title'        => 'title',
 			'data'         => [ 'toggle' => 'tooltip' ],
 			'callback'     => [ __CLASS__, 'postImageCallback' ],
-			'figure'       => FALSE, // or class of the figure
-			'caption_link' => FALSE, // custom figcaption link / TRUE for default
+			'figure'       => FALSE,                                // or class of the figure
+			'caption_link' => FALSE,                                // custom `figcaption` link / TRUE for default
 			'fallback'     => FALSE,
 			'default'      => FALSE,
 			'wrap'         => TRUE,
@@ -355,13 +355,26 @@ class Template extends WordPress\Main
 		if ( $args['link'] ) {
 
 			if ( 'parent' == $args['link'] )
-				$args['link'] = in_array( $status, [ 'publish', 'inherit' ] ) ? apply_filters( 'the_permalink', get_permalink( $post ), $post ) : FALSE;
+				$args['link'] = in_array( $status, [ 'publish', 'inherit' ], TRUE )
+					? apply_filters( 'the_permalink', get_permalink( $post ), $post )
+					: FALSE;
 
 			else if ( 'attachment' == $args['link'] )
-				$args['link'] = ( $args['thumbnail'] && in_array( $status, [ 'publish', 'inherit' ] ) ) ? get_attachment_link( $args['thumbnail'] ) : FALSE;
+				$args['link'] = ( $args['thumbnail']
+					&& in_array( $status, [ 'publish', 'inherit' ], TRUE ) )
+						? get_attachment_link( $args['thumbnail'] )
+						: FALSE;
 
 			else if ( 'url' == $args['link'] )
-				$args['link'] = ( $args['thumbnail'] && in_array( $status, [ 'publish', 'inherit' ] ) ) ? wp_get_attachment_url( $args['thumbnail'] ) : FALSE;
+				$args['link'] = ( $args['thumbnail']
+					&& in_array( $status, [ 'publish', 'inherit' ], TRUE ) )
+						? wp_get_attachment_url( $args['thumbnail'] )
+						: FALSE;
+
+			else if ( 'edit' == $args['link'] )
+				$args['link'] = $args['thumbnail']
+					? WordPress\Attachment::edit( $args['thumbnail'] )
+					: FALSE;
 		}
 
 		$args  = apply_filters( static::BASE.'_template_post_image_args', $args, $post, $module, $title );
@@ -374,17 +387,19 @@ class Template extends WordPress\Main
 		} else if ( $image ) {
 
 			$html = Core\HTML::tag( ( $args['link'] ? 'a' : 'span' ), [
-				'href'  => $args['link'] ?: FALSE,
-				'title' => $title,
-				'data'  => $args['link'] ? $args['data'] : FALSE,
+				'href'   => $args['link'] ?: FALSE,
+				'target' => $args['newtab'] ? '_blank' : FALSE,
+				'title'  => $title,
+				'data'   => $args['link'] ? $args['data'] : FALSE,
 			], $image );
 
 		} else if ( $args['fallback'] && in_array( $status, [ 'publish', 'inherit' ] ) ) {
 
 			$html = Core\HTML::tag( 'a', [
-				'href'  => apply_filters( 'the_permalink', get_permalink( $post ), $post ),
-				'title' => $title,
-				'data'  => $args['data'],
+				'href'   => apply_filters( 'the_permalink', get_permalink( $post ), $post ),
+				'target' => $args['newtab'] ? '_blank' : FALSE,
+				'title'  => $title,
+				'data'   => $args['data'],
 			], get_the_title( $post ) );
 		}
 
@@ -422,8 +437,8 @@ class Template extends WordPress\Main
 			'published'     => TRUE,
 			'single'        => FALSE,
 			'item_tag'      => 'span',
-			'item_title'    => '', // use %s for post title
-			'item_title_cb' => FALSE, // callback for title attr
+			'item_title'    => '',       // use `%s` for post title
+			'item_title_cb' => FALSE,    // callback for title attribute
 			'default'       => FALSE,
 			'before'        => '',
 			'after'         => '',
@@ -511,20 +526,17 @@ class Template extends WordPress\Main
 	// NOTE: wraps the service method
 	public static function getMetaField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
 	{
-		// self::_dep( 'Services\PostTypeFields::getField()' );
 		return Services\PostTypeFields::getField( $field_key, $atts, $check, $module );
 	}
 
 	// NOTE: wraps the service method
 	public static function getMetaFieldRaw( $field_key, $post_id, $module = 'meta', $check = FALSE, $default = FALSE )
 	{
-		// self::_dep( 'Services\PostTypeFields::getFieldRaw()' );
 		return Services\PostTypeFields::getFieldRaw( $field_key, $post_id, $module, $check, $default );
 	}
 
 	/**
 	 * Applies WordPress embed mechanism on given URL.
-	 *
 	 * @source https://wordpress.stackexchange.com/a/23213/
 	 *
 	 * @param string $meta
@@ -1126,7 +1138,6 @@ class Template extends WordPress\Main
 
 			do_action( sprintf( '%s_term_intro_title_before', static::BASE ), $term, $desc, (bool) $image, $args, $module );
 
-			// if ( $args['heading'] && ( $image || $desc ) )
 			if ( $args['heading'] )
 				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ).Core\HTML::small( $suffix, '-secondary', TRUE ) );
 

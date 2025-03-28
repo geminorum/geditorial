@@ -376,7 +376,7 @@ class Info extends WordPress\Main
 	public static function renderRegistered( $datetime_string, $before = '', $after = '' )
 	{
 		echo $before.sprintf(
-			/* translators: `%s`: datetime string */
+			/* translators: `%s`: date-time string */
 			_x( 'Registered on %s', 'Info: Message', 'geditorial-admin' ),
 			Helper::getDateEditRow( $datetime_string, '-registered' )
 		).$after;

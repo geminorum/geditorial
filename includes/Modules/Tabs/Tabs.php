@@ -73,11 +73,13 @@ class Tabs extends gEditorial\Module
 		$strings = [
 			'fields' => [
 				'mimetypes' => [
-					'application/pdf'      => _x( 'PDF', 'Mime-Type', 'geditorial-tabs' ),
-					'text/markdown'        => _x( 'Markdown', 'Mime-Type', 'geditorial-tabs' ),
-					'text/csv'             => _x( 'CSV', 'Mime-Type', 'geditorial-tabs' ),
-					'application/msword'   => _x( 'Microsoft Word', 'Mime-Type', 'geditorial-tabs' ),
-					'application/epub+zip' => _x( 'ePub', 'Mime-Type', 'geditorial-tabs' ),
+					'audio/mpeg'               => _x( 'MP3', 'Mime-Type', 'geditorial-tabs' ),
+					'application/pdf'          => _x( 'PDF', 'Mime-Type', 'geditorial-tabs' ),
+					'text/markdown'            => _x( 'Markdown', 'Mime-Type', 'geditorial-tabs' ),
+					'text/csv'                 => _x( 'CSV', 'Mime-Type', 'geditorial-tabs' ),
+					'application/vnd.ms-excel' => _x( 'CSV (Excel)', 'Mime-Type', 'geditorial-tabs' ),
+					'application/msword'       => _x( 'Microsoft Word', 'Mime-Type', 'geditorial-tabs' ),
+					'application/epub+zip'     => _x( 'ePub', 'Mime-Type', 'geditorial-tabs' ),
 				],
 			],
 		];
@@ -267,6 +269,7 @@ class Tabs extends gEditorial\Module
 	public function mimetype_post_attachment_summary( $post = NULL )
 	{
 		$defaults = [
+			'audio/mpeg',
 			'application/pdf',
 			'text/markdown',
 		];

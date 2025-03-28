@@ -25,9 +25,9 @@ trait ViewEngines
 		if ( empty( $template ) )
 			return $verbose ? FALSE : '';
 
-		// `0` means no `Mustache_Loader_FilesystemLoader`
-		if ( empty( $this->view_engines[0] ) )
-			$this->view_engines[0] = $this->viewengine__get( 0 );
+		// with no `Mustache_Loader_FilesystemLoader`
+		if ( empty( $this->view_engines['__string__'] ) )
+			$this->view_engines['__string__'] = $this->viewengine__get();
 
 		$html     = $this->view_engines[0]->render( $template, $data );
 		$filtered = $this->filters( 'render_view_string', $html, $template, $data );
@@ -76,11 +76,11 @@ trait ViewEngines
 	}
 
 	// NOTE: always gets a new instance
-	protected function viewengine__get( $path )
+	protected function viewengine__get( $path = FALSE )
 	{
 		$args = [
 			'cache_file_mode' => FS_CHMOD_FILE,
-			'cache'           => get_temp_dir(),   // sprintf( '%sviews/cache', $this->path ),
+			'cache'           => get_temp_dir(),
 
 			'template_class_prefix' => sprintf( '__%s_%s_', $this->base, $this->key ),
 
@@ -179,7 +179,7 @@ trait ViewEngines
 		if ( $post = WordPress\Post::get( $post ) )
 			$part = sprintf( '%s-type-%s', $context, $post->post_type );
 
-		if ( ! is_readable( $this->get_view_path( $part ) ) )
+		if ( ! Core\File::readable( $this->get_view_path( $part ) ) )
 			$part = $fallback;
 
 		return $this->filters( 'view_part_by_post', $part, $post, $context, $fallback );
@@ -194,7 +194,7 @@ trait ViewEngines
 		if ( $term = WordPress\Term::get( $term ) )
 			$part = sprintf( '%s-tax-%s', $context, $term->taxonomy );
 
-		if ( ! is_readable( $this->get_view_path( $part ) ) )
+		if ( ! Core\File::readable( $this->get_view_path( $part ) ) )
 			$part = $fallback;
 
 		return $this->filters( 'view_part_by_term', $part, $term, $context, $fallback );

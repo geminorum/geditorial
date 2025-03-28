@@ -81,7 +81,7 @@ class Plugin
 			if ( ! $check )
 				require_once $base.'includes/'.$path.'.php';
 
-			else if ( is_readable( $base.'includes/'.$path.'.php' ) )
+			else if ( Core\File::readable( $base.'includes/'.$path.'.php' ) )
 				require_once $base.'includes/'.$path.'.php';
 	}
 

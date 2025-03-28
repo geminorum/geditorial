@@ -49,7 +49,7 @@ class Scripts extends WordPress\Main
 		$style  = sprintf( '%s%s/%s/build/main.css', $base_url ?? static::URL, $path, $name );
 		$asset  = sprintf( '%s%s/%s/build/main.asset.php', $base_path ?? static::PATH, $path, $name );
 
-		$config = is_readable( $asset )
+		$config = Core\File::readable( $asset )
 			? require( $asset )
 			: [
 				'dependencies' => [],

@@ -452,7 +452,7 @@ class Addendum extends gEditorial\Module
 			$args['template'] = 'downloadbox';
 
 		if ( is_null( $args['render'] ) )
-			$args['render'] = [ '\geminorum\gEditorial\WordPress\Theme', 'render_template' ];
+			$args['render'] = [ '\geminorum\gEditorial\WordPress\Theme', 'render_post_template' ];
 
 		if ( ! $template = $this->locate_template_part( $args['template'], $args['context'] ) ) {
 			$this->log( 'WARNING', sprintf( 'TEMPLATE NOT FOUND: %s', $args['template'] ) );

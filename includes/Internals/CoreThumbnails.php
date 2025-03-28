@@ -8,6 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreThumbnails
 {
+	// TODO: same for term with image support on Terms module
 	protected function corethumbnails__hook_tabloid_side_image( $constant )
 	{
 		add_filter( $this->hook_base( 'tabloid', 'view_data_for_post' ),
@@ -20,10 +21,11 @@ trait CoreThumbnails
 					return $data;
 
 				$html = Template::postImage( [
-					'id'   => $post,
-					'link' => 'edit',
-					'echo' => FALSE,
-					'wrap' => FALSE,
+					'id'     => $post,
+					'link'   => 'edit',
+					'newtab' => TRUE,
+					'echo'   => FALSE,
+					'wrap'   => FALSE,
 				], $this->key );
 
 				if ( $html )

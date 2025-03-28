@@ -34,7 +34,6 @@ class Bookmarked extends gEditorial\Module
 		];
 	}
 
-	// TODO: optional display on front: `Tabs` module / WC Product Tabs
 	protected function get_global_settings()
 	{
 		$roles = $this->get_settings_default_roles();

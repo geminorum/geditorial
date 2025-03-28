@@ -128,7 +128,7 @@ trait MainDownload
 		return $post_link;
 	}
 
-	// NOTE: overrided
+	// NOTE: overrides
 	protected function maindownload__posttype_supported( $posttype )
 	{
 		return TRUE;

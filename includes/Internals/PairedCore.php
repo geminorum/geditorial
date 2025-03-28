@@ -278,15 +278,15 @@ trait PairedCore
 	}
 
 	/**
-	 * Strips paired terms rendred for already added data into pointers.
+	 * Strips paired terms rendered for already added data into pointers.
 	 * @example `$this->filter_module( 'tabloid', 'view_data_for_post', 3, 9, 'paired_supported' );`
 	 *
-	 * FIXME: DEPRECATED: use `$this->hook_paired_tabloid_exclude_rendered()`
+	 * NOTE: DEPRECATED: use `$this->hook_paired_tabloid_exclude_rendered()`
 	 *
-	 * @param  array  $data
-	 * @param  object $post
-	 * @param  string $context
-	 * @return array  $data
+	 * @param array $data
+	 * @param object $post
+	 * @param string $context
+	 * @return array $data
 	 */
 	public function tabloid_view_data_for_post_paired_supported( $data, $post, $context )
 	{

@@ -196,12 +196,12 @@ class Badges extends gEditorial\Module
 			$args['before'] = '';
 
 		if ( $this->posttype_supported( $post->post_type ) )
-			$args['before'].= $this->get_rendred_badges( $post );
+			$args['before'].= $this->get_rendered_badges( $post );
 
 		return $args;
 	}
 
-	public function get_rendred_badges( $post = NULL, $badges = NULL, $fallback = '' )
+	public function get_rendered_badges( $post = NULL, $badges = NULL, $fallback = '' )
 	{
 		if ( is_null( $badges ) )
 			$badges = $this->get_badges( $post );
