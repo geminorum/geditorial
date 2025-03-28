@@ -6,11 +6,11 @@ class File extends Base
 {
 
 	/**
-	 * Wraps the `file_exists` and uses current install absoulute-path.
+	 * Wraps the `file_exists()` and uses current install absolute path.
 	 *
-	 * @param  string $path
-	 * @param  string $base
-	 * @return bool   $exists
+	 * @param string $path
+	 * @param string $base
+	 * @return bool $exists
 	 */
 	public static function exists( $path, $base = ABSPATH )
 	{
@@ -23,8 +23,8 @@ class File extends Base
 	/**
 	 * Tells whether a file exists and is readable.
 	 *
-	 * @param  string $path
-	 * @return bool   $readable
+	 * @param string $path
+	 * @return bool $readable
 	 */
 	public static function readable( $path )
 	{
@@ -53,12 +53,12 @@ class File extends Base
 	}
 
 	/**
-	 * Retrieves the file type from the file name.
+	 * Retrieves the filetype from the filename.
 	 * NOTE: wrapper for `wp_check_filetype()`
 	 *
-	 * @param  string $filename
-	 * @param  array  $mimes
-	 * @return array  $data
+	 * @param string $filename
+	 * @param array $mimes
+	 * @return array $data
 	 */
 	public static function type( $filename, $mimes = NULL )
 	{
@@ -66,10 +66,12 @@ class File extends Base
 	}
 
 	/**
-	 * normalize a filesystem path
+	 * Normalizes a filesystem path.
 	 *
-	 * on windows systems, replaces backslashes with forward slashes and forces upper-case drive letters.
-	 * allows for two leading slashes for Windows network shares, but ensures that all other duplicate slashes are reduced to a single.
+	 * On windows systems, replaces backslashes with forward slashes
+	 * and forces upper-case drive letters.
+	 * Allows for two leading slashes for Windows network shares, but
+	 * ensures that all other duplicate slashes are reduced to a single.
 	 *
 	 * @source: `wp_normalize_path()`
 	 *
@@ -96,8 +98,8 @@ class File extends Base
 	 * if the filename ends in suffix this will also be cut off
 	 * @source `wp_basename()`
 	 *
-	 * @param  string $path
-	 * @param  string $suffix
+	 * @param string $path
+	 * @param string $suffix
 	 * @return string $basename
 	 */
 	public static function basename( $path, $suffix = '' )
@@ -109,11 +111,11 @@ class File extends Base
 	}
 
 	/**
-	 * Retrieves file-name from given path or url.
+	 * Retrieves file-name from given path or URL.
 	 *
-	 * @param  string     $path
-	 * @param  null|array $mimes
-	 * @return string     $filename
+	 * @param string $path
+	 * @param null|array $mimes
+	 * @return string $filename
 	 */
 	public static function filename( $path, $mimes = NULL )
 	{
@@ -137,7 +139,7 @@ class File extends Base
 		// as the name for the temporary directory
 		$temp = preg_replace( '|\.[^.]*$|', '', basename( $name ) );
 
-		// If the folder is falsey, use its parent directory name instead.
+		// If the folder is false, use its parent directory name instead.
 		if ( ! $temp )
 			return self::tempName( dirname( $name ), $dir );
 
@@ -157,11 +159,19 @@ class File extends Base
 		return $temp;
 	}
 
-	// join two filesystem paths together
-	// @SOURCE: `path_join()`
+	/**
+	 * Joins two filesystem paths together.
+	 * @source: `path_join()`
+	 *
+	 * @param string $base
+	 * @param string $path
+	 * @return string $joined
+	 */
 	public static function join( $base, $path )
 	{
-		return self::isAbsolute( $path ) ? $path : rtrim( $base, '/' ).'/'.ltrim( $path, '/' );
+		return self::isAbsolute( $path )
+			? $path
+			: rtrim( $base, '/' ).'/'.ltrim( $path, '/' );
 	}
 
 	/**
@@ -177,7 +187,7 @@ class File extends Base
 	public static function isAbsolute( $path )
 	{
 		// Check to see if the path is a stream and check to see if its an actual
-		// path or file as realpath() does not support stream wrappers.
+		// path or file as `realpath()` does not support stream wrappers.
 		if ( wp_is_stream( $path ) && ( is_dir( $path ) || is_file( $path ) ) )
 			return TRUE;
 
@@ -235,7 +245,13 @@ class File extends Base
 		closedir( $dir );
 	}
 
-	// puts .htaccess deny from all on a given folder
+	/**
+	 * Puts `.htaccess` deny from all on a given folder.
+	 *
+	 * @param string $path
+	 * @param bool $check_folder
+	 * @return bool $success
+	 */
 	public static function putHTAccessDeny( $path, $check_folder = TRUE )
 	{
 		$content = '<Files ~ ".*\..*">'.PHP_EOL.
@@ -299,13 +315,12 @@ class File extends Base
 
 	/**
 	 * Reads the last n lines of a file without reading through all of it.
-	 *
 	 * @source http://stackoverflow.com/a/6451391
 	 *
-	 * @param  string $path
-	 * @param  int    $count
-	 * @param  int    $block_size
-	 * @return array  $lines
+	 * @param string $path
+	 * @param int $count
+	 * @param int $block_size
+	 * @return array $lines
 	 */
 	public static function getLastLines( $path, $count, $block_size = 512 )
 	{
@@ -630,7 +645,7 @@ class File extends Base
 	// @REF: https://paulund.co.uk/html5-download-attribute
 	public static function download( $path, $name = NULL, $mime = 'application/octet-stream' )
 	{
-		if ( ! is_readable( $path ) )
+		if ( ! self::readable( $path ) )
 			return FALSE;
 
 		if ( ! is_file( $path ) )
@@ -665,7 +680,7 @@ class File extends Base
 
 	public static function requireData( $path, $fallback = FALSE )
 	{
-		return is_readable( $path )
+		return self::readable( $path )
 			? require( $path )
 			: $fallback;
 	}

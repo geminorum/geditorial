@@ -359,14 +359,13 @@ class Media extends Core\Base
 		return $sub ? $base.'/'.$sub : $base;
 	}
 
-	// FIXME: DEPRECATED
-	// USE: `Attachment::get()`
+	// NOTE: DEPRECATED: USE: `Attachment::list()`
 	public static function getAttachments( $post_id, $mime_type = 'image' )
 	{
-		return Attachment::get( $post_id, $mime_type );
+		return Attachment::list( $post_id, $mime_type );
 	}
 
-	// TODO: get title if html is empty
+	// TODO: get title if HTML is empty
 	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
 	{
 		return Core\HTML::tag( 'a', [
@@ -400,9 +399,9 @@ class Media extends Core\Base
 		return FALSE;
 	}
 
-	// PDF: 'application/pdf'
-	// MP3: 'audio/mpeg'
-	// CSV: 'application/vnd.ms-excel'
+	// `PDF`: `application/pdf`
+	// `MP3`: `audio/mpeg`
+	// `CSV`: `application/vnd.ms-excel`
 	public static function selectAttachment( $selected = 0, $mime = NULL, $name = 'attach_id', $empty = '' )
 	{
 		$attachments = get_posts( [

@@ -13,9 +13,9 @@ class Post extends Core\Base
 	 * simplified `get_post()`
 	 * @old `PostType::getPost()`
 	 *
-	 * @param  null|int|object $post
-	 * @param  string $output
-	 * @param  string $filter
+	 * @param null|int|object $post
+	 * @param string $output
+	 * @param string $filter
 	 * @return object $post
 	 */
 	public static function get( $post = NULL, $output = OBJECT, $filter = 'raw' )
@@ -44,7 +44,7 @@ class Post extends Core\Base
 	 *
 	 * @source `get_post_type()`
 	 *
-	 * @param  null|int|object $post
+	 * @param null|int|object $post
 	 * @return string $posttype
 	 */
 	public static function type( $post = NULL )
@@ -60,7 +60,7 @@ class Post extends Core\Base
 	 *
 	 * @source `is_post_publicly_viewable()` @since WP5.7.0
 	 *
-	 * @param  int|WP_Post|null $post
+	 * @param int|WP_Post|null $post
 	 * @return bool $viewable
 	 */
 	public static function viewable( $post = NULL )
@@ -76,11 +76,11 @@ class Post extends Core\Base
 	 * Retrieves the user capability for a given post.
 	 * NOTE: caches the result
 	 *
-	 * @param  int|object      $post
-	 * @param  null|string     $capability
-	 * @param  null|int|object $user_id
-	 * @param  bool            $fallback
-	 * @return bool            $can
+	 * @param int|object $post
+	 * @param null|string $capability
+	 * @param null|int|object $user_id
+	 * @param bool $fallback
+	 * @return bool $can
 	 */
 	public static function can( $post, $capability, $user_id = NULL, $fallback = FALSE )
 	{
@@ -128,9 +128,9 @@ class Post extends Core\Base
 	 *
 	 * @old `PostType::getPostTitle()`
 	 *
-	 * @param  null|int|object $post
-	 * @param  null|string $fallback
-	 * @param  bool   $filter
+	 * @param null|int|object $post
+	 * @param null|string $fallback
+	 * @param bool $filter
 	 * @return string $title
 	 */
 	public static function title( $post = NULL, $fallback = NULL, $filter = TRUE )
@@ -183,23 +183,30 @@ class Post extends Core\Base
 	 * @ref `get_edit_post_link()`
 	 * @old `WordPress::getPostEditLink()`
 	 *
-	 * @param  int|object $post
-	 * @param  array      $extra
-	 * @param  mixed      $fallback
-	 * @return string     $link
+	 * @param int|object $post
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string $link
 	 */
 	public static function edit( $post, $extra = [], $fallback = FALSE )
 	{
 		if ( ! $post = self::get( $post ) )
 			return $fallback;
 
+		if ( ! $object = PostType::object( $post ) )
+			return $fallback;
+
 		if ( ! self::can( $post, 'edit_post' ) )
 			return $fallback;
 
-		$link = add_query_arg( array_merge( [
-			'action' => 'edit',
-			'post'   => $post->ID,
-		], $extra ), admin_url( 'post.php' ) );
+		if ( empty( $extra['action'] ) && ! \in_array( $post->post_type, [ 'revision' ], TRUE ) )
+			$extra['action'] = 'edit';
+
+		$link = $fallback;
+
+		// NOTE: default is `post.php?post=%d`
+		if ( ! empty( $object->_edit_link ) )
+			$link = add_query_arg( $extra, admin_url( sprintf( $object->_edit_link, $post->ID ) ) );
 
 		return apply_filters( 'get_edit_post_link', $link, $post->ID, 'display' );
 	}

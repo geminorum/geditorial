@@ -10,13 +10,14 @@ class Attachment extends Core\Base
 	/**
 	 * Retrieves attachments for a parent post given mime type.
 	 * @old `Media::getAttachments()`
+	 * @old `Attachment::get()`
 	 *
-	 * @param  null|int|object $parent
-	 * @param  string $mime
-	 * @param  mixed $fallback
+	 * @param null|int|object $parent
+	 * @param string $mime
+	 * @param mixed $fallback
 	 * @return array $attachments
 	 */
-	public static function get( $parent = NULL, $mime = 'image', $fallback = [] )
+	public static function list( $parent = NULL, $mime = 'image', $fallback = [] )
 	{
 		if ( ! $post = Post::get( $parent ) )
 			return $fallback;
@@ -39,10 +40,38 @@ class Attachment extends Core\Base
 	// public static function select( $mime = NULL, $context = NULL ) {} // Media::selectAttachment();
 
 	/**
-	 * Retrieves mime type given a attachment ID or attachment object.
+	 * Retrieves the user capability for a given attachment.
+	 * NOTE: caches the result
 	 *
-	 * @param  null|int|object $attachment
-	 * @param  mixed $fallback
+	 * @param int|object $attachment
+	 * @param null|string $capability
+	 * @param null|int|object $user_id
+	 * @param bool $fallback
+	 * @return bool $can
+	 */
+	public static function can( $attachment, $capability, $user_id = NULL, $fallback = FALSE )
+	{
+		return Post::can( $attachment, $capability, $user_id, $fallback );
+	}
+
+	/**
+	 * Retrieves the URL for editing a given attachment.
+	 *
+	 * @param int|object $attachment
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string $link
+	 */
+	public static function edit( $attachment, $extra = [], $fallback = FALSE )
+	{
+		return Post::edit( $attachment, $extra, $fallback );
+	}
+
+	/**
+	 * Retrieves mime type given an attachment ID or attachment object.
+	 *
+	 * @param null|int|object $attachment
+	 * @param mixed $fallback
 	 * @return string $mime
 	 */
 	public static function type( $attachment = NULL, $fallback = FALSE )
@@ -54,11 +83,11 @@ class Attachment extends Core\Base
 	}
 
 	/**
-	 * Retrieves attachment title given a attachment ID or attachment object.
+	 * Retrieves attachment title given an attachment ID or attachment object.
 	 *
-	 * @param  null|int|object $attachment
-	 * @param  null|string $fallback
-	 * @param  bool   $filter
+	 * @param null|int|object $attachment
+	 * @param null|string $fallback
+	 * @param bool $filter
 	 * @return string $title
 	 */
 	public static function title( $attachment = NULL, $fallback = NULL, $filter = TRUE )
@@ -77,7 +106,7 @@ class Attachment extends Core\Base
 	/**
 	 * Retrieves attachment rest route given an attachment ID or attachment object.
 	 *
-	 * @param  null|int|object $post
+	 * @param null|int|object $post
 	 * @return false|string $route
 	 */
 	public static function getRestRoute( $post = NULL )

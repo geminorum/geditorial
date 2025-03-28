@@ -278,7 +278,7 @@ class Theme extends Core\Base
 		// set the $post global.
 		$post = new \WP_Post( (object) $dummy );
 
-		// copy the new post global into the main $wp_query.
+		// copy the new post global into the main `$wp_query`.
 		$wp_query->post  = $post;
 		$wp_query->posts = [ $post ];
 
@@ -324,7 +324,7 @@ class Theme extends Core\Base
 		return $wp_query->is_404 = TRUE;
 	}
 
-	public static function render_template( $template, $post, $args = [] )
+	public static function render_post_template( $template, $post, $args = [] )
 	{
 		if ( ! $post = Post::get( $post ) )
 			return;

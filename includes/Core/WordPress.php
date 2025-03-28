@@ -69,7 +69,7 @@ class WordPress extends Base
 		if ( is_null( $page ) )
 			return $now;
 
-		return in_array( $now, (array) $page );
+		return in_array( $now, (array) $page, TRUE );
 	}
 
 	// @SEE: `is_login()` @since WP 6.1.0
