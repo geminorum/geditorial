@@ -730,6 +730,9 @@ class Config extends gEditorial\Module
 	{
 		foreach ( apply_filters( $this->hook_base( 'imports' , 'data_summary' ), [] ) as $row ) {
 
+			if ( ! $view = $this->viewengine__view_by_template( 'data-summary', 'imports' ) )
+				continue;
+
 			$data = self::atts( [
 				'title'       => _x( 'Untitled', 'Imports: Data Summary', 'geditorial-admin' ),
 				'description' => '',
@@ -743,7 +746,7 @@ class Config extends gEditorial\Module
 			$data['links']       = count( (array) $data['sources'] );
 
 			echo $this->wrap_open( '-view -imports-data-summary' );
-				$this->render_view( 'imports-data-summary', $data );
+				$this->viewengine__render( $view, $data );
 			echo '</div>';
 		}
 

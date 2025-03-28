@@ -627,13 +627,15 @@ class Audit extends gEditorial\Module
 
 	private function _render_view_for_post( $post, $context )
 	{
-		$part = $this->get_view_part_by_post( $post, $context );
+		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
+			return Info::renderSomethingIsWrong();
+
 		$data = $this->_get_view_data_for_post( $post, $context );
 
-		echo $this->wrap_open( '-view -'.$part );
-			$this->actions( 'render_view_post_before', $post, $context, $data, $part );
-			$this->render_view( $part, $data );
-			$this->actions( 'render_view_post_after', $post, $context, $data, $part );
+		echo $this->wrap_open( '-view -'.$context );
+			$this->actions( 'render_view_post_before', $post, $context, $data, $view );
+			$this->viewengine__render( $view, $data );
+			$this->actions( 'render_view_post_after', $post, $context, $data, $view );
 		echo '</div>';
 
 		// $this->_print_script( $post, $context, $data );

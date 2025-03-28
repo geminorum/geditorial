@@ -10,13 +10,24 @@ trait ViewEngines
 
 	protected $view_engines = [];
 
-	protected function render_view_string( $template, $data = [], $verbose = TRUE )
+	protected function viewengine__roots( $path = NULL )
+	{
+		return [
+			sprintf( '%s/editorial/views/%s/', STYLESHEETPATH, $this->key ),
+			sprintf( '%s/editorial/views/%s/', TEMPLATEPATH, $this->key ),
+			$path ?? sprintf( '%sviews/', $this->path ),
+			sprintf( '%sassets/views/', GEDITORIAL_DIR ),
+		];
+	}
+
+	protected function viewengine__render_string( $template, $data = [], $verbose = TRUE )
 	{
 		if ( empty( $template ) )
 			return $verbose ? FALSE : '';
 
+		// `0` means no `Mustache_Loader_FilesystemLoader`
 		if ( empty( $this->view_engines[0] ) )
-			$this->view_engines[0] = $this->get_view_engine( 0 );
+			$this->view_engines[0] = $this->viewengine__get( 0 );
 
 		$html     = $this->view_engines[0]->render( $template, $data );
 		$filtered = $this->filters( 'render_view_string', $html, $template, $data );
@@ -27,14 +38,33 @@ trait ViewEngines
 		echo $filtered;
 	}
 
+	protected function viewengine__render( $view, $data = [], $verbose = TRUE )
+	{
+		$key = $this->hash( $view );
+		list( $part, $root ) = $view;
+
+		if ( empty( $this->view_engines[$key] ) )
+			$this->view_engines[$key] = $this->viewengine__get( $root );
+
+		$html     = $this->view_engines[$key]->loadTemplate( $part )->render( $data );
+		$filtered = $this->filters( 'render_view', $html, $part, $data );
+
+		if ( ! $verbose )
+			return $filtered;
+
+		echo $filtered;
+	}
+
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
 	protected function render_view( $part, $data = [], $path = NULL, $verbose = TRUE )
 	{
+		self::_dep( '$this->viewengine__render()' );
+
 		if ( is_null( $path ) )
 			$path = $this->get_view_path();
 
 		if ( empty( $this->view_engines[$path] ) )
-			$this->view_engines[$path] = $this->get_view_engine( $path );
+			$this->view_engines[$path] = $this->viewengine__get( $path );
 
 		$html     = $this->view_engines[$path]->loadTemplate( $part )->render( $data );
 		$filtered = $this->filters( 'render_view', $html, $part, $data );
@@ -46,15 +76,11 @@ trait ViewEngines
 	}
 
 	// NOTE: always gets a new instance
-	protected function get_view_engine( $path = NULL )
+	protected function viewengine__get( $path )
 	{
-		if ( is_null( $path ) )
-			$path = $this->get_view_path();
-
 		$args = [
 			'cache_file_mode' => FS_CHMOD_FILE,
-			// 'cache'           => $this->path.'views/cache',
-			'cache'           => get_temp_dir(),
+			'cache'           => get_temp_dir(),   // sprintf( '%sviews/cache', $this->path ),
 
 			'template_class_prefix' => sprintf( '__%s_%s_', $this->base, $this->key ),
 
@@ -71,8 +97,83 @@ trait ViewEngines
 		return @new \Mustache_Engine( $args );
 	}
 
+	protected function viewengine__view_by_template( $template, $context, $default = 'default', $path = NULL )
+	{
+		$view     = FALSE;
+		$target   = sprintf( '%s-%s', $context, $template );
+		$fallback = sprintf( '%s-%s', $default, $template );
+		$roots    = $this->viewengine__roots( $path );
+
+		foreach ( $roots as $root ) {
+
+			if ( Core\File::readable( sprintf( '%s/%s.mustache', $root, $target ) ) ) {
+				$view = [ $target, $root ];
+				break;
+			}
+
+			if ( Core\File::readable( sprintf( '%s/%s.mustache', $root, $fallback ) ) ) {
+				$view = [ $fallback, $root ];
+				break;
+			}
+		}
+
+		return $this->filters( 'view_by_template', $view, $template, $context, $fallback, $roots, $target );
+	}
+
+	protected function viewengine__view_by_post( $post, $context, $default = 'default', $path = NULL )
+	{
+		$target   = $view = FALSE;
+		$fallback = sprintf( '%s-type-%s', $context, $default );
+		$roots    = $this->viewengine__roots( $path );
+
+		if ( $post = WordPress\Post::get( $post ) )
+			$target = sprintf( '%s-type-%s', $context, $post->post_type );
+
+		foreach ( $roots as $root ) {
+
+			if ( $target && Core\File::readable( sprintf( '%s/%s.mustache', $root, $target ) ) ) {
+				$view = [ $target, $root ];
+				break;
+			}
+
+			if ( Core\File::readable( sprintf( '%s/%s.mustache', $root, $fallback ) ) ) {
+				$view = [ $fallback, $root ];
+				break;
+			}
+		}
+
+		return $this->filters( 'view_by_post', $view, $post, $context, $fallback, $roots, $target );
+	}
+
+	protected function viewengine__view_by_term( $term, $context, $default = 'default', $path = NULL )
+	{
+		$target   = $view = FALSE;
+		$fallback = sprintf( '%s-tax-%s', $context, $default );
+		$roots    = $this->viewengine__roots( $path );
+
+		if ( $term = WordPress\Term::get( $term ) )
+			$target = sprintf( '%s-tax-%s', $context, $term->taxonomy );
+
+		foreach ( $roots as $root ) {
+
+			if ( $target && Core\File::readable( sprintf( '%s/%s.mustache', $root, $target ) ) ) {
+				$view = [ $target, $root ];
+				break;
+			}
+
+			if ( Core\File::readable( sprintf( '%s/%s.mustache', $root, $fallback ) ) ) {
+				$view = [ $fallback, $root ];
+				break;
+			}
+		}
+
+		return $this->filters( 'view_by_term', $view, $term, $context, $fallback, $roots, $target );
+	}
+
 	protected function get_view_part_by_post( $post, $context, $default = 'default' )
 	{
+		self::_dep();
+
 		$part = $fallback = sprintf( '%s-type-%s', $context, $default );
 
 		if ( $post = WordPress\Post::get( $post ) )
@@ -86,6 +187,8 @@ trait ViewEngines
 
 	protected function get_view_part_by_term( $term, $context, $default = 'default' )
 	{
+		self::_dep();
+
 		$part = $fallback = sprintf( '%s-tax-%s', $context, $default );
 
 		if ( $term = WordPress\Term::get( $term ) )
@@ -99,6 +202,8 @@ trait ViewEngines
 
 	protected function get_view_path( $part = FALSE, $path = NULL )
 	{
+		self::_dep();
+
 		if ( is_null( $path ) )
 			$path = $this->path.'views';
 

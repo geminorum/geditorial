@@ -252,15 +252,17 @@ class Tabloid extends gEditorial\Module
 
 	private function _render_view_for_post( $post, $context )
 	{
-		$part = $this->get_view_part_by_post( $post, $context );
+		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
+			return Info::renderSomethingIsWrong();
+
 		$data = $this->_get_view_data_for_post( $post, $context );
 
 		$this->_handle_flags_for_post( $post, $context, $data );
 
-		echo $this->wrap_open( '-view -'.$part );
-			$this->actions( 'render_view_post_before', $post, $context, $data, $part );
-			$this->render_view( $part, $data );
-			$this->actions( 'render_view_post_after', $post, $context, $data, $part );
+		echo $this->wrap_open( '-view -'.$context );
+			$this->actions( 'render_view_post_before', $post, $context, $data, $view );
+			$this->viewengine__render( $view, $data );
+			$this->actions( 'render_view_post_after', $post, $context, $data, $view );
 		echo '</div>';
 
 		$data = $this->_cleanup_view_data_for_post( $post, $context, $data );
@@ -274,15 +276,17 @@ class Tabloid extends gEditorial\Module
 
 	private function _render_view_for_term( $term, $context )
 	{
-		$part = $this->get_view_part_by_term( $term, $context );
+		if ( ! $view = $this->viewengine__view_by_term( $term, $context ) )
+			return Info::renderSomethingIsWrong();
+
 		$data = $this->_get_view_data_for_term( $term, $context );
 
 		$this->_handle_flags_for_term( $term, $context, $data );
 
-		echo $this->wrap_open( '-view -'.$part );
-			$this->actions( 'render_view_term_before', $term, $context, $data, $part );
-			$this->render_view( $part, $data );
-			$this->actions( 'render_view_term_after', $term, $context, $data, $part );
+		echo $this->wrap_open( '-view -'.$context );
+			$this->actions( 'render_view_term_before', $term, $context, $data, $view );
+			$this->viewengine__render( $view, $data );
+			$this->actions( 'render_view_term_after', $term, $context, $data, $view );
 		echo '</div>';
 
 		$data = $this->_cleanup_view_data_for_term( $term, $context, $data );

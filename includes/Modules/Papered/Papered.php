@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
@@ -563,7 +564,7 @@ class Papered extends gEditorial\Module
 
 		if ( ! empty( $config['row_per_sheet'] ) && ! empty( $list ) ) {
 
-			$this->render_view_string( $before, $data );
+			$this->viewengine__render_string( $before, $data );
 
 			$chunks = array_chunk( $list, (int) $config['row_per_sheet'] );
 			$pages  = count( $chunks );
@@ -573,36 +574,36 @@ class Papered extends gEditorial\Module
 				$data_sheet = array_merge( $data, [
 					'list'  => $chunk,
 					'paged' => Core\Number::format( $offset + 1 ),
-					'rows'  => $this->render_view_string( $rows, [
+					'rows'  => $this->viewengine__render_string( $rows, [
 						'data'  => $data,
 						'list'  => $chunk,
 						'paged' => Core\Number::format( $offset + 1 ),
 					], FALSE ),
 				] );
 
-				$this->render_view_string( $sheet, $data_sheet );
+				$this->viewengine__render_string( $sheet, $data_sheet );
 
 				if ( $pages > 1 && $pages !== ( $offset + 1 ) )
 					$this->printpage__render_pagebreak( $profile );
 			}
 
-			$this->render_view_string( $after, $data );
+			$this->viewengine__render_string( $after, $data );
 
 		} else {
 
 			$data_sheet = array_merge( $data, [
 				'list'  => $list ?: [],
 				'paged' => 1,
-				'rows'  => $this->render_view_string( $rows, [
+				'rows'  => $this->viewengine__render_string( $rows, [
 					'data'  => $data,
 					'list'  => $list ?: [],
 					'paged' => 1,
 				], FALSE ),
 			] );
 
-			$this->render_view_string( $before, $data_sheet );
-			$this->render_view_string( $sheet, $data_sheet );
-			$this->render_view_string( $after, $data_sheet );
+			$this->viewengine__render_string( $before, $data_sheet );
+			$this->viewengine__render_string( $sheet, $data_sheet );
+			$this->viewengine__render_string( $after, $data_sheet );
 		}
 	}
 
