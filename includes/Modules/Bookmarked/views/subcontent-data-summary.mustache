@@ -1,0 +1,41 @@
+{{! TODO: make non-bootstrap compatible: `body:not(.theme-based-bootstrap-v5) {}` }}
+
+<div class="geditorial-wrap -wrap -data-summary -bookmarked">
+	<div class="list-group list-group-flush">
+		{{#data}}
+			<a
+				href="{{link}}"
+				class="list-group-item list-group-item-action d-flex gap-3 py-3"
+				style="--custom-link-color:{{color}};--custom-link-background:{{bgcolor}};"
+				data-type="{{type}}"
+				aria-current="true"
+				target="_blank"
+				>
+
+				<!--
+				{{#logo}}
+					<img src="{{logo}}" alt="{{title}}" class="-main-logo flex-shrink-0" />
+				{{/logo}}
+				-->
+
+				{{#icon}}
+					<span class="-main-icon flex-shrink-0">{{{icon}}}</span>
+				{{/icon}}
+
+				<div class="d-flex gap-2 w-100 justify-content-between">
+
+					<div>
+						<h6 class="mb-0">{{{label}}}</h6>
+						{{#desc}}
+							<div class="description -description mt-1 opacity-75">{{{desc}}}</div>
+						{{/desc}}
+					</div>
+
+					<small class="opacity-50 text-nowrap -side-icon" title="{{type}}">
+						<span data-icon="dashicons" class="dashicons dashicons-external"></span>
+					</small>
+				</div>
+			</a>
+		{{/data}}
+	</div>
+</div>
