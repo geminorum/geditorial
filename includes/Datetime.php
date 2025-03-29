@@ -282,10 +282,13 @@ class Datetime extends WordPress\Main
 
 	public static function prepForInput( $date, $format = NULL, $calendar_type = NULL, $timezone = NULL )
 	{
+		if ( $year = self::prepYearOnly( $date, FALSE ) )
+			return $year;
+
 		return apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone, FALSE );
 	}
 
-	public static function prepYearOnly( $data, $fallback = '' )
+	public static function prepYearOnly( $data, $localize = TRUE, $fallback = '' )
 	{
 		if ( ! $data )
 			return $fallback;
@@ -295,7 +298,7 @@ class Datetime extends WordPress\Main
 		if ( strlen( $sanitized ) > 4 )
 			return $fallback;
 
-		return Core\Number::localize( $sanitized );
+		return $localize ? Core\Number::localize( $sanitized ) : $sanitized;
 	}
 
 	public static function prepForDisplay( $data, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
