@@ -4,12 +4,72 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
 
 	const MODULE = 'bookmarked';
+
+	public static function prepDataForSummary( $data, $options, $context )
+	{
+		$prepped = [];
+
+		foreach ( $data as $offset => $row ) {
+
+			$type   = empty( $row['__type'] ) ? 'default' : $row['__type'];
+			$option = empty( $options[$type] ) ? [] : $options[$type];
+
+			$item = [
+				'type'    => $type,
+				'label'   => '',
+				'link'    => '',
+				'desc'    => '',
+				'code'    => array_key_exists( '__code', $row ) ? Core\Number::translate( $row['__code'] ) : '',
+				'icon'    => array_key_exists( 'icon', $option ) ? $option['icon'] : '',
+				'logo'    => array_key_exists( 'logo', $option ) ? $option['logo'] : '',
+				'title'   => array_key_exists( 'title', $option ) ? $option['title'] : '',
+				'color'   => 'inherit',
+				'bgcolor' => 'transparent',
+			];
+
+			if ( ! empty( $row['__label'] ) )
+				$item['label'] = Core\Text::wordWrap( Core\Text::trim( $row['__label'] ) );
+
+			else if ( ! empty( $option['title'] ) )
+				$item['label'] = Core\Text::wordWrap( $option['title'] );
+
+			if ( ! empty( $row['__link'] ) )
+				$item['link'] = Core\URL::sanitize( $row['__link'] );
+
+			else if ( ! empty( $option['template'] ) )
+				$item['link'] = Core\Text::replaceTokens( $option['template'], $row );
+
+			if ( ! empty( $row['__desc'] ) )
+				$item['desc'] = Core\Text::wordWrap( WordPress\Strings::prepDescription( Core\Text::replaceTokens( $row['__desc'], $row ) ) );
+
+			else if ( 'attachment' === $type && ! empty( $row['__code'] ) )
+				$item['desc'] = Core\Text::wordWrap( WordPress\Strings::prepDescription( WordPress\Attachment::caption( (int) $row['__code'], '' ) ) );
+
+			if ( empty( $item['desc'] ) && ! empty( $option['desc'] ) )
+				$item['desc'] = Core\Text::wordWrap( WordPress\Strings::prepDescription( Core\Text::replaceTokens( $option['desc'], $row ) ) );
+
+			if ( 'attachment' === $type && ! empty( $row['__code'] ) )
+				$item['icon'] = Core\Icon::guessByMIME( WordPress\Attachment::type( (int) $row['__code'] ), $item['icon'] );
+
+			$item['icon'] = Helper::getIcon( $item['icon'], 'external' );
+
+			if ( ! empty( $option['color'] ) && Core\Color::validHex( $option['color'] ) ) {
+				$item['color']   = $option['color'];
+				$item['bgcolor'] = Core\Color::lightOrDark( $option['color'] );
+			}
+
+			$prepped[$offset] = $item;
+		}
+
+		return $prepped;
+	}
 
 	// TODO: Support: `Shenoto`: https://logoyab.com/logo/%d9%84%d9%88%da%af%d9%88-%d9%86%d8%b1%d9%85-%d8%a7%d9%81%d8%b2%d8%a7%d8%b1-%d8%b4%d9%86%d9%88%d8%aa%d9%88/
 	// TODO: Support: `Namlik`: https://logoyab.com/logo/%d9%84%d9%88%da%af%d9%88-%d9%86%d8%b1%d9%85-%d8%a7%d9%81%d8%b2%d8%a7%d8%b1-%d9%86%d8%a7%d9%85%d9%84%db%8c%da%a9/

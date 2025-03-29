@@ -1361,36 +1361,35 @@ trait SubContents
 	public function subcontent_data_summary( $atts = [], $post = NULL )
 	{
 		$args = $this->filters( 'data_summary_args', self::atts( [
-			'id'      => $post,
-			'fields'  => NULL,
-			'context' => 'summary',
-			'default' => FALSE,
-			'before'  => '',
-			'after'   => '',
-			'echo'    => TRUE,
-			'render'  => NULL,
+			'id'       => $post,
+			'fields'   => NULL,
+			'context'  => NULL,
+			'template' => NULL,
+			'default'  => FALSE,
+			'before'   => '',
+			'after'    => '',
+			'echo'     => TRUE,
+			'render'   => NULL,
 		], $atts ), $post );
 
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
-		if ( ! $data = $this->subcontent_get_data_all( $post, $args['context'] ?? 'display' ) )
+		if ( ! $data = $this->subcontent_get_data_all( $post, $args['context'] ?? 'summary' ) )
 			return $args['default'];
 
-		if ( ! $data = $this->subcontent_get_prepped_data( $data, $args['context'] ?? 'display' ) )
+		if ( ! $data = $this->subcontent_get_prepped_data( $data, $args['context'] ?? 'summary' ) )
 			return $args['default'];
 
-		if ( is_null( $args['render'] ) )
-			$args['render'] = [ $this, 'subcontent_data_summary__render_callback' ];
+		if ( ! method_exists( $this, 'viewengine__render' ) ) {
+			$this->log( 'CRITICAL', 'VIEW ENGINE NOT AVAILABLE' );
+			return $args['default'];
+		}
 
-		$callback_args = [
-			$data,
-			$args,
-			$post,
-			$this->module->name
-		];
+		if ( ! $view = $this->viewengine__view_by_template( $args['template'] ?? 'data-summary', $args['context'] ?? 'subcontent' ) )
+			return $args['default'];
 
-		if ( ! $html = ShortCode::buffer( $args['render'], $callback_args ) )
+		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )
 			return $args['default'];
 
 		$html = $args['before'].$html.$args['after'];
@@ -1400,55 +1399,5 @@ trait SubContents
 
 		echo $html;
 		return TRUE;
-	}
-
-	// TODO: make non-bootstrap compatible
-	// TODO: move to `Bookmarked` Module-Template
-	public function subcontent_data_summary__render_callback( $data, $args, $post = NULL, $module = NULL )
-	{
-		echo $this->wrap_open( [ '-subcontent-data-summary' ] );
-		echo '<div class="list-group list-group-flush">';
-
-		foreach ( $data as $key => $row ) {
-
-			$type  = empty( $row['_type_options']['name'] ) ? 'default' : $row['_type_options']['name'];
-			$style = '';
-
-			if ( ! empty( $row['_type_options']['color'] ) && Core\Color::is( $row['_type_options']['color'] ) )
-				$style.= sprintf(
-					// @REF: https://css-tricks.com/css-attr-function-got-nothin-custom-properties/
-					'--custom-link-color:%s;--custom-link-background:%s;',
-					Core\Color::lightOrDark( $row['_type_options']['color'] ),
-					$row['_type_options']['color']
-				);
-
-			echo '<a data-type="'.Core\HTML::escapeAttr( $type ).'" ';
-			echo $style ? ( 'style="'.Core\HTML::escapeAttr( $style ).'" ' ) : ' ';
-			echo 'href="'.Core\HTML::escapeURL( $row['link'] ).'" ';
-			echo 'class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true" target="_blank">';
-
-				// if ( ! empty( $row['_logo'] ) )
-				// 	echo Core\HTML::img( $row['_logo'], '-main-logo flex-shrink-0' );
-
-				if ( ! empty( $row['_icon'] ) )
-					echo '<span class="-main-icon flex-shrink-0">'.$row['_icon'].'</span>';
-
-				echo '<div class="d-flex gap-2 w-100 justify-content-between"><div>';
-
-					echo Core\HTML::tag( 'h6', [ 'class' => 'mb-0' ], $row['label'] );
-
-					Core\HTML::desc( $row['desc'], TRUE, 'mb-0 opacity-75' );
-
-					echo '</div>';
-
-				echo '<small class="opacity-50 text-nowrap -side-icon" title="'.Core\HTML::escapeAttr( $row['type'] ).'">';
-					echo Helper::getIcon( 'external' );
-				echo '</small>';
-
-				echo '</div>';
-			echo '</a>';
-		}
-
-		echo '</div></div>';
 	}
 }

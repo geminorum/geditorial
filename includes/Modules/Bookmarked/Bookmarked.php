@@ -18,6 +18,7 @@ class Bookmarked extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 	use Internals\RestAPI;
 	use Internals\SubContents;
+	use Internals\ViewEngines;
 
 	public static function module()
 	{
@@ -193,7 +194,7 @@ class Bookmarked extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->filter_self( 'prepped_data', 6, 8 );
+		$this->filter_self( 'prepped_data', 5, 8 );
 		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );
 		$this->register_shortcode( 'main_shortcode' );
@@ -351,42 +352,12 @@ class Bookmarked extends gEditorial\Module
 		return $this->filters( 'generate_link', $link, $data, $post, $context );
 	}
 
-	// TODO: move to process to `ModuleHelper`
-	public function prepped_data( $list, $context, $post, $data, $types, $selectable )
+	public function prepped_data( $data, $context, $post, $raw, $types )
 	{
-		$posttype = WordPress\Post::type( $post );
-		$options  = Core\Arraay::reKey( $this->subcontent_define_type_options( $context, $posttype ), 'name' );
-
-		foreach ( $data as $key => $row ) {
-
-			$type = empty( $row['type'] ) ? 'default' : $row['type'];
-
-			if ( empty( $row['link'] ) && ! empty( $options[$type]['template'] ) )
-				$list[$key]['link'] = Core\Text::replaceTokens( $options[$type]['template'], $list[$key] );
-			else
-				$list[$key]['link'] = $row['link'];
-
-			if ( empty( $row['desc'] ) && 'attachment' === $type && ! empty( $row['code'] ) )
-				$list[$key]['desc'] = Core\Text::wordWrap( WordPress\Attachment::caption( (int) $row['code'], '' ) );
-
-			else if ( empty( $row['desc'] ) && ! empty( $options[$type]['desc'] ) )
-				$list[$key]['desc'] = Core\Text::wordWrap( Core\Text::replaceTokens( $options[$type]['desc'], $list[$key] ) );
-
-			else
-				$list[$key]['desc'] = Core\Text::wordWrap( $row['desc'] );
-
-			if ( empty( $list[$key]['_icon'] ) && 'attachment' === $type && ! empty( $row['code'] ) )
-				$list[$key]['_icon'] = Helper::getIcon( Core\Icon::guessByMIME( WordPress\Attachment::type( (int) $row['code'] ), $options[$type]['icon'] ) );
-
-			if ( empty( $list[$key]['_icon'] ) && ! empty( $options[$type]['icon'] ) )
-				$list[$key]['_icon'] = Helper::getIcon( $options[$type]['icon'] );
-
-			if ( empty( $list[$key]['_logo'] ) && ! empty( $options[$type]['logo'] ) )
-				$list[$key]['_logo'] = $options[$type]['logo'];
-
-			$list[$key]['_type_options'] = $options[$type];
-		}
-
-		return $list;
+		return ModuleHelper::prepDataForSummary(
+			$data,
+			Core\Arraay::reKey( $this->subcontent_define_type_options( $context, WordPress\Post::type( $post ) ), 'name' ),
+			$context
+		);
 	}
 }
