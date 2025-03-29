@@ -284,6 +284,16 @@ trait SubContents
 		];
 	}
 
+	// NOTE: prevents from meta preparations
+	protected function subcontent_get_meta_untouchable( $context = NULL, $posttype = NULL )
+	{
+		return [
+			// 'data',
+			// 'order',
+			// 'postid',
+		];
+	}
+
 	protected function subcontent_base_data_mapping( $context = 'display', $posttype = NULL )
 	{
 		return [
@@ -525,6 +535,7 @@ trait SubContents
 				case 'distance': $data[$raw_key] = Core\Distance::sanitize( $raw_value ); break;
 				case 'duration': $data[$raw_key] = Core\Duration::sanitize( $raw_value ); break;
 				case 'area':     $data[$raw_key] = Core\Area::sanitize( $raw_value ); break;
+				case 'cssclass': $data[$raw_key] = Core\HTML::prepClass( $raw_value ); break;
 
 				case 'code'    : // WTF
 				case 'date'    : // WTF
@@ -674,43 +685,58 @@ trait SubContents
 	/**
 	 * Prepares sub-content data for display given the context.
 	 *
-	 * @param  array  $data
-	 * @param  string $context
-	 * @return array  $prepped
+	 * @param array $raw
+	 * @param string $context
+	 * @return array $data
 	 */
-	protected function subcontent_get_prepped_data( $data, $context = 'display', $post = NULL )
+	protected function subcontent_get_prepped_data( $raw, $context = 'display', $post = NULL )
 	{
-		$list       = [];
-		$types      = $this->subcontent_get_field_types( $context );
-		$selectable = $this->subcontent_get_selectable_fields( $context );
+		$data        = [];
+		$types       = $this->subcontent_get_field_types( $context );
+		$selectable  = $this->subcontent_get_selectable_fields( $context );
+		$untouchable = $this->subcontent_get_meta_untouchable( $context );
 
-		foreach ( $data as $offset => $row ) {
+		foreach ( $raw as $offset => $row ) {
 
-			$prepped = [];
+			$item = [];
 
 			foreach ( $row as $key => $value ) {
 
-				if ( empty( $value ) || ! trim( $value ) ) {
+				if ( in_array( $key, $untouchable, TRUE )
+					|| Core\Text::starts( $key, '_' ) ) {
 
-					$prepped[$key] = 'display' === $context ? Helper::htmlEmpty() : '';
+					$item[$key] = $value;
+
+				} else if ( empty( $value ) || ! trim( $value ) ) {
+
+					if ( 'display' === $context )
+						$item[$key] = Helper::htmlEmpty();
+
+					else
+						// also passing raw data
+						$item[$key] = $item[sprintf( '__%s', $key )] = '';
 
 				} else {
 
 					$raw = $value;
 
+					// also passing raw data
+					if ( 'display' !== $context )
+						$item[sprintf( '__%s', $key )] = $raw;
+
 					if ( ! empty( $selectable[$key][$value] ) )
 						$value = $selectable[$key][$value];
 
-					$prepped[$key] = $this->prep_meta_row( $value, $key, [
+					$item[$key] = $this->prep_meta_row( $value, $key, [
 						'type' => array_key_exists( $key, $types ) ? $types[$key] : $key,
 					], $raw );
 				}
 			}
 
-			$list[$offset] = $prepped;
+			$data[$offset] = $item;
 		}
 
-		return $this->filters( 'prepped_data', $list, $context, $post, $data, $types, $selectable );
+		return $this->filters( 'prepped_data', $data, $context, $post, $raw, $types );
 	}
 
 	protected function subcontent_get_empty_notice( $context = 'display', $string_key = 'empty' )
