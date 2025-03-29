@@ -455,7 +455,7 @@ class Addendum extends gEditorial\Module
 			$args['render'] = [ '\geminorum\gEditorial\WordPress\Theme', 'render_post_template' ];
 
 		if ( ! $template = $this->locate_template_part( $args['template'], $args['context'] ) ) {
-			$this->log( 'WARNING', sprintf( 'TEMPLATE NOT FOUND: %s', $args['template'] ) );
+			$this->log( 'CRITICAL', sprintf( 'TEMPLATE NOT FOUND: %s', $args['template'] ) );
 			return $content;
 		}
 

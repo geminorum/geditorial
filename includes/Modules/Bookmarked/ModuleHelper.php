@@ -148,6 +148,7 @@ class ModuleHelper extends gEditorial\Helper
 				'icon'     => [ 'misc-512', 'taaghche' ], // 'book-alt',
 				'logo'     => self::getLinkLogo( 'taaghche', NULL, $path ),
 				'desc'     => _x( 'Read this on Taaghche e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
+				'color'    => '#04a3a3',
 			],
 			[
 				'name'     => 'behkhaan',

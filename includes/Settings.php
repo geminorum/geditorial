@@ -291,6 +291,14 @@ class Settings extends WordPress\Main
 			'bp-email-type',          // BuddyPress
 			'bp_member_type',         // BuddyPress
 			'bp_group_type',          // BuddyPress
+
+			'audit_attribute' ,   // Editorial: Audit
+			'affiliation'     ,   // Editorial: People
+			'relation'        ,   // Editorial: Byline
+			'user_group'      ,   // Editorial: Users
+			'user_type'       ,   // Editorial: Users
+			'event_calendar'  ,   // Editorial: Happening
+			'event_type'      ,   // Editorial: Happening
 		];
 
 		if ( class_exists( 'bbPress' ) )

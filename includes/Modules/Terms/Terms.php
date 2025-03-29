@@ -299,6 +299,7 @@ class Terms extends gEditorial\Module
 			case 'fullname' : $excluded[] = 'post_tag'; break;
 			case 'tagline'  : $excluded[] = 'post_tag'; break;
 			case 'subtitle' : $excluded[] = 'post_tag'; break;
+			case 'image'    : $excluded = array_merge( $excluded, [ 'post_tag', 'product_brand', 'product_cat', 'product_tag' ] ); break;
 			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );  // override!
 			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!
 			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!

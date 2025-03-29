@@ -28,7 +28,7 @@ trait DashboardSummary
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
 			if ( ! method_exists( $this, 'get_dashboard_summary_content' ) )
-				return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', 'get_dashboard_summary_content()' ) );
+				return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', 'get_dashboard_summary_content()' ) );
 
 			if ( $summary = $this->get_dashboard_summary_content( $scope, NULL, NULL, 'li' ) ) {
 

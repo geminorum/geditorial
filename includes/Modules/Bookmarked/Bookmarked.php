@@ -35,6 +35,7 @@ class Bookmarked extends gEditorial\Module
 		];
 	}
 
+	// TODO: custom override default `title`/`desc` for type options
 	protected function get_global_settings()
 	{
 		$roles = $this->get_settings_default_roles();

@@ -41,7 +41,7 @@ trait CoreRowActions
 		$method = $callback_suffix ? sprintf( 'rowaction_get_mainlink_for_post_%s', $callback_suffix ) : 'rowaction_get_mainlink_for_post';
 
 		if ( ! method_exists( $this, $method ) )
-			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
+			return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
 
 		$callback = function ( $actions, $post ) use ( $posttype, $prepend, $action_key, $method ) {
 
@@ -82,7 +82,7 @@ trait CoreRowActions
 		$method = $callback_suffix ? sprintf( 'rowaction_get_mainlink_for_term_%s', $callback_suffix ) : 'rowaction_get_mainlink_for_term';
 
 		if ( ! method_exists( $this, $method ) )
-			return $this->log( 'NOTICE', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
+			return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
 
 		$callback = function ( $actions, $term ) use ( $taxonomy, $prepend, $action_key, $method ) {
 
