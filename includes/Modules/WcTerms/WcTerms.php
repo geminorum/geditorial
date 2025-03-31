@@ -156,7 +156,7 @@ class WcTerms extends gEditorial\Module
 		if ( $term = get_queried_object() )
 			gEditorial\Template::renderTermIntro( $term, [
 				'heading'     => $this->get_setting( 'term_archive_title' ),
-				'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+				'image_field' => $this->_get_term_image_field( $term ),
 			], $this->module->name );
 	}
 
@@ -222,7 +222,7 @@ class WcTerms extends gEditorial\Module
 					foreach ( $terms as $term )
 						gEditorial\Template::renderTermIntro( $term, [
 							'heading'     => $heading,
-							'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+							'image_field' => $this->_get_term_image_field( $term ),
 							'image_link'  => 'attachment',
 						], $this->module->name );
 				},
@@ -247,7 +247,7 @@ class WcTerms extends gEditorial\Module
 				'callback' => function () use ( $term, $heading ) {
 					gEditorial\Template::renderTermIntro( $term, [
 						'heading'     => $heading,
-						'image_field' => WordPress\WooCommerce::TERM_IMAGE_METAKEY,
+						'image_field' => $this->_get_term_image_field( $term ),
 						'image_link'  => 'attachment',
 					], $this->module->name );
 				},
@@ -255,5 +255,18 @@ class WcTerms extends gEditorial\Module
 		}
 
 		return $tabs;
+	}
+
+	private function _get_term_image_field( $term )
+	{
+		$woocommerce = [
+			'product_brand',
+			'product_cat',
+			'product_tag',
+		];
+
+		return in_array( $term->taxonomy, $woocommerce, TRUE )
+			? WordPress\WooCommerce::TERM_IMAGE_METAKEY
+			: 'image'; // TODO: get from `Terms` Module
 	}
 }
