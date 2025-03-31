@@ -2468,13 +2468,24 @@ class Settings extends WordPress\Main
 		if ( TRUE === $args['wrap'] )
 			$args['wrap'] = 'div';
 
-		if ( 'tr' == $args['wrap'] ) {
+		if ( 'tr' === $args['wrap'] ) {
+
+			// NOTE: to use inside list-table
 
 			if ( ! empty( $args['label_for'] ) )
 				echo '<tr class="'.Core\HTML::prepClass( $args['class'] ).'"><th scope="row"><label for="'.Core\HTML::escape( $args['label_for'] ).'">'.$args['title'].'</label></th><td>';
 
 			else
 				echo '<tr class="'.Core\HTML::prepClass( $args['class'] ).'"><th scope="row">'.$args['title'].'</th><td>';
+
+		} else if ( 'fieldset' === $args['wrap'] ) {
+
+			// NOTE: to use inside quick-edit
+
+			echo '<fieldset><div class="inline-edit-col">';
+			echo '<label'.( empty( $args['label_for'] ) ? '' : ( ' for="'.Core\HTML::escape( $args['label_for'] ).'"' ) ).'>';
+			echo '<span class="title">'.$args['title'].'</span></label>';
+			echo '<span class="input-text-wrap">';
 
 		} else if ( $args['wrap'] ) {
 
@@ -2519,6 +2530,11 @@ class Settings extends WordPress\Main
 			$args['disabled'] = TRUE;
 			$args['after']    = Core\HTML::code( $args['constant'] );
 		}
+
+		if ( empty( $args['data'] ) )
+			$args['data'] = [];
+
+		$args['data']['raw-value'] = $value;
 
 		if ( is_null( $args['cap'] ) ) {
 
@@ -2787,12 +2803,15 @@ class Settings extends WordPress\Main
 
 				if ( $args['values'] && count( $args['values'] ) ) {
 
+					echo '<div'.Core\HTML::propData( $args['data'] ).'>';
+
 					if ( ! is_null( $args['none_title'] ) ) {
 
 						$html = Core\HTML::tag( 'input', [
 							'type'     => 'checkbox',
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'data'     => [ 'raw-value' => $args['none_value'] ?? '' ],
 							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
 							'checked'  => FALSE === $value || in_array( $args['none_value'], (array) $value ),
 							'class'    => Core\HTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
@@ -2815,6 +2834,7 @@ class Settings extends WordPress\Main
 							'type'     => 'checkbox',
 							'id'       => $id.'-'.$value_name,
 							'name'     => $name.'['.$value_name.']',
+							'data'     => [ 'raw-value' => $value_name ],
 							'value'    => '1',
 							'checked'  => TRUE === $value || in_array( $value_name, (array) $value ),
 							'class'    => Core\HTML::attrClass( $args['field_class'], '-type-checkbox' ),
@@ -2831,6 +2851,8 @@ class Settings extends WordPress\Main
 							Core\HTML::label( $html, $id.'-'.$value_name );
 					}
 
+					echo '</div>';
+
 				} else if ( is_array( $args['values'] ) ) {
 
 					$args['description'] = FALSE;
@@ -2839,10 +2861,11 @@ class Settings extends WordPress\Main
 
 			break;
 			case 'checkbox-panel':
+			case 'checkboxs-panel':
 
 				if ( $args['values'] && count( $args['values'] ) ) {
 
-					echo self::tabPanelOpen();
+					echo self::tabPanelOpen( $args['data'] );
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
@@ -2850,6 +2873,7 @@ class Settings extends WordPress\Main
 							'type'     => 'checkbox',
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'data'     => [ 'raw-value' => $args['none_value'] ?? '' ],
 							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
 							'checked'  => FALSE === $value || in_array( $args['none_value'], (array) $value ),
 							'class'    => Core\HTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
@@ -2872,6 +2896,7 @@ class Settings extends WordPress\Main
 							'type'     => 'checkbox',
 							'id'       => $id.'-'.$value_name,
 							'name'     => $name.'['.$value_name.']',
+							'data'     => [ 'raw-value' => $value_name ],
 							'value'    => '1',
 							'checked'  => TRUE === $value || in_array( $value_name, (array) $value ),
 							'class'    => Core\HTML::attrClass( $args['field_class'], '-type-checkbox' ),
@@ -2978,7 +3003,7 @@ class Settings extends WordPress\Main
 					], $html );
 
 					if ( $args['readonly'] )
-					Core\HTML::inputHidden( $name, $value );
+						Core\HTML::inputHidden( $name, $value );
 
 				} else {
 
@@ -3335,7 +3360,7 @@ class Settings extends WordPress\Main
 					break;
 				}
 
-				echo self::tabPanelOpen();
+				echo self::tabPanelOpen( $args['data'] );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -3346,6 +3371,7 @@ class Settings extends WordPress\Main
 						'type'     => 'checkbox',
 						'id'       => $id.'-'.$value_name,
 						'name'     => $name.'['.$value_name.']',
+						'data'     => [ 'raw-value' => $value_name ],
 						'value'    => '1',
 						'checked'  => in_array( $value_name, (array) $value ),
 						'class'    => Core\HTML::attrClass( $args['field_class'], '-type-posttypes' ),
@@ -3374,7 +3400,7 @@ class Settings extends WordPress\Main
 					break;
 				}
 
-				echo self::tabPanelOpen();
+				echo self::tabPanelOpen( $args['data'] );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -3385,6 +3411,7 @@ class Settings extends WordPress\Main
 						'type'     => 'checkbox',
 						'id'       => $id.'-'.$value_name,
 						'name'     => $name.'['.$value_name.']',
+						'data'     => [ 'raw-value' => $value_name ],
 						'value'    => '1',
 						'checked'  => in_array( $value_name, (array) $value ),
 						'class'    => Core\HTML::attrClass( $args['field_class'], '-type-taxonomies' ),
@@ -3485,8 +3512,11 @@ class Settings extends WordPress\Main
 		if ( FALSE !== $args['values'] )
 			Core\HTML::desc( $args['description'] );
 
-		if ( 'tr' == $args['wrap'] )
+		if ( 'tr' === $args['wrap'] )
 			echo '</td></tr>';
+
+		else if ( 'fieldset' === $args['wrap'] )
+			echo '</span></span></div></fieldset>';
 
 		else if ( $args['wrap'] )
 			echo '</'.$args['wrap'].'>';
@@ -3645,10 +3675,14 @@ class Settings extends WordPress\Main
 	}
 
 	// @REF: https://codepen.io/geminorum/pen/RwEPyWJ
-	public static function tabPanelOpen()
+	public static function tabPanelOpen( $data = [], $class = '' )
 	{
-		return '<div class="wp-tab-panel -with-select-all" data-select-all-label="'
-			.esc_attr_x( 'Select All', 'Settings: Tab Panel', 'geditorial-admin' ).'"><ul>';
+		$data['select-all-label'] = _x( 'Select All', 'Settings: Tab Panel', 'geditorial-admin' );
+
+		return '<div class="'
+			.Core\HTML::prepClass( 'wp-tab-panel', '-with-select-all', $class ).'"'
+			.Core\HTML::propData( $data )
+			.'"><ul>';
 	}
 
 	public static function processingListOpen()
