@@ -126,7 +126,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://www.goodreads.com/book/show/{{code}}',
 				'cssclass' => '-goodreads-book',
 				'icon'     => [ 'misc-24', 'goodreads' ], // 'amazon',
-				'logo'     => self::getLinkLogo( 'goodreads', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'goodreads', NULL, $context, $path ),
 				'desc'     => _x( 'More about this on Goodreads network.', 'Type Description', 'geditorial-bookmarked' ),
 				'color'    => '#59461b',
 			],
@@ -136,7 +136,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://fidibo.com/book/{{code}}',
 				'cssclass' => '-fidibo-book',
 				'icon'     => [ 'misc-16', 'fidibo' ], // 'location-alt',
-				'logo'     => self::getLinkLogo( 'fidibo', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'fidibo', NULL, $context, $path ),
 				'desc'     => _x( 'Read this on Fidibo e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
 				'color'    => '#322e2a',
 			],
@@ -145,10 +145,10 @@ class ModuleHelper extends gEditorial\Helper
 				'title'    => _x( 'Taaghche Book', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => 'https://taaghche.com/book/{{code}}',
 				'cssclass' => '-taaghche-book',
-				'icon'     => [ 'misc-512', 'taaghche' ], // 'book-alt',
-				'logo'     => self::getLinkLogo( 'taaghche', NULL, $path ),
+				'icon'     => [ 'misc-16', 'taaghche' ], // 'book-alt',
+				'logo'     => self::getLinkLogo( 'taaghche', NULL, $context, $path ),
 				'desc'     => _x( 'Read this on Taaghche e-book platform.', 'Type Description', 'geditorial-bookmarked' ),
-				'color'    => '#04a3a3',
+				'color'    => '#00a2a4',
 			],
 			[
 				'name'     => 'behkhaan',
@@ -156,7 +156,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://behkhaan.ir/profile/{{code}}',
 				'cssclass' => '-behkhaan-profile',
 				'icon'     => [ 'misc-32', 'behkhaan' ], // 'book-alt',
-				'logo'     => self::getLinkLogo( 'behkhaan', 'png', $path ),
+				'logo'     => self::getLinkLogo( 'behkhaan', 'png', $context, $path ),
 				'desc'     => _x( 'More about this on Behkhaan network.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
@@ -165,7 +165,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://nshn.ir/{{code}}',
 				'cssclass' => '-neshan-map',
 				'icon'     => [ 'misc-512', 'neshan' ], // 'location-alt',
-				'logo'     => self::getLinkLogo( 'neshan', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'neshan', NULL, $context, $path ),
 				'desc'     => _x( 'More about this on Neshan maps.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
@@ -174,7 +174,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://balad.ir/p/{{code}}',
 				'cssclass' => '-balad-map',
 				'icon'     => [ 'misc-512', 'balad' ], // 'location-alt',
-				'logo'     => self::getLinkLogo( 'balad', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'balad', NULL, $context, $path ),
 				'desc'     => _x( 'More about this on Balad maps.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
@@ -183,7 +183,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://www.aparat.com/v/{{code}}',
 				'cssclass' => '-aparat-video',
 				'icon'     => [ 'misc-24', 'aparat' ], // 'video-alt3',
-				'logo'     => self::getLinkLogo( 'aparat', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'aparat', NULL, $context, $path ),
 				'desc'     => _x( 'More about this on Aparat video platform.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
@@ -192,7 +192,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://www.youtube.com/watch?v={{code}}',
 				'cssclass' => '-youtube-video',
 				'icon'     => 'youtube',
-				'logo'     => self::getLinkLogo( 'youtube', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'youtube', NULL, $context, $path ),
 				'desc'     => _x( 'More about this on Youtube video platform.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
@@ -201,7 +201,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://{{_iso639}}.wikipedia.org/wiki/{{code}}',
 				'cssclass' => '-wikipedia-page',
 				'icon'     => [ 'misc-16', 'wikipedia' ],
-				'logo'     => self::getLinkLogo( 'wikipedia', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'wikipedia', NULL, $context, $path ),
 				'desc'     => _x( 'More about this on an Wikipedia page.', 'Type Description', 'geditorial-bookmarked' ),
 			],
 			[
@@ -210,7 +210,7 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => 'https://www.navaar.ir/audiobook/{{code}}',
 				'cssclass' => '-navaar-audio',
 				'icon'     => [ 'misc-32', 'navaar' ],
-				'logo'     => self::getLinkLogo( 'navaar', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'navaar', NULL, $context, $path ),
 				'desc'     => _x( 'More about this on an Navaar audio.', 'Type Description', 'geditorial-bookmarked' ),
 				'color'    => '#567dbf',
 			],
@@ -265,20 +265,17 @@ class ModuleHelper extends gEditorial\Helper
 				'template' => '{{link}}',
 				'cssclass' => '-epub-book',
 				'icon'     => [ 'misc-32', 'epub' ],
-				'logo'     => self::getLinkLogo( 'epub', NULL, $path ),
+				'logo'     => self::getLinkLogo( 'epub', NULL, $context, $path ),
 				'desc'     => _x( 'Read more about this as ePub book.', 'Type Description', 'geditorial-bookmarked' ),
 				'color'    => '#86b918',
 			],
 		];
 	}
 
-	public static function getLinkLogo( $key, $ext = NULL, $path = NULL )
+	public static function getLinkLogo( $key, $ext = NULL, $context = NULL, $path = NULL )
 	{
-		// self::_log(__FILE__);
-
 		return sprintf( '%s%s%s.%s',
-			// Core\URL::fromPath( $path ?? $this->path ),
-			Core\URL::fromPath( $path ),
+			Core\URL::fromPath( $path ?? self::path( $context ) ),
 			'data/logos/',
 			$key,
 			$ext ?? self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'

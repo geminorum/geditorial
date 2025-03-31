@@ -8,6 +8,11 @@ use geminorum\gEditorial\WordPress;
 trait CoreIncludes
 {
 
+	public function get_module_path( $context = NULL )
+	{
+		return $this->filters( 'path', $this->path, $context );
+	}
+
 	/**
 	 * requires a relative file.
 	 *

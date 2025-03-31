@@ -183,7 +183,7 @@ class Bookmarked extends gEditorial\Module
 
 	protected function subcontent_define_type_options( $context, $posttype = NULL )
 	{
-		return ModuleHelper::getTypeOptions( $context, $this->path );
+		return ModuleHelper::getTypeOptions( $context );
 	}
 
 	public function after_setup_theme()
