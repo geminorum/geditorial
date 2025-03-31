@@ -157,7 +157,7 @@ class CustomTaxonomy extends WordPress\Main
 
 			case 'extended_label':
 
-				if ( ! empty( $object->{TermHierarchy::SINGLE_TERM_SELECT} ) )
+				if ( TermHierarchy::isSingleTerm( $object ) )
 					return $object->labels->singular_name;
 
 				return $object->labels->name;

@@ -1528,7 +1528,7 @@ class Importer extends gEditorial\Module
 			if ( FALSE === $filtered )
 				continue;
 
-			if ( ! empty( $object->{Services\TermHierarchy::SINGLE_TERM_SELECT} ) ) {
+			if ( Services\TermHierarchy::isSingleTerm( $object ) ) {
 
 				if ( $override && ( $single = Services\TermHierarchy::getSingleSelectTerm( $object, $filtered, $post_id ) ) )
 					$filtered = $single->term_id;

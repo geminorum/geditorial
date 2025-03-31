@@ -186,6 +186,20 @@ class TermHierarchy extends WordPress\Main
 	}
 
 	/**
+	 * Checks whether the taxonomy is `SingleTerm`
+	 *
+	 * @param string|object $taxonomy
+	 * @return bool $is
+	 */
+	public static function isSingleTerm( $taxonomy )
+	{
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
+			return FALSE;
+
+		return ! empty( $object->{static::SINGLE_TERM_SELECT} );
+	}
+
+	/**
 	 * Retrieves a single targeted term form a taxonomy with select-single prop.
 	 *
 	 * @param  string|object $taxonomy
