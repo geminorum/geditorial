@@ -140,6 +140,7 @@ trait CoreTaxonomies
 			'custom_objects'  => NULL,    // NULL for default. `user`/`comment`/`taxonomy`
 			'custom_captype'  => FALSE,
 			'admin_managed'   => NULL,    // pseudo-setting: manage only for admins
+			'content_rich'    => NULL,    // pseudo-setting: the terms have additional content beside just assignment to posts
 			'auto_parents'    => FALSE,
 			'auto_children'   => FALSE,
 			'single_selected' => FALSE,   // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
@@ -275,6 +276,13 @@ trait CoreTaxonomies
 								'assign_terms' => 'edit_posts',
 							];
 					}
+
+					break;
+
+				case 'content_rich':
+
+					// even empty shows on sitemaps
+					$args[Services\Sitemaps::VIEWABLE_TAXONOMY_PROP] = TRUE;
 
 					break;
 

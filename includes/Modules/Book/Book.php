@@ -490,8 +490,8 @@ class Book extends gEditorial\Module
 		], 'main_posttype' );
 
 		$this->register_taxonomy( 'brand_taxonomy', [
-			'meta_box_cb'                             => NULL,   // default meta box
-			Services\Sitemaps::VIEWABLE_TAXONOMY_PROP => TRUE,   // even empty shows on sitemaps // TODO: register via taxonomy settings
+			'meta_box_cb'  => NULL,   // default meta box
+			'content_rich' => TRUE,   // even empty shows on sitemaps
 		], 'main_posttype' );
 
 		$this->register_taxonomy( 'type_taxonomy', [
