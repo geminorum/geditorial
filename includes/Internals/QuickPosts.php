@@ -17,8 +17,8 @@ trait QuickPosts
 		$this->render_default_mainpage( 'newpost', 'insert' );
 	}
 
-	// TODO: link to edit posttype screen
-	// TODO: get default posttype/status somehow!
+	// TODO: link to edit post-type screen
+	// TODO: get default post-type/status somehow!
 	protected function render_newpost_content()
 	{
 		$posttype = self::req( 'type', 'post' );
@@ -122,11 +122,11 @@ trait QuickPosts
 		echo '<div class="-recents">';
 
 			// FIXME: do actions here
-			// FIXME: move recents to pre-conf action
+			// FIXME: move `recents` to pre-configured action
 			// FIXME: correct the selectors
-			// TODO: hook action from Book module: suggestd the book by passed meta
+			// TODO: hook action from Book module: suggested the book by passed meta
 
-			/* translators: `%s`: posttype singular name */
+			/* translators: `%s`: post-type singular name */
 			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ), $object->labels->singular_name );
 
 			Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
@@ -135,7 +135,7 @@ trait QuickPosts
 
 		echo '</div>';
 
-			/* translators: `%s`: posttype name */
+			/* translators: `%s`: post-type name */
 			Core\HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial-admin' ), $object->labels->name ) );
 
 		echo '</div></div>';
@@ -159,9 +159,9 @@ trait QuickPosts
 		Core\HTML::inputHidden( 'menu_order', WordPress\PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
 
-	// LEGACY: do not use thickbox anymore!
+	// LEGACY: do not use thick-box anymore!
 	// NOTE: must `add_thickbox()` on load
-	// FIXME: use color box api
+	// FIXME: use color box API
 	public function do_render_thickbox_newpostbutton( $post, $constant, $context = 'newpost', $extra = [], $inline = FALSE, $width = '600' )
 	{
 		$posttype = $this->constant( $constant );

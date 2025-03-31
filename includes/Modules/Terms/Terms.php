@@ -16,6 +16,7 @@ use geminorum\gEditorial\WordPress;
 class Terms extends gEditorial\Module
 {
 
+	// TODO: general column like: `geditorial-column-meta`:
 	// TODO: like `tableColumnPostMeta()` for term meta
 	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `phonetic`, `time`, `pseudonym`
 	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
@@ -673,6 +674,10 @@ class Terms extends gEditorial\Module
 
 		$supported = $this->get_supported( $taxonomy );
 		$icons     = [
+
+			// TODO: assign dashicons here!
+			// 'field' => 'dashicon',
+
 			'order',
 			'contact',
 			'venue',
@@ -797,7 +802,7 @@ class Terms extends gEditorial\Module
 		$this->actions( 'custom_column', $column_name, $taxonomy, $supported, $term );
 	}
 
-	// TODO: use readonly inputs on non-columns
+	// TODO: use read-only inputs on non-columns
 	private function display_form_field( $field, $taxonomy, $term, $column = TRUE )
 	{
 		$html     = $meta = '';
@@ -2054,6 +2059,7 @@ class Terms extends gEditorial\Module
 		return $data;
 	}
 
+	// TODO: check access
 	public function taxonomy_export_term_meta( $metas, $taxonomy )
 	{
 		return array_merge( $metas, $this->list_supported( $taxonomy ) );
@@ -2189,13 +2195,13 @@ class Terms extends gEditorial\Module
 	 * Changes `get_terms()` defaults for supported taxonomies to order by meta.
 	 * @source `wc_change_get_terms_defaults()`
 	 *
-	 * @param array  $defaults
-	 * @param array  $taxonomies
+	 * @param array $defaults
+	 * @param array $taxonomies
 	 * @return array $defaults
 	 */
 	public function get_terms_defaults_ordering( $defaults, $taxonomies )
 	{
-		if ( is_array( $taxonomies ) && 1 < count( $taxonomies ) )
+		if ( is_array( $taxonomies ) && count( $taxonomies ) > 1 )
 			return $defaults;
 
 		$taxonomy = is_array( $taxonomies ) ? (string) current( $taxonomies ) : $taxonomies;
@@ -2227,7 +2233,7 @@ class Terms extends gEditorial\Module
 	{
 		$args = &$terms_query->query_vars;
 
-		// Put back valid orderby values.
+		// Put back valid `orderby` values.
 		if ( 'menu_order' === $args['orderby'] ) {
 			$args['orderby']               = 'name';
 			$args['force_menu_order_sort'] = TRUE;

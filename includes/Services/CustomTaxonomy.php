@@ -140,7 +140,7 @@ class CustomTaxonomy extends WordPress\Main
 	public static function getLabel( $term_or_taxonomy, $label, $fallback_key = NULL, $fallback = '' )
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $term_or_taxonomy ) )
-			return $fallback ?? Plugin::na();
+			return $fallback ?? gEditorial\Plugin::na();
 
 		if ( ! empty( $object->labels->{$label} ) )
 			return $object->labels->{$label};

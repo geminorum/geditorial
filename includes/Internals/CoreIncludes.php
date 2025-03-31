@@ -14,10 +14,10 @@ trait CoreIncludes
 	}
 
 	/**
-	 * requires a relative file.
+	 * Requires a relative file.
 	 *
-	 * @param  string|array $filenames
-	 * @param  bool         $once
+	 * @param string|array $filenames
+	 * @param bool $once
 	 * @return void
 	 */
 	protected function require_code( $filenames, $once = TRUE )

@@ -994,6 +994,7 @@ trait PostTypeFields
 
 		echo '</ul></div>';
 
+		// TODO: use `$this->hidden()`
 		// TODO: move this to `add_inline_data` action hook
 		// NOTE: for `quickedit` enabled fields
 		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )

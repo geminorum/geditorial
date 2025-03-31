@@ -71,9 +71,6 @@ class ModuleHelper extends gEditorial\Helper
 		return $prepped;
 	}
 
-	// TODO: Support: `Shenoto`: https://logoyab.com/logo/%d9%84%d9%88%da%af%d9%88-%d9%86%d8%b1%d9%85-%d8%a7%d9%81%d8%b2%d8%a7%d8%b1-%d8%b4%d9%86%d9%88%d8%aa%d9%88/
-	// TODO: Support: `Namlik`: https://logoyab.com/logo/%d9%84%d9%88%da%af%d9%88-%d9%86%d8%b1%d9%85-%d8%a7%d9%81%d8%b2%d8%a7%d8%b1-%d9%86%d8%a7%d9%85%d9%84%db%8c%da%a9/
-
 	// @SEE: `subcontent_define_type_options()`
 	public static function getTypeOptions( $context = NULL, $path = NULL )
 	{

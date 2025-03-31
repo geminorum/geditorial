@@ -668,8 +668,7 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	// for ajax calls on quick edit
-	// OLD: `is_inline_save()`
+	// NOTE: for Ajax calls on quick edit
 	public function is_inline_save_posttype( $target = FALSE, $request = NULL, $key = 'post_type' )
 	{
 		if ( ! Core\WordPress::isAdminAJAX() )
@@ -697,7 +696,7 @@ class Module extends WordPress\Module
 		return $request[$key];
 	}
 
-	// for ajax calls on quick edit
+	// NOTE: for Ajax calls on quick edit
 	public function is_inline_save_taxonomy( $target = FALSE, $request = NULL, $key = 'taxonomy' )
 	{
 		if ( ! Core\WordPress::isAdminAJAX() )

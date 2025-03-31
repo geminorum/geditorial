@@ -10,14 +10,14 @@ trait CoreCapabilities
 
 	/**
 	 * Wraps Role API method for given taxonomy constant
-	 * FIXME: WTF: maybe check if taxonomy exists
+	 * NOTE: WTF: maybe check if taxonomy exists
 	 *
-	 * @param  string $constant
-	 * @param  string|array $whats
-	 * @param  null|int $user_id
-	 * @param  bool $fallback
-	 * @param  bool $admins
-	 * @param  string $prefix
+	 * @param string $constant
+	 * @param string|array $whats
+	 * @param null|int $user_id
+	 * @param bool $fallback
+	 * @param bool $admins
+	 * @param string $prefix
 	 * @return bool $can
 	 */
 	protected function corecaps_taxonomy_role_can( $constant, $whats, $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
@@ -37,7 +37,7 @@ trait CoreCapabilities
 	 * Hooks corresponding filter for `map_meta_cap` of WordPress.
 	 * @REF: https://make.wordpress.org/core/?p=20496
 	 *
-	 * @param  string $constant
+	 * @param string $constant
 	 * @return bool $hooked
 	 */
 	protected function corecaps__handle_taxonomy_metacaps_roles( $constant )
@@ -74,9 +74,9 @@ trait CoreCapabilities
 
 					break;
 
-				case 'manage_'.$taxonomy[0]:  // FIXME: DEPRECATED
-				case 'edit_'.$taxonomy[0]:    // FIXME: DEPRECATED
-				case 'delete_'.$taxonomy[0]:  // FIXME: DEPRECATED
+				case 'manage_'.$taxonomy[0]:  // NOTE: DEPRECATED
+				case 'edit_'.$taxonomy[0]:    // NOTE: DEPRECATED
+				case 'delete_'.$taxonomy[0]:  // NOTE: DEPRECATED
 
 				case 'manage_'.$taxonomy[1]:
 				case 'edit_'.$taxonomy[1]:
@@ -88,7 +88,7 @@ trait CoreCapabilities
 
 					break;
 
-				case 'assign_'.$taxonomy[0]:  // FIXME: DEPRECATED
+				case 'assign_'.$taxonomy[0]:  // NOTE: DEPRECATED
 				case 'assign_'.$taxonomy[1]:
 
 					return $this->corecaps_taxonomy_role_can( $constant, 'assign', $user_id )
@@ -136,10 +136,10 @@ trait CoreCapabilities
 
 			switch ( $cap ) {
 
-				case 'manage_'.$taxonomy[0]: // FIXME: DEPRECATED
-				case 'edit_'.$taxonomy[0]:   // FIXME: DEPRECATED
-				case 'delete_'.$taxonomy[0]: // FIXME: DEPRECATED
-				case 'assign_'.$taxonomy[0]: // FIXME: DEPRECATED
+				case 'manage_'.$taxonomy[0]: // NOTE: DEPRECATED
+				case 'edit_'.$taxonomy[0]:   // NOTE: DEPRECATED
+				case 'delete_'.$taxonomy[0]: // NOTE: DEPRECATED
+				case 'assign_'.$taxonomy[0]: // NOTE: DEPRECATED
 
 				case 'manage_'.$taxonomy[1]:
 				case 'edit_'.$taxonomy[1]:
@@ -266,7 +266,7 @@ trait CoreCapabilities
 
 	protected function corecaps__render_captype_install( $constant, $setting = NULL )
 	{
-		// display table with generated caps using the captype
+		// Display table with generated caps using the `captype`
 		// list available roles to add the cap types
 		// add/remove buttons for selected roles
 	}

@@ -1051,7 +1051,6 @@ class StaticCovers extends gEditorial\Module
 
 	private function _register_headerbuttons_for_post_secondary( $posttype, $post = NULL, $handle = NULL )
 	{
-
 		if ( ! $this->role_can( 'reports' ) )
 			return FALSE;
 

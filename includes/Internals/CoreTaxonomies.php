@@ -137,7 +137,7 @@ trait CoreTaxonomies
 	{
 		$settings = self::atts( [
 			'is_viewable'     => NULL,
-			'custom_objects'  => NULL,    // NULL for default. `user`/`comment`/`taxonomy` // TODO: WTF?!
+			'custom_objects'  => NULL,    // NULL for default. `user`/`comment`/`taxonomy`
 			'custom_captype'  => FALSE,
 			'admin_managed'   => NULL,    // pseudo-setting: manage only for admins
 			'auto_parents'    => FALSE,

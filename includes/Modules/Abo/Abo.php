@@ -16,8 +16,6 @@ class Abo extends gEditorial\Module
 	use Internals\DashboardSummary;
 	use Internals\TemplateTaxonomy;
 
-	// TODO: custom Build meta-box row: A+[] B+[] AB+[] O+[] A-[] B-[] AB-[] O-[]
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()

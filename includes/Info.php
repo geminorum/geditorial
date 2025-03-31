@@ -141,8 +141,10 @@ class Info extends WordPress\Main
 
 		if ( $raw = Core\Validation::sanitizePostCode( $input ) ) {
 
-			// @package `brick/postcode`
-			// @source https://github.com/brick/postcode
+			/**
+			 * @package `brick/postcode`
+			 * @link https://github.com/brick/postcode
+			 */
 			$formatter = new \Brick\Postcode\PostcodeFormatter;
 			$country   = self::const( 'GCORE_DEFAULT_COUNTRY_CODE', 'IR' );
 

@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings

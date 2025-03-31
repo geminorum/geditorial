@@ -9,7 +9,6 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Isbn extends gEditorial\Module

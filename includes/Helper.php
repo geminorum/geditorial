@@ -126,6 +126,7 @@ class Helper extends WordPress\Main
 		return $result;
 	}
 
+	// TODO: move to `Visual`
 	public static function getIcon( $icon, $fallback = 'admin-post' )
 	{
 		if ( ! $icon )
@@ -447,7 +448,6 @@ class Helper extends WordPress\Main
 			if ( Core\Text::has( $object->menu_icon, 'data:image/svg+xml;base64,' ) )
 				return Core\Icon::wrapBase64( $object->menu_icon );
 
-
 			if ( Core\Text::has( $object->menu_icon, 'dashicons-' ) )
 				return Core\HTML::getDashicon( str_ireplace( 'dashicons-', '', $object->menu_icon ) );
 
@@ -457,7 +457,7 @@ class Helper extends WordPress\Main
 		return Core\HTML::getDashicon( $fallback );
 	}
 
-	// DEPRECATED
+	// NOTE: DEPRECATED
 	public static function getEditorialUserID( $fallback = FALSE )
 	{
 		self::_dep();
@@ -744,8 +744,10 @@ class Helper extends WordPress\Main
 		if ( ! $algo || ! $rsa )
 			return $fallback;
 
-		// @package `adhocore/jwt`
-		// @source https://github.com/adhocore/php-jwt
+		/**
+		 * @package `adhocore/jwt`
+		 * @link https://github.com/adhocore/php-jwt
+		 */
 		$jwt = new \Ahc\Jwt\JWT(
 			$rsa,
 			$algo,

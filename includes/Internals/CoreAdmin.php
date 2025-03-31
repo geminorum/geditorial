@@ -207,7 +207,7 @@ trait CoreAdmin
 						'title'  => Services\CustomPostType::getLabel( $posttypes[$posttype], 'extended_label' ),
 						'target' => $edit ? '_blank' : FALSE,
 						'class'  => $edit ? '-icon -link' : '-icon',
-					], Helper::getIcon( $posttypes[$posttype]->menu_icon, 'admin-post' ) );
+					], Helper::getPostTypeIcon( $posttypes[$posttype] ) );
 				}
 
 				echo Core\HTML::wrap( Core\HTML::renderList( $list ), '-icon-list -supported-posttype' );

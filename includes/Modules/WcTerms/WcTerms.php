@@ -64,6 +64,7 @@ class WcTerms extends gEditorial\Module
 							'description' => _x( 'Tab priority where the term introduction appears on the tabs.', 'Setting Description', 'geditorial-wc-terms' ),
 							'default'     => 10,
 						],
+						// TODO: heading level inside the tab
 					],
 				],
 				[
@@ -92,6 +93,7 @@ class WcTerms extends gEditorial\Module
 					'title'       => _x( 'Archive Title', 'Setting Title', 'geditorial-wc-terms' ),
 					'description' => _x( 'Enhance the term archive titles.', 'Setting Description', 'geditorial-wc-terms' ),
 					'deafult'     => '0',
+					// TODO: move up
 					'values'      => [
 						'0' => _x( 'Disabled', 'Setting Option', 'geditorial-wc-terms' ),
 						'1' => _x( 'Heading Level 1', 'Setting Option', 'geditorial-wc-terms' ),

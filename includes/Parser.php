@@ -54,8 +54,10 @@ class Parser extends WordPress\Main
 		if ( $args['extra_size'] )
 			$data['file_size'] = Core\File::getSize( $data['file_path'] );
 
-		// @REF: https://github.com/jwage/easy-csv
-		// @package `jwage/easy-csv`
+		/**
+		 * @package `jwage/easy-csv`
+		 * @link https://github.com/jwage/easy-csv
+		 */
 		$reader = new \EasyCSV\Reader( $data['file_path'] );
 
 		$data['headers'] = $reader->getHeaders();
@@ -145,9 +147,11 @@ class Parser extends WordPress\Main
 		if ( $args['extra_size'] )
 			$data['file_size'] = Core\File::getSize( $data['file_path'] );
 
-		// @REF: https://github.com/openspout/openspout/blob/3.x/docs/index.md
-		// @REF: https://opensource.box.com/spout/docs/
-		// @package `openspout/openspout`
+		/**
+		 * @package `openspout/openspout`
+		 * @link https://opensource.box.com/spout/docs/
+		 * @link https://github.com/openspout/openspout/blob/3.x/docs/index.md
+		 */
 		$reader = \OpenSpout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
 		$reader->open( $data['file_path'] );
 
@@ -265,7 +269,7 @@ class Parser extends WordPress\Main
 	/**
 	 * Generates simple `XLSX` data string from given data.
 	 * @package `maksimovic/php-xlsx-writer`
-	 * @REF: https://github.com/maksimovic/PHP_XLSXWriter
+	 * @link: https://github.com/maksimovic/PHP_XLSXWriter
 	 *
 	 * OLD: `Helper::generateXLSX()`
 	 *
