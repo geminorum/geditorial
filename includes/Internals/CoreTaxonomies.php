@@ -805,6 +805,33 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
+	// NOTE: check for not-admin before calling
+	protected function hook_adminbar_node_for_taxonomy( $constant, $parent = NULL )
+	{
+		if ( ! Core\WordPress::mustRegisterUI( FALSE ) )
+			return FALSE;
+
+		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
+			return FALSE;
+
+		add_action( 'admin_bar_menu',
+			function ( $wp_admin_bar ) use ( $taxonomy, $parent ) {
+
+				if ( ! is_admin_bar_showing() || ! is_user_logged_in() )
+					return;
+
+				$wp_admin_bar->add_node( [
+					'parent' => $parent ?? 'appearance',
+					'id'     => $this->classs( $taxonomy ),
+					'title'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ),
+					'href'   => WordPress\Taxonomy::edit( $taxonomy ),
+				] );
+
+			}, 32, 1 );
+
+		return TRUE;
+	}
+
 	protected function hook_taxonomy_parents_as_views( $screen, $constant, $setting = 'parents_as_views' )
 	{
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
