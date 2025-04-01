@@ -3,6 +3,8 @@
 
   const s = {
     overlay: '#cboxOverlay', // colorbox.js selector
+    trigger: 'a.do-' + module + '-iframe, .do-' + module + '-iframe-for-child > a',
+    parent: 'do-' + module + '-iframe-for-child',
     before: 'do-' + module + '-iframe',
     after: 'hooked-' + module + '-iframe'
   };
@@ -13,7 +15,7 @@
     },
 
     hook: function (mobile) {
-      $('a.' + s.before).each(function () {
+      $(s.trigger).each(function () {
         const $instance = $(this);
 
         $instance.on('click', function (event) {
@@ -56,7 +58,7 @@
           });
         });
 
-        $instance.removeClass(s.before);
+        $instance.removeClass(s.before).parent(s.parent);
         $instance.addClass(s.after);
       });
     }
