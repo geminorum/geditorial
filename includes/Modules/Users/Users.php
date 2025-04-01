@@ -138,8 +138,8 @@ class Users extends gEditorial\Module
 			$this->register_taxonomy( 'group_taxonomy', [
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
-			], 'user', [
-				'custom_objects' => 'user',
+			], FALSE, [
+				'target_object' => 'user',
 			] );
 
 			// no need, we use slash in slug
@@ -150,8 +150,8 @@ class Users extends gEditorial\Module
 			$this->register_taxonomy( 'type_taxonomy', [
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
-			], 'user', [
-				'custom_objects' => 'user',
+			], FALSE, [
+				'target_object' => 'user',
 			] );
 
 		if ( $this->get_setting( 'author_categories' ) )

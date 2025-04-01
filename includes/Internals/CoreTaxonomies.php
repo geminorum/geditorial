@@ -16,17 +16,13 @@ trait CoreTaxonomies
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
 	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $settings = [] )
 	{
-		$cpt_tax  = TRUE;
 		$taxonomy = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $taxonomy ) );
 
-		if ( is_string( $posttypes ) && in_array( $posttypes, [ 'user', 'comment', 'taxonomy' ] ) )
-			$cpt_tax = FALSE;
-
-		else if ( is_null( $posttypes ) )
+		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
-		else if ( ! is_array( $posttypes ) )
+		else if ( $posttypes && ! is_array( $posttypes ) )
 			$posttypes = $posttypes ? [ $this->constant( $posttypes ) ] : '';
 
 		$args = self::recursiveParseArgs( $atts, [
@@ -80,27 +76,6 @@ trait CoreTaxonomies
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_taxonomy_labels( $constant );
 
-		if ( ! array_key_exists( 'update_count_callback', $args ) ) {
-
-			if ( $cpt_tax )
-				// $args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
-				$args['update_count_callback'] = '_update_post_term_count';
-
-			else if ( 'user' == $posttypes )
-				$args['update_count_callback'] = [ WordPress\Database::class, 'updateUserTermCountCallback' ];
-
-			else if ( 'comment' == $posttypes )
-				$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
-
-			else if ( 'taxonomy' == $posttypes )
-				$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
-
-			// WTF: if not else ?!
-
-			// if ( is_admin() && ( $cpt_tax || 'user' == $posttypes || 'comment' == $posttypes ) )
-			// 	$this->_hook_taxonomies_excluded( $constant, 'recount' );
-		}
-
 		if ( FALSE !== $args['default_term'] )
 			$args['default_term'] = $this->_get_taxonomy_default_term( $constant, $args['default_term'] );
 
@@ -114,7 +89,7 @@ trait CoreTaxonomies
 
 		$object = register_taxonomy(
 			$taxonomy,
-			$cpt_tax ? $posttypes : '',
+			$posttypes ?: '',
 			$this->apply_taxonomy_object_settings(
 				$taxonomy,
 				$args,
@@ -137,7 +112,7 @@ trait CoreTaxonomies
 	{
 		$settings = self::atts( [
 			'is_viewable'     => NULL,
-			'custom_objects'  => NULL,    // NULL for default. `user`/`comment`/`taxonomy`
+			'target_object'   => FALSE,   // `FALSE` for default. `user`/`comment`/`taxonomy`
 			'custom_captype'  => FALSE,
 			'admin_managed'   => NULL,    // pseudo-setting: manage only for admins
 			'content_rich'    => NULL,    // pseudo-setting: the terms have additional content beside just assignment to posts
@@ -180,6 +155,39 @@ trait CoreTaxonomies
 						static function ( $viewable, $term ) use ( $taxonomy ) {
 							return $term->taxonomy === $taxonomy ? TRUE : $viewable;
 						}, 12, 2 );
+
+					break;
+
+				case 'target_object': // `post`/`user`/`comment`/`taxonomy`
+
+					$callback = array_key_exists( 'update_count_callback', $args );
+
+					if ( ! $value || 'post' === $value ) {
+
+						if ( ! $callback )
+							// $args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
+							$args['update_count_callback'] = '_update_post_term_count';
+
+					} else if ( 'user' === $value ) {
+
+						// "{$constant}_slug" => 'users/group',
+
+						if ( ! $callback )
+							$args['update_count_callback'] = [ WordPress\Database::class, 'updateUserTermCountCallback' ];
+
+					} else if ( 'comment' === $value ) {
+
+						if ( ! $callback )
+							$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
+
+					} else if ( 'taxonomy' === $value ) {
+
+						if ( ! $callback )
+							$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
+					}
+
+					// if ( $value && is_admin() && $constant )
+					// 	$this->_hook_taxonomies_excluded( $constant, 'recount' );
 
 					break;
 
