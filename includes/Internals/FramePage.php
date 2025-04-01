@@ -10,6 +10,15 @@ use geminorum\gEditorial\WordPress;
 trait FramePage
 {
 
+	public function framepage_get_mainlink_url( $linked, $target = NULL, $context = NULL )
+	{
+		return $this->get_adminpage_url( TRUE, [
+			'linked'   => $linked,
+			'target'   => $target ?? 'none',
+			'noheader' => 1,
+		], $context ?? 'framepage' );
+	}
+
 	protected function framepage_get_mainlink_for_post( $post, $atts = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
