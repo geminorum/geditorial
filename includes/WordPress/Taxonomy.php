@@ -7,8 +7,7 @@ use geminorum\gEditorial\Core;
 class Taxonomy extends Core\Base
 {
 
-	const NAME_INPUT_PATTERN     = '[-a-zA-Z0-9_]{3,32}';
-	const TARGET_TAXONOMIES_PROP = 'target_taxonomies';
+	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,32}';
 
 	public static function object( $taxonomy_or_term )
 	{
@@ -28,8 +27,8 @@ class Taxonomy extends Core\Base
 	 * Determines whether a taxonomy is registered.
 	 * @source: `taxonomy_exists()`
 	 *
-	 * @param  string|object $taxonomy_or_term
-	 * @return bool          $exists
+	 * @param string|object $taxonomy_or_term
+	 * @return bool $exists
 	 */
 	public static function exists( $taxonomy_or_term )
 	{
@@ -257,10 +256,10 @@ class Taxonomy extends Core\Base
 	 * Retrieves the URL for editing a given taxonomy.
 	 * @old `WordPress::getEditTaxLink()`
 	 *
-	 * @param  string|object $taxonomy
-	 * @param  array         $extra
-	 * @param  mixed         $fallback
-	 * @return string        $link
+	 * @param string|object $taxonomy
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string $link
 	 */
 	public static function edit( $taxonomy, $extra = [], $fallback = FALSE )
 	{
@@ -568,29 +567,35 @@ class Taxonomy extends Core\Base
 
 	// FIXME: check and exclude terms with `trashed` meta
 	// @REF: https://developer.wordpress.org/?p=22286
-	public static function listTerms( $taxonomy, $fields = NULL, $extra = [] )
+	public static function listTerms( $taxonomy, $fields = NULL, $extra = [], $ordering = TRUE )
 	{
-		$query = new \WP_Term_Query( array_merge( [
+		$args = [
 			'taxonomy'   => (array) $taxonomy,
-			'order'      => 'ASC',
-			'orderby'    => 'meta_value_num, name', // 'name',
-			'meta_query' => [
-				// @REF: https://core.trac.wordpress.org/ticket/34996
-				// FIXME: drop order here: see Terms: `apply_ordering`
-				'relation' => 'OR',
-				[
-					'key'     => 'order',
-					'compare' => 'NOT EXISTS'
-				],
-				[
-					'key'     => 'order',
-					'compare' => '>=',
-					'value'   => 0,
-				],
-			],
 			'fields'     => is_null( $fields ) ? 'id=>name' : $fields,
 			'hide_empty' => FALSE,
-		], $extra ) );
+		];
+
+		if ( $ordering )
+			$args = array_merge( $args, [
+				'order'      => 'ASC',
+				'orderby'    => 'meta_value_num, name', // 'name',
+				'meta_query' => [
+					// @REF: https://core.trac.wordpress.org/ticket/34996
+					// FIXME: drop order here: see Terms: `apply_ordering`
+					'relation' => 'OR',
+					[
+						'key'     => 'order',
+						'compare' => 'NOT EXISTS'
+					],
+					[
+						'key'     => 'order',
+						'compare' => '>=',
+						'value'   => 0,
+					],
+				],
+			] );
+
+		$query = new \WP_Term_Query( array_merge( $args, $extra ) );
 
 		if ( empty( $query->terms ) )
 			return [];
@@ -1315,7 +1320,7 @@ class Taxonomy extends Core\Base
 		return empty( $query->terms ) ? [] : $query->terms;
 	}
 
-	// must add `add_thickbox()` for thickbox
+	// must add `add_thickbox()` for thick-box
 	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage( $term_id, $size = NULL, $link = TRUE, $metakey = NULL )
 	{
@@ -1345,35 +1350,18 @@ class Taxonomy extends Core\Base
 		return apply_filters( 'geditorial_get_term_thumbnail_id', $thumbnail_id, $term_id, $metakey );
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function getArchiveLink( $taxonomy )
 	{
-		self::_dep();
+		self::_dep( 'Taxonomy::link()' );
 		return self::link( $taxonomy );
 	}
 
-	// DEPRECATED: use `Term::title()`
+	// NOTE: DEPRECATED
 	public static function getTermTitle( $term, $fallback = NULL, $filter = TRUE )
 	{
+		self::_dep( 'Term::title()' );
 		return Term::title( $term, $fallback, $filter );
-	}
-
-	public static function getTargetTaxonomies( $taxonomy, $fallback = FALSE )
-	{
-		$targets = [];
-
-		if ( $object = self::object( $taxonomy ) ) {
-
-			if ( ! empty( $object->{self::TARGET_TAXONOMIES_PROP} ) ) {
-
-				foreach ( (array) $object->{self::TARGET_TAXONOMIES_PROP} as $target )
-
-					if ( self::exists( $target ) )
-						$targets[] = $target;
-			}
-		}
-
-		return apply_filters( 'geditorial_taxonomy_target_taxonomies', $targets ?: $fallback, $taxonomy, $fallback );
 	}
 
 	/**

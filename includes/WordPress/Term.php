@@ -278,9 +278,9 @@ class Term extends Core\Base
 	/**
 	 * Generates HTML link for given term
 	 *
-	 * @param  null|int|string|object $term
-	 * @param  null|false|string $title
-	 * @param  bool|string $fallback
+	 * @param null|int|string|object $term
+	 * @param null|false|string $title
+	 * @param bool|string $fallback
 	 * @return string|false $html
 	 */
 	public static function htmlLink( $term, $title = NULL, $fallback = FALSE )

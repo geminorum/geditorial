@@ -442,6 +442,11 @@ class Module extends Core\Base
 		add_screen_option( $option, $args );
 	}
 
+	protected function hidden( $value, $data = [], $class = '', $id = FALSE )
+	{
+		echo Core\HTML::wrap( $value, Core\HTML::attrClass( 'hidden', $class ), TRUE, $data, $id );
+	}
+
 	protected function wrap( $html, $class = '', $block = TRUE, $id = FALSE, $hide = FALSE )
 	{
 		if ( empty( $html ) )

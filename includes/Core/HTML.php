@@ -166,7 +166,7 @@ class HTML extends Base
 
 	public static function row( $html, $class = '', $data = [], $tag = 'li' )
 	{
-		if ( ! $html )
+		if ( ! $html && ! '0' === $html )
 			return '';
 
 		return '<'.( $tag ?: 'div' )
@@ -177,7 +177,7 @@ class HTML extends Base
 
 	public static function wrap( $html, $class = '', $block = TRUE, $data = [], $id = FALSE )
 	{
-		if ( ! $html )
+		if ( ! $html && ! '0' === $html )
 			return '';
 
 		return $block

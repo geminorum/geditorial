@@ -308,15 +308,14 @@ class Post extends Core\Base
 	}
 
 	/**
-	 * Updates the posttype for the given post.
-	 *
-	 * also accepts post and posttype objects
-	 * and checks if its a different posttype
+	 * Updates the post-type for the given post.
+	 * Also accepts post and post-type objects
+	 * and checks if its a different post-type
 	 *
 	 * @source `set_post_type()`
 	 *
-	 * @param  int|object $post
-	 * @param  string|object $posttype
+	 * @param int|object $post
+	 * @param string|object $posttype
 	 * @return bool $success
 	 */
 	public static function setPostType( $post, $posttype )
@@ -379,7 +378,7 @@ class Post extends Core\Base
 	/**
 	 * Retrieves post rest route given a post ID or post object.
 	 *
-	 * @param  null|int|object $post
+	 * @param null|int|object $post
 	 * @return false|string $route
 	 */
 	public static function getRestRoute( $post = NULL )

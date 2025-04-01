@@ -6,17 +6,14 @@ use geminorum\gEditorial\Core;
 
 class Main extends Core\Base
 {
-
-	// TODO: make this a trait
-
 	const BASE   = '';
 	const MODULE = FALSE;
 
 	public static function setup() {}
 
-	protected static function factory()
+	public static function factory()
 	{
-		return gEditorial();
+		throw new Core\Exception( 'The Factory is not defined!' );
 	}
 
 	protected static function classs()
@@ -57,7 +54,7 @@ class Main extends Core\Base
 		if ( is_null( $module ) )
 			$module = static::MODULE;
 
-		return self::factory()->constant( $module, $key, $default );
+		return parent::factory()->constant( $module, $key, $default );
 	}
 
 	protected static function filters( $hook, ...$args )
@@ -69,12 +66,17 @@ class Main extends Core\Base
 		), ...$args );
 	}
 
+	protected static function path( $context = NULL, $module = NULL )
+	{
+		return static::factory()->module( $module ?? static::MODULE )->get_module_path( $context );
+	}
+
 	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE, $module = NULL )
 	{
 		if ( is_null( $module ) )
 			$module = static::MODULE;
 
-		return self::factory()->module( $module )->get_string( $string, $posttype, $group, $fallback );
+		return static::factory()->module( $module )->get_string( $string, $posttype, $group, $fallback );
 	}
 
 	protected static function getPostMeta( $post_id, $field = FALSE, $default = [], $metakey = NULL, $module = NULL )
@@ -83,8 +85,8 @@ class Main extends Core\Base
 			$module = static::MODULE;
 
 		return FALSE === $field
-			? self::factory()->module( $module )->get_postmeta_legacy( $post_id, $default )
-			: self::factory()->module( $module )->get_postmeta_field( $post_id, $field, $default, $metakey );
+			? static::factory()->module( $module )->get_postmeta_legacy( $post_id, $default )
+			: static::factory()->module( $module )->get_postmeta_field( $post_id, $field, $default, $metakey );
 	}
 
 	// FIXME: WTF?!
@@ -93,8 +95,8 @@ class Main extends Core\Base
 		if ( is_null( $module ) )
 			$module = static::MODULE;
 
-		// if ( static::MODULE && self::factory()->enabled( static::MODULE ) )
-			return self::factory()->module( $module )->posttypes( $posttypes );
+		// if ( static::MODULE && static::factory()->enabled( static::MODULE ) )
+			return static::factory()->module( $module )->posttypes( $posttypes );
 
 		return [];
 	}

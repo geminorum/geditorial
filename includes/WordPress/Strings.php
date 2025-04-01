@@ -119,10 +119,10 @@ class Strings extends Core\Base
 	/**
 	 * Separates given string by set of delimiters into an array.
 	 *
-	 * @param  string $string
-	 * @param  null|string|array $delimiters
-	 * @param  null|int $limit
-	 * @param  string $delimiter
+	 * @param string $string
+	 * @param null|string|array $delimiters
+	 * @param null|int $limit
+	 * @param string $delimiter
 	 * @return array $separated
 	 */
 	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
@@ -244,13 +244,13 @@ class Strings extends Core\Base
 	}
 
 	/**
-	 * First strip out registered and enclosing shortcodes using native WordPress strip_shortcodes function.
-	 * Then strip out the shortcodes with a filthy regex, because people don't properly register their shortcodes.
+	 * First strip out registered and enclosing short-codes using native WordPress `strip_shortcodes()` function.
+	 * Then strip out the short-codes with a filthy regex, because people don't properly register their short-codes.
 	 *
 	 * @source `Yoast\WP\SEO\Helpers\String_Helper::strip_shortcode()`
 	 *
-	 * @param string $text Input string that might contain shortcodes.
-	 * @return string String without shortcodes.
+	 * @param string $text Input string that might contain short-codes.
+	 * @return string String without short-codes.
 	 */
 	public static function stripShortCode( $text )
 	{
@@ -290,15 +290,15 @@ class Strings extends Core\Base
 
 			if ( 'text' == $context )
 				/**
-				 * allows all most inline elements and strips all
-				 * block level elements except blockquote
+				 * Allows all most inline elements and strips all
+				 * block level elements except `blockquote`
 				 */
 				$allowed = wp_kses_allowed_html( 'data' );
 
 			else if ( 'html' == $context )
 				/**
-				 * very permissive: allows pretty much all HTML to pass.
-				 * same as what's normally applied to the_content by default.
+				 * Very permissive: allows pretty much all HTML to pass.
+				 * Same as what's normally applied to `the_content` by default.
 				 */
 				$allowed = wp_kses_allowed_html( 'post' );
 

@@ -23,7 +23,7 @@ class Media extends Core\Base
 	}
 
 	/**
-	 * Retrieves available mime types for given posttype in media library.
+	 * Retrieves available mime types for given post-type in media library.
 	 * @ref `wp_count_attachments()`
 	 *
 	 * @return array $mime_types
