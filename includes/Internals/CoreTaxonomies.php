@@ -14,7 +14,7 @@ trait CoreTaxonomies
 {
 
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
-	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $settings = [] )
+	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $settings_atts = [] )
 	{
 		$taxonomy = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $taxonomy ) );
@@ -87,29 +87,6 @@ trait CoreTaxonomies
 		if ( ! array_key_exists( 'menu_icon', $args ) )
 			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
 
-		$object = register_taxonomy(
-			$taxonomy,
-			$posttypes ?: '',
-			$this->apply_taxonomy_object_settings(
-				$taxonomy,
-				$args,
-				$settings,
-				$posttypes,
-				$constant
-			)
-		);
-
-		// TODO: `after_taxonomy_object_register()`
-
-		if ( self::isError( $object ) )
-			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
-
-		return $object;
-	}
-
-	// TODO: support for taxonomy icon: @SEE: `$args['menu_icon']`
-	protected function apply_taxonomy_object_settings( $taxonomy, $args = [], $atts = [], $posttypes = NULL, $constant = FALSE )
-	{
 		$settings = self::atts( [
 			'is_viewable'     => NULL,
 			'target_object'   => FALSE,   // `FALSE` for default. `user`/`comment`/`taxonomy`
@@ -121,7 +98,7 @@ trait CoreTaxonomies
 			'single_selected' => FALSE,   // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
 			'reverse_ordered' => NULL,
 			'auto_assigned'   => NULL,
-		], $atts );
+		], $settings_atts );
 
 		foreach ( $settings as $setting => $value ) {
 
@@ -309,7 +286,18 @@ trait CoreTaxonomies
 			}
 		}
 
-		return $args;
+		$object = register_taxonomy(
+			$taxonomy,
+			$posttypes ?: '',
+			$args
+		);
+
+		if ( self::isError( $object ) )
+			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
+
+		// TODO: `after_taxonomy_object_register()`
+
+		return $object;
 	}
 
 	public function get_taxonomy_labels( $constant )
@@ -728,7 +716,7 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
-	// TODO: integrate to `apply_taxonomy_object_settings()`
+	// TODO: integrate to `$this->register_taxonomy()`
 	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL, $hierarchical = FALSE )
 	{
 		if ( ! $arg && method_exists( $this, 'meta_box_cb_'.$constant ) )
