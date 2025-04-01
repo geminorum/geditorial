@@ -844,7 +844,7 @@ class ShortCode extends WordPress\Main
 		if ( 'associated' == $list )
 			$list = 'paired';
 
-		$key   = self::hash( $list, $args );
+		$key   = static::hash( $list, $args );
 		$group = sprintf( '%s_list_posts', static::BASE );
 		$cache = wp_cache_get( $key, $group );
 
@@ -1454,7 +1454,7 @@ class ShortCode extends WordPress\Main
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		$key   = self::hash( $list, $args );
+		$key   = static::hash( $list, $args );
 		$group = sprintf( '%s_list_terms', static::BASE );
 		$cache = wp_cache_get( $key, $group );
 

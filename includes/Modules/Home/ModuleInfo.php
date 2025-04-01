@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 
 class ModuleInfo extends gEditorial\Info
 {
-
 	const MODULE = 'home';
 
 	public static function getHelpTabs( $context = NULL )
@@ -15,7 +14,7 @@ class ModuleInfo extends gEditorial\Info
 		return [
 			[
 				'title'   => _x( 'Featured Content', 'Help Tab Title', 'geditorial-home' ),
-				'id'      => self::classs( 'featured-content' ),
+				'id'      => static::classs( 'featured-content' ),
 				'content' => self::buffer( [ __CLASS__, 'renderrenderHelpTab_featured_content' ] ),
 			],
 		];

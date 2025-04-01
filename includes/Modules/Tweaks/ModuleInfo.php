@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 
 class ModuleInfo extends gEditorial\Info
 {
-
 	const MODULE = 'tweaks';
 
 	public static function getHelpTabs( $context = NULL )
@@ -15,12 +14,12 @@ class ModuleInfo extends gEditorial\Info
 		return [
 			[
 				'title'   => _x( 'Category Search', 'Help Tab Title', 'geditorial-tweaks' ),
-				'id'      => self::classs( 'category-search' ),
+				'id'      => static::classs( 'category-search' ),
 				'content' => self::buffer( [ __CLASS__, 'renderrenderHelpTab_category_search' ] ),
 			],
 			[
 				'title'   => _x( 'Checklist Tree', 'Help Tab Title', 'geditorial-tweaks' ),
-				'id'      => self::classs( 'checklist-tree' ),
+				'id'      => static::classs( 'checklist-tree' ),
 				'content' => self::buffer( [ __CLASS__, 'renderrenderHelpTab_checklist_tree' ] ),
 			],
 		];

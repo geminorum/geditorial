@@ -20,7 +20,7 @@ trait ViewEngines
 		];
 	}
 
-	protected function viewengine__render_string( $template, $data = [], $verbose = TRUE )
+	public function viewengine__render_string( $template, $data = [], $verbose = TRUE )
 	{
 		if ( empty( $template ) )
 			return $verbose ? FALSE : '';
@@ -38,7 +38,7 @@ trait ViewEngines
 		echo $filtered;
 	}
 
-	protected function viewengine__render( $view, $data = [], $verbose = TRUE )
+	public function viewengine__render( $view, $data = [], $verbose = TRUE )
 	{
 		$key = $this->hash( $view );
 		list( $part, $root ) = $view;
@@ -97,7 +97,7 @@ trait ViewEngines
 		return @new \Mustache_Engine( $args );
 	}
 
-	protected function viewengine__view_by_template( $template, $context, $default = 'default', $path = NULL )
+	public function viewengine__view_by_template( $template, $context, $default = 'default', $path = NULL )
 	{
 		$view     = FALSE;
 		$target   = sprintf( '%s-%s', $context, $template );
@@ -120,7 +120,7 @@ trait ViewEngines
 		return $this->filters( 'view_by_template', $view, $template, $context, $fallback, $roots, $target );
 	}
 
-	protected function viewengine__view_by_post( $post, $context, $default = 'default', $path = NULL )
+	public function viewengine__view_by_post( $post, $context, $default = 'default', $path = NULL )
 	{
 		$target   = $view = FALSE;
 		$fallback = sprintf( '%s-type-%s', $context, $default );
@@ -145,7 +145,7 @@ trait ViewEngines
 		return $this->filters( 'view_by_post', $view, $post, $context, $fallback, $roots, $target );
 	}
 
-	protected function viewengine__view_by_term( $term, $context, $default = 'default', $path = NULL )
+	public function viewengine__view_by_term( $term, $context, $default = 'default', $path = NULL )
 	{
 		$target   = $view = FALSE;
 		$fallback = sprintf( '%s-tax-%s', $context, $default );

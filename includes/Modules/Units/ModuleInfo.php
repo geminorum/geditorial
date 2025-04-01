@@ -7,9 +7,6 @@ use geminorum\gEditorial\Core;
 
 class ModuleInfo extends gEditorial\Info
 {
-
-	// TODO: https://www.neenahpaper.com/resources/paper-101/basis-weights
-
 	const MODULE = 'units';
 
 	public static function getHelpTabs( $context = NULL )
@@ -17,7 +14,7 @@ class ModuleInfo extends gEditorial\Info
 		return [
 			[
 				'title'   => _x( 'Shortcodes', 'Help Tab Title', 'geditorial-units' ),
-				'id'      => self::classs( 'shortcodes' ),
+				'id'      => static::classs( 'shortcodes' ),
 				'content' => self::buffer( [ __CLASS__, 'renderHelpTabList' ], [
 					[
 						Core\HTML::code( '[unit /]' ),

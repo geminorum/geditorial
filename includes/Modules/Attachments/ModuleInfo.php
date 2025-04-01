@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 
 class ModuleInfo extends gEditorial\Info
 {
-
 	const MODULE = 'attachments';
 
 	public static function getHelpTabs( $context = NULL )
@@ -15,7 +14,7 @@ class ModuleInfo extends gEditorial\Info
 		return [
 			[
 				'title'   => _x( 'Shortcodes', 'Help Tab Title', 'geditorial-attachments' ),
-				'id'      => self::classs( 'shortcodes' ),
+				'id'      => static::classs( 'shortcodes' ),
 				'content' => self::buffer( [ __CLASS__, 'renderHelpTabList' ], [
 					[
 						Core\HTML::code( '[attachments mime_type="application/pdf" title=0 wrap=0 /]' ),

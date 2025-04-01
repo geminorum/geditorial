@@ -15,7 +15,7 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		$prepped = [];
 
-		foreach ( $data as $offset => $row ) {
+		foreach ( $data as $row ) {
 
 			$type   = empty( $row['__type'] ) ? 'default' : $row['__type'];
 			$option = empty( $options[$type] ) ? [] : $options[$type];
@@ -64,7 +64,7 @@ class ModuleHelper extends gEditorial\Helper
 				$item['bgcolor'] = Core\Color::lightOrDark( $option['color'] );
 			}
 
-			$prepped[$offset] = $item;
+			$prepped[] = $item;
 		}
 
 		return $prepped;

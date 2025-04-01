@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 
 class ModuleInfo extends gEditorial\Info
 {
-
 	const MODULE = 'ortho';
 
 	const VIRASTAR_VERSION     = '0.21.0';
@@ -18,12 +17,12 @@ class ModuleInfo extends gEditorial\Info
 		return [
 			[
 				'title'    => _x( 'Virastar', 'Help Tab Title', 'geditorial-ortho' ),
-				'id'      => self::classs( 'virastar' ),
+				'id'      => static::classs( 'virastar' ),
 				'content' => self::buffer( [ __CLASS__, 'renderrenderHelpTab_virastar' ] ),
 			],
 			[
 				'title'   => _x( 'PersianTools', 'Help Tab Title', 'geditorial-ortho' ),
-				'id'      => self::classs( 'persiantools' ),
+				'id'      => static::classs( 'persiantools' ),
 				'content' => self::buffer( [ __CLASS__, 'renderrenderHelpTab_persiantools' ] ),
 			],
 		];

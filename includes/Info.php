@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Info extends WordPress\Main
 {
-
 	const BASE = 'geditorial';
 
 	public static function factory()
@@ -681,8 +680,7 @@ class Info extends WordPress\Main
 			return;
 
 		echo Core\HTML::wrap( Core\HTML::renderList( $list ), [
-			// sprintf( '%s-help-tab-content', static::BASE ),
-			self::classs( 'help-tab-content' ),
+			static::classs( 'help-tab-content' ),
 			static::MODULE ? sprintf( '-%s', static::MODULE ) : '',
 			'-help-tab-content',
 			'-info',

@@ -26,7 +26,7 @@ class SearchTerms extends gEditorial\Widget
 			return;
 
 		$criteria = trim( get_query_var( 's' ) ); // avoid core filtering
-		$criteria = self::filters( 'criteria', $criteria, $instance, $args );
+		$criteria = static::filters( 'criteria', $criteria, $instance, $args );
 
 		if ( ! $criteria )
 			return;

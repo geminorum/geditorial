@@ -2046,6 +2046,7 @@ class Settings extends WordPress\Main
 			case '_subcontent' : return [ _x( 'Sub-Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_bulkactions': return [ _x( 'Bulk Actions', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_roles'      : return [ _x( 'Availability', 'Settings: Section Title', 'geditorial-admin' ), _x( 'Though Administrators have it all!', 'Settings: Section Description', 'geditorial-admin' ) ];
+			case '_woocommerce': return [ _x( 'WooCommerce', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_p2p'        : return [ _x( 'Posts-to-Posts', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_o2o'        : return [ _x( 'Objects-to-Objects', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 		}

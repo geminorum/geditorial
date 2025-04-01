@@ -36,7 +36,7 @@ class NamesakeTerms extends gEditorial\Widget
 			return;
 
 		$criteria = WordPress\Term::title( $term );
-		$criteria = self::filters( 'criteria', $criteria, $instance, $args, $term );
+		$criteria = static::filters( 'criteria', $criteria, $instance, $args, $term );
 
 		if ( ! $criteria )
 			return;
