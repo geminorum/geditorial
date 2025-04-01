@@ -14,16 +14,10 @@ trait CoreTaxonomies
 {
 
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
-	public function register_taxonomy( $constant, $atts = [], $posttypes = NULL, $settings_atts = [] )
+	public function register_taxonomy( $constant, $atts = [], $targets = NULL, $settings_atts = [] )
 	{
 		$taxonomy = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $taxonomy ) );
-
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
-
-		else if ( $posttypes && ! is_array( $posttypes ) )
-			$posttypes = $posttypes ? [ $this->constant( $posttypes ) ] : '';
 
 		$args = self::recursiveParseArgs( $atts, [
 			'meta_box_cb'          => FALSE,
@@ -48,8 +42,7 @@ trait CoreTaxonomies
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			/// gEditorial Props
-			WordPress\Taxonomy::TARGET_TAXONOMIES_PROP => FALSE,  // or array of taxonomies
-			Services\Paired::PAIRED_POSTTYPE_PROP      => FALSE,  // @SEE: `Paired::isTaxonomy()`
+			Services\Paired::PAIRED_POSTTYPE_PROP => FALSE,  // @SEE: `Paired::isTaxonomy()`
 		] );
 
 		$rewrite = [
@@ -87,18 +80,21 @@ trait CoreTaxonomies
 		if ( ! array_key_exists( 'menu_icon', $args ) )
 			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
 
+		// NOTE: ordering here is important!
 		$settings = self::atts( [
+			'target_object'   => 'post',   // `post`/`user`/`comment`/`taxonomy`
 			'is_viewable'     => NULL,
-			'target_object'   => FALSE,   // `FALSE` for default. `user`/`comment`/`taxonomy`
 			'custom_captype'  => FALSE,
-			'admin_managed'   => NULL,    // pseudo-setting: manage only for admins
-			'content_rich'    => NULL,    // pseudo-setting: the terms have additional content beside just assignment to posts
+			'admin_managed'   => NULL,     // pseudo-setting: manage only for admins
+			'content_rich'    => NULL,     // pseudo-setting: the terms have additional content beside just assignment to posts
 			'auto_parents'    => FALSE,
 			'auto_children'   => FALSE,
-			'single_selected' => FALSE,   // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
+			'single_selected' => FALSE,    // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
 			'reverse_ordered' => NULL,
 			'auto_assigned'   => NULL,
 		], $settings_atts );
+
+		$target_object = $settings['target_object'] ?: 'post';
 
 		foreach ( $settings as $setting => $value ) {
 
@@ -107,6 +103,63 @@ trait CoreTaxonomies
 				continue;
 
 			switch ( $setting ) {
+
+				case 'target_object':
+
+					$callback = array_key_exists( 'update_count_callback', $args );
+
+					if ( ! $value || 'post' === $value ) {
+
+						if ( is_null( $targets ) )
+							$targets = $this->posttypes();
+
+						else if ( $targets && ! is_array( $targets ) )
+							$targets = $targets ? [ $this->constant( $targets ) ] : '';
+
+						if ( ! $callback )
+							// $args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
+							$args['update_count_callback'] = '_update_post_term_count';
+
+					} else if ( 'user' === $value ) {
+
+						$target_object = 'user';
+
+						// TODO: prefix with `users`: "{$constant}_slug" => 'users/{$taxonomy}',
+
+						if ( ! $callback )
+							$args['update_count_callback'] = [ WordPress\Database::class, 'updateUserTermCountCallback' ];
+
+					} else if ( 'comment' === $value ) {
+
+						$target_object = 'comment';
+
+						if ( ! $callback )
+							$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
+
+					} else if ( 'taxonomy' === $value ) {
+
+						$target_object = 'taxonomy';
+
+						if ( is_null( $targets ) )
+							$targets = $this->taxonomies();
+
+						else if ( $targets && ! is_array( $targets ) )
+							$targets = $targets ? [ $this->constant( $targets ) ] : '';
+
+						$args[WordPress\Taxonomy::TARGET_TAXONOMIES_PROP] = $targets;
+
+						if ( ! $callback )
+							$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
+
+					} else {
+
+						$target_object = FALSE; // WTF: Unknown!
+					}
+
+					// if ( $target_object && 'post' !== $target_object && is_admin() )
+					// 	$this->_hook_taxonomies_excluded( $constant, 'recount' );
+
+					break;
 
 				case 'is_viewable':
 
@@ -132,39 +185,6 @@ trait CoreTaxonomies
 						static function ( $viewable, $term ) use ( $taxonomy ) {
 							return $term->taxonomy === $taxonomy ? TRUE : $viewable;
 						}, 12, 2 );
-
-					break;
-
-				case 'target_object': // `post`/`user`/`comment`/`taxonomy`
-
-					$callback = array_key_exists( 'update_count_callback', $args );
-
-					if ( ! $value || 'post' === $value ) {
-
-						if ( ! $callback )
-							// $args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
-							$args['update_count_callback'] = '_update_post_term_count';
-
-					} else if ( 'user' === $value ) {
-
-						// "{$constant}_slug" => 'users/group',
-
-						if ( ! $callback )
-							$args['update_count_callback'] = [ WordPress\Database::class, 'updateUserTermCountCallback' ];
-
-					} else if ( 'comment' === $value ) {
-
-						if ( ! $callback )
-							$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
-
-					} else if ( 'taxonomy' === $value ) {
-
-						if ( ! $callback )
-							$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
-					}
-
-					// if ( $value && is_admin() && $constant )
-					// 	$this->_hook_taxonomies_excluded( $constant, 'recount' );
 
 					break;
 
@@ -203,15 +223,15 @@ trait CoreTaxonomies
 								'assign_terms' => sprintf( 'edit_%s', $captype[1] ),
 							];
 
-					} else if ( 'comment' === $posttypes ) {
+					} else if ( 'comment' === $target_object ) {
 
 						// FIXME: WTF?!
 
-					} else if ( 'taxonomy' === $posttypes ) {
+					} else if ( 'taxonomy' === $target_object ) {
 
 						// FIXME: must filter meta_cap
 
-					} else if ( 'user' === $posttypes ) {
+					} else if ( 'user' === $target_object ) {
 
 						// FIXME: `edit_users` is not working!
 						// maybe map meta cap
@@ -225,9 +245,9 @@ trait CoreTaxonomies
 							'assign_terms' => 'list_users',
 						];
 
-					} else if ( is_array( $posttypes ) && count( $posttypes ) && gEditorial()->enabled( 'roled' ) ) {
+					} else if ( is_array( $targets ) && count( $targets ) && gEditorial()->enabled( 'roled' ) ) {
 
-						if ( in_array( $posttypes[0], gEditorial()->module( 'roled' )->posttypes() ) ) {
+						if ( in_array( $targets[0], gEditorial()->module( 'roled' )->posttypes() ) ) {
 
 							$captype = gEditorial()->module( 'roled' )->constant( 'base_type' );
 
@@ -288,7 +308,7 @@ trait CoreTaxonomies
 
 		$object = register_taxonomy(
 			$taxonomy,
-			$posttypes ?: '',
+			'post' === $target_object ? $targets : '',
 			$args
 		);
 
