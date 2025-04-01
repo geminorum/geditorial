@@ -11,8 +11,6 @@ use geminorum\gEditorial\WordPress;
 class Recount extends gEditorial\Module
 {
 
-	// TODO: count by post-types
-
 	protected $disable_no_taxonomies = TRUE;
 
 	public static function module()
@@ -48,8 +46,6 @@ class Recount extends gEditorial\Module
 
 		if ( ! $this->is_thrift_mode() )
 			$this->action( 'edit_term_taxonomy', 10, 2 );
-
-		// TODO: maybe hook to `added_term_relationship` action
 
 		$this->filter( 'taxonomy_term_count', 3, 10, FALSE, 'gnetwork' );
 	}

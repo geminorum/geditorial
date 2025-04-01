@@ -19,10 +19,6 @@ class Lingo extends gEditorial\Module
 	use Internals\CoreToolBox;
 	use Internals\RawImports;
 
-	// FIXME: WTF: must not be hierarchical?!
-	// TODO: dashboard summary support
-	// TODO: add css body-class/post-class based on language/direction
-
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafile   = 'languages-20230325.json';
 
@@ -103,9 +99,9 @@ class Lingo extends gEditorial\Module
 		$strings['misc'] = [
 			'wp_importer' => [
 				'title'       => _x( 'Import Language Identifiers', 'Importer: Title', 'geditorial-lingo' ),
-				/* translators: `%s`: iso code */
+				/* translators: `%s`: ISO code */
 				'description' => sprintf( _x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ), Core\HTML::code( 'ISO 639-1' ) ),
-				/* translators: `%s`: redirect url */
+				/* translators: `%s`: redirect URL */
 				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-lingo' ),
 			],
 		];
@@ -140,6 +136,7 @@ class Lingo extends gEditorial\Module
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], NULL, [
 			'custom_captype' => TRUE,
+			'admin_managed'  => TRUE,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'language_taxonomy' );
@@ -201,7 +198,7 @@ class Lingo extends gEditorial\Module
 		return $items;
 	}
 
-	// TODO: move to ModuleInfo
+	// TODO: move to `ModuleInfo`
 	public function imports_data_summary( $data )
 	{
 		$data[] = [

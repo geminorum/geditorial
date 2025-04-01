@@ -108,17 +108,22 @@ class Honored extends gEditorial\Module
 	// TODO: خانم/خانوم
 	// TODO: جناب/سرکار
 	// TODO: سرهنگ/سرگرد/سردار/سرباز
+	// https://en.wikipedia.org/wiki/Honorific
+	// Prefix: "Mrs.", "Mr.", "Miss", "Ms.", "Dr.", or "Mlle."
+	// Suffix: "Jr.", "B.Sc.", "PhD.", "MBASW", or "IV"
 	protected function define_default_terms()
 	{
 		return [
 			'main_taxonomy' => [
-				'clergy'   => _x( 'Clergy', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
-				'doctor'   => _x( 'Doctor', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
-				'sadat'    => _x( 'Sadat', 'Main Taxonomy: Default Term', 'geditorial-honored' ),      // https://en.wikipedia.org/wiki/Sadat
-				'sayyid'   => _x( 'Sayyid', 'Main Taxonomy: Default Term', 'geditorial-honored' ),     // https://en.wikipedia.org/wiki/Sayyid
-				'sayyidah' => _x( 'Sayyidah', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
-				'engineer' => _x( 'Engineer', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
-				'lawyer'   => _x( 'Lawyer', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
+				'clergy'    => _x( 'Clergy', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
+				'doctor'    => _x( 'Doctor', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
+				'sadat'     => _x( 'Sadat', 'Main Taxonomy: Default Term', 'geditorial-honored' ),       // https://en.wikipedia.org/wiki/Sadat
+				'sayyid'    => _x( 'Sayyid', 'Main Taxonomy: Default Term', 'geditorial-honored' ),      // https://en.wikipedia.org/wiki/Sayyid
+				'sayyidah'  => _x( 'Sayyidah', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
+				'engineer'  => _x( 'Engineer', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
+				'lawyer'    => _x( 'Lawyer', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
+				'professor' => _x( 'Professor', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
+				'ayatollah' => _x( 'Ayatollah', 'Main Taxonomy: Default Term', 'geditorial-honored' ),
 			],
 		];
 	}

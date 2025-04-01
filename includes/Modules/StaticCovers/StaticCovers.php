@@ -19,8 +19,6 @@ class StaticCovers extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 	use Internals\ViewEngines;
 
-	// TODO: support users and overwrite avatars
-
 	public static function module()
 	{
 		return [
@@ -406,7 +404,7 @@ class StaticCovers extends gEditorial\Module
 		if ( $response = Services\RestAPI::getPostResponse( $post, 'view' ) )
 			$data = $response;
 
-		// fallback if `title` is not supported by the posttype
+		// fallback if `title` is not supported by the post-type
 		if ( empty( $data['title'] ) )
 			$data['title'] = [ 'rendered' => WordPress\Post::title( $post ) ];
 

@@ -28,8 +28,6 @@ class Personage extends gEditorial\Module
 	use Internals\PostTypeFields;
 	use Internals\PostTypeOverview;
 
-	// https://github.com/washingtonstateuniversity/WSU-People-Directory
-
 	protected $positions     = [ 'main_posttype' => 2 ];
 	protected $priority_init = 9;
 

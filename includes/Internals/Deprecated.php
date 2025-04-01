@@ -427,4 +427,77 @@ trait Deprecated
 			);
 		}, 1, 1 );
 	}
+
+	// NOTE: DEPRECATED
+	protected function _get_taxonomy_caps( $taxonomy, $caps, $posttypes )
+	{
+		if ( is_array( $caps ) )
+			return $caps;
+
+		// WordPress core default
+		if ( FALSE === $caps )
+			return [
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts',
+			];
+
+		$custom = [
+			'manage_terms' => 'manage_'.$taxonomy,
+			'edit_terms'   => 'edit_'.$taxonomy,
+			'delete_terms' => 'delete_'.$taxonomy,
+			'assign_terms' => 'assign_'.$taxonomy,
+		];
+
+		if ( TRUE === $caps )
+			return $custom;
+
+		$defaults = [
+			'manage_terms' => 'edit_others_posts',
+			'edit_terms'   => 'edit_others_posts',
+			'delete_terms' => 'edit_others_posts',
+			'assign_terms' => 'edit_posts',
+		];
+
+		// WTF: `edit_users` is not working!
+		// maybe map meta cap
+		if ( 'user' == $posttypes )
+			return [
+				'manage_terms' => 'edit_users',
+				'edit_terms'   => 'list_users',
+				'delete_terms' => 'list_users',
+				'assign_terms' => 'list_users',
+			];
+
+		else if ( 'taxonomy' === $posttypes )
+			return $custom; // FIXME: must filter meta_cap
+
+		else if ( 'comment' == $posttypes )
+			return $defaults; // FIXME: WTF?!
+
+		if ( ! gEditorial()->enabled( 'roled' ) )
+			return $defaults;
+
+		if ( ! is_null( $caps ) )
+			$posttype = $this->constant( $caps );
+
+		else if ( count( $posttypes ) )
+			$posttype = $posttypes[0];
+
+		else
+			return $defaults;
+
+		if ( ! in_array( $posttype, gEditorial()->module( 'roled' )->posttypes() ) )
+			return $defaults;
+
+		$base = gEditorial()->module( 'roled' )->constant( 'base_type' );
+
+		return [
+			'manage_terms' => 'edit_others_'.$base[1],
+			'edit_terms'   => 'edit_others_'.$base[1],
+			'delete_terms' => 'edit_others_'.$base[1],
+			'assign_terms' => 'edit_'.$base[1],
+		];
+	}
 }

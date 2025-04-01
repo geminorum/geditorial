@@ -45,7 +45,6 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	// TODO: custom list title for each supported posttypes
 	protected function get_global_settings()
 	{
 		return [
@@ -333,7 +332,7 @@ class Venue extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )

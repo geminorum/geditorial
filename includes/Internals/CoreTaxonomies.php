@@ -41,7 +41,7 @@ trait CoreTaxonomies
 			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $plural ) ),
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 
-			/// gEditorial Props
+			/// `gEditorial` Props
 			Services\Paired::PAIRED_POSTTYPE_PROP => FALSE,  // @SEE: `Paired::isTaxonomy()`
 		] );
 
@@ -65,18 +65,18 @@ trait CoreTaxonomies
 
 		$args['meta_box_cb'] = $this->determine_taxonomy_meta_box_cb( $constant, $args['meta_box_cb'], $args['hierarchical'] );
 
-		// TODO: get `$args['description']` from module strings api
+		// TODO: get `$args['description']` from module strings
 		if ( ! array_key_exists( 'labels', $args ) )
 			$args['labels'] = $this->get_taxonomy_labels( $constant );
 
 		if ( FALSE !== $args['default_term'] )
 			$args['default_term'] = $this->_get_taxonomy_default_term( $constant, $args['default_term'] );
 
-		// NOTE: gEditorial Prop
+		// NOTE: `gEditorial` Prop
 		if ( ! array_key_exists( 'has_archive', $args ) && $args['public'] && $args['show_ui'] )
 			$args['has_archive'] = $this->constant( $constant.'_archive', $plural );
 
-		// NOTE: gEditorial Prop
+		// NOTE: `gEditorial` Prop
 		if ( ! array_key_exists( 'menu_icon', $args ) )
 			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
 
@@ -373,79 +373,6 @@ trait CoreTaxonomies
 			$icon = 'dashicons-'.$icon;
 
 		return $icon ?: 'dashicons-'.$default;
-	}
-
-	// FIXME: DEPRECATED
-	protected function _get_taxonomy_caps( $taxonomy, $caps, $posttypes )
-	{
-		if ( is_array( $caps ) )
-			return $caps;
-
-		// wp core default
-		if ( FALSE === $caps )
-			return [
-				'manage_terms' => 'manage_categories',
-				'edit_terms'   => 'manage_categories',
-				'delete_terms' => 'manage_categories',
-				'assign_terms' => 'edit_posts',
-			];
-
-		$custom = [
-			'manage_terms' => 'manage_'.$taxonomy,
-			'edit_terms'   => 'edit_'.$taxonomy,
-			'delete_terms' => 'delete_'.$taxonomy,
-			'assign_terms' => 'assign_'.$taxonomy,
-		];
-
-		if ( TRUE === $caps )
-			return $custom;
-
-		$defaults = [
-			'manage_terms' => 'edit_others_posts',
-			'edit_terms'   => 'edit_others_posts',
-			'delete_terms' => 'edit_others_posts',
-			'assign_terms' => 'edit_posts',
-		];
-
-		// FIXME: `edit_users` is not working!
-		// maybe map meta cap
-		if ( 'user' == $posttypes )
-			return [
-				'manage_terms' => 'edit_users',
-				'edit_terms'   => 'list_users',
-				'delete_terms' => 'list_users',
-				'assign_terms' => 'list_users',
-			];
-
-		else if ( 'taxonomy' === $posttypes )
-			return $custom; // FIXME: must filter meta_cap
-
-		else if ( 'comment' == $posttypes )
-			return $defaults; // FIXME: WTF?!
-
-		if ( ! gEditorial()->enabled( 'roled' ) )
-			return $defaults;
-
-		if ( ! is_null( $caps ) )
-			$posttype = $this->constant( $caps );
-
-		else if ( count( $posttypes ) )
-			$posttype = $posttypes[0];
-
-		else
-			return $defaults;
-
-		if ( ! in_array( $posttype, gEditorial()->module( 'roled' )->posttypes() ) )
-			return $defaults;
-
-		$base = gEditorial()->module( 'roled' )->constant( 'base_type' );
-
-		return [
-			'manage_terms' => 'edit_others_'.$base[1],
-			'edit_terms'   => 'edit_others_'.$base[1],
-			'delete_terms' => 'edit_others_'.$base[1],
-			'assign_terms' => 'edit_'.$base[1],
-		];
 	}
 
 	// WTF: the core default term system is messed-up!

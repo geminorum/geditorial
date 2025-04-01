@@ -427,7 +427,7 @@ class Meta extends gEditorial\Module
 
 		if ( count( $fields ) ) {
 
-			echo '&nbsp;'; // workaround for weird css bug on no-js!
+			echo '&nbsp;'; // NOTE: workaround for weird CSS bug on `no-js`!
 
 			foreach ( $fields as $field => $args ) {
 
@@ -510,7 +510,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	// FIXME: Move to ModuleHelper
+	// TODO: Move to `ModuleHelper`
 	public function sanitize_postmeta_field_key( $field_key )
 	{
 		if ( is_array( $field_key ) )
@@ -572,7 +572,7 @@ class Meta extends gEditorial\Module
 			'reshare_source_title' => [ 'source_title', 'reshare_source_title' ],
 			'reshare_source_url'   => [ 'source_url', 'reshare_source_url' ],
 
-			// fallbacks
+			// fall-backs
 			'over-title' => [ 'over_title', 'ot' ],
 			'sub-title'  => [ 'sub_title', 'st' ],
 			'pages'      => [ 'total_pages', 'pages' ],
@@ -943,11 +943,6 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
-	// TODO: imports: bulk migrate data to another field with filters for processing
-	// TODO: tools: bulk check fields for empty strings and remove
-	// - @SEE: `WordPress\Strings::isEmpty()`
-	// - Special version for email/phone/postal-codes
-	// - or just rename meta-key directly on database!
 	protected function render_imports_html( $uri, $sub )
 	{
 		$na   = TRUE;

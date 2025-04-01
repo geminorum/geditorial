@@ -24,9 +24,6 @@ class Audit extends gEditorial\Module
 	use Internals\FramePage;
 	use Internals\ViewEngines;
 
-	// TODO: module rename to `audited`
-	// TODO: taxonomy rename to `audition`
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
@@ -313,7 +310,7 @@ class Audit extends gEditorial\Module
 				];
 		}
 
-		if ( ! $this->role_can( 'assign' ) )
+		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'assign' ) )
 			return;
 
 		if ( empty( $terms ) && ! WordPress\Taxonomy::hasTerms( $taxonomy ) )

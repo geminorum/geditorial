@@ -15,8 +15,6 @@ class Units extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
 
-	// FIXME: rename columns based on post-type
-
 	protected $priority_init           = 12;
 	protected $priority_current_screen = 12;
 
@@ -335,7 +333,7 @@ class Units extends gEditorial\Module
 		return $value;
 	}
 
-	// FIXME: Move to ModuleHelper
+	// TODO: Move to `ModuleHelper`
 	public function sanitize_postmeta_field_key( $field_key )
 	{
 		if ( is_array( $field_key ) )

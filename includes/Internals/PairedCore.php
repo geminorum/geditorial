@@ -81,7 +81,7 @@ trait PairedCore
 				'hierarchical' => $paired[4],
 
 				// the paired taxonomies are often in plural
-				// FIXME: WTF: conflict on the posttype rest base!
+				// FIXME: WTF: conflict on the post-type rest base!
 				// 'rest_base' => $this->constant( $paired[1].'_slug', str_replace( '_', '-', $this->constant( $paired[1] ) ) ),
 
 			], array_merge( $supported, [ $this->constant( $paired[0] ) ] ), $settings );
