@@ -119,6 +119,7 @@ class Plugin
 		Services\Sitemaps::setup();
 		Services\TaxonomyTaxonomy::setup();
 		Services\TermHierarchy::setup();
+		Services\TermRelations::setup();
 
 		// \TenUp\ContentConnect\Plugin::instance();
 	}
