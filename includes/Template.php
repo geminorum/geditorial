@@ -7,6 +7,11 @@ class Template extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '', $metakey = NULL )
 	{
 		if ( ! $term = WordPress\Term::get( $term_id, $taxonomy ) )

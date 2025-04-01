@@ -9,7 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
-
 	const MODULE = 'bookmarked';
 
 	public static function prepDataForSummary( $data, $options, $context )

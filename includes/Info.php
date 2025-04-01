@@ -7,6 +7,11 @@ class Info extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function lookupIP( $ip )
 	{
 		if ( function_exists( 'gnetwork_ip_lookup' ) )

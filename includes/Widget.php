@@ -19,7 +19,7 @@ class Widget extends \WP_Widget
 	{
 		return apply_filters( sprintf( '%s_%s_%s',
 			static::BASE,
-			static::WIDGET, // usually the widget name also contain the module name
+			static::WIDGET, // NOTE: usually the widget name also contain the module name
 			$hook
 		), ...$args );
 	}
@@ -81,7 +81,7 @@ class Widget extends \WP_Widget
 		$this->widget_cache( $args, $instance );
 	}
 
-	// override this for diffrent types of caching
+	// override this for different types of caching
 	protected function widget_cache_key( $instance = [] )
 	{
 		return $this->alt_option_name;

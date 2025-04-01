@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
 
+// @SEE: https://johnbeales.com/2018/changing-the-auto-suggest-behaviour-in-woocommerce/
 
 class SearchSelect extends gEditorial\Service
 {

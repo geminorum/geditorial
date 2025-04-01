@@ -16,6 +16,11 @@ class Parser extends WordPress\Main
 	 * @source https://www.bureauworks.com/blog/what-is-data-parsing
 	 */
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	// public static function attachment( $post, $mimetype = NULL ) {}
 	// public static function file( $path, $mimetype = NULL ) {}
 

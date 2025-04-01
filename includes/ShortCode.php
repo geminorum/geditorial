@@ -7,6 +7,11 @@ class ShortCode extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [] )
 	{
 		return WordPress\ShortCode::wrap( $html, $suffix, $args, $block, $extra, static::BASE );

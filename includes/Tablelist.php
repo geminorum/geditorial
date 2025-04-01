@@ -7,6 +7,11 @@ class Tablelist extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function isAction( $actions, $check_cb = FALSE )
 	{
 		foreach( (array) $actions as $action )

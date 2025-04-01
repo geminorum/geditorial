@@ -7,6 +7,11 @@ class Datetime extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE )
 	{
 		return Core\Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );

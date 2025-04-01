@@ -17,8 +17,7 @@ class LateChores extends gEditorial\Service
 		add_action( static::TERMS_COUNT_ACTION, [ __CLASS__, 'termCountDoCount' ], 10, 1 );
 	}
 
-	// use this after disabling counts
-	// Services\LateChores::termCountCollect();
+	// use this after disabling counts: `Services\LateChores::termCountCollect();`
 	public static function termCountCollect()
 	{
 		static $hooked = NULL;

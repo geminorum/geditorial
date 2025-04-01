@@ -4,8 +4,12 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Helper extends WordPress\Main
 {
-
 	const BASE = 'geditorial';
+
+	public static function factory()
+	{
+		return gEditorial();
+	}
 
 	public static function moduleClass( $module, $check = TRUE )
 	{
@@ -135,7 +139,7 @@ class Helper extends WordPress\Main
 	 * - Pass the name of a `Dashicons` helper class to use a font icon, e.g. `dashicons-chart-pie`.
 	 * - Pass 'none' to leave div.wp-menu-image empty so an icon can be added via CSS.
 	 *
-	 * @param mixed $icon
+	 * @param string|array $icon
 	 * @param string $fallback
 	 * @return string $markup
 	 */

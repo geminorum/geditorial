@@ -9,6 +9,11 @@ class Listtable extends WordPress\Main
 
 	const BASE = 'geditorial';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function columnCount( $count, $title_attr = NULL )
 	{
 		return Helper::htmlCount( $count, $title_attr )

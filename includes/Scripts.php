@@ -10,6 +10,11 @@ class Scripts extends WordPress\Main
 	const URL     = GEDITORIAL_URL;
 	const VERSION = GEDITORIAL_VERSION;
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function noScriptMessage( $verbose = TRUE )
 	{
 		$html = Core\HTML::tag( 'noscript',

@@ -9,6 +9,11 @@ class MetaBox extends WordPress\Main
 
 	const POSTTYPE_MAINBOX_PROP = 'editorial_mainbox';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	public static function checkHidden( $metabox_id, $posttype = FALSE, $after = '' )
 	{
 		if ( ! $metabox_id )

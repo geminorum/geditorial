@@ -12,6 +12,11 @@ class Settings extends WordPress\Main
 	const ROLES    = 'geditorial-roles';
 	const IMPORTS  = 'geditorial-imports';
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	// NOTE: better to use `$this->get_module_url()`
 	public static function subURL( $sub = FALSE, $context = 'reports', $extra = [] )
 	{

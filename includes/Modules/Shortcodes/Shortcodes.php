@@ -53,8 +53,6 @@ class Shortcodes extends gEditorial\Module
 		];
 	}
 
-	// TODO: MAYBE: finally shortcode class!
-	// TODO: adopt general shortcodes from gTheme and gNetwork
 	private function _list_shortcodes()
 	{
 		return [
@@ -111,7 +109,7 @@ class Shortcodes extends gEditorial\Module
 			'href'   => $this->get_module_url(),
 		];
 
-		// TODO: niche for each shortcode tag
+		// TODO: niche for each short-code tag
 		foreach ( $matches[0] as $offset => $shortcode )
 			$nodes[] = [
 				'id'     => $this->classs( 'shortcode', $offset ),
@@ -194,7 +192,7 @@ class Shortcodes extends gEditorial\Module
 		return $list;
 	}
 
-	// FIXME: add table action
+	// TODO: add table action
 	protected function remove_shortcode( $post_id, $shortcode )
 	{
 		if ( ! $post = WordPress\Post::get( $post_id ) )
@@ -222,12 +220,12 @@ class Shortcodes extends gEditorial\Module
 	}
 
 	/**
-	 * Strips Orphan Shortcodes
+	 * Strips Orphan Short-codes
 	 * Author: Meks - v1.2
 	 *
 	 * @source https://wordpress.org/plugins/remove-orphan-shortcodes/
 	 *
-	 * @param  string $content
+	 * @param string $content
 	 * @return string $content
 	 */
 	public function the_content_orphaned( $content )
@@ -237,11 +235,11 @@ class Shortcodes extends gEditorial\Module
 		if ( ! Core\Text::has( $content, '[' ) )
 			return $content;
 
-		// Check for active shortcodes
+		// Check for active short-codes
 		$active_shortcodes = ( is_array( $shortcode_tags ) && ! empty( $shortcode_tags ) )
 			? array_keys( $shortcode_tags ) : [];
 
-		// Avoid "/" chars in content breaks preg_replace
+		// Avoid "/" chars in content breaks `preg_replace`
 		$hack1   = md5( microtime( TRUE ) );
 		$content = str_replace( '[/', $hack1, $content );
 		$hack2   = md5( microtime( TRUE ) + 1 );
@@ -250,13 +248,13 @@ class Shortcodes extends gEditorial\Module
 
 		if ( ! empty( $active_shortcodes ) ) {
 
-			// Be sure to keep active shortcodes
+			// Be sure to keep active short-codes
 			$keep_active = implode( '|', $active_shortcodes );
 			$content     = preg_replace( "~(?:\[/?)(?!(?:$keep_active))[^/\]]+/?\]~s", '', $content );
 
 		} else {
 
-			// Strip all shortcodes
+			// Strip all short-codes
 			$content = preg_replace( "~(?:\[/?)[^/\]]+/?\]~s", '', $content );
 		}
 
