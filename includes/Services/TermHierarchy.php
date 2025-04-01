@@ -2,16 +2,14 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
-class TermHierarchy extends WordPress\Main
+class TermHierarchy extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	const AUTO_SET_PARENT_TERMS = 'auto_set_parent_terms';
 	const AUTO_SET_CHILD_TERMS  = 'auto_set_child_terms';
 	const REVERSE_ORDERED_TERMS = 'reverse_ordered_terms';

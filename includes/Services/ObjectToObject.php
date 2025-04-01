@@ -2,15 +2,12 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
-// use geminorum\gEditorial\Services\O2O;
 
-class ObjectToObject extends WordPress\Main
+class ObjectToObject extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	public static function setup()
 	{
 		// FIXME: WTF: not compatible with original p2p!

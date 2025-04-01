@@ -7,13 +7,9 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
 
-class SearchSelect extends WordPress\Main
+
+class SearchSelect extends gEditorial\Service
 {
-
-	// @SEE: https://johnbeales.com/2018/changing-the-auto-suggest-behaviour-in-woocommerce/
-
-	const BASE = 'geditorial';
-
 	const REST_ENDPOINT_SUFFIX     = 'searchselect';
 	const REST_ENDPOINT_VERSION    = 'v1';
 	const REST_ENDPOINT_MAIN_ROUTE = 'query';

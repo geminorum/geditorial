@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
@@ -9,11 +10,8 @@ use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
-class PostTypeFields extends WordPress\Main
+class PostTypeFields extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	public static function setup()
 	{
 		if ( 'fa_IR' === Core\L10n::locale( TRUE ) ) {

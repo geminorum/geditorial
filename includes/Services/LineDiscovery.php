@@ -6,11 +6,8 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-class LineDiscovery extends WordPress\Main
+class LineDiscovery extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	const REST_ENDPOINT_SUFFIX     = 'line-discovery';
 	const REST_ENDPOINT_VERSION    = 'v1';
 	const REST_ENDPOINT_MAIN_ROUTE = 'bulk';

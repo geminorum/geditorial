@@ -9,11 +9,8 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
-class CustomPostType extends WordPress\Main
+class CustomPostType extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	/**
 	 * Generates labels for given post-type.
 	 *

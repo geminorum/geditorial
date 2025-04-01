@@ -2,15 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\WordPress;
 
-class Paired extends WordPress\Main
+class Paired extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	const PAIRED_TAXONOMY_PROP  = 'paired_taxonomy';
 	const PAIRED_POSTTYPE_PROP  = 'paired_posttype';
 	const PAIRED_SUPPORTED_PROP = 'paired_supported';

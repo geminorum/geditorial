@@ -2,14 +2,12 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-class Sitemaps extends WordPress\Main
+class Sitemaps extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	const VIEWABLE_POSTTYPE_PROP  = 'sitemaps_viewable'; // TODO: WTF?!
 	const VIEWABLE_TAXONOMY_PROP  = 'sitemaps_viewable';
 

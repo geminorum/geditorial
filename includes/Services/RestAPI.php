@@ -6,11 +6,8 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-class RestAPI extends WordPress\Main
+class RestAPI extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	public static function getPostResponse( $post, $context = 'view' )
 	{
 		$response = FALSE;

@@ -2,14 +2,12 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-class AdvancedQueries extends WordPress\Main
+class AdvancedQueries extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	const SEARCH_OPERATOR_OR  = '|';
 	const SEARCH_OPERATOR_NOT = '!';
 

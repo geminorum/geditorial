@@ -7,11 +7,8 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
-class CustomTaxonomy extends WordPress\Main
+class CustomTaxonomy extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	/**
 	 * Generates labels for given taxonomy.
 	 *

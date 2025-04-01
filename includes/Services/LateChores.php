@@ -2,15 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
-class LateChores extends WordPress\Main
+class LateChores extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	const TERMS_COUNT_ACTION = 'geditorial_late_terms_counts';
 
 	public static function setup()

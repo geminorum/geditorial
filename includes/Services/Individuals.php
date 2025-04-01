@@ -2,14 +2,12 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-class Individuals extends WordPress\Main
+class Individuals extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	// TODO: support: `Byline` Module
 	// TODO: support: `byline` field from meta-data
 

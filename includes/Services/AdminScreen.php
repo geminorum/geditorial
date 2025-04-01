@@ -2,15 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
-class AdminScreen extends WordPress\Main
+class AdminScreen extends gEditorial\Service
 {
-
-	const BASE = 'geditorial';
-
 	public static function setup()
 	{
 		if ( ! is_admin() )

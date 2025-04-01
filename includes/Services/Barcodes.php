@@ -2,14 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
-class Barcodes extends WordPress\Main
+class Barcodes extends gEditorial\Service
 {
-	const BASE = 'geditorial';
-
 	// FIXME: Already included: https://github.com/tecnickcom/tc-lib-barcode
 
 	// @REF: https://github.com/hbgl/php-code-128-encoder
