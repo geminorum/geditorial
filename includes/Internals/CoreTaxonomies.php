@@ -146,7 +146,7 @@ trait CoreTaxonomies
 						else if ( $targets && ! is_array( $targets ) )
 							$targets = $targets ? [ $this->constant( $targets ) ] : '';
 
-						$args[WordPress\Taxonomy::TARGET_TAXONOMIES_PROP] = $targets;
+						$args[Services\TaxonomyTaxonomy::TARGET_TAXONOMIES_PROP] = $targets;
 
 						if ( ! $callback )
 							$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];

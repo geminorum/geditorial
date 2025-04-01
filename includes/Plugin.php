@@ -117,6 +117,7 @@ class Plugin
 		Services\RestAPI::setup();
 		Services\SearchSelect::setup();
 		Services\Sitemaps::setup();
+		Services\TaxonomyTaxonomy::setup();
 		Services\TermHierarchy::setup();
 
 		// \TenUp\ContentConnect\Plugin::instance();
