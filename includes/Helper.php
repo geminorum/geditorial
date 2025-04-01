@@ -126,7 +126,19 @@ class Helper extends WordPress\Main
 		return $result;
 	}
 
-	// TODO: move to `Visual`
+	/**
+	 * Retrieves markup for given icon.
+	 * TODO: move to `Visual`
+	 *
+	 * The URL to the icon to be used for `add_menu_page()`
+	 * - Pass a `base64-encoded` SVG using a data URI, which will be colored to match the color scheme. This should begin with `data:image/svg+xml;base64,`.
+	 * - Pass the name of a `Dashicons` helper class to use a font icon, e.g. `dashicons-chart-pie`.
+	 * - Pass 'none' to leave div.wp-menu-image empty so an icon can be added via CSS.
+	 *
+	 * @param mixed $icon
+	 * @param string $fallback
+	 * @return string $markup
+	 */
 	public static function getIcon( $icon, $fallback = 'admin-post' )
 	{
 		if ( ! $icon )

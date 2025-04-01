@@ -358,6 +358,7 @@ trait CorePostTypes
 		return gEditorial()->module( 'roled' )->constant( 'base_type' );
 	}
 
+	// TODO: MUST DEPRECATE
 	public function get_posttype_icon( $constant = NULL, $default = 'welcome-write-blog' )
 	{
 		$icon  = $this->module->icon ? $this->module->icon : $default;

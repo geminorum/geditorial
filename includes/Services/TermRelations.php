@@ -116,7 +116,7 @@ class TermRelations extends WordPress\Main
 				continue;
 
 			if ( empty( $supported[$term->taxonomy] ) )
-				$supported[$term->taxonomy] = self::get_supported( $term->taxonomy );
+				$supported[$term->taxonomy] = self::get_supported( $term->taxonomy, 'edit', $post->post_type );
 
 			foreach ( $supported[$term->taxonomy] as $field => $args ) {
 
@@ -182,7 +182,7 @@ class TermRelations extends WordPress\Main
 				continue;
 
 			$terms     = wp_get_object_terms( $post->ID, $taxonomy );
-			$supported = self::get_supported( $taxonomy );
+			$supported = self::get_supported( $taxonomy, $context, $post->post_type );
 
 			if ( is_wp_error( $terms ) )
 				return [];
@@ -252,13 +252,13 @@ class TermRelations extends WordPress\Main
 		] );
 	}
 
-	public static function get_supported( $taxonomy )
+	public static function get_supported( $taxonomy, $context = NULL, $posttype = FALSE )
 	{
 		return apply_filters( sprintf( '%s_termrelations_supported', static::BASE ), [
 			static::FIELD_ORDER     => NULL,
 			// static::FIELD_USERID    => NULL,
 			// static::FIELD_TIMESTAMP => NULL,
-		], $taxonomy );
+		], $taxonomy, $context, $posttype );
 	}
 
 	public static function getMetakey( $key, $object_id, $for = 'post' )

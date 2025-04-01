@@ -39,13 +39,13 @@ class Config extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'       => 'config',
-			'title'      => _x( 'Editorial', 'Modules: Config', 'geditorial-admin' ),
-			'desc'       => _x( 'WordPress in Magazine Style', 'Modules: Config', 'geditorial-admin' ),
-			'textdomain' => FALSE, // strings in this module are loaded via plugin
-			'frontend'   => FALSE, // move all strings to `geditorial-admin` text-domain
-			'autoload'   => TRUE,
-			'access'     => 'stable',
+			'name'     => 'config',
+			'title'    => _x( 'Editorial', 'Modules: Config', 'geditorial-admin' ),
+			'desc'     => _x( 'WordPress in Magazine Style', 'Modules: Config', 'geditorial-admin' ),
+			'i18n'     => FALSE, // NOTE: strings in this module are loaded via plugin
+			'frontend' => FALSE,
+			'autoload' => TRUE,
+			'access'   => 'stable',
 		];
 	}
 

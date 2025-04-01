@@ -14,12 +14,12 @@ class Pointers extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'       => 'pointers',
-			'title'      => _x( 'Pointers', 'Modules: Pointers', 'geditorial-admin' ),
-			'desc'       => _x( 'Editorial Content Hints', 'Modules: Pointers', 'geditorial-admin' ),
-			'icon'       => 'sticky',
-			'textdomain' => FALSE,
-			'access'     => 'beta',
+			'name'   => 'pointers',
+			'title'  => _x( 'Pointers', 'Modules: Pointers', 'geditorial-admin' ),
+			'desc'   => _x( 'Editorial Content Hints', 'Modules: Pointers', 'geditorial-admin' ),
+			'i18n'   => FALSE, // NOTE: strings in this module are loaded via plugin
+			'icon'   => 'sticky',
+			'access' => 'beta',
 		];
 	}
 

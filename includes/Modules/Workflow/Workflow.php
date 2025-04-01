@@ -13,8 +13,6 @@ class Workflow extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
 
-	private $statuses = [];
-
 	public static function module()
 	{
 		return [
@@ -265,8 +263,11 @@ class Workflow extends gEditorial\Module
 		if ( is_null( $user_id ) )
 			$user_id = get_current_user_id();
 
-		if ( ! empty( $this->statuses[$user_id] ) )
-			return $this->statuses[$user_id];
+		if ( empty( $this->cache['statuses'] ) )
+			$this->cache['statuses'] = [];
+
+		if ( ! isset( $this->cache['statuses'][$user_id] ) )
+			return $this->cache['statuses'][$user_id];
 
 		$args = [
 			'taxonomy'   => $this->constant( 'main_taxonomy' ),
@@ -316,7 +317,7 @@ class Workflow extends gEditorial\Module
 			$statuses[$term->slug] = (object) $status;
 		}
 
-		return $this->statuses[$user_id] = Core\Arraay::sortObjectByPriority( $statuses, 'order' );
+		return $this->cache['statuses'][$user_id] = Core\Arraay::sortObjectByPriority( $statuses, 'order' );
 	}
 
 	private function register_post_statuses()

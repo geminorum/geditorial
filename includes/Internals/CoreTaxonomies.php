@@ -347,6 +347,7 @@ trait CoreTaxonomies
 		return $labels;
 	}
 
+	// TODO: MUST DEPRECATE
 	public function get_taxonomy_icon( $constant = NULL, $hierarchical = FALSE, $fallback = FALSE )
 	{
 		$icons   = $this->get_module_icons();

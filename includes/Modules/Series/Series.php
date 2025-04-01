@@ -15,9 +15,6 @@ class Series extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\PostMeta;
 
-	// TODO: use `TermRelations` Service
-	// TODO: use each parent term as a `set`
-
 	public $meta_key = '_ge_series';
 
 	protected $disable_no_posttypes = TRUE;

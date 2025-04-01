@@ -2410,6 +2410,7 @@ class Settings extends WordPress\Main
 		] );
 	}
 
+	// TODO: move to new main: `Fields`
 	// TODO: support HTML `pattern`: https://input-pattern.com/en/tutorial.php
 	// TODO: support HTML `title_attr`
 	public static function fieldType( $atts, &$scripts )

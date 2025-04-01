@@ -15,12 +15,6 @@ use geminorum\gEditorial\WordPress;
 
 class Terms extends gEditorial\Module
 {
-
-	// TODO: general column like: `geditorial-column-meta`:
-	// TODO: like `tableColumnPostMeta()` for term meta
-	// TODO: `cost`, `price`, 'status`: public/private/protected, `capability`, `icon`, `phonetic`, `time`, `pseudonym`
-	// - for protected @SEE: https://make.wordpress.org/core/2016/10/28/fine-grained-capabilities-for-taxonomy-terms-in-4-7/
-
 	protected $supported = [
 		'parent',
 		'order',
@@ -65,8 +59,6 @@ class Terms extends gEditorial\Module
 		'embed',
 		'url',
 	];
-
-	private $_roles = [];
 
 	public static function module()
 	{
@@ -375,6 +367,8 @@ class Terms extends gEditorial\Module
 					}, 8, 1 );
 
 				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) ) {
+
+					// TODO: see `taxtax__hook_screen()` for multiple checkbox support
 
 					add_action( 'quick_edit_custom_box',
 						function ( $column, $screen, $taxonomy ) use ( $field ) {
@@ -1013,14 +1007,14 @@ class Terms extends gEditorial\Module
 
 			case 'role':
 
-				if ( empty( $this->_roles ) )
-					$this->_roles = $this->get_settings_default_roles();
+				if ( empty( $this->cache['roles'] ) )
+					$this->cache['roles'] = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
-						.( empty( $this->_roles[$meta] )
+						.( empty( $this->cache['roles'][$meta] )
 							? Core\HTML::escape( $meta )
-							: $this->_roles[$meta] )
+							: $this->cache['roles'][$meta] )
 						.'</span>';
 
 				else
@@ -1030,8 +1024,8 @@ class Terms extends gEditorial\Module
 
 			case 'roles':
 
-				if ( empty( $this->_roles ) )
-					$this->_roles = $this->get_settings_default_roles();
+				if ( empty( $this->cache['roles'] ) )
+					$this->cache['roles'] = $this->get_settings_default_roles();
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1039,9 +1033,9 @@ class Terms extends gEditorial\Module
 
 					foreach ( (array) $meta as $role )
 						$list[] = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $role ).'">'
-							.( empty( $this->_roles[$role] )
+							.( empty( $this->cache['roles'][$role] )
 								? Core\HTML::escape( $role )
-								: $this->_roles[$role] )
+								: $this->cache['roles'][$role] )
 							.'</span>';
 
 					$html = WordPress\Strings::getJoined( $list );

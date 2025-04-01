@@ -69,8 +69,8 @@ class DeadDrops extends gEditorial\Module
 	{
 		$strings = [
 			'metabox' => [
-				/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
-				'heading_title' => _x( 'Dead Drop for %1$s', 'Label: Extended Label', 'geditorial-dead-drops' ),
+				/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+				'heading_title' => _x( 'Dead Drop for %1$s', 'Button Title', 'geditorial-dead-drops' ),
 			],
 		];
 
@@ -147,7 +147,7 @@ class DeadDrops extends gEditorial\Module
 		echo '</div>';
 	}
 
-	// decodes the unicode filename encoded with `encodeURI`/`encodeURIComponent`
+	// decodes the Unicode filename encoded with `encodeURI`/`encodeURIComponent`
 	public function wp_handle_sideload_prefilter( $file )
 	{
 		if ( ! empty( $file['name'] )
@@ -207,7 +207,7 @@ class DeadDrops extends gEditorial\Module
 		if ( ! $secret = get_query_var( $this->constant( 'main_queryvar' ) ) )
 			return;
 
-		// NOTE: checks for `p` with fallbacks to wp queried!
+		// NOTE: checks for `p` with fall-backs to wp-queried!
 		if ( ! $post = WordPress\Post::get( get_query_var( 'p', get_queried_object_id() ) ) )
 			return;
 
@@ -220,7 +220,6 @@ class DeadDrops extends gEditorial\Module
 		if ( ! $user = WordPress\User::user( (int) $user_id ) )
 			self::cheatin();
 
-		// ModuleTemplate::renderDropzone( [
 		$this->_render_page_dropzone( [
 			'user'   => $user,
 			'post'   => $post,
@@ -236,7 +235,7 @@ class DeadDrops extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$link = ( $mobile = WordPress\IsIt::mobile() )
+		$link = WordPress\IsIt::mobile()
 			? $this->_get_deaddrop_link( $post )
 			: $this->_get_signal_link( $post );
 

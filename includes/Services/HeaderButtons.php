@@ -19,7 +19,7 @@ class HeaderButtons extends WordPress\Main
 
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ], 9, 1 );
 
-		// TODO: move to Barcodes Service
+		// TODO: move to `Barcodes` Service
 		add_filter( 'kses_allowed_protocols', function ( $protocols ) {
 			return array_merge( $protocols, [ 'binaryeye' ] );
 		} );

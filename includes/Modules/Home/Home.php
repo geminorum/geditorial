@@ -4,13 +4,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\WordPress;
 
 class Home extends gEditorial\Module
 {
-
-	private $featured = [];
-
 	public static function module()
 	{
 		return [
@@ -135,7 +132,7 @@ class Home extends gEditorial\Module
 
 		if ( $this->setup_featured( $posttypes, $featured ) ) {
 
-			add_filter( $this->featured['filter'], [ $this, 'get_featured_posts' ] );
+			add_filter( $this->cache['featured']['filter'], [ $this, 'get_featured_posts' ] );
 
 			add_action( 'save_post', [ $this, 'delete_transient' ] );
 			add_action( 'switch_theme', [ $this, 'delete_transient' ] );
@@ -184,7 +181,7 @@ class Home extends gEditorial\Module
 		foreach ( $support[0]['post_types'] as $posttype )
 			register_taxonomy_for_object_type( $tax, $posttype );
 
-		return $this->featured = $support[0];
+		return $this->cache['featured'] = $support[0];
 	}
 
 	// @SEE: https://developer.wordpress.org/reference/hooks/posts_where/#comment-3491
@@ -238,7 +235,7 @@ class Home extends gEditorial\Module
 			return [];
 
 		return get_posts( [
-			'post_type'      => $this->featured['post_types'],
+			'post_type'      => $this->cache['featured']['post_types'],
 			'posts_per_page' => count( $ids ),
 			'include'        => $ids,
 		] );
@@ -258,8 +255,8 @@ class Home extends gEditorial\Module
 					return apply_filters( 'featured_content_post_ids', [] );
 
 		$featured = get_posts( [
-			'post_type'   => $this->featured['post_types'],
-			'numberposts' => $this->featured['max_posts'],
+			'post_type'   => $this->cache['featured']['post_types'],
+			'numberposts' => $this->cache['featured']['max_posts'],
 			'tax_query'   => [ [
 				'field'    => 'term_id',
 				'taxonomy' => $this->constant( 'featured_taxonomy' ),

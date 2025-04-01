@@ -183,13 +183,13 @@ class Plugin
 		$defaults = [
 			'folder'     => $folder,
 			'class'      => $class ?: Helper::moduleClass( $args['name'], FALSE ),
-			'icon'       => 'screenoptions', // dashicon class / svg icon array
+			'icon'       => 'screenoptions', // `dashicons` class / SVG icon array
 			'textdomain' => sprintf( '%s-%s', static::BASE, Core\Text::sanitizeBase( $args['name'] ) ), // or `NULL` for plugin base
 			'configure'  => TRUE,  // or `settings`, `tools`, `reports`, `imports`, `FALSE` to disable
 			'i18n'       => TRUE,  // or `FALSE`, `adminonly`, `frontonly`, `restonly`
-			'frontend'   => TRUE,  // whether or not the module should be loaded on the frontend
-			'autoload'   => FALSE, // autoloading a module will remove the ability to enable/disable it
-			'disabled'   => FALSE, // or string explaining why the module is not available
+			'frontend'   => TRUE,  // Whether or not the module should be loaded on the frontend
+			'autoload'   => FALSE, // Auto-loading a module will remove the ability to enable/disable it
+			'disabled'   => FALSE, // FALSE or string explaining why the module is not available
 			'access'     => 'unknown', // or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
 			'keywords'   => [],
 		];
@@ -206,7 +206,7 @@ class Plugin
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
-			// skip on the frontend?
+			// Skip on the frontend?
 			if ( $frontend && ! $module->frontend )
 				continue;
 
@@ -278,7 +278,7 @@ class Plugin
 		return $plugin_array;
 	}
 
-	// FIXME: move this to listtable main
+	// TODO: move this to `AdminScreen` Service
 	private function _handle_set_screen_options()
 	{
 		add_filter( 'screen_settings', [ $this, 'screen_settings' ], 12, 2 );

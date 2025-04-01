@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 class Actions extends gEditorial\Module
 {
 
-	// TODO: Migrate into Services
+	// TODO: Migrate into Services since it has no settings
 
 	public static function module()
 	{
@@ -17,7 +17,7 @@ class Actions extends gEditorial\Module
 			'name'      => 'actions',
 			'title'     => _x( 'Actions', 'Modules: Actions', 'geditorial-admin' ),
 			'desc'      => _x( 'Editorial Content Actions', 'Modules: Actions', 'geditorial-admin' ),
-			'i18n'      => FALSE, // strings in this module are loaded via plugin
+			'i18n'      => FALSE, // NOTE: strings in this module are loaded via plugin
 			'configure' => FALSE,
 			'autoload'  => TRUE,
 			'access'    => 'stable',

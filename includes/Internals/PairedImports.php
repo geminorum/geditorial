@@ -20,8 +20,8 @@ trait PairedImports
 	 * NOTE: uses paired slug!
 	 * TODO: migrate to `Services\HeaderButtons::register()`
 	 *
-	 * @param  string $posttype
-	 * @return bool   $hooked
+	 * @param string $posttype
+	 * @return bool $hooked
 	 */
 	protected function pairedimports__hook_append_import_button( $posttype )
 	{

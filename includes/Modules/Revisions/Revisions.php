@@ -25,8 +25,6 @@ class Revisions extends gEditorial\Module
 		'reports' => 'edit_others_posts',
 	];
 
-	private $_authors = [];
-
 	public static function module()
 	{
 		return [
@@ -188,10 +186,13 @@ class Revisions extends gEditorial\Module
 
 	protected function author( $user_id )
 	{
-		if ( isset( $this->_authors[$user_id] ) )
-			return $this->_authors[$user_id];
+		if ( empty( $this->cache['authors'] ) )
+			$this->cache['authors'] = [];
 
-		return $this->_authors[$user_id] = [
+		if ( isset( $this->cache['authors'][$user_id] ) )
+			return $this->cache['authors'][$user_id];
+
+		return $this->cache['authors'][$user_id] = [
 			'name'   => get_the_author_meta( 'display_name', $user_id ),
 			'avatar' => get_avatar( $user_id, 24 ),
 			// FIXME: add link to user profile
