@@ -76,13 +76,10 @@ trait CoreTaxonomies
 		if ( ! array_key_exists( 'has_archive', $args ) && $args['public'] && $args['show_ui'] )
 			$args['has_archive'] = $this->constant( $constant.'_archive', $plural );
 
-		// NOTE: `gEditorial` Prop
-		if ( ! array_key_exists( 'menu_icon', $args ) )
-			$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
-
 		// NOTE: ordering here is important!
 		$settings = self::atts( [
 			'target_object'   => 'post',   // `post`/`user`/`comment`/`taxonomy`
+			'custom_icon'     => TRUE,
 			'is_viewable'     => NULL,
 			'custom_captype'  => FALSE,
 			'admin_managed'   => NULL,     // pseudo-setting: manage only for admins
@@ -159,6 +156,40 @@ trait CoreTaxonomies
 
 					// if ( $target_object && 'post' !== $target_object && is_admin() )
 					// 	$this->_hook_taxonomies_excluded( $constant, 'recount' );
+
+					break;
+
+				case 'custom_icon':
+
+					/**
+					 * NOTE: `menu_icon` here is `gEditorial` prop, WordPress has no icon for taxonomies.
+					 * NOTE: following is from `register_post_type()` docs:
+					 *
+					 * The URL to the icon to be used for this menu. Pass a
+					 * `base64-encoded` SVG using a data URI, which will be
+					 * colored to match the color scheme -- this should begin
+					 * with `data:image/svg+xml;base64,`.
+					 *
+					 * Pass the name of a `Dashicons` helper class to use a font
+					 * icon, e.g. `dashicons-chart-pie`.
+					 *
+					 * Pass `none` to leave `div.wp-menu-image` empty so an icon
+					 * can be added via CSS.
+					 *
+					 * Defaults to use the posts icon.
+					 */
+
+					if ( array_key_exists( 'menu_icon', $args ) )
+						break;
+
+					if ( TRUE === $value )
+						$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
+
+					else if ( is_array( $value ) )
+						$args['menu_icon'] = Core\Icon::getBase64( $value[1], $value[0] );
+
+					else if ( $value )
+						$args['menu_icon'] = sprintf( 'dashicons-%s', $value );
 
 					break;
 
