@@ -21,6 +21,7 @@ class Socialite extends gEditorial\Module
 		'youtube',
 		'aparat',
 		'behkhaan',
+		'fidibo',
 		'goodreads',
 		'eitaa',
 		'wikipedia',
@@ -145,6 +146,7 @@ class Socialite extends gEditorial\Module
 				'youtube'   => _x( 'YouTube', 'Title', 'geditorial-socialite' ),
 				'aparat'    => _x( 'Aparat', 'Title', 'geditorial-socialite' ),
 				'behkhaan'  => _x( 'Behkhaan', 'Title', 'geditorial-socialite' ),
+				'fidibo'    => _x( 'Fidibo', 'Title', 'geditorial-socialite' ),
 				'goodreads' => _x( 'Goodreads', 'Title', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Eitaa', 'Title', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Wikipedia', 'Title', 'geditorial-socialite' ),
@@ -158,6 +160,7 @@ class Socialite extends gEditorial\Module
 				'youtube'   => _x( 'Handle or URL to a YouTube channel.', 'Description', 'geditorial-socialite' ),
 				'aparat'    => _x( 'Handle or URL to an Aparat channel.', 'Description', 'geditorial-socialite' ),
 				'behkhaan'  => _x( 'Handle or URL to an Behkhaan profile.', 'Description', 'geditorial-socialite' ),
+				'fidibo'    => _x( 'ID or URL to an Fidibo profile.', 'Description', 'geditorial-socialite' ),
 				'goodreads' => _x( 'URL to an Goodreads page.', 'Description', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Handle or URL to a Eitaa user or channel.', 'Description', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Handle or URL to a Wikipedia page.', 'Description', 'geditorial-socialite' ),
@@ -308,6 +311,7 @@ class Socialite extends gEditorial\Module
 			case 'youtube'  :
 			case 'aparat'   :
 			case 'behkhaan' :
+			case 'fidibo'   :
 			case 'goodreads':
 			case 'eitaa'    :
 			case 'wikipedia':
@@ -336,6 +340,7 @@ class Socialite extends gEditorial\Module
 			case 'youtube'  : return [ 'social-logos', 'youtube' ];
 			case 'aparat'   : return [ 'misc-24', 'aparat' ];
 			case 'behkhaan' : return [ 'misc-32', 'behkhaan' ];
+			case 'fidibo'   : return [ 'misc-16', 'fidibo' ];
 			case 'goodreads': return [ 'misc-24', 'goodreads' ];
 			case 'eitaa'    : return [ 'misc-48', 'eitaa' ];
 			case 'wikipedia': return [ 'misc-16', 'wikipedia' ];
