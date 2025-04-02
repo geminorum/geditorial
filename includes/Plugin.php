@@ -709,7 +709,7 @@ class Plugin
 
 			$wp_admin_bar->add_node( [
 				'id'     => static::BASE,
-				'title'  => Helper::getAdminBarIcon(),
+				'title'  => Visual::getAdminBarIconMarkup(),
 				// 'parent' => 'top-secondary',
 				'href'   => $link,
 				'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ) ],

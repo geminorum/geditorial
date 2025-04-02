@@ -3,8 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait CoreAdmin
@@ -207,7 +207,7 @@ trait CoreAdmin
 						'title'  => Services\CustomPostType::getLabel( $posttypes[$posttype], 'extended_label' ),
 						'target' => $edit ? '_blank' : FALSE,
 						'class'  => $edit ? '-icon -link' : '-icon',
-					], Helper::getPostTypeIcon( $posttypes[$posttype] ) );
+					], Visual::getPostTypeIconMarkup( $posttypes[$posttype] ) );
 				}
 
 				echo Core\HTML::wrap( Core\HTML::renderList( $list ), '-icon-list -supported-posttype' );

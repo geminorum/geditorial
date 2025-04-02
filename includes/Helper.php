@@ -445,38 +445,6 @@ class Helper extends WordPress\Main
 		], Core\HTML::escape( $title ) ).$after;
 	}
 
-	// TODO: move to `Visual`
-	public static function getAdminBarIcon( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
-	{
-		return Core\HTML::tag( 'span', [
-			'class' => [
-				'ab-icon',
-				'dashicons',
-				'dashicons-'.$icon,
-			],
-			'style' => $style,
-		], NULL );
-	}
-
-	// TODO: move to `Visual`
-	public static function getPostTypeIcon( $posttype, $fallback = 'admin-post' )
-	{
-		$object = WordPress\PostType::object( $posttype );
-
-		if ( $object->menu_icon && is_string( $object->menu_icon ) ) {
-
-			if ( Core\Text::has( $object->menu_icon, 'data:image/svg+xml;base64,' ) )
-				return Core\Icon::wrapBase64( $object->menu_icon );
-
-			if ( Core\Text::has( $object->menu_icon, 'dashicons-' ) )
-				return Core\HTML::getDashicon( str_ireplace( 'dashicons-', '', $object->menu_icon ) );
-
-			return Core\Icon::wrapURL( esc_url( $object->menu_icon ) );
-		}
-
-		return Core\HTML::getDashicon( $fallback );
-	}
-
 	// NOTE: DEPRECATED
 	public static function getEditorialUserID( $fallback = FALSE )
 	{

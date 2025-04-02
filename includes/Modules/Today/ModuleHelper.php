@@ -5,8 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
@@ -487,7 +487,7 @@ class ModuleHelper extends gEditorial\Helper
 			$title = $object->labels->add_new_item;
 
 			if ( is_admin() )
-				$title = Helper::getPostTypeIcon( $object ).' '.$title;
+				$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 			$html.= Core\HTML::button( $title,
 				Core\WordPress::getPostNewLink( $object->name, $the_day ),
@@ -508,7 +508,7 @@ class ModuleHelper extends gEditorial\Helper
 					$title = $object->labels->add_new_item;
 
 					if ( is_admin() )
-						$title = Helper::getPostTypeIcon( $object ).' '.$title;
+						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 					$html.= Core\HTML::button( $title,
 						Core\WordPress::getPostNewLink( $object->name, $the_day ),
@@ -524,7 +524,7 @@ class ModuleHelper extends gEditorial\Helper
 					$title = $object->labels->edit_item;
 
 					if ( is_admin() )
-						$title = Helper::getPostTypeIcon( $object ).' '.$title;
+						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 					$html.= Core\HTML::button( $title,
 						Core\WordPress::getPostEditLink( $the_post ),
