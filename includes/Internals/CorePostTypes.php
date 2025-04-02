@@ -22,7 +22,6 @@ trait CorePostTypes
 				? $this->strings['labels'][$constant]['description'] : '',
 
 			'show_in_menu'  => NULL, // or TRUE or `$parent_slug`
-			'menu_icon'     => $this->get_posttype_icon( $constant ),
 			'menu_position' => empty( $this->positions[$constant] ) ? 4 : $this->positions[$constant],
 
 			// 'show_in_nav_menus' => TRUE,
@@ -115,6 +114,7 @@ trait CorePostTypes
 		$settings = self::atts( [
 			'block_editor'      => FALSE,
 			'quick_edit'        => NULL,
+			'custom_icon'       => TRUE,
 			'is_viewable'       => NULL,
 			'custom_captype'    => FALSE,
 			'primary_taxonomy'  => NULL,
@@ -150,6 +150,37 @@ trait CorePostTypes
 						static function ( $edit, $type ) use ( $posttype, $value ) {
 							return $posttype === $type ? (bool) $value : $edit;
 						}, 12, 2 );
+
+					break;
+
+				case 'custom_icon':
+
+					/**
+					 * The URL to the icon to be used for this menu. Pass a
+					 * `base64-encoded` SVG using a data URI, which will be
+					 * colored to match the color scheme -- this should begin
+					 * with `data:image/svg+xml;base64,`.
+					 *
+					 * Pass the name of a `Dashicons` helper class to use a font
+					 * icon, e.g. `dashicons-chart-pie`.
+					 *
+					 * Pass `none` to leave `div.wp-menu-image` empty so an icon
+					 * can be added via CSS.
+					 *
+					 * Defaults to use the posts icon.
+					 */
+
+					if ( array_key_exists( 'menu_icon', $args ) )
+						break;
+
+					if ( TRUE === $value )
+						$args['menu_icon'] = $this->get_posttype_icon( $constant );
+
+					else if ( is_array( $value ) )
+						$args['menu_icon'] = Core\Icon::getBase64( $value[1], $value[0] );
+
+					else if ( $value )
+						$args['menu_icon'] = sprintf( 'dashicons-%s', $value );
 
 					break;
 
