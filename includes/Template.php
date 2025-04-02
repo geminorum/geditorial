@@ -670,7 +670,7 @@ class Template extends WordPress\Main
 				$args['link'] = WordPress\Term::link( $term );
 
 			if ( is_null( $args['description'] ) )
-				$args['description'] = trim( strip_tags( $term->description ) );
+				$args['description'] = Core\Text::trim( strip_tags( $term->description ) );
 
 		} else if ( $meta && is_null( $args['link'] ) ) {
 

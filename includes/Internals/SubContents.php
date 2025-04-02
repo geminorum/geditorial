@@ -1120,6 +1120,8 @@ trait SubContents
 
 				return $tabs;
 			}, 10, 2 );
+
+		return TRUE;
 	}
 
 	/**

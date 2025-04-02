@@ -639,7 +639,7 @@ class Personage extends gEditorial\Module
 		return $default;
 	}
 
-	// TODO: move the list into ModuleHelper
+	// TODO: move the list into `ModuleHelper`
 	public function identified_possible_keys_for_identifier( $keys, $posttype )
 	{
 		if ( $posttype == $this->constant( 'main_posttype' ) )

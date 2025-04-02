@@ -20,7 +20,7 @@ class ModuleHelper extends gEditorial\Helper
 		$taxonomy = $taxonomy ?? self::constant( 'main_taxonomy', 'audit_attribute' );
 		$currents = WordPress\Taxonomy::getObjectTerms( $taxonomy, $post->ID );
 
-		$terms = static::filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
+		$terms = self::filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
 		$terms = Core\Arraay::prepNumeral( $terms );
 
 		if ( Core\Arraay::equalNoneAssoc( $terms, $currents ) )

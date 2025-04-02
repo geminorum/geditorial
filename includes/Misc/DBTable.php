@@ -10,6 +10,7 @@ class DBTable extends Core\Base
 	// A Base WordPress Database Table class
 	// based on: WP DB Table by JJJ v1.4.0 - 2018-03-04
 	// @REF: https://github.com/stuttter/wp-db-table
+	// @SEE: https://core.trac.wordpress.org/ticket/37692
 
 	/**
 	 * A base WordPress database table class, which facilitates the creation of

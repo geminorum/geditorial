@@ -65,7 +65,7 @@ class Helper extends WordPress\Main
 		return $enabled;
 	}
 
-	// TODO: must check for min version of wc
+	// TODO: must check for minimum version of WooCommerce
 	// TODO: move to `Info`
 	public static function moduleCheckWooCommerce( $message = NULL )
 	{
@@ -311,7 +311,7 @@ class Helper extends WordPress\Main
 		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
 
-	// NOTE: the output of `the_title()` is unescaped
+	// NOTE: the output of `the_title()` is `un-escaped`
 	// @REF: https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html
 	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
 	{
@@ -707,12 +707,12 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Separates given string by set of delimiters into an array.
-	 * NOTE: applys the plugin filter on default delimiters
+	 * NOTE: applies the plugin filter on default delimiters
 	 *
-	 * @param  string $string
-	 * @param  null|string|array $delimiters
-	 * @param  null|int $limit
-	 * @param  string $delimiter
+	 * @param string $string
+	 * @param null|string|array $delimiters
+	 * @param null|int $limit
+	 * @param string $delimiter
 	 * @return array $separated
 	 */
 	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
@@ -728,7 +728,7 @@ class Helper extends WordPress\Main
 	/**
 	 * Retrieves the list of string delimiters.
 	 *
-	 * @param  string $default
+	 * @param string $default
 	 * @return null|array $delimiters
 	 */
 	public static function getDelimiters( $default = '|' )
@@ -741,11 +741,11 @@ class Helper extends WordPress\Main
 	 * Generates a Security Token for authorization.
 	 * @todo move to services
 	 *
-	 * @param  string $context
-	 * @param  string $subject
-	 * @param  string $fullname
-	 * @param  int    $expires
-	 * @param  mixed  $fallback
+	 * @param string $context
+	 * @param string $subject
+	 * @param string $fullname
+	 * @param int $expires
+	 * @param mixed $fallback
 	 * @return string $token
 	 */
 	public static function generateSecurityToken( $context, $subject, $fullname, $expires = NULL, $fallback = FALSE )
@@ -777,12 +777,12 @@ class Helper extends WordPress\Main
 	}
 
 	/**
-	 * Logs a message given agent, level and context.
+	 * Logs a message given agent, level, and context.
 	 *
-	 * @param  string      $message
-	 * @param  null|string $agent
-	 * @param  null|string $level
-	 * @param  array       $context
+	 * @param string $message
+	 * @param null|string $agent
+	 * @param null|string $level
+	 * @param array $context
 	 * @return false
 	 */
 	public static function log( $message, $agent = NULL, $level = \null, $context = [] )

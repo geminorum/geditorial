@@ -206,14 +206,17 @@ class NumbersInPersian extends Core\Base
 		return $list;
 	}
 
-
 	public function test( $max = 1000, $start = 0 )
 	{
 		echo '<ol>';
+
 		for ( $start = 0; $start < $max; $start++ ) {
+
 			$number = random_int( $start, $max * $start );
+
 			echo '<li>'.$this->number_to_words( $number ).' &mdash; '.$this->number_to_ordinal( $number ).' &mdash; '.$number.'</li>';
 		}
+
 		echo '</ol>';
 	}
 }

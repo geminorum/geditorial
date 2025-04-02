@@ -57,6 +57,7 @@ trait TaxonomyTaxonomy
 		return $this->taxtax__edit_tags_screen( $taxonomy, $target );
 	}
 
+	// TODO: auto-hook this via `taxtax__hook_init()`
 	// NOTE: use on `current_screen`
 	protected function taxtax__hook_screen( $screen, $constant, $column = TRUE, $priority = NULL )
 	{

@@ -8,10 +8,10 @@ use geminorum\gEditorial\Core;
  * Retrieves information about MP3 file.
  * @source https://github.com/mk-j/PHP_MP3_Duration
  *
- * $mp3 = new MP3File( 'examplefile.mp3' );
- * $duration = $mp3->getDuration( TRUE );
- * $estimate = $mp3->getDuration();
- * $formatted = MP3File::formatTime( $duration );
+ * `$mp3       = new MP3File( 'examplefile.mp3' );`
+ * `$duration  = $mp3->getDuration( TRUE );`
+ * `$estimate  = $mp3->getDuration();`
+ * `$formatted = MP3File::formatTime( $duration );`
  */
 class MP3File extends Core\Base
 {
@@ -25,8 +25,8 @@ class MP3File extends Core\Base
 	/**
 	 * Retrieves duration time in readable format as `hh:mm:ss` or `hh:mm`
 	 *
-	 * @param  int    $duration
-	 * @param  bool   $simple
+	 * @param int $duration
+	 * @param bool $simple
 	 * @return string formatted
 	 */
 	public static function formatTime( $duration, $simple = FALSE )
@@ -43,11 +43,11 @@ class MP3File extends Core\Base
 
 	/**
 	 * Retrieves duration time of the MP3 file.
-	 * by CBR (constant bit rate): Read first mp3 frame only (faster)
+	 * by CBR (constant bit rate): Read first MP3 frame only (faster)
 	 * by VBR (variable bit rate): Read entire file, frame by frame (slower)
 	 *
-	 * @param  bool $cbr
-	 * @return int  $duration
+	 * @param bool $cbr
+	 * @return int $duration
 	 */
 	public function getDuration( $cbr = FALSE )
 	{

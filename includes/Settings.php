@@ -299,7 +299,7 @@ class Settings extends WordPress\Main
 
 			'audit_attribute' ,   // Editorial: Audit
 			'affiliation'     ,   // Editorial: People
-			'relation'        ,   // Editorial: Byline
+			// 'relation'        ,   // Editorial: Byline
 			'user_group'      ,   // Editorial: Users
 			'user_type'       ,   // Editorial: Users
 			'event_calendar'  ,   // Editorial: Happening

@@ -368,15 +368,16 @@ class Socialite extends gEditorial\Module
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
+	// TODO: migrate to `ViewEngines` templates
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
 			'context' => NULL,
 			'wrap'    => TRUE,
-			'before'  => '', // html after wrap
-			'after'   => '', // html before wrap
-			'class'   => '', // wrap css class
-		], $atts, $this->constant( 'main_shortcode' ) );
+			'before'  => '',
+			'after'   => '',
+			'class'   => '',
+		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
@@ -401,7 +402,7 @@ class Socialite extends gEditorial\Module
 
 			$src = Core\Text::has( $row['icon'], ':' )
 				? Core\Icon::getBase64( ...explode( ':', $row['icon'], 2 ) ) // `icon_name:icon_set`
-				: $row['icon']; // raw url
+				: $row['icon']; // raw URL
 
 			$list[] = $row['before_link']
 				.Core\HTML::tag( 'a', [

@@ -814,17 +814,20 @@ trait CoreTaxonomies
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
 			return FALSE;
 
-		add_action( 'admin_bar_menu',
-			function ( $wp_admin_bar ) use ( $taxonomy, $parent ) {
+		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy ) )
+			return FALSE;
 
-				if ( ! is_admin_bar_showing() || ! is_user_logged_in() )
+		add_action( 'admin_bar_menu',
+			function ( $wp_admin_bar ) use ( $taxonomy, $parent, $edit ) {
+
+				if ( ! is_admin_bar_showing() )
 					return;
 
 				$wp_admin_bar->add_node( [
 					'parent' => $parent ?? 'appearance',
 					'id'     => $this->classs( $taxonomy ),
 					'title'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ),
-					'href'   => WordPress\Taxonomy::edit( $taxonomy ),
+					'href'   => $edit,
 				] );
 
 			}, 32, 1 );

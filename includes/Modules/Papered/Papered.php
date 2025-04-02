@@ -530,7 +530,7 @@ class Papered extends gEditorial\Module
 		printf( '<style>@page { size: %s }</style>', $config['page_size'] );
 	}
 
-	// prepends source title before print-page html title
+	// NOTE: prepend source title before print-page HTML title
 	public function printpage_get_layout_pagetitle( $profile = FALSE )
 	{
 		$title = WordPress\Post::title( $profile );
