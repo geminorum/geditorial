@@ -133,6 +133,7 @@ class Helper extends WordPress\Main
 	/**
 	 * Retrieves markup for given icon.
 	 * TODO: move to `Visual`
+	 * TODO: support for `none`: `div.wp-menu-image`
 	 *
 	 * The URL to the icon to be used for `add_menu_page()`
 	 * - Pass a `base64-encoded` SVG using a data URI, which will be colored to match the color scheme. This should begin with `data:image/svg+xml;base64,`.
@@ -145,7 +146,7 @@ class Helper extends WordPress\Main
 	 */
 	public static function getIcon( $icon, $fallback = 'admin-post' )
 	{
-		if ( ! $icon )
+		if ( ! $icon || 'none' === $icon )
 			return Core\HTML::getDashicon( $fallback );
 
 		if ( is_array( $icon ) )
@@ -156,6 +157,9 @@ class Helper extends WordPress\Main
 
 		if ( Core\Text::starts( $icon, 'dashicons-' ) )
 			$icon = Core\Text::stripPrefix( $icon, 'dashicons-' );
+
+		if ( Core\URL::isValid( $icon ) )
+			return Core\Icon::wrapURL( esc_url( $icon ) );
 
 		return Core\HTML::getDashicon( $icon );
 	}
