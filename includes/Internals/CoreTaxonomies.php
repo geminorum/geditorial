@@ -8,6 +8,7 @@ use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait CoreTaxonomies
@@ -864,6 +865,22 @@ trait CoreTaxonomies
 			}, 32, 1 );
 
 		return TRUE;
+	}
+
+	protected function register_headerbutton_for_taxonomy( $constant )
+	{
+		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
+			return FALSE;
+
+		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy ) )
+			return FALSE;
+
+		return Services\HeaderButtons::register( $this->classs( $taxonomy ), [
+			'text'     => Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ),
+			'icon'     => Visual::getTaxonomyIconMarkup( $taxonomy, NULL, TRUE ),
+			'link'     => $edit,
+			'priority' => 12,
+		] );
 	}
 
 	protected function hook_taxonomy_parents_as_views( $screen, $constant, $setting = 'parents_as_views' )
