@@ -88,7 +88,7 @@ trait CoreTaxonomies
 			'auto_parents'    => FALSE,
 			'auto_children'   => FALSE,
 			'single_selected' => FALSE,    // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
-			'reverse_ordered' => NULL,
+			'reverse_ordered' => NULL,     // the value used on `orderby`: `name`/`id`
 			'auto_assigned'   => NULL,
 			'terms_related'   => NULL,
 		], $settings_atts );
@@ -405,7 +405,7 @@ trait CoreTaxonomies
 			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
 
 		else if ( $icon )
-			$icon = 'dashicons-'.$icon;
+			$icon = sprintf( 'dashicons-%s', $icon );
 
 		return $icon ?: 'dashicons-'.$default;
 	}

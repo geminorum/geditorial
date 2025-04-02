@@ -201,10 +201,10 @@ class TermHierarchy extends gEditorial\Service
 	/**
 	 * Retrieves a single targeted term form a taxonomy with select-single prop.
 	 *
-	 * @param  string|object $taxonomy
-	 * @param  array         $terms
-	 * @param  bool|object   $post
-	 * @return false|object  $term
+	 * @param string|object $taxonomy
+	 * @param array $terms
+	 * @param bool|object $post
+	 * @return false|object $term
 	 */
 	public static function getSingleSelectTerm( $taxonomy, $terms, $post = FALSE )
 	{
@@ -271,18 +271,18 @@ class TermHierarchy extends gEditorial\Service
 	/**
 	 * Automatically assigns child taxonomy terms to posts.
 	 *
-	 * This function will automatically set child taxonomy terms whenever a parent term is set on a post,
-	 * with the option to configure specific post types, and/or taxonomies.
+	 * This function will automatically set child taxonomy terms whenever
+	 * a parent term is set on a post, with the option to configure specific
+	 * post types, and/or taxonomies.
 	 *
 	 * @source https://gist.github.com/tripflex/33025718246b4ffb0050058dd8a69fe3
 	 *
-	 *
-	 * @param int    $object_id  Object ID.
-	 * @param array  $terms      An array of object terms.
-	 * @param array  $tt_ids     An array of term taxonomy IDs.
-	 * @param string $taxonomy   Taxonomy slug.
-	 * @param bool   $append     Whether to append new terms to the old terms.
-	 * @param array  $old_tt_ids Old array of term taxonomy IDs.
+	 * @param int $object_id Object ID.
+	 * @param array $terms An array of object terms.
+	 * @param array $tt_ids An array of term taxonomy IDs.
+	 * @param string $taxonomy Taxonomy slug.
+	 * @param bool $append Whether to append new terms to the old terms.
+	 * @param array $old_tt_ids Old array of term taxonomy IDs.
 	 */
 	public static function set_object_terms_auto_set_child_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids )
 	{
@@ -307,8 +307,8 @@ class TermHierarchy extends gEditorial\Service
 	/**
 	 * Filters the terms query default arguments.
 	 *
-	 * @param  array $defaults
-	 * @param  array $taxonomies
+	 * @param array $defaults
+	 * @param array $taxonomies
 	 * @return array $defaults
 	 */
 	public static function get_terms_defaults( $defaults, $taxonomies )

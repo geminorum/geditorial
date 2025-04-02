@@ -2,11 +2,14 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-class Ajax extends Core\Base
+class Ajax extends WordPress\Main
 {
+	const BASE = 'geditorial';
 
-	const BASE   = 'geditorial';
-	const MODULE = FALSE;
+	public static function factory()
+	{
+		return gEditorial();
+	}
 
 	public static function checkReferer( $action = NULL, $key = 'nonce' )
 	{

@@ -16,9 +16,9 @@ trait CoreRestrictPosts
 	 * NOTE: uses screen settings added by the plugin
 	 * OLD: `_hook_screen_restrict_taxonomies()`
 	 *
-	 * @param  string|array $constants
-	 * @param  null|bool|string $check_role
-	 * @param  int $priority
+	 * @param string|array $constants
+	 * @param null|bool|string $check_role
+	 * @param int $priority
 	 * @return bool $hooked
 	 */
 	protected function corerestrictposts__hook_screen_taxonomies( $constants, $check_role = FALSE, $priority = 10 )
@@ -66,8 +66,8 @@ trait CoreRestrictPosts
 	 * NOTE: disabled by default, use `admin_restrict` setting for enable
 	 * OLD: `do_restrict_manage_posts_authors()`
 	 *
-	 * @param  null|bool|string $check_role
-	 * @param  int  $priority
+	 * @param null|bool|string $check_role
+	 * @param int $priority
 	 * @return bool $hooked
 	 */
 	protected function corerestrictposts__hook_screen_authors( $check_role = FALSE, $priority = 12 )
@@ -95,9 +95,9 @@ trait CoreRestrictPosts
 	 * NOTE: must add `taxonomy-{$taxonomy}` column
 	 * TODO: maybe setting the default order here!
 	 *
-	 * @param  string $posttype
-	 * @param  string|array $constants
-	 * @param  int $priority
+	 * @param string $posttype
+	 * @param string|array $constants
+	 * @param int $priority
 	 * @return bool $hooked
 	 */
 	protected function corerestrictposts__hook_sortby_taxonomies( $posttype, $constants, $priority = 10 )
@@ -140,9 +140,9 @@ trait CoreRestrictPosts
 	/**
 	 * Hooks post parent into core query.
 	 *
-	 * @param  string      $constant
-	 * @param  null|string $query_var
-	 * @return bool        $hooked
+	 * @param string $constant
+	 * @param null|string $query_var
+	 * @return bool $hooked
 	 */
 	protected function corerestrictposts__hook_parsequery_for_post_parent( $constant, $query_var = NULL )
 	{
@@ -167,14 +167,14 @@ trait CoreRestrictPosts
 
 	/**
 	 * Hooks column row for post children information.
-	 * NOTE: the post children are from a dffrent posttype
+	 * NOTE: the post children are from a different post-type
 	 *
-	 * @param  string            $constant
-	 * @param  null|string       $icon
-	 * @param  null|string       $module
-	 * @param  null|false|string $empty
-	 * @param  int               $priority
-	 * @return bool              $hooked
+	 * @param string $constant
+	 * @param null|string $icon
+	 * @param null|string $module
+	 * @param null|false|string $empty
+	 * @param int $priority
+	 * @return bool $hooked
 	 */
 	protected function corerestrictposts__hook_columnrow_for_post_children( $parent_type, $constant, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{
@@ -220,14 +220,14 @@ trait CoreRestrictPosts
 
 	/**
 	 * Hooks column row for parent post information.
-	 * NOTE: the parent post is from a dffrent posttype
+	 * NOTE: the parent post is from a different post-type
 	 *
-	 * @param  string            $posttype
-	 * @param  null|string       $icon
-	 * @param  null|string       $module
-	 * @param  null|false|string $empty
-	 * @param  int               $priority
-	 * @return bool              $hooked
+	 * @param string $posttype
+	 * @param null|string $icon
+	 * @param null|string $module
+	 * @param null|false|string $empty
+	 * @param int $priority
+	 * @return bool $hooked
 	 */
 	protected function corerestrictposts__hook_columnrow_for_parent_post( $posttype, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{

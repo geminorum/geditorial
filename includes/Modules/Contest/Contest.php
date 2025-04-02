@@ -117,10 +117,10 @@ class Contest extends gEditorial\Module
 			],
 			'taxonomies' => [
 				'category_contest' => 'category',
-				'contest_paired' => 'megaphone',
+				'contest_paired'   => 'megaphone',
 				'section_taxonomy' => 'category',
 				'category_apply'   => 'category',
-				'status_taxonomy'  => 'post-status', // 'portfolio',
+				'status_taxonomy'  => 'post-status',   // 'portfolio',
 			],
 		];
 	}
@@ -197,7 +197,7 @@ class Contest extends gEditorial\Module
 					],
 
 					'venue_string'   => [ 'type' => 'venue' ],
-					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'contact_string' => [ 'type' => 'contact' ],   // `url`/`email`/`phone`
 					'website_url'    => [ 'type' => 'link' ],
 					'email_address'  => [ 'type' => 'email' ],
 				],
@@ -335,7 +335,7 @@ class Contest extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		if ( Settings::isDashboard( $screen ) )

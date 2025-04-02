@@ -402,7 +402,7 @@ trait CorePostTypes
 			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
 
 		else if ( $icon )
-			$icon = 'dashicons-'.$icon;
+			$icon = sprintf( 'dashicons-%s', $icon );
 
 		return $icon ?: 'dashicons-'.$default;
 	}

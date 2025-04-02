@@ -14,7 +14,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'today';
 
-	// TODO: check min/max for day/month
+	// TODO: check minimum/max for day/month
 	// TODO: 4 digit year based on `$type`
 	public static function parseTheFullDay( $text, $type = 'gregorian' )
 	{

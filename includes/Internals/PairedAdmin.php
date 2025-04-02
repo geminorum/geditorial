@@ -15,8 +15,8 @@ trait PairedAdmin
 	 * NOTE: uses screen settings added by the plugin
 	 * OLD: `_hook_screen_restrict_paired()`
 	 *
-	 * @param  null|bool|string $check_role
-	 * @param  int $priority
+	 * @param null|bool|string $check_role
+	 * @param int $priority
 	 * @return bool $hooked
 	 */
 	protected function paired__hook_screen_restrictposts( $check_role = FALSE, $priority = 10 )
@@ -45,7 +45,6 @@ trait PairedAdmin
 				$taxonomy = $this->constant( $constants[1] );
 
 				if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )
-					// Listtable::restrictByTaxonomy( $taxonomy, $this->constant( $constants[0] ) );
 					Listtable::restrictByTaxonomy( $taxonomy );
 
 			}, $priority, 2 );
@@ -81,7 +80,7 @@ trait PairedAdmin
 
 				if ( count( $supported ) > 1 ) {
 
-					// extensive query only for multiple supported
+					// NOTE: extensive query only for multiple supported
 
 					$posts = $this->paired_all_connected_to( $post, 'columns' );
 
@@ -92,7 +91,7 @@ trait PairedAdmin
 
 				} else {
 
-					// simple count query for single supported
+					// NOTE: simple count query for single supported
 
 					if ( ! $count = $this->paired_count_connected_to( $post, 'columns' ) )
 						return;
@@ -130,7 +129,7 @@ trait PairedAdmin
 		return TRUE;
 	}
 
-	// TODO: add an advance version with modal for multipaired modules
+	// TODO: add an advance version with modal for `multipaired` modules
 	protected function paired__hook_tweaks_column( $posttype, $priority = 10 )
 	{
 		if ( ! $this->_paired )

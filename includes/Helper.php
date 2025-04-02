@@ -285,7 +285,7 @@ class Helper extends WordPress\Main
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
-		if ( ! $terms = wp_get_object_terms( $user_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
+		if ( ! $terms = wp_get_object_terms( (int) $user_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
 			return;
 
 		$list = [];

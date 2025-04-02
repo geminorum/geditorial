@@ -30,7 +30,8 @@ class Listtable extends WordPress\Main
 
 	public static function columnTerm( $object_id, $taxonomy, $title_attr = NULL, $single = TRUE )
 	{
-		$the_terms = wp_get_object_terms( $object_id, $taxonomy );
+		// $the_terms = wp_get_object_terms( $object_id, $taxonomy );
+		$the_terms = get_the_terms( (int) $object_id, $taxonomy );
 
 		if ( ! is_wp_error( $the_terms ) && count( $the_terms ) ) {
 

@@ -36,7 +36,7 @@ class MetaBox extends WordPress\Main
 	}
 
 	// FIXME: adopt `wp_dropdown_categories()`
-	// FIXME: add taxonomy `title::description` as dropdown title attr
+	// FIXME: add taxonomy `title::description` as drop-down title attribute
 	public static function singleselectTerms( $object_id = 0, $atts = [], $terms = NULL )
 	{
 		$args = self::args( $atts, [

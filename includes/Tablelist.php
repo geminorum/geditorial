@@ -27,11 +27,11 @@ class Tablelist extends WordPress\Main
 	 * @REF: `Taxonomy::getTerms()`
 	 * NOTE: false `$perpage` will result in list of terms only.
 	 *
-	 * @param  array        $atts
-	 * @param  array        $extra
-	 * @param  string|array $taxonomy
-	 * @param  int|false    $perpage
-	 * @return array        $data
+	 * @param array $atts
+	 * @param array $extra
+	 * @param string|array $taxonomy
+	 * @param int|false $perpage
+	 * @return array $data
 	 */
 	public static function getTerms( $atts = [], $extra = [], $taxonomy = '', $perpage = 25 )
 	{
@@ -75,8 +75,8 @@ class Tablelist extends WordPress\Main
 		return [ $terms, $pagination ];
 	}
 
-	// TODO: support the parent posttype
-	// - must alter query to filter the parent posttype
+	// TODO: support the parent post-type
+	// - must alter query to filter the parent post-type
 	public static function getAttachments( $atts = [], $extra = [], $posttypes = 'attachment', $perpage = 25 )
 	{
 		return self::getPosts( $atts, $extra, $posttypes, $perpage );

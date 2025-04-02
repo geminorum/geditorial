@@ -119,9 +119,9 @@ class HeaderButtons extends gEditorial\Service
 		 * `http://markusfisch.de/BinaryEye?ret=http%3A%2F%2Fexample.com%2F%3Fresult%3D{RESULT}`
 		 *
 		 * Supported symbols are:
-		 * `RESULT` - scanned content
-		 * `RESULT_BYTES` - raw result as a hex string
-		 * `FORMAT` - barcode format
+		 * `RESULT`: scanned content
+		 * `RESULT_BYTES`: raw result as a hex string
+		 * `FORMAT`: bar-code format
 		 *
 		 * @source https://github.com/markusfisch/BinaryEye
 		 */

@@ -14,10 +14,10 @@ trait CoreAdmin
 	 * NOTE: default settings here is `TRUE`
 	 * @old: `_hook_admin_ordering()`
 	 *
-	 * @param  string $posttype
-	 * @param  string $orderby
-	 * @param  string $order
-	 * @return bool   $hooked
+	 * @param string $posttype
+	 * @param string $orderby
+	 * @param string $order
+	 * @return bool $hooked
 	 */
 	protected function coreadmin__hook_admin_ordering( $posttype, $orderby = 'menu_order', $order = 'DESC' )
 	{
