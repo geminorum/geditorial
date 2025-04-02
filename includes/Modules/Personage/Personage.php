@@ -838,7 +838,7 @@ class Personage extends gEditorial\Module
 			$names = $this->_get_human_names( $post );
 
 		$fullname = $this->filters( 'make_human_title',
-			ModuleHelper::makeFullname( $names, $context, $fallback ),
+			Services\Individuals::makeFullname( $names, $context, $fallback ),
 			$context,
 			$post,
 			$names,
