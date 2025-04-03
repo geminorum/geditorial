@@ -13,7 +13,8 @@
 
   const app = {
     clicked: function (event) {
-      $(s.hidden).each(function () {
+      const tag = $(this).parents('tr').attr('id');
+      $(s.hidden, '#' + tag).each(function () {
         const name = $(this).data('name');
         if ($(this).data(s.single)) {
           const input = $(':input[data-quickedit="' + name + '"]', '.inline-edit-row');
@@ -28,9 +29,7 @@
           $(s.checkbox, wrap).each(function () {
             const value = $(this).data(s.raw);
             // avoid `0`
-            if (value && values.includes(value.toString())) {
-              $(this).prop('checked', true);
-            }
+            $(this).prop('checked', (value && values.includes(value.toString())));
           });
         }
       });
