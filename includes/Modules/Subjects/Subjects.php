@@ -30,7 +30,7 @@ class Subjects extends gEditorial\Module
 		return [
 			'name'     => 'subjects',
 			'title'    => _x( 'Subjects', 'Modules: Subjects', 'geditorial-admin' ),
-			'desc'     => _x( 'َContent Universal Topics', 'Modules: Subjects', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Universal Topics', 'Modules: Subjects', 'geditorial-admin' ),
 			'icon'     => 'tag',
 			'access'   => 'beta',
 			'keywords' => [
@@ -104,6 +104,13 @@ class Subjects extends gEditorial\Module
 		];
 
 		return $strings;
+	}
+
+	protected function define_default_terms()
+	{
+		return [
+			'main_taxonomy' => ModuleInfo::getLiterarySubjects( 'strings' ),
+		];
 	}
 
 	public function init()

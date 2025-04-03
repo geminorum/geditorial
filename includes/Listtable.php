@@ -30,31 +30,14 @@ class Listtable extends WordPress\Main
 
 	public static function columnTerm( $object_id, $taxonomy, $title_attr = NULL, $single = TRUE )
 	{
-		// $the_terms = wp_get_object_terms( $object_id, $taxonomy );
-		$the_terms = get_the_terms( (int) $object_id, $taxonomy );
+		$terms = get_the_terms( (int) $object_id, $taxonomy );
 
-		if ( ! is_wp_error( $the_terms ) && count( $the_terms ) ) {
+		if ( $terms && ! is_wp_error( $terms ) && count( $terms ) )
+			return $single
+				? $terms[0]->name
+				: WordPress\Strings::getJoined( Core\Arraay::pluck( $terms, 'name' ) );
 
-			if ( $single ) {
-				return $the_terms[0]->name;
-
-			} else {
-
-				$terms = [];
-
-				foreach ( $the_terms as $the_term )
-					$terms[] = $the_term->name;
-
-				return WordPress\Strings::getJoined( $terms );
-			}
-
-		} else {
-
-			if ( is_null( $title_attr ) )
-				$title_attr = _x( 'No Term', 'Listtable: No Count Term Attribute', 'geditorial' );
-
-			return sprintf( '<span title="%s" class="column-term-empty">&mdash;</span>', $title_attr );
-		}
+		return Helper::htmlEmpty( 'column-term-empty', $title_attr ?? _x( 'No Term', 'Listtable: No Count Term Attribute', 'geditorial' ) );
 	}
 
 	public static function parseQueryTaxonomy( &$query, $taxonomy )

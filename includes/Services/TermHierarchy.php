@@ -132,7 +132,7 @@ class TermHierarchy extends gEditorial\Service
 				if ( $added || $current !== $posttype )
 					return;
 
-				// NOTE: diffrent context
+				// NOTE: different context
 				self::_renderCustomBoxDropdowns( $taxonomies, TRUE );
 
 				$added = $column;
@@ -151,7 +151,6 @@ class TermHierarchy extends gEditorial\Service
 				'hierarchical'      => $taxonomy->hierarchical,
 				'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
 				'value_field'       => $taxonomy->hierarchical ? 'term_id' : 'slug',
-				// 'name'              => 'tax_input['.$taxonomy->name.'][]',
 				'name'              => sprintf( '%s[%s][]', $bulkedit ? static::SINGLE_TERM_SELECT : 'tax_input', $taxonomy->name ),
 				'id'                => sprintf( '%s-singleselect-%s-%s', static::BASE, $bulkedit ? 'bulkedit' : 'quickedit', $taxonomy->name ),
 				'option_none_value' => '0',

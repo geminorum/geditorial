@@ -180,11 +180,10 @@ class TermRelations extends gEditorial\Service
 			if ( ! in_array( $taxonomy, $supported, TRUE ) )
 				continue;
 
-			// $terms = wp_get_object_terms( $post->ID, $taxonomy );
 			// hits the cache
 			$terms = get_the_terms( $post, $taxonomy );
 
-			if ( is_wp_error( $terms ) )
+			if ( ! $terms || is_wp_error( $terms ) )
 				return [];
 
 			$supported = self::get_supported( $taxonomy, $context, $post->post_type );

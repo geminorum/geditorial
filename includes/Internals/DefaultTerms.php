@@ -7,7 +7,6 @@ use geminorum\gEditorial\WordPress;
 
 trait DefaultTerms
 {
-
 	protected function init_default_terms()
 	{
 		if ( ! method_exists( $this, 'define_default_terms' ) )
