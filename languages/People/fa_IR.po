@@ -1,0 +1,266 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial People\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-04-03 02:17+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ../../includes/Modules/People\n"
+"X-Domain: geditorial-people\n"
+
+#: People.php:43
+msgctxt "Setting Description"
+msgid "Whether to assign multiple affiliations in edit panel."
+msgstr "اختصاص بیش از یک وابستگی، در پنل ویرایش امکان‌پذیر باشد."
+
+#: People.php:70
+msgid "Person"
+msgid_plural "People"
+msgstr[0] "افراد"
+msgstr[1] "فرد"
+
+#: People.php:71
+msgid "Affiliation"
+msgid_plural "Affiliations"
+msgstr[0] "وابستگی‌ها"
+msgstr[1] "وابستگی"
+
+#: People.php:75
+msgctxt "Label: `name_field_description`"
+msgid "What is the full-name of the person."
+msgstr "نام کامل فرد را تعریف کنید."
+
+#: People.php:76
+msgctxt "Label: `slug_field_description`"
+msgid "Define the URL-friendly version of the name of the person."
+msgstr "نسخه مناسب URL نام فرد را تعریف کنید."
+
+#: People.php:77
+msgctxt "Label: `desc_field_description`"
+msgid "Describe the person in more words."
+msgstr "این فرد را با کلمات بیشتری توصیف کنید."
+
+#: People.php:80
+msgctxt "Label: `extended_label`"
+msgid "People Affiliations"
+msgstr "وابستگی‌های فردی"
+
+#: People.php:81
+msgctxt "Label: `show_option_all`"
+msgid "People Affiliations"
+msgstr "وابستگی‌های فردی"
+
+#: People.php:82
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unaffiliated)"
+msgstr "(بدون وابستگی)"
+
+#: People.php:83
+msgctxt "Label: `assign_description`"
+msgid "Defines the affiliation of the person."
+msgstr "وابستگی فرد را تعریف کنید."
+
+#~ msgctxt "Javascript String"
+#~ msgid "Search"
+#~ msgstr "جست‌وجو"
+
+#~ msgctxt "Javascript String"
+#~ msgid "Loading"
+#~ msgstr "بارگیری"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Assign Roles"
+#~ msgstr "نقش‌های تخصیص"
+
+#~ msgctxt "Setting Title"
+#~ msgid "Default Filters"
+#~ msgstr "پالایه‌های پیش‌فرض"
+
+#~ msgid "Relation"
+#~ msgid_plural "Relations"
+#~ msgstr[0] "ارتباط‌ها"
+#~ msgstr[1] "ارتباط"
+
+#~ msgid "Honorific"
+#~ msgid_plural "Honorifics"
+#~ msgstr[0] "تجلیلی‌ها"
+#~ msgstr[1] "تجلیلی"
+
+#~ msgctxt "Label: Menu Name"
+#~ msgid "People"
+#~ msgstr "افراد"
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "People"
+#~ msgstr "افراد"
+
+#~ msgctxt "MetaBox Action"
+#~ msgid "Directory"
+#~ msgstr "فهرست"
+
+#~ msgctxt "Button Title"
+#~ msgid "People of %2$s"
+#~ msgstr "افراد %s"
+
+#~ msgctxt "Button Text"
+#~ msgid "%1$s View %2$s People"
+#~ msgstr "%1$s نمایش افراد %2$s"
+
+#~ msgctxt "Meta Field Title"
+#~ msgid "Default Filter"
+#~ msgstr "پالایه پیش‌فرض"
+
+#~ msgctxt "Meta Field Description"
+#~ msgid "Sets a default filter for this term."
+#~ msgstr "یک پالایه پیش‌فرض برای این رده تنظیم می‌کند."
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Author"
+#~ msgstr "نویسنده"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Co-Author"
+#~ msgstr "مؤلف همکار"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Editor"
+#~ msgstr "ویرایشگر"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Photographer"
+#~ msgstr "عکاس"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Translator"
+#~ msgstr "مترجم"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Reporter"
+#~ msgstr "گزارش‌گر"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Commentator"
+#~ msgstr "مفسر"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Artist"
+#~ msgstr "هنرمند"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Co-Artist"
+#~ msgstr "هنرمند همکار"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Illustrator"
+#~ msgstr "تصویرگر"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Collector"
+#~ msgstr "گردآورنده"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Curator"
+#~ msgstr "کتابدار"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Poet"
+#~ msgstr "شاعر"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Interviewer"
+#~ msgstr "گفت‌وگو کننده"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Interviewee"
+#~ msgstr "گفت‌وگو شونده"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Director"
+#~ msgstr "کارگردان"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Selector"
+#~ msgstr "انتخاب کننده"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Conductor"
+#~ msgstr "تنظیم کننده"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Speaker"
+#~ msgstr "سخنران"
+
+#~ msgctxt "Default Term: Relation"
+#~ msgid "Critic"
+#~ msgstr "منتقد"
+
+#~ msgctxt "Default Term: Honorific"
+#~ msgid "Doctor"
+#~ msgstr "دکتر"
+
+#~ msgctxt "Default Term: Honorific"
+#~ msgid "Professor"
+#~ msgstr "استاد"
+
+#~ msgctxt "Default Term: Honorific"
+#~ msgid "Ayatollah"
+#~ msgstr "آیت‌الله"
+
+#~ msgctxt "JS: String"
+#~ msgid "more than %s chars needed!"
+#~ msgstr "بیشتر از %s نویسه احتیاج است!"
+
+#~ msgctxt "JS: String"
+#~ msgid "Query in %ss"
+#~ msgstr "کاووش در %s ثانیه"
+
+#~ msgctxt "JS: String"
+#~ msgid "Saved!"
+#~ msgstr "ذخیره شد!"
+
+#~ msgctxt "RelMeta Title"
+#~ msgid "Relation"
+#~ msgstr "رابطه‌ها"
+
+#~ msgctxt "Import Field"
+#~ msgid "People: %s"
+#~ msgstr "فرد: %s"
+
+#~ msgctxt "Import Field"
+#~ msgid "Undefined"
+#~ msgstr "تعریف‌نشده"
+
+#~ msgctxt "App Template"
+#~ msgid "Search here …"
+#~ msgstr "اینجا جست‌وجو کنید …"
+
+#~ msgctxt "Taxonomy Menu"
+#~ msgid "People"
+#~ msgstr "افراد"
+
+#~ msgctxt "Column Title"
+#~ msgid "People"
+#~ msgstr "افراد"
+
+#~ msgctxt "Show Option All"
+#~ msgid "People"
+#~ msgstr "افراد"
+
+#~ msgctxt "Show Option None"
+#~ msgid "(No person)"
+#~ msgstr "(بدون شخص)"
+
+#~ msgctxt "Button Title"
+#~ msgid "People of %s"
+#~ msgstr "افراد %s"
+
+#~ msgctxt "Taxmeta Title"
+#~ msgid "Relation"
+#~ msgstr "ارتباط"
