@@ -62,17 +62,6 @@ class Happening extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'category_taxonomy' => 'category',
-				'type_taxonomy'     => 'tag',
-				'calendar_taxonomy' => 'calendar',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -194,7 +183,9 @@ class Happening extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
@@ -202,13 +193,16 @@ class Happening extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'main_posttype', [
+			'custom_icon'  => 'tag',
 			'auto_parents' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'calendar_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'calendar',
+		] );
 
 		$this->register_posttype( 'main_posttype', [
 			'hierarchical' => TRUE,

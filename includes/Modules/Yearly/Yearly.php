@@ -76,15 +76,6 @@ class Yearly extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -123,6 +114,7 @@ class Yearly extends gEditorial\Module
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
+			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => TRUE,
 			'reverse_ordered' => 'name',
 		] );

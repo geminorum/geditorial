@@ -75,15 +75,6 @@ class Genres extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -133,6 +124,7 @@ class Genres extends gEditorial\Module
 			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], NULL, [
 			'auto_parents' => $this->get_setting( 'auto_term_parents', TRUE ),
+			'custom_icon'  => $this->module->icon,
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );

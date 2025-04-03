@@ -69,15 +69,6 @@ class Almanac extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -125,6 +116,7 @@ class Almanac extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 		], NULL, [
+			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => TRUE,
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
 		] );

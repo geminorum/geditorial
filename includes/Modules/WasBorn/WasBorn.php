@@ -204,7 +204,9 @@ class WasBorn extends gEditorial\Module
 			'rewrite'      => FALSE,
 			'show_in_menu' => FALSE,
 		], FALSE, [
+			'target_object'  => 'none',
 			'custom_captype' => TRUE,
+			'custom_icon'    => 'groups',
 		] );
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )

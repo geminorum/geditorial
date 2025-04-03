@@ -27,8 +27,6 @@ class Collect extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 
-	// FIXME: rename to `Collecting`/`Collective`
-
 	public static function module()
 	{
 		return [
@@ -117,7 +115,6 @@ class Collect extends gEditorial\Module
 		return [
 			'taxonomies' => [
 				'collection_paired' => 'star-filled',
-				'group_taxonomy'    => 'clipboard',
 				'part_taxonomy'     => 'exerpt-view',
 			],
 		];
@@ -229,7 +226,9 @@ class Collect extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'collection_posttype' );
+		], 'collection_posttype', [
+			'custom_icon' => 'clipboard',
+		] );
 
 		$this->paired_register();
 

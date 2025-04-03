@@ -45,15 +45,6 @@ class Team extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'group_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		return [
@@ -140,7 +131,9 @@ class Team extends gEditorial\Module
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'member_posttype' );
+		], 'member_posttype', [
+			'custom_icon' => 'groups',
+		] );
 
 		$this->register_posttype( 'member_posttype', [
 			'menu_position'     => 65,

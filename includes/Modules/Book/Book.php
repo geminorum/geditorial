@@ -178,7 +178,6 @@ class Book extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'category_taxonomy' => 'category',
 				'subject_taxonomy'  => 'tag',
 				'serie_taxonomy'    => 'tag',
 				'location_taxonomy' => 'book-alt',
@@ -472,7 +471,9 @@ class Book extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_taxonomy( 'subject_taxonomy', [
 			'hierarchical' => TRUE,

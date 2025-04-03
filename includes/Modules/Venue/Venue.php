@@ -128,7 +128,6 @@ class Venue extends gEditorial\Module
 		return [
 			'taxonomies' => [
 				'place_paired'      => NULL,
-				'category_taxonomy' => 'category',
 				'facility_taxonomy' => 'building',
 			],
 		];
@@ -237,7 +236,9 @@ class Venue extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'place_posttype' );
+		], 'place_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->paired_register();
 

@@ -137,12 +137,11 @@ class Course extends gEditorial\Module
 				'lesson_posttype' => 'portfolio',
 			],
 			'taxonomies' => [
-				'course_paired'     => 'welcome-learn-more',
-				'category_taxonomy' => 'category',
-				'span_taxonomy'     => 'backup',
-				'topic_taxonomy'    => 'category',
-				'format_taxonomy'   => 'category',
-				'status_taxonomy'   => 'post-status',
+				'course_paired'   => 'welcome-learn-more',
+				'span_taxonomy'   => 'backup',
+				'topic_taxonomy'  => 'category',
+				'format_taxonomy' => 'category',
+				'status_taxonomy' => 'post-status',
 			],
 		];
 	}
@@ -275,7 +274,9 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'default_term'       => NULL,
-		], 'course_posttype' );
+		], 'course_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_taxonomy( 'span_taxonomy', [
 			'hierarchical'       => TRUE,

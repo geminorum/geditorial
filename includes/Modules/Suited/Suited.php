@@ -73,15 +73,6 @@ class Suited extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -114,6 +105,8 @@ class Suited extends gEditorial\Module
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
 			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
+		], NULL, [
+			'custom_icon' => $this->module->icon,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

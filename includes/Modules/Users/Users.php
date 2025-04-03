@@ -140,6 +140,7 @@ class Users extends gEditorial\Module
 				'show_in_quick_edit' => TRUE,
 			], FALSE, [
 				'target_object' => 'user',
+				'custom_icon'   => 'groups',
 			] );
 
 			// no need, we use slash in slug
@@ -152,6 +153,7 @@ class Users extends gEditorial\Module
 				'show_in_quick_edit' => TRUE,
 			], FALSE, [
 				'target_object' => 'user',
+				'custom_icon'   => 'tag',
 			] );
 
 		if ( $this->get_setting( 'author_categories' ) )

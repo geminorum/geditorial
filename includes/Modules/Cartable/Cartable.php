@@ -18,8 +18,6 @@ class Cartable extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreUsers;
 
-	// TODO: dynamic cartables based on external taxonomies
-
 	protected $disable_no_posttypes = TRUE;
 	protected $priority_admin_menu  = 90;
 
@@ -211,13 +209,13 @@ class Cartable extends gEditorial\Module
 				'rewrite'      => FALSE,
 				'show_ui'      => FALSE,
 				'meta_box_cb'  => FALSE,
-				'capabilities' => [
-					// TODO: migrate to settings
-					'manage_terms' => $this->caps['settings'],
-					'edit_terms'   => $this->caps['settings'],
-					'delete_terms' => $this->caps['settings'],
-					'assign_terms' => 'assign_'.$this->constant( 'user_taxonomy' ),
-				],
+			], NULL, [
+				'custom_icon' => 'admin-users',
+			], [
+				'manage_terms' => $this->caps['settings'],
+				'edit_terms'   => $this->caps['settings'],
+				'delete_terms' => $this->caps['settings'],
+				'assign_terms' => 'assign_'.$this->constant( 'user_taxonomy' ),
 			] );
 
 			// new term for new users
@@ -236,7 +234,9 @@ class Cartable extends gEditorial\Module
 				'public'       => FALSE,
 				'rewrite'      => FALSE,
 				'show_in_menu' => FALSE,
-			], NULL, [], [
+			], NULL, [
+				'custom_icon' => 'tag',
+			], [
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
@@ -259,7 +259,9 @@ class Cartable extends gEditorial\Module
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
 			'show_ui'      => FALSE,
-		], NULL, [], [
+		], NULL, [
+			'custom_icon' => 'groups',
+		], [
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],

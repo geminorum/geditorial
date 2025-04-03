@@ -108,15 +108,6 @@ class Athlete extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -307,6 +298,7 @@ class Athlete extends gEditorial\Module
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
+			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => TRUE,
 		] );
 

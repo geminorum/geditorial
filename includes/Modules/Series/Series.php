@@ -55,15 +55,6 @@ class Series extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		return [
@@ -93,13 +84,15 @@ class Series extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		return [ 'series' => [
-			'_supported' => [
-				'in_series_title' => TRUE,
-				'in_series_order' => TRUE,
-				'in_series_desc'  => FALSE,
-			],
-		] ];
+		return [
+			'series' => [
+				'_supported' => [
+					'in_series_title' => TRUE,
+					'in_series_order' => TRUE,
+					'in_series_desc'  => FALSE,
+				],
+			]
+		];
 	}
 
 	public function init()
@@ -109,6 +102,8 @@ class Series extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'show_admin_column' => TRUE,
 			'show_in_rest'      => FALSE, // disables in block editor, temporarily!
+		], NULL, [
+			'custom_icon' => $this->module->icon,
 		] );
 
 		foreach ( $this->posttypes() as $posttype )

@@ -84,15 +84,6 @@ class Audit extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -158,6 +149,7 @@ class Audit extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => '__checklist_restricted_terms_callback',
 		], NULL, [
+			'custom_icon'    => $this->module->icon,
 			'custom_captype' => TRUE,
 		] );
 

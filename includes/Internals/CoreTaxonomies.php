@@ -79,7 +79,7 @@ trait CoreTaxonomies
 
 		// NOTE: ordering here is important!
 		$settings = self::atts( [
-			'target_object'   => 'post',   // `post`/`user`/`comment`/`taxonomy`
+			'target_object'   => 'post',   // `post`/`user`/`comment`/`taxonomy`/`none`
 			'custom_icon'     => TRUE,
 			'is_viewable'     => NULL,
 			'custom_captype'  => FALSE,
@@ -163,7 +163,7 @@ trait CoreTaxonomies
 				case 'custom_icon':
 
 					/**
-					 * NOTE: `menu_icon` here is `gEditorial` prop, WordPress has no icon for taxonomies.
+					 * NOTE: `menu_icon` here is `gEditorial` prop, WordPress has no icon support for taxonomies.
 					 * NOTE: following is from `register_post_type()` docs:
 					 *
 					 * The URL to the icon to be used for this menu. Pass a
