@@ -125,16 +125,6 @@ class Meeted extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'primary_taxonomy' => NULL,
-				'primary_subterm'  => 'performance',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -180,7 +170,7 @@ class Meeted extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no meeting information available!', 'Notice', 'geditorial-meeted' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the meeting information.', 'Notice', 'geditorial-meeted' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the meeting information.', 'Notice', 'geditorial-meeted' ),
 		];
 
 		$strings['misc'] = [
@@ -330,6 +320,7 @@ class Meeted extends gEditorial\Module
 			'default_term'       => NULL,
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
+			'custom_icon'    => $this->module->icon,
 			'custom_captype' => $captype,
 		] );
 
@@ -379,12 +370,14 @@ class Meeted extends gEditorial\Module
 		] );
 
 		$this->paired_register( [], [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-		], [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => $captype,
 			'status_taxonomy' => TRUE,
+		], [
+			'is_viewable'    => $viewable,
+			'custom_icon'    => 'performance',
+			'custom_captype' => $captype,
 		] );
 
 		if ( $this->get_setting( 'paired_globalsummary', TRUE ) )

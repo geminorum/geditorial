@@ -74,15 +74,6 @@ class Sufficed extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => [ 'misc-16', 'bookmark-x-fill' ],
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -124,6 +115,7 @@ class Sufficed extends gEditorial\Module
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
+			'custom_icon'     => [ 'misc-16', 'bookmark-x-fill' ],
 			'custom_captype'  => TRUE,
 		] );
 

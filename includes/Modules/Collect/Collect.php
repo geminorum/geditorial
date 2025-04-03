@@ -110,16 +110,6 @@ class Collect extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'collection_paired' => 'star-filled',
-				'part_taxonomy'     => 'exerpt-view',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -230,7 +220,11 @@ class Collect extends gEditorial\Module
 			'custom_icon' => 'clipboard',
 		] );
 
-		$this->paired_register();
+		$this->paired_register( [], [
+			'custom_icon' => $this->module->icon,
+		], [
+			'custom_icon' => 'exerpt-view',
+		] );
 
 		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'group_shortcode' );

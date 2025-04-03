@@ -137,7 +137,7 @@ class Diagnosed extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no medical information available!', 'Notice', 'geditorial-diagnosed' ),
-			'noaccess' => _x( 'You have not necessary permission to manage this medical data.', 'Notice', 'geditorial-diagnosed' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage this medical data.', 'Notice', 'geditorial-diagnosed' ),
 		];
 
 		if ( ! is_admin() )

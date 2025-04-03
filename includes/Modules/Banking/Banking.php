@@ -104,7 +104,7 @@ class Banking extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no account information available!', 'Notice', 'geditorial-banking' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the bank accounts.', 'Notice', 'geditorial-banking' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the bank accounts.', 'Notice', 'geditorial-banking' ),
 		];
 
 		if ( ! is_admin() )

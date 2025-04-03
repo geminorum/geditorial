@@ -136,15 +136,6 @@ class Organization extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'primary_subterm' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -340,12 +331,14 @@ class Organization extends gEditorial\Module
 		] );
 
 		$this->paired_register( [], [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-		], [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => $captype,
 			'status_taxonomy' => TRUE,
+		], [
+			'is_viewable'    => $viewable,
+			'custom_icon'    => $this->module->icon,
+			'custom_captype' => $captype,
 		] );
 
 		$this->hook_paired_static_covers_secondaries();

@@ -208,7 +208,7 @@ class Config extends gEditorial\Module
 		Settings::wrapClose();
 	}
 
-	// TODO: display wp_dashboard on overview
+	// TODO: display `wp_dashboard` on overview
 	protected function reports_overview( $uri )
 	{
 		do_action( $this->hook_base( 'reports', 'overview' ), $uri );

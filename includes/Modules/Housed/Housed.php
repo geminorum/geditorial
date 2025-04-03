@@ -134,7 +134,7 @@ class Housed extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no visiting information available!', 'Notice', 'geditorial-housed' ),
-			'noaccess' => _x( 'You have not necessary permission to manage this visiting data.', 'Notice', 'geditorial-housed' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage this visiting data.', 'Notice', 'geditorial-housed' ),
 		];
 
 		if ( ! is_admin() )

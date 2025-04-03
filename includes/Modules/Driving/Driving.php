@@ -97,7 +97,7 @@ class Driving extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no vehicle information available!', 'Notice', 'geditorial-driving' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the vehicles data.', 'Notice', 'geditorial-driving' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the vehicles data.', 'Notice', 'geditorial-driving' ),
 		];
 
 		if ( ! is_admin() )

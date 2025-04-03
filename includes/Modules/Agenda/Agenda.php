@@ -103,7 +103,7 @@ class Agenda extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no itinerary information available!', 'Notice', 'geditorial-agenda' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the itinerary data.', 'Notice', 'geditorial-agenda' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the itinerary data.', 'Notice', 'geditorial-agenda' ),
 		];
 
 		if ( ! is_admin() )

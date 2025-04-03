@@ -98,7 +98,7 @@ class Chronicles extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no timeline information available!', 'Notice', 'geditorial-chronicles' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the timeline data.', 'Notice', 'geditorial-chronicles' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the timeline data.', 'Notice', 'geditorial-chronicles' ),
 		];
 
 		if ( ! is_admin() )

@@ -54,16 +54,6 @@ class Pitches extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'primary_taxonomy' => NULL,
-				'primary_subterm'  => 'clipboard',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -98,7 +88,7 @@ class Pitches extends gEditorial\Module
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'primary_posttype', [
-
+			'custom_icon' => $this->module->icon,
 		] );
 
 		$this->register_taxonomy( 'primary_subterm', [
@@ -107,10 +97,11 @@ class Pitches extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'primary_posttype', [
-
+			'custom_icon' => 'clipboard',
 		] );
 
 		$this->register_posttype( 'primary_posttype', [], [
+			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => TRUE,
 		] );
 	}

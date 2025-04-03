@@ -142,7 +142,7 @@ class Athlete extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no athletic information available!', 'Notice', 'geditorial-athlete' ),
-			'noaccess' => _x( 'You have not necessary permission to manage this athletic data.', 'Notice', 'geditorial-athlete' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage this athletic data.', 'Notice', 'geditorial-athlete' ),
 		];
 
 		if ( ! is_admin() )

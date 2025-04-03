@@ -195,6 +195,7 @@ class WasBorn extends gEditorial\Module
 			'show_in_menu' => FALSE,
 			'data_length'  => _x( '6', 'Main Taxonomy Argument: `data_length`', 'geditorial-was-born' ),
 		], $posttypes, [
+			'custom_icon'   => 'backup',
 			'admin_managed' => TRUE,
 			'auto_assigned' => TRUE,
 		] );

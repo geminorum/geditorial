@@ -108,21 +108,6 @@ class Contest extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'post_types' => [
-				'contest_posttype' => NULL,
-				'apply_posttype'   => 'portfolio',
-			],
-			'taxonomies' => [
-				'category_contest' => 'category',
-				'contest_paired'   => 'megaphone',
-				'section_taxonomy' => 'category',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -229,7 +214,7 @@ class Contest extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 		], 'contest_posttype', [
-
+			'custom_icon' => 'category',
 		] );
 
 		$this->register_taxonomy( 'category_apply', [
@@ -251,11 +236,14 @@ class Contest extends gEditorial\Module
 		] );
 
 		$this->paired_register( [], [
+			'custom_icon'     => $this->module->icon,
 			'status_taxonomy' => TRUE,
+		], [
+			'custom_icon' => 'category',
 		] );
 
 		$this->register_posttype( 'apply_posttype', [], [
-
+			'custom_icon' => 'portfolio',
 		] );
 
 		$this->register_shortcode( 'contest_shortcode' );

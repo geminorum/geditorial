@@ -183,6 +183,27 @@ trait Strings
 		return sprintf( $template, $title, $singular );
 	}
 
+	// OLD: `subcontent_get_empty_notice()`
+	protected function get_notice_for_empty( $context = 'display', $string_key = 'empty' )
+	{
+		if ( $this->is_thrift_mode() )
+			return '<div class="-placeholder-empty"></div>';
+
+		return Core\HTML::tag( 'p', [
+			'class' => [ 'description', '-description', '-empty' ],
+		], $this->get_string( $string_key, $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ) );
+	}
+
+	// OLD: `subcontent_get_noaccess_notice()`
+	protected function get_notice_for_noaccess( $context = 'display', $string_key = 'noaccess' )
+	{
+		$default = _x( 'You do not have the necessary permission to manage the information.', 'Internal: Strings: No-Access Notice', 'geditorial' );
+
+		return Core\HTML::tag( 'p', [
+			'class' => [ 'description', '-description', '-noaccess' ],
+		], $this->get_string( $string_key, $context, 'notices', $default ) );
+	}
+
 	protected function _hook_post_updated_messages( $constant )
 	{
 		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {

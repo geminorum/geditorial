@@ -91,15 +91,6 @@ class NextOfKin extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => 'buddicons-tracking',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -134,7 +125,7 @@ class NextOfKin extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no family information available!', 'Notice', 'geditorial-next-of-kin' ),
-			'noaccess' => _x( 'You have not necessary permission to manage this family data.', 'Notice', 'geditorial-next-of-kin' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage this family data.', 'Notice', 'geditorial-next-of-kin' ),
 		];
 
 		if ( ! is_admin() )
@@ -244,6 +235,7 @@ class NextOfKin extends gEditorial\Module
 			'data_length'        => _x( '10', 'Main Taxonomy Argument: `data_length`', 'geditorial-next-of-kin' ),
 		], NULL, [
 			'custom_captype'  => TRUE,
+			'custom_icon'     => 'buddicons-tracking',
 			'single_selected' => TRUE,
 		] );
 

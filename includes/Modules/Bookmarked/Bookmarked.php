@@ -99,7 +99,7 @@ class Bookmarked extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no bookmarks information available!', 'Notice', 'geditorial-bookmarked' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the bookmarks data.', 'Notice', 'geditorial-bookmarked' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the bookmarks data.', 'Notice', 'geditorial-bookmarked' ),
 		];
 
 		if ( ! is_admin() )

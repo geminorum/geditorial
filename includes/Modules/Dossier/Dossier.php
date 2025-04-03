@@ -124,16 +124,6 @@ class Dossier extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'primary_paired'  => NULL,
-				'primary_subterm' => 'category',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -242,7 +232,11 @@ class Dossier extends gEditorial\Module
 			'custom_icon' => 'backup',
 		] );
 
-		$this->paired_register();
+		$this->paired_register( [], [
+			'custom_icon' => $this->module->icon,
+		], [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );

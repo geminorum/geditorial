@@ -55,15 +55,6 @@ class Lingo extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'language_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function tool_box_content()
 	{
 		/* translators: `%s`: iso code */
@@ -136,6 +127,7 @@ class Lingo extends gEditorial\Module
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], NULL, [
 			'custom_captype' => TRUE,
+			'custom_icon'    => $this->module->icon,
 			'admin_managed'  => TRUE,
 		] );
 

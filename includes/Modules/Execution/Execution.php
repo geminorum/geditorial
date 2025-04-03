@@ -138,7 +138,7 @@ class Execution extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no execution information available!', 'Notice', 'geditorial-execution' ),
-			'noaccess' => _x( 'You have not necessary permission to manage this execution data.', 'Notice', 'geditorial-execution' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage this execution data.', 'Notice', 'geditorial-execution' ),
 		];
 
 		if ( ! is_admin() )

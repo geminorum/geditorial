@@ -129,7 +129,7 @@ class Positions extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no position information available!', 'Notice', 'geditorial-positions' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the position data.', 'Notice', 'geditorial-positions' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the position data.', 'Notice', 'geditorial-positions' ),
 		];
 
 		if ( ! is_admin() )
@@ -424,7 +424,7 @@ class Positions extends gEditorial\Module
 				Core\HTML::desc( _x( 'No Position Profile assigned to this content.', 'Notice', 'geditorial-positions' ), TRUE, '-empty' );
 
 			else
-				echo $this->subcontent_get_noaccess_notice();
+				echo $this->get_notice_for_noaccess();
 		}
 	}
 

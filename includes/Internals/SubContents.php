@@ -739,25 +739,6 @@ trait SubContents
 		return $this->filters( 'prepped_data', $data, $context, $post, $raw, $types );
 	}
 
-	protected function subcontent_get_empty_notice( $context = 'display', $string_key = 'empty' )
-	{
-		if ( $this->is_thrift_mode() )
-			return '<div class="-placeholder-empty"></div>';
-
-		return Core\HTML::tag( 'p', [
-			'class' => [ 'description', '-description', '-empty' ],
-		], $this->get_string( $string_key, $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ) );
-	}
-
-	protected function subcontent_get_noaccess_notice( $context = 'display', $string_key = 'noaccess' )
-	{
-		$default = _x( 'You have not necessary permission to manage the information.', 'Internal: SubContents: No-Access Notice', 'geditorial' );
-
-		return Core\HTML::tag( 'p', [
-			'class' => [ 'description', '-description', '-noaccess' ],
-		], $this->get_string( $string_key, $context, 'notices', $default ) );
-	}
-
 	protected function subcontent__hook_importer_init()
 	{
 		$this->filter_module( 'importer', 'fields', 2, 10, 'subcontent' );
@@ -1047,7 +1028,7 @@ trait SubContents
 			'id'      => $parent,
 			'context' => 'restapi',
 			'wrap'    => FALSE,
-		], $this->subcontent_get_empty_notice( $context ) );
+		], $this->get_notice_for_empty( $context ) );
 
 		return $this->filters( 'provide_markup', $markup, $parent, $context );
 	}
@@ -1112,7 +1093,7 @@ trait SubContents
 								'context' => 'tabs',
 								'wrap'    => FALSE,
 								'title'   => FALSE,
-							], $this->subcontent_get_empty_notice( 'tabs' ) );
+							], $this->get_notice_for_empty( 'tabs' ) );
 						},
 
 						'priority' => $priority ?? 80,
@@ -1176,7 +1157,7 @@ trait SubContents
 					'id'      => $post,
 					'context' => $context,
 					'class'   => '-table-content',
-				], $this->subcontent_get_empty_notice( $context ) );
+				], $this->get_notice_for_empty( $context ) );
 
 			Settings::wrapClose( FALSE );
 
@@ -1253,7 +1234,7 @@ trait SubContents
 			'id'      => $post,
 			'context' => $context,
 			'wrap'    => FALSE,
-		], $this->subcontent_get_empty_notice( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
+		], $this->get_notice_for_empty( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
 	}
 
 	protected function subcontent_delete_data_all( $post, $force_delete = TRUE )
@@ -1336,7 +1317,7 @@ trait SubContents
 			] ), 'field-wrap -buttons' );
 
 		else
-			echo $this->subcontent_get_noaccess_notice();
+			echo $this->get_notice_for_noaccess();
 	}
 
 	public function audit_auto_audit_save_post_subcontent( $terms, $post, $taxonomy, $currents, $update )

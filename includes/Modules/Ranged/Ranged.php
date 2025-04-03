@@ -127,16 +127,6 @@ class Ranged extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'primary_taxonomy' => NULL,
-				'primary_subterm'  => 'performance',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -186,7 +176,7 @@ class Ranged extends gEditorial\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no shooting information available!', 'Notice', 'geditorial-ranged' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the shooting information.', 'Notice', 'geditorial-ranged' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the shooting information.', 'Notice', 'geditorial-ranged' ),
 		];
 
 		$strings['misc'] = [
@@ -392,6 +382,7 @@ class Ranged extends gEditorial\Module
 			'default_term'       => NULL,
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
+			'custom_icon'    => $this->module->icon,
 			'custom_captype' => $captype,
 		] );
 
@@ -450,12 +441,14 @@ class Ranged extends gEditorial\Module
 		] );
 
 		$this->paired_register( [], [
-			'is_viewable'    => $viewable,
-			'custom_captype' => $captype,
-		], [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => $captype,
 			'status_taxonomy' => TRUE,
+		], [
+			'is_viewable'    => $viewable,
+			'custom_icon'    => 'performance',
+			'custom_captype' => $captype,
 		] );
 
 		if ( $this->get_setting( 'paired_globalsummary', TRUE ) )

@@ -123,16 +123,6 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'place_paired'      => NULL,
-				'facility_taxonomy' => 'building',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -240,7 +230,11 @@ class Venue extends gEditorial\Module
 			'custom_icon' => 'category',
 		] );
 
-		$this->paired_register();
+		$this->paired_register( [], [
+			'custom_icon' => $this->module->icon,
+		], [
+			'custom_icon' => 'building',
+		] );
 
 		$this->register_shortcode( 'main_shortcode' );
 
