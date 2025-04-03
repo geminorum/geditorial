@@ -36,7 +36,7 @@
   };
 
   const strings = $.extend({}, {
-    button_virastar: '<span class="dashicons dashicons-text"></span>',
+    button_virastar: '<span class="dashicons dashicons-text"></span>', // TODO: change to `virastar` icon
     button_virastar_title: 'Apply Virastar!',
     qtag_virastar: 'Virastar!',
     qtag_virastar_title: 'Apply Virastar!',

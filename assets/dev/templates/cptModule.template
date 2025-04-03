@@ -56,15 +56,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'category_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -108,10 +99,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, [
 			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+			'custom_icon' => $this->module->icon,
 		] );
 
-		$this->register_posttype( 'main_posttype', [], [
+		$this->register_posttype( 'main_posttype', [
+
+		], [
 			'is_viewable'      => $this->get_setting( 'contents_viewable', TRUE ),
+			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}

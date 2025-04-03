@@ -95,7 +95,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		$strings['notices'] = [
 			'empty'    => _x( 'There is no definition information available!', 'Notice', '<%= moduleTextdomain %>' ),
-			'noaccess' => _x( 'You have not necessary permission to manage the definition data.', 'Notice', '<%= moduleTextdomain %>' ),
+			'noaccess' => _x( 'You do not have the necessary permission to manage the definition data.', 'Notice', '<%= moduleTextdomain %>' ),
 		];
 
 		if ( ! is_admin() )
@@ -105,19 +105,19 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'supportedbox_title'  => _x( 'Definitions', 'MetaBox Title', '<%= moduleTextdomain %>' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', '<%= moduleTextdomain %>' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'mainbutton_title' => _x( 'Definitions of %1$s', 'Button Title', '<%= moduleTextdomain %>' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 			'mainbutton_text'  => _x( '%1$s Manage the Definitions of %2$s', 'Button Text', '<%= moduleTextdomain %>' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'rowaction_title' => _x( 'Definitions of %1$s', 'Action Title', '<%= moduleTextdomain %>' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 			'rowaction_text'  => _x( 'Definitions', 'Action Text', '<%= moduleTextdomain %>' ),
 
-			/* translators: %1$s: current post title, %2$s: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
 			'columnrow_title' => _x( 'Definitions of %1$s', 'Row Title', '<%= moduleTextdomain %>' ),
-			/* translators: %1$s: icon markup, %2$s: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 			'columnrow_text'  => _x( 'Definitions', 'Row Text', '<%= moduleTextdomain %>' ),
 		];
 
@@ -231,9 +231,9 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		$this->subcontent_do_render_iframe_content(
 			'framepage',
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Definition Grid for %s', 'Page Title', '<%= moduleTextdomain %>' ),
-			/* translators: %s: post title */
+			/* translators: `%s`: post title */
 			_x( 'Definitions Overview for %s', 'Page Title', '<%= moduleTextdomain %>' )
 		);
 	}

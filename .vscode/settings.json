@@ -1,6 +1,7 @@
 {
   "intelephense.environment.phpVersion": "7.4.0",
   "search.useIgnoreFiles": false,
+  "search.useGlobalIgnoreFiles": false,
   "search.exclude": {
     "./assets/bin": true,
     "./assets/packages": true,
@@ -78,10 +79,6 @@
     "pcntl",
     "pcre",
     "PDO",
-    "pdo_ibm",
-    "pdo_mysql",
-    "pdo_pgsql",
-    "pdo_sqlite",
     "pgsql",
     "Phar",
     "posix",

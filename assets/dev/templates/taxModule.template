@@ -86,15 +86,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'main_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -103,9 +94,10 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			],
 			'labels' => [
 				'main_taxonomy' => [
-					'menu_name'            => _x( 'Content Definitions', 'Label: Menu Name', '<%= moduleTextdomain %>' ),
-					'show_option_all'      => _x( 'Definitions', 'Label: Show Option All', '<%= moduleTextdomain %>' ),
-					'show_option_no_items' => _x( '(Undefined)', 'Label: Show Option No Terms', '<%= moduleTextdomain %>' ),
+					'extended_label'       => _x( 'Content Definitions', 'Label: `extended_label`', '<%= moduleTextdomain %>' ),
+					'menu_name'            => _x( 'Content Definitions', 'Label: `menu_name`', '<%= moduleTextdomain %>' ),
+					'show_option_all'      => _x( 'Definitions', 'Label: `show_option_all`', '<%= moduleTextdomain %>' ),
+					'show_option_no_items' => _x( '(Undefined)', 'Label: `show_option_no_items`', '<%= moduleTextdomain %>' ),
 				],
 			],
 		];
@@ -140,6 +132,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'data_length'        => _x( '20', 'Main Taxonomy Argument: `data_length`', '<%= moduleTextdomain %>' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'custom_icon'     => $this->module->icon,
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,

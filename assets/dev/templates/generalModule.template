@@ -114,16 +114,22 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'default_term'       => NULL,
 		], 'primary_posttype', [
 			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
+			'custom_icon' => $this->module->icon,
 		] );
 
-		$this->register_posttype( 'primary_posttype', [], [
+		$this->register_posttype( 'primary_posttype', [
+
+		], [
 			'is_viewable'      => $this->get_setting( 'contents_viewable', TRUE ),
+			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
+		], NULL, [
+
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );
