@@ -1,0 +1,84 @@
+{{! TODO: make non-bootstrap compatible: `body:not(.theme-based-bootstrap-v5) {}` }}
+{{! @source: https://codepen.io/geminorum/pen/zxYmabp }}
+{{! @source: https://www.reshot.com/free-svg-icons/item/avatar-E7JU2GQ3FT/ }}
+
+<div class="geditorial-wrap -wrap -template-cardsrow -byline">
+	<div class="container-fluid">
+		<div class="row row-cols-auto">
+		{{#data}}
+			<div class="col w-25">
+				<div class="section-card">
+					{{#relation}}
+						<div class="-intro mt-3 mb-1 px-2 fw-semibold fs-6 text-secondary">{{relation}}</div>
+					{{/relation}}
+					{{^relation}}
+						<div class="-intro mt-3 mb-1 px-2 fw-semibold fs-6 text-secondary opacity-75">{{args._strings.norelation}}</div>
+					{{/relation}}
+
+					<div class="-card bg-light border border-light-subtle shadow">
+						<div class="-photo position-relative">
+							<a class="-link position-relative d-block text-secondary ratio ratio-1x1" href="{{link}}">
+								{{#img}}
+									<div class="d-flex justify-content-center align-items-center">
+										<img src="{{img}}" class="-img d-block mh-100 img-fluid" alt="{{name}}" />
+									</div>
+								{{/img}}
+								{{^img}}
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="-img d-block w-100 img-fluid p-3">
+										<path d="M34.51 42.87A11 11 0 0 1 29 34h2a9 9 0 0 0 4.49 7.16zM13.49 42.87l-1-1.74A9.09 9.09 0 0 0 17 34h2a11 11 0 0 1-5.51 8.87z"/>
+										<path d="M24 37c-7.53 0-13-6.8-13-16.16C11 12.3 16 7 24 7s13 5.3 13 13.84C37 30.2 31.53 37 24 37zm0-28c-7 0-11 4.32-11 11.84C13 29 17.63 35 24 35s11-6 11-14.16C35 13.32 31 9 24 9z"/>
+										<path d="M18.53 20.19a20.44 20.44 0 0 1-6.9-1.26l.74-1.86c.06 0 6.38 2.47 11.18 0 4.37-2.22 10.89-2.13 13.16.19l-1.42 1.4c-1.52-1.55-7-1.73-10.84.19a13 13 0 0 1-5.92 1.34z"/>
+										<path d="M35 48H13A13 13 0 0 1 0 35V13A13 13 0 0 1 13 0h22a13 13 0 0 1 13 13v22a13 13 0 0 1-13 13zM13 2A11 11 0 0 0 2 13v22a11 11 0 0 0 11 11h22a11 11 0 0 0 11-11V13A11 11 0 0 0 35 2z"/>
+									</svg>
+								{{/img}}
+								<div class="-hint d-flex justify-content-center align-items-center text-light-emphasis w-100 h-100 position-absolute fs-6">
+									{{args._strings.hint}}
+								</div>
+							</a>
+						</div>
+						<div class="-content p-3">
+							<h4 class="-title m-0 fs-5 fw-bold text-dark">{{{label}}}</h4>
+							{{#notes}}
+								<h6 class="-subtitle mb-0 mt-2 fs-6 fw-semibold text-dark-emphasis">{{{notes}}}</h6>
+							{{/notes}}
+							<!-- {{{desc}}} -->
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/data}}
+		</div>
+	</div>
+</div>
+<style>
+
+.section-card > .-card {
+  transition: transform 0.2s, opacity 0.2s;
+}
+.section-card > .-card > .-photo .-hint {
+  background-color: rgba(var(--bs-tertiary-bg-rgb), 0.6);
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.section-card > .-card > .-photo .-hint:hover {
+  opacity: 1;
+}
+.section-card > .-card > .-photo svg {
+  fill: currentColor;
+}
+.section-card > .-card > .-content .-title + p {
+  margin-top: 0.25rem;
+}
+.section-card > .-card > .-content .-subtitle + p {
+  margin-top: 0.25rem;
+}
+.section-card > .-card > .-content p {
+  margin: 0 0 0.25rem 0;
+  font-size: smaller;
+}
+.section-card > .-card > .-content p:last-of-type {
+  margin-bottom: 0;
+}
+</style>

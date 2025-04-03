@@ -1,0 +1,44 @@
+{{! TODO: make non-bootstrap compatible: `body:not(.theme-based-bootstrap-v5) {}` }}
+{{! TODO: rename to `walker-listgroup` }}
+
+<div class="geditorial-wrap -wrap -template-listgroup -byline">
+	<div class="list-group list-group-flush">
+		{{#data}}
+			<a
+				href="{{link}}"
+				class="list-group-item list-group-item-action d-flex gap-3 py-3"
+				data-relation="{{rel}}"
+				aria-current="true"
+				target="_blank"
+				>
+
+				{{#img}}
+					<span class="flex-shrink-0" style="max-width: 15%;">
+						<img src="{{img}}" alt="{{name}}" class="img-fluid" />
+					</span>
+				{{/img}}
+
+				<div class="d-flex gap-2 w-100 justify-content-between">
+
+					<div>
+						<h6 class="mb-0 mt-2">{{{label}}}</h6>
+
+						{{#notes}}
+							<div class="description -description mt-2">{{{notes}}}</div>
+						{{/notes}}
+
+						{{#desc}}
+							<div class="description -description mt-2 opacity-75">{{{desc}}}</div>
+						{{/desc}}
+					</div>
+
+					{{#relation}}
+						<small class="opacity-50 text-nowrap fs-6" title="{{rel}}">
+						{{relation}}
+						</small>
+					{{/relation}}
+				</div>
+			</a>
+		{{/data}}
+	</div>
+</div>
