@@ -9,7 +9,7 @@
     table: '#the-list',
     quickedit: '#' + plugin._base + '-' + module + '-quickedit-wrap',
     bulkedit: '#' + plugin._base + '-' + module + '-bulkedit-wrap',
-    select: 'select#' + plugin._base + '-' + module + '-select-',
+    select: 'select#' + plugin._base + '-' + module + '-quickedit-',
     value: 'div.' + plugin._base + '-' + module + '-value-'
   };
 

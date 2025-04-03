@@ -153,7 +153,7 @@ class TermHierarchy extends gEditorial\Service
 				'value_field'       => $taxonomy->hierarchical ? 'term_id' : 'slug',
 				// 'name'              => 'tax_input['.$taxonomy->name.'][]',
 				'name'              => sprintf( '%s[%s][]', $bulkedit ? static::SINGLE_TERM_SELECT : 'tax_input', $taxonomy->name ),
-				'id'                => static::BASE.'-singleselect-select-'.$taxonomy->name,
+				'id'                => sprintf( '%s-singleselect-%s-%s', static::BASE, $bulkedit ? 'bulkedit' : 'quickedit', $taxonomy->name ),
 				'option_none_value' => '0',
 				'show_option_none'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
 				'class'             => static::BASE.'-admin-dropbown '.( $bulkedit ? '-bulkedit-custombox' : '-quickedit-custombox' ),
