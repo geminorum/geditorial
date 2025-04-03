@@ -1,10 +1,3 @@
-<!--
-
-  support for more fields:
-    info.datetime
-    info.time ago using sprintf() with i18n.timeago
-
--->
 <template>
   <div class="grid-info">
     <div class="grid-info-image" v-show="info.image"><img :src="info.image" alt="" /></div>

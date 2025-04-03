@@ -1,9 +1,3 @@
-<!--
-
-  support for image on dropdown
-  support for more extra info foreach item like: subtitle/org-code
-
--->
 <style lang="scss">
 .search-results-dropdown {
   /**font-size: .75rem !important;**/

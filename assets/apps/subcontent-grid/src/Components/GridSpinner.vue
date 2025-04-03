@@ -1,7 +1,3 @@
-<template>
-  <span class="spinner -loading grid-spinner"></span>
-</template>
-
 <style lang="scss">
 .grid-spinner {
   padding: 0 !important;
@@ -16,7 +12,10 @@
 }
 </style>
 
+<template>
+  <span class="spinner -loading grid-spinner"></span>
+</template>
+
 <script>
-export default {
-}
+export default {}
 </script>

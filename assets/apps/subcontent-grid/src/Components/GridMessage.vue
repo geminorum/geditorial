@@ -1,7 +1,3 @@
-<template>
-  <p class="description -description grid-message">{{ message }} <span class="-count-items" v-show="count">({{ countItems }})</span></p>
-</template>
-
 <style lang="scss">
 $brand-success: #5cb85c !default;
 $brand-info:    #5bc0de !default;
@@ -29,6 +25,10 @@ span.-count-items {
   font-size: smaller;
 }
 </style>
+
+<template>
+  <p class="description -description grid-message">{{ message }} <span class="-count-items" v-show="count">({{ countItems }})</span></p>
+</template>
 
 <script>
 import { sprintf } from '@wordpress/i18n'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/

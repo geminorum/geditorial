@@ -1,11 +1,3 @@
-<!--
-
-  FIXME: support object fileds with declerations
-  -- example: precision data: 10x numbers with calc anonymous callback
-  -- angle + distance from center = score
-
--->
-
 <style lang="scss" scoped>
 @import './Styles/App.scss';
 </style>
