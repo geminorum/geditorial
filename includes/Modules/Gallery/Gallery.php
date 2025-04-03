@@ -47,16 +47,6 @@ class Gallery extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'category_taxonomy' => 'format-image',
-				'tag_taxonomy' => 'images-alt2',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -72,11 +62,6 @@ class Gallery extends gEditorial\Module
 				],
 			],
 		];
-
-		if ( ! is_admin() )
-			return $strings;
-
-		// $strings['misc'] = [];
 
 		return $strings;
 	}
@@ -101,15 +86,21 @@ class Gallery extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'album_posttype' );
+		], 'album_posttype', [
+			'custom_icon' => 'format-image',
+		] );
 
 		$this->register_taxonomy( 'tag_taxonomy', [
 			'meta_box_cb'        => NULL,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], [ 'attachments' ] );
+		], [ 'attachments' ], [
+			'custom_icon' => 'images-alt2',
+		] );
 
-		$this->register_posttype( 'album_posttype' );
+		$this->register_posttype( 'album_posttype', [], [
+			'custom_icon' => $this->module->icon,
+		] );
 	}
 
 	public function current_screen( $screen )

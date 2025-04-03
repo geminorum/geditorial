@@ -680,8 +680,8 @@ trait CoreTaxonomies
 	/**
 	 * Makes available empty terms on sitemaps.
 	 *
-	 * @param  string $constant
-	 * @return bool   $hooked
+	 * @param string $constant
+	 * @return bool $hooked
 	 */
 	protected function hook_taxonomy_sitemap_show_empty( $constant )
 	{
@@ -752,12 +752,12 @@ trait CoreTaxonomies
 	/**
 	 * Sets actions/filters for given taxonomy meta-box.
 	 *
-	 * @param  string        $constant
-	 * @param  string        $posttype
-	 * @param  null|callable $callback
-	 * @param  int           $priority
-	 * @param  null|string   $context
-	 * @return bool          $hooked
+	 * @param string $constant
+	 * @param string $posttype
+	 * @param null|callable $callback
+	 * @param int $priority
+	 * @param null|string $context
+	 * @return bool $hooked
 	 */
 	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 80, $context = NULL )
 	{
@@ -941,8 +941,8 @@ trait CoreTaxonomies
 	 * Hooks the filter for taxonomy parent terms on imports.
 	 * @SEE: `pairedcore__hook_importer_term_parents()`
 	 *
-	 * @param  bool|string $setting
-	 * @return bool        $hooked
+	 * @param bool|string $setting
+	 * @return bool $hooked
 	 */
 	protected function hook_taxonomy_importer_term_parents( $taxonomy, $setting = 'force_parents' )
 	{

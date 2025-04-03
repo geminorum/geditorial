@@ -171,8 +171,9 @@ class Today extends gEditorial\Module
 	{
 		parent::init();
 
-		// TODO: main post-type must be optional
-		$this->register_posttype( 'main_posttype' );
+		$this->register_posttype( 'main_posttype', [], [
+			'custom_icon' => $this->module->icon,
+		] );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 

@@ -153,7 +153,7 @@ class Users extends gEditorial\Module
 				'show_in_quick_edit' => TRUE,
 			], FALSE, [
 				'target_object' => 'user',
-				'custom_icon'   => 'tag',
+				'custom_icon'   => 'screenoptions',
 			] );
 
 		if ( $this->get_setting( 'author_categories' ) )

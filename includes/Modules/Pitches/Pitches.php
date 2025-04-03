@@ -97,14 +97,18 @@ class Pitches extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+
+		] );
 
 		$this->register_taxonomy( 'primary_subterm', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+
+		] );
 
 		$this->register_posttype( 'primary_posttype', [], [
 			'primary_taxonomy' => TRUE,

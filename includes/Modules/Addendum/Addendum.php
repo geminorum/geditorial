@@ -238,7 +238,9 @@ class Addendum extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+
+		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
@@ -246,6 +248,7 @@ class Addendum extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
+			'custom_icon'     => 'screenoptions',
 			// 'single_selected' => TRUE,
 		] );
 
@@ -255,6 +258,7 @@ class Addendum extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__singleselect_terms_callback',
 		], 'primary_posttype', [
+			'custom_icon'     => 'post-status',
 			'single_selected' => TRUE,
 		] );
 

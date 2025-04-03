@@ -34,6 +34,8 @@ class Suited extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'suitable',
+				'cinema',
+				'literature',
 				'taxmodule',
 			],
 		];

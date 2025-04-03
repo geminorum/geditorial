@@ -113,11 +113,6 @@ class Entry extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
-
-		// $strings['misc'] = [];
-
 		return $strings;
 	}
 
@@ -136,9 +131,12 @@ class Entry extends gEditorial\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus', TRUE ),
 			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_posttype( 'main_posttype', [], [
+			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => 'category_taxonomy',
 		] );
 

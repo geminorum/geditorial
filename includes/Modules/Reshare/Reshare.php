@@ -49,15 +49,6 @@ class Reshare extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'primary_taxonomy' => NULL,
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		return [
@@ -88,9 +79,12 @@ class Reshare extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'custom_icon' => $this->module->icon,
+		] );
 
 		$this->register_posttype( 'primary_posttype', [], [
+			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => TRUE,
 		] );
 	}

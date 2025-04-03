@@ -22,8 +22,6 @@ class Conscripted extends gEditorial\Module
 	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
-	// TODO: calculate underage/subject to service based on given dob metakey
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()

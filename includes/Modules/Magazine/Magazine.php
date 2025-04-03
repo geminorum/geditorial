@@ -132,7 +132,6 @@ class Magazine extends gEditorial\Module
 		return [
 			'taxonomies' => [
 				'primary_paired'  => NULL,
-				'span_taxonomy'   => 'backup',
 				'primary_subterm' => 'category',
 			],
 		];
@@ -265,7 +264,9 @@ class Magazine extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'custom_icon' => 'backup',
+		] );
 
 		$this->paired_register();
 

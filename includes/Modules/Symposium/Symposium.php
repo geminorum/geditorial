@@ -168,10 +168,11 @@ class Symposium extends gEditorial\Module
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
 		], 'main_posttype', [
-			'custom_icon' => 'tag',
+			'custom_icon' => 'screenoptions',
 		] );
 
 		$this->register_posttype( 'main_posttype', [], [
+			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}

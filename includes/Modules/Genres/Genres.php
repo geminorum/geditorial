@@ -30,6 +30,10 @@ class Genres extends gEditorial\Module
 			'icon'     => 'category',
 			'access'   => 'beta',
 			'keywords' => [
+				'film',
+				'movie',
+				'cinema',
+				'literature',
 				'taxmodule',
 			],
 		];
@@ -122,16 +126,17 @@ class Genres extends gEditorial\Module
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
 			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
+			'data_length'  => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-genres' ),
 		], NULL, [
 			'auto_parents' => $this->get_setting( 'auto_term_parents', TRUE ),
 			'custom_icon'  => $this->module->icon,
 		] );
 
-		$this->register_shortcode( 'main_shortcode' );
-
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
+
+		$this->register_shortcode( 'main_shortcode' );
 	}
 
 	public function current_screen( $screen )

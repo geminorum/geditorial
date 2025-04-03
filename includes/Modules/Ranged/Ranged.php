@@ -130,15 +130,9 @@ class Ranged extends gEditorial\Module
 	protected function get_module_icons()
 	{
 		return [
-			'post_types' => [
-				'primary_posttype' => NULL,
-			],
 			'taxonomies' => [
 				'primary_taxonomy' => NULL,
 				'primary_subterm'  => 'performance',
-				'span_taxonomy'    => 'backup',
-				'type_taxonomy'    => 'screenoptions',
-				'status_taxonomy'  => 'post-status',
 			],
 		];
 	}
@@ -426,6 +420,7 @@ class Ranged extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
+			'custom_icon'    => 'backup',
 			'custom_captype' => $captype,
 			'admin_managed'  => TRUE,
 		] );
@@ -436,6 +431,7 @@ class Ranged extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => 'screenoptions',
 			'custom_captype'  => $captype,
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
@@ -447,6 +443,7 @@ class Ranged extends gEditorial\Module
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype', [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => 'post-status',
 			'custom_captype'  => $captype,
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,

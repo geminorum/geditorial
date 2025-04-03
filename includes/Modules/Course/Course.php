@@ -129,23 +129,6 @@ class Course extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'post_types' => [
-				'course_posttype' => NULL,
-				'lesson_posttype' => 'portfolio',
-			],
-			'taxonomies' => [
-				'course_paired'   => 'welcome-learn-more',
-				'span_taxonomy'   => 'backup',
-				'topic_taxonomy'  => 'category',
-				'format_taxonomy' => 'category',
-				'status_taxonomy' => 'post-status',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -283,21 +266,27 @@ class Course extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
-		], 'course_posttype' );
+		], 'course_posttype', [
+			'custom_icon' => 'backup',
+		] );
 
 		$this->register_taxonomy( 'format_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'lesson_posttype' );
+		], 'lesson_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'lesson_posttype' );
+		], 'lesson_posttype', [
+			'custom_icon' => 'post-status',
+		] );
 
 		$this->paired_register();
 		$this->register_posttype( 'lesson_posttype', [], [

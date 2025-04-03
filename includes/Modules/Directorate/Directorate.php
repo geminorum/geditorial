@@ -141,11 +141,7 @@ class Directorate extends gEditorial\Module
 	protected function get_module_icons()
 	{
 		return [
-			'post_types' => [
-				'primary_posttype' => NULL,
-			],
 			'taxonomies' => [
-				'type_taxonomy'   => 'admin-media',
 				'primary_subterm' => NULL,
 			],
 		];
@@ -330,6 +326,7 @@ class Directorate extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => 'screenoptions',
 			'custom_captype'  => $captype,
 			'single_selected' => TRUE,
 		] );
@@ -339,6 +336,7 @@ class Directorate extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
+			'custom_icon'     => 'post-status',
 			'single_selected' => TRUE,
 		] );
 

@@ -138,6 +138,8 @@ class Team extends gEditorial\Module
 		$this->register_posttype( 'member_posttype', [
 			'menu_position'     => 65,
 			'show_in_admin_bar' => FALSE,
+		], [
+			'custom_icon' => $this->module->icon,
 		] );
 	}
 

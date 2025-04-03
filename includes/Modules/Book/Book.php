@@ -46,6 +46,7 @@ class Book extends gEditorial\Module
 			'access'   => 'stable',
 			'keywords' => [
 				'publication',
+				'literature',
 				'pairedmodule',
 				'cptmodule',
 			],
@@ -159,31 +160,15 @@ class Book extends gEditorial\Module
 			'type_taxonomy'     => 'publication_type',
 			'status_taxonomy'   => 'publication_status',
 			'size_taxonomy'     => 'publication_size',        // TODO: move to `Units` Module: `book_cover`
-			'audience_taxonomy' => 'publication_audience',    // TODO: DEPRECATE: use `Suited` Tax-Module
 
-			'main_shortcode'    => 'publication',
-			'serie_shortcode'   => 'publication-serie',     // TODO: move to new Tax-Module: فروست
-			'cover_shortcode'   => 'publication-cover',
+			'main_shortcode'  => 'publication',
+			'serie_shortcode' => 'publication-serie',   // TODO: move to new Tax-Module: فروست
+			'cover_shortcode' => 'publication-cover',
 
 			'metakey_import_id'    => 'book_publication_id',
 			'metakey_import_title' => 'book_publication_title',
 			'metakey_import_ref'   => 'book_publication_ref',
 			'metakey_import_desc'  => 'book_publication_desc',
-		];
-	}
-
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'serie_taxonomy'    => 'tag',
-				'location_taxonomy' => 'book-alt',
-				'brand_taxonomy'    => 'book',
-				'type_taxonomy'     => 'admin-media',
-				'status_taxonomy'   => 'post-status',
-				'size_taxonomy'     => 'image-crop',
-				'audience_taxonomy' => 'groups',
-			],
 		];
 	}
 
@@ -199,7 +184,6 @@ class Book extends gEditorial\Module
 				'type_taxonomy'     => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
 				'status_taxonomy'   => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
 				'size_taxonomy'     => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
-				'audience_taxonomy' => _n_noop( 'Publication Audience', 'Publication Audiences', 'geditorial-book' ),
 			],
 			'labels' => [
 				'main_posttype' => [
@@ -474,42 +458,48 @@ class Book extends gEditorial\Module
 		$this->register_taxonomy( 'serie_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'tag',
+		] );
 
 		$this->register_taxonomy( 'location_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'book-alt',
+		] );
 
 		$this->register_taxonomy( 'brand_taxonomy', [
 			'meta_box_cb'  => NULL,   // default meta box
 			'content_rich' => TRUE,   // even empty shows on sitemaps
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'book',
+		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'screenoptions',
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'main_posttype', [
+			'custom_icon'     => 'post-status',
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		]  );
-
-		$this->register_taxonomy( 'audience_taxonomy', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'main_posttype' );
 
 		if ( count( $this->posttypes() ) ) {
 
 			$this->register_taxonomy( 'main_paired', [
 				'show_ui'      => FALSE,
 				'show_in_rest' => FALSE,
+			], NULL, [
+
 			] );
 
 			$this->_paired = $this->constant( 'main_paired' );
@@ -615,7 +605,6 @@ class Book extends gEditorial\Module
 					'serie_taxonomy',
 					'location_taxonomy',
 					'status_taxonomy',
-					'audience_taxonomy',
 					'brand_taxonomy',
 				] );
 			}
@@ -685,7 +674,9 @@ class Book extends gEditorial\Module
 		// FIXME: DEPRECATED: use `Units` Module
 		$this->register_taxonomy( 'size_taxonomy', [
 			'meta_box_cb' => FALSE,
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'image-crop',
+		] );
 
 		$this->add_posttype_fields( $this->constant( 'main_posttype' ) );
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );

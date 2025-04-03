@@ -79,26 +79,11 @@ class Tube extends gEditorial\Module
 			'primary_posttype'             => 'video',                   // ALT: `clip`
 			'primary_posttype_connected'   => 'connected_videos',
 			'primary_taxonomy'             => 'video_category',
-			'subject_taxonomy'             => 'video_subject',           // TODO: move to new Tax-Module: موضوعات
 			'secondary_posttype'           => 'channel',
 			'secondary_posttype_connected' => 'connected_channels',
 			'secondary_taxonomy'           => 'channel_category',
 			'primary_shortcode'            => 'tube-video-category',
 			'secondary_shortcode'          => 'tube-channel-category',
-		];
-	}
-
-	protected function get_module_icons()
-	{
-		return [
-			'post_types' => [
-				'primary_posttype'   => NULL,
-				'secondary_posttype' => 'playlist-video',
-			],
-			'taxonomies' => [
-				'primary_taxonomy'   => NULL,
-				'secondary_taxonomy' => 'playlist-video',
-			],
 		];
 	}
 
@@ -241,9 +226,14 @@ class Tube extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'primary_posttype' );
+		], 'primary_posttype', [
+			'custom_icon' => $this->module->icon,
+		] );
 
-		$this->register_posttype( 'primary_posttype', [], [
+		$this->register_posttype( 'primary_posttype', [
+
+		], [
+			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
 		] );
 
@@ -257,11 +247,15 @@ class Tube extends gEditorial\Module
 				'show_admin_column'  => TRUE,
 				'show_in_quick_edit' => TRUE,
 				'default_term'       => NULL,
-			], 'secondary_posttype' );
+			], 'secondary_posttype', [
+				'custom_icon' => 'playlist-video',
+			] );
 
 			$this->register_posttype( 'secondary_posttype', [
 				'show_in_admin_bar' => FALSE,
-				'primary_taxonomy'  => $this->constant( 'secondary_taxonomy' ),
+			], [
+				'custom_icon'      => 'playlist-video',
+				'primary_taxonomy' => $this->constant( 'secondary_taxonomy' ),
 			] );
 
 			$this->register_shortcode( 'secondary_shortcode' );

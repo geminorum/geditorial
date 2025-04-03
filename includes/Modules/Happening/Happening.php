@@ -193,7 +193,7 @@ class Happening extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'main_posttype', [
-			'custom_icon'  => 'tag',
+			'custom_icon'  => 'screenoptions',
 			'auto_parents' => TRUE,
 		] );
 

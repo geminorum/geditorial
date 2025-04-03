@@ -17,11 +17,16 @@ class Inquire extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'inquire',
-			'title'  => _x( 'Inquire', 'Modules: Inquire', 'geditorial-admin' ),
-			'desc'   => _x( 'Questions and Answers', 'Modules: Inquire', 'geditorial-admin' ),
-			'icon'   => 'editor-help',
-			'access' => 'beta',
+			'name'     => 'inquire',
+			'title'    => _x( 'Inquire', 'Modules: Inquire', 'geditorial-admin' ),
+			'desc'     => _x( 'Questions and Answers', 'Modules: Inquire', 'geditorial-admin' ),
+			'icon'     => 'editor-help',
+			'access'   => 'beta',
+			'keywords' => [
+				'inquiry',
+				'question',
+				'cptmodule',
+			],
 		];
 	}
 
@@ -43,7 +48,7 @@ class Inquire extends gEditorial\Module
 				'contents_viewable',
 			],
 			'_supports' => [
-				$this->settings_supports_option( 'inquiry_posttype', TRUE ),
+				$this->settings_supports_option( 'main_posttype', TRUE ),
 			],
 		];
 	}
@@ -51,21 +56,10 @@ class Inquire extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'inquiry_posttype'  => 'inquiry',
-			'subject_taxonomy'  => 'inquiry_subject',
+			'main_posttype'     => 'inquiry',
+			'category_taxonomy' => 'inquiry_subject',
 			'status_taxonomy'   => 'inquire_status',
 			'priority_taxonomy' => 'inquire_priority',
-		];
-	}
-
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'subject_taxonomy'  => NULL,
-				'status_taxonomy'   => 'tag',
-				'priority_taxonomy' => 'clipboard',
-			],
 		];
 	}
 
@@ -73,13 +67,13 @@ class Inquire extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'inquiry_posttype'  => _n_noop( 'Inquiry', 'Inquiries', 'geditorial-inquire' ),
-				'subject_taxonomy'  => _n_noop( 'Inquiry Subject', 'Inquiry Subjects', 'geditorial-inquire' ),
+				'main_posttype'     => _n_noop( 'Inquiry', 'Inquiries', 'geditorial-inquire' ),
+				'category_taxonomy' => _n_noop( 'Inquiry Subject', 'Inquiry Subjects', 'geditorial-inquire' ),
 				'status_taxonomy'   => _n_noop( 'Inquiry Status', 'Inquiry Statuses', 'geditorial-inquire' ),
 				'priority_taxonomy' => _n_noop( 'Inquiry Priority', 'Inquiry Priorities', 'geditorial-inquire' ),
 			],
 			'labels' => [
-				'inquiry_posttype' => [
+				'main_posttype' => [
 					'excerpt_label' => _x( 'Question', 'Label: Excerpt Label', 'geditorial-inquire' ),
 				],
 			],
@@ -120,11 +114,12 @@ class Inquire extends gEditorial\Module
 
 		$viewable = $this->get_setting( 'contents_viewable', TRUE );
 
-		$this->register_taxonomy( 'subject_taxonomy', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
-		], 'inquiry_posttype', [
+		], 'main_posttype', [
 			'is_viewable' => $viewable,
+			'custom_icon' => $this->module->icon,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
@@ -132,8 +127,10 @@ class Inquire extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'inquiry_posttype', [
+		], 'main_posttype', [
 			'is_viewable' => $viewable,
+			'custom_icon' => 'post-status',
+			'custom_icon' => 'tag',
 		] );
 
 		$this->register_taxonomy( 'priority_taxonomy', [
@@ -141,12 +138,14 @@ class Inquire extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'inquiry_posttype', [
+		], 'main_posttype', [
 			'is_viewable' => $viewable,
+			'custom_icon' => 'clipboard',
 		] );
 
-		$this->register_posttype( 'inquiry_posttype', [], [
+		$this->register_posttype( 'main_posttype', [], [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => $this->module->icon,
 			'status_taxonomy' => TRUE,
 		] );
 	}
@@ -168,7 +167,7 @@ class Inquire extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'inquiry_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -180,21 +179,21 @@ class Inquire extends gEditorial\Module
 					MetaBox::classEditorBox( $screen, $this->classs( 'question' ) );
 
 					add_meta_box( $this->classs( 'question' ),
-						$this->get_posttype_label( 'inquiry_posttype', 'excerpt_label' ),
+						$this->get_posttype_label( 'main_posttype', 'excerpt_label' ),
 						[ $this, 'do_metabox_excerpt' ],
 						$screen,
 						'after_title'
 					);
 				}
 
-				$this->posttype__media_register_headerbutton( 'inquiry_posttype' );
-				$this->_hook_post_updated_messages( 'inquiry_posttype' );
+				$this->posttype__media_register_headerbutton( 'main_posttype' );
+				$this->_hook_post_updated_messages( 'main_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
 
-				$this->_hook_bulk_post_updated_messages( 'inquiry_posttype' );
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 				$this->corerestrictposts__hook_screen_taxonomies( [
-					'subject_taxonomy',
+					'category_taxonomy',
 					'status_taxonomy',
 					'priority_taxonomy',
 				] );
@@ -204,12 +203,12 @@ class Inquire extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$this->_hack_adminmenu_no_create_posts( $this->constant( 'inquiry_posttype' ) );
+		$this->_hack_adminmenu_no_create_posts( $this->constant( 'main_posttype' ) );
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'inquiry_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -229,7 +228,7 @@ class Inquire extends gEditorial\Module
 			MetaBox::fieldEditorBox(
 				$post->post_excerpt,
 				'excerpt',
-				$this->get_posttype_label( 'inquiry_posttype', 'excerpt_label' )
+				$this->get_posttype_label( 'main_posttype', 'excerpt_label' )
 			);
 
 		else

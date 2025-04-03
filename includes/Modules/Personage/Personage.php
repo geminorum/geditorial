@@ -135,16 +135,6 @@ class Personage extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_icons()
-	{
-		return [
-			'taxonomies' => [
-				'category_taxonomy' => NULL,
-				'status_taxonomy'   => 'post-status',
-			],
-		];
-	}
-
 	protected function get_global_strings()
 	{
 		$strings = [
@@ -346,6 +336,7 @@ class Personage extends gEditorial\Module
 			'default_term'       => NULL,
 		], 'main_posttype', [
 			'is_viewable'    => $viewable,
+			'custom_icon'    => 'groups',
 			'custom_captype' => $captype,
 		] );
 
@@ -355,6 +346,7 @@ class Personage extends gEditorial\Module
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'main_posttype', [
 			'is_viewable'     => $viewable,
+			'custom_icon'     => 'post-status',
 			'custom_captype'  => $captype,
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
@@ -366,6 +358,7 @@ class Personage extends gEditorial\Module
 			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
 			'is_viewable'       => $viewable,
+			'custom_icon'       => $this->module->icon,
 			'custom_captype'    => $captype,
 			'category_taxonomy' => TRUE,
 			'status_taxonomy'   => TRUE,

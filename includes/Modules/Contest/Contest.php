@@ -119,8 +119,6 @@ class Contest extends gEditorial\Module
 				'category_contest' => 'category',
 				'contest_paired'   => 'megaphone',
 				'section_taxonomy' => 'category',
-				'category_apply'   => 'category',
-				'status_taxonomy'  => 'post-status',   // 'portfolio',
 			],
 		];
 	}
@@ -230,27 +228,35 @@ class Contest extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
-		], 'contest_posttype' );
+		], 'contest_posttype', [
+
+		] );
 
 		$this->register_taxonomy( 'category_apply', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'apply_posttype' );
+		], 'apply_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'apply_posttype' );
+		], 'apply_posttype', [
+			'custom_icon' => 'post-status',
+		] );
 
 		$this->paired_register( [], [
 			'status_taxonomy' => TRUE,
 		] );
 
-		$this->register_posttype( 'apply_posttype' );
+		$this->register_posttype( 'apply_posttype', [], [
+
+		] );
 
 		$this->register_shortcode( 'contest_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
