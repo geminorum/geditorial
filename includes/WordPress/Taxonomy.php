@@ -520,7 +520,7 @@ class Taxonomy extends Core\Base
 
 			// NOTE: use `Taxonomy::getPostTerms()` instead!
 
-			// using cached terms, only for posts, when no extra args provided
+			// Using cached terms, only for posts, when no extra arguments provided
 			// @REF: https://developer.wordpress.org/reference/functions/wp_get_object_terms/#comment-1582
 			$terms = $post_object && empty( $extra )
 				? get_the_terms( $id, $taxonomy )
@@ -528,7 +528,7 @@ class Taxonomy extends Core\Base
 
 		} else {
 
-			// FIXME: use WP_Term_Query directly
+			// TODO: use WP_Term_Query directly
 
 			$terms = get_terms( array_merge( [
 				'taxonomy'   => $taxonomy,

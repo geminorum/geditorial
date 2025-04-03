@@ -54,7 +54,7 @@ class Main extends Core\Base
 		if ( is_null( $module ) )
 			$module = static::MODULE;
 
-		return parent::factory()->constant( $module, $key, $default );
+		return static::factory()->constant( $module, $key, $default );
 	}
 
 	protected static function filters( $hook, ...$args )

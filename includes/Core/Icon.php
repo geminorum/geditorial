@@ -298,8 +298,8 @@ class Icon extends Base
 		return '<span data-icon="svg" class="'.static::BASE.'-icon -iconsvg icon-'.$group.'-'.$icon.'"><svg><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg></span>';
 	}
 
-	// FIXME: use css background
-	// SEE: #adminmenu div.wp-menu-image.svg
+	// FIXME: use CSS background
+	// SEE: `#adminmenu div.wp-menu-image.svg`
 	// SEE: https://stackoverflow.com/a/19570011
 	public static function wrapBase64( $data )
 	{
