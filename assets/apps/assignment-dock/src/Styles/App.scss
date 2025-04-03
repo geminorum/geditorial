@@ -1,0 +1,285 @@
+@import "../../../../sass/modules/all";
+@import "../../../../sass/partials/base";
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+$spacer: 1rem !default;
+////////////////////////////////////////////////////////////////////////////////
+$brand-success: #5cb85c !default;
+$brand-info:    #5bc0de !default;
+$brand-warning: #f0ad4e !default;
+$brand-danger:  #d9534f !default;
+
+////////////////////////////////////////////////////////////////////////////////
+.main-app-wrap {
+  box-sizing: border-box;
+
+  *,
+  *::after,
+  *::before,
+  &::after,
+  &::before {
+    box-sizing: border-box;
+  }
+}
+
+.wrap-sidebyside {
+  display: flex;
+  justify-content: space-between;
+
+  > .-side {
+    width: calc( 50% - #{($spacer * .25)} );
+  }
+
+  // > .-start {}
+  // > .-end {}
+
+  .-head {
+    border: 1px dashed #ccc;
+    padding: $spacer * .5;
+
+    .-form {
+      display: flex;
+      margin-bottom: $spacer * .5;
+
+      .-input {
+        flex-grow: 2;
+        position: relative;
+
+        input {
+          width: 100%;
+          padding-left: $spacer * .25;
+          border: 1px solid #ccc;
+          border-radius: 0;
+        }
+
+        .-loading {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+        }
+      }
+
+      .-buttons {
+        line-height: 30px;
+        margin-left: $spacer * .5;
+
+        button {
+          border: 1px solid #ccc;
+          padding-right: $spacer * .35;
+          padding-left: $spacer * .35;
+          vertical-align: middle;
+          height: 30px;
+        }
+      }
+    }
+
+    .-message {
+      // display: flex;
+      // justify-content: space-between;
+
+      .icon-button {
+        // float: right;
+      }
+    }
+  }
+
+  .-newitem {
+    border: 1px dashed #ccc;
+    padding: $spacer * .5;
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacer * .5;
+
+    .-group {
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+
+      input {
+        width: calc(50% - #{($spacer * .25)});
+      }
+    }
+
+    // input.-newslug {
+    //   &::placeholder {
+    //     body.rtl & {
+    //       direction: ltr;
+    //     }
+    //   }
+    // }
+
+    select {
+      margin-left: $spacer * .25;
+    }
+
+    .icon-button {
+      margin-right: $spacer * .25;
+    }
+  }
+
+
+  .-head_OLD {
+    border: 1px dashed #ccc;
+    padding: $spacer * .5;
+
+    .-input {
+      display: flex;
+      margin-bottom: $spacer * .5;
+
+      input {
+        margin: 0;
+        flex-grow: 2;
+      }
+    }
+
+    .-message {
+      position: relative;
+      @include theme-clearfix;
+
+      .-buttons {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      // .-loading {}
+    }
+  }
+
+  .-list {
+    ul {
+      margin: ($spacer * .5) 0 0 0;
+      padding: 0;
+
+      li + li {
+        margin-top: $spacer * .5;
+      }
+    }
+  }
+
+  .-result,
+  .-item {
+    display: flex;
+    margin: 0;
+    padding: $spacer * .5;
+    border: 1px solid #ccc;
+    // @include theme-clearfix;
+
+    .-image {
+      margin-left: $spacer * .5;
+      // border: 1px dashed #ccc;
+
+      img {
+        // float: right;
+        max-height: 70px;
+        width: auto;
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .-box {
+      flex-grow: 2;
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    .-title {
+      margin: 0 0 ($spacer * .5) 0;
+      cursor: pointer;
+    }
+
+    .-subtitle {
+      line-height: 1;
+      margin: -($spacer * .33) 0 ($spacer * .25) 0;
+    }
+
+    .-content {
+      max-height: $spacer * 4;
+      overflow: hidden;
+      position: relative;
+
+      // https://css-tricks.com/recreating-mdns-truncated-text-effect/
+      &::after {
+        content: "";
+        background: linear-gradient(to right, transparent, #f1f1f1 80%);
+        height: calc(#{$spacer} + 1px);
+        position: absolute;
+        inset-block-end: 0; // Logical property equivalent to `right: 0`
+        width: 100%;
+      }
+
+      > p {
+        font-size: smaller;
+        margin: 0;
+        + p {
+          margin-top: $spacer * .5;
+        }
+      }
+
+      h2,
+      h3,
+      h4 {
+        margin: 0 0 $spacer * .5 0;
+      }
+    }
+
+    .-buttons {
+      margin-right: $spacer * .5;
+      // padding-top: $spacer * .25;
+      // margin-top: auto;
+      display: flex;
+      flex-direction: column;
+
+      button + button {
+        margin-top: $spacer * .5;
+      }
+    }
+
+    .-fields {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: -($spacer * .25);
+
+      .-custom-field {
+        margin-bottom: $spacer * .25;
+        width: calc( 50% - #{($spacer * .125)} );
+      }
+    }
+  }
+}
+
+body.rtl {
+  input.-newslug {
+    &::placeholder {
+      direction: ltr;
+      text-align: left;
+    }
+  }
+}
+
+// https://vuejs.org/guide/built-ins/transition
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
