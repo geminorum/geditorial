@@ -4,11 +4,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Parser;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait BulkExports
@@ -23,7 +23,7 @@ trait BulkExports
 			$label = sprintf(
 				/* translators: `%1$s`: icon markup, `%2$s`: export type title */
 				_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial-admin' ),
-				Helper::getIcon( 'download' ),
+				Visual::getIcon( 'download' ),
 				$type_args['title']
 			);
 

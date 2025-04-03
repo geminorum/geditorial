@@ -11,6 +11,39 @@ class Visual extends WordPress\Main
 		return gEditorial();
 	}
 
+	/**
+	 * Retrieves markup for given icon.
+	 * TODO: support for `none`: `div.wp-menu-image`
+	 *
+	 * The URL to the icon to be used for `add_menu_page()`
+	 * - Pass a `base64-encoded` SVG using a data URI, which will be colored to match the color scheme. This should begin with `data:image/svg+xml;base64,`.
+	 * - Pass the name of a `Dashicons` helper class to use a font icon, e.g. `dashicons-chart-pie`.
+	 * - Pass 'none' to leave div.wp-menu-image empty so an icon can be added via CSS.
+	 *
+	 * @param string|array $icon
+	 * @param string $fallback
+	 * @return string $markup
+	 */
+	public static function getIcon( $icon, $fallback = 'admin-post' )
+	{
+		if ( ! $icon || 'none' === $icon )
+			return Core\HTML::getDashicon( $fallback );
+
+		if ( is_array( $icon ) )
+			return gEditorial()->icon( $icon[1], $icon[0] );
+
+		if ( Core\Text::starts( $icon, 'data:image/' ) )
+			return Core\HTML::img( $icon, [ '-icon', '-encoded' ] );
+
+		if ( Core\Text::starts( $icon, 'dashicons-' ) )
+			$icon = Core\Text::stripPrefix( $icon, 'dashicons-' );
+
+		if ( Core\URL::isValid( $icon ) )
+			return Core\Icon::wrapURL( esc_url( $icon ) );
+
+		return Core\HTML::getDashicon( $icon );
+	}
+
 	public static function getPostTypeIconMarkup( $posttype, $fallback = NULL, $raw = FALSE )
 	{
 		$object = WordPress\PostType::object( $posttype );

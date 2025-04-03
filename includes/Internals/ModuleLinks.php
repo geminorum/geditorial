@@ -3,9 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait ModuleLinks
@@ -207,7 +207,7 @@ trait ModuleLinks
 
 		$posttype = $this->constant( $constant_or_posttype, $constant_or_posttype );
 		$links    = $this->exports_get_export_links( $posttype, $context, 'posttype' );
-		$icon     = Helper::getIcon( 'download' );
+		$icon     = Visual::getIcon( 'download' );
 
 		foreach ( $links as $name => $url )
 			Services\HeaderButtons::register( $name, [

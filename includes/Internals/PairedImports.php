@@ -3,11 +3,11 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait PairedImports
@@ -72,7 +72,7 @@ trait PairedImports
 		$label = $label ?? sprintf(
 			/* translators: `%s`: icon markup */
 			_x( '%s Upload', 'Internal: PairedImports: Button Label', 'geditorial' ),
-			Helper::getIcon( 'upload' )
+			Visual::getIcon( 'upload' )
 		);
 
 		return Core\HTML::tag( 'a', [

@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class HeaderButtons extends gEditorial\Service
@@ -79,7 +79,7 @@ class HeaderButtons extends gEditorial\Service
 				continue;
 
 			if ( ! empty( $button['icon'] ) )
-				$button['text'] = sprintf( '%s %s', Helper::getIcon( $button['icon'] ), $button['text'] );
+				$button['text'] = sprintf( '%s %s', Visual::getIcon( $button['icon'] ), $button['text'] );
 
 			if ( ! empty( $button['html'] ) )
 				$args['buttons'][] = $button['html'];

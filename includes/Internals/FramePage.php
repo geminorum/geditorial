@@ -3,8 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait FramePage
@@ -73,7 +73,7 @@ trait FramePage
 				'max-width'     => $args['maxwidth'],
 				'max-height'    => $args['maxheight'],
 			], $args['data'] ),
-		], sprintf( $text, Helper::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );
+		], sprintf( $text, Visual::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );
 	}
 
 	protected function framepage_get_mainlink_for_term( $term, $atts = [] )
@@ -130,6 +130,6 @@ trait FramePage
 				'max-width'     => $args['maxwidth'],
 				'max-height'    => $args['maxheight'],
 			], $args['data'] ),
-		], sprintf( $text, Helper::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );
+		], sprintf( $text, Visual::getIcon( $args['icon'] ?? $this->module->icon ), $name ) );
 	}
 }

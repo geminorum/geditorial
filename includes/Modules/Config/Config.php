@@ -14,6 +14,7 @@ use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class Config extends gEditorial\Module
@@ -855,7 +856,7 @@ class Config extends gEditorial\Module
 				.( $enabled ? '-enabled' : '-disabled' ).'">';
 
 			if ( $module->icon )
-				echo Helper::getIcon( $module->icon );
+				echo Visual::getIcon( $module->icon );
 
 			echo Ajax::spinner();
 

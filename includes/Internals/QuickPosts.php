@@ -4,9 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait QuickPosts
@@ -197,7 +197,7 @@ trait QuickPosts
 			'id'    => $this->classs( 'newpostbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-newpostbutton', 'thickbox' ],
 			'title' => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
-		], sprintf( $text, Helper::getIcon( $this->module->icon ), $name ) );
+		], sprintf( $text, Visual::getIcon( $this->module->icon ), $name ) );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons hide-if-no-js' );
 	}
