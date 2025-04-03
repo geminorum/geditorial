@@ -65,6 +65,39 @@
   }
 }
 
+@media screen and ( max-width: 782px ) {
+  .wp-list-table tr {
+
+    // NOTE: columns `before` primary column must be hidden
+    .column-geditorial-terms-order,
+    .column-geditorial-terms-color,
+    .column-geditorial-terms-role,
+    .column-geditorial-terms-posttype,
+    .column-geditorial-terms-code,
+    .column-geditorial-terms-barcode,
+    .column-geditorial-terms-latlng,
+    .column-geditorial-terms-arrow,
+    .column-geditorial-terms-viewable,
+    .column-geditorial-terms-image {
+      display: none !important;
+    }
+
+    .column-geditorial-terms-image {
+      text-align: inherit !important;
+    }
+
+    &:not(.inline-edit-row):not(.no-items) {
+      td:not(.column-primary):not(.check-column) {
+        padding: .25rem .5rem .25rem 7rem !important;
+
+        &::before {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 /* stylelint-disable-next-line no-invalid-position-at-import-rule */

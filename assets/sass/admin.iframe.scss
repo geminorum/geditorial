@@ -316,7 +316,8 @@ body.admin_page_geditorial-dead-drops-signal {
     padding-left: .25rem;
   }
 
-  div.-static-cover-image {
+  div.-side-image,
+  div.-cover-image {
     width: 165px;
 
     img {
@@ -402,7 +403,8 @@ body.admin_page_geditorial-dead-drops-signal {
 ////////////////////////////////////////////////////////////////////////////////
 @media screen and ( max-width: 782px ) {
   .-wrap.side-wrap {
-    div.-static-cover-image,
+    div.-side-image,
+    div.-cover-image,
     div.-qrcode-vcard {
       width: 110px;
     }
