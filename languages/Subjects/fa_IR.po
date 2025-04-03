@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Subjects\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-04-03 06:32+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ../../includes/Modules/Subjects\n"
+"X-Domain: geditorial-subjects\n"
+
+#: Subjects.php:94
+msgid "Subject"
+msgid_plural "Subjects"
+msgstr[0] "موضوعات"
+msgstr[1] "موضوع"
+
+#: Subjects.php:98
+msgctxt "Label: `extended_label`"
+msgid "Content Subjects"
+msgstr "موضوعات محتوا"
+
+#: Subjects.php:99
+msgctxt "Label: `menu_name`"
+msgid "Content Subjects"
+msgstr "موضوعات محتوا"
+
+#: Subjects.php:100
+msgctxt "Label: `show_option_all`"
+msgid "Subjects"
+msgstr "موضوعات"
+
+#: Subjects.php:101
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unsubjected)"
+msgstr "(بدون موضوع)"
+
+#: Subjects.php:119
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr "20"

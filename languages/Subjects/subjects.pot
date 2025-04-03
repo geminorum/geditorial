@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Subjects\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Subjects\n"
+"X-Domain: geditorial-subjects\n"
+
+#: Subjects.php:94
+msgid "Subject"
+msgid_plural "Subjects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Subjects.php:98
+msgctxt "Label: `extended_label`"
+msgid "Content Subjects"
+msgstr ""
+
+#: Subjects.php:99
+msgctxt "Label: `menu_name`"
+msgid "Content Subjects"
+msgstr ""
+
+#: Subjects.php:100
+msgctxt "Label: `show_option_all`"
+msgid "Subjects"
+msgstr ""
+
+#: Subjects.php:101
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unsubjected)"
+msgstr ""
+
+#: Subjects.php:119
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr ""

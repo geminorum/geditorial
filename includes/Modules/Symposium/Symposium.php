@@ -66,8 +66,6 @@ class Symposium extends gEditorial\Module
 			'main_posttype'     => 'session',
 			'category_taxonomy' => 'session_category',
 			'type_taxonomy'     => 'session_type',
-			'audience_taxonomy' => 'session_audience',   // TODO: DEPRECATE: use `Suited` Tax-Module
-			'subject_taxonomy'  => 'session_subject',    // TODO: move to new Tax-Module: موضوعات
 		];
 	}
 
@@ -78,8 +76,6 @@ class Symposium extends gEditorial\Module
 				'main_posttype'     => _n_noop( 'Session', 'Sessions', 'geditorial-symposium' ),
 				'category_taxonomy' => _n_noop( 'Session Category', 'Session Categories', 'geditorial-symposium' ),
 				'type_taxonomy'     => _n_noop( 'Session Type', 'Session Types', 'geditorial-symposium' ),
-				'audience_taxonomy' => _n_noop( 'Session Audience', 'Session Audiences', 'geditorial-symposium' ),
-				'subject_taxonomy'  => _n_noop( 'Session Subject', 'Session Subjects', 'geditorial-symposium' ),
 			],
 		];
 
@@ -164,22 +160,16 @@ class Symposium extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'main_posttype' );
-
-		$this->register_taxonomy( 'subject_taxonomy', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL,
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'category',
+		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'main_posttype' );
-
-		$this->register_taxonomy( 'audience_taxonomy', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => '__checklist_terms_callback',
-		], 'main_posttype' );
+		], 'main_posttype', [
+			'custom_icon' => 'tag',
+		] );
 
 		$this->register_posttype( 'main_posttype', [], [
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
@@ -205,8 +195,6 @@ class Symposium extends gEditorial\Module
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'type_taxonomy',
 					'category_taxonomy',
-					'subject_taxonomy',
-					'audience_taxonomy',
 				] );
 			}
 		}

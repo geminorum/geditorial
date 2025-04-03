@@ -153,7 +153,6 @@ class Book extends gEditorial\Module
 			'main_posttype_p2p' => 'related_publications',
 			'main_paired'       => 'related_publication',
 			'category_taxonomy' => 'publication_category',
-			'subject_taxonomy'  => 'publication_subject',     // TODO: move to new Tax-Module: موضوعات
 			'serie_taxonomy'    => 'publication_serie',       // TODO: move to new Tax-Module: فروست
 			'location_taxonomy' => 'publication_library',
 			'brand_taxonomy'    => 'publication_publisher',
@@ -163,7 +162,6 @@ class Book extends gEditorial\Module
 			'audience_taxonomy' => 'publication_audience',    // TODO: DEPRECATE: use `Suited` Tax-Module
 
 			'main_shortcode'    => 'publication',
-			'subject_shortcode' => 'publication-subject',
 			'serie_shortcode'   => 'publication-serie',     // TODO: move to new Tax-Module: فروست
 			'cover_shortcode'   => 'publication-cover',
 
@@ -178,7 +176,6 @@ class Book extends gEditorial\Module
 	{
 		return [
 			'taxonomies' => [
-				'subject_taxonomy'  => 'tag',
 				'serie_taxonomy'    => 'tag',
 				'location_taxonomy' => 'book-alt',
 				'brand_taxonomy'    => 'book',
@@ -196,7 +193,6 @@ class Book extends gEditorial\Module
 			'noops' => [
 				'main_posttype'     => _n_noop( 'Publication', 'Publications', 'geditorial-book' ),
 				'category_taxonomy' => _n_noop( 'Publication Category', 'Publication Categories', 'geditorial-book' ),
-				'subject_taxonomy'  => _n_noop( 'Subject', 'Subjects', 'geditorial-book' ),
 				'serie_taxonomy'    => _n_noop( 'Serie', 'Series', 'geditorial-book' ),
 				'location_taxonomy' => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
 				'brand_taxonomy'    => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
@@ -475,11 +471,6 @@ class Book extends gEditorial\Module
 			'custom_icon' => 'category',
 		] );
 
-		$this->register_taxonomy( 'subject_taxonomy', [
-			'hierarchical' => TRUE,
-			'meta_box_cb'  => NULL, // default meta box
-		], 'main_posttype' );
-
 		$this->register_taxonomy( 'serie_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => NULL, // default meta box
@@ -537,7 +528,6 @@ class Book extends gEditorial\Module
 		$this->corethumbnails__hook_tabloid_side_image( 'main_posttype' );
 
 		$this->register_shortcode( 'main_shortcode' );
-		$this->register_shortcode( 'subject_shortcode' );
 		$this->register_shortcode( 'serie_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 	}
@@ -622,7 +612,6 @@ class Book extends gEditorial\Module
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'type_taxonomy',
 					'category_taxonomy',
-					'subject_taxonomy',
 					'serie_taxonomy',
 					'location_taxonomy',
 					'status_taxonomy',
@@ -735,28 +724,18 @@ class Book extends gEditorial\Module
 			] );
 
 		else
-			$html.= $this->subject_shortcode( [
-				'id'     => 'all',
-				'future' => 'off',
-				'title'  => FALSE,
-				'wrap'   => FALSE,
-			] );
+			$html.= ShortCode::listPosts( 'assigned',
+				$this->constant( 'main_posttype' ),
+				$this->constant( 'category_taxonomy' ),
+				[
+					'id'     => 'all',
+					'future' => 'off',
+					'title'  => FALSE,
+					'wrap'   => FALSE,
+				]
+			);
 
 		return $html;
-	}
-
-	public function subject_shortcode( $atts = [], $content = NULL, $tag = '' )
-	{
-		return ShortCode::listPosts( 'assigned',
-			$this->constant( 'main_posttype' ),
-			$this->constant( 'subject_taxonomy' ),
-			array_merge( [
-				'post_id' => NULL,
-			], (array) $atts ),
-			$content,
-			$this->constant( 'subject_shortcode', $tag ),
-			$this->key
-		);
 	}
 
 	public function serie_shortcode( $atts = [], $content = NULL, $tag = '' )

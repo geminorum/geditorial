@@ -8,12 +8,12 @@ class ModuleQuery extends \WP_Query
 {
 
 	private $cpt = 'publication';
-	private $tax = 'publication_subject';
+	private $tax = 'publication_category';
 
 	public function __construct( $args = [] )
 	{
 		$this->cpt = gEditorial()->constant( 'book', 'main_posttype', 'publication' );
-		$this->tax = gEditorial()->constant( 'book', 'subject_taxonomy', 'publication_subject' );
+		$this->tax = gEditorial()->constant( 'book', 'category_taxonomy', 'publication_category' );
 
 		// force these args
 		$args = array_merge( $args, [
