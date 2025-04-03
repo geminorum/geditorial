@@ -184,13 +184,22 @@ trait CoreTaxonomies
 						break;
 
 					if ( TRUE === $value )
-						$args['menu_icon'] = $this->get_taxonomy_icon( $constant, $args['hierarchical'] );
-
-					else if ( is_array( $value ) )
-						$args['menu_icon'] = Core\Icon::getBase64( $value[1], $value[0] );
+						$icon = $this->module->icon ?: ( $args['hierarchical'] ? 'category' : 'tag' );
 
 					else if ( $value )
-						$args['menu_icon'] = sprintf( 'dashicons-%s', $value );
+						$icon = $value;
+
+					else
+						break;
+
+					if ( is_array( $icon ) )
+						$args['menu_icon'] = Core\Icon::getBase64( $icon[1], $icon[0] );
+
+					else
+						$args['menu_icon'] = sprintf( 'dashicons-%s', $icon );
+
+					// NOTE: passing icon on the original format: string/array
+					$args[Visual::MENUICON_PROP] = $icon;
 
 					break;
 
@@ -377,37 +386,6 @@ trait CoreTaxonomies
 			);
 
 		return $labels;
-	}
-
-	// TODO: MUST DEPRECATE
-	public function get_taxonomy_icon( $constant = NULL, $hierarchical = FALSE, $fallback = FALSE )
-	{
-		$icons   = $this->get_module_icons();
-		$default = $hierarchical ? 'category' : 'tag';
-		$module  = $this->module->icon ?? FALSE;
-
-		if ( is_null( $fallback ) && $module )
-			$icon = $module;
-
-		else if ( $fallback )
-			$icon = $fallback;
-
-		else
-			$icon = $default;
-
-		if ( $constant && isset( $icons['taxonomies'] ) && array_key_exists( $constant, (array) $icons['taxonomies'] ) )
-			$icon = $icons['taxonomies'][$constant];
-
-		if ( is_null( $icon ) && $module )
-			$icon = $module;
-
-		if ( is_array( $icon ) )
-			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
-
-		else if ( $icon )
-			$icon = sprintf( 'dashicons-%s', $icon );
-
-		return $icon ?: 'dashicons-'.$default;
 	}
 
 	// WTF: the core default term system is messed-up!

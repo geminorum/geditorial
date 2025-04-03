@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait AdminPage
@@ -45,7 +46,7 @@ trait AdminPage
 			$cap,
 			$slug,
 			[ $this, 'render_menu_adminpage' ],
-			$this->get_posttype_icon(),
+			Visual::getMenuIcon( $this->module->icon ),
 			$position
 		);
 

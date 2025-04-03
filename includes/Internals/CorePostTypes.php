@@ -7,6 +7,7 @@ use geminorum\gEditorial\Info;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait CorePostTypes
@@ -174,13 +175,22 @@ trait CorePostTypes
 						break;
 
 					if ( TRUE === $value )
-						$args['menu_icon'] = $this->get_posttype_icon( $constant );
-
-					else if ( is_array( $value ) )
-						$args['menu_icon'] = Core\Icon::getBase64( $value[1], $value[0] );
+						$icon = $this->module->icon ?: 'welcome-write-blog';
 
 					else if ( $value )
-						$args['menu_icon'] = sprintf( 'dashicons-%s', $value );
+						$icon = $value;
+
+					else
+						break;
+
+					if ( is_array( $icon ) )
+						$args['menu_icon'] = Core\Icon::getBase64( $icon[1], $icon[0] );
+
+					else
+						$args['menu_icon'] = sprintf( 'dashicons-%s', $icon );
+
+					// NOTE: passing icon on the original format: string/array
+					$args[Visual::MENUICON_PROP] = $icon;
 
 					break;
 
@@ -387,24 +397,6 @@ trait CorePostTypes
 			return $default;
 
 		return gEditorial()->module( 'roled' )->constant( 'base_type' );
-	}
-
-	// TODO: MUST DEPRECATE
-	public function get_posttype_icon( $constant = NULL, $default = 'welcome-write-blog' )
-	{
-		$icon  = $this->module->icon ? $this->module->icon : $default;
-		$icons = $this->get_module_icons();
-
-		if ( $constant && isset( $icons['post_types'][$constant] ) )
-			$icon = $icons['post_types'][$constant];
-
-		if ( is_array( $icon ) )
-			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
-
-		else if ( $icon )
-			$icon = sprintf( 'dashicons-%s', $icon );
-
-		return $icon ?: 'dashicons-'.$default;
 	}
 
 	public function get_posttype_labels( $constant )

@@ -114,7 +114,7 @@ class Config extends gEditorial\Module
 			'editorial_settings',
 			$this->base.'-settings',
 			[ $this, 'admin_settings_page' ],
-			$this->get_posttype_icon()
+			Visual::getMenuIcon( $this->module->icon ),
 		);
 
 		$hook_tools = add_submenu_page(

@@ -500,4 +500,56 @@ trait Deprecated
 			'assign_terms' => 'edit_'.$base[1],
 		];
 	}
+
+	// NOTE: DEPRECATED
+	protected function get_module_icons() { return []; }
+
+	// NOTE: DEPRECATED
+	public function get_taxonomy_icon( $constant = NULL, $hierarchical = FALSE, $fallback = FALSE )
+	{
+		$icons   = $this->get_module_icons();
+		$default = $hierarchical ? 'category' : 'tag';
+		$module  = $this->module->icon ?? FALSE;
+
+		if ( is_null( $fallback ) && $module )
+			$icon = $module;
+
+		else if ( $fallback )
+			$icon = $fallback;
+
+		else
+			$icon = $default;
+
+		if ( $constant && isset( $icons['taxonomies'] ) && array_key_exists( $constant, (array) $icons['taxonomies'] ) )
+			$icon = $icons['taxonomies'][$constant];
+
+		if ( is_null( $icon ) && $module )
+			$icon = $module;
+
+		if ( is_array( $icon ) )
+			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
+
+		else if ( $icon )
+			$icon = sprintf( 'dashicons-%s', $icon );
+
+		return $icon ?: 'dashicons-'.$default;
+	}
+
+	// NOTE: DEPRECATED
+	public function get_posttype_icon( $constant = NULL, $default = 'welcome-write-blog' )
+	{
+		$icon  = $this->module->icon ? $this->module->icon : $default;
+		$icons = $this->get_module_icons();
+
+		if ( $constant && isset( $icons['post_types'][$constant] ) )
+			$icon = $icons['post_types'][$constant];
+
+		if ( is_array( $icon ) )
+			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
+
+		else if ( $icon )
+			$icon = sprintf( 'dashicons-%s', $icon );
+
+		return $icon ?: 'dashicons-'.$default;
+	}
 }

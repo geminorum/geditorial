@@ -360,7 +360,6 @@ class Module extends WordPress\Module
 	protected function get_global_fields() { return []; }
 
 	protected function get_module_templates() { return []; }
-	protected function get_module_icons() { return []; } // TODO: MUST DEPRECATE
 
 	// NOTE: do not use `thick-box` anymore!
 	// NOTE: must `add_thickbox()` on load

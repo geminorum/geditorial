@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class Entry extends gEditorial\Module
@@ -213,7 +214,7 @@ class Entry extends gEditorial\Module
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'main_shortcode' ), [
 			'label'         => Core\HTML::escape( _x( 'Entry Section', 'UI: Label', 'geditorial-entry' ) ),
-			'listItemImage' => $this->get_posttype_icon( 'main_posttype' ),
+			'listItemImage' => Visual::getMenuIcon( $this->module->icon ),
 			'attrs'         => [
 				[
 					'label'    => Core\HTML::escape( _x( 'Section', 'UI: Label', 'geditorial-entry' ) ),

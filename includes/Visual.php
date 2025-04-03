@@ -6,6 +6,8 @@ class Visual extends WordPress\Main
 {
 	const BASE = 'geditorial';
 
+	const MENUICON_PROP = 'editorial_icon';
+
 	public static function factory()
 	{
 		return gEditorial();
@@ -44,9 +46,24 @@ class Visual extends WordPress\Main
 		return Core\HTML::getDashicon( $icon );
 	}
 
+	public static function getMenuIcon( $icon, $fallback = NULL )
+	{
+		if ( ! $icon )
+			$icon = $fallback ?? 'screenoptions';
+
+		return is_array( $icon )
+			? Core\Icon::getBase64( $icon[1], $icon[0] )
+			: sprintf( 'dashicons-%s', $icon );
+	}
+
 	public static function getPostTypeIconMarkup( $posttype, $fallback = NULL, $raw = FALSE )
 	{
 		$object = WordPress\PostType::object( $posttype );
+
+		if ( ! empty( $object->{static::MENUICON_PROP} ) )
+			return $raw
+				? $object->{static::MENUICON_PROP}
+				: Core\HTML::getDashicon( $object->{static::MENUICON_PROP} );
 
 		if ( ! empty( $object->menu_icon )
 			&& is_string( $object->menu_icon ) ) {
@@ -74,6 +91,11 @@ class Visual extends WordPress\Main
 	public static function getTaxonomyIconMarkup( $taxonomy, $fallback = NULL, $raw = FALSE )
 	{
 		$object = WordPress\Taxonomy::object( $taxonomy );
+
+		if ( ! empty( $object->{static::MENUICON_PROP} ) )
+			return $raw
+				? $object->{static::MENUICON_PROP}
+				: Core\HTML::getDashicon( $object->{static::MENUICON_PROP} );
 
 		if ( ! empty( $object->menu_icon )
 			&& is_string( $object->menu_icon ) ) {
