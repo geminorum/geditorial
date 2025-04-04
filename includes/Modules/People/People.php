@@ -29,6 +29,7 @@ class People extends gEditorial\Module
 				'person',
 				'byline',
 				'individual',
+				'honorific',
 				'literature',
 			],
 		];
@@ -59,6 +60,7 @@ class People extends gEditorial\Module
 			'main_taxonomy'         => 'people',
 			'main_taxonomy_archive' => 'people',
 			'category_taxonomy'     => 'people_affiliation',
+			'type_taxonomy'         => 'people_honorific',
 			'restapi_attribute'     => 'people_meta',
 		];
 	}
@@ -69,6 +71,7 @@ class People extends gEditorial\Module
 			'noops' => [
 				'main_taxonomy'     => _n_noop( 'Person', 'People', 'geditorial-people' ),
 				'category_taxonomy' => _n_noop( 'Affiliation', 'Affiliations', 'geditorial-people' ),
+				'type_taxonomy'     => _n_noop( 'Honorific', 'Honorifics', 'geditorial-people' ),
 			],
 			'labels' => [
 				'main_taxonomy' => [
@@ -81,6 +84,13 @@ class People extends gEditorial\Module
 					'show_option_all'      => _x( 'People Affiliations', 'Label: `show_option_all`', 'geditorial-people' ),
 					'show_option_no_items' => _x( '(Unaffiliated)', 'Label: `show_option_no_items`', 'geditorial-people' ),
 					'assign_description'   => _x( 'Defines the affiliation of the person.', 'Label: `assign_description`', 'geditorial-people' ),
+				],
+				'type_taxonomy' => [
+					'extended_label'       => _x( 'People Honorifics', 'Label: `extended_label`', 'geditorial-people' ),
+					'column_title'         => _x( 'Honorifics', 'Label: `column_title`', 'geditorial-people' ),
+					'show_option_all'      => _x( 'People Honorifics', 'Label: `show_option_all`', 'geditorial-people' ),
+					'show_option_no_items' => _x( '(Undefined)', 'Label: `show_option_no_items`', 'geditorial-people' ),
+					'assign_description'   => _x( 'Defines the honorifics of the person.', 'Label: `assign_description`', 'geditorial-people' ),
 				],
 			],
 		];
@@ -117,6 +127,16 @@ class People extends gEditorial\Module
 			'admin_managed'   => TRUE,
 		] );
 
+		$this->register_taxonomy( 'type_taxonomy', [
+			'hierarchical' => TRUE,
+			'public'       => FALSE,
+			'rewrite'      => FALSE,
+		], 'main_taxonomy', [
+			'target_object' => 'taxonomy',
+			'custom_icon'   => 'superhero',
+			'admin_managed' => TRUE,
+		] );
+
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'category_taxonomy' );
 
@@ -147,9 +167,17 @@ class People extends gEditorial\Module
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 			$this->register_headerbutton_for_taxonomy( 'category_taxonomy' );
+			$this->register_headerbutton_for_taxonomy( 'type_taxonomy' );
 			$this->taxtax__hook_screen( $screen, 'category_taxonomy' );
+			$this->taxtax__hook_screen( $screen, 'type_taxonomy' );
 
 		} else if ( $this->constant( 'category_taxonomy' ) === $screen->taxonomy ) {
+
+			$this->filter_string( 'parent_file', 'users.php' );
+			$this->modulelinks__register_headerbuttons();
+			$this->register_headerbutton_for_taxonomy( 'main_taxonomy' );
+
+		} else if ( $this->constant( 'type_taxonomy' ) === $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'users.php' );
 			$this->modulelinks__register_headerbuttons();
@@ -170,6 +198,7 @@ class People extends gEditorial\Module
 	{
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
 		$this->_hook_menu_taxonomy( 'category_taxonomy', 'users.php' );
+		$this->_hook_menu_taxonomy( 'type_taxonomy', 'users.php' );
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )
