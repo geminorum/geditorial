@@ -49,7 +49,6 @@ class People extends gEditorial\Module
 			],
 			'_constants' => [
 				'main_taxonomy_constant'     => [ NULL, 'people' ],
-				'category_taxonomy_constant' => [ NULL, 'affiliation' ],
 			],
 		];
 	}
@@ -59,7 +58,7 @@ class People extends gEditorial\Module
 		return [
 			'main_taxonomy'         => 'people',
 			'main_taxonomy_archive' => 'people',
-			'category_taxonomy'     => 'affiliation',
+			'category_taxonomy'     => 'people_affiliation',
 			'restapi_attribute'     => 'people_meta',
 		];
 	}
