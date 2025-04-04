@@ -256,6 +256,7 @@ class Execution extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5, 12, 'subcontent' );

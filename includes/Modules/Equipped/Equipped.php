@@ -158,6 +158,7 @@ class Equipped extends gEditorial\Module
 
 		// $this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' ); // FIXME!
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}

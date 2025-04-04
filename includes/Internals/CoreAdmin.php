@@ -158,8 +158,18 @@ trait CoreAdmin
 		return TRUE;
 	}
 
-	// TODO: support Ajax edit
-	protected function coreadmin__hook_taxonomy_multiple_supported_column( $screen, $supported = NULL )
+	protected function coreadmin__ajax_taxonomy_multiple_supported_column( $constant )
+	{
+		if ( ! $constant || ! Core\WordPress::isAJAX() )
+			return FALSE;
+
+		if ( ! $taxonomy = $this->is_inline_save_taxonomy( $constant ) )
+			return FALSE;
+
+		return $this->coreadmin__do_taxonomy_multiple_supported_column( $taxonomy );
+	}
+
+	protected function coreadmin__hook_taxonomy_multiple_supported_column( $screen )
 	{
 		if ( 'edit-tags' !== $screen->base )
 			return FALSE;
@@ -170,10 +180,13 @@ trait CoreAdmin
 		if ( ! $object->query_var )
 			return FALSE; // If false, a taxonomy cannot be loaded at `?{query_var}={term_slug}`
 
-		if ( is_null( $supported ) )
-			$supported = $this->posttypes();
+		return $this->coreadmin__do_taxonomy_multiple_supported_column( $object );
+	}
 
-		$posttypes = WordPress\PostType::get( 4, [], 'read' );
+	protected function coreadmin__do_taxonomy_multiple_supported_column( $taxonomy )
+	{
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
+			return FALSE;
 
 		add_filter( sprintf( 'manage_edit-%s_columns', $object->name ),
 			function ( $columns ) use ( $object ) {
@@ -185,7 +198,7 @@ trait CoreAdmin
 			} );
 
 		add_filter( sprintf( 'manage_%s_custom_column', $object->name ),
-			function ( $display, $column, $term_id ) use ( $object, $supported, $posttypes ) {
+			function ( $display, $column, $term_id ) use ( $object ) {
 
 				if ( $this->hook_base( 'multiplesupported' ) !== $column )
 					return;
@@ -193,25 +206,33 @@ trait CoreAdmin
 				if ( ! $term = WordPress\Term::get( $term_id, $object->name ) )
 					return;
 
+				if ( empty( $this->cache['core_admin_supported'] ) )
+					$this->cache['core_admin_supported'] = $this->posttypes();
+
 				$list = [];
 
-				foreach ( $supported as $posttype ) {
+				foreach ( $this->cache['core_admin_supported'] as $posttype ) {
 
-					if ( ! array_key_exists( $posttype, $posttypes ) )
+					if ( empty( $this->cache['core_admin_posttypes'] ) )
+						$this->cache['core_admin_posttypes'] = WordPress\PostType::get( 4, [], 'read' );
+
+					if ( ! array_key_exists( $posttype, $this->cache['core_admin_posttypes'] ) )
 						continue; // no cap
 
 					$edit = WordPress\PostType::edit( $posttype, [ $object->query_var => $term->slug ] );
 
 					$list[] = Core\HTML::tag( $edit ? 'a' : 'span', [
 						'href'   => $edit,
-						'title'  => Services\CustomPostType::getLabel( $posttypes[$posttype], 'extended_label' ),
+						'title'  => Services\CustomPostType::getLabel( $this->cache['core_admin_posttypes'][$posttype], 'extended_label' ),
 						'target' => $edit ? '_blank' : FALSE,
 						'class'  => $edit ? '-icon -link' : '-icon',
-					], Visual::getPostTypeIconMarkup( $posttypes[$posttype] ) );
+					], Visual::getPostTypeIconMarkup( $this->cache['core_admin_posttypes'][$posttype] ) );
 				}
 
 				echo Core\HTML::wrap( Core\HTML::renderList( $list ), '-icon-list -supported-posttype' );
 
 			}, 10, 3 );
+
+		return TRUE;
 	}
 }
