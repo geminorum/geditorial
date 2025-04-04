@@ -12,7 +12,8 @@ class Individuals extends gEditorial\Service
 	// TODO: support: `Byline` Module
 	// TODO: support: `byline` field from meta-data
 
-	const FORMAT_TEMPLATE = '%2$s, %1$s';
+	const FORMAT_TEMPLATE    = '%2$s, %1$s';
+	const SEPARATOR_TEMPLATE = ', ';
 
 	public static function setup()
 	{
@@ -27,6 +28,10 @@ class Individuals extends gEditorial\Service
 
 	public static function filter_people_format_name( $formatted, $raw, $term = NULL )
 	{
+		// already formatted
+		if ( Core\Text::has( $raw, trim( static::SEPARATOR_TEMPLATE ) ) )
+			return $formatted;
+
 		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $raw ) )
 			return $formatted;
 
