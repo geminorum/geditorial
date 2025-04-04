@@ -192,13 +192,13 @@ class Terms extends gEditorial\Module
 				'url'       => _x( 'URL', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
-				'parent'    => _x( 'Terms can have parents from another taxonomies.', 'Descriptions', 'geditorial-terms' ),
+				'parent'    => _x( 'Terms can have parents from other taxonomies.', 'Descriptions', 'geditorial-terms' ),
 				'order'     => _x( 'Terms are usually ordered alphabetically, but you can choose your own order by numbers.', 'Descriptions', 'geditorial-terms' ),
 				'plural'    => _x( 'Defines the plural form of the term.', 'Descriptions', 'geditorial-terms' ),
-				'overwrite' => _x( 'Replaces the term name on front-page display.', 'Descriptions', 'geditorial-terms' ),
+				'overwrite' => _x( 'Replaces the term name on the front-page display.', 'Descriptions', 'geditorial-terms' ),
 				'fullname'  => _x( 'Defines the full-name form of the term.', 'Descriptions', 'geditorial-terms' ),
 				'tagline'   => _x( 'Gives more information about the term in a short phrase.', 'Descriptions', 'geditorial-terms' ),
-				'subtitle'  => _x( 'Gives more information about the term in a sub-title.', 'Descriptions', 'geditorial-terms' ),
+				'subtitle'  => _x( 'Gives more information about the term in a subtitle.', 'Descriptions', 'geditorial-terms' ),
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
 				'venue'     => _x( 'Defines a string as venue for the term.', 'Descriptions', 'geditorial-terms' ),
 				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
@@ -208,30 +208,32 @@ class Terms extends gEditorial\Module
 				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
 				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
 				'posttypes' => _x( 'Terms can have unique posttypes visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
-				'arrow'     => _x( 'Terms can have direction arrow to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'label'     => _x( 'Terms can have text label to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'arrow'     => _x( 'Terms can have direction arrows to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'label'     => _x( 'Terms can have text labels to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'code'      => _x( 'Terms can have text code to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'barcode'   => _x( 'Terms can have barcode to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'latlng'    => _x( 'Terms can have Latitude and Longitude to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'date'      => _x( 'Terms can have date to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'datetime'  => _x( 'Terms can have date-time to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'datestart' => _x( 'Terms can have date-start to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'dateend'   => _x( 'Terms can have date-end to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'born'      => _x( 'Terms can have born-date to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'dead'      => _x( 'Terms can have dead-date to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'barcode'   => _x( 'Terms can have barcodes to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'latlng'    => _x( 'Terms can have latitude and longitude to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'date'      => _x( 'Terms can have dates to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'datetime'  => _x( 'Terms can have a date-time to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'datestart' => _x( 'Terms can have a start date to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'dateend'   => _x( 'Terms can have an end date to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'born'      => _x( 'Terms can have a born date to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'dead'      => _x( 'Terms can have a dead date to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'days'      => _x( 'Terms can have days number to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'hours'     => _x( 'Terms can have hours number to help organize them.', 'Descriptions', 'geditorial-terms' ),
-				'period'    => _x( 'The length of time about the term.', 'Descriptions', 'geditorial-terms' ),
-				'amount'    => _x( 'The quantity number about the term.', 'Descriptions', 'geditorial-terms' ),
+				'hours'     => _x( 'Terms can have hour number to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'period'    => _x( 'The length of time of the term.', 'Descriptions', 'geditorial-terms' ),
+				'amount'    => _x( 'The quantity number of the term.', 'Descriptions', 'geditorial-terms' ),
 				'unit'      => _x( 'Terms can have unit number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'min'       => _x( 'Defines the minimum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
 				'max'       => _x( 'Defines the maximum threshold for the term.', 'Descriptions', 'geditorial-terms' ),
 				'viewable'  => _x( 'Determines whether the term is publicly viewable.', 'Descriptions', 'geditorial-terms' ),
 				'source'    => _x( 'Defines a source URL for the term.', 'Descriptions', 'geditorial-terms' ),
-				'embed'     => _x( 'Defines a embed-able URL for the term.', 'Descriptions', 'geditorial-terms' ),
+				'embed'     => _x( 'Defines an embedable URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'url'       => _x( 'Defines a custom URL for the term.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
+				'posts_column_title' => _x( 'Posts', 'Column Title', 'geditorial-terms' ),
+
 				// NOTE: Only the difference from titles
 				// - filters are able to customize by `{$field}_column_title` key
 				'order_column_title'    => _x( 'Ordering', 'Column Title: Order', 'geditorial-terms' ),
@@ -496,7 +498,7 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'list_supported_fields', $list, $taxonomy );
 	}
 
-	// TODO: handle `$taxonomy` if is an array
+	// TODO: handle if `$taxonomy` was an array
 	// NOTE: by default the meta-key is the same as the field
 	private function get_supported_metakey( $field, $taxonomy = FALSE )
 	{
@@ -668,10 +670,6 @@ class Terms extends gEditorial\Module
 
 		$supported = $this->get_supported( $taxonomy );
 		$icons     = [
-
-			// TODO: assign dashicons here!
-			// 'field' => 'dashicon',
-
 			'order',
 			'contact',
 			'venue',

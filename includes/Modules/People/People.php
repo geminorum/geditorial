@@ -49,7 +49,7 @@ class People extends gEditorial\Module
 				'archive_override',
 			],
 			'_constants' => [
-				'main_taxonomy_constant'     => [ NULL, 'people' ],
+				'main_taxonomy_constant' => [ NULL, 'people' ],
 			],
 		];
 	}
@@ -81,6 +81,7 @@ class People extends gEditorial\Module
 				],
 				'category_taxonomy' => [
 					'extended_label'       => _x( 'People Affiliations', 'Label: `extended_label`', 'geditorial-people' ),
+					'column_title'         => _x( 'Affiliations', 'Label: `column_title`', 'geditorial-people' ),
 					'show_option_all'      => _x( 'People Affiliations', 'Label: `show_option_all`', 'geditorial-people' ),
 					'show_option_no_items' => _x( '(Unaffiliated)', 'Label: `show_option_no_items`', 'geditorial-people' ),
 					'assign_description'   => _x( 'Defines the affiliation of the person.', 'Label: `assign_description`', 'geditorial-people' ),
@@ -139,6 +140,7 @@ class People extends gEditorial\Module
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'category_taxonomy' );
+		$this->taxtax__hook_init( $taxonomy, 'type_taxonomy' );
 
 		if ( is_admin() ) {
 
@@ -216,17 +218,25 @@ class People extends gEditorial\Module
 
 	public function get_name_familyfirst( $string, $term = NULL )
 	{
-		return $this->filters( 'format_name', Core\Text::nameFamilyFirst( $string ), $string, $term );
+		return $this->filters( 'format_name',
+			Core\Text::nameFamilyFirst( $string ),
+			$string,
+			$term
+		);
 	}
 
 	public function get_name_familylast( $string, $term = NULL )
 	{
-		return $this->filters( 'display_name', Core\Text::nameFamilyLast( $string ), $string, $term );
+		return $this->filters( 'display_name',
+			Core\Text::nameFamilyLast( $string ),
+			$string,
+			$term
+		);
 	}
 
 	public function pre_term_name( $field, $taxonomy )
 	{
-		return $taxonomy == $this->constant( 'people_taxonomy' )
+		return $taxonomy == $this->constant( 'main_taxonomy' )
 			? $this->get_name_familyfirst( $field )
 			: $field;
 	}
@@ -234,7 +244,7 @@ class People extends gEditorial\Module
 	// @FILTER: `gnetwork_taxonomy_term_rewrite_slug`
 	public function taxonomy_term_rewrite_slug( $name, $term, $taxonomy )
 	{
-		return $taxonomy == $this->constant( 'people_taxonomy' )
+		return $taxonomy == $this->constant( 'main_taxonomy' )
 			? $this->get_name_familylast( $name, $term )
 			: $name;
 	}
@@ -242,19 +252,18 @@ class People extends gEditorial\Module
 	// @FILTER: `geditorial_terms_sanitize_name`
 	public function terms_sanitize_name( $name, $term, $action )
 	{
-		return $term->taxonomy == $this->constant( 'people_taxonomy' )
+		return $term->taxonomy == $this->constant( 'main_taxonomy' )
 			? $this->get_name_familylast( $name, $term )
 			: $name;
 	}
 
 	public function single_term_title( $title )
 	{
-		return is_tax( $this->constant( 'people_taxonomy' ) )
+		return is_tax( $this->constant( 'main_taxonomy' ) )
 			? $this->get_name_familylast( $title )
 			: $title;
 	}
 
-	// NOTE: non-admin only
 	public function people_term_name( $value, $term_id, $context )
 	{
 		return 'display' == $context

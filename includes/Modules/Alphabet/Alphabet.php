@@ -145,10 +145,10 @@ class Alphabet extends gEditorial\Module
 			$actives = [];
 
 			$alphabet = Core\L10n::getAlphabet( $args['locale'] );
-			$keys     = array_flip( Core\Arraay::column( $alphabet, 'letter', 'key' ) );
+			$keys     = Core\Arraay::pluck( $alphabet, 'key', 'letter' );
 
 			$alt      = $args['alternative'] ? Core\L10n::getAlphabet( $args['alternative'] ) : FALSE;
-			$alt_keys = $alt ? array_flip( Core\Arraay::column( $alt, 'letter', 'key' ) ) : [];
+			$alt_keys = $alt ? Core\Arraay::pluck( $alt, 'key', 'letter' ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
 				$args['heading_cb'] = FALSE;
@@ -273,16 +273,16 @@ class Alphabet extends gEditorial\Module
 			];
 
 			$query = new \WP_Term_Query();
-			$terms = $query->query( $args );
+			$terms = $query->query( $query_args );
 
 			$current = $html = $list = '';
 			$actives = [];
 
 			$alphabet = Core\L10n::getAlphabet( $args['locale'] );
-			$keys     = array_flip( Core\Arraay::column( $alphabet, 'letter', 'key' ) );
+			$keys     = Core\Arraay::pluck( $alphabet, 'key', 'letter' );
 
 			$alt      = $args['alternative'] ? Core\L10n::getAlphabet( $args['alternative'] ) : FALSE;
-			$alt_keys = $alt ? array_flip( Core\Arraay::column( $alt, 'letter', 'key' ) ) : [];
+			$alt_keys = $alt ? Core\Arraay::pluck( $alt, 'key', 'letter' ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
 				$args['heading_cb'] = FALSE;
