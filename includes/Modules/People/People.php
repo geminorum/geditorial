@@ -143,7 +143,6 @@ class People extends gEditorial\Module
 		if ( is_admin() ) {
 
 			$this->filter( 'pre_term_name', 2, 12 );
-			$this->filter( 'pre_term_slug', 2, 12 );
 			$this->filter( 'taxonomy_term_rewrite_slug', 3, 8, FALSE, 'gnetwork' );
 			$this->filter_module( 'terms', 'sanitize_name', 3, 12 );
 
@@ -156,6 +155,8 @@ class People extends gEditorial\Module
 
 			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
 		}
+
+		$this->filter( 'wp_insert_term_data', 3, 9 );
 	}
 
 	public function current_screen( $screen )
@@ -230,13 +231,6 @@ class People extends gEditorial\Module
 			: $field;
 	}
 
-	public function pre_term_slug( $field, $taxonomy )
-	{
-		return $taxonomy == $this->constant( 'people_taxonomy' )
-			? Core\Text::nameFamilyLast( $field )
-			: $field;
-	}
-
 	// @FILTER: `gnetwork_taxonomy_term_rewrite_slug`
 	public function taxonomy_term_rewrite_slug( $name, $term, $taxonomy )
 	{
@@ -266,5 +260,32 @@ class People extends gEditorial\Module
 		return 'display' == $context
 			? $this->get_name_familylast( $value, $term_id )
 			: $value;
+	}
+
+	// NOTE: tries to make slug family last if name provided is family first
+	public function wp_insert_term_data( $data, $taxonomy, $args )
+	{
+		if ( $this->constant( 'main_taxonomy' ) !== $taxonomy )
+			return $data;
+
+		// cleanup
+		if ( ! $data['name'] = Core\Text::trim( $data['name'] ) )
+			return $data;
+
+		// slug already provided
+		if ( ! empty( $args['slug'] ) )
+			return $data;
+
+		// are the same!
+		if ( $data['name'] !== Core\Text::nameFamilyFirst( $data['name'] ) )
+			return $data;
+
+		$slug = Core\Text::nameFamilyLast( $data['name'] );
+
+		// avoid db queries if the same
+		if ( $data['slug'] !== $slug )
+			$data['slug'] = wp_unique_term_slug( $slug, (object) $args );
+
+		return $data;
 	}
 }
