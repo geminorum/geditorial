@@ -12,12 +12,29 @@ class Individuals extends gEditorial\Service
 	// TODO: support: `Byline` Module
 	// TODO: support: `byline` field from meta-data
 
+	const FORMAT_TEMPLATE = '%2$s, %1$s';
+
 	public static function setup()
 	{
+		if ( in_array( Core\L10n::locale( TRUE ), Misc\NamesInPersian::SUPPORTED_LOCALE, TRUE ) )
+			add_filter( static::BASE.'_people_format_name', [ __CLASS__, 'filter_people_format_name' ], 9, 3 );
+
 		if ( is_admin() )
 			return;
 
 		add_filter( static::BASE.'_prep_individual', [ __CLASS__, 'filter_prep_individual_front' ], 5, 3 );
+	}
+
+	public static function filter_people_format_name( $formatted, $raw, $term = NULL )
+	{
+		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $raw ) )
+			return $formatted;
+
+		if ( WordPress\Strings::isEmpty( $parsed['first_name'] )
+			|| WordPress\Strings::isEmpty( $parsed['last_name'] ) )
+				return $formatted;
+
+		return sprintf( static::FORMAT_TEMPLATE, $parsed['first_name'], $parsed['last_name'] );
 	}
 
 	public static function filter_prep_individual_front( $individual, $raw, $value )

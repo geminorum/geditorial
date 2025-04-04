@@ -8,6 +8,10 @@ use geminorum\gEditorial\WordPress;
 class NamesInPersian extends Core\Base
 {
 
+	const SUPPORTED_LOCALE = [
+		'fa_IR',
+	];
+
 	public static function isValidFullname( $text )
 	{
 		if ( WordPress\Strings::isEmpty( $text ) )
