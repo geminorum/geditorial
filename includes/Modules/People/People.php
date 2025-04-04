@@ -145,20 +145,17 @@ class People extends gEditorial\Module
 
 		if ( is_admin() ) {
 
-			$this->filter( 'pre_term_name', 2, 12 );
 			$this->filter( 'taxonomy_term_rewrite_slug', 3, 8, FALSE, 'gnetwork' );
 			$this->filter_module( 'terms', 'sanitize_name', 3, 12 );
-
-			add_filter( $taxonomy.'_name', [ $this, 'people_term_name' ], 8, 3 );
 
 		} else {
 
 			$this->filter( 'single_term_title', 1, 8 );
-			add_filter( $taxonomy.'_name', [ $this, 'people_term_name' ], 8, 3 );
-
 			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
 		}
 
+		add_filter( $taxonomy.'_name', [ $this, 'people_term_name' ], 8, 3 );
+		$this->filter( 'pre_term_name', 2, 12 );
 		$this->filter( 'wp_insert_term_data', 3, 9 );
 	}
 
@@ -286,11 +283,7 @@ class People extends gEditorial\Module
 		if ( ! empty( $args['slug'] ) )
 			return $data;
 
-		// are the same!
-		if ( $data['name'] !== Core\Text::nameFamilyFirst( $data['name'] ) )
-			return $data;
-
-		$slug = Core\Text::nameFamilyLast( $data['name'] );
+		$slug = Core\Text::formatSlug( Core\Text::nameFamilyLast( $data['name'] ) );
 
 		// avoid db queries if the same
 		if ( $data['slug'] !== $slug )
