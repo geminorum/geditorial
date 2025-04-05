@@ -7,6 +7,14 @@
     target: '#' + plugin._base + '-' + module + '-rendered'
   };
 
+  const u = {
+    inOut: (s, h) => {
+      $(s).fadeOut('fast', function () {
+        $(this).html(h).fadeIn();
+      });
+    }
+  };
+
   const app = {
     request: null,
     // init: function () {},
@@ -29,7 +37,8 @@
     },
 
     requestDone: function (data) {
-      $(s.target).html(data[plugin[module].attr]);
+      // $(s.target).html(data[plugin[module].attr]);
+      u.inOut(s.target, data[plugin[module].attr]);
     },
 
     requestFailed: function (data) {
