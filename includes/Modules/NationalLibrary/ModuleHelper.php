@@ -11,7 +11,6 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'national_library';
 
-	public static function linkBib( $bib, $link = TRUE )
 	const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
 	public static function getRemoteBody( $url )
@@ -22,6 +21,7 @@ class ModuleHelper extends gEditorial\Helper
 		] );
 	}
 
+	public static function linkBib( $bib, $link = TRUE, $html = NULL )
 	{
 		$url = sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) ;
 
@@ -34,10 +34,10 @@ class ModuleHelper extends gEditorial\Helper
 			'title'    => _x( 'Book Page on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
 			'rel'      => 'noreferrer',
 			'target'   => '_blank',
-		], $bib );
+		], $html ?? $bib );
 	}
 
-	public static function linkISBN( $isbn, $link = TRUE )
+	public static function linkISBN( $isbn, $link = TRUE, $html = NULL )
 	{
 		$base = 'https://opac.nlai.ir';
 		$url  = add_query_arg( [
@@ -64,7 +64,7 @@ class ModuleHelper extends gEditorial\Helper
 			'title'     => _x( 'Search ISBN on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
 			'rel'       => 'noreferrer',
 			'target'    => '_blank',
-		], Core\ISBN::prep( $isbn, TRUE ) );
+		], $html ?? Core\ISBN::prep( $isbn, TRUE ) );
 	}
 
 	public static function scrapeURLFromISBN( $isbn )
@@ -148,7 +148,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( WordPress\Strings::isEmpty( $bib ) )
 			return FALSE;
 
-		return self::scrapeFipaFromURL( sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) );
+		return self::scrapeFipaFromURL( self::linkBib( $bib, FALSE ) );
 	}
 
 	public static function getFibaByISBN( $isbn )
