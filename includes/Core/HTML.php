@@ -175,6 +175,21 @@ class HTML extends Base
 			.'</'.( $tag ?: 'div' ).'>';
 	}
 
+	public static function rows( $rows, $class = '', $data = [], $tag = 'ul', $sub_tag = 'li' )
+	{
+		if ( empty( $rows ) )
+			return '';
+
+		$html = '<'.( $tag ?: 'div' )
+			.' class="'.self::prepClass( '-rows', $class )
+			.'"'.self::propData( $data ).'>';
+
+			foreach ( $rows as $row )
+				$html.= self::row( $row, '', [], $sub_tag );
+
+		return $html.'</'.( $tag ?: 'div' ).'>';
+	}
+
 	public static function wrap( $html, $class = '', $block = TRUE, $data = [], $id = FALSE )
 	{
 		if ( ! $html && ! '0' === $html )
@@ -314,6 +329,9 @@ class HTML extends Base
 
 	public static function propData( $data )
 	{
+		if ( empty( $data ) )
+			return '';
+
 		if ( ! is_array( $data ) )
 			return ' data="'.trim( self::escape( $data ) ).'"';
 
@@ -1532,7 +1550,7 @@ class HTML extends Base
 		return self::wrap( $html, '-multiselect-wrap'.( $args['panel'] ? ' wp-tab-panel' : '' ) );
 	}
 
-	// TODO: must rename to `prepList()`
+	// NOTE: DEPRECATED: use `HTML::rows()`
 	public static function renderList( $items, $keys = FALSE, $list = 'ul' )
 	{
 		return $items ? self::tag( $list, '<li>'.implode( '</li><li>', $keys ? array_keys( $items ) : array_filter( $items ) ).'</li>' ) : '';
