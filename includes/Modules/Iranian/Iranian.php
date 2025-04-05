@@ -28,6 +28,10 @@ class Iranian extends gEditorial\Module
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckLocale( 'fa_IR' ),
+			'keywords' => [
+				'publicapi',
+				'persian',
+			],
 		];
 	}
 

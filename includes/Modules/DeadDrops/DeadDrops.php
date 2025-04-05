@@ -197,7 +197,6 @@ class DeadDrops extends gEditorial\Module
 		$wp_salt   = wp_salt();
 
 		$plain = trim( sprintf( '%s|%s|%s|%s', $secret, $user_id, $post_id, $wp_salt ) );
-		// self::_log( [ $plain, $hash ] );
 
 		return $wp_hasher->CheckPassword( $plain, $hash );
 	}

@@ -18,11 +18,15 @@ class Identified extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'identified',
-			'title'  => _x( 'Identified', 'Modules: Identified', 'geditorial-admin' ),
-			'desc'   => _x( 'Content Identification Management', 'Modules: Identified', 'geditorial-admin' ),
-			'icon'   => [ 'misc-16', 'fingerprint' ],
-			'access' => 'beta',
+			'name'     => 'identified',
+			'title'    => _x( 'Identified', 'Modules: Identified', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Identification Management', 'Modules: Identified', 'geditorial-admin' ),
+			'icon'     => [ 'misc-16', 'fingerprint' ],
+			'access'   => 'beta',
+			'keywords' => [
+				'identifier',
+				'publicapi',
+			],
 		];
 	}
 

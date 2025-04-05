@@ -29,6 +29,7 @@ class NationalLibrary extends gEditorial\Module
 				'book',
 				'publication',
 				'woocommerce',
+				'publicapi',
 				'persian',
 			],
 		];
@@ -393,7 +394,7 @@ class NationalLibrary extends gEditorial\Module
 		return $isbn;
 	}
 
-	public function get_fipa( $post, $fallback = FALSE, $raw = FALSE )
+	public function get_fipa_by_post( $post, $fallback = FALSE, $raw = FALSE )
 	{
 		$key = $this->hash( 'fipa', 'post', $post->ID );
 
@@ -423,9 +424,9 @@ class NationalLibrary extends gEditorial\Module
 			: $fallback;
 	}
 
-	public function get_fipa_parsed( $post = NULL, $fallback = FALSE )
+	public function get_fipa_by_post_parsed( $post = NULL, $fallback = FALSE )
 	{
-		if ( ! $data = $this->get_fipa( $post, FALSE, TRUE ) )
+		if ( ! $data = $this->get_fipa_by_post( $post, FALSE, TRUE ) )
 			return $fallback;
 
 		return ModuleHelper::parseFipa( $data );
@@ -585,7 +586,7 @@ class NationalLibrary extends gEditorial\Module
 
 	public function tab_callback_fipa_summary( $post = NULL, $item_name = '', $item_args = [] )
 	{
-		if ( $html = $this->get_fipa( $post ) )
+		if ( $html = $this->get_fipa_by_post( $post ) )
 			echo $this->wrap( $html, '-fipa-summary' );
 	}
 
@@ -611,7 +612,8 @@ class NationalLibrary extends gEditorial\Module
 		if ( empty( $this->cache[$posttype]['parsed'] ) )
 			return;
 
-		self::dump( $this->cache[$posttype]['parsed'] );
+		if ( Core\WordPress::isDev() )
+			self::dump( $this->cache[$posttype]['parsed'] );
 
 		if ( ! empty( $this->cache[$posttype]['parsed']['biblio'] ) )
 			echo ModuleHelper::linkBib( $this->cache[$posttype]['parsed']['biblio'] );
@@ -699,7 +701,7 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $extend || ! in_array( $extend, $support, TRUE  ) )
 			return $tips;
 
-		if ( ! $fipa = $this->get_fipa( $post, FALSE, TRUE ) )
+		if ( ! $fipa = $this->get_fipa_by_post( $post, FALSE, TRUE ) )
 			return $tips;
 
 		return array_merge( $tips,
@@ -731,7 +733,7 @@ class NationalLibrary extends gEditorial\Module
 			$html = Core\HTML::tableSimple( $data, [], FALSE, 'table' ); // not cached!
 
 		else if ( $post = WordPress\Post::get( $args['id'] ) )
-			$html = $this->get_fipa( $post ); // cached
+			$html = $this->get_fipa_by_post( $post ); // cached
 
 		if ( ! $html )
 			return $content;
