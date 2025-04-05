@@ -349,6 +349,7 @@ class Byline extends gEditorial\Module
 				'labels'       => $args['targets'],
 				'routes'       => $routes,
 				'searchselect' => Services\SearchSelect::namespace(),
+				'hints'        => Services\ObjectHints::namespace(),
 				'attribute'    => $this->constant( 'restapi_attribute' ),
 				'perpage'      => 5,
 			],

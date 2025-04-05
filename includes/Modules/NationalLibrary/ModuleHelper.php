@@ -364,4 +364,34 @@ class ModuleHelper extends gEditorial\Helper
 			'target'    => '_blank',
 		], $html ?? $criteria );
 	}
+
+	public static function generateHints( $raw, $post, $context, $queried )
+	{
+		$hints = [];
+
+		if ( ! $data = self::parseFipa( $raw ) )
+			return $hints;
+
+		if ( ! empty( $data['biblio'] ) )
+			$hints[] = [
+				'html'     => self::linkBib( $data['biblio'], TRUE, isset( $data['title'][0] ) ? $data['title'][0] : NULL ),
+				'class'    => static::classs( 'biblio' ),
+				'source'   => static::MODULE,
+				'priority' => 60,
+			];
+
+		if ( empty( $data['people'] ) )
+			return $hints;
+
+		foreach ( $data['people'] as $row )
+			$hints[] = [
+				'html'     => sprintf( '%s: %s', $row['label'], self::linkPeople( $row['raw'] ) ),
+				'data'     => isset( $row['parsed'][0]['data'] ) ? $row['parsed'][0]['data'] : [],
+				'class'    => static::classs( 'people', isset( $row['parsed'][0]['flags'] ) ? $row['parsed'][0]['flags'] : [] ),
+				'source'   => static::MODULE,
+				'priority' => $row['featured'] ? 6 : 8,
+			];
+
+		return $hints;
+	}
 }

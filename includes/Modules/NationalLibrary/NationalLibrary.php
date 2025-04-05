@@ -155,6 +155,7 @@ class NationalLibrary extends gEditorial\Module
 		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )
 			$this->filter( 'product_tabs', 1, 99, FALSE, 'woocommerce' );
 
+		$this->filter( 'objecthints_tips_for_post', 5, 12, FALSE, $this->base );
 		$this->action( 'template_newpost_side', 6, 8, FALSE, $this->base );
 		$this->filter( 'meta_initial_bibliographic', 4, 8, FALSE, $this->base );
 		$this->filter( 'meta_initial_isbn', 4, 8, FALSE, $this->base );
@@ -577,6 +578,29 @@ class NationalLibrary extends gEditorial\Module
 			return $this->cache[$post->post_type]['parsed']['isbn'];
 
 		return $meta;
+	}
+
+	public function objecthints_tips_for_post( $tips, $post, $extend, $context, $queried )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $tips;
+
+		$support = [
+			'default',
+			'byline',
+			'author',
+			'translator',
+			'subject',
+		];
+
+		if ( ! $extend || ! in_array( $extend, $support, TRUE  ) )
+			return $tips;
+
+		if ( ! $fipa = $this->get_fipa( $post, FALSE, TRUE ) )
+			return $tips;
+
+		return array_merge( $tips,
+			ModuleHelper::generateHints( $fipa, $post, $context, $queried ) );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )

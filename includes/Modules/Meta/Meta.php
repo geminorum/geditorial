@@ -321,6 +321,7 @@ class Meta extends gEditorial\Module
 		$this->filter( 'meta_field', 7, 15, 'tokens', $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, 'action', $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );
+		$this->filter( 'objecthints_tips_for_post', 5, 8, FALSE, $this->base );
 	}
 
 	public function importer_init()
@@ -661,6 +662,15 @@ class Meta extends gEditorial\Module
 		}
 
 		return $excludes;
+	}
+
+	public function objecthints_tips_for_post( $tips, $post, $extend, $context, $queried )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $tips;
+
+		return array_merge( $tips,
+			ModuleHelper::generateHints( $post, $extend, $context, $queried ) );
 	}
 
 	// @REF: `Template::getMetaField()`
