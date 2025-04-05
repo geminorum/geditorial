@@ -162,8 +162,10 @@ class ModuleHelper extends gEditorial\Helper
 	public static function parseFipa( $raw )
 	{
 		$data = [
-			'note'    => [],
+			'title'   => [],
+			'notes'   => [],
 			'subject' => [],
+			'people'  => [],
 		];
 
 		foreach ( $raw as $row ) {
@@ -171,18 +173,23 @@ class ModuleHelper extends gEditorial\Helper
 			if ( empty( $row[1] ) )
 				continue;
 
-			$text = trim( $row[1], '.;:' );
+			$text     = Core\Text::normalizeZWNJ( trim( $row[1], '.;:' ) );
+			$featured = FALSE;
 
 			switch ( $row[0] ) {
 
 				case 'يادداشت':
 
-					$data['note'][] = $text;
+					$data['notes'][] = $text;
+					break;
+
+				case 'عنوان و نام پديدآور':
+					$data['title'][] = $text;
 					break;
 
 				case 'عنوان قراردادی':
 
-					$data['title'] = $text;
+					$data['title'][] = $text;
 					break;
 
 				case 'رده بندی کنگره':
@@ -203,7 +210,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				case 'شماره کتابشناسی ملی':
 
-					$data['bibliographic'] = Core\Number::translate( $row[1] );
+					$data['biblio'] = Core\Number::translate( $row[1] );
 					break;
 
 				case 'موضوع':
@@ -217,9 +224,144 @@ class ModuleHelper extends gEditorial\Helper
 
 					$data['serie'] = $text;
 					break;
+
+				case 'سرشناسه':
+
+					$featured = TRUE;
+
+				case 'شناسه افزوده':
+
+					$text = str_ireplace( [ '--', '<br>', '<br/>', '<br />' ], '|', $text );
+					$text = str_ireplace( [ '*' ], '', $text );
+
+					$data['people'][] = [
+						'raw'      => $text,
+						'parsed'   => self::parsePeople( WordPress\Strings::getSeparated( $text, '|' ), $featured ),
+						'featured' => $featured,
+						'label'    => $row[0],
+					];
+
+					break;
 			}
 		}
 
 		return $data;
+	}
+
+	public static function parsePeople( $batch, $featured = FALSE )
+	{
+		$parsed = [];
+
+		foreach ( $batch as $raw ) {
+
+			if ( WordPress\Strings::isEmpty( $raw ) )
+				continue;
+
+			$raw   = Core\Text::normalizeZWNJ( $raw );
+			$raw   = Core\Text::normalizeWhitespaceUTF8( $raw );
+			$parts = WordPress\Strings::getSeparated( $raw, '،,' );
+			$count = count( $parts );
+
+			if ( 1 === $count ) {
+
+				$flags = [ 'undefined' ];
+
+				if ( $featured )
+					$flags[] = 'featured';
+
+				$parsed[] = [
+					'raw'   => $raw,
+					'flags' => $flags,
+					'data'  => [],
+				];
+
+			} else if ( $count > 1 ) {
+
+				$flags = [ 'has-name' ];
+				$data  = [
+					'fullname'   => sprintf( '%s %s', $parts[1], $parts[0] ),
+					'first_name' => $parts[1],
+					'last_name'  => $parts[0],
+				];
+
+				if ( $featured )
+					$flags[] = 'featured';
+
+				if ( $count > 2 ) {
+
+					if ( Core\Text::has( $parts[2], [ 'فروردین' ] ) )
+						$data['calendar'] = 'persian';
+
+					else if ( Core\Text::has( $parts[2], 'م.' ) )
+						$data['calendar'] = 'gregorian';
+
+					else if ( Core\Text::has( $parts[2], 'ق.' ) )
+						$data['calendar'] = 'islamic';
+
+					$dates = WordPress\Strings::getSeparated( str_ireplace( [
+						'م.',
+						'ق.',
+						'?',
+						'؟',
+						'فروردین',
+					], '', $parts[2] ), '-', 2 );
+
+					if ( count( $dates ) )
+						$flags[] = 'has-dates';
+
+					if ( isset( $dates[0] ) )
+						$data['born'] = Core\Number::translate( $dates[0] );
+
+					if ( isset( $dates[1] ) )
+						$data['dead'] = Core\Number::translate( $dates[1] );
+				}
+
+				if ( $count > 3 )
+					$data['relation'] = $parts[3];
+
+				$parsed[] = [
+					'raw'   => $raw,
+					'flags' => $flags,
+					'data'  => $data,
+				];
+			}
+		}
+
+		return $parsed;
+	}
+
+	public static function linkPeople( $criteria, $link = TRUE, $html = NULL )
+	{
+		$criteria = Core\Text::normalizeZWNJ( $criteria );
+
+		if ( WordPress\Strings::isEmpty( $criteria ) )
+			return FALSE;
+
+		$base = 'https://opac.nlai.ir';
+		$url  = add_query_arg( [
+			'simpleSearch.value'                           => urlencode( $criteria ),
+			'bibliographicLimitQueryBuilder.biblioDocType' => 'BF',
+			'simpleSearch.indexFieldId'                    => '220901',
+			'nliHolding'                                   => '', // 'nli',
+			'command'                                      => 'I',
+			'simpleSearch.tokenized'                       => 'true',
+			'classType'                                    => '0',
+			'pageStatus'                                   => '0',
+			'bibliographicLimitQueryBuilder.useDateRange'  => 'null',
+			'bibliographicLimitQueryBuilder.year'          => '',
+			'documentType'                                 => '',
+			'attributes.locale'                            => 'fa',
+		], $base.'/opac-prod/search/bibliographicSimpleSearchProcess.do' );
+
+		if ( ! $link )
+			return $url;
+
+		return Core\HTML::tag( 'a', [
+			'href'      => $url,
+			'data-isbn' => $criteria,
+			'title'     => _x( 'Search People on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
+			'rel'       => 'noreferrer',
+			'target'    => '_blank',
+		], $html ?? $criteria );
 	}
 }

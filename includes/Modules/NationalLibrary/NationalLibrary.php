@@ -509,8 +509,8 @@ class NationalLibrary extends gEditorial\Module
 
 		self::dump( $this->cache[$posttype]['parsed'] );
 
-		if ( ! empty( $this->cache[$posttype]['parsed']['bibliographic'] ) )
-			echo ModuleHelper::linkBib( $this->cache[$posttype]['parsed']['bibliographic'] );
+		if ( ! empty( $this->cache[$posttype]['parsed']['biblio'] ) )
+			echo ModuleHelper::linkBib( $this->cache[$posttype]['parsed']['biblio'] );
 
 		echo '<br />';
 
@@ -556,8 +556,8 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $this->_prime_current_request( $post->post_type ) )
 			return $meta;
 
-		if ( ! empty( $this->cache[$post->post_type]['parsed']['bibliographic'] ) )
-			return $this->cache[$post->post_type]['parsed']['bibliographic'];
+		if ( ! empty( $this->cache[$post->post_type]['parsed']['biblio'] ) )
+			return $this->cache[$post->post_type]['parsed']['biblio'];
 
 		return $meta;
 	}
