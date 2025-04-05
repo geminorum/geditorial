@@ -6,6 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
@@ -13,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 class NationalLibrary extends gEditorial\Module
 {
 	use Internals\Rewrites;
+	use Internals\RestAPI;
 
 	public static function module()
 	{
@@ -78,6 +80,7 @@ class NationalLibrary extends gEditorial\Module
 
 		$settings['_supports'] = [
 			'shortcode_support',
+			'restapi_restricted',
 		];
 
 		if ( $woocommerce )
@@ -110,6 +113,8 @@ class NationalLibrary extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
+			'restapi_namespace' => 'national-library',
+
 			'fipa_queryvar' => 'fipa',   // NOTE: value is an `ISBN`
 			'bib_queryvar'  => 'bib',    // NOTE: value is an `National Bibliographic Number`
 
@@ -174,6 +179,119 @@ class NationalLibrary extends gEditorial\Module
 
 			$this->_hook_newpost_hints( $screen->post_type );
 		}
+	}
+
+	public function setup_restapi()
+	{
+		$this->restapi_register_route( 'query', 'get', '(?P<code>.+)' );
+	}
+
+	public function restapi_query_get_permission( $request )
+	{
+		if ( self::const( 'GEDITORIAL_DISABLE_AUTH' ) )
+			return TRUE;
+
+		if ( ! $this->get_setting( 'restapi_restricted', TRUE ) )
+			return TRUE;
+
+		if ( ! current_user_can( 'read' ) && ! WordPress\User::isSuperAdmin() )
+			return Services\RestAPI::getErrorForbidden();
+
+		return TRUE;
+	}
+
+	public function restapi_query_get_arguments()
+	{
+		return [
+			'code' => [
+				'required'    => TRUE,
+				'description' => esc_html_x( 'The ISBN or Biblio Code to process.', 'RestAPI: Arg Description', 'geditorial-national-library' ),
+
+				'validate_callback' => [ $this, 'restapi_query_get_code_validate_callback' ],
+			],
+		];
+	}
+
+	public function restapi_query_get_code_validate_callback( $param, $request, $key )
+	{
+		if ( empty( $param ) )
+			return Services\RestAPI::getErrorArgNotEmpty( $key );
+
+		return TRUE;
+	}
+
+	public function restapi_query_get_callback( $request )
+	{
+		return rest_ensure_response(
+			$this->get_query_summary(
+				urldecode( $request['code'] ),
+				$request['context']
+			)
+		);
+	}
+
+	public function get_query_summary( $code, $context = 'markup' )
+	{
+		switch ( $context ) {
+
+			default:
+			case 'view':
+			case 'markup':
+
+				$data = $this->get_fipa_by_code( $code );
+
+				if ( self::isError( $data ) )
+					return $data;
+
+				return [ 'html' => $data ];
+
+			case 'edit':
+			case 'parsed':
+
+				if ( ! $data = $this->get_fipa_by_code( $code, FALSE, TRUE ) )
+					return Services\RestAPI::getErrorInvalidData();
+
+				return [ 'date' => ModuleHelper::parseFipa( $data ) ];
+		}
+
+		return Services\RestAPI::getErrorSomethingIsWrong();
+	}
+
+	public function get_fipa_by_code( $code, $fallback = FALSE, $raw = FALSE )
+	{
+		$code = Core\Number::translate( $code );
+		$code = Core\Text::stripAllSpaces( $code );
+		$code = Core\Text::trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $code ) );
+
+		if ( WordPress\Strings::isEmpty( $code ) )
+			return Services\RestAPI::getErrorInvalidData();
+
+		$key = $this->hash( 'fipa', 'code', $code );
+
+		if ( Core\WordPress::isFlush() )
+			delete_transient( $key );
+
+		if ( FALSE === ( $data = get_transient( $key ) ) ) {
+
+			if ( $isbn = Core\ISBN::sanitize( $code ) )
+				$data = ModuleHelper::getFibaByISBN( $isbn );
+
+			else if ( Core\Validation::isBibliographic( $code ) )
+				$data = ModuleHelper::getFibaByBib( $code );
+
+			else
+				$data = NULL; // avoid repeatable requests
+
+			if ( FALSE !== $data )
+				set_transient( $key, $data, Core\Date::WEEK_IN_SECONDS );
+		}
+
+		if ( $raw )
+			return $data ?: $fallback;
+
+		return $data
+			? Core\HTML::tableSimple( $data, [], FALSE, 'table' )
+			: $fallback;
 	}
 
 	private function _hook_newpost_hints( $posttype )
