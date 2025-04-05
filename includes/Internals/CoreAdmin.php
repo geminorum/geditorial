@@ -229,7 +229,7 @@ trait CoreAdmin
 					], Visual::getPostTypeIconMarkup( $this->cache['core_admin_posttypes'][$posttype] ) );
 				}
 
-				echo Core\HTML::wrap( Core\HTML::renderList( $list ), '-icon-list -supported-posttype' );
+				echo Core\HTML::wrap( Core\HTML::rows( $list ), '-icon-list -supported-posttype' );
 
 			}, 10, 3 );
 

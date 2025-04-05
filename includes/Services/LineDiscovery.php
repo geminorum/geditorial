@@ -52,7 +52,7 @@ class LineDiscovery extends gEditorial\Service
 		], $request->get_json_params() );
 
 		if ( empty( $queried['raw'] ) )
-			return new \WP_Error( 'empty_raw_Data', gEditorial\Plugin::invalid( FALSE ) );
+			return new \WP_Error( 'empty_raw_data', gEditorial\Plugin::invalid( FALSE ) );
 
 		switch ( $queried['target'] ) {
 
@@ -75,8 +75,8 @@ class LineDiscovery extends gEditorial\Service
 				$response = self::_get_bulk_posts( $queried );
 				break;
 
-				default:
-					return RestAPI::getErrorSomethingIsWrong();
+			default:
+				return RestAPI::getErrorSomethingIsWrong();
 		}
 
 		return new \WP_REST_Response( $response, 200 );

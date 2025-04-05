@@ -25,7 +25,7 @@ trait CoreToolBox
 						'class' => [ 'button', '-button' ],
 					], $link['title'] );
 
-				echo Core\HTML::wrap( Core\HTML::renderList( $links ), '-toolbox-links' );
+				echo Core\HTML::wrap( Core\HTML::rows( $links ), '-toolbox-links' );
 			}
 
 		echo '</div>';

@@ -345,10 +345,12 @@ class Byline extends gEditorial\Module
 			],
 			'config' => [
 				'linked'       => $linked,
+				'context'      => $args['context'],
 				'targets'      => array_keys( $args['targets'] ),
 				'labels'       => $args['targets'],
 				'routes'       => $routes,
 				'searchselect' => Services\SearchSelect::namespace(),
+				// 'discovery'    => Services\LineDiscovery::namespace(), // NOT USED YET
 				'hints'        => Services\ObjectHints::namespace(),
 				'attribute'    => $this->constant( 'restapi_attribute' ),
 				'perpage'      => 5,

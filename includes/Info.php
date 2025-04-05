@@ -676,10 +676,7 @@ class Info extends WordPress\Main
 	// TODO: add click to select
 	public static function renderHelpTabList( $list )
 	{
-		if ( ! $list )
-			return;
-
-		echo Core\HTML::wrap( Core\HTML::renderList( $list ), [
+		echo Core\HTML::wrap( Core\HTML::rows( $list ), [
 			static::classs( 'help-tab-content' ),
 			static::MODULE ? sprintf( '-%s', static::MODULE ) : '',
 			'-help-tab-content',

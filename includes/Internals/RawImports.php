@@ -79,7 +79,7 @@ trait RawImports
 			], $this->get_string( 'button', 'wp_importer', 'misc',
 				_x( 'Go to Imports', 'Module: Importer Button', 'geditorial' ) ) );
 
-			echo Core\HTML::wrap( Core\HTML::renderList( (array) $link ), '-toolbox-links' );
+			echo Core\HTML::wrap( Core\HTML::rows( (array) $link ), '-toolbox-links' );
 
 		echo '</div>';
 	}

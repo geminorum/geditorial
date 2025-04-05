@@ -24,9 +24,6 @@ class Phonebook extends gEditorial\Module
 
 	// @SEE `ContactCards` module
 
-	// TODO: optional fallback on `export` context into available sub-contents via `geditorial_meta_field_empty` filter
-	// TODO: remove duplicates via tools/aftercare/bulk-actions @see: `Iranian::_render_tools_card_purge_duplicates()`
-
 	public static function module()
 	{
 		return [
@@ -407,9 +404,6 @@ class Phonebook extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	// TODO: auto audit: `term_content_has_phone_number`
-	// https://wordpress.org/plugins/search-clickable-phone-number-for-mobile-device/
-	// preg_match_all( '/\+{0,1}[0-9]{0,2}[ .-]*\(*[0-9]{3}\)*[ .-]*[0-9]{3}[ .-]*[0-9]{4}/', $content, $matches ) ) {
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )

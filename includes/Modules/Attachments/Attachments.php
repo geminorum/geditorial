@@ -455,7 +455,7 @@ class Attachments extends gEditorial\Module
 						$list[] = sprintf( _x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
 							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
 
-					return $list ? Core\HTML::renderList( $list ) : Helper::htmlEmpty();
+					return $list ? Core\HTML::rows( $list ) : Helper::htmlEmpty();
 				},
 			],
 			'sizes' => [

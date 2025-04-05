@@ -350,7 +350,7 @@ trait PairedCore
 			'key'     => $this->key,
 			'class'   => '-paired-summary',
 			'title'   => sprintf( $template, WordPress\Strings::getCounted( count( $items ) ) ),
-			'content' => Core\HTML::wrap( Core\HTML::renderList( $posts ), 'list-columns -post-columns' ),
+			'content' => Core\HTML::wrap( Core\HTML::rows( $posts ), 'list-columns -post-columns' ),
 		];
 
 		return $list;
@@ -392,7 +392,7 @@ trait PairedCore
 			'key'     => $this->key,
 			'class'   => '-paired-summary',
 			'title'   => sprintf( $template, WordPress\Strings::getCounted( count( $items ) ) ),
-			'content' => Core\HTML::wrap( Core\HTML::renderList( $posts ), 'list-columns -post-columns' ),
+			'content' => Core\HTML::wrap( Core\HTML::rows( $posts ), 'list-columns -post-columns' ),
 		];
 
 		return $list;

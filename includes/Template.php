@@ -1035,7 +1035,7 @@ class Template extends WordPress\Main
 
 			/* translators: `%s`: post-type name */
 			Core\HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
-			echo Core\HTML::renderList( $list );
+			echo Core\HTML::rows( $list );
 
 		} else if ( is_null( $empty ) ) {
 

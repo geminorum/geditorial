@@ -306,7 +306,7 @@ trait PostTypeFields
 					|| NULL === WordPress\PostType::object( $post ) ) {
 
 					/**
-					 * falls back to `post` if posttype is not registered
+					 * Falls back to `post` if post-type is not registered.
 					 */
 
 					$access = in_array( $context, [ 'edit' ], TRUE )
@@ -318,7 +318,7 @@ trait PostTypeFields
 				} else {
 
 					/**
-					 * this is cap check fallback to the parent post
+					 * This is cap check fallback to the parent post
 					 * each field is go through this check individually
 					 * so no need to check for `edit_post_meta` for the field:
 					 * `user_can( $user_id, 'edit_post_meta', $post->ID, $metakey )`

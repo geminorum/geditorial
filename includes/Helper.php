@@ -677,7 +677,7 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Generates a Security Token for authorization.
-	 * @todo move to services
+	 * TODO move to services
 	 *
 	 * @param string $context
 	 * @param string $subject

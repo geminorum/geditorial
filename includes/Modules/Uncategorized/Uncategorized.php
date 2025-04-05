@@ -302,7 +302,7 @@ class Uncategorized extends gEditorial\Module
 					foreach ( $list as $taxonomy => $terms )
 						$list[$taxonomy] = sprintf( '<code>%s</code>: %s', $taxonomy, WordPress\Strings::getJoined( $terms ) );
 
-					return Core\HTML::renderList( $list );
+					return Core\HTML::rows( $list );
 				},
 			],
 

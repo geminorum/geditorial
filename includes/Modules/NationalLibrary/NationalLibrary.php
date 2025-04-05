@@ -291,7 +291,7 @@ class NationalLibrary extends gEditorial\Module
 
 	public function get_fipa( $post, $fallback = FALSE, $raw = FALSE )
 	{
-		$key = $this->hash( 'fipa', $post->ID );
+		$key = $this->hash( 'fipa', 'post', $post->ID );
 
 		if ( Core\WordPress::isFlush() )
 			delete_transient( $key );
@@ -479,7 +479,6 @@ class NationalLibrary extends gEditorial\Module
 		return (bool) Core\ISBN::validate( $isbn );
 	}
 
-	// TODO: report error button on front-end
 	public function tab_callback_fipa_summary( $post = NULL, $item_name = '', $item_args = [] )
 	{
 		if ( $html = $this->get_fipa( $post ) )

@@ -63,13 +63,13 @@ class PostTypeFields extends gEditorial\Service
 	}
 
 	/**
-	 * Checks the availability of posttype field for given posttype via certain module.
+	 * Checks the availability of post-type field for given post-type via certain module.
 	 * OLD: `Helper::isPostTypeFieldAvailable()`
 	 *
-	 * @param  string $field_key
-	 * @param  string $posttype
-	 * @param  string $module
-	 * @return mixed  $available
+	 * @param string $field_key
+	 * @param string $posttype
+	 * @param string $module
+	 * @return mixed $available
 	 */
 	public static function isAvailable( $field_key, $posttype, $module = 'meta' )
 	{
@@ -245,15 +245,16 @@ class PostTypeFields extends gEditorial\Service
 			'id'       => NULL,
 			'fallback' => FALSE,
 			'default'  => FALSE,
-			'noaccess' => NULL, // returns upon no access, `NULL` for `default` arg
-			'context'  => 'view', // for access checks // `FALSE` to disable checks
-			'filter'   => FALSE, // or `__do_embed_shortcode`
-			'trim'     => FALSE, // or number of chars
+			'noaccess' => NULL,     // returns upon no access, `NULL` for `default` argument
+			'context'  => 'view',   // access checks, `FALSE` to disable checks
+			'filter'   => FALSE,    // or `__do_embed_shortcode`
+			'prefix'   => FALSE,    // prefix the value with field prop
+			'trim'     => FALSE,    // or number of chars
 			'before'   => '',
 			'after'    => '',
 		], $atts );
 
-		// NOTE: may come from posttype field args
+		// NOTE: may come from post-type field argument
 		if ( is_null( $args['default'] ) )
 			$args['default'] = '';
 
@@ -309,6 +310,9 @@ class PostTypeFields extends gEditorial\Service
 
 		if ( $args['filter'] && is_callable( $args['filter'] ) )
 			$meta = call_user_func( $args['filter'], $meta );
+
+		if ( $args['prefix'] )
+			$meta = sprintf( '%s: %s', isset( $field[$args['prefix']] ) ? $field[$args['prefix']] : $args['prefix'], $meta );
 
 		if ( $meta )
 			return $args['before'].( $args['trim'] ? WordPress\Strings::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];

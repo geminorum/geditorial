@@ -297,7 +297,7 @@ class Socialite extends gEditorial\Module
 				$list[$field] = $this->_get_field_link( $field,
 					$this->_get_field_url( $meta, $field, $term->taxonomy ), $term->taxonomy );
 
-		return $this->wrap( Core\HTML::renderList( $list ), $extra );
+		return $this->wrap( Core\HTML::rows( $list ), $extra );
 	}
 
 	private function _get_field_url( $value, $key, $taxonomy = FALSE )
@@ -422,6 +422,6 @@ class Socialite extends gEditorial\Module
 		if ( empty( $list ) )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( Core\HTML::renderList( $list ), $tag, $args );
+		return gEditorial\ShortCode::wrap( Core\HTML::rows( $list ), $tag, $args );
 	}
 }
