@@ -12,6 +12,16 @@ class ModuleHelper extends gEditorial\Helper
 	const MODULE = 'national_library';
 
 	public static function linkBib( $bib, $link = TRUE )
+	const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+
+	public static function getRemoteBody( $url )
+	{
+		return Core\HTTP::getHTML( $url, [
+			'timeout'    => 30,
+			'user-agent' => static::USER_AGENT,
+		] );
+	}
+
 	{
 		$url = sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) ;
 
@@ -78,7 +88,7 @@ class ModuleHelper extends gEditorial\Helper
 			'attributes.locale'                            => 'fa',
 		], $base.'/opac-prod/search/bibliographicSimpleSearchProcess.do' );
 
-		if ( ! $body = Core\HTTP::getHTML( $search, [ 'timeout' => 30 ] ) )
+		if ( ! $body = self::getRemoteBody( $search ) )
 			return FALSE;
 
 		$dom = @new \Rct567\DomQuery\DomQuery( trim( $body ) );
@@ -94,7 +104,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $url )
 			return FALSE;
 
-		if ( ! $body = Core\HTTP::getHTML( $url, [ 'timeout' => 30 ] ) )
+		if ( ! $body = self::getRemoteBody( $url ) )
 			return FALSE;
 
 		$data = [];
