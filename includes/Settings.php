@@ -1662,6 +1662,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_restapi_restricted( $description = NULL, $default = 1 )
+	{
+		return [
+			'field'       => 'restapi_restricted',
+			'title'       => _x( 'Restricted API', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Access Rest-API requires logged-in users.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default,
+		];
+	}
+
 	public static function sub( $default = 'general' )
 	{
 		return trim( self::req( 'sub', $default ) );

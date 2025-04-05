@@ -186,20 +186,6 @@ class NationalLibrary extends gEditorial\Module
 		$this->restapi_register_route( 'query', 'get', '(?P<code>.+)' );
 	}
 
-	public function restapi_query_get_permission( $request )
-	{
-		if ( self::const( 'GEDITORIAL_DISABLE_AUTH' ) )
-			return TRUE;
-
-		if ( ! $this->get_setting( 'restapi_restricted', TRUE ) )
-			return TRUE;
-
-		if ( ! current_user_can( 'read' ) && ! WordPress\User::isSuperAdmin() )
-			return Services\RestAPI::getErrorForbidden();
-
-		return TRUE;
-	}
-
 	public function restapi_query_get_arguments()
 	{
 		return [

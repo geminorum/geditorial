@@ -70,6 +70,7 @@ class Iranian extends gEditorial\Module
 		}
 
 		$settings['posttypes_option'] = 'posttypes_option';
+		$settings['_supports'][]      = 'restapi_restricted';
 
 		$settings['_roles']['reports_roles'] = [ NULL, $roles ];
 		$settings['_roles']['tools_roles']   = [ NULL, $roles ];

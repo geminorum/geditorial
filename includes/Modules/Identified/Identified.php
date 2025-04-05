@@ -104,6 +104,7 @@ class Identified extends gEditorial\Module
 		}
 
 		$settings['_frontend'][] = 'admin_rowactions';
+		$settings['_supports'][] = 'restapi_restricted';
 
 		$settings['_import'] = [
 			'post_status',

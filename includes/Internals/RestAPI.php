@@ -103,6 +103,9 @@ trait RestAPI
 		if ( self::const( 'GEDITORIAL_DISABLE_AUTH' ) )
 			return TRUE;
 
+		if ( ! $this->get_setting( 'restapi_restricted', TRUE ) )
+			return TRUE;
+
 		if ( ! current_user_can( 'read' ) && ! WordPress\User::isSuperAdmin() )
 			return Services\RestAPI::getErrorForbidden();
 
