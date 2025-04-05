@@ -29,6 +29,9 @@
           <AppMessage :message="(!onLine ? i18n.offline : showBackOnline ? i18n.online : searchMessage)" :state="searchState" />
 
         </div>
+        <div class="-hints" v-show="hints">
+          <AppHint v-for="(hint, offset) in hints" :hint="hint" :offset="offset" />
+        </div>
       </div>
       <Transition name="bounce">
       <div class="-newitem" v-show="newitem">
@@ -103,6 +106,7 @@
 
 <script>
 import { debounce } from 'lodash-es';
+import { omitDeep } from '../../js-utils/object.v1';
 import apiFetch from '@wordpress/api-fetch'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
 import { addQueryArgs } from '@wordpress/url'; // https://github.com/WordPress/gutenberg/tree/trunk/packages/url
 
@@ -118,6 +122,8 @@ export default {
       summarySpinner: false,
       summaryMessage: '',
       summaryState: 'initial',
+
+      hints: [],
 
       results: {},
       searchSpinner: false,
@@ -278,7 +284,7 @@ export default {
         this.focusSearch();
       });
     },
-    renderSummary () {
+    renderSummary (lite) {
       this.summarySpinner = true;
 
       apiFetch({
@@ -292,13 +298,14 @@ export default {
           // this.summaryMessage = data[this.config.attribute].rendered;
           // this.items = data[this.config.attribute].terms;
           this.summaryMessage = data[this.config.attribute];
-          this.items = data[this.linked.related];
+          if (!lite) this.items = data[this.linked.related];
         }).catch((error) => {
           this.summarySpinner = false;
           this.summaryState = 'wrong';
           this.summaryMessage = error.message;
         });
     },
+
     doStore (callback) {
       this.summarySpinner = true;
 
@@ -306,10 +313,13 @@ export default {
         method: 'POST',
         path: this.linked.rest,
         data: {
-          [(this.linked.related)]: this.items
+          [(this.linked.related)]: omitDeep(this.items, [
+            '_order', // orders are saved via `doSort()`
+            'extra', // no need to pass extra info
+          ]),
         }
       }).then((data) => {
-        // this.renderSummary(); // NO NEED
+        this.renderSummary(true);
         this.state = 'success';
         this.summarySpinner = false;
         if(callback) callback();
@@ -319,6 +329,27 @@ export default {
         this.message = error.message;
       });
     },
+
+    fetchHints() {
+      // no need for spin!
+
+      apiFetch({
+        path: addQueryArgs( this.config.hints + '/tips', {
+          id: this.linked.id,
+          target: 'post',
+          extend: this.config.attribute,
+          context: 'edit', // this.config.context, // this.plugin.appname,
+        } )
+      }).then((data) => {
+          console.log(data);
+          this.hints = data;
+      }).catch((error) => {
+          console.log(error);
+          this.state = 'wrong';
+          this.message = error.message;
+      });
+    },
+
     doQuery (changed) {
       this.searchSpinner = true;
 
@@ -332,7 +363,7 @@ export default {
             target: 'term',
             // context: ,
             // context: this.plugin.appname ? this.plugin.appname : 'assignment-dock',
-            context: this.appname,
+            context: this.plugin.appname,
             taxonomy: this.config.targets.join(','),
             page: this.searchPage,
             per: this.config.perpage || 5,
@@ -353,6 +384,7 @@ export default {
           this.focusSearch();
         });
     },
+
     doSort () {
       this.summarySpinner = true;
 
@@ -365,7 +397,7 @@ export default {
         }).then((data) => {
           // this.items = data;
 
-          this.renderSummary();
+          this.renderSummary(true);
           this.summarySpinner = false;
           this.state = 'saved';
           // this.message = this.i18n.sorted;
@@ -402,6 +434,7 @@ export default {
     this.$nextTick(() => {
       this.renderSummary();
       this.doQuery();
+      this.fetchHints();
     });
 
     window.addEventListener('online', this.updateOnlineStatus);
