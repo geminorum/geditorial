@@ -274,8 +274,11 @@ class Attachments extends gEditorial\Module
 
 			echo $this->get_column_icon( FALSE, 'images-alt2', _x( 'Attachments', 'Row Icon Title', 'geditorial-attachments' ) );
 
-			/* translators: `%s`: attachments count */
-			$title = sprintf( _nx( '%s Attachment', '%s Attachments', $count, 'Noop', 'geditorial-attachments' ), Core\Number::format( $count ) );
+			$title = sprintf(
+				/* translators: `%s`: attachments count */
+				_nx( '%s Attachment', '%s Attachments', $count, 'Noop', 'geditorial-attachments' ),
+				Core\Number::format( $count )
+			);
 
 			if ( current_user_can( 'upload_files' ) )
 				echo Core\HTML::tag( 'a', [
@@ -528,7 +531,6 @@ class Attachments extends gEditorial\Module
 		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
-	// TODO: bulk action to delete all attachments with parent as supported post
 	protected function render_tools_html( $uri, $sub )
 	{
 		echo Settings::toolboxColumnOpen( _x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );

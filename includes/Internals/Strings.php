@@ -184,9 +184,9 @@ trait Strings
 	}
 
 	// OLD: `subcontent_get_empty_notice()`
-	protected function get_notice_for_empty( $context = 'display', $string_key = 'empty' )
+	protected function get_notice_for_empty( $context = 'display', $string_key = 'empty', $check_thrift = TRUE )
 	{
-		if ( $this->is_thrift_mode() )
+		if ( $check_thrift && $this->is_thrift_mode() )
 			return '<div class="-placeholder-empty"></div>';
 
 		return Core\HTML::tag( 'p', [
@@ -195,7 +195,7 @@ trait Strings
 	}
 
 	// OLD: `subcontent_get_noaccess_notice()`
-	protected function get_notice_for_noaccess( $context = 'display', $string_key = 'noaccess' )
+	protected function get_notice_for_noaccess( $context = 'display', $string_key = 'noaccess', $check_thrift = TRUE )
 	{
 		$default = _x( 'You do not have the necessary permission to manage the information.', 'Internal: Strings: No-Access Notice', 'geditorial' );
 

@@ -51,7 +51,7 @@ class Byline extends gEditorial\Module
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
 			'_roles'            => [
-				'manage_roles'  => [ _x( 'Roles that can manage, edit and delete relations.', 'Setting Description', 'geditorial-byline' ), $roles ],
+				'manage_roles'  => [ _x( 'Roles that can manage, edit and delete <strong>relations</strong>.', 'Setting Description', 'geditorial-byline' ), $roles ],
 				'reports_roles' => [ NULL, $roles ],
 				'assign_roles'  => [ NULL, $roles ],
 			],
@@ -217,7 +217,7 @@ class Byline extends gEditorial\Module
 						'callback' => function ( $post ) {
 
 							ModuleTemplate::renderDefault( [
-								'default'  => $this->get_notice_for_empty( 'tabs' ),
+								'default'  => $this->get_notice_for_empty( 'tabs', 'empty', FALSE ),
 								'template' => 'cardsrow',
 								'hidden'   => TRUE,
 								'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
@@ -392,7 +392,7 @@ class Byline extends gEditorial\Module
 			Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				ModuleTemplate::renderDefault( [
-					'default'  => $this->get_notice_for_empty( $target ),
+					'default'  => $this->get_notice_for_empty( $target, 'empty', FALSE ),
 					'template' => 'cardsrow',
 					'hidden'   => TRUE,
 					'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
@@ -423,7 +423,7 @@ class Byline extends gEditorial\Module
 			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $object, [
 				'context'  => 'mainbutton',
 				'target'   => 'mainapp', // OR: `summaryreport`
-				'maxwidth' => '820px',
+				'maxwidth' => '800px',
 			] ), 'field-wrap -buttons' );
 	}
 
@@ -663,7 +663,7 @@ class Byline extends gEditorial\Module
 				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'People', 'Setting Default', 'geditorial-byline' ) ),
 				'callback' => function () use ( $post_id ) {
 					ModuleTemplate::renderDefault( [
-						'default'  => $this->get_notice_for_empty( 'woocommerce' ),
+						'default'  => $this->get_notice_for_empty( 'woocommerce', 'empty', FALSE ),
 						'template' => 'cardsrow',
 						'hidden'   => TRUE,
 						'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
@@ -691,7 +691,7 @@ class Byline extends gEditorial\Module
 				'module'     => $this->key,
 				'linked'     => $post->ID,
 				'target'     => 'summaryreport',
-				// 'max-width'  => '420',
+				'max-width'  => '800',
 				// 'max-height' => '310',
 			],
 		] );
@@ -716,6 +716,8 @@ class Byline extends gEditorial\Module
 				] );
 
 			}, -4, 4 );
+
+		Scripts::enqueueColorBox();
 
 		return TRUE;
 	}

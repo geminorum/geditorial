@@ -214,7 +214,7 @@ class Meta extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbox_title'  => _x( 'Metadata', 'MetaBox: `mainbox_title`', 'geditorial-meta' ),
 			'mainbox_action' => _x( 'Configure', 'MetaBox: `mainbox_action`', 'geditorial-meta' ),
 		];
@@ -371,7 +371,7 @@ class Meta extends gEditorial\Module
 
 			$fields = $this->get_posttype_fields( $screen->post_type );
 
-			// bail if no fields enabled for this posttype
+			// bail if no fields enabled for this post-type
 			if ( ! count( $fields ) )
 				return;
 

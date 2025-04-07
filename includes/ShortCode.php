@@ -302,18 +302,24 @@ class ShortCode extends WordPress\Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
-	// posttype as title of the list
+	/**
+	 * Retrieves post-type as title of the list
+	 *
+	 * @param string|object $posttype
+	 * @param array $atts
+	 * @return string
+	 */
 	public static function posttypeTitle( $posttype = NULL, $atts = [] )
 	{
 		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return '';
 
 		$args = self::atts( [
-			'title'          => NULL, // FALSE to disable
-			'title_cb'       => FALSE, // callback for title
-			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
+			'title'          => NULL,                             // `FALSE` to disable
+			'title_cb'       => FALSE,                            // callback for title
+			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE, // callback for title attr
+			'title_title_cb' => FALSE,                            // callback for title attribute
 			'title_tag'      => 'h3',
 			'title_anchor'   => '%2$s',
 			'title_class'    => '-title',
@@ -382,11 +388,11 @@ class ShortCode extends WordPress\Main
 			return '';
 
 		$args = self::atts( [
-			'title'          => NULL, // FALSE to disable
-			'title_cb'       => FALSE, // callback for title
-			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
+			'title'          => NULL,                             // `FALSE` to disable
+			'title_cb'       => FALSE,                            // callback for title
+			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE, // callback for title attr
+			'title_title_cb' => FALSE,                            // callback for title attribute
 			'title_tag'      => 'h3',
 			'title_anchor'   => '%2$s',
 			'title_class'    => '-title',

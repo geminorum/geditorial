@@ -239,11 +239,11 @@ class Settings extends WordPress\Main
 	}
 
 	/**
-	 * Returns the filtred list of general excluded post-types.
+	 * Returns the filtered list of general excluded post-types.
 	 *
-	 * @param  array  $extra
-	 * @param  string $context
-	 * @return array  $excluded
+	 * @param array $extra
+	 * @param string $context
+	 * @return array $excluded
 	 */
 	public static function posttypesExcluded( $extra = [], $context = 'settings' )
 	{
@@ -2047,6 +2047,7 @@ class Settings extends WordPress\Main
 			case '_import'     : return [ _x( 'Import Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_reports'    : return [ _x( 'Report Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_printpage'  : return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_shortcode'  : return [ _x( 'ShortCode Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_strings'    : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_tabs'       : return [ _x( 'Content Tabs', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_fields'     : return [ _x( 'Data Fields', 'Settings: Section Title', 'geditorial-admin' ), NULL ];

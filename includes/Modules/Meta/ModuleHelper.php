@@ -40,7 +40,8 @@ class ModuleHelper extends gEditorial\Helper
 			)
 		);
 
-		$overview = WordPress\Post::overview( $post, 'hints' );
+		if ( ! $overview = WordPress\Post::overview( $post, 'hints' ) )
+			$overview = WordPress\Post::edit( $post );
 
 		foreach ( $fields as $field_key ) {
 
@@ -55,7 +56,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( $meta )
 				$hints[] = [
 					'text'     => $meta,
-					'link'     => $overview,
+					'link'     => $overview ?: '',
 					'title'    => sprintf( '%s :: %s', $field['title'] ?: $field['name'], $field['description'] ?: '' ),
 					'class'    => static::classs( $field_key ),
 					'source'   => static::MODULE,

@@ -19,9 +19,9 @@ trait PostTypeFields
 	/**
 	 * Retrieves a registered field for a post-type.
 	 *
-	 * @param  string $field_key
-	 * @param  string $posttype
-	 * @return array  $field
+	 * @param string $field_key
+	 * @param string $posttype
+	 * @return array $field
 	 */
 	public function get_posttype_field_args( $field_key, $posttype )
 	{
@@ -216,7 +216,7 @@ trait PostTypeFields
 				'metakey'     => $this->get_postmeta_key( $field ), // for referencing
 				'sanitize'    => NULL, // callback
 				'prep'        => NULL, // callback
-				'pattern'     => NULL, // HTML5 input pattern
+				'pattern'     => NULL, // HTML input pattern
 				'default'     => NULL, // currently only on rest
 				'datatype'    => NULL, // DataType Class
 				'icon'        => 'smiley',
@@ -229,7 +229,7 @@ trait PostTypeFields
 				'export_title'   => NULL,    // the export column title
 				'data_unit'      => NULL,    // the unit which in the data is stored
 				'data_length'    => NULL,    // typical length of the data // FIXME: implement this!
-				'autocomplete'   => 'off',   // NULL to drop the attr // FIXME: implement this!
+				'autocomplete'   => 'off',   // NULL to drop the attribute // FIXME: implement this!
 				// 'discovery'      => FALSE,   // REGEX string or callback array
 
 				'values'      => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
@@ -255,17 +255,17 @@ trait PostTypeFields
 	}
 
 	/**
-	 * Checks for accessing a posttype field.
+	 * Checks for accessing a post-type field.
 	 *
 	 * $arg `TRUE`/`FALSE` for public/private
-	 * $arg `NULL` for posttype `read`/`edit_post` capability check
+	 * $arg `NULL` for post-type `read`/`edit_post` capability check
 	 * $arg String for strait capability check
 	 *
-	 * @param  array    $field
-	 * @param  mixed    $post
-	 * @param  string   $context
-	 * @param  null|int $user_id
-	 * @return bool     $access
+	 * @param array $field
+	 * @param mixed $post
+	 * @param string $context
+	 * @param null|int $user_id
+	 * @return bool $access
 	 */
 	public function access_posttype_field( $field, $post = NULL, $context = 'view', $user_id = NULL )
 	{
@@ -345,9 +345,9 @@ trait PostTypeFields
 	/**
 	 * Sanitizes given data for a post-type field.
 	 *
-	 * @param  mixed $data
-	 * @param  array $field
-	 * @param  mixed $post
+	 * @param mixed $data
+	 * @param array $field
+	 * @param mixed $post
 	 * @return mixed $sanitized
 	 */
 	public function sanitize_posttype_field( $data, $field, $post = FALSE )
@@ -1032,17 +1032,17 @@ trait PostTypeFields
 	// NOTE: excludes are for other modules
 	protected function posttypefields_custom_column_excludes( $fields )
 	{
-		return array_keys( $fields ); // by default we display all fields
+		return array_keys( $fields ); // By default we display all fields
 	}
 
 	// NOTE: helps devise actions to make room for other modules
 	protected function posttypefields__hook_default_rows( $posttype )
 	{
-		// by default we display all fields
+		// By default we display all fields
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_all_posttypefields' ], 5, 6 );
 
-		// for EXAMPLE: display quickedit only
-		// add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_quickedit_posttypefields' ], 5, 6 );
+		// For EXAMPLE: display quick-edit only
+		// `add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_quickedit_posttypefields' ], 5, 6 );`
 	}
 
 	public function column_row_all_posttypefields( $post, $before, $after, $module, $fields, $excludes )

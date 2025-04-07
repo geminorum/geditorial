@@ -46,9 +46,9 @@ class PostTypeFields extends gEditorial\Service
 	/**
 	 * Retrieves the post meta-key for given field.
 	 *
-	 * @param  string $field_key
-	 * @param  string $module
-	 * @param  bool   $check
+	 * @param string $field_key
+	 * @param string $module
+	 * @param bool $check
 	 * @return string $meta_key
 	 */
 	public static function getPostMetaKey( $field_key, $module = 'meta', $check = TRUE )
@@ -83,11 +83,11 @@ class PostTypeFields extends gEditorial\Service
 	}
 
 	/**
-	 * Retrieves the export title of field for given posttype via certain module.
+	 * Retrieves the export title of field for given post-type via certain module.
 	 *
-	 * @param  string $field_key
-	 * @param  string $posttype
-	 * @param  string $module
+	 * @param string $field_key
+	 * @param string $posttype
+	 * @param string $module
 	 * @return string $export_title
 	 */
 	public static function getExportTitle( $field_key, $posttype, $module = 'meta' )
@@ -105,9 +105,9 @@ class PostTypeFields extends gEditorial\Service
 	 * Retrieves the supported post-types given a field key via certain module.
 	 * OLD: `Helper::getPostTypeFieldSupported()`
 	 *
-	 * @param  string $field_key
-	 * @param  string $module
-	 * @return array  $supported
+	 * @param string $field_key
+	 * @param string $module
+	 * @return array $supported
 	 */
 	public static function getSupported( $field_key, $module = 'meta' )
 	{
@@ -123,11 +123,11 @@ class PostTypeFields extends gEditorial\Service
 	/**
 	 * Retrieves the enabled post-type fields given a post-type via certain module.
 	 *
-	 * @param  string $posttype
-	 * @param  string $module
-	 * @param  array  $filter
-	 * @param  string $operator
-	 * @return array  $enabled
+	 * @param string $posttype
+	 * @param string $module
+	 * @param array $filter
+	 * @param string $operator
+	 * @return array $enabled
 	 */
 	public static function getEnabled( $posttype, $module = 'meta', $filter = [], $operator = 'AND' )
 	{
@@ -145,11 +145,11 @@ class PostTypeFields extends gEditorial\Service
 	 *
 	 * OLD: `posttypefields_get_post_by()`
 	 *
-	 * @param  string   $field_key
-	 * @param  string   $value
-	 * @param  string   $posttype
-	 * @param  bool     $sanitize
-	 * @param  string   $module
+	 * @param string $field_key
+	 * @param string $value
+	 * @param string $posttype
+	 * @param bool $sanitize
+	 * @param string $module
 	 * @return bool|int $post_id
 	 */
 	public static function getPostByField( $field_key, $value, $posttype, $sanitize = FALSE, $module = 'meta' )
@@ -186,9 +186,9 @@ class PostTypeFields extends gEditorial\Service
 	 * Retrieves the default icon given a field arguments and post-type.
 	 * @old: `get_posttype_field_icon()`
 	 *
-	 * @param  string       $field_key
-	 * @param  array        $args
-	 * @param  string|null  $posttype
+	 * @param string $field_key
+	 * @param array $args
+	 * @param string|null $posttype
 	 * @return string|array $icon
 	 */
 	public static function getFieldIcon( $field_key, $args = [], $posttype = NULL )
