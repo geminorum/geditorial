@@ -80,8 +80,19 @@ class Attachments extends gEditorial\Module
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
-			'_supports' => [
+			'_shortcode' => [
 				'shortcode_support',
+				[
+					'field'       => 'shortcode_caption',
+					'title'       => _x( 'ShortCode Caption', 'Setting Title', 'geditorial-attachments' ),
+					'description' => _x( 'Displays the attachment caption after each item on the list.', 'Setting Description', 'geditorial-attachments' ),
+				],
+				[
+					'field'       => 'shortcode_description',
+					'title'       => _x( 'ShortCode Description', 'Setting Title', 'geditorial-attachments' ),
+					'description' => _x( 'Displays the attachment description after each item on the list.', 'Setting Description', 'geditorial-attachments' ),
+					'default'     => '1',
+				],
 			],
 			'_constants' => [
 				'main_shortcode_constant' => [ NULL, 'attachments' ],
@@ -322,13 +333,16 @@ class Attachments extends gEditorial\Module
 	{
 		$html = '';
 
-		// TODO: default enabled on settings
-		if ( $caption = wp_get_attachment_caption( $post->ID ) )
-			$html.= sprintf( '<div class="-caption">%s</div>', WordPress\Strings::prepDescription( $caption ) );
+		// NOTE: usually caption is the same as attachment title
+		if ( $this->get_setting( 'shortcode_caption' )
+			&& ( $caption = wp_get_attachment_caption( $post->ID ) ) )
+			$html.= sprintf( '<div class="-caption">%s</div>',
+				WordPress\Strings::prepDescription( $caption ) );
 
-		// TODO: default enabled on settings
-		if ( ! empty( $post->post_content ) )
-			$html.= sprintf( '<div class="-description">%s</div>', WordPress\Strings::prepDescription( $post->post_content ) );
+		if ( $this->get_setting( 'shortcode_caption', TRUE )
+			&& ! empty( $post->post_content ) )
+			$html.= sprintf( '<div class="-description">%s</div>',
+				WordPress\Strings::prepDescription( $post->post_content ) );
 
 		return $html;
 	}
