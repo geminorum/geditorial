@@ -206,6 +206,7 @@ class PostTypeFields extends gEditorial\Service
 			case 'lead'       : return 'editor-paragraph';
 			case 'label'      : return 'megaphone';
 			case 'notes'      : return 'text-page';
+			case 'reference'  : return 'editor-break';
 			case 'itineraries': return 'editor-ul';
 		}
 

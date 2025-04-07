@@ -142,6 +142,7 @@ class Meta extends gEditorial\Module
 				'amount'    => _x( 'Amount', 'Titles', 'geditorial-meta' ),
 
 				'notes'       => _x( 'Notes', 'Titles', 'geditorial-meta' ),
+				'reference'   => _x( 'Reference', 'Titles', 'geditorial-meta' ),
 				'itineraries' => _x( 'Itineraries', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
@@ -201,6 +202,7 @@ class Meta extends gEditorial\Module
 				'amount'    => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
 
 				'notes'       => _x( 'General Notes about the Content', 'Descriptions: `notes`', 'geditorial-meta' ),
+				'reference'   => _x( 'Full Reference to the Content', 'Descriptions: `reference`', 'geditorial-meta' ),
 				'itineraries' => _x( 'Brief Itineraries of the Content', 'Descriptions: `itineraries`', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
@@ -283,6 +285,7 @@ class Meta extends gEditorial\Module
 					'amount'    => [ 'type' => 'number' ],
 
 					'notes'       => [ 'type' => 'note' ],
+					'reference'   => [ 'type' => 'note' ],
 					'itineraries' => [ 'type' => 'note' ],
 				],
 				'page' => [
