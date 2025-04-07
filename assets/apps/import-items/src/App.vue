@@ -1,9 +1,3 @@
-<!--
-  TODO: SearchResults: separate logic
-  TODO: Button: remove selected from imported list
-  TODO: handle esc key: @see: assignment-dock app
--->
-
 <style lang="scss" scoped>
 @import './Styles/App.scss';
 </style>
