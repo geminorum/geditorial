@@ -575,6 +575,9 @@ class ShortCode extends WordPress\Main
 			if ( $args['item_title_cb'] && is_callable( $args['item_title_cb'] ) )
 				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $text ] );
 
+			else if ( 'caption' === $args['item_title'] )
+				$attr = WordPress\Attachment::caption( $post, '' );
+
 			else if ( $args['item_title'] )
 				$attr = sprintf( $args['item_title'], $text );
 

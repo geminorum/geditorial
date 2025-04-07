@@ -323,6 +323,7 @@ class Attachments extends gEditorial\Module
 				'title_title'   => _x( 'Attachments of %s', 'Shortcode', 'geditorial-attachments' ),
 				'title_anchor'  => 'attachments',
 				'title_link'    => FALSE,
+				'item_title'    => 'caption',
 				'item_after_cb' => [ $this, 'main_shortcode_item_after_cb' ],
 			], (array) $atts ),
 			$content,
@@ -342,7 +343,7 @@ class Attachments extends gEditorial\Module
 			$html.= sprintf( '<div class="-caption">%s</div>',
 				WordPress\Strings::prepDescription( $caption ) );
 
-		if ( $this->get_setting( 'shortcode_caption', TRUE )
+		if ( $this->get_setting( 'shortcode_description', TRUE )
 			&& ! empty( $post->post_content ) )
 			$html.= sprintf( '<div class="-description">%s</div>',
 				WordPress\Strings::prepDescription( $post->post_content ) );
