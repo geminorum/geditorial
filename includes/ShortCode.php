@@ -457,11 +457,11 @@ class ShortCode extends WordPress\Main
 	public static function postTitle( $post = NULL, $atts = [] )
 	{
 		$args = self::atts( [
-			'title'          => NULL, // FALSE to disable
-			'title_cb'       => FALSE, // callback for title
-			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
+			'title'          => NULL,                             // `FALSE` to disable
+			'title_cb'       => FALSE,                            // callback for title
+			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE, // callback for title attr
+			'title_title_cb' => FALSE,                            // callback for title attribute
 			'title_tag'      => 'h3',
 			'title_anchor'   => 'post-%2$s',
 			'title_class'    => '-title',
@@ -528,18 +528,18 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'item_link'     => TRUE,
-			'item_text'     => NULL,  // callback or use %s for post title
-			'item_wrap'     => '', // use %s for item title / or html tag
-			'item_title'    => '', // use %s for post title
+			'item_text'     => NULL,                             // Callback or use `%s` for post title
+			'item_wrap'     => '',                               // Use `%s` for item title / or HTML tag
+			'item_title'    => '',                               // Use `%s` for post title / or `caption` for attachment caption
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
-			'item_anchor'   => FALSE, // $post->post_type.'-%2$s',
+			'item_anchor'   => FALSE,                            // `$post->post_type.'-%2$s'`,
 			'item_class'    => '-item do-sincethen',
 			'item_dummy'    => '<span class="-dummy"></span>',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
-			'item_download' => TRUE, // only for attachments
-			'item_filesize' => TRUE, // only for attachments // OLD: `item_size`
+			'item_download' => TRUE,                             // only for attachments
+			'item_filesize' => TRUE,                             // only for attachments // OLD: `item_size`
 			'trim_chars'    => FALSE,
 			'order_before'  => FALSE,
 			'order_zeroise' => FALSE,
@@ -662,7 +662,16 @@ class ShortCode extends WordPress\Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
-	// post as an image on the list
+	/**
+	 * Retrieves post as an image on the list.
+	 *
+	 * @param object $post
+	 * @param array $atts
+	 * @param string $before
+	 * @param string $after
+	 * @param string $fallback
+	 * @return string
+	 */
 	public static function postImage( $post = NULL, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -670,12 +679,12 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'item_link'           => TRUE,
-			'item_text'           => NULL,                             // callback or use %s for post title
-			'item_wrap'           => '',                               // use %s for item title / or html tag
-			'item_title'          => '',                               // use %s for post title
+			'item_text'           => NULL,                             // Callback or use `%s` for post title
+			'item_wrap'           => '',                               // Use `%s` for item title / or HTML tag
+			'item_title'          => '',                               // Use `%s` for post title
 			'item_title_cb'       => FALSE,
 			'item_tag'            => 'li',
-			'item_anchor'         => FALSE,                            // $post->post_type.'-%2$s',
+			'item_anchor'         => FALSE,                            // `$post->post_type.'-%2$s'`,
 			'item_class'          => '-item -tile do-sincethen',
 			'item_dummy'          => '<span class="-dummy"></span>',
 			'item_after'          => '',
@@ -683,8 +692,8 @@ class ShortCode extends WordPress\Main
 			'item_image_tile'     => NULL,
 			'item_image_metakey'  => NULL,
 			'item_image_size'     => NULL,
-			'item_image_loading'  => 'lazy',                           // FALSE to disable
-			'item_image_decoding' => 'async',                          // FALSE to disable
+			'item_image_loading'  => 'lazy',                           // `FALSE` to disable
+			'item_image_decoding' => 'async',                          // `FALSE` to disable
 			'item_image_empty'    => FALSE,
 		], $atts );
 

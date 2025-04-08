@@ -144,10 +144,10 @@ class Helper extends WordPress\Main
 	/**
 	 * Prepares data for display as a contact.
 	 *
-	 * @param  string $value
-	 * @param  string $title
-	 * @param  string $empty
-	 * @param  bool   $icon
+	 * @param string $value
+	 * @param string $title
+	 * @param string $empty
+	 * @param bool $icon
 	 * @return string $contact
 	 */
 	public static function prepContact( $value, $title = NULL, $empty = '', $icon = FALSE )

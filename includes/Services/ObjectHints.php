@@ -55,7 +55,7 @@ class ObjectHints extends gEditorial\Service
 
 			case 'post':
 
-				if ( empty( $queried['id'] )  )
+				if ( empty( $queried['id'] ) )
 					return RestAPI::getErrorSomethingIsWrong();
 
 				if ( ! $post = WordPress\Post::get( (int) $queried['id'] ) )

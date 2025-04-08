@@ -14,7 +14,7 @@ class Tablelist extends WordPress\Main
 
 	public static function isAction( $actions, $check_cb = FALSE )
 	{
-		foreach( (array) $actions as $action )
+		foreach ( (array) $actions as $action )
 			if ( $action == self::req( 'table_action' ) || isset( $_POST[$action] ) )
 				return $check_cb ? (bool) count( self::req( '_cb', [] ) ) : TRUE;
 

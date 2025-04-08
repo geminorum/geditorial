@@ -309,7 +309,7 @@ trait DashboardSummary
 
 	protected function hook_dashboardsummary_paired_post_summaries( $constant, $supported = NULL, $setting = NULL, $priority = NULL )
 	{
-		if ( $setting !== TRUE && ! $this->get_setting(  $setting ?? 'dashboard_widgets', FALSE ) )
+		if ( $setting !== TRUE && ! $this->get_setting( $setting ?? 'dashboard_widgets', FALSE ) )
 			return FALSE;
 
 		if ( $supported && is_string( $supported ) )

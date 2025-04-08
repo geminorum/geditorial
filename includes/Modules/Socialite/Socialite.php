@@ -45,17 +45,6 @@ class Socialite extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_edittags' => [
-				[
-					'field'        => 'extra_meta_fields',
-					'type'         => 'checkbox-panel',
-					'title'        => _x( 'Supported Fields', 'Setting Title', 'geditorial-socialite' ),
-					'description'  => _x( 'Appends custom meta fields for social services to taxonomies. Terms module needs to be enabled.', 'Setting Description', 'geditorial-socialite' ),
-					'string_empty' => _x( 'The Terms module is not available!', 'Setting String Empty', 'geditorial-socialite' ),
-					'values'       => $this->_prep_fields_for_settings(),
-				],
-			],
-			'posttypes_option' => 'posttypes_option',
 			'_general' => [
 				[
 					'field'  => 'social_icons',
@@ -126,6 +115,17 @@ class Socialite extends gEditorial\Module
 					],
 				],
 			],
+			'posttypes_option' => 'posttypes_option',
+			'_taxonomies' => [
+				[
+					'field'        => 'extra_meta_fields',
+					'type'         => 'checkbox-panel',
+					'title'        => _x( 'Supported Fields', 'Setting Title', 'geditorial-socialite' ),
+					'description'  => _x( 'Appends custom meta fields for social services to taxonomies. <em>Terms</em> module needs to be enabled.', 'Setting Description', 'geditorial-socialite' ),
+					'string_empty' => _x( 'The Terms module is not available!', 'Setting String Empty', 'geditorial-socialite' ),
+					'values'       => $this->_prep_fields_for_settings(),
+				],
+			],
 			'_supports' => [
 				'shortcode_support',
 			],
@@ -165,6 +165,9 @@ class Socialite extends gEditorial\Module
 				'goodreads' => _x( 'URL to a Goodreads profile page.', 'Description', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Handle or URL to an Eitaa user or channel.', 'Description', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Handle or URL to a Wikipedia page.', 'Description', 'geditorial-socialite' ),
+			],
+			'settings' => [
+				'post_types_after' => _x( 'Appends custom meta fields for social services to post-types. <em>Meta</em> module needs to be enabled.', 'Setting Description', 'geditorial-socialite' ),
 			],
 			'misc' => [
 				'social_column_title' => _x( 'Social', 'Column Title', 'geditorial-socialite' ),

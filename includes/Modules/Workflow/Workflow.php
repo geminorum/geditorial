@@ -266,7 +266,7 @@ class Workflow extends gEditorial\Module
 		if ( empty( $this->cache['statuses'] ) )
 			$this->cache['statuses'] = [];
 
-		if ( ! isset( $this->cache['statuses'][$user_id] ) )
+		if ( isset( $this->cache['statuses'][$user_id] ) )
 			return $this->cache['statuses'][$user_id];
 
 		$args = [
@@ -288,7 +288,7 @@ class Workflow extends gEditorial\Module
 				'color'     => '',
 				'posttype'  => '',
 				'posttypes' => $supported,
-				'viewable'  => '0', // NOTE: `0`: Undefined, `1`: Nonviewable, `2`: Viewable
+				'viewable'  => '0', // NOTE: `0`: Undefined, `1`: Non-Viewable, `2`: Viewable
 				'roles'     => FALSE,
 			] );
 
