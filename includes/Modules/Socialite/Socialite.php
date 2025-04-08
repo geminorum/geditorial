@@ -55,6 +55,7 @@ class Socialite extends gEditorial\Module
 					'values'       => $this->_prep_fields_for_settings(),
 				],
 			],
+			'posttypes_option' => 'posttypes_option',
 			'_general' => [
 				[
 					'field'  => 'social_icons',
@@ -174,6 +175,32 @@ class Socialite extends gEditorial\Module
 		];
 	}
 
+	protected function get_global_fields()
+	{
+		// bail if no post-type supported
+		if ( empty( $this->posttypes() ) )
+			return [];
+
+		// NOTE: module strings are not available at this point
+		$strings   = $this->filters( 'strings', $this->get_global_strings(), $this->module );
+		$supported = [];
+
+		foreach ( $this->supported as $field )
+			$supported[$field] = [
+				'title'       => isset( $strings['titles'][$field] ) ? $strings['titles'][$field] : $field,
+				'description' => isset( $strings['descriptions'][$field] ) ? $strings['descriptions'][$field] : '',
+				'icon'        => $this->_get_field_icon( $field, '_supported' ),
+				'type'        => 'code',
+				'order'       => 800,
+			];
+
+		return [
+			'meta' => [
+				'_supported' => $supported,
+			],
+		];
+	}
+
 	protected function get_global_constants()
 	{
 		return [
@@ -205,6 +232,11 @@ class Socialite extends gEditorial\Module
 			add_filter( $this->hook_base( 'terms', 'field', $field, 'title' ), [ $this, 'terms_field_title' ], 12, 4 );
 			add_filter( $this->hook_base( 'terms', 'field', $field, 'desc' ), [ $this, 'terms_field_desc' ], 12, 4 );
 		}
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields_supported();
 	}
 
 	private function _prep_fields_for_settings()
