@@ -700,6 +700,16 @@ class Meta extends gEditorial\Module
 
 		switch ( $field_args['type'] ) {
 
+			case 'venue':
+
+				if ( 'export' === $context )
+					return WordPress\Strings::getPiped( Helper::getSeparated( $raw ?: $meta ) );
+
+				if ( 'print' === $context )
+					return WordPress\Strings::getJoined( Helper::getSeparated( $raw ?: $meta ) );
+
+				return Helper::prepVenue( $raw ?: $meta );
+
 			case 'people':
 
 				if ( 'export' === $context )

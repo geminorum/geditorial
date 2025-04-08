@@ -184,6 +184,20 @@ class Helper extends WordPress\Main
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
+	public static function prepVenue( $value, $empty = '', $separator = NULL )
+	{
+		if ( self::empty( $value ) )
+			return $empty;
+
+		$list = [];
+
+		foreach ( self::getSeparated( $value ) as $location )
+			if ( $prepared = apply_filters( static::BASE.'_prep_location', $location, $location, $value ) )
+				$list[] = $prepared;
+
+		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
+	}
+
 	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )

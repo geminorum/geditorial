@@ -110,6 +110,7 @@ class Plugin
 		Services\Individuals::setup();
 		Services\LateChores::setup();
 		Services\LineDiscovery::setup();
+		Services\Locations::setup();
 		Services\ObjectHints::setup();
 		Services\ObjectToObject::setup();
 		Services\Paired::setup();

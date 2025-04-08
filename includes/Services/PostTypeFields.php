@@ -386,6 +386,9 @@ class PostTypeFields extends gEditorial\Service
 			// NOTE: second priority: field type
 			switch ( $field['type'] ) {
 
+				case 'venue':
+					return Helper::prepVenue( $raw ?: $value );
+
 				case 'people':
 					return Helper::prepPeople( $raw ?: $value );
 
