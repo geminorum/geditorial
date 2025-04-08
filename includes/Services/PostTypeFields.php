@@ -232,6 +232,16 @@ class PostTypeFields extends gEditorial\Service
 				case 'venue'     : return 'location-alt';
 				case 'embed'     : return 'embed-generic';
 				case 'link'      : return 'admin-links';
+
+				case 'text_source' : return 'media-text';
+				case 'audio_source': return 'media-audio';
+				case 'video_source': return 'media-video';
+				case 'image_source': return 'format-image';  // 'media-document';
+				case 'downloadable': return 'download';      // 'media-archive'
+				case 'post'        : return 'admin-post';
+				case 'attachment'  : return 'admin-media';
+				case 'parent_post' : return 'admin-page';
+
 			}
 		}
 
@@ -524,6 +534,34 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'link':
 					return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
+
+				case 'text_source':
+				case 'audio_source':
+				case 'video_source':
+				case 'image_source':
+				case 'downloadable':
+					return Core\HTML::tag( 'a', [
+						'href'   => $raw ?: $value,
+						'title'  => Core\URL::getDomain( $raw ?: $value ),
+						'class'  => Core\URL::isValid( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+						'target' => '_blank',
+					], Core\File::basename( $raw ?: $value ) );
+
+				case 'post':
+				case 'attachment':
+				case 'parent_post':
+					return Helper::getPostTitleRow( (int) $raw ?: $value );
+
+				// TODO
+				// case 'posts':
+				// case 'attachments':
+				// case 'term':
+
+				case 'user':
+					return Helper::getAuthorsEditRow(
+						(int) $raw ?: $value,
+						self::req( 'post_type', 'post' )
+					);
 			}
 		}
 
