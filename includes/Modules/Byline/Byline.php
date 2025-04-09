@@ -374,7 +374,7 @@ class Byline extends gEditorial\Module
 
 		$target = self::req( 'target', 'mainapp' );
 
-		if ( $this->role_can( 'assign' ) && 'mainapp' === $target ) {
+		if ( $this->role_can_post( $post, 'assign' ) && 'mainapp' === $target ) {
 
 			/* translators: `%s`: post title */
 			$assign_template = _x( 'Byline Dock for %s', 'Page Title', 'geditorial-byline' );
@@ -386,7 +386,7 @@ class Byline extends gEditorial\Module
 
 			Settings::wrapClose( FALSE );
 
-		} else if ( $this->role_can( 'reports' ) && 'summaryreport' === $target ) {
+		} else if ( $this->role_can_post( $post, 'reports' ) && 'summaryreport' === $target ) {
 
 			/* translators: `%s`: post title */
 			$reports_template = _x( 'Byline Overview for %s', 'Page Title', 'geditorial-byline' );
@@ -736,10 +736,15 @@ class Byline extends gEditorial\Module
 		if ( is_admin() || ! is_singular( $this->posttypes() ) )
 			return;
 
-		$post_id = get_queried_object_id();
+		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
+			return;
+
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
+			return;
+
 		$classs  = $this->classs();
-		$assign  = $this->role_can( 'assign' );
-		$reports = $this->role_can( 'reports' );
+		$assign  = $this->role_can_post( $post, 'assign' );
+		$reports = $this->role_can_post( $post, 'reports' );
 
 		if ( ! $reports && ! $assign )
 			return;
@@ -748,14 +753,14 @@ class Byline extends gEditorial\Module
 			'parent' => $parent,
 			'id'     => $classs,
 			'title'  => _x( 'Byline', 'Adminbar', 'geditorial-byline' ),
-			'href'   => $reports ? $this->get_module_url( 'reports' ) : FALSE,
+			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'linked' => $post->ID ] ) : FALSE,
 		];
 
 		$nodes[] = [
 			'parent' => $classs,
 			'id'     => $classs.'-rendered',
-			'title'  => $this->get_byline_for_post( $post_id, [ 'link' => FALSE ], Helper::htmlEmpty() ),
-			'href'   => $this->framepage_get_mainlink_url( $post_id, $assign ? 'mainapp' : 'summaryreport' ),
+			'title'  => $this->get_byline_for_post( $post, [ 'link' => FALSE ], Helper::htmlEmpty() ),
+			'href'   => $this->framepage_get_mainlink_url( $post->ID, $assign ? 'mainapp' : 'summaryreport' ),
 			'meta' => [
 				'class' => 'do-colorbox-iframe-for-child',
 				'title' => _x( 'Byline', 'Adminbar', 'geditorial-byline' ),
