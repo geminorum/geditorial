@@ -156,16 +156,32 @@ class Helper extends WordPress\Main
 			return $empty;
 
 		if ( Core\Email::is( $value ) )
-			$prepared = Core\Email::prep( $value, [ 'title' => $title ?? $value ], $icon ? 'icon' : 'display' );
+			$prepared = Core\Email::prep(
+				$value,
+				[ 'title' => $title ?? $value ],
+				$icon ? 'icon' : 'display',
+				$icon ? Visual::getIcon( [ 'misc-16', 'envelope-fill' ] ) : NULL
+			);
 
 		else if ( Core\URL::isValid( $value ) )
-			$prepared = Core\HTML::link( $icon ? Core\HTML::getDashicon( 'admin-links' ) : Core\URL::prepTitle( $value ), $value, TRUE );
+			$prepared = Core\HTML::link(
+				$icon ? Visual::getIcon( [ 'misc-16', 'link-45deg' ] ) : Core\URL::prepTitle( $value ),
+				$value,
+				TRUE
+			);
 
 		else if ( Core\Phone::is( $value ) )
-			$prepared = Core\Phone::prep( $value, [ 'title' => $title ], $icon ? 'icon' : 'display' );
+			$prepared = Core\Phone::prep(
+				$value,
+				[ 'title' => $title ],
+				$icon ? 'icon' : 'display',
+				$icon ? Visual::getIcon( [ 'misc-16', 'telephone-fill' ] ) : NULL
+			);
 
 		else
-			$prepared = $icon ? Core\HTML::getDashicon( 'editor-help', $value ) : Core\HTML::escape( $value );
+			$prepared = $icon
+				? Core\HTML::tag( 'span', [ 'title' => $value ], Visual::getIcon( [ 'misc-16', 'patch-question-fill' ] ) )
+				: Core\HTML::escape( $value );
 
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
 	}
