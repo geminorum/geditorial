@@ -404,7 +404,9 @@ class Byline extends gEditorial\Module
 
 		} else {
 
-			Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
+			Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
+				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
+			Settings::wrapClose( FALSE );
 		}
 	}
 

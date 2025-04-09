@@ -306,7 +306,7 @@ trait TemplatePostType
 		$post     = WordPress\Post::defaultToEdit( $posttype );
 
 		if ( ! current_user_can( $object->cap->create_posts ) )
-			return Core\HTML::desc( gEditorial\Plugin::denied( FALSE ), TRUE, '-denied' );
+			return Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 
 		ob_start();
 
