@@ -7,8 +7,10 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\WordPress;
 
 class Venue extends gEditorial\Module
 {
@@ -60,8 +62,8 @@ class Venue extends gEditorial\Module
 				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
-					$this->constant( 'category_taxonomy' ),
-					$this->get_taxonomy_label( 'category_taxonomy', 'no_terms' ),
+					$this->constant( 'primary_taxonomy' ),
+					$this->get_taxonomy_label( 'primary_taxonomy', 'no_terms' ),
 				],
 			],
 			'_editlist' => [
@@ -84,7 +86,7 @@ class Venue extends gEditorial\Module
 				'archive_override',
 				'display_searchform',
 				'empty_content',
-				'archive_title' => [ NULL, $this->get_posttype_label( 'place_posttype', 'all_items' ) ],
+				'archive_title' => [ NULL, $this->get_posttype_label( 'primary_posttype', 'all_items' ) ],
 				'archive_content',
 				'archive_template',
 			],
@@ -93,7 +95,7 @@ class Venue extends gEditorial\Module
 				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'place_posttype', [
+				$this->settings_supports_option( 'primary_posttype', [
 					'title',
 					'editor',
 					'excerpt',
@@ -102,9 +104,9 @@ class Venue extends gEditorial\Module
 				] ),
 			],
 			'_reports' => [
-				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'place_posttype' ) ],
-				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'meta' ) ],
-				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'place_posttype', 'units' ) ],
+				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],
+				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'meta' ) ],
+				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'primary_posttype', 'units' ) ],
 			],
 			'_constants' => [
 				'main_shortcode_constant' => [ NULL, 'place' ],
@@ -115,11 +117,11 @@ class Venue extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'place_posttype'    => 'place',
-			'place_paired'      => 'places',
-			'category_taxonomy' => 'place_category',
-			'facility_taxonomy' => 'place_facility',
-			'main_shortcode'    => 'place',
+			'primary_posttype' => 'place',
+			'primary_paired'   => 'places',
+			'primary_taxonomy' => 'place_category',
+			'primary_subterm'  => 'place_facility',
+			'main_shortcode'   => 'place',
 		];
 	}
 
@@ -127,10 +129,10 @@ class Venue extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'place_posttype'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'place_paired'      => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'category_taxonomy' => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
-				'facility_taxonomy' => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
+				'primary_posttype' => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'primary_paired'   => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'primary_taxonomy' => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
+				'primary_subterm'  => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
 			],
 		];
 
@@ -142,7 +144,7 @@ class Venue extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			'place_posttype' => [
+			'primary_posttype' => [
 				'metabox_title' => _x( 'Place Details', 'Label: MetaBox Title', 'geditorial-venue' ),
 				'listbox_title' => _x( 'Connected to this Place', 'Label: MetaBox Title', 'geditorial-venue' ),
 			],
@@ -155,7 +157,7 @@ class Venue extends gEditorial\Module
 	{
 		return [
 			'meta' => [
-				$this->constant( 'place_posttype' ) => [
+				$this->constant( 'primary_posttype' ) => [
 					'parent_complex' => [
 						'title'       => _x( 'Parent Complex', 'Field Title', 'geditorial-venue' ),
 						'description' => _x( 'Parent complex title of the location', 'Field Description', 'geditorial-venue' ),
@@ -213,25 +215,26 @@ class Venue extends gEditorial\Module
 
 	public function after_setup_theme()
 	{
-		$this->register_posttype_thumbnail( 'place_posttype' );
+		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
 	public function init()
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'category_taxonomy', [
+		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'place_posttype', [
+		], 'primary_posttype', [
 			'custom_icon' => 'category',
 		] );
 
 		$this->paired_register( [], [
-			'custom_icon' => $this->module->icon,
+			'custom_icon'      => $this->module->icon,
+			'primary_taxonomy' => TRUE,
 		], [
 			'custom_icon' => 'building',
 		] );
@@ -247,12 +250,12 @@ class Venue extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_tax( $this->constant( 'place_paired' ) ) ) {
+		if ( is_tax( $this->constant( 'primary_paired' ) ) ) {
 
-			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'place_posttype', 'place_paired' ) )
+			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'primary_posttype', 'primary_paired' ) )
 				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
 
-		} else if ( is_post_type_archive( $this->constant( 'place_posttype' ) ) ) {
+		} else if ( is_post_type_archive( $this->constant( 'primary_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
 				Core\WordPress::redirect( $redirect, 301 );
@@ -261,7 +264,7 @@ class Venue extends gEditorial\Module
 
 	public function setup_ajax()
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'place_posttype' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
 		}
 	}
@@ -269,10 +272,10 @@ class Venue extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
-			? $this->constant( 'facility_taxonomy' )
+			? $this->constant( 'primary_subterm' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'place_posttype' ) ) {
+		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
@@ -285,8 +288,8 @@ class Venue extends gEditorial\Module
 					'website_url'    => NULL,
 				] );
 
-				$this->posttype__media_register_headerbutton( 'place_posttype' );
-				$this->_hook_post_updated_messages( 'place_posttype' );
+				$this->posttype__media_register_headerbutton( 'primary_posttype' );
+				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
@@ -298,16 +301,19 @@ class Venue extends gEditorial\Module
 				$this->modulelinks__register_headerbuttons();
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'menu_order', 'ASC' );
-				$this->_hook_bulk_post_updated_messages( 'place_posttype' );
+				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->pairedcore__hook_sync_paired();
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
-				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
+				$this->corerestrictposts__hook_screen_taxonomies( [
+					'primary_subterm',
+					'primary_taxonomy',
+				] );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $subterms && $subterms === $screen->taxonomy )
-				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'place_posttype' ) ) );
+				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'primary_posttype' ) ) );
 
 			if ( 'edit-tags' == $screen->base ) {
 
@@ -337,22 +343,22 @@ class Venue extends gEditorial\Module
 	protected function paired_get_paired_constants()
 	{
 		return [
-			'place_posttype',
-			'place_paired',
-			'facility_taxonomy',
-			'category_taxonomy',
+			'primary_posttype',
+			'primary_paired',
+			'primary_subterm',
+			'primary_taxonomy',
 		];
 	}
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'place_posttype' ) );
+		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
 	}
 
 	public function dashboard_glance_items( $items )
 	{
-		if ( $glance = $this->dashboard_glance_post( 'place_posttype' ) )
+		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
 
 		return $items;
@@ -360,16 +366,16 @@ class Venue extends gEditorial\Module
 
 	public function template_include( $template )
 	{
-		return $this->templateposttype__include( $template, $this->constant( 'place_posttype' ) );
+		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ) );
 	}
 
 	public function templateposttype_get_archive_content_default( $posttype )
 	{
-		$html = $this->get_search_form( 'place_posttype' );
+		$html = $this->get_search_form( 'primary_posttype' );
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
 			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
-				'post_type' => $posttype, // $this->constant( 'place_posttype' ),
+				'post_type' => $posttype, // $this->constant( 'primary_posttype' ),
 			] );
 
 		else
@@ -385,8 +391,8 @@ class Venue extends gEditorial\Module
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'paired',
-			$this->constant( 'place_posttype' ),
-			$this->constant( 'place_paired' ),
+			$this->constant( 'primary_posttype' ),
+			$this->constant( 'primary_paired' ),
 			array_merge( [
 				'post_id'   => NULL,
 				'posttypes' => $this->posttypes(),
@@ -454,7 +460,7 @@ class Venue extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		if ( ! $this->posttype_overview_render_table( 'place_posttype', $uri, $sub ) )
+		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return Info::renderNoReportsAvailable();
 	}
 }

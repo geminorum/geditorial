@@ -306,10 +306,12 @@ class Book extends gEditorial\Module
 					'alt_title' => [
 						'title'       => _x( 'Alternative Title', 'Field Title', 'geditorial-book' ),
 						'description' => _x( 'The Original Title or Title in Another Language', 'Field Description', 'geditorial-book' ),
+						'icon'        => 'admin-site-alt',
 					],
 					'collection' => [
 						'title'       => _x( 'Collection Title', 'Field Title', 'geditorial-book' ),
 						'description' => _x( 'This Publication Is Part of a Collection', 'Field Description', 'geditorial-book' ),
+						'icon'        => 'screenoptions',
 					],
 					'publication_byline' => [
 						'title'       => _x( 'Publication By-Line', 'Field Title', 'geditorial-book' ),

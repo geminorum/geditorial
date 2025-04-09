@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress;
 
@@ -24,6 +25,20 @@ class Individuals extends gEditorial\Service
 			return;
 
 		add_filter( static::BASE.'_prep_individual', [ __CLASS__, 'filter_prep_individual_front' ], 5, 3 );
+	}
+
+	public static function prepPeople( $value, $empty = '', $separator = NULL )
+	{
+		if ( self::empty( $value ) )
+			return $empty;
+
+		$list = [];
+
+		foreach ( Helper::getSeparated( $value ) as $individual )
+			if ( $prepared = apply_filters( static::BASE.'_prep_individual', $individual, $individual, $value ) )
+				$list[] = $prepared;
+
+		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
 	public static function filter_people_format_name( $formatted, $raw, $term = NULL )

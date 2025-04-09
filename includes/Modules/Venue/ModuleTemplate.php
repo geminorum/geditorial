@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
@@ -16,7 +17,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = NULL;
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'place_posttype', 'place' );
+			$atts['type'] = self::constant( 'primary_posttype', 'place' );
 
 		return self::metaSummary( $atts );
 	}
@@ -35,12 +36,12 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['id'] = 'paired';
 
 		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'place_posttype', 'place' );
+			$atts['type'] = self::constant( 'primary_posttype', 'place' );
 
 		return parent::postImage( $atts, static::MODULE );
 	}
 
-	// TODO: add shortcode for this
+	// TODO: add short-code for this
 	public static function map( $atts = [] )
 	{
 		if ( ! array_key_exists( 'default', $atts ) )
@@ -52,7 +53,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( ! $post = WordPress\Post::get( $atts['id'] ) )
 			return $atts['default'];
 
-		if ( $post->post_type === self::constant( 'place_posttype', 'place' ) )
+		if ( $post->post_type === self::constant( 'primary_posttype', 'place' ) )
 			return self::metaField( 'map_embed_url', array_merge( $atts, [
 				'fallback' => 'content_embed_url',
 				// 'filter'   => '__do_embed_shortcode', // NO NEED: filtering the raw meta

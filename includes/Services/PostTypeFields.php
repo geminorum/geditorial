@@ -199,6 +199,7 @@ class PostTypeFields extends gEditorial\Service
 		switch ( $field_key ) {
 			case 'over_title' : return 'arrow-up-alt2';
 			case 'sub_title'  : return 'arrow-down-alt2';
+			case 'alt_title'  : return 'admin-site-alt';
 			case 'highlight'  : return 'pressthis';
 			case 'byline'     : return 'admin-users';
 			case 'published'  : return 'calendar-alt';
@@ -397,10 +398,10 @@ class PostTypeFields extends gEditorial\Service
 			switch ( $field['type'] ) {
 
 				case 'venue':
-					return Helper::prepVenue( $raw ?: $value );
+					return Locations::prepVenue( $raw ?: $value );
 
 				case 'people':
-					return Helper::prepPeople( $raw ?: $value );
+					return Individuals::prepPeople( $raw ?: $value );
 
 				case 'day':
 				case 'hour':

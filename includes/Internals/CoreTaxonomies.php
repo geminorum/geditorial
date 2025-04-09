@@ -855,6 +855,7 @@ trait CoreTaxonomies
 
 		return Services\HeaderButtons::register( $this->classs( $taxonomy ), [
 			'text'     => Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ),
+			'title'    => Services\CustomTaxonomy::getLabel( $taxonomy, 'manage_description' ),
 			'icon'     => Visual::getTaxonomyIconMarkup( $taxonomy, NULL, TRUE ),
 			'link'     => $edit,
 			'priority' => 12,

@@ -78,6 +78,7 @@ class People extends gEditorial\Module
 					'name_field_description' => _x( 'What is the full-name of the person.', 'Label: `name_field_description`', 'geditorial-people' ),
 					'slug_field_description' => _x( 'Define the URL-friendly version of the name of the person.', 'Label: `slug_field_description`', 'geditorial-people' ),
 					'desc_field_description' => _x( 'Describe the person in more words.', 'Label: `desc_field_description`', 'geditorial-people' ),
+					'manage_description'     => _x( 'Define the individuals affiliated with this site.', 'Label: `manage_description`', 'geditorial-people' ),
 				],
 				'category_taxonomy' => [
 					'extended_label'       => _x( 'People Affiliations', 'Label: `extended_label`', 'geditorial-people' ),

@@ -10,6 +10,8 @@ class ModuleHelper extends gEditorial\Helper
 {
 	const MODULE = 'byline';
 
+	// EXAMPLE: `Pam Durban, Mary Hood (Foreword)`
+	// EXAMPLE: `John Updike (Editor, Contributor), Katrina Kenison (Editor)`
 	public static function bylineDefaultWalker( $list, $atts = [] )
 	{
 		$args = self::atts( static::filters( 'walker_default', [

@@ -97,6 +97,7 @@ class Meta extends gEditorial\Module
 				'byline'     => _x( 'Byline', 'Titles', 'geditorial-meta' ),
 				'lead'       => _x( 'Lead', 'Titles', 'geditorial-meta' ),
 
+				'alt_title'   => _x( 'Alternative Title', 'Titles', 'geditorial-meta' ),
 				'print_title' => _x( 'Print Title', 'Titles', 'geditorial-meta' ),
 				'print_date'  => _x( 'Print Date', 'Titles', 'geditorial-meta' ),
 
@@ -157,6 +158,7 @@ class Meta extends gEditorial\Module
 				'byline'     => _x( 'Text to override the content author', 'Descriptions', 'geditorial-meta' ),
 				'lead'       => _x( 'Notes to place before the content text', 'Descriptions', 'geditorial-meta' ),
 
+				'alt_title'   => _x( 'The Original Title or Title in Another Language', 'Descriptions', 'geditorial-meta' ),
 				'print_title' => _x( 'Text to Overwrite the Original Title on Printing', 'Descriptions', 'geditorial-meta' ),
 				'print_date'  => _x( 'Date to Overwrite the Original Date on Printing', 'Descriptions', 'geditorial-meta' ),
 
@@ -241,6 +243,7 @@ class Meta extends gEditorial\Module
 					'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
 					'lead'       => [ 'type' => 'postbox_html' ],                // OLD: 'postbox_legacy'
 
+					'alt_title'     => [ 'type' => 'text' ],
 					'print_title'   => [ 'type' => 'text' ],
 					'print_date'    => [ 'type' => 'date' ],
 					'published'     => [ 'type' => 'datestring', 'quickedit' => TRUE ],
@@ -708,7 +711,7 @@ class Meta extends gEditorial\Module
 				if ( 'print' === $context )
 					return WordPress\Strings::getJoined( Helper::getSeparated( $raw ?: $meta ) );
 
-				return Helper::prepVenue( $raw ?: $meta );
+				return Services\Locations::prepVenue( $raw ?: $meta );
 
 			case 'people':
 
@@ -718,7 +721,7 @@ class Meta extends gEditorial\Module
 				if ( 'print' === $context )
 					return WordPress\Strings::getJoined( Helper::getSeparated( $raw ?: $meta ) );
 
-				return Helper::prepPeople( $raw ?: $meta );
+				return Services\Individuals::prepPeople( $raw ?: $meta );
 
 			case 'identity':
 

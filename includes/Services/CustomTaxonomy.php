@@ -185,6 +185,7 @@ class CustomTaxonomy extends gEditorial\Service
 				break; // go to fall-backs
 
 			// case 'assign_description': // TODO: display on meta-box after hook
+			// case 'manage_description': // TODO
 			// case 'extended_description': // TODO
 
 			case 'show_option_no_items':

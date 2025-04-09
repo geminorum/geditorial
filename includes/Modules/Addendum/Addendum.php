@@ -263,7 +263,8 @@ class Addendum extends gEditorial\Module
 		] );
 
 		$this->paired_register( [], [
-			'status_taxonomy' => TRUE,
+			'primary_taxonomy' => TRUE,
+			'status_taxonomy'  => TRUE,
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );

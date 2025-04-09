@@ -369,10 +369,11 @@ class Programmed extends gEditorial\Module
 		] );
 
 		$this->paired_register( [], [
-			'is_viewable'     => $viewable,
-			'custom_icon'     => $this->module->icon,
-			'custom_captype'  => $captype,
-			'status_taxonomy' => TRUE,
+			'is_viewable'      => $viewable,
+			'custom_icon'      => $this->module->icon,
+			'custom_captype'   => $captype,
+			'primary_taxonomy' => TRUE,
+			'status_taxonomy'  => TRUE,
 		], [
 			'is_viewable'    => $viewable,
 			'custom_icon'    => 'performance',

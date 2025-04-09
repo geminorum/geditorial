@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 trait CoreRoles
 {
 	// NOTE: accepts array and performs `OR` check
-	protected function role_can( $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
+	protected function role_can( $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = NULL )
 	{
 		if ( is_null( $whats ) )
 			return TRUE;
@@ -27,7 +27,7 @@ trait CoreRoles
 
 		foreach ( (array) $whats as $what ) {
 
-			$setting = $this->get_setting( $what.$prefix, [] );
+			$setting = $this->get_setting( sprintf( '%s%s', $what, $prefix ?? '_roles' ), [] );
 
 			if ( TRUE === $setting )
 				return $setting;
@@ -48,10 +48,10 @@ trait CoreRoles
 	/**
 	 * Overrides the current-user-check for customized contexts.
 	 *
-	 * @param  string $context
-	 * @param  string $fallback
-	 * @param  array  $customized
-	 * @return mixed  $overrided
+	 * @param string $context
+	 * @param string $fallback
+	 * @param array $customized
+	 * @return mixed
 	 */
 	protected function _override_module_cuc( $context = 'settings', $fallback = '', $customized = NULL )
 	{
@@ -63,11 +63,11 @@ trait CoreRoles
 	/**
 	 * Overrides the current-user-check for customized contexts by taxonomy.
 	 *
-	 * @param  string $constant
-	 * @param  string $context
-	 * @param  string $fallback
-	 * @param  array  $customized
-	 * @return mixed  $overrided
+	 * @param string $constant
+	 * @param string $context
+	 * @param string $fallback
+	 * @param array $customized
+	 * @return mixed
 	 */
 	protected function _override_module_cuc_by_taxonomy( $constant, $context = 'settings', $fallback = '', $customized = NULL )
 	{

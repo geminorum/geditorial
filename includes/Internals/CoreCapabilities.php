@@ -20,7 +20,7 @@ trait CoreCapabilities
 	 * @param string $prefix
 	 * @return bool $can
 	 */
-	protected function corecaps_taxonomy_role_can( $constant, $whats, $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = '_roles' )
+	protected function corecaps_taxonomy_role_can( $constant, $whats, $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = NULL )
 	{
 		if ( ! $taxonomy = $this->constant( $constant ) )
 			return $fallback;
@@ -264,6 +264,7 @@ trait CoreCapabilities
 		return $settings;
 	}
 
+	// TODO: WTF?!
 	protected function corecaps__render_captype_install( $constant, $setting = NULL )
 	{
 		// Display table with generated caps using the `captype`
