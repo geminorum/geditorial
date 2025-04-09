@@ -1594,6 +1594,26 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_reports_post_edit( $description = NULL, $default = 1 )
+	{
+		return [
+			'field'       => 'reports_post_edit',
+			'title'       => _x( 'Edit Post Reports', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Also checks for <strong>edit-post</strong> capability for <em>reports</em> roles.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => $default,
+		];
+	}
+
+	public static function getSetting_assign_post_edit( $description = NULL, $default = 1 )
+	{
+		return [
+			'field'       => 'assign_post_edit',
+			'title'       => _x( 'Edit Post Assign', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Also checks for <strong>edit-post</strong> capability for <em>assign</em> roles.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => $default,
+		];
+	}
+
 	public static function getSetting_overview_fields( $description = NULL, $fields = NULL, $empty = NULL )
 	{
 		return [

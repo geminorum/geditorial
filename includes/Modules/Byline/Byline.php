@@ -53,7 +53,9 @@ class Byline extends gEditorial\Module
 			'_roles'            => [
 				'manage_roles'  => [ _x( 'Roles that can manage, edit and delete <strong>relations</strong>.', 'Setting Description', 'geditorial-byline' ), $roles ],
 				'reports_roles' => [ NULL, $roles ],
+				'reports_post_edit',
 				'assign_roles'  => [ NULL, $roles ],
+				'assign_post_edit',
 			],
 			'_supports' => [
 				'tabs_support',
@@ -701,14 +703,21 @@ class Byline extends gEditorial\Module
 		return $button;
 	}
 
-	// NOTE: check for access before
 	private function _hook_tweaks_column( $screen )
 	{
 		add_action( $this->hook_base( 'tweaks', 'column_row', $screen->post_type ),
 			function ( $post, $before, $after, $module ) {
 
-				$edit = $this->framepage_get_mainlink_url( $post->ID, $this->role_can( 'assign' ) ? 'mainapp' : 'summaryreport' );
-				$icon = $this->get_column_icon( $edit, NULL, NULL, $post->post_type, 'do-colorbox-iframe' );
+				if ( $this->role_can_post( $post, 'assign' ) )
+					$edit = $this->framepage_get_mainlink_url( $post->ID, 'mainapp' );
+
+				else if ( $this->role_can_post( $post, 'reports' ) )
+					$edit = $this->framepage_get_mainlink_url( $post->ID, 'summaryreport' );
+
+				else if ( ! WordPress\Post::can( $post, 'read_post' ) )
+					return;
+
+				$icon = $this->get_column_icon( $edit ?? FALSE, NULL, NULL, $post->post_type, 'do-colorbox-iframe' );
 
 				echo $this->get_byline_for_post( $post, [
 					'before' => sprintf( $before, '-post-byline' ).$icon,

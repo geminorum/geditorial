@@ -47,7 +47,9 @@ class Bookmarked extends gEditorial\Module
 			],
 			'_roles' => [
 				'reports_roles' => [ NULL, $roles ],
+				'reports_post_edit',
 				'assign_roles'  => [ NULL, $roles ],
+				'assign_post_edit',
 			],
 			'_editpost' => [
 				'admin_rowactions',

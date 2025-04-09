@@ -45,6 +45,45 @@ trait CoreRoles
 		return $fallback;
 	}
 
+	// NOTE: accepts array and performs `OR` check
+	protected function role_can_post( $post, $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = NULL )
+	{
+		if ( is_null( $whats ) )
+			return TRUE;
+
+		if ( FALSE === $whats )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $fallback;
+
+		if ( is_null( $user_id ) )
+			$user_id = get_current_user_id();
+
+		if ( ! $user_id )
+			return $fallback;
+
+		if ( $admins && WordPress\User::isSuperAdmin( $user_id ) )
+			return TRUE;
+
+		// NOTE: can't read the post!
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
+			return $fallback;
+
+		$edit = WordPress\Post::can( $post, 'edit_post' );
+
+		foreach ( (array) $whats as $what ) {
+
+			if ( ! $edit && $this->get_setting( sprintf( '%s_post_%s', $what, 'edit' ), TRUE ) )
+				continue;
+
+			if ( $this->role_can( $what, $user_id, FALSE, FALSE, $prefix ) )
+				return TRUE;
+		}
+
+		return $fallback;
+	}
+
 	/**
 	 * Overrides the current-user-check for customized contexts.
 	 *

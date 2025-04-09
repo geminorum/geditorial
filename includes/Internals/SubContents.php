@@ -1140,7 +1140,7 @@ trait SubContents
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return Info::renderNoPostsAvailable();
 
-		if ( $this->role_can( 'assign' ) ) {
+		if ( $this->role_can_post( $post, 'assign' ) ) {
 
 			Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
@@ -1149,7 +1149,7 @@ trait SubContents
 
 			Settings::wrapClose( FALSE );
 
-		} else if ( $this->role_can( 'reports' ) ) {
+		} else if ( $this->role_can_post( $post, 'reports' ) ) {
 
 			Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
@@ -1183,23 +1183,26 @@ trait SubContents
 			'strings'    => [],
 		], $atts );
 
-		if ( ! $this->role_can( $args['can'] ) )
+		if ( ! $linked = $args['linked'] ?? self::req( 'linked', FALSE ) )
 			return;
 
-		if ( ! $linked = $args['linked'] ?? self::req( 'linked', FALSE ) )
+		if ( ! $post = WordPress\Post::get( (int) $linked ) )
+			return;
+
+		if ( ! $this->role_can_post( $post, $args['can'] ) )
 			return;
 
 		$asset = [
 			'strings' => $this->subcontent_get_strings_for_js( $args['strings'] ),
 			'fields'  => $this->subcontent_get_fields( $args['context'] ),
 			'linked'  => [
-				'id'    => $linked,
-				'text'  => WordPress\Post::title( $linked ),
-				'extra' => Services\SearchSelect::getExtraForPost( $linked, [ 'context' => 'subcontent' ] ),
-				'image' => Services\SearchSelect::getImageForPost( $linked, [ 'context' => 'subcontent' ] ),
+				'id'    => $post->ID,
+				'text'  => WordPress\Post::title( $post ),
+				'extra' => Services\SearchSelect::getExtraForPost( $post, [ 'context' => 'subcontent' ] ),
+				'image' => Services\SearchSelect::getImageForPost( $post, [ 'context' => 'subcontent' ] ),
 			],
 			'config' => [
-				'linked'       => $linked,
+				'linked'       => $post->ID,
 				'searchselect' => Services\SearchSelect::namespace(),
 				'searchable'   => $args['searchable'] ?? $this->subcontent_get_searchable_fields( $args['context'] ),
 				'selectable'   => $args['selectable'] ?? $this->subcontent_get_selectable_fields( $args['context'] ),
@@ -1299,6 +1302,9 @@ trait SubContents
 
 	protected function rowaction_get_mainlink_for_post_subcontent( $post )
 	{
+		if ( ! $this->role_can_post( $post, [ 'reports', 'assign' ] ) )
+			return FALSE;
+
 		return [
 			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
 				'context' => 'rowaction',
@@ -1310,7 +1316,7 @@ trait SubContents
 	{
 		$this->subcontent_render_metabox_data_grid( $post, $context );
 
-		if ( $this->role_can( 'assign' ) )
+		if ( $this->role_can_post( $post, 'assign' ) )
 			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $post, [
 				'context' => 'mainbutton',
 				'target'  => 'grid',
