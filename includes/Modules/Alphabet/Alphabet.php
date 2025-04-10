@@ -102,9 +102,10 @@ class Alphabet extends gEditorial\Module
 			'comments'          => FALSE,
 			'comments_template' => '&nbsp;(%s)',
 			'excerpt'           => FALSE,
-			'list_tag'          => 'dl',
-			'term_tag'          => 'dt',
-			'desc_tag'          => 'dd',
+			'list_mode'         => 'dl',                        // `dl`/`ul`/`ol`
+			'list_tag'          => NULL,
+			'term_tag'          => NULL,
+			'desc_tag'          => NULL,
 			'heading_cb'        => FALSE,
 			'item_cb'           => FALSE,
 			'context'           => NULL,
@@ -156,6 +157,8 @@ class Alphabet extends gEditorial\Module
 			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 				$args['item_cb'] = FALSE;
 
+			$mode = $this->_get_alphabet_list_mode( $args['list_mode'], $args );
+
 			foreach ( $posts as $post ) {
 
 				$letter = Core\L10n::firstLetter( $post->post_title, $alphabet, $alt );
@@ -177,10 +180,10 @@ class Alphabet extends gEditorial\Module
 
 					} else {
 
-						$html.= ( count( $actives ) ? '</'.$args['list_tag'].'><div class="clearfix"></div></li>' : '' );
+						$html.= ( count( $actives ) ? '</'.$mode['tag'].'><div class="clearfix"></div></li>' : '' );
 
 						$html.= '<li id="'.$id.'"><h4 class="-heading">'.$letter.'</h4>';
-						$html.= '<'.$args['list_tag'].( $args['excerpt'] ? ' class="dl-horizontal"' : '' ).'>';
+						$html.= '<'.$mode['tag'].( $args['excerpt'] ? ' class="dl-horizontal"' : '' ).'>';
 					}
 
 					$actives[] = $current = $letter;
@@ -195,24 +198,24 @@ class Alphabet extends gEditorial\Module
 					$title = WordPress\Post::title( $post );
 					$link  = Core\WordPress::getPostShortLink( $post->ID );
 
-					$html.= '<'.$args['term_tag'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$mode['term'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
 
 					if ( $args['comments'] && $post->comment_count )
 						$html.= '<span class="-comments-count">'.WordPress\Strings::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
 
-					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
+					$html.= '<span class="-dummy"></span></'.$mode['term'].'>';
 
 					if ( $args['excerpt'] && $post->post_excerpt )
-						$html.= '<'.$args['desc_tag'].' class="-excerpt">'
+						$html.= '<'.$mode['desc'].' class="-excerpt">'
 							.wpautop( WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE )
-							.'</'.$args['desc_tag'].'>';
+							.'</'.$mode['desc'].'>';
 
-					else if ( 'dd' == $args['desc_tag'] && $args['excerpt'] )
-						$html.= '<'.$args['desc_tag'].' class="-empty"></'.$args['desc_tag'].'>';
+					else if ( 'dd' === $mode['desc'] && $args['excerpt'] )
+						$html.= '<'.$mode['desc'].' class="-empty"></'.$mode['desc'].'>';
 				}
 			}
 
-			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
+			$html.= '</'.$mode['tag'].'><div class="clearfix"></div></li>';
 
 			$list.= $this->get_alphabet_list_html( [ [ 'letter' => '#', 'key' => '#', 'name' => '#' ] ], $actives );
 			$list.= $this->get_alphabet_list_html( $alt, $actives );
@@ -220,8 +223,8 @@ class Alphabet extends gEditorial\Module
 
 			$fields = '<input class="-search" type="search" style="display:none;" />';
 
-			$html = '<ul class="list-inline -letters">'.$list.'</ul>'
-				.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
+			$html = '<ul class="'.$this->key.'-letters -letters list-inline">'.$list.'</ul>'
+				.$fields.'<ul class="'.$this->key.'-definitions -definitions list-unstyled">'.$html.'</ul>';
 
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_posts' ), $args );
 			$html = Core\Text::minifyHTML( $html );
@@ -241,9 +244,10 @@ class Alphabet extends gEditorial\Module
 			'description'    => FALSE,
 			'count'          => FALSE,
 			'count_template' => '&nbsp;(%s)',
-			'list_tag'       => 'dl',
-			'term_tag'       => 'dt',
-			'desc_tag'       => 'dd',
+			'list_mode'      => 'dl',                        // `dl`/`ul`/`ol`
+			'list_tag'       => NULL,
+			'term_tag'       => NULL,
+			'desc_tag'       => NULL,
 			'heading_cb'     => FALSE,
 			'item_cb'        => FALSE,
 			'context'        => NULL,
@@ -290,6 +294,8 @@ class Alphabet extends gEditorial\Module
 			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 				$args['item_cb'] = FALSE;
 
+			$mode = $this->_get_alphabet_list_mode( $args['list_mode'], $args );
+
 			foreach ( $terms as $term ) {
 
 				$letter = Core\L10n::firstLetter( $term->name, $alphabet, $alt );
@@ -311,10 +317,10 @@ class Alphabet extends gEditorial\Module
 
 					} else {
 
-						$html.= ( count( $actives ) ? '</'.$args['list_tag'].'><div class="clearfix"></div></li>' : '' );
+						$html.= ( count( $actives ) ? '</'.$mode['tag'].'><div class="clearfix"></div></li>' : '' );
 
 						$html.= '<li id="'.$id.'"><h4 class="-heading">'.$letter.'</h4>';
-						$html.= '<'.$args['list_tag'].( $args['description'] ? ' class="dl-horizontal"' : '' ).'>';
+						$html.= '<'.$mode['tag'].' class="-terms'.( $args['description'] ? ' -has-desc' : '' ).'">';
 					}
 
 					$actives[] = $current = $letter;
@@ -330,24 +336,24 @@ class Alphabet extends gEditorial\Module
 					// $title = Core\Text::nameFamilyLast( $title ); // no need on front
 					$link  = WordPress\Term::link( $term );
 
-					$html.= '<'.$args['term_tag'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$mode['term'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
 
 					if ( $args['count'] && $term->count )
 						$html.= '<span class="-term-count">'.WordPress\Strings::getCounted( $term->count, $args['count_template'] ).'</span>';
 
-					$html.= '<span class="-dummy"></span></'.$args['term_tag'].'>';
+					$html.= '<span class="-dummy"></span></'.$mode['term'].'>';
 
 					if ( $args['description'] && $term->description )
-						$html.= '<'.$args['desc_tag'].' class="-description">'
+						$html.= '<'.$mode['desc'].' class="-description">'
 							.wpautop( WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ), FALSE )
-							.'</'.$args['desc_tag'].'>';
+							.'</'.$mode['desc'].'>';
 
-					else if ( 'dd' == $args['desc_tag'] && $args['description'] )
-						$html.= '<'.$args['desc_tag'].' class="-empty"></'.$args['desc_tag'].'>';
+					else if ( 'dd' === $mode['desc'] && $args['description'] )
+						$html.= '<'.$mode['desc'].' class="-empty"></'.$mode['desc'].'>';
 				}
 			}
 
-			$html.= '</'.$args['list_tag'].'><div class="clearfix"></div></li>';
+			$html.= '</'.$mode['tag'].'><div class="clearfix"></div></li>';
 
 			$list.= $this->get_alphabet_list_html( [ [ 'letter' => '#', 'key' => '#', 'name' => '#' ] ], $actives );
 			$list.= $this->get_alphabet_list_html( $alt, $actives );
@@ -355,8 +361,8 @@ class Alphabet extends gEditorial\Module
 
 			$fields = '<input class="-search" type="search" style="display:none;" />';
 
-			$html = '<ul class="list-inline -letters">'.$list.'</ul>'
-				.$fields.'<ul class="list-unstyled -definitions">'.$html.'</ul>';
+			$html = '<ul class="'.$this->key.'-letters -letters list-inline">'.$list.'</ul>'
+				.$fields.'<ul class="'.$this->key.'-definitions -definitions list-unstyled">'.$html.'</ul>';
 
 			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_terms' ), $args );
 			$html = Core\Text::minifyHTML( $html );
@@ -384,5 +390,48 @@ class Alphabet extends gEditorial\Module
 				: Core\HTML::tag( 'span', $info['letter'] );
 
 		return '<li>'.implode( '</li><li>', $list ).'</li>';
+	}
+
+	private function _get_alphabet_list_mode( $mode, $defaults )
+	{
+		$args = self::atts( [
+			'list_tag' => NULL,
+			'term_tag' => NULL,
+			'desc_tag' => NULL,
+		], $defaults );
+
+		switch ( $mode ) {
+
+			case 'ul':
+
+				$mode = [
+					'tag'  => $args['list_tag'] ?? 'ul',
+					'term' => $args['term_tag'] ?? 'li',
+					'desc' => $args['desc_tag'] ?? 'li',
+				];
+
+				break;
+
+			case 'ol':
+
+				$mode = [
+					'tag'  => $args['list_tag'] ?? 'ol',
+					'term' => $args['term_tag'] ?? 'li',
+					'desc' => $args['desc_tag'] ?? 'li',
+				];
+
+				break;
+
+			default:
+			case 'dl':
+
+				$mode = [
+					'tag'  => $args['list_tag'] ?? 'dl',
+					'term' => $args['term_tag'] ?? 'dt',
+					'desc' => $args['desc_tag'] ?? 'dd',
+				];
+		}
+
+		return $mode;
 	}
 }
