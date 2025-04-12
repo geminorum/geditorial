@@ -98,10 +98,10 @@ class Alphabet extends gEditorial\Module
 		$args = shortcode_atts( [
 			'locale'            => Core\L10n::locale( TRUE ),
 			'alternative'       => 'en_US', // FALSE to disable
-			'post_type'         => $this->posttypes(),
+			'posttype'          => $this->posttypes(),
+			'excerpt'           => FALSE,
 			'comments'          => FALSE,
 			'comments_template' => '&nbsp;(%s)',
-			'excerpt'           => FALSE,
 			'list_mode'         => 'dl',                        // `dl`/`ul`/`ol`
 			'list_tag'          => NULL,
 			'term_tag'          => NULL,
@@ -115,7 +115,7 @@ class Alphabet extends gEditorial\Module
 			'class'             => '',
 		], $atts, $tag );
 
-		if ( FALSE === $args['context'] )
+		if ( FALSE === $args['context'] || empty( $args['posttype'] ) )
 			return NULL;
 
 		$key = $this->hash( 'posts', $args );
@@ -132,7 +132,7 @@ class Alphabet extends gEditorial\Module
 				'orderby'          => 'title',
 				'order'            => 'ASC',
 				'post_status'      => 'publish',
-				'post_type'        => $args['post_type'],
+				'post_type'        => $args['posttype'],
 				'posts_per_page'   => -1,
 				'suppress_filters' => TRUE,
 			];
@@ -257,7 +257,7 @@ class Alphabet extends gEditorial\Module
 			'class'          => '',
 		], $atts, $tag );
 
-		if ( FALSE === $args['context'] )
+		if ( FALSE === $args['context'] || empty( $args['taxonomy'] ) )
 			return NULL;
 
 		$key = $this->hash( 'terms', $args );
