@@ -12,7 +12,7 @@ class Text extends Base
 	 * - \u202e is the RIGHT-TO-LEFT OVERRIDE (RLO) character.
 	 * - \u202c is the POP DIRECTIONAL FORMATTING (PDF) character.
 	 *
-	 * @param  string $text
+	 * @param string $text
 	 * @return string $text
 	 */
 	public static function trim( $text )
@@ -162,12 +162,10 @@ class Text extends Base
 			return '';
 
 		$text = strtolower( $text );
+		$text = Number::translate( $text );
 
 		// remove arabic/persian accents
 		$text = preg_replace( "/[\x{0618}-\x{061A}\x{064B}-\x{065F}]+/u", '', $text );
-
-		// TODO: remove arabic question mark
-		// TODO: remove accents
 
 		$text = self::normalizeZWNJ( $text );
 		$text = preg_replace( "/(\x{200C})/u", ' ', $text );
@@ -183,12 +181,22 @@ class Text extends Base
 			"\xC2\xBB",     // `»`
 			"\xE2\x80\xA6", // `…` // Horizontal Ellipsis
 
+			"?",
+			"؟",
+			"!",
 			"'",
+			":",
+			";",
+			"،",
+			"؛",
+			"|",
+			",",
+			".",
 		], '', $text );
 
 		// $text = self::stripPunctuation( $text );
 
-		$text = str_replace( [ '%20', '+' ], '-', $text );
+		$text = str_replace( [ '%20', '+', '–', '—' ], '-', $text );
 		$text = preg_replace( '/[\r\n\t -]+/', '-', $text );
 		$text = preg_replace( '/\.{2,}/', '.', $text );
 		$text = preg_replace( '/-{2,}/', '-', $text );

@@ -240,9 +240,9 @@ class Taxonomy extends Core\Base
 	/**
 	 * Retrieves taxonomy archive link.
 	 *
-	 * @param  string|object $taxonomy
-	 * @param  mixed         $fallback
-	 * @return string        $link
+	 * @param string|object $taxonomy
+	 * @param mixed $fallback
+	 * @return string $link
 	 */
 	public static function link( $taxonomy, $fallback = NULL )
 	{
@@ -345,7 +345,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// NOTE: results are compatible with `WordPress\Database::countPostsByTaxonomy()`
-	// -> $counts[$term_slug][$posttype] = $term_count;
+	// -> `$counts[$term_slug][$posttype] = $term_count;`
 	public static function countPostsDoubleTerms( $the_term, $second_taxonomy, $posttypes, $exclude_statuses = NULL )
 	{
 		$counts = [];

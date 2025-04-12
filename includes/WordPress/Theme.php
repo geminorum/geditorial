@@ -230,6 +230,8 @@ class Theme extends Core\Base
 				'is_tax'        => FALSE,
 				'is_home'       => FALSE,
 				'is_front_page' => FALSE,
+
+				'taxonomy' => FALSE, // works for queried as term
 			], $args );
 
 		} else {
@@ -272,6 +274,8 @@ class Theme extends Core\Base
 				'is_tax'        => FALSE,
 				'is_home'       => FALSE,
 				'is_front_page' => FALSE,
+
+				'taxonomy' => FALSE, // works for queried as term
 			], $args );
 		}
 

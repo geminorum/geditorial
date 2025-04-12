@@ -418,13 +418,12 @@ class Term extends Core\Base
 	}
 
 	/**
-	 * retrieves meta-data for a given term.
-	 *
+	 * Retrieves meta-data for a given term.
 	 * @OLD: `Taxonomy::getTermMeta()`
 	 *
-	 * @param  object|int $term
-	 * @param  bool|array $keys `false` for all meta
-	 * @param  bool $single
+	 * @param object|int $term
+	 * @param bool|array $keys `false` for all meta
+	 * @param bool $single
 	 * @return array $metadata
 	 */
 	public static function getMeta( $term, $keys = FALSE, $single = TRUE )

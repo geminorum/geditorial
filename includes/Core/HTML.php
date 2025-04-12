@@ -132,6 +132,15 @@ class HTML extends Base
 		.'</'.$tag.'>';
 	}
 
+	public static function dieMessage( $html )
+	{
+		echo '<div class="wrap-die-message">';
+			echo wpautop( $html );
+		echo '</div>';
+
+		return FALSE;
+	}
+
 	public static function label( $input, $for = FALSE, $wrap = 'p' )
 	{
 		$html = self::tag( 'label', [ 'for' => $for, 'class' => 'form-label' ], $input );

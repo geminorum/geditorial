@@ -9,6 +9,11 @@ class ShortCode extends Core\Base
 
 	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,}';
 
+	public static function exists( $tag )
+	{
+		return empty( $tag ) ? FALSE : shortcode_exists( $tag );
+	}
+
 	// @SEE: https://konstantin.blog/2013/dont-do_shortcode/
 	public static function apply( $text, $ignore_html = FALSE )
 	{
@@ -16,19 +21,19 @@ class ShortCode extends Core\Base
 	}
 
 	/**
-	 * Calls a shortcode by its tag name.
+	 * Calls a short-code by its tag name.
 	 * @source https://wpbitz.com/dont-use-do_shortcode/
 	 *
-	 * Directly executes a shortcode's callback function using the shortcode's
+	 * Directly executes a short-code's callback function using the short-code's
 	 * tag name. Can execute a function even if it's in an object class.
-	 * Simply pass the shortcode's tag and an array of any attributes.
+	 * Simply pass the short-code's tag and an array of any attributes.
 	 *
-	 * @global array  $shortcode_tags
-	 * @param  string $shortcode      The shortcode tag name.
-	 * @param  array  $atts           The attributes (optional).
-	 * @param  array  $content        The shortcode content (null by default).
+	 * @global array $shortcode_tags
+	 * @param string $shortcode The short-code tag name.
+	 * @param array $atts The attributes (optional).
+	 * @param array $content The short-code content (null by default).
 	 *
-	 * @return string|bool False on failure, the result of the shortcode on success.
+	 * @return string|bool False on failure, the result of the short-code on success.
 	 */
 	public static function tag( $shortcode, $atts = [], $content = NULL )
 	{

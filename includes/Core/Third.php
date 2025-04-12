@@ -79,6 +79,7 @@ class Third extends Base
 
 			case 'wikipedia':
 
+				// https://en.wikipedia.org/w/index.php?title=Style_(manner_of_address)
 				$base = sprintf( 'https://%s.wikipedia.org/wiki/', L10n::getISO639() );
 				$url  = self::getHandle( $string, TRUE, $base, $prefix );
 				break;
