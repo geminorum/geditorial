@@ -123,8 +123,10 @@ trait TemplateTaxonomy
 	// DEFAULT METHOD: title for overrided archive page
 	public function templatetaxonomy_get_archive_title( $taxonomy )
 	{
-		return $this->get_setting_fallback( 'archive_title',
-			WordPress\Term::title( $this->current_queried ) );
+		// return $this->get_setting_fallback( 'archive_title',
+		// 	WordPress\Term::title( $this->current_queried ) );
+
+		return ''; // NOTE: `renderTermIntro` will display the title;
 	}
 
 	public function gtheme_navigation_crumb_archive( $crumb, $args )
@@ -151,24 +153,29 @@ trait TemplateTaxonomy
 		if ( $default = $this->templatetaxonomy_get_archive_content_default( $taxonomy ) )
 			return $default;
 
-		// TODO: must display term summary: desc/image/meta-table
-		// TODO: add widget area
+		if ( ! is_tax() )
+			return '';
 
-		if ( is_tax() )
-			return ShortCode::listPosts( 'assigned',
-				'',
-				$taxonomy,
-				[
-					'context' => 'template_taxonomy',
-					'orderby' => 'menu_order',             // WTF: must apply to `assigned`
-					'term_id' => $this->current_queried,
-					'future'  => 'off',
-					'title'   => FALSE,
-					'wrap'    => FALSE,
-				]
-			);
+		$html = self::buffer( [ 'geminorum\\gEditorial\\Template', 'renderTermIntro' ], [
+			$this->current_queried,
+			[],
+			$this->key,
+		] );
 
-		return '';
+		$list = ShortCode::listPosts( 'assigned',
+			'',
+			$taxonomy,
+			[
+				'context' => 'template_taxonomy',
+				'orderby' => 'menu_order',             // WTF: must apply to `assigned`
+				'term_id' => $this->current_queried,
+				'future'  => 'off',
+				'title'   => FALSE,
+				'wrap'    => FALSE,
+			]
+		);
+
+		return $html;
 	}
 
 	public function templatetaxonomy_get_archive_content_default( $taxonomy )
