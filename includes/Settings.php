@@ -1197,6 +1197,17 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_archive_empty_items( $description = NULL )
+	{
+		return [
+			'field'       => 'archive_empty_items',
+			'type'        => 'textarea-quicktags',
+			'title'       => _x( 'Empty Items', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Displays as empty items placeholder.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'default'     => _x( 'There are no contents available.', 'Setting: Setting Default', 'geditorial-admin' ),
+		];
+	}
+
 	public static function getSetting_archive_override( $description = NULL )
 	{
 		return [

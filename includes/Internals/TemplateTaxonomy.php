@@ -129,6 +129,15 @@ trait TemplateTaxonomy
 		return ''; // NOTE: `renderTermIntro` will display the title;
 	}
 
+	// DEFAULT METHOD: content for overridden empty items
+	public function templatetaxonomy_get_empty_items( $taxonomy, $atts = [] )
+	{
+		if ( $content = $this->get_setting( 'archive_empty_items' ) )
+			return Core\Text::autoP( trim( $content ) );
+
+		return '';
+	}
+
 	public function gtheme_navigation_crumb_archive( $crumb, $args )
 	{
 		return $this->get_setting_fallback( 'archive_title',
@@ -174,6 +183,8 @@ trait TemplateTaxonomy
 				'wrap'    => FALSE,
 			]
 		);
+
+		$html.= $list ?: $this->templatetaxonomy_get_empty_items( $taxonomy );
 
 		return $html;
 	}
