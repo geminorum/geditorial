@@ -106,6 +106,7 @@ class Alphabet extends gEditorial\Module
 			'list_tag'          => NULL,
 			'term_tag'          => NULL,
 			'desc_tag'          => NULL,
+			'head_tag'          => NULL,
 			'heading_cb'        => FALSE,
 			'item_cb'           => FALSE,
 			'context'           => NULL,
@@ -182,8 +183,8 @@ class Alphabet extends gEditorial\Module
 
 						$html.= ( count( $actives ) ? '</'.$mode['tag'].'><div class="clearfix"></div></li>' : '' );
 
-						$html.= '<li id="'.$id.'"><h4 class="-heading">'.$letter.'</h4>';
 						$html.= '<'.$mode['tag'].( $args['excerpt'] ? ' class="dl-horizontal"' : '' ).'>';
+						$html.= '<li id="'.$id.'"><'.$mode['head'].' class="-heading">'.$letter.'</'.$mode['head'].'>';
 					}
 
 					$actives[] = $current = $letter;
@@ -248,6 +249,7 @@ class Alphabet extends gEditorial\Module
 			'list_tag'       => NULL,
 			'term_tag'       => NULL,
 			'desc_tag'       => NULL,
+			'head_tag'       => NULL,
 			'heading_cb'     => FALSE,
 			'item_cb'        => FALSE,
 			'context'        => NULL,
@@ -319,8 +321,8 @@ class Alphabet extends gEditorial\Module
 
 						$html.= ( count( $actives ) ? '</'.$mode['tag'].'><div class="clearfix"></div></li>' : '' );
 
-						$html.= '<li id="'.$id.'"><h4 class="-heading">'.$letter.'</h4>';
 						$html.= '<'.$mode['tag'].' class="-terms'.( $args['description'] ? ' -has-desc' : '' ).'">';
+						$html.= '<li id="'.$id.'"><'.$mode['head'].' class="-heading">'.$letter.'</'.$mode['head'].'>';
 					}
 
 					$actives[] = $current = $letter;
@@ -398,6 +400,7 @@ class Alphabet extends gEditorial\Module
 			'list_tag' => NULL,
 			'term_tag' => NULL,
 			'desc_tag' => NULL,
+			'head_tag' => NULL,
 		], $defaults );
 
 		switch ( $mode ) {
@@ -408,6 +411,7 @@ class Alphabet extends gEditorial\Module
 					'tag'  => $args['list_tag'] ?? 'ul',
 					'term' => $args['term_tag'] ?? 'li',
 					'desc' => $args['desc_tag'] ?? 'li',
+					'head' => $args['head_tag'] ?? 'h4',
 				];
 
 				break;
@@ -418,6 +422,7 @@ class Alphabet extends gEditorial\Module
 					'tag'  => $args['list_tag'] ?? 'ol',
 					'term' => $args['term_tag'] ?? 'li',
 					'desc' => $args['desc_tag'] ?? 'li',
+					'head' => $args['head_tag'] ?? 'h4',
 				];
 
 				break;
@@ -429,6 +434,7 @@ class Alphabet extends gEditorial\Module
 					'tag'  => $args['list_tag'] ?? 'dl',
 					'term' => $args['term_tag'] ?? 'dt',
 					'desc' => $args['desc_tag'] ?? 'dd',
+					'head' => $args['head_tag'] ?? 'h4',
 				];
 		}
 
